@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD7F1C6FF9;
-	Wed,  5 Mar 2025 18:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A721714B075;
+	Wed,  5 Mar 2025 18:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197645; cv=none; b=i70O+PPSwMeQXCJjGbmc5ZVkVlFfCTp9BTnRLzcqTGzo9Jaz0szCgkvO/9ix8FYMYrFZD13i1SO/Kwl55V3MxIurVOAOwcyhHr+s2m9N2dk8MaZVfrTqH3nta/M82XJV6eM9t7hd3mgW68psjIEjxIosbF96qWoVDm4hE6UqJe8=
+	t=1741197647; cv=none; b=ogynMNc4Lh+tD84UuC8ZDjATP3c9j7LslFSC5epmEDWOIkB9g2/vI4mDlK40DOZ2oskEsPoSYVw9AuxUpJEnRDuqcbeXoHG1Qd+cUWVxemH18go8CTVK1a4dzikAGwD0ySbMWuuWbgKYe3fILwrU1jQbfcGaNCtqCWZVFApnLhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197645; c=relaxed/simple;
-	bh=uAmPkXbfWvSbv5R6RuQXHnUNtr4VRWk5DbLWi1+Jai8=;
+	s=arc-20240116; t=1741197647; c=relaxed/simple;
+	bh=pYYeP4YiEM1Khn3C3VdjPDEtX3PrABdQl/qoQckF968=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nX0iAjKEsmIRSFkIva9yyYHWyfZ8LoVmveygw9afnvOIY0N4A/jdSkCR9vgmzaKnxBquRG6ewKYoIJnt4IRIWkrEh+4+NdldeE9wRDi4J66ynTOXFxKqKnOVrKIokruaU7VbayT1oXP5/Ku4lo0YhqWvPwHjFsmTWMLR29VQv18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUIs3xpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5lehzXJetjk+KVgr5JjmufFQtoH+dWOqLsNbvcP4Dmdfjw5JUFWRTAh+KORWZrIfr8LWHbuINhZ5hNW02/z+sPNIIPUF06geiAkmKGeOXcpj71QWgxxagp48JkfxePmrZSPSEJnPRWnWaKWw3Rm5hMbv1MhPWQqAetgHynRPRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYdHzR03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUIs3xpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487A1C4CED1;
-	Wed,  5 Mar 2025 18:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYdHzR03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEF7C4CED1;
+	Wed,  5 Mar 2025 18:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197644;
-	bh=uAmPkXbfWvSbv5R6RuQXHnUNtr4VRWk5DbLWi1+Jai8=;
+	s=korg; t=1741197647;
+	bh=pYYeP4YiEM1Khn3C3VdjPDEtX3PrABdQl/qoQckF968=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUIs3xpL51epAoMDa4wbhPUtjl46GiGG7pnA1GaZtD/z1DXvUMHCBtObUZKcPZC2K
-	 UuLj59SvSXy+yai7ipXXTzE7EHlmloQEItlFDo0ahAzG0X2OCxLJ8mAVvpnEt3WTYC
-	 Rx5EIgT4TKL3u3jrmwsySvYTYPxoUSsXmAxRK6Kw=
+	b=aYdHzR03e3ISgc3tuKmKOc3qxjTZGL25ilAqkZj7eezBShXZXwYtJRIuskTGlM/mO
+	 ZjIOp+VjAqEmcAVbc6W/d7NwwqQULqj0rCLNcmo2bSJ/jv7CIysFjWDLgZg0eNBzMW
+	 0dRls7k9mL0kdvLIODh6Gt2MtUJdbA98EfGoHFlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/142] net: ti: icss-iep: Reject perout generation request
-Date: Wed,  5 Mar 2025 18:47:50 +0100
-Message-ID: <20250305174502.388950296@linuxfoundation.org>
+Subject: [PATCH 6.6 052/142] perf/core: Order the PMU list to fix warning about unordered pmu_ctx_list
+Date: Wed,  5 Mar 2025 18:47:51 +0100
+Message-ID: <20250305174502.428609184@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,58 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Luo Gengkun <luogengkun@huaweicloud.com>
 
-[ Upstream commit 54e1b4becf5e220be03db4e1be773c1310e8cbbd ]
+[ Upstream commit 2016066c66192a99d9e0ebf433789c490a6785a2 ]
 
-IEP driver supports both perout and pps signal generation
-but perout feature is faulty with half-cooked support
-due to some missing configuration. Remove perout
-support from the driver and reject perout requests with
-"not supported" error code.
+Syskaller triggers a warning due to prev_epc->pmu != next_epc->pmu in
+perf_event_swap_task_ctx_data(). vmcore shows that two lists have the same
+perf_event_pmu_context, but not in the same order.
 
-Fixes: c1e0230eeaab2 ("net: ti: icss-iep: Add IEP driver")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250227092441.1848419-1-m-malladi@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The problem is that the order of pmu_ctx_list for the parent is impacted by
+the time when an event/PMU is added. While the order for a child is
+impacted by the event order in the pinned_groups and flexible_groups. So
+the order of pmu_ctx_list in the parent and child may be different.
+
+To fix this problem, insert the perf_event_pmu_context to its proper place
+after iteration of the pmu_ctx_list.
+
+The follow testcase can trigger above warning:
+
+ # perf record -e cycles --call-graph lbr -- taskset -c 3 ./a.out &
+ # perf stat -e cpu-clock,cs -p xxx // xxx is the pid of a.out
+
+ test.c
+
+ void main() {
+        int count = 0;
+        pid_t pid;
+
+        printf("%d running\n", getpid());
+        sleep(30);
+        printf("running\n");
+
+        pid = fork();
+        if (pid == -1) {
+                printf("fork error\n");
+                return;
+        }
+        if (pid == 0) {
+                while (1) {
+                        count++;
+                }
+        } else {
+                while (1) {
+                        count++;
+                }
+        }
+ }
+
+The testcase first opens an LBR event, so it will allocate task_ctx_data,
+and then open tracepoint and software events, so the parent context will
+have 3 different perf_event_pmu_contexts. On inheritance, child ctx will
+insert the perf_event_pmu_context in another order and the warning will
+trigger.
+
+[ mingo: Tidied up the changelog. ]
+
+Fixes: bd2756811766 ("perf: Rewrite core context handling")
+Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20250122073356.1824736-1-luogengkun@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ kernel/events/core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index b491d89de8fb2..3f9a030471fe2 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -544,26 +544,7 @@ static int icss_iep_perout_enable_hw(struct icss_iep *iep,
- static int icss_iep_perout_enable(struct icss_iep *iep,
- 				  struct ptp_perout_request *req, int on)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 5d6458ea675e9..18f0a3aa6d7c6 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4842,7 +4842,7 @@ static struct perf_event_pmu_context *
+ find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
+ 		     struct perf_event *event)
  {
--	int ret = 0;
--
--	mutex_lock(&iep->ptp_clk_mutex);
--
--	if (iep->pps_enabled) {
--		ret = -EBUSY;
--		goto exit;
--	}
--
--	if (iep->perout_enabled == !!on)
--		goto exit;
--
--	ret = icss_iep_perout_enable_hw(iep, req, on);
--	if (!ret)
--		iep->perout_enabled = !!on;
--
--exit:
--	mutex_unlock(&iep->ptp_clk_mutex);
--
--	return ret;
-+	return -EOPNOTSUPP;
- }
+-	struct perf_event_pmu_context *new = NULL, *epc;
++	struct perf_event_pmu_context *new = NULL, *pos = NULL, *epc;
+ 	void *task_ctx_data = NULL;
  
- static int icss_iep_pps_enable(struct icss_iep *iep, int on)
+ 	if (!ctx->task) {
+@@ -4899,12 +4899,19 @@ find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
+ 			atomic_inc(&epc->refcount);
+ 			goto found_epc;
+ 		}
++		/* Make sure the pmu_ctx_list is sorted by PMU type: */
++		if (!pos && epc->pmu->type > pmu->type)
++			pos = epc;
+ 	}
+ 
+ 	epc = new;
+ 	new = NULL;
+ 
+-	list_add(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
++	if (!pos)
++		list_add_tail(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
++	else
++		list_add(&epc->pmu_ctx_entry, pos->pmu_ctx_entry.prev);
++
+ 	epc->ctx = ctx;
+ 
+ found_epc:
 -- 
 2.39.5
 
