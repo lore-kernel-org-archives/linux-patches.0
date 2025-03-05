@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E29D13C67E;
-	Wed,  5 Mar 2025 18:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CBA14884C;
+	Wed,  5 Mar 2025 18:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198616; cv=none; b=uwtw8UaHbiZ57GpTyZGgHON8QaRBprqLZ48GfIgk0xbxkeqrGpmYGCJKbYYAGbX+h3GabGU224AhAf4hPOZhQpkuD4A21/MhsIcf9XLTmhT6LKuTbOjPAe+aPCfx1l40/DLqFeXbfgl2f8MUAyWivr4GxG4xUCDlEVVGQt1EJLk=
+	t=1741198619; cv=none; b=aWq+O9cYJtRNOePe6c45voo3bF9xyQ82VODesGoMnFMenwEuk2nI9To3x5NFySuHQHQlWyht4wow+k17r+qAdV572wlnixdGQTVYXPPzqmQIgHigjf+42e4QVbn8uD01FVHLBAi6wa/+9aOf49z/3Qq0P/6k5P/bKqX9Tzi4cjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198616; c=relaxed/simple;
-	bh=wyrdkgaIrAGPyWFb39uQeh5I+c817IBiNGeyCbeNmq0=;
+	s=arc-20240116; t=1741198619; c=relaxed/simple;
+	bh=w+YBK7YCtXCHPCUtA/IyQ/402J3a30BZXg+VQt7e8Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkJPZe2dccr3DShd9JuLv8Kdyi3qlvlnx8zc+Sp1dZKJTjb3REx5N0XjNrlHZqALm83RDf1beOVbympdh2iE8iJQ3HYrr7ZHS1n8uWwesHbKb40b8HqO8IvMAJz+0Lqn3eBnP1QctNOt0habXzr7awEFDkZ6/wSgE5ohBYsB008=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+LO2Kku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LcGpzbsnuPMudHasdmpCZZVYv0KGHKoN/uv8Hsi0cSFYNqM0uCqNg/kMftcFIog8b0NCPq1+TnaK3QyyreucA+z2SwuX2qq2i8wiAArlkLI5bSRIOA8ok6MLHmluk02YNt1knJQFo4194pM1VLG7Fm2mRG/puOMjNP/wW0FZoIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3Oi1icw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+LO2Kku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7655C4CED1;
-	Wed,  5 Mar 2025 18:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3Oi1icw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9199C4CED1;
+	Wed,  5 Mar 2025 18:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198616;
-	bh=wyrdkgaIrAGPyWFb39uQeh5I+c817IBiNGeyCbeNmq0=;
+	s=korg; t=1741198619;
+	bh=w+YBK7YCtXCHPCUtA/IyQ/402J3a30BZXg+VQt7e8Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+LO2KkukSX1P68YOnQ/ESVP2Ku91othqgkBvHXwff3RHgihLnS3exct5S86LFiEw
-	 RgwS2UkMT/56BVuiY2/Mt9Nwg9Blr0CXOLw49E6BNDYpiGu7KCQPVGrOOXjIgZ8Ik2
-	 krp90KzuRlmIzpwQBkcE/qefi8sU2g7l6ZI4Hjhk=
+	b=P3Oi1icwdjSZyoIswUxxUNR/CKWAYMJzPJdSjYKxBc/N+Jg78m0r1ZY0wXWDAqG0f
+	 rkHV5lWZd0YEirSQsZTGFJoEY3Bux02V4c4nzgyEycGbsImfxl2tZ8QA9dBuUrSkKE
+	 HQWfzJrWxZzYMot86fgRiIATv1tqOIyZeUN0I15s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.13 088/157] perf/core: Fix low freq setting via IOC_PERIOD
-Date: Wed,  5 Mar 2025 18:48:44 +0100
-Message-ID: <20250305174508.845217243@linuxfoundation.org>
+	Alexander Aring <alex.aring@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 059/157] net: ipv6: fix dst ref loop on input in rpl lwt
+Date: Wed,  5 Mar 2025 18:48:15 +0100
+Message-ID: <20250305174507.675431437@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,59 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-commit 0d39844150546fa1415127c5fbae26db64070dd3 upstream.
+[ Upstream commit 13e55fbaec176119cff68a7e1693b251c8883c5f ]
 
-A low attr::freq value cannot be set via IOC_PERIOD on some platforms.
+Prevent a dst ref loop on input in rpl_iptunnel.
 
-The perf_event_check_period() introduced in:
-
-  81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
-
-was intended to check the period, rather than the frequency.
-A low frequency may be mistakenly rejected by limit_period().
-
-Fix it.
-
-Fixes: 81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250117151913.3043942-2-kan.liang@linux.intel.com
-Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Cc: Alexander Aring <alex.aring@gmail.com>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/ipv6/rpl_iptunnel.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5969,14 +5969,15 @@ static int _perf_event_period(struct per
- 	if (!value)
- 		return -EINVAL;
+diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
+index 0ac4283acdf20..7c05ac846646f 100644
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -262,10 +262,18 @@ static int rpl_input(struct sk_buff *skb)
+ {
+ 	struct dst_entry *orig_dst = skb_dst(skb);
+ 	struct dst_entry *dst = NULL;
++	struct lwtunnel_state *lwtst;
+ 	struct rpl_lwt *rlwt;
+ 	int err;
  
--	if (event->attr.freq && value > sysctl_perf_event_sample_rate)
--		return -EINVAL;
--
--	if (perf_event_check_period(event, value))
--		return -EINVAL;
--
--	if (!event->attr.freq && (value & (1ULL << 63)))
--		return -EINVAL;
-+	if (event->attr.freq) {
-+		if (value > sysctl_perf_event_sample_rate)
-+			return -EINVAL;
-+	} else {
-+		if (perf_event_check_period(event, value))
-+			return -EINVAL;
-+		if (value & (1ULL << 63))
-+			return -EINVAL;
-+	}
+-	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
++	/* We cannot dereference "orig_dst" once ip6_route_input() or
++	 * skb_dst_drop() is called. However, in order to detect a dst loop, we
++	 * need the address of its lwtstate. So, save the address of lwtstate
++	 * now and use it later as a comparison.
++	 */
++	lwtst = orig_dst->lwtstate;
++
++	rlwt = rpl_lwt_lwtunnel(lwtst);
  
- 	event_function_call(event, __perf_event_period, &value);
- 
+ 	local_bh_disable();
+ 	dst = dst_cache_get(&rlwt->cache);
+@@ -280,7 +288,9 @@ static int rpl_input(struct sk_buff *skb)
+ 	if (!dst) {
+ 		ip6_route_input(skb);
+ 		dst = skb_dst(skb);
+-		if (!dst->error) {
++
++		/* cache only if we don't create a dst reference loop */
++		if (!dst->error && lwtst != dst->lwtstate) {
+ 			local_bh_disable();
+ 			dst_cache_set_ip6(&rlwt->cache, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+-- 
+2.39.5
+
 
 
