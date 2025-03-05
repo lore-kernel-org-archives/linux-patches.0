@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6B8255E53;
-	Wed,  5 Mar 2025 18:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512E255238;
+	Wed,  5 Mar 2025 18:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198725; cv=none; b=tjqCJFoSzls6geF1FVqgMDL76mMnO+LG/1b3AvoXPXAdcHIX16mfZvKMOKv1NCq3okU+i/eoH0qGruHECHLFRIZxwjePJdGSdu2CspZlDqAoyOz9OEe+ouEOv9+U4N5Csv+I7BYVc//5pEnR3nzRstz+3yUPz9qbkvA1aMkp1II=
+	t=1741198728; cv=none; b=uvc79Z4Kb/eKvzFs6UDpmyuwhEk1BEaK0mZoKufkJJ2nwNnesNC8O/5qRyIZH5EFnsD6JbDkCLO43Gp41jP6DwV02K7OR5b/vdKuYfHQ2u3n8kGCpdpHrUgqOYVPr+N+i+vFpgdjbVFVlQTOluiOZmVGov4KatfTZvLLb5yFh7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198725; c=relaxed/simple;
-	bh=VH7UdYV3FBiD7Fp3Cwev5wThqgeOM5+zX3NUEIEbNe8=;
+	s=arc-20240116; t=1741198728; c=relaxed/simple;
+	bh=OZ9agHv1Q04BRKqaY88WwutoTWq4x52coR2YvTzx/3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tFAdTziHpOwkylXRHLKL2fBTAgCiLTm/hF6vcLJoCByadE5Odgi9meNlM/2ojE55P44/v4rD5JMhFPOXImPU7cxcs7nbGzNMJ0OFuBtkBXeQYUuV5EL+geDunFsYmvJG05BE8bMVslyWJoaF3tPWbOrNLBGrI/q1+6Vu05cj1hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3JIpnrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sA0O+NQCP0T8XZaVm0qhhDXfJ+1LIkyrj4ogR+7zDmp75nL3NK7BYh1XlMP6Qab0XrjFBVdnnD2EwZUBGjigo9V23KoZHRAYeYVilNq/WEBLHBB4l9kI1ZoLZT+HfhqPGLOBqBSpE5szMMXQEfgFmLtATMThJR18kGC5k+7tpmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCZX0yVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3JIpnrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E24C4CEE0;
-	Wed,  5 Mar 2025 18:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCZX0yVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD20AC4CED1;
+	Wed,  5 Mar 2025 18:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198725;
-	bh=VH7UdYV3FBiD7Fp3Cwev5wThqgeOM5+zX3NUEIEbNe8=;
+	s=korg; t=1741198728;
+	bh=OZ9agHv1Q04BRKqaY88WwutoTWq4x52coR2YvTzx/3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3JIpnrMTaeCe/4eCJ9BZhoOHbOEokO8Ro20F8g73F0NFKhL9pdWGMkinCPzM66l7
-	 N/KaaBs7kmwfFdQPfzugiCCdMqIJAc/ZiBbhRJHGJidtkELk0MQucXB2TiIEMplNZg
-	 YApZm5RGhIlIUt1YyNF5+O3JSQJWeii05OME5jeU=
+	b=BCZX0yVm4D8S8XUwDRRFW94zeCcQXDgYCXyFD9BoVUConfhoupZJKPDUHe0tpOoHp
+	 hRGt3it2DEFjVqIWiQvj3bba3kuSl38qa/c6XgdyS1qsr6t/NfytWvrFjfRwPA4alp
+	 3Ylt1vGB33fN+jbWEu4N/FeQQt8gHDrNPZjw5drk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.13 095/157] drm/amdgpu: init return value in amdgpu_ttm_clear_buffer
-Date: Wed,  5 Mar 2025 18:48:51 +0100
-Message-ID: <20250305174509.132376597@linuxfoundation.org>
+	Sun peng Li <sunpeng.li@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.13 096/157] drm/amd/display: Disable PSR-SU on eDP panels
+Date: Wed,  5 Mar 2025 18:48:52 +0100
+Message-ID: <20250305174509.171192441@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -45,44 +48,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-commit d3c7059b6a8600fc62cd863f1ea203b8675e63e1 upstream.
+commit e8863f8b0316d8ee1e7e5291e8f2f72c91ac967d upstream.
 
-Otherwise an uninitialized value can be returned if
-amdgpu_res_cleared returns true for all regions.
+[Why]
+PSR-SU may cause some glitching randomly on several panels.
 
-Possibly closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3812
+[How]
+Temporarily disable the PSR-SU and fallback to PSR1 for
+all eDP panels.
 
-Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3388
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7c62aacc3b452f73a1284198c81551035fac6d71)
+(cherry picked from commit 6deeefb820d0efb0b36753622fb982d03b37b3ad)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2280,7 +2280,7 @@ int amdgpu_ttm_clear_buffer(struct amdgp
- 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
- 	struct amdgpu_res_cursor cursor;
- 	u64 addr;
--	int r;
-+	int r = 0;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
+@@ -54,7 +54,8 @@ static bool link_supports_psrsu(struct d
+ 	if (amdgpu_dc_debug_mask & DC_DISABLE_PSR_SU)
+ 		return false;
  
- 	if (!adev->mman.buffer_funcs_enabled)
- 		return -EINVAL;
+-	return dc_dmub_check_min_version(dc->ctx->dmub_srv->dmub);
++	/* Temporarily disable PSR-SU to avoid glitches */
++	return false;
+ }
+ 
+ /*
 
 
