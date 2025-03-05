@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D5C24FBE8;
-	Wed,  5 Mar 2025 18:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9E21C860D;
+	Wed,  5 Mar 2025 18:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197822; cv=none; b=mbumuwAwJXBVVfeSHNFEiV/Dzgv8QPuvOpgTtfBwSLigy2qctRbnRsXF/GN3gtDtv8A7ojIu4n331PFD9cuw/OFWh89kT40eyUw3ognaKu+XFg9mm12gqniKprt2cQ7uIvWWBa/2yPYNpJMHQc4gaHRz0i7ksiTpeTJXSA4718o=
+	t=1741197824; cv=none; b=PWA3pLteN5VMO2c8iP6Xmg13tg6ygdtiip6Cpy60jMy2ZuRhxFv34qvgU5a9h4QD2d/gN4AN18u8rxDYe6ZdqxnNHWpnju+Pt+xPo9IxemSNtnJeuu+zv0WSaHO3Bsl1zvrWa0DXU8K/mVTNiEPVTKTcSt1LRhhQ1LGL5n2QeY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197822; c=relaxed/simple;
-	bh=LWU1swHedvZNkOoR6R5AEBvo2Wj4x9bF0tVkHKAHark=;
+	s=arc-20240116; t=1741197824; c=relaxed/simple;
+	bh=Yzozj5lnCJmHNM5jU06kOdQ9hhqZvdi3PAhzGIuvZ5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOPD1H0jhgRCdWyojVvvyAyHTZ/LWMCsAdGVTiShhC/O8ks2epHis/x+C8LXHtyiOvE/vuuSmigcDW5dgr5+61jJ0NsDd3CAYLFCIagCkGWVL7e+lamx+QcMnH+bxs0DFTUcaCXvcpVfW+Rwt0HczH4hixS4IvpApXychZL17JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdsUZXtH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uO35eRBRc0mGKQOPmmDbMFgmWN1cZqTcBQjab6BnYrVeQ8oQsupePiaKkDYB20R3BOkDw4CMTb40peEZZG7aE8SBf//2BZ1LeupDNDTHAvxUNxifWhhaYmaDAwH9KD9SfM9FK3mAiaMzZhquikmmullgv1Wl+9Ts+cXcoNQR0ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LenJHAiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdsUZXtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FB9C4CED1;
-	Wed,  5 Mar 2025 18:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LenJHAiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1895EC4CEE0;
+	Wed,  5 Mar 2025 18:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197820;
-	bh=LWU1swHedvZNkOoR6R5AEBvo2Wj4x9bF0tVkHKAHark=;
+	s=korg; t=1741197823;
+	bh=Yzozj5lnCJmHNM5jU06kOdQ9hhqZvdi3PAhzGIuvZ5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdsUZXtHkyWjymHq52LBagTaPBfG4RVL8iA5YtBq0W+B15iP9PJ4S85LW9IdudvKZ
-	 3KvnetD+OMmkJSKJayAvW/XT6obFR9twlztL8Q/LApy+kOU1DTmDzZ5x139vNuA5Il
-	 tIOYxOimEH2668WALR73tQdOPwXP2dAhPBAfGa1M=
+	b=LenJHAiLd6H2kgfAM5h5/ULWMCD4hT1GOUk4eWE+ZMUKMT0ks1Rf9oFCRSynDfvOC
+	 8JiGTAM35aKtWZzS/Cr9c9i5gRRpwCHbgPO99IB2nQQdLVqqej82EOWsvSD8vuTpHl
+	 T28zd53e2ah33yizaHd2uIvj1n7FlInnJwZtyoWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 104/142] x86/microcode/intel: Switch to kvmalloc()
-Date: Wed,  5 Mar 2025 18:48:43 +0100
-Message-ID: <20250305174504.509249115@linuxfoundation.org>
+Subject: [PATCH 6.6 113/142] x86/microcode/amd: Use cached microcode for AP load
+Date: Wed,  5 Mar 2025 18:48:52 +0100
+Message-ID: <20250305174504.868058881@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,145 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit f24f204405f9875bc539c6e88553fd5ac913c867 upstream
+commit 5af05b8d51a8e3ff5905663655c0f46d1aaae44a upstream
 
-Microcode blobs are getting larger and might soon reach the kmalloc()
-limit. Switch over kvmalloc().
+Now that the microcode cache is initialized before the APs are brought
+up, there is no point in scanning builtin/initrd microcode during AP
+loading.
+
+Convert the AP loader to utilize the cache, which in turn makes the CPU
+hotplug callback which applies the microcode after initrd/builtin is
+gone, obsolete as the early loading during late hotplug operations
+including the resume path depends now only on the cache.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231002115902.564323243@linutronix.de
+Link: https://lore.kernel.org/r/20231017211723.243426023@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/intel.c |   48 +++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c      |   20 +++++++++++---------
+ arch/x86/kernel/cpu/microcode/core.c     |   15 ++-------------
+ arch/x86/kernel/cpu/microcode/internal.h |    2 --
+ 3 files changed, 13 insertions(+), 24 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -14,7 +14,6 @@
- #include <linux/earlycpio.h>
- #include <linux/firmware.h>
- #include <linux/uaccess.h>
--#include <linux/vmalloc.h>
- #include <linux/initrd.h>
- #include <linux/kernel.h>
- #include <linux/slab.h>
-@@ -245,7 +244,7 @@ EXPORT_SYMBOL_GPL(intel_microcode_sanity
- 
- static void update_ucode_pointer(struct microcode_intel *mc)
- {
--	kfree(ucode_patch_va);
-+	kvfree(ucode_patch_va);
- 
- 	/*
- 	 * Save the virtual address for early loading and for eventual free
-@@ -256,11 +255,14 @@ static void update_ucode_pointer(struct
- 
- static void save_microcode_patch(struct microcode_intel *patch)
- {
-+	unsigned int size = get_totalsize(&patch->hdr);
- 	struct microcode_intel *mc;
- 
--	mc = kmemdup(patch, get_totalsize(&patch->hdr), GFP_KERNEL);
-+	mc = kvmemdup(patch, size, GFP_KERNEL);
- 	if (mc)
- 		update_ucode_pointer(mc);
-+	else
-+		pr_err("Unable to allocate microcode memory size: %u\n", size);
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -496,7 +496,7 @@ static bool get_builtin_microcode(struct
+ 	return false;
  }
  
- /* Scan blob for microcode matching the boot CPUs family, model, stepping */
-@@ -539,36 +541,34 @@ static enum ucode_state parse_microcode_
+-static void find_blobs_in_containers(unsigned int cpuid_1_eax, struct cpio_data *ret)
++static void __init find_blobs_in_containers(unsigned int cpuid_1_eax, struct cpio_data *ret)
+ {
+ 	struct cpio_data cp;
  
- 		if (!copy_from_iter_full(&mc_header, sizeof(mc_header), iter)) {
- 			pr_err("error! Truncated or inaccessible header in microcode data file\n");
--			break;
-+			goto fail;
- 		}
+@@ -506,12 +506,12 @@ static void find_blobs_in_containers(uns
+ 	*ret = cp;
+ }
  
- 		mc_size = get_totalsize(&mc_header);
- 		if (mc_size < sizeof(mc_header)) {
- 			pr_err("error! Bad data in microcode data file (totalsize too small)\n");
--			break;
-+			goto fail;
- 		}
+-static void apply_ucode_from_containers(unsigned int cpuid_1_eax)
++void __init load_ucode_amd_bsp(unsigned int cpuid_1_eax)
+ {
+ 	struct cpio_data cp = { };
+ 
+ 	/* Needed in load_microcode_amd() */
+-	ucode_cpu_info[smp_processor_id()].cpu_sig.sig = cpuid_1_eax;
++	ucode_cpu_info[0].cpu_sig.sig = cpuid_1_eax;
+ 
+ 	find_blobs_in_containers(cpuid_1_eax, &cp);
+ 	if (!(cp.data && cp.size))
+@@ -520,11 +520,6 @@ static void apply_ucode_from_containers(
+ 	early_apply_microcode(cpuid_1_eax, cp.data, cp.size);
+ }
+ 
+-void load_ucode_amd_early(unsigned int cpuid_1_eax)
+-{
+-	return apply_ucode_from_containers(cpuid_1_eax);
+-}
 -
- 		data_size = mc_size - sizeof(mc_header);
- 		if (data_size > iov_iter_count(iter)) {
- 			pr_err("error! Bad data in microcode data file (truncated file?)\n");
--			break;
-+			goto fail;
- 		}
+ static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size);
  
- 		/* For performance reasons, reuse mc area when possible */
- 		if (!mc || mc_size > curr_mc_size) {
--			vfree(mc);
--			mc = vmalloc(mc_size);
-+			kvfree(mc);
-+			mc = kvmalloc(mc_size, GFP_KERNEL);
- 			if (!mc)
--				break;
-+				goto fail;
- 			curr_mc_size = mc_size;
- 		}
+ static int __init save_microcode_in_initrd(void)
+@@ -608,7 +603,6 @@ static struct ucode_patch *find_patch(un
+ 	struct ucode_cpu_info *uci = ucode_cpu_info + cpu;
+ 	u16 equiv_id;
  
- 		memcpy(mc, &mc_header, sizeof(mc_header));
- 		data = mc + sizeof(mc_header);
- 		if (!copy_from_iter_full(data, data_size, iter) ||
--		    intel_microcode_sanity_check(mc, true, MC_HEADER_TYPE_MICROCODE) < 0) {
--			break;
--		}
-+		    intel_microcode_sanity_check(mc, true, MC_HEADER_TYPE_MICROCODE) < 0)
-+			goto fail;
- 
- 		if (cur_rev >= mc_header.rev)
- 			continue;
-@@ -576,24 +576,26 @@ static enum ucode_state parse_microcode_
- 		if (!intel_find_matching_signature(mc, uci->cpu_sig.sig, uci->cpu_sig.pf))
- 			continue;
- 
--		vfree(new_mc);
-+		kvfree(new_mc);
- 		cur_rev = mc_header.rev;
- 		new_mc  = mc;
- 		mc = NULL;
- 	}
- 
--	vfree(mc);
 -
--	if (iov_iter_count(iter)) {
--		vfree(new_mc);
--		return UCODE_ERROR;
--	}
-+	if (iov_iter_count(iter))
-+		goto fail;
+ 	equiv_id = find_equiv_id(&equiv_table, uci->cpu_sig.sig);
+ 	if (!equiv_id)
+ 		return NULL;
+@@ -710,6 +704,14 @@ out:
+ 	return ret;
+ }
  
-+	kvfree(mc);
- 	if (!new_mc)
- 		return UCODE_NFOUND;
- 
- 	ucode_patch_late = (struct microcode_intel *)new_mc;
- 	return UCODE_NEW;
++void load_ucode_amd_ap(unsigned int cpuid_1_eax)
++{
++	unsigned int cpu = smp_processor_id();
 +
-+fail:
-+	kvfree(mc);
-+	kvfree(new_mc);
-+	return UCODE_ERROR;
- }
- 
- static bool is_blacklisted(unsigned int cpu)
-@@ -652,9 +654,9 @@ static enum ucode_state request_microcod
- static void finalize_late_load(int result)
++	ucode_cpu_info[cpu].cpu_sig.sig = cpuid_1_eax;
++	apply_microcode_amd(cpu);
++}
++
+ static size_t install_equiv_cpu_table(const u8 *buf, size_t buf_size)
  {
- 	if (!result)
--		save_microcode_patch(ucode_patch_late);
--
--	vfree(ucode_patch_late);
-+		update_ucode_pointer(ucode_patch_late);
-+	else
-+		kvfree(ucode_patch_late);
- 	ucode_patch_late = NULL;
+ 	u32 equiv_tbl_len;
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -154,7 +154,7 @@ void __init load_ucode_bsp(void)
+ 	if (intel)
+ 		load_ucode_intel_bsp();
+ 	else
+-		load_ucode_amd_early(cpuid_1_eax);
++		load_ucode_amd_bsp(cpuid_1_eax);
  }
  
+ void load_ucode_ap(void)
+@@ -173,7 +173,7 @@ void load_ucode_ap(void)
+ 		break;
+ 	case X86_VENDOR_AMD:
+ 		if (x86_family(cpuid_1_eax) >= 0x10)
+-			load_ucode_amd_early(cpuid_1_eax);
++			load_ucode_amd_ap(cpuid_1_eax);
+ 		break;
+ 	default:
+ 		break;
+@@ -494,15 +494,6 @@ static struct syscore_ops mc_syscore_ops
+ 	.resume	= microcode_bsp_resume,
+ };
+ 
+-static int mc_cpu_starting(unsigned int cpu)
+-{
+-	enum ucode_state err = microcode_ops->apply_microcode(cpu);
+-
+-	pr_debug("%s: CPU%d, err: %d\n", __func__, cpu, err);
+-
+-	return err == UCODE_ERROR;
+-}
+-
+ static int mc_cpu_online(unsigned int cpu)
+ {
+ 	struct device *dev = get_cpu_device(cpu);
+@@ -590,8 +581,6 @@ static int __init microcode_init(void)
+ 	schedule_on_each_cpu(setup_online_cpu);
+ 
+ 	register_syscore_ops(&mc_syscore_ops);
+-	cpuhp_setup_state_nocalls(CPUHP_AP_MICROCODE_LOADER, "x86/microcode:starting",
+-				  mc_cpu_starting, NULL);
+ 	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "x86/microcode:online",
+ 				  mc_cpu_online, mc_cpu_down_prep);
+ 
+--- a/arch/x86/kernel/cpu/microcode/internal.h
++++ b/arch/x86/kernel/cpu/microcode/internal.h
+@@ -91,7 +91,6 @@ extern bool initrd_gone;
+ #ifdef CONFIG_CPU_SUP_AMD
+ void load_ucode_amd_bsp(unsigned int family);
+ void load_ucode_amd_ap(unsigned int family);
+-void load_ucode_amd_early(unsigned int cpuid_1_eax);
+ int save_microcode_in_initrd_amd(unsigned int family);
+ void reload_ucode_amd(unsigned int cpu);
+ struct microcode_ops *init_amd_microcode(void);
+@@ -99,7 +98,6 @@ void exit_amd_microcode(void);
+ #else /* CONFIG_CPU_SUP_AMD */
+ static inline void load_ucode_amd_bsp(unsigned int family) { }
+ static inline void load_ucode_amd_ap(unsigned int family) { }
+-static inline void load_ucode_amd_early(unsigned int family) { }
+ static inline int save_microcode_in_initrd_amd(unsigned int family) { return -EINVAL; }
+ static inline void reload_ucode_amd(unsigned int cpu) { }
+ static inline struct microcode_ops *init_amd_microcode(void) { return NULL; }
 
 
