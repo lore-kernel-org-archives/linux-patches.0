@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A7B256C7C;
-	Wed,  5 Mar 2025 18:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11C22528E4;
+	Wed,  5 Mar 2025 18:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198757; cv=none; b=m4f5SekbVtDeM/pxu2uAQLfzKB4hHj2MBuN+faWEMGsVHBijxyES0A/EnzfFkOk8o9jIq4WWy5TAeydwgrERHlBOmaVzrxmqMgyhDazS0sdYI4IcMwosfOT6Qy4H5cIocml9lk9MUkkWmv7wDcAAjAAOFpRygrRk83mqL3KEgOE=
+	t=1741198760; cv=none; b=pIhZ1U7WnDuD6WPldjX9I3Z1sbLTfSiGLnAhIo4Ic5fNyrx7HC4UZ1S98Ud5Dqe6xcDaGPnZJHffykaICbayhaTSkCi+5/2a3/bjPZq1wZbgJEY2ZsDBm/Q62EM84vrktoMdaIzMF3p9gbriKtQmK1vJ+V6rgLG3DcNgse6++9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198757; c=relaxed/simple;
-	bh=SOWRPqBKaoJx9Y6k3qeqrEIzhGOpAuIMvJNo1ZvD11w=;
+	s=arc-20240116; t=1741198760; c=relaxed/simple;
+	bh=l+sxxI1l4YnmIiSY+R+VF2QSnMXYjhvANKmzs3xnh+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKVXbFWuwQmhWlSC1v+eMJEx254k1d8wmF5jC94wekajgO1zXjrEgOxgstKVwUdHRypu4Zt1Y/+Eoipruel45Kvf6gdf3WS6/qDiN6lBZXSi49l9mnsSw7HVNCkXI+YZ5qIleRCdOohtVnatmUdyeUI2sK9OStGjn4Es1j1hSGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkGhoOOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lkitv99EVNhhlMZIdQuiTyed2GMF5/5pYlYkltp3KmlheLX7VgDQbqmMyWxoL1Xq0ew01kfzAZ0tYpcD0PyaF/ZZpJGkm6PShnEFcAIlRXyiB1Ca0YDnpntnwP+288uXGSAL+ktwVknigHnQeeMSr+VHt17xijfuqwd+HR/Zg+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1bidmEc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkGhoOOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C80C4CED1;
-	Wed,  5 Mar 2025 18:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1bidmEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CB8C4CED1;
+	Wed,  5 Mar 2025 18:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198757;
-	bh=SOWRPqBKaoJx9Y6k3qeqrEIzhGOpAuIMvJNo1ZvD11w=;
+	s=korg; t=1741198760;
+	bh=l+sxxI1l4YnmIiSY+R+VF2QSnMXYjhvANKmzs3xnh+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkGhoOOFbGJL6K5oIydK+90JJP7rxqTKtCE+XRKJtCaajhAEVYvnaH5uenSq40ZmY
-	 qrkTc3DS/RaESsCg6Z5ZtRG1PJorM0vTAOScWHkamKJ9Olv3+VGbkYYjSs0zQwc7Tp
-	 tZ57w88hZxfF9r2/ejOv6MybuvOXc6xDd15v3pXk=
+	b=p1bidmEc2RMdihJhSbSLVh7mwcKo7qIHjDKt08+Rpq5Dx9kT6kOxwfdXvxRVNTquD
+	 jg9GkyZJlQVARVVvA6K+cROkiygZRLphMGJYHxoY7CdnOZckA8BQH6rMZzXBB2gTkP
+	 L+sAXAAirdfuKxZbg464S5HVd1nb120LHOKALdqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milan Broz <gmazyland@gmail.com>,
+	Ken Raeburn <raeburn@redhat.com>,
+	Matthew Sakai <msakai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.13 138/157] dm-integrity: Avoid divide by zero in table status in Inline mode
-Date: Wed,  5 Mar 2025 18:49:34 +0100
-Message-ID: <20250305174510.848520007@linuxfoundation.org>
+Subject: [PATCH 6.13 139/157] dm vdo: add missing spin_lock_init
+Date: Wed,  5 Mar 2025 18:49:35 +0100
+Message-ID: <20250305174510.888161154@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -50,59 +51,28 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan Broz <gmazyland@gmail.com>
+From: Ken Raeburn <raeburn@redhat.com>
 
-commit 7fb39882b20c98a9a393c244c86b56ef6933cff8 upstream.
+commit 36e1b81f599a093ec7477e4593e110104adcfb96 upstream.
 
-In Inline mode, the journal is unused, and journal_sectors is zero.
-
-Calculating the journal watermark requires dividing by journal_sectors,
-which should be done only if the journal is configured.
-
-Otherwise, a simple table query (dmsetup table) can cause OOPS.
-
-This bug did not show on some systems, perhaps only due to
-compiler optimization.
-
-On my 32-bit testing machine, this reliably crashes with the following:
-
- : Oops: divide error: 0000 [#1] PREEMPT SMP
- : CPU: 0 UID: 0 PID: 2450 Comm: dmsetup Not tainted 6.14.0-rc2+ #959
- : EIP: dm_integrity_status+0x2f8/0xab0 [dm_integrity]
- ...
-
-Signed-off-by: Milan Broz <gmazyland@gmail.com>
+Signed-off-by: Ken Raeburn <raeburn@redhat.com>
+Signed-off-by: Matthew Sakai <msakai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: fb0987682c62 ("dm-integrity: introduce the Inline mode")
-Cc: stable@vger.kernel.org # 6.11+
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/dm-vdo/dedupe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3790,10 +3790,6 @@ static void dm_integrity_status(struct d
- 		break;
+--- a/drivers/md/dm-vdo/dedupe.c
++++ b/drivers/md/dm-vdo/dedupe.c
+@@ -2178,6 +2178,7 @@ static int initialize_index(struct vdo *
  
- 	case STATUSTYPE_TABLE: {
--		__u64 watermark_percentage = (__u64)(ic->journal_entries - ic->free_sectors_threshold) * 100;
--
--		watermark_percentage += ic->journal_entries / 2;
--		do_div(watermark_percentage, ic->journal_entries);
- 		arg_count = 3;
- 		arg_count += !!ic->meta_dev;
- 		arg_count += ic->sectors_per_block != 1;
-@@ -3826,6 +3822,10 @@ static void dm_integrity_status(struct d
- 		DMEMIT(" interleave_sectors:%u", 1U << ic->sb->log2_interleave_sectors);
- 		DMEMIT(" buffer_sectors:%u", 1U << ic->log2_buffer_sectors);
- 		if (ic->mode == 'J') {
-+			__u64 watermark_percentage = (__u64)(ic->journal_entries - ic->free_sectors_threshold) * 100;
-+
-+			watermark_percentage += ic->journal_entries / 2;
-+			do_div(watermark_percentage, ic->journal_entries);
- 			DMEMIT(" journal_watermark:%u", (unsigned int)watermark_percentage);
- 			DMEMIT(" commit_time:%u", ic->autocommit_msec);
- 		}
+ 	vdo_set_dedupe_index_timeout_interval(vdo_dedupe_index_timeout_interval);
+ 	vdo_set_dedupe_index_min_timer_interval(vdo_dedupe_index_min_timer_interval);
++	spin_lock_init(&zones->lock);
+ 
+ 	/*
+ 	 * Since we will save up the timeouts that would have been reported but were ratelimited,
 
 
