@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DC6481DD;
-	Wed,  5 Mar 2025 17:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB49481DD;
+	Wed,  5 Mar 2025 17:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197268; cv=none; b=A3B+vF151xNQP8FEKHgh1GerrFrAsjCyYwFkqsoLNoTZOQ0oIVMdn7X2zA9rqU8FVm6jpSGJJEJRkEDnAHlnTY3O8sXxmoMrCUZvEOsuT9AYo9jkF0Nb8N2MVil70KFQKx05nFdewK8LY3+oS9FgmIdzZXR1rQaUwyETB+kPmLQ=
+	t=1741197272; cv=none; b=PX+gDUB5hLdE6Z64He7/qTClo4Vk0P3g221U5R7qrfriXgWVtzMAjsK2TcrNGLZae123F8NPsPOGtbS4DnZxTFzPQbovy3XkZHIGCOkksepZHnD7UIHGkuK7utXBsT+ipo7MRTpX9p5J+iNPc8uZTX4cxJqWZ4ssgQHTGWI2qjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197268; c=relaxed/simple;
-	bh=Br8bwubP9IGwdhDFfun0AFMeybdO3UeEQqakFGqFPTc=;
+	s=arc-20240116; t=1741197272; c=relaxed/simple;
+	bh=6E3g8mB46wZwMn+JQmr/PWGy7+cDg+bWe6Jcj6MqK7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A77SIdIZx5ZHBSwXQ4ema6i+sv1PTT7GFy1Unhfu5qyFAH7astmaldWYQiFvtY4V4HfCx7LD1EPqYiHTBLTE/Ze+y7U7g8shw86i/EJIZf4ADBvf5x4W7nHNKJ8ud/L41oj7DcRHDG/O7nirxneItVN5vaHWgSznSaBJMryCb+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMhKI+1m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaI3Be3O2sD+FkpHIl2SabfuFl0ReWMkCoXMwsEbKmMSi6dtqbTQzaq0PA+lrffd54H/2S4I2sUV5yBJNiVsqor8UuxikIB+uve5hHwLJ6xz2ke4el6OPXaJ733oHIryvlQTlyimJZ++M3L9JHAQtXMTeBZXUS3NMBJbpGn9i0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJ5JFbJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMhKI+1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAFBC4CED1;
-	Wed,  5 Mar 2025 17:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJ5JFbJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DD9C4CED1;
+	Wed,  5 Mar 2025 17:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197268;
-	bh=Br8bwubP9IGwdhDFfun0AFMeybdO3UeEQqakFGqFPTc=;
+	s=korg; t=1741197271;
+	bh=6E3g8mB46wZwMn+JQmr/PWGy7+cDg+bWe6Jcj6MqK7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMhKI+1mzr+UNN8i8dkb7aue90/50xaO2k5ZicL2CZuzCUdULEAlkG2SkmiKqeQss
-	 iMAsZyPuHJMkwtvFtfTUnS1OCK6dYwsOzztiYD7Ibc+tfJuAwHYX7l+wj5vyTbxNhg
-	 RnNYioOCp97o0Fyc7oq2sbtj+hGr/Nb3JnOD0Wc4=
+	b=mJ5JFbJCIdosO2kzDMh94Y1Y8uEV31/l1CAc2FlbRZQaid7SFG9k6mFOaxLgBZtUg
+	 J3f/2E7O5McUy8Bdv5gOZRZij00Ff2VSufzGf9UggHBc2mwlRbdkow+0aLr1EsuF/E
+	 o1A9t9yQtRNK98im9AyN21T3BHCdrsmtYkSKFGvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 096/176] netfilter: allow exp not to be removed in nf_ct_find_expectation
-Date: Wed,  5 Mar 2025 18:47:45 +0100
-Message-ID: <20250305174509.316626694@linuxfoundation.org>
+	Aharon Landau <aharonl@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 097/176] RDMA/mlx5: Dont keep umrable page_shift in cache entries
+Date: Wed,  5 Mar 2025 18:47:46 +0100
+Message-ID: <20250305174509.358007400@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,89 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Aharon Landau <aharonl@nvidia.com>
 
-commit 4914109a8e1e494c6aa9852f9e84ec77a5fc643f upstream.
+[ Upstream commit a2a88b8e22d1b202225d0e40b02ad068afab2ccb ]
 
-Currently nf_conntrack_in() calling nf_ct_find_expectation() will
-remove the exp from the hash table. However, in some scenario, we
-expect the exp not to be removed when the created ct will not be
-confirmed, like in OVS and TC conntrack in the following patches.
+mkc.log_page_size can be changed using UMR. Therefore, don't treat it as a
+cache entry property.
 
-This patch allows exp not to be removed by setting IPS_CONFIRMED
-in the status of the tmpl.
+Removing it from struct mlx5_cache_ent.
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+All cache mkeys will be created with default PAGE_SHIFT, and updated with
+the needed page_shift using UMR when passing them to a user.
+
+Link: https://lore.kernel.org/r/20230125222807.6921-2-michaelgur@nvidia.com
+Signed-off-by: Aharon Landau <aharonl@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: d97505baea64 ("RDMA/mlx5: Fix the recovery flow of the UMR QP")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_expect.h |    2 +-
- net/netfilter/nf_conntrack_core.c           |    2 +-
- net/netfilter/nf_conntrack_expect.c         |    4 ++--
- net/netfilter/nft_ct.c                      |    2 ++
- 4 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h | 1 -
+ drivers/infiniband/hw/mlx5/mr.c      | 3 +--
+ drivers/infiniband/hw/mlx5/odp.c     | 2 --
+ 3 files changed, 1 insertion(+), 5 deletions(-)
 
---- a/include/net/netfilter/nf_conntrack_expect.h
-+++ b/include/net/netfilter/nf_conntrack_expect.h
-@@ -100,7 +100,7 @@ nf_ct_expect_find_get(struct net *net,
- struct nf_conntrack_expect *
- nf_ct_find_expectation(struct net *net,
- 		       const struct nf_conntrack_zone *zone,
--		       const struct nf_conntrack_tuple *tuple);
-+		       const struct nf_conntrack_tuple *tuple, bool unlink);
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 0ef347e91ffeb..10c87901da27c 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -759,7 +759,6 @@ struct mlx5_cache_ent {
+ 	char                    name[4];
+ 	u32                     order;
+ 	u32			access_mode;
+-	u32			page;
+ 	unsigned int		ndescs;
  
- void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
- 				u32 portid, int report);
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1770,7 +1770,7 @@ init_conntrack(struct net *net, struct n
- 	cnet = nf_ct_pernet(net);
- 	if (cnet->expect_count) {
- 		spin_lock_bh(&nf_conntrack_expect_lock);
--		exp = nf_ct_find_expectation(net, zone, tuple);
-+		exp = nf_ct_find_expectation(net, zone, tuple, !tmpl || nf_ct_is_confirmed(tmpl));
- 		if (exp) {
- 			pr_debug("expectation arrives ct=%p exp=%p\n",
- 				 ct, exp);
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -171,7 +171,7 @@ EXPORT_SYMBOL_GPL(nf_ct_expect_find_get)
- struct nf_conntrack_expect *
- nf_ct_find_expectation(struct net *net,
- 		       const struct nf_conntrack_zone *zone,
--		       const struct nf_conntrack_tuple *tuple)
-+		       const struct nf_conntrack_tuple *tuple, bool unlink)
- {
- 	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
- 	struct nf_conntrack_expect *i, *exp = NULL;
-@@ -211,7 +211,7 @@ nf_ct_find_expectation(struct net *net,
- 		     !refcount_inc_not_zero(&exp->master->ct_general.use)))
- 		return NULL;
+ 	u8 disabled:1;
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index b81b03aa2a629..53fadd6edb68d 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -297,7 +297,7 @@ static void set_cache_mkc(struct mlx5_cache_ent *ent, void *mkc)
  
--	if (exp->flags & NF_CT_EXPECT_PERMANENT) {
-+	if (exp->flags & NF_CT_EXPECT_PERMANENT || !unlink) {
- 		refcount_inc(&exp->use);
- 		return exp;
- 	} else if (del_timer(&exp->timeout)) {
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -272,6 +272,7 @@ static void nft_ct_set_zone_eval(const s
- 			regs->verdict.code = NF_DROP;
- 			return;
- 		}
-+		__set_bit(IPS_CONFIRMED_BIT, &ct->status);
- 	}
+ 	MLX5_SET(mkc, mkc, translations_octword_size,
+ 		 get_mkc_octo_size(ent->access_mode, ent->ndescs));
+-	MLX5_SET(mkc, mkc, log_page_size, ent->page);
++	MLX5_SET(mkc, mkc, log_page_size, PAGE_SHIFT);
+ }
  
- 	nf_ct_set(skb, ct, IP_CT_NEW);
-@@ -378,6 +379,7 @@ static bool nft_ct_tmpl_alloc_pcpu(void)
- 			return false;
- 		}
+ /* Asynchronously schedule new MRs to be populated in the cache. */
+@@ -765,7 +765,6 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 		if (ent->order > mkey_cache_max_order(dev))
+ 			continue;
  
-+		__set_bit(IPS_CONFIRMED_BIT, &tmp->status);
- 		per_cpu(nft_ct_pcpu_template, cpu) = tmp;
- 	}
+-		ent->page = PAGE_SHIFT;
+ 		ent->ndescs = 1 << ent->order;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
+ 		if ((dev->mdev->profile.mask & MLX5_PROF_MASK_MR_CACHE) &&
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 87fbee8061003..a5c9baec8be85 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1598,14 +1598,12 @@ void mlx5_odp_init_mkey_cache_entry(struct mlx5_cache_ent *ent)
  
+ 	switch (ent->order - 2) {
+ 	case MLX5_IMR_MTT_CACHE_ENTRY:
+-		ent->page = PAGE_SHIFT;
+ 		ent->ndescs = MLX5_IMR_MTT_ENTRIES;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_MTT;
+ 		ent->limit = 0;
+ 		break;
+ 
+ 	case MLX5_IMR_KSM_CACHE_ENTRY:
+-		ent->page = MLX5_KSM_PAGE_SHIFT;
+ 		ent->ndescs = mlx5_imr_ksm_entries;
+ 		ent->access_mode = MLX5_MKC_ACCESS_MODE_KSM;
+ 		ent->limit = 0;
+-- 
+2.39.5
+
 
 
