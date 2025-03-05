@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21D251785;
-	Wed,  5 Mar 2025 18:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E29C24887A;
+	Wed,  5 Mar 2025 18:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198180; cv=none; b=MmLq9RgdC/WNzn4q80qJDUaXOM1aTACjCBkxxg4ehnZSWCLR2hiXrLXYm22dY56yDuXd0jEn1Orq/W8mU9vat8URT65/npFMMAM+zozAKxi6cc1q5De4FUiTbC0nawX0k4SN7q8m02ZJ3VM+3KVx2tPqDTeAe6S9pGVUq7rUAho=
+	t=1741198183; cv=none; b=UiK6LrXOp5KEjREYPwz0rnrM2aZ8f2Zls7koGHNm8k1P4oUxndmyHXveKlu5j5RWpiirhlwG1qNgJFJo4Dtqp4PsFnd2l+HW4nl/NiqThp2dv6K7TwKlX16Y1HLB2lnqNvJAatoKQx6zXsKrs/599EVVTVwRZoy5EJW3FXWTSQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198180; c=relaxed/simple;
-	bh=upxf7/R7plvCHL4kq005/f5wtvGwqzYj51Lff1ZfFco=;
+	s=arc-20240116; t=1741198183; c=relaxed/simple;
+	bh=l1HYFf9StVRhduSejHgkm/sepkYzIp+n3Kb9sCt4VVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QF3MVU7Z/1CpCAjLVCQhevNG52I+ozo8zMRE8enH+dyLX+VQynyNYtevz0y+eB96cVqHNsSvUl+xXsoFTunC+XFTVE066NUCmFUYxyXNqreA8VXo6Gj5zhorHhK/VPO36tosHqPv6d7NjW2zv0YHjPtOI5MAmZMNa+TGEEL6smM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ho5L0bzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThihXgesnS9rfxs3YhtZxQubNod+ide3vcKdTkq5qe2ZHmeu1Z1hv/+12JowzyMxdsbFWZWTpdwgYhPKhsMnOyZCILiz9a2m76yBmurxRemYvKN7RXNr4h1wnjm3EfXaiPAW1jdJ3lvE4TZKLu0Adt8CYBzOATsun08wbliiraM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsniSFxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ho5L0bzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134E7C4CED1;
-	Wed,  5 Mar 2025 18:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsniSFxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB68DC4CED1;
+	Wed,  5 Mar 2025 18:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198180;
-	bh=upxf7/R7plvCHL4kq005/f5wtvGwqzYj51Lff1ZfFco=;
+	s=korg; t=1741198183;
+	bh=l1HYFf9StVRhduSejHgkm/sepkYzIp+n3Kb9sCt4VVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ho5L0bzQY98tgfSFMIgwIP/obaajAyFxDUbcGHbYb6I9eHdP5sQn35jp05nd35WMp
-	 i+j2FVEGfLjmlYXXf7OI1bvaPWsDTJYQ9VnNVy+t2ZemffDtrG3usC2rFGpd1Vs/ME
-	 1WHon7/oYt8KBo+13yBYlGjMlUhq/sz6APAhEd/8=
+	b=RsniSFxN5L0iRNwggaILngp045CAPnTaijWITfmBw6NRI9bCHkJuWA3jRmVxVNVMC
+	 XNgn60yRTY0wFJUSkhJErsrGY4qP0Mw4Xidc6TKBCMyg9CGz+il1gKrD6bQtJBACe4
+	 uMiooxUsyuhyUqqnhPvQVtLDtd5ITywLyb7wNNzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.12 092/150] perf/core: Fix low freq setting via IOC_PERIOD
-Date: Wed,  5 Mar 2025 18:48:41 +0100
-Message-ID: <20250305174507.506575950@linuxfoundation.org>
+	Mingcong Bai <jeffbai@aosc.io>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 093/150] drm/xe/regs: remove a duplicate definition for RING_CTL_SIZE(size)
+Date: Wed,  5 Mar 2025 18:48:42 +0100
+Message-ID: <20250305174507.544314012@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,59 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-commit 0d39844150546fa1415127c5fbae26db64070dd3 upstream.
+commit f2ba0cf1ca32e075617813de98c826ab55d57f11 upstream.
 
-A low attr::freq value cannot be set via IOC_PERIOD on some platforms.
+Commit b79e8fd954c4 ("drm/xe: Remove dependency on intel_engine_regs.h")
+introduced an internal set of engine registers, however, as part of this
+change, it has also introduced two duplicate `define' lines for
+`RING_CTL_SIZE(size)'. This commit was introduced to the tree in v6.8-rc1.
 
-The perf_event_check_period() introduced in:
+While this is harmless as the definitions did not change, so no compiler
+warning was observed.
 
-  81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
+Drop this line anyway for the sake of correctness.
 
-was intended to check the period, rather than the frequency.
-A low frequency may be mistakenly rejected by limit_period().
-
-Fix it.
-
-Fixes: 81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250117151913.3043942-2-kan.liang@linux.intel.com
-Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
+Cc: stable@vger.kernel.org # v6.8-rc1+
+Fixes: b79e8fd954c4 ("drm/xe: Remove dependency on intel_engine_regs.h")
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250225073104.865230-1-jeffbai@aosc.io
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 6b68c4542ffecc36087a9e14db8fc990c88bb01b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_engine_regs.h |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5976,14 +5976,15 @@ static int _perf_event_period(struct per
- 	if (!value)
- 		return -EINVAL;
+--- a/drivers/gpu/drm/xe/regs/xe_engine_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+@@ -53,7 +53,6 @@
  
--	if (event->attr.freq && value > sysctl_perf_event_sample_rate)
--		return -EINVAL;
--
--	if (perf_event_check_period(event, value))
--		return -EINVAL;
--
--	if (!event->attr.freq && (value & (1ULL << 63)))
--		return -EINVAL;
-+	if (event->attr.freq) {
-+		if (value > sysctl_perf_event_sample_rate)
-+			return -EINVAL;
-+	} else {
-+		if (perf_event_check_period(event, value))
-+			return -EINVAL;
-+		if (value & (1ULL << 63))
-+			return -EINVAL;
-+	}
+ #define RING_CTL(base)				XE_REG((base) + 0x3c)
+ #define   RING_CTL_SIZE(size)			((size) - PAGE_SIZE) /* in bytes -> pages */
+-#define   RING_CTL_SIZE(size)			((size) - PAGE_SIZE) /* in bytes -> pages */
  
- 	event_function_call(event, __perf_event_period, &value);
+ #define RING_START_UDW(base)			XE_REG((base) + 0x48)
  
 
 
