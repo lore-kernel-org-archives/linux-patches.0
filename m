@@ -1,33 +1,33 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0125487E
-	for <patches@lists.linux.dev>; Wed,  5 Mar 2025 19:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D17D255229;
+	Wed,  5 Mar 2025 20:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741203481; cv=none; b=EInZm/jUo8Js73ZFSknf5YN5muiUUNIfbR5ezJ9T9mA1avLwmLdvEdksWSe2rmQau7rXYtIIiACoEHgHVykURanjn6kSbNaNb7EGXOpRW6GO5owpHyDGafTZ3Yo6ht8g9oYc4Gc76f3lnl8tErds8eItBcugerX5/wcC/5+vahU=
+	t=1741205586; cv=none; b=uDM7S2v0eZckVTGK4UK75YDzSDC38J8kgVb0ybOoURam1NyhhaOvLtWEPS3VfqvmuD/40eJMbPw21f90yvTJHKjnhD751Gdoz1myBA2A9j011fci5h+jfe209zeWokEOY7waIwGlzGCc1u0DQxHG/Ean6nn0N7tIJk7ivbezLdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741203481; c=relaxed/simple;
-	bh=YaeXAIalc5DmxyKI0ax248xGq1aSY2e1Rppfasxvec0=;
+	s=arc-20240116; t=1741205586; c=relaxed/simple;
+	bh=hFo6rL+75WRubYu2f6ja0U/pMo0LSXFLvVGX6KuwvtM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mJ2brlAkMb9o8T/Zk9+TzoTIlJq8ThgpQGa4LBmcDYtgWKX4k7uqb+V+wW5y2hZ+54WzGWNIiWIUGoE7fiDr1doVileKO/L+i+R1GP0obrCiWglrRWFBcQUe52OZTC8n960o7NKJN/qATv1o9ziddL1Pmid3N779hJxhhxLaQ9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=Ygv6KX9z; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=MLEQnDadcekVK/KPL2IU6s1LnU8/WqNAkz38C7OKQGk4zWWGgHreoczUfNLOV7SJGBmR1E2sduA4f8hZ2xeiuNmfYUbjOMVdma4syxM26c8S6wwlyK7knnkT4sh03V0AY3q0m1+M7Z3vbvosiTmxKHhsPjEr1uAare7lbPwMe2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiqhWiXS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="Ygv6KX9z"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4865010382C18;
-	Wed,  5 Mar 2025 20:37:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1741203477; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=pfqBtTAyM0wNbUUeMeWy6C19KVMVCE7Zn0dvNPi44FY=;
-	b=Ygv6KX9ztc+yAMGd5LBvD38tYzNnuWy+d/ptEMM1kW9VsnSmJf1KzhP9+JOeyxRdhci4pW
-	c0w7sRYt0hI3D5JmZvLVYVgGI10cww8nP5/EGEvhse9ysN2opE2LBiC9cNulcyEEeCurft
-	5KaHzgHTLqrrQDJq1tlcYEOrGTBXaKgeIAX9wg2s4/AfT/Gree+hU5LqrTDMzO/SSf/2s7
-	5F6Or20X3fuQxbXzOFBPPDBzKf0peiSMERRX6VCt500OdA/WAf2TjuK7uHL26Qr4mg5Gbp
-	pZLWTkfa6hwFlW7LZAXbbu7HtrdueyY9cxoCMkFBwlrd2nJARuqzTJBTGXNhNA==
-Date: Wed, 5 Mar 2025 20:37:50 +0100
-From: Pavel Machek <pavel@denx.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiqhWiXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24B2C4CED1;
+	Wed,  5 Mar 2025 20:13:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741205586;
+	bh=hFo6rL+75WRubYu2f6ja0U/pMo0LSXFLvVGX6KuwvtM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oiqhWiXST//UvY/UvsYdMfpv5viv2p+Pj0amK1NnxWSR8UV6SsFSHp225SHGSxB9U
+	 6R/uz5LEPT8Zwn3q0j+gWy6UgO3MdOcj0wz7mdXSNfkCtYERFGGyeus5Qte6CZCeIY
+	 3OWvolhKVlszGy8G/UH15LSe+hGeHSstP57oWoBi/5FtCf4jZdCiE3ETvtecjLcJMk
+	 6f67bFzL1hL5V3/r+o8xLedPMs+vxgv9hfrRlBveTB+AXWKiluiJOPiwrG/ceNntHd
+	 P1sqnoKD7TmzQgTuT+IvfasOwwJzpdhWz8fakZTuasxuTc+QpeKY0DVbgO76FjfM1N
+	 4uHlJpJGzzCgQ==
+Date: Wed, 5 Mar 2025 20:12:59 +0000
+From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -35,56 +35,62 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/176] 6.1.130-rc1 review
-Message-ID: <Z8ioDomrJ9pcv4MW@duo.ucw.cz>
-References: <20250305174505.437358097@linuxfoundation.org>
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.13 000/157] 6.13.6-rc1 review
+Message-ID: <8433c362-1909-4a2e-b41f-c0f5677286d2@sirena.org.uk>
+References: <20250305174505.268725418@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="A/bYaBZRBTYrYPQ0"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YLIFX1f4k5OCHHnW"
 Content-Disposition: inline
-In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
+X-Cookie: Everybody gets free BORSCHT!
 
 
---A/bYaBZRBTYrYPQ0
-Content-Type: text/plain; charset=us-ascii
+--YLIFX1f4k5OCHHnW
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.130 release.
-> There are 176 patches in this series, all will be posted as a response
+On Wed, Mar 05, 2025 at 06:47:16PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.13.6 release.
+> There are 157 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-CIP testing did not find any problems here:
+The arm64 defconfig build is broken (KernelCI reported this initially):
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
+/build/stage/linux/arch/arm64/mm/hugetlbpage.c: In function =E2=80=98huge_p=
+tep_get_and_clear=E2=80=99:
+/build/stage/linux/arch/arm64/mm/hugetlbpage.c:397:35: error: =E2=80=98sz=
+=E2=80=99 undeclared (first use in this function); did you mean =E2=80=98s8=
+=E2=80=99?
+  397 |         ncontig =3D num_contig_ptes(sz, &pgsize);
+      |                                   ^~
+      |                                   s8
+/build/stage/linux/arch/arm64/mm/hugetlbpage.c:397:35: note: each undeclare=
+d identifier is reported only once for each function it appears in
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+The same issue affects 6.12.
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---A/bYaBZRBTYrYPQ0
+--YLIFX1f4k5OCHHnW
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ8ioDgAKCRAw5/Bqldv6
-8qerAJ9lpnQHt2XVKls1G/LcFTVRwpRUHQCfbp7qkY7Rq5GohWl0nJZQc0tgrqQ=
-=Ew1O
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmfIsEsACgkQJNaLcl1U
+h9AsLgf8C2dlr7m4HALKYeWi6j0Uq0E81SRFYyXjYFUiZgZDPdWD8Wfda4lmSdoP
+S2gflUW8yxBtTSyeZ2bnt6tkAstcoE2VSXk6ty7yzr/JrOjUwist/CQ28df6dPqk
+EJ9asij1GKgIoMYGY/pqbIlPWk8dX3fplQvkMeQgJnCx+TK76FMvxHp2Aj8iMD0m
+9YU0xlHJbonML5IBfluxY5dXzaD3GZ5TmMGsCgybDvBqxROiAsnF8x7kESkZXViU
+2sxmnyyZELY7cyZg++ZdvhoD9/Xh6rad6MhqOu2g7mO3GP8Aa6UOrxzWYsVk9wP4
+9dojnF88jighlPsNbS/blhNJwGeb6w==
+=PIVl
 -----END PGP SIGNATURE-----
 
---A/bYaBZRBTYrYPQ0--
+--YLIFX1f4k5OCHHnW--
