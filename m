@@ -1,56 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C731C6FFE;
-	Wed,  5 Mar 2025 17:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD23B2528FD;
+	Wed,  5 Mar 2025 17:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197494; cv=none; b=sf494lFG57a84BXWmRGyyWAEjshU120NahyhUjbk9zOe1vT1KbUOeEhVbTMrXS6S7gwAEVp4g+ymkABl3RK+JTASKVPhgxsijF8Sw7+Zkgs8ORLoyBMzdbP11s0C9vE6dvKvt/E/q2o6SGtGNo6e1bq3MaTyuH9w241/wZl4muE=
+	t=1741197496; cv=none; b=T9Bq+PO+3Z32NMe3+I52EyAvNb6XkwUhHDBlE482fxqNCpelEjNRFcbuaiQPOQyOuPamPuADLY5f9Wa2cn+l4QzLGaVhrEXDaQGvga3jiuT0G/S7CvOkfVfncPXtgqL+ft/aXcVXB0wUpq78EzcIJd3aofm5dBWyvLZ0PEZQpnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197494; c=relaxed/simple;
-	bh=/6xHPLL6GhXalpIRi3UgVjQ+8XkBGM2Q/FIQre3NnhY=;
+	s=arc-20240116; t=1741197496; c=relaxed/simple;
+	bh=fUtP1AMJbBHI4SBFrGLj1PzhR+HxYNk8R1xiTydFhBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COiSOGAfoD6CxUhCXsoOaJAyfkDTIb7+0GEwLHgaXoU/kKJF4p3VcVNYZOzph11RwWgMSS4jU1OUNB5hHamCkOdyv72wKCjOkVqhBaHCgf4bh1WR4qz0bqkfuXJ9khAZlPsKRGEqVsRfGfy2xYEmiZ3qUAeKz59AN/m0uWU2c+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccXFIVh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWenjXvmTxp06d7yeD1LN/8mc+QYfBB43Xl1ecHGI3BG3v0uS55k3rlQifD1a6B7X0W6H4w0r3rJky6je50DdqpkSOlBfwcgadR7pXlxtiJ8p2kV66wInhplx4LZ0sYj3QKoCdEKjic0izj9KwW9DIAKO2PNLBWwIFTdRQXhMJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eAm9nfO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccXFIVh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD9BC4CED1;
-	Wed,  5 Mar 2025 17:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eAm9nfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55468C4CEE9;
+	Wed,  5 Mar 2025 17:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197493;
-	bh=/6xHPLL6GhXalpIRi3UgVjQ+8XkBGM2Q/FIQre3NnhY=;
+	s=korg; t=1741197496;
+	bh=fUtP1AMJbBHI4SBFrGLj1PzhR+HxYNk8R1xiTydFhBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccXFIVh48eiBCWqpU+6gEsuWw7UWwZknfNWHJZ924RvmY4kw3/FnV5KYhnr/KarsS
-	 4MeCoEwqC1nUg4PKI8Oodpxrk8HzVSmrK03hL1EuYxmicUhsizfhptgPrzfYMOu16Q
-	 jcX4KRP3PIKfCWDg5feWUkXxSRV8YeJtZz6zpikI=
+	b=2eAm9nfOULzShMBZf3r+EzxOKVTgnV/rTlibT6TcBecdTK3o/ZyBGbh5q+Dn12nSH
+	 YAEnaeh04HCcYrudT9YSYGz9GkCgS5H+gjbdKKpuybKRjIM1oS6Z4HkLPmq1TCYsf0
+	 6XlH/pqZDPw9QFuC1ugVLPwtiCSk1PLGvrQiAEWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Matthew Wilcox <willy@infradead.org>,
-	Jan Kara <jack@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Christoph Hellwig <hch@lst.de>,
+	Wang Hai <wanghai38@huawei.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/176] mm: Dont pin ZERO_PAGE in pin_user_pages()
-Date: Wed,  5 Mar 2025 18:48:32 +0100
-Message-ID: <20250305174511.186748725@linuxfoundation.org>
+Subject: [PATCH 6.1 134/176] tcp: Defer ts_recent changes until req is owned
+Date: Wed,  5 Mar 2025 18:48:23 +0100
+Message-ID: <20250305174510.826100177@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -69,202 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit c8070b78751955e59b42457b974bea4a4fe00187 ]
+[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
 
-Make pin_user_pages*() leave a ZERO_PAGE unpinned if it extracts a pointer
-to it from the page tables and make unpin_user_page*() correspondingly
-ignore a ZERO_PAGE when unpinning.  We don't want to risk overrunning a
-zero page's refcount as we're only allowed ~2 million pins on it -
-something that userspace can conceivably trigger.
+Recently a bug was discovered where the server had entered TCP_ESTABLISHED
+state, but the upper layers were not notified.
 
-Add a pair of functions to test whether a page or a folio is a ZERO_PAGE.
+The same 5-tuple packet may be processed by different CPUSs, so two
+CPUs may receive different ack packets at the same time when the
+state is TCP_NEW_SYN_RECV.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Christoph Hellwig <hch@infradead.org>
-cc: David Hildenbrand <david@redhat.com>
-cc: Lorenzo Stoakes <lstoakes@gmail.com>
-cc: Andrew Morton <akpm@linux-foundation.org>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Al Viro <viro@zeniv.linux.org.uk>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: Jan Kara <jack@suse.cz>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Jason Gunthorpe <jgg@nvidia.com>
-cc: Logan Gunthorpe <logang@deltatee.com>
-cc: Hillf Danton <hdanton@sina.com>
-cc: Christian Brauner <brauner@kernel.org>
-cc: Linus Torvalds <torvalds@linux-foundation.org>
-cc: linux-fsdevel@vger.kernel.org
-cc: linux-block@vger.kernel.org
-cc: linux-kernel@vger.kernel.org
-cc: linux-mm@kvack.org
-Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/20230526214142.958751-2-dhowells@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: bddf10d26e6e ("uprobes: Reject the shared zeropage in uprobe_write_opcode()")
+In that case, req->ts_recent in tcp_check_req may be changed concurrently,
+which will probably cause the newsk's ts_recent to be incorrectly large.
+So that tcp_validate_incoming will fail. At this point, newsk will not be
+able to enter the TCP_ESTABLISHED.
+
+cpu1                                    cpu2
+tcp_check_req
+                                        tcp_check_req
+ req->ts_recent = rcv_tsval = t1
+                                         req->ts_recent = rcv_tsval = t2
+
+ syn_recv_sock
+  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
+tcp_child_process
+ tcp_rcv_state_process
+  tcp_validate_incoming
+   tcp_paws_check
+    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
+        // t2 - t1 > paws_win, failed
+                                        tcp_v4_do_rcv
+                                         tcp_rcv_state_process
+                                         // TCP_ESTABLISHED
+
+The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
+the newsk into the TCP_ESTABLISHED state, but at this point it is no
+longer possible to notify the upper layer application. A notification
+mechanism could be added here, but the fix is more complex, so the
+current fix is used.
+
+In tcp_check_req, req->ts_recent is used to assign a value to
+tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
+and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
+req fixes this bug.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/core-api/pin_user_pages.rst |  6 +++++
- include/linux/mm.h                        | 26 +++++++++++++++++--
- mm/gup.c                                  | 31 ++++++++++++++++++++++-
- 3 files changed, 60 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_minisocks.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/core-api/pin_user_pages.rst b/Documentation/core-api/pin_user_pages.rst
-index b18416f4500fe..7995ce2b9676a 100644
---- a/Documentation/core-api/pin_user_pages.rst
-+++ b/Documentation/core-api/pin_user_pages.rst
-@@ -113,6 +113,12 @@ pages:
- This also leads to limitations: there are only 31-10==21 bits available for a
- counter that increments 10 bits at a time.
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index c562cb965e742..bc94df0140bfd 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -735,12 +735,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
  
-+* Because of that limitation, special handling is applied to the zero pages
-+  when using FOLL_PIN.  We only pretend to pin a zero page - we don't alter its
-+  refcount or pincount at all (it is permanent, so there's no need).  The
-+  unpinning functions also don't do anything to a zero page.  This is
-+  transparent to the caller.
-+
- * Callers must specifically request "dma-pinned tracking of pages". In other
-   words, just calling get_user_pages() will not suffice; a new set of functions,
-   pin_user_page() and related, must be used.
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 971186f0b7b07..03357c196e0ba 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -1610,6 +1610,28 @@ static inline bool page_needs_cow_for_dma(struct vm_area_struct *vma,
- 	return page_maybe_dma_pinned(page);
- }
+ 	/* In sequence, PAWS is OK. */
  
-+/**
-+ * is_zero_page - Query if a page is a zero page
-+ * @page: The page to query
-+ *
-+ * This returns true if @page is one of the permanent zero pages.
-+ */
-+static inline bool is_zero_page(const struct page *page)
-+{
-+	return is_zero_pfn(page_to_pfn(page));
-+}
-+
-+/**
-+ * is_zero_folio - Query if a folio is a zero page
-+ * @folio: The folio to query
-+ *
-+ * This returns true if @folio is one of the permanent zero pages.
-+ */
-+static inline bool is_zero_folio(const struct folio *folio)
-+{
-+	return is_zero_page(&folio->page);
-+}
-+
- /* MIGRATE_CMA and ZONE_MOVABLE do not allow pin pages */
- #ifdef CONFIG_MIGRATION
- static inline bool is_longterm_pinnable_page(struct page *page)
-@@ -1620,8 +1642,8 @@ static inline bool is_longterm_pinnable_page(struct page *page)
- 	if (mt == MIGRATE_CMA || mt == MIGRATE_ISOLATE)
- 		return false;
- #endif
--	/* The zero page may always be pinned */
--	if (is_zero_pfn(page_to_pfn(page)))
-+	/* The zero page can be "pinned" but gets special handling. */
-+	if (is_zero_page(page))
- 		return true;
+-	/* TODO: We probably should defer ts_recent change once
+-	 * we take ownership of @req.
+-	 */
+-	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
+-		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
+-
+ 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
+ 		/* Truncate SYN, it is out of window starting
+ 		   at tcp_rsk(req)->rcv_isn + 1. */
+@@ -789,6 +783,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	if (!child)
+ 		goto listen_overflow;
  
- 	/* Coherent device memory must always allow eviction. */
-diff --git a/mm/gup.c b/mm/gup.c
-index e31d00443c4e6..b1daaa9d89aab 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -51,7 +51,8 @@ static inline void sanity_check_pinned_pages(struct page **pages,
- 		struct page *page = *pages;
- 		struct folio *folio = page_folio(page);
- 
--		if (!folio_test_anon(folio))
-+		if (is_zero_page(page) ||
-+		    !folio_test_anon(folio))
- 			continue;
- 		if (!folio_test_large(folio) || folio_test_hugetlb(folio))
- 			VM_BUG_ON_PAGE(!PageAnonExclusive(&folio->page), page);
-@@ -128,6 +129,13 @@ struct folio *try_grab_folio(struct page *page, int refs, unsigned int flags)
- 	else if (flags & FOLL_PIN) {
- 		struct folio *folio;
- 
-+		/*
-+		 * Don't take a pin on the zero page - it's not going anywhere
-+		 * and it is used in a *lot* of places.
-+		 */
-+		if (is_zero_page(page))
-+			return page_folio(page);
++	if (own_req && tmp_opt.saw_tstamp &&
++	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
++		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
 +
- 		/*
- 		 * Can't do FOLL_LONGTERM + FOLL_PIN gup fast path if not in a
- 		 * right zone, so fail and let the caller fall back to the slow
-@@ -177,6 +185,8 @@ struct folio *try_grab_folio(struct page *page, int refs, unsigned int flags)
- static void gup_put_folio(struct folio *folio, int refs, unsigned int flags)
- {
- 	if (flags & FOLL_PIN) {
-+		if (is_zero_folio(folio))
-+			return;
- 		node_stat_mod_folio(folio, NR_FOLL_PIN_RELEASED, refs);
- 		if (folio_test_large(folio))
- 			atomic_sub(refs, folio_pincount_ptr(folio));
-@@ -217,6 +227,13 @@ bool __must_check try_grab_page(struct page *page, unsigned int flags)
- 	if (flags & FOLL_GET)
- 		folio_ref_inc(folio);
- 	else if (flags & FOLL_PIN) {
-+		/*
-+		 * Don't take a pin on the zero page - it's not going anywhere
-+		 * and it is used in a *lot* of places.
-+		 */
-+		if (is_zero_page(page))
-+			return 0;
-+
- 		/*
- 		 * Similar to try_grab_folio(): be sure to *also*
- 		 * increment the normal page refcount field at least once,
-@@ -3149,6 +3166,9 @@ EXPORT_SYMBOL_GPL(get_user_pages_fast);
-  *
-  * FOLL_PIN means that the pages must be released via unpin_user_page(). Please
-  * see Documentation/core-api/pin_user_pages.rst for further details.
-+ *
-+ * Note that if a zero_page is amongst the returned pages, it will not have
-+ * pins in it and unpin_user_page() will not remove pins from it.
-  */
- int pin_user_pages_fast(unsigned long start, int nr_pages,
- 			unsigned int gup_flags, struct page **pages)
-@@ -3225,6 +3245,9 @@ EXPORT_SYMBOL_GPL(pin_user_pages_fast_only);
-  *
-  * FOLL_PIN means that the pages must be released via unpin_user_page(). Please
-  * see Documentation/core-api/pin_user_pages.rst for details.
-+ *
-+ * Note that if a zero_page is amongst the returned pages, it will not have
-+ * pins in it and unpin_user_page*() will not remove pins from it.
-  */
- long pin_user_pages_remote(struct mm_struct *mm,
- 			   unsigned long start, unsigned long nr_pages,
-@@ -3260,6 +3283,9 @@ EXPORT_SYMBOL(pin_user_pages_remote);
-  *
-  * FOLL_PIN means that the pages must be released via unpin_user_page(). Please
-  * see Documentation/core-api/pin_user_pages.rst for details.
-+ *
-+ * Note that if a zero_page is amongst the returned pages, it will not have
-+ * pins in it and unpin_user_page*() will not remove pins from it.
-  */
- long pin_user_pages(unsigned long start, unsigned long nr_pages,
- 		    unsigned int gup_flags, struct page **pages,
-@@ -3282,6 +3308,9 @@ EXPORT_SYMBOL(pin_user_pages);
-  * pin_user_pages_unlocked() is the FOLL_PIN variant of
-  * get_user_pages_unlocked(). Behavior is the same, except that this one sets
-  * FOLL_PIN and rejects FOLL_GET.
-+ *
-+ * Note that if a zero_page is amongst the returned pages, it will not have
-+ * pins in it and unpin_user_page*() will not remove pins from it.
-  */
- long pin_user_pages_unlocked(unsigned long start, unsigned long nr_pages,
- 			     struct page **pages, unsigned int gup_flags)
+ 	if (own_req && rsk_drop_req(req)) {
+ 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
+ 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
 -- 
 2.39.5
 
