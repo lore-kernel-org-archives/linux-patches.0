@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA56D2512D6;
-	Wed,  5 Mar 2025 18:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD0C1ACEDD;
+	Wed,  5 Mar 2025 18:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198123; cv=none; b=dxpqVlRpgOX/lCCDsvqtY0NmXdmeDsrWwWORcJvNvJyPSDVUHWqQ1TMjynuFF6nIiKDniw0yjqiM+7RF/ixTQS4bZMIn549ywDGYrz2Cg980jdDPnFeugm5IsO7vPtoLI7i81POArioSlSx2wAIIFaTxFMXPT6ha4OQNtwo3dc8=
+	t=1741198126; cv=none; b=Eq6Iu4bF++VQtd8EQ5f/Gli2jO4qE999JoQcteZw+AjcjauOwGXESilY4xg/4wcGBvhraJB/yrpb/ynQPWQ1XEfA+To6VI16HjkxMGwChyRiAxF/Vuei/PlhEFuBdIHKv7c9M8HrCfaHFZkeNy5kTrR1sFCCC7SrZYyRVjmZjds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198123; c=relaxed/simple;
-	bh=AyYO23ZaaEc46egISq9MNEJwlGwI4jx52P6d7KKucyo=;
+	s=arc-20240116; t=1741198126; c=relaxed/simple;
+	bh=BD4t53IrIWqMJSgQ9p75y1vonFjVDMgc/M7vHNTUX1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3Hz7uxQ3fWKKAlBLgLTlEVBmxONNDpG/OBN+sEJvm+qJ7s4/wshpTNXR6oSMquFYPMD2O2KNzP/AT3TVkfwZCj5R5/T9YoVeoO01r4GzIFENg/UEGLOwVxNIfv0kLaYLsJw/U1CQjPFlqu8yHbJ1QV+xaqweaYYf+tkAahtl4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpl0iXIQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFPCWoeKRVZW458fXVX1anRe0G5sZI3jCRWCMdjM3J1/56ge/YQYc7AdQcd6B8MmBj0hskXHj2HQUmAd323bHJ0m+JhhGV1cxBa5Ot/ajyauVWzGWvFEf+nmc0ezt+Vfct9yft3qY2BMGNxPvYzyruhO23N5vOQeI8ZFOQQfzHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cir5gRS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpl0iXIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8A0C4CED1;
-	Wed,  5 Mar 2025 18:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cir5gRS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDCFC4CED1;
+	Wed,  5 Mar 2025 18:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198123;
-	bh=AyYO23ZaaEc46egISq9MNEJwlGwI4jx52P6d7KKucyo=;
+	s=korg; t=1741198126;
+	bh=BD4t53IrIWqMJSgQ9p75y1vonFjVDMgc/M7vHNTUX1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpl0iXIQWlmh1CVmpcHEFKZyX2XbzMYoYlRDRiYx5xTAJbL36OhcU28giNwDCe8M3
-	 gyhTIfo2E/SYd6OJiEixpGDqqXlyXkAX9bm5NQrpGgq7lwpn0dBsRY0Qhro8CUG0hc
-	 A22HogjteAumGWK+YEXnwC6hU4VPWsFycNVvodIg=
+	b=cir5gRS9nHWre2pAATWoQW2DIVX56uJL2kzIFcdc3Nv7nAQ2D+izl5UdAHl/vBTEd
+	 l5684XEn1iyv9MxEjJkSFOiXVB5cir6m/YBntMImr5pFt9ItgTdsvonlKsWdg8u8lU
+	 H9znqmIcOruAX6oFnvx0T/MxNtbq4Ju12EWS6Lz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/150] drm/xe/oa: Move functions up so they can be reused for config ioctl
-Date: Wed,  5 Mar 2025 18:47:54 +0100
-Message-ID: <20250305174505.634288514@linuxfoundation.org>
+Subject: [PATCH 6.12 072/150] thermal: core: Move lists of thermal instances to trip descriptors
+Date: Wed,  5 Mar 2025 18:48:21 +0100
+Message-ID: <20250305174506.706497920@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -51,506 +51,457 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit cc4e6994d5a237ef38363e459ac83cf8ef7626ff ]
+[ Upstream commit 0dc23567c20639049ad57fd8cc2165ee9f493ab6 ]
 
-No code changes, only code movement so that functions used during stream
-open can be reused for the stream reconfiguration
-ioctl (DRM_XE_OBSERVATION_IOCTL_CONFIG).
+In almost all places where a thermal zone's list of thermal instances
+is walked, there is a check to match a specific trip point and it is
+walked in vain whenever there are no cooling devices associated with
+the given trip.
 
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-6-ashutosh.dixit@intel.com
-Stable-dep-of: 5bd566703e16 ("drm/xe/oa: Allow oa_exponent value of 0")
+To address this, store the lists of thermal instances in trip point
+descriptors instead of storing them in thermal zones and adjust all
+code using those lists accordingly.
+
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5522726.Sb9uPGUboI@rjwysocki.net
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Stable-dep-of: 0cde378a10c1 ("thermal: gov_power_allocator: Update total_weight on bind and cdev updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 458 ++++++++++++++++++-------------------
- 1 file changed, 229 insertions(+), 229 deletions(-)
+ drivers/thermal/gov_bang_bang.c       | 11 ++++----
+ drivers/thermal/gov_fair_share.c      | 16 ++++-------
+ drivers/thermal/gov_power_allocator.c | 40 +++++++++++++--------------
+ drivers/thermal/gov_step_wise.c       | 16 +++++------
+ drivers/thermal/thermal_core.c        | 33 ++++++++++++----------
+ drivers/thermal/thermal_core.h        |  5 ++--
+ drivers/thermal/thermal_helpers.c     |  5 ++--
+ 7 files changed, 62 insertions(+), 64 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index a54098c1a944a..dd541b62942f8 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -1091,6 +1091,235 @@ static int xe_oa_enable_metric_set(struct xe_oa_stream *stream)
- 	return xe_oa_emit_oa_config(stream, stream->oa_config);
+diff --git a/drivers/thermal/gov_bang_bang.c b/drivers/thermal/gov_bang_bang.c
+index 863e7a4272e66..b887e48e8c7e6 100644
+--- a/drivers/thermal/gov_bang_bang.c
++++ b/drivers/thermal/gov_bang_bang.c
+@@ -67,6 +67,7 @@ static void bang_bang_control(struct thermal_zone_device *tz,
+ 			      const struct thermal_trip *trip,
+ 			      bool crossed_up)
+ {
++	const struct thermal_trip_desc *td = trip_to_trip_desc(trip);
+ 	struct thermal_instance *instance;
+ 
+ 	lockdep_assert_held(&tz->lock);
+@@ -75,10 +76,8 @@ static void bang_bang_control(struct thermal_zone_device *tz,
+ 		thermal_zone_trip_id(tz, trip), trip->temperature,
+ 		tz->temperature, trip->hysteresis);
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-		if (instance->trip == trip)
+-			bang_bang_set_instance_target(instance, crossed_up);
+-	}
++	list_for_each_entry(instance, &td->thermal_instances, trip_node)
++		bang_bang_set_instance_target(instance, crossed_up);
  }
  
-+static int decode_oa_format(struct xe_oa *oa, u64 fmt, enum xe_oa_format_name *name)
-+{
-+	u32 counter_size = FIELD_GET(DRM_XE_OA_FORMAT_MASK_COUNTER_SIZE, fmt);
-+	u32 counter_sel = FIELD_GET(DRM_XE_OA_FORMAT_MASK_COUNTER_SEL, fmt);
-+	u32 bc_report = FIELD_GET(DRM_XE_OA_FORMAT_MASK_BC_REPORT, fmt);
-+	u32 type = FIELD_GET(DRM_XE_OA_FORMAT_MASK_FMT_TYPE, fmt);
-+	int idx;
-+
-+	for_each_set_bit(idx, oa->format_mask, __XE_OA_FORMAT_MAX) {
-+		const struct xe_oa_format *f = &oa->oa_formats[idx];
-+
-+		if (counter_size == f->counter_size && bc_report == f->bc_report &&
-+		    type == f->type && counter_sel == f->counter_select) {
-+			*name = idx;
-+			return 0;
-+		}
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int xe_oa_set_prop_oa_unit_id(struct xe_oa *oa, u64 value,
-+				     struct xe_oa_open_param *param)
-+{
-+	if (value >= oa->oa_unit_ids) {
-+		drm_dbg(&oa->xe->drm, "OA unit ID out of range %lld\n", value);
-+		return -EINVAL;
-+	}
-+	param->oa_unit_id = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_sample_oa(struct xe_oa *oa, u64 value,
-+				    struct xe_oa_open_param *param)
-+{
-+	param->sample = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_metric_set(struct xe_oa *oa, u64 value,
-+				     struct xe_oa_open_param *param)
-+{
-+	param->metric_set = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_oa_format(struct xe_oa *oa, u64 value,
-+				    struct xe_oa_open_param *param)
-+{
-+	int ret = decode_oa_format(oa, value, &param->oa_format);
-+
-+	if (ret) {
-+		drm_dbg(&oa->xe->drm, "Unsupported OA report format %#llx\n", value);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_oa_exponent(struct xe_oa *oa, u64 value,
-+				      struct xe_oa_open_param *param)
-+{
-+#define OA_EXPONENT_MAX 31
-+
-+	if (value > OA_EXPONENT_MAX) {
-+		drm_dbg(&oa->xe->drm, "OA timer exponent too high (> %u)\n", OA_EXPONENT_MAX);
-+		return -EINVAL;
-+	}
-+	param->period_exponent = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_disabled(struct xe_oa *oa, u64 value,
-+				   struct xe_oa_open_param *param)
-+{
-+	param->disabled = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_exec_queue_id(struct xe_oa *oa, u64 value,
-+					struct xe_oa_open_param *param)
-+{
-+	param->exec_queue_id = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_engine_instance(struct xe_oa *oa, u64 value,
-+					  struct xe_oa_open_param *param)
-+{
-+	param->engine_instance = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_no_preempt(struct xe_oa *oa, u64 value,
-+				struct xe_oa_open_param *param)
-+{
-+	param->no_preempt = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_num_syncs(struct xe_oa *oa, u64 value,
-+				    struct xe_oa_open_param *param)
-+{
-+	param->num_syncs = value;
-+	return 0;
-+}
-+
-+static int xe_oa_set_prop_syncs_user(struct xe_oa *oa, u64 value,
-+				     struct xe_oa_open_param *param)
-+{
-+	param->syncs_user = u64_to_user_ptr(value);
-+	return 0;
-+}
-+
-+typedef int (*xe_oa_set_property_fn)(struct xe_oa *oa, u64 value,
-+				     struct xe_oa_open_param *param);
-+static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
-+	[DRM_XE_OA_PROPERTY_OA_UNIT_ID] = xe_oa_set_prop_oa_unit_id,
-+	[DRM_XE_OA_PROPERTY_SAMPLE_OA] = xe_oa_set_prop_sample_oa,
-+	[DRM_XE_OA_PROPERTY_OA_METRIC_SET] = xe_oa_set_prop_metric_set,
-+	[DRM_XE_OA_PROPERTY_OA_FORMAT] = xe_oa_set_prop_oa_format,
-+	[DRM_XE_OA_PROPERTY_OA_PERIOD_EXPONENT] = xe_oa_set_prop_oa_exponent,
-+	[DRM_XE_OA_PROPERTY_OA_DISABLED] = xe_oa_set_prop_disabled,
-+	[DRM_XE_OA_PROPERTY_EXEC_QUEUE_ID] = xe_oa_set_prop_exec_queue_id,
-+	[DRM_XE_OA_PROPERTY_OA_ENGINE_INSTANCE] = xe_oa_set_prop_engine_instance,
-+	[DRM_XE_OA_PROPERTY_NO_PREEMPT] = xe_oa_set_no_preempt,
-+	[DRM_XE_OA_PROPERTY_NUM_SYNCS] = xe_oa_set_prop_num_syncs,
-+	[DRM_XE_OA_PROPERTY_SYNCS] = xe_oa_set_prop_syncs_user,
-+};
-+
-+static int xe_oa_user_ext_set_property(struct xe_oa *oa, u64 extension,
-+				       struct xe_oa_open_param *param)
-+{
-+	u64 __user *address = u64_to_user_ptr(extension);
-+	struct drm_xe_ext_set_property ext;
-+	int err;
-+	u32 idx;
-+
-+	err = __copy_from_user(&ext, address, sizeof(ext));
-+	if (XE_IOCTL_DBG(oa->xe, err))
-+		return -EFAULT;
-+
-+	if (XE_IOCTL_DBG(oa->xe, ext.property >= ARRAY_SIZE(xe_oa_set_property_funcs)) ||
-+	    XE_IOCTL_DBG(oa->xe, ext.pad))
-+		return -EINVAL;
-+
-+	idx = array_index_nospec(ext.property, ARRAY_SIZE(xe_oa_set_property_funcs));
-+	return xe_oa_set_property_funcs[idx](oa, ext.value, param);
-+}
-+
-+typedef int (*xe_oa_user_extension_fn)(struct xe_oa *oa, u64 extension,
-+				       struct xe_oa_open_param *param);
-+static const xe_oa_user_extension_fn xe_oa_user_extension_funcs[] = {
-+	[DRM_XE_OA_EXTENSION_SET_PROPERTY] = xe_oa_user_ext_set_property,
-+};
-+
-+#define MAX_USER_EXTENSIONS	16
-+static int xe_oa_user_extensions(struct xe_oa *oa, u64 extension, int ext_number,
-+				 struct xe_oa_open_param *param)
-+{
-+	u64 __user *address = u64_to_user_ptr(extension);
-+	struct drm_xe_user_extension ext;
-+	int err;
-+	u32 idx;
-+
-+	if (XE_IOCTL_DBG(oa->xe, ext_number >= MAX_USER_EXTENSIONS))
-+		return -E2BIG;
-+
-+	err = __copy_from_user(&ext, address, sizeof(ext));
-+	if (XE_IOCTL_DBG(oa->xe, err))
-+		return -EFAULT;
-+
-+	if (XE_IOCTL_DBG(oa->xe, ext.pad) ||
-+	    XE_IOCTL_DBG(oa->xe, ext.name >= ARRAY_SIZE(xe_oa_user_extension_funcs)))
-+		return -EINVAL;
-+
-+	idx = array_index_nospec(ext.name, ARRAY_SIZE(xe_oa_user_extension_funcs));
-+	err = xe_oa_user_extension_funcs[idx](oa, extension, param);
-+	if (XE_IOCTL_DBG(oa->xe, err))
-+		return err;
-+
-+	if (ext.next_extension)
-+		return xe_oa_user_extensions(oa, ext.next_extension, ++ext_number, param);
-+
-+	return 0;
-+}
-+
-+static int xe_oa_parse_syncs(struct xe_oa *oa, struct xe_oa_open_param *param)
-+{
-+	int ret, num_syncs, num_ufence = 0;
-+
-+	if (param->num_syncs && !param->syncs_user) {
-+		drm_dbg(&oa->xe->drm, "num_syncs specified without sync array\n");
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-+
-+	if (param->num_syncs) {
-+		param->syncs = kcalloc(param->num_syncs, sizeof(*param->syncs), GFP_KERNEL);
-+		if (!param->syncs) {
-+			ret = -ENOMEM;
-+			goto exit;
-+		}
-+	}
-+
-+	for (num_syncs = 0; num_syncs < param->num_syncs; num_syncs++) {
-+		ret = xe_sync_entry_parse(oa->xe, param->xef, &param->syncs[num_syncs],
-+					  &param->syncs_user[num_syncs], 0);
-+		if (ret)
-+			goto err_syncs;
-+
-+		if (xe_sync_is_ufence(&param->syncs[num_syncs]))
-+			num_ufence++;
-+	}
-+
-+	if (XE_IOCTL_DBG(oa->xe, num_ufence > 1)) {
-+		ret = -EINVAL;
-+		goto err_syncs;
-+	}
-+
-+	return 0;
-+
-+err_syncs:
-+	while (num_syncs--)
-+		xe_sync_entry_cleanup(&param->syncs[num_syncs]);
-+	kfree(param->syncs);
-+exit:
-+	return ret;
-+}
-+
- static void xe_oa_stream_enable(struct xe_oa_stream *stream)
+ static void bang_bang_manage(struct thermal_zone_device *tz)
+@@ -104,8 +103,8 @@ static void bang_bang_manage(struct thermal_zone_device *tz)
+ 		 * to the thermal zone temperature and the trip point threshold.
+ 		 */
+ 		turn_on = tz->temperature >= td->threshold;
+-		list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-			if (!instance->initialized && instance->trip == trip)
++		list_for_each_entry(instance, &td->thermal_instances, trip_node) {
++			if (!instance->initialized)
+ 				bang_bang_set_instance_target(instance, turn_on);
+ 		}
+ 	}
+diff --git a/drivers/thermal/gov_fair_share.c b/drivers/thermal/gov_fair_share.c
+index ce0ea571ed67a..d37d57d48c389 100644
+--- a/drivers/thermal/gov_fair_share.c
++++ b/drivers/thermal/gov_fair_share.c
+@@ -44,7 +44,7 @@ static int get_trip_level(struct thermal_zone_device *tz)
+ /**
+  * fair_share_throttle - throttles devices associated with the given zone
+  * @tz: thermal_zone_device
+- * @trip: trip point
++ * @td: trip point descriptor
+  * @trip_level: number of trips crossed by the zone temperature
+  *
+  * Throttling Logic: This uses three parameters to calculate the new
+@@ -61,29 +61,23 @@ static int get_trip_level(struct thermal_zone_device *tz)
+  * new_state of cooling device = P3 * P2 * P1
+  */
+ static void fair_share_throttle(struct thermal_zone_device *tz,
+-				const struct thermal_trip *trip,
++				const struct thermal_trip_desc *td,
+ 				int trip_level)
  {
- 	stream->pollin = false;
-@@ -1664,27 +1893,6 @@ static bool engine_supports_oa_format(const struct xe_hw_engine *hwe, int type)
+ 	struct thermal_instance *instance;
+ 	int total_weight = 0;
+ 	int nr_instances = 0;
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-		if (instance->trip != trip)
+-			continue;
+-
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		total_weight += instance->weight;
+ 		nr_instances++;
+ 	}
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		struct thermal_cooling_device *cdev = instance->cdev;
+ 		u64 dividend;
+ 		u32 divisor;
+ 
+-		if (instance->trip != trip)
+-			continue;
+-
+ 		dividend = trip_level;
+ 		dividend *= cdev->max_state;
+ 		divisor = tz->num_trips;
+@@ -116,7 +110,7 @@ static void fair_share_manage(struct thermal_zone_device *tz)
+ 		    trip->type == THERMAL_TRIP_HOT)
+ 			continue;
+ 
+-		fair_share_throttle(tz, trip, trip_level);
++		fair_share_throttle(tz, td, trip_level);
  	}
  }
  
--static int decode_oa_format(struct xe_oa *oa, u64 fmt, enum xe_oa_format_name *name)
--{
--	u32 counter_size = FIELD_GET(DRM_XE_OA_FORMAT_MASK_COUNTER_SIZE, fmt);
--	u32 counter_sel = FIELD_GET(DRM_XE_OA_FORMAT_MASK_COUNTER_SEL, fmt);
--	u32 bc_report = FIELD_GET(DRM_XE_OA_FORMAT_MASK_BC_REPORT, fmt);
--	u32 type = FIELD_GET(DRM_XE_OA_FORMAT_MASK_FMT_TYPE, fmt);
--	int idx;
--
--	for_each_set_bit(idx, oa->format_mask, __XE_OA_FORMAT_MAX) {
--		const struct xe_oa_format *f = &oa->oa_formats[idx];
--
--		if (counter_size == f->counter_size && bc_report == f->bc_report &&
--		    type == f->type && counter_sel == f->counter_select) {
--			*name = idx;
--			return 0;
--		}
--	}
--
--	return -EINVAL;
--}
--
- /**
-  * xe_oa_unit_id - Return OA unit ID for a hardware engine
-  * @hwe: @xe_hw_engine
-@@ -1731,214 +1939,6 @@ static int xe_oa_assign_hwe(struct xe_oa *oa, struct xe_oa_open_param *param)
- 	return ret;
+diff --git a/drivers/thermal/gov_power_allocator.c b/drivers/thermal/gov_power_allocator.c
+index d59549e616399..b00da17c66a90 100644
+--- a/drivers/thermal/gov_power_allocator.c
++++ b/drivers/thermal/gov_power_allocator.c
+@@ -97,11 +97,9 @@ struct power_allocator_params {
+ 	struct power_actor *power;
+ };
+ 
+-static bool power_actor_is_valid(struct power_allocator_params *params,
+-				 struct thermal_instance *instance)
++static bool power_actor_is_valid(struct thermal_instance *instance)
+ {
+-	return (instance->trip == params->trip_max &&
+-		 cdev_is_power_actor(instance->cdev));
++	return cdev_is_power_actor(instance->cdev);
  }
  
--static int xe_oa_set_prop_oa_unit_id(struct xe_oa *oa, u64 value,
--				     struct xe_oa_open_param *param)
--{
--	if (value >= oa->oa_unit_ids) {
--		drm_dbg(&oa->xe->drm, "OA unit ID out of range %lld\n", value);
--		return -EINVAL;
--	}
--	param->oa_unit_id = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_sample_oa(struct xe_oa *oa, u64 value,
--				    struct xe_oa_open_param *param)
--{
--	param->sample = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_metric_set(struct xe_oa *oa, u64 value,
--				     struct xe_oa_open_param *param)
--{
--	param->metric_set = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_oa_format(struct xe_oa *oa, u64 value,
--				    struct xe_oa_open_param *param)
--{
--	int ret = decode_oa_format(oa, value, &param->oa_format);
--
--	if (ret) {
--		drm_dbg(&oa->xe->drm, "Unsupported OA report format %#llx\n", value);
--		return ret;
--	}
--	return 0;
--}
--
--static int xe_oa_set_prop_oa_exponent(struct xe_oa *oa, u64 value,
--				      struct xe_oa_open_param *param)
--{
--#define OA_EXPONENT_MAX 31
--
--	if (value > OA_EXPONENT_MAX) {
--		drm_dbg(&oa->xe->drm, "OA timer exponent too high (> %u)\n", OA_EXPONENT_MAX);
--		return -EINVAL;
--	}
--	param->period_exponent = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_disabled(struct xe_oa *oa, u64 value,
--				   struct xe_oa_open_param *param)
--{
--	param->disabled = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_exec_queue_id(struct xe_oa *oa, u64 value,
--					struct xe_oa_open_param *param)
--{
--	param->exec_queue_id = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_engine_instance(struct xe_oa *oa, u64 value,
--					  struct xe_oa_open_param *param)
--{
--	param->engine_instance = value;
--	return 0;
--}
--
--static int xe_oa_set_no_preempt(struct xe_oa *oa, u64 value,
--				struct xe_oa_open_param *param)
--{
--	param->no_preempt = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_num_syncs(struct xe_oa *oa, u64 value,
--				    struct xe_oa_open_param *param)
--{
--	param->num_syncs = value;
--	return 0;
--}
--
--static int xe_oa_set_prop_syncs_user(struct xe_oa *oa, u64 value,
--				     struct xe_oa_open_param *param)
--{
--	param->syncs_user = u64_to_user_ptr(value);
--	return 0;
--}
--
--typedef int (*xe_oa_set_property_fn)(struct xe_oa *oa, u64 value,
--				     struct xe_oa_open_param *param);
--static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
--	[DRM_XE_OA_PROPERTY_OA_UNIT_ID] = xe_oa_set_prop_oa_unit_id,
--	[DRM_XE_OA_PROPERTY_SAMPLE_OA] = xe_oa_set_prop_sample_oa,
--	[DRM_XE_OA_PROPERTY_OA_METRIC_SET] = xe_oa_set_prop_metric_set,
--	[DRM_XE_OA_PROPERTY_OA_FORMAT] = xe_oa_set_prop_oa_format,
--	[DRM_XE_OA_PROPERTY_OA_PERIOD_EXPONENT] = xe_oa_set_prop_oa_exponent,
--	[DRM_XE_OA_PROPERTY_OA_DISABLED] = xe_oa_set_prop_disabled,
--	[DRM_XE_OA_PROPERTY_EXEC_QUEUE_ID] = xe_oa_set_prop_exec_queue_id,
--	[DRM_XE_OA_PROPERTY_OA_ENGINE_INSTANCE] = xe_oa_set_prop_engine_instance,
--	[DRM_XE_OA_PROPERTY_NO_PREEMPT] = xe_oa_set_no_preempt,
--	[DRM_XE_OA_PROPERTY_NUM_SYNCS] = xe_oa_set_prop_num_syncs,
--	[DRM_XE_OA_PROPERTY_SYNCS] = xe_oa_set_prop_syncs_user,
--};
--
--static int xe_oa_user_ext_set_property(struct xe_oa *oa, u64 extension,
--				       struct xe_oa_open_param *param)
--{
--	u64 __user *address = u64_to_user_ptr(extension);
--	struct drm_xe_ext_set_property ext;
--	int err;
--	u32 idx;
--
--	err = __copy_from_user(&ext, address, sizeof(ext));
--	if (XE_IOCTL_DBG(oa->xe, err))
--		return -EFAULT;
--
--	if (XE_IOCTL_DBG(oa->xe, ext.property >= ARRAY_SIZE(xe_oa_set_property_funcs)) ||
--	    XE_IOCTL_DBG(oa->xe, ext.pad))
--		return -EINVAL;
--
--	idx = array_index_nospec(ext.property, ARRAY_SIZE(xe_oa_set_property_funcs));
--	return xe_oa_set_property_funcs[idx](oa, ext.value, param);
--}
--
--typedef int (*xe_oa_user_extension_fn)(struct xe_oa *oa, u64 extension,
--				       struct xe_oa_open_param *param);
--static const xe_oa_user_extension_fn xe_oa_user_extension_funcs[] = {
--	[DRM_XE_OA_EXTENSION_SET_PROPERTY] = xe_oa_user_ext_set_property,
--};
--
--#define MAX_USER_EXTENSIONS	16
--static int xe_oa_user_extensions(struct xe_oa *oa, u64 extension, int ext_number,
--				 struct xe_oa_open_param *param)
--{
--	u64 __user *address = u64_to_user_ptr(extension);
--	struct drm_xe_user_extension ext;
--	int err;
--	u32 idx;
--
--	if (XE_IOCTL_DBG(oa->xe, ext_number >= MAX_USER_EXTENSIONS))
--		return -E2BIG;
--
--	err = __copy_from_user(&ext, address, sizeof(ext));
--	if (XE_IOCTL_DBG(oa->xe, err))
--		return -EFAULT;
--
--	if (XE_IOCTL_DBG(oa->xe, ext.pad) ||
--	    XE_IOCTL_DBG(oa->xe, ext.name >= ARRAY_SIZE(xe_oa_user_extension_funcs)))
--		return -EINVAL;
--
--	idx = array_index_nospec(ext.name, ARRAY_SIZE(xe_oa_user_extension_funcs));
--	err = xe_oa_user_extension_funcs[idx](oa, extension, param);
--	if (XE_IOCTL_DBG(oa->xe, err))
--		return err;
--
--	if (ext.next_extension)
--		return xe_oa_user_extensions(oa, ext.next_extension, ++ext_number, param);
--
--	return 0;
--}
--
--static int xe_oa_parse_syncs(struct xe_oa *oa, struct xe_oa_open_param *param)
--{
--	int ret, num_syncs, num_ufence = 0;
--
--	if (param->num_syncs && !param->syncs_user) {
--		drm_dbg(&oa->xe->drm, "num_syncs specified without sync array\n");
--		ret = -EINVAL;
--		goto exit;
--	}
--
--	if (param->num_syncs) {
--		param->syncs = kcalloc(param->num_syncs, sizeof(*param->syncs), GFP_KERNEL);
--		if (!param->syncs) {
--			ret = -ENOMEM;
--			goto exit;
--		}
--	}
--
--	for (num_syncs = 0; num_syncs < param->num_syncs; num_syncs++) {
--		ret = xe_sync_entry_parse(oa->xe, param->xef, &param->syncs[num_syncs],
--					  &param->syncs_user[num_syncs], 0);
--		if (ret)
--			goto err_syncs;
--
--		if (xe_sync_is_ufence(&param->syncs[num_syncs]))
--			num_ufence++;
--	}
--
--	if (XE_IOCTL_DBG(oa->xe, num_ufence > 1)) {
--		ret = -EINVAL;
--		goto err_syncs;
--	}
--
--	return 0;
--
--err_syncs:
--	while (num_syncs--)
--		xe_sync_entry_cleanup(&param->syncs[num_syncs]);
--	kfree(param->syncs);
--exit:
--	return ret;
--}
--
  /**
-  * xe_oa_stream_open_ioctl - Opens an OA stream
-  * @dev: @drm_device
+@@ -118,13 +116,14 @@ static bool power_actor_is_valid(struct power_allocator_params *params,
+ static u32 estimate_sustainable_power(struct thermal_zone_device *tz)
+ {
+ 	struct power_allocator_params *params = tz->governor_data;
++	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+ 	struct thermal_cooling_device *cdev;
+ 	struct thermal_instance *instance;
+ 	u32 sustainable_power = 0;
+ 	u32 min_power;
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-		if (!power_actor_is_valid(params, instance))
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
++		if (!power_actor_is_valid(instance))
+ 			continue;
+ 
+ 		cdev = instance->cdev;
+@@ -400,6 +399,7 @@ static void divvy_up_power(struct power_actor *power, int num_actors,
+ static void allocate_power(struct thermal_zone_device *tz, int control_temp)
+ {
+ 	struct power_allocator_params *params = tz->governor_data;
++	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+ 	unsigned int num_actors = params->num_actors;
+ 	struct power_actor *power = params->power;
+ 	struct thermal_cooling_device *cdev;
+@@ -417,10 +417,10 @@ static void allocate_power(struct thermal_zone_device *tz, int control_temp)
+ 	/* Clean all buffers for new power estimations */
+ 	memset(power, 0, params->buffer_size);
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		struct power_actor *pa = &power[i];
+ 
+-		if (!power_actor_is_valid(params, instance))
++		if (!power_actor_is_valid(instance))
+ 			continue;
+ 
+ 		cdev = instance->cdev;
+@@ -454,10 +454,10 @@ static void allocate_power(struct thermal_zone_device *tz, int control_temp)
+ 		       power_range);
+ 
+ 	i = 0;
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		struct power_actor *pa = &power[i];
+ 
+-		if (!power_actor_is_valid(params, instance))
++		if (!power_actor_is_valid(instance))
+ 			continue;
+ 
+ 		power_actor_set_power(instance->cdev, instance,
+@@ -538,12 +538,13 @@ static void reset_pid_controller(struct power_allocator_params *params)
+ static void allow_maximum_power(struct thermal_zone_device *tz)
+ {
+ 	struct power_allocator_params *params = tz->governor_data;
++	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+ 	struct thermal_cooling_device *cdev;
+ 	struct thermal_instance *instance;
+ 	u32 req_power;
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-		if (!power_actor_is_valid(params, instance))
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
++		if (!power_actor_is_valid(instance))
+ 			continue;
+ 
+ 		cdev = instance->cdev;
+@@ -581,13 +582,11 @@ static void allow_maximum_power(struct thermal_zone_device *tz)
+ static int check_power_actors(struct thermal_zone_device *tz,
+ 			      struct power_allocator_params *params)
+ {
++	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+ 	struct thermal_instance *instance;
+ 	int ret = 0;
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
+-		if (instance->trip != params->trip_max)
+-			continue;
+-
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		if (!cdev_is_power_actor(instance->cdev)) {
+ 			dev_warn(&tz->device, "power_allocator: %s is not a power actor\n",
+ 				 instance->cdev->type);
+@@ -635,14 +634,15 @@ static void power_allocator_update_tz(struct thermal_zone_device *tz,
+ 				      enum thermal_notify_event reason)
+ {
+ 	struct power_allocator_params *params = tz->governor_data;
++	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
+ 	struct thermal_instance *instance;
+ 	int num_actors = 0;
+ 
+ 	switch (reason) {
+ 	case THERMAL_TZ_BIND_CDEV:
+ 	case THERMAL_TZ_UNBIND_CDEV:
+-		list_for_each_entry(instance, &tz->thermal_instances, tz_node)
+-			if (power_actor_is_valid(params, instance))
++		list_for_each_entry(instance, &td->thermal_instances, trip_node)
++			if (power_actor_is_valid(instance))
+ 				num_actors++;
+ 
+ 		if (num_actors == params->num_actors)
+@@ -652,8 +652,8 @@ static void power_allocator_update_tz(struct thermal_zone_device *tz,
+ 		break;
+ 	case THERMAL_INSTANCE_WEIGHT_CHANGED:
+ 		params->total_weight = 0;
+-		list_for_each_entry(instance, &tz->thermal_instances, tz_node)
+-			if (power_actor_is_valid(params, instance))
++		list_for_each_entry(instance, &td->thermal_instances, trip_node)
++			if (power_actor_is_valid(instance))
+ 				params->total_weight += instance->weight;
+ 		break;
+ 	default:
+diff --git a/drivers/thermal/gov_step_wise.c b/drivers/thermal/gov_step_wise.c
+index fd5527188cf91..ea4bf88d37f33 100644
+--- a/drivers/thermal/gov_step_wise.c
++++ b/drivers/thermal/gov_step_wise.c
+@@ -66,9 +66,10 @@ static unsigned long get_target_state(struct thermal_instance *instance,
+ }
+ 
+ static void thermal_zone_trip_update(struct thermal_zone_device *tz,
+-				     const struct thermal_trip *trip,
++				     const struct thermal_trip_desc *td,
+ 				     int trip_threshold)
+ {
++	const struct thermal_trip *trip = &td->trip;
+ 	enum thermal_trend trend = get_tz_trend(tz, trip);
+ 	int trip_id = thermal_zone_trip_id(tz, trip);
+ 	struct thermal_instance *instance;
+@@ -82,12 +83,9 @@ static void thermal_zone_trip_update(struct thermal_zone_device *tz,
+ 	dev_dbg(&tz->device, "Trip%d[type=%d,temp=%d]:trend=%d,throttle=%d\n",
+ 		trip_id, trip->type, trip_threshold, trend, throttle);
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
++	list_for_each_entry(instance, &td->thermal_instances, trip_node) {
+ 		int old_target;
+ 
+-		if (instance->trip != trip)
+-			continue;
+-
+ 		old_target = instance->target;
+ 		instance->target = get_target_state(instance, trend, throttle);
+ 
+@@ -127,11 +125,13 @@ static void step_wise_manage(struct thermal_zone_device *tz)
+ 		    trip->type == THERMAL_TRIP_HOT)
+ 			continue;
+ 
+-		thermal_zone_trip_update(tz, trip, td->threshold);
++		thermal_zone_trip_update(tz, td, td->threshold);
+ 	}
+ 
+-	list_for_each_entry(instance, &tz->thermal_instances, tz_node)
+-		thermal_cdev_update(instance->cdev);
++	for_each_trip_desc(tz, td) {
++		list_for_each_entry(instance, &td->thermal_instances, trip_node)
++			thermal_cdev_update(instance->cdev);
++	}
+ }
+ 
+ static struct thermal_governor thermal_gov_step_wise = {
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 1d2f2b307bac5..c2fa236e10cda 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -490,7 +490,7 @@ static void thermal_zone_device_check(struct work_struct *work)
+ 
+ static void thermal_zone_device_init(struct thermal_zone_device *tz)
+ {
+-	struct thermal_instance *pos;
++	struct thermal_trip_desc *td;
+ 
+ 	INIT_DELAYED_WORK(&tz->poll_queue, thermal_zone_device_check);
+ 
+@@ -498,8 +498,12 @@ static void thermal_zone_device_init(struct thermal_zone_device *tz)
+ 	tz->passive = 0;
+ 	tz->prev_low_trip = -INT_MAX;
+ 	tz->prev_high_trip = INT_MAX;
+-	list_for_each_entry(pos, &tz->thermal_instances, tz_node)
+-		pos->initialized = false;
++	for_each_trip_desc(tz, td) {
++		struct thermal_instance *instance;
++
++		list_for_each_entry(instance, &td->thermal_instances, trip_node)
++			instance->initialized = false;
++	}
+ }
+ 
+ static void thermal_governor_trip_crossed(struct thermal_governor *governor,
+@@ -764,12 +768,12 @@ struct thermal_zone_device *thermal_zone_get_by_id(int id)
+  * Return: 0 on success, the proper error value otherwise.
+  */
+ static int thermal_bind_cdev_to_trip(struct thermal_zone_device *tz,
+-				     const struct thermal_trip *trip,
++				     struct thermal_trip *trip,
+ 				     struct thermal_cooling_device *cdev,
+ 				     struct cooling_spec *cool_spec)
+ {
+-	struct thermal_instance *dev;
+-	struct thermal_instance *pos;
++	struct thermal_trip_desc *td = trip_to_trip_desc(trip);
++	struct thermal_instance *dev, *instance;
+ 	bool upper_no_limit;
+ 	int result;
+ 
+@@ -832,13 +836,13 @@ static int thermal_bind_cdev_to_trip(struct thermal_zone_device *tz,
+ 		goto remove_trip_file;
+ 
+ 	mutex_lock(&cdev->lock);
+-	list_for_each_entry(pos, &tz->thermal_instances, tz_node)
+-		if (pos->trip == trip && pos->cdev == cdev) {
++	list_for_each_entry(instance, &td->thermal_instances, trip_node)
++		if (instance->cdev == cdev) {
+ 			result = -EEXIST;
+ 			break;
+ 		}
+ 	if (!result) {
+-		list_add_tail(&dev->tz_node, &tz->thermal_instances);
++		list_add_tail(&dev->trip_node, &td->thermal_instances);
+ 		list_add_tail(&dev->cdev_node, &cdev->thermal_instances);
+ 		atomic_set(&tz->need_update, 1);
+ 
+@@ -872,15 +876,16 @@ static int thermal_bind_cdev_to_trip(struct thermal_zone_device *tz,
+  * This function is usually called in the thermal zone device .unbind callback.
+  */
+ static void thermal_unbind_cdev_from_trip(struct thermal_zone_device *tz,
+-					  const struct thermal_trip *trip,
++					  struct thermal_trip *trip,
+ 					  struct thermal_cooling_device *cdev)
+ {
++	struct thermal_trip_desc *td = trip_to_trip_desc(trip);
+ 	struct thermal_instance *pos, *next;
+ 
+ 	mutex_lock(&cdev->lock);
+-	list_for_each_entry_safe(pos, next, &tz->thermal_instances, tz_node) {
+-		if (pos->trip == trip && pos->cdev == cdev) {
+-			list_del(&pos->tz_node);
++	list_for_each_entry_safe(pos, next, &td->thermal_instances, trip_node) {
++		if (pos->cdev == cdev) {
++			list_del(&pos->trip_node);
+ 			list_del(&pos->cdev_node);
+ 
+ 			thermal_governor_update_tz(tz, THERMAL_TZ_UNBIND_CDEV);
+@@ -1435,7 +1440,6 @@ thermal_zone_device_register_with_trips(const char *type,
+ 		}
+ 	}
+ 
+-	INIT_LIST_HEAD(&tz->thermal_instances);
+ 	INIT_LIST_HEAD(&tz->node);
+ 	ida_init(&tz->ida);
+ 	mutex_init(&tz->lock);
+@@ -1459,6 +1463,7 @@ thermal_zone_device_register_with_trips(const char *type,
+ 	tz->num_trips = num_trips;
+ 	for_each_trip_desc(tz, td) {
+ 		td->trip = *trip++;
++		INIT_LIST_HEAD(&td->thermal_instances);
+ 		/*
+ 		 * Mark all thresholds as invalid to start with even though
+ 		 * this only matters for the trips that start as invalid and
+diff --git a/drivers/thermal/thermal_core.h b/drivers/thermal/thermal_core.h
+index 421522a2bb9d4..163871699a602 100644
+--- a/drivers/thermal/thermal_core.h
++++ b/drivers/thermal/thermal_core.h
+@@ -30,6 +30,7 @@ struct thermal_trip_desc {
+ 	struct thermal_trip trip;
+ 	struct thermal_trip_attrs trip_attrs;
+ 	struct list_head notify_list_node;
++	struct list_head thermal_instances;
+ 	int notify_temp;
+ 	int threshold;
+ };
+@@ -99,7 +100,6 @@ struct thermal_governor {
+  * @tzp:	thermal zone parameters
+  * @governor:	pointer to the governor for this thermal zone
+  * @governor_data:	private pointer for governor data
+- * @thermal_instances:	list of &struct thermal_instance of this thermal zone
+  * @ida:	&struct ida to generate unique id for this zone's cooling
+  *		devices
+  * @lock:	lock to protect thermal_instances list
+@@ -133,7 +133,6 @@ struct thermal_zone_device {
+ 	struct thermal_zone_params *tzp;
+ 	struct thermal_governor *governor;
+ 	void *governor_data;
+-	struct list_head thermal_instances;
+ 	struct ida ida;
+ 	struct mutex lock;
+ 	struct list_head node;
+@@ -230,7 +229,7 @@ struct thermal_instance {
+ 	struct device_attribute attr;
+ 	char weight_attr_name[THERMAL_NAME_LENGTH];
+ 	struct device_attribute weight_attr;
+-	struct list_head tz_node; /* node in tz->thermal_instances */
++	struct list_head trip_node; /* node in trip->thermal_instances */
+ 	struct list_head cdev_node; /* node in cdev->thermal_instances */
+ 	unsigned int weight; /* The weight of the cooling device */
+ 	bool upper_no_limit;
+diff --git a/drivers/thermal/thermal_helpers.c b/drivers/thermal/thermal_helpers.c
+index dc374a7a1a659..403d62d3ce77e 100644
+--- a/drivers/thermal/thermal_helpers.c
++++ b/drivers/thermal/thermal_helpers.c
+@@ -43,10 +43,11 @@ static bool thermal_instance_present(struct thermal_zone_device *tz,
+ 				     struct thermal_cooling_device *cdev,
+ 				     const struct thermal_trip *trip)
+ {
++	const struct thermal_trip_desc *td = trip_to_trip_desc(trip);
+ 	struct thermal_instance *ti;
+ 
+-	list_for_each_entry(ti, &tz->thermal_instances, tz_node) {
+-		if (ti->trip == trip && ti->cdev == cdev)
++	list_for_each_entry(ti, &td->thermal_instances, trip_node) {
++		if (ti->cdev == cdev)
+ 			return true;
+ 	}
+ 
 -- 
 2.39.5
 
