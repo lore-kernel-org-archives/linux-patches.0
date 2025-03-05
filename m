@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873971C6FFE;
-	Wed,  5 Mar 2025 17:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DAA24C07D;
+	Wed,  5 Mar 2025 17:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197439; cv=none; b=QsRAH/rh+jetr0sYaHH0KjatU9uj04nzZXNc9yaHCFBbTmXza7UBAPDT6x1fnviUWfrKY6jH8S3An2yVOMZTBXKh3nzedJd0OCeU54+BGrIqNsQ0Ft8bYo0XFtTQXeUtWKqVKTQsjrdnp/sWgN/wfhs+Qr+a0wtiP50MXvg58YE=
+	t=1741197442; cv=none; b=Be3bVjdBSFc1BwMUrTyAR5eT8fVy4pGLCNq2rxh/DQiuywF0oabhZMGpxzapLunVlJhoa3d/Dyb+vnKdr1BgA08Cp1A7ASVWrUwTQm0R8asBoSZEFdaeaUJ97tpWj2UTcbJockc45aiY5NeSUu/e2ImLtdmw3TdrBeNRMI5+d58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197439; c=relaxed/simple;
-	bh=lS8klghCrYjnDE84UafB7Ek+Me+xPcUvYHcQEALoU0Q=;
+	s=arc-20240116; t=1741197442; c=relaxed/simple;
+	bh=jnph49W75XbROrdH5bRw1G2RRq68DQm5Ei2IttGo+gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1V+88GDUXZpvc0Yww/JkVL3HQrS5m6X274DkfHKKFe8etycU8joD26yeoLsJxhjjdfZILnDvXNuu8weHmzzWDV1BvzXiOLiTBXssJL8WRRLZQOrLy+pESP1wYfVriF9ZydSf6q6wWspQ3Gygnt2zAO3piV+ZF1R7lh6muKn0xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeqEjSfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPGdNwy4/QQvpy2tJLbkA6Sj042mTRSvn4lziBBzYSCLaikC5dEqJCEnW+rVxPRcxUiddLlOafr639S0oAxPrM6f/Ya80DrCavvGNTPVVLT0fb2dE3i+7Su/+tJbXDTwmeAKIYsRgGkz9W14mM1Ri8fmbi3d3rnoeHF4bemV93A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoLUJK0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeqEjSfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1C5C4CEE2;
-	Wed,  5 Mar 2025 17:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoLUJK0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A22C4CED1;
+	Wed,  5 Mar 2025 17:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197439;
-	bh=lS8klghCrYjnDE84UafB7Ek+Me+xPcUvYHcQEALoU0Q=;
+	s=korg; t=1741197441;
+	bh=jnph49W75XbROrdH5bRw1G2RRq68DQm5Ei2IttGo+gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aeqEjSfL8B5AHv8JaW617MHYG+54htzukOfDNcGLO/8+Pq9J3a4jc/n6vGLloyfAz
-	 QhuWYqKpj1W4N5FMH2Skz+x7FEW720XUuRhZR86f6+SALq29AnLT9b6G7vdHv+DA1o
-	 zpR2MOzyCeish3ousYSwFSlLeVMvXrDiboE1s7XU=
+	b=eoLUJK0BdysFLM0SYi1+veOlFw2GBJfCw7pQmykRHst1zpbJGF5nqHRVM4ZOlMHmJ
+	 Ghb/DDIYEUbcmGUsx++5/A1M1sjicHR6SGXLyEjT40xtJp+qpLVPElDJAxrUOSxdsO
+	 T1kqjMd3gVaswln8rxmLLfLuJz5hQ5TzfqYi5Y+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 156/176] usbnet: gl620a: fix endpoint checking in genelink_bind()
-Date: Wed,  5 Mar 2025 18:48:45 +0100
-Message-ID: <20250305174511.705246160@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 157/176] net: enetc: fix the off-by-one issue in enetc_map_tx_buffs()
+Date: Wed,  5 Mar 2025 18:48:46 +0100
+Message-ID: <20250305174511.744472590@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -51,93 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 1cf9631d836b289bd5490776551961c883ae8a4f upstream.
+commit 39ab773e4c120f7f98d759415ccc2aca706bbc10 upstream.
 
-Syzbot reports [1] a warning in usb_submit_urb() triggered by
-inconsistencies between expected and actually present endpoints
-in gl620a driver. Since genelink_bind() does not properly
-verify whether specified eps are in fact provided by the device,
-in this case, an artificially manufactured one, one may get a
-mismatch.
+When a DMA mapping error occurs while processing skb frags, it will free
+one more tx_swbd than expected, so fix this off-by-one issue.
 
-Fix the issue by resorting to a usbnet utility function
-usbnet_get_endpoints(), usually reserved for this very problem.
-Check for endpoints and return early before proceeding further if
-any are missing.
-
-[1] Syzbot report:
-usb 5-1: Manufacturer: syz
-usb 5-1: SerialNumber: syz
-usb 5-1: config 0 descriptor??
-gl620a 5-1:0.23 usb0: register 'gl620a' at usb-dummy_hcd.0-1, ...
-------------[ cut here ]------------
-usb 5-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 2 PID: 1841 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-Modules linked in:
-CPU: 2 UID: 0 PID: 1841 Comm: kworker/2:2 Not tainted 6.12.0-syzkaller-07834-g06afb0f36106 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Workqueue: mld mld_ifc_work
-RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-...
-Call Trace:
- <TASK>
- usbnet_start_xmit+0x6be/0x2780 drivers/net/usb/usbnet.c:1467
- __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
- netdev_start_xmit include/linux/netdevice.h:5011 [inline]
- xmit_one net/core/dev.c:3590 [inline]
- dev_hard_start_xmit+0x9a/0x7b0 net/core/dev.c:3606
- sch_direct_xmit+0x1ae/0xc30 net/sched/sch_generic.c:343
- __dev_xmit_skb net/core/dev.c:3827 [inline]
- __dev_queue_xmit+0x13d4/0x43e0 net/core/dev.c:4400
- dev_queue_xmit include/linux/netdevice.h:3168 [inline]
- neigh_resolve_output net/core/neighbour.c:1514 [inline]
- neigh_resolve_output+0x5bc/0x950 net/core/neighbour.c:1494
- neigh_output include/net/neighbour.h:539 [inline]
- ip6_finish_output2+0xb1b/0x2070 net/ipv6/ip6_output.c:141
- __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
- ip6_finish_output+0x3f9/0x1360 net/ipv6/ip6_output.c:226
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip6_output+0x1f8/0x540 net/ipv6/ip6_output.c:247
- dst_output include/net/dst.h:450 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- mld_sendpack+0x9f0/0x11d0 net/ipv6/mcast.c:1819
- mld_send_cr net/ipv6/mcast.c:2120 [inline]
- mld_ifc_work+0x740/0xca0 net/ipv6/mcast.c:2651
- process_one_work+0x9c5/0x1ba0 kernel/workqueue.c:3229
- process_scheduled_works kernel/workqueue.c:3310 [inline]
- worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-
-Reported-by: syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d693c07c6f647e0388d3
-Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250224172919.1220522-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20250224111251.1061098-2-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/gl620a.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
---- a/drivers/net/usb/gl620a.c
-+++ b/drivers/net/usb/gl620a.c
-@@ -179,9 +179,7 @@ static int genelink_bind(struct usbnet *
- {
- 	dev->hard_mtu = GL_RCV_BUF_SIZE;
- 	dev->net->hard_header_len += 4;
--	dev->in = usb_rcvbulkpipe(dev->udev, dev->driver_info->in);
--	dev->out = usb_sndbulkpipe(dev->udev, dev->driver_info->out);
--	return 0;
-+	return usbnet_get_endpoints(dev, intf);
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -123,6 +123,24 @@ static int enetc_ptp_parse(struct sk_buf
+ 	return 0;
  }
  
- static const struct driver_info	genelink_info = {
++/**
++ * enetc_unwind_tx_frame() - Unwind the DMA mappings of a multi-buffer Tx frame
++ * @tx_ring: Pointer to the Tx ring on which the buffer descriptors are located
++ * @count: Number of Tx buffer descriptors which need to be unmapped
++ * @i: Index of the last successfully mapped Tx buffer descriptor
++ */
++static void enetc_unwind_tx_frame(struct enetc_bdr *tx_ring, int count, int i)
++{
++	while (count--) {
++		struct enetc_tx_swbd *tx_swbd = &tx_ring->tx_swbd[i];
++
++		enetc_free_tx_frame(tx_ring, tx_swbd);
++		if (i == 0)
++			i = tx_ring->bd_count;
++		i--;
++	}
++}
++
+ static int enetc_map_tx_buffs(struct enetc_bdr *tx_ring, struct sk_buff *skb)
+ {
+ 	bool do_vlan, do_onestep_tstamp = false, do_twostep_tstamp = false;
+@@ -306,13 +324,7 @@ static int enetc_map_tx_buffs(struct ene
+ dma_err:
+ 	dev_err(tx_ring->dev, "DMA map error");
+ 
+-	do {
+-		tx_swbd = &tx_ring->tx_swbd[i];
+-		enetc_free_tx_frame(tx_ring, tx_swbd);
+-		if (i == 0)
+-			i = tx_ring->bd_count;
+-		i--;
+-	} while (count--);
++	enetc_unwind_tx_frame(tx_ring, count, i);
+ 
+ 	return 0;
+ }
 
 
