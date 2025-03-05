@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3692528F1;
-	Wed,  5 Mar 2025 18:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CC2230BC6;
+	Wed,  5 Mar 2025 18:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198280; cv=none; b=P4jrxEcpYHBnZI53BPveAmtpsYmvNqFFetvBXagsNlsCBRuZxGRNDtj8gPHlPWr7UOYm0y8JJJr7DWrBrIY1kEgx+Xl8JB2TGi2qDqj4dutXSPpETttg6/PXhyDHSTNGizzQVFQQOH2d1lvqJVwmT0qKT+qJCJL8A0Svko2D3xI=
+	t=1741198282; cv=none; b=NovPGMwaRjdClREJ01yGXzvrZHEqQXkkk3Lpip3a1F/AfoifrW5FDVq7yXEoCZJKe95UMA615x+dBLi0Sd9x9grEsqXEIBMSZ9wLlm2M7NSH1n/bItZLWHmhF40el7yNtFdM+5cWM1AaeBZZL+KwBwkPBVdFfOiKrTbMPGISKVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198280; c=relaxed/simple;
-	bh=a1CuO/IS3qvD5EkQz1LdsEkcJRfL74bTbi7+fuCd5s4=;
+	s=arc-20240116; t=1741198282; c=relaxed/simple;
+	bh=GfcA+NFyCyK0osIeC1YVnFfxrJvZN0R+sE/Z36JWM0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U3U7dOg7kysStf09mpDf/mYv+qRDhwSt9Efg9foKHHDVauP5EMd2V2tmVeZ7MeyTlYgfhq85GZMzdWF6VMMt9MmpK8k6lV317JoGFZyIr8O2s/5dze5gsipjEXZjQx/SgHlU/9I+qscudwT6n8dlKWdVngYQh7I0U1/86rDmPhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8FIMrDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJCOJr62U/9k8T+04buZjZmvwGilnMoMw1+DFU7c9273yXQ9PfPFhvUms/CTH9TMpZtYl/U8VXEuPRbGkAASu0XnO1ktCF7wYY+HCcbCvBoNjlcoqgZa1wMCqGG+mpJGmiz7Ab14EX2gWlBzrusAQEEXi4e8GrvR+5NFQWpOstc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6xTOTt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8FIMrDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CDD7C4CED1;
-	Wed,  5 Mar 2025 18:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6xTOTt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD3AC4CEE0;
+	Wed,  5 Mar 2025 18:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198279;
-	bh=a1CuO/IS3qvD5EkQz1LdsEkcJRfL74bTbi7+fuCd5s4=;
+	s=korg; t=1741198282;
+	bh=GfcA+NFyCyK0osIeC1YVnFfxrJvZN0R+sE/Z36JWM0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8FIMrDJEDmU8iHL/qXbBL3Tnlqk0RTysFHB/pjSns40QrPJAQbgcf60mE2XJtu6U
-	 16k/1J+Ntc1ejSQXFNyF/HiCwBxzS+s2zVyAj8h4PGQYMCXu6w3cuu5oWVxIEwx3uo
-	 EVbbWkByEIDott+3XiECd8Q+WQKFsoM/Oi7YhBgA=
+	b=E6xTOTt1N+QTrlDvitP0wm5RC67fbhA3abcNBiAw8tISrb4KnjRyKYSNmWI9SeRqn
+	 rbC5GF9YEnhzcvgneGewLWzpDF7ruE9JM8IuFi4uhPU5I3P+yqcqi/HMzxU2rJGyNd
+	 UZaIDzS12pfLjfpEiShK27MDqEFr1PEu6D13tmhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.12 125/150] selftests/landlock: Test that MPTCP actions are not restricted
-Date: Wed,  5 Mar 2025 18:49:14 +0100
-Message-ID: <20250305174508.837908136@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 6.12 126/150] vmlinux.lds: Ensure that const vars with relocations are mapped R/O
+Date: Wed,  5 Mar 2025 18:49:15 +0100
+Message-ID: <20250305174508.878215448@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -44,114 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 3d4033985ff508ef587ca11f1c8361ba57c7e09f upstream.
+commit 68f3ea7ee199ef77551e090dfef5a49046ea8443 upstream.
 
-Extend protocol fixture with test suits for MPTCP protocol.
-Add CONFIG_MPTCP and CONFIG_MPTCP_IPV6 options in config.
+In the kernel, there are architectures (x86, arm64) that perform
+boot-time relocation (for KASLR) without relying on PIE codegen. In this
+case, all const global objects are emitted into .rodata, including const
+objects with fields that will be fixed up by the boot-time relocation
+code.  This implies that .rodata (and .text in some cases) need to be
+writable at boot, but they will usually be mapped read-only as soon as
+the boot completes.
 
-Signed-off-by: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
-Link: https://lore.kernel.org/r/20250205093651.1424339-4-ivanov.mikhail1@huawei-partners.com
-Cc: <stable@vger.kernel.org> # 6.7.x
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+When using PIE codegen, the compiler will emit const global objects into
+.data.rel.ro rather than .rodata if the object contains fields that need
+such fixups at boot-time. This permits the linker to annotate such
+regions as requiring read-write access only at load time, but not at
+execution time (in user space), while keeping .rodata truly const (in
+user space, this is important for reducing the CoW footprint of dynamic
+executables).
+
+This distinction does not matter for the kernel, but it does imply that
+const data will end up in writable memory if the .data.rel.ro sections
+are not treated in a special way, as they will end up in the writable
+.data segment by default.
+
+So emit .data.rel.ro into the .rodata segment.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20250221135704.431269-5-ardb+git@google.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/config     |    2 +
- tools/testing/selftests/landlock/net_test.c |   44 ++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ include/asm-generic/vmlinux.lds.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/landlock/config
-+++ b/tools/testing/selftests/landlock/config
-@@ -3,6 +3,8 @@ CONFIG_CGROUP_SCHED=y
- CONFIG_INET=y
- CONFIG_IPV6=y
- CONFIG_KEYS=y
-+CONFIG_MPTCP=y
-+CONFIG_MPTCP_IPV6=y
- CONFIG_NET=y
- CONFIG_NET_NS=y
- CONFIG_OVERLAY_FS=y
---- a/tools/testing/selftests/landlock/net_test.c
-+++ b/tools/testing/selftests/landlock/net_test.c
-@@ -310,6 +310,17 @@ FIXTURE_VARIANT_ADD(protocol, no_sandbox
- };
- 
- /* clang-format off */
-+FIXTURE_VARIANT_ADD(protocol, no_sandbox_with_ipv4_mptcp) {
-+	/* clang-format on */
-+	.sandbox = NO_SANDBOX,
-+	.prot = {
-+		.domain = AF_INET,
-+		.type = SOCK_STREAM,
-+		.protocol = IPPROTO_MPTCP,
-+	},
-+};
-+
-+/* clang-format off */
- FIXTURE_VARIANT_ADD(protocol, no_sandbox_with_ipv4_udp) {
- 	/* clang-format on */
- 	.sandbox = NO_SANDBOX,
-@@ -330,6 +341,17 @@ FIXTURE_VARIANT_ADD(protocol, no_sandbox
- };
- 
- /* clang-format off */
-+FIXTURE_VARIANT_ADD(protocol, no_sandbox_with_ipv6_mptcp) {
-+	/* clang-format on */
-+	.sandbox = NO_SANDBOX,
-+	.prot = {
-+		.domain = AF_INET6,
-+		.type = SOCK_STREAM,
-+		.protocol = IPPROTO_MPTCP,
-+	},
-+};
-+
-+/* clang-format off */
- FIXTURE_VARIANT_ADD(protocol, no_sandbox_with_unix_stream) {
- 	/* clang-format on */
- 	.sandbox = NO_SANDBOX,
-@@ -390,6 +412,17 @@ FIXTURE_VARIANT_ADD(protocol, tcp_sandbo
- };
- 
- /* clang-format off */
-+FIXTURE_VARIANT_ADD(protocol, tcp_sandbox_with_ipv4_mptcp) {
-+	/* clang-format on */
-+	.sandbox = TCP_SANDBOX,
-+	.prot = {
-+		.domain = AF_INET,
-+		.type = SOCK_STREAM,
-+		.protocol = IPPROTO_MPTCP,
-+	},
-+};
-+
-+/* clang-format off */
- FIXTURE_VARIANT_ADD(protocol, tcp_sandbox_with_unix_stream) {
- 	/* clang-format on */
- 	.sandbox = TCP_SANDBOX,
-@@ -399,6 +432,17 @@ FIXTURE_VARIANT_ADD(protocol, tcp_sandbo
- 	},
- };
- 
-+/* clang-format off */
-+FIXTURE_VARIANT_ADD(protocol, tcp_sandbox_with_ipv6_mptcp) {
-+	/* clang-format on */
-+	.sandbox = TCP_SANDBOX,
-+	.prot = {
-+		.domain = AF_INET6,
-+		.type = SOCK_STREAM,
-+		.protocol = IPPROTO_MPTCP,
-+	},
-+};
-+
- /* clang-format off */
- FIXTURE_VARIANT_ADD(protocol, tcp_sandbox_with_unix_datagram) {
- 	/* clang-format on */
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -450,7 +450,7 @@
+ 	. = ALIGN((align));						\
+ 	.rodata           : AT(ADDR(.rodata) - LOAD_OFFSET) {		\
+ 		__start_rodata = .;					\
+-		*(.rodata) *(.rodata.*)					\
++		*(.rodata) *(.rodata.*) *(.data.rel.ro*)		\
+ 		SCHED_DATA						\
+ 		RO_AFTER_INIT_DATA	/* Read only after init */	\
+ 		. = ALIGN(8);						\
 
 
