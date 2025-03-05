@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BCE481DD;
-	Wed,  5 Mar 2025 17:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E353481DD;
+	Wed,  5 Mar 2025 17:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197416; cv=none; b=lMsN3WxBQP1Fj0UbEv6kX/H7ndsSwepEmTb2u64jtDsWAAKuMLQ2jl1/UfHY7bV/ABouolFH3qqLZHFRVSllmWsShoqKgHB2vPd+uZJyrrdsHdmTE43Md090xJCoJgQkCkdUG1i6CxhTa+dPZ+p5qcNVEiO0FhKldiSJWc4ofYA=
+	t=1741197419; cv=none; b=SdGha0LZfqWAdLVzWiGn9Ns81LXsR2EJPIulfhPKZpcUs6UvwdSdYDLPOH1K0bymquir18N4Kd46mt7DyMQfTLFfTtGtGmAEPF/+l2vRUgCoV6qDGX0qS6JTQJoz4zOkRu4n7ra7GJtvcx4l0CMIx7L3jxr0LJMDVpyCsHqY4mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197416; c=relaxed/simple;
-	bh=Sc9iCEQV53M/eXpKUb44WkKZZL07qOr/X1EkeOeE44c=;
+	s=arc-20240116; t=1741197419; c=relaxed/simple;
+	bh=t0ffan+qAdIdqlYWOs4H7/Ey0qxmtkK4LYLroZRia0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPJeXQ0VIFyuGa2QJ2kWGQjXDBNVdi35NAJojGpFm3lQc2QDzYEnn+j2+6eFoDa/4CZ7IJTgcHM/8r77VJ3CvRMBIy24qpfQk+3vCBeyFoZWBV6pfbBSBbFrgq4LcaoVdn/ObzIWqwDSi+SQ8W5U1qatjRiiVuaHnkdNJz2ISJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj3AaSkw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUwWRsFYwraOdEd31DDMPOj7RVTlkex6nDuyaQPTo6Y6NarbP7bJPAG8+0cPEwNHb4ZGJmvWCDnUH/fBslCMowk8j9/ff8X0WhzcMfy9i/FDAvgobdPx0DtL7HEAcOYqI+Ra8q4j5G1yd68QQLJsIkGSM9snlp+2GUcrxouM2i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFZ5hEUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj3AaSkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC157C4CEE0;
-	Wed,  5 Mar 2025 17:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFZ5hEUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDC8C4CED1;
+	Wed,  5 Mar 2025 17:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197416;
-	bh=Sc9iCEQV53M/eXpKUb44WkKZZL07qOr/X1EkeOeE44c=;
+	s=korg; t=1741197419;
+	bh=t0ffan+qAdIdqlYWOs4H7/Ey0qxmtkK4LYLroZRia0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tj3AaSkwiCXmMifkJ2ojfoRdCAzW/HBYHjKXmi4rzyM5mM22Qtxld7yVyngUfvRxg
-	 XUphBRFC53h9yMiVhcXA+KY9zbD6um7dCSEi/poVBCmRUjS+FHAlLbfVr2IXNtoOXN
-	 kxKpyfzWAOgq7VmoeFj3yNNRwBw0sZfC9VKAcuWo=
+	b=gFZ5hEUGk2/g59OqsUSuXYejjRlhcY78fWWOCn1We77BurGM8/DKjF2BYCBOlQu72
+	 ykqMKzJ9N0H+EKpogB3sHnKpgUt54/yHqS2ZIZC2IR8ACYWaHGnYifticfufhH2+kj
+	 py2weFDrz+/dPWU7lZ1nCIkLKf+fQLV6F1YIU6XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Yang <wenyang@linux.alibaba.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 149/176] ftrace: Avoid potential division by zero in function_stat_show()
-Date: Wed,  5 Mar 2025 18:48:38 +0100
-Message-ID: <20250305174511.422580325@linuxfoundation.org>
+	Dmitry Panchenko <dmitry@d-systems.ee>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 150/176] ALSA: usb-audio: Re-add sample rate quirk for Pioneer DJM-900NXS2
+Date: Wed,  5 Mar 2025 18:48:39 +0100
+Message-ID: <20250305174511.461812705@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -53,73 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Dmitry Panchenko <dmitry@d-systems.ee>
 
-commit a1a7eb89ca0b89dc1c326eeee2596f263291aca3 upstream.
+commit 9af3b4f2d879da01192d6168e6c651e7fb5b652d upstream.
 
-Check whether denominator expression x * (x - 1) * 1000 mod {2^32, 2^64}
-produce zero and skip stddev computation in that case.
+Re-add the sample-rate quirk for the Pioneer DJM-900NXS2. This
+device does not work without setting sample-rate.
 
-For now don't care about rec->counter * rec->counter overflow because
-rec->time * rec->time overflow will likely happen earlier.
-
-Cc: stable@vger.kernel.org
-Cc: Wen Yang <wenyang@linux.alibaba.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250206090156.1561783-1-kniv@yandex-team.ru
-Fixes: e31f7939c1c27 ("ftrace: Avoid potential division by zero in function profiler")
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Dmitry Panchenko <dmitry@d-systems.ee>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250220161540.3624660-1-dmitry@d-systems.ee
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ sound/usb/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -507,6 +507,7 @@ static int function_stat_show(struct seq
- 	static struct trace_seq s;
- 	unsigned long long avg;
- 	unsigned long long stddev;
-+	unsigned long long stddev_denom;
- #endif
- 	mutex_lock(&ftrace_profile_lock);
- 
-@@ -528,23 +529,19 @@ static int function_stat_show(struct seq
- #ifdef CONFIG_FUNCTION_GRAPH_TRACER
- 	seq_puts(m, "    ");
- 
--	/* Sample standard deviation (s^2) */
--	if (rec->counter <= 1)
--		stddev = 0;
--	else {
--		/*
--		 * Apply Welford's method:
--		 * s^2 = 1 / (n * (n-1)) * (n * \Sum (x_i)^2 - (\Sum x_i)^2)
--		 */
-+	/*
-+	 * Variance formula:
-+	 * s^2 = 1 / (n * (n-1)) * (n * \Sum (x_i)^2 - (\Sum x_i)^2)
-+	 * Maybe Welford's method is better here?
-+	 * Divide only by 1000 for ns^2 -> us^2 conversion.
-+	 * trace_print_graph_duration will divide by 1000 again.
-+	 */
-+	stddev = 0;
-+	stddev_denom = rec->counter * (rec->counter - 1) * 1000;
-+	if (stddev_denom) {
- 		stddev = rec->counter * rec->time_squared -
- 			 rec->time * rec->time;
--
--		/*
--		 * Divide only 1000 for ns^2 -> us^2 conversion.
--		 * trace_print_graph_duration will divide 1000 again.
--		 */
--		stddev = div64_ul(stddev,
--				  rec->counter * (rec->counter - 1) * 1000);
-+		stddev = div64_ul(stddev, stddev_denom);
- 	}
- 
- 	trace_seq_init(&s);
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1773,6 +1773,7 @@ void snd_usb_set_format_quirk(struct snd
+ 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
+ 		subs->stream_offset_adj = 2;
+ 		break;
++	case USB_ID(0x2b73, 0x000a): /* Pioneer DJM-900NXS2 */
+ 	case USB_ID(0x2b73, 0x0013): /* Pioneer DJM-450 */
+ 		pioneer_djm_set_format_quirk(subs, 0x0082);
+ 		break;
 
 
