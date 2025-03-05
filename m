@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70201C6FFE;
-	Wed,  5 Mar 2025 17:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6699F24C07D;
+	Wed,  5 Mar 2025 17:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197477; cv=none; b=p/PltDaYeW4c0B2eSS4BQnbGD+AwIRZgSXJHeOHRwjrEddXu3V3PS5DvcjH8NiIjbiDjj32190RRrahtO2JpDdrsovAdAWfWtE2STtGcMDcNqWxZf2P78+zlxiCGmtRXUB0AQvVIwHDayz1Zzl3DQKEnyfmE0cNIrUrtVluc6o4=
+	t=1741197479; cv=none; b=CWqgbJsip+JNzWPaFU4Xvci0Cge+vO21q/cXH9j6K1M4T1g52TTQLPk1uvS2Kul9t57VT1run65EABAlJrj3zqe+/QCLGmY2K/Yq4pFAr8gXh8wmLCzEF82dxS+3vMgrSFAcLSUO43qNI0jWmuSrjt+D8hwPbIXCH5zNzk5fu/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197477; c=relaxed/simple;
-	bh=TAKHXbw5nCMNwNWFtBwCvnZd9hLg9RvA/l2YuEUTVe4=;
+	s=arc-20240116; t=1741197479; c=relaxed/simple;
+	bh=PJ8oYJwDIiPGSbBSyjmubeKX6qE9mvXsgWwo59SVL80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HYqWl9uNDQG7PpmAO3e9zCJSI4/Nwh6fOO6YckxyeJftwgJA4aacrmSMouWIPbPL1TSrs1VvcIgNIAtFJzIgv3MxhZA9GJB3gM+OqroIoz4XEbis0stXt4ciPb5h7GkdMtTHPd/MASH6YTJw7J+3/8ocA5MZvsH8ZWMd2iIKhq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLv6ruT/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pG9qIMZe4gsWIMpg2+Mse6fdmjuFi4uQdn+j/tN+y3IdmS2TngeV/CtiLl1/oebDhGyhozXRP9qBRGh/hDZ5IIXIgH9KB8+q8zWjbWIMTyEXl86WvPuIWmT+MK814eT1FAxRgmB5G8ZUHn2AFpxD4LGMx7tfj6dB/fhU7nDHI2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNp+QTGg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLv6ruT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD6FC4CED1;
-	Wed,  5 Mar 2025 17:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNp+QTGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4484C4CED1;
+	Wed,  5 Mar 2025 17:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197476;
-	bh=TAKHXbw5nCMNwNWFtBwCvnZd9hLg9RvA/l2YuEUTVe4=;
+	s=korg; t=1741197479;
+	bh=PJ8oYJwDIiPGSbBSyjmubeKX6qE9mvXsgWwo59SVL80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aLv6ruT/vy7IA5wViX0vaQZmx5YnlodfoHnXQ5o+EL6r/SEBQWZi8l+FKPo4u+Ho5
-	 EuG4bQYk3bQmEmHrU5//gU/CmgbEQvJp3zhFmjc4tS1quEsFcqceFDX6aZQ7iMVOzu
-	 zdFvdQhLrDcWjuCLQ/WEC2FU3WNZrH4kzSxzTg2o=
+	b=xNp+QTGgGl5PhD7yyxQ7Q1dri18SpYd3KWD9GhtkAFQEeXKIREoXb10O4ohsjGLrE
+	 cxNJfrSAXYbaE01XUfoEpJixuLBkjw9+ck63w270rurEXtdSkvVsRPFDS0G5DYLHgV
+	 cNiAKOHv8G4+3pnpjl0XlWEFqKgSm4Wlq3bNQCQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Schwab <schwab@suse.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 168/176] riscv/futex: sign extend compare value in atomic cmpxchg
-Date: Wed,  5 Mar 2025 18:48:57 +0100
-Message-ID: <20250305174512.185043929@linuxfoundation.org>
+	Justin Iurman <justin.iurman@uliege.be>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 138/176] include: net: add static inline dst_dev_overhead() to dst.h
+Date: Wed,  5 Mar 2025 18:48:27 +0100
+Message-ID: <20250305174510.984699536@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -46,44 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Schwab <schwab@suse.de>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-commit 599c44cd21f4967774e0acf58f734009be4aea9a upstream.
+[ Upstream commit 0600cf40e9b36fe17f9c9f04d4f9cef249eaa5e7 ]
 
-Make sure the compare value in the lr/sc loop is sign extended to match
-what lr.w does.  Fortunately, due to the compiler keeping the register
-contents sign extended anyway the lack of the explicit extension didn't
-result in wrong code so far, but this cannot be relied upon.
+Add static inline dst_dev_overhead() function to include/net/dst.h. This
+helper function is used by ioam6_iptunnel, rpl_iptunnel and
+seg6_iptunnel to get the dev's overhead based on a cache entry
+(dst_entry). If the cache is empty, the default and generic value
+skb->mac_len is returned. Otherwise, LL_RESERVED_SPACE() over dst's dev
+is returned.
 
-Fixes: b90edb33010b ("RISC-V: Add futex support.")
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/mvmfrkv2vhz.fsf@suse.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: c64a0727f9b1 ("net: ipv6: fix dst ref loop on input in seg6 lwt")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/futex.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/dst.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/riscv/include/asm/futex.h
-+++ b/arch/riscv/include/asm/futex.h
-@@ -93,7 +93,7 @@ futex_atomic_cmpxchg_inatomic(u32 *uval,
- 		_ASM_EXTABLE_UACCESS_ERR(1b, 3b, %[r])	\
- 		_ASM_EXTABLE_UACCESS_ERR(2b, 3b, %[r])	\
- 	: [r] "+r" (ret), [v] "=&r" (val), [u] "+m" (*uaddr), [t] "=&r" (tmp)
--	: [ov] "Jr" (oldval), [nv] "Jr" (newval)
-+	: [ov] "Jr" ((long)(int)oldval), [nv] "Jr" (newval)
- 	: "memory");
- 	__disable_user_access();
+diff --git a/include/net/dst.h b/include/net/dst.h
+index d67fda89cd0fa..3a1a6f94a8092 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -434,6 +434,15 @@ static inline void dst_set_expires(struct dst_entry *dst, int timeout)
+ 		dst->expires = expires;
+ }
  
++static inline unsigned int dst_dev_overhead(struct dst_entry *dst,
++					    struct sk_buff *skb)
++{
++	if (likely(dst))
++		return LL_RESERVED_SPACE(dst->dev);
++
++	return skb->mac_len;
++}
++
+ INDIRECT_CALLABLE_DECLARE(int ip6_output(struct net *, struct sock *,
+ 					 struct sk_buff *));
+ INDIRECT_CALLABLE_DECLARE(int ip_output(struct net *, struct sock *,
+-- 
+2.39.5
+
 
 
