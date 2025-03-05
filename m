@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F44E6ADD;
-	Wed,  5 Mar 2025 17:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E286ADD;
+	Wed,  5 Mar 2025 17:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197092; cv=none; b=NZuzHc3F8S4y5GZwO5fPlVhNjJVzhyful+r3qbijeE4yEqqFOixfhQiMoJsFJug6NOvNNIC/VW7D3VueGlwaVV1sI/64DK0ImRnLqG6cTlpgFJvNAjCau1tttXBu4BKAq3KlX8bBMQ3aoOFF9V5GEmfiL3IsWAoFd5Vefu+mDUc=
+	t=1741197095; cv=none; b=WSdQkx/T3ylIccPhrrwzmPosh7jQn/4woEbjiQ7uuzMYF7M8cvCxGZwmoSmTManHwf9H+IFShbSt8cIbFuGM08J/5vNXb8n+SwhYYITLLks0SIRNkRcdrSHY1OBDjb5DkT3PAtOysc2Cqx7kb1edusHMBVL+ZU3CfsGlxbigvJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197092; c=relaxed/simple;
-	bh=BaYuVLgwSHOTQxm2f4FbTUlhH1WNKrlPL1dRt7aqFnU=;
+	s=arc-20240116; t=1741197095; c=relaxed/simple;
+	bh=jAVEoqYNHyyS3BD9k8Nh0EzANHkqoXA3Lrht+AdV3OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxSlu+V4AC2d3byv7ukqFosRjUi3MnkKycZNVn0CluQ+U2MNwVQc5MfGfxJX/ofNpep8PPEPoGPDRUF+rZwtQJ/z0ot90WbFVrqYZW6FuA4g91WukNYeZl8J6HQyhrcr+u3DNqK6/VC/NGM/l6ZI2Jo15HQUVYcnG0jl97ddz40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdCNkuGE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ANm6DpyAyCos1eUDjCZ+kT4i4jisgbM24UEsZ9N1IO/5loq1ZyQtFoa6QhnOWCRrNVZ4Z6QJ/bkISRqiySpM7gCnsxL0n3Adn+GdZQf+/kAZ+hB/fPsy931rMuCviufqF0AqxT8JsOgYRJg8KG4HIWJ9WD3l8uegqiwL6aGD034=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/BvZzEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdCNkuGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD72C4CED1;
-	Wed,  5 Mar 2025 17:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/BvZzEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB70C4CED1;
+	Wed,  5 Mar 2025 17:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197091;
-	bh=BaYuVLgwSHOTQxm2f4FbTUlhH1WNKrlPL1dRt7aqFnU=;
+	s=korg; t=1741197094;
+	bh=jAVEoqYNHyyS3BD9k8Nh0EzANHkqoXA3Lrht+AdV3OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdCNkuGE4z1EMJBdgCChcVWdJOT0hePPJDpl6TCyYg25tyHQ+bUfKoYjJTTOyzD5L
-	 KQCVS/G1BPquur0bM91PTWeCItISgYc+zOxzLhqkkG8XneJ9CeJjfw7ypA6pjDB/Fm
-	 QGsczYPNG8fgkTW+/ubuv7hvQivm2pcCyzdSaoDk=
+	b=H/BvZzEa4X9SaGXST1ssNDj+oj2qa6WVX4mt6IjwXR7Ld50+xBi+CHACYdVz7ShVs
+	 Vz3bsuWh+tKFo1mQm19liNqr/ESxgcyljQfqGxymuwzRSIHi9KMVxl8StQ6eprXTbl
+	 /vNRgRorIpkLJ5bXRyIhio/uACbYQh74SFv+5xmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.1 008/176] md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime
-Date: Wed,  5 Mar 2025 18:46:17 +0100
-Message-ID: <20250305174505.786569651@linuxfoundation.org>
+	Carlos Galo <carlosgalo@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 009/176] mm: update mark_victim tracepoints fields
+Date: Wed,  5 Mar 2025 18:46:18 +0100
+Message-ID: <20250305174505.828133345@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -46,92 +50,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Carlos Galo <carlosgalo@google.com>
 
-[ Upstream commit 8d28d0ddb986f56920ac97ae704cc3340a699a30 ]
+[ Upstream commit 72ba14deb40a9e9668ec5e66a341ed657e5215c2 ]
 
-After commit ec6bb299c7c3 ("md/md-bitmap: add 'sync_size' into struct
-md_bitmap_stats"), following panic is reported:
+The current implementation of the mark_victim tracepoint provides only the
+process ID (pid) of the victim process.  This limitation poses challenges
+for userspace tools requiring real-time OOM analysis and intervention.
+Although this information is available from the kernel logs, it’s not
+the appropriate format to provide OOM notifications.  In Android, BPF
+programs are used with the mark_victim trace events to notify userspace of
+an OOM kill.  For consistency, update the trace event to include the same
+information about the OOMed victim as the kernel logs.
 
-Oops: general protection fault, probably for non-canonical address
-RIP: 0010:bitmap_get_stats+0x2b/0xa0
-Call Trace:
- <TASK>
- md_seq_show+0x2d2/0x5b0
- seq_read_iter+0x2b9/0x470
- seq_read+0x12f/0x180
- proc_reg_read+0x57/0xb0
- vfs_read+0xf6/0x380
- ksys_read+0x6c/0xf0
- do_syscall_64+0x82/0x170
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+- UID
+   In Android each installed application has a unique UID. Including
+   the `uid` assists in correlating OOM events with specific apps.
 
-Root cause is that bitmap_get_stats() can be called at anytime if mddev
-is still there, even if bitmap is destroyed, or not fully initialized.
-Deferenceing bitmap in this case can crash the kernel. Meanwhile, the
-above commit start to deferencing bitmap->storage, make the problem
-easier to trigger.
+- Process Name (comm)
+   Enables identification of the affected process.
 
-Fix the problem by protecting bitmap_get_stats() with bitmap_info.mutex.
+- OOM Score
+  Will allow userspace to get additional insight of the relative kill
+  priority of the OOM victim. In Android, the oom_score_adj is used to
+  categorize app state (foreground, background, etc.), which aids in
+  analyzing user-perceptible impacts of OOM events [1].
 
-Cc: stable@vger.kernel.org # v6.12+
-Fixes: 32a7627cf3a3 ("[PATCH] md: optimised resync using Bitmap based intent logging")
-Reported-and-tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Closes: https://lore.kernel.org/linux-raid/ca3a91a2-50ae-4f68-b317-abd9889f3907@oracle.com/T/#m6e5086c95201135e4941fe38f9efa76daf9666c5
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250124092055.4050195-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+- Total VM, RSS Stats, and pgtables
+  Amount of memory used by the victim that will, potentially, be freed up
+  by killing it.
+
+[1] https://cs.android.com/android/platform/superproject/main/+/246dc8fc95b6d93afcba5c6d6c133307abb3ac2e:frameworks/base/services/core/java/com/android/server/am/ProcessList.java;l=188-283
+Signed-off-by: Carlos Galo <carlosgalo@google.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 5 ++++-
- drivers/md/md.c        | 5 +++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ include/trace/events/oom.h | 36 ++++++++++++++++++++++++++++++++----
+ mm/oom_kill.c              |  6 +++++-
+ 2 files changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index bddf4f3d27a77..e18e21b24210d 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2029,7 +2029,10 @@ int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats)
+diff --git a/include/trace/events/oom.h b/include/trace/events/oom.h
+index 26a11e4a2c361..b799f3bcba823 100644
+--- a/include/trace/events/oom.h
++++ b/include/trace/events/oom.h
+@@ -7,6 +7,8 @@
+ #include <linux/tracepoint.h>
+ #include <trace/events/mmflags.h>
  
- 	if (!bitmap)
- 		return -ENOENT;
--
-+	if (bitmap->mddev->bitmap_info.external)
-+		return -ENOENT;
-+	if (!bitmap->storage.sb_page) /* no superblock */
-+		return -EINVAL;
- 	sb = kmap_local_page(bitmap->storage.sb_page);
- 	stats->sync_size = le64_to_cpu(sb->sync_size);
- 	kunmap_local(sb);
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 887479e0d3afe..e2a3a1e1afca0 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8317,6 +8317,10 @@ static int md_seq_show(struct seq_file *seq, void *v)
- 		return 0;
++#define PG_COUNT_TO_KB(x) ((x) << (PAGE_SHIFT - 10))
++
+ TRACE_EVENT(oom_score_adj_update,
  
- 	spin_unlock(&all_mddevs_lock);
-+
-+	/* prevent bitmap to be freed after checking */
-+	mutex_lock(&mddev->bitmap_info.mutex);
-+
- 	spin_lock(&mddev->lock);
- 	if (mddev->pers || mddev->raid_disks || !list_empty(&mddev->disks)) {
- 		seq_printf(seq, "%s : %sactive", mdname(mddev),
-@@ -8387,6 +8391,7 @@ static int md_seq_show(struct seq_file *seq, void *v)
- 		seq_printf(seq, "\n");
- 	}
- 	spin_unlock(&mddev->lock);
-+	mutex_unlock(&mddev->bitmap_info.mutex);
- 	spin_lock(&all_mddevs_lock);
- 	if (atomic_dec_and_test(&mddev->active))
- 		__mddev_put(mddev);
+ 	TP_PROTO(struct task_struct *task),
+@@ -72,19 +74,45 @@ TRACE_EVENT(reclaim_retry_zone,
+ );
+ 
+ TRACE_EVENT(mark_victim,
+-	TP_PROTO(int pid),
++	TP_PROTO(struct task_struct *task, uid_t uid),
+ 
+-	TP_ARGS(pid),
++	TP_ARGS(task, uid),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(int, pid)
++		__string(comm, task->comm)
++		__field(unsigned long, total_vm)
++		__field(unsigned long, anon_rss)
++		__field(unsigned long, file_rss)
++		__field(unsigned long, shmem_rss)
++		__field(uid_t, uid)
++		__field(unsigned long, pgtables)
++		__field(short, oom_score_adj)
+ 	),
+ 
+ 	TP_fast_assign(
+-		__entry->pid = pid;
++		__entry->pid = task->pid;
++		__assign_str(comm, task->comm);
++		__entry->total_vm = PG_COUNT_TO_KB(task->mm->total_vm);
++		__entry->anon_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_ANONPAGES));
++		__entry->file_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_FILEPAGES));
++		__entry->shmem_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_SHMEMPAGES));
++		__entry->uid = uid;
++		__entry->pgtables = mm_pgtables_bytes(task->mm) >> 10;
++		__entry->oom_score_adj = task->signal->oom_score_adj;
+ 	),
+ 
+-	TP_printk("pid=%d", __entry->pid)
++	TP_printk("pid=%d comm=%s total-vm=%lukB anon-rss=%lukB file-rss:%lukB shmem-rss:%lukB uid=%u pgtables=%lukB oom_score_adj=%hd",
++		__entry->pid,
++		__get_str(comm),
++		__entry->total_vm,
++		__entry->anon_rss,
++		__entry->file_rss,
++		__entry->shmem_rss,
++		__entry->uid,
++		__entry->pgtables,
++		__entry->oom_score_adj
++	)
+ );
+ 
+ TRACE_EVENT(wake_reaper,
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index 1276e49b31b0a..4de30c6c5183f 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -44,6 +44,7 @@
+ #include <linux/kthread.h>
+ #include <linux/init.h>
+ #include <linux/mmu_notifier.h>
++#include <linux/cred.h>
+ 
+ #include <asm/tlb.h>
+ #include "internal.h"
+@@ -757,6 +758,7 @@ static inline void queue_oom_reaper(struct task_struct *tsk)
+  */
+ static void mark_oom_victim(struct task_struct *tsk)
+ {
++	const struct cred *cred;
+ 	struct mm_struct *mm = tsk->mm;
+ 
+ 	WARN_ON(oom_killer_disabled);
+@@ -776,7 +778,9 @@ static void mark_oom_victim(struct task_struct *tsk)
+ 	 */
+ 	__thaw_task(tsk);
+ 	atomic_inc(&oom_victims);
+-	trace_mark_victim(tsk->pid);
++	cred = get_task_cred(tsk);
++	trace_mark_victim(tsk, cred->uid.val);
++	put_cred(cred);
+ }
+ 
+ /**
 -- 
 2.39.5
 
