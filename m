@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3992512C0;
-	Wed,  5 Mar 2025 18:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564212512C0;
+	Wed,  5 Mar 2025 18:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198466; cv=none; b=oU3I6szzk4QORpFsS1NLkd5tUrf7lvPu4ppyDZu/8aEYP+bhCP7xN3rzJ7sixp0vyktvLqAjhcC/ziGAj0s4WnOsL4VS4o4R3bFxG6GYWy/Mj5KDL5CPKO0DM2mHL1dsDgw/oGXWPNeyRQ8hyWA3ng3Pj6fTvw3WjmGgCn3cmMc=
+	t=1741198469; cv=none; b=e7pCTX36+czgq6T6XG4zJ+m2R72zU/x514F0NVg726Aqdtr3QI3kX6Q40Ly2FV1u0PnW1euVDKHN3KmBP3enftJi2gOwVwWhbesXIy+aTbmqWlADdqJJG3mPCKC35t+z6teyNo243px8+E/g+w1DnJiIZc+uPisLj2TLnpLdt50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198466; c=relaxed/simple;
-	bh=fZhK3/HrODARSvYFJn34OUmvCqosoTVbu5f/Ea2j+9g=;
+	s=arc-20240116; t=1741198469; c=relaxed/simple;
+	bh=g60T00jl/tFF1Sh4ycb7LqlYAFChdHU/Ihrxhw+TziI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCq4HxaZ7WmYreNwRJKrTKpSrujl3wPvocZetP+LHA9fv9n3yuxrf38GrwdxCvEZ7a5Lo7tU726lhofh8FYdt99O4NTgLSicU0pJOYZvA9VBOJCgaexJoHJVRI6GhvFvBlZa4Kc/7leLbUYQx7BajfTiM3w3M+6umVTPLL6zRog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYZNRZoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URfWMoRcJPrANfonCrpQCwIbViJGQkBYI3muasVUFUUYEhZ5XI7oggpX4bIcnsiXXag+F1o0D6REVsZt2rVdFc62c1KPomQu8h1jlTkIZ1rWUs6XfxzjDdkq1+/NaBmloiO6kZcJpp7Se/6J+n7ka7pYMCnK+tdKBMX0Ng0Q4zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMjYHReH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYZNRZoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BEBC4CED1;
-	Wed,  5 Mar 2025 18:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMjYHReH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05D6C4CED1;
+	Wed,  5 Mar 2025 18:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198466;
-	bh=fZhK3/HrODARSvYFJn34OUmvCqosoTVbu5f/Ea2j+9g=;
+	s=korg; t=1741198469;
+	bh=g60T00jl/tFF1Sh4ycb7LqlYAFChdHU/Ihrxhw+TziI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYZNRZoovyCj3o5YXyzwijvOIB4j0Vm6P9MUie05ER+Z1aZDQiy0uOIws4+hsLUf3
-	 s+/WlrTHz+Ws1HaKtTVxQdSP1JLvRwJeyvT0HO0kMGEhYVHCstnpwde3vRUuyiJoOj
-	 2LcaH900oSkPlOAbzBzZH2ITdu0TS53f/dx0l6Lw=
+	b=XMjYHReHmeGHFGJoTgFYRWrQi5MNaGSKiWHvgB20EP7gxoUjUksdnrSSKmGKO3WNT
+	 Sa50CuWOQJ+QMt3YZ2KV1Oo1awwwr+u0C0lzxGQGALHbM+9AsiK5VlQ+u7wvaevZ2R
+	 UiWS/EppHWVfgKewaT4W0KV3ibW4NXWirQgffwvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 038/157] ASoC: fsl: Rename stream name of SAI DAI driver
-Date: Wed,  5 Mar 2025 18:47:54 +0100
-Message-ID: <20250305174506.828620399@linuxfoundation.org>
+Subject: [PATCH 6.13 039/157] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
+Date: Wed,  5 Mar 2025 18:47:55 +0100
+Message-ID: <20250305174506.868712084@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,71 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Philo Lu <lulie@linux.alibaba.com>
 
-[ Upstream commit 0da83ab025bc45e9742e87c2cce19bff423377c8 ]
+[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
 
-If stream names of DAI driver are duplicated there'll be warnings when
-machine driver tries to add widgets on a route:
+We found an issue when using bpf_redirect with ipvs NAT mode after
+commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
+the same name space"). Particularly, we use bpf_redirect to return
+the skb directly back to the netif it comes from, i.e., xnet is
+false in skb_scrub_packet(), and then ipvs_property is preserved
+and SNAT is skipped in the rx path.
 
-[    8.831335] fsl-asoc-card sound-wm8960: ASoC: sink widget CPU-Playback overwritten
-[    8.839917] fsl-asoc-card sound-wm8960: ASoC: source widget CPU-Capture overwritten
+ipvs_property has been already cleared when netns is changed in
+commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
+SKB net namespace changed"). This patch just clears it in spite of
+netns.
 
-Use different stream names to avoid such warnings.
-DAI names in AUDMIX are also updated accordingly.
-
-Fixes: 15c958390460 ("ASoC: fsl_sai: Add separate DAI for transmitter and receiver")
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://patch.msgid.link/20250217010437.258621-1-chancel.liu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c    | 6 +++---
- sound/soc/fsl/imx-audmix.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ net/core/skbuff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 634168d2bb6e5..c5efbceb06d1f 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -994,10 +994,10 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
- 	{
- 		.name = "sai-tx",
- 		.playback = {
--			.stream_name = "CPU-Playback",
-+			.stream_name = "SAI-Playback",
- 			.channels_min = 1,
- 			.channels_max = 32,
--				.rate_min = 8000,
-+			.rate_min = 8000,
- 			.rate_max = 2822400,
- 			.rates = SNDRV_PCM_RATE_KNOT,
- 			.formats = FSL_SAI_FORMATS,
-@@ -1007,7 +1007,7 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
- 	{
- 		.name = "sai-rx",
- 		.capture = {
--			.stream_name = "CPU-Capture",
-+			.stream_name = "SAI-Capture",
- 			.channels_min = 1,
- 			.channels_max = 32,
- 			.rate_min = 8000,
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index 50ecc5f51100e..dac5d4ddacd6e 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -119,8 +119,8 @@ static const struct snd_soc_ops imx_audmix_be_ops = {
- static const char *name[][3] = {
- 	{"HiFi-AUDMIX-FE-0", "HiFi-AUDMIX-FE-1", "HiFi-AUDMIX-FE-2"},
- 	{"sai-tx", "sai-tx", "sai-rx"},
--	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "CPU-Capture"},
--	{"CPU-Playback", "CPU-Playback", "AUDMIX-Capture-0"},
-+	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "SAI-Capture"},
-+	{"SAI-Playback", "SAI-Playback", "AUDMIX-Capture-0"},
- };
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index f251a99f8d421..bed75273f8c47 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6127,11 +6127,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->offload_fwd_mark = 0;
+ 	skb->offload_l3_fwd_mark = 0;
+ #endif
++	ipvs_reset(skb);
  
- static int imx_audmix_probe(struct platform_device *pdev)
+ 	if (!xnet)
+ 		return;
+ 
+-	ipvs_reset(skb);
+ 	skb->mark = 0;
+ 	skb_clear_tstamp(skb);
+ }
 -- 
 2.39.5
 
