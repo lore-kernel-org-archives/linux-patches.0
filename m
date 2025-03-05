@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFF91C860D;
-	Wed,  5 Mar 2025 18:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C120C004;
+	Wed,  5 Mar 2025 18:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197753; cv=none; b=XJGSri6Rb2L2QiV0lTSysip14FOZdTTAkcqeVBBNxSxn95djFIW1ZmEqdEaIutDlJ5r10cpunyhm7hCLbAYFvJDflosPM8Txw7J+FSN8HPFfUwKMSxmt4FDRjaJV4tCF/aclWsvbyHvsYkBsVrjAzqnyaPpi/3BIrJgFcSZzBEs=
+	t=1741197756; cv=none; b=SJ9fNDtsW6xBrehkKBmUC3PVkv79ucAUB1/50h+Gk+iteEhkLC2PG+hHshYRnoDmZkilzQLykJD2e3P73oThS+JNEFG3f1TZeMwfmaPoRG8vPw/e8+IfUDuzGOTv7seTFZWIwSwcw9NK74kQFeIaExtlSeOLubfCRVwBD3QuR2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197753; c=relaxed/simple;
-	bh=fC6F+G25uvo8w9ktO7+TIYQSf8CAP+1UehQ/y5Rm6tY=;
+	s=arc-20240116; t=1741197756; c=relaxed/simple;
+	bh=P0fzaIEz7l5MrUTFfJINgUaCvJsBR65G/YLWXpfGggM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJd7reexeo5Lmns0wni3RK11Kpw8Tq5d2nYLHBTKR/cOGJwPQaZlTssICCaBqV3rzTYWbJDdGUo0gFM8ZwGSEsXIruxNg9RUW9gCJXavtYl1hbwhnKQBd5s8hmilYpqJjqVbwdFvQkBhdykCQ5Z7Fyj4CjArxRte8HsxQfuVprI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gw/OVjXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JBtvsxnrE3UBFWilEgBv5HYnFxSKicCSdiHJ0sRGedIaaW8llaIymT9FgFmytTFdH0swOK3vRTP91uv9tlFve6d/Xrz5YNF1UH0rV5yNjKvTH3bm+OjiRH0POnAJuERvc1br+1nuonFIPwlB3HzcsVT3Zvmb19UZiUZVac493Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcyNLGbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gw/OVjXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651E9C4CED1;
-	Wed,  5 Mar 2025 18:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcyNLGbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47936C4CED1;
+	Wed,  5 Mar 2025 18:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197753;
-	bh=fC6F+G25uvo8w9ktO7+TIYQSf8CAP+1UehQ/y5Rm6tY=;
+	s=korg; t=1741197756;
+	bh=P0fzaIEz7l5MrUTFfJINgUaCvJsBR65G/YLWXpfGggM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gw/OVjXxrPHrRlrxWjg/jLd0v7iVaruKDUyaq4cl8yUORp9tK1066rHOPtLc9JXne
-	 P+DlZnU0E81erlvr6yqBXq97+AkXXFjhY3BjEfI8ZJ92UjlLxsE7dTgak/M2wc2DKR
-	 94jWIu6ZVv2PoKomrhMBFe84UhISlsuD4/ONiGcU=
+	b=LcyNLGbOV4WnJFPhYVcVjjkMNy2FfnAbd2CO0TJvEwwDVLTy9Vu1HLWz7ytd45RYV
+	 WsZypifiyhMEwleDSd2VWnI3Jij9vmD3yZdqbLbZNw3FNpI1M9SGdOkkA+/m0gJ0qB
+	 qho8kj9l6ftWK5NAsCIAMclvZQsdnMpOT/Ht4x4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongliang Wang <wanghongliang@loongson.cn>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 071/142] i2c: ls2x: Fix frequency division register access
-Date: Wed,  5 Mar 2025 18:48:10 +0100
-Message-ID: <20250305174503.187705822@linuxfoundation.org>
+	Tomas Glozar <tglozar@redhat.com>
+Subject: [PATCH 6.6 089/142] Revert "rtla/timerlat_top: Set OSNOISE_WORKLOAD for kernel threads"
+Date: Wed,  5 Mar 2025 18:48:28 +0100
+Message-ID: <20250305174503.909373226@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,79 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Tomas Glozar <tglozar@redhat.com>
 
-commit 71c49ee9bb41e1709abac7e2eb05f9193222e580 upstream.
+This reverts commit 41955b6c268154f81e34f9b61cf8156eec0730c0.
 
-According to the chip manual, the I2C register access type of
-Loongson-2K2000/LS7A is "B", so we can only access registers in byte
-form (readb()/writeb()).
+The commit breaks rtla build, since params->kernel_workload is not
+present on 6.6-stable.
 
-Although Loongson-2K0500/Loongson-2K1000 do not have similar
-constraints, register accesses in byte form also behave correctly.
-
-Also, in hardware, the frequency division registers are defined as two
-separate registers (high 8-bit and low 8-bit), so we just access them
-directly as bytes.
-
-Fixes: 015e61f0bffd ("i2c: ls2x: Add driver for Loongson-2K/LS7A I2C controller")
-Co-developed-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: stable@vger.kernel.org # v6.3+
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250220125612.1910990-1-zhoubinbin@loongson.cn
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-ls2x.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ tools/tracing/rtla/src/timerlat_top.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/i2c/busses/i2c-ls2x.c
-+++ b/drivers/i2c/busses/i2c-ls2x.c
-@@ -10,6 +10,7 @@
-  * Rewritten for mainline by Binbin Zhou <zhoubinbin@loongson.cn>
-  */
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -679,15 +679,12 @@ timerlat_top_apply_config(struct osnoise
+ 		auto_house_keeping(&params->monitored_cpus);
+ 	}
  
-+#include <linux/bitfield.h>
- #include <linux/bits.h>
- #include <linux/completion.h>
- #include <linux/device.h>
-@@ -26,7 +27,8 @@
- #include <linux/units.h>
+-	/*
+-	* Set workload according to type of thread if the kernel supports it.
+-	* On kernels without support, user threads will have already failed
+-	* on missing timerlat_fd, and kernel threads do not need it.
+-	*/
+-	retval = osnoise_set_workload(top->context, params->kernel_workload);
+-	if (retval < -1) {
+-		err_msg("Failed to set OSNOISE_WORKLOAD option\n");
+-		goto out_err;
++	if (params->user_top) {
++		retval = osnoise_set_workload(top->context, 0);
++		if (retval) {
++			err_msg("Failed to set OSNOISE_WORKLOAD option\n");
++			goto out_err;
++		}
+ 	}
  
- /* I2C Registers */
--#define I2C_LS2X_PRER		0x0 /* Freq Division Register(16 bits) */
-+#define I2C_LS2X_PRER_LO	0x0 /* Freq Division Low Byte Register */
-+#define I2C_LS2X_PRER_HI	0x1 /* Freq Division High Byte Register */
- #define I2C_LS2X_CTR		0x2 /* Control Register */
- #define I2C_LS2X_TXR		0x3 /* Transport Data Register */
- #define I2C_LS2X_RXR		0x3 /* Receive Data Register */
-@@ -93,6 +95,7 @@ static irqreturn_t ls2x_i2c_isr(int this
-  */
- static void ls2x_i2c_adjust_bus_speed(struct ls2x_i2c_priv *priv)
- {
-+	u16 val;
- 	struct i2c_timings *t = &priv->i2c_t;
- 	struct device *dev = priv->adapter.dev.parent;
- 	u32 acpi_speed = i2c_acpi_find_bus_speed(dev);
-@@ -104,9 +107,14 @@ static void ls2x_i2c_adjust_bus_speed(st
- 	else
- 		t->bus_freq_hz = LS2X_I2C_FREQ_STD;
- 
--	/* Calculate and set i2c frequency. */
--	writew(LS2X_I2C_PCLK_FREQ / (5 * t->bus_freq_hz) - 1,
--	       priv->base + I2C_LS2X_PRER);
-+	/*
-+	 * According to the chip manual, we can only access the registers as bytes,
-+	 * otherwise the high bits will be truncated.
-+	 * So set the I2C frequency with a sequential writeb() instead of writew().
-+	 */
-+	val = LS2X_I2C_PCLK_FREQ / (5 * t->bus_freq_hz) - 1;
-+	writeb(FIELD_GET(GENMASK(7, 0), val), priv->base + I2C_LS2X_PRER_LO);
-+	writeb(FIELD_GET(GENMASK(15, 8), val), priv->base + I2C_LS2X_PRER_HI);
- }
- 
- static void ls2x_i2c_init(struct ls2x_i2c_priv *priv)
+ 	return 0;
 
 
