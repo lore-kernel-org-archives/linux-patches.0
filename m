@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC521A5BB7;
-	Wed,  5 Mar 2025 18:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34F41AAE2E;
+	Wed,  5 Mar 2025 18:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198332; cv=none; b=RNbmlx75SWUQ9flBL17H8hjKrkfyE3ymXIAowsolB24GMQ+l8OiAXU+xCFyogzet66mM6uXPtNswAVKq181ivg2SVDpEVxbAOnIXFlhKVtVSMrSMsoZyecfiN0g35Mgz5xC8cyZSKW/SXsypkMrHQu2amTqlaW+cT2k4b6mUt2E=
+	t=1741198334; cv=none; b=Xoz/JycsdIavHhVxq2WAkekQNniM5d0QCFx0WKbxPhGNnOqJeuGpu6jUKgnOP1EQPIAhZNNGvG6g073ChrGXkxJKrH6aBOesLE49kwdRnACPBVvRB1eewr6MLdb4HitUJJGd1vSMVBz89LIMP7lZJ341nSaX8j1S4UgLA/aUAo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198332; c=relaxed/simple;
-	bh=uZXNVRwowt7V43zGg2Dcb7k3nSmkzNl5C97M0pyTN6c=;
+	s=arc-20240116; t=1741198334; c=relaxed/simple;
+	bh=sFtd5gPj2DSlv6fdNuLBW7oY4tu6j/cZVl9BYN2Mzp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efS/ogtf39LWXe1Lu99+OVGZh2abIYhrVCZVWE4SOx7rjlh3Gjkg6guQdJKECt9o8271Rib8YdxWeUXD6LHxBuBGvPgBj/aW6KqHezn7r3PwOm0FNt5WWXmMTMtMBkqxaWimwLt9raJT+/7QwC9euCsXvFBzfRCq0jD/AK57E/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBNSevGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LqhCzj8gkgxHUc28rIxfWt5a8SazrWbloLVYV805DoRLabH+czJ6ajwCAfyA3+9w6YVpt9NoX//CMKYQPiMOkiGj9vvZOWR29VoH32u/niUl9CJ2b8H2wqW0xOZrlRfrvsP2iXVFyi4I8x77unCnsPWqNXCiLV4KPgd2LfbxvYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwXkpTJE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBNSevGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53583C4CED1;
-	Wed,  5 Mar 2025 18:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwXkpTJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF2DC4CED1;
+	Wed,  5 Mar 2025 18:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198331;
-	bh=uZXNVRwowt7V43zGg2Dcb7k3nSmkzNl5C97M0pyTN6c=;
+	s=korg; t=1741198334;
+	bh=sFtd5gPj2DSlv6fdNuLBW7oY4tu6j/cZVl9BYN2Mzp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBNSevGx6bqAFbQJhB0Q0BINQ02H7NOuqwQYfnFRmKQ8ryFI7rnxBRkehdUnrdHUR
-	 wodlZmcRXBfx6pBJ1S17eUyjn31ZPTIkuXn9+aN+LarViv7e89CJ/k4B4gDAcAsv7R
-	 qLXEkT7xtEmzsxBNyOZNKEN7Wg9XO4ZE7cqZ5RoE=
+	b=nwXkpTJE5FmxvwE/L9uN/hS4BG+hRObDvkLoYI1EZmQzZFwaJOppWsGdRiiKNRH4l
+	 VYDBtasmMwhQAWArzv/g8VyRZFlSxzkH4SNdgJPUbvnWRLX6iqR2KyO/9pqqLq5Uw3
+	 kqYEoM8N1L0senXu9LCNNNFc8uSJ6yPm1f+FRYCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jones <pjones@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.12 141/150] efi: Dont map the entire mokvar table to determine its size
-Date: Wed,  5 Mar 2025 18:49:30 +0100
-Message-ID: <20250305174509.478421602@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	"chr[]" <chris@rudorff.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PATCH 6.12 142/150] amdgpu/pm/legacy: fix suspend/resume issues
+Date: Wed,  5 Mar 2025 18:49:31 +0100
+Message-ID: <20250305174509.518124159@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -50,127 +52,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Jones <pjones@redhat.com>
+From: chr[] <chris@rudorff.com>
 
-commit 2b90e7ace79774a3540ce569e000388f8d22c9e0 upstream.
+commit 91dcc66b34beb72dde8412421bdc1b4cd40e4fb8 upstream.
 
-Currently, when validating the mokvar table, we (re)map the entire table
-on each iteration of the loop, adding space as we discover new entries.
-If the table grows over a certain size, this fails due to limitations of
-early_memmap(), and we get a failure and traceback:
+resume and irq handler happily races in set_power_state()
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at mm/early_ioremap.c:139 __early_ioremap+0xef/0x220
-  ...
-  Call Trace:
-   <TASK>
-   ? __early_ioremap+0xef/0x220
-   ? __warn.cold+0x93/0xfa
-   ? __early_ioremap+0xef/0x220
-   ? report_bug+0xff/0x140
-   ? early_fixup_exception+0x5d/0xb0
-   ? early_idt_handler_common+0x2f/0x3a
-   ? __early_ioremap+0xef/0x220
-   ? efi_mokvar_table_init+0xce/0x1d0
-   ? setup_arch+0x864/0xc10
-   ? start_kernel+0x6b/0xa10
-   ? x86_64_start_reservations+0x24/0x30
-   ? x86_64_start_kernel+0xed/0xf0
-   ? common_startup_64+0x13e/0x141
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  mokvar: Failed to map EFI MOKvar config table pa=0x7c4c3000, size=265187.
+* amdgpu_legacy_dpm_compute_clocks() needs lock
+* protect irq work handler
+* fix dpm_enabled usage
 
-Mapping the entire structure isn't actually necessary, as we don't ever
-need more than one entry header mapped at once.
+v2: fix clang build, integrate Lijo's comments (Alex)
 
-Changes efi_mokvar_table_init() to only map each entry header, not the
-entire table, when determining the table size.  Since we're not mapping
-any data past the variable name, it also changes the code to enforce
-that each variable name is NUL terminated, rather than attempting to
-verify it in place.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Peter Jones <pjones@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2524
+Fixes: 3712e7a49459 ("drm/amd/pm: unified lock protections in amdgpu_dpm.c")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Tested-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name> # on Oland PRO
+Signed-off-by: chr[] <chris@rudorff.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ee3dc9e204d271c9c7a8d4d38a0bce4745d33e71)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/mokvar-table.c |   42 +++++++++++-------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c     |   25 ++++++++++++++++++------
+ drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c |    8 +++++--
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c     |   26 +++++++++++++++++++------
+ 3 files changed, 45 insertions(+), 14 deletions(-)
 
---- a/drivers/firmware/efi/mokvar-table.c
-+++ b/drivers/firmware/efi/mokvar-table.c
-@@ -103,9 +103,7 @@ void __init efi_mokvar_table_init(void)
- 	void *va = NULL;
- 	unsigned long cur_offset = 0;
- 	unsigned long offset_limit;
--	unsigned long map_size = 0;
- 	unsigned long map_size_needed = 0;
--	unsigned long size;
- 	struct efi_mokvar_table_entry *mokvar_entry;
- 	int err;
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
+@@ -3043,6 +3043,7 @@ static int kv_dpm_hw_init(void *handle)
+ 	if (!amdgpu_dpm)
+ 		return 0;
  
-@@ -134,48 +132,34 @@ void __init efi_mokvar_table_init(void)
- 	 */
- 	err = -EINVAL;
- 	while (cur_offset + sizeof(*mokvar_entry) <= offset_limit) {
--		mokvar_entry = va + cur_offset;
--		map_size_needed = cur_offset + sizeof(*mokvar_entry);
--		if (map_size_needed > map_size) {
--			if (va)
--				early_memunmap(va, map_size);
--			/*
--			 * Map a little more than the fixed size entry
--			 * header, anticipating some data. It's safe to
--			 * do so as long as we stay within current memory
--			 * descriptor.
--			 */
--			map_size = min(map_size_needed + 2*EFI_PAGE_SIZE,
--				       offset_limit);
--			va = early_memremap(efi.mokvar_table, map_size);
--			if (!va) {
--				pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%lu.\n",
--				       efi.mokvar_table, map_size);
--				return;
--			}
--			mokvar_entry = va + cur_offset;
-+		if (va)
-+			early_memunmap(va, sizeof(*mokvar_entry));
-+		va = early_memremap(efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+		if (!va) {
-+			pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%zu.\n",
-+			       efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+			return;
- 		}
-+		mokvar_entry = va;
++	mutex_lock(&adev->pm.mutex);
+ 	kv_dpm_setup_asic(adev);
+ 	ret = kv_dpm_enable(adev);
+ 	if (ret)
+@@ -3050,6 +3051,8 @@ static int kv_dpm_hw_init(void *handle)
+ 	else
+ 		adev->pm.dpm_enabled = true;
+ 	amdgpu_legacy_dpm_compute_clocks(adev);
++	mutex_unlock(&adev->pm.mutex);
++
+ 	return ret;
+ }
  
- 		/* Check for last sentinel entry */
- 		if (mokvar_entry->name[0] == '\0') {
- 			if (mokvar_entry->data_size != 0)
- 				break;
- 			err = 0;
-+			map_size_needed = cur_offset + sizeof(*mokvar_entry);
- 			break;
- 		}
+@@ -3067,32 +3070,42 @@ static int kv_dpm_suspend(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
  
--		/* Sanity check that the name is null terminated */
--		size = strnlen(mokvar_entry->name,
--			       sizeof(mokvar_entry->name));
--		if (size >= sizeof(mokvar_entry->name))
--			break;
-+		/* Enforce that the name is NUL terminated */
-+		mokvar_entry->name[sizeof(mokvar_entry->name) - 1] = '\0';
- 
- 		/* Advance to the next entry */
--		cur_offset = map_size_needed + mokvar_entry->data_size;
-+		cur_offset += sizeof(*mokvar_entry) + mokvar_entry->data_size;
++	cancel_work_sync(&adev->pm.dpm.thermal.work);
++
+ 	if (adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
++		adev->pm.dpm_enabled = false;
+ 		/* disable dpm */
+ 		kv_dpm_disable(adev);
+ 		/* reset the power state */
+ 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
++		mutex_unlock(&adev->pm.mutex);
  	}
+ 	return 0;
+ }
  
- 	if (va)
--		early_memunmap(va, map_size);
-+		early_memunmap(va, sizeof(*mokvar_entry));
- 	if (err) {
- 		pr_err("EFI MOKvar config table is not valid\n");
- 		return;
+ static int kv_dpm_resume(void *handle)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+-	if (adev->pm.dpm_enabled) {
++	if (!amdgpu_dpm)
++		return 0;
++
++	if (!adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
+ 		/* asic init will reset to the boot state */
+ 		kv_dpm_setup_asic(adev);
+ 		ret = kv_dpm_enable(adev);
+-		if (ret)
++		if (ret) {
+ 			adev->pm.dpm_enabled = false;
+-		else
++		} else {
+ 			adev->pm.dpm_enabled = true;
+-		if (adev->pm.dpm_enabled)
+ 			amdgpu_legacy_dpm_compute_clocks(adev);
++		}
++		mutex_unlock(&adev->pm.mutex);
+ 	}
+-	return 0;
++	return ret;
+ }
+ 
+ static bool kv_dpm_is_idle(void *handle)
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
+@@ -1009,9 +1009,12 @@ void amdgpu_dpm_thermal_work_handler(str
+ 	enum amd_pm_state_type dpm_state = POWER_STATE_TYPE_INTERNAL_THERMAL;
+ 	int temp, size = sizeof(temp);
+ 
+-	if (!adev->pm.dpm_enabled)
+-		return;
++	mutex_lock(&adev->pm.mutex);
+ 
++	if (!adev->pm.dpm_enabled) {
++		mutex_unlock(&adev->pm.mutex);
++		return;
++	}
+ 	if (!pp_funcs->read_sensor(adev->powerplay.pp_handle,
+ 				   AMDGPU_PP_SENSOR_GPU_TEMP,
+ 				   (void *)&temp,
+@@ -1033,4 +1036,5 @@ void amdgpu_dpm_thermal_work_handler(str
+ 	adev->pm.dpm.state = dpm_state;
+ 
+ 	amdgpu_legacy_dpm_compute_clocks(adev->powerplay.pp_handle);
++	mutex_unlock(&adev->pm.mutex);
+ }
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7783,6 +7783,7 @@ static int si_dpm_hw_init(void *handle)
+ 	if (!amdgpu_dpm)
+ 		return 0;
+ 
++	mutex_lock(&adev->pm.mutex);
+ 	si_dpm_setup_asic(adev);
+ 	ret = si_dpm_enable(adev);
+ 	if (ret)
+@@ -7790,6 +7791,7 @@ static int si_dpm_hw_init(void *handle)
+ 	else
+ 		adev->pm.dpm_enabled = true;
+ 	amdgpu_legacy_dpm_compute_clocks(adev);
++	mutex_unlock(&adev->pm.mutex);
+ 	return ret;
+ }
+ 
+@@ -7807,32 +7809,44 @@ static int si_dpm_suspend(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
++	cancel_work_sync(&adev->pm.dpm.thermal.work);
++
+ 	if (adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
++		adev->pm.dpm_enabled = false;
+ 		/* disable dpm */
+ 		si_dpm_disable(adev);
+ 		/* reset the power state */
+ 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
++		mutex_unlock(&adev->pm.mutex);
+ 	}
++
+ 	return 0;
+ }
+ 
+ static int si_dpm_resume(void *handle)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+-	if (adev->pm.dpm_enabled) {
++	if (!amdgpu_dpm)
++		return 0;
++
++	if (!adev->pm.dpm_enabled) {
+ 		/* asic init will reset to the boot state */
++		mutex_lock(&adev->pm.mutex);
+ 		si_dpm_setup_asic(adev);
+ 		ret = si_dpm_enable(adev);
+-		if (ret)
++		if (ret) {
+ 			adev->pm.dpm_enabled = false;
+-		else
++		} else {
+ 			adev->pm.dpm_enabled = true;
+-		if (adev->pm.dpm_enabled)
+ 			amdgpu_legacy_dpm_compute_clocks(adev);
++		}
++		mutex_unlock(&adev->pm.mutex);
+ 	}
+-	return 0;
++
++	return ret;
+ }
+ 
+ static bool si_dpm_is_idle(void *handle)
 
 
