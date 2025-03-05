@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A124251785;
-	Wed,  5 Mar 2025 18:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214B0250C1A;
+	Wed,  5 Mar 2025 18:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198157; cv=none; b=spFJl4DzSiBNdS9SV8TrH5vogaj5/nWNhPUl0Ijvyb8FOkjBk9FyHaYy63Npe8BJJqIKuymNJtDkDYukxXfFSCJU8wEhLeSQGAz11IXk2MV198Vyg64Qrvj0aJ6yfUtHQF9z8Mr/e9iSwWSEVVxLxFIsrVj9hdRBLWHQAh3IHk4=
+	t=1741198161; cv=none; b=eUgeAZXXl00QINlQoqOohnSIKckZ378+fUKjNV6U/khcgjJO0dcN2Dy1vvXUZd8IuEEnSmjgKkIM7dP1a1JSXZRjdSmqOZurXOmCFrsBfTESfDo4Dz+VxM1AuFQt3/UHpuM4YdctKwQs3KQWyfPxMwh5ESTCg/6BDG7xlF3rSIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198157; c=relaxed/simple;
-	bh=lxf1Z7JCNRN97T59fTHht8Nhktr8mXWi3bEoa0TG5Ko=;
+	s=arc-20240116; t=1741198161; c=relaxed/simple;
+	bh=VKyGxKn/fOzJ6B0UhnvFvw6i4CPpbxBTGhfVGkNjlY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMy+c+17i26GubNMUI26eD934vkUijhQdgpl/yJ1ocvcqln8h0I0019h7ii8zMtqPjR4P6wMepNPqRldeLS+CfGJqU+Og73i94ie0Yc0V+A/gElXZVn+3cm66QBvlxyyJe8F73jtDlVAFqY/FSfVHfEXsJaag46E/lIVgIrds9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPJehBHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQhNewc5a4YN4DMjVj+QHA4U9zWcz7HknVWy+TW8++nvQ6As+dsMWw31K88eP22+P5AVDvs51czLxjuyUutSVqEEIhJ3Mgz37hhOyten2sBeaJt6VK5JS645MAa+G31CCG5atkvGvZVZwrTjl/VsnV0VitVv0sHC7O6yZ+dXQCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AL0nl98e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPJehBHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250B6C4CED1;
-	Wed,  5 Mar 2025 18:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AL0nl98e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4114CC4CEE0;
+	Wed,  5 Mar 2025 18:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198156;
-	bh=lxf1Z7JCNRN97T59fTHht8Nhktr8mXWi3bEoa0TG5Ko=;
+	s=korg; t=1741198159;
+	bh=VKyGxKn/fOzJ6B0UhnvFvw6i4CPpbxBTGhfVGkNjlY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPJehBHIduTqNO4WkZNyGKnS64fIBPW9Th5ewTNPdYo7vQ80ix18RyPg6Gdx5wBPQ
-	 5YPyTOFR5fyORjOYKUOTRtMNHyIvcbJ5ZfELbiYLJJLiffwIcSxKxY8wQlpi+jXGUB
-	 LyJizVBRDiF/5zSPEd8gvExCFpPSoh+GBX+He9VI=
+	b=AL0nl98e3bKt4LX90iWm00n9NtTQq7zB6dP0iapL3bttD77IHpLpNKmACcg6XlHtX
+	 6CJBb3m5hNmbek9iFVbdcDVhPlOPgWz0OdCWkz6MhyLCFA/2/DfjXbWH0UTTfHVI+b
+	 luKRz8Da7LQ4ZZ5ntrvUlBXaryY8iIIFXEBqR3CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/150] ASoC: fsl: Rename stream name of SAI DAI driver
-Date: Wed,  5 Mar 2025 18:47:51 +0100
-Message-ID: <20250305174505.511586519@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>
+Subject: [PATCH 6.12 077/150] objtool: Fix C jump table annotations for Clang
+Date: Wed,  5 Mar 2025 18:48:26 +0100
+Message-ID: <20250305174506.907885575@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,71 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 0da83ab025bc45e9742e87c2cce19bff423377c8 ]
+[ Upstream commit 73cfc53cc3b6380eccf013049574485f64cb83ca ]
 
-If stream names of DAI driver are duplicated there'll be warnings when
-machine driver tries to add widgets on a route:
+A C jump table (such as the one used by the BPF interpreter) is a const
+global array of absolute code addresses, and this means that the actual
+values in the table may not be known until the kernel is booted (e.g.,
+when using KASLR or when the kernel VA space is sized dynamically).
 
-[    8.831335] fsl-asoc-card sound-wm8960: ASoC: sink widget CPU-Playback overwritten
-[    8.839917] fsl-asoc-card sound-wm8960: ASoC: source widget CPU-Capture overwritten
+When using PIE codegen, the compiler will default to placing such const
+global objects in .data.rel.ro (which is annotated as writable), rather
+than .rodata (which is annotated as read-only). As C jump tables are
+explicitly emitted into .rodata, this used to result in warnings for
+LoongArch builds (which uses PIE codegen for the entire kernel) like
 
-Use different stream names to avoid such warnings.
-DAI names in AUDMIX are also updated accordingly.
+  Warning: setting incorrect section attributes for .rodata..c_jump_table
 
-Fixes: 15c958390460 ("ASoC: fsl_sai: Add separate DAI for transmitter and receiver")
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://patch.msgid.link/20250217010437.258621-1-chancel.liu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+due to the fact that the explicitly specified .rodata section inherited
+the read-write annotation that the compiler uses for such objects when
+using PIE codegen.
+
+This warning was suppressed by explicitly adding the read-only
+annotation to the __attribute__((section(""))) string, by commit
+
+  c5b1184decc8 ("compiler.h: specify correct attribute for .rodata..c_jump_table")
+
+Unfortunately, this hack does not work on Clang's integrated assembler,
+which happily interprets the appended section type and permission
+specifiers as part of the section name, which therefore no longer
+matches the hard-coded pattern '.rodata..c_jump_table' that objtool
+expects, causing it to emit a warning
+
+  kernel/bpf/core.o: warning: objtool: ___bpf_prog_run+0x20: sibling call from callable instruction with modified stack frame
+
+Work around this, by emitting C jump tables into .data.rel.ro instead,
+which is treated as .rodata by the linker script for all builds, not
+just PIE based ones.
+
+Fixes: c5b1184decc8 ("compiler.h: specify correct attribute for .rodata..c_jump_table")
+Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn> # on LoongArch
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20250221135704.431269-6-ardb+git@google.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c    | 6 +++---
- sound/soc/fsl/imx-audmix.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/linux/compiler.h                | 2 +-
+ tools/objtool/check.c                   | 7 ++++---
+ tools/objtool/include/objtool/special.h | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 634168d2bb6e5..c5efbceb06d1f 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -994,10 +994,10 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
- 	{
- 		.name = "sai-tx",
- 		.playback = {
--			.stream_name = "CPU-Playback",
-+			.stream_name = "SAI-Playback",
- 			.channels_min = 1,
- 			.channels_max = 32,
--				.rate_min = 8000,
-+			.rate_min = 8000,
- 			.rate_max = 2822400,
- 			.rates = SNDRV_PCM_RATE_KNOT,
- 			.formats = FSL_SAI_FORMATS,
-@@ -1007,7 +1007,7 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
- 	{
- 		.name = "sai-rx",
- 		.capture = {
--			.stream_name = "CPU-Capture",
-+			.stream_name = "SAI-Capture",
- 			.channels_min = 1,
- 			.channels_max = 32,
- 			.rate_min = 8000,
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index ff3671226306b..ca33ecad07521 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -119,8 +119,8 @@ static const struct snd_soc_ops imx_audmix_be_ops = {
- static const char *name[][3] = {
- 	{"HiFi-AUDMIX-FE-0", "HiFi-AUDMIX-FE-1", "HiFi-AUDMIX-FE-2"},
- 	{"sai-tx", "sai-tx", "sai-rx"},
--	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "CPU-Capture"},
--	{"CPU-Playback", "CPU-Playback", "AUDMIX-Capture-0"},
-+	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "SAI-Capture"},
-+	{"SAI-Playback", "SAI-Playback", "AUDMIX-Capture-0"},
- };
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index 75a83394824c4..b15911e201bf9 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -110,7 +110,7 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
+ /* Unreachable code */
+ #ifdef CONFIG_OBJTOOL
+ /* Annotate a C jump table to allow objtool to follow the code flow */
+-#define __annotate_jump_table __section(".rodata..c_jump_table,\"a\",@progbits #")
++#define __annotate_jump_table __section(".data.rel.ro.c_jump_table")
+ #else /* !CONFIG_OBJTOOL */
+ #define __annotate_jump_table
+ #endif /* CONFIG_OBJTOOL */
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 3e72c9f9b7f37..1691aa6e6ce32 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2589,13 +2589,14 @@ static void mark_rodata(struct objtool_file *file)
+ 	 *
+ 	 * - .rodata: can contain GCC switch tables
+ 	 * - .rodata.<func>: same, if -fdata-sections is being used
+-	 * - .rodata..c_jump_table: contains C annotated jump tables
++	 * - .data.rel.ro.c_jump_table: contains C annotated jump tables
+ 	 *
+ 	 * .rodata.str1.* sections are ignored; they don't contain jump tables.
+ 	 */
+ 	for_each_sec(file, sec) {
+-		if (!strncmp(sec->name, ".rodata", 7) &&
+-		    !strstr(sec->name, ".str1.")) {
++		if ((!strncmp(sec->name, ".rodata", 7) &&
++		     !strstr(sec->name, ".str1.")) ||
++		    !strncmp(sec->name, ".data.rel.ro", 12)) {
+ 			sec->rodata = true;
+ 			found = true;
+ 		}
+diff --git a/tools/objtool/include/objtool/special.h b/tools/objtool/include/objtool/special.h
+index 86d4af9c5aa9d..89ee12b1a1384 100644
+--- a/tools/objtool/include/objtool/special.h
++++ b/tools/objtool/include/objtool/special.h
+@@ -10,7 +10,7 @@
+ #include <objtool/check.h>
+ #include <objtool/elf.h>
  
- static int imx_audmix_probe(struct platform_device *pdev)
+-#define C_JUMP_TABLE_SECTION ".rodata..c_jump_table"
++#define C_JUMP_TABLE_SECTION ".data.rel.ro.c_jump_table"
+ 
+ struct special_alt {
+ 	struct list_head list;
 -- 
 2.39.5
 
