@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948231386B4;
-	Wed,  5 Mar 2025 18:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B332512F7;
+	Wed,  5 Mar 2025 18:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197739; cv=none; b=DEh/svFi3OQE0GevEET0zflgSN2AmC152faqAn4Gacfj6OD/a12isIRx9Fq7fmObR10I8eP+a7xkwqXgjwjv8I92CTLTENDeNEqUrxWNAcUOUlnm/Jnwx/D5NK8gNlhxsLVBcRpUbUKHwWXyRcnob3sc04hTYeriiKk9d+ggAgA=
+	t=1741197742; cv=none; b=SvKaLtEZBWcZuwjmow6+8pfk9sISw4kHzTJUOEWr8c9r0yRDUrYMywycpGz8EOAMzplSdLywud2xaSNk0GVCrcXZDHBBvqr5+zfp1NgyyYnsyzevb+qd2W+AnwEV9joI3nh3oLzebtqL9zi/TeR4OcZQk63Oo9z7gSMuB3UU82Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197739; c=relaxed/simple;
-	bh=WGUoj3Y+0H1bkTsgEDCtn7BZ2qVFD6QSnFJ/zxWihJ0=;
+	s=arc-20240116; t=1741197742; c=relaxed/simple;
+	bh=+elkL7mLwOGOHZ7RZIf6xa80gVxP0TYuUVI0+48LPvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZzd92VFDXTtD627sBzV38YJcBz6fohvTU4znnI+7kcyeLA7fadPqhwqHLz4qvZKbmi/A7qQJHaGHtP9PcROhxXa9YwbU+niX2449s2X38fyOeDytWdgjJ3XEcJ7KxzOM8whpja4Tm91pc61mZWaL5x1Zg9CzFe6ghNCYHTZh2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgObgq8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ueW00SD75d2IJCDIV8jvKk70bfv7AfUshcDwxhh+9oou/WZZxhZFBLDktqyWFp/74ClDaRNJtOVxG7xHlyfgjiI4riJkSPk7xazHfpdHxEh+C0mfFZ57FNkwaIy6Kz+scutbIyMGl9rHv6uCHzyWUnLUy4Ms7iS516l7Vqs6MrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1/+lnGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgObgq8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6D3C4CED1;
-	Wed,  5 Mar 2025 18:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1/+lnGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B54C4CED1;
+	Wed,  5 Mar 2025 18:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197739;
-	bh=WGUoj3Y+0H1bkTsgEDCtn7BZ2qVFD6QSnFJ/zxWihJ0=;
+	s=korg; t=1741197742;
+	bh=+elkL7mLwOGOHZ7RZIf6xa80gVxP0TYuUVI0+48LPvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgObgq8hJiT6uxEqnTYAncUiBcn9HM3zvNUOBJ7d/3Ma3OIVMrxjf8MFPO6JWP6XX
-	 +Omvs9DJqV1vW6Jdv/1R7+GFPRavDRQrH2uYJBpHUN8UGF3HdqOABKMAgBxuTFqegs
-	 yxqTBS3xRaiU++sxVjOYcd0XIpFB0zLElgvrVoAM=
+	b=D1/+lnGhgSauxV7Q1SGRX2Q3GqNpxhxiLCUwMHq2sVes6WLiJJI9LDAKapgG6eeiE
+	 sWYo2BTpLjncuOSQbeweUELf+o575ea/zYxkrjOgChUNcWPmH0VV4zfJA8qpWgtx0i
+	 DNfOKdCseH1reGn859aCVFuab3wDRSufVtSUXGYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 084/142] sched/core: Prevent rescheduling when interrupts are disabled
-Date: Wed,  5 Mar 2025 18:48:23 +0100
-Message-ID: <20250305174503.713513669@linuxfoundation.org>
+	Bean Huo <beanhuo@micron.com>,
+	Arthur Simchaev <arthur.simchaev@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 085/142] scsi: ufs: core: bsg: Fix crash when arpmb command fails
+Date: Wed,  5 Mar 2025 18:48:24 +0100
+Message-ID: <20250305174503.752694800@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -53,85 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Arthur Simchaev <arthur.simchaev@sandisk.com>
 
-commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
+commit f27a95845b01e86d67c8b014b4f41bd3327daa63 upstream.
 
-David reported a warning observed while loop testing kexec jump:
+If the device doesn't support arpmb we'll crash due to copying user data in
+bsg_transport_sg_io_fn().
 
-  Interrupts enabled after irqrouter_resume+0x0/0x50
-  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
-   kernel_kexec+0xf6/0x180
-   __do_sys_reboot+0x206/0x250
-   do_syscall_64+0x95/0x180
+In the case where ufs_bsg_exec_advanced_rpmb_req() returns an error, do not
+set the job's reply_len.
 
-The corresponding interrupt flag trace:
+Memory crash backtrace:
+3,1290,531166405,-;ufshcd 0000:00:12.5: ARPMB OP failed: error code -22
 
-  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
-  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
+4,1308,531166555,-;Call Trace:
 
-That means __up_console_sem() was invoked with interrupts enabled. Further
-instrumentation revealed that in the interrupt disabled section of kexec
-jump one of the syscore_suspend() callbacks woke up a task, which set the
-NEED_RESCHED flag. A later callback in the resume path invoked
-cond_resched() which in turn led to the invocation of the scheduler:
+4,1309,531166559,-; <TASK>
 
-  __cond_resched+0x21/0x60
-  down_timeout+0x18/0x60
-  acpi_os_wait_semaphore+0x4c/0x80
-  acpi_ut_acquire_mutex+0x3d/0x100
-  acpi_ns_get_node+0x27/0x60
-  acpi_ns_evaluate+0x1cb/0x2d0
-  acpi_rs_set_srs_method_data+0x156/0x190
-  acpi_pci_link_set+0x11c/0x290
-  irqrouter_resume+0x54/0x60
-  syscore_resume+0x6a/0x200
-  kernel_kexec+0x145/0x1c0
-  __do_sys_reboot+0xeb/0x240
-  do_syscall_64+0x95/0x180
+4,1310,531166565,-; ? show_regs+0x6d/0x80
 
-This is a long standing problem, which probably got more visible with
-the recent printk changes. Something does a task wakeup and the
-scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
-invokes schedule() from a completely bogus context. The scheduler
-enables interrupts after context switching, which causes the above
-warning at the end.
+4,1311,531166575,-; ? die+0x37/0xa0
 
-Quite some of the code paths in syscore_suspend()/resume() can result in
-triggering a wakeup with the exactly same consequences. They might not
-have done so yet, but as they share a lot of code with normal operations
-it's just a question of time.
+4,1312,531166583,-; ? do_trap+0xd4/0xf0
 
-The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
-models. Full preemption is not affected as cond_resched() is disabled and
-the preemption check preemptible() takes the interrupt disabled flag into
-account.
+4,1313,531166593,-; ? do_error_trap+0x71/0xb0
 
-Cure the problem by adding a corresponding check into cond_resched().
+4,1314,531166601,-; ? usercopy_abort+0x6c/0x80
 
-Reported-by: David Woodhouse <dwmw@amazon.co.uk>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+4,1315,531166610,-; ? exc_invalid_op+0x52/0x80
+
+4,1316,531166622,-; ? usercopy_abort+0x6c/0x80
+
+4,1317,531166630,-; ? asm_exc_invalid_op+0x1b/0x20
+
+4,1318,531166643,-; ? usercopy_abort+0x6c/0x80
+
+4,1319,531166652,-; __check_heap_object+0xe3/0x120
+
+4,1320,531166661,-; check_heap_object+0x185/0x1d0
+
+4,1321,531166670,-; __check_object_size.part.0+0x72/0x150
+
+4,1322,531166679,-; __check_object_size+0x23/0x30
+
+4,1323,531166688,-; bsg_transport_sg_io_fn+0x314/0x3b0
+
+Fixes: 6ff265fc5ef6 ("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Arthur Simchaev <arthur.simchaev@sandisk.com>
+Link: https://lore.kernel.org/r/20250220142039.250992-1-arthur.simchaev@sandisk.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufs_bsg.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8561,7 +8561,7 @@ SYSCALL_DEFINE0(sched_yield)
- #if !defined(CONFIG_PREEMPTION) || defined(CONFIG_PREEMPT_DYNAMIC)
- int __sched __cond_resched(void)
- {
--	if (should_resched(0)) {
-+	if (should_resched(0) && !irqs_disabled()) {
- 		preempt_schedule_common();
- 		return 1;
- 	}
+--- a/drivers/ufs/core/ufs_bsg.c
++++ b/drivers/ufs/core/ufs_bsg.c
+@@ -194,10 +194,12 @@ out:
+ 	ufshcd_rpm_put_sync(hba);
+ 	kfree(buff);
+ 	bsg_reply->result = ret;
+-	job->reply_len = !rpmb ? sizeof(struct ufs_bsg_reply) : sizeof(struct ufs_rpmb_reply);
+ 	/* complete the job here only if no error */
+-	if (ret == 0)
++	if (ret == 0) {
++		job->reply_len = rpmb ? sizeof(struct ufs_rpmb_reply) :
++					sizeof(struct ufs_bsg_reply);
+ 		bsg_job_done(job, ret, bsg_reply->reply_payload_rcv_len);
++	}
+ 
+ 	return ret;
+ }
 
 
