@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3783678F3A;
-	Wed,  5 Mar 2025 18:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E71E78F3A;
+	Wed,  5 Mar 2025 18:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198393; cv=none; b=huenFvG2IxlDGuEg+ip9wWlNY3YZwsIUVcsvmCNPUjXoKchzqRE1Mz7m8QQy3AfWyS0V+p1fXCSDtx1xxlo0tkViTMfOrSM5EiHlOntP8EHaG6r35asuOWTprXBf0wx/FuQq47IhFJKFRpVC16eNQQSrwjjkUslmgm8f0qwmcqg=
+	t=1741198396; cv=none; b=SUkDdw3r4uddTmQmRaLfe57iPQOmpRaP4Co6DCHrmdATh0/H6VOXsBUipZhtGA5K5X6A134uzIaJB9BDp5RLdiRTUzQOMJ4ofgK/UjV10LTQUEyPZJ6WRmTY7FFnWSKMCrQOgsCRMvVPnODU0yIusrkwIO98ph+RMbg+btzb04U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198393; c=relaxed/simple;
-	bh=8bWcm94E2memMbaZZKS35c8PeZYPZ+v0LpgtU8iqWpI=;
+	s=arc-20240116; t=1741198396; c=relaxed/simple;
+	bh=ZCc1k3ExwTqCPBIBp48kUUTK7cIFiOoP9pqjj8bcLng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shgb72uAmbG3U9qtO+PpV5aBxT53GJ3vfwYxFhSNXMdJvPndGE4eqAUrIhu8FGGWjMOQ3AhqSCkvIw/7D94iQI8WqVk1BuCsk9j59wo9nOzeWchnduPAy8BG0abCNUQuaeefCn8k7GQTcg0RoxZ3DB0JnHaY/DJ9m4YaCuU/lok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evpz9e91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hVgKi88UsYJNwUnbqAdhgg/TxA2wap7fOTmdTxBEdLWDySshlEL39UZ0Vz1Trlo9qOBzajmFl7viii+sCUsMuJWg0ItHP2rqpdkavRoFuv7Gzu0qHzTPsaRhon96swogSHs+5VfH6jrX3iVm1vHChkuRU+V7gMjwF8310+xOogk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFj1lh4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evpz9e91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B312FC4CED1;
-	Wed,  5 Mar 2025 18:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFj1lh4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DDBC4CED1;
+	Wed,  5 Mar 2025 18:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198393;
-	bh=8bWcm94E2memMbaZZKS35c8PeZYPZ+v0LpgtU8iqWpI=;
+	s=korg; t=1741198396;
+	bh=ZCc1k3ExwTqCPBIBp48kUUTK7cIFiOoP9pqjj8bcLng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evpz9e91pGmFGTt8gc6VpgweuRZUNXB9uHYZpOk0hVQfHakhfba5N6cyOnZPKxKv2
-	 AAtAt7D3iuVaPa1MQBT1m8+ay8cSTj1uX38sT104PmaXRgCzB8NkrvsUNH49k/wjA4
-	 9HVF3WTL/zfxjY9WGMSabwNjR/Xn/PAuUZi3POAI=
+	b=fFj1lh4DXkSbwiInonlX08BWlhqcimr4HSk139uWSXtO3GNna1wZcJQK07FGNXbT4
+	 V+OOk+BbTk+keuXBxgzy/cT2FfezER9pShWJxzv2Ds6LYsff9slkd+6sDnicRI4KP5
+	 k1sD1Ao0qfmNX6EPlxRJ06Y8GNBN+8mM3rbolNB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 013/157] NFS: O_DIRECT writes must check and adjust the file length
-Date: Wed,  5 Mar 2025 18:47:29 +0100
-Message-ID: <20250305174505.816324359@linuxfoundation.org>
+Subject: [PATCH 6.13 014/157] NFS: Adjust delegated timestamps for O_DIRECT reads and writes
+Date: Wed,  5 Mar 2025 18:47:30 +0100
+Message-ID: <20250305174505.858492108@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -54,68 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit fcf857ee1958e9247298251f7615d0c76f1e9b38 ]
+[ Upstream commit 88025c67fe3c025a0123bc7af50535b97f7af89a ]
 
-While it is uncommon for delegations to be held while O_DIRECT writes
-are in progress, it is possible. The xfstests generic/647 and
-generic/729 both end up triggering that state, and end up failing due to
-the fact that the file size is not adjusted.
+Adjust the timestamps if O_DIRECT is being combined with attribute
+delegations.
 
-Reported-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219738
-Cc: stable@vger.kernel.org
+Fixes: e12912d94137 ("NFSv4: Add support for delegated atime and mtime attributes")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Stable-dep-of: 88025c67fe3c ("NFS: Adjust delegated timestamps for O_DIRECT reads and writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/direct.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/nfs/direct.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index b08dbe96bc579..8f2aa2bf45659 100644
+index 8f2aa2bf45659..6a6e758841336 100644
 --- a/fs/nfs/direct.c
 +++ b/fs/nfs/direct.c
-@@ -130,6 +130,20 @@ static void nfs_direct_truncate_request(struct nfs_direct_req *dreq,
- 		dreq->count = req_start;
- }
+@@ -56,6 +56,7 @@
+ #include <linux/uaccess.h>
+ #include <linux/atomic.h>
  
-+static void nfs_direct_file_adjust_size_locked(struct inode *inode,
-+					       loff_t offset, size_t count)
-+{
-+	loff_t newsize = offset + (loff_t)count;
-+	loff_t oldsize = i_size_read(inode);
-+
-+	if (newsize > oldsize) {
-+		i_size_write(inode, newsize);
-+		NFS_I(inode)->cache_validity &= ~NFS_INO_INVALID_SIZE;
-+		trace_nfs_size_grow(inode, newsize);
-+		nfs_inc_stats(inode, NFSIOS_EXTENDWRITE);
-+	}
-+}
-+
- /**
-  * nfs_swap_rw - NFS address space operation for swap I/O
-  * @iocb: target I/O control block
-@@ -740,6 +754,7 @@ static void nfs_direct_write_completion(struct nfs_pgio_header *hdr)
- 	struct nfs_direct_req *dreq = hdr->dreq;
- 	struct nfs_commit_info cinfo;
- 	struct nfs_page *req = nfs_list_entry(hdr->pages.next);
-+	struct inode *inode = dreq->inode;
- 	int flags = NFS_ODIRECT_DONE;
- 
- 	trace_nfs_direct_write_completion(dreq);
-@@ -761,6 +776,10 @@ static void nfs_direct_write_completion(struct nfs_pgio_header *hdr)
- 	}
++#include "delegation.h"
+ #include "internal.h"
+ #include "iostat.h"
+ #include "pnfs.h"
+@@ -286,6 +287,8 @@ static void nfs_direct_read_completion(struct nfs_pgio_header *hdr)
+ 	nfs_direct_count_bytes(dreq, hdr);
  	spin_unlock(&dreq->lock);
  
-+	spin_lock(&inode->i_lock);
-+	nfs_direct_file_adjust_size_locked(inode, dreq->io_start, dreq->count);
-+	spin_unlock(&inode->i_lock);
++	nfs_update_delegated_atime(dreq->inode);
 +
  	while (!list_empty(&hdr->pages)) {
+ 		struct nfs_page *req = nfs_list_entry(hdr->pages.next);
+ 		struct page *page = req->wb_page;
+@@ -778,6 +781,7 @@ static void nfs_direct_write_completion(struct nfs_pgio_header *hdr)
  
- 		req = nfs_list_entry(hdr->pages.next);
+ 	spin_lock(&inode->i_lock);
+ 	nfs_direct_file_adjust_size_locked(inode, dreq->io_start, dreq->count);
++	nfs_update_delegated_mtime_locked(dreq->inode);
+ 	spin_unlock(&inode->i_lock);
+ 
+ 	while (!list_empty(&hdr->pages)) {
 -- 
 2.39.5
 
