@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09271C6FF6;
-	Wed,  5 Mar 2025 18:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90211C6FF6;
+	Wed,  5 Mar 2025 18:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198044; cv=none; b=S4vc4Uab8M76muXvBZsR/C8D2xzFD2kmmzVr5qAziIjMndmPfgHmKXTF0zrBAE51MHrpT9SVtb6GOF+9E3GDVFabgKs9HxJ+iaMtpKibgWhRUzkZj+lKHYApcaV/KL83BhIizw2P8xhld3r+qaBoDwDK6Axxf+MwePv63fdODSE=
+	t=1741198048; cv=none; b=heecRUyRTPCQuhDC5NF7/Mkn0mvkJIIK8Ae20j6nyqoRtfAsH/ddmtyx3/9OOsdQRd9NQsPl31ws4sdk346lRjb1hNPFtVFZpomh70sGzIh+sDzan5qPjFXMKasz/9qheF891om1YWdhqXo3vFsJR4h4UOtdF/bQZeQQAtkY8B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198044; c=relaxed/simple;
-	bh=lh8mVYMUKs03vJP0OeBQcJEPNhzh1cqbJMEMc8oje7o=;
+	s=arc-20240116; t=1741198048; c=relaxed/simple;
+	bh=iTPQHxWpB0LbJOJbkvNXvJqU4uVqGXOpIrnXJudZC9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=haDUCpaxkxFyTKy406rNXAA2/8ZtWPaxAyf6mkWh3tsvSinGqlHbw2TYEZVW1rXZqUDpXMalq1sshciFjoZVIJLv6ZG1k+5kQDnb42Zc1vHsd5JhEvwcwGBFZG75ecwOdTrBqYJCd5b9NyP8mzewUa6g3Or0OWttkKi7bYcNA0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVqf7v49; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzD9F0GEgpQKrJtpOerLTBvfafc4gnQpRIYxIcQnBeme3kx5nsj1RZPLFXj0fAfdqe2yfDLbgMTRWcgbb27WuC7x9sogRTJKAJ596nLdHW88uafHNc1Vorv2L7O5ovlQfu2ZbTPJzaBY7RhP51RcBHpy7Uby80tZGYBQuXqi5Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLobO3db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVqf7v49"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40923C4CED1;
-	Wed,  5 Mar 2025 18:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLobO3db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2206CC4CEE0;
+	Wed,  5 Mar 2025 18:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198044;
-	bh=lh8mVYMUKs03vJP0OeBQcJEPNhzh1cqbJMEMc8oje7o=;
+	s=korg; t=1741198047;
+	bh=iTPQHxWpB0LbJOJbkvNXvJqU4uVqGXOpIrnXJudZC9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVqf7v49e5bNXOuMafIYajTE05e1HXG3q8DGn2Q48Q//uksBwq4IfFHJcBvmxgEor
-	 ndjSO/syLDRWrsPUevxt8kCscmXTdJJYbDi4E4OnxH1VnVCycT7JT1Bd87FIBizyUy
-	 1HEzZwp3vkyt18YLYfP9GUatu7iR0lHZv60xx8Y8=
+	b=mLobO3dbzqEHeHH5mdJqciJvXGlMW0Wf4Vlz3QzcOQZccjx7j7e/F2/WIzXcB0/xw
+	 vjSSI5AIJUKtc///fUBTFJaayFlxPLW+sjwqOwrDlUKiNbkUL9y9u7xh6mZpgWz6sM
+	 OqDxD3UXFRHoqDj7MP1jZr+3xdqSOTGIvkdhQn6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/150] landlock: Fix non-TCP sockets restriction
-Date: Wed,  5 Mar 2025 18:47:22 +0100
-Message-ID: <20250305174504.340334667@linuxfoundation.org>
+Subject: [PATCH 6.12 014/150] scsi: ufs: core: Fix ufshcd_is_ufs_dev_busy() and ufshcd_eh_timed_out()
+Date: Wed,  5 Mar 2025 18:47:23 +0100
+Message-ID: <20250305174504.378931012@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -45,66 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 854277e2cc8c75dc3c216c82e72523258fcf65b9 ]
+[ Upstream commit 4fa382be430421e1445f9c95c4dc9b7e0949ae8a ]
 
-Use sk_is_tcp() to check if socket is TCP in bind(2) and connect(2)
-hooks.
+ufshcd_is_ufs_dev_busy(), ufshcd_print_host_state() and
+ufshcd_eh_timed_out() are used in both modes (legacy mode and MCQ mode).
+hba->outstanding_reqs only represents the outstanding requests in legacy
+mode. Hence, change hba->outstanding_reqs into scsi_host_busy(hba->host) in
+these functions.
 
-SMC, MPTCP, SCTP protocols are currently restricted by TCP access
-rights.  The purpose of TCP access rights is to provide control over
-ports that can be used by userland to establish a TCP connection.
-Therefore, it is incorrect to deny bind(2) and connect(2) requests for a
-socket of another protocol.
-
-However, SMC, MPTCP and RDS implementations use TCP internal sockets to
-establish communication or even to exchange packets over a TCP
-connection [1]. Landlock rules that configure bind(2) and connect(2)
-usage for TCP sockets should not cover requests for sockets of such
-protocols. These protocols have different set of security issues and
-security properties, therefore, it is necessary to provide the userland
-with the ability to distinguish between them (eg. [2]).
-
-Control over TCP connection used by other protocols can be achieved with
-upcoming support of socket creation control [3].
-
-[1] https://lore.kernel.org/all/62336067-18c2-3493-d0ec-6dd6a6d3a1b5@huawei-partners.com/
-[2] https://lore.kernel.org/all/20241204.fahVio7eicim@digikod.net/
-[3] https://lore.kernel.org/all/20240904104824.1844082-1-ivanov.mikhail1@huawei-partners.com/
-
-Closes: https://github.com/landlock-lsm/linux/issues/40
-Fixes: fff69fb03dde ("landlock: Support network rules with TCP bind and connect")
-Signed-off-by: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
-Link: https://lore.kernel.org/r/20250205093651.1424339-2-ivanov.mikhail1@huawei-partners.com
-[mic: Format commit message to 72 columns]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: eacb139b77ff ("scsi: ufs: core: mcq: Enable multi-circular queue")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250214224352.3025151-1-bvanassche@acm.org
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/net.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/security/landlock/net.c b/security/landlock/net.c
-index d5dcc4407a197..104b6c01fe503 100644
---- a/security/landlock/net.c
-+++ b/security/landlock/net.c
-@@ -63,8 +63,7 @@ static int current_check_access_socket(struct socket *const sock,
- 	if (WARN_ON_ONCE(dom->num_layers < 1))
- 		return -EACCES;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 67410c4cebee6..ff4878cf882be 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -266,7 +266,7 @@ static bool ufshcd_has_pending_tasks(struct ufs_hba *hba)
  
--	/* Checks if it's a (potential) TCP socket. */
--	if (sock->type != SOCK_STREAM)
-+	if (!sk_is_tcp(sock->sk))
- 		return 0;
+ static bool ufshcd_is_ufs_dev_busy(struct ufs_hba *hba)
+ {
+-	return hba->outstanding_reqs || ufshcd_has_pending_tasks(hba);
++	return scsi_host_busy(hba->host) || ufshcd_has_pending_tasks(hba);
+ }
  
- 	/* Checks for minimal header length to safely read sa_family. */
+ static const struct ufs_dev_quirk ufs_fixups[] = {
+@@ -639,8 +639,8 @@ static void ufshcd_print_host_state(struct ufs_hba *hba)
+ 	const struct scsi_device *sdev_ufs = hba->ufs_device_wlun;
+ 
+ 	dev_err(hba->dev, "UFS Host state=%d\n", hba->ufshcd_state);
+-	dev_err(hba->dev, "outstanding reqs=0x%lx tasks=0x%lx\n",
+-		hba->outstanding_reqs, hba->outstanding_tasks);
++	dev_err(hba->dev, "%d outstanding reqs, tasks=0x%lx\n",
++		scsi_host_busy(hba->host), hba->outstanding_tasks);
+ 	dev_err(hba->dev, "saved_err=0x%x, saved_uic_err=0x%x\n",
+ 		hba->saved_err, hba->saved_uic_err);
+ 	dev_err(hba->dev, "Device power mode=%d, UIC link state=%d\n",
+@@ -8975,7 +8975,7 @@ static enum scsi_timeout_action ufshcd_eh_timed_out(struct scsi_cmnd *scmd)
+ 	dev_info(hba->dev, "%s() finished; outstanding_tasks = %#lx.\n",
+ 		 __func__, hba->outstanding_tasks);
+ 
+-	return hba->outstanding_reqs ? SCSI_EH_RESET_TIMER : SCSI_EH_DONE;
++	return scsi_host_busy(hba->host) ? SCSI_EH_RESET_TIMER : SCSI_EH_DONE;
+ }
+ 
+ static const struct attribute_group *ufshcd_driver_groups[] = {
 -- 
 2.39.5
 
