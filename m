@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B296ADD;
-	Wed,  5 Mar 2025 17:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399F2250BFB;
+	Wed,  5 Mar 2025 17:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197101; cv=none; b=FD3GcAA8WP2N8tJ/XW9cGn38/7+NStScXP5yf/w0IJZR3XZsMk+dupS06v/NDsyqcuYGzngnasdW34dJMgCJcKK0I1DkaX3nepHtGlWnuzWpYig1vWNjnUNkeOLRMkvSVugQztOnW5VsR0BB8ILRtMY6jYm/ooXCNzVZ5JY5k6c=
+	t=1741197105; cv=none; b=KrVtxn7g/lArzBHpKv3MonNK5iijTXRd1RwmTeL9fCoVLcq785SvOarCh8YgPBbfksJbWYDGV/r8c3fsgLbybGGZyY44nIzZWzCOPCc0v0LAR40+mE1mAj5Yo3OmCzolcyAP3g2BbKQqzrCDAYBCW6AgDNQiy8KG6uuNFV09CqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197101; c=relaxed/simple;
-	bh=CAGD6PEVIOi1fteZqr8xc5KOAkQE8jU/lzp0/cj1YgI=;
+	s=arc-20240116; t=1741197105; c=relaxed/simple;
+	bh=iPetLBpR5REr4FdTzFLXMQHyb2VC3yTvBqBrs1wUOSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XdCOosV94N+wagnMuIi8qEgJM/XA1Ls0nvLZpFkg2t/N3YnkXVnoCCUNbz01DZWSt9xmoX1nu4KWuPrA716CLKtaLskSALW5mdCJMudXNYc1/Xiw7NVmFrV/ztkmGWtq02u5Gbc9LkEYaOfEraClH9yy9DTHs3ig3Zh2BgHpCfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuLjLYuJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBgNlVZK8O0VGTLWfTkUfSzmd6ozBcSbDgUxYep2rxiYgGipgjSD40MVXA8de9n9inAl2kd9qzRUkaRIGWo+VCoCgeQWhscDN31DBDQpgJNDzgZSDk10j/NDOVqg/luXmI13z3xh5SJlfHwWWgS7hNqMTQ5gFMbmmMWfuE8/ZZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLN1SUff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuLjLYuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59934C4CED1;
-	Wed,  5 Mar 2025 17:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLN1SUff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B73EC4CEE2;
+	Wed,  5 Mar 2025 17:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197100;
-	bh=CAGD6PEVIOi1fteZqr8xc5KOAkQE8jU/lzp0/cj1YgI=;
+	s=korg; t=1741197103;
+	bh=iPetLBpR5REr4FdTzFLXMQHyb2VC3yTvBqBrs1wUOSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuLjLYuJeBNAPrO5C7GK1sQWOawRsiTnmzsGMy1EjX/IL3kkAnP29L1BplJNV5P9h
-	 uNmydBgFhaiF7X6tKRIv55EWIcUu+sIryw9d1YrfXxo2Q4Z0DVGnnesXrSWj4LAZZt
-	 0etcVmQsSsrKHELMi/pgNRTpx5GY+kb8kjrkiTts=
+	b=CLN1SUffbK0MPKZny5n9IBaapJLxe8a276EmNvjV6U49jna+A5G9Bhndrh655IIS3
+	 1UOQOq4iSyEg2/FnN+gsZnxwwBk96q+nrDEk6XPBt30zs7d8qTs+8HpRyeICgLrgJt
+	 xsjMAYxm3BRv202y/fKWhW1q1PttRrQbWhKsmyEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	stable <stable@kernel.org>,
+	Jill Donahue <jilliandonahue58@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/176] soc/mediatek: mtk-devapc: Convert to platform remove callback returning void
-Date: Wed,  5 Mar 2025 18:46:41 +0100
-Message-ID: <20250305174506.753736943@linuxfoundation.org>
+Subject: [PATCH 6.1 041/176] USB: gadget: f_midi: f_midi_complete to call queue_work
+Date: Wed,  5 Mar 2025 18:46:50 +0100
+Message-ID: <20250305174507.115481827@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -45,63 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jill Donahue <jilliandonahue58@gmail.com>
 
-[ Upstream commit a129ac3555c0dca6f04ae404dc0f0790656587fb ]
+[ Upstream commit 4ab37fcb42832cdd3e9d5e50653285ca84d6686f ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+When using USB MIDI, a lock is attempted to be acquired twice through a
+re-entrant call to f_midi_transmit, causing a deadlock.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Fix it by using queue_work() to schedule the inner f_midi_transmit() via
+a high priority work queue from the completion handler.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230925095532.1984344-15-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Stable-dep-of: c9c0036c1990 ("soc: mediatek: mtk-devapc: Fix leaking IO map on driver remove")
+Link: https://lore.kernel.org/all/CAArt=LjxU0fUZOj06X+5tkeGT+6RbXzpWg1h4t4Fwa_KGVAX6g@mail.gmail.com/
+Fixes: d5daf49b58661 ("USB: gadget: midi: add midi function driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jill Donahue <jilliandonahue58@gmail.com>
+Link: https://lore.kernel.org/r/20250211174805.1369265-1-jdonahue@fender.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-devapc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_midi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/mediatek/mtk-devapc.c b/drivers/soc/mediatek/mtk-devapc.c
-index c72273aae7c64..226a79f43492f 100644
---- a/drivers/soc/mediatek/mtk-devapc.c
-+++ b/drivers/soc/mediatek/mtk-devapc.c
-@@ -300,18 +300,16 @@ static int mtk_devapc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int mtk_devapc_remove(struct platform_device *pdev)
-+static void mtk_devapc_remove(struct platform_device *pdev)
- {
- 	struct mtk_devapc_context *ctx = platform_get_drvdata(pdev);
- 
- 	stop_devapc(ctx);
--
--	return 0;
- }
- 
- static struct platform_driver mtk_devapc_driver = {
- 	.probe = mtk_devapc_probe,
--	.remove = mtk_devapc_remove,
-+	.remove_new = mtk_devapc_remove,
- 	.driver = {
- 		.name = "mtk-devapc",
- 		.of_match_table = mtk_devapc_dt_match,
+diff --git a/drivers/usb/gadget/function/f_midi.c b/drivers/usb/gadget/function/f_midi.c
+index 1d8521103b661..dd1cfeeffb671 100644
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -282,7 +282,7 @@ f_midi_complete(struct usb_ep *ep, struct usb_request *req)
+ 			/* Our transmit completed. See if there's more to go.
+ 			 * f_midi_transmit eats req, don't queue it again. */
+ 			req->length = 0;
+-			f_midi_transmit(midi);
++			queue_work(system_highpri_wq, &midi->work);
+ 			return;
+ 		}
+ 		break;
 -- 
 2.39.5
 
