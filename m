@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1E31C6FF6;
-	Wed,  5 Mar 2025 18:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1541C6FF9;
+	Wed,  5 Mar 2025 18:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197768; cv=none; b=fCLmda6Cfdb92mP1gXreYqnn/prrhrVoMmqhWGAEu9Nt2OMJ6q9IUvKH+CR1cyLNrzob5gIlci/1+eb1sxd/EYqlJ0/uBM1TtAZ4q3vfrC6uRcQZKMExmk0zIXWQ+mJgpzphCrFbTQt03SemHprR8KVnZA6F5u9r3utc2c7nV30=
+	t=1741197771; cv=none; b=KeF0xCpXKP0VtLzVDREyWnwzS+713iC5UyhFIqBiE8fx6XOp7ik3PLxqMeNb4/xSuRXeesJPQsBq6FVm0Q9pc3PYPRF2HJVykxY8jabJVr5Ix4+Ja9964sHhQPY2C7jOlOhPOYilR6cx84dLWBmckh7HNJZBfpy9gaCpFIpOIsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197768; c=relaxed/simple;
-	bh=DSemyBmFBj7KwxVWMA7BUtSJ9ET99GoXQ9PClA3N9Xs=;
+	s=arc-20240116; t=1741197771; c=relaxed/simple;
+	bh=XpDUp+fPowDhNOJ3hH7G6hYwKEbSdrGoQIZ9A47aa2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcjghFk0n3MINM91xr6lr9Q9ph6NyitZmiizuJvWQfrVebMOYkuos8+hjGnwL3tj75rbXBZvaPy6BKMEa/VjAi+axGyJbxE7fFzLulXjeBaqQNupJkCaguQ13Co7n/aJRjC3jOTXINHxFzAvBcYRo1quy9VavxQ0EMUAobH/X38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahSS1F0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhGGv6A0haiCC7A5q+7WJ8t5qVi0ZUtcypQiEzcDbnevjYJRlP1CP/u5AuujiTFZ8SP0FCs05eJELNBVTjvYJq0fYsCrPYpjkqoNJPd37OiDQbUaMds1Rn9sKpZEDOCdz/wrwMLoFf1R5mtbA6W6kZfqHCwAVgLHVienPYKy2QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGqSv9Za; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahSS1F0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E8DC4CED1;
-	Wed,  5 Mar 2025 18:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGqSv9Za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F54C4CED1;
+	Wed,  5 Mar 2025 18:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197768;
-	bh=DSemyBmFBj7KwxVWMA7BUtSJ9ET99GoXQ9PClA3N9Xs=;
+	s=korg; t=1741197771;
+	bh=XpDUp+fPowDhNOJ3hH7G6hYwKEbSdrGoQIZ9A47aa2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahSS1F0Wx1xHkzbOO0mzP0wa/GfVwnIzYWqxp0/jmgVI9wbObyCpQ/Twwo7lYIvVB
-	 RPMa4U+pSb+fLYqXjix1hVQOhk62ncEygYLklv/nGUof5hRcd81FZ4mMEZ1xxox4RV
-	 Yf/EO7lpVYFNT7oQbVzjA4AqzB6Y2dHVXwnNjh1I=
+	b=cGqSv9ZaellH8X7WLBRtg78SDvGcOZkaz3X1wBoeOnpwg92uJLxBZys610/PVGaV5
+	 x3t1ws/PaBZ6/yb269mTHGeqqngttYoJYfelgwJ1BuqY4vonOihvR1XnX6FVxn6dTd
+	 j6m0NO/KMeaywnbxiNbBME4/PFm65LAtMBaPFxM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	"chr[]" <chris@rudorff.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Subject: [PATCH 6.6 093/142] amdgpu/pm/legacy: fix suspend/resume issues
-Date: Wed,  5 Mar 2025 18:48:32 +0100
-Message-ID: <20250305174504.068448083@linuxfoundation.org>
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Jeroen de Borst <jeroendb@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 094/142] gve: set xdp redirect target only when it is available
+Date: Wed,  5 Mar 2025 18:48:33 +0100
+Message-ID: <20250305174504.108721946@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,192 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chr[] <chris@rudorff.com>
+From: Joshua Washington <joshwash@google.com>
 
-commit 91dcc66b34beb72dde8412421bdc1b4cd40e4fb8 upstream.
+commit 415cadd505464d9a11ff5e0f6e0329c127849da5 upstream.
 
-resume and irq handler happily races in set_power_state()
+Before this patch the NETDEV_XDP_ACT_NDO_XMIT XDP feature flag is set by
+default as part of driver initialization, and is never cleared. However,
+this flag differs from others in that it is used as an indicator for
+whether the driver is ready to perform the ndo_xdp_xmit operation as
+part of an XDP_REDIRECT. Kernel helpers
+xdp_features_(set|clear)_redirect_target exist to convey this meaning.
 
-* amdgpu_legacy_dpm_compute_clocks() needs lock
-* protect irq work handler
-* fix dpm_enabled usage
+This patch ensures that the netdev is only reported as a redirect target
+when XDP queues exist to forward traffic.
 
-v2: fix clang build, integrate Lijo's comments (Alex)
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2524
-Fixes: 3712e7a49459 ("drm/amd/pm: unified lock protections in amdgpu_dpm.c")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Tested-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name> # on Oland PRO
-Signed-off-by: chr[] <chris@rudorff.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ee3dc9e204d271c9c7a8d4d38a0bce4745d33e71)
+Fixes: 39a7f4aa3e4a ("gve: Add XDP REDIRECT support for GQI-QPL format")
 Cc: stable@vger.kernel.org
+Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Reviewed-by: Jeroen de Borst <jeroendb@google.com>
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Link: https://patch.msgid.link/20250214224417.1237818-1-joshwash@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Joshua Washington <joshwash@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c     |   25 ++++++++++++++++++------
- drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c |    8 +++++--
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c     |   26 +++++++++++++++++++------
- 3 files changed, 45 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/google/gve/gve.h      |   10 ++++++++++
+ drivers/net/ethernet/google/gve/gve_main.c |    6 +++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-@@ -3043,6 +3043,7 @@ static int kv_dpm_hw_init(void *handle)
- 	if (!amdgpu_dpm)
- 		return 0;
- 
-+	mutex_lock(&adev->pm.mutex);
- 	kv_dpm_setup_asic(adev);
- 	ret = kv_dpm_enable(adev);
- 	if (ret)
-@@ -3050,6 +3051,8 @@ static int kv_dpm_hw_init(void *handle)
- 	else
- 		adev->pm.dpm_enabled = true;
- 	amdgpu_legacy_dpm_compute_clocks(adev);
-+	mutex_unlock(&adev->pm.mutex);
-+
- 	return ret;
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -1030,6 +1030,16 @@ static inline u32 gve_xdp_tx_start_queue
+ 	return gve_xdp_tx_queue_id(priv, 0);
  }
  
-@@ -3067,32 +3070,42 @@ static int kv_dpm_suspend(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
-+	cancel_work_sync(&adev->pm.dpm.thermal.work);
-+
- 	if (adev->pm.dpm_enabled) {
-+		mutex_lock(&adev->pm.mutex);
-+		adev->pm.dpm_enabled = false;
- 		/* disable dpm */
- 		kv_dpm_disable(adev);
- 		/* reset the power state */
- 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
-+		mutex_unlock(&adev->pm.mutex);
- 	}
- 	return 0;
- }
- 
- static int kv_dpm_resume(void *handle)
- {
--	int ret;
-+	int ret = 0;
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
--	if (adev->pm.dpm_enabled) {
-+	if (!amdgpu_dpm)
-+		return 0;
-+
-+	if (!adev->pm.dpm_enabled) {
-+		mutex_lock(&adev->pm.mutex);
- 		/* asic init will reset to the boot state */
- 		kv_dpm_setup_asic(adev);
- 		ret = kv_dpm_enable(adev);
--		if (ret)
-+		if (ret) {
- 			adev->pm.dpm_enabled = false;
--		else
-+		} else {
- 			adev->pm.dpm_enabled = true;
--		if (adev->pm.dpm_enabled)
- 			amdgpu_legacy_dpm_compute_clocks(adev);
-+		}
-+		mutex_unlock(&adev->pm.mutex);
- 	}
--	return 0;
-+	return ret;
- }
- 
- static bool kv_dpm_is_idle(void *handle)
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-@@ -1018,9 +1018,12 @@ void amdgpu_dpm_thermal_work_handler(str
- 	enum amd_pm_state_type dpm_state = POWER_STATE_TYPE_INTERNAL_THERMAL;
- 	int temp, size = sizeof(temp);
- 
--	if (!adev->pm.dpm_enabled)
--		return;
-+	mutex_lock(&adev->pm.mutex);
- 
-+	if (!adev->pm.dpm_enabled) {
-+		mutex_unlock(&adev->pm.mutex);
-+		return;
++static inline bool gve_supports_xdp_xmit(struct gve_priv *priv)
++{
++	switch (priv->queue_format) {
++	case GVE_GQI_QPL_FORMAT:
++		return true;
++	default:
++		return false;
 +	}
- 	if (!pp_funcs->read_sensor(adev->powerplay.pp_handle,
- 				   AMDGPU_PP_SENSOR_GPU_TEMP,
- 				   (void *)&temp,
-@@ -1042,4 +1045,5 @@ void amdgpu_dpm_thermal_work_handler(str
- 	adev->pm.dpm.state = dpm_state;
- 
- 	amdgpu_legacy_dpm_compute_clocks(adev->powerplay.pp_handle);
-+	mutex_unlock(&adev->pm.mutex);
- }
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -7789,6 +7789,7 @@ static int si_dpm_hw_init(void *handle)
- 	if (!amdgpu_dpm)
- 		return 0;
- 
-+	mutex_lock(&adev->pm.mutex);
- 	si_dpm_setup_asic(adev);
- 	ret = si_dpm_enable(adev);
- 	if (ret)
-@@ -7796,6 +7797,7 @@ static int si_dpm_hw_init(void *handle)
- 	else
- 		adev->pm.dpm_enabled = true;
- 	amdgpu_legacy_dpm_compute_clocks(adev);
-+	mutex_unlock(&adev->pm.mutex);
- 	return ret;
- }
- 
-@@ -7813,32 +7815,44 @@ static int si_dpm_suspend(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
-+	cancel_work_sync(&adev->pm.dpm.thermal.work);
++}
 +
- 	if (adev->pm.dpm_enabled) {
-+		mutex_lock(&adev->pm.mutex);
-+		adev->pm.dpm_enabled = false;
- 		/* disable dpm */
- 		si_dpm_disable(adev);
- 		/* reset the power state */
- 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
-+		mutex_unlock(&adev->pm.mutex);
+ /* buffers */
+ int gve_alloc_page(struct gve_priv *priv, struct device *dev,
+ 		   struct page **page, dma_addr_t *dma,
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -1753,6 +1753,8 @@ static void gve_turndown(struct gve_priv
+ 	/* Stop tx queues */
+ 	netif_tx_disable(priv->dev);
+ 
++	xdp_features_clear_redirect_target(priv->dev);
++
+ 	gve_clear_napi_enabled(priv);
+ 	gve_clear_report_stats(priv);
+ 
+@@ -1793,6 +1795,9 @@ static void gve_turnup(struct gve_priv *
+ 		}
  	}
+ 
++	if (priv->num_xdp_queues && gve_supports_xdp_xmit(priv))
++		xdp_features_set_redirect_target(priv->dev, false);
 +
- 	return 0;
+ 	gve_set_napi_enabled(priv);
  }
  
- static int si_dpm_resume(void *handle)
- {
--	int ret;
-+	int ret = 0;
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
--	if (adev->pm.dpm_enabled) {
-+	if (!amdgpu_dpm)
-+		return 0;
-+
-+	if (!adev->pm.dpm_enabled) {
- 		/* asic init will reset to the boot state */
-+		mutex_lock(&adev->pm.mutex);
- 		si_dpm_setup_asic(adev);
- 		ret = si_dpm_enable(adev);
--		if (ret)
-+		if (ret) {
- 			adev->pm.dpm_enabled = false;
--		else
-+		} else {
- 			adev->pm.dpm_enabled = true;
--		if (adev->pm.dpm_enabled)
- 			amdgpu_legacy_dpm_compute_clocks(adev);
-+		}
-+		mutex_unlock(&adev->pm.mutex);
- 	}
--	return 0;
-+
-+	return ret;
- }
- 
- static bool si_dpm_is_idle(void *handle)
+@@ -2014,7 +2019,6 @@ static void gve_set_netdev_xdp_features(
+ 	if (priv->queue_format == GVE_GQI_QPL_FORMAT) {
+ 		xdp_features = NETDEV_XDP_ACT_BASIC;
+ 		xdp_features |= NETDEV_XDP_ACT_REDIRECT;
+-		xdp_features |= NETDEV_XDP_ACT_NDO_XMIT;
+ 		xdp_features |= NETDEV_XDP_ACT_XSK_ZEROCOPY;
+ 	} else {
+ 		xdp_features = 0;
 
 
