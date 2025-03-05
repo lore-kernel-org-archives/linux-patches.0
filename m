@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8332250BE9;
-	Wed,  5 Mar 2025 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95079250BE9;
+	Wed,  5 Mar 2025 17:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197381; cv=none; b=nNlXnAurpZ6P2ijenqjoTbKbXJQiSiihOUhKKSoe5VbcM+1KKcOOuFpqMp6qyhEAdX4cqN4etlXbjXJ/trxcR5tyJ7rH3LwkPpdIsEEwJSJVwv99OvTHC1NHm2YNWU76/o8Q9Vcv3BINrEqBGzCp6O/vfu/J5i0Ct3RYcBers7g=
+	t=1741197384; cv=none; b=FNUPDpdFaiBNlnYjY9ykSICeb3FG49xaIfF+D+m5xUNmnFAOeXR0WnOoobY/+rKdwrtLfsxx1euCMHgBx4ui1qFnpFbTuhy1C7NPTEhhtO0RN0XwlVV3bMCaImHRYT5htTGIjZhbiPd4vYAXKaxSknUT/q+g9IW4wLUaB6PqFVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197381; c=relaxed/simple;
-	bh=/Ubf/GoIoHLc60Wa3q4m/KdbsE0gMSdk0cM9yih+Cy4=;
+	s=arc-20240116; t=1741197384; c=relaxed/simple;
+	bh=cBcgtfEB/4giwI4PiZvnysKoBxtGEEvADolXR+s1Ye8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJkuYv7rvD0nfdRtG/B97eruL8xhr8k/wfathH4UpShJXFA4HFKcHXJ2XH47vQM/yEauB1kKM11O+gSAp59rdaqAJw2LPmfMt8YG8xllELYcu/TBerf9imRbq75ZBkEbTWdMaTf4bkffT/zdWNW82tvR8BfMeYDt2eRTOfzqmpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEQPWCZf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOQWcYccHTizTJVK8tfNmKX0a8VEb9c+1ajI3W9n0jl+oHikukxa5N/YjNUUeSE31nQcLpi4va8R5pkZWhKVaUFJ8fKmY4C/P+sWfRF47q8A7CeR9s/aYqytmifY0NyISFUbCyT/zjON7BczhbBKGazvCDqHXi1N/zG9ifzkj4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxcdCGl9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEQPWCZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30745C4CED1;
-	Wed,  5 Mar 2025 17:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxcdCGl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2D9C4CED1;
+	Wed,  5 Mar 2025 17:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197381;
-	bh=/Ubf/GoIoHLc60Wa3q4m/KdbsE0gMSdk0cM9yih+Cy4=;
+	s=korg; t=1741197384;
+	bh=cBcgtfEB/4giwI4PiZvnysKoBxtGEEvADolXR+s1Ye8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MEQPWCZfxLvPMjpm32Mu2oA4PXZOJUWaXo0fc/ASfI1fU8ihupZHq7k/ipBlEcyEJ
-	 VfOMfRLfMBjuw4Vmy93NoKF91oS6kEfbGAtPofbBJeObfwEe7RJXGh3tPfOirquEDj
-	 BIZFXaQMM0FcfWGdbNAl5NnU3qcTrz7jPQ1UMNms=
+	b=CxcdCGl9VaRkWpvCQSu4ySZ2NACozj5qhsHvP8Pr4+hagUWIsJGrCSidwE8lyYNUc
+	 X3YAI31ncpvO6xV6vVq4vlePgAoIVtTJvpjUkHq+HMAKq7HKr7+fa9OEATRFFt0o+f
+	 Sxw2QkMaRvn4ooTUjDESXt+Oqmb1vDUy9i9QiBXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/176] IB/mlx5: Set and get correct qp_num for a DCT QP
-Date: Wed,  5 Mar 2025 18:47:54 +0100
-Message-ID: <20250305174509.682026010@linuxfoundation.org>
+Subject: [PATCH 6.1 106/176] ovl: fix UAF in ovl_dentry_update_reval by moving dput() in ovl_link_up
+Date: Wed,  5 Mar 2025 18:47:55 +0100
+Message-ID: <20250305174509.721412710@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,48 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 12d044770e12c4205fa69535b4fa8a9981fea98f ]
+[ Upstream commit c84e125fff2615b4d9c259e762596134eddd2f27 ]
 
-When a DCT QP is created on an active lag, it's dctc.port is assigned
-in a round-robin way, which is from 1 to dev->lag_port. In this case
-when querying this QP, we may get qp_attr.port_num > 2.
-Fix this by setting qp->port when modifying a DCT QP, and read port_num
-from qp->port instead of dctc.port when querying it.
+The issue was caused by dput(upper) being called before
+ovl_dentry_update_reval(), while upper->d_flags was still
+accessed in ovl_dentry_remote().
 
-Fixes: 7c4b1ab9f167 ("IB/mlx5: Add DCT RoCE LAG support")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Link: https://patch.msgid.link/94c76bf0adbea997f87ffa27674e0a7118ad92a9.1737290358.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Move dput(upper) after its last use to prevent use-after-free.
+
+BUG: KASAN: slab-use-after-free in ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
+BUG: KASAN: slab-use-after-free in ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
+
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0xc3/0x620 mm/kasan/report.c:488
+ kasan_report+0xd9/0x110 mm/kasan/report.c:601
+ ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
+ ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
+ ovl_link_up fs/overlayfs/copy_up.c:610 [inline]
+ ovl_copy_up_one+0x2105/0x3490 fs/overlayfs/copy_up.c:1170
+ ovl_copy_up_flags+0x18d/0x200 fs/overlayfs/copy_up.c:1223
+ ovl_rename+0x39e/0x18c0 fs/overlayfs/dir.c:1136
+ vfs_rename+0xf84/0x20a0 fs/namei.c:4893
+...
+ </TASK>
+
+Fixes: b07d5cc93e1b ("ovl: update of dentry revalidate flags after copy up")
+Reported-by: syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=316db8a1191938280eb6
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20250214215148.761147-1-kovalev@altlinux.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 8d132b726c64b..d782a494abcda 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -4466,6 +4466,8 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index 86d4b6975dbcb..203b88293f6bb 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -532,7 +532,6 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
+ 	err = PTR_ERR(upper);
+ 	if (!IS_ERR(upper)) {
+ 		err = ovl_do_link(ofs, ovl_dentry_upper(c->dentry), udir, upper);
+-		dput(upper);
  
- 		set_id = mlx5_ib_get_counters_id(dev, attr->port_num - 1);
- 		MLX5_SET(dctc, dctc, counter_set_id, set_id);
-+
-+		qp->port = attr->port_num;
- 	} else if (cur_state == IB_QPS_INIT && new_state == IB_QPS_RTR) {
- 		struct mlx5_ib_modify_qp_resp resp = {};
- 		u32 out[MLX5_ST_SZ_DW(create_dct_out)] = {};
-@@ -4955,7 +4957,7 @@ static int mlx5_ib_dct_query_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *mqp,
+ 		if (!err) {
+ 			/* Restore timestamps on parent (best effort) */
+@@ -540,6 +539,7 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
+ 			ovl_dentry_set_upper_alias(c->dentry);
+ 			ovl_dentry_update_reval(c->dentry, upper);
+ 		}
++		dput(upper);
  	}
- 
- 	if (qp_attr_mask & IB_QP_PORT)
--		qp_attr->port_num = MLX5_GET(dctc, dctc, port);
-+		qp_attr->port_num = mqp->port;
- 	if (qp_attr_mask & IB_QP_MIN_RNR_TIMER)
- 		qp_attr->min_rnr_timer = MLX5_GET(dctc, dctc, min_rnr_nak);
- 	if (qp_attr_mask & IB_QP_AV) {
+ 	inode_unlock(udir);
+ 	if (err)
 -- 
 2.39.5
 
