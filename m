@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D3914B075;
-	Wed,  5 Mar 2025 18:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6970414B075;
+	Wed,  5 Mar 2025 18:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197719; cv=none; b=KVLFfy7w8/EzFuex7PDFZkoPGGxA4hnrftkip9tS9BIGhGMEwZU6VTHyFxvdhlMFXlJczzZeBIi8mVTxO/bto+12sMs+vzFwxGGx/eD4Uk0b5VBEEt0PLgD0RygCndPSiSi2Dwx+bxu/+Z5XCZboUU3B/ytX8I6gsmAZ+Ac1GgU=
+	t=1741197722; cv=none; b=EtdYn3tiq6wKvjrQgeNdaAsZTYVyLryoew+j8aaO05v2gT9UpGy0hTjbvAbToM35broILzkj6PcBkgGDOPSEiLLgMk+zo1eS805qMRrpqVXxnXRSCF2LPgBnd+jm/nQfJKdga1AOeK/7z5aReagCKEtpX453zqIju2RTnkcIadU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197719; c=relaxed/simple;
-	bh=X2en+sAH6G9CcOPIZwVG6+rMrqdLgHekgz6y+mh+mSE=;
+	s=arc-20240116; t=1741197722; c=relaxed/simple;
+	bh=7cYMkN6Z8nwq1ddHeN5KrvO2EpatYJ/Yan4+KubOeD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llQw0QqfSMQteu5iSnM1oUF/PHYMpgckg9D5r6ekubQ4on/t9ZJSXpoiX3+x9fP97IByJpfw8hprGaohv4/XEaGnSka7mJWRdxTMtTOmiyrL2Z1jWyQ+pUiCBXmyAH/vpwF5rMi2oqiw8xhAvCc/tzpiiPQgEiW/SyEYj5q9p+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Doj4bh69; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rwq+q8NAk+ZX/LvloYkcBwgg1FP/+Zb4wxbFF/tsJrj0/0SfajhjVB/GMKkN3lYh6w220GmgqSRe3tzHa4/hutVx17og8YQZeBHX3tvVQVEvwWqKNlgn9DkgD59e9fmVjqhF78JYj4ch5x3dX3SxzLSBUcgT5vCuIlGv5C1hOQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIVAS/ul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Doj4bh69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22CFC4CED1;
-	Wed,  5 Mar 2025 18:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIVAS/ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA99C4CED1;
+	Wed,  5 Mar 2025 18:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197719;
-	bh=X2en+sAH6G9CcOPIZwVG6+rMrqdLgHekgz6y+mh+mSE=;
+	s=korg; t=1741197722;
+	bh=7cYMkN6Z8nwq1ddHeN5KrvO2EpatYJ/Yan4+KubOeD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Doj4bh69xgsYmbBu6iAbzU6Z/KibjjVWSLgLlsvtkLb/Gj/G1LMsZG0f8hVakavwx
-	 i2tQFQnbXB6DtWQUWHK7KQniKQGENVzSh43qjg65FCAf79joQK7HMywKpElZqUWVKU
-	 f/L+8Gye7B6RfcI3h4BlTJ+QulK7P6mMhvwRy4LQ=
+	b=QIVAS/ulPp66vSqwLJ5lBPbwdn0gL5OGzIUbobD/BctSafuU5beNAm5qyNZlOkGk9
+	 mQd2Sm0S+EdNc70jfsSGvbxlMdYntIYHhmRugPZo4bgMDIBsjpxD2ttW4GeUqVKFYZ
+	 bmHbum/6fPlGMiTUEJlEVdYYUCTaSMWYSBQMFgD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/142] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
-Date: Wed,  5 Mar 2025 18:47:33 +0100
-Message-ID: <20250305174501.708569757@linuxfoundation.org>
+	Tyrone Ting <kfting@nuvoton.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 070/142] i2c: npcm: disable interrupt enable bit before devm_request_irq
+Date: Wed,  5 Mar 2025 18:48:09 +0100
+Message-ID: <20250305174503.146399846@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,51 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philo Lu <lulie@linux.alibaba.com>
+From: Tyrone Ting <kfting@nuvoton.com>
 
-[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
+commit dd1998e243f5fa25d348a384ba0b6c84d980f2b2 upstream.
 
-We found an issue when using bpf_redirect with ipvs NAT mode after
-commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
-the same name space"). Particularly, we use bpf_redirect to return
-the skb directly back to the netif it comes from, i.e., xnet is
-false in skb_scrub_packet(), and then ipvs_property is preserved
-and SNAT is skipped in the rx path.
+The customer reports that there is a soft lockup issue related to
+the i2c driver. After checking, the i2c module was doing a tx transfer
+and the bmc machine reboots in the middle of the i2c transaction, the i2c
+module keeps the status without being reset.
 
-ipvs_property has been already cleared when netns is changed in
-commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
-SKB net namespace changed"). This patch just clears it in spite of
-netns.
+Due to such an i2c module status, the i2c irq handler keeps getting
+triggered since the i2c irq handler is registered in the kernel booting
+process after the bmc machine is doing a warm rebooting.
+The continuous triggering is stopped by the soft lockup watchdog timer.
 
-Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Disable the interrupt enable bit in the i2c module before calling
+devm_request_irq to fix this issue since the i2c relative status bit
+is read-only.
+
+Here is the soft lockup log.
+[   28.176395] watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [swapper/0:1]
+[   28.183351] Modules linked in:
+[   28.186407] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.15.120-yocto-s-dirty-bbebc78 #1
+[   28.201174] pstate: 40000005 (nZcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   28.208128] pc : __do_softirq+0xb0/0x368
+[   28.212055] lr : __do_softirq+0x70/0x368
+[   28.215972] sp : ffffff8035ebca00
+[   28.219278] x29: ffffff8035ebca00 x28: 0000000000000002 x27: ffffff80071a3780
+[   28.226412] x26: ffffffc008bdc000 x25: ffffffc008bcc640 x24: ffffffc008be50c0
+[   28.233546] x23: ffffffc00800200c x22: 0000000000000000 x21: 000000000000001b
+[   28.240679] x20: 0000000000000000 x19: ffffff80001c3200 x18: ffffffffffffffff
+[   28.247812] x17: ffffffc02d2e0000 x16: ffffff8035eb8b40 x15: 00001e8480000000
+[   28.254945] x14: 02c3647e37dbfcb6 x13: 02c364f2ab14200c x12: 0000000002c364f2
+[   28.262078] x11: 00000000fa83b2da x10: 000000000000b67e x9 : ffffffc008010250
+[   28.269211] x8 : 000000009d983d00 x7 : 7fffffffffffffff x6 : 0000036d74732434
+[   28.276344] x5 : 00ffffffffffffff x4 : 0000000000000015 x3 : 0000000000000198
+[   28.283476] x2 : ffffffc02d2e0000 x1 : 00000000000000e0 x0 : ffffffc008bdcb40
+[   28.290611] Call trace:
+[   28.293052]  __do_softirq+0xb0/0x368
+[   28.296625]  __irq_exit_rcu+0xe0/0x100
+[   28.300374]  irq_exit+0x14/0x20
+[   28.303513]  handle_domain_irq+0x68/0x90
+[   28.307440]  gic_handle_irq+0x78/0xb0
+[   28.311098]  call_on_irq_stack+0x20/0x38
+[   28.315019]  do_interrupt_handler+0x54/0x5c
+[   28.319199]  el1_interrupt+0x2c/0x4c
+[   28.322777]  el1h_64_irq_handler+0x14/0x20
+[   28.326872]  el1h_64_irq+0x74/0x78
+[   28.330269]  __setup_irq+0x454/0x780
+[   28.333841]  request_threaded_irq+0xd0/0x1b4
+[   28.338107]  devm_request_threaded_irq+0x84/0x100
+[   28.342809]  npcm_i2c_probe_bus+0x188/0x3d0
+[   28.346990]  platform_probe+0x6c/0xc4
+[   28.350653]  really_probe+0xcc/0x45c
+[   28.354227]  __driver_probe_device+0x8c/0x160
+[   28.358578]  driver_probe_device+0x44/0xe0
+[   28.362670]  __driver_attach+0x124/0x1d0
+[   28.366589]  bus_for_each_dev+0x7c/0xe0
+[   28.370426]  driver_attach+0x28/0x30
+[   28.373997]  bus_add_driver+0x124/0x240
+[   28.377830]  driver_register+0x7c/0x124
+[   28.381662]  __platform_driver_register+0x2c/0x34
+[   28.386362]  npcm_i2c_init+0x3c/0x5c
+[   28.389937]  do_one_initcall+0x74/0x230
+[   28.393768]  kernel_init_freeable+0x24c/0x2b4
+[   28.398126]  kernel_init+0x28/0x130
+[   28.401614]  ret_from_fork+0x10/0x20
+[   28.405189] Kernel panic - not syncing: softlockup: hung tasks
+[   28.411011] SMP: stopping secondary CPUs
+[   28.414933] Kernel Offset: disabled
+[   28.418412] CPU features: 0x00000000,00000802
+[   28.427644] Rebooting in 20 seconds..
+
+Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250220040029.27596-2-kfting@nuvoton.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-npcm7xx.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index f0a9ef1aeaa29..21a83e26f004b 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5867,11 +5867,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
- 	skb->offload_fwd_mark = 0;
- 	skb->offload_l3_fwd_mark = 0;
- #endif
-+	ipvs_reset(skb);
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -2333,6 +2333,13 @@ static int npcm_i2c_probe_bus(struct pla
+ 	if (irq < 0)
+ 		return irq;
  
- 	if (!xnet)
- 		return;
- 
--	ipvs_reset(skb);
- 	skb->mark = 0;
- 	skb_clear_tstamp(skb);
- }
--- 
-2.39.5
-
++	/*
++	 * Disable the interrupt to avoid the interrupt handler being triggered
++	 * incorrectly by the asynchronous interrupt status since the machine
++	 * might do a warm reset during the last smbus/i2c transfer session.
++	 */
++	npcm_i2c_int_enable(bus, false);
++
+ 	ret = devm_request_irq(bus->dev, irq, npcm_i2c_bus_irq, 0,
+ 			       dev_name(bus->dev), bus);
+ 	if (ret)
 
 
