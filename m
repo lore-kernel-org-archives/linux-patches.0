@@ -1,121 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA129487BF;
-	Thu,  6 Mar 2025 01:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848FD154C05
+	for <patches@lists.linux.dev>; Thu,  6 Mar 2025 01:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741223522; cv=none; b=O/gq3Yjd4XV8FW7Bfp8HYmeJWsVk9qKP14npqFtOrN1P5m69R9Nt5VZdcgoIuPaczzUECTKj8B6ZmPvnZDVs6dZtwafUrU9uXhAuHf4jhvzbEskFztUEVebbeMLXA6DMIh94Emb89qBiGhPcSdPi/PodXtg24Dq8SppCPV/Ya3U=
+	t=1741223987; cv=none; b=JHGE/y0UYoM0x+YPA6vVTqDMf5wByzxCds3YntgI/ezYA77UfVS56ZzGg7xWVX8mkjHML/olIYC7vDs0SJaEui5AAv9dp3ubE94tGAdHhoV1C5SvzwC26Ne79ZdtNTwjZJPWAlbxtGK9Be5F5+2dw+FrfLndbcvK02WuOcbg+Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741223522; c=relaxed/simple;
-	bh=NoaY4nFPkc9jT0zrJ9Xqr6WgodFiRPcr1e1s7E7/B/0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=A3VMxZpg9Ri5qioRBm6Xf5v8juKAB8N1ZvGp2PYPMDc+JP4P6ZXjH9681TWtyKRPOtW8hIluLERzxEqHk3IGfpDi5A09dFpKmEVN5gybvMXPW8tf76f40YAXwF94LrtIT6Lsyx3Ew6IuE98pCSJAzMzBwtaTuMj+KGlhEZJa9Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qY0cJZRW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741223987; c=relaxed/simple;
+	bh=NQ9JaqO7/f8BskH51rnOv+3ZlwJ/qLixzYb9yoPjjUU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CT7P2p6ARmCqtrC8CpI/I164maOXAqhjSTkjIa7ARuum6YzAuhJVTtv+//IjP15TOhG67Nszf/L34LVoePZbfr7mmvJsVl7+DfBd+aK2cAzX7/zE3ehV+JqnaPpazU8r4FO1r9+o1mbWY/krGiWPGzQli4Yj7YOwKbaclLPIba4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=WNknAGy8; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qY0cJZRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0B1C4CED1;
-	Thu,  6 Mar 2025 01:12:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741223522;
-	bh=NoaY4nFPkc9jT0zrJ9Xqr6WgodFiRPcr1e1s7E7/B/0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qY0cJZRWYfBzu7DG3UlndBDX/g0DkHEfFZYAdbcBfCZddJVUEM6kommfOvP2wAT6U
-	 4+d7Vyscsw084MQz0omvL01PVR9lqXXA5JWEb6O3MNpQIYpMZY4YgOH6qnUYXeF14m
-	 l70wBht+08/Mk3zsf+fu8lR3GcqvfG81EkHs/OXVEg+U8THtsDZgAUZ8nB4ujgBuvm
-	 gp/9i3v2c76zfUEi0zhj8YZ++LcBHqDqaD+szvdQWT8R99Tje8dB66RaEVr1kE+iaM
-	 fa69RfIiI7I8qF+xuLIl6OCKTXafaxJ1+JDFW+wB/AXe9fZh5Vowxj3Gln3MqzmYBM
-	 t5IKxEy8aWUBg==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.13 000/157] 6.13.6-rc1 review
-Date: Wed,  5 Mar 2025 17:11:59 -0800
-Message-Id: <20250306011200.138999-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="WNknAGy8"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-390dd35c78dso924289f8f.1
+        for <patches@lists.linux.dev>; Wed, 05 Mar 2025 17:19:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1741223984; x=1741828784; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tKo26csy1Wj+Q6iZIefqxzUixDxkCmTqOW6lRWj6/Ho=;
+        b=WNknAGy86BtxUbCtq+T57K2b/gRE1ayHTLXz0zHT8SJ3JR8BVbmYKZ6sYLegLGAo84
+         q2VJHdM4cktvKMBkNpM6veayt3yigXQX3huM2qX6ljJmWZtQ8RMjGRm3mXZohrZKPD+m
+         FC4OZVYrAHoJRUnDDOoL7MhFxiEABs06ZnpqINLHm6QT4CtGWDBCFi08yT/C/2DzRKnZ
+         H1v8y9+vZqRCRWnxHg0HDO7lmoHeSiu5xU+a8ezaMtKLZrgU6QkWu3kW1gHnNRNCCAQc
+         UkUDj6sO/ZkpVjaF3QsE9x31uIqQyWVSbPDhc6vX/nXX9StjbrKqIBOz6cuNYfDMhS56
+         dvDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741223984; x=1741828784;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tKo26csy1Wj+Q6iZIefqxzUixDxkCmTqOW6lRWj6/Ho=;
+        b=CTZcvE5S15sxe62aIdDvNeD7h/+a6Pkv8vwY0LOgG0rB+PouRV6GPB+dLy48aeLMnW
+         3PmDUilgC674UWVr4Wy5Y15NZ971v/HyHNkayerD+4pt7ykHfkBYqjffERFVg0yUv/mt
+         dPdR81s1fFiyyBvR2u7rvsLOpyoqrVSa1nkprZA2J8MefcDtM08Mv4jP8dpT4gG8jQp5
+         xcmZro6ogIH61o13yVSEPAGXQEhqdKjaGJb+Fh0tAQdFX/M8tKCMr8e9BcuVsw1BrXwX
+         VX+wjmuAS1snOkCMM8LPn7Z4R1EyCJbRxtI85Ox252dtoxndc9WYdpVBOEMvBUIVzIAp
+         FHNg==
+X-Gm-Message-State: AOJu0YwgLWcISi6apJMDoTmz4gOjUEeB26vN33qJvSJyChqtad9EGgxH
+	Skb8rn69a9bPNXLN9/aws8zbgeN5d/No4l+zsAZBgND9maVX6X0=
+X-Gm-Gg: ASbGnctJ9zakpVQRLxfm4Exq6XudbgfDzJwboNO/67NPX9PxHq0jIb/MOLDgFm3tA4B
+	nDahf/0h08FEoPdcR/Yy4JSkz4cajgUrheIg3qLohpkAFS7aE14SwJoGt2kBcdH4PZ5WIyo+FX1
+	QgmIHaIiKJQv9Ns0pW8N/nBTs90tuxKmGnasa/QmPRj4T7BKCOzB4ZQb/i8rqcmSRBtT5V4z04q
+	c1XJ8ObuzVud0MkzBQmir3nivqDPGJzb7T8oxnzQWxQRheCnFXVRKV6eLiiV1GybNjfNuVq1Kvj
+	FOyZF+kmqbPRBPibX25lONOnbqBq2ep2GzZOheSUWLYdTOWeHYUBu9fT/DGPK78dnqp+lb+pWM5
+	WOrYT4pdKtHVDTfbkmmvJ
+X-Google-Smtp-Source: AGHT+IFpPgTvwRArsdAwnNWcjZHo/WphvoPPh+mSd9cE5f54PpLp9KMuL1fBCvQFKa40509uQgVZ8w==
+X-Received: by 2002:a5d:6c6e:0:b0:391:952:c74a with SMTP id ffacd0b85a97d-391296d8a65mr962184f8f.8.1741223983547;
+        Wed, 05 Mar 2025 17:19:43 -0800 (PST)
+Received: from [192.168.1.3] (p5b2b4217.dip0.t-ipconnect.de. [91.43.66.23])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bdd8c3d61sm3465675e9.15.2025.03.05.17.19.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Mar 2025 17:19:42 -0800 (PST)
+Message-ID: <5b7bcb84-5ad8-46d2-856d-38e3081026bb@googlemail.com>
+Date: Thu, 6 Mar 2025 02:19:41 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/176] 6.1.130-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250305174505.437358097@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hello,
-
-On Wed,  5 Mar 2025 18:47:16 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.13.6 release.
-> There are 157 patches in this series, all will be posted as a response
+Am 05.03.2025 um 18:46 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.130 release.
+> There are 176 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Fri, 07 Mar 2025 17:44:26 +0000.
-> Anything received after that time might be too late.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] 30be4aa8b957 ("Linux 6.13.6-rc1")
 
-Thanks,
-SJ
+Beste Grüße,
+Peter Schneider
 
-[...]
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
----
-
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
