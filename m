@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D251DDC1A;
-	Thu,  6 Mar 2025 08:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228E34315F;
+	Thu,  6 Mar 2025 08:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741248437; cv=none; b=L87sioYI7GzA8DexGG9T9ZVAr/KVGwu7nfLcCn/EoypqHGC2KUopB3DP6MHyLSDM2F425rDDR0nPY6OpX8CFVagEfGrGzz0TzsmKorPd95ocG89eghelM1d6iJKiCpi1cxB+m7iD74qLBoiSx4q9Ag2Rlo36lUYYsd3KHfOlLkc=
+	t=1741248533; cv=none; b=gnyqF5xxV/rBBSa+GxloBwlg9+sUbfYWB6ppKPcTQpegn5b4aCwagq1yLC9JyMpOw7/kaRjaDQTBdAgnQpG6DkE475ANPKvibHFypwNwnkU2kpmDAL8iUqnnHFSrM7iGO2qpz1OJqCMVM1ysZl6vFPZIXhbYjhF8OLesZa0Fv4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741248437; c=relaxed/simple;
-	bh=F+DVaW0MEn8CkvIYJ6JT4xQvSti4q5vM94PkBIoV8fU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MWlVQJZtzyLW/toI5p2HKNs3V/QoP0GcYFYBq2leH2prYgHPTlEBYXYMKvbifD1tGlEcJo+jz+txm0sgrRdTsthcCd6rYYa1WSu+9kg5Ss1yYvsu+EXfLZlKihE6efMamy8uc0K1EX7iHZ7oiuLGOEkZgdyDSbf5QR4/SQfrDGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcXQAeGS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741248533; c=relaxed/simple;
+	bh=KKrVHT1EemskmISqd19LHlW/py0M5870O46L1p8+4Ro=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kFCEnamcqjIj7Nhj7ANSKym314r1+WghxSsIBFJol6i7l1ntmFTQ3eCzm9dNsptC4hKgWdKQyIKQ1pIwFX7XlUrdJ6Km0/qsl/ldflTEx9G3bIIV9D7RzXxzCDys1ebp2dEq4dAvFfaN1S4RNJ3MctsyBxe05K7yvduEXRxnfho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aSRiTuVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcXQAeGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B60C4CEE0;
-	Thu,  6 Mar 2025 08:07:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aSRiTuVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349E2C4CEE0;
+	Thu,  6 Mar 2025 08:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741248435;
-	bh=F+DVaW0MEn8CkvIYJ6JT4xQvSti4q5vM94PkBIoV8fU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UcXQAeGSJYouXPqztIk8Tm/A7brrV7d8uP+Tlmbbz/SPIatQM9KXVmC6RyjiBfcp/
-	 Yje2jaCaE0zbXK6Fotyp6r01mGT8zcsJPvWsVak1EPK9U0+dvyVgDZ0vrA8y7SHdMg
-	 tAiUSXRnSgowx/sNdLJZjeRxIButoTHAroRe692DKPA2C6a62n2nkA6v+EOgbaUCOi
-	 gj+0ox+KtMXPM2FNDUvbVOLB2DA7rRpXUHZbe+sNnOuK5W2p7y6NE+fyDWJadwI8gd
-	 tn1J1POBHAcgfvPXp/0NpihOE4VDoEDpq8O9gDM/jOhmpQm7J2H1Nv8b9AetYCFULs
-	 8JKe5OxnrXvYQ==
-Message-ID: <ebf8b6fc-33b8-408b-aeac-96b8495753e6@kernel.org>
-Date: Thu, 6 Mar 2025 09:07:12 +0100
+	s=k20201202; t=1741248532;
+	bh=KKrVHT1EemskmISqd19LHlW/py0M5870O46L1p8+4Ro=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=aSRiTuVXUr4ZpteWhlwzb8ssDfq8Y+oMLPX1Lsc6M87bsLCeCcCnbguqtjH5njd4Q
+	 Gqnq1nmLqQkvLJ9x+1SrQoehi4Q1jLzY2NZlQKJVmL2iN66gZC4QtwWM2rpvcanNn8
+	 a4c71Wrdi2qF79RUtVRUl1dMO/nO7SMs2ZVDAfHMgmt48YOKXRFD4pNZ7uy4G6OG41
+	 BJDurks9SNJMqL+nO6bs6qMC5xqRDPR4+dXxaNhJMHau1yI9RUNsWBT89cNaHkQBUL
+	 MIa855iOWY66tDjptw7dpQMUekysPScNsRanrSIfFJgrNJHY5BCz60Ttx/zKaaDKDX
+	 cr5aSJ0/fSvrQ==
+Message-ID: <44400ac2-4c46-498c-a5d1-5a0441dd5571@kernel.org>
+Date: Thu, 6 Mar 2025 09:08:49 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,13 +37,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.13 100/157] arm64: hugetlb: Fix
  huge_ptep_get_and_clear() for non-present ptes
+From: Jiri Slaby <jirislaby@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
  Ryan Roberts <ryan.roberts@arm.com>, Will Deacon <will@kernel.org>
 References: <20250305174505.268725418@linuxfoundation.org>
  <20250305174509.330888653@linuxfoundation.org>
+ <ebf8b6fc-33b8-408b-aeac-96b8495753e6@kernel.org>
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
  xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -86,177 +87,66 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20250305174509.330888653@linuxfoundation.org>
+In-Reply-To: <ebf8b6fc-33b8-408b-aeac-96b8495753e6@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 05. 03. 25, 18:48, Greg Kroah-Hartman wrote:
-> 6.13-stable review patch.  If anyone has any objections, please let me know.
+On 06. 03. 25, 9:07, Jiri Slaby wrote:
+> On 05. 03. 25, 18:48, Greg Kroah-Hartman wrote:
+>> 6.13-stable review patch.  If anyone has any objections, please let me 
+>> know.
+>>
+>> ------------------
+>>
+>> From: Ryan Roberts <ryan.roberts@arm.com>
+>>
+>> commit 49c87f7677746f3c5bd16c81b23700bb6b88bfd4 upstream.
+...
+>> @@ -401,13 +393,8 @@ pte_t huge_ptep_get_and_clear(struct mm_
+>>   {
+>>       int ncontig;
+>>       size_t pgsize;
+>> -    pte_t orig_pte = __ptep_get(ptep);
+>> -
+>> -    if (!pte_cont(orig_pte))
+>> -        return __ptep_get_and_clear(mm, addr, ptep);
+>> -
+>> -    ncontig = find_num_contig(mm, addr, ptep, &pgsize);
+>> +    ncontig = num_contig_ptes(sz, &pgsize);
 > 
-> ------------------
 > 
-> From: Ryan Roberts <ryan.roberts@arm.com>
+> This fails to build:
 > 
-> commit 49c87f7677746f3c5bd16c81b23700bb6b88bfd4 upstream.
-> 
-> arm64 supports multiple huge_pte sizes. Some of the sizes are covered by
-> a single pte entry at a particular level (PMD_SIZE, PUD_SIZE), and some
-> are covered by multiple ptes at a particular level (CONT_PTE_SIZE,
-> CONT_PMD_SIZE). So the function has to figure out the size from the
-> huge_pte pointer. This was previously done by walking the pgtable to
-> determine the level and by using the PTE_CONT bit to determine the
-> number of ptes at the level.
-> 
-> But the PTE_CONT bit is only valid when the pte is present. For
-> non-present pte values (e.g. markers, migration entries), the previous
-> implementation was therefore erroneously determining the size. There is
-> at least one known caller in core-mm, move_huge_pte(), which may call
-> huge_ptep_get_and_clear() for a non-present pte. So we must be robust to
-> this case. Additionally the "regular" ptep_get_and_clear() is robust to
-> being called for non-present ptes so it makes sense to follow the
-> behavior.
-> 
-> Fix this by using the new sz parameter which is now provided to the
-> function. Additionally when clearing each pte in a contig range, don't
-> gather the access and dirty bits if the pte is not present.
-> 
-> An alternative approach that would not require API changes would be to
-> store the PTE_CONT bit in a spare bit in the swap entry pte for the
-> non-present case. But it felt cleaner to follow other APIs' lead and
-> just pass in the size.
-> 
-> As an aside, PTE_CONT is bit 52, which corresponds to bit 40 in the swap
-> entry offset field (layout of non-present pte). Since hugetlb is never
-> swapped to disk, this field will only be populated for markers, which
-> always set this bit to 0 and hwpoison swap entries, which set the offset
-> field to a PFN; So it would only ever be 1 for a 52-bit PVA system where
-> memory in that high half was poisoned (I think!). So in practice, this
-> bit would almost always be zero for non-present ptes and we would only
-> clear the first entry if it was actually a contiguous block. That's
-> probably a less severe symptom than if it was always interpreted as 1
-> and cleared out potentially-present neighboring PTEs.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 66b3923a1a0f ("arm64: hugetlb: add support for PTE contiguous bit")
-> Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-> Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-> Link: https://lore.kernel.org/r/20250226120656.2400136-3-ryan.roberts@arm.com
-> Signed-off-by: Will Deacon <will@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   arch/arm64/mm/hugetlbpage.c |   51 ++++++++++++++++----------------------------
->   1 file changed, 19 insertions(+), 32 deletions(-)
-> 
-> --- a/arch/arm64/mm/hugetlbpage.c
-> +++ b/arch/arm64/mm/hugetlbpage.c
-> @@ -100,20 +100,11 @@ static int find_num_contig(struct mm_str
->   
->   static inline int num_contig_ptes(unsigned long size, size_t *pgsize)
->   {
-> -	int contig_ptes = 0;
-> +	int contig_ptes = 1;
->   
->   	*pgsize = size;
->   
->   	switch (size) {
-> -#ifndef __PAGETABLE_PMD_FOLDED
-> -	case PUD_SIZE:
-> -		if (pud_sect_supported())
-> -			contig_ptes = 1;
-> -		break;
-> -#endif
-> -	case PMD_SIZE:
-> -		contig_ptes = 1;
-> -		break;
->   	case CONT_PMD_SIZE:
->   		*pgsize = PMD_SIZE;
->   		contig_ptes = CONT_PMDS;
-> @@ -122,6 +113,8 @@ static inline int num_contig_ptes(unsign
->   		*pgsize = PAGE_SIZE;
->   		contig_ptes = CONT_PTES;
->   		break;
-> +	default:
-> +		WARN_ON(!__hugetlb_valid_size(size));
->   	}
->   
->   	return contig_ptes;
-> @@ -163,24 +156,23 @@ static pte_t get_clear_contig(struct mm_
->   			     unsigned long pgsize,
->   			     unsigned long ncontig)
->   {
-> -	pte_t orig_pte = __ptep_get(ptep);
-> -	unsigned long i;
-> +	pte_t pte, tmp_pte;
-> +	bool present;
->   
-> -	for (i = 0; i < ncontig; i++, addr += pgsize, ptep++) {
-> -		pte_t pte = __ptep_get_and_clear(mm, addr, ptep);
-> -
-> -		/*
-> -		 * If HW_AFDBM is enabled, then the HW could turn on
-> -		 * the dirty or accessed bit for any page in the set,
-> -		 * so check them all.
-> -		 */
-> -		if (pte_dirty(pte))
-> -			orig_pte = pte_mkdirty(orig_pte);
-> -
-> -		if (pte_young(pte))
-> -			orig_pte = pte_mkyoung(orig_pte);
-> +	pte = __ptep_get_and_clear(mm, addr, ptep);
-> +	present = pte_present(pte);
-> +	while (--ncontig) {
-> +		ptep++;
-> +		addr += pgsize;
-> +		tmp_pte = __ptep_get_and_clear(mm, addr, ptep);
-> +		if (present) {
-> +			if (pte_dirty(tmp_pte))
-> +				pte = pte_mkdirty(pte);
-> +			if (pte_young(tmp_pte))
-> +				pte = pte_mkyoung(pte);
-> +		}
->   	}
-> -	return orig_pte;
-> +	return pte;
->   }
->   
->   static pte_t get_clear_contig_flush(struct mm_struct *mm,
-> @@ -401,13 +393,8 @@ pte_t huge_ptep_get_and_clear(struct mm_
->   {
->   	int ncontig;
->   	size_t pgsize;
-> -	pte_t orig_pte = __ptep_get(ptep);
-> -
-> -	if (!pte_cont(orig_pte))
-> -		return __ptep_get_and_clear(mm, addr, ptep);
-> -
-> -	ncontig = find_num_contig(mm, addr, ptep, &pgsize);
->   
-> +	ncontig = num_contig_ptes(sz, &pgsize);
+> /usr/bin/gcc-current/gcc (SUSE Linux) 14.2.1 20250220 [revision 
+> 9ffecde121af883b60bbe60d00425036bc873048]
+> /usr/bin/aarch64-suse-linux-gcc (SUSE Linux) 14.2.1 20250220 [revision 
+> 9ffecde121af883b60bbe60d00425036bc873048]
+> run_oldconfig.sh --check... PASS
+> Build...                    FAIL
+> + make -j48 -s -C /dev/shm/kbuild/linux.34170/current ARCH=arm64 
+> HOSTCC=gcc CROSS_COMPILE=aarch64-suse-linux- clean
+> arch/arm64/mm/hugetlbpage.c:397:35: error: 'sz' undeclared (first use in 
+> this function); did you mean 's8'?
+>        |                                   s8
+> arch/arm64/mm/hugetlbpage.c:397:35: note: each undeclared identifier is 
+> reported only once for each function it appears in
+> make[4]: *** [scripts/Makefile.build:197: arch/arm64/mm/hugetlbpage.o] 
+> Error 1
+
+It looks like the stable tree is missing this pre-req:
+commit 02410ac72ac3707936c07ede66e94360d0d65319
+Author: Ryan Roberts <ryan.roberts@arm.com>
+Date:   Wed Feb 26 12:06:51 2025 +0000
+
+     mm: hugetlb: Add huge page size param to huge_ptep_get_and_clear()
 
 
-This fails to build:
-
-/usr/bin/gcc-current/gcc (SUSE Linux) 14.2.1 20250220 [revision 
-9ffecde121af883b60bbe60d00425036bc873048]
-/usr/bin/aarch64-suse-linux-gcc (SUSE Linux) 14.2.1 20250220 [revision 
-9ffecde121af883b60bbe60d00425036bc873048]
-run_oldconfig.sh --check... PASS
-Build...                    FAIL
-+ make -j48 -s -C /dev/shm/kbuild/linux.34170/current ARCH=arm64 
-HOSTCC=gcc CROSS_COMPILE=aarch64-suse-linux- clean
-arch/arm64/mm/hugetlbpage.c:397:35: error: 'sz' undeclared (first use in 
-this function); did you mean 's8'?
-       |                                   s8
-arch/arm64/mm/hugetlbpage.c:397:35: note: each undeclared identifier is 
-reported only once for each function it appears in
-make[4]: *** [scripts/Makefile.build:197: arch/arm64/mm/hugetlbpage.o] 
-Error 1
-
->   	return get_clear_contig(mm, addr, ptep, pgsize, ncontig);
->   }
->   
 > 
-> 
+>>       return get_clear_contig(mm, addr, ptep, pgsize, ncontig);
+>>   }
+>>
+>>
+>>
 > 
 
 -- 
