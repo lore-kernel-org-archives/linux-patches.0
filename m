@@ -1,82 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0517420DD5C;
-	Thu,  6 Mar 2025 13:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55551946C;
+	Thu,  6 Mar 2025 13:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741266913; cv=none; b=SnLSQHP6twuxGBAi6fKnun8l+Gf7nk5opLp4ojmo+YYc0L1MkaevQSx0Vkn3uoiJ5jyqbJcZejolSmp/w7KZdFRmopE29BWkPdi01L0gHilLpV010+vWVedED9TcuxeGDR80cyZ78D7LbWdjuBlfkHGEOWMUuh9AnKXgOaN0jYA=
+	t=1741267980; cv=none; b=BNr58BMGiA2fnPG6cX9dH8I/o5f0Txz03DLW6csCn+B2ys/+ehsKz5DYdrnZP17+6eeRoik/TVm60338fME6xwa5A7IpOB9O2y100S9N5A2huX5zwVyDZCZXeuFtlZ5IJZBUaP+r8SGs446cre0k9UBFP+OyWIiMMfSvjAYuSKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741266913; c=relaxed/simple;
-	bh=O9O62UlkBTOhtuGrt5efvAUz84z1X18H1McnHic9SF0=;
+	s=arc-20240116; t=1741267980; c=relaxed/simple;
+	bh=run5yGBKWfr9Umyhbc1xOv/ticuecsos8WTvKbqE0F8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GnlQXlMjLI8wOf/446CIE9lZQvWH7LTu1e1PBMvZLjGZwM3kGvF3PU8gXLNFaXpn9Z+3g7HijMhS15E2wJ7fIAIiWUofTPFYOvtuU4IQRRW+a/TZcm+RFQfVyLthH7xEoXqZhdq5Brj+L5hLxNdzKcrHUr0fSQHMTgaqoTFIo3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q7arWnbf; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=WwoHSB2tm9rLHkrDmfk2ZDRir2N86Q29JpLvIhF4cM1AXBsSjVAnHTgTXyj0zfmEDrImru++UnRVlDFvE+U7jjjAu+XIKbso/0apK1jJgA0d1j4JepajlXu2jmeH8Iy3YwzoXS8uYwSXXBS5lPSXYGoXETGPtwk2hYgkNh87X9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knaJFfx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q7arWnbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D92C4CEE0;
-	Thu,  6 Mar 2025 13:15:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741266912;
-	bh=O9O62UlkBTOhtuGrt5efvAUz84z1X18H1McnHic9SF0=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knaJFfx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CFEC4CEE8;
+	Thu,  6 Mar 2025 13:32:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1741267979;
+	bh=run5yGBKWfr9Umyhbc1xOv/ticuecsos8WTvKbqE0F8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q7arWnbf+mnu1DCbjy5hefMvtmGP/A8FBbFbGU9lLfNtdh0rP1jlY+sMuzOXIvC/e
-	 1zv1tIIyT4u2rBTtTnxknCM7Qg7PeZnDqUMyhJxDjPe0Xw++ps0XbWOrmcrC6Jj76i
-	 mkh02qruFVDTHlDKPjLScJHcfrcx+ow/kalQUYLgOYy4Re1USIRy62o+ML5Gis2ZKg
-	 FBTfdUCSy6foxdunJoOIFzWQSlIhZflgCJz1uOm46+NkNDAD+Uxr9SDdZVxzKerJE8
-	 tE9XP1/ctxKFloCc9LM9Se0UThUwrUAJNmKWMM2b/vi+ituo5I5zVQyCPyMDu90mEX
-	 MbszTKrKZGa1Q==
-Date: Thu, 6 Mar 2025 13:15:06 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	b=knaJFfx38cFN0stfjswFmGiwnRteTbfchZvHkfhZN0YAclbI6IZ6BFryIg+qUlDr/
+	 dz8T+2MArNF9Y1pmlT7TgHJ6vbkOFLe+A92o9TFxU0i2Dm+PRpf5JZJ5GgyG+YhT+m
+	 NUm0sO1cs3xnhaoHpdoniGOSx61qT8YjLT3iY0i8=
+Date: Thu, 6 Mar 2025 14:32:56 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Matthew Brost <matthew.brost@intel.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com
-Subject: Re: [PATCH 6.1 000/176] 6.1.130-rc1 review
-Message-ID: <083c24a7-f5d7-4be0-a3ab-ff8fd43e4027@sirena.org.uk>
-References: <20250305174505.437358097@linuxfoundation.org>
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 058/150] drm/xe: cancel pending job timer before
+ freeing scheduler
+Message-ID: <2025030621-fame-chastity-0bbd@gregkh>
+References: <20250305174503.801402104@linuxfoundation.org>
+ <20250305174506.154179603@linuxfoundation.org>
+ <Z8kklJj90JKGPCHC@lstrano-desk.jf.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wCC8hkrLehm9utWs"
-Content-Disposition: inline
-In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
-X-Cookie: What!?  Me worry?
-
-
---wCC8hkrLehm9utWs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <Z8kklJj90JKGPCHC@lstrano-desk.jf.intel.com>
 
-On Wed, Mar 05, 2025 at 06:46:09PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.130 release.
-> There are 176 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Mar 05, 2025 at 08:29:08PM -0800, Matthew Brost wrote:
+> On Wed, Mar 05, 2025 at 06:48:07PM +0100, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> 
+> We just got CI report on this patch, can you please hold off on backporting this.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Ok, but note you all better revert this upstream as well soon, otherwise
+our tools have a tendancy to want to drag stuff like this back into
+stable kernels to remain in sync with Linus's tree.
 
---wCC8hkrLehm9utWs
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmfJn9kACgkQJNaLcl1U
-h9D1ygf/co2z08dbMwOCPd6thascuXdM3+0jP5iYz5v1QQQNmDdUVvMwSdUc5ptK
-0jKWo2dQG8ZxZWLC68ZOOoCIKmHPVL5jZPNksNVBZT2Y85LOJpu7/KbKpYiDTr4N
-fOtzSERJAE417b210HkgAhimlWZajl5t705dV/Qrnrl9G6lD2JytaC8zefliIoKL
-b8UkstHx/Tv3pjY93L1IpTToyvVz5PsWB5+DxrJsKdVADohvKgc7IvUypB4+5anE
-+Py8Om2SSSg8BLXCqmwKB+skxGvElErE9YSdZTJFH8mqCmiDJ8RO7EhyytKEUowm
-3IYjoPPvN4BLDtlRQ38KXHrVklhslQ==
-=RzpW
------END PGP SIGNATURE-----
-
---wCC8hkrLehm9utWs--
+greg k-h
