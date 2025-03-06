@@ -1,122 +1,96 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079611FCCE7
-	for <patches@lists.linux.dev>; Thu,  6 Mar 2025 12:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071972040BD
+	for <patches@lists.linux.dev>; Thu,  6 Mar 2025 12:57:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741265716; cv=none; b=Kr0XMYge2HJkm1gar62+qVbxRLn+kvX6KKTDlS9aRPoQLZj8dovxFoTuGMzPBxAlaIAoXbS2WOi3yLN1fVm6ZyswCos5+1+oC8RqpzR7T/Ddt7UlNz4pjUA8WlM4SGLAnKmWTgYkz8UInTI8WOdL01XHeYoPey633HuFT4wZ9OY=
+	t=1741265842; cv=none; b=QsppXwB2LclQMovS33ADEa0nFUtctUAGSn5/j7Exl6NYDq6zdIB84SjqN1aOgRQ06rfYk25Q7ccrQsddjMrAYHrXki34FCvV0shTVU+HJyP64OX4JvGkJwtdNn8tYtxYyAZU6qgNA+rNa7NLQjIVF5XGFZRvo/S7shTITZc2Clc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741265716; c=relaxed/simple;
-	bh=CL8xqMbDSfXJhqryd6RGNfCVZzu0ssYGv1JLaVXfKDw=;
+	s=arc-20240116; t=1741265842; c=relaxed/simple;
+	bh=E39Ml7fCBZbxfVHzjpdOttpEvi9Y8jkd/560+rZTYD0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DFSG1KuCWOqtyPZ1pM84a/20X4eGzPT79AwzyINZi4/X/weV6X0VjmVt2lj2Rmz94m+1PPKFFw4pgE1owgVHjl4WsBz2xJnblBC7WsGIcOmjcfeU8PrgGODseTxkx+srjzGC7mL6XN+UHoz5dMAzHgwPcXK7K/W2Iay/1W38lXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=ByT7Y2Ty; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	 To:Cc:Content-Type; b=KOJH+SfDGw6p3gPPLz5Ump5nrd7KpmzZfvNsf5i7QvucZMqKnRQf+iMWl5reeSCCcwQoHZev8xWry52d3jD9mHn0nh70h0eI/5M807+N8TOW6BYUZYyg11lXvYIO50i/ghtoOfrBT91ZWHxgA49713CXG2gppfrrHZn+EvOUQe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z9BV25cY; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="ByT7Y2Ty"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2fec13a4067so962628a91.2
-        for <patches@lists.linux.dev>; Thu, 06 Mar 2025 04:55:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z9BV25cY"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2fe9fd5e7f8so150737a91.3
+        for <patches@lists.linux.dev>; Thu, 06 Mar 2025 04:57:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1741265714; x=1741870514; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741265840; x=1741870640; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ccc/H2dnyXMFfYeHkIhobLxEoO1aevmdpjSTBRDha2k=;
-        b=ByT7Y2TyCyCfWISh+XRFSB+8Q/kcgPrKWTRvRI6Q3XJTSgHHgM57LL18Ud8jWIIPwN
-         LC8Xl1HaxRxyIuqAUE5jENSdUvQ4GzkpdRrbzGCZ+zdK8I+lZIIe0D2wIrPCXJuqMRbI
-         C1vKomTTrLfppVwZysNuM4F8t4oqJ91E7hsv5M/6d7FN7MOI4ueLmX2UYmwXwBBBo/uD
-         vl9xurtlIgwBVsVIa6b46wt16kcADKZ7L9fkgSOGrKdXo9PHxHAtZ+eZJ3n6XZdjJqq+
-         OmtuA4Z/gIhFtiSLtDtTZsU+zL1wBlOOlWNC4jqWjcmUSwNbbFrYU8CJMVqycj3cPWwG
-         BNKw==
+        bh=E39Ml7fCBZbxfVHzjpdOttpEvi9Y8jkd/560+rZTYD0=;
+        b=Z9BV25cY+AM7jJGGrZVtYNIBV9zQE+tR9/MDxEgLL2shKlmI269Jz6dYjrkm1X4BJN
+         k7er9aK3tlgY0q7b3pqOE+K+jyttBtxFFJljVKqD8iGd8gTtDLyuAS4xJI8tP9/6MT6B
+         tLUB0ih81zH0lLM9nWhlftXOw42nGN2E/3cjHFbB9M8KugNB/vgOJl1AaecViPp38OsL
+         yxgliIIkEClJCn7FvcFo8GYYHSB49/UWNIgTH3CPTFPnQqGQl+BZcLd5twSYDtzuieV0
+         Tycf1ma/6p7DA3/dlh4KPZd8A/JNIoZmrgT+klT0sA50IXTvUYasGj3icmjLT4cTJ+ne
+         4FyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741265714; x=1741870514;
+        d=1e100.net; s=20230601; t=1741265840; x=1741870640;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ccc/H2dnyXMFfYeHkIhobLxEoO1aevmdpjSTBRDha2k=;
-        b=pAenP9jOOGJanDAZKYJ3fiDbnmou/gTnV7+s9eHVLEBWIi2i3Km6mdkIBUYLEjbddT
-         n47HhLJ3OSzwndCHW1RGiog8KUKmLB51mEcjVIPTbk3bTpVOkrXAzNMAwXFXM8L+gtz1
-         uFPW+jdwFkIwU8ugxrKDhHBqd8T+37/0C/HItMi9YdxJ2vvkleNk77wh6K+m5taHtt/J
-         mGEotBB3gIlOPem9E7K0BbQSOz55BqcxFBP6tql2TLyW2hjGoA2h+erkyAp6Ok2zGZlk
-         5AjLkauakjJHKPG4XBEE4FwqcMk5l34692CEsrsbCYJD/L/1xRnOQqetOSMMINZmZPy2
-         n6Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCV7R5Rgl5s2mfuefmHOUtIvM7w4QhZt05r6NHaEgapEW9d8r9o/nZ2HT9PhT5npXsiKyvBeJN8H@lists.linux.dev
-X-Gm-Message-State: AOJu0YyH3D2t7A0lU9seUUhfwy0XSN+vwwmdODiLN1R+hpyqqPm+kxJ7
-	nwH8j2pyll+KcanWfUhq2VAHC8Y2go7+ciJqvYXecAsfTRTFKuphF2r6Bokyss6oLuCe8W/X4Zo
-	cIlHVHjKQTX7EqrcArtLdjQyLAy0vrM4sPFmHXg==
-X-Gm-Gg: ASbGncvrgkdd5Ki2lamVnv4OLUwS1MXIieZmPrvlEvSSf3ULNqELRKnv/k7E/1h7720
-	xUKgBJjNZxJi6jbNeKz6tW/lILRWfpd7/SJlt6NCHrBvTes2QoJflOx4CwbAcfarUTGAu+2DMjm
-	jGzvPUo/HjBmFjbAEGtMCGfMxS
-X-Google-Smtp-Source: AGHT+IF7OiPlaCSQEnsXNBjhCDFUemUvQa+NRtTs/JSJ9+1Qyh4+kePAcg2WzwOWcgqtz8B61BAqo3R1eMqK+BSPwLY=
-X-Received: by 2002:a17:90a:8c18:b0:2ff:5e4e:861 with SMTP id
- 98e67ed59e1d1-2ff5e4e0a25mr6281780a91.24.1741265713650; Thu, 06 Mar 2025
- 04:55:13 -0800 (PST)
+        bh=E39Ml7fCBZbxfVHzjpdOttpEvi9Y8jkd/560+rZTYD0=;
+        b=VtvyjtIIHrlVKHpYTenoHLq4zSz2pqzvhjqUu6mHCZcPfmu3TtqCaWLIpnutyPcYSP
+         GzYJ8pqazmoc228TBRAPj3giUaoKCxVm/EIGKuaFEnqUFElaCKFOymksebjWaKlJhpsI
+         iGWazUGhSPs8iiz58wTpNLzVkC10iW2q07MP7qHuEbhisxs6GvarwzNsvvTWtk33PJRu
+         WuV3n8roUz+Aq2IWAOWYiEMQzl6qNQJb8wLfoWHI2o7/WR2cXTq/dV1jTHYJdX5zu8He
+         VxFzzUs8byGVZIozsYnYynALWJBtEi6t+sR0fIGII9D+z3C5nfuOVq7FXFP1hPFj7ZBX
+         Fslw==
+X-Forwarded-Encrypted: i=1; AJvYcCUgKqZ4gz7WHN363PhxqJBmlISUKfUi/TtxA1PFMbIvrlNuPC+Zjzzy8zptdHsSMPLpMiNVfHLq@lists.linux.dev
+X-Gm-Message-State: AOJu0YydSWU4OYGMUt2W+mdZdlCrpVzTB2xzubX56W4zUpVQiaRsovBt
+	5LvsO8h6Mg4k+aTpu9AVwzs60g4lzp4pUd2ZcH6QjBy2B204D+FKxwQLs5eEUisth7XchzCg2Le
+	LFtQo/F/kleAWg1JdrNWAGF5rUo8=
+X-Gm-Gg: ASbGncu17RvAeQJwpzG4nLVO3K+c0VBqzNuXsgXk9qS7HTKrOFNvJi9XLVM13Jinicg
+	69BhCqMaKYbWpNe5+rK9+XE5Al7n+ByKJpyXq+SJfkLH6gH7+lKHEg7zElNqAUU5hIVAYNDIdW2
+	reYp+axG+YiuE3XMCAnB4Jh1JK3Q==
+X-Google-Smtp-Source: AGHT+IEWKk04PIz7Wk8c0F5vZKKvySTmpJETnfri4bCYCQcstfnihMhMTAiUwNPxtpeY7tThxygpdKPz6oh1oX3Y1Zk=
+X-Received: by 2002:a17:90b:17d0:b0:2fb:f9de:9497 with SMTP id
+ 98e67ed59e1d1-2ff498223fdmr4702572a91.5.1741265840262; Thu, 06 Mar 2025
+ 04:57:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250305174505.268725418@linuxfoundation.org>
-In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Thu, 6 Mar 2025 21:54:56 +0900
-X-Gm-Features: AQ5f1Jpv_EZBxAwkR3XhpjU0MlJG0w8trjkFHUomYWnS5F4PAVsYZYvVmcl5D4U
-Message-ID: <CAKL4bV4TstXsNOuvqKb7shhdykg73r+zAP3MLQsf0nvGYYT0Rg@mail.gmail.com>
-Subject: Re: [PATCH 6.13 000/157] 6.13.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
+References: <20250210164245.282886-1-ojeda@kernel.org> <CAK7LNAQBFX5q6yyKBJoxMoD5d9SwdKm0c23J4+LpjwA1eh=bZw@mail.gmail.com>
+ <CANiq72n=95jgJs17NFAkit5uzxqtO9xij9Um3ybd_RiMCpFrDQ@mail.gmail.com> <CAK7LNAQC5Q5EQjuvMEWS5NAs-pixj3b--rkCHZ=xGQDTHqBBFQ@mail.gmail.com>
+In-Reply-To: <CAK7LNAQC5Q5EQjuvMEWS5NAs-pixj3b--rkCHZ=xGQDTHqBBFQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 6 Mar 2025 13:57:06 +0100
+X-Gm-Features: AQ5f1JozzC7HXKLXrrD94nPS6o7fBCrwM6b7SXP64UvI5vEbi8ijBc_ec378rj0
+Message-ID: <CANiq72nYUcGDmDG9Sx1AqgyXfkUWA4B5M3d5PexVfN7JB58Ryg@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: add rustc-min-version support function
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
+	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
-
-On Thu, Mar 6, 2025 at 3:14=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Thu, Mar 6, 2025 at 12:37=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
+rg> wrote:
 >
-> This is the start of the stable review cycle for the 6.13.6 release.
-> There are 157 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 07 Mar 2025 17:44:26 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.13.6-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.13.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+> This has not been picked up by any one in linux-next.
 
-6.13.6-rc1 tested.
+Yeah, I didn't start yet, sorry.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+> I applied this to linux-kbuild now. Thanks.
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Thanks!
 
-[    0.000000] Linux version 6.13.6-rc1rv-g30be4aa8b957
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20250207, GNU ld (GNU
-Binutils) 2.44) #1 SMP PREEMPT_DYNAMIC Thu Mar  6 20:52:49 JST 2025
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Cheers,
+Miguel
