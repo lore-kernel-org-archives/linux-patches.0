@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAE220D503;
-	Fri,  7 Mar 2025 22:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBEE18BC36;
+	Fri,  7 Mar 2025 22:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387867; cv=none; b=bsr69Ue9lxSfGamf12K2h5vNyhDKzTsiTYqpr5eD7GQersP0laOp2ohpemQsKLLcWZ3DaGvFfSkHFfakBbaePWSZNDFCcuJTKqE+hp1TNOEHPCz3f62YSbnZDW1xyoAP92AKaLzH8RfvBSQ2kIRCG9jZnlJQGBhsgh6+HtxtMgE=
+	t=1741387869; cv=none; b=IMIu4scD9rIJz+h2cY9cotyLHTNncbnJ/cYRkxeoADCz+IqwTG78mO4feAsnH6XGNZfQzniPJdI+tAWqTLgNrymL6j+P4pFesQnuhvnFMEdavuJUxM4nNQRW9bM5Vbo6ZKqnAKinXXnEicGfpwiDCA4ahetFKWl9ObdKR0JofGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387867; c=relaxed/simple;
-	bh=ZBX3obtCbnClXxU4zqEndprDVU834ZAq6aEFweF8XFI=;
+	s=arc-20240116; t=1741387869; c=relaxed/simple;
+	bh=sgb9roCamCt1UqlkFgft3zpl62r1p/bZz8kV9L9O8/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXz4Mz1D2uj1QaYSh5W1oe16xr5XG4fas80+mEzoa7yOym1HGDK0GTy+1kbSD1ALoAXPMIq/0ohCE8w+eqoN+Q8mW4P3Ofjya8hS76rz+Hggn9eNx0eKNYxjpT7t5ZBT0Nao7CJI13Rh/6D/029FPoLGOV4tq1AKAJoEdX5fr/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kj2iDWfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYJGkZOeWe9unjxPfZm/hZ5XCxJSGtqnhKd+6vvH9wuYiVVqmu9yagOfLpxIoqVh3oECPPphfOVCa35aGVHEq6EBkttV74pX3OQbVVP2hzvq+Y47RefvUa1oScWvDUkeDQDDtbwNxFmos3pkxO1QYUuQGe/vB1O4xkiAsgE/9qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZfKd0/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kj2iDWfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E48C4CED1;
-	Fri,  7 Mar 2025 22:51:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZfKd0/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4034C4CEE5;
+	Fri,  7 Mar 2025 22:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387866;
-	bh=ZBX3obtCbnClXxU4zqEndprDVU834ZAq6aEFweF8XFI=;
+	s=k20201202; t=1741387868;
+	bh=sgb9roCamCt1UqlkFgft3zpl62r1p/bZz8kV9L9O8/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kj2iDWfPsw97Jf9Q+3iGeNgyPogsV29+D0EancQfQyJcDLyZkJo+2oK5JH4+u7eNH
-	 rqvwIoduxXlRdOZNFhT3nV8qJyZYF+48D1DncunhK9VOLLhfXMEhBV3Ao9TNvsJNi3
-	 77rbi9Aw0SyKZNbiB/Rlo8yGiVoguGQcKYif1i1NoS30GUdN4skateblZvMxI7srap
-	 SSiSPob4gzbUH23//O6lVRoj/9Avj2pMwaxWKOX0jzogKEu7M3y4NVS1WZUfHSx8NC
-	 0/mwkXsSeT0/vzC/IJpOWIGnRfdNaiwaDLA52kmg7FBSWhRMmabqN6y8KISX5yENaY
-	 +7ppMOXG0vfAQ==
+	b=mZfKd0/BTLTuxjBI8pZGL0WEj7Eho+XuhyELIIx00Ncc343DCCMZDyOZFYiQfHwIq
+	 r9y8XXbTuvkpLY/y214BO4txP7QjIQLooO+Untxuspex4fvBLkiIBWpTuWfWVODpSM
+	 74hy6oQUJSB/+wwWUwlgWXSW5nPSRp+Urf5/TT2+pMUHWMoEBiUA3zX9QTwqKIwZOU
+	 JOXDFEkbltiwEG/T46TqPUkzqcvPIsb2ih1Ybl7bBkaGJheCK3IU4iUdPjsCD/1KX/
+	 9utiRPS4pPfd2rdCTsVHHQIVgb3++zVNw4MEAXcFPKrnoHwO0okqv1AXFZ+bzhYfON
+	 fh/6avRVujiFA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 11/60] rust: introduce `.clippy.toml`
-Date: Fri,  7 Mar 2025 23:49:18 +0100
-Message-ID: <20250307225008.779961-12-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 12/60] rust: replace `clippy::dbg_macro` with `disallowed_macros`
+Date: Fri,  7 Mar 2025 23:49:19 +0100
+Message-ID: <20250307225008.779961-13-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -49,79 +49,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-commit 7d56786edcbdf58b6367fd7f01d5861214ad1c95 upstream.
+commit 8577c9dca799bd74377f7c30015d8cdc53a53ca2 upstream.
 
-Some Clippy lints can be configured/tweaked. We will use these knobs to
-our advantage in later commits.
+Back when we used Rust 1.60.0 (before Rust was merged in the kernel),
+we added `-Wclippy::dbg_macro` to the compilation flags. This worked
+great with our custom `dbg!` macro (vendored from `std`, but slightly
+modified to use the kernel printing facilities).
 
-This is done via a configuration file, `.clippy.toml` [1]. The file is
-currently unstable. This may be a problem in the future, but we can adapt
-as needed. In addition, we proposed adding Clippy to the Rust CI's RFL
-job [2], so we should be able to catch issues pre-merge.
+However, in the very next version, 1.61.0, it stopped working [1] since
+the lint started to use a Rust diagnostic item rather than a path to find
+the `dbg!` macro [1]. This behavior remains until the current nightly
+(1.83.0).
 
-Thus introduce the file.
+Therefore, currently, the `dbg_macro` is not doing anything, which
+explains why we can invoke `dbg!` in samples/rust/rust_print.rs`, as well
+as why changing the `#[allow()]`s to `#[expect()]`s in `std_vendor.rs`
+doctests does not work since they are not fulfilled.
 
-Link: https://doc.rust-lang.org/clippy/configuration.html [1]
-Link: https://github.com/rust-lang/rust/pull/128928 [2]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
+One possible workaround is using `rustc_attrs` like the standard library
+does. However, this is intended to be internal, and we just started
+supporting several Rust compiler versions, so it is best to avoid it.
+
+Therefore, instead, use `disallowed_macros`. It is a stable lint and
+is more flexible (in that we can provide different macros), although
+its diagnostic message(s) are not as nice as the specialized one (yet),
+and does not allow to set different lint levels per macro/path [2].
+
+In turn, this requires allowing the (intentional) `dbg!` use in the
+sample, as one would have expected.
+
+Finally, in a single case, the `allow` is fixed to be an inner attribute,
+since otherwise it was not being applied.
+
+Link: https://github.com/rust-lang/rust-clippy/issues/11303 [1]
+Link: https://github.com/rust-lang/rust-clippy/issues/11307 [2]
 Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-12-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-13-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- .clippy.toml | 1 +
- .gitignore   | 1 +
- MAINTAINERS  | 1 +
- Makefile     | 3 +++
- 4 files changed, 6 insertions(+)
- create mode 100644 .clippy.toml
+ .clippy.toml               |  6 ++++++
+ Makefile                   |  1 -
+ rust/kernel/std_vendor.rs  | 10 +++++-----
+ samples/rust/rust_print.rs |  1 +
+ 4 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/.clippy.toml b/.clippy.toml
-new file mode 100644
-index 000000000000..f66554cd5c45
---- /dev/null
+index f66554cd5c45..ad9f804fb677 100644
+--- a/.clippy.toml
 +++ b/.clippy.toml
-@@ -0,0 +1 @@
-+# SPDX-License-Identifier: GPL-2.0
-diff --git a/.gitignore b/.gitignore
-index 56972adb5031..a61e4778d011 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -103,6 +103,7 @@ modules.order
- # We don't want to ignore the following even if they are dot-files
- #
- !.clang-format
-+!.clippy.toml
- !.cocciconfig
- !.editorconfig
- !.get_maintainer.ignore
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6bb4ec0c162a..f4e08a0851bd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20175,6 +20175,7 @@ B:	https://github.com/Rust-for-Linux/linux/issues
- C:	zulip://rust-for-linux.zulipchat.com
- P:	https://rust-for-linux.com/contributing
- T:	git https://github.com/Rust-for-Linux/linux.git rust-next
-+F:	.clippy.toml
- F:	Documentation/rust/
- F:	rust/
- F:	samples/rust/
+@@ -1 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
++
++disallowed-macros = [
++    # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
++    # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
++    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
++]
 diff --git a/Makefile b/Makefile
-index 8748aa1b2f79..43cc17c514dc 100644
+index 43cc17c514dc..d005a439a67c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -588,6 +588,9 @@ endif
- # Allows the usage of unstable features in stable compilers.
- export RUSTC_BOOTSTRAP := 1
+@@ -452,7 +452,6 @@ export rust_common_flags := --edition=2021 \
+ 			    -Wrust_2018_idioms \
+ 			    -Wunreachable_pub \
+ 			    -Wclippy::all \
+-			    -Wclippy::dbg_macro \
+ 			    -Wclippy::ignored_unit_patterns \
+ 			    -Wclippy::mut_mut \
+ 			    -Wclippy::needless_bitwise_bool \
+diff --git a/rust/kernel/std_vendor.rs b/rust/kernel/std_vendor.rs
+index 67bf9d37ddb5..085b23312c65 100644
+--- a/rust/kernel/std_vendor.rs
++++ b/rust/kernel/std_vendor.rs
+@@ -14,7 +14,7 @@
+ ///
+ /// ```rust
+ /// let a = 2;
+-/// # #[allow(clippy::dbg_macro)]
++/// # #[allow(clippy::disallowed_macros)]
+ /// let b = dbg!(a * 2) + 1;
+ /// //      ^-- prints: [src/main.rs:2] a * 2 = 4
+ /// assert_eq!(b, 5);
+@@ -52,7 +52,7 @@
+ /// With a method call:
+ ///
+ /// ```rust
+-/// # #[allow(clippy::dbg_macro)]
++/// # #[allow(clippy::disallowed_macros)]
+ /// fn foo(n: usize) {
+ ///     if dbg!(n.checked_sub(4)).is_some() {
+ ///         // ...
+@@ -71,7 +71,7 @@
+ /// Naive factorial implementation:
+ ///
+ /// ```rust
+-/// # #[allow(clippy::dbg_macro)]
++/// # #[allow(clippy::disallowed_macros)]
+ /// # {
+ /// fn factorial(n: u32) -> u32 {
+ ///     if dbg!(n <= 1) {
+@@ -118,7 +118,7 @@
+ /// a tuple (and return it, too):
+ ///
+ /// ```
+-/// # #[allow(clippy::dbg_macro)]
++/// # #![allow(clippy::disallowed_macros)]
+ /// assert_eq!(dbg!(1usize, 2u32), (1, 2));
+ /// ```
+ ///
+@@ -127,7 +127,7 @@
+ /// invocations. You can use a 1-tuple directly if you need one:
+ ///
+ /// ```
+-/// # #[allow(clippy::dbg_macro)]
++/// # #[allow(clippy::disallowed_macros)]
+ /// # {
+ /// assert_eq!(1, dbg!(1u32,)); // trailing comma ignored
+ /// assert_eq!((1,), dbg!((1u32,))); // 1-tuple
+diff --git a/samples/rust/rust_print.rs b/samples/rust/rust_print.rs
+index 6eabb0d79ea3..ed1137ab2018 100644
+--- a/samples/rust/rust_print.rs
++++ b/samples/rust/rust_print.rs
+@@ -15,6 +15,7 @@
  
-+# Allows finding `.clippy.toml` in out-of-srctree builds.
-+export CLIPPY_CONF_DIR := $(srctree)
-+
- export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC HOSTPKG_CONFIG
- export RUSTC RUSTDOC RUSTFMT RUSTC_OR_CLIPPY_QUIET RUSTC_OR_CLIPPY BINDGEN
- export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
+ struct RustPrint;
+ 
++#[allow(clippy::disallowed_macros)]
+ fn arc_print() -> Result {
+     use kernel::sync::*;
+ 
 -- 
 2.48.1
 
