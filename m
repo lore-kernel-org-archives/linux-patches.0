@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C4520D503;
-	Fri,  7 Mar 2025 22:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8134E18BC36;
+	Fri,  7 Mar 2025 22:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387905; cv=none; b=D2OAXJ2EtOI7rL40uxL1V+Z839SKUBhf8TkdC8l/jxD/10ta/Tgz9x0XTHm8FrT/Vwx8cd9ng/avmlEKjpdp2n8YCteR/OcAcb4Dqk5qO5uooKNmvxFhORWN1ZhLsHcxPQMetUV0A9xv7BRQe1wJkTizhE01f0GcWV4ZcATFxS4=
+	t=1741387907; cv=none; b=G9uiskkUKpJwgnnyiK+G6mtLzv5auwfVd/pP3kmrcgjjboRvhq/ouMiEbIYKxeby89GtXywso09nQPNz0XmriU0Tghth3k8dtLbFqAKX4uqgIsKtDePl/Zu/ON3mXUZ/1HsBm/ZLgFyAsg8P1YSZLBssQSZp+pwAKbiXDNTNByo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387905; c=relaxed/simple;
-	bh=WBukgr0DSq8br+CEPb9i5jFwFmXFlMexsPASHfdLV3g=;
+	s=arc-20240116; t=1741387907; c=relaxed/simple;
+	bh=vNmXjLHauCLUhD0zmXfUrAi6uW5sFMKIenUjQ+BaNGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcEjp9nS2ofC9fIX6clgGPtNy2KjzpTzYqDf84CTDGDNM5YAMHcSY8brDTFTN/Me9WiLuc+p2oOj//p7Stg24M24CDKWKhO9fEuzKWjk58PaDUwz+4oo811ZuiXwvMri+I3LHZGt4U3rVI8fnrAtkG+QQaE5Adu8rBzeBXXmNCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vp4Nvtxp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/ec/rzA4UdJjPu/sAty6L2h39XHNGcPKHA8bbv8OU0jM8xnxPj6mWGc/lHhmvAVtDTIHG0ayW7MZQ8L9kpPKMaPoVZG7y7O22FrrW1MRsMxBHj7R9vkX66ds6wB3NOUIX5dXwXN8NezD9+zX5yZgk8uSBvhmdR2UjsVpCQRCaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sBBwLbIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vp4Nvtxp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040F1C4CEE5;
-	Fri,  7 Mar 2025 22:51:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sBBwLbIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0A5C4CEE3;
+	Fri,  7 Mar 2025 22:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387904;
-	bh=WBukgr0DSq8br+CEPb9i5jFwFmXFlMexsPASHfdLV3g=;
+	s=k20201202; t=1741387907;
+	bh=vNmXjLHauCLUhD0zmXfUrAi6uW5sFMKIenUjQ+BaNGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vp4Nvtxpsf9/oYXXg1UfLOUhXnlZaoh3j3duuxnt3Hp+97zoG9aZHu7OJRkXVo31L
-	 j34CKQHTxpw5+PelSt2F0SluteGYAUOFpLIEFVzkdTq67539srKWUgI4HF0ZO0y1du
-	 eFqZ5ysUxfREp1KnkTkjj+ghOK8TD7Lw3m/M5fpixKwEti6dzqNxpvtFsTcoJz1Ztc
-	 b49x9MegZoOn7sy/duoUoAitpjyPQm4mb2jasBFm3gbOEtoZ+qW1L5NHLl6J0X1aS3
-	 nG6ep2zvgFhbiTQ1NE6go2kfPLpUsXntGm6jafk5MSz+U+djZxx7tw77y970B/BYtA
-	 xnPtYbe/pGtYg==
+	b=sBBwLbIY2nqeoBYWkTYJui8SzUEHPGc3XqSt7ghF5e+QLEJNVa0oYKUWwjQ5PqN6A
+	 bFEtP/0BJ4dpKZCtc3DcbrFW65YLmsE5EI8dGN9SgWibIVun51F5C8sfrIxM5y8e9Z
+	 JnirRW4fm63Ipx2yZ+aAYN0DILiScg0tuYwvwCA2e+7pnp8ISBwRAT9HuGiSpSH2DK
+	 v2J4Xw+jRFQSJMoOrfNTBIWnZirMAkebHlfXJv1P9ZpJaz557gvZ0PgZRNl7ir83Pv
+	 TyOUUfiTIgHiL2NmHr2yTCxICwwgv3piRc0yIHp4iXXJkR/R7cuqIuhvJ3LxGyVIv+
+	 88fuaGU0xsdbw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 25/60] rust: alloc: implement `Allocator` for `Kmalloc`
-Date: Fri,  7 Mar 2025 23:49:32 +0100
-Message-ID: <20250307225008.779961-26-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 26/60] rust: alloc: add module `allocator_test`
+Date: Fri,  7 Mar 2025 23:49:33 +0100
+Message-ID: <20250307225008.779961-27-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -51,84 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit a34822d1c4c93085f635b922441a017bd7e959b0 upstream.
+commit 5a888c28e3b4ff6f54a53fca33951537d135e7f1 upstream.
 
-Implement `Allocator` for `Kmalloc`, the kernel's default allocator,
-typically used for objects smaller than page size.
+`Allocator`s, such as `Kmalloc`, will be used by e.g. `Box` and `Vec` in
+subsequent patches, and hence this dependency propagates throughout the
+whole kernel.
 
-All memory allocations made with `Kmalloc` end up in `krealloc()`.
+Add the `allocator_test` module that provides an empty implementation
+for all `Allocator`s in the kernel, such that we don't break the
+`rusttest` make target in subsequent patches.
 
-It serves as allocator for the subsequently introduced types `KBox` and
-`KVec`.
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-7-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-8-dakr@kernel.org
+[ Added missing `_old_layout` parameter as discussed. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/alloc/allocator.rs | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ rust/kernel/alloc.rs                |  9 +++++++--
+ rust/kernel/alloc/allocator_test.rs | 20 ++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
+ create mode 100644 rust/kernel/alloc/allocator_test.rs
 
-diff --git a/rust/kernel/alloc/allocator.rs b/rust/kernel/alloc/allocator.rs
-index 9ed122401e8a..272c581e24a0 100644
---- a/rust/kernel/alloc/allocator.rs
-+++ b/rust/kernel/alloc/allocator.rs
-@@ -13,10 +13,16 @@
- use core::ptr;
- use core::ptr::NonNull;
+diff --git a/rust/kernel/alloc.rs b/rust/kernel/alloc.rs
+index 2203852c3712..b5605aab182d 100644
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -2,12 +2,17 @@
  
--use crate::alloc::AllocError;
-+use crate::alloc::{AllocError, Allocator};
- use crate::bindings;
+ //! Extensions to the [`alloc`] crate.
  
--struct Kmalloc;
-+/// The contiguous kernel allocator.
-+///
-+/// `Kmalloc` is typically used for physically contiguous allocations up to page size, but also
-+/// supports larger allocations up to `bindings::KMALLOC_MAX_SIZE`, which is hardware specific.
-+///
-+/// For more details see [self].
-+pub struct Kmalloc;
+-#[cfg(not(test))]
+-#[cfg(not(testlib))]
++#[cfg(not(any(test, testlib)))]
+ pub mod allocator;
+ pub mod box_ext;
+ pub mod vec_ext;
  
- /// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
- fn aligned_size(new_layout: Layout) -> usize {
-@@ -53,8 +59,10 @@ struct ReallocFunc(
-     unsafe extern "C" fn(*const core::ffi::c_void, usize, u32) -> *mut core::ffi::c_void,
- );
- 
--#[expect(dead_code)]
- impl ReallocFunc {
-+    // INVARIANT: `krealloc` satisfies the type invariants.
-+    const KREALLOC: Self = Self(bindings::krealloc);
++#[cfg(any(test, testlib))]
++pub mod allocator_test;
 +
-     /// # Safety
-     ///
-     /// This method has the same safety requirements as [`Allocator::realloc`].
-@@ -106,6 +114,23 @@ unsafe fn call(
-     }
- }
- 
-+// SAFETY: `realloc` delegates to `ReallocFunc::call`, which guarantees that
-+// - memory remains valid until it is explicitly freed,
-+// - passing a pointer to a valid memory allocation is OK,
-+// - `realloc` satisfies the guarantees, since `ReallocFunc::call` has the same.
++#[cfg(any(test, testlib))]
++pub use self::allocator_test as allocator;
++
+ /// Indicates an allocation error.
+ #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+ pub struct AllocError;
+diff --git a/rust/kernel/alloc/allocator_test.rs b/rust/kernel/alloc/allocator_test.rs
+new file mode 100644
+index 000000000000..c5d325506f0c
+--- /dev/null
++++ b/rust/kernel/alloc/allocator_test.rs
+@@ -0,0 +1,20 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#![allow(missing_docs)]
++
++use super::{AllocError, Allocator, Flags};
++use core::alloc::Layout;
++use core::ptr::NonNull;
++
++pub struct Kmalloc;
++
 +unsafe impl Allocator for Kmalloc {
-+    #[inline]
 +    unsafe fn realloc(
-+        ptr: Option<NonNull<u8>>,
-+        layout: Layout,
-+        old_layout: Layout,
-+        flags: Flags,
++        _ptr: Option<NonNull<u8>>,
++        _layout: Layout,
++        _old_layout: Layout,
++        _flags: Flags,
 +    ) -> Result<NonNull<[u8]>, AllocError> {
-+        // SAFETY: `ReallocFunc::call` has the same safety requirements as `Allocator::realloc`.
-+        unsafe { ReallocFunc::KREALLOC.call(ptr, layout, old_layout, flags) }
++        panic!();
 +    }
 +}
-+
- // SAFETY: TODO.
- unsafe impl GlobalAlloc for Kmalloc {
-     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
 -- 
 2.48.1
 
