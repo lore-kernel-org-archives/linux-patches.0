@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C42C20DD67;
-	Fri,  7 Mar 2025 22:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448B825743D;
+	Fri,  7 Mar 2025 22:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387958; cv=none; b=PfEm7wmkqoDexzfBLnmNhjQAXHJ+1PXV0ahSFKp3717JlGM8Fpuf40eIHcreEjbnqFBwnt/y+7kLhotwJJa/f3vPg9I6RBPkUdhxHC7+f081wkSPaHvQTTCeXTSfSFGSRp4ZHuwx7CY/S78V0cNaWbbkgSIwa5xbOWJdahNGWfg=
+	t=1741387961; cv=none; b=WtsCC5Z6ukL0X6AcvCmImdJ3X6crjt/68mlxTolSNM1VIY73N+PHbHRc/YAy16JZ2XYQyRm2aIR8XVdEx484fN9iRfONt2nX9jHxc7YijOISTa/DkxHV2REuWPbJ+iUI5ufS6OYMclON1CAjhQOT2P1EHcC46bH75nc7BcS+swc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387958; c=relaxed/simple;
-	bh=Z6lXjfzEZTu0VoX9ev9NPtxWKkZi6oQLb8rPKzc6bH8=;
+	s=arc-20240116; t=1741387961; c=relaxed/simple;
+	bh=x09Tw1njTamUUai9ybUHaxJhy8Yxr/Y5HYW2aI9Y2Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyCWz5Jql84CVXi1GHWwfhYyWXaa5zST70MVeK98quy2ftwZR/wMK1AsUn2pERO7qYgCf7fBswCNgHaUOesOG0tjft5xS4b9+6evUa8ygk6UAFe+FFXHAi2udT+9EHZaFCb2DPkJhEBbVkmygYx+C8PK4b2k5BEG1XwrIxxrPpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6BBNb56; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAXccLjZUiihqZ96Clk5q7klo1gz/waF7rW9vIh+GCAXT4OUD8ehTbyk4fR1m2yNiI5X9lN6uhg7vfxKTI8mSsW8OKzGNfXBE2qsvZeSjq4fCqSyWFYeDX0djP+Ym3VrUBU9xS5RXdnf0K0bfc38S4ZjmhCbUKJmzN4d1ZZ51+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KbewqeKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6BBNb56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A25DC4CEE3;
-	Fri,  7 Mar 2025 22:52:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KbewqeKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05588C4CED1;
+	Fri,  7 Mar 2025 22:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387958;
-	bh=Z6lXjfzEZTu0VoX9ev9NPtxWKkZi6oQLb8rPKzc6bH8=;
+	s=k20201202; t=1741387961;
+	bh=x09Tw1njTamUUai9ybUHaxJhy8Yxr/Y5HYW2aI9Y2Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6BBNb56TtWWUT3QsOa+6xG1nbQ2bRhl1tRl5WKThyz77ulCsZazKpUUzqLVNn/y+
-	 rU/KZw1lsjcA0MboFFFWkE/b/DYyrDmaI5/dKukLT+hZt8/ju9DInXCQEKRof0HyLl
-	 o3iCa0sebWZyL2dhQw65jB9E8MX+bHhxZvcTZlLyKi1au4SDXVpzDk86yMKh8/8VMy
-	 pl0Nv8TGc38mldOAbtDooamiIef7QOk4odWTsz7IWVKzPnRwPSK4BrbaswfFLgnH+1
-	 Vmznor8tpnY86ScAnejUMd1+P/42jFPrlzhr60quTIUA+6/6tep9i4vPGKvepWG2xD
-	 UYhmj7Faa7dNA==
+	b=KbewqeKK2i41496H2ZtFLPFZV/hRBvRh3Do3hf520ZOqGrqTzLAGd/RJDBySD89nd
+	 WwzIChlqrw3LxmCGC6/74F8FvklaiumcFcNItXDPMzS4bQpuYGf3MQZ2H2iBB+kbYL
+	 9ZfZT7bG/zjPQXng+OtXUPNr8doucqz7gxkmVfX9h4ASbAbueEPkjpkbP8gqaSBVb8
+	 n3hFzXTIM8djJdx0T+7sN2+0BD4ACF3Zq3nWLFIlfTyDlmJSOwUN6GSbHHst9OnCjx
+	 GBwi1g2dBhpVNDeLDYczJvLD9+Hbw9JDDdup/Lm0PXRHxmAe0yRgcFhuW24Tvp7dW1
+	 mHerP1ZT+XClg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 45/60] rust: str: test: replace `alloc::format`
-Date: Fri,  7 Mar 2025 23:49:52 +0100
-Message-ID: <20250307225008.779961-46-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 46/60] rust: alloc: update module comment of alloc.rs
+Date: Fri,  7 Mar 2025 23:49:53 +0100
+Message-ID: <20250307225008.779961-47-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -51,61 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit eb6f92cd3f755c179204ea1f933b07cf992892fd upstream.
+commit 8ae740c3917ff92108df17236b3cf1b9a74bd359 upstream.
 
-The current implementation of tests in str.rs use `format!` to format
-strings for comparison, which, internally, creates a new `String`.
+Before we remove Rust's alloc crate, rewrite the module comment in
+alloc.rs to avoid a rustdoc warning.
 
-In order to prepare for getting rid of Rust's alloc crate, we have to
-cut this dependency. Instead, implement `format!` for `CString`.
-
-Note that for userspace tests, `Kmalloc`, which is backing `CString`'s
-memory, is just a type alias to `Cmalloc`.
+Besides that, the module comment in alloc.rs isn't correct anymore,
+we're no longer extending Rust's alloc crate.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-27-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-28-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/str.rs | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ rust/kernel/alloc.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
-index 6053bc7a98d1..aff6baa521d4 100644
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -524,7 +524,28 @@ macro_rules! c_str {
- #[cfg(test)]
- mod tests {
-     use super::*;
--    use alloc::format;
-+
-+    struct String(CString);
-+
-+    impl String {
-+        fn from_fmt(args: fmt::Arguments<'_>) -> Self {
-+            String(CString::try_from_fmt(args).unwrap())
-+        }
-+    }
-+
-+    impl Deref for String {
-+        type Target = str;
-+
-+        fn deref(&self) -> &str {
-+            self.0.to_str().unwrap()
-+        }
-+    }
-+
-+    macro_rules! format {
-+        ($($f:tt)*) => ({
-+            &*String::from_fmt(kernel::fmt!($($f)*))
-+        })
-+    }
+diff --git a/rust/kernel/alloc.rs b/rust/kernel/alloc.rs
+index c6024afa3739..f2f7f3a53d29 100644
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
  
-     const ALL_ASCII_CHARS: &'static str =
-         "\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\x09\\x0a\\x0b\\x0c\\x0d\\x0e\\x0f\
+-//! Extensions to the [`alloc`] crate.
++//! Implementation of the kernel's memory allocation infrastructure.
+ 
+ #[cfg(not(any(test, testlib)))]
+ pub mod allocator;
 -- 
 2.48.1
 
