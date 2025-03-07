@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E5018BC36;
-	Fri,  7 Mar 2025 22:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F05A18BC36;
+	Fri,  7 Mar 2025 22:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387888; cv=none; b=Vqb5SGbhX50sxP6K65gGxLQlr+lYLVkrdyUqmLp1afruI2oczWQzFWnU0xry3pYSSN/u5UYR2+HZL4B8ix6KwCWs0Pigu4OkxvlFin37RSSIfFo3t+/4l/j6dfakUVdIrxhSKTp9nySyP8unlGLklofhoDwn15SOzncCTaWs4+A=
+	t=1741387892; cv=none; b=WOBtPoPHO90pOPCX3s6kvIQkjfE9YPLI0sVki/TRLUF6VLt7BEt4T8cifir1/ytMw7wE3rxqibFPjQ0r5hjCU6AFFteAA0mbxnRtPAQFg3/Otd0rIvOjloj5m9TE8Rdqto+KB7oOkj/t6nka6ytW71i+XmOd8tLK5pOiGlZBuIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387888; c=relaxed/simple;
-	bh=IFsVEZtyNME8h9sO8w1L8+Hr0zDRB3RAI6Cil6+J8Lk=;
+	s=arc-20240116; t=1741387892; c=relaxed/simple;
+	bh=dVNgUt810C/rJwZVaRG0Ia5N9+h4eBDEIQikpsZjg50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9iLQt0BCnAer7J52f/EUlBQBxmjMLX1ktlzZszObVI8lvuW4gJzxMBEhGv2asYlYVvLbBxmy0DryJsgZ33jyIPgsDdwIxY//2IzqOw0ztYzAD0czZrnbzABIPm9rjdmEoJxKvTqpmpoOkI0cT+J5mRO+HQyGUuEceLT+r7LAL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hAxgtx6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuFbDKuMlFOa+LldV7bdTcDqmueOtH8MB4Ok9MoTPI1ptUwT+GQUf3ye+CVbel9ScEHg+/Rpkr2Oc/TAtDd2EZhKPQJ60t+fiMJK+9nj95CL5v6gSoYjxXcqSWA6u9AyOWkWAhvwx1a+DCyZJRVDOuAT6FvB+DmhdDDlORZGlL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W0B7ynL8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hAxgtx6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C983DC4CED1;
-	Fri,  7 Mar 2025 22:51:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W0B7ynL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACB2C4CED1;
+	Fri,  7 Mar 2025 22:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387888;
-	bh=IFsVEZtyNME8h9sO8w1L8+Hr0zDRB3RAI6Cil6+J8Lk=;
+	s=k20201202; t=1741387890;
+	bh=dVNgUt810C/rJwZVaRG0Ia5N9+h4eBDEIQikpsZjg50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAxgtx6Ej5wrT6HIPlrflF266qV7AF2vns3/xDwmtjtnnGWrwzqm6lVCJ4ZOu817D
-	 ill0Q53uGC0t/719C4bOs9HUvc2R0BQlwgflznnJ+gR30d/nvM90RF1suuUhAdlMCP
-	 IzQulrwzd+w0hTEZkRM5AnBddrWKh0/fvMe+734EZ2yKOamq9tn/zL/DV/sJicmCa7
-	 KvIx0oZpPaPidqtohmLSa5pQoFfDCggbwv6a0egKlMQIGRCDwIg9NFR+zreycGYMkQ
-	 f4BKo0n0EhXMObcYDle6yhgIuDb3GJIr9IkI4Aac4CTFeTMKLy8/1S4hBGHAqmtVvl
-	 +vpaagkbM2NCw==
+	b=W0B7ynL81wfUZCDrPolqwxXrJTqLzmJRVZmpbYQcgiUdixj9EKugXzeEnx/bhpMFi
+	 BOH3n2Zb01ZCUtR7H15FHWPut73atXKJIQiPYdCOZEtM4gxOg3kzJXpunXP/6DRw5y
+	 GKGi3qMKMeKwsK19ZT5WeLHEd6SSqldDotX2hq6zL4yUeiDKYJbM1LBd+dohGW283v
+	 XfOAWowmlgbBGFA3cnGEEp1dpzsMnsxMEHBfZUy3wznFZb0nHakOkyK8oIiCtIgCWD
+	 lfFiro+K4jCmsRfPYPWZM4g5Z7MxVtEUi90u3nlOp2NuV+wQJ3tjlMiajHyCF6WRYM
+	 kAqTc+jywUxMg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 19/60] rust: error: optimize error type to use nonzero
-Date: Fri,  7 Mar 2025 23:49:26 +0100
-Message-ID: <20250307225008.779961-20-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 20/60] rust: alloc: add `Allocator` trait
+Date: Fri,  7 Mar 2025 23:49:27 +0100
+Message-ID: <20250307225008.779961-21-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -49,131 +49,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Xavier <felipe_life@live.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit e9759c5b9ea555d09f426c70c880e9522e9b0576 upstream.
+commit b7a084ba4fbb8f416ce8d19c93a3a2bee63c9c89 upstream.
 
-Optimize `Result<(), Error>` size by changing `Error` type to
-`NonZero*` for niche optimization.
+Add a kernel specific `Allocator` trait, that in contrast to the one in
+Rust's core library doesn't require unstable features and supports GFP
+flags.
 
-This reduces the space used by the `Result` type, as the `NonZero*`
-type enables the compiler to apply more efficient memory layout.
-For example, the `Result<(), Error>` changes size from 8 to 4 bytes.
+Subsequent patches add the following trait implementors: `Kmalloc`,
+`Vmalloc` and `KVmalloc`.
 
-Link: https://github.com/Rust-for-Linux/linux/issues/1120
-Signed-off-by: Filipe Xavier <felipe_life@live.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Link: https://lore.kernel.org/r/BL0PR02MB4914B9B088865CF237731207E9732@BL0PR02MB4914.namprd02.prod.outlook.com
-[ Removed unneeded block around `match`, added backticks in panic
-  message and added intra-doc link. - Miguel ]
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-2-dakr@kernel.org
+[ Fixed typo. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/error.rs | 37 ++++++++++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 9 deletions(-)
+ rust/kernel/alloc.rs | 101 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
 
-diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index 2f1e4b783bfb..be6509d5f4a4 100644
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -9,6 +9,7 @@
- use alloc::alloc::LayoutError;
+diff --git a/rust/kernel/alloc.rs b/rust/kernel/alloc.rs
+index 1966bd407017..998779cc6976 100644
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -11,6 +11,7 @@
+ /// Indicates an allocation error.
+ #[derive(Copy, Clone, PartialEq, Eq, Debug)]
+ pub struct AllocError;
++use core::{alloc::Layout, ptr::NonNull};
  
- use core::fmt;
-+use core::num::NonZeroI32;
- use core::num::TryFromIntError;
- use core::str::Utf8Error;
- 
-@@ -20,7 +21,11 @@ macro_rules! declare_err {
-             $(
-             #[doc = $doc]
-             )*
--            pub const $err: super::Error = super::Error(-(crate::bindings::$err as i32));
-+            pub const $err: super::Error =
-+                match super::Error::try_from_errno(-(crate::bindings::$err as i32)) {
-+                    Some(err) => err,
-+                    None => panic!("Invalid errno in `declare_err!`"),
-+                };
-         };
-     }
- 
-@@ -88,7 +93,7 @@ macro_rules! declare_err {
+ /// Flags to be used when allocating memory.
  ///
- /// The value is a valid `errno` (i.e. `>= -MAX_ERRNO && < 0`).
- #[derive(Clone, Copy, PartialEq, Eq)]
--pub struct Error(core::ffi::c_int);
-+pub struct Error(NonZeroI32);
- 
- impl Error {
-     /// Creates an [`Error`] from a kernel error code.
-@@ -107,7 +112,20 @@ pub fn from_errno(errno: core::ffi::c_int) -> Error {
- 
-         // INVARIANT: The check above ensures the type invariant
-         // will hold.
--        Error(errno)
-+        // SAFETY: `errno` is checked above to be in a valid range.
-+        unsafe { Error::from_errno_unchecked(errno) }
+@@ -86,3 +87,103 @@ pub mod flags {
+     /// small allocations.
+     pub const GFP_NOWAIT: Flags = Flags(bindings::GFP_NOWAIT);
+ }
++
++/// The kernel's [`Allocator`] trait.
++///
++/// An implementation of [`Allocator`] can allocate, re-allocate and free memory buffers described
++/// via [`Layout`].
++///
++/// [`Allocator`] is designed to be implemented as a ZST; [`Allocator`] functions do not operate on
++/// an object instance.
++///
++/// In order to be able to support `#[derive(SmartPointer)]` later on, we need to avoid a design
++/// that requires an `Allocator` to be instantiated, hence its functions must not contain any kind
++/// of `self` parameter.
++///
++/// # Safety
++///
++/// - A memory allocation returned from an allocator must remain valid until it is explicitly freed.
++///
++/// - Any pointer to a valid memory allocation must be valid to be passed to any other [`Allocator`]
++///   function of the same type.
++///
++/// - Implementers must ensure that all trait functions abide by the guarantees documented in the
++///   `# Guarantees` sections.
++pub unsafe trait Allocator {
++    /// Allocate memory based on `layout` and `flags`.
++    ///
++    /// On success, returns a buffer represented as `NonNull<[u8]>` that satisfies the layout
++    /// constraints (i.e. minimum size and alignment as specified by `layout`).
++    ///
++    /// This function is equivalent to `realloc` when called with `None`.
++    ///
++    /// # Guarantees
++    ///
++    /// When the return value is `Ok(ptr)`, then `ptr` is
++    /// - valid for reads and writes for `layout.size()` bytes, until it is passed to
++    ///   [`Allocator::free`] or [`Allocator::realloc`],
++    /// - aligned to `layout.align()`,
++    ///
++    /// Additionally, `Flags` are honored as documented in
++    /// <https://docs.kernel.org/core-api/mm-api.html#mm-api-gfp-flags>.
++    fn alloc(layout: Layout, flags: Flags) -> Result<NonNull<[u8]>, AllocError> {
++        // SAFETY: Passing `None` to `realloc` is valid by its safety requirements and asks for a
++        // new memory allocation.
++        unsafe { Self::realloc(None, layout, Layout::new::<()>(), flags) }
 +    }
 +
-+    /// Creates an [`Error`] from a kernel error code.
++    /// Re-allocate an existing memory allocation to satisfy the requested `layout`.
 +    ///
-+    /// Returns [`None`] if `errno` is out-of-range.
-+    const fn try_from_errno(errno: core::ffi::c_int) -> Option<Error> {
-+        if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
-+            return None;
-+        }
++    /// If the requested size is zero, `realloc` behaves equivalent to `free`.
++    ///
++    /// If the requested size is larger than the size of the existing allocation, a successful call
++    /// to `realloc` guarantees that the new or grown buffer has at least `Layout::size` bytes, but
++    /// may also be larger.
++    ///
++    /// If the requested size is smaller than the size of the existing allocation, `realloc` may or
++    /// may not shrink the buffer; this is implementation specific to the allocator.
++    ///
++    /// On allocation failure, the existing buffer, if any, remains valid.
++    ///
++    /// The buffer is represented as `NonNull<[u8]>`.
++    ///
++    /// # Safety
++    ///
++    /// - If `ptr == Some(p)`, then `p` must point to an existing and valid memory allocation
++    ///   created by this [`Allocator`]; if `old_layout` is zero-sized `p` does not need to be a
++    ///   pointer returned by this [`Allocator`].
++    /// - `ptr` is allowed to be `None`; in this case a new memory allocation is created and
++    ///   `old_layout` is ignored.
++    /// - `old_layout` must match the `Layout` the allocation has been created with.
++    ///
++    /// # Guarantees
++    ///
++    /// This function has the same guarantees as [`Allocator::alloc`]. When `ptr == Some(p)`, then
++    /// it additionally guarantees that:
++    /// - the contents of the memory pointed to by `p` are preserved up to the lesser of the new
++    ///   and old size, i.e. `ret_ptr[0..min(layout.size(), old_layout.size())] ==
++    ///   p[0..min(layout.size(), old_layout.size())]`.
++    /// - when the return value is `Err(AllocError)`, then `ptr` is still valid.
++    unsafe fn realloc(
++        ptr: Option<NonNull<u8>>,
++        layout: Layout,
++        old_layout: Layout,
++        flags: Flags,
++    ) -> Result<NonNull<[u8]>, AllocError>;
 +
-+        // SAFETY: `errno` is checked above to be in a valid range.
-+        Some(unsafe { Error::from_errno_unchecked(errno) })
-     }
- 
-     /// Creates an [`Error`] from a kernel error code.
-@@ -115,21 +133,22 @@ pub fn from_errno(errno: core::ffi::c_int) -> Error {
-     /// # Safety
-     ///
-     /// `errno` must be within error code range (i.e. `>= -MAX_ERRNO && < 0`).
--    unsafe fn from_errno_unchecked(errno: core::ffi::c_int) -> Error {
-+    const unsafe fn from_errno_unchecked(errno: core::ffi::c_int) -> Error {
-         // INVARIANT: The contract ensures the type invariant
-         // will hold.
--        Error(errno)
-+        // SAFETY: The caller guarantees `errno` is non-zero.
-+        Error(unsafe { NonZeroI32::new_unchecked(errno) })
-     }
- 
-     /// Returns the kernel error code.
-     pub fn to_errno(self) -> core::ffi::c_int {
--        self.0
-+        self.0.get()
-     }
- 
-     #[cfg(CONFIG_BLOCK)]
-     pub(crate) fn to_blk_status(self) -> bindings::blk_status_t {
-         // SAFETY: `self.0` is a valid error due to its invariant.
--        unsafe { bindings::errno_to_blk_status(self.0) }
-+        unsafe { bindings::errno_to_blk_status(self.0.get()) }
-     }
- 
-     /// Returns the error encoded as a pointer.
-@@ -137,7 +156,7 @@ pub fn to_ptr<T>(self) -> *mut T {
-         #[cfg_attr(target_pointer_width = "32", allow(clippy::useless_conversion))]
-         // SAFETY: `self.0` is a valid error due to its invariant.
-         unsafe {
--            bindings::ERR_PTR(self.0.into()) as *mut _
-+            bindings::ERR_PTR(self.0.get().into()) as *mut _
-         }
-     }
- 
-@@ -145,7 +164,7 @@ pub fn to_ptr<T>(self) -> *mut T {
-     #[cfg(not(testlib))]
-     pub fn name(&self) -> Option<&'static CStr> {
-         // SAFETY: Just an FFI call, there are no extra safety requirements.
--        let ptr = unsafe { bindings::errname(-self.0) };
-+        let ptr = unsafe { bindings::errname(-self.0.get()) };
-         if ptr.is_null() {
-             None
-         } else {
++    /// Free an existing memory allocation.
++    ///
++    /// # Safety
++    ///
++    /// - `ptr` must point to an existing and valid memory allocation created by this [`Allocator`];
++    ///   if `old_layout` is zero-sized `p` does not need to be a pointer returned by this
++    ///   [`Allocator`].
++    /// - `layout` must match the `Layout` the allocation has been created with.
++    /// - The memory allocation at `ptr` must never again be read from or written to.
++    unsafe fn free(ptr: NonNull<u8>, layout: Layout) {
++        // SAFETY: The caller guarantees that `ptr` points at a valid allocation created by this
++        // allocator. We are passing a `Layout` with the smallest possible alignment, so it is
++        // smaller than or equal to the alignment previously used with this allocation.
++        let _ = unsafe { Self::realloc(Some(ptr), Layout::new::<()>(), layout, Flags(0)) };
++    }
++}
 -- 
 2.48.1
 
