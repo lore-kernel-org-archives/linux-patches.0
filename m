@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74031256C93;
-	Fri,  7 Mar 2025 22:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32587256C93;
+	Fri,  7 Mar 2025 22:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387950; cv=none; b=s0gQyIxb1zjNjsXn1Bb01fsdp4RGKXJ8Yczs8lSte1qUXrPoM6i2Pszmb9Pa2UCrQj7IfXqMcEMc25T9VJrYRJN1gqNCIirCbo2Q7sEJqlL7Tl7pOvBuKRIH0JlT9K4SNmGZigEDLGeNG148DDApg62v3ljWF8YhfTWNnWkKAhg=
+	t=1741387953; cv=none; b=CZ7jzsOX4+gxEVuBvi6x7L/fp/oklVIu/YtyYtyk+99OVaAPW9HCaWbt2jpJhHesq2h6iJBqRgwfQ9/dnqqHPoYVNPgL6FN09AG6V8EyNw+RQn1tDI3VUinFJ71pQpMKYcWXmNbPeCIvnc6UbyV9rhEsXzJN0uVZc9XdPB89KC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387950; c=relaxed/simple;
-	bh=ZtdwPMiHtvPElpmPqnXFaCjS20erR3RrGV6u4+eySek=;
+	s=arc-20240116; t=1741387953; c=relaxed/simple;
+	bh=WlfylzQeyKacsKZOnAzATuF1sqqVRMvwVo/ZI3QrPN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfXQ6D8eJEeLk1We0r/aORGNx3DbIcE9RLcZkDSXEbvX0ByjnkE5ZrTAdLtS2X6xSEagH0jpSK+upuTPLrTiTpZ3qsyXm+20XAHmph9KrV3P/zGm7T5GQ9ifFSkL64tj2uep4MKU3stmKmLr4xMKjZtQQnkM8gl+JWUNArZvXC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeF3tcyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRW+2ND6s4Ub02qsr5k2k00wE6TBlXFsT9A6XpqJYWEY7p7dZIE+dpdaqjEaCcfiYHvB4qtJmVqSWzUgVBAOpDHB8eFhDh5FrDOrC6PoQuFUCSG8zY9h0wT9081denYFgZuLY/O5FlROeRGp5VG/dCzYZ/w//oNxlg5I4S7u6T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JUCaeQoN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeF3tcyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28115C4CED1;
-	Fri,  7 Mar 2025 22:52:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JUCaeQoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5630C4CED1;
+	Fri,  7 Mar 2025 22:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387950;
-	bh=ZtdwPMiHtvPElpmPqnXFaCjS20erR3RrGV6u4+eySek=;
+	s=k20201202; t=1741387953;
+	bh=WlfylzQeyKacsKZOnAzATuF1sqqVRMvwVo/ZI3QrPN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WeF3tcynfuVshU6/zFQYDhiV53S3dxUow0Jeyn4jl+Fhm1cGHJavp4fj6c1eYw7JN
-	 yBWX+zKcM4S9hGGv6kbCBVwCNr/rAHNyXe+NhirI6zczfpsLk7TYkzGFwPhXjVNuA7
-	 XCwmnIdHpmYzKuzZ7TXsXcpzwuLyxg2t5sw2c2cERBdzOQVFpCASE1ic4+o0zr0ZpZ
-	 VHu88SKEO3vwMZPMbdQOrsKHQIRiGG1waMKZoU5X8v19kHp3MCe1bjQck3ZxMO3anD
-	 QJ/ndUz4sKHW2+rO/mwyA8qXuS3WO8fMujNhlG2V2DDi5j5h26LW/BnKULBXAK9wQJ
-	 k2xwMATot73Sw==
+	b=JUCaeQoNf/P0jCwi8u4LQHyaRg+M4P1nbwWBaiu+JQfyAFtpc2rLSY/cbE8962sxT
+	 Ti/ZiRDLZ0l7tENR1qB5mnvXsipOLUFuc3YOY6rxJqG0l7hYiL4N1Wienhxv+dky5c
+	 Bz+LsnCFHz3LoHggtW65efqYN+myyoky8/7HSvTv8MJPmCW4TNIyqA9site+yKjqev
+	 wuKVjoFCxBrIXUtyiZlD2sVbndgr/oI7HZGDf6tzhH2b/PYnHtj2glLVEPGZVOb4zm
+	 Cwb4I5OczhmFn++MX5AFQHYKJk1bjV/ao3S+5jUniZqU/zVDbTGh3YUj7gerbwN9OD
+	 b78CdyGPq+Kag==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 42/60] rust: error: check for config `test` in `Error::name`
-Date: Fri,  7 Mar 2025 23:49:49 +0100
-Message-ID: <20250307225008.779961-43-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 43/60] rust: alloc: implement `contains` for `Flags`
+Date: Fri,  7 Mar 2025 23:49:50 +0100
+Message-ID: <20250307225008.779961-44-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -51,44 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit 4a28ab469ff01855eb819dfd94754d1792f03f2a upstream.
+commit 909037ce0369bc3f4fd31743fd2d8d7096f06002 upstream.
 
-Additional to `testlib` also check for `test` in `Error::name`. This is
-required by a subsequent patch that (indirectly) uses `Error` in test
-cases.
+Provide a simple helper function to check whether given flags do
+contain one or multiple other flags.
+
+This is used by a subsequent patch implementing the Cmalloc `Allocator`
+to check for __GFP_ZERO.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-24-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-25-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/error.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/kernel/alloc.rs | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index aced2fe68b86..7cd3bbab52f2 100644
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -161,7 +161,7 @@ pub fn to_ptr<T>(self) -> *mut T {
-     }
+diff --git a/rust/kernel/alloc.rs b/rust/kernel/alloc.rs
+index 7fc2e404e594..049fca7a514d 100644
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -35,7 +35,7 @@
+ /// They can be combined with the operators `|`, `&`, and `!`.
+ ///
+ /// Values can be used from the [`flags`] module.
+-#[derive(Clone, Copy)]
++#[derive(Clone, Copy, PartialEq)]
+ pub struct Flags(u32);
  
-     /// Returns a string representing the error, if one exists.
--    #[cfg(not(testlib))]
-+    #[cfg(not(any(test, testlib)))]
-     pub fn name(&self) -> Option<&'static CStr> {
-         // SAFETY: Just an FFI call, there are no extra safety requirements.
-         let ptr = unsafe { bindings::errname(-self.0.get()) };
-@@ -178,7 +178,7 @@ pub fn name(&self) -> Option<&'static CStr> {
-     /// When `testlib` is configured, this always returns `None` to avoid the dependency on a
-     /// kernel function so that tests that use this (e.g., by calling [`Result::unwrap`]) can still
-     /// run in userspace.
--    #[cfg(testlib)]
-+    #[cfg(any(test, testlib))]
-     pub fn name(&self) -> Option<&'static CStr> {
-         None
+ impl Flags {
+@@ -43,6 +43,11 @@ impl Flags {
+     pub(crate) fn as_raw(self) -> u32 {
+         self.0
      }
++
++    /// Check whether `flags` is contained in `self`.
++    pub fn contains(self, flags: Flags) -> bool {
++        (self & flags) == flags
++    }
+ }
+ 
+ impl core::ops::BitOr for Flags {
 -- 
 2.48.1
 
