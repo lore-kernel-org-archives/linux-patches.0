@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2377620CCCD;
-	Fri,  7 Mar 2025 22:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E144F20CCCD;
+	Fri,  7 Mar 2025 22:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387991; cv=none; b=MtcPbUA7wnbMbYGoS8jkouyQ8aufcRo4wUJJNO+BStKqsdM1sC4EZqJnTbcjgPq8wau59o5lWA01mzgzQVxo3Ile4dXVvRY59aI83csYXqKWc7N6Q7Pb6E3yBhmN3c5wqCvjDZvWPwTSSdTvCiO7fOuwDv7QMU+fQ/wWTSXx0yM=
+	t=1741387994; cv=none; b=EMe6ByJT/a1XCxTRjHnvjjVfHJTiRimIMl6Urndal7zgYiB3ug4pPj9iWfoxSx4aV3rwGCuqSzbbeWPe/PzhOnrpjFJ3G9ysypt/QsxF6upDTI/GdDLjZ10BQX0x6U9t9ZlPP5Rt6S/lKiLW6Ym9ycj0xR9NVQcAkbZThzphPMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387991; c=relaxed/simple;
-	bh=MatB0J1yPhNc7aboWBkW4yVvdNQQnAdOYZ7GRBfI6Yc=;
+	s=arc-20240116; t=1741387994; c=relaxed/simple;
+	bh=XyfI0qxW2s+gzaE9WCja1XWBboKS3Xj5Ujq85oW1exw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnleWuLGov25sfkozYqFnxI5qVb0okVJtYJk7FSmVpJM103wyHjluj07gyCa1VeTHUmUvtHQBrzfonm+otDYqex+/4dK7lLnLVXfXhSi0axAAOoJXFWo1oRmFFT5UhdsoQrEYBS/Ri3mY96sYF7Ff0j1cZkQuvyKus5b7Qmbu9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ik/eklap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k78L9n/UPc4E9IK06Uxo4q2pwGvfmyv11EknRQ007SGjg2AS0GW4o0b14KtKiB0kJoBRr/smp9o5M0dYp4nxgMuGjPENu0UzofOa4j/ychD1pW/JfXkUIm7NJywf64a3uDQ6NE0rFEsyvO7Wcy7/gmEoT/Eu66iC4GqipgRjxd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCfLkYnb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ik/eklap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9D4C4CEE5;
-	Fri,  7 Mar 2025 22:53:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCfLkYnb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E59C4CEE9;
+	Fri,  7 Mar 2025 22:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387991;
-	bh=MatB0J1yPhNc7aboWBkW4yVvdNQQnAdOYZ7GRBfI6Yc=;
+	s=k20201202; t=1741387993;
+	bh=XyfI0qxW2s+gzaE9WCja1XWBboKS3Xj5Ujq85oW1exw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ik/eklapsIRXzSCypROCogCUYGTCxztMSvDrvkNogqHuwuQga38egbLS++ZuoyldV
-	 O1ZIkea+OM8A7GL4MzB9p7/3uEBsUxKFMZh8WBfO5ZSTgce3Kr2DX62Kod5Ob2J/hT
-	 nmjBFL14JcTN1OpagnHdSsqcSvuBsWjTNTLVcoPwrDvHcSacHkLdDCnYjliRfGf7PB
-	 LpQtybp7bShCPdbnbaJmEUapwmqcGtS0LLJj5fHMg3CC+hGb+LbvHkFmaXiwvVV1xt
-	 WH1N7fHlnXNGQwXVH+cq/3uKJ1cs9+ODU/YMSOe6Wu+ngU+c9+gEbKV4MkUPgLJuq2
-	 AUR4MGkRO3OvQ==
+	b=OCfLkYnbq+2gKGlvu3QMr65fn4NwisbDbU9ys4XS58P8QBTuEAc0+08OMXhYhwdHx
+	 V3y9zHdTRIciBgJdslSn85RtcOPfpyfekai4MNiivl4CsXM403/E2Ug8jn4jTJ5Mz/
+	 MLBk+swKD3Y2KEke52b8q4ymvYNr4v1ZjeztDwGlT6aY/p8LbjQSdXlmcLzlZQ7u4C
+	 n7RNTxx1qWRWXfDrvDxVE/RcBrAQE2IB0kmktyOM05h6HSHh8Y5fO51G4gb5uCZYE0
+	 BnpkuDe8nQDYIabEUsb4rBzSWKu1QWx3XMsQEfAAtqNQxhQs4jkiy3/y1oMMAj4Sua
+	 IeuVvJfEj1ahw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
@@ -36,9 +36,9 @@ Cc: Danilo Krummrich <dakr@kernel.org>,
 	NoisyCoil <noisycoil@disroot.org>,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 57/60] rust: fix size_t in bindgen prototypes of C builtins
-Date: Fri,  7 Mar 2025 23:50:04 +0100
-Message-ID: <20250307225008.779961-58-ojeda@kernel.org>
+Subject: [PATCH 6.12.y 58/60] rust: map `__kernel_size_t` and friends also to usize/isize
+Date: Fri,  7 Mar 2025 23:50:05 +0100
+Message-ID: <20250307225008.779961-59-ojeda@kernel.org>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
 References: <20250307225008.779961-1-ojeda@kernel.org>
 Precedence: bulk
@@ -51,67 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Gary Guo <gary@garyguo.net>
 
-commit 75c1fd41a671a0843b89d1526411a837a7163fa2 upstream.
+commit 2fd6f55c048d0c863ffbc8590b1bd2edb5ff13e5 upstream.
 
-Without `-fno-builtin`, for functions like memcpy/memmove (and many
-others), bindgen seems to be using the clang-provided prototype. This
-prototype is ABI-wise compatible, but the issue is that it does not have
-the same information as the source code w.r.t. typedefs.
+Currently bindgen has special logic to recognise `size_t` and `ssize_t`
+and map them to Rust `usize` and `isize`. Similarly, `ptrdiff_t` is
+mapped to `isize`.
 
-For example, bindgen generates the following:
-
-    extern "C" {
-        pub fn strlen(s: *const core::ffi::c_char) -> core::ffi::c_ulong;
-    }
-
-note that the return type is `c_ulong` (i.e. unsigned long), despite the
-size_t-is-usize behavior (this is default, and we have not opted out
-from it using --no-size_t-is-usize).
-
-Similarly, memchr's size argument should be of type `__kernel_size_t`,
-but bindgen generates `c_ulong` directly.
-
-We want to ensure any `size_t` is translated to Rust `usize` so that we
-can avoid having them be different type on 32-bit and 64-bit
-architectures, and hence would require a lot of excessive type casts
-when calling FFI functions.
-
-I found that this bindgen behavior (which probably is caused by
-libclang) can be disabled by `-fno-builtin`. Using the flag for compiled
-code can result in less optimisation because compiler cannot assume
-about their properties anymore, but this should not affect bindgen.
-
-[ Trevor asked: "I wonder how reliable this behavior is. Maybe bindgen
-  could do a better job controlling this, is there an open issue?".
-
-  Gary replied: ..."apparently this is indeed the suggested approach in
-  https://github.com/rust-lang/rust-bindgen/issues/1770". - Miguel ]
+However this falls short for `__kernel_size_t`, `__kernel_ssize_t` and
+`__kernel_ptrdiff_t`. To ensure that they are mapped to usize/isize
+rather than 32/64 integers depending on platform, blocklist them in
+bindgen parameters and manually provide their definition.
 
 Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240913213041.395655-2-gary@garyguo.net
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://lore.kernel.org/r/20240913213041.395655-3-gary@garyguo.net
 [ Formatted comment. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ rust/bindgen_parameters | 5 +++++
+ rust/bindings/lib.rs    | 5 +++++
+ rust/uapi/lib.rs        | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 5e7612f69cea..a6e80caa42c1 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -264,7 +264,11 @@ else
- bindgen_c_flags_lto = $(bindgen_c_flags)
- endif
+diff --git a/rust/bindgen_parameters b/rust/bindgen_parameters
+index b7c7483123b7..0f96af8b9a7f 100644
+--- a/rust/bindgen_parameters
++++ b/rust/bindgen_parameters
+@@ -1,5 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
  
--bindgen_c_flags_final = $(bindgen_c_flags_lto) -D__BINDGEN__
-+# `-fno-builtin` is passed to avoid `bindgen` from using `clang` builtin
-+# prototypes for functions like `memcpy` -- if this flag is not passed,
-+# `bindgen`-generated prototypes use `c_ulong` or `c_uint` depending on
-+# architecture instead of generating `usize`.
-+bindgen_c_flags_final = $(bindgen_c_flags_lto) -fno-builtin -D__BINDGEN__
++# We want to map these types to `isize`/`usize` manually, instead of
++# define them as `int`/`long` depending on platform bitwidth.
++--blocklist-type __kernel_s?size_t
++--blocklist-type __kernel_ptrdiff_t
++
+ --opaque-type xregs_state
+ --opaque-type desc_struct
+ --opaque-type arch_lbr_state
+diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
+index d6da3011281a..014af0d1fc70 100644
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -27,6 +27,11 @@
+ #[allow(dead_code)]
+ #[allow(clippy::undocumented_unsafe_blocks)]
+ mod bindings_raw {
++    // Manual definition for blocklisted types.
++    type __kernel_size_t = usize;
++    type __kernel_ssize_t = isize;
++    type __kernel_ptrdiff_t = isize;
++
+     // Use glob import here to expose all helpers.
+     // Symbols defined within the module will take precedence to the glob import.
+     pub use super::bindings_helper::*;
+diff --git a/rust/uapi/lib.rs b/rust/uapi/lib.rs
+index fea2de330d19..13495910271f 100644
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -25,4 +25,9 @@
+     unsafe_op_in_unsafe_fn
+ )]
  
- # Each `bindgen` release may upgrade the list of Rust target versions. By
- # default, the highest stable release in their list is used. Thus we need to set
++// Manual definition of blocklisted types.
++type __kernel_size_t = usize;
++type __kernel_ssize_t = isize;
++type __kernel_ptrdiff_t = isize;
++
+ include!(concat!(env!("OBJTREE"), "/rust/uapi/uapi_generated.rs"));
 -- 
 2.48.1
 
