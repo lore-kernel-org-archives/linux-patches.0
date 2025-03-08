@@ -1,87 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0C818BC36;
-	Fri,  7 Mar 2025 22:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1CC71F16B
+	for <patches@lists.linux.dev>; Sat,  8 Mar 2025 01:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741387999; cv=none; b=myY73SfrWik/tprzIcnkQQOulbzqyE7Ggg8n4w5wfpMnC37T/crlDVEyeZh9cmGn6whzFQJYTn4ZE+qaDAGiT/V+QJARsLgRdrL+eCimjNGI57ayePBWPs7lAo0x+5Leo6qeerTG2+55kWc1liYb6/ePjQU/fO6zlZMcHrgPb/A=
+	t=1741397387; cv=none; b=JPUYaNpOXmWtxC3NZW0unX2V2vX9vNDAPwoaIt7fEyEdHZAVqqMF7bh1rQoUGMlv2gg4aqK4A0qIy+2+lxkryaSlfztj/kf72tLI1wDCUruPkKSvQN7gRXFy4ueF3+Imyqfcykh3Du14WJyc63QzhjRWKGEoqXkO9Cour13hwaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741387999; c=relaxed/simple;
-	bh=4Qc6fD7vAa4od4D0L4vhyxptn78VumlHS11kr7lXXGk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7CJOuF53ymQ3ug0+CMyyz4qFCFSOHayxvogDu0SHN+naUyHQ5HPGOy3iKOfJopJ8sXyPMdp1g0blL/RuhSFg5cMYVx7M1N2oUOZmTwhXj7jM3w3HZh6oA7bwMO5otPuHjk6CUYf9RWtbRlk7V9cS3LR2+IDygwN+xREk60OCBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4xn7Fbg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741397387; c=relaxed/simple;
+	bh=BqP4DM+/+IuWr9xFjlNtPFqeLgHhfPnAfbwAYxrh9t8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=ihUpan+lg98Koq1niy3JBtAeQu/xERdorsRNQX6Rd2I8yPqmGSMPakaesZfJd79+u74cwDNErElLorGesiQXSrEMFDj4KWTYLScLyxBrml5Fl199URog0G9dve5rFHhWuFytiOOFASxIIucvq/SBAYJHgMjNBaO/EvUpbfDRoFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=p4XwbJnI; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4xn7Fbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EAADC4CEE5;
-	Fri,  7 Mar 2025 22:53:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741387999;
-	bh=4Qc6fD7vAa4od4D0L4vhyxptn78VumlHS11kr7lXXGk=;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="p4XwbJnI"
+Received: by linux.microsoft.com (Postfix, from userid 1158)
+	id 6F32C2038F40; Fri,  7 Mar 2025 17:29:45 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6F32C2038F40
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1741397385;
+	bh=TTvLsv859XQqVD3qFhNh+GXBq7oLLcfCxbyXedqoY4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4xn7Fbg/fl3TuPLwhaxdPJBBTiQosXmLBWKR6c3tiNZMbbIq/rVTgZcht4BcuxfM
-	 yalEFsiQ1SvK/PptXOY7h2Hy5iRdA/1zLkQ/s9Opm9INnHW56ywk2gFeN6JvZgkBti
-	 6aGfBNyIvT7w4qDh4j73M+YF99qV2hZqrd8S/Zy8tlAb0fMVYCU3SFyC1YxGZtKhWu
-	 +arEqrw6/63EWjb10kU7w7+z/0sUibriZ12nVAHnu2sm15Dcs+E+F2u2bVXX6UKrrH
-	 zccXi8QJeDY0txqOzsArfbYNagNUgaR+JrrWxzqg23RAA+lkm/PvYe7FBNXAXbGg/l
-	 P5EWqqzfLGBjg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org
-Cc: Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Alyssa Ross <hi@alyssa.is>,
-	NoisyCoil <noisycoil@disroot.org>,
+	b=p4XwbJnI03zOJFK/oL763+6NLiTllnotnwAAAAr8H3k8cVXwmAhBMWdplZIjSuxF1
+	 VyNJ5xXSFF4jBZCf1gOTSLxrFNyyF7pP5b3HWU7fWsEyMCdHDobCWzd1Po5lCjG1yF
+	 rAT9KqVeVgLFovRdaJxdFXurv38S9B+FpxM7XbeE=
+From: Hardik Garg <hargar@linux.microsoft.com>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12.y 60/60] rust: alloc: Fix `ArrayLayout` allocations
-Date: Fri,  7 Mar 2025 23:50:07 +0100
-Message-ID: <20250307225008.779961-61-ojeda@kernel.org>
-In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
-References: <20250307225008.779961-1-ojeda@kernel.org>
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 6.1 000/161] 6.1.130-rc2 review
+Date: Fri,  7 Mar 2025 17:29:45 -0800
+Message-Id: <1741397385-31329-1-git-send-email-hargar@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <20250306151414.484343862@linuxfoundation.org>
+References: <20250306151414.484343862@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Asahi Lina <lina@asahilina.net>
+The kernel, bpf tool, perf tool, and kselftest builds fine for v6.1.130-rc2 on x86 and arm64 Azure VM.
 
-commit b7ed2b6f4e8d7f64649795e76ee9db67300de8eb upstream.
+Kernel binary size for x86 build:
+text      data      bss      dec       hex      filename
+25843392  11301066  16613376 53757834  334478a  vmlinux
 
-We were accidentally allocating a layout for the *square* of the object
-size due to a variable shadowing mishap.
+Kernel binary size for arm64 build:
+text      data      bss      dec       hex      filename
+31253797  12542616  831080   44627493  2a8f625  vmlinux
 
-Fixes memory bloat and page allocation failures in drm/asahi.
 
-Reported-by: Janne Grunau <j@jannau.net>
-Fixes: 9e7bbfa18276 ("rust: alloc: introduce `ArrayLayout`")
-Signed-off-by: Asahi Lina <lina@asahilina.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Link: https://lore.kernel.org/r/20241123-rust-fix-arraylayout-v1-1-197e64c95bd4@asahilina.net
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/alloc/layout.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Tested-by: Hardik Garg <hargar@linux.microsoft.com>
 
-diff --git a/rust/kernel/alloc/layout.rs b/rust/kernel/alloc/layout.rs
-index 7e0c2f46157b..4b3cd7fdc816 100644
---- a/rust/kernel/alloc/layout.rs
-+++ b/rust/kernel/alloc/layout.rs
-@@ -45,7 +45,7 @@ pub const fn empty() -> Self {
-     /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
-     pub const fn new(len: usize) -> Result<Self, LayoutError> {
-         match len.checked_mul(core::mem::size_of::<T>()) {
--            Some(len) if len <= ISIZE_MAX => {
-+            Some(size) if size <= ISIZE_MAX => {
-                 // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
-                 Ok(Self {
-                     len,
--- 
-2.48.1
 
+
+
+Thanks,
+Hardik
