@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A5B1AC43A;
-	Sun,  9 Mar 2025 09:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55C21AC43A;
+	Sun,  9 Mar 2025 09:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513770; cv=none; b=e/IElP7DGe5v81GvYm8NX6xfNa33sV/QLxVA/HgfQ0qgr+qEvSduLr60GJsi/e2jOMi++62Mma8RgqunRrbf1n7McQeP81p+vfG9/n5JrcBJva+kpopgiAJF+xQ+BxGVC7ifS/W4mCLoHl/LiErZCk20t0MghzBvNowEiOLzR+I=
+	t=1741513772; cv=none; b=ExHtavPrO354ZIxvLd3Um8m1HlrEvG0t9L98kuehA2+xaV2qCrb1qAci7Id2YefOxTwXiAWHqumqxPJFNEePV5yh+oj4r2F6Q4bRGQ9s7tCX47v3SJVol3rAyUXDautiCoWIAprrFrOOrUmGkiHKDj0PONK8hknneMq+BKzbqSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513770; c=relaxed/simple;
-	bh=fM204/hgAFJDPwaLJdqDuHo0lT7TuOul3ai4NwGhAHc=;
+	s=arc-20240116; t=1741513772; c=relaxed/simple;
+	bh=Z08htN7bv6cP27gO2GPSuJtqSYa8CXdIVvrEO1Fapp0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=sziUZi5JNH0aFrMzebFkltPthK/3YeLT6G9Qg8h0sPeJKdqjF2X5ktCpDnEHFc2S5kvrkaeXOGN0MG2WczRLi1RN7It/8YkR1H8QulO82ej0qH9/GDPaBj3wd4wajQo+H4esMAWNDAsEUNB7cg47N4hWjyNgKgYtdT+YZzAN0Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbeB8zXR; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=T7b3LMfOl//9VtDxSVon4ckZWeBTYE758IktmmdV9zMsjsuy5B64ZaIKgKsy6a5f9MCLV5eO3fgNG4h275JEUO9bwZwAxGeyq39Ajqe1ympc1L5/Bqd/n5avQXGcGIa15It6P//L3cvRGim1PmNBswrOJC4im6R3UhlGgoV3fZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSGN2oKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbeB8zXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F8C4CEE5;
-	Sun,  9 Mar 2025 09:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSGN2oKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBE7C4CEE5;
+	Sun,  9 Mar 2025 09:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513769;
-	bh=fM204/hgAFJDPwaLJdqDuHo0lT7TuOul3ai4NwGhAHc=;
+	s=korg; t=1741513772;
+	bh=Z08htN7bv6cP27gO2GPSuJtqSYa8CXdIVvrEO1Fapp0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=ZbeB8zXRypZa4daiks9IoJRES969oc6kN4qo1jTbmbb+AkKjdLwggLPw9Stidw8TR
-	 tLvnHH66bZPQdF1EEL3OkUmVUzdKivw2f8/SWUQtuxzDA/5zyka058wgP/b4WpHy8A
-	 ESzeYfDfcugMc2AC/Y4uotBDeUaH21VQjB76vXJQ=
-Subject: Patch "rust: enable `clippy::unnecessary_safety_comment` lint" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu,vincenzopalazzodev@gmail.com
+	b=pSGN2oKYfmB/jx+HZgLge62p9yibg2Gs3DQhvI9VbW006vifLYX8V8nvc7clJNtmK
+	 U4NHdKTCIC+BKLQ43Z9ry8Y7mJaMNuNUFbn31Yu/eiihVozFzkn9dxht4YbUwiw+z0
+	 vNRRJTCIyb2OeP6AtTWC7XO759Nn7EEPey1z7fk0=
+Subject: Patch "rust: alloc: remove extension of std's `Box`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-6-ojeda@kernel.org>
-Message-ID: <2025030950-twentieth-unwanted-8002@gregkh>
+In-Reply-To: <20250307225008.779961-33-ojeda@kernel.org>
+Message-ID: <2025030950-doornail-agile-8004@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,96 +44,330 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: enable `clippy::unnecessary_safety_comment` lint
+    rust: alloc: remove extension of std's `Box`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-enable-clippy-unnecessary_safety_comment-lint.patch
+     rust-alloc-remove-extension-of-std-s-box.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121460-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:52 2025
+From stable+bounces-121487-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:15 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:12 +0100
-Subject: rust: enable `clippy::unnecessary_safety_comment` lint
+Date: Fri,  7 Mar 2025 23:49:39 +0100
+Subject: rust: alloc: remove extension of std's `Box`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-6-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-33-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit c28bfe76e4ba707775a205b0274710de7aa1e31c upstream.
+commit e8c6ccdbcaaf31f26c0fffd4073edd0b0147cdc6 upstream.
 
-In Rust 1.67.0, Clippy added the `unnecessary_safety_comment` lint [1],
-which is the "inverse" of `undocumented_unsafe_blocks`: it finds places
-where safe code has a `// SAFETY` comment attached.
+Now that all existing `Box` users were moved to the kernel `Box` type,
+remove the `BoxExt` extension and all other related extensions.
 
-The lint currently finds 3 places where we had such mistakes, thus it
-seems already quite useful.
-
-Thus clean those and enable it.
-
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/unnecessary_safety_comment [1]
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
-Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-6-ojeda@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-14-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile                 |    1 +
- rust/kernel/sync/arc.rs  |    2 +-
- rust/kernel/workqueue.rs |    4 ++--
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ rust/kernel/alloc.rs         |    1 
+ rust/kernel/alloc/box_ext.rs |   89 -------------------------------------------
+ rust/kernel/init.rs          |   46 ----------------------
+ rust/kernel/lib.rs           |    1 
+ rust/kernel/prelude.rs       |    4 -
+ rust/kernel/types.rs         |   50 ------------------------
+ 6 files changed, 3 insertions(+), 188 deletions(-)
+ delete mode 100644 rust/kernel/alloc/box_ext.rs
 
---- a/Makefile
-+++ b/Makefile
-@@ -459,6 +459,7 @@ export rust_common_flags := --edition=20
- 			    -Aclippy::needless_lifetimes \
- 			    -Wclippy::no_mangle_with_rust_abi \
- 			    -Wclippy::undocumented_unsafe_blocks \
-+			    -Wclippy::unnecessary_safety_comment \
- 			    -Wrustdoc::missing_crate_level_docs
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -4,7 +4,6 @@
  
- KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -338,7 +338,7 @@ impl<T: 'static> ForeignOwnable for Arc<
+ #[cfg(not(any(test, testlib)))]
+ pub mod allocator;
+-pub mod box_ext;
+ pub mod kbox;
+ pub mod vec_ext;
+ 
+--- a/rust/kernel/alloc/box_ext.rs
++++ /dev/null
+@@ -1,89 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-//! Extensions to [`Box`] for fallible allocations.
+-
+-use super::{AllocError, Flags};
+-use alloc::boxed::Box;
+-use core::{mem::MaybeUninit, ptr, result::Result};
+-
+-/// Extensions to [`Box`].
+-pub trait BoxExt<T>: Sized {
+-    /// Allocates a new box.
+-    ///
+-    /// The allocation may fail, in which case an error is returned.
+-    fn new(x: T, flags: Flags) -> Result<Self, AllocError>;
+-
+-    /// Allocates a new uninitialised box.
+-    ///
+-    /// The allocation may fail, in which case an error is returned.
+-    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError>;
+-
+-    /// Drops the contents, but keeps the allocation.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// use kernel::alloc::{flags, box_ext::BoxExt};
+-    /// let value = Box::new([0; 32], flags::GFP_KERNEL)?;
+-    /// assert_eq!(*value, [0; 32]);
+-    /// let mut value = Box::drop_contents(value);
+-    /// // Now we can re-use `value`:
+-    /// value.write([1; 32]);
+-    /// // SAFETY: We just wrote to it.
+-    /// let value = unsafe { value.assume_init() };
+-    /// assert_eq!(*value, [1; 32]);
+-    /// # Ok::<(), Error>(())
+-    /// ```
+-    fn drop_contents(this: Self) -> Box<MaybeUninit<T>>;
+-}
+-
+-impl<T> BoxExt<T> for Box<T> {
+-    fn new(x: T, flags: Flags) -> Result<Self, AllocError> {
+-        let mut b = <Self as BoxExt<_>>::new_uninit(flags)?;
+-        b.write(x);
+-        // SAFETY: We just wrote to it.
+-        Ok(unsafe { b.assume_init() })
+-    }
+-
+-    #[cfg(any(test, testlib))]
+-    fn new_uninit(_flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
+-        Ok(Box::new_uninit())
+-    }
+-
+-    #[cfg(not(any(test, testlib)))]
+-    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
+-        let ptr = if core::mem::size_of::<MaybeUninit<T>>() == 0 {
+-            core::ptr::NonNull::<_>::dangling().as_ptr()
+-        } else {
+-            let layout = core::alloc::Layout::new::<MaybeUninit<T>>();
+-
+-            // SAFETY: Memory is being allocated (first arg is null). The only other source of
+-            // safety issues is sleeping on atomic context, which is addressed by klint. Lastly,
+-            // the type is not a SZT (checked above).
+-            let ptr =
+-                unsafe { super::allocator::krealloc_aligned(core::ptr::null_mut(), layout, flags) };
+-            if ptr.is_null() {
+-                return Err(AllocError);
+-            }
+-
+-            ptr.cast::<MaybeUninit<T>>()
+-        };
+-
+-        // SAFETY: For non-zero-sized types, we allocate above using the global allocator. For
+-        // zero-sized types, we use `NonNull::dangling`.
+-        Ok(unsafe { Box::from_raw(ptr) })
+-    }
+-
+-    fn drop_contents(this: Self) -> Box<MaybeUninit<T>> {
+-        let ptr = Box::into_raw(this);
+-        // SAFETY: `ptr` is valid, because it came from `Box::into_raw`.
+-        unsafe { ptr::drop_in_place(ptr) };
+-
+-        // CAST: `MaybeUninit<T>` is a transparent wrapper of `T`.
+-        let ptr = ptr.cast::<MaybeUninit<T>>();
+-
+-        // SAFETY: `ptr` is valid for writes, because it came from `Box::into_raw` and it is valid for
+-        // reads, since the pointer came from `Box::into_raw` and the type is `MaybeUninit<T>`.
+-        unsafe { Box::from_raw(ptr) }
+-    }
+-}
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -211,13 +211,12 @@
+ //! [`pin_init!`]: crate::pin_init!
+ 
+ use crate::{
+-    alloc::{box_ext::BoxExt, AllocError, Flags, KBox},
++    alloc::{AllocError, Flags, KBox},
+     error::{self, Error},
+     sync::Arc,
+     sync::UniqueArc,
+     types::{Opaque, ScopeGuard},
+ };
+-use alloc::boxed::Box;
+ use core::{
+     cell::UnsafeCell,
+     convert::Infallible,
+@@ -588,7 +587,6 @@ macro_rules! pin_init {
+ /// # Examples
+ ///
+ /// ```rust
+-/// # #![feature(new_uninit)]
+ /// use kernel::{init::{self, PinInit}, error::Error};
+ /// #[pin_data]
+ /// struct BigBuf {
+@@ -1245,26 +1243,6 @@ impl<T> InPlaceInit<T> for Arc<T> {
      }
+ }
  
-     unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
--        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
-+        // By the safety requirement of this function, we know that `ptr` came from
-         // a previous call to `Arc::into_foreign`.
-         let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+-impl<T> InPlaceInit<T> for Box<T> {
+-    type PinnedSelf = Pin<Self>;
+-
+-    #[inline]
+-    fn try_pin_init<E>(init: impl PinInit<T, E>, flags: Flags) -> Result<Self::PinnedSelf, E>
+-    where
+-        E: From<AllocError>,
+-    {
+-        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_pin_init(init)
+-    }
+-
+-    #[inline]
+-    fn try_init<E>(init: impl Init<T, E>, flags: Flags) -> Result<Self, E>
+-    where
+-        E: From<AllocError>,
+-    {
+-        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_init(init)
+-    }
+-}
+-
+ impl<T> InPlaceInit<T> for UniqueArc<T> {
+     type PinnedSelf = Pin<Self>;
  
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -526,7 +526,7 @@ where
-     T: HasWork<T, ID>,
- {
-     unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
--        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-+        // The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-         let ptr = ptr as *mut Work<T, ID>;
-         // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
-         let ptr = unsafe { T::work_container_of(ptr) };
-@@ -573,7 +573,7 @@ where
-     T: HasWork<T, ID>,
- {
-     unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
--        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-+        // The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-         let ptr = ptr as *mut Work<T, ID>;
-         // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
-         let ptr = unsafe { T::work_container_of(ptr) };
+@@ -1301,28 +1279,6 @@ pub trait InPlaceWrite<T> {
+     fn write_pin_init<E>(self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E>;
+ }
+ 
+-impl<T> InPlaceWrite<T> for Box<MaybeUninit<T>> {
+-    type Initialized = Box<T>;
+-
+-    fn write_init<E>(mut self, init: impl Init<T, E>) -> Result<Self::Initialized, E> {
+-        let slot = self.as_mut_ptr();
+-        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
+-        // slot is valid.
+-        unsafe { init.__init(slot)? };
+-        // SAFETY: All fields have been initialized.
+-        Ok(unsafe { self.assume_init() })
+-    }
+-
+-    fn write_pin_init<E>(mut self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E> {
+-        let slot = self.as_mut_ptr();
+-        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
+-        // slot is valid and will not be moved, because we pin it later.
+-        unsafe { init.__pinned_init(slot)? };
+-        // SAFETY: All fields have been initialized.
+-        Ok(unsafe { self.assume_init() }.into())
+-    }
+-}
+-
+ impl<T> InPlaceWrite<T> for UniqueArc<MaybeUninit<T>> {
+     type Initialized = UniqueArc<T>;
+ 
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -16,7 +16,6 @@
+ #![feature(coerce_unsized)]
+ #![feature(dispatch_from_dyn)]
+ #![feature(lint_reasons)]
+-#![feature(new_uninit)]
+ #![feature(unsize)]
+ 
+ // Ensure conditional compilation based on the kernel configuration works;
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -14,10 +14,10 @@
+ #[doc(no_inline)]
+ pub use core::pin::Pin;
+ 
+-pub use crate::alloc::{box_ext::BoxExt, flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
++pub use crate::alloc::{flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
+ 
+ #[doc(no_inline)]
+-pub use alloc::{boxed::Box, vec::Vec};
++pub use alloc::vec::Vec;
+ 
+ #[doc(no_inline)]
+ pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -3,13 +3,11 @@
+ //! Kernel types.
+ 
+ use crate::init::{self, PinInit};
+-use alloc::boxed::Box;
+ use core::{
+     cell::UnsafeCell,
+     marker::{PhantomData, PhantomPinned},
+     mem::{ManuallyDrop, MaybeUninit},
+     ops::{Deref, DerefMut},
+-    pin::Pin,
+     ptr::NonNull,
+ };
+ 
+@@ -71,54 +69,6 @@ pub trait ForeignOwnable: Sized {
+     }
+ }
+ 
+-impl<T: 'static> ForeignOwnable for Box<T> {
+-    type Borrowed<'a> = &'a T;
+-
+-    fn into_foreign(self) -> *const core::ffi::c_void {
+-        Box::into_raw(self) as _
+-    }
+-
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
+-        // SAFETY: The safety requirements for this function ensure that the object is still alive,
+-        // so it is safe to dereference the raw pointer.
+-        // The safety requirements of `from_foreign` also ensure that the object remains alive for
+-        // the lifetime of the returned value.
+-        unsafe { &*ptr.cast() }
+-    }
+-
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
+-        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
+-        // call to `Self::into_foreign`.
+-        unsafe { Box::from_raw(ptr as _) }
+-    }
+-}
+-
+-impl<T: 'static> ForeignOwnable for Pin<Box<T>> {
+-    type Borrowed<'a> = Pin<&'a T>;
+-
+-    fn into_foreign(self) -> *const core::ffi::c_void {
+-        // SAFETY: We are still treating the box as pinned.
+-        Box::into_raw(unsafe { Pin::into_inner_unchecked(self) }) as _
+-    }
+-
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Pin<&'a T> {
+-        // SAFETY: The safety requirements for this function ensure that the object is still alive,
+-        // so it is safe to dereference the raw pointer.
+-        // The safety requirements of `from_foreign` also ensure that the object remains alive for
+-        // the lifetime of the returned value.
+-        let r = unsafe { &*ptr.cast() };
+-
+-        // SAFETY: This pointer originates from a `Pin<Box<T>>`.
+-        unsafe { Pin::new_unchecked(r) }
+-    }
+-
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
+-        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
+-        // call to `Self::into_foreign`.
+-        unsafe { Pin::new_unchecked(Box::from_raw(ptr as _)) }
+-    }
+-}
+-
+ impl ForeignOwnable for () {
+     type Borrowed<'a> = ();
+ 
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
