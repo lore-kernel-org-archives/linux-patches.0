@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8983C1B0425;
-	Sun,  9 Mar 2025 09:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68ED1B372C;
+	Sun,  9 Mar 2025 09:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513797; cv=none; b=BZ053cj4HopRUBknH2MagQnP5CxiX84goTgvxQnQIW4c8bbMQph8F4x0xiTbcudfJnTt48YKJ/5o5stV5mNPC5lepVQaKk1q09ppD4l/2RhdrIJH51hIw6ND5XAXUEp5V/QbGulYNFfdisFAyXaGd672rL2upnjWvre2XTR69oQ=
+	t=1741513800; cv=none; b=bGp1IAxrUc5WWM9maK6zh/Rw6wojUfOXCvn3DSpZQ7TOWG66D4rnIJtGxAtqlFOQPNusBx8G79e4GmoHo12czrlS1aB9pELz1XfPMfag4hAcCSBkap5PkCnzf9grufYDX1bUktO55NfjsUOgK3fS0TtkbJNbQmbKT6kSu1BSNe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513797; c=relaxed/simple;
-	bh=BDLvsXBRB01Jb41fG5uJj+aOOJ28wPScKgwitJDJfXI=;
+	s=arc-20240116; t=1741513800; c=relaxed/simple;
+	bh=XHTj8mOy4u8yrrsaZDH2vrfmZrcLGkHopbBvHo6UnuM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=Dm7jGwcFR+uWM2GXt6bb2ejGr9wE7T6EaZzrYWT6maSYYpANx/t8DqgDnbB25mITaS2u5CwW+QSXfhb+i8tRSPT7r00XOgo/PVQgqONu9rKniuyZWlkRBHvMw6CGMg/hlAUN+BtLO5FQTLQ3XWQ+/FDWd8A04ES5eRoMc36zzAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziPKxg4D; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=L4y/PR8ylQNJf5YsgI0uOdYZQ6ufqKF7o5xUIgpPsTyJG95AZrIZwNrZ/U5hN6LOA/2j2YPRw52bPfaERYzh7e+5r81SpJnqmxJU4+0uM0f4C/eAO1D58rJ4vK6nSSlU8K6vReDKTBjwBNPOHo3WLYkkqefsPAdwnBDqNG1P1XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fr8qVJIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziPKxg4D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A55C4CEEF;
-	Sun,  9 Mar 2025 09:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fr8qVJIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C70EC4CEED;
+	Sun,  9 Mar 2025 09:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513797;
-	bh=BDLvsXBRB01Jb41fG5uJj+aOOJ28wPScKgwitJDJfXI=;
+	s=korg; t=1741513800;
+	bh=XHTj8mOy4u8yrrsaZDH2vrfmZrcLGkHopbBvHo6UnuM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=ziPKxg4DLqTwmWmVnh6OKh3/ytjo7CMyns4MWia2+bD1JmhkDxT8W4lWbJ6QusKvh
-	 bG+G0dxyg8evCvCnlUKGo8Y7ZOL4BDzbswnEsjjfi+FI+MShIgFNtaddwxCSSvVLwX
-	 nd9zAe2m+fb42SLP5Qa39PyOt0bX07bmUqqfpdiI=
-Subject: Patch "rust: alloc: introduce `ArrayLayout`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=Fr8qVJIXl0T9PXPK7Y4hS4Nk6l2/KzB7IfMkC49USu4ApWlKLgF2uNKEsF+1nNabx
+	 FVIjpWuDYbqEzG61s9cCCo9Dxid1Kep9ajbE8IFmEp7NRjggkEkLls8HKiJaSm+G4p
+	 jG49HGy24uYM/nhEKUPVgjsV3/UydffzO3eAny94=
+Subject: Patch "rust: enable `clippy::unnecessary_safety_doc` lint" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-35-ojeda@kernel.org>
-Message-ID: <2025030949-talcum-deem-150d@gregkh>
+Date: Sun, 09 Mar 2025 10:46:51 +0100
+In-Reply-To: <20250307225008.779961-7-ojeda@kernel.org>
+Message-ID: <2025030950-pyramid-outpost-0cbc@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,158 +44,60 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: introduce `ArrayLayout`
+    rust: enable `clippy::unnecessary_safety_doc` lint
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-introduce-arraylayout.patch
+     rust-enable-clippy-unnecessary_safety_doc-lint.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121489-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:14 2025
+From stable+bounces-121461-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:58 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:41 +0100
-Subject: rust: alloc: introduce `ArrayLayout`
+Date: Fri,  7 Mar 2025 23:49:13 +0100
+Subject: rust: enable `clippy::unnecessary_safety_doc` lint
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-35-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-7-ojeda@kernel.org>
 
-From: Benno Lossin <benno.lossin@proton.me>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 9e7bbfa182767f638ba61dba3518ff78da9f31ff upstream.
+commit 23f42dc054b3c550373eae0c9ae97f1ce1501e0a upstream.
 
-When allocating memory for arrays using allocators, the `Layout::array`
-function is typically used. It returns a result, since the given size
-might be too big. However, `Vec` and its iterators store their allocated
-capacity and thus they already did check that the size is not too big.
+In Rust 1.67.0, Clippy added the `unnecessary_safety_doc` lint [1],
+which is similar to `unnecessary_safety_comment`, but for `# Safety`
+sections, i.e. safety preconditions in the documentation.
 
-The `ArrayLayout` type provides this exact behavior, as it can be
-infallibly converted into a `Layout`. Instead of a `usize` capacity,
-`Vec` and other similar array-storing types can use `ArrayLayout`
-instead.
+This is something that should not happen with our coding guidelines in
+mind. Thus enable the lint to have it machine-checked.
 
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/unnecessary_safety_doc [1]
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-16-dakr@kernel.org
-[ Formatted a few comments. - Miguel ]
+Link: https://lore.kernel.org/r/20240904204347.168520-7-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs        |    1 
- rust/kernel/alloc/layout.rs |   91 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 92 insertions(+)
- create mode 100644 rust/kernel/alloc/layout.rs
+ Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -5,6 +5,7 @@
- #[cfg(not(any(test, testlib)))]
- pub mod allocator;
- pub mod kbox;
-+pub mod layout;
- pub mod vec_ext;
+--- a/Makefile
++++ b/Makefile
+@@ -460,6 +460,7 @@ export rust_common_flags := --edition=20
+ 			    -Wclippy::no_mangle_with_rust_abi \
+ 			    -Wclippy::undocumented_unsafe_blocks \
+ 			    -Wclippy::unnecessary_safety_comment \
++			    -Wclippy::unnecessary_safety_doc \
+ 			    -Wrustdoc::missing_crate_level_docs
  
- #[cfg(any(test, testlib))]
---- /dev/null
-+++ b/rust/kernel/alloc/layout.rs
-@@ -0,0 +1,91 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+//! Memory layout.
-+//!
-+//! Custom layout types extending or improving [`Layout`].
-+
-+use core::{alloc::Layout, marker::PhantomData};
-+
-+/// Error when constructing an [`ArrayLayout`].
-+pub struct LayoutError;
-+
-+/// A layout for an array `[T; n]`.
-+///
-+/// # Invariants
-+///
-+/// - `len * size_of::<T>() <= isize::MAX`.
-+pub struct ArrayLayout<T> {
-+    len: usize,
-+    _phantom: PhantomData<fn() -> T>,
-+}
-+
-+impl<T> Clone for ArrayLayout<T> {
-+    fn clone(&self) -> Self {
-+        *self
-+    }
-+}
-+impl<T> Copy for ArrayLayout<T> {}
-+
-+const ISIZE_MAX: usize = isize::MAX as usize;
-+
-+impl<T> ArrayLayout<T> {
-+    /// Creates a new layout for `[T; 0]`.
-+    pub const fn empty() -> Self {
-+        // INVARIANT: `0 * size_of::<T>() <= isize::MAX`.
-+        Self {
-+            len: 0,
-+            _phantom: PhantomData,
-+        }
-+    }
-+
-+    /// Creates a new layout for `[T; len]`.
-+    ///
-+    /// # Errors
-+    ///
-+    /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
-+    pub const fn new(len: usize) -> Result<Self, LayoutError> {
-+        match len.checked_mul(core::mem::size_of::<T>()) {
-+            Some(len) if len <= ISIZE_MAX => {
-+                // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
-+                Ok(Self {
-+                    len,
-+                    _phantom: PhantomData,
-+                })
-+            }
-+            _ => Err(LayoutError),
-+        }
-+    }
-+
-+    /// Creates a new layout for `[T; len]`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `len` must be a value, for which `len * size_of::<T>() <= isize::MAX` is true.
-+    pub unsafe fn new_unchecked(len: usize) -> Self {
-+        // INVARIANT: By the safety requirements of this function
-+        // `len * size_of::<T>() <= isize::MAX`.
-+        Self {
-+            len,
-+            _phantom: PhantomData,
-+        }
-+    }
-+
-+    /// Returns the number of array elements represented by this layout.
-+    pub const fn len(&self) -> usize {
-+        self.len
-+    }
-+
-+    /// Returns `true` when no array elements are represented by this layout.
-+    pub const fn is_empty(&self) -> bool {
-+        self.len == 0
-+    }
-+}
-+
-+impl<T> From<ArrayLayout<T>> for Layout {
-+    fn from(value: ArrayLayout<T>) -> Self {
-+        let res = Layout::array::<T>(value.len);
-+        // SAFETY: By the type invariant of `ArrayLayout` we have
-+        // `len * size_of::<T>() <= isize::MAX` and thus the result must be `Ok`.
-+        unsafe { res.unwrap_unchecked() }
-+    }
-+}
+ KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
