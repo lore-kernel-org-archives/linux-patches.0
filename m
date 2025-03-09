@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B3B1AC43A;
-	Sun,  9 Mar 2025 09:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5C41AC43A;
+	Sun,  9 Mar 2025 09:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513785; cv=none; b=sLbH6gmPSrYH0C8LgStVIiAYC5MaZIhJGWQRdss/XaUWMVRx9FldcXdqdBeoKauqkYzSkE93oqlU6tBIs4HvQGVzY5f80zSqF6G5i/8h3/ABBMaf8xKNaU3S+FbWe5BTOiyGtmJ/ZkGELNbv/87LJJsFiCukbR9k0jH3z0J2uvQ=
+	t=1741513788; cv=none; b=ftIXC5Ez9giUYdI672W2R2oWBxjQTchO9kGQwcGwCBVm7DKVE3K6MmKuCBq8s2Lpauxt067/MAr0VxyX1eWf4r0C8WjyJP1G/Yv+/roLDCV3gi3rQ18ltE8P2AWqjQ3G0hcVj8anwr0J0HWLnpBwxyZw/nGSJx1lWlFQ9l4ZyZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513785; c=relaxed/simple;
-	bh=XZg0ZgvGkCwRBHLnSXcN4X4FiVpZFef08pKXcYdsEWE=;
+	s=arc-20240116; t=1741513788; c=relaxed/simple;
+	bh=mubuz/Kp3u9Gm/E8zexsKFmPhBkrTJ8G7RiWCtX3YLw=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=dpcbcFinRTrZD0DiNFNypwA9fHF7CSDToWJ0VO5zQ0sTdpcXcQXbqy9KlfyQkyBMVRQXWeBAf7u2b1oCAOrgq58z76Qoo8VJWpz/ZXRqUMNyAoyTx40gno3WWLGdPW76Th56jotLzW0wj8hhmx735js3NtTl3KqfVPmjRWTFzbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPtngrHo; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=F6RmqeSZTxnbG6ZENYYq5MBMZyLIwWPkVHqeMx288DSsq2h3PcRaTJQtdKLTVvFQ4ZE3HbGRAD/P2X0M0dGwQNQPCtg/eIn+iSsT5zsSOSlj6/C7PpLNBgz7BrISTmQGSh4C2vwVWTFCziRaQpKEn4df3lsNGPuODQGEA30DjSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxRbuIAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPtngrHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E119EC4CEE5;
-	Sun,  9 Mar 2025 09:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxRbuIAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A8FC4CEE5;
+	Sun,  9 Mar 2025 09:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513785;
-	bh=XZg0ZgvGkCwRBHLnSXcN4X4FiVpZFef08pKXcYdsEWE=;
+	s=korg; t=1741513788;
+	bh=mubuz/Kp3u9Gm/E8zexsKFmPhBkrTJ8G7RiWCtX3YLw=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=RPtngrHo14629d31XiDhdJqslQpWbgus+2NUvObkSL+g6Ib2Es/fYYBo5G76fADTZ
-	 gF/bGpUEI3HUd7rBCKml+xEl0+V0zYJeet1e1g4hZzBKe5d7wBX807stXhAy7wlHUJ
-	 9kLY6xnNYDD6ytRIpOukHxdFhU8wxHHcnSz10LO0=
-Subject: Patch "rust: alloc: update module comment of alloc.rs" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=PxRbuIALMIbNx0rjJDv/SrksQWuGa2xWqw57A4zKyC9N4EMQYXRvDee7jQBEdaUjn
+	 ceAU8qEPfibFVr5rsVt8A1C1OoDV0GUL5xkYf+xzRaQX8AAog/JC8jAhG9eGBKryUS
+	 sIU69+XX5JyFMF8vou9rdUIpjm/cqs2MjcOM+AC0=
+Subject: Patch "rust: enable `clippy::ignored_unit_patterns` lint" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-47-ojeda@kernel.org>
-Message-ID: <2025030950-ream-projector-a017@gregkh>
+In-Reply-To: <20250307225008.779961-8-ojeda@kernel.org>
+Message-ID: <2025030950-munchkin-reverb-a7a3@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,58 +44,84 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: update module comment of alloc.rs
+    rust: enable `clippy::ignored_unit_patterns` lint
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-update-module-comment-of-alloc.rs.patch
+     rust-enable-clippy-ignored_unit_patterns-lint.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121501-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:59 2025
+From stable+bounces-121462-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:59 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:53 +0100
-Subject: rust: alloc: update module comment of alloc.rs
+Date: Fri,  7 Mar 2025 23:49:14 +0100
+Subject: rust: enable `clippy::ignored_unit_patterns` lint
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-47-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-8-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 8ae740c3917ff92108df17236b3cf1b9a74bd359 upstream.
+commit 3fcc23397628c2357dbe66df59644e09f72ac725 upstream.
 
-Before we remove Rust's alloc crate, rewrite the module comment in
-alloc.rs to avoid a rustdoc warning.
+In Rust 1.73.0, Clippy introduced the `ignored_unit_patterns` lint [1]:
 
-Besides that, the module comment in alloc.rs isn't correct anymore,
-we're no longer extending Rust's alloc crate.
+> Matching with `()` explicitly instead of `_` outlines the fact that
+> the pattern contains no data. Also it would detect a type change
+> that `_` would ignore.
 
+There is only a single case that requires a change:
+
+    error: matching over `()` is more explicit
+       --> rust/kernel/types.rs:176:45
+        |
+    176 |         ScopeGuard::new_with_data((), move |_| cleanup())
+        |                                             ^ help: use `()` instead of `_`: `()`
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ignored_unit_patterns
+        = note: requested on the command line with `-D clippy::ignored-unit-patterns`
+
+Thus clean it up and enable the lint -- no functional change intended.
+
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/ignored_unit_patterns [1]
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-28-dakr@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-8-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile             |    1 +
+ rust/kernel/types.rs |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
+--- a/Makefile
++++ b/Makefile
+@@ -453,6 +453,7 @@ export rust_common_flags := --edition=20
+ 			    -Wunreachable_pub \
+ 			    -Wclippy::all \
+ 			    -Wclippy::dbg_macro \
++			    -Wclippy::ignored_unit_patterns \
+ 			    -Wclippy::mut_mut \
+ 			    -Wclippy::needless_bitwise_bool \
+ 			    -Wclippy::needless_continue \
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -225,7 +225,7 @@ impl<T, F: FnOnce(T)> ScopeGuard<T, F> {
+ impl ScopeGuard<(), fn(())> {
+     /// Creates a new guarded object with the given cleanup function.
+     pub fn new(cleanup: impl FnOnce()) -> ScopeGuard<(), impl FnOnce(())> {
+-        ScopeGuard::new_with_data((), move |_| cleanup())
++        ScopeGuard::new_with_data((), move |()| cleanup())
+     }
+ }
  
--//! Extensions to the [`alloc`] crate.
-+//! Implementation of the kernel's memory allocation infrastructure.
- 
- #[cfg(not(any(test, testlib)))]
- pub mod allocator;
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
