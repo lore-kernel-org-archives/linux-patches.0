@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714051FB3;
-	Sun,  9 Mar 2025 09:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8993B1FB3;
+	Sun,  9 Mar 2025 09:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513684; cv=none; b=XTEuRCE13XfikLo9/vT2Oc5RdZD55FIsN1pm9mM+XqSrcLdFdPJ8I/2W/gKxuCol9IPeI2ROS2qXUpEo3P2RUAeVnvhuIEoSBEx/5r8CXmm8XxDPI53rX1ZfgD23SMURhzcUKKIEa7QnyvY5GUjZvpGznWTRb3/8oRGAMd9NiKg=
+	t=1741513687; cv=none; b=H59M97ub1FKgCF9xFVrBnFq+d9SXd7WRspI6Hly+tclUvIUWO0kNc/jeFVRm6a/BM0CvwvN1d4vOrA2e4bSXNSmAE0XUGFlayOQWhekV2ZTm8xAGeWBRDua5aUN4r6pYZKo+F/Bs5QXZEZtJdJe3Ei8gkBM7cnDIrsJRE2vXp1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513684; c=relaxed/simple;
-	bh=GaaRUjoh8u1eQb/nJ0PGXQG8zTX/sqOFZFWkK08Hj/0=;
+	s=arc-20240116; t=1741513687; c=relaxed/simple;
+	bh=SHALiv4yYAU3lmT24bDzJn3kcwrxcFCkMT2e2nCj/OM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=o33UznybOCR2aDslXvUeS07NPMRgb4WSjvnOTfN5ob4nELq+8eExnpS/wAt1do6R1fu/2nP+CVbHFezNNBiiskraqSnz2JN72zEW0cxkdT6n7W66WxFpS/K/XqVpAwvAbnsZsepdpXhz0LYz1dBX0zA3quaDYxkTqmy4/uB1Nrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLl8OrMD; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=U/UxvUe6QFG5LCpzt1XGKZxlXB2On6sE1JIoQz5raarITjuCIUiNTgzVpGaT1gyU5oHMffu5cZ6mzJlrwkQHusJp73X0HMmaNHx2WZjeXrDw6IEFKuJAS78RjCLtDM033UG11BRLsfa6A1iU/8JjjhNuAju5zlE3H5KG37aNEvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0IlxCX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLl8OrMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF11C4CEE5;
-	Sun,  9 Mar 2025 09:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0IlxCX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF25C4CEE5;
+	Sun,  9 Mar 2025 09:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513683;
-	bh=GaaRUjoh8u1eQb/nJ0PGXQG8zTX/sqOFZFWkK08Hj/0=;
+	s=korg; t=1741513687;
+	bh=SHALiv4yYAU3lmT24bDzJn3kcwrxcFCkMT2e2nCj/OM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=HLl8OrMD7i5bzMVCSDyldbaAXpqVNObR772m66QK43xPoQW0C/30GO75T4hCUfTrM
-	 lqaeoVeZOhtIN6ssras17SN0EH1Abx0aiohlqddOk8Bac/IfzC8BR9TDSMXVssGdrq
-	 npTpWYMXWqtyy4C5CIdQyWUFLkN2IYDo36xZV4/U=
-Subject: Patch "Documentation: rust: add coding guidelines on lints" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
+	b=Z0IlxCX6Dfy9ZtB7kK0Rj0ALP4uTze+JevpTwb0dYZ0NBB0pZoSDDrLE6w924JYqD
+	 Er7t/vJ0GKjUUl48mYECDE7419BZQUkNhHZ5rnTARctUhqQMutzqXUQDB84Y+GoSbG
+	 KrN3wJTPOwSBFnVgSPfGcFyt94sJw0RrTCdUgycY=
+Subject: Patch "Documentation: rust: discuss `#[expect(...)]` in the guidelines" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:47 +0100
-In-Reply-To: <20250307225008.779961-16-ojeda@kernel.org>
-Message-ID: <2025030947-mutable-extending-0de3@gregkh>
+In-Reply-To: <20250307225008.779961-18-ojeda@kernel.org>
+Message-ID: <2025030947-overarch-isolated-b079@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,98 +44,164 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    Documentation: rust: add coding guidelines on lints
+    Documentation: rust: discuss `#[expect(...)]` in the guidelines
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     documentation-rust-add-coding-guidelines-on-lints.patch
+     documentation-rust-discuss-in-the-guidelines.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121470-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:23 2025
+From stable+bounces-121472-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:27 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:22 +0100
-Subject: Documentation: rust: add coding guidelines on lints
+Date: Fri,  7 Mar 2025 23:49:24 +0100
+Subject: Documentation: rust: discuss `#[expect(...)]` in the guidelines
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-16-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-18-ojeda@kernel.org>
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 139d396572ec4ba6e8cc5c02f5c8d5d1139be4b7 upstream.
+commit 04866494e936d041fd196d3a36aecd979e4ef078 upstream.
 
-In the C side, disabling diagnostics locally, i.e. within the source code,
-is rare (at least in the kernel). Sometimes warnings are manipulated
-via the flags at the translation unit level, but that is about it.
+Discuss `#[expect(...)]` in the Lints sections of the coding guidelines
+document, which is an upcoming feature in Rust 1.81.0, and explain that
+it is generally to be preferred over `allow` unless there is a reason
+not to use it (e.g. conditional compilation being involved).
 
-In Rust, it is easier to change locally the "level" of lints
-(e.g. allowing them locally). In turn, this means it is easier to
-globally enable more lints that may trigger a few false positives here
-and there that need to be allowed locally, but that generally can spot
-issues or bugs.
-
-Thus document this.
-
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-17-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-19-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/rust/coding-guidelines.rst |   38 +++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ Documentation/rust/coding-guidelines.rst |  110 +++++++++++++++++++++++++++++++
+ 1 file changed, 110 insertions(+)
 
 --- a/Documentation/rust/coding-guidelines.rst
 +++ b/Documentation/rust/coding-guidelines.rst
-@@ -227,3 +227,41 @@ The equivalent in Rust may look like (ig
- That is, the equivalent of ``GPIO_LINE_DIRECTION_IN`` would be referred to as
- ``gpio::LineDirection::In``. In particular, it should not be named
- ``gpio::gpio_line_direction::GPIO_LINE_DIRECTION_IN``.
+@@ -262,6 +262,116 @@ default (i.e. outside ``W=`` levels). In
+ false positives but that are otherwise quite useful to keep enabled to catch
+ potential mistakes.
+ 
++On top of that, Rust provides the ``expect`` attribute which takes this further.
++It makes the compiler warn if the warning was not produced. For instance, the
++following will ensure that, when ``f()`` is called somewhere, we will have to
++remove the attribute:
 +
++.. code-block:: rust
 +
-+Lints
-+-----
++	#[expect(dead_code)]
++	fn f() {}
 +
-+In Rust, it is possible to ``allow`` particular warnings (diagnostics, lints)
-+locally, making the compiler ignore instances of a given warning within a given
-+function, module, block, etc.
++If we do not, we get a warning from the compiler::
 +
-+It is similar to ``#pragma GCC diagnostic push`` + ``ignored`` + ``pop`` in C
-+[#]_:
++	warning: this lint expectation is unfulfilled
++	 --> x.rs:3:10
++	  |
++	3 | #[expect(dead_code)]
++	  |          ^^^^^^^^^
++	  |
++	  = note: `#[warn(unfulfilled_lint_expectations)]` on by default
 +
-+.. code-block:: c
++This means that ``expect``\ s do not get forgotten when they are not needed, which
++may happen in several situations, e.g.:
 +
-+	#pragma GCC diagnostic push
-+	#pragma GCC diagnostic ignored "-Wunused-function"
-+	static void f(void) {}
-+	#pragma GCC diagnostic pop
++- Temporary attributes added while developing.
 +
-+.. [#] In this particular case, the kernel's ``__{always,maybe}_unused``
-+       attributes (C23's ``[[maybe_unused]]``) may be used; however, the example
-+       is meant to reflect the equivalent lint in Rust discussed afterwards.
++- Improvements in lints in the compiler, Clippy or custom tools which may
++  remove a false positive.
 +
-+But way less verbose:
++- When the lint is not needed anymore because it was expected that it would be
++  removed at some point, such as the ``dead_code`` example above.
++
++It also increases the visibility of the remaining ``allow``\ s and reduces the
++chance of misapplying one.
++
++Thus prefer ``except`` over ``allow`` unless:
++
++- The lint attribute is intended to be temporary, e.g. while developing.
++
++- Conditional compilation triggers the warning in some cases but not others.
++
++  If there are only a few cases where the warning triggers (or does not
++  trigger) compared to the total number of cases, then one may consider using
++  a conditional ``expect`` (i.e. ``cfg_attr(..., expect(...))``). Otherwise,
++  it is likely simpler to just use ``allow``.
++
++- Inside macros, when the different invocations may create expanded code that
++  triggers the warning in some cases but not in others.
++
++- When code may trigger a warning for some architectures but not others, such
++  as an ``as`` cast to a C FFI type.
++
++As a more developed example, consider for instance this program:
++
++.. code-block:: rust
++
++	fn g() {}
++
++	fn main() {
++	    #[cfg(CONFIG_X)]
++	    g();
++	}
++
++Here, function ``g()`` is dead code if ``CONFIG_X`` is not set. Can we use
++``expect`` here?
++
++.. code-block:: rust
++
++	#[expect(dead_code)]
++	fn g() {}
++
++	fn main() {
++	    #[cfg(CONFIG_X)]
++	    g();
++	}
++
++This would emit a lint if ``CONFIG_X`` is set, since it is not dead code in that
++configuration. Therefore, in cases like this, we cannot use ``expect`` as-is.
++
++A simple possibility is using ``allow``:
 +
 +.. code-block:: rust
 +
 +	#[allow(dead_code)]
-+	fn f() {}
++	fn g() {}
 +
-+By that virtue, it makes it possible to comfortably enable more diagnostics by
-+default (i.e. outside ``W=`` levels). In particular, those that may have some
-+false positives but that are otherwise quite useful to keep enabled to catch
-+potential mistakes.
++	fn main() {
++	    #[cfg(CONFIG_X)]
++	    g();
++	}
 +
-+For more information about diagnostics in Rust, please see:
++An alternative would be using a conditional ``expect``:
 +
-+	https://doc.rust-lang.org/stable/reference/attributes/diagnostics.html
++.. code-block:: rust
++
++	#[cfg_attr(not(CONFIG_X), expect(dead_code))]
++	fn g() {}
++
++	fn main() {
++	    #[cfg(CONFIG_X)]
++	    g();
++	}
++
++This would ensure that, if someone introduces another call to ``g()`` somewhere
++(e.g. unconditionally), then it would be spotted that it is not dead code
++anymore. However, the ``cfg_attr`` is more complex than a simple ``allow``.
++
++Therefore, it is likely that it is not worth using conditional ``expect``\ s when
++more than one or two configurations are involved or when the lint may be
++triggered due to non-local changes (such as ``dead_code``).
++
+ For more information about diagnostics in Rust, please see:
+ 
+ 	https://doc.rust-lang.org/stable/reference/attributes/diagnostics.html
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
