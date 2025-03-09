@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED119D89D;
-	Sun,  9 Mar 2025 09:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5D21FB3;
+	Sun,  9 Mar 2025 09:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513699; cv=none; b=ggWiOAG2MV9fo7yP21QJ/DCdt+r1PdfurISF8xS9KyZICHUWAKxRCquHYyb83pLySnMCgRyEDR3P+8C5SfCBoDADQzcGERw0ZuZvbjon7QeulrTLoHgQ6z+arSip54GuUUwQaNh3FHLW/5bGHIzLxK3xeu4iOv3zatFcjiSp7R4=
+	t=1741513702; cv=none; b=YwUzrMl8LReK6WsdtF1D0JI+z85PS5OrCZBjCqGhmMn3SGwLM3JhsIxtlIbpD5Wc0lX8IgnVr2miQUvk1/ZR1+b9LpG84t465JlwFs56eJCfZEGzB/9oKkxV+fhUWFUHSeBXNdSn19PL8+gNDHxSzE3z22xEvGMK9E25MEJr2lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513699; c=relaxed/simple;
-	bh=oxGmD7uGwtZDIQ2R2ogGnMjKq9qZAkHzvS6jqSp1494=;
+	s=arc-20240116; t=1741513702; c=relaxed/simple;
+	bh=3yotAWf0UOavafYM+KFgXA5ytWPdurw4E6bqdZkBtAY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=dReiErBQgcOdop9oIp9OFqyK4EZCiiGc1Mo/QqqR372w+iry9dPRgJuzFMjOMI9eDCOpGfN0ShqHKKjProTUUT7VoNPs1u4J0hRDCfbMZvVEE29w08F0KmUPoqmcIhiima+EC+4zUwINKRH9D3eh77rhIoikyzxFDl11zW213kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vV+aLZf; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=aT3Pn0nzH+YmOjujCfYswGOjx97R02wh6Zf1pcL0Olf7cOeMAZvs6rclDniQWHRcinC69dQQVlqoh5G1gRNAOVFJjBaClyzrCzDSjZPGzpQqDMB7nuiuW2BDeuUVtld6UHa8v0TBqnLOLOqmv+qnFxH7atP4Xrm+c5k6qjtDxnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teRAFZY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vV+aLZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA2CC4CEE5;
-	Sun,  9 Mar 2025 09:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teRAFZY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6341C4CEE5;
+	Sun,  9 Mar 2025 09:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513699;
-	bh=oxGmD7uGwtZDIQ2R2ogGnMjKq9qZAkHzvS6jqSp1494=;
+	s=korg; t=1741513702;
+	bh=3yotAWf0UOavafYM+KFgXA5ytWPdurw4E6bqdZkBtAY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=0vV+aLZfSGGVWb7IpeMgO8C4RcnRtKEPJZdxaufaEFZXWueianTQYGSorjo0MQzve
-	 ecGDjsUWytS3HsUTH9XJVd7ak/k9OXylSxT16zeVMtro9FTLNT0dKqx4LglFeG6kXE
-	 lBI4+VUCcXD8NyF1JK8R8L3N1ULKcfHcJejkZpHE=
-Subject: Patch "drm/panic: prefer eliding lifetimes" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
+	b=teRAFZY/FQ2RT2BQYb6W/+bldDbiP5O/VoY5bKdTT3XRYnLOIFzyuSkVtO+hGXywS
+	 G3KwtOmrmj+H27u8CRYhmNLM+erI7H/A3+biqpI9fOYOyp0reQmzE+gUKKSnBfYZWL
+	 Tu+c+1qLjLH8dfwBaMGr+bhh1Bk7OoYpNmSqE9L0=
+Subject: Patch "rust: alloc: add `Vec` to prelude" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-52-ojeda@kernel.org>
-Message-ID: <2025030948-unwary-racoon-e494@gregkh>
+In-Reply-To: <20250307225008.779961-41-ojeda@kernel.org>
+Message-ID: <2025030948-alright-backboned-61a9@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore
@@ -44,75 +44,56 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/panic: prefer eliding lifetimes
+    rust: alloc: add `Vec` to prelude
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-panic-prefer-eliding-lifetimes.patch
+     rust-alloc-add-vec-to-prelude.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121506-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:57 2025
+From stable+bounces-121495-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:37 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:58 +0100
-Subject: drm/panic: prefer eliding lifetimes
+Date: Fri,  7 Mar 2025 23:49:47 +0100
+Subject: rust: alloc: add `Vec` to prelude
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-52-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-41-ojeda@kernel.org>
 
-From: Thomas Böhler <witcher@wiredspace.de>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit ae75c40117b53ae3d91dfc9d0bf06984a079f044 upstream.
+commit 3145dc91c3c0ad945f06354385a6eb89d22becdb upstream.
 
-Eliding lifetimes when possible instead of specifying them directly is
-both shorter and easier to read. Clippy notes this in the
-`needless_lifetimes` lint:
+Now that we removed `VecExt` and the corresponding includes in
+prelude.rs, add the new kernel `Vec` type instead.
 
-    error: the following explicit lifetimes could be elided: 'b
-       --> drivers/gpu/drm/drm_panic_qr.rs:479:16
-        |
-    479 |     fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
-        |                ^^                       ^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-        = note: `-D clippy::needless-lifetimes` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::needless_lifetimes)]`
-    help: elide the lifetimes
-        |
-    479 -     fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
-    479 +     fn new<'a>(segments: &[&Segment<'_>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
-        |
-
-Remove the explicit lifetime annotation in favour of an elided lifetime.
-
-Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1123
-Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-4-witcher@wiredspace.de
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-22-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    2 +-
+ rust/kernel/prelude.rs |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -476,7 +476,7 @@ struct EncodedMsg<'a> {
- /// Data to be put in the QR code, with correct segment encoding, padding, and
- /// Error Code Correction.
- impl EncodedMsg<'_> {
--    fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
-+    fn new<'a>(segments: &[&Segment<'_>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
-         let version = Version::from_segments(segments)?;
-         let ec_size = version.ec_size();
-         let g1_blocks = version.g1_blocks();
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -14,7 +14,7 @@
+ #[doc(no_inline)]
+ pub use core::pin::Pin;
+ 
+-pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec};
++pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec, Vec};
+ 
+ #[doc(no_inline)]
+ pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
