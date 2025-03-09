@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8B71FB3;
-	Sun,  9 Mar 2025 09:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7183E1FB3;
+	Sun,  9 Mar 2025 09:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513721; cv=none; b=n79lIERkV04OW1bcU6BUZhtXLeyq4B9rkB4/oMbNJCzXUnXoS9/EqNG4uGvkszZ5EojaaIMzWBJX1aAeo92BJysd+Z7ekPZaRvxZdj9qm0fJsaf6/BO18dbo/1AVeRSGPwBMdS0HheUXS49LMX3aP/kcIaZGiE/tS8Iu1eV99yQ=
+	t=1741513724; cv=none; b=tzjmEbsN3toqqdFUvH146sQtdyQ/DrxAdJ0/b7pnyTzDZD1v3PkqSVSxTpPwg0ywVVeiBVor+vSQpLlXHzkBi6z0QIg/hzRmrp7DsQOZQ0sANDHPCG3qAQiOe0qnhhYxOqTY76xFAUwg7IA+YKE/fPFwKNMhNomZl5SsoZU3W0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513721; c=relaxed/simple;
-	bh=Z49LUML22w8acm4D99U7000XO615tLvxngC+pTm1xN4=;
+	s=arc-20240116; t=1741513724; c=relaxed/simple;
+	bh=odlNxHdg7QDsVk1/aAGaxuLYKz3oRViUM9uuWzm+Sb0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=DQBXKby6xUNM/bw0hP5l+3GPyc6yQNnjhzo3OfY7xrfI5U8F/5fTwsfOkLDVAux8dSwF0P7ZJYYwwOPS74+59yEQ6Mt7ku00D+bBV7yZ92a1YW5Y6zc3yKnuTzYuyOMvhQ3TOM2p/deeP3mPehi6G0Cb1Beg28wEU327PtDXKv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8FT/kSU; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=isAhlOzVs6CBYz8/bWohyTb4FH0cqhmrhuF3/CegfdWF1tHfPncbvsr2uHgz7eq2j0n5mbM0SBApgk56/apaCLL18yTO4ztFWvYyWZs0M+CX/a/OKQz/L1UseE/PD5kPfBn69KvbTtWcUFZnPMUqgKE641xBib9jyKJ9DdPhMrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k56ozumw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8FT/kSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E258C4CEE5;
-	Sun,  9 Mar 2025 09:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k56ozumw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AAEC4CEE5;
+	Sun,  9 Mar 2025 09:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513720;
-	bh=Z49LUML22w8acm4D99U7000XO615tLvxngC+pTm1xN4=;
+	s=korg; t=1741513724;
+	bh=odlNxHdg7QDsVk1/aAGaxuLYKz3oRViUM9uuWzm+Sb0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=m8FT/kSUQbrkrIfDKs38CZ543w9xATbyGW97UBDggrZ5QytHnRxqh20cKCLhu/UNV
-	 PeVW0Imorf6W7pVfqky/UNodTf9XiaejnFvB3ep6bXiO+eWYtDsChaOPAbOoLoBCeg
-	 zBEAoTh8PT74NQGgvwEZ6H9vOc80uZlA1szVNTQ4=
-Subject: Patch "rust: alloc: add `Allocator` trait" has been added to the 6.12-stable tree
+	b=k56ozumwtOwPeXzXD/tbWNRlFeEwpsArxpNuymslTG4A7m7zBhfvPx2HRnY7JTrMb
+	 PNEGbsdaXI0jwy2zGucoBWj+2ObYw1zlohWqGyBh3qen6kUHKWeEOGSP4qdQiFSH/P
+	 urnf8VH5KAQb079HhxGPTWm6/RPobH7ZXl6FDLbw=
+Subject: Patch "rust: alloc: add `Box` to prelude" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-21-ojeda@kernel.org>
-Message-ID: <2025030948-daytime-trillion-a00d@gregkh>
+In-Reply-To: <20250307225008.779961-34-ojeda@kernel.org>
+Message-ID: <2025030948-veto-regain-0634@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,164 +44,56 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: add `Allocator` trait
+    rust: alloc: add `Box` to prelude
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-add-allocator-trait.patch
+     rust-alloc-add-box-to-prelude.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121475-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:36 2025
+From stable+bounces-121488-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:17 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:27 +0100
-Subject: rust: alloc: add `Allocator` trait
+Date: Fri,  7 Mar 2025 23:49:40 +0100
+Subject: rust: alloc: add `Box` to prelude
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-21-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-34-ojeda@kernel.org>
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit b7a084ba4fbb8f416ce8d19c93a3a2bee63c9c89 upstream.
+commit e1044c2238f54ae5bd902cac6d12e48835df418b upstream.
 
-Add a kernel specific `Allocator` trait, that in contrast to the one in
-Rust's core library doesn't require unstable features and supports GFP
-flags.
-
-Subsequent patches add the following trait implementors: `Kmalloc`,
-`Vmalloc` and `KVmalloc`.
+Now that we removed `BoxExt` and the corresponding includes in
+prelude.rs, add the new kernel `Box` type instead.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-2-dakr@kernel.org
-[ Fixed typo. - Miguel ]
+Link: https://lore.kernel.org/r/20241004154149.93856-15-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+ rust/kernel/prelude.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -11,6 +11,7 @@ pub mod vec_ext;
- /// Indicates an allocation error.
- #[derive(Copy, Clone, PartialEq, Eq, Debug)]
- pub struct AllocError;
-+use core::{alloc::Layout, ptr::NonNull};
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -14,7 +14,7 @@
+ #[doc(no_inline)]
+ pub use core::pin::Pin;
  
- /// Flags to be used when allocating memory.
- ///
-@@ -86,3 +87,103 @@ pub mod flags {
-     /// small allocations.
-     pub const GFP_NOWAIT: Flags = Flags(bindings::GFP_NOWAIT);
- }
-+
-+/// The kernel's [`Allocator`] trait.
-+///
-+/// An implementation of [`Allocator`] can allocate, re-allocate and free memory buffers described
-+/// via [`Layout`].
-+///
-+/// [`Allocator`] is designed to be implemented as a ZST; [`Allocator`] functions do not operate on
-+/// an object instance.
-+///
-+/// In order to be able to support `#[derive(SmartPointer)]` later on, we need to avoid a design
-+/// that requires an `Allocator` to be instantiated, hence its functions must not contain any kind
-+/// of `self` parameter.
-+///
-+/// # Safety
-+///
-+/// - A memory allocation returned from an allocator must remain valid until it is explicitly freed.
-+///
-+/// - Any pointer to a valid memory allocation must be valid to be passed to any other [`Allocator`]
-+///   function of the same type.
-+///
-+/// - Implementers must ensure that all trait functions abide by the guarantees documented in the
-+///   `# Guarantees` sections.
-+pub unsafe trait Allocator {
-+    /// Allocate memory based on `layout` and `flags`.
-+    ///
-+    /// On success, returns a buffer represented as `NonNull<[u8]>` that satisfies the layout
-+    /// constraints (i.e. minimum size and alignment as specified by `layout`).
-+    ///
-+    /// This function is equivalent to `realloc` when called with `None`.
-+    ///
-+    /// # Guarantees
-+    ///
-+    /// When the return value is `Ok(ptr)`, then `ptr` is
-+    /// - valid for reads and writes for `layout.size()` bytes, until it is passed to
-+    ///   [`Allocator::free`] or [`Allocator::realloc`],
-+    /// - aligned to `layout.align()`,
-+    ///
-+    /// Additionally, `Flags` are honored as documented in
-+    /// <https://docs.kernel.org/core-api/mm-api.html#mm-api-gfp-flags>.
-+    fn alloc(layout: Layout, flags: Flags) -> Result<NonNull<[u8]>, AllocError> {
-+        // SAFETY: Passing `None` to `realloc` is valid by its safety requirements and asks for a
-+        // new memory allocation.
-+        unsafe { Self::realloc(None, layout, Layout::new::<()>(), flags) }
-+    }
-+
-+    /// Re-allocate an existing memory allocation to satisfy the requested `layout`.
-+    ///
-+    /// If the requested size is zero, `realloc` behaves equivalent to `free`.
-+    ///
-+    /// If the requested size is larger than the size of the existing allocation, a successful call
-+    /// to `realloc` guarantees that the new or grown buffer has at least `Layout::size` bytes, but
-+    /// may also be larger.
-+    ///
-+    /// If the requested size is smaller than the size of the existing allocation, `realloc` may or
-+    /// may not shrink the buffer; this is implementation specific to the allocator.
-+    ///
-+    /// On allocation failure, the existing buffer, if any, remains valid.
-+    ///
-+    /// The buffer is represented as `NonNull<[u8]>`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// - If `ptr == Some(p)`, then `p` must point to an existing and valid memory allocation
-+    ///   created by this [`Allocator`]; if `old_layout` is zero-sized `p` does not need to be a
-+    ///   pointer returned by this [`Allocator`].
-+    /// - `ptr` is allowed to be `None`; in this case a new memory allocation is created and
-+    ///   `old_layout` is ignored.
-+    /// - `old_layout` must match the `Layout` the allocation has been created with.
-+    ///
-+    /// # Guarantees
-+    ///
-+    /// This function has the same guarantees as [`Allocator::alloc`]. When `ptr == Some(p)`, then
-+    /// it additionally guarantees that:
-+    /// - the contents of the memory pointed to by `p` are preserved up to the lesser of the new
-+    ///   and old size, i.e. `ret_ptr[0..min(layout.size(), old_layout.size())] ==
-+    ///   p[0..min(layout.size(), old_layout.size())]`.
-+    /// - when the return value is `Err(AllocError)`, then `ptr` is still valid.
-+    unsafe fn realloc(
-+        ptr: Option<NonNull<u8>>,
-+        layout: Layout,
-+        old_layout: Layout,
-+        flags: Flags,
-+    ) -> Result<NonNull<[u8]>, AllocError>;
-+
-+    /// Free an existing memory allocation.
-+    ///
-+    /// # Safety
-+    ///
-+    /// - `ptr` must point to an existing and valid memory allocation created by this [`Allocator`];
-+    ///   if `old_layout` is zero-sized `p` does not need to be a pointer returned by this
-+    ///   [`Allocator`].
-+    /// - `layout` must match the `Layout` the allocation has been created with.
-+    /// - The memory allocation at `ptr` must never again be read from or written to.
-+    unsafe fn free(ptr: NonNull<u8>, layout: Layout) {
-+        // SAFETY: The caller guarantees that `ptr` points at a valid allocation created by this
-+        // allocator. We are passing a `Layout` with the smallest possible alignment, so it is
-+        // smaller than or equal to the alignment previously used with this allocation.
-+        let _ = unsafe { Self::realloc(Some(ptr), Layout::new::<()>(), layout, Flags(0)) };
-+    }
-+}
+-pub use crate::alloc::{flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
++pub use crate::alloc::{flags::*, vec_ext::VecExt, Box, KBox, KVBox, VBox};
+ 
+ #[doc(no_inline)]
+ pub use alloc::vec::Vec;
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
