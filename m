@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84602158A13;
-	Sun,  9 Mar 2025 21:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7E31E5210;
+	Sun,  9 Mar 2025 21:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741554149; cv=none; b=FolclERGRNveWlze0XvFLvWqbDTXt8IdrrzQHQ5GO72/1FWKcopilgsbXsLHH+Qn+GGtStxc2n+YrRAbWjwhxj77cEL6qww1IyueMUEQ1grquUZjfnA9+1lm1yWRjfgl7cRf3X2Hy5YHvoP4bY3smyGCOLMui/ARH5mJfIIOzwA=
+	t=1741554157; cv=none; b=LWcvqjVmsdoq56rgYyQ8dXEDvYInaxboodaoscJzugdgYZQFTfCHJ2g6aDc/q/Pjbh/uETx3ImX1rUq3N14zo4Xj7FSgOaWQceJVqBVjGaWuTmm4zwGNT/PHiLczyLW0r50C6wPjDkqS7j9B439IgMZtVcogB7/tRKkEtKBqjSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741554149; c=relaxed/simple;
-	bh=z2Ozz3AlozyXKhFgFB1QbWDTdAFyGKYCYY/MtVuhd64=;
+	s=arc-20240116; t=1741554157; c=relaxed/simple;
+	bh=znbftPFKkJYlsmyv8423rZPlNTsEFqLd5kYPH6KawAA=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=TLwFUOnkDlXDKUtl1M8ueAcREaBJSYSB/wD1Wr2hU2VZKdxS6MdsOh0CaHfzRcte+hmeOsor7YUC5tNZoadoyVJroFnJRh3g22yFpHW6L71sTs2ttlbMYAtHno5uG6SWVL2UHkDDpAKak7lNLiMqVbOpstLSd8a+2p3gOAFc9Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6gSdueK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=GcDntcw5Lv4Emb3Qw2Jjeicok0aYaMdZUKHOvXtd+WqCqWMim8FcVqbP8//jiG1lYwOTQXVKpOrO8GIghYL/xLJuRBAIy/YJzbYgZCGmexz4fa7iNdVoEqyZ5JsitbAXUA/1d4oaetR+P+GuJpxlorJ6s9ixbyhxAQosckTdvLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBwACEl3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6gSdueK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A58EC4CEE3;
-	Sun,  9 Mar 2025 21:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBwACEl3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA20BC4CEE3;
+	Sun,  9 Mar 2025 21:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741554148;
-	bh=z2Ozz3AlozyXKhFgFB1QbWDTdAFyGKYCYY/MtVuhd64=;
+	s=korg; t=1741554157;
+	bh=znbftPFKkJYlsmyv8423rZPlNTsEFqLd5kYPH6KawAA=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=M6gSdueKDwqxK6rc6T/zjJm0oiDszedUiBlYTdQqhFjmG8VWrsM2P18xrH+k2N8Bm
-	 742dOa1XitVzeCnsdRuAqoDOqX93TxkRA7d8b53e5oR5Dq1Y2JiBQpKB2yJY8XVUNT
-	 zEYTS0nZhkhub574BrxnkdIXp1vxRkXbylbziHdk=
-Subject: Patch "rust: finish using custom FFI integer types" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=SBwACEl3vknEFBL2tQEYqQwRYyWHgblj3Q9kuLvb9eie9RszgG+IEooEtfoF0Kbjc
+	 mlJD+bwuB0nht12xmr1lZrfWUEnFxB+9bXBpXaTSqDtQ4XZGDrRjc3trPNnLrXKaJe
+	 vLMFOAtNfopKeMmMn1/MTm+3OjhKCIhVK+dquruM=
+Subject: Patch "rust: map `long` to `isize` and `char` to `u8`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 22:02:26 +0100
-In-Reply-To: <20250309204217.1553389-2-ojeda@kernel.org>
-Message-ID: <2025030926-crying-enactment-5341@gregkh>
+In-Reply-To: <20250309204217.1553389-3-ojeda@kernel.org>
+Message-ID: <2025030926-pretzel-prune-b1b0@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,64 +44,209 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: finish using custom FFI integer types
+    rust: map `long` to `isize` and `char` to `u8`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-finish-using-custom-ffi-integer-types.patch
+     rust-map-long-to-isize-and-char-to-u8.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121622-greg=kroah.com@vger.kernel.org Sun Mar  9 21:42:38 2025
+From stable+bounces-121623-greg=kroah.com@vger.kernel.org Sun Mar  9 21:42:43 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Sun,  9 Mar 2025 21:42:16 +0100
-Subject: rust: finish using custom FFI integer types
+Date: Sun,  9 Mar 2025 21:42:17 +0100
+Subject: rust: map `long` to `isize` and `char` to `u8`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250309204217.1553389-2-ojeda@kernel.org>
+Message-ID: <20250309204217.1553389-3-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit 27c7518e7f1ccaaa43eb5f25dc362779d2dc2ccb upstream.
+commit 1bae8729e50a900f41e9a1c17ae81113e4cf62b8 upstream.
 
-In the last kernel cycle we migrated most of the `core::ffi` cases in
-commit d072acda4862 ("rust: use custom FFI integer types"):
+The following FFI types are replaced compared to `core::ffi`:
 
-    Currently FFI integer types are defined in libcore. This commit
-    creates the `ffi` crate and asks bindgen to use that crate for FFI
-    integer types instead of `core::ffi`.
+1. `char` type is now always mapped to `u8`, since kernel uses
+   `-funsigned-char` on the C code. `core::ffi` maps it to platform
+   default ABI, which can be either signed or unsigned.
 
-    This commit is preparatory and no type changes are made in this
-    commit yet.
+2. `long` is now always mapped to `isize`. It's very common in the
+   kernel to use `long` to represent a pointer-sized integer, and in
+   fact `intptr_t` is a typedef of `long` in the kernel. Enforce this
+   mapping rather than mapping to `i32/i64` depending on platform can
+   save us a lot of unnecessary casts.
 
-Finish now the few remaining/new cases so that we perform the actual
-remapping in the next commit as planned.
-
-Acked-by: Jocelyn Falempe <jfalempe@redhat.com> # drm
-Link: https://lore.kernel.org/rust-for-linux/CANiq72m_rg42SvZK=bF2f0yEoBLVA33UBhiAsv8THhVu=G2dPA@mail.gmail.com/
-Link: https://lore.kernel.org/all/cc9253fa-9d5f-460b-9841-94948fb6580c@redhat.com/
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240913213041.395655-5-gary@garyguo.net
+[ Moved `uaccess` changes from the next commit, since they were
+  irrefutable patterns that Rust >= 1.82.0 warns about. Reworded
+  slightly and reformatted a few documentation comments. Rebased on
+  top of `rust-next`. Added the removal of two casts to avoid Clippy
+  warnings. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/ffi.rs             |   37 ++++++++++++++++++++++++++++++++++++-
+ rust/kernel/error.rs    |    5 +----
+ rust/kernel/firmware.rs |    2 +-
+ rust/kernel/uaccess.rs  |   27 +++++++--------------------
+ 4 files changed, 45 insertions(+), 26 deletions(-)
 
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -931,7 +931,7 @@ impl QrImage<'_> {
- /// They must remain valid for the duration of the function call.
- #[no_mangle]
- pub unsafe extern "C" fn drm_panic_qr_generate(
--    url: *const i8,
-+    url: *const kernel::ffi::c_char,
-     data: *mut u8,
-     data_len: usize,
-     data_size: usize,
+--- a/rust/ffi.rs
++++ b/rust/ffi.rs
+@@ -10,4 +10,39 @@
+ 
+ #![no_std]
+ 
+-pub use core::ffi::*;
++macro_rules! alias {
++    ($($name:ident = $ty:ty;)*) => {$(
++        #[allow(non_camel_case_types, missing_docs)]
++        pub type $name = $ty;
++
++        // Check size compatibility with `core`.
++        const _: () = assert!(
++            core::mem::size_of::<$name>() == core::mem::size_of::<core::ffi::$name>()
++        );
++    )*}
++}
++
++alias! {
++    // `core::ffi::c_char` is either `i8` or `u8` depending on architecture. In the kernel, we use
++    // `-funsigned-char` so it's always mapped to `u8`.
++    c_char = u8;
++
++    c_schar = i8;
++    c_uchar = u8;
++
++    c_short = i16;
++    c_ushort = u16;
++
++    c_int = i32;
++    c_uint = u32;
++
++    // In the kernel, `intptr_t` is defined to be `long` in all platforms, so we can map the type to
++    // `isize`.
++    c_long = isize;
++    c_ulong = usize;
++
++    c_longlong = i64;
++    c_ulonglong = u64;
++}
++
++pub use core::ffi::c_void;
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -153,11 +153,8 @@ impl Error {
+ 
+     /// Returns the error encoded as a pointer.
+     pub fn to_ptr<T>(self) -> *mut T {
+-        #[cfg_attr(target_pointer_width = "32", allow(clippy::useless_conversion))]
+         // SAFETY: `self.0` is a valid error due to its invariant.
+-        unsafe {
+-            bindings::ERR_PTR(self.0.get().into()) as *mut _
+-        }
++        unsafe { bindings::ERR_PTR(self.0.get() as _) as *mut _ }
+     }
+ 
+     /// Returns a string representing the error, if one exists.
+--- a/rust/kernel/firmware.rs
++++ b/rust/kernel/firmware.rs
+@@ -12,7 +12,7 @@ use core::ptr::NonNull;
+ /// One of the following: `bindings::request_firmware`, `bindings::firmware_request_nowarn`,
+ /// `bindings::firmware_request_platform`, `bindings::request_firmware_direct`.
+ struct FwFunc(
+-    unsafe extern "C" fn(*mut *const bindings::firmware, *const i8, *mut bindings::device) -> i32,
++    unsafe extern "C" fn(*mut *const bindings::firmware, *const u8, *mut bindings::device) -> i32,
+ );
+ 
+ impl FwFunc {
+--- a/rust/kernel/uaccess.rs
++++ b/rust/kernel/uaccess.rs
+@@ -8,7 +8,7 @@ use crate::{
+     alloc::Flags,
+     bindings,
+     error::Result,
+-    ffi::{c_ulong, c_void},
++    ffi::c_void,
+     prelude::*,
+     types::{AsBytes, FromBytes},
+ };
+@@ -224,13 +224,9 @@ impl UserSliceReader {
+         if len > self.length {
+             return Err(EFAULT);
+         }
+-        let Ok(len_ulong) = c_ulong::try_from(len) else {
+-            return Err(EFAULT);
+-        };
+-        // SAFETY: `out_ptr` points into a mutable slice of length `len_ulong`, so we may write
++        // SAFETY: `out_ptr` points into a mutable slice of length `len`, so we may write
+         // that many bytes to it.
+-        let res =
+-            unsafe { bindings::copy_from_user(out_ptr, self.ptr as *const c_void, len_ulong) };
++        let res = unsafe { bindings::copy_from_user(out_ptr, self.ptr as *const c_void, len) };
+         if res != 0 {
+             return Err(EFAULT);
+         }
+@@ -259,9 +255,6 @@ impl UserSliceReader {
+         if len > self.length {
+             return Err(EFAULT);
+         }
+-        let Ok(len_ulong) = c_ulong::try_from(len) else {
+-            return Err(EFAULT);
+-        };
+         let mut out: MaybeUninit<T> = MaybeUninit::uninit();
+         // SAFETY: The local variable `out` is valid for writing `size_of::<T>()` bytes.
+         //
+@@ -272,7 +265,7 @@ impl UserSliceReader {
+             bindings::_copy_from_user(
+                 out.as_mut_ptr().cast::<c_void>(),
+                 self.ptr as *const c_void,
+-                len_ulong,
++                len,
+             )
+         };
+         if res != 0 {
+@@ -335,12 +328,9 @@ impl UserSliceWriter {
+         if len > self.length {
+             return Err(EFAULT);
+         }
+-        let Ok(len_ulong) = c_ulong::try_from(len) else {
+-            return Err(EFAULT);
+-        };
+-        // SAFETY: `data_ptr` points into an immutable slice of length `len_ulong`, so we may read
++        // SAFETY: `data_ptr` points into an immutable slice of length `len`, so we may read
+         // that many bytes from it.
+-        let res = unsafe { bindings::copy_to_user(self.ptr as *mut c_void, data_ptr, len_ulong) };
++        let res = unsafe { bindings::copy_to_user(self.ptr as *mut c_void, data_ptr, len) };
+         if res != 0 {
+             return Err(EFAULT);
+         }
+@@ -359,9 +349,6 @@ impl UserSliceWriter {
+         if len > self.length {
+             return Err(EFAULT);
+         }
+-        let Ok(len_ulong) = c_ulong::try_from(len) else {
+-            return Err(EFAULT);
+-        };
+         // SAFETY: The reference points to a value of type `T`, so it is valid for reading
+         // `size_of::<T>()` bytes.
+         //
+@@ -372,7 +359,7 @@ impl UserSliceWriter {
+             bindings::_copy_to_user(
+                 self.ptr as *mut c_void,
+                 (value as *const T).cast::<c_void>(),
+-                len_ulong,
++                len,
+             )
+         };
+         if res != 0 {
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
