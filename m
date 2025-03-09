@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE991AE00E;
-	Sun,  9 Mar 2025 09:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EE11FB3;
+	Sun,  9 Mar 2025 09:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513729; cv=none; b=GMppb7hfFHU8lFfv47xxp9YOIvJxbAyFRzF3Q2kGCyLGKnfA3GSEAxPMOhPybW2yEfG8/41zyQ4bg6nDfyc8q+4N7hb2IatDwHSk7cRAH7VD/RhRJjJsyy+TiPLO+sSTa3da/l5eXLdZnnQx/ukwEi6XyGPfnLk7q8wTTZLCE1E=
+	t=1741513730; cv=none; b=UXdG0OixgE/RdIOhsPWXfFXQqD+Yd2e5DeITVgvLopM8LiG0eOcHd8Y9Q2t7Jjc3dAyUq5mIsnlEfKbJCPuQYC9CDSiE8eNRjKTIGo7cYoXQ11k5SK2py1W7o6fEU9vPzvq9wsaBw09hhGb0rv4o80/W13P4yzY08E7IF4IqZOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513729; c=relaxed/simple;
-	bh=H09/Pv+cLmIbRozjeWZmd1GmEtDOlq+eO9G4rWkxmC0=;
+	s=arc-20240116; t=1741513730; c=relaxed/simple;
+	bh=CcWjIFW0npP6clrbNBABrOecclZcAI3SOBP37MlmwL8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=jHzvS3EFpZ2rLeiRXUDCyUzM0KizFC6l/efRMK7lb5qY8DRGLl/9mJsxOLlcQnQqQOiCzPtxwkIl3Ki1+7Uw1qr8E769eBTAGG8Zn72xgAxHeS0tl1NalWaMDkbfkVUFFyxnNcs6LSrlVuW6l137gxffV1aldQ9/8Xwztn+1L9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haZ9ZA4g; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=VX6uBodLJ8WW2DamQJ0jtLMfIi1EIiIkojZxPcdrFRmFagjHI9BnVIovaB7KA+4+cX5k6zsY8V0R21sAuzILU9OAY1JrPR9wWQoUqHNiEU2dOSIu8lzxLIE6Er6JHNThw7lxmyfVu+ygoSRxTeUXjnWDMOt+XUVP1oEq53t2aNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7l6jF4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haZ9ZA4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9682C4CEE5;
-	Sun,  9 Mar 2025 09:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7l6jF4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDE5C4CEEC;
+	Sun,  9 Mar 2025 09:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513727;
-	bh=H09/Pv+cLmIbRozjeWZmd1GmEtDOlq+eO9G4rWkxmC0=;
+	s=korg; t=1741513730;
+	bh=CcWjIFW0npP6clrbNBABrOecclZcAI3SOBP37MlmwL8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=haZ9ZA4gPhVQ1RPDq53uYRWJfrEEvvCuaXq7u69qXdUcG73Uw03GABOl7jDdLWKAg
-	 IWpuxBgqZW8/dKKIMpfwbgVolBTt3/4SR+y0tAiGuPtyHyivVbSOdz5BBxB1nThNnZ
-	 Vmf4PWj7+xXryNuMu8oD9Dxlr6kiPpJ1VThFVKWk=
-Subject: Patch "rust: alloc: add module `allocator_test`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=J7l6jF4K04H4jjR7DMEVPM5HywhlVKPPCcvNtPbU6Ry3rqVncv7OVtnYouVZoUp+2
+	 m0/MguvLxZT/cAlyxGL+qi5PlFknB/y5rB5cH8OVq8DsgmQUYDTz6yxqgUJRBbkTpW
+	 hWQDaniGkwddk+1uUFSfGDlEjK+FZXKhkJcnOtYg=
+Subject: Patch "drm/panic: correctly indent continuation of line in list item" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-27-ojeda@kernel.org>
-Message-ID: <2025030948-ebony-october-bd37@gregkh>
+In-Reply-To: <20250307225008.779961-54-ojeda@kernel.org>
+Message-ID: <2025030948-selection-contort-80ec@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore
@@ -44,98 +44,76 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: add module `allocator_test`
+    drm/panic: correctly indent continuation of line in list item
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-add-module-allocator_test.patch
+     drm-panic-correctly-indent-continuation-of-line-in-list-item.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121481-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:53 2025
+From stable+bounces-121508-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:09 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:33 +0100
-Subject: rust: alloc: add module `allocator_test`
+Date: Fri,  7 Mar 2025 23:50:00 +0100
+Subject: drm/panic: correctly indent continuation of line in list item
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-27-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-54-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Thomas Böhler <witcher@wiredspace.de>
 
-commit 5a888c28e3b4ff6f54a53fca33951537d135e7f1 upstream.
+commit 5bb698e6fc514ddd9e23b6649b29a0934d8d8586 upstream.
 
-`Allocator`s, such as `Kmalloc`, will be used by e.g. `Box` and `Vec` in
-subsequent patches, and hence this dependency propagates throughout the
-whole kernel.
+It is common practice in Rust to indent the next line the same amount of
+space as the previous one if both belong to the same list item. Clippy
+checks for this with the lint `doc_lazy_continuation`.
 
-Add the `allocator_test` module that provides an empty implementation
-for all `Allocator`s in the kernel, such that we don't break the
-`rusttest` make target in subsequent patches.
+    error: doc list item without indentation
+    --> drivers/gpu/drm/drm_panic_qr.rs:979:5
+        |
+    979 | /// conversion to numeric segments.
+        |     ^
+        |
+        = help: if this is supposed to be its own paragraph, add a blank line
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_lazy_continuation
+        = note: `-D clippy::doc-lazy-continuation` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::doc_lazy_continuation)]`
+    help: indent this line
+        |
+    979 | ///   conversion to numeric segments.
+        |     ++
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-8-dakr@kernel.org
-[ Added missing `_old_layout` parameter as discussed. - Miguel ]
+Indent the offending line by 2 more spaces to remove this Clippy error.
+
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/1123
+Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20241019084048.22336-6-witcher@wiredspace.de
+[ Reworded to indent Clippy's message. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs                |    9 +++++++--
- rust/kernel/alloc/allocator_test.rs |   20 ++++++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100644 rust/kernel/alloc/allocator_test.rs
+ drivers/gpu/drm/drm_panic_qr.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -2,12 +2,17 @@
- 
- //! Extensions to the [`alloc`] crate.
- 
--#[cfg(not(test))]
--#[cfg(not(testlib))]
-+#[cfg(not(any(test, testlib)))]
- pub mod allocator;
- pub mod box_ext;
- pub mod vec_ext;
- 
-+#[cfg(any(test, testlib))]
-+pub mod allocator_test;
-+
-+#[cfg(any(test, testlib))]
-+pub use self::allocator_test as allocator;
-+
- /// Indicates an allocation error.
- #[derive(Copy, Clone, PartialEq, Eq, Debug)]
- pub struct AllocError;
---- /dev/null
-+++ b/rust/kernel/alloc/allocator_test.rs
-@@ -0,0 +1,20 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#![allow(missing_docs)]
-+
-+use super::{AllocError, Allocator, Flags};
-+use core::alloc::Layout;
-+use core::ptr::NonNull;
-+
-+pub struct Kmalloc;
-+
-+unsafe impl Allocator for Kmalloc {
-+    unsafe fn realloc(
-+        _ptr: Option<NonNull<u8>>,
-+        _layout: Layout,
-+        _old_layout: Layout,
-+        _flags: Flags,
-+    ) -> Result<NonNull<[u8]>, AllocError> {
-+        panic!();
-+    }
-+}
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -975,7 +975,7 @@ pub unsafe extern "C" fn drm_panic_qr_ge
+ /// * `url_len`: Length of the URL.
+ ///
+ /// * If `url_len` > 0, remove the 2 segments header/length and also count the
+-/// conversion to numeric segments.
++///   conversion to numeric segments.
+ /// * If `url_len` = 0, only removes 3 bytes for 1 binary segment.
+ #[no_mangle]
+ pub extern "C" fn drm_panic_qr_max_data_size(version: u8, url_len: usize) -> usize {
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
