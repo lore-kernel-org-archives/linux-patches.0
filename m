@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A7D1B0F26;
-	Sun,  9 Mar 2025 09:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4821B0408;
+	Sun,  9 Mar 2025 09:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513809; cv=none; b=E4lVZ4+FpxBpQnxvaiz189OIwGYwwmKRgDyMgCs+Kox3f3nVcD3V6FXs0VrAHdfJZCSJoVP6I7mAph2vqKPHZAgFg+1zqRlh0X+7c5xnXJB9F3YCYV50TRYWlVbC0psIuwM5xFErvtyTylw0PytD1tmjjQEptiajPTinseupAv0=
+	t=1741513812; cv=none; b=LlFlg2XbAOJiqFgw+VbselHKhIbchh22R/35uDymWabJtUwlOAUrHO4FajszySLHTiANWRdyMzEZN6Mtv9Ihyftr4speORo4SXBNNABOpCc/42+8y8qz+JsiY64ZWXDFbPAIkUx1sXthZVrdDAa4NZ0dsFx/Zv2zTT5qrv4KoT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513809; c=relaxed/simple;
-	bh=8VUW61EHbVcoY2NhkVGuRTXKuwQK+bph0ikzmpGlYQU=;
+	s=arc-20240116; t=1741513812; c=relaxed/simple;
+	bh=47cHVKjf878U5mBAW9CJzmRGmf0JDIDBCgXVVTvhBPE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=ScG6QPd2GSDTOGrKvi001OOOxJDjYiYNXeUg4MaRzD0uVKr6p62wkLKfqlzA1ptJhfUR3ITr7gYq5zfcfNc2EIj4uJRyztFcWYSm5LJjzSD/6yhASpxuV1K+eTC1fj69FxF/L39XrUqJE6bhZqVu2u7iCa4v2Vo5QNTx105EQHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyezFBZS; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=nJjZ1vrOJntAVCPan3d/sSJjpQoqDlbvlPhLlgE88BiZqN7fr0F158SKGWIEv1akLNRWYEBdq99Fdq2VQZP1dQivjC7WyPVSBK868XR6DpkbmPsRIEk/OfB7m087C8N2s3xXp+2SqPWxw0oU0yjuYj/97QfrR7PnSBoE94cpszU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXhNr+a9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyezFBZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C696C4CEE5;
-	Sun,  9 Mar 2025 09:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXhNr+a9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F5BC4CEE5;
+	Sun,  9 Mar 2025 09:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513809;
-	bh=8VUW61EHbVcoY2NhkVGuRTXKuwQK+bph0ikzmpGlYQU=;
+	s=korg; t=1741513812;
+	bh=47cHVKjf878U5mBAW9CJzmRGmf0JDIDBCgXVVTvhBPE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=CyezFBZSyDL+b6uOX7ZM79WmWgtrjUxZn8KT0ULKMm+qX3MzlvRk5Imoxrvb/mMSh
-	 Ik0aDaCCmdbEDnPzGEIFx1A+W6tzBg30T40mHuaH0q043Cq/6BelYhCHEmLF3jaA4E
-	 j+Y1OFfd61fhZcAFcXz1nhr3zC2ACqqT/tDALLZ4=
-Subject: Patch "rust: provide proper code documentation titles" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
+	b=FXhNr+a9h/YahjM988fdcsTGxNlEq6Tw2V3GxG76wjF3CY5s2oJlMnem1nRTaaLjz
+	 6gX8LaxegkT+yT92QysC9X7+bQ5I0DZ5HWlUN2Kj8StgnPUEnxnSydleeYPpyFWpNk
+	 ZtwaePCcsM1EmRn0FaW5jgbGA+vPafpksUdUvFzM=
+Subject: Patch "rust: error: check for config `test` in `Error::name`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-14-ojeda@kernel.org>
-Message-ID: <2025030951-startup-baking-bdbf@gregkh>
+In-Reply-To: <20250307225008.779961-43-ojeda@kernel.org>
+Message-ID: <2025030951-variably-outreach-0d9f@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,121 +44,66 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: provide proper code documentation titles
+    rust: error: check for config `test` in `Error::name`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-provide-proper-code-documentation-titles.patch
+     rust-error-check-for-config-test-in-error-name.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121468-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:16 2025
+From stable+bounces-121497-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:54 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:20 +0100
-Subject: rust: provide proper code documentation titles
+Date: Fri,  7 Mar 2025 23:49:49 +0100
+Subject: rust: error: check for config `test` in `Error::name`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-14-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-43-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 2f390cc589433dfcfedc307a141e103929a6fd4d upstream.
+commit 4a28ab469ff01855eb819dfd94754d1792f03f2a upstream.
 
-Rust 1.82.0's Clippy is introducing [1][2] a new warn-by-default lint,
-`too_long_first_doc_paragraph` [3], which is intended to catch titles
-of code documentation items that are too long (likely because no title
-was provided and the item documentation starts with a paragraph).
+Additional to `testlib` also check for `test` in `Error::name`. This is
+required by a subsequent patch that (indirectly) uses `Error` in test
+cases.
 
-This lint does not currently trigger anywhere, but it does detect a couple
-cases if checking for private items gets enabled (which we will do in
-the next commit):
-
-    error: first doc comment paragraph is too long
-      --> rust/kernel/init/__internal.rs:18:1
-       |
-    18 | / /// This is the module-internal type implementing `PinInit` and `Init`. It is unsafe to create this
-    19 | | /// type, since the closure needs to fulfill the same safety requirement as the
-    20 | | /// `__pinned_init`/`__init` functions.
-       | |_
-       |
-       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_long_first_doc_paragraph
-       = note: `-D clippy::too-long-first-doc-paragraph` implied by `-D warnings`
-       = help: to override `-D warnings` add `#[allow(clippy::too_long_first_doc_paragraph)]`
-
-    error: first doc comment paragraph is too long
-     --> rust/kernel/sync/arc/std_vendor.rs:3:1
-      |
-    3 | / //! The contents of this file come from the Rust standard library, hosted in
-    4 | | //! the <https://github.com/rust-lang/rust> repository, licensed under
-    5 | | //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
-    6 | | //! see <https://github.com/rust-lang/rust/blob/master/COPYRIGHT>.
-      | |_
-      |
-      = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_long_first_doc_paragraph
-
-Thus clean those two instances.
-
-In addition, since we have a second `std_vendor.rs` file with a similar
-header, do the same there too (even if that one does not trigger the lint,
-because it is `doc(hidden)`).
-
-Link: https://github.com/rust-lang/rust/pull/129531 [1]
-Link: https://github.com/rust-lang/rust-clippy/pull/12993 [2]
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/too_long_first_doc_paragraph [3]
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-15-ojeda@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-24-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init/__internal.rs     |    7 ++++---
- rust/kernel/std_vendor.rs          |    2 ++
- rust/kernel/sync/arc/std_vendor.rs |    2 ++
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ rust/kernel/error.rs |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -15,9 +15,10 @@ use super::*;
- /// [this table]: https://doc.rust-lang.org/nomicon/phantom-data.html#table-of-phantomdata-patterns
- pub(super) type Invariant<T> = PhantomData<fn(*mut T) -> *mut T>;
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -161,7 +161,7 @@ impl Error {
+     }
  
--/// This is the module-internal type implementing `PinInit` and `Init`. It is unsafe to create this
--/// type, since the closure needs to fulfill the same safety requirement as the
--/// `__pinned_init`/`__init` functions.
-+/// Module-internal type implementing `PinInit` and `Init`.
-+///
-+/// It is unsafe to create this type, since the closure needs to fulfill the same safety
-+/// requirement as the `__pinned_init`/`__init` functions.
- pub(crate) struct InitClosure<F, T: ?Sized, E>(pub(crate) F, pub(crate) Invariant<(E, T)>);
- 
- // SAFETY: While constructing the `InitClosure`, the user promised that it upholds the
---- a/rust/kernel/std_vendor.rs
-+++ b/rust/kernel/std_vendor.rs
-@@ -1,5 +1,7 @@
- // SPDX-License-Identifier: Apache-2.0 OR MIT
- 
-+//! Rust standard library vendored code.
-+//!
- //! The contents of this file come from the Rust standard library, hosted in
- //! the <https://github.com/rust-lang/rust> repository, licensed under
- //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
---- a/rust/kernel/sync/arc/std_vendor.rs
-+++ b/rust/kernel/sync/arc/std_vendor.rs
-@@ -1,5 +1,7 @@
- // SPDX-License-Identifier: Apache-2.0 OR MIT
- 
-+//! Rust standard library vendored code.
-+//!
- //! The contents of this file come from the Rust standard library, hosted in
- //! the <https://github.com/rust-lang/rust> repository, licensed under
- //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
+     /// Returns a string representing the error, if one exists.
+-    #[cfg(not(testlib))]
++    #[cfg(not(any(test, testlib)))]
+     pub fn name(&self) -> Option<&'static CStr> {
+         // SAFETY: Just an FFI call, there are no extra safety requirements.
+         let ptr = unsafe { bindings::errname(-self.0.get()) };
+@@ -178,7 +178,7 @@ impl Error {
+     /// When `testlib` is configured, this always returns `None` to avoid the dependency on a
+     /// kernel function so that tests that use this (e.g., by calling [`Result::unwrap`]) can still
+     /// run in userspace.
+-    #[cfg(testlib)]
++    #[cfg(any(test, testlib))]
+     pub fn name(&self) -> Option<&'static CStr> {
+         None
+     }
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
