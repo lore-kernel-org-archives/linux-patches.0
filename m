@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E291AC43A;
-	Sun,  9 Mar 2025 09:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313BF1AE00E;
+	Sun,  9 Mar 2025 09:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513760; cv=none; b=gKkLBwrzUyFGKqCarVeJZyCOPSvI12bvbX0bw6VlbOghR01+e3Rx1oSo4/37XsiwJuqfwj6tbQSEITxtZSnE5k031ZpUAdGAC7y7U/2Fiza0wH2F+QrSl5TcOCLDJ5OglqEmQfEhFp6NWC3FcH7Pd6q/2oFooHxYCwSDNAYlp4E=
+	t=1741513764; cv=none; b=oOdCozCAc2X2Ug05RfktbAYQ6h9ubMBov4Wxx7oTru9aQwN3XlVcB9IDwiywb8A/RV+KBo/Em/ImV9i1paxjTwYzRI2Ty6VvDzpPbGgmhShWMbqTvYsxLrc3+E2ui6AQx/MEMEvv8mINU/v6BQAIKECryIupke50vF4I00OYDoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513760; c=relaxed/simple;
-	bh=/gUtRBS4nUZs0gJ4fS7KhF5R6EU9PnZ+KUrn2EQZ3yc=;
+	s=arc-20240116; t=1741513764; c=relaxed/simple;
+	bh=67nPWCwLV48Yx6H3WYqUoIQA0TjHAm4NPyadO5/ZuX4=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=u6KWg5IpxjvUsi93rq8kMYu6Z1aw1s2PrGwXk8lkt7K9BTE06X38okFkRp0Ky2BWQkAdrSMC/bm/+mAh4n2054kKbTX14TrpQiF5oPmoQRA3XJzyfDEHK+oPyyDkyiPPExSkMx9KX6BD0dZQXJbRknsKRACIlT2ftQnMAboeKmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6KGpP0G; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=DSMJtnK+rz92LOFGb4+aHh31WzFqRecFUGOp3nXgyVxMJqjnVz6zmsmi3v+KOkf4ioEUAL0RhFRtHh3vIhT/L6cVONJCyPYZ/XnkW+vD9SDy7sf/H9ELWy2nGdyiZXrc0b3J7TKkgq7Ir9QkydHGr98QuBX3O94C6RAH1FoQ2jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/yRFZX2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6KGpP0G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD950C4CEE5;
-	Sun,  9 Mar 2025 09:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/yRFZX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDCAC4CEE5;
+	Sun,  9 Mar 2025 09:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513760;
-	bh=/gUtRBS4nUZs0gJ4fS7KhF5R6EU9PnZ+KUrn2EQZ3yc=;
+	s=korg; t=1741513763;
+	bh=67nPWCwLV48Yx6H3WYqUoIQA0TjHAm4NPyadO5/ZuX4=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=s6KGpP0Ga2KnGWdpwoOz1b6zUD1boetn5+/RLXpbWB0hxgspRYO/OCJCrEH0g6h/7
-	 nbGWEV8P7N8f6TQlIoWvGLIvEAESUro/OJuZm71xVXX9+Kz5aB65P8iyfUm65o9pSa
-	 vPETMro/lb4fFoWtM+MYfncOcw9fZYKTR9zhFe3Y=
-Subject: Patch "rust: alloc: implement `ReallocFunc`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=o/yRFZX2ftpXVYqJVWsoMsRHdNGuPY3R+0reZOWGZ2MNoEC9ExS0UDRqyFUAxyVoF
+	 B0hAk9oPQVt8G/ONdyyZThl07pqYsl3FF+IzNHYLdBo43+3oseLr5R6ex04Yfj83f0
+	 hgDZWonzGwyx95hFd/e6EAmpC46A8m5fbED2LBTs=
+Subject: Patch "rust: alloc: Fix `ArrayLayout` allocations" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,j@jannau.net,lina@asahilina.net,neal@gompa.dev,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:49 +0100
-In-Reply-To: <20250307225008.779961-24-ojeda@kernel.org>
-Message-ID: <2025030949-envoy-criteria-e591@gregkh>
+In-Reply-To: <20250307225008.779961-61-ojeda@kernel.org>
+Message-ID: <2025030949-encrust-litigator-a85c@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,158 +44,59 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: implement `ReallocFunc`
+    rust: alloc: Fix `ArrayLayout` allocations
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-implement-reallocfunc.patch
+     rust-alloc-fix-arraylayout-allocations.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121478-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:42 2025
+From stable+bounces-121515-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:26 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:30 +0100
-Subject: rust: alloc: implement `ReallocFunc`
+Date: Fri,  7 Mar 2025 23:50:07 +0100
+Subject: rust: alloc: Fix `ArrayLayout` allocations
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-24-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-61-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Asahi Lina <lina@asahilina.net>
 
-commit 8a799831fc63c988eec90d334fdd68ff5f2c7eb5 upstream.
+commit b7ed2b6f4e8d7f64649795e76ee9db67300de8eb upstream.
 
-`ReallocFunc` is an abstraction for the kernel's realloc derivates, such
-as `krealloc`, `vrealloc` and `kvrealloc`.
+We were accidentally allocating a layout for the *square* of the object
+size due to a variable shadowing mishap.
 
-All of the named functions share the same function signature and
-implement the same semantics. The `ReallocFunc` abstractions provides a
-generalized wrapper around those, to trivialize the implementation of
-`Kmalloc`, `Vmalloc` and `KVmalloc` in subsequent patches.
+Fixes memory bloat and page allocation failures in drm/asahi.
 
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-5-dakr@kernel.org
-[ Added temporary `allow(dead_code)` for `dangling_from_layout` to clean
-  warning in `rusttest` target as discussed in the list (but it is
-  needed earlier, i.e. in this patch already). Added colon. - Miguel ]
+Reported-by: Janne Grunau <j@jannau.net>
+Fixes: 9e7bbfa18276 ("rust: alloc: introduce `ArrayLayout`")
+Signed-off-by: Asahi Lina <lina@asahilina.net>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Link: https://lore.kernel.org/r/20241123-rust-fix-arraylayout-v1-1-197e64c95bd4@asahilina.net
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs           |    9 +++++
- rust/kernel/alloc/allocator.rs |   70 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+)
+ rust/kernel/alloc/layout.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -187,3 +187,12 @@ pub unsafe trait Allocator {
-         let _ = unsafe { Self::realloc(Some(ptr), Layout::new::<()>(), layout, Flags(0)) };
-     }
- }
-+
-+#[allow(dead_code)]
-+/// Returns a properly aligned dangling pointer from the given `layout`.
-+pub(crate) fn dangling_from_layout(layout: Layout) -> NonNull<u8> {
-+    let ptr = layout.align() as *mut u8;
-+
-+    // SAFETY: `layout.align()` (and hence `ptr`) is guaranteed to be non-zero.
-+    unsafe { NonNull::new_unchecked(ptr) }
-+}
---- a/rust/kernel/alloc/allocator.rs
-+++ b/rust/kernel/alloc/allocator.rs
-@@ -1,10 +1,20 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- //! Allocator support.
-+//!
-+//! Documentation for the kernel's memory allocators can found in the "Memory Allocation Guide"
-+//! linked below. For instance, this includes the concept of "get free page" (GFP) flags and the
-+//! typical application of the different kernel allocators.
-+//!
-+//! Reference: <https://docs.kernel.org/core-api/memory-allocation.html>
- 
- use super::{flags::*, Flags};
- use core::alloc::{GlobalAlloc, Layout};
- use core::ptr;
-+use core::ptr::NonNull;
-+
-+use crate::alloc::AllocError;
-+use crate::bindings;
- 
- struct Kmalloc;
- 
-@@ -36,6 +46,66 @@ pub(crate) unsafe fn krealloc_aligned(pt
-     unsafe { bindings::krealloc(ptr as *const core::ffi::c_void, size, flags.0) as *mut u8 }
- }
- 
-+/// # Invariants
-+///
-+/// One of the following: `krealloc`, `vrealloc`, `kvrealloc`.
-+struct ReallocFunc(
-+    unsafe extern "C" fn(*const core::ffi::c_void, usize, u32) -> *mut core::ffi::c_void,
-+);
-+
-+#[expect(dead_code)]
-+impl ReallocFunc {
-+    /// # Safety
-+    ///
-+    /// This method has the same safety requirements as [`Allocator::realloc`].
-+    ///
-+    /// # Guarantees
-+    ///
-+    /// This method has the same guarantees as `Allocator::realloc`. Additionally
-+    /// - it accepts any pointer to a valid memory allocation allocated by this function.
-+    /// - memory allocated by this function remains valid until it is passed to this function.
-+    unsafe fn call(
-+        &self,
-+        ptr: Option<NonNull<u8>>,
-+        layout: Layout,
-+        old_layout: Layout,
-+        flags: Flags,
-+    ) -> Result<NonNull<[u8]>, AllocError> {
-+        let size = aligned_size(layout);
-+        let ptr = match ptr {
-+            Some(ptr) => {
-+                if old_layout.size() == 0 {
-+                    ptr::null()
-+                } else {
-+                    ptr.as_ptr()
-+                }
-+            }
-+            None => ptr::null(),
-+        };
-+
-+        // SAFETY:
-+        // - `self.0` is one of `krealloc`, `vrealloc`, `kvrealloc` and thus only requires that
-+        //   `ptr` is NULL or valid.
-+        // - `ptr` is either NULL or valid by the safety requirements of this function.
-+        //
-+        // GUARANTEE:
-+        // - `self.0` is one of `krealloc`, `vrealloc`, `kvrealloc`.
-+        // - Those functions provide the guarantees of this function.
-+        let raw_ptr = unsafe {
-+            // If `size == 0` and `ptr != NULL` the memory behind the pointer is freed.
-+            self.0(ptr.cast(), size, flags.0).cast()
-+        };
-+
-+        let ptr = if size == 0 {
-+            crate::alloc::dangling_from_layout(layout)
-+        } else {
-+            NonNull::new(raw_ptr).ok_or(AllocError)?
-+        };
-+
-+        Ok(NonNull::slice_from_raw_parts(ptr, size))
-+    }
-+}
-+
- // SAFETY: TODO.
- unsafe impl GlobalAlloc for Kmalloc {
-     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+--- a/rust/kernel/alloc/layout.rs
++++ b/rust/kernel/alloc/layout.rs
+@@ -45,7 +45,7 @@ impl<T> ArrayLayout<T> {
+     /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
+     pub const fn new(len: usize) -> Result<Self, LayoutError> {
+         match len.checked_mul(core::mem::size_of::<T>()) {
+-            Some(len) if len <= ISIZE_MAX => {
++            Some(size) if size <= ISIZE_MAX => {
+                 // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
+                 Ok(Self {
+                     len,
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
