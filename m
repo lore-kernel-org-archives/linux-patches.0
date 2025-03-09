@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3083A1FB3;
-	Sun,  9 Mar 2025 09:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAC41FB3;
+	Sun,  9 Mar 2025 09:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513705; cv=none; b=aNUejvneeHd4/miAC3XMyCJ/fvH2nbN9/ngRR1ap9K/DeulHB9EXVxZqPPw7PAyvkpWv54UxtjZ8xDmqIOk44cAEJA05vn77XPS3UPhWUs5X50hUzYhk380GxOfVIv5Gurs0YjO7RpouKKbtuB6dJUi7Q/+JLfsayph4HM7s+C8=
+	t=1741513708; cv=none; b=IV558p9ttoZjWGqCImFFzzfFkWamZuVbGxQ8Vff31ClkCI13nhbXfLI6TULWs/cYlwz3HMKx6oPrtf+Q1kHF8S/fUEZNjN8ThULJuOvyuSM1ytoH8KTD3BpmNu2aZQCR49UWOuF56tmKFYPEO+xmrL8TTahQjzqcPuShBngu0d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513705; c=relaxed/simple;
-	bh=Svl37115EonF/pHj1KjSBD5w3F7KONU8Yuzu/qA0QBw=;
+	s=arc-20240116; t=1741513708; c=relaxed/simple;
+	bh=C8rebbeCGzJXgtirfjFQImrwBzu0zZyzYDCIVlW/l1s=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=PNf46l04K7yh0zrXrpF3wppSFqOS00myzTfr27Q+Ijng7E0jz8VeBgOiXegkUxYPl0OF+P93KB99K95cKR+yicH8l7CLNZ10prBe4g9w6mhI9tMRB+tDV8WjswXrU5DoDe+xb+YF6aet5bfcI3z7xmELCut5ZxQ166ThEa/PJEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlZURTCN; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=KziZwkgZGtfoULVibjjs7yEYmKcdj2k1Rql31mSMCYdl0TtdXu1N05MlOUDAv3D7CqMtCtUkVNvC4ClvE44t2RFcqEUyxpNlw/IH0sB5GS8iV6huFw8J3Ww9sQ+LrYQgDqu39FTyCegzNtrsfRTOIEft46lEne1JWf5AuKuF3ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3hTUKy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlZURTCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4AFC4CEE5;
-	Sun,  9 Mar 2025 09:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3hTUKy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BC5C4CEE5;
+	Sun,  9 Mar 2025 09:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513705;
-	bh=Svl37115EonF/pHj1KjSBD5w3F7KONU8Yuzu/qA0QBw=;
+	s=korg; t=1741513708;
+	bh=C8rebbeCGzJXgtirfjFQImrwBzu0zZyzYDCIVlW/l1s=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=RlZURTCNGj3vd/PTqVsveRonX1ahchYPVPJivqQCKSWiA/VEiIZGGasPh9aW/13GX
-	 9/zA5xrWotDDNrgYrrCn0+Q6bOSbAjWX+NbLyInRieDqujI3KnNxDhJWew1sk3/msL
-	 NUIQjvyybIoNRwQlHU6FyqDC4+pl1porROuwwho8=
-Subject: Patch "drm/panic: remove redundant field when assigning value" has been added to the 6.12-stable tree
+	b=D3hTUKy3rRdauNVPKExtUp041ULVBJThwYONnu6jbPSc+cKXuKybJw5parUztrn3d
+	 HeO/0z3zq0PaaMkp0A82ifj+aHDiflGC94+RCxJtwcY41syPsyh0fzHhsKAR0eDE/R
+	 91/e8nwo1SGpYPt3TPxuiNV8aa7awOoKhuywg7m0=
+Subject: Patch "drm/panic: remove unnecessary borrow in alignment_pattern" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-53-ojeda@kernel.org>
-Message-ID: <2025030948-shining-banker-b792@gregkh>
+In-Reply-To: <20250307225008.779961-51-ojeda@kernel.org>
+Message-ID: <2025030948-rocklike-patronize-d088@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,56 +44,55 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/panic: remove redundant field when assigning value
+    drm/panic: remove unnecessary borrow in alignment_pattern
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-panic-remove-redundant-field-when-assigning-value.patch
+     drm-panic-remove-unnecessary-borrow-in-alignment_pattern.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121507-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:06 2025
+From stable+bounces-121505-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:05 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:59 +0100
-Subject: drm/panic: remove redundant field when assigning value
+Date: Fri,  7 Mar 2025 23:49:57 +0100
+Subject: drm/panic: remove unnecessary borrow in alignment_pattern
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-53-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-51-ojeda@kernel.org>
 
 From: Thomas Böhler <witcher@wiredspace.de>
 
-commit da13129a3f2a75d49469e1d6f7dcefac2d11d205 upstream.
+commit 7b6de57e0b2d1e62becfa3aac063c4c58d2c2c42 upstream.
 
-Rust allows initializing fields of a struct without specifying the
-attribute that is assigned if the variable has the same name. In this
-instance this is done for all other attributes of the struct except for
-`data`. Clippy notes the redundant field name:
+The function `alignment_pattern` returns a static reference to a `u8`
+slice. The borrow of the returned element in `ALIGNMENT_PATTERNS` is
+already a reference as defined in the array definition above so this
+borrow is unnecessary and removed by the compiler. Clippy notes this in
+`needless_borrow`:
 
-    error: redundant field names in struct initialization
-    --> drivers/gpu/drm/drm_panic_qr.rs:495:13
+    error: this expression creates a reference which is immediately dereferenced by the compiler
+       --> drivers/gpu/drm/drm_panic_qr.rs:245:9
         |
-    495 |             data: data,
-        |             ^^^^^^^^^^ help: replace it with: `data`
+    245 |         &ALIGNMENT_PATTERNS[self.0 - 1]
+        |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `ALIGNMENT_PATTERNS[self.0 - 1]`
         |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#redundant_field_names
-        = note: `-D clippy::redundant-field-names` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::redundant_field_names)]`
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrow
+        = note: `-D clippy::needless-borrow` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
 
-Remove the redundant `data` in the assignment to be consistent.
+Remove the unnecessary borrow.
 
 Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
 Reported-by: Miguel Ojeda <ojeda@kernel.org>
 Link: https://github.com/Rust-for-Linux/linux/issues/1123
 Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
 Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-5-witcher@wiredspace.de
-[ Reworded to add Clippy warning like it is done in the rest of the
-  series. - Miguel ]
+Link: https://lore.kernel.org/r/20241019084048.22336-3-witcher@wiredspace.de
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -102,15 +101,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpu/drm/drm_panic_qr.rs
 +++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -489,7 +489,7 @@ impl EncodedMsg<'_> {
-         data.fill(0);
+@@ -239,7 +239,7 @@ impl Version {
+     }
  
-         let mut em = EncodedMsg {
--            data: data,
-+            data,
-             ec_size,
-             g1_blocks,
-             g2_blocks,
+     fn alignment_pattern(&self) -> &'static [u8] {
+-        &ALIGNMENT_PATTERNS[self.0 - 1]
++        ALIGNMENT_PATTERNS[self.0 - 1]
+     }
+ 
+     fn poly(&self) -> &'static [u8] {
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
