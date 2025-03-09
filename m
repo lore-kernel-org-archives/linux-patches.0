@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313BF1AE00E;
-	Sun,  9 Mar 2025 09:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2911AC43A;
+	Sun,  9 Mar 2025 09:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513764; cv=none; b=oOdCozCAc2X2Ug05RfktbAYQ6h9ubMBov4Wxx7oTru9aQwN3XlVcB9IDwiywb8A/RV+KBo/Em/ImV9i1paxjTwYzRI2Ty6VvDzpPbGgmhShWMbqTvYsxLrc3+E2ui6AQx/MEMEvv8mINU/v6BQAIKECryIupke50vF4I00OYDoE=
+	t=1741513766; cv=none; b=sZ/itF0Y35UnNHHGmPNYPa6yBDdvlM4wOOFgRAnZylsJ5VQVm6ofO0Sgrhh0CGX3gOsV1ja8Dyt4kU86rJ77x8q0IY+xQGPDfb9YWM148cXtuVCxsFub4MlRbdCiWCo5iPO1U59C7kRlCwtnqpAFvWxGypqFvKOQSFlYmy1e938=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513764; c=relaxed/simple;
-	bh=67nPWCwLV48Yx6H3WYqUoIQA0TjHAm4NPyadO5/ZuX4=;
+	s=arc-20240116; t=1741513766; c=relaxed/simple;
+	bh=5Vjak9cUJTeIo94+HSVEBTNjc4+S+b5J5WjZCGRmK1k=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=DSMJtnK+rz92LOFGb4+aHh31WzFqRecFUGOp3nXgyVxMJqjnVz6zmsmi3v+KOkf4ioEUAL0RhFRtHh3vIhT/L6cVONJCyPYZ/XnkW+vD9SDy7sf/H9ELWy2nGdyiZXrc0b3J7TKkgq7Ir9QkydHGr98QuBX3O94C6RAH1FoQ2jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/yRFZX2; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=kTSQC67V+via+oTVuP7hg9IPwqRrpTaIDwRcUSm/ueHkaxiBUQ/YsS9+/zpR+hKcuxmbIbmfWaZFtnG6yZ39+/CJvMk9ulEzmnqZO1xGy6s0XG72mxSWCp5nQ1v4V+yCZamGPEP4ds3Ru2zBwnZahmb7HjnMN5T8oYdslEecMrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVLkCHVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/yRFZX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDCAC4CEE5;
-	Sun,  9 Mar 2025 09:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVLkCHVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C9CC4CEE5;
+	Sun,  9 Mar 2025 09:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513763;
-	bh=67nPWCwLV48Yx6H3WYqUoIQA0TjHAm4NPyadO5/ZuX4=;
+	s=korg; t=1741513766;
+	bh=5Vjak9cUJTeIo94+HSVEBTNjc4+S+b5J5WjZCGRmK1k=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=o/yRFZX2ftpXVYqJVWsoMsRHdNGuPY3R+0reZOWGZ2MNoEC9ExS0UDRqyFUAxyVoF
-	 B0hAk9oPQVt8G/ONdyyZThl07pqYsl3FF+IzNHYLdBo43+3oseLr5R6ex04Yfj83f0
-	 hgDZWonzGwyx95hFd/e6EAmpC46A8m5fbED2LBTs=
-Subject: Patch "rust: alloc: Fix `ArrayLayout` allocations" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,j@jannau.net,lina@asahilina.net,neal@gompa.dev,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=NVLkCHVXAHtQ24Mws3EW6urS7QglZyoU80xUJNwWf/BgJKPKf/uv3JhnR1/eWdKyY
+	 n5oXcfhfW39Lx5hjxZSDWYGwMD508AAh4nqDFrs5vtEDHCRVUm5qe0n98mL5pgKYVY
+	 XCMzj7p08Xw1RNg5juA8wgFm5a24TA+UHmpDSV+M=
+Subject: Patch "rust: alloc: make `allocator` module public" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Sun, 09 Mar 2025 10:46:49 +0100
-In-Reply-To: <20250307225008.779961-61-ojeda@kernel.org>
-Message-ID: <2025030949-encrust-litigator-a85c@gregkh>
+Date: Sun, 09 Mar 2025 10:46:50 +0100
+In-Reply-To: <20250307225008.779961-25-ojeda@kernel.org>
+Message-ID: <2025030950-superglue-immunity-7f66@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,59 +44,56 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: Fix `ArrayLayout` allocations
+    rust: alloc: make `allocator` module public
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-fix-arraylayout-allocations.patch
+     rust-alloc-make-allocator-module-public.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121515-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:26 2025
+From stable+bounces-121479-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:46 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:07 +0100
-Subject: rust: alloc: Fix `ArrayLayout` allocations
+Date: Fri,  7 Mar 2025 23:49:31 +0100
+Subject: rust: alloc: make `allocator` module public
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-61-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-25-ojeda@kernel.org>
 
-From: Asahi Lina <lina@asahilina.net>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit b7ed2b6f4e8d7f64649795e76ee9db67300de8eb upstream.
+commit a87a36f0bf517dae22f3e3790b05c979070f776a upstream.
 
-We were accidentally allocating a layout for the *square* of the object
-size due to a variable shadowing mishap.
+Subsequent patches implement allocators such as `Kmalloc`, `Vmalloc`,
+`KVmalloc`; we need them to be available outside of the kernel crate as
+well.
 
-Fixes memory bloat and page allocation failures in drm/asahi.
-
-Reported-by: Janne Grunau <j@jannau.net>
-Fixes: 9e7bbfa18276 ("rust: alloc: introduce `ArrayLayout`")
-Signed-off-by: Asahi Lina <lina@asahilina.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Link: https://lore.kernel.org/r/20241123-rust-fix-arraylayout-v1-1-197e64c95bd4@asahilina.net
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-6-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc/layout.rs |    2 +-
+ rust/kernel/alloc.rs |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc/layout.rs
-+++ b/rust/kernel/alloc/layout.rs
-@@ -45,7 +45,7 @@ impl<T> ArrayLayout<T> {
-     /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
-     pub const fn new(len: usize) -> Result<Self, LayoutError> {
-         match len.checked_mul(core::mem::size_of::<T>()) {
--            Some(len) if len <= ISIZE_MAX => {
-+            Some(size) if size <= ISIZE_MAX => {
-                 // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
-                 Ok(Self {
-                     len,
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -4,7 +4,7 @@
+ 
+ #[cfg(not(test))]
+ #[cfg(not(testlib))]
+-mod allocator;
++pub mod allocator;
+ pub mod box_ext;
+ pub mod vec_ext;
+ 
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
