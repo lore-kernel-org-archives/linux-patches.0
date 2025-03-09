@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD33B1B3920;
-	Sun,  9 Mar 2025 09:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1EF1AC43A;
+	Sun,  9 Mar 2025 09:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513830; cv=none; b=rnyoLotcxu+ySTjXw4Sfc0Vu+DPNWA5keBSW7bQHosliFoF2PZ2jq8g9dSmjpw3cNM8NYS8+yVzJb1400PK6ctgyknSrqivEnX/3TWBKSxwQ+ZfVETRa/yg9/UnvMx1Uk0batdgUc+sQOGAn4Ss/vBzgDK1LjTYJSO4vMPhQvd4=
+	t=1741513834; cv=none; b=Sa9Xh32xMi36U4LVNKmQJf2Syaeo6e5By2XJ1t3uzQ1Kwq3unp57a+WY5AHpAd1bdlfE97wktMvJCDLR4mdDpScckHBwUnne/ZzB2vE8+Vy5WFlNOaiJgGalCAemVrzDcDcy3Dey0CfDO7woNcA9R8pn9qLBdtwptWAPfHO4MBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513830; c=relaxed/simple;
-	bh=+qSsqViJaouve/7qR4gvBaV/DwFoH6YBENKSaV5tGZ8=;
+	s=arc-20240116; t=1741513834; c=relaxed/simple;
+	bh=woRoxPWCUkK4uDBuweL5k01aa6ZVwvsL29siQmzq9vM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=AV8kEtrQU94sA2giMDdKPUVrjGwUbCYwnCXhigNJq1WPelZYD+SGnJtBP8A4j6gX9nVDllN9i0P1BzStnt1il+ZLGuFh/0nQKSuYc/Lxx6F5ZFyVeVyWmx9hUeGTcBhSOS1Hjz6rxzq5A7tTf/WfZpqtCNHmX8bwlnsTJP44KP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1V4oqjt; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=Pj59kyUbO0ztLlf/8aKPu2L8EqT2DkgXq40sPak+9oANrrxQRk3ahagRUwjMMhj3jRzQmpFwORtq3e1iW+faJaCmfmWKwx6GGa/+wAKg0YEKNX4WNBJVHyJC7j7qdMaX+M8Mb7md4odCMjDJ6vK/OtKfL+P0Z9MvyVWp3AfCDhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk6BM3Nb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1V4oqjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E85C4CEEE;
-	Sun,  9 Mar 2025 09:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk6BM3Nb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9FAC4CEE5;
+	Sun,  9 Mar 2025 09:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513830;
-	bh=+qSsqViJaouve/7qR4gvBaV/DwFoH6YBENKSaV5tGZ8=;
+	s=korg; t=1741513834;
+	bh=woRoxPWCUkK4uDBuweL5k01aa6ZVwvsL29siQmzq9vM=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=l1V4oqjtPXTne/rgGlxvxknvcSsRlus1J/PrNucmPGrO6C4NQuuDeMEsH9Ruaozi9
-	 20+jWjUd00zLqgmHYhAMUI0PTFi5l3Ty2cYt++Eeeb5Cy2824wnjvVy66mM1DmIZbQ
-	 JFqvfHL46zmmm7XXvGAebyqfI3hKJyC6VCNQKhAc=
-Subject: Patch "rust: introduce `.clippy.toml`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
+	b=Pk6BM3Nb7rx4Avss5As8woRfIDqh1/iD3gpbSvqOZI3yoBF/90GayAK3f67g9KA/y
+	 vQWoYtpR1kpEAUUpmk6aV9yochDYlzML0df78UIkSXTQ/B8x5LphP73z3MKxhwjxDU
+	 iEGSJoI7PBs250th5JjL+vRv/a6AGmOkk3ABOgd0=
+Subject: Patch "rust: kbuild: expand rusttest target for macros" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,ethan.twardy@gmail.com,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-12-ojeda@kernel.org>
-Message-ID: <2025030951-paralyses-scallop-3bce@gregkh>
+In-Reply-To: <20250307225008.779961-57-ojeda@kernel.org>
+Message-ID: <2025030951-bright-playlist-7860@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,94 +44,104 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: introduce `.clippy.toml`
+    rust: kbuild: expand rusttest target for macros
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-introduce-.clippy.toml.patch
+     rust-kbuild-expand-rusttest-target-for-macros.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121466-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:09 2025
+From stable+bounces-121511-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:11 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:18 +0100
-Subject: rust: introduce `.clippy.toml`
+Date: Fri,  7 Mar 2025 23:50:03 +0100
+Subject: rust: kbuild: expand rusttest target for macros
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-12-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-57-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 
-commit 7d56786edcbdf58b6367fd7f01d5861214ad1c95 upstream.
+commit b2c261fa8629dff2bd1143fa790797a773ace102 upstream.
 
-Some Clippy lints can be configured/tweaked. We will use these knobs to
-our advantage in later commits.
+Previously, the rusttest target for the macros crate did not specify
+the dependencies necessary to run the rustdoc tests. These tests rely on
+the kernel crate, so add the dependencies.
 
-This is done via a configuration file, `.clippy.toml` [1]. The file is
-currently unstable. This may be a problem in the future, but we can adapt
-as needed. In addition, we proposed adding Clippy to the Rust CI's RFL
-job [2], so we should be able to catch issues pre-merge.
-
-Thus introduce the file.
-
-Link: https://doc.rust-lang.org/clippy/configuration.html [1]
-Link: https://github.com/rust-lang/rust/pull/128928 [2]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Tested-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-12-ojeda@kernel.org
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+Link: https://github.com/Rust-for-Linux/linux/issues/1076
+Link: https://lore.kernel.org/r/20240704145607.17732-2-ethan.twardy@gmail.com
+[ Rebased (`alloc` is gone nowadays, sysroot handling is simpler) and
+  simplified (reused `rustdoc_test` rule instead of adding a new one,
+  no need for `rustdoc-compiler_builtins`, removed unneeded `macros`
+  explicit path). Made `vtable` example fail (avoiding to increase
+  the complexity in the `rusttest` target). Removed unstable
+  `-Zproc-macro-backtrace` option. Reworded accordingly. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .clippy.toml |    1 +
- .gitignore   |    1 +
- MAINTAINERS  |    1 +
- Makefile     |    3 +++
- 4 files changed, 6 insertions(+)
- create mode 100644 .clippy.toml
+ rust/Makefile      |   17 +++++++++++++----
+ rust/macros/lib.rs |    2 +-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- /dev/null
-+++ b/.clippy.toml
-@@ -0,0 +1 @@
-+# SPDX-License-Identifier: GPL-2.0
---- a/.gitignore
-+++ b/.gitignore
-@@ -103,6 +103,7 @@ modules.order
- # We don't want to ignore the following even if they are dot-files
- #
- !.clang-format
-+!.clippy.toml
- !.cocciconfig
- !.editorconfig
- !.get_maintainer.ignore
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20175,6 +20175,7 @@ B:	https://github.com/Rust-for-Linux/lin
- C:	zulip://rust-for-linux.zulipchat.com
- P:	https://rust-for-linux.com/contributing
- T:	git https://github.com/Rust-for-Linux/linux.git rust-next
-+F:	.clippy.toml
- F:	Documentation/rust/
- F:	rust/
- F:	samples/rust/
---- a/Makefile
-+++ b/Makefile
-@@ -588,6 +588,9 @@ endif
- # Allows the usage of unstable features in stable compilers.
- export RUSTC_BOOTSTRAP := 1
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -129,6 +129,14 @@ rusttestlib-macros: private rustc_test_l
+ rusttestlib-macros: $(src)/macros/lib.rs FORCE
+ 	+$(call if_changed,rustc_test_library)
  
-+# Allows finding `.clippy.toml` in out-of-srctree builds.
-+export CLIPPY_CONF_DIR := $(srctree)
++rusttestlib-kernel: private rustc_target_flags = \
++    --extern build_error --extern macros \
++    --extern bindings --extern uapi
++rusttestlib-kernel: $(src)/kernel/lib.rs \
++    rusttestlib-bindings rusttestlib-uapi rusttestlib-build_error \
++    $(obj)/libmacros.so $(obj)/bindings.o FORCE
++	+$(call if_changed,rustc_test_library)
 +
- export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC HOSTPKG_CONFIG
- export RUSTC RUSTDOC RUSTFMT RUSTC_OR_CLIPPY_QUIET RUSTC_OR_CLIPPY BINDGEN
- export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
+ rusttestlib-bindings: $(src)/bindings/lib.rs FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
+@@ -181,19 +189,20 @@ quiet_cmd_rustc_test = RUSTC T  $<
+ 
+ rusttest: rusttest-macros rusttest-kernel
+ 
+-rusttest-macros: private rustc_target_flags = --extern proc_macro
++rusttest-macros: private rustc_target_flags = --extern proc_macro \
++	--extern macros --extern kernel
+ rusttest-macros: private rustdoc_test_target_flags = --crate-type proc-macro
+-rusttest-macros: $(src)/macros/lib.rs FORCE
++rusttest-macros: $(src)/macros/lib.rs \
++    rusttestlib-macros rusttestlib-kernel FORCE
+ 	+$(call if_changed,rustc_test)
+ 	+$(call if_changed,rustdoc_test)
+ 
+ rusttest-kernel: private rustc_target_flags = \
+     --extern build_error --extern macros --extern bindings --extern uapi
+-rusttest-kernel: $(src)/kernel/lib.rs \
++rusttest-kernel: $(src)/kernel/lib.rs rusttestlib-kernel \
+     rusttestlib-build_error rusttestlib-macros rusttestlib-bindings \
+     rusttestlib-uapi FORCE
+ 	+$(call if_changed,rustc_test)
+-	+$(call if_changed,rustc_test_library)
+ 
+ ifdef CONFIG_CC_IS_CLANG
+ bindgen_c_flags = $(c_flags)
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -132,7 +132,7 @@ pub fn module(ts: TokenStream) -> TokenS
+ /// calls to this function at compile time:
+ ///
+ /// ```compile_fail
+-/// # use kernel::error::VTABLE_DEFAULT_ERROR;
++/// # // Intentionally missing `use`s to simplify `rusttest`.
+ /// kernel::build_error(VTABLE_DEFAULT_ERROR)
+ /// ```
+ ///
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
