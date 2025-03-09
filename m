@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C52D1B393D;
-	Sun,  9 Mar 2025 09:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6E81B0F18;
+	Sun,  9 Mar 2025 09:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513856; cv=none; b=Y7222DmHANTbZPUvx4DhyhagC27apf9BZOawg9vAI5qEvddEwDPFCVSVPRlVJwlUegJnM85LfZILpDEP8kVsDFpfhwE9H4QimIV59vUma9j1iXPnGJxsuRp+CFFQEhe0G0sxzVHPUqNIQdctaRwteejJK6C7diTc5prNheKCVTA=
+	t=1741513859; cv=none; b=m4L755HcF2dxq3zd4Etko2o9MkAUFo44zJHQLNwDRAD2b125yt/a9muFb4eFlUGJ3UHhfQsH2FQN9i13MXOFj/7Hph0kGu7d23vpKw1nQ1h5wQ00S4dguCzP6xt2pur0avmolAZrWgEtpBL8JfAvAC1ZpTW3YSEUsdUul2dOioY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513856; c=relaxed/simple;
-	bh=QTnS0JVouNfv92gsV1GhBHMAMDQd8Ad/4J6wC+dZMKs=;
+	s=arc-20240116; t=1741513859; c=relaxed/simple;
+	bh=uqE1xHU9h0CqV4vpC/tmm9lTunFMlW5A7S3L1iCHgvg=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=fBk7dQwqs6HrkhIzRdHtVmpO0rCZHeIEal/SAQV5o7yZUB072BnbQAsAnL7Ft6bVfnALucC6f3hrzExcPxkpx1MldB00pcB1GXJ70auA6f8Sfa3D09fyUEeZp9TI/UZVNR6HGUdKPClViBv1e/mHlQrd+sdWOf6KymWfaiGtWFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxNwUffv; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=TPfwnrds366k6/n8BFMR3XNFayL/WQ19s2hTTnepwWNspu3Kid1fsLGuK0Q4wX2USTL6uhnWzoWy3rZufw4atueEuCoaqE2ghiNU8cRlKJo9uGKvuXWZtRk0LlYuEYO/I6+lDkgCr33xW5MxaRNs+jB/DISWRgWYpXAQ4nPV2F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbfZU6Dr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxNwUffv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D02C4CEE5;
-	Sun,  9 Mar 2025 09:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbfZU6Dr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95985C4CEE5;
+	Sun,  9 Mar 2025 09:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513856;
-	bh=QTnS0JVouNfv92gsV1GhBHMAMDQd8Ad/4J6wC+dZMKs=;
+	s=korg; t=1741513859;
+	bh=uqE1xHU9h0CqV4vpC/tmm9lTunFMlW5A7S3L1iCHgvg=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=BxNwUffvf4lzaVJsCpFH3V3f296iCEFzzLGs/XguTogUL/fpPc220hPtpfelO1c6+
-	 JvFRAuEKAqFDyicnor0D3bh3BNDFBO5K/1woiC1RH807hnOM5Mvew+13FoO9H6XZBl
-	 czUDlWO/VnBnJ5vpvOB/H+ES/d/7NrvRrMIfWlOI=
-Subject: Patch "rust: types: avoid repetition in `{As,From}Bytes` impls" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
+	b=QbfZU6DratKTKmFOj55rEMfQt8bpaoB9oTB31NZxXxZdkXKwgvydVAt9IMfDC8osq
+	 4IICCgARxmUN70Bac/2mlIKlNtKUzu6tHMXmnOI0frpLEMhRMMt2l4vSVqPHNZOD4V
+	 l+tQ3a1RSGSFC6afql53NBDwAxSu17uUB6LKNVJY=
+Subject: Patch "rust: use custom FFI integer types" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:52 +0100
-In-Reply-To: <20250307225008.779961-4-ojeda@kernel.org>
-Message-ID: <2025030952-plod-estrogen-06b2@gregkh>
+In-Reply-To: <20250307225008.779961-60-ojeda@kernel.org>
+Message-ID: <2025030952-unwatched-frostlike-c608@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,137 +44,786 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: types: avoid repetition in `{As,From}Bytes` impls
+    rust: use custom FFI integer types
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-types-avoid-repetition-in-as-from-bytes-impls.patch
+     rust-use-custom-ffi-integer-types.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121458-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:48 2025
+From stable+bounces-121514-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:20 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:10 +0100
-Subject: rust: types: avoid repetition in `{As,From}Bytes` impls
+Date: Fri,  7 Mar 2025 23:50:06 +0100
+Subject: rust: use custom FFI integer types
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-4-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-60-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit 567cdff53e71de56ae67eaf4309db38778b7bcd3 upstream.
+commit d072acda4862f095ec9056979b654cc06a22cc68 upstream.
 
-In order to provide `// SAFETY` comments for every `unsafe impl`, we would
-need to repeat them, which is not very useful and would be harder to read.
+Currently FFI integer types are defined in libcore. This commit creates
+the `ffi` crate and asks bindgen to use that crate for FFI integer types
+instead of `core::ffi`.
 
-We could perhaps allow the lint (ideally within a small module), but we
-can take the chance to avoid the repetition of the `impl`s themselves
-too by using a small local macro, like in other places where we have
-had to do this sort of thing.
+This commit is preparatory and no type changes are made in this commit
+yet.
 
-Thus add the straightforward `impl_{from,as}bytes!` macros and use them
-to implement `FromBytes`.
-
-This, in turn, will allow us in the next patch to place a `// SAFETY`
-comment that defers to the actual invocation of the macro.
-
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Tested-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-4-ojeda@kernel.org
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240913213041.395655-4-gary@garyguo.net
+[ Added `rustdoc`, `rusttest` and KUnit tests support. Rebased on top of
+  `rust-next` (e.g. migrated more `core::ffi` cases). Reworded crate
+  docs slightly and formatted. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/types.rs |   68 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+ rust/Makefile                       |   39 ++++++++++++++++++++++++------------
+ rust/ffi.rs                         |   13 ++++++++++++
+ rust/kernel/alloc/allocator.rs      |    2 -
+ rust/kernel/alloc/allocator_test.rs |    4 +--
+ rust/kernel/alloc/kbox.rs           |   12 +++++------
+ rust/kernel/block/mq/operations.rs  |   18 ++++++++--------
+ rust/kernel/block/mq/raw_writer.rs  |    2 -
+ rust/kernel/block/mq/tag_set.rs     |    2 -
+ rust/kernel/error.rs                |   20 +++++++++---------
+ rust/kernel/init.rs                 |    2 -
+ rust/kernel/lib.rs                  |    2 +
+ rust/kernel/net/phy.rs              |   16 +++++++-------
+ rust/kernel/str.rs                  |    4 +--
+ rust/kernel/sync/arc.rs             |    6 ++---
+ rust/kernel/sync/condvar.rs         |    2 -
+ rust/kernel/sync/lock.rs            |    2 -
+ rust/kernel/sync/lock/mutex.rs      |    2 -
+ rust/kernel/sync/lock/spinlock.rs   |    2 -
+ rust/kernel/task.rs                 |    8 +------
+ rust/kernel/time.rs                 |    4 +--
+ rust/kernel/types.rs                |   14 ++++++------
+ rust/kernel/uaccess.rs              |    6 ++---
+ rust/macros/module.rs               |    8 +++----
+ 23 files changed, 107 insertions(+), 83 deletions(-)
+ create mode 100644 rust/ffi.rs
 
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -3,7 +3,7 @@
+ # Where to place rustdoc generated documentation
+ rustdoc_output := $(objtree)/Documentation/output/rust/rustdoc
+ 
+-obj-$(CONFIG_RUST) += core.o compiler_builtins.o
++obj-$(CONFIG_RUST) += core.o compiler_builtins.o ffi.o
+ always-$(CONFIG_RUST) += exports_core_generated.h
+ 
+ # Missing prototypes are expected in the helpers since these are exported
+@@ -103,10 +103,13 @@ rustdoc-core: $(RUST_LIB_SRC)/core/src/l
+ rustdoc-compiler_builtins: $(src)/compiler_builtins.rs rustdoc-core FORCE
+ 	+$(call if_changed,rustdoc)
+ 
+-rustdoc-kernel: private rustc_target_flags = \
++rustdoc-ffi: $(src)/ffi.rs rustdoc-core FORCE
++	+$(call if_changed,rustdoc)
++
++rustdoc-kernel: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros=$(objtree)/$(obj)/libmacros.so \
+     --extern bindings --extern uapi
+-rustdoc-kernel: $(src)/kernel/lib.rs rustdoc-core rustdoc-macros \
++rustdoc-kernel: $(src)/kernel/lib.rs rustdoc-core rustdoc-ffi rustdoc-macros \
+     rustdoc-compiler_builtins $(obj)/libmacros.so \
+     $(obj)/bindings.o FORCE
+ 	+$(call if_changed,rustdoc)
+@@ -124,12 +127,15 @@ quiet_cmd_rustc_test_library = RUSTC TL
+ rusttestlib-build_error: $(src)/build_error.rs FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
++rusttestlib-ffi: $(src)/ffi.rs FORCE
++	+$(call if_changed,rustc_test_library)
++
+ rusttestlib-macros: private rustc_target_flags = --extern proc_macro
+ rusttestlib-macros: private rustc_test_library_proc = yes
+ rusttestlib-macros: $(src)/macros/lib.rs FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
+-rusttestlib-kernel: private rustc_target_flags = \
++rusttestlib-kernel: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros \
+     --extern bindings --extern uapi
+ rusttestlib-kernel: $(src)/kernel/lib.rs \
+@@ -137,10 +143,12 @@ rusttestlib-kernel: $(src)/kernel/lib.rs
+     $(obj)/libmacros.so $(obj)/bindings.o FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
+-rusttestlib-bindings: $(src)/bindings/lib.rs FORCE
++rusttestlib-bindings: private rustc_target_flags = --extern ffi
++rusttestlib-bindings: $(src)/bindings/lib.rs rusttestlib-ffi FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
+-rusttestlib-uapi: $(src)/uapi/lib.rs FORCE
++rusttestlib-uapi: private rustc_target_flags = --extern ffi
++rusttestlib-uapi: $(src)/uapi/lib.rs rusttestlib-ffi FORCE
+ 	+$(call if_changed,rustc_test_library)
+ 
+ quiet_cmd_rustdoc_test = RUSTDOC T $<
+@@ -159,7 +167,7 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC
+ 	mkdir -p $(objtree)/$(obj)/test/doctests/kernel; \
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) --test $(rust_flags) \
+-		-L$(objtree)/$(obj) --extern kernel \
++		-L$(objtree)/$(obj) --extern ffi --extern kernel \
+ 		--extern build_error --extern macros \
+ 		--extern bindings --extern uapi \
+ 		--no-run --crate-name kernel -Zunstable-options \
+@@ -197,9 +205,9 @@ rusttest-macros: $(src)/macros/lib.rs \
+ 	+$(call if_changed,rustc_test)
+ 	+$(call if_changed,rustdoc_test)
+ 
+-rusttest-kernel: private rustc_target_flags = \
++rusttest-kernel: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros --extern bindings --extern uapi
+-rusttest-kernel: $(src)/kernel/lib.rs rusttestlib-kernel \
++rusttest-kernel: $(src)/kernel/lib.rs rusttestlib-ffi rusttestlib-kernel \
+     rusttestlib-build_error rusttestlib-macros rusttestlib-bindings \
+     rusttestlib-uapi FORCE
+ 	+$(call if_changed,rustc_test)
+@@ -286,7 +294,7 @@ bindgen_c_flags_final = $(bindgen_c_flag
+ quiet_cmd_bindgen = BINDGEN $@
+       cmd_bindgen = \
+ 	$(BINDGEN) $< $(bindgen_target_flags) --rust-target 1.68 \
+-		--use-core --with-derive-default --ctypes-prefix core::ffi --no-layout-tests \
++		--use-core --with-derive-default --ctypes-prefix ffi --no-layout-tests \
+ 		--no-debug '.*' --enable-function-attribute-detection \
+ 		-o $@ -- $(bindgen_c_flags_final) -DMODULE \
+ 		$(bindgen_target_cflags) $(bindgen_target_extra)
+@@ -414,18 +422,23 @@ $(obj)/compiler_builtins.o: $(src)/compi
+ $(obj)/build_error.o: $(src)/build_error.rs $(obj)/compiler_builtins.o FORCE
+ 	+$(call if_changed_rule,rustc_library)
+ 
++$(obj)/ffi.o: $(src)/ffi.rs $(obj)/compiler_builtins.o FORCE
++	+$(call if_changed_rule,rustc_library)
++
++$(obj)/bindings.o: private rustc_target_flags = --extern ffi
+ $(obj)/bindings.o: $(src)/bindings/lib.rs \
+-    $(obj)/compiler_builtins.o \
++    $(obj)/ffi.o \
+     $(obj)/bindings/bindings_generated.rs \
+     $(obj)/bindings/bindings_helpers_generated.rs FORCE
+ 	+$(call if_changed_rule,rustc_library)
+ 
++$(obj)/uapi.o: private rustc_target_flags = --extern ffi
+ $(obj)/uapi.o: $(src)/uapi/lib.rs \
+-    $(obj)/compiler_builtins.o \
++    $(obj)/ffi.o \
+     $(obj)/uapi/uapi_generated.rs FORCE
+ 	+$(call if_changed_rule,rustc_library)
+ 
+-$(obj)/kernel.o: private rustc_target_flags = \
++$(obj)/kernel.o: private rustc_target_flags = --extern ffi \
+     --extern build_error --extern macros --extern bindings --extern uapi
+ $(obj)/kernel.o: $(src)/kernel/lib.rs $(obj)/build_error.o \
+     $(obj)/libmacros.so $(obj)/bindings.o $(obj)/uapi.o FORCE
+--- /dev/null
++++ b/rust/ffi.rs
+@@ -0,0 +1,13 @@
++// SPDX-License-Identifier: GPL-2.0
++
++//! Foreign function interface (FFI) types.
++//!
++//! This crate provides mapping from C primitive types to Rust ones.
++//!
++//! The Rust [`core`] crate provides [`core::ffi`], which maps integer types to the platform default
++//! C ABI. The kernel does not use [`core::ffi`], so it can customise the mapping that deviates from
++//! the platform default.
++
++#![no_std]
++
++pub use core::ffi::*;
+--- a/rust/kernel/alloc/allocator.rs
++++ b/rust/kernel/alloc/allocator.rs
+@@ -58,7 +58,7 @@ fn aligned_size(new_layout: Layout) -> u
+ ///
+ /// One of the following: `krealloc`, `vrealloc`, `kvrealloc`.
+ struct ReallocFunc(
+-    unsafe extern "C" fn(*const core::ffi::c_void, usize, u32) -> *mut core::ffi::c_void,
++    unsafe extern "C" fn(*const crate::ffi::c_void, usize, u32) -> *mut crate::ffi::c_void,
+ );
+ 
+ impl ReallocFunc {
+--- a/rust/kernel/alloc/allocator_test.rs
++++ b/rust/kernel/alloc/allocator_test.rs
+@@ -24,10 +24,10 @@ pub type KVmalloc = Kmalloc;
+ 
+ extern "C" {
+     #[link_name = "aligned_alloc"]
+-    fn libc_aligned_alloc(align: usize, size: usize) -> *mut core::ffi::c_void;
++    fn libc_aligned_alloc(align: usize, size: usize) -> *mut crate::ffi::c_void;
+ 
+     #[link_name = "free"]
+-    fn libc_free(ptr: *mut core::ffi::c_void);
++    fn libc_free(ptr: *mut crate::ffi::c_void);
+ }
+ 
+ // SAFETY:
+--- a/rust/kernel/alloc/kbox.rs
++++ b/rust/kernel/alloc/kbox.rs
+@@ -355,17 +355,17 @@ where
+ {
+     type Borrowed<'a> = &'a T;
+ 
+-    fn into_foreign(self) -> *const core::ffi::c_void {
++    fn into_foreign(self) -> *const crate::ffi::c_void {
+         Box::into_raw(self) as _
+     }
+ 
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
++    unsafe fn from_foreign(ptr: *const crate::ffi::c_void) -> Self {
+         // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
+         // call to `Self::into_foreign`.
+         unsafe { Box::from_raw(ptr as _) }
+     }
+ 
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
++    unsafe fn borrow<'a>(ptr: *const crate::ffi::c_void) -> &'a T {
+         // SAFETY: The safety requirements of this method ensure that the object remains alive and
+         // immutable for the duration of 'a.
+         unsafe { &*ptr.cast() }
+@@ -378,18 +378,18 @@ where
+ {
+     type Borrowed<'a> = Pin<&'a T>;
+ 
+-    fn into_foreign(self) -> *const core::ffi::c_void {
++    fn into_foreign(self) -> *const crate::ffi::c_void {
+         // SAFETY: We are still treating the box as pinned.
+         Box::into_raw(unsafe { Pin::into_inner_unchecked(self) }) as _
+     }
+ 
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
++    unsafe fn from_foreign(ptr: *const crate::ffi::c_void) -> Self {
+         // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
+         // call to `Self::into_foreign`.
+         unsafe { Pin::new_unchecked(Box::from_raw(ptr as _)) }
+     }
+ 
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Pin<&'a T> {
++    unsafe fn borrow<'a>(ptr: *const crate::ffi::c_void) -> Pin<&'a T> {
+         // SAFETY: The safety requirements for this function ensure that the object is still alive,
+         // so it is safe to dereference the raw pointer.
+         // The safety requirements of `from_foreign` also ensure that the object remains alive for
+--- a/rust/kernel/block/mq/operations.rs
++++ b/rust/kernel/block/mq/operations.rs
+@@ -131,7 +131,7 @@ impl<T: Operations> OperationsVTable<T>
+     unsafe extern "C" fn poll_callback(
+         _hctx: *mut bindings::blk_mq_hw_ctx,
+         _iob: *mut bindings::io_comp_batch,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         T::poll().into()
+     }
+ 
+@@ -145,9 +145,9 @@ impl<T: Operations> OperationsVTable<T>
+     /// for the same context.
+     unsafe extern "C" fn init_hctx_callback(
+         _hctx: *mut bindings::blk_mq_hw_ctx,
+-        _tagset_data: *mut core::ffi::c_void,
+-        _hctx_idx: core::ffi::c_uint,
+-    ) -> core::ffi::c_int {
++        _tagset_data: *mut crate::ffi::c_void,
++        _hctx_idx: crate::ffi::c_uint,
++    ) -> crate::ffi::c_int {
+         from_result(|| Ok(0))
+     }
+ 
+@@ -159,7 +159,7 @@ impl<T: Operations> OperationsVTable<T>
+     /// This function may only be called by blk-mq C infrastructure.
+     unsafe extern "C" fn exit_hctx_callback(
+         _hctx: *mut bindings::blk_mq_hw_ctx,
+-        _hctx_idx: core::ffi::c_uint,
++        _hctx_idx: crate::ffi::c_uint,
+     ) {
+     }
+ 
+@@ -176,9 +176,9 @@ impl<T: Operations> OperationsVTable<T>
+     unsafe extern "C" fn init_request_callback(
+         _set: *mut bindings::blk_mq_tag_set,
+         rq: *mut bindings::request,
+-        _hctx_idx: core::ffi::c_uint,
+-        _numa_node: core::ffi::c_uint,
+-    ) -> core::ffi::c_int {
++        _hctx_idx: crate::ffi::c_uint,
++        _numa_node: crate::ffi::c_uint,
++    ) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: By the safety requirements of this function, `rq` points
+             // to a valid allocation.
+@@ -203,7 +203,7 @@ impl<T: Operations> OperationsVTable<T>
+     unsafe extern "C" fn exit_request_callback(
+         _set: *mut bindings::blk_mq_tag_set,
+         rq: *mut bindings::request,
+-        _hctx_idx: core::ffi::c_uint,
++        _hctx_idx: crate::ffi::c_uint,
+     ) {
+         // SAFETY: The tagset invariants guarantee that all requests are allocated with extra memory
+         // for the request data.
+--- a/rust/kernel/block/mq/raw_writer.rs
++++ b/rust/kernel/block/mq/raw_writer.rs
+@@ -25,7 +25,7 @@ impl<'a> RawWriter<'a> {
+     }
+ 
+     pub(crate) fn from_array<const N: usize>(
+-        a: &'a mut [core::ffi::c_char; N],
++        a: &'a mut [crate::ffi::c_char; N],
+     ) -> Result<RawWriter<'a>> {
+         Self::new(
+             // SAFETY: the buffer of `a` is valid for read and write as `u8` for
+--- a/rust/kernel/block/mq/tag_set.rs
++++ b/rust/kernel/block/mq/tag_set.rs
+@@ -53,7 +53,7 @@ impl<T: Operations> TagSet<T> {
+                     queue_depth: num_tags,
+                     cmd_size,
+                     flags: bindings::BLK_MQ_F_SHOULD_MERGE,
+-                    driver_data: core::ptr::null_mut::<core::ffi::c_void>(),
++                    driver_data: core::ptr::null_mut::<crate::ffi::c_void>(),
+                     nr_maps: num_maps,
+                     ..tag_set
+                 }
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -100,7 +100,7 @@ impl Error {
+     ///
+     /// It is a bug to pass an out-of-range `errno`. `EINVAL` would
+     /// be returned in such a case.
+-    pub fn from_errno(errno: core::ffi::c_int) -> Error {
++    pub fn from_errno(errno: crate::ffi::c_int) -> Error {
+         if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
+             // TODO: Make it a `WARN_ONCE` once available.
+             crate::pr_warn!(
+@@ -119,7 +119,7 @@ impl Error {
+     /// Creates an [`Error`] from a kernel error code.
+     ///
+     /// Returns [`None`] if `errno` is out-of-range.
+-    const fn try_from_errno(errno: core::ffi::c_int) -> Option<Error> {
++    const fn try_from_errno(errno: crate::ffi::c_int) -> Option<Error> {
+         if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
+             return None;
+         }
+@@ -133,7 +133,7 @@ impl Error {
+     /// # Safety
+     ///
+     /// `errno` must be within error code range (i.e. `>= -MAX_ERRNO && < 0`).
+-    const unsafe fn from_errno_unchecked(errno: core::ffi::c_int) -> Error {
++    const unsafe fn from_errno_unchecked(errno: crate::ffi::c_int) -> Error {
+         // INVARIANT: The contract ensures the type invariant
+         // will hold.
+         // SAFETY: The caller guarantees `errno` is non-zero.
+@@ -141,7 +141,7 @@ impl Error {
+     }
+ 
+     /// Returns the kernel error code.
+-    pub fn to_errno(self) -> core::ffi::c_int {
++    pub fn to_errno(self) -> crate::ffi::c_int {
+         self.0.get()
+     }
+ 
+@@ -259,7 +259,7 @@ pub type Result<T = (), E = Error> = cor
+ 
+ /// Converts an integer as returned by a C kernel function to an error if it's negative, and
+ /// `Ok(())` otherwise.
+-pub fn to_result(err: core::ffi::c_int) -> Result {
++pub fn to_result(err: crate::ffi::c_int) -> Result {
+     if err < 0 {
+         Err(Error::from_errno(err))
+     } else {
+@@ -282,15 +282,15 @@ pub fn to_result(err: core::ffi::c_int)
+ /// fn devm_platform_ioremap_resource(
+ ///     pdev: &mut PlatformDevice,
+ ///     index: u32,
+-/// ) -> Result<*mut core::ffi::c_void> {
++/// ) -> Result<*mut kernel::ffi::c_void> {
+ ///     // SAFETY: `pdev` points to a valid platform device. There are no safety requirements
+ ///     // on `index`.
+ ///     from_err_ptr(unsafe { bindings::devm_platform_ioremap_resource(pdev.to_ptr(), index) })
+ /// }
+ /// ```
+ pub fn from_err_ptr<T>(ptr: *mut T) -> Result<*mut T> {
+-    // CAST: Casting a pointer to `*const core::ffi::c_void` is always valid.
+-    let const_ptr: *const core::ffi::c_void = ptr.cast();
++    // CAST: Casting a pointer to `*const crate::ffi::c_void` is always valid.
++    let const_ptr: *const crate::ffi::c_void = ptr.cast();
+     // SAFETY: The FFI function does not deref the pointer.
+     if unsafe { bindings::IS_ERR(const_ptr) } {
+         // SAFETY: The FFI function does not deref the pointer.
+@@ -306,7 +306,7 @@ pub fn from_err_ptr<T>(ptr: *mut T) -> R
+         //
+         // SAFETY: `IS_ERR()` ensures `err` is a
+         // negative value greater-or-equal to `-bindings::MAX_ERRNO`.
+-        return Err(unsafe { Error::from_errno_unchecked(err as core::ffi::c_int) });
++        return Err(unsafe { Error::from_errno_unchecked(err as crate::ffi::c_int) });
+     }
+     Ok(ptr)
+ }
+@@ -326,7 +326,7 @@ pub fn from_err_ptr<T>(ptr: *mut T) -> R
+ /// # use kernel::bindings;
+ /// unsafe extern "C" fn probe_callback(
+ ///     pdev: *mut bindings::platform_device,
+-/// ) -> core::ffi::c_int {
++/// ) -> kernel::ffi::c_int {
+ ///     from_result(|| {
+ ///         let ptr = devm_alloc(pdev)?;
+ ///         bindings::platform_set_drvdata(pdev, ptr);
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -133,7 +133,7 @@
+ //! # }
+ //! # // `Error::from_errno` is `pub(crate)` in the `kernel` crate, thus provide a workaround.
+ //! # trait FromErrno {
+-//! #     fn from_errno(errno: core::ffi::c_int) -> Error {
++//! #     fn from_errno(errno: kernel::ffi::c_int) -> Error {
+ //! #         // Dummy error that can be constructed outside the `kernel` crate.
+ //! #         Error::from(core::fmt::Error)
+ //! #     }
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -27,6 +27,8 @@ compile_error!("Missing kernel configura
+ // Allow proc-macros to refer to `::kernel` inside the `kernel` crate (this crate).
+ extern crate self as kernel;
+ 
++pub use ffi;
++
+ pub mod alloc;
+ #[cfg(CONFIG_BLOCK)]
+ pub mod block;
+--- a/rust/kernel/net/phy.rs
++++ b/rust/kernel/net/phy.rs
+@@ -314,7 +314,7 @@ impl<T: Driver> Adapter<T> {
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+     unsafe extern "C" fn soft_reset_callback(
+         phydev: *mut bindings::phy_device,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: This callback is called only in contexts
+             // where we hold `phy_device->lock`, so the accessors on
+@@ -328,7 +328,7 @@ impl<T: Driver> Adapter<T> {
+     /// # Safety
+     ///
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+-    unsafe extern "C" fn probe_callback(phydev: *mut bindings::phy_device) -> core::ffi::c_int {
++    unsafe extern "C" fn probe_callback(phydev: *mut bindings::phy_device) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: This callback is called only in contexts
+             // where we can exclusively access `phy_device` because
+@@ -345,7 +345,7 @@ impl<T: Driver> Adapter<T> {
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+     unsafe extern "C" fn get_features_callback(
+         phydev: *mut bindings::phy_device,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: This callback is called only in contexts
+             // where we hold `phy_device->lock`, so the accessors on
+@@ -359,7 +359,7 @@ impl<T: Driver> Adapter<T> {
+     /// # Safety
+     ///
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+-    unsafe extern "C" fn suspend_callback(phydev: *mut bindings::phy_device) -> core::ffi::c_int {
++    unsafe extern "C" fn suspend_callback(phydev: *mut bindings::phy_device) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: The C core code ensures that the accessors on
+             // `Device` are okay to call even though `phy_device->lock`
+@@ -373,7 +373,7 @@ impl<T: Driver> Adapter<T> {
+     /// # Safety
+     ///
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+-    unsafe extern "C" fn resume_callback(phydev: *mut bindings::phy_device) -> core::ffi::c_int {
++    unsafe extern "C" fn resume_callback(phydev: *mut bindings::phy_device) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: The C core code ensures that the accessors on
+             // `Device` are okay to call even though `phy_device->lock`
+@@ -389,7 +389,7 @@ impl<T: Driver> Adapter<T> {
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+     unsafe extern "C" fn config_aneg_callback(
+         phydev: *mut bindings::phy_device,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: This callback is called only in contexts
+             // where we hold `phy_device->lock`, so the accessors on
+@@ -405,7 +405,7 @@ impl<T: Driver> Adapter<T> {
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+     unsafe extern "C" fn read_status_callback(
+         phydev: *mut bindings::phy_device,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         from_result(|| {
+             // SAFETY: This callback is called only in contexts
+             // where we hold `phy_device->lock`, so the accessors on
+@@ -421,7 +421,7 @@ impl<T: Driver> Adapter<T> {
+     /// `phydev` must be passed by the corresponding callback in `phy_driver`.
+     unsafe extern "C" fn match_phy_device_callback(
+         phydev: *mut bindings::phy_device,
+-    ) -> core::ffi::c_int {
++    ) -> crate::ffi::c_int {
+         // SAFETY: This callback is called only in contexts
+         // where we hold `phy_device->lock`, so the accessors on
+         // `Device` are okay to call.
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -184,7 +184,7 @@ impl CStr {
+     /// last at least `'a`. When `CStr` is alive, the memory pointed by `ptr`
+     /// must not be mutated.
+     #[inline]
+-    pub unsafe fn from_char_ptr<'a>(ptr: *const core::ffi::c_char) -> &'a Self {
++    pub unsafe fn from_char_ptr<'a>(ptr: *const crate::ffi::c_char) -> &'a Self {
+         // SAFETY: The safety precondition guarantees `ptr` is a valid pointer
+         // to a `NUL`-terminated C string.
+         let len = unsafe { bindings::strlen(ptr) } + 1;
+@@ -247,7 +247,7 @@ impl CStr {
+ 
+     /// Returns a C pointer to the string.
+     #[inline]
+-    pub const fn as_char_ptr(&self) -> *const core::ffi::c_char {
++    pub const fn as_char_ptr(&self) -> *const crate::ffi::c_char {
+         self.0.as_ptr() as _
+     }
+ 
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -332,11 +332,11 @@ impl<T: ?Sized> Arc<T> {
+ impl<T: 'static> ForeignOwnable for Arc<T> {
+     type Borrowed<'a> = ArcBorrow<'a, T>;
+ 
+-    fn into_foreign(self) -> *const core::ffi::c_void {
++    fn into_foreign(self) -> *const crate::ffi::c_void {
+         ManuallyDrop::new(self).ptr.as_ptr() as _
+     }
+ 
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
++    unsafe fn borrow<'a>(ptr: *const crate::ffi::c_void) -> ArcBorrow<'a, T> {
+         // By the safety requirement of this function, we know that `ptr` came from
+         // a previous call to `Arc::into_foreign`.
+         let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+@@ -346,7 +346,7 @@ impl<T: 'static> ForeignOwnable for Arc<
+         unsafe { ArcBorrow::new(inner) }
+     }
+ 
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
++    unsafe fn from_foreign(ptr: *const crate::ffi::c_void) -> Self {
+         // SAFETY: By the safety requirement of this function, we know that `ptr` came from
+         // a previous call to `Arc::into_foreign`, which guarantees that `ptr` is valid and
+         // holds a reference count increment that is transferrable to us.
+--- a/rust/kernel/sync/condvar.rs
++++ b/rust/kernel/sync/condvar.rs
+@@ -7,6 +7,7 @@
+ 
+ use super::{lock::Backend, lock::Guard, LockClassKey};
+ use crate::{
++    ffi::{c_int, c_long},
+     init::PinInit,
+     pin_init,
+     str::CStr,
+@@ -14,7 +15,6 @@ use crate::{
+     time::Jiffies,
+     types::Opaque,
+ };
+-use core::ffi::{c_int, c_long};
+ use core::marker::PhantomPinned;
+ use core::ptr;
+ use macros::pin_data;
+--- a/rust/kernel/sync/lock.rs
++++ b/rust/kernel/sync/lock.rs
+@@ -46,7 +46,7 @@ pub unsafe trait Backend {
+     /// remain valid for read indefinitely.
+     unsafe fn init(
+         ptr: *mut Self::State,
+-        name: *const core::ffi::c_char,
++        name: *const crate::ffi::c_char,
+         key: *mut bindings::lock_class_key,
+     );
+ 
+--- a/rust/kernel/sync/lock/mutex.rs
++++ b/rust/kernel/sync/lock/mutex.rs
+@@ -96,7 +96,7 @@ unsafe impl super::Backend for MutexBack
+ 
+     unsafe fn init(
+         ptr: *mut Self::State,
+-        name: *const core::ffi::c_char,
++        name: *const crate::ffi::c_char,
+         key: *mut bindings::lock_class_key,
+     ) {
+         // SAFETY: The safety requirements ensure that `ptr` is valid for writes, and `name` and
+--- a/rust/kernel/sync/lock/spinlock.rs
++++ b/rust/kernel/sync/lock/spinlock.rs
+@@ -95,7 +95,7 @@ unsafe impl super::Backend for SpinLockB
+ 
+     unsafe fn init(
+         ptr: *mut Self::State,
+-        name: *const core::ffi::c_char,
++        name: *const crate::ffi::c_char,
+         key: *mut bindings::lock_class_key,
+     ) {
+         // SAFETY: The safety requirements ensure that `ptr` is valid for writes, and `name` and
+--- a/rust/kernel/task.rs
++++ b/rust/kernel/task.rs
+@@ -4,13 +4,9 @@
+ //!
+ //! C header: [`include/linux/sched.h`](srctree/include/linux/sched.h).
+ 
++use crate::ffi::{c_int, c_long, c_uint};
+ use crate::types::Opaque;
+-use core::{
+-    ffi::{c_int, c_long, c_uint},
+-    marker::PhantomData,
+-    ops::Deref,
+-    ptr,
+-};
++use core::{marker::PhantomData, ops::Deref, ptr};
+ 
+ /// A sentinel value used for infinite timeouts.
+ pub const MAX_SCHEDULE_TIMEOUT: c_long = c_long::MAX;
+--- a/rust/kernel/time.rs
++++ b/rust/kernel/time.rs
+@@ -12,10 +12,10 @@
+ pub const NSEC_PER_MSEC: i64 = bindings::NSEC_PER_MSEC as i64;
+ 
+ /// The time unit of Linux kernel. One jiffy equals (1/HZ) second.
+-pub type Jiffies = core::ffi::c_ulong;
++pub type Jiffies = crate::ffi::c_ulong;
+ 
+ /// The millisecond time unit.
+-pub type Msecs = core::ffi::c_uint;
++pub type Msecs = crate::ffi::c_uint;
+ 
+ /// Converts milliseconds to jiffies.
+ #[inline]
 --- a/rust/kernel/types.rs
 +++ b/rust/kernel/types.rs
-@@ -481,21 +481,22 @@ pub enum Either<L, R> {
- /// All bit-patterns must be valid for this type. This type must not have interior mutability.
- pub unsafe trait FromBytes {}
+@@ -29,7 +29,7 @@ pub trait ForeignOwnable: Sized {
+     /// For example, it might be invalid, dangling or pointing to uninitialized memory. Using it in
+     /// any way except for [`ForeignOwnable::from_foreign`], [`ForeignOwnable::borrow`],
+     /// [`ForeignOwnable::try_from_foreign`] can result in undefined behavior.
+-    fn into_foreign(self) -> *const core::ffi::c_void;
++    fn into_foreign(self) -> *const crate::ffi::c_void;
  
--// SAFETY: All bit patterns are acceptable values of the types below.
--unsafe impl FromBytes for u8 {}
--unsafe impl FromBytes for u16 {}
--unsafe impl FromBytes for u32 {}
--unsafe impl FromBytes for u64 {}
--unsafe impl FromBytes for usize {}
--unsafe impl FromBytes for i8 {}
--unsafe impl FromBytes for i16 {}
--unsafe impl FromBytes for i32 {}
--unsafe impl FromBytes for i64 {}
--unsafe impl FromBytes for isize {}
--// SAFETY: If all bit patterns are acceptable for individual values in an array, then all bit
--// patterns are also acceptable for arrays of that type.
--unsafe impl<T: FromBytes> FromBytes for [T] {}
--unsafe impl<T: FromBytes, const N: usize> FromBytes for [T; N] {}
-+macro_rules! impl_frombytes {
-+    ($($({$($generics:tt)*})? $t:ty, )*) => {
-+        $(unsafe impl$($($generics)*)? FromBytes for $t {})*
-+    };
-+}
-+
-+impl_frombytes! {
-+    // SAFETY: All bit patterns are acceptable values of the types below.
-+    u8, u16, u32, u64, usize,
-+    i8, i16, i32, i64, isize,
-+
-+    // SAFETY: If all bit patterns are acceptable for individual values in an array, then all bit
-+    // patterns are also acceptable for arrays of that type.
-+    {<T: FromBytes>} [T],
-+    {<T: FromBytes, const N: usize>} [T; N],
-+}
+     /// Borrows a foreign-owned object.
+     ///
+@@ -37,7 +37,7 @@ pub trait ForeignOwnable: Sized {
+     ///
+     /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+     /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+-    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowed<'a>;
++    unsafe fn borrow<'a>(ptr: *const crate::ffi::c_void) -> Self::Borrowed<'a>;
  
- /// Types that can be viewed as an immutable slice of initialized bytes.
+     /// Converts a foreign-owned object back to a Rust-owned one.
+     ///
+@@ -47,7 +47,7 @@ pub trait ForeignOwnable: Sized {
+     /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+     /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow`] for
+     /// this object must have been dropped.
+-    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self;
++    unsafe fn from_foreign(ptr: *const crate::ffi::c_void) -> Self;
+ 
+     /// Tries to convert a foreign-owned object back to a Rust-owned one.
+     ///
+@@ -58,7 +58,7 @@ pub trait ForeignOwnable: Sized {
+     ///
+     /// `ptr` must either be null or satisfy the safety requirements for
+     /// [`ForeignOwnable::from_foreign`].
+-    unsafe fn try_from_foreign(ptr: *const core::ffi::c_void) -> Option<Self> {
++    unsafe fn try_from_foreign(ptr: *const crate::ffi::c_void) -> Option<Self> {
+         if ptr.is_null() {
+             None
+         } else {
+@@ -72,13 +72,13 @@ pub trait ForeignOwnable: Sized {
+ impl ForeignOwnable for () {
+     type Borrowed<'a> = ();
+ 
+-    fn into_foreign(self) -> *const core::ffi::c_void {
++    fn into_foreign(self) -> *const crate::ffi::c_void {
+         core::ptr::NonNull::dangling().as_ptr()
+     }
+ 
+-    unsafe fn borrow<'a>(_: *const core::ffi::c_void) -> Self::Borrowed<'a> {}
++    unsafe fn borrow<'a>(_: *const crate::ffi::c_void) -> Self::Borrowed<'a> {}
+ 
+-    unsafe fn from_foreign(_: *const core::ffi::c_void) -> Self {}
++    unsafe fn from_foreign(_: *const crate::ffi::c_void) -> Self {}
+ }
+ 
+ /// Runs a cleanup function/closure when dropped.
+--- a/rust/kernel/uaccess.rs
++++ b/rust/kernel/uaccess.rs
+@@ -8,10 +8,10 @@ use crate::{
+     alloc::Flags,
+     bindings,
+     error::Result,
++    ffi::{c_ulong, c_void},
+     prelude::*,
+     types::{AsBytes, FromBytes},
+ };
+-use core::ffi::{c_ulong, c_void};
+ use core::mem::{size_of, MaybeUninit};
+ 
+ /// The type used for userspace addresses.
+@@ -45,7 +45,7 @@ pub type UserPtr = usize;
+ /// every byte in the region.
  ///
-@@ -514,21 +515,22 @@ unsafe impl<T: FromBytes, const N: usize
- /// mutability.
- pub unsafe trait AsBytes {}
+ /// ```no_run
+-/// use core::ffi::c_void;
++/// use kernel::ffi::c_void;
+ /// use kernel::error::Result;
+ /// use kernel::uaccess::{UserPtr, UserSlice};
+ ///
+@@ -67,7 +67,7 @@ pub type UserPtr = usize;
+ /// Example illustrating a TOCTOU (time-of-check to time-of-use) bug.
+ ///
+ /// ```no_run
+-/// use core::ffi::c_void;
++/// use kernel::ffi::c_void;
+ /// use kernel::error::{code::EINVAL, Result};
+ /// use kernel::uaccess::{UserPtr, UserSlice};
+ ///
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -253,7 +253,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     #[doc(hidden)]
+                     #[no_mangle]
+                     #[link_section = \".init.text\"]
+-                    pub unsafe extern \"C\" fn init_module() -> core::ffi::c_int {{
++                    pub unsafe extern \"C\" fn init_module() -> kernel::ffi::c_int {{
+                         // SAFETY: This function is inaccessible to the outside due to the double
+                         // module wrapping it. It is called exactly once by the C side via its
+                         // unique name.
+@@ -292,7 +292,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     #[doc(hidden)]
+                     #[link_section = \"{initcall_section}\"]
+                     #[used]
+-                    pub static __{name}_initcall: extern \"C\" fn() -> core::ffi::c_int = __{name}_init;
++                    pub static __{name}_initcall: extern \"C\" fn() -> kernel::ffi::c_int = __{name}_init;
  
--// SAFETY: Instances of the following types have no uninitialized portions.
--unsafe impl AsBytes for u8 {}
--unsafe impl AsBytes for u16 {}
--unsafe impl AsBytes for u32 {}
--unsafe impl AsBytes for u64 {}
--unsafe impl AsBytes for usize {}
--unsafe impl AsBytes for i8 {}
--unsafe impl AsBytes for i16 {}
--unsafe impl AsBytes for i32 {}
--unsafe impl AsBytes for i64 {}
--unsafe impl AsBytes for isize {}
--unsafe impl AsBytes for bool {}
--unsafe impl AsBytes for char {}
--unsafe impl AsBytes for str {}
--// SAFETY: If individual values in an array have no uninitialized portions, then the array itself
--// does not have any uninitialized portions either.
--unsafe impl<T: AsBytes> AsBytes for [T] {}
--unsafe impl<T: AsBytes, const N: usize> AsBytes for [T; N] {}
-+macro_rules! impl_asbytes {
-+    ($($({$($generics:tt)*})? $t:ty, )*) => {
-+        $(unsafe impl$($($generics)*)? AsBytes for $t {})*
-+    };
-+}
-+
-+impl_asbytes! {
-+    // SAFETY: Instances of the following types have no uninitialized portions.
-+    u8, u16, u32, u64, usize,
-+    i8, i16, i32, i64, isize,
-+    bool,
-+    char,
-+    str,
-+
-+    // SAFETY: If individual values in an array have no uninitialized portions, then the array
-+    // itself does not have any uninitialized portions either.
-+    {<T: AsBytes>} [T],
-+    {<T: AsBytes, const N: usize>} [T; N],
-+}
+                     #[cfg(not(MODULE))]
+                     #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
+@@ -307,7 +307,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     #[cfg(not(MODULE))]
+                     #[doc(hidden)]
+                     #[no_mangle]
+-                    pub extern \"C\" fn __{name}_init() -> core::ffi::c_int {{
++                    pub extern \"C\" fn __{name}_init() -> kernel::ffi::c_int {{
+                         // SAFETY: This function is inaccessible to the outside due to the double
+                         // module wrapping it. It is called exactly once by the C side via its
+                         // placement above in the initcall section.
+@@ -330,7 +330,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     /// # Safety
+                     ///
+                     /// This function must only be called once.
+-                    unsafe fn __init() -> core::ffi::c_int {{
++                    unsafe fn __init() -> kernel::ffi::c_int {{
+                         match <{type_} as kernel::Module>::init(&super::super::THIS_MODULE) {{
+                             Ok(m) => {{
+                                 // SAFETY: No data race, since `__MOD` can only be accessed by this
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
