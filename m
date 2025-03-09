@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9561AC43A;
-	Sun,  9 Mar 2025 09:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3052A1ADC74;
+	Sun,  9 Mar 2025 09:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513751; cv=none; b=RmPhj1ugbHX9Uuslv1C1fkNw0i2r95VER7DEOLXafA859S+b7eSuhiBU1bWjnJXge+oYj1xeliEdhnf04tdG4UKDTZJPrq582h48K2N4fjSrIJ4XjnIyYqRDjsUYK6TeK7iybbaawgwgJpQgf51NSkfLZqNI9KBBVmQdBtLG5nU=
+	t=1741513754; cv=none; b=bBxBinCGRDLtot2TeeU3obA8Z3kUQHXHDkcaHjuNb1D5ueMdbqhAuBa4NqQvukK3Q/PTMgwzzEDZTcgfTwiqGgUATGA8MYFKMBdEWliWQSuDm8nI2eIgnl4C/t0OLc0V4PWAJzkAblKMfC9eMSlPHJKRIco+FRBndaO7XMqukSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513751; c=relaxed/simple;
-	bh=ID3UV2hA3hylawpgz9OnYGJbzqN5clmHKfMOdqVTQng=;
+	s=arc-20240116; t=1741513754; c=relaxed/simple;
+	bh=dTgTn2ICEY0oMGdHKe8LSjvGfcDaMENtJqqhoJofAVI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=omrHGF2tKZIwG7cleC/ZvGL8PW33uu/gelzpYAtPCQzsFUWl8NFGMACv2oI7XgVRfPFNvxf/Q+2yAhV8Q8wwyrCqLlYoht6sFo6C8u5JdgrNsaxpg4iFgUadOih/d4qHX8rvS/yUJTxzVseAkmV2Mr4NcWZxUSRjjXnxUBKmr4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+3bdutW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=dIS2ThPO3ygfPUWxDc+vs/YXliHpMx0UIEhnzN6ApzTCiHRiSKWuY+H7woJ66XS9LVO4TJIcSnDYMXKKxYhbXz4osck2uWJZAn6QxLo75apdndE+23FPLNUPLFpQ3ltfsJySHX7zg/kKppOUK5xnknaJkRe9yEyoVr/QFEvryTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bkz75+na; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+3bdutW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89788C4CEE5;
-	Sun,  9 Mar 2025 09:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bkz75+na"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7839FC4CEE5;
+	Sun,  9 Mar 2025 09:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513750;
-	bh=ID3UV2hA3hylawpgz9OnYGJbzqN5clmHKfMOdqVTQng=;
+	s=korg; t=1741513754;
+	bh=dTgTn2ICEY0oMGdHKe8LSjvGfcDaMENtJqqhoJofAVI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=q+3bdutWKTwOG7EYvqs9n3g/1AC4CddMLCo7DU81yidLEf5RiB6kvgrBazDg51EHl
-	 6EehgYZEvD9/eABW6XmYEL5a4q3YxXVBMlccmyD4Kc5EZoiy/5uTL/zD6lSFwRHhRe
-	 KQT8AbOA4MCkFJ+S46NbkImJ8F7jp+7wz/pEEOzQ=
-Subject: Patch "rust: alloc: implement kernel `Box`" has been added to the 6.12-stable tree
+	b=Bkz75+nagToPtpeQoPC/WNyhokG31HmDiRtbjnZH9n+AJW2UDhvc/vBWVpxCkYG1P
+	 dIIrf1wLMTKZjSbbgAQxCHGBzuxOcJnCr3CL3mB3j0DEYpf61nCWCmw0XPSE2XsZV1
+	 +PIviLfea6Ho6lmtbAbW4/gIUrMOc9QGDHn2G3Dw=
+Subject: Patch "rust: alloc: implement kernel `Vec` type" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:49 +0100
-In-Reply-To: <20250307225008.779961-31-ojeda@kernel.org>
-Message-ID: <2025030949-strict-designed-56b6@gregkh>
+In-Reply-To: <20250307225008.779961-36-ojeda@kernel.org>
+Message-ID: <2025030949-clumsy-croon-83a3@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore
@@ -44,546 +44,754 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: implement kernel `Box`
+    rust: alloc: implement kernel `Vec` type
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-implement-kernel-box.patch
+     rust-alloc-implement-kernel-vec-type.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121485-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:12 2025
+From stable+bounces-121490-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:17 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:37 +0100
-Subject: rust: alloc: implement kernel `Box`
+Date: Fri,  7 Mar 2025 23:49:42 +0100
+Subject: rust: alloc: implement kernel `Vec` type
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-31-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-36-ojeda@kernel.org>
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit c8cfa8d0c0b10be216861fe904ea68978b1dcc97 upstream.
+commit 2aac4cd7dae3d7bb0e0ddec2561b2ee4cbe6c8f6 upstream.
 
-`Box` provides the simplest way to allocate memory for a generic type
-with one of the kernel's allocators, e.g. `Kmalloc`, `Vmalloc` or
-`KVmalloc`.
+`Vec` provides a contiguous growable array type with contents allocated
+with the kernel's allocators (e.g. `Kmalloc`, `Vmalloc` or `KVmalloc`).
 
-In contrast to Rust's `Box` type, the kernel `Box` type considers the
-kernel's GFP flags for all appropriate functions, always reports
+In contrast to Rust's stdlib `Vec` type, the kernel `Vec` type considers
+the kernel's GFP flags for all appropriate functions, always reports
 allocation failures through `Result<_, AllocError>` and remains
 independent from unstable features.
+
+[ This patch starts using a new unstable feature, `inline_const`, but
+  it was stabilized in Rust 1.79.0, i.e. the next version after the
+  minimum one, thus it will not be an issue. - Miguel ]
 
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-12-dakr@kernel.org
-[ Added backticks, fixed typos. - Miguel ]
+Link: https://lore.kernel.org/r/20241004154149.93856-17-dakr@kernel.org
+[ Cleaned `rustdoc` unescaped backtick warning, added a couple more
+  backticks elsewhere, fixed typos, sorted `feature`s, rewrapped
+  documentation lines. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  rust/kernel/alloc.rs      |    6 
- rust/kernel/alloc/kbox.rs |  456 ++++++++++++++++++++++++++++++++++++++++++++++
+ rust/kernel/alloc/kvec.rs |  648 ++++++++++++++++++++++++++++++++++++++++++++++
+ rust/kernel/lib.rs        |    1 
  rust/kernel/prelude.rs    |    2 
- 3 files changed, 463 insertions(+), 1 deletion(-)
- create mode 100644 rust/kernel/alloc/kbox.rs
+ 4 files changed, 656 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/alloc/kvec.rs
 
 --- a/rust/kernel/alloc.rs
 +++ b/rust/kernel/alloc.rs
 @@ -5,6 +5,7 @@
  #[cfg(not(any(test, testlib)))]
  pub mod allocator;
- pub mod box_ext;
-+pub mod kbox;
+ pub mod kbox;
++pub mod kvec;
+ pub mod layout;
  pub mod vec_ext;
  
- #[cfg(any(test, testlib))]
-@@ -13,6 +14,11 @@ pub mod allocator_test;
- #[cfg(any(test, testlib))]
- pub use self::allocator_test as allocator;
+@@ -19,6 +20,11 @@ pub use self::kbox::KBox;
+ pub use self::kbox::KVBox;
+ pub use self::kbox::VBox;
  
-+pub use self::kbox::Box;
-+pub use self::kbox::KBox;
-+pub use self::kbox::KVBox;
-+pub use self::kbox::VBox;
++pub use self::kvec::KVVec;
++pub use self::kvec::KVec;
++pub use self::kvec::VVec;
++pub use self::kvec::Vec;
 +
  /// Indicates an allocation error.
  #[derive(Copy, Clone, PartialEq, Eq, Debug)]
  pub struct AllocError;
 --- /dev/null
-+++ b/rust/kernel/alloc/kbox.rs
-@@ -0,0 +1,456 @@
++++ b/rust/kernel/alloc/kvec.rs
+@@ -0,0 +1,648 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
-+//! Implementation of [`Box`].
++//! Implementation of [`Vec`].
 +
-+#[allow(unused_imports)] // Used in doc comments.
-+use super::allocator::{KVmalloc, Kmalloc, Vmalloc};
-+use super::{AllocError, Allocator, Flags};
-+use core::alloc::Layout;
-+use core::fmt;
-+use core::marker::PhantomData;
-+use core::mem::ManuallyDrop;
-+use core::mem::MaybeUninit;
-+use core::ops::{Deref, DerefMut};
-+use core::pin::Pin;
-+use core::ptr::NonNull;
-+use core::result::Result;
++use super::{
++    allocator::{KVmalloc, Kmalloc, Vmalloc},
++    layout::ArrayLayout,
++    AllocError, Allocator, Box, Flags,
++};
++use core::{
++    fmt,
++    marker::PhantomData,
++    mem::{ManuallyDrop, MaybeUninit},
++    ops::Deref,
++    ops::DerefMut,
++    ops::Index,
++    ops::IndexMut,
++    ptr,
++    ptr::NonNull,
++    slice,
++    slice::SliceIndex,
++};
 +
-+use crate::init::{InPlaceInit, InPlaceWrite, Init, PinInit};
-+use crate::types::ForeignOwnable;
-+
-+/// The kernel's [`Box`] type -- a heap allocation for a single value of type `T`.
++/// Create a [`KVec`] containing the arguments.
 +///
-+/// This is the kernel's version of the Rust stdlib's `Box`. There are several differences,
-+/// for example no `noalias` attribute is emitted and partially moving out of a `Box` is not
-+/// supported. There are also several API differences, e.g. `Box` always requires an [`Allocator`]
-+/// implementation to be passed as generic, page [`Flags`] when allocating memory and all functions
-+/// that may allocate memory are fallible.
-+///
-+/// `Box` works with any of the kernel's allocators, e.g. [`Kmalloc`], [`Vmalloc`] or [`KVmalloc`].
-+/// There are aliases for `Box` with these allocators ([`KBox`], [`VBox`], [`KVBox`]).
-+///
-+/// When dropping a [`Box`], the value is also dropped and the heap memory is automatically freed.
++/// New memory is allocated with `GFP_KERNEL`.
 +///
 +/// # Examples
 +///
 +/// ```
-+/// let b = KBox::<u64>::new(24_u64, GFP_KERNEL)?;
++/// let mut v = kernel::kvec![];
++/// v.push(1, GFP_KERNEL)?;
++/// assert_eq!(v, [1]);
 +///
-+/// assert_eq!(*b, 24_u64);
++/// let mut v = kernel::kvec![1; 3]?;
++/// v.push(4, GFP_KERNEL)?;
++/// assert_eq!(v, [1, 1, 1, 4]);
++///
++/// let mut v = kernel::kvec![1, 2, 3]?;
++/// v.push(4, GFP_KERNEL)?;
++/// assert_eq!(v, [1, 2, 3, 4]);
++///
 +/// # Ok::<(), Error>(())
 +/// ```
++#[macro_export]
++macro_rules! kvec {
++    () => (
++        $crate::alloc::KVec::new()
++    );
++    ($elem:expr; $n:expr) => (
++        $crate::alloc::KVec::from_elem($elem, $n, GFP_KERNEL)
++    );
++    ($($x:expr),+ $(,)?) => (
++        match $crate::alloc::KBox::new_uninit(GFP_KERNEL) {
++            Ok(b) => Ok($crate::alloc::KVec::from($crate::alloc::KBox::write(b, [$($x),+]))),
++            Err(e) => Err(e),
++        }
++    );
++}
++
++/// The kernel's [`Vec`] type.
 +///
-+/// ```
-+/// # use kernel::bindings;
-+/// const SIZE: usize = bindings::KMALLOC_MAX_SIZE as usize + 1;
-+/// struct Huge([u8; SIZE]);
++/// A contiguous growable array type with contents allocated with the kernel's allocators (e.g.
++/// [`Kmalloc`], [`Vmalloc`] or [`KVmalloc`]), written `Vec<T, A>`.
 +///
-+/// assert!(KBox::<Huge>::new_uninit(GFP_KERNEL | __GFP_NOWARN).is_err());
-+/// ```
++/// For non-zero-sized values, a [`Vec`] will use the given allocator `A` for its allocation. For
++/// the most common allocators the type aliases [`KVec`], [`VVec`] and [`KVVec`] exist.
 +///
-+/// ```
-+/// # use kernel::bindings;
-+/// const SIZE: usize = bindings::KMALLOC_MAX_SIZE as usize + 1;
-+/// struct Huge([u8; SIZE]);
++/// For zero-sized types the [`Vec`]'s pointer must be `dangling_mut::<T>`; no memory is allocated.
 +///
-+/// assert!(KVBox::<Huge>::new_uninit(GFP_KERNEL).is_ok());
-+/// ```
++/// Generally, [`Vec`] consists of a pointer that represents the vector's backing buffer, the
++/// capacity of the vector (the number of elements that currently fit into the vector), its length
++/// (the number of elements that are currently stored in the vector) and the `Allocator` type used
++/// to allocate (and free) the backing buffer.
++///
++/// A [`Vec`] can be deconstructed into and (re-)constructed from its previously named raw parts
++/// and manually modified.
++///
++/// [`Vec`]'s backing buffer gets, if required, automatically increased (re-allocated) when elements
++/// are added to the vector.
 +///
 +/// # Invariants
 +///
-+/// `self.0` is always properly aligned and either points to memory allocated with `A` or, for
-+/// zero-sized types, is a dangling, well aligned pointer.
-+#[repr(transparent)]
-+pub struct Box<T: ?Sized, A: Allocator>(NonNull<T>, PhantomData<A>);
++/// - `self.ptr` is always properly aligned and either points to memory allocated with `A` or, for
++///   zero-sized types, is a dangling, well aligned pointer.
++///
++/// - `self.len` always represents the exact number of elements stored in the vector.
++///
++/// - `self.layout` represents the absolute number of elements that can be stored within the vector
++///   without re-allocation. For ZSTs `self.layout`'s capacity is zero. However, it is legal for the
++///   backing buffer to be larger than `layout`.
++///
++/// - The `Allocator` type `A` of the vector is the exact same `Allocator` type the backing buffer
++///   was allocated with (and must be freed with).
++pub struct Vec<T, A: Allocator> {
++    ptr: NonNull<T>,
++    /// Represents the actual buffer size as `cap` times `size_of::<T>` bytes.
++    ///
++    /// Note: This isn't quite the same as `Self::capacity`, which in contrast returns the number of
++    /// elements we can still store without reallocating.
++    layout: ArrayLayout<T>,
++    len: usize,
++    _p: PhantomData<A>,
++}
 +
-+/// Type alias for [`Box`] with a [`Kmalloc`] allocator.
++/// Type alias for [`Vec`] with a [`Kmalloc`] allocator.
 +///
 +/// # Examples
 +///
 +/// ```
-+/// let b = KBox::new(24_u64, GFP_KERNEL)?;
++/// let mut v = KVec::new();
++/// v.push(1, GFP_KERNEL)?;
++/// assert_eq!(&v, &[1]);
 +///
-+/// assert_eq!(*b, 24_u64);
 +/// # Ok::<(), Error>(())
 +/// ```
-+pub type KBox<T> = Box<T, super::allocator::Kmalloc>;
++pub type KVec<T> = Vec<T, Kmalloc>;
 +
-+/// Type alias for [`Box`] with a [`Vmalloc`] allocator.
++/// Type alias for [`Vec`] with a [`Vmalloc`] allocator.
 +///
 +/// # Examples
 +///
 +/// ```
-+/// let b = VBox::new(24_u64, GFP_KERNEL)?;
++/// let mut v = VVec::new();
++/// v.push(1, GFP_KERNEL)?;
++/// assert_eq!(&v, &[1]);
 +///
-+/// assert_eq!(*b, 24_u64);
 +/// # Ok::<(), Error>(())
 +/// ```
-+pub type VBox<T> = Box<T, super::allocator::Vmalloc>;
++pub type VVec<T> = Vec<T, Vmalloc>;
 +
-+/// Type alias for [`Box`] with a [`KVmalloc`] allocator.
++/// Type alias for [`Vec`] with a [`KVmalloc`] allocator.
 +///
 +/// # Examples
 +///
 +/// ```
-+/// let b = KVBox::new(24_u64, GFP_KERNEL)?;
++/// let mut v = KVVec::new();
++/// v.push(1, GFP_KERNEL)?;
++/// assert_eq!(&v, &[1]);
 +///
-+/// assert_eq!(*b, 24_u64);
 +/// # Ok::<(), Error>(())
 +/// ```
-+pub type KVBox<T> = Box<T, super::allocator::KVmalloc>;
++pub type KVVec<T> = Vec<T, KVmalloc>;
 +
-+// SAFETY: `Box` is `Send` if `T` is `Send` because the `Box` owns a `T`.
-+unsafe impl<T, A> Send for Box<T, A>
++// SAFETY: `Vec` is `Send` if `T` is `Send` because `Vec` owns its elements.
++unsafe impl<T, A> Send for Vec<T, A>
 +where
-+    T: Send + ?Sized,
++    T: Send,
 +    A: Allocator,
 +{
 +}
 +
-+// SAFETY: `Box` is `Sync` if `T` is `Sync` because the `Box` owns a `T`.
-+unsafe impl<T, A> Sync for Box<T, A>
++// SAFETY: `Vec` is `Sync` if `T` is `Sync` because `Vec` owns its elements.
++unsafe impl<T, A> Sync for Vec<T, A>
 +where
-+    T: Sync + ?Sized,
++    T: Sync,
 +    A: Allocator,
 +{
 +}
 +
-+impl<T, A> Box<T, A>
++impl<T, A> Vec<T, A>
 +where
-+    T: ?Sized,
 +    A: Allocator,
 +{
-+    /// Creates a new `Box<T, A>` from a raw pointer.
++    #[inline]
++    const fn is_zst() -> bool {
++        core::mem::size_of::<T>() == 0
++    }
++
++    /// Returns the number of elements that can be stored within the vector without allocating
++    /// additional memory.
++    pub fn capacity(&self) -> usize {
++        if const { Self::is_zst() } {
++            usize::MAX
++        } else {
++            self.layout.len()
++        }
++    }
++
++    /// Returns the number of elements stored within the vector.
++    #[inline]
++    pub fn len(&self) -> usize {
++        self.len
++    }
++
++    /// Forcefully sets `self.len` to `new_len`.
 +    ///
 +    /// # Safety
 +    ///
-+    /// For non-ZSTs, `raw` must point at an allocation allocated with `A` that is sufficiently
-+    /// aligned for and holds a valid `T`. The caller passes ownership of the allocation to the
-+    /// `Box`.
-+    ///
-+    /// For ZSTs, `raw` must be a dangling, well aligned pointer.
++    /// - `new_len` must be less than or equal to [`Self::capacity`].
++    /// - If `new_len` is greater than `self.len`, all elements within the interval
++    ///   [`self.len`,`new_len`) must be initialized.
 +    #[inline]
-+    pub const unsafe fn from_raw(raw: *mut T) -> Self {
-+        // INVARIANT: Validity of `raw` is guaranteed by the safety preconditions of this function.
-+        // SAFETY: By the safety preconditions of this function, `raw` is not a NULL pointer.
-+        Self(unsafe { NonNull::new_unchecked(raw) }, PhantomData)
++    pub unsafe fn set_len(&mut self, new_len: usize) {
++        debug_assert!(new_len <= self.capacity());
++        self.len = new_len;
 +    }
 +
-+    /// Consumes the `Box<T, A>` and returns a raw pointer.
-+    ///
-+    /// This will not run the destructor of `T` and for non-ZSTs the allocation will stay alive
-+    /// indefinitely. Use [`Box::from_raw`] to recover the [`Box`], drop the value and free the
-+    /// allocation, if any.
++    /// Returns a slice of the entire vector.
++    #[inline]
++    pub fn as_slice(&self) -> &[T] {
++        self
++    }
++
++    /// Returns a mutable slice of the entire vector.
++    #[inline]
++    pub fn as_mut_slice(&mut self) -> &mut [T] {
++        self
++    }
++
++    /// Returns a mutable raw pointer to the vector's backing buffer, or, if `T` is a ZST, a
++    /// dangling raw pointer.
++    #[inline]
++    pub fn as_mut_ptr(&mut self) -> *mut T {
++        self.ptr.as_ptr()
++    }
++
++    /// Returns a raw pointer to the vector's backing buffer, or, if `T` is a ZST, a dangling raw
++    /// pointer.
++    #[inline]
++    pub fn as_ptr(&self) -> *const T {
++        self.ptr.as_ptr()
++    }
++
++    /// Returns `true` if the vector contains no elements, `false` otherwise.
 +    ///
 +    /// # Examples
 +    ///
 +    /// ```
-+    /// let x = KBox::new(24, GFP_KERNEL)?;
-+    /// let ptr = KBox::into_raw(x);
-+    /// // SAFETY: `ptr` comes from a previous call to `KBox::into_raw`.
-+    /// let x = unsafe { KBox::from_raw(ptr) };
++    /// let mut v = KVec::new();
++    /// assert!(v.is_empty());
 +    ///
-+    /// assert_eq!(*x, 24);
-+    /// # Ok::<(), Error>(())
++    /// v.push(1, GFP_KERNEL);
++    /// assert!(!v.is_empty());
 +    /// ```
 +    #[inline]
-+    pub fn into_raw(b: Self) -> *mut T {
-+        ManuallyDrop::new(b).0.as_ptr()
++    pub fn is_empty(&self) -> bool {
++        self.len() == 0
 +    }
 +
-+    /// Consumes and leaks the `Box<T, A>` and returns a mutable reference.
++    /// Creates a new, empty `Vec<T, A>`.
 +    ///
-+    /// See [`Box::into_raw`] for more details.
++    /// This method does not allocate by itself.
 +    #[inline]
-+    pub fn leak<'a>(b: Self) -> &'a mut T {
-+        // SAFETY: `Box::into_raw` always returns a properly aligned and dereferenceable pointer
-+        // which points to an initialized instance of `T`.
-+        unsafe { &mut *Box::into_raw(b) }
++    pub const fn new() -> Self {
++        // INVARIANT: Since this is a new, empty `Vec` with no backing memory yet,
++        // - `ptr` is a properly aligned dangling pointer for type `T`,
++        // - `layout` is an empty `ArrayLayout` (zero capacity)
++        // - `len` is zero, since no elements can be or have been stored,
++        // - `A` is always valid.
++        Self {
++            ptr: NonNull::dangling(),
++            layout: ArrayLayout::empty(),
++            len: 0,
++            _p: PhantomData::<A>,
++        }
 +    }
-+}
 +
-+impl<T, A> Box<MaybeUninit<T>, A>
-+where
-+    A: Allocator,
-+{
-+    /// Converts a `Box<MaybeUninit<T>, A>` to a `Box<T, A>`.
++    /// Returns a slice of `MaybeUninit<T>` for the remaining spare capacity of the vector.
++    pub fn spare_capacity_mut(&mut self) -> &mut [MaybeUninit<T>] {
++        // SAFETY:
++        // - `self.len` is smaller than `self.capacity` and hence, the resulting pointer is
++        //   guaranteed to be part of the same allocated object.
++        // - `self.len` can not overflow `isize`.
++        let ptr = unsafe { self.as_mut_ptr().add(self.len) } as *mut MaybeUninit<T>;
++
++        // SAFETY: The memory between `self.len` and `self.capacity` is guaranteed to be allocated
++        // and valid, but uninitialized.
++        unsafe { slice::from_raw_parts_mut(ptr, self.capacity() - self.len) }
++    }
++
++    /// Appends an element to the back of the [`Vec`] instance.
 +    ///
-+    /// It is undefined behavior to call this function while the value inside of `b` is not yet
-+    /// fully initialized.
++    /// # Examples
++    ///
++    /// ```
++    /// let mut v = KVec::new();
++    /// v.push(1, GFP_KERNEL)?;
++    /// assert_eq!(&v, &[1]);
++    ///
++    /// v.push(2, GFP_KERNEL)?;
++    /// assert_eq!(&v, &[1, 2]);
++    /// # Ok::<(), Error>(())
++    /// ```
++    pub fn push(&mut self, v: T, flags: Flags) -> Result<(), AllocError> {
++        self.reserve(1, flags)?;
++
++        // SAFETY:
++        // - `self.len` is smaller than `self.capacity` and hence, the resulting pointer is
++        //   guaranteed to be part of the same allocated object.
++        // - `self.len` can not overflow `isize`.
++        let ptr = unsafe { self.as_mut_ptr().add(self.len) };
++
++        // SAFETY:
++        // - `ptr` is properly aligned and valid for writes.
++        unsafe { core::ptr::write(ptr, v) };
++
++        // SAFETY: We just initialised the first spare entry, so it is safe to increase the length
++        // by 1. We also know that the new length is <= capacity because of the previous call to
++        // `reserve` above.
++        unsafe { self.set_len(self.len() + 1) };
++        Ok(())
++    }
++
++    /// Creates a new [`Vec`] instance with at least the given capacity.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let v = KVec::<u32>::with_capacity(20, GFP_KERNEL)?;
++    ///
++    /// assert!(v.capacity() >= 20);
++    /// # Ok::<(), Error>(())
++    /// ```
++    pub fn with_capacity(capacity: usize, flags: Flags) -> Result<Self, AllocError> {
++        let mut v = Vec::new();
++
++        v.reserve(capacity, flags)?;
++
++        Ok(v)
++    }
++
++    /// Creates a `Vec<T, A>` from a pointer, a length and a capacity using the allocator `A`.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let mut v = kernel::kvec![1, 2, 3]?;
++    /// v.reserve(1, GFP_KERNEL)?;
++    ///
++    /// let (mut ptr, mut len, cap) = v.into_raw_parts();
++    ///
++    /// // SAFETY: We've just reserved memory for another element.
++    /// unsafe { ptr.add(len).write(4) };
++    /// len += 1;
++    ///
++    /// // SAFETY: We only wrote an additional element at the end of the `KVec`'s buffer and
++    /// // correspondingly increased the length of the `KVec` by one. Otherwise, we construct it
++    /// // from the exact same raw parts.
++    /// let v = unsafe { KVec::from_raw_parts(ptr, len, cap) };
++    ///
++    /// assert_eq!(v, [1, 2, 3, 4]);
++    ///
++    /// # Ok::<(), Error>(())
++    /// ```
 +    ///
 +    /// # Safety
 +    ///
-+    /// Callers must ensure that the value inside of `b` is in an initialized state.
-+    pub unsafe fn assume_init(self) -> Box<T, A> {
-+        let raw = Self::into_raw(self);
-+
-+        // SAFETY: `raw` comes from a previous call to `Box::into_raw`. By the safety requirements
-+        // of this function, the value inside the `Box` is in an initialized state. Hence, it is
-+        // safe to reconstruct the `Box` as `Box<T, A>`.
-+        unsafe { Box::from_raw(raw.cast()) }
-+    }
-+
-+    /// Writes the value and converts to `Box<T, A>`.
-+    pub fn write(mut self, value: T) -> Box<T, A> {
-+        (*self).write(value);
-+
-+        // SAFETY: We've just initialized `b`'s value.
-+        unsafe { self.assume_init() }
-+    }
-+}
-+
-+impl<T, A> Box<T, A>
-+where
-+    A: Allocator,
-+{
-+    /// Creates a new `Box<T, A>` and initializes its contents with `x`.
++    /// If `T` is a ZST:
 +    ///
-+    /// New memory is allocated with `A`. The allocation may fail, in which case an error is
-+    /// returned. For ZSTs no memory is allocated.
-+    pub fn new(x: T, flags: Flags) -> Result<Self, AllocError> {
-+        let b = Self::new_uninit(flags)?;
-+        Ok(Box::write(b, x))
++    /// - `ptr` must be a dangling, well aligned pointer.
++    ///
++    /// Otherwise:
++    ///
++    /// - `ptr` must have been allocated with the allocator `A`.
++    /// - `ptr` must satisfy or exceed the alignment requirements of `T`.
++    /// - `ptr` must point to memory with a size of at least `size_of::<T>() * capacity` bytes.
++    /// - The allocated size in bytes must not be larger than `isize::MAX`.
++    /// - `length` must be less than or equal to `capacity`.
++    /// - The first `length` elements must be initialized values of type `T`.
++    ///
++    /// It is also valid to create an empty `Vec` passing a dangling pointer for `ptr` and zero for
++    /// `cap` and `len`.
++    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
++        let layout = if Self::is_zst() {
++            ArrayLayout::empty()
++        } else {
++            // SAFETY: By the safety requirements of this function, `capacity * size_of::<T>()` is
++            // smaller than `isize::MAX`.
++            unsafe { ArrayLayout::new_unchecked(capacity) }
++        };
++
++        // INVARIANT: For ZSTs, we store an empty `ArrayLayout`, all other type invariants are
++        // covered by the safety requirements of this function.
++        Self {
++            // SAFETY: By the safety requirements, `ptr` is either dangling or pointing to a valid
++            // memory allocation, allocated with `A`.
++            ptr: unsafe { NonNull::new_unchecked(ptr) },
++            layout,
++            len: length,
++            _p: PhantomData::<A>,
++        }
 +    }
 +
-+    /// Creates a new `Box<T, A>` with uninitialized contents.
++    /// Consumes the `Vec<T, A>` and returns its raw components `pointer`, `length` and `capacity`.
 +    ///
-+    /// New memory is allocated with `A`. The allocation may fail, in which case an error is
-+    /// returned. For ZSTs no memory is allocated.
-+    ///
-+    /// # Examples
-+    ///
-+    /// ```
-+    /// let b = KBox::<u64>::new_uninit(GFP_KERNEL)?;
-+    /// let b = KBox::write(b, 24);
-+    ///
-+    /// assert_eq!(*b, 24_u64);
-+    /// # Ok::<(), Error>(())
-+    /// ```
-+    pub fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>, A>, AllocError> {
-+        let layout = Layout::new::<MaybeUninit<T>>();
-+        let ptr = A::alloc(layout, flags)?;
-+
-+        // INVARIANT: `ptr` is either a dangling pointer or points to memory allocated with `A`,
-+        // which is sufficient in size and alignment for storing a `T`.
-+        Ok(Box(ptr.cast(), PhantomData))
++    /// This will not run the destructor of the contained elements and for non-ZSTs the allocation
++    /// will stay alive indefinitely. Use [`Vec::from_raw_parts`] to recover the [`Vec`], drop the
++    /// elements and free the allocation, if any.
++    pub fn into_raw_parts(self) -> (*mut T, usize, usize) {
++        let mut me = ManuallyDrop::new(self);
++        let len = me.len();
++        let capacity = me.capacity();
++        let ptr = me.as_mut_ptr();
++        (ptr, len, capacity)
 +    }
 +
-+    /// Constructs a new `Pin<Box<T, A>>`. If `T` does not implement [`Unpin`], then `x` will be
-+    /// pinned in memory and can't be moved.
-+    #[inline]
-+    pub fn pin(x: T, flags: Flags) -> Result<Pin<Box<T, A>>, AllocError>
-+    where
-+        A: 'static,
-+    {
-+        Ok(Self::new(x, flags)?.into())
-+    }
-+
-+    /// Forgets the contents (does not run the destructor), but keeps the allocation.
-+    fn forget_contents(this: Self) -> Box<MaybeUninit<T>, A> {
-+        let ptr = Self::into_raw(this);
-+
-+        // SAFETY: `ptr` is valid, because it came from `Box::into_raw`.
-+        unsafe { Box::from_raw(ptr.cast()) }
-+    }
-+
-+    /// Drops the contents, but keeps the allocation.
++    /// Ensures that the capacity exceeds the length by at least `additional` elements.
 +    ///
 +    /// # Examples
 +    ///
 +    /// ```
-+    /// let value = KBox::new([0; 32], GFP_KERNEL)?;
-+    /// assert_eq!(*value, [0; 32]);
-+    /// let value = KBox::drop_contents(value);
-+    /// // Now we can re-use `value`:
-+    /// let value = KBox::write(value, [1; 32]);
-+    /// assert_eq!(*value, [1; 32]);
++    /// let mut v = KVec::new();
++    /// v.push(1, GFP_KERNEL)?;
++    ///
++    /// v.reserve(10, GFP_KERNEL)?;
++    /// let cap = v.capacity();
++    /// assert!(cap >= 10);
++    ///
++    /// v.reserve(10, GFP_KERNEL)?;
++    /// let new_cap = v.capacity();
++    /// assert_eq!(new_cap, cap);
++    ///
 +    /// # Ok::<(), Error>(())
 +    /// ```
-+    pub fn drop_contents(this: Self) -> Box<MaybeUninit<T>, A> {
-+        let ptr = this.0.as_ptr();
++    pub fn reserve(&mut self, additional: usize, flags: Flags) -> Result<(), AllocError> {
++        let len = self.len();
++        let cap = self.capacity();
 +
-+        // SAFETY: `ptr` is valid, because it came from `this`. After this call we never access the
-+        // value stored in `this` again.
-+        unsafe { core::ptr::drop_in_place(ptr) };
++        if cap - len >= additional {
++            return Ok(());
++        }
 +
-+        Self::forget_contents(this)
-+    }
++        if Self::is_zst() {
++            // The capacity is already `usize::MAX` for ZSTs, we can't go higher.
++            return Err(AllocError);
++        }
 +
-+    /// Moves the `Box`'s value out of the `Box` and consumes the `Box`.
-+    pub fn into_inner(b: Self) -> T {
-+        // SAFETY: By the type invariant `&*b` is valid for `read`.
-+        let value = unsafe { core::ptr::read(&*b) };
-+        let _ = Self::forget_contents(b);
-+        value
++        // We know that `cap <= isize::MAX` because of the type invariants of `Self`. So the
++        // multiplication by two won't overflow.
++        let new_cap = core::cmp::max(cap * 2, len.checked_add(additional).ok_or(AllocError)?);
++        let layout = ArrayLayout::new(new_cap).map_err(|_| AllocError)?;
++
++        // SAFETY:
++        // - `ptr` is valid because it's either `None` or comes from a previous call to
++        //   `A::realloc`.
++        // - `self.layout` matches the `ArrayLayout` of the preceding allocation.
++        let ptr = unsafe {
++            A::realloc(
++                Some(self.ptr.cast()),
++                layout.into(),
++                self.layout.into(),
++                flags,
++            )?
++        };
++
++        // INVARIANT:
++        // - `layout` is some `ArrayLayout::<T>`,
++        // - `ptr` has been created by `A::realloc` from `layout`.
++        self.ptr = ptr.cast();
++        self.layout = layout;
++
++        Ok(())
 +    }
 +}
 +
-+impl<T, A> From<Box<T, A>> for Pin<Box<T, A>>
-+where
-+    T: ?Sized,
-+    A: Allocator,
-+{
-+    /// Converts a `Box<T, A>` into a `Pin<Box<T, A>>`. If `T` does not implement [`Unpin`], then
-+    /// `*b` will be pinned in memory and can't be moved.
++impl<T: Clone, A: Allocator> Vec<T, A> {
++    /// Extend the vector by `n` clones of `value`.
++    pub fn extend_with(&mut self, n: usize, value: T, flags: Flags) -> Result<(), AllocError> {
++        if n == 0 {
++            return Ok(());
++        }
++
++        self.reserve(n, flags)?;
++
++        let spare = self.spare_capacity_mut();
++
++        for item in spare.iter_mut().take(n - 1) {
++            item.write(value.clone());
++        }
++
++        // We can write the last element directly without cloning needlessly.
++        spare[n - 1].write(value);
++
++        // SAFETY:
++        // - `self.len() + n < self.capacity()` due to the call to reserve above,
++        // - the loop and the line above initialized the next `n` elements.
++        unsafe { self.set_len(self.len() + n) };
++
++        Ok(())
++    }
++
++    /// Pushes clones of the elements of slice into the [`Vec`] instance.
 +    ///
-+    /// This moves `b` into `Pin` without moving `*b` or allocating and copying any memory.
-+    fn from(b: Box<T, A>) -> Self {
-+        // SAFETY: The value wrapped inside a `Pin<Box<T, A>>` cannot be moved or replaced as long
-+        // as `T` does not implement `Unpin`.
-+        unsafe { Pin::new_unchecked(b) }
++    /// # Examples
++    ///
++    /// ```
++    /// let mut v = KVec::new();
++    /// v.push(1, GFP_KERNEL)?;
++    ///
++    /// v.extend_from_slice(&[20, 30, 40], GFP_KERNEL)?;
++    /// assert_eq!(&v, &[1, 20, 30, 40]);
++    ///
++    /// v.extend_from_slice(&[50, 60], GFP_KERNEL)?;
++    /// assert_eq!(&v, &[1, 20, 30, 40, 50, 60]);
++    /// # Ok::<(), Error>(())
++    /// ```
++    pub fn extend_from_slice(&mut self, other: &[T], flags: Flags) -> Result<(), AllocError> {
++        self.reserve(other.len(), flags)?;
++        for (slot, item) in core::iter::zip(self.spare_capacity_mut(), other) {
++            slot.write(item.clone());
++        }
++
++        // SAFETY:
++        // - `other.len()` spare entries have just been initialized, so it is safe to increase
++        //   the length by the same number.
++        // - `self.len() + other.len() <= self.capacity()` is guaranteed by the preceding `reserve`
++        //   call.
++        unsafe { self.set_len(self.len() + other.len()) };
++        Ok(())
++    }
++
++    /// Create a new `Vec<T, A>` and extend it by `n` clones of `value`.
++    pub fn from_elem(value: T, n: usize, flags: Flags) -> Result<Self, AllocError> {
++        let mut v = Self::with_capacity(n, flags)?;
++
++        v.extend_with(n, value, flags)?;
++
++        Ok(v)
 +    }
 +}
 +
-+impl<T, A> InPlaceWrite<T> for Box<MaybeUninit<T>, A>
++impl<T, A> Drop for Vec<T, A>
 +where
-+    A: Allocator + 'static,
++    A: Allocator,
 +{
-+    type Initialized = Box<T, A>;
++    fn drop(&mut self) {
++        // SAFETY: `self.as_mut_ptr` is guaranteed to be valid by the type invariant.
++        unsafe {
++            ptr::drop_in_place(core::ptr::slice_from_raw_parts_mut(
++                self.as_mut_ptr(),
++                self.len,
++            ))
++        };
 +
-+    fn write_init<E>(mut self, init: impl Init<T, E>) -> Result<Self::Initialized, E> {
-+        let slot = self.as_mut_ptr();
-+        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-+        // slot is valid.
-+        unsafe { init.__init(slot)? };
-+        // SAFETY: All fields have been initialized.
-+        Ok(unsafe { Box::assume_init(self) })
-+    }
-+
-+    fn write_pin_init<E>(mut self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E> {
-+        let slot = self.as_mut_ptr();
-+        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
-+        // slot is valid and will not be moved, because we pin it later.
-+        unsafe { init.__pinned_init(slot)? };
-+        // SAFETY: All fields have been initialized.
-+        Ok(unsafe { Box::assume_init(self) }.into())
++        // SAFETY:
++        // - `self.ptr` was previously allocated with `A`.
++        // - `self.layout` matches the `ArrayLayout` of the preceding allocation.
++        unsafe { A::free(self.ptr.cast(), self.layout.into()) };
 +    }
 +}
 +
-+impl<T, A> InPlaceInit<T> for Box<T, A>
++impl<T, A, const N: usize> From<Box<[T; N], A>> for Vec<T, A>
 +where
-+    A: Allocator + 'static,
++    A: Allocator,
 +{
-+    type PinnedSelf = Pin<Self>;
++    fn from(b: Box<[T; N], A>) -> Vec<T, A> {
++        let len = b.len();
++        let ptr = Box::into_raw(b);
 +
++        // SAFETY:
++        // - `b` has been allocated with `A`,
++        // - `ptr` fulfills the alignment requirements for `T`,
++        // - `ptr` points to memory with at least a size of `size_of::<T>() * len`,
++        // - all elements within `b` are initialized values of `T`,
++        // - `len` does not exceed `isize::MAX`.
++        unsafe { Vec::from_raw_parts(ptr as _, len, len) }
++    }
++}
++
++impl<T> Default for KVec<T> {
 +    #[inline]
-+    fn try_pin_init<E>(init: impl PinInit<T, E>, flags: Flags) -> Result<Pin<Self>, E>
-+    where
-+        E: From<AllocError>,
-+    {
-+        Box::<_, A>::new_uninit(flags)?.write_pin_init(init)
-+    }
-+
-+    #[inline]
-+    fn try_init<E>(init: impl Init<T, E>, flags: Flags) -> Result<Self, E>
-+    where
-+        E: From<AllocError>,
-+    {
-+        Box::<_, A>::new_uninit(flags)?.write_init(init)
++    fn default() -> Self {
++        Self::new()
 +    }
 +}
 +
-+impl<T: 'static, A> ForeignOwnable for Box<T, A>
-+where
-+    A: Allocator,
-+{
-+    type Borrowed<'a> = &'a T;
-+
-+    fn into_foreign(self) -> *const core::ffi::c_void {
-+        Box::into_raw(self) as _
-+    }
-+
-+    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
-+        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
-+        // call to `Self::into_foreign`.
-+        unsafe { Box::from_raw(ptr as _) }
-+    }
-+
-+    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
-+        // SAFETY: The safety requirements of this method ensure that the object remains alive and
-+        // immutable for the duration of 'a.
-+        unsafe { &*ptr.cast() }
-+    }
-+}
-+
-+impl<T: 'static, A> ForeignOwnable for Pin<Box<T, A>>
-+where
-+    A: Allocator,
-+{
-+    type Borrowed<'a> = Pin<&'a T>;
-+
-+    fn into_foreign(self) -> *const core::ffi::c_void {
-+        // SAFETY: We are still treating the box as pinned.
-+        Box::into_raw(unsafe { Pin::into_inner_unchecked(self) }) as _
-+    }
-+
-+    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
-+        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
-+        // call to `Self::into_foreign`.
-+        unsafe { Pin::new_unchecked(Box::from_raw(ptr as _)) }
-+    }
-+
-+    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Pin<&'a T> {
-+        // SAFETY: The safety requirements for this function ensure that the object is still alive,
-+        // so it is safe to dereference the raw pointer.
-+        // The safety requirements of `from_foreign` also ensure that the object remains alive for
-+        // the lifetime of the returned value.
-+        let r = unsafe { &*ptr.cast() };
-+
-+        // SAFETY: This pointer originates from a `Pin<Box<T>>`.
-+        unsafe { Pin::new_unchecked(r) }
-+    }
-+}
-+
-+impl<T, A> Deref for Box<T, A>
-+where
-+    T: ?Sized,
-+    A: Allocator,
-+{
-+    type Target = T;
-+
-+    fn deref(&self) -> &T {
-+        // SAFETY: `self.0` is always properly aligned, dereferenceable and points to an initialized
-+        // instance of `T`.
-+        unsafe { self.0.as_ref() }
-+    }
-+}
-+
-+impl<T, A> DerefMut for Box<T, A>
-+where
-+    T: ?Sized,
-+    A: Allocator,
-+{
-+    fn deref_mut(&mut self) -> &mut T {
-+        // SAFETY: `self.0` is always properly aligned, dereferenceable and points to an initialized
-+        // instance of `T`.
-+        unsafe { self.0.as_mut() }
-+    }
-+}
-+
-+impl<T, A> fmt::Debug for Box<T, A>
-+where
-+    T: ?Sized + fmt::Debug,
-+    A: Allocator,
-+{
++impl<T: fmt::Debug, A: Allocator> fmt::Debug for Vec<T, A> {
 +    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 +        fmt::Debug::fmt(&**self, f)
 +    }
 +}
 +
-+impl<T, A> Drop for Box<T, A>
++impl<T, A> Deref for Vec<T, A>
 +where
-+    T: ?Sized,
 +    A: Allocator,
 +{
-+    fn drop(&mut self) {
-+        let layout = Layout::for_value::<T>(self);
++    type Target = [T];
 +
-+        // SAFETY: The pointer in `self.0` is guaranteed to be valid by the type invariant.
-+        unsafe { core::ptr::drop_in_place::<T>(self.deref_mut()) };
-+
-+        // SAFETY:
-+        // - `self.0` was previously allocated with `A`.
-+        // - `layout` is equal to the `Layout´ `self.0` was allocated with.
-+        unsafe { A::free(self.0.cast(), layout) };
++    #[inline]
++    fn deref(&self) -> &[T] {
++        // SAFETY: The memory behind `self.as_ptr()` is guaranteed to contain `self.len`
++        // initialized elements of type `T`.
++        unsafe { slice::from_raw_parts(self.as_ptr(), self.len) }
 +    }
 +}
++
++impl<T, A> DerefMut for Vec<T, A>
++where
++    A: Allocator,
++{
++    #[inline]
++    fn deref_mut(&mut self) -> &mut [T] {
++        // SAFETY: The memory behind `self.as_ptr()` is guaranteed to contain `self.len`
++        // initialized elements of type `T`.
++        unsafe { slice::from_raw_parts_mut(self.as_mut_ptr(), self.len) }
++    }
++}
++
++impl<T: Eq, A> Eq for Vec<T, A> where A: Allocator {}
++
++impl<T, I: SliceIndex<[T]>, A> Index<I> for Vec<T, A>
++where
++    A: Allocator,
++{
++    type Output = I::Output;
++
++    #[inline]
++    fn index(&self, index: I) -> &Self::Output {
++        Index::index(&**self, index)
++    }
++}
++
++impl<T, I: SliceIndex<[T]>, A> IndexMut<I> for Vec<T, A>
++where
++    A: Allocator,
++{
++    #[inline]
++    fn index_mut(&mut self, index: I) -> &mut Self::Output {
++        IndexMut::index_mut(&mut **self, index)
++    }
++}
++
++macro_rules! impl_slice_eq {
++    ($([$($vars:tt)*] $lhs:ty, $rhs:ty,)*) => {
++        $(
++            impl<T, U, $($vars)*> PartialEq<$rhs> for $lhs
++            where
++                T: PartialEq<U>,
++            {
++                #[inline]
++                fn eq(&self, other: &$rhs) -> bool { self[..] == other[..] }
++            }
++        )*
++    }
++}
++
++impl_slice_eq! {
++    [A1: Allocator, A2: Allocator] Vec<T, A1>, Vec<U, A2>,
++    [A: Allocator] Vec<T, A>, &[U],
++    [A: Allocator] Vec<T, A>, &mut [U],
++    [A: Allocator] &[T], Vec<U, A>,
++    [A: Allocator] &mut [T], Vec<U, A>,
++    [A: Allocator] Vec<T, A>, [U],
++    [A: Allocator] [T], Vec<U, A>,
++    [A: Allocator, const N: usize] Vec<T, A>, [U; N],
++    [A: Allocator, const N: usize] Vec<T, A>, &[U; N],
++}
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -15,6 +15,7 @@
+ #![feature(arbitrary_self_types)]
+ #![feature(coerce_unsized)]
+ #![feature(dispatch_from_dyn)]
++#![feature(inline_const)]
+ #![feature(lint_reasons)]
+ #![feature(unsize)]
+ 
 --- a/rust/kernel/prelude.rs
 +++ b/rust/kernel/prelude.rs
 @@ -14,7 +14,7 @@
  #[doc(no_inline)]
  pub use core::pin::Pin;
  
--pub use crate::alloc::{box_ext::BoxExt, flags::*, vec_ext::VecExt};
-+pub use crate::alloc::{box_ext::BoxExt, flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
+-pub use crate::alloc::{flags::*, vec_ext::VecExt, Box, KBox, KVBox, VBox};
++pub use crate::alloc::{flags::*, vec_ext::VecExt, Box, KBox, KVBox, KVVec, KVec, VBox, VVec};
  
  #[doc(no_inline)]
- pub use alloc::{boxed::Box, vec::Vec};
+ pub use alloc::vec::Vec;
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
