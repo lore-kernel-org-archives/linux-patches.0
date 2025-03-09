@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1616C1FB3;
-	Sun,  9 Mar 2025 09:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A611ADC95;
+	Sun,  9 Mar 2025 09:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513717; cv=none; b=tLPcdJdmaCafVFRmHEuqAV53+F2IjKdRsN5ucI0TaJhq1KiKqW2Sw3AobjpboQbeNuqCDS+wluv4UUl7GRCzmbcMU/wKCd+GLealp0b2YbCZQS8jVuRJE4YxvLUNCvtEDIEKkm/UkzUkmCoIEDq6hQhZUdbqBl4w4EZ8bnHGaZ8=
+	t=1741513718; cv=none; b=bcQ5kAR2JzX9bj5/a9Smk3G2bkXoI7lxwo1UlRWNhem/8bw4FPWTlqIfnxvXP0QdLxX2D49iUvhyBQlNfoTnpk8L5JW5XPOrt0/j/V3iVv+alOP65o18lR2z0OeSx/PFOIi0vFWkUFc7Tc/GwA+HH3ISBeKkcrPAE2RrmDkyWnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513717; c=relaxed/simple;
-	bh=Cy8lTC784kbi7Ot35Pq1DNMK1/xf0W9ybtxC+1uhcq4=;
+	s=arc-20240116; t=1741513718; c=relaxed/simple;
+	bh=1A6dJG+cDAzrD7qj0r63zHS/FPCqLw0flKvOl6YY3B0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=tHwTagQbvWzM6KL/NiXofJC9aMzMCmEv0K1WUFsCNk6H71EO2edkRz528mQsdjalFOPO3lrcvq0anfDR0amS5DWvE7hHgkdt6/xJWk5CN53gHl0EcJR76JiGak0i6wfvaZL3ApsO4QZh8wSEbjHfWBC9LVIgzUTwYLCnazU4NaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFfGNz0B; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=HJwIyK6NSRZ9gwTcfgNn9CBiq4RchzC75fM8Ckylv6n7BJJkWoMFUrWdJBgjC/spI9tWEdbYQ2jTNuriAEEUkzjtKfMwwFFTHOpPhlvzdKsknwnVJI5ncMhKgPbuRjKyCWEWHUk7Pd3LA+vY9ZfEkLoTdVBm1PPWsbKzhvTz9cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07Wfndg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFfGNz0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D16BC4CEE5;
-	Sun,  9 Mar 2025 09:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07Wfndg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590B9C4CEE5;
+	Sun,  9 Mar 2025 09:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513714;
-	bh=Cy8lTC784kbi7Ot35Pq1DNMK1/xf0W9ybtxC+1uhcq4=;
+	s=korg; t=1741513717;
+	bh=1A6dJG+cDAzrD7qj0r63zHS/FPCqLw0flKvOl6YY3B0=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=lFfGNz0BIPgxNW/9EFlEj90pXyBp3d9Grj/QQyTFqsdkqYOnqETyAvW5YGA1ToBQb
-	 m1PTGeVWXoFHcdG9eXKvs5Co/yi/ecnmEq+qAG7RHOXiP1nZ30bs/GY6gPsJq47bQC
-	 L+AXpgB0Sh3wS7TAl+s7IecbNivWLDaNMjv33Pp4=
-Subject: Patch "MAINTAINERS: add entry for the Rust `alloc` module" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=07Wfndg+s8b2A2qs1NNl/9E0ZTRVEXdV9rRdTuLLfslvTzEz3wgFcVv2fSpb7R9VO
+	 rWTyVqCZN4b6lPrnw2rAK6ieALEYQa/f3N/mGfB8/QA7hfPL9Ge4t8lq0FEGQcwwbG
+	 yj136pX/vCWZoKm3/aXETE6A0RuDAaAs3yB34enc=
+Subject: Patch "rust: alloc: add __GFP_NOWARN to `Flags`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-49-ojeda@kernel.org>
-Message-ID: <2025030948-stowaway-presuming-91fa@gregkh>
+In-Reply-To: <20250307225008.779961-30-ojeda@kernel.org>
+Message-ID: <2025030948-wipe-snide-966b@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,62 +44,68 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    MAINTAINERS: add entry for the Rust `alloc` module
+    rust: alloc: add __GFP_NOWARN to `Flags`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     maintainers-add-entry-for-the-rust-alloc-module.patch
+     rust-alloc-add-__gfp_nowarn-to-flags.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121503-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:51 2025
+From stable+bounces-121484-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:11 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:55 +0100
-Subject: MAINTAINERS: add entry for the Rust `alloc` module
+Date: Fri,  7 Mar 2025 23:49:36 +0100
+Subject: rust: alloc: add __GFP_NOWARN to `Flags`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-49-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-30-ojeda@kernel.org>
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit 6ce162a002657910104c7a07fb50017681bc476c upstream.
+commit 01b2196e5aac8af9343282d0044fa0d6b07d484c upstream.
 
-Add maintainers entry for the Rust `alloc` module.
+Some test cases in subsequent patches provoke allocation failures. Add
+`__GFP_NOWARN` to enable test cases to silence unpleasant warnings.
 
-Currently, this includes the `Allocator` API itself, `Allocator`
-implementations, such as `Kmalloc` or `Vmalloc`, as well as the kernel's
-implementation of the primary memory allocation data structures, `Box`
-and `Vec`.
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-30-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-11-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- MAINTAINERS |    7 +++++++
- 1 file changed, 7 insertions(+)
+ rust/bindings/bindings_helper.h |    1 +
+ rust/kernel/alloc.rs            |    5 +++++
+ 2 files changed, 6 insertions(+)
 
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20183,6 +20183,13 @@ F:	scripts/*rust*
- F:	tools/testing/selftests/rust/
- K:	\b(?i:rust)\b
- 
-+RUST [ALLOC]
-+M:	Danilo Krummrich <dakr@kernel.org>
-+L:	rust-for-linux@vger.kernel.org
-+S:	Maintained
-+F:	rust/kernel/alloc.rs
-+F:	rust/kernel/alloc/
+--- a/rust/bindings/bindings_helper.h
++++ b/rust/bindings/bindings_helper.h
+@@ -31,4 +31,5 @@ const gfp_t RUST_CONST_HELPER_GFP_KERNEL
+ const gfp_t RUST_CONST_HELPER_GFP_NOWAIT = GFP_NOWAIT;
+ const gfp_t RUST_CONST_HELPER___GFP_ZERO = __GFP_ZERO;
+ const gfp_t RUST_CONST_HELPER___GFP_HIGHMEM = ___GFP_HIGHMEM;
++const gfp_t RUST_CONST_HELPER___GFP_NOWARN = ___GFP_NOWARN;
+ const blk_features_t RUST_CONST_HELPER_BLK_FEAT_ROTATIONAL = BLK_FEAT_ROTATIONAL;
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -91,6 +91,11 @@ pub mod flags {
+     /// use any filesystem callback.  It is very likely to fail to allocate memory, even for very
+     /// small allocations.
+     pub const GFP_NOWAIT: Flags = Flags(bindings::GFP_NOWAIT);
 +
- RXRPC SOCKETS (AF_RXRPC)
- M:	David Howells <dhowells@redhat.com>
- M:	Marc Dionne <marc.dionne@auristor.com>
++    /// Suppresses allocation failure reports.
++    ///
++    /// This is normally or'd with other flags.
++    pub const __GFP_NOWARN: Flags = Flags(bindings::__GFP_NOWARN);
+ }
+ 
+ /// The kernel's [`Allocator`] trait.
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
