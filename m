@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE68C1AC43A;
-	Sun,  9 Mar 2025 09:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A7D1B0F26;
+	Sun,  9 Mar 2025 09:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513806; cv=none; b=a09K52TqUN8vSyR01zUHLrv+6a1aYzTkgMN2MQEbCtwQToVxOkYPgP8kLfD7LXdZ1mZdb+d1zV5+k1yxuAxzBs4wO5Vv8TOyypqb9fLnIO1NDVNuEA3FN+BAc6UkOB16Q9gvXSPYoObOrZOr3YINmaIwg/96fkQwYb39fgJGvHA=
+	t=1741513809; cv=none; b=E4lVZ4+FpxBpQnxvaiz189OIwGYwwmKRgDyMgCs+Kox3f3nVcD3V6FXs0VrAHdfJZCSJoVP6I7mAph2vqKPHZAgFg+1zqRlh0X+7c5xnXJB9F3YCYV50TRYWlVbC0psIuwM5xFErvtyTylw0PytD1tmjjQEptiajPTinseupAv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513806; c=relaxed/simple;
-	bh=hMeaGpA9Me/VZqO4+cLZiKoMPl6HN7q11RvKUfNR29M=;
+	s=arc-20240116; t=1741513809; c=relaxed/simple;
+	bh=8VUW61EHbVcoY2NhkVGuRTXKuwQK+bph0ikzmpGlYQU=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=pHSVvfn/O+i0CRKgAIjwb/LJMeM5fNc7i9KgEHJIUzdMR1DzT7/qBLF7F4DKMsn5RBow+s9rp33mhzCnrghj02TEzFRF4gyqDD/hmMgLy3bXJrLWFFujd+PJMRdA5mp+E5P9q8mOnqWk8xt88vTqDZnTr3CoPRDAfBU0+Lq9Ykg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Edn6W7C4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=ScG6QPd2GSDTOGrKvi001OOOxJDjYiYNXeUg4MaRzD0uVKr6p62wkLKfqlzA1ptJhfUR3ITr7gYq5zfcfNc2EIj4uJRyztFcWYSm5LJjzSD/6yhASpxuV1K+eTC1fj69FxF/L39XrUqJE6bhZqVu2u7iCa4v2Vo5QNTx105EQHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyezFBZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Edn6W7C4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E1C4CEEC;
-	Sun,  9 Mar 2025 09:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyezFBZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C696C4CEE5;
+	Sun,  9 Mar 2025 09:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513806;
-	bh=hMeaGpA9Me/VZqO4+cLZiKoMPl6HN7q11RvKUfNR29M=;
+	s=korg; t=1741513809;
+	bh=8VUW61EHbVcoY2NhkVGuRTXKuwQK+bph0ikzmpGlYQU=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=Edn6W7C4fmywYVX8umdqutBDnqlqjyeGUc4nMiz9BN4DC7h0QufBggeFAhT7CWsc8
-	 i/6RhNh+Cy7iqVzZ8920067OkU7jFIIqD5UoSM+IHSl+vdIW0x50AHbUQNRwYa9oOC
-	 tPi64UXN5oRQV7tAmLwsxsPHpHGfIO8t1qTJzVA8=
-Subject: Patch "rust: map `__kernel_size_t` and friends also to usize/isize" has been added to the 6.12-stable tree
+	b=CyezFBZSyDL+b6uOX7ZM79WmWgtrjUxZn8KT0ULKMm+qX3MzlvRk5Imoxrvb/mMSh
+	 Ik0aDaCCmdbEDnPzGEIFx1A+W6tzBg30T40mHuaH0q043Cq/6BelYhCHEmLF3jaA4E
+	 j+Y1OFfd61fhZcAFcXz1nhr3zC2ACqqT/tDALLZ4=
+Subject: Patch "rust: provide proper code documentation titles" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-59-ojeda@kernel.org>
-Message-ID: <2025030951-reversion-unclad-0236@gregkh>
+In-Reply-To: <20250307225008.779961-14-ojeda@kernel.org>
+Message-ID: <2025030951-startup-baking-bdbf@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,92 +44,121 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: map `__kernel_size_t` and friends also to usize/isize
+    rust: provide proper code documentation titles
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-map-__kernel_size_t-and-friends-also-to-usize-isize.patch
+     rust-provide-proper-code-documentation-titles.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121513-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:16 2025
+From stable+bounces-121468-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:16 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:05 +0100
-Subject: rust: map `__kernel_size_t` and friends also to usize/isize
+Date: Fri,  7 Mar 2025 23:49:20 +0100
+Subject: rust: provide proper code documentation titles
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-59-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-14-ojeda@kernel.org>
 
-From: Gary Guo <gary@garyguo.net>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 2fd6f55c048d0c863ffbc8590b1bd2edb5ff13e5 upstream.
+commit 2f390cc589433dfcfedc307a141e103929a6fd4d upstream.
 
-Currently bindgen has special logic to recognise `size_t` and `ssize_t`
-and map them to Rust `usize` and `isize`. Similarly, `ptrdiff_t` is
-mapped to `isize`.
+Rust 1.82.0's Clippy is introducing [1][2] a new warn-by-default lint,
+`too_long_first_doc_paragraph` [3], which is intended to catch titles
+of code documentation items that are too long (likely because no title
+was provided and the item documentation starts with a paragraph).
 
-However this falls short for `__kernel_size_t`, `__kernel_ssize_t` and
-`__kernel_ptrdiff_t`. To ensure that they are mapped to usize/isize
-rather than 32/64 integers depending on platform, blocklist them in
-bindgen parameters and manually provide their definition.
+This lint does not currently trigger anywhere, but it does detect a couple
+cases if checking for private items gets enabled (which we will do in
+the next commit):
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+    error: first doc comment paragraph is too long
+      --> rust/kernel/init/__internal.rs:18:1
+       |
+    18 | / /// This is the module-internal type implementing `PinInit` and `Init`. It is unsafe to create this
+    19 | | /// type, since the closure needs to fulfill the same safety requirement as the
+    20 | | /// `__pinned_init`/`__init` functions.
+       | |_
+       |
+       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_long_first_doc_paragraph
+       = note: `-D clippy::too-long-first-doc-paragraph` implied by `-D warnings`
+       = help: to override `-D warnings` add `#[allow(clippy::too_long_first_doc_paragraph)]`
+
+    error: first doc comment paragraph is too long
+     --> rust/kernel/sync/arc/std_vendor.rs:3:1
+      |
+    3 | / //! The contents of this file come from the Rust standard library, hosted in
+    4 | | //! the <https://github.com/rust-lang/rust> repository, licensed under
+    5 | | //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
+    6 | | //! see <https://github.com/rust-lang/rust/blob/master/COPYRIGHT>.
+      | |_
+      |
+      = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_long_first_doc_paragraph
+
+Thus clean those two instances.
+
+In addition, since we have a second `std_vendor.rs` file with a similar
+header, do the same there too (even if that one does not trigger the lint,
+because it is `doc(hidden)`).
+
+Link: https://github.com/rust-lang/rust/pull/129531 [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/12993 [2]
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/too_long_first_doc_paragraph [3]
 Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Link: https://lore.kernel.org/r/20240913213041.395655-3-gary@garyguo.net
-[ Formatted comment. - Miguel ]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240904204347.168520-15-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindgen_parameters |    5 +++++
- rust/bindings/lib.rs    |    5 +++++
- rust/uapi/lib.rs        |    5 +++++
- 3 files changed, 15 insertions(+)
+ rust/kernel/init/__internal.rs     |    7 ++++---
+ rust/kernel/std_vendor.rs          |    2 ++
+ rust/kernel/sync/arc/std_vendor.rs |    2 ++
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/rust/bindgen_parameters
-+++ b/rust/bindgen_parameters
-@@ -1,5 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
+--- a/rust/kernel/init/__internal.rs
++++ b/rust/kernel/init/__internal.rs
+@@ -15,9 +15,10 @@ use super::*;
+ /// [this table]: https://doc.rust-lang.org/nomicon/phantom-data.html#table-of-phantomdata-patterns
+ pub(super) type Invariant<T> = PhantomData<fn(*mut T) -> *mut T>;
  
-+# We want to map these types to `isize`/`usize` manually, instead of
-+# define them as `int`/`long` depending on platform bitwidth.
-+--blocklist-type __kernel_s?size_t
-+--blocklist-type __kernel_ptrdiff_t
-+
- --opaque-type xregs_state
- --opaque-type desc_struct
- --opaque-type arch_lbr_state
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -27,6 +27,11 @@
- #[allow(dead_code)]
- #[allow(clippy::undocumented_unsafe_blocks)]
- mod bindings_raw {
-+    // Manual definition for blocklisted types.
-+    type __kernel_size_t = usize;
-+    type __kernel_ssize_t = isize;
-+    type __kernel_ptrdiff_t = isize;
-+
-     // Use glob import here to expose all helpers.
-     // Symbols defined within the module will take precedence to the glob import.
-     pub use super::bindings_helper::*;
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -25,4 +25,9 @@
-     unsafe_op_in_unsafe_fn
- )]
+-/// This is the module-internal type implementing `PinInit` and `Init`. It is unsafe to create this
+-/// type, since the closure needs to fulfill the same safety requirement as the
+-/// `__pinned_init`/`__init` functions.
++/// Module-internal type implementing `PinInit` and `Init`.
++///
++/// It is unsafe to create this type, since the closure needs to fulfill the same safety
++/// requirement as the `__pinned_init`/`__init` functions.
+ pub(crate) struct InitClosure<F, T: ?Sized, E>(pub(crate) F, pub(crate) Invariant<(E, T)>);
  
-+// Manual definition of blocklisted types.
-+type __kernel_size_t = usize;
-+type __kernel_ssize_t = isize;
-+type __kernel_ptrdiff_t = isize;
-+
- include!(concat!(env!("OBJTREE"), "/rust/uapi/uapi_generated.rs"));
+ // SAFETY: While constructing the `InitClosure`, the user promised that it upholds the
+--- a/rust/kernel/std_vendor.rs
++++ b/rust/kernel/std_vendor.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: Apache-2.0 OR MIT
+ 
++//! Rust standard library vendored code.
++//!
+ //! The contents of this file come from the Rust standard library, hosted in
+ //! the <https://github.com/rust-lang/rust> repository, licensed under
+ //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
+--- a/rust/kernel/sync/arc/std_vendor.rs
++++ b/rust/kernel/sync/arc/std_vendor.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: Apache-2.0 OR MIT
+ 
++//! Rust standard library vendored code.
++//!
+ //! The contents of this file come from the Rust standard library, hosted in
+ //! the <https://github.com/rust-lang/rust> repository, licensed under
+ //! "Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
