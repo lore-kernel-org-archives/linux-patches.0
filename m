@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2911AC43A;
-	Sun,  9 Mar 2025 09:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A5B1AC43A;
+	Sun,  9 Mar 2025 09:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513766; cv=none; b=sZ/itF0Y35UnNHHGmPNYPa6yBDdvlM4wOOFgRAnZylsJ5VQVm6ofO0Sgrhh0CGX3gOsV1ja8Dyt4kU86rJ77x8q0IY+xQGPDfb9YWM148cXtuVCxsFub4MlRbdCiWCo5iPO1U59C7kRlCwtnqpAFvWxGypqFvKOQSFlYmy1e938=
+	t=1741513770; cv=none; b=e/IElP7DGe5v81GvYm8NX6xfNa33sV/QLxVA/HgfQ0qgr+qEvSduLr60GJsi/e2jOMi++62Mma8RgqunRrbf1n7McQeP81p+vfG9/n5JrcBJva+kpopgiAJF+xQ+BxGVC7ifS/W4mCLoHl/LiErZCk20t0MghzBvNowEiOLzR+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513766; c=relaxed/simple;
-	bh=5Vjak9cUJTeIo94+HSVEBTNjc4+S+b5J5WjZCGRmK1k=;
+	s=arc-20240116; t=1741513770; c=relaxed/simple;
+	bh=fM204/hgAFJDPwaLJdqDuHo0lT7TuOul3ai4NwGhAHc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=kTSQC67V+via+oTVuP7hg9IPwqRrpTaIDwRcUSm/ueHkaxiBUQ/YsS9+/zpR+hKcuxmbIbmfWaZFtnG6yZ39+/CJvMk9ulEzmnqZO1xGy6s0XG72mxSWCp5nQ1v4V+yCZamGPEP4ds3Ru2zBwnZahmb7HjnMN5T8oYdslEecMrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVLkCHVX; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=sziUZi5JNH0aFrMzebFkltPthK/3YeLT6G9Qg8h0sPeJKdqjF2X5ktCpDnEHFc2S5kvrkaeXOGN0MG2WczRLi1RN7It/8YkR1H8QulO82ej0qH9/GDPaBj3wd4wajQo+H4esMAWNDAsEUNB7cg47N4hWjyNgKgYtdT+YZzAN0Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbeB8zXR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVLkCHVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C9CC4CEE5;
-	Sun,  9 Mar 2025 09:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbeB8zXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2F8C4CEE5;
+	Sun,  9 Mar 2025 09:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513766;
-	bh=5Vjak9cUJTeIo94+HSVEBTNjc4+S+b5J5WjZCGRmK1k=;
+	s=korg; t=1741513769;
+	bh=fM204/hgAFJDPwaLJdqDuHo0lT7TuOul3ai4NwGhAHc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=NVLkCHVXAHtQ24Mws3EW6urS7QglZyoU80xUJNwWf/BgJKPKf/uv3JhnR1/eWdKyY
-	 n5oXcfhfW39Lx5hjxZSDWYGwMD508AAh4nqDFrs5vtEDHCRVUm5qe0n98mL5pgKYVY
-	 XCMzj7p08Xw1RNg5juA8wgFm5a24TA+UHmpDSV+M=
-Subject: Patch "rust: alloc: make `allocator` module public" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=ZbeB8zXRypZa4daiks9IoJRES969oc6kN4qo1jTbmbb+AkKjdLwggLPw9Stidw8TR
+	 tLvnHH66bZPQdF1EEL3OkUmVUzdKivw2f8/SWUQtuxzDA/5zyka058wgP/b4WpHy8A
+	 ESzeYfDfcugMc2AC/Y4uotBDeUaH21VQjB76vXJQ=
+Subject: Patch "rust: enable `clippy::unnecessary_safety_comment` lint" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu,vincenzopalazzodev@gmail.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-25-ojeda@kernel.org>
-Message-ID: <2025030950-superglue-immunity-7f66@gregkh>
+In-Reply-To: <20250307225008.779961-6-ojeda@kernel.org>
+Message-ID: <2025030950-twentieth-unwanted-8002@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,56 +44,96 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: make `allocator` module public
+    rust: enable `clippy::unnecessary_safety_comment` lint
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-make-allocator-module-public.patch
+     rust-enable-clippy-unnecessary_safety_comment-lint.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121479-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:46 2025
+From stable+bounces-121460-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:52 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:31 +0100
-Subject: rust: alloc: make `allocator` module public
+Date: Fri,  7 Mar 2025 23:49:12 +0100
+Subject: rust: enable `clippy::unnecessary_safety_comment` lint
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-25-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-6-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit a87a36f0bf517dae22f3e3790b05c979070f776a upstream.
+commit c28bfe76e4ba707775a205b0274710de7aa1e31c upstream.
 
-Subsequent patches implement allocators such as `Kmalloc`, `Vmalloc`,
-`KVmalloc`; we need them to be available outside of the kernel crate as
-well.
+In Rust 1.67.0, Clippy added the `unnecessary_safety_comment` lint [1],
+which is the "inverse" of `undocumented_unsafe_blocks`: it finds places
+where safe code has a `// SAFETY` comment attached.
 
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+The lint currently finds 3 places where we had such mistakes, thus it
+seems already quite useful.
+
+Thus clean those and enable it.
+
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/unnecessary_safety_comment [1]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-6-dakr@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-6-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile                 |    1 +
+ rust/kernel/sync/arc.rs  |    2 +-
+ rust/kernel/workqueue.rs |    4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -4,7 +4,7 @@
+--- a/Makefile
++++ b/Makefile
+@@ -459,6 +459,7 @@ export rust_common_flags := --edition=20
+ 			    -Aclippy::needless_lifetimes \
+ 			    -Wclippy::no_mangle_with_rust_abi \
+ 			    -Wclippy::undocumented_unsafe_blocks \
++			    -Wclippy::unnecessary_safety_comment \
+ 			    -Wrustdoc::missing_crate_level_docs
  
- #[cfg(not(test))]
- #[cfg(not(testlib))]
--mod allocator;
-+pub mod allocator;
- pub mod box_ext;
- pub mod vec_ext;
+ KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -338,7 +338,7 @@ impl<T: 'static> ForeignOwnable for Arc<
+     }
  
+     unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
+-        // SAFETY: By the safety requirement of this function, we know that `ptr` came from
++        // By the safety requirement of this function, we know that `ptr` came from
+         // a previous call to `Arc::into_foreign`.
+         let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+ 
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -526,7 +526,7 @@ where
+     T: HasWork<T, ID>,
+ {
+     unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
+-        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
++        // The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
+         let ptr = ptr as *mut Work<T, ID>;
+         // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
+         let ptr = unsafe { T::work_container_of(ptr) };
+@@ -573,7 +573,7 @@ where
+     T: HasWork<T, ID>,
+ {
+     unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
+-        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
++        // The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
+         let ptr = ptr as *mut Work<T, ID>;
+         // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
+         let ptr = unsafe { T::work_container_of(ptr) };
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
