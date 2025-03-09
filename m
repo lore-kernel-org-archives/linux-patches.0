@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5D21FB3;
-	Sun,  9 Mar 2025 09:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3083A1FB3;
+	Sun,  9 Mar 2025 09:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513702; cv=none; b=YwUzrMl8LReK6WsdtF1D0JI+z85PS5OrCZBjCqGhmMn3SGwLM3JhsIxtlIbpD5Wc0lX8IgnVr2miQUvk1/ZR1+b9LpG84t465JlwFs56eJCfZEGzB/9oKkxV+fhUWFUHSeBXNdSn19PL8+gNDHxSzE3z22xEvGMK9E25MEJr2lM=
+	t=1741513705; cv=none; b=aNUejvneeHd4/miAC3XMyCJ/fvH2nbN9/ngRR1ap9K/DeulHB9EXVxZqPPw7PAyvkpWv54UxtjZ8xDmqIOk44cAEJA05vn77XPS3UPhWUs5X50hUzYhk380GxOfVIv5Gurs0YjO7RpouKKbtuB6dJUi7Q/+JLfsayph4HM7s+C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513702; c=relaxed/simple;
-	bh=3yotAWf0UOavafYM+KFgXA5ytWPdurw4E6bqdZkBtAY=;
+	s=arc-20240116; t=1741513705; c=relaxed/simple;
+	bh=Svl37115EonF/pHj1KjSBD5w3F7KONU8Yuzu/qA0QBw=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=aT3Pn0nzH+YmOjujCfYswGOjx97R02wh6Zf1pcL0Olf7cOeMAZvs6rclDniQWHRcinC69dQQVlqoh5G1gRNAOVFJjBaClyzrCzDSjZPGzpQqDMB7nuiuW2BDeuUVtld6UHa8v0TBqnLOLOqmv+qnFxH7atP4Xrm+c5k6qjtDxnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teRAFZY/; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=PNf46l04K7yh0zrXrpF3wppSFqOS00myzTfr27Q+Ijng7E0jz8VeBgOiXegkUxYPl0OF+P93KB99K95cKR+yicH8l7CLNZ10prBe4g9w6mhI9tMRB+tDV8WjswXrU5DoDe+xb+YF6aet5bfcI3z7xmELCut5ZxQ166ThEa/PJEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlZURTCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teRAFZY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6341C4CEE5;
-	Sun,  9 Mar 2025 09:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlZURTCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4AFC4CEE5;
+	Sun,  9 Mar 2025 09:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513702;
-	bh=3yotAWf0UOavafYM+KFgXA5ytWPdurw4E6bqdZkBtAY=;
+	s=korg; t=1741513705;
+	bh=Svl37115EonF/pHj1KjSBD5w3F7KONU8Yuzu/qA0QBw=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=teRAFZY/FQ2RT2BQYb6W/+bldDbiP5O/VoY5bKdTT3XRYnLOIFzyuSkVtO+hGXywS
-	 G3KwtOmrmj+H27u8CRYhmNLM+erI7H/A3+biqpI9fOYOyp0reQmzE+gUKKSnBfYZWL
-	 Tu+c+1qLjLH8dfwBaMGr+bhh1Bk7OoYpNmSqE9L0=
-Subject: Patch "rust: alloc: add `Vec` to prelude" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=RlZURTCNGj3vd/PTqVsveRonX1ahchYPVPJivqQCKSWiA/VEiIZGGasPh9aW/13GX
+	 9/zA5xrWotDDNrgYrrCn0+Q6bOSbAjWX+NbLyInRieDqujI3KnNxDhJWew1sk3/msL
+	 NUIQjvyybIoNRwQlHU6FyqDC4+pl1porROuwwho8=
+Subject: Patch "drm/panic: remove redundant field when assigning value" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-41-ojeda@kernel.org>
-Message-ID: <2025030948-alright-backboned-61a9@gregkh>
+In-Reply-To: <20250307225008.779961-53-ojeda@kernel.org>
+Message-ID: <2025030948-shining-banker-b792@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore
@@ -44,56 +44,73 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: add `Vec` to prelude
+    drm/panic: remove redundant field when assigning value
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-add-vec-to-prelude.patch
+     drm-panic-remove-redundant-field-when-assigning-value.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121495-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:37 2025
+From stable+bounces-121507-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:06 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:47 +0100
-Subject: rust: alloc: add `Vec` to prelude
+Date: Fri,  7 Mar 2025 23:49:59 +0100
+Subject: drm/panic: remove redundant field when assigning value
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-41-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-53-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Thomas Böhler <witcher@wiredspace.de>
 
-commit 3145dc91c3c0ad945f06354385a6eb89d22becdb upstream.
+commit da13129a3f2a75d49469e1d6f7dcefac2d11d205 upstream.
 
-Now that we removed `VecExt` and the corresponding includes in
-prelude.rs, add the new kernel `Vec` type instead.
+Rust allows initializing fields of a struct without specifying the
+attribute that is assigned if the variable has the same name. In this
+instance this is done for all other attributes of the struct except for
+`data`. Clippy notes the redundant field name:
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-22-dakr@kernel.org
+    error: redundant field names in struct initialization
+    --> drivers/gpu/drm/drm_panic_qr.rs:495:13
+        |
+    495 |             data: data,
+        |             ^^^^^^^^^^ help: replace it with: `data`
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#redundant_field_names
+        = note: `-D clippy::redundant-field-names` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::redundant_field_names)]`
+
+Remove the redundant `data` in the assignment to be consistent.
+
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/1123
+Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20241019084048.22336-5-witcher@wiredspace.de
+[ Reworded to add Clippy warning like it is done in the rest of the
+  series. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/prelude.rs |    2 +-
+ drivers/gpu/drm/drm_panic_qr.rs |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/prelude.rs
-+++ b/rust/kernel/prelude.rs
-@@ -14,7 +14,7 @@
- #[doc(no_inline)]
- pub use core::pin::Pin;
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -489,7 +489,7 @@ impl EncodedMsg<'_> {
+         data.fill(0);
  
--pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec};
-+pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec, Vec};
- 
- #[doc(no_inline)]
- pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+         let mut em = EncodedMsg {
+-            data: data,
++            data,
+             ec_size,
+             g1_blocks,
+             g2_blocks,
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
