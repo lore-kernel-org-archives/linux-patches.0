@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5C41AC43A;
-	Sun,  9 Mar 2025 09:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD9B1AC43A;
+	Sun,  9 Mar 2025 09:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513788; cv=none; b=ftIXC5Ez9giUYdI672W2R2oWBxjQTchO9kGQwcGwCBVm7DKVE3K6MmKuCBq8s2Lpauxt067/MAr0VxyX1eWf4r0C8WjyJP1G/Yv+/roLDCV3gi3rQ18ltE8P2AWqjQ3G0hcVj8anwr0J0HWLnpBwxyZw/nGSJx1lWlFQ9l4ZyZg=
+	t=1741513791; cv=none; b=aBFQI4mgAU7Pgsj+5U5+IHiACRxPiITbfQufrZqetjkybjc40AuXDEikb1xg9hNtALlfNCboqUnf5fwaaS534u3CzFW3PLqCMv9LlvQS8xG6/ilfVeOoSMvkqXoGhRXX2SwasE+DETJTGoEXlB3Qnlbz4vBA5AdIOjmKSZ5BWHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513788; c=relaxed/simple;
-	bh=mubuz/Kp3u9Gm/E8zexsKFmPhBkrTJ8G7RiWCtX3YLw=;
+	s=arc-20240116; t=1741513791; c=relaxed/simple;
+	bh=cYrdrpeijB3PJoz13sXKVlPGHvvOpwQK2bhAitmKrH4=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=F6RmqeSZTxnbG6ZENYYq5MBMZyLIwWPkVHqeMx288DSsq2h3PcRaTJQtdKLTVvFQ4ZE3HbGRAD/P2X0M0dGwQNQPCtg/eIn+iSsT5zsSOSlj6/C7PpLNBgz7BrISTmQGSh4C2vwVWTFCziRaQpKEn4df3lsNGPuODQGEA30DjSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxRbuIAL; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=VTbJlQR19oWZkW8mXALHvlGsHGYNQFF9YICNcqdUyv8s0CNqwXbDiupUefkAauL2KlkWlTmeKAFLrJKfpNx3fJoYevM/hAZUvQzUokeRtdK73yexQz5tAVQX1RUH5fy0KNNphzsu37O9o+QsQcdjpTjme1rcxzjGIpOSbpEO394=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxatSspH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxRbuIAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A8FC4CEE5;
-	Sun,  9 Mar 2025 09:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxatSspH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BA2C4CEE5;
+	Sun,  9 Mar 2025 09:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513788;
-	bh=mubuz/Kp3u9Gm/E8zexsKFmPhBkrTJ8G7RiWCtX3YLw=;
+	s=korg; t=1741513791;
+	bh=cYrdrpeijB3PJoz13sXKVlPGHvvOpwQK2bhAitmKrH4=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=PxRbuIALMIbNx0rjJDv/SrksQWuGa2xWqw57A4zKyC9N4EMQYXRvDee7jQBEdaUjn
-	 ceAU8qEPfibFVr5rsVt8A1C1OoDV0GUL5xkYf+xzRaQX8AAog/JC8jAhG9eGBKryUS
-	 sIU69+XX5JyFMF8vou9rdUIpjm/cqs2MjcOM+AC0=
-Subject: Patch "rust: enable `clippy::ignored_unit_patterns` lint" has been added to the 6.12-stable tree
+	b=FxatSspH/TJ6SfDZdnnBRnEtjzYqoiyZ48cwZaCrTVgw97289VcX/AGWIQCd32TTQ
+	 Ibaa/ys788yUhawbGrnmgRal/r7/fRbZ8ehsolG6Nh4DMKd5IJXjU5OojxeN5HhERB
+	 q43+lObLwrcgzhZPBdsv4VyhjTbHMIkrd9mrsC0Y=
+Subject: Patch "rust: enable Clippy's `check-private-items`" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-8-ojeda@kernel.org>
-Message-ID: <2025030950-munchkin-reverb-a7a3@gregkh>
+In-Reply-To: <20250307225008.779961-15-ojeda@kernel.org>
+Message-ID: <2025030950-aim-spur-1611@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,84 +44,119 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: enable `clippy::ignored_unit_patterns` lint
+    rust: enable Clippy's `check-private-items`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-enable-clippy-ignored_unit_patterns-lint.patch
+     rust-enable-clippy-s-check-private-items.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121462-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:59 2025
+From stable+bounces-121469-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:20 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:14 +0100
-Subject: rust: enable `clippy::ignored_unit_patterns` lint
+Date: Fri,  7 Mar 2025 23:49:21 +0100
+Subject: rust: enable Clippy's `check-private-items`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-8-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-15-ojeda@kernel.org>
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 3fcc23397628c2357dbe66df59644e09f72ac725 upstream.
+commit 624063b9ac97f40cadca32a896aafeb28b1220fd upstream.
 
-In Rust 1.73.0, Clippy introduced the `ignored_unit_patterns` lint [1]:
+In Rust 1.76.0, Clippy added the `check-private-items` lint configuration
+option. When turned on (the default is off), it makes several lints
+check private items as well.
 
-> Matching with `()` explicitly instead of `_` outlines the fact that
-> the pattern contains no data. Also it would detect a type change
-> that `_` would ignore.
+In our case, it affects two lints we have enabled [1]:
+`missing_safety_doc` and `unnecessary_safety_doc`.
 
-There is only a single case that requires a change:
+It also seems to affect the new `too_long_first_doc_paragraph` lint [2],
+even though the documentation does not mention it.
 
-    error: matching over `()` is more explicit
-       --> rust/kernel/types.rs:176:45
-        |
-    176 |         ScopeGuard::new_with_data((), move |_| cleanup())
-        |                                             ^ help: use `()` instead of `_`: `()`
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ignored_unit_patterns
-        = note: requested on the command line with `-D clippy::ignored-unit-patterns`
+Thus allow the few instances remaining we currently hit and enable
+the lint.
 
-Thus clean it up and enable the lint -- no functional change intended.
-
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#/ignored_unit_patterns [1]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://doc.rust-lang.org/nightly/clippy/lint_configuration.html#check-private-items [1]
+Link: https://rust-lang.github.io/rust-clippy/master/index.html#/too_long_first_doc_paragraph [2]
 Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-8-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-16-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile             |    1 +
- rust/kernel/types.rs |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ .clippy.toml                   |    2 ++
+ rust/kernel/init.rs            |    1 +
+ rust/kernel/init/__internal.rs |    2 ++
+ rust/kernel/init/macros.rs     |    1 +
+ rust/kernel/print.rs           |    1 +
+ 5 files changed, 7 insertions(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -453,6 +453,7 @@ export rust_common_flags := --edition=20
- 			    -Wunreachable_pub \
- 			    -Wclippy::all \
- 			    -Wclippy::dbg_macro \
-+			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
- 			    -Wclippy::needless_bitwise_bool \
- 			    -Wclippy::needless_continue \
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -225,7 +225,7 @@ impl<T, F: FnOnce(T)> ScopeGuard<T, F> {
- impl ScopeGuard<(), fn(())> {
-     /// Creates a new guarded object with the given cleanup function.
-     pub fn new(cleanup: impl FnOnce()) -> ScopeGuard<(), impl FnOnce(())> {
--        ScopeGuard::new_with_data((), move |_| cleanup())
-+        ScopeGuard::new_with_data((), move |()| cleanup())
-     }
+--- a/.clippy.toml
++++ b/.clippy.toml
+@@ -1,5 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
++check-private-items = true
++
+ disallowed-macros = [
+     # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
+     # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -125,6 +125,7 @@
+ //! use core::{ptr::addr_of_mut, marker::PhantomPinned, pin::Pin};
+ //! # mod bindings {
+ //! #     #![allow(non_camel_case_types)]
++//! #     #![allow(clippy::missing_safety_doc)]
+ //! #     pub struct foo;
+ //! #     pub unsafe fn init_foo(_ptr: *mut foo) {}
+ //! #     pub unsafe fn destroy_foo(_ptr: *mut foo) {}
+--- a/rust/kernel/init/__internal.rs
++++ b/rust/kernel/init/__internal.rs
+@@ -54,6 +54,7 @@ where
+ pub unsafe trait HasPinData {
+     type PinData: PinData;
+ 
++    #[allow(clippy::missing_safety_doc)]
+     unsafe fn __pin_data() -> Self::PinData;
  }
  
+@@ -83,6 +84,7 @@ pub unsafe trait PinData: Copy {
+ pub unsafe trait HasInitData {
+     type InitData: InitData;
+ 
++    #[allow(clippy::missing_safety_doc)]
+     unsafe fn __init_data() -> Self::InitData;
+ }
+ 
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -989,6 +989,7 @@ macro_rules! __pin_data {
+         //
+         // The functions are `unsafe` to prevent accidentally calling them.
+         #[allow(dead_code)]
++        #[allow(clippy::missing_safety_doc)]
+         impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
+         where $($whr)*
+         {
+--- a/rust/kernel/print.rs
++++ b/rust/kernel/print.rs
+@@ -14,6 +14,7 @@ use core::{
+ use crate::str::RawFormatter;
+ 
+ // Called from `vsprintf` with format specifier `%pA`.
++#[allow(clippy::missing_safety_doc)]
+ #[no_mangle]
+ unsafe extern "C" fn rust_fmt_argument(
+     buf: *mut c_char,
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
