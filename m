@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1511AC43A;
-	Sun,  9 Mar 2025 09:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8983C1B0425;
+	Sun,  9 Mar 2025 09:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513794; cv=none; b=pN+PAXsqi8BPtxonzDTzNjYkzqW2U316xMMs/ZUpCeMyxzZrSC00Me5GW1pvr2wzGZniBlprscbwrGPbTrUFHq89Tnt/nQT5QclsbeWjFddZ9sLgf/c0Lzky0XwzAAOQbE7vSl+0xIYFSKjlrtZdxR0M45hK2YnznMKArV1o9TI=
+	t=1741513797; cv=none; b=BZ053cj4HopRUBknH2MagQnP5CxiX84goTgvxQnQIW4c8bbMQph8F4x0xiTbcudfJnTt48YKJ/5o5stV5mNPC5lepVQaKk1q09ppD4l/2RhdrIJH51hIw6ND5XAXUEp5V/QbGulYNFfdisFAyXaGd672rL2upnjWvre2XTR69oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513794; c=relaxed/simple;
-	bh=FB/7RSbcHcxOq0y+BFLesTQd6T64EZY5AmfeBTwh3n4=;
+	s=arc-20240116; t=1741513797; c=relaxed/simple;
+	bh=BDLvsXBRB01Jb41fG5uJj+aOOJ28wPScKgwitJDJfXI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=VcrIJMr++f2lsUZXw7VFVZsJhR7+Qy77796h5FPx5pXQt5ZqdGoPxjJoKhEalCcJo2tBmzAkc+b950ZQpELB77WR8AWtucP9VCpLM3SOkCrgKGwnKMqr9ht3KHdwS88fPevo/oLHEkWHywTwOFMR5341kn/nSe6dsu+D7PwN2iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXuAgBvr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=Dm7jGwcFR+uWM2GXt6bb2ejGr9wE7T6EaZzrYWT6maSYYpANx/t8DqgDnbB25mITaS2u5CwW+QSXfhb+i8tRSPT7r00XOgo/PVQgqONu9rKniuyZWlkRBHvMw6CGMg/hlAUN+BtLO5FQTLQ3XWQ+/FDWd8A04ES5eRoMc36zzAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziPKxg4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXuAgBvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBD3C4CEE5;
-	Sun,  9 Mar 2025 09:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziPKxg4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A55C4CEEF;
+	Sun,  9 Mar 2025 09:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513794;
-	bh=FB/7RSbcHcxOq0y+BFLesTQd6T64EZY5AmfeBTwh3n4=;
+	s=korg; t=1741513797;
+	bh=BDLvsXBRB01Jb41fG5uJj+aOOJ28wPScKgwitJDJfXI=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=gXuAgBvrr5UGtCHikH6lwOhbpjIkJttwwL40P0lwj4wB9kJysb15uBVjj2kSO+1m/
-	 KUpfeIwfM6+KpUk0UqpgVQfnL23jd0q3ZtVSJjnjomZ1nih41p563TQXM2LPNeK2a7
-	 XbbWpT8FP/6uGtKfiYmfa5lmFULNgiP97NkK+UAs=
-Subject: Patch "rust: enable `clippy::undocumented_unsafe_blocks` lint" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
+	b=ziPKxg4DLqTwmWmVnh6OKh3/ytjo7CMyns4MWia2+bD1JmhkDxT8W4lWbJ6QusKvh
+	 bG+G0dxyg8evCvCnlUKGo8Y7ZOL4BDzbswnEsjjfi+FI+MShIgFNtaddwxCSSvVLwX
+	 nd9zAe2m+fb42SLP5Qa39PyOt0bX07bmUqqfpdiI=
+Subject: Patch "rust: alloc: introduce `ArrayLayout`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-5-ojeda@kernel.org>
-Message-ID: <2025030950-huntsman-tabasco-580c@gregkh>
+In-Reply-To: <20250307225008.779961-35-ojeda@kernel.org>
+Message-ID: <2025030949-talcum-deem-150d@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,432 +44,158 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: enable `clippy::undocumented_unsafe_blocks` lint
+    rust: alloc: introduce `ArrayLayout`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-enable-clippy-undocumented_unsafe_blocks-lint.patch
+     rust-alloc-introduce-arraylayout.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121459-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:50 2025
+From stable+bounces-121489-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:14 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:11 +0100
-Subject: rust: enable `clippy::undocumented_unsafe_blocks` lint
+Date: Fri,  7 Mar 2025 23:49:41 +0100
+Subject: rust: alloc: introduce `ArrayLayout`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-5-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-35-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Benno Lossin <benno.lossin@proton.me>
 
-commit db4f72c904cb116e2bf56afdd67fc5167a607a7b upstream.
+commit 9e7bbfa182767f638ba61dba3518ff78da9f31ff upstream.
 
-Checking that we are not missing any `// SAFETY` comments in our `unsafe`
-blocks is something we have wanted to do for a long time, as well as
-cleaning up the remaining cases that were not documented [1].
+When allocating memory for arrays using allocators, the `Layout::array`
+function is typically used. It returns a result, since the given size
+might be too big. However, `Vec` and its iterators store their allocated
+capacity and thus they already did check that the size is not too big.
 
-Back when Rust for Linux started, this was something that could have
-been done via a script, like Rust's `tidy`. Soon after, in Rust 1.58.0,
-Clippy implemented the `undocumented_unsafe_blocks` lint [2].
+The `ArrayLayout` type provides this exact behavior, as it can be
+infallibly converted into a `Layout`. Instead of a `usize` capacity,
+`Vec` and other similar array-storing types can use `ArrayLayout`
+instead.
 
-Even though the lint has a few false positives, e.g. in some cases where
-attributes appear between the comment and the `unsafe` block [3], there
-are workarounds and the lint seems quite usable already.
-
-Thus enable the lint now.
-
-We still have a few cases to clean up, so just allow those for the moment
-by writing a `TODO` comment -- some of those may be good candidates for
-new contributors.
-
-Link: https://github.com/Rust-for-Linux/linux/issues/351 [1]
-Link: https://rust-lang.github.io/rust-clippy/master/#/undocumented_unsafe_blocks [2]
-Link: https://github.com/rust-lang/rust-clippy/issues/13189 [3]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-5-ojeda@kernel.org
+Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-16-dakr@kernel.org
+[ Formatted a few comments. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile                       |    1 +
- mm/kasan/kasan_test_rust.rs    |    1 +
- rust/bindings/lib.rs           |    1 +
- rust/kernel/alloc/allocator.rs |    2 ++
- rust/kernel/error.rs           |    9 ++++++---
- rust/kernel/init.rs            |    5 +++++
- rust/kernel/init/__internal.rs |    2 ++
- rust/kernel/init/macros.rs     |    9 +++++++++
- rust/kernel/list.rs            |    1 +
- rust/kernel/print.rs           |    2 ++
- rust/kernel/str.rs             |    7 ++++---
- rust/kernel/sync/condvar.rs    |    2 +-
- rust/kernel/sync/lock.rs       |    6 +++---
- rust/kernel/types.rs           |    4 ++++
- rust/kernel/workqueue.rs       |    4 ++++
- rust/uapi/lib.rs               |    1 +
- 16 files changed, 47 insertions(+), 10 deletions(-)
+ rust/kernel/alloc.rs        |    1 
+ rust/kernel/alloc/layout.rs |   91 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 92 insertions(+)
+ create mode 100644 rust/kernel/alloc/layout.rs
 
---- a/Makefile
-+++ b/Makefile
-@@ -458,6 +458,7 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::needless_continue \
- 			    -Aclippy::needless_lifetimes \
- 			    -Wclippy::no_mangle_with_rust_abi \
-+			    -Wclippy::undocumented_unsafe_blocks \
- 			    -Wrustdoc::missing_crate_level_docs
+--- a/rust/kernel/alloc.rs
++++ b/rust/kernel/alloc.rs
+@@ -5,6 +5,7 @@
+ #[cfg(not(any(test, testlib)))]
+ pub mod allocator;
+ pub mod kbox;
++pub mod layout;
+ pub mod vec_ext;
  
- KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
---- a/mm/kasan/kasan_test_rust.rs
-+++ b/mm/kasan/kasan_test_rust.rs
-@@ -17,5 +17,6 @@ pub extern "C" fn kasan_test_rust_uaf()
-     }
-     let ptr: *mut u8 = addr_of_mut!(v[2048]);
-     drop(v);
-+    // SAFETY: Incorrect, on purpose.
-     unsafe { *ptr }
- }
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -25,6 +25,7 @@
- )]
- 
- #[allow(dead_code)]
-+#[allow(clippy::undocumented_unsafe_blocks)]
- mod bindings_raw {
-     // Use glob import here to expose all helpers.
-     // Symbols defined within the module will take precedence to the glob import.
---- a/rust/kernel/alloc/allocator.rs
-+++ b/rust/kernel/alloc/allocator.rs
-@@ -31,6 +31,7 @@ pub(crate) unsafe fn krealloc_aligned(pt
-     unsafe { bindings::krealloc(ptr as *const core::ffi::c_void, size, flags.0) as *mut u8 }
- }
- 
-+// SAFETY: TODO.
- unsafe impl GlobalAlloc for KernelAllocator {
-     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-         // SAFETY: `ptr::null_mut()` is null and `layout` has a non-zero size by the function safety
-@@ -39,6 +40,7 @@ unsafe impl GlobalAlloc for KernelAlloca
-     }
- 
-     unsafe fn dealloc(&self, ptr: *mut u8, _layout: Layout) {
-+        // SAFETY: TODO.
-         unsafe {
-             bindings::kfree(ptr as *const core::ffi::c_void);
-         }
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -171,9 +171,11 @@ impl fmt::Debug for Error {
-         match self.name() {
-             // Print out number if no name can be found.
-             None => f.debug_tuple("Error").field(&-self.0).finish(),
--            // SAFETY: These strings are ASCII-only.
-             Some(name) => f
--                .debug_tuple(unsafe { core::str::from_utf8_unchecked(name) })
-+                .debug_tuple(
-+                    // SAFETY: These strings are ASCII-only.
-+                    unsafe { core::str::from_utf8_unchecked(name) },
-+                )
-                 .finish(),
-         }
-     }
-@@ -277,6 +279,8 @@ pub(crate) fn from_err_ptr<T>(ptr: *mut
-     if unsafe { bindings::IS_ERR(const_ptr) } {
-         // SAFETY: The FFI function does not deref the pointer.
-         let err = unsafe { bindings::PTR_ERR(const_ptr) };
+ #[cfg(any(test, testlib))]
+--- /dev/null
++++ b/rust/kernel/alloc/layout.rs
+@@ -0,0 +1,91 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+        #[allow(clippy::unnecessary_cast)]
-         // CAST: If `IS_ERR()` returns `true`,
-         // then `PTR_ERR()` is guaranteed to return a
-         // negative value greater-or-equal to `-bindings::MAX_ERRNO`,
-@@ -286,7 +290,6 @@ pub(crate) fn from_err_ptr<T>(ptr: *mut
-         //
-         // SAFETY: `IS_ERR()` ensures `err` is a
-         // negative value greater-or-equal to `-bindings::MAX_ERRNO`.
--        #[allow(clippy::unnecessary_cast)]
-         return Err(unsafe { Error::from_errno_unchecked(err as core::ffi::c_int) });
-     }
-     Ok(ptr)
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -541,6 +541,7 @@ macro_rules! stack_try_pin_init {
- /// }
- /// pin_init!(&this in Buf {
- ///     buf: [0; 64],
-+///     // SAFETY: TODO.
- ///     ptr: unsafe { addr_of_mut!((*this.as_ptr()).buf).cast() },
- ///     pin: PhantomPinned,
- /// });
-@@ -875,6 +876,7 @@ pub unsafe trait PinInit<T: ?Sized, E =
-     /// }
-     ///
-     /// let foo = pin_init!(Foo {
-+    ///     // SAFETY: TODO.
-     ///     raw <- unsafe {
-     ///         Opaque::ffi_init(|s| {
-     ///             init_foo(s);
-@@ -1162,6 +1164,7 @@ where
- // SAFETY: Every type can be initialized by-value.
- unsafe impl<T, E> Init<T, E> for T {
-     unsafe fn __init(self, slot: *mut T) -> Result<(), E> {
-+        // SAFETY: TODO.
-         unsafe { slot.write(self) };
-         Ok(())
-     }
-@@ -1170,6 +1173,7 @@ unsafe impl<T, E> Init<T, E> for T {
- // SAFETY: Every type can be initialized by-value. `__pinned_init` calls `__init`.
- unsafe impl<T, E> PinInit<T, E> for T {
-     unsafe fn __pinned_init(self, slot: *mut T) -> Result<(), E> {
-+        // SAFETY: TODO.
-         unsafe { self.__init(slot) }
-     }
- }
-@@ -1411,6 +1415,7 @@ pub fn zeroed<T: Zeroable>() -> impl Ini
- 
- macro_rules! impl_zeroable {
-     ($($({$($generics:tt)*})? $t:ty, )*) => {
-+        // SAFETY: Safety comments written in the macro invocation.
-         $(unsafe impl$($($generics)*)? Zeroable for $t {})*
-     };
- }
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -112,10 +112,12 @@ impl<T: ?Sized> Clone for AllData<T> {
- 
- impl<T: ?Sized> Copy for AllData<T> {}
- 
-+// SAFETY: TODO.
- unsafe impl<T: ?Sized> InitData for AllData<T> {
-     type Datee = T;
- }
- 
-+// SAFETY: TODO.
- unsafe impl<T: ?Sized> HasInitData for T {
-     type InitData = AllData<T>;
- 
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -513,6 +513,7 @@ macro_rules! __pinned_drop {
-             }
-         ),
-     ) => {
-+        // SAFETY: TODO.
-         unsafe $($impl_sig)* {
-             // Inherit all attributes and the type/ident tokens for the signature.
-             $(#[$($attr)*])*
-@@ -872,6 +873,7 @@ macro_rules! __pin_data {
-                 }
-             }
- 
-+            // SAFETY: TODO.
-             unsafe impl<$($impl_generics)*>
-                 $crate::init::__internal::PinData for __ThePinData<$($ty_generics)*>
-             where $($whr)*
-@@ -997,6 +999,7 @@ macro_rules! __pin_data {
-                     slot: *mut $p_type,
-                     init: impl $crate::init::PinInit<$p_type, E>,
-                 ) -> ::core::result::Result<(), E> {
-+                    // SAFETY: TODO.
-                     unsafe { $crate::init::PinInit::__pinned_init(init, slot) }
-                 }
-             )*
-@@ -1007,6 +1010,7 @@ macro_rules! __pin_data {
-                     slot: *mut $type,
-                     init: impl $crate::init::Init<$type, E>,
-                 ) -> ::core::result::Result<(), E> {
-+                    // SAFETY: TODO.
-                     unsafe { $crate::init::Init::__init(init, slot) }
-                 }
-             )*
-@@ -1121,6 +1125,8 @@ macro_rules! __init_internal {
-         // no possibility of returning without `unsafe`.
-         struct __InitOk;
-         // Get the data about fields from the supplied type.
-+        //
-+        // SAFETY: TODO.
-         let data = unsafe {
-             use $crate::init::__internal::$has_data;
-             // Here we abuse `paste!` to retokenize `$t`. Declarative macros have some internal
-@@ -1176,6 +1182,7 @@ macro_rules! __init_internal {
-         let init = move |slot| -> ::core::result::Result<(), $err> {
-             init(slot).map(|__InitOk| ())
-         };
-+        // SAFETY: TODO.
-         let init = unsafe { $crate::init::$construct_closure::<_, $err>(init) };
-         init
-     }};
-@@ -1324,6 +1331,8 @@ macro_rules! __init_internal {
-         // Endpoint, nothing more to munch, create the initializer.
-         // Since we are in the closure that is never called, this will never get executed.
-         // We abuse `slot` to get the correct type inference here:
-+        //
-+        // SAFETY: TODO.
-         unsafe {
-             // Here we abuse `paste!` to retokenize `$t`. Declarative macros have some internal
-             // information that is associated to already parsed fragments, so a path fragment
---- a/rust/kernel/list.rs
-+++ b/rust/kernel/list.rs
-@@ -354,6 +354,7 @@ impl<T: ?Sized + ListItem<ID>, const ID:
-     ///
-     /// `item` must not be in a different linked list (with the same id).
-     pub unsafe fn remove(&mut self, item: &T) -> Option<ListArc<T, ID>> {
-+        // SAFETY: TODO.
-         let mut item = unsafe { ListLinks::fields(T::view_links(item)) };
-         // SAFETY: The user provided a reference, and reference are never dangling.
-         //
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -23,6 +23,7 @@ unsafe extern "C" fn rust_fmt_argument(
-     use fmt::Write;
-     // SAFETY: The C contract guarantees that `buf` is valid if it's less than `end`.
-     let mut w = unsafe { RawFormatter::from_ptrs(buf.cast(), end.cast()) };
-+    // SAFETY: TODO.
-     let _ = w.write_fmt(unsafe { *(ptr as *const fmt::Arguments<'_>) });
-     w.pos().cast()
- }
-@@ -102,6 +103,7 @@ pub unsafe fn call_printk(
- ) {
-     // `_printk` does not seem to fail in any path.
-     #[cfg(CONFIG_PRINTK)]
-+    // SAFETY: TODO.
-     unsafe {
-         bindings::_printk(
-             format_string.as_ptr() as _,
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -162,10 +162,10 @@ impl CStr {
-     /// Returns the length of this string with `NUL`.
-     #[inline]
-     pub const fn len_with_nul(&self) -> usize {
--        // SAFETY: This is one of the invariant of `CStr`.
--        // We add a `unreachable_unchecked` here to hint the optimizer that
--        // the value returned from this function is non-zero.
-         if self.0.is_empty() {
-+            // SAFETY: This is one of the invariant of `CStr`.
-+            // We add a `unreachable_unchecked` here to hint the optimizer that
-+            // the value returned from this function is non-zero.
-             unsafe { core::hint::unreachable_unchecked() };
-         }
-         self.0.len()
-@@ -301,6 +301,7 @@ impl CStr {
-     /// ```
-     #[inline]
-     pub unsafe fn as_str_unchecked(&self) -> &str {
-+        // SAFETY: TODO.
-         unsafe { core::str::from_utf8_unchecked(self.as_bytes()) }
-     }
- 
---- a/rust/kernel/sync/condvar.rs
-+++ b/rust/kernel/sync/condvar.rs
-@@ -92,8 +92,8 @@ pub struct CondVar {
-     _pin: PhantomPinned,
- }
- 
--// SAFETY: `CondVar` only uses a `struct wait_queue_head`, which is safe to use on any thread.
- #[allow(clippy::non_send_fields_in_send_ty)]
-+// SAFETY: `CondVar` only uses a `struct wait_queue_head`, which is safe to use on any thread.
- unsafe impl Send for CondVar {}
- 
- // SAFETY: `CondVar` only uses a `struct wait_queue_head`, which is safe to use on multiple threads
---- a/rust/kernel/sync/lock.rs
-+++ b/rust/kernel/sync/lock.rs
-@@ -150,9 +150,9 @@ impl<T: ?Sized, B: Backend> Guard<'_, T,
-         // SAFETY: The caller owns the lock, so it is safe to unlock it.
-         unsafe { B::unlock(self.lock.state.get(), &self.state) };
- 
--        // SAFETY: The lock was just unlocked above and is being relocked now.
--        let _relock =
--            ScopeGuard::new(|| unsafe { B::relock(self.lock.state.get(), &mut self.state) });
-+        let _relock = ScopeGuard::new(||
-+                // SAFETY: The lock was just unlocked above and is being relocked now.
-+                unsafe { B::relock(self.lock.state.get(), &mut self.state) });
- 
-         cb()
-     }
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -410,6 +410,7 @@ impl<T: AlwaysRefCounted> ARef<T> {
-     ///
-     /// struct Empty {}
-     ///
-+    /// # // SAFETY: TODO.
-     /// unsafe impl AlwaysRefCounted for Empty {
-     ///     fn inc_ref(&self) {}
-     ///     unsafe fn dec_ref(_obj: NonNull<Self>) {}
-@@ -417,6 +418,7 @@ impl<T: AlwaysRefCounted> ARef<T> {
-     ///
-     /// let mut data = Empty {};
-     /// let ptr = NonNull::<Empty>::new(&mut data as *mut _).unwrap();
-+    /// # // SAFETY: TODO.
-     /// let data_ref: ARef<Empty> = unsafe { ARef::from_raw(ptr) };
-     /// let raw_ptr: NonNull<Empty> = ARef::into_raw(data_ref);
-     ///
-@@ -483,6 +485,7 @@ pub unsafe trait FromBytes {}
- 
- macro_rules! impl_frombytes {
-     ($($({$($generics:tt)*})? $t:ty, )*) => {
-+        // SAFETY: Safety comments written in the macro invocation.
-         $(unsafe impl$($($generics)*)? FromBytes for $t {})*
-     };
- }
-@@ -517,6 +520,7 @@ pub unsafe trait AsBytes {}
- 
- macro_rules! impl_asbytes {
-     ($($({$($generics:tt)*})? $t:ty, )*) => {
-+        // SAFETY: Safety comments written in the macro invocation.
-         $(unsafe impl$($($generics)*)? AsBytes for $t {})*
-     };
- }
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -519,6 +519,7 @@ impl_has_work! {
-     impl{T} HasWork<Self> for ClosureWork<T> { self.work }
- }
- 
-+// SAFETY: TODO.
- unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
- where
-     T: WorkItem<ID, Pointer = Self>,
-@@ -536,6 +537,7 @@ where
-     }
- }
- 
-+// SAFETY: TODO.
- unsafe impl<T, const ID: u64> RawWorkItem<ID> for Arc<T>
- where
-     T: WorkItem<ID, Pointer = Self>,
-@@ -564,6 +566,7 @@ where
-     }
- }
- 
-+// SAFETY: TODO.
- unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Pin<Box<T>>
- where
-     T: WorkItem<ID, Pointer = Self>,
-@@ -583,6 +586,7 @@ where
-     }
- }
- 
-+// SAFETY: TODO.
- unsafe impl<T, const ID: u64> RawWorkItem<ID> for Pin<Box<T>>
- where
-     T: WorkItem<ID, Pointer = Self>,
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -14,6 +14,7 @@
- #![cfg_attr(test, allow(unsafe_op_in_unsafe_fn))]
- #![allow(
-     clippy::all,
-+    clippy::undocumented_unsafe_blocks,
-     dead_code,
-     missing_docs,
-     non_camel_case_types,
++//! Memory layout.
++//!
++//! Custom layout types extending or improving [`Layout`].
++
++use core::{alloc::Layout, marker::PhantomData};
++
++/// Error when constructing an [`ArrayLayout`].
++pub struct LayoutError;
++
++/// A layout for an array `[T; n]`.
++///
++/// # Invariants
++///
++/// - `len * size_of::<T>() <= isize::MAX`.
++pub struct ArrayLayout<T> {
++    len: usize,
++    _phantom: PhantomData<fn() -> T>,
++}
++
++impl<T> Clone for ArrayLayout<T> {
++    fn clone(&self) -> Self {
++        *self
++    }
++}
++impl<T> Copy for ArrayLayout<T> {}
++
++const ISIZE_MAX: usize = isize::MAX as usize;
++
++impl<T> ArrayLayout<T> {
++    /// Creates a new layout for `[T; 0]`.
++    pub const fn empty() -> Self {
++        // INVARIANT: `0 * size_of::<T>() <= isize::MAX`.
++        Self {
++            len: 0,
++            _phantom: PhantomData,
++        }
++    }
++
++    /// Creates a new layout for `[T; len]`.
++    ///
++    /// # Errors
++    ///
++    /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
++    pub const fn new(len: usize) -> Result<Self, LayoutError> {
++        match len.checked_mul(core::mem::size_of::<T>()) {
++            Some(len) if len <= ISIZE_MAX => {
++                // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
++                Ok(Self {
++                    len,
++                    _phantom: PhantomData,
++                })
++            }
++            _ => Err(LayoutError),
++        }
++    }
++
++    /// Creates a new layout for `[T; len]`.
++    ///
++    /// # Safety
++    ///
++    /// `len` must be a value, for which `len * size_of::<T>() <= isize::MAX` is true.
++    pub unsafe fn new_unchecked(len: usize) -> Self {
++        // INVARIANT: By the safety requirements of this function
++        // `len * size_of::<T>() <= isize::MAX`.
++        Self {
++            len,
++            _phantom: PhantomData,
++        }
++    }
++
++    /// Returns the number of array elements represented by this layout.
++    pub const fn len(&self) -> usize {
++        self.len
++    }
++
++    /// Returns `true` when no array elements are represented by this layout.
++    pub const fn is_empty(&self) -> bool {
++        self.len == 0
++    }
++}
++
++impl<T> From<ArrayLayout<T>> for Layout {
++    fn from(value: ArrayLayout<T>) -> Self {
++        let res = Layout::array::<T>(value.len);
++        // SAFETY: By the type invariant of `ArrayLayout` we have
++        // `len * size_of::<T>() <= isize::MAX` and thus the result must be `Ok`.
++        unsafe { res.unwrap_unchecked() }
++    }
++}
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
