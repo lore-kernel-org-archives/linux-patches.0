@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB451AC43A;
-	Sun,  9 Mar 2025 09:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0E1AC43A;
+	Sun,  9 Mar 2025 09:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513779; cv=none; b=DCz9pMW245xZUHlXv+QGWhOiEUDk2HXbyqgNejx/iT+dgu1xFgMT0FQobMgS6LgXSMdXyT+DcykHdHAPCQF74HwlH5b6B8s3rmlSbqcg44VgZ5Da6DDtlCfai6DPP7IcNJrkKrr9kO0BxkE5P6AGo1zlU5MeT/ftnFddub0oUpo=
+	t=1741513782; cv=none; b=VEpgZQot8nwsauOQQcxcCCQvBRuEY0Uu3HxLkIWY5XiRJlPwux2TFuucB2JWYOTizfg2CHTOzYTfp8voO8nsbMX0sdhMOCFW455uhDelW8OE4Mb749aovvtf3ynOxcbCxdf1RdLj1kPBZD1+hUa0LjDeotVQ12DSeFK8qrrkrtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513779; c=relaxed/simple;
-	bh=BWbv4iJ62wTTIPSiN2CgYXRbQmQdpfAsqhlympKv4Bo=;
+	s=arc-20240116; t=1741513782; c=relaxed/simple;
+	bh=2XdKfWRj9vZAsAUCJsVPhXXWl2ifeL3hwIYJuYrE90A=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=Vt9p+5rkefh9kuBXvgyX71OiOKXdKqcajLL2Ens1vKtIXIFbfZnD74ZydtnfWigMTTO+inzNysOSGLU+7c378OwI93yvuglJ3xv+7MsUcoVN3/gRLMcVV6iFbAivOMu5Fb8kOyeHGhENh7LSRGSwKUfm7uuKvlhd0X/qKqsnwhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKQCgDV5; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=MvNDXcrAxNyhVxmUlh3Et1ud3AzE1FIoBdIj0u1kK+2oLuZmktkEcS7HXMUPc5Lf8c1oBzLGYBHiyDMPrtbPLk4H+9QAsI8NhMv/jJpNtHRbS5N6sLHYm5OBlwxQA9EdTI/3X/7ZyL0oOPNO1hBoZy3p6Y6UKaIosLte4F7gd9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJRkm2LP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKQCgDV5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53EBC4CEE5;
-	Sun,  9 Mar 2025 09:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJRkm2LP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97C3C4CEE5;
+	Sun,  9 Mar 2025 09:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513779;
-	bh=BWbv4iJ62wTTIPSiN2CgYXRbQmQdpfAsqhlympKv4Bo=;
+	s=korg; t=1741513782;
+	bh=2XdKfWRj9vZAsAUCJsVPhXXWl2ifeL3hwIYJuYrE90A=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=ZKQCgDV5uwuL5Pq/Ue8Io8b252kVCnpssufElGEUaANps+COFRX8s28kNazb95Zu1
-	 s4HUPyztFekjDwS+p0Z/TTZaJnQ39OLu8jsd791bnqry1wnGvsmr3Rp8ZZBw53hhit
-	 yqYf39/PW0Le30EpxTyCEcdrhOiYH8UoPATUpv9c=
-Subject: Patch "rust: alloc: rename `KernelAllocator` to `Kmalloc`" has been added to the 6.12-stable tree
+	b=nJRkm2LPljKKJg42lggdfiHx6D8BXjd1yH08dhYf6jHkQWwHmyjUdz8AsHJumcdbU
+	 CDzw87qaBBGCfc2z3A/Z2Pymu88tA0tzS+Z5KIMOMHsEANPra4gIfXCZq8SlDQ8PXH
+	 F7/Oqyh6pZJHwwBWLtNigpPIX2K9WUJ2y0P2pKHg=
+Subject: Patch "rust: alloc: separate `aligned_size` from `krealloc_aligned`" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-23-ojeda@kernel.org>
-Message-ID: <2025030950-expert-roamer-4e9f@gregkh>
+In-Reply-To: <20250307225008.779961-22-ojeda@kernel.org>
+Message-ID: <2025030950-mating-parsley-2326@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,74 +44,82 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: rename `KernelAllocator` to `Kmalloc`
+    rust: alloc: separate `aligned_size` from `krealloc_aligned`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-rename-kernelallocator-to-kmalloc.patch
+     rust-alloc-separate-aligned_size-from-krealloc_aligned.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121477-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:40 2025
+From stable+bounces-121476-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:37 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:29 +0100
-Subject: rust: alloc: rename `KernelAllocator` to `Kmalloc`
+Date: Fri,  7 Mar 2025 23:49:28 +0100
+Subject: rust: alloc: separate `aligned_size` from `krealloc_aligned`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-23-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-22-ojeda@kernel.org>
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit 941e65531446c1eb5d573c5d30172117ebe96112 upstream.
+commit a654a6e09644266e38ac05415ef7737d299c4497 upstream.
 
-Subsequent patches implement `Vmalloc` and `KVmalloc` allocators, hence
-align `KernelAllocator` to this naming scheme.
+Separate `aligned_size` from `krealloc_aligned`.
+
+Subsequent patches implement `Allocator` derivates, such as `Kmalloc`,
+that require `aligned_size` and replace the original `krealloc_aligned`.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-4-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-3-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc/allocator.rs |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/kernel/alloc/allocator.rs |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 --- a/rust/kernel/alloc/allocator.rs
 +++ b/rust/kernel/alloc/allocator.rs
-@@ -6,7 +6,7 @@ use super::{flags::*, Flags};
- use core::alloc::{GlobalAlloc, Layout};
- use core::ptr;
+@@ -8,6 +8,17 @@ use core::ptr;
  
--struct KernelAllocator;
-+struct Kmalloc;
+ struct KernelAllocator;
  
- /// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
- fn aligned_size(new_layout: Layout) -> usize {
-@@ -37,7 +37,7 @@ pub(crate) unsafe fn krealloc_aligned(pt
- }
++/// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
++fn aligned_size(new_layout: Layout) -> usize {
++    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
++    let layout = new_layout.pad_to_align();
++
++    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
++    // which together with the slab guarantees means the `krealloc` will return a properly aligned
++    // object (see comments in `kmalloc()` for more information).
++    layout.size()
++}
++
+ /// Calls `krealloc` with a proper size to alloc a new object aligned to `new_layout`'s alignment.
+ ///
+ /// # Safety
+@@ -15,13 +26,7 @@ struct KernelAllocator;
+ /// - `ptr` can be either null or a pointer which has been allocated by this allocator.
+ /// - `new_layout` must have a non-zero size.
+ pub(crate) unsafe fn krealloc_aligned(ptr: *mut u8, new_layout: Layout, flags: Flags) -> *mut u8 {
+-    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
+-    let layout = new_layout.pad_to_align();
+-
+-    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
+-    // which together with the slab guarantees means the `krealloc` will return a properly aligned
+-    // object (see comments in `kmalloc()` for more information).
+-    let size = layout.size();
++    let size = aligned_size(new_layout);
  
- // SAFETY: TODO.
--unsafe impl GlobalAlloc for KernelAllocator {
-+unsafe impl GlobalAlloc for Kmalloc {
-     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-         // SAFETY: `ptr::null_mut()` is null and `layout` has a non-zero size by the function safety
-         // requirement.
-@@ -74,7 +74,7 @@ unsafe impl GlobalAlloc for KernelAlloca
- }
- 
- #[global_allocator]
--static ALLOCATOR: KernelAllocator = KernelAllocator;
-+static ALLOCATOR: Kmalloc = Kmalloc;
- 
- // See <https://github.com/rust-lang/rust/pull/86844>.
- #[no_mangle]
+     // SAFETY:
+     // - `ptr` is either null or a pointer returned from a previous `k{re}alloc()` by the
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
