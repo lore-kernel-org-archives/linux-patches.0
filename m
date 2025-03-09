@@ -1,49 +1,67 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from forward502b.mail.yandex.net (forward502b.mail.yandex.net [178.154.239.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09DA1B2EF2;
-	Sun,  9 Mar 2025 09:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89FDA934
+	for <patches@lists.linux.dev>; Sun,  9 Mar 2025 12:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513868; cv=none; b=p3CYcsJ5u+0oJeVLmjabh0UCW+MoMg5P4stQuu9GgaKEkLYpvtx4RfGLEyH6G3UIxD1tYz/WgvW4wFzrdqFPvcJr5VMJAIp3pdUafvJ8dm/Dy3qtPWq8AH2Xs1E1oiEec5ZD8zJiTaO7Ymdb3zSJ/pvysxEohivg9ultsAY96zk=
+	t=1741524588; cv=none; b=N7Aa1RyB5zAMGsKOMEx6H3EBLVHbG+MTSlYRE8lrXfVJ+TZY0a/NWTfTo86sZS0vYAMa+hRLn53ZJPO1N2ZmcSzpD7EkbMfuiKF0mPMM7X8wtH7PBR3xKqN4MuJx1PMc6wfucxavy6Snp/uO7DUtaUiJAfuTZC/111wBrDSBJ54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513868; c=relaxed/simple;
-	bh=jbft38EME4Lb1rB4rI1Ryh26bE9ZQkn0FcVHmId6jlc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AaoCC0z4l2NF7F9SwU7l4zNTGE2ynwqLTkKyGPPHAGn0PbiUTrkl5tirqHB2tXUpQvROhDCSX9TEgYN5oXlM4ahLLpJLf4TZT+n8TT588Hb79flqVf/bdrjvBTR9nMPDaQqUJ3MSPCqhN93J4J147kYpH7vJUkddgo+epvCQSOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJi6tOh0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741524588; c=relaxed/simple;
+	bh=iy6t4oyM9xmi9DgI4b5OIyueTJghTJtBIylEhXhmP/g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c+IN58lGKPecjviysNLLZbYWeWE1JDWZc7dE8lEzKbZZKRyVhj4s0u4ZsvmZlnnV18D/K350jIyNs/o7KD86aTGP3Uwq+EBe6RnCh6zpdaUy/fH5y7hO2/X4uKkbB+YmgHVKFBAZo/tO0uTEdK+hCzrOgPE/xn5weQfyYSln++Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=0upti.me; spf=pass smtp.mailfrom=0upti.me; dkim=pass (1024-bit key) header.d=0upti.me header.i=@0upti.me header.b=XWuRdPlA; arc=none smtp.client-ip=178.154.239.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=0upti.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=0upti.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJi6tOh0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464D0C4CEE5;
-	Sun,  9 Mar 2025 09:51:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513868;
-	bh=jbft38EME4Lb1rB4rI1Ryh26bE9ZQkn0FcVHmId6jlc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CJi6tOh0vtc4k5zThT+C+SjiYtfJH7odPrNFkagTboAhPHh2fH/CC20rDx7N1efEV
-	 FHnQYHwc8RkvONi7Aq4vrWKcpU9dqRcGUU3Vv3g7cHG5JJOSBzmkqbGqN/rRxO+0Tu
-	 yb+oKv/PQgX/vCtsujQ3ovvu5DfLZ9lKmUEVgD3I=
-Date: Sun, 9 Mar 2025 10:47:33 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>,
-	NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev
-Subject: Re: [PATCH 6.12.y 00/60] `alloc`, `#[expect]` and "Custom FFI"
-Message-ID: <2025030918-enzyme-conch-b489@gregkh>
-References: <20250307225008.779961-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=0upti.me header.i=@0upti.me header.b="XWuRdPlA"
+Received: from mail-nwsmtp-smtp-production-main-57.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-57.sas.yp-c.yandex.net [IPv6:2a02:6b8:c11:797:0:640:5446:0])
+	by forward502b.mail.yandex.net (Yandex) with ESMTPS id DF38460CF1;
+	Sun,  9 Mar 2025 15:42:00 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-57.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id wfnPP5mLoeA0-rVz0gawF;
+	Sun, 09 Mar 2025 15:41:59 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=0upti.me; s=mail;
+	t=1741524120; bh=Fmlf9rTNzjTKYC7fGgDKsvoi6EYWuiAAdTrT2ktfLro=;
+	h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+	b=XWuRdPlA922w4t/EnsrNC1ZAl1uTnQSpx4LvyHAoS4/t1v5lv2qpAETPBEfHju5Lw
+	 xKBd/LZ9Sjql+dNcdei3wX2thJZPMNo7VX1UYlUt/zOvMlkYfmqooMzlzLLDa1i8cu
+	 cT8TBQ4LMt9ES/qgRxe2ChFNV0XZaPD9KV/DtfHE=
+Authentication-Results: mail-nwsmtp-smtp-production-main-57.sas.yp-c.yandex.net; dkim=pass header.i=@0upti.me
+Message-ID: <33f6c73c-4a2d-42b3-b033-921d2e1eaeac@0upti.me>
+Date: Sun, 9 Mar 2025 15:41:57 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12.y 00/60] `alloc`, `#[expect]` and "Custom FFI"
+To: Miguel Ojeda <ojeda@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
+Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
+ Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>,
+ patches@lists.linux.dev
+References: <20250307225008.779961-1-ojeda@kernel.org>
+Content-Language: en-US
+From: Ilya K <me@0upti.me>
 In-Reply-To: <20250307225008.779961-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 07, 2025 at 11:49:07PM +0100, Miguel Ojeda wrote:
+Hi, I think this is missing one final change, specifically 27c7518e, 
+or rather, the only line of it that applies:
+
+ pub unsafe extern "C" fn drm_panic_qr_generate(
+-    url: *const i8,
++    url: *const kernel::ffi::c_char,
+
+Without it, the build fails on Rust 1.85 / aarch64.
+
+On 2025-03-08 01:49, Miguel Ojeda wrote:
 > Hi Greg, Sasha,
 > 
 > Please consider this series for 6.12.y. It should apply cleanly on top
@@ -81,7 +99,159 @@ On Fri, Mar 07, 2025 at 11:49:07PM +0100, Miguel Ojeda wrote:
 > 
 > Things could still break, so extra tests on the next -rc from users in
 > Cc here would be welcome -- thanks!
+> 
+> Cheers,
+> Miguel
+> 
+> Asahi Lina (1):
+>   rust: alloc: Fix `ArrayLayout` allocations
+> 
+> Benno Lossin (1):
+>   rust: alloc: introduce `ArrayLayout`
+> 
+> Danilo Krummrich (28):
+>   rust: alloc: add `Allocator` trait
+>   rust: alloc: separate `aligned_size` from `krealloc_aligned`
+>   rust: alloc: rename `KernelAllocator` to `Kmalloc`
+>   rust: alloc: implement `ReallocFunc`
+>   rust: alloc: make `allocator` module public
+>   rust: alloc: implement `Allocator` for `Kmalloc`
+>   rust: alloc: add module `allocator_test`
+>   rust: alloc: implement `Vmalloc` allocator
+>   rust: alloc: implement `KVmalloc` allocator
+>   rust: alloc: add __GFP_NOWARN to `Flags`
+>   rust: alloc: implement kernel `Box`
+>   rust: treewide: switch to our kernel `Box` type
+>   rust: alloc: remove extension of std's `Box`
+>   rust: alloc: add `Box` to prelude
+>   rust: alloc: implement kernel `Vec` type
+>   rust: alloc: implement `IntoIterator` for `Vec`
+>   rust: alloc: implement `collect` for `IntoIter`
+>   rust: treewide: switch to the kernel `Vec` type
+>   rust: alloc: remove `VecExt` extension
+>   rust: alloc: add `Vec` to prelude
+>   rust: error: use `core::alloc::LayoutError`
+>   rust: error: check for config `test` in `Error::name`
+>   rust: alloc: implement `contains` for `Flags`
+>   rust: alloc: implement `Cmalloc` in module allocator_test
+>   rust: str: test: replace `alloc::format`
+>   rust: alloc: update module comment of alloc.rs
+>   kbuild: rust: remove the `alloc` crate and `GlobalAlloc`
+>   MAINTAINERS: add entry for the Rust `alloc` module
+> 
+> Ethan D. Twardy (1):
+>   rust: kbuild: expand rusttest target for macros
+> 
+> Filipe Xavier (2):
+>   rust: error: make conversion functions public
+>   rust: error: optimize error type to use nonzero
+> 
+> Gary Guo (3):
+>   rust: fix size_t in bindgen prototypes of C builtins
+>   rust: map `__kernel_size_t` and friends also to usize/isize
+>   rust: use custom FFI integer types
+> 
+> Miguel Ojeda (17):
+>   rust: workqueue: remove unneeded ``#[allow(clippy::new_ret_no_self)]`
+>   rust: sort global Rust flags
+>   rust: types: avoid repetition in `{As,From}Bytes` impls
+>   rust: enable `clippy::undocumented_unsafe_blocks` lint
+>   rust: enable `clippy::unnecessary_safety_comment` lint
+>   rust: enable `clippy::unnecessary_safety_doc` lint
+>   rust: enable `clippy::ignored_unit_patterns` lint
+>   rust: enable `rustdoc::unescaped_backticks` lint
+>   rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
+>   rust: sync: remove unneeded
+>     `#[allow(clippy::non_send_fields_in_send_ty)]`
+>   rust: introduce `.clippy.toml`
+>   rust: replace `clippy::dbg_macro` with `disallowed_macros`
+>   rust: provide proper code documentation titles
+>   rust: enable Clippy's `check-private-items`
+>   Documentation: rust: add coding guidelines on lints
+>   rust: start using the `#[expect(...)]` attribute
+>   Documentation: rust: discuss `#[expect(...)]` in the guidelines
+> 
+> Thomas Böhler (7):
+>   drm/panic: avoid reimplementing Iterator::find
+>   drm/panic: remove unnecessary borrow in alignment_pattern
+>   drm/panic: prefer eliding lifetimes
+>   drm/panic: remove redundant field when assigning value
+>   drm/panic: correctly indent continuation of line in list item
+>   drm/panic: allow verbose boolean for clarity
+>   drm/panic: allow verbose version check
+> 
+>  .clippy.toml                             |   9 +
+>  .gitignore                               |   1 +
+>  Documentation/rust/coding-guidelines.rst | 148 ++++
+>  MAINTAINERS                              |   8 +
+>  Makefile                                 |  15 +-
+>  drivers/block/rnull.rs                   |   4 +-
+>  drivers/gpu/drm/drm_panic_qr.rs          |  23 +-
+>  mm/kasan/kasan_test_rust.rs              |   3 +-
+>  rust/Makefile                            |  92 +--
+>  rust/bindgen_parameters                  |   5 +
+>  rust/bindings/bindings_helper.h          |   1 +
+>  rust/bindings/lib.rs                     |   6 +
+>  rust/exports.c                           |   1 -
+>  rust/ffi.rs                              |  13 +
+>  rust/helpers/helpers.c                   |   1 +
+>  rust/helpers/slab.c                      |   6 +
+>  rust/helpers/vmalloc.c                   |   9 +
+>  rust/kernel/alloc.rs                     | 150 +++-
+>  rust/kernel/alloc/allocator.rs           | 208 ++++--
+>  rust/kernel/alloc/allocator_test.rs      |  95 +++
+>  rust/kernel/alloc/box_ext.rs             |  89 ---
+>  rust/kernel/alloc/kbox.rs                | 456 +++++++++++
+>  rust/kernel/alloc/kvec.rs                | 913 +++++++++++++++++++++++
+>  rust/kernel/alloc/layout.rs              |  91 +++
+>  rust/kernel/alloc/vec_ext.rs             | 185 -----
+>  rust/kernel/block/mq/operations.rs       |  18 +-
+>  rust/kernel/block/mq/raw_writer.rs       |   2 +-
+>  rust/kernel/block/mq/tag_set.rs          |   2 +-
+>  rust/kernel/error.rs                     |  79 +-
+>  rust/kernel/init.rs                      | 127 ++--
+>  rust/kernel/init/__internal.rs           |  13 +-
+>  rust/kernel/init/macros.rs               |  18 +-
+>  rust/kernel/ioctl.rs                     |   2 +-
+>  rust/kernel/lib.rs                       |   5 +-
+>  rust/kernel/list.rs                      |   1 +
+>  rust/kernel/list/arc_field.rs            |   2 +-
+>  rust/kernel/net/phy.rs                   |  16 +-
+>  rust/kernel/prelude.rs                   |   5 +-
+>  rust/kernel/print.rs                     |   5 +-
+>  rust/kernel/rbtree.rs                    |  49 +-
+>  rust/kernel/std_vendor.rs                |  12 +-
+>  rust/kernel/str.rs                       |  46 +-
+>  rust/kernel/sync/arc.rs                  |  25 +-
+>  rust/kernel/sync/arc/std_vendor.rs       |   2 +
+>  rust/kernel/sync/condvar.rs              |   7 +-
+>  rust/kernel/sync/lock.rs                 |   8 +-
+>  rust/kernel/sync/lock/mutex.rs           |   4 +-
+>  rust/kernel/sync/lock/spinlock.rs        |   4 +-
+>  rust/kernel/sync/locked_by.rs            |   2 +-
+>  rust/kernel/task.rs                      |   8 +-
+>  rust/kernel/time.rs                      |   4 +-
+>  rust/kernel/types.rs                     | 140 ++--
+>  rust/kernel/uaccess.rs                   |  23 +-
+>  rust/kernel/workqueue.rs                 |  29 +-
+>  rust/macros/lib.rs                       |  14 +-
+>  rust/macros/module.rs                    |   8 +-
+>  rust/uapi/lib.rs                         |   6 +
+>  samples/rust/rust_minimal.rs             |   4 +-
+>  samples/rust/rust_print.rs               |   1 +
+>  scripts/Makefile.build                   |   4 +-
+>  scripts/generate_rust_analyzer.py        |  11 +-
+>  61 files changed, 2482 insertions(+), 756 deletions(-)
+>  create mode 100644 .clippy.toml
+>  create mode 100644 rust/ffi.rs
+>  create mode 100644 rust/helpers/vmalloc.c
+>  create mode 100644 rust/kernel/alloc/allocator_test.rs
+>  delete mode 100644 rust/kernel/alloc/box_ext.rs
+>  create mode 100644 rust/kernel/alloc/kbox.rs
+>  create mode 100644 rust/kernel/alloc/kvec.rs
+>  create mode 100644 rust/kernel/alloc/layout.rs
+>  delete mode 100644 rust/kernel/alloc/vec_ext.rs
+> 
+> --
+> 2.48.1
 
-All queued up now, thanks!
-
-greg k-h
