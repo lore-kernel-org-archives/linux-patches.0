@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AEC1AC43A;
-	Sun,  9 Mar 2025 09:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5E11AC43A;
+	Sun,  9 Mar 2025 09:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513840; cv=none; b=juK3Z1yZYEAc5mlh7n7QJApiIU5sJZAlCRBfRgmDSd0+9DqBhxXJwegius+nF5Th7pOEbVlxW2Gq3SUJMpe6xXi1eafanbgJrxUhxdnZvuhQx4zasSR6hc4i/k2OPaS25An6k7VPOusrIcuNpYMTofvFEz8MI84aq2C08Clddik=
+	t=1741513843; cv=none; b=uRjIwYqUhdc5+5BNyozQNNLqxHEH7NFtGGemk+KwzS81aLikn6tTozQ42hVJC9GMtBm6oTUMNN6nxtK9ioIjxAIqS2ARN1uchAEggzvVoiJdBVNxeiE1I1wkIVKKdjS9xcb6o7iFVajZs1N8zUXopqXB98czq/tOczlVqpcIhyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513840; c=relaxed/simple;
-	bh=KxCZt2/LCFXw/uh227TzFljPrPwL7bWlulShg6E66vk=;
+	s=arc-20240116; t=1741513843; c=relaxed/simple;
+	bh=xMKzx/KZbhBLAwc2Y5UV+r0CJDvBSsqCrgUWC0cRAjE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=uouHMqNV0f06JC+6jUxAolZBu4vZsCYz6NOzGTYJRMxj45KjAQipWx9wyjm21j7bZt0IVTpEV+M2dDgyKqGwoLgPrQlyzuPHwxDyaTL6Vu1FUy3I7EZddhpcdobUZTaph8UeDgYYN05C6d+nx26JJNWJWCIDART0Rj0cXFJqF0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOVBhlaB; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=qDVdRRX4nD1j/yMXokDFowEPS+KpVv41fdJb6ff8OvpZ2LqQVFu+YaZwbNdj/jXUuWsXmKwWHt8iydngAr/TR3gt7F8qY2YDkuIoPH9BRQuucZRzDXA9lG95UuKZ8K9BfRR65jS+xwHsmhQ7x/Nj9bDSV6Sh27L4MRP+z3umHKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvwBHiT/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOVBhlaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E470AC4CEE5;
-	Sun,  9 Mar 2025 09:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvwBHiT/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0687FC4CEE5;
+	Sun,  9 Mar 2025 09:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513840;
-	bh=KxCZt2/LCFXw/uh227TzFljPrPwL7bWlulShg6E66vk=;
+	s=korg; t=1741513843;
+	bh=xMKzx/KZbhBLAwc2Y5UV+r0CJDvBSsqCrgUWC0cRAjE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=lOVBhlaBj+j0Ji9P5M47lDS0yS4EUW8YzeSKCV6Rt1rcCH1t4KIdpfJbX8js4VP91
-	 bXEsX3nUbeI53n1w9ijd1PoZun65UIU6dt1B4jUtOwlXCS9yAeeRmCg3pr6EMIXbcm
-	 jvbfcKzpLKNnkVswVde2DoqnozloAGzwYaPg0PFo=
-Subject: Patch "rust: start using the `#[expect(...)]` attribute" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu,urgau@numericable.fr,xfrednet@gmail.com
+	b=RvwBHiT/ZawuHKuBtpe6XhTPXrtYxQ6hvor7AEECqq8ofbGIKIj/9qiTo1HFrrsDX
+	 h3ubdIf88A5kPGhXWaRF3o4pb64ir8kXIbHrcqLjFSfRscoOJIt9jqI6KjFscQ+vda
+	 NwLVF2N64gnXTFFgsojeS9pd5PCGhPdsFLdQ2dDo=
+Subject: Patch "rust: str: test: replace `alloc::format`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:52 +0100
-In-Reply-To: <20250307225008.779961-17-ojeda@kernel.org>
-Message-ID: <2025030952-flashbulb-lurk-c4b8@gregkh>
+In-Reply-To: <20250307225008.779961-46-ojeda@kernel.org>
+Message-ID: <2025030952-craving-reappoint-bc76@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,399 +44,83 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: start using the `#[expect(...)]` attribute
+    rust: str: test: replace `alloc::format`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-start-using-the-attribute.patch
+     rust-str-test-replace-alloc-format.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121471-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:25 2025
+From stable+bounces-121500-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:58 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:23 +0100
-Subject: rust: start using the `#[expect(...)]` attribute
+Date: Fri,  7 Mar 2025 23:49:52 +0100
+Subject: rust: str: test: replace `alloc::format`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-17-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-46-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 1f9ed172545687e5c04c77490a45896be6d2e459 upstream.
+commit eb6f92cd3f755c179204ea1f933b07cf992892fd upstream.
 
-In Rust, it is possible to `allow` particular warnings (diagnostics,
-lints) locally, making the compiler ignore instances of a given warning
-within a given function, module, block, etc.
+The current implementation of tests in str.rs use `format!` to format
+strings for comparison, which, internally, creates a new `String`.
 
-It is similar to `#pragma GCC diagnostic push` + `ignored` + `pop` in C:
+In order to prepare for getting rid of Rust's alloc crate, we have to
+cut this dependency. Instead, implement `format!` for `CString`.
 
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wunused-function"
-    static void f(void) {}
-    #pragma GCC diagnostic pop
+Note that for userspace tests, `Kmalloc`, which is backing `CString`'s
+memory, is just a type alias to `Cmalloc`.
 
-But way less verbose:
-
-    #[allow(dead_code)]
-    fn f() {}
-
-By that virtue, it makes it possible to comfortably enable more
-diagnostics by default (i.e. outside `W=` levels) that may have some
-false positives but that are otherwise quite useful to keep enabled to
-catch potential mistakes.
-
-The `#[expect(...)]` attribute [1] takes this further, and makes the
-compiler warn if the diagnostic was _not_ produced. For instance, the
-following will ensure that, when `f()` is called somewhere, we will have
-to remove the attribute:
-
-    #[expect(dead_code)]
-    fn f() {}
-
-If we do not, we get a warning from the compiler:
-
-    warning: this lint expectation is unfulfilled
-     --> x.rs:3:10
-      |
-    3 | #[expect(dead_code)]
-      |          ^^^^^^^^^
-      |
-      = note: `#[warn(unfulfilled_lint_expectations)]` on by default
-
-This means that `expect`s do not get forgotten when they are not needed.
-
-See the next commit for more details, nuances on its usage and
-documentation on the feature.
-
-The attribute requires the `lint_reasons` [2] unstable feature, but it
-is becoming stable in 1.81.0 (to be released on 2024-09-05) and it has
-already been useful to clean things up in this patch series, finding
-cases where the `allow`s should not have been there.
-
-Thus, enable `lint_reasons` and convert some of our `allow`s to `expect`s
-where possible.
-
-This feature was also an example of the ongoing collaboration between
-Rust and the kernel -- we tested it in the kernel early on and found an
-issue that was quickly resolved [3].
-
-Cc: Fridtjof Stoldt <xfrednet@gmail.com>
-Cc: Urgau <urgau@numericable.fr>
-Link: https://rust-lang.github.io/rfcs/2383-lint-reasons.html#expect-lint-attribute [1]
-Link: https://github.com/rust-lang/rust/issues/54503 [2]
-Link: https://github.com/rust-lang/rust/issues/114557 [3]
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-18-ojeda@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-27-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/error.rs           |    2 +-
- rust/kernel/init.rs            |   22 +++++++++++-----------
- rust/kernel/init/__internal.rs |    4 ++--
- rust/kernel/init/macros.rs     |   10 +++++-----
- rust/kernel/ioctl.rs           |    2 +-
- rust/kernel/lib.rs             |    1 +
- rust/kernel/list/arc_field.rs  |    2 +-
- rust/kernel/print.rs           |    4 ++--
- rust/kernel/std_vendor.rs      |   10 +++++-----
- samples/rust/rust_print.rs     |    2 +-
- scripts/Makefile.build         |    2 +-
- 11 files changed, 31 insertions(+), 30 deletions(-)
+ rust/kernel/str.rs |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -133,7 +133,7 @@ impl Error {
-     }
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -524,7 +524,28 @@ macro_rules! c_str {
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+-    use alloc::format;
++
++    struct String(CString);
++
++    impl String {
++        fn from_fmt(args: fmt::Arguments<'_>) -> Self {
++            String(CString::try_from_fmt(args).unwrap())
++        }
++    }
++
++    impl Deref for String {
++        type Target = str;
++
++        fn deref(&self) -> &str {
++            self.0.to_str().unwrap()
++        }
++    }
++
++    macro_rules! format {
++        ($($f:tt)*) => ({
++            &*String::from_fmt(kernel::fmt!($($f)*))
++        })
++    }
  
-     /// Returns the error encoded as a pointer.
--    #[allow(dead_code)]
-+    #[expect(dead_code)]
-     pub(crate) fn to_ptr<T>(self) -> *mut T {
-         #[cfg_attr(target_pointer_width = "32", allow(clippy::useless_conversion))]
-         // SAFETY: `self.0` is a valid error due to its invariant.
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -35,7 +35,7 @@
- //! that you need to write `<-` instead of `:` for fields that you want to initialize in-place.
- //!
- //! ```rust
--//! # #![allow(clippy::disallowed_names)]
-+//! # #![expect(clippy::disallowed_names)]
- //! use kernel::sync::{new_mutex, Mutex};
- //! # use core::pin::Pin;
- //! #[pin_data]
-@@ -55,7 +55,7 @@
- //! (or just the stack) to actually initialize a `Foo`:
- //!
- //! ```rust
--//! # #![allow(clippy::disallowed_names)]
-+//! # #![expect(clippy::disallowed_names)]
- //! # use kernel::sync::{new_mutex, Mutex};
- //! # use core::pin::Pin;
- //! # #[pin_data]
-@@ -120,12 +120,12 @@
- //!   `slot` gets called.
- //!
- //! ```rust
--//! # #![allow(unreachable_pub, clippy::disallowed_names)]
-+//! # #![expect(unreachable_pub, clippy::disallowed_names)]
- //! use kernel::{init, types::Opaque};
- //! use core::{ptr::addr_of_mut, marker::PhantomPinned, pin::Pin};
- //! # mod bindings {
--//! #     #![allow(non_camel_case_types)]
--//! #     #![allow(clippy::missing_safety_doc)]
-+//! #     #![expect(non_camel_case_types)]
-+//! #     #![expect(clippy::missing_safety_doc)]
- //! #     pub struct foo;
- //! #     pub unsafe fn init_foo(_ptr: *mut foo) {}
- //! #     pub unsafe fn destroy_foo(_ptr: *mut foo) {}
-@@ -238,7 +238,7 @@ pub mod macros;
- /// # Examples
- ///
- /// ```rust
--/// # #![allow(clippy::disallowed_names)]
-+/// # #![expect(clippy::disallowed_names)]
- /// # use kernel::{init, macros::pin_data, pin_init, stack_pin_init, init::*, sync::Mutex, new_mutex};
- /// # use core::pin::Pin;
- /// #[pin_data]
-@@ -290,7 +290,7 @@ macro_rules! stack_pin_init {
- /// # Examples
- ///
- /// ```rust,ignore
--/// # #![allow(clippy::disallowed_names)]
-+/// # #![expect(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mutex, new_mutex};
- /// # use macros::pin_data;
- /// # use core::{alloc::AllocError, pin::Pin};
-@@ -316,7 +316,7 @@ macro_rules! stack_pin_init {
- /// ```
- ///
- /// ```rust,ignore
--/// # #![allow(clippy::disallowed_names)]
-+/// # #![expect(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mutex, new_mutex};
- /// # use macros::pin_data;
- /// # use core::{alloc::AllocError, pin::Pin};
-@@ -438,7 +438,7 @@ macro_rules! stack_try_pin_init {
- /// Users of `Foo` can now create it like this:
- ///
- /// ```rust
--/// # #![allow(clippy::disallowed_names)]
-+/// # #![expect(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, macros::pin_data, init::*};
- /// # use core::pin::Pin;
- /// # #[pin_data]
-@@ -852,7 +852,7 @@ pub unsafe trait PinInit<T: ?Sized, E =
-     /// # Examples
-     ///
-     /// ```rust
--    /// # #![allow(clippy::disallowed_names)]
-+    /// # #![expect(clippy::disallowed_names)]
-     /// use kernel::{types::Opaque, init::pin_init_from_closure};
-     /// #[repr(C)]
-     /// struct RawFoo([u8; 16]);
-@@ -964,7 +964,7 @@ pub unsafe trait Init<T: ?Sized, E = Inf
-     /// # Examples
-     ///
-     /// ```rust
--    /// # #![allow(clippy::disallowed_names)]
-+    /// # #![expect(clippy::disallowed_names)]
-     /// use kernel::{types::Opaque, init::{self, init_from_closure}};
-     /// struct Foo {
-     ///     buf: [u8; 1_000_000],
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -54,7 +54,7 @@ where
- pub unsafe trait HasPinData {
-     type PinData: PinData;
- 
--    #[allow(clippy::missing_safety_doc)]
-+    #[expect(clippy::missing_safety_doc)]
-     unsafe fn __pin_data() -> Self::PinData;
- }
- 
-@@ -84,7 +84,7 @@ pub unsafe trait PinData: Copy {
- pub unsafe trait HasInitData {
-     type InitData: InitData;
- 
--    #[allow(clippy::missing_safety_doc)]
-+    #[expect(clippy::missing_safety_doc)]
-     unsafe fn __init_data() -> Self::InitData;
- }
- 
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -182,13 +182,13 @@
- //!     // Normally `Drop` bounds do not have the correct semantics, but for this purpose they do
- //!     // (normally people want to know if a type has any kind of drop glue at all, here we want
- //!     // to know if it has any kind of custom drop glue, which is exactly what this bound does).
--//!     #[allow(drop_bounds)]
-+//!     #[expect(drop_bounds)]
- //!     impl<T: ::core::ops::Drop> MustNotImplDrop for T {}
- //!     impl<T> MustNotImplDrop for Bar<T> {}
- //!     // Here comes a convenience check, if one implemented `PinnedDrop`, but forgot to add it to
- //!     // `#[pin_data]`, then this will error with the same mechanic as above, this is not needed
- //!     // for safety, but a good sanity check, since no normal code calls `PinnedDrop::drop`.
--//!     #[allow(non_camel_case_types)]
-+//!     #[expect(non_camel_case_types)]
- //!     trait UselessPinnedDropImpl_you_need_to_specify_PinnedDrop {}
- //!     impl<
- //!         T: ::kernel::init::PinnedDrop,
-@@ -925,14 +925,14 @@ macro_rules! __pin_data {
-         // `Drop`. Additionally we will implement this trait for the struct leading to a conflict,
-         // if it also implements `Drop`
-         trait MustNotImplDrop {}
--        #[allow(drop_bounds)]
-+        #[expect(drop_bounds)]
-         impl<T: ::core::ops::Drop> MustNotImplDrop for T {}
-         impl<$($impl_generics)*> MustNotImplDrop for $name<$($ty_generics)*>
-         where $($whr)* {}
-         // We also take care to prevent users from writing a useless `PinnedDrop` implementation.
-         // They might implement `PinnedDrop` correctly for the struct, but forget to give
-         // `PinnedDrop` as the parameter to `#[pin_data]`.
--        #[allow(non_camel_case_types)]
-+        #[expect(non_camel_case_types)]
-         trait UselessPinnedDropImpl_you_need_to_specify_PinnedDrop {}
-         impl<T: $crate::init::PinnedDrop>
-             UselessPinnedDropImpl_you_need_to_specify_PinnedDrop for T {}
-@@ -989,7 +989,7 @@ macro_rules! __pin_data {
-         //
-         // The functions are `unsafe` to prevent accidentally calling them.
-         #[allow(dead_code)]
--        #[allow(clippy::missing_safety_doc)]
-+        #[expect(clippy::missing_safety_doc)]
-         impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
-         where $($whr)*
-         {
---- a/rust/kernel/ioctl.rs
-+++ b/rust/kernel/ioctl.rs
-@@ -4,7 +4,7 @@
- //!
- //! C header: [`include/asm-generic/ioctl.h`](srctree/include/asm-generic/ioctl.h)
- 
--#![allow(non_snake_case)]
-+#![expect(non_snake_case)]
- 
- use crate::build_assert;
- 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -15,6 +15,7 @@
- #![feature(arbitrary_self_types)]
- #![feature(coerce_unsized)]
- #![feature(dispatch_from_dyn)]
-+#![feature(lint_reasons)]
- #![feature(new_uninit)]
- #![feature(unsize)]
- 
---- a/rust/kernel/list/arc_field.rs
-+++ b/rust/kernel/list/arc_field.rs
-@@ -56,7 +56,7 @@ impl<T, const ID: u64> ListArcField<T, I
-     ///
-     /// The caller must have mutable access to the `ListArc<ID>` containing the struct with this
-     /// field for the duration of the returned reference.
--    #[allow(clippy::mut_from_ref)]
-+    #[expect(clippy::mut_from_ref)]
-     pub unsafe fn assert_mut(&self) -> &mut T {
-         // SAFETY: The caller has exclusive access to the `ListArc`, so they also have exclusive
-         // access to this field.
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -14,7 +14,7 @@ use core::{
- use crate::str::RawFormatter;
- 
- // Called from `vsprintf` with format specifier `%pA`.
--#[allow(clippy::missing_safety_doc)]
-+#[expect(clippy::missing_safety_doc)]
- #[no_mangle]
- unsafe extern "C" fn rust_fmt_argument(
-     buf: *mut c_char,
-@@ -140,7 +140,7 @@ pub fn call_printk_cont(args: fmt::Argum
- #[doc(hidden)]
- #[cfg(not(testlib))]
- #[macro_export]
--#[allow(clippy::crate_in_macro_def)]
-+#[expect(clippy::crate_in_macro_def)]
- macro_rules! print_macro (
-     // The non-continuation cases (most of them, e.g. `INFO`).
-     ($format_string:path, false, $($arg:tt)+) => (
---- a/rust/kernel/std_vendor.rs
-+++ b/rust/kernel/std_vendor.rs
-@@ -16,7 +16,7 @@
- ///
- /// ```rust
- /// let a = 2;
--/// # #[allow(clippy::disallowed_macros)]
-+/// # #[expect(clippy::disallowed_macros)]
- /// let b = dbg!(a * 2) + 1;
- /// //      ^-- prints: [src/main.rs:2] a * 2 = 4
- /// assert_eq!(b, 5);
-@@ -54,7 +54,7 @@
- /// With a method call:
- ///
- /// ```rust
--/// # #[allow(clippy::disallowed_macros)]
-+/// # #[expect(clippy::disallowed_macros)]
- /// fn foo(n: usize) {
- ///     if dbg!(n.checked_sub(4)).is_some() {
- ///         // ...
-@@ -73,7 +73,7 @@
- /// Naive factorial implementation:
- ///
- /// ```rust
--/// # #[allow(clippy::disallowed_macros)]
-+/// # #[expect(clippy::disallowed_macros)]
- /// # {
- /// fn factorial(n: u32) -> u32 {
- ///     if dbg!(n <= 1) {
-@@ -120,7 +120,7 @@
- /// a tuple (and return it, too):
- ///
- /// ```
--/// # #![allow(clippy::disallowed_macros)]
-+/// # #![expect(clippy::disallowed_macros)]
- /// assert_eq!(dbg!(1usize, 2u32), (1, 2));
- /// ```
- ///
-@@ -129,7 +129,7 @@
- /// invocations. You can use a 1-tuple directly if you need one:
- ///
- /// ```
--/// # #[allow(clippy::disallowed_macros)]
-+/// # #[expect(clippy::disallowed_macros)]
- /// # {
- /// assert_eq!(1, dbg!(1u32,)); // trailing comma ignored
- /// assert_eq!((1,), dbg!((1u32,))); // 1-tuple
---- a/samples/rust/rust_print.rs
-+++ b/samples/rust/rust_print.rs
-@@ -15,7 +15,7 @@ module! {
- 
- struct RustPrint;
- 
--#[allow(clippy::disallowed_macros)]
-+#[expect(clippy::disallowed_macros)]
- fn arc_print() -> Result {
-     use kernel::sync::*;
- 
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -248,7 +248,7 @@ $(obj)/%.lst: $(obj)/%.c FORCE
- # Compile Rust sources (.rs)
- # ---------------------------------------------------------------------------
- 
--rust_allowed_features := arbitrary_self_types,new_uninit
-+rust_allowed_features := arbitrary_self_types,lint_reasons,new_uninit
- 
- # `--out-dir` is required to avoid temporaries being created by `rustc` in the
- # current working directory, which may be not accessible in the out-of-tree
+     const ALL_ASCII_CHARS: &'static str =
+         "\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\x09\\x0a\\x0b\\x0c\\x0d\\x0e\\x0f\
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
