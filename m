@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4821B0408;
-	Sun,  9 Mar 2025 09:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E781AC43A;
+	Sun,  9 Mar 2025 09:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513812; cv=none; b=LlFlg2XbAOJiqFgw+VbselHKhIbchh22R/35uDymWabJtUwlOAUrHO4FajszySLHTiANWRdyMzEZN6Mtv9Ihyftr4speORo4SXBNNABOpCc/42+8y8qz+JsiY64ZWXDFbPAIkUx1sXthZVrdDAa4NZ0dsFx/Zv2zTT5qrv4KoT0=
+	t=1741513817; cv=none; b=eq23ycfL2PthgNOVD92ofS/sWsDYOyC0g1zJwK4N/b0Kj9D4vrFQ3zWB9MqK1tJUH6g3TIEp9wTOsHLk1cVG3HkHjWSKIy75mq8k86ckdgs2RDzvTkxOqbKc+zpm2iGocVY52gXSzOnsJfvo8m3mo7qlw4jAhdpFf4dFOf7Tj5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513812; c=relaxed/simple;
-	bh=47cHVKjf878U5mBAW9CJzmRGmf0JDIDBCgXVVTvhBPE=;
+	s=arc-20240116; t=1741513817; c=relaxed/simple;
+	bh=R6/ZBoCSwBAeDBhDzIHhE8ZcCqwzAKJ94kk6fy4zwkY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=nJjZ1vrOJntAVCPan3d/sSJjpQoqDlbvlPhLlgE88BiZqN7fr0F158SKGWIEv1akLNRWYEBdq99Fdq2VQZP1dQivjC7WyPVSBK868XR6DpkbmPsRIEk/OfB7m087C8N2s3xXp+2SqPWxw0oU0yjuYj/97QfrR7PnSBoE94cpszU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXhNr+a9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=Lfc56RYuTAfLeUXq4J26Ko1Av1CHZ55kW968zawra8AJubQyiO7hlJrOxlPdJdIa2N0BEiHiZZZCYRcVxczNYUnNogqBTZQLb9J7GhYC5s7u+3VhvG28a+KtjA7PhUFEY9ChH2uKw73PuUdnTIIh3SFlaxpLzXyuORKWkn+4hNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF8c10Lq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXhNr+a9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F5BC4CEE5;
-	Sun,  9 Mar 2025 09:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF8c10Lq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B7C4CEE5;
+	Sun,  9 Mar 2025 09:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513812;
-	bh=47cHVKjf878U5mBAW9CJzmRGmf0JDIDBCgXVVTvhBPE=;
+	s=korg; t=1741513815;
+	bh=R6/ZBoCSwBAeDBhDzIHhE8ZcCqwzAKJ94kk6fy4zwkY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=FXhNr+a9h/YahjM988fdcsTGxNlEq6Tw2V3GxG76wjF3CY5s2oJlMnem1nRTaaLjz
-	 6gX8LaxegkT+yT92QysC9X7+bQ5I0DZ5HWlUN2Kj8StgnPUEnxnSydleeYPpyFWpNk
-	 ZtwaePCcsM1EmRn0FaW5jgbGA+vPafpksUdUvFzM=
-Subject: Patch "rust: error: check for config `test` in `Error::name`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=XF8c10LqfSYbFO34kUmBYNMlKReXLBHtWLyIpTiQNZRpW7SJWsZDUf6jtEca/DfFy
+	 1J7bva3ZdSr6ninJz+QcnIPtz2gLDTUAW862yFzIGvJYgYS7Pc7LukcyvUzMJbrV4A
+	 2X00VhBjzDTy7Ko/utKK6GwSwCH5M2OonbRSks2g=
+Subject: Patch "rust: error: make conversion functions public" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,felipe_life@live.com,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-43-ojeda@kernel.org>
-Message-ID: <2025030951-variably-outreach-0d9f@gregkh>
+In-Reply-To: <20250307225008.779961-19-ojeda@kernel.org>
+Message-ID: <2025030951-hunchback-hypnotist-5673@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,66 +44,90 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: error: check for config `test` in `Error::name`
+    rust: error: make conversion functions public
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-error-check-for-config-test-in-error-name.patch
+     rust-error-make-conversion-functions-public.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121497-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:54 2025
+From stable+bounces-121473-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:29 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:49 +0100
-Subject: rust: error: check for config `test` in `Error::name`
+Date: Fri,  7 Mar 2025 23:49:25 +0100
+Subject: rust: error: make conversion functions public
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-43-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-19-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Filipe Xavier <felipe_life@live.com>
 
-commit 4a28ab469ff01855eb819dfd94754d1792f03f2a upstream.
+commit 5ed147473458f8c20f908a03227d8f5bb3cb8f7d upstream.
 
-Additional to `testlib` also check for `test` in `Error::name`. This is
-required by a subsequent patch that (indirectly) uses `Error` in test
-cases.
+Change visibility to public of functions in error.rs:
+from_err_ptr, from_errno, from_result and to_ptr.
+Additionally, remove dead_code annotations.
 
+Link: https://github.com/Rust-for-Linux/linux/issues/1105
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Filipe Xavier <felipe_life@live.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-24-dakr@kernel.org
+Link: https://lore.kernel.org/r/DM4PR14MB7276E6948E67B3B23D8EA847E9652@DM4PR14MB7276.namprd14.prod.outlook.com
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/error.rs |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/kernel/error.rs |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 --- a/rust/kernel/error.rs
 +++ b/rust/kernel/error.rs
-@@ -161,7 +161,7 @@ impl Error {
+@@ -95,7 +95,7 @@ impl Error {
+     ///
+     /// It is a bug to pass an out-of-range `errno`. `EINVAL` would
+     /// be returned in such a case.
+-    pub(crate) fn from_errno(errno: core::ffi::c_int) -> Error {
++    pub fn from_errno(errno: core::ffi::c_int) -> Error {
+         if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
+             // TODO: Make it a `WARN_ONCE` once available.
+             crate::pr_warn!(
+@@ -133,8 +133,7 @@ impl Error {
      }
  
-     /// Returns a string representing the error, if one exists.
--    #[cfg(not(testlib))]
-+    #[cfg(not(any(test, testlib)))]
-     pub fn name(&self) -> Option<&'static CStr> {
-         // SAFETY: Just an FFI call, there are no extra safety requirements.
-         let ptr = unsafe { bindings::errname(-self.0.get()) };
-@@ -178,7 +178,7 @@ impl Error {
-     /// When `testlib` is configured, this always returns `None` to avoid the dependency on a
-     /// kernel function so that tests that use this (e.g., by calling [`Result::unwrap`]) can still
-     /// run in userspace.
--    #[cfg(testlib)]
-+    #[cfg(any(test, testlib))]
-     pub fn name(&self) -> Option<&'static CStr> {
-         None
-     }
+     /// Returns the error encoded as a pointer.
+-    #[expect(dead_code)]
+-    pub(crate) fn to_ptr<T>(self) -> *mut T {
++    pub fn to_ptr<T>(self) -> *mut T {
+         #[cfg_attr(target_pointer_width = "32", allow(clippy::useless_conversion))]
+         // SAFETY: `self.0` is a valid error due to its invariant.
+         unsafe {
+@@ -270,9 +269,7 @@ pub fn to_result(err: core::ffi::c_int)
+ ///     from_err_ptr(unsafe { bindings::devm_platform_ioremap_resource(pdev.to_ptr(), index) })
+ /// }
+ /// ```
+-// TODO: Remove `dead_code` marker once an in-kernel client is available.
+-#[allow(dead_code)]
+-pub(crate) fn from_err_ptr<T>(ptr: *mut T) -> Result<*mut T> {
++pub fn from_err_ptr<T>(ptr: *mut T) -> Result<*mut T> {
+     // CAST: Casting a pointer to `*const core::ffi::c_void` is always valid.
+     let const_ptr: *const core::ffi::c_void = ptr.cast();
+     // SAFETY: The FFI function does not deref the pointer.
+@@ -318,9 +315,7 @@ pub(crate) fn from_err_ptr<T>(ptr: *mut
+ ///     })
+ /// }
+ /// ```
+-// TODO: Remove `dead_code` marker once an in-kernel client is available.
+-#[allow(dead_code)]
+-pub(crate) fn from_result<T, F>(f: F) -> T
++pub fn from_result<T, F>(f: F) -> T
+ where
+     T: From<i16>,
+     F: FnOnce() -> Result<T>,
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
