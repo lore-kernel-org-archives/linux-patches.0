@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC71F1FB3;
-	Sun,  9 Mar 2025 09:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B111FB3;
+	Sun,  9 Mar 2025 09:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513690; cv=none; b=d/pEw8gWxYzd6/PIlKLa27wu+eQuBBTvgFiIr1wDY9cPMDJyg+FaWDOT+Af0NfrT6cafpKRI9UYi2D1NS1MeCyfyGNtCudJ6iXc6W6AMdBZd1AoHFCpykXMz8aefLLuGN3oOBpwmr0JksUczs7/94yKQ8BqL/TZ26fDFSnnOXjI=
+	t=1741513693; cv=none; b=Gco3fxvb0Ij/OYpN6PSGfHgFIfgFx23JXBO0I7hpuMjGtjz1DAVtZffBb0uurimfB7JmriqNrIaALT4O22zthACMKKRIyYuSZRKcGQ9XFssET50sKTRRk0KtfEpPkC2PtXd90n2yiPPBCvdTsU+Y5AfR2uE9YVkaWQ00Bue/lRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513690; c=relaxed/simple;
-	bh=GFa+IT30zttccNdvAKTAM7I4ZUxDnhHrh37Or+nLhdE=;
+	s=arc-20240116; t=1741513693; c=relaxed/simple;
+	bh=vY+bsiQzUyTdSPLqkvbvzSSZ4aVKgGpoYI5ljaXlpsE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=QteVwQgZEUiOaslSyPEQ/B7BBo/O00noBo+R8Ga+6jzAqNrE5SSzwEog1zmkoo7PYxUpSuenX9GDsthfre9ArKmUkSafFm8+xfJAAMxWMqTxTaPBqdYO/sE3/nULzXFM1/lWRC8XXceRz1X54ZwKiS79xXrCo+LooE7Acst7gxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp5MDkzB; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=NM6D1rbj8T84KAEN4BfFfKqcOgdC84lSFvytmWHM5cRbO3Hr7Cwv5irhXdZ74oVhkltvmUb81ab3AiOgewrx5uwolqbHkMT8JvLGNIerxyC4uiLnE7j5F7RBMPxAk8bN+4WcC3voy4EWHzzGIDvtCGbanpOcJCFT7ieCobcCyqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQeJLpGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp5MDkzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E237FC4CEE5;
-	Sun,  9 Mar 2025 09:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQeJLpGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BF8C4CEE5;
+	Sun,  9 Mar 2025 09:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513690;
-	bh=GFa+IT30zttccNdvAKTAM7I4ZUxDnhHrh37Or+nLhdE=;
+	s=korg; t=1741513693;
+	bh=vY+bsiQzUyTdSPLqkvbvzSSZ4aVKgGpoYI5ljaXlpsE=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=bp5MDkzBca9HEUJ3rPilhvyTxk6rt+WwGYN73pitIc/OprVKnKfPyZ8Du8g9c1if/
-	 iuafkmDRs0uMaVXF+iCPxiNFSD9cAt+bTjAWIgr6Umwa68virCXsiFFuZvFsw/oMEc
-	 QCF+cNGQGQatVibatDXGtfC94NZOFBhxy7/1WZuo=
-Subject: Patch "drm/panic: allow verbose boolean for clarity" has been added to the 6.12-stable tree
+	b=UQeJLpGjrCeEI94PBDG+WrliDxn+p2uUOggN0WwdvZ2NUfy7AsoWBxturKHgw3aPi
+	 MuAt/AgMmwrOGyxLuP2EqiPf/6gUYQTHw7LK9H9LwkzWbSe3w56fueSCZeTwu+vRFO
+	 I7PGZf33yuygTRep4cdizOl4ppafWvyNUWG32O60=
+Subject: Patch "drm/panic: allow verbose version check" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:47 +0100
-In-Reply-To: <20250307225008.779961-55-ojeda@kernel.org>
-Message-ID: <2025030947-backshift-duly-a204@gregkh>
+In-Reply-To: <20250307225008.779961-56-ojeda@kernel.org>
+Message-ID: <2025030947-profane-around-0834@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,80 +44,68 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/panic: allow verbose boolean for clarity
+    drm/panic: allow verbose version check
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-panic-allow-verbose-boolean-for-clarity.patch
+     drm-panic-allow-verbose-version-check.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121509-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:06 2025
+From stable+bounces-121510-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:09 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:01 +0100
-Subject: drm/panic: allow verbose boolean for clarity
+Date: Fri,  7 Mar 2025 23:50:02 +0100
+Subject: drm/panic: allow verbose version check
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-55-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-56-ojeda@kernel.org>
 
 From: Thomas Böhler <witcher@wiredspace.de>
 
-commit 27aef8a52e4b7f120ce47cd638d9d83065b759d2 upstream.
+commit 06b919e3fedf4798a1f0f60e0b67caa192f724a7 upstream.
 
-Clippy complains about a non-minimal boolean expression with
-`nonminimal_bool`:
+Clippy warns about a reimplementation of `RangeInclusive::contains`:
 
-    error: this boolean expression can be simplified
-       --> drivers/gpu/drm/drm_panic_qr.rs:722:9
+    error: manual `!RangeInclusive::contains` implementation
+       --> drivers/gpu/drm/drm_panic_qr.rs:986:8
         |
-    722 |         (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
-        |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    986 |     if version < 1 || version > 40 {
+        |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: use: `!(1..=40).contains(&version)`
         |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#nonminimal_bool
-        = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
-    help: try
-        |
-    722 |         !(x >= 8 || y >= 8 && y < end) || (x >= end && y < 8)
-        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    722 |         (y >= end || y < 8) && x < 8 || (x >= end && y < 8)
-        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_range_contains
+        = note: `-D clippy::manual-range-contains` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::manual_range_contains)]`
 
-While this can be useful in a lot of cases, it isn't here because the
-line expresses clearly what the intention is. Simplifying the expression
-means losing clarity, so opt-out of this lint for the offending line.
+Ignore this and keep the current implementation as that makes it easier
+to read.
 
 Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
 Reported-by: Miguel Ojeda <ojeda@kernel.org>
 Link: https://github.com/Rust-for-Linux/linux/issues/1123
 Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
 Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-7-witcher@wiredspace.de
+Link: https://lore.kernel.org/r/20241019084048.22336-8-witcher@wiredspace.de
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panic_qr.rs |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/gpu/drm/drm_panic_qr.rs
 +++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -719,7 +719,10 @@ impl QrImage<'_> {
- 
-     fn is_finder(&self, x: u8, y: u8) -> bool {
-         let end = self.width - 8;
--        (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
-+        #[expect(clippy::nonminimal_bool)]
-+        {
-+            (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
-+        }
+@@ -982,6 +982,7 @@ pub unsafe extern "C" fn drm_panic_qr_ge
+ /// * If `url_len` = 0, only removes 3 bytes for 1 binary segment.
+ #[no_mangle]
+ pub extern "C" fn drm_panic_qr_max_data_size(version: u8, url_len: usize) -> usize {
++    #[expect(clippy::manual_range_contains)]
+     if version < 1 || version > 40 {
+         return 0;
      }
- 
-     // Alignment pattern: 5x5 squares in a grid.
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
