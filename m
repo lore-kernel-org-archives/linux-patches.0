@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AF91FB3;
-	Sun,  9 Mar 2025 09:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ED119D89D;
+	Sun,  9 Mar 2025 09:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513696; cv=none; b=HcgdKHv8mPr73dO+CHQ4hssG+Qlb9GmWD562RCNsLfr2LTKB6XI4attJrjshmELxAbRzAhP4WPZBIRTmUM+vsNLIJla1z2qKeWoJjKo486jW4W6JvDI3p00e+ng+iIvmpRWh5BBWP9ZzzPDSjvxdS8GqVqfdM4uRHin5ZMDIC2o=
+	t=1741513699; cv=none; b=ggWiOAG2MV9fo7yP21QJ/DCdt+r1PdfurISF8xS9KyZICHUWAKxRCquHYyb83pLySnMCgRyEDR3P+8C5SfCBoDADQzcGERw0ZuZvbjon7QeulrTLoHgQ6z+arSip54GuUUwQaNh3FHLW/5bGHIzLxK3xeu4iOv3zatFcjiSp7R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513696; c=relaxed/simple;
-	bh=uRHtWyXyz4MCbx1QWB8k/VELwRRTLEooPtKT5WOmcJw=;
+	s=arc-20240116; t=1741513699; c=relaxed/simple;
+	bh=oxGmD7uGwtZDIQ2R2ogGnMjKq9qZAkHzvS6jqSp1494=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=IITzaHsHSixG58NCYOln51hF72Jx48jV0kwZmZVvolgTEE9cIhdZe5C8V2v/37A5lK4zA7t0YmK/Y3182xd8jPglSmRUuFFvyYoki+i4G9ln/EzHMUVxijYYBu8eRPMdWbO06tm36Vn6DITSXS2r1Gaz3EBaL7/k+KId+G1wtgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMNVCqxm; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=dReiErBQgcOdop9oIp9OFqyK4EZCiiGc1Mo/QqqR372w+iry9dPRgJuzFMjOMI9eDCOpGfN0ShqHKKjProTUUT7VoNPs1u4J0hRDCfbMZvVEE29w08F0KmUPoqmcIhiima+EC+4zUwINKRH9D3eh77rhIoikyzxFDl11zW213kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vV+aLZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMNVCqxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA91C4CEE5;
-	Sun,  9 Mar 2025 09:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vV+aLZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA2CC4CEE5;
+	Sun,  9 Mar 2025 09:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513696;
-	bh=uRHtWyXyz4MCbx1QWB8k/VELwRRTLEooPtKT5WOmcJw=;
+	s=korg; t=1741513699;
+	bh=oxGmD7uGwtZDIQ2R2ogGnMjKq9qZAkHzvS6jqSp1494=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=jMNVCqxmTOxGMI9fmN/uG3yCEM+uOCATUFwkLqsegs4QXBFDkfvo8pwSs4rb8v4SE
-	 UV8ZnszlXptK6NKEvlCFpsdypadIigLbk0E0sw3mRCp22E57UifyBqQRXPAki6l4bh
-	 quv/qu1t6O3bYAhaae0HzGscDRidJuvgAV3Nki4E=
-Subject: Patch "drm/panic: avoid reimplementing Iterator::find" has been added to the 6.12-stable tree
+	b=0vV+aLZfSGGVWb7IpeMgO8C4RcnRtKEPJZdxaufaEFZXWueianTQYGSorjo0MQzve
+	 ecGDjsUWytS3HsUTH9XJVd7ak/k9OXylSxT16zeVMtro9FTLNT0dKqx4LglFeG6kXE
+	 lBI4+VUCcXD8NyF1JK8R8L3N1ULKcfHcJejkZpHE=
+Subject: Patch "drm/panic: prefer eliding lifetimes" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Sun, 09 Mar 2025 10:46:47 +0100
-In-Reply-To: <20250307225008.779961-50-ojeda@kernel.org>
-Message-ID: <2025030947-twisty-uncoated-3a0a@gregkh>
+Date: Sun, 09 Mar 2025 10:46:48 +0100
+In-Reply-To: <20250307225008.779961-52-ojeda@kernel.org>
+Message-ID: <2025030948-unwary-racoon-e494@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,99 +44,75 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/panic: avoid reimplementing Iterator::find
+    drm/panic: prefer eliding lifetimes
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-panic-avoid-reimplementing-iterator-find.patch
+     drm-panic-prefer-eliding-lifetimes.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121504-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:51 2025
+From stable+bounces-121506-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:57 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:56 +0100
-Subject: drm/panic: avoid reimplementing Iterator::find
+Date: Fri,  7 Mar 2025 23:49:58 +0100
+Subject: drm/panic: prefer eliding lifetimes
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-50-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-52-ojeda@kernel.org>
 
 From: Thomas Böhler <witcher@wiredspace.de>
 
-commit c408dd81678bb0a957eae96962c913c242e069f7 upstream.
+commit ae75c40117b53ae3d91dfc9d0bf06984a079f044 upstream.
 
-Rust's standard library's `std::iter::Iterator` trait provides a function
-`find` that finds the first element that satisfies a predicate.
-The function `Version::from_segments` is doing the same thing but is
-implementing the same logic itself.
+Eliding lifetimes when possible instead of specifying them directly is
+both shorter and easier to read. Clippy notes this in the
+`needless_lifetimes` lint:
 
-Clippy complains about this in the `manual_find` lint:
-
-    error: manual implementation of `Iterator::find`
-       --> drivers/gpu/drm/drm_panic_qr.rs:212:9
+    error: the following explicit lifetimes could be elided: 'b
+       --> drivers/gpu/drm/drm_panic_qr.rs:479:16
         |
-    212 | /         for v in (1..=40).map(|k| Version(k)) {
-    213 | |             if v.max_data() * 8 >= segments.iter().map(|s| s.total_size_bits(v)).sum() {
-    214 | |                 return Some(v);
-    215 | |             }
-    216 | |         }
-    217 | |         None
-        | |____________^ help: replace with an iterator: `(1..=40).map(|k| Version(k)).find(|&v| v.max_data() * 8 >= segments.iter().map(|s| s.total_size_bits(v)).sum())`
+    479 |     fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
+        |                ^^                       ^^
         |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_find
-        = note: `-D clippy::manual-find` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::manual_find)]`
-
-Use `Iterator::find` instead to make the intention clearer.
-
-At the same time, clean up the redundant closure that Clippy warns
-about too:
-
-    error: redundant closure
-    --> drivers/gpu/drm/drm_panic_qr.rs:212:31
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
+        = note: `-D clippy::needless-lifetimes` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::needless_lifetimes)]`
+    help: elide the lifetimes
         |
-    212 |         for v in (1..=40).map(|k| Version(k)) {
-        |                               ^^^^^^^^^^^^^^ help: replace the closure with the function itself: `Version`
+    479 -     fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
+    479 +     fn new<'a>(segments: &[&Segment<'_>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
         |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#redundant_closure
-        = note: `-D clippy::redundant-closure` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::redundant_closure)]`
+
+Remove the explicit lifetime annotation in favour of an elided lifetime.
 
 Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
 Reported-by: Miguel Ojeda <ojeda@kernel.org>
 Link: https://github.com/Rust-for-Linux/linux/issues/1123
 Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
 Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-2-witcher@wiredspace.de
-[ Reworded to mention the redundant closure cleanup too. - Miguel ]
+Link: https://lore.kernel.org/r/20241019084048.22336-4-witcher@wiredspace.de
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_panic_qr.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/drm_panic_qr.rs
 +++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -209,12 +209,9 @@ const FORMAT_INFOS_QR_L: [u16; 8] = [
- impl Version {
-     /// Returns the smallest QR version than can hold these segments.
-     fn from_segments(segments: &[&Segment<'_>]) -> Option<Version> {
--        for v in (1..=40).map(|k| Version(k)) {
--            if v.max_data() * 8 >= segments.iter().map(|s| s.total_size_bits(v)).sum() {
--                return Some(v);
--            }
--        }
--        None
-+        (1..=40)
-+            .map(Version)
-+            .find(|&v| v.max_data() * 8 >= segments.iter().map(|s| s.total_size_bits(v)).sum())
-     }
- 
-     fn width(&self) -> u8 {
+@@ -476,7 +476,7 @@ struct EncodedMsg<'a> {
+ /// Data to be put in the QR code, with correct segment encoding, padding, and
+ /// Error Code Correction.
+ impl EncodedMsg<'_> {
+-    fn new<'a, 'b>(segments: &[&Segment<'b>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
++    fn new<'a>(segments: &[&Segment<'_>], data: &'a mut [u8]) -> Option<EncodedMsg<'a>> {
+         let version = Version::from_segments(segments)?;
+         let ec_size = version.ec_size();
+         let g1_blocks = version.g1_blocks();
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
