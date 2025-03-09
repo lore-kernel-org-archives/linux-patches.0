@@ -1,78 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9381FB3;
-	Sun,  9 Mar 2025 16:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E294A0C;
+	Sun,  9 Mar 2025 18:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741537636; cv=none; b=cJ1ITeHzNgvpUTDnH5VtlvsidC0w3Mvu1oOhYAQUtgRP6g967fMIbBBKJTqXnrzo0CWi+uPsUhhYPwIki8RUMBmx3QST+/3t83BdL9y83ugo82wBeuZHn6qOTfRSzc4xrMvy4jhGzlixPdpSqUXmAmJBFDmYVQZIPjVOUh8egEo=
+	t=1741543608; cv=none; b=pJobhv1eJJEnL3h8vzwRatBKy3m5DbARejZ2S/cOv/ldUIFnZgz0qU8VwsmVzYbKof1ecVgLdLU2UbYzjVutrESTM4yuk4xrvbUBbasHxHWq0ThOUbNkyMgCbCdJbCef7VAu6tiBnSySheNkuvPOtburzmBLiq24BWQYglG2In4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741537636; c=relaxed/simple;
-	bh=CxpI5xmN0yqi/hQcPV31Gk/Nx7XU1co1kADCpP7BSVI=;
+	s=arc-20240116; t=1741543608; c=relaxed/simple;
+	bh=IcBptB44Pp2GCp+DT+lWCvzQ7EZtuHKGjKG0M0du4Q4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mrc4l9pX6OgI45xa5A4Qeu7YUwLEolazvfPZ/PzTVd2VJeb63sBQcKBR+rzDefDx5TLH/wGXCvT6M2wWxrClmGP48JXY4lOQ4DBgednqhCMEpD80v8Q1TDfzH3P1os0Sw1Qi8UBsFU5zDYbxL2m1KRQWEzdT8hoPk0C1xzWkXaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBWO+KoR; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=KTArxSuuTA0MXzZu9AlVzXERi/+hGefc6gvQ/R+sh7P2KveEtCfchAbW2tgPOyP915mP+6W1Mdp+ZzbxEqPNFRgoobPgzsl68Ckn+pr3JRXJlBadqenVdPeMPLwZ1BKmA0puwgB+TqRDTdaaU0CzXJ5MAbPb2qLHHH4ls9tq6IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KPKXnHPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBWO+KoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D37C4CEE3;
-	Sun,  9 Mar 2025 16:27:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741537634;
-	bh=CxpI5xmN0yqi/hQcPV31Gk/Nx7XU1co1kADCpP7BSVI=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KPKXnHPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DFFC4CEE3;
+	Sun,  9 Mar 2025 18:06:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741543607;
+	bh=IcBptB44Pp2GCp+DT+lWCvzQ7EZtuHKGjKG0M0du4Q4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VBWO+KoRByyxWU3fon5q2W99YWahUynkrU4L9EfX+iMOLlgcft1yq/Me/G55GxlQh
-	 bOaQPfVTAJJ/mR4XTecpccnsfbrRVTSEJccQnPflI4DaTSAtabFPbCrdWKkaeDBSIb
-	 zQhikXe/DepcpPWLZyY1Nl3AWTEn9TOH98n7Hj4I=
-Date: Sun, 9 Mar 2025 17:27:10 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Ilya K <me@0upti.me>, Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>,
-	NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev
-Subject: Re: [PATCH 6.12.y 00/60] `alloc`, `#[expect]` and "Custom FFI"
-Message-ID: <2025030955-kindness-designing-246c@gregkh>
-References: <20250307225008.779961-1-ojeda@kernel.org>
- <33f6c73c-4a2d-42b3-b033-921d2e1eaeac@0upti.me>
- <CANiq72nu71ETyLpu=GwbzpnMJg3jetL5zSSh3AE+DoQDMgHAwA@mail.gmail.com>
+	b=KPKXnHPSYV8MZZUueeRB7MF9nZHHkXIrs8ADSDGSbG2dIoGT5V0ePUff7/60AkhG4
+	 yE5Hap+Q1T6dWlqLtvpUsn3hkR7gdfoRwZNI+VuqCaLlTpBPxXBNkcxyxO/yghq7Zf
+	 k8llb7le44tFiTCL4rC8erXymQCsfjw3V9DkMVMlR9gniT6pr5b076z9fb3qHgNWnX
+	 0lR31zhvh0SGref7vZDHE70NGz/IU1AgmdM0Pp+bdqH7nn6lrTqgx+fepKlJxLShxd
+	 wxoMvEfq3weyvmVN7Ct/OApDkZf+xDzdbChtDYQSAOFG7aC9/yl52Tyu55JU5fZW/s
+	 CYZ8druUXqprw==
+Date: Sun, 9 Mar 2025 19:06:42 +0100
+From: Danilo Krummrich <dakr@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] MAINTAINERS: rust: add tree field for RUST [ALLOC]
+Message-ID: <Z83YsnKdB7eYiXDs@pollux.localdomain>
+References: <20250308164258.811040-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72nu71ETyLpu=GwbzpnMJg3jetL5zSSh3AE+DoQDMgHAwA@mail.gmail.com>
+In-Reply-To: <20250308164258.811040-1-ojeda@kernel.org>
 
-On Sun, Mar 09, 2025 at 03:20:56PM +0100, Miguel Ojeda wrote:
-> On Sun, Mar 9, 2025 at 1:42 PM Ilya K <me@0upti.me> wrote:
-> >
-> > Hi, I think this is missing one final change, specifically 27c7518e,
-> > or rather, the only line of it that applies:
-> >
-> >  pub unsafe extern "C" fn drm_panic_qr_generate(
-> > -    url: *const i8,
-> > +    url: *const kernel::ffi::c_char,
-> >
-> > Without it, the build fails on Rust 1.85 / aarch64.
+On Sat, Mar 08, 2025 at 05:42:58PM +0100, Miguel Ojeda wrote:
+> In the Rust subsystem we are starting to add new subentries which will
+> have their own trees. Those trees will be part of linux-next and will
+> be sent as PRs to be merged into rust-next.
 > 
-> Bah, sorry, my bad, that is embarrassing... It is not just that one --
-> the actual remap is not there. Let me re-send...
+> Thus do the same for the existing subentry we already have: RUST [ALLOC].
 > 
-> Greg: no changes except for the 2 extra on top you will see.
-> 
-> It still holds that the x86_64 build still builds commit-by-commit,
-> and I double-checked that hash builds for x86_64, arm64 and riscv64
-> with the min and max compilers.
-> 
-> Let me also run a test for loongarch64 with the unrelated fix applied.
+> Cc: Danilo Krummrich <dakr@kernel.org>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Please just send additional ones, not the whole series, otherwise I'm
-going to get confused :)
-
-thanks,
-
-greg k-h
+Acked-by: Danilo Krummrich <dakr@kernel.org>
