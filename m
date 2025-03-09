@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39681AC43A;
-	Sun,  9 Mar 2025 09:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD33B1B3920;
+	Sun,  9 Mar 2025 09:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513827; cv=none; b=OpWYR+FOjvOmLb9O37me6lgn4fnrU1gR6Z3eSPtM+qT445r3gk6oqKTSQW5jjEWE2S6YX/fz+B5J31l1NAeyCvSJWtYlUApj5ZZ+pvKWY6eunhx5hZ1LvGKy5Yf8yDSS8rxQu3uKt70Sn8WKdhset7esl+dCyCnAkU5AXynFxQk=
+	t=1741513830; cv=none; b=rnyoLotcxu+ySTjXw4Sfc0Vu+DPNWA5keBSW7bQHosliFoF2PZ2jq8g9dSmjpw3cNM8NYS8+yVzJb1400PK6ctgyknSrqivEnX/3TWBKSxwQ+ZfVETRa/yg9/UnvMx1Uk0batdgUc+sQOGAn4Ss/vBzgDK1LjTYJSO4vMPhQvd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513827; c=relaxed/simple;
-	bh=G/MmJCWaQ3MJpLLJP+kIcVW0A+8OuR8Tyt1F7CYDdLs=;
+	s=arc-20240116; t=1741513830; c=relaxed/simple;
+	bh=+qSsqViJaouve/7qR4gvBaV/DwFoH6YBENKSaV5tGZ8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=UpMfJhs9ZlX8k/OPhHqYOterVxIr2r7JxPVJMfXUDcD9pkRSp65HjFDw3lKH1w+PauzN9jaMLn9lAh6z/YRUSWae4/0IG4yP4fMvaNG7kCx0CB+dBHgcb1Nzzs/h7Uhd48rhzsAtImLxEaIg5KyAfeslfwR7m8XbgG/groQ2Q38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPJoRSf4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=AV8kEtrQU94sA2giMDdKPUVrjGwUbCYwnCXhigNJq1WPelZYD+SGnJtBP8A4j6gX9nVDllN9i0P1BzStnt1il+ZLGuFh/0nQKSuYc/Lxx6F5ZFyVeVyWmx9hUeGTcBhSOS1Hjz6rxzq5A7tTf/WfZpqtCNHmX8bwlnsTJP44KP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1V4oqjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPJoRSf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BB2C4CEE5;
-	Sun,  9 Mar 2025 09:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1V4oqjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E85C4CEEE;
+	Sun,  9 Mar 2025 09:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513827;
-	bh=G/MmJCWaQ3MJpLLJP+kIcVW0A+8OuR8Tyt1F7CYDdLs=;
+	s=korg; t=1741513830;
+	bh=+qSsqViJaouve/7qR4gvBaV/DwFoH6YBENKSaV5tGZ8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=nPJoRSf4L0yVzT7QADh86c8QO9uyNg8+Tib5hVJRkmejTRVIyysX8ESijup0s0pip
-	 qBNoAjLcJ4u+/ZK6uaP/3kc7uVEj99AhHK3x2LLyrQ90NxGMY81CzGBLLpJGHIj4GK
-	 ky5MFuW7Qp4Mo+fGGAbOjtgl99Ktj7IVjayKgSr0=
-Subject: Patch "rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`" has been added to the 6.12-stable tree
+	b=l1V4oqjtPXTne/rgGlxvxknvcSsRlus1J/PrNucmPGrO6C4NQuuDeMEsH9Ruaozi9
+	 20+jWjUd00zLqgmHYhAMUI0PTFi5l3Ty2cYt++Eeeb5Cy2824wnjvVy66mM1DmIZbQ
+	 JFqvfHL46zmmm7XXvGAebyqfI3hKJyC6VCNQKhAc=
+Subject: Patch "rust: introduce `.clippy.toml`" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-10-ojeda@kernel.org>
-Message-ID: <2025030951-revered-pencil-bcb0@gregkh>
+In-Reply-To: <20250307225008.779961-12-ojeda@kernel.org>
+Message-ID: <2025030951-paralyses-scallop-3bce@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,80 +44,94 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
+    rust: introduce `.clippy.toml`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-init-remove-unneeded.patch
+     rust-introduce-.clippy.toml.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121464-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:07 2025
+From stable+bounces-121466-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:09 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:16 +0100
-Subject: rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
+Date: Fri,  7 Mar 2025 23:49:18 +0100
+Subject: rust: introduce `.clippy.toml`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-10-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-12-ojeda@kernel.org>
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit d5cc7ab0a0a99496de1bd933dac242699a417809 upstream.
+commit 7d56786edcbdf58b6367fd7f01d5861214ad1c95 upstream.
 
-These few cases, unlike others in the same file, did not need the `allow`.
+Some Clippy lints can be configured/tweaked. We will use these knobs to
+our advantage in later commits.
 
-Thus clean them up.
+This is done via a configuration file, `.clippy.toml` [1]. The file is
+currently unstable. This may be a problem in the future, but we can adapt
+as needed. In addition, we proposed adding Clippy to the Rust CI's RFL
+job [2], so we should be able to catch issues pre-merge.
 
+Thus introduce the file.
+
+Link: https://doc.rust-lang.org/clippy/configuration.html [1]
+Link: https://github.com/rust-lang/rust/pull/128928 [2]
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Trevor Gross <tmgross@umich.edu>
 Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-10-ojeda@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-12-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init.rs |    4 ----
- 1 file changed, 4 deletions(-)
+ .clippy.toml |    1 +
+ .gitignore   |    1 +
+ MAINTAINERS  |    1 +
+ Makefile     |    3 +++
+ 4 files changed, 6 insertions(+)
+ create mode 100644 .clippy.toml
 
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -87,7 +87,6 @@
- //! To declare an init macro/function you just return an [`impl PinInit<T, E>`]:
- //!
- //! ```rust
--//! # #![allow(clippy::disallowed_names)]
- //! # use kernel::{sync::Mutex, new_mutex, init::PinInit, try_pin_init};
- //! #[pin_data]
- //! struct DriverData {
-@@ -368,7 +367,6 @@ macro_rules! stack_try_pin_init {
- /// The syntax is almost identical to that of a normal `struct` initializer:
- ///
- /// ```rust
--/// # #![allow(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, macros::pin_data, init::*};
- /// # use core::pin::Pin;
- /// #[pin_data]
-@@ -413,7 +411,6 @@ macro_rules! stack_try_pin_init {
- /// To create an initializer function, simply declare it like this:
- ///
- /// ```rust
--/// # #![allow(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, init::*};
- /// # use core::pin::Pin;
- /// # #[pin_data]
-@@ -468,7 +465,6 @@ macro_rules! stack_try_pin_init {
- /// They can also easily embed it into their own `struct`s:
- ///
- /// ```rust
--/// # #![allow(clippy::disallowed_names)]
- /// # use kernel::{init, pin_init, macros::pin_data, init::*};
- /// # use core::pin::Pin;
- /// # #[pin_data]
+--- /dev/null
++++ b/.clippy.toml
+@@ -0,0 +1 @@
++# SPDX-License-Identifier: GPL-2.0
+--- a/.gitignore
++++ b/.gitignore
+@@ -103,6 +103,7 @@ modules.order
+ # We don't want to ignore the following even if they are dot-files
+ #
+ !.clang-format
++!.clippy.toml
+ !.cocciconfig
+ !.editorconfig
+ !.get_maintainer.ignore
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -20175,6 +20175,7 @@ B:	https://github.com/Rust-for-Linux/lin
+ C:	zulip://rust-for-linux.zulipchat.com
+ P:	https://rust-for-linux.com/contributing
+ T:	git https://github.com/Rust-for-Linux/linux.git rust-next
++F:	.clippy.toml
+ F:	Documentation/rust/
+ F:	rust/
+ F:	samples/rust/
+--- a/Makefile
++++ b/Makefile
+@@ -588,6 +588,9 @@ endif
+ # Allows the usage of unstable features in stable compilers.
+ export RUSTC_BOOTSTRAP := 1
+ 
++# Allows finding `.clippy.toml` in out-of-srctree builds.
++export CLIPPY_CONF_DIR := $(srctree)
++
+ export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC HOSTPKG_CONFIG
+ export RUSTC RUSTDOC RUSTFMT RUSTC_OR_CLIPPY_QUIET RUSTC_OR_CLIPPY BINDGEN
+ export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
