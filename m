@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EE11FB3;
-	Sun,  9 Mar 2025 09:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19C71A08B1;
+	Sun,  9 Mar 2025 09:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513730; cv=none; b=UXdG0OixgE/RdIOhsPWXfFXQqD+Yd2e5DeITVgvLopM8LiG0eOcHd8Y9Q2t7Jjc3dAyUq5mIsnlEfKbJCPuQYC9CDSiE8eNRjKTIGo7cYoXQ11k5SK2py1W7o6fEU9vPzvq9wsaBw09hhGb0rv4o80/W13P4yzY08E7IF4IqZOA=
+	t=1741513734; cv=none; b=T4e0D1aaXN2RXKRdJ4mvqadUWLOiv+eZWpFJA+/Ij1d6TQ0qt9QXPqxsDr8+bfTD1KffxO3r1SGMgeVI44GB9f84Hls81EupYZ2AwgLQ5rHjaqnBluZimn1AJpEr5fQbtDizyKrU9mVJB2SsdLBDqYYAOMIJg+2fN/6HCYsskYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513730; c=relaxed/simple;
-	bh=CcWjIFW0npP6clrbNBABrOecclZcAI3SOBP37MlmwL8=;
+	s=arc-20240116; t=1741513734; c=relaxed/simple;
+	bh=8TUcSEjAPQZ7GawzI+cbALX9UZsqpg/pTEQkAwDzcbg=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=VX6uBodLJ8WW2DamQJ0jtLMfIi1EIiIkojZxPcdrFRmFagjHI9BnVIovaB7KA+4+cX5k6zsY8V0R21sAuzILU9OAY1JrPR9wWQoUqHNiEU2dOSIu8lzxLIE6Er6JHNThw7lxmyfVu+ygoSRxTeUXjnWDMOt+XUVP1oEq53t2aNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7l6jF4K; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=QLuo7HV7S7EIVFchjsVxL1HsBzGLLl9SXlymqUSX4owt5lkNUs6Qd/uv4YGAfye0xPXX7iRD5uJLydV89QD4anRebS3IP/873K8n+p/zgQMG32nTx461iGv+7bVzHbYDFKecKUih2QrhsebDBqkFhx5yJoJr/yE7jdCwVan3tVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4niPuAt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7l6jF4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDE5C4CEEC;
-	Sun,  9 Mar 2025 09:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4niPuAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A138C4CEE5;
+	Sun,  9 Mar 2025 09:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513730;
-	bh=CcWjIFW0npP6clrbNBABrOecclZcAI3SOBP37MlmwL8=;
+	s=korg; t=1741513733;
+	bh=8TUcSEjAPQZ7GawzI+cbALX9UZsqpg/pTEQkAwDzcbg=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=J7l6jF4K04H4jjR7DMEVPM5HywhlVKPPCcvNtPbU6Ry3rqVncv7OVtnYouVZoUp+2
-	 m0/MguvLxZT/cAlyxGL+qi5PlFknB/y5rB5cH8OVq8DsgmQUYDTz6yxqgUJRBbkTpW
-	 hWQDaniGkwddk+1uUFSfGDlEjK+FZXKhkJcnOtYg=
-Subject: Patch "drm/panic: correctly indent continuation of line in list item" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gregkh@linuxfoundation.org,hi@alyssa.is,jfalempe@redhat.com,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,witcher@wiredspace.de
+	b=E4niPuAtNS1rwb3rQekS+bHR/okdh/vYzmc5B9XDc7ONSNTaEwAoTsRKNIAkhWkQ2
+	 L+rOHG9DT4ajm7DsJsjqalkaRqoFyD8tU1xwtEmlmmqaxsEJvWEgem0g/lxHe8hQT0
+	 sj/Y93y6Wa17yTzyB7zH0nutSfROqR7zVkzIfSIQ=
+Subject: Patch "rust: alloc: implement `Allocator` for `Kmalloc`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Sun, 09 Mar 2025 10:46:48 +0100
-In-Reply-To: <20250307225008.779961-54-ojeda@kernel.org>
-Message-ID: <2025030948-selection-contort-80ec@gregkh>
+Date: Sun, 09 Mar 2025 10:46:49 +0100
+In-Reply-To: <20250307225008.779961-26-ojeda@kernel.org>
+Message-ID: <2025030949-landfall-blabber-c90b@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore
@@ -44,76 +44,106 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/panic: correctly indent continuation of line in list item
+    rust: alloc: implement `Allocator` for `Kmalloc`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-panic-correctly-indent-continuation-of-line-in-list-item.patch
+     rust-alloc-implement-allocator-for-kmalloc.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121508-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:09 2025
+From stable+bounces-121480-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:53 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:00 +0100
-Subject: drm/panic: correctly indent continuation of line in list item
+Date: Fri,  7 Mar 2025 23:49:32 +0100
+Subject: rust: alloc: implement `Allocator` for `Kmalloc`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-54-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-26-ojeda@kernel.org>
 
-From: Thomas Böhler <witcher@wiredspace.de>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 5bb698e6fc514ddd9e23b6649b29a0934d8d8586 upstream.
+commit a34822d1c4c93085f635b922441a017bd7e959b0 upstream.
 
-It is common practice in Rust to indent the next line the same amount of
-space as the previous one if both belong to the same list item. Clippy
-checks for this with the lint `doc_lazy_continuation`.
+Implement `Allocator` for `Kmalloc`, the kernel's default allocator,
+typically used for objects smaller than page size.
 
-    error: doc list item without indentation
-    --> drivers/gpu/drm/drm_panic_qr.rs:979:5
-        |
-    979 | /// conversion to numeric segments.
-        |     ^
-        |
-        = help: if this is supposed to be its own paragraph, add a blank line
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_lazy_continuation
-        = note: `-D clippy::doc-lazy-continuation` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::doc_lazy_continuation)]`
-    help: indent this line
-        |
-    979 | ///   conversion to numeric segments.
-        |     ++
+All memory allocations made with `Kmalloc` end up in `krealloc()`.
 
-Indent the offending line by 2 more spaces to remove this Clippy error.
+It serves as allocator for the subsequently introduced types `KBox` and
+`KVec`.
 
-Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1123
-Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-6-witcher@wiredspace.de
-[ Reworded to indent Clippy's message. - Miguel ]
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20241004154149.93856-7-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/alloc/allocator.rs |   31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -975,7 +975,7 @@ pub unsafe extern "C" fn drm_panic_qr_ge
- /// * `url_len`: Length of the URL.
- ///
- /// * If `url_len` > 0, remove the 2 segments header/length and also count the
--/// conversion to numeric segments.
-+///   conversion to numeric segments.
- /// * If `url_len` = 0, only removes 3 bytes for 1 binary segment.
- #[no_mangle]
- pub extern "C" fn drm_panic_qr_max_data_size(version: u8, url_len: usize) -> usize {
+--- a/rust/kernel/alloc/allocator.rs
++++ b/rust/kernel/alloc/allocator.rs
+@@ -13,10 +13,16 @@ use core::alloc::{GlobalAlloc, Layout};
+ use core::ptr;
+ use core::ptr::NonNull;
+ 
+-use crate::alloc::AllocError;
++use crate::alloc::{AllocError, Allocator};
+ use crate::bindings;
+ 
+-struct Kmalloc;
++/// The contiguous kernel allocator.
++///
++/// `Kmalloc` is typically used for physically contiguous allocations up to page size, but also
++/// supports larger allocations up to `bindings::KMALLOC_MAX_SIZE`, which is hardware specific.
++///
++/// For more details see [self].
++pub struct Kmalloc;
+ 
+ /// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
+ fn aligned_size(new_layout: Layout) -> usize {
+@@ -53,8 +59,10 @@ struct ReallocFunc(
+     unsafe extern "C" fn(*const core::ffi::c_void, usize, u32) -> *mut core::ffi::c_void,
+ );
+ 
+-#[expect(dead_code)]
+ impl ReallocFunc {
++    // INVARIANT: `krealloc` satisfies the type invariants.
++    const KREALLOC: Self = Self(bindings::krealloc);
++
+     /// # Safety
+     ///
+     /// This method has the same safety requirements as [`Allocator::realloc`].
+@@ -106,6 +114,23 @@ impl ReallocFunc {
+     }
+ }
+ 
++// SAFETY: `realloc` delegates to `ReallocFunc::call`, which guarantees that
++// - memory remains valid until it is explicitly freed,
++// - passing a pointer to a valid memory allocation is OK,
++// - `realloc` satisfies the guarantees, since `ReallocFunc::call` has the same.
++unsafe impl Allocator for Kmalloc {
++    #[inline]
++    unsafe fn realloc(
++        ptr: Option<NonNull<u8>>,
++        layout: Layout,
++        old_layout: Layout,
++        flags: Flags,
++    ) -> Result<NonNull<[u8]>, AllocError> {
++        // SAFETY: `ReallocFunc::call` has the same safety requirements as `Allocator::realloc`.
++        unsafe { ReallocFunc::KREALLOC.call(ptr, layout, old_layout, flags) }
++    }
++}
++
+ // SAFETY: TODO.
+ unsafe impl GlobalAlloc for Kmalloc {
+     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
