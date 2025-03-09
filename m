@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55C21AC43A;
-	Sun,  9 Mar 2025 09:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6827D1AC43A;
+	Sun,  9 Mar 2025 09:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513772; cv=none; b=ExHtavPrO354ZIxvLd3Um8m1HlrEvG0t9L98kuehA2+xaV2qCrb1qAci7Id2YefOxTwXiAWHqumqxPJFNEePV5yh+oj4r2F6Q4bRGQ9s7tCX47v3SJVol3rAyUXDautiCoWIAprrFrOOrUmGkiHKDj0PONK8hknneMq+BKzbqSc=
+	t=1741513776; cv=none; b=Z53OyB6Bin96F6gGKAms74/aj49GbOcOd5LGa2KdtagZ/NAZ82lB0Ch0tsm3Abe7GfIsDJcs6R8cCsuR8kXH77u5dG7VsczGljE0UjF6kk58vrV0qSo6HnlYOfLtfpWrCoqVsuRfnvQzRw8pI5Wq6N8b1hcygYC5AebaOgzGaas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513772; c=relaxed/simple;
-	bh=Z08htN7bv6cP27gO2GPSuJtqSYa8CXdIVvrEO1Fapp0=;
+	s=arc-20240116; t=1741513776; c=relaxed/simple;
+	bh=9VUjqgHZIj5L6kvcCvL7ZzYKvvIt4Pr/9OUYf1iRnho=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=T7b3LMfOl//9VtDxSVon4ckZWeBTYE758IktmmdV9zMsjsuy5B64ZaIKgKsy6a5f9MCLV5eO3fgNG4h275JEUO9bwZwAxGeyq39Ajqe1ympc1L5/Bqd/n5avQXGcGIa15It6P//L3cvRGim1PmNBswrOJC4im6R3UhlGgoV3fZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSGN2oKY; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=F0BTbHcl5IrD9CYDcO79V2zuoeI+TlXiHp32OpVIFxiwWjXELxjvH4kymTDtnNgnFUeNRfB2aaaF3iM2HfQ1h7Y1YPEN0TkUtsPOhlBhXfH2/8uGi+jibtl8a8CrEUZX1LQ8zCXRJuL8QOKsMJGmoI6nlWx8ubdX9T5EwZH6l44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueWuWhSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSGN2oKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBE7C4CEE5;
-	Sun,  9 Mar 2025 09:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueWuWhSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EC4C4CEEC;
+	Sun,  9 Mar 2025 09:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513772;
-	bh=Z08htN7bv6cP27gO2GPSuJtqSYa8CXdIVvrEO1Fapp0=;
+	s=korg; t=1741513775;
+	bh=9VUjqgHZIj5L6kvcCvL7ZzYKvvIt4Pr/9OUYf1iRnho=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=pSGN2oKYfmB/jx+HZgLge62p9yibg2Gs3DQhvI9VbW006vifLYX8V8nvc7clJNtmK
-	 U4NHdKTCIC+BKLQ43Z9ry8Y7mJaMNuNUFbn31Yu/eiihVozFzkn9dxht4YbUwiw+z0
-	 vNRRJTCIyb2OeP6AtTWC7XO759Nn7EEPey1z7fk0=
-Subject: Patch "rust: alloc: remove extension of std's `Box`" has been added to the 6.12-stable tree
+	b=ueWuWhSt4xbUYfKNEQ87tj4Ve0yTJEF4ZNwYAqSGsw0WJM9+l6FamDbqtkrtcjtbp
+	 OXPI7VoQ1QUhb+LZ7SZt/nIoF/A7L1bMPGGXUFeqs+JdOn9ItrUYuVPDU8TqPRpgmK
+	 ogs4C93WjJO+lqa0IjsBCKwCUeaZnlBNjOVQ/tLc=
+Subject: Patch "rust: alloc: remove `VecExt` extension" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:50 +0100
-In-Reply-To: <20250307225008.779961-33-ojeda@kernel.org>
-Message-ID: <2025030950-doornail-agile-8004@gregkh>
+In-Reply-To: <20250307225008.779961-40-ojeda@kernel.org>
+Message-ID: <2025030950-freckled-cosponsor-dfc3@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,330 +44,260 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: alloc: remove extension of std's `Box`
+    rust: alloc: remove `VecExt` extension
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-alloc-remove-extension-of-std-s-box.patch
+     rust-alloc-remove-vecext-extension.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121487-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:15 2025
+From stable+bounces-121494-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:46 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:39 +0100
-Subject: rust: alloc: remove extension of std's `Box`
+Date: Fri,  7 Mar 2025 23:49:46 +0100
+Subject: rust: alloc: remove `VecExt` extension
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-33-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-40-ojeda@kernel.org>
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit e8c6ccdbcaaf31f26c0fffd4073edd0b0147cdc6 upstream.
+commit 405966efc789888c3e1a53cd09d2c2b338064438 upstream.
 
-Now that all existing `Box` users were moved to the kernel `Box` type,
-remove the `BoxExt` extension and all other related extensions.
+Now that all existing `Vec` users were moved to the kernel `Vec` type,
+remove the `VecExt` extension.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-14-dakr@kernel.org
+Link: https://lore.kernel.org/r/20241004154149.93856-21-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  rust/kernel/alloc.rs         |    1 
- rust/kernel/alloc/box_ext.rs |   89 -------------------------------------------
- rust/kernel/init.rs          |   46 ----------------------
- rust/kernel/lib.rs           |    1 
- rust/kernel/prelude.rs       |    4 -
- rust/kernel/types.rs         |   50 ------------------------
- 6 files changed, 3 insertions(+), 188 deletions(-)
- delete mode 100644 rust/kernel/alloc/box_ext.rs
+ rust/kernel/alloc/vec_ext.rs |  185 -------------------------------------------
+ rust/kernel/prelude.rs       |    5 -
+ 3 files changed, 1 insertion(+), 190 deletions(-)
+ delete mode 100644 rust/kernel/alloc/vec_ext.rs
 
 --- a/rust/kernel/alloc.rs
 +++ b/rust/kernel/alloc.rs
-@@ -4,7 +4,6 @@
- 
- #[cfg(not(any(test, testlib)))]
- pub mod allocator;
--pub mod box_ext;
+@@ -7,7 +7,6 @@ pub mod allocator;
  pub mod kbox;
- pub mod vec_ext;
+ pub mod kvec;
+ pub mod layout;
+-pub mod vec_ext;
  
---- a/rust/kernel/alloc/box_ext.rs
+ #[cfg(any(test, testlib))]
+ pub mod allocator_test;
+--- a/rust/kernel/alloc/vec_ext.rs
 +++ /dev/null
-@@ -1,89 +0,0 @@
+@@ -1,185 +0,0 @@
 -// SPDX-License-Identifier: GPL-2.0
 -
--//! Extensions to [`Box`] for fallible allocations.
+-//! Extensions to [`Vec`] for fallible allocations.
 -
 -use super::{AllocError, Flags};
--use alloc::boxed::Box;
--use core::{mem::MaybeUninit, ptr, result::Result};
+-use alloc::vec::Vec;
 -
--/// Extensions to [`Box`].
--pub trait BoxExt<T>: Sized {
--    /// Allocates a new box.
--    ///
--    /// The allocation may fail, in which case an error is returned.
--    fn new(x: T, flags: Flags) -> Result<Self, AllocError>;
--
--    /// Allocates a new uninitialised box.
--    ///
--    /// The allocation may fail, in which case an error is returned.
--    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError>;
--
--    /// Drops the contents, but keeps the allocation.
+-/// Extensions to [`Vec`].
+-pub trait VecExt<T>: Sized {
+-    /// Creates a new [`Vec`] instance with at least the given capacity.
 -    ///
 -    /// # Examples
 -    ///
 -    /// ```
--    /// use kernel::alloc::{flags, box_ext::BoxExt};
--    /// let value = Box::new([0; 32], flags::GFP_KERNEL)?;
--    /// assert_eq!(*value, [0; 32]);
--    /// let mut value = Box::drop_contents(value);
--    /// // Now we can re-use `value`:
--    /// value.write([1; 32]);
--    /// // SAFETY: We just wrote to it.
--    /// let value = unsafe { value.assume_init() };
--    /// assert_eq!(*value, [1; 32]);
+-    /// let v = Vec::<u32>::with_capacity(20, GFP_KERNEL)?;
+-    ///
+-    /// assert!(v.capacity() >= 20);
 -    /// # Ok::<(), Error>(())
 -    /// ```
--    fn drop_contents(this: Self) -> Box<MaybeUninit<T>>;
+-    fn with_capacity(capacity: usize, flags: Flags) -> Result<Self, AllocError>;
+-
+-    /// Appends an element to the back of the [`Vec`] instance.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// let mut v = Vec::new();
+-    /// v.push(1, GFP_KERNEL)?;
+-    /// assert_eq!(&v, &[1]);
+-    ///
+-    /// v.push(2, GFP_KERNEL)?;
+-    /// assert_eq!(&v, &[1, 2]);
+-    /// # Ok::<(), Error>(())
+-    /// ```
+-    fn push(&mut self, v: T, flags: Flags) -> Result<(), AllocError>;
+-
+-    /// Pushes clones of the elements of slice into the [`Vec`] instance.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// let mut v = Vec::new();
+-    /// v.push(1, GFP_KERNEL)?;
+-    ///
+-    /// v.extend_from_slice(&[20, 30, 40], GFP_KERNEL)?;
+-    /// assert_eq!(&v, &[1, 20, 30, 40]);
+-    ///
+-    /// v.extend_from_slice(&[50, 60], GFP_KERNEL)?;
+-    /// assert_eq!(&v, &[1, 20, 30, 40, 50, 60]);
+-    /// # Ok::<(), Error>(())
+-    /// ```
+-    fn extend_from_slice(&mut self, other: &[T], flags: Flags) -> Result<(), AllocError>
+-    where
+-        T: Clone;
+-
+-    /// Ensures that the capacity exceeds the length by at least `additional` elements.
+-    ///
+-    /// # Examples
+-    ///
+-    /// ```
+-    /// let mut v = Vec::new();
+-    /// v.push(1, GFP_KERNEL)?;
+-    ///
+-    /// v.reserve(10, GFP_KERNEL)?;
+-    /// let cap = v.capacity();
+-    /// assert!(cap >= 10);
+-    ///
+-    /// v.reserve(10, GFP_KERNEL)?;
+-    /// let new_cap = v.capacity();
+-    /// assert_eq!(new_cap, cap);
+-    ///
+-    /// # Ok::<(), Error>(())
+-    /// ```
+-    fn reserve(&mut self, additional: usize, flags: Flags) -> Result<(), AllocError>;
 -}
 -
--impl<T> BoxExt<T> for Box<T> {
--    fn new(x: T, flags: Flags) -> Result<Self, AllocError> {
--        let mut b = <Self as BoxExt<_>>::new_uninit(flags)?;
--        b.write(x);
--        // SAFETY: We just wrote to it.
--        Ok(unsafe { b.assume_init() })
+-impl<T> VecExt<T> for Vec<T> {
+-    fn with_capacity(capacity: usize, flags: Flags) -> Result<Self, AllocError> {
+-        let mut v = Vec::new();
+-        <Self as VecExt<_>>::reserve(&mut v, capacity, flags)?;
+-        Ok(v)
+-    }
+-
+-    fn push(&mut self, v: T, flags: Flags) -> Result<(), AllocError> {
+-        <Self as VecExt<_>>::reserve(self, 1, flags)?;
+-        let s = self.spare_capacity_mut();
+-        s[0].write(v);
+-
+-        // SAFETY: We just initialised the first spare entry, so it is safe to increase the length
+-        // by 1. We also know that the new length is <= capacity because of the previous call to
+-        // `reserve` above.
+-        unsafe { self.set_len(self.len() + 1) };
+-        Ok(())
+-    }
+-
+-    fn extend_from_slice(&mut self, other: &[T], flags: Flags) -> Result<(), AllocError>
+-    where
+-        T: Clone,
+-    {
+-        <Self as VecExt<_>>::reserve(self, other.len(), flags)?;
+-        for (slot, item) in core::iter::zip(self.spare_capacity_mut(), other) {
+-            slot.write(item.clone());
+-        }
+-
+-        // SAFETY: We just initialised the `other.len()` spare entries, so it is safe to increase
+-        // the length by the same amount. We also know that the new length is <= capacity because
+-        // of the previous call to `reserve` above.
+-        unsafe { self.set_len(self.len() + other.len()) };
+-        Ok(())
 -    }
 -
 -    #[cfg(any(test, testlib))]
--    fn new_uninit(_flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
--        Ok(Box::new_uninit())
+-    fn reserve(&mut self, additional: usize, _flags: Flags) -> Result<(), AllocError> {
+-        Vec::reserve(self, additional);
+-        Ok(())
 -    }
 -
 -    #[cfg(not(any(test, testlib)))]
--    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
--        let ptr = if core::mem::size_of::<MaybeUninit<T>>() == 0 {
--            core::ptr::NonNull::<_>::dangling().as_ptr()
+-    fn reserve(&mut self, additional: usize, flags: Flags) -> Result<(), AllocError> {
+-        let len = self.len();
+-        let cap = self.capacity();
+-
+-        if cap - len >= additional {
+-            return Ok(());
+-        }
+-
+-        if core::mem::size_of::<T>() == 0 {
+-            // The capacity is already `usize::MAX` for SZTs, we can't go higher.
+-            return Err(AllocError);
+-        }
+-
+-        // We know cap is <= `isize::MAX` because `Layout::array` fails if the resulting byte size
+-        // is greater than `isize::MAX`. So the multiplication by two won't overflow.
+-        let new_cap = core::cmp::max(cap * 2, len.checked_add(additional).ok_or(AllocError)?);
+-        let layout = core::alloc::Layout::array::<T>(new_cap).map_err(|_| AllocError)?;
+-
+-        let (old_ptr, len, cap) = destructure(self);
+-
+-        // We need to make sure that `ptr` is either NULL or comes from a previous call to
+-        // `krealloc_aligned`. A `Vec<T>`'s `ptr` value is not guaranteed to be NULL and might be
+-        // dangling after being created with `Vec::new`. Instead, we can rely on `Vec<T>`'s capacity
+-        // to be zero if no memory has been allocated yet.
+-        let ptr = if cap == 0 {
+-            core::ptr::null_mut()
 -        } else {
--            let layout = core::alloc::Layout::new::<MaybeUninit<T>>();
--
--            // SAFETY: Memory is being allocated (first arg is null). The only other source of
--            // safety issues is sleeping on atomic context, which is addressed by klint. Lastly,
--            // the type is not a SZT (checked above).
--            let ptr =
--                unsafe { super::allocator::krealloc_aligned(core::ptr::null_mut(), layout, flags) };
--            if ptr.is_null() {
--                return Err(AllocError);
--            }
--
--            ptr.cast::<MaybeUninit<T>>()
+-            old_ptr
 -        };
 -
--        // SAFETY: For non-zero-sized types, we allocate above using the global allocator. For
--        // zero-sized types, we use `NonNull::dangling`.
--        Ok(unsafe { Box::from_raw(ptr) })
--    }
--
--    fn drop_contents(this: Self) -> Box<MaybeUninit<T>> {
--        let ptr = Box::into_raw(this);
--        // SAFETY: `ptr` is valid, because it came from `Box::into_raw`.
--        unsafe { ptr::drop_in_place(ptr) };
--
--        // CAST: `MaybeUninit<T>` is a transparent wrapper of `T`.
--        let ptr = ptr.cast::<MaybeUninit<T>>();
--
--        // SAFETY: `ptr` is valid for writes, because it came from `Box::into_raw` and it is valid for
--        // reads, since the pointer came from `Box::into_raw` and the type is `MaybeUninit<T>`.
--        unsafe { Box::from_raw(ptr) }
--    }
--}
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -211,13 +211,12 @@
- //! [`pin_init!`]: crate::pin_init!
- 
- use crate::{
--    alloc::{box_ext::BoxExt, AllocError, Flags, KBox},
-+    alloc::{AllocError, Flags, KBox},
-     error::{self, Error},
-     sync::Arc,
-     sync::UniqueArc,
-     types::{Opaque, ScopeGuard},
- };
--use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-     convert::Infallible,
-@@ -588,7 +587,6 @@ macro_rules! pin_init {
- /// # Examples
- ///
- /// ```rust
--/// # #![feature(new_uninit)]
- /// use kernel::{init::{self, PinInit}, error::Error};
- /// #[pin_data]
- /// struct BigBuf {
-@@ -1245,26 +1243,6 @@ impl<T> InPlaceInit<T> for Arc<T> {
-     }
- }
- 
--impl<T> InPlaceInit<T> for Box<T> {
--    type PinnedSelf = Pin<Self>;
--
--    #[inline]
--    fn try_pin_init<E>(init: impl PinInit<T, E>, flags: Flags) -> Result<Self::PinnedSelf, E>
--    where
--        E: From<AllocError>,
--    {
--        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_pin_init(init)
--    }
--
--    #[inline]
--    fn try_init<E>(init: impl Init<T, E>, flags: Flags) -> Result<Self, E>
--    where
--        E: From<AllocError>,
--    {
--        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_init(init)
+-        // SAFETY: `ptr` is valid because it's either NULL or comes from a previous call to
+-        // `krealloc_aligned`. We also verified that the type is not a ZST.
+-        let new_ptr = unsafe { super::allocator::krealloc_aligned(ptr.cast(), layout, flags) };
+-        if new_ptr.is_null() {
+-            // SAFETY: We are just rebuilding the existing `Vec` with no changes.
+-            unsafe { rebuild(self, old_ptr, len, cap) };
+-            Err(AllocError)
+-        } else {
+-            // SAFETY: `ptr` has been reallocated with the layout for `new_cap` elements. New cap
+-            // is greater than `cap`, so it continues to be >= `len`.
+-            unsafe { rebuild(self, new_ptr.cast::<T>(), len, new_cap) };
+-            Ok(())
+-        }
 -    }
 -}
 -
- impl<T> InPlaceInit<T> for UniqueArc<T> {
-     type PinnedSelf = Pin<Self>;
- 
-@@ -1301,28 +1279,6 @@ pub trait InPlaceWrite<T> {
-     fn write_pin_init<E>(self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E>;
- }
- 
--impl<T> InPlaceWrite<T> for Box<MaybeUninit<T>> {
--    type Initialized = Box<T>;
--
--    fn write_init<E>(mut self, init: impl Init<T, E>) -> Result<Self::Initialized, E> {
--        let slot = self.as_mut_ptr();
--        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
--        // slot is valid.
--        unsafe { init.__init(slot)? };
--        // SAFETY: All fields have been initialized.
--        Ok(unsafe { self.assume_init() })
--    }
--
--    fn write_pin_init<E>(mut self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E> {
--        let slot = self.as_mut_ptr();
--        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
--        // slot is valid and will not be moved, because we pin it later.
--        unsafe { init.__pinned_init(slot)? };
--        // SAFETY: All fields have been initialized.
--        Ok(unsafe { self.assume_init() }.into())
--    }
+-#[cfg(not(any(test, testlib)))]
+-fn destructure<T>(v: &mut Vec<T>) -> (*mut T, usize, usize) {
+-    let mut tmp = Vec::new();
+-    core::mem::swap(&mut tmp, v);
+-    let mut tmp = core::mem::ManuallyDrop::new(tmp);
+-    let len = tmp.len();
+-    let cap = tmp.capacity();
+-    (tmp.as_mut_ptr(), len, cap)
 -}
 -
- impl<T> InPlaceWrite<T> for UniqueArc<MaybeUninit<T>> {
-     type Initialized = UniqueArc<T>;
- 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -16,7 +16,6 @@
- #![feature(coerce_unsized)]
- #![feature(dispatch_from_dyn)]
- #![feature(lint_reasons)]
--#![feature(new_uninit)]
- #![feature(unsize)]
- 
- // Ensure conditional compilation based on the kernel configuration works;
+-/// Rebuilds a `Vec` from a pointer, length, and capacity.
+-///
+-/// # Safety
+-///
+-/// The same as [`Vec::from_raw_parts`].
+-#[cfg(not(any(test, testlib)))]
+-unsafe fn rebuild<T>(v: &mut Vec<T>, ptr: *mut T, len: usize, cap: usize) {
+-    // SAFETY: The safety requirements from this function satisfy those of `from_raw_parts`.
+-    let mut tmp = unsafe { Vec::from_raw_parts(ptr, len, cap) };
+-    core::mem::swap(&mut tmp, v);
+-}
 --- a/rust/kernel/prelude.rs
 +++ b/rust/kernel/prelude.rs
-@@ -14,10 +14,10 @@
+@@ -14,10 +14,7 @@
  #[doc(no_inline)]
  pub use core::pin::Pin;
  
--pub use crate::alloc::{box_ext::BoxExt, flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
-+pub use crate::alloc::{flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
- 
- #[doc(no_inline)]
--pub use alloc::{boxed::Box, vec::Vec};
-+pub use alloc::vec::Vec;
+-pub use crate::alloc::{flags::*, vec_ext::VecExt, Box, KBox, KVBox, KVVec, KVec, VBox, VVec};
+-
+-#[doc(no_inline)]
+-pub use alloc::vec::Vec;
++pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec};
  
  #[doc(no_inline)]
  pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -3,13 +3,11 @@
- //! Kernel types.
- 
- use crate::init::{self, PinInit};
--use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-     marker::{PhantomData, PhantomPinned},
-     mem::{ManuallyDrop, MaybeUninit},
-     ops::{Deref, DerefMut},
--    pin::Pin,
-     ptr::NonNull,
- };
- 
-@@ -71,54 +69,6 @@ pub trait ForeignOwnable: Sized {
-     }
- }
- 
--impl<T: 'static> ForeignOwnable for Box<T> {
--    type Borrowed<'a> = &'a T;
--
--    fn into_foreign(self) -> *const core::ffi::c_void {
--        Box::into_raw(self) as _
--    }
--
--    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
--        // SAFETY: The safety requirements for this function ensure that the object is still alive,
--        // so it is safe to dereference the raw pointer.
--        // The safety requirements of `from_foreign` also ensure that the object remains alive for
--        // the lifetime of the returned value.
--        unsafe { &*ptr.cast() }
--    }
--
--    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
--        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
--        // call to `Self::into_foreign`.
--        unsafe { Box::from_raw(ptr as _) }
--    }
--}
--
--impl<T: 'static> ForeignOwnable for Pin<Box<T>> {
--    type Borrowed<'a> = Pin<&'a T>;
--
--    fn into_foreign(self) -> *const core::ffi::c_void {
--        // SAFETY: We are still treating the box as pinned.
--        Box::into_raw(unsafe { Pin::into_inner_unchecked(self) }) as _
--    }
--
--    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Pin<&'a T> {
--        // SAFETY: The safety requirements for this function ensure that the object is still alive,
--        // so it is safe to dereference the raw pointer.
--        // The safety requirements of `from_foreign` also ensure that the object remains alive for
--        // the lifetime of the returned value.
--        let r = unsafe { &*ptr.cast() };
--
--        // SAFETY: This pointer originates from a `Pin<Box<T>>`.
--        unsafe { Pin::new_unchecked(r) }
--    }
--
--    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
--        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
--        // call to `Self::into_foreign`.
--        unsafe { Pin::new_unchecked(Box::from_raw(ptr as _)) }
--    }
--}
--
- impl ForeignOwnable for () {
-     type Borrowed<'a> = ();
- 
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
