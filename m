@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E071AC43A;
-	Sun,  9 Mar 2025 09:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39681AC43A;
+	Sun,  9 Mar 2025 09:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513824; cv=none; b=j74wOnXp3HjT+SlZlcftz9DdHv6XTW2ZrN2iSrVKnteIM2gqfjl8VB6388976iyoR/2gJpMjX42Q3knXC4JFMrOfSktxEpaK9kYEDCPtAxAhM5uU+hgxiAhNKjTCa8OQitwDRjGcBquehC0lrjHkE8woLmMx72YwXRjdlq4z7u0=
+	t=1741513827; cv=none; b=OpWYR+FOjvOmLb9O37me6lgn4fnrU1gR6Z3eSPtM+qT445r3gk6oqKTSQW5jjEWE2S6YX/fz+B5J31l1NAeyCvSJWtYlUApj5ZZ+pvKWY6eunhx5hZ1LvGKy5Yf8yDSS8rxQu3uKt70Sn8WKdhset7esl+dCyCnAkU5AXynFxQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513824; c=relaxed/simple;
-	bh=g/p7KVky5RuMKpEN7Fo1UMXZzXgEVWg0n/lgzI5ErMQ=;
+	s=arc-20240116; t=1741513827; c=relaxed/simple;
+	bh=G/MmJCWaQ3MJpLLJP+kIcVW0A+8OuR8Tyt1F7CYDdLs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=o062QyGiirisvTaru5ZAlD4Nozc0bi/HPTcTkqy/r7qev5xRDD3kdS3SAvlz5bZtP01dvsDOisfhVDfICsZIwcLkFu6rjlGcCCAxWJ+i3SzDvhiYk9v/442HSntoyfeDticOK+6sqBbWLKFEo5pFxe9SMzz7TD9V1pILRSL16Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXu62q7u; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=UpMfJhs9ZlX8k/OPhHqYOterVxIr2r7JxPVJMfXUDcD9pkRSp65HjFDw3lKH1w+PauzN9jaMLn9lAh6z/YRUSWae4/0IG4yP4fMvaNG7kCx0CB+dBHgcb1Nzzs/h7Uhd48rhzsAtImLxEaIg5KyAfeslfwR7m8XbgG/groQ2Q38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPJoRSf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXu62q7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E37C4CEE5;
-	Sun,  9 Mar 2025 09:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPJoRSf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BB2C4CEE5;
+	Sun,  9 Mar 2025 09:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513824;
-	bh=g/p7KVky5RuMKpEN7Fo1UMXZzXgEVWg0n/lgzI5ErMQ=;
+	s=korg; t=1741513827;
+	bh=G/MmJCWaQ3MJpLLJP+kIcVW0A+8OuR8Tyt1F7CYDdLs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=MXu62q7u08b215wRenKmdz5j4ZEBkX22DnnDLIvjq4rPcgW2SXG/L+fMCU2wLJpyp
-	 RmCu9u5N8nwBQWSsgl7wtgHQGcAQ/7TffowJK8uSzhS1KhOV/3tqobio4Cx6I8Asut
-	 z3KCw8ula1jgBYwNq8hvifLD3xS8koUq19ieoKxY=
-Subject: Patch "rust: fix size_t in bindgen prototypes of C builtins" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=nPJoRSf4L0yVzT7QADh86c8QO9uyNg8+Tib5hVJRkmejTRVIyysX8ESijup0s0pip
+	 qBNoAjLcJ4u+/ZK6uaP/3kc7uVEj99AhHK3x2LLyrQ90NxGMY81CzGBLLpJGHIj4GK
+	 ky5MFuW7Qp4Mo+fGGAbOjtgl99Ktj7IVjayKgSr0=
+Subject: Patch "rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-58-ojeda@kernel.org>
-Message-ID: <2025030951-registry-corset-5d91@gregkh>
+In-Reply-To: <20250307225008.779961-10-ojeda@kernel.org>
+Message-ID: <2025030951-revered-pencil-bcb0@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,89 +44,80 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: fix size_t in bindgen prototypes of C builtins
+    rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-fix-size_t-in-bindgen-prototypes-of-c-builtins.patch
+     rust-init-remove-unneeded.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121512-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:18 2025
+From stable+bounces-121464-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:07 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:04 +0100
-Subject: rust: fix size_t in bindgen prototypes of C builtins
+Date: Fri,  7 Mar 2025 23:49:16 +0100
+Subject: rust: init: remove unneeded `#[allow(clippy::disallowed_names)]`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-58-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-10-ojeda@kernel.org>
 
-From: Gary Guo <gary@garyguo.net>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 75c1fd41a671a0843b89d1526411a837a7163fa2 upstream.
+commit d5cc7ab0a0a99496de1bd933dac242699a417809 upstream.
 
-Without `-fno-builtin`, for functions like memcpy/memmove (and many
-others), bindgen seems to be using the clang-provided prototype. This
-prototype is ABI-wise compatible, but the issue is that it does not have
-the same information as the source code w.r.t. typedefs.
+These few cases, unlike others in the same file, did not need the `allow`.
 
-For example, bindgen generates the following:
+Thus clean them up.
 
-    extern "C" {
-        pub fn strlen(s: *const core::ffi::c_char) -> core::ffi::c_ulong;
-    }
-
-note that the return type is `c_ulong` (i.e. unsigned long), despite the
-size_t-is-usize behavior (this is default, and we have not opted out
-from it using --no-size_t-is-usize).
-
-Similarly, memchr's size argument should be of type `__kernel_size_t`,
-but bindgen generates `c_ulong` directly.
-
-We want to ensure any `size_t` is translated to Rust `usize` so that we
-can avoid having them be different type on 32-bit and 64-bit
-architectures, and hence would require a lot of excessive type casts
-when calling FFI functions.
-
-I found that this bindgen behavior (which probably is caused by
-libclang) can be disabled by `-fno-builtin`. Using the flag for compiled
-code can result in less optimisation because compiler cannot assume
-about their properties anymore, but this should not affect bindgen.
-
-[ Trevor asked: "I wonder how reliable this behavior is. Maybe bindgen
-  could do a better job controlling this, is there an open issue?".
-
-  Gary replied: ..."apparently this is indeed the suggested approach in
-  https://github.com/rust-lang/rust-bindgen/issues/1770". - Miguel ]
-
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240913213041.395655-2-gary@garyguo.net
-[ Formatted comment. - Miguel ]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240904204347.168520-10-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ rust/kernel/init.rs |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -264,7 +264,11 @@ else
- bindgen_c_flags_lto = $(bindgen_c_flags)
- endif
- 
--bindgen_c_flags_final = $(bindgen_c_flags_lto) -D__BINDGEN__
-+# `-fno-builtin` is passed to avoid `bindgen` from using `clang` builtin
-+# prototypes for functions like `memcpy` -- if this flag is not passed,
-+# `bindgen`-generated prototypes use `c_ulong` or `c_uint` depending on
-+# architecture instead of generating `usize`.
-+bindgen_c_flags_final = $(bindgen_c_flags_lto) -fno-builtin -D__BINDGEN__
- 
- # Each `bindgen` release may upgrade the list of Rust target versions. By
- # default, the highest stable release in their list is used. Thus we need to set
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -87,7 +87,6 @@
+ //! To declare an init macro/function you just return an [`impl PinInit<T, E>`]:
+ //!
+ //! ```rust
+-//! # #![allow(clippy::disallowed_names)]
+ //! # use kernel::{sync::Mutex, new_mutex, init::PinInit, try_pin_init};
+ //! #[pin_data]
+ //! struct DriverData {
+@@ -368,7 +367,6 @@ macro_rules! stack_try_pin_init {
+ /// The syntax is almost identical to that of a normal `struct` initializer:
+ ///
+ /// ```rust
+-/// # #![allow(clippy::disallowed_names)]
+ /// # use kernel::{init, pin_init, macros::pin_data, init::*};
+ /// # use core::pin::Pin;
+ /// #[pin_data]
+@@ -413,7 +411,6 @@ macro_rules! stack_try_pin_init {
+ /// To create an initializer function, simply declare it like this:
+ ///
+ /// ```rust
+-/// # #![allow(clippy::disallowed_names)]
+ /// # use kernel::{init, pin_init, init::*};
+ /// # use core::pin::Pin;
+ /// # #[pin_data]
+@@ -468,7 +465,6 @@ macro_rules! stack_try_pin_init {
+ /// They can also easily embed it into their own `struct`s:
+ ///
+ /// ```rust
+-/// # #![allow(clippy::disallowed_names)]
+ /// # use kernel::{init, pin_init, macros::pin_data, init::*};
+ /// # use core::pin::Pin;
+ /// # #[pin_data]
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
