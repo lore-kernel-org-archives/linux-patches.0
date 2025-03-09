@@ -1,117 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935EC16B3B7;
-	Sun,  9 Mar 2025 21:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBEA214218
+	for <patches@lists.linux.dev>; Sun,  9 Mar 2025 21:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741556950; cv=none; b=jBThs6jM6Z9XdgBnX+WsR5hqKulQleIxN6i7DXOK/V54fij4YsT5wB6K6xXKFPVXgE1HQCWtAMAHLEDHtqX2XvuEETQ+JzoENYdHVbMJZrfxLCNnTNkmM0m2wmrKsEU0H1oJdrOFROuIoW+wNkvC3G7eJTXTKHjH6C+21P8VpK4=
+	t=1741557347; cv=none; b=FHjt1v1tmZSsrA1m3ZK0zQY8peRzv9Q5hloaGGEKnaS4XI1XgBVRGo8rOrJe2AXRbp2otACYBmsZ9LbHzikPY5Ns5ZSb4wmKC8XMJPFUk+NkeYN9BD2fJH7Ge6hJXV/EU/+V1+K2fKw9/YaC7aYANTcfGdxvyuQP1dLUjzwPdNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741556950; c=relaxed/simple;
-	bh=E1l/O9YZeI+myHOBN9lIwYaG7N6QrE+xuS3xGAhnwmY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYHuYrjGccLpvw+Zo8pfX6x5sOKqrBKR/DSYAOS6lUwKKX6PYTo6bsD3XGNWVThEqPuh3o8eluOw+sbEGs5m5HKiLUR4uwj0FPnhyeGivbpaFlw/uhMkxGlqMFknO3u2wk1VWSauMyqRdnsssWN8VkG0dit4StgMMmzVTDidN0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EMXNBvO6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741557347; c=relaxed/simple;
+	bh=GTq6UEu3Li4X7ErToPMFMwx2eg5l8CAxQ+gMdiZqzhs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ipoecnuyd8tfgA4nJl1paI9IcSkHMXwBol0T8Sevu6t5UKRw8Sd15oP2M+uyYAaO5XdSWdLYw3zEubM8xMElYWwm6dBCe8B8JfFGHu9d6u6Ur7oDGM4AKphhbUFbXu9Uo5JPWEuaad+R3ch5w3P118/Qkvf39jG+T8NR4hwwivc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OHJ4T2aT; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EMXNBvO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DA9C4CEE3;
-	Sun,  9 Mar 2025 21:49:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741556950;
-	bh=E1l/O9YZeI+myHOBN9lIwYaG7N6QrE+xuS3xGAhnwmY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMXNBvO6eQo4v+yaUwdbcjFiJEWSJDeE6HvpYnIj3cpQV80nQjRYrOhRvff7p3q0U
-	 uQ9dp/4jPKDFufj/k60sBXc0VHa68TZBCZGQi2KtYrjylDuzEy2MmOL/oUwhRlEh6Z
-	 WL5qKMp46NZwWrNL7LF1V2HcuQm/SUdBy+dmZzlR6XglMF2/etknYFd7sYg7REyJet
-	 k7tGC6Usnsyd+oKDCan1gAo2m25xFp1KNjS4jZdiO1zV0+Q1RFfIcN9dBLiGiCMxbG
-	 bEU8uLMrKEJ/e242bYcDzmy3Y+3ADwUYOGv1UexexS71A3OLY0NpArxy4qTuThkqp7
-	 EFqJga69iSyAg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: aliceryhl@google.com
-Cc: a.hindborg@kernel.org,
-	alex.gaynor@gmail.com,
-	benno.lossin@proton.me,
-	bjorn3_gh@protonmail.com,
-	boqun.feng@gmail.com,
-	gary@garyguo.net,
-	lina@asahilina.net,
-	linux-kernel@vger.kernel.org,
-	miguel.ojeda.sandonis@gmail.com,
-	ojeda@kernel.org,
-	oliver.mangold@pm.me,
-	rust-for-linux@vger.kernel.org,
-	tmgross@umich.edu,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: kbuild: provide `RUSTC_HAS_DO_NOT_RECOMMEND` symbol
-Date: Sun,  9 Mar 2025 22:48:57 +0100
-Message-ID: <20250309214857.1559606-1-ojeda@kernel.org>
-In-Reply-To: <Z8sXqXgfhHbNpG6B@google.com>
-References: <Z8sXqXgfhHbNpG6B@google.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OHJ4T2aT"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ff73032ac0so904337a91.3
+        for <patches@lists.linux.dev>; Sun, 09 Mar 2025 14:55:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741557346; x=1742162146; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GTq6UEu3Li4X7ErToPMFMwx2eg5l8CAxQ+gMdiZqzhs=;
+        b=OHJ4T2aTapGIicF5an66ahfp9i9KRnnTq0jTRAv3SnETHgFr+S9ovaDnui2EXjsN7q
+         MWknnSZXVYNdhBj794epVQqn0cU9/GVGPb+/0FAmRWIM64JpiNYrK6le3Lu5gCUFrLFN
+         E2CNRJUvKMqGLcgomI/hJaKoeDKh2e3ll2iXPCT4aFEcg17uFPBGfbybjhVI0UX80bt8
+         e7l2DP1/H5b4xIIAbkxOveO8FRwPexYiLOkS/OmfhzQzFl/dxY23AtESXMSCLALURp4b
+         JIvqH0cZCvPfOyVIlW+25MGwWvyeL0R7dxjS9epY9sEU5gXFcyxfi9oUxP/31TfRHS8v
+         9fHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741557346; x=1742162146;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GTq6UEu3Li4X7ErToPMFMwx2eg5l8CAxQ+gMdiZqzhs=;
+        b=pw1D+zx4hrbjGh/nNLC2fjniKBMYtPHIcatEAvgaKfIRWFMo4qsI/XrF8SrQOqbNMH
+         1xccranmWvZ8LXOYe+KiBBvTYMiy0ixGNojQal5QKmHXQr1edhSxO17ftcGoXuLwnpXf
+         S6m1XNiax6hNBmc9PkG4ttV22hE0Hpd8ViCva25i38X1ywLeRa++DsLledH5xTy5g4Cs
+         17UiURNUdw3F6P9oFgaPNk5V1EWUxFFoeGX0wHhq1MinwxgI+xlj268LgCWZrOeI3uII
+         M3R7cnbcHERzx2uz8a1OAi2VEvqlZ0IMDROwvs+xXuYalq1w4XUPOK+xuY3BBq6qX8Yv
+         MjAw==
+X-Forwarded-Encrypted: i=1; AJvYcCU1AgJ2tT2UJ1648dcFGCYeIKyAahws7FsTp7TOn1AvJarBh27aAPe5IG0sFKA6QdbVAks6SfeV@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx9O/xEJHmSi/iWjRrT86sdKHtXq9wU334QITxr/GQUxImDTpP4
+	mTgjEFRXeq91jTSVabvp8fTly96TrTPu7WUNk8KRCM8rnS6h5hU5NVuCrqQUqM4MGcaOw7xwPch
+	6tAUDAECz1T1WjA7eMQ4ao5pziWk=
+X-Gm-Gg: ASbGncuxom4i3UddlNTEyQ9e5fduFrEG4oa/V2NUeEA85+F+H6bRQKS1oZ0/pJSg2k1
+	s7g56L054GyHiKxigkBBEHdflhRATdxQov50PzGSP3nf3oLks0BuqHvxO++6nzzKWNciDXXDF2H
+	T8WOiqmjm0g8tE4KptOVtQSZhJRw==
+X-Google-Smtp-Source: AGHT+IHXlAJPVtOg05iMzwq+BMigf1lmxizD3DaJUYSB9U80GIORpHkKG2bK6XK7N00HhDagNjnQiESufq7xg5WfLB4=
+X-Received: by 2002:a17:90b:38c1:b0:2ff:6ac2:c5ae with SMTP id
+ 98e67ed59e1d1-300a2b6b6f4mr4206702a91.1.1741557345730; Sun, 09 Mar 2025
+ 14:55:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <Z8sXqXgfhHbNpG6B@google.com> <20250309214857.1559606-1-ojeda@kernel.org>
+In-Reply-To: <20250309214857.1559606-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 9 Mar 2025 22:55:33 +0100
+X-Gm-Features: AQ5f1JplJ2sdLw88CGdK_039ODMPr-eVmC66w8cRjSL3sCK1VExgIqPYi5hdaQg
+Message-ID: <CANiq72nfdTDdk2TFJXMtdM5fpRQPkn38FEqQkNH1+xB45L99QA@mail.gmail.com>
+Subject: Re: [PATCH] rust: kbuild: provide `RUSTC_HAS_DO_NOT_RECOMMEND` symbol
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: aliceryhl@google.com, a.hindborg@kernel.org, alex.gaynor@gmail.com, 
+	benno.lossin@proton.me, bjorn3_gh@protonmail.com, boqun.feng@gmail.com, 
+	gary@garyguo.net, lina@asahilina.net, linux-kernel@vger.kernel.org, 
+	oliver.mangold@pm.me, rust-for-linux@vger.kernel.org, tmgross@umich.edu, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Rust 1.85.0 (current stable version) stabilized [1]
-`#[diagnostic::do_not_recommend]` [2].
+On Sun, Mar 9, 2025 at 10:49=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-In order to use it across all supported Rust versions, introduce a new
-Kconfig symbol for it.
+s/kbuild: // in the title, sorry.
 
-This allows to perform conditional compilation based on it, e.g. on the
-use site to enable the attribute:
-
-    #[cfg_attr(RUSTC_HAS_DO_NOT_RECOMMEND, diagnostic::do_not_recommend)]
-    impl A for i32 {}
-
-An alternative would have been to `allow` the following warning:
-
-    #![allow(unknown_or_malformed_diagnostic_attributes)]
-
-However, that would lose the checking for typos across all versions,
-which we do not want to lose.
-
-One can also use the Kconfig symbol to allow the warning in older
-compilers instead, to avoid repeating the `cfg_attr` line above in all
-use sites:
-
-    #![cfg_attr(
-        not(RUSTC_HAS_DO_NOT_RECOMMEND),
-        expect(unknown_or_malformed_diagnostic_attributes)
-    )]
-
-That still loses the checking for typos in older versions, but we still
-keep it in newer ones, thus we should still catch mistakes eventually.
-
-In this case we can promote it to `expect` as shown above, so that we do
-not forget to remove these lines if we stop using the attribute somewhere.
-
-Link: https://github.com/rust-lang/rust/pull/132056 [1]
-Link: https://doc.rust-lang.org/reference/attributes/diagnostics.html#the-diagnosticdo_not_recommend-attribute [2]
-Link: https://lore.kernel.org/rust-for-linux/CANiq72mYfhuRWkjomb1vOMMPOaxvdS6qjfVLAwxUw6ecdqyh2A@mail.gmail.com/
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- init/Kconfig | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/init/Kconfig b/init/Kconfig
-index d0d021b3fa3b..213b4cc9310a 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -132,6 +132,9 @@ config CC_HAS_COUNTED_BY
- config RUSTC_HAS_COERCE_POINTEE
- 	def_bool RUSTC_VERSION >= 108400
-
-+config RUSTC_HAS_DO_NOT_RECOMMEND
-+	def_bool RUSTC_VERSION >= 108500
-+
- config PAHOLE_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
-
-base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
---
-2.48.1
+Cheers,
+Miguel
