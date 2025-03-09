@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5E11AC43A;
-	Sun,  9 Mar 2025 09:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904901AC43A;
+	Sun,  9 Mar 2025 09:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513843; cv=none; b=uRjIwYqUhdc5+5BNyozQNNLqxHEH7NFtGGemk+KwzS81aLikn6tTozQ42hVJC9GMtBm6oTUMNN6nxtK9ioIjxAIqS2ARN1uchAEggzvVoiJdBVNxeiE1I1wkIVKKdjS9xcb6o7iFVajZs1N8zUXopqXB98czq/tOczlVqpcIhyg=
+	t=1741513846; cv=none; b=VEFe/WZRbpq3dO0NS6E1o5121ooM6umw+7DgFJ5O1OlomCjSueDqlkItc/nWHpg+1H11mTA8dz6xfjb1G44WRZgAtj5S8FIS9o8GAg3h/Z8mM4wv6zxDO1wKbQbN1GWnaAkOJITdpr5KJan+z71kCQLvqlkZernYDTILYdcly3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513843; c=relaxed/simple;
-	bh=xMKzx/KZbhBLAwc2Y5UV+r0CJDvBSsqCrgUWC0cRAjE=;
+	s=arc-20240116; t=1741513846; c=relaxed/simple;
+	bh=KMGsddV//CrXVf2LZRwcwiO9nAwSxw1bbvppqDDZ3Vc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=qDVdRRX4nD1j/yMXokDFowEPS+KpVv41fdJb6ff8OvpZ2LqQVFu+YaZwbNdj/jXUuWsXmKwWHt8iydngAr/TR3gt7F8qY2YDkuIoPH9BRQuucZRzDXA9lG95UuKZ8K9BfRR65jS+xwHsmhQ7x/Nj9bDSV6Sh27L4MRP+z3umHKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvwBHiT/; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=RTXtbKkZELsaDNYbymfdjl2Bnv7o7GNB7YMYYD+0XCS4zbOSpZq4vn3mJbfVFqL414YEyHfPGuK19BspWVEDvNfb1SbDpF9D05MjwdP7t7NumlA8/Gbm0CHvvRENWwQMTDYSQzVtXoSCjzy5DXUPPDOidL1yONp7v4tD9D5jmok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgAFplHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvwBHiT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0687FC4CEE5;
-	Sun,  9 Mar 2025 09:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgAFplHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E55C4CEE5;
+	Sun,  9 Mar 2025 09:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513843;
-	bh=xMKzx/KZbhBLAwc2Y5UV+r0CJDvBSsqCrgUWC0cRAjE=;
+	s=korg; t=1741513846;
+	bh=KMGsddV//CrXVf2LZRwcwiO9nAwSxw1bbvppqDDZ3Vc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=RvwBHiT/ZawuHKuBtpe6XhTPXrtYxQ6hvor7AEECqq8ofbGIKIj/9qiTo1HFrrsDX
-	 h3ubdIf88A5kPGhXWaRF3o4pb64ir8kXIbHrcqLjFSfRscoOJIt9jqI6KjFscQ+vda
-	 NwLVF2N64gnXTFFgsojeS9pd5PCGhPdsFLdQ2dDo=
-Subject: Patch "rust: str: test: replace `alloc::format`" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,benno.lossin@proton.me,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=KgAFplHTFrIScz1NQRmt/dhtcjO5b5MJiqyL/GtWpoMAfaX01v22QPjvMxjwJIDIl
+	 WCinTYPSbjS8BMkCwjPMoVBeD5DQ05guPY7tWfwpXlqiXl8P9+GcF6UKipDjXxDwRt
+	 QRBQ1UWl2Brx6S7kcLnSh/jGR6Vap6P1n3MGjo9g=
+Subject: Patch "rust: sync: remove unneeded `#[allow(clippy::non_send_fields_in_send_ty)]`" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:52 +0100
-In-Reply-To: <20250307225008.779961-46-ojeda@kernel.org>
-Message-ID: <2025030952-craving-reappoint-bc76@gregkh>
+In-Reply-To: <20250307225008.779961-11-ojeda@kernel.org>
+Message-ID: <2025030952-impromptu-although-fbe8@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,83 +44,74 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: str: test: replace `alloc::format`
+    rust: sync: remove unneeded `#[allow(clippy::non_send_fields_in_send_ty)]`
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-str-test-replace-alloc-format.patch
+     rust-sync-remove-unneeded.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121500-greg=kroah.com@vger.kernel.org Fri Mar  7 23:52:58 2025
+From stable+bounces-121465-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:07 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:52 +0100
-Subject: rust: str: test: replace `alloc::format`
+Date: Fri,  7 Mar 2025 23:49:17 +0100
+Subject: rust: sync: remove unneeded `#[allow(clippy::non_send_fields_in_send_ty)]`
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-46-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-11-ojeda@kernel.org>
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit eb6f92cd3f755c179204ea1f933b07cf992892fd upstream.
+commit 5e7c9b84ad08cc7a41b2ddbbbaccb60057da3860 upstream.
 
-The current implementation of tests in str.rs use `format!` to format
-strings for comparison, which, internally, creates a new `String`.
+Rust 1.58.0 (before Rust was merged into the kernel) made Clippy's
+`non_send_fields_in_send_ty` lint part of the `suspicious` lint group for
+a brief window of time [1] until the minor version 1.58.1 got released
+a week after, where the lint was moved back to `nursery`.
 
-In order to prepare for getting rid of Rust's alloc crate, we have to
-cut this dependency. Instead, implement `format!` for `CString`.
+By that time, we had already upgraded to that Rust version, and thus we
+had `allow`ed the lint here for `CondVar`.
 
-Note that for userspace tests, `Kmalloc`, which is backing `CString`'s
-memory, is just a type alias to `Cmalloc`.
+Nowadays, Clippy's `non_send_fields_in_send_ty` would still trigger here
+if it were enabled.
 
+Moreover, if enabled, `Lock<T, B>` and `Task` would also require an
+`allow`. Therefore, it does not seem like someone is actually enabling it
+(in, e.g., a custom flags build).
+
+Finally, the lint does not appear to have had major improvements since
+then [2].
+
+Thus remove the `allow` since it is unneeded.
+
+Link: https://github.com/rust-lang/rust/blob/master/RELEASES.md#version-1581-2022-01-20 [1]
+Link: https://github.com/rust-lang/rust-clippy/issues/8045 [2]
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Tested-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-27-dakr@kernel.org
+Link: https://lore.kernel.org/r/20240904204347.168520-11-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/str.rs |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ rust/kernel/sync/condvar.rs |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -524,7 +524,28 @@ macro_rules! c_str {
- #[cfg(test)]
- mod tests {
-     use super::*;
--    use alloc::format;
-+
-+    struct String(CString);
-+
-+    impl String {
-+        fn from_fmt(args: fmt::Arguments<'_>) -> Self {
-+            String(CString::try_from_fmt(args).unwrap())
-+        }
-+    }
-+
-+    impl Deref for String {
-+        type Target = str;
-+
-+        fn deref(&self) -> &str {
-+            self.0.to_str().unwrap()
-+        }
-+    }
-+
-+    macro_rules! format {
-+        ($($f:tt)*) => ({
-+            &*String::from_fmt(kernel::fmt!($($f)*))
-+        })
-+    }
+--- a/rust/kernel/sync/condvar.rs
++++ b/rust/kernel/sync/condvar.rs
+@@ -92,7 +92,6 @@ pub struct CondVar {
+     _pin: PhantomPinned,
+ }
  
-     const ALL_ASCII_CHARS: &'static str =
-         "\\x01\\x02\\x03\\x04\\x05\\x06\\x07\\x08\\x09\\x0a\\x0b\\x0c\\x0d\\x0e\\x0f\
+-#[allow(clippy::non_send_fields_in_send_ty)]
+ // SAFETY: `CondVar` only uses a `struct wait_queue_head`, which is safe to use on any thread.
+ unsafe impl Send for CondVar {}
+ 
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
