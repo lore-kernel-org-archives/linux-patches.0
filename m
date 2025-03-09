@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1EF1AC43A;
-	Sun,  9 Mar 2025 09:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EAC1B0F14;
+	Sun,  9 Mar 2025 09:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513834; cv=none; b=Sa9Xh32xMi36U4LVNKmQJf2Syaeo6e5By2XJ1t3uzQ1Kwq3unp57a+WY5AHpAd1bdlfE97wktMvJCDLR4mdDpScckHBwUnne/ZzB2vE8+Vy5WFlNOaiJgGalCAemVrzDcDcy3Dey0CfDO7woNcA9R8pn9qLBdtwptWAPfHO4MBY=
+	t=1741513837; cv=none; b=HmNMGpPUI5fMcK1vFn1da/X0Ou5QthzRO6AC4wYsj1hQ1UoCPGR33MmQT61Zvfezw2AZwNq7mXg73rYZwhh8te7cv9mUdGWBr2uAgWRP4FWfkKn0cY9KXhI41qzV0CllIoLhdKQBs4q0+vo/eUzV3o1oh0vRX5ScdGF0cKCTo8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513834; c=relaxed/simple;
-	bh=woRoxPWCUkK4uDBuweL5k01aa6ZVwvsL29siQmzq9vM=;
+	s=arc-20240116; t=1741513837; c=relaxed/simple;
+	bh=sgfO3lSCqfLLq4Vk1Z1Mt1cMi4ne59OxQeG0GFvKqek=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=Pj59kyUbO0ztLlf/8aKPu2L8EqT2DkgXq40sPak+9oANrrxQRk3ahagRUwjMMhj3jRzQmpFwORtq3e1iW+faJaCmfmWKwx6GGa/+wAKg0YEKNX4WNBJVHyJC7j7qdMaX+M8Mb7md4odCMjDJ6vK/OtKfL+P0Z9MvyVWp3AfCDhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk6BM3Nb; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=IFpUIXlq7UxRgR1Ehe5qd0S/8GL2eEVQkBYQFB5lc50T2FOhX3OXNqJaaXGqxxEDeeSLRAyIvdXABWjGztIm0Bl0joRsVdZG6y5eMFguwKxv6epkE768pKF6aI+oLsBshT4Ttm6KGotiySBHKbQsp+VWS1Q0zMa1lLHNPYrID7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVdIGx+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk6BM3Nb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9FAC4CEE5;
-	Sun,  9 Mar 2025 09:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVdIGx+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED75C4CEE5;
+	Sun,  9 Mar 2025 09:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513834;
-	bh=woRoxPWCUkK4uDBuweL5k01aa6ZVwvsL29siQmzq9vM=;
+	s=korg; t=1741513837;
+	bh=sgfO3lSCqfLLq4Vk1Z1Mt1cMi4ne59OxQeG0GFvKqek=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=Pk6BM3Nb7rx4Avss5As8woRfIDqh1/iD3gpbSvqOZI3yoBF/90GayAK3f67g9KA/y
-	 vQWoYtpR1kpEAUUpmk6aV9yochDYlzML0df78UIkSXTQ/B8x5LphP73z3MKxhwjxDU
-	 iEGSJoI7PBs250th5JjL+vRv/a6AGmOkk3ABOgd0=
-Subject: Patch "rust: kbuild: expand rusttest target for macros" has been added to the 6.12-stable tree
-To: aliceryhl@google.com,dakr@kernel.org,ethan.twardy@gmail.com,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org
+	b=rVdIGx+x3ErM0Zoo+w3Vr8b64im9bMG0pgxTn4v+vBxkPXuepitqDXwRVfZIGLNqW
+	 rKvKVUanyuYsmLIVnY+cw+xG25wD+HDH9h6v9NLhnN+HvUjpZUXedoaazGjynNn/O6
+	 tmekKnG0tOD8euCbOmZsazfvyi+RXL31VRVEtKrk=
+Subject: Patch "rust: sort global Rust flags" has been added to the 6.12-stable tree
+To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-57-ojeda@kernel.org>
-Message-ID: <2025030951-bright-playlist-7860@gregkh>
+Date: Sun, 09 Mar 2025 10:46:52 +0100
+In-Reply-To: <20250307225008.779961-3-ojeda@kernel.org>
+Message-ID: <2025030952-sloping-plop-942e@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,104 +44,71 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: kbuild: expand rusttest target for macros
+    rust: sort global Rust flags
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-kbuild-expand-rusttest-target-for-macros.patch
+     rust-sort-global-rust-flags.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121511-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:11 2025
+From stable+bounces-121457-greg=kroah.com@vger.kernel.org Fri Mar  7 23:50:49 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:50:03 +0100
-Subject: rust: kbuild: expand rusttest target for macros
+Date: Fri,  7 Mar 2025 23:49:09 +0100
+Subject: rust: sort global Rust flags
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-57-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-3-ojeda@kernel.org>
 
-From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit b2c261fa8629dff2bd1143fa790797a773ace102 upstream.
+commit a135aa3d30d28f26eb28a0ff5d48b387b0e0755f upstream.
 
-Previously, the rusttest target for the macros crate did not specify
-the dependencies necessary to run the rustdoc tests. These tests rely on
-the kernel crate, so add the dependencies.
+Sort the global Rust flags so that it is easier to follow along when we
+have more, like this patch series does.
 
-Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
-Link: https://github.com/Rust-for-Linux/linux/issues/1076
-Link: https://lore.kernel.org/r/20240704145607.17732-2-ethan.twardy@gmail.com
-[ Rebased (`alloc` is gone nowadays, sysroot handling is simpler) and
-  simplified (reused `rustdoc_test` rule instead of adding a new one,
-  no need for `rustdoc-compiler_builtins`, removed unneeded `macros`
-  explicit path). Made `vtable` example fail (avoiding to increase
-  the complexity in the `rusttest` target). Removed unstable
-  `-Zproc-macro-backtrace` option. Reworded accordingly. - Miguel ]
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20240904204347.168520-3-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile      |   17 +++++++++++++----
- rust/macros/lib.rs |    2 +-
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ Makefile |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -129,6 +129,14 @@ rusttestlib-macros: private rustc_test_l
- rusttestlib-macros: $(src)/macros/lib.rs FORCE
- 	+$(call if_changed,rustc_test_library)
+--- a/Makefile
++++ b/Makefile
+@@ -446,19 +446,19 @@ KBUILD_USERLDFLAGS := $(USERLDFLAGS)
+ export rust_common_flags := --edition=2021 \
+ 			    -Zbinary_dep_depinfo=y \
+ 			    -Astable_features \
+-			    -Dunsafe_op_in_unsafe_fn \
+ 			    -Dnon_ascii_idents \
++			    -Dunsafe_op_in_unsafe_fn \
++			    -Wmissing_docs \
+ 			    -Wrust_2018_idioms \
+ 			    -Wunreachable_pub \
+-			    -Wmissing_docs \
+-			    -Wrustdoc::missing_crate_level_docs \
+ 			    -Wclippy::all \
++			    -Wclippy::dbg_macro \
+ 			    -Wclippy::mut_mut \
+ 			    -Wclippy::needless_bitwise_bool \
+ 			    -Wclippy::needless_continue \
+ 			    -Aclippy::needless_lifetimes \
+ 			    -Wclippy::no_mangle_with_rust_abi \
+-			    -Wclippy::dbg_macro
++			    -Wrustdoc::missing_crate_level_docs
  
-+rusttestlib-kernel: private rustc_target_flags = \
-+    --extern build_error --extern macros \
-+    --extern bindings --extern uapi
-+rusttestlib-kernel: $(src)/kernel/lib.rs \
-+    rusttestlib-bindings rusttestlib-uapi rusttestlib-build_error \
-+    $(obj)/libmacros.so $(obj)/bindings.o FORCE
-+	+$(call if_changed,rustc_test_library)
-+
- rusttestlib-bindings: $(src)/bindings/lib.rs FORCE
- 	+$(call if_changed,rustc_test_library)
- 
-@@ -181,19 +189,20 @@ quiet_cmd_rustc_test = RUSTC T  $<
- 
- rusttest: rusttest-macros rusttest-kernel
- 
--rusttest-macros: private rustc_target_flags = --extern proc_macro
-+rusttest-macros: private rustc_target_flags = --extern proc_macro \
-+	--extern macros --extern kernel
- rusttest-macros: private rustdoc_test_target_flags = --crate-type proc-macro
--rusttest-macros: $(src)/macros/lib.rs FORCE
-+rusttest-macros: $(src)/macros/lib.rs \
-+    rusttestlib-macros rusttestlib-kernel FORCE
- 	+$(call if_changed,rustc_test)
- 	+$(call if_changed,rustdoc_test)
- 
- rusttest-kernel: private rustc_target_flags = \
-     --extern build_error --extern macros --extern bindings --extern uapi
--rusttest-kernel: $(src)/kernel/lib.rs \
-+rusttest-kernel: $(src)/kernel/lib.rs rusttestlib-kernel \
-     rusttestlib-build_error rusttestlib-macros rusttestlib-bindings \
-     rusttestlib-uapi FORCE
- 	+$(call if_changed,rustc_test)
--	+$(call if_changed,rustc_test_library)
- 
- ifdef CONFIG_CC_IS_CLANG
- bindgen_c_flags = $(c_flags)
---- a/rust/macros/lib.rs
-+++ b/rust/macros/lib.rs
-@@ -132,7 +132,7 @@ pub fn module(ts: TokenStream) -> TokenS
- /// calls to this function at compile time:
- ///
- /// ```compile_fail
--/// # use kernel::error::VTABLE_DEFAULT_ERROR;
-+/// # // Intentionally missing `use`s to simplify `rusttest`.
- /// kernel::build_error(VTABLE_DEFAULT_ERROR)
- /// ```
- ///
+ KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
+ 		       $(HOSTCFLAGS) -I $(srctree)/scripts/include
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
