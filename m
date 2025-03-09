@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246E11AC43A;
-	Sun,  9 Mar 2025 09:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE68C1AC43A;
+	Sun,  9 Mar 2025 09:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741513804; cv=none; b=ccvTT7fJJn6RWPmWAC0t3DpR5F066MJPsrzH93v7i/n3VvnVg5POcxgyNynynuVkUXki+Z+sZAx8FIogsPnRBxr6lmD9HqpSHu7ggO4q5ArxtBcvf+uFACtk9+ULtTRAQp//mSNK5nHU8o5bTTddmy/RIhltkDpT0uwUVf7+Kgg=
+	t=1741513806; cv=none; b=a09K52TqUN8vSyR01zUHLrv+6a1aYzTkgMN2MQEbCtwQToVxOkYPgP8kLfD7LXdZ1mZdb+d1zV5+k1yxuAxzBs4wO5Vv8TOyypqb9fLnIO1NDVNuEA3FN+BAc6UkOB16Q9gvXSPYoObOrZOr3YINmaIwg/96fkQwYb39fgJGvHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741513804; c=relaxed/simple;
-	bh=wcoWN0XNSPuplznwcMVf4SVOfkmrQBDKXzhxVa1S5kE=;
+	s=arc-20240116; t=1741513806; c=relaxed/simple;
+	bh=hMeaGpA9Me/VZqO4+cLZiKoMPl6HN7q11RvKUfNR29M=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=bLI8lHlGhIMKHRFuAc4NTVdNjMIco2JyE0vQDDFXweVqMNaxb48O2m+LBtPJpXnW0frjqmPCOtydRiyFbJRLOEiJwAhb9Gg0wHBHsLm3ABBueiFN8X2S4C0LyjnU9NvOqvweVYfA8pfCxDYPKlLK6cpZziCEszXvdpK1v6TGJpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C69L1E6r; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=pHSVvfn/O+i0CRKgAIjwb/LJMeM5fNc7i9KgEHJIUzdMR1DzT7/qBLF7F4DKMsn5RBow+s9rp33mhzCnrghj02TEzFRF4gyqDD/hmMgLy3bXJrLWFFujd+PJMRdA5mp+E5P9q8mOnqWk8xt88vTqDZnTr3CoPRDAfBU0+Lq9Ykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Edn6W7C4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C69L1E6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A774C4CEE5;
-	Sun,  9 Mar 2025 09:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Edn6W7C4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E1C4CEEC;
+	Sun,  9 Mar 2025 09:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741513803;
-	bh=wcoWN0XNSPuplznwcMVf4SVOfkmrQBDKXzhxVa1S5kE=;
+	s=korg; t=1741513806;
+	bh=hMeaGpA9Me/VZqO4+cLZiKoMPl6HN7q11RvKUfNR29M=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=C69L1E6r55BYxRnHgaUt9fnOoGDNc53DQpwa6f5exaczjS9yAFfJQJTY8WZDrZmaN
-	 kv/TG/9eCwlNajKrnJrlv+gB1nwsUd7S/cd8R7ouAIu1COCSiyCiOSqSKTVPOZPkoU
-	 IlXVlbmhPgrrb0mAcXMTrag9DyMY2P9HNT81lS3U=
-Subject: Patch "rust: enable `rustdoc::unescaped_backticks` lint" has been added to the 6.12-stable tree
+	b=Edn6W7C4fmywYVX8umdqutBDnqlqjyeGUc4nMiz9BN4DC7h0QufBggeFAhT7CWsc8
+	 i/6RhNh+Cy7iqVzZ8920067OkU7jFIIqD5UoSM+IHSl+vdIW0x50AHbUQNRwYa9oOC
+	 tPi64UXN5oRQV7tAmLwsxsPHpHGfIO8t1qTJzVA8=
+Subject: Patch "rust: map `__kernel_size_t` and friends also to usize/isize" has been added to the 6.12-stable tree
 To: aliceryhl@google.com,dakr@kernel.org,gary@garyguo.net,gregkh@linuxfoundation.org,hi@alyssa.is,noisycoil@disroot.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Sun, 09 Mar 2025 10:46:51 +0100
-In-Reply-To: <20250307225008.779961-9-ojeda@kernel.org>
-Message-ID: <2025030951-mulled-handlebar-8843@gregkh>
+In-Reply-To: <20250307225008.779961-59-ojeda@kernel.org>
+Message-ID: <2025030951-reversion-unclad-0236@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,93 +44,92 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rust: enable `rustdoc::unescaped_backticks` lint
+    rust: map `__kernel_size_t` and friends also to usize/isize
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rust-enable-rustdoc-unescaped_backticks-lint.patch
+     rust-map-__kernel_size_t-and-friends-also-to-usize-isize.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-121463-greg=kroah.com@vger.kernel.org Fri Mar  7 23:51:00 2025
+From stable+bounces-121513-greg=kroah.com@vger.kernel.org Fri Mar  7 23:53:16 2025
 From: Miguel Ojeda <ojeda@kernel.org>
-Date: Fri,  7 Mar 2025 23:49:15 +0100
-Subject: rust: enable `rustdoc::unescaped_backticks` lint
+Date: Fri,  7 Mar 2025 23:50:05 +0100
+Subject: rust: map `__kernel_size_t` and friends also to usize/isize
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
 Cc: Danilo Krummrich <dakr@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Alyssa Ross <hi@alyssa.is>, NoisyCoil <noisycoil@disroot.org>, patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Message-ID: <20250307225008.779961-9-ojeda@kernel.org>
+Message-ID: <20250307225008.779961-59-ojeda@kernel.org>
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit bef83245f5ed434932aaf07f890142b576dc5d85 upstream.
+commit 2fd6f55c048d0c863ffbc8590b1bd2edb5ff13e5 upstream.
 
-In Rust 1.71.0, `rustdoc` added the `unescaped_backticks` lint, which
-detects what are typically typos in Markdown formatting regarding inline
-code [1], e.g. from the Rust standard library:
+Currently bindgen has special logic to recognise `size_t` and `ssize_t`
+and map them to Rust `usize` and `isize`. Similarly, `ptrdiff_t` is
+mapped to `isize`.
 
-    /// ... to `deref`/`deref_mut`` must ...
+However this falls short for `__kernel_size_t`, `__kernel_ssize_t` and
+`__kernel_ptrdiff_t`. To ensure that they are mapped to usize/isize
+rather than 32/64 integers depending on platform, blocklist them in
+bindgen parameters and manually provide their definition.
 
-    /// ... use [`from_mut`]`. Specifically, ...
-
-It does not seem to have almost any false positives, from the experience
-of enabling it in the Rust standard library [2], which will be checked
-starting with Rust 1.82.0. The maintainers also confirmed it is ready
-to be used.
-
-Thus enable it.
-
-Link: https://doc.rust-lang.org/rustdoc/lints.html#unescaped_backticks [1]
-Link: https://github.com/rust-lang/rust/pull/128307 [2]
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Signed-off-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20240904204347.168520-9-ojeda@kernel.org
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://lore.kernel.org/r/20240913213041.395655-3-gary@garyguo.net
+[ Formatted comment. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile      |    3 ++-
- rust/Makefile |    5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ rust/bindgen_parameters |    5 +++++
+ rust/bindings/lib.rs    |    5 +++++
+ rust/uapi/lib.rs        |    5 +++++
+ 3 files changed, 15 insertions(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -462,7 +462,8 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::undocumented_unsafe_blocks \
- 			    -Wclippy::unnecessary_safety_comment \
- 			    -Wclippy::unnecessary_safety_doc \
--			    -Wrustdoc::missing_crate_level_docs
-+			    -Wrustdoc::missing_crate_level_docs \
-+			    -Wrustdoc::unescaped_backticks
+--- a/rust/bindgen_parameters
++++ b/rust/bindgen_parameters
+@@ -1,5 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- KBUILD_HOSTCFLAGS   := $(KBUILD_USERHOSTCFLAGS) $(HOST_LFS_CFLAGS) \
- 		       $(HOSTCFLAGS) -I $(srctree)/scripts/include
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -61,7 +61,7 @@ alloc-cfgs = \
- quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
-       cmd_rustdoc = \
- 	OBJTREE=$(abspath $(objtree)) \
--	$(RUSTDOC) $(if $(rustdoc_host),$(rust_common_flags),$(rust_flags)) \
-+	$(RUSTDOC) $(filter-out $(skip_flags),$(if $(rustdoc_host),$(rust_common_flags),$(rust_flags))) \
- 		$(rustc_target_flags) -L$(objtree)/$(obj) \
- 		-Zunstable-options --generate-link-to-definition \
- 		--output $(rustdoc_output) \
-@@ -98,6 +98,9 @@ rustdoc-macros: private rustc_target_fla
- rustdoc-macros: $(src)/macros/lib.rs FORCE
- 	+$(call if_changed,rustdoc)
++# We want to map these types to `isize`/`usize` manually, instead of
++# define them as `int`/`long` depending on platform bitwidth.
++--blocklist-type __kernel_s?size_t
++--blocklist-type __kernel_ptrdiff_t
++
+ --opaque-type xregs_state
+ --opaque-type desc_struct
+ --opaque-type arch_lbr_state
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -27,6 +27,11 @@
+ #[allow(dead_code)]
+ #[allow(clippy::undocumented_unsafe_blocks)]
+ mod bindings_raw {
++    // Manual definition for blocklisted types.
++    type __kernel_size_t = usize;
++    type __kernel_ssize_t = isize;
++    type __kernel_ptrdiff_t = isize;
++
+     // Use glob import here to expose all helpers.
+     // Symbols defined within the module will take precedence to the glob import.
+     pub use super::bindings_helper::*;
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -25,4 +25,9 @@
+     unsafe_op_in_unsafe_fn
+ )]
  
-+# Starting with Rust 1.82.0, skipping `-Wrustdoc::unescaped_backticks` should
-+# not be needed -- see https://github.com/rust-lang/rust/pull/128307.
-+rustdoc-core: private skip_flags = -Wrustdoc::unescaped_backticks
- rustdoc-core: private rustc_target_flags = $(core-cfgs)
- rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
- 	+$(call if_changed,rustdoc)
++// Manual definition of blocklisted types.
++type __kernel_size_t = usize;
++type __kernel_ssize_t = isize;
++type __kernel_ptrdiff_t = isize;
++
+ include!(concat!(env!("OBJTREE"), "/rust/uapi/uapi_generated.rs"));
 
 
 Patches currently in stable-queue which might be from ojeda@kernel.org are
