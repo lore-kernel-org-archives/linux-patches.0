@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E07230BE3;
-	Mon, 10 Mar 2025 17:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63FB230BE6;
+	Mon, 10 Mar 2025 17:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626897; cv=none; b=LJXqtpPRafqAuieJJ6KhwD/THPOVfHDYwJVcj7NJo8MoOQcm5ApWeRPCEB6Mob4AZSPQNJLU5J0MthNUIXYXHFE9C7QAwYiNu5SrjoF9hdDECDwLwLkzM1oNzZwacoLIUVsSeFcsr4AHWViIzdjPEYSkSYxoADCVYrlYryqMFlo=
+	t=1741626900; cv=none; b=Cywkex/8Xr/7eu+f2fB7jWpJCPOIQXmtxxqLWhCFOWcE388YcmUxGiNnXDpd0zSwmwXlQu+Vgz4a+HEwz39cB/phBo79nJTXg8V8Ns3os6NArM87J4r9tz5UzBqlvnkkEqnNmELIKpVHP/UAl6NMUQtzJobEZ+XOBLROD51MhPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626897; c=relaxed/simple;
-	bh=Qac905umtN8Ce8ef7FqZaK5Fbc6DclHTyAM0AL1hU9A=;
+	s=arc-20240116; t=1741626900; c=relaxed/simple;
+	bh=mY2qvHevQxthjQKGYM0ASLMeINxY5CDFiVgssH01xg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=br8CyhLOhlgRly8NJS7LJYafwz7RLa+p8cxUAmU9rcng3Vb+ar1UsWOgeRF52mKczFLZAIenR9KneQHDuKdv3ei59kU9eurbLjiNYh6Moxoi9WR4gHGS47M4QCg0z1jK2TSn8UnWiB2C6DHaN+xB2iUvYCmR/eY59chvLvuECHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9h3sr84; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HqxAc2tppJcQahkcSOgTDDGtrrc4yG861H85IGp/AhJVL30FNDByo1v7ow+/NBYghHXvtxYTmI5IOE73+maN4PB51Q8FTywaWNRziQ9esbq4P9HDFCdCfU/b34gJHj80GOnQn11CqV+dxx5iif49WBNoIv1igaAZERaWWFjS9f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiFu5+q4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9h3sr84"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDBAC4CEE5;
-	Mon, 10 Mar 2025 17:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiFu5+q4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7E0C4CEE5;
+	Mon, 10 Mar 2025 17:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626896;
-	bh=Qac905umtN8Ce8ef7FqZaK5Fbc6DclHTyAM0AL1hU9A=;
+	s=korg; t=1741626900;
+	bh=mY2qvHevQxthjQKGYM0ASLMeINxY5CDFiVgssH01xg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9h3sr84Uk9y+OetJ5zPzwe+mEDdtJ5jhheWIr1d8dQvpUfJRcuRYbZU394GSKLMN
-	 /t2Pq2kaMp/mHZzWWhrowT06oTQ2pnZ1Yb290g+IIPR/Wewkb57LvPzMgGWSIE0z6w
-	 xh4uEyAvtbPpPozSsZvk1JvE3EwlREZxNEr/7b+E=
+	b=TiFu5+q4Dznr8fcmLMtni/d78RIKUWdwve08m5SZJsAFY6r5jQkFa6XN4/5C2jl3k
+	 TQzM/R7Z7YBroBZcliqJuD07B2La0nlbhmtCUuPMbKawcA0Cpqu+vExaGj6zrClLL/
+	 LwGjfCuYv/+jL1TKyY7qoRWhQ/M59sfi5T6KTtU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	qf <quintafeira@tutanota.com>,
-	Christian Heusel <christian@heusel.eu>
-Subject: [PATCH 6.13 151/207] Revert "drivers/card_reader/rtsx_usb: Restore interrupt based detection"
-Date: Mon, 10 Mar 2025 18:05:44 +0100
-Message-ID: <20250310170453.800418873@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.13 152/207] usb: renesas_usbhs: Call clk_put()
+Date: Mon, 10 Mar 2025 18:05:45 +0100
+Message-ID: <20250310170453.839249198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,59 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Heusel <christian@heusel.eu>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 2397d61ee45cddb8f3bd3a3a9840ef0f0b5aa843 upstream.
+commit b5ea08aa883da05106fcc683d12489a4292d1122 upstream.
 
-This reverts commit 235b630eda072d7e7b102ab346d6b8a2c028a772.
+Clocks acquired with of_clk_get() need to be freed with clk_put(). Call
+clk_put() on priv->clks[0] on error path.
 
-This commit was found responsible for issues with SD card recognition,
-as users had to re-insert their cards in the readers and wait for a
-while. As for some people the SD card was involved in the boot process
-it also caused boot failures.
-
-Cc: stable@vger.kernel.org
-Link: https://bbs.archlinux.org/viewtopic.php?id=303321
-Fixes: 235b630eda07 ("drivers/card_reader/rtsx_usb: Restore interrupt based detection")
-Reported-by: qf <quintafeira@tutanota.com>
-Closes: https://lore.kernel.org/all/1de87dfa-1e81-45b7-8dcb-ad86c21d5352@heusel.eu
-Signed-off-by: Christian Heusel <christian@heusel.eu>
-Link: https://lore.kernel.org/r/20250224-revert-sdcard-patch-v1-1-d1a457fbb796@heusel.eu
+Fixes: 3df0e240caba ("usb: renesas_usbhs: Add multiple clocks management")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250225110248.870417-2-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/cardreader/rtsx_usb.c |   15 ---------------
- 1 file changed, 15 deletions(-)
+ drivers/usb/renesas_usbhs/common.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/cardreader/rtsx_usb.c
-+++ b/drivers/misc/cardreader/rtsx_usb.c
-@@ -286,7 +286,6 @@ static int rtsx_usb_get_status_with_bulk
- int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
- {
- 	int ret;
--	u8 interrupt_val = 0;
- 	u16 *buf;
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -312,8 +312,10 @@ static int usbhsc_clk_get(struct device
+ 	priv->clks[1] = of_clk_get(dev_of_node(dev), 1);
+ 	if (PTR_ERR(priv->clks[1]) == -ENOENT)
+ 		priv->clks[1] = NULL;
+-	else if (IS_ERR(priv->clks[1]))
++	else if (IS_ERR(priv->clks[1])) {
++		clk_put(priv->clks[0]);
+ 		return PTR_ERR(priv->clks[1]);
++	}
  
- 	if (!status)
-@@ -309,20 +308,6 @@ int rtsx_usb_get_card_status(struct rtsx
- 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
- 	}
- 
--	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
--	/* Cross check presence with interrupts */
--	if (*status & XD_CD)
--		if (!(interrupt_val & XD_INT))
--			*status &= ~XD_CD;
--
--	if (*status & SD_CD)
--		if (!(interrupt_val & SD_INT))
--			*status &= ~SD_CD;
--
--	if (*status & MS_CD)
--		if (!(interrupt_val & MS_INT))
--			*status &= ~MS_CD;
--
- 	/* usb_control_msg may return positive when success */
- 	if (ret < 0)
- 		return ret;
+ 	return 0;
+ }
 
 
