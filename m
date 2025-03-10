@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FA6232367;
-	Mon, 10 Mar 2025 18:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F40B23370B;
+	Mon, 10 Mar 2025 18:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741631051; cv=none; b=anEosZ4+6aqAZkAyTFUtTCPvUOc/mT0tXKWFwoh2SypVuq6ewE0ZvQbZwtFra845KY/wluznSyVDDZ4oi/TsSJa3PXZxsOEc4dXnyxASTvYMUTlihk2MOctxIEOLvo1voNfFI0iFSimyx3lVfjXr/WQI4b3FGE6VOjJ0c/b0x/Q=
+	t=1741631054; cv=none; b=Tc4GC2LeMxs3F3eHh32pctySGJwcwEaleilKDyLQBU9xn8cP80o9lyzVFKHoj5UCwzGtx3+lQrkNbc5xGCcGFQTPYkomabgI7ob6L+HR7Ng9j7v22rDMrz0Vri89GzURYJ2E0/v2boABnx2vyDtNLJdU5lCFPc50yEXaeNJmSR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741631051; c=relaxed/simple;
-	bh=DMvu03iB7X6hTvgVEZI1JTDCJ1UI7aWrBnqEaPg4pX4=;
+	s=arc-20240116; t=1741631054; c=relaxed/simple;
+	bh=t0Y/PdUafhcObrADrqS26juKfd95uRREIieJRkVk3QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9SkbNDdIaIGQd++AUrntjeurWwJwnGrncKKLi5WidsSQQezPdQqfcziMMD1ShSdDQ1jFdHEmGFd8xg+KMuFiSMyvHi5IhNYg8O9yMoDhNfHnoEpB+kDVi3vD2PT5NaZYOsK2/oLfYTMgwwRR9u4T9uS53dveAH2sDa5O3kTwFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwuSrTD4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXmsC7cwDAwaMadS+d8pnkwj/jWv0CMt01oxAWN2sD5roOA4t7TEAzTZyelF/NHuxBsPIZ7B4KfrFNDXK6jiXFp5hj1nLsxJdtKedf3/+v1zfoyUQ3U/WQCWWzgkujmPqOVQ2yvMoF/KqMzx56xe/rZUngpZ4UZN6QY8g98fY6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeOL48Rs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwuSrTD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9B2C4CEE5;
-	Mon, 10 Mar 2025 18:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeOL48Rs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14473C4CEE5;
+	Mon, 10 Mar 2025 18:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741631051;
-	bh=DMvu03iB7X6hTvgVEZI1JTDCJ1UI7aWrBnqEaPg4pX4=;
+	s=korg; t=1741631054;
+	bh=t0Y/PdUafhcObrADrqS26juKfd95uRREIieJRkVk3QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwuSrTD4T8TcP0e0IsQ5x30mJglBuK7ZfudZJbFXkZAkbVLRHG/ronpytMfLjEfdr
-	 ED583pmjihNlBih0mQAmkxS6V+CcXUqhH31/k4YYLMl+2/eon18CFsFW38VavgLk7a
-	 2O9g0KNLjCWNVdYNouUusK3G9uwLed2HYN3pAKoQ=
+	b=LeOL48RsSbf8J/jPRBNCGR5TLvAv2dxI88JpUZoQxiGPTl016DXamOqfJ0vUHIftW
+	 ROkvTz6Lro4hXu6Kcmt/lElqGDnAogdEokOXK7d5QT8xNl4d9tRJAUEBcXT9l3mAqR
+	 DE5s1i6nOtM5K3fpdTHvC15dX5IpMSYtAStbWIxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 595/620] usb: xhci: Enable the TRB overfetch quirk on VIA VL805
-Date: Mon, 10 Mar 2025 18:07:21 +0100
-Message-ID: <20250310170609.021982680@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	"Ubisectech Sirius" <bugreport@ubisectech.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 596/620] Squashfs: check the inode number is not the invalid value of zero
+Date: Mon, 10 Mar 2025 18:07:22 +0100
+Message-ID: <20250310170609.060861304@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,100 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit c133ec0e5717868c9967fa3df92a55e537b1aead upstream.
+commit 9253c54e01b6505d348afbc02abaa4d9f8a01395 upstream.
 
-Raspberry Pi is a major user of those chips and they discovered a bug -
-when the end of a transfer ring segment is reached, up to four TRBs can
-be prefetched from the next page even if the segment ends with link TRB
-and on page boundary (the chip claims to support standard 4KB pages).
+Syskiller has produced an out of bounds access in fill_meta_index().
 
-It also appears that if the prefetched TRBs belong to a different ring
-whose doorbell is later rung, they may be used without refreshing from
-system RAM and the endpoint will stay idle if their cycle bit is stale.
+That out of bounds access is ultimately caused because the inode
+has an inode number with the invalid value of zero, which was not checked.
 
-Other users complain about IOMMU faults on x86 systems, unsurprisingly.
+The reason this causes the out of bounds access is due to following
+sequence of events:
 
-Deal with it by using existing quirk which allocates a dummy page after
-each transfer ring segment. This was seen to resolve both problems. RPi
-came up with a more efficient solution, shortening each segment by four
-TRBs, but it complicated the driver and they ditched it for this quirk.
+1. Fill_meta_index() is called to allocate (via empty_meta_index())
+   and fill a metadata index.  It however suffers a data read error
+   and aborts, invalidating the newly returned empty metadata index.
+   It does this by setting the inode number of the index to zero,
+   which means unused (zero is not a valid inode number).
 
-Also rename the quirk and add VL805 device ID macro.
+2. When fill_meta_index() is subsequently called again on another
+   read operation, locate_meta_index() returns the previous index
+   because it matches the inode number of 0.  Because this index
+   has been returned it is expected to have been filled, and because
+   it hasn't been, an out of bounds access is performed.
 
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://github.com/raspberrypi/linux/issues/4685
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=215906
-CC: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250225095927.2512358-2-mathias.nyman@linux.intel.com
+This patch adds a sanity check which checks that the inode number
+is not zero when the inode is created and returns -EINVAL if it is.
+
+[phillip@squashfs.org.uk: whitespace fix]
+  Link: https://lkml.kernel.org/r/20240409204723.446925-1-phillip@squashfs.org.uk
+Link: https://lkml.kernel.org/r/20240408220206.435788-1-phillip@squashfs.org.uk
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: "Ubisectech Sirius" <bugreport@ubisectech.com>
+Closes: https://lore.kernel.org/lkml/87f5c007-b8a5-41ae-8b57-431e924c5915.bugreport@ubisectech.com/
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    3 ++-
- drivers/usb/host/xhci-pci.c |   10 +++++++---
- drivers/usb/host/xhci.h     |    2 +-
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ fs/squashfs/inode.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2406,7 +2406,8 @@ int xhci_mem_init(struct xhci_hcd *xhci,
- 	 * and our use of dma addresses in the trb_address_map radix tree needs
- 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
- 	 */
--	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
-+	if (xhci->quirks & XHCI_TRB_OVERFETCH)
-+		/* Buggy HC prefetches beyond segment bounds - allocate dummy space at the end */
- 		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
- 				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
- 	else
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -38,6 +38,8 @@
- #define PCI_DEVICE_ID_EJ168		0x7023
- #define PCI_DEVICE_ID_EJ188		0x7052
+--- a/fs/squashfs/inode.c
++++ b/fs/squashfs/inode.c
+@@ -48,6 +48,10 @@ static int squashfs_new_inode(struct sup
+ 	gid_t i_gid;
+ 	int err;
  
-+#define PCI_DEVICE_ID_VIA_VL805			0x3483
++	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
++	if (inode->i_ino == 0)
++		return -EINVAL;
 +
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI		0x8c31
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI		0x9c31
- #define PCI_DEVICE_ID_INTEL_WILDCATPOINT_LP_XHCI	0x9cb1
-@@ -305,8 +307,10 @@ static void xhci_pci_quirks(struct devic
- 			pdev->device == 0x3432)
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 	err = squashfs_get_id(sb, le16_to_cpu(sqsh_ino->uid), &i_uid);
+ 	if (err)
+ 		return err;
+@@ -58,7 +62,6 @@ static int squashfs_new_inode(struct sup
  
--	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483)
-+	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
- 		xhci->quirks |= XHCI_LPM_SUPPORT;
-+		xhci->quirks |= XHCI_TRB_OVERFETCH;
-+	}
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
- 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI) {
-@@ -354,11 +358,11 @@ static void xhci_pci_quirks(struct devic
- 
- 		if (pdev->device == 0x9202) {
- 			xhci->quirks |= XHCI_RESET_ON_RESUME;
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 		}
- 
- 		if (pdev->device == 0x9203)
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 	}
- 
- 	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1665,7 +1665,7 @@ struct xhci_hcd {
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
--#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
-+#define XHCI_TRB_OVERFETCH	BIT_ULL(45)
- #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
- #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
+ 	i_uid_write(inode, i_uid);
+ 	i_gid_write(inode, i_gid);
+-	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
+ 	inode->i_mtime.tv_sec = le32_to_cpu(sqsh_ino->mtime);
+ 	inode->i_atime.tv_sec = inode->i_mtime.tv_sec;
+ 	inode->i_ctime.tv_sec = inode->i_mtime.tv_sec;
 
 
