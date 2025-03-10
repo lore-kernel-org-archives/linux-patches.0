@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C7E17CA12;
-	Mon, 10 Mar 2025 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4A18DB24;
+	Mon, 10 Mar 2025 17:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627038; cv=none; b=hPxxop0lT58JA39dfKi7GOFgly2dp6kzpw8Uo0dXzEbOkXXgd+uYd42ZpZjaRELLMpr2nnJs4al1c927eJdibsCWdNFo8nrSGNLJ0thqxR5q6tF3G+cJIOpydcsRgFNm2CsR7TaOPrm/n2Nr5VZ5f1M3Q14HSMP7nD7Jxau1JUI=
+	t=1741627040; cv=none; b=i1EfWqlQoPfA0sfwk885mAleqZm3dQqgs2OtsmS4vXtL+2esIvooyDRoq3TAYjZCpRNkOKM3/rfHOmw7edxHUUMiIwkUc63M8acO+I6tuDgUpfsGBTvF9avwq7c43nDCHt86U4NBOhxTcbSyO39Eccsi2QvEbYEdtFY+5xSderg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627038; c=relaxed/simple;
-	bh=/k7EzXK804qLq6z1sHZPNaDQ8aV0fKSXMDZPYbuRddw=;
+	s=arc-20240116; t=1741627040; c=relaxed/simple;
+	bh=AiozW++0Z8C7zBMfxtvEGAth/zd/dzykyYKk8jvv7n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJEHUhGT/cu/OUFfuf2+b/WhwCWYWuJ5Uy9drGmCxq3geVBl3jXZkIHL2cZzNRDy+BEc5Squuhqn1PTeeum4U3ktjPPFyCq7iM/3bX9mjdgX/8a/2kdguvILcOOxJmiwsuBHkmYLPpFKEDoxn1PMIAwAZ/FuSvGz07RAQrcswaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFtpW2IV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syv8AadaKx89Oqnbgj76tWyAVfb0RCQ7HxxehJAhV9VE2oZSwB78jnq829vBsC88YKQz7L1m36loo0LwxvrGVGbsVnyFjl0/0dinifdEBuiaH6fjcu4P8QMaWWYp6kkfd7X0voZ+uACjDRw2TfgRTtikWTYs+01EpFtB/KylKE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KAcf0w+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFtpW2IV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866BBC4CEE5;
-	Mon, 10 Mar 2025 17:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KAcf0w+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A59C4CEE5;
+	Mon, 10 Mar 2025 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627037;
-	bh=/k7EzXK804qLq6z1sHZPNaDQ8aV0fKSXMDZPYbuRddw=;
+	s=korg; t=1741627040;
+	bh=AiozW++0Z8C7zBMfxtvEGAth/zd/dzykyYKk8jvv7n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFtpW2IVo2XkSmWS/ZPvZjgGp1/enUHHYixvMItSfnBJUcTX7RYz0nHIFd31M0zpj
-	 gBGfFcx93mCZrnIn7ka55NpsQ7i9XFmNpuMlZzI8QUCEmsrh2A21m7Qs/soOhfrt3o
-	 GH7BIRpPSxmqiYWaZG3d9+uEw/saroyZ0B7r5+3c=
+	b=0KAcf0w+HluzHsgcaUWXjW80kEd0EAXZrPCuJPC56PkZNW7NlksaV7XKQQu78s/pL
+	 JKk1k94rGrWFNO47Sdv8xR7KJmahm6PLQy8T7DIth+JNNwgbnRMNONs60RHNfSDf44
+	 kKbRRptu96+JwvOp+Uqb6v1HrZyb8fAjsWOdK6mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Angelo Dureghello <adureghello@baylibre.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 199/207] iio: hid-sensor-prox: Split difference from multiple channels
-Date: Mon, 10 Mar 2025 18:06:32 +0100
-Message-ID: <20250310170455.694201151@linuxfoundation.org>
+Subject: [PATCH 6.13 200/207] dt-bindings: iio: dac: adi-axi-adc: fix ad7606 pwm-names
+Date: Mon, 10 Mar 2025 18:06:33 +0100
+Message-ID: <20250310170455.733600193@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,61 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Angelo Dureghello <adureghello@baylibre.com>
 
-[ Upstream commit 4eba4d92906c3814ca3ec65c16af27c46c12342e ]
+[ Upstream commit 02ccd7e5d81af4ae20852fc1ad67e7d943fa5778 ]
 
-When the driver was originally created, it was decided that
-sampling_frequency and hysteresis would be shared_per_type instead
-of shared_by_all (even though it is internally shared by all). Eg:
-in_proximity_raw
-in_proximity_sampling_frequency
+Fix make dt_binding_check warning:
 
-When we introduced support for more channels, we continued with
-shared_by_type which. Eg:
-in_proximity0_raw
-in_proximity1_raw
-in_proximity_sampling_frequency
-in_attention_raw
-in_attention_sampling_frequency
+DTC [C] Documentation/devicetree/bindings/iio/adc/adi,axi-adc.example.dtb
+.../adc/adi,axi-adc.example.dtb: adc@0: pwm-names: ['convst1'] is too short
+    from schema $id: http://devicetree.org/schemas/iio/adc/adi,ad7606.yaml#
 
-Ideally we should change to shared_by_all, but it is not an option,
-because the current naming has been a stablished ABI by now. Luckily we
-can use separate instead. That will be more consistent:
-in_proximity0_raw
-in_proximity0_sampling_frequency
-in_proximity1_raw
-in_proximity1_sampling_frequency
-in_attention_raw
-in_attention_sampling_frequency
+Add "minItems" to pwm-names, it allows to use one single pwm when
+connected to both adc conversion inputs.
 
-Fixes: 596ef5cf654b ("iio: hid-sensor-prox: Add support for more channels")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20241216-fix-hid-sensor-v2-1-ff8c1959ec4a@chromium.org
+Fixes: 7c2357b10490 ("dt-bindings: iio: adc: ad7606: Add iio backend bindings")
+Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20250129-wip-bl-ad7606_add_backend_sw_mode-v3-1-c3aec77c0ab7@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/hid-sensor-prox.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/iio/adc/adi,ad7606.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/light/hid-sensor-prox.c b/drivers/iio/light/hid-sensor-prox.c
-index c83acbd782759..71dcef3fbe57d 100644
---- a/drivers/iio/light/hid-sensor-prox.c
-+++ b/drivers/iio/light/hid-sensor-prox.c
-@@ -49,9 +49,10 @@ static const u32 prox_sensitivity_addresses[] = {
- #define PROX_CHANNEL(_is_proximity, _channel) \
- 	{\
- 		.type = _is_proximity ? IIO_PROXIMITY : IIO_ATTENTION,\
--		.info_mask_separate = _is_proximity ? BIT(IIO_CHAN_INFO_RAW) :\
--				      BIT(IIO_CHAN_INFO_PROCESSED),\
--		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_OFFSET) |\
-+		.info_mask_separate = \
-+		(_is_proximity ? BIT(IIO_CHAN_INFO_RAW) :\
-+				BIT(IIO_CHAN_INFO_PROCESSED)) |\
-+		BIT(IIO_CHAN_INFO_OFFSET) |\
- 		BIT(IIO_CHAN_INFO_SCALE) |\
- 		BIT(IIO_CHAN_INFO_SAMP_FREQ) |\
- 		BIT(IIO_CHAN_INFO_HYSTERESIS),\
+diff --git a/Documentation/devicetree/bindings/iio/adc/adi,ad7606.yaml b/Documentation/devicetree/bindings/iio/adc/adi,ad7606.yaml
+index ab5881d0d017f..52d3f1ce33678 100644
+--- a/Documentation/devicetree/bindings/iio/adc/adi,ad7606.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7606.yaml
+@@ -146,6 +146,7 @@ properties:
+     maxItems: 2
+ 
+   pwm-names:
++    minItems: 1
+     items:
+       - const: convst1
+       - const: convst2
 -- 
 2.39.5
 
