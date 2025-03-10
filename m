@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40C92D023;
-	Mon, 10 Mar 2025 17:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFDC2D023;
+	Mon, 10 Mar 2025 17:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629302; cv=none; b=h32IwkDIB7T7SwwNXFPwk2M/9rMghTMVOf8BF1tdDFQfHBv524plkoyUrELmN/Qi6CZSoIBegmawwG0gTbcKOUV5pYqUQfOPoJ9ZBuHn/DDP5G4ITYECb70140y6HvKKGSiTJwQW7yJuWA89n/U/pb4HY6tZCPuYlYXybdVuOp0=
+	t=1741629304; cv=none; b=jMLFs5u3HEqhMs2Bw9+xwguM9b50xXmC19whqsotza/S7sXxQwbd2DYrt5ylHZoDgBqJgWLcJdccAxEzsyX1lvy9hL6XJO5nqi0x8xBerHzs88Y7xiMSvWR72fmKSdGi2cJcxJuDB+3jbWPnIn/vm+HV/co9rFbR3QnTxKuvcbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629302; c=relaxed/simple;
-	bh=Tr6TOysNNrze2Kvwm2IWimsi0AbqRoU7N8L5uF/w93A=;
+	s=arc-20240116; t=1741629304; c=relaxed/simple;
+	bh=919Oj1QLToLl+MQLiHaa0bVnG4U53FPKDsbUAhYbL9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9KbWHpzw2X02jlZ7kmotMisfUiBODQsvwvOOJ/3NLab7LGDJbQvu8ZkvAfejN1InVBI3w/ikmdN1eBljK0VbV4kh1i1FaMhuWF6u6J8I0ehnw7ag2If+IOHVZUOxn/wSEhAj70cXmIPmyVrR7NaK7IHXKLavy2qbyj3z9r/8RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UC34VZTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJEbr3iulQj7qeCgYTH7WE++zLxMXukH6Ui8M8m4J4yVVYTZtq4sGbIlMwm/l+lzni2mVMGt92XlyTCIZmBBTGfxtcgVfI4REpaTy3vuodcpMKH2E6JvOBAu7z52j+GozlyFtyi1MPRQ2gFchZs2OxfU/XGC8p5pzGFvPDyhO9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtDFCl6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UC34VZTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6634BC4CEE5;
-	Mon, 10 Mar 2025 17:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtDFCl6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49223C4CEF1;
+	Mon, 10 Mar 2025 17:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629301;
-	bh=Tr6TOysNNrze2Kvwm2IWimsi0AbqRoU7N8L5uF/w93A=;
+	s=korg; t=1741629304;
+	bh=919Oj1QLToLl+MQLiHaa0bVnG4U53FPKDsbUAhYbL9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UC34VZTsa00yApFM0VW3WlTo7MLvFoIujoYrLGn6iy4wI7dJriAjNDN4bJlzscABk
-	 5ahoR/+YYR5Hp91M1LLSrT1q0NfjYC7uPe7irosZgwVh2SPzHMvxBMLcpGjOQjviCo
-	 lwKdAt8B6Cd7BBwOx+vT65DPS5s3FS8IzR33MhSg=
+	b=mtDFCl6jvu5GceslDSAKzYn48RQpsfKbpDy6HbPDPx2lCMGwf2YsojCN+plJlZSVh
+	 JA9jR77vlZrVA4kikVWPVAAZu9O5a17YDHix6AtNoESLWgZSYQhSGN2rJgOzXnASWW
+	 gpB4zncHy/hcSzl8Rxj88c1LjUkwsKkYV2/PEzQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <mail@jakemoroni.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Randolph Ha <rha051117@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/620] net: atlantic: fix warning during hot unplug
-Date: Mon, 10 Mar 2025 18:01:32 +0100
-Message-ID: <20250310170555.340909249@linuxfoundation.org>
+Subject: [PATCH 5.15 217/620] i2c: Force ELAN06FA touchpad I2C bus freq to 100KHz
+Date: Mon, 10 Mar 2025 18:01:03 +0100
+Message-ID: <20250310170554.190099426@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,69 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <mail@jakemoroni.com>
+From: Randolph Ha <rha051117@gmail.com>
 
-[ Upstream commit 028676bb189ed6d1b550a0fc570a9d695b6acfd3 ]
+[ Upstream commit bfd74cd1fbc026f04446e67d6915c7e199c2bffd ]
 
-Firmware deinitialization performs MMIO accesses which are not
-necessary if the device has already been removed. In some cases,
-these accesses happen via readx_poll_timeout_atomic which ends up
-timing out, resulting in a warning at hw_atl2_utils_fw.c:112:
+When a 400KHz freq is used on this model of ELAN touchpad in Linux,
+excessive smoothing (similar to when the touchpad's firmware detects
+a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
+V15 G4) ACPI tables specify a 400KHz frequency for this device and
+some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
+force the speed to 100KHz as a workaround.
 
-[  104.595913] Call Trace:
-[  104.595915]  <TASK>
-[  104.595918]  ? show_regs+0x6c/0x80
-[  104.595923]  ? __warn+0x8d/0x150
-[  104.595925]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595934]  ? report_bug+0x182/0x1b0
-[  104.595938]  ? handle_bug+0x6e/0xb0
-[  104.595940]  ? exc_invalid_op+0x18/0x80
-[  104.595942]  ? asm_exc_invalid_op+0x1b/0x20
-[  104.595944]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595952]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595959]  aq_nic_deinit.part.0+0xbd/0xf0 [atlantic]
-[  104.595964]  aq_nic_deinit+0x17/0x30 [atlantic]
-[  104.595970]  aq_ndev_close+0x2b/0x40 [atlantic]
-[  104.595975]  __dev_close_many+0xad/0x160
-[  104.595978]  dev_close_many+0x99/0x170
-[  104.595979]  unregister_netdevice_many_notify+0x18b/0xb20
-[  104.595981]  ? __call_rcu_common+0xcd/0x700
-[  104.595984]  unregister_netdevice_queue+0xc6/0x110
-[  104.595986]  unregister_netdev+0x1c/0x30
-[  104.595988]  aq_pci_remove+0xb1/0xc0 [atlantic]
+For future investigation: This problem may be related to the default
+HCNT/LCNT values given by some busses' drivers, because they are not
+specified in the aforementioned devices' ACPI tables, and because
+the device works without issues on Windows at what is expected to be
+a 400KHz frequency. The root cause of the issue is not known.
 
-Fix this by skipping firmware deinitialization altogether if the
-PCI device is no longer present.
-
-Tested with an AQC113 attached via Thunderbolt by performing
-repeated unplug cycles while traffic was running via iperf.
-
-Fixes: 97bde5c4f909 ("net: ethernet: aquantia: Support for NIC-specific code")
-Signed-off-by: Jacob Moroni <mail@jakemoroni.com>
-Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250203143604.24930-3-mail@jakemoroni.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Randolph Ha <rha051117@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_nic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-core-acpi.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-index c52093589d7cf..25349a2ae5cfe 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-@@ -1294,7 +1294,9 @@ void aq_nic_deinit(struct aq_nic_s *self, bool link_down)
- 	aq_ptp_ring_free(self);
- 	aq_ptp_free(self);
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 6ce05441178a3..8b06f5d4a4c30 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -327,6 +327,25 @@ static const struct acpi_device_id i2c_acpi_force_400khz_device_ids[] = {
+ 	{}
+ };
  
--	if (likely(self->aq_fw_ops->deinit) && link_down) {
-+	/* May be invoked during hot unplug. */
-+	if (pci_device_is_present(self->pdev) &&
-+	    likely(self->aq_fw_ops->deinit) && link_down) {
- 		mutex_lock(&self->fwreq_mutex);
- 		self->aq_fw_ops->deinit(self->aq_hw);
- 		mutex_unlock(&self->fwreq_mutex);
++static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
++	/*
++	 * When a 400KHz freq is used on this model of ELAN touchpad in Linux,
++	 * excessive smoothing (similar to when the touchpad's firmware detects
++	 * a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
++	 * V15 G4) ACPI tables specify a 400KHz frequency for this device and
++	 * some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
++	 * force the speed to 100KHz as a workaround.
++	 *
++	 * For future investigation: This problem may be related to the default
++	 * HCNT/LCNT values given by some busses' drivers, because they are not
++	 * specified in the aforementioned devices' ACPI tables, and because
++	 * the device works without issues on Windows at what is expected to be
++	 * a 400KHz frequency. The root cause of the issue is not known.
++	 */
++	{ "ELAN06FA", 0 },
++	{}
++};
++
+ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
+ 					   void *data, void **return_value)
+ {
+@@ -348,6 +367,9 @@ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
+ 	if (acpi_match_device_ids(adev, i2c_acpi_force_400khz_device_ids) == 0)
+ 		lookup->force_speed = I2C_MAX_FAST_MODE_FREQ;
+ 
++	if (acpi_match_device_ids(adev, i2c_acpi_force_100khz_device_ids) == 0)
++		lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ;
++
+ 	return AE_OK;
+ }
+ 
 -- 
 2.39.5
 
