@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE8CBA3D;
-	Mon, 10 Mar 2025 18:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D465ABA3D;
+	Mon, 10 Mar 2025 18:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630883; cv=none; b=njD4sOdJN/gEoAdFtKFwOZpVvZwX/bKPtrsNioEDblxDdDSvfFi7PWuagRiQIQzbviNHb9KiqoxpkerqGg02fCQC7qxvvAx7OuAxO/CuAh0AXL8zRr/kTsbm9UG+k3C1Ok/kMsrCnuxF5fTAgA40SUmWukFtYKAb6s7v5lh3G38=
+	t=1741630885; cv=none; b=WLzsJqZQ9aw+xGbD3MN8T921zZa/SFui5b2uq6acwAS80CUcK39OozmXWmL9XgsgNCUQuXIY0meWHckLl20H6dzPvp8EpmNuq/gNohXUFD3onKS2QBp99Xwe91u+J9hAuerQNexFRhVtuuWwU8gokXZCt0JWBWdHI5Ov/OSv59c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630883; c=relaxed/simple;
-	bh=a0NzzosRn60cB2+PqjhE0QsRymvGSMgUkDEPNPc9DWI=;
+	s=arc-20240116; t=1741630885; c=relaxed/simple;
+	bh=owkFvLq+dFWQFXe774RJDTTurhS3H33RyOLsr/elrO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hf/uJfPVoX3hGD4wIFJDXF4gNNcla6xL007SRqrSU2cEsfY0ZSO9wuKMfoaLw9Ww4/pRtjdyIgNM8//BaqhvmJBP3qCdqh2Cl5ZU7pH4qqOWMHazKE+qaG9PydYUoPb2NsS5kvgwlj7IMuQhtCISJp2zSKwiVznyZQhkMkNxT2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvQaH6Ik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCb9sMg3rfjiJUXHFJHLm3g/kLJ0N1YnpqMqoUFuCKvf9wYExoXvF6shnYhqrUa+lzvdV8dcx7DMyKCehD+iUX2PMke2vslSnkUJcD+9zS1JKsK+JOVZ1d5JmB5noPYVVEkLqTZ1tEpNAu+BScghK/ruw0oP9GO53zcJxh7w5NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kz44moqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvQaH6Ik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E913C4CEE5;
-	Mon, 10 Mar 2025 18:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kz44moqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC68C4CEE5;
+	Mon, 10 Mar 2025 18:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630882;
-	bh=a0NzzosRn60cB2+PqjhE0QsRymvGSMgUkDEPNPc9DWI=;
+	s=korg; t=1741630885;
+	bh=owkFvLq+dFWQFXe774RJDTTurhS3H33RyOLsr/elrO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvQaH6IkzQhqQi9vseMan8ppR/HbCNN6uw908+Sbizaw8jg935hFGMjoorKjjuM8m
-	 xEk/2ujvCL0iFoLOMvQUueyCoADErdLOEnZJcJ2t0XTF84u9iE+pOzA5TT4le0svwO
-	 ZpJYVy/y5IGLSoQHUGV4F9z/wvE+ntutxvQA6m54=
+	b=kz44moqDIEnh+N9C4fakiaK+ySJEI5PxipmRxRcqDSIirespaEqVoDepx76XPhh2Y
+	 Gm/jglHDV3ssY6QdN0qRHZazUCcpdAnXhp9Qo7JzWc5o9h1mQOJkV+2qU7/59oo/4G
+	 bERkbn7V2FKIbDuAg7DLdhV3iRDbIzz0Ha4pvnzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+91161fe81857b396c8a0@syzkaller.appspotmail.com,
-	Oscar Maes <oscmaes92@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 568/620] vlan: enforce underlying device type
-Date: Mon, 10 Mar 2025 18:06:54 +0100
-Message-ID: <20250310170607.966075286@linuxfoundation.org>
+Subject: [PATCH 5.15 569/620] x86/sgx: Support loading enclave page without VMA permissions check
+Date: Mon, 10 Mar 2025 18:06:55 +0100
+Message-ID: <20250310170608.004496373@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,67 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit b33a534610067ade2bdaf2052900aaad99701353 ]
+[ Upstream commit b3fb517dc6020fec85c82171a909da10c6a6f90a ]
 
-Currently, VLAN devices can be created on top of non-ethernet devices.
+sgx_encl_load_page() is used to find and load an enclave page into
+enclave (EPC) memory, potentially loading it from the backing storage.
+Both usages of sgx_encl_load_page() are during an access to the
+enclave page from a VMA and thus the permissions of the VMA are
+considered before the enclave page is loaded.
 
-Besides the fact that it doesn't make much sense, this also causes a
-bug which leaks the address of a kernel function to usermode.
+SGX2 functions operating on enclave pages belonging to an initialized
+enclave requiring the page to be in EPC. It is thus required to
+support loading enclave pages into the EPC independent from a VMA.
 
-When creating a VLAN device, we initialize GARP (garp_init_applicant)
-and MRP (mrp_init_applicant) for the underlying device.
+Split the current sgx_encl_load_page() to support the two usages:
+A new call, sgx_encl_load_page_in_vma(), behaves exactly like the
+current sgx_encl_load_page() that takes VMA permissions into account,
+while sgx_encl_load_page() just loads an enclave page into EPC.
 
-As part of the initialization process, we add the multicast address of
-each applicant to the underlying device, by calling dev_mc_add.
+VMA, PTE, and EPCM permissions continue to dictate whether
+the pages can be accessed from within an enclave.
 
-__dev_mc_add uses dev->addr_len to determine the length of the new
-multicast address.
-
-This causes an out-of-bounds read if dev->addr_len is greater than 6,
-since the multicast addresses provided by GARP and MRP are only 6
-bytes long.
-
-This behaviour can be reproduced using the following commands:
-
-ip tunnel add gretest mode ip6gre local ::1 remote ::2 dev lo
-ip l set up dev gretest
-ip link add link gretest name vlantest type vlan id 100
-
-Then, the following command will display the address of garp_pdu_rcv:
-
-ip maddr show | grep 01:80:c2:00:00:21
-
-Fix the bug by enforcing the type of the underlying device during VLAN
-device initialization.
-
-Fixes: 22bedad3ce11 ("net: convert multicast list to list_head")
-Reported-by: syzbot+91161fe81857b396c8a0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000ca9a81061a01ec20@google.com/
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250303155619.8918-1-oscmaes92@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lkml.kernel.org/r/d4393513c1f18987c14a490bcf133bfb71a5dc43.1652137848.git.reinette.chatre@intel.com
+Stable-dep-of: 0d3e0dfd68fb ("x86/sgx: Fix size overflows in sgx_encl_create()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/sgx/encl.c | 57 ++++++++++++++++++++++------------
+ arch/x86/kernel/cpu/sgx/encl.h |  2 ++
+ 2 files changed, 40 insertions(+), 19 deletions(-)
 
-diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-index abaa5d96ded24..eba36453a51ad 100644
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -131,7 +131,8 @@ int vlan_check_real_dev(struct net_device *real_dev,
- {
- 	const char *name = real_dev->name;
+diff --git a/arch/x86/kernel/cpu/sgx/encl.c b/arch/x86/kernel/cpu/sgx/encl.c
+index fa5777af8da1a..70fd9aa47c68d 100644
+--- a/arch/x86/kernel/cpu/sgx/encl.c
++++ b/arch/x86/kernel/cpu/sgx/encl.c
+@@ -232,25 +232,10 @@ static struct sgx_epc_page *sgx_encl_eldu(struct sgx_encl_page *encl_page,
+ 	return epc_page;
+ }
  
--	if (real_dev->features & NETIF_F_VLAN_CHALLENGED) {
-+	if (real_dev->features & NETIF_F_VLAN_CHALLENGED ||
-+	    real_dev->type != ARPHRD_ETHER) {
- 		pr_info("VLANs not supported on %s\n", name);
- 		NL_SET_ERR_MSG_MOD(extack, "VLANs not supported on device");
- 		return -EOPNOTSUPP;
+-static struct sgx_encl_page *sgx_encl_load_page(struct sgx_encl *encl,
+-						unsigned long addr,
+-						unsigned long vm_flags)
++static struct sgx_encl_page *__sgx_encl_load_page(struct sgx_encl *encl,
++						  struct sgx_encl_page *entry)
+ {
+-	unsigned long vm_prot_bits = vm_flags & (VM_READ | VM_WRITE | VM_EXEC);
+ 	struct sgx_epc_page *epc_page;
+-	struct sgx_encl_page *entry;
+-
+-	entry = xa_load(&encl->page_array, PFN_DOWN(addr));
+-	if (!entry)
+-		return ERR_PTR(-EFAULT);
+-
+-	/*
+-	 * Verify that the faulted page has equal or higher build time
+-	 * permissions than the VMA permissions (i.e. the subset of {VM_READ,
+-	 * VM_WRITE, VM_EXECUTE} in vma->vm_flags).
+-	 */
+-	if ((entry->vm_max_prot_bits & vm_prot_bits) != vm_prot_bits)
+-		return ERR_PTR(-EFAULT);
+ 
+ 	/* Entry successfully located. */
+ 	if (entry->epc_page) {
+@@ -276,6 +261,40 @@ static struct sgx_encl_page *sgx_encl_load_page(struct sgx_encl *encl,
+ 	return entry;
+ }
+ 
++static struct sgx_encl_page *sgx_encl_load_page_in_vma(struct sgx_encl *encl,
++						       unsigned long addr,
++						       unsigned long vm_flags)
++{
++	unsigned long vm_prot_bits = vm_flags & (VM_READ | VM_WRITE | VM_EXEC);
++	struct sgx_encl_page *entry;
++
++	entry = xa_load(&encl->page_array, PFN_DOWN(addr));
++	if (!entry)
++		return ERR_PTR(-EFAULT);
++
++	/*
++	 * Verify that the page has equal or higher build time
++	 * permissions than the VMA permissions (i.e. the subset of {VM_READ,
++	 * VM_WRITE, VM_EXECUTE} in vma->vm_flags).
++	 */
++	if ((entry->vm_max_prot_bits & vm_prot_bits) != vm_prot_bits)
++		return ERR_PTR(-EFAULT);
++
++	return __sgx_encl_load_page(encl, entry);
++}
++
++struct sgx_encl_page *sgx_encl_load_page(struct sgx_encl *encl,
++					 unsigned long addr)
++{
++	struct sgx_encl_page *entry;
++
++	entry = xa_load(&encl->page_array, PFN_DOWN(addr));
++	if (!entry)
++		return ERR_PTR(-EFAULT);
++
++	return __sgx_encl_load_page(encl, entry);
++}
++
+ static vm_fault_t sgx_vma_fault(struct vm_fault *vmf)
+ {
+ 	unsigned long addr = (unsigned long)vmf->address;
+@@ -297,7 +316,7 @@ static vm_fault_t sgx_vma_fault(struct vm_fault *vmf)
+ 
+ 	mutex_lock(&encl->lock);
+ 
+-	entry = sgx_encl_load_page(encl, addr, vma->vm_flags);
++	entry = sgx_encl_load_page_in_vma(encl, addr, vma->vm_flags);
+ 	if (IS_ERR(entry)) {
+ 		mutex_unlock(&encl->lock);
+ 
+@@ -445,7 +464,7 @@ static struct sgx_encl_page *sgx_encl_reserve_page(struct sgx_encl *encl,
+ 	for ( ; ; ) {
+ 		mutex_lock(&encl->lock);
+ 
+-		entry = sgx_encl_load_page(encl, addr, vm_flags);
++		entry = sgx_encl_load_page_in_vma(encl, addr, vm_flags);
+ 		if (PTR_ERR(entry) != -EBUSY)
+ 			break;
+ 
+diff --git a/arch/x86/kernel/cpu/sgx/encl.h b/arch/x86/kernel/cpu/sgx/encl.h
+index 332ef3568267e..a4894cf3f56a2 100644
+--- a/arch/x86/kernel/cpu/sgx/encl.h
++++ b/arch/x86/kernel/cpu/sgx/encl.h
+@@ -119,5 +119,7 @@ unsigned int sgx_alloc_va_slot(struct sgx_va_page *va_page);
+ void sgx_free_va_slot(struct sgx_va_page *va_page, unsigned int offset);
+ bool sgx_va_page_full(struct sgx_va_page *va_page);
+ void sgx_encl_free_epc_page(struct sgx_epc_page *page);
++struct sgx_encl_page *sgx_encl_load_page(struct sgx_encl *encl,
++					 unsigned long addr);
+ 
+ #endif /* _X86_ENCL_H */
 -- 
 2.39.5
 
