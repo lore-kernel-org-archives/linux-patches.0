@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0C017CA12;
-	Mon, 10 Mar 2025 17:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075D91C4A24;
+	Mon, 10 Mar 2025 17:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628726; cv=none; b=IwjNXSqBFb2iODH93PtlgzVqpZ/bzv4gNO/OtY/zWTWbtKlhcclIHGnu0oZoNhBKxMs3PjBmzw/NkfT7r9pXDTwvx+sH6N9OlwlxmBNwv3wpt/JiGg3P/40utPXWTOdl/aEUgOYuub66yllTPM3AuGhfd+kuZn1Rac893DsLWtY=
+	t=1741628729; cv=none; b=T5B+jm1CvOftdA5faZJzPDmipHzlOy82zwXwz/ZH7CPl0SB6x+v3M63o32IgTASzWEoKGERHgUXwRF1q0W7rWfFt4NVtRxWKB9aPx933kztnY2EeyK/RwXNSAlADyWSwNffAvPIvpQWbJaGDTniYSPENg9tW+iEVnSbf0yOI6Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628726; c=relaxed/simple;
-	bh=se0BGL2EYNnDEFNdcufzOsiZ5ypvFp8BjDBaO6Xf13E=;
+	s=arc-20240116; t=1741628729; c=relaxed/simple;
+	bh=xFMygZirvcL2aS8XNTxvjqQiJ4U67FP7ji1hzAAsb4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AusNUgN2XCUR30Mq+DQG86h9TyCrxw2/FjrRqX6vnIozLON8cH1AlY0+uUyLdTnqTGhlSq42Zdzqcr1aKHDWv/6/JN8ptArebN87BUdIX7Ugm9kxxu6u745afnxqGHLBvMBRLzQLknU1YeAHrDBxJQl+QOmMzceue/Y8e1GCGzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruemGqq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqSEWSZquNb6YGcg0Ec5CFX1dN2zW2zn1CvYlvPEpRn4x1+xBLlY+lLjqKM4DOFiI1WzUIOmXtD2pyJgtwcgK3mVnuNTvwfYcgPpoUxKK/pLxm4sBDPNeY/hykakl14Fz26gmuduGu0YSoD4rZFbp9dx+wykKYT6JdmDeiMQwrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJXFbg6S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruemGqq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E28C4CEE5;
-	Mon, 10 Mar 2025 17:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJXFbg6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C512C4CEE5;
+	Mon, 10 Mar 2025 17:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628726;
-	bh=se0BGL2EYNnDEFNdcufzOsiZ5ypvFp8BjDBaO6Xf13E=;
+	s=korg; t=1741628728;
+	bh=xFMygZirvcL2aS8XNTxvjqQiJ4U67FP7ji1hzAAsb4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruemGqq0YlzQ4fCJ0JVyjq009VIUIs4HoJdS2WKxBcHMGUOYP3iHMP71Vqhcy5WHU
-	 54fBH8R8fkTWknzibgnBv6aT8X4m4vd4/5SyacNsyBO7ZGTtnwQztK4IJuxmpHHnmY
-	 hRtkPxSl8YE7EzUAGldjm2YG1P56TVokACz63yPU=
+	b=TJXFbg6S5wAoRYUOLimJ+jPFr0QrVhcOhnfDB9OfwgECSVbfMuyiQi/P6W28TMR8H
+	 q4qLnPWtldekfpYxWFP/9oksTZ2YuyFxjcTelCRIo8W9b1Lq2zz4bwBMiUKSdS4chq
+	 NW5I9ykOvu9oXRw/YaeW7OWHIE2DtQ5i4zTk3GoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/620] afs: Fix the fallback handling for the YFS.RemoveFile2 RPC call
-Date: Mon, 10 Mar 2025 17:57:42 +0100
-Message-ID: <20250310170546.220300791@linuxfoundation.org>
+Subject: [PATCH 5.15 017/620] sched/psi: Use task->psi_flags to clear in CPU migration
+Date: Mon, 10 Mar 2025 17:57:43 +0100
+Message-ID: <20250310170546.257580776@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,44 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-[ Upstream commit e30458d690f35abb01de8b3cbc09285deb725d00 ]
+[ Upstream commit 52b33d87b9197c51e8ffdc61873739d90dd0a16f ]
 
-Fix a pair of bugs in the fallback handling for the YFS.RemoveFile2 RPC
-call:
+The commit d583d360a620 ("psi: Fix psi state corruption when schedule()
+races with cgroup move") fixed a race problem by making cgroup_move_task()
+use task->psi_flags instead of looking at the scheduler state.
 
- (1) Fix the abort code check to also look for RXGEN_OPCODE.  The lack of
-     this masks the second bug.
+We can extend task->psi_flags usage to CPU migration, which should be
+a minor optimization for performance and code simplicity.
 
- (2) call->server is now not used for ordinary filesystem RPC calls that
-     have an operation descriptor.  Fix to use call->op->server instead.
-
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/109541.1736865963@warthog.procyon.org.uk
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Link: https://lore.kernel.org/r/20220926081931.45420-1-zhouchengming@bytedance.com
+Stable-dep-of: a430d99e3490 ("sched/fair: Fix value reported by hot tasks pulled in /proc/schedstat")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/yfsclient.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/sched.h |  3 ---
+ kernel/sched/core.c   |  2 +-
+ kernel/sched/stats.h  | 22 ++++------------------
+ 3 files changed, 5 insertions(+), 22 deletions(-)
 
-diff --git a/fs/afs/yfsclient.c b/fs/afs/yfsclient.c
-index 88ea20e79ae27..b3bc46a112242 100644
---- a/fs/afs/yfsclient.c
-+++ b/fs/afs/yfsclient.c
-@@ -662,8 +662,9 @@ static int yfs_deliver_fs_remove_file2(struct afs_call *call)
- static void yfs_done_fs_remove_file2(struct afs_call *call)
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 9b3cfe685cb45..875f3d317b9c8 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -874,9 +874,6 @@ struct task_struct {
+ 	unsigned			sched_reset_on_fork:1;
+ 	unsigned			sched_contributes_to_load:1;
+ 	unsigned			sched_migrated:1;
+-#ifdef CONFIG_PSI
+-	unsigned			sched_psi_wake_requeue:1;
+-#endif
+ 
+ 	/* Force alignment to the next boundary: */
+ 	unsigned			:0;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index ed92b75f7e024..fee8e2a7c7530 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1967,7 +1967,7 @@ static inline void enqueue_task(struct rq *rq, struct task_struct *p, int flags)
+ 
+ 	if (!(flags & ENQUEUE_RESTORE)) {
+ 		sched_info_enqueue(rq, p);
+-		psi_enqueue(p, flags & ENQUEUE_WAKEUP);
++		psi_enqueue(p, (flags & ENQUEUE_WAKEUP) && !(flags & ENQUEUE_MIGRATED));
+ 	}
+ 
+ 	uclamp_rq_inc(rq, p);
+diff --git a/kernel/sched/stats.h b/kernel/sched/stats.h
+index 975703572bc0d..cee3100c74cd5 100644
+--- a/kernel/sched/stats.h
++++ b/kernel/sched/stats.h
+@@ -91,11 +91,9 @@ static inline void psi_enqueue(struct task_struct *p, bool wakeup)
+ 	if (p->in_memstall)
+ 		set |= TSK_MEMSTALL_RUNNING;
+ 
+-	if (!wakeup || p->sched_psi_wake_requeue) {
++	if (!wakeup) {
+ 		if (p->in_memstall)
+ 			set |= TSK_MEMSTALL;
+-		if (p->sched_psi_wake_requeue)
+-			p->sched_psi_wake_requeue = 0;
+ 	} else {
+ 		if (p->in_iowait)
+ 			clear |= TSK_IOWAIT;
+@@ -106,8 +104,6 @@ static inline void psi_enqueue(struct task_struct *p, bool wakeup)
+ 
+ static inline void psi_dequeue(struct task_struct *p, bool sleep)
  {
- 	if (call->error == -ECONNABORTED &&
--	    call->abort_code == RX_INVALID_OPERATION) {
--		set_bit(AFS_SERVER_FL_NO_RM2, &call->server->flags);
-+	    (call->abort_code == RX_INVALID_OPERATION ||
-+	     call->abort_code == RXGEN_OPCODE)) {
-+		set_bit(AFS_SERVER_FL_NO_RM2, &call->op->server->flags);
- 		call->op->flags |= AFS_OPERATION_DOWNGRADE;
+-	int clear = TSK_RUNNING;
+-
+ 	if (static_branch_likely(&psi_disabled))
+ 		return;
+ 
+@@ -120,10 +116,7 @@ static inline void psi_dequeue(struct task_struct *p, bool sleep)
+ 	if (sleep)
+ 		return;
+ 
+-	if (p->in_memstall)
+-		clear |= (TSK_MEMSTALL | TSK_MEMSTALL_RUNNING);
+-
+-	psi_task_change(p, clear, 0);
++	psi_task_change(p, p->psi_flags, 0);
+ }
+ 
+ static inline void psi_ttwu_dequeue(struct task_struct *p)
+@@ -135,19 +128,12 @@ static inline void psi_ttwu_dequeue(struct task_struct *p)
+ 	 * deregister its sleep-persistent psi states from the old
+ 	 * queue, and let psi_enqueue() know it has to requeue.
+ 	 */
+-	if (unlikely(p->in_iowait || p->in_memstall)) {
++	if (unlikely(p->psi_flags)) {
+ 		struct rq_flags rf;
+ 		struct rq *rq;
+-		int clear = 0;
+-
+-		if (p->in_iowait)
+-			clear |= TSK_IOWAIT;
+-		if (p->in_memstall)
+-			clear |= TSK_MEMSTALL;
+ 
+ 		rq = __task_rq_lock(p, &rf);
+-		psi_task_change(p, clear, 0);
+-		p->sched_psi_wake_requeue = 1;
++		psi_task_change(p, p->psi_flags, 0);
+ 		__task_rq_unlock(rq, &rf);
  	}
  }
 -- 
