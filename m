@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A4617CA12;
-	Mon, 10 Mar 2025 17:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5A217CA12;
+	Mon, 10 Mar 2025 17:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629092; cv=none; b=rRz6z2pacaArbeBKp2ZMHY3pXdbrxaYGTc24RTl715TUEJBJOuibx0KKayKZ5IPbeFN5UtQ7qQPfU0IxhqUsubl1M+hOENSX31YJmGR7aUPw6gR1D8i7Zxh7SQxr3S3JlfoqFNmG4LRnV19k+hnXfVreq08O+QEUKkos1oORO/c=
+	t=1741629095; cv=none; b=LYc8ACBL1iXojNnaeNQvTFDGkSAixPuFlem8tk6COwKOeJe2I47wrd7b9wwE56tA9UPY2VrL0gVSsqtRvWV1jVPCCYCzWyTp20ru+q6Ev3LSu2ZRwEyTsrE/1nZehT5yC8jo8WkMSb5F+Qu49VwhhvZlRmRgFMCL4f2cjS3hFeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629092; c=relaxed/simple;
-	bh=XSGDD9lmOq5dZIr2zye4Xs7kKOIA6b6erHy+IcHKa/M=;
+	s=arc-20240116; t=1741629095; c=relaxed/simple;
+	bh=WPf+o9/ygVl+vFBSNk3R3A54DhDqAQNuxZGSWz2helQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6xtLokvGmll5WHQiBreOr+6vANpj+BUxKjsxdfA0tToJdu4FN1Iho3pQUPAvJfNJGf1m7kUNRP7OvTDs2Cy0GsQ0R/Dt2vR67ugrpJv+G5mWdRXzlrucgc5rMW1gUOHEmpa/Hkh3c/13mr27EpYuJaHJP1QUNZRQL0rYL/B0co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h74lW2Od; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l2FR/KiAjLeSFJM6MNZBKE4icGHz7nDYfXX5TgD8rsT40UOhLZXx6QZNCajTluTTK2Nsc74lGjrMp+X3UOWIyheQxmolSlx1LzeiGjfOiKMpEI9o+vwZanwIm6PFpn1MG+cYg//jsnJYCC0j/37Jy7nR40FxaB6aPLzdhY1BAug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hmeum9kz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h74lW2Od"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A58C4CEE5;
-	Mon, 10 Mar 2025 17:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hmeum9kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75935C4CEE5;
+	Mon, 10 Mar 2025 17:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629092;
-	bh=XSGDD9lmOq5dZIr2zye4Xs7kKOIA6b6erHy+IcHKa/M=;
+	s=korg; t=1741629094;
+	bh=WPf+o9/ygVl+vFBSNk3R3A54DhDqAQNuxZGSWz2helQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h74lW2OdM2G5gTzCaiWzy+NGVdiHBd2mgxqwlax4CSbJqO21xmEYnXI7YRJCO/h1n
-	 eoaayrVjnX3iUdkreslal9OUooM++67h0DfCRYwClIzBWY88IdC9OHzCLhtuNJV0xP
-	 axLyVTXd9sjSybEOsdh0VHPUUm77sL5SAXHGR5Mc=
+	b=Hmeum9kzc6KshIZQ47Pl2GnGudNeb1S0sPwGmXKbZUo1g2PZmq1OPKadlDMjVrh7Y
+	 u/DuLaFPv0vPGW4Vlz9heywH4I6s4QlEqZ9KpplXg7648SV9RoTIJju5e4tzMbciIB
+	 i2clYVwUvIVkcucFovlJH1P/9+yoQSaFzRRx9sXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Stephan Wurm <stephan.wurm@a-eberle.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/620] mtd: hyperbus: hbmc-am654: fix an OF node reference leak
-Date: Mon, 10 Mar 2025 17:59:53 +0100
-Message-ID: <20250310170551.407716992@linuxfoundation.org>
+Subject: [PATCH 5.15 174/620] net: hsr: fix fill_frame_info() regression vs VLAN packets
+Date: Mon, 10 Mar 2025 18:00:20 +0100
+Message-ID: <20250310170552.492170263@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,80 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bf5821909eb9c7f5d07d5c6e852ead2c373c94a0 ]
+[ Upstream commit 0f5697f1a3f99bc2b674b8aa3c5da822c5673c11 ]
 
-In am654_hbmc_platform_driver, .remove() and the error path of .probe()
-do not decrement the refcount of an OF node obtained by
-  of_get_next_child(). Fix this by adding of_node_put() calls.
+Stephan Wurm reported that my recent patch broke VLAN support.
 
-Fixes: aca31ce96814 ("mtd: hyperbus: hbmc-am654: Fix direct mapping setup flash access")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Apparently skb->mac_len is not correct for VLAN traffic as
+shown by debug traces [1].
+
+Use instead pskb_may_pull() to make sure the expected header
+is present in skb->head.
+
+Many thanks to Stephan for his help.
+
+[1]
+kernel: skb len=170 headroom=2 headlen=170 tailroom=20
+        mac=(2,14) mac_len=14 net=(16,-1) trans=-1
+        shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
+        csum(0x0 start=0 offset=0 ip_summed=0 complete_sw=0 valid=0 level=0)
+        hash(0x0 sw=0 l4=0) proto=0x0000 pkttype=0 iif=0
+        priority=0x0 mark=0x0 alloc_cpu=0 vlan_all=0x0
+        encapsulation=0 inner(proto=0x0000, mac=0, net=0, trans=0)
+kernel: dev name=prp0 feat=0x0000000000007000
+kernel: sk family=17 type=3 proto=0
+kernel: skb headroom: 00000000: 74 00
+kernel: skb linear:   00000000: 01 0c cd 01 00 01 00 d0 93 53 9c cb 81 00 80 00
+kernel: skb linear:   00000010: 88 b8 00 01 00 98 00 00 00 00 61 81 8d 80 16 52
+kernel: skb linear:   00000020: 45 47 44 4e 43 54 52 4c 2f 4c 4c 4e 30 24 47 4f
+kernel: skb linear:   00000030: 24 47 6f 43 62 81 01 14 82 16 52 45 47 44 4e 43
+kernel: skb linear:   00000040: 54 52 4c 2f 4c 4c 4e 30 24 44 73 47 6f 6f 73 65
+kernel: skb linear:   00000050: 83 07 47 6f 49 64 65 6e 74 84 08 67 8d f5 93 7e
+kernel: skb linear:   00000060: 76 c8 00 85 01 01 86 01 00 87 01 00 88 01 01 89
+kernel: skb linear:   00000070: 01 00 8a 01 02 ab 33 a2 15 83 01 00 84 03 03 00
+kernel: skb linear:   00000080: 00 91 08 67 8d f5 92 77 4b c6 1f 83 01 00 a2 1a
+kernel: skb linear:   00000090: a2 06 85 01 00 83 01 00 84 03 03 00 00 91 08 67
+kernel: skb linear:   000000a0: 8d f5 92 77 4b c6 1f 83 01 00
+kernel: skb tailroom: 00000000: 80 18 02 00 fe 4e 00 00 01 01 08 0a 4f fd 5e d1
+kernel: skb tailroom: 00000010: 4f fd 5e cd
+
+Fixes: b9653d19e556 ("net: hsr: avoid potential out-of-bound access in fill_frame_info()")
+Reported-by: Stephan Wurm <stephan.wurm@a-eberle.de>
+Tested-by: Stephan Wurm <stephan.wurm@a-eberle.de>
+Closes: https://lore.kernel.org/netdev/Z4o_UC0HweBHJ_cw@PC-LX-SteWu/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250129130007.644084-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/hbmc-am654.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/hsr/hsr_forward.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/hyperbus/hbmc-am654.c b/drivers/mtd/hyperbus/hbmc-am654.c
-index dbe3eb361cca2..4b6cbee23fe89 100644
---- a/drivers/mtd/hyperbus/hbmc-am654.c
-+++ b/drivers/mtd/hyperbus/hbmc-am654.c
-@@ -174,26 +174,30 @@ static int am654_hbmc_probe(struct platform_device *pdev)
- 	priv->hbdev.np = of_get_next_child(np, NULL);
- 	ret = of_address_to_resource(priv->hbdev.np, 0, &res);
- 	if (ret)
--		return ret;
-+		goto put_node;
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 20d4c3f8d8750..3de280a0dab2b 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -546,9 +546,12 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		frame->is_vlan = true;
  
- 	if (of_property_read_bool(dev->of_node, "mux-controls")) {
- 		struct mux_control *control = devm_mux_control_get(dev, NULL);
- 
--		if (IS_ERR(control))
--			return PTR_ERR(control);
-+		if (IS_ERR(control)) {
-+			ret = PTR_ERR(control);
-+			goto put_node;
-+		}
- 
- 		ret = mux_control_select(control, 1);
- 		if (ret) {
- 			dev_err(dev, "Failed to select HBMC mux\n");
--			return ret;
-+			goto put_node;
- 		}
- 		priv->mux_ctrl = control;
- 	}
- 
- 	priv->hbdev.map.size = resource_size(&res);
- 	priv->hbdev.map.virt = devm_ioremap_resource(dev, &res);
--	if (IS_ERR(priv->hbdev.map.virt))
--		return PTR_ERR(priv->hbdev.map.virt);
-+	if (IS_ERR(priv->hbdev.map.virt)) {
-+		ret = PTR_ERR(priv->hbdev.map.virt);
-+		goto disable_mux;
-+	}
- 
- 	priv->ctlr.dev = dev;
- 	priv->ctlr.ops = &am654_hbmc_ops;
-@@ -226,6 +230,8 @@ static int am654_hbmc_probe(struct platform_device *pdev)
- disable_mux:
- 	if (priv->mux_ctrl)
- 		mux_control_deselect(priv->mux_ctrl);
-+put_node:
-+	of_node_put(priv->hbdev.np);
- 	return ret;
- }
- 
-@@ -241,6 +247,7 @@ static void am654_hbmc_remove(struct platform_device *pdev)
- 
- 	if (dev_priv->rx_chan)
- 		dma_release_channel(dev_priv->rx_chan);
-+	of_node_put(priv->hbdev.np);
- }
- 
- static const struct of_device_id am654_hbmc_dt_ids[] = {
+ 	if (frame->is_vlan) {
+-		if (skb->mac_len < offsetofend(struct hsr_vlan_ethhdr, vlanhdr))
++		/* Note: skb->mac_len might be wrong here. */
++		if (!pskb_may_pull(skb,
++				   skb_mac_offset(skb) +
++				   offsetofend(struct hsr_vlan_ethhdr, vlanhdr)))
+ 			return -EINVAL;
+-		vlan_hdr = (struct hsr_vlan_ethhdr *)ethhdr;
++		vlan_hdr = (struct hsr_vlan_ethhdr *)skb_mac_header(skb);
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+ 		netdev_warn_once(skb->dev, "VLAN not yet supported");
 -- 
 2.39.5
 
