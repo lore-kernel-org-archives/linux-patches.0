@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42946230BF6;
-	Mon, 10 Mar 2025 17:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4365A23236F;
+	Mon, 10 Mar 2025 17:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626874; cv=none; b=ECK5uK0feuewMBgesfRXJJ08ZfkiECcMt+OpX5NT3kzAWV8kd24YYqbQ76ajvs+XcCwgaLFkAwevpUMB/jxkXQ9o67or/NwKRSnKVJpz2No4T2SdgQ05+Q3sYLUh7hGgAMkSB8x+TGHSaBFHDURV48Co6JI5txElnON1xvFdh6Q=
+	t=1741626877; cv=none; b=ecCw1chcUNsLklarQrrSZA+yKsifn+Y8BHHOsCkd0XJLPbzlmN5aHAqT4OteS4Sz9b5YcrY1TYpzCvpTu0LQyPT5P+YtAibj3SubZAqpqEGSeJ7XwFZSpnDCaf1020MTrPhmLPULuLjaknuDSCJWGFboLNcL/RLHPDxNJrrksyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626874; c=relaxed/simple;
-	bh=GyGavryKUjHq22byAEmoywGMpp3F8S1EQtdWrgQ7Hgo=;
+	s=arc-20240116; t=1741626877; c=relaxed/simple;
+	bh=WoZYNLzKoRzto2sFjjWmUATeR/F0EvPxURSN8CiYoaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zql0OsUkCBVA1MqV4yP5kvVyOC/t/WZWCk3yABnJw4PJJ0aWEaoWA4CZR1Ea8fnFEFtKb+KnTdMJ+mdRavkr8WgimJDUxIfuSbbqEgjlPhZzzEd2MqFXRX/RZqX128mZpe424VQCMghShs1m228CZ5HQBglY6Fn7fmJBA3a0/oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzGVLwC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwKl4A7sBNkIETcPcSx7EodrawsxZCZxCLKaNpcyelQedYKDR72AEyJgr8mGnRTvNaqlb6y1S3lnDlpmk2mbxvYUnRyyouVqF3h7koNkRnmTM4gr/xoj1X+rUFVMH8MthYzG4PpvRXWhm0mTUVPGsIjPvx4ZYvw4ZNZeUilG4SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hzr5uiUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzGVLwC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62331C4CEE5;
-	Mon, 10 Mar 2025 17:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzr5uiUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A56EC4CEED;
+	Mon, 10 Mar 2025 17:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626873;
-	bh=GyGavryKUjHq22byAEmoywGMpp3F8S1EQtdWrgQ7Hgo=;
+	s=korg; t=1741626876;
+	bh=WoZYNLzKoRzto2sFjjWmUATeR/F0EvPxURSN8CiYoaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzGVLwC5KUnxe3/aL5PDK5rCDE+s9NoCEzL2pZylh5zq1tvJv5rsed9uLiU5wDI5z
-	 MyU2pAqGTOWvFwaxLm708zBf4di9js0nY5MnuX46RPIXvxp5vlRp4aeM6jvN280y7G
-	 3fWyOGX1SFnIIY6UjXjgzRIMnc/hvrk0NBPmuyfE=
+	b=Hzr5uiUXpYSoxFSHj7rY9pp2UAfHNCpcedNm4FVM/1zjnHgr1sJ9sKuN5BdgbHl3j
+	 bXKPHKSFuEc7yuLgQHVdJcb6cWjzBjJfJ3ICw316Bkt3Vq4fiDHKt2kaQmrcUKJwrs
+	 epmgV9S4puClUdCqlKGCgaC9Vc5h09jDsId3Kd8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 110/207] ALSA: hda/realtek: Remove (revert) duplicate Ally X config
-Date: Mon, 10 Mar 2025 18:05:03 +0100
-Message-ID: <20250310170452.129058302@linuxfoundation.org>
+Subject: [PATCH 6.13 111/207] net: gso: fix ownership in __udp_gso_segment
+Date: Mon, 10 Mar 2025 18:05:04 +0100
+Message-ID: <20250310170452.167760449@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,62 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 3414cda9d41f41703832d0abd01063dd8de82b89 ]
+[ Upstream commit ee01b2f2d7d0010787c2343463965bbc283a497f ]
 
-In commit 1e9c708dc3ae ("ALSA: hda/tas2781: Add new quirk for Lenovo,
-ASUS, Dell projects") Baojun adds a bunch of projects to the file,
-including for the Ally X. Turns out the initial Ally X was not sorted
-properly, so the kernel had 2 quirks for it.
+In __udp_gso_segment the skb destructor is removed before segmenting the
+skb but the socket reference is kept as-is. This is an issue if the
+original skb is later orphaned as we can hit the following bug:
 
-The previous quirk overrode the new one due to being earlier and they
-are different. When AB testing, the normal pin fixup seems to work ok
-but causes a bit of a minor popping. Given the other config is more
-complicated and may cause undefined behavior, revert it.
+  kernel BUG at ./include/linux/skbuff.h:3312!  (skb_orphan)
+  RIP: 0010:ip_rcv_core+0x8b2/0xca0
+  Call Trace:
+   ip_rcv+0xab/0x6e0
+   __netif_receive_skb_one_core+0x168/0x1b0
+   process_backlog+0x384/0x1100
+   __napi_poll.constprop.0+0xa1/0x370
+   net_rx_action+0x925/0xe50
 
-Fixes: 1e9c708dc3ae ("ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects")
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20250227175107.33432-2-lkml@antheas.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The above can happen following a sequence of events when using
+OpenVSwitch, when an OVS_ACTION_ATTR_USERSPACE action precedes an
+OVS_ACTION_ATTR_OUTPUT action:
+
+1. OVS_ACTION_ATTR_USERSPACE is handled (in do_execute_actions): the skb
+   goes through queue_gso_packets and then __udp_gso_segment, where its
+   destructor is removed.
+2. The segments' data are copied and sent to userspace.
+3. OVS_ACTION_ATTR_OUTPUT is handled (in do_execute_actions) and the
+   same original skb is sent to its path.
+4. If it later hits skb_orphan, we hit the bug.
+
+Fix this by also removing the reference to the socket in
+__udp_gso_segment.
+
+Fixes: ad405857b174 ("udp: better wmem accounting on gso")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20250226171352.258045-1-atenart@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 8 --------
- 1 file changed, 8 deletions(-)
+ net/ipv4/udp_offload.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 2cd606900b8b0..e86c4d894ea30 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7761,7 +7761,6 @@ enum {
- 	ALC285_FIXUP_THINKPAD_X1_GEN7,
- 	ALC285_FIXUP_THINKPAD_HEADSET_JACK,
- 	ALC294_FIXUP_ASUS_ALLY,
--	ALC294_FIXUP_ASUS_ALLY_X,
- 	ALC294_FIXUP_ASUS_ALLY_PINS,
- 	ALC294_FIXUP_ASUS_ALLY_VERBS,
- 	ALC294_FIXUP_ASUS_ALLY_SPEAKER,
-@@ -9206,12 +9205,6 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC294_FIXUP_ASUS_ALLY_PINS
- 	},
--	[ALC294_FIXUP_ASUS_ALLY_X] = {
--		.type = HDA_FIXUP_FUNC,
--		.v.func = tas2781_fixup_i2c,
--		.chained = true,
--		.chain_id = ALC294_FIXUP_ASUS_ALLY_PINS
--	},
- 	[ALC294_FIXUP_ASUS_ALLY_PINS] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -10705,7 +10698,6 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1740, "ASUS UX430UA", ALC295_FIXUP_ASUS_DACS),
- 	SND_PCI_QUIRK(0x1043, 0x17d1, "ASUS UX431FL", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x17f3, "ROG Ally NR2301L/X", ALC294_FIXUP_ASUS_ALLY),
--	SND_PCI_QUIRK(0x1043, 0x1eb3, "ROG Ally X RC72LA", ALC294_FIXUP_ASUS_ALLY_X),
- 	SND_PCI_QUIRK(0x1043, 0x1863, "ASUS UX6404VI/VV", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1881, "ASUS Zephyrus S/M", ALC294_FIXUP_ASUS_GX502_PINS),
- 	SND_PCI_QUIRK(0x1043, 0x18b1, "Asus MJ401TA", ALC256_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index a5be6e4ed326f..ecfca59f31f13 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -321,13 +321,17 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+ 
+ 	/* clear destructor to avoid skb_segment assigning it to tail */
+ 	copy_dtor = gso_skb->destructor == sock_wfree;
+-	if (copy_dtor)
++	if (copy_dtor) {
+ 		gso_skb->destructor = NULL;
++		gso_skb->sk = NULL;
++	}
+ 
+ 	segs = skb_segment(gso_skb, features);
+ 	if (IS_ERR_OR_NULL(segs)) {
+-		if (copy_dtor)
++		if (copy_dtor) {
+ 			gso_skb->destructor = sock_wfree;
++			gso_skb->sk = sk;
++		}
+ 		return segs;
+ 	}
+ 
 -- 
 2.39.5
 
