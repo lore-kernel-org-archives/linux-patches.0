@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E232206BD;
-	Mon, 10 Mar 2025 18:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB85E233716;
+	Mon, 10 Mar 2025 18:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630432; cv=none; b=UwiAEtieKGIWcDLOKR9VHKlhAETIWDLv3oGu7xbkDCM2RA3tk7OFfWEjE3XheT0ykMC0mA8VSSLv2t+iYBiYkPv/X37fKUz3Eesb835VZR7HdTV2ZassIPgfKZV7THqA197bL2P3eZegwYmsnJE82t+zZsTcw8/PqntJKIeTSNs=
+	t=1741630436; cv=none; b=lPFz1Bq7ozNw38L1oUcF0Gdpi23MO6PfhiOpoCROweNEylwNrj45ExmJTiNKjqIXr0CVxxVDBWYRgQcYlVF6iwhAbrAldUkYOxO17LtumzPwAklgHq9TN6P9JQP4j+QdZCWVp80Qd/WCClsWgPGVBAXH1wMMabUS/qvP/uR+WFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630432; c=relaxed/simple;
-	bh=ZgA4kHqqJVMGJhUT6P3VfVs6iMWIM/OM+ieLoXF01dY=;
+	s=arc-20240116; t=1741630436; c=relaxed/simple;
+	bh=xTUXnM2AEWjY9bWB2FxgfkzZD1TcufuLysSVVbN/57A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=No6gPumPiMZokjHrAx9YI3qjPpSvBMSihlqwXJ5tEdYJUJFmMuniqsK2x2RmcHoiYSh+1FgH2hOIfoBJk5zCXj8G2f2xlKWo5ng1hidlu97oE2RY9bnbSbAjAkW3waS+UVWJ+Z00FYFH89yOe8b9aprg1BfKZ21N3MgSIbDvL68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oL3QSDhN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MHQCRDUWROx7XXANfnBuJviqA0hWcsbB8HnTVKJEMJO5KY44uAw+e/Q5IUlub+epJGFwlNIAfLblmgml6x+2oKqlGMvvPZ0s3fXW0pLeXmULhlTnmgvArLCj/IIEMvNFA2hELw1SXeKKzLmS0I1DEszwqAnvslnHV6zE9+9DHOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSYhkuRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL3QSDhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D909C4CEE5;
-	Mon, 10 Mar 2025 18:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSYhkuRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1E4C4CEE5;
+	Mon, 10 Mar 2025 18:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630432;
-	bh=ZgA4kHqqJVMGJhUT6P3VfVs6iMWIM/OM+ieLoXF01dY=;
+	s=korg; t=1741630435;
+	bh=xTUXnM2AEWjY9bWB2FxgfkzZD1TcufuLysSVVbN/57A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oL3QSDhNFocaYsXzI9K/l8v6AtJrXWOmevBTNb3JUhNNvyd3lQBV9KIK3eOsQYsl9
-	 pi78+t8fYrnNrV/2GWkEP8Qm9NygvuBEdqaO0BsVcYL464eEQbq4xeEJO9za4pd4uA
-	 ISdTfvMCLxYQwCL1y6z1ISFav18QVCrzXdmrzpUQ=
+	b=ZSYhkuRvEMOD1n+l7mGfHJYiRMtOhXoYHSonctNUNiSmaDb13+Vr1v3wd+WYrVU/c
+	 8uTOr+oVxia/AOu4hePrVaAN8C4Bds/IVCueydr3S1Al9VrxgVve8DVuj6k5akJIX3
+	 lKho8/ynikgaD4mWG7gqnhWQ4Yqe6rvunnNMLpPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Petr Machata <petrm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 404/620] neighbour: delete redundant judgment statements
-Date: Mon, 10 Mar 2025 18:04:10 +0100
-Message-ID: <20250310170601.538889738@linuxfoundation.org>
+Subject: [PATCH 5.15 405/620] neighbour: use RCU protection in __neigh_notify()
+Date: Mon, 10 Mar 2025 18:04:11 +0100
+Message-ID: <20250310170601.577886142@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,35 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c25bdd2ac8cf7da70a226f1a66cdce7af15ff86f ]
+[ Upstream commit becbd5850c03ed33b232083dd66c6e38c0c0e569 ]
 
-The initial value of err is -ENOBUFS, and err is guaranteed to be
-less than 0 before all goto errout. Therefore, on the error path
-of errout, there is no need to repeatedly judge that err is less than 0,
-and delete redundant judgments to make the code more concise.
+__neigh_notify() can be called without RTNL or RCU protection.
 
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: becbd5850c03 ("neighbour: use RCU protection in __neigh_notify()")
+Use RCU protection to avoid potential UAF.
+
+Fixes: 426b5303eb43 ("[NETNS]: Modify the neighbour table code so it handles multiple network namespaces")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/core/neighbour.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 6f3bd1a4ec8ca..7fffbe0424342 100644
+index 7fffbe0424342..9549738b81842 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -3387,8 +3387,7 @@ static void __neigh_notify(struct neighbour *n, int type, int flags,
+@@ -3369,10 +3369,12 @@ static const struct seq_operations neigh_stat_seq_ops = {
+ static void __neigh_notify(struct neighbour *n, int type, int flags,
+ 			   u32 pid)
+ {
+-	struct net *net = dev_net(n->dev);
+ 	struct sk_buff *skb;
+ 	int err = -ENOBUFS;
++	struct net *net;
+ 
++	rcu_read_lock();
++	net = dev_net_rcu(n->dev);
+ 	skb = nlmsg_new(neigh_nlmsg_size(), GFP_ATOMIC);
+ 	if (skb == NULL)
+ 		goto errout;
+@@ -3385,9 +3387,11 @@ static void __neigh_notify(struct neighbour *n, int type, int flags,
+ 		goto errout;
+ 	}
  	rtnl_notify(skb, net, 0, RTNLGRP_NEIGH, NULL, GFP_ATOMIC);
- 	return;
+-	return;
++	goto out;
  errout:
--	if (err < 0)
--		rtnl_set_sk_err(net, RTNLGRP_NEIGH, err);
-+	rtnl_set_sk_err(net, RTNLGRP_NEIGH, err);
+ 	rtnl_set_sk_err(net, RTNLGRP_NEIGH, err);
++out:
++	rcu_read_unlock();
  }
  
  void neigh_app_ns(struct neighbour *n)
