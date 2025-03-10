@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00F222B5AD;
-	Mon, 10 Mar 2025 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A7D233706;
+	Mon, 10 Mar 2025 17:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628757; cv=none; b=i8TyqTXXYo+pAiFSXeNamJPOktap6qYR/pPK206f6rKynmYHbD5GvSXKy8qfTv3KDszg0r6WRheIk0ezUo4FeEnD/hTg7OhLw//ySX8yWptmlD7AN0tzBUWGuNLbam0W7d6RZ61EKRSrZpfV1UaA/pz1eLe9F0RmOFTvZh34d5k=
+	t=1741628760; cv=none; b=CjfY8eTMGBA3cpKnJRmE5m+FaFWRP67LgXQlWL1OkOJYzZEQNXp9K7rFbY+bN+RJG3zyv53yKMgbhEZgaHf9NVcQcs5sgqgXvUMCzTDUkT4VrKMOTu80rqiBBC7931JysXAzmbVflbN4GQ9zLNOSC159muSkd3gE03KrBPFWG9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628757; c=relaxed/simple;
-	bh=y7b5EIzOqtsjz+MaIYgrWMgOIK83UECn3fQo5nNcaME=;
+	s=arc-20240116; t=1741628760; c=relaxed/simple;
+	bh=tKKoteUkwmu4+txe1E5X2ABs1hnziPEv8auZNcZqmS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emWvux1KDMjVpqDYSixAbVIBbvnBnK3E5O7glPBivh1/FLMQmCfb0XrxCMvNxVq67dBus6yBgN4mvY34tmZaMVCVDu5tpP/THdyTl0SsEcfmOT2iJk226Q/lx+7r4nWtOzlO5XA3yoijGSaThuLa89Pcy0vqbLrg+TKhy1zXV6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVL7jH3H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qPx/GpTK3J92t6628/LCWbN/gRtpaROrdohEVnV9dUNeBvl6x0Fk95rUCBVGQ5HnnT2MTqXSCLanyol/31yqsee5JZrkFitGatdPUe8VyR3jZPLmuk8sIZny7DTxh2v9c0EqdEoSpGyGeSMhSXKGmHavS/GTb0t2+K94tCH6xdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLnJEOeJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVL7jH3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49249C4CEE5;
-	Mon, 10 Mar 2025 17:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLnJEOeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DC3C4CEE5;
+	Mon, 10 Mar 2025 17:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628757;
-	bh=y7b5EIzOqtsjz+MaIYgrWMgOIK83UECn3fQo5nNcaME=;
+	s=korg; t=1741628760;
+	bh=tKKoteUkwmu4+txe1E5X2ABs1hnziPEv8auZNcZqmS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVL7jH3HBcGWBIoOy3h+IXGoABvEB/9pk0yfLz+TAOiBnYUCly/H/M7dd2mYWUSXa
-	 62f85s2zkf2uETVWw2GFtnlKw8pYL1iEWs9pW4tp4w88pt7tGp1jKgz73oVNmPHsUM
-	 +TV4HeKTtPyODtwdjoNCxRysigMtulN/BWhAXddo=
+	b=vLnJEOeJAr6grc6h4F9h+hP5rtgnNuYJxK/s4BLo9RPVMZWS36l4wqjHiZ1wG+Blo
+	 4lCEfnWTS6ekybZFVhtLP4mpG0SgpLAZ0Jf+JWVzUaIeCOlucK8rHBRO/7jjgU/ZGy
+	 GJ/9GpCEWVq7mRYCBgU8yltW42w1iU9M6tqGbB8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/620] net/smc: fix data error when recvmsg with MSG_PEEK flag
-Date: Mon, 10 Mar 2025 17:58:25 +0100
-Message-ID: <20250310170547.914757412@linuxfoundation.org>
+Subject: [PATCH 5.15 060/620] landlock: Move filesystem helpers and add a new one
+Date: Mon, 10 Mar 2025 17:58:26 +0100
+Message-ID: <20250310170547.954519280@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -46,248 +45,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit a4b6539038c1aa1ae871aacf6e41b566c3613993 ]
+[ Upstream commit 9da82b20fde95814af721a2a7b1796a5b4a3d78e ]
 
-When recvmsg with MSG_PEEK flag, the data will be copied to
-user's buffer without advancing consume cursor and without
-reducing the length of rx available data. Once the expected
-peek length is larger than the value of bytes_to_rcv, in the
-loop of do while in smc_rx_recvmsg, the first loop will copy
-bytes_to_rcv bytes of data from the position local_tx_ctrl.cons,
-the second loop will copy the min(bytes_to_rcv, read_remaining)
-bytes from the position local_tx_ctrl.cons again because of the
-lacking of process with advancing consume cursor and reducing
-the length of available data. So do the subsequent loops. The
-data copied in the second loop and the subsequent loops will
-result in data error, as it should not be copied if no more data
-arrives and it should be copied from the position advancing
-bytes_to_rcv bytes from the local_tx_ctrl.cons if more data arrives.
+Move the SB_NOUSER and IS_PRIVATE dentry check to a standalone
+is_nouser_or_private() helper.  This will be useful for a following
+commit.
 
-This issue can be reproduce by the following python script:
-server.py:
-import socket
-import time
-server_ip = '0.0.0.0'
-server_port = 12346
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind((server_ip, server_port))
-server_socket.listen(1)
-print('Server is running and listening for connections...')
-conn, addr = server_socket.accept()
-print('Connected by', addr)
-while True:
-    data = conn.recv(1024)
-    if not data:
-        break
-    print('Received request:', data.decode())
-    conn.sendall(b'Hello, client!\n')
-    time.sleep(5)
-    conn.sendall(b'Hello, again!\n')
-conn.close()
+Move get_mode_access() and maybe_remove() to make them usable by new
+code provided by a following commit.
 
-client.py:
-import socket
-server_ip = '<server ip>'
-server_port = 12346
-resp=b'Hello, client!\nHello, again!\n'
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((server_ip, server_port))
-request = 'Hello, server!'
-client_socket.sendall(request.encode())
-peek_data = client_socket.recv(len(resp),
-    socket.MSG_PEEK | socket.MSG_WAITALL)
-print('Peeked data:', peek_data.decode())
-client_socket.close()
-
-Fixes: 952310ccf2d8 ("smc: receive data from RMBE")
-Reported-by: D. Wythe <alibuda@linux.alibaba.com>
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20250104143201.35529-1-guangguan.wang@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20220506161102.525323-6-mic@digikod.net
+Stable-dep-of: 49440290a093 ("landlock: Handle weird files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c |  2 +-
- net/smc/smc_rx.c | 37 +++++++++++++++++++++----------------
- net/smc/smc_rx.h |  8 ++++----
- 3 files changed, 26 insertions(+), 21 deletions(-)
+ security/landlock/fs.c | 87 ++++++++++++++++++++++--------------------
+ 1 file changed, 46 insertions(+), 41 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index ef0f264932e1f..2a642dfbc94a1 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -2209,7 +2209,7 @@ static int smc_accept(struct socket *sock, struct socket *new_sock,
- 			release_sock(clcsk);
- 		} else if (!atomic_read(&smc_sk(nsk)->conn.bytes_to_rcv)) {
- 			lock_sock(nsk);
--			smc_rx_wait(smc_sk(nsk), &timeo, smc_rx_data_available);
-+			smc_rx_wait(smc_sk(nsk), &timeo, 0, smc_rx_data_available);
- 			release_sock(nsk);
- 		}
- 	}
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index 5b63c250ba604..81cf611eae750 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -175,22 +175,23 @@ static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
- 	return bytes;
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index c5749301b37d6..7b7860039a08b 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -261,6 +261,18 @@ unmask_layers(const struct landlock_rule *const rule,
+ 	return false;
  }
  
--static int smc_rx_data_available_and_no_splice_pend(struct smc_connection *conn)
-+static int smc_rx_data_available_and_no_splice_pend(struct smc_connection *conn, size_t peeked)
- {
--	return atomic_read(&conn->bytes_to_rcv) &&
-+	return smc_rx_data_available(conn, peeked) &&
- 	       !atomic_read(&conn->splice_pending);
++/*
++ * Allows access to pseudo filesystems that will never be mountable (e.g.
++ * sockfs, pipefs), but can still be reachable through
++ * /proc/<pid>/fd/<file-descriptor>
++ */
++static inline bool is_nouser_or_private(const struct dentry *dentry)
++{
++	return (dentry->d_sb->s_flags & SB_NOUSER) ||
++	       (d_is_positive(dentry) &&
++		unlikely(IS_PRIVATE(d_backing_inode(dentry))));
++}
++
+ static int check_access_path(const struct landlock_ruleset *const domain,
+ 			     const struct path *const path,
+ 			     const access_mask_t access_request)
+@@ -274,14 +286,7 @@ static int check_access_path(const struct landlock_ruleset *const domain,
+ 		return 0;
+ 	if (WARN_ON_ONCE(!domain || !path))
+ 		return 0;
+-	/*
+-	 * Allows access to pseudo filesystems that will never be mountable
+-	 * (e.g. sockfs, pipefs), but can still be reachable through
+-	 * /proc/<pid>/fd/<file-descriptor> .
+-	 */
+-	if ((path->dentry->d_sb->s_flags & SB_NOUSER) ||
+-	    (d_is_positive(path->dentry) &&
+-	     unlikely(IS_PRIVATE(d_backing_inode(path->dentry)))))
++	if (is_nouser_or_private(path->dentry))
+ 		return 0;
+ 	if (WARN_ON_ONCE(domain->num_layers < 1))
+ 		return -EACCES;
+@@ -360,6 +365,39 @@ static inline int current_check_access_path(const struct path *const path,
+ 	return check_access_path(dom, path, access_request);
  }
  
- /* blocks rcvbuf consumer until >=len bytes available or timeout or interrupted
-  *   @smc    smc socket
-  *   @timeo  pointer to max seconds to wait, pointer to value 0 for no timeout
-+ *   @peeked  number of bytes already peeked
-  *   @fcrit  add'l criterion to evaluate as function pointer
-  * Returns:
-  * 1 if at least 1 byte available in rcvbuf or if socket error/shutdown.
-  * 0 otherwise (nothing in rcvbuf nor timeout, e.g. interrupted).
-  */
--int smc_rx_wait(struct smc_sock *smc, long *timeo,
--		int (*fcrit)(struct smc_connection *conn))
-+int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
-+		int (*fcrit)(struct smc_connection *conn, size_t baseline))
- {
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
- 	struct smc_connection *conn = &smc->conn;
-@@ -199,7 +200,7 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo,
- 	struct sock *sk = &smc->sk;
- 	int rc;
++static inline access_mask_t get_mode_access(const umode_t mode)
++{
++	switch (mode & S_IFMT) {
++	case S_IFLNK:
++		return LANDLOCK_ACCESS_FS_MAKE_SYM;
++	case 0:
++		/* A zero mode translates to S_IFREG. */
++	case S_IFREG:
++		return LANDLOCK_ACCESS_FS_MAKE_REG;
++	case S_IFDIR:
++		return LANDLOCK_ACCESS_FS_MAKE_DIR;
++	case S_IFCHR:
++		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
++	case S_IFBLK:
++		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
++	case S_IFIFO:
++		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
++	case S_IFSOCK:
++		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
++	default:
++		WARN_ON_ONCE(1);
++		return 0;
++	}
++}
++
++static inline access_mask_t maybe_remove(const struct dentry *const dentry)
++{
++	if (d_is_negative(dentry))
++		return 0;
++	return d_is_dir(dentry) ? LANDLOCK_ACCESS_FS_REMOVE_DIR :
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE;
++}
++
+ /* Inode hooks */
  
--	if (fcrit(conn))
-+	if (fcrit(conn, peeked))
- 		return 1;
- 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 	add_wait_queue(sk_sleep(sk), &wait);
-@@ -208,7 +209,7 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo,
- 			   cflags->peer_conn_abort ||
- 			   READ_ONCE(sk->sk_shutdown) & RCV_SHUTDOWN ||
- 			   conn->killed ||
--			   fcrit(conn),
-+			   fcrit(conn, peeked),
- 			   &wait);
- 	remove_wait_queue(sk_sleep(sk), &wait);
- 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-@@ -259,11 +260,11 @@ static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
- 	return -EAGAIN;
+ static void hook_inode_free_security(struct inode *const inode)
+@@ -553,31 +591,6 @@ static int hook_sb_pivotroot(const struct path *const old_path,
+ 
+ /* Path hooks */
+ 
+-static inline access_mask_t get_mode_access(const umode_t mode)
+-{
+-	switch (mode & S_IFMT) {
+-	case S_IFLNK:
+-		return LANDLOCK_ACCESS_FS_MAKE_SYM;
+-	case 0:
+-		/* A zero mode translates to S_IFREG. */
+-	case S_IFREG:
+-		return LANDLOCK_ACCESS_FS_MAKE_REG;
+-	case S_IFDIR:
+-		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+-	case S_IFCHR:
+-		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
+-	case S_IFBLK:
+-		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
+-	case S_IFIFO:
+-		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
+-	case S_IFSOCK:
+-		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
+-	default:
+-		WARN_ON_ONCE(1);
+-		return 0;
+-	}
+-}
+-
+ /*
+  * Creating multiple links or renaming may lead to privilege escalations if not
+  * handled properly.  Indeed, we must be sure that the source doesn't gain more
+@@ -606,14 +619,6 @@ static int hook_path_link(struct dentry *const old_dentry,
+ 		get_mode_access(d_backing_inode(old_dentry)->i_mode));
  }
  
--static bool smc_rx_recvmsg_data_available(struct smc_sock *smc)
-+static bool smc_rx_recvmsg_data_available(struct smc_sock *smc, size_t peeked)
- {
- 	struct smc_connection *conn = &smc->conn;
- 
--	if (smc_rx_data_available(conn))
-+	if (smc_rx_data_available(conn, peeked))
- 		return true;
- 	else if (conn->urg_state == SMC_URG_VALID)
- 		/* we received a single urgent Byte - skip */
-@@ -281,10 +282,10 @@ static bool smc_rx_recvmsg_data_available(struct smc_sock *smc)
- int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 		   struct pipe_inode_info *pipe, size_t len, int flags)
- {
--	size_t copylen, read_done = 0, read_remaining = len;
-+	size_t copylen, read_done = 0, read_remaining = len, peeked_bytes = 0;
- 	size_t chunk_len, chunk_off, chunk_len_sum;
- 	struct smc_connection *conn = &smc->conn;
--	int (*func)(struct smc_connection *conn);
-+	int (*func)(struct smc_connection *conn, size_t baseline);
- 	union smc_host_cursor cons;
- 	int readable, chunk;
- 	char *rcvbuf_base;
-@@ -321,14 +322,14 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 		if (conn->killed)
- 			break;
- 
--		if (smc_rx_recvmsg_data_available(smc))
-+		if (smc_rx_recvmsg_data_available(smc, peeked_bytes))
- 			goto copy;
- 
- 		if (sk->sk_shutdown & RCV_SHUTDOWN) {
- 			/* smc_cdc_msg_recv_action() could have run after
- 			 * above smc_rx_recvmsg_data_available()
- 			 */
--			if (smc_rx_recvmsg_data_available(smc))
-+			if (smc_rx_recvmsg_data_available(smc, peeked_bytes))
- 				goto copy;
- 			break;
- 		}
-@@ -362,26 +363,28 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 			}
- 		}
- 
--		if (!smc_rx_data_available(conn)) {
--			smc_rx_wait(smc, &timeo, smc_rx_data_available);
-+		if (!smc_rx_data_available(conn, peeked_bytes)) {
-+			smc_rx_wait(smc, &timeo, peeked_bytes, smc_rx_data_available);
- 			continue;
- 		}
- 
- copy:
- 		/* initialize variables for 1st iteration of subsequent loop */
- 		/* could be just 1 byte, even after waiting on data above */
--		readable = atomic_read(&conn->bytes_to_rcv);
-+		readable = smc_rx_data_available(conn, peeked_bytes);
- 		splbytes = atomic_read(&conn->splice_pending);
- 		if (!readable || (msg && splbytes)) {
- 			if (splbytes)
- 				func = smc_rx_data_available_and_no_splice_pend;
- 			else
- 				func = smc_rx_data_available;
--			smc_rx_wait(smc, &timeo, func);
-+			smc_rx_wait(smc, &timeo, peeked_bytes, func);
- 			continue;
- 		}
- 
- 		smc_curs_copy(&cons, &conn->local_tx_ctrl.cons, conn);
-+		if ((flags & MSG_PEEK) && peeked_bytes)
-+			smc_curs_add(conn->rmb_desc->len, &cons, peeked_bytes);
- 		/* subsequent splice() calls pick up where previous left */
- 		if (splbytes)
- 			smc_curs_add(conn->rmb_desc->len, &cons, splbytes);
-@@ -418,6 +421,8 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 			}
- 			read_remaining -= chunk_len;
- 			read_done += chunk_len;
-+			if (flags & MSG_PEEK)
-+				peeked_bytes += chunk_len;
- 
- 			if (chunk_len_sum == copylen)
- 				break; /* either on 1st or 2nd iteration */
-diff --git a/net/smc/smc_rx.h b/net/smc/smc_rx.h
-index db823c97d824e..994f5e42d1ba2 100644
---- a/net/smc/smc_rx.h
-+++ b/net/smc/smc_rx.h
-@@ -21,11 +21,11 @@ void smc_rx_init(struct smc_sock *smc);
- 
- int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 		   struct pipe_inode_info *pipe, size_t len, int flags);
--int smc_rx_wait(struct smc_sock *smc, long *timeo,
--		int (*fcrit)(struct smc_connection *conn));
--static inline int smc_rx_data_available(struct smc_connection *conn)
-+int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
-+		int (*fcrit)(struct smc_connection *conn, size_t baseline));
-+static inline int smc_rx_data_available(struct smc_connection *conn, size_t peeked)
- {
--	return atomic_read(&conn->bytes_to_rcv);
-+	return atomic_read(&conn->bytes_to_rcv) - peeked;
- }
- 
- #endif /* SMC_RX_H */
+-static inline access_mask_t maybe_remove(const struct dentry *const dentry)
+-{
+-	if (d_is_negative(dentry))
+-		return 0;
+-	return d_is_dir(dentry) ? LANDLOCK_ACCESS_FS_REMOVE_DIR :
+-				  LANDLOCK_ACCESS_FS_REMOVE_FILE;
+-}
+-
+ static int hook_path_rename(const struct path *const old_dir,
+ 			    struct dentry *const old_dentry,
+ 			    const struct path *const new_dir,
 -- 
 2.39.5
 
