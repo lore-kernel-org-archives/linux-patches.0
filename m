@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736D22206BD;
-	Mon, 10 Mar 2025 18:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD681C5F1B;
+	Mon, 10 Mar 2025 18:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630499; cv=none; b=GWVj6NNQMe2hM9whL3FF2/ZpaoKABarWFyuMdtlGq4F3MBgqxQy+vgj8s3V4rpXrAOGiaAyIB/+b7cXsVo1GPDAQ1M+Px9nirsokkVVk2ZeDmnyUW9VKO0H991FOUu4YWbU1XtGGd7Mg4VdmXE4LIG45BjmyxdtFq3IjnLXEd4w=
+	t=1741630503; cv=none; b=Obh8WQeHkBbSkkeWAql46Ord5ST2CNyLpZ3nOiwMxZGNmE3ccTl+OiHTLuGvBzoQCCuo+qsuwWkKr4MmBowZBHGkclqe8zEFPUezgGzez67RLlI2UGvdjGJ1y42TuqWzAzAcEYDVZOnZGrRy2whl17RGpty9RhSM65nVsahhAiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630499; c=relaxed/simple;
-	bh=8iLeWn/ubdTvnUxs3J13xQwgT/5CiMqkkcomABR204A=;
+	s=arc-20240116; t=1741630503; c=relaxed/simple;
+	bh=BVyWzh35+jWcBEQbHjc/8SBD0HhjDmlvawLvgX0JewY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwZhK89pWV74BbI3LkH0qaYYCLQeflr+5pkukXKlx/N7QzX9DO2YhS6cvKmxP2apDVyaWESmikxhL/2c+8pBx1AjGsy3LVYTKwIBVwNJ7d2bzNKncFiQN5DDlAqywKPvatb++G/tYb+aNU9FgCWkVLuMLCahaC/0YuIT86AOOBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODP5tZRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bVuBPklYlLWL2ufd4jh7Pg8UPPIIctbmy1fpv0DHmKJvYr2FWFPoMKzUaCTfX/IitDaz5QIKUYTGDxKzMhcjItzLYC91Bg479m8U5qtr5dvT0NvO/TADvxJJ+TVX/ttusM/XsTbJDfWXmYi7uhgk+cfJrqTpQ1j/cfTjMahSIyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk5Mk3L2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODP5tZRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED944C4CEED;
-	Mon, 10 Mar 2025 18:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk5Mk3L2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CBBC4CEE5;
+	Mon, 10 Mar 2025 18:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630499;
-	bh=8iLeWn/ubdTvnUxs3J13xQwgT/5CiMqkkcomABR204A=;
+	s=korg; t=1741630502;
+	bh=BVyWzh35+jWcBEQbHjc/8SBD0HhjDmlvawLvgX0JewY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODP5tZRc0lh7Txlz3fNIbR4AMlgyAdB3o8dm9YlwrMD9ZUNucU35p3/CO8QQbVwMI
-	 8bi0h+9RmBL9x75sWLZJYDYrWkai+MYA58RlMxg5AL3elOSbilQASuIqBQCWIypNvG
-	 37pCvApfZvWFlYuvhfhdd33Knwdi0tCfGP2MiAbU=
+	b=Lk5Mk3L2BuHixwV8lqbjU4WcPr4Eio84tBKHm730TSCxiwClTQEyF+cadDTMoLnXa
+	 BAW1zly5pfWAXwxFBC9JFd865gxCvG1oO3Ow13dwE/dj1rmgLtASl8SRVgD0Qxdox3
+	 KuW4ra4MtE/evFuv4maGDQqwkAU+E+h93V7nz7+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Carlos Galo <carlosgalo@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/620] media: imx-jpeg: Fix potential error pointer dereference in detach_pm()
-Date: Mon, 10 Mar 2025 18:04:42 +0100
-Message-ID: <20250310170602.808373718@linuxfoundation.org>
+Subject: [PATCH 5.15 437/620] mm: update mark_victim tracepoints fields
+Date: Mon, 10 Mar 2025 18:04:43 +0100
+Message-ID: <20250310170602.851461134@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -46,55 +50,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Carlos Galo <carlosgalo@google.com>
 
-[ Upstream commit 1378ffec30367233152b7dbf4fa6a25ee98585d1 ]
+[ Upstream commit 72ba14deb40a9e9668ec5e66a341ed657e5215c2 ]
 
-The proble is on the first line:
+The current implementation of the mark_victim tracepoint provides only the
+process ID (pid) of the victim process.  This limitation poses challenges
+for userspace tools requiring real-time OOM analysis and intervention.
+Although this information is available from the kernel logs, it’s not
+the appropriate format to provide OOM notifications.  In Android, BPF
+programs are used with the mark_victim trace events to notify userspace of
+an OOM kill.  For consistency, update the trace event to include the same
+information about the OOMed victim as the kernel logs.
 
-	if (jpeg->pd_dev[i] && !pm_runtime_suspended(jpeg->pd_dev[i]))
+- UID
+   In Android each installed application has a unique UID. Including
+   the `uid` assists in correlating OOM events with specific apps.
 
-If jpeg->pd_dev[i] is an error pointer, then passing it to
-pm_runtime_suspended() will lead to an Oops.  The other conditions
-check for both error pointers and NULL, but it would be more clear to
-use the IS_ERR_OR_NULL() check for that.
+- Process Name (comm)
+   Enables identification of the affected process.
 
-Fixes: fd0af4cd35da ("media: imx-jpeg: Ensure power suppliers be suspended before detach them")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+- OOM Score
+  Will allow userspace to get additional insight of the relative kill
+  priority of the OOM victim. In Android, the oom_score_adj is used to
+  categorize app state (foreground, background, etc.), which aids in
+  analyzing user-perceptible impacts of OOM events [1].
+
+- Total VM, RSS Stats, and pgtables
+  Amount of memory used by the victim that will, potentially, be freed up
+  by killing it.
+
+[1] https://cs.android.com/android/platform/superproject/main/+/246dc8fc95b6d93afcba5c6d6c133307abb3ac2e:frameworks/base/services/core/java/com/android/server/am/ProcessList.java;l=188-283
+Signed-off-by: Carlos Galo <carlosgalo@google.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/imx-jpeg/mxc-jpeg.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/trace/events/oom.h | 36 ++++++++++++++++++++++++++++++++----
+ mm/oom_kill.c              |  6 +++++-
+ 2 files changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/imx-jpeg/mxc-jpeg.c
-index 8ac844db0e833..059e45aa03b7f 100644
---- a/drivers/media/platform/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/imx-jpeg/mxc-jpeg.c
-@@ -1997,11 +1997,12 @@ static void mxc_jpeg_detach_pm_domains(struct mxc_jpeg_dev *jpeg)
- 	int i;
+diff --git a/include/trace/events/oom.h b/include/trace/events/oom.h
+index 26a11e4a2c361..b799f3bcba823 100644
+--- a/include/trace/events/oom.h
++++ b/include/trace/events/oom.h
+@@ -7,6 +7,8 @@
+ #include <linux/tracepoint.h>
+ #include <trace/events/mmflags.h>
  
- 	for (i = 0; i < jpeg->num_domains; i++) {
--		if (jpeg->pd_dev[i] && !pm_runtime_suspended(jpeg->pd_dev[i]))
-+		if (!IS_ERR_OR_NULL(jpeg->pd_dev[i]) &&
-+		    !pm_runtime_suspended(jpeg->pd_dev[i]))
- 			pm_runtime_force_suspend(jpeg->pd_dev[i]);
--		if (jpeg->pd_link[i] && !IS_ERR(jpeg->pd_link[i]))
-+		if (!IS_ERR_OR_NULL(jpeg->pd_link[i]))
- 			device_link_del(jpeg->pd_link[i]);
--		if (jpeg->pd_dev[i] && !IS_ERR(jpeg->pd_dev[i]))
-+		if (!IS_ERR_OR_NULL(jpeg->pd_dev[i]))
- 			dev_pm_domain_detach(jpeg->pd_dev[i], true);
- 		jpeg->pd_dev[i] = NULL;
- 		jpeg->pd_link[i] = NULL;
++#define PG_COUNT_TO_KB(x) ((x) << (PAGE_SHIFT - 10))
++
+ TRACE_EVENT(oom_score_adj_update,
+ 
+ 	TP_PROTO(struct task_struct *task),
+@@ -72,19 +74,45 @@ TRACE_EVENT(reclaim_retry_zone,
+ );
+ 
+ TRACE_EVENT(mark_victim,
+-	TP_PROTO(int pid),
++	TP_PROTO(struct task_struct *task, uid_t uid),
+ 
+-	TP_ARGS(pid),
++	TP_ARGS(task, uid),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(int, pid)
++		__string(comm, task->comm)
++		__field(unsigned long, total_vm)
++		__field(unsigned long, anon_rss)
++		__field(unsigned long, file_rss)
++		__field(unsigned long, shmem_rss)
++		__field(uid_t, uid)
++		__field(unsigned long, pgtables)
++		__field(short, oom_score_adj)
+ 	),
+ 
+ 	TP_fast_assign(
+-		__entry->pid = pid;
++		__entry->pid = task->pid;
++		__assign_str(comm, task->comm);
++		__entry->total_vm = PG_COUNT_TO_KB(task->mm->total_vm);
++		__entry->anon_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_ANONPAGES));
++		__entry->file_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_FILEPAGES));
++		__entry->shmem_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_SHMEMPAGES));
++		__entry->uid = uid;
++		__entry->pgtables = mm_pgtables_bytes(task->mm) >> 10;
++		__entry->oom_score_adj = task->signal->oom_score_adj;
+ 	),
+ 
+-	TP_printk("pid=%d", __entry->pid)
++	TP_printk("pid=%d comm=%s total-vm=%lukB anon-rss=%lukB file-rss:%lukB shmem-rss:%lukB uid=%u pgtables=%lukB oom_score_adj=%hd",
++		__entry->pid,
++		__get_str(comm),
++		__entry->total_vm,
++		__entry->anon_rss,
++		__entry->file_rss,
++		__entry->shmem_rss,
++		__entry->uid,
++		__entry->pgtables,
++		__entry->oom_score_adj
++	)
+ );
+ 
+ TRACE_EVENT(wake_reaper,
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index 262f752d3d516..8be6ffc0336f5 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -44,6 +44,7 @@
+ #include <linux/kthread.h>
+ #include <linux/init.h>
+ #include <linux/mmu_notifier.h>
++#include <linux/cred.h>
+ 
+ #include <asm/tlb.h>
+ #include "internal.h"
+@@ -725,6 +726,7 @@ static inline void queue_oom_reaper(struct task_struct *tsk)
+  */
+ static void mark_oom_victim(struct task_struct *tsk)
+ {
++	const struct cred *cred;
+ 	struct mm_struct *mm = tsk->mm;
+ 
+ 	WARN_ON(oom_killer_disabled);
+@@ -746,7 +748,9 @@ static void mark_oom_victim(struct task_struct *tsk)
+ 	 */
+ 	__thaw_task(tsk);
+ 	atomic_inc(&oom_victims);
+-	trace_mark_victim(tsk->pid);
++	cred = get_task_cred(tsk);
++	trace_mark_victim(tsk, cred->uid.val);
++	put_cred(cred);
+ }
+ 
+ /**
 -- 
 2.39.5
 
