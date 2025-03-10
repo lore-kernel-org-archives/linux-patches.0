@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C659A231A2D;
-	Mon, 10 Mar 2025 17:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D8F2309B0;
+	Mon, 10 Mar 2025 17:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626974; cv=none; b=erXAfbs8C3EF39rYZm3sV3p5iYBxaseUwMZgTrfuHfTN94RiakWrHP2xH7tH3tftMiZgf7qjBTQS0ExMDbXu/ZFSdMmVcPD9gkNDaynntFdTWJYrVScAF59c6fuwk8MZW9OSbgregRtdoX02b2MLTMRvs8nag2Q9hJA1/PSf5rU=
+	t=1741626977; cv=none; b=aPgUNlBsSoN1wvVqkN4Au1O1Tu0ralbt2v3+ztkHssjY/RYenBBzcqAiuSlVix5Tw7ARR/WW1G+196GVEoNEqcR5uTP77U863oNxMGqtLA1/IgFGEUB2Sa85Eggu00w/5rTJ5cv480yxjI9SS0kA4c7BWfPR7NAOsjNj6nG8zHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626974; c=relaxed/simple;
-	bh=1eWag9KY0Ryz964/FpUyH6+B48eI31nyllL8FBMjKzM=;
+	s=arc-20240116; t=1741626977; c=relaxed/simple;
+	bh=dcKqITZSswVY4xtZKaNruNqFhvmPi2oxGo3uXsggFuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iw6X3ZSdPRdz4VcoE+FRsVktm01mwtORtKL+agPduW2nZq/e9hqzpZAMJwl5k0GILcQ7PGRi7iv7tZot+AJn9I5jaQVQn0MfR26ZOEqlwcc+vguZjHSn3N3UX4XgTIlwl/q8u3kzrgsbnzgaIxqBvYQa7As5q7SPj+9ShRR+v0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCd5+ez+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0/4r0EKY+KDFQ8doV9eawmk8P2k7x7W18ewXzIrc8VXff61wpyvfnS09HYA18FULCfC042BIzkhR+anNVh7ZNR/IhRwWpItELwihzdAOcEIbcZrhCGSuvLEz7zXVWcnJkSzJSiHrBkNJowZqmKwn+9xriw1zxf7hoxxHzoZ624=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/S9yTEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCd5+ez+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EE7C4CEEB;
-	Mon, 10 Mar 2025 17:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/S9yTEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB4CC4CEE5;
+	Mon, 10 Mar 2025 17:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626974;
-	bh=1eWag9KY0Ryz964/FpUyH6+B48eI31nyllL8FBMjKzM=;
+	s=korg; t=1741626977;
+	bh=dcKqITZSswVY4xtZKaNruNqFhvmPi2oxGo3uXsggFuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCd5+ez+dNPiixDARQFTuSdjPNnGnx+DhSBOV2RltNeqWuVwKZPdg4C54Xeq27Cuv
-	 KPba99KrGQ2wkivUfEtkBQ8+B9xNsgM4kE9Af1kugVstffV6Yh2VpX+qfjv1BURzIW
-	 p0B0F132b6LfunO7qcn1RUj6RKpDwg0BCv0kWL8I=
+	b=V/S9yTEta88w+hqfqHYQ9PyGJMYUWbMGSBOf/EfJk4ONJ7JBwkUXKe8gB/97Ynhn0
+	 5VNXiEueXgq/LsbCgaqLsKUbsVXH+qwxrduEXi9FSp43m+wbxWyV7OxA3vhDCFEDeZ
+	 dhoIaTfdSFoMN0e6JNJ+LKZ2a7HpebgbhTywAufA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 146/207] drm/bochs: Fix DPMS regression
-Date: Mon, 10 Mar 2025 18:05:39 +0100
-Message-ID: <20250310170453.600026838@linuxfoundation.org>
+Subject: [PATCH 6.13 147/207] mctp i3c: handle NULL header address
+Date: Mon, 10 Mar 2025 18:05:40 +0100
+Message-ID: <20250310170453.639472748@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 80da96d735094ea22985ced98bc57fe3a4422921 ]
+[ Upstream commit cf7ee25e70c6edfac4553d6b671e8b19db1d9573 ]
 
-The recent rewrite with the use of regular atomic helpers broke the
-DPMS unblanking on X11.  Fix it by moving the call of
-bochs_hw_blank(false) from CRTC mode_set_nofb() to atomic_enable().
+daddr can be NULL if there is no neighbour table entry present,
+in that case the tx packet should be dropped.
 
-Fixes: 2037174993c8 ("drm/bochs: Use regular atomic helpers")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1238209
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250304134203.20534-1-tiwai@suse.de
+saddr will usually be set by MCTP core, but check for NULL in case a
+packet is transmitted by a different protocol.
+
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Fixes: c8755b29b58e ("mctp i3c: MCTP I3C driver")
+Link: https://patch.msgid.link/20250304-mctp-i3c-null-v1-1-4416bbd56540@codeconstruct.com.au
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/bochs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/mctp/mctp-i3c.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/tiny/bochs.c b/drivers/gpu/drm/tiny/bochs.c
-index 6f91ff1dbf7e2..4e7d49fb9e6e6 100644
---- a/drivers/gpu/drm/tiny/bochs.c
-+++ b/drivers/gpu/drm/tiny/bochs.c
-@@ -335,8 +335,6 @@ static void bochs_hw_setmode(struct bochs_device *bochs, struct drm_display_mode
- 			 bochs->xres, bochs->yres, bochs->bpp,
- 			 bochs->yres_virtual);
- 
--	bochs_hw_blank(bochs, false);
--
- 	bochs_dispi_write(bochs, VBE_DISPI_INDEX_ENABLE,      0);
- 	bochs_dispi_write(bochs, VBE_DISPI_INDEX_BPP,         bochs->bpp);
- 	bochs_dispi_write(bochs, VBE_DISPI_INDEX_XRES,        bochs->xres);
-@@ -506,6 +504,9 @@ static int bochs_crtc_helper_atomic_check(struct drm_crtc *crtc,
- static void bochs_crtc_helper_atomic_enable(struct drm_crtc *crtc,
- 					    struct drm_atomic_state *state)
+diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
+index d247fe483c588..c1e72253063b5 100644
+--- a/drivers/net/mctp/mctp-i3c.c
++++ b/drivers/net/mctp/mctp-i3c.c
+@@ -507,6 +507,9 @@ static int mctp_i3c_header_create(struct sk_buff *skb, struct net_device *dev,
  {
-+	struct bochs_device *bochs = to_bochs_device(crtc->dev);
-+
-+	bochs_hw_blank(bochs, false);
- }
+ 	struct mctp_i3c_internal_hdr *ihdr;
  
- static void bochs_crtc_helper_atomic_disable(struct drm_crtc *crtc,
++	if (!daddr || !saddr)
++		return -EINVAL;
++
+ 	skb_push(skb, sizeof(struct mctp_i3c_internal_hdr));
+ 	skb_reset_mac_header(skb);
+ 	ihdr = (void *)skb_mac_header(skb);
 -- 
 2.39.5
 
