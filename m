@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C87A22D786;
-	Mon, 10 Mar 2025 17:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F53422D786;
+	Mon, 10 Mar 2025 17:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626549; cv=none; b=OnwdTPVSgxIb8mxVouRxs/ANHTKMVyuC5xn1n/eKMx7F+VsWwsI9NOLocFKCTO280OXqjy1+bLw/Dk42YgrzhUYyWx3GnyPft1/FBej0p/rLUbCmTSSQNpT9HVLh8TepbaNiniZN04bs7oCSTIydLYdJWFBnwCzFtraziHz+x9g=
+	t=1741626552; cv=none; b=lqOMiiTLfykUG4wr35KEiH9gQrPbbkqh72jGIm7GG1AdWLbCgx/SQeNbDPtZabMBquU70A7zm2ZgOP8+WFrYMrSpHGrHATzADt2IX0ixMKbvipCMfPvrHmx0THeS/sj6J7eqXiLgV6abS/gROogqmWZLwTLXiWU+cndsXUPYna4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626549; c=relaxed/simple;
-	bh=GsnrNqbvD1zsFSkPgjpEDT0RNddJVtJdb0E7a8Jhjf0=;
+	s=arc-20240116; t=1741626552; c=relaxed/simple;
+	bh=GpfBPjqPUa+gY4qYBcq7tvky5tWRYyG0n6vPDD4pe9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RktjYQymdgxG9PDuuK1DXqDrsTayXMg8t5Hsp/y+EXW6Uv886TzyN1f04e8UozwGVEMWQljtf9zM5mxJx8yIqZ8Z3btode2bHa5AJdd3zpEpGPBLHSapvDK4UCfhb6K5Eehy+jNW0MkPAXXb6XX6L91E3j6wYCm4gC76wE96VLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW5GF2N0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ikvN/a8SCVwdHpjgovccFMqcTOryEvYYNyz2SzQU+dPHmn2rd2k9FQA3V8iJuM19VONvl0GuXY438dkp7As+7RZ2NnjAbFcg63VvpfqhB8SeCSsDDuc/YBdl6C2LXIJhw1jUuW6dZXE5zof/AvMyz9icGPx5OnLO9sL6iJ7he6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxbN+1b3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW5GF2N0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1825CC4CEE5;
-	Mon, 10 Mar 2025 17:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxbN+1b3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60FFC4CEE5;
+	Mon, 10 Mar 2025 17:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626549;
-	bh=GsnrNqbvD1zsFSkPgjpEDT0RNddJVtJdb0E7a8Jhjf0=;
+	s=korg; t=1741626552;
+	bh=GpfBPjqPUa+gY4qYBcq7tvky5tWRYyG0n6vPDD4pe9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HW5GF2N0EZV9ZUSqUoIJ3dyheBYmdQiphmG8nFKX2EUxUp2eSIL+Eu4ln0Jt7CA+m
-	 SWZv/Jd3m5OTlIhaocFJ1yRShjzpzp+vYKJNQOkAVR3VIY6fgCvBySEy7JUt0IvBi0
-	 1nuuWOyPZeF/2qgrg8kPPNttzMyWUQl2R61KJ+BY=
+	b=wxbN+1b3lp/2cyJ6pj5gocTsPrwwONuHaPFAEZIrVKgPLDPQM6xWgh2lRfrFKpgSf
+	 spGywlmbQx9XqTCWYcbuMzukHk2/4GO0OeBCC21yPrnfmUHYsXEfGCcDO9hq7LWLP1
+	 DyTy+EVH56/XwJ1udZS5WlgJbPPLtxtz/lFPnKw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.13 030/207] btrfs: zoned: fix extent range end unlock in cow_file_range()
-Date: Mon, 10 Mar 2025 18:03:43 +0100
-Message-ID: <20250310170448.971963512@linuxfoundation.org>
+	Oleh Nykyforchyn <oleh.nyk@gmail.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 004/207] smb311: failure to open files of length 1040 when mounting with SMB3.1.1 POSIX extensions
+Date: Mon, 10 Mar 2025 18:03:17 +0100
+Message-ID: <20250310170447.926613061@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,130 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit 5a4041f2c47247575a6c2e53ce14f7b0ac946c33 upstream.
+[ Upstream commit 9df23801c83d3e12b4c09be39d37d2be385e52f9 ]
 
-Running generic/751 on the for-next branch often results in a hang like
-below. They are both stack by locking an extent. This suggests someone
-forget to unlock an extent.
+If a file size has bits 0x410 = ATTR_DIRECTORY | ATTR_REPARSE set
+then during queryinfo (stat) the file is regarded as a directory
+and subsequent opens can fail. A simple test example is trying
+to open any file 1040 bytes long when mounting with "posix"
+(SMB3.1.1 POSIX/Linux Extensions).
 
-  INFO: task kworker/u128:1:12 blocked for more than 323 seconds.
-        Not tainted 6.13.0-BTRFS-ZNS+ #503
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:kworker/u128:1  state:D stack:0     pid:12    tgid:12    ppid:2      flags:0x00004000
-  Workqueue: btrfs-fixup btrfs_work_helper [btrfs]
-  Call Trace:
-   <TASK>
-   __schedule+0x534/0xdd0
-   schedule+0x39/0x140
-   __lock_extent+0x31b/0x380 [btrfs]
-   ? __pfx_autoremove_wake_function+0x10/0x10
-   btrfs_writepage_fixup_worker+0xf1/0x3a0 [btrfs]
-   btrfs_work_helper+0xff/0x480 [btrfs]
-   ? lock_release+0x178/0x2c0
-   process_one_work+0x1ee/0x570
-   ? srso_return_thunk+0x5/0x5f
-   worker_thread+0x1d1/0x3b0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x10b/0x230
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x30/0x50
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-  INFO: task kworker/u134:0:184 blocked for more than 323 seconds.
-        Not tainted 6.13.0-BTRFS-ZNS+ #503
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:kworker/u134:0  state:D stack:0     pid:184   tgid:184   ppid:2      flags:0x00004000
-  Workqueue: writeback wb_workfn (flush-btrfs-4)
-  Call Trace:
-   <TASK>
-   __schedule+0x534/0xdd0
-   schedule+0x39/0x140
-   __lock_extent+0x31b/0x380 [btrfs]
-   ? __pfx_autoremove_wake_function+0x10/0x10
-   find_lock_delalloc_range+0xdb/0x260 [btrfs]
-   writepage_delalloc+0x12f/0x500 [btrfs]
-   ? srso_return_thunk+0x5/0x5f
-   extent_write_cache_pages+0x232/0x840 [btrfs]
-   btrfs_writepages+0x72/0x130 [btrfs]
-   do_writepages+0xe7/0x260
-   ? srso_return_thunk+0x5/0x5f
-   ? lock_acquire+0xd2/0x300
-   ? srso_return_thunk+0x5/0x5f
-   ? find_held_lock+0x2b/0x80
-   ? wbc_attach_and_unlock_inode.part.0+0x102/0x250
-   ? wbc_attach_and_unlock_inode.part.0+0x102/0x250
-   __writeback_single_inode+0x5c/0x4b0
-   writeback_sb_inodes+0x22d/0x550
-   __writeback_inodes_wb+0x4c/0xe0
-   wb_writeback+0x2f6/0x3f0
-   wb_workfn+0x32a/0x510
-   process_one_work+0x1ee/0x570
-   ? srso_return_thunk+0x5/0x5f
-   worker_thread+0x1d1/0x3b0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x10b/0x230
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x30/0x50
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+The cause of this bug is that Attributes field in smb2_file_all_info
+struct occupies the same place that EndOfFile field in
+smb311_posix_qinfo, and sometimes the latter struct is incorrectly
+processed as if it was the first one.
 
-This happens because we have another success path for the zoned mode. When
-there is no active zone available, btrfs_reserve_extent() returns
--EAGAIN. In this case, we have two reactions.
-
-(1) If the given range is never allocated, we can only wait for someone
-    to finish a zone, so wait on BTRFS_FS_NEED_ZONE_FINISH bit and retry
-    afterward.
-
-(2) Or, if some allocations are already done, we must bail out and let
-    the caller to send IOs for the allocation. This is because these IOs
-    may be necessary to finish a zone.
-
-The commit 06f364284794 ("btrfs: do proper folio cleanup when
-cow_file_range() failed") moved the unlock code from the inside of the
-loop to the outside. So, previously, the allocated extents are unlocked
-just after the allocation and so before returning from the function.
-However, they are no longer unlocked on the case (2) above. That caused
-the hang issue.
-
-Fix the issue by modifying the 'end' to the end of the allocated
-range. Then, we can exit the loop and the same unlock code can properly
-handle the case.
-
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Tested-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Fixes: 06f364284794 ("btrfs: do proper folio cleanup when cow_file_range() failed")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Oleh Nykyforchyn <oleh.nyk@gmail.com>
+Tested-by: Oleh Nykyforchyn <oleh.nyk@gmail.com>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsglob.h  |  1 +
+ fs/smb/client/reparse.h   | 28 ++++++++++++++++++++++------
+ fs/smb/client/smb2inode.c |  4 ++++
+ fs/smb/client/smb2ops.c   |  3 ++-
+ 4 files changed, 29 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1426,8 +1426,13 @@ static noinline int cow_file_range(struc
- 				continue;
- 			}
- 			if (done_offset) {
--				*done_offset = start - 1;
--				return 0;
-+				/*
-+				 * Move @end to the end of the processed range,
-+				 * and exit the loop to unlock the processed extents.
-+				 */
-+				end = start - 1;
-+				ret = 0;
-+				break;
- 			}
- 			ret = -ENOSPC;
- 		}
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 3877b861529ea..37b7d84e26913 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -216,6 +216,7 @@ struct cifs_cred {
+ struct cifs_open_info_data {
+ 	bool adjust_tz;
+ 	bool reparse_point;
++	bool contains_posix_file_info;
+ 	struct {
+ 		/* ioctl response buffer */
+ 		struct {
+diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
+index ff05b0e75c928..f080f92cb1e74 100644
+--- a/fs/smb/client/reparse.h
++++ b/fs/smb/client/reparse.h
+@@ -97,14 +97,30 @@ static inline bool reparse_inode_match(struct inode *inode,
+ 
+ static inline bool cifs_open_data_reparse(struct cifs_open_info_data *data)
+ {
+-	struct smb2_file_all_info *fi = &data->fi;
+-	u32 attrs = le32_to_cpu(fi->Attributes);
++	u32 attrs;
+ 	bool ret;
+ 
+-	ret = data->reparse_point || (attrs & ATTR_REPARSE);
+-	if (ret)
+-		attrs |= ATTR_REPARSE;
+-	fi->Attributes = cpu_to_le32(attrs);
++	if (data->contains_posix_file_info) {
++		struct smb311_posix_qinfo *fi = &data->posix_fi;
++
++		attrs = le32_to_cpu(fi->DosAttributes);
++		if (data->reparse_point) {
++			attrs |= ATTR_REPARSE;
++			fi->DosAttributes = cpu_to_le32(attrs);
++		}
++
++	} else {
++		struct smb2_file_all_info *fi = &data->fi;
++
++		attrs = le32_to_cpu(fi->Attributes);
++		if (data->reparse_point) {
++			attrs |= ATTR_REPARSE;
++			fi->Attributes = cpu_to_le32(attrs);
++		}
++	}
++
++	ret = attrs & ATTR_REPARSE;
++
+ 	return ret;
+ }
+ 
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index 7dfd3eb3847b3..6048b3fed3e78 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -648,6 +648,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 		switch (cmds[i]) {
+ 		case SMB2_OP_QUERY_INFO:
+ 			idata = in_iov[i].iov_base;
++			idata->contains_posix_file_info = false;
+ 			if (rc == 0 && cfile && cfile->symlink_target) {
+ 				idata->symlink_target = kstrdup(cfile->symlink_target, GFP_KERNEL);
+ 				if (!idata->symlink_target)
+@@ -671,6 +672,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 			break;
+ 		case SMB2_OP_POSIX_QUERY_INFO:
+ 			idata = in_iov[i].iov_base;
++			idata->contains_posix_file_info = true;
+ 			if (rc == 0 && cfile && cfile->symlink_target) {
+ 				idata->symlink_target = kstrdup(cfile->symlink_target, GFP_KERNEL);
+ 				if (!idata->symlink_target)
+@@ -768,6 +770,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 				idata = in_iov[i].iov_base;
+ 				idata->reparse.io.iov = *iov;
+ 				idata->reparse.io.buftype = resp_buftype[i + 1];
++				idata->contains_posix_file_info = false; /* BB VERIFY */
+ 				rbuf = reparse_buf_ptr(iov);
+ 				if (IS_ERR(rbuf)) {
+ 					rc = PTR_ERR(rbuf);
+@@ -789,6 +792,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 		case SMB2_OP_QUERY_WSL_EA:
+ 			if (!rc) {
+ 				idata = in_iov[i].iov_base;
++				idata->contains_posix_file_info = false;
+ 				qi_rsp = rsp_iov[i + 1].iov_base;
+ 				data[0] = (u8 *)qi_rsp + le16_to_cpu(qi_rsp->OutputBufferOffset);
+ 				size[0] = le32_to_cpu(qi_rsp->OutputBufferLength);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 793e9b2b79d6f..17c3063a9ca5b 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -1001,6 +1001,7 @@ static int smb2_query_file_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 		if (!data->symlink_target)
+ 			return -ENOMEM;
+ 	}
++	data->contains_posix_file_info = false;
+ 	return SMB2_query_info(xid, tcon, fid->persistent_fid, fid->volatile_fid, &data->fi);
+ }
+ 
+@@ -5150,7 +5151,7 @@ int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
+ 			     FILE_CREATE, CREATE_NOT_DIR |
+ 			     CREATE_OPTION_SPECIAL, ACL_NO_MODE);
+ 	oparms.fid = &fid;
+-
++	idata.contains_posix_file_info = false;
+ 	rc = server->ops->open(xid, &oparms, &oplock, &idata);
+ 	if (rc)
+ 		goto out;
+-- 
+2.39.5
+
 
 
