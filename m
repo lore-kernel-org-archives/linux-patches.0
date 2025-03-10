@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE5B230988;
-	Mon, 10 Mar 2025 17:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744F1230BEC;
+	Mon, 10 Mar 2025 17:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626865; cv=none; b=iMLvXhUCGvPn8+tgVl+KAAJIw+AS71DhHynUORJ/i8qG8T+1mcgh0Z3J9NO1sMZeaSGbVQIpbE+0o/B+5LJ2TtpAnppgsdrIUO0xb210qX452IscDQAe4uRZ6Gv+9+WmolrOcCVN54jVwlNLsS7rzTMHy8hiztO7SeYdiVGWM2E=
+	t=1741626868; cv=none; b=tx1PsVdMzOSlQq3kJ1Z8/Z6gF+e+TFO3U7ox0npxcTphjfX/4grMMuddmB96BY4MVveTFBUAhY45L9Jc0a4JxIezkI512zmsqA0OQEXK5f/0ppZvIqaprecM5RDERtWBlJ2h1q1ymh3NpO1RLkfkvFzQOGb3mO+CiotwmMILRf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626865; c=relaxed/simple;
-	bh=emX6ygGggS7nUpbTIYC/03+/7BSwd/paieLkHLQqSJs=;
+	s=arc-20240116; t=1741626868; c=relaxed/simple;
+	bh=4TG1RVmmWLVoSlsblGM9IOx6ExzMT5DAzEmBJ0dIKVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmD5iZZlFbKYICmCAFECH/0JGM4Quady2e1RXInDLPqeumdIZu0i2dMqrAIzRgDtv/Ukdq8FW9jcYvjtJMfKcjb16fi4I0syAbSKjrlcz9E8/kP1o9GFxXe065IR+3W9nur2jaaH886UUFDaD90HyfFoS6Xc6OVGbk/y/5F5ezk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5zwx9LO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aESsHXXDnOGpHyttS7Z5RHYTcZdsZ1vswiKalKU4xTsjVbxBg4c8P3Fnwisw8CHdf0nMYdnL/a92H2JvRBSx7bjhOSgCgc6tYEF5smeRwe/YjDPsfU2d2GUffdPhei4JPZHWEBfurwU22PnVz9Yunug72BpzI5k87OO1wBVens4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUnkVxO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5zwx9LO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA62DC4CEE5;
-	Mon, 10 Mar 2025 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUnkVxO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975BEC4CEE5;
+	Mon, 10 Mar 2025 17:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626865;
-	bh=emX6ygGggS7nUpbTIYC/03+/7BSwd/paieLkHLQqSJs=;
+	s=korg; t=1741626868;
+	bh=4TG1RVmmWLVoSlsblGM9IOx6ExzMT5DAzEmBJ0dIKVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5zwx9LOhIDn2iGxfqA5UaJNtovtrjF5DUSfdGhuHwMXjH0m9sHADOTStomXYrZWe
-	 mU+DMQpmCjZIqOiObBDlvbjizqoJcPoT8s6zo4EN6lTsgUtcGOZfN+xhmsS0iuVr+w
-	 0bkDSgN4hxoo5JicNXqlrTIx4jBawyRCzgO2SpB0=
+	b=mUnkVxO1zCUUERCjhupGOrhqkmNttRRx/+i2uJ/qSP6TTYN50Ij7665h86n10yZEm
+	 jEZ6mxHlgcGVZPO8C/1JtPoZI7Ge27ZR4QOji+v24+Fls+YSt14NkhsuP4YaPUG/ub
+	 SLHIiu9uHDdEfEYOwNfJ5MR4wCfczvct3W8GDS70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 107/207] nvme-tcp: add basic support for the C2HTermReq PDU
-Date: Mon, 10 Mar 2025 18:05:00 +0100
-Message-ID: <20250310170452.013048214@linuxfoundation.org>
+Subject: [PATCH 6.13 108/207] nvme-tcp: fix potential memory corruption in nvme_tcp_recv_pdu()
+Date: Mon, 10 Mar 2025 18:05:01 +0100
+Message-ID: <20250310170452.051148873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -54,100 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 84e009042d0f3dfe91bec60bcd208ee3f866cbcd ]
+[ Upstream commit ad95bab0cd28ed77c2c0d0b6e76e03e031391064 ]
 
-Previously, the NVMe/TCP host driver did not handle the C2HTermReq PDU,
-instead printing "unsupported pdu type (3)" when received. This patch adds
-support for processing the C2HTermReq PDU, allowing the driver
-to print the Fatal Error Status field.
+nvme_tcp_recv_pdu() doesn't check the validity of the header length.
+When header digests are enabled, a target might send a packet with an
+invalid header length (e.g. 255), causing nvme_tcp_verify_hdgst()
+to access memory outside the allocated area and cause memory corruptions
+by overwriting it with the calculated digest.
 
-Example of output:
-nvme nvme4: Received C2HTermReq (FES = Invalid PDU Header Field)
+Fix this by rejecting packets with an unexpected header length.
 
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
 Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: ad95bab0cd28 ("nvme-tcp: fix potential memory corruption in nvme_tcp_recv_pdu()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c  | 43 ++++++++++++++++++++++++++++++++++++++++
- include/linux/nvme-tcp.h |  2 ++
- 2 files changed, 45 insertions(+)
+ drivers/nvme/host/tcp.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index d7c193028e7c3..8a9131c95a3da 100644
+index 8a9131c95a3da..ade7f1af33d80 100644
 --- a/drivers/nvme/host/tcp.c
 +++ b/drivers/nvme/host/tcp.c
-@@ -763,6 +763,40 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
- 	return 0;
+@@ -217,6 +217,19 @@ static inline int nvme_tcp_queue_id(struct nvme_tcp_queue *queue)
+ 	return queue - queue->ctrl->queues;
  }
  
-+static void nvme_tcp_handle_c2h_term(struct nvme_tcp_queue *queue,
-+		struct nvme_tcp_term_pdu *pdu)
++static inline bool nvme_tcp_recv_pdu_supported(enum nvme_tcp_pdu_type type)
 +{
-+	u16 fes;
-+	const char *msg;
-+	u32 plen = le32_to_cpu(pdu->hdr.plen);
-+
-+	static const char * const msg_table[] = {
-+		[NVME_TCP_FES_INVALID_PDU_HDR] = "Invalid PDU Header Field",
-+		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
-+		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
-+		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
-+		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
-+		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
-+	};
-+
-+	if (plen < NVME_TCP_MIN_C2HTERM_PLEN ||
-+	    plen > NVME_TCP_MAX_C2HTERM_PLEN) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"Received a malformed C2HTermReq PDU (plen = %u)\n",
-+			plen);
-+		return;
++	switch (type) {
++	case nvme_tcp_c2h_term:
++	case nvme_tcp_c2h_data:
++	case nvme_tcp_r2t:
++	case nvme_tcp_rsp:
++		return true;
++	default:
++		return false;
 +	}
-+
-+	fes = le16_to_cpu(pdu->fes);
-+	if (fes && fes < ARRAY_SIZE(msg_table))
-+		msg = msg_table[fes];
-+	else
-+		msg = "Unknown";
-+
-+	dev_err(queue->ctrl->ctrl.device,
-+		"Received C2HTermReq (FES = %s)\n", msg);
 +}
 +
- static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
- 		unsigned int *offset, size_t *len)
- {
-@@ -784,6 +818,15 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
+ /*
+  * Check if the queue is TLS encrypted
+  */
+@@ -818,6 +831,16 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
  		return 0;
  
  	hdr = queue->pdu;
-+	if (unlikely(hdr->type == nvme_tcp_c2h_term)) {
-+		/*
-+		 * C2HTermReq never includes Header or Data digests.
-+		 * Skip the checks.
-+		 */
-+		nvme_tcp_handle_c2h_term(queue, (void *)queue->pdu);
-+		return -EINVAL;
++	if (unlikely(hdr->hlen != sizeof(struct nvme_tcp_rsp_pdu))) {
++		if (!nvme_tcp_recv_pdu_supported(hdr->type))
++			goto unsupported_pdu;
++
++		dev_err(queue->ctrl->ctrl.device,
++			"pdu type %d has unexpected header length (%d)\n",
++			hdr->type, hdr->hlen);
++		return -EPROTO;
 +	}
 +
- 	if (queue->hdr_digest) {
- 		ret = nvme_tcp_verify_hdgst(queue, queue->pdu, hdr->hlen);
- 		if (unlikely(ret))
-diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
-index e07e8978d691b..e435250fcb4d0 100644
---- a/include/linux/nvme-tcp.h
-+++ b/include/linux/nvme-tcp.h
-@@ -13,6 +13,8 @@
- #define NVME_TCP_ADMIN_CCSZ	SZ_8K
- #define NVME_TCP_DIGEST_LENGTH	4
- #define NVME_TCP_MIN_MAXH2CDATA 4096
-+#define NVME_TCP_MIN_C2HTERM_PLEN	24
-+#define NVME_TCP_MAX_C2HTERM_PLEN	152
+ 	if (unlikely(hdr->type == nvme_tcp_c2h_term)) {
+ 		/*
+ 		 * C2HTermReq never includes Header or Data digests.
+@@ -850,10 +873,13 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
+ 		nvme_tcp_init_recv_ctx(queue);
+ 		return nvme_tcp_handle_r2t(queue, (void *)queue->pdu);
+ 	default:
+-		dev_err(queue->ctrl->ctrl.device,
+-			"unsupported pdu type (%d)\n", hdr->type);
+-		return -EINVAL;
++		goto unsupported_pdu;
+ 	}
++
++unsupported_pdu:
++	dev_err(queue->ctrl->ctrl.device,
++		"unsupported pdu type (%d)\n", hdr->type);
++	return -EINVAL;
+ }
  
- enum nvme_tcp_pfv {
- 	NVME_TCP_PFV_1_0 = 0x0,
+ static inline void nvme_tcp_end_request(struct request *rq, u16 status)
 -- 
 2.39.5
 
