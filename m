@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4321723236F;
-	Mon, 10 Mar 2025 18:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF6F233710;
+	Mon, 10 Mar 2025 18:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630459; cv=none; b=nbXFh210t2P5bwr6pi9XdNKuSMF+nSgBOKM/ZWUGsAS7oj88eee3d1Kif7QKzKddExDhSlGvz7gRDDxQDY9WwhxphtdlNNzvdwLrb+oJPtV4dok5r2341aQie179e5WuiiyCVga64f4a0bgO5/xO5yDF0B16yn5tLdCft46hIpo=
+	t=1741630461; cv=none; b=R2D2MzQ1qkNS+F27wN+9yIgdyn+kMBgmMjpRFYwS7SQ8Gv/ZjCrchfHZ4GDjOic2UwUzkOwFnp0pR3O1vdOR+WTRAk/qFBTlplU1xSywYIP3ieIY+qnjBk17vNKQcWV+86oPA6kjzTSdRg2vHDtyXPO3Htpz03IizTWpOdm6zxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630459; c=relaxed/simple;
-	bh=fsXOZwNIFSbGPAgPTJHpYkJdYaRSxY714E7oO19eqJU=;
+	s=arc-20240116; t=1741630461; c=relaxed/simple;
+	bh=nIQ3/c99Og5WOn6AEqIbrnXiHWF378hCDooQKOhiPtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTCCxzArtqS+3nQ92gxLV4DHlZs7KrXib+W5EE+6xupHR+P6HWxglwtzK2eLgVXVjuAmpVovLzvn/DEVZxsPYHYUUpWScTrB7vIUSjIgWCuiw3nQnR5/z1tOoflDyQO5kfNtxigdkOgQLZxJpWyqpLSUEBkrJdo2aM9bUiGcrbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVTeFnQa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0ITSv+mQxHflRgDoFSPzesZKQxkhCF2pRo2G8rtOhlwAlW9/PmfDxlZ9HNsohl7eFvafMUSFqGtOgRr3LJIzZpX5U7bpOmLGzpUywZT8KpEbzB9xkQPzRTWwHCEkOH1F9NlXAx4Nhby/tk0QOo8CCB8r6+Xaq/fw+I+juPF7gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff3E0Ybw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVTeFnQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC17C4CEEC;
-	Mon, 10 Mar 2025 18:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff3E0Ybw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9B3C4CEE5;
+	Mon, 10 Mar 2025 18:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630458;
-	bh=fsXOZwNIFSbGPAgPTJHpYkJdYaRSxY714E7oO19eqJU=;
+	s=korg; t=1741630461;
+	bh=nIQ3/c99Og5WOn6AEqIbrnXiHWF378hCDooQKOhiPtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVTeFnQaElHIotO8RAAxLqYkAYREMjV9ZX+AxXl7PoxQqd3u508VFZU4Ze7RSYcZb
-	 EcFijcF12TJDjy5f7N5K9vPV9H6YzfcjWX1nDfzO+sTWQwoR4btPI9T0bpwzjOJbV3
-	 +qbYiEN6za/7nO/4ITzqQ1A04P/biBA2IFdW8IaU=
+	b=ff3E0YbwCmRm8tsg+ljt5dViK1XNUwJjKVT9z20NHrZNWgLLwuXfkgDO+FnYjkgwg
+	 kesbFkwjrLDAlksrQ0XFcvD284Sttu8WbmtlgZ7ARwp9gLHXxTV5Ov5SG0oxPa/icU
+	 L1MPjGVX7A+N4nyibRWuY1KXvpcW3avOLUtRIJrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Brian Norris <briannorris@chromium.org>
-Subject: [PATCH 5.15 413/620] kdb: Do not assume write() callback available
-Date: Mon, 10 Mar 2025 18:04:19 +0100
-Message-ID: <20250310170601.892094073@linuxfoundation.org>
+	Alex Zenla <alex@edera.dev>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.15 414/620] x86/static-call: Remove early_boot_irqs_disabled check to fix Xen PVH dom0
+Date: Mon, 10 Mar 2025 18:04:20 +0100
+Message-ID: <20250310170601.930949866@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,39 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 6d3e0d8cc63221dec670d0ee92ac57961581e975 upstream.
+commit 5cc2db37124bb33914996d6fdbb2ddb3811f2945 upstream.
 
-It is allowed for consoles to not provide a write() callback. For
-example ttynull does this.
+__static_call_update_early() has a check for early_boot_irqs_disabled, but
+is used before early_boot_irqs_disabled is set up in start_kernel().
 
-Check if a write() callback is available before using it.
+Xen PV has always special cased early_boot_irqs_disabled, but Xen PVH does
+not and falls over the BUG when booting as dom0.
 
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20230717194607.145135-2-john.ogness@linutronix.de
-Cc: Brian Norris <briannorris@chromium.org>
+It is very suspect that early_boot_irqs_disabled starts as 0, becomes 1 for
+a time, then becomes 0 again, but as this needs backporting to fix a
+breakage in a security fix, dropping the BUG_ON() is the far safer option.
+
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219620
+Reported-by: Alex Zenla <alex@edera.dev>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Alex Zenla <alex@edera.dev>
+Link: https://lore.kernel.org/r/20241221211046.6475-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/debug/kdb/kdb_io.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/static_call.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/debug/kdb/kdb_io.c
-+++ b/kernel/debug/kdb/kdb_io.c
-@@ -577,6 +577,8 @@ static void kdb_msg_write(const char *ms
- 			continue;
- 		if (c == dbg_io_ops->cons)
- 			continue;
-+		if (!c->write)
-+			continue;
- 		/*
- 		 * Set oops_in_progress to encourage the console drivers to
- 		 * disregard their internal spin locks: in the current calling
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -169,7 +169,6 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
+ noinstr void __static_call_update_early(void *tramp, void *func)
+ {
+ 	BUG_ON(system_state != SYSTEM_BOOTING);
+-	BUG_ON(!early_boot_irqs_disabled);
+ 	BUG_ON(static_call_initialized);
+ 	__text_gen_insn(tramp, JMP32_INSN_OPCODE, tramp, func, JMP32_INSN_SIZE);
+ 	sync_core();
 
 
