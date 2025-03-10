@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57854230BED;
-	Mon, 10 Mar 2025 17:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B0C17CA12;
+	Mon, 10 Mar 2025 17:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627012; cv=none; b=X/6CliIEITxkL0ZwjiYf0siNGFxBJyofithwqZAuy+zzJYk+pnj+Ye8oGjesnGbSGSaeuj+gmJKeqZmSaX25KbJDpAl7gmXyIIEv0E02DNESlCtMPaLtlGt1OT/8ToK0c/ntUDKig4cPYGKJVY8BFRaG32zQTaSbNYYtK29OOMk=
+	t=1741627015; cv=none; b=LVRQ4gewJ62VXEIwrrWJjFSfz67rBPzRa+cOpmS77F7yl2QhECnkdcxVZnWenVDVRC9twhIXmTtEWn/AJ3/ItLMWSDS6D1Y+0Tt957OMlUC29WXILIKiSxJLnrClh1g1v7ldZHKhC7Dan4HJi191CxKXuqHcv6HFdhUNDikuITA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627012; c=relaxed/simple;
-	bh=I6kjLditApgbqYDjjquLZ928LOe/tlJYqTGnHvEOxYg=;
+	s=arc-20240116; t=1741627015; c=relaxed/simple;
+	bh=D9vzuX7ExAeorCoOp2sZUwqSp+HeA/9eQCU9/+dZwco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XOjeMC5EJ1c6ORAkaiVzHtYozxD1iZdSh2AA8nsrp/lxjx24x2jQjsvU7ihMjae2P9+u6PgdiGFkRR1HGqG2weSKWlcyQHI4o6M4rIixUnr1tn8nNZuJjBFZBtSVD6i6239R3hFTFyKPfO9XgAjtXXjOxryI6c0fHD7yeSlsts0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/XG4Ypz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EQC7YNTd+LOujp0W1xQ1h3gP/iUo4fyFdBQF0/LYXhevFAr4FrhXqWgO9IxgnjGrznrtfXcq9YYiena9ug/VcjdqD1+y+24aK4gHdOGBY1o//pSj+EkmPxayGA0NYv/HfO3ZKpiUV8lk+z79iYCSM5wWWX8KDpkI500PPk/5mH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIg6/UGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/XG4Ypz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D323CC4CEE5;
-	Mon, 10 Mar 2025 17:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIg6/UGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8719C4CEE5;
+	Mon, 10 Mar 2025 17:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627012;
-	bh=I6kjLditApgbqYDjjquLZ928LOe/tlJYqTGnHvEOxYg=;
+	s=korg; t=1741627015;
+	bh=D9vzuX7ExAeorCoOp2sZUwqSp+HeA/9eQCU9/+dZwco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/XG4YpzIHybvja777ks+vgX5miT/86Xpnhq6thxgGexBk/fKfIX/IqdWiK/CDUrT
-	 XihQOztWyegjb2eh8ZcN3nkINYroWVt8apzvjPIgA37qXT70hQvGoXvyt//wYjw8xM
-	 T0wJLf7JN6cb/2se8xenHKTIBQ9Z52ltJt6Umk8k=
+	b=nIg6/UGx7zMUwYL1E5c3QLLWMR9nzSFfAvsOiqQKaykLkXO/N/2LMkbxDPEOXQUFW
+	 pkhXyT29uC3srkaRmszbWEFK4pPbd0j6vvUl3vdnlAfi1oy7p2vDM0+z6Wdh/QlZij
+	 GZkXOmyzVPoaBICQWfJNHwire5Sbk3SqPoArg8mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoyu Li <lihaoyu499@gmail.com>,
-	stable <stable@kernel.org>,
-	Fei Li <fei1.li@intel.com>
-Subject: [PATCH 6.13 191/207] drivers: virt: acrn: hsm: Use kzalloc to avoid info leak in pmcmd_ioctl
-Date: Mon, 10 Mar 2025 18:06:24 +0100
-Message-ID: <20250310170455.374714209@linuxfoundation.org>
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.13 174/207] KVM: SVM: Drop DEBUGCTL[5:2] from guests effective value
+Date: Mon, 10 Mar 2025 18:06:07 +0100
+Message-ID: <20250310170454.707578918@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -45,60 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoyu Li <lihaoyu499@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 819cec1dc47cdeac8f5dd6ba81c1dbee2a68c3bb upstream.
+commit ee89e8013383d50a27ea9bf3c8a69eed6799856f upstream.
 
-In the "pmcmd_ioctl" function, three memory objects allocated by
-kmalloc are initialized by "hcall_get_cpu_state", which are then
-copied to user space. The initializer is indeed implemented in
-"acrn_hypercall2" (arch/x86/include/asm/acrn.h). There is a risk of
-information leakage due to uninitialized bytes.
+Drop bits 5:2 from the guest's effective DEBUGCTL value, as AMD changed
+the architectural behavior of the bits and broke backwards compatibility.
+On CPUs without BusLockTrap (or at least, in APMs from before ~2023),
+bits 5:2 controlled the behavior of external pins:
 
-Fixes: 3d679d5aec64 ("virt: acrn: Introduce interfaces to query C-states and P-states allowed by hypervisor")
-Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
-Cc: stable <stable@kernel.org>
-Acked-by: Fei Li <fei1.li@intel.com>
-Link: https://lore.kernel.org/r/20250130115811.92424-1-lihaoyu499@gmail.com
+  Performance-Monitoring/Breakpoint Pin-Control (PBi)—Bits 5:2, read/write.
+  Software uses thesebits to control the type of information reported by
+  the four external performance-monitoring/breakpoint pins on the
+  processor. When a PBi bit is cleared to 0, the corresponding external pin
+  (BPi) reports performance-monitor information. When a PBi bit is set to
+  1, the corresponding external pin (BPi) reports breakpoint information.
+
+With the introduction of BusLockTrap, presumably to be compatible with
+Intel CPUs, AMD redefined bit 2 to be BLCKDB:
+
+  Bus Lock #DB Trap (BLCKDB)—Bit 2, read/write. Software sets this bit to
+  enable generation of a #DB trap following successful execution of a bus
+  lock when CPL is > 0.
+
+and redefined bits 5:3 (and bit 6) as "6:3 Reserved MBZ".
+
+Ideally, KVM would treat bits 5:2 as reserved.  Defer that change to a
+feature cleanup to avoid breaking existing guest in LTS kernels.  For now,
+drop the bits to retain backwards compatibility (of a sort).
+
+Note, dropping bits 5:2 is still a guest-visible change, e.g. if the guest
+is enabling LBRs *and* the legacy PBi bits, then the state of the PBi bits
+is visible to the guest, whereas now the guest will always see '0'.
+
+Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20250227222411.3490595-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virt/acrn/hsm.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/svm.c |   12 ++++++++++++
+ arch/x86/kvm/svm/svm.h |    2 +-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/virt/acrn/hsm.c
-+++ b/drivers/virt/acrn/hsm.c
-@@ -49,7 +49,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
- 	switch (cmd & PMCMD_TYPE_MASK) {
- 	case ACRN_PMCMD_GET_PX_CNT:
- 	case ACRN_PMCMD_GET_CX_CNT:
--		pm_info = kmalloc(sizeof(u64), GFP_KERNEL);
-+		pm_info = kzalloc(sizeof(u64), GFP_KERNEL);
- 		if (!pm_info)
- 			return -ENOMEM;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3169,6 +3169,18 @@ static int svm_set_msr(struct kvm_vcpu *
+ 			kvm_pr_unimpl_wrmsr(vcpu, ecx, data);
+ 			break;
+ 		}
++
++		/*
++		 * AMD changed the architectural behavior of bits 5:2.  On CPUs
++		 * without BusLockTrap, bits 5:2 control "external pins", but
++		 * on CPUs that support BusLockDetect, bit 2 enables BusLockTrap
++		 * and bits 5:3 are reserved-to-zero.  Sadly, old KVM allowed
++		 * the guest to set bits 5:2 despite not actually virtualizing
++		 * Performance-Monitoring/Breakpoint external pins.  Drop bits
++		 * 5:2 for backwards compatibility.
++		 */
++		data &= ~GENMASK(5, 2);
++
+ 		if (data & DEBUGCTL_RESERVED_BITS)
+ 			return 1;
  
-@@ -64,7 +64,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
- 		kfree(pm_info);
- 		break;
- 	case ACRN_PMCMD_GET_PX_DATA:
--		px_data = kmalloc(sizeof(*px_data), GFP_KERNEL);
-+		px_data = kzalloc(sizeof(*px_data), GFP_KERNEL);
- 		if (!px_data)
- 			return -ENOMEM;
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -591,7 +591,7 @@ static inline bool is_vnmi_enabled(struc
+ /* svm.c */
+ #define MSR_INVALID				0xffffffffU
  
-@@ -79,7 +79,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
- 		kfree(px_data);
- 		break;
- 	case ACRN_PMCMD_GET_CX_DATA:
--		cx_data = kmalloc(sizeof(*cx_data), GFP_KERNEL);
-+		cx_data = kzalloc(sizeof(*cx_data), GFP_KERNEL);
- 		if (!cx_data)
- 			return -ENOMEM;
+-#define DEBUGCTL_RESERVED_BITS (~(0x3fULL))
++#define DEBUGCTL_RESERVED_BITS (~(DEBUGCTLMSR_BTF | DEBUGCTLMSR_LBR))
+ 
+ extern bool dump_invalid_vmcb;
  
 
 
