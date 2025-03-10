@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E434A235340;
-	Mon, 10 Mar 2025 17:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42F823535D;
+	Mon, 10 Mar 2025 17:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627455; cv=none; b=prdCyADNkcr2Ri8Et3yvkmHmR0TYU75n7OzpgcS+/lUSePIUWGJ6k/NBUUJYGR8UGFBFtXVneU/vrUsZjVhWKQ8VgubBK4SY9iM16P1p1dMBPtI/l0toeIB/Ldylnpnt0C8ViUH0HInWtZVvZyQqLg6dd5wfQo/0Vk2CaicTfhY=
+	t=1741627457; cv=none; b=BXdFteDClDZfFiTUbnGBvN04wN+qofubEpQPW1Ia2b7koqCVAIvRPuJNRqqxLjdatyX6zG/KjMoi8AQ6W2EGA/ISXU16Ethe0LtpASxQZPM5Zbs+lRAOjVMSj40ykqe8xftzh+CBc7wlatbbWYRFgCrI3/GqZ7HAEZtvFst6WC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627455; c=relaxed/simple;
-	bh=vr14tTuSAh9fwq/I8PE9CB4k7HdiZTpjFZe4vcbZyvM=;
+	s=arc-20240116; t=1741627457; c=relaxed/simple;
+	bh=qnPoaHYBjJFT0K37o3ZjO1fhKJ3x+ISxMziszAKb5h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfRret7chJq7X36RtDfFwiGBkU5BD7e3YF+06cLzDq3VGPLKOogwEabiVZEhrQmJj4HbPbh0rhr6sbRlE9ncFlD3NQ8UnMuXImdpnQjY/H/OeiUlHFS98m8jN3WtzDQ4+DG4E0NjGHtZycqzOI/tqxRvGJiHvrOTsCVvSrfLTCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6IuR8nn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+K0afZqCWSZAXlB3Y41DEHnh1463YVDfceC45DgXn7k77sCOj71NyyIQoOXJBSTM1ixTLqS+UQ0x5ZWgm/MQV1e3IiYUhtlAYpOtzf4CeDbO5kCs9eFWfmvGD+WIMswUkcXvTwK5vWWNpvpsFZeW4SqcmcODFqsNayhgT0Xw+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tR/1XbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6IuR8nn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEB0C4CEE5;
-	Mon, 10 Mar 2025 17:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tR/1XbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5037CC4CEED;
+	Mon, 10 Mar 2025 17:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627454;
-	bh=vr14tTuSAh9fwq/I8PE9CB4k7HdiZTpjFZe4vcbZyvM=;
+	s=korg; t=1741627457;
+	bh=qnPoaHYBjJFT0K37o3ZjO1fhKJ3x+ISxMziszAKb5h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6IuR8nn9rFs1sVKtVK59KS1oPax2Ql96ENVtwJjUKZAafps1N360vgSHj0VV68eB
-	 qzAx2Aijo/E0AxQ7cHKsI6+geL6T8dYjSbPL0DG1J4zige4ONJZGgVVWVXx/hSQfUW
-	 T0qRbLn9Zh+8Z/9kKAB1ZPGDHFHWADH0APlmY1H0=
+	b=1tR/1XbS4n1vIqfJAdSsBDNz1Bc/W5Jgl3gxH5qkwUaAoSyx3nP5ZqthgfTcbifd0
+	 scgTSwdW9A/Sj3f6UK7mj87QO1vSoaeFQVVei7EpP5c8XVOLZ0skek6CxhABqJslW4
+	 2vSGcqg2X4/nL2QvgYXdVbvLzoA2qG2a+DtUVm/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0cfd5e38e96a5596f2b6@syzkaller.appspotmail.com,
-	Hao Zhang <zhanghao1@kylinos.cn>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Brad Spengler <brad.spengler@opensrcsec.com>,
+	syzbot+46423ed8fa1f1148c6e4@syzkaller.appspotmail.com,
+	Jann Horn <jannh@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	Michal Hocko <mhocko@kernel.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 134/269] mm/page_alloc: fix uninitialized variable
-Date: Mon, 10 Mar 2025 18:04:47 +0100
-Message-ID: <20250310170503.065150515@linuxfoundation.org>
+Subject: [PATCH 6.12 135/269] mm: abort vma_modify() on merge out of memory failure
+Date: Mon, 10 Mar 2025 18:04:48 +0100
+Message-ID: <20250310170503.103827261@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -54,78 +55,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Zhang <zhanghao1@kylinos.cn>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 8fe9ed44dc29fba0786b7e956d2e87179e407582 upstream.
+commit 47b16d0462a460000b8f05dfb1292377ac48f3ca upstream.
 
-The variable "compact_result" is not initialized in function
-__alloc_pages_slowpath().  It causes should_compact_retry() to use an
-uninitialized value.
+The remainder of vma_modify() relies upon the vmg state remaining pristine
+after a merge attempt.
 
-Initialize variable "compact_result" with the value COMPACT_SKIPPED.
+Usually this is the case, however in the one edge case scenario of a merge
+attempt failing not due to the specified range being unmergeable, but
+rather due to an out of memory error arising when attempting to commit the
+merge, this assumption becomes untrue.
 
-BUG: KMSAN: uninit-value in __alloc_pages_slowpath+0xee8/0x16c0 mm/page_alloc.c:4416
- __alloc_pages_slowpath+0xee8/0x16c0 mm/page_alloc.c:4416
- __alloc_frozen_pages_noprof+0xa4c/0xe00 mm/page_alloc.c:4752
- alloc_pages_mpol+0x4cd/0x890 mm/mempolicy.c:2270
- alloc_frozen_pages_noprof mm/mempolicy.c:2341 [inline]
- alloc_pages_noprof mm/mempolicy.c:2361 [inline]
- folio_alloc_noprof+0x1dc/0x350 mm/mempolicy.c:2371
- filemap_alloc_folio_noprof+0xa6/0x440 mm/filemap.c:1019
- __filemap_get_folio+0xb9a/0x1840 mm/filemap.c:1970
- grow_dev_folio fs/buffer.c:1039 [inline]
- grow_buffers fs/buffer.c:1105 [inline]
- __getblk_slow fs/buffer.c:1131 [inline]
- bdev_getblk+0x2c9/0xab0 fs/buffer.c:1431
- getblk_unmovable include/linux/buffer_head.h:369 [inline]
- ext4_getblk+0x3b7/0xe50 fs/ext4/inode.c:864
- ext4_bread_batch+0x9f/0x7d0 fs/ext4/inode.c:933
- __ext4_find_entry+0x1ebb/0x36c0 fs/ext4/namei.c:1627
- ext4_lookup_entry fs/ext4/namei.c:1729 [inline]
- ext4_lookup+0x189/0xb40 fs/ext4/namei.c:1797
- __lookup_slow+0x538/0x710 fs/namei.c:1793
- lookup_slow+0x6a/0xd0 fs/namei.c:1810
- walk_component fs/namei.c:2114 [inline]
- link_path_walk+0xf29/0x1420 fs/namei.c:2479
- path_openat+0x30f/0x6250 fs/namei.c:3985
- do_filp_open+0x268/0x600 fs/namei.c:4016
- do_sys_openat2+0x1bf/0x2f0 fs/open.c:1428
- do_sys_open fs/open.c:1443 [inline]
- __do_sys_openat fs/open.c:1459 [inline]
- __se_sys_openat fs/open.c:1454 [inline]
- __x64_sys_openat+0x2a1/0x310 fs/open.c:1454
- x64_sys_call+0x36f5/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:258
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This results in vmg->start, end being modified, and thus the proceeding
+attempts to split the VMA will be done with invalid start/end values.
 
-Local variable compact_result created at:
- __alloc_pages_slowpath+0x66/0x16c0 mm/page_alloc.c:4218
- __alloc_frozen_pages_noprof+0xa4c/0xe00 mm/page_alloc.c:4752
+Thankfully, it is likely practically impossible for us to hit this in
+reality, as it would require a maple tree node pre-allocation failure that
+would likely never happen due to it being 'too small to fail', i.e.  the
+kernel would simply keep retrying reclaim until it succeeded.
 
-Link: https://lkml.kernel.org/r/tencent_ED1032321D6510B145CDBA8CBA0093178E09@qq.com
-Reported-by: syzbot+0cfd5e38e96a5596f2b6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0cfd5e38e96a5596f2b6
-Signed-off-by: Hao Zhang <zhanghao1@kylinos.cn>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
+However, this scenario remains theoretically possible, and what we are
+doing here is wrong so we must correct it.
+
+The safest option is, when this scenario occurs, to simply give up the
+operation.  If we cannot allocate memory to merge, then we cannot allocate
+memory to split either (perhaps moreso!).
+
+Any scenario where this would be happening would be under very extreme
+(likely fatal) memory pressure, so it's best we give up early.
+
+So there is no doubt it is appropriate to simply bail out in this
+scenario.
+
+However, in general we must if at all possible never assume VMG state is
+stable after a merge attempt, since merge operations update VMG fields.
+As a result, additionally also make this clear by storing start, end in
+local variables.
+
+The issue was reported originally by syzkaller, and by Brad Spengler (via
+an off-list discussion), and in both instances it manifested as a
+triggering of the assert:
+
+	VM_WARN_ON_VMG(start >= end, vmg);
+
+In vma_merge_existing_range().
+
+It seems at least one scenario in which this is occurring is one in which
+the merge being attempted is due to an madvise() across multiple VMAs
+which looks like this:
+
+        start     end
+          |<------>|
+     |----------|------|
+     |   vma    | next |
+     |----------|------|
+
+When madvise_walk_vmas() is invoked, we first find vma in the above
+(determining prev to be equal to vma as we are offset into vma), and then
+enter the loop.
+
+We determine the end of vma that forms part of the range we are
+madvise()'ing by setting 'tmp' to this value:
+
+		/* Here vma->vm_start <= start < (end|vma->vm_end) */
+		tmp = vma->vm_end;
+
+We then invoke the madvise() operation via visit(), letting prev get
+updated to point to vma as part of the operation:
+
+		/* Here vma->vm_start <= start < tmp <= (end|vma->vm_end). */
+		error = visit(vma, &prev, start, tmp, arg);
+
+Where the visit() function pointer in this instance is
+madvise_vma_behavior().
+
+As observed in syzkaller reports, it is ultimately madvise_update_vma()
+that is invoked, calling vma_modify_flags_name() and vma_modify() in turn.
+
+Then, in vma_modify(), we attempt the merge:
+
+	merged = vma_merge_existing_range(vmg);
+	if (merged)
+		return merged;
+
+We invoke this with vmg->start, end set to start, tmp as such:
+
+        start  tmp
+          |<--->|
+     |----------|------|
+     |   vma    | next |
+     |----------|------|
+
+We find ourselves in the merge right scenario, but the one in which we
+cannot remove the middle (we are offset into vma).
+
+Here we have a special case where vmg->start, end get set to perhaps
+unintuitive values - we intended to shrink the middle VMA and expand the
+next.
+
+This means vmg->start, end are set to...  vma->vm_start, start.
+
+Now the commit_merge() fails, and vmg->start, end are left like this.
+This means we return to the rest of vma_modify() with vmg->start, end
+(here denoted as start', end') set as:
+
+  start' end'
+     |<-->|
+     |----------|------|
+     |   vma    | next |
+     |----------|------|
+
+So we now erroneously try to split accordingly.  This is where the
+unfortunate stuff begins.
+
+We start with:
+
+	/* Split any preceding portion of the VMA. */
+	if (vma->vm_start < vmg->start) {
+		...
+	}
+
+This doesn't trigger as we are no longer offset into vma at the start.
+
+But then we invoke:
+
+	/* Split any trailing portion of the VMA. */
+	if (vma->vm_end > vmg->end) {
+		...
+	}
+
+Which does get invoked. This leaves us with:
+
+  start' end'
+     |<-->|
+     |----|-----|------|
+     | vma| new | next |
+     |----|-----|------|
+
+We then return ultimately to madvise_walk_vmas().  Here 'new' is unknown,
+and putting back the values known in this function we are faced with:
+
+        start tmp end
+          |     |  |
+     |----|-----|------|
+     | vma| new | next |
+     |----|-----|------|
+      prev
+
+Then:
+
+		start = tmp;
+
+So:
+
+             start end
+                |  |
+     |----|-----|------|
+     | vma| new | next |
+     |----|-----|------|
+      prev
+
+The following code does not cause anything to happen:
+
+		if (prev && start < prev->vm_end)
+			start = prev->vm_end;
+		if (start >= end)
+			break;
+
+And then we invoke:
+
+		if (prev)
+			vma = find_vma(mm, prev->vm_end);
+
+Which is where a problem occurs - we don't know about 'new' so we
+essentially look for the vma after prev, which is new, whereas we actually
+intended to discover next!
+
+So we end up with:
+
+             start end
+                |  |
+     |----|-----|------|
+     |prev| vma | next |
+     |----|-----|------|
+
+And we have successfully bypassed all of the checks madvise_walk_vmas()
+has to ensure early exit should we end up moving out of range.
+
+We loop around, and hit:
+
+		/* Here vma->vm_start <= start < (end|vma->vm_end) */
+		tmp = vma->vm_end;
+
+Oh dear. Now we have:
+
+              tmp
+             start end
+                |  |
+     |----|-----|------|
+     |prev| vma | next |
+     |----|-----|------|
+
+We then invoke:
+
+		/* Here vma->vm_start <= start < tmp <= (end|vma->vm_end). */
+		error = visit(vma, &prev, start, tmp, arg);
+
+Where start == tmp. That is, a zero range. This is not good.
+
+We invoke visit() which is madvise_vma_behavior() which does not check the
+range (for good reason, it assumes all checks have been done before it was
+called), which in turn finally calls madvise_update_vma().
+
+The madvise_update_vma() function calls vma_modify_flags_name() in turn,
+which ultimately invokes vma_modify() with...  start == end.
+
+vma_modify() calls vma_merge_existing_range() and finally we hit:
+
+	VM_WARN_ON_VMG(start >= end, vmg);
+
+Which triggers, as start == end.
+
+While it might be useful to add some CONFIG_DEBUG_VM asserts in these
+instances to catch this kind of error, since we have just eliminated any
+possibility of that happening, we will add such asserts separately as to
+reduce churn and aid backporting.
+
+Link: https://lkml.kernel.org/r/20250222161952.41957-1-lorenzo.stoakes@oracle.com
+Fixes: 2f1c6611b0a8 ("mm: introduce vma_merge_struct and abstract vma_merge(),vma_modify()")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Tested-by: Brad Spengler <brad.spengler@opensrcsec.com>
+Reported-by: Brad Spengler <brad.spengler@opensrcsec.com>
+Reported-by: syzbot+46423ed8fa1f1148c6e4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/6774c98f.050a0220.25abdd.0991.GAE@google.com/
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/vma.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4243,6 +4243,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, u
- restart:
- 	compaction_retries = 0;
- 	no_progress_loops = 0;
-+	compact_result = COMPACT_SKIPPED;
- 	compact_priority = DEF_COMPACT_PRIORITY;
- 	cpuset_mems_cookie = read_mems_allowed_begin();
- 	zonelist_iter_cookie = zonelist_iter_begin();
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -1417,24 +1417,28 @@ int do_vmi_munmap(struct vma_iterator *v
+ static struct vm_area_struct *vma_modify(struct vma_merge_struct *vmg)
+ {
+ 	struct vm_area_struct *vma = vmg->vma;
++	unsigned long start = vmg->start;
++	unsigned long end = vmg->end;
+ 	struct vm_area_struct *merged;
+ 
+ 	/* First, try to merge. */
+ 	merged = vma_merge_existing_range(vmg);
+ 	if (merged)
+ 		return merged;
++	if (vmg_nomem(vmg))
++		return ERR_PTR(-ENOMEM);
+ 
+ 	/* Split any preceding portion of the VMA. */
+-	if (vma->vm_start < vmg->start) {
+-		int err = split_vma(vmg->vmi, vma, vmg->start, 1);
++	if (vma->vm_start < start) {
++		int err = split_vma(vmg->vmi, vma, start, 1);
+ 
+ 		if (err)
+ 			return ERR_PTR(err);
+ 	}
+ 
+ 	/* Split any trailing portion of the VMA. */
+-	if (vma->vm_end > vmg->end) {
+-		int err = split_vma(vmg->vmi, vma, vmg->end, 0);
++	if (vma->vm_end > end) {
++		int err = split_vma(vmg->vmi, vma, end, 0);
+ 
+ 		if (err)
+ 			return ERR_PTR(err);
 
 
