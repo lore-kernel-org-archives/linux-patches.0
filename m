@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C63233737;
-	Mon, 10 Mar 2025 17:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF432230BF6;
+	Mon, 10 Mar 2025 17:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626729; cv=none; b=biRobMzMYY84Jg3E/a+mqZS/mGqx3e+h9rEaIMHLUI7CbHuF5mvLG4y4Ewz+pvo45P87i9Mm0CGsat1tS9sO0C91Edapc/3rJVOSW2wh5EJyGc5kbuxgYHno4xxScAnWhRRES9kIK7uEMPzuXsLiU5x/DmU/ABxl95V63JrFGpE=
+	t=1741626732; cv=none; b=BKrM52t9PDT0LP5CTKMPrvgUa8pwe3JQQcV5BJdDbWunbdBhBeNp20a+HA0E72nuVdB2RINw+CC0QKpqg9e9HQ0xdXEXkiECLritwVYUriyjTaxIURP73ml55CLcEMKt8yv7Fg3OHyn0lfXgLWnv3Rsn60snQnPT36Fv6THZl6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626729; c=relaxed/simple;
-	bh=K/Z8CFzkjX5E5KrljE/lBKAHnPI9xsrgBa/i/hTpVyw=;
+	s=arc-20240116; t=1741626732; c=relaxed/simple;
+	bh=8k44+r0wMWiCprAmKUon55zhTQVLYXjT2TUswB9Z6nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izUXd1uq8/KCtBXLk0UfiC/NZJrqyqwFskLv2xOyEpqB5qxHLfjcZLk6HEb0Z23eQMND/yPoe2v2wjDvFw1SDwNsCOw4sskmjDZP8v0WvwIgcb9R7M9CkGSGygwdBXipjo8kUCbfVtO27bQ15zP+7PbIy7oa7GOvD+83ukYW66E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NagLaJ7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7J1BZFrfXLFFuLBKVYn8vaKpdYWzW5lM1jrIGv73Cc2D2/vVt/ZKsJvHhGp4PinRh3UEpcdsnwaK2G5cH0ZfrHY09i9YQGbJSSxqKD+L78tuFxYwVXbNO8DZkcywmhjvtCnTJBi0lVkY7mMC/KiH7BmoLB1PVxLbtbm5/AL2Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAfxMWmC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NagLaJ7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1256C4CEED;
-	Mon, 10 Mar 2025 17:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAfxMWmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90A9C4CEE5;
+	Mon, 10 Mar 2025 17:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626729;
-	bh=K/Z8CFzkjX5E5KrljE/lBKAHnPI9xsrgBa/i/hTpVyw=;
+	s=korg; t=1741626732;
+	bh=8k44+r0wMWiCprAmKUon55zhTQVLYXjT2TUswB9Z6nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NagLaJ7wIkR3eJRxF26Zkq4B+dmlNqCTsaSuhA4TlJ8eY2wE7PpHggWTysiMJl/UX
-	 SLH0Ej0BfBn4hGrJEs1Lnoiv4g0isFvlfehWsMX9KZtOkcvm/WnpD1d6blZpIp3NIB
-	 whlGsJHSDSrP4cXdsyLh9HmMmYxHx4gG9K0/6SDQ=
+	b=MAfxMWmCiRFVKZSvbzZOULsd2mV/UO0VEWjeHmqTxpBTgwHriMahPSZN5uAnubeJl
+	 Gs8ZP8uYJYZaVBbHXMagziqsSrmIVDsD6INqCuyI1xzwLOEOb/GtkVsbOBFkeJz5zK
+	 yG1QgRgE3cuF/R6Y7M91jCCmaQ2jCZPg3N+eHk8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Stapelberg <michael@stapelberg.ch>,
-	Kees Cook <kees@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 092/207] coredump: Only sort VMAs when core_sort_vma sysctl is set
-Date: Mon, 10 Mar 2025 18:04:45 +0100
-Message-ID: <20250310170451.418624345@linuxfoundation.org>
+Subject: [PATCH 6.13 093/207] nvme-ioctl: fix leaked requests on mapping error
+Date: Mon, 10 Mar 2025 18:04:46 +0100
+Message-ID: <20250310170451.456364638@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,87 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 39ec9eaaa165d297d008d1fa385748430bd18e4d ]
+[ Upstream commit 00817f0f1c45b007965f5676b9a2013bb39c7228 ]
 
-The sorting of VMAs by size in commit 7d442a33bfe8 ("binfmt_elf: Dump
-smaller VMAs first in ELF cores") breaks elfutils[1]. Instead, sort
-based on the setting of the new sysctl, core_sort_vma, which defaults
-to 0, no sorting.
+All the callers assume nvme_map_user_request() frees the request on a
+failure. This wasn't happening on invalid metadata or io_uring command
+flags, so we've been leaking those requests.
 
-Reported-by: Michael Stapelberg <michael@stapelberg.ch>
-Closes: https://lore.kernel.org/all/20250218085407.61126-1-michael@stapelberg.de/ [1]
-Fixes: 7d442a33bfe8 ("binfmt_elf: Dump smaller VMAs first in ELF cores")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 23fd22e55b767b ("nvme: wire up fixed buffer support for nvme passthrough")
+Fixes: 7c2fd76048e95d ("nvme: fix metadata handling in nvme-passthrough")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/sysctl/kernel.rst | 11 +++++++++++
- fs/coredump.c                               | 15 +++++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ drivers/nvme/host/ioctl.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
-index b2b36d0c3094d..7a85b6eb884ea 100644
---- a/Documentation/admin-guide/sysctl/kernel.rst
-+++ b/Documentation/admin-guide/sysctl/kernel.rst
-@@ -212,6 +212,17 @@ pid>/``).
- This value defaults to 0.
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index b1b46c2713e1c..24e2c702da7a2 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -128,8 +128,10 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 	if (!nvme_ctrl_sgl_supported(ctrl))
+ 		dev_warn_once(ctrl->device, "using unchecked data buffer\n");
+ 	if (has_metadata) {
+-		if (!supports_metadata)
+-			return -EINVAL;
++		if (!supports_metadata) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 		if (!nvme_ctrl_meta_sgl_supported(ctrl))
+ 			dev_warn_once(ctrl->device,
+ 				      "using unchecked metadata buffer\n");
+@@ -139,8 +141,10 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 		struct iov_iter iter;
  
- 
-+core_sort_vma
-+=============
-+
-+The default coredump writes VMAs in address order. By setting
-+``core_sort_vma`` to 1, VMAs will be written from smallest size
-+to largest size. This is known to break at least elfutils, but
-+can be handy when dealing with very large (and truncated)
-+coredumps where the more useful debugging details are included
-+in the smaller VMAs.
-+
-+
- core_uses_pid
- =============
- 
-diff --git a/fs/coredump.c b/fs/coredump.c
-index d48edb37bc35c..c6f4c745e1bd8 100644
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -63,6 +63,7 @@ static void free_vma_snapshot(struct coredump_params *cprm);
- 
- static int core_uses_pid;
- static unsigned int core_pipe_limit;
-+static unsigned int core_sort_vma;
- static char core_pattern[CORENAME_MAX_SIZE] = "core";
- static int core_name_size = CORENAME_MAX_SIZE;
- unsigned int core_file_note_size_limit = CORE_FILE_NOTE_SIZE_DEFAULT;
-@@ -1026,6 +1027,15 @@ static struct ctl_table coredump_sysctls[] = {
- 		.extra1		= (unsigned int *)&core_file_note_size_min,
- 		.extra2		= (unsigned int *)&core_file_note_size_max,
- 	},
-+	{
-+		.procname	= "core_sort_vma",
-+		.data		= &core_sort_vma,
-+		.maxlen		= sizeof(int),
-+		.mode		= 0644,
-+		.proc_handler	= proc_douintvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_ONE,
-+	},
- };
- 
- static int __init init_fs_coredump_sysctls(void)
-@@ -1256,8 +1266,9 @@ static bool dump_vma_snapshot(struct coredump_params *cprm)
- 		cprm->vma_data_size += m->dump_size;
- 	}
- 
--	sort(cprm->vma_meta, cprm->vma_count, sizeof(*cprm->vma_meta),
--		cmp_vma_size, NULL);
-+	if (core_sort_vma)
-+		sort(cprm->vma_meta, cprm->vma_count, sizeof(*cprm->vma_meta),
-+		     cmp_vma_size, NULL);
- 
- 	return true;
- }
+ 		/* fixedbufs is only for non-vectored io */
+-		if (WARN_ON_ONCE(flags & NVME_IOCTL_VEC))
+-			return -EINVAL;
++		if (WARN_ON_ONCE(flags & NVME_IOCTL_VEC)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 		ret = io_uring_cmd_import_fixed(ubuffer, bufflen,
+ 				rq_data_dir(req), &iter, ioucmd);
+ 		if (ret < 0)
 -- 
 2.39.5
 
