@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD0C22D7A6;
-	Mon, 10 Mar 2025 17:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4A21B3927;
+	Mon, 10 Mar 2025 17:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628320; cv=none; b=dPi8GtB8hinK2w8ruDkW8Lz0SNa+cSy3F1OBGN/GswPt20GaOsTJt84i3gdokOeo6Mab3zuxlWAE9wgpZxF15VJ4FQDrQy96CpXNbA6KT59GDQ9gIDvAIaIYyBWGVRkTszhvmMbxX6CKZ2nhkzbwMinxrfxFLx5S/TyD2bWnJL4=
+	t=1741628323; cv=none; b=cP5Iikxe1w1CKBGfwYusVbmA/NhUNvNLxY5HCUG6c/rvMPFg54ppBkVVUIXdaW7Ugw03PQl0IvydBbFd97+Rd/n2GFqQ05BIs0B8cJRztPUjJ/uc3PfgGG/gzyg48o1KVaE4aSEs4NNm5RqtLZ95CxQZOc4JObGYWHTNZSkzQsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628320; c=relaxed/simple;
-	bh=wvk1HP28FPI4U953jmyNpVI/li1OwC/KRPumEY1akfo=;
+	s=arc-20240116; t=1741628323; c=relaxed/simple;
+	bh=AZiF63Di2n/qcVWkyg0rxYricfWXoescIA39/PzL1M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DrRPoM0eWLLixKPXh3F+o/0ixH6g9vaOYaTGW+nVWwq3ps5F8ncNszrRksf/jGaypSLom7mHsl+WGqKvJ66A4gCOWSCycqf++vvQmVVmC5DqxPYtgvtmyTAhoIMrBBHtPiRUSKn5e3fTp3upqwLnBDATTCn9Ny9dqruSY7O5HdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFEF3Ffn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e2KfKxmLlRaOVJIhba2HaS8lsPUE28hXO1camR/dQlF2X7YSwnXftlBLjkZBYt8F4u0oD5A4kmdTmGprw/vNqf8vSPW5+8J1bHuHHI+0fkhatg2Dea6+/AsseC2Aem/5qG7qDt0tyc2vo4xohaPOl/DHCJ/6izcmu32slFpaMYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CADm8Fc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFEF3Ffn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9D6C4CEE5;
-	Mon, 10 Mar 2025 17:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CADm8Fc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60E3C4CEEC;
+	Mon, 10 Mar 2025 17:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628320;
-	bh=wvk1HP28FPI4U953jmyNpVI/li1OwC/KRPumEY1akfo=;
+	s=korg; t=1741628323;
+	bh=AZiF63Di2n/qcVWkyg0rxYricfWXoescIA39/PzL1M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFEF3FfnxAUOKCiYHyo7I8xjm5qcafp1n57RAYaxUozNOFMYygcQ2w/J6KF+I9JQK
-	 9a4+pNfoP+zlomL78uZBW8s1O/qmjkw4fzcHof1uDPIbkIGy+ofC5MOsdfewvu29ki
-	 8yULip+LvmIUrqGUvuO6vdx0kTi3rP+0J1RxEInk=
+	b=CADm8Fc15m7AQysAX21c+9nOreq6MoR6NINTKlOm277AZsukb7kWilEFcFzCmf0LN
+	 s0Qk9Ff4G1VtPxFnmBuY3I/hLm4frUbZlU5xyqEg8EnkypLd2cP19TWbttY2vGQIQo
+	 IkOfcSiWr4bU1d82ap8PbWUSXFYPD9NsUTgqqcXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/109] drm/amdgpu: disable BAR resize on Dell G5 SE
-Date: Mon, 10 Mar 2025 18:05:48 +0100
-Message-ID: <20250310170427.719553177@linuxfoundation.org>
+Subject: [PATCH 6.1 005/109] cpuidle, intel_idle: Fix CPUIDLE_FLAG_IBRS
+Date: Mon, 10 Mar 2025 18:05:49 +0100
+Message-ID: <20250310170427.760538798@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -51,48 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 099bffc7cadff40bfab1517c3461c53a7a38a0d7 ]
+[ Upstream commit 9b461a6faae7b220c32466261965778b10189e54 ]
 
-There was a quirk added to add a workaround for a Sapphire
-RX 5600 XT Pulse that didn't allow BAR resizing.  However,
-the quirk caused a regression with runtime pm on Dell laptops
-using those chips, rather than narrowing the scope of the
-resizing quirk, add a quirk to prevent amdgpu from resizing
-the BAR on those Dell platforms unless runtime pm is disabled.
+objtool to the rescue:
 
-v2: update commit message, add runpm check
+  vmlinux.o: warning: objtool: intel_idle_ibrs+0x17: call to spec_ctrl_current() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: intel_idle_ibrs+0x27: call to wrmsrl.constprop.0() leaves .noinstr.text section
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1707
-Fixes: 907830b0fc9e ("PCI: Add a REBAR size quirk for Sapphire RX 5600 XT Pulse")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5235053f443cef4210606e5fb71f99b915a9723d)
-Cc: stable@vger.kernel.org
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20230112195540.556912863@infradead.org
+Stable-dep-of: c157d351460b ("intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/cpu/bugs.c | 2 +-
+ drivers/idle/intel_idle.c  | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index a28f7e0a27aaa..b41a97185823a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1220,6 +1220,13 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 03221a060ae77..7d73b53115514 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -92,7 +92,7 @@ void update_spec_ctrl_cond(u64 val)
+ 		wrmsrl(MSR_IA32_SPEC_CTRL, val);
+ }
  
-+	/* resizing on Dell G5 SE platforms causes problems with runtime pm */
-+	if ((amdgpu_runtime_pm != 0) &&
-+	    adev->pdev->vendor == PCI_VENDOR_ID_ATI &&
-+	    adev->pdev->device == 0x731f &&
-+	    adev->pdev->subsystem_vendor == PCI_VENDOR_ID_DELL)
-+		return 0;
-+
- 	/* PCI_EXT_CAP_ID_VNDR extended capability is located at 0x100 */
- 	if (!pci_find_ext_capability(adev->pdev, PCI_EXT_CAP_ID_VNDR))
- 		DRM_WARN("System can't access extended configuration space,please check!!\n");
+-u64 spec_ctrl_current(void)
++noinstr u64 spec_ctrl_current(void)
+ {
+ 	return this_cpu_read(x86_spec_ctrl_current);
+ }
+diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
+index 5d7bbccb52b5e..ae07dc018e666 100644
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -188,12 +188,12 @@ static __cpuidle int intel_idle_ibrs(struct cpuidle_device *dev,
+ 	int ret;
+ 
+ 	if (smt_active)
+-		wrmsrl(MSR_IA32_SPEC_CTRL, 0);
++		native_wrmsrl(MSR_IA32_SPEC_CTRL, 0);
+ 
+ 	ret = __intel_idle(dev, drv, index);
+ 
+ 	if (smt_active)
+-		wrmsrl(MSR_IA32_SPEC_CTRL, spec_ctrl);
++		native_wrmsrl(MSR_IA32_SPEC_CTRL, spec_ctrl);
+ 
+ 	return ret;
+ }
 -- 
 2.39.5
 
