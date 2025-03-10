@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF011DE89C;
-	Mon, 10 Mar 2025 18:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E681C5F1B;
+	Mon, 10 Mar 2025 18:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630525; cv=none; b=dooSU1yG7aOUqQPPtoeJ6jVXL26Sy/sujxSeOdCzYyz1GNkfXnYcydwvPuZ79GeNWP8l6C2O1LCoH0bU+SVJ8IGTOQmEUn8f66y5TpmYfY/TNcBpNL+EnOsKxiIIjQTUd6ucpJn6sPo58JDFF4FQtl4i2MQtc69WeuR1j/q9pwo=
+	t=1741630528; cv=none; b=HBdXOo5csH73AJ1cUiZxIza4D6/LjPbYitew8zHACX27tgUlV8DiPCETVLpcBE7vsKvEgkKFl1jYOlYAoxKJEWTuWtSwO8+4dWe6u1BgK10896YkfmtA3f/4C+VEelMmXbZ3sNc7Jfv4seA1nl905QJgZ5LAAYzIqSOD2YVcGHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630525; c=relaxed/simple;
-	bh=mcOFbP1DxCuclKaMgxQw/vSy8WBakJjLZIi6R/z3wIg=;
+	s=arc-20240116; t=1741630528; c=relaxed/simple;
+	bh=zaAwm2+1YKjgrNmpitARvizpzYjN1m/x/UW5LmMAuZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSTieuqc1jZw5jNtBhb1LrRmlsZN5///iNBQdnrTwepmZPeF4Ywxy6+Ia8u4jgBYiL6IVgZdgszICTqvgoIlSoSIJjc1pusKdOVyxlw8ps2+RynsVJHpGpHD/2tp8Na6bhHrBIAkZaR0i/bSZzG9svvqg5q5FRNpPedHPPibjtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUWjKl4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5zrJqU9jAD3MjiA7lqTlI4vmtTNd0A455UKKGkLFYfOlINbQvPLBTnwLOUJHbzRtK/PX6CBCHorMyqARcqfbCHH1g/6njedDhjC1y7zp6pXUbRF8bLDBKjHSzcW/M9XTDe6BAvgRAvMbShCFnNup0eCpObkJMSl6mb26gyBhVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdFd8zAe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUWjKl4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24615C4CEEC;
-	Mon, 10 Mar 2025 18:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdFd8zAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1897C4CEE5;
+	Mon, 10 Mar 2025 18:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630525;
-	bh=mcOFbP1DxCuclKaMgxQw/vSy8WBakJjLZIi6R/z3wIg=;
+	s=korg; t=1741630528;
+	bh=zaAwm2+1YKjgrNmpitARvizpzYjN1m/x/UW5LmMAuZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUWjKl4qzGgtkUat0y+FBdTpawELiIb39XC9GfFy3SyXaUPrs1FJ4mrKMr7NhPGie
-	 0r3PXLLPl+NotcrtJMMjjxyAkhaAltrWxTrlrNqPG+pvcItL1CoEHeQPwkB19I8NBB
-	 zQRMISCsdnGO1tgk1HUIKpVXqKOQ5ITEcPornw9I=
+	b=zdFd8zAe+LcLRMJIAcNkPIuV05t1pr79H3Xjma2E4FTaiHDAz2nR2V9GnVIBhaU0Z
+	 LF7nxFxb0koTUNd8jIFFDxfz2Eg9t9E+bzZOZJdHGtryPPbl6c7b0mm1+4A62uYh0v
+	 CDsLdXKJuzG+SX4Pm4dWZeAwCZc+GSuEruDmI4KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Andy Liang <andy.liang@hpe.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 444/620] tpm: Use managed allocation for bios event log
-Date: Mon, 10 Mar 2025 18:04:50 +0100
-Message-ID: <20250310170603.121206598@linuxfoundation.org>
+Subject: [PATCH 5.15 445/620] tpm: Change to kvalloc() in eventlog/acpi.c
+Date: Mon, 10 Mar 2025 18:04:51 +0100
+Message-ID: <20250310170603.159280746@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,136 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 441b7152729f4a2bdb100135a58625fa0aeb69e4 ]
+[ Upstream commit a3a860bc0fd6c07332e4911cf9a238d20de90173 ]
 
-Since the bios event log is freed in the device release function,
-let devres handle the deallocation. This will allow other memory
-allocation/mapping functions to be used for the bios event log.
+The following failure was reported on HPE ProLiant D320:
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+[   10.693310][    T1] tpm_tis STM0925:00: 2.0 TPM (device-id 0x3, rev-id 0)
+[   10.848132][    T1] ------------[ cut here ]------------
+[   10.853559][    T1] WARNING: CPU: 59 PID: 1 at mm/page_alloc.c:4727 __alloc_pages_noprof+0x2ca/0x330
+[   10.862827][    T1] Modules linked in:
+[   10.866671][    T1] CPU: 59 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-lp155.2.g52785e2-default #1 openSUSE Tumbleweed (unreleased) 588cd98293a7c9eba9013378d807364c088c9375
+[   10.882741][    T1] Hardware name: HPE ProLiant DL320 Gen12/ProLiant DL320 Gen12, BIOS 1.20 10/28/2024
+[   10.892170][    T1] RIP: 0010:__alloc_pages_noprof+0x2ca/0x330
+[   10.898103][    T1] Code: 24 08 e9 4a fe ff ff e8 34 36 fa ff e9 88 fe ff ff 83 fe 0a 0f 86 b3 fd ff ff 80 3d 01 e7 ce 01 00 75 09 c6 05 f8 e6 ce 01 01 <0f> 0b 45 31 ff e9 e5 fe ff ff f7 c2 00 00 08 00 75 42 89 d9 80 e1
+[   10.917750][    T1] RSP: 0000:ffffb7cf40077980 EFLAGS: 00010246
+[   10.923777][    T1] RAX: 0000000000000000 RBX: 0000000000040cc0 RCX: 0000000000000000
+[   10.931727][    T1] RDX: 0000000000000000 RSI: 000000000000000c RDI: 0000000000040cc0
+
+The above transcript shows that ACPI pointed a 16 MiB buffer for the log
+events because RSI maps to the 'order' parameter of __alloc_pages_noprof().
+Address the bug by moving from devm_kmalloc() to devm_add_action() and
+kvmalloc() and devm_add_action().
+
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org # v2.6.16+
+Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
+Reported-by: Andy Liang <andy.liang@hpe.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219495
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Andy Liang <andy.liang@hpe.com>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Stable-dep-of: a3a860bc0fd6 ("tpm: Change to kvalloc() in eventlog/acpi.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/acpi.c |  5 +++--
- drivers/char/tpm/eventlog/efi.c  | 13 +++++++------
- drivers/char/tpm/eventlog/of.c   |  3 ++-
- drivers/char/tpm/tpm-chip.c      |  1 -
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/char/tpm/eventlog/acpi.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
-index cd266021d0103..bd757d836c5cf 100644
+index bd757d836c5cf..1a5644051d310 100644
 --- a/drivers/char/tpm/eventlog/acpi.c
 +++ b/drivers/char/tpm/eventlog/acpi.c
-@@ -14,6 +14,7 @@
-  * Access to the event log extended by the TCG BIOS of PC platform
-  */
+@@ -63,6 +63,11 @@ static bool tpm_is_tpm2_log(void *bios_event_log, u64 len)
+ 	return n == 0;
+ }
  
-+#include <linux/device.h>
- #include <linux/seq_file.h>
- #include <linux/fs.h>
- #include <linux/security.h>
-@@ -135,7 +136,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
++static void tpm_bios_log_free(void *data)
++{
++	kvfree(data);
++}
++
+ /* read binary bios log */
+ int tpm_read_log_acpi(struct tpm_chip *chip)
+ {
+@@ -136,7 +141,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
  	}
  
  	/* malloc EventLog space */
--	log->bios_event_log = kmalloc(len, GFP_KERNEL);
-+	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
+-	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
++	log->bios_event_log = kvmalloc(len, GFP_KERNEL);
  	if (!log->bios_event_log)
  		return -ENOMEM;
  
-@@ -164,7 +165,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+@@ -162,10 +167,16 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+ 		goto err;
+ 	}
+ 
++	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
++	if (ret) {
++		log->bios_event_log = NULL;
++		goto err;
++	}
++
  	return format;
  
  err:
--	kfree(log->bios_event_log);
-+	devm_kfree(&chip->dev, log->bios_event_log);
+-	devm_kfree(&chip->dev, log->bios_event_log);
++	tpm_bios_log_free(log->bios_event_log);
  	log->bios_event_log = NULL;
  	return ret;
  }
-diff --git a/drivers/char/tpm/eventlog/efi.c b/drivers/char/tpm/eventlog/efi.c
-index e6cb9d525e30c..4e9d7c2bf32ee 100644
---- a/drivers/char/tpm/eventlog/efi.c
-+++ b/drivers/char/tpm/eventlog/efi.c
-@@ -6,6 +6,7 @@
-  *      Thiebaud Weksteen <tweek@google.com>
-  */
- 
-+#include <linux/device.h>
- #include <linux/efi.h>
- #include <linux/tpm_eventlog.h>
- 
-@@ -55,7 +56,7 @@ int tpm_read_log_efi(struct tpm_chip *chip)
- 	}
- 
- 	/* malloc EventLog space */
--	log->bios_event_log = kmemdup(log_tbl->log, log_size, GFP_KERNEL);
-+	log->bios_event_log = devm_kmemdup(&chip->dev, log_tbl->log, log_size, GFP_KERNEL);
- 	if (!log->bios_event_log) {
- 		ret = -ENOMEM;
- 		goto out;
-@@ -76,7 +77,7 @@ int tpm_read_log_efi(struct tpm_chip *chip)
- 			     MEMREMAP_WB);
- 	if (!final_tbl) {
- 		pr_err("Could not map UEFI TPM final log\n");
--		kfree(log->bios_event_log);
-+		devm_kfree(&chip->dev, log->bios_event_log);
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-@@ -91,11 +92,11 @@ int tpm_read_log_efi(struct tpm_chip *chip)
- 	 * Allocate memory for the 'combined log' where we will append the
- 	 * 'final events log' to.
- 	 */
--	tmp = krealloc(log->bios_event_log,
--		       log_size + final_events_log_size,
--		       GFP_KERNEL);
-+	tmp = devm_krealloc(&chip->dev, log->bios_event_log,
-+			    log_size + final_events_log_size,
-+			    GFP_KERNEL);
- 	if (!tmp) {
--		kfree(log->bios_event_log);
-+		devm_kfree(&chip->dev, log->bios_event_log);
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-diff --git a/drivers/char/tpm/eventlog/of.c b/drivers/char/tpm/eventlog/of.c
-index a9ce66d09a754..741ab2204b11a 100644
---- a/drivers/char/tpm/eventlog/of.c
-+++ b/drivers/char/tpm/eventlog/of.c
-@@ -10,6 +10,7 @@
-  * Read the event log created by the firmware on PPC64
-  */
- 
-+#include <linux/device.h>
- #include <linux/slab.h>
- #include <linux/of.h>
- #include <linux/tpm_eventlog.h>
-@@ -65,7 +66,7 @@ int tpm_read_log_of(struct tpm_chip *chip)
- 		return -EIO;
- 	}
- 
--	log->bios_event_log = kmemdup(__va(base), size, GFP_KERNEL);
-+	log->bios_event_log = devm_kmemdup(&chip->dev, __va(base), size, GFP_KERNEL);
- 	if (!log->bios_event_log)
- 		return -ENOMEM;
- 
-diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
-index 65d800ecc9964..a3459238ecb36 100644
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -267,7 +267,6 @@ static void tpm_dev_release(struct device *dev)
- 	idr_remove(&dev_nums_idr, chip->dev_num);
- 	mutex_unlock(&idr_lock);
- 
--	kfree(chip->log.bios_event_log);
- 	kfree(chip->work_space.context_buf);
- 	kfree(chip->work_space.session_buf);
- 	kfree(chip->allocated_banks);
 -- 
 2.39.5
 
