@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BDC23099F;
-	Mon, 10 Mar 2025 17:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6351B22B8BD;
+	Mon, 10 Mar 2025 17:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627739; cv=none; b=iS3YaSmCXJunVHY3c/blwr8PQ7fan5YQJsfVBb+5ABXniqjsOT0qFReISIO5rE4E0MaWArPgiEaGB+OeXcY9X2cP32eymZfL2DO5kYG0EKvVCYGh6AWhD/HXVO4Y5XxRiKmYNTUKt1xj21WULMtiDPDKOI9BgYtVfCuunvWiPDc=
+	t=1741627740; cv=none; b=ZMBDdhzMEtX1NEOkZNSDe8mtqO5DzeDgYSq8uT/YwbTfk+GST+Pfy734u9qn8BVEu/XWG/rnTESGPhVKlEdFCPBpWNQ7sfsm6kgQeMySgVk3M2FBJHIdMmuDLYDJKpdmS47/HwGp3Vfxj2nJn/jol0ngJmuT838bW34r9Ndd4+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627739; c=relaxed/simple;
-	bh=XEsdKSewen3JdCfRHrCApi6HANwDxKePcUk6+BLH+vs=;
+	s=arc-20240116; t=1741627740; c=relaxed/simple;
+	bh=NkKRCbP8txvE1xMo4hgwyVtFsfdZhth0eurr7dNc+Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cq3e58C6rfm1D0FaDUqU5ILxI7ykzZ/AYv335jUVT/06Ea8UDv+SuIzXfr2jbSUWMCDPIJksG5fo2NBckETseHTeayk8o8cy51zkdy5bNGMfa0v8r+lyh+sXPusb4i7kGYyfAlUHvnxguJNyxe13RA7Lna8ieeXDA+1Opv2T6N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiOFFgUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DMJYSWKSvbdKhrSOK8zRqOrHfwxZE86zOjGZye/8XUy1G+3/WF+uBIb5i/sbB74xOYMMaJ866AtwJbSkvOKLf/U1k9t0I49TfsNYOeuC4ADeFSSYXhA9SJq5oe3io8DPlLXIuUF4wTFWUv0fE/ql6IHdcWDFe/Th0bYAr54IBA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMJyEfoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiOFFgUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26186C4CEEF;
-	Mon, 10 Mar 2025 17:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMJyEfoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2373C4CEEC;
+	Mon, 10 Mar 2025 17:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627737;
-	bh=XEsdKSewen3JdCfRHrCApi6HANwDxKePcUk6+BLH+vs=;
+	s=korg; t=1741627740;
+	bh=NkKRCbP8txvE1xMo4hgwyVtFsfdZhth0eurr7dNc+Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiOFFgUKFbYkSaakW2a1YDsSidoxpAzCgxum8mq2hCCtmPA/xhCO9brGBL5NG3S8N
-	 FmYnFT0XQuxaIXLyWjy0EHsSZaqvxcR1EitZtjR2whwh0pC1IViwICBMPNmuprTPrJ
-	 rZLzQfANFYATwW5xwQ4IRMJduKJxn+VOeY04hYWU=
+	b=KMJyEfoUN3q2aZ0M6wDYh4KYmTpEki9L6ZjdSt/HVOPv3Lam1NOgxLt5qs0Ix4nH6
+	 cuVcehku/zE2hFkGt9KfvprS3QPYDbXO13vFpXsHA3HqpH59+BFBfOF03p4/hUecX9
+	 zfQfkJIqs0w4cLUDY7V0LzmOIAqYNPgAoiE89NeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 215/269] usb: atm: cxacru: fix a flaw in existing endpoint checks
-Date: Mon, 10 Mar 2025 18:06:08 +0100
-Message-ID: <20250310170506.257557228@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>
+Subject: [PATCH 6.12 233/269] KVM: x86: Snapshot the hosts DEBUGCTL in common x86
+Date: Mon, 10 Mar 2025 18:06:26 +0100
+Message-ID: <20250310170506.971498440@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,83 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c90aad369899a607cfbc002bebeafd51e31900cd upstream.
+commit fb71c795935652fa20eaf9517ca9547f5af99a76 upstream.
 
-Syzbot once again identified a flaw in usb endpoint checking, see [1].
-This time the issue stems from a commit authored by me (2eabb655a968
-("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")).
+Move KVM's snapshot of DEBUGCTL to kvm_vcpu_arch and take the snapshot in
+common x86, so that SVM can also use the snapshot.
 
-While using usb_find_common_endpoints() may usually be enough to
-discard devices with wrong endpoints, in this case one needs more
-than just finding and identifying the sufficient number of endpoints
-of correct types - one needs to check the endpoint's address as well.
+Opportunistically change the field to a u64.  While bits 63:32 are reserved
+on AMD, not mentioned at all in Intel's SDM, and managed as an "unsigned
+long" by the kernel, DEBUGCTL is an MSR and therefore a 64-bit value.
 
-Since cxacru_bind() fills URBs with CXACRU_EP_CMD address in mind,
-switch the endpoint verification approach to usb_check_XXX_endpoints()
-instead to fix incomplete ep testing.
-
-[1] Syzbot report:
-usb 5-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 1378 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
-...
-RIP: 0010:usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
-...
-Call Trace:
- <TASK>
- cxacru_cm+0x3c8/0xe50 drivers/usb/atm/cxacru.c:649
- cxacru_card_status drivers/usb/atm/cxacru.c:760 [inline]
- cxacru_bind+0xcf9/0x1150 drivers/usb/atm/cxacru.c:1223
- usbatm_usb_probe+0x314/0x1d30 drivers/usb/atm/usbatm.c:1058
- cxacru_usb_probe+0x184/0x220 drivers/usb/atm/cxacru.c:1377
- usb_probe_interface+0x641/0xbb0 drivers/usb/core/driver.c:396
- really_probe+0x2b9/0xad0 drivers/base/dd.c:658
- __driver_probe_device+0x1a2/0x390 drivers/base/dd.c:800
- driver_probe_device+0x50/0x430 drivers/base/dd.c:830
-...
-
-Reported-and-tested-by: syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccbbc229a024fa3e13b5
-Fixes: 2eabb655a968 ("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")
-Cc: stable@kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20250213122259.730772-1-n.zhandarovich@fintech.ru
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20250227222411.3490595-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/kvm_host.h |    1 +
+ arch/x86/kvm/vmx/vmx.c          |    8 ++------
+ arch/x86/kvm/vmx/vmx.h          |    2 --
+ arch/x86/kvm/x86.c              |    1 +
+ 4 files changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -1131,7 +1131,10 @@ static int cxacru_bind(struct usbatm_dat
- 	struct cxacru_data *instance;
- 	struct usb_device *usb_dev = interface_to_usbdev(intf);
- 	struct usb_host_endpoint *cmd_ep = usb_dev->ep_in[CXACRU_EP_CMD];
--	struct usb_endpoint_descriptor *in, *out;
-+	static const u8 ep_addrs[] = {
-+		CXACRU_EP_CMD + USB_DIR_IN,
-+		CXACRU_EP_CMD + USB_DIR_OUT,
-+		0};
- 	int ret;
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -761,6 +761,7 @@ struct kvm_vcpu_arch {
+ 	u32 pkru;
+ 	u32 hflags;
+ 	u64 efer;
++	u64 host_debugctl;
+ 	u64 apic_base;
+ 	struct kvm_lapic *apic;    /* kernel irqchip context */
+ 	bool load_eoi_exitmap_pending;
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -1515,16 +1515,12 @@ void vmx_vcpu_load_vmcs(struct kvm_vcpu
+  */
+ void vmx_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ {
+-	struct vcpu_vmx *vmx = to_vmx(vcpu);
+-
+ 	if (vcpu->scheduled_out && !kvm_pause_in_guest(vcpu->kvm))
+ 		shrink_ple_window(vcpu);
  
- 	/* instance init */
-@@ -1179,13 +1182,11 @@ static int cxacru_bind(struct usbatm_dat
+ 	vmx_vcpu_load_vmcs(vcpu, cpu, NULL);
+ 
+ 	vmx_vcpu_pi_load(vcpu, cpu);
+-
+-	vmx->host_debugctlmsr = get_debugctlmsr();
+ }
+ 
+ void vmx_vcpu_put(struct kvm_vcpu *vcpu)
+@@ -7454,8 +7450,8 @@ fastpath_t vmx_vcpu_run(struct kvm_vcpu
  	}
  
- 	if (usb_endpoint_xfer_int(&cmd_ep->desc))
--		ret = usb_find_common_endpoints(intf->cur_altsetting,
--						NULL, NULL, &in, &out);
-+		ret = usb_check_int_endpoints(intf, ep_addrs);
- 	else
--		ret = usb_find_common_endpoints(intf->cur_altsetting,
--						&in, &out, NULL, NULL);
-+		ret = usb_check_bulk_endpoints(intf, ep_addrs);
+ 	/* MSR_IA32_DEBUGCTLMSR is zeroed on vmexit. Restore it if needed */
+-	if (vmx->host_debugctlmsr)
+-		update_debugctlmsr(vmx->host_debugctlmsr);
++	if (vcpu->arch.host_debugctl)
++		update_debugctlmsr(vcpu->arch.host_debugctl);
  
--	if (ret) {
-+	if (!ret) {
- 		usb_err(usbatm_instance, "cxacru_bind: interface has incorrect endpoints\n");
- 		ret = -ENODEV;
- 		goto fail;
+ #ifndef CONFIG_X86_64
+ 	/*
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -339,8 +339,6 @@ struct vcpu_vmx {
+ 	/* apic deadline value in host tsc */
+ 	u64 hv_deadline_tsc;
+ 
+-	unsigned long host_debugctlmsr;
+-
+ 	/*
+ 	 * Only bits masked by msr_ia32_feature_control_valid_bits can be set in
+ 	 * msr_ia32_feature_control. FEAT_CTL_LOCKED is always included
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4993,6 +4993,7 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
+ 
+ 	/* Save host pkru register if supported */
+ 	vcpu->arch.host_pkru = read_pkru();
++	vcpu->arch.host_debugctl = get_debugctlmsr();
+ 
+ 	/* Apply any externally detected TSC adjustments (due to suspend) */
+ 	if (unlikely(vcpu->arch.tsc_offset_adjustment)) {
 
 
