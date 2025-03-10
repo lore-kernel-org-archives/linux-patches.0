@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D6718DB24;
-	Mon, 10 Mar 2025 17:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9F518DB24;
+	Mon, 10 Mar 2025 17:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628230; cv=none; b=dCrwB3rgki7XrUy1TaitSbuR6sDQTspNbvSL5FxuKemKHk1rhxy6vnrTp2yIYs0iKWajSBq5Skl8yV+p/7lFPK2PzKlLsUpLEB/m3jFQjKALIjnwRRJtzaZEaxAP8RIjr7ZDKr6mcPSyoPBeLxk+ktSPJhyyYoS/jzs+w54/VAo=
+	t=1741628233; cv=none; b=NTgFyaQRsazC25zaCpfpucOm+ZjVs1WJyNOGvO3KNmX/D2cHHnRa4tCbtugz+9alaPRAw2NBMSg9eBPgMNX+bskK1sE8/7QBfF6IM73guUP8sYf/rjWm4PYUtQz6AOOpG/MeZb66sLQRptuWSxw+Qidjyzt1dEI3xLRssDubU3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628230; c=relaxed/simple;
-	bh=hCdAsGjTVw3LAduvr2P1TR2iJXAvZKjyDYgBsmk+zX8=;
+	s=arc-20240116; t=1741628233; c=relaxed/simple;
+	bh=bRtJ1WAntY8pH81YN6yxCy3rHl4IP0Cw7FtSzs/oCEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5eSSnIGe9g7XZ3qWXg83TSFMLJjWvC2nc1Y/nFhElPRiR3uGbbxw/6hhYO4s4RIB13zpZgMyWYfh3kTKkEf04Z6qNrVAA3XyTzCelf6ijpoWTr8V+ss7/+SodfbUzu/EeXV7jKWylDu1tKeHMq4yaK3TBSGa0A0g6wQFJjdqR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6qCdsAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMXoSpK27Q6g1bhp8rN0umU+DREh8k4k+CqovkriOWYKf5mnZlDTA0sleUldS/td2ImsjDZFgognZqjSHtbPCUY8iqkcmxZbvIvqsLTTO1bTFJaN7WfZRyFkFGoA/7F1z55LH6ovmqCCrKF7RDDr4kOgUqJoVeupduIKsUOxmWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSLDOf4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6qCdsAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35683C4CEE5;
-	Mon, 10 Mar 2025 17:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSLDOf4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE681C4CEE5;
+	Mon, 10 Mar 2025 17:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628230;
-	bh=hCdAsGjTVw3LAduvr2P1TR2iJXAvZKjyDYgBsmk+zX8=;
+	s=korg; t=1741628233;
+	bh=bRtJ1WAntY8pH81YN6yxCy3rHl4IP0Cw7FtSzs/oCEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6qCdsApjaHb4NQBZ8eBdeUFyYIfSbpvUeP7ixQA1yw06kiEciv5ewXB4hwRy4GsI
-	 cuVbrMmozsJXItcVEKEMxvF4QSOMda0o5VH/OSlwokzzFMxUdMGcZAcoYGBmohogSL
-	 +EFpnP2FspIwEmVfzGzkgmvtGwzG1fA7/FYcNBb8=
+	b=RSLDOf4Ja2eY9CAiU7EBRicVgRP9rfL7a7NEnX7NAuX9tC2rBePi0tO1jJNMfKT+R
+	 5b4WTsjiQKSFrVuog1Xxih2gBCWBqD7tjrFGGD0jiSdiGQEcWOaXBQEc3XwpeZ5USJ
+	 /DTK3VJsaxpNXNP6A1kJ0abg4ge1im7RpRAv/bZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 131/145] riscv: Fix enabling cbo.zero when running in M-mode
-Date: Mon, 10 Mar 2025 18:07:05 +0100
-Message-ID: <20250310170440.051068889@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.6 102/145] usb: dwc3: gadget: Prevent irq storm when TH re-executes
+Date: Mon, 10 Mar 2025 18:06:36 +0100
+Message-ID: <20250310170438.881511520@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -52,54 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 3fb3f7164edc467450e650dca51dbe4823315a56 upstream.
+commit 69c58deec19628c8a686030102176484eb94fed4 upstream.
 
-When the kernel is running in M-mode, the CBZE bit must be set in the
-menvcfg CSR, not in senvcfg.
+While commit d325a1de49d6 ("usb: dwc3: gadget: Prevent losing events in
+event cache") makes sure that top half(TH) does not end up overwriting the
+cached events before processing them when the TH gets invoked more than one
+time, returning IRQ_HANDLED results in occasional irq storm where the TH
+hogs the CPU. The irq storm can be prevented by the flag before event
+handler busy is cleared. Default enable interrupt moderation in all
+versions which support them.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 43c16d51a19b ("RISC-V: Enable cbo.zero in usermode")
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20240228065559.3434837-2-samuel.holland@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+ftrace event stub during dwc3 irq storm:
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000866: irq_handler_exit: irq=14 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000872: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000874: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000881: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000883: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000889: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000892: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000898: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000901: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000907: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000909: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000915: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000918: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000924: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000927: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000933: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000935: irq_handler_exit: irq=504 ret=handled
+    ....
+
+Cc: stable <stable@kernel.org>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Fixes: d325a1de49d6 ("usb: dwc3: gadget: Prevent losing events in event cache")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250216223003.3568039-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/csr.h   |    2 ++
- arch/riscv/kernel/cpufeature.c |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c   |   16 ++++++----------
+ drivers/usb/dwc3/gadget.c |   10 +++++++---
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/arch/riscv/include/asm/csr.h
-+++ b/arch/riscv/include/asm/csr.h
-@@ -398,6 +398,7 @@
- # define CSR_STATUS	CSR_MSTATUS
- # define CSR_IE		CSR_MIE
- # define CSR_TVEC	CSR_MTVEC
-+# define CSR_ENVCFG	CSR_MENVCFG
- # define CSR_SCRATCH	CSR_MSCRATCH
- # define CSR_EPC	CSR_MEPC
- # define CSR_CAUSE	CSR_MCAUSE
-@@ -422,6 +423,7 @@
- # define CSR_STATUS	CSR_SSTATUS
- # define CSR_IE		CSR_SIE
- # define CSR_TVEC	CSR_STVEC
-+# define CSR_ENVCFG	CSR_SENVCFG
- # define CSR_SCRATCH	CSR_SSCRATCH
- # define CSR_EPC	CSR_SEPC
- # define CSR_CAUSE	CSR_SCAUSE
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -679,7 +679,7 @@ arch_initcall(check_unaligned_access_boo
- void riscv_user_isa_enable(void)
- {
- 	if (riscv_cpu_has_extension_unlikely(smp_processor_id(), RISCV_ISA_EXT_ZICBOZ))
--		csr_set(CSR_SENVCFG, ENVCFG_CBZE);
-+		csr_set(CSR_ENVCFG, ENVCFG_CBZE);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1671,8 +1671,6 @@ static void dwc3_get_properties(struct d
+ 	dwc->tx_thr_num_pkt_prd = tx_thr_num_pkt_prd;
+ 	dwc->tx_max_burst_prd = tx_max_burst_prd;
+ 
+-	dwc->imod_interval = 0;
+-
+ 	dwc->tx_fifo_resize_max_num = tx_fifo_resize_max_num;
  }
  
- #ifdef CONFIG_RISCV_ALTERNATIVE
+@@ -1690,21 +1688,19 @@ static void dwc3_check_params(struct dwc
+ 	unsigned int hwparam_gen =
+ 		DWC3_GHWPARAMS3_SSPHY_IFC(dwc->hwparams.hwparams3);
+ 
+-	/* Check for proper value of imod_interval */
+-	if (dwc->imod_interval && !dwc3_has_imod(dwc)) {
+-		dev_warn(dwc->dev, "Interrupt moderation not supported\n");
+-		dwc->imod_interval = 0;
+-	}
+-
+ 	/*
++	 * Enable IMOD for all supporting controllers.
++	 *
++	 * Particularly, DWC_usb3 v3.00a must enable this feature for
++	 * the following reason:
++	 *
+ 	 * Workaround for STAR 9000961433 which affects only version
+ 	 * 3.00a of the DWC_usb3 core. This prevents the controller
+ 	 * interrupt from being masked while handling events. IMOD
+ 	 * allows us to work around this issue. Enable it for the
+ 	 * affected version.
+ 	 */
+-	if (!dwc->imod_interval &&
+-	    DWC3_VER_IS(DWC3, 300A))
++	if (dwc3_has_imod((dwc)))
+ 		dwc->imod_interval = 1;
+ 
+ 	/* Check the maximum_speed parameter */
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4507,14 +4507,18 @@ static irqreturn_t dwc3_process_event_bu
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0),
+ 		    DWC3_GEVNTSIZ_SIZE(evt->length));
+ 
++	evt->flags &= ~DWC3_EVENT_PENDING;
++	/*
++	 * Add an explicit write memory barrier to make sure that the update of
++	 * clearing DWC3_EVENT_PENDING is observed in dwc3_check_event_buf()
++	 */
++	wmb();
++
+ 	if (dwc->imod_interval) {
+ 		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), DWC3_GEVNTCOUNT_EHB);
+ 		dwc3_writel(dwc->regs, DWC3_DEV_IMOD(0), dwc->imod_interval);
+ 	}
+ 
+-	/* Keep the clearing of DWC3_EVENT_PENDING at the end */
+-	evt->flags &= ~DWC3_EVENT_PENDING;
+-
+ 	return ret;
+ }
+ 
 
 
