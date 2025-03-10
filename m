@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2B717CA12;
-	Mon, 10 Mar 2025 17:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404A6231A2A;
+	Mon, 10 Mar 2025 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629250; cv=none; b=NpRN/a4dw1F7jsYKyUy/13yYmda6hgaOnPYzXuYHSXaQCwBOVvm79sHSzL60d5RTOMlG5zCZfO9jjDIb0SPGsFg5imB8fmNJTW3AACnyPYTPLEKqusbYJnC4NvGjec1BDbns6wWdjQ458hqrmoBPLVMaC1fkYOugyqIOuY1kcC8=
+	t=1741629253; cv=none; b=e/Uh/wdCPYOEjV+lX+EHFJbYt4bfBmvBJR7SXkxxjk6rxuuvjJdNoladAAPXurmCBe8nx5ZJW6ronOl1HBgLTVWORyKxbeRQRZTJ9h0bgCgQXg2v0ct92hg6lUB1tRp3XRV2cVC4J8eqfZY/t7L0RDZ4PrMr4H7XH0j8GoE0DEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629250; c=relaxed/simple;
-	bh=dulB4lfa3TIoDXjn2Xf6srooPirTNzSNhRPAnoZ/dI8=;
+	s=arc-20240116; t=1741629253; c=relaxed/simple;
+	bh=oPzarWIX/yqH8RsVUtzz4nLlersf9RZP+C3brK3gaZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gG1G7ZIzeQWtRRGhmQiR+TfCvB/ImSAtlopbN603vvBqwKXtkHz6eXboIUj6vYyFIjoNx/pdwP1z9Ogzu3sF7IwlDpowlMYhEyKZDtGhxRdzO7eQrGzGj+BzK0izYJuh9l3rEJ0krlVm0SCty3BTgQ4KxJgs3mEv5aN77qXr/80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGchUB3y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dlNKCcsViEpa+2WBhhRjkRCwwZp6K8/KCyke2Xlw5xj3VVlEI/DLy79BH/ekIPrYPUKp2KtIzvQRvym0aAiGyx/J106wHrSOrqO3+p1Jy1rzIEBf5NLEix6WxYM1/W/qw8gMVqgiho1caVH47KvUGucINSg0W//I1qy7JGBfkb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reJ9/EZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGchUB3y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17EEC4CEE5;
-	Mon, 10 Mar 2025 17:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reJ9/EZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1F8C4CEE5;
+	Mon, 10 Mar 2025 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629250;
-	bh=dulB4lfa3TIoDXjn2Xf6srooPirTNzSNhRPAnoZ/dI8=;
+	s=korg; t=1741629253;
+	bh=oPzarWIX/yqH8RsVUtzz4nLlersf9RZP+C3brK3gaZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGchUB3yKFwgT+dsrMhpGoFXqrlxFK/ZsUeLoLZifD8HtZfzkI2kr4QMxDQySDcBT
-	 K5aiut76OSZOMxjyUmf/hbX6f3MWaO1l1V45ogcAgK06HDo6ZFBxJaScV38NnzaX3E
-	 kIVjfgZ5I0pzKJCOqFOtdjOQT3M3Cqo7V7Hv1ya8=
+	b=reJ9/EZx/PwBCmMkdqF5oKJLKFLNTQ21bur7p4LpVDG4oQl37lpaM/HA4QbSrzoCs
+	 cJFR9u73jhFUrLgsRqFKG/s0Wan7hE3M5wAkXLxK1D20WiGdw2sUaTfBQ82TyaYlmC
+	 oOwG64w3sMwRo3jmsG0N3IIO18ux/Xcq4LPz2jvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	Potin Lai <potin.lai.pt@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/620] net/ncsi: fix locking in Get MAC Address handling
-Date: Mon, 10 Mar 2025 18:01:16 +0100
-Message-ID: <20250310170554.713804928@linuxfoundation.org>
+Subject: [PATCH 5.15 231/620] gpio: Dont fiddle with irqchips marked as immutable
+Date: Mon, 10 Mar 2025 18:01:17 +0100
+Message-ID: <20250310170554.752785231@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,135 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 9e2bbab94b88295dcc57c7580393c9ee08d7314d ]
+[ Upstream commit 6c846d026d490b2383d395bc8e7b06336219667b ]
 
-Obtaining RTNL lock in a response handler is not allowed since it runs
-in an atomic softirq context. Postpone setting the MAC address by adding
-a dedicated step to the configuration FSM.
+In order to move away from gpiolib messing with the internals of
+unsuspecting irqchips, add a flag by which irqchips advertise
+that they are not to be messed with, and do solemnly swear that
+they correctly call into the gpiolib helpers when required.
 
-Fixes: 790071347a0a ("net/ncsi: change from ndo_set_mac_address to dev_set_mac_address")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20241129-potin-revert-ncsi-set-mac-addr-v1-1-94ea2cb596af@gmail.com
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Tested-by: Potin Lai <potin.lai.pt@gmail.com>
-Link: https://patch.msgid.link/20250109145054.30925-1-fercerpav@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Also nudge the users into converting their drivers to the
+new model.
+
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20220419141846.598305-2-maz@kernel.org
+Stable-dep-of: 9860370c2172 ("gpio: xilinx: Convert gpio_lock to raw spinlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h    |  2 ++
- net/ncsi/ncsi-manage.c | 16 ++++++++++++++--
- net/ncsi/ncsi-rsp.c    | 19 ++++++-------------
- 3 files changed, 22 insertions(+), 15 deletions(-)
+ drivers/gpio/gpiolib.c | 7 ++++++-
+ include/linux/irq.h    | 2 ++
+ kernel/irq/debugfs.c   | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index ef0f8f73826f5..4e0842df5234e 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -289,6 +289,7 @@ enum {
- 	ncsi_dev_state_config_sp	= 0x0301,
- 	ncsi_dev_state_config_cis,
- 	ncsi_dev_state_config_oem_gma,
-+	ncsi_dev_state_config_apply_mac,
- 	ncsi_dev_state_config_clear_vids,
- 	ncsi_dev_state_config_svf,
- 	ncsi_dev_state_config_ev,
-@@ -322,6 +323,7 @@ struct ncsi_dev_priv {
- #define NCSI_DEV_RESHUFFLE	4
- #define NCSI_DEV_RESET		8            /* Reset state of NC          */
- 	unsigned int        gma_flag;        /* OEM GMA flag               */
-+	struct sockaddr     pending_mac;     /* MAC address received from GMA */
- 	spinlock_t          lock;            /* Protect the NCSI device    */
- 	unsigned int        package_probe_id;/* Current ID during probe    */
- 	unsigned int        package_num;     /* Number of packages         */
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index da7013c407012..1104c6ce8d65e 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -1038,7 +1038,7 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
- 			  : ncsi_dev_state_config_clear_vids;
- 		break;
- 	case ncsi_dev_state_config_oem_gma:
--		nd->state = ncsi_dev_state_config_clear_vids;
-+		nd->state = ncsi_dev_state_config_apply_mac;
- 
- 		nca.package = np->id;
- 		nca.channel = nc->id;
-@@ -1050,10 +1050,22 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
- 			nca.type = NCSI_PKT_CMD_OEM;
- 			ret = ncsi_gma_handler(&nca, nc->version.mf_id);
- 		}
--		if (ret < 0)
-+		if (ret < 0) {
-+			nd->state = ncsi_dev_state_config_clear_vids;
- 			schedule_work(&ndp->work);
-+		}
- 
- 		break;
-+	case ncsi_dev_state_config_apply_mac:
-+		rtnl_lock();
-+		ret = dev_set_mac_address(dev, &ndp->pending_mac, NULL);
-+		rtnl_unlock();
-+		if (ret < 0)
-+			netdev_warn(dev, "NCSI: 'Writing MAC address to device failed\n");
-+
-+		nd->state = ncsi_dev_state_config_clear_vids;
-+
-+		fallthrough;
- 	case ncsi_dev_state_config_clear_vids:
- 	case ncsi_dev_state_config_svf:
- 	case ncsi_dev_state_config_ev:
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index e28be33bdf2c4..14bd66909ca45 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -628,16 +628,14 @@ static int ncsi_rsp_handler_snfc(struct ncsi_request *nr)
- static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5eb4edcf03bd4..631eaf2e418a7 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1484,6 +1484,11 @@ static void gpiochip_set_irq_hooks(struct gpio_chip *gc)
  {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
-+	struct sockaddr *saddr = &ndp->pending_mac;
- 	struct net_device *ndev = ndp->ndev.dev;
- 	struct ncsi_rsp_oem_pkt *rsp;
--	struct sockaddr saddr;
- 	u32 mac_addr_off = 0;
--	int ret = 0;
+ 	struct irq_chip *irqchip = gc->irq.chip;
  
- 	/* Get the response header */
- 	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
++	if (irqchip->flags & IRQCHIP_IMMUTABLE)
++		return;
++
++	chip_warn(gc, "not an immutable chip, please consider fixing it!\n");
++
+ 	if (!irqchip->irq_request_resources &&
+ 	    !irqchip->irq_release_resources) {
+ 		irqchip->irq_request_resources = gpiochip_irq_reqres;
+@@ -1651,7 +1656,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
+ 		irq_domain_remove(gc->irq.domain);
+ 	}
  
--	saddr.sa_family = ndev->type;
- 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
- 	if (mfr_id == NCSI_OEM_MFR_BCM_ID)
- 		mac_addr_off = BCM_MAC_ADDR_OFFSET;
-@@ -646,22 +644,17 @@ static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
- 	else if (mfr_id == NCSI_OEM_MFR_INTEL_ID)
- 		mac_addr_off = INTEL_MAC_ADDR_OFFSET;
+-	if (irqchip) {
++	if (irqchip && !(irqchip->flags & IRQCHIP_IMMUTABLE)) {
+ 		if (irqchip->irq_request_resources == gpiochip_irq_reqres) {
+ 			irqchip->irq_request_resources = NULL;
+ 			irqchip->irq_release_resources = NULL;
+diff --git a/include/linux/irq.h b/include/linux/irq.h
+index 4fd8d900a1b86..38399d7f508fd 100644
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -570,6 +570,7 @@ struct irq_chip {
+  * IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND:  Invokes __enable_irq()/__disable_irq() for wake irqs
+  *                                    in the suspend path if they are in disabled state
+  * IRQCHIP_AFFINITY_PRE_STARTUP:      Default affinity update before startup
++ * IRQCHIP_IMMUTABLE:		      Don't ever change anything in this chip
+  */
+ enum {
+ 	IRQCHIP_SET_TYPE_MASKED			= (1 <<  0),
+@@ -583,6 +584,7 @@ enum {
+ 	IRQCHIP_SUPPORTS_NMI			= (1 <<  8),
+ 	IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND	= (1 <<  9),
+ 	IRQCHIP_AFFINITY_PRE_STARTUP		= (1 << 10),
++	IRQCHIP_IMMUTABLE			= (1 << 11),
+ };
  
--	memcpy(saddr.sa_data, &rsp->data[mac_addr_off], ETH_ALEN);
-+	saddr->sa_family = ndev->type;
-+	memcpy(saddr->sa_data, &rsp->data[mac_addr_off], ETH_ALEN);
- 	if (mfr_id == NCSI_OEM_MFR_BCM_ID || mfr_id == NCSI_OEM_MFR_INTEL_ID)
--		eth_addr_inc((u8 *)saddr.sa_data);
--	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
-+		eth_addr_inc((u8 *)saddr->sa_data);
-+	if (!is_valid_ether_addr((const u8 *)saddr->sa_data))
- 		return -ENXIO;
+ #include <linux/irqdesc.h>
+diff --git a/kernel/irq/debugfs.c b/kernel/irq/debugfs.c
+index e4cff358b437e..7ff52d94b42c0 100644
+--- a/kernel/irq/debugfs.c
++++ b/kernel/irq/debugfs.c
+@@ -58,6 +58,7 @@ static const struct irq_bit_descr irqchip_flags[] = {
+ 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_LEVEL_MSI),
+ 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_NMI),
+ 	BIT_MASK_DESCR(IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND),
++	BIT_MASK_DESCR(IRQCHIP_IMMUTABLE),
+ };
  
- 	/* Set the flag for GMA command which should only be called once */
- 	ndp->gma_flag = 1;
- 
--	rtnl_lock();
--	ret = dev_set_mac_address(ndev, &saddr, NULL);
--	rtnl_unlock();
--	if (ret < 0)
--		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
--
--	return ret;
-+	return 0;
- }
- 
- /* Response handler for Mellanox card */
+ static void
 -- 
 2.39.5
 
