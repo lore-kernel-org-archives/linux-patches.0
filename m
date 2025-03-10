@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BABB22ACDC;
-	Mon, 10 Mar 2025 17:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5820022ACDC;
+	Mon, 10 Mar 2025 17:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628138; cv=none; b=F3ONw0cttOT3QCmkp1FtT1isaEowodXcGb54r6Wr/I5Va6SoxCE2VV8WnfRtGpLpWP4BaSrKzqsfUj8Fw6RIjcXn8ydcC86WZkZ+UAZ/eCL5DcdzW4FPo9gTcKNOjRyjnDihKOIVbj0tpT5yUkGcaLY/Aj5QeUTpmbScWncLBLA=
+	t=1741628141; cv=none; b=qKSEKqlxasAvmCAv1kKnFBLD+AsNf+uiEP5hfOd+B8JgZK4wn3qEH+ikxLsRzQBEN7v108KzIumTvS1Yu2QrzARHGYt4rw/zCHy8afkL84eyuFYh8cvjB8RpqZ83T40Sw6RUpyouHwXb1iZkw5fN50b/wGXW+/vyTRftDEOWJf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628138; c=relaxed/simple;
-	bh=Zp3CN3YZhLqgDAUH0AuwChnrRs1xfff9afHLpsPWn8c=;
+	s=arc-20240116; t=1741628141; c=relaxed/simple;
+	bh=aF7YcOOFxbBql5p8WpnwA+5xzqscJH4E+H2LGCMu67U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpDM3w1Wg3VPJrKAGKcLWP4BlcCkHMxik1d6l13+XIaVN1YGRFg2Ycwk7StXLHVqYuysoEl/zSjL+cKR0QrbVaDdNNL2vETkV4AEm8+R7bbaLbr7MW8kPYt5a/TVQFxqahUivb0JB9z3nr89ASeFWjuvyVvdnlfQJt5BNhvEDs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sUlIDIJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HU5DKt9HW2vQrlaaCkw71nWJsXeM1frh41OeQnnsTiaj+WaT4vM5l02tmvUpdokmz1/l4ppEL1X9T5v67oYOqpHPmz7L88Rteg7vhupJpeyI5oKNMO047sh4E+ZFYQRV2hfIOmXu6QgN14ZDiJeDgJR9AQFtrgJEGZN/0XXxHHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojuCD/le; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sUlIDIJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F711C4CEE5;
-	Mon, 10 Mar 2025 17:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojuCD/le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D697EC4CEE5;
+	Mon, 10 Mar 2025 17:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628138;
-	bh=Zp3CN3YZhLqgDAUH0AuwChnrRs1xfff9afHLpsPWn8c=;
+	s=korg; t=1741628141;
+	bh=aF7YcOOFxbBql5p8WpnwA+5xzqscJH4E+H2LGCMu67U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUlIDIJ8laLQKPq80fyCmzCMAVgmLeWkAqCXxWyiy1HToDkW2y3lola6v3jH2l94r
-	 gST7IQRhIEUrojthw4EQjPN9QqvLTOSCZe8VrT4vM2pPwyPTEWeAKapk6H3oEDzQY4
-	 uZy6KOSdHd0ly/NqKJDyMfiVUOL9yiDiVWSqDYqs=
+	b=ojuCD/leZyvNjBICPgT9pR/B5HfIM3UZljNED/0/LwJ2xnvkNCpCgume2oPil8TpC
+	 lYyc9O4tPZ7O1MdThBDU3jcNPUmjibAm+rViAH99YUHyAKfeOkHRFEvQVPHKmQh0wk
+	 mKQD4OJmlj1QpxeVZ/2mEKVtRjBkxMKMuAqp5EfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Erik Schumacher <erik.schumacher@iris-sensing.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/145] hwmon: (ntc_thermistor) Fix the ncpXXxh103 sensor table
-Date: Mon, 10 Mar 2025 18:06:02 +0100
-Message-ID: <20250310170437.494531647@linuxfoundation.org>
+Subject: [PATCH 6.6 069/145] hwmon: (ad7314) Validate leading zero bits and return error
+Date: Mon, 10 Mar 2025 18:06:03 +0100
+Message-ID: <20250310170437.534885552@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -52,106 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Erik Schumacher <erik.schumacher@iris-sensing.com>
 
-[ Upstream commit 1c7932d5ae0f5c22fa52ac811b4c427bbca5aff5 ]
+[ Upstream commit e278d5e8aef4c0a1d9a9fa8b8910d713a89aa800 ]
 
-I could not find a single table that has the values currently present in
-the table, change it to the actual values that can be found in [1]/[2]
-and [3] (page 15 column 2)
+Leading zero bits are sent on the bus before the temperature value is
+transmitted. If any of these bits are high, the connection might be
+unstable or there could be no AD7314 / ADT730x (or compatible) at all.
+Return -EIO in that case.
 
-[1]: https://www.murata.com/products/productdetail?partno=NCP15XH103F03RC
-[2]: https://www.murata.com/products/productdata/8796836626462/NTHCG83.txt?1437969843000
-[3]: https://nl.mouser.com/datasheet/2/281/r44e-522712.pdf
-
-Fixes: 54ce3a0d8011 ("hwmon: (ntc_thermistor) Add support for ncpXXxh103")
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Link: https://lore.kernel.org/r/20250227-ntc_thermistor_fixes-v1-3-70fa73200b52@gocontroll.com
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Erik Schumacher <erik.schumacher@iris-sensing.com>
+Fixes: 4f3a659581cab ("hwmon: AD7314 driver (ported from IIO)")
+Link: https://lore.kernel.org/r/24a50c2981a318580aca8f50d23be7987b69ea00.camel@iris-sensing.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ntc_thermistor.c | 66 +++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ drivers/hwmon/ad7314.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/hwmon/ntc_thermistor.c b/drivers/hwmon/ntc_thermistor.c
-index b5352900463fb..0d29c8f97ba7c 100644
---- a/drivers/hwmon/ntc_thermistor.c
-+++ b/drivers/hwmon/ntc_thermistor.c
-@@ -181,40 +181,40 @@ static const struct ntc_compensation ncpXXwf104[] = {
- };
- 
- static const struct ntc_compensation ncpXXxh103[] = {
--	{ .temp_c	= -40, .ohm	= 247565 },
--	{ .temp_c	= -35, .ohm	= 181742 },
--	{ .temp_c	= -30, .ohm	= 135128 },
--	{ .temp_c	= -25, .ohm	= 101678 },
--	{ .temp_c	= -20, .ohm	= 77373 },
--	{ .temp_c	= -15, .ohm	= 59504 },
--	{ .temp_c	= -10, .ohm	= 46222 },
--	{ .temp_c	= -5, .ohm	= 36244 },
--	{ .temp_c	= 0, .ohm	= 28674 },
--	{ .temp_c	= 5, .ohm	= 22878 },
--	{ .temp_c	= 10, .ohm	= 18399 },
--	{ .temp_c	= 15, .ohm	= 14910 },
--	{ .temp_c	= 20, .ohm	= 12169 },
-+	{ .temp_c	= -40, .ohm	= 195652 },
-+	{ .temp_c	= -35, .ohm	= 148171 },
-+	{ .temp_c	= -30, .ohm	= 113347 },
-+	{ .temp_c	= -25, .ohm	= 87559 },
-+	{ .temp_c	= -20, .ohm	= 68237 },
-+	{ .temp_c	= -15, .ohm	= 53650 },
-+	{ .temp_c	= -10, .ohm	= 42506 },
-+	{ .temp_c	= -5, .ohm	= 33892 },
-+	{ .temp_c	= 0, .ohm	= 27219 },
-+	{ .temp_c	= 5, .ohm	= 22021 },
-+	{ .temp_c	= 10, .ohm	= 17926 },
-+	{ .temp_c	= 15, .ohm	= 14674 },
-+	{ .temp_c	= 20, .ohm	= 12081 },
- 	{ .temp_c	= 25, .ohm	= 10000 },
--	{ .temp_c	= 30, .ohm	= 8271 },
--	{ .temp_c	= 35, .ohm	= 6883 },
--	{ .temp_c	= 40, .ohm	= 5762 },
--	{ .temp_c	= 45, .ohm	= 4851 },
--	{ .temp_c	= 50, .ohm	= 4105 },
--	{ .temp_c	= 55, .ohm	= 3492 },
--	{ .temp_c	= 60, .ohm	= 2985 },
--	{ .temp_c	= 65, .ohm	= 2563 },
--	{ .temp_c	= 70, .ohm	= 2211 },
--	{ .temp_c	= 75, .ohm	= 1915 },
--	{ .temp_c	= 80, .ohm	= 1666 },
--	{ .temp_c	= 85, .ohm	= 1454 },
--	{ .temp_c	= 90, .ohm	= 1275 },
--	{ .temp_c	= 95, .ohm	= 1121 },
--	{ .temp_c	= 100, .ohm	= 990 },
--	{ .temp_c	= 105, .ohm	= 876 },
--	{ .temp_c	= 110, .ohm	= 779 },
--	{ .temp_c	= 115, .ohm	= 694 },
--	{ .temp_c	= 120, .ohm	= 620 },
--	{ .temp_c	= 125, .ohm	= 556 },
-+	{ .temp_c	= 30, .ohm	= 8315 },
-+	{ .temp_c	= 35, .ohm	= 6948 },
-+	{ .temp_c	= 40, .ohm	= 5834 },
-+	{ .temp_c	= 45, .ohm	= 4917 },
-+	{ .temp_c	= 50, .ohm	= 4161 },
-+	{ .temp_c	= 55, .ohm	= 3535 },
-+	{ .temp_c	= 60, .ohm	= 3014 },
-+	{ .temp_c	= 65, .ohm	= 2586 },
-+	{ .temp_c	= 70, .ohm	= 2228 },
-+	{ .temp_c	= 75, .ohm	= 1925 },
-+	{ .temp_c	= 80, .ohm	= 1669 },
-+	{ .temp_c	= 85, .ohm	= 1452 },
-+	{ .temp_c	= 90, .ohm	= 1268 },
-+	{ .temp_c	= 95, .ohm	= 1110 },
-+	{ .temp_c	= 100, .ohm	= 974 },
-+	{ .temp_c	= 105, .ohm	= 858 },
-+	{ .temp_c	= 110, .ohm	= 758 },
-+	{ .temp_c	= 115, .ohm	= 672 },
-+	{ .temp_c	= 120, .ohm	= 596 },
-+	{ .temp_c	= 125, .ohm	= 531 },
- };
+diff --git a/drivers/hwmon/ad7314.c b/drivers/hwmon/ad7314.c
+index 7802bbf5f9587..59424103f6348 100644
+--- a/drivers/hwmon/ad7314.c
++++ b/drivers/hwmon/ad7314.c
+@@ -22,11 +22,13 @@
+  */
+ #define AD7314_TEMP_MASK		0x7FE0
+ #define AD7314_TEMP_SHIFT		5
++#define AD7314_LEADING_ZEROS_MASK	BIT(15)
  
  /*
+  * ADT7301 and ADT7302 temperature masks
+  */
+ #define ADT7301_TEMP_MASK		0x3FFF
++#define ADT7301_LEADING_ZEROS_MASK	(BIT(15) | BIT(14))
+ 
+ enum ad7314_variant {
+ 	adt7301,
+@@ -65,12 +67,20 @@ static ssize_t ad7314_temperature_show(struct device *dev,
+ 		return ret;
+ 	switch (spi_get_device_id(chip->spi_dev)->driver_data) {
+ 	case ad7314:
++		if (ret & AD7314_LEADING_ZEROS_MASK) {
++			/* Invalid read-out, leading zero part is missing */
++			return -EIO;
++		}
+ 		data = (ret & AD7314_TEMP_MASK) >> AD7314_TEMP_SHIFT;
+ 		data = sign_extend32(data, 9);
+ 
+ 		return sprintf(buf, "%d\n", 250 * data);
+ 	case adt7301:
+ 	case adt7302:
++		if (ret & ADT7301_LEADING_ZEROS_MASK) {
++			/* Invalid read-out, leading zero part is missing */
++			return -EIO;
++		}
+ 		/*
+ 		 * Documented as a 13 bit twos complement register
+ 		 * with a sign bit - which is a 14 bit 2's complement
 -- 
 2.39.5
 
