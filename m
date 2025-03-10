@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C7023372C;
-	Mon, 10 Mar 2025 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59132154BE0;
+	Mon, 10 Mar 2025 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628717; cv=none; b=BxzHlJspaslNULJB8cNI/zZGy2hqNJcVcc05UebJ1e15cTHxWkqG+hQKSdG0UqDf1l4GJy+60DfNuj7pgXjQZlhLqHCRBsXBVRHYG1yNn3s2x3iUJXphuZKF4XbPnc2YjYzOgKCBOuYFzKzDTHjH81fcN84KZIgMtihg8G4ozJY=
+	t=1741628720; cv=none; b=BOermZNinnSpFdUgT8suHjQoXrqLGbd3ebXvkdlBvf3hs8K/jgHXGkd0pmJLzkpwz4JbPHpo10nKr1LsXGDCFExue9slW7MxWWXri+t6giHRgOzmNwvKtKRKkvg4uSxnRTgGPxZGSaLxASOUnaChz1dHu0TZXE/QoqJvmlmArTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628717; c=relaxed/simple;
-	bh=CjTMD5hyA0yu+sgmcYD6rRpjUckEIJsefjs8YXK61Ls=;
+	s=arc-20240116; t=1741628720; c=relaxed/simple;
+	bh=eHF1PGkn2I+cPfYz+Nkcvhu9S4yPQsF2nD/52JSrk/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqKpqeG17LUklzH1E+Q/++OMnktq0niSTCvHDNwxtmm7dkAl08LB0SQ+r7VOk1i+zrRw9eOU3W4wHePXB6ErdlZ0D4EURcH8AZBrzpzRQ/0TrydSap/bmK4e2ZWHeIc1AOT6JrYF4mlcaLYpdg07eemNFow9Fd86UVWuJcWPzPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1K7YW2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gw9NXPJL+yD7vx4jRvbiqhgGMsKk9r0JbUCVnSk/N1EDiM80xl3TtwISYzDAkcIeH2gOeroZr5JDIpU/arL7mi8M7lD3LK12X/fIUNqZ9t5BKxEJYlRl9tBnqzFAaALo7EbLFqd2ouOqzkGIAFJIdu8i9g/Utw5AWFZpdKuPXfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C++jbXtf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1K7YW2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E669BC4CEE5;
-	Mon, 10 Mar 2025 17:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C++jbXtf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33CFC4CEE5;
+	Mon, 10 Mar 2025 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628717;
-	bh=CjTMD5hyA0yu+sgmcYD6rRpjUckEIJsefjs8YXK61Ls=;
+	s=korg; t=1741628720;
+	bh=eHF1PGkn2I+cPfYz+Nkcvhu9S4yPQsF2nD/52JSrk/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1K7YW2IR5bt15mFQGgP7GEeNJNWuIx98K4PCDN5fyceRxI8RCtVb8ArOelnPxviM
-	 gaNZFa+BpuxheP7fDF5CwQ3/WLjqKACC6Kn27EPyamecm/gLzBYYFNUR085PTKLn/k
-	 kISOyZ9eU1OB5kAfRJfxSwftq6eNlbx++1X8Sxg0=
+	b=C++jbXtfhj0051yaZ9OKwotPTFOhvu1b4/mJV4xDeh0Tan84JUY2sHMwaMdCE6Sfy
+	 MhoW4gHSpLWfEF27IOkvdsARuk0+iSiGAu46xGiGQL9twuxlE5aI/hrW2ePT+1D62A
+	 cjyTwm0PDWkMXyWcfhP2kXxmjg0OtDnlK/l43RyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Richard Russon (FlatCap)" <ldm@flatcap.org>,
+	linux-ntfs-dev@lists.sourceforge.net,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/620] nvme: Add error check for xa_store in nvme_get_effects_log
-Date: Mon, 10 Mar 2025 17:57:39 +0100
-Message-ID: <20250310170546.101821811@linuxfoundation.org>
+Subject: [PATCH 5.15 014/620] partitions: ldm: remove the initial kernel-doc notation
+Date: Mon, 10 Mar 2025 17:57:40 +0100
+Message-ID: <20250310170546.140440057@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,50 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
+[ Upstream commit e494e451611a3de6ae95f99e8339210c157d70fb ]
 
-The xa_store() may fail due to memory allocation failure because there
-is no guarantee that the index csi is already used. This fix adds an
-error check of the return value of xa_store() in nvme_get_effects_log().
+Remove the file's first comment describing what the file is.
+This comment is not in kernel-doc format so it causes a kernel-doc
+warning.
 
-Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+ldm.h:13: warning: expecting prototype for ldm(). Prototype was for _FS_PT_LDM_H_() instead
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Richard Russon (FlatCap) <ldm@flatcap.org>
+Cc: linux-ntfs-dev@lists.sourceforge.net
+Cc: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20250111062758.910458-1-rdunlap@infradead.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ block/partitions/ldm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 93a19588ae92a..17ba2e59fce26 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2861,7 +2861,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
- static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 				struct nvme_effects_log **log)
- {
--	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
-+	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
- 	int ret;
- 
- 	if (cel)
-@@ -2878,7 +2878,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 		return ret;
- 	}
- 
--	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	if (xa_is_err(old)) {
-+		kfree(cel);
-+		return xa_err(old);
-+	}
- out:
- 	*log = cel;
- 	return 0;
+diff --git a/block/partitions/ldm.h b/block/partitions/ldm.h
+index 8693704dcf5e9..84a66b51cd2ab 100644
+--- a/block/partitions/ldm.h
++++ b/block/partitions/ldm.h
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+-/**
++/*
+  * ldm - Part of the Linux-NTFS project.
+  *
+  * Copyright (C) 2001,2002 Richard Russon <ldm@flatcap.org>
 -- 
 2.39.5
 
