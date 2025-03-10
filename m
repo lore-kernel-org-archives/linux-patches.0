@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FAE230BF6;
-	Mon, 10 Mar 2025 17:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BB230BF6;
+	Mon, 10 Mar 2025 17:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626917; cv=none; b=M0o5OD4tOk0tKSYiqrF5t9tk/gpThMSh2YVd2th1hTiA4Web/W2ufVN0tZv/V4BBLwl0rNNLTdh2DX4mPsAXtyMRce/8mFpFRlLVbrBI2Cnw6xydtcHC83N6d3jGiZLvRl+QY8swdGvgcBokrYiIpv7VvxmU5AebVmdy7XrwVPI=
+	t=1741626920; cv=none; b=oC2NExogUq2R320wVQ1KCaQ/SCWFDvA4TFbKSizQyZ40uBn4NQ6ccSFlsVNGnGqRZPkyvjF1T9INrxEYAjhjEx5gOZi1KzoTwStjprJdf6TzR+p7+fmfuQ6A6gEqL6Jq2tTSeNUbqrgvifba7jqHmh1cZJs9wPKLQn4lH5rDb2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626917; c=relaxed/simple;
-	bh=WjAFfnTh5Oc7BQOzM2HBQN3XS+TahWRACsRnzoS51n8=;
+	s=arc-20240116; t=1741626920; c=relaxed/simple;
+	bh=lpBvOJ7iacnTcEMd/g6bgHzeaXnrq92QgbevZwBIoEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFCUH5J1R1U3uMWpxQi4+9jY0A8AXTiszdhUbhgBGInh7DtbD8NWCt3pa0eDt9rAbxZN6kqWzUu98TL9kDDmvbPJbeul6Svgen0UJXQT7tluobLglkCNZde19Z6fDxhyPZvxpzj6NU5KeJId1cxYypQ2he+W1ZA/vNFg2liJ0tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaIzdtCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i2RcLmk3gU6yltQ2S5El9PW2OT9ABxTATeAcaiZuMA0JO1/y7SHNrXpi0vR5Uqr7Sxz4rh3eezE6ohm5OL9eWTUxiuEDmmR5seGkpULHyiOrIEdeNB3wo1Nhtu4i03HK1TeevbNDjAc9P88ZHR7ZrvpN7oUMKSYtDuW41ofkUfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSlSF1Ly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaIzdtCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA47C4CEEB;
-	Mon, 10 Mar 2025 17:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSlSF1Ly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CB6C4CEE5;
+	Mon, 10 Mar 2025 17:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626917;
-	bh=WjAFfnTh5Oc7BQOzM2HBQN3XS+TahWRACsRnzoS51n8=;
+	s=korg; t=1741626920;
+	bh=lpBvOJ7iacnTcEMd/g6bgHzeaXnrq92QgbevZwBIoEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BaIzdtCcN8cSn+KFKS7LFTlLYH3maQUAlrwzJeFcXzlhsSKs27bOjxT8O1kxyaw0R
-	 UZzGcXjOgYLqNncVbVYdp2P3aDmH/cwLZvgmIKrauE5HEBMMutZhfYbvbPtQpWDPrW
-	 OKsdgWRmSaqayOLeJD46xOqU5G3pRtDzSTQSFOuc=
+	b=qSlSF1LyCLpDJxwQ5hcKpfmhCkg4SZ3f8IJirB9ofZIwUdl0gKtsb1mj7KbGojBuH
+	 dM6rCL567+u8IYPWZb+WRBZQU+CsHEm8Pjkw+lEsB+B1ByI8jwBkCMYpInct0nZsi7
+	 iEcA8+mmJI6uxkvkDcDOm9SSsFgETh1WX+/yIdpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noah <kernel-org-10@maxgrass.eu>,
-	Eric Sandeen <sandeen@redhat.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 140/207] exfat: short-circuit zero-byte writes in exfat_file_write_iter
-Date: Mon, 10 Mar 2025 18:05:33 +0100
-Message-ID: <20250310170453.367645683@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.13 158/207] usb: typec: ucsi: Fix NULL pointer access
+Date: Mon, 10 Mar 2025 18:05:51 +0100
+Message-ID: <20250310170454.073935817@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,44 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-[ Upstream commit fda94a9919fd632033979ad7765a99ae3cab9289 ]
+commit b13abcb7ddd8d38de769486db5bd917537b32ab1 upstream.
 
-When generic_write_checks() returns zero, it means that
-iov_iter_count() is zero, and there is no work to do.
+Resources should be released only after all threads that utilize them
+have been destroyed.
+This commit ensures that resources are not released prematurely by waiting
+for the associated workqueue to complete before deallocating them.
 
-Simply return success like all other filesystems do, rather than
-proceeding down the write path, which today yields an -EFAULT in
-generic_perform_write() via the
-(fault_in_iov_iter_readable(i, bytes) == bytes) check when bytes
-== 0.
-
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
-Reported-by: Noah <kernel-org-10@maxgrass.eu>
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250305111739.1489003-2-akuchynski@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 05b51e7217838..807349d8ea050 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -587,7 +587,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	valid_size = ei->valid_size;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1825,11 +1825,11 @@ static int ucsi_init(struct ucsi *ucsi)
  
- 	ret = generic_write_checks(iocb, iter);
--	if (ret < 0)
-+	if (ret <= 0)
- 		goto unlock;
+ err_unregister:
+ 	for (con = connector; con->port; con++) {
++		if (con->wq)
++			destroy_workqueue(con->wq);
+ 		ucsi_unregister_partner(con);
+ 		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
+ 		ucsi_unregister_port_psy(con);
+-		if (con->wq)
+-			destroy_workqueue(con->wq);
  
- 	if (iocb->ki_flags & IOCB_DIRECT) {
--- 
-2.39.5
-
+ 		usb_power_delivery_unregister_capabilities(con->port_sink_caps);
+ 		con->port_sink_caps = NULL;
+@@ -2013,10 +2013,6 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		cancel_work_sync(&ucsi->connector[i].work);
+-		ucsi_unregister_partner(&ucsi->connector[i]);
+-		ucsi_unregister_altmodes(&ucsi->connector[i],
+-					 UCSI_RECIPIENT_CON);
+-		ucsi_unregister_port_psy(&ucsi->connector[i]);
+ 
+ 		if (ucsi->connector[i].wq) {
+ 			struct ucsi_work *uwork;
+@@ -2032,6 +2028,11 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 			destroy_workqueue(ucsi->connector[i].wq);
+ 		}
+ 
++		ucsi_unregister_partner(&ucsi->connector[i]);
++		ucsi_unregister_altmodes(&ucsi->connector[i],
++					 UCSI_RECIPIENT_CON);
++		ucsi_unregister_port_psy(&ucsi->connector[i]);
++
+ 		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_sink_caps);
+ 		ucsi->connector[i].port_sink_caps = NULL;
+ 		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_source_caps);
 
 
