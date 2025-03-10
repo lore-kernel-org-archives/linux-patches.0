@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39FC230BD5;
-	Mon, 10 Mar 2025 17:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843B11E519;
+	Mon, 10 Mar 2025 17:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626659; cv=none; b=DO/NGooznW/j5jxtCojdHVCYf5AP3KxikN01REg9sJP6JjUgLGjwOEqyqgnvdYshCLDz6Doamx60sFcAa8UTU4na2CYosWgL1h0/iZdSurXWDplwsw0cjwKAUNteHDEYFXp6P9LR7QWvIq0STB2IlKQ8LIeOcDK1FM7oJ5P5UQU=
+	t=1741626662; cv=none; b=G89WP9k3OomOl8aw+OdGpAJE+5a//TGaDs4/hnx2B80TbbaPrrRogxSqZUkKnhgLdcrsLXa/pYiiVacsdZH7zjDrZ+R2LvWOeKPeUxfwbCzg1/2Tz5o6JlQuwVPcKg/JKLSkllDpcXNKSq/fUvkHgmEvM3mbMEITSBSLrY6yxZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626659; c=relaxed/simple;
-	bh=dUUQCezPFGQD25IQq0TfrDxMdW2XHLn4I4NHOINBwx4=;
+	s=arc-20240116; t=1741626662; c=relaxed/simple;
+	bh=7bXBFraa22KQ/Ri5ud0wQ36mHEBxYc+8HvNgKUXfUbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/7zYrMHwh/fSDCYg+q7wrY+giZqyT3jztpir0+vGPHvih/GlJUWGCOVPN075NZg1qObwFeLdwwrfMntuzk2Ws5Q4miueDq9HcI86a/Frcqn4jkU51KTd3JXIxp+rMJuWIPS84X0a/9xLnZO2lEBzEBWNAq3UtIlsgDh8q0jgpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJEwxmhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=unVBoXzlXZMX4/+8+LDq4RayHBiIDL/skO6dB97JBdEjlc3b+iShCHMhEsBfy63LS28F9WDeuRUz+oyQXlRj/ClkorW6HFZVI6H4LB6eTMYYZCtTS9z8I6U5oYqxVjhIspja3ZppGQhkVm2Mo8YafiNa9ogOkekgpXyOCZZgktc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qf+FH+2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJEwxmhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE83C4CEE5;
-	Mon, 10 Mar 2025 17:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf+FH+2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEDAC4CEE5;
+	Mon, 10 Mar 2025 17:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626659;
-	bh=dUUQCezPFGQD25IQq0TfrDxMdW2XHLn4I4NHOINBwx4=;
+	s=korg; t=1741626662;
+	bh=7bXBFraa22KQ/Ri5ud0wQ36mHEBxYc+8HvNgKUXfUbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJEwxmhDPa+M583EZk18/LJUSkMNKvut6N3BtZoGyxu0McMWBpAiP5ljnxnZKNa8a
-	 E/s9ZTIGuKXwuXwgLuurVh3Qc5d47moHTWooe5nVKYL72Mo3OI9LqF3IOomhncl+iY
-	 rDMHMNToAx5vYBWepaFfhRxdcdPlFJ/5V7J6riXc=
+	b=Qf+FH+2z+MmqCzJEFgNEyKxe3eJsuy/Khdf9SUZFyZ5Sxqsn1Nf9cz0AR92C2KOHA
+	 MtnV+AP5i3HwUEDAIDMyYPiNBoqfP8NoSpeaRWQI3tP3Pw3b9acDkOWsIBT7VhR/wt
+	 hnKMqiE4eduup921iPuCiJi3M/0Ajw/rJUGkcLkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	kernel test robot <lkp@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Macro Elver <elver@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 067/207] rapidio: fix an API misues when rio_add_net() fails
-Date: Mon, 10 Mar 2025 18:04:20 +0100
-Message-ID: <20250310170450.430919757@linuxfoundation.org>
+Subject: [PATCH 6.13 068/207] dma: kmsan: export kmsan_handle_dma() for modules
+Date: Mon, 10 Mar 2025 18:04:21 +0100
+Message-ID: <20250310170450.469817702@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -54,39 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit b2ef51c74b0171fde7eb69b6152d3d2f743ef269 upstream.
+commit 19fac3c93991502a22c5132824c40b6a2e64b136 upstream.
 
-rio_add_net() calls device_register() and fails when device_register()
-fails.  Thus, put_device() should be used rather than kfree().  Add
-"mport->net = NULL;" to avoid a use after free issue.
+kmsan_handle_dma() is used by virtio_ring() which can be built as a
+module.  kmsan_handle_dma() needs to be exported otherwise building the
+virtio_ring fails.
 
-Link: https://lkml.kernel.org/r/20250227073409.3696854-1-haoxiang_li2024@163.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Yang Yingliang <yangyingliang@huawei.com>
+Export kmsan_handle_dma for modules.
+
+Link: https://lkml.kernel.org/r/20250218091411.MMS3wBN9@linutronix.de
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502150634.qjxwSeJR-lkp@intel.com/
+Fixes: 7ade4f10779c ("dma: kmsan: unpoison DMA mappings")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Macro Elver <elver@google.com>
+Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/kmsan/hooks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -1742,7 +1742,8 @@ static int rio_mport_add_riodev(struct m
- 		err = rio_add_net(net);
- 		if (err) {
- 			rmcd_debug(RDEV, "failed to register net, err=%d", err);
--			kfree(net);
-+			put_device(&net->dev);
-+			mport->net = NULL;
- 			goto cleanup;
- 		}
+--- a/mm/kmsan/hooks.c
++++ b/mm/kmsan/hooks.c
+@@ -357,6 +357,7 @@ void kmsan_handle_dma(struct page *page,
+ 		size -= to_go;
  	}
+ }
++EXPORT_SYMBOL_GPL(kmsan_handle_dma);
+ 
+ void kmsan_handle_dma_sg(struct scatterlist *sg, int nents,
+ 			 enum dma_data_direction dir)
 
 
