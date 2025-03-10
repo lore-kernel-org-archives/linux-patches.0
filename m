@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B519233731;
-	Mon, 10 Mar 2025 17:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277B422D4C3;
+	Mon, 10 Mar 2025 17:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626986; cv=none; b=teikJtxzA0OVh0MZAoBWlTkzF/EjuYT7mTtf+XcmJnRGklJIhSKDRpC9oDi1OI0JNH3rP+hOadPkJTgTsy5Kgr+n8l1gtBjfRxw3pIo/mzEVBut01tf3Zg9gidbEM5dCpzDGTWiArMICao16VbdC2LouN+r6/6qute7lPyGrxew=
+	t=1741626989; cv=none; b=Vgqm8kwaEPczSp3eaXGzXDKMSShZ9a0BtDJIl94P+eP8LP9dlbvjdqGUr7OG8Cud9a2TksRCGoQhPb0UR1+X5sdFbhXOY8ODuZrTi3naJICYNEaxqdcn6VOr7d3LbNu+otIkaDceqqoUIuKGNdcUw1tNAm5qYBN93SkjiVRYAu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626986; c=relaxed/simple;
-	bh=i91s11DZAp6iAwe4QWO3LejN99UVZ9F2g9xrnbq+bBU=;
+	s=arc-20240116; t=1741626989; c=relaxed/simple;
+	bh=tkwRAYb/gpiBX9RvzoSAgiiuoict60PQg0wPe8jwg94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fH2vWgTSW/qdwrDGR75wnrHz3nMR5e0xJM08WIX2vLOYPRue0KmAkOw+UB70pvCAPYOTDcMGfBESES4eXv087w5lIMp4IQRHjSWkDaLbaAF6b9vF8OzFWdF/7KCr2zUsfJzUa55Enrn7iQf8feZcTSAyrcbjELjX0h5KEvhC7Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INSXpCe+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTxsZf1RXWbBim3BZNqPqC1HXqsXr11duAWVtX82q3+5rTJArD+ikJdsFXgCGC29E74CyFPIIh4qJJkXCr+Yc1xP/J8lVPGfdC5N4MIFKJ/jFTTM+czz+KSRkBY4JVq4hBZ6gLgKzwDAodB0Jdiop2vtlH34prb//awMJF7ERRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRqF2rEr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INSXpCe+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E47C4CEEB;
-	Mon, 10 Mar 2025 17:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRqF2rEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FA0C4CEE5;
+	Mon, 10 Mar 2025 17:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626986;
-	bh=i91s11DZAp6iAwe4QWO3LejN99UVZ9F2g9xrnbq+bBU=;
+	s=korg; t=1741626989;
+	bh=tkwRAYb/gpiBX9RvzoSAgiiuoict60PQg0wPe8jwg94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INSXpCe+2pcneqyYsSe2Nl62EdkkBLPgpEXKZC+2eqDtQt9BB48WuvyhU/TgTzLxd
-	 5R7uvobr2uL/GMWebvV+RcgXp769kKoEwt8ZKHexAHrKNRKTfBQtu5JssJPL+6Gkm8
-	 iEQF0rdKDpKqCZEZfd0oIim2ptpgxlNlHOnXkr6A=
+	b=sRqF2rErtmT6HHHq1JnVKTBjxEgXS39m6Ldc9pUYd1/9g2J0O08KPTEII9jfe0rhn
+	 25fs9FpZMXT3991CjHIVFYe9AdOzCiccnS8Igm5vQO2gvQ5wwl205lnT9cGFUxni/o
+	 7lX+5YTXU4DJoNAnwlEczfPailLxMynyBgC2iA4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.13 182/207] mei: vsc: Use "wakeuphostint" when getting the host wakeup GPIO
-Date: Mon, 10 Mar 2025 18:06:15 +0100
-Message-ID: <20250310170455.022225062@linuxfoundation.org>
+	Pawel Chmielewski <pawel.chmielewski@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.13 183/207] intel_th: pci: Add Arrow Lake support
+Date: Mon, 10 Mar 2025 18:06:16 +0100
+Message-ID: <20250310170455.062750036@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,76 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Pawel Chmielewski <pawel.chmielewski@intel.com>
 
-commit fdb1ada57cf8b8752cdf54f08709d76d74999544 upstream.
+commit b5edccae9f447a92d475267d94c33f4926963eec upstream.
 
-The _CRS ACPI resources table has 2 entries for the host wakeup GPIO,
-the first one being a regular GpioIo () resource while the second one
-is a GpioInt () resource for the same pin.
+Add support for the Trace Hub in Arrow Lake.
 
-The acpi_gpio_mapping table used by vsc-tp.c maps the first Gpio ()
-resource to "wakeuphost-gpios" where as the second GpioInt () entry
-is mapped to "wakeuphostint-gpios".
-
-Using "wakeuphost" to request the GPIO as was done until now, means
-that the gpiolib-acpi code does not know that the GPIO is active-low
-as that info is only available in the GpioInt () entry.
-
-Things were still working before due to the following happening:
-
-1. Since the 2 entries point to the same pin they share a struct gpio_desc
-2. The SPI core creates the SPI device vsc-tp.c binds to and calls
-   acpi_dev_gpio_irq_get(). This does use the second entry and sets
-   FLAG_ACTIVE_LOW in gpio_desc.flags .
-3. vsc_tp_probe() requests the "wakeuphost" GPIO and inherits the
-   active-low flag set by acpi_dev_gpio_irq_get()
-
-But there is a possible scenario where things do not work:
-
-1. - 3. happen as above
-4. After requesting the "wakeuphost" GPIO, the "resetfw" GPIO is requested
-   next, but its USB GPIO controller is not available yet, so this call
-   returns -EPROBE_DEFER.
-5. The gpio_desc for "wakeuphost" is put() and during this the active-low
-   flag is cleared from gpio_desc.flags .
-6. Later on vsc_tp_probe() requests the "wakeuphost" GPIO again, but now it
-   is not marked active-low.
-
-The difference can also be seen in /sys/kernel/debug/gpio, which contains
-the following line for this GPIO:
-
- gpio-535 (                    |wakeuphost          ) in  hi IRQ ACTIVE LOW
-
-If the second scenario is hit the "ACTIVE LOW" at the end disappears and
-things do not work.
-
-Fix this by requesting the GPIO through the "wakeuphostint" mapping instead
-which provides active-low info without relying on acpi_dev_gpio_irq_get()
-pre-populating this info in the gpio_desc.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2316918
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250214212425.84021-1-hdegoede@redhat.com
+Signed-off-by: Pawel Chmielewski <pawel.chmielewski@intel.com>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20250211185017.1759193-4-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/vsc-tp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -502,7 +502,7 @@ static int vsc_tp_probe(struct spi_devic
- 	if (ret)
- 		return ret;
- 
--	tp->wakeuphost = devm_gpiod_get(dev, "wakeuphost", GPIOD_IN);
-+	tp->wakeuphost = devm_gpiod_get(dev, "wakeuphostint", GPIOD_IN);
- 	if (IS_ERR(tp->wakeuphost))
- 		return PTR_ERR(tp->wakeuphost);
- 
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -335,6 +335,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Arrow Lake */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7724),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Alder Lake CPU */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
