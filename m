@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8EE22758F;
-	Mon, 10 Mar 2025 18:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9D41C3C1C;
+	Mon, 10 Mar 2025 18:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741631019; cv=none; b=XyCiad6CFKxMBqm5Fa5NCqZzbLYy6s84Be6lIYX3Y9k8nQdDFaV14OMbni40W8OaPG+WloRyzhR/VkFQsnS7A+n7Y+kksfYbYzsr1eaqBTwgOIKjWzvOOicrgfbjZCRdizoNHkMtPAKO696ri/+FImI5JKvpTmidBm0krspwZ5I=
+	t=1741631022; cv=none; b=sEfJ1u+HrSlM3HxqYwoA3PavfFJWhYRTQF+4PWW2A2UImsBtYSGS/42EaFzenoIGv0nBs6+7ZNjZRMQgE4i7w7owwtr8M4EUf96QCS6RcuN++MbQRk7Cp/Mr1M/s6n+BCHCwKoo7s2oV/CdHzC5e/kXqEeI4kKFAKTrafj4vNzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741631019; c=relaxed/simple;
-	bh=ps2T+nJYYzEZHGGlCx36+bMH3AaSjqIa6qT4V6bybhY=;
+	s=arc-20240116; t=1741631022; c=relaxed/simple;
+	bh=KrkkogL2RdKVfDvGWLZACn4RYZnaBGdo66T3VaveKcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dceXuJpLRkRotMoMFCHk567fNYY9yD1HjtNxhrB1g3eGU64EZgse33NpbHgzupbVh3ruZeVxdHPhjzthgBAbncGwokI5tukLb7xrEJ0yy/bEIH3sOIePOf4nKU0OgA2MgORXJ8Mqbkwujj4JhpSjUn2ugyf1oY+EqqfxsL2gI9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNDkJCT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kv7lu3+cvh/+tVsWUVhJ3PVEcsqL/bKEWmVREtFNl282OEEqsdN/Ev12BBmLOQB0gIkRaPxBXNHG+Wf2OcbFABglqJt95MQjfl8Gu41v12FaZd8W9D24jnghWcJLI1efiTlh4nrr4araQFE6GhunR0cegJ+2q+ooWFnWr0UQWsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2td9W7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNDkJCT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CB0C4CEE5;
-	Mon, 10 Mar 2025 18:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2td9W7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330F5C4CEEC;
+	Mon, 10 Mar 2025 18:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741631019;
-	bh=ps2T+nJYYzEZHGGlCx36+bMH3AaSjqIa6qT4V6bybhY=;
+	s=korg; t=1741631022;
+	bh=KrkkogL2RdKVfDvGWLZACn4RYZnaBGdo66T3VaveKcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNDkJCT5i/WODt2K3UckL32EV7VhIUg2iktBpOO7ukoKJjMCiZay0z4+H5vXS0buq
-	 9D3RNlHW381IyplAoUBRn+gDFi/1bwObYRaUcoaSnC/7ND58AQL5EWOaXlspE7zU8O
-	 Ppxw+96hAxVOBW0amn02ZSoRav2QZQi2h6ZohlbQ=
+	b=T2td9W7gTd/lyAg6MYF/1zNT1JFR146RdGjVlR/mNcCQYsRd1nrOeezZ6l/owsTT/
+	 Th0axW3NP9vu9B0hn/C8wpuw7MOkKN9VcAfvJhpShGD/h99h03ms8lIoq2knjvPb77
+	 IZJ4f83Q77alLxJ6q3QXK8pK+VI2xbQ7B/8d3pFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.15 614/620] media: uvcvideo: Remove dangling pointers
-Date: Mon, 10 Mar 2025 18:07:40 +0100
-Message-ID: <20250310170609.773475610@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 5.15 615/620] bpf, vsock: Invoke proto::close on close()
+Date: Mon, 10 Mar 2025 18:07:41 +0100
+Message-ID: <20250310170609.812306484@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,174 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 221cd51efe4565501a3dbf04cc011b537dcce7fb upstream.
+commit 135ffc7becc82cfb84936ae133da7969220b43b2 upstream.
 
-When an async control is written, we copy a pointer to the file handle
-that started the operation. That pointer will be used when the device is
-done. Which could be anytime in the future.
+vsock defines a BPF callback to be invoked when close() is called. However,
+this callback is never actually executed. As a result, a closed vsock
+socket is not automatically removed from the sockmap/sockhash.
 
-If the user closes that file descriptor, its structure will be freed,
-and there will be one dangling pointer per pending async control, that
-the driver will try to use.
+Introduce a dummy vsock_close() and make vsock_release() call proto::close.
 
-Clean all the dangling pointers during release().
+Note: changes in __vsock_release() look messy, but it's only due to indent
+level reduction and variables xmas tree reorder.
 
-To avoid adding a performance penalty in the most common case (no async
-operation), a counter has been introduced with some logic to make sure
-that it is properly handled.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-3-26c867231118@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 634f1a7110b4 ("vsock: support sockmap")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://lore.kernel.org/r/20241118-vsock-bpf-poll-close-v1-3-f1b9669cacdc@rbox.co
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+[LL: There is no sockmap support for this kernel version. This patch has
+been backported because it helps reduce conflicts on future backports]
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   63 +++++++++++++++++++++++++++++++++++++--
- drivers/media/usb/uvc/uvc_v4l2.c |    2 +
- drivers/media/usb/uvc/uvcvideo.h |    9 ++++-
- 3 files changed, 71 insertions(+), 3 deletions(-)
+ net/vmw_vsock/af_vsock.c |   71 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 42 insertions(+), 29 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1417,6 +1417,40 @@ static void uvc_ctrl_send_slave_event(st
- 	uvc_ctrl_send_event(chain, handle, ctrl, mapping, val, changes);
- }
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -113,12 +113,14 @@
+ static int __vsock_bind(struct sock *sk, struct sockaddr_vm *addr);
+ static void vsock_sk_destruct(struct sock *sk);
+ static int vsock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb);
++static void vsock_close(struct sock *sk, long timeout);
  
-+static void uvc_ctrl_set_handle(struct uvc_fh *handle, struct uvc_control *ctrl,
-+				struct uvc_fh *new_handle)
-+{
-+	lockdep_assert_held(&handle->chain->ctrl_mutex);
-+
-+	if (new_handle) {
-+		if (ctrl->handle)
-+			dev_warn_ratelimited(&handle->stream->dev->udev->dev,
-+					     "UVC non compliance: Setting an async control with a pending operation.");
-+
-+		if (new_handle == ctrl->handle)
-+			return;
-+
-+		if (ctrl->handle) {
-+			WARN_ON(!ctrl->handle->pending_async_ctrls);
-+			if (ctrl->handle->pending_async_ctrls)
-+				ctrl->handle->pending_async_ctrls--;
-+		}
-+
-+		ctrl->handle = new_handle;
-+		handle->pending_async_ctrls++;
-+		return;
-+	}
-+
-+	/* Cannot clear the handle for a control not owned by us.*/
-+	if (WARN_ON(ctrl->handle != handle))
-+		return;
-+
-+	ctrl->handle = NULL;
-+	if (WARN_ON(!handle->pending_async_ctrls))
-+		return;
-+	handle->pending_async_ctrls--;
-+}
-+
- void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 			   struct uvc_control *ctrl, const u8 *data)
- {
-@@ -1427,7 +1461,8 @@ void uvc_ctrl_status_event(struct uvc_vi
- 	mutex_lock(&chain->ctrl_mutex);
- 
- 	handle = ctrl->handle;
--	ctrl->handle = NULL;
-+	if (handle)
-+		uvc_ctrl_set_handle(handle, ctrl, NULL);
- 
- 	list_for_each_entry(mapping, &ctrl->info.mappings, list) {
- 		s32 value = __uvc_ctrl_get_value(mapping, data);
-@@ -1698,7 +1733,7 @@ static int uvc_ctrl_commit_entity(struct
- 
- 		if (!rollback && handle &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
--			ctrl->handle = handle;
-+			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
- 
- 	return 0;
-@@ -2552,6 +2587,30 @@ int uvc_ctrl_init_device(struct uvc_devi
- 	return 0;
- }
- 
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle)
-+{
-+	struct uvc_entity *entity;
-+
-+	mutex_lock(&handle->chain->ctrl_mutex);
-+
-+	if (!handle->pending_async_ctrls) {
-+		mutex_unlock(&handle->chain->ctrl_mutex);
-+		return;
-+	}
-+
-+	list_for_each_entry(entity, &handle->chain->dev->entities, list) {
-+		unsigned int i;
-+		for (i = 0; i < entity->ncontrols; ++i) {
-+			if (entity->controls[i].handle != handle)
-+				continue;
-+			uvc_ctrl_set_handle(handle, &entity->controls[i], NULL);
-+		}
-+	}
-+
-+	WARN_ON(handle->pending_async_ctrls);
-+	mutex_unlock(&handle->chain->ctrl_mutex);
-+}
-+
- /*
-  * Cleanup device controls.
-  */
---- a/drivers/media/usb/uvc/uvc_v4l2.c
-+++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -602,6 +602,8 @@ static int uvc_v4l2_release(struct file
- 
- 	uvc_dbg(stream->dev, CALLS, "%s\n", __func__);
- 
-+	uvc_ctrl_cleanup_fh(handle);
-+
- 	/* Only free resources if this is a privileged handle. */
- 	if (uvc_has_privileges(handle))
- 		uvc_queue_release(&stream->queue);
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -472,7 +472,11 @@ struct uvc_video_chain {
- 	struct uvc_entity *processing;		/* Processing unit */
- 	struct uvc_entity *selector;		/* Selector unit */
- 
--	struct mutex ctrl_mutex;		/* Protects ctrl.info */
-+	struct mutex ctrl_mutex;		/*
-+						 * Protects ctrl.info,
-+						 * ctrl.handle and
-+						 * uvc_fh.pending_async_ctrls
-+						 */
- 
- 	struct v4l2_prio_state prio;		/* V4L2 priority state */
- 	u32 caps;				/* V4L2 chain-wide caps */
-@@ -724,6 +728,7 @@ struct uvc_fh {
- 	struct uvc_video_chain *chain;
- 	struct uvc_streaming *stream;
- 	enum uvc_handle_state state;
-+	unsigned int pending_async_ctrls;
+ /* Protocol family. */
+ static struct proto vsock_proto = {
+ 	.name = "AF_VSOCK",
+ 	.owner = THIS_MODULE,
+ 	.obj_size = sizeof(struct vsock_sock),
++	.close = vsock_close,
  };
  
- struct uvc_driver {
-@@ -907,6 +912,8 @@ int uvc_ctrl_is_accessible(struct uvc_vi
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 		      struct uvc_xu_control_query *xqry);
+ /* The default peer timeout indicates how long we will wait for a peer response
+@@ -800,39 +802,37 @@ static bool sock_type_connectible(u16 ty
  
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle);
+ static void __vsock_release(struct sock *sk, int level)
+ {
+-	if (sk) {
+-		struct sock *pending;
+-		struct vsock_sock *vsk;
++	struct vsock_sock *vsk;
++	struct sock *pending;
+ 
+-		vsk = vsock_sk(sk);
+-		pending = NULL;	/* Compiler warning. */
++	vsk = vsock_sk(sk);
++	pending = NULL;	/* Compiler warning. */
+ 
+-		/* When "level" is SINGLE_DEPTH_NESTING, use the nested
+-		 * version to avoid the warning "possible recursive locking
+-		 * detected". When "level" is 0, lock_sock_nested(sk, level)
+-		 * is the same as lock_sock(sk).
+-		 */
+-		lock_sock_nested(sk, level);
++	/* When "level" is SINGLE_DEPTH_NESTING, use the nested
++	 * version to avoid the warning "possible recursive locking
++	 * detected". When "level" is 0, lock_sock_nested(sk, level)
++	 * is the same as lock_sock(sk).
++	 */
++	lock_sock_nested(sk, level);
+ 
+-		if (vsk->transport)
+-			vsk->transport->release(vsk);
+-		else if (sock_type_connectible(sk->sk_type))
+-			vsock_remove_sock(vsk);
+-
+-		sock_orphan(sk);
+-		sk->sk_shutdown = SHUTDOWN_MASK;
+-
+-		skb_queue_purge(&sk->sk_receive_queue);
+-
+-		/* Clean up any sockets that never were accepted. */
+-		while ((pending = vsock_dequeue_accept(sk)) != NULL) {
+-			__vsock_release(pending, SINGLE_DEPTH_NESTING);
+-			sock_put(pending);
+-		}
++	if (vsk->transport)
++		vsk->transport->release(vsk);
++	else if (sock_type_connectible(sk->sk_type))
++		vsock_remove_sock(vsk);
+ 
+-		release_sock(sk);
+-		sock_put(sk);
++	sock_orphan(sk);
++	sk->sk_shutdown = SHUTDOWN_MASK;
 +
- /* Utility functions */
- void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
- 			   unsigned int n_terms, unsigned int threshold);
++	skb_queue_purge(&sk->sk_receive_queue);
++
++	/* Clean up any sockets that never were accepted. */
++	while ((pending = vsock_dequeue_accept(sk)) != NULL) {
++		__vsock_release(pending, SINGLE_DEPTH_NESTING);
++		sock_put(pending);
+ 	}
++
++	release_sock(sk);
++	sock_put(sk);
+ }
+ 
+ static void vsock_sk_destruct(struct sock *sk)
+@@ -899,9 +899,22 @@ s64 vsock_stream_has_space(struct vsock_
+ }
+ EXPORT_SYMBOL_GPL(vsock_stream_has_space);
+ 
++/* Dummy callback required by sockmap.
++ * See unconditional call of saved_close() in sock_map_close().
++ */
++static void vsock_close(struct sock *sk, long timeout)
++{
++}
++
+ static int vsock_release(struct socket *sock)
+ {
+-	__vsock_release(sock->sk, 0);
++	struct sock *sk = sock->sk;
++
++	if (!sk)
++		return 0;
++
++	sk->sk_prot->close(sk, 0);
++	__vsock_release(sk, 0);
+ 	sock->sk = NULL;
+ 	sock->state = SS_FREE;
+ 
 
 
