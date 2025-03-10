@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3FF22D4C3;
-	Mon, 10 Mar 2025 17:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7AB2253FE;
+	Mon, 10 Mar 2025 17:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628403; cv=none; b=jpGFpBb9iOvv+8uNa+6ekS4oW7s9dcfV3WWaSlfVpt7t6FVqtXwTr6KWo8igGgNK6kcbzj2r+tBYioEl9dREnwqfGhnYjZBKIBp4+ZWRhtzo7Bx7Co2+l4Ts49wrPapMIyj6Wc0nxTdM9hwEDNgTGlOiQgRO8iODxDG1SOaLBmE=
+	t=1741628406; cv=none; b=VY/wRvT2O1NTSzLIsY2MAEE+irXkx/0XFhOhVCM40ktVjswVXLbyAeouREVjyJ4AruYdMn5RljI4rZlE2xRNUntDYgW0tkknwVlZ3NPwTC0bbOQU8aW7gMNXfRJ4w/Y/wrohdOVyNfldwRUZpo4OjbY6Hkr4wEx+0uzEB6VGl40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628403; c=relaxed/simple;
-	bh=mUhL/py6onsJmeBpNUzL5YlZKtv95fvTvrmoBdgH3ro=;
+	s=arc-20240116; t=1741628406; c=relaxed/simple;
+	bh=x5E/7FViincD7Icb3re6PuZbXR227b7eHl5lw/KNldo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLYXfajbGRKi9KimHun5A9K1d/DwTDMjyxsU4qR7sx84bATYBDO0987IHHyloN1plpSQ7r4TBNwoom05YB5i8MaL1ZpF8LaOT6FcIBwBF9gNXQrqIOuD6WWatZ08NKaXp8yduOrjL0L4behRAFCh4N59QAEpfuCW6Hl7EFGS/yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkNbPcnQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeaqprCbebj52ZDw/quunbdlPClBxfUS7Lel3+6LwNF7T8AUprMyZF/xDG7o6Msz/GMk2g7ZfjxNgAMgQW2TSbapfYAlNIDVsDUcT+HE/BC9aeSSdjhbfNalKqWm0HF58e79hnCG44Aqo/FJOqz1xo5eR2JiU9Jdq/sQB+UIyts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnyRAcgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkNbPcnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D9CC4CEE5;
-	Mon, 10 Mar 2025 17:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnyRAcgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32600C4CEE5;
+	Mon, 10 Mar 2025 17:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628403;
-	bh=mUhL/py6onsJmeBpNUzL5YlZKtv95fvTvrmoBdgH3ro=;
+	s=korg; t=1741628406;
+	bh=x5E/7FViincD7Icb3re6PuZbXR227b7eHl5lw/KNldo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkNbPcnQLci8EkW4VidOx2BolxfWBdIh4MR/BtkydnUkaN31ngVpkjPEKb4bslBKe
-	 0AWKyLEki62CztxlweO9hQt6JXIVOvQNRNX1rdraL1LYPuF0v9EKvQz7U2KI/rFY0C
-	 vq+wFgzV9P0HX/DL/9wc5kqQHgHM92ETBRfvqxrk=
+	b=MnyRAcgxuauhFVYRM26Zap7ESoAdt3f48bEox2kVqCmew2My7gfDduGSx6bxA0TX6
+	 fRpfYF2wrjmvZHpmBOjZQ65Zftc2P53bdG5B9YvpG2NW+IH3coSQjFu3PPvQGhJWls
+	 Te+0xrnhjnZoaaKFaWU7K2yYPi+a2/wR8J8tKAuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 019/109] drm/amd/display: Fix null check for pipe_ctx->plane_state in resource_build_scaling_params
-Date: Mon, 10 Mar 2025 18:06:03 +0100
-Message-ID: <20250310170428.312900687@linuxfoundation.org>
+	Erik Schumacher <erik.schumacher@iris-sensing.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 046/109] hwmon: (ad7314) Validate leading zero bits and return error
+Date: Mon, 10 Mar 2025 18:06:30 +0100
+Message-ID: <20250310170429.397487108@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -51,38 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Erik Schumacher <erik.schumacher@iris-sensing.com>
 
-commit 374c9faac5a763a05bc3f68ad9f73dab3c6aec90 upstream.
+[ Upstream commit e278d5e8aef4c0a1d9a9fa8b8910d713a89aa800 ]
 
-Null pointer dereference issue could occur when pipe_ctx->plane_state
-is null. The fix adds a check to ensure 'pipe_ctx->plane_state' is not
-null before accessing. This prevents a null pointer dereference.
+Leading zero bits are sent on the bus before the temperature value is
+transmitted. If any of these bits are high, the connection might be
+unstable or there could be no AD7314 / ADT730x (or compatible) at all.
+Return -EIO in that case.
 
-Found by code review.
-
-Fixes: 3be5262e353b ("drm/amd/display: Rename more dc_surface stuff to plane_state")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 63e6a77ccf239337baa9b1e7787cde9fa0462092)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Erik Schumacher <erik.schumacher@iris-sensing.com>
+Fixes: 4f3a659581cab ("hwmon: AD7314 driver (ported from IIO)")
+Link: https://lore.kernel.org/r/24a50c2981a318580aca8f50d23be7987b69ea00.camel@iris-sensing.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/ad7314.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1100,7 +1100,8 @@ bool resource_build_scaling_params(struc
- 	DC_LOGGER_INIT(pipe_ctx->stream->ctx->logger);
+diff --git a/drivers/hwmon/ad7314.c b/drivers/hwmon/ad7314.c
+index 7802bbf5f9587..59424103f6348 100644
+--- a/drivers/hwmon/ad7314.c
++++ b/drivers/hwmon/ad7314.c
+@@ -22,11 +22,13 @@
+  */
+ #define AD7314_TEMP_MASK		0x7FE0
+ #define AD7314_TEMP_SHIFT		5
++#define AD7314_LEADING_ZEROS_MASK	BIT(15)
  
- 	/* Invalid input */
--	if (!plane_state->dst_rect.width ||
-+	if (!plane_state ||
-+			!plane_state->dst_rect.width ||
- 			!plane_state->dst_rect.height ||
- 			!plane_state->src_rect.width ||
- 			!plane_state->src_rect.height) {
+ /*
+  * ADT7301 and ADT7302 temperature masks
+  */
+ #define ADT7301_TEMP_MASK		0x3FFF
++#define ADT7301_LEADING_ZEROS_MASK	(BIT(15) | BIT(14))
+ 
+ enum ad7314_variant {
+ 	adt7301,
+@@ -65,12 +67,20 @@ static ssize_t ad7314_temperature_show(struct device *dev,
+ 		return ret;
+ 	switch (spi_get_device_id(chip->spi_dev)->driver_data) {
+ 	case ad7314:
++		if (ret & AD7314_LEADING_ZEROS_MASK) {
++			/* Invalid read-out, leading zero part is missing */
++			return -EIO;
++		}
+ 		data = (ret & AD7314_TEMP_MASK) >> AD7314_TEMP_SHIFT;
+ 		data = sign_extend32(data, 9);
+ 
+ 		return sprintf(buf, "%d\n", 250 * data);
+ 	case adt7301:
+ 	case adt7302:
++		if (ret & ADT7301_LEADING_ZEROS_MASK) {
++			/* Invalid read-out, leading zero part is missing */
++			return -EIO;
++		}
+ 		/*
+ 		 * Documented as a 13 bit twos complement register
+ 		 * with a sign bit - which is a 14 bit 2's complement
+-- 
+2.39.5
+
 
 
