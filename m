@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC802D023;
-	Mon, 10 Mar 2025 17:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3962D023;
+	Mon, 10 Mar 2025 17:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629316; cv=none; b=cXJd0fxZd/dE4l5YaO/Y7suh9RW7GH4jC0yGH+aIOKW4rTHd/a+Rs9INWGhpymyzn3ZFRWwe8ooExlk8drTr8fyHc3EvoSyzKYy3AQru3CcP/pKzNQ0li+h/AwEbt+rbaVRf8ZBws/9rN02c02Kn1MB9/O8ePTUQpPYu41ho+6I=
+	t=1741629319; cv=none; b=hujxoetmBqwrrG5uJq4O2Kt2jJXPhAyAzuPnDw4EA9oux07dsBTOHaLrfpdGWzuWZV4uPvR2dHRtYFvfFZQrCJgoJwu9xi+YUj0vR6+C402m5O/RotwyDahO3dntvMrdYTNCCOa5siIsOLChddSwKIWnN55cLz9wzoyRA2VC8FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629316; c=relaxed/simple;
-	bh=SmPCecALW9OUxm9MuBSM3QRtPZsqojZEj538q/4ytDw=;
+	s=arc-20240116; t=1741629319; c=relaxed/simple;
+	bh=5UyX8yvYY/l0qV+QIgGtOTLCwxGG+MKDbg+Z5ITAo3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFeDjneQOHq+OBIk0k1xRTltPCp3sd6OA4ignpcQbD84q7IxJCX5ik/h+tp7TLdjAhMF9Bk4ZXKqkoMISx2VNsxt4VaSzcKdZgrXpQgxNYEkC8KOeBmhVeI5Zpa7dSBijUjWYdJTiNWZtavOOnE2r68qLhM24PG1Vsp1YsaKQtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zv4GSrGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBxp/6BkeJbSQ+oMC/dXHZpPHKwci/05ogmqeAshbFdm0Uq3pHVseZ6gaY/IVIVrzxPyq4cZiPIzACSWkLHo3TljT9fIg4XRwMiFA6MejgKmjCuX2FY7xqMc1TG9yYK4NHP5b8Ro6gJB7R5pLhPqM7+4XsKckfKpwYnsx1UFzRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFA7Yc7z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zv4GSrGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2FFC4CEE5;
-	Mon, 10 Mar 2025 17:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFA7Yc7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803D7C4CEE5;
+	Mon, 10 Mar 2025 17:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629316;
-	bh=SmPCecALW9OUxm9MuBSM3QRtPZsqojZEj538q/4ytDw=;
+	s=korg; t=1741629318;
+	bh=5UyX8yvYY/l0qV+QIgGtOTLCwxGG+MKDbg+Z5ITAo3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zv4GSrGTs1jnFRuv0NyChwzeHvo6bD3zghyTOilXjvGkqZKlPbE0pvAQBs7zjc1Iy
-	 besms5RvfAO6X5Iz0Ok9npyh/hjdkjJ7TwEAvWNALelTJl2uk0QVgfO3XuSoc8JXoO
-	 csExP5YuG8nMKyduOdbAnUsK27t2n/9Pq0KE5ZB4=
+	b=YFA7Yc7zKeSgBIxVMrOb/+r5w3wT2Ir68QeI/rxaJLAJ25tbeA1ePF2OI1JikECxe
+	 6FLbijRwY60J5nKGglbu3qhbgodB/ZFllbZ3QC7mDuIhLDyXMyKye21g39RFazMh9N
+	 G4lLD42k8odfjZGC9+EAVbfQc6kzHs0SjEH/Nbm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Ye <liuye@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/620] tipc: re-order conditions in tipc_crypto_key_rcv()
-Date: Mon, 10 Mar 2025 18:01:07 +0100
-Message-ID: <20250310170554.346021160@linuxfoundation.org>
+Subject: [PATCH 5.15 222/620] selftests/net/ipsec: Fix Null pointer dereference in rtattr_pack()
+Date: Mon, 10 Mar 2025 18:01:08 +0100
+Message-ID: <20250310170554.384322847@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,39 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Liu Ye <liuye@kylinos.cn>
 
-[ Upstream commit 5fe71fda89745fc3cd95f70d06e9162b595c3702 ]
+[ Upstream commit 3a0b7fa095212b51ed63892540c4f249991a2d74 ]
 
-On a 32bit system the "keylen + sizeof(struct tipc_aead_key)" math could
-have an integer wrapping issue.  It doesn't matter because the "keylen"
-is checked on the next line, but just to make life easier for static
-analysis tools, let's re-order these conditions and avoid the integer
-overflow.
+Address Null pointer dereference / undefined behavior in rtattr_pack
+(note that size is 0 in the bad case).
 
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Flagged by cppcheck as:
+    tools/testing/selftests/net/ipsec.c:230:25: warning: Possible null pointer
+    dereference: payload [nullPointer]
+    memcpy(RTA_DATA(attr), payload, size);
+                           ^
+    tools/testing/selftests/net/ipsec.c:1618:54: note: Calling function 'rtattr_pack',
+    4th argument 'NULL' value is 0
+    if (rtattr_pack(&req.nh, sizeof(req), XFRMA_IF_ID, NULL, 0)) {
+                                                       ^
+    tools/testing/selftests/net/ipsec.c:230:25: note: Null pointer dereference
+    memcpy(RTA_DATA(attr), payload, size);
+                           ^
+Signed-off-by: Liu Ye <liuye@kylinos.cn>
+
+Link: https://patch.msgid.link/20250116013037.29470-1-liuye@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/ipsec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index 86d1e782b8fca..b09c4a17b283e 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -2304,8 +2304,8 @@ static bool tipc_crypto_key_rcv(struct tipc_crypto *rx, struct tipc_msg *hdr)
- 	keylen = ntohl(*((__be32 *)(data + TIPC_AEAD_ALG_NAME)));
+diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
+index c5be3f390849b..ae3da27b00973 100644
+--- a/tools/testing/selftests/net/ipsec.c
++++ b/tools/testing/selftests/net/ipsec.c
+@@ -189,7 +189,8 @@ static int rtattr_pack(struct nlmsghdr *nh, size_t req_sz,
  
- 	/* Verify the supplied size values */
--	if (unlikely(size != keylen + sizeof(struct tipc_aead_key) ||
--		     keylen > TIPC_AEAD_KEY_SIZE_MAX)) {
-+	if (unlikely(keylen > TIPC_AEAD_KEY_SIZE_MAX ||
-+		     size != keylen + sizeof(struct tipc_aead_key))) {
- 		pr_debug("%s: invalid MSG_CRYPTO key size\n", rx->name);
- 		goto exit;
- 	}
+ 	attr->rta_len = RTA_LENGTH(size);
+ 	attr->rta_type = rta_type;
+-	memcpy(RTA_DATA(attr), payload, size);
++	if (payload)
++		memcpy(RTA_DATA(attr), payload, size);
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
