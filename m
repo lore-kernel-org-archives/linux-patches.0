@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5B722FACA;
-	Mon, 10 Mar 2025 17:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AD8233145;
+	Mon, 10 Mar 2025 17:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626963; cv=none; b=I/ibAJNHk3EnB1ZdxAfBR7u7ye/pgk83hn4VvjR1vUiAbagfk7a6niIbvHigr1rzBwfUNrvtYZnLNCoBLd2kgb/nhDv9LT1a4noaQ9DrrXpfEeZtPJMN+Z1X/1nVstXc3O77vkxARri84yb3rxkAlvCY9vHo/ZEZXJdVhcRUsbw=
+	t=1741626966; cv=none; b=X5orb1QYsbjt8gD9tb0cWqtkI9QR6T2jjEmb1eAwDzoqg+T65q+2nGByRaN2f83xD9/Vr/AVAsQSyNBSY/GMh2lbk/ui6K56TVcrgKg4Tfhci35+I3t6w5AFnhmtUytTKxoMTpw+iLG2lDEkjmpN7srr50lvMW4Kx2y5Akd4iWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626963; c=relaxed/simple;
-	bh=0FJ0QdwVhLm6E5QBu/Wf6lY4KIxmZUxYPnXZQTzEx2k=;
+	s=arc-20240116; t=1741626966; c=relaxed/simple;
+	bh=6jNz0ikYRwIx/UfDYWXLL+rc/XnpGoGSK3r0fNDAsdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uk7nctMCb5dBWcA4jX+9eIRxoFNBZp5OFb3AyY8AF5cHBFfvMejXnNhs4fU5tCOqExnEJgoYLZ/F8i52HwrlQ9jfdUuw44KMysm1xy6XIYwxebOSxeknbXWsPUoAwAsLd5ODVCa+X75H87JnKdtFJtmQ4YgWmciWyxkbf3Qty+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdDfcFrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJ9Fgq48Q5Csecn96MGDP2lw5o7UMkNmHHlWx82VdnU3544mfQnKIJD6eSUm7qZere7VIL3/OW5PxnFrbgByxBuVfyph2wOJtcwQDm3bZyQr84DCm2q6tZeBoTqYSnO8iYL4UmlyhM7F/rlRLe5xBFjcZhkJUsmaskJDE/PrHm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IneYddWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdDfcFrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB958C4CEE5;
-	Mon, 10 Mar 2025 17:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IneYddWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35D6C4CEE5;
+	Mon, 10 Mar 2025 17:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626963;
-	bh=0FJ0QdwVhLm6E5QBu/Wf6lY4KIxmZUxYPnXZQTzEx2k=;
+	s=korg; t=1741626966;
+	bh=6jNz0ikYRwIx/UfDYWXLL+rc/XnpGoGSK3r0fNDAsdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdDfcFrADtHIP+ffHNoqDD2uwbB23MNiDW8Vr1Jb0jlBvVrZFCiC/FuLfD8THU/H4
-	 PZzdKAuZ6ad+AgH7mFHInpUu8bXBeRxhKDKkZOcqLkKm9/KrBojRq410wnAJCU1PkG
-	 N5ZxYR7WfG0mozj5sh6UAbUPfIf9myp6XyO+1Hp4=
+	b=IneYddWYkkqeC6H2B4yOvVF+Gh9zkhJCqnyRQe8YpOHXcUJYUvkjBAdtFODSWwSfH
+	 uSohQ0ScepCcpaW2Prpbj1ETQuhnQUb7iPkwiP4FDETXocj6Mkyb1pJ/85XziHv5IG
+	 DKf5kGh1hmWV6VLbQzOHE8mtTVc7nvYdvu66EwAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 142/207] ublk: set_params: properly check if parameters can be applied
-Date: Mon, 10 Mar 2025 18:05:35 +0100
-Message-ID: <20250310170453.445751980@linuxfoundation.org>
+	Zecheng Li <zecheng@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>
+Subject: [PATCH 6.13 143/207] sched/fair: Fix potential memory corruption in child_cfs_rq_on_list
+Date: Mon, 10 Mar 2025 18:05:36 +0100
+Message-ID: <20250310170453.484712475@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,52 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Zecheng Li <zecheng@google.com>
 
-[ Upstream commit 5ac60242b0173be83709603ebaf27a473f16c4e4 ]
+[ Upstream commit 3b4035ddbfc8e4521f85569998a7569668cccf51 ]
 
-The parameters set by the set_params call are only applied to the block
-device in the start_dev call. So if a device has already been started, a
-subsequently issued set_params on that device will not have the desired
-effect, and should return an error. There is an existing check for this
-- set_params fails on devices in the LIVE state. But this check is not
-sufficient to cover the recovery case. In this case, the device will be
-in the QUIESCED or FAIL_IO states, so set_params will succeed. But this
-success is misleading, because the parameters will not be applied, since
-the device has already been started (by a previous ublk server). The bit
-UB_STATE_USED is set on completion of the start_dev; use it to detect
-and fail set_params commands which arrive too late to be applied (after
-start_dev).
+child_cfs_rq_on_list attempts to convert a 'prev' pointer to a cfs_rq.
+This 'prev' pointer can originate from struct rq's leaf_cfs_rq_list,
+making the conversion invalid and potentially leading to memory
+corruption. Depending on the relative positions of leaf_cfs_rq_list and
+the task group (tg) pointer within the struct, this can cause a memory
+fault or access garbage data.
 
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Fixes: 0aa73170eba5 ("ublk_drv: add SET_PARAMS/GET_PARAMS control command")
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250304-set_params-v1-1-17b5e0887606@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The issue arises in list_add_leaf_cfs_rq, where both
+cfs_rq->leaf_cfs_rq_list and rq->leaf_cfs_rq_list are added to the same
+leaf list. Also, rq->tmp_alone_branch can be set to rq->leaf_cfs_rq_list.
+
+This adds a check `if (prev == &rq->leaf_cfs_rq_list)` after the main
+conditional in child_cfs_rq_on_list. This ensures that the container_of
+operation will convert a correct cfs_rq struct.
+
+This check is sufficient because only cfs_rqs on the same CPU are added
+to the list, so verifying the 'prev' pointer against the current rq's list
+head is enough.
+
+Fixes a potential memory corruption issue that due to current struct
+layout might not be manifesting as a crash but could lead to unpredictable
+behavior when the layout changes.
+
+Fixes: fdaba61ef8a2 ("sched/fair: Ensure that the CFS parent is added after unthrottling")
+Signed-off-by: Zecheng Li <zecheng@google.com>
+Reviewed-and-tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20250304214031.2882646-1-zecheng@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 934ab9332c80a..d9e8bf9f5e5a8 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2716,9 +2716,12 @@ static int ublk_ctrl_set_params(struct ublk_device *ub,
- 	if (ph.len > sizeof(struct ublk_params))
- 		ph.len = sizeof(struct ublk_params);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 7d0a05660e5ef..4f850edf16401 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4046,15 +4046,17 @@ static inline bool child_cfs_rq_on_list(struct cfs_rq *cfs_rq)
+ {
+ 	struct cfs_rq *prev_cfs_rq;
+ 	struct list_head *prev;
++	struct rq *rq = rq_of(cfs_rq);
  
--	/* parameters can only be changed when device isn't live */
- 	mutex_lock(&ub->mutex);
--	if (ub->dev_info.state == UBLK_S_DEV_LIVE) {
-+	if (test_bit(UB_STATE_USED, &ub->state)) {
-+		/*
-+		 * Parameters can only be changed when device hasn't
-+		 * been started yet
-+		 */
- 		ret = -EACCES;
- 	} else if (copy_from_user(&ub->params, argp, ph.len)) {
- 		ret = -EFAULT;
+ 	if (cfs_rq->on_list) {
+ 		prev = cfs_rq->leaf_cfs_rq_list.prev;
+ 	} else {
+-		struct rq *rq = rq_of(cfs_rq);
+-
+ 		prev = rq->tmp_alone_branch;
+ 	}
+ 
++	if (prev == &rq->leaf_cfs_rq_list)
++		return false;
++
+ 	prev_cfs_rq = container_of(prev, struct cfs_rq, leaf_cfs_rq_list);
+ 
+ 	return (prev_cfs_rq->tg->parent == cfs_rq->tg);
 -- 
 2.39.5
 
