@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C5222576A;
-	Mon, 10 Mar 2025 18:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C071156861;
+	Mon, 10 Mar 2025 18:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630935; cv=none; b=bIl1L8I6tWl9l6oLYP/Bo/tEYDwD3f0nYKbvJE43g8ByJFn4s0QSdg9gsYiyToh8c2uQC0NiSkEEuZWhUrTbkFl4xfbMNPgmbVFiS4+u2kkOFDKu844lL0C0LVXp7/ChBXRvVXuRsrfduccNCQMSIXTTGpSesJEPsj2T0DDX0sQ=
+	t=1741630939; cv=none; b=qNPW0/2rOWnMhODIxj7H5+9jBkuq08l1XOu0v3NGbnvb+GtTPouJKubOYZTK8glTdYBLkHpfemP221S10Aj65zQNdDOhmPg+T9LxYCb568kBsB6maF2vIemdOyzqwvLuIWaAdGKmNcFHktY11vkeT651GY5xKeNY8RFb0vb+kcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630935; c=relaxed/simple;
-	bh=2mmOC3S8YEUIcFYcmdfyTC0HFO2ikpUTQhAC/jtjvS0=;
+	s=arc-20240116; t=1741630939; c=relaxed/simple;
+	bh=7+U6i/4lAiPxk2mQIjcaZreQhOmlC1oEi2l/PtjO01c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaUfyOqCxQl9+qnKDmkJ3Mu4V+LUiMG6N1OhR7i8RrhKv2aWXcGE5NPj2du5sIaSVmjurbcXmnHGLJsBbFe4LlDic9wGkeVYttzyTKlPJU/ahNU6cMYNb7Y5vEVRukQwYhRyZ2IQ58YuR6osgQlXQf+RJPD7A9s+SYE3JlLN3+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iq6qPJvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qNOsYu0uVkUqn519d/edkG/qVqpLEj+yqvJdtiTs/Symr8fKh6W9EWZLlqlbYw4NVcYyJ7xNPHMEXgP8v+jzuL+Fgwz2RQmf3RPMKZn780/gSYi4a1P1J863RkgPKDRzUrzDdEFXyvikDBxJzGrhdMv1Xgf1aux8hl0oYIGY3zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWgiwby2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iq6qPJvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D447C4CEE5;
-	Mon, 10 Mar 2025 18:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWgiwby2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C608C4CEE5;
+	Mon, 10 Mar 2025 18:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630935;
-	bh=2mmOC3S8YEUIcFYcmdfyTC0HFO2ikpUTQhAC/jtjvS0=;
+	s=korg; t=1741630938;
+	bh=7+U6i/4lAiPxk2mQIjcaZreQhOmlC1oEi2l/PtjO01c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iq6qPJvRxriW7DNbBhF2q+GXvtd0kZjcNaVIBqoydMVRSoFaqTRkA6CRIkDJDNQer
-	 rY0YaDi1sNrClD7fef9DdaJ9/EIvsntXvkm+bHZBe+FyxLi5rA6MNqON/ZJBqfYXeq
-	 d+yBySwIXpktS2SSoSMUxBxp9khq8ech/WiCjpoI=
+	b=kWgiwby2FFYUzfCz4tos+jUX5Zzi2TMQLukBB6z1kS02hMAHi30QayxXjIWe4nCan
+	 chy4EIaCKNQKuoR4H+CokOJq3xrzoGWtotlsFp38u4xUMyNKNWMtp6w8axiypxMRuq
+	 Ugkq+acbOIbGHsNMR2uvuWPzHL//GIaUwr+Y7pIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Titus Rwantare <titusr@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 558/620] hwmon: (pmbus) Initialise page count in pmbus_identify()
-Date: Mon, 10 Mar 2025 18:06:44 +0100
-Message-ID: <20250310170607.571075058@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 5.15 585/620] usb: renesas_usbhs: Flush the notify_hotplug_work
+Date: Mon, 10 Mar 2025 18:07:11 +0100
+Message-ID: <20250310170608.624479339@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Titus Rwantare <titusr@google.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 6b6e2e8fd0de3fa7c6f4f8fe6841b01770b2e7bc ]
+commit 552ca6b87e3778f3dd5b87842f95138162e16c82 upstream.
 
-The `pmbus_identify()` function fails to correctly determine the number
-of supported pages on PMBus devices. This occurs because `info->pages`
-is implicitly zero-initialised, and `pmbus_set_page()` does not perform
-writes to the page register if `info->pages` is not yet initialised.
-Without this patch, `info->pages` is always set to the maximum after
-scanning.
+When performing continuous unbind/bind operations on the USB drivers
+available on the Renesas RZ/G2L SoC, a kernel crash with the message
+"Unable to handle kernel NULL pointer dereference at virtual address"
+may occur. This issue points to the usbhsc_notify_hotplug() function.
 
-This patch initialises `info->pages` to `PMBUS_PAGES` before the probing
-loop, enabling `pmbus_set_page()` writes to make it out onto the bus
-correctly identifying the number of pages. `PMBUS_PAGES` seemed like a
-reasonable non-zero number because that's the current result of the
-identification process.
+Flush the delayed work to avoid its execution when driver resources are
+unavailable.
 
-Testing was done with a PMBus device in QEMU.
-
-Signed-off-by: Titus Rwantare <titusr@google.com>
-Fixes: 442aba78728e7 ("hwmon: PMBus device driver")
-Link: https://lore.kernel.org/r/20250227222455.2583468-1-titusr@google.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bc57381e6347 ("usb: renesas_usbhs: use delayed_work instead of work_struct")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250225110248.870417-4-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus.c | 2 ++
+ drivers/usb/renesas_usbhs/common.c |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
-index d0d386990af5e..6366610a90827 100644
---- a/drivers/hwmon/pmbus/pmbus.c
-+++ b/drivers/hwmon/pmbus/pmbus.c
-@@ -103,6 +103,8 @@ static int pmbus_identify(struct i2c_client *client,
- 		if (pmbus_check_byte_register(client, 0, PMBUS_PAGE)) {
- 			int page;
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -774,6 +774,8 @@ static int usbhs_remove(struct platform_
  
-+			info->pages = PMBUS_PAGES;
+ 	dev_dbg(&pdev->dev, "usb remove\n");
+ 
++	flush_delayed_work(&priv->notify_hotplug_work);
 +
- 			for (page = 1; page < PMBUS_PAGES; page++) {
- 				if (pmbus_set_page(client, page, 0xff) < 0)
- 					break;
--- 
-2.39.5
-
+ 	/* power off */
+ 	if (!usbhs_get_dparam(priv, runtime_pwctrl))
+ 		usbhsc_power_ctrl(priv, 0);
 
 
