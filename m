@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3295F233136;
-	Mon, 10 Mar 2025 17:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FC9233149;
+	Mon, 10 Mar 2025 17:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627420; cv=none; b=ZqATmx/xHd6Mb67UV4Oj2Lr4mzbQ+3mnNYldlSsJSTDeJ5J9buRtmvjLO5hygfKfKRZFk10UADPKB1Vw9tmOvRHG0Zleieh0eyAa4GrdVVpssgIQAoV3+tV9osvC78tMCFPtziJ1zq9TXGB3YAy+IwZz5lt9d3cSddPa8e0ZAl8=
+	t=1741627423; cv=none; b=Jqxc1HVzQpGT1YtpJF5ke3jgM/+2LCZwHy20L9HKbgnjluYQVFTUNw00an2dNN3IBRg5y6LVQAJAe5dHuYo5Xq+uKXjEo1AE4sab7Vh18ot8qdAV2JHmfJy50MiMKzihDP1dg4/Ghrt0cDP3iIDhec+B9qwS13fYeYLsfgj3o9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627420; c=relaxed/simple;
-	bh=+1n/QqpjDKgeG9n2YP3ng+yMnEAR+oqvnKhseFK7DaU=;
+	s=arc-20240116; t=1741627423; c=relaxed/simple;
+	bh=iFiFL8Z78geu32fs+bw9Q3E0oOyyG/1RoXUVWsVa/5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilZ6JLogBCilxd+13KmBgIdbP95vMQUU9F/lOU3q9F4U75zNePWL9F0g2vulJMqdAvMdBK9IBojM4bhNs0xIhF4iVfNh5wCM0aGg/X7WogqDYZr3ML0lzuldBzQq0jI00D9oIn+7dZTebM3VycoW+QtTM2Ydq4RR46j+0XOtQzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8o4OHxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZsR15+F1m+0TdfNtZuOzNCRtzyqT82UoxwR/fv6+VTCpXshVZ1P1X1Vj6DRRD8Ld4Mu4GFfi2NtOLHSyx3lNQuXgyLDeHGh8uFt9thaxSrg45qImXV3MrQVfzVAzt6rzU/ePHEDOW4oX864e9kmefX/mBmZQQsmvgfLCQsYb+hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jT9NHZoG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8o4OHxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6EBC4CEE5;
-	Mon, 10 Mar 2025 17:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jT9NHZoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF9FC4CEE5;
+	Mon, 10 Mar 2025 17:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627419;
-	bh=+1n/QqpjDKgeG9n2YP3ng+yMnEAR+oqvnKhseFK7DaU=;
+	s=korg; t=1741627422;
+	bh=iFiFL8Z78geu32fs+bw9Q3E0oOyyG/1RoXUVWsVa/5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8o4OHxrQJ8tstVt/1KDOczvh4LsDIMcuy35SfLY+TSmwUQNZTXbdndaFHuiNphGI
-	 UYVEyOMNFR6G4hmAqgMXA1S4/dPDS0oEPT83yHxlsXCxxHVmnPkm0m0oXksrBfrk35
-	 8zecPMeJTru3gRN7sHsG3guxI3p5Yy7Lgr1r5Z1E=
+	b=jT9NHZoGulbVouZAoSqk9ES8V1zm1vEOKGZKODKuMlhYEBITv8g5+LbZeGdePHbHI
+	 tm1oMeeUnH52UyYVS+ChHb0Tzpgg0UWRybcQJGTFL/4gKlbHNrHx+7B6gXeocsrQIv
+	 VAo6Ly4Wdb+36up+K4qPiWLW2b+/qNS/VsQU2lGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	SeongJae Park <sj@kernel.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 124/269] selftests/damon/damos_quota: make real expectation of quota exceeds
-Date: Mon, 10 Mar 2025 18:04:37 +0100
-Message-ID: <20250310170502.666137946@linuxfoundation.org>
+Subject: [PATCH 6.12 125/269] selftests/damon/damon_nr_regions: set ops update for merge results check to 100ms
+Date: Mon, 10 Mar 2025 18:04:38 +0100
+Message-ID: <20250310170502.705951644@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,60 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 1c684d77dfbcf926e0dd28f6d260e8fdd8a58e85 upstream.
+commit 695469c07a65547acb6e229b3fdf6aaa881817e3 upstream.
 
-Patch series "selftests/damon: three fixes for false results".
+damon_nr_regions.py updates max_nr_regions to a number smaller than
+expected number of real regions and confirms DAMON respect the harsh
+limit.  To give time for DAMON to make changes for the regions, 3
+aggregation intervals (300 milliseconds) are given.
 
-Fix three DAMON selftest bugs that cause two and one false positive
-failures and successes.
+The internal mechanism works with not only the max_nr_regions, but also
+sz_limit, though.  It avoids merging region if that casn make region of
+size larger than sz_limit.  In the test, sz_limit is set too small to
+achive the new max_nr_regions, unless it is updated for the new
+min_nr_regions.  But the update is done only once per operations set
+update interval, which is one second by default.
 
+Hence, the test randomly incurs false positive failures.  Fix it by
+setting the ops interval same to aggregation interval, to make sure
+sz_limit is updated by the time of the check.
 
-This patch (of 3):
-
-damos_quota.py assumes the quota will always exceeded.  But whether quota
-will be exceeded or not depend on the monitoring results.  Actually the
-monitored workload has chaning access pattern and hence sometimes the
-quota may not really be exceeded.  As a result, false positive test
-failures happen.  Expect how much time the quota will be exceeded by
-checking the monitoring results, and use it instead of the naive
-assumption.
-
-Link: https://lkml.kernel.org/r/20250225222333.505646-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20250225222333.505646-2-sj@kernel.org
-Fixes: 51f58c9da14b ("selftests/damon: add a test for DAMOS quota")
+Link: https://lkml.kernel.org/r/20250225222333.505646-3-sj@kernel.org
+Fixes: 8bf890c81612 ("selftests/damon/damon_nr_regions: test online-tuned max_nr_regions")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/damon/damos_quota.py |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/damon/damon_nr_regions.py |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/damon/damos_quota.py
-+++ b/tools/testing/selftests/damon/damos_quota.py
-@@ -51,16 +51,19 @@ def main():
-         nr_quota_exceeds = scheme.stats.qt_exceeds
- 
-     wss_collected.sort()
-+    nr_expected_quota_exceeds = 0
-     for wss in wss_collected:
-         if wss > sz_quota:
-             print('quota is not kept: %s > %s' % (wss, sz_quota))
-             print('collected samples are as below')
-             print('\n'.join(['%d' % wss for wss in wss_collected]))
-             exit(1)
-+        if wss == sz_quota:
-+            nr_expected_quota_exceeds += 1
- 
--    if nr_quota_exceeds < len(wss_collected):
--        print('quota is not always exceeded: %d > %d' %
--              (len(wss_collected), nr_quota_exceeds))
-+    if nr_quota_exceeds < nr_expected_quota_exceeds:
-+        print('quota is exceeded less than expected: %d < %d' %
-+              (nr_quota_exceeds, nr_expected_quota_exceeds))
-         exit(1)
- 
- if __name__ == '__main__':
+--- a/tools/testing/selftests/damon/damon_nr_regions.py
++++ b/tools/testing/selftests/damon/damon_nr_regions.py
+@@ -109,6 +109,7 @@ def main():
+     attrs = kdamonds.kdamonds[0].contexts[0].monitoring_attrs
+     attrs.min_nr_regions = 3
+     attrs.max_nr_regions = 7
++    attrs.update_us = 100000
+     err = kdamonds.kdamonds[0].commit()
+     if err is not None:
+         proc.terminate()
 
 
