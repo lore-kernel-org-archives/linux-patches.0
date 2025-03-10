@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1033E22D4C3;
-	Mon, 10 Mar 2025 17:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C67230D0F;
+	Mon, 10 Mar 2025 17:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627521; cv=none; b=OLcizsnIz+CyWFHAudI/fEyASn6vC+NLcgeWMniH2RMboqrfC19zmCNdSV6pkNAEQkKgfjoEvcFxes03VmX1r+Z1whlC/+qg24vrERnAOxQLSUnOnXIdZ1If9QgItR+Om3+0Sq64unykG4QYeTGY6nJsE7qTtwJxtf8iZ7PjoSc=
+	t=1741627524; cv=none; b=gzpD17vnYu/8Kn8veUq84STzOG9XShn4FyBzKHVpoRpJqruXj1CO291mmu2x8UijfsEaTeVHIgGMYAvQSYcQVB6tmiEZ4V0FH/c8YC5+XEUZLEGQJU9Bu3HRv/CfHAwK3e8PIy2lhtjC6jRMeapqv3V9a+LbN3hi9+qpK4OWjOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627521; c=relaxed/simple;
-	bh=bQZgGTx1rGlzH2hLhUNkuy2rKdKKaDG4e+2ck/I25cA=;
+	s=arc-20240116; t=1741627524; c=relaxed/simple;
+	bh=2dIfekDVl4IYopIj6mUy2340jIawcqKOctgwD/LCQEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJKiKYIosF6IdevRrh4knIIN8A2KtVEvvpzcDXrqrSjEgzYWyBIhcHKxpKW86O3z223j95RwDiP9bY+u4qHKyaj5YbKr1LPngDOmy277qkJq2IkTWtqeTRPs6lTvWuArIrSv2+oksa22IXTy/tBl0sEwHNR9JtJy/+NwTOZDtec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOg61+ju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cGHMTCCXp3uhZ7l+zoVq710QQRgDlQ7EWa0W0l3JWezButZAajF71nDubhIlJ4skvdHI4ksbyGwUyGOls5Qm4NyR1Mcm/63UVRAZUDSzN5PkksqV0Si3z3E+xwFU+RKUwkRRO/zCk1WzWm7AiKTViJx1HWM5Rm1ZKNI6ZyPGjSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjRf+KWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOg61+ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89572C4CEE5;
-	Mon, 10 Mar 2025 17:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjRf+KWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A10DC4CEE5;
+	Mon, 10 Mar 2025 17:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627520;
-	bh=bQZgGTx1rGlzH2hLhUNkuy2rKdKKaDG4e+2ck/I25cA=;
+	s=korg; t=1741627523;
+	bh=2dIfekDVl4IYopIj6mUy2340jIawcqKOctgwD/LCQEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gOg61+jujow4zahKyUk2ft7b2RqfGFGZMf7V46uNFPT7m0//KGkkTpw8JlncZUFQt
-	 iiwEUQ/pWCLHTI17ALAEcYHoTU4Hm9QLoiqN29gmRqaz5Ut40qSIZo/qLhnvv7OZ49
-	 foRNoexeZ+x4V/8x1yea+U6IskL6tXmtaqAOefRc=
+	b=RjRf+KWDOLlB055Ro/vbEZH8Ae4qf1jUPcQ0lIWGyItsUlVLMjxZgFyi5Bcwbsxff
+	 U1RXWuKO/5dcn1ipiMRMF8cvl2GKoeqgQJ0TTjby0CMlw9G79Q3xJyqaCfGvkKj0SS
+	 +6vAaoxvuu3vo7s0ZgEHeFQn3WGA/gtmslk1xqUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 158/269] drm: Add client-agnostic setup helper
-Date: Mon, 10 Mar 2025 18:05:11 +0100
-Message-ID: <20250310170504.021227426@linuxfoundation.org>
+Subject: [PATCH 6.12 159/269] drm/fbdev-ttm: Support struct drm_driver.fbdev_probe
+Date: Mon, 10 Mar 2025 18:05:12 +0100
+Message-ID: <20250310170504.059819713@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,191 +53,215 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit d07fdf9225922d3e36ebd13ccab3df62b1ccdab3 ]
+[ Upstream commit c7c1b9e1d52b0a0dbb0ee552efdc3360c0f5363c ]
 
-DRM may support multiple in-kernel clients that run as soon as a DRM
-driver has been registered. To select the client(s) in a single place,
-introduce drm_client_setup().
+Rework fbdev probing to support fbdev_probe in struct drm_driver
+and reimplement the old fb_probe callback on top of it. Provide an
+initializer macro for struct drm_driver that sets the callback
+according to the kernel configuration.
 
-Drivers that call the new helper automatically instantiate the kernel's
-configured default clients. Only fbdev emulation is currently supported.
-Later versions can add support for DRM-based logging, a boot logo or even
-a console.
-
-Some drivers handle the color mode for clients internally. Provide the
-helper drm_client_setup_with_color_mode() for them.
-
-Using the new interface requires the driver to select
-DRM_CLIENT_SELECTION in its Kconfig. For now this only enables the
-client-setup helpers if the fbdev client has been configured by the
-user. A future patchset will further modularize client support and
-rework DRM_CLIENT_SELECTION to select the correct dependencies for
-all its clients.
-
-v5:
-- add CONFIG_DRM_CLIENT_SELECTION und DRM_CLIENT_SETUP
-v4:
-- fix docs for drm_client_setup_with_fourcc() (Geert)
-v3:
-- fix build error
-v2:
-- add drm_client_setup_with_fourcc() (Laurent)
-- push default-format handling into actual clients
+This change allows the common fbdev client to run on top of TTM-
+based DRM drivers.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240924071734.98201-5-tzimmermann@suse.de
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924071734.98201-65-tzimmermann@suse.de
 Stable-dep-of: 6b481ab0e685 ("drm/nouveau: select FW caching")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/Kconfig            | 12 ++++++
- drivers/gpu/drm/Makefile           |  2 +
- drivers/gpu/drm/drm_client_setup.c | 66 ++++++++++++++++++++++++++++++
- include/drm/drm_client_setup.h     | 26 ++++++++++++
- 4 files changed, 106 insertions(+)
- create mode 100644 drivers/gpu/drm/drm_client_setup.c
- create mode 100644 include/drm/drm_client_setup.h
+ drivers/gpu/drm/drm_fbdev_ttm.c | 142 +++++++++++++++++---------------
+ include/drm/drm_fbdev_ttm.h     |  13 +++
+ 2 files changed, 90 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index 7408ea8caacc3..ae53f26da945f 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -211,6 +211,18 @@ config DRM_DEBUG_MODESET_LOCK
+diff --git a/drivers/gpu/drm/drm_fbdev_ttm.c b/drivers/gpu/drm/drm_fbdev_ttm.c
+index 119ffb28aaf95..d799cbe944cd3 100644
+--- a/drivers/gpu/drm/drm_fbdev_ttm.c
++++ b/drivers/gpu/drm/drm_fbdev_ttm.c
+@@ -71,71 +71,7 @@ static const struct fb_ops drm_fbdev_ttm_fb_ops = {
+ static int drm_fbdev_ttm_helper_fb_probe(struct drm_fb_helper *fb_helper,
+ 					     struct drm_fb_helper_surface_size *sizes)
+ {
+-	struct drm_client_dev *client = &fb_helper->client;
+-	struct drm_device *dev = fb_helper->dev;
+-	struct drm_client_buffer *buffer;
+-	struct fb_info *info;
+-	size_t screen_size;
+-	void *screen_buffer;
+-	u32 format;
+-	int ret;
+-
+-	drm_dbg_kms(dev, "surface width(%d), height(%d) and bpp(%d)\n",
+-		    sizes->surface_width, sizes->surface_height,
+-		    sizes->surface_bpp);
+-
+-	format = drm_driver_legacy_fb_format(dev, sizes->surface_bpp,
+-					     sizes->surface_depth);
+-	buffer = drm_client_framebuffer_create(client, sizes->surface_width,
+-					       sizes->surface_height, format);
+-	if (IS_ERR(buffer))
+-		return PTR_ERR(buffer);
+-
+-	fb_helper->buffer = buffer;
+-	fb_helper->fb = buffer->fb;
+-
+-	screen_size = buffer->gem->size;
+-	screen_buffer = vzalloc(screen_size);
+-	if (!screen_buffer) {
+-		ret = -ENOMEM;
+-		goto err_drm_client_framebuffer_delete;
+-	}
+-
+-	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info)) {
+-		ret = PTR_ERR(info);
+-		goto err_vfree;
+-	}
+-
+-	drm_fb_helper_fill_info(info, fb_helper, sizes);
+-
+-	info->fbops = &drm_fbdev_ttm_fb_ops;
+-
+-	/* screen */
+-	info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
+-	info->screen_buffer = screen_buffer;
+-	info->fix.smem_len = screen_size;
+-
+-	/* deferred I/O */
+-	fb_helper->fbdefio.delay = HZ / 20;
+-	fb_helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
+-
+-	info->fbdefio = &fb_helper->fbdefio;
+-	ret = fb_deferred_io_init(info);
+-	if (ret)
+-		goto err_drm_fb_helper_release_info;
+-
+-	return 0;
+-
+-err_drm_fb_helper_release_info:
+-	drm_fb_helper_release_info(fb_helper);
+-err_vfree:
+-	vfree(screen_buffer);
+-err_drm_client_framebuffer_delete:
+-	fb_helper->fb = NULL;
+-	fb_helper->buffer = NULL;
+-	drm_client_framebuffer_delete(buffer);
+-	return ret;
++	return drm_fbdev_ttm_driver_fbdev_probe(fb_helper, sizes);
+ }
  
- 	  If in doubt, say "N".
+ static void drm_fbdev_ttm_damage_blit_real(struct drm_fb_helper *fb_helper,
+@@ -240,6 +176,82 @@ static const struct drm_fb_helper_funcs drm_fbdev_ttm_helper_funcs = {
+ 	.fb_dirty = drm_fbdev_ttm_helper_fb_dirty,
+ };
  
-+config DRM_CLIENT_SELECTION
-+	bool
-+	depends on DRM
-+	select DRM_CLIENT_SETUP if DRM_FBDEV_EMULATION
-+	help
-+	  Drivers that support in-kernel DRM clients have to select this
-+	  option.
-+
-+config DRM_CLIENT_SETUP
-+	bool
-+	depends on DRM_CLIENT_SELECTION
-+
- config DRM_FBDEV_EMULATION
- 	bool "Enable legacy fbdev support for your modesetting driver"
- 	depends on DRM
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index a1dd0909fa38b..1ec44529447a7 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -144,6 +144,8 @@ drm_kms_helper-y := \
- 	drm_rect.o \
- 	drm_self_refresh_helper.o \
- 	drm_simple_kms_helper.o
-+drm_kms_helper-$(CONFIG_DRM_CLIENT_SETUP) += \
-+	drm_client_setup.o
- drm_kms_helper-$(CONFIG_DRM_PANEL_BRIDGE) += bridge/panel.o
- drm_kms_helper-$(CONFIG_DRM_FBDEV_EMULATION) += \
- 	drm_fbdev_client.o \
-diff --git a/drivers/gpu/drm/drm_client_setup.c b/drivers/gpu/drm/drm_client_setup.c
-new file mode 100644
-index 0000000000000..5969c4ffe31ba
---- /dev/null
-+++ b/drivers/gpu/drm/drm_client_setup.c
-@@ -0,0 +1,66 @@
-+// SPDX-License-Identifier: MIT
-+
-+#include <drm/drm_client_setup.h>
-+#include <drm/drm_device.h>
-+#include <drm/drm_fbdev_client.h>
-+#include <drm/drm_fourcc.h>
-+#include <drm/drm_print.h>
-+
-+/**
-+ * drm_client_setup() - Setup in-kernel DRM clients
-+ * @dev: DRM device
-+ * @format: Preferred pixel format for the device. Use NULL, unless
-+ *          there is clearly a driver-preferred format.
-+ *
-+ * This function sets up the in-kernel DRM clients. Restore, hotplug
-+ * events and teardown are all taken care of.
-+ *
-+ * Drivers should call drm_client_setup() after registering the new
-+ * DRM device with drm_dev_register(). This function is safe to call
-+ * even when there are no connectors present. Setup will be retried
-+ * on the next hotplug event.
-+ *
-+ * The clients are destroyed by drm_dev_unregister().
++/*
++ * struct drm_driver
 + */
-+void drm_client_setup(struct drm_device *dev, const struct drm_format_info *format)
++
++int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
++				     struct drm_fb_helper_surface_size *sizes)
 +{
++	struct drm_client_dev *client = &fb_helper->client;
++	struct drm_device *dev = fb_helper->dev;
++	struct drm_client_buffer *buffer;
++	struct fb_info *info;
++	size_t screen_size;
++	void *screen_buffer;
++	u32 format;
 +	int ret;
 +
-+	ret = drm_fbdev_client_setup(dev, format);
++	drm_dbg_kms(dev, "surface width(%d), height(%d) and bpp(%d)\n",
++		    sizes->surface_width, sizes->surface_height,
++		    sizes->surface_bpp);
++
++	format = drm_driver_legacy_fb_format(dev, sizes->surface_bpp,
++					     sizes->surface_depth);
++	buffer = drm_client_framebuffer_create(client, sizes->surface_width,
++					       sizes->surface_height, format);
++	if (IS_ERR(buffer))
++		return PTR_ERR(buffer);
++
++	fb_helper->funcs = &drm_fbdev_ttm_helper_funcs;
++	fb_helper->buffer = buffer;
++	fb_helper->fb = buffer->fb;
++
++	screen_size = buffer->gem->size;
++	screen_buffer = vzalloc(screen_size);
++	if (!screen_buffer) {
++		ret = -ENOMEM;
++		goto err_drm_client_framebuffer_delete;
++	}
++
++	info = drm_fb_helper_alloc_info(fb_helper);
++	if (IS_ERR(info)) {
++		ret = PTR_ERR(info);
++		goto err_vfree;
++	}
++
++	drm_fb_helper_fill_info(info, fb_helper, sizes);
++
++	info->fbops = &drm_fbdev_ttm_fb_ops;
++
++	/* screen */
++	info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
++	info->screen_buffer = screen_buffer;
++	info->fix.smem_len = screen_size;
++
++	/* deferred I/O */
++	fb_helper->fbdefio.delay = HZ / 20;
++	fb_helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
++
++	info->fbdefio = &fb_helper->fbdefio;
++	ret = fb_deferred_io_init(info);
 +	if (ret)
-+		drm_warn(dev, "Failed to set up DRM client; error %d\n", ret);
++		goto err_drm_fb_helper_release_info;
++
++	return 0;
++
++err_drm_fb_helper_release_info:
++	drm_fb_helper_release_info(fb_helper);
++err_vfree:
++	vfree(screen_buffer);
++err_drm_client_framebuffer_delete:
++	fb_helper->fb = NULL;
++	fb_helper->buffer = NULL;
++	drm_client_framebuffer_delete(buffer);
++	return ret;
 +}
-+EXPORT_SYMBOL(drm_client_setup);
++EXPORT_SYMBOL(drm_fbdev_ttm_driver_fbdev_probe);
 +
-+/**
-+ * drm_client_setup_with_fourcc() - Setup in-kernel DRM clients for color mode
-+ * @dev: DRM device
-+ * @fourcc: Preferred pixel format as 4CC code for the device
-+ *
-+ * This function sets up the in-kernel DRM clients. It is equivalent
-+ * to drm_client_setup(), but expects a 4CC code as second argument.
-+ */
-+void drm_client_setup_with_fourcc(struct drm_device *dev, u32 fourcc)
-+{
-+	drm_client_setup(dev, drm_format_info(fourcc));
-+}
-+EXPORT_SYMBOL(drm_client_setup_with_fourcc);
+ static void drm_fbdev_ttm_client_unregister(struct drm_client_dev *client)
+ {
+ 	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
+diff --git a/include/drm/drm_fbdev_ttm.h b/include/drm/drm_fbdev_ttm.h
+index 9e6c3bdf35376..243685d02eb13 100644
+--- a/include/drm/drm_fbdev_ttm.h
++++ b/include/drm/drm_fbdev_ttm.h
+@@ -3,11 +3,24 @@
+ #ifndef DRM_FBDEV_TTM_H
+ #define DRM_FBDEV_TTM_H
+ 
++#include <linux/stddef.h>
 +
-+/**
-+ * drm_client_setup_with_color_mode() - Setup in-kernel DRM clients for color mode
-+ * @dev: DRM device
-+ * @color_mode: Preferred color mode for the device
-+ *
-+ * This function sets up the in-kernel DRM clients. It is equivalent
-+ * to drm_client_setup(), but expects a color mode as second argument.
-+ *
-+ * Do not use this function in new drivers. Prefer drm_client_setup() with a
-+ * format of NULL.
-+ */
-+void drm_client_setup_with_color_mode(struct drm_device *dev, unsigned int color_mode)
-+{
-+	u32 fourcc = drm_driver_color_mode_format(dev, color_mode);
+ struct drm_device;
++struct drm_fb_helper;
++struct drm_fb_helper_surface_size;
+ 
+ #ifdef CONFIG_DRM_FBDEV_EMULATION
++int drm_fbdev_ttm_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
++				     struct drm_fb_helper_surface_size *sizes);
 +
-+	drm_client_setup_with_fourcc(dev, fourcc);
-+}
-+EXPORT_SYMBOL(drm_client_setup_with_color_mode);
-diff --git a/include/drm/drm_client_setup.h b/include/drm/drm_client_setup.h
-new file mode 100644
-index 0000000000000..46aab3fb46be5
---- /dev/null
-+++ b/include/drm/drm_client_setup.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: MIT */
++#define DRM_FBDEV_TTM_DRIVER_OPS \
++	.fbdev_probe = drm_fbdev_ttm_driver_fbdev_probe
 +
-+#ifndef DRM_CLIENT_SETUP_H
-+#define DRM_CLIENT_SETUP_H
+ void drm_fbdev_ttm_setup(struct drm_device *dev, unsigned int preferred_bpp);
+ #else
++#define DRM_FBDEV_TTM_DRIVER_OPS \
++	.fbdev_probe = NULL
 +
-+#include <linux/types.h>
-+
-+struct drm_device;
-+struct drm_format_info;
-+
-+#if defined(CONFIG_DRM_CLIENT_SETUP)
-+void drm_client_setup(struct drm_device *dev, const struct drm_format_info *format);
-+void drm_client_setup_with_fourcc(struct drm_device *dev, u32 fourcc);
-+void drm_client_setup_with_color_mode(struct drm_device *dev, unsigned int color_mode);
-+#else
-+static inline void drm_client_setup(struct drm_device *dev,
-+				    const struct drm_format_info *format)
-+{ }
-+static inline void drm_client_setup_with_fourcc(struct drm_device *dev, u32 fourcc)
-+{ }
-+static inline void drm_client_setup_with_color_mode(struct drm_device *dev,
-+						    unsigned int color_mode)
-+{ }
-+#endif
-+
-+#endif
+ static inline void drm_fbdev_ttm_setup(struct drm_device *dev, unsigned int preferred_bpp)
+ { }
+ #endif
 -- 
 2.39.5
 
