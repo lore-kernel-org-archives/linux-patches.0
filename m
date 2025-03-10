@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163C022B8A9;
-	Mon, 10 Mar 2025 17:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED92423370F;
+	Mon, 10 Mar 2025 17:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628610; cv=none; b=P7z2THAqa4aczgsX9dlYysE8nxu4hz9qnl7RdeB1Rl7EInJY6OBx7oTbmVASu+OKudyIvEqLyIRECUmmYd+M8djaKHRPuVrd90lCAmoFw6CPIlEKovrIINcAjBzVlwW+IP+e5LgRy9AqX+YgsJZ10HHXbZ4iR7d9C9Y4D7HoNsU=
+	t=1741628613; cv=none; b=mtvIQcSuZXG+3FM3jx0jr+ZI2bjOc3EY7PfTnZQhEQ/tEcwAV/7X2qt58Rd1AYzLqgF9SPJnHeiJah95SWV8t5oYKw8d47nnHIMV6SyrgZoebR1p+zJecr4wHlEayhtOlSgpR6aFDvY8Xv9mQ95ZSd6NxQfXalGTTMhHnpFSG3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628610; c=relaxed/simple;
-	bh=PSvdKAj037Y5qlfLRROj1jObZIy9yAORWBCa/Dcrxos=;
+	s=arc-20240116; t=1741628613; c=relaxed/simple;
+	bh=P5/YXvWrhNDduSZlwjknUqOE2DGm3sSPIwNZ/r4jij0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYyt9S9LGRDuPL/rNw6fMVx9SadYnHn0syyQ5ZVdnA5MSGe85W7IcJ0UqMzIzKvlViUw9XxoEp82HJ/MKXD7vZFGcFx9tGJdHNaa02xmdQz3o6n04j2b467aq/a0Ez8sqz75FtWFVO5mgtckk66n3UQYXxK/XycaXG2Ppm3NxFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8B3FiCs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGeY+GZWCSi1DA0ICmvMu5u9mNN6JpPEpd7NQVR+RgjNiaoDXd3c41Ae/S5GttbgMfQhFy9OGj0vM2URnxuS4IkwWvJnM5b/VUJFgO3zmOZQzZDKJuRUT7XTAC9YGjVdROcvx3/X1Fo2o/sQCRrWa8vRv/pjsS4Ke0Uh5ljF81U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTmjLwUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8B3FiCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C53C4CEEC;
-	Mon, 10 Mar 2025 17:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTmjLwUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763DBC4CEEC;
+	Mon, 10 Mar 2025 17:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628610;
-	bh=PSvdKAj037Y5qlfLRROj1jObZIy9yAORWBCa/Dcrxos=;
+	s=korg; t=1741628612;
+	bh=P5/YXvWrhNDduSZlwjknUqOE2DGm3sSPIwNZ/r4jij0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8B3FiCs0ffbDGSbqMEf/Dm98/R/N4RgecMogGHYSMiAu7QkV/h7Rh5vbllw+cUjQ
-	 d4PLNJIore3L+N/uiS0CrDJgUj+yzP+fNtvvpgh86duv9IaXonMwU1/t2gqWbreFyW
-	 3HI6Auwwp383iNWdCfYq8zlDmNy3VEjWAMv/JEgA=
+	b=hTmjLwUd7A/aAnBpjfWugVQijg+nrD8aCoV6NzEyErw5b4cq4FBuC9jrIQmU/YTxp
+	 PKP92ujuCwRH54ygKYb890YlOcIwtXvtxBUtY4r5HTl+SaOcdHoDxGJq5GvtzuqDKQ
+	 0Wym0x2jxQHz02GAmjhoB1Ws2VKN969rnwQx2ajc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Subject: [PATCH 6.1 085/109] slimbus: messaging: Free transaction ID in delayed interrupt scenario
-Date: Mon, 10 Mar 2025 18:07:09 +0100
-Message-ID: <20250310170430.944585305@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/620] afs: Fix EEXIST error returned from afs_rmdir() to be ENOTEMPTY
+Date: Mon, 10 Mar 2025 17:57:27 +0100
+Message-ID: <20250310170545.618943678@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
-References: <20250310170427.529761261@linuxfoundation.org>
+In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
+References: <20250310170545.553361750@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Visweswara Tanuku <quic_vtanuku@quicinc.com>
+From: David Howells <dhowells@redhat.com>
 
-commit dcb0d43ba8eb9517e70b1a0e4b0ae0ab657a0e5a upstream.
+[ Upstream commit b49194da2aff2c879dec9c59ef8dec0f2b0809ef ]
 
-In case of interrupt delay for any reason, slim_do_transfer()
-returns timeout error but the transaction ID (TID) is not freed.
-This results into invalid memory access inside
-qcom_slim_ngd_rx_msgq_cb() due to invalid TID.
+AFS servers pass back a code indicating EEXIST when they're asked to remove
+a directory that is not empty rather than ENOTEMPTY because not all the
+systems that an AFS server can run on have the latter error available and
+AFS preexisted the addition of that error in general.
 
-Fix the issue by freeing the TID in slim_do_transfer() before
-returning timeout error to avoid invalid memory access.
+Fix afs_rmdir() to translate EEXIST to ENOTEMPTY.
 
-Call trace:
-__memcpy_fromio+0x20/0x190
-qcom_slim_ngd_rx_msgq_cb+0x130/0x290 [slim_qcom_ngd_ctrl]
-vchan_complete+0x2a0/0x4a0
-tasklet_action_common+0x274/0x700
-tasklet_action+0x28/0x3c
-_stext+0x188/0x620
-run_ksoftirqd+0x34/0x74
-smpboot_thread_fn+0x1d8/0x464
-kthread+0x178/0x238
-ret_from_fork+0x10/0x20
-Code: aa0003e8 91000429 f100044a 3940002b (3800150b)
----[ end trace 0fe00bec2b975c99 ]---
-Kernel panic - not syncing: Oops: Fatal exception in interrupt.
-
-Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Link: https://lore.kernel.org/r/20250124125740.16897-1-quic_vtanuku@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 260a980317da ("[AFS]: Add "directory write" support.")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20241216204124.3752367-13-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/messaging.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/afs/dir.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -147,8 +147,9 @@ int slim_do_transfer(struct slim_control
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index cec18f9f8bd7a..d4bd6efc8c447 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -1493,7 +1493,12 @@ static int afs_rmdir(struct inode *dir, struct dentry *dentry)
+ 		op->file[1].vnode = vnode;
  	}
  
- 	ret = ctrl->xfer_msg(ctrl, txn);
--
--	if (!ret && need_tid && !txn->msg->comp) {
-+	if (ret == -ETIMEDOUT) {
-+		slim_free_txn_tid(ctrl, txn);
-+	} else if (!ret && need_tid && !txn->msg->comp) {
- 		unsigned long ms = txn->rl + HZ;
+-	return afs_do_sync_operation(op);
++	ret = afs_do_sync_operation(op);
++
++	/* Not all systems that can host afs servers have ENOTEMPTY. */
++	if (ret == -EEXIST)
++		ret = -ENOTEMPTY;
++	return ret;
  
- 		timeout = wait_for_completion_timeout(txn->comp,
+ error:
+ 	return afs_put_operation(op);
+-- 
+2.39.5
+
 
 
