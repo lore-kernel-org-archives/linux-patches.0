@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1865B22D4C3;
-	Mon, 10 Mar 2025 17:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E07230BE3;
+	Mon, 10 Mar 2025 17:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626894; cv=none; b=i3cvnOUwwfDDPgxD01AMZzM8yTY1uQ1GwabYBVTV2Z0Xya3Hawa7wDl9YjcwulvwZPsijWnE5ozIoGmu1Y9MNxKkGJ58cbfkD4NUkGxnZAr6UCeQF49F1AP7j4BOUnRt+/SmO2XN3kd3cZIip2K1UWNFbs2p5ebhXO6GjxgTZ7A=
+	t=1741626897; cv=none; b=LJXqtpPRafqAuieJJ6KhwD/THPOVfHDYwJVcj7NJo8MoOQcm5ApWeRPCEB6Mob4AZSPQNJLU5J0MthNUIXYXHFE9C7QAwYiNu5SrjoF9hdDECDwLwLkzM1oNzZwacoLIUVsSeFcsr4AHWViIzdjPEYSkSYxoADCVYrlYryqMFlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626894; c=relaxed/simple;
-	bh=AB9Jxl4riai5/r2LuXB0yehHPIzz0ri1i/qemd9742o=;
+	s=arc-20240116; t=1741626897; c=relaxed/simple;
+	bh=Qac905umtN8Ce8ef7FqZaK5Fbc6DclHTyAM0AL1hU9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eysySXxN42mjJ6MnZ0Szr9NzBYQ6mCvIKpNcN3VA2LhyhzCf2PkQjEdyf3lL2SUQpnEd7DGDkJzRb0lVfyqVH+vy0QruJBOph9bF4GmrwniJOYVns8V1bhgd78Eq+6RFAP/y9kfVKBrdtDIsB8sbZveGpAG4WMMfjfstiGBnX18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJ7rDfNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=br8CyhLOhlgRly8NJS7LJYafwz7RLa+p8cxUAmU9rcng3Vb+ar1UsWOgeRF52mKczFLZAIenR9KneQHDuKdv3ei59kU9eurbLjiNYh6Moxoi9WR4gHGS47M4QCg0z1jK2TSn8UnWiB2C6DHaN+xB2iUvYCmR/eY59chvLvuECHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9h3sr84; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJ7rDfNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B41C4CEE5;
-	Mon, 10 Mar 2025 17:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9h3sr84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDBAC4CEE5;
+	Mon, 10 Mar 2025 17:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626894;
-	bh=AB9Jxl4riai5/r2LuXB0yehHPIzz0ri1i/qemd9742o=;
+	s=korg; t=1741626896;
+	bh=Qac905umtN8Ce8ef7FqZaK5Fbc6DclHTyAM0AL1hU9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJ7rDfNiBPdVrGUUsJBHhBOW21v7BlxkSBoN0Ns9+h2yeaks427LvkHxz5WBNXwZF
-	 eoV/FGDnmTTxbq6RkeCG7o3gCNwCVvq1ZgOa9jk5waBQT9QOeqUObUVKYYJrLBNdYn
-	 /gmxejRq68u/gcebqBadoRtdO3UE9neMVpGfzL9c=
+	b=I9h3sr84Uk9y+OetJ5zPzwe+mEDdtJ5jhheWIr1d8dQvpUfJRcuRYbZU394GSKLMN
+	 /t2Pq2kaMp/mHZzWWhrowT06oTQ2pnZ1Yb290g+IIPR/Wewkb57LvPzMgGWSIE0z6w
+	 xh4uEyAvtbPpPozSsZvk1JvE3EwlREZxNEr/7b+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 150/207] gpio: rcar: Fix missing of_node_put() call
-Date: Mon, 10 Mar 2025 18:05:43 +0100
-Message-ID: <20250310170453.760792402@linuxfoundation.org>
+	qf <quintafeira@tutanota.com>,
+	Christian Heusel <christian@heusel.eu>
+Subject: [PATCH 6.13 151/207] Revert "drivers/card_reader/rtsx_usb: Restore interrupt based detection"
+Date: Mon, 10 Mar 2025 18:05:44 +0100
+Message-ID: <20250310170453.800418873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,47 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Christian Heusel <christian@heusel.eu>
 
-[ Upstream commit 391b41f983bf7ff853de44704d8e14e7cc648a9b ]
+commit 2397d61ee45cddb8f3bd3a3a9840ef0f0b5aa843 upstream.
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+This reverts commit 235b630eda072d7e7b102ab346d6b8a2c028a772.
 
-Call into of_node_put() to rectify that.
+This commit was found responsible for issues with SD card recognition,
+as users had to re-insert their cards in the readers and wait for a
+while. As for some people the SD card was involved in the boot process
+it also caused boot failures.
 
-Fixes: 159f8a0209af ("gpio-rcar: Add DT support")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20250305163753.34913-2-fabrizio.castro.jz@renesas.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://bbs.archlinux.org/viewtopic.php?id=303321
+Fixes: 235b630eda07 ("drivers/card_reader/rtsx_usb: Restore interrupt based detection")
+Reported-by: qf <quintafeira@tutanota.com>
+Closes: https://lore.kernel.org/all/1de87dfa-1e81-45b7-8dcb-ad86c21d5352@heusel.eu
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://lore.kernel.org/r/20250224-revert-sdcard-patch-v1-1-d1a457fbb796@heusel.eu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rcar.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_usb.c |   15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/drivers/gpio/gpio-rcar.c b/drivers/gpio/gpio-rcar.c
-index 8e0544e924886..a7a1cdf7ac66d 100644
---- a/drivers/gpio/gpio-rcar.c
-+++ b/drivers/gpio/gpio-rcar.c
-@@ -468,7 +468,12 @@ static int gpio_rcar_parse_dt(struct gpio_rcar_priv *p, unsigned int *npins)
- 	p->info = *info;
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -286,7 +286,6 @@ static int rtsx_usb_get_status_with_bulk
+ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
+ {
+ 	int ret;
+-	u8 interrupt_val = 0;
+ 	u16 *buf;
  
- 	ret = of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3, 0, &args);
--	*npins = ret == 0 ? args.args[2] : RCAR_MAX_GPIO_PER_BANK;
-+	if (ret) {
-+		*npins = RCAR_MAX_GPIO_PER_BANK;
-+	} else {
-+		*npins = args.args[2];
-+		of_node_put(args.np);
-+	}
+ 	if (!status)
+@@ -309,20 +308,6 @@ int rtsx_usb_get_card_status(struct rtsx
+ 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
+ 	}
  
- 	if (*npins == 0 || *npins > RCAR_MAX_GPIO_PER_BANK) {
- 		dev_warn(p->dev, "Invalid number of gpio lines %u, using %u\n",
--- 
-2.39.5
-
+-	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
+-	/* Cross check presence with interrupts */
+-	if (*status & XD_CD)
+-		if (!(interrupt_val & XD_INT))
+-			*status &= ~XD_CD;
+-
+-	if (*status & SD_CD)
+-		if (!(interrupt_val & SD_INT))
+-			*status &= ~SD_CD;
+-
+-	if (*status & MS_CD)
+-		if (!(interrupt_val & MS_INT))
+-			*status &= ~MS_CD;
+-
+ 	/* usb_control_msg may return positive when success */
+ 	if (ret < 0)
+ 		return ret;
 
 
