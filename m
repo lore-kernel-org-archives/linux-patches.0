@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FCC1C4A24;
-	Mon, 10 Mar 2025 17:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11271C4A24;
+	Mon, 10 Mar 2025 17:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629476; cv=none; b=j2Yn6nX1pKx10nUYWJEwbEyWn0za1N0dYg/b/T4FexSU/fqXgVRRV5HcBniagNLpicQsmxcCfOXrZ/3QRmhAOABoYX/whUrb9bT0g9KUinlihCGFL3FqnRX3/nG0VttX8lC9kDkKrn6b2A3Xf3kjWzdpJNwkdGkYWJCZPbGsCUQ=
+	t=1741629479; cv=none; b=bVJmIVjAmRQifaJkrwVc2ojQTv3qgxki3Hjg9LgsaNN8DHvxvZB6nIGs4qHwUg2v0o/WHGmv22lTYyMvSluJOCSp39N5xrW3JSXDqS8sHYFSzMU96hszuvIDmAX5H3axnAr41aZ11/qSvdohPCiTGytsXTF+UBJX1/NsUlem9nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629476; c=relaxed/simple;
-	bh=lnFvfk0qg3VNdwdp5lGHklcmti48l/YJnzIsP2vo+G8=;
+	s=arc-20240116; t=1741629479; c=relaxed/simple;
+	bh=sG6hS+GbQAn4bEAnW1DQAjoI7YIFy35Akr31K+Qc7Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgdbpEqZ6KqdH9eAwSh32uahk370K+OoKKTVOHxo7ES3rTM8tnhpdttBgB1wXkfCuNoFPPP815rRxLhCc+2MZpLKFQhxwcCQ1iIjHzQFmkSYht2zwfpE4tfMLFZ9d+hkQa3oJt9zT1+XVht3QgO6pAZkwBejS3MZBXmCzUZ/iuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOFtOcR8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5uG+GkE7pBfhvJUHQ1AU9FHfxH5LZS6d/Jf8dfLzSqfkHNe6eiqqE41h/imFyCJaQVthJzKGiC9uc+5mtxWDf0nKzqQGbbiMzlKpT+d0TVxLkIiVM+mErpsdMQH7SHPeWCsxvZ5rDpFul5vj61FNqKB6xGy8Lkns9vN/SakmYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usJu+w2o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOFtOcR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E7CC4CEE5;
-	Mon, 10 Mar 2025 17:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usJu+w2o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD98C4CEE5;
+	Mon, 10 Mar 2025 17:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629476;
-	bh=lnFvfk0qg3VNdwdp5lGHklcmti48l/YJnzIsP2vo+G8=;
+	s=korg; t=1741629478;
+	bh=sG6hS+GbQAn4bEAnW1DQAjoI7YIFy35Akr31K+Qc7Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOFtOcR8/1maHz4L6zoGY9Jp9oZI+XkFAO1jE1AoYQs0/fcDhFmOMO8EnrtbWGnDj
-	 P0rc6OONTGuf08VDHAvXlJX/HV3WeGCzBM7uIHd/btmTMwDdXORpgcz+RTtY7a3bct
-	 A0ghN66CrURZueSifTafs9VpBvNkZ6XesosOIBKc=
+	b=usJu+w2opovaQoqwsFkuAwoyzqO++dw61jxuaBO4z944IbkSXfEikJet1Bd/E1sv8
+	 lMbBOtBikqoMi415PnPd7FemvctKMpbBhMKhnVde1mkiX2WtP8eZZACmTekaGJFI4o
+	 h+0ug5/WsNUGgyhgk1YhiOSK50br993HX7ppR3Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Sam Bobrowicz <sam@elite-embedded.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.15 307/620] media: mc: fix endpoint iteration
-Date: Mon, 10 Mar 2025 18:02:33 +0100
-Message-ID: <20250310170557.737138522@linuxfoundation.org>
+Subject: [PATCH 5.15 308/620] media: ov5640: fix get_light_freq on auto
+Date: Mon, 10 Mar 2025 18:02:34 +0100
+Message-ID: <20250310170557.775931717@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,42 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Sam Bobrowicz <sam@elite-embedded.com>
 
-commit fb2bd86270cd0ad004f4c614ba4f8c63a5720e25 upstream.
+commit 001d3753538d26ddcbef011f5643cfff58a7f672 upstream.
 
-When creating links from a subdev to a sink, the current logic tries to
-iterate over the endpoints of dev's fwnode.
+Light frequency was not properly returned when in auto
+mode and the detected frequency was 60Hz.
 
-This might not be correct when the subdev uses a different fwnode
-compared to the dev's fwnode.
-
-If, when registering, the subdev's fwnode is not set, the code inside
-v4l2_async_register_subdev will set it to the dev's fwnode.
-
-To fix this, just use the subdev's fwnode.
-
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Fixes: 0d3c81e82da9 ("media: v4l2-mc: add v4l2_create_fwnode_links helpers")
+Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Sam Bobrowicz <sam@elite-embedded.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-mc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov5640.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/v4l2-core/v4l2-mc.c
-+++ b/drivers/media/v4l2-core/v4l2-mc.c
-@@ -321,7 +321,7 @@ int v4l2_create_fwnode_links_to_pad(stru
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -1406,6 +1406,7 @@ static int ov5640_get_light_freq(struct
+ 			light_freq = 50;
+ 		} else {
+ 			/* 60Hz */
++			light_freq = 60;
+ 		}
+ 	}
  
- 	sink_sd = media_entity_to_v4l2_subdev(sink->entity);
- 
--	fwnode_graph_for_each_endpoint(dev_fwnode(src_sd->dev), endpoint) {
-+	fwnode_graph_for_each_endpoint(src_sd->fwnode, endpoint) {
- 		struct fwnode_handle *remote_ep;
- 		int src_idx, sink_idx, ret;
- 		struct media_pad *src;
 
 
