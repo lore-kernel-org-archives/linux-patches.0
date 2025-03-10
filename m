@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF5322D79B;
-	Mon, 10 Mar 2025 17:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFA1233714;
+	Mon, 10 Mar 2025 17:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626582; cv=none; b=Jh8EyQrbWq4rG+s9lkRmNORpjMlDdtKX6DdA/m61vo9N+MsOxKnoM+BJ5vTMXQoqu4cxZgLnL910+oU9td2Wn68eWQlEh9Aqa4sv5AoDLpBEF+e4hL67n/0O12/iRoMGQSGfyn86wjZz/0R+9HuQE9y8coER1UZA09Va08SQ/R4=
+	t=1741626584; cv=none; b=jm08ezJkp65HJak7p60czN97m/+ZS1JQI6RSAuXJluVSvo+48XtEkK/wQEjh1QsfTahm+7cEd/aL9G/gOtQqqOcwV2WfERwh/EcA2SX62zLwofGSmQWnTo0eXLVRlE49XvuGXlLKkxYd8kULNc/FSsUHpNcu9Cb3r+faWPw8lT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626582; c=relaxed/simple;
-	bh=IGjdUz4y0TbjTmP2f1p7qpBnqJG7zdG7cZVIEqN1kzI=;
+	s=arc-20240116; t=1741626584; c=relaxed/simple;
+	bh=KNL5oaUqacsuUaiNRG2cIfM/OROJoCPN38v4y2d6OaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptFRkxIbZpi2wh0TdueIAy2Yb8Z3X1qNpZEyxtebjJgYmZczk3xzoWLnCwFonsx4Cz1wBzefyVcCQeCx1KEQjBPfdB+TN/gNNrne7KKDy0sw/Lec+3acVVZKqRaDlfhTPKbhAqTgggkklPUWFdaYm9QltEYLVqNsFGP38+PSt+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNrP1GJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgFpsKR+sZoqMOeAm3uMWDXyLYjIjDi1CNFRcLobyGhaUU/m9NPsYiqss1kE0cYgGqFgCPGWU31t2bS/J1KdPJAB+4hQu7rQH8lJz+071pdCZ4u4J5XbrXH1xHLZxS8gLXPStWcl1TMT5Oeo+tgZyPoS7ug/qhojxKWGNiLj5h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4fJYf27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNrP1GJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2EEC4CEE5;
-	Mon, 10 Mar 2025 17:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4fJYf27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53076C4CEEB;
+	Mon, 10 Mar 2025 17:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626581;
-	bh=IGjdUz4y0TbjTmP2f1p7qpBnqJG7zdG7cZVIEqN1kzI=;
+	s=korg; t=1741626584;
+	bh=KNL5oaUqacsuUaiNRG2cIfM/OROJoCPN38v4y2d6OaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNrP1GJPAYCj5vBvJQEOYNduF6aQ6yvNAkR/MSdvVaKTQPp5rNKmqOyAfrxZnQIWb
-	 bn6QmVg4rISxe9LTH57KHhE0o60vA0yfDhXDMuEz5vJDTK0lTv1FAurQR1efEi0DiY
-	 Vp4hYDM/bwBaL62B20brD6Cwl8LvDJQIO0kM2NCs=
+	b=h4fJYf27rJ/q5pycWDA6FweRa20l0tftOXi2wRNC4Hn1AsdxQklYkrNND6XE5M9bh
+	 QDVe53bQUGDcsnHyi9rCJoX4Ip2aw5m2SNbztfvxJHZzQYTQVfaosaqXXDOf3mCawQ
+	 M9tAIDtu2DpP9orHhiHZE2k+5Z34UfxpIkjSLWw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Henry Chen <chenx97@aosc.io>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.13 010/207] stmmac: loongson: Pass correct arg to PCI function
-Date: Mon, 10 Mar 2025 18:03:23 +0100
-Message-ID: <20250310170448.173852469@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.13 001/207] x86/amd_nb: Use rdmsr_safe() in amd_get_mmconfig_range()
+Date: Mon, 10 Mar 2025 18:03:14 +0100
+Message-ID: <20250310170447.800398540@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,57 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 00371a3f48775967950c2fe3ec97b7c786ca956d upstream.
+commit 14cb5d83068ecf15d2da6f7d0e9ea9edbcbc0457 upstream.
 
-pcim_iomap_regions() should receive the driver's name as its third
-parameter, not the PCI device's name.
+Xen doesn't offer MSR_FAM10H_MMIO_CONF_BASE to all guests.  This results
+in the following warning:
 
-Define the driver name with a macro and use it at the appropriate
-places, including pcim_iomap_regions().
+  unchecked MSR access error: RDMSR from 0xc0010058 at rIP: 0xffffffff8101d19f (xen_do_read_msr+0x7f/0xa0)
+  Call Trace:
+   xen_read_msr+0x1e/0x30
+   amd_get_mmconfig_range+0x2b/0x80
+   quirk_amd_mmconfig_area+0x28/0x100
+   pnp_fixup_device+0x39/0x50
+   __pnp_add_device+0xf/0x150
+   pnp_add_device+0x3d/0x100
+   pnpacpi_add_device_handler+0x1f9/0x280
+   acpi_ns_get_device_callback+0x104/0x1c0
+   acpi_ns_walk_namespace+0x1d0/0x260
+   acpi_get_devices+0x8a/0xb0
+   pnpacpi_init+0x50/0x80
+   do_one_initcall+0x46/0x2e0
+   kernel_init_freeable+0x1da/0x2f0
+   kernel_init+0x16/0x1b0
+   ret_from_fork+0x30/0x50
+   ret_from_fork_asm+0x1b/0x30
 
-Cc: stable@vger.kernel.org # v5.14+
-Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Tested-by: Henry Chen <chenx97@aosc.io>
-Link: https://patch.msgid.link/20250226085208.97891-2-phasta@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+based on quirks for a "PNP0c01" device.  Treating MMCFG as disabled is the
+right course of action, so no change is needed there.
+
+This was most likely exposed by fixing the Xen MSR accessors to not be
+silently-safe.
+
+Fixes: 3fac3734c43a ("xen/pv: support selecting safe/unsafe msr accesses")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250307002846.3026685-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kernel/amd_nb.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -11,6 +11,8 @@
- #include "dwmac_dma.h"
- #include "dwmac1000.h"
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -405,7 +405,6 @@ bool __init early_is_amd_nb(u32 device)
  
-+#define DRIVER_NAME "dwmac-loongson-pci"
-+
- /* Normal Loongson Tx Summary */
- #define DMA_INTR_ENA_NIE_TX_LOONGSON	0x00040000
- /* Normal Loongson Rx Summary */
-@@ -568,7 +570,7 @@ static int loongson_dwmac_probe(struct p
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
- 		if (pci_resource_len(pdev, i) == 0)
- 			continue;
--		ret = pcim_iomap_regions(pdev, BIT(0), pci_name(pdev));
-+		ret = pcim_iomap_regions(pdev, BIT(0), DRIVER_NAME);
- 		if (ret)
- 			goto err_disable_device;
- 		break;
-@@ -687,7 +689,7 @@ static const struct pci_device_id loongs
- MODULE_DEVICE_TABLE(pci, loongson_dwmac_id_table);
+ struct resource *amd_get_mmconfig_range(struct resource *res)
+ {
+-	u32 address;
+ 	u64 base, msr;
+ 	unsigned int segn_busn_bits;
  
- static struct pci_driver loongson_dwmac_driver = {
--	.name = "dwmac-loongson-pci",
-+	.name = DRIVER_NAME,
- 	.id_table = loongson_dwmac_id_table,
- 	.probe = loongson_dwmac_probe,
- 	.remove = loongson_dwmac_remove,
+@@ -413,13 +412,11 @@ struct resource *amd_get_mmconfig_range(
+ 	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
+ 		return NULL;
+ 
+-	/* assume all cpus from fam10h have mmconfig */
+-	if (boot_cpu_data.x86 < 0x10)
++	/* Assume CPUs from Fam10h have mmconfig, although not all VMs do */
++	if (boot_cpu_data.x86 < 0x10 ||
++	    rdmsrl_safe(MSR_FAM10H_MMIO_CONF_BASE, &msr))
+ 		return NULL;
+ 
+-	address = MSR_FAM10H_MMIO_CONF_BASE;
+-	rdmsrl(address, msr);
+-
+ 	/* mmconfig is not enabled */
+ 	if (!(msr & FAM10H_MMIO_CONF_ENABLE))
+ 		return NULL;
 
 
