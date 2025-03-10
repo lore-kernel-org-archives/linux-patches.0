@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCE2226D0B;
-	Mon, 10 Mar 2025 17:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686FB233149;
+	Mon, 10 Mar 2025 17:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627439; cv=none; b=LQpqwKaKtINMiyRwdwECrnLPe3vCXAwVE9daMsjhPDI0AeUox0ZKPNUmWEXmtvFH2Z0l7tPrbUeL6fHwcUehxPRwtuHtpZolYSC4iu6rtJ9drRYN0QZk7OqpiTgYa7W5VHA3xUwDhx1H465LT9d9FjX52BfeGuPzEVYqFpFy5NU=
+	t=1741627442; cv=none; b=I8o8COk2ccOwckx5GlbgJ2Wt3k9KbGJxKaQyjoFE/4ELMEuI73+a2YmP+xXurPG7oDfZGopyIJTcIHvZMUuZwHuTel8QCWfm6ZVmlA4bcHHGEvjV+CXaBtgg4JQG9iYhe5wOJwEWgYyVB2b/86Wwl691LPTxwCuau691Ab756cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627439; c=relaxed/simple;
-	bh=v6sKzMiMeGVSGMu2DRwHEbQzFcBqyUUfimKcbT9VSMs=;
+	s=arc-20240116; t=1741627442; c=relaxed/simple;
+	bh=koPw3EbEcyxUkGx2lzzLr8dxLYv3JlB9mLH5UxoSUkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OJdoHi29xjKEaOrZ+S4Qwu5UE36pO+NcapURTihedNKzxy8tZuhsrrtDBlTL+L16uqWXO77VD5exBJXtJrd9U+ixHxgXOjyeUrBBNFDsb3RncreA6ZPOhLhxzcTb2hRvWpT5/h+1PDtfAVgH/iF/qeW8YvnJHHAoTpmLpVbNu2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbrqMXcD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYzsq6wVuHEN+xxo9Iv0DQ50cCMhnyI5M1+Wqs2Ct+olTzdJ7s1KDO7g3OOKE6uoTj8NycWP8kOX+NNmxUBICd4GhazgBQHRV6x1Sy+UXBdqe9/NC88suV9Two5Y5u0zQl/5Gl+pBhUkZ8ycXIw9M0R3zLwbYEcIPRoRdIwkRDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT3/0N7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbrqMXcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C417C4CEE5;
-	Mon, 10 Mar 2025 17:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT3/0N7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DFAC4CEE5;
+	Mon, 10 Mar 2025 17:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627438;
-	bh=v6sKzMiMeGVSGMu2DRwHEbQzFcBqyUUfimKcbT9VSMs=;
+	s=korg; t=1741627442;
+	bh=koPw3EbEcyxUkGx2lzzLr8dxLYv3JlB9mLH5UxoSUkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbrqMXcDXqkll1DlzwOF7r6gkyXbOchOWFpijIl+ezqV6QN11tAlUrpZxS9XztP1i
-	 bH7LDUbDt0amLqSZhkhtKG1UviRW16SOnIzWkbj1H7CngQc83kir7CgAE7Oc1uDaQF
-	 6RqMr0JtlluHkASb3pSaHCq63lgfyLmNgyeOFCc0=
+	b=rT3/0N7lNLd0RGh3ruYLbn4cMfYs0rMNcEgTgM/I86qh2Xdh8ik6oIZ6RLJFWPC7t
+	 DB9gXOYbALZDBHjX7xnMxVV0MmHUcD6LwGRy0X3lNTHukpgY94CSBl9Q+AKCZ1rKQe
+	 e0zcyyM6aXCtQ1/89qNHuc9bSXUjTwUEIYWyAJBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 112/269] drm/xe/vm: Fix a misplaced #endif
-Date: Mon, 10 Mar 2025 18:04:25 +0100
-Message-ID: <20250310170502.183470495@linuxfoundation.org>
+	Juergen Christ <jchrist@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 130/269] s390/traps: Fix test_monitor_call() inline assembly
+Date: Mon, 10 Mar 2025 18:04:43 +0100
+Message-ID: <20250310170502.903419287@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -48,47 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 1414d95d5805b1dc221d22db9b8dc5287ef083bc upstream.
+commit 5623bc23a1cb9f9a9470fa73b3a20321dc4c4870 upstream.
 
-Fix a (harmless) misplaced #endif leading to declarations
-appearing multiple times.
+The test_monitor_call() inline assembly uses the xgr instruction, which
+also modifies the condition code, to clear a register. However the clobber
+list of the inline assembly does not specify that the condition code is
+modified, which may lead to incorrect code generation.
 
-Fixes: 0eb2a18a8fad ("drm/xe: Implement VM snapshot support for BO's and userptr")
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Cc: <stable@vger.kernel.org> # v6.12+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-3-thomas.hellstrom@linux.intel.com
-(cherry picked from commit fcc20a4c752214b3e25632021c57d7d1d71ee1dd)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Use the lhi instruction instead to clear the register without that the
+condition code is modified. Furthermore this limits clearing to the lower
+32 bits of val, since its type is int.
+
+Fixes: 17248ea03674 ("s390: fix __EMIT_BUG() macro")
+Cc: stable@vger.kernel.org
+Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kernel/traps.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -275,9 +275,9 @@ static inline void vm_dbg(const struct d
- 			  const char *format, ...)
- { /* noop */ }
- #endif
--#endif
- 
- struct xe_vm_snapshot *xe_vm_snapshot_capture(struct xe_vm *vm);
- void xe_vm_snapshot_capture_delayed(struct xe_vm_snapshot *snap);
- void xe_vm_snapshot_print(struct xe_vm_snapshot *snap, struct drm_printer *p);
- void xe_vm_snapshot_free(struct xe_vm_snapshot *snap);
-+#endif
+--- a/arch/s390/kernel/traps.c
++++ b/arch/s390/kernel/traps.c
+@@ -284,10 +284,10 @@ static void __init test_monitor_call(voi
+ 		return;
+ 	asm volatile(
+ 		"	mc	0,0\n"
+-		"0:	xgr	%0,%0\n"
++		"0:	lhi	%[val],0\n"
+ 		"1:\n"
+-		EX_TABLE(0b,1b)
+-		: "+d" (val));
++		EX_TABLE(0b, 1b)
++		: [val] "+d" (val));
+ 	if (!val)
+ 		panic("Monitor call doesn't work!\n");
+ }
 
 
