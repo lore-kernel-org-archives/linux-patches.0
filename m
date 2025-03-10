@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318623372B;
-	Mon, 10 Mar 2025 17:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA16723237F;
+	Mon, 10 Mar 2025 17:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628483; cv=none; b=g08+FrEnLyc14Z2t7O5I8CpDm6kQoGuscxq5rS6p5Iq4JLXH7njCUUcNezD4G5s9/oLG7tQjDfIlEYVvAdQskiszlAjzJ9VfJQEiKkaGEU6QQNjJWRdyv/3Q7hD28eg+4WneQtr33g/0KmKk+PL4Qc+LEn2cqq4EJkBeTKxg5G4=
+	t=1741628485; cv=none; b=T8GbEKdxUvHaXYRmrt8/j/1BIeOR+M/IRobwQX0xER1MZyy+Ztw8Q4TBF/pk2rCPj+ovXhIfkRcnVUQgcg6bnpbIFcVhC2+oOUUeP3IM+9fQQwosGBy0pmqCkhF9Jz2nuULZhlFwzNiY040rUOzEU9Qbpl/+zlWoqKJX0jcfpgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628483; c=relaxed/simple;
-	bh=f7YBsyZ6IDxzvLqlJUper7YIkPQCZrRPCia5K8OJbcY=;
+	s=arc-20240116; t=1741628485; c=relaxed/simple;
+	bh=+W3kRukJE6Qy90DVqgj2G2OXVvU/HAYzhqhexBkMDNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+Ej3haiVVU5efwZigpXYW0SkVH+5B3nynhdIb7/vEGGWTHPZ7UuSbEmD22Gl+qwNIae1f4m0CTuHccD2kuwTYbkLwlkFkOhqxm+sYt9GuAtkBlMlmwiQsOVtt8Nmnx6A7vCXBbUtx1a1AFMYd4KY5G0uegf853FitK/kYQXghs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSCcpKgq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggPMzdoXeW3BCQo7CkPy6VUzMoikybCO7lwOZmNpXpjJtCKxOdH28IKLgZF63EFr6UM5hhOkd58hMGEr++oi41TMQkALWwImF2evFcSPVW0QF8G1IG0xqoFk8twAF6A0FBKH+N0aQXO35xNfjdiLqXYDulz8Vi4432HmVrgbves=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCXt9Eyo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSCcpKgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9B9C4CEE5;
-	Mon, 10 Mar 2025 17:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCXt9Eyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F978C4CEE5;
+	Mon, 10 Mar 2025 17:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628482;
-	bh=f7YBsyZ6IDxzvLqlJUper7YIkPQCZrRPCia5K8OJbcY=;
+	s=korg; t=1741628485;
+	bh=+W3kRukJE6Qy90DVqgj2G2OXVvU/HAYzhqhexBkMDNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSCcpKgqsLnYgzAj6S5rWq93gkipYX8VX/qJJmUNJrbLvUOIQu0/+SsHnjG3dBX2S
-	 3fkOVk/zlWjooTxd5FZz2K0dZGv/YYMwNgNTCY+IEv6GM/z0dsJFNA52Egzuwr/SWJ
-	 ptOfEq6XuBGQeCGXhBf3N2DfhDqeG/DW02wvujgE=
+	b=sCXt9Eyog7Oozlisk5wo/npBCTc1k1eMNSbf/0O7peVllE5Fytx/uBOh+b9rw4uwZ
+	 6UBDdkxMthFnl0/kYIGDZGKGXIujgpz2RzDlnuGxieZg5BsLBFrMS4ZS7V0ExkLXeD
+	 Rfhr061oWJpoCU/GOl70T0LWKiXXzYbvI/h4nQlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.1 073/109] usb: typec: tcpci_rt1711h: Unmask alert interrupts to fix functionality
-Date: Mon, 10 Mar 2025 18:06:57 +0100
-Message-ID: <20250310170430.464809001@linuxfoundation.org>
+	Prashanth K <prashanth.k@oss.qualcomm.com>
+Subject: [PATCH 6.1 074/109] usb: gadget: Set self-powered based on MaxPower and bmAttributes
+Date: Mon, 10 Mar 2025 18:06:58 +0100
+Message-ID: <20250310170430.504220762@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -50,55 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit d6b82dafd17db0658f089b9cdec573982ca82bc5 upstream.
+commit 40e89ff5750fca2c1d6da93f98a2038716bba86c upstream.
 
-During probe, the TCPC alert interrupts are getting masked to
-avoid unwanted interrupts during chip setup: this is ok to do
-but there is no unmasking happening at any later time, which
-means that the chip will not raise any interrupt, essentially
-making it not functional as, while internally it does perform
-all of the intended functions, it won't signal anything to the
-outside.
+Currently the USB gadget will be set as bus-powered based solely
+on whether its bMaxPower is greater than 100mA, but this may miss
+devices that may legitimately draw less than 100mA but still want
+to report as bus-powered. Similarly during suspend & resume, USB
+gadget is incorrectly marked as bus/self powered without checking
+the bmAttributes field. Fix these by configuring the USB gadget
+as self or bus powered based on bmAttributes, and explicitly set
+it as bus-powered if it draws more than 100mA.
 
-Unmask the alert interrupts to fix functionality.
-
-Fixes: ce08eaeb6388 ("staging: typec: rt1711h typec chip driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250219114700.41700-1-angelogioacchino.delregno@collabora.com
+Fixes: 5e5caf4fa8d3 ("usb: gadget: composite: Inform controller driver of self-powered")
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250217120328.2446639-1-prashanth.k@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci_rt1711h.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/gadget/composite.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-+++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
-@@ -332,6 +332,11 @@ static int rt1711h_probe(struct i2c_clie
- {
- 	int ret;
- 	struct rt1711h_chip *chip;
-+	const u16 alert_mask = TCPC_ALERT_TX_SUCCESS | TCPC_ALERT_TX_DISCARDED |
-+			       TCPC_ALERT_TX_FAILED | TCPC_ALERT_RX_HARD_RST |
-+			       TCPC_ALERT_RX_STATUS | TCPC_ALERT_POWER_STATUS |
-+			       TCPC_ALERT_CC_STATUS | TCPC_ALERT_RX_BUF_OVF |
-+			       TCPC_ALERT_FAULT;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1018,10 +1018,11 @@ static int set_config(struct usb_composi
+ 	else
+ 		usb_gadget_set_remote_wakeup(gadget, 0);
+ done:
+-	if (power <= USB_SELF_POWER_VBUS_MAX_DRAW)
+-		usb_gadget_set_selfpowered(gadget);
+-	else
++	if (power > USB_SELF_POWER_VBUS_MAX_DRAW ||
++	    !(c->bmAttributes & USB_CONFIG_ATT_SELFPOWER))
+ 		usb_gadget_clear_selfpowered(gadget);
++	else
++		usb_gadget_set_selfpowered(gadget);
  
- 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
-@@ -380,6 +385,12 @@ static int rt1711h_probe(struct i2c_clie
- 					dev_name(chip->dev), chip);
- 	if (ret < 0)
- 		return ret;
-+
-+	/* Enable alert interrupts */
-+	ret = rt1711h_write16(chip, TCPC_ALERT_MASK, alert_mask);
-+	if (ret < 0)
-+		return ret;
-+
- 	enable_irq_wake(client->irq);
+ 	usb_gadget_vbus_draw(gadget, power);
+ 	if (result >= 0 && cdev->delayed_status)
+@@ -2490,7 +2491,9 @@ void composite_suspend(struct usb_gadget
  
- 	return 0;
+ 	cdev->suspended = 1;
+ 
+-	usb_gadget_set_selfpowered(gadget);
++	if (cdev->config->bmAttributes & USB_CONFIG_ATT_SELFPOWER)
++		usb_gadget_set_selfpowered(gadget);
++
+ 	usb_gadget_vbus_draw(gadget, 2);
+ }
+ 
+@@ -2519,8 +2522,11 @@ void composite_resume(struct usb_gadget
+ 		else
+ 			maxpower = min(maxpower, 900U);
+ 
+-		if (maxpower > USB_SELF_POWER_VBUS_MAX_DRAW)
++		if (maxpower > USB_SELF_POWER_VBUS_MAX_DRAW ||
++		    !(cdev->config->bmAttributes & USB_CONFIG_ATT_SELFPOWER))
+ 			usb_gadget_clear_selfpowered(gadget);
++		else
++			usb_gadget_set_selfpowered(gadget);
+ 
+ 		usb_gadget_vbus_draw(gadget, maxpower);
+ 	}
 
 
