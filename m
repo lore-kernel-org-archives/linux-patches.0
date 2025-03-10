@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835E91C4A24;
-	Mon, 10 Mar 2025 17:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3650F1C4A24;
+	Mon, 10 Mar 2025 17:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629459; cv=none; b=XMzIiL6Dzso1zk4NtZfR14IWHk5C72hCYM7GaE4eANdRSBNkof8BzzIS7JiMsO5YMp2/xVGwglZSPmGbfwSqh7tb3lJGYgRGD/PiUMn8EbGcgmW9L+1Mbz03yNjSJVG15oQcaL/+KbZUnWs65jMQNQI3iqVyiH7uk9U0081PJKg=
+	t=1741629462; cv=none; b=LqMPYE9iRvBR1QRwqct55k42LoVRJOvawfRtN/VeUscbwultR8ncjNGTDw7Yiboo8tRr1aEpMoWLOidVuwLVGrWkrfg7n1z7ohoYtQwCq2mQJjTysOzM0nS/RNGOKQ7rE9ifpE8IUDivFl0FDlNhL/O8jUC47KiAUg9dM0RCIYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629459; c=relaxed/simple;
-	bh=xSSvJLVZdBs4lC8SLNt53HsgTRXw4ttr/4hXYJkFPoQ=;
+	s=arc-20240116; t=1741629462; c=relaxed/simple;
+	bh=Dl7e+2he79y2qusisPzzY/KrasmuMCIogootsXl0TuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKySIRxuH0NZwtIlge9GeXpK2FwM0mTmoXfjtX3jVvMVG8f7Vwh11FwEMUn//dBKSmc0f44+Cg95w25uRGQGEA4O1cnTngEmvR+x5IZF0nJFQ0f1/Ygim6ochaygaleh9v18dcOL5FMG0fH6ZoAR1eKSjC/mYmjy2dqGTedFpNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRdFnkVf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d3amW8uGQBIY2dnSHrhURGjT1jWsmEtmRgKnbxNi//NHyqg5cj5Xv3R2wcRGCLi6jxGAAd+06XkGxkDv7MfK2axqMj8upAfXE5j9sTC53mIFKewkI2B4ptcCOQCfHTtfR8zx0RTBL30BoU6mEn6eJuHc3gg/iQkgt6+fwLrg5iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lsm0Xm9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRdFnkVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFF4C4CEE5;
-	Mon, 10 Mar 2025 17:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lsm0Xm9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AFFC4CEE5;
+	Mon, 10 Mar 2025 17:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629458;
-	bh=xSSvJLVZdBs4lC8SLNt53HsgTRXw4ttr/4hXYJkFPoQ=;
+	s=korg; t=1741629461;
+	bh=Dl7e+2he79y2qusisPzzY/KrasmuMCIogootsXl0TuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRdFnkVfy0TK66aBPrMF7mbRNChI+6MJ2dW1KOYRCorAtp+ZlRGjSCs1CiieBqIFv
-	 ZVEfCWpw+wei0kpmRGDV36qfrKxQXkfn3HTCYUiIbBm4dRBtQivlZ1sxGrJA2qcBDA
-	 +2uoGV+iSzlfYYMGRmT4uWrfnVMhDQc40O1VDP3Y=
+	b=Lsm0Xm9W4aMY0xvxRZNuD9S4wDR2d+o5fxlsZQHUzWhMU4s12Pyf+z/U+emWCHxAk
+	 zI6FfNXF2PrtYmKyZQM1uAV2PqFQ8+2jg8Sf78SNEbNmZSDM+HaefdRswgZ8kKOj00
+	 7bVud14TU2lRYzq6BDTu7EY/kBIrmBce895Ag4Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 301/620] arm64: dts: qcom: sm8350: Fix MPSS memory length
-Date: Mon, 10 Mar 2025 18:02:27 +0100
-Message-ID: <20250310170557.504745853@linuxfoundation.org>
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 302/620] crypto: qce - fix priority to be less than ARMv8 CE
+Date: Mon, 10 Mar 2025 18:02:28 +0100
+Message-ID: <20250310170557.543017941@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,39 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Eric Biggers <ebiggers@google.com>
 
-commit da1937dec9cd986e685b6a429b528a4cbc7b1603 upstream.
+commit 49b9258b05b97c6464e1964b6a2fddb3ddb65d17 upstream.
 
-The address space in MPSS/Modem PAS (Peripheral Authentication Service)
-remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x4040 was
-copied from older DTS, but it grew since then.
+As QCE is an order of magnitude slower than the ARMv8 Crypto Extensions
+on the CPU, and is also less well tested, give it a lower priority.
+Previously the QCE SHA algorithms had higher priority than the ARMv8 CE
+equivalents, and the ciphers such as AES-XTS had the same priority which
+meant the QCE versions were chosen if they happened to be loaded later.
 
-This should have no functional impact on Linux users, because PAS loader
-does not use this address space at all.
-
-Fixes: 177fcf0aeda2 ("arm64: dts: qcom: sm8350: Add remoteprocs")
+Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-3-2e0036fccd8d@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qce/aead.c     |    2 +-
+ drivers/crypto/qce/sha.c      |    2 +-
+ drivers/crypto/qce/skcipher.c |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -754,7 +754,7 @@
+--- a/drivers/crypto/qce/aead.c
++++ b/drivers/crypto/qce/aead.c
+@@ -786,7 +786,7 @@ static int qce_aead_register_one(const s
+ 	alg->init			= qce_aead_init;
+ 	alg->exit			= qce_aead_exit;
  
- 		mpss: remoteproc@4080000 {
- 			compatible = "qcom,sm8350-mpss-pas";
--			reg = <0x0 0x04080000 0x0 0x4040>;
-+			reg = <0x0 0x04080000 0x0 0x10000>;
+-	alg->base.cra_priority		= 300;
++	alg->base.cra_priority		= 275;
+ 	alg->base.cra_flags		= CRYPTO_ALG_ASYNC |
+ 					  CRYPTO_ALG_ALLOCATES_MEMORY |
+ 					  CRYPTO_ALG_KERN_DRIVER_ONLY |
+--- a/drivers/crypto/qce/sha.c
++++ b/drivers/crypto/qce/sha.c
+@@ -480,7 +480,7 @@ static int qce_ahash_register_one(const
  
- 			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+ 	base = &alg->halg.base;
+ 	base->cra_blocksize = def->blocksize;
+-	base->cra_priority = 300;
++	base->cra_priority = 175;
+ 	base->cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_KERN_DRIVER_ONLY;
+ 	base->cra_ctxsize = sizeof(struct qce_sha_ctx);
+ 	base->cra_alignmask = 0;
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -461,7 +461,7 @@ static int qce_skcipher_register_one(con
+ 	alg->encrypt			= qce_skcipher_encrypt;
+ 	alg->decrypt			= qce_skcipher_decrypt;
+ 
+-	alg->base.cra_priority		= 300;
++	alg->base.cra_priority		= 275;
+ 	alg->base.cra_flags		= CRYPTO_ALG_ASYNC |
+ 					  CRYPTO_ALG_ALLOCATES_MEMORY |
+ 					  CRYPTO_ALG_KERN_DRIVER_ONLY;
 
 
