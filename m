@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060182309B0;
-	Mon, 10 Mar 2025 17:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AF723236D;
+	Mon, 10 Mar 2025 17:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628202; cv=none; b=p505PbFskAlcTvyrdUKrbvTuT6i6T6bTs9OivoQAbViz85jd8U6VfqdNZgg9B9a8wPZ85jQS6KSAN60nCAh5MJHIhvntE/89Gq7Z9N9A1oJTei1SROyT9dHFZAYVuD709sFjVQ4bXSO145SbPTVIz9LpG3SfTxX2GyIwTnqIjtY=
+	t=1741628205; cv=none; b=sW3v07xoJ9VJVZ6SK2QhegjcZ5Wf7hKnC7DQuqgq1+B3NmzRbfCK5X7Y9f1g1LlN9dOGXUx0Hh+nZZilMr3wLihQBJh4bdL8Y6RaKT5d4b1dfevzQN4Dj04HPL3KltEy9e2YHqNMrtzBeFQRoEzB8svGOwTtJG0X53MNCBn1N/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628202; c=relaxed/simple;
-	bh=+5f3pQIcrsht9TJNmeYDTh0g9iHNh1yJycuaysOWzXo=;
+	s=arc-20240116; t=1741628205; c=relaxed/simple;
+	bh=BsMtMUihKrGvv1qflL/ygO6Vdf7N9Cx3Vde3ukFQqqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMwXPrHv/CcAlkdNo3q/2GY+BkrWxX9C2AuaKZEsZcQ3QnKZp+c8D6bV+l3cLc7B4aBg0QWjoJT3UcdO1sus32VughP6Qm83kK/YoFdRIZzH6feqZCvrhDtbb+XRWVFVt4MNn6QOkkORLwyk0Un9ijoTUI+G6bxfdcCUTYwWiLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiUd9Oa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KcH5PjGt9KSZO0z5x4E0sVv3dYfPge2Z8Z9tLSCHXjAI+vQLIZxUG4ZboBFFDOCXb7/9nGWcOQZjFtDm2aPOvPka9woteO8KX2PUUbVQkw4InWebgbF/0UtBtlmZ86aCsERLqoMJV3Mfg6XMKMiY+a5CPCm7Mmxb8Dq9A2Gefrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCr1SvwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiUd9Oa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7C0C4CEE5;
-	Mon, 10 Mar 2025 17:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCr1SvwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AC0C4CEE5;
+	Mon, 10 Mar 2025 17:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628201;
-	bh=+5f3pQIcrsht9TJNmeYDTh0g9iHNh1yJycuaysOWzXo=;
+	s=korg; t=1741628204;
+	bh=BsMtMUihKrGvv1qflL/ygO6Vdf7N9Cx3Vde3ukFQqqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiUd9Oa10SHHTXQrO9NOUikHkCssuWEoihcgRD3ngXfTJsA28OI4Y98wmbqYT968m
-	 OgGKf0t11jxTjKTa5nZUqLuu/F8gorFpyG51yavI8bKv5TMc2PCHB97jhyZ8C06HQC
-	 1r9ldybqSlo32nFqrn6by6OkXWOvHTcjG8Ve+qFk=
+	b=MCr1SvwW8VOBQK4HwewTG8vvcqnfMZgJsiA13nG6gZXpqHSyUFKlFXwR2d/qSxu1w
+	 SfCPulWNAnPf0rmfgAKf6yv99txv91nS7D1CFCoK26qRTVe2Fj6isHYaYPuE76fZ9I
+	 S6gyZgTjgdrIa5+zERs6OfF1OqkQ4uh6yxzMoib8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Haoyu Li <lihaoyu499@gmail.com>,
 	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.6 122/145] eeprom: digsy_mtc: Make GPIO lookup table match the device
-Date: Mon, 10 Mar 2025 18:06:56 +0100
-Message-ID: <20250310170439.696873532@linuxfoundation.org>
+	Fei Li <fei1.li@intel.com>
+Subject: [PATCH 6.6 123/145] drivers: virt: acrn: hsm: Use kzalloc to avoid info leak in pmcmd_ioctl
+Date: Mon, 10 Mar 2025 18:06:57 +0100
+Message-ID: <20250310170439.735095272@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,35 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Haoyu Li <lihaoyu499@gmail.com>
 
-commit 038ef0754aae76f79b147b8867f9250e6a976872 upstream.
+commit 819cec1dc47cdeac8f5dd6ba81c1dbee2a68c3bb upstream.
 
-The dev_id value in the GPIO lookup table must match to
-the device instance name, which in this case is combined
-of name and platform device ID, i.e. "spi_gpio.1". But
-the table assumed that there was no platform device ID
-defined, which is wrong. Fix the dev_id value accordingly.
+In the "pmcmd_ioctl" function, three memory objects allocated by
+kmalloc are initialized by "hcall_get_cpu_state", which are then
+copied to user space. The initializer is indeed implemented in
+"acrn_hypercall2" (arch/x86/include/asm/acrn.h). There is a risk of
+information leakage due to uninitialized bytes.
 
-Fixes: 9b00bc7b901f ("spi: spi-gpio: Rewrite to use GPIO descriptors")
+Fixes: 3d679d5aec64 ("virt: acrn: Introduce interfaces to query C-states and P-states allowed by hypervisor")
+Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250206220311.1554075-1-andriy.shevchenko@linux.intel.com
+Acked-by: Fei Li <fei1.li@intel.com>
+Link: https://lore.kernel.org/r/20250130115811.92424-1-lihaoyu499@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/eeprom/digsy_mtc_eeprom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/virt/acrn/hsm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
-+++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
-@@ -60,7 +60,7 @@ static struct platform_device digsy_mtc_
- };
+--- a/drivers/virt/acrn/hsm.c
++++ b/drivers/virt/acrn/hsm.c
+@@ -49,7 +49,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
+ 	switch (cmd & PMCMD_TYPE_MASK) {
+ 	case ACRN_PMCMD_GET_PX_CNT:
+ 	case ACRN_PMCMD_GET_CX_CNT:
+-		pm_info = kmalloc(sizeof(u64), GFP_KERNEL);
++		pm_info = kzalloc(sizeof(u64), GFP_KERNEL);
+ 		if (!pm_info)
+ 			return -ENOMEM;
  
- static struct gpiod_lookup_table eeprom_spi_gpiod_table = {
--	.dev_id         = "spi_gpio",
-+	.dev_id         = "spi_gpio.1",
- 	.table          = {
- 		GPIO_LOOKUP("gpio@b00", GPIO_EEPROM_CLK,
- 			    "sck", GPIO_ACTIVE_HIGH),
+@@ -64,7 +64,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
+ 		kfree(pm_info);
+ 		break;
+ 	case ACRN_PMCMD_GET_PX_DATA:
+-		px_data = kmalloc(sizeof(*px_data), GFP_KERNEL);
++		px_data = kzalloc(sizeof(*px_data), GFP_KERNEL);
+ 		if (!px_data)
+ 			return -ENOMEM;
+ 
+@@ -79,7 +79,7 @@ static int pmcmd_ioctl(u64 cmd, void __u
+ 		kfree(px_data);
+ 		break;
+ 	case ACRN_PMCMD_GET_CX_DATA:
+-		cx_data = kmalloc(sizeof(*cx_data), GFP_KERNEL);
++		cx_data = kzalloc(sizeof(*cx_data), GFP_KERNEL);
+ 		if (!cx_data)
+ 			return -ENOMEM;
+ 
 
 
