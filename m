@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AD8233145;
-	Mon, 10 Mar 2025 17:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71993233148;
+	Mon, 10 Mar 2025 17:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626966; cv=none; b=X5orb1QYsbjt8gD9tb0cWqtkI9QR6T2jjEmb1eAwDzoqg+T65q+2nGByRaN2f83xD9/Vr/AVAsQSyNBSY/GMh2lbk/ui6K56TVcrgKg4Tfhci35+I3t6w5AFnhmtUytTKxoMTpw+iLG2lDEkjmpN7srr50lvMW4Kx2y5Akd4iWA=
+	t=1741626969; cv=none; b=VIb/X8tx7AjGIGO2x/UdxzYMdpo7v1kFgsy9DZ9moTBGftsgoEFL+4ks7h319Dr7XzEVuPgxv80D+B/TkYTORwnG8p3L0AdIo3orpEm33BVOsLADFB0FoY7chYdq0esc94TpcykLBWZNBD8UfBtHSbUwm1bUMpt2GdzgJCxRY1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626966; c=relaxed/simple;
-	bh=6jNz0ikYRwIx/UfDYWXLL+rc/XnpGoGSK3r0fNDAsdA=;
+	s=arc-20240116; t=1741626969; c=relaxed/simple;
+	bh=y9+VU2xmPaRjAoDrXqU/TBtH7tp1M8ZY2yfh7cQ64Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ9Fgq48Q5Csecn96MGDP2lw5o7UMkNmHHlWx82VdnU3544mfQnKIJD6eSUm7qZere7VIL3/OW5PxnFrbgByxBuVfyph2wOJtcwQDm3bZyQr84DCm2q6tZeBoTqYSnO8iYL4UmlyhM7F/rlRLe5xBFjcZhkJUsmaskJDE/PrHm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IneYddWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2xBlmYiQxvqMxslhN31zMG244/yc0RBlvDNz1z53NixGB3BoQmQ02ZybH2iaKmGv0DlaCTMrLM9isv/K6uvlzY342pr0ZlXTssQWa2FeZISXMGeUvDa7EkUN28aWL+FAwI/R4aQBwpPDqnPFHR7ou78xeqa9fKg2/7IerXqvTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJV69H0s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IneYddWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35D6C4CEE5;
-	Mon, 10 Mar 2025 17:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJV69H0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977C9C4CEE5;
+	Mon, 10 Mar 2025 17:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626966;
-	bh=6jNz0ikYRwIx/UfDYWXLL+rc/XnpGoGSK3r0fNDAsdA=;
+	s=korg; t=1741626969;
+	bh=y9+VU2xmPaRjAoDrXqU/TBtH7tp1M8ZY2yfh7cQ64Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IneYddWYkkqeC6H2B4yOvVF+Gh9zkhJCqnyRQe8YpOHXcUJYUvkjBAdtFODSWwSfH
-	 uSohQ0ScepCcpaW2Prpbj1ETQuhnQUb7iPkwiP4FDETXocj6Mkyb1pJ/85XziHv5IG
-	 DKf5kGh1hmWV6VLbQzOHE8mtTVc7nvYdvu66EwAI=
+	b=NJV69H0sm1Qi5YUft8x3NCFXEzET58nr65/CGT4Nsh9Y5lYtIcln0NOEMTnzDfUrv
+	 P5mvwHlaIdpcbV9Uf5soT2nK9AiHvwURggvtxH+Z/ls0pihTJNh/d+/XM8/E7NoHZs
+	 G3aUdrq2kHuPCfbZMuSgFNRkDSLJupguWDcEpgu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zecheng Li <zecheng@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>
-Subject: [PATCH 6.13 143/207] sched/fair: Fix potential memory corruption in child_cfs_rq_on_list
-Date: Mon, 10 Mar 2025 18:05:36 +0100
-Message-ID: <20250310170453.484712475@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 144/207] nvme-tcp: fix signedness bug in nvme_tcp_init_connection()
+Date: Mon, 10 Mar 2025 18:05:37 +0100
+Message-ID: <20250310170453.523260801@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,68 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zecheng Li <zecheng@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 3b4035ddbfc8e4521f85569998a7569668cccf51 ]
+[ Upstream commit 528361c49962708a60f51a1afafeb00987cebedf ]
 
-child_cfs_rq_on_list attempts to convert a 'prev' pointer to a cfs_rq.
-This 'prev' pointer can originate from struct rq's leaf_cfs_rq_list,
-making the conversion invalid and potentially leading to memory
-corruption. Depending on the relative positions of leaf_cfs_rq_list and
-the task group (tg) pointer within the struct, this can cause a memory
-fault or access garbage data.
+The kernel_recvmsg() function returns an int which could be either
+negative error codes or the number of bytes received.  The problem is
+that the condition:
 
-The issue arises in list_add_leaf_cfs_rq, where both
-cfs_rq->leaf_cfs_rq_list and rq->leaf_cfs_rq_list are added to the same
-leaf list. Also, rq->tmp_alone_branch can be set to rq->leaf_cfs_rq_list.
+        if (ret < sizeof(*icresp)) {
 
-This adds a check `if (prev == &rq->leaf_cfs_rq_list)` after the main
-conditional in child_cfs_rq_on_list. This ensures that the container_of
-operation will convert a correct cfs_rq struct.
+is type promoted to type unsigned long and negative values are treated
+as high positive values which is success, when they should be treated as
+failure.  Handle invalid positive returns separately from negative
+error codes to avoid this problem.
 
-This check is sufficient because only cfs_rqs on the same CPU are added
-to the list, so verifying the 'prev' pointer against the current rq's list
-head is enough.
-
-Fixes a potential memory corruption issue that due to current struct
-layout might not be manifesting as a crash but could lead to unpredictable
-behavior when the layout changes.
-
-Fixes: fdaba61ef8a2 ("sched/fair: Ensure that the CFS parent is added after unthrottling")
-Signed-off-by: Zecheng Li <zecheng@google.com>
-Reviewed-and-tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20250304214031.2882646-1-zecheng@google.com
+Fixes: 578539e09690 ("nvme-tcp: fix connect failure on receiving partial ICResp PDU")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/host/tcp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 7d0a05660e5ef..4f850edf16401 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4046,15 +4046,17 @@ static inline bool child_cfs_rq_on_list(struct cfs_rq *cfs_rq)
- {
- 	struct cfs_rq *prev_cfs_rq;
- 	struct list_head *prev;
-+	struct rq *rq = rq_of(cfs_rq);
- 
- 	if (cfs_rq->on_list) {
- 		prev = cfs_rq->leaf_cfs_rq_list.prev;
- 	} else {
--		struct rq *rq = rq_of(cfs_rq);
--
- 		prev = rq->tmp_alone_branch;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index ade7f1af33d80..5c50f1a5af957 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1521,11 +1521,11 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ 	msg.msg_flags = MSG_WAITALL;
+ 	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
+ 			iov.iov_len, msg.msg_flags);
+-	if (ret < sizeof(*icresp)) {
++	if (ret >= 0 && ret < sizeof(*icresp))
++		ret = -ECONNRESET;
++	if (ret < 0) {
+ 		pr_warn("queue %d: failed to receive icresp, error %d\n",
+ 			nvme_tcp_queue_id(queue), ret);
+-		if (ret >= 0)
+-			ret = -ECONNRESET;
+ 		goto free_icresp;
  	}
- 
-+	if (prev == &rq->leaf_cfs_rq_list)
-+		return false;
-+
- 	prev_cfs_rq = container_of(prev, struct cfs_rq, leaf_cfs_rq_list);
- 
- 	return (prev_cfs_rq->tg->parent == cfs_rq->tg);
+ 	ret = -ENOTCONN;
 -- 
 2.39.5
 
