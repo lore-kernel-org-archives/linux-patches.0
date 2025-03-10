@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4841DE89C;
-	Mon, 10 Mar 2025 17:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E5A22D4C3;
+	Mon, 10 Mar 2025 17:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628691; cv=none; b=NGymKfCiW2mNNnKaLOzKCut9/SNfBAUU+puS+SX1XIzUTBQInXdNtqO4hBJeddPPju4ciWmCZfn5CiJehkwSdpl+9b/mYyMXQh7F7+C4/oh+Yrb1cb0qN/d06VZXs+2LWsA73L355BQDfpNh+mAhSL8yDt6sxX2wN38gzfYETCs=
+	t=1741628694; cv=none; b=JYTdffvDxjIUBzCSsd1IYW2im+N+40Cbx2sZqwCVYPLOfGvPiug2Fpvgk8H5U19A6AWjRAVAMXQxoFTU738lg046y3//UtE5+c+1LCQFEqUcab6GPSy92ZA0tXEwiuVLHAGmcMlb226SkPnl1OZxlQrNrkYCRCX0XFhPswVzSkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628691; c=relaxed/simple;
-	bh=sFpzfLECERwi/D2m5o1haxFJ6QGCBlS0V1q2AxACb3Q=;
+	s=arc-20240116; t=1741628694; c=relaxed/simple;
+	bh=IjBCSmfatBVorqLd6OHM4UOht1+r+TTriUnx6OgEH5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BO0B/7wN8ofNkjHhA90rH2nPoikSESx/FK3OEK00C61qeus4RE9Qg63ikVnM39yX1a8mE3dwjt1DwsuHT7UGyNo99D+g0vgtkqS3I8uoQ2HCmwS7yO8f9zDWKh5F/oZCVKYDvintSoLlG765Q95HMNuTEyQYUhqUKOLwl+a/WXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWatx5+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkerN++iRxWXbdQSgbz9bMc39KnXdFS+FWldH3kqTzrAJAZz4PmfC2G10g1nSraPAr90IwevqATo7B8iMlgDDSLqzJCIiQQPc7HD4bAwDYftJ+TgWF/DovzquiikJTgl+mEV9MkXZMsjYYDHbEEnjrD4g8VZE2dZmmFTd0SmvUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKS7MKmS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWatx5+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FD3C4CEE5;
-	Mon, 10 Mar 2025 17:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKS7MKmS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8287C4CEE5;
+	Mon, 10 Mar 2025 17:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628691;
-	bh=sFpzfLECERwi/D2m5o1haxFJ6QGCBlS0V1q2AxACb3Q=;
+	s=korg; t=1741628694;
+	bh=IjBCSmfatBVorqLd6OHM4UOht1+r+TTriUnx6OgEH5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWatx5+wM6WOHAECxHGVYs7XMWVxkbWyR480Fb5RkL57WTc3qD8nt+H9wmOa0lB+F
-	 lqHrfVGTQecK3kFPJcSvlqVi2BpZiSlzWVwQZEUIzBlDezlkcEeqYJncNOmYjBTyDs
-	 oQjZyUOQj/zb0dU/KATr+DQPfAh++g6ozRZerFMs=
+	b=KKS7MKmSBLHnXNRByPU9FTf6z15Bxr64UKmaGGNijpGA3KJGMTsQ16oz+KZ0wSOry
+	 QdIfbdh9v665Z+v9eiBHIm9MN65PD3YRnVSj9q3yqMK1NN5MWR9kEAX1fT3+eg7jSI
+	 AhS9cJ6Z8QaeQjZy8/jSiCPcFHdOiQWTEjuWYb3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Pavel Machek <pavel@ucw.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/620] dt-bindings: leds: Add multicolor PWM LED bindings
-Date: Mon, 10 Mar 2025 17:58:01 +0100
-Message-ID: <20250310170546.964857762@linuxfoundation.org>
+Subject: [PATCH 5.15 036/620] dt-bindings: leds: class-multicolor: reference class directly in multi-led node
+Date: Mon, 10 Mar 2025 17:58:02 +0100
+Message-ID: <20250310170547.004006843@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,108 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ac123741b8f52311af118f8a052b1cbbed041291 ]
+[ Upstream commit de40c8496ead3e25d1e989999eed0c3ecee8fc96 ]
 
-This allows to group multiple PWM-connected monochrome LEDs into
-multicolor LEDs, e.g. RGB LEDs.
+The leds/common.yaml is referenced directly in each LED node, which
+leads to people doing the same with leds/leds-class-multicolor.yaml.
+This is not correct because leds-class-multicolor.yaml defined multi-led
+property and its children.  Some schemas implemented this incorrect.
 
-Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+Rework this to match same behavior common.yaml, so expect the multi-led
+node to reference the leds-class-multicolor.yaml.  Fixing allows to add
+unevaluatedProperties:false.
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Pavel Machek <pavel@ucw.cz>
 Stable-dep-of: 609bc99a4452 ("dt-bindings: leds: class-multicolor: Fix path to color definitions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/leds/leds-pwm-multicolor.yaml    | 79 +++++++++++++++++++
- 1 file changed, 79 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
+ .../leds/cznic,turris-omnia-leds.yaml         |  2 ++
+ .../bindings/leds/leds-class-multicolor.yaml  | 32 +++++++++----------
+ .../devicetree/bindings/leds/leds-lp50xx.yaml |  2 ++
+ .../bindings/leds/leds-pwm-multicolor.yaml    |  5 ++-
+ .../bindings/leds/leds-qcom-lpg.yaml          |  2 ++
+ 5 files changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
-new file mode 100644
-index 0000000000000..6625a528f7275
---- /dev/null
-+++ b/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
-@@ -0,0 +1,79 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/leds/leds-pwm-multicolor.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/Documentation/devicetree/bindings/leds/cznic,turris-omnia-leds.yaml b/Documentation/devicetree/bindings/leds/cznic,turris-omnia-leds.yaml
+index 9362b1ef9e88a..14bebe1ad8f8a 100644
+--- a/Documentation/devicetree/bindings/leds/cznic,turris-omnia-leds.yaml
++++ b/Documentation/devicetree/bindings/leds/cznic,turris-omnia-leds.yaml
+@@ -33,6 +33,8 @@ patternProperties:
+   "^multi-led@[0-9a-b]$":
+     type: object
+     $ref: leds-class-multicolor.yaml#
++    unevaluatedProperties: false
 +
-+title: Multi-color LEDs connected to PWM
-+
-+maintainers:
-+  - Sven Schwermer <sven.schwermer@disruptive-technologies.com>
-+
-+description: |
-+  This driver combines several monochrome PWM LEDs into one multi-color
-+  LED using the multicolor LED class.
-+
+     description:
+       This node represents one of the RGB LED devices on Turris Omnia.
+       No subnodes need to be added for subchannels since this controller only
+diff --git a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
+index f41d021ed6774..12693483231f7 100644
+--- a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
++++ b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
+@@ -19,22 +19,22 @@ description: |
+   LED class.  Common LED nodes and properties are inherited from the common.yaml
+   within this documentation directory.
+ 
+-patternProperties:
+-  "^multi-led(@[0-9a-f])?$":
+-    type: object
+-    description: Represents the LEDs that are to be grouped.
+-    properties:
+-      color:
+-        description: |
+-          For multicolor LED support this property should be defined as either
+-          LED_COLOR_ID_RGB or LED_COLOR_ID_MULTI which can be found in
+-          include/linux/leds/common.h.
+-        enum: [ 8, 9 ]
+-
+-    $ref: "common.yaml#"
+-
+-    required:
+-      - color
 +properties:
-+  compatible:
-+    const: pwm-leds-multicolor
++  $nodename:
++    pattern: "^multi-led(@[0-9a-f])?$"
 +
-+  multi-led:
-+    type: object
-+
-+    patternProperties:
-+      "^led-[0-9a-z]+$":
-+        type: object
-+        $ref: common.yaml#
-+
-+        additionalProperties: false
-+
-+        properties:
-+          pwms:
-+            maxItems: 1
-+
-+          pwm-names: true
-+
-+          color: true
-+
-+        required:
-+          - pwms
-+          - color
++  color:
++    description: |
++      For multicolor LED support this property should be defined as either
++      LED_COLOR_ID_RGB or LED_COLOR_ID_MULTI which can be found in
++      include/linux/leds/common.h.
++    enum: [ 8, 9 ]
 +
 +required:
-+  - compatible
++  - color
 +
 +allOf:
-+  - $ref: leds-class-multicolor.yaml#
++  - $ref: "common.yaml#"
+ 
+ additionalProperties: true
+ 
+diff --git a/Documentation/devicetree/bindings/leds/leds-lp50xx.yaml b/Documentation/devicetree/bindings/leds/leds-lp50xx.yaml
+index f12fe5b53f30d..64d07fd20eab3 100644
+--- a/Documentation/devicetree/bindings/leds/leds-lp50xx.yaml
++++ b/Documentation/devicetree/bindings/leds/leds-lp50xx.yaml
+@@ -56,6 +56,8 @@ patternProperties:
+   '^multi-led@[0-9a-f]$':
+     type: object
+     $ref: leds-class-multicolor.yaml#
++    unevaluatedProperties: false
 +
-+additionalProperties: false
+     properties:
+       reg:
+         minItems: 1
+diff --git a/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
+index 6625a528f7275..03fc14d1601f3 100644
+--- a/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
++++ b/Documentation/devicetree/bindings/leds/leds-pwm-multicolor.yaml
+@@ -19,6 +19,8 @@ properties:
+ 
+   multi-led:
+     type: object
++    $ref: leds-class-multicolor.yaml#
++    unevaluatedProperties: false
+ 
+     patternProperties:
+       "^led-[0-9a-z]+$":
+@@ -42,9 +44,6 @@ properties:
+ required:
+   - compatible
+ 
+-allOf:
+-  - $ref: leds-class-multicolor.yaml#
+-
+ additionalProperties: false
+ 
+ examples:
+diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+index 336bd8e10efd3..6df2838d5f5b3 100644
+--- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
++++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+@@ -57,6 +57,8 @@ properties:
+   multi-led:
+     type: object
+     $ref: leds-class-multicolor.yaml#
++    unevaluatedProperties: false
 +
-+examples:
-+  - |
-+    #include <dt-bindings/leds/common.h>
-+
-+    led-controller {
-+        compatible = "pwm-leds-multicolor";
-+
-+        multi-led {
-+          color = <LED_COLOR_ID_RGB>;
-+          function = LED_FUNCTION_INDICATOR;
-+          max-brightness = <65535>;
-+
-+          led-red {
-+              pwms = <&pwm1 0 1000000>;
-+              color = <LED_COLOR_ID_RED>;
-+          };
-+
-+          led-green {
-+              pwms = <&pwm2 0 1000000>;
-+              color = <LED_COLOR_ID_GREEN>;
-+          };
-+
-+          led-blue {
-+              pwms = <&pwm3 0 1000000>;
-+              color = <LED_COLOR_ID_BLUE>;
-+          };
-+        };
-+    };
-+
-+...
+     properties:
+       "#address-cells":
+         const: 1
 -- 
 2.39.5
 
