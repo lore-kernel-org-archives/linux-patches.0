@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA2F22D786;
-	Mon, 10 Mar 2025 17:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3294231A2A;
+	Mon, 10 Mar 2025 17:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626622; cv=none; b=T8Y0U1p3pUthG0REJGrRLGXfbZpNa8eqN65z0/V+OA0vXUty3QCY9uYsBrm1amLV7hCxZ8RAyk28puKReNzu/yiLQahQW6+cVeS2wZLDyCOECT0isOYOrxz157YVuzKxNrOeCU/QCMFTchzDkWwRopTRt+wBaZsUFQW8vJQI+gU=
+	t=1741626625; cv=none; b=uWv1wE60l4nroxIgrGziWZnYJ6qKOB/NkA8xJS5natzA7OR4s5DC7mXHF4ZPBiJzEq9NCNTrQz2VumfzjudJnt8odPrZ7OnWKUUqAtMjcKI9HEHUeoyJmsQ6reRlK3e7i6Ok4EqwmJvd5FfI8MGUG4W1YKpAypzjMC3n8a1i69o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626622; c=relaxed/simple;
-	bh=bEjbMgsSUnbyGT/KTp3F8KCecUO8PmjShWGkKROtpbY=;
+	s=arc-20240116; t=1741626625; c=relaxed/simple;
+	bh=DdRMA6bvAUl3+BltA5lcjc7IsNJijo7JvopzdvLhF4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oGbU3G8z1+r97GEubQOB2e79TWhcBqkjqj0NYmk7E+R55Zn4dwwdfjwQ76u88LAS6x6LGiWD4+XXzVA9ZTyX8H3nVol9oQIOplTxwtmH0PxRcaVTZ82kmGSOxOJSJDEE0w4moQ7rDpDZaF60C4d3q8RpinLgqI0TDgz9meEUYqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtZXJjkz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IoF/Ijvlpcsg+2R5XP1o+5S8p52txeALYdGR2f2us4cL5UahDCMvQUhddahlb3Z3mfRKJnz8UmpiLG76tm1aLsulW1xcgVOFUgXSdaGd/2r1cFjtuHFGRJfawVMfIbmnWnAje0umLmP4jzs+jnJ3DZwBnBJ6zNTKkgHw+Wmbgkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBSU8WhZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtZXJjkz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97812C4CEE5;
-	Mon, 10 Mar 2025 17:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBSU8WhZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE16C4CEE5;
+	Mon, 10 Mar 2025 17:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626622;
-	bh=bEjbMgsSUnbyGT/KTp3F8KCecUO8PmjShWGkKROtpbY=;
+	s=korg; t=1741626624;
+	bh=DdRMA6bvAUl3+BltA5lcjc7IsNJijo7JvopzdvLhF4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtZXJjkzjNTcO/OUSWZA4hDrAAqOa6uFzDiYtH9n5ZeRLou+8RfytVPqbNKI5dNaG
-	 5mkaRmUPOQWOSjLc9eqpRvIf3AuRFzoDGulbB8fM2uTI2x1Tue8uagS1hqTTHXe5tl
-	 uhHDI2Z0m06vUv/3P8RjolJJdpBy7iBDrUN8b48A=
+	b=HBSU8WhZmG3RPINTZ9CqB7GAnp8k7Eya7/dvvpoDlk+tYvITV++IhklE1UTx1npPC
+	 /KgrGKHO3SfB7BzFlMfIvT4WwsZLObPHCanYTw1rAHm3JOlJ9/7pABPFAYqH7Ctq6o
+	 BHVWEJ7F79aydErFQ+n9HlrDlGE86Pvc5ISwIF6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
 	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 055/207] drm/xe: Fix fault mode invalidation with unbind
-Date: Mon, 10 Mar 2025 18:04:08 +0100
-Message-ID: <20250310170449.958131640@linuxfoundation.org>
+Subject: [PATCH 6.13 056/207] drm/xe/userptr: properly setup pfn_flags_mask
+Date: Mon, 10 Mar 2025 18:04:09 +0100
+Message-ID: <20250310170449.999160091@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -53,252 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 84211b1c0db6b9dbe0020fa97192fb9661617f24 upstream.
+commit 475d06e00b7496c7915d87f7ae67af26738e4649 upstream.
 
-Fix fault mode invalidation racing with unbind leading to the
-PTE zapping potentially traversing an invalid page-table tree.
-Do this by holding the notifier lock across PTE zapping. This
-might transfer any contention waiting on the notifier seqlock
-read side to the notifier lock read side, but that shouldn't be
-a major problem.
+Currently we just leave it uninitialised, which at first looks harmless,
+however we also don't zero out the pfn array, and with pfn_flags_mask
+the idea is to be able set individual flags for a given range of pfn or
+completely ignore them, outside of default_flags. So here we end up with
+pfn[i] & pfn_flags_mask, and if both are uninitialised we might get back
+an unexpected flags value, like asking for read only with default_flags,
+but getting back write on top, leading to potentially bogus behaviour.
 
-At the same time get rid of the open-coded invalidation in the bind
-code by relying on the notifier even when the vma bind is not
-yet committed.
+To fix this ensure we zero the pfn_flags_mask, such that hmm only
+considers the default_flags and not also the initial pfn[i] value.
 
-Finally let userptr invalidation call a dedicated xe_vm function
-performing a full invalidation.
+v2 (Thomas):
+ - Prefer proper initializer.
 
-Fixes: e8babb280b5e ("drm/xe: Convert multiple bind ops into single job")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 81e058a3e7fd ("drm/xe: Introduce helper to populate userptr")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
 Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: <stable@vger.kernel.org> # v6.12+
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-4-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 100a5b8dadfca50d91d9a4c9fc01431b42a25cab)
+Cc: Thomas Hellström <thomas.hellstrom@intel.com>
+Cc: <stable@vger.kernel.org> # v6.10+
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250226174748.294285-2-matthew.auld@intel.com
+(cherry picked from commit dd8c01e42f4c5c1eaf02f003d7d588ba6706aa71)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c       |   38 ++++-------------
- drivers/gpu/drm/xe/xe_vm.c       |   85 +++++++++++++++++++++++++--------------
- drivers/gpu/drm/xe/xe_vm.h       |    8 +++
- drivers/gpu/drm/xe/xe_vm_types.h |    4 -
- 4 files changed, 75 insertions(+), 60 deletions(-)
+ drivers/gpu/drm/xe/xe_hmm.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1233,42 +1233,22 @@ static int vma_check_userptr(struct xe_v
- 		return 0;
- 
- 	uvma = to_userptr_vma(vma);
--	notifier_seq = uvma->userptr.notifier_seq;
-+	if (xe_pt_userptr_inject_eagain(uvma))
-+		xe_vma_userptr_force_invalidate(uvma);
- 
--	if (uvma->userptr.initial_bind && !xe_vm_in_fault_mode(vm))
--		return 0;
-+	notifier_seq = uvma->userptr.notifier_seq;
- 
- 	if (!mmu_interval_read_retry(&uvma->userptr.notifier,
--				     notifier_seq) &&
--	    !xe_pt_userptr_inject_eagain(uvma))
-+				     notifier_seq))
- 		return 0;
- 
--	if (xe_vm_in_fault_mode(vm)) {
-+	if (xe_vm_in_fault_mode(vm))
- 		return -EAGAIN;
--	} else {
--		spin_lock(&vm->userptr.invalidated_lock);
--		list_move_tail(&uvma->userptr.invalidate_link,
--			       &vm->userptr.invalidated);
--		spin_unlock(&vm->userptr.invalidated_lock);
--
--		if (xe_vm_in_preempt_fence_mode(vm)) {
--			struct dma_resv_iter cursor;
--			struct dma_fence *fence;
--			long err;
--
--			dma_resv_iter_begin(&cursor, xe_vm_resv(vm),
--					    DMA_RESV_USAGE_BOOKKEEP);
--			dma_resv_for_each_fence_unlocked(&cursor, fence)
--				dma_fence_enable_sw_signaling(fence);
--			dma_resv_iter_end(&cursor);
--
--			err = dma_resv_wait_timeout(xe_vm_resv(vm),
--						    DMA_RESV_USAGE_BOOKKEEP,
--						    false, MAX_SCHEDULE_TIMEOUT);
--			XE_WARN_ON(err <= 0);
--		}
--	}
- 
-+	/*
-+	 * Just continue the operation since exec or rebind worker
-+	 * will take care of rebinding.
-+	 */
- 	return 0;
- }
- 
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -580,51 +580,26 @@ out_unlock_outer:
- 	trace_xe_vm_rebind_worker_exit(vm);
- }
- 
--static bool vma_userptr_invalidate(struct mmu_interval_notifier *mni,
--				   const struct mmu_notifier_range *range,
--				   unsigned long cur_seq)
-+static void __vma_userptr_invalidate(struct xe_vm *vm, struct xe_userptr_vma *uvma)
+--- a/drivers/gpu/drm/xe/xe_hmm.c
++++ b/drivers/gpu/drm/xe/xe_hmm.c
+@@ -203,13 +203,20 @@ int xe_hmm_userptr_populate_range(struct
  {
--	struct xe_userptr *userptr = container_of(mni, typeof(*userptr), notifier);
--	struct xe_userptr_vma *uvma = container_of(userptr, typeof(*uvma), userptr);
-+	struct xe_userptr *userptr = &uvma->userptr;
+ 	unsigned long timeout =
+ 		jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
+-	unsigned long *pfns, flags = HMM_PFN_REQ_FAULT;
++	unsigned long *pfns;
+ 	struct xe_userptr *userptr;
  	struct xe_vma *vma = &uvma->vma;
--	struct xe_vm *vm = xe_vma_vm(vma);
- 	struct dma_resv_iter cursor;
- 	struct dma_fence *fence;
- 	long err;
+ 	u64 userptr_start = xe_vma_userptr(vma);
+ 	u64 userptr_end = userptr_start + xe_vma_size(vma);
+ 	struct xe_vm *vm = xe_vma_vm(vma);
+-	struct hmm_range hmm_range;
++	struct hmm_range hmm_range = {
++		.pfn_flags_mask = 0, /* ignore pfns */
++		.default_flags = HMM_PFN_REQ_FAULT,
++		.start = userptr_start,
++		.end = userptr_end,
++		.notifier = &uvma->userptr.notifier,
++		.dev_private_owner = vm->xe,
++	};
+ 	bool write = !xe_vma_read_only(vma);
+ 	unsigned long notifier_seq;
+ 	u64 npages;
+@@ -236,19 +243,14 @@ int xe_hmm_userptr_populate_range(struct
+ 		return -ENOMEM;
  
--	xe_assert(vm->xe, xe_vma_is_userptr(vma));
--	trace_xe_vma_userptr_invalidate(vma);
--
--	if (!mmu_notifier_range_blockable(range))
--		return false;
--
--	vm_dbg(&xe_vma_vm(vma)->xe->drm,
--	       "NOTIFIER: addr=0x%016llx, range=0x%016llx",
--		xe_vma_start(vma), xe_vma_size(vma));
--
--	down_write(&vm->userptr.notifier_lock);
--	mmu_interval_set_seq(mni, cur_seq);
--
--	/* No need to stop gpu access if the userptr is not yet bound. */
--	if (!userptr->initial_bind) {
--		up_write(&vm->userptr.notifier_lock);
--		return true;
--	}
--
- 	/*
- 	 * Tell exec and rebind worker they need to repin and rebind this
- 	 * userptr.
- 	 */
- 	if (!xe_vm_in_fault_mode(vm) &&
--	    !(vma->gpuva.flags & XE_VMA_DESTROYED) && vma->tile_present) {
-+	    !(vma->gpuva.flags & XE_VMA_DESTROYED)) {
- 		spin_lock(&vm->userptr.invalidated_lock);
- 		list_move_tail(&userptr->invalidate_link,
- 			       &vm->userptr.invalidated);
- 		spin_unlock(&vm->userptr.invalidated_lock);
+ 	if (write)
+-		flags |= HMM_PFN_REQ_WRITE;
++		hmm_range.default_flags |= HMM_PFN_REQ_WRITE;
+ 
+ 	if (!mmget_not_zero(userptr->notifier.mm)) {
+ 		ret = -EFAULT;
+ 		goto free_pfns;
  	}
  
--	up_write(&vm->userptr.notifier_lock);
--
- 	/*
- 	 * Preempt fences turn into schedule disables, pipeline these.
- 	 * Note that even in fault mode, we need to wait for binds and
-@@ -642,11 +617,35 @@ static bool vma_userptr_invalidate(struc
- 				    false, MAX_SCHEDULE_TIMEOUT);
- 	XE_WARN_ON(err <= 0);
+-	hmm_range.default_flags = flags;
+ 	hmm_range.hmm_pfns = pfns;
+-	hmm_range.notifier = &userptr->notifier;
+-	hmm_range.start = userptr_start;
+-	hmm_range.end = userptr_end;
+-	hmm_range.dev_private_owner = vm->xe;
  
--	if (xe_vm_in_fault_mode(vm)) {
-+	if (xe_vm_in_fault_mode(vm) && userptr->initial_bind) {
- 		err = xe_vm_invalidate_vma(vma);
- 		XE_WARN_ON(err);
- 	}
-+}
-+
-+static bool vma_userptr_invalidate(struct mmu_interval_notifier *mni,
-+				   const struct mmu_notifier_range *range,
-+				   unsigned long cur_seq)
-+{
-+	struct xe_userptr_vma *uvma = container_of(mni, typeof(*uvma), userptr.notifier);
-+	struct xe_vma *vma = &uvma->vma;
-+	struct xe_vm *vm = xe_vma_vm(vma);
-+
-+	xe_assert(vm->xe, xe_vma_is_userptr(vma));
-+	trace_xe_vma_userptr_invalidate(vma);
- 
-+	if (!mmu_notifier_range_blockable(range))
-+		return false;
-+
-+	vm_dbg(&xe_vma_vm(vma)->xe->drm,
-+	       "NOTIFIER: addr=0x%016llx, range=0x%016llx",
-+		xe_vma_start(vma), xe_vma_size(vma));
-+
-+	down_write(&vm->userptr.notifier_lock);
-+	mmu_interval_set_seq(mni, cur_seq);
-+
-+	__vma_userptr_invalidate(vm, uvma);
-+	up_write(&vm->userptr.notifier_lock);
- 	trace_xe_vma_userptr_invalidate_complete(vma);
- 
- 	return true;
-@@ -656,6 +655,34 @@ static const struct mmu_interval_notifie
- 	.invalidate = vma_userptr_invalidate,
- };
- 
-+#if IS_ENABLED(CONFIG_DRM_XE_USERPTR_INVAL_INJECT)
-+/**
-+ * xe_vma_userptr_force_invalidate() - force invalidate a userptr
-+ * @uvma: The userptr vma to invalidate
-+ *
-+ * Perform a forced userptr invalidation for testing purposes.
-+ */
-+void xe_vma_userptr_force_invalidate(struct xe_userptr_vma *uvma)
-+{
-+	struct xe_vm *vm = xe_vma_vm(&uvma->vma);
-+
-+	/* Protect against concurrent userptr pinning */
-+	lockdep_assert_held(&vm->lock);
-+	/* Protect against concurrent notifiers */
-+	lockdep_assert_held(&vm->userptr.notifier_lock);
-+	/*
-+	 * Protect against concurrent instances of this function and
-+	 * the critical exec sections
-+	 */
-+	xe_vm_assert_held(vm);
-+
-+	if (!mmu_interval_read_retry(&uvma->userptr.notifier,
-+				     uvma->userptr.notifier_seq))
-+		uvma->userptr.notifier_seq -= 2;
-+	__vma_userptr_invalidate(vm, uvma);
-+}
-+#endif
-+
- int xe_vm_userptr_pin(struct xe_vm *vm)
- {
- 	struct xe_userptr_vma *uvma, *next;
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -280,4 +280,12 @@ struct xe_vm_snapshot *xe_vm_snapshot_ca
- void xe_vm_snapshot_capture_delayed(struct xe_vm_snapshot *snap);
- void xe_vm_snapshot_print(struct xe_vm_snapshot *snap, struct drm_printer *p);
- void xe_vm_snapshot_free(struct xe_vm_snapshot *snap);
-+
-+#if IS_ENABLED(CONFIG_DRM_XE_USERPTR_INVAL_INJECT)
-+void xe_vma_userptr_force_invalidate(struct xe_userptr_vma *uvma);
-+#else
-+static inline void xe_vma_userptr_force_invalidate(struct xe_userptr_vma *uvma)
-+{
-+}
-+#endif
- #endif
---- a/drivers/gpu/drm/xe/xe_vm_types.h
-+++ b/drivers/gpu/drm/xe/xe_vm_types.h
-@@ -227,8 +227,8 @@ struct xe_vm {
- 		 * up for revalidation. Protected from access with the
- 		 * @invalidated_lock. Removing items from the list
- 		 * additionally requires @lock in write mode, and adding
--		 * items to the list requires the @userptr.notifer_lock in
--		 * write mode.
-+		 * items to the list requires either the @userptr.notifer_lock in
-+		 * write mode, OR @lock in write mode.
- 		 */
- 		struct list_head invalidated;
- 	} userptr;
+ 	while (true) {
+ 		hmm_range.notifier_seq = mmu_interval_read_begin(&userptr->notifier);
 
 
