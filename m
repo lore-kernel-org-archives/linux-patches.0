@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDC5233721;
-	Mon, 10 Mar 2025 18:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B3622FACA;
+	Mon, 10 Mar 2025 18:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630417; cv=none; b=NY8f5OnuXp+QXR0ldc19cXFKt77UZnWx/QXujXJipvFMm7k4UOQdQ1YyRGOab+lPOKqMcSoyb/UXnqMKLlCtPKbnD7aUSYaKo4meyVAp9TcXZUeSSP09iKbW2Vtql5u3kItkfWn7svqXNS9TMvDsbJeABCpLaFA2mmu3n/mZxfE=
+	t=1741630420; cv=none; b=EWeXV4anZi6pVCjBpLn/DbcM4n1cQSLIwA/6c1PiFMU2VXng/4IoQX6xo9qj8yegHTUBL1xw0vwryKxrZ1qFYTmSl+L7SKi+66FVfetu/zojD065wopkg4nYUZY7efURDiFApx80ga2/q7qkmd8SoNf3SMT8WPbAJGLi7Ct8L30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630417; c=relaxed/simple;
-	bh=TVvQvNZH/BritEBsPAIqZBroEYSkAUtrztZKHeS/9iU=;
+	s=arc-20240116; t=1741630420; c=relaxed/simple;
+	bh=bj2UtUBDhJMTRhyYfQvT6Gkwztjq43fZv4WBaX6XRKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAdOmQYF4UZZ3mZ2bLMiY8Rl16UdQ1XpGk8jHh9Oo54Ik+JqbiP8EBK0WAwR1FPXIPyZOgLAOKUr0uWtZbHc5p1dWROJDdWYggMXL2FngKZJSAtAClHEc9zcxSLIapDl/mM0nGOv57ySFTFljb5nq6kQgIe2nQ6mefVxOqzgOF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJPbvRaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1Ac+AaVL6iv9pUO5vPP5ZEhWF1sP3o6cWQa6bLEeIf4YgOyeMzCJCMj2TQJajrtskLUoLjRsxwiRclbIctyPmIOCnSjpI4nLegKfsc8wkRbK9nDLDGsv4nP6JZVj6yQlpH/+tZa+OXZTV0AH6pZMoAKZ1CirBBvhekzwNaFFws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSaGdntW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJPbvRaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BD4C4CEEC;
-	Mon, 10 Mar 2025 18:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSaGdntW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F35C4CEEC;
+	Mon, 10 Mar 2025 18:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630417;
-	bh=TVvQvNZH/BritEBsPAIqZBroEYSkAUtrztZKHeS/9iU=;
+	s=korg; t=1741630420;
+	bh=bj2UtUBDhJMTRhyYfQvT6Gkwztjq43fZv4WBaX6XRKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJPbvRaUpjbxhpNbmj8JEzIrg7YLsc/W+H1XDBigpruqt+e6xmtSa7wKIuywDZkYy
-	 3WSp46/IhSq2fd92IXhxkRTTn8lsShKr4AdybEK8o8HLkYNHGwiGUBoLkx4g1Zvllb
-	 zOxwmy5on+RX37CWu4j3fEqP8fZCX5/hvZA9UL2A=
+	b=CSaGdntWCgyXgjmq2VJTAYFls0Y2TW4e/fh2DVtmR9quBGjfSPgB9kV+v7dl5WdG7
+	 NiUICCx/o3nEoXzwTKDtjmqWas78XGFpZsz4v9MmX61TkBiboEDhp2UUabz2y929gR
+	 W3M99ALAyUOv21scez7nad0lEdPvUU1pc0PMjcCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
+	Vladimir Vdovin <deliran@verdict.gg>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/620] selftest: net: Test IPv4 PMTU exceptions with DSCP and ECN
-Date: Mon, 10 Mar 2025 18:04:05 +0100
-Message-ID: <20250310170601.342349472@linuxfoundation.org>
+Subject: [PATCH 5.15 400/620] net: ipv4: Cache pmtu for all packet paths if multipath enabled
+Date: Mon, 10 Mar 2025 18:04:06 +0100
+Message-ID: <20250310170601.382113770@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,183 +52,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Vladimir Vdovin <deliran@verdict.gg>
 
-[ Upstream commit ec730c3e1f0e3a80612a9be2beb00e2b4f93fe70 ]
+[ Upstream commit 7d3f3b4367f315a61fc615e3138f3d320da8c466 ]
 
-Add two tests to pmtu.sh, for verifying that PMTU exceptions get
-properly created for routes that don't belong to the main table.
+Check number of paths by fib_info_num_path(),
+and update_or_create_fnhe() for every path.
+Problem is that pmtu is cached only for the oif
+that has received icmp message "need to frag",
+other oifs will still try to use "default" iface mtu.
 
-A fib-rule based on the packet's DSCP field is used to jump to the
-correct table. ECN shouldn't interfere with this process, so each test
-has two components: one that only sets DSCP and one that sets both DSCP
-and ECN.
+An example topology showing the problem:
 
-One of the test triggers PMTU exceptions using ICMP Echo Requests, the
-other using UDP packets (to test different handlers in the kernel).
+                    |  host1
+                +---------+
+                |  dummy0 | 10.179.20.18/32  mtu9000
+                +---------+
+        +-----------+----------------+
+    +---------+                     +---------+
+    | ens17f0 |  10.179.2.141/31    | ens17f1 |  10.179.2.13/31
+    +---------+                     +---------+
+        |    (all here have mtu 9000)    |
+    +------+                         +------+
+    | ro1  |  10.179.2.140/31        | ro2  |  10.179.2.12/31
+    +------+                         +------+
+        |                                |
+---------+------------+-------------------+------
+                        |
+                    +-----+
+                    | ro3 | 10.10.10.10  mtu1500
+                    +-----+
+                        |
+    ========================================
+                some networks
+    ========================================
+                        |
+                    +-----+
+                    | eth0| 10.10.30.30  mtu9000
+                    +-----+
+                        |  host2
 
-A few adjustments are necessary in the rest of the script to allow
-policy routing scenarios:
+host1 have enabled multipath and
+sysctl net.ipv4.fib_multipath_hash_policy = 1:
 
-  * Add global variable rt_table that allows setup_routing_*() to
-    add routes to a specific routing table. By default rt_table is set
-    to "main", so existing tests don't need to be modified.
+default proto static src 10.179.20.18
+        nexthop via 10.179.2.12 dev ens17f1 weight 1
+        nexthop via 10.179.2.140 dev ens17f0 weight 1
 
-  * Another global variable, policy_mark, is used to define which
-    dsfield value is used for policy routing. This variable has no
-    effect on tests that don't use policy routing.
+When host1 tries to do pmtud from 10.179.20.18/32 to host2,
+host1 receives at ens17f1 iface an icmp packet from ro3 that ro3 mtu=1500.
+And host1 caches it in nexthop exceptions cache.
 
-  * The UDP version of the test uses socat. So cleanup() now also need
-    to kill socat PIDs.
+Problem is that it is cached only for the iface that has received icmp,
+and there is no way that ro3 will send icmp msg to host1 via another path.
 
-  * route_get_dst_pmtu_from_exception() and route_get_dst_exception()
-    now take an optional third argument specifying the dsfield. If
-    not specified, 0 is used, so existing users don't need to be
-    modified.
+Host1 now have this routes to host2:
 
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+ip r g 10.10.30.30 sport 30000 dport 443
+10.10.30.30 via 10.179.2.12 dev ens17f1 src 10.179.20.18 uid 0
+    cache expires 521sec mtu 1500
+
+ip r g 10.10.30.30 sport 30033 dport 443
+10.10.30.30 via 10.179.2.140 dev ens17f0 src 10.179.20.18 uid 0
+    cache
+
+So when host1 tries again to reach host2 with mtu>1500,
+if packet flow is lucky enough to be hashed with oif=ens17f1 its ok,
+if oif=ens17f0 it blackholes and still gets icmp msgs from ro3 to ens17f1,
+until lucky day when ro3 will send it through another flow to ens17f0.
+
+Signed-off-by: Vladimir Vdovin <deliran@verdict.gg>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20241108093427.317942-1-deliran@verdict.gg
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 139512191bd0 ("ipv4: use RCU protection in __ip_rt_update_pmtu()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 141 +++++++++++++++++++++++++++-
- 1 file changed, 137 insertions(+), 4 deletions(-)
+ net/ipv4/route.c                    |  13 ++++
+ tools/testing/selftests/net/pmtu.sh | 112 +++++++++++++++++++++++-----
+ 2 files changed, 108 insertions(+), 17 deletions(-)
 
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 75c379315ef37..2ae9d2855efab 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1049,6 +1049,19 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 		struct fib_nh_common *nhc;
+ 
+ 		fib_select_path(net, &res, fl4, NULL);
++#ifdef CONFIG_IP_ROUTE_MULTIPATH
++		if (fib_info_num_path(res.fi) > 1) {
++			int nhsel;
++
++			for (nhsel = 0; nhsel < fib_info_num_path(res.fi); nhsel++) {
++				nhc = fib_info_nhc(res.fi, nhsel);
++				update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
++						      jiffies + net->ipv4.ip_rt_mtu_expires);
++			}
++			rcu_read_unlock();
++			return;
++		}
++#endif /* CONFIG_IP_ROUTE_MULTIPATH */
+ 		nhc = FIB_RES_NHC(res);
+ 		update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
+ 				      jiffies + net->ipv4.ip_rt_mtu_expires);
 diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 84c05e533056d..dbfa56173d291 100755
+index dbfa56173d291..33f4fb34ac9b2 100755
 --- a/tools/testing/selftests/net/pmtu.sh
 +++ b/tools/testing/selftests/net/pmtu.sh
-@@ -26,6 +26,15 @@
- # - pmtu_ipv6
- #	Same as pmtu_ipv4, except for locked PMTU tests, using IPv6
+@@ -197,6 +197,12 @@
  #
-+# - pmtu_ipv4_dscp_icmp_exception
-+#	Set up the same network topology as pmtu_ipv4, but use non-default
-+#	routing table in A. A fib-rule is used to jump to this routing table
-+#	based on DSCP. Send ICMPv4 packets with the expected DSCP value and
-+#	verify that ECN doesn't interfere with the creation of PMTU exceptions.
+ # - pmtu_ipv6_route_change
+ #	Same as above but with IPv6
 +#
-+# - pmtu_ipv4_dscp_udp_exception
-+#	Same as pmtu_ipv4_dscp_icmp_exception, but use UDP instead of ICMP.
-+#
- # - pmtu_ipv4_vxlan4_exception
- #	Set up the same network topology as pmtu_ipv4, create a VXLAN tunnel
- #	over IPv4 between A and B, routed via R1. On the link between R1 and B,
-@@ -203,6 +212,8 @@ which ping6 > /dev/null 2>&1 && ping6=$(which ping6) || ping6=$(which ping)
- tests="
- 	pmtu_ipv4_exception		ipv4: PMTU exceptions			1
- 	pmtu_ipv6_exception		ipv6: PMTU exceptions			1
-+	pmtu_ipv4_dscp_icmp_exception	ICMPv4 with DSCP and ECN: PMTU exceptions	1
-+	pmtu_ipv4_dscp_udp_exception	UDPv4 with DSCP and ECN: PMTU exceptions	1
- 	pmtu_ipv4_vxlan4_exception	IPv4 over vxlan4: PMTU exceptions	1
- 	pmtu_ipv6_vxlan4_exception	IPv6 over vxlan4: PMTU exceptions	1
- 	pmtu_ipv4_vxlan6_exception	IPv4 over vxlan6: PMTU exceptions	1
-@@ -323,6 +334,9 @@ routes_nh="
- 	B	6	default			61
- "
++# - pmtu_ipv4_mp_exceptions
++#	Use the same topology as in pmtu_ipv4, but add routeable addresses
++#	on host A and B on lo reachable via both routers. Host A and B
++#	addresses have multipath routes to each other, b_r1 mtu = 1500.
++#	Check that PMTU exceptions are created for both paths.
  
-+policy_mark=0x04
-+rt_table=main
+ # Kselftest framework requirement - SKIP code is 4.
+ ksft_skip=4
+@@ -266,7 +272,8 @@ tests="
+ 	list_flush_ipv4_exception	ipv4: list and flush cached exceptions	1
+ 	list_flush_ipv6_exception	ipv6: list and flush cached exceptions	1
+ 	pmtu_ipv4_route_change		ipv4: PMTU exception w/route replace	1
+-	pmtu_ipv6_route_change		ipv6: PMTU exception w/route replace	1"
++	pmtu_ipv6_route_change		ipv6: PMTU exception w/route replace	1
++	pmtu_ipv4_mp_exceptions		ipv4: PMTU multipath nh exceptions	1"
+ 
+ NS_A="ns-A"
+ NS_B="ns-B"
+@@ -353,6 +360,9 @@ tunnel6_a_addr="fd00:2::a"
+ tunnel6_b_addr="fd00:2::b"
+ tunnel6_mask="64"
+ 
++host4_a_addr="192.168.99.99"
++host4_b_addr="192.168.88.88"
 +
- veth4_a_addr="192.168.1.1"
- veth4_b_addr="192.168.1.2"
- veth4_c_addr="192.168.2.10"
-@@ -346,6 +360,7 @@ dummy6_mask="64"
- err_buf=
- tcpdump_pids=
- nettest_pids=
-+socat_pids=
- 
- err() {
- 	err_buf="${err_buf}${1}
-@@ -725,7 +740,7 @@ setup_routing_old() {
- 
- 		ns_name="$(nsname ${ns})"
- 
--		ip -n ${ns_name} route add ${addr} via ${gw}
-+		ip -n "${ns_name}" route add "${addr}" table "${rt_table}" via "${gw}"
- 
- 		ns=""; addr=""; gw=""
- 	done
-@@ -755,7 +770,7 @@ setup_routing_new() {
- 
- 		ns_name="$(nsname ${ns})"
- 
--		ip -n ${ns_name} -${fam} route add ${addr} nhid ${nhid}
-+		ip -n "${ns_name}" -"${fam}" route add "${addr}" table "${rt_table}" nhid "${nhid}"
- 
- 		ns=""; fam=""; addr=""; nhid=""
- 	done
-@@ -800,6 +815,24 @@ setup_routing() {
- 	return 0
+ dummy6_0_prefix="fc00:1000::"
+ dummy6_1_prefix="fc00:1001::"
+ dummy6_mask="64"
+@@ -907,6 +917,52 @@ setup_ovs_bridge() {
+ 	run_cmd ip route add ${prefix6}:${b_r1}::1 via ${prefix6}:${a_r1}::2
  }
  
-+setup_policy_routing() {
-+	setup_routing
++setup_multipath_new() {
++	# Set up host A with multipath routes to host B host4_b_addr
++	run_cmd ${ns_a} ip addr add ${host4_a_addr} dev lo
++	run_cmd ${ns_a} ip nexthop add id 401 via ${prefix4}.${a_r1}.2 dev veth_A-R1
++	run_cmd ${ns_a} ip nexthop add id 402 via ${prefix4}.${a_r2}.2 dev veth_A-R2
++	run_cmd ${ns_a} ip nexthop add id 403 group 401/402
++	run_cmd ${ns_a} ip route add ${host4_b_addr} src ${host4_a_addr} nhid 403
 +
-+	ip -netns "${NS_A}" -4 rule add dsfield "${policy_mark}" \
-+		table "${rt_table}"
-+
-+	# Set the IPv4 Don't Fragment bit with tc, since socat doesn't seem to
-+	# have an option do to it.
-+	tc -netns "${NS_A}" qdisc replace dev veth_A-R1 root prio
-+	tc -netns "${NS_A}" qdisc replace dev veth_A-R2 root prio
-+	tc -netns "${NS_A}" filter add dev veth_A-R1                      \
-+		protocol ipv4 flower ip_proto udp                         \
-+		action pedit ex munge ip df set 0x40 pipe csum ip and udp
-+	tc -netns "${NS_A}" filter add dev veth_A-R2                      \
-+		protocol ipv4 flower ip_proto udp                         \
-+		action pedit ex munge ip df set 0x40 pipe csum ip and udp
++	# Set up host B with multipath routes to host A host4_a_addr
++	run_cmd ${ns_b} ip addr add ${host4_b_addr} dev lo
++	run_cmd ${ns_b} ip nexthop add id 401 via ${prefix4}.${b_r1}.2 dev veth_B-R1
++	run_cmd ${ns_b} ip nexthop add id 402 via ${prefix4}.${b_r2}.2 dev veth_B-R2
++	run_cmd ${ns_b} ip nexthop add id 403 group 401/402
++	run_cmd ${ns_b} ip route add ${host4_a_addr} src ${host4_b_addr} nhid 403
 +}
 +
- setup_bridge() {
- 	run_cmd ${ns_a} ip link add br0 type bridge || return $ksft_skip
- 	run_cmd ${ns_a} ip link set br0 up
-@@ -905,6 +938,11 @@ cleanup() {
- 	done
- 	nettest_pids=
- 
-+	for pid in ${socat_pids}; do
-+		kill "${pid}"
-+	done
-+	socat_pids=
++setup_multipath_old() {
++	# Set up host A with multipath routes to host B host4_b_addr
++	run_cmd ${ns_a} ip addr add ${host4_a_addr} dev lo
++	run_cmd ${ns_a} ip route add ${host4_b_addr} \
++			src ${host4_a_addr} \
++			nexthop via ${prefix4}.${a_r1}.2 weight 1 \
++			nexthop via ${prefix4}.${a_r2}.2 weight 1
 +
- 	for n in ${NS_A} ${NS_B} ${NS_C} ${NS_R1} ${NS_R2}; do
- 		ip netns del ${n} 2> /dev/null
- 	done
-@@ -952,15 +990,21 @@ link_get_mtu() {
- route_get_dst_exception() {
- 	ns_cmd="${1}"
- 	dst="${2}"
-+	dsfield="${3}"
- 
--	${ns_cmd} ip route get "${dst}"
-+	if [ -z "${dsfield}" ]; then
-+		dsfield=0
++	# Set up host B with multipath routes to host A host4_a_addr
++	run_cmd ${ns_b} ip addr add ${host4_b_addr} dev lo
++	run_cmd ${ns_b} ip route add ${host4_a_addr} \
++			src ${host4_b_addr} \
++			nexthop via ${prefix4}.${b_r1}.2 weight 1 \
++			nexthop via ${prefix4}.${b_r2}.2 weight 1
++}
++
++setup_multipath() {
++	if [ "$USE_NH" = "yes" ]; then
++		setup_multipath_new
++	else
++		setup_multipath_old
 +	fi
 +
-+	${ns_cmd} ip route get "${dst}" dsfield "${dsfield}"
++	# Set up routers with routes to dummies
++	run_cmd ${ns_r1} ip route add ${host4_a_addr} via ${prefix4}.${a_r1}.1
++	run_cmd ${ns_r2} ip route add ${host4_a_addr} via ${prefix4}.${a_r2}.1
++	run_cmd ${ns_r1} ip route add ${host4_b_addr} via ${prefix4}.${b_r1}.1
++	run_cmd ${ns_r2} ip route add ${host4_b_addr} via ${prefix4}.${b_r2}.1
++}
++
+ setup() {
+ 	[ "$(id -u)" -ne 0 ] && echo "  need to run as root" && return $ksft_skip
+ 
+@@ -988,23 +1044,15 @@ link_get_mtu() {
+ }
+ 
+ route_get_dst_exception() {
+-	ns_cmd="${1}"
+-	dst="${2}"
+-	dsfield="${3}"
++	ns_cmd="${1}"; shift
+ 
+-	if [ -z "${dsfield}" ]; then
+-		dsfield=0
+-	fi
+-
+-	${ns_cmd} ip route get "${dst}" dsfield "${dsfield}"
++	${ns_cmd} ip route get "$@"
  }
  
  route_get_dst_pmtu_from_exception() {
- 	ns_cmd="${1}"
- 	dst="${2}"
-+	dsfield="${3}"
+-	ns_cmd="${1}"
+-	dst="${2}"
+-	dsfield="${3}"
++	ns_cmd="${1}"; shift
  
--	mtu_parse "$(route_get_dst_exception "${ns_cmd}" ${dst})"
-+	mtu_parse "$(route_get_dst_exception "${ns_cmd}" "${dst}" "${dsfield}")"
+-	mtu_parse "$(route_get_dst_exception "${ns_cmd}" "${dst}" "${dsfield}")"
++	mtu_parse "$(route_get_dst_exception "${ns_cmd}" "$@")"
  }
  
  check_pmtu_value() {
-@@ -1070,6 +1114,95 @@ test_pmtu_ipv6_exception() {
- 	test_pmtu_ipvX 6
+@@ -1147,10 +1195,10 @@ test_pmtu_ipv4_dscp_icmp_exception() {
+ 	run_cmd "${ns_a}" ping -q -M want -Q "${dsfield}" -c 1 -w 1 -s "${len}" "${dst2}"
+ 
+ 	# Check that exceptions have been created with the correct PMTU
+-	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" "${policy_mark}")"
++	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" dsfield "${policy_mark}")"
+ 	check_pmtu_value "1400" "${pmtu_1}" "exceeding MTU" || return 1
+ 
+-	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" "${policy_mark}")"
++	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" dsfield "${policy_mark}")"
+ 	check_pmtu_value "1500" "${pmtu_2}" "exceeding MTU" || return 1
  }
  
-+test_pmtu_ipv4_dscp_icmp_exception() {
-+	rt_table=100
+@@ -1197,9 +1245,9 @@ test_pmtu_ipv4_dscp_udp_exception() {
+ 		UDP:"${dst2}":50000,tos="${dsfield}"
+ 
+ 	# Check that exceptions have been created with the correct PMTU
+-	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" "${policy_mark}")"
++	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" dsfield "${policy_mark}")"
+ 	check_pmtu_value "1400" "${pmtu_1}" "exceeding MTU" || return 1
+-	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" "${policy_mark}")"
++	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" dsfield "${policy_mark}")"
+ 	check_pmtu_value "1500" "${pmtu_2}" "exceeding MTU" || return 1
+ }
+ 
+@@ -2205,6 +2253,36 @@ test_pmtu_ipv6_route_change() {
+ 	test_pmtu_ipvX_route_change 6
+ }
+ 
++test_pmtu_ipv4_mp_exceptions() {
++	setup namespaces routing multipath || return $ksft_skip
 +
-+	setup namespaces policy_routing || return $ksft_skip
 +	trace "${ns_a}"  veth_A-R1    "${ns_r1}" veth_R1-A \
 +	      "${ns_r1}" veth_R1-B    "${ns_b}"  veth_B-R1 \
 +	      "${ns_a}"  veth_A-R2    "${ns_r2}" veth_R2-A \
@@ -237,86 +314,28 @@ index 84c05e533056d..dbfa56173d291 100755
 +	# Set up initial MTU values
 +	mtu "${ns_a}"  veth_A-R1 2000
 +	mtu "${ns_r1}" veth_R1-A 2000
-+	mtu "${ns_r1}" veth_R1-B 1400
-+	mtu "${ns_b}"  veth_B-R1 1400
++	mtu "${ns_r1}" veth_R1-B 1500
++	mtu "${ns_b}"  veth_B-R1 1500
 +
 +	mtu "${ns_a}"  veth_A-R2 2000
 +	mtu "${ns_r2}" veth_R2-A 2000
 +	mtu "${ns_r2}" veth_R2-B 1500
 +	mtu "${ns_b}"  veth_B-R2 1500
 +
-+	len=$((2000 - 20 - 8)) # Fills MTU of veth_A-R1
-+
-+	dst1="${prefix4}.${b_r1}.1"
-+	dst2="${prefix4}.${b_r2}.1"
-+
-+	# Create route exceptions
-+	dsfield=${policy_mark} # No ECN bit set (Not-ECT)
-+	run_cmd "${ns_a}" ping -q -M want -Q "${dsfield}" -c 1 -w 1 -s "${len}" "${dst1}"
-+
-+	dsfield=$(printf "%#x" $((policy_mark + 0x02))) # ECN=2 (ECT(0))
-+	run_cmd "${ns_a}" ping -q -M want -Q "${dsfield}" -c 1 -w 1 -s "${len}" "${dst2}"
++	# Ping and expect two nexthop exceptions for two routes
++	run_cmd ${ns_a} ping -q -M want -i 0.1 -c 1 -s 1800 "${host4_b_addr}"
 +
 +	# Check that exceptions have been created with the correct PMTU
-+	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" "${policy_mark}")"
-+	check_pmtu_value "1400" "${pmtu_1}" "exceeding MTU" || return 1
++	pmtu_a_R1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${host4_b_addr}" oif veth_A-R1)"
++	pmtu_a_R2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${host4_b_addr}" oif veth_A-R2)"
 +
-+	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" "${policy_mark}")"
-+	check_pmtu_value "1500" "${pmtu_2}" "exceeding MTU" || return 1
++	check_pmtu_value "1500" "${pmtu_a_R1}" "exceeding MTU (veth_A-R1)" || return 1
++	check_pmtu_value "1500" "${pmtu_a_R2}" "exceeding MTU (veth_A-R2)" || return 1
 +}
 +
-+test_pmtu_ipv4_dscp_udp_exception() {
-+	rt_table=100
-+
-+	if ! which socat > /dev/null 2>&1; then
-+		echo "'socat' command not found; skipping tests"
-+		return $ksft_skip
-+	fi
-+
-+	setup namespaces policy_routing || return $ksft_skip
-+	trace "${ns_a}"  veth_A-R1    "${ns_r1}" veth_R1-A \
-+	      "${ns_r1}" veth_R1-B    "${ns_b}"  veth_B-R1 \
-+	      "${ns_a}"  veth_A-R2    "${ns_r2}" veth_R2-A \
-+	      "${ns_r2}" veth_R2-B    "${ns_b}"  veth_B-R2
-+
-+	# Set up initial MTU values
-+	mtu "${ns_a}"  veth_A-R1 2000
-+	mtu "${ns_r1}" veth_R1-A 2000
-+	mtu "${ns_r1}" veth_R1-B 1400
-+	mtu "${ns_b}"  veth_B-R1 1400
-+
-+	mtu "${ns_a}"  veth_A-R2 2000
-+	mtu "${ns_r2}" veth_R2-A 2000
-+	mtu "${ns_r2}" veth_R2-B 1500
-+	mtu "${ns_b}"  veth_B-R2 1500
-+
-+	len=$((2000 - 20 - 8)) # Fills MTU of veth_A-R1
-+
-+	dst1="${prefix4}.${b_r1}.1"
-+	dst2="${prefix4}.${b_r2}.1"
-+
-+	# Create route exceptions
-+	run_cmd_bg "${ns_b}" socat UDP-LISTEN:50000 OPEN:/dev/null,wronly=1
-+	socat_pids="${socat_pids} $!"
-+
-+	dsfield=${policy_mark} # No ECN bit set (Not-ECT)
-+	run_cmd "${ns_a}" socat OPEN:/dev/zero,rdonly=1,readbytes="${len}" \
-+		UDP:"${dst1}":50000,tos="${dsfield}"
-+
-+	dsfield=$(printf "%#x" $((policy_mark + 0x02))) # ECN=2 (ECT(0))
-+	run_cmd "${ns_a}" socat OPEN:/dev/zero,rdonly=1,readbytes="${len}" \
-+		UDP:"${dst2}":50000,tos="${dsfield}"
-+
-+	# Check that exceptions have been created with the correct PMTU
-+	pmtu_1="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst1}" "${policy_mark}")"
-+	check_pmtu_value "1400" "${pmtu_1}" "exceeding MTU" || return 1
-+	pmtu_2="$(route_get_dst_pmtu_from_exception "${ns_a}" "${dst2}" "${policy_mark}")"
-+	check_pmtu_value "1500" "${pmtu_2}" "exceeding MTU" || return 1
-+}
-+
- test_pmtu_ipvX_over_vxlanY_or_geneveY_exception() {
- 	type=${1}
- 	family=${2}
+ usage() {
+ 	echo
+ 	echo "$0 [OPTIONS] [TEST]..."
 -- 
 2.39.5
 
