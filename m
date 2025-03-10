@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E498922B8BD;
-	Mon, 10 Mar 2025 17:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCCD81E;
+	Mon, 10 Mar 2025 17:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627917; cv=none; b=OQKnPg83J7FA0WIKFx5nwX1A6lSpRLTFif17DklC5XiusAspR2toZspkZRuuf9tntkY9PEGPLfy+F3FORI2vSDLJgoJkcf9+0DVN7g/6Cz2ITvBVt5PPxNGgpyqz3NSprtvjbuMcVToT9zTkps2QMR7a5g0nIiQ0Hn0S6JbEGts=
+	t=1741627919; cv=none; b=FOTQCqIqNyBuGLbpMzNp3b850P4zeED2LkqUtDB9qY0n0uGKTkVHJWkhuE5+KThAXGpLrLRxCGVrFh90v6Ho/5pU5t/IDLzFj6a13/pPdUhBYePSyqjywdjBK2i+roFuzpNzHkbUXm1U8b++h4upo/42BdiNnrqmmHOooB1HfsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627917; c=relaxed/simple;
-	bh=VDxsG4sfRdZyyvRTLfVBldk9p49cnAa2uUdPX6TY+c8=;
+	s=arc-20240116; t=1741627919; c=relaxed/simple;
+	bh=8+/NQluEUZ992eyGN17m2cXctI7MqSRsRlycfICHWec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pm3PanFntNjVazJrRa8dUXesJjJpi4OmphyCvSbrbWSjeK/Mxu+IIF+WruTf4e1m9WDC1cDpNgie4vsxKc8bCMohVz2SS3vi5AoWMHHsxQKpQdu4vOCvaqnhJ1XcKMGmGUcsv8L8AwX00C0ChYijkR9zlwVcHzWfRbZRTB8NTlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDqaG8si; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=THKL6jy5YbgGmErkNso3zAKyVhfMbZms+jF6rVt9Q5yr06FKx56mA7kyH4cxsdis1EvF56/vjJQS1PzviFczLTgk4P6UwaSRIDsARWC2uljMgy5WVkwgtq9kSmP+dSKvJ1c66oPxhEcB4XK1mpM5SjP6KZpePL5Iuh8fw216WC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbS/GudI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDqaG8si"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D452BC4CEE5;
-	Mon, 10 Mar 2025 17:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbS/GudI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D37C4CEE5;
+	Mon, 10 Mar 2025 17:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627916;
-	bh=VDxsG4sfRdZyyvRTLfVBldk9p49cnAa2uUdPX6TY+c8=;
+	s=korg; t=1741627919;
+	bh=8+/NQluEUZ992eyGN17m2cXctI7MqSRsRlycfICHWec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDqaG8sigGQC+gRsIBJ3oslPSH8u/qlHUNUPEHBepMYqwgaLE0Fnd0AkW6tyt7IgH
-	 tl9olTBefAXf4gk5z8gv5j5JCqmIQR9m5rMJgLZ7t+oac8iW16TP38sK2khLNvaE/o
-	 M7JHLaWi+Pn+w+MYeTthYj6TNAvHu23uXfWg7acM=
+	b=lbS/GudI/B3o7Mp1GaXofNYr5bkTNBq289TPBBYrJccdL5NKn2VpU5jDwLKb6/VM1
+	 aFMpU/njsqdnNAZZ2V4Bs07ReqfvBXnWLdDOuvnTo/p66fUV+uCHumZ/uIrMhWySa2
+	 y509YjcTGM8mMIPk+vMDyOPnY4kJbiVZpxMnGXv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 024/145] tracing: tprobe-events: Fix a memory leak when tprobe with $retval
-Date: Mon, 10 Mar 2025 18:05:18 +0100
-Message-ID: <20250310170435.712389254@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 025/145] LoongArch: Convert unreachable() to BUG()
+Date: Mon, 10 Mar 2025 18:05:19 +0100
+Message-ID: <20250310170435.751789456@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,36 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit ac965d7d88fc36fb42e3d50225c0a44dd8326da4 upstream.
+commit da64a2359092ceec4f9dea5b329d0aef20104217 upstream.
 
-Fix a memory leak when a tprobe is defined with $retval. This
-combination is not allowed, but the parse_symbol_and_return() does
-not free the *symbol which should not be used if it returns the error.
-Thus, it leaks the *symbol memory in that error path.
+When compiling on LoongArch, there exists the following objtool warning
+in arch/loongarch/kernel/machine_kexec.o:
 
-Link: https://lore.kernel.org/all/174055072650.4079315.3063014346697447838.stgit@mhiramat.tok.corp.google.com/
+  kexec_reboot() falls through to next function crash_shutdown_secondary()
 
-Fixes: ce51e6153f77 ("tracing: fprobe-event: Fix to check tracepoint event and return")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: stable@vger.kernel.org
+Avoid using unreachable() as it can (and will in the absence of UBSAN)
+generate fall-through code. Use BUG() so we get a "break BRK_BUG" trap
+(with unreachable annotation).
+
+Cc: stable@vger.kernel.org  # 6.12+
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_fprobe.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/kernel/machine_kexec.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -948,6 +948,8 @@ static int parse_symbol_and_return(int a
- 			if (is_tracepoint) {
- 				trace_probe_log_set_index(i);
- 				trace_probe_log_err(tmp - argv[i], RETVAL_ON_PROBE);
-+				kfree(*symbol);
-+				*symbol = NULL;
- 				return -EINVAL;
- 			}
- 			*is_return = true;
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -126,14 +126,14 @@ void kexec_reboot(void)
+ 	/* All secondary cpus go to kexec_smp_wait */
+ 	if (smp_processor_id() > 0) {
+ 		relocated_kexec_smp_wait(NULL);
+-		unreachable();
++		BUG();
+ 	}
+ #endif
+ 
+ 	do_kexec = (void *)reboot_code_buffer;
+ 	do_kexec(efi_boot, cmdline_ptr, systable_ptr, start_addr, first_ind_entry);
+ 
+-	unreachable();
++	BUG();
+ }
+ 
+ 
 
 
