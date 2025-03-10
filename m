@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3347E22ACDC;
-	Mon, 10 Mar 2025 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA72F22ACDC;
+	Mon, 10 Mar 2025 17:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628326; cv=none; b=bRyFKhhgZ6dda89/H9KEfui910vGn/MEgTLXoENe5nRJu4tTWTraYu5DUaHvvjW/URvJzcB4rmY3ip99OlCFdI0cErBaL/efSqLnYFwR4NsDlkwiNKuknCKXewFn85y5/3y8yluNkMOSMS7i+cVEUmRUjBqhB2C2QQR+fDuau00=
+	t=1741628329; cv=none; b=naHS7R5vLuIvkNYq92ptq8ismBpNe7y8VRB1KKVLOjdHzf+8Ob7sAfbPm6O5oI1ZKAxKyVRlpL8Ix1nb5U1MUkrf+XUY94LEai1ZByXi00qwJ19muc9S1yRtrBOpq95JdBHafhBq98vzfpKoJA6iaZBFz7D4kBJG/Obz7xpZws0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628326; c=relaxed/simple;
-	bh=dUW73rSm6UYz24fCbFMuxlJhzzui7O26U1GjSur+Xms=;
+	s=arc-20240116; t=1741628329; c=relaxed/simple;
+	bh=fYzXYgQ5XUl65IjJaLdjg0JOiKtx3y14j6uyR+mzlKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuXZUOraLeJB/QDxno92pzn2Klh6pYE3KNeeP1bfZm4UqAWCdGmPqtTszY8ZTaCpubCGgDt/jk21Cz2UubMewRnPDGAkhxY/Groui0u8LUmxVmjDzqckDFwXC+i93q5UJMfPGwxyQdPjsI6Kq5hVWgq+IVVQRtEZXukK7W9+RtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofpYHRSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q59Vez4zkAQ9Bh7UXxa9oK24gid5iuzH3ennx4HMsCF77/NcWXwGJ5QGM4MF48qGAAKtuD1yNGJY2XpTjhEvrgbbMpSLF2NbVtms/HS311kRvKz1SNsTXlvu0Y3n7Zqyy7MNB8m6lx9oYjEY5mn3kzddPo+1xfbwG0Guv3LYPwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2K2ginF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofpYHRSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D26C4CEE5;
-	Mon, 10 Mar 2025 17:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2K2ginF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EE8C4CEE5;
+	Mon, 10 Mar 2025 17:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628326;
-	bh=dUW73rSm6UYz24fCbFMuxlJhzzui7O26U1GjSur+Xms=;
+	s=korg; t=1741628329;
+	bh=fYzXYgQ5XUl65IjJaLdjg0JOiKtx3y14j6uyR+mzlKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofpYHRSoZx5zzZ4KED3ADBSiEpENnMKg/Rwm/um48Y7+yRxHVy5OGPI5nHly4F0yH
-	 HKt9n/xL/QYDZKxBWOZYuHskDWlDfTRVXSUujAdp1pLvekInHj5B+ost2kMo/3dxiQ
-	 a74WgK6TLck1oZEowBPOpYlTShz0Z72PQpVTNeRE=
+	b=C2K2ginFB8T15o3ZnyNObfOIh9lFbMpOjrpDQnKuuZUOVNYTj63xmwqRw3SP41DCM
+	 cwGXWEuZBHAGlDGoULBvE6GOQwF3VGKtliXcEmlc7wKRFe1EvjlAt+jgm+sKqPKM8H
+	 kUgo5Yr+usglPosHdPR/avsOhKzXA4Lj/WSYsmgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/109] x86/speculation: Add __update_spec_ctrl() helper
-Date: Mon, 10 Mar 2025 18:05:50 +0100
-Message-ID: <20250310170427.800026279@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 007/109] x86/amd_nb: Use rdmsr_safe() in amd_get_mmconfig_range()
+Date: Mon, 10 Mar 2025 18:05:51 +0100
+Message-ID: <20250310170427.839844168@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -54,56 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit e3e3bab1844d448a239cd57ebf618839e26b4157 ]
+commit 14cb5d83068ecf15d2da6f7d0e9ea9edbcbc0457 upstream.
 
-Add a new __update_spec_ctrl() helper which is a variant of
-update_spec_ctrl() that can be used in a noinstr function.
+Xen doesn't offer MSR_FAM10H_MMIO_CONF_BASE to all guests.  This results
+in the following warning:
 
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Waiman Long <longman@redhat.com>
+  unchecked MSR access error: RDMSR from 0xc0010058 at rIP: 0xffffffff8101d19f (xen_do_read_msr+0x7f/0xa0)
+  Call Trace:
+   xen_read_msr+0x1e/0x30
+   amd_get_mmconfig_range+0x2b/0x80
+   quirk_amd_mmconfig_area+0x28/0x100
+   pnp_fixup_device+0x39/0x50
+   __pnp_add_device+0xf/0x150
+   pnp_add_device+0x3d/0x100
+   pnpacpi_add_device_handler+0x1f9/0x280
+   acpi_ns_get_device_callback+0x104/0x1c0
+   acpi_ns_walk_namespace+0x1d0/0x260
+   acpi_get_devices+0x8a/0xb0
+   pnpacpi_init+0x50/0x80
+   do_one_initcall+0x46/0x2e0
+   kernel_init_freeable+0x1da/0x2f0
+   kernel_init+0x16/0x1b0
+   ret_from_fork+0x30/0x50
+   ret_from_fork_asm+0x1b/0x30
+
+based on quirks for a "PNP0c01" device.  Treating MMCFG as disabled is the
+right course of action, so no change is needed there.
+
+This was most likely exposed by fixing the Xen MSR accessors to not be
+silently-safe.
+
+Fixes: 3fac3734c43a ("xen/pv: support selecting safe/unsafe msr accesses")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20230727184600.26768-2-longman@redhat.com
-Stable-dep-of: c157d351460b ("intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20250307002846.3026685-1-andrew.cooper3@citrix.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/spec-ctrl.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/x86/kernel/amd_nb.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/include/asm/spec-ctrl.h b/arch/x86/include/asm/spec-ctrl.h
-index cb0386fc4dc3b..c648502e45357 100644
---- a/arch/x86/include/asm/spec-ctrl.h
-+++ b/arch/x86/include/asm/spec-ctrl.h
-@@ -4,6 +4,7 @@
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -342,7 +342,6 @@ bool __init early_is_amd_nb(u32 device)
  
- #include <linux/thread_info.h>
- #include <asm/nospec-branch.h>
-+#include <asm/msr.h>
+ struct resource *amd_get_mmconfig_range(struct resource *res)
+ {
+-	u32 address;
+ 	u64 base, msr;
+ 	unsigned int segn_busn_bits;
  
- /*
-  * On VMENTER we must preserve whatever view of the SPEC_CTRL MSR
-@@ -76,6 +77,16 @@ static inline u64 ssbd_tif_to_amd_ls_cfg(u64 tifn)
- 	return (tifn & _TIF_SSBD) ? x86_amd_ls_cfg_ssbd_mask : 0ULL;
- }
+@@ -350,13 +349,11 @@ struct resource *amd_get_mmconfig_range(
+ 	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
+ 		return NULL;
  
-+/*
-+ * This can be used in noinstr functions & should only be called in bare
-+ * metal context.
-+ */
-+static __always_inline void __update_spec_ctrl(u64 val)
-+{
-+	__this_cpu_write(x86_spec_ctrl_current, val);
-+	native_wrmsrl(MSR_IA32_SPEC_CTRL, val);
-+}
-+
- #ifdef CONFIG_SMP
- extern void speculative_store_bypass_ht_init(void);
- #else
--- 
-2.39.5
-
+-	/* assume all cpus from fam10h have mmconfig */
+-	if (boot_cpu_data.x86 < 0x10)
++	/* Assume CPUs from Fam10h have mmconfig, although not all VMs do */
++	if (boot_cpu_data.x86 < 0x10 ||
++	    rdmsrl_safe(MSR_FAM10H_MMIO_CONF_BASE, &msr))
+ 		return NULL;
+ 
+-	address = MSR_FAM10H_MMIO_CONF_BASE;
+-	rdmsrl(address, msr);
+-
+ 	/* mmconfig is not enabled */
+ 	if (!(msr & FAM10H_MMIO_CONF_ENABLE))
+ 		return NULL;
 
 
