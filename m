@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E4422D7A6;
-	Mon, 10 Mar 2025 17:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA81D22AE7C;
+	Mon, 10 Mar 2025 17:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629236; cv=none; b=fQFG+dWKSV7MdFlV8oYpjsMXE4iXkTViPutaU4EPAdKSxN4HtHBiNX/W8UBdwAltZzkoyzVReYZ4Ppo/9P8KWEAu8yK4XUO4AbtEXfa0XCxFXd+AQppNU90ZxfSBXwmbdUIemlmI6JZ48hul+f0FGGSnECG1vPVo/WkP330cUis=
+	t=1741629238; cv=none; b=In91CeiypfOqJBNHAbnb9cWWjKrZG8z2mjnm8ycKYkbAAAfhcSaHCfs3ebdg6K6FqaVG/1eYPHWkKpYLQazzYgnSNnY+HyKkNpizVqYETGJcSK5Gjgv0angfIhn4lNCFoCZonKDFD7lnh1Hm5cT6lqil8IhXWws9pEyGtGVnrtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629236; c=relaxed/simple;
-	bh=gHITukwMXek0fmtNamXJQnZsUjCTxYSD0z2CSPmL0Os=;
+	s=arc-20240116; t=1741629238; c=relaxed/simple;
+	bh=UrJx82ZQnAYNCgP52c+WiklDua+ZO8I0scsnxfmfq0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8Eam4ZjXkYwhhCk6dM4tEuyvIn6V+mHHl5qwZ+oAVWk1TJvHvj5k9Yo90lS48jNjr1KKPdhxGIx8PmZBkssMtkYqwz+ttR+EDYIeN4B6vPuV0HlTyWiccDF+UBD+1fXyecGvfltTOLwMeY/EJFWZJsxlX+lAsKWZKe9A6M0/7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dzt/M/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1MWtcvEmbNVRxp4wbvHXFrU+O02h0Fa43JUAHN8uR5WG0JIne62EcSwBBZcLvGP2zYIqLGdZxDX7V7y0790rGQTUC2VQY7qrgvnHh45H1EUS0Lej/0+rTbf8JyLbvvO3P/x+QTF273mSgjh6qbAKJkQSYJzrOQOQwxXIJJJz8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rt4GT09q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dzt/M/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78749C4CEE5;
-	Mon, 10 Mar 2025 17:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rt4GT09q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BD6C4CEE5;
+	Mon, 10 Mar 2025 17:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629235;
-	bh=gHITukwMXek0fmtNamXJQnZsUjCTxYSD0z2CSPmL0Os=;
+	s=korg; t=1741629238;
+	bh=UrJx82ZQnAYNCgP52c+WiklDua+ZO8I0scsnxfmfq0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dzt/M/9cghwKc95Y8XZlMcVPgvHJ5p7oXuBZZSHeQJrs3VYYG57CkGLXLOrOgggi
-	 cA/9hbx/CeWDOdbYJy7HLSDU5JxiXTSIqYOQawsnWJbxmo9vyXgqoHAMhxAWntx+nR
-	 7Cb5vJZgfmHLwQre0IxRqYAK2HTIptlb11JycF94=
+	b=rt4GT09qRLAXcoV8CRjL0BByiUOdqkpO8A1gIIHw2TSddihv6l5F61rhST8nXDiBb
+	 MYR2MxAb6qrA0CXd+LVavUwoAqmp0q//8vKPAIwvfWIsmHpK7A7L7AwXYe7VhPVQJp
+	 SXDXcn5dJK64XpW/eEKWP4L8IygeuAcwShcSSAAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.15 225/620] x86/mm: Dont disable PCID when INVLPG has been fixed by microcode
-Date: Mon, 10 Mar 2025 18:01:11 +0100
-Message-ID: <20250310170554.503194575@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 226/620] usb: chipidea: ci_hdrc_imx: use dev_err_probe()
+Date: Mon, 10 Mar 2025 18:01:12 +0100
+Message-ID: <20250310170554.546418970@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,79 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit f24f669d03f884a6ef95cca84317d0f329e93961 upstream.
+[ Upstream commit 18171cfc3c236a1587dcad9adc27c6e781af4438 ]
 
-Per the "Processor Specification Update" documentations referred by
-the intel-microcode-20240312 release note, this microcode release has
-fixed the issue for all affected models.
+Use dev_err_probe() to simplify handling errors in ci_hdrc_imx_probe()
 
-So don't disable PCID if the microcode is new enough.  The precise
-minimum microcode revision fixing the issue was provided by Pawan
-Intel.
-
-[ dhansen: comment and changelog tweaks ]
-
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Link: https://lore.kernel.org/all/168436059559.404.13934972543631851306.tip-bot2@tip-bot2/
-Link: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20240312
-Link: https://cdrdv2.intel.com/v1/dl/getContent/740518 # RPL042, rev. 13
-Link: https://cdrdv2.intel.com/v1/dl/getContent/682436 # ADL063, rev. 24
-Link: https://lore.kernel.org/all/20240325231300.qrltbzf6twm43ftb@desk/
-Link: https://lore.kernel.org/all/20240522020625.69418-1-xry111%40xry111.site
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20220614120522.1469957-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 74adad500346 ("usb: chipidea: ci_hdrc_imx: decrement device's refcount in .remove() and in the error path of .probe()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/init.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_imx.c | 23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -264,28 +264,33 @@ static void __init probe_page_size_mask(
- }
+diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
+index d8efa90479e23..caa91117ba429 100644
+--- a/drivers/usb/chipidea/ci_hdrc_imx.c
++++ b/drivers/usb/chipidea/ci_hdrc_imx.c
+@@ -355,25 +355,18 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
+ 		data->pinctrl = devm_pinctrl_get(dev);
+ 		if (PTR_ERR(data->pinctrl) == -ENODEV)
+ 			data->pinctrl = NULL;
+-		else if (IS_ERR(data->pinctrl)) {
+-			if (PTR_ERR(data->pinctrl) != -EPROBE_DEFER)
+-				dev_err(dev, "pinctrl get failed, err=%ld\n",
+-					PTR_ERR(data->pinctrl));
+-			return PTR_ERR(data->pinctrl);
+-		}
++		else if (IS_ERR(data->pinctrl))
++			return dev_err_probe(dev, PTR_ERR(data->pinctrl),
++					     "pinctrl get failed\n");
  
- /*
-- * INVLPG may not properly flush Global entries
-- * on these CPUs when PCIDs are enabled.
-+ * INVLPG may not properly flush Global entries on
-+ * these CPUs.  New microcode fixes the issue.
-  */
- static const struct x86_cpu_id invlpg_miss_ids[] = {
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0x2e),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0x42c),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0x11),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0x118),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0x4117),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0x2e),
- 	{}
- };
+ 		data->hsic_pad_regulator =
+ 				devm_regulator_get_optional(dev, "hsic");
+ 		if (PTR_ERR(data->hsic_pad_regulator) == -ENODEV) {
+ 			/* no pad regualator is needed */
+ 			data->hsic_pad_regulator = NULL;
+-		} else if (IS_ERR(data->hsic_pad_regulator)) {
+-			if (PTR_ERR(data->hsic_pad_regulator) != -EPROBE_DEFER)
+-				dev_err(dev,
+-					"Get HSIC pad regulator error: %ld\n",
+-					PTR_ERR(data->hsic_pad_regulator));
+-			return PTR_ERR(data->hsic_pad_regulator);
+-		}
++		} else if (IS_ERR(data->hsic_pad_regulator))
++			return dev_err_probe(dev, PTR_ERR(data->hsic_pad_regulator),
++					     "Get HSIC pad regulator error\n");
  
- static void setup_pcid(void)
- {
-+	const struct x86_cpu_id *invlpg_miss_match;
-+
- 	if (!IS_ENABLED(CONFIG_X86_64))
- 		return;
+ 		if (data->hsic_pad_regulator) {
+ 			ret = regulator_enable(data->hsic_pad_regulator);
+@@ -465,9 +458,7 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
+ 				&pdata);
+ 	if (IS_ERR(data->ci_pdev)) {
+ 		ret = PTR_ERR(data->ci_pdev);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(dev, "ci_hdrc_add_device failed, err=%d\n",
+-					ret);
++		dev_err_probe(dev, ret, "ci_hdrc_add_device failed\n");
+ 		goto err_clk;
+ 	}
  
- 	if (!boot_cpu_has(X86_FEATURE_PCID))
- 		return;
- 
--	if (x86_match_cpu(invlpg_miss_ids)) {
-+	invlpg_miss_match = x86_match_cpu(invlpg_miss_ids);
-+
-+	if (invlpg_miss_match &&
-+	    boot_cpu_data.microcode < invlpg_miss_match->driver_data) {
- 		pr_info("Incomplete global flushes, disabling PCID");
- 		setup_clear_cpu_cap(X86_FEATURE_PCID);
- 		return;
+-- 
+2.39.5
+
 
 
