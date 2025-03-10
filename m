@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9031B395F;
-	Mon, 10 Mar 2025 17:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED5E1C4A24;
+	Mon, 10 Mar 2025 17:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628703; cv=none; b=CQKZEN0Pf7BoP+7uBVMLe14a5YZoqdjWiA/sX/q9W/tfAlmVJijKOmOpzFl+8N06aioDBy15iOIJFfZzjStaopPWU2XBoWVu8rxMuWvlVMuDgx3wTrmIji3pVbsNZ8MdfWUEe3Dmaghg96eqURvt0HpuI85V2vWNGz2cziBLX+A=
+	t=1741628706; cv=none; b=UIshmzCcfx+r0BJwaDt6bP9J+L7i+IuYxlzDvMmcwb84LMrerFWpO6ypzd/ASBTWTfJlNvQ9oSotY0Dj4NnYAkP0H6jZknB/iANgxEkgrsg4n/7GY71ZuQdSWAHFXAE32/xv3BK9OJeOSQnnLGbAa5oznrrGNJuoBBmsGea1LQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628703; c=relaxed/simple;
-	bh=EN7KVuQf0GUtNWnsy8umZ7Erw4/OlHs6RsHoZjJxMTY=;
+	s=arc-20240116; t=1741628706; c=relaxed/simple;
+	bh=ms7AWOa7tmR60YLb7zSE7gRqnNc/Ml2eWIiZgE9+/04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jt5QEcB6sSNLztaBC8pnIcK6nmHa6fi8ZHJCdq8+RuI0qfW1bg4oyGIPyOzEq9yFVQzxlo5i1Y1elqTSePYIYZwZTgO1JFmkblUX0cqiRj3n1U3/hQhc1xH+/4Bqww1O1TjCeagtxG0RxSB6wrnP3ERyB9csn+gsraK1evGR23o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW77CHDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WwR6afnUopkQYc9aNgflPx6GjDp2mgnqDWs35J4V2Hh0AhRXJ66TfX+8XTAbLkN4bqcEm53zqPRr0fnI1I3rDi0OZm7YUCCWU7TJY3TV/PaoywVeuAdcOTgzODLg5NVnpP8mLVkCr6Ot0rlHVnBOCXxWyUYjpckEcUsCZ9I9yCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=six9RyfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW77CHDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8419DC4CEE5;
-	Mon, 10 Mar 2025 17:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="six9RyfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EEC4CEE5;
+	Mon, 10 Mar 2025 17:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628702;
-	bh=EN7KVuQf0GUtNWnsy8umZ7Erw4/OlHs6RsHoZjJxMTY=;
+	s=korg; t=1741628705;
+	bh=ms7AWOa7tmR60YLb7zSE7gRqnNc/Ml2eWIiZgE9+/04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mW77CHDoQaaMGp90AJILiW+1u/aW0lPkeO/izozLX8p4EX13Q95tJEEZqfNkVKaGv
-	 ssyW96O8fWO7GTd/Pdi8/KwKbtymvQJog+ptzuCU+Kal2W8As8M0ZEHWSTDq9c1ba4
-	 tLZPUggCfTLrfrkEu6uX8S9aynB9tN83jnIjqNs0=
+	b=six9RyfYbzkSpBlZqe+e07ZfZHLIKIa6CfdphzLZyYxQzcR1z58lvKMuce1rUMegG
+	 /KkpbLAniAQPkRRwrxyopd8huiacrb/4oQpIX+YSQajvLO3HEVKlZf/yU4U+I6w7AZ
+	 LinqtFbKTMkxNkVs5+CZbw1976P6lCoU+1QN9Bi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jakobkoschel@gmail.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/620] rtlwifi: replace usage of found with dedicated list iterator variable
-Date: Mon, 10 Mar 2025 17:58:04 +0100
-Message-ID: <20250310170547.086818891@linuxfoundation.org>
+Subject: [PATCH 5.15 039/620] wifi: rtlwifi: remove unused timer and related code
+Date: Mon, 10 Mar 2025 17:58:05 +0100
+Message-ID: <20250310170547.126285261@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,117 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakob Koschel <jakobkoschel@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit a0ff2a87194a968b9547fd4d824a09092171d1ea ]
+[ Upstream commit 358b94f0a7cadd2ec7824531d54dadaa8b71de04 ]
 
-To move the list iterator variable into the list_for_each_entry_*()
-macro in the future it should be avoided to use the list iterator
-variable after the loop body.
+Drop unused 'dualmac_easyconcurrent_retrytimer' of 'struct rtl_works',
+corresponding 'rtl_easy_concurrent_retrytimer_callback()' handler,
+'dualmac_easy_concurrent' function pointer of 'struct rtl_hal_ops'
+and related call to 'timer_setup()' in '_rtl_init_deferred_work()'.
 
-To *never* use the list iterator variable after the loop it was
-concluded to use a separate iterator variable instead of a
-found boolean [1].
-
-This removes the need to use a found variable and simply checking if
-the variable was set, can determine if the break/goto was hit.
-
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220324072124.62458-1-jakobkoschel@gmail.com
+Link: https://lore.kernel.org/r/20230602065940.149198-1-dmantipov@yandex.ru
 Stable-dep-of: 2fdac64c3c35 ("wifi: rtlwifi: remove unused check_buddy_priv")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c | 13 ++++++-------
- drivers/net/wireless/realtek/rtlwifi/pci.c  | 15 +++++++--------
- 2 files changed, 13 insertions(+), 15 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/base.c | 16 +---------------
+ drivers/net/wireless/realtek/rtlwifi/base.h |  1 -
+ drivers/net/wireless/realtek/rtlwifi/wifi.h |  2 --
+ 3 files changed, 1 insertion(+), 18 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index ffd150ec181fa..a7ef84f559399 100644
+index a7ef84f559399..e2552bcdc6a02 100644
 --- a/drivers/net/wireless/realtek/rtlwifi/base.c
 +++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -1994,8 +1994,7 @@ void rtl_collect_scan_list(struct ieee80211_hw *hw, struct sk_buff *skb)
- 	struct rtl_mac *mac = rtl_mac(rtl_priv(hw));
- 	unsigned long flags;
- 
--	struct rtl_bssid_entry *entry;
--	bool entry_found = false;
-+	struct rtl_bssid_entry *entry = NULL, *iter;
- 
- 	/* check if it is scanning */
- 	if (!mac->act_scanning)
-@@ -2008,10 +2007,10 @@ void rtl_collect_scan_list(struct ieee80211_hw *hw, struct sk_buff *skb)
- 
- 	spin_lock_irqsave(&rtlpriv->locks.scan_list_lock, flags);
- 
--	list_for_each_entry(entry, &rtlpriv->scan_list.list, list) {
--		if (memcmp(entry->bssid, hdr->addr3, ETH_ALEN) == 0) {
--			list_del_init(&entry->list);
--			entry_found = true;
-+	list_for_each_entry(iter, &rtlpriv->scan_list.list, list) {
-+		if (memcmp(iter->bssid, hdr->addr3, ETH_ALEN) == 0) {
-+			list_del_init(&iter->list);
-+			entry = iter;
- 			rtl_dbg(rtlpriv, COMP_SCAN, DBG_LOUD,
- 				"Update BSSID=%pM to scan list (total=%d)\n",
- 				hdr->addr3, rtlpriv->scan_list.num);
-@@ -2019,7 +2018,7 @@ void rtl_collect_scan_list(struct ieee80211_hw *hw, struct sk_buff *skb)
- 		}
- 	}
- 
--	if (!entry_found) {
-+	if (!entry) {
- 		entry = kmalloc(sizeof(*entry), GFP_ATOMIC);
- 
- 		if (!entry)
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 70f1cc906502b..f17a365fba070 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -300,14 +300,13 @@ static bool rtl_pci_check_buddy_priv(struct ieee80211_hw *hw,
- {
- 	struct rtl_priv *rtlpriv = rtl_priv(hw);
- 	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
--	bool find_buddy_priv = false;
--	struct rtl_priv *tpriv;
-+	struct rtl_priv *tpriv = NULL, *iter;
- 	struct rtl_pci_priv *tpcipriv = NULL;
- 
- 	if (!list_empty(&rtlpriv->glb_var->glb_priv_list)) {
--		list_for_each_entry(tpriv, &rtlpriv->glb_var->glb_priv_list,
-+		list_for_each_entry(iter, &rtlpriv->glb_var->glb_priv_list,
- 				    list) {
--			tpcipriv = (struct rtl_pci_priv *)tpriv->priv;
-+			tpcipriv = (struct rtl_pci_priv *)iter->priv;
- 			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
- 				"pcipriv->ndis_adapter.funcnumber %x\n",
- 				pcipriv->ndis_adapter.funcnumber);
-@@ -321,19 +320,19 @@ static bool rtl_pci_check_buddy_priv(struct ieee80211_hw *hw,
- 			    tpcipriv->ndis_adapter.devnumber &&
- 			    pcipriv->ndis_adapter.funcnumber !=
- 			    tpcipriv->ndis_adapter.funcnumber) {
--				find_buddy_priv = true;
-+				tpriv = iter;
- 				break;
- 			}
- 		}
- 	}
- 
- 	rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--		"find_buddy_priv %d\n", find_buddy_priv);
-+		"find_buddy_priv %d\n", tpriv != NULL);
- 
--	if (find_buddy_priv)
-+	if (tpriv)
- 		*buddy_priv = tpriv;
- 
--	return find_buddy_priv;
-+	return tpriv != NULL;
+@@ -452,8 +452,7 @@ static int _rtl_init_deferred_work(struct ieee80211_hw *hw)
+ 	/* <1> timer */
+ 	timer_setup(&rtlpriv->works.watchdog_timer,
+ 		    rtl_watch_dog_timer_callback, 0);
+-	timer_setup(&rtlpriv->works.dualmac_easyconcurrent_retrytimer,
+-		    rtl_easy_concurrent_retrytimer_callback, 0);
++
+ 	/* <2> work queue */
+ 	rtlpriv->works.hw = hw;
+ 	rtlpriv->works.rtl_wq = wq;
+@@ -2365,19 +2364,6 @@ static void rtl_c2hcmd_wq_callback(struct work_struct *work)
+ 	rtl_c2hcmd_launcher(hw, 1);
  }
  
- static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+-void rtl_easy_concurrent_retrytimer_callback(struct timer_list *t)
+-{
+-	struct rtl_priv *rtlpriv =
+-		from_timer(rtlpriv, t, works.dualmac_easyconcurrent_retrytimer);
+-	struct ieee80211_hw *hw = rtlpriv->hw;
+-	struct rtl_priv *buddy_priv = rtlpriv->buddy_priv;
+-
+-	if (buddy_priv == NULL)
+-		return;
+-
+-	rtlpriv->cfg->ops->dualmac_easy_concurrent(hw);
+-}
+-
+ /*********************************************************
+  *
+  * frame process functions
+diff --git a/drivers/net/wireless/realtek/rtlwifi/base.h b/drivers/net/wireless/realtek/rtlwifi/base.h
+index 0e4f8a8ae3a5f..f081a9a90563f 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/base.h
++++ b/drivers/net/wireless/realtek/rtlwifi/base.h
+@@ -124,7 +124,6 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
+ u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
+ void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
+ u8 rtl_tid_to_ac(u8 tid);
+-void rtl_easy_concurrent_retrytimer_callback(struct timer_list *t);
+ extern struct rtl_global_var rtl_global_var;
+ void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
+ 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+index 0bac788ccd6e3..1991cffd3dd4a 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
++++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+@@ -2300,7 +2300,6 @@ struct rtl_hal_ops {
+ 			  u32 regaddr, u32 bitmask, u32 data);
+ 	void (*linked_set_reg)(struct ieee80211_hw *hw);
+ 	void (*chk_switch_dmdp)(struct ieee80211_hw *hw);
+-	void (*dualmac_easy_concurrent)(struct ieee80211_hw *hw);
+ 	void (*dualmac_switch_to_dmdp)(struct ieee80211_hw *hw);
+ 	bool (*phy_rf6052_config)(struct ieee80211_hw *hw);
+ 	void (*phy_rf6052_set_cck_txpower)(struct ieee80211_hw *hw,
+@@ -2465,7 +2464,6 @@ struct rtl_works {
+ 
+ 	/*timer */
+ 	struct timer_list watchdog_timer;
+-	struct timer_list dualmac_easyconcurrent_retrytimer;
+ 	struct timer_list fw_clockoff_timer;
+ 	struct timer_list fast_antenna_training_timer;
+ 	/*task */
 -- 
 2.39.5
 
