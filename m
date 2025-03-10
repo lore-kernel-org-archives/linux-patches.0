@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973D0226D0B;
-	Mon, 10 Mar 2025 17:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF1823236E;
+	Mon, 10 Mar 2025 17:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627899; cv=none; b=p7BBNsCMsYg4XO3Gaq2WtUCKHkJ3+d1TIgR8GgEPF3guJyTLR0H5T+fqBV/0BKP0/KqcHdxurroryXuUG0E2cPQEUKVbdBW07EZ13bEVJrTYejA+WK10Ecx/tJtZfr8IhPvSIuElSUUrqbMw5s7tu4ULCWGbW9PBdkB2DcT6D3s=
+	t=1741627902; cv=none; b=PSvzAKgUgddaekOcjJ1j1ucRwzWKLGz+QeIe168LibJ587dePgHbWEqs1N8ccGVLJTz8EdaXslUyMulTC8wxp68JrAWGJsjffoIn5TQrKu9p8d7tRRLEG83OLNwYZpA3FPW/moqrZC7y0QWtKBieeA/OZtGG4l36R5rW2iSoo/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627899; c=relaxed/simple;
-	bh=lL1ZHpLixLlPzoi/ujzPbluKeOMDxEHFbkuLBMxcELU=;
+	s=arc-20240116; t=1741627902; c=relaxed/simple;
+	bh=mLN0Y1doX6hq+vIjRn8MbsMC21CvoqaBEMh4XA5KRPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bC1ST5uc+I36Zhnxf0mgZYtTUjcs358d13c9MoigpygSuFz0P6s7RskofsJONX+XbjKXGGpd4DMFvxAMl70mMnEK8p1oruSoj6xu0mJ8snzZIH0ebM9SD+yCS28kLlSpCwMwR9poRbXhDlWjywcgnduD2X4RpPwtZMAR6cQjNUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+bQQ8k8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIU0BRqqN3xU4vwnY1/97UlC/yz7o8eiaqboQcedjQFXZD+/FHmzsE/E8liG/ex2/8TgBf+zZRLC4nH/8pC2f1GmizrhRK2hDD6qCz9qLQFLZVyvJx5gS7HN17GnOS1/PK5zzfmYXC38bG7lA7UKrjer3sQnhVixFg57+5YBkBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giieWT2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+bQQ8k8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E5DC4CEE5;
-	Mon, 10 Mar 2025 17:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giieWT2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B24C4CEE5;
+	Mon, 10 Mar 2025 17:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627899;
-	bh=lL1ZHpLixLlPzoi/ujzPbluKeOMDxEHFbkuLBMxcELU=;
+	s=korg; t=1741627902;
+	bh=mLN0Y1doX6hq+vIjRn8MbsMC21CvoqaBEMh4XA5KRPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+bQQ8k8aNzdDlWDApzNFzsKR/QmyvJTvqWmrbJR865xutY9YWWePw+03zFIzPTr6
-	 fR27c+vbGUiBTn7gnFRaBkoIth0gc0DHWvS6fEgp0A6wPKqdkt3Y/tVdgEkfeucOXx
-	 nfAdGF+42CM8YpJI00uT9ecSwyancYjpnMKBuizs=
+	b=giieWT2KTPJ22lCTn81rn2viW6K5uS9nS5Lhys/VEjJghqNkrT0PecF8yX/l3yuAa
+	 Lrp/4s9xC7eIjwSrhj4tHpWpEeqlxkbK5uZYrtQt9TYelRIQTFidvl4kLsWu7BoWB3
+	 zBTneUtlCybXFyGtelLwVs+NK7yd5k2eVXk3T784=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/145] riscv: cacheinfo: Use of_property_present() for non-boolean properties
-Date: Mon, 10 Mar 2025 18:05:13 +0100
-Message-ID: <20250310170435.517417282@linuxfoundation.org>
+	Peter Jones <pjones@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 002/145] efi: Dont map the entire mokvar table to determine its size
+Date: Mon, 10 Mar 2025 18:04:56 +0100
+Message-ID: <20250310170434.838505714@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -46,68 +44,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Peter Jones <pjones@redhat.com>
 
-[ Upstream commit fb8179ce2996bffaa36a04e2b6262843b01b7565 ]
+commit 2b90e7ace79774a3540ce569e000388f8d22c9e0 upstream.
 
-The use of of_property_read_bool() for non-boolean properties is
-deprecated in favor of of_property_present() when testing for property
-presence.
+Currently, when validating the mokvar table, we (re)map the entire table
+on each iteration of the loop, adding space as we discover new entries.
+If the table grows over a certain size, this fails due to limitations of
+early_memmap(), and we get a failure and traceback:
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
-Cc: stable@vger.kernel.org
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Link: https://lore.kernel.org/r/20241104190314.270095-1-robh@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 0 at mm/early_ioremap.c:139 __early_ioremap+0xef/0x220
+  ...
+  Call Trace:
+   <TASK>
+   ? __early_ioremap+0xef/0x220
+   ? __warn.cold+0x93/0xfa
+   ? __early_ioremap+0xef/0x220
+   ? report_bug+0xff/0x140
+   ? early_fixup_exception+0x5d/0xb0
+   ? early_idt_handler_common+0x2f/0x3a
+   ? __early_ioremap+0xef/0x220
+   ? efi_mokvar_table_init+0xce/0x1d0
+   ? setup_arch+0x864/0xc10
+   ? start_kernel+0x6b/0xa10
+   ? x86_64_start_reservations+0x24/0x30
+   ? x86_64_start_kernel+0xed/0xf0
+   ? common_startup_64+0x13e/0x141
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  mokvar: Failed to map EFI MOKvar config table pa=0x7c4c3000, size=265187.
+
+Mapping the entire structure isn't actually necessary, as we don't ever
+need more than one entry header mapped at once.
+
+Changes efi_mokvar_table_init() to only map each entry header, not the
+entire table, when determining the table size.  Since we're not mapping
+any data past the variable name, it also changes the code to enforce
+that each variable name is NUL terminated, rather than attempting to
+verify it in place.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Peter Jones <pjones@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cacheinfo.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/firmware/efi/mokvar-table.c |   42 +++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 29 deletions(-)
 
-diff --git a/arch/riscv/kernel/cacheinfo.c b/arch/riscv/kernel/cacheinfo.c
-index d32dfdba083e1..9fb97c9f9b0be 100644
---- a/arch/riscv/kernel/cacheinfo.c
-+++ b/arch/riscv/kernel/cacheinfo.c
-@@ -103,11 +103,11 @@ int populate_cache_leaves(unsigned int cpu)
- 	if (!np)
- 		return -ENOENT;
+--- a/drivers/firmware/efi/mokvar-table.c
++++ b/drivers/firmware/efi/mokvar-table.c
+@@ -103,9 +103,7 @@ void __init efi_mokvar_table_init(void)
+ 	void *va = NULL;
+ 	unsigned long cur_offset = 0;
+ 	unsigned long offset_limit;
+-	unsigned long map_size = 0;
+ 	unsigned long map_size_needed = 0;
+-	unsigned long size;
+ 	struct efi_mokvar_table_entry *mokvar_entry;
+ 	int err;
  
--	if (of_property_read_bool(np, "cache-size"))
-+	if (of_property_present(np, "cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
--	if (of_property_read_bool(np, "i-cache-size"))
-+	if (of_property_present(np, "i-cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
--	if (of_property_read_bool(np, "d-cache-size"))
-+	if (of_property_present(np, "d-cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+@@ -134,48 +132,34 @@ void __init efi_mokvar_table_init(void)
+ 	 */
+ 	err = -EINVAL;
+ 	while (cur_offset + sizeof(*mokvar_entry) <= offset_limit) {
+-		mokvar_entry = va + cur_offset;
+-		map_size_needed = cur_offset + sizeof(*mokvar_entry);
+-		if (map_size_needed > map_size) {
+-			if (va)
+-				early_memunmap(va, map_size);
+-			/*
+-			 * Map a little more than the fixed size entry
+-			 * header, anticipating some data. It's safe to
+-			 * do so as long as we stay within current memory
+-			 * descriptor.
+-			 */
+-			map_size = min(map_size_needed + 2*EFI_PAGE_SIZE,
+-				       offset_limit);
+-			va = early_memremap(efi.mokvar_table, map_size);
+-			if (!va) {
+-				pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%lu.\n",
+-				       efi.mokvar_table, map_size);
+-				return;
+-			}
+-			mokvar_entry = va + cur_offset;
++		if (va)
++			early_memunmap(va, sizeof(*mokvar_entry));
++		va = early_memremap(efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
++		if (!va) {
++			pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%zu.\n",
++			       efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
++			return;
+ 		}
++		mokvar_entry = va;
  
- 	prev = np;
-@@ -120,11 +120,11 @@ int populate_cache_leaves(unsigned int cpu)
+ 		/* Check for last sentinel entry */
+ 		if (mokvar_entry->name[0] == '\0') {
+ 			if (mokvar_entry->data_size != 0)
+ 				break;
+ 			err = 0;
++			map_size_needed = cur_offset + sizeof(*mokvar_entry);
  			break;
- 		if (level <= levels)
- 			break;
--		if (of_property_read_bool(np, "cache-size"))
-+		if (of_property_present(np, "cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
--		if (of_property_read_bool(np, "i-cache-size"))
-+		if (of_property_present(np, "i-cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
--		if (of_property_read_bool(np, "d-cache-size"))
-+		if (of_property_present(np, "d-cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
- 		levels = level;
+ 		}
+ 
+-		/* Sanity check that the name is null terminated */
+-		size = strnlen(mokvar_entry->name,
+-			       sizeof(mokvar_entry->name));
+-		if (size >= sizeof(mokvar_entry->name))
+-			break;
++		/* Enforce that the name is NUL terminated */
++		mokvar_entry->name[sizeof(mokvar_entry->name) - 1] = '\0';
+ 
+ 		/* Advance to the next entry */
+-		cur_offset = map_size_needed + mokvar_entry->data_size;
++		cur_offset += sizeof(*mokvar_entry) + mokvar_entry->data_size;
  	}
--- 
-2.39.5
-
+ 
+ 	if (va)
+-		early_memunmap(va, map_size);
++		early_memunmap(va, sizeof(*mokvar_entry));
+ 	if (err) {
+ 		pr_err("EFI MOKvar config table is not valid\n");
+ 		return;
 
 
