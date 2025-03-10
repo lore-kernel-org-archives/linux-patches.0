@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F48B236424;
-	Mon, 10 Mar 2025 17:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89E8238148;
+	Mon, 10 Mar 2025 17:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627414; cv=none; b=QXRYiyxohrCwBQmgJY+at5JyEVZqNXs+5Ip4tqBjWk890wgeK/wscyS+7yTUElBL08p+p9r8h+isbHuY+/2tx+3Jiv394BVREOCYAunJQD8WnE7gEYdcDI1Gpri7jdmwxj/YersbWWvfswWlNwlQ5rxqQ6I6ecnFEeOrAjq9YIs=
+	t=1741627417; cv=none; b=G2nX6ecmx/xfA4ottKQytSVdxUPaG7R8dxUZxqMEDBRZOMnppXlSYfBya++rzw/CPLgxH5JmTli/KqYE/ihOELFYy3kDS7yTBB54eImwGZfOlM+U3Bk2rzNV0ALRWyC9OIBbgGWxIc5HJp9Gks/eM0Q+LmA+oSeuum8j1UO+SRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627414; c=relaxed/simple;
-	bh=o//9dZDBBdQoDbSLIhTVYQPRTq7noHn4sb8rZPg5H7A=;
+	s=arc-20240116; t=1741627417; c=relaxed/simple;
+	bh=LnNM9p7ZfauKYIaZn3hHmCVg0J4Us3EuX8f7ECn/NFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5t4X7XewxsRkjzGQbIvTuDATOOl5PCyFU/wMeiOnhcqxPXKxRS9WTH0pSo0yHM7AeBi3SQO8jotZxk3v4e+b5yEtlAEoFHOXdTkc/pS+mKGN1jIqbtZwLSOISb1LJ8UAYh1TdXGqVfS/IeZZkuCDZihqDH4ED92LcAcanF6rYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQSt4HTU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSIpkzOeAi43QNJee6fN755RC/pQOc8+2hk58+mpN55znYWmLB1vl8YwvJhJPWEVXySDcWKVk/MpCZfgqqYgGRvN3zMABrzuuqVsudGsM7oTOqS3fmOs8h/Zst9/mxX5armeAr8bHfjDPMkKUkY9AUgeZFYpI8gto8pTs286Twg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df6A1nXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQSt4HTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87623C4CEED;
-	Mon, 10 Mar 2025 17:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df6A1nXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AECC4CEEC;
+	Mon, 10 Mar 2025 17:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627413;
-	bh=o//9dZDBBdQoDbSLIhTVYQPRTq7noHn4sb8rZPg5H7A=;
+	s=korg; t=1741627416;
+	bh=LnNM9p7ZfauKYIaZn3hHmCVg0J4Us3EuX8f7ECn/NFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQSt4HTUQVP2npH9UhuRfZjoPd7NTaf2jhr4bRWK182O+692LtzppF8gFKqQMfJP6
-	 gcPDsjBHHsRD8XBbR1WLDMTfg8nPK6Ryp3sDXbSwyCFljqBFTVXv6uXG7mOJsLuYF6
-	 nMxtkvnyvFVM+u4D1u9THGcfnMLN66/GrVrttFhY=
+	b=df6A1nXW2ZlHUmtN0yyzGtX1vj1dlR03f5wugBkn/2pNXNyWgwU8Ii/MZlKxtR8Hc
+	 RPzzjkf1oIynpBkv8yrMb4ZlY/HnLH96KpqSQ29TWoKiGXeac/P/yEimGLBAxzE8oM
+	 fqveZOaRMiD2f9S58IsRcknSnn8ZMWniTfxMJYLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 122/269] wifi: nl80211: reject cooked mode if it is set along with other flags
-Date: Mon, 10 Mar 2025 18:04:35 +0100
-Message-ID: <20250310170502.584519402@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	kernel test robot <oliver.sang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 123/269] selftests/damon/damos_quota_goal: handle minimum quota that cannot be further reduced
+Date: Mon, 10 Mar 2025 18:04:36 +0100
+Message-ID: <20250310170502.625714111@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,48 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: SeongJae Park <sj@kernel.org>
 
-commit 49f27f29446a5bfe633dd2cc0cfebd48a1a5e77f upstream.
+commit 349db086a66051bc6114b64b4446787c20ac3f00 upstream.
 
-It is possible to set both MONITOR_FLAG_COOK_FRAMES and MONITOR_FLAG_ACTIVE
-flags simultaneously on the same monitor interface from the userspace. This
-causes a sub-interface to be created with no IEEE80211_SDATA_IN_DRIVER bit
-set because the monitor interface is in the cooked state and it takes
-precedence over all other states. When the interface is then being deleted
-the kernel calls WARN_ONCE() from check_sdata_in_driver() because of missing
-that bit.
+damos_quota_goal.py selftest see if DAMOS quota goals tuning feature
+increases or reduces the effective size quota for given score as expected.
+The tuning feature sets the minimum quota size as one byte, so if the
+effective size quota is already one, we cannot expect it further be
+reduced.  However the test is not aware of the edge case, and fails since
+it shown no expected change of the effective quota.  Handle the case by
+updating the failure logic for no change to see if it was the case, and
+simply skips to next test input.
 
-Fix this by rejecting MONITOR_FLAG_COOK_FRAMES if it is set along with
-other flags.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 66f7ac50ed7c ("nl80211: Add monitor interface configuration flags")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e5c1e55b9e5c28a3da7
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Link: https://patch.msgid.link/20250131152657.5606-1-v.shevtsov@mt-integration.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lkml.kernel.org/r/20250217182304.45215-1-sj@kernel.org
+Fixes: f1c07c0a1662 ("selftests/damon: add a test for DAMOS quota goal")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202502171423.b28a918d-lkp@intel.com
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.10.x]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/damon/damos_quota_goal.py |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4218,6 +4218,11 @@ static int parse_monitor_flags(struct nl
- 		if (flags[flag])
- 			*mntrflags |= (1<<flag);
+--- a/tools/testing/selftests/damon/damos_quota_goal.py
++++ b/tools/testing/selftests/damon/damos_quota_goal.py
+@@ -63,6 +63,9 @@ def main():
+             if last_effective_bytes != 0 else -1.0))
  
-+	/* cooked monitor mode is incompatible with other modes */
-+	if (*mntrflags & MONITOR_FLAG_COOK_FRAMES &&
-+	    *mntrflags != MONITOR_FLAG_COOK_FRAMES)
-+		return -EOPNOTSUPP;
-+
- 	*mntrflags |= MONITOR_FLAG_CHANGED;
+         if last_effective_bytes == goal.effective_bytes:
++            # effective quota was already minimum that cannot be more reduced
++            if expect_increase is False and last_effective_bytes == 1:
++                continue
+             print('efective bytes not changed: %d' % goal.effective_bytes)
+             exit(1)
  
- 	return 0;
 
 
