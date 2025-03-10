@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB8822AE7C;
-	Mon, 10 Mar 2025 17:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679FE17CA12;
+	Mon, 10 Mar 2025 17:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629127; cv=none; b=u8tBYUygIc81Emtr0qAx7pk37sNdFSSXkaAeyzoq3K+nHLEiWe1TwG3sGLxXXr691fZKqozrDnXUwzzt9xW0U7zTuStySLt18lcreWi+BOxw/zR+dg4p5B76lVsisXZvqPIcEtFB1iUML9OGqP4ZBWuZDM6u1+WECtmc8iW1SUI=
+	t=1741629129; cv=none; b=Fg3S6X6s5lfNEgRM0lv2TjIBcfGls/LlMkNZyIcz9sM+CWMYV3iGQcmsLFcb9uY8v4XgLyOvacEA88VKVE/TgPzIhcEX8v6mJZ1JF2swhWL0jh7XAMsA7QJ0lPwuVDF41THse/+gchM0tbeQNLw59Vh+BgZg8U3/LgTAZVr0IzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629127; c=relaxed/simple;
-	bh=RjwPNjzL8ekAadipPT3FO8Apk/oSH1XErcziTpzntUQ=;
+	s=arc-20240116; t=1741629129; c=relaxed/simple;
+	bh=+sndNOySwgR/4X+PF7GvnkhUdAtCmln3h3qwdkWTcMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLwC9g7zQGJ2ETrPTRCZU9YlO/diQr+Jc8rp7h4uHZobxKOFAhnXJLW86ec5GWjLscePGXrQPR8W1BNYiCrHQK/p7C663WRRdp+Mp8T13NcYZxZjqGZ/gT/tCZyTCzDG55frw6WiTTqvR8L5Sna4wl9cUb8WM2isO6uDTuCaDHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYPcmNQc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rE0padwa0DYa/UFQ3YSAVYPgr1HQeKdSJZPLUQ6U7uUIAISQfMPdf5EYYfMzE4477VDMyA+5MjtrRSONTemiAcHE3RutuYESrNB2Xp1wafAEjG9WqtSrt7Ls7zaS8dGmAQ9bXdYCFeZ7BQO3AkIXPm9q4qQVO8LERmYQ2WFg6VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lG5PlyUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYPcmNQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFB3C4CEE5;
-	Mon, 10 Mar 2025 17:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG5PlyUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13356C4CEE5;
+	Mon, 10 Mar 2025 17:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629126;
-	bh=RjwPNjzL8ekAadipPT3FO8Apk/oSH1XErcziTpzntUQ=;
+	s=korg; t=1741629129;
+	bh=+sndNOySwgR/4X+PF7GvnkhUdAtCmln3h3qwdkWTcMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYPcmNQcubh0bU0u34aUrfrV3ibEYOtSKW4YjJ2PrThnvDxv3ekgspGUhmJ31rgj/
-	 HpJhMvnxQyjk4ZbZM3SnIaEr9DC8lRLOy87o7tUAQf4Uo4GHM/lXcaU0VKCoCAoXV6
-	 67L7VOwfv/Fg96fFbvsYOvQcQT9d+PXeB5HZEosM=
+	b=lG5PlyUvPnS6+PPxp/8RLaJAYUbMOquVu9x4qD/Eac0W17g7FB+f8JfR4ErHfDv/3
+	 TQzdzY7XNH7lHtbMyBvkvS3TW/vWqiMzJQRuGdJ8PyIHLIGOLDq9Lthnr7zA8GIZZt
+	 MNyRKdtbOcOvMUhJS2RXPO6GCpHIDdKTRCDVwf2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 179/620] kconfig: require a space after # for valid input
-Date: Mon, 10 Mar 2025 18:00:25 +0100
-Message-ID: <20250310170552.688689370@linuxfoundation.org>
+	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 188/620] netfilter: nf_tables: reject mismatching sum of field_len with set key length
+Date: Mon, 10 Mar 2025 18:00:34 +0100
+Message-ID: <20250310170553.056156851@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,45 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 4d137ab0107ead0f2590fc0314e627431e3b9e3f ]
+commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
 
-Currently, when an input line starts with '#', (line + 2) is passed to
-memcmp() without checking line[1].
+The field length description provides the length of each separated key
+field in the concatenation, each field gets rounded up to 32-bits to
+calculate the pipapo rule width from pipapo_init(). The set key length
+provides the total size of the key aligned to 32-bits.
 
-It means that line[1] can be any arbitrary character. For example,
-"#KCONFIG_FOO is not set" is accepted as valid input, functioning the
-same as "# CONFIG_FOO is not set".
+Register-based arithmetics still allows for combining mismatching set
+key length and field length description, eg. set key length 10 and field
+description [ 5, 4 ] leading to pipapo width of 12.
 
-More importantly, this can potentially lead to a buffer overrun if
-line[1] == '\0'. It occurs if the input only contains '#', as
-(line + 2) points to an uninitialized buffer.
-
-Check line[1], and skip the line if it is not a space.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: a409fc1463d6 ("kconfig: fix memory leak in sym_warn_unmet_dep()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
+Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/kconfig/confdata.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
-index 033f2882436d3..80160aee01ff6 100644
---- a/scripts/kconfig/confdata.c
-+++ b/scripts/kconfig/confdata.c
-@@ -434,6 +434,8 @@ int conf_read_simple(const char *name, int def)
- 		conf_lineno++;
- 		sym = NULL;
- 		if (line[0] == '#') {
-+			if (line[1] != ' ')
-+				continue;
- 			if (memcmp(line + 2, CONFIG_, strlen(CONFIG_)))
- 				continue;
- 			p = strchr(line + 2 + strlen(CONFIG_), ' ');
--- 
-2.39.5
-
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4497,7 +4497,7 @@ static int nft_set_desc_concat_parse(con
+ static int nft_set_desc_concat(struct nft_set_desc *desc,
+ 			       const struct nlattr *nla)
+ {
+-	u32 num_regs = 0, key_num_regs = 0;
++	u32 len = 0, num_regs;
+ 	struct nlattr *attr;
+ 	int rem, err, i;
+ 
+@@ -4511,12 +4511,12 @@ static int nft_set_desc_concat(struct nf
+ 	}
+ 
+ 	for (i = 0; i < desc->field_count; i++)
+-		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
++		len += round_up(desc->field_len[i], sizeof(u32));
+ 
+-	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+-	if (key_num_regs != num_regs)
++	if (len != desc->klen)
+ 		return -EINVAL;
+ 
++	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+ 	if (num_regs > NFT_REG32_COUNT)
+ 		return -E2BIG;
+ 
 
 
