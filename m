@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABEE17CA12;
-	Mon, 10 Mar 2025 17:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2A517CA12;
+	Mon, 10 Mar 2025 17:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628861; cv=none; b=tNiFkoKQ1l2b/B2o61jw55YmBib+JRhG1O0HplIR/DmSYSniGf6NOXMdgKdwK3dBChK1wy9cuqAIisjfg1HWiGprJvW/aCpxMUu59DUjaIZz+f/Dy/qXtpMCv7nJQvtLGij9ubCLbEyGdhH96p9HMQ3BfluumSV1kWq6Y7eD6pY=
+	t=1741628864; cv=none; b=RY0FvlURtMRaCOAC1h7hkaS9UEyNyWXItgRW/c7iE52q6RopobEfmvtYekcDnawYvqwpGxqSsjv6qbVLljqG7/Gb5nsAiETBdQjA+m6/zfH/3oEIa8L+Jlq8EWvEbJuHP0L/NpR06u7JkeFCBsvrpN1GgqNMBpvItSBHxb2RYks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628861; c=relaxed/simple;
-	bh=QjsCBBzTMMoQwxYYXNAPP8Q+mA+Mh+q67VNs3tDwqkM=;
+	s=arc-20240116; t=1741628864; c=relaxed/simple;
+	bh=W/Y9dIM0UGQhJj5l5dk3eN5aiG4n4ZVGMXDZrTSMiPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPMApOGpTvHnSky54M5MgNDlx+T7bd7FVQAA5TfSFHEJVx11H8X0gBCFqYCCIMFPYvBl6EHQmVCt6PnnsYsUzqssHAd7qM1vGrZeMakMzZYWxJYTB21Ft/D5zZQIY35q7BdXidxa/Zf0+wYJ2eCoVbq43eTlwRgI2RT5FqyBqkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1KhfYKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqYou3Rv5SsZcfZWPaTNfn2jP21wJEPP8Nm4DXlwLmzrlk/ByDiNS+2jE910MqwFRKI36b8Q6y2XeKN0I9d9nsx+9fDglGDzeg67k6PE0sq3jJsrkhkWpejxAx+a1JOnKr02QaOZ/PycSLGBL0ttRH9apdVTygBOH0hZt0mAc+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ynx0+Ct8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1KhfYKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6DBC4CEE5;
-	Mon, 10 Mar 2025 17:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ynx0+Ct8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB43C4CEE5;
+	Mon, 10 Mar 2025 17:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628861;
-	bh=QjsCBBzTMMoQwxYYXNAPP8Q+mA+Mh+q67VNs3tDwqkM=;
+	s=korg; t=1741628864;
+	bh=W/Y9dIM0UGQhJj5l5dk3eN5aiG4n4ZVGMXDZrTSMiPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1KhfYKOpRM5UeUTwDqKzQiKg8Dz503CQh/gc1uf1Sb3yl9loO+F5CxG7WxMaud5v
-	 uhA3Xr93kTUodkrf9LTPow0wdad374tcvgfacX2kiOUHB/vUnguPouE5p1zgUEgUh9
-	 AyZIlK79H2k740nJJT7wdYrQ/fu2v5HO40CTMZyM=
+	b=Ynx0+Ct8FfXx7CAhoNGM+HRostIT5ijOsYMFPVlrAIRAnC5SBcNMcFGTurX6EsddW
+	 jMnqTHeItTwwiRjBws1AGvw8rWoB4I+mF3rfDsiNEsFtH1mL56rSAan5nbjR+Xyu2D
+	 QEW8fK7ycciwk8YE4iSIOYDLULZyV3OJcDvs/KWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Qu Zicheng <quzicheng@huawei.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Quentin Monnet <qmo@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/620] padata: fix UAF in padata_reorder
-Date: Mon, 10 Mar 2025 17:59:01 +0100
-Message-ID: <20250310170549.330701033@linuxfoundation.org>
+Subject: [PATCH 5.15 078/620] libbpf: Fix segfault due to libelf functions not setting errno
+Date: Mon, 10 Mar 2025 17:58:44 +0100
+Message-ID: <20250310170548.661255689@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,92 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Quentin Monnet <qmo@kernel.org>
 
-[ Upstream commit e01780ea4661172734118d2a5f41bc9720765668 ]
+[ Upstream commit e10500b69c3f3378f3dcfc8c2fe4cdb74fc844f5 ]
 
-A bug was found when run ltp test:
+Libelf functions do not set errno on failure. Instead, it relies on its
+internal _elf_errno value, that can be retrieved via elf_errno (or the
+corresponding message via elf_errmsg()). From "man libelf":
 
-BUG: KASAN: slab-use-after-free in padata_find_next+0x29/0x1a0
-Read of size 4 at addr ffff88bbfe003524 by task kworker/u113:2/3039206
+    If a libelf function encounters an error it will set an internal
+    error code that can be retrieved with elf_errno. Each thread
+    maintains its own separate error code. The meaning of each error
+    code can be determined with elf_errmsg, which returns a string
+    describing the error.
 
-CPU: 0 PID: 3039206 Comm: kworker/u113:2 Kdump: loaded Not tainted 6.6.0+
-Workqueue: pdecrypt_parallel padata_parallel_worker
-Call Trace:
-<TASK>
-dump_stack_lvl+0x32/0x50
-print_address_description.constprop.0+0x6b/0x3d0
-print_report+0xdd/0x2c0
-kasan_report+0xa5/0xd0
-padata_find_next+0x29/0x1a0
-padata_reorder+0x131/0x220
-padata_parallel_worker+0x3d/0xc0
-process_one_work+0x2ec/0x5a0
+As a consequence, libbpf should not return -errno when a function from
+libelf fails, because an empty value will not be interpreted as an error
+and won't prevent the program to stop. This is visible in
+bpf_linker__add_file(), for example, where we call a succession of
+functions that rely on libelf:
 
-If 'mdelay(10)' is added before calling 'padata_find_next' in the
-'padata_reorder' function, this issue could be reproduced easily with
-ltp test (pcrypt_aead01).
+    err = err ?: linker_load_obj_file(linker, filename, opts, &obj);
+    err = err ?: linker_append_sec_data(linker, &obj);
+    err = err ?: linker_append_elf_syms(linker, &obj);
+    err = err ?: linker_append_elf_relos(linker, &obj);
+    err = err ?: linker_append_btf(linker, &obj);
+    err = err ?: linker_append_btf_ext(linker, &obj);
 
-This can be explained as bellow:
+If the object file that we try to process is not, in fact, a correct
+object file, linker_load_obj_file() may fail with errno not being set,
+and return 0. In this case we attempt to run linker_append_elf_sysms()
+and may segfault.
 
-pcrypt_aead_encrypt
-...
-padata_do_parallel
-refcount_inc(&pd->refcnt); // add refcnt
-...
-padata_do_serial
-padata_reorder // pd
-while (1) {
-padata_find_next(pd, true); // using pd
-queue_work_on
-...
-padata_serial_worker				crypto_del_alg
-padata_put_pd_cnt // sub refcnt
-						padata_free_shell
-						padata_put_pd(ps->pd);
-						// pd is freed
-// loop again, but pd is freed
-// call padata_find_next, UAF
-}
+This can happen (and was discovered) with bpftool:
 
-In the padata_reorder function, when it loops in 'while', if the alg is
-deleted, the refcnt may be decreased to 0 before entering
-'padata_find_next', which leads to UAF.
+    $ bpftool gen object output.o sample_ret0.bpf.c
+    libbpf: failed to get ELF header for sample_ret0.bpf.c: invalid `Elf' handle
+    zsh: segmentation fault (core dumped)  bpftool gen object output.o sample_ret0.bpf.c
 
-As mentioned in [1], do_serial is supposed to be called with BHs disabled
-and always happen under RCU protection, to address this issue, add
-synchronize_rcu() in 'padata_free_shell' wait for all _do_serial calls
-to finish.
+Fix the issue by returning a non-null error code (-EINVAL) when libelf
+functions fail.
 
-[1] https://lore.kernel.org/all/20221028160401.cccypv4euxikusiq@parnassus.localdomain/
-[2] https://lore.kernel.org/linux-kernel/jfjz5d7zwbytztackem7ibzalm5lnxldi2eofeiczqmqs2m7o6@fq426cwnjtkm/
-Fixes: b128a3040935 ("padata: allocate workqueue internally")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Qu Zicheng <quzicheng@huawei.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
+Signed-off-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241205135942.65262-1-qmo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/lib/bpf/linker.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index a5699c5ba58da..9608a269f66f2 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -1110,6 +1110,12 @@ void padata_free_shell(struct padata_shell *ps)
- 	if (!ps)
- 		return;
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index 8907d4238818c..2adf55f487430 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -568,17 +568,15 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 	obj->elf = elf_begin(obj->fd, ELF_C_READ_MMAP, NULL);
+ 	if (!obj->elf) {
+-		err = -errno;
+ 		pr_warn_elf("failed to parse ELF file '%s'", filename);
+-		return err;
++		return -EINVAL;
+ 	}
  
-+	/*
-+	 * Wait for all _do_serial calls to finish to avoid touching
-+	 * freed pd's and ps's.
-+	 */
-+	synchronize_rcu();
-+
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
- 	pd = rcu_dereference_protected(ps->pd, 1);
+ 	/* Sanity check ELF file high-level properties */
+ 	ehdr = elf64_getehdr(obj->elf);
+ 	if (!ehdr) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get ELF header for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 	if (ehdr->e_ident[EI_DATA] != host_endianness) {
+ 		err = -EOPNOTSUPP;
+@@ -594,9 +592,8 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 
+ 	if (elf_getshdrstrndx(obj->elf, &obj->shstrs_sec_idx)) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get SHSTRTAB section index for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 
+ 	scn = NULL;
+@@ -606,26 +603,23 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 
+ 		shdr = elf64_getshdr(scn);
+ 		if (!shdr) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu header for %s",
+ 				    sec_idx, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		sec_name = elf_strptr(obj->elf, obj->shstrs_sec_idx, shdr->sh_name);
+ 		if (!sec_name) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu name for %s",
+ 				    sec_idx, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		data = elf_getdata(scn, 0);
+ 		if (!data) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu (%s) data from %s",
+ 				    sec_idx, sec_name, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		sec = add_src_sec(obj, sec_name);
+@@ -2601,14 +2595,14 @@ int bpf_linker__finalize(struct bpf_linker *linker)
+ 
+ 	/* Finalize ELF layout */
+ 	if (elf_update(linker->elf, ELF_C_NULL) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to finalize ELF layout");
+ 		return libbpf_err(err);
+ 	}
+ 
+ 	/* Write out final ELF contents */
+ 	if (elf_update(linker->elf, ELF_C_WRITE) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to write ELF contents");
+ 		return libbpf_err(err);
+ 	}
 -- 
 2.39.5
 
