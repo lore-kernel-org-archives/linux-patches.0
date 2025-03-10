@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEA322B8D0;
-	Mon, 10 Mar 2025 17:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E4422D7A6;
+	Mon, 10 Mar 2025 17:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629233; cv=none; b=KEqHCDOZsoATv9Qy9X/TmOKkKnOHCbP/y0/k9rjHUsk7stEDp6tSowDD87Cdk6xpZjCBeFEYkHDQlylaxwqBVuGh/KKXBFI3UQF/dEWxBt1dUEtIDCUwl17XEnLzttcyGUg83B/egSjr/Ikj/5i1itx4G+Z2/UGEGtbBkYsDLQI=
+	t=1741629236; cv=none; b=fQFG+dWKSV7MdFlV8oYpjsMXE4iXkTViPutaU4EPAdKSxN4HtHBiNX/W8UBdwAltZzkoyzVReYZ4Ppo/9P8KWEAu8yK4XUO4AbtEXfa0XCxFXd+AQppNU90ZxfSBXwmbdUIemlmI6JZ48hul+f0FGGSnECG1vPVo/WkP330cUis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629233; c=relaxed/simple;
-	bh=rj7ly47Ub+912Y9k7G0gRt1P6AjYn62MQ6eAEdopc2k=;
+	s=arc-20240116; t=1741629236; c=relaxed/simple;
+	bh=gHITukwMXek0fmtNamXJQnZsUjCTxYSD0z2CSPmL0Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DuZ3L2qYksm4By7iv/CVoZuPkTeCCnJOAaUlF+K/D2ts2bXJbDIcON6vyaBRsbebGv8CFzNs29y36xUx5kIBu0AOeQhP6P/yg+neIxgRugdK2rwh+/uba1GYvK2BDzmxiHbVSVBbCtgPIQnVY7La1xT4a2E8unAf1oNRJ8trb9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFB/Qgdi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X8Eam4ZjXkYwhhCk6dM4tEuyvIn6V+mHHl5qwZ+oAVWk1TJvHvj5k9Yo90lS48jNjr1KKPdhxGIx8PmZBkssMtkYqwz+ttR+EDYIeN4B6vPuV0HlTyWiccDF+UBD+1fXyecGvfltTOLwMeY/EJFWZJsxlX+lAsKWZKe9A6M0/7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dzt/M/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFB/Qgdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978B2C4CEE5;
-	Mon, 10 Mar 2025 17:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dzt/M/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78749C4CEE5;
+	Mon, 10 Mar 2025 17:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629233;
-	bh=rj7ly47Ub+912Y9k7G0gRt1P6AjYn62MQ6eAEdopc2k=;
+	s=korg; t=1741629235;
+	bh=gHITukwMXek0fmtNamXJQnZsUjCTxYSD0z2CSPmL0Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFB/Qgdi6G+WZPQgJUK5AgG01eMriRFX4ZYg4UDg2S17LVk5YILfWIomdvWoEk7nz
-	 Q/N/3Z2nuoGgx+PFsAy9S1mb/8mAZqtOxt/Ufoqmq050dX3CK0Ye9uKExnz0ST+SEC
-	 8ctaO3PiuDPz/a/G3LFnjB+trGRnAqIPLwwJZZo0=
+	b=2dzt/M/9cghwKc95Y8XZlMcVPgvHJ5p7oXuBZZSHeQJrs3VYYG57CkGLXLOrOgggi
+	 cA/9hbx/CeWDOdbYJy7HLSDU5JxiXTSIqYOQawsnWJbxmo9vyXgqoHAMhxAWntx+nR
+	 7Cb5vJZgfmHLwQre0IxRqYAK2HTIptlb11JycF94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Anwar <farhan.anwar8@gmail.com>,
-	Rayan Margham <rayanmargham4@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 224/620] platform/x86: acer-wmi: Ignore AC events
-Date: Mon, 10 Mar 2025 18:01:10 +0100
-Message-ID: <20250310170554.461127361@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.15 225/620] x86/mm: Dont disable PCID when INVLPG has been fixed by microcode
+Date: Mon, 10 Mar 2025 18:01:11 +0100
+Message-ID: <20250310170554.503194575@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -47,57 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit f6bfa25c6665f8721421ea94fe506cc22f1d4b43 ]
+commit f24f669d03f884a6ef95cca84317d0f329e93961 upstream.
 
-On the Acer Swift SFG14-41, the events 8 - 1 and 8 - 0 are printed on
-AC connect/disconnect. Ignore those events to avoid spamming the
-kernel log with error messages.
+Per the "Processor Specification Update" documentations referred by
+the intel-microcode-20240312 release note, this microcode release has
+fixed the issue for all affected models.
 
-Reported-by: Farhan Anwar <farhan.anwar8@gmail.com>
-Closes: https://lore.kernel.org/platform-driver-x86/2ffb529d-e7c8-4026-a3b8-120c8e7afec8@gmail.com
-Tested-by: Rayan Margham <rayanmargham4@gmail.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250119201723.11102-2-W_Armin@gmx.de
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So don't disable PCID if the microcode is new enough.  The precise
+minimum microcode revision fixing the issue was provided by Pawan
+Intel.
+
+[ dhansen: comment and changelog tweaks ]
+
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Link: https://lore.kernel.org/all/168436059559.404.13934972543631851306.tip-bot2@tip-bot2/
+Link: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20240312
+Link: https://cdrdv2.intel.com/v1/dl/getContent/740518 # RPL042, rev. 13
+Link: https://cdrdv2.intel.com/v1/dl/getContent/682436 # ADL063, rev. 24
+Link: https://lore.kernel.org/all/20240325231300.qrltbzf6twm43ftb@desk/
+Link: https://lore.kernel.org/all/20240522020625.69418-1-xry111%40xry111.site
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/acer-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/mm/init.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index 82516796a53b0..7ef80f517e76e 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -88,6 +88,7 @@ enum acer_wmi_event_ids {
- 	WMID_HOTKEY_EVENT = 0x1,
- 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
- 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
-+	WMID_AC_EVENT = 0x8,
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -264,28 +264,33 @@ static void __init probe_page_size_mask(
+ }
+ 
+ /*
+- * INVLPG may not properly flush Global entries
+- * on these CPUs when PCIDs are enabled.
++ * INVLPG may not properly flush Global entries on
++ * these CPUs.  New microcode fixes the issue.
+  */
+ static const struct x86_cpu_id invlpg_miss_ids[] = {
+-	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
+-	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
+-	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0),
+-	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
+-	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
+-	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0x2e),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0x42c),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0x11),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0x118),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0x4117),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0x2e),
+ 	{}
  };
  
- static const struct key_entry acer_wmi_keymap[] __initconst = {
-@@ -2067,6 +2068,9 @@ static void acer_wmi_notify(u32 value, void *context)
- 		if (return_value.key_num == 0x4)
- 			acer_toggle_turbo();
- 		break;
-+	case WMID_AC_EVENT:
-+		/* We ignore AC events here */
-+		break;
- 	default:
- 		pr_warn("Unknown function number - %d - %d\n",
- 			return_value.function, return_value.key_num);
--- 
-2.39.5
-
+ static void setup_pcid(void)
+ {
++	const struct x86_cpu_id *invlpg_miss_match;
++
+ 	if (!IS_ENABLED(CONFIG_X86_64))
+ 		return;
+ 
+ 	if (!boot_cpu_has(X86_FEATURE_PCID))
+ 		return;
+ 
+-	if (x86_match_cpu(invlpg_miss_ids)) {
++	invlpg_miss_match = x86_match_cpu(invlpg_miss_ids);
++
++	if (invlpg_miss_match &&
++	    boot_cpu_data.microcode < invlpg_miss_match->driver_data) {
+ 		pr_info("Incomplete global flushes, disabling PCID");
+ 		setup_clear_cpu_cap(X86_FEATURE_PCID);
+ 		return;
 
 
