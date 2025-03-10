@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29CE2F28;
-	Mon, 10 Mar 2025 17:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8BE21E087;
+	Mon, 10 Mar 2025 17:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627075; cv=none; b=Jevqdl5oFDRc5lMV8D80s0RYPaa0XZUvl7COyMEhYhPhuXW8ham4yrTGVzvGoJCbTmI0WS0bGXN+ZfdXFG3KMU0U4AJQ4RSd23FKozpRpVcT2/yfj0Bg0sVfnZkkdbJc/7Ogy3kbHj7Hs0pXi+yOdDw0MkA3mODSAzP2vXmCFp4=
+	t=1741627078; cv=none; b=Z2Ok4Yz6U8ibaXCrTPeireRRRlFVpE+g/p6znQ2LPUd/RaKzacqeMI/n2JnByynoo62QYIn0ZrzOHMx/IhD8uF5FQM3LnZAs+NOpJmfdj6kxDXCRye0JrCZM4h8IWDqBcQFzJRJfhPrynpTroNBbKuMQD5Ecjnd03Zmko8OH0TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627075; c=relaxed/simple;
-	bh=9av+5EhlNUGW5djx3BveweTsufEw+Mqxuki0XVFR//8=;
+	s=arc-20240116; t=1741627078; c=relaxed/simple;
+	bh=TC37pz90bmuSeR0zMVVd7H7h1N3M4gXRR4KerhxSHbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmnU7wENFObMIEYFGx0OvwebOdjkk1Rtf4SBC97dQ3/itu8Z9eWV1qPq/yXYGfp7fU4fua8fGtxPE+A20PQtGaW1lRVLSyspQFgwaZUrotXspAgGSnUpKmd7UWnadDQijc5/94k2OY/cVHL6Pc87zsy3eEhdcyG30IhpfYF5vjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lh9NLLiH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X99PssV+09sGNS2TgS+Pml7An2APSva2mGgPJhUJ9TyDoa0cWo0/6A09YFmimUDZy2G3hMIvrnPpfxuxO+yiSGE1g1s9PXjxTMkgwAPuqtZKnSFvdzlLc4vM+LjQ10SNiT41PaGo/ifd87IBYkYn5qGJ2zjPvA09HuE/GyKSgFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aP87s0/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lh9NLLiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6E2C4CEE5;
-	Mon, 10 Mar 2025 17:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aP87s0/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087D3C4CEE5;
+	Mon, 10 Mar 2025 17:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627075;
-	bh=9av+5EhlNUGW5djx3BveweTsufEw+Mqxuki0XVFR//8=;
+	s=korg; t=1741627078;
+	bh=TC37pz90bmuSeR0zMVVd7H7h1N3M4gXRR4KerhxSHbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lh9NLLiHmeBJwcG8PZdQ39zMHd0H/yDZv3h3G6ZQ8cQB8uNoQvVOUYFC2hYKeVBTH
-	 MsmRPjptfzEq8cszYAhxqRHUST7nFUirG1m47snIQ1FE3FLSIbAipBfsHNYACFItLL
-	 SYIZX3i3BhtllVjguKXeZRz8HF7aMtHA+zCgJf9U=
+	b=aP87s0/srwU6Vbu5JF+Enu+okiwzaLZTVeng54Oscg5vbA0tOjOvL2bKLoHOxVv8H
+	 UfMuARfOVbdTSOeneQsr9nkNg7SeX0LqEIDfrw0RIu4/QXcEpu6uYLC6BOYyAnv26+
+	 optguKpEG7CgKrhR1XxC8gtb/0R1y9vf9aSwAe+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Qiu-ji Chen <chenqiuji666@gmail.com>
-Subject: [PATCH 6.13 180/207] cdx: Fix possible UAF error in driver_override_show()
-Date: Mon, 10 Mar 2025 18:06:13 +0100
-Message-ID: <20250310170454.945161679@linuxfoundation.org>
+	Tomas Winkler <tomasw@gmail.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.13 181/207] mei: me: add panther lake P DID
+Date: Mon, 10 Mar 2025 18:06:14 +0100
+Message-ID: <20250310170454.983157769@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,56 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 91d44c1afc61a2fec37a9c7a3485368309391e0b upstream.
+commit a8e8ffcc3afce2ee5fb70162aeaef3f03573ee1e upstream.
 
-Fixed a possible UAF problem in driver_override_show() in drivers/cdx/cdx.c
+Add Panther Lake P device id.
 
-This function driver_override_show() is part of DEVICE_ATTR_RW, which
-includes both driver_override_show() and driver_override_store().
-These functions can be executed concurrently in sysfs.
-
-The driver_override_store() function uses driver_set_override() to
-update the driver_override value, and driver_set_override() internally
-locks the device (device_lock(dev)). If driver_override_show() reads
-cdx_dev->driver_override without locking, it could potentially access
-a freed pointer if driver_override_store() frees the string
-concurrently. This could lead to printing a kernel address, which is a
-security risk since DEVICE_ATTR can be read by all users.
-
-Additionally, a similar pattern is used in drivers/amba/bus.c, as well
-as many other bus drivers, where device_lock() is taken in the show
-function, and it has been working without issues.
-
-This potential bug was detected by our experimental static analysis
-tool, which analyzes locking APIs and paired functions to identify
-data races and atomicity violations.
-
-Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Link: https://lore.kernel.org/r/20250118070833.27201-1-chenqiuji666@gmail.com
+Co-developed-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://lore.kernel.org/r/20250209110550.1582982-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdx/cdx.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/misc/mei/hw-me-regs.h |    2 ++
+ drivers/misc/mei/pci-me.c     |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/cdx/cdx.c
-+++ b/drivers/cdx/cdx.c
-@@ -470,8 +470,12 @@ static ssize_t driver_override_show(stru
- 				    struct device_attribute *attr, char *buf)
- {
- 	struct cdx_device *cdx_dev = to_cdx_device(dev);
-+	ssize_t len;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -117,6 +117,8 @@
  
--	return sysfs_emit(buf, "%s\n", cdx_dev->driver_override);
-+	device_lock(dev);
-+	len = sysfs_emit(buf, "%s\n", cdx_dev->driver_override);
-+	device_unlock(dev);
-+	return len;
- }
- static DEVICE_ATTR_RW(driver_override);
+ #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
  
++#define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
++
+ /*
+  * MEI HW Section
+  */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -124,6 +124,8 @@ static const struct pci_device_id mei_me
+ 
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
+ 
++	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
++
+ 	/* required last entry */
+ 	{0, }
+ };
 
 
