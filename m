@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9675A2236E4;
-	Mon, 10 Mar 2025 18:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BD11C57B2;
+	Mon, 10 Mar 2025 18:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630856; cv=none; b=SHvmQtO9dKg++9uYA0uO1hSWl4thIAqGvxwKRF8iifHMtwmakl1hfSLOKFz58bd9rI4dMheyqmBXIiROy5HUR8m557GoI2X+iSkfrORDj3spszlerdXtWvehloOKN+wrQoz+8SJ7swnL3oyI7EYkrPWe89aQSnHRt/ZbSXsL+vk=
+	t=1741630859; cv=none; b=hcESLAjmQeARnV/zZj3YRN9HaqF4DD8l39Kjf4fCQ/JUf/KF072uDmaQZPxLoSVhHHV38uL8cq9JX+npJ9erE9vUTEC/N5QLth97dpZpI7LkJ+hAnq+VzTxal+xmsQYz0U/UZSsg9NbTUDZ015r/FAkPeRENE9UCqGNqRhrRWFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630856; c=relaxed/simple;
-	bh=8O5bmcoSnHw54jmpj5V2OaiXud1EJ0IAEqTLQAYsbzg=;
+	s=arc-20240116; t=1741630859; c=relaxed/simple;
+	bh=fRBqh0P5+v5EPnPJv0o09RvivcpBbf87DsmQstL+Uwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NozDXoz1Qe9mFYyLTwLBTirxoDgfiUxvBpuaY6Y44K6S4uezBR/ITjQVRrqfzxy3QWKojiY1RhQCesKZCAYoTk6GnrVcwBK92E7fXhas+tPmKCUn404kLElIgWjTB5SzmbIiFRpCuHMwET8sGvRhNNp8Enw6xCj3y6nEVw3s110=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9pEzle9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nsJGUeLq3zZ2mMIaO78ug5/9TIy2eOT0G8zxYnmjMcxsGZpWXPeQ/20vaTAAZSlUVxx8J4XGhR1MUwvmL3cSeiG62wOXPOLjyXrPfmmPxvj4HIULYCK/fjx7iCFhOzK/FOoW3TPHK3UgCbl8bW0howOnIpDPPLUT4g8PnzjGXJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFIIP07i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9pEzle9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4F2C4CEE5;
-	Mon, 10 Mar 2025 18:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFIIP07i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A169C4CEE5;
+	Mon, 10 Mar 2025 18:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630856;
-	bh=8O5bmcoSnHw54jmpj5V2OaiXud1EJ0IAEqTLQAYsbzg=;
+	s=korg; t=1741630859;
+	bh=fRBqh0P5+v5EPnPJv0o09RvivcpBbf87DsmQstL+Uwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9pEzle950RBLRYAfhnJJwHxYXQu3c1k+1xTyQg4EeTIqhMFgcofVb9R+YWbpVaR4
-	 KNOTGeIyjabvvQs+0T0bD4QPtI8KLUBedduUrVFVu3V1pK8FCANTzN/OxHKFNRIDbW
-	 32TMOOS881WNYWyDsyPMQ3bXVuWplGcCnk450QJE=
+	b=SFIIP07if7ysY3eZqlNN607hZL0m/Arr+7eO+DNtv86IuK2gEAMAukIcLuHH69RgM
+	 cdHVHwWFTuw2TIbEVaNTi99Kf8JFj2LRgCpbgAneeyB4Ar7JPBRr5HBO9Hyh3x0URn
+	 CFGKuDiT4jEyncUaNT9QZr/VVH9RhNPGhjPgRqpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Fab Stz <fabstz-it@yahoo.fr>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 527/620] sched/core: Prevent rescheduling when interrupts are disabled
-Date: Mon, 10 Mar 2025 18:06:13 +0100
-Message-ID: <20250310170606.348919968@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 528/620] intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly
+Date: Mon, 10 Mar 2025 18:06:14 +0100
+Message-ID: <20250310170606.388698626@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -55,83 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
+commit c157d351460bcf202970e97e611cb6b54a3dd4a4 upstream.
 
-David reported a warning observed while loop testing kexec jump:
+The Intel idle driver is preferred over the ACPI processor idle driver,
+but fails to implement the work around for Core2 generation CPUs, where
+the TSC stops in C2 and deeper C-states. This causes stalls and boot
+delays, when the clocksource watchdog does not catch the unstable TSC
+before the CPU goes deep idle for the first time.
 
-  Interrupts enabled after irqrouter_resume+0x0/0x50
-  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
-   kernel_kexec+0xf6/0x180
-   __do_sys_reboot+0x206/0x250
-   do_syscall_64+0x95/0x180
+The ACPI driver marks the TSC unstable when it detects that the CPU
+supports C2 or deeper and the CPU does not have a non-stop TSC.
 
-The corresponding interrupt flag trace:
+Add the equivivalent work around to the Intel idle driver to cure that.
 
-  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
-  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
-
-That means __up_console_sem() was invoked with interrupts enabled. Further
-instrumentation revealed that in the interrupt disabled section of kexec
-jump one of the syscore_suspend() callbacks woke up a task, which set the
-NEED_RESCHED flag. A later callback in the resume path invoked
-cond_resched() which in turn led to the invocation of the scheduler:
-
-  __cond_resched+0x21/0x60
-  down_timeout+0x18/0x60
-  acpi_os_wait_semaphore+0x4c/0x80
-  acpi_ut_acquire_mutex+0x3d/0x100
-  acpi_ns_get_node+0x27/0x60
-  acpi_ns_evaluate+0x1cb/0x2d0
-  acpi_rs_set_srs_method_data+0x156/0x190
-  acpi_pci_link_set+0x11c/0x290
-  irqrouter_resume+0x54/0x60
-  syscore_resume+0x6a/0x200
-  kernel_kexec+0x145/0x1c0
-  __do_sys_reboot+0xeb/0x240
-  do_syscall_64+0x95/0x180
-
-This is a long standing problem, which probably got more visible with
-the recent printk changes. Something does a task wakeup and the
-scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
-invokes schedule() from a completely bogus context. The scheduler
-enables interrupts after context switching, which causes the above
-warning at the end.
-
-Quite some of the code paths in syscore_suspend()/resume() can result in
-triggering a wakeup with the exactly same consequences. They might not
-have done so yet, but as they share a lot of code with normal operations
-it's just a question of time.
-
-The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
-models. Full preemption is not affected as cond_resched() is disabled and
-the preemption check preemptible() takes the interrupt disabled flag into
-account.
-
-Cure the problem by adding a corresponding check into cond_resched().
-
-Reported-by: David Woodhouse <dwmw@amazon.co.uk>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Fixes: 18734958e9bf ("intel_idle: Use ACPI _CST for processor models without C-state tables")
+Reported-by: Fab Stz <fabstz-it@yahoo.fr>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
+Tested-by: Fab Stz <fabstz-it@yahoo.fr>
+Cc: All applicable <stable@vger.kernel.org>
+Closes: https://lore.kernel.org/all/10cf96aa-1276-4bd4-8966-c890377030c3@yahoo.fr
+Link: https://patch.msgid.link/87bjupfy7f.ffs@tglx
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/idle/intel_idle.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8247,7 +8247,7 @@ SYSCALL_DEFINE0(sched_yield)
- #if !defined(CONFIG_PREEMPTION) || defined(CONFIG_PREEMPT_DYNAMIC)
- int __sched __cond_resched(void)
- {
--	if (should_resched(0)) {
-+	if (should_resched(0) && !irqs_disabled()) {
- 		preempt_schedule_common();
- 		return 1;
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -56,6 +56,7 @@
+ #include <asm/nospec-branch.h>
+ #include <asm/mwait.h>
+ #include <asm/msr.h>
++#include <asm/tsc.h>
+ 
+ #define INTEL_IDLE_VERSION "0.5.1"
+ 
+@@ -1335,6 +1336,9 @@ static void __init intel_idle_init_cstat
+ 		if (intel_idle_state_needs_timer_stop(state))
+ 			state->flags |= CPUIDLE_FLAG_TIMER_STOP;
+ 
++		if (cx->type > ACPI_STATE_C1 && !boot_cpu_has(X86_FEATURE_NONSTOP_TSC))
++			mark_tsc_unstable("TSC halts in idle");
++
+ 		state->enter = intel_idle;
+ 		state->enter_s2idle = intel_idle_s2idle;
  	}
 
 
