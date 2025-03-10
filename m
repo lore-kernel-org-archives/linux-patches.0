@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7E322AE7C;
-	Mon, 10 Mar 2025 17:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4116F22AE7C;
+	Mon, 10 Mar 2025 17:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629443; cv=none; b=RJV2MrxtP5Y8p80eRml7u9UkXO06WNLIAP1XnoEXx4ZAg2UALvx7y5NcFEd+cGHd6gvjZxyyarV4GS4s7TdMNztLT51klnYzKgYwhhpY10kKibdb5Ybs5+OrS9vUiaoKaKvwjzAokaDqw1633XMHXoKbZJGpmZnEv6cqsJJuBqc=
+	t=1741629447; cv=none; b=FOwkppTJZn/7gFyyLXBmdcBZRBX29jEhCtYfVCkdn1yqOyAhscH3HQxnsB6JtrPgJDdlN46BgSrZN7qCs80zUB/Mgt+kPgF0MESmSr4R/vYIz1/3pmgaYc0P/sO3ObICOzZd4nHWBe5r1CI1m5vgZJrCkMCIt4TI4c1DYVvVaw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629443; c=relaxed/simple;
-	bh=tzeKlwnviBYCSBVK4rysVjNL2OeZvtiJ6tIFmQ5HAe0=;
+	s=arc-20240116; t=1741629447; c=relaxed/simple;
+	bh=0hEu6EMs3mB4TSPHZnFNSJUOUEfjIyAaCl9XPR/A5lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7ExRA7sgib+wSFahBF+7OENZkkbCy7mvP7K0gp36/5E4ZA2FjFh8NfR4Z/9qQW29wsppKjU7Fh3CByWloxyTTFnZUlH2Oh4uFBo9nwYyZHpQNglFZHx3mgwL2wmRozP8+NIVnflr8jMYVUlkskFd303+RPdReIiESyMzD+Wawc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdxfDJEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lYOeVAmqtgD6EWarUYYqzA8lrIT8gBcKiim0PxZVCqAcHr7bpbTSCxsj24BjcXP7QoiCJoc/OwjiwldTXx7lRi+3OhU1+9brfSiXlodciCg8ENM7KakFLi5p90CYvzQVjNu12Hn7eRyNDKHiZVzqk0LIVzHehDTc6dIKPjv3Qjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smtn9/Fl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdxfDJEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F64C4CEE5;
-	Mon, 10 Mar 2025 17:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smtn9/Fl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395A8C4CEE5;
+	Mon, 10 Mar 2025 17:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629443;
-	bh=tzeKlwnviBYCSBVK4rysVjNL2OeZvtiJ6tIFmQ5HAe0=;
+	s=korg; t=1741629446;
+	bh=0hEu6EMs3mB4TSPHZnFNSJUOUEfjIyAaCl9XPR/A5lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdxfDJEd+d3UbucIDo2u+eG4cGhHyLQ6f/dqpOAQkLAvDOWYMEqT6JrSW8+njhTJm
-	 TG8xtF0O5CP96sGwCzbaEWg3fSeFpNFPfBagt2S2TOWxFgH99l0smqdXsRlt5Aw7nV
-	 A23Ja7JgkCYyZpbA5orVd1F3fAc7fv6OW6sEBTeA=
+	b=smtn9/FlQTO1e5e0R6bM0Lg10BM52vAt36uFXOz58aBT+R4uMWTMINl1ClW2gyhe0
+	 ESzCXqb2kV38VgODhYByTGpmN983dCXzjD1QflqpUe3J81UesuXlvyujTne73wKLQq
+	 WpgMqsfg2JUqsETh29rxyLZJYzheGBEsQGgebBoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	stable@kernel.org,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Long Li <longli@microsoft.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 297/620] scsi: qla2xxx: Move FCE Trace buffer allocation to user control
-Date: Mon, 10 Mar 2025 18:02:23 +0100
-Message-ID: <20250310170557.346837103@linuxfoundation.org>
+Subject: [PATCH 5.15 298/620] scsi: storvsc: Set correct data length for sending SCSI command without payload
+Date: Mon, 10 Mar 2025 18:02:24 +0100
+Message-ID: <20250310170557.386366442@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,297 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Long Li <longli@microsoft.com>
 
-commit 841df27d619ee1f5ca6473e15227b39d6136562d upstream.
+commit 87c4b5e8a6b65189abd9ea5010ab308941f964a4 upstream.
 
-Currently FCE Tracing is enabled to log additional ELS events. Instead,
-user will enable or disable this feature through debugfs.
+In StorVSC, payload->range.len is used to indicate if this SCSI command
+carries payload. This data is allocated as part of the private driver data
+by the upper layer and may get passed to lower driver uninitialized.
 
-Modify existing DFS knob to allow user to enable or disable this
-feature.
+For example, the SCSI error handling mid layer may send TEST_UNIT_READY or
+REQUEST_SENSE while reusing the buffer from a failed command. The private
+data section may have stale data from the previous command.
 
-echo [1 | 0] > /sys/kernel/debug/qla2xxx/qla2xxx_??/fce
-cat  /sys/kernel/debug/qla2xxx/qla2xxx_??/fce
+If the SCSI command doesn't carry payload, the driver may use this value as
+is for communicating with host, resulting in possible corruption.
 
-Cc: stable@vger.kernel.org
-Fixes: df613b96077c ("[SCSI] qla2xxx: Add Fibre Channel Event (FCE) tracing support.")
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-4-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Fix this by always initializing this value.
+
+Fixes: be0cf6ca301c ("scsi: storvsc: Set the tablesize based on the information given by the host")
+Cc: stable@kernel.org
+Tested-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/1737601642-7759-1-git-send-email-longli@linuxonhyperv.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |    2 
- drivers/scsi/qla2xxx/qla_dfs.c  |  124 ++++++++++++++++++++++++++++++++--------
- drivers/scsi/qla2xxx/qla_gbl.h  |    3 
- drivers/scsi/qla2xxx/qla_init.c |   28 ++++++---
- 4 files changed, 126 insertions(+), 31 deletions(-)
+ drivers/scsi/storvsc_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -4029,6 +4029,8 @@ struct qla_hw_data {
- 		uint32_t	npiv_supported		:1;
- 		uint32_t	pci_channel_io_perm_failure	:1;
- 		uint32_t	fce_enabled		:1;
-+		uint32_t	user_enabled_fce	:1;
-+		uint32_t	fce_dump_buf_alloced	:1;
- 		uint32_t	fac_supported		:1;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1854,6 +1854,7 @@ static int storvsc_queuecommand(struct S
  
- 		uint32_t	chip_reset_done		:1;
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -409,27 +409,32 @@ qla2x00_dfs_fce_show(struct seq_file *s,
+ 	length = scsi_bufflen(scmnd);
+ 	payload = (struct vmbus_packet_mpb_array *)&cmd_request->mpb;
++	payload->range.len = 0;
+ 	payload_sz = 0;
  
- 	mutex_lock(&ha->fce_mutex);
- 
--	seq_puts(s, "FCE Trace Buffer\n");
--	seq_printf(s, "In Pointer = %llx\n\n", (unsigned long long)ha->fce_wr);
--	seq_printf(s, "Base = %llx\n\n", (unsigned long long) ha->fce_dma);
--	seq_puts(s, "FCE Enable Registers\n");
--	seq_printf(s, "%08x %08x %08x %08x %08x %08x\n",
--	    ha->fce_mb[0], ha->fce_mb[2], ha->fce_mb[3], ha->fce_mb[4],
--	    ha->fce_mb[5], ha->fce_mb[6]);
--
--	fce = (uint32_t *) ha->fce;
--	fce_start = (unsigned long long) ha->fce_dma;
--	for (cnt = 0; cnt < fce_calc_size(ha->fce_bufs) / 4; cnt++) {
--		if (cnt % 8 == 0)
--			seq_printf(s, "\n%llx: ",
--			    (unsigned long long)((cnt * 4) + fce_start));
--		else
--			seq_putc(s, ' ');
--		seq_printf(s, "%08x", *fce++);
-+	if (ha->flags.user_enabled_fce) {
-+		seq_puts(s, "FCE Trace Buffer\n");
-+		seq_printf(s, "In Pointer = %llx\n\n", (unsigned long long)ha->fce_wr);
-+		seq_printf(s, "Base = %llx\n\n", (unsigned long long)ha->fce_dma);
-+		seq_puts(s, "FCE Enable Registers\n");
-+		seq_printf(s, "%08x %08x %08x %08x %08x %08x\n",
-+			   ha->fce_mb[0], ha->fce_mb[2], ha->fce_mb[3], ha->fce_mb[4],
-+			   ha->fce_mb[5], ha->fce_mb[6]);
-+
-+		fce = (uint32_t *)ha->fce;
-+		fce_start = (unsigned long long)ha->fce_dma;
-+		for (cnt = 0; cnt < fce_calc_size(ha->fce_bufs) / 4; cnt++) {
-+			if (cnt % 8 == 0)
-+				seq_printf(s, "\n%llx: ",
-+					   (unsigned long long)((cnt * 4) + fce_start));
-+			else
-+				seq_putc(s, ' ');
-+			seq_printf(s, "%08x", *fce++);
-+		}
-+
-+		seq_puts(s, "\nEnd\n");
-+	} else {
-+		seq_puts(s, "FCE Trace is currently not enabled\n");
-+		seq_puts(s, "\techo [ 1 | 0 ] > fce\n");
- 	}
- 
--	seq_puts(s, "\nEnd\n");
--
- 	mutex_unlock(&ha->fce_mutex);
- 
- 	return 0;
-@@ -467,7 +472,7 @@ qla2x00_dfs_fce_release(struct inode *in
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval;
- 
--	if (ha->flags.fce_enabled)
-+	if (ha->flags.fce_enabled || !ha->fce)
- 		goto out;
- 
- 	mutex_lock(&ha->fce_mutex);
-@@ -488,11 +493,88 @@ out:
- 	return single_release(inode, file);
- }
- 
-+static ssize_t
-+qla2x00_dfs_fce_write(struct file *file, const char __user *buffer,
-+		      size_t count, loff_t *pos)
-+{
-+	struct seq_file *s = file->private_data;
-+	struct scsi_qla_host *vha = s->private;
-+	struct qla_hw_data *ha = vha->hw;
-+	char *buf;
-+	int rc = 0;
-+	unsigned long enable;
-+
-+	if (!IS_QLA25XX(ha) && !IS_QLA81XX(ha) && !IS_QLA83XX(ha) &&
-+	    !IS_QLA27XX(ha) && !IS_QLA28XX(ha)) {
-+		ql_dbg(ql_dbg_user, vha, 0xd034,
-+		       "this adapter does not support FCE.");
-+		return -EINVAL;
-+	}
-+
-+	buf = memdup_user_nul(buffer, count);
-+	if (IS_ERR(buf)) {
-+		ql_dbg(ql_dbg_user, vha, 0xd037,
-+		    "fail to copy user buffer.");
-+		return PTR_ERR(buf);
-+	}
-+
-+	enable = kstrtoul(buf, 0, 0);
-+	rc = count;
-+
-+	mutex_lock(&ha->fce_mutex);
-+
-+	if (enable) {
-+		if (ha->flags.user_enabled_fce) {
-+			mutex_unlock(&ha->fce_mutex);
-+			goto out_free;
-+		}
-+		ha->flags.user_enabled_fce = 1;
-+		if (!ha->fce) {
-+			rc = qla2x00_alloc_fce_trace(vha);
-+			if (rc) {
-+				ha->flags.user_enabled_fce = 0;
-+				mutex_unlock(&ha->fce_mutex);
-+				goto out_free;
-+			}
-+
-+			/* adjust fw dump buffer to take into account of this feature */
-+			if (!ha->flags.fce_dump_buf_alloced)
-+				qla2x00_alloc_fw_dump(vha);
-+		}
-+
-+		if (!ha->flags.fce_enabled)
-+			qla_enable_fce_trace(vha);
-+
-+		ql_dbg(ql_dbg_user, vha, 0xd045, "User enabled FCE .\n");
-+	} else {
-+		if (!ha->flags.user_enabled_fce) {
-+			mutex_unlock(&ha->fce_mutex);
-+			goto out_free;
-+		}
-+		ha->flags.user_enabled_fce = 0;
-+		if (ha->flags.fce_enabled) {
-+			qla2x00_disable_fce_trace(vha, NULL, NULL);
-+			ha->flags.fce_enabled = 0;
-+		}
-+
-+		qla2x00_free_fce_trace(ha);
-+		/* no need to re-adjust fw dump buffer */
-+
-+		ql_dbg(ql_dbg_user, vha, 0xd04f, "User disabled FCE .\n");
-+	}
-+
-+	mutex_unlock(&ha->fce_mutex);
-+out_free:
-+	kfree(buf);
-+	return rc;
-+}
-+
- static const struct file_operations dfs_fce_ops = {
- 	.open		= qla2x00_dfs_fce_open,
- 	.read		= seq_read,
- 	.llseek		= seq_lseek,
- 	.release	= qla2x00_dfs_fce_release,
-+	.write		= qla2x00_dfs_fce_write,
- };
- 
- static int
-@@ -578,8 +660,6 @@ qla2x00_dfs_setup(scsi_qla_host_t *vha)
- 	if (!IS_QLA25XX(ha) && !IS_QLA81XX(ha) && !IS_QLA83XX(ha) &&
- 	    !IS_QLA27XX(ha) && !IS_QLA28XX(ha))
- 		goto out;
--	if (!ha->fce)
--		goto out;
- 
- 	if (qla2x00_dfs_root)
- 		goto create_dir;
---- a/drivers/scsi/qla2xxx/qla_gbl.h
-+++ b/drivers/scsi/qla2xxx/qla_gbl.h
-@@ -11,6 +11,9 @@
- /*
-  * Global Function Prototypes in qla_init.c source file.
-  */
-+int  qla2x00_alloc_fce_trace(scsi_qla_host_t *);
-+void qla2x00_free_fce_trace(struct qla_hw_data *ha);
-+void qla_enable_fce_trace(scsi_qla_host_t *);
- extern int qla2x00_initialize_adapter(scsi_qla_host_t *);
- extern int qla24xx_post_prli_work(struct scsi_qla_host *vha, fc_port_t *fcport);
- 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2683,7 +2683,7 @@ exit:
- 	return rval;
- }
- 
--static void qla_enable_fce_trace(scsi_qla_host_t *vha)
-+void qla_enable_fce_trace(scsi_qla_host_t *vha)
- {
- 	int rval;
- 	struct qla_hw_data *ha = vha->hw;
-@@ -3719,25 +3719,24 @@ qla24xx_chip_diag(scsi_qla_host_t *vha)
- 	return rval;
- }
- 
--static void
--qla2x00_alloc_fce_trace(scsi_qla_host_t *vha)
-+int qla2x00_alloc_fce_trace(scsi_qla_host_t *vha)
- {
- 	dma_addr_t tc_dma;
- 	void *tc;
- 	struct qla_hw_data *ha = vha->hw;
- 
- 	if (!IS_FWI2_CAPABLE(ha))
--		return;
-+		return -EINVAL;
- 
- 	if (!IS_QLA25XX(ha) && !IS_QLA81XX(ha) && !IS_QLA83XX(ha) &&
- 	    !IS_QLA27XX(ha) && !IS_QLA28XX(ha))
--		return;
-+		return -EINVAL;
- 
- 	if (ha->fce) {
- 		ql_dbg(ql_dbg_init, vha, 0x00bd,
- 		       "%s: FCE Mem is already allocated.\n",
- 		       __func__);
--		return;
-+		return -EIO;
- 	}
- 
- 	/* Allocate memory for Fibre Channel Event Buffer. */
-@@ -3747,7 +3746,7 @@ qla2x00_alloc_fce_trace(scsi_qla_host_t
- 		ql_log(ql_log_warn, vha, 0x00be,
- 		       "Unable to allocate (%d KB) for FCE.\n",
- 		       FCE_SIZE / 1024);
--		return;
-+		return -ENOMEM;
- 	}
- 
- 	ql_dbg(ql_dbg_init, vha, 0x00c0,
-@@ -3756,6 +3755,16 @@ qla2x00_alloc_fce_trace(scsi_qla_host_t
- 	ha->fce_dma = tc_dma;
- 	ha->fce = tc;
- 	ha->fce_bufs = FCE_NUM_BUFFERS;
-+	return 0;
-+}
-+
-+void qla2x00_free_fce_trace(struct qla_hw_data *ha)
-+{
-+	if (!ha->fce)
-+		return;
-+	dma_free_coherent(&ha->pdev->dev, FCE_SIZE, ha->fce, ha->fce_dma);
-+	ha->fce = NULL;
-+	ha->fce_dma = 0;
- }
- 
- static void
-@@ -3846,9 +3855,10 @@ qla2x00_alloc_fw_dump(scsi_qla_host_t *v
- 		if (ha->tgt.atio_ring)
- 			mq_size += ha->tgt.atio_q_length * sizeof(request_t);
- 
--		qla2x00_alloc_fce_trace(vha);
--		if (ha->fce)
-+		if (ha->fce) {
- 			fce_size = sizeof(struct qla2xxx_fce_chain) + FCE_SIZE;
-+			ha->flags.fce_dump_buf_alloced = 1;
-+		}
- 		qla2x00_alloc_eft_trace(vha);
- 		if (ha->eft)
- 			eft_size = EFT_SIZE;
+ 	if (sg_count) {
 
 
