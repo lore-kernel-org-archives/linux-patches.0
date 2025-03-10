@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE411BBBFD;
-	Mon, 10 Mar 2025 18:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ADE1CAA6C;
+	Mon, 10 Mar 2025 18:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630755; cv=none; b=jGuJc+EqDYueGHv8DPty17KwuykFU1EYeo5DaMjR7+6wEcjS+MVQQTZaX5scgitBhhmlqlVX55p5IqNwLF605v2Q1NONZoUkWFD/2cI1SyORmGosh8QrRAENy8Iz1s3JU7wLfyOENUT5TnTPDouPQbMQGSVuJbxLTjW/aZRHnXI=
+	t=1741630758; cv=none; b=Q84vXCl4ppDeUd17j17BxL/OTQA4q1QvQ34klxG8JfQ/RbBSUMXzBpt9vSlXhfQ8BBFRlemsyqFEo0MUL1Fi/f7GFdOVSsGdpvXN81kVKUGZ/k8y2dxMFJuqm+s0H/fQ5rkXaprfL/jYVBZqxIzitfeHvQJcul3HcawIPVHlFeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630755; c=relaxed/simple;
-	bh=7hwlGyBUt2DNgHJIjO1UbUfqNDh7WjrsDe6CwBqnVnU=;
+	s=arc-20240116; t=1741630758; c=relaxed/simple;
+	bh=MhLHbD+ui/D8kcjuUof68BS64S76tMvdoSKYHqimyv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwX9+OOPRrFnipo+k2n5LCj0OUyEXltlQQW/r52oHRDVYUZZaGhfcB13ia/+H0eMtQ7ZV1nZkVUN4PrGO7eFpqMxLlKUvtfq//DmuQzaCbORARMqrZsdcNsMpdA9ojN3dUu99L3BWCoRLPZUrlZkaIwt2Ii8EPBlv3QYgNDS1NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt54MJDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nO17hywCosmOXkqW5I6Thf/kdeXDJNVkGSiXHl28jUAl2+Aue+uCFb/MwboEfiQh90CbOOjQTPkNHpHMe9hCrLenOhNeaBsxXmuDEVmVrPM2bc3V5lRqjvkaxngve2Sur8/XtYmBF/6OJBwbMWK4Yp5SucYWHCJHL+QWvufaYmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjTQYZ9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt54MJDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D42C4CEEC;
-	Mon, 10 Mar 2025 18:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjTQYZ9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C89EC4CEEC;
+	Mon, 10 Mar 2025 18:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630755;
-	bh=7hwlGyBUt2DNgHJIjO1UbUfqNDh7WjrsDe6CwBqnVnU=;
+	s=korg; t=1741630758;
+	bh=MhLHbD+ui/D8kcjuUof68BS64S76tMvdoSKYHqimyv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jt54MJDsp4bWdJEn0RoxPao6fN6HKeEGJ+JpusO2nQcs7DOXmvKpeRbq8n6HVgMvM
-	 I8EOBRG52qutzZH66ZPywrpOX8MWMUcz3qHnK500+N3As1J6oJ/Vw6kgGoqYuXAotk
-	 eRkO6r03i7FELzascOwl48KGNuewXV/Z4fA9AHvk=
+	b=PjTQYZ9dWzIDh/hOe72Es+TkNT8FfftDLp5cs5+A4DMv6Y9U5w4HYfY6YQjNX/l5O
+	 Gcp2LLcUlqW8Ad1HWDrYau7RFQaQXcKl2CDqndOLaqYrM0cXSCs0FRtxLDYraIhZsA
+	 8TZOxXeP9z8d4GMbPadyDPI/3v9irfrreHMCU4/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 491/620] scsi: core: Clear driver private data when retrying request
-Date: Mon, 10 Mar 2025 18:05:37 +0100
-Message-ID: <20250310170604.952192298@linuxfoundation.org>
+Subject: [PATCH 5.15 492/620] RDMA/mlx5: Fix bind QP error cleanup flow
+Date: Mon, 10 Mar 2025 18:05:38 +0100
+Message-ID: <20250310170604.991314001@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,66 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit dce5c4afd035e8090a26e5d776b1682c0e649683 ]
+[ Upstream commit e1a0bdbdfdf08428f0ede5ae49c7f4139ac73ef5 ]
 
-After commit 1bad6c4a57ef ("scsi: zero per-cmd private driver data for each
-MQ I/O"), the xen-scsifront/virtio_scsi/snic drivers all removed code that
-explicitly zeroed driver-private command data.
+When there is a failure during bind QP, the cleanup flow destroys the
+counter regardless if it is the one that created it or not, which is
+problematic since if it isn't the one that created it, that counter could
+still be in use.
 
-In combination with commit 464a00c9e0ad ("scsi: core: Kill DRIVER_SENSE"),
-after virtio_scsi performs a capacity expansion, the first request will
-return a unit attention to indicate that the capacity has changed. And then
-the original command is retried. As driver-private command data was not
-cleared, the request would return UA again and eventually time out and fail.
+Fix that by destroying the counter only if it was created during this call.
 
-Zero driver-private command data when a request is retried.
-
-Fixes: f7de50da1479 ("scsi: xen-scsifront: Remove code that zeroes driver-private command data")
-Fixes: c2bb87318baa ("scsi: virtio_scsi: Remove code that zeroes driver-private command data")
-Fixes: c3006a926468 ("scsi: snic: Remove code that zeroes driver-private command data")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250217021628.2929248-1-yebin@huaweicloud.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 45842fc627c7 ("IB/mlx5: Support statistic q counter configuration")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://patch.msgid.link/25dfefddb0ebefa668c32e06a94d84e3216257cf.1740033937.git.leon@kernel.org
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/mlx5/counters.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index ddaffaea2c32c..c8be41d8eb247 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1532,13 +1532,6 @@ static blk_status_t scsi_prepare_cmd(struct request *req)
- 	if (in_flight)
- 		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
+index 1a0ecf439c099..870a089198116 100644
+--- a/drivers/infiniband/hw/mlx5/counters.c
++++ b/drivers/infiniband/hw/mlx5/counters.c
+@@ -337,6 +337,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 				   struct ib_qp *qp)
+ {
+ 	struct mlx5_ib_dev *dev = to_mdev(qp->device);
++	bool new = false;
+ 	int err;
  
--	/*
--	 * Only clear the driver-private command data if the LLD does not supply
--	 * a function to initialize that data.
--	 */
--	if (!shost->hostt->init_cmd_priv)
--		memset(cmd + 1, 0, shost->hostt->cmd_size);
--
- 	cmd->prot_op = SCSI_PROT_NORMAL;
- 	if (blk_rq_bytes(req))
- 		cmd->sc_data_direction = rq_dma_dir(req);
-@@ -1675,6 +1668,13 @@ static blk_status_t scsi_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	if (!scsi_host_queue_ready(q, shost, sdev, cmd))
- 		goto out_dec_target_busy;
+ 	if (!counter->id) {
+@@ -351,6 +352,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 			return err;
+ 		counter->id =
+ 			MLX5_GET(alloc_q_counter_out, out, counter_set_id);
++		new = true;
+ 	}
  
-+	/*
-+	 * Only clear the driver-private command data if the LLD does not supply
-+	 * a function to initialize that data.
-+	 */
-+	if (shost->hostt->cmd_size && !shost->hostt->init_cmd_priv)
-+		memset(cmd + 1, 0, shost->hostt->cmd_size);
-+
- 	if (!(req->rq_flags & RQF_DONTPREP)) {
- 		ret = scsi_prepare_cmd(req);
- 		if (ret != BLK_STS_OK)
+ 	err = mlx5_ib_qp_set_counter(qp, counter);
+@@ -360,8 +362,10 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 	return 0;
+ 
+ fail_set_counter:
+-	mlx5_ib_counter_dealloc(counter);
+-	counter->id = 0;
++	if (new) {
++		mlx5_ib_counter_dealloc(counter);
++		counter->id = 0;
++	}
+ 
+ 	return err;
+ }
 -- 
 2.39.5
 
