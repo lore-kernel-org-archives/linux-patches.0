@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1B52253FE;
-	Mon, 10 Mar 2025 17:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378C0226D0B;
+	Mon, 10 Mar 2025 17:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627990; cv=none; b=g4EsR0liG9uEwLKiMseabI9oGy0uRMYgw+smOqiSak8+GyU/5OpUojJtWsLx1awTymMk/ga1lmfo6g+jMZHtdefRsFEj+ONS39UoVtGMa9bD1jadqbpt9Gg4Es1HFE3qV9qoz+q7k5BvYfySc6qiPW9wXq39zlfataI7NT0sil0=
+	t=1741627993; cv=none; b=QM2cvwZU8n5aQLuVhbGq5zzo2SFMfksAihn2Tc9a6qIAMLZqDpkonv2BFqP4Gsz8aAL3hPoTO62Zq1uRY51Zt6Oa1XLe9MpoL06IAG+CgvILybPZ1DUr4PG20NG306ddhno5GjfmiKlAvFHzzljaKcYG8CPB1krMeSJB6FGPjoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627990; c=relaxed/simple;
-	bh=8UlrNCeaUn9p1Gq3HlCPwsWkuGKk3JCf7Y8sLIghCD8=;
+	s=arc-20240116; t=1741627993; c=relaxed/simple;
+	bh=H3I87v817XbdveCkHR3zSbsCdaiY9bvkUZfd5dgL/6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rp7BeO4Us9Aglq9rWGJxoBnLi0xvUqQ3jorWhpgSH6OWWbkGlQ97BcRqn631qkZzi88Vp1HrnS/MvizoLxeO1fK1bb/JVIe5xTr+4+prqkU1BzFPDY3alC/niiQqp/vcqS5RXMOmLv27HnMpHrXoFy+elYR/QntHC9UX4hsb078=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFDFxICa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHay+LRFh07rDsAnnHy7S4EQAO/4erGNfhW8ffnlYZFRmWADA4NG62eZfTlAUrEiT8wBzd+1GZEz6KQ7N/eUbVIRLGZl/jJ0tGrwkrZzCIZbG+cRevSkPML5lshYb1hiLP8a7gDrK8Y2tnshxpFviF6qvqrwtLW3f3w6BYtQync=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LViC+nfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFDFxICa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F2AC4CEE5;
-	Mon, 10 Mar 2025 17:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LViC+nfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5E8C4CEE5;
+	Mon, 10 Mar 2025 17:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627990;
-	bh=8UlrNCeaUn9p1Gq3HlCPwsWkuGKk3JCf7Y8sLIghCD8=;
+	s=korg; t=1741627993;
+	bh=H3I87v817XbdveCkHR3zSbsCdaiY9bvkUZfd5dgL/6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFDFxICapDOF34TOxDEZDqYEaFMnNKQBFd4WU6hqDA2EIxnsAWEqeQujCvq4sgI9A
-	 YGoP7yE7PyH7PE5lnJTlReaLwSEM5uIGoo7XAbMwqwU0SmJxumjYoA0q3Yx8q5xEeU
-	 5SOn/Wa9O6Knd5R/4n5wCw7aa4InOMXy3xI9HiAE=
+	b=LViC+nfowhZWj6W+x0fwSHEy4d/dsrkxOkCryzVCsw91G4YlZPOS/90D10dhcfcb2
+	 b2uebNHdSf9IBgcs03rjnC8rASA9G6xf2GElCgR3dZdgdMxOZsh3edcPH4pksEJ07V
+	 2FZGBtdUn0tmzFAQFle5ttp+nIQHeRYQ5/EiP5BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e10709ac3c44f3d4e800@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com,
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 049/145] wifi: cfg80211: regulatory: improve invalid hints checking
-Date: Mon, 10 Mar 2025 18:05:43 +0100
-Message-ID: <20250310170436.717404793@linuxfoundation.org>
+Subject: [PATCH 6.6 050/145] wifi: nl80211: reject cooked mode if it is set along with other flags
+Date: Mon, 10 Mar 2025 18:05:44 +0100
+Message-ID: <20250310170436.756936674@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -46,94 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-commit 59b348be7597c4a9903cb003c69e37df20c04a30 upstream.
+commit 49f27f29446a5bfe633dd2cc0cfebd48a1a5e77f upstream.
 
-Syzbot keeps reporting an issue [1] that occurs when erroneous symbols
-sent from userspace get through into user_alpha2[] via
-regulatory_hint_user() call. Such invalid regulatory hints should be
-rejected.
+It is possible to set both MONITOR_FLAG_COOK_FRAMES and MONITOR_FLAG_ACTIVE
+flags simultaneously on the same monitor interface from the userspace. This
+causes a sub-interface to be created with no IEEE80211_SDATA_IN_DRIVER bit
+set because the monitor interface is in the cooked state and it takes
+precedence over all other states. When the interface is then being deleted
+the kernel calls WARN_ONCE() from check_sdata_in_driver() because of missing
+that bit.
 
-While a sanity check from commit 47caf685a685 ("cfg80211: regulatory:
-reject invalid hints") looks to be enough to deter these very cases,
-there is a way to get around it due to 2 reasons.
+Fix this by rejecting MONITOR_FLAG_COOK_FRAMES if it is set along with
+other flags.
 
-1) The way isalpha() works, symbols other than latin lower and
-upper letters may be used to determine a country/domain.
-For instance, greek letters will also be considered upper/lower
-letters and for such characters isalpha() will return true as well.
-However, ISO-3166-1 alpha2 codes should only hold latin
-characters.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-2) While processing a user regulatory request, between
-reg_process_hint_user() and regulatory_hint_user() there happens to
-be a call to queue_regulatory_request() which modifies letters in
-request->alpha2[] with toupper(). This works fine for latin symbols,
-less so for weird letter characters from the second part of _ctype[].
-
-Syzbot triggers a warning in is_user_regdom_saved() by first sending
-over an unexpected non-latin letter that gets malformed by toupper()
-into a character that ends up failing isalpha() check.
-
-Prevent this by enhancing is_an_alpha2() to ensure that incoming
-symbols are latin letters and nothing else.
-
-[1] Syzbot report:
-------------[ cut here ]------------
-Unexpected user alpha2: A�
-WARNING: CPU: 1 PID: 964 at net/wireless/reg.c:442 is_user_regdom_saved net/wireless/reg.c:440 [inline]
-WARNING: CPU: 1 PID: 964 at net/wireless/reg.c:442 restore_alpha2 net/wireless/reg.c:3424 [inline]
-WARNING: CPU: 1 PID: 964 at net/wireless/reg.c:442 restore_regulatory_settings+0x3c0/0x1e50 net/wireless/reg.c:3516
-Modules linked in:
-CPU: 1 UID: 0 PID: 964 Comm: kworker/1:2 Not tainted 6.12.0-rc5-syzkaller-00044-gc1e939a21eb1 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Workqueue: events_power_efficient crda_timeout_work
-RIP: 0010:is_user_regdom_saved net/wireless/reg.c:440 [inline]
-RIP: 0010:restore_alpha2 net/wireless/reg.c:3424 [inline]
-RIP: 0010:restore_regulatory_settings+0x3c0/0x1e50 net/wireless/reg.c:3516
-...
-Call Trace:
- <TASK>
- crda_timeout_work+0x27/0x50 net/wireless/reg.c:542
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xa65/0x1850 kernel/workqueue.c:3310
- worker_thread+0x870/0xd30 kernel/workqueue.c:3391
- kthread+0x2f2/0x390 kernel/kthread.c:389
- ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-
-Reported-by: syzbot+e10709ac3c44f3d4e800@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e10709ac3c44f3d4e800
-Fixes: 09d989d179d0 ("cfg80211: add regulatory hint disconnect support")
-Cc: stable@kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250228134659.1577656-1-n.zhandarovich@fintech.ru
+Fixes: 66f7ac50ed7c ("nl80211: Add monitor interface configuration flags")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2e5c1e55b9e5c28a3da7
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Link: https://patch.msgid.link/20250131152657.5606-1-v.shevtsov@mt-integration.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/reg.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/wireless/nl80211.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -405,7 +405,8 @@ static bool is_an_alpha2(const char *alp
- {
- 	if (!alpha2)
- 		return false;
--	return isalpha(alpha2[0]) && isalpha(alpha2[1]);
-+	return isascii(alpha2[0]) && isalpha(alpha2[0]) &&
-+	       isascii(alpha2[1]) && isalpha(alpha2[1]);
- }
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -4102,6 +4102,11 @@ static int parse_monitor_flags(struct nl
+ 		if (flags[flag])
+ 			*mntrflags |= (1<<flag);
  
- static bool alpha2_equal(const char *alpha2_x, const char *alpha2_y)
++	/* cooked monitor mode is incompatible with other modes */
++	if (*mntrflags & MONITOR_FLAG_COOK_FRAMES &&
++	    *mntrflags != MONITOR_FLAG_COOK_FRAMES)
++		return -EOPNOTSUPP;
++
+ 	*mntrflags |= MONITOR_FLAG_CHANGED;
+ 
+ 	return 0;
 
 
