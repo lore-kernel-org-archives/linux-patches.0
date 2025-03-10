@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ED6374EA;
-	Mon, 10 Mar 2025 18:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EC4374EA;
+	Mon, 10 Mar 2025 18:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630804; cv=none; b=Tvjox60Z1DFjuyG0ND8RKPV3BojHoyAxTWjuYF1lHncf8Hz32UVHLv1N0zZr+9qtlVHlq58ODhoUZlN/HP2lToDBjhAfyyM0j7QTx47If0rTsMrg2TfeaGUcx0GZrp/dLmpfogrngjre9PoALOq6nGX0aTvQcbAhPCSzFyaNW6g=
+	t=1741630807; cv=none; b=EJFJF/Jh2ZGVAf2Z4EKeOD1NyjwvCvRd6esZTwPUNMHjpMderg/0tBPcDg8rjuPJYUIceX3OVf1xH1i8Jht9vSOTpJBxy3ZkNg4cj+XJ7NMXZaTQnM2DYcr8Wom3Xcu8Iyy4XfCLxoReqCKRXglRP0U0q2R6h1M8r1d/CMEQqh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630804; c=relaxed/simple;
-	bh=qTFfKgFYWw95zlOBJIw0UH/HBixA3t9QVZSb6XOSyvg=;
+	s=arc-20240116; t=1741630807; c=relaxed/simple;
+	bh=OrsXLUx0lqvxRm5M4fS0+TKdcP6Lzua0SfVfhnV4o0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fpr/POYrO2NaVtW14caVHp+Z/UokjLgavGqxvMu8wgFxbBzD2PAsuoNYUzdoRiGiShjox+vijWTNx0jkBTijiNtpCinSOk1vG8QbszK2lOFC/Ja7vJyjPuJkI4hSXDgM3ppgqw+Kuia+Bqj9gRlsdpKCqvDgv9xte/KnG76xMc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ry0DEinP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YsUk82aL2U8XDfQMDXzuhr1k+1JJJsjDJeIdiHpySKkHXvlX9BClnJss5CCX0Yuhpo1S95WI45TRjWgnh1o3ZMsjwGaqXL9DZjn9Q1jylTeVvUJOkT7oznFiIMTnd/QFSzBN+vzfoiW0gwEAKqU+bsUMcDEQgZcbJPrprbCrAe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr+Gxumk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry0DEinP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D73C4CEE5;
-	Mon, 10 Mar 2025 18:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr+Gxumk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6ACC4CEE5;
+	Mon, 10 Mar 2025 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630804;
-	bh=qTFfKgFYWw95zlOBJIw0UH/HBixA3t9QVZSb6XOSyvg=;
+	s=korg; t=1741630807;
+	bh=OrsXLUx0lqvxRm5M4fS0+TKdcP6Lzua0SfVfhnV4o0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry0DEinPSFMCce7ZF8Ny1m12bChaU5sT9fHriNqvF5GyjDnRu11WAs3abW229eng+
-	 R2JAoiNzektZTlxTLfVd1Gp8rUkWWZGBVqQ57F9iCxaqCLDWBzM99J7lEIiPpPas8/
-	 OpG1+9QvPapsloWD34eWqqhNvTpiT2iRMijv9fxg=
+	b=cr+GxumkbRMTfzNCfd8ZLG9Dl0ggOiHm0NnuPAG7zK5mmNdvDUaStdTw4j7VrLvgr
+	 1aoItPOHnRTqalvKwnrroUloqhj59myRCty3z/kBtpr7/SWltO1FiK+fjw07Llz4Q6
+	 aNu69PokrX/D3xu1t3+uOibx6z5zL6FGXIaBGw3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BH Hsieh <bhsieh@nvidia.com>,
-	Henry Lin <henryl@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 523/620] phy: tegra: xusb: reset VBUS & ID OVERRIDE
-Date: Mon, 10 Mar 2025 18:06:09 +0100
-Message-ID: <20250310170606.195998226@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 541/620] x86/cacheinfo: Validate CPUID leaf 0x2 EDX output
+Date: Mon, 10 Mar 2025 18:06:27 +0100
+Message-ID: <20250310170606.903193127@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,69 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: BH Hsieh <bhsieh@nvidia.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit 55f1a5f7c97c3c92ba469e16991a09274410ceb7 upstream.
+commit 8177c6bedb7013cf736137da586cf783922309dd upstream.
 
-Observed VBUS_OVERRIDE & ID_OVERRIDE might be programmed
-with unexpected value prior to XUSB PADCTL driver, this
-could also occur in virtualization scenario.
+CPUID leaf 0x2 emits one-byte descriptors in its four output registers
+EAX, EBX, ECX, and EDX.  For these descriptors to be valid, the most
+significant bit (MSB) of each register must be clear.
 
-For example, UEFI firmware programs ID_OVERRIDE=GROUNDED to set
-a type-c port to host mode and keeps the value to kernel.
-If the type-c port is connected a usb host, below errors can be
-observed right after usb host mode driver gets probed. The errors
-would keep until usb role class driver detects the type-c port
-as device mode and notifies usb device mode driver to set both
-ID_OVERRIDE and VBUS_OVERRIDE to correct value by XUSB PADCTL
-driver.
+The historical Git commit:
 
-[  173.765814] usb usb3-port2: Cannot enable. Maybe the USB cable is bad?
-[  173.765837] usb usb3-port2: config error
+  019361a20f016 ("- pre6: Intel: start to add Pentium IV specific stuff (128-byte cacheline etc)...")
 
-Taking virtualization into account, asserting XUSB PADCTL
-reset would break XUSB functions used by other guest OS,
-hence only reset VBUS & ID OVERRIDE of the port in
-utmi_phy_init.
+introduced leaf 0x2 output parsing.  It only validated the MSBs of EAX,
+EBX, and ECX, but left EDX unchecked.
 
-Fixes: bbf711682cd5 ("phy: tegra: xusb: Add Tegra186 support")
+Validate EDX's most-significant bit.
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Change-Id: Ic63058d4d49b4a1f8f9ab313196e20ad131cc591
-Signed-off-by: BH Hsieh <bhsieh@nvidia.com>
-Signed-off-by: Henry Lin <henryl@nvidia.com>
-Link: https://lore.kernel.org/r/20250122105943.8057-1-henryl@nvidia.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250304085152.51092-2-darwi@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb-tegra186.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/x86/kernel/cpu/cacheinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/phy/tegra/xusb-tegra186.c
-+++ b/drivers/phy/tegra/xusb-tegra186.c
-@@ -897,6 +897,7 @@ static int tegra186_utmi_phy_exit(struct
- 	unsigned int index = lane->index;
- 	struct device *dev = padctl->dev;
- 	int err;
-+	u32 reg;
+--- a/arch/x86/kernel/cpu/cacheinfo.c
++++ b/arch/x86/kernel/cpu/cacheinfo.c
+@@ -795,7 +795,7 @@ void init_intel_cacheinfo(struct cpuinfo
+ 			cpuid(2, &regs[0], &regs[1], &regs[2], &regs[3]);
  
- 	port = tegra_xusb_find_usb2_port(padctl, index);
- 	if (!port) {
-@@ -904,6 +905,16 @@ static int tegra186_utmi_phy_exit(struct
- 		return -ENODEV;
- 	}
+ 			/* If bit 31 is set, this is an unknown format */
+-			for (j = 0 ; j < 3 ; j++)
++			for (j = 0 ; j < 4 ; j++)
+ 				if (regs[j] & (1 << 31))
+ 					regs[j] = 0;
  
-+	if (port->mode == USB_DR_MODE_OTG ||
-+	    port->mode == USB_DR_MODE_PERIPHERAL) {
-+		/* reset VBUS&ID OVERRIDE */
-+		reg = padctl_readl(padctl, USB2_VBUS_ID);
-+		reg &= ~VBUS_OVERRIDE;
-+		reg &= ~ID_OVERRIDE(~0);
-+		reg |= ID_OVERRIDE_FLOATING;
-+		padctl_writel(padctl, reg, USB2_VBUS_ID);
-+	}
-+
- 	if (port->supply && port->mode == USB_DR_MODE_HOST) {
- 		err = regulator_disable(port->supply);
- 		if (err) {
 
 
