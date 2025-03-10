@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BBE2F28;
-	Mon, 10 Mar 2025 18:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CBA2F28;
+	Mon, 10 Mar 2025 18:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630690; cv=none; b=XcZrRC/t+mjQsf3OiVinykTB/evm7mUPj4MBnf9BjCi3O43iQjoNhaTxaTtuA0yajrCCzV0stONl2/Y7URdGEmbw3BVasUfkOOxMibT1wGEsSMzG+WKwmGX+KZCc2L4KYS9WUR/GikFUsCm12OGoBaq4o1laCgOy8rFrHOibi9w=
+	t=1741630693; cv=none; b=dR1PyusjRdaTOEEaWeNt9OGnrMg5yLTdZAMkEDm1mA62M0zvMUjzbr7d+f1CIPcbEjlfORxcEphyyyoTzW6AuKYk4uChrZJMswl3692XkXV8x+xPVL7dH6XKIxpIpaNgNfFzYCUhd1+bGtxYs2YQrLHPbShivWTdCFwo0hICUMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630690; c=relaxed/simple;
-	bh=Crs7ZcqhSsPKeczGLIwCeZy7lECXL+4u+lzzp4YivOk=;
+	s=arc-20240116; t=1741630693; c=relaxed/simple;
+	bh=TZTeoR7P6XiFAvMuIdBwZxaGt50jW0eX+nKc+sr3Sjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvUrNWoJ0vq1QT+Xw3aSzKrxib7KPN+cmmj6RykCyd/v6s5n1aIi9YY5rvhr5wuEfYplJr6cHCEhvLctFQdGCiVoijVRBO/qDbaCY+UDUHpgirexrCt9WymRLbDaYFhpvLfv80v8hbistt/d0w8VT3jTUVqOeyk4ja8tDtKLulI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJC+7c1A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYOlgAt4M/U4+NFSrFyBQCUZqKNU6IazANEfDy/RGq8GCvBKdCD7PMeYSh0ihi7GnMETEITPPJhl2gn+zoip8YqzPG+ZqQ+XEl1Z6uEizK829rgcJ7foO10ATtfnAvwXFQ6d0YRT7WNRC08oGgjmZBLM1xmoJGvH8q7ucfBafXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7BuB3Kh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJC+7c1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A9CC4CEE5;
-	Mon, 10 Mar 2025 18:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7BuB3Kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ECAC4CEE5;
+	Mon, 10 Mar 2025 18:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630690;
-	bh=Crs7ZcqhSsPKeczGLIwCeZy7lECXL+4u+lzzp4YivOk=;
+	s=korg; t=1741630693;
+	bh=TZTeoR7P6XiFAvMuIdBwZxaGt50jW0eX+nKc+sr3Sjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJC+7c1Ariogo9QgAV7m4ovi9ICnXucK6+lkoAypXnNrJvxyT83xRDC+0UtlCe6dx
-	 GLxit4pFYXPG2U/8ELwiO1awg1Ea6OCFgkT6zTAKNtkjDs7gUnI+T4zTmHdpUkolzb
-	 caVGKh8z5aPOH02Fs+E7dEsAsLQDNC5DyKc/N7Cg=
+	b=L7BuB3KhYdG+8wE2P9unu+J1mVabue2/kiL+Hmj12pcoDyv31KGdB4DyoxgSWQHuV
+	 HqrI5TTxeL4olBAO4/pxrZglzNEtI1WKDfrCrNCw3AVZz7WJst59FEngB2hS2CJgm1
+	 CpWsLBnd15w7GhqjRY+NwGb5u3DMGn6aAeuckI44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 502/620] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
-Date: Mon, 10 Mar 2025 18:05:48 +0100
-Message-ID: <20250310170605.381071413@linuxfoundation.org>
+Subject: [PATCH 5.15 503/620] tcp: Defer ts_recent changes until req is owned
+Date: Mon, 10 Mar 2025 18:05:49 +0100
+Message-ID: <20250310170605.418854964@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,49 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philo Lu <lulie@linux.alibaba.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
+[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
 
-We found an issue when using bpf_redirect with ipvs NAT mode after
-commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
-the same name space"). Particularly, we use bpf_redirect to return
-the skb directly back to the netif it comes from, i.e., xnet is
-false in skb_scrub_packet(), and then ipvs_property is preserved
-and SNAT is skipped in the rx path.
+Recently a bug was discovered where the server had entered TCP_ESTABLISHED
+state, but the upper layers were not notified.
 
-ipvs_property has been already cleared when netns is changed in
-commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
-SKB net namespace changed"). This patch just clears it in spite of
-netns.
+The same 5-tuple packet may be processed by different CPUSs, so two
+CPUs may receive different ack packets at the same time when the
+state is TCP_NEW_SYN_RECV.
 
-Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In that case, req->ts_recent in tcp_check_req may be changed concurrently,
+which will probably cause the newsk's ts_recent to be incorrectly large.
+So that tcp_validate_incoming will fail. At this point, newsk will not be
+able to enter the TCP_ESTABLISHED.
+
+cpu1                                    cpu2
+tcp_check_req
+                                        tcp_check_req
+ req->ts_recent = rcv_tsval = t1
+                                         req->ts_recent = rcv_tsval = t2
+
+ syn_recv_sock
+  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
+tcp_child_process
+ tcp_rcv_state_process
+  tcp_validate_incoming
+   tcp_paws_check
+    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
+        // t2 - t1 > paws_win, failed
+                                        tcp_v4_do_rcv
+                                         tcp_rcv_state_process
+                                         // TCP_ESTABLISHED
+
+The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
+the newsk into the TCP_ESTABLISHED state, but at this point it is no
+longer possible to notify the upper layer application. A notification
+mechanism could be added here, but the fix is more complex, so the
+current fix is used.
+
+In tcp_check_req, req->ts_recent is used to assign a value to
+tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
+and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
+req fixes this bug.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_minisocks.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 17073429cc365..d4c821d97b545 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5558,11 +5558,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
- 	skb->offload_fwd_mark = 0;
- 	skb->offload_l3_fwd_mark = 0;
- #endif
-+	ipvs_reset(skb);
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index d84b71f70766b..061225d645e6b 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -725,12 +725,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
  
- 	if (!xnet)
- 		return;
+ 	/* In sequence, PAWS is OK. */
  
--	ipvs_reset(skb);
- 	skb->mark = 0;
- 	skb->tstamp = 0;
- }
+-	/* TODO: We probably should defer ts_recent change once
+-	 * we take ownership of @req.
+-	 */
+-	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
+-		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
+-
+ 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
+ 		/* Truncate SYN, it is out of window starting
+ 		   at tcp_rsk(req)->rcv_isn + 1. */
+@@ -779,6 +773,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	if (!child)
+ 		goto listen_overflow;
+ 
++	if (own_req && tmp_opt.saw_tstamp &&
++	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
++		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
++
+ 	if (own_req && rsk_drop_req(req)) {
+ 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
+ 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
 -- 
 2.39.5
 
