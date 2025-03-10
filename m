@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E388022AE7C;
-	Mon, 10 Mar 2025 17:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFC817CA12;
+	Mon, 10 Mar 2025 17:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629190; cv=none; b=FhqZeex8MjQcREjcFJey+UeUKCeNWZqDMPe2KLU5UFvET4DNRjiMCEp64/PQjDjr4jib26DZTLda0vT09sPPhW8m3LW4bTW0+M7bkj3VARReAW5zA/1PnYXKzD12wS7R2BLwLqJRHl3l6R6T/Ct84RyEULqcpURXRIfNB0H2P7I=
+	t=1741629192; cv=none; b=DekfVQs48FWaL3iWLZKTnM6y+X8BSYKgkTKJtp3buMltAmY9Nfk1OTFoUke8HHLvKe2Bv5l076inr7Ud9FoKCJTaJ/BsMPtaT6mpIzfo4I6f2lj31qF2D5ZCFiLt32Ie3ASZKopXfUGJwtx49HTdLT//ycvr3lcCT3x2GQSRSN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629190; c=relaxed/simple;
-	bh=PJ3svGZhiD4QI2Lu0aXLw0iIUJlvLddWWFfwR63hprg=;
+	s=arc-20240116; t=1741629192; c=relaxed/simple;
+	bh=CJlvlBV1JpmqbjhGuM2+YK0rq6Vcx4W9RIwZG1wigNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faIZtFTWIK8+wqNzBgZNTsFLG/i6pH8i5+5pKRFjwMs0sOzC0wYY5efY40EfqkH8o2thcDisyKaVPwsZqPwq8KHUxGNOqzrb+iDYKx4vMOASl7Hrb8bx8oB2HKoDscDm85HjFsiSElGsf3oZzua9LstBIDYvPo1klQQVkA73/nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4DWQHM5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CXhpQc2/lRN0tLhPq2tWgQV/LeVwK1jAyhhkrrYjMfIcMlyVVxnnJY1MlihtWIvGzX3msAA9pztisbffCFZQDjax72XwiQjENUP2eeQVRSoFPYOAtC1XKLRhdfwTvK1u3rKaMxZaoF0uOkJUji2zHBiqjt0QKL45jCD/LROY2sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrzbNNG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4DWQHM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A4FC4CEE5;
-	Mon, 10 Mar 2025 17:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrzbNNG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53293C4CEE5;
+	Mon, 10 Mar 2025 17:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629189;
-	bh=PJ3svGZhiD4QI2Lu0aXLw0iIUJlvLddWWFfwR63hprg=;
+	s=korg; t=1741629192;
+	bh=CJlvlBV1JpmqbjhGuM2+YK0rq6Vcx4W9RIwZG1wigNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4DWQHM56sJQHvB1gHLpsoXKd6yDPfCRqiGyOubQIg/b7QQafNBS53eo1JGUe2Gqd
-	 i7X5vm9QpJqkSQG0lV6RaPq4hy81ivtxWJC5kvQH0KamoSfj6AVho5jcJ45dni46C/
-	 Q8gFllV5gwjHWmgHlt8/p0erezfFNG1JiZtneHXk=
+	b=xrzbNNG1pdVvEKSWd6CH0OpFWAca8oWKkRUU+8EhTyFzRVPL6pIozU01HRNYzJF8w
+	 Pa0Q3tKRVF+5SRcgYPkHdLjIB5iqLJL9GlHZRhG+B1IcrJROaq5QyutPfdbLh4aStb
+	 4uH0r6gnQUdkRc5i0QSz+wXC2zAazD05pLeKLjyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com,
+	Leo Stone <leocstone@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/620] kconfig: deduplicate code in conf_read_simple()
-Date: Mon, 10 Mar 2025 18:00:27 +0100
-Message-ID: <20250310170552.766879495@linuxfoundation.org>
+Subject: [PATCH 5.15 208/620] safesetid: check size of policy writes
+Date: Mon, 10 Mar 2025 18:00:54 +0100
+Message-ID: <20250310170553.837098289@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,157 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Leo Stone <leocstone@gmail.com>
 
-[ Upstream commit d854b4b21de684a16a7d6163c7b0e9c5ff8a09d3 ]
+[ Upstream commit f09ff307c7299392f1c88f763299e24bc99811c7 ]
 
-Kconfig accepts both "# CONFIG_FOO is not set" and "CONFIG_FOO=n" as
-a valid input, but conf_read_simple() duplicates similar code to handle
-them. Factor out the common code.
+syzbot attempts to write a buffer with a large size to a sysfs entry
+with writes handled by handle_policy_update(), triggering a warning
+in kmalloc.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: a409fc1463d6 ("kconfig: fix memory leak in sym_warn_unmet_dep()")
+Check the size specified for write buffers before allocating.
+
+Reported-by: syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4eb7a741b3216020043a
+Signed-off-by: Leo Stone <leocstone@gmail.com>
+[PM: subject tweak]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/confdata.c | 89 +++++++++++++++-----------------------
- 1 file changed, 35 insertions(+), 54 deletions(-)
+ security/safesetid/securityfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
-index 8349f6ecd9dc7..ef9deb1e22f8c 100644
---- a/scripts/kconfig/confdata.c
-+++ b/scripts/kconfig/confdata.c
-@@ -348,11 +348,10 @@ int conf_read_simple(const char *name, int def)
- 	FILE *in = NULL;
- 	char   *line = NULL;
- 	size_t  line_asize = 0;
--	char *p, *p2;
-+	char *p, *p2, *val;
- 	struct symbol *sym;
- 	int i, def_flags;
--	const char *warn_unknown;
--	const char *werror;
-+	const char *warn_unknown, *werror, *sym_name;
+diff --git a/security/safesetid/securityfs.c b/security/safesetid/securityfs.c
+index 25310468bcddf..8e1ffd70b18ab 100644
+--- a/security/safesetid/securityfs.c
++++ b/security/safesetid/securityfs.c
+@@ -143,6 +143,9 @@ static ssize_t handle_policy_update(struct file *file,
+ 	char *buf, *p, *end;
+ 	int err;
  
- 	warn_unknown = getenv("KCONFIG_WARN_UNKNOWN_SYMBOLS");
- 	werror = getenv("KCONFIG_WERROR");
-@@ -432,77 +431,34 @@ int conf_read_simple(const char *name, int def)
- 
- 	while (compat_getline(&line, &line_asize, in) != -1) {
- 		conf_lineno++;
--		sym = NULL;
- 		if (line[0] == '#') {
- 			if (line[1] != ' ')
- 				continue;
--			if (memcmp(line + 2, CONFIG_, strlen(CONFIG_)))
-+			p = line + 2;
-+			if (memcmp(p, CONFIG_, strlen(CONFIG_)))
- 				continue;
--			p = strchr(line + 2 + strlen(CONFIG_), ' ');
-+			sym_name = p + strlen(CONFIG_);
-+			p = strchr(sym_name, ' ');
- 			if (!p)
- 				continue;
- 			*p++ = 0;
- 			if (strncmp(p, "is not set", 10))
- 				continue;
- 
--			sym = sym_find(line + 2 + strlen(CONFIG_));
--			if (!sym) {
--				if (warn_unknown)
--					conf_warning("unknown symbol: %s",
--						     line + 2 + strlen(CONFIG_));
--
--				conf_set_changed(true);
--				continue;
--			}
--			if (sym->flags & def_flags) {
--				conf_warning("override: reassigning to symbol %s", sym->name);
--			}
--			switch (sym->type) {
--			case S_BOOLEAN:
--			case S_TRISTATE:
--				sym->def[def].tri = no;
--				sym->flags |= def_flags;
--				break;
--			default:
--				;
--			}
-+			val = "n";
- 		} else if (memcmp(line, CONFIG_, strlen(CONFIG_)) == 0) {
--			p = strchr(line + strlen(CONFIG_), '=');
-+			sym_name = line + strlen(CONFIG_);
-+			p = strchr(sym_name, '=');
- 			if (!p)
- 				continue;
- 			*p++ = 0;
-+			val = p;
- 			p2 = strchr(p, '\n');
- 			if (p2) {
- 				*p2-- = 0;
- 				if (*p2 == '\r')
- 					*p2 = 0;
- 			}
--
--			sym = sym_find(line + strlen(CONFIG_));
--			if (!sym) {
--				if (def == S_DEF_AUTO) {
--					/*
--					 * Reading from include/config/auto.conf
--					 * If CONFIG_FOO previously existed in
--					 * auto.conf but it is missing now,
--					 * include/config/FOO must be touched.
--					 */
--					conf_touch_dep(line + strlen(CONFIG_));
--				} else {
--					if (warn_unknown)
--						conf_warning("unknown symbol: %s",
--							     line + strlen(CONFIG_));
--
--					conf_set_changed(true);
--				}
--				continue;
--			}
--
--			if (sym->flags & def_flags) {
--				conf_warning("override: reassigning to symbol %s", sym->name);
--			}
--			if (conf_set_sym_val(sym, def, def_flags, p))
--				continue;
- 		} else {
- 			if (line[0] != '\r' && line[0] != '\n')
- 				conf_warning("unexpected data: %.*s",
-@@ -511,6 +467,31 @@ int conf_read_simple(const char *name, int def)
- 			continue;
- 		}
- 
-+		sym = sym_find(sym_name);
-+		if (!sym) {
-+			if (def == S_DEF_AUTO) {
-+				/*
-+				 * Reading from include/config/auto.conf.
-+				 * If CONFIG_FOO previously existed in auto.conf
-+				 * but it is missing now, include/config/FOO
-+				 * must be touched.
-+				 */
-+				conf_touch_dep(sym_name);
-+			} else {
-+				if (warn_unknown)
-+					conf_warning("unknown symbol: %s", sym_name);
++	if (len >= KMALLOC_MAX_SIZE)
++		return -EINVAL;
 +
-+				conf_set_changed(true);
-+			}
-+			continue;
-+		}
-+
-+		if (sym->flags & def_flags)
-+			conf_warning("override: reassigning to symbol %s", sym->name);
-+
-+		if (conf_set_sym_val(sym, def, def_flags, val))
-+			continue;
-+
- 		if (sym && sym_is_choice_value(sym)) {
- 			struct symbol *cs = prop_get_symbol(sym_get_choice_prop(sym));
- 			switch (sym->def[def].tri) {
+ 	pol = kmalloc(sizeof(struct setid_ruleset), GFP_KERNEL);
+ 	if (!pol)
+ 		return -ENOMEM;
 -- 
 2.39.5
 
