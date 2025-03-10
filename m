@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679DC18DB24;
-	Mon, 10 Mar 2025 17:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390AF18DB24;
+	Mon, 10 Mar 2025 17:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627058; cv=none; b=S9sTZlVkWuyVZ/HrcVUXoyC7/dCefakxRV5vdjhvuXif1BbbDuaZsgaTznwPp4KeBI8Inkg/MJ2m34pAbOrruWh+DqmcqfZe0H4vMwl7D2EIkdLW0Qs9texYk0V9VtW3UqzhIF1CwNn6DQeRDI+Wt9AUTts1zg3h82dUCL/Bb2k=
+	t=1741627061; cv=none; b=rPgfYF3GyvPhfL0+CV/rd2d46b+af05QOG6hz3ve3Ds0Bk8E7cU2+VDLgw8QUfaNwYlhJuEdwsKVImNDXF9jMU7O33l1rIdIMmpY8iGWx8khkUhMqQnXeWgRVOKGlB2Me54hIRlm7VBAKqUoCssvo7p2DlbLVXKoIkUCNnYkW08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627058; c=relaxed/simple;
-	bh=f0D5V+OAnA7noYzJ6Sq1r7StG7cClV+ZVtsJlpTkbF8=;
+	s=arc-20240116; t=1741627061; c=relaxed/simple;
+	bh=xTFO5HTdi2uJmS4u9W+dN5rGgLslRnUkUcs1PTxljc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXAWDHaqazUUDORjUofUupXgz3TK7NttDGXS50JFKNaAx7Cz16ivLZNkLEZFLS2AbtVE3iWlwidTQ6kvOBjmVVzQOip6g6XBLVVrl0etqKuRk8UzprCg4hkf6ANF2I40KtPAlOHk+dimcLojPAcwe1v5q+60kXO8vVK+u2DeQAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u90PgzkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cI6o66IiW3jVMwDhdUyPQkFT8L8UTu4nZ9E6xmGqGDs1E3JHrekbc4iQNKR8EAjRQSK7P9sWm90VgCjDx8mj1fotfdFKChfa39QXb/GHVcd/dbbVRs3JE8a0t1lTXyk0ZcG7CXVD2AzV24y+RMYPJ8PZb8LQ03hG6Pu8TFOKJ8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Upmfz1Qc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u90PgzkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62EBC4CEE5;
-	Mon, 10 Mar 2025 17:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Upmfz1Qc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63D7C4CEE5;
+	Mon, 10 Mar 2025 17:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627058;
-	bh=f0D5V+OAnA7noYzJ6Sq1r7StG7cClV+ZVtsJlpTkbF8=;
+	s=korg; t=1741627061;
+	bh=xTFO5HTdi2uJmS4u9W+dN5rGgLslRnUkUcs1PTxljc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u90PgzkZ3GRRTjC7vnVqcWcbruzSe+5C/Orx1nbNwHgYxIbUlVnW6o+cCnNNiHnYY
-	 EeWBNbD8544GGCyAXjr4Csqodn90yebN+Ws0HRM4cpLTVoC4RGfOnFm64LAILUZ4jq
-	 XPSqLUk1zywkJRQkjpbd4MF90tVKA2+eLpLNQ1xc=
+	b=Upmfz1QcNnvSwtDRghU4lpiX/ZK0AF4XSBK+iUn8WneEnjW6LKF9DqIFmQKnjG5Gx
+	 Si2FvKA/kxhAFZn2M3gV0wp7SJIJM8XVijVD0nvigJiTsJoKyEEnvGZfDsU5pOBP6O
+	 UPeQ5p7V1OZoYUhLmZmSx0xPiRHQ/EDYnOBQfKbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.13 205/207] fprobe: Fix accounting of when to unregister from function graph
-Date: Mon, 10 Mar 2025 18:06:38 +0100
-Message-ID: <20250310170455.926971053@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.13 206/207] ALSA: hda: realtek: fix incorrect IS_REACHABLE() usage
+Date: Mon, 10 Mar 2025 18:06:39 +0100
+Message-ID: <20250310170455.965311992@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -57,93 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit ca26554a1498bc905c4a39fb42d55d93f3ae8df2 upstream.
+commit d0bbe332669c5db32c8c92bc967f8e7f8d460ddf upstream.
 
-When adding a new fprobe, it will update the function hash to the
-functions the fprobe is attached to and register with function graph to
-have it call the registered functions. The fprobe_graph_active variable
-keeps track of the number of fprobes that are using function graph.
+The alternative path leads to a build error after a recent change:
 
-If two fprobes attach to the same function, it increments the
-fprobe_graph_active for each of them. But when they are removed, the first
-fprobe to be removed will see that the function it is attached to is also
-used by another fprobe and it will not remove that function from
-function_graph. The logic will skip decrementing the fprobe_graph_active
-variable.
+sound/pci/hda/patch_realtek.c: In function 'alc233_fixup_lenovo_low_en_micmute_led':
+include/linux/stddef.h:9:14: error: called object is not a function or function pointer
+    9 | #define NULL ((void *)0)
+      |              ^
+sound/pci/hda/patch_realtek.c:5041:49: note: in expansion of macro 'NULL'
+ 5041 | #define alc233_fixup_lenovo_line2_mic_hotkey    NULL
+      |                                                 ^~~~
+sound/pci/hda/patch_realtek.c:5063:9: note: in expansion of macro 'alc233_fixup_lenovo_line2_mic_hotkey'
+ 5063 |         alc233_fixup_lenovo_line2_mic_hotkey(codec, fix, action);
 
-This causes the fprobe_graph_active variable to not go to zero when all
-fprobes are removed, and in doing so it does not unregister from
-function graph. As the fgraph ops hash will now be empty, and an empty
-filter hash means all functions are enabled, this triggers function graph
-to add a callback to the fprobe infrastructure for every function!
+Using IS_REACHABLE() is somewhat questionable here anyway since it
+leads to the input code not working when the HDA driver is builtin
+but input is in a loadable module. Replace this with a hard compile-time
+dependency on CONFIG_INPUT. In practice this won't chance much
+other than solve the compiler error because it is rare to require
+sound output but no input support.
 
- # echo "f:myevent1 kernel_clone" >> /sys/kernel/tracing/dynamic_events
- # echo "f:myevent2 kernel_clone%return" >> /sys/kernel/tracing/dynamic_events
- # cat /sys/kernel/tracing/enabled_functions
-kernel_clone (1)           	tramp: 0xffffffffc0024000 (ftrace_graph_func+0x0/0x60) ->ftrace_graph_func+0x0/0x60
-
- # > /sys/kernel/tracing/dynamic_events
- # cat /sys/kernel/tracing/enabled_functions
-trace_initcall_start_cb (1)             tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-run_init_process (1)            tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-try_to_run_init_process (1)             tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-x86_pmu_show_pmu_cap (1)                tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-cleanup_rapl_pmus (1)                   tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-uncore_free_pcibus_map (1)              tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-uncore_types_exit (1)                   tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-uncore_pci_exit.part.0 (1)              tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-kvm_shutdown (1)                tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-vmx_dump_msrs (1)               tramp: 0xffffffffc0026000 (function_trace_call+0x0/0x170) ->function_trace_call+0x0/0x170
-[..]
-
- # cat /sys/kernel/tracing/enabled_functions | wc -l
-54702
-
-If a fprobe is being removed and all its functions are also traced by
-other fprobes, still decrement the fprobe_graph_active counter.
-
-Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Link: https://lore.kernel.org/20250220202055.565129766@goodmis.org
-Fixes: 4346ba1604093 ("fprobe: Rewrite fprobe on function-graph tracer")
-Closes: https://lore.kernel.org/all/20250217114918.10397-A-hca@linux.ibm.com/
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Tested-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: f603b159231b ("ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250304142620.582191-1-arnd@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/Kconfig         |    1 +
+ sound/pci/hda/patch_realtek.c |    5 -----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -378,7 +378,8 @@ static void fprobe_graph_remove_ips(unsi
- 	if (!fprobe_graph_active)
- 		unregister_ftrace_graph(&fprobe_graph_ops);
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -208,6 +208,7 @@ comment "Set to Y if you want auto-loadi
  
--	ftrace_set_filter_ips(&fprobe_graph_ops.ops, addrs, num, 1, 0);
-+	if (num)
-+		ftrace_set_filter_ips(&fprobe_graph_ops.ops, addrs, num, 1, 0);
+ config SND_HDA_CODEC_REALTEK
+ 	tristate "Build Realtek HD-audio codec support"
++	depends on INPUT
+ 	select SND_HDA_GENERIC
+ 	select SND_HDA_GENERIC_LEDS
+ 	select SND_HDA_SCODEC_COMPONENT
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -5002,7 +5002,6 @@ static void alc298_fixup_samsung_amp_v2_
+ 		alc298_samsung_v2_init_amps(codec, 4);
  }
  
- static int symbols_cmp(const void *a, const void *b)
-@@ -648,8 +649,7 @@ int unregister_fprobe(struct fprobe *fp)
+-#if IS_REACHABLE(CONFIG_INPUT)
+ static void gpio2_mic_hotkey_event(struct hda_codec *codec,
+ 				   struct hda_jack_callback *event)
+ {
+@@ -5111,10 +5110,6 @@ static void alc233_fixup_lenovo_line2_mi
+ 		spec->kb_dev = NULL;
  	}
- 	del_fprobe_hash(fp);
+ }
+-#else /* INPUT */
+-#define alc280_fixup_hp_gpio2_mic_hotkey	NULL
+-#define alc233_fixup_lenovo_line2_mic_hotkey	NULL
+-#endif /* INPUT */
  
--	if (count)
--		fprobe_graph_remove_ips(addrs, count);
-+	fprobe_graph_remove_ips(addrs, count);
- 
- 	kfree_rcu(hlist_array, rcu);
- 	fp->hlist_array = NULL;
+ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
 
 
