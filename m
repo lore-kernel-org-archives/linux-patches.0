@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E681C5F1B;
-	Mon, 10 Mar 2025 18:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0582343D4;
+	Mon, 10 Mar 2025 18:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630528; cv=none; b=HBdXOo5csH73AJ1cUiZxIza4D6/LjPbYitew8zHACX27tgUlV8DiPCETVLpcBE7vsKvEgkKFl1jYOlYAoxKJEWTuWtSwO8+4dWe6u1BgK10896YkfmtA3f/4C+VEelMmXbZ3sNc7Jfv4seA1nl905QJgZ5LAAYzIqSOD2YVcGHo=
+	t=1741630531; cv=none; b=WtewBnQuWvnhSqjfaRUXB7i05VfdTrg7Q6HhWz4Qm8jwBsyC4m2hKgX6HVkQlMc//Xv/PLtzCaaRAgNmU44Czerl0qVXqIe3tmnZ+v5MT4ZhF1t++MJyaIlULWdNVc1Wtgq78vc2F/gxSQs66uOvHZaaZUrX/3jb7I5A4x7xdbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630528; c=relaxed/simple;
-	bh=zaAwm2+1YKjgrNmpitARvizpzYjN1m/x/UW5LmMAuZ8=;
+	s=arc-20240116; t=1741630531; c=relaxed/simple;
+	bh=7F7BFDEqM7+n4C2vn+Kf5kd8gDJpkG/iQjpQ7g1vCeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5zrJqU9jAD3MjiA7lqTlI4vmtTNd0A455UKKGkLFYfOlINbQvPLBTnwLOUJHbzRtK/PX6CBCHorMyqARcqfbCHH1g/6njedDhjC1y7zp6pXUbRF8bLDBKjHSzcW/M9XTDe6BAvgRAvMbShCFnNup0eCpObkJMSl6mb26gyBhVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdFd8zAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jzLtVZLZaeowy5A52Cy8PdMeD6/iB/AQRpKIcTgXCC0QeSKrR1JArI8sam3v2fvnqe4mhg7kA6iyLOHAeadPGPQYKRW5kqEMtY+OnX64doNjKADBJ1ML0VRfRz6itvESu6UckuxF0GRNLlyheJgHPP8jrUX9ss7Yor/PUjrQxZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rOEViO/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdFd8zAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1897C4CEE5;
-	Mon, 10 Mar 2025 18:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rOEViO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE21C4CEE5;
+	Mon, 10 Mar 2025 18:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630528;
-	bh=zaAwm2+1YKjgrNmpitARvizpzYjN1m/x/UW5LmMAuZ8=;
+	s=korg; t=1741630531;
+	bh=7F7BFDEqM7+n4C2vn+Kf5kd8gDJpkG/iQjpQ7g1vCeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdFd8zAe+LcLRMJIAcNkPIuV05t1pr79H3Xjma2E4FTaiHDAz2nR2V9GnVIBhaU0Z
-	 LF7nxFxb0koTUNd8jIFFDxfz2Eg9t9E+bzZOZJdHGtryPPbl6c7b0mm1+4A62uYh0v
-	 CDsLdXKJuzG+SX4Pm4dWZeAwCZc+GSuEruDmI4KI=
+	b=1rOEViO/mGFy0tzIANznwyIOJLE9Yyp8VIGUlNbC4yQXtzjdfEn8l7suPrzI4ItE4
+	 nbvnXJ7pSEXYHojkIE2tsi7bVTymfHmdkaXzYtB6nRQvD4V3qIMekbnSReZOUD+cgh
+	 Win7QqniMyfmatm/GcQqKcVk6KUMXQU66CewYfzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Andy Liang <andy.liang@hpe.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 445/620] tpm: Change to kvalloc() in eventlog/acpi.c
-Date: Mon, 10 Mar 2025 18:04:51 +0100
-Message-ID: <20250310170603.159280746@linuxfoundation.org>
+Subject: [PATCH 5.15 446/620] kfence: allow use of a deferrable timer
+Date: Mon, 10 Mar 2025 18:04:52 +0100
+Message-ID: <20250310170603.200361226@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,87 +54,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit a3a860bc0fd6c07332e4911cf9a238d20de90173 ]
+[ Upstream commit 737b6a10ac19e41877aa1911bf6b361a72a88ad9 ]
 
-The following failure was reported on HPE ProLiant D320:
+Allow the use of a deferrable timer, which does not force CPU wake-ups
+when the system is idle.  A consequence is that the sample interval
+becomes very unpredictable, to the point that it is not guaranteed that
+the KFENCE KUnit test still passes.
 
-[   10.693310][    T1] tpm_tis STM0925:00: 2.0 TPM (device-id 0x3, rev-id 0)
-[   10.848132][    T1] ------------[ cut here ]------------
-[   10.853559][    T1] WARNING: CPU: 59 PID: 1 at mm/page_alloc.c:4727 __alloc_pages_noprof+0x2ca/0x330
-[   10.862827][    T1] Modules linked in:
-[   10.866671][    T1] CPU: 59 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-lp155.2.g52785e2-default #1 openSUSE Tumbleweed (unreleased) 588cd98293a7c9eba9013378d807364c088c9375
-[   10.882741][    T1] Hardware name: HPE ProLiant DL320 Gen12/ProLiant DL320 Gen12, BIOS 1.20 10/28/2024
-[   10.892170][    T1] RIP: 0010:__alloc_pages_noprof+0x2ca/0x330
-[   10.898103][    T1] Code: 24 08 e9 4a fe ff ff e8 34 36 fa ff e9 88 fe ff ff 83 fe 0a 0f 86 b3 fd ff ff 80 3d 01 e7 ce 01 00 75 09 c6 05 f8 e6 ce 01 01 <0f> 0b 45 31 ff e9 e5 fe ff ff f7 c2 00 00 08 00 75 42 89 d9 80 e1
-[   10.917750][    T1] RSP: 0000:ffffb7cf40077980 EFLAGS: 00010246
-[   10.923777][    T1] RAX: 0000000000000000 RBX: 0000000000040cc0 RCX: 0000000000000000
-[   10.931727][    T1] RDX: 0000000000000000 RSI: 000000000000000c RDI: 0000000000040cc0
+Nevertheless, on power-constrained systems this may be preferable, so
+let's give the user the option should they accept the above trade-off.
 
-The above transcript shows that ACPI pointed a 16 MiB buffer for the log
-events because RSI maps to the 'order' parameter of __alloc_pages_noprof().
-Address the bug by moving from devm_kmalloc() to devm_add_action() and
-kvmalloc() and devm_add_action().
-
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: stable@vger.kernel.org # v2.6.16+
-Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
-Reported-by: Andy Liang <andy.liang@hpe.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219495
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Tested-by: Andy Liang <andy.liang@hpe.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lkml.kernel.org/r/20220308141415.3168078-1-elver@google.com
+Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: e64f81946adf ("kfence: skip __GFP_THISNODE allocations on NUMA systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/acpi.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ Documentation/dev-tools/kfence.rst | 12 ++++++++++++
+ lib/Kconfig.kfence                 | 12 ++++++++++++
+ mm/kfence/core.c                   | 15 +++++++++++++--
+ 3 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
-index bd757d836c5cf..1a5644051d310 100644
---- a/drivers/char/tpm/eventlog/acpi.c
-+++ b/drivers/char/tpm/eventlog/acpi.c
-@@ -63,6 +63,11 @@ static bool tpm_is_tpm2_log(void *bios_event_log, u64 len)
- 	return n == 0;
- }
+diff --git a/Documentation/dev-tools/kfence.rst b/Documentation/dev-tools/kfence.rst
+index 48244d32780f6..b6671d907836a 100644
+--- a/Documentation/dev-tools/kfence.rst
++++ b/Documentation/dev-tools/kfence.rst
+@@ -41,6 +41,18 @@ guarded by KFENCE. The default is configurable via the Kconfig option
+ ``CONFIG_KFENCE_SAMPLE_INTERVAL``. Setting ``kfence.sample_interval=0``
+ disables KFENCE.
  
-+static void tpm_bios_log_free(void *data)
-+{
-+	kvfree(data);
-+}
++The sample interval controls a timer that sets up KFENCE allocations. By
++default, to keep the real sample interval predictable, the normal timer also
++causes CPU wake-ups when the system is completely idle. This may be undesirable
++on power-constrained systems. The boot parameter ``kfence.deferrable=1``
++instead switches to a "deferrable" timer which does not force CPU wake-ups on
++idle systems, at the risk of unpredictable sample intervals. The default is
++configurable via the Kconfig option ``CONFIG_KFENCE_DEFERRABLE``.
 +
- /* read binary bios log */
- int tpm_read_log_acpi(struct tpm_chip *chip)
++.. warning::
++   The KUnit test suite is very likely to fail when using a deferrable timer
++   since it currently causes very unpredictable sample intervals.
++
+ The KFENCE memory pool is of fixed size, and if the pool is exhausted, no
+ further KFENCE allocations occur. With ``CONFIG_KFENCE_NUM_OBJECTS`` (default
+ 255), the number of available guarded objects can be controlled. Each object
+diff --git a/lib/Kconfig.kfence b/lib/Kconfig.kfence
+index 912f252a41fc6..459dda9ef619b 100644
+--- a/lib/Kconfig.kfence
++++ b/lib/Kconfig.kfence
+@@ -45,6 +45,18 @@ config KFENCE_NUM_OBJECTS
+ 	  pages are required; with one containing the object and two adjacent
+ 	  ones used as guard pages.
+ 
++config KFENCE_DEFERRABLE
++	bool "Use a deferrable timer to trigger allocations"
++	help
++	  Use a deferrable timer to trigger allocations. This avoids forcing
++	  CPU wake-ups if the system is idle, at the risk of a less predictable
++	  sample interval.
++
++	  Warning: The KUnit test suite fails with this option enabled - due to
++	  the unpredictability of the sample interval!
++
++	  Say N if you are unsure.
++
+ config KFENCE_STATIC_KEYS
+ 	bool "Use static keys to set up allocations" if EXPERT
+ 	depends on JUMP_LABEL
+diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+index 3eab72fb3d8c9..1a2dc187a72f9 100644
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -89,6 +89,10 @@ module_param_cb(sample_interval, &sample_interval_param_ops, &kfence_sample_inte
+ static unsigned long kfence_skip_covered_thresh __read_mostly = 75;
+ module_param_named(skip_covered_thresh, kfence_skip_covered_thresh, ulong, 0644);
+ 
++/* If true, use a deferrable timer. */
++static bool kfence_deferrable __read_mostly = IS_ENABLED(CONFIG_KFENCE_DEFERRABLE);
++module_param_named(deferrable, kfence_deferrable, bool, 0444);
++
+ /* The pool of pages used for guard pages and objects. */
+ char *__kfence_pool __ro_after_init;
+ EXPORT_SYMBOL(__kfence_pool); /* Export for test modules. */
+@@ -695,6 +699,8 @@ late_initcall(kfence_debugfs_init);
+ 
+ /* === Allocation Gate Timer ================================================ */
+ 
++static struct delayed_work kfence_timer;
++
+ #ifdef CONFIG_KFENCE_STATIC_KEYS
+ /* Wait queue to wake up allocation-gate timer task. */
+ static DECLARE_WAIT_QUEUE_HEAD(allocation_wait);
+@@ -717,7 +723,6 @@ static DEFINE_IRQ_WORK(wake_up_kfence_timer_work, wake_up_kfence_timer);
+  * avoids IPIs, at the cost of not immediately capturing allocations if the
+  * instructions remain cached.
+  */
+-static struct delayed_work kfence_timer;
+ static void toggle_allocation_gate(struct work_struct *work)
  {
-@@ -136,7 +141,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
- 	}
- 
- 	/* malloc EventLog space */
--	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
-+	log->bios_event_log = kvmalloc(len, GFP_KERNEL);
- 	if (!log->bios_event_log)
- 		return -ENOMEM;
- 
-@@ -162,10 +167,16 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
- 		goto err;
- 	}
- 
-+	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
-+	if (ret) {
-+		log->bios_event_log = NULL;
-+		goto err;
-+	}
-+
- 	return format;
- 
- err:
--	devm_kfree(&chip->dev, log->bios_event_log);
-+	tpm_bios_log_free(log->bios_event_log);
- 	log->bios_event_log = NULL;
- 	return ret;
+ 	if (!READ_ONCE(kfence_enabled))
+@@ -745,7 +750,6 @@ static void toggle_allocation_gate(struct work_struct *work)
+ 	queue_delayed_work(system_unbound_wq, &kfence_timer,
+ 			   msecs_to_jiffies(kfence_sample_interval));
  }
+-static DECLARE_DELAYED_WORK(kfence_timer, toggle_allocation_gate);
+ 
+ /* === Public interface ===================================================== */
+ 
+@@ -774,8 +778,15 @@ void __init kfence_init(void)
+ 
+ 	if (!IS_ENABLED(CONFIG_KFENCE_STATIC_KEYS))
+ 		static_branch_enable(&kfence_allocation_key);
++
++	if (kfence_deferrable)
++		INIT_DEFERRABLE_WORK(&kfence_timer, toggle_allocation_gate);
++	else
++		INIT_DELAYED_WORK(&kfence_timer, toggle_allocation_gate);
++
+ 	WRITE_ONCE(kfence_enabled, true);
+ 	queue_delayed_work(system_unbound_wq, &kfence_timer, 0);
++
+ 	pr_info("initialized - using %lu bytes for %d objects at 0x%p-0x%p\n", KFENCE_POOL_SIZE,
+ 		CONFIG_KFENCE_NUM_OBJECTS, (void *)__kfence_pool,
+ 		(void *)(__kfence_pool + KFENCE_POOL_SIZE));
 -- 
 2.39.5
 
