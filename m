@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA4F2253FE;
-	Mon, 10 Mar 2025 17:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9921B81E;
+	Mon, 10 Mar 2025 17:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627813; cv=none; b=Sbt/I2YtVTkzalipEksiMdvztMEQl3JojZWPiL2Sf1ArtR+b96uDE7S4lCYic/VrAn25GK7ooeU5LpvDDc5qXA3VgOWH3mpQAxbwh8PX0hg4kGKGXdnfUvjUNYU02I/sN8zdEwuUi4JgseqwbHg4QSb2SLVFpE9suFF4Pd5adtc=
+	t=1741627815; cv=none; b=pzMJs1mHhlkkfurPorhYFDSiQZ8Je+eorsu9YPAx7lCD64Y043/ED5krFArtKsfTP1KbIj00BcVg+nQp6U2g55qH/RdEhAsHxdeo4DpJOC2DiUUywBi4//k4RlYYVYQFqyVIIUUbJUlsYG0cGHZacPfjTj5lflY37eCJXtbbsLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627813; c=relaxed/simple;
-	bh=zy6TLv4fCa0/HqRGiRmEJDCON+Bm3LxFmrX7Jcw0mJ8=;
+	s=arc-20240116; t=1741627815; c=relaxed/simple;
+	bh=8pxBmFDl0I4ADAUputZGrSAb0LU9wh2vbu99B1Ol48Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMeCbiZw+Bxz4JgdjcCxyyfgecCsifCu/8xyv85cF9cVV+uolfla6YHxRhzruFG+9o5NgOTHClR4ENP3IJs5qNsk4KW5WcXuKpvyGiUdD8cZQKbUMomRujRNMoIKrnE29ny6cUdm9VOXJTrWOZU1O5NuBMtYsFzsdi64MXs+/MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtilBSGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2QTsPIDeXClJEbLBbiaHlVSr4pg9PMVZEBZ1ob/roa3+hQb8NUZPG0JKEcaZ6ggOFtY/9wMds/KMKF5Y79CoP678CY0x2XY+Z3nnCO564apTCjvWV47mWfmGidh/p+Yu6HfF/4Hr576858nM/HY9vAuXoldG7+fksFwjqwqm9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hi7tOrNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtilBSGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CD3C4CEE5;
-	Mon, 10 Mar 2025 17:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hi7tOrNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200B3C4CEE5;
+	Mon, 10 Mar 2025 17:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627812;
-	bh=zy6TLv4fCa0/HqRGiRmEJDCON+Bm3LxFmrX7Jcw0mJ8=;
+	s=korg; t=1741627815;
+	bh=8pxBmFDl0I4ADAUputZGrSAb0LU9wh2vbu99B1Ol48Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jtilBSGAGHHC79XVUn6uGE35aEd1+pMZwsnN1h5v28jaiZYDFmaxT9WhMwqZVQiuI
-	 iwtynw5yeWJB+aXVHFtjhS5hDS24H1VkiHvbh8mQy/Ywd2j9zExUGj+t1LDRdpyDmi
-	 z8j0xV1YND6oY1eofVJXp9n9uA7CfkleHr4cYSsc=
+	b=hi7tOrNICgjMyJXmI7d5gxlF/bmvYI3aNVUaJ24YJauObd15G8h5orbEJtFzgJmar
+	 Y59Og/+oGpLtY5a8PoYzn+RAKKTkcR6qxZf2Gi8/vcDLhxNHjNaJ21PZSzB1O7+AmI
+	 rn2tveMMDLY8Zk3Hks/T55FhD1wEpmx6WDIWDxME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 259/269] ALSA: hda: realtek: fix incorrect IS_REACHABLE() usage
-Date: Mon, 10 Mar 2025 18:06:52 +0100
-Message-ID: <20250310170508.114092105@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 260/269] nvme-tcp: Fix a C2HTermReq error message
+Date: Mon, 10 Mar 2025 18:06:53 +0100
+Message-ID: <20250310170508.152618082@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -50,69 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit d0bbe332669c5db32c8c92bc967f8e7f8d460ddf upstream.
+commit afb41b08c44e5386f2f52fa859010ac4afd2b66f upstream.
 
-The alternative path leads to a build error after a recent change:
+In H2CTermReq, a FES with value 0x05 means "R2T Limit Exceeded"; but
+in C2HTermReq the same value has a different meaning (Data Transfer Limit
+Exceeded).
 
-sound/pci/hda/patch_realtek.c: In function 'alc233_fixup_lenovo_low_en_micmute_led':
-include/linux/stddef.h:9:14: error: called object is not a function or function pointer
-    9 | #define NULL ((void *)0)
-      |              ^
-sound/pci/hda/patch_realtek.c:5041:49: note: in expansion of macro 'NULL'
- 5041 | #define alc233_fixup_lenovo_line2_mic_hotkey    NULL
-      |                                                 ^~~~
-sound/pci/hda/patch_realtek.c:5063:9: note: in expansion of macro 'alc233_fixup_lenovo_line2_mic_hotkey'
- 5063 |         alc233_fixup_lenovo_line2_mic_hotkey(codec, fix, action);
-
-Using IS_REACHABLE() is somewhat questionable here anyway since it
-leads to the input code not working when the HDA driver is builtin
-but input is in a loadable module. Replace this with a hard compile-time
-dependency on CONFIG_INPUT. In practice this won't chance much
-other than solve the compiler error because it is rare to require
-sound output but no input support.
-
-Fixes: f603b159231b ("ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250304142620.582191-1-arnd@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 84e009042d0f ("nvme-tcp: add basic support for the C2HTermReq PDU")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/Kconfig         |    1 +
- sound/pci/hda/patch_realtek.c |    5 -----
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/nvme/host/tcp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -208,6 +208,7 @@ comment "Set to Y if you want auto-loadi
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -788,7 +788,7 @@ static void nvme_tcp_handle_c2h_term(str
+ 		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
+ 		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
+ 		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
+-		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
++		[NVME_TCP_FES_DATA_LIMIT_EXCEEDED] = "Data Transfer Limit Exceeded",
+ 		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
+ 	};
  
- config SND_HDA_CODEC_REALTEK
- 	tristate "Build Realtek HD-audio codec support"
-+	depends on INPUT
- 	select SND_HDA_GENERIC
- 	select SND_HDA_GENERIC_LEDS
- 	select SND_HDA_SCODEC_COMPONENT
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -5002,7 +5002,6 @@ static void alc298_fixup_samsung_amp_v2_
- 		alc298_samsung_v2_init_amps(codec, 4);
- }
- 
--#if IS_REACHABLE(CONFIG_INPUT)
- static void gpio2_mic_hotkey_event(struct hda_codec *codec,
- 				   struct hda_jack_callback *event)
- {
-@@ -5111,10 +5110,6 @@ static void alc233_fixup_lenovo_line2_mi
- 		spec->kb_dev = NULL;
- 	}
- }
--#else /* INPUT */
--#define alc280_fixup_hp_gpio2_mic_hotkey	NULL
--#define alc233_fixup_lenovo_line2_mic_hotkey	NULL
--#endif /* INPUT */
- 
- static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
 
 
