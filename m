@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92A417CA12;
-	Mon, 10 Mar 2025 17:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD9217CA12;
+	Mon, 10 Mar 2025 17:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629077; cv=none; b=ZUQAX5sUS9V9et7I0vQToOGHbhczRrEe1kGfyCpVPycQsh+d095XdZir5MsOXCLsDkZPy0qt9QpYM6YYVHUZUm0zdtStUr3QOlROaVsqLpPQ2ryBr32nGZ2hWJiodYeo6omB+kQ5qi8WN5BluY4ZhYIwVaPJcyEustnmbk7wprM=
+	t=1741629080; cv=none; b=Eqcd1s3CUIREMeYHcbzgWTycJSYpNX0dmC25fDJDvDAwHriQpGAAqqAGUMCGNui0j4r5erKYd076u5B1Lm/srXjLapbqJ2/BBNOuUlRmPmm+91wo2b/1pTY9Z3qONnpUkg0wagSpyTZ4L7gaOcqAHNhGJspmyKTJT5QcJ/GSRTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629077; c=relaxed/simple;
-	bh=3mTbJ2+oDBuw7dk9Pnu3H/KnfwoOJRgz8W4hfV63+wc=;
+	s=arc-20240116; t=1741629080; c=relaxed/simple;
+	bh=VV5hFlyc4yDXiNbxAOoxv4+bfE0Ni26zcaKHR72ZdEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PgShPB1PEt/5QX0kEfirOrLeGwpRY8ILpr7uxKZVLbiDy5gQMwg6ezUMGoWpkqPZHV6O9piAKrLmAQ2MdCjlmmRKKRkvHqWQyPmWZXNDS6XEKgLvzlLPM83HXQKmSKAOzKBock25re4t+nkvchLRwatqx7kedVh/EFDmTH87R+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjCiWcKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHyR3bHdpDbgbX9AMgUZOvSZAQNfm2ARO49L1ML0Ck+YubLgpWHDAnHdw2Z+IA3FpmyjoVAEIlIKFStmIaxeERjD3uP4SNl4w5kDCGWolKMf4zoFKtFm5eTcTQ+UWGkeB3Uu0m6PR9tgxdkQMgN20EDP8n4ai6rSoVr19emanpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlhQjrrh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjCiWcKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A27C4CEE5;
-	Mon, 10 Mar 2025 17:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlhQjrrh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A35C4CEE5;
+	Mon, 10 Mar 2025 17:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629077;
-	bh=3mTbJ2+oDBuw7dk9Pnu3H/KnfwoOJRgz8W4hfV63+wc=;
+	s=korg; t=1741629080;
+	bh=VV5hFlyc4yDXiNbxAOoxv4+bfE0Ni26zcaKHR72ZdEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjCiWcKA2bQLBriRX1rtRmPl13dh/pepsnANqLvL5BlhT4IYQ3s9NI41VjVoZQDuN
-	 5h6eSXmFqz8lEKlLG6+FgeZgGYXoZb8WFbD5YkqnRLXag5Dmgjdn3e8pnT2OBnlz1r
-	 2CGmZL5SmJ1gDS5cBO2BpJ3awdac6gb7tKcCY+aw=
+	b=jlhQjrrhQezqUcnjM6gFGnv322NCB78hQdRSa6ciD85ZqpkZ/d88Rta6iglLPCYnc
+	 P4vDsVJDmEdHgaHQUygTDbx5Qalg5nEQGiIrj9jiwt5Ahec9wp+cl+6OmrX95YABlm
+	 qypvyPYniE3vh9zQixNYJ2J0+7qmIaT2ZJHkW37I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 169/620] ptp: Properly handle compat ioctls
-Date: Mon, 10 Mar 2025 18:00:15 +0100
-Message-ID: <20250310170552.291487964@linuxfoundation.org>
+Subject: [PATCH 5.15 170/620] perf trace: Fix runtime error of index out of bounds
+Date: Mon, 10 Mar 2025 18:00:16 +0100
+Message-ID: <20250310170552.330420478@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -48,56 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Howard Chu <howardchu95@gmail.com>
 
-[ Upstream commit 19ae40f572a9ce1ade9954990af709a03fd37010 ]
+[ Upstream commit c7b87ce0dd10b64b68a0b22cb83bbd556e28fe81 ]
 
-Pointer arguments passed to ioctls need to pass through compat_ptr() to
-work correctly on s390; as explained in Documentation/driver-api/ioctl.rst.
-Detect compat mode at runtime and call compat_ptr() for those commands
-which do take pointer arguments.
+libtraceevent parses and returns an array of argument fields, sometimes
+larger than RAW_SYSCALL_ARGS_NUM (6) because it includes "__syscall_nr",
+idx will traverse to index 6 (7th element) whereas sc->fmt->arg holds 6
+elements max, creating an out-of-bounds access. This runtime error is
+found by UBsan. The error message:
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/lkml/1ba5d3a4-7931-455b-a3ce-85a968a7cb10@app.fastmail.com/
-Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250125-posix-clock-compat_ioctl-v2-1-11c865c500eb@weissschuh.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  $ sudo UBSAN_OPTIONS=print_stacktrace=1 ./perf trace -a --max-events=1
+  builtin-trace.c:1966:35: runtime error: index 6 out of bounds for type 'syscall_arg_fmt [6]'
+    #0 0x5c04956be5fe in syscall__alloc_arg_fmts /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:1966
+    #1 0x5c04956c0510 in trace__read_syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2110
+    #2 0x5c04956c372b in trace__syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2436
+    #3 0x5c04956d2f39 in trace__init_syscalls_bpf_prog_array_maps /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:3897
+    #4 0x5c04956d6d25 in trace__run /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:4335
+    #5 0x5c04956e112e in cmd_trace /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:5502
+    #6 0x5c04956eda7d in run_builtin /home/howard/hw/linux-perf/tools/perf/perf.c:351
+    #7 0x5c04956ee0a8 in handle_internal_command /home/howard/hw/linux-perf/tools/perf/perf.c:404
+    #8 0x5c04956ee37f in run_argv /home/howard/hw/linux-perf/tools/perf/perf.c:448
+    #9 0x5c04956ee8e9 in main /home/howard/hw/linux-perf/tools/perf/perf.c:556
+    #10 0x79eb3622a3b7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #11 0x79eb3622a47a in __libc_start_main_impl ../csu/libc-start.c:360
+    #12 0x5c04955422d4 in _start (/home/howard/hw/linux-perf/tools/perf/perf+0x4e02d4) (BuildId: 5b6cab2d59e96a4341741765ad6914a4d784dbc6)
+
+     0.000 ( 0.014 ms): Chrome_ChildIO/117244 write(fd: 238, buf: !, count: 1)                                      = 1
+
+Fixes: 5e58fcfaf4c6 ("perf trace: Allow allocating sc->arg_fmt even without the syscall tracepoint")
+Signed-off-by: Howard Chu <howardchu95@gmail.com>
+Link: https://lore.kernel.org/r/20250122025519.361873-1-howardchu95@gmail.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_chardev.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/builtin-trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -4,6 +4,7 @@
-  *
-  * Copyright (C) 2010 OMICRON electronics GmbH
-  */
-+#include <linux/compat.h>
- #include <linux/module.h>
- #include <linux/posix-clock.h>
- #include <linux/poll.h>
-@@ -124,6 +125,9 @@ long ptp_ioctl(struct posix_clock *pc, u
- 	struct timespec64 ts;
- 	int enable, err = 0;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 65f94597590ef..c569e090fa976 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1813,8 +1813,12 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		return PTR_ERR(sc->tp_format);
+ 	}
  
-+	if (in_compat_syscall() && cmd != PTP_ENABLE_PPS && cmd != PTP_ENABLE_PPS2)
-+		arg = (unsigned long)compat_ptr(arg);
-+
- 	switch (cmd) {
++	/*
++	 * The tracepoint format contains __syscall_nr field, so it's one more
++	 * than the actual number of syscall arguments.
++	 */
+ 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
+-					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
++					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields - 1))
+ 		return -ENOMEM;
  
- 	case PTP_CLOCK_GETCAPS:
+ 	sc->args = sc->tp_format->format.fields;
+-- 
+2.39.5
+
 
 
