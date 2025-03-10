@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D301BBBFD;
-	Mon, 10 Mar 2025 18:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3910B1C5D6F;
+	Mon, 10 Mar 2025 18:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630839; cv=none; b=TUENez+Jw+gU6RkoWVE//M7FvVkKEHCHBlr9g07KWh91M57j4VBZZrQ3zDjJvvXuOCvgf9KvwX9l8mmw0NNNEwZWCSaXxzD+B3u403EIJ5CzbRqVujQ1Xa4sk4lgDq2aTJTMZBXYtQ4EPTPpEx5tTu8aWtQIIZzqBaoOuC8s8Yw=
+	t=1741630842; cv=none; b=egasfizTXAtgUR7Uwr8JzIFhC++3C1AG8lXvhmTHDdp7aiVAf1i/aZifjZO7XetiqMvVQCK8uh6/Kg5dPF5F1nnaWBDL0LRQrCcFMvAFLe5ogeVk9TuKw6QuRs1AwyX2GzbEUjB1TlTsfFAtT1dbCos0c9phDDHN+92XuJRFPfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630839; c=relaxed/simple;
-	bh=8+o09/tUdQZZIy6qgV18tcdtJv9UhjX8rPX+uhucWSM=;
+	s=arc-20240116; t=1741630842; c=relaxed/simple;
+	bh=vmyymX6mrwJeiBDePQhSVHQfTBZ6IJIGVcnBD8c1CIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhkV3+GyXOsUri53RBPgNbc8E6CYGMmfqNmdObez6CYUChd4wmdoUNJr3j4RuH5HNX5n2QhgEsVBQtqRGRbOpTL142lyZs0xcsEmcz2edKnREoiOvkEkXpmR4AWIHxaH1Xb+WERSnl9D3EZ0FXp07NJs6j3RwO/X4AIdSCUJ9kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMx5rcF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6nF2/y+FXYOhEqgQemr5/FfBfPEDmnEZrXCXowguCqFZEPuoGBmu8jqoSurCX54/8YZHH25lPg1tw3DobrbNtIGg2r086EIduyBf48zT5rhmyNfyGteBMyBkzUN8AZhqJ9AGbxXsqbAmN0HkwOwm9zaPncfcYqU0OKlB6/OnmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxkBfGmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMx5rcF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B18C4CEE5;
-	Mon, 10 Mar 2025 18:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxkBfGmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88426C4CEE5;
+	Mon, 10 Mar 2025 18:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630839;
-	bh=8+o09/tUdQZZIy6qgV18tcdtJv9UhjX8rPX+uhucWSM=;
+	s=korg; t=1741630842;
+	bh=vmyymX6mrwJeiBDePQhSVHQfTBZ6IJIGVcnBD8c1CIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMx5rcF5vqAWFZPGIxY/e1PRQZaZ0BFoz5RPKMdrZsOFkU4NzcUQb7GH6sJtSgChL
-	 pZCj1F+5OsltDpl1CDtFSv8wvNhAsSDFiHhSf1RobGhBl6lWzsujQxxRjIQbNdLiiI
-	 ih+ab/SM2KSaAxvKGa5h8othjCpnieFDTv4Z6J3Y=
+	b=fxkBfGmpNzjCRVLO27tMopuSdYU7ZnVZ/M7KH6rnR3d2dJ/wNRHYmdBFFVEQeef00
+	 4QdgSTpsvQegGHAYiodqJPT9dhtRyy3BdTEngzFUNjZziMQlSgg6eUyzYJs7p7IfLI
+	 7YABtZBTO5XVZGdT10nI/14P1KZ2VrQj1Jbu7NoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christop Hellwig <hch@infradead.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 551/620] mm: dont skip arch_sync_kernel_mappings() in error paths
-Date: Mon, 10 Mar 2025 18:06:37 +0100
-Message-ID: <20250310170607.292006566@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 552/620] wifi: iwlwifi: limit printed string from FW file
+Date: Mon, 10 Mar 2025 18:06:38 +0100
+Message-ID: <20250310170607.332503939@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,65 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 3685024edd270f7c791f993157d65d3c928f3d6e upstream.
+[ Upstream commit e0dc2c1bef722cbf16ae557690861e5f91208129 ]
 
-Fix callers that previously skipped calling arch_sync_kernel_mappings() if
-an error occurred during a pgtable update.  The call is still required to
-sync any pgtable updates that may have occurred prior to hitting the error
-condition.
+There's no guarantee here that the file is always with a
+NUL-termination, so reading the string may read beyond the
+end of the TLV. If that's the last TLV in the file, it can
+perhaps even read beyond the end of the file buffer.
 
-These are theoretical bugs discovered during code review.
+Fix that by limiting the print format to the size of the
+buffer we have.
 
-Link: https://lkml.kernel.org/r/20250226121610.2401743-1-ryan.roberts@arm.com
-Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
-Fixes: 0c95cba49255 ("mm: apply_to_pte_range warn and fail if a large pte is encountered")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christop Hellwig <hch@infradead.org>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: aee1b6385e29 ("iwlwifi: support fseq tlv and print fseq version")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250209143303.cb5f9d0c2f5d.Idec695d53c6c2234aade306f7647b576c7e3d928@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c  |    6 ++++--
- mm/vmalloc.c |    4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2713,8 +2713,10 @@ static int __apply_to_page_range(struct
- 		next = pgd_addr_end(addr, end);
- 		if (pgd_none(*pgd) && !create)
- 			continue;
--		if (WARN_ON_ONCE(pgd_leaf(*pgd)))
--			return -EINVAL;
-+		if (WARN_ON_ONCE(pgd_leaf(*pgd))) {
-+			err = -EINVAL;
-+			break;
-+		}
- 		if (!pgd_none(*pgd) && WARN_ON_ONCE(pgd_bad(*pgd))) {
- 			if (!create)
- 				continue;
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -556,13 +556,13 @@ static int vmap_small_pages_range_noflus
- 			mask |= PGTBL_PGD_MODIFIED;
- 		err = vmap_pages_p4d_range(pgd, addr, next, prot, pages, &nr, &mask);
- 		if (err)
--			return err;
-+			break;
- 	} while (pgd++, addr = next, addr != end);
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index afa89deb7bc3a..144aa1825286e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -1071,7 +1071,7 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
  
- 	if (mask & ARCH_PAGE_TABLE_SYNC_MASK)
- 		arch_sync_kernel_mappings(start, end);
- 
--	return 0;
-+	return err;
- }
- 
- /*
+ 			if (tlv_len != sizeof(*fseq_ver))
+ 				goto invalid_tlv_len;
+-			IWL_INFO(drv, "TLV_FW_FSEQ_VERSION: %s\n",
++			IWL_INFO(drv, "TLV_FW_FSEQ_VERSION: %.32s\n",
+ 				 fseq_ver->version);
+ 			}
+ 			break;
+-- 
+2.39.5
+
 
 
