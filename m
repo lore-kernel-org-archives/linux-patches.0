@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F32235377;
-	Mon, 10 Mar 2025 18:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CED4235377;
+	Mon, 10 Mar 2025 18:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630583; cv=none; b=l8CEbZbyprsRg5CeghckQC6Z40q9Enrxmh/LPdCt5Rs4OSelk/usjpqJyQcmnbFdyh3tl6shU/Nuzj2R+4baqfebAEqJ6Op/Yqoq1Hn98OkGonEbfK/h6P2diACJLT7tsHsT6uTI4Ngvvkw9mgL8eK/aGoVSxUeR7uen1FjRR6U=
+	t=1741630586; cv=none; b=XkYJRy8hyqCNma0Rbhaq0DVpSPGvyK6vQ1oyZUWIAlbFSAwyEl1KnCipBib8ya54rKEJDTrNpdYAUZGyH/ZpLoow+mxOHFbvfDOd78pAkmKzmBMFbMzMoKYrbsWAn862RGY1QsQbsf06DQAJXwQj420CSK3h6Hj0jzWGI0fmU+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630583; c=relaxed/simple;
-	bh=UC2onKzE1YDaHeM5mH4LWtLX63XVqhRr5nrCE1D+Q9g=;
+	s=arc-20240116; t=1741630586; c=relaxed/simple;
+	bh=2hsl+iW3fO2/OVF7LIA9S6ID4ALMNtttnMANYp4IMw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI920ClObvDAI+oNHd1dryWolNQphYcuDrd0dQcQXb3+B6ACZ2Nc5zFO4rCoiH0a0uBcx4sKl9h1F0AedjM9wO8kzL6drG3oiJwaaWd3uMPHV+X/TB+iHBezsxw8IzxI3LWbyR2cu30eoThk3rMaGSYoeAeR6AK3MSttxfqUqdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAwbm/Ka; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcRoMssS9GjOhSK8nbciaT4hIFxFnOjP7lFM1Mp4WnZp/Bso49VicjGZC1WdEd2HmrJ/bdyE4QCOM8fGXINFGrYR3x+UyUC/Ftzf5v7HXFVAiBj+f0E+PsZ09BVaS3eNTRsUi5JXnWjBJqjQG8c0+C8aP9J+CHIqu7WVj+2Dy+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJb/xteN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAwbm/Ka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8CBC4CEE5;
-	Mon, 10 Mar 2025 18:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJb/xteN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F358C4CEE5;
+	Mon, 10 Mar 2025 18:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630583;
-	bh=UC2onKzE1YDaHeM5mH4LWtLX63XVqhRr5nrCE1D+Q9g=;
+	s=korg; t=1741630585;
+	bh=2hsl+iW3fO2/OVF7LIA9S6ID4ALMNtttnMANYp4IMw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAwbm/KacaJTbUWAdi4PFalxe7b3QTGydctr36BdKqZoOicXr68TfgK5wDG48qxhh
-	 gMkYxBFfj9OYwkZY/F5TCua4p2RSCIWacVZbqaCxKVylQgT1FlHPh2DUGHj9KmUOen
-	 jpxP0AUHQgIGi619Tt34l5P/EDuyGBd7AcNBuLdk=
+	b=DJb/xteN7HxwUQp/im+VHs/JqqimP8MSgIhvRmIs6bWLLwJwVRnJ/NpfYTX54kh2+
+	 4m+loBALrPCMsTgTQAt8iD2ojAzxatFBnXjxeojnM9tgKko4c0gwLU8vm112TShtPz
+	 eRS8NIY9a/rmgL7bmIycVD6SYlYAW65Iq8ZykmhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
+	Brad Spengler <spender@grsecurity.net>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 465/620] geneve: Fix use-after-free in geneve_find_dev().
-Date: Mon, 10 Mar 2025 18:05:11 +0100
-Message-ID: <20250310170603.937659220@linuxfoundation.org>
+Subject: [PATCH 5.15 466/620] gtp: Suppress list corruption splat in gtp_net_exit_batch_rtnl().
+Date: Mon, 10 Mar 2025 18:05:12 +0100
+Message-ID: <20250310170603.975535211@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,196 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 9593172d93b9f91c362baec4643003dc29802929 ]
+[ Upstream commit 4ccacf86491d33d2486b62d4d44864d7101b299d ]
 
-syzkaller reported a use-after-free in geneve_find_dev() [0]
-without repro.
+Brad Spengler reported the list_del() corruption splat in
+gtp_net_exit_batch_rtnl(). [0]
 
-geneve_configure() links struct geneve_dev.next to
-net_generic(net, geneve_net_id)->geneve_list.
+Commit eb28fd76c0a0 ("gtp: Destroy device along with udp socket's netns
+dismantle.") added the for_each_netdev() loop in gtp_net_exit_batch_rtnl()
+to destroy devices in each netns as done in geneve and ip tunnels.
 
-The net here could differ from dev_net(dev) if IFLA_NET_NS_PID,
-IFLA_NET_NS_FD, or IFLA_TARGET_NETNSID is set.
+However, this could trigger ->dellink() twice for the same device during
+->exit_batch_rtnl().
 
-When dev_net(dev) is dismantled, geneve_exit_batch_rtnl() finally
-calls unregister_netdevice_queue() for each dev in the netns,
-and later the dev is freed.
+Say we have two netns A & B and gtp device B that resides in netns B but
+whose UDP socket is in netns A.
 
-However, its geneve_dev.next is still linked to the backend UDP
-socket netns.
+  1. cleanup_net() processes netns A and then B.
 
-Then, use-after-free will occur when another geneve dev is created
-in the netns.
+  2. gtp_net_exit_batch_rtnl() finds the device B while iterating
+     netns A's gn->gtp_dev_list and calls ->dellink().
 
-Let's call geneve_dellink() instead in geneve_destroy_tunnels().
+  [ device B is not yet unlinked from netns B
+    as unregister_netdevice_many() has not been called. ]
+
+  3. gtp_net_exit_batch_rtnl() finds the device B while iterating
+     netns B's for_each_netdev() and calls ->dellink().
+
+gtp_dellink() cleans up the device's hash table, unlinks the dev from
+gn->gtp_dev_list, and calls unregister_netdevice_queue().
+
+Basically, calling gtp_dellink() multiple times is fine unless
+CONFIG_DEBUG_LIST is enabled.
+
+Let's remove for_each_netdev() in gtp_net_exit_batch_rtnl() and
+delegate the destruction to default_device_exit_batch() as done
+in bareudp.
 
 [0]:
-BUG: KASAN: slab-use-after-free in geneve_find_dev drivers/net/geneve.c:1295 [inline]
-BUG: KASAN: slab-use-after-free in geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
-Read of size 2 at addr ffff000054d6ee24 by task syz.1.4029/13441
+list_del corruption, ffff8880aaa62c00->next (autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc00/0x1000 [slab object]) is LIST_POISON1 (ffffffffffffff02) (prev is 0xffffffffffffff04)
+kernel BUG at lib/list_debug.c:58!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 UID: 0 PID: 1804 Comm: kworker/u8:7 Tainted: G                T   6.12.13-grsec-full-20250211091339 #1
+Tainted: [T]=RANDSTRUCT
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: netns cleanup_net
+RIP: 0010:[<ffffffff84947381>] __list_del_entry_valid_or_report+0x141/0x200 lib/list_debug.c:58
+Code: c2 76 91 31 c0 e8 9f b1 f7 fc 0f 0b 4d 89 f0 48 c7 c1 02 ff ff ff 48 89 ea 48 89 ee 48 c7 c7 e0 c2 76 91 31 c0 e8 7f b1 f7 fc <0f> 0b 4d 89 e8 48 c7 c1 04 ff ff ff 48 89 ea 48 89 ee 48 c7 c7 60
+RSP: 0018:fffffe8040b4fbd0 EFLAGS: 00010283
+RAX: 00000000000000cc RBX: dffffc0000000000 RCX: ffffffff818c4054
+RDX: ffffffff84947381 RSI: ffffffff818d1512 RDI: 0000000000000000
+RBP: ffff8880aaa62c00 R08: 0000000000000001 R09: fffffbd008169f32
+R10: fffffe8040b4f997 R11: 0000000000000001 R12: a1988d84f24943e4
+R13: ffffffffffffff02 R14: ffffffffffffff04 R15: ffff8880aaa62c08
+RBX: kasan shadow of 0x0
+RCX: __wake_up_klogd.part.0+0x74/0xe0 kernel/printk/printk.c:4554
+RDX: __list_del_entry_valid_or_report+0x141/0x200 lib/list_debug.c:58
+RSI: vprintk+0x72/0x100 kernel/printk/printk_safe.c:71
+RBP: autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc00/0x1000 [slab object]
+RSP: process kstack fffffe8040b4fbd0+0x7bd0/0x8000 [kworker/u8:7+netns 1804 ]
+R09: kasan shadow of process kstack fffffe8040b4f990+0x7990/0x8000 [kworker/u8:7+netns 1804 ]
+R10: process kstack fffffe8040b4f997+0x7997/0x8000 [kworker/u8:7+netns 1804 ]
+R15: autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc08/0x1000 [slab object]
+FS:  0000000000000000(0000) GS:ffff888116000000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000748f5372c000 CR3: 0000000015408000 CR4: 00000000003406f0 shadow CR4: 00000000003406f0
+Stack:
+ 0000000000000000 ffffffff8a0c35e7 ffffffff8a0c3603 ffff8880aaa62c00
+ ffff8880aaa62c00 0000000000000004 ffff88811145311c 0000000000000005
+ 0000000000000001 ffff8880aaa62000 fffffe8040b4fd40 ffffffff8a0c360d
+Call Trace:
+ <TASK>
+ [<ffffffff8a0c360d>] __list_del_entry_valid include/linux/list.h:131 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] __list_del_entry include/linux/list.h:248 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] list_del include/linux/list.h:262 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] gtp_dellink+0x16d/0x360 drivers/net/gtp.c:1557 fffffe8040b4fc28
+ [<ffffffff8a0d0404>] gtp_net_exit_batch_rtnl+0x124/0x2c0 drivers/net/gtp.c:2495 fffffe8040b4fc88
+ [<ffffffff8e705b24>] cleanup_net+0x5a4/0xbe0 net/core/net_namespace.c:635 fffffe8040b4fcd0
+ [<ffffffff81754c97>] process_one_work+0xbd7/0x2160 kernel/workqueue.c:3326 fffffe8040b4fd88
+ [<ffffffff81757195>] process_scheduled_works kernel/workqueue.c:3407 [inline] fffffe8040b4fec0
+ [<ffffffff81757195>] worker_thread+0x6b5/0xfa0 kernel/workqueue.c:3488 fffffe8040b4fec0
+ [<ffffffff817782a0>] kthread+0x360/0x4c0 kernel/kthread.c:397 fffffe8040b4ff78
+ [<ffffffff814d8594>] ret_from_fork+0x74/0xe0 arch/x86/kernel/process.c:172 fffffe8040b4ffb8
+ [<ffffffff8110f509>] ret_from_fork_asm+0x29/0xc0 arch/x86/entry/entry_64.S:399 fffffe8040b4ffe8
+ </TASK>
+Modules linked in:
 
-CPU: 1 UID: 0 PID: 13441 Comm: syz.1.4029 Not tainted 6.13.0-g0ad9617c78ac #24 dc35ca22c79fb82e8e7bc5c9c9adafea898b1e3d
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- show_stack+0x38/0x50 arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbc/0x108 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x16c/0x6f0 mm/kasan/report.c:489
- kasan_report+0xc0/0x120 mm/kasan/report.c:602
- __asan_report_load2_noabort+0x20/0x30 mm/kasan/report_generic.c:379
- geneve_find_dev drivers/net/geneve.c:1295 [inline]
- geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
- geneve_newlink+0xb8/0x128 drivers/net/geneve.c:1634
- rtnl_newlink_create+0x23c/0x868 net/core/rtnetlink.c:3795
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Allocated by task 13247:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_alloc_info+0x44/0x58 mm/kasan/generic.c:568
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x84/0xa0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4298 [inline]
- __kmalloc_node_noprof+0x2a0/0x560 mm/slub.c:4304
- __kvmalloc_node_noprof+0x9c/0x230 mm/util.c:645
- alloc_netdev_mqs+0xb8/0x11a0 net/core/dev.c:11470
- rtnl_create_link+0x2b8/0xb50 net/core/rtnetlink.c:3604
- rtnl_newlink_create+0x19c/0x868 net/core/rtnetlink.c:3780
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Freed by task 45:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_free_info+0x58/0x70 mm/kasan/generic.c:582
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x48/0x68 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2353 [inline]
- slab_free mm/slub.c:4613 [inline]
- kfree+0x140/0x420 mm/slub.c:4761
- kvfree+0x4c/0x68 mm/util.c:688
- netdev_release+0x94/0xc8 net/core/net-sysfs.c:2065
- device_release+0x98/0x1c0
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x2b0/0x438 lib/kobject.c:737
- netdev_run_todo+0xe5c/0xfc8 net/core/dev.c:11185
- rtnl_unlock+0x20/0x38 net/core/rtnetlink.c:151
- cleanup_net+0x4fc/0x8c0 net/core/net_namespace.c:648
- process_one_work+0x700/0x1398 kernel/workqueue.c:3236
- process_scheduled_works kernel/workqueue.c:3317 [inline]
- worker_thread+0x8c4/0xe10 kernel/workqueue.c:3398
- kthread+0x4bc/0x608 kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:862
-
-The buggy address belongs to the object at ffff000054d6e000
- which belongs to the cache kmalloc-cg-4k of size 4096
-The buggy address is located 3620 bytes inside of
- freed 4096-byte region [ffff000054d6e000, ffff000054d6f000)
-
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x94d68
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-memcg:ffff000016276181
-flags: 0x3fffe0000000040(head|node=0|zone=0|lastcpupid=0x1ffff)
-page_type: f5(slab)
-raw: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-head: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000003 fffffdffc1535a01 ffffffffffffffff 0000000000000000
-head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff000054d6ed00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ed80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff000054d6ee00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff000054d6ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ef00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 2d07dc79fe04 ("geneve: add initial netdev driver for GENEVE tunnels")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
+Fixes: eb28fd76c0a0 ("gtp: Destroy device along with udp socket's netns dismantle.")
+Reported-by: Brad Spengler <spender@grsecurity.net>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250213043354.91368-1-kuniyu@amazon.com
+Link: https://patch.msgid.link/20250217203705.40342-2-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/gtp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 10e3d69205a4f..5e270cb0d8cb4 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1965,16 +1965,11 @@ static void geneve_destroy_tunnels(struct net *net, struct list_head *head)
- 	/* gather any geneve devices that were moved into this ns */
- 	for_each_netdev_safe(net, dev, aux)
- 		if (dev->rtnl_link_ops == &geneve_link_ops)
--			unregister_netdevice_queue(dev, head);
-+			geneve_dellink(dev, head);
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 2d306971d4fde..8f76fd927ff4a 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1414,11 +1414,6 @@ static void __net_exit gtp_net_exit_batch_rtnl(struct list_head *net_list,
+ 	list_for_each_entry(net, net_list, exit_list) {
+ 		struct gtp_net *gn = net_generic(net, gtp_net_id);
+ 		struct gtp_dev *gtp, *gtp_next;
+-		struct net_device *dev;
+-
+-		for_each_netdev(net, dev)
+-			if (dev->rtnl_link_ops == &gtp_link_ops)
+-				gtp_dellink(dev, dev_to_kill);
  
- 	/* now gather any other geneve devices that were created in this ns */
--	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next) {
--		/* If geneve->dev is in the same netns, it was already added
--		 * to the list by the previous loop.
--		 */
--		if (!net_eq(dev_net(geneve->dev), net))
--			unregister_netdevice_queue(geneve->dev, head);
--	}
-+	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next)
-+		geneve_dellink(geneve->dev, head);
- }
- 
- static void __net_exit geneve_exit_batch_net(struct list_head *net_list)
+ 		list_for_each_entry_safe(gtp, gtp_next, &gn->gtp_dev_list, list)
+ 			gtp_dellink(gtp->dev, dev_to_kill);
 -- 
 2.39.5
 
