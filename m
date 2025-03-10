@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5738423236F;
-	Mon, 10 Mar 2025 17:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D783122D7A6;
+	Mon, 10 Mar 2025 17:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629164; cv=none; b=GrXn8y0SutTWCm/bsWHG/4enNGMrB73Zceg4O/Br6lXtDmqphnhnWnQjlQXhtXiSlb2FwsLurmi9eyZe35wkXE7HHaqnG2cx4gGyovqFWbkZorGNpftJYtpXXKIhsdqvHy3fmmx/WdwrdUKgbKA46J/YUNlQAI9JOHKjwihuzsI=
+	t=1741629166; cv=none; b=Q56uEtP5Bn/ZSBdzaZfwVWUgkoOBA1QVC36G9KHTpjDq9XsptN8taKcyFzjdvZPaO1IrUpm6gCLMKwE4fjxuxLdCdSqbU5tvuJjCusnqCXGj0s45dQQOqoNthhrcynXxJaGl5AoRQvXmE7qg0ukDRx0kwEfnJ3tEipIJZBOZFKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629164; c=relaxed/simple;
-	bh=dVp9yt4Hsff8qu0xv7BQXB9j6LDnFt0JCBYNVXC+21I=;
+	s=arc-20240116; t=1741629166; c=relaxed/simple;
+	bh=A7RpCloDsAkdiNT49SdRt9cuH1uqOm/eocydfEaFz78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNhGFQpGEJ5wi4ZPj3gQEiS6K3S8q+GDNTrCxdD0no8nsL/AWY9MdTmkV933QLmXzK4TwYgnkT5h7aQyZAehUtF835wpDRne3f/cP9aB44iySpCiWzUNPpbdWCQ/HFbdPgLE8na2LPrV1mvJiUjpC95xHIoCuvPCllleNZqgq/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGDf7OW3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TAUW8atm8BjDl2hICFtl15y5qkpIrvuhuolKkFgB6NhDYKso2/3CP7s16hjasYFaqh3k38fczI1uUsXUBlPWDyMJjwPCFo+L6KOlm1BRmlIso9T6AE+UlZATPwwmr8JQeS5o6teFkt1I+1OmtGl11kITtOil2TVECNP0Sox0Soc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E35tbzLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGDf7OW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F141C4CEE5;
-	Mon, 10 Mar 2025 17:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E35tbzLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC27C4CEE5;
+	Mon, 10 Mar 2025 17:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629163;
-	bh=dVp9yt4Hsff8qu0xv7BQXB9j6LDnFt0JCBYNVXC+21I=;
+	s=korg; t=1741629166;
+	bh=A7RpCloDsAkdiNT49SdRt9cuH1uqOm/eocydfEaFz78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGDf7OW34sxeKnSCVCyep4ZhBEeA9NOjADjhMmeTQAKx+rXzZE+DVbgMW2GDTFS4c
-	 +pfB1bHBJ7LUVkxnACOZUGXcUSnKbZ0/YJCCvm8QPiOFUDaLNBlzDnESpn3sBPMni7
-	 2BmJRr2Qs35BUGqq7OLgLR1k9cqqM7NcVBksQibE=
+	b=E35tbzLeGb1U98EO0XNa8hiULO8R+elZ/xB1KdG2kEI+tbubuDcuO6MSMlvknHIUL
+	 hSop5JS9S8MGWnc+sjOHvNL4IV4IMylT1pbO32guqSo3gX2Lvjyi//pc/JuWqrooHo
+	 MMIw/cSBfNrXc86o2zkpYz60Sfw7urADmhjgOV6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 199/620] usb: gadget: f_tcm: Dont free command immediately
-Date: Mon, 10 Mar 2025 18:00:45 +0100
-Message-ID: <20250310170553.482203756@linuxfoundation.org>
+	Christoph Anton Mitterer <calestyo@scientia.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 200/620] btrfs: output the reason for open_ctree() failure
+Date: Mon, 10 Mar 2025 18:00:46 +0100
+Message-ID: <20250310170553.520114966@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -49,40 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit c225d006a31949d673e646d585d9569bc28feeb9 upstream.
+commit d0f038104fa37380e2a725e669508e43d0c503e9 upstream.
 
-Don't prematurely free the command. Wait for the status completion of
-the sense status. It can be freed then. Otherwise we will double-free
-the command.
+There is a recent ML report that mounting a large fs backed by hardware
+RAID56 controller (with one device missing) took too much time, and
+systemd seems to kill the mount attempt.
 
-Fixes: cff834c16d23 ("usb-gadget/tcm: Convert to TARGET_SCF_ACK_KREF I/O krefs")
+In that case, the only error message is:
+
+  BTRFS error (device sdj): open_ctree failed
+
+There is no reason on why the failure happened, making it very hard to
+understand the reason.
+
+At least output the error number (in the particular case it should be
+-EINTR) to provide some clue.
+
+Link: https://lore.kernel.org/linux-btrfs/9b9c4d2810abcca2f9f76e32220ed9a90febb235.camel@scientia.org/
+Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/ae919ac431f16275e05ec819bdffb3ac5f44cbe1.1733876548.git.Thinh.Nguyen@synopsys.com
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/btrfs/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1066,7 +1066,6 @@ static void usbg_cmd_work(struct work_st
- out:
- 	transport_send_check_condition_and_sense(se_cmd,
- 			TCM_UNSUPPORTED_SCSI_OPCODE, 1);
--	transport_generic_free_cmd(&cmd->se_cmd, 0);
- }
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1386,7 +1386,7 @@ static int btrfs_fill_super(struct super
  
- static struct usbg_cmd *usbg_get_cmd(struct f_uas *fu,
-@@ -1195,7 +1194,6 @@ static void bot_cmd_work(struct work_str
- out:
- 	transport_send_check_condition_and_sense(se_cmd,
- 				TCM_UNSUPPORTED_SCSI_OPCODE, 1);
--	transport_generic_free_cmd(&cmd->se_cmd, 0);
- }
+ 	err = open_ctree(sb, fs_devices, (char *)data);
+ 	if (err) {
+-		btrfs_err(fs_info, "open_ctree failed");
++		btrfs_err(fs_info, "open_ctree failed: %d", err);
+ 		return err;
+ 	}
  
- static int bot_submit_command(struct f_uas *fu,
 
 
