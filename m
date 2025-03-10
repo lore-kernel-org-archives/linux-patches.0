@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BA51DE89C;
-	Mon, 10 Mar 2025 17:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033651DE89C;
+	Mon, 10 Mar 2025 17:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628286; cv=none; b=DJndGBZZmWPPFGlSQfUjC7i9bM3E/h8RrBo2saMlD3vt9lNaj7Egz3oRSs9qKnJSPD5O33+QDwiv9Z6lE6KtWRK3J8Ei0pzXqjak0KDNHPto1ukosX+/0nfgMGxdPJkWb5iauyDBjQ9UMC4A0LjPkUFHlXgYoBulYtckD7Dsl4g=
+	t=1741628289; cv=none; b=k1UamlhxxgiC3nSb/8yWeBIPb0FiiTY0JiqDwAJvZSX8S0q8daDFJ2T9NN2bNXmrhFy6iaO4Kkc+LueHuxM3Wp0flK4cf9MkdjgE3ufGCWHweoIlRtC367nt5o8Avy/oiaNyqkk+b/fXJRR/VlJ9fokdm0V1Hbhc2y4aV7b+r/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628286; c=relaxed/simple;
-	bh=GBoY/r60u0R+vOFhGPNGjGVEustp1xTkDQfjXA2F00Y=;
+	s=arc-20240116; t=1741628289; c=relaxed/simple;
+	bh=u6Gl1avNaLO6v3el150MjzPT+QsazA05BvWqmv/PqWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgJI/RCjwr5esPaPowd4lY4YmqdBZ6TTzUuLDNu6HjnEZJk63B7h+tRqAwg0aWQ3DeigE+SwgBO7xkcbX4BGYfEKvnSC7pqurdn7zkmOki3SHhjHigFJw1yzQN3Ecs8iLhRbcuy3poEuWVxKzVLhC9MMpIrwlkdOId7A6uEVwtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K74YrU9x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajMogPn/aADXRlsIKPtv9J69FjEeNDaTiQaPj6f30yYVbsNV4Z8jLwOjjl9xRzPO/mnwKcmxDum3JJUjf0Ktb04zuRLOWpuDN5iBNduN0gDr0D2Xu/wwgGBQZv6iYK4rhFNvrajyoeNb+ddLqQv3jGXNc+91yInTXWB3okonz2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjV0BVr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K74YrU9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FEC4CEE5;
-	Mon, 10 Mar 2025 17:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjV0BVr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5164EC4CEE5;
+	Mon, 10 Mar 2025 17:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628285;
-	bh=GBoY/r60u0R+vOFhGPNGjGVEustp1xTkDQfjXA2F00Y=;
+	s=korg; t=1741628288;
+	bh=u6Gl1avNaLO6v3el150MjzPT+QsazA05BvWqmv/PqWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K74YrU9xUW3y429t16S5sEwdDQVW06BSJYYNy7VVVZ8fmPUJOlLku8OfybgAh80PX
-	 nCoyegFkav9KNUWq96xSG+44JTesY7YumoPHcOCkIc0zsyRQyE7dWpS8YGr3eo5IeH
-	 yQbY8/yig4xTjtSKmy9TeL7zufRoipTYdzU3nw20=
+	b=CjV0BVr8P5pLlSbcZNssU9qJeISxowZY3N+n7WCDWCo6hq/VDGOGnX54vZIFmVVSE
+	 SN7W2WbckOD/80OpE3jSBMYaqo48BlV68Ia7Mb9xVFjA7hszFPm7B3rY15SWjc8NhD
+	 PNoSaABmLFeYRFJnh7zE4Wo/V41gX+feqaFaO3qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.6 140/145] ima: Reset IMA_NONACTION_RULE_FLAGS after post_setattr
-Date: Mon, 10 Mar 2025 18:07:14 +0100
-Message-ID: <20250310170440.405840272@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.6 141/145] x86/boot: Rename conflicting boot_params pointer to boot_params_ptr
+Date: Mon, 10 Mar 2025 18:07:15 +0100
+Message-ID: <20250310170440.449896143@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,69 +51,417 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 57a0ef02fefafc4b9603e33a18b669ba5ce59ba3 upstream.
+commit d55d5bc5d937743aa8ebb7ca3af25111053b5d8c upstream.
 
-Commit 0d73a55208e9 ("ima: re-introduce own integrity cache lock")
-mistakenly reverted the performance improvement introduced in commit
-42a4c603198f0 ("ima: fix ima_inode_post_setattr"). The unused bit mask was
-subsequently removed by commit 11c60f23ed13 ("integrity: Remove unused
-macro IMA_ACTION_RULE_FLAGS").
+The x86 decompressor is built and linked as a separate executable, but
+it shares components with the kernel proper, which are either #include'd
+as C files, or linked into the decompresor as a static library (e.g, the
+EFI stub)
 
-Restore the performance improvement by introducing the new mask
-IMA_NONACTION_RULE_FLAGS, equal to IMA_NONACTION_FLAGS without
-IMA_NEW_FILE, which is not a rule-specific flag.
+Both the kernel itself and the decompressor define a global symbol
+'boot_params' to refer to the boot_params struct, but in the former
+case, it refers to the struct directly, whereas in the decompressor, it
+refers to a global pointer variable referring to the struct boot_params
+passed by the bootloader or constructed from scratch.
 
-Finally, reset IMA_NONACTION_RULE_FLAGS instead of IMA_NONACTION_FLAGS in
-process_measurement(), if the IMA_CHANGE_ATTR atomic flag is set (after
-file metadata modification).
+This ambiguity is unfortunate, and makes it impossible to assign this
+decompressor variable from the x86 EFI stub, given that declaring it as
+extern results in a clash. So rename the decompressor version (whose
+scope is limited) to boot_params_ptr.
 
-With this patch, new files for which metadata were modified while they are
-still open, can be reopened before the last file close (when security.ima
-is written), since the IMA_NEW_FILE flag is not cleared anymore. Otherwise,
-appraisal fails because security.ima is missing (files with IMA_NEW_FILE
-set are an exception).
+[ mingo: Renamed 'boot_params_p' to 'boot_params_ptr' for clarity ]
 
-Cc: stable@vger.kernel.org # v4.16.x
-Fixes: 0d73a55208e9 ("ima: re-introduce own integrity cache lock")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-kernel@vger.kernel.org
+[ardb: include references to boot_params in x86-stub.[ch]]
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_main.c |    7 +++++--
- security/integrity/integrity.h    |    3 +++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/boot/compressed/acpi.c         |   14 +++++++-------
+ arch/x86/boot/compressed/cmdline.c      |    4 ++--
+ arch/x86/boot/compressed/ident_map_64.c |    7 ++++---
+ arch/x86/boot/compressed/kaslr.c        |   26 +++++++++++++-------------
+ arch/x86/boot/compressed/mem.c          |    6 +++---
+ arch/x86/boot/compressed/misc.c         |   26 +++++++++++++-------------
+ arch/x86/boot/compressed/misc.h         |    1 -
+ arch/x86/boot/compressed/pgtable_64.c   |    9 ++++-----
+ arch/x86/boot/compressed/sev.c          |    2 +-
+ arch/x86/include/asm/boot.h             |    2 ++
+ drivers/firmware/efi/libstub/x86-stub.c |    2 +-
+ drivers/firmware/efi/libstub/x86-stub.h |    2 --
+ 12 files changed, 50 insertions(+), 51 deletions(-)
 
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -267,10 +267,13 @@ static int process_measurement(struct fi
- 	mutex_lock(&iint->mutex);
+--- a/arch/x86/boot/compressed/acpi.c
++++ b/arch/x86/boot/compressed/acpi.c
+@@ -30,13 +30,13 @@ __efi_get_rsdp_addr(unsigned long cfg_tb
+ 	 * Search EFI system tables for RSDP. Preferred is ACPI_20_TABLE_GUID to
+ 	 * ACPI_TABLE_GUID because it has more features.
+ 	 */
+-	rsdp_addr = efi_find_vendor_table(boot_params, cfg_tbl_pa, cfg_tbl_len,
++	rsdp_addr = efi_find_vendor_table(boot_params_ptr, cfg_tbl_pa, cfg_tbl_len,
+ 					  ACPI_20_TABLE_GUID);
+ 	if (rsdp_addr)
+ 		return (acpi_physical_address)rsdp_addr;
  
- 	if (test_and_clear_bit(IMA_CHANGE_ATTR, &iint->atomic_flags))
--		/* reset appraisal flags if ima_inode_post_setattr was called */
-+		/*
-+		 * Reset appraisal flags (action and non-action rule-specific)
-+		 * if ima_inode_post_setattr was called.
-+		 */
- 		iint->flags &= ~(IMA_APPRAISE | IMA_APPRAISED |
- 				 IMA_APPRAISE_SUBMASK | IMA_APPRAISED_SUBMASK |
--				 IMA_NONACTION_FLAGS);
-+				 IMA_NONACTION_RULE_FLAGS);
+ 	/* No ACPI_20_TABLE_GUID found, fallback to ACPI_TABLE_GUID. */
+-	rsdp_addr = efi_find_vendor_table(boot_params, cfg_tbl_pa, cfg_tbl_len,
++	rsdp_addr = efi_find_vendor_table(boot_params_ptr, cfg_tbl_pa, cfg_tbl_len,
+ 					  ACPI_TABLE_GUID);
+ 	if (rsdp_addr)
+ 		return (acpi_physical_address)rsdp_addr;
+@@ -56,15 +56,15 @@ static acpi_physical_address efi_get_rsd
+ 	enum efi_type et;
+ 	int ret;
+ 
+-	et = efi_get_type(boot_params);
++	et = efi_get_type(boot_params_ptr);
+ 	if (et == EFI_TYPE_NONE)
+ 		return 0;
+ 
+-	systab_pa = efi_get_system_table(boot_params);
++	systab_pa = efi_get_system_table(boot_params_ptr);
+ 	if (!systab_pa)
+ 		error("EFI support advertised, but unable to locate system table.");
+ 
+-	ret = efi_get_conf_table(boot_params, &cfg_tbl_pa, &cfg_tbl_len);
++	ret = efi_get_conf_table(boot_params_ptr, &cfg_tbl_pa, &cfg_tbl_len);
+ 	if (ret || !cfg_tbl_pa)
+ 		error("EFI config table not found.");
+ 
+@@ -156,7 +156,7 @@ acpi_physical_address get_rsdp_addr(void
+ {
+ 	acpi_physical_address pa;
+ 
+-	pa = boot_params->acpi_rsdp_addr;
++	pa = boot_params_ptr->acpi_rsdp_addr;
+ 
+ 	if (!pa)
+ 		pa = efi_get_rsdp_addr();
+@@ -210,7 +210,7 @@ static unsigned long get_acpi_srat_table
+ 	rsdp = (struct acpi_table_rsdp *)get_cmdline_acpi_rsdp();
+ 	if (!rsdp)
+ 		rsdp = (struct acpi_table_rsdp *)(long)
+-			boot_params->acpi_rsdp_addr;
++			boot_params_ptr->acpi_rsdp_addr;
+ 
+ 	if (!rsdp)
+ 		return 0;
+--- a/arch/x86/boot/compressed/cmdline.c
++++ b/arch/x86/boot/compressed/cmdline.c
+@@ -14,9 +14,9 @@ static inline char rdfs8(addr_t addr)
+ #include "../cmdline.c"
+ unsigned long get_cmd_line_ptr(void)
+ {
+-	unsigned long cmd_line_ptr = boot_params->hdr.cmd_line_ptr;
++	unsigned long cmd_line_ptr = boot_params_ptr->hdr.cmd_line_ptr;
+ 
+-	cmd_line_ptr |= (u64)boot_params->ext_cmd_line_ptr << 32;
++	cmd_line_ptr |= (u64)boot_params_ptr->ext_cmd_line_ptr << 32;
+ 
+ 	return cmd_line_ptr;
+ }
+--- a/arch/x86/boot/compressed/ident_map_64.c
++++ b/arch/x86/boot/compressed/ident_map_64.c
+@@ -159,8 +159,9 @@ void initialize_identity_maps(void *rmod
+ 	 * or does not touch all the pages covering them.
+ 	 */
+ 	kernel_add_identity_map((unsigned long)_head, (unsigned long)_end);
+-	boot_params = rmode;
+-	kernel_add_identity_map((unsigned long)boot_params, (unsigned long)(boot_params + 1));
++	boot_params_ptr = rmode;
++	kernel_add_identity_map((unsigned long)boot_params_ptr,
++				(unsigned long)(boot_params_ptr + 1));
+ 	cmdline = get_cmd_line_ptr();
+ 	kernel_add_identity_map(cmdline, cmdline + COMMAND_LINE_SIZE);
+ 
+@@ -168,7 +169,7 @@ void initialize_identity_maps(void *rmod
+ 	 * Also map the setup_data entries passed via boot_params in case they
+ 	 * need to be accessed by uncompressed kernel via the identity mapping.
+ 	 */
+-	sd = (struct setup_data *)boot_params->hdr.setup_data;
++	sd = (struct setup_data *)boot_params_ptr->hdr.setup_data;
+ 	while (sd) {
+ 		unsigned long sd_addr = (unsigned long)sd;
+ 
+--- a/arch/x86/boot/compressed/kaslr.c
++++ b/arch/x86/boot/compressed/kaslr.c
+@@ -63,7 +63,7 @@ static unsigned long get_boot_seed(void)
+ 	unsigned long hash = 0;
+ 
+ 	hash = rotate_xor(hash, build_str, sizeof(build_str));
+-	hash = rotate_xor(hash, boot_params, sizeof(*boot_params));
++	hash = rotate_xor(hash, boot_params_ptr, sizeof(*boot_params_ptr));
+ 
+ 	return hash;
+ }
+@@ -383,7 +383,7 @@ static void handle_mem_options(void)
+ static void mem_avoid_init(unsigned long input, unsigned long input_size,
+ 			   unsigned long output)
+ {
+-	unsigned long init_size = boot_params->hdr.init_size;
++	unsigned long init_size = boot_params_ptr->hdr.init_size;
+ 	u64 initrd_start, initrd_size;
+ 	unsigned long cmd_line, cmd_line_size;
+ 
+@@ -395,10 +395,10 @@ static void mem_avoid_init(unsigned long
+ 	mem_avoid[MEM_AVOID_ZO_RANGE].size = (output + init_size) - input;
+ 
+ 	/* Avoid initrd. */
+-	initrd_start  = (u64)boot_params->ext_ramdisk_image << 32;
+-	initrd_start |= boot_params->hdr.ramdisk_image;
+-	initrd_size  = (u64)boot_params->ext_ramdisk_size << 32;
+-	initrd_size |= boot_params->hdr.ramdisk_size;
++	initrd_start  = (u64)boot_params_ptr->ext_ramdisk_image << 32;
++	initrd_start |= boot_params_ptr->hdr.ramdisk_image;
++	initrd_size  = (u64)boot_params_ptr->ext_ramdisk_size << 32;
++	initrd_size |= boot_params_ptr->hdr.ramdisk_size;
+ 	mem_avoid[MEM_AVOID_INITRD].start = initrd_start;
+ 	mem_avoid[MEM_AVOID_INITRD].size = initrd_size;
+ 	/* No need to set mapping for initrd, it will be handled in VO. */
+@@ -413,8 +413,8 @@ static void mem_avoid_init(unsigned long
+ 	}
+ 
+ 	/* Avoid boot parameters. */
+-	mem_avoid[MEM_AVOID_BOOTPARAMS].start = (unsigned long)boot_params;
+-	mem_avoid[MEM_AVOID_BOOTPARAMS].size = sizeof(*boot_params);
++	mem_avoid[MEM_AVOID_BOOTPARAMS].start = (unsigned long)boot_params_ptr;
++	mem_avoid[MEM_AVOID_BOOTPARAMS].size = sizeof(*boot_params_ptr);
+ 
+ 	/* We don't need to set a mapping for setup_data. */
+ 
+@@ -447,7 +447,7 @@ static bool mem_avoid_overlap(struct mem
+ 	}
+ 
+ 	/* Avoid all entries in the setup_data linked list. */
+-	ptr = (struct setup_data *)(unsigned long)boot_params->hdr.setup_data;
++	ptr = (struct setup_data *)(unsigned long)boot_params_ptr->hdr.setup_data;
+ 	while (ptr) {
+ 		struct mem_vector avoid;
+ 
+@@ -706,7 +706,7 @@ static inline bool memory_type_is_free(e
+ static bool
+ process_efi_entries(unsigned long minimum, unsigned long image_size)
+ {
+-	struct efi_info *e = &boot_params->efi_info;
++	struct efi_info *e = &boot_params_ptr->efi_info;
+ 	bool efi_mirror_found = false;
+ 	struct mem_vector region;
+ 	efi_memory_desc_t *md;
+@@ -777,8 +777,8 @@ static void process_e820_entries(unsigne
+ 	struct boot_e820_entry *entry;
+ 
+ 	/* Verify potential e820 positions, appending to slots list. */
+-	for (i = 0; i < boot_params->e820_entries; i++) {
+-		entry = &boot_params->e820_table[i];
++	for (i = 0; i < boot_params_ptr->e820_entries; i++) {
++		entry = &boot_params_ptr->e820_table[i];
+ 		/* Skip non-RAM entries. */
+ 		if (entry->type != E820_TYPE_RAM)
+ 			continue;
+@@ -852,7 +852,7 @@ void choose_random_location(unsigned lon
+ 		return;
+ 	}
+ 
+-	boot_params->hdr.loadflags |= KASLR_FLAG;
++	boot_params_ptr->hdr.loadflags |= KASLR_FLAG;
+ 
+ 	if (IS_ENABLED(CONFIG_X86_32))
+ 		mem_limit = KERNEL_IMAGE_SIZE;
+--- a/arch/x86/boot/compressed/mem.c
++++ b/arch/x86/boot/compressed/mem.c
+@@ -54,17 +54,17 @@ bool init_unaccepted_memory(void)
+ 	enum efi_type et;
+ 	int ret;
+ 
+-	et = efi_get_type(boot_params);
++	et = efi_get_type(boot_params_ptr);
+ 	if (et == EFI_TYPE_NONE)
+ 		return false;
+ 
+-	ret = efi_get_conf_table(boot_params, &cfg_table_pa, &cfg_table_len);
++	ret = efi_get_conf_table(boot_params_ptr, &cfg_table_pa, &cfg_table_len);
+ 	if (ret) {
+ 		warn("EFI config table not found.");
+ 		return false;
+ 	}
+ 
+-	table = (void *)efi_find_vendor_table(boot_params, cfg_table_pa,
++	table = (void *)efi_find_vendor_table(boot_params_ptr, cfg_table_pa,
+ 					      cfg_table_len, guid);
+ 	if (!table)
+ 		return false;
+--- a/arch/x86/boot/compressed/misc.c
++++ b/arch/x86/boot/compressed/misc.c
+@@ -46,7 +46,7 @@ void *memmove(void *dest, const void *sr
+ /*
+  * This is set up by the setup-routine at boot-time
+  */
+-struct boot_params *boot_params;
++struct boot_params *boot_params_ptr;
+ 
+ struct port_io_ops pio_ops;
+ 
+@@ -132,8 +132,8 @@ void __putstr(const char *s)
+ 	if (lines == 0 || cols == 0)
+ 		return;
+ 
+-	x = boot_params->screen_info.orig_x;
+-	y = boot_params->screen_info.orig_y;
++	x = boot_params_ptr->screen_info.orig_x;
++	y = boot_params_ptr->screen_info.orig_y;
+ 
+ 	while ((c = *s++) != '\0') {
+ 		if (c == '\n') {
+@@ -154,8 +154,8 @@ void __putstr(const char *s)
+ 		}
+ 	}
+ 
+-	boot_params->screen_info.orig_x = x;
+-	boot_params->screen_info.orig_y = y;
++	boot_params_ptr->screen_info.orig_x = x;
++	boot_params_ptr->screen_info.orig_y = y;
+ 
+ 	pos = (x + cols * y) * 2;	/* Update cursor position */
+ 	outb(14, vidport);
+@@ -396,16 +396,16 @@ asmlinkage __visible void *extract_kerne
+ 	size_t entry_offset;
+ 
+ 	/* Retain x86 boot parameters pointer passed from startup_32/64. */
+-	boot_params = rmode;
++	boot_params_ptr = rmode;
+ 
+ 	/* Clear flags intended for solely in-kernel use. */
+-	boot_params->hdr.loadflags &= ~KASLR_FLAG;
++	boot_params_ptr->hdr.loadflags &= ~KASLR_FLAG;
+ 
+-	parse_mem_encrypt(&boot_params->hdr);
++	parse_mem_encrypt(&boot_params_ptr->hdr);
+ 
+-	sanitize_boot_params(boot_params);
++	sanitize_boot_params(boot_params_ptr);
+ 
+-	if (boot_params->screen_info.orig_video_mode == 7) {
++	if (boot_params_ptr->screen_info.orig_video_mode == 7) {
+ 		vidmem = (char *) 0xb0000;
+ 		vidport = 0x3b4;
+ 	} else {
+@@ -413,8 +413,8 @@ asmlinkage __visible void *extract_kerne
+ 		vidport = 0x3d4;
+ 	}
+ 
+-	lines = boot_params->screen_info.orig_video_lines;
+-	cols = boot_params->screen_info.orig_video_cols;
++	lines = boot_params_ptr->screen_info.orig_video_lines;
++	cols = boot_params_ptr->screen_info.orig_video_cols;
+ 
+ 	init_default_io_ops();
+ 
+@@ -433,7 +433,7 @@ asmlinkage __visible void *extract_kerne
+ 	 * so that early debugging output from the RSDP parsing code can be
+ 	 * collected.
+ 	 */
+-	boot_params->acpi_rsdp_addr = get_rsdp_addr();
++	boot_params_ptr->acpi_rsdp_addr = get_rsdp_addr();
+ 
+ 	debug_putstr("early console in extract_kernel\n");
+ 
+--- a/arch/x86/boot/compressed/misc.h
++++ b/arch/x86/boot/compressed/misc.h
+@@ -61,7 +61,6 @@ extern memptr free_mem_ptr;
+ extern memptr free_mem_end_ptr;
+ void *malloc(int size);
+ void free(void *where);
+-extern struct boot_params *boot_params;
+ void __putstr(const char *s);
+ void __puthex(unsigned long value);
+ #define error_putstr(__x)  __putstr(__x)
+--- a/arch/x86/boot/compressed/pgtable_64.c
++++ b/arch/x86/boot/compressed/pgtable_64.c
+@@ -28,7 +28,6 @@ static char trampoline_save[TRAMPOLINE_3
+  */
+ unsigned long *trampoline_32bit __section(".data");
+ 
+-extern struct boot_params *boot_params;
+ int cmdline_find_option_bool(const char *option);
+ 
+ static unsigned long find_trampoline_placement(void)
+@@ -49,7 +48,7 @@ static unsigned long find_trampoline_pla
+ 	 *
+ 	 * Only look for values in the legacy ROM for non-EFI system.
+ 	 */
+-	signature = (char *)&boot_params->efi_info.efi_loader_signature;
++	signature = (char *)&boot_params_ptr->efi_info.efi_loader_signature;
+ 	if (strncmp(signature, EFI32_LOADER_SIGNATURE, 4) &&
+ 	    strncmp(signature, EFI64_LOADER_SIGNATURE, 4)) {
+ 		ebda_start = *(unsigned short *)0x40e << 4;
+@@ -65,10 +64,10 @@ static unsigned long find_trampoline_pla
+ 	bios_start = round_down(bios_start, PAGE_SIZE);
+ 
+ 	/* Find the first usable memory region under bios_start. */
+-	for (i = boot_params->e820_entries - 1; i >= 0; i--) {
++	for (i = boot_params_ptr->e820_entries - 1; i >= 0; i--) {
+ 		unsigned long new = bios_start;
+ 
+-		entry = &boot_params->e820_table[i];
++		entry = &boot_params_ptr->e820_table[i];
+ 
+ 		/* Skip all entries above bios_start. */
+ 		if (bios_start <= entry->addr)
+@@ -107,7 +106,7 @@ asmlinkage void configure_5level_paging(
+ 	bool l5_required = false;
+ 
+ 	/* Initialize boot_params. Required for cmdline_find_option_bool(). */
+-	boot_params = bp;
++	boot_params_ptr = bp;
  
  	/*
- 	 * Re-evaulate the file if either the xattr has changed or the
---- a/security/integrity/integrity.h
-+++ b/security/integrity/integrity.h
-@@ -42,6 +42,9 @@
- #define IMA_CHECK_BLACKLIST	0x40000000
- #define IMA_VERITY_REQUIRED	0x80000000
+ 	 * Check if LA57 is desired and supported.
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -618,7 +618,7 @@ void sev_prep_identity_maps(unsigned lon
+ 	 * accessed after switchover.
+ 	 */
+ 	if (sev_snp_enabled()) {
+-		unsigned long cc_info_pa = boot_params->cc_blob_address;
++		unsigned long cc_info_pa = boot_params_ptr->cc_blob_address;
+ 		struct cc_blob_sev_info *cc_info;
  
-+/* Exclude non-action flags which are not rule-specific. */
-+#define IMA_NONACTION_RULE_FLAGS	(IMA_NONACTION_FLAGS & ~IMA_NEW_FILE)
+ 		kernel_add_identity_map(cc_info_pa, cc_info_pa + sizeof(*cc_info));
+--- a/arch/x86/include/asm/boot.h
++++ b/arch/x86/include/asm/boot.h
+@@ -86,6 +86,8 @@ extern const unsigned long kernel_total_
+ 
+ unsigned long decompress_kernel(unsigned char *outbuf, unsigned long virt_addr,
+ 				void (*error)(char *x));
 +
- #define IMA_DO_MASK		(IMA_MEASURE | IMA_APPRAISE | IMA_AUDIT | \
- 				 IMA_HASH | IMA_APPRAISE_SUBMASK)
- #define IMA_DONE_MASK		(IMA_MEASURED | IMA_APPRAISED | IMA_AUDITED | \
++extern struct boot_params *boot_params_ptr;
+ #endif
+ 
+ #endif /* _ASM_X86_BOOT_H */
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -883,7 +883,7 @@ void __noreturn efi_stub_entry(efi_handl
+ 	unsigned long kernel_entry;
+ 	efi_status_t status;
+ 
+-	boot_params_pointer = boot_params;
++	boot_params_ptr = boot_params;
+ 
+ 	efi_system_table = sys_table_arg;
+ 	/* Check if we were booted by the EFI firmware */
+--- a/drivers/firmware/efi/libstub/x86-stub.h
++++ b/drivers/firmware/efi/libstub/x86-stub.h
+@@ -2,8 +2,6 @@
+ 
+ #include <linux/efi.h>
+ 
+-extern struct boot_params *boot_params_pointer asm("boot_params");
+-
+ extern void trampoline_32bit_src(void *, bool);
+ extern const u16 trampoline_ljmp_imm_offset;
+ 
 
 
