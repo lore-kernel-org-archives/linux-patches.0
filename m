@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249B92309B0;
-	Mon, 10 Mar 2025 18:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EED2206BD;
+	Mon, 10 Mar 2025 18:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630441; cv=none; b=RpSkLCNzy1/0HNZAfOg4j3IIq37iEovkxrasXiiAGWO8ZjFwqfiVPDJs0113MGbp7il7nyqMUqKPqdDchNqXbiSdSo1VdZI4UNi1fggTp7S+yAilrWB40AwyDBo7ZErPbHndniSDRgVGRsxBoF5tpFX4T87HgIdpNcB2WA1GUfg=
+	t=1741630444; cv=none; b=WHuomz16lDwaZJywGcpUzmjWbyeErDPrW1YGiR5PJJ0iEe3zBBmGnI7PkDHz1l3vdTexkTbX4mdG9NSWzDTjUYP81WSuudeJUL13fVK/DZKYr5SlFpRveOCCdPFJA9ikczDTyXuChdFiymZ6MyKymvqH7RWceP++9pOFFsZtEq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630441; c=relaxed/simple;
-	bh=gb2SQef8eSyb57oG3fELCW5jea5WpRyZp9kMKUlGlpE=;
+	s=arc-20240116; t=1741630444; c=relaxed/simple;
+	bh=ng80GeQXA6gUTS/bY5AvEx5mE4jY4ljB16rN7RxjiKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HT8xUPJ6TClF8OsL/tOzLo/VnDaIcjW5Oq3sDOcrj6mbpj2iH03MyIhIYDh2rSgoke/qUEbk0sdsJOEi4P6ZkJWFx0cqLdx1mBYIaLQabIICvvQF1ZHMxKY2xjYfoXnYfx4vg7wuvYwi+0LsOi7G61MV/JiGSM0UvccgS5au8lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSImKDoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YJJq+mkdUx8XgqLDAlh5RK1qI3IV2p/Ll506QVkLu5UCW/ZwJBTwOWn4n3kVXoNPAnjY7OrJifymJuhBUH3758anIZjZgUzWZrkrs2sI9Ck2QnXhG6TitTtTOGonVLnmS1EhkWH2p9Y6THAI96+9w89HL9K7Soa52lVtCaTTEsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWl0NTBz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSImKDoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CCFC4CEE5;
-	Mon, 10 Mar 2025 18:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWl0NTBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF09C4CEE5;
+	Mon, 10 Mar 2025 18:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630441;
-	bh=gb2SQef8eSyb57oG3fELCW5jea5WpRyZp9kMKUlGlpE=;
+	s=korg; t=1741630444;
+	bh=ng80GeQXA6gUTS/bY5AvEx5mE4jY4ljB16rN7RxjiKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OSImKDoy5WBWmk3D0DpqjllsIMZfQovSG5v8pA+Bj0rkKtuFpuF71u00grI89MX9X
-	 tfJWI+ZkJQjTFgTbw98u4hdoVGdBmfXUWB/U4T1zOeCfbXc5oOHL5wR4cSMU9Sx5js
-	 tWVy4wDSER0XwhmrLrNuKOIvmMN3/no8mF1IrOFg=
+	b=rWl0NTBz+noQkZrTTC/2256KTF3z+nXGEaiszrpEsvfiP+i8DhnpHTPz8XmjgSz69
+	 C1MYUFTrgN6E93nR8g3x6cvj4Ul3xW4V7BebXL1OZxtty5iBhvUwKwOZugfbTIQty/
+	 h3/zfFCakxDGGPQUkFqwZz0BnGW+LNkSQ87+jr+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 407/620] openvswitch: use RCU protection in ovs_vport_cmd_fill_info()
-Date: Mon, 10 Mar 2025 18:04:13 +0100
-Message-ID: <20250310170601.655974268@linuxfoundation.org>
+Subject: [PATCH 5.15 408/620] ndisc: extend RCU protection in ndisc_send_skb()
+Date: Mon, 10 Mar 2025 18:04:14 +0100
+Message-ID: <20250310170601.694298095@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,62 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 90b2f49a502fa71090d9f4fe29a2f51fe5dff76d ]
+[ Upstream commit ed6ae1f325d3c43966ec1b62ac1459e2b8e45640 ]
 
-ovs_vport_cmd_fill_info() can be called without RTNL or RCU.
+ndisc_send_skb() can be called without RTNL or RCU held.
 
-Use RCU protection and dev_net_rcu() to avoid potential UAF.
+Acquire rcu_read_lock() earlier, so that we can use dev_net_rcu()
+and avoid a potential UAF.
 
-Fixes: 9354d4520342 ("openvswitch: reliable interface indentification in port dumps")
+Fixes: 1762f7e88eb3 ("[NETNS][IPV6] ndisc - make socket control per namespace")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-6-edumazet@google.com
+Link: https://patch.msgid.link/20250207135841.1948589-8-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/ipv6/ndisc.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 0fc98e89a1149..c28b56c309169 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -2058,6 +2058,7 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 3972189c09b14..af584e879467e 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -471,16 +471,20 @@ static void ndisc_send_skb(struct sk_buff *skb,
+ 			   const struct in6_addr *daddr,
+ 			   const struct in6_addr *saddr)
  {
- 	struct ovs_header *ovs_header;
- 	struct ovs_vport_stats vport_stats;
-+	struct net *net_vport;
++	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(skb->dev);
+-	struct sock *sk = net->ipv6.ndisc_sk;
+ 	struct inet6_dev *idev;
++	struct net *net;
++	struct sock *sk;
  	int err;
+-	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	u8 type;
  
- 	ovs_header = genlmsg_put(skb, portid, seq, &dp_vport_genl_family,
-@@ -2074,12 +2075,15 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
- 	    nla_put_u32(skb, OVS_VPORT_ATTR_IFINDEX, vport->dev->ifindex))
- 		goto nla_put_failure;
+ 	type = icmp6h->icmp6_type;
  
--	if (!net_eq(net, dev_net(vport->dev))) {
--		int id = peernet2id_alloc(net, dev_net(vport->dev), gfp);
 +	rcu_read_lock();
-+	net_vport = dev_net_rcu(vport->dev);
-+	if (!net_eq(net, net_vport)) {
-+		int id = peernet2id_alloc(net, net_vport, GFP_ATOMIC);
++
++	net = dev_net_rcu(skb->dev);
++	sk = net->ipv6.ndisc_sk;
+ 	if (!dst) {
+ 		struct flowi6 fl6;
+ 		int oif = skb->dev->ifindex;
+@@ -488,6 +492,7 @@ static void ndisc_send_skb(struct sk_buff *skb,
+ 		icmpv6_flow_init(sk, &fl6, type, saddr, daddr, oif);
+ 		dst = icmp6_dst_alloc(skb->dev, &fl6);
+ 		if (IS_ERR(dst)) {
++			rcu_read_unlock();
+ 			kfree_skb(skb);
+ 			return;
+ 		}
+@@ -502,7 +507,6 @@ static void ndisc_send_skb(struct sk_buff *skb,
  
- 		if (nla_put_s32(skb, OVS_VPORT_ATTR_NETNSID, id))
--			goto nla_put_failure;
-+			goto nla_put_failure_unlock;
- 	}
-+	rcu_read_unlock();
+ 	ip6_nd_hdr(skb, saddr, daddr, inet6_sk(sk)->hop_limit, skb->len);
  
- 	ovs_vport_get_stats(vport, &vport_stats);
- 	if (nla_put_64bit(skb, OVS_VPORT_ATTR_STATS,
-@@ -2097,6 +2101,8 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
- 	genlmsg_end(skb, ovs_header);
- 	return 0;
+-	rcu_read_lock();
+ 	idev = __in6_dev_get(dst->dev);
+ 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
  
-+nla_put_failure_unlock:
-+	rcu_read_unlock();
- nla_put_failure:
- 	err = -EMSGSIZE;
- error:
 -- 
 2.39.5
 
