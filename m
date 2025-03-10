@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C8817CA12;
-	Mon, 10 Mar 2025 17:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA3017C225;
+	Mon, 10 Mar 2025 17:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627046; cv=none; b=sttcloOTYIg3eWpd9wOj3bwNBniJgD2MpZGCowiOLnKviYpKEoc5ZPakuFWmte1qxCX198kshoxiCyq50A3WvfeRIqvgtfAbF37CMF0bIkqLhbo2oocXNophZFAnt07/2h+dAyHP9BWMMizsgtmCCnaXflC43GH23sb0av977jU=
+	t=1741627049; cv=none; b=Ilb9T2A25GzZoI5tXktDNYTYtONGr9KApatZb/zJlhGOyUyzqS30dmacIfnR889C4fA+tJpR4b+VmjFHw0+2o+uspqpTLAc+L6X8B2iizuw60YibB0QdDUNabB5nMQwIqXGTUG6pfBZS8yk+yRev2s7+dpaBNwwda6RN6B10ouc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627046; c=relaxed/simple;
-	bh=iSKEaGdx9LV2qbAaChBdDZXqhcwp/b+fxzrHEx2UByw=;
+	s=arc-20240116; t=1741627049; c=relaxed/simple;
+	bh=SMTXSGPDoRqP7i7xHKuKEGGgbxtxLiwKKR8JUfAlDGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/jwSGthetLJKR/BbHB78PEhhKkA9pBiOzkwQgnJqP3t1VStmOMBusMP577ReqUN1ZdqDBIZw70TFQL1S0Jshube3Dit9nH3/XXzg+q1RI8Z3pNEM2Bd1vjb43+pbyoJ1awRG6EEzxifB0CWOB9Hcrf4JNbJSRc1bHJPQfgTIbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJVDayw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGyjOBkL8X+WU3i5l4cnIUt62pdD2T5pe1EGnGJFVTNNyjS32RXS49sDQdlN4NcY08GbzpfYJwlZCYx2dJ/2ZH8j/dfxEnvZeVSBshN6CtKf+x9u0S42umahvG7bIfwp0AnjtoYqP47Q5zkx7U73grFMfTWa+QEDXse9JV8T3Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJXT04DV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJVDayw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40271C4CEE5;
-	Mon, 10 Mar 2025 17:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJXT04DV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAE7C4CEE5;
+	Mon, 10 Mar 2025 17:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627046;
-	bh=iSKEaGdx9LV2qbAaChBdDZXqhcwp/b+fxzrHEx2UByw=;
+	s=korg; t=1741627049;
+	bh=SMTXSGPDoRqP7i7xHKuKEGGgbxtxLiwKKR8JUfAlDGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJVDayw0Mw9etDgbxPu4GymNPxfbfjoed6eWsPwnsMirDUhy3LawQ3J11VeVVtCyz
-	 C8sno8mxB+haW3tARbUVj9M1w8o8/i0XEiGvxrQVWQmUpazeKZzQyro23AJBhG7Eb1
-	 L+sMTwXO3tEigR3QOdP7sKAEFqO0pBpHqrrrnSRU=
+	b=iJXT04DVUV7KnCLKWd0qi/8uBMP1O+PKtJynTU2XwI41XXH2MBv51zS3AwjZ+SSH+
+	 Yhcd78E+UIgLvfvRFaeEYDTOLzZIkbFKOgp08bXpW9t43C4h6m831+MOAOxTFR08hj
+	 Jonj2BYuV6qHHFOiOBwNB9Bc8a7YfjhYrnJNNxFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.13 175/207] KVM: SVM: Suppress DEBUGCTL.BTF on AMD
-Date: Mon, 10 Mar 2025 18:06:08 +0100
-Message-ID: <20250310170454.748139322@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 202/207] kbuild: hdrcheck: fix cross build with clang
+Date: Mon, 10 Mar 2025 18:06:35 +0100
+Message-ID: <20250310170455.809872652@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,64 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d0eac42f5cecce009d315655bee341304fbe075e upstream.
+[ Upstream commit 02e9a22ceef0227175e391902d8760425fa072c6 ]
 
-Mark BTF as reserved in DEBUGCTL on AMD, as KVM doesn't actually support
-BTF, and fully enabling BTF virtualization is non-trivial due to
-interactions with the emulator, guest_debug, #DB interception, nested SVM,
-etc.
+The headercheck tries to call clang with a mix of compiler arguments
+that don't include the target architecture. When building e.g. x86
+headers on arm64, this produces a warning like
 
-Don't inject #GP if the guest attempts to set BTF, as there's no way to
-communicate lack of support to the guest, and instead suppress the flag
-and treat the WRMSR as (partially) unsupported.
+   clang: warning: unknown platform, assuming -mfloat-abi=soft
 
-In short, make KVM behave the same on AMD and Intel (VMX already squashes
-BTF).
+Add in the KBUILD_CPPFLAGS, which contain the target, in order to make it
+build properly.
 
-Note, due to other bugs in KVM's handling of DEBUGCTL, the only way BTF
-has "worked" in any capacity is if the guest simultaneously enables LBRs.
+See also 1b71c2fb04e7 ("kbuild: userprogs: fix bitsize and target
+detection on clang").
 
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250227222411.3490595-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c |    9 +++++++++
- arch/x86/kvm/svm/svm.h |    2 +-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ usr/include/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3181,6 +3181,15 @@ static int svm_set_msr(struct kvm_vcpu *
- 		 */
- 		data &= ~GENMASK(5, 2);
+diff --git a/usr/include/Makefile b/usr/include/Makefile
+index 6c6de1b1622b1..e3d6b03527fec 100644
+--- a/usr/include/Makefile
++++ b/usr/include/Makefile
+@@ -10,7 +10,7 @@ UAPI_CFLAGS := -std=c90 -Wall -Werror=implicit-function-declaration
  
-+		/*
-+		 * Suppress BTF as KVM doesn't virtualize BTF, but there's no
-+		 * way to communicate lack of support to the guest.
-+		 */
-+		if (data & DEBUGCTLMSR_BTF) {
-+			kvm_pr_unimpl_wrmsr(vcpu, MSR_IA32_DEBUGCTLMSR, data);
-+			data &= ~DEBUGCTLMSR_BTF;
-+		}
-+
- 		if (data & DEBUGCTL_RESERVED_BITS)
- 			return 1;
+ # In theory, we do not care -m32 or -m64 for header compile tests.
+ # It is here just because CONFIG_CC_CAN_LINK is tested with -m32 or -m64.
+-UAPI_CFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
++UAPI_CFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
  
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -591,7 +591,7 @@ static inline bool is_vnmi_enabled(struc
- /* svm.c */
- #define MSR_INVALID				0xffffffffU
- 
--#define DEBUGCTL_RESERVED_BITS (~(DEBUGCTLMSR_BTF | DEBUGCTLMSR_LBR))
-+#define DEBUGCTL_RESERVED_BITS (~DEBUGCTLMSR_LBR)
- 
- extern bool dump_invalid_vmcb;
- 
+ # USERCFLAGS might contain sysroot location for CC.
+ UAPI_CFLAGS += $(USERCFLAGS)
+-- 
+2.39.5
+
 
 
