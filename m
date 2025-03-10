@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AFA2236FB;
-	Mon, 10 Mar 2025 17:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE672236FB;
+	Mon, 10 Mar 2025 17:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626793; cv=none; b=gmiAMOir5BUvCIKx+JLMTYmSjX/TkENnudPkX0A7O0M2ftxkMjaEdzZaEuR3znQXAuMs9kfsF2APaCr34CChgrlmMJCmCD77X5zPkqN2bWlyOdTEp2smki/jUhGnpf6ZtiWPnqCTmpHH3c0YUBlsgxLXjIzM8FOy6Sc9JwRxdCM=
+	t=1741626796; cv=none; b=uT5TI1cOSnsfx83/wSIM0HA0VCdHkNTG1agpzJpayg3EzdZQ9BAf/+4exrXuQvZTZCjTb1MQIPyfLLG4o65hyQaPsuTsx4zvEAM5zpnABkmjP7j1EcpZAJgdIPDHEJr8Qf8o3aQdMT3/FvLkKGe3ttqajqCtZhYVnBwCpl12yV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626793; c=relaxed/simple;
-	bh=7LzbM3UV+RcA80JnfMG/jGbucYIgaDGxHfhbrQaYN4A=;
+	s=arc-20240116; t=1741626796; c=relaxed/simple;
+	bh=Zd1ccEZIeNh+cwZFH9UGS7mFt0cUG7wY4WCHSO5sIEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C15f5XrEqH8du2a0zJSXLWah2KIM9oWhZg/avrDtFDZFz1VVcni6B1unrTBIZqT0TyW0ELDR7+Y5RyhseCpvoL2X10HFGjkfBHwjRjgk4JAiFdjEMn7azEq8TFkWWTFgS6kREpCOpKwW1SyoOawUYD0DORZDMmjooLqaoXh7Khs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10p/hUdT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ka0reNuUsw0mqFeRPQL6z423sdqE+Lgm8ph2aSMg8m7AFQqHoSM9DTKZXbdkIzird9REU067VwvVW/I7uMrRzs5e45CRX/otwBpjQst8XjyC8fEMw2LNAB1CTFM4bjxxTEqpGHUbPmEbnPi8m2r0TXN6IhfXV13FSIWve4St3lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18xSOkGB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10p/hUdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F94C4CEE5;
-	Mon, 10 Mar 2025 17:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18xSOkGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AB2C4CEE5;
+	Mon, 10 Mar 2025 17:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626793;
-	bh=7LzbM3UV+RcA80JnfMG/jGbucYIgaDGxHfhbrQaYN4A=;
+	s=korg; t=1741626796;
+	bh=Zd1ccEZIeNh+cwZFH9UGS7mFt0cUG7wY4WCHSO5sIEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10p/hUdTxUlTJRGlHoLbA7YJQEH5SuFcaffI6ukTo3F7l3wPyn+bglX0aYYyo5t8a
-	 WIQUNn0jn88TjnL5pvwf23WYVjNUvBt+3AR2DcU8tnH4ExCoWKreN5/KYsjUdgFJYj
-	 R2+lfy4y3YDBG0SgVe9pSzHW1k3k1E13KHJVx5lY=
+	b=18xSOkGBrdMSV6YL6PDP43YVTD6ECQ0q81Wnb74t2HmdWfItOFEA3ZfKlTNQnpPV4
+	 R45If/uLtpEbfF8as6nzwUC5xHdQlO5ptNoqz+HNmGlCZJVotywEOCKniJqDdBIg5H
+	 WTN+LyMOosgT+0Jngoq0KkpjabFr6wKlKTduxo7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Christian Brauner <brauner@kernel.org>,
+	Titus Rwantare <titusr@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 115/207] cred: Fix RCU warnings in override/revert_creds
-Date: Mon, 10 Mar 2025 18:05:08 +0100
-Message-ID: <20250310170452.383376333@linuxfoundation.org>
+Subject: [PATCH 6.13 116/207] hwmon: (pmbus) Initialise page count in pmbus_identify()
+Date: Mon, 10 Mar 2025 18:05:09 +0100
+Message-ID: <20250310170452.422938114@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Titus Rwantare <titusr@google.com>
 
-[ Upstream commit e04918dc594669068f5d59d567d08db531167188 ]
+[ Upstream commit 6b6e2e8fd0de3fa7c6f4f8fe6841b01770b2e7bc ]
 
-Fix RCU warnings in override_creds and revert_creds by turning
-the RCU pointer into a normal pointer using rcu_replace_pointer.
+The `pmbus_identify()` function fails to correctly determine the number
+of supported pages on PMBus devices. This occurs because `info->pages`
+is implicitly zero-initialised, and `pmbus_set_page()` does not perform
+writes to the page register if `info->pages` is not yet initialised.
+Without this patch, `info->pages` is always set to the maximum after
+scanning.
 
-These warnings were previously private to the cred code, but due
-to the move into the header file they are now polluting unrelated
-subsystems.
+This patch initialises `info->pages` to `PMBUS_PAGES` before the probing
+loop, enabling `pmbus_set_page()` writes to make it out onto the bus
+correctly identifying the number of pages. `PMBUS_PAGES` seemed like a
+reasonable non-zero number because that's the current result of the
+identification process.
 
-Fixes: 49dffdfde462 ("cred: Add a light version of override/revert_creds()")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Link: https://lore.kernel.org/r/Z8QGQGW0IaSklKG7@gondor.apana.org.au
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Testing was done with a PMBus device in QEMU.
+
+Signed-off-by: Titus Rwantare <titusr@google.com>
+Fixes: 442aba78728e7 ("hwmon: PMBus device driver")
+Link: https://lore.kernel.org/r/20250227222455.2583468-1-titusr@google.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cred.h | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/hwmon/pmbus/pmbus.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/cred.h b/include/linux/cred.h
-index 382768a9707b5..1e1ec8834e454 100644
---- a/include/linux/cred.h
-+++ b/include/linux/cred.h
-@@ -179,18 +179,12 @@ static inline bool cap_ambient_invariant_ok(const struct cred *cred)
-  */
- static inline const struct cred *override_creds_light(const struct cred *override_cred)
- {
--	const struct cred *old = current->cred;
--
--	rcu_assign_pointer(current->cred, override_cred);
--	return old;
-+	return rcu_replace_pointer(current->cred, override_cred, 1);
- }
+diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
+index 77cf268e7d2d6..920cd5408141a 100644
+--- a/drivers/hwmon/pmbus/pmbus.c
++++ b/drivers/hwmon/pmbus/pmbus.c
+@@ -103,6 +103,8 @@ static int pmbus_identify(struct i2c_client *client,
+ 		if (pmbus_check_byte_register(client, 0, PMBUS_PAGE)) {
+ 			int page;
  
- static inline const struct cred *revert_creds_light(const struct cred *revert_cred)
- {
--	const struct cred *override_cred = current->cred;
--
--	rcu_assign_pointer(current->cred, revert_cred);
--	return override_cred;
-+	return rcu_replace_pointer(current->cred, revert_cred, 1);
- }
- 
- /**
++			info->pages = PMBUS_PAGES;
++
+ 			for (page = 1; page < PMBUS_PAGES; page++) {
+ 				if (pmbus_set_page(client, page, 0xff) < 0)
+ 					break;
 -- 
 2.39.5
 
