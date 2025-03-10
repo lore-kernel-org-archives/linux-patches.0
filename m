@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C13C17CA12;
-	Mon, 10 Mar 2025 17:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C3917CA12;
+	Mon, 10 Mar 2025 17:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629047; cv=none; b=geOhIun3dHYk5bBirKmh+01T6rcsPF0/v96WzDJqg07YaCiXupzjoCzRrp6lJgwHtYqK92Jkt0hdf4BFNhcacWWVT4UuukTYXrGazixUjyElBob9s7s1274Avh/3dNrNltWiuvw6qPZ0GwttSxWIhcJlfGAzOEXp4hLVREsud04=
+	t=1741629049; cv=none; b=sKgDZsMvZOpTzuTrgC9YmZNE0B9zyunipkeeyyuc0QkNJZRRJjhqjtYjSYtLDmunN00npALi6y0dw7ptrjFoLOqkg60MWPybsjsmMrBLNJyd1LoN7fah07ODLSG5K1Fxx722UeSjh34kIHjP9Cl68lS0nBoJhIDYYo6pgt81dCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629047; c=relaxed/simple;
-	bh=SYH7yvVBBOp0vs3f05oia5/DMwj/hYfi/PROwd0UnOY=;
+	s=arc-20240116; t=1741629049; c=relaxed/simple;
+	bh=+iqRORjzSsPoSTDoXHM5lyn7OOfPK8dJ87BGu8/dPfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKNaehY/ajbsrEB3kgLpkKdPJizGYFByu618wfMk67T0/kKK9kERI6qqZH0sfLXxX3l01RPlvdD+8eVvS7s455lSI0jyqi0bqYvFK0CtIMnuEHawr2hYYLVoBsPiS2WCFapN2hyOiugCzNubT/ailxmwvO2LQXWMIwDlZw9qcpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEwKVP8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktHyEj1C2LJFesKjC43vZKFZfB4ksB9oCz9B8/OgqSfQmRkuYu1nEQhCe9m8pe/1gPL3DvGc7OOOfZ1bFCePA2u7i9JYj1lkZLFeKU92ZVTjrGM98OWzXVB4YA4G3OySGGjam7wpIAeQmKqFI1hfLVgZ9vAz4TgkdVLpVNmDMFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lH8Rea6B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEwKVP8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12942C4CEE5;
-	Mon, 10 Mar 2025 17:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lH8Rea6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6DAC4CEE5;
+	Mon, 10 Mar 2025 17:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629046;
-	bh=SYH7yvVBBOp0vs3f05oia5/DMwj/hYfi/PROwd0UnOY=;
+	s=korg; t=1741629049;
+	bh=+iqRORjzSsPoSTDoXHM5lyn7OOfPK8dJ87BGu8/dPfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEwKVP8kASALnz4UNPszfvJ8Pl+vHB91uF6muAcx0MVzt1SzpHnuWmrH0jC/qdN4B
-	 AWkX1yMMbfbWebsNk9Cu1gRf9rb7wKUoSe2Xxz9Ky3Yz3ugPcAWtK1E6T0DXB9EsJF
-	 py/LM5i7izOvZzMlztAI1BsnNw50P42kKADs3y/c=
+	b=lH8Rea6B03QBDpAt0M8Jlm+GlaTbf/W1wgcyaBM7ZlVC92ugQQel6mxTsg07AxP/S
+	 IunD3BnaQL35HKMbXyY7oFOIX7mThJHIQ/iCruSzXgoQfn/tchQKUrlrxAJ0B/j4cz
+	 ouVckT4TH92zbFSNgMdiZqpcc8EUFgZuiyQ/tQcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	pangliyuan <pangliyuan1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/620] rtc: pcf85063: fix potential OOB write in PCF85063 NVMEM read
-Date: Mon, 10 Mar 2025 18:00:05 +0100
-Message-ID: <20250310170551.891626447@linuxfoundation.org>
+Subject: [PATCH 5.15 160/620] ubifs: skip dumping tnc tree when zroot is null
+Date: Mon, 10 Mar 2025 18:00:06 +0100
+Message-ID: <20250310170551.932503198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: pangliyuan <pangliyuan1@huawei.com>
 
-[ Upstream commit 3ab8c5ed4f84fa20cd16794fe8dc31f633fbc70c ]
+[ Upstream commit bdb0ca39e0acccf6771db49c3f94ed787d05f2d7 ]
 
-The nvmem interface supports variable buffer sizes, while the regmap
-interface operates with fixed-size storage. If an nvmem client uses a
-buffer size less than 4 bytes, regmap_read will write out of bounds
-as it expects the buffer to point at an unsigned int.
+Clearing slab cache will free all znode in memory and make
+c->zroot.znode = NULL, then dumping tnc tree will access
+c->zroot.znode which cause null pointer dereference.
 
-Fix this by using an intermediary unsigned int to hold the value.
-
-Fixes: fadfd092ee91 ("rtc: pcf85063: add nvram support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20241218-rtc-pcf85063-stack-corruption-v1-1-12fd0ee0f046@pengutronix.de
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219624#c0
+Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Signed-off-by: pangliyuan <pangliyuan1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/ubifs/debug.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index bf2e370907b73..89e080798e03f 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -320,7 +320,16 @@ static const struct rtc_class_ops pcf85063_rtc_ops = {
- static int pcf85063_nvmem_read(void *priv, unsigned int offset,
- 			       void *val, size_t bytes)
- {
--	return regmap_read(priv, PCF85063_REG_RAM, val);
-+	unsigned int tmp;
-+	int ret;
-+
-+	ret = regmap_read(priv, PCF85063_REG_RAM, &tmp);
-+	if (ret < 0)
-+		return ret;
-+
-+	*(u8 *)val = tmp;
-+
-+	return 0;
- }
+diff --git a/fs/ubifs/debug.c b/fs/ubifs/debug.c
+index fc718f6178f25..8386228131a29 100644
+--- a/fs/ubifs/debug.c
++++ b/fs/ubifs/debug.c
+@@ -946,16 +946,20 @@ void ubifs_dump_tnc(struct ubifs_info *c)
  
- static int pcf85063_nvmem_write(void *priv, unsigned int offset,
+ 	pr_err("\n");
+ 	pr_err("(pid %d) start dumping TNC tree\n", current->pid);
+-	znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
+-	level = znode->level;
+-	pr_err("== Level %d ==\n", level);
+-	while (znode) {
+-		if (level != znode->level) {
+-			level = znode->level;
+-			pr_err("== Level %d ==\n", level);
++	if (c->zroot.znode) {
++		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
++		level = znode->level;
++		pr_err("== Level %d ==\n", level);
++		while (znode) {
++			if (level != znode->level) {
++				level = znode->level;
++				pr_err("== Level %d ==\n", level);
++			}
++			ubifs_dump_znode(c, znode);
++			znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
+ 		}
+-		ubifs_dump_znode(c, znode);
+-		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
++	} else {
++		pr_err("empty TNC tree in memory\n");
+ 	}
+ 	pr_err("(pid %d) finish dumping TNC tree\n", current->pid);
+ }
 -- 
 2.39.5
 
