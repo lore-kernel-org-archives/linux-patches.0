@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B11A17C225;
-	Mon, 10 Mar 2025 17:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93302F28;
+	Mon, 10 Mar 2025 17:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627067; cv=none; b=p6Avia5NxZ5zgs1jK3rZD5N14ybkX7S3qj0VQTIn1wyfcj0jryxCBwB3FDdN9LODKBbnrd/ZZEuW7YxOdwdKS3OvIlDSB66KTj0O82RsHvyA+CugUwmsx5EtwXXODzqrlnXtvLInSxYbJdpZqOPDWjxEzGPnNj3bATP4M1632jU=
+	t=1741627069; cv=none; b=Jcyu2vQLNKBh9mLMQZZoGFcihxNJS6CDxbhCVTBXNbl2lDRV9x8Slqd9oL+/lel9feRMu2JTivHPln3u0prkj64a0GpcMCRUef+mzA+iV5cJruyhtbrOr9VIv54G3+X6VKmCkLI63wCHgYnUyWzMtJUFYss/iM/MIiEZZ7c9d3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627067; c=relaxed/simple;
-	bh=Ol0SghZerOOGthIQsJ79hrKZGXDmtffZzamtGS7+2GM=;
+	s=arc-20240116; t=1741627069; c=relaxed/simple;
+	bh=QmrS8jk5qbpb3vu5J6QFNSoCOmr6zGz54TaMG4fusIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZpNoFh0bnVeOiEMygH6Si+Ayf5c57tFsWclCalnvaeXt+ArMtup5EzuX1LFLCdBxzkvSN3Qb3s0U7+LqTPWwRYnW8wYmgnEOg2WVGA0hHbq7v/CCRLhMJ1tNV5gF0uXkLeZCJjw6VSEm3++0QRLZGYj/63p5IjzXiPm6efMS9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPFjan7p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxNHeZYBNPZCIDtyqZ8Xcq8K8XYzrNj+JfflLpvO4tAunUK0c9DCB2+Rda1EXNM/+xhZMPW/XSGJO9dhULMauBlHC5l3MqqSJpwdyT+tcRueOztDv4/y9IBVVgKJwEpoRft3qRjK7dF1Xqth0nQ8cFxkCMr86StTRCdkSThslIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQcROO8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPFjan7p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B89C4CEE5;
-	Mon, 10 Mar 2025 17:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQcROO8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63462C4CEE5;
+	Mon, 10 Mar 2025 17:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627066;
-	bh=Ol0SghZerOOGthIQsJ79hrKZGXDmtffZzamtGS7+2GM=;
+	s=korg; t=1741627069;
+	bh=QmrS8jk5qbpb3vu5J6QFNSoCOmr6zGz54TaMG4fusIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPFjan7p7cxAGA3UUdDD9cb8hnTzItZOzJ4NpPQafdqB8dFE9AKJ+Zg7TmZQfI/NN
-	 Sd2JJoieCehpdLCBaD9WNmRZusD/bZsjRGMvnpHxwgxRxRrE8bdHsLsiz/iK/A1Ndm
-	 cHDCIVTUYhnYE2wzXQRfsPvgmPew7kKxuR6Ufat4=
+	b=HQcROO8BWYQ9IL8fquKTIaC0VZhRzM7uhcl0+fk+Yum15qvvfWopV5LsPIjPzPja2
+	 oixbZfPIzr4b1KLH9gGNaYQ51wc9dCe1FywTeqTSa+NahXJN3ApMyTnLeY6sYKOt1A
+	 JgMgP8XoJDeXA1e5cyeOQDCSQ73ODFWOu0yzrw60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rangemachine@gmail.com,
-	whanos@sergal.fun,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.13 177/207] KVM: SVM: Manually context switch DEBUGCTL if LBR virtualization is disabled
-Date: Mon, 10 Mar 2025 18:06:10 +0100
-Message-ID: <20250310170454.826135580@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>
+Subject: [PATCH 6.13 178/207] KVM: x86: Snapshot the hosts DEBUGCTL after disabling IRQs
+Date: Mon, 10 Mar 2025 18:06:11 +0100
+Message-ID: <20250310170454.864976884@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -54,86 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 433265870ab3455b418885bff48fa5fd02f7e448 upstream.
+commit 189ecdb3e112da703ac0699f4ec76aa78122f911 upstream.
 
-Manually load the guest's DEBUGCTL prior to VMRUN (and restore the host's
-value on #VMEXIT) if it diverges from the host's value and LBR
-virtualization is disabled, as hardware only context switches DEBUGCTL if
-LBR virtualization is fully enabled.  Running the guest with the host's
-value has likely been mildly problematic for quite some time, e.g. it will
-result in undesirable behavior if BTF diverges (with the caveat that KVM
-now suppresses guest BTF due to lack of support).
+Snapshot the host's DEBUGCTL after disabling IRQs, as perf can toggle
+debugctl bits from IRQ context, e.g. when enabling/disabling events via
+smp_call_function_single().  Taking the snapshot (long) before IRQs are
+disabled could result in KVM effectively clobbering DEBUGCTL due to using
+a stale snapshot.
 
-But the bug became fatal with the introduction of Bus Lock Trap ("Detect"
-in kernel paralance) support for AMD (commit 408eb7417a92
-("x86/bus_lock: Add support for AMD")), as a bus lock in the guest will
-trigger an unexpected #DB.
-
-Note, suppressing the bus lock #DB, i.e. simply resuming the guest without
-injecting a #DB, is not an option.  It wouldn't address the general issue
-with DEBUGCTL, e.g. for things like BTF, and there are other guest-visible
-side effects if BusLockTrap is left enabled.
-
-If BusLockTrap is disabled, then DR6.BLD is reserved-to-1; any attempts to
-clear it by software are ignored.  But if BusLockTrap is enabled, software
-can clear DR6.BLD:
-
-  Software enables bus lock trap by setting DebugCtl MSR[BLCKDB] (bit 2)
-  to 1.  When bus lock trap is enabled, ... The processor indicates that
-  this #DB was caused by a bus lock by clearing DR6[BLD] (bit 11).  DR6[11]
-  previously had been defined to be always 1.
-
-and clearing DR6.BLD is "sticky" in that it's not set (i.e. lowered) by
-other #DBs:
-
-  All other #DB exceptions leave DR6[BLD] unmodified
-
-E.g. leaving BusLockTrap enable can confuse a legacy guest that writes '0'
-to reset DR6.
-
-Reported-by: rangemachine@gmail.com
-Reported-by: whanos@sergal.fun
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219787
-Closes: https://lore.kernel.org/all/bug-219787-28872@https.bugzilla.kernel.org%2F
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
 Cc: stable@vger.kernel.org
 Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250227222411.3490595-5-seanjc@google.com
+Link: https://lore.kernel.org/r/20250227222411.3490595-6-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/x86/kvm/x86.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4277,6 +4277,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
- 	clgi();
- 	kvm_load_guest_xsave_state(vcpu);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4976,7 +4976,6 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
  
-+	/*
-+	 * Hardware only context switches DEBUGCTL if LBR virtualization is
-+	 * enabled.  Manually load DEBUGCTL if necessary (and restore it after
-+	 * VM-Exit), as running with the host's DEBUGCTL can negatively affect
-+	 * guest state and can even be fatal, e.g. due to Bus Lock Detect.
-+	 */
-+	if (!(svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK) &&
-+	    vcpu->arch.host_debugctl != svm->vmcb->save.dbgctl)
-+		update_debugctlmsr(svm->vmcb->save.dbgctl);
+ 	/* Save host pkru register if supported */
+ 	vcpu->arch.host_pkru = read_pkru();
+-	vcpu->arch.host_debugctl = get_debugctlmsr();
+ 
+ 	/* Apply any externally detected TSC adjustments (due to suspend) */
+ 	if (unlikely(vcpu->arch.tsc_offset_adjustment)) {
+@@ -10961,6 +10960,8 @@ static int vcpu_enter_guest(struct kvm_v
+ 		set_debugreg(0, 7);
+ 	}
+ 
++	vcpu->arch.host_debugctl = get_debugctlmsr();
 +
- 	kvm_wait_lapic_expire(vcpu);
+ 	guest_timing_enter_irqoff();
  
- 	/*
-@@ -4304,6 +4314,10 @@ static __no_kcsan fastpath_t svm_vcpu_ru
- 	if (unlikely(svm->vmcb->control.exit_code == SVM_EXIT_NMI))
- 		kvm_before_interrupt(vcpu, KVM_HANDLING_NMI);
- 
-+	if (!(svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK) &&
-+	    vcpu->arch.host_debugctl != svm->vmcb->save.dbgctl)
-+		update_debugctlmsr(vcpu->arch.host_debugctl);
-+
- 	kvm_load_host_xsave_state(vcpu);
- 	stgi();
- 
+ 	for (;;) {
 
 
