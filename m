@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416B823026D;
-	Mon, 10 Mar 2025 17:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F7F22F175;
+	Mon, 10 Mar 2025 17:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627853; cv=none; b=ojSMtiNEwEjlP6FOvzzwKWV6kXDvOawWIp6vCi4xtBlnsJVxyvHIc+0oBGKx0uYIkuKWFcEdg7wPbYtyjj1+nfPDeTbt3WqO4rqtZEs0gEJ5VeYytPbTaBMYF73Yh1kX4bCmDgfAy3MyWkcWx5zw2AwnWYqv4hVAlqA+rTwXQgU=
+	t=1741627856; cv=none; b=eqZbJQpOnXUkOzIICxRjRrg+no1ReM6l6TFt1xdX45TSg6fvmLiSPeWt1SjaN5fo90Rcc/ssRJdCgpnlo0ZaJwpBXhvgbR4RAS70vrKlhry4L0azWyuvisqZvnjFfPGd3MmH4n/+Gfch4eo5QmBf1CYKm7dB6Jhg3ddg5FyvJHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627853; c=relaxed/simple;
-	bh=OKoICI5tNCqMxlE2eUckimKWoin0V7p+S6rICbSypuU=;
+	s=arc-20240116; t=1741627856; c=relaxed/simple;
+	bh=QrvE4dGuOHGyp6dozB+Pi8SllBpY4cWM53keGvin2Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mPgg8CJAIvJdTo8XPswpa68iRT1p3lhFgWY9XVpH80OeMOtDhObPzfepwX73xDGHLqu8UU/8OlwqrEcSwZDYOs0nXorex6CV8dCJOIuH7HDNRRH7wg7o3oWEm4Q+Ops4pkgAaI0s3njnT8XvDoNp7WvZn4c/chavpxdmZQSGrzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLo/bWzv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opFvwwtqwka0W8EiT8qMkpKcUiCumwEyh7LYvKm64ZRD9g38vGFRPnNPElr3uCs0lAH8JOgNlAq4a2Fopgatimj7AbfdhQ91L75KlDzp4JCD0Mkf/FUIjlLGQS9sBGm2lTMpAv+ULwZQc2y5i945LkjzesIZfT65ALfnxq0DUvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtB41jsH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLo/bWzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD0FC4CEE5;
-	Mon, 10 Mar 2025 17:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtB41jsH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90792C4CEE5;
+	Mon, 10 Mar 2025 17:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627853;
-	bh=OKoICI5tNCqMxlE2eUckimKWoin0V7p+S6rICbSypuU=;
+	s=korg; t=1741627856;
+	bh=QrvE4dGuOHGyp6dozB+Pi8SllBpY4cWM53keGvin2Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLo/bWzvbcJpBYG9V/ab43LBGGKzOeYN5QentAT3qORfnBu+1MAGUcH7i116w6Pj8
-	 Di4ud6yLepPr2IEG2kiLufOCz7rApmBcMcYI2Mr2+y683a+DB2wTNw5ftmo78nUJct
-	 o2sOJR6l90x7Hxjp49AZEsvbBYZC4Q+PZvQIeqEk=
+	b=wtB41jsHJtwJxmXanjg4W0nlLPaVc/+4P9lOLR42je6Wa3EBNWPGLKiRoKUf6zkSC
+	 lUqQmnb3DOWUpdvvTa9pnTenG5WvqkzrVSVrzTM0riqcxlfeSXcpOLmgu3GspA1//e
+	 Z8JEK9BSpUph+rXyz9xnue4Io/ZAswqwNyByyeD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayab Sayed <nayabbasha.sayed@microchip.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 253/269] iio: adc: at91-sama5d2_adc: fix sama7g5 realbits value
-Date: Mon, 10 Mar 2025 18:06:46 +0100
-Message-ID: <20250310170507.881085765@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.12 254/269] mm: hugetlb: Add huge page size param to huge_ptep_get_and_clear()
+Date: Mon, 10 Mar 2025 18:06:47 +0100
+Message-ID: <20250310170507.919891140@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,134 +56,340 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nayab Sayed <nayabbasha.sayed@microchip.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit aa5119c36d19639397d29ef305aa53a5ecd72b27 upstream.
+commit 02410ac72ac3707936c07ede66e94360d0d65319 upstream.
 
-The number of valid bits in SAMA7G5 ADC channel data register are 16.
-Hence changing the realbits value to 16
+In order to fix a bug, arm64 needs to be told the size of the huge page
+for which the huge_pte is being cleared in huge_ptep_get_and_clear().
+Provide for this by adding an `unsigned long sz` parameter to the
+function. This follows the same pattern as huge_pte_clear() and
+set_huge_pte_at().
 
-Fixes: 840bf6cb983f ("iio: adc: at91-sama5d2_adc: add support for sama7g5 device")
-Signed-off-by: Nayab Sayed <nayabbasha.sayed@microchip.com>
-Link: https://patch.msgid.link/20250115-fix-sama7g5-adc-realbits-v2-1-58a6e4087584@microchip.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This commit makes the required interface modifications to the core mm as
+well as all arches that implement this function (arm64, loongarch, mips,
+parisc, powerpc, riscv, s390, sparc). The actual arm64 bug will be fixed
+in a separate commit.
+
+Cc: stable@vger.kernel.org
+Fixes: 66b3923a1a0f ("arm64: hugetlb: add support for PTE contiguous bit")
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com> # riscv
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com> # s390
+Link: https://lore.kernel.org/r/20250226120656.2400136-2-ryan.roberts@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c |   68 +++++++++++++++++++++----------------
- 1 file changed, 40 insertions(+), 28 deletions(-)
+ arch/arm64/include/asm/hugetlb.h     |    4 ++--
+ arch/arm64/mm/hugetlbpage.c          |    8 +++++---
+ arch/loongarch/include/asm/hugetlb.h |    6 ++++--
+ arch/mips/include/asm/hugetlb.h      |    6 ++++--
+ arch/parisc/include/asm/hugetlb.h    |    2 +-
+ arch/parisc/mm/hugetlbpage.c         |    2 +-
+ arch/powerpc/include/asm/hugetlb.h   |    6 ++++--
+ arch/riscv/include/asm/hugetlb.h     |    3 ++-
+ arch/riscv/mm/hugetlbpage.c          |    2 +-
+ arch/s390/include/asm/hugetlb.h      |   17 ++++++++++++-----
+ arch/s390/mm/hugetlbpage.c           |    4 ++--
+ arch/sparc/include/asm/hugetlb.h     |    2 +-
+ arch/sparc/mm/hugetlbpage.c          |    2 +-
+ include/asm-generic/hugetlb.h        |    2 +-
+ include/linux/hugetlb.h              |    4 +++-
+ mm/hugetlb.c                         |    4 ++--
+ 16 files changed, 46 insertions(+), 28 deletions(-)
 
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -329,7 +329,7 @@ static const struct at91_adc_reg_layout
- #define AT91_HWFIFO_MAX_SIZE_STR	"128"
- #define AT91_HWFIFO_MAX_SIZE		128
+--- a/arch/arm64/include/asm/hugetlb.h
++++ b/arch/arm64/include/asm/hugetlb.h
+@@ -34,8 +34,8 @@ extern int huge_ptep_set_access_flags(st
+ 				      unsigned long addr, pte_t *ptep,
+ 				      pte_t pte, int dirty);
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+-extern pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-				     unsigned long addr, pte_t *ptep);
++extern pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
++				     pte_t *ptep, unsigned long sz);
+ #define __HAVE_ARCH_HUGE_PTEP_SET_WRPROTECT
+ extern void huge_ptep_set_wrprotect(struct mm_struct *mm,
+ 				    unsigned long addr, pte_t *ptep);
+--- a/arch/arm64/mm/hugetlbpage.c
++++ b/arch/arm64/mm/hugetlbpage.c
+@@ -385,8 +385,8 @@ void huge_pte_clear(struct mm_struct *mm
+ 		__pte_clear(mm, addr, ptep);
+ }
  
--#define AT91_SAMA5D2_CHAN_SINGLE(index, num, addr)			\
-+#define AT91_SAMA_CHAN_SINGLE(index, num, addr, rbits)			\
- 	{								\
- 		.type = IIO_VOLTAGE,					\
- 		.channel = num,						\
-@@ -337,7 +337,7 @@ static const struct at91_adc_reg_layout
- 		.scan_index = index,					\
- 		.scan_type = {						\
- 			.sign = 'u',					\
--			.realbits = 14,					\
-+			.realbits = rbits,				\
- 			.storagebits = 16,				\
- 		},							\
- 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),		\
-@@ -350,7 +350,13 @@ static const struct at91_adc_reg_layout
- 		.indexed = 1,						\
+-pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-			      unsigned long addr, pte_t *ptep)
++pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
++			      pte_t *ptep, unsigned long sz)
+ {
+ 	int ncontig;
+ 	size_t pgsize;
+@@ -538,6 +538,8 @@ bool __init arch_hugetlb_valid_size(unsi
+ 
+ pte_t huge_ptep_modify_prot_start(struct vm_area_struct *vma, unsigned long addr, pte_t *ptep)
+ {
++	unsigned long psize = huge_page_size(hstate_vma(vma));
++
+ 	if (alternative_has_cap_unlikely(ARM64_WORKAROUND_2645198)) {
+ 		/*
+ 		 * Break-before-make (BBM) is required for all user space mappings
+@@ -547,7 +549,7 @@ pte_t huge_ptep_modify_prot_start(struct
+ 		if (pte_user_exec(__ptep_get(ptep)))
+ 			return huge_ptep_clear_flush(vma, addr, ptep);
  	}
+-	return huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++	return huge_ptep_get_and_clear(vma->vm_mm, addr, ptep, psize);
+ }
  
--#define AT91_SAMA5D2_CHAN_DIFF(index, num, num2, addr)			\
-+#define AT91_SAMA5D2_CHAN_SINGLE(index, num, addr)			\
-+	AT91_SAMA_CHAN_SINGLE(index, num, addr, 14)
+ void huge_ptep_modify_prot_commit(struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
+--- a/arch/loongarch/include/asm/hugetlb.h
++++ b/arch/loongarch/include/asm/hugetlb.h
+@@ -41,7 +41,8 @@ static inline void huge_pte_clear(struct
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ static inline pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-					    unsigned long addr, pte_t *ptep)
++					    unsigned long addr, pte_t *ptep,
++					    unsigned long sz)
+ {
+ 	pte_t clear;
+ 	pte_t pte = ptep_get(ptep);
+@@ -56,8 +57,9 @@ static inline pte_t huge_ptep_clear_flus
+ 					  unsigned long addr, pte_t *ptep)
+ {
+ 	pte_t pte;
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 
+-	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep, sz);
+ 	flush_tlb_page(vma, addr);
+ 	return pte;
+ }
+--- a/arch/mips/include/asm/hugetlb.h
++++ b/arch/mips/include/asm/hugetlb.h
+@@ -32,7 +32,8 @@ static inline int prepare_hugepage_range
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ static inline pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-					    unsigned long addr, pte_t *ptep)
++					    unsigned long addr, pte_t *ptep,
++					    unsigned long sz)
+ {
+ 	pte_t clear;
+ 	pte_t pte = *ptep;
+@@ -47,13 +48,14 @@ static inline pte_t huge_ptep_clear_flus
+ 					  unsigned long addr, pte_t *ptep)
+ {
+ 	pte_t pte;
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 
+ 	/*
+ 	 * clear the huge pte entry firstly, so that the other smp threads will
+ 	 * not get old pte entry after finishing flush_tlb_page and before
+ 	 * setting new huge pte entry
+ 	 */
+-	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep, sz);
+ 	flush_tlb_page(vma, addr);
+ 	return pte;
+ }
+--- a/arch/parisc/include/asm/hugetlb.h
++++ b/arch/parisc/include/asm/hugetlb.h
+@@ -10,7 +10,7 @@ void set_huge_pte_at(struct mm_struct *m
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
+-			      pte_t *ptep);
++			      pte_t *ptep, unsigned long sz);
+ 
+ /*
+  * If the arch doesn't supply something else, assume that hugepage
+--- a/arch/parisc/mm/hugetlbpage.c
++++ b/arch/parisc/mm/hugetlbpage.c
+@@ -147,7 +147,7 @@ void set_huge_pte_at(struct mm_struct *m
+ 
+ 
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
+-			      pte_t *ptep)
++			      pte_t *ptep, unsigned long sz)
+ {
+ 	pte_t entry;
+ 
+--- a/arch/powerpc/include/asm/hugetlb.h
++++ b/arch/powerpc/include/asm/hugetlb.h
+@@ -45,7 +45,8 @@ void set_huge_pte_at(struct mm_struct *m
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ static inline pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-					    unsigned long addr, pte_t *ptep)
++					    unsigned long addr, pte_t *ptep,
++					    unsigned long sz)
+ {
+ 	return __pte(pte_update(mm, addr, ptep, ~0UL, 0, 1));
+ }
+@@ -55,8 +56,9 @@ static inline pte_t huge_ptep_clear_flus
+ 					  unsigned long addr, pte_t *ptep)
+ {
+ 	pte_t pte;
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 
+-	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++	pte = huge_ptep_get_and_clear(vma->vm_mm, addr, ptep, sz);
+ 	flush_hugetlb_page(vma, addr);
+ 	return pte;
+ }
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -28,7 +28,8 @@ void set_huge_pte_at(struct mm_struct *m
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-			      unsigned long addr, pte_t *ptep);
++			      unsigned long addr, pte_t *ptep,
++			      unsigned long sz);
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_CLEAR_FLUSH
+ pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
+--- a/arch/riscv/mm/hugetlbpage.c
++++ b/arch/riscv/mm/hugetlbpage.c
+@@ -293,7 +293,7 @@ int huge_ptep_set_access_flags(struct vm
+ 
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+ 			      unsigned long addr,
+-			      pte_t *ptep)
++			      pte_t *ptep, unsigned long sz)
+ {
+ 	pte_t orig_pte = ptep_get(ptep);
+ 	int pte_num;
+--- a/arch/s390/include/asm/hugetlb.h
++++ b/arch/s390/include/asm/hugetlb.h
+@@ -20,8 +20,15 @@ void set_huge_pte_at(struct mm_struct *m
+ void __set_huge_pte_at(struct mm_struct *mm, unsigned long addr,
+ 		     pte_t *ptep, pte_t pte);
+ pte_t huge_ptep_get(struct mm_struct *mm, unsigned long addr, pte_t *ptep);
+-pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-			      unsigned long addr, pte_t *ptep);
++pte_t __huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
++				pte_t *ptep);
 +
-+#define AT91_SAMA7G5_CHAN_SINGLE(index, num, addr)			\
-+	AT91_SAMA_CHAN_SINGLE(index, num, addr, 16)
-+
-+#define AT91_SAMA_CHAN_DIFF(index, num, num2, addr, rbits)		\
- 	{								\
- 		.type = IIO_VOLTAGE,					\
- 		.differential = 1,					\
-@@ -360,7 +366,7 @@ static const struct at91_adc_reg_layout
- 		.scan_index = index,					\
- 		.scan_type = {						\
- 			.sign = 's',					\
--			.realbits = 14,					\
-+			.realbits = rbits,				\
- 			.storagebits = 16,				\
- 		},							\
- 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),		\
-@@ -373,6 +379,12 @@ static const struct at91_adc_reg_layout
- 		.indexed = 1,						\
++static inline pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
++					    unsigned long addr, pte_t *ptep,
++					    unsigned long sz)
++{
++	return __huge_ptep_get_and_clear(mm, addr, ptep);
++}
+ 
+ /*
+  * If the arch doesn't supply something else, assume that hugepage
+@@ -57,7 +64,7 @@ static inline void huge_pte_clear(struct
+ static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
+ 					  unsigned long address, pte_t *ptep)
+ {
+-	return huge_ptep_get_and_clear(vma->vm_mm, address, ptep);
++	return __huge_ptep_get_and_clear(vma->vm_mm, address, ptep);
+ }
+ 
+ static inline int huge_ptep_set_access_flags(struct vm_area_struct *vma,
+@@ -66,7 +73,7 @@ static inline int huge_ptep_set_access_f
+ {
+ 	int changed = !pte_same(huge_ptep_get(vma->vm_mm, addr, ptep), pte);
+ 	if (changed) {
+-		huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++		__huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
+ 		__set_huge_pte_at(vma->vm_mm, addr, ptep, pte);
  	}
+ 	return changed;
+@@ -75,7 +82,7 @@ static inline int huge_ptep_set_access_f
+ static inline void huge_ptep_set_wrprotect(struct mm_struct *mm,
+ 					   unsigned long addr, pte_t *ptep)
+ {
+-	pte_t pte = huge_ptep_get_and_clear(mm, addr, ptep);
++	pte_t pte = __huge_ptep_get_and_clear(mm, addr, ptep);
+ 	__set_huge_pte_at(mm, addr, ptep, pte_wrprotect(pte));
+ }
  
-+#define AT91_SAMA5D2_CHAN_DIFF(index, num, num2, addr)			\
-+	AT91_SAMA_CHAN_DIFF(index, num, num2, addr, 14)
-+
-+#define AT91_SAMA7G5_CHAN_DIFF(index, num, num2, addr)			\
-+	AT91_SAMA_CHAN_DIFF(index, num, num2, addr, 16)
-+
- #define AT91_SAMA5D2_CHAN_TOUCH(num, name, mod)				\
- 	{								\
- 		.type = IIO_POSITIONRELATIVE,				\
-@@ -666,30 +678,30 @@ static const struct iio_chan_spec at91_s
- };
+--- a/arch/s390/mm/hugetlbpage.c
++++ b/arch/s390/mm/hugetlbpage.c
+@@ -174,8 +174,8 @@ pte_t huge_ptep_get(struct mm_struct *mm
+ 	return __rste_to_pte(pte_val(*ptep));
+ }
  
- static const struct iio_chan_spec at91_sama7g5_adc_channels[] = {
--	AT91_SAMA5D2_CHAN_SINGLE(0, 0, 0x60),
--	AT91_SAMA5D2_CHAN_SINGLE(1, 1, 0x64),
--	AT91_SAMA5D2_CHAN_SINGLE(2, 2, 0x68),
--	AT91_SAMA5D2_CHAN_SINGLE(3, 3, 0x6c),
--	AT91_SAMA5D2_CHAN_SINGLE(4, 4, 0x70),
--	AT91_SAMA5D2_CHAN_SINGLE(5, 5, 0x74),
--	AT91_SAMA5D2_CHAN_SINGLE(6, 6, 0x78),
--	AT91_SAMA5D2_CHAN_SINGLE(7, 7, 0x7c),
--	AT91_SAMA5D2_CHAN_SINGLE(8, 8, 0x80),
--	AT91_SAMA5D2_CHAN_SINGLE(9, 9, 0x84),
--	AT91_SAMA5D2_CHAN_SINGLE(10, 10, 0x88),
--	AT91_SAMA5D2_CHAN_SINGLE(11, 11, 0x8c),
--	AT91_SAMA5D2_CHAN_SINGLE(12, 12, 0x90),
--	AT91_SAMA5D2_CHAN_SINGLE(13, 13, 0x94),
--	AT91_SAMA5D2_CHAN_SINGLE(14, 14, 0x98),
--	AT91_SAMA5D2_CHAN_SINGLE(15, 15, 0x9c),
--	AT91_SAMA5D2_CHAN_DIFF(16, 0, 1, 0x60),
--	AT91_SAMA5D2_CHAN_DIFF(17, 2, 3, 0x68),
--	AT91_SAMA5D2_CHAN_DIFF(18, 4, 5, 0x70),
--	AT91_SAMA5D2_CHAN_DIFF(19, 6, 7, 0x78),
--	AT91_SAMA5D2_CHAN_DIFF(20, 8, 9, 0x80),
--	AT91_SAMA5D2_CHAN_DIFF(21, 10, 11, 0x88),
--	AT91_SAMA5D2_CHAN_DIFF(22, 12, 13, 0x90),
--	AT91_SAMA5D2_CHAN_DIFF(23, 14, 15, 0x98),
-+	AT91_SAMA7G5_CHAN_SINGLE(0, 0, 0x60),
-+	AT91_SAMA7G5_CHAN_SINGLE(1, 1, 0x64),
-+	AT91_SAMA7G5_CHAN_SINGLE(2, 2, 0x68),
-+	AT91_SAMA7G5_CHAN_SINGLE(3, 3, 0x6c),
-+	AT91_SAMA7G5_CHAN_SINGLE(4, 4, 0x70),
-+	AT91_SAMA7G5_CHAN_SINGLE(5, 5, 0x74),
-+	AT91_SAMA7G5_CHAN_SINGLE(6, 6, 0x78),
-+	AT91_SAMA7G5_CHAN_SINGLE(7, 7, 0x7c),
-+	AT91_SAMA7G5_CHAN_SINGLE(8, 8, 0x80),
-+	AT91_SAMA7G5_CHAN_SINGLE(9, 9, 0x84),
-+	AT91_SAMA7G5_CHAN_SINGLE(10, 10, 0x88),
-+	AT91_SAMA7G5_CHAN_SINGLE(11, 11, 0x8c),
-+	AT91_SAMA7G5_CHAN_SINGLE(12, 12, 0x90),
-+	AT91_SAMA7G5_CHAN_SINGLE(13, 13, 0x94),
-+	AT91_SAMA7G5_CHAN_SINGLE(14, 14, 0x98),
-+	AT91_SAMA7G5_CHAN_SINGLE(15, 15, 0x9c),
-+	AT91_SAMA7G5_CHAN_DIFF(16, 0, 1, 0x60),
-+	AT91_SAMA7G5_CHAN_DIFF(17, 2, 3, 0x68),
-+	AT91_SAMA7G5_CHAN_DIFF(18, 4, 5, 0x70),
-+	AT91_SAMA7G5_CHAN_DIFF(19, 6, 7, 0x78),
-+	AT91_SAMA7G5_CHAN_DIFF(20, 8, 9, 0x80),
-+	AT91_SAMA7G5_CHAN_DIFF(21, 10, 11, 0x88),
-+	AT91_SAMA7G5_CHAN_DIFF(22, 12, 13, 0x90),
-+	AT91_SAMA7G5_CHAN_DIFF(23, 14, 15, 0x98),
- 	IIO_CHAN_SOFT_TIMESTAMP(24),
- 	AT91_SAMA5D2_CHAN_TEMP(AT91_SAMA7G5_ADC_TEMP_CHANNEL, "temp", 0xdc),
- };
+-pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-			      unsigned long addr, pte_t *ptep)
++pte_t __huge_ptep_get_and_clear(struct mm_struct *mm,
++				unsigned long addr, pte_t *ptep)
+ {
+ 	pte_t pte = huge_ptep_get(mm, addr, ptep);
+ 	pmd_t *pmdp = (pmd_t *) ptep;
+--- a/arch/sparc/include/asm/hugetlb.h
++++ b/arch/sparc/include/asm/hugetlb.h
+@@ -20,7 +20,7 @@ void __set_huge_pte_at(struct mm_struct
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
+-			      pte_t *ptep);
++			      pte_t *ptep, unsigned long sz);
+ 
+ #define __HAVE_ARCH_HUGE_PTEP_CLEAR_FLUSH
+ static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
+--- a/arch/sparc/mm/hugetlbpage.c
++++ b/arch/sparc/mm/hugetlbpage.c
+@@ -368,7 +368,7 @@ void set_huge_pte_at(struct mm_struct *m
+ }
+ 
+ pte_t huge_ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
+-			      pte_t *ptep)
++			      pte_t *ptep, unsigned long sz)
+ {
+ 	unsigned int i, nptes, orig_shift, shift;
+ 	unsigned long size;
+--- a/include/asm-generic/hugetlb.h
++++ b/include/asm-generic/hugetlb.h
+@@ -84,7 +84,7 @@ static inline void set_huge_pte_at(struc
+ 
+ #ifndef __HAVE_ARCH_HUGE_PTEP_GET_AND_CLEAR
+ static inline pte_t huge_ptep_get_and_clear(struct mm_struct *mm,
+-		unsigned long addr, pte_t *ptep)
++		unsigned long addr, pte_t *ptep, unsigned long sz)
+ {
+ 	return ptep_get_and_clear(mm, addr, ptep);
+ }
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -1009,7 +1009,9 @@ static inline void hugetlb_count_sub(lon
+ static inline pte_t huge_ptep_modify_prot_start(struct vm_area_struct *vma,
+ 						unsigned long addr, pte_t *ptep)
+ {
+-	return huge_ptep_get_and_clear(vma->vm_mm, addr, ptep);
++	unsigned long psize = huge_page_size(hstate_vma(vma));
++
++	return huge_ptep_get_and_clear(vma->vm_mm, addr, ptep, psize);
+ }
+ #endif
+ 
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5395,7 +5395,7 @@ static void move_huge_pte(struct vm_area
+ 	if (src_ptl != dst_ptl)
+ 		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
+ 
+-	pte = huge_ptep_get_and_clear(mm, old_addr, src_pte);
++	pte = huge_ptep_get_and_clear(mm, old_addr, src_pte, sz);
+ 
+ 	if (need_clear_uffd_wp && pte_marker_uffd_wp(pte))
+ 		huge_pte_clear(mm, new_addr, dst_pte, sz);
+@@ -5570,7 +5570,7 @@ void __unmap_hugepage_range(struct mmu_g
+ 			set_vma_resv_flags(vma, HPAGE_RESV_UNMAPPED);
+ 		}
+ 
+-		pte = huge_ptep_get_and_clear(mm, address, ptep);
++		pte = huge_ptep_get_and_clear(mm, address, ptep, sz);
+ 		tlb_remove_huge_tlb_entry(h, tlb, ptep, address);
+ 		if (huge_pte_dirty(pte))
+ 			set_page_dirty(page);
 
 
