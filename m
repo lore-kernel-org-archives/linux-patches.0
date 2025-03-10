@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE25617C225;
-	Mon, 10 Mar 2025 17:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E35230988;
+	Mon, 10 Mar 2025 17:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627154; cv=none; b=X8jB3E1N76/RMjbXYzBQGkoRj39+RaeBA4w7L5nD1JiSb9dvq/txFJH92VAAgZSqQAEUej3Wz+es9YiM6NIxg18A3+Z57jZBl+TC+gPaf6EkveAdrTvYwlZ3hF9mWIRAZ4SgAXs9HLQT+T332Tnn0xJgFqMfLCQE6U+5Dl7mzP0=
+	t=1741627156; cv=none; b=Bm1SzaihI37+EXTv3UbHgJfavNlfvrr7o2/qCloLRzThlDD5jQ3L1VNmBzk1V4uyASY2a8LJ3OD/19MbdJcRpZjr33VV/2+Pm8beFRTyADzNF+j42NRqJ+GCHxEbGOsnYHlPWoR5Z2DGLljk4q31np1y6pn/K7+Qsl2XpjCScYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627154; c=relaxed/simple;
-	bh=Uu54+qm7DnfQGVbqP8L8jk70yuLYTe2ZSpozUQJx4v0=;
+	s=arc-20240116; t=1741627156; c=relaxed/simple;
+	bh=qrSs9B3aceNfhsgV/29qDHEpgFmQ0UgZl2MkgnCyhZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myzmXvQvomvItWB+xxjlQqfpvOtFL40trAty0ewkzyr41BJiEzimFWEU0oeGq2SlDcysdiBuORXlyVIzEqaxwbTVq+FB66C06XVCoITnb6cwrxZk52khkuPIHfBjhGHuXChabuSLy/aOOkkNFedKhOWS3a5RR1RLP+FyvNCeKyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEp9ovgO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVMDg/M0fsOAFQRhPwem2cwKQPjPhfL6oe/7yNJmuK7NrWy5i3m1BZd+XEPGSbWryzNYxpTCTeUzwsivEg7SYi4xHROZwz2DMr5rcZrbkbbZinL+AdCe9m45J+QiXaODySsHMym3/1u506viPueqiV7IQNLgQMSkzUK7A2OEc9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpgseOei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEp9ovgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12643C4CEEC;
-	Mon, 10 Mar 2025 17:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpgseOei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF992C4CEEE;
+	Mon, 10 Mar 2025 17:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627153;
-	bh=Uu54+qm7DnfQGVbqP8L8jk70yuLYTe2ZSpozUQJx4v0=;
+	s=korg; t=1741627156;
+	bh=qrSs9B3aceNfhsgV/29qDHEpgFmQ0UgZl2MkgnCyhZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEp9ovgOD52qBpKEYqK5VC4zkh3WiJXJWJ+zt/aFha3P91AXZrVVsy5faoeo5Dgvt
-	 neePtI6k+X24VeNnqURbSNfztEtsZKZSBCnKBl1ufby5wO+3reDKRPDIiEMLmktWcl
-	 sfIyPc8C6lT4ICuGvvw4pFUteRBtIyLiLeHOX4B8=
+	b=ZpgseOeieiRhNOgylJaQqo94uE88SOxUZ2ActLHMF/nogAwbR2fGf/rj9rDWx4M9n
+	 JFX1fgZv2aQxMOmP7mB43C1lhliVjPNPQAZwyoxta/tFqF/LLutX6uuJaPPKmiApLC
+	 TNAiPxLc3DjUTUEfuZGmI96ezUi+KggO6F8RaRH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gary Guo <gary@garyguo.net>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 031/269] rust: alloc: add `Allocator` trait
-Date: Mon, 10 Mar 2025 18:03:04 +0100
-Message-ID: <20250310170458.956138866@linuxfoundation.org>
+Subject: [PATCH 6.12 032/269] rust: alloc: separate `aligned_size` from `krealloc_aligned`
+Date: Mon, 10 Mar 2025 18:03:05 +0100
+Message-ID: <20250310170458.997690803@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -55,140 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit b7a084ba4fbb8f416ce8d19c93a3a2bee63c9c89 upstream.
+commit a654a6e09644266e38ac05415ef7737d299c4497 upstream.
 
-Add a kernel specific `Allocator` trait, that in contrast to the one in
-Rust's core library doesn't require unstable features and supports GFP
-flags.
+Separate `aligned_size` from `krealloc_aligned`.
 
-Subsequent patches add the following trait implementors: `Kmalloc`,
-`Vmalloc` and `KVmalloc`.
+Subsequent patches implement `Allocator` derivates, such as `Kmalloc`,
+that require `aligned_size` and replace the original `krealloc_aligned`.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-2-dakr@kernel.org
-[ Fixed typo. - Miguel ]
+Link: https://lore.kernel.org/r/20241004154149.93856-3-dakr@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+ rust/kernel/alloc/allocator.rs |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -11,6 +11,7 @@ pub mod vec_ext;
- /// Indicates an allocation error.
- #[derive(Copy, Clone, PartialEq, Eq, Debug)]
- pub struct AllocError;
-+use core::{alloc::Layout, ptr::NonNull};
+--- a/rust/kernel/alloc/allocator.rs
++++ b/rust/kernel/alloc/allocator.rs
+@@ -8,6 +8,17 @@ use core::ptr;
  
- /// Flags to be used when allocating memory.
- ///
-@@ -86,3 +87,103 @@ pub mod flags {
-     /// small allocations.
-     pub const GFP_NOWAIT: Flags = Flags(bindings::GFP_NOWAIT);
- }
+ struct KernelAllocator;
+ 
++/// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
++fn aligned_size(new_layout: Layout) -> usize {
++    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
++    let layout = new_layout.pad_to_align();
 +
-+/// The kernel's [`Allocator`] trait.
-+///
-+/// An implementation of [`Allocator`] can allocate, re-allocate and free memory buffers described
-+/// via [`Layout`].
-+///
-+/// [`Allocator`] is designed to be implemented as a ZST; [`Allocator`] functions do not operate on
-+/// an object instance.
-+///
-+/// In order to be able to support `#[derive(SmartPointer)]` later on, we need to avoid a design
-+/// that requires an `Allocator` to be instantiated, hence its functions must not contain any kind
-+/// of `self` parameter.
-+///
-+/// # Safety
-+///
-+/// - A memory allocation returned from an allocator must remain valid until it is explicitly freed.
-+///
-+/// - Any pointer to a valid memory allocation must be valid to be passed to any other [`Allocator`]
-+///   function of the same type.
-+///
-+/// - Implementers must ensure that all trait functions abide by the guarantees documented in the
-+///   `# Guarantees` sections.
-+pub unsafe trait Allocator {
-+    /// Allocate memory based on `layout` and `flags`.
-+    ///
-+    /// On success, returns a buffer represented as `NonNull<[u8]>` that satisfies the layout
-+    /// constraints (i.e. minimum size and alignment as specified by `layout`).
-+    ///
-+    /// This function is equivalent to `realloc` when called with `None`.
-+    ///
-+    /// # Guarantees
-+    ///
-+    /// When the return value is `Ok(ptr)`, then `ptr` is
-+    /// - valid for reads and writes for `layout.size()` bytes, until it is passed to
-+    ///   [`Allocator::free`] or [`Allocator::realloc`],
-+    /// - aligned to `layout.align()`,
-+    ///
-+    /// Additionally, `Flags` are honored as documented in
-+    /// <https://docs.kernel.org/core-api/mm-api.html#mm-api-gfp-flags>.
-+    fn alloc(layout: Layout, flags: Flags) -> Result<NonNull<[u8]>, AllocError> {
-+        // SAFETY: Passing `None` to `realloc` is valid by its safety requirements and asks for a
-+        // new memory allocation.
-+        unsafe { Self::realloc(None, layout, Layout::new::<()>(), flags) }
-+    }
-+
-+    /// Re-allocate an existing memory allocation to satisfy the requested `layout`.
-+    ///
-+    /// If the requested size is zero, `realloc` behaves equivalent to `free`.
-+    ///
-+    /// If the requested size is larger than the size of the existing allocation, a successful call
-+    /// to `realloc` guarantees that the new or grown buffer has at least `Layout::size` bytes, but
-+    /// may also be larger.
-+    ///
-+    /// If the requested size is smaller than the size of the existing allocation, `realloc` may or
-+    /// may not shrink the buffer; this is implementation specific to the allocator.
-+    ///
-+    /// On allocation failure, the existing buffer, if any, remains valid.
-+    ///
-+    /// The buffer is represented as `NonNull<[u8]>`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// - If `ptr == Some(p)`, then `p` must point to an existing and valid memory allocation
-+    ///   created by this [`Allocator`]; if `old_layout` is zero-sized `p` does not need to be a
-+    ///   pointer returned by this [`Allocator`].
-+    /// - `ptr` is allowed to be `None`; in this case a new memory allocation is created and
-+    ///   `old_layout` is ignored.
-+    /// - `old_layout` must match the `Layout` the allocation has been created with.
-+    ///
-+    /// # Guarantees
-+    ///
-+    /// This function has the same guarantees as [`Allocator::alloc`]. When `ptr == Some(p)`, then
-+    /// it additionally guarantees that:
-+    /// - the contents of the memory pointed to by `p` are preserved up to the lesser of the new
-+    ///   and old size, i.e. `ret_ptr[0..min(layout.size(), old_layout.size())] ==
-+    ///   p[0..min(layout.size(), old_layout.size())]`.
-+    /// - when the return value is `Err(AllocError)`, then `ptr` is still valid.
-+    unsafe fn realloc(
-+        ptr: Option<NonNull<u8>>,
-+        layout: Layout,
-+        old_layout: Layout,
-+        flags: Flags,
-+    ) -> Result<NonNull<[u8]>, AllocError>;
-+
-+    /// Free an existing memory allocation.
-+    ///
-+    /// # Safety
-+    ///
-+    /// - `ptr` must point to an existing and valid memory allocation created by this [`Allocator`];
-+    ///   if `old_layout` is zero-sized `p` does not need to be a pointer returned by this
-+    ///   [`Allocator`].
-+    /// - `layout` must match the `Layout` the allocation has been created with.
-+    /// - The memory allocation at `ptr` must never again be read from or written to.
-+    unsafe fn free(ptr: NonNull<u8>, layout: Layout) {
-+        // SAFETY: The caller guarantees that `ptr` points at a valid allocation created by this
-+        // allocator. We are passing a `Layout` with the smallest possible alignment, so it is
-+        // smaller than or equal to the alignment previously used with this allocation.
-+        let _ = unsafe { Self::realloc(Some(ptr), Layout::new::<()>(), layout, Flags(0)) };
-+    }
++    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
++    // which together with the slab guarantees means the `krealloc` will return a properly aligned
++    // object (see comments in `kmalloc()` for more information).
++    layout.size()
 +}
++
+ /// Calls `krealloc` with a proper size to alloc a new object aligned to `new_layout`'s alignment.
+ ///
+ /// # Safety
+@@ -15,13 +26,7 @@ struct KernelAllocator;
+ /// - `ptr` can be either null or a pointer which has been allocated by this allocator.
+ /// - `new_layout` must have a non-zero size.
+ pub(crate) unsafe fn krealloc_aligned(ptr: *mut u8, new_layout: Layout, flags: Flags) -> *mut u8 {
+-    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
+-    let layout = new_layout.pad_to_align();
+-
+-    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
+-    // which together with the slab guarantees means the `krealloc` will return a properly aligned
+-    // object (see comments in `kmalloc()` for more information).
+-    let size = layout.size();
++    let size = aligned_size(new_layout);
+ 
+     // SAFETY:
+     // - `ptr` is either null or a pointer returned from a previous `k{re}alloc()` by the
 
 
