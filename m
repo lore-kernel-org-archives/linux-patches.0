@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692C41DE89C;
-	Mon, 10 Mar 2025 17:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53725231A51;
+	Mon, 10 Mar 2025 17:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628118; cv=none; b=PXXoPUWG6NpHYG0LghBOjohtqxFQQ3YtRS7PNhNdf88cHzXkYIU96ctqnue8MKlZuktsn9FVoGbWO39SZT6jZCa/weQfnp7EUS0eJDVmWsyx4LuHb6SApQJfNOEOE4JiimG8Me5wjeTosJLB380NnyH2OuMHxYucD18RcnVa6x0=
+	t=1741628121; cv=none; b=qjLMfvj209iIJK2WNVS4NFai2Ndq8xdHdwWBS/8TYPICe31yjgCH9dUfMnZeTH3ixQ4gGJLLzZ7bQ03WvVbbjuUnenIauaaeooz8RVxgGAygnjhKvIBt2TNpOr0vJnSv5H+Mleqep4MxOzw9XNIHiXx2UZ7lm+vMQF+2yBsFLT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628118; c=relaxed/simple;
-	bh=YvHVFuMMYHhbHMdneNJS7zha00RfUsO5f/tSMo/pSUM=;
+	s=arc-20240116; t=1741628121; c=relaxed/simple;
+	bh=H91Eu9/JbA0+d+FMpzSpsWbiZH9twQH+BcW8JKrzOdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzoRglQZ300kjRxbq6V8Cbnb/qPOoyOnoTQpix6SxBHPBfkYhVwqxWuMCVsXxPEC37mRcooU9PzG011+8qQ1zQS59ifgC12RVkx30aqhBqkHwoN1mZc231nv4neEkfIFjfqMtAa9ldiGtYWvkQd+7sAhRqXpsZiP9VGDtve4M8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2Z3wxfe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZw0P1vkd7Z2hL2WK/QZ5fqtOyzFLrSdiQtY/zqspR+4mN1+1th8EDk/Mtt9C9/VxuUT2K5XAiycZL9hO1VqpPcnNw41uuGS9Pr77Jd1PyGuBqdT2L1Ti9HM39/BnMYCkFQKC8jqAA9p05OQ59zgB8su4UAqtKQsRvOV0iduY9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgFVMs+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2Z3wxfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D06C4CEE5;
-	Mon, 10 Mar 2025 17:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgFVMs+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC00CC4CEE5;
+	Mon, 10 Mar 2025 17:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628118;
-	bh=YvHVFuMMYHhbHMdneNJS7zha00RfUsO5f/tSMo/pSUM=;
+	s=korg; t=1741628121;
+	bh=H91Eu9/JbA0+d+FMpzSpsWbiZH9twQH+BcW8JKrzOdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2Z3wxfeirw6ya70FRz7CD+XuGvLrhLLKr2Wz2JFOwW5UK8o54aGr4NLrIyV0c0LN
-	 v8v7xNLLt/pFnUwVqlACP1gS5/SnkZd1cAF5UapaoxO7MBqCsZkutbi2HKOT8AbnuT
-	 Le6LOjAA0ahj9j3dGV1Whfo0ktKye7JowBDkoLUo=
+	b=DgFVMs+PmHAWuYtM/G111nt8nhJba/J9hRlxANM58Y8KAWPlwZkX034HpkSD7inc5
+	 F3E9nKyQSeqXsuTQ4KP+Vwjq6EIOiU7IPT3x5Zr1QTzMvB9lN0dsS34uk2cEIaO51E
+	 7o2JIZ/FRHy/WgWa3oT/eOES5yHa0hp7bkl7rn0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/145] perf/core: Fix pmus_lock vs. pmus_srcu ordering
-Date: Mon, 10 Mar 2025 18:06:00 +0100
-Message-ID: <20250310170437.414791689@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.6 093/145] usb: renesas_usbhs: Call clk_put()
+Date: Mon, 10 Mar 2025 18:06:27 +0100
+Message-ID: <20250310170438.510696462@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,58 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 2565e42539b120b81a68a58da961ce5d1e34eac8 ]
+commit b5ea08aa883da05106fcc683d12489a4292d1122 upstream.
 
-Commit a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
-placed pmus_lock inside pmus_srcu, this makes perf_pmu_unregister()
-trip lockdep.
+Clocks acquired with of_clk_get() need to be freed with clk_put(). Call
+clk_put() on priv->clks[0] on error path.
 
-Move the locking about such that only pmu_idr and pmus (list) are
-modified while holding pmus_lock. This avoids doing synchronize_srcu()
-while holding pmus_lock and all is well again.
-
-Fixes: a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20241104135517.679556858@infradead.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3df0e240caba ("usb: renesas_usbhs: Add multiple clocks management")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250225110248.870417-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/renesas_usbhs/common.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 4f6b18ecfdb21..4dd8936b5aa09 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11660,6 +11660,8 @@ void perf_pmu_unregister(struct pmu *pmu)
- {
- 	mutex_lock(&pmus_lock);
- 	list_del_rcu(&pmu->entry);
-+	idr_remove(&pmu_idr, pmu->type);
-+	mutex_unlock(&pmus_lock);
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -312,8 +312,10 @@ static int usbhsc_clk_get(struct device
+ 	priv->clks[1] = of_clk_get(dev_of_node(dev), 1);
+ 	if (PTR_ERR(priv->clks[1]) == -ENOENT)
+ 		priv->clks[1] = NULL;
+-	else if (IS_ERR(priv->clks[1]))
++	else if (IS_ERR(priv->clks[1])) {
++		clk_put(priv->clks[0]);
+ 		return PTR_ERR(priv->clks[1]);
++	}
  
- 	/*
- 	 * We dereference the pmu list under both SRCU and regular RCU, so
-@@ -11669,7 +11671,6 @@ void perf_pmu_unregister(struct pmu *pmu)
- 	synchronize_rcu();
- 
- 	free_percpu(pmu->pmu_disable_count);
--	idr_remove(&pmu_idr, pmu->type);
- 	if (pmu_bus_running && pmu->dev && pmu->dev != PMU_NULL_DEV) {
- 		if (pmu->nr_addr_filters)
- 			device_remove_file(pmu->dev, &dev_attr_nr_addr_filters);
-@@ -11677,7 +11678,6 @@ void perf_pmu_unregister(struct pmu *pmu)
- 		put_device(pmu->dev);
- 	}
- 	free_pmu_context(pmu);
--	mutex_unlock(&pmus_lock);
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(perf_pmu_unregister);
- 
--- 
-2.39.5
-
 
 
