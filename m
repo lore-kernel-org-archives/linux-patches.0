@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8611C3F34;
-	Mon, 10 Mar 2025 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994E3BA3D;
+	Mon, 10 Mar 2025 18:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630888; cv=none; b=FAoBLa+tZha3cED164dhCdAE0ECc5L1+h1Zpp7sRxQ61Jiik895PL/B0bkdfmYUbBoAy0PmSnJjy6wLq1DxkIn2NNHQHukwQnqsOc7iZadBNfiN53Q8iJAWyqZCsImUAqJQsY7QvD5W5m0uyM+1ug67PlQD0HTG2jYith8lSwWc=
+	t=1741630891; cv=none; b=m8KvGGRdnXy9RhgosdCuxY09ajnPursT7ZE730XlYYbiehKGI5jfONo1mMZpOVSGp6utRoEQVfYzL1dZjG0LQvdhvDt9A5xTE6xA572Odnr8JQc724JDDKI0pwZcV7kd+kPj6wwg8/STVlz1xuxcWC6ug0bwHkybwgRYFSvXFXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630888; c=relaxed/simple;
-	bh=rX0Ngd+z7N8/Hq0X8o08cW/D9dsh5kyGoeqSqDBrgUg=;
+	s=arc-20240116; t=1741630891; c=relaxed/simple;
+	bh=oFsV43Zt09s14305CTJEGiRtT5MTqBdiM2nrbUDoGhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tx1gaV8T2LdFiNRHTqRQVuzsXR+jZQ308bC7AS10GdmfgvpohQmqxcSv51Ih2bvCgyFMK5n/uzrpJTLyCg0sbytWbrT9RsRewXcCsMZt8MZ1jZ+tGk3AhEPCrGlDAa2NJLA5Zo54p8iukf5VPWSyAreLkykX/Om7XxJeN6yl4/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QybhWPpc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hyFP8m/G1j5Ngxe1Q9frAzTUEvqfm7EMe3+JDAkYL3MPVdikG8ULxwciJCncW9NwgD3ltzDsH69qzpObHD8xzGOmJDIrXagL6j5GUwaNykQpC7401WleVh1Nzd7if1hbmyQytPTpjMEVM8LCMz41dq+LAPetDlV+k1/odmCU+JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMgIl8n6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QybhWPpc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CECC4CEE5;
-	Mon, 10 Mar 2025 18:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMgIl8n6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20064C4CEE5;
+	Mon, 10 Mar 2025 18:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630888;
-	bh=rX0Ngd+z7N8/Hq0X8o08cW/D9dsh5kyGoeqSqDBrgUg=;
+	s=korg; t=1741630891;
+	bh=oFsV43Zt09s14305CTJEGiRtT5MTqBdiM2nrbUDoGhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QybhWPpc6hZNLVBoyeR2EN8Gyjp6WtHFWes1LWVUQx1UWEC8i1mtVcY/5AwIMQIcR
-	 4cSzYLKQdIB7SZ+GK6+ESqK1ect/0s26awkgCeFnA0uNFrYPNx4EEetKoLBC10Xruh
-	 etqqzBlzdGugeLolvdEn+eUboLm3UqpmwSwMdZbc=
+	b=gMgIl8n6HZrToDsKzM0kwiqgzOaA4doIz0q8HW4BKgWpdHnfIKTL8pXmdxywXcgZR
+	 dEuZx/bNFUiQlJDie/0JsY78Va2bUrGRwXcfUxXIlwqviRyLwDNY2FTE81qoWKvFg4
+	 prR/1TmJ1/a70Cukh4BDeLNj2zFJJWFQKaUEaYSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 570/620] x86/sgx: Move PTE zap code to new sgx_zap_enclave_ptes()
-Date: Mon, 10 Mar 2025 18:06:56 +0100
-Message-ID: <20250310170608.043633025@linuxfoundation.org>
+Subject: [PATCH 5.15 571/620] x86/sgx: Export sgx_encl_{grow,shrink}()
+Date: Mon, 10 Mar 2025 18:06:57 +0100
+Message-ID: <20250310170608.082107152@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,157 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit f89c2f9bf5a64f619de06ded4349dff5a35da860 ]
+[ Upstream commit 3a5351415228d06c988a1e610e71d3889f707ac9 ]
 
-The SGX reclaimer removes page table entries pointing to pages that are
-moved to swap.
+In order to use sgx_encl_{grow,shrink}() in the page augmentation code
+located in encl.c, export these functions.
 
-SGX2 enables changes to pages belonging to an initialized enclave, thus
-enclave pages may have their permission or type changed while the page
-is being accessed by an enclave. Supporting SGX2 requires page table
-entries to be removed so that any cached mappings to changed pages
-are removed. For example, with the ability to change enclave page types
-a regular enclave page may be changed to a Thread Control Structure
-(TCS) page that may not be accessed by an enclave.
-
-Factor out the code removing page table entries to a separate function
-sgx_zap_enclave_ptes(), fixing accuracy of comments in the process,
-and make it available to the upcoming SGX2 code.
-
-Place sgx_zap_enclave_ptes() with the rest of the enclave code in
-encl.c interacting with the page table since this code is no longer
-unique to the reclaimer.
-
+Suggested-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lkml.kernel.org/r/b010cdf01d7ce55dd0f00e883b7ccbd9db57160a.1652137848.git.reinette.chatre@intel.com
+Link: https://lkml.kernel.org/r/d51730acf54b6565710b2261b3099517b38c2ec4.1652137848.git.reinette.chatre@intel.com
 Stable-dep-of: 0d3e0dfd68fb ("x86/sgx: Fix size overflows in sgx_encl_create()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/encl.c | 45 +++++++++++++++++++++++++++++++++-
- arch/x86/kernel/cpu/sgx/encl.h |  2 +-
- arch/x86/kernel/cpu/sgx/main.c | 31 ++---------------------
- 3 files changed, 47 insertions(+), 31 deletions(-)
+ arch/x86/kernel/cpu/sgx/encl.h  | 2 ++
+ arch/x86/kernel/cpu/sgx/ioctl.c | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/encl.c b/arch/x86/kernel/cpu/sgx/encl.c
-index 70fd9aa47c68d..7cb9f89ee7365 100644
---- a/arch/x86/kernel/cpu/sgx/encl.c
-+++ b/arch/x86/kernel/cpu/sgx/encl.c
-@@ -721,7 +721,7 @@ int sgx_encl_mm_add(struct sgx_encl *encl, struct mm_struct *mm)
- 
- 	spin_lock(&encl->mm_lock);
- 	list_add_rcu(&encl_mm->list, &encl->mm_list);
--	/* Pairs with smp_rmb() in sgx_reclaimer_block(). */
-+	/* Pairs with smp_rmb() in sgx_zap_enclave_ptes(). */
- 	smp_wmb();
- 	encl->mm_list_version++;
- 	spin_unlock(&encl->mm_lock);
-@@ -936,6 +936,49 @@ int sgx_encl_test_and_clear_young(struct mm_struct *mm,
- 	return ret;
- }
- 
-+/**
-+ * sgx_zap_enclave_ptes() - remove PTEs mapping the address from enclave
-+ * @encl: the enclave
-+ * @addr: page aligned pointer to single page for which PTEs will be removed
-+ *
-+ * Multiple VMAs may have an enclave page mapped. Remove the PTE mapping
-+ * @addr from each VMA. Ensure that page fault handler is ready to handle
-+ * new mappings of @addr before calling this function.
-+ */
-+void sgx_zap_enclave_ptes(struct sgx_encl *encl, unsigned long addr)
-+{
-+	unsigned long mm_list_version;
-+	struct sgx_encl_mm *encl_mm;
-+	struct vm_area_struct *vma;
-+	int idx, ret;
-+
-+	do {
-+		mm_list_version = encl->mm_list_version;
-+
-+		/* Pairs with smp_wmb() in sgx_encl_mm_add(). */
-+		smp_rmb();
-+
-+		idx = srcu_read_lock(&encl->srcu);
-+
-+		list_for_each_entry_rcu(encl_mm, &encl->mm_list, list) {
-+			if (!mmget_not_zero(encl_mm->mm))
-+				continue;
-+
-+			mmap_read_lock(encl_mm->mm);
-+
-+			ret = sgx_encl_find(encl_mm->mm, addr, &vma);
-+			if (!ret && encl == vma->vm_private_data)
-+				zap_vma_ptes(vma, addr, PAGE_SIZE);
-+
-+			mmap_read_unlock(encl_mm->mm);
-+
-+			mmput_async(encl_mm->mm);
-+		}
-+
-+		srcu_read_unlock(&encl->srcu, idx);
-+	} while (unlikely(encl->mm_list_version != mm_list_version));
-+}
-+
- /**
-  * sgx_alloc_va_page() - Allocate a Version Array (VA) page
-  *
 diff --git a/arch/x86/kernel/cpu/sgx/encl.h b/arch/x86/kernel/cpu/sgx/encl.h
-index a4894cf3f56a2..ed5ced8ccd2c8 100644
+index ed5ced8ccd2c8..90e3a1181bd62 100644
 --- a/arch/x86/kernel/cpu/sgx/encl.h
 +++ b/arch/x86/kernel/cpu/sgx/encl.h
-@@ -113,7 +113,7 @@ int sgx_encl_alloc_backing(struct sgx_encl *encl, unsigned long page_index,
- void sgx_encl_put_backing(struct sgx_backing *backing);
- int sgx_encl_test_and_clear_young(struct mm_struct *mm,
- 				  struct sgx_encl_page *page);
--
-+void sgx_zap_enclave_ptes(struct sgx_encl *encl, unsigned long addr);
- struct sgx_epc_page *sgx_alloc_va_page(void);
- unsigned int sgx_alloc_va_slot(struct sgx_va_page *va_page);
- void sgx_free_va_slot(struct sgx_va_page *va_page, unsigned int offset);
-diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
-index ad453b4387a44..fd786f1bc4e87 100644
---- a/arch/x86/kernel/cpu/sgx/main.c
-+++ b/arch/x86/kernel/cpu/sgx/main.c
-@@ -122,36 +122,9 @@ static void sgx_reclaimer_block(struct sgx_epc_page *epc_page)
- 	struct sgx_encl_page *page = epc_page->owner;
- 	unsigned long addr = page->desc & PAGE_MASK;
- 	struct sgx_encl *encl = page->encl;
--	unsigned long mm_list_version;
--	struct sgx_encl_mm *encl_mm;
--	struct vm_area_struct *vma;
--	int idx, ret;
--
--	do {
--		mm_list_version = encl->mm_list_version;
--
--		/* Pairs with smp_rmb() in sgx_encl_mm_add(). */
--		smp_rmb();
--
--		idx = srcu_read_lock(&encl->srcu);
--
--		list_for_each_entry_rcu(encl_mm, &encl->mm_list, list) {
--			if (!mmget_not_zero(encl_mm->mm))
--				continue;
--
--			mmap_read_lock(encl_mm->mm);
--
--			ret = sgx_encl_find(encl_mm->mm, addr, &vma);
--			if (!ret && encl == vma->vm_private_data)
--				zap_vma_ptes(vma, addr, PAGE_SIZE);
--
--			mmap_read_unlock(encl_mm->mm);
--
--			mmput_async(encl_mm->mm);
--		}
-+	int ret;
+@@ -121,5 +121,7 @@ bool sgx_va_page_full(struct sgx_va_page *va_page);
+ void sgx_encl_free_epc_page(struct sgx_epc_page *page);
+ struct sgx_encl_page *sgx_encl_load_page(struct sgx_encl *encl,
+ 					 unsigned long addr);
++struct sgx_va_page *sgx_encl_grow(struct sgx_encl *encl);
++void sgx_encl_shrink(struct sgx_encl *encl, struct sgx_va_page *va_page);
  
--		srcu_read_unlock(&encl->srcu, idx);
--	} while (unlikely(encl->mm_list_version != mm_list_version));
-+	sgx_zap_enclave_ptes(encl, addr);
+ #endif /* _X86_ENCL_H */
+diff --git a/arch/x86/kernel/cpu/sgx/ioctl.c b/arch/x86/kernel/cpu/sgx/ioctl.c
+index 217777c029eea..f21890150216d 100644
+--- a/arch/x86/kernel/cpu/sgx/ioctl.c
++++ b/arch/x86/kernel/cpu/sgx/ioctl.c
+@@ -17,7 +17,7 @@
+ #include "encl.h"
+ #include "encls.h"
  
- 	mutex_lock(&encl->lock);
+-static struct sgx_va_page *sgx_encl_grow(struct sgx_encl *encl)
++struct sgx_va_page *sgx_encl_grow(struct sgx_encl *encl)
+ {
+ 	struct sgx_va_page *va_page = NULL;
+ 	void *err;
+@@ -43,7 +43,7 @@ static struct sgx_va_page *sgx_encl_grow(struct sgx_encl *encl)
+ 	return va_page;
+ }
+ 
+-static void sgx_encl_shrink(struct sgx_encl *encl, struct sgx_va_page *va_page)
++void sgx_encl_shrink(struct sgx_encl *encl, struct sgx_va_page *va_page)
+ {
+ 	encl->page_cnt--;
  
 -- 
 2.39.5
