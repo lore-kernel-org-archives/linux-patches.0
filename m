@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CBA2F28;
-	Mon, 10 Mar 2025 18:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451441C5F1B;
+	Mon, 10 Mar 2025 18:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630693; cv=none; b=dR1PyusjRdaTOEEaWeNt9OGnrMg5yLTdZAMkEDm1mA62M0zvMUjzbr7d+f1CIPcbEjlfORxcEphyyyoTzW6AuKYk4uChrZJMswl3692XkXV8x+xPVL7dH6XKIxpIpaNgNfFzYCUhd1+bGtxYs2YQrLHPbShivWTdCFwo0hICUMY=
+	t=1741630696; cv=none; b=Xc4AcRQ6OYOtacezrAbV2EaUVjdtrU7U7l+V7nxJ5el+JSIpBdHyk/F0utFO2IEJetEikduOaTXPVC4lhsBm4s5sbmmNslnj3vheARX4/AKA2aqHfYt44lxJryZdeR+RQFZf+ESBkDEdamIJVOltxh4JBPgx8JzZCVfNK+dWaIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630693; c=relaxed/simple;
-	bh=TZTeoR7P6XiFAvMuIdBwZxaGt50jW0eX+nKc+sr3Sjo=;
+	s=arc-20240116; t=1741630696; c=relaxed/simple;
+	bh=rVXm2r8JXNRYtfuwvyW1ps3V7bh3zv/XXT78Nx/S0Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYOlgAt4M/U4+NFSrFyBQCUZqKNU6IazANEfDy/RGq8GCvBKdCD7PMeYSh0ihi7GnMETEITPPJhl2gn+zoip8YqzPG+ZqQ+XEl1Z6uEizK829rgcJ7foO10ATtfnAvwXFQ6d0YRT7WNRC08oGgjmZBLM1xmoJGvH8q7ucfBafXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7BuB3Kh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sw0rfADxV3p5XB/3a3krVV1M9wtQ0kGtc6XzN5ZxwgdAVTbpFC/jQVqem4Ato1U8aKNwpF458v2Q9nNU6gqIxRbdp+9xL0XRZ2wZFrdr17kIazyLsL3470sb3sVL9wCurevQrO0q2s9r5ys7co+iNnLq4pekliOiK9cMt7ES7Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCXH7HAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7BuB3Kh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ECAC4CEE5;
-	Mon, 10 Mar 2025 18:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCXH7HAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1375C4CEE5;
+	Mon, 10 Mar 2025 18:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630693;
-	bh=TZTeoR7P6XiFAvMuIdBwZxaGt50jW0eX+nKc+sr3Sjo=;
+	s=korg; t=1741630696;
+	bh=rVXm2r8JXNRYtfuwvyW1ps3V7bh3zv/XXT78Nx/S0Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7BuB3KhYdG+8wE2P9unu+J1mVabue2/kiL+Hmj12pcoDyv31KGdB4DyoxgSWQHuV
-	 HqrI5TTxeL4olBAO4/pxrZglzNEtI1WKDfrCrNCw3AVZz7WJst59FEngB2hS2CJgm1
-	 CpWsLBnd15w7GhqjRY+NwGb5u3DMGn6aAeuckI44=
+	b=iCXH7HAU4r/DtoKhYt5rGdA/AYsLAOtTg4tEe1eXdeC0rDGGlBJJ/SAOM/Bp/46MQ
+	 BfwDNYAxrD4oxCBcXilzbqS7qxgpR27sQFUSXy7ofqzhJs4ZzdiZOCdj0MO/Z5E6ED
+	 vWJnm6trYml2dioAS+u8rZYMXDBjHdgnsuTeuJl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Harshal Chaudhari <hchaudhari@marvell.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 503/620] tcp: Defer ts_recent changes until req is owned
-Date: Mon, 10 Mar 2025 18:05:49 +0100
-Message-ID: <20250310170605.418854964@linuxfoundation.org>
+Subject: [PATCH 5.15 504/620] net: mvpp2: cls: Fixed Non IP flow, with vlan tag flow defination.
+Date: Mon, 10 Mar 2025 18:05:50 +0100
+Message-ID: <20250310170605.456755955@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,90 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Harshal Chaudhari <hchaudhari@marvell.com>
 
-[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
+[ Upstream commit 2d253726ff7106b39a44483b6864398bba8a2f74 ]
 
-Recently a bug was discovered where the server had entered TCP_ESTABLISHED
-state, but the upper layers were not notified.
+Non IP flow, with vlan tag not working as expected while
+running below command for vlan-priority. fixed that.
 
-The same 5-tuple packet may be processed by different CPUSs, so two
-CPUs may receive different ack packets at the same time when the
-state is TCP_NEW_SYN_RECV.
+ethtool -N eth1 flow-type ether vlan 0x8000 vlan-mask 0x1fff action 0 loc 0
 
-In that case, req->ts_recent in tcp_check_req may be changed concurrently,
-which will probably cause the newsk's ts_recent to be incorrectly large.
-So that tcp_validate_incoming will fail. At this point, newsk will not be
-able to enter the TCP_ESTABLISHED.
-
-cpu1                                    cpu2
-tcp_check_req
-                                        tcp_check_req
- req->ts_recent = rcv_tsval = t1
-                                         req->ts_recent = rcv_tsval = t2
-
- syn_recv_sock
-  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
-tcp_child_process
- tcp_rcv_state_process
-  tcp_validate_incoming
-   tcp_paws_check
-    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
-        // t2 - t1 > paws_win, failed
-                                        tcp_v4_do_rcv
-                                         tcp_rcv_state_process
-                                         // TCP_ESTABLISHED
-
-The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
-the newsk into the TCP_ESTABLISHED state, but at this point it is no
-longer possible to notify the upper layer application. A notification
-mechanism could be added here, but the fix is more complex, so the
-current fix is used.
-
-In tcp_check_req, req->ts_recent is used to assign a value to
-tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
-and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
-req fixes this bug.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1274daede3ef ("net: mvpp2: cls: Add steering based on vlan Id and priority.")
+Signed-off-by: Harshal Chaudhari <hchaudhari@marvell.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250225042058.2643838-1-hchaudhari@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index d84b71f70766b..061225d645e6b 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -725,12 +725,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+index 40aeaa7bd739f..d2757cc116139 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
+@@ -324,7 +324,7 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
+ 		       MVPP2_PRS_RI_VLAN_MASK),
+ 	/* Non IP flow, with vlan tag */
+ 	MVPP2_DEF_FLOW(MVPP22_FLOW_ETHERNET, MVPP2_FL_NON_IP_TAG,
+-		       MVPP22_CLS_HEK_OPT_VLAN,
++		       MVPP22_CLS_HEK_TAGGED,
+ 		       0, 0),
+ };
  
- 	/* In sequence, PAWS is OK. */
- 
--	/* TODO: We probably should defer ts_recent change once
--	 * we take ownership of @req.
--	 */
--	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
--		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
--
- 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
- 		/* Truncate SYN, it is out of window starting
- 		   at tcp_rsk(req)->rcv_isn + 1. */
-@@ -779,6 +773,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	if (!child)
- 		goto listen_overflow;
- 
-+	if (own_req && tmp_opt.saw_tstamp &&
-+	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
-+		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
-+
- 	if (own_req && rsk_drop_req(req)) {
- 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
- 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
 -- 
 2.39.5
 
