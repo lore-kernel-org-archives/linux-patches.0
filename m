@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B8623026D;
-	Mon, 10 Mar 2025 17:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51C81DE89C;
+	Mon, 10 Mar 2025 17:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628130; cv=none; b=flSoFk8Mui72AMac4SNq3Za2DNz9JooMjEqPiQr8KJHYFkwxvGV17tYlDueuU+JP9+cdC7g0yH+RL1B3S4BVpMtrrg22kBj3Q8DwYxkzFRjArYyy3w22oObuenwGb5daYC9UkhEND3cfG+V5QS468WSC40FSgOF7/Ubkj/Yt3JQ=
+	t=1741628132; cv=none; b=cQ5LwzSr+dJOQeKJi5tt3OKQ5X5hKDWelATCrvwouz7b85LZqirwBxBkbv3SBqFjXosz2QqOSAbcVvoGaqqAIqWKijxjoG16znGT9xmGPC20CjmIbYiJawVC083EPa1AWhjIhUnf6gGD71IzcBGELew357AYsqlbiWwWdz4YGgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628130; c=relaxed/simple;
-	bh=oDJ8MqkViM1VE+nXIwz0+4SIzrhV3AMfw/f2Q1tW73w=;
+	s=arc-20240116; t=1741628132; c=relaxed/simple;
+	bh=dLb9hrYl3mhOOIA5ITWLDWQA7s+8RW+fsvSSi9QI3mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZqGD1Hc53WXd9zNb14SHNeJ+LuOCdT8XoeB/fk1fPUeljFNSyI1AVeO+js/FCHyE4f8U3e1usw4bPJDyxlUXw0gPgXtvyAntvQUU1ohTRe32nqSPsBCrcZy9377a4CPAjXHZ84vMEU6IYPANEkmcl5uaHjOnFqifoWEFkbpq4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qesgZWjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9U9VkT79l0DvD9CDNP6O/UwJbNyc/Uw+RriKGF5hg8bnL6K97NAGnehXM3QJlJv+sHEmf9fQf/cSHP6lf9cvQWKWksoZkmErAexnnWb1KcIWg8a0U4aPNdo8HudBWBErwZIaCmU+fgQFNzcSsFJJdAJRHcQpHmqeRqA+OHJmhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTleCsf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qesgZWjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E208C4CEE5;
-	Mon, 10 Mar 2025 17:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTleCsf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52785C4CEE5;
+	Mon, 10 Mar 2025 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628129;
-	bh=oDJ8MqkViM1VE+nXIwz0+4SIzrhV3AMfw/f2Q1tW73w=;
+	s=korg; t=1741628132;
+	bh=dLb9hrYl3mhOOIA5ITWLDWQA7s+8RW+fsvSSi9QI3mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qesgZWjRFnGC4P/xfRzK2UL+JwVv1MmqCUN2Fu2PjLE7kRLyBLOO4Cau7z/nZ0JXJ
-	 Io/aPAEr8gosX+GzMSFMXY8+ivsSXA9UPzCPsNrW8f+wSleVKYfC++0nh9mew+Ut93
-	 roGlQ0sPA6s+dYJm8t/89mCFgxjbq+Q3quvlMIEY=
+	b=wTleCsf9FI2obNhng7lhZBXsMvaeFQXVEwP1Nny4XGPlvXdDnKgS/T8NcIMJ6yttB
+	 UfNU3w8goDHe5A26orUDupaUwH5VAq29C9NC9M0E3fNR1em/lVOQVCpeW5XHfbzdqi
+	 fKACuQbbm9V2jLCxsyzlX+8gyvQHYzVAEsMzx8lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 096/145] usb: quirks: Add DELAY_INIT and NO_LPM for Prolific Mass Storage Card Reader
-Date: Mon, 10 Mar 2025 18:06:30 +0100
-Message-ID: <20250310170438.629242455@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 097/145] usb: typec: ucsi: Fix NULL pointer access
+Date: Mon, 10 Mar 2025 18:06:31 +0100
+Message-ID: <20250310170438.670744703@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,36 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit ff712188daa3fe3ce7e11e530b4dca3826dae14a upstream.
+commit b13abcb7ddd8d38de769486db5bd917537b32ab1 upstream.
 
-When used on Huawei hisi platforms, Prolific Mass Storage Card Reader
-which the VID:PID is in 067b:2731 might fail to enumerate at boot time
-and doesn't work well with LPM enabled, combination quirks:
-	USB_QUIRK_DELAY_INIT + USB_QUIRK_NO_LPM
-fixed the problems.
+Resources should be released only after all threads that utilize them
+have been destroyed.
+This commit ensures that resources are not released prematurely by waiting
+for the associated workqueue to complete before deallocating them.
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250304070757.139473-1-limiao870622@163.com
+Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250305111739.1489003-2-akuchynski@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -341,6 +341,10 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0638, 0x0a13), .driver_info =
- 	  USB_QUIRK_STRING_FETCH_255 },
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1465,11 +1465,11 @@ static int ucsi_init(struct ucsi *ucsi)
  
-+	/* Prolific Single-LUN Mass Storage Card Reader */
-+	{ USB_DEVICE(0x067b, 0x2731), .driver_info = USB_QUIRK_DELAY_INIT |
-+	  USB_QUIRK_NO_LPM },
+ err_unregister:
+ 	for (con = connector; con->port; con++) {
++		if (con->wq)
++			destroy_workqueue(con->wq);
+ 		ucsi_unregister_partner(con);
+ 		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
+ 		ucsi_unregister_port_psy(con);
+-		if (con->wq)
+-			destroy_workqueue(con->wq);
+ 
+ 		usb_power_delivery_unregister_capabilities(con->port_sink_caps);
+ 		con->port_sink_caps = NULL;
+@@ -1651,10 +1651,6 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		cancel_work_sync(&ucsi->connector[i].work);
+-		ucsi_unregister_partner(&ucsi->connector[i]);
+-		ucsi_unregister_altmodes(&ucsi->connector[i],
+-					 UCSI_RECIPIENT_CON);
+-		ucsi_unregister_port_psy(&ucsi->connector[i]);
+ 
+ 		if (ucsi->connector[i].wq) {
+ 			struct ucsi_work *uwork;
+@@ -1670,6 +1666,11 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 			destroy_workqueue(ucsi->connector[i].wq);
+ 		}
+ 
++		ucsi_unregister_partner(&ucsi->connector[i]);
++		ucsi_unregister_altmodes(&ucsi->connector[i],
++					 UCSI_RECIPIENT_CON);
++		ucsi_unregister_port_psy(&ucsi->connector[i]);
 +
- 	/* Saitek Cyborg Gold Joystick */
- 	{ USB_DEVICE(0x06a3, 0x0006), .driver_info =
- 			USB_QUIRK_CONFIG_INTF_STRINGS },
+ 		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_sink_caps);
+ 		ucsi->connector[i].port_sink_caps = NULL;
+ 		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_source_caps);
 
 
