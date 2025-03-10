@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B83233136;
-	Mon, 10 Mar 2025 17:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7581DE89C;
+	Mon, 10 Mar 2025 17:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627306; cv=none; b=Sr6W3Ua8a+yz0lpAcUl9pVAmItias1pV2WKyt8gC363hrMyiWHmJEGm0VYkMqH3O+jw7inicaMaRQZJYrZ78/B8uKlHORHxJkXqs+lgwsi2OWHQWRQ7/h5ORaqE8s6EgLraRPqJzIqg5hQH6ycsjCOmtDinVD7cXt1fWa0urr2A=
+	t=1741627309; cv=none; b=IYORmTzMPJULvXaU8fk5kOF2VqmLr+3Hc8MJFSGumwmDJfILncP3GkzVf35+4QtIBuNstRiWGODx1DPLe4WjXyb9FwZhJwqzKlw4p0U7mlaxlciCo+5Ek8jUnyumTHisuMtnozOzQ073gONGc7sMevUNNlCRASdbVhOaO4Gdhyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627306; c=relaxed/simple;
-	bh=lN9Plcqy2M4KZnE9ZW6QQ9iaRS6Y+D6GlU6X91kDhaE=;
+	s=arc-20240116; t=1741627309; c=relaxed/simple;
+	bh=zVHlTjdMiMp9YMnFyusUNQy0MBL5dctImEFuIQS2UYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcywutNVDMKA06N6NTSwoQQHPGVxH0jmeV9JBZHyKipq4y13OpILGrYR/vPV3peVXHMP8vQCpPr9Z7D+XwOJgicKxmHJ/Q85fqE/hHnx9MKdl1rHAeeebyGvJ1k+rlhRIaAn2p71KorQVJV8bevqrPE3fnmgjBVu282SoJOznFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11LPjSnX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aECiakG4h+8D2kWdlxguvNtYjlaRKray1DJuLYQadvlMNg59ZXnkSM8XfR/+vSOR9Zq7j3MNH5il1rT8LJ+9FDP6LIZf1MmuyVQXlH5TrepIBO+PxP1GwiwcRWwmnKUgxBA27ZN3dXlgMDQUieFmA3NWPY6wWbC2LsVZZJLLH4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHgIoWBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11LPjSnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37490C4CEED;
-	Mon, 10 Mar 2025 17:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHgIoWBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222DCC4CEE5;
+	Mon, 10 Mar 2025 17:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627306;
-	bh=lN9Plcqy2M4KZnE9ZW6QQ9iaRS6Y+D6GlU6X91kDhaE=;
+	s=korg; t=1741627309;
+	bh=zVHlTjdMiMp9YMnFyusUNQy0MBL5dctImEFuIQS2UYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11LPjSnX0u1NWx9+SHYPfqaU6fyUFJV4g/iUAPhRfWtZiCpbiBFaY0NGgIeqrl8eq
-	 1ttrK9ZNu95LPyE332x8zxVMHScdVAS16WUVqb1IPf3ct7WRN2Lfj8AuxJuTR1Kj/D
-	 vXYO4pAaK+sf77ItXLtlCsH/LkRGfw/uryxYkUho=
+	b=aHgIoWBP1MtpG+TrwYN+T8oDhcLUoYIzGCDIwRjIEYrFAHRfxj1PxtW5lVHcz3HsF
+	 eBWHp+glJiBc1TMPrSqAXrmqCcSIPRrNHEVGHfCL/rLkc7O678MinsI9pvWeN6GDp2
+	 lYTP+u2yPXqpZ5RfkkZAXOqxnjphDsJRsQgQSodo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erpeng Xu <xuerpeng@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 077/269] LoongArch: Use polling play_dead() when resuming from hibernation
-Date: Mon, 10 Mar 2025 18:03:50 +0100
-Message-ID: <20250310170500.794065489@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 086/269] ksmbd: fix bug on trap in smb2_lock
+Date: Mon, 10 Mar 2025 18:03:59 +0100
+Message-ID: <20250310170501.145538770@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,106 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit c9117434c8f7523f0b77db4c5766f5011cc94677 upstream.
+commit e26e2d2e15daf1ab33e0135caf2304a0cfa2744b upstream.
 
-When CONFIG_RANDOM_KMALLOC_CACHES or other randomization infrastructrue
-enabled, the idle_task's stack may different between the booting kernel
-and target kernel. So when resuming from hibernation, an ACTION_BOOT_CPU
-IPI wakeup the idle instruction in arch_cpu_idle_dead() and jump to the
-interrupt handler. But since the stack pointer is changed, the interrupt
-handler cannot restore correct context.
-
-So rename the current arch_cpu_idle_dead() to idle_play_dead(), make it
-as the default version of play_dead(), and the new arch_cpu_idle_dead()
-call play_dead() directly. For hibernation, implement an arch-specific
-hibernate_resume_nonboot_cpu_disable() to use the polling version (idle
-instruction is replace by nop, and irq is disabled) of play_dead(), i.e.
-poll_play_dead(), to avoid IPI handler corrupting the idle_task's stack
-when resuming from hibernation.
-
-This solution is a little similar to commit 406f992e4a372dafbe3c ("x86 /
-hibernate: Use hlt_play_dead() when resuming from hibernation").
+If lock count is greater than 1, flags could be old value.
+It should be checked with flags of smb_lock, not flags.
+It will cause bug-on trap from locks_free_lock in error handling
+routine.
 
 Cc: stable@vger.kernel.org
-Tested-by: Erpeng Xu <xuerpeng@uniontech.com>
-Tested-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/smp.c |   47 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -19,6 +19,7 @@
- #include <linux/smp.h>
- #include <linux/threads.h>
- #include <linux/export.h>
-+#include <linux/suspend.h>
- #include <linux/syscore_ops.h>
- #include <linux/time.h>
- #include <linux/tracepoint.h>
-@@ -423,7 +424,7 @@ void loongson_cpu_die(unsigned int cpu)
- 	mb();
- }
- 
--void __noreturn arch_cpu_idle_dead(void)
-+static void __noreturn idle_play_dead(void)
- {
- 	register uint64_t addr;
- 	register void (*init_fn)(void);
-@@ -447,6 +448,50 @@ void __noreturn arch_cpu_idle_dead(void)
- 	BUG();
- }
- 
-+#ifdef CONFIG_HIBERNATION
-+static void __noreturn poll_play_dead(void)
-+{
-+	register uint64_t addr;
-+	register void (*init_fn)(void);
-+
-+	idle_task_exit();
-+	__this_cpu_write(cpu_state, CPU_DEAD);
-+
-+	__smp_mb();
-+	do {
-+		__asm__ __volatile__("nop\n\t");
-+		addr = iocsr_read64(LOONGARCH_IOCSR_MBUF0);
-+	} while (addr == 0);
-+
-+	init_fn = (void *)TO_CACHE(addr);
-+	iocsr_write32(0xffffffff, LOONGARCH_IOCSR_IPI_CLEAR);
-+
-+	init_fn();
-+	BUG();
-+}
-+#endif
-+
-+static void (*play_dead)(void) = idle_play_dead;
-+
-+void __noreturn arch_cpu_idle_dead(void)
-+{
-+	play_dead();
-+	BUG(); /* play_dead() doesn't return */
-+}
-+
-+#ifdef CONFIG_HIBERNATION
-+int hibernate_resume_nonboot_cpu_disable(void)
-+{
-+	int ret;
-+
-+	play_dead = poll_play_dead;
-+	ret = suspend_disable_secondary_cpus();
-+	play_dead = idle_play_dead;
-+
-+	return ret;
-+}
-+#endif
-+
- #endif
- 
- /*
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7451,7 +7451,7 @@ no_check_cl:
+ retry:
+ 		rc = vfs_lock_file(filp, smb_lock->cmd, flock, NULL);
+ skip:
+-		if (flags & SMB2_LOCKFLAG_UNLOCK) {
++		if (smb_lock->flags & SMB2_LOCKFLAG_UNLOCK) {
+ 			if (!rc) {
+ 				ksmbd_debug(SMB, "File unlocked\n");
+ 			} else if (rc == -ENOENT) {
 
 
