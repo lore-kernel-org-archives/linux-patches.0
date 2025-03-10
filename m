@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF59D2253FE;
-	Mon, 10 Mar 2025 17:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A6A22DF80;
+	Mon, 10 Mar 2025 17:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628104; cv=none; b=XUmy+1Dh8K8jVFE16qLkeyOclyc0+5wwB+HCe5u4wkTsb2IHJ3JZVm6nd8RODpqMBdykGsSv34Bm0MpGJISIbUQcUh/zQeOatMNtdZaPj7K2u354g+VXPYckuPUDub+f9x9ESqM9VmYfJ0mMWBJ3nYAiYIlaUsSDhmQwzHrFN/Q=
+	t=1741628107; cv=none; b=QL+xGhFEjE4qGg9VrBT5nQhqbRjJde4RFyM5F2KgXn4zZm1n0rBtz5l2IsrjCADTAhZ+v1eE1bxnPsBcx8eoJYpOQUCTXDBj8yekDgnTwDZc+vCpDs9J+lShcTSEP2fTohnwUdjGzqJVGpTpZtDLqbq5PaKS4LjWFanSmPaRqFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628104; c=relaxed/simple;
-	bh=2ix7QSPHf8HWJymzibF8iprWvkpSNNzoOqr+mv/WzS8=;
+	s=arc-20240116; t=1741628107; c=relaxed/simple;
+	bh=Jsfm9S5JhEWUSj+9OFH4I0+eDpMkXJUSf5tI0C3UxwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMtjBqBb+DE4g5ICBKuJ28CwyMEEeseUNIvt1+xcMAfm+qlpGGzKlbWvM27Ay9o7bX1KfjcP3snHp8kNp49sgOUUn/rLqh8qG6Ern/k7K1JWwWRlFT9rWw6slTvq+OCRQga7Lm8w6pD6Ieof/Brh6xHIuY/bWzAPZZZYkJCE5U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSku3Wje; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gzYFd2ZkkdISMBWudAK64djJMgqdsHGUnVIHulRJlsEHJbzS9zQOXvyXwycwfsKi11aYb7NCdgzfQYwOyYHKQA+oSH6WId8Sxj9z4z0LG6ooXtwGal7nMBmXhIFEcufS5Z7vKlSZtNtpsHjwNG6SIfhTZlhpKAKNaKCMi6OoYMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WsvDe5T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSku3Wje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D84C4CEEC;
-	Mon, 10 Mar 2025 17:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WsvDe5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86968C4CEED;
+	Mon, 10 Mar 2025 17:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628104;
-	bh=2ix7QSPHf8HWJymzibF8iprWvkpSNNzoOqr+mv/WzS8=;
+	s=korg; t=1741628106;
+	bh=Jsfm9S5JhEWUSj+9OFH4I0+eDpMkXJUSf5tI0C3UxwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSku3WjeqWvDkqkh+lHSGrGrbixFKNYMBe3AJzHW7dPCUwofuRnjPkAuWCraNOBGY
-	 LXgYXRGV+pCXKDWeydOlnx8TqWfOaXPuKwogroBgGaWhkf9ioIfnhP0iTW884fohbI
-	 Ad3G7TklfpjM8xqvKGsU5Q7ywU8OSh3/KcsZKETA=
+	b=2WsvDe5TP4PmuQFFBx/Rsr/OxnBQbckdTUH6aBYnD2KfmWm/pG3t+pkEJ1Mq46N/a
+	 4wPWfFA8NB7lcCDTX9VA7/fBZ67s6tI9/VGC/mgfBCn1LkM+VHtSxe4yqsSxzVIflA
+	 LxsMI278z2znL94H29pfj1EDXRtEvg67D75XMz5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tom Herbert <tom@herbertland.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/145] net: dsa: mt7530: Fix traffic flooding for MMIO devices
-Date: Mon, 10 Mar 2025 18:06:22 +0100
-Message-ID: <20250310170438.309354193@linuxfoundation.org>
+Subject: [PATCH 6.6 089/145] net: ipv6: fix dst ref loop in ila lwtunnel
+Date: Mon, 10 Mar 2025 18:06:23 +0100
+Message-ID: <20250310170438.348294077@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -52,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit ccc2f5a436fbb0ae1fb598932a9b8e48423c1959 ]
+[ Upstream commit 0e7633d7b95b67f1758aea19f8e85621c5f506a3 ]
 
-On MMIO devices (e.g. MT7988 or EN7581) unicast traffic received on lanX
-port is flooded on all other user ports if the DSA switch is configured
-without VLAN support since PORT_MATRIX in PCR regs contains all user
-ports. Similar to MDIO devices (e.g. MT7530 and MT7531) fix the issue
-defining default VLAN-ID 0 for MT7530 MMIO devices.
+This patch follows commit 92191dd10730 ("net: ipv6: fix dst ref loops in
+rpl, seg6 and ioam6 lwtunnels") and, on a second thought, the same patch
+is also needed for ila (even though the config that triggered the issue
+was pathological, but still, we don't want that to happen).
 
-Fixes: 110c18bfed414 ("net: dsa: mt7530: introduce driver for MT7988 built-in switch")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Link: https://patch.msgid.link/20250304-mt7988-flooding-fix-v1-1-905523ae83e9@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
+Cc: Tom Herbert <tom@herbertland.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Link: https://patch.msgid.link/20250304181039.35951-1-justin.iurman@uliege.be
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/ipv6/ila/ila_lwt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 53ead0989777f..90ab2f1058ce0 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -2640,7 +2640,8 @@ mt7531_setup_common(struct dsa_switch *ds)
- 	if (ret < 0)
- 		return ret;
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index ff7e734e335b0..ac4bcc623603a 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -88,7 +88,8 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
  
--	return 0;
-+	/* Setup VLAN ID 0 for VLAN-unaware bridges */
-+	return mt7530_setup_vlan0(priv);
- }
- 
- static int
-@@ -2734,11 +2735,6 @@ mt7531_setup(struct dsa_switch *ds)
- 
- 	mt7531_setup_common(ds);
- 
--	/* Setup VLAN ID 0 for VLAN-unaware bridges */
--	ret = mt7530_setup_vlan0(priv);
--	if (ret)
--		return ret;
--
- 	ds->assisted_learning_on_cpu_port = true;
- 	ds->mtu_enforcement_ingress = true;
- 
+-		if (ilwt->connected) {
++		/* cache only if we don't create a dst reference loop */
++		if (ilwt->connected && orig_dst->lwtstate != dst->lwtstate) {
+ 			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
+ 			local_bh_enable();
 -- 
 2.39.5
 
