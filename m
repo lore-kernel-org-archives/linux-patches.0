@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7D118DB24;
-	Mon, 10 Mar 2025 17:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28E218DB24;
+	Mon, 10 Mar 2025 17:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628236; cv=none; b=mYmeRdTGhETO9Y6uY4VrMg0tCTTaIAAGVMI54eKqyZcC6Phn/pf5tz2LyuVRqNQJz1/WKgq9q33l7sy8cLjfWrcUnyQ4B1n4VmGriPjkZ0eubXx0mrmXvmCGcoUgZso+fqsTT5O1a5j4HkhYj8hP5KFUpBWZdlkbh2Y2UXgah8s=
+	t=1741628239; cv=none; b=b77J8ZMWo1x/XBd3+wPKU49I4yaemOMnSWAYlp0rkiW+75suMfwFI+rnIAgspfdUxtMBUbmGyOHJlZigGLfDt3NT6tRGGMyN1JbZKWJnObSjnz8wFM6n/WyY4g2zAnvqb0p6Fuk1T+C/IU5c7JTW8XFHqO2Y/sjsOvlhyeOcKVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628236; c=relaxed/simple;
-	bh=G4yLjX0M35rfqWSSl/crRbCODCiN6uIiPrxiaEp09O8=;
+	s=arc-20240116; t=1741628239; c=relaxed/simple;
+	bh=Kn18c6M1KoZK25ypF6TJbVuJv35kmKJP1ou1xWWYGFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYwRFsZBlWHWc4IAOBIiIbYnTsja38s3jcnby7P1VPgXO/cSQM6aHt+zz09DwkqraYB6fwG+Zhk2V2XvjFAJgABTBeXa0NSsavCwmIVoBkLnbgSygM4Q9VWTeWOHJ6NvJISCUW8BIgnTVK3TQvodOejSrtrITvgrb73Pr12a5X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXKQV6xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxdRjEkT87P8TK0kkPz+4HX3dU9D2LTEcIyv7X1BvObTdqQuZN0/tkO4cYf6jIF4gFKuH9v7SG4eR+jFQojuui0igMouuWbKkwwvVKIzX1UX9exAVaN/9LUkpcFoAuGAoYWXk3CIkQnt4TfLGjzKsHA2nSXE6SaenUpwjOBRMzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQ+KOgUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXKQV6xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBD2C4CEE5;
-	Mon, 10 Mar 2025 17:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQ+KOgUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7170C4CEE5;
+	Mon, 10 Mar 2025 17:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628236;
-	bh=G4yLjX0M35rfqWSSl/crRbCODCiN6uIiPrxiaEp09O8=;
+	s=korg; t=1741628239;
+	bh=Kn18c6M1KoZK25ypF6TJbVuJv35kmKJP1ou1xWWYGFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXKQV6xuo5siK9qZGwXhhnXGIz03UxjmkndgIS0EgEj6ykHmLp56f4gn6N2VmW/xn
-	 IN0VJMg2F7xW7JSvBhtp5fLc+fKyLoAnTjq55GMnTK6J6ZyyNC8Y/HXxtWkeeQ6FOO
-	 RY7MKeLRXS3rDfBQp5VmXjm0P3G6gZKsHvi0J9JM=
+	b=xQ+KOgUfEAfy4sGbBPb6LG1j31a4mehA8La6rDqcSOr5gL2PRzK0Xd7JgRBqNq747
+	 Duvz/5WSOH/Hi4aVOYe8c1a+OUHbYYHhS4xUNqC1CkyZr0GxQsksDRw8jL5/VCAMUy
+	 uErLXMyKoWMjqWImOofyykyrIIyI5vrXBJk6GBCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fedor Pchelkin <boddah8794@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 103/145] usb: typec: ucsi: increase timeout for PPM reset operations
-Date: Mon, 10 Mar 2025 18:06:37 +0100
-Message-ID: <20250310170438.921265809@linuxfoundation.org>
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.6 104/145] usb: typec: tcpci_rt1711h: Unmask alert interrupts to fix functionality
+Date: Mon, 10 Mar 2025 18:06:38 +0100
+Message-ID: <20250310170438.961474896@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,51 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <boddah8794@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit bf4f9ae1cb08ccaafbe6874be6c46f59b83ae778 upstream.
+commit d6b82dafd17db0658f089b9cdec573982ca82bc5 upstream.
 
-It is observed that on some systems an initial PPM reset during the boot
-phase can trigger a timeout:
+During probe, the TCPC alert interrupts are getting masked to
+avoid unwanted interrupts during chip setup: this is ok to do
+but there is no unmasking happening at any later time, which
+means that the chip will not raise any interrupt, essentially
+making it not functional as, while internally it does perform
+all of the intended functions, it won't signal anything to the
+outside.
 
-[    6.482546] ucsi_acpi USBC000:00: failed to reset PPM!
-[    6.482551] ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
+Unmask the alert interrupts to fix functionality.
 
-Still, increasing the timeout value, albeit being the most straightforward
-solution, eliminates the problem: the initial PPM reset may take up to
-~8000-10000ms on some Lenovo laptops. When it is reset after the above
-period of time (or even if ucsi_reset_ppm() is not called overall), UCSI
-works as expected.
-
-Moreover, if the ucsi_acpi module is loaded/unloaded manually after the
-system has booted, reading the CCI values and resetting the PPM works
-perfectly, without any timeout. Thus it's only a boot-time issue.
-
-The reason for this behavior is not clear but it may be the consequence
-of some tricks that the firmware performs or be an actual firmware bug.
-As a workaround, increase the timeout to avoid failing the UCSI
-initialization prematurely.
-
-Fixes: b1b59e16075f ("usb: typec: ucsi: Increase command completion timeout value")
+Fixes: ce08eaeb6388 ("staging: typec: rt1711h typec chip driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fedor Pchelkin <boddah8794@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250217105442.113486-3-boddah8794@gmail.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250219114700.41700-1-angelogioacchino.delregno@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpci_rt1711h.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -25,7 +25,7 @@
-  * difficult to estimate the time it takes for the system to process the command
-  * before it is actually passed to the PPM.
-  */
--#define UCSI_TIMEOUT_MS		5000
-+#define UCSI_TIMEOUT_MS		10000
+--- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
++++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
+@@ -331,6 +331,11 @@ static int rt1711h_probe(struct i2c_clie
+ {
+ 	int ret;
+ 	struct rt1711h_chip *chip;
++	const u16 alert_mask = TCPC_ALERT_TX_SUCCESS | TCPC_ALERT_TX_DISCARDED |
++			       TCPC_ALERT_TX_FAILED | TCPC_ALERT_RX_HARD_RST |
++			       TCPC_ALERT_RX_STATUS | TCPC_ALERT_POWER_STATUS |
++			       TCPC_ALERT_CC_STATUS | TCPC_ALERT_RX_BUF_OVF |
++			       TCPC_ALERT_FAULT;
  
- /*
-  * UCSI_SWAP_TIMEOUT_MS - Timeout for role swap requests
+ 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+ 	if (!chip)
+@@ -379,6 +384,12 @@ static int rt1711h_probe(struct i2c_clie
+ 					dev_name(chip->dev), chip);
+ 	if (ret < 0)
+ 		return ret;
++
++	/* Enable alert interrupts */
++	ret = rt1711h_write16(chip, TCPC_ALERT_MASK, alert_mask);
++	if (ret < 0)
++		return ret;
++
+ 	enable_irq_wake(client->irq);
+ 
+ 	return 0;
 
 
