@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA72F22ACDC;
-	Mon, 10 Mar 2025 17:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2751618DB24;
+	Mon, 10 Mar 2025 17:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628329; cv=none; b=naHS7R5vLuIvkNYq92ptq8ismBpNe7y8VRB1KKVLOjdHzf+8Ob7sAfbPm6O5oI1ZKAxKyVRlpL8Ix1nb5U1MUkrf+XUY94LEai1ZByXi00qwJ19muc9S1yRtrBOpq95JdBHafhBq98vzfpKoJA6iaZBFz7D4kBJG/Obz7xpZws0=
+	t=1741628332; cv=none; b=fFqoLnrGRlfmeHImkTDryOSO0JSg8YSvRNjQ16gRRMt9cCQxr914ywBllvI6tANFNgelWQ9ROklTZ8o9AYZjN+ZH+fiauqfOV4mx/XDtIKDIx4B7b4BnrYLYQtj4zXC/ZUW2Y14Ve6SBQfyu8SQ6FNQcu2CP5O3LYH7XND7alXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628329; c=relaxed/simple;
-	bh=fYzXYgQ5XUl65IjJaLdjg0JOiKtx3y14j6uyR+mzlKQ=;
+	s=arc-20240116; t=1741628332; c=relaxed/simple;
+	bh=GnIbLZEeQfN2A503wMlxVQSb5bignW3/P8JKpzisdBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q59Vez4zkAQ9Bh7UXxa9oK24gid5iuzH3ennx4HMsCF77/NcWXwGJ5QGM4MF48qGAAKtuD1yNGJY2XpTjhEvrgbbMpSLF2NbVtms/HS311kRvKz1SNsTXlvu0Y3n7Zqyy7MNB8m6lx9oYjEY5mn3kzddPo+1xfbwG0Guv3LYPwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2K2ginF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u11WbukASoClG/Ctq2UCxIeUm+xltqYZlV4cvNmO7jP9qaV3SX+r6jZjHEp5DB26yBfvwvTx8BzntGTquneE9OMHEqkTJllQVNoeAi3agvdsNgruymczPLn3JMxem7eJTfsDQLFBoNcpTmsBh65TUiwFK47qfbKrGyHOSLpMHzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIcfRtpe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2K2ginF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EE8C4CEE5;
-	Mon, 10 Mar 2025 17:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIcfRtpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F82C4CEE5;
+	Mon, 10 Mar 2025 17:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628329;
-	bh=fYzXYgQ5XUl65IjJaLdjg0JOiKtx3y14j6uyR+mzlKQ=;
+	s=korg; t=1741628332;
+	bh=GnIbLZEeQfN2A503wMlxVQSb5bignW3/P8JKpzisdBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2K2ginFB8T15o3ZnyNObfOIh9lFbMpOjrpDQnKuuZUOVNYTj63xmwqRw3SP41DCM
-	 cwGXWEuZBHAGlDGoULBvE6GOQwF3VGKtliXcEmlc7wKRFe1EvjlAt+jgm+sKqPKM8H
-	 kUgo5Yr+usglPosHdPR/avsOhKzXA4Lj/WSYsmgs=
+	b=yIcfRtpett3SyR25CZdltUpHEc2m6nQ9h9LNwL4WG3wtKmDKpZdNjF4YBexiid0Gj
+	 sZxsIKqZTUrvzDIJ5Cu4QOYogCkpC2hFOJkcOMg2lgECpqi3E+ZgrQ3E0PfiFOVL5C
+	 lGjb18ER9GujN52zgKmcooG2I8pJxFdLQWFkBH18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 007/109] x86/amd_nb: Use rdmsr_safe() in amd_get_mmconfig_range()
-Date: Mon, 10 Mar 2025 18:05:51 +0100
-Message-ID: <20250310170427.839844168@linuxfoundation.org>
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.1 008/109] Revert "of: reserved-memory: Fix using wrong number of cells to get property alignment"
+Date: Mon, 10 Mar 2025 18:05:52 +0100
+Message-ID: <20250310170427.878723063@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -50,73 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit 14cb5d83068ecf15d2da6f7d0e9ea9edbcbc0457 upstream.
+commit 75f1f311d883dfaffb98be3c1da208d6ed5d4df9 upstream.
 
-Xen doesn't offer MSR_FAM10H_MMIO_CONF_BASE to all guests.  This results
-in the following warning:
+This reverts commit 267b21d0bef8e67dbe6c591c9991444e58237ec9.
 
-  unchecked MSR access error: RDMSR from 0xc0010058 at rIP: 0xffffffff8101d19f (xen_do_read_msr+0x7f/0xa0)
-  Call Trace:
-   xen_read_msr+0x1e/0x30
-   amd_get_mmconfig_range+0x2b/0x80
-   quirk_amd_mmconfig_area+0x28/0x100
-   pnp_fixup_device+0x39/0x50
-   __pnp_add_device+0xf/0x150
-   pnp_add_device+0x3d/0x100
-   pnpacpi_add_device_handler+0x1f9/0x280
-   acpi_ns_get_device_callback+0x104/0x1c0
-   acpi_ns_walk_namespace+0x1d0/0x260
-   acpi_get_devices+0x8a/0xb0
-   pnpacpi_init+0x50/0x80
-   do_one_initcall+0x46/0x2e0
-   kernel_init_freeable+0x1da/0x2f0
-   kernel_init+0x16/0x1b0
-   ret_from_fork+0x30/0x50
-   ret_from_fork_asm+0x1b/0x30
+Turns out some DTs do depend on this behavior. Specifically, a
+downstream Pixel 6 DT. Revert the change at least until we can decide if
+the DT spec can be changed instead.
 
-based on quirks for a "PNP0c01" device.  Treating MMCFG as disabled is the
-right course of action, so no change is needed there.
-
-This was most likely exposed by fixing the Xen MSR accessors to not be
-silently-safe.
-
-Fixes: 3fac3734c43a ("xen/pv: support selecting safe/unsafe msr accesses")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250307002846.3026685-1-andrew.cooper3@citrix.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_nb.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/of/of_reserved_mem.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -342,7 +342,6 @@ bool __init early_is_amd_nb(u32 device)
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -105,12 +105,12 @@ static int __init __reserved_mem_alloc_s
  
- struct resource *amd_get_mmconfig_range(struct resource *res)
- {
--	u32 address;
- 	u64 base, msr;
- 	unsigned int segn_busn_bits;
+ 	prop = of_get_flat_dt_prop(node, "alignment", &len);
+ 	if (prop) {
+-		if (len != dt_root_size_cells * sizeof(__be32)) {
++		if (len != dt_root_addr_cells * sizeof(__be32)) {
+ 			pr_err("invalid alignment property in '%s' node.\n",
+ 				uname);
+ 			return -EINVAL;
+ 		}
+-		align = dt_mem_next_cell(dt_root_size_cells, &prop);
++		align = dt_mem_next_cell(dt_root_addr_cells, &prop);
+ 	}
  
-@@ -350,13 +349,11 @@ struct resource *amd_get_mmconfig_range(
- 	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
- 		return NULL;
- 
--	/* assume all cpus from fam10h have mmconfig */
--	if (boot_cpu_data.x86 < 0x10)
-+	/* Assume CPUs from Fam10h have mmconfig, although not all VMs do */
-+	if (boot_cpu_data.x86 < 0x10 ||
-+	    rdmsrl_safe(MSR_FAM10H_MMIO_CONF_BASE, &msr))
- 		return NULL;
- 
--	address = MSR_FAM10H_MMIO_CONF_BASE;
--	rdmsrl(address, msr);
--
- 	/* mmconfig is not enabled */
- 	if (!(msr & FAM10H_MMIO_CONF_ENABLE))
- 		return NULL;
+ 	nomap = of_get_flat_dt_prop(node, "no-map", NULL) != NULL;
 
 
