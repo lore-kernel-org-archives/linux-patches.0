@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87ADC233705;
-	Mon, 10 Mar 2025 17:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FD0233159;
+	Mon, 10 Mar 2025 17:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626512; cv=none; b=DRgbUT9MlBVBryADtTSRanM6HgAerNIDhcrrj/Z/SHxtNGVUYxN7HaX8D9o3Yj7JcoOX4vXVMBC5RT+8w8LCPSlcLjqOKQBilTxkAj9FIai49tgs7ZFtCJCI74vn6RpI6IwbZCBFzp3y7XbnVxIIo+/1QOCBROUI6HawlRK3sR4=
+	t=1741626515; cv=none; b=Tv8ZYQGG/rFAZOQ7HZR6D7QM8vQxc9hKcQK6fbf3Cb5OshjVLmf1BV/szv4PdwXMxoU074oElWSLRJCJbM12XaOaZO9Eyv3sSlh2cPmbio5syqHSWxvTmwIfpVIwNF5bGGMaGBaojz6hWQ7DENRPYqgJxQ7zQthL7FH9pcm3tF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626512; c=relaxed/simple;
-	bh=SD3E+JobWaElRhLBfYFjaUyuL8IHJDmwjbWHPVJjGlU=;
+	s=arc-20240116; t=1741626515; c=relaxed/simple;
+	bh=cc+6RU6mjA2+3VfnMaJkpcqualvcXDWW7xBLl5oOvC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkfUwLMxRODCt92IIcqwHnpvTLeP/DbpO5dBG9UjQNTuJ6efeZb5niRQlzrZ/dqhbr6/r65nEHUZhTxL8H8NnbnCFGWxVUFQPUDj4MNAbSn2T1KJVosjINcXCZ+3fcGWK0kM5VKZGNzAjtIX0oZLsjUiYE7waYah3zPCepJqLpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLNBXVMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qA7eZuUziFfMnG5vt3qbcJw3u/xDTUBUQxcSXtshQ3Bizx/W9phkixyCM7rBj2I0TCgqUjXXzEpA06qd/W296wz4e8O+iXtlr3dqUOvD3KweXBt5XU10wcpbccxnRx6YHC5lwNu3oPudv05DCeLrHjPt2bJC7HdqGseGkNpoXek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5Cywk3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLNBXVMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15D5C4CEE5;
-	Mon, 10 Mar 2025 17:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5Cywk3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB640C4CEE5;
+	Mon, 10 Mar 2025 17:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626512;
-	bh=SD3E+JobWaElRhLBfYFjaUyuL8IHJDmwjbWHPVJjGlU=;
+	s=korg; t=1741626515;
+	bh=cc+6RU6mjA2+3VfnMaJkpcqualvcXDWW7xBLl5oOvC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLNBXVMwZXCykqIN8pzfp/hPuWjZxlu3NT3v4jExoeIgJ+hiXKOKgQ8vhUy1v9o/d
-	 YB6OaWnKLiTp+eUGDHzKj6NTRBA1GoWnZV8IamRWkpEh5LWTMjap6M+F/unG0qPfRO
-	 9O8MdAuY8RHZCZ5z5WgMh/8yrztkRA7x3nrXgdPE=
+	b=Z5Cywk3YudinaPsabbOkjo3msEXoG0JCQQhsY+Va3sgciimQC1kYe53ZWZgoPqjWT
+	 al+dh/uAMD9j1rSncQYU1r0u1Iwsophuy/3YtrIw6tTXzszWMxHkz/RYmqF5BQ0/5H
+	 rMu9JKOmEmWYUxJDbrmLk9+AL8R54rSKsI6ARIc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.13 018/207] HID: appleir: Fix potential NULL dereference at raw event handle
-Date: Mon, 10 Mar 2025 18:03:31 +0100
-Message-ID: <20250310170448.494719343@linuxfoundation.org>
+Subject: [PATCH 6.13 019/207] HID: corsair-void: Update power supply values with a unified work handler
+Date: Mon, 10 Mar 2025 18:03:32 +0100
+Message-ID: <20250310170448.533614748@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,100 +51,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-commit 2ff5baa9b5275e3acafdf7f2089f74cccb2f38d1 upstream.
+commit 0c28e4d1e10d2aae608094620bb386e6fd73d55e upstream.
 
-Syzkaller reports a NULL pointer dereference issue in input_event().
+corsair_void_process_receiver can be called from an interrupt context,
+locking battery_mutex in it was causing a kernel panic.
+Fix it by moving the critical section into its own work, sharing this
+work with battery_add_work and battery_remove_work to remove the need
+for any locking
 
-BUG: KASAN: null-ptr-deref in instrument_atomic_read include/linux/instrumented.h:68 [inline]
-BUG: KASAN: null-ptr-deref in _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
-BUG: KASAN: null-ptr-deref in is_event_supported drivers/input/input.c:67 [inline]
-BUG: KASAN: null-ptr-deref in input_event+0x42/0xa0 drivers/input/input.c:395
-Read of size 8 at addr 0000000000000028 by task syz-executor199/2949
-
-CPU: 0 UID: 0 PID: 2949 Comm: syz-executor199 Not tainted 6.13.0-rc4-syzkaller-00076-gf097a36ef88d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <IRQ>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- kasan_report+0xd9/0x110 mm/kasan/report.c:602
- check_region_inline mm/kasan/generic.c:183 [inline]
- kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
- instrument_atomic_read include/linux/instrumented.h:68 [inline]
- _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
- is_event_supported drivers/input/input.c:67 [inline]
- input_event+0x42/0xa0 drivers/input/input.c:395
- input_report_key include/linux/input.h:439 [inline]
- key_down drivers/hid/hid-appleir.c:159 [inline]
- appleir_raw_event+0x3e5/0x5e0 drivers/hid/hid-appleir.c:232
- __hid_input_report.constprop.0+0x312/0x440 drivers/hid/hid-core.c:2111
- hid_ctrl+0x49f/0x550 drivers/hid/usbhid/hid-core.c:484
- __usb_hcd_giveback_urb+0x389/0x6e0 drivers/usb/core/hcd.c:1650
- usb_hcd_giveback_urb+0x396/0x450 drivers/usb/core/hcd.c:1734
- dummy_timer+0x17f7/0x3960 drivers/usb/gadget/udc/dummy_hcd.c:1993
- __run_hrtimer kernel/time/hrtimer.c:1739 [inline]
- __hrtimer_run_queues+0x20a/0xae0 kernel/time/hrtimer.c:1803
- hrtimer_run_softirq+0x17d/0x350 kernel/time/hrtimer.c:1820
- handle_softirqs+0x206/0x8d0 kernel/softirq.c:561
- __do_softirq kernel/softirq.c:595 [inline]
- invoke_softirq kernel/softirq.c:435 [inline]
- __irq_exit_rcu+0xfa/0x160 kernel/softirq.c:662
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
- sysvec_apic_timer_interrupt+0x90/0xb0 arch/x86/kernel/apic/apic.c:1049
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
- __mod_timer+0x8f6/0xdc0 kernel/time/timer.c:1185
- add_timer+0x62/0x90 kernel/time/timer.c:1295
- schedule_timeout+0x11f/0x280 kernel/time/sleep_timeout.c:98
- usbhid_wait_io+0x1c7/0x380 drivers/hid/usbhid/hid-core.c:645
- usbhid_init_reports+0x19f/0x390 drivers/hid/usbhid/hid-core.c:784
- hiddev_ioctl+0x1133/0x15b0 drivers/hid/usbhid/hiddev.c:794
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-This happens due to the malformed report items sent by the emulated device
-which results in a report, that has no fields, being added to the report list.
-Due to this appleir_input_configured() is never called, hidinput_connect()
-fails which results in the HID_CLAIMED_INPUT flag is not being set. However,
-it  does not make appleir_probe() fail and lets the event callback to be
-called without the associated input device.
-
-Thus, add a check for the HID_CLAIMED_INPUT flag and leave the event hook
-early if the driver didn't claim any input_dev for some reason. Moreover,
-some other hid drivers accessing input_dev in their event callbacks do have
-similar checks, too.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1236843
+Fixes: 6ea2a6fd3872 ("HID: corsair-void: Add Corsair Void headset family driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appleir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-corsair-void.c | 83 ++++++++++++++++++----------------
+ 1 file changed, 43 insertions(+), 40 deletions(-)
 
---- a/drivers/hid/hid-appleir.c
-+++ b/drivers/hid/hid-appleir.c
-@@ -188,7 +188,7 @@ static int appleir_raw_event(struct hid_
- 	static const u8 flatbattery[] = { 0x25, 0x87, 0xe0 };
- 	unsigned long flags;
+diff --git a/drivers/hid/hid-corsair-void.c b/drivers/hid/hid-corsair-void.c
+index 56e858066c3c..afbd67aa9719 100644
+--- a/drivers/hid/hid-corsair-void.c
++++ b/drivers/hid/hid-corsair-void.c
+@@ -71,11 +71,9 @@
  
--	if (len != 5)
-+	if (len != 5 || !(hid->claimed & HID_CLAIMED_INPUT))
- 		goto out;
+ #include <linux/bitfield.h>
+ #include <linux/bitops.h>
+-#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/hid.h>
+ #include <linux/module.h>
+-#include <linux/mutex.h>
+ #include <linux/power_supply.h>
+ #include <linux/usb.h>
+ #include <linux/workqueue.h>
+@@ -120,6 +118,12 @@ enum {
+ 	CORSAIR_VOID_BATTERY_CHARGING	= 5,
+ };
  
- 	if (!memcmp(data, keydown, sizeof(keydown))) {
++enum {
++	CORSAIR_VOID_ADD_BATTERY	= 0,
++	CORSAIR_VOID_REMOVE_BATTERY	= 1,
++	CORSAIR_VOID_UPDATE_BATTERY	= 2,
++};
++
+ static enum power_supply_property corsair_void_battery_props[] = {
+ 	POWER_SUPPLY_PROP_STATUS,
+ 	POWER_SUPPLY_PROP_PRESENT,
+@@ -155,12 +159,12 @@ struct corsair_void_drvdata {
+ 
+ 	struct power_supply *battery;
+ 	struct power_supply_desc battery_desc;
+-	struct mutex battery_mutex;
+ 
+ 	struct delayed_work delayed_status_work;
+ 	struct delayed_work delayed_firmware_work;
+-	struct work_struct battery_remove_work;
+-	struct work_struct battery_add_work;
++
++	unsigned long battery_work_flags;
++	struct work_struct battery_work;
+ };
+ 
+ /*
+@@ -260,11 +264,9 @@ static void corsair_void_process_receiver(struct corsair_void_drvdata *drvdata,
+ 
+ 	/* Inform power supply if battery values changed */
+ 	if (memcmp(&orig_battery_data, battery_data, sizeof(*battery_data))) {
+-		scoped_guard(mutex, &drvdata->battery_mutex) {
+-			if (drvdata->battery) {
+-				power_supply_changed(drvdata->battery);
+-			}
+-		}
++		set_bit(CORSAIR_VOID_UPDATE_BATTERY,
++			&drvdata->battery_work_flags);
++		schedule_work(&drvdata->battery_work);
+ 	}
+ }
+ 
+@@ -536,29 +538,11 @@ static void corsair_void_firmware_work_handler(struct work_struct *work)
+ 
+ }
+ 
+-static void corsair_void_battery_remove_work_handler(struct work_struct *work)
++static void corsair_void_add_battery(struct corsair_void_drvdata *drvdata)
+ {
+-	struct corsair_void_drvdata *drvdata;
+-
+-	drvdata = container_of(work, struct corsair_void_drvdata,
+-			       battery_remove_work);
+-	scoped_guard(mutex, &drvdata->battery_mutex) {
+-		if (drvdata->battery) {
+-			power_supply_unregister(drvdata->battery);
+-			drvdata->battery = NULL;
+-		}
+-	}
+-}
+-
+-static void corsair_void_battery_add_work_handler(struct work_struct *work)
+-{
+-	struct corsair_void_drvdata *drvdata;
+ 	struct power_supply_config psy_cfg = {};
+ 	struct power_supply *new_supply;
+ 
+-	drvdata = container_of(work, struct corsair_void_drvdata,
+-			       battery_add_work);
+-	guard(mutex)(&drvdata->battery_mutex);
+ 	if (drvdata->battery)
+ 		return;
+ 
+@@ -583,16 +567,42 @@ static void corsair_void_battery_add_work_handler(struct work_struct *work)
+ 	drvdata->battery = new_supply;
+ }
+ 
++static void corsair_void_battery_work_handler(struct work_struct *work)
++{
++	struct corsair_void_drvdata *drvdata = container_of(work,
++		struct corsair_void_drvdata, battery_work);
++
++	bool add_battery = test_and_clear_bit(CORSAIR_VOID_ADD_BATTERY,
++					      &drvdata->battery_work_flags);
++	bool remove_battery = test_and_clear_bit(CORSAIR_VOID_REMOVE_BATTERY,
++						 &drvdata->battery_work_flags);
++	bool update_battery = test_and_clear_bit(CORSAIR_VOID_UPDATE_BATTERY,
++						 &drvdata->battery_work_flags);
++
++	if (add_battery && !remove_battery) {
++		corsair_void_add_battery(drvdata);
++	} else if (remove_battery && !add_battery && drvdata->battery) {
++		power_supply_unregister(drvdata->battery);
++		drvdata->battery = NULL;
++	}
++
++	if (update_battery && drvdata->battery)
++		power_supply_changed(drvdata->battery);
++
++}
++
+ static void corsair_void_headset_connected(struct corsair_void_drvdata *drvdata)
+ {
+-	schedule_work(&drvdata->battery_add_work);
++	set_bit(CORSAIR_VOID_ADD_BATTERY, &drvdata->battery_work_flags);
++	schedule_work(&drvdata->battery_work);
+ 	schedule_delayed_work(&drvdata->delayed_firmware_work,
+ 			      msecs_to_jiffies(100));
+ }
+ 
+ static void corsair_void_headset_disconnected(struct corsair_void_drvdata *drvdata)
+ {
+-	schedule_work(&drvdata->battery_remove_work);
++	set_bit(CORSAIR_VOID_REMOVE_BATTERY, &drvdata->battery_work_flags);
++	schedule_work(&drvdata->battery_work);
+ 
+ 	corsair_void_set_unknown_wireless_data(drvdata);
+ 	corsair_void_set_unknown_batt(drvdata);
+@@ -678,13 +688,7 @@ static int corsair_void_probe(struct hid_device *hid_dev,
+ 	drvdata->battery_desc.get_property = corsair_void_battery_get_property;
+ 
+ 	drvdata->battery = NULL;
+-	INIT_WORK(&drvdata->battery_remove_work,
+-		  corsair_void_battery_remove_work_handler);
+-	INIT_WORK(&drvdata->battery_add_work,
+-		  corsair_void_battery_add_work_handler);
+-	ret = devm_mutex_init(drvdata->dev, &drvdata->battery_mutex);
+-	if (ret)
+-		return ret;
++	INIT_WORK(&drvdata->battery_work, corsair_void_battery_work_handler);
+ 
+ 	ret = sysfs_create_group(&hid_dev->dev.kobj, &corsair_void_attr_group);
+ 	if (ret)
+@@ -721,8 +725,7 @@ static void corsair_void_remove(struct hid_device *hid_dev)
+ 	struct corsair_void_drvdata *drvdata = hid_get_drvdata(hid_dev);
+ 
+ 	hid_hw_stop(hid_dev);
+-	cancel_work_sync(&drvdata->battery_remove_work);
+-	cancel_work_sync(&drvdata->battery_add_work);
++	cancel_work_sync(&drvdata->battery_work);
+ 	if (drvdata->battery)
+ 		power_supply_unregister(drvdata->battery);
+ 
+-- 
+2.48.1
+
 
 
