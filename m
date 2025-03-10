@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4365A23236F;
-	Mon, 10 Mar 2025 17:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E1233705;
+	Mon, 10 Mar 2025 17:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626877; cv=none; b=ecCw1chcUNsLklarQrrSZA+yKsifn+Y8BHHOsCkd0XJLPbzlmN5aHAqT4OteS4Sz9b5YcrY1TYpzCvpTu0LQyPT5P+YtAibj3SubZAqpqEGSeJ7XwFZSpnDCaf1020MTrPhmLPULuLjaknuDSCJWGFboLNcL/RLHPDxNJrrksyc=
+	t=1741626879; cv=none; b=TpnoLawirkTAmFtj6OGvq48PoKtnf3KJpKzExVs8Y7f4STtVgAJrhT5+K52zTXlHb8QpQDu8vLeM64ZHtCXpb4PY2pW6g29JNRNs46BmEV2DaWmuq+YA1lX7vy/VUu5HXEiLBE9K3lGRFeNqO5krlid9LiHlv/H8Mzd2UNHTrV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626877; c=relaxed/simple;
-	bh=WoZYNLzKoRzto2sFjjWmUATeR/F0EvPxURSN8CiYoaQ=;
+	s=arc-20240116; t=1741626879; c=relaxed/simple;
+	bh=itI0yDnlLqUHUtR5N8W0OdEPbQ7RqLZ7FDqqedbNdyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwKl4A7sBNkIETcPcSx7EodrawsxZCZxCLKaNpcyelQedYKDR72AEyJgr8mGnRTvNaqlb6y1S3lnDlpmk2mbxvYUnRyyouVqF3h7koNkRnmTM4gr/xoj1X+rUFVMH8MthYzG4PpvRXWhm0mTUVPGsIjPvx4ZYvw4ZNZeUilG4SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hzr5uiUX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0EnVg/jV7XIbyrr08e3JG31ds5Hodjh7ZtB/MiEd8vcAF/EY57Pcdy87CTGOdcJaQ0SlJpTd/A/Y3LKsTJcTOuDOUmZzFBUcFGh4za2Nr4pvxyJENFF9Z0brJN5tWM+6gW0kiEk6rwC+RGeE0ARoCjqpn5mvLZbznhiwiCdMxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FO/5ygjI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzr5uiUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A56EC4CEED;
-	Mon, 10 Mar 2025 17:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FO/5ygjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C06C4CEE5;
+	Mon, 10 Mar 2025 17:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626876;
-	bh=WoZYNLzKoRzto2sFjjWmUATeR/F0EvPxURSN8CiYoaQ=;
+	s=korg; t=1741626879;
+	bh=itI0yDnlLqUHUtR5N8W0OdEPbQ7RqLZ7FDqqedbNdyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hzr5uiUXpYSoxFSHj7rY9pp2UAfHNCpcedNm4FVM/1zjnHgr1sJ9sKuN5BdgbHl3j
-	 bXKPHKSFuEc7yuLgQHVdJcb6cWjzBjJfJ3ICw316Bkt3Vq4fiDHKt2kaQmrcUKJwrs
-	 epmgV9S4puClUdCqlKGCgaC9Vc5h09jDsId3Kd8g=
+	b=FO/5ygjIljZFXQNRSLGCDnuFYFvRTNtmch7060bwKlSyRgPMRhaGNp8LId8dsmca+
+	 6gPXccCA+I24yg44skjSjPb5Gt/xB4b7e5IeauFXYLgqWD1eSDlyCx8bTn3yHQ/Sbv
+	 1nyt9ynBgutcOtg7FYq2hSPPjyTf8763dKAKKM7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 111/207] net: gso: fix ownership in __udp_gso_segment
-Date: Mon, 10 Mar 2025 18:05:04 +0100
-Message-ID: <20250310170452.167760449@linuxfoundation.org>
+Subject: [PATCH 6.13 112/207] caif_virtio: fix wrong pointer check in cfv_probe()
+Date: Mon, 10 Mar 2025 18:05:05 +0100
+Message-ID: <20250310170452.267096617@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,71 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-[ Upstream commit ee01b2f2d7d0010787c2343463965bbc283a497f ]
+[ Upstream commit a466fd7e9fafd975949e5945e2f70c33a94b1a70 ]
 
-In __udp_gso_segment the skb destructor is removed before segmenting the
-skb but the socket reference is kept as-is. This is an issue if the
-original skb is later orphaned as we can hit the following bug:
+del_vqs() frees virtqueues, therefore cfv->vq_tx pointer should be checked
+for NULL before calling it, not cfv->vdev. Also the current implementation
+is redundant because the pointer cfv->vdev is dereferenced before it is
+checked for NULL.
 
-  kernel BUG at ./include/linux/skbuff.h:3312!  (skb_orphan)
-  RIP: 0010:ip_rcv_core+0x8b2/0xca0
-  Call Trace:
-   ip_rcv+0xab/0x6e0
-   __netif_receive_skb_one_core+0x168/0x1b0
-   process_backlog+0x384/0x1100
-   __napi_poll.constprop.0+0xa1/0x370
-   net_rx_action+0x925/0xe50
+Fix this by checking cfv->vq_tx for NULL instead of cfv->vdev before
+calling del_vqs().
 
-The above can happen following a sequence of events when using
-OpenVSwitch, when an OVS_ACTION_ATTR_USERSPACE action precedes an
-OVS_ACTION_ATTR_OUTPUT action:
-
-1. OVS_ACTION_ATTR_USERSPACE is handled (in do_execute_actions): the skb
-   goes through queue_gso_packets and then __udp_gso_segment, where its
-   destructor is removed.
-2. The segments' data are copied and sent to userspace.
-3. OVS_ACTION_ATTR_OUTPUT is handled (in do_execute_actions) and the
-   same original skb is sent to its path.
-4. If it later hits skb_orphan, we hit the bug.
-
-Fix this by also removing the reference to the socket in
-__udp_gso_segment.
-
-Fixes: ad405857b174 ("udp: better wmem accounting on gso")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20250226171352.258045-1-atenart@kernel.org
+Fixes: 0d2e1a2926b1 ("caif_virtio: Introduce caif over virtio")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Link: https://patch.msgid.link/20250227184716.4715-1-v.shevtsov@mt-integration.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/caif/caif_virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index a5be6e4ed326f..ecfca59f31f13 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -321,13 +321,17 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+diff --git a/drivers/net/caif/caif_virtio.c b/drivers/net/caif/caif_virtio.c
+index 7fea00c7ca8a6..c60386bf2d1a4 100644
+--- a/drivers/net/caif/caif_virtio.c
++++ b/drivers/net/caif/caif_virtio.c
+@@ -745,7 +745,7 @@ static int cfv_probe(struct virtio_device *vdev)
  
- 	/* clear destructor to avoid skb_segment assigning it to tail */
- 	copy_dtor = gso_skb->destructor == sock_wfree;
--	if (copy_dtor)
-+	if (copy_dtor) {
- 		gso_skb->destructor = NULL;
-+		gso_skb->sk = NULL;
-+	}
- 
- 	segs = skb_segment(gso_skb, features);
- 	if (IS_ERR_OR_NULL(segs)) {
--		if (copy_dtor)
-+		if (copy_dtor) {
- 			gso_skb->destructor = sock_wfree;
-+			gso_skb->sk = sk;
-+		}
- 		return segs;
- 	}
- 
+ 	if (cfv->vr_rx)
+ 		vdev->vringh_config->del_vrhs(cfv->vdev);
+-	if (cfv->vdev)
++	if (cfv->vq_tx)
+ 		vdev->config->del_vqs(cfv->vdev);
+ 	free_netdev(netdev);
+ 	return err;
 -- 
 2.39.5
 
