@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7046422CBF1;
-	Mon, 10 Mar 2025 17:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3766822B8BD;
+	Mon, 10 Mar 2025 17:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627784; cv=none; b=Fkh+Rqcq6S2SUTb0vbltSpAW7j4YDU9m3HloJb5MwJLnBAr5u+gu/Ct29jcFpET3DISbJ+eQo8a1FUPcKyuHvl6l9s7KkPQWYBrR7S5xPqEflLape/eqDmStuLAnlwXOHp9siX5j0/v6rsSgULT80Dl7sLd88ARAtFZ8J3vxdeI=
+	t=1741627787; cv=none; b=BoDh3VCXz+/rLP8oOuspeXTN6jNr3E814wgi7sT1NCJoltRFzBAAEstaBJzxE+H8EUOU4lfmOGH2LEJ5xoZ2TYZzI7rJfxFS0NPVLIv8Z9m32xJPWyOzk5NfgajNgTdKJiIAuKtbmsVio8Zn2TLjfrXT0O4u6e2q0DaDJJmC+Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627784; c=relaxed/simple;
-	bh=FDLDK0uBwFq/fPU0CVaRpf+wFmubTUbyWqrXCDOGJeA=;
+	s=arc-20240116; t=1741627787; c=relaxed/simple;
+	bh=dCN/CHfPFu2bMYNmYac36P39762K0phKIQ9Ja/FXWak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpMp9yDC9g33xZM9lA1UvN0tb6bndZiRCZ5ewxt+Q94gIjT0M33bFsqT3PkKE1S8NSNAvpFxoGWl7bfDUp2liBtQ2Yyp9d+zWBDMzJwEmyFOvX5+dXZVI90EMaCqYDy/HI816g6Rq7gPttkGhy2TiDChYxN6AQy9GWvHVxHhnf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQYOR8lZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hiynww2qp00Nl/qD0OXUqtb9Mk4ZW+4IIvvPpAt4vM8lteCtDZlUBFM6fkWmIh8aV+hhQsMBAQgINOkK/cw6dRg//R+043UHZh3Xat3c9Fzpg/EZEdpLpohH/R1mmP4/iLLebb0NEVxptwmhELxPR/gxVXuYKvN2NiCetoDEk9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAr6Tr/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQYOR8lZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC02C4CEF0;
-	Mon, 10 Mar 2025 17:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAr6Tr/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53233C4CEE5;
+	Mon, 10 Mar 2025 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627783;
-	bh=FDLDK0uBwFq/fPU0CVaRpf+wFmubTUbyWqrXCDOGJeA=;
+	s=korg; t=1741627786;
+	bh=dCN/CHfPFu2bMYNmYac36P39762K0phKIQ9Ja/FXWak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQYOR8lZXBk7bvN8OV2bC35WsQRJD8ZAhZbCm1kOFnMiFP/CZSjsdfZjHp95Nv77D
-	 oKyjjavrZ46eS7er4l/pm1P7S4j6M0/xMElmcSxTNowC3frrC4ULLDV6mhRDvujbU2
-	 Yc1YRFW/8jeWq3y1C8+ffZKOPXUt7FgKWMLhG5yA=
+	b=PAr6Tr/RQrV08/WaEHZP0hTb3qH9xKnVCnOpfsh927bAYPTCHSkveZCbctMB1GxBq
+	 FuMFnHrsBVN3E5pUJ0WyIcC2eSDA/S/HGjuNxg6M+M2FGCzcSHRH7/XLkkmGUcbf0B
+	 21OohFcV5TMpGqyCCOCDmGqG+lX/E0+KZNTQC4DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.12 247/269] eeprom: digsy_mtc: Make GPIO lookup table match the device
-Date: Mon, 10 Mar 2025 18:06:40 +0100
-Message-ID: <20250310170507.640243017@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.12 217/269] usb: dwc3: gadget: Prevent irq storm when TH re-executes
+Date: Mon, 10 Mar 2025 18:06:10 +0100
+Message-ID: <20250310170506.337203966@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -50,35 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 038ef0754aae76f79b147b8867f9250e6a976872 upstream.
+commit 69c58deec19628c8a686030102176484eb94fed4 upstream.
 
-The dev_id value in the GPIO lookup table must match to
-the device instance name, which in this case is combined
-of name and platform device ID, i.e. "spi_gpio.1". But
-the table assumed that there was no platform device ID
-defined, which is wrong. Fix the dev_id value accordingly.
+While commit d325a1de49d6 ("usb: dwc3: gadget: Prevent losing events in
+event cache") makes sure that top half(TH) does not end up overwriting the
+cached events before processing them when the TH gets invoked more than one
+time, returning IRQ_HANDLED results in occasional irq storm where the TH
+hogs the CPU. The irq storm can be prevented by the flag before event
+handler busy is cleared. Default enable interrupt moderation in all
+versions which support them.
 
-Fixes: 9b00bc7b901f ("spi: spi-gpio: Rewrite to use GPIO descriptors")
+ftrace event stub during dwc3 irq storm:
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000866: irq_handler_exit: irq=14 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000872: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000874: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000881: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000883: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000889: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000892: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000898: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000901: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000907: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000909: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000915: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000918: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000924: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000927: irq_handler_exit: irq=504 ret=handled
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000933: irq_handler_entry: irq=504 name=dwc3
+    irq/504_dwc3-1111  ( 1111) [000] .... 70.000935: irq_handler_exit: irq=504 ret=handled
+    ....
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250206220311.1554075-1-andriy.shevchenko@linux.intel.com
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Fixes: d325a1de49d6 ("usb: dwc3: gadget: Prevent losing events in event cache")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250216223003.3568039-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/eeprom/digsy_mtc_eeprom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c   |   16 ++++++----------
+ drivers/usb/dwc3/gadget.c |   10 +++++++---
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
-+++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
-@@ -50,7 +50,7 @@ static struct platform_device digsy_mtc_
- };
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1826,8 +1826,6 @@ static void dwc3_get_properties(struct d
+ 	dwc->tx_thr_num_pkt_prd = tx_thr_num_pkt_prd;
+ 	dwc->tx_max_burst_prd = tx_max_burst_prd;
  
- static struct gpiod_lookup_table eeprom_spi_gpiod_table = {
--	.dev_id         = "spi_gpio",
-+	.dev_id         = "spi_gpio.1",
- 	.table          = {
- 		GPIO_LOOKUP("gpio@b00", GPIO_EEPROM_CLK,
- 			    "sck", GPIO_ACTIVE_HIGH),
+-	dwc->imod_interval = 0;
+-
+ 	dwc->tx_fifo_resize_max_num = tx_fifo_resize_max_num;
+ }
+ 
+@@ -1845,21 +1843,19 @@ static void dwc3_check_params(struct dwc
+ 	unsigned int hwparam_gen =
+ 		DWC3_GHWPARAMS3_SSPHY_IFC(dwc->hwparams.hwparams3);
+ 
+-	/* Check for proper value of imod_interval */
+-	if (dwc->imod_interval && !dwc3_has_imod(dwc)) {
+-		dev_warn(dwc->dev, "Interrupt moderation not supported\n");
+-		dwc->imod_interval = 0;
+-	}
+-
+ 	/*
++	 * Enable IMOD for all supporting controllers.
++	 *
++	 * Particularly, DWC_usb3 v3.00a must enable this feature for
++	 * the following reason:
++	 *
+ 	 * Workaround for STAR 9000961433 which affects only version
+ 	 * 3.00a of the DWC_usb3 core. This prevents the controller
+ 	 * interrupt from being masked while handling events. IMOD
+ 	 * allows us to work around this issue. Enable it for the
+ 	 * affected version.
+ 	 */
+-	if (!dwc->imod_interval &&
+-	    DWC3_VER_IS(DWC3, 300A))
++	if (dwc3_has_imod((dwc)))
+ 		dwc->imod_interval = 1;
+ 
+ 	/* Check the maximum_speed parameter */
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4507,14 +4507,18 @@ static irqreturn_t dwc3_process_event_bu
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0),
+ 		    DWC3_GEVNTSIZ_SIZE(evt->length));
+ 
++	evt->flags &= ~DWC3_EVENT_PENDING;
++	/*
++	 * Add an explicit write memory barrier to make sure that the update of
++	 * clearing DWC3_EVENT_PENDING is observed in dwc3_check_event_buf()
++	 */
++	wmb();
++
+ 	if (dwc->imod_interval) {
+ 		dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), DWC3_GEVNTCOUNT_EHB);
+ 		dwc3_writel(dwc->regs, DWC3_DEV_IMOD(0), dwc->imod_interval);
+ 	}
+ 
+-	/* Keep the clearing of DWC3_EVENT_PENDING at the end */
+-	evt->flags &= ~DWC3_EVENT_PENDING;
+-
+ 	return ret;
+ }
+ 
 
 
