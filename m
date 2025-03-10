@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8C52D023;
-	Mon, 10 Mar 2025 17:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084B2D023;
+	Mon, 10 Mar 2025 17:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629273; cv=none; b=R1ZGfRp4dSP79ICGqbd+FLwd7lHS1GJwJBU2Dlyg9BO8emXH/hJdlgKPHAeptsqw+zncoWGLjz6KWqQQOYzkO4hfs8qO4f78MiTxGjepJn+DkJxwKeHupUTNN1WxSJ6ZPGFdXPlZFUgzAxr2TIj+zXzONMcghpuOjnfid3iJMwU=
+	t=1741629276; cv=none; b=eRl+5dNzCpaP0PGvbHCOD0ngX6w+O1lxqGgGL+574SkKR7LBwTFEDmk8LiWyrYgNsd7sRkr+acD5FHpm4JS5RJ7aOYbqFImeJEBDttRwAXKxtDpQG6ID7vOzhsdYrUoTLNuwGOETjFJRLaxAAWXVJk5wQqmUITzO44Mew/RaV6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629273; c=relaxed/simple;
-	bh=RT9n0kiWWfShHM07zA1xtWj7JCkkTU2GcKconoQ6ZW8=;
+	s=arc-20240116; t=1741629276; c=relaxed/simple;
+	bh=OJQGysqnu/qpaX6wkRGILl9FASl5iJF5NgERCI/PJhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMgLcc99VZQ/6or7VDhAnJwg0KrjafODU/Tv9XDumthVYiL6K8rUdFQpMvUiC2yhdDmp6EblDyrlPgeVBAW/+ChXS6wSjeXOD4q1P622Kcd+VHH9yuBS03IhJvFreXuV6cuIT/U1E9z8XgP99fInTXI/3jgkdsOsjHZHnfGD57U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8rXI8RE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EX9eo4HvmH39hpvILdx+GyLgDzq+sagiPlKJxnfBSDvLmWYXewkKO4TyHGKh+fzG2s7E5h/xLu95FNIPAgmLc/WwJ1NJrq4ZroLkyWGs1/gZxAUh9YVoorNv0UWdE21zuUxVnuc2U/j+s2vhxtrXDGDLlpVHyncSwT8Pcud8vK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxfkVORl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8rXI8RE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B054C4CEE5;
-	Mon, 10 Mar 2025 17:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxfkVORl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8050BC4CEE5;
+	Mon, 10 Mar 2025 17:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629273;
-	bh=RT9n0kiWWfShHM07zA1xtWj7JCkkTU2GcKconoQ6ZW8=;
+	s=korg; t=1741629275;
+	bh=OJQGysqnu/qpaX6wkRGILl9FASl5iJF5NgERCI/PJhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8rXI8REn/wayz3HrCuMF2zxMtzyNrVj7iU9fKj5bGIJRp4bdkxlB/dZcBp653G0d
-	 YVQK8c/OGd3VGhVCDZaWAFAOV9L7/3rOG2my+yCRYwkexQy2LC+UQ4LA4NOib8QUZU
-	 WuQ5X7xM3skkeqKZ0b4yMVmkeLwqS/CQiLbGKj74=
+	b=XxfkVORlBRHWx8gqAEcBEPm2B0NdAvdHufvQOGkfb48ybr4MUHUn7rPq09fnPJvj8
+	 hX88O/73G6CselhRk8uoalAMkG7W/kcSb9TfhHvY3npsmjyJPne0o5jCy1TxPGdw0f
+	 29HkxsUBbMArkx16pDg/72MMxTSVIYZiV2EGGW8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Florac <eflorac@intellique.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Hardik Gajjar <hgajjar@de.adit-jv.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 237/620] xfs: dont over-report free space or inodes in statvfs
-Date: Mon, 10 Mar 2025 18:01:23 +0100
-Message-ID: <20250310170554.988006393@linuxfoundation.org>
+Subject: [PATCH 5.15 238/620] usb: xhci: Add timeout argument in address_device USB HCD callback
+Date: Mon, 10 Mar 2025 18:01:24 +0100
+Message-ID: <20250310170555.027802341@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,83 +51,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Hardik Gajjar <hgajjar@de.adit-jv.com>
 
-[ Upstream commit 4b8d867ca6e2fc6d152f629fdaf027053b81765a ]
+[ Upstream commit a769154c7cac037914ba375ae88aae55b2c853e0 ]
 
-Emmanual Florac reports a strange occurrence when project quota limits
-are enabled, free space is lower than the remaining quota, and someone
-runs statvfs:
+- The HCD address_device callback now accepts a user-defined timeout value
+  in milliseconds, providing better control over command execution times.
+- The default timeout value for the address_device command has been set
+  to 5000 ms, aligning with the USB 3.2 specification. However, this
+  timeout can be adjusted as needed.
+- The xhci_setup_device function has been updated to accept the timeout
+  value, allowing it to specify the maximum wait time for the command
+  operation to complete.
+- The hub driver has also been updated to accommodate the newly added
+  timeout parameter during the SET_ADDRESS request.
 
-  # mkfs.xfs -f /dev/sda
-  # mount /dev/sda /mnt -o prjquota
-  # xfs_quota  -x -c 'limit -p bhard=2G 55' /mnt
-  # mkdir /mnt/dir
-  # xfs_io -c 'chproj 55' -c 'chattr +P' -c 'stat -vvvv' /mnt/dir
-  # fallocate -l 19g /mnt/a
-  # df /mnt /mnt/dir
-  Filesystem      Size  Used Avail Use% Mounted on
-  /dev/sda         20G   20G  345M  99% /mnt
-  /dev/sda        2.0G     0  2.0G   0% /mnt
-
-I think the bug here is that xfs_fill_statvfs_from_dquot unconditionally
-assigns to f_bfree without checking that the filesystem has enough free
-space to fill the remaining project quota.  However, this is a
-longstanding behavior of xfs so it's unclear what to do here.
-
-Cc: <stable@vger.kernel.org> # v2.6.18
-Fixes: 932f2c323196c2 ("[XFS] statvfs component of directory/project quota support, code originally by Glen.")
-Reported-by: Emmanuel Florac <eflorac@intellique.com>
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
+Reviewed-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231027152029.104363-1-hgajjar@de.adit-jv.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1e0a19912adb ("usb: xhci: Fix NULL pointer dereference on certain command aborts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_qm_bhv.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/usb/core/hub.c       |  2 +-
+ drivers/usb/host/xhci-mem.c  |  2 ++
+ drivers/usb/host/xhci-ring.c | 11 ++++++-----
+ drivers/usb/host/xhci.c      | 23 ++++++++++++++++-------
+ drivers/usb/host/xhci.h      |  9 +++++++--
+ include/linux/usb/hcd.h      |  5 +++--
+ 6 files changed, 35 insertions(+), 17 deletions(-)
 
-diff --git a/fs/xfs/xfs_qm_bhv.c b/fs/xfs/xfs_qm_bhv.c
-index 268a07218c777..26b2c449f3c66 100644
---- a/fs/xfs/xfs_qm_bhv.c
-+++ b/fs/xfs/xfs_qm_bhv.c
-@@ -32,21 +32,28 @@ xfs_fill_statvfs_from_dquot(
- 	limit = blkres->softlimit ?
- 		blkres->softlimit :
- 		blkres->hardlimit;
--	if (limit && statp->f_blocks > limit) {
--		statp->f_blocks = limit;
--		statp->f_bfree = statp->f_bavail =
--			(statp->f_blocks > blkres->reserved) ?
--			 (statp->f_blocks - blkres->reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
-+
-+		if (limit > blkres->reserved)
-+			remaining = limit - blkres->reserved;
-+
-+		statp->f_blocks = min(statp->f_blocks, limit);
-+		statp->f_bfree = min(statp->f_bfree, remaining);
-+		statp->f_bavail = min(statp->f_bavail, remaining);
+diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
+index 1a7a6161e68ff..9902fcc06d5e2 100644
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -4654,7 +4654,7 @@ static int hub_set_address(struct usb_device *udev, int devnum)
+ 	if (udev->state != USB_STATE_DEFAULT)
+ 		return -EINVAL;
+ 	if (hcd->driver->address_device)
+-		retval = hcd->driver->address_device(hcd, udev);
++		retval = hcd->driver->address_device(hcd, udev, USB_CTRL_SET_TIMEOUT);
+ 	else
+ 		retval = usb_control_msg(udev, usb_sndaddr0pipe(),
+ 				USB_REQ_SET_ADDRESS, 0, devnum, 0,
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index c44b66628a6dc..c819192445b08 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1761,6 +1761,8 @@ struct xhci_command *xhci_alloc_command(struct xhci_hcd *xhci,
  	}
  
- 	limit = dqp->q_ino.softlimit ?
- 		dqp->q_ino.softlimit :
- 		dqp->q_ino.hardlimit;
--	if (limit && statp->f_files > limit) {
--		statp->f_files = limit;
--		statp->f_ffree =
--			(statp->f_files > dqp->q_ino.reserved) ?
--			 (statp->f_files - dqp->q_ino.reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
-+
-+		if (limit > dqp->q_ino.reserved)
-+			remaining = limit - dqp->q_ino.reserved;
-+
-+		statp->f_files = min(statp->f_files, limit);
-+		statp->f_ffree = min(statp->f_ffree, remaining);
- 	}
+ 	command->status = 0;
++	/* set default timeout to 5000 ms */
++	command->timeout_ms = XHCI_CMD_DEFAULT_TIMEOUT;
+ 	INIT_LIST_HEAD(&command->cmd_list);
+ 	return command;
+ }
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index f2b86872aa6bd..97b192058ffe4 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -333,9 +333,10 @@ void xhci_ring_cmd_db(struct xhci_hcd *xhci)
+ 	readl(&xhci->dba->doorbell[0]);
  }
  
+-static bool xhci_mod_cmd_timer(struct xhci_hcd *xhci, unsigned long delay)
++static bool xhci_mod_cmd_timer(struct xhci_hcd *xhci)
+ {
+-	return mod_delayed_work(system_wq, &xhci->cmd_timer, delay);
++	return mod_delayed_work(system_wq, &xhci->cmd_timer,
++			msecs_to_jiffies(xhci->current_cmd->timeout_ms));
+ }
+ 
+ static struct xhci_command *xhci_next_queued_cmd(struct xhci_hcd *xhci)
+@@ -379,7 +380,7 @@ static void xhci_handle_stopped_cmd_ring(struct xhci_hcd *xhci,
+ 	if ((xhci->cmd_ring->dequeue != xhci->cmd_ring->enqueue) &&
+ 	    !(xhci->xhc_state & XHCI_STATE_DYING)) {
+ 		xhci->current_cmd = cur_cmd;
+-		xhci_mod_cmd_timer(xhci, XHCI_CMD_DEFAULT_TIMEOUT);
++		xhci_mod_cmd_timer(xhci);
+ 		xhci_ring_cmd_db(xhci);
+ 	}
+ }
+@@ -1922,7 +1923,7 @@ static void handle_cmd_completion(struct xhci_hcd *xhci,
+ 	if (!list_is_singular(&xhci->cmd_list)) {
+ 		xhci->current_cmd = list_first_entry(&cmd->cmd_list,
+ 						struct xhci_command, cmd_list);
+-		xhci_mod_cmd_timer(xhci, XHCI_CMD_DEFAULT_TIMEOUT);
++		xhci_mod_cmd_timer(xhci);
+ 	} else if (xhci->current_cmd == cmd) {
+ 		xhci->current_cmd = NULL;
+ 	}
+@@ -4503,7 +4504,7 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
+ 	/* if there are no other commands queued we start the timeout timer */
+ 	if (list_empty(&xhci->cmd_list)) {
+ 		xhci->current_cmd = cmd;
+-		xhci_mod_cmd_timer(xhci, XHCI_CMD_DEFAULT_TIMEOUT);
++		xhci_mod_cmd_timer(xhci);
+ 	}
+ 
+ 	list_add_tail(&cmd->cmd_list, &xhci->cmd_list);
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index c145a1ac1abab..e9ebb6c7954fa 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -4190,12 +4190,18 @@ int xhci_alloc_dev(struct usb_hcd *hcd, struct usb_device *udev)
+ 	return 0;
+ }
+ 
+-/*
+- * Issue an Address Device command and optionally send a corresponding
+- * SetAddress request to the device.
++/**
++ * xhci_setup_device - issues an Address Device command to assign a unique
++ *			USB bus address.
++ * @hcd: USB host controller data structure.
++ * @udev: USB dev structure representing the connected device.
++ * @setup: Enum specifying setup mode: address only or with context.
++ * @timeout_ms: Max wait time (ms) for the command operation to complete.
++ *
++ * Return: 0 if successful; otherwise, negative error code.
+  */
+ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
+-			     enum xhci_setup_dev setup)
++			     enum xhci_setup_dev setup, unsigned int timeout_ms)
+ {
+ 	const char *act = setup == SETUP_CONTEXT_ONLY ? "context" : "address";
+ 	unsigned long flags;
+@@ -4252,6 +4258,7 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
+ 	}
+ 
+ 	command->in_ctx = virt_dev->in_ctx;
++	command->timeout_ms = timeout_ms;
+ 
+ 	slot_ctx = xhci_get_slot_ctx(xhci, virt_dev->in_ctx);
+ 	ctrl_ctx = xhci_get_input_control_ctx(virt_dev->in_ctx);
+@@ -4380,14 +4387,16 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
+ 	return ret;
+ }
+ 
+-static int xhci_address_device(struct usb_hcd *hcd, struct usb_device *udev)
++static int xhci_address_device(struct usb_hcd *hcd, struct usb_device *udev,
++			       unsigned int timeout_ms)
+ {
+-	return xhci_setup_device(hcd, udev, SETUP_CONTEXT_ADDRESS);
++	return xhci_setup_device(hcd, udev, SETUP_CONTEXT_ADDRESS, timeout_ms);
+ }
+ 
+ static int xhci_enable_device(struct usb_hcd *hcd, struct usb_device *udev)
+ {
+-	return xhci_setup_device(hcd, udev, SETUP_CONTEXT_ONLY);
++	return xhci_setup_device(hcd, udev, SETUP_CONTEXT_ONLY,
++				 XHCI_CMD_DEFAULT_TIMEOUT);
+ }
+ 
+ /*
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index f76dae4ea429f..1ca283f5d3066 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -563,6 +563,8 @@ struct xhci_command {
+ 	struct completion		*completion;
+ 	union xhci_trb			*command_trb;
+ 	struct list_head		cmd_list;
++	/* xHCI command response timeout in milliseconds */
++	unsigned int			timeout_ms;
+ };
+ 
+ /* drop context bitmasks */
+@@ -1326,8 +1328,11 @@ struct xhci_td {
+ 	unsigned int		num_trbs;
+ };
+ 
+-/* xHCI command default timeout value */
+-#define XHCI_CMD_DEFAULT_TIMEOUT	(5 * HZ)
++/*
++ * xHCI command default timeout value in milliseconds.
++ * USB 3.2 spec, section 9.2.6.1
++ */
++#define XHCI_CMD_DEFAULT_TIMEOUT	5000
+ 
+ /* command descriptor */
+ struct xhci_cd {
+diff --git a/include/linux/usb/hcd.h b/include/linux/usb/hcd.h
+index aa43ef8a7aa34..a0f092b3fb66c 100644
+--- a/include/linux/usb/hcd.h
++++ b/include/linux/usb/hcd.h
+@@ -385,8 +385,9 @@ struct hc_driver {
+ 		 * or bandwidth constraints.
+ 		 */
+ 	void	(*reset_bandwidth)(struct usb_hcd *, struct usb_device *);
+-		/* Returns the hardware-chosen device address */
+-	int	(*address_device)(struct usb_hcd *, struct usb_device *udev);
++		/* Set the hardware-chosen device address */
++	int	(*address_device)(struct usb_hcd *, struct usb_device *udev,
++				  unsigned int timeout_ms);
+ 		/* prepares the hardware to send commands to the device */
+ 	int	(*enable_device)(struct usb_hcd *, struct usb_device *udev);
+ 		/* Notifies the HCD after a hub descriptor is fetched.
 -- 
 2.39.5
 
