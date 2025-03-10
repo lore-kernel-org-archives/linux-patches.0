@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB0F17A2E8;
-	Mon, 10 Mar 2025 18:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE7417A2E8;
+	Mon, 10 Mar 2025 18:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629684; cv=none; b=bt+TA3tdAqBnCbQZh3Vh+M5aSErLlUnUSC7QcSJVm3/N+nZbJ6jvKg2YRFD9FKrf/Gb3dOHtAvkFYuvRMOW8SWc77P5qjY/SGUBNI526h6L76bApLZfI330+anf40DonqJ9zQnWWG8wE5voKjAg6fUESq6MAJqFPDQ1od8EXsos=
+	t=1741629687; cv=none; b=DhExOWEuzaoip20ZoHUtuTTRfJyPgvInxa2YYLQ4uq6FJjpPph3d4C05aTMgKux4Zd7+3dGUT+V2BG/5brvyNi2YzOnikhWFCB9M9KFNlSUPLh1+Pu4bFgKvUdo8dn94IFWqlZuZ9MFnYtJMc+s4x+yXPH5FXgtNfCmln6PY63Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629684; c=relaxed/simple;
-	bh=ZNDE6ALcigYqS1ip0+1mUt5sW4jIm1oxOBHBKeKL69M=;
+	s=arc-20240116; t=1741629687; c=relaxed/simple;
+	bh=MnA5bXLNTIQd+XqIHFO7KlBZIKjEXQcSovokQANi9/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Neuja0hRTmru2C4H5+v4K/KP/qwzUdH4u19J2EseSaHPZ1G73Ra1mUCtVw9iSohK/EILIx8wQzJlcRZ14cL8C4UBqC87NdynFN7wKVzHmq7ajDprZWtoiL5zwEKlrqzr4omAvAfClmOhga58v2bDZQ1D0y1RX7Hkbn8snaPMsSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRNDls2e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jt3hkqyDZ9wgPkSY1U/gT8fsW0UgJ06pboMGFwR1oenAxV85JRmOWGfmJPLFEi416hdCIDzXXHn5ZfATj8TCa0+UlFb9bNBoZnldQCdW1g0cVpdVjwydvZ4KUQchG6Bt+Kyc4gPcqA8er4blD5X3wkiQen196tb+OPQk4rG9C8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmgzH2Re; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRNDls2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CB4C4CEE5;
-	Mon, 10 Mar 2025 18:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmgzH2Re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B7FC4CEE5;
+	Mon, 10 Mar 2025 18:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629684;
-	bh=ZNDE6ALcigYqS1ip0+1mUt5sW4jIm1oxOBHBKeKL69M=;
+	s=korg; t=1741629687;
+	bh=MnA5bXLNTIQd+XqIHFO7KlBZIKjEXQcSovokQANi9/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRNDls2eS5AekGzWvw8xV0B+NtPHQTr32FBJc59InfnwBKrCXoiUD/GZvabRiwFTb
-	 aLQ89cXXAU0QEBuc/ny5YIaz+QQFJCLplMv/Ic4s7+JXXwuuS6V4rwoV0pt6keavVD
-	 yHdefzOuPeJYJfSpjgX9IqdTXmr1PZTugytZOj88=
+	b=nmgzH2RejUslPJlaEvFt/xXBtVyKI8hNHL/4NDN2kSoCr/fzqJgJmzvnwIuo8kzIL
+	 FzmOwEi8qV7Aa8l0uCPxwUS+7tpNVR+I95eLKXOGjNPrDwvz4xjcOOnV/e0mfL/Y1H
+	 h+NinN7oEbTnoJ54QJFwLqHRdrl346ATyOz/5/hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Planeta <maksym@exostellar.io>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 352/620] Grab mm lock before grabbing pt lock
-Date: Mon, 10 Mar 2025 18:03:18 +0100
-Message-ID: <20250310170559.504166187@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 379/620] efi: Avoid cold plugged memory for placing the kernel
+Date: Mon, 10 Mar 2025 18:03:45 +0100
+Message-ID: <20250310170600.554538101@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,156 +49,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksym Planeta <maksym@exostellar.io>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 6d002348789bc16e9203e9818b7a3688787e3b29 ]
+commit ba69e0750b0362870294adab09339a0c39c3beaf upstream.
 
-Function xen_pin_page calls xen_pte_lock, which in turn grab page
-table lock (ptlock). When locking, xen_pte_lock expect mm->page_table_lock
-to be held before grabbing ptlock, but this does not happen when pinning
-is caused by xen_mm_pin_all.
+UEFI 2.11 introduced EFI_MEMORY_HOT_PLUGGABLE to annotate system memory
+regions that are 'cold plugged' at boot, i.e., hot pluggable memory that
+is available from early boot, and described as system RAM by the
+firmware.
 
-This commit addresses lockdep warning below, which shows up when
-suspending a Xen VM.
+Existing loaders and EFI applications running in the boot context will
+happily use this memory for allocating data structures that cannot be
+freed or moved at runtime, and this prevents the memory from being
+unplugged. Going forward, the new EFI_MEMORY_HOT_PLUGGABLE attribute
+should be tested, and memory annotated as such should be avoided for
+such allocations.
 
-[ 3680.658422] Freezing user space processes
-[ 3680.660156] Freezing user space processes completed (elapsed 0.001 seconds)
-[ 3680.660182] OOM killer disabled.
-[ 3680.660192] Freezing remaining freezable tasks
-[ 3680.661485] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[ 3680.685254]
-[ 3680.685265] ==================================
-[ 3680.685269] WARNING: Nested lock was not taken
-[ 3680.685274] 6.12.0+ #16 Tainted: G        W
-[ 3680.685279] ----------------------------------
-[ 3680.685283] migration/0/19 is trying to lock:
-[ 3680.685288] ffff88800bac33c0 (ptlock_ptr(ptdesc)#2){+.+.}-{3:3}, at: xen_pin_page+0x175/0x1d0
-[ 3680.685303]
-[ 3680.685303] but this task is not holding:
-[ 3680.685308] init_mm.page_table_lock
-[ 3680.685311]
-[ 3680.685311] stack backtrace:
-[ 3680.685316] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
-[ 3680.685324] Tainted: [W]=WARN
-[ 3680.685328] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
-[ 3680.685339] Call Trace:
-[ 3680.685344]  <TASK>
-[ 3680.685347]  dump_stack_lvl+0x77/0xb0
-[ 3680.685356]  __lock_acquire+0x917/0x2310
-[ 3680.685364]  lock_acquire+0xce/0x2c0
-[ 3680.685369]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685373]  _raw_spin_lock_nest_lock+0x2f/0x70
-[ 3680.685381]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685386]  xen_pin_page+0x175/0x1d0
-[ 3680.685390]  ? __pfx_xen_pin_page+0x10/0x10
-[ 3680.685394]  __xen_pgd_walk+0x233/0x2c0
-[ 3680.685401]  ? stop_one_cpu+0x91/0x100
-[ 3680.685405]  __xen_pgd_pin+0x5d/0x250
-[ 3680.685410]  xen_mm_pin_all+0x70/0xa0
-[ 3680.685415]  xen_pv_pre_suspend+0xf/0x280
-[ 3680.685420]  xen_suspend+0x57/0x1a0
-[ 3680.685428]  multi_cpu_stop+0x6b/0x120
-[ 3680.685432]  ? update_cpumasks_hier+0x7c/0xa60
-[ 3680.685439]  ? __pfx_multi_cpu_stop+0x10/0x10
-[ 3680.685443]  cpu_stopper_thread+0x8c/0x140
-[ 3680.685448]  ? smpboot_thread_fn+0x20/0x1f0
-[ 3680.685454]  ? __pfx_smpboot_thread_fn+0x10/0x10
-[ 3680.685458]  smpboot_thread_fn+0xed/0x1f0
-[ 3680.685462]  kthread+0xde/0x110
-[ 3680.685467]  ? __pfx_kthread+0x10/0x10
-[ 3680.685471]  ret_from_fork+0x2f/0x50
-[ 3680.685478]  ? __pfx_kthread+0x10/0x10
-[ 3680.685482]  ret_from_fork_asm+0x1a/0x30
-[ 3680.685489]  </TASK>
-[ 3680.685491]
-[ 3680.685491] other info that might help us debug this:
-[ 3680.685497] 1 lock held by migration/0/19:
-[ 3680.685500]  #0: ffffffff8284df38 (pgd_lock){+.+.}-{3:3}, at: xen_mm_pin_all+0x14/0xa0
-[ 3680.685512]
-[ 3680.685512] stack backtrace:
-[ 3680.685518] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
-[ 3680.685528] Tainted: [W]=WARN
-[ 3680.685531] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
-[ 3680.685538] Call Trace:
-[ 3680.685541]  <TASK>
-[ 3680.685544]  dump_stack_lvl+0x77/0xb0
-[ 3680.685549]  __lock_acquire+0x93c/0x2310
-[ 3680.685554]  lock_acquire+0xce/0x2c0
-[ 3680.685558]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685562]  _raw_spin_lock_nest_lock+0x2f/0x70
-[ 3680.685568]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685572]  xen_pin_page+0x175/0x1d0
-[ 3680.685578]  ? __pfx_xen_pin_page+0x10/0x10
-[ 3680.685582]  __xen_pgd_walk+0x233/0x2c0
-[ 3680.685588]  ? stop_one_cpu+0x91/0x100
-[ 3680.685592]  __xen_pgd_pin+0x5d/0x250
-[ 3680.685596]  xen_mm_pin_all+0x70/0xa0
-[ 3680.685600]  xen_pv_pre_suspend+0xf/0x280
-[ 3680.685607]  xen_suspend+0x57/0x1a0
-[ 3680.685611]  multi_cpu_stop+0x6b/0x120
-[ 3680.685615]  ? update_cpumasks_hier+0x7c/0xa60
-[ 3680.685620]  ? __pfx_multi_cpu_stop+0x10/0x10
-[ 3680.685625]  cpu_stopper_thread+0x8c/0x140
-[ 3680.685629]  ? smpboot_thread_fn+0x20/0x1f0
-[ 3680.685634]  ? __pfx_smpboot_thread_fn+0x10/0x10
-[ 3680.685638]  smpboot_thread_fn+0xed/0x1f0
-[ 3680.685642]  kthread+0xde/0x110
-[ 3680.685645]  ? __pfx_kthread+0x10/0x10
-[ 3680.685649]  ret_from_fork+0x2f/0x50
-[ 3680.685654]  ? __pfx_kthread+0x10/0x10
-[ 3680.685657]  ret_from_fork_asm+0x1a/0x30
-[ 3680.685662]  </TASK>
-[ 3680.685267] xen:grant_table: Grant tables using version 1 layout
-[ 3680.685921] OOM killer enabled.
-[ 3680.685934] Restarting tasks ... done.
+In the EFI stub, there are a couple of occurrences where, instead of the
+high-level AllocatePages() UEFI boot service, a low-level code sequence
+is used that traverses the EFI memory map and carves out the requested
+number of pages from a free region. This is needed, e.g., for allocating
+as low as possible, or for allocating pages at random.
 
-Signed-off-by: Maksym Planeta <maksym@exostellar.io>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20241204103516.3309112-1-maksym@exostellar.io>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While AllocatePages() should presumably avoid special purpose memory and
+cold plugged regions, this manual approach needs to incorporate this
+logic itself, in order to prevent the kernel itself from ending up in a
+hot unpluggable region, preventing it from being unplugged.
+
+So add the EFI_MEMORY_HOTPLUGGABLE macro definition, and check for it
+where appropriate.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/mmu_pv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/efi/efi.c                 |    6 ++++--
+ drivers/firmware/efi/libstub/randomalloc.c |    3 +++
+ drivers/firmware/efi/libstub/relocate.c    |    3 +++
+ include/linux/efi.h                        |    1 +
+ 4 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
-index f88071566cac5..4eb6a6bb609f4 100644
---- a/arch/x86/xen/mmu_pv.c
-+++ b/arch/x86/xen/mmu_pv.c
-@@ -807,6 +807,7 @@ void xen_mm_pin_all(void)
- {
- 	struct page *page;
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -774,13 +774,15 @@ char * __init efi_md_typeattr_format(cha
+ 		     EFI_MEMORY_WB | EFI_MEMORY_UCE | EFI_MEMORY_RO |
+ 		     EFI_MEMORY_WP | EFI_MEMORY_RP | EFI_MEMORY_XP |
+ 		     EFI_MEMORY_NV | EFI_MEMORY_SP | EFI_MEMORY_CPU_CRYPTO |
+-		     EFI_MEMORY_RUNTIME | EFI_MEMORY_MORE_RELIABLE))
++		     EFI_MEMORY_MORE_RELIABLE | EFI_MEMORY_HOT_PLUGGABLE |
++		     EFI_MEMORY_RUNTIME))
+ 		snprintf(pos, size, "|attr=0x%016llx]",
+ 			 (unsigned long long)attr);
+ 	else
+ 		snprintf(pos, size,
+-			 "|%3s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%3s|%2s|%2s|%2s|%2s]",
++			 "|%3s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%3s|%2s|%2s|%2s|%2s]",
+ 			 attr & EFI_MEMORY_RUNTIME		? "RUN" : "",
++			 attr & EFI_MEMORY_HOT_PLUGGABLE	? "HP"  : "",
+ 			 attr & EFI_MEMORY_MORE_RELIABLE	? "MR"  : "",
+ 			 attr & EFI_MEMORY_CPU_CRYPTO   	? "CC"  : "",
+ 			 attr & EFI_MEMORY_SP			? "SP"  : "",
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -24,6 +24,9 @@ static unsigned long get_entry_num_slots
+ 	if (md->type != EFI_CONVENTIONAL_MEMORY)
+ 		return 0;
  
-+	spin_lock(&init_mm.page_table_lock);
- 	spin_lock(&pgd_lock);
++	if (md->attribute & EFI_MEMORY_HOT_PLUGGABLE)
++		return 0;
++
+ 	if (efi_soft_reserve_enabled() &&
+ 	    (md->attribute & EFI_MEMORY_SP))
+ 		return 0;
+--- a/drivers/firmware/efi/libstub/relocate.c
++++ b/drivers/firmware/efi/libstub/relocate.c
+@@ -62,6 +62,9 @@ efi_status_t efi_low_alloc_above(unsigne
+ 		if (desc->type != EFI_CONVENTIONAL_MEMORY)
+ 			continue;
  
- 	list_for_each_entry(page, &pgd_list, lru) {
-@@ -817,6 +818,7 @@ void xen_mm_pin_all(void)
- 	}
++		if (desc->attribute & EFI_MEMORY_HOT_PLUGGABLE)
++			continue;
++
+ 		if (efi_soft_reserve_enabled() &&
+ 		    (desc->attribute & EFI_MEMORY_SP))
+ 			continue;
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -125,6 +125,7 @@ typedef	struct {
+ #define EFI_MEMORY_RO		((u64)0x0000000000020000ULL)	/* read-only */
+ #define EFI_MEMORY_SP		((u64)0x0000000000040000ULL)	/* soft reserved */
+ #define EFI_MEMORY_CPU_CRYPTO	((u64)0x0000000000080000ULL)	/* supports encryption */
++#define EFI_MEMORY_HOT_PLUGGABLE	BIT_ULL(20)	/* supports unplugging at runtime */
+ #define EFI_MEMORY_RUNTIME	((u64)0x8000000000000000ULL)	/* range requires runtime mapping */
+ #define EFI_MEMORY_DESCRIPTOR_VERSION	1
  
- 	spin_unlock(&pgd_lock);
-+	spin_unlock(&init_mm.page_table_lock);
- }
- 
- static void __init xen_mark_pinned(struct mm_struct *mm, struct page *page,
-@@ -914,6 +916,7 @@ void xen_mm_unpin_all(void)
- {
- 	struct page *page;
- 
-+	spin_lock(&init_mm.page_table_lock);
- 	spin_lock(&pgd_lock);
- 
- 	list_for_each_entry(page, &pgd_list, lru) {
-@@ -925,6 +928,7 @@ void xen_mm_unpin_all(void)
- 	}
- 
- 	spin_unlock(&pgd_lock);
-+	spin_unlock(&init_mm.page_table_lock);
- }
- 
- static void xen_activate_mm(struct mm_struct *prev, struct mm_struct *next)
--- 
-2.39.5
-
 
 
