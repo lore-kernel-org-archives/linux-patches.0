@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9F32356CC;
-	Mon, 10 Mar 2025 18:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98462356CC;
+	Mon, 10 Mar 2025 18:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630606; cv=none; b=uVelY1/7ub9fefKVRdGtMluhcvlKcd3rp5s6isFaWgZFmlFuCAjIDGjMl4DVWjNnckS1fGFzY8hGnZzMUN3TwKOP3uwkWBAQDTeGE3w/9wpet0CaI+U5UjxvApcgLVlYgkyCjGvsNSi86dLxbIAKkdnmEz2hne8IHbvGOW20VCU=
+	t=1741630609; cv=none; b=gYtq9Wi7roAFjkUfJyQ41Bmud3kxKmINoXa5zZK53zpN8cD/OWYs8ONRB1lMh2oopFLvkA77/Mi2jC8WBmpu6pJBLi1qOAhca6aAt3gnuHjBniseaFnT5lGGE5LDkh9FJ41cqMdL0xhajdOwHrWgHmJY+JJXrwbPw6MZ5xQk7ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630606; c=relaxed/simple;
-	bh=08lbthVK5vneiyLKKHzM/eaEUUsc1/IBOjGygeuVjOs=;
+	s=arc-20240116; t=1741630609; c=relaxed/simple;
+	bh=2ySZ0YuGx3hvOkPONry/+iGRwUcq8SLOu9E7kFh+bWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAbhyfDUdi6A6r04k0jCnYV9Qy3Brtn/knC0MnLugVu9ni7OKmzxpE46YYobNh4dh0zpAzBb7anlkjc8eszJ187om2lmq1QkJ/u0X+ClqH4CwcvOn+4iI3gaLug0NT383SLHRp3a33M6HRcW/Ieq6nNOfY9RiwdqsxsXX8nate8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnTRO/7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEj27NIjt8dGhsK+dvmIO5of+T2r2LBg+d84XiexBFFKtzo81cSm8FYnmkZsmjb9stXWdvCnFm//obuRY1qR4nCLvrCErbI+41UfN9KMoS3ZcoxEv0KVFvd2opbvdNz3dNXgBSBeYUfOjiqygMjLV3pMjz10C/6IOM8embnlrY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzrAm/iz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnTRO/7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF1BC4CEE5;
-	Mon, 10 Mar 2025 18:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzrAm/iz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFE3C4CEE5;
+	Mon, 10 Mar 2025 18:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630606;
-	bh=08lbthVK5vneiyLKKHzM/eaEUUsc1/IBOjGygeuVjOs=;
+	s=korg; t=1741630609;
+	bh=2ySZ0YuGx3hvOkPONry/+iGRwUcq8SLOu9E7kFh+bWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnTRO/7LwL9RRLWTLL6H6Vie+G+qj9GSjR8dmqL80wAKSwVFExRk/4y8UwyUtO0jD
-	 Zc1Bqytn1BNHDJPh7tFljjy3VJIK0rlYWvZbLBk4wB0gYKxWQDE16zCQuFtdgwd0pC
-	 ISUy9ablYnUgMtlCk+VCrkWd1uufsHcpm5/jDo3w=
+	b=KzrAm/iz6Gib6QzfcYAQsA9M3tCCroMFouy7Ym2YFpkgYma9M6GEEHP5pWaNpHUjT
+	 1jAaKe1/408hQhtUn5OQ8dYkSHWE0xDTobmUypJvAJs+WzkGhlZqYCqgwUohNs0IOJ
+	 7AcmDeB/Qp/JLGgtrhuQPto2GkLD7eKe1Xz+mrcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 472/620] arp: switch to dev_getbyhwaddr() in arp_req_set_public()
-Date: Mon, 10 Mar 2025 18:05:18 +0100
-Message-ID: <20250310170604.209195631@linuxfoundation.org>
+Subject: [PATCH 5.15 473/620] power: supply: da9150-fg: fix potential overflow
+Date: Mon, 10 Mar 2025 18:05:19 +0100
+Message-ID: <20250310170604.249360687@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,45 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit 4eae0ee0f1e6256d0b0b9dd6e72f1d9cf8f72e08 ]
+[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
 
-The arp_req_set_public() function is called with the rtnl lock held,
-which provides enough synchronization protection. This makes the RCU
-variant of dev_getbyhwaddr() unnecessary. Switch to using the simpler
-dev_getbyhwaddr() function since we already have the required rtnl
-locking.
+Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
+Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
 
-This change helps maintain consistency in the networking code by using
-the appropriate helper function for the existing locking context.
-Since we're not holding the RCU read lock in arp_req_set_public()
-existing code could trigger false positive locking warnings.
+The expression sd_gain * shunt_val is currently being evaluated using
+32-bit arithmetic. So during the multiplication an overflow may occur.
 
-Fixes: 941666c2e3e0 ("net: RCU conversion of dev_getbyhwaddr() and arp_ioctl()")
-Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20250218-arm_fix_selftest-v5-2-d3d6892db9e1@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As the value of type 'u64' is used as storage for the eventual result, put
+ULL variable at the first position of each expression in order to give the
+compiler complete information about the proper arithmetic to use. According
+to C99 the guaranteed width for a variable of type 'unsigned long long' >=
+64 bits.
+
+Remove the explicit cast to u64 as it is meaningless.
+
+Just for the sake of consistency, perform the similar trick with another
+expression concerning 'iavg'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/arp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/da9150-fg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index 6879e0b70c769..ef69321886798 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1009,7 +1009,7 @@ static int arp_req_set_public(struct net *net, struct arpreq *r,
- 	if (mask && mask != htonl(0xFFFFFFFF))
- 		return -EINVAL;
- 	if (!dev && (r->arp_flags & ATF_COM)) {
--		dev = dev_getbyhwaddr_rcu(net, r->arp_ha.sa_family,
-+		dev = dev_getbyhwaddr(net, r->arp_ha.sa_family,
- 				      r->arp_ha.sa_data);
- 		if (!dev)
- 			return -ENODEV;
+diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
+index 6e367826aae92..d5e1fbac87f22 100644
+--- a/drivers/power/supply/da9150-fg.c
++++ b/drivers/power/supply/da9150-fg.c
+@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
+ 				      DA9150_QIF_SD_GAIN_SIZE);
+ 	da9150_fg_read_sync_end(fg);
+ 
+-	div = (u64) (sd_gain * shunt_val * 65536ULL);
++	div = 65536ULL * sd_gain * shunt_val;
+ 	do_div(div, 1000000);
+-	res = (u64) (iavg * 1000000ULL);
++	res = 1000000ULL * iavg;
+ 	do_div(res, div);
+ 
+ 	val->intval = (int) res;
 -- 
 2.39.5
 
