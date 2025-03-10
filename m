@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB352253FE;
-	Mon, 10 Mar 2025 17:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E816822D4C3;
+	Mon, 10 Mar 2025 17:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628372; cv=none; b=BkMtbW30TTYXYNBu14PuIQasoE3VWMT/WSCRxcag9cmclEDs3ccH/GnRV5c6cMkUbd19pjtH+x7UG+ypWYTXmUnPG8IGiVUepkaAH6/OUvzQwkvaXsD451bmQ50++9rhlPBknvZEXbgezCIubeeOqTOvylP1YbhMjZlpKiQnFPs=
+	t=1741628375; cv=none; b=SC7R21B7Rs66lIIB5vV0NPfX00PZt9SK+PUHU4yXe2qG2TUahh8dpKp6UhfjBV3s6Fms/jGcearLTEgNEt5j9mhhlSCdacLahFngujFdQWSKtNZXj0TXaaSf7uiaeSeWyhhlz9gXciEZt/3Y1qE2zPfi8YJox9cZFMmwKvu2LB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628372; c=relaxed/simple;
-	bh=VOYjjzaJ+6mYeZNcwSeS1j2E68YF1YReJqCLOoggVGs=;
+	s=arc-20240116; t=1741628375; c=relaxed/simple;
+	bh=p8c8sJHtVv8Px0dBfisAy9141SheAXmp018t0pXLryY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=By2KsMCAU589HObfe9nAseo9yIt+VZyTCsIhCOoIjgbBGpMwFwjOy5Hx4D4EWSKe+YuxY4Bv6tfxN3vYJ9tzbTZ+3Tzl3nouPJ+KI73KZOfTyEGh8eDZA6qoY9nZWSigghPi5GdMgmVjiuA/oxq8s9BAbG5/M+L/zlTstpSGVvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWbEST92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqftxLKwLgwOgunM1u5+6ordACGTAxE9UXEFXpC3csLDD6HsgBDobrXhpp1fulNUbnKkLeUgwfL/iqhKsfvPXcrz1IFeV5ROZFVxN9pAPHFGpOGc5c3kN3dBLWrBcQsIOkmqqnG3PZXAs9fkH+Dtgzr85ZO2nteoUYShcvKnLOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlJtFX9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWbEST92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907B0C4CEE5;
-	Mon, 10 Mar 2025 17:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlJtFX9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF0AC4CEE5;
+	Mon, 10 Mar 2025 17:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628371;
-	bh=VOYjjzaJ+6mYeZNcwSeS1j2E68YF1YReJqCLOoggVGs=;
+	s=korg; t=1741628374;
+	bh=p8c8sJHtVv8Px0dBfisAy9141SheAXmp018t0pXLryY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWbEST92pp5WJ1DLRhrsxzLe2AZ2BhiL8wTSfyafzP+zysVvk4U0nubNdXBwMc9WV
-	 xg36JaKs/NkHRyKxnlw17ppjHiNLHmQB7fiUZHPVqH7oMvEFHXj6bBeZTbOtvkxt+5
-	 xGmqtaqy56moj1h5dEl4h4WzjQiFNyTkRLj2i970=
+	b=jlJtFX9W3WJdlwhMOv3hEyXpLYcWzbkwUnPBSywFlMu2wHs1f/cWW2y/N0LxZiC7+
+	 SOjt5KoXFFSYuhI68/J4/o0kc6oPV+QAKeye/Umkwh1NjzTuqKTASQXaT0coZEqV4D
+	 7JY2LO9RdFkJ/bOPN4p2l/GF4EB1TinB2C+mSo+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 018/109] ALSA: hda/realtek: update ALC222 depop optimize
-Date: Mon, 10 Mar 2025 18:06:02 +0100
-Message-ID: <20250310170428.274975696@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christop Hellwig <hch@infradead.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 036/109] mm: dont skip arch_sync_kernel_mappings() in error paths
+Date: Mon, 10 Mar 2025 18:06:20 +0100
+Message-ID: <20250310170428.997682758@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -50,116 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit ca0dedaff92307591f66c9206933fbdfe87add10 upstream.
+commit 3685024edd270f7c791f993157d65d3c928f3d6e upstream.
 
-Add ALC222 its own depop functions for alc_init and alc_shutup.
+Fix callers that previously skipped calling arch_sync_kernel_mappings() if
+an error occurred during a pgtable update.  The call is still required to
+sync any pgtable updates that may have occurred prior to hitting the error
+condition.
 
-[note: this fixes pop noise issues on the models with two headphone
- jacks -- tiwai ]
+These are theoretical bugs discovered during code review.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lkml.kernel.org/r/20250226121610.2401743-1-ryan.roberts@arm.com
+Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
+Fixes: 0c95cba49255 ("mm: apply_to_pte_range warn and fail if a large pte is encountered")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christop Hellwig <hch@infradead.org>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   76 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+ mm/memory.c  |    6 ++++--
+ mm/vmalloc.c |    4 ++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3831,6 +3831,79 @@ static void alc225_shutup(struct hda_cod
- 	}
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2802,8 +2802,10 @@ static int __apply_to_page_range(struct
+ 		next = pgd_addr_end(addr, end);
+ 		if (pgd_none(*pgd) && !create)
+ 			continue;
+-		if (WARN_ON_ONCE(pgd_leaf(*pgd)))
+-			return -EINVAL;
++		if (WARN_ON_ONCE(pgd_leaf(*pgd))) {
++			err = -EINVAL;
++			break;
++		}
+ 		if (!pgd_none(*pgd) && WARN_ON_ONCE(pgd_bad(*pgd))) {
+ 			if (!create)
+ 				continue;
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -566,13 +566,13 @@ static int vmap_small_pages_range_noflus
+ 			mask |= PGTBL_PGD_MODIFIED;
+ 		err = vmap_pages_p4d_range(pgd, addr, next, prot, pages, &nr, &mask);
+ 		if (err)
+-			return err;
++			break;
+ 	} while (pgd++, addr = next, addr != end);
+ 
+ 	if (mask & ARCH_PAGE_TABLE_SYNC_MASK)
+ 		arch_sync_kernel_mappings(start, end);
+ 
+-	return 0;
++	return err;
  }
  
-+static void alc222_init(struct hda_codec *codec)
-+{
-+	struct alc_spec *spec = codec->spec;
-+	hda_nid_t hp_pin = alc_get_hp_pin(spec);
-+	bool hp1_pin_sense, hp2_pin_sense;
-+
-+	if (!hp_pin)
-+		return;
-+
-+	msleep(30);
-+
-+	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
-+	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
-+
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		msleep(2);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+
-+		msleep(75);
-+	}
-+}
-+
-+static void alc222_shutup(struct hda_codec *codec)
-+{
-+	struct alc_spec *spec = codec->spec;
-+	hda_nid_t hp_pin = alc_get_hp_pin(spec);
-+	bool hp1_pin_sense, hp2_pin_sense;
-+
-+	if (!hp_pin)
-+		hp_pin = 0x21;
-+
-+	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
-+	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
-+
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		msleep(2);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+
-+		msleep(75);
-+	}
-+	alc_auto_setup_eapd(codec, false);
-+	alc_shutup_pins(codec);
-+}
-+
- static void alc_default_init(struct hda_codec *codec)
- {
- 	struct alc_spec *spec = codec->spec;
-@@ -11111,8 +11184,11 @@ static int patch_alc269(struct hda_codec
- 		spec->codec_variant = ALC269_TYPE_ALC300;
- 		spec->gen.mixer_nid = 0; /* no loopback on ALC300 */
- 		break;
-+	case 0x10ec0222:
- 	case 0x10ec0623:
- 		spec->codec_variant = ALC269_TYPE_ALC623;
-+		spec->shutup = alc222_shutup;
-+		spec->init_hook = alc222_init;
- 		break;
- 	case 0x10ec0700:
- 	case 0x10ec0701:
+ /*
 
 
