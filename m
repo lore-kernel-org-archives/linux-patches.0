@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B173374EA;
-	Mon, 10 Mar 2025 18:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B28374EA;
+	Mon, 10 Mar 2025 18:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630798; cv=none; b=WVRmmK3wQYr0qREvDYSZYTP7y9BmH3xVlEb3mpM+MP2DGsul0aO/T64l2hi7LN2c/ZrtnYFyJC5RdytMcic7WdXzsrC26mMcc+CvuaZL/e6YmTVhloVVIwagDjdiO8lBFsQc1pfM63mnD1UVgtVRnFxdiEppDozL05jkphcPe3U=
+	t=1741630801; cv=none; b=B2WvgTRdaOIp0rwQlg70MzVpUHtjIl9jj761wIOMlS7bM77R1eJK+Zh9PeSS9QrmfAv/V42seJtzbo3Jl7TyqnjP0iQBx4+PMD1Y4KiMY+k9gNVuv3dwJB8jqKOmA8SrDpVg3Jlx0nL8xYeMbQ0xxJ3NrUlsm4mUVTOP0CsCYNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630798; c=relaxed/simple;
-	bh=BKbpyQ21zCUgZXGwhCzBCZ58koJFMddklVM27Y9rokw=;
+	s=arc-20240116; t=1741630801; c=relaxed/simple;
+	bh=jpdpz44es24qwxAO7fbqpejqdFzkjwpwPNEfliwDMm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C8qDFnaV+k1YFkE4oTH1zDFiL0sjt8KXTzmqDjCI24jZhom1gp3e04eU6oo0oiktBysSVannff+AVZCdeI+OEOB/f0RS1V4/2iwjt3w3N5f5db0EcGU58xTwjoED9uP2MJQawjW1aKolKw3tVkgpwEni+t/EGOQg5vsTQjPkUL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unaYOl+A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i4SCesvSReYaY1pUcN/br2WVcy59x6mmHfZDf+VrFQXuakh1LqsVB/VpbguH2l7d649TYiZniM7BwkKkszX1NKkW+hdE4cDUQIGg0kOaOUQ7CbCvJH/3WQvUO8bjbqzoWv93bPc1pnscqjtVk+AlML4uANB/D34bfl6uX5p4AXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onXPpVGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unaYOl+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F912C4CEE5;
-	Mon, 10 Mar 2025 18:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onXPpVGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E74C4CEE5;
+	Mon, 10 Mar 2025 18:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630798;
-	bh=BKbpyQ21zCUgZXGwhCzBCZ58koJFMddklVM27Y9rokw=;
+	s=korg; t=1741630801;
+	bh=jpdpz44es24qwxAO7fbqpejqdFzkjwpwPNEfliwDMm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unaYOl+AkJSX//h5oBy+pkzBSdX41+3AIejSAUs1WJ6CkMzbDglFiKQ5elyAkofq6
-	 5b1agb0l2J7O3f+hcjNjxRuBWMPAgHE7VrOSOaPuhY5bqOlW7gG57W5N1GQ3zJytAE
-	 U5YqonoLNMGw4w2KEdF17MxvvKXZy5ZlIJGbRQAc=
+	b=onXPpVGuVag9RzjJm6LG8/ZaseWggHCA5hqoUpoGt98sos/pTk8q6yOyqfuF7pM10
+	 oMCVZoj09RU4O2kO/xvBkpoe4WEYDdpPGJH1S4KJuLcSDYdsrWWLQ/B+KpZJTztwkR
+	 T5Q0wABZRl2X26f2WAh5blNJ5BfHpuDG5YUDBBQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
-	Richard Thier <u9vata@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 539/620] drm/radeon: Fix rs400_gpu_init for ATI mobility radeon Xpress 200M
-Date: Mon, 10 Mar 2025 18:06:25 +0100
-Message-ID: <20250310170606.825199891@linuxfoundation.org>
+	Fan Yang <804284660@qq.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 540/620] platform/x86: thinkpad_acpi: Add battery quirk for ThinkPad X131e
+Date: Mon, 10 Mar 2025 18:06:26 +0100
+Message-ID: <20250310170606.864066405@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,75 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Thier <u9vata@gmail.com>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-commit 29ffeb73b216ce3eff10229eb077cf9b7812119d upstream.
+commit d0d10eaedcb53740883d7e5d53c5e15c879b48fb upstream.
 
-num_gb_pipes was set to a wrong value using r420_pipe_config
+Based on the dmesg messages from the original reporter:
 
-This have lead to HyperZ glitches on fast Z clearing.
+[    4.964073] ACPI: \_SB_.PCI0.LPCB.EC__.HKEY: BCTG evaluated but flagged as error
+[    4.964083] thinkpad_acpi: Error probing battery 2
 
-Closes: https://bugs.freedesktop.org/show_bug.cgi?id=110897
-Reviewed-by: Marek Olšák <marek.olsak@amd.com>
-Signed-off-by: Richard Thier <u9vata@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 044e59a85c4d84e3c8d004c486e5c479640563a6)
+Lenovo ThinkPad X131e also needs this battery quirk.
+
+Reported-by: Fan Yang <804284660@qq.com>
+Tested-by: Fan Yang <804284660@qq.com>
+Co-developed-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250221164825.77315-1-jeffbai@aosc.io
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/r300.c        |    3 ++-
- drivers/gpu/drm/radeon/radeon_asic.h |    1 +
- drivers/gpu/drm/radeon/rs400.c       |   18 ++++++++++++++++--
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/radeon/r300.c
-+++ b/drivers/gpu/drm/radeon/r300.c
-@@ -359,7 +359,8 @@ int r300_mc_wait_for_idle(struct radeon_
- 	return -1;
- }
- 
--static void r300_gpu_init(struct radeon_device *rdev)
-+/* rs400_gpu_init also calls this! */
-+void r300_gpu_init(struct radeon_device *rdev)
- {
- 	uint32_t gb_tile_config, tmp;
- 
---- a/drivers/gpu/drm/radeon/radeon_asic.h
-+++ b/drivers/gpu/drm/radeon/radeon_asic.h
-@@ -165,6 +165,7 @@ void r200_set_safe_registers(struct rade
-  */
- extern int r300_init(struct radeon_device *rdev);
- extern void r300_fini(struct radeon_device *rdev);
-+extern void r300_gpu_init(struct radeon_device *rdev);
- extern int r300_suspend(struct radeon_device *rdev);
- extern int r300_resume(struct radeon_device *rdev);
- extern int r300_asic_reset(struct radeon_device *rdev, bool hard);
---- a/drivers/gpu/drm/radeon/rs400.c
-+++ b/drivers/gpu/drm/radeon/rs400.c
-@@ -255,8 +255,22 @@ int rs400_mc_wait_for_idle(struct radeon
- 
- static void rs400_gpu_init(struct radeon_device *rdev)
- {
--	/* FIXME: is this correct ? */
--	r420_pipes_init(rdev);
-+	/* Earlier code was calling r420_pipes_init and then
-+	 * rs400_mc_wait_for_idle(rdev). The problem is that
-+	 * at least on my Mobility Radeon Xpress 200M RC410 card
-+	 * that ends up in this code path ends up num_gb_pipes == 3
-+	 * while the card seems to have only one pipe. With the
-+	 * r420 pipe initialization method.
-+	 *
-+	 * Problems shown up as HyperZ glitches, see:
-+	 * https://bugs.freedesktop.org/show_bug.cgi?id=110897
-+	 *
-+	 * Delegating initialization to r300 code seems to work
-+	 * and results in proper pipe numbers. The rs400 cards
-+	 * are said to be not r400, but r300 kind of cards.
-+	 */
-+	r300_gpu_init(rdev);
-+
- 	if (rs400_mc_wait_for_idle(rdev)) {
- 		pr_warn("rs400: Failed to wait MC idle while programming pipes. Bad things might happen. %08x\n",
- 			RREG32(RADEON_MC_STATUS));
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -9766,6 +9766,7 @@ static const struct tpacpi_quirk battery
+ 	 * Individual addressing is broken on models that expose the
+ 	 * primary battery as BAT1.
+ 	 */
++	TPACPI_Q_LNV('G', '8', true),       /* ThinkPad X131e */
+ 	TPACPI_Q_LNV('8', 'F', true),       /* Thinkpad X120e */
+ 	TPACPI_Q_LNV('J', '7', true),       /* B5400 */
+ 	TPACPI_Q_LNV('J', 'I', true),       /* Thinkpad 11e */
 
 
