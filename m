@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEA0226D0B;
-	Mon, 10 Mar 2025 17:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97A722E407;
+	Mon, 10 Mar 2025 17:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627996; cv=none; b=qC54pofAm4n7+fQaJGMbOfTtz5XyGhN4ljKzCURCGhjskEbufNF6ED6r/HEV2zICDJqH9paGZtKAtAFSTb2B6ebcKMgSXUAgqve/04OsEIEfe3eLUOxk2K0Z7JEjgAiXQ8yyEfVkaMrV+iBTnLZQ+HjUCAx/GqpkqwFd3gECXO0=
+	t=1741627998; cv=none; b=koRMl/vUI4imbf/aipuPjf5a0di35iFr2elgVbPEmicSo4KhwHqRdm4nN1eGY8nPssePAKu+EtGIohAmhx96DJYNeej7HiWpHR0Ki23FbkCNhPR5YEp9YwC6sPxI4OCfYU8m2f4AC6eMU8p88tYYTGcBw0E+vDqiSCiNkOQBxwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627996; c=relaxed/simple;
-	bh=ErflIqqbS0aE0EZ8D4MFhlTKh4ugIQ+O1fPxBdfN18s=;
+	s=arc-20240116; t=1741627998; c=relaxed/simple;
+	bh=EkkgAnYT5zOjIFxCcTWQpJW+WIGa9bXJIqGoh7YuEbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P57LHpvr3hbG7aHYkDeRmcuoyGr04fo5P1GPH1+RXG5s6P89oNsbGoR8vDeD8cqEhwlLqnx+E1LJENMB2HqL2P28rH+dsMI2EIaCmL8KavV27FSUtSRwXw8GzvMPtvac8jSSb2S+HiqMWpOhFU5uh+Qq+NE9wxwk369am6QaDe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCrDk5cN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r52iW6IuG8G8Ld33FWbmbznvrZ8tY9WF46RujsqhZG6rCMO5hSY+5ufTMQI5TfAwH6Q4MOLBPvTSoR5npj956AfkGPF/58o83GfjgY+D96ZPghtfX+ZtsPVoHe1qUlm9yX3oNs8P29svct4zCwg7bPSvL09UD2tMCM0vQrV66QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaWOPF6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCrDk5cN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AB3C4CEE5;
-	Mon, 10 Mar 2025 17:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaWOPF6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627B5C4CEE5;
+	Mon, 10 Mar 2025 17:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627995;
-	bh=ErflIqqbS0aE0EZ8D4MFhlTKh4ugIQ+O1fPxBdfN18s=;
+	s=korg; t=1741627998;
+	bh=EkkgAnYT5zOjIFxCcTWQpJW+WIGa9bXJIqGoh7YuEbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCrDk5cNGFjyMZ5u4zOeqVihhRGh3N49QUX1RaqCdct6oY1AEitr70rkhgM/HLm8d
-	 x74qN713UQLfkKenj/FgUnKQaKZIhlRM4ofb9Q7P7qSSYPYjTdnBeL9E68P+5UpCzy
-	 WWLLCGKT5bxmOwSY7VBIF0Bl5iTpPcXEyFuhD6ts=
+	b=KaWOPF6rw6Xr1BTa3IWTAZ/6/nG4WE4m8cdQZDhi9aKlUzFgaLKoI5ueCgHRZDxf9
+	 G7SF/rf8jP/8mh3RV8BkC8ymXlQg5pFXT7iru7Oj6WWIWoFOYdUxFYEvlBk6MXgcJv
+	 QaUc6v1c6SM96qf2x+CBYod1C/nQlSnGVHmidi/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
 	Haoxiang Li <haoxiang_li2024@163.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Alexandre Bounine <alex.bou9@gmail.com>,
 	Matt Porter <mporter@kernel.crashing.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 051/145] rapidio: add check for rio_add_net() in rio_scan_alloc_net()
-Date: Mon, 10 Mar 2025 18:05:45 +0100
-Message-ID: <20250310170436.796027897@linuxfoundation.org>
+Subject: [PATCH 6.6 052/145] rapidio: fix an API misues when rio_add_net() fails
+Date: Mon, 10 Mar 2025 18:05:46 +0100
+Message-ID: <20250310170436.838091212@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -56,39 +56,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit e842f9a1edf306bf36fe2a4d847a0b0d458770de upstream.
+commit b2ef51c74b0171fde7eb69b6152d3d2f743ef269 upstream.
 
-The return value of rio_add_net() should be checked.  If it fails,
-put_device() should be called to free the memory and give up the reference
-initialized in rio_add_net().
+rio_add_net() calls device_register() and fails when device_register()
+fails.  Thus, put_device() should be used rather than kfree().  Add
+"mport->net = NULL;" to avoid a use after free issue.
 
-Link: https://lkml.kernel.org/r/20250227041131.3680761-1-haoxiang_li2024@163.com
-Fixes: e6b585ca6e81 ("rapidio: move net allocation into core code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lkml.kernel.org/r/20250227073409.3696854-1-haoxiang_li2024@163.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
 Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: Alexandre Bounine <alex.bou9@gmail.com>
 Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/rio-scan.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/rapidio/devices/rio_mport_cdev.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -871,7 +871,10 @@ static struct rio_net *rio_scan_alloc_ne
- 		dev_set_name(&net->dev, "rnet_%d", net->id);
- 		net->dev.parent = &mport->dev;
- 		net->dev.release = rio_scan_release_dev;
--		rio_add_net(net);
-+		if (rio_add_net(net)) {
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1740,7 +1740,8 @@ static int rio_mport_add_riodev(struct m
+ 		err = rio_add_net(net);
+ 		if (err) {
+ 			rmcd_debug(RDEV, "failed to register net, err=%d", err);
+-			kfree(net);
 +			put_device(&net->dev);
-+			net = NULL;
-+		}
++			mport->net = NULL;
+ 			goto cleanup;
+ 		}
  	}
- 
- 	return net;
 
 
