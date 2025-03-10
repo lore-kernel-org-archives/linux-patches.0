@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A2322B8D0;
-	Mon, 10 Mar 2025 17:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B316B17A2E3;
+	Mon, 10 Mar 2025 17:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626827; cv=none; b=DZ4WP5MM0AuLg/9pNkcmb4dmarDOR/M5ykeoUJBQCHlX6V4EzPppGLAthk9OH4YlBmJyoRUF7ZlMYrdP2N6qo2JPp5q6TKE+TWNohT5mc8C47FfQMRNXcrvnpZnEDtrihLoJNCMAIfjVdmUe/koM9aU5V2jcpXyGTboPnhhiRp8=
+	t=1741626830; cv=none; b=XLoTkGbXE92bEjmgTIuZa3t6nVW/ZKleDqvepEYBbHPgX+VvocgyvntBPzG9SOd9YPVd29OhQ8eIOhKRtmoSgcp9KMGe7+MBcwqaUCS4BemB9uHfX8zd2zH84VxSJ2i6c8fBUiPsVGOKewzg1C658c+ahZMEWpHsw5gdHDZSiBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626827; c=relaxed/simple;
-	bh=3HSskLKaCss0320X0mPegXaLY6wGRIMjdGsid41yxxs=;
+	s=arc-20240116; t=1741626830; c=relaxed/simple;
+	bh=mfWvI21v5x8oLl4j09IuezZStJYLifedV21mO2AtY/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPDcShxegZVjtRqshgoLsla1erOm+Qk+rsDokbj6RGtjVPQ8LoYm3arcLXBer5W1xWzES0/bAVDJOvMx7+VYki2FGjB7f8fQ8J4YrSWM7+SUgse32N27s59uH2Z2eGzRI9UB5NUcKwWTdLA2DuGTo8pecuge5kosub+ucWLR8/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4m4ovLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RO27/pj/Pktv/DLZbtYeExXHiu832yI6CX1lXsWz3+HqUeVvzJDCzxKlKqcTzmkApbikrGLYVr29r5rgXaQ05NiIHTfrElrOMLhHKArTPqqAdhZbVer9GUehY5290JlzP0E7o2kRz2bAI9XIMZQ5973Hewn8btWuAzHU9QbywZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPA5pPtu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4m4ovLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5734FC4CEE5;
-	Mon, 10 Mar 2025 17:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPA5pPtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391D7C4CEE5;
+	Mon, 10 Mar 2025 17:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626827;
-	bh=3HSskLKaCss0320X0mPegXaLY6wGRIMjdGsid41yxxs=;
+	s=korg; t=1741626830;
+	bh=mfWvI21v5x8oLl4j09IuezZStJYLifedV21mO2AtY/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4m4ovLHUnBN9rGBiqpn/7h6x48GVUGgGnLVyIvTY0L03OVkY+63pNsIl90YXypA8
-	 e7p/1KgH99M4bDKvw/OrSI8BzQWKhhgwfZfm1EiyJ9iZibUL+1rko/F35KJ2UWUKTh
-	 Qn7yLuMnGVwTfuCSi7BE+DGbIsDfLdXuX1y2Ry3o=
+	b=XPA5pPtuu4rRsZMKdTxiyw2A/5EIG9fontIAnXaIGZUprp2MNJS96YtwMv69Deams
+	 AMHpEXLGqPpTObssFgsHxi6pjQ4rUSC5yOnWgeGMEg7yesXuh8+Ui6v1cC776Z9S3q
+	 wi0cIgXQDw3r2qNy9NCr1mnbj4tJoXlGRn+zLM9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Vinod Govindapillai <vinod.govindapillai@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Maarten Lankhorst <dev@lankhorst.se>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 126/207] net: hns3: make sure ptp clock is unregister and freed if hclge_ptp_get_cycle returns an error
-Date: Mon, 10 Mar 2025 18:05:19 +0100
-Message-ID: <20250310170452.814131916@linuxfoundation.org>
+Subject: [PATCH 6.13 127/207] drm/xe: Remove double pageflip
+Date: Mon, 10 Mar 2025 18:05:20 +0100
+Message-ID: <20250310170452.853317329@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -47,45 +48,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peiyang Wang <wangpeiyang1@huawei.com>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit b7365eab39831487a84e63a9638209b68dc54008 ]
+[ Upstream commit 30bfc151f0c1ec80c27a80a7651b2c15c648ad16 ]
 
-During the initialization of ptp, hclge_ptp_get_cycle might return an error
-and returned directly without unregister clock and free it. To avoid that,
-call hclge_ptp_destroy_clock to unregist and free clock if
-hclge_ptp_get_cycle failed.
+This is already handled below in the code by fixup_initial_plane_config.
 
-Fixes: 8373cd38a888 ("net: hns3: change the method of obtaining default ptp cycle")
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250228105258.1243461-1-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a8153627520a ("drm/i915: Try to relocate the BIOS fb to the start of ggtt")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241210083111.230484-3-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+(cherry picked from commit 2218704997979fbf11765281ef752f07c5cf25bb)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/display/xe_plane_initial.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-index bab16c2191b2f..181af419b878d 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-@@ -483,7 +483,7 @@ int hclge_ptp_init(struct hclge_dev *hdev)
+diff --git a/drivers/gpu/drm/xe/display/xe_plane_initial.c b/drivers/gpu/drm/xe/display/xe_plane_initial.c
+index 8c113463a3d55..668f544a7ac80 100644
+--- a/drivers/gpu/drm/xe/display/xe_plane_initial.c
++++ b/drivers/gpu/drm/xe/display/xe_plane_initial.c
+@@ -194,8 +194,6 @@ intel_find_initial_plane_obj(struct intel_crtc *crtc,
+ 		to_intel_plane(crtc->base.primary);
+ 	struct intel_plane_state *plane_state =
+ 		to_intel_plane_state(plane->base.state);
+-	struct intel_crtc_state *crtc_state =
+-		to_intel_crtc_state(crtc->base.state);
+ 	struct drm_framebuffer *fb;
+ 	struct i915_vma *vma;
  
- 		ret = hclge_ptp_get_cycle(hdev);
- 		if (ret)
--			return ret;
-+			goto out;
- 	}
+@@ -241,14 +239,6 @@ intel_find_initial_plane_obj(struct intel_crtc *crtc,
+ 	atomic_or(plane->frontbuffer_bit, &to_intel_frontbuffer(fb)->bits);
  
- 	ret = hclge_ptp_int_en(hdev, true);
+ 	plane_config->vma = vma;
+-
+-	/*
+-	 * Flip to the newly created mapping ASAP, so we can re-use the
+-	 * first part of GGTT for WOPCM, prevent flickering, and prevent
+-	 * the lookup of sysmem scratch pages.
+-	 */
+-	plane->check_plane(crtc_state, plane_state);
+-	plane->async_flip(NULL, plane, crtc_state, plane_state, true);
+ 	return;
+ 
+ nofb:
 -- 
 2.39.5
 
