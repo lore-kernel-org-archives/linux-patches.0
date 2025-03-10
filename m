@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539F922D7A6;
-	Mon, 10 Mar 2025 17:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6097522DFF3;
+	Mon, 10 Mar 2025 17:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629574; cv=none; b=c+zLO1kLHeCHSt5sjF4hIM9/yiBW+v1b1TGFbalxLVfEvOHbf7oS+EFvWanJxbhx2jq7lgk5Ow3+a0V2/24P9HCyykZ9pezY10QFQmC6hArKEpYNcT50RamsmI7WVLkbF+zG5t7eXcubkqEKkKuUAQ7pLTLR8U4kSHwW67Mkz8I=
+	t=1741629577; cv=none; b=N8P/jIWqGtCYLSs+GoZYrK+x1O4UYPLYO0X5UGVWjbp9rexnF144RMY/J+VbjD2JgtoP4IYauZVMgaGLm5uE4CU1IeXxtp3lzK3oxeZwQab70yBX113RNXoYOZy8hYr7nLvC2HyV8/ZreIuptXERhKLL3AgX/Eu2ll4oJFk6Eck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629574; c=relaxed/simple;
-	bh=cwuNPUJRi97RqF+IW0r/XifJr8MAoxvct4miUmZla60=;
+	s=arc-20240116; t=1741629577; c=relaxed/simple;
+	bh=ZTCxl9CvJ3Lhp0Nb7K1hnauDUQbsgLEyPXOm0n5fBxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGykdYAjQz7DicxinjLd0t/2A+1e6uqjkGhOAqlK0fNlhAi7psyF5y5s/6NTFJYQKOY/UOoR+LX4DD+RrdviJKcXzuMcumg9vcqFtgdxXKNay2Tx21KD+gJbH7UhNn5qMrYeZ40ZLGCQPqR+LumR51slaL+0FyrosHaopKlwKwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDZAwEUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAEj2j71E4NFofzU7Rhav/9sraE4MzjlfdC00I/cjiVDOY5YqcE1xQ7+neO2oS8w9AgVXLrbYRnoMk692ARTURrJVPOoNmNovCemcXK54KU+h3AgVhxid19SY+SABVDNLEN5vn2qjr3o0wJVbFGVXLp5Jb1V+SwbLV2RHXiIdIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YA20+Dz1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDZAwEUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF3DC4CEED;
-	Mon, 10 Mar 2025 17:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YA20+Dz1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FF0C4CEE5;
+	Mon, 10 Mar 2025 17:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629574;
-	bh=cwuNPUJRi97RqF+IW0r/XifJr8MAoxvct4miUmZla60=;
+	s=korg; t=1741629577;
+	bh=ZTCxl9CvJ3Lhp0Nb7K1hnauDUQbsgLEyPXOm0n5fBxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDZAwEUiG7yJpI2raoc+783rYRn0IgQ3AlyJYhDEPbunj/2qXWZMaa76JF2AeTo9B
-	 sxlo29fhq89LmTune4MEaLuSm9BAjnGEfc7yW04/IyXt5ARC9qaqGFmYjxlE88V3wM
-	 Jd4yCtgdK+1oMXIj4NEnluc3w0noxNuONvVhfcbs=
+	b=YA20+Dz1mn6i7+6YWVZFbIhMqGPR6HaljF7d9g9MY9r97xEDT248B13FNvq26WSfP
+	 YAA/QdCQ7pSTW2OlHgPhKdjWCx/zOKi8e0gcNePoNMX6BtU8AnVLeLfjUie3QkgytO
+	 8oa1p+9rQ3RtuzHNRTX8v3lI3QkkKJEKeVr3L//g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radu Rendec <rrendec@redhat.com>,
-	Will Deacon <will@kernel.org>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Mikolaj Wasiak <mikolaj.wasiak@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 341/620] arm64: cacheinfo: Avoid out-of-bounds write to cacheinfo array
-Date: Mon, 10 Mar 2025 18:03:07 +0100
-Message-ID: <20250310170559.074396077@linuxfoundation.org>
+Subject: [PATCH 5.15 342/620] drm/i915/selftests: avoid using uninitialized context
+Date: Mon, 10 Mar 2025 18:03:08 +0100
+Message-ID: <20250310170559.112108489@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,53 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radu Rendec <rrendec@redhat.com>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-[ Upstream commit 875d742cf5327c93cba1f11e12b08d3cce7a88d2 ]
+[ Upstream commit 53139b3f9998ea07289e7b70b909fea2264a0de9 ]
 
-The loop that detects/populates cache information already has a bounds
-check on the array size but does not account for cache levels with
-separate data/instructions cache. Fix this by incrementing the index
-for any populated leaf (instead of any populated level).
+There is an error path in igt_ppgtt_alloc(), which leads
+to ww object being passed down to i915_gem_ww_ctx_fini() without
+initialization. Correct that by only putting ppgtt->vm and
+returning early.
 
-Fixes: 5d425c186537 ("arm64: kernel: add support for cpu cache information")
-
-Signed-off-by: Radu Rendec <rrendec@redhat.com>
-Link: https://lore.kernel.org/r/20250206174420.2178724-1-rrendec@redhat.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 480ae79537b2 ("drm/i915/selftests: Prepare gtt tests for obj->mm.lock removal")
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Mikolaj Wasiak <mikolaj.wasiak@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/iuaonpjc3rywmvhna6umjlvzilocn2uqsrxfxfob24e2taocbi@lkaivvfp4777
+(cherry picked from commit 8d8334632ea62424233ac6529712868241d0f8df)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cacheinfo.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/selftests/i915_gem_gtt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/cacheinfo.c b/arch/arm64/kernel/cacheinfo.c
-index 97c42be71338a..1510f457b6154 100644
---- a/arch/arm64/kernel/cacheinfo.c
-+++ b/arch/arm64/kernel/cacheinfo.c
-@@ -87,16 +87,18 @@ int populate_cache_leaves(unsigned int cpu)
- 	unsigned int level, idx;
- 	enum cache_type type;
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
-+	struct cacheinfo *infos = this_cpu_ci->info_list;
+diff --git a/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c b/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
+index f843a5040706a..df3934a990d08 100644
+--- a/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
++++ b/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
+@@ -160,7 +160,7 @@ static int igt_ppgtt_alloc(void *arg)
+ 		return PTR_ERR(ppgtt);
  
- 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
--	     idx < this_cpu_ci->num_leaves; idx++, level++) {
-+	     idx < this_cpu_ci->num_leaves; level++) {
- 		type = get_cache_type(level);
- 		if (type == CACHE_TYPE_SEPARATE) {
--			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
--			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
-+			if (idx + 1 >= this_cpu_ci->num_leaves)
-+				break;
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_DATA, level);
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_INST, level);
- 		} else {
--			ci_leaf_init(this_leaf++, type, level);
-+			ci_leaf_init(&infos[idx++], type, level);
- 		}
+ 	if (!ppgtt->vm.allocate_va_range)
+-		goto err_ppgtt_cleanup;
++		goto ppgtt_vm_put;
+ 
+ 	/*
+ 	 * While we only allocate the page tables here and so we could
+@@ -228,7 +228,7 @@ static int igt_ppgtt_alloc(void *arg)
+ 			goto retry;
  	}
- 	return 0;
+ 	i915_gem_ww_ctx_fini(&ww);
+-
++ppgtt_vm_put:
+ 	i915_vm_put(&ppgtt->vm);
+ 	return err;
+ }
 -- 
 2.39.5
 
