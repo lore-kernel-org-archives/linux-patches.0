@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9982253FE;
-	Mon, 10 Mar 2025 17:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BA51DE89C;
+	Mon, 10 Mar 2025 17:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628283; cv=none; b=VDqpOf0mtHhGWPmK4opMt9Ucn9GYIELdkXasTOFvUDcjae5o7+63C1wLyUFVqpRDNqFBmlCllDm5PM6gw4Dw67JBbh89ZLa7vPKOgtbbNS4YtTnF9HI6A0cZ0UaHwAeuNZGuuDWGW8hSoMpsgIJoC+OqYy5YaBfLYzaafOE56PQ=
+	t=1741628286; cv=none; b=DJndGBZZmWPPFGlSQfUjC7i9bM3E/h8RrBo2saMlD3vt9lNaj7Egz3oRSs9qKnJSPD5O33+QDwiv9Z6lE6KtWRK3J8Ei0pzXqjak0KDNHPto1ukosX+/0nfgMGxdPJkWb5iauyDBjQ9UMC4A0LjPkUFHlXgYoBulYtckD7Dsl4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628283; c=relaxed/simple;
-	bh=zKvKM6kVGHvS3GCnuzI9NZBL4qT/wjYRgzlU0PJ4kWY=;
+	s=arc-20240116; t=1741628286; c=relaxed/simple;
+	bh=GBoY/r60u0R+vOFhGPNGjGVEustp1xTkDQfjXA2F00Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9fDTDVG4agHnRLHWz4gbks7KvJhVGH/whFLjqiPs3LvuQ8Fg9BQsFS7zDcysZkXHhVkx958RIbxCzuAkHIKoQcdxhTCA6dClQdvZa+7M3dutNCOTonQ1JCbo9WY3TUxqkTP3yuvSQsmRq08vtxErHfk2+lXOlXEU7dDlXEBOTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI2q7/9q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgJI/RCjwr5esPaPowd4lY4YmqdBZ6TTzUuLDNu6HjnEZJk63B7h+tRqAwg0aWQ3DeigE+SwgBO7xkcbX4BGYfEKvnSC7pqurdn7zkmOki3SHhjHigFJw1yzQN3Ecs8iLhRbcuy3poEuWVxKzVLhC9MMpIrwlkdOId7A6uEVwtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K74YrU9x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI2q7/9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4B5C4CEE5;
-	Mon, 10 Mar 2025 17:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K74YrU9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FEC4CEE5;
+	Mon, 10 Mar 2025 17:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628282;
-	bh=zKvKM6kVGHvS3GCnuzI9NZBL4qT/wjYRgzlU0PJ4kWY=;
+	s=korg; t=1741628285;
+	bh=GBoY/r60u0R+vOFhGPNGjGVEustp1xTkDQfjXA2F00Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZI2q7/9q4v5vjKPZ3slLOAFIeBSGS1twQjQ9IpH4UCkS4cXbW9xos6p3XjLzUmfm7
-	 UveNXHoHlaUuk79AVgTW+bOcsbYOZXswj+BUzdIcKXE6dGLkt8UCJ7whf8nbfLLdNu
-	 2X31wFl0TWuN5dl0Lh8moZ/U1ENriSGW2VXc07Fk=
+	b=K74YrU9xUW3y429t16S5sEwdDQVW06BSJYYNy7VVVZ8fmPUJOlLku8OfybgAh80PX
+	 nCoyegFkav9KNUWq96xSG+44JTesY7YumoPHcOCkIc0zsyRQyE7dWpS8YGr3eo5IeH
+	 yQbY8/yig4xTjtSKmy9TeL7zufRoipTYdzU3nw20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 6.6 139/145] x86/mm: Dont disable PCID when INVLPG has been fixed by microcode
-Date: Mon, 10 Mar 2025 18:07:13 +0100
-Message-ID: <20250310170440.365081479@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.6 140/145] ima: Reset IMA_NONACTION_RULE_FLAGS after post_setattr
+Date: Mon, 10 Mar 2025 18:07:14 +0100
+Message-ID: <20250310170440.405840272@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,79 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit f24f669d03f884a6ef95cca84317d0f329e93961 upstream.
+commit 57a0ef02fefafc4b9603e33a18b669ba5ce59ba3 upstream.
 
-Per the "Processor Specification Update" documentations referred by
-the intel-microcode-20240312 release note, this microcode release has
-fixed the issue for all affected models.
+Commit 0d73a55208e9 ("ima: re-introduce own integrity cache lock")
+mistakenly reverted the performance improvement introduced in commit
+42a4c603198f0 ("ima: fix ima_inode_post_setattr"). The unused bit mask was
+subsequently removed by commit 11c60f23ed13 ("integrity: Remove unused
+macro IMA_ACTION_RULE_FLAGS").
 
-So don't disable PCID if the microcode is new enough.  The precise
-minimum microcode revision fixing the issue was provided by Pawan
-Intel.
+Restore the performance improvement by introducing the new mask
+IMA_NONACTION_RULE_FLAGS, equal to IMA_NONACTION_FLAGS without
+IMA_NEW_FILE, which is not a rule-specific flag.
 
-[ dhansen: comment and changelog tweaks ]
+Finally, reset IMA_NONACTION_RULE_FLAGS instead of IMA_NONACTION_FLAGS in
+process_measurement(), if the IMA_CHANGE_ATTR atomic flag is set (after
+file metadata modification).
 
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Link: https://lore.kernel.org/all/168436059559.404.13934972543631851306.tip-bot2@tip-bot2/
-Link: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20240312
-Link: https://cdrdv2.intel.com/v1/dl/getContent/740518 # RPL042, rev. 13
-Link: https://cdrdv2.intel.com/v1/dl/getContent/682436 # ADL063, rev. 24
-Link: https://lore.kernel.org/all/20240325231300.qrltbzf6twm43ftb@desk/
-Link: https://lore.kernel.org/all/20240522020625.69418-1-xry111%40xry111.site
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+With this patch, new files for which metadata were modified while they are
+still open, can be reopened before the last file close (when security.ima
+is written), since the IMA_NEW_FILE flag is not cleared anymore. Otherwise,
+appraisal fails because security.ima is missing (files with IMA_NEW_FILE
+set are an exception).
+
+Cc: stable@vger.kernel.org # v4.16.x
+Fixes: 0d73a55208e9 ("ima: re-introduce own integrity cache lock")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/init.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ security/integrity/ima/ima_main.c |    7 +++++--
+ security/integrity/integrity.h    |    3 +++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -262,28 +262,33 @@ static void __init probe_page_size_mask(
- }
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -267,10 +267,13 @@ static int process_measurement(struct fi
+ 	mutex_lock(&iint->mutex);
  
- /*
-- * INVLPG may not properly flush Global entries
-- * on these CPUs when PCIDs are enabled.
-+ * INVLPG may not properly flush Global entries on
-+ * these CPUs.  New microcode fixes the issue.
-  */
- static const struct x86_cpu_id invlpg_miss_ids[] = {
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
--	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GRACEMONT, 0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0x2e),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0x42c),
-+	X86_MATCH_INTEL_FAM6_MODEL(ATOM_GRACEMONT, 0x11),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0x118),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0x4117),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0x2e),
- 	{}
- };
+ 	if (test_and_clear_bit(IMA_CHANGE_ATTR, &iint->atomic_flags))
+-		/* reset appraisal flags if ima_inode_post_setattr was called */
++		/*
++		 * Reset appraisal flags (action and non-action rule-specific)
++		 * if ima_inode_post_setattr was called.
++		 */
+ 		iint->flags &= ~(IMA_APPRAISE | IMA_APPRAISED |
+ 				 IMA_APPRAISE_SUBMASK | IMA_APPRAISED_SUBMASK |
+-				 IMA_NONACTION_FLAGS);
++				 IMA_NONACTION_RULE_FLAGS);
  
- static void setup_pcid(void)
- {
-+	const struct x86_cpu_id *invlpg_miss_match;
+ 	/*
+ 	 * Re-evaulate the file if either the xattr has changed or the
+--- a/security/integrity/integrity.h
++++ b/security/integrity/integrity.h
+@@ -42,6 +42,9 @@
+ #define IMA_CHECK_BLACKLIST	0x40000000
+ #define IMA_VERITY_REQUIRED	0x80000000
+ 
++/* Exclude non-action flags which are not rule-specific. */
++#define IMA_NONACTION_RULE_FLAGS	(IMA_NONACTION_FLAGS & ~IMA_NEW_FILE)
 +
- 	if (!IS_ENABLED(CONFIG_X86_64))
- 		return;
- 
- 	if (!boot_cpu_has(X86_FEATURE_PCID))
- 		return;
- 
--	if (x86_match_cpu(invlpg_miss_ids)) {
-+	invlpg_miss_match = x86_match_cpu(invlpg_miss_ids);
-+
-+	if (invlpg_miss_match &&
-+	    boot_cpu_data.microcode < invlpg_miss_match->driver_data) {
- 		pr_info("Incomplete global flushes, disabling PCID");
- 		setup_clear_cpu_cap(X86_FEATURE_PCID);
- 		return;
+ #define IMA_DO_MASK		(IMA_MEASURE | IMA_APPRAISE | IMA_AUDIT | \
+ 				 IMA_HASH | IMA_APPRAISE_SUBMASK)
+ #define IMA_DONE_MASK		(IMA_MEASURED | IMA_APPRAISED | IMA_AUDITED | \
 
 
