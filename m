@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1624231A42;
-	Mon, 10 Mar 2025 17:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAD6231A42;
+	Mon, 10 Mar 2025 17:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626753; cv=none; b=cO3vr47zRCuWQ2SlBxXqbCh0zNwSfo1RoaYHKGggxLrIjIbBiTHm/bBrvQBSs3rMincdjpGOgDg3jQ84O3jyfYH21HcY6BD0YLRtSvyqgSEFQZDbZUVj0xrTKiR3eIBTwBz0ai5Wh1CMqCIJOm7ccKOqMFDeP5FuXhU5b9pXQVQ=
+	t=1741626756; cv=none; b=uBEY0D2AASHwLGEdEp370LzpcqQ9ZCq89vWvYH8gf/G+NZyoHY5EWQqBjjpviM4fNGMGXeWHRd+CMSihDfq1ZDu4STTo4NEPu9d0H0BNo1QJxaPC8pIh1H7XyyMt4uJXfB5USwjjeoVhZn3zGhAaRQCBTEFg8aByQc81OtdaOzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626753; c=relaxed/simple;
-	bh=r4KVN0nr5nuNTcjhTjsUC5wTrNaQNbjBiL31CqRxB5U=;
+	s=arc-20240116; t=1741626756; c=relaxed/simple;
+	bh=VSIGPvkXzulVY2d/HjsC6UhIFGBXaTz7fmDR/EaZCrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ny90jFCsggNJZ1s339zCPU+RPlCduDKDZbtmPzJ79o+JvmdJCCx5JDQu8by2UXYEB8hJHdwu37d0dGWQAzf2Na3yvmz78M6jvjmyGMcS49VIN7BmY/1pHXVuuQ54pGACIMUiOtVCXW66YRfZk02Rcy9o7BG2RRUHdnc0MVar/tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzTQNW6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UetXPdxjvAIHD6BQtym0+/jYzVoNESz4V0kNXFJIrrtkOYiErlK+EAbaxXcvICI+RrH4dwCIAROfUVWuspUxJwBrv0nJzNjvUvEDYxiTTrBmPZmYrF6+wnF+O6kR4h/Ks6Wj2Vo6o3jJuc7qTvUd6FONiv7PhHiWPuey14p9wYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcXaDXE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzTQNW6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69694C4CEE5;
-	Mon, 10 Mar 2025 17:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcXaDXE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2813EC4CEE5;
+	Mon, 10 Mar 2025 17:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626752;
-	bh=r4KVN0nr5nuNTcjhTjsUC5wTrNaQNbjBiL31CqRxB5U=;
+	s=korg; t=1741626755;
+	bh=VSIGPvkXzulVY2d/HjsC6UhIFGBXaTz7fmDR/EaZCrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzTQNW6TRJIw0nO36cEOdJXUFxhFyGGJofagclDL7X4WTHHodH+HYhafBcppoG+4o
-	 2KSmgSZsR+OieqBbvM/97AwiddALGiEW57eA438/UpGQxvltmGdosKDoCPbj67wUOX
-	 Odxgdw3aHe1FCY2d2yWQo3ugEM4vrFHR88JcKUnc=
+	b=LcXaDXE0dK7lDgHZT5XZOxYw+IU440B1sDMvZpYza8HqMzR5Ke09ZlpO7huvZA7jl
+	 NsToKkduTEWwhwObdeL+tit7tEgg2BgEg3hcCLRouU2v2dGqN4aujbTUFhSSYlHj0l
+	 sp+/C22KrzrDU8XquX5oQDytxDZP70mBMJutWYBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mulhern <amulhern@redhat.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Olivier Gayot <olivier.gayot@canonical.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 073/207] block: fix conversion of GPT partition name to 7-bit
-Date: Mon, 10 Mar 2025 18:04:26 +0100
-Message-ID: <20250310170450.665666607@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Florent Revest <revest@chromium.org>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	bpf <bpf@vger.kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 100/207] tracing: Add ftrace_partial_regs() for converting ftrace_regs to pt_regs
+Date: Mon, 10 Mar 2025 18:04:53 +0100
+Message-ID: <20250310170451.734174424@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -47,78 +58,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olivier Gayot <olivier.gayot@canonical.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit e06472bab2a5393430cc2fbc3211cd3602422c1e upstream.
+[ Upstream commit b9b55c8912ce1e5555715d126486bdd63ddfeaec ]
 
-The utf16_le_to_7bit function claims to, naively, convert a UTF-16
-string to a 7-bit ASCII string. By naively, we mean that it:
- * drops the first byte of every character in the original UTF-16 string
- * checks if all characters are printable, and otherwise replaces them
-   by exclamation mark "!".
+Add ftrace_partial_regs() which converts the ftrace_regs to pt_regs.
+This is for the eBPF which needs this to keep the same pt_regs interface
+to access registers.
+Thus when replacing the pt_regs with ftrace_regs in fprobes (which is
+used by kprobe_multi eBPF event), this will be used.
 
-This means that theoretically, all characters outside the 7-bit ASCII
-range should be replaced by another character. Examples:
+If the architecture defines its own ftrace_regs, this copies partial
+registers to pt_regs and returns it. If not, ftrace_regs is the same as
+pt_regs and ftrace_partial_regs() will return ftrace_regs::regs.
 
- * lower-case alpha (ɒ) 0x0252 becomes 0x52 (R)
- * ligature OE (œ) 0x0153 becomes 0x53 (S)
- * hangul letter pieup (ㅂ) 0x3142 becomes 0x42 (B)
- * upper-case gamma (Ɣ) 0x0194 becomes 0x94 (not printable) so gets
-   replaced by "!"
-
-The result of this conversion for the GPT partition name is passed to
-user-space as PARTNAME via udev, which is confusing and feels questionable.
-
-However, there is a flaw in the conversion function itself. By dropping
-one byte of each character and using isprint() to check if the remaining
-byte corresponds to a printable character, we do not actually guarantee
-that the resulting character is 7-bit ASCII.
-
-This happens because we pass 8-bit characters to isprint(), which
-in the kernel returns 1 for many values > 0x7f - as defined in ctype.c.
-
-This results in many values which should be replaced by "!" to be kept
-as-is, despite not being valid 7-bit ASCII. Examples:
-
- * e with acute accent (é) 0x00E9 becomes 0xE9 - kept as-is because
-   isprint(0xE9) returns 1.
- * euro sign (€) 0x20AC becomes 0xAC - kept as-is because isprint(0xAC)
-   returns 1.
-
-This way has broken pyudev utility[1], fixes it by using a mask of 7 bits
-instead of 8 bits before calling isprint.
-
-Link: https://github.com/pyudev/pyudev/issues/490#issuecomment-2685794648 [1]
-Link: https://lore.kernel.org/linux-block/4cac90c2-e414-4ebb-ae62-2a4589d9dc6e@canonical.com/
-Cc: Mulhern <amulhern@redhat.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: stable@vger.kernel.org
-Signed-off-by: Olivier Gayot <olivier.gayot@canonical.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250305022154.3903128-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Florent Revest <revest@chromium.org>
+Cc: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: bpf <bpf@vger.kernel.org>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Alan Maguire <alan.maguire@oracle.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Link: https://lore.kernel.org/173518996761.391279.4987911298206448122.stgit@devnote2
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: db5e228611b1 ("tracing: fprobe-events: Log error for exceeding the number of entry args")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/efi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/ftrace.h | 13 +++++++++++++
+ arch/riscv/include/asm/ftrace.h | 14 ++++++++++++++
+ include/linux/ftrace.h          | 17 +++++++++++++++++
+ 3 files changed, 44 insertions(+)
 
---- a/block/partitions/efi.c
-+++ b/block/partitions/efi.c
-@@ -682,7 +682,7 @@ static void utf16_le_to_7bit(const __le1
- 	out[size] = 0;
+diff --git a/arch/arm64/include/asm/ftrace.h b/arch/arm64/include/asm/ftrace.h
+index b5fa57b61378e..09210f853f12d 100644
+--- a/arch/arm64/include/asm/ftrace.h
++++ b/arch/arm64/include/asm/ftrace.h
+@@ -135,6 +135,19 @@ ftrace_regs_get_frame_pointer(const struct ftrace_regs *fregs)
+ 	return arch_ftrace_regs(fregs)->fp;
+ }
  
- 	while (i < size) {
--		u8 c = le16_to_cpu(in[i]) & 0xff;
-+		u8 c = le16_to_cpu(in[i]) & 0x7f;
++static __always_inline struct pt_regs *
++ftrace_partial_regs(const struct ftrace_regs *fregs, struct pt_regs *regs)
++{
++	struct __arch_ftrace_regs *afregs = arch_ftrace_regs(fregs);
++
++	memcpy(regs->regs, afregs->regs, sizeof(afregs->regs));
++	regs->sp = afregs->sp;
++	regs->pc = afregs->pc;
++	regs->regs[29] = afregs->fp;
++	regs->regs[30] = afregs->lr;
++	return regs;
++}
++
+ int ftrace_regs_query_register_offset(const char *name);
  
- 		if (c && !isprint(c))
- 			c = '!';
+ int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec);
+diff --git a/arch/riscv/include/asm/ftrace.h b/arch/riscv/include/asm/ftrace.h
+index 9372f8d7036f8..7064a530794b6 100644
+--- a/arch/riscv/include/asm/ftrace.h
++++ b/arch/riscv/include/asm/ftrace.h
+@@ -197,6 +197,20 @@ static __always_inline void ftrace_override_function_with_return(struct ftrace_r
+ 	arch_ftrace_regs(fregs)->epc = arch_ftrace_regs(fregs)->ra;
+ }
+ 
++static __always_inline struct pt_regs *
++ftrace_partial_regs(const struct ftrace_regs *fregs, struct pt_regs *regs)
++{
++	struct __arch_ftrace_regs *afregs = arch_ftrace_regs(fregs);
++
++	memcpy(&regs->a0, afregs->args, sizeof(afregs->args));
++	regs->epc = afregs->epc;
++	regs->ra = afregs->ra;
++	regs->sp = afregs->sp;
++	regs->s0 = afregs->s0;
++	regs->t1 = afregs->t1;
++	return regs;
++}
++
+ int ftrace_regs_query_register_offset(const char *name);
+ 
+ void ftrace_graph_func(unsigned long ip, unsigned long parent_ip,
+diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
+index 46ac44366c90a..863c014dff683 100644
+--- a/include/linux/ftrace.h
++++ b/include/linux/ftrace.h
+@@ -190,6 +190,23 @@ static __always_inline struct pt_regs *ftrace_get_regs(struct ftrace_regs *fregs
+ 	return arch_ftrace_get_regs(fregs);
+ }
+ 
++#if !defined(CONFIG_HAVE_DYNAMIC_FTRACE_WITH_ARGS) || \
++	defined(CONFIG_HAVE_FTRACE_REGS_HAVING_PT_REGS)
++
++static __always_inline struct pt_regs *
++ftrace_partial_regs(struct ftrace_regs *fregs, struct pt_regs *regs)
++{
++	/*
++	 * If CONFIG_HAVE_FTRACE_REGS_HAVING_PT_REGS=y, ftrace_regs memory
++	 * layout is including pt_regs. So always returns that address.
++	 * Since arch_ftrace_get_regs() will check some members and may return
++	 * NULL, we can not use it.
++	 */
++	return &arch_ftrace_regs(fregs)->regs;
++}
++
++#endif /* !CONFIG_HAVE_DYNAMIC_FTRACE_WITH_ARGS || CONFIG_HAVE_FTRACE_REGS_HAVING_PT_REGS */
++
+ /*
+  * When true, the ftrace_regs_{get,set}_*() functions may be used on fregs.
+  * Note: this can be true even when ftrace_get_regs() cannot provide a pt_regs.
+-- 
+2.39.5
+
 
 
