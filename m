@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425022356A4;
-	Mon, 10 Mar 2025 17:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF89234977;
+	Mon, 10 Mar 2025 17:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627472; cv=none; b=gO6ALI/DfTKupsIvFRs1X2w/u+dvQhhXBbLj6o4XdTBrf5iwIptaVr92hyk/O7cMopZJaHmSER70zCd29xoESwSx5sZ8m5xnIpI0Jd1WdpRaDZV1QKcaVJxZ2AKdcpDo7qqyKKON83Wt4RO+o1I3MNGcG8LfwKmuH6i/ww2szqc=
+	t=1741627475; cv=none; b=n/PWnMDBhoxZ1FhOg0sxF/obL9PFbgu6DPyA71X9wwKhBFi2arBTGxvBUHLKtNde5yC2YCiwqWe0WtZcO2WnGsTdloUsZs5pnZh4nW+OR47jOccq6JXfr4gwXvPUIUqfqnqZvMbA6nK2Nl1rAmsyxwMm2SWhsZyOUjedaBR33y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627472; c=relaxed/simple;
-	bh=lDQQNjCjzWhz8VfaeJNtHewQPj3Cb7e2CjBPd1mDr0I=;
+	s=arc-20240116; t=1741627475; c=relaxed/simple;
+	bh=P+Ojc9Nxub0WxyU3khEVmZMTx6hrvFT8AobOabCawag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=beCTTqrekzTpqO1zx4kGdRaFcb8laytIDITC1N46gkIB+9krxJoRNBolCci0FPEuamAU9P+eYBZNnCviZwheG51uH9ic3xS938B4wQ3nHxgYSpaqHY2w01DOr92J+LjI+0o7Ykt/bBa00AnYFZLFG3eRWUByK4FM+h530J0PscU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zb+6Xurs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SeHjmiTXVluofTfu/HsFthYAF4p42WI6UqMq/vaf/50eZ1Ei5FCvOR8W0yijVSgOVVynzAiGnRAi+K+Xq3sdstL/yBwoxHByGbWvKNzdvJtU7LAOoLJsdykzHGW9DjhEG/+Rh6XwZyEXjxK1/TdaDtOeJdE3kFNiHkYvh9EyQ5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtnbmyfh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zb+6Xurs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0071C4CEE5;
-	Mon, 10 Mar 2025 17:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtnbmyfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A794EC4CEE5;
+	Mon, 10 Mar 2025 17:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627472;
-	bh=lDQQNjCjzWhz8VfaeJNtHewQPj3Cb7e2CjBPd1mDr0I=;
+	s=korg; t=1741627475;
+	bh=P+Ojc9Nxub0WxyU3khEVmZMTx6hrvFT8AobOabCawag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb+6XursFHax3L3iWvtYWcKDUoQNLPucHfp/qvIuQ98iTqSUhWgb4iwf6RvvNStBO
-	 hvrf/AJBH3jINRYZUblE06cCxpjTrXvzhqfcsAsVfv1f8R5ZhCb/08CwU6JHxNGJu6
-	 LG6CZ99aNiCFo7KoONMY+QGI7wleRogQPJSemeUg=
+	b=dtnbmyfhNVdTIei1xQMDiF+uEUoMdJFa3a8/B1cbSscyyUbBEi5ZNV4jqr1cZAHai
+	 adv/bHCqooClvfJB5sAy3TZINDs669O6iD04Ab4izYh7qHfFBt4oUD4BBwuE4tuD+I
+	 5xGiqfKfNaCZJ9Ry8WhuBnEuh+HCDhQSTLn1apFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 113/269] drm/xe/vm: Validate userptr during gpu vma prefetching
-Date: Mon, 10 Mar 2025 18:04:26 +0100
-Message-ID: <20250310170502.223905350@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 140/269] mm: memory-hotplug: check folio ref count first in do_migrate_range
+Date: Mon, 10 Mar 2025 18:04:53 +0100
+Message-ID: <20250310170503.301111336@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -45,62 +49,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-commit e775e2a060d99180edc5366fb9f4299d0f07b66c upstream.
+commit 773b9a6aa6d38894b95088e3ed6f8a701d9f50fd upstream.
 
-If a userptr vma subject to prefetching was already invalidated
-or invalidated during the prefetch operation, the operation would
-repeatedly return -EAGAIN which would typically cause an infinite
-loop.
+If a folio has an increased reference count, folio_try_get() will acquire
+it, perform necessary operations, and then release it.  In the case of a
+poisoned folio without an elevated reference count (which is unlikely for
+memory-failure), folio_try_get() will simply bypass it.
 
-Validate the userptr to ensure this doesn't happen.
+Therefore, relocate the folio_try_get() function, responsible for checking
+and acquiring this reference count at first.
 
-v2:
-- Don't fallthrough from UNMAP to PREFETCH (Matthew Brost)
-
-Fixes: 5bd24e78829a ("drm/xe/vm: Subclass userptr vmas")
-Fixes: 617eebb9c480 ("drm/xe: Fix array of binds")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.9+
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-2-thomas.hellstrom@linux.intel.com
-(cherry picked from commit 03c346d4d0d85d210d549d43c8cfb3dfb7f20e0a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lkml.kernel.org/r/20250217014329.3610326-3-mawupeng1@huawei.com
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ mm/memory_hotplug.c |   20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -2284,8 +2284,17 @@ static int vm_bind_ioctl_ops_parse(struc
- 			break;
- 		}
- 		case DRM_GPUVA_OP_UNMAP:
-+			xe_vma_ops_incr_pt_update_ops(vops, op->tile_mask);
-+			break;
- 		case DRM_GPUVA_OP_PREFETCH:
--			/* FIXME: Need to skip some prefetch ops */
-+			vma = gpuva_to_vma(op->base.prefetch.va);
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1795,12 +1795,12 @@ static void do_migrate_range(unsigned lo
+ 		if (folio_test_large(folio))
+ 			pfn = folio_pfn(folio) + folio_nr_pages(folio) - 1;
+ 
+-		/*
+-		 * HWPoison pages have elevated reference counts so the migration would
+-		 * fail on them. It also doesn't make any sense to migrate them in the
+-		 * first place. Still try to unmap such a page in case it is still mapped
+-		 * (keep the unmap as the catch all safety net).
+-		 */
++		if (!folio_try_get(folio))
++			continue;
 +
-+			if (xe_vma_is_userptr(vma)) {
-+				err = xe_vma_userptr_pin_pages(to_userptr_vma(vma));
-+				if (err)
-+					return err;
-+			}
++		if (unlikely(page_folio(page) != folio))
++			goto put_folio;
 +
- 			xe_vma_ops_incr_pt_update_ops(vops, op->tile_mask);
- 			break;
- 		default:
+ 		if (folio_test_hwpoison(folio) ||
+ 		    (folio_test_large(folio) && folio_test_has_hwpoisoned(folio))) {
+ 			if (WARN_ON(folio_test_lru(folio)))
+@@ -1811,14 +1811,8 @@ static void do_migrate_range(unsigned lo
+ 				folio_unlock(folio);
+ 			}
+ 
+-			continue;
+-		}
+-
+-		if (!folio_try_get(folio))
+-			continue;
+-
+-		if (unlikely(page_folio(page) != folio))
+ 			goto put_folio;
++		}
+ 
+ 		if (!isolate_folio_to_list(folio, &source)) {
+ 			if (__ratelimit(&migrate_rs)) {
 
 
