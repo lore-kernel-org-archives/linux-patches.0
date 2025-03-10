@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833BB22B59D;
-	Mon, 10 Mar 2025 17:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66815233721;
+	Mon, 10 Mar 2025 17:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628645; cv=none; b=cNm9Rp9TDe015CqejbTJ04HLqNDff3SZOyy7dSOByVwzXru3lRSvZ6AJ5orh0v98Svgd/XLlYYzgjgJhgSYwY2uQD6+NbJJWfgYnf/69TZg4A49Mrs6ltX36J2hXCokiUhzlcFThGzxhWj4O8HNmZv8bL551V3Usguy7QNo7Lr8=
+	t=1741628648; cv=none; b=ivJ/oIMLMOAaBTyfsiID5bP7NZSBMovyBRe1TY4AcOsD/mqoyiEz6UH21rCi0Pp4kEinnthbDRC8r+CpUbKVdZ3p2X1eHvmrp+CCy1y98T/JlfYXhsuOk1OH3NcMvP+A9gmzosfvY1TI3yeQW+hMzA+J2gEgCM2l8vkKctGg1dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628645; c=relaxed/simple;
-	bh=j/ANsJ0ZLHYSwjvS3gfFefYb0qc0eW7q5DfuyViRLRU=;
+	s=arc-20240116; t=1741628648; c=relaxed/simple;
+	bh=fkvWwmXSMd+tz5IjMdYHqYTt7o6vDPCyEOG7E9L1Xb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojdlY9M42OAnrxiG5qUbFppVJRAiWyiw6ZQytwLemlrfgKhq71JfaSNGKCP7Z8kyUUFuphD1Oxzx9x6/AAiAfi0FWO/AUlJb+QZnweIKz155pi49uQL2dgAocHtuKgHve1fJuVHf0v3suaXLYCpLVboeY/17GHVx9dnQOG9CUhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ12Jacs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpQ4W/P67FTwhAD+T0rUSFzH6egKkzHQC+nhpoA+k2Gnb8DB9rCrS23DGsItVrdCogG0+nmfQGGf3rnVk749oRJIoEZECJ6awPVNalHaRTJaSOYlx4Udwaw+XwXrBKNkETXj/bppBqTMOIIHdMq45whEA4T2D6hEojHd6VBm2LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoceoJKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ12Jacs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6CDC4CEE5;
-	Mon, 10 Mar 2025 17:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoceoJKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F8EC4CEEC;
+	Mon, 10 Mar 2025 17:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628645;
-	bh=j/ANsJ0ZLHYSwjvS3gfFefYb0qc0eW7q5DfuyViRLRU=;
+	s=korg; t=1741628648;
+	bh=fkvWwmXSMd+tz5IjMdYHqYTt7o6vDPCyEOG7E9L1Xb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJ12Jacsh5tPypMvCGJdCypqnl0RnjW6/n681q6S+m+k+ZoSOQZpHo8jgL2kkG0dM
-	 cAyiWYYLWfunDGdN0FR0DXcS0v/5JKI3zfoSYtLBS5mDBBGaULjMSGXhIj/xFR57uN
-	 0QyeKhisvrhkj6mUmsmhj9eiPPKi/zo3iUDIcXUw=
+	b=EoceoJKwXPpB45yUjEu2NRLPc3ESv9+iIrBP55eBzhGQH2osLK1zd87fDBOe/d2P+
+	 +3qqR7Hdm+GttTxulix4fXT0+GZWTTo69W3JgjeOcmwy6o+VC3KF7AA3WZMaKKy132
+	 WNbNGp0e6hQDUcrzDSpktRPmv9nytoFuCqOI62Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 020/620] HID: core: Fix assumption that Resolution Multipliers must be in Logical Collections
-Date: Mon, 10 Mar 2025 17:57:46 +0100
-Message-ID: <20250310170546.371368707@linuxfoundation.org>
+	Ivan Stepchenko <sid@itb.spb.ru>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 021/620] drm/amdgpu: Fix potential NULL pointer dereference in atomctrl_get_smc_sclk_range_table
+Date: Mon, 10 Mar 2025 17:57:47 +0100
+Message-ID: <20250310170546.408727302@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,60 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Ivan Stepchenko <sid@itb.spb.ru>
 
-commit 64f2657b579343cf923aa933f08074e6258eb07b upstream.
+[ Upstream commit 357445e28ff004d7f10967aa93ddb4bffa5c3688 ]
 
-A report in 2019 by the syzbot fuzzer was found to be connected to two
-errors in the HID core associated with Resolution Multipliers.  One of
-the errors was fixed by commit ea427a222d8b ("HID: core: Fix deadloop
-in hid_apply_multiplier."), but the other has not been fixed.
+The function atomctrl_get_smc_sclk_range_table() does not check the return
+value of smu_atom_get_data_table(). If smu_atom_get_data_table() fails to
+retrieve SMU_Info table, it returns NULL which is later dereferenced.
 
-This error arises because hid_apply_multipler() assumes that every
-Resolution Multiplier control is contained in a Logical Collection,
-i.e., there's no way the routine can ever set multiplier_collection to
-NULL.  This is in spite of the fact that the function starts with a
-big comment saying:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-	 * "The Resolution Multiplier control must be contained in the same
-	 * Logical Collection as the control(s) to which it is to be applied.
-	   ...
-	 *  If no Logical Collection is
-	 * defined, the Resolution Multiplier is associated with all
-	 * controls in the report."
-	 * HID Usage Table, v1.12, Section 4.3.1, p30
-	 *
-	 * Thus, search from the current collection upwards until we find a
-	 * logical collection...
+In practice this should never happen as this code only gets called
+on polaris chips and the vbios data table will always be present on
+those chips.
 
-The comment and the code overlook the possibility that none of the
-collections found may be a Logical Collection.
-
-The fix is to set the multiplier_collection pointer to NULL if the
-collection found isn't a Logical Collection.
-
-Reported-by: syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000109c040597dc5843@google.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Peter Hutterer <peter.hutterer@who-t.net>
-Fixes: 5a4abb36f312 ("HID: core: process the Resolution Multiplier")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a23eefa2f461 ("drm/amd/powerplay: enable dpm for baffin.")
+Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    2 ++
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1124,6 +1124,8 @@ static void hid_apply_multiplier(struct
- 	while (multiplier_collection->parent_idx != -1 &&
- 	       multiplier_collection->type != HID_COLLECTION_LOGICAL)
- 		multiplier_collection = &hid->collection[multiplier_collection->parent_idx];
-+	if (multiplier_collection->type != HID_COLLECTION_LOGICAL)
-+		multiplier_collection = NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+index cc3b62f733941..1fbd23922082a 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
+@@ -1420,6 +1420,8 @@ int atomctrl_get_smc_sclk_range_table(struct pp_hwmgr *hwmgr, struct pp_atom_ctr
+ 			GetIndexIntoMasterTable(DATA, SMU_Info),
+ 			&size, &frev, &crev);
  
- 	effective_multiplier = hid_calculate_multiplier(hid, multiplier);
++	if (!psmu_info)
++		return -EINVAL;
  
+ 	for (i = 0; i < psmu_info->ucSclkEntryNum; i++) {
+ 		table->entry[i].ucVco_setting = psmu_info->asSclkFcwRangeEntry[i].ucVco_setting;
+-- 
+2.39.5
+
 
 
