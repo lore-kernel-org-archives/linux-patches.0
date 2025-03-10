@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679FE17CA12;
-	Mon, 10 Mar 2025 17:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F09217CA12;
+	Mon, 10 Mar 2025 17:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629129; cv=none; b=Fg3S6X6s5lfNEgRM0lv2TjIBcfGls/LlMkNZyIcz9sM+CWMYV3iGQcmsLFcb9uY8v4XgLyOvacEA88VKVE/TgPzIhcEX8v6mJZ1JF2swhWL0jh7XAMsA7QJ0lPwuVDF41THse/+gchM0tbeQNLw59Vh+BgZg8U3/LgTAZVr0IzI=
+	t=1741629132; cv=none; b=l10EGKDCO4nCfd1d2fyHy3xrI9kXACZbrnSv9be9mYwMJx9n6e0BKybSb29Q/kpEEBwAYrM4+xSGOOVl7nGeSlkoByw19pqXqP4qFom7WhtgjwpCKUcuP55kpV4DfMP/XkU+3oOhwOVyxbM+scP0+DnlWdFeQblbJItToAEWXZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629129; c=relaxed/simple;
-	bh=+sndNOySwgR/4X+PF7GvnkhUdAtCmln3h3qwdkWTcMQ=;
+	s=arc-20240116; t=1741629132; c=relaxed/simple;
+	bh=NGyjM800FCvgNl2zHlnIMFYsc7h5z8N1YhJP+OXKoBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rE0padwa0DYa/UFQ3YSAVYPgr1HQeKdSJZPLUQ6U7uUIAISQfMPdf5EYYfMzE4477VDMyA+5MjtrRSONTemiAcHE3RutuYESrNB2Xp1wafAEjG9WqtSrt7Ls7zaS8dGmAQ9bXdYCFeZ7BQO3AkIXPm9q4qQVO8LERmYQ2WFg6VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lG5PlyUv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cHE/Jbz/kfLvYy7WOwcecv1s/NGoXzOtC1HjmpKwHPy1cw4VG2o+ghHcQqIQNXbo8wo5Iyz3JrAeH9DS+qBGlugVWNiDQqL/+/rmQDCBtSn/c1SogsGrB040Cb0h7g12s7Yywq22ZS9ljzsBqSWldizGtujU4JMMzDnPisFSt14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07acrBLR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG5PlyUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13356C4CEE5;
-	Mon, 10 Mar 2025 17:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07acrBLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF4C4CEE5;
+	Mon, 10 Mar 2025 17:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629129;
-	bh=+sndNOySwgR/4X+PF7GvnkhUdAtCmln3h3qwdkWTcMQ=;
+	s=korg; t=1741629132;
+	bh=NGyjM800FCvgNl2zHlnIMFYsc7h5z8N1YhJP+OXKoBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lG5PlyUvPnS6+PPxp/8RLaJAYUbMOquVu9x4qD/Eac0W17g7FB+f8JfR4ErHfDv/3
-	 TQzdzY7XNH7lHtbMyBvkvS3TW/vWqiMzJQRuGdJ8PyIHLIGOLDq9Lthnr7zA8GIZZt
-	 MNyRKdtbOcOvMUhJS2RXPO6GCpHIDdKTRCDVwf2c=
+	b=07acrBLRfbWFfNITC+/R6+MQyfFtvDUf8KNmZgymWuvqgMzNPnawutNIX1V33cje2
+	 Cri1aD1LhIoziWTqHe/yaqsw2YYAoIQvjlhRa5poLtecJVOXT3SrhJOIzyQkEHdmQn
+	 I4OTHgejQAH/qVDMPdvq+6MnMs20n5/lgA3N2Ov4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 188/620] netfilter: nf_tables: reject mismatching sum of field_len with set key length
-Date: Mon, 10 Mar 2025 18:00:34 +0100
-Message-ID: <20250310170553.056156851@linuxfoundation.org>
+	John Hawley <warthog9@eaglescrag.net>,
+	"Ricardo B. Marliere" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 189/620] ktest.pl: Check kernelrelease return in get_version
+Date: Mon, 10 Mar 2025 18:00:35 +0100
+Message-ID: <20250310170553.095504932@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,55 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ricardo B. Marliere <rbm@suse.com>
 
-commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
+commit a4e17a8f239a545c463f8ec27db4ed6e74b31841 upstream.
 
-The field length description provides the length of each separated key
-field in the concatenation, each field gets rounded up to 32-bits to
-calculate the pipapo rule width from pipapo_init(). The set key length
-provides the total size of the key aligned to 32-bits.
-
-Register-based arithmetics still allows for combining mismatching set
-key length and field length description, eg. set key length 10 and field
-description [ 5, 4 ] leading to pipapo width of 12.
+In the case of a test that uses the special option ${KERNEL_VERSION} in one
+of its settings but has no configuration available in ${OUTPUT_DIR}, for
+example if it's a new empty directory, then the `make kernelrelease` call
+will fail and the subroutine will chomp an empty string, silently. Fix that
+by adding an empty configuration and retrying.
 
 Cc: stable@vger.kernel.org
-Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: John Hawley <warthog9@eaglescrag.net>
+Fixes: 5f9b6ced04a4e ("ktest: Bisecting, install modules, add logging")
+Link: https://lore.kernel.org/20241205-ktest_kver_fallback-v2-1-869dae4c7777@suse.com
+Signed-off-by: Ricardo B. Marliere <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/ktest/ktest.pl |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4497,7 +4497,7 @@ static int nft_set_desc_concat_parse(con
- static int nft_set_desc_concat(struct nft_set_desc *desc,
- 			       const struct nlattr *nla)
- {
--	u32 num_regs = 0, key_num_regs = 0;
-+	u32 len = 0, num_regs;
- 	struct nlattr *attr;
- 	int rem, err, i;
- 
-@@ -4511,12 +4511,12 @@ static int nft_set_desc_concat(struct nf
- 	}
- 
- 	for (i = 0; i < desc->field_count; i++)
--		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
-+		len += round_up(desc->field_len[i], sizeof(u32));
- 
--	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
--	if (key_num_regs != num_regs)
-+	if (len != desc->klen)
- 		return -EINVAL;
- 
-+	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
- 	if (num_regs > NFT_REG32_COUNT)
- 		return -E2BIG;
- 
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2399,6 +2399,11 @@ sub get_version {
+     return if ($have_version);
+     doprint "$make kernelrelease ... ";
+     $version = `$make -s kernelrelease | tail -1`;
++    if (!length($version)) {
++	run_command "$make allnoconfig" or return 0;
++	doprint "$make kernelrelease ... ";
++	$version = `$make -s kernelrelease | tail -1`;
++    }
+     chomp($version);
+     doprint "$version\n";
+     $have_version = 1;
 
 
