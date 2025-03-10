@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137641B3927;
-	Mon, 10 Mar 2025 17:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02A41B3927;
+	Mon, 10 Mar 2025 17:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627382; cv=none; b=IQjEFRhvXkR3qYL94Y04dUPIj2W8kf7U2H/7gpyzqwaU+E3gze+0qDGmCsCZbU4IvuPCowMTX1mJzJCz4F09KL4ePJDG5AjpQAntnhyWrix9j6PtNjyCW/v97/legzTBC8RIu1EnnifIgsAokgnBICh99BfwzcQppeycUT0zQoM=
+	t=1741627385; cv=none; b=clqs+liwqk/He9mcb84oREwyiPqQoQ9E1TdykJrpANFCG6n+QWaIDtq7WvZBS12ViAoZ+fbtctSB4HezIqPVEr5/gho+y3BieW9ii1WJN4XcUzzUjXCdW+aScocwyIgi4oycnX2qndtIJt2KaYvT04FUEuccfFhYPMr+Tq1lKd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627382; c=relaxed/simple;
-	bh=MKY5Q8kN0BTBFOhFQ/o0HvyqUNlvoLCgxmab+xNgJQo=;
+	s=arc-20240116; t=1741627385; c=relaxed/simple;
+	bh=D7tB8EvONLaYhmOJAJo4hzBaGkCofz4Ypy204H5qb04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aTB0TgJ+R/BW82SxLecxznRZgVq7N4/urTi+u4tlRMu5o8JxKelz9CMX1K2ttB3hgs/iiRTPthzxE9YKJyqpYy1f8VcUc8YMtPlzWuIHOA/g6VM2YRxpdh1UKksUWuTiBWnrCy07OcqvL84lTglLXsFa0GWeykAr99eJ5X26zk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MACrGo3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qz4gputshIDrz8gz1DpSdn/ukiTp9hwiiIx7dGKukUlf7Ys7Kyy/qgQ5PRmAd7SA+yEsK76z6hMCvCWBZmSr0W82BdHqf+aJq6xy0gyeUfJ5r+yTdpTkgIHCOaGCT8ZZiFk2ikJ7YI1xMpmYjD3L+m4numzx9MfjF65NxUr07BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1FykEMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MACrGo3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90123C4CEE5;
-	Mon, 10 Mar 2025 17:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1FykEMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4D6C4CEE5;
+	Mon, 10 Mar 2025 17:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627382;
-	bh=MKY5Q8kN0BTBFOhFQ/o0HvyqUNlvoLCgxmab+xNgJQo=;
+	s=korg; t=1741627384;
+	bh=D7tB8EvONLaYhmOJAJo4hzBaGkCofz4Ypy204H5qb04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MACrGo3UWCSHL1yugdMNZGKDG8stGOJCoMzs1bN6KoOMjpHLYhW7sIkp+k8tGrBGs
-	 SQkJGCC3vZ/4Dk0jD45YqQVBKYPGpFKYWMb4y4xfjht8Z6XOeO3RGEYtzITrfN/z/k
-	 ByRelC5SraNAX8lWFSrvNugcgksKJQae6mGRl2gs=
+	b=X1FykEMzHDaUB9guheGb4WvDeUCBwbMo2gcG4i8uGwKCpoEf9Bp7dM6Qv/y+2z888
+	 8njtQwwpt/FRx6FsfsQoq+BqNSDpEgQtIFtwycZDHgSfjiDc0DWW50kLmQR6JGdBnR
+	 xdnF44Xjj26wPEM2cRR81p0iIkYYVTRYRL1ERrHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 109/269] drm/xe: Add staging tree for VM binds
-Date: Mon, 10 Mar 2025 18:04:22 +0100
-Message-ID: <20250310170502.059459399@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 080/269] LoongArch: KVM: Reload guest CSR registers after sleep
+Date: Mon, 10 Mar 2025 18:03:53 +0100
+Message-ID: <20250310170500.913983411@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -45,284 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit ae482ec8cd1a85bde3307f71921a7780086fbec0 upstream.
+commit 78d7bc5a02e1468df53896df354fa80727f35b7d upstream.
 
-Concurrent VM bind staging and zapping of PTEs from a userptr notifier
-do not work because the view of PTEs is not stable. VM binds cannot
-acquire the notifier lock during staging, as memory allocations are
-required. To resolve this race condition, use a staging tree for VM
-binds that is committed only under the userptr notifier lock during the
-final step of the bind. This ensures a consistent view of the PTEs in
-the userptr notifier.
+On host, the HW guest CSR registers are lost after suspend and resume
+operation. Since last_vcpu of boot CPU still records latest vCPU pointer
+so that the guest CSR register skips to reload when boot CPU resumes and
+vCPU is scheduled.
 
-A follow up may only use staging for VM in fault mode as this is the
-only mode in which the above race exists.
+Here last_vcpu is cleared so that guest CSR registers will reload from
+scheduled vCPU context after suspend and resume.
 
-v3:
- - Drop zap PTE change (Thomas)
- - s/xe_pt_entry/xe_pt_entry_staging (Thomas)
-
-Suggested-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: <stable@vger.kernel.org>
-Fixes: e8babb280b5e ("drm/xe: Convert multiple bind ops into single job")
-Fixes: a708f6501c69 ("drm/xe: Update PT layer with better error handling")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-5-thomas.hellstrom@linux.intel.com
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-(cherry picked from commit 6f39b0c5ef0385eae586760d10b9767168037aa5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c      |   58 +++++++++++++++++++++++++++-------------
- drivers/gpu/drm/xe/xe_pt_walk.c |    3 +-
- drivers/gpu/drm/xe/xe_pt_walk.h |    4 ++
- 3 files changed, 46 insertions(+), 19 deletions(-)
+ arch/loongarch/kvm/main.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -28,6 +28,8 @@ struct xe_pt_dir {
- 	struct xe_pt pt;
- 	/** @children: Array of page-table child nodes */
- 	struct xe_ptw *children[XE_PDES];
-+	/** @staging: Array of page-table staging nodes */
-+	struct xe_ptw *staging[XE_PDES];
- };
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -297,6 +297,13 @@ int kvm_arch_enable_virtualization_cpu(v
+ 	kvm_debug("GCFG:%lx GSTAT:%lx GINTC:%lx GTLBC:%lx",
+ 		  read_csr_gcfg(), read_csr_gstat(), read_csr_gintc(), read_csr_gtlbc());
  
- #if IS_ENABLED(CONFIG_DRM_XE_DEBUG_VM)
-@@ -48,9 +50,10 @@ static struct xe_pt_dir *as_xe_pt_dir(st
- 	return container_of(pt, struct xe_pt_dir, pt);
- }
- 
--static struct xe_pt *xe_pt_entry(struct xe_pt_dir *pt_dir, unsigned int index)
-+static struct xe_pt *
-+xe_pt_entry_staging(struct xe_pt_dir *pt_dir, unsigned int index)
- {
--	return container_of(pt_dir->children[index], struct xe_pt, base);
-+	return container_of(pt_dir->staging[index], struct xe_pt, base);
- }
- 
- static u64 __xe_pt_empty_pte(struct xe_tile *tile, struct xe_vm *vm,
-@@ -125,6 +128,7 @@ struct xe_pt *xe_pt_create(struct xe_vm
- 	}
- 	pt->bo = bo;
- 	pt->base.children = level ? as_xe_pt_dir(pt)->children : NULL;
-+	pt->base.staging = level ? as_xe_pt_dir(pt)->staging : NULL;
- 
- 	if (vm->xef)
- 		xe_drm_client_add_bo(vm->xef->client, pt->bo);
-@@ -205,8 +209,8 @@ void xe_pt_destroy(struct xe_pt *pt, u32
- 		struct xe_pt_dir *pt_dir = as_xe_pt_dir(pt);
- 
- 		for (i = 0; i < XE_PDES; i++) {
--			if (xe_pt_entry(pt_dir, i))
--				xe_pt_destroy(xe_pt_entry(pt_dir, i), flags,
-+			if (xe_pt_entry_staging(pt_dir, i))
-+				xe_pt_destroy(xe_pt_entry_staging(pt_dir, i), flags,
- 					      deferred);
- 		}
- 	}
-@@ -375,8 +379,10 @@ xe_pt_insert_entry(struct xe_pt_stage_bi
- 		/* Continue building a non-connected subtree. */
- 		struct iosys_map *map = &parent->bo->vmap;
- 
--		if (unlikely(xe_child))
-+		if (unlikely(xe_child)) {
- 			parent->base.children[offset] = &xe_child->base;
-+			parent->base.staging[offset] = &xe_child->base;
-+		}
- 
- 		xe_pt_write(xe_walk->vm->xe, map, offset, pte);
- 		parent->num_live++;
-@@ -613,6 +619,7 @@ xe_pt_stage_bind(struct xe_tile *tile, s
- 			.ops = &xe_pt_stage_bind_ops,
- 			.shifts = xe_normal_pt_shifts,
- 			.max_level = XE_PT_HIGHEST_LEVEL,
-+			.staging = true,
- 		},
- 		.vm = xe_vma_vm(vma),
- 		.tile = tile,
-@@ -872,7 +879,7 @@ static void xe_pt_cancel_bind(struct xe_
- 	}
- }
- 
--static void xe_pt_commit_locks_assert(struct xe_vma *vma)
-+static void xe_pt_commit_prepare_locks_assert(struct xe_vma *vma)
- {
- 	struct xe_vm *vm = xe_vma_vm(vma);
- 
-@@ -884,6 +891,16 @@ static void xe_pt_commit_locks_assert(st
- 	xe_vm_assert_held(vm);
- }
- 
-+static void xe_pt_commit_locks_assert(struct xe_vma *vma)
-+{
-+	struct xe_vm *vm = xe_vma_vm(vma);
++	/*
++	 * HW Guest CSR registers are lost after CPU suspend and resume.
++	 * Clear last_vcpu so that Guest CSR registers forced to reload
++	 * from vCPU SW state.
++	 */
++	this_cpu_ptr(vmcs)->last_vcpu = NULL;
 +
-+	xe_pt_commit_prepare_locks_assert(vma);
-+
-+	if (xe_vma_is_userptr(vma))
-+		lockdep_assert_held_read(&vm->userptr.notifier_lock);
-+}
-+
- static void xe_pt_commit(struct xe_vma *vma,
- 			 struct xe_vm_pgtable_update *entries,
- 			 u32 num_entries, struct llist_head *deferred)
-@@ -894,13 +911,17 @@ static void xe_pt_commit(struct xe_vma *
- 
- 	for (i = 0; i < num_entries; i++) {
- 		struct xe_pt *pt = entries[i].pt;
-+		struct xe_pt_dir *pt_dir;
- 
- 		if (!pt->level)
- 			continue;
- 
-+		pt_dir = as_xe_pt_dir(pt);
- 		for (j = 0; j < entries[i].qwords; j++) {
- 			struct xe_pt *oldpte = entries[i].pt_entries[j].pt;
-+			int j_ = j + entries[i].ofs;
- 
-+			pt_dir->children[j_] = pt_dir->staging[j_];
- 			xe_pt_destroy(oldpte, xe_vma_vm(vma)->flags, deferred);
- 		}
- 	}
-@@ -912,7 +933,7 @@ static void xe_pt_abort_bind(struct xe_v
- {
- 	int i, j;
- 
--	xe_pt_commit_locks_assert(vma);
-+	xe_pt_commit_prepare_locks_assert(vma);
- 
- 	for (i = num_entries - 1; i >= 0; --i) {
- 		struct xe_pt *pt = entries[i].pt;
-@@ -927,10 +948,10 @@ static void xe_pt_abort_bind(struct xe_v
- 		pt_dir = as_xe_pt_dir(pt);
- 		for (j = 0; j < entries[i].qwords; j++) {
- 			u32 j_ = j + entries[i].ofs;
--			struct xe_pt *newpte = xe_pt_entry(pt_dir, j_);
-+			struct xe_pt *newpte = xe_pt_entry_staging(pt_dir, j_);
- 			struct xe_pt *oldpte = entries[i].pt_entries[j].pt;
- 
--			pt_dir->children[j_] = oldpte ? &oldpte->base : 0;
-+			pt_dir->staging[j_] = oldpte ? &oldpte->base : 0;
- 			xe_pt_destroy(newpte, xe_vma_vm(vma)->flags, NULL);
- 		}
- 	}
-@@ -942,7 +963,7 @@ static void xe_pt_commit_prepare_bind(st
- {
- 	u32 i, j;
- 
--	xe_pt_commit_locks_assert(vma);
-+	xe_pt_commit_prepare_locks_assert(vma);
- 
- 	for (i = 0; i < num_entries; i++) {
- 		struct xe_pt *pt = entries[i].pt;
-@@ -960,10 +981,10 @@ static void xe_pt_commit_prepare_bind(st
- 			struct xe_pt *newpte = entries[i].pt_entries[j].pt;
- 			struct xe_pt *oldpte = NULL;
- 
--			if (xe_pt_entry(pt_dir, j_))
--				oldpte = xe_pt_entry(pt_dir, j_);
-+			if (xe_pt_entry_staging(pt_dir, j_))
-+				oldpte = xe_pt_entry_staging(pt_dir, j_);
- 
--			pt_dir->children[j_] = &newpte->base;
-+			pt_dir->staging[j_] = &newpte->base;
- 			entries[i].pt_entries[j].pt = oldpte;
- 		}
- 	}
-@@ -1513,6 +1534,7 @@ static unsigned int xe_pt_stage_unbind(s
- 			.ops = &xe_pt_stage_unbind_ops,
- 			.shifts = xe_normal_pt_shifts,
- 			.max_level = XE_PT_HIGHEST_LEVEL,
-+			.staging = true,
- 		},
- 		.tile = tile,
- 		.modified_start = xe_vma_start(vma),
-@@ -1554,7 +1576,7 @@ static void xe_pt_abort_unbind(struct xe
- {
- 	int i, j;
- 
--	xe_pt_commit_locks_assert(vma);
-+	xe_pt_commit_prepare_locks_assert(vma);
- 
- 	for (i = num_entries - 1; i >= 0; --i) {
- 		struct xe_vm_pgtable_update *entry = &entries[i];
-@@ -1567,7 +1589,7 @@ static void xe_pt_abort_unbind(struct xe
- 			continue;
- 
- 		for (j = entry->ofs; j < entry->ofs + entry->qwords; j++)
--			pt_dir->children[j] =
-+			pt_dir->staging[j] =
- 				entries[i].pt_entries[j - entry->ofs].pt ?
- 				&entries[i].pt_entries[j - entry->ofs].pt->base : NULL;
- 	}
-@@ -1580,7 +1602,7 @@ xe_pt_commit_prepare_unbind(struct xe_vm
- {
- 	int i, j;
- 
--	xe_pt_commit_locks_assert(vma);
-+	xe_pt_commit_prepare_locks_assert(vma);
- 
- 	for (i = 0; i < num_entries; ++i) {
- 		struct xe_vm_pgtable_update *entry = &entries[i];
-@@ -1594,8 +1616,8 @@ xe_pt_commit_prepare_unbind(struct xe_vm
- 		pt_dir = as_xe_pt_dir(pt);
- 		for (j = entry->ofs; j < entry->ofs + entry->qwords; j++) {
- 			entry->pt_entries[j - entry->ofs].pt =
--				xe_pt_entry(pt_dir, j);
--			pt_dir->children[j] = NULL;
-+				xe_pt_entry_staging(pt_dir, j);
-+			pt_dir->staging[j] = NULL;
- 		}
- 	}
+ 	return 0;
  }
---- a/drivers/gpu/drm/xe/xe_pt_walk.c
-+++ b/drivers/gpu/drm/xe/xe_pt_walk.c
-@@ -74,7 +74,8 @@ int xe_pt_walk_range(struct xe_ptw *pare
- 		     u64 addr, u64 end, struct xe_pt_walk *walk)
- {
- 	pgoff_t offset = xe_pt_offset(addr, level, walk);
--	struct xe_ptw **entries = parent->children ? parent->children : NULL;
-+	struct xe_ptw **entries = walk->staging ? (parent->staging ?: NULL) :
-+		(parent->children ?: NULL);
- 	const struct xe_pt_walk_ops *ops = walk->ops;
- 	enum page_walk_action action;
- 	struct xe_ptw *child;
---- a/drivers/gpu/drm/xe/xe_pt_walk.h
-+++ b/drivers/gpu/drm/xe/xe_pt_walk.h
-@@ -11,12 +11,14 @@
- /**
-  * struct xe_ptw - base class for driver pagetable subclassing.
-  * @children: Pointer to an array of children if any.
-+ * @staging: Pointer to an array of staging if any.
-  *
-  * Drivers could subclass this, and if it's a page-directory, typically
-  * embed an array of xe_ptw pointers.
-  */
- struct xe_ptw {
- 	struct xe_ptw **children;
-+	struct xe_ptw **staging;
- };
  
- /**
-@@ -41,6 +43,8 @@ struct xe_pt_walk {
- 	 * as shared pagetables.
- 	 */
- 	bool shared_pt_mode;
-+	/** @staging: Walk staging PT structure */
-+	bool staging;
- };
- 
- /**
 
 
