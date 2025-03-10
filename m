@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EB32309B6;
-	Mon, 10 Mar 2025 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE96722D786;
+	Mon, 10 Mar 2025 17:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626555; cv=none; b=frlfu0Hgo+e1ONGJTdFG7TvfHBHNhYsUveLdyRlVYGHQ7mj0gQfjSzdSVZ3SiRCOeIO8pRcTtEKgTdiTjDKPrWzEvSmQI2fgR0niI2p2WBePUe3Mcq8ajJf1AcdRCxBvNt+8iqmuUAq5Y2IJSnJpkXwbFZ5YaMNWcTGiOBARZss=
+	t=1741626558; cv=none; b=OVzX+Ktuv5hZNMlwGoAGpw+RoQs24WgVLEwZhnUKjMpwQrPaMbdeCeYwjZ+YRoML4ajNgBZOx7EX7ce8opjjtLCKUgBmKqBKJ2iWAFRD01vytTYq596FoygKJM+Mi8relWfCGa1gVzFXPjW7L9BS/yv0EdHGd+gxx7nMvpsNRHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626555; c=relaxed/simple;
-	bh=0w92nnXyiqeY03N+NV3oQfnGfuiPtmuLDluUnn76ZVk=;
+	s=arc-20240116; t=1741626558; c=relaxed/simple;
+	bh=CocNOnSpbDink+FwxRazvx2YSdbXcJ3d8dc5gjA+ydg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPq5QEh51eaM1q+MMctd4T13NQwBsD+3Rk8Owt9eiIthIsUKUJJFruJ3QyVt1HsKBlKqrKpTswL5a+rugMMOWh9Qs2UcSJgbrgyn/Y1ccAqRRc3fytAS/qHd9bRZXvKbDHK29iQniziP/0BOH5Xsk7C0MlzSKcHr7zCwd4ORQc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh8l1oHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lF8qkFlskyyvRT1W9gyRXWhXGg4zS87VYe0rp49QmyMgJvWoLE/Xpw3NfPJNXiQI8U2Z7xulsnVZTPQ6tC+VNFg7ag71haBTyrkgPbtrBVHT/dgkRVqcFwGlhiTyakzlv6y/E31+X8k9RmcoAtcYj7vRJyGC/obfBHYx6Ondr3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1OE4rt0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh8l1oHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FDDC4CEE5;
-	Mon, 10 Mar 2025 17:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1OE4rt0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330F7C4CEE5;
+	Mon, 10 Mar 2025 17:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626555;
-	bh=0w92nnXyiqeY03N+NV3oQfnGfuiPtmuLDluUnn76ZVk=;
+	s=korg; t=1741626558;
+	bh=CocNOnSpbDink+FwxRazvx2YSdbXcJ3d8dc5gjA+ydg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fh8l1oHuqByu2oqDOyq+gl9R093r/h76KYEzETg3vBIO0WAfjIdz7IztrSwD9eekI
-	 o83vMpwPticvRng1GtSecXW0r3PvdVTSPH404SUjeU8Ql10qUio0xPn84vrSL616RG
-	 KNhmVA0Mm3y4hr5yD5pOxGJrdpPvIMr+4OaHlx38=
+	b=s1OE4rt0qPHSLCksTEA31BfG+2okJmXnU9yRWO+RwOSgVtV7ZN0Szrc7b4ylCum6c
+	 ypOQi9HifcXxIRULOrpsT6zKr3yloizyKx0Gu75hNHzuROT1uuNXi3uUKDanriIx1P
+	 EtXEIncB/KBc1qP/p2qEH/+6WcLjpBaXQuKxSM+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.13 031/207] btrfs: fix a leaked chunk map issue in read_one_chunk()
-Date: Mon, 10 Mar 2025 18:03:44 +0100
-Message-ID: <20250310170449.010760907@linuxfoundation.org>
+	andreas.stuehrk@yaxi.tech,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.13 032/207] virt: sev-guest: Allocate request data dynamically
+Date: Mon, 10 Mar 2025 18:03:45 +0100
+Message-ID: <20250310170449.053128699@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,33 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-commit 35d99c68af40a8ca175babc5a89ef7e2226fb3ca upstream.
+commit ac7c06acaa3738b38e83815ac0f07140ad320f13 upstream.
 
-Add btrfs_free_chunk_map() to free the memory allocated
-by btrfs_alloc_chunk_map() if btrfs_add_chunk_map() fails.
+Commit
 
-Fixes: 7dc66abb5a47 ("btrfs: use a dedicated data structure for chunk maps")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  ae596615d93d ("virt: sev-guest: Reduce the scope of SNP command mutex")
+
+narrowed the command mutex scope to snp_send_guest_request().  However,
+GET_REPORT, GET_DERIVED_KEY, and GET_EXT_REPORT share the req structure in
+snp_guest_dev. Without the mutex protection, concurrent requests can overwrite
+each other's data. Fix it by dynamically allocating the request structure.
+
+Fixes: ae596615d93d ("virt: sev-guest: Reduce the scope of SNP command mutex")
+Closes: https://github.com/AMDESE/AMDSEV/issues/265
+Reported-by: andreas.stuehrk@yaxi.tech
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250307013700.437505-2-aik@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/virt/coco/sev-guest/sev-guest.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7076,6 +7076,7 @@ static int read_one_chunk(struct btrfs_k
- 		btrfs_err(fs_info,
- 			  "failed to add chunk map, start=%llu len=%llu: %d",
- 			  map->start, map->chunk_len, ret);
-+		btrfs_free_chunk_map(map);
- 	}
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -41,12 +41,6 @@ struct snp_guest_dev {
+ 	struct miscdevice misc;
  
- 	return ret;
+ 	struct snp_msg_desc *msg_desc;
+-
+-	union {
+-		struct snp_report_req report;
+-		struct snp_derived_key_req derived_key;
+-		struct snp_ext_report_req ext_report;
+-	} req;
+ };
+ 
+ /*
+@@ -390,7 +384,7 @@ struct snp_req_resp {
+ 
+ static int get_report(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
+ {
+-	struct snp_report_req *report_req = &snp_dev->req.report;
++	struct snp_report_req *report_req __free(kfree) = NULL;
+ 	struct snp_msg_desc *mdesc = snp_dev->msg_desc;
+ 	struct snp_report_resp *report_resp;
+ 	struct snp_guest_req req = {};
+@@ -399,6 +393,10 @@ static int get_report(struct snp_guest_d
+ 	if (!arg->req_data || !arg->resp_data)
+ 		return -EINVAL;
+ 
++	report_req = kzalloc(sizeof(*report_req), GFP_KERNEL_ACCOUNT);
++	if (!report_req)
++		return -ENOMEM;
++
+ 	if (copy_from_user(report_req, (void __user *)arg->req_data, sizeof(*report_req)))
+ 		return -EFAULT;
+ 
+@@ -435,7 +433,7 @@ e_free:
+ 
+ static int get_derived_key(struct snp_guest_dev *snp_dev, struct snp_guest_request_ioctl *arg)
+ {
+-	struct snp_derived_key_req *derived_key_req = &snp_dev->req.derived_key;
++	struct snp_derived_key_req *derived_key_req __free(kfree) = NULL;
+ 	struct snp_derived_key_resp derived_key_resp = {0};
+ 	struct snp_msg_desc *mdesc = snp_dev->msg_desc;
+ 	struct snp_guest_req req = {};
+@@ -455,6 +453,10 @@ static int get_derived_key(struct snp_gu
+ 	if (sizeof(buf) < resp_len)
+ 		return -ENOMEM;
+ 
++	derived_key_req = kzalloc(sizeof(*derived_key_req), GFP_KERNEL_ACCOUNT);
++	if (!derived_key_req)
++		return -ENOMEM;
++
+ 	if (copy_from_user(derived_key_req, (void __user *)arg->req_data,
+ 			   sizeof(*derived_key_req)))
+ 		return -EFAULT;
+@@ -487,7 +489,7 @@ static int get_ext_report(struct snp_gue
+ 			  struct snp_req_resp *io)
+ 
+ {
+-	struct snp_ext_report_req *report_req = &snp_dev->req.ext_report;
++	struct snp_ext_report_req *report_req __free(kfree) = NULL;
+ 	struct snp_msg_desc *mdesc = snp_dev->msg_desc;
+ 	struct snp_report_resp *report_resp;
+ 	struct snp_guest_req req = {};
+@@ -497,6 +499,10 @@ static int get_ext_report(struct snp_gue
+ 	if (sockptr_is_null(io->req_data) || sockptr_is_null(io->resp_data))
+ 		return -EINVAL;
+ 
++	report_req = kzalloc(sizeof(*report_req), GFP_KERNEL_ACCOUNT);
++	if (!report_req)
++		return -ENOMEM;
++
+ 	if (copy_from_sockptr(report_req, io->req_data, sizeof(*report_req)))
+ 		return -EFAULT;
+ 
 
 
