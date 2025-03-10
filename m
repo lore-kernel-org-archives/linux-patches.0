@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC906230D0F;
-	Mon, 10 Mar 2025 17:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E44230D0F;
+	Mon, 10 Mar 2025 17:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626617; cv=none; b=enfN03JygH7UIdTODiBOmfOB2sejzxhrgwM1DSeKPOKeLISWa8evewZqjvDgogdB48Qxe+7pzNPAuHgn12tMXwnOdqVRz3hsfQTjFZuMZawyR6aYTvmaX7gVm8SBIm5Y0jveaicEBV0C/+TvADIwuwspKk91zIW7HGP3Xlcj/Yo=
+	t=1741626619; cv=none; b=IgMQOg5ORU0jkXpQNJ5zlEbL9aK8oAeeQPUdfjE0T6rW5XU9XIcAv2rjbGyO6NqBfasopvaVs7tpS5gPLi7rNARq3E71FoA5mvfqnSYeetGy6qdMfgQlL+5iLc7Beo2RsKtNpUqhUkYNkgg6sR2U6T9n5JWBv24Q8Vx72sF5Ebw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626617; c=relaxed/simple;
-	bh=al4eda13LG3mbk5VjsMItC0iNSf0OYsFWz5QdV6sWhQ=;
+	s=arc-20240116; t=1741626619; c=relaxed/simple;
+	bh=f2ebQUAlynQptLK3/1knvtDxytwkzEC5HKJpG0wFKRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdE96YADwCxdGMjw2HlzAN4ko9DuU4M0eg4bHwgYiAiEjRDTeC5g8iB+TZxCDA/N275ervbJ5mM04vCUuc29gM58p0w0Rlddc/GZbVZMqzl+g0273+Xp6bOfLHV0uKO2qizCorkR2qKUvt/QBC20v2qVae/OonpZGtm4Fy3T2s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJE3CvLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7R0yDdUxAkNElGjVT8RZ7HrVQFtR0dMIkEhFqNjDgEvpKOS9iX29P7k88s7mAjo+TDmeXgMvsvGTUXKgnVOHrL8+O/6ALoaIOxsVAqLHAROZmDX5jEbYMVj0PR/WlzyOiwoA/41hHlItLpfny0m/mJZpaWiL4UpDyWHVkICzuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFItDxZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJE3CvLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F5BC4CEE5;
-	Mon, 10 Mar 2025 17:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFItDxZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1B2C4CEE5;
+	Mon, 10 Mar 2025 17:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626616;
-	bh=al4eda13LG3mbk5VjsMItC0iNSf0OYsFWz5QdV6sWhQ=;
+	s=korg; t=1741626619;
+	bh=f2ebQUAlynQptLK3/1knvtDxytwkzEC5HKJpG0wFKRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJE3CvLieo5US05ZZuGYxuLB6QTmXNUGrnBp3oeB1c5QPEzIH9JLk48iv3Pbn9+Xr
-	 /Cs9WtoiSN3iExKbR3QArFMXCut6pfkJ5+cfoECZvCk8WUPLhYh7VxdcB+vhAISu3g
-	 cOnf991H0+019osTx5QdhE3RR078P+NLoCmFZoNA=
+	b=ZFItDxZaO9Y7iGnBzmmF6anBrbk/++1desvOesYEd5RYdUA3shul0dpzjzb7uKLJ/
+	 iryf35UpaDreLCOgZV5BBRMNYg1po9Ax2cqlv9zz+QweJ3i2Bu4kCtXT3U0PvC4eEK
+	 z/6fwCRGpXOF3PW9uBiOerzK2bDkJfhSg005Th3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 054/207] drm/xe: Fix GT "for each engine" workarounds
-Date: Mon, 10 Mar 2025 18:04:07 +0100
-Message-ID: <20250310170449.918445540@linuxfoundation.org>
+	Brendan King <brendan.king@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.13 037/207] drm/imagination: avoid deadlock on fence release
+Date: Mon, 10 Mar 2025 18:03:50 +0100
+Message-ID: <20250310170449.249051613@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,65 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Brendan King <Brendan.King@imgtec.com>
 
-commit 54f94dc7f6b4db45dbc23b4db3d20c7194e2c54f upstream.
+commit df1a1ed5e1bdd9cc13148e0e5549f5ebcf76cf13 upstream.
 
-Any rules using engine matching are currently broken due RTP processing
-happening too in early init, before the list of hardware engines has been
-initialised.
+Do scheduler queue fence release processing on a workqueue, rather
+than in the release function itself.
 
-Fix this by moving workaround processing to later in the driver probe
-sequence, to just before the processed list is used for the first time.
+Fixes deadlock issues such as the following:
 
-Looking at the debugfs gt0/workarounds on ADL-P we notice 14011060649
-should be present while we see, before:
+[  607.400437] ============================================
+[  607.405755] WARNING: possible recursive locking detected
+[  607.415500] --------------------------------------------
+[  607.420817] weston:zfq0/24149 is trying to acquire lock:
+[  607.426131] ffff000017d041a0 (reservation_ww_class_mutex){+.+.}-{3:3}, at: pvr_gem_object_vunmap+0x40/0xc0 [powervr]
+[  607.436728]
+               but task is already holding lock:
+[  607.442554] ffff000017d105a0 (reservation_ww_class_mutex){+.+.}-{3:3}, at: dma_buf_ioctl+0x250/0x554
+[  607.451727]
+               other info that might help us debug this:
+[  607.458245]  Possible unsafe locking scenario:
 
- GT Workarounds
-     14011059788
-     14015795083
+[  607.464155]        CPU0
+[  607.466601]        ----
+[  607.469044]   lock(reservation_ww_class_mutex);
+[  607.473584]   lock(reservation_ww_class_mutex);
+[  607.478114]
+                *** DEADLOCK ***
 
-And with the patch:
-
- GT Workarounds
-     14011060649
-     14011059788
-     14015795083
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: stable@vger.kernel.org # v6.11+
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250227101304.46660-2-tvrtko.ursulin@igalia.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 25d434cef791e03cf40680f5441b576c639bfa84)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
+Signed-off-by: Brendan King <brendan.king@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250226-fence-release-deadlock-v2-1-6fed2fc1fe88@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_queue.c |   13 +++++++++++--
+ drivers/gpu/drm/imagination/pvr_queue.h |    4 ++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -380,9 +380,7 @@ int xe_gt_init_early(struct xe_gt *gt)
- 	if (err)
- 		return err;
+--- a/drivers/gpu/drm/imagination/pvr_queue.c
++++ b/drivers/gpu/drm/imagination/pvr_queue.c
+@@ -109,12 +109,20 @@ pvr_queue_fence_get_driver_name(struct d
+ 	return PVR_DRIVER_NAME;
+ }
  
--	xe_wa_process_gt(gt);
- 	xe_wa_process_oob(gt);
--	xe_tuning_process_gt(gt);
++static void pvr_queue_fence_release_work(struct work_struct *w)
++{
++	struct pvr_queue_fence *fence = container_of(w, struct pvr_queue_fence, release_work);
++
++	pvr_context_put(fence->queue->ctx);
++	dma_fence_free(&fence->base);
++}
++
+ static void pvr_queue_fence_release(struct dma_fence *f)
+ {
+ 	struct pvr_queue_fence *fence = container_of(f, struct pvr_queue_fence, base);
++	struct pvr_device *pvr_dev = fence->queue->ctx->pvr_dev;
  
- 	xe_force_wake_init_gt(gt, gt_to_fw(gt));
- 	spin_lock_init(&gt->global_invl_lock);
-@@ -474,6 +472,8 @@ static int all_fw_domain_init(struct xe_
- 	}
+-	pvr_context_put(fence->queue->ctx);
+-	dma_fence_free(f);
++	queue_work(pvr_dev->sched_wq, &fence->release_work);
+ }
  
- 	xe_gt_mcr_set_implicit_defaults(gt);
-+	xe_wa_process_gt(gt);
-+	xe_tuning_process_gt(gt);
- 	xe_reg_sr_apply_mmio(&gt->reg_sr, gt);
+ static const char *
+@@ -268,6 +276,7 @@ pvr_queue_fence_init(struct dma_fence *f
  
- 	err = xe_gt_clock_init(gt);
+ 	pvr_context_get(queue->ctx);
+ 	fence->queue = queue;
++	INIT_WORK(&fence->release_work, pvr_queue_fence_release_work);
+ 	dma_fence_init(&fence->base, fence_ops,
+ 		       &fence_ctx->lock, fence_ctx->id,
+ 		       atomic_inc_return(&fence_ctx->seqno));
+--- a/drivers/gpu/drm/imagination/pvr_queue.h
++++ b/drivers/gpu/drm/imagination/pvr_queue.h
+@@ -5,6 +5,7 @@
+ #define PVR_QUEUE_H
+ 
+ #include <drm/gpu_scheduler.h>
++#include <linux/workqueue.h>
+ 
+ #include "pvr_cccb.h"
+ #include "pvr_device.h"
+@@ -63,6 +64,9 @@ struct pvr_queue_fence {
+ 
+ 	/** @queue: Queue that created this fence. */
+ 	struct pvr_queue *queue;
++
++	/** @release_work: Fence release work structure. */
++	struct work_struct release_work;
+ };
+ 
+ /**
 
 
