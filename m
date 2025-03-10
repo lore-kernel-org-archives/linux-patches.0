@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ADE1CAA6C;
-	Mon, 10 Mar 2025 18:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2121BBBFD;
+	Mon, 10 Mar 2025 18:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630758; cv=none; b=Q84vXCl4ppDeUd17j17BxL/OTQA4q1QvQ34klxG8JfQ/RbBSUMXzBpt9vSlXhfQ8BBFRlemsyqFEo0MUL1Fi/f7GFdOVSsGdpvXN81kVKUGZ/k8y2dxMFJuqm+s0H/fQ5rkXaprfL/jYVBZqxIzitfeHvQJcul3HcawIPVHlFeY=
+	t=1741630761; cv=none; b=sZ7xlTnyZStiu2DtO5AMthc2uD4xlfPskWbUbEReqru9rVc9kgDkCcWvVnt9iebTccpHKKOrML8E80HJFUkopeguex/c53Qd6Cu3e8veHfN0wW5B140eNecPf3raaJx+TSlRzgfK0tOtz8R/u49Il3epEUOYihxjavIBsuET0KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630758; c=relaxed/simple;
-	bh=MhLHbD+ui/D8kcjuUof68BS64S76tMvdoSKYHqimyv0=;
+	s=arc-20240116; t=1741630761; c=relaxed/simple;
+	bh=YrteuGJe4guQZ94KID31DzERlehSU8UmkH/WGeXedeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nO17hywCosmOXkqW5I6Thf/kdeXDJNVkGSiXHl28jUAl2+Aue+uCFb/MwboEfiQh90CbOOjQTPkNHpHMe9hCrLenOhNeaBsxXmuDEVmVrPM2bc3V5lRqjvkaxngve2Sur8/XtYmBF/6OJBwbMWK4Yp5SucYWHCJHL+QWvufaYmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjTQYZ9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPa9/GC4Tj8xsrjc6ERMKOG48RAS0EP0JR4XJqv4zhIW6f9zj+QTI3eCb3RHzTzl+UjkzPNIiAi2JtoiCcldbOi/Fah+3QCudUPiLgNYRethx59R3LDuOpfPOQ/9rR6FCsIglY+on+aTUXmpZ9V8LoWQvgM6qGLeuq3iBDDTmXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pz2Y1FIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjTQYZ9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C89EC4CEEC;
-	Mon, 10 Mar 2025 18:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz2Y1FIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A6AC4CEE5;
+	Mon, 10 Mar 2025 18:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630758;
-	bh=MhLHbD+ui/D8kcjuUof68BS64S76tMvdoSKYHqimyv0=;
+	s=korg; t=1741630760;
+	bh=YrteuGJe4guQZ94KID31DzERlehSU8UmkH/WGeXedeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjTQYZ9dWzIDh/hOe72Es+TkNT8FfftDLp5cs5+A4DMv6Y9U5w4HYfY6YQjNX/l5O
-	 Gcp2LLcUlqW8Ad1HWDrYau7RFQaQXcKl2CDqndOLaqYrM0cXSCs0FRtxLDYraIhZsA
-	 8TZOxXeP9z8d4GMbPadyDPI/3v9irfrreHMCU4/0=
+	b=pz2Y1FIYsO5OEiC8SQqncJsEoX7++NaAVCIfrQsH3BoczH+q0QHCcZdjIA5+gnAtw
+	 BjP6NGmPb20u8u3rh6AeN434Elf/WJBDmRWNETkoOGmzzKHX9iUQMP8mJLO6ug6RlN
+	 +bVhVuWPmrd5nmQBjxgf0VZNt025w+t55Yuonayo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 492/620] RDMA/mlx5: Fix bind QP error cleanup flow
-Date: Mon, 10 Mar 2025 18:05:38 +0100
-Message-ID: <20250310170604.991314001@linuxfoundation.org>
+Subject: [PATCH 5.15 493/620] sunrpc: suppress warnings for unused procfs functions
+Date: Mon, 10 Mar 2025 18:05:39 +0100
+Message-ID: <20250310170605.030430343@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,61 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e1a0bdbdfdf08428f0ede5ae49c7f4139ac73ef5 ]
+[ Upstream commit 1f7a4f98c11fbeb18ed21f3b3a497e90a50ad2e0 ]
 
-When there is a failure during bind QP, the cleanup flow destroys the
-counter regardless if it is the one that created it or not, which is
-problematic since if it isn't the one that created it, that counter could
-still be in use.
+There is a warning about unused variables when building with W=1 and no procfs:
 
-Fix that by destroying the counter only if it was created during this call.
+net/sunrpc/cache.c:1660:30: error: 'cache_flush_proc_ops' defined but not used [-Werror=unused-const-variable=]
+ 1660 | static const struct proc_ops cache_flush_proc_ops = {
+      |                              ^~~~~~~~~~~~~~~~~~~~
+net/sunrpc/cache.c:1622:30: error: 'content_proc_ops' defined but not used [-Werror=unused-const-variable=]
+ 1622 | static const struct proc_ops content_proc_ops = {
+      |                              ^~~~~~~~~~~~~~~~
+net/sunrpc/cache.c:1598:30: error: 'cache_channel_proc_ops' defined but not used [-Werror=unused-const-variable=]
+ 1598 | static const struct proc_ops cache_channel_proc_ops = {
+      |                              ^~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 45842fc627c7 ("IB/mlx5: Support statistic q counter configuration")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://patch.msgid.link/25dfefddb0ebefa668c32e06a94d84e3216257cf.1740033937.git.leon@kernel.org
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+These are used inside of an #ifdef, so replacing that with an
+IS_ENABLED() check lets the compiler see how they are used while
+still dropping them during dead code elimination.
+
+Fixes: dbf847ecb631 ("knfsd: allow cache_register to return error on failure")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/counters.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sunrpc/cache.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
-index 1a0ecf439c099..870a089198116 100644
---- a/drivers/infiniband/hw/mlx5/counters.c
-+++ b/drivers/infiniband/hw/mlx5/counters.c
-@@ -337,6 +337,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 				   struct ib_qp *qp)
- {
- 	struct mlx5_ib_dev *dev = to_mdev(qp->device);
-+	bool new = false;
- 	int err;
- 
- 	if (!counter->id) {
-@@ -351,6 +352,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 			return err;
- 		counter->id =
- 			MLX5_GET(alloc_q_counter_out, out, counter_set_id);
-+		new = true;
+diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
+index 8c9597b9a3f2e..95aab48d32e67 100644
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1659,12 +1659,14 @@ static void remove_cache_proc_entries(struct cache_detail *cd)
  	}
- 
- 	err = mlx5_ib_qp_set_counter(qp, counter);
-@@ -360,8 +362,10 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 	return 0;
- 
- fail_set_counter:
--	mlx5_ib_counter_dealloc(counter);
--	counter->id = 0;
-+	if (new) {
-+		mlx5_ib_counter_dealloc(counter);
-+		counter->id = 0;
-+	}
- 
- 	return err;
  }
+ 
+-#ifdef CONFIG_PROC_FS
+ static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
+ {
+ 	struct proc_dir_entry *p;
+ 	struct sunrpc_net *sn;
+ 
++	if (!IS_ENABLED(CONFIG_PROC_FS))
++		return 0;
++
+ 	sn = net_generic(net, sunrpc_net_id);
+ 	cd->procfs = proc_mkdir(cd->name, sn->proc_net_rpc);
+ 	if (cd->procfs == NULL)
+@@ -1692,12 +1694,6 @@ static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
+ 	remove_cache_proc_entries(cd);
+ 	return -ENOMEM;
+ }
+-#else /* CONFIG_PROC_FS */
+-static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
+-{
+-	return 0;
+-}
+-#endif
+ 
+ void __init cache_initialize(void)
+ {
 -- 
 2.39.5
 
