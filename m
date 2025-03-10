@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F5230BED;
-	Mon, 10 Mar 2025 17:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143F6230BE6;
+	Mon, 10 Mar 2025 17:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626779; cv=none; b=ZBXTpCJG7CxoAttGUTiGvAMThm1t59xj7Mipl8NOU52UeCeC0KhHYREeaS7CSn6+0nwNbOzIj9xEIwdcPqDPgP6KOiUkAgYRC4mwUxajqrLB5Y5AKSWlLgQopi46rO9hfHMm3hqZT6XmIoEzbO8KSalSVzQ974uAsfcltZyxEQg=
+	t=1741626782; cv=none; b=rJIl/SFyx3o8qn4FH4H4RcTyQN6QmiYMgclxIY1yuGqQSGWmwFwYchImp8GrO8RY3SXkcGlwYkJxr/NXc+XReBdf2aJXVRFt3ArgTObCfq1s9c73n2wj5xx3kbZynWGWsZu02jrTgvWe6oXU0Qhpx7LBo6tjBD/y3+5xmsG5D4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626779; c=relaxed/simple;
-	bh=s8xM1x3fqMrbOesrkuPmFLMK8k0aWC5+R5x/CAIfigA=;
+	s=arc-20240116; t=1741626782; c=relaxed/simple;
+	bh=Fjk0Va2wpj0NnvX5Omrsu4cYDOVz3b7ZQB9y/yrkNQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/to7SCecxzkhxPb/6wKwRMv/PQF2e6DKA1us5BoCAmlRZ/DSb1VJAGnY8yK7/MZGrixDGh/jTOV0UYUyNnWJtSLT5hczGg6Pkc73kPqNQAdUVuJEwb/6Nvd1KoGfVOJA8xPijvn1uEEmYpL8TGBc62IvnwBtWlV61VJ6tSZYoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANu/g852; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elqYp6uQls//oGj3zwQnfJM+wEa258/sn7z24IqvxPKzsUYqBD/Eir854haDhGtHPo2cXwaZEiw/KcHKwEA5JmYXe2cnjndkOkqdphEMGSzHPHa9iDRwfn/16Gymx5sLcg/ZkJGR4ghe/x/j4xeeKcSWViVr4kNpNMvlv0HbZg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfheZlnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANu/g852"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B37C4CEE5;
-	Mon, 10 Mar 2025 17:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfheZlnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E3AC4CEE5;
+	Mon, 10 Mar 2025 17:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626779;
-	bh=s8xM1x3fqMrbOesrkuPmFLMK8k0aWC5+R5x/CAIfigA=;
+	s=korg; t=1741626782;
+	bh=Fjk0Va2wpj0NnvX5Omrsu4cYDOVz3b7ZQB9y/yrkNQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANu/g852Yqnjdp4aVTY50BxoMhM8h/LgMSsBrr1Kzts1xXeUZjANf+Pjw+zuMu26X
-	 R3++AfPRg43rjGmhyvpCDCAaNZsCutsOOXRNRneQZVuIhy3ea9PMpXMyzM7CMJCkRg
-	 +zsGf11ruqu7AYPb5J9GaTih+W/q/mUOl9w9iCr4=
+	b=qfheZlntOKXC7n6mVCQHuGfg5iTylocPZaDwcQ9uCzKBPh7MY6CWtoLHwTKaNEhNX
+	 pQAlGff5rwxBRLsISnDQ4qS97z6DV/QvlCi8gmb/N3utdCm21u35qOkocj9WPnfGUA
+	 FUH7hgJv3nSFTvBTv3NdWIWphcP8vQ4JBEh2dstk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 079/207] hwpoison, memory_hotplug: lock folio before unmap hwpoisoned folio
-Date: Mon, 10 Mar 2025 18:04:32 +0100
-Message-ID: <20250310170450.902806161@linuxfoundation.org>
+Subject: [PATCH 6.13 070/207] NFS: fix nfs_release_folio() to not deadlock via kcompactd writeback
+Date: Mon, 10 Mar 2025 18:04:23 +0100
+Message-ID: <20250310170450.546883566@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -55,85 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Wupeng <mawupeng1@huawei.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit af288a426c3e3552b62595c6138ec6371a17dbba upstream.
+commit ce6d9c1c2b5cc785016faa11b48b6cd317eb367e upstream.
 
-Commit b15c87263a69 ("hwpoison, memory_hotplug: allow hwpoisoned pages to
-be offlined) add page poison checks in do_migrate_range in order to make
-offline hwpoisoned page possible by introducing isolate_lru_page and
-try_to_unmap for hwpoisoned page.  However folio lock must be held before
-calling try_to_unmap.  Add it to fix this problem.
+Add PF_KCOMPACTD flag and current_is_kcompactd() helper to check for it so
+nfs_release_folio() can skip calling nfs_wb_folio() from kcompactd.
 
-Warning will be produced if folio is not locked during unmap:
+Otherwise NFS can deadlock waiting for kcompactd enduced writeback which
+recurses back to NFS (which triggers writeback to NFSD via NFS loopback
+mount on the same host, NFSD blocks waiting for XFS's call to
+__filemap_get_folio):
 
-  ------------[ cut here ]------------
-  kernel BUG at ./include/linux/swapops.h:400!
-  Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-  Modules linked in:
-  CPU: 4 UID: 0 PID: 411 Comm: bash Tainted: G        W          6.13.0-rc1-00016-g3c434c7ee82a-dirty #41
-  Tainted: [W]=WARN
-  Hardware name: QEMU QEMU Virtual Machine, BIOS 0.0.0 02/06/2015
-  pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : try_to_unmap_one+0xb08/0xd3c
-  lr : try_to_unmap_one+0x3dc/0xd3c
-  Call trace:
-   try_to_unmap_one+0xb08/0xd3c (P)
-   try_to_unmap_one+0x3dc/0xd3c (L)
-   rmap_walk_anon+0xdc/0x1f8
-   rmap_walk+0x3c/0x58
-   try_to_unmap+0x88/0x90
-   unmap_poisoned_folio+0x30/0xa8
-   do_migrate_range+0x4a0/0x568
-   offline_pages+0x5a4/0x670
-   memory_block_action+0x17c/0x374
-   memory_subsys_offline+0x3c/0x78
-   device_offline+0xa4/0xd0
-   state_store+0x8c/0xf0
-   dev_attr_store+0x18/0x2c
-   sysfs_kf_write+0x44/0x54
-   kernfs_fop_write_iter+0x118/0x1a8
-   vfs_write+0x3a8/0x4bc
-   ksys_write+0x6c/0xf8
-   __arm64_sys_write+0x1c/0x28
-   invoke_syscall+0x44/0x100
-   el0_svc_common.constprop.0+0x40/0xe0
-   do_el0_svc+0x1c/0x28
-   el0_svc+0x30/0xd0
-   el0t_64_sync_handler+0xc8/0xcc
-   el0t_64_sync+0x198/0x19c
-  Code: f9407be0 b5fff320 d4210000 17ffff97 (d4210000)
-  ---[ end trace 0000000000000000 ]---
+6070.550357] INFO: task kcompactd0:58 blocked for more than 4435 seconds.
 
-Link: https://lkml.kernel.org/r/20250217014329.3610326-4-mawupeng1@huawei.com
-Fixes: b15c87263a69 ("hwpoison, memory_hotplug: allow hwpoisoned pages to be offlined")
-Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
+{---
+[58] "kcompactd0"
+[<0>] folio_wait_bit+0xe8/0x200
+[<0>] folio_wait_writeback+0x2b/0x80
+[<0>] nfs_wb_folio+0x80/0x1b0 [nfs]
+[<0>] nfs_release_folio+0x68/0x130 [nfs]
+[<0>] split_huge_page_to_list_to_order+0x362/0x840
+[<0>] migrate_pages_batch+0x43d/0xb90
+[<0>] migrate_pages_sync+0x9a/0x240
+[<0>] migrate_pages+0x93c/0x9f0
+[<0>] compact_zone+0x8e2/0x1030
+[<0>] compact_node+0xdb/0x120
+[<0>] kcompactd+0x121/0x2e0
+[<0>] kthread+0xcf/0x100
+[<0>] ret_from_fork+0x31/0x40
+[<0>] ret_from_fork_asm+0x1a/0x30
+---}
+
+[akpm@linux-foundation.org: fix build]
+Link: https://lkml.kernel.org/r/20250225022002.26141-1-snitzer@kernel.org
+Fixes: 96780ca55e3c ("NFS: fix up nfs_release_folio() to try to release the page")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: Anna Schumaker <anna.schumaker@oracle.com>
+Cc: Trond Myklebust <trond.myklebust@hammerspace.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nfs/file.c              |    3 ++-
+ include/linux/compaction.h |    5 +++++
+ include/linux/sched.h      |    2 +-
+ mm/compaction.c            |    3 +++
+ 4 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1805,8 +1805,11 @@ static void do_migrate_range(unsigned lo
- 		    (folio_test_large(folio) && folio_test_has_hwpoisoned(folio))) {
- 			if (WARN_ON(folio_test_lru(folio)))
- 				folio_isolate_lru(folio);
--			if (folio_mapped(folio))
-+			if (folio_mapped(folio)) {
-+				folio_lock(folio);
- 				unmap_poisoned_folio(folio, pfn, false);
-+				folio_unlock(folio);
-+			}
+--- a/fs/nfs/file.c
++++ b/fs/nfs/file.c
+@@ -29,6 +29,7 @@
+ #include <linux/pagemap.h>
+ #include <linux/gfp.h>
+ #include <linux/swap.h>
++#include <linux/compaction.h>
  
- 			continue;
- 		}
+ #include <linux/uaccess.h>
+ #include <linux/filelock.h>
+@@ -457,7 +458,7 @@ static bool nfs_release_folio(struct fol
+ 	/* If the private flag is set, then the folio is not freeable */
+ 	if (folio_test_private(folio)) {
+ 		if ((current_gfp_context(gfp) & GFP_KERNEL) != GFP_KERNEL ||
+-		    current_is_kswapd())
++		    current_is_kswapd() || current_is_kcompactd())
+ 			return false;
+ 		if (nfs_wb_folio(folio->mapping->host, folio) < 0)
+ 			return false;
+--- a/include/linux/compaction.h
++++ b/include/linux/compaction.h
+@@ -80,6 +80,11 @@ static inline unsigned long compact_gap(
+ 	return 2UL << order;
+ }
+ 
++static inline int current_is_kcompactd(void)
++{
++	return current->flags & PF_KCOMPACTD;
++}
++
+ #ifdef CONFIG_COMPACTION
+ 
+ extern unsigned int extfrag_for_order(struct zone *zone, unsigned int order);
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1686,7 +1686,7 @@ extern struct pid *cad_pid;
+ #define PF_USED_MATH		0x00002000	/* If unset the fpu must be initialized before use */
+ #define PF_USER_WORKER		0x00004000	/* Kernel thread cloned from userspace thread */
+ #define PF_NOFREEZE		0x00008000	/* This thread should not be frozen */
+-#define PF__HOLE__00010000	0x00010000
++#define PF_KCOMPACTD		0x00010000	/* I am kcompactd */
+ #define PF_KSWAPD		0x00020000	/* I am kswapd */
+ #define PF_MEMALLOC_NOFS	0x00040000	/* All allocations inherit GFP_NOFS. See memalloc_nfs_save() */
+ #define PF_MEMALLOC_NOIO	0x00080000	/* All allocations inherit GFP_NOIO. See memalloc_noio_save() */
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -3164,6 +3164,7 @@ static int kcompactd(void *p)
+ 	if (!cpumask_empty(cpumask))
+ 		set_cpus_allowed_ptr(tsk, cpumask);
+ 
++	current->flags |= PF_KCOMPACTD;
+ 	set_freezable();
+ 
+ 	pgdat->kcompactd_max_order = 0;
+@@ -3220,6 +3221,8 @@ static int kcompactd(void *p)
+ 			pgdat->proactive_compact_trigger = false;
+ 	}
+ 
++	current->flags &= ~PF_KCOMPACTD;
++
+ 	return 0;
+ }
+ 
 
 
