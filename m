@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F184722FE18;
-	Mon, 10 Mar 2025 17:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45422FE18;
+	Mon, 10 Mar 2025 17:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626785; cv=none; b=oD9N37d9JgXA2F/t3hMFUODVYSNxKeDnuugaLE1dFqAsxuVAEPm1YFWnFEnwSFxBrE6qjjlz22BTXNg4gZy2sIDhUlqHlKettgZ5hi+ULvmW1LNgLc05lRyvWAqOwAR5Su5n1+xTeKrXwr5sNg+pIp0mYdI1xj0NQ5Qnc+o71J0=
+	t=1741626788; cv=none; b=btxGOBLpV8deDeR13MLjb8nvQ4wIf4zhCh74O/M+v5uepbmxRLkX67mmZ2p3O2epzTKjOzzwTNJURzbaa9in5/H/OSVqNoaMdB8FTG2l1C244SPMjh0EmdlivvqLG6RE9MD6jcNQ1w8XxGO3fx3wTXc7ApjNA8ipaHYCaRuwCfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626785; c=relaxed/simple;
-	bh=LIgtc/Fuc8rQiQsEqydLp92hCtmmLHpPC3bBozJkoJI=;
+	s=arc-20240116; t=1741626788; c=relaxed/simple;
+	bh=V/4i8PTmmRCspvU63NDAjWKw0JG5/9LX5BHsUsNfY0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ1NPlKJ0Fa9i2MkUCVnKl2Ww+ZxrnAslmG/i16PM4Lm2PpfJTgplNCv5HsVMe70L+EooLZpsR3012MFsPtTqWMBwg6ocmZ5g8u0mNBYxikhmq/YkgMVCK/mfpjFEJ32t+USAXYsm2IiOipfKNiZZccV3f5r2KryiGSOyO1BrTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owLipO7B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIwCDkcNhsumSus7F7/7t2DhQo8Inc1JtvL4Dth/QBK5827u5aapsWFGeHO8s40nOsnmlMDBCMInedtYFGGJkUpOfd+IUDy7tRJyunGa/H9MtClwg69x2XiZdS4OpWAEGE/b/5s5kAUfmV5EFgyfCdpIpOZ+0dK5WDbBeHqfrjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjoTNmEo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owLipO7B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7233FC4CEE5;
-	Mon, 10 Mar 2025 17:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjoTNmEo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D74C4CEE5;
+	Mon, 10 Mar 2025 17:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626784;
-	bh=LIgtc/Fuc8rQiQsEqydLp92hCtmmLHpPC3bBozJkoJI=;
+	s=korg; t=1741626787;
+	bh=V/4i8PTmmRCspvU63NDAjWKw0JG5/9LX5BHsUsNfY0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owLipO7BrF/bS3LxNARsJSHZjZnStgYuMnGsJSXrtOGosGkMScxSsZugNCY+0tmq7
-	 REw/ZmcrnVQwuWEZ6rdZa/9nLhsrZfdP36B6lpuvfZTcqlwiAb9K75b/vL/fMl/dId
-	 oeG7vKhiExEl+0m570kXdOtgTxlN+WV6BoZVla9U=
+	b=fjoTNmEoS4SexA5XKz2p7tiA+mmird6IWD3//d0d3e8F3hvMRHtfnnywjrC4S1h5W
+	 5lF2odWNohMFt5MmcY0Hj4xe1e6LmT8zide60qqtd7jidm9IHHWK5j6OuNwE7UEe3F
+	 +m6iJjQ/8JzkXQGCdks1R0v+TY3M3nK1N3AAEd7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 104/207] drm/nouveau: select FW caching
-Date: Mon, 10 Mar 2025 18:04:57 +0100
-Message-ID: <20250310170451.898087689@linuxfoundation.org>
+Subject: [PATCH 6.13 113/207] perf/core: Fix pmus_lock vs. pmus_srcu ordering
+Date: Mon, 10 Mar 2025 18:05:06 +0100
+Message-ID: <20250310170452.306963355@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,35 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 6b481ab0e6855fb30e2923c51f62f1662d1cda7e ]
+[ Upstream commit 2565e42539b120b81a68a58da961ce5d1e34eac8 ]
 
-nouveau tries to load some firmware during suspend that it loaded
-earlier, but with fw caching disabled it hangs suspend, so just rely on
-FW cache enabling instead of working around it in the driver.
+Commit a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
+placed pmus_lock inside pmus_srcu, this makes perf_pmu_unregister()
+trip lockdep.
 
-Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250207012531.621369-1-airlied@gmail.com
+Move the locking about such that only pmu_idr and pmus (list) are
+modified while holding pmus_lock. This avoids doing synchronize_srcu()
+while holding pmus_lock and all is well again.
+
+Fixes: a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20241104135517.679556858@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/Kconfig b/drivers/gpu/drm/nouveau/Kconfig
-index ce840300578d8..1050a4617fc15 100644
---- a/drivers/gpu/drm/nouveau/Kconfig
-+++ b/drivers/gpu/drm/nouveau/Kconfig
-@@ -4,6 +4,7 @@ config DRM_NOUVEAU
- 	depends on DRM && PCI && MMU
- 	select IOMMU_API
- 	select FW_LOADER
-+	select FW_CACHE if PM_SLEEP
- 	select DRM_CLIENT_SELECTION
- 	select DRM_DISPLAY_DP_HELPER
- 	select DRM_DISPLAY_HDMI_HELPER
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 0e6e16eb2d106..43a44a6e243b1 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11896,6 +11896,8 @@ void perf_pmu_unregister(struct pmu *pmu)
+ {
+ 	mutex_lock(&pmus_lock);
+ 	list_del_rcu(&pmu->entry);
++	idr_remove(&pmu_idr, pmu->type);
++	mutex_unlock(&pmus_lock);
+ 
+ 	/*
+ 	 * We dereference the pmu list under both SRCU and regular RCU, so
+@@ -11905,7 +11907,6 @@ void perf_pmu_unregister(struct pmu *pmu)
+ 	synchronize_rcu();
+ 
+ 	free_percpu(pmu->pmu_disable_count);
+-	idr_remove(&pmu_idr, pmu->type);
+ 	if (pmu_bus_running && pmu->dev && pmu->dev != PMU_NULL_DEV) {
+ 		if (pmu->nr_addr_filters)
+ 			device_remove_file(pmu->dev, &dev_attr_nr_addr_filters);
+@@ -11913,7 +11914,6 @@ void perf_pmu_unregister(struct pmu *pmu)
+ 		put_device(pmu->dev);
+ 	}
+ 	free_pmu_context(pmu);
+-	mutex_unlock(&pmus_lock);
+ }
+ EXPORT_SYMBOL_GPL(perf_pmu_unregister);
+ 
 -- 
 2.39.5
 
