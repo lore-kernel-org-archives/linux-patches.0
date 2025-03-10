@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800D4233735;
-	Mon, 10 Mar 2025 18:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3AD233735;
+	Mon, 10 Mar 2025 18:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630600; cv=none; b=uB/dxK6CkAo5yrfrAbOo+9JpzM8qJfF2FWBbe4kzNPbDR7VZ6iMotD2mFaMs3Md1RO6KPRXL70JlY80NViGroJXIv9yI0dG2V+L5NLn5rpvUdAkaESQrt4RY7hHlprbHnKgxCA3nPEnk3XtFTHKAazxO+odBo0DmxZ5MHjlXHvE=
+	t=1741630603; cv=none; b=K0MmarPJnDyFdGRP7Xgdvnvi/WQOfAlhkslHUMYfikEPFDlgZYVe7ok+UNAFlPZVJqVjeEpjIOaR/dYV49B+wI/iGBFv9+RBkeHwTgFrFfejjb2uiE/Oj5j8AVxZJz5MdAi1EFQQQxOpvKRsdjIehApxrjMO0QMm7uLCUk5aDt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630600; c=relaxed/simple;
-	bh=wo8aHhft/orC3KrvTRrrX8UgiXf+F8q5Vp/wfq6Sovk=;
+	s=arc-20240116; t=1741630603; c=relaxed/simple;
+	bh=5hwpmockmVW0bt4oTfhOwkWsNHc1Zt7JvksXd4NMFQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwrK2LVR0cjMs5IWT0UcBmrdphJoGLHRd9WfdrNMGavObRpwBCxrKjBJyW6jhBcGcmGQ1Z6MWp15VBi1u4mDaVVLd47QpAgExgcEU/aVVyAlETAW7XXz9qA7d4ZcFVxXwEZTYEwf0TicSUqD14csLR+yrUz+IsWeqbfnHNXzSWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwlVmV9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mzf3XiLMaF80XGEWxHv7XJ9S2D8vebBdark0Fx8qTqqHctHyIM1vTztXBoVAMTQxJz7odcE2cKK3cMFPDb4SGGNo47vrXr031V5X8iTwR0tqc6/ZBsZpa34OxW6hP6bNNosMeWN4ZRWYv8P/GH/BQbgtt5ou3LQK4HXDQWacQgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtiF6vDs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwlVmV9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0676DC4CEE5;
-	Mon, 10 Mar 2025 18:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtiF6vDs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00042C4CEE5;
+	Mon, 10 Mar 2025 18:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630600;
-	bh=wo8aHhft/orC3KrvTRrrX8UgiXf+F8q5Vp/wfq6Sovk=;
+	s=korg; t=1741630603;
+	bh=5hwpmockmVW0bt4oTfhOwkWsNHc1Zt7JvksXd4NMFQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwlVmV9hP343Rt2tXvElKrgWvGkpnk6ZAP8y1+jwIt8MceHOAvF8dmRfyHT7sX9W3
-	 PToA1nyHFm9f1/SRg37VnpwtiY19Mwlo95BuTHIEsCwdWQ0FKFPea8Iu01e63f/vKE
-	 b3OrN3ryNN2u6FUta/o6nvtpCpQihnR1XWivIg/g=
+	b=wtiF6vDsoPAhyGuVCCrxvhpKjxXiCcvLZJHvP6O4+LNXujXheJ6A23tIOhFoHGJBu
+	 JtOPbphNabWrs0B9BJFPzKb5CfBHb4ge5G6iQOlMTSB57bze6YQs2eQ/PNBdWFmzog
+	 yTSBJGwYKTieXlCh18Itw7Rl8M0tYAhYq6xCLoMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kuniyu@amazon.com,
-	ushankar@purestorage.com,
-	Eric Dumazet <edumazet@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 471/620] net: Add non-RCU dev_getbyhwaddr() helper
-Date: Mon, 10 Mar 2025 18:05:17 +0100
-Message-ID: <20250310170604.170003770@linuxfoundation.org>
+Subject: [PATCH 5.15 454/620] media: uvcvideo: Refactor iterators
+Date: Mon, 10 Mar 2025 18:05:00 +0100
+Message-ID: <20250310170603.508107929@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,116 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 4b5a28b38c4a0106c64416a1b2042405166b26ce ]
+[ Upstream commit 64627daf0c5f7838111f52bbbd1a597cb5d6871a ]
 
-Add dedicated helper for finding devices by hardware address when
-holding rtnl_lock, similar to existing dev_getbyhwaddr_rcu(). This prevents
-PROVE_LOCKING warnings when rtnl_lock is held but RCU read lock is not.
+Avoid using the iterators after the list_for_each() constructs.
+This patch should be a NOP, but makes cocci, happier:
 
-Extract common address comparison logic into dev_addr_cmp().
+drivers/media/usb/uvc/uvc_ctrl.c:1861:44-50: ERROR: invalid reference to the index variable of the iterator on line 1850
+drivers/media/usb/uvc/uvc_ctrl.c:2195:17-23: ERROR: invalid reference to the index variable of the iterator on line 2179
 
-The context about this change could be found in the following
-discussion:
-
-Link: https://lore.kernel.org/all/20250206-scarlet-ermine-of-improvement-1fcac5@leitao/
-
-Cc: kuniyu@amazon.com
-Cc: ushankar@purestorage.com
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250218-arm_fix_selftest-v5-1-d3d6892db9e1@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4eae0ee0f1e6 ("arp: switch to dev_getbyhwaddr() in arp_req_set_public()")
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: d9fecd096f67 ("media: uvcvideo: Only save async fh if success")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  2 ++
- net/core/dev.c            | 37 ++++++++++++++++++++++++++++++++++---
- 2 files changed, 36 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 79b528c128c14..179c569a55c42 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2966,6 +2966,8 @@ static inline struct net_device *first_net_device_rcu(struct net *net)
- }
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 7adc2776754a1..7148dde023db2 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1730,16 +1730,18 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+ 	list_for_each_entry(entity, &chain->entities, chain) {
+ 		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
+ 					     &err_ctrl);
+-		if (ret < 0)
++		if (ret < 0) {
++			if (ctrls)
++				ctrls->error_idx =
++					uvc_ctrl_find_ctrl_idx(entity, ctrls,
++							       err_ctrl);
+ 			goto done;
++		}
+ 	}
  
- int netdev_boot_setup_check(struct net_device *dev);
-+struct net_device *dev_getbyhwaddr(struct net *net, unsigned short type,
-+				   const char *hwaddr);
- struct net_device *dev_getbyhwaddr_rcu(struct net *net, unsigned short type,
- 				       const char *hwaddr);
- struct net_device *dev_getfirstbyhwtype(struct net *net, unsigned short type);
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 15ed4a79be46f..81f9fd0c5830a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -972,6 +972,12 @@ int netdev_get_name(struct net *net, char *name, int ifindex)
+ 	if (!rollback)
+ 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
+ done:
+-	if (ret < 0 && ctrls)
+-		ctrls->error_idx = uvc_ctrl_find_ctrl_idx(entity, ctrls,
+-							  err_ctrl);
+ 	mutex_unlock(&chain->ctrl_mutex);
  	return ret;
  }
- 
-+static bool dev_addr_cmp(struct net_device *dev, unsigned short type,
-+			 const char *ha)
-+{
-+	return dev->type == type && !memcmp(dev->dev_addr, ha, dev->addr_len);
-+}
-+
- /**
-  *	dev_getbyhwaddr_rcu - find a device by its hardware address
-  *	@net: the applicable net namespace
-@@ -980,7 +986,7 @@ int netdev_get_name(struct net *net, char *name, int ifindex)
-  *
-  *	Search for an interface by MAC address. Returns NULL if the device
-  *	is not found or a pointer to the device.
-- *	The caller must hold RCU or RTNL.
-+ *	The caller must hold RCU.
-  *	The returned device has not had its ref count increased
-  *	and the caller must therefore be careful about locking
-  *
-@@ -992,14 +998,39 @@ struct net_device *dev_getbyhwaddr_rcu(struct net *net, unsigned short type,
- 	struct net_device *dev;
- 
- 	for_each_netdev_rcu(net, dev)
--		if (dev->type == type &&
--		    !memcmp(dev->dev_addr, ha, dev->addr_len))
-+		if (dev_addr_cmp(dev, type, ha))
- 			return dev;
- 
- 	return NULL;
- }
- EXPORT_SYMBOL(dev_getbyhwaddr_rcu);
- 
-+/**
-+ * dev_getbyhwaddr() - find a device by its hardware address
-+ * @net: the applicable net namespace
-+ * @type: media type of device
-+ * @ha: hardware address
-+ *
-+ * Similar to dev_getbyhwaddr_rcu(), but the owner needs to hold
-+ * rtnl_lock.
-+ *
-+ * Context: rtnl_lock() must be held.
-+ * Return: pointer to the net_device, or NULL if not found
-+ */
-+struct net_device *dev_getbyhwaddr(struct net *net, unsigned short type,
-+				   const char *ha)
-+{
-+	struct net_device *dev;
-+
-+	ASSERT_RTNL();
-+	for_each_netdev(net, dev)
-+		if (dev_addr_cmp(dev, type, ha))
-+			return dev;
-+
-+	return NULL;
-+}
-+EXPORT_SYMBOL(dev_getbyhwaddr);
-+
- struct net_device *dev_getfirstbyhwtype(struct net *net, unsigned short type)
+@@ -2037,7 +2039,7 @@ static int uvc_ctrl_init_xu_ctrl(struct uvc_device *dev,
+ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+ 	struct uvc_xu_control_query *xqry)
  {
- 	struct net_device *dev, *ret = NULL;
+-	struct uvc_entity *entity;
++	struct uvc_entity *entity, *iter;
+ 	struct uvc_control *ctrl;
+ 	unsigned int i;
+ 	bool found;
+@@ -2047,16 +2049,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
+ 	int ret;
+ 
+ 	/* Find the extension unit. */
+-	found = false;
+-	list_for_each_entry(entity, &chain->entities, chain) {
+-		if (UVC_ENTITY_TYPE(entity) == UVC_VC_EXTENSION_UNIT &&
+-		    entity->id == xqry->unit) {
+-			found = true;
++	entity = NULL;
++	list_for_each_entry(iter, &chain->entities, chain) {
++		if (UVC_ENTITY_TYPE(iter) == UVC_VC_EXTENSION_UNIT &&
++		    iter->id == xqry->unit) {
++			entity = iter;
+ 			break;
+ 		}
+ 	}
+ 
+-	if (!found) {
++	if (!entity) {
+ 		uvc_dbg(chain->dev, CONTROL, "Extension unit %u not found\n",
+ 			xqry->unit);
+ 		return -ENOENT;
 -- 
 2.39.5
 
