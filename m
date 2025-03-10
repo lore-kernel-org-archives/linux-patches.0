@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FB117A2E8;
-	Mon, 10 Mar 2025 18:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9EB17A2E8;
+	Mon, 10 Mar 2025 18:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629719; cv=none; b=MX4XmKihT3rVfpPnvIeipIWz3uuia+QawYzu9Q6yWSBEcTnR7S/CX/ac2+aPKxnpNPc4PiNM+/xJf+4Xb33X3FYFMzXu1vYbZ+scPrkESaCJ5uGIm8NIeQHYtaMzIH7E2PVSnZ6b6G7yGoB0B591xxODT2wyuq4dj4J8IbHRNyM=
+	t=1741629721; cv=none; b=SmZmpnlnkW+r6OGO6l95o0W/eYd0OfyJj1yHBDPhEslpu0c9BPxzPWSifOtDSSZ5suOdCwb1mR4Jef5V/EeVHlPrENRqF0GJq/eVTbZKgjxST7BaThKPAOtwoC+yyX5C93AexEDJUkRwska6k8FFTxsTt9oMKC5pFfmQFCim8+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629719; c=relaxed/simple;
-	bh=kKAs93igI3SPIFlXy2o6MQhliq7f/R4KNZJOKSJkksg=;
+	s=arc-20240116; t=1741629721; c=relaxed/simple;
+	bh=02y/wQoRst6YuTksMYQnkgF2MlSEfGc4u6mYrw6JNuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cj/dl2gVlFJjS6XLl5V22XZK4RszeVnE8YgZbvp5enKHALU7WvXb1IshpmmdKkTXmGWD4YieC9UhYMnCuG4Xm2aKV/7UZ+o09xZCBExwTiJJGaMlNFI/oSOy0XKjDBWuByU1l1zfmAXDNooxFRzYmk28xti0FKKv85QLxOZBmus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03gtrC9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGdcIGvaPdBcKN9Oce2VPHlMiJlyXvWdHTiYf20ImdIUMw0LVmd5NcPFQkfWE95t5IYzVp+cv/jbdljWftX+s00DGjd8vTLNBhbwYfdi3ejM2cYlaBczw+UXhrUuVlQuTuGWWkYfti/MTNlUWCoGuFBlCBEOzNnlzGTJH0Mb7t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMhRZAcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03gtrC9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C041C4CEE5;
-	Mon, 10 Mar 2025 18:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMhRZAcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578D9C4CEE5;
+	Mon, 10 Mar 2025 18:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629718;
-	bh=kKAs93igI3SPIFlXy2o6MQhliq7f/R4KNZJOKSJkksg=;
+	s=korg; t=1741629721;
+	bh=02y/wQoRst6YuTksMYQnkgF2MlSEfGc4u6mYrw6JNuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03gtrC9VUdyfXTA62Sm7BRM0O2NQ4ychJZTUNOIOR+471JNbVJ/l8GIph4R8bzsxh
-	 qe7XempDNRKaMJLJKn34s55o+aNsDieeq7GJEjwpXwvEKHOUNYlqDzdHp64rAfmu1t
-	 rJXxqPIngkryq1z/u79Bogpmp8iVmLMAXUzVKyMg=
+	b=uMhRZAcKbH5fuK7jMaZuY72+sZpyaq4S8vMB33y6mqYd0FzQLcMjuMPDDnVNxIuI5
+	 czpQmt8hrUXtVX8MKGgwRtaqQ9ZLird6zLJWP/D1jPJlVig1w4cSjg8XxxGAFmsl8y
+	 F+5QOL5L3Kq8b1jFFLKrLoHS/pVcdVqCRa7+wjdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5e248227c80a3be8e96a@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 349/620] media: vidtv: Fix a null-ptr-deref in vidtv_mux_stop_thread
-Date: Mon, 10 Mar 2025 18:03:15 +0100
-Message-ID: <20250310170559.386234054@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 385/620] regmap-irq: Add missing kfree()
+Date: Mon, 10 Mar 2025 18:03:51 +0100
+Message-ID: <20250310170600.790604896@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,96 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 1221989555db711578a327a9367f1be46500cb48 ]
+commit 32ffed055dcee17f6705f545b069e44a66067808 upstream.
 
-syzbot report a null-ptr-deref in vidtv_mux_stop_thread. [1]
+Add kfree() for "d->main_status_buf" to the error-handling path to prevent
+a memory leak.
 
-If dvb->mux is not initialized successfully by vidtv_mux_init() in the
-vidtv_start_streaming(), it will trigger null pointer dereference about mux
-in vidtv_mux_stop_thread().
-
-Adjust the timing of streaming initialization and check it before
-stopping it.
-
-[1]
-KASAN: null-ptr-deref in range [0x0000000000000128-0x000000000000012f]
-CPU: 0 UID: 0 PID: 5842 Comm: syz-executor248 Not tainted 6.13.0-rc4-syzkaller-00012-g9b2ffa6148b1 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-RIP: 0010:vidtv_mux_stop_thread+0x26/0x80 drivers/media/test-drivers/vidtv/vidtv_mux.c:471
-Code: 90 90 90 90 66 0f 1f 00 55 53 48 89 fb e8 82 2e c8 f9 48 8d bb 28 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 02 7e 3b 0f b6 ab 28 01 00 00 31 ff 89 ee e8
-RSP: 0018:ffffc90003f2faa8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff87cfb125
-RDX: 0000000000000025 RSI: ffffffff87d120ce RDI: 0000000000000128
-RBP: ffff888029b8d220 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000003 R12: ffff888029b8d188
-R13: ffffffff8f590aa0 R14: ffffc9000581c5c8 R15: ffff888029a17710
-FS:  00007f7eef5156c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f7eef5e635c CR3: 0000000076ca6000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- vidtv_stop_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:209 [inline]
- vidtv_stop_feed+0x151/0x250 drivers/media/test-drivers/vidtv/vidtv_bridge.c:252
- dmx_section_feed_stop_filtering+0x90/0x160 drivers/media/dvb-core/dvb_demux.c:1000
- dvb_dmxdev_feed_stop.isra.0+0x1ee/0x270 drivers/media/dvb-core/dmxdev.c:486
- dvb_dmxdev_filter_stop+0x22a/0x3a0 drivers/media/dvb-core/dmxdev.c:559
- dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
- dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
- __fput+0x3f8/0xb60 fs/file_table.c:450
- task_work_run+0x14e/0x250 kernel/task_work.c:239
- get_signal+0x1d3/0x2610 kernel/signal.c:2790
- arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
- exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
- __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
- syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
- do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reported-by: syzbot+5e248227c80a3be8e96a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5e248227c80a3be8e96a
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a2d21848d921 ("regmap: regmap-irq: Add main status register support")
+Cc: stable@vger.kernel.org  # v5.1+
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://patch.msgid.link/20250205004343.14413-1-jiashengjiangcool@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/base/regmap/regmap-irq.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-index dff7265a42ca2..c1621680ec570 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -191,10 +191,11 @@ static int vidtv_start_streaming(struct vidtv_dvb *dvb)
- 
- 	mux_args.mux_buf_sz  = mux_buf_sz;
- 
--	dvb->streaming = true;
- 	dvb->mux = vidtv_mux_init(dvb->fe[0], dev, &mux_args);
- 	if (!dvb->mux)
- 		return -ENOMEM;
-+
-+	dvb->streaming = true;
- 	vidtv_mux_start_thread(dvb->mux);
- 
- 	dev_dbg_ratelimited(dev, "Started streaming\n");
-@@ -205,6 +206,11 @@ static int vidtv_stop_streaming(struct vidtv_dvb *dvb)
- {
- 	struct device *dev = &dvb->pdev->dev;
- 
-+	if (!dvb->streaming) {
-+		dev_warn_ratelimited(dev, "No streaming. Skipping.\n");
-+		return 0;
-+	}
-+
- 	dvb->streaming = false;
- 	vidtv_mux_stop_thread(dvb->mux);
- 	vidtv_mux_destroy(dvb->mux);
--- 
-2.39.5
-
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -904,6 +904,7 @@ err_alloc:
+ 	kfree(d->wake_buf);
+ 	kfree(d->mask_buf_def);
+ 	kfree(d->mask_buf);
++	kfree(d->main_status_buf);
+ 	kfree(d->status_buf);
+ 	kfree(d->status_reg_buf);
+ 	if (d->virt_buf) {
+@@ -979,6 +980,7 @@ void regmap_del_irq_chip(int irq, struct
+ 	kfree(d->wake_buf);
+ 	kfree(d->mask_buf_def);
+ 	kfree(d->mask_buf);
++	kfree(d->main_status_buf);
+ 	kfree(d->status_reg_buf);
+ 	kfree(d->status_buf);
+ 	kfree(d);
 
 
