@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B5222154C;
-	Mon, 10 Mar 2025 17:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC5422154C;
+	Mon, 10 Mar 2025 17:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627237; cv=none; b=m8ajxOmE9SvvuoNPreDoBOYAa3SFnXvEQ+fxOI4/HEH4ndWCLcvhp+8RBow1LHGJ9N3Im6DybYO0YCnn1PQOrmj+hJalGHVjLsWcXODtnNNMYeE+7KlXfiXMv08qhG/Yntgr18o6L6CJoTWAKag3Yd8zXvYAY8PyfAHi1EsNmGg=
+	t=1741627240; cv=none; b=P24S1MixPvjitsY0F1lvF1qDRp15JcQaaB5f9TTN1dMirMGmA3dWU3xxQ8yfaVnWkjfab2HRHlkc/kRFFFmJkUUhkzyBwDDocQ3XJDnhBS48n5jLfBjtiPqaKlUgHHGnWhA/Bc2IgkFbuMgELRBG/XdM4oggtx0rnm8hQBLyes8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627237; c=relaxed/simple;
-	bh=zpjAtEmDe/P98AvS5LlJVbdxyaH77pnAlQo64LN/2nM=;
+	s=arc-20240116; t=1741627240; c=relaxed/simple;
+	bh=Cv0KAqNzyYANgQoILDjwvr3bBU5/lIYwwDBFXFPJuFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYFsBrFJn/KaBuLonKweo/DanAXigDLimpD+InGccae8Qh+nodBNqTZ4/uE7Ng/tVdiGHxmA6fMue5bSjG97RZpjGVEfLaA39FezL4W7hnX/xGyX10L+geRrRZ6n7vCR/EZ56gMfcASyc1w5Wy4AlJSbr1uoaKBOffMau6t6E5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o851TrJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rLXPOhm7m79C+o7CfTRYvWZrAirWlffIzrvhy6oEFmNhAZZYQdCrIvf1kQAsxtkF36nIRWcSb07NBkrfgyncd8Zu1neT5aXQ1aGob3GGP9Zzg1Gb7UpptdHuwEnrae3bxfdntMQZgYNs0kdNjN6WPi94lUgJgeGuKrp99q+LxcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJysrCyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o851TrJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F30AC4CEE5;
-	Mon, 10 Mar 2025 17:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJysrCyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEB2C4CEE5;
+	Mon, 10 Mar 2025 17:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627237;
-	bh=zpjAtEmDe/P98AvS5LlJVbdxyaH77pnAlQo64LN/2nM=;
+	s=korg; t=1741627240;
+	bh=Cv0KAqNzyYANgQoILDjwvr3bBU5/lIYwwDBFXFPJuFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o851TrJnay5J1ugNuiB3a44+adnLYKPBgGe0CwYsCGJjqcEeK1F/6wLwTcyKkJiqP
-	 ahr9omHI0I/gyla42y5jW/mtiVXMI8bWHfAWx0oSiepYYvjotWI3ifW8cCGLiNoY56
-	 Oy3Frdfw+MvuOGgUa9enm0bgyk8EXuKFuc/j0OW0=
+	b=SJysrCyZ9r5dvpkcy8Lxa0JY5F1jqndfqbYW1jQt1x/OQnKjQFpS9NFeZ8RLCPF6Y
+	 4OaXBigEJcyskVwcmtK4M9Z+amWUQr3PRw9yMeo7nHGF9+Z6WKycQ3tmla1aCe/qph
+	 4TnAv5EQ5g/Vv9LNwvt/NaF3Uk01NtQKkTcbzJoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 043/269] rust: alloc: remove extension of stds `Box`
-Date: Mon, 10 Mar 2025 18:03:16 +0100
-Message-ID: <20250310170459.439740761@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	=?UTF-8?q?Thomas=20B=C3=B6hler?= <witcher@wiredspace.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>
+Subject: [PATCH 6.12 061/269] drm/panic: remove unnecessary borrow in alignment_pattern
+Date: Mon, 10 Mar 2025 18:03:34 +0100
+Message-ID: <20250310170500.160640798@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -47,314 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Thomas Böhler <witcher@wiredspace.de>
 
-commit e8c6ccdbcaaf31f26c0fffd4073edd0b0147cdc6 upstream.
+commit 7b6de57e0b2d1e62becfa3aac063c4c58d2c2c42 upstream.
 
-Now that all existing `Box` users were moved to the kernel `Box` type,
-remove the `BoxExt` extension and all other related extensions.
+The function `alignment_pattern` returns a static reference to a `u8`
+slice. The borrow of the returned element in `ALIGNMENT_PATTERNS` is
+already a reference as defined in the array definition above so this
+borrow is unnecessary and removed by the compiler. Clippy notes this in
+`needless_borrow`:
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-14-dakr@kernel.org
+    error: this expression creates a reference which is immediately dereferenced by the compiler
+       --> drivers/gpu/drm/drm_panic_qr.rs:245:9
+        |
+    245 |         &ALIGNMENT_PATTERNS[self.0 - 1]
+        |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `ALIGNMENT_PATTERNS[self.0 - 1]`
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_borrow
+        = note: `-D clippy::needless-borrow` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+Remove the unnecessary borrow.
+
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/1123
+Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20241019084048.22336-3-witcher@wiredspace.de
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs         |    1 
- rust/kernel/alloc/box_ext.rs |   89 -------------------------------------------
- rust/kernel/init.rs          |   46 ----------------------
- rust/kernel/lib.rs           |    1 
- rust/kernel/prelude.rs       |    4 -
- rust/kernel/types.rs         |   50 ------------------------
- 6 files changed, 3 insertions(+), 188 deletions(-)
- delete mode 100644 rust/kernel/alloc/box_ext.rs
+ drivers/gpu/drm/drm_panic_qr.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -4,7 +4,6 @@
- 
- #[cfg(not(any(test, testlib)))]
- pub mod allocator;
--pub mod box_ext;
- pub mod kbox;
- pub mod vec_ext;
- 
---- a/rust/kernel/alloc/box_ext.rs
-+++ /dev/null
-@@ -1,89 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--
--//! Extensions to [`Box`] for fallible allocations.
--
--use super::{AllocError, Flags};
--use alloc::boxed::Box;
--use core::{mem::MaybeUninit, ptr, result::Result};
--
--/// Extensions to [`Box`].
--pub trait BoxExt<T>: Sized {
--    /// Allocates a new box.
--    ///
--    /// The allocation may fail, in which case an error is returned.
--    fn new(x: T, flags: Flags) -> Result<Self, AllocError>;
--
--    /// Allocates a new uninitialised box.
--    ///
--    /// The allocation may fail, in which case an error is returned.
--    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError>;
--
--    /// Drops the contents, but keeps the allocation.
--    ///
--    /// # Examples
--    ///
--    /// ```
--    /// use kernel::alloc::{flags, box_ext::BoxExt};
--    /// let value = Box::new([0; 32], flags::GFP_KERNEL)?;
--    /// assert_eq!(*value, [0; 32]);
--    /// let mut value = Box::drop_contents(value);
--    /// // Now we can re-use `value`:
--    /// value.write([1; 32]);
--    /// // SAFETY: We just wrote to it.
--    /// let value = unsafe { value.assume_init() };
--    /// assert_eq!(*value, [1; 32]);
--    /// # Ok::<(), Error>(())
--    /// ```
--    fn drop_contents(this: Self) -> Box<MaybeUninit<T>>;
--}
--
--impl<T> BoxExt<T> for Box<T> {
--    fn new(x: T, flags: Flags) -> Result<Self, AllocError> {
--        let mut b = <Self as BoxExt<_>>::new_uninit(flags)?;
--        b.write(x);
--        // SAFETY: We just wrote to it.
--        Ok(unsafe { b.assume_init() })
--    }
--
--    #[cfg(any(test, testlib))]
--    fn new_uninit(_flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
--        Ok(Box::new_uninit())
--    }
--
--    #[cfg(not(any(test, testlib)))]
--    fn new_uninit(flags: Flags) -> Result<Box<MaybeUninit<T>>, AllocError> {
--        let ptr = if core::mem::size_of::<MaybeUninit<T>>() == 0 {
--            core::ptr::NonNull::<_>::dangling().as_ptr()
--        } else {
--            let layout = core::alloc::Layout::new::<MaybeUninit<T>>();
--
--            // SAFETY: Memory is being allocated (first arg is null). The only other source of
--            // safety issues is sleeping on atomic context, which is addressed by klint. Lastly,
--            // the type is not a SZT (checked above).
--            let ptr =
--                unsafe { super::allocator::krealloc_aligned(core::ptr::null_mut(), layout, flags) };
--            if ptr.is_null() {
--                return Err(AllocError);
--            }
--
--            ptr.cast::<MaybeUninit<T>>()
--        };
--
--        // SAFETY: For non-zero-sized types, we allocate above using the global allocator. For
--        // zero-sized types, we use `NonNull::dangling`.
--        Ok(unsafe { Box::from_raw(ptr) })
--    }
--
--    fn drop_contents(this: Self) -> Box<MaybeUninit<T>> {
--        let ptr = Box::into_raw(this);
--        // SAFETY: `ptr` is valid, because it came from `Box::into_raw`.
--        unsafe { ptr::drop_in_place(ptr) };
--
--        // CAST: `MaybeUninit<T>` is a transparent wrapper of `T`.
--        let ptr = ptr.cast::<MaybeUninit<T>>();
--
--        // SAFETY: `ptr` is valid for writes, because it came from `Box::into_raw` and it is valid for
--        // reads, since the pointer came from `Box::into_raw` and the type is `MaybeUninit<T>`.
--        unsafe { Box::from_raw(ptr) }
--    }
--}
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -211,13 +211,12 @@
- //! [`pin_init!`]: crate::pin_init!
- 
- use crate::{
--    alloc::{box_ext::BoxExt, AllocError, Flags, KBox},
-+    alloc::{AllocError, Flags, KBox},
-     error::{self, Error},
-     sync::Arc,
-     sync::UniqueArc,
-     types::{Opaque, ScopeGuard},
- };
--use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-     convert::Infallible,
-@@ -588,7 +587,6 @@ macro_rules! pin_init {
- /// # Examples
- ///
- /// ```rust
--/// # #![feature(new_uninit)]
- /// use kernel::{init::{self, PinInit}, error::Error};
- /// #[pin_data]
- /// struct BigBuf {
-@@ -1245,26 +1243,6 @@ impl<T> InPlaceInit<T> for Arc<T> {
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -239,7 +239,7 @@ impl Version {
      }
- }
  
--impl<T> InPlaceInit<T> for Box<T> {
--    type PinnedSelf = Pin<Self>;
--
--    #[inline]
--    fn try_pin_init<E>(init: impl PinInit<T, E>, flags: Flags) -> Result<Self::PinnedSelf, E>
--    where
--        E: From<AllocError>,
--    {
--        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_pin_init(init)
--    }
--
--    #[inline]
--    fn try_init<E>(init: impl Init<T, E>, flags: Flags) -> Result<Self, E>
--    where
--        E: From<AllocError>,
--    {
--        <Box<_> as BoxExt<_>>::new_uninit(flags)?.write_init(init)
--    }
--}
--
- impl<T> InPlaceInit<T> for UniqueArc<T> {
-     type PinnedSelf = Pin<Self>;
- 
-@@ -1301,28 +1279,6 @@ pub trait InPlaceWrite<T> {
-     fn write_pin_init<E>(self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E>;
- }
- 
--impl<T> InPlaceWrite<T> for Box<MaybeUninit<T>> {
--    type Initialized = Box<T>;
--
--    fn write_init<E>(mut self, init: impl Init<T, E>) -> Result<Self::Initialized, E> {
--        let slot = self.as_mut_ptr();
--        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
--        // slot is valid.
--        unsafe { init.__init(slot)? };
--        // SAFETY: All fields have been initialized.
--        Ok(unsafe { self.assume_init() })
--    }
--
--    fn write_pin_init<E>(mut self, init: impl PinInit<T, E>) -> Result<Pin<Self::Initialized>, E> {
--        let slot = self.as_mut_ptr();
--        // SAFETY: When init errors/panics, slot will get deallocated but not dropped,
--        // slot is valid and will not be moved, because we pin it later.
--        unsafe { init.__pinned_init(slot)? };
--        // SAFETY: All fields have been initialized.
--        Ok(unsafe { self.assume_init() }.into())
--    }
--}
--
- impl<T> InPlaceWrite<T> for UniqueArc<MaybeUninit<T>> {
-     type Initialized = UniqueArc<T>;
- 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -16,7 +16,6 @@
- #![feature(coerce_unsized)]
- #![feature(dispatch_from_dyn)]
- #![feature(lint_reasons)]
--#![feature(new_uninit)]
- #![feature(unsize)]
- 
- // Ensure conditional compilation based on the kernel configuration works;
---- a/rust/kernel/prelude.rs
-+++ b/rust/kernel/prelude.rs
-@@ -14,10 +14,10 @@
- #[doc(no_inline)]
- pub use core::pin::Pin;
- 
--pub use crate::alloc::{box_ext::BoxExt, flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
-+pub use crate::alloc::{flags::*, vec_ext::VecExt, KBox, KVBox, VBox};
- 
- #[doc(no_inline)]
--pub use alloc::{boxed::Box, vec::Vec};
-+pub use alloc::vec::Vec;
- 
- #[doc(no_inline)]
- pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -3,13 +3,11 @@
- //! Kernel types.
- 
- use crate::init::{self, PinInit};
--use alloc::boxed::Box;
- use core::{
-     cell::UnsafeCell,
-     marker::{PhantomData, PhantomPinned},
-     mem::{ManuallyDrop, MaybeUninit},
-     ops::{Deref, DerefMut},
--    pin::Pin,
-     ptr::NonNull,
- };
- 
-@@ -71,54 +69,6 @@ pub trait ForeignOwnable: Sized {
+     fn alignment_pattern(&self) -> &'static [u8] {
+-        &ALIGNMENT_PATTERNS[self.0 - 1]
++        ALIGNMENT_PATTERNS[self.0 - 1]
      }
- }
  
--impl<T: 'static> ForeignOwnable for Box<T> {
--    type Borrowed<'a> = &'a T;
--
--    fn into_foreign(self) -> *const core::ffi::c_void {
--        Box::into_raw(self) as _
--    }
--
--    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> &'a T {
--        // SAFETY: The safety requirements for this function ensure that the object is still alive,
--        // so it is safe to dereference the raw pointer.
--        // The safety requirements of `from_foreign` also ensure that the object remains alive for
--        // the lifetime of the returned value.
--        unsafe { &*ptr.cast() }
--    }
--
--    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
--        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
--        // call to `Self::into_foreign`.
--        unsafe { Box::from_raw(ptr as _) }
--    }
--}
--
--impl<T: 'static> ForeignOwnable for Pin<Box<T>> {
--    type Borrowed<'a> = Pin<&'a T>;
--
--    fn into_foreign(self) -> *const core::ffi::c_void {
--        // SAFETY: We are still treating the box as pinned.
--        Box::into_raw(unsafe { Pin::into_inner_unchecked(self) }) as _
--    }
--
--    unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Pin<&'a T> {
--        // SAFETY: The safety requirements for this function ensure that the object is still alive,
--        // so it is safe to dereference the raw pointer.
--        // The safety requirements of `from_foreign` also ensure that the object remains alive for
--        // the lifetime of the returned value.
--        let r = unsafe { &*ptr.cast() };
--
--        // SAFETY: This pointer originates from a `Pin<Box<T>>`.
--        unsafe { Pin::new_unchecked(r) }
--    }
--
--    unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self {
--        // SAFETY: The safety requirements of this function ensure that `ptr` comes from a previous
--        // call to `Self::into_foreign`.
--        unsafe { Pin::new_unchecked(Box::from_raw(ptr as _)) }
--    }
--}
--
- impl ForeignOwnable for () {
-     type Borrowed<'a> = ();
- 
+     fn poly(&self) -> &'static [u8] {
 
 
