@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CF82F28;
-	Mon, 10 Mar 2025 17:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D697B2F28;
+	Mon, 10 Mar 2025 17:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627087; cv=none; b=SO96VF3cP8RpXdCNsimDttvvgIDK+dxJyTICZAIAXXEt/LovAVP6lCuY2NJEilggbYD/ZLMiFZ+Vrr7sLxgiN+U8VuVI7lc+7KINWHcjisM9+8p+/MY7fQAK7XbDzfwI61KNX/l3LUW7+R7ijaqsdSUXOv/oPDgC74QhaJQZxfI=
+	t=1741627089; cv=none; b=HX3TQM4DRPUlEzK8QcaL6XjHggrKUxqUiO/DjkC/JT+1mgOe0v5BUdWWJQoMhavMuAr0t/1qxPkeGmE59nrZsh66q6d0q5d3xoWxHwBak9XAQYUJ09/1Yp9fHxd+aEYGh5pkLHXhWpP4pFdqg9Z1eGHJhYtzzVV/zDNN2HEjXlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627087; c=relaxed/simple;
-	bh=DGOxVxHbbJ1SY0z/XB874Q2gH+84eCcu1dIFRogSyaY=;
+	s=arc-20240116; t=1741627089; c=relaxed/simple;
+	bh=lJJOa9Gv76m892YY+DKBJ5CUk43bO3IopUie60mpLvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfpEGEfaX4S2hxVMz0ToIJ0PvI5IZWaeJ9lbEflcaClyssbSpBkSdj+JmTxQyDX6H/zRv2cIVoEx1bE/YO7XU6xV2UE3WFp+abTBhPdZKL8PE7ZFbEUUpa55gglT4gj8E9wPrvSgZMhttgBZsFmZIZKmRMvtMKpwumNDflNiPfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju6/M5D2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1piJqwMgmi3B1QNTiFCY7445sqLirMAHxd5RiGX0cRqThJuRHeflskEMNcM6DM4eU6JqXmR9vZG+K9EBvM2fc0EcIAoWuHgoLwvLed0qBWoyoxNH0nWDVaTugUBz2mfZ5Go2xvNd6PQWaPT0FaCbpHtiYZgLsMrRv6xFfEwv5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DN0alma1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju6/M5D2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FB0C4CEE5;
-	Mon, 10 Mar 2025 17:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DN0alma1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C852C4CEE5;
+	Mon, 10 Mar 2025 17:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627086;
-	bh=DGOxVxHbbJ1SY0z/XB874Q2gH+84eCcu1dIFRogSyaY=;
+	s=korg; t=1741627089;
+	bh=lJJOa9Gv76m892YY+DKBJ5CUk43bO3IopUie60mpLvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ju6/M5D2WERF60mRq+fF4/Vol1v9CPbydc6as6yg91ZHxh6Ctp+BhvMLZ6V9PLg3J
-	 pBNiYzAy/Sa0KIBIXL0oSo8AftcVwp/SNtKTlBQfePm5UlvhQ6C2tdgQ5rx3hkZnUt
-	 kxk+vco75O5eaz3CaLX0wbu0TPwlD2Q3SseU0Nw4=
+	b=DN0alma1+hyOEwlVYTAjaDG51lW9vGD97Qoh5f8s6xb4bkyJ8ZjpWdx2CRBE22B6e
+	 mClwDGWsKc/NGQKtuffLC5lioqrorysfr2zekVnsteHHmjBq/cfrJTl82cboUdn9WV
+	 iw/ZvkeaSdMatxURnEC2su/Fl3Sh0n3Q+BAvqR8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.12 001/269] x86/amd_nb: Use rdmsr_safe() in amd_get_mmconfig_range()
-Date: Mon, 10 Mar 2025 18:02:34 +0100
-Message-ID: <20250310170457.762242525@linuxfoundation.org>
+	Yutaro Ohno <yutaro.ono.418@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 002/269] rust: block: fix formatting in GenDisk doc
+Date: Mon, 10 Mar 2025 18:02:35 +0100
+Message-ID: <20250310170457.801582266@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -50,73 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Yutaro Ohno <yutaro.ono.418@gmail.com>
 
-commit 14cb5d83068ecf15d2da6f7d0e9ea9edbcbc0457 upstream.
+commit 0c5928deada15a8d075516e6e0d9ee19011bb000 upstream.
 
-Xen doesn't offer MSR_FAM10H_MMIO_CONF_BASE to all guests.  This results
-in the following warning:
+Align bullet points and improve indentation in the `Invariants` section
+of the `GenDisk` struct documentation for better readability.
 
-  unchecked MSR access error: RDMSR from 0xc0010058 at rIP: 0xffffffff8101d19f (xen_do_read_msr+0x7f/0xa0)
-  Call Trace:
-   xen_read_msr+0x1e/0x30
-   amd_get_mmconfig_range+0x2b/0x80
-   quirk_amd_mmconfig_area+0x28/0x100
-   pnp_fixup_device+0x39/0x50
-   __pnp_add_device+0xf/0x150
-   pnp_add_device+0x3d/0x100
-   pnpacpi_add_device_handler+0x1f9/0x280
-   acpi_ns_get_device_callback+0x104/0x1c0
-   acpi_ns_walk_namespace+0x1d0/0x260
-   acpi_get_devices+0x8a/0xb0
-   pnpacpi_init+0x50/0x80
-   do_one_initcall+0x46/0x2e0
-   kernel_init_freeable+0x1da/0x2f0
-   kernel_init+0x16/0x1b0
-   ret_from_fork+0x30/0x50
-   ret_from_fork_asm+0x1b/0x30
+[ Yutaro is also working on implementing the lint we suggested to catch
+  this sort of issue in upstream Rust:
 
-based on quirks for a "PNP0c01" device.  Treating MMCFG as disabled is the
-right course of action, so no change is needed there.
+    https://github.com/rust-lang/rust-clippy/issues/13601
+    https://github.com/rust-lang/rust-clippy/pull/13711
 
-This was most likely exposed by fixing the Xen MSR accessors to not be
-silently-safe.
+  Thanks a lot! - Miguel ]
 
-Fixes: 3fac3734c43a ("xen/pv: support selecting safe/unsafe msr accesses")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250307002846.3026685-1-andrew.cooper3@citrix.com
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Signed-off-by: Yutaro Ohno <yutaro.ono.418@gmail.com>
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
+Link: https://lore.kernel.org/r/ZxkcU5yTFCagg_lX@ohnotp
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_nb.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ rust/kernel/block/mq/gen_disk.rs |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -405,7 +405,6 @@ bool __init early_is_amd_nb(u32 device)
- 
- struct resource *amd_get_mmconfig_range(struct resource *res)
- {
--	u32 address;
- 	u64 base, msr;
- 	unsigned int segn_busn_bits;
- 
-@@ -413,13 +412,11 @@ struct resource *amd_get_mmconfig_range(
- 	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
- 		return NULL;
- 
--	/* assume all cpus from fam10h have mmconfig */
--	if (boot_cpu_data.x86 < 0x10)
-+	/* Assume CPUs from Fam10h have mmconfig, although not all VMs do */
-+	if (boot_cpu_data.x86 < 0x10 ||
-+	    rdmsrl_safe(MSR_FAM10H_MMIO_CONF_BASE, &msr))
- 		return NULL;
- 
--	address = MSR_FAM10H_MMIO_CONF_BASE;
--	rdmsrl(address, msr);
--
- 	/* mmconfig is not enabled */
- 	if (!(msr & FAM10H_MMIO_CONF_ENABLE))
- 		return NULL;
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -174,9 +174,9 @@ impl GenDiskBuilder {
+ ///
+ /// # Invariants
+ ///
+-///  - `gendisk` must always point to an initialized and valid `struct gendisk`.
+-///  - `gendisk` was added to the VFS through a call to
+-///     `bindings::device_add_disk`.
++/// - `gendisk` must always point to an initialized and valid `struct gendisk`.
++/// - `gendisk` was added to the VFS through a call to
++///   `bindings::device_add_disk`.
+ pub struct GenDisk<T: Operations> {
+     _tagset: Arc<TagSet<T>>,
+     gendisk: *mut bindings::gendisk,
 
 
