@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EDC1C3C1C;
-	Mon, 10 Mar 2025 18:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E900D1CAA6C;
+	Mon, 10 Mar 2025 18:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741631038; cv=none; b=JQdZyeCwP41y4k254AsVVH+5gXrlxKfXXs1fEQOpsGC4V9iz95eQR3ysCnwpmDCwdGVoQuuR0KHWd2gMz+h0o66UVvqTU29TcpbDtjt4BsE3yxkQyy7a2BbLfbSBmq8ncurXLBT8IpgEX9y9gh90ZTjV6czG2xw4gyXTfBh5/0Q=
+	t=1741631042; cv=none; b=um1v2rX/033gOXadRLvSTP/9GuYVigrAyMpkb87ylBFueQPPTMq8/d9BeWe9YriAfrUcGBONcxHtTZyeKlwqi1m+hb5J3u7UwW7pdlLz3Y68QTEKFK80BCCeMvNNZcfFGe0xebGA0/TorhZLDq3LhhONhCS5shEjOucYhtDgAsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741631038; c=relaxed/simple;
-	bh=PokMTrrplQLOjbxS9gLlmeJ+Qm47NaLzEl0uhjOTef8=;
+	s=arc-20240116; t=1741631042; c=relaxed/simple;
+	bh=xjrKi3xJPfg+HykeVCbYGsfUjFv38YqbJN1NijT4Fxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fYngbiCR+Ex3TJqaGlfwamZyhjGcIEeyurRJleTrcRPCZpKUv1yX60bPCJofWcMD+VnJ0cNRonSSxJ/InjccPYmxU360E1d3/ZIEMDPUUxTlfQqJTHgqtWZ6xiP07P7MIwTODSHTQB6Uj3aMtg2Q0JCehdsbJVT2j5XTlrC5NRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKcH4b0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quudsEDZxIY+i5pSl7FhJaDZsH0sJ1GDDwIyrRaQyt7+DNrwNmrMGoMjZteqan5EqpDb3yWSdfgoyAlOs3la0TtWyRtJzO1T8Bpx3zlTiMwyCGavS3mJdlF5gD8By/fPKnKZEZJMIag6nfsCBXkVSkN1uU/Ii8Mkou5xt11htLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rN8r0Qay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKcH4b0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10108C4CEE5;
-	Mon, 10 Mar 2025 18:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rN8r0Qay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6A7C4CEE5;
+	Mon, 10 Mar 2025 18:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741631038;
-	bh=PokMTrrplQLOjbxS9gLlmeJ+Qm47NaLzEl0uhjOTef8=;
+	s=korg; t=1741631041;
+	bh=xjrKi3xJPfg+HykeVCbYGsfUjFv38YqbJN1NijT4Fxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YKcH4b0iPiyLN1yBak+U9j/FHS9BHM0gS4RrklOPZpTcpRggwoKmU4whO+3Url3ct
-	 Q+dnYFxIfEN8FxbKS+ZJDhAieOwgkC19RBoOiTiZSSeZeEyrpRV/9OC4Xsc9+pVvPm
-	 9Y2jpFS3fjA8cx8+LyDs866IyfYHScZYl1yC0woQ=
+	b=rN8r0QayLCLO3eq7zcmo/oty5+zj/M8AqqjIZ8OsRm6cAm1gjDKM1T0M2bfiP9Zo6
+	 UguV26dxreOg65S2odnYviZoZjy8u5eyyQIv+wPbxIuQGJ/qCcj0uogJyPCbeGWkvk
+	 r4NaMN7p7FzmUghFdZcIja2D3Dwn0/ZcpfsRD8/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.15 619/620] kbuild: userprogs: use correct lld when linking through clang
-Date: Mon, 10 Mar 2025 18:07:45 +0100
-Message-ID: <20250310170609.966595067@linuxfoundation.org>
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 620/620] net: ipv6: fix dst refleaks in rpl, seg6 and ioam6 lwtunnels
+Date: Mon, 10 Mar 2025 18:07:46 +0100
+Message-ID: <20250310170610.006675223@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -45,57 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Thomas Weiﬂschuh" <thomas.weissschuh@linutronix.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit dfc1b168a8c4b376fa222b27b97c2c4ad4b786e1 upstream.
+commit c71a192976ded2f2f416d03c4f595cdd4478b825 upstream.
 
-The userprog infrastructure links objects files through $(CC).
-Either explicitly by manually calling $(CC) on multiple object files or
-implicitly by directly compiling a source file to an executable.
-The documentation at Documentation/kbuild/llvm.rst indicates that ld.lld
-would be used for linking if LLVM=1 is specified.
-However clang instead will use either a globally installed cross linker
-from $PATH called ${target}-ld or fall back to the system linker, which
-probably does not support crosslinking.
-For the normal kernel build this is not an issue because the linker is
-always executed directly, without the compiler being involved.
+dst_cache_get() gives us a reference, we need to release it.
 
-Explicitly pass --ld-path to clang so $(LD) is respected.
-As clang 13.0.1 is required to build the kernel, this option is available.
+Discovered by the ioam6.sh test, kmemleak was recently fixed
+to catch per-cpu memory leaks.
 
-Fixes: 7f3a59db274c ("kbuild: add infrastructure to build userspace programs")
-Cc: stable@vger.kernel.org # needs wrapping in $(cc-option) for < 6.9
-Signed-off-by: Thomas Wei√üschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-[nathan: use cc-option for 6.6 and older, as those trees support back to
-         clang-11]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 985ec6f5e623 ("net: ipv6: rpl_iptunnel: mitigate 2-realloc issue")
+Fixes: 40475b63761a ("net: ipv6: seg6_iptunnel: mitigate 2-realloc issue")
+Fixes: dce525185bc9 ("net: ipv6: ioam6_iptunnel: mitigate 2-realloc issue")
+Reviewed-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250130031519.2716843-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/rpl_iptunnel.c  |    6 ++++--
+ net/ipv6/seg6_iptunnel.c |    6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1114,6 +1114,11 @@ endif
- KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
- KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -232,7 +232,6 @@ static int rpl_output(struct net *net, s
+ 		dst = ip6_route_output(net, NULL, &fl6);
+ 		if (dst->error) {
+ 			err = dst->error;
+-			dst_release(dst);
+ 			goto drop;
+ 		}
  
-+# userspace programs are linked via the compiler, use the correct linker
-+ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
-+KBUILD_USERLDFLAGS += $(call cc-option, --ld-path=$(LD))
-+endif
-+
- # make the checker run with the right architecture
- CHECKFLAGS += --arch=$(ARCH)
+@@ -251,6 +250,7 @@ static int rpl_output(struct net *net, s
+ 	return dst_output(net, sk, skb);
  
+ drop:
++	dst_release(dst);
+ 	kfree_skb(skb);
+ 	return err;
+ }
+@@ -277,8 +277,10 @@ static int rpl_input(struct sk_buff *skb
+ 	local_bh_enable();
+ 
+ 	err = rpl_do_srh(skb, rlwt, dst);
+-	if (unlikely(err))
++	if (unlikely(err)) {
++		dst_release(dst);
+ 		goto drop;
++	}
+ 
+ 	skb_dst_drop(skb);
+ 
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -490,8 +490,10 @@ static int seg6_input_core(struct net *n
+ 	local_bh_enable();
+ 
+ 	err = seg6_do_srh(skb, dst);
+-	if (unlikely(err))
++	if (unlikely(err)) {
++		dst_release(dst);
+ 		goto drop;
++	}
+ 
+ 	skb_dst_drop(skb);
+ 
+@@ -582,7 +584,6 @@ static int seg6_output_core(struct net *
+ 		dst = ip6_route_output(net, NULL, &fl6);
+ 		if (dst->error) {
+ 			err = dst->error;
+-			dst_release(dst);
+ 			goto drop;
+ 		}
+ 
+@@ -604,6 +605,7 @@ static int seg6_output_core(struct net *
+ 
+ 	return dst_output(net, sk, skb);
+ drop:
++	dst_release(dst);
+ 	kfree_skb(skb);
+ 	return err;
+ }
 
 
