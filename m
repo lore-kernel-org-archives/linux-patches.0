@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB932F28;
-	Mon, 10 Mar 2025 17:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6451B3927;
+	Mon, 10 Mar 2025 17:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627689; cv=none; b=skYYZmw6pwQE8XMHAH/3lnHs/7eUYJnDbUWBxKqeFIsh02bJQi9pt1mv4rManfUCMo0dHs6Cs30dY/K0zMe64Y/AlABuuah85v4dfaSYv5SJuvX01rAnoC/9teFU9dPMg8i7jGhVxuvQgsS3jjtu/iu+T0O6mSFtzaua95GRzWo=
+	t=1741627691; cv=none; b=Z0MaIT610nYVE2424qht181t7OLGYBjH/3Q4Kr0swO+yfLwpM6VQkLRteHXleH5Pw9l8S6YCv983+OdRWLx7fKaZd6cSaTa6JixSsv+Vw+wgQcnDbz1p7+ejaJJm2yf0s74W6L6GWDAY29W+8VGi3IiMsi8x9czkD3UtEWdihbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627689; c=relaxed/simple;
-	bh=yQtIqnj5fwGkfxPLG7PvdOltm8eN3whRD8k2VP0cneE=;
+	s=arc-20240116; t=1741627691; c=relaxed/simple;
+	bh=wTCri4Jlsh7Pjy2duu7Qm4sqSrmU9w9l/CGUlyownTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcAQFcgN6axp1Rh6wE4g+kYO6CqjWUzwztHxoYhWXQ97m14u1FHPPtGNLvaXUUimfsup65kSlVRMQjJ8i8GahhsKwGuTN0ENXPIy/uO2TPalwTBo4bsg9gFsXCVZc7hWRemG3CmLQ28XaHg5VFV5mmP/PGWEDDN2SxbpiSyq9yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKEGaJDr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jVwAm/zs3OwDqMecaYzlus96z58rfaA/eJKLO8bSzJaEEydesfRm19Xwvm0NJWZ21fzgM/fr7p3ZSEzvT0MjTiyjYhHyfgxWqUk4pOCr7mqez5aZN3nQI4MxKAa79AdTF7tiPJgX9E8e7XTZ9d3YEckfkyUilvopKdzGeMM40CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJNcQtT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKEGaJDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51412C4CEE5;
-	Mon, 10 Mar 2025 17:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJNcQtT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35577C4CEE5;
+	Mon, 10 Mar 2025 17:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627688;
-	bh=yQtIqnj5fwGkfxPLG7PvdOltm8eN3whRD8k2VP0cneE=;
+	s=korg; t=1741627691;
+	bh=wTCri4Jlsh7Pjy2duu7Qm4sqSrmU9w9l/CGUlyownTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKEGaJDr0Y+/cJX2FVvIOAcPkw0eEWgKxLRUJx7r6X9vucnzOpBu53VBkYXLq67yh
-	 o7Ry482yHFD5ah0hek8m8cjK+mhUUWIex3mUUew9kohkPLDzTgSc2kNAitWZHbri3o
-	 tJX2hbjYZxucI38holcR4DC1+g2Sz3SZ39NG1AIE=
+	b=hJNcQtT6g5OggHIUKCMk6k7Pz22Kyzb+A/zOieG1S/SPt+S0c7rsAd3M1OFCbDMJi
+	 V3wKVetQSAynsRwsNE5p4v4pcqwv57MtgwxaPThGEeHwfKyYQPyP/eIkToKIIx4nVR
+	 0BYPd6FKiQYHOa76WD2evCCmcrfeC2ot4LYOksq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0154da2d403396b2bd59@syzkaller.appspotmail.com,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Alex Elder <elder@riscstar.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 184/269] HID: hid-steam: Fix use-after-free when detaching device
-Date: Mon, 10 Mar 2025 18:05:37 +0100
-Message-ID: <20250310170505.042220051@linuxfoundation.org>
+Subject: [PATCH 6.12 185/269] net: ipa: Fix v4.7 resource group names
+Date: Mon, 10 Mar 2025 18:05:38 +0100
+Message-ID: <20250310170505.081101246@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -52,43 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit e53fc232a65f7488ab75d03a5b95f06aaada7262 ]
+[ Upstream commit 5eb3dc1396aa7e315486b24df80df782912334b7 ]
 
-When a hid-steam device is removed it must clean up the client_hdev used for
-intercepting hidraw access. This can lead to scheduling deferred work to
-reattach the input device. Though the cleanup cancels the deferred work, this
-was done before the client_hdev itself is cleaned up, so it gets rescheduled.
-This patch fixes the ordering to make sure the deferred work is properly
-canceled.
+In the downstream IPA driver there's only one group defined for source
+and destination, and the destination group doesn't have a _DPL suffix.
 
-Reported-by: syzbot+0154da2d403396b2bd59@syzkaller.appspotmail.com
-Fixes: 79504249d7e2 ("HID: hid-steam: Move hidraw input (un)registering to work")
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: b310de784bac ("net: ipa: add IPA v4.7 support")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20250227-ipa-v4-7-fixes-v1-1-a88dd8249d8a@fairphone.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipa/data/ipa_data-v4.7.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 7b35966898785..19b7bb0c3d7f9 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -1327,11 +1327,11 @@ static void steam_remove(struct hid_device *hdev)
- 		return;
- 	}
+diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
+index c8c23d9be961b..7e315779e6648 100644
+--- a/drivers/net/ipa/data/ipa_data-v4.7.c
++++ b/drivers/net/ipa/data/ipa_data-v4.7.c
+@@ -28,12 +28,10 @@ enum ipa_resource_type {
+ enum ipa_rsrc_group_id {
+ 	/* Source resource group identifiers */
+ 	IPA_RSRC_GROUP_SRC_UL_DL			= 0,
+-	IPA_RSRC_GROUP_SRC_UC_RX_Q,
+ 	IPA_RSRC_GROUP_SRC_COUNT,	/* Last in set; not a source group */
  
-+	hid_destroy_device(steam->client_hdev);
- 	cancel_delayed_work_sync(&steam->mode_switch);
- 	cancel_work_sync(&steam->work_connect);
- 	cancel_work_sync(&steam->rumble_work);
- 	cancel_work_sync(&steam->unregister_work);
--	hid_destroy_device(steam->client_hdev);
- 	steam->client_hdev = NULL;
- 	steam->client_opened = 0;
- 	if (steam->quirks & STEAM_QUIRK_WIRELESS) {
+ 	/* Destination resource group identifiers */
+-	IPA_RSRC_GROUP_DST_UL_DL_DPL			= 0,
+-	IPA_RSRC_GROUP_DST_UNUSED_1,
++	IPA_RSRC_GROUP_DST_UL_DL			= 0,
+ 	IPA_RSRC_GROUP_DST_COUNT,	/* Last; not a destination group */
+ };
+ 
+@@ -81,7 +79,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 		},
+ 		.endpoint = {
+ 			.config = {
+-				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL_DPL,
++				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL,
+ 				.aggregation	= true,
+ 				.status_enable	= true,
+ 				.rx = {
+@@ -128,7 +126,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
+ 		},
+ 		.endpoint = {
+ 			.config = {
+-				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL_DPL,
++				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL,
+ 				.qmap		= true,
+ 				.aggregation	= true,
+ 				.rx = {
+@@ -197,12 +195,12 @@ static const struct ipa_resource ipa_resource_src[] = {
+ /* Destination resource configuration data for an SoC having IPA v4.7 */
+ static const struct ipa_resource ipa_resource_dst[] = {
+ 	[IPA_RESOURCE_TYPE_DST_DATA_SECTORS] = {
+-		.limits[IPA_RSRC_GROUP_DST_UL_DL_DPL] = {
++		.limits[IPA_RSRC_GROUP_DST_UL_DL] = {
+ 			.min = 7,	.max = 7,
+ 		},
+ 	},
+ 	[IPA_RESOURCE_TYPE_DST_DPS_DMARS] = {
+-		.limits[IPA_RSRC_GROUP_DST_UL_DL_DPL] = {
++		.limits[IPA_RSRC_GROUP_DST_UL_DL] = {
+ 			.min = 2,	.max = 2,
+ 		},
+ 	},
 -- 
 2.39.5
 
