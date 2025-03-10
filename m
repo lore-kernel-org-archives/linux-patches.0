@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26D92236E4;
-	Mon, 10 Mar 2025 18:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAFF234972;
+	Mon, 10 Mar 2025 18:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630941; cv=none; b=VDwMOjyjWGTtMTr7NvR4fOQOoSUVCE/fWo8Kd52uB0l92Cwn5ujwMUtGZizCHVO4nxPu44xt0G+psji5w4DUktx9PwPfdNJk0Faq9+1hzyArVmFzgzdajxh6f2yZux44Hww1FMU0CZ+0JZi2iMNF6qa7KTpPIonLhsf5TBLdjPw=
+	t=1741630944; cv=none; b=cmxGWD9NVPv6Y3cwqCkybXmid/MNVdW2LX3MRhjCQzA+hv3OExGNxyrOOi4ZRAoVvsSWz3XdTZYuNx7j3kro6ueXI2wx4e5yhhDynosH84mUhVYZy17xcf0ABPOh6xIvWx2P8aKBlruoAtGWxwbIBNTVz0ZlShu6dJNahdRKf7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630941; c=relaxed/simple;
-	bh=DEZHH5LNio1cw/QVY2pimJtS3YxgUVWLAuy/vbMjIZU=;
+	s=arc-20240116; t=1741630944; c=relaxed/simple;
+	bh=G7ctVaqwI4KPkdJusJyBEkIbEoFUBMPWQhIkax5atnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5MiXkfmPKuq8PWaBsGboevkvnxj9/VTKpe/3ItrCi8T9oyPCskS3hZaehn7klTR3pMoOb8o91ENZ19GyvmQ2KTT8JJf7HL30KEi+vBGWluf13cZluA23PxsqQmP85xNo+oU+z/XqiCAfdwPsj8JNIRaQS+zZZutO0blfdY42js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2rSNZB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MmWdV70kLaFf+CgIWZsHEsrOAVLC0Q4iBqCH5BGk3cn5er87jhzo2zNwmR2hl9RikD01CyyoO/w/wJxRDBDSOmue6ffG89tedSBahktBwBHPcDtYWBZeYYy+AIP1Rl+8j/crpqJEL/VIidTpRdTSNwg5aF9OaKugSKH23WtJ6sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5E3Fe4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2rSNZB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA6FC4CEED;
-	Mon, 10 Mar 2025 18:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5E3Fe4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222E1C4CEE5;
+	Mon, 10 Mar 2025 18:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630941;
-	bh=DEZHH5LNio1cw/QVY2pimJtS3YxgUVWLAuy/vbMjIZU=;
+	s=korg; t=1741630944;
+	bh=G7ctVaqwI4KPkdJusJyBEkIbEoFUBMPWQhIkax5atnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2rSNZB8WUB1rZna96NfvYkxeo/r290CqUkvMB8JTmpSyPhoaHpROr5NFuCtemEwm
-	 zKZPys7bBTsi8RzzDcTUam+Dl7k/zbbDCT1hrGDzJrJZPZmFYsE5eYMQk6Qr87IcfS
-	 0chaZvudfkjRl4eu3Q8GIwOYzRBdqjcVT4SU44o0=
+	b=r5E3Fe4cJWD85RSSoDVq5t8pLO1zH/4JXQl6jGk4a431xwkO2WIUo8Iv8qs7xiN+H
+	 rAs0SEIIgV6eA40Sji+gMBJ5kdqF/QHdlFcXw2t/dkhlu1qWtciRRZuHisB6kjkwjk
+	 dDaHA7BMS8+ANzTK94z0+On2hPsogWYX64BrHib0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 586/620] usb: atm: cxacru: fix a flaw in existing endpoint checks
-Date: Mon, 10 Mar 2025 18:07:12 +0100
-Message-ID: <20250310170608.662045221@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 587/620] usb: dwc3: Set SUSPENDENABLE soon after phy init
+Date: Mon, 10 Mar 2025 18:07:13 +0100
+Message-ID: <20250310170608.700345889@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,83 +50,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit c90aad369899a607cfbc002bebeafd51e31900cd upstream.
+commit cc5bfc4e16fc1d1c520cd7bb28646e82b6e69217 upstream.
 
-Syzbot once again identified a flaw in usb endpoint checking, see [1].
-This time the issue stems from a commit authored by me (2eabb655a968
-("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")).
+After phy initialization, some phy operations can only be executed while
+in lower P states. Ensure GUSB3PIPECTL.SUSPENDENABLE and
+GUSB2PHYCFG.SUSPHY are set soon after initialization to avoid blocking
+phy ops.
 
-While using usb_find_common_endpoints() may usually be enough to
-discard devices with wrong endpoints, in this case one needs more
-than just finding and identifying the sufficient number of endpoints
-of correct types - one needs to check the endpoint's address as well.
+Previously the SUSPENDENABLE bits are only set after the controller
+initialization, which may not happen right away if there's no gadget
+driver or xhci driver bound. Revise this to clear SUSPENDENABLE bits
+only when there's mode switching (change in GCTL.PRTCAPDIR).
 
-Since cxacru_bind() fills URBs with CXACRU_EP_CMD address in mind,
-switch the endpoint verification approach to usb_check_XXX_endpoints()
-instead to fix incomplete ep testing.
-
-[1] Syzbot report:
-usb 5-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 1378 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
-...
-RIP: 0010:usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
-...
-Call Trace:
- <TASK>
- cxacru_cm+0x3c8/0xe50 drivers/usb/atm/cxacru.c:649
- cxacru_card_status drivers/usb/atm/cxacru.c:760 [inline]
- cxacru_bind+0xcf9/0x1150 drivers/usb/atm/cxacru.c:1223
- usbatm_usb_probe+0x314/0x1d30 drivers/usb/atm/usbatm.c:1058
- cxacru_usb_probe+0x184/0x220 drivers/usb/atm/cxacru.c:1377
- usb_probe_interface+0x641/0xbb0 drivers/usb/core/driver.c:396
- really_probe+0x2b9/0xad0 drivers/base/dd.c:658
- __driver_probe_device+0x1a2/0x390 drivers/base/dd.c:800
- driver_probe_device+0x50/0x430 drivers/base/dd.c:830
-...
-
-Reported-and-tested-by: syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccbbc229a024fa3e13b5
-Fixes: 2eabb655a968 ("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")
-Cc: stable@kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20250213122259.730772-1-n.zhandarovich@fintech.ru
+Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/633aef0afee7d56d2316f7cc3e1b2a6d518a8cc9.1738280911.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/core.c |   69 +++++++++++++++++++++++++++++-------------------
+ drivers/usb/dwc3/core.h |    2 -
+ drivers/usb/dwc3/drd.c  |    4 +-
+ 3 files changed, 45 insertions(+), 30 deletions(-)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -1131,7 +1131,10 @@ static int cxacru_bind(struct usbatm_dat
- 	struct cxacru_data *instance;
- 	struct usb_device *usb_dev = interface_to_usbdev(intf);
- 	struct usb_host_endpoint *cmd_ep = usb_dev->ep_in[CXACRU_EP_CMD];
--	struct usb_endpoint_descriptor *in, *out;
-+	static const u8 ep_addrs[] = {
-+		CXACRU_EP_CMD + USB_DIR_IN,
-+		CXACRU_EP_CMD + USB_DIR_OUT,
-+		0};
- 	int ret;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -123,11 +123,24 @@ void dwc3_enable_susphy(struct dwc3 *dwc
+ 	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
+ }
  
- 	/* instance init */
-@@ -1179,13 +1182,11 @@ static int cxacru_bind(struct usbatm_dat
+-void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
++void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode, bool ignore_susphy)
+ {
++	unsigned int hw_mode;
+ 	u32 reg;
+ 
+ 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
++
++	 /*
++	  * For DRD controllers, GUSB3PIPECTL.SUSPENDENABLE and
++	  * GUSB2PHYCFG.SUSPHY should be cleared during mode switching,
++	  * and they can be set after core initialization.
++	  */
++	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
++	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD && !ignore_susphy) {
++		if (DWC3_GCTL_PRTCAP(reg) != mode)
++			dwc3_enable_susphy(dwc, false);
++	}
++
+ 	reg &= ~(DWC3_GCTL_PRTCAPDIR(DWC3_GCTL_PRTCAP_OTG));
+ 	reg |= DWC3_GCTL_PRTCAPDIR(mode);
+ 	dwc3_writel(dwc->regs, DWC3_GCTL, reg);
+@@ -207,7 +220,7 @@ static void __dwc3_set_mode(struct work_
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
+ 
+-	dwc3_set_prtcap(dwc, desired_dr_role);
++	dwc3_set_prtcap(dwc, desired_dr_role, false);
+ 
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -651,16 +664,7 @@ static int dwc3_phy_setup(struct dwc3 *d
+ 	 */
+ 	reg &= ~DWC3_GUSB3PIPECTL_UX_EXIT_PX;
+ 
+-	/*
+-	 * Above DWC_usb3.0 1.94a, it is recommended to set
+-	 * DWC3_GUSB3PIPECTL_SUSPHY to '0' during coreConsultant configuration.
+-	 * So default value will be '0' when the core is reset. Application
+-	 * needs to set it to '1' after the core initialization is completed.
+-	 *
+-	 * Similarly for DRD controllers, GUSB3PIPECTL.SUSPENDENABLE must be
+-	 * cleared after power-on reset, and it can be set after core
+-	 * initialization.
+-	 */
++	/* Ensure the GUSB3PIPECTL.SUSPENDENABLE is cleared prior to phy init. */
+ 	reg &= ~DWC3_GUSB3PIPECTL_SUSPHY;
+ 
+ 	if (dwc->u2ss_inp3_quirk)
+@@ -733,15 +737,7 @@ static int dwc3_phy_setup(struct dwc3 *d
+ 		break;
  	}
  
- 	if (usb_endpoint_xfer_int(&cmd_ep->desc))
--		ret = usb_find_common_endpoints(intf->cur_altsetting,
--						NULL, NULL, &in, &out);
-+		ret = usb_check_int_endpoints(intf, ep_addrs);
- 	else
--		ret = usb_find_common_endpoints(intf->cur_altsetting,
--						&in, &out, NULL, NULL);
-+		ret = usb_check_bulk_endpoints(intf, ep_addrs);
+-	/*
+-	 * Above DWC_usb3.0 1.94a, it is recommended to set
+-	 * DWC3_GUSB2PHYCFG_SUSPHY to '0' during coreConsultant configuration.
+-	 * So default value will be '0' when the core is reset. Application
+-	 * needs to set it to '1' after the core initialization is completed.
+-	 *
+-	 * Similarly for DRD controllers, GUSB2PHYCFG.SUSPHY must be cleared
+-	 * after power-on reset, and it can be set after core initialization.
+-	 */
++	/* Ensure the GUSB2PHYCFG.SUSPHY is cleared prior to phy init. */
+ 	reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
  
--	if (ret) {
-+	if (!ret) {
- 		usb_err(usbatm_instance, "cxacru_bind: interface has incorrect endpoints\n");
- 		ret = -ENODEV;
- 		goto fail;
+ 	if (dwc->dis_enblslpm_quirk)
+@@ -1158,6 +1154,25 @@ static int dwc3_core_init(struct dwc3 *d
+ 		}
+ 	}
+ 
++	/*
++	 * Above DWC_usb3.0 1.94a, it is recommended to set
++	 * DWC3_GUSB3PIPECTL_SUSPHY and DWC3_GUSB2PHYCFG_SUSPHY to '0' during
++	 * coreConsultant configuration. So default value will be '0' when the
++	 * core is reset. Application needs to set it to '1' after the core
++	 * initialization is completed.
++	 *
++	 * Certain phy requires to be in P0 power state during initialization.
++	 * Make sure GUSB3PIPECTL.SUSPENDENABLE and GUSB2PHYCFG.SUSPHY are clear
++	 * prior to phy init to maintain in the P0 state.
++	 *
++	 * After phy initialization, some phy operations can only be executed
++	 * while in lower P states. Ensure GUSB3PIPECTL.SUSPENDENABLE and
++	 * GUSB2PHYCFG.SUSPHY are set soon after initialization to avoid
++	 * blocking phy ops.
++	 */
++	if (!DWC3_VER_IS_WITHIN(DWC3, ANY, 194A))
++		dwc3_enable_susphy(dwc, true);
++
+ 	return 0;
+ 
+ err4:
+@@ -1245,7 +1260,7 @@ static int dwc3_core_init_mode(struct dw
+ 
+ 	switch (dwc->dr_mode) {
+ 	case USB_DR_MODE_PERIPHERAL:
+-		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE);
++		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE, false);
+ 
+ 		if (dwc->usb2_phy)
+ 			otg_set_vbus(dwc->usb2_phy->otg, false);
+@@ -1257,7 +1272,7 @@ static int dwc3_core_init_mode(struct dw
+ 			return dev_err_probe(dev, ret, "failed to initialize gadget\n");
+ 		break;
+ 	case USB_DR_MODE_HOST:
+-		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
++		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST, false);
+ 
+ 		if (dwc->usb2_phy)
+ 			otg_set_vbus(dwc->usb2_phy->otg, true);
+@@ -1300,7 +1315,7 @@ static void dwc3_core_exit_mode(struct d
+ 	}
+ 
+ 	/* de-assert DRVVBUS for HOST and OTG mode */
+-	dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE);
++	dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE, true);
+ }
+ 
+ static void dwc3_get_properties(struct dwc3 *dwc)
+@@ -1882,7 +1897,7 @@ static int dwc3_resume_common(struct dwc
+ 		if (ret)
+ 			return ret;
+ 
+-		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE);
++		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_DEVICE, true);
+ 		dwc3_gadget_resume(dwc);
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+@@ -1890,7 +1905,7 @@ static int dwc3_resume_common(struct dwc
+ 			ret = dwc3_core_init_for_resume(dwc);
+ 			if (ret)
+ 				return ret;
+-			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
++			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST, true);
+ 			break;
+ 		}
+ 		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+@@ -1915,7 +1930,7 @@ static int dwc3_resume_common(struct dwc
+ 		if (ret)
+ 			return ret;
+ 
+-		dwc3_set_prtcap(dwc, dwc->current_dr_role);
++		dwc3_set_prtcap(dwc, dwc->current_dr_role, true);
+ 
+ 		dwc3_otg_init(dwc);
+ 		if (dwc->current_otg_role == DWC3_OTG_ROLE_HOST) {
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1475,7 +1475,7 @@ struct dwc3_gadget_ep_cmd_params {
+ #define DWC3_HAS_OTG			BIT(3)
+ 
+ /* prototypes */
+-void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode);
++void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode, bool ignore_susphy);
+ void dwc3_set_mode(struct dwc3 *dwc, u32 mode);
+ u32 dwc3_core_fifo_space(struct dwc3_ep *dep, u8 type);
+ 
+--- a/drivers/usb/dwc3/drd.c
++++ b/drivers/usb/dwc3/drd.c
+@@ -173,7 +173,7 @@ void dwc3_otg_init(struct dwc3 *dwc)
+ 	 * block "Initialize GCTL for OTG operation".
+ 	 */
+ 	/* GCTL.PrtCapDir=2'b11 */
+-	dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_OTG);
++	dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_OTG, true);
+ 	/* GUSB2PHYCFG0.SusPHY=0 */
+ 	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 	reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
+@@ -585,7 +585,7 @@ int dwc3_drd_init(struct dwc3 *dwc)
+ 
+ 		dwc3_drd_update(dwc);
+ 	} else {
+-		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_OTG);
++		dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_OTG, true);
+ 
+ 		/* use OTG block to get ID event */
+ 		irq = dwc3_otg_get_irq(dwc);
 
 
