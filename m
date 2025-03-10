@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7658D233737;
-	Mon, 10 Mar 2025 17:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C9D22E418;
+	Mon, 10 Mar 2025 17:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629539; cv=none; b=hUmNbidkV8R87RR0ftW+U2Y27QshoRTu8x4tKnLNaQJh6/hc8SF+art0eL4bc3BF5H438qFmDkpUOoq8LJMoh8ymHcj9BJPaYDNq7hdeKJQao/vUJdcp0GRYqlWAWbYj8F5+NM5kN5ly6AZFLg71t3oX1IZiPDKdJ9zI7eaQgvQ=
+	t=1741629542; cv=none; b=sUJ/N/UD6BXHOurIS9ZZvQJp1mMOJoRq0k+C0na9n4KW3AEaMf1iHuGzLGnnoiRoq32sUpqEHEYM38O/EmEElmOtUzZfyvbWqbk0gJq/2eyGukgzlv+pUClPm2y6i5KU/cujpEyBVs2EYZmIBSkb1QqF/s2bglUtU510Ncz1+QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629539; c=relaxed/simple;
-	bh=wsh+U3oBNRUiPBecAOLjz8IHxx7308Nxi0ME1YlJ7is=;
+	s=arc-20240116; t=1741629542; c=relaxed/simple;
+	bh=+lcOHe6kl83+54wZGowrtSXFMR467VKu5slrHBMtcBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSAX3YQt/1fLwJXPFfYSSc4fbNrKxvhppxzbhWRxJD0T8YJWCFbGGJD+wl5+hcA+bz5Wx0lP/49L/KJEQzXxqjWW9Xx6IiJD+fSDOhy9aXNU8UXmeU30XCvGudiJSkyntkAqkxQb5iRUGfmQybLtM36Xg0B6VGsgSmShqkfy6Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWxHuKv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ibR0nBIY3qbx/JMNbYrpTQeEtxzFYLQytpEpEdx4m1a23tnxfFefbw19wG381RSrJt1UWF6lND1jaJckgBfH48x03mGtvIlOrg/ei2oldgJ8wATvWEtOfYNN3SNhXSrLLHlQ5BySTQCu9p4GXIA1QDvz59E7xqP895W5D1am9qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfFS1jK3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWxHuKv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020D8C4CEEC;
-	Mon, 10 Mar 2025 17:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfFS1jK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BFEC4CEE5;
+	Mon, 10 Mar 2025 17:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629539;
-	bh=wsh+U3oBNRUiPBecAOLjz8IHxx7308Nxi0ME1YlJ7is=;
+	s=korg; t=1741629542;
+	bh=+lcOHe6kl83+54wZGowrtSXFMR467VKu5slrHBMtcBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TWxHuKv4y7nnToHa1XF0yI/aL1oEgOj8FYKLIlWzzEDb34F11GGD6Mp7UDcGuF9cs
-	 ci2fQWIugKMjlq7wTlxV3q75/IuK6RxAWmzrnS4n+gg+RWCdKXH2pu1xKL3fn84m9F
-	 mpEWtPrmXYZFC8mkmgpktVIFGtMzb1+c6NzWK8RA=
+	b=pfFS1jK3aOtCGv7ZGrVQwFt1YJlY+cU0w4T6f4MvH+wmQrlrG7PtNaTDbkG1XCB08
+	 20llZM+cenlBzbxhKVzf4WnDO+AYsiGjAOLvZ0RPe64daqXZSWvwdsFU7LPfz346YG
+	 oaq+2ne5z+bFql/pHr1ooDmhjfnbJs9H+Qehcu0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 5.15 330/620] gpio: xilinx: remove excess kernel doc
-Date: Mon, 10 Mar 2025 18:02:56 +0100
-Message-ID: <20250310170558.629962494@linuxfoundation.org>
+	Dmitry Osipenko <digetx@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 5.15 331/620] memory: tegra20-emc: Correct memory device mask
+Date: Mon, 10 Mar 2025 18:02:57 +0100
+Message-ID: <20250310170558.668157612@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,33 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Dmitry Osipenko <digetx@gmail.com>
 
-commit 4c7fcbf5077532b80bc233c83d56e09a6bfa16b0 upstream.
+commit 9ff684342ee7d3ea2755c6e9b60bc43085baa3ad upstream.
 
-The irqchip field has been removed from struct xgpio_instance so remove
-the doc as well.
+Memory chip select is swapped when we read mode register, correct it.
+We didn't have devices that use a single LPDDR chip and both chips are
+always identical, hence this change is just a minor improvement.
 
-Fixes: b4510f8fd5d0 ("gpio: xilinx: Convert to immutable irq_chip")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312150239.IyuTVvrL-lkp@intel.com/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 131dd9a436d8 ("memory: tegra20-emc: Support matching timings by LPDDR2 configuration")
+Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
+Link: https://lore.kernel.org/r/20211222043215.28237-2-digetx@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-xilinx.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/memory/tegra/tegra20-emc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-xilinx.c
-+++ b/drivers/gpio/gpio-xilinx.c
-@@ -52,7 +52,6 @@
-  * @dir: GPIO direction shadow register
-  * @gpio_lock: Lock used for synchronization
-  * @irq: IRQ used by GPIO device
-- * @irqchip: IRQ chip
-  * @enable: GPIO IRQ enable/disable bitfield
-  * @rising_edge: GPIO IRQ rising edge enable/disable bitfield
-  * @falling_edge: GPIO IRQ falling edge enable/disable bitfield
+--- a/drivers/memory/tegra/tegra20-emc.c
++++ b/drivers/memory/tegra/tegra20-emc.c
+@@ -540,7 +540,7 @@ static int emc_read_lpddr_mode_register(
+ 					unsigned int register_addr,
+ 					unsigned int *register_data)
+ {
+-	u32 memory_dev = emem_dev + 1;
++	u32 memory_dev = emem_dev ? 1 : 2;
+ 	u32 val, mr_mask = 0xff;
+ 	int err;
+ 
 
 
