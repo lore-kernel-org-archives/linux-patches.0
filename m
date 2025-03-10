@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE91A233145;
-	Mon, 10 Mar 2025 17:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BA3233145;
+	Mon, 10 Mar 2025 17:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627804; cv=none; b=jmgUR7q+nitsJlfTcisiQeDAiN8HnOdjwtD6qz8mqira97CoM+n0nsP3wDwowGyqyZozEHtOu6ZezWpow6SGNDqWVfDRtnYyUpMOXpmpfjgM6r6gDAv46U/FDaz+KzPx3nx2Iig6wOtlwRdfecSeI0rBUldNjKgKM1Ekj3ekzpw=
+	t=1741627806; cv=none; b=HcXU7PS9nk2HyIasGW27f95osdLOgiEEXwgGXtO+ZtakvAjgUYdjBzS8s87kjQ6RUzqe7o328pVah3bKmwa5kRcXj1i8rM1nhYqCRSr/w8v38E3XMfXgfMZEQMe9q0ZQFKtZvRylfE7wumq8HIQdn2lmURokDvTaWeLfhrfSlSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627804; c=relaxed/simple;
-	bh=Aay2TFQj1ZhmU9F35W8FtETXxv48fm+p6X6NkTfHoB0=;
+	s=arc-20240116; t=1741627806; c=relaxed/simple;
+	bh=KPMo/zi66tQnE2BRIY9sze22+u1FRAMtcHNUDIAGLZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDMkOdGhBTWVK506k2V+QY6wa0y9vGQ2vO8AAGbM+1sdKIRoywa4MByiUmdzuS2iWXSCm5Y2Wh4LTOF3BGQlHqy9OG7TiIyaFbHdEJoaTcvQZYzbp8viG1F5vNN6xHd6ES44DMuh4fTFJ2QfcTh5A903iSYrMNKchRdRsXtTeTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vK4TeLht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RxBHUTnfJgG1n0C9OmS7yVMzV9DoA/Lym3jAmvXoChQGarwqa0BAHWt9+lcjH59iCH8uwc8aZG3XeyEsen7nmYC2W/s8UZ1oVfF9e+cR82PhVEqnOvZHffXYXYnpXlzXJBjKZsVTM4j3IamLPoCCzLHj/+DDqLeBCp6j/QJJoxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zd5igt7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vK4TeLht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4D6C4CEE5;
-	Mon, 10 Mar 2025 17:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zd5igt7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B25BC4CEE5;
+	Mon, 10 Mar 2025 17:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627803;
-	bh=Aay2TFQj1ZhmU9F35W8FtETXxv48fm+p6X6NkTfHoB0=;
+	s=korg; t=1741627806;
+	bh=KPMo/zi66tQnE2BRIY9sze22+u1FRAMtcHNUDIAGLZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vK4TeLhtDMt9jsbHYsK5timrGbY1xbICYgoogwj2bYKwiJxxBkq+qlz3Pgj4adSiP
-	 ZptB3wACqi+nhfhvnGCrDQscamkIxqOcwNEm5utK5llsK8vMQ85xt+pnqng2BAUN0H
-	 wePbiGES7fy5OXArtqPL2Gx5VArVdHdngTyzJh/I=
+	b=Zd5igt7S53MznAce4KRZ9gj1QVoH4brbyLdvu5wn2jrttXqdHnCKy186TPtsvN/Q/
+	 fQtFd8/Q5cqzBU/MULXmLngplG4tXfIYU2SB3L0fw118zFA8+RtTN1YRxQ4lOwVb+4
+	 vo5VvlZ6pcQEjHnRoSQ5Psp0eez8m8OcTwvYZp3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH 6.12 213/269] usb: renesas_usbhs: Flush the notify_hotplug_work
-Date: Mon, 10 Mar 2025 18:06:06 +0100
-Message-ID: <20250310170506.180479545@linuxfoundation.org>
+	Sam Winchenbach <swinchenbach@arka.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 249/269] iio: filter: admv8818: Force initialization of SDO
+Date: Mon, 10 Mar 2025 18:06:42 +0100
+Message-ID: <20250310170507.722846014@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,39 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Sam Winchenbach <swinchenbach@arka.org>
 
-commit 552ca6b87e3778f3dd5b87842f95138162e16c82 upstream.
+commit cc2c3540d9477a9931fb0fd851fcaeba524a5b35 upstream.
 
-When performing continuous unbind/bind operations on the USB drivers
-available on the Renesas RZ/G2L SoC, a kernel crash with the message
-"Unable to handle kernel NULL pointer dereference at virtual address"
-may occur. This issue points to the usbhsc_notify_hotplug() function.
+When a weak pull-up is present on the SDO line, regmap_update_bits fails
+to write both the SOFTRESET and SDOACTIVE bits because it incorrectly
+reads them as already set.
 
-Flush the delayed work to avoid its execution when driver resources are
-unavailable.
+Since the soft reset disables the SDO line, performing a
+read-modify-write operation on ADI_SPI_CONFIG_A to enable the SDO line
+doesn't make sense. This change directly writes to the register instead
+of using regmap_update_bits.
 
-Fixes: bc57381e6347 ("usb: renesas_usbhs: use delayed_work instead of work_struct")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250225110248.870417-4-claudiu.beznea.uj@bp.renesas.com
+Fixes: f34fe888ad05 ("iio:filter:admv8818: add support for ADMV8818")
+Signed-off-by: Sam Winchenbach <swinchenbach@arka.org>
+Link: https://patch.msgid.link/SA1P110MB106904C961B0F3FAFFED74C0BCF5A@SA1P110MB1069.NAMP110.PROD.OUTLOOK.COM
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/renesas_usbhs/common.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/filter/admv8818.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/renesas_usbhs/common.c
-+++ b/drivers/usb/renesas_usbhs/common.c
-@@ -781,6 +781,8 @@ static void usbhs_remove(struct platform
+--- a/drivers/iio/filter/admv8818.c
++++ b/drivers/iio/filter/admv8818.c
+@@ -574,21 +574,15 @@ static int admv8818_init(struct admv8818
+ 	struct spi_device *spi = st->spi;
+ 	unsigned int chip_id;
  
- 	dev_dbg(&pdev->dev, "usb remove\n");
+-	ret = regmap_update_bits(st->regmap, ADMV8818_REG_SPI_CONFIG_A,
+-				 ADMV8818_SOFTRESET_N_MSK |
+-				 ADMV8818_SOFTRESET_MSK,
+-				 FIELD_PREP(ADMV8818_SOFTRESET_N_MSK, 1) |
+-				 FIELD_PREP(ADMV8818_SOFTRESET_MSK, 1));
++	ret = regmap_write(st->regmap, ADMV8818_REG_SPI_CONFIG_A,
++			   ADMV8818_SOFTRESET_N_MSK | ADMV8818_SOFTRESET_MSK);
+ 	if (ret) {
+ 		dev_err(&spi->dev, "ADMV8818 Soft Reset failed.\n");
+ 		return ret;
+ 	}
  
-+	flush_delayed_work(&priv->notify_hotplug_work);
-+
- 	/* power off */
- 	if (!usbhs_get_dparam(priv, runtime_pwctrl))
- 		usbhsc_power_ctrl(priv, 0);
+-	ret = regmap_update_bits(st->regmap, ADMV8818_REG_SPI_CONFIG_A,
+-				 ADMV8818_SDOACTIVE_N_MSK |
+-				 ADMV8818_SDOACTIVE_MSK,
+-				 FIELD_PREP(ADMV8818_SDOACTIVE_N_MSK, 1) |
+-				 FIELD_PREP(ADMV8818_SDOACTIVE_MSK, 1));
++	ret = regmap_write(st->regmap, ADMV8818_REG_SPI_CONFIG_A,
++			   ADMV8818_SDOACTIVE_N_MSK | ADMV8818_SDOACTIVE_MSK);
+ 	if (ret) {
+ 		dev_err(&spi->dev, "ADMV8818 SDO Enable failed.\n");
+ 		return ret;
 
 
