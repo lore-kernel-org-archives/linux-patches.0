@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E06717A2E8;
-	Mon, 10 Mar 2025 18:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FCA17A2E8;
+	Mon, 10 Mar 2025 18:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629727; cv=none; b=f2b9txJImez5BDiILH810T56oqBYqfp7HGzvqzQIILrLC60zm/w3xwT16KZQHYck6APwsjBl1NNLNAINw4jEtwCMUrL4/K9hYycC/iQb5zXOAzzBjSaKLXTshbYtXTqlQZHNcj6LhDNDOucxhGbS2N+SlU1tbFlhtWpHjDScUoE=
+	t=1741629730; cv=none; b=nBZ9DyAWUyjKI1UDYfF1uisJ+f3gMRmur/nv2L1l+3b6J/zu15q4MwBfzsceT+Wqzxr4jujRXITOyXgnlkUDh0GX5d+RYMCEh7XogcxQBmLeXx4Fw2eyS2ziitPjvn1eOKtypQjF8ZXGYG7oJCgYzpemPv6tC0h+ycAf+M0XMRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629727; c=relaxed/simple;
-	bh=V+mKPAjzViWrgkOicHikaFK8/NTfYV4aMGOqAe4QGLM=;
+	s=arc-20240116; t=1741629730; c=relaxed/simple;
+	bh=akNmJzVrEj8RSzUwHTPnJa13GQXlpPoF9Bs0+Ab+7+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9GnVC4+bxecJzh2P3VzJk/OMo+MSyubCfjPXqGWDjP+AjRea70ELMxP9y0S9yVnJn+TlCqIFis/0Wb6IFabj6y3YMdO0OszxZ9Fdtnlid6NfzX/+WrwR8G8pcFcxKjyEjXBoffhTH5DAiEKm3MZtG6Z+r/7VWc6sGc65eIuk+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVYY1fYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHBxUirADEXSh1omw4OxKI5OYFw2LIsD42Ekx1PyPy9irL6dy0gr9+HTcsZ0nOkia3Uxk7z//51ZUO9BUjM0hjeyYAKUpByyVIitppVbrwqVUMkieX3fd4TpBlQ7NJ0RTyx8mKTzGZGNF+y2PPG1yUBj7vOfqSXqjwmEOicaitk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwlI9iO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVYY1fYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1795EC4CEE5;
-	Mon, 10 Mar 2025 18:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwlI9iO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF301C4CEE5;
+	Mon, 10 Mar 2025 18:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629727;
-	bh=V+mKPAjzViWrgkOicHikaFK8/NTfYV4aMGOqAe4QGLM=;
+	s=korg; t=1741629730;
+	bh=akNmJzVrEj8RSzUwHTPnJa13GQXlpPoF9Bs0+Ab+7+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVYY1fYJT9GA5j3II6uZLHL8+ldFvUYBaen6m/4e7xnb0KZY7GdUiaaAOsBLRRBF/
-	 DkCYHsNSJ/Uv2HMqFbGdHXK/nYBKY397xKugnKpNKxCbVEDvkNjsaJjXS9aYPpmW90
-	 Qw+E3sd3IgtAqPkNYTdlnuSAoVCPZN9vB32nbnUg=
+	b=UwlI9iO2cdKha9o2oEscfPt6gTuY7/v0Ij3W3ikTHzngaSAYvVrAr96ghL2mYWBqE
+	 kHSnqORrpZOA/YxQ3k3GJVXLDowNEdFb/s6qBCHEnJJj1pTy5WnEaxGyk3p80fN8bJ
+	 t3KEIxsJhkPg9KfDtS7XAM/eh7NQGNDSN8laclGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 395/620] ipv4: use RCU protection in rt_is_expired()
-Date: Mon, 10 Mar 2025 18:04:01 +0100
-Message-ID: <20250310170601.183464959@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.15 386/620] arm64: Handle .ARM.attributes section in linker scripts
+Date: Mon, 10 Mar 2025 18:03:52 +0100
+Message-ID: <20250310170600.829587199@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,44 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit dd205fcc33d92d54eee4d7f21bb073af9bd5ce2b ]
+commit ca0f4fe7cf7183bfbdc67ca2de56ae1fc3a8db2b upstream.
 
-rt_is_expired() must use RCU protection to make
-sure the net structure it reads does not disappear.
+A recent LLVM commit [1] started generating an .ARM.attributes section
+similar to the one that exists for 32-bit, which results in orphan
+section warnings (or errors if CONFIG_WERROR is enabled) from the linker
+because it is not handled in the arm64 linker scripts.
 
-Fixes: e84f84f27647 ("netns: place rt_genid into struct net")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ld.lld: error: arch/arm64/kernel/vdso/vgettimeofday.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: arch/arm64/kernel/vdso/vgetrandom.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+
+  ld.lld: error: vmlinux.a(lib/vsprintf.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+
+Discard the new sections in the necessary linker scripts to resolve the
+warnings, as the kernel and vDSO do not need to retain it, similar to
+the .note.gnu.property section.
+
+Cc: stable@vger.kernel.org
+Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
+Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/vdso/vdso.lds.S |    1 +
+ arch/arm64/kernel/vmlinux.lds.S   |    1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 3522801885787..3ad78bbd6261b 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -400,7 +400,13 @@ static inline int ip_rt_proc_init(void)
+--- a/arch/arm64/kernel/vdso/vdso.lds.S
++++ b/arch/arm64/kernel/vdso/vdso.lds.S
+@@ -37,6 +37,7 @@ SECTIONS
+ 	 */
+ 	/DISCARD/	: {
+ 		*(.note.GNU-stack .note.gnu.property)
++		*(.ARM.attributes)
+ 	}
+ 	.note		: { *(.note.*) }		:text	:note
  
- static inline bool rt_is_expired(const struct rtable *rth)
- {
--	return rth->rt_genid != rt_genid_ipv4(dev_net(rth->dst.dev));
-+	bool res;
-+
-+	rcu_read_lock();
-+	res = rth->rt_genid != rt_genid_ipv4(dev_net_rcu(rth->dst.dev));
-+	rcu_read_unlock();
-+
-+	return res;
- }
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -139,6 +139,7 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.interp .dynamic)
+ 		*(.dynsym .dynstr .hash .gnu.hash)
++		*(.ARM.attributes)
+ 	}
  
- void rt_cache_flush(struct net *net)
--- 
-2.39.5
-
+ 	. = KIMAGE_VADDR;
 
 
