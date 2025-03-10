@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80B4232376;
-	Mon, 10 Mar 2025 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF24422B8D0;
+	Mon, 10 Mar 2025 17:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626847; cv=none; b=q8hT0Ve75L/rI1vQgVvaESyTBTQzxKGpn/J2X4xmTpg1UMe5VL0hU3fXkXVjlKt4rSeryrq7Cu/I/pbE4V5aUnW0T3h9BWEIIZ3InKbkpILo4B0LbARsZLJq/H3QaS+d2Vw8yPickwN2HUjgLWOYlLVCL2/lM/t0Qiwrws3NOig=
+	t=1741626850; cv=none; b=NIX+a3BThQfodzAwEiCvTl/wY/y44cSrpfD6M2keaL1dVmMrLue+8Ga8oFENJexVvP5BEi+il19KaHiSwSCMVDaUKqs1P1Y3P8r+ewQDAndfANfHI+DjA94KyILep8/Ah6kTKBrIss+tKjdrh2di49E0IC/wzdieybsDDKCrNe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626847; c=relaxed/simple;
-	bh=6goeNrC2/8QyLQ11H+Vkt0w/SbWxbqGLMZybWw/DO8E=;
+	s=arc-20240116; t=1741626850; c=relaxed/simple;
+	bh=OXumr60NOCNUDR4+qyqdvCdD2IWuNBCHgYrHGUubjVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkPP+fOC+qr1sfFQ8TQEzHjl9wGLiJYhGNFOv0nOx2v70VkUKAAFPZUH8CpO0cEHXhtqVUdK4vfXUht/E6Ky46f/Y0b5FOjPidXWATvc8y1GwOXyU48/9Qg6TrUObUDjCn+cZeuviFAanmu8fSx7KYyirqt8sVH2IZCA3gsv+sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WF0TncyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfnR8vkNHzdlCxwVIEhB2X7a0S9KiCrUqP2Thn3Olen2G1p6887gcq8r5igLpLxwTIHtMPxM/k31Y85gfuxS2jderXiX+O8r4LADjZClGmrIKeROZdbG3J4l4OZVBylEmLlFwodM9WMAbU+ddpoNWXB4TJ/6tN1B8OzHGMpgUo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QguRn73A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WF0TncyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545E5C4CEED;
-	Mon, 10 Mar 2025 17:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QguRn73A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37135C4CEE5;
+	Mon, 10 Mar 2025 17:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626847;
-	bh=6goeNrC2/8QyLQ11H+Vkt0w/SbWxbqGLMZybWw/DO8E=;
+	s=korg; t=1741626850;
+	bh=OXumr60NOCNUDR4+qyqdvCdD2IWuNBCHgYrHGUubjVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WF0TncyIJduh12ScMrDlRIAkkVXi7c8aCd+3PRGjOpmtjWFKzD2Xm3EwBsCr1+gzi
-	 6em9C7meH2QwVfPVVOKma7FFayQZ8LDjUjzmSpRm2wdmWW5dXWjUoAIlC9+6dYpnJH
-	 f2A+0ITM3PQ2mPnqy34zlX6vEe2m8RgWsFc5HpvU=
+	b=QguRn73ADu6LvTeQFf20e17huzGqXQAGngSmXQn6QT9m8YmicwQdyr+asibWeA6r/
+	 qpdh297w+3TGqw/E1aK27RolJifzGacBohHxbVnGi4UrjbUkqZ1ulmCqbAimq3H8zu
+	 e0Uv4Ld8maXJjJnByRDOi5uJVZxFmP+f0uH4QKsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 106/207] nvmet: remove old function prototype
-Date: Mon, 10 Mar 2025 18:04:59 +0100
-Message-ID: <20250310170451.974941904@linuxfoundation.org>
+Subject: [PATCH 6.13 133/207] ethtool: linkstate: migrate linkstate functions to support multi-PHY setups
+Date: Mon, 10 Mar 2025 18:05:26 +0100
+Message-ID: <20250310170453.088466395@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,32 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 0979ff3676b1b4e6a20970bc265491d23c2da42b ]
+[ Upstream commit fe55b1d401c697c2ef126fe3ebbcaa6885fced5a ]
 
-nvmet_subsys_nsid_exists() doesn't exist anymore
+Adapt linkstate_get_sqi() and linkstate_get_sqi_max() to take a
+phy_device argument directly, enabling support for setups with
+multiple PHYs. The previous assumption of a single PHY attached to
+a net_device no longer holds.
 
-Fixes: 74d16965d7ac ("nvmet-loop: avoid using mutex in IO hotpath")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Use ethnl_req_get_phydev() to identify the appropriate PHY device
+for the operation. Update linkstate_prepare_data() and related
+logic to accommodate this change, ensuring compatibility with
+multi-PHY configurations.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 637399bf7e77 ("net: ethtool: netlink: Allow NULL nlattrs when getting a phy_device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/nvmet.h | 1 -
- 1 file changed, 1 deletion(-)
+ net/ethtool/linkstate.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 7233549f7c8a0..016a5c2505464 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -607,7 +607,6 @@ void nvmet_subsys_disc_changed(struct nvmet_subsys *subsys,
- 		struct nvmet_host *host);
- void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
- 		u8 event_info, u8 log_page);
--bool nvmet_subsys_nsid_exists(struct nvmet_subsys *subsys, u32 nsid);
+diff --git a/net/ethtool/linkstate.c b/net/ethtool/linkstate.c
+index 34d76e87847d0..459cfea7652d4 100644
+--- a/net/ethtool/linkstate.c
++++ b/net/ethtool/linkstate.c
+@@ -26,9 +26,8 @@ const struct nla_policy ethnl_linkstate_get_policy[] = {
+ 		NLA_POLICY_NESTED(ethnl_header_policy_stats),
+ };
  
- #define NVMET_MIN_QUEUE_SIZE	16
- #define NVMET_MAX_QUEUE_SIZE	1024
+-static int linkstate_get_sqi(struct net_device *dev)
++static int linkstate_get_sqi(struct phy_device *phydev)
+ {
+-	struct phy_device *phydev = dev->phydev;
+ 	int ret;
+ 
+ 	if (!phydev)
+@@ -46,9 +45,8 @@ static int linkstate_get_sqi(struct net_device *dev)
+ 	return ret;
+ }
+ 
+-static int linkstate_get_sqi_max(struct net_device *dev)
++static int linkstate_get_sqi_max(struct phy_device *phydev)
+ {
+-	struct phy_device *phydev = dev->phydev;
+ 	int ret;
+ 
+ 	if (!phydev)
+@@ -100,19 +98,28 @@ static int linkstate_prepare_data(const struct ethnl_req_info *req_base,
+ {
+ 	struct linkstate_reply_data *data = LINKSTATE_REPDATA(reply_base);
+ 	struct net_device *dev = reply_base->dev;
++	struct nlattr **tb = info->attrs;
++	struct phy_device *phydev;
+ 	int ret;
+ 
++	phydev = ethnl_req_get_phydev(req_base, tb[ETHTOOL_A_LINKSTATE_HEADER],
++				      info->extack);
++	if (IS_ERR(phydev)) {
++		ret = PTR_ERR(phydev);
++		goto out;
++	}
++
+ 	ret = ethnl_ops_begin(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 	data->link = __ethtool_get_link(dev);
+ 
+-	ret = linkstate_get_sqi(dev);
++	ret = linkstate_get_sqi(phydev);
+ 	if (linkstate_sqi_critical_error(ret))
+ 		goto out;
+ 	data->sqi = ret;
+ 
+-	ret = linkstate_get_sqi_max(dev);
++	ret = linkstate_get_sqi_max(phydev);
+ 	if (linkstate_sqi_critical_error(ret))
+ 		goto out;
+ 	data->sqi_max = ret;
+@@ -127,9 +134,9 @@ static int linkstate_prepare_data(const struct ethnl_req_info *req_base,
+ 			   sizeof(data->link_stats) / 8);
+ 
+ 	if (req_base->flags & ETHTOOL_FLAG_STATS) {
+-		if (dev->phydev)
++		if (phydev)
+ 			data->link_stats.link_down_events =
+-				READ_ONCE(dev->phydev->link_down_events);
++				READ_ONCE(phydev->link_down_events);
+ 
+ 		if (dev->ethtool_ops->get_link_ext_stats)
+ 			dev->ethtool_ops->get_link_ext_stats(dev,
 -- 
 2.39.5
 
