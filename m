@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1A318DB24;
-	Mon, 10 Mar 2025 17:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5E222F164;
+	Mon, 10 Mar 2025 17:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628196; cv=none; b=vGWtMvIoKJFKPET/17MTLW2Nr0zP5rBh/OcE0K0BUbUwzhdX6zVW9gOVBcgZaX+CPqMRn3Zv/sXF0kk2AOEn7iZOJHvJrrUyYm4tS4R3oVOEze2+oX2J09O5YvtxPnE2IW3birYUcqs7Ej2f5rqodiWPLgjtfsAcwcK0dshZnHQ=
+	t=1741628199; cv=none; b=DtLLN8XVJstmA95ga/KzxKOqmUm79e1NvtdDyPw+zsrN+1H1dfDjfhJm+q3aeN+jBfaL8R+vCk90SBy3ZVsY+j+Rfl4Hh7BEvaEJcgIhMGz4v1ddMinkQMkqw0tjLgLG67zsbmJ6LdisQW3gFjNjlWIEXJMba9qV++XqdcBErAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628196; c=relaxed/simple;
-	bh=vaYheL08dtBnQXLh7VdR11NxPGe4XzKTBs30V5w+7S4=;
+	s=arc-20240116; t=1741628199; c=relaxed/simple;
+	bh=iK1mpza4dN83YUaPm3BcCxKd4dBaCkcBVP4Y5LfLAZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Is6wkoZMrWjPMp3Pum9EFzFbW9xPkO9lPayu1W89QMx3mRzhro9VvrsKtHEDmeq4LQHY+PqbUEpElN/CVj0khnXQKD/JXUBLp2m6c99mPhrSOFqdCUKFeHWNytO+4i5ZmPYcqAa2zT2DtNcG1QEJafUlLhgtRRKkwaV8R/nas9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsUgcMUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYGSckCgys5I52pqd7NfEBrdV7VXKPfUxZjf7BzEHld9TvNoqx5RRry0nQoU+SPXFEwltBGtU1FwG4UE6GQkRLsPU3tmPItZBK//OWSg2wXyMwy34Btwiotq/0CJ2QOeFNVrRGcsbzQXmVX25AFCTKObuXwbJ8DEv4PR95UmgI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn1Yl3Td; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsUgcMUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B725DC4CEE5;
-	Mon, 10 Mar 2025 17:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn1Yl3Td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99737C4CEE5;
+	Mon, 10 Mar 2025 17:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628196;
-	bh=vaYheL08dtBnQXLh7VdR11NxPGe4XzKTBs30V5w+7S4=;
+	s=korg; t=1741628199;
+	bh=iK1mpza4dN83YUaPm3BcCxKd4dBaCkcBVP4Y5LfLAZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsUgcMUnraD/9iyTUxi5z0R0OLiQwEq6NYtjfNDz+wVb+znGmTaeLP75+wkQ81Kg0
-	 SUjaCIQMgCT7RRSi6LDYNMXYGkzKacZlRRcMl0WFQowtbw0M2QNSow/f14gcB5eOIr
-	 +ma0p5hTZO/0gxKmVrPAkwjmr5XQHS9Z2pDcZ078=
+	b=Gn1Yl3Tdxa2Mk2QXbnXae/vWWggsW+Y5OwM8jS8B8irH+Ug6cwbvmFPNqq9mqZzTY
+	 MpwXJPvrBEOht/4g/dp9BFd1TIpS8cnWXQan2S3ZvHpHjybBs4NzCnfYhcfKaAlpk5
+	 r/JJFHyPR7HpCPDAJ0xWNutCgNd5srsZzaA7CMMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Subject: [PATCH 6.6 120/145] slimbus: messaging: Free transaction ID in delayed interrupt scenario
-Date: Mon, 10 Mar 2025 18:06:54 +0100
-Message-ID: <20250310170439.609393536@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.6 121/145] bus: mhi: host: pci_generic: Use pci_try_reset_function() to avoid deadlock
+Date: Mon, 10 Mar 2025 18:06:55 +0100
+Message-ID: <20250310170439.653874095@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,55 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Visweswara Tanuku <quic_vtanuku@quicinc.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit dcb0d43ba8eb9517e70b1a0e4b0ae0ab657a0e5a upstream.
+commit a321d163de3d8aa38a6449ab2becf4b1581aed96 upstream.
 
-In case of interrupt delay for any reason, slim_do_transfer()
-returns timeout error but the transaction ID (TID) is not freed.
-This results into invalid memory access inside
-qcom_slim_ngd_rx_msgq_cb() due to invalid TID.
+There are multiple places from where the recovery work gets scheduled
+asynchronously. Also, there are multiple places where the caller waits
+synchronously for the recovery to be completed. One such place is during
+the PM shutdown() callback.
 
-Fix the issue by freeing the TID in slim_do_transfer() before
-returning timeout error to avoid invalid memory access.
+If the device is not alive during recovery_work, it will try to reset the
+device using pci_reset_function(). This function internally will take the
+device_lock() first before resetting the device. By this time, if the lock
+has already been acquired, then recovery_work will get stalled while
+waiting for the lock. And if the lock was already acquired by the caller
+which waits for the recovery_work to be completed, it will lead to
+deadlock.
 
-Call trace:
-__memcpy_fromio+0x20/0x190
-qcom_slim_ngd_rx_msgq_cb+0x130/0x290 [slim_qcom_ngd_ctrl]
-vchan_complete+0x2a0/0x4a0
-tasklet_action_common+0x274/0x700
-tasklet_action+0x28/0x3c
-_stext+0x188/0x620
-run_ksoftirqd+0x34/0x74
-smpboot_thread_fn+0x1d8/0x464
-kthread+0x178/0x238
-ret_from_fork+0x10/0x20
-Code: aa0003e8 91000429 f100044a 3940002b (3800150b)
----[ end trace 0fe00bec2b975c99 ]---
-Kernel panic - not syncing: Oops: Fatal exception in interrupt.
+This is what happened on the X1E80100 CRD device when the device died
+before shutdown() callback. Driver core calls the driver's shutdown()
+callback while holding the device_lock() leading to deadlock.
 
-Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Link: https://lore.kernel.org/r/20250124125740.16897-1-quic_vtanuku@quicinc.com
+And this deadlock scenario can occur on other paths as well, like during
+the PM suspend() callback, where the driver core would hold the
+device_lock() before calling driver's suspend() callback. And if the
+recovery_work was already started, it could lead to deadlock. This is also
+observed on the X1E80100 CRD.
+
+So to fix both issues, use pci_try_reset_function() in recovery_work. This
+function first checks for the availability of the device_lock() before
+trying to reset the device. If the lock is available, it will acquire it
+and reset the device. Otherwise, it will return -EAGAIN. If that happens,
+recovery_work will fail with the error message "Recovery failed" as not
+much could be done.
+
+Cc: stable@vger.kernel.org # 5.12
+Reported-by: Johan Hovold <johan@kernel.org>
+Closes: https://lore.kernel.org/mhi/Z1me8iaK7cwgjL92@hovoldconsulting.com
+Fixes: 7389337f0a78 ("mhi: pci_generic: Add suspend/resume/recovery procedure")
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Analyzed-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/mhi/Z2KKjWY2mPen6GPL@hovoldconsulting.com/
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Link: https://lore.kernel.org/r/20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/messaging.c |    5 +++--
+ drivers/bus/mhi/host/pci_generic.c |    5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -147,8 +147,9 @@ int slim_do_transfer(struct slim_control
- 	}
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -892,8 +892,9 @@ static void mhi_pci_recovery_work(struct
+ err_unprepare:
+ 	mhi_unprepare_after_power_down(mhi_cntrl);
+ err_try_reset:
+-	if (pci_reset_function(pdev))
+-		dev_err(&pdev->dev, "Recovery failed\n");
++	err = pci_try_reset_function(pdev);
++	if (err)
++		dev_err(&pdev->dev, "Recovery failed: %d\n", err);
+ }
  
- 	ret = ctrl->xfer_msg(ctrl, txn);
--
--	if (!ret && need_tid && !txn->msg->comp) {
-+	if (ret == -ETIMEDOUT) {
-+		slim_free_txn_tid(ctrl, txn);
-+	} else if (!ret && need_tid && !txn->msg->comp) {
- 		unsigned long ms = txn->rl + HZ;
- 
- 		timeout = wait_for_completion_timeout(txn->comp,
+ static void health_check(struct timer_list *t)
 
 
