@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36DA17CA12;
-	Mon, 10 Mar 2025 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92A417CA12;
+	Mon, 10 Mar 2025 17:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629075; cv=none; b=aI+D3U9VjO3wG8I1PnPfVbKS11z0X6Dtdjniw/RZ1h9w1Qk3KzaBpvG51BXAiW1VHt2Oxv0zs6Cyh8b+AOThH6E8+cuEl2+wuB6xiThLClN9pbyAzP1ntIRGdFgCVO5jSekielNCKDKZZgVjCydVTOTBrCYnMvHRgWrN2l/pYvU=
+	t=1741629077; cv=none; b=ZUQAX5sUS9V9et7I0vQToOGHbhczRrEe1kGfyCpVPycQsh+d095XdZir5MsOXCLsDkZPy0qt9QpYM6YYVHUZUm0zdtStUr3QOlROaVsqLpPQ2ryBr32nGZ2hWJiodYeo6omB+kQ5qi8WN5BluY4ZhYIwVaPJcyEustnmbk7wprM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629075; c=relaxed/simple;
-	bh=yp1H4xE5wd9Q4nl0vasT7rlW+XN6Jg5nyInLcUcX7m8=;
+	s=arc-20240116; t=1741629077; c=relaxed/simple;
+	bh=3mTbJ2+oDBuw7dk9Pnu3H/KnfwoOJRgz8W4hfV63+wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KWIpc0yyR0kTzMwC81dkvRpwqGAxbC4xC6G7PwsFPDLjKf4MtPnYks8M8XKZJbI68OeiWEMQdsXz1x9dVQvtUrpQvqW9pmHmr9ToabI7EBePMmcziGK+9sygobK5K0mE4/VelnzH9L9bfKU4/Jm6BprCIrcAMBQHja5kWqrJo8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t56sZfPA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PgShPB1PEt/5QX0kEfirOrLeGwpRY8ILpr7uxKZVLbiDy5gQMwg6ezUMGoWpkqPZHV6O9piAKrLmAQ2MdCjlmmRKKRkvHqWQyPmWZXNDS6XEKgLvzlLPM83HXQKmSKAOzKBock25re4t+nkvchLRwatqx7kedVh/EFDmTH87R+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjCiWcKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t56sZfPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76386C4CEE5;
-	Mon, 10 Mar 2025 17:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjCiWcKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A27C4CEE5;
+	Mon, 10 Mar 2025 17:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629074;
-	bh=yp1H4xE5wd9Q4nl0vasT7rlW+XN6Jg5nyInLcUcX7m8=;
+	s=korg; t=1741629077;
+	bh=3mTbJ2+oDBuw7dk9Pnu3H/KnfwoOJRgz8W4hfV63+wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t56sZfPASiVKjMXOHdwuSG+tmF+/IZ47ZR7/OZ40Fb9jz6Fxe5lG8X7zmnYHpjLX+
-	 eNiaQOdk/gQjuF3efwJ5LihyIJVU116krDSCxRPsYW10+zoHzEqdgBnmJukKyzRDFq
-	 +08AgBqre7TQmuLMsWSTBLJqQYiUoFltel2tCjlg=
+	b=PjCiWcKA2bQLBriRX1rtRmPl13dh/pepsnANqLvL5BlhT4IYQ3s9NI41VjVoZQDuN
+	 5h6eSXmFqz8lEKlLG6+FgeZgGYXoZb8WFbD5YkqnRLXag5Dmgjdn3e8pnT2OBnlz1r
+	 2CGmZL5SmJ1gDS5cBO2BpJ3awdac6gb7tKcCY+aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/620] net: davicom: fix UAF in dm9000_drv_remove
-Date: Mon, 10 Mar 2025 18:00:14 +0100
-Message-ID: <20250310170552.252938758@linuxfoundation.org>
+Subject: [PATCH 5.15 169/620] ptp: Properly handle compat ioctls
+Date: Mon, 10 Mar 2025 18:00:15 +0100
+Message-ID: <20250310170552.291487964@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,49 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 19e65c45a1507a1a2926649d2db3583ed9d55fd9 ]
+[ Upstream commit 19ae40f572a9ce1ade9954990af709a03fd37010 ]
 
-dm is netdev private data and it cannot be
-used after free_netdev() call. Using dm after free_netdev()
-can cause UAF bug. Fix it by moving free_netdev() at the end of the
-function.
+Pointer arguments passed to ioctls need to pass through compat_ptr() to
+work correctly on s390; as explained in Documentation/driver-api/ioctl.rst.
+Detect compat mode at runtime and call compat_ptr() for those commands
+which do take pointer arguments.
 
-This is similar to the issue fixed in commit
-ad297cd2db89 ("net: qcom/emac: fix UAF in emac_remove").
-
-This bug is detected by our static analysis tool.
-
-Fixes: cf9e60aa69ae ("net: davicom: Fix regulator not turned off on driver removal")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-CC: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250123214213.623518-1-chenyuan0y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/lkml/1ba5d3a4-7931-455b-a3ce-85a968a7cb10@app.fastmail.com/
+Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://patch.msgid.link/20250125-posix-clock-compat_ioctl-v2-1-11c865c500eb@weissschuh.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/davicom/dm9000.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_chardev.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/davicom/dm9000.c b/drivers/net/ethernet/davicom/dm9000.c
-index e842de6f66356..afa92b44c8ebb 100644
---- a/drivers/net/ethernet/davicom/dm9000.c
-+++ b/drivers/net/ethernet/davicom/dm9000.c
-@@ -1773,10 +1773,11 @@ dm9000_drv_remove(struct platform_device *pdev)
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -4,6 +4,7 @@
+  *
+  * Copyright (C) 2010 OMICRON electronics GmbH
+  */
++#include <linux/compat.h>
+ #include <linux/module.h>
+ #include <linux/posix-clock.h>
+ #include <linux/poll.h>
+@@ -124,6 +125,9 @@ long ptp_ioctl(struct posix_clock *pc, u
+ 	struct timespec64 ts;
+ 	int enable, err = 0;
  
- 	unregister_netdev(ndev);
- 	dm9000_release_board(pdev, dm);
--	free_netdev(ndev);		/* free device structure */
- 	if (dm->power_supply)
- 		regulator_disable(dm->power_supply);
- 
-+	free_netdev(ndev);		/* free device structure */
++	if (in_compat_syscall() && cmd != PTP_ENABLE_PPS && cmd != PTP_ENABLE_PPS2)
++		arg = (unsigned long)compat_ptr(arg);
 +
- 	dev_dbg(&pdev->dev, "released and freed device\n");
- 	return 0;
- }
--- 
-2.39.5
-
+ 	switch (cmd) {
+ 
+ 	case PTP_CLOCK_GETCAPS:
 
 
