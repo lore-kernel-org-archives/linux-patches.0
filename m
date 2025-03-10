@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AC522E418;
-	Mon, 10 Mar 2025 17:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DC822D7A6;
+	Mon, 10 Mar 2025 17:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628931; cv=none; b=O1RnsYX4uGzK5sgeI8RyLB7jmPEgCPth1eL2wSeNzw2tZ3d+CxeSUdorUWORv8AEfqWPdVkP6iOoWq84ZwBgobipeNZlddEzq6N7OVSdP55Q/N6DLCc+Ss8OWqTNuwu0ebJ9DKUoq/tJYfYXhF1eKltQeEmEOLcplBwfdU2Tl5g=
+	t=1741628933; cv=none; b=cYG6BiMzuc8r1R9c/esAQ/pCiaKaL6a1ZxOvxmRHlMurJHMCkN+wF8LbolDVK1D+Y3uDmjCQqxYaZuGSseo0Jzt7lPpbWCRgPttPxeOX3B5Ry38FcqOe1NC9YHcOHiTPzH1E3H42D1WGRBTk1InVuphRj6v7krhlU+xfNFwQ6l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628931; c=relaxed/simple;
-	bh=/DEwEEhGfAj5zTjhRnqqQdApk8sjXY3nTVC7877Ej2M=;
+	s=arc-20240116; t=1741628933; c=relaxed/simple;
+	bh=4LV/FX5DmYgDx2ZL9Q2xCnGd2uv+3ozl2czwK8J87Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zgb5YvUZk4ZqkG5qCd2Sy2EJj8s/P17X2W3dLrFiSifThq+EBO3uRx6hJamVm8R5pLR0iaOeBV/076us2PN4islI/zB66ZZDamhRIJU2IIFMUGMxo4PqsNawWnGNui6PSVSoliILzL6MNKBnK5dqqJlWclyWCiCNpMfRBw/crmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc811nEK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/jDVpe1+D5Aqbr5eX7RvME0S2W2rtOcY6qVBNLiG2qo0sEdqwCXvo2iT3PYZ3L3aLvJ8SrqW1AyABHhXy0HdJ9ESCtk48U97Mmd+Ez2O58JZmIZHFSmtBua3XAwkfm2JWKnDd8XdJJaV/PYweRDhF8gUsPVtRtXgH1NyMTMkTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M98EI5UC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc811nEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5118CC4CEE5;
-	Mon, 10 Mar 2025 17:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M98EI5UC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380A6C4CEE5;
+	Mon, 10 Mar 2025 17:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628930;
-	bh=/DEwEEhGfAj5zTjhRnqqQdApk8sjXY3nTVC7877Ej2M=;
+	s=korg; t=1741628933;
+	bh=4LV/FX5DmYgDx2ZL9Q2xCnGd2uv+3ozl2czwK8J87Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fc811nEKtGKA9XS63S4PxV46/n/WL8G/JLAFwOLeJFNkF7RCgRdOCl14p3dg0LQ8r
-	 f9IHqqR30tNSYEvA0fWT/5r1ckU5EX+yjNB8osLhttWOAeVOBnh+nrvyghtOQweX5J
-	 pIWqiWwAsQ01xy0UEHyd2twD4pz6f7MVLSvXEJ5E=
+	b=M98EI5UCCB3w1rPNUtEdO6GegNJPXRjM09G58SWphQXedC+enaEeemqd7tZM9fCA5
+	 x9sYbO894iM72Q9hpECN4WWcRVZbCDzPjC9fpTQ74VaT6wFORtBmyBc17q7blF9CJh
+	 Pe+Ikjp7O6KVfjPuol6h9FEMS1oO/JdR652TC7FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/620] arm64: dts: mediatek: mt8183: kenzo: Support second source touchscreen
-Date: Mon, 10 Mar 2025 17:59:17 +0100
-Message-ID: <20250310170549.989359368@linuxfoundation.org>
+Subject: [PATCH 5.15 120/620] arm64: dts: qcom: msm8994: correct sleep clock frequency
+Date: Mon, 10 Mar 2025 17:59:26 +0100
+Message-ID: <20250310170550.339080796@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5ec5dc73c5ac0c6e06803dc3b5aea4493e856568 ]
+[ Upstream commit a4148d869d47d8c86da0291dd95d411a5ebe90c8 ]
 
-Some kenzo devices use second source touchscreen.
+The MSM8994 platform uses PM8994/6 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 0a9cefe21aec ("arm64: dts: mt8183: Add kukui-jacuzzi-kenzo board")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Link: https://lore.kernel.org/r/20241213-touchscreen-v3-1-7c1f670913f9@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-3-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts   | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-index 6f1aa692753ad..a477e2cce2048 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-@@ -10,3 +10,18 @@
- 	model = "Google kenzo sku17 board";
- 	compatible = "google,juniper-sku17", "google,juniper", "mediatek,mt8183";
- };
-+
-+&i2c0 {
-+	touchscreen@40 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x40>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchscreen_pins>;
-+
-+		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
-+
-+		post-power-on-delay-ms = <70>;
-+		hid-descr-addr = <0x0001>;
-+	};
-+};
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index fafeb790c5c59..1ae2fbef90582 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -25,7 +25,7 @@
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 			clock-output-names = "sleep_clk";
+ 		};
+ 	};
 -- 
 2.39.5
 
