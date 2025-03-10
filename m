@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B88234966;
-	Mon, 10 Mar 2025 18:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D301BBBFD;
+	Mon, 10 Mar 2025 18:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630836; cv=none; b=U0IAcj1WnWdjKS0vFacwZ5seRJRSaCx12+sWbvxTfrZUnPfLTY1caNWu7zr5q7nvUNy421m2xheNJybPYr/IWX/DXuh/cB8KCcrOrJRl/F3Dvml8Nr7L/rkm26f2ytObRusyxNlaWDk2TI/HnT02UFvir0aS/2BRBRb0rbO8dQk=
+	t=1741630839; cv=none; b=TUENez+Jw+gU6RkoWVE//M7FvVkKEHCHBlr9g07KWh91M57j4VBZZrQ3zDjJvvXuOCvgf9KvwX9l8mmw0NNNEwZWCSaXxzD+B3u403EIJ5CzbRqVujQ1Xa4sk4lgDq2aTJTMZBXYtQ4EPTPpEx5tTu8aWtQIIZzqBaoOuC8s8Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630836; c=relaxed/simple;
-	bh=h4VaJ82Qj92sj+vELKQ1cGXMbSwdCpaTDzROKpW/AAs=;
+	s=arc-20240116; t=1741630839; c=relaxed/simple;
+	bh=8+o09/tUdQZZIy6qgV18tcdtJv9UhjX8rPX+uhucWSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvPjK6Jr/dzzCGm4XakJp753XZ54DjaICQBk8CeJ2R1uSjqVElqfFHHw0pNrhjVyJD4xrcraRf3TWvknf6Rwm6QgRjvvrfi638v4bhP+pRxeK54zVjZS7+j9R+bfX5TumTwUB2SaRWEM2KKvlqObamZZW3Qs/8qCDzSo5Om/u1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH0wvquk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OhkV3+GyXOsUri53RBPgNbc8E6CYGMmfqNmdObez6CYUChd4wmdoUNJr3j4RuH5HNX5n2QhgEsVBQtqRGRbOpTL142lyZs0xcsEmcz2edKnREoiOvkEkXpmR4AWIHxaH1Xb+WERSnl9D3EZ0FXp07NJs6j3RwO/X4AIdSCUJ9kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMx5rcF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH0wvquk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572AC4AF0B;
-	Mon, 10 Mar 2025 18:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMx5rcF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B18C4CEE5;
+	Mon, 10 Mar 2025 18:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630836;
-	bh=h4VaJ82Qj92sj+vELKQ1cGXMbSwdCpaTDzROKpW/AAs=;
+	s=korg; t=1741630839;
+	bh=8+o09/tUdQZZIy6qgV18tcdtJv9UhjX8rPX+uhucWSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH0wvqukffDcI7TwIVa8koNLMHFHzzOwQ0wMk13pIu8EUOl5PoDvOfDj71R9tsuCF
-	 DGbcr9xnEkHpNHtg2wGHmjEXw1E0KytXKWZjPxlCNWpQ5EZFl2UrgYVnaIUtSvL05+
-	 qHDSPdo2CqHA52HejgpovOQpo4b06+SblF8iXw7k=
+	b=aMx5rcF5vqAWFZPGIxY/e1PRQZaZ0BFoz5RPKMdrZsOFkU4NzcUQb7GH6sJtSgChL
+	 pZCj1F+5OsltDpl1CDtFSv8wvNhAsSDFiHhSf1RobGhBl6lWzsujQxxRjIQbNdLiiI
+	 ih+ab/SM2KSaAxvKGa5h8othjCpnieFDTv4Z6J3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 524/620] phy: exynos5-usbdrd: fix MPLL_MULTIPLIER and SSC_REFCLKSEL masks in refclk
-Date: Mon, 10 Mar 2025 18:06:10 +0100
-Message-ID: <20250310170606.234605851@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christop Hellwig <hch@infradead.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 551/620] mm: dont skip arch_sync_kernel_mappings() in error paths
+Date: Mon, 10 Mar 2025 18:06:37 +0100
+Message-ID: <20250310170607.292006566@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,53 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit e2158c953c973adb49383ddea2504faf08d375b7 upstream.
+commit 3685024edd270f7c791f993157d65d3c928f3d6e upstream.
 
-In exynos5_usbdrd_{pipe3,utmi}_set_refclk(), the masks
-PHYCLKRST_MPLL_MULTIPLIER_MASK and PHYCLKRST_SSC_REFCLKSEL_MASK are not
-inverted when applied to the register values. Fix it.
+Fix callers that previously skipped calling arch_sync_kernel_mappings() if
+an error occurred during a pgtable update.  The call is still required to
+sync any pgtable updates that may have occurred prior to hitting the error
+condition.
 
-Cc: stable@vger.kernel.org
-Fixes: 59025887fb08 ("phy: Add new Exynos5 USB 3.0 PHY driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Anand Moon <linux.amoon@gmail.com>
-Link: https://lore.kernel.org/r/20250209-exynos5-usbdrd-masks-v1-1-4f7f83f323d7@disroot.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+These are theoretical bugs discovered during code review.
+
+Link: https://lkml.kernel.org/r/20250226121610.2401743-1-ryan.roberts@arm.com
+Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
+Fixes: 0c95cba49255 ("mm: apply_to_pte_range warn and fail if a large pte is encountered")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christop Hellwig <hch@infradead.org>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/memory.c  |    6 ++++--
+ mm/vmalloc.c |    4 ++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -288,9 +288,9 @@ exynos5_usbdrd_pipe3_set_refclk(struct p
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2713,8 +2713,10 @@ static int __apply_to_page_range(struct
+ 		next = pgd_addr_end(addr, end);
+ 		if (pgd_none(*pgd) && !create)
+ 			continue;
+-		if (WARN_ON_ONCE(pgd_leaf(*pgd)))
+-			return -EINVAL;
++		if (WARN_ON_ONCE(pgd_leaf(*pgd))) {
++			err = -EINVAL;
++			break;
++		}
+ 		if (!pgd_none(*pgd) && WARN_ON_ONCE(pgd_bad(*pgd))) {
+ 			if (!create)
+ 				continue;
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -556,13 +556,13 @@ static int vmap_small_pages_range_noflus
+ 			mask |= PGTBL_PGD_MODIFIED;
+ 		err = vmap_pages_p4d_range(pgd, addr, next, prot, pages, &nr, &mask);
+ 		if (err)
+-			return err;
++			break;
+ 	} while (pgd++, addr = next, addr != end);
  
- 	/* FSEL settings corresponding to reference clock */
--	reg &= ~PHYCLKRST_FSEL_PIPE_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_PIPE_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	switch (phy_drd->extrefclk) {
- 	case EXYNOS5_FSEL_50MHZ:
- 		reg |= (PHYCLKRST_MPLL_MULTIPLIER_50M_REF |
-@@ -332,9 +332,9 @@ exynos5_usbdrd_utmi_set_refclk(struct ph
- 	reg &= ~PHYCLKRST_REFCLKSEL_MASK;
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
+ 	if (mask & ARCH_PAGE_TABLE_SYNC_MASK)
+ 		arch_sync_kernel_mappings(start, end);
  
--	reg &= ~PHYCLKRST_FSEL_UTMI_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_UTMI_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	reg |= PHYCLKRST_FSEL(phy_drd->extrefclk);
+-	return 0;
++	return err;
+ }
  
- 	return reg;
+ /*
 
 
