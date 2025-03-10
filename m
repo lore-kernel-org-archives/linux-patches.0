@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBDB230BF6;
-	Mon, 10 Mar 2025 17:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7065C233148;
+	Mon, 10 Mar 2025 17:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626691; cv=none; b=uKgihqzKnRM6FiOIF01ND9Z7Jk6BEnh6VBeno6Dk8mFUzmtN9tiyFZA8Et7cj1+r1JN8mA/AAQVoTRodMj/YnbjVUM6ta9u0btnoux0sqUVyiG9pIj/LZmbBP+g6RsbuKaoHMG2W844N9+JmZr4OjXn+o77sdcJGi1tNkg/+kcg=
+	t=1741626694; cv=none; b=SK0uQdJatrnXck/2fFDp9A8hz9qHEZ5XFjL+aD/0naaRuS2qzGCAfHB3KmdXKWbTSV5MmmGIc7Dj+szDy/rq8/xzfK7nUXXhnsFhWlJvd+P0kwnsVGD4k1Cmw8sK0lVa3mD3rYtBTAaWfGlLfQ8TUdPH7W1fhADmImtUbzs6lpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626691; c=relaxed/simple;
-	bh=VITXYDUAtubNtI8N5FpHFBIQ7Mct/cVJZSAv29V7uzw=;
+	s=arc-20240116; t=1741626694; c=relaxed/simple;
+	bh=Rcrz7qixOlxB3dFDQuQPJ8ibScD6QNVnox6TOHZ/8EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWzcvkqH4ubbArveLYKmi43kj7Yk7MnMcSpO05ry+wTgTDbogD5FKYINEakrEonziyJK9+ZzOxtUdl2y2zy63wfLF55dr2YLjrQ7XcF5rKa2/ZEc7jHW7bjUpdwpn64bsrsjn5iaZ+yESurzvRpF5Aqt8ynxJWxU4H1WmZ0x0sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBtvM293; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CzMdJrPyNtck3WmDl5Vz18ABdqIlgjgro7W40I8J5+AXTfaMU8mD5AMOOoTbp8FFJJymG6XleJ+ovE0h5OJZlq4BfMThHiP4urN1H+FnWEx79OP5REMmDxcexCkVJ3ihz50R7S/KHSasmQyzGwwyCclyBAekA23b1Exe+TTmE50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWZgjkFN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBtvM293"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105E9C4CEE5;
-	Mon, 10 Mar 2025 17:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWZgjkFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECB3C4CEE5;
+	Mon, 10 Mar 2025 17:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626691;
-	bh=VITXYDUAtubNtI8N5FpHFBIQ7Mct/cVJZSAv29V7uzw=;
+	s=korg; t=1741626694;
+	bh=Rcrz7qixOlxB3dFDQuQPJ8ibScD6QNVnox6TOHZ/8EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BBtvM293kOLMm2PutzpXZV6HSE7GTRIj3SbiXJ09DhmQv9OVw6Ew59wt6sIGNi+Cr
-	 WJs3/ztRQu8y6n4bLzYSr3yxpcUdksdufYHPSqrJoxmBpZm0+TIPXojshwDHOue9FC
-	 zh+2K08ICe8FiIkWRtafe4il4hmfsREa2rAiQu40=
+	b=VWZgjkFNYcfjkXisBkowYYG35Edtb+WWTy1a5LWsQqXAX7R0wE2afUP3Obo+v8qLy
+	 9T+rGYTHR8QCnxKbj4CXVbmvEDhcERM9G5iPs7DTaavs8nZarYnTiRFXcQi3rD2dTD
+	 B0cEJm32LPd+xnUjSDUF0QggMLhLiNfQTt0yzMJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 080/207] mm: memory-hotplug: check folio ref count first in do_migrate_range
-Date: Mon, 10 Mar 2025 18:04:33 +0100
-Message-ID: <20250310170450.941664395@linuxfoundation.org>
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 081/207] wifi: iwlwifi: fw: avoid using an uninitialized variable
+Date: Mon, 10 Mar 2025 18:04:34 +0100
+Message-ID: <20250310170450.979773646@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -55,68 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Wupeng <mawupeng1@huawei.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-commit 773b9a6aa6d38894b95088e3ed6f8a701d9f50fd upstream.
+[ Upstream commit 3f8aa0b8a53df2247a84eaf3b3aa38b6ef86cb1c ]
 
-If a folio has an increased reference count, folio_try_get() will acquire
-it, perform necessary operations, and then release it.  In the case of a
-poisoned folio without an elevated reference count (which is unlikely for
-memory-failure), folio_try_get() will simply bypass it.
+iwl_fwrt_read_err_table can return true also when it failed to read
+the memory. In this case, err_id argument is not initialized,
+but the callers are still using it.
 
-Therefore, relocate the folio_try_get() function, responsible for checking
-and acquiring this reference count at first.
+Simply initialize it to 0. If the error table was read successfully it'll
+be overridden.
 
-Link: https://lkml.kernel.org/r/20250217014329.3610326-3-mawupeng1@huawei.com
-Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 43e0b2ada519 ("wifi: iwlwifi: fw: add an error table status getter")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20250209143303.37cdbba4eb56.I95fe9bd95303b8179f946766558a9f15f4fe254c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory_hotplug.c |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dump.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1795,12 +1795,12 @@ static void do_migrate_range(unsigned lo
- 		if (folio_test_large(folio))
- 			pfn = folio_pfn(folio) + folio_nr_pages(folio) - 1;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dump.c b/drivers/net/wireless/intel/iwlwifi/fw/dump.c
+index 8e0c85a1240d7..c7b261c8ec969 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dump.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dump.c
+@@ -540,6 +540,9 @@ bool iwl_fwrt_read_err_table(struct iwl_trans *trans, u32 base, u32 *err_id)
+ 	} err_info = {};
+ 	int ret;
  
--		/*
--		 * HWPoison pages have elevated reference counts so the migration would
--		 * fail on them. It also doesn't make any sense to migrate them in the
--		 * first place. Still try to unmap such a page in case it is still mapped
--		 * (keep the unmap as the catch all safety net).
--		 */
-+		if (!folio_try_get(folio))
-+			continue;
++	if (err_id)
++		*err_id = 0;
 +
-+		if (unlikely(page_folio(page) != folio))
-+			goto put_folio;
-+
- 		if (folio_test_hwpoison(folio) ||
- 		    (folio_test_large(folio) && folio_test_has_hwpoisoned(folio))) {
- 			if (WARN_ON(folio_test_lru(folio)))
-@@ -1811,14 +1811,8 @@ static void do_migrate_range(unsigned lo
- 				folio_unlock(folio);
- 			}
+ 	if (!base)
+ 		return false;
  
--			continue;
--		}
--
--		if (!folio_try_get(folio))
--			continue;
--
--		if (unlikely(page_folio(page) != folio))
- 			goto put_folio;
-+		}
- 
- 		if (!isolate_folio_to_list(folio, &source)) {
- 			if (__ratelimit(&migrate_rs)) {
+-- 
+2.39.5
+
 
 
