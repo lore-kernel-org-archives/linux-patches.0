@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4DD374EA;
-	Mon, 10 Mar 2025 18:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE411BBBFD;
+	Mon, 10 Mar 2025 18:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630752; cv=none; b=bKmbAllKnYzANr2J+2LKuhXtl13EPgwmEngIVfH+C3mXRGKEWlSi3QqfCm7/aqGlK9DGeN+i5v2qTu++MK1ehG4/78WUBWn/HmYCA7Fim75MWdkPx50Hrxcg0HnooMRlUEqMQ3sF9wXeEkh11qVtxUCnbfLOLEq8kBloCAVoxrU=
+	t=1741630755; cv=none; b=jGuJc+EqDYueGHv8DPty17KwuykFU1EYeo5DaMjR7+6wEcjS+MVQQTZaX5scgitBhhmlqlVX55p5IqNwLF605v2Q1NONZoUkWFD/2cI1SyORmGosh8QrRAENy8Iz1s3JU7wLfyOENUT5TnTPDouPQbMQGSVuJbxLTjW/aZRHnXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630752; c=relaxed/simple;
-	bh=ylwZ8VyUEp8XyAb4DQLsZ796QncVTFi59eLpuHgmqaQ=;
+	s=arc-20240116; t=1741630755; c=relaxed/simple;
+	bh=7hwlGyBUt2DNgHJIjO1UbUfqNDh7WjrsDe6CwBqnVnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ide+gBfH8RvjNBsoPHfjMBkgDqjSJ27KXHWWh9jSvgTk86y+OS/TJVIpEFtIu0cfnTWIglscZOgDw9l7yZcp7i/Rm4z8d9EtoGUP82f8WpGFBq/I6zkq6WyuTDn/wVtT981lTICwJGlBgOj5DFyUzHplv2XylMVmNgob82AxJIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzfoUDQ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwX9+OOPRrFnipo+k2n5LCj0OUyEXltlQQW/r52oHRDVYUZZaGhfcB13ia/+H0eMtQ7ZV1nZkVUN4PrGO7eFpqMxLlKUvtfq//DmuQzaCbORARMqrZsdcNsMpdA9ojN3dUu99L3BWCoRLPZUrlZkaIwt2Ii8EPBlv3QYgNDS1NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt54MJDs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzfoUDQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F9C4CEE5;
-	Mon, 10 Mar 2025 18:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt54MJDs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D42C4CEEC;
+	Mon, 10 Mar 2025 18:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630752;
-	bh=ylwZ8VyUEp8XyAb4DQLsZ796QncVTFi59eLpuHgmqaQ=;
+	s=korg; t=1741630755;
+	bh=7hwlGyBUt2DNgHJIjO1UbUfqNDh7WjrsDe6CwBqnVnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RzfoUDQ/Bm9SQKV+hQFhEoMIVcL6LgY02/uP+x5cnGdVX4r7gjeXIRmvkSTbzW5Ak
-	 2qAFmsTS7xa9kof7GQY5xBp5gVunbmLPXQmLmxUkn2WrwZuRHmPp5/F/c7odQlhlU6
-	 KEqN59QMuDaUl21c9/eo98uiQVvY/cUu9vDYhWhw=
+	b=jt54MJDsp4bWdJEn0RoxPao6fN6HKeEGJ+JpusO2nQcs7DOXmvKpeRbq8n6HVgMvM
+	 I8EOBRG52qutzZH66ZPywrpOX8MWMUcz3qHnK500+N3As1J6oJ/Vw6kgGoqYuXAotk
+	 eRkO6r03i7FELzascOwl48KGNuewXV/Z4fA9AHvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ye Bin <yebin10@huawei.com>,
 	Bart Van Assche <bvanassche@acm.org>,
-	John Garry <john.garry@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 490/620] scsi: core: Dont memset() the entire scsi_cmnd in scsi_init_command()
-Date: Mon, 10 Mar 2025 18:05:36 +0100
-Message-ID: <20250310170604.914108099@linuxfoundation.org>
+Subject: [PATCH 5.15 491/620] scsi: core: Clear driver private data when retrying request
+Date: Mon, 10 Mar 2025 18:05:37 +0100
+Message-ID: <20250310170604.952192298@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,118 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 71bada345b33b9297e7cc9415db6328c99b554f9 ]
+[ Upstream commit dce5c4afd035e8090a26e5d776b1682c0e649683 ]
 
-Replace the big fat memset that requires saving and restoring various
-fields with just initializing those fields that need initialization.
+After commit 1bad6c4a57ef ("scsi: zero per-cmd private driver data for each
+MQ I/O"), the xen-scsifront/virtio_scsi/snic drivers all removed code that
+explicitly zeroed driver-private command data.
 
-All the clearing to 0 is moved to scsi_prepare_cmd() as scsi_ioctl_reset()
-alreadly uses kzalloc() to allocate a pre-zeroed command.
+In combination with commit 464a00c9e0ad ("scsi: core: Kill DRIVER_SENSE"),
+after virtio_scsi performs a capacity expansion, the first request will
+return a unit attention to indicate that the capacity has changed. And then
+the original command is retried. As driver-private command data was not
+cleared, the request would return UA again and eventually time out and fail.
 
-This is still conservative and can probably be optimized further.
+Zero driver-private command data when a request is retried.
 
-Link: https://lore.kernel.org/r/20220224175552.988286-3-hch@lst.de
+Fixes: f7de50da1479 ("scsi: xen-scsifront: Remove code that zeroes driver-private command data")
+Fixes: c2bb87318baa ("scsi: virtio_scsi: Remove code that zeroes driver-private command data")
+Fixes: c3006a926468 ("scsi: snic: Remove code that zeroes driver-private command data")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: John Garry <john.garry@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250217021628.2929248-1-yebin@huaweicloud.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: dce5c4afd035 ("scsi: core: Clear driver private data when retrying request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 60 +++++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 32 deletions(-)
+ drivers/scsi/scsi_lib.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 9721984fd9bc6..ddaffaea2c32c 100644
+index ddaffaea2c32c..c8be41d8eb247 100644
 --- a/drivers/scsi/scsi_lib.c
 +++ b/drivers/scsi/scsi_lib.c
-@@ -1114,45 +1114,16 @@ static void scsi_cleanup_rq(struct request *rq)
- /* Called before a request is prepared. See also scsi_mq_prep_fn(). */
- void scsi_init_command(struct scsi_device *dev, struct scsi_cmnd *cmd)
- {
--	void *buf = cmd->sense_buffer;
--	void *prot = cmd->prot_sdb;
- 	struct request *rq = scsi_cmd_to_rq(cmd);
--	unsigned int flags = cmd->flags & SCMD_PRESERVED_FLAGS;
--	unsigned long jiffies_at_alloc;
--	int retries, to_clear;
--	bool in_flight;
--	int budget_token = cmd->budget_token;
--
--	if (!blk_rq_is_passthrough(rq) && !(flags & SCMD_INITIALIZED)) {
--		flags |= SCMD_INITIALIZED;
-+
-+	if (!blk_rq_is_passthrough(rq) && !(cmd->flags & SCMD_INITIALIZED)) {
-+		cmd->flags |= SCMD_INITIALIZED;
- 		scsi_initialize_rq(rq);
- 	}
+@@ -1532,13 +1532,6 @@ static blk_status_t scsi_prepare_cmd(struct request *req)
+ 	if (in_flight)
+ 		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
  
--	jiffies_at_alloc = cmd->jiffies_at_alloc;
--	retries = cmd->retries;
--	in_flight = test_bit(SCMD_STATE_INFLIGHT, &cmd->state);
 -	/*
--	 * Zero out the cmd, except for the embedded scsi_request. Only clear
--	 * the driver-private command data if the LLD does not supply a
--	 * function to initialize that data.
+-	 * Only clear the driver-private command data if the LLD does not supply
+-	 * a function to initialize that data.
 -	 */
--	to_clear = sizeof(*cmd) - sizeof(cmd->req);
--	if (!dev->host->hostt->init_cmd_priv)
--		to_clear += dev->host->hostt->cmd_size;
--	memset((char *)cmd + sizeof(cmd->req), 0, to_clear);
+-	if (!shost->hostt->init_cmd_priv)
+-		memset(cmd + 1, 0, shost->hostt->cmd_size);
 -
- 	cmd->device = dev;
--	cmd->sense_buffer = buf;
--	cmd->prot_sdb = prot;
--	cmd->flags = flags;
- 	INIT_LIST_HEAD(&cmd->eh_entry);
- 	INIT_DELAYED_WORK(&cmd->abort_work, scmd_eh_abort_handler);
--	cmd->jiffies_at_alloc = jiffies_at_alloc;
--	cmd->retries = retries;
--	if (in_flight)
--		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
--	cmd->budget_token = budget_token;
--
- }
+ 	cmd->prot_op = SCSI_PROT_NORMAL;
+ 	if (blk_rq_bytes(req))
+ 		cmd->sc_data_direction = rq_dma_dir(req);
+@@ -1675,6 +1668,13 @@ static blk_status_t scsi_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	if (!scsi_host_queue_ready(q, shost, sdev, cmd))
+ 		goto out_dec_target_busy;
  
- static blk_status_t scsi_setup_scsi_cmnd(struct scsi_device *sdev,
-@@ -1539,10 +1510,35 @@ static blk_status_t scsi_prepare_cmd(struct request *req)
- 	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(req);
- 	struct scsi_device *sdev = req->q->queuedata;
- 	struct Scsi_Host *shost = sdev->host;
-+	bool in_flight = test_bit(SCMD_STATE_INFLIGHT, &cmd->state);
- 	struct scatterlist *sg;
- 
- 	scsi_init_command(sdev, cmd);
- 
-+	cmd->eh_eflags = 0;
-+	cmd->allowed = 0;
-+	cmd->prot_type = 0;
-+	cmd->prot_flags = 0;
-+	cmd->submitter = 0;
-+	cmd->cmd_len = 0;
-+	cmd->cmnd = NULL;
-+	memset(&cmd->sdb, 0, sizeof(cmd->sdb));
-+	cmd->underflow = 0;
-+	cmd->transfersize = 0;
-+	cmd->host_scribble = NULL;
-+	cmd->result = 0;
-+	cmd->extra_len = 0;
-+	cmd->state = 0;
-+	if (in_flight)
-+		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
-+
 +	/*
 +	 * Only clear the driver-private command data if the LLD does not supply
 +	 * a function to initialize that data.
 +	 */
-+	if (!shost->hostt->init_cmd_priv)
++	if (shost->hostt->cmd_size && !shost->hostt->init_cmd_priv)
 +		memset(cmd + 1, 0, shost->hostt->cmd_size);
 +
- 	cmd->prot_op = SCSI_PROT_NORMAL;
- 	if (blk_rq_bytes(req))
- 		cmd->sc_data_direction = rq_dma_dir(req);
+ 	if (!(req->rq_flags & RQF_DONTPREP)) {
+ 		ret = scsi_prepare_cmd(req);
+ 		if (ret != BLK_STS_OK)
 -- 
 2.39.5
 
