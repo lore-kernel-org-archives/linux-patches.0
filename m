@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE6A81E;
-	Mon, 10 Mar 2025 17:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70481A7264;
+	Mon, 10 Mar 2025 17:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627838; cv=none; b=B/mivt2GPZTUsnw01hpu0fDy/ar2Wlt3I4VeF7baosRKeV46mYAPAoLgbbN4DRnvqXeIi7V4LF50f1iJI4gGPm143kjJ43RdnKq3+uRocuSgQOyQtuW6PCs2ZUxAawoAhT9mwatfq1Src40B38qTuSEdjFppY/An89x3FyENq1s=
+	t=1741627841; cv=none; b=rWSu9bhueFyYc43TeJLV2LQbGg7H0m5G2DQI/9pgGymEQ+EnXsxQlMyjjXfx7UxM4sEQJVI857f4Gse6OqBi4/bdyqdACnG3vdYFOx6Tjrb7yg4MshY2KI0/rU4bolApgx7JsJvqkRPfY4wG9GVZ6+E1XMdcBV7/q9lGwOFppag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627838; c=relaxed/simple;
-	bh=/1CPqAySQfFTlh9pu9FBEwJKjwF4PXfnmp1TPrjUh0w=;
+	s=arc-20240116; t=1741627841; c=relaxed/simple;
+	bh=WCimsoKnksEH8UlJFwiM6EBXQgJo/QSAbfqnxiy/ySo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pJ2S8E7NppCVkqsXZOur0PHBV/B93/CYYbn5xaXIgC4QJMi+luiQoL5PFtGxRupH6G+8JNWRnccvZGtk6cfRKY7OUyNZsCF7QlnbqyqDZf9MM0wxAWQHUzUmvsOvyyr099fw9IB+OJHt9dNktjxOPgx/wPlbhqNctutPtn6hcV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+681yAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6Hdq0xbJnwL0d1mOKt93o4pBP22nbnK4eLwIPPy2V5Wn7g7TSVtSXuo+NSv5BdOfx6WgSahO4dPVZxQrYW2l+SubFQbemcOpNzHTYdzlWdD/x+cZKHm7KlaYu2/N5x9Tf6iLiB4mJSqbuzRg80FZVLLx5IeOsxZu2D++uQqsZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCeySBmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+681yAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF2EC4CEE5;
-	Mon, 10 Mar 2025 17:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCeySBmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE35C4CEE5;
+	Mon, 10 Mar 2025 17:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627838;
-	bh=/1CPqAySQfFTlh9pu9FBEwJKjwF4PXfnmp1TPrjUh0w=;
+	s=korg; t=1741627841;
+	bh=WCimsoKnksEH8UlJFwiM6EBXQgJo/QSAbfqnxiy/ySo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+681yAzuEGJ6yFUwz07gEetApO8RzGQRe75oGc+vGGBxR9XzeEHBc6zO0A8HmgL+
-	 zSYkeqynjVqefIkGp5Z6mmgfyyljnLpzO5np3xq3et7xZynvk1ltYc7cRGFIpTEt7+
-	 QGApeeGVec19g9a+s/KqDyot6xv6nbwNxuWDiAOc=
+	b=LCeySBmPaJdlTVwY4MHrfM4aAtO9lsKqaTgLDssdZig35v8C9cd8EcLLlMz5z2H2N
+	 tfKM6NuRwBwANw8EHAKdmx7uMKEFCrEgmIy/qqpkjF7QImvSSAT/K3qbVtJOJdtj6g
+	 dy2dFfstklRGiV5d3i7Etto42Idu5L5UAK3Ngte0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	subhajit.ghosh@tweaklogic.com,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 250/269] iio: light: apds9306: fix max_scale_nano values
-Date: Mon, 10 Mar 2025 18:06:43 +0100
-Message-ID: <20250310170507.761284572@linuxfoundation.org>
+	Jiri Olsa <jolsa@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Colm Harrington <colm.harrington@oracle.com>,
+	Alan Maguire <alan.maguire@oracle.com>
+Subject: [PATCH 6.12 268/269] selftests/bpf: Clean up open-coded gettid syscall invocations
+Date: Mon, 10 Mar 2025 18:07:01 +0100
+Message-ID: <20250310170508.467223185@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -45,55 +47,268 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-commit a96d3e2beca0e51c8444d0a3b6b3ec484c4c5a8f upstream.
+commit 0e2fb011a0ba8e2258ce776fdf89fbd589c2a3a6 upstream.
 
-The two provided max_scale_nano values must be multiplied by 100 and 10
-respectively to achieve nano units. According to the comments:
+Availability of the gettid definition across glibc versions supported by
+BPF selftests is not certain. Currently, all users in the tree open-code
+syscall to gettid. Convert them to a common macro definition.
 
-Max scale for apds0306 is 16.326432 → the fractional part is 0.326432,
-which is 326432000 in NANO. The current value is 3264320.
-
-Max scale for apds0306-065 is 14.09721 → the fractional part is 0.09712,
-which is 97120000 in NANO. The current value is 9712000.
-
-Update max_scale_nano initialization to use the right NANO fractional
-parts.
-
-Cc: stable@vger.kernel.org
-Fixes: 620d1e6c7a3f ("iio: light: Add support for APDS9306 Light Sensor")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Tested-by: subhajit.ghosh@tweaklogic.com
-Link: https://patch.msgid.link/20250112-apds9306_nano_vals-v1-1-82fb145d0b16@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241104171959.2938862-3-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Colm Harrington <colm.harrington@oracle.com>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
 ---
- drivers/iio/light/apds9306.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/benchs/bench_trigger.c           |    3 ++-
+ tools/testing/selftests/bpf/bpf_util.h                       |    9 +++++++++
+ tools/testing/selftests/bpf/map_tests/task_storage_map.c     |    3 ++-
+ tools/testing/selftests/bpf/prog_tests/bpf_cookie.c          |    2 +-
+ tools/testing/selftests/bpf/prog_tests/bpf_iter.c            |    6 +++---
+ tools/testing/selftests/bpf/prog_tests/cgrp_local_storage.c  |   10 +++++-----
+ tools/testing/selftests/bpf/prog_tests/core_reloc.c          |    2 +-
+ tools/testing/selftests/bpf/prog_tests/linked_funcs.c        |    2 +-
+ tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c |    2 +-
+ tools/testing/selftests/bpf/prog_tests/rcu_read_lock.c       |    4 ++--
+ tools/testing/selftests/bpf/prog_tests/task_local_storage.c  |    8 ++++----
+ tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c   |    2 +-
+ 12 files changed, 32 insertions(+), 21 deletions(-)
 
---- a/drivers/iio/light/apds9306.c
-+++ b/drivers/iio/light/apds9306.c
-@@ -108,11 +108,11 @@ static const struct part_id_gts_multipli
- 	{
- 		.part_id = 0xB1,
- 		.max_scale_int = 16,
--		.max_scale_nano = 3264320,
-+		.max_scale_nano = 326432000,
- 	}, {
- 		.part_id = 0xB3,
- 		.max_scale_int = 14,
--		.max_scale_nano = 9712000,
-+		.max_scale_nano = 97120000,
- 	},
- };
+--- a/tools/testing/selftests/bpf/benchs/bench_trigger.c
++++ b/tools/testing/selftests/bpf/benchs/bench_trigger.c
+@@ -4,6 +4,7 @@
+ #include <argp.h>
+ #include <unistd.h>
+ #include <stdint.h>
++#include "bpf_util.h"
+ #include "bench.h"
+ #include "trigger_bench.skel.h"
+ #include "trace_helpers.h"
+@@ -72,7 +73,7 @@ static __always_inline void inc_counter(
+ 	unsigned slot;
  
+ 	if (unlikely(tid == 0))
+-		tid = syscall(SYS_gettid);
++		tid = sys_gettid();
+ 
+ 	/* multiplicative hashing, it's fast */
+ 	slot = 2654435769U * tid;
+--- a/tools/testing/selftests/bpf/bpf_util.h
++++ b/tools/testing/selftests/bpf/bpf_util.h
+@@ -6,6 +6,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <errno.h>
++#include <syscall.h>
+ #include <bpf/libbpf.h> /* libbpf_num_possible_cpus */
+ 
+ static inline unsigned int bpf_num_possible_cpus(void)
+@@ -59,4 +60,12 @@ static inline void bpf_strlcpy(char *dst
+ 	(offsetof(TYPE, MEMBER)	+ sizeof_field(TYPE, MEMBER))
+ #endif
+ 
++/* Availability of gettid across glibc versions is hit-and-miss, therefore
++ * fallback to syscall in this macro and use it everywhere.
++ */
++#ifndef sys_gettid
++#define sys_gettid() syscall(SYS_gettid)
++#endif
++
++
+ #endif /* __BPF_UTIL__ */
+--- a/tools/testing/selftests/bpf/map_tests/task_storage_map.c
++++ b/tools/testing/selftests/bpf/map_tests/task_storage_map.c
+@@ -12,6 +12,7 @@
+ #include <bpf/bpf.h>
+ #include <bpf/libbpf.h>
+ 
++#include "bpf_util.h"
+ #include "test_maps.h"
+ #include "task_local_storage_helpers.h"
+ #include "read_bpf_task_storage_busy.skel.h"
+@@ -115,7 +116,7 @@ void test_task_storage_map_stress_lookup
+ 	CHECK(err, "attach", "error %d\n", err);
+ 
+ 	/* Trigger program */
+-	syscall(SYS_gettid);
++	sys_gettid();
+ 	skel->bss->pid = 0;
+ 
+ 	CHECK(skel->bss->busy != 0, "bad bpf_task_storage_busy", "got %d\n", skel->bss->busy);
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
+@@ -690,7 +690,7 @@ void test_bpf_cookie(void)
+ 	if (!ASSERT_OK_PTR(skel, "skel_open"))
+ 		return;
+ 
+-	skel->bss->my_tid = syscall(SYS_gettid);
++	skel->bss->my_tid = sys_gettid();
+ 
+ 	if (test__start_subtest("kprobe"))
+ 		kprobe_subtest(skel);
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
+@@ -226,7 +226,7 @@ static void test_task_common_nocheck(str
+ 	ASSERT_OK(pthread_create(&thread_id, NULL, &do_nothing_wait, NULL),
+ 		  "pthread_create");
+ 
+-	skel->bss->tid = syscall(SYS_gettid);
++	skel->bss->tid = sys_gettid();
+ 
+ 	do_dummy_read_opts(skel->progs.dump_task, opts);
+ 
+@@ -255,10 +255,10 @@ static void *run_test_task_tid(void *arg
+ 	union bpf_iter_link_info linfo;
+ 	int num_unknown_tid, num_known_tid;
+ 
+-	ASSERT_NEQ(getpid(), syscall(SYS_gettid), "check_new_thread_id");
++	ASSERT_NEQ(getpid(), sys_gettid(), "check_new_thread_id");
+ 
+ 	memset(&linfo, 0, sizeof(linfo));
+-	linfo.task.tid = syscall(SYS_gettid);
++	linfo.task.tid = sys_gettid();
+ 	opts.link_info = &linfo;
+ 	opts.link_info_len = sizeof(linfo);
+ 	test_task_common(&opts, 0, 1);
+--- a/tools/testing/selftests/bpf/prog_tests/cgrp_local_storage.c
++++ b/tools/testing/selftests/bpf/prog_tests/cgrp_local_storage.c
+@@ -63,14 +63,14 @@ static void test_tp_btf(int cgroup_fd)
+ 	if (!ASSERT_OK(err, "map_delete_elem"))
+ 		goto out;
+ 
+-	skel->bss->target_pid = syscall(SYS_gettid);
++	skel->bss->target_pid = sys_gettid();
+ 
+ 	err = cgrp_ls_tp_btf__attach(skel);
+ 	if (!ASSERT_OK(err, "skel_attach"))
+ 		goto out;
+ 
+-	syscall(SYS_gettid);
+-	syscall(SYS_gettid);
++	sys_gettid();
++	sys_gettid();
+ 
+ 	skel->bss->target_pid = 0;
+ 
+@@ -154,7 +154,7 @@ static void test_recursion(int cgroup_fd
+ 		goto out;
+ 
+ 	/* trigger sys_enter, make sure it does not cause deadlock */
+-	syscall(SYS_gettid);
++	sys_gettid();
+ 
+ out:
+ 	cgrp_ls_recursion__destroy(skel);
+@@ -224,7 +224,7 @@ static void test_yes_rcu_lock(__u64 cgro
+ 		return;
+ 
+ 	CGROUP_MODE_SET(skel);
+-	skel->bss->target_pid = syscall(SYS_gettid);
++	skel->bss->target_pid = sys_gettid();
+ 
+ 	bpf_program__set_autoload(skel->progs.yes_rcu_lock, true);
+ 	err = cgrp_ls_sleepable__load(skel);
+--- a/tools/testing/selftests/bpf/prog_tests/core_reloc.c
++++ b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
+@@ -1010,7 +1010,7 @@ static void run_core_reloc_tests(bool us
+ 	struct data *data;
+ 	void *mmap_data = NULL;
+ 
+-	my_pid_tgid = getpid() | ((uint64_t)syscall(SYS_gettid) << 32);
++	my_pid_tgid = getpid() | ((uint64_t)sys_gettid() << 32);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(test_cases); i++) {
+ 		char btf_file[] = "/tmp/core_reloc.btf.XXXXXX";
+--- a/tools/testing/selftests/bpf/prog_tests/linked_funcs.c
++++ b/tools/testing/selftests/bpf/prog_tests/linked_funcs.c
+@@ -20,7 +20,7 @@ void test_linked_funcs(void)
+ 	bpf_program__set_autoload(skel->progs.handler1, true);
+ 	bpf_program__set_autoload(skel->progs.handler2, true);
+ 
+-	skel->rodata->my_tid = syscall(SYS_gettid);
++	skel->rodata->my_tid = sys_gettid();
+ 	skel->bss->syscall_id = SYS_getpgid;
+ 
+ 	err = linked_funcs__load(skel);
+--- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
++++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+@@ -23,7 +23,7 @@ static int get_pid_tgid(pid_t *pid, pid_
+ 	struct stat st;
+ 	int err;
+ 
+-	*pid = syscall(SYS_gettid);
++	*pid = sys_gettid();
+ 	*tgid = getpid();
+ 
+ 	err = stat("/proc/self/ns/pid", &st);
+--- a/tools/testing/selftests/bpf/prog_tests/rcu_read_lock.c
++++ b/tools/testing/selftests/bpf/prog_tests/rcu_read_lock.c
+@@ -21,7 +21,7 @@ static void test_success(void)
+ 	if (!ASSERT_OK_PTR(skel, "skel_open"))
+ 		return;
+ 
+-	skel->bss->target_pid = syscall(SYS_gettid);
++	skel->bss->target_pid = sys_gettid();
+ 
+ 	bpf_program__set_autoload(skel->progs.get_cgroup_id, true);
+ 	bpf_program__set_autoload(skel->progs.task_succ, true);
+@@ -58,7 +58,7 @@ static void test_rcuptr_acquire(void)
+ 	if (!ASSERT_OK_PTR(skel, "skel_open"))
+ 		return;
+ 
+-	skel->bss->target_pid = syscall(SYS_gettid);
++	skel->bss->target_pid = sys_gettid();
+ 
+ 	bpf_program__set_autoload(skel->progs.task_acquire, true);
+ 	err = rcu_read_lock__load(skel);
+--- a/tools/testing/selftests/bpf/prog_tests/task_local_storage.c
++++ b/tools/testing/selftests/bpf/prog_tests/task_local_storage.c
+@@ -23,14 +23,14 @@ static void test_sys_enter_exit(void)
+ 	if (!ASSERT_OK_PTR(skel, "skel_open_and_load"))
+ 		return;
+ 
+-	skel->bss->target_pid = syscall(SYS_gettid);
++	skel->bss->target_pid = sys_gettid();
+ 
+ 	err = task_local_storage__attach(skel);
+ 	if (!ASSERT_OK(err, "skel_attach"))
+ 		goto out;
+ 
+-	syscall(SYS_gettid);
+-	syscall(SYS_gettid);
++	sys_gettid();
++	sys_gettid();
+ 
+ 	/* 3x syscalls: 1x attach and 2x gettid */
+ 	ASSERT_EQ(skel->bss->enter_cnt, 3, "enter_cnt");
+@@ -99,7 +99,7 @@ static void test_recursion(void)
+ 
+ 	/* trigger sys_enter, make sure it does not cause deadlock */
+ 	skel->bss->test_pid = getpid();
+-	syscall(SYS_gettid);
++	sys_gettid();
+ 	skel->bss->test_pid = 0;
+ 	task_ls_recursion__detach(skel);
+ 
+--- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+@@ -125,7 +125,7 @@ static void *child_thread(void *ctx)
+ 	struct child *child = ctx;
+ 	int c = 0, err;
+ 
+-	child->tid = syscall(SYS_gettid);
++	child->tid = sys_gettid();
+ 
+ 	/* let parent know we are ready */
+ 	err = write(child->c2p[1], &c, 1);
 
 
