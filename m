@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4116F22AE7C;
-	Mon, 10 Mar 2025 17:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920C422AE7C;
+	Mon, 10 Mar 2025 17:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629447; cv=none; b=FOwkppTJZn/7gFyyLXBmdcBZRBX29jEhCtYfVCkdn1yqOyAhscH3HQxnsB6JtrPgJDdlN46BgSrZN7qCs80zUB/Mgt+kPgF0MESmSr4R/vYIz1/3pmgaYc0P/sO3ObICOzZd4nHWBe5r1CI1m5vgZJrCkMCIt4TI4c1DYVvVaw0=
+	t=1741629449; cv=none; b=ffznpqzMXi823EwBENCVoU9WAl96AzMz/eBAfarGxFnpEQBDEVc1k5gzRXC58B/5y0SNhNt9IAoQlwwpWHMttlWa9EXyLNYgEdvywTUmAR+MThyJaTBT0FONsCs1V4fahbziiBVfjkcHz2PygbNMaoNRCslQ7AmUKXRu6SSXmfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629447; c=relaxed/simple;
-	bh=0hEu6EMs3mB4TSPHZnFNSJUOUEfjIyAaCl9XPR/A5lE=;
+	s=arc-20240116; t=1741629449; c=relaxed/simple;
+	bh=HYup6J7Vc9+rwZMSR2YF8Em2LiYA0lVTMDbPetjyleY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYOeVAmqtgD6EWarUYYqzA8lrIT8gBcKiim0PxZVCqAcHr7bpbTSCxsj24BjcXP7QoiCJoc/OwjiwldTXx7lRi+3OhU1+9brfSiXlodciCg8ENM7KakFLi5p90CYvzQVjNu12Hn7eRyNDKHiZVzqk0LIVzHehDTc6dIKPjv3Qjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smtn9/Fl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvDdNBQx3pqAckCfuLgANKQNRvAok0Da/z2TgGT2IuMdEgi7BK4Hfg6zKUA9CNI8mr2ni9W5rLUalJwDfvtj1vxxnVj3z7XIu/Ets71nBp81GXjHuxZbqxNcdhffHY9T33qkTcyrCnCgHQPaO/NnjHNT8WDGhrrhvSu69hmgkp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m47Rjjj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smtn9/Fl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395A8C4CEE5;
-	Mon, 10 Mar 2025 17:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m47Rjjj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18556C4CEE5;
+	Mon, 10 Mar 2025 17:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629446;
-	bh=0hEu6EMs3mB4TSPHZnFNSJUOUEfjIyAaCl9XPR/A5lE=;
+	s=korg; t=1741629449;
+	bh=HYup6J7Vc9+rwZMSR2YF8Em2LiYA0lVTMDbPetjyleY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smtn9/FlQTO1e5e0R6bM0Lg10BM52vAt36uFXOz58aBT+R4uMWTMINl1ClW2gyhe0
-	 ESzCXqb2kV38VgODhYByTGpmN983dCXzjD1QflqpUe3J81UesuXlvyujTne73wKLQq
-	 WpgMqsfg2JUqsETh29rxyLZJYzheGBEsQGgebBoo=
+	b=m47Rjjj0qkscxeESqdJi4cRVpP2giZBbgIhhx7FR6SXecBhLhsrUjYiGjlrMkmdpd
+	 d7PCm+hp0/eRE2N6MXco/jU5A3Jv9bm802LKwDpkAtEZZcnb+SAFchiTaPqLCi3K9F
+	 e900DHSUUOuUdfnB1Y09up3MZ1ilxlYrU0q1YRcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Roman Kisel <romank@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Long Li <longli@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 298/620] scsi: storvsc: Set correct data length for sending SCSI command without payload
-Date: Mon, 10 Mar 2025 18:02:24 +0100
-Message-ID: <20250310170557.386366442@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 299/620] kbuild: Move -Wenum-enum-conversion to W=2
+Date: Mon, 10 Mar 2025 18:02:25 +0100
+Message-ID: <20250310170557.426369669@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,45 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 87c4b5e8a6b65189abd9ea5010ab308941f964a4 upstream.
+commit 8f6629c004b193d23612641c3607e785819e97ab upstream.
 
-In StorVSC, payload->range.len is used to indicate if this SCSI command
-carries payload. This data is allocated as part of the private driver data
-by the upper layer and may get passed to lower driver uninitialized.
+-Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
+caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
+Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
+there were numerous instances that would break builds with -Werror.
+Unfortunately, this is not a full solution, as more and more developers,
+subsystems, and distributors are building with W=1 as well, so they
+continue to see the numerous instances of this warning.
 
-For example, the SCSI error handling mid layer may send TEST_UNIT_READY or
-REQUEST_SENSE while reusing the buffer from a failed command. The private
-data section may have stale data from the previous command.
+Since the move to W=1, there have not been many new instances that have
+appeared through various build reports and the ones that have appeared
+seem to be following similar existing patterns, suggesting that most
+instances of this warning will not be real issues. The only alternatives
+for silencing this warning are adding casts (which is generally seen as
+an ugly practice) or refactoring the enums to macro defines or a unified
+enum (which may be undesirable because of type safety in other parts of
+the code).
 
-If the SCSI command doesn't carry payload, the driver may use this value as
-is for communicating with host, resulting in possible corruption.
+Move the warning to W=2, where warnings that occur frequently but may be
+relevant should reside.
 
-Fix this by always initializing this value.
-
-Fixes: be0cf6ca301c ("scsi: storvsc: Set the tablesize based on the information given by the host")
-Cc: stable@kernel.org
-Tested-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Long Li <longli@microsoft.com>
-Link: https://lore.kernel.org/r/1737601642-7759-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
+Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/Makefile.extrawarn |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1854,6 +1854,7 @@ static int storvsc_queuecommand(struct S
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -37,6 +37,10 @@ KBUILD_CFLAGS += -Wno-missing-field-init
+ KBUILD_CFLAGS += -Wno-sign-compare
+ KBUILD_CFLAGS += -Wno-type-limits
  
- 	length = scsi_bufflen(scmnd);
- 	payload = (struct vmbus_packet_mpb_array *)&cmd_request->mpb;
-+	payload->range.len = 0;
- 	payload_sz = 0;
++ifdef CONFIG_CC_IS_CLANG
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
++endif
++
+ KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
  
- 	if (sg_count) {
+ else
+@@ -54,7 +58,6 @@ KBUILD_CFLAGS += -Wno-tautological-const
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
+ KBUILD_CFLAGS += -Wno-enum-compare-conditional
+-KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
+ 
+ endif
 
 
