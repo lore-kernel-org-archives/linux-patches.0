@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FCA17A2E8;
-	Mon, 10 Mar 2025 18:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DDC17A2E8;
+	Mon, 10 Mar 2025 18:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629730; cv=none; b=nBZ9DyAWUyjKI1UDYfF1uisJ+f3gMRmur/nv2L1l+3b6J/zu15q4MwBfzsceT+Wqzxr4jujRXITOyXgnlkUDh0GX5d+RYMCEh7XogcxQBmLeXx4Fw2eyS2ziitPjvn1eOKtypQjF8ZXGYG7oJCgYzpemPv6tC0h+ycAf+M0XMRQ=
+	t=1741629733; cv=none; b=b8PcJWEpgTBqNm6EFeZJlQZVjaLn/dyz2UgMe79k3Pxwb3zAhKFXku/vahuXixVNKRcv8FK2ufw/1/gHBWMOLxbieVy+H/eJG5ZxBGQKSyLNc04GxEzPLsMDQP+fZp/bnfhf4xJVKv7QVK+YYcxV9z5K1sSlTFQyAT1/4LlBit0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629730; c=relaxed/simple;
-	bh=akNmJzVrEj8RSzUwHTPnJa13GQXlpPoF9Bs0+Ab+7+A=;
+	s=arc-20240116; t=1741629733; c=relaxed/simple;
+	bh=cOUd+e41ZntMxbs++QHBYdrcssJfWn4R9NB3QFLe89Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHBxUirADEXSh1omw4OxKI5OYFw2LIsD42Ekx1PyPy9irL6dy0gr9+HTcsZ0nOkia3Uxk7z//51ZUO9BUjM0hjeyYAKUpByyVIitppVbrwqVUMkieX3fd4TpBlQ7NJ0RTyx8mKTzGZGNF+y2PPG1yUBj7vOfqSXqjwmEOicaitk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwlI9iO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTDUfRt96pUSRqEyB9TjxJDKoCK+cGH/416UT85FI5SnpYiFf9ZIgcdioyB7DtiuzzUTxJ5/z/PLK33A9UQd/MhTchGvnLwdGEcv0SXE/izgsxdj8e8x14yeu1JAy2QCuZGibrF5rNPxJVf9a4g6+OdrWDBC1AgotRcx9RdLcDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg8adPyI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwlI9iO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF301C4CEE5;
-	Mon, 10 Mar 2025 18:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg8adPyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48C6C4CEE5;
+	Mon, 10 Mar 2025 18:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629730;
-	bh=akNmJzVrEj8RSzUwHTPnJa13GQXlpPoF9Bs0+Ab+7+A=;
+	s=korg; t=1741629733;
+	bh=cOUd+e41ZntMxbs++QHBYdrcssJfWn4R9NB3QFLe89Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwlI9iO2cdKha9o2oEscfPt6gTuY7/v0Ij3W3ikTHzngaSAYvVrAr96ghL2mYWBqE
-	 kHSnqORrpZOA/YxQ3k3GJVXLDowNEdFb/s6qBCHEnJJj1pTy5WnEaxGyk3p80fN8bJ
-	 t3KEIxsJhkPg9KfDtS7XAM/eh7NQGNDSN8laclGg=
+	b=wg8adPyISJe4Nw4kdE9v485sYi+m6erLr5/if7s4/Z8PogfN2OailqXSgUGmoXymp
+	 vgCDX8l5qTnRCchjg//s74kX6jyBr8uNKTtHZ3sb8P+SXQ0rzd+maB4VbOZMILAN+O
+	 SX1ZVLsiQD7wPXdnu07dIQxCfxQWtjC5dBQlGItk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 386/620] arm64: Handle .ARM.attributes section in linker scripts
-Date: Mon, 10 Mar 2025 18:03:52 +0100
-Message-ID: <20250310170600.829587199@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 387/620] mlxsw: Add return value check for mlxsw_sp_port_get_stats_raw()
+Date: Mon, 10 Mar 2025 18:03:53 +0100
+Message-ID: <20250310170600.870214482@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit ca0f4fe7cf7183bfbdc67ca2de56ae1fc3a8db2b upstream.
+commit fee5d688940690cc845937459e340e4e02598e90 upstream.
 
-A recent LLVM commit [1] started generating an .ARM.attributes section
-similar to the one that exists for 32-bit, which results in orphan
-section warnings (or errors if CONFIG_WERROR is enabled) from the linker
-because it is not handled in the arm64 linker scripts.
+Add a check for the return value of mlxsw_sp_port_get_stats_raw()
+in __mlxsw_sp_port_get_stats(). If mlxsw_sp_port_get_stats_raw()
+returns an error, exit the function to prevent further processing
+with potentially invalid data.
 
-  ld.lld: error: arch/arm64/kernel/vdso/vgettimeofday.o:(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: arch/arm64/kernel/vdso/vgetrandom.o:(.ARM.attributes) is being placed in '.ARM.attributes'
-
-  ld.lld: error: vmlinux.a(lib/vsprintf.o):(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
-
-Discard the new sections in the necessary linker scripts to resolve the
-warnings, as the kernel and vDSO do not need to retain it, similar to
-the .note.gnu.property section.
-
-Cc: stable@vger.kernel.org
-Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
-Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 614d509aa1e7 ("mlxsw: Move ethtool_ops to spectrum_ethtool.c")
+Cc: stable@vger.kernel.org # 5.9+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/20250212152311.1332-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/vdso/vdso.lds.S |    1 +
- arch/arm64/kernel/vmlinux.lds.S   |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/vdso/vdso.lds.S
-+++ b/arch/arm64/kernel/vdso/vdso.lds.S
-@@ -37,6 +37,7 @@ SECTIONS
- 	 */
- 	/DISCARD/	: {
- 		*(.note.GNU-stack .note.gnu.property)
-+		*(.ARM.attributes)
- 	}
- 	.note		: { *(.note.*) }		:text	:note
- 
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -139,6 +139,7 @@ SECTIONS
- 	/DISCARD/ : {
- 		*(.interp .dynamic)
- 		*(.dynsym .dynstr .hash .gnu.hash)
-+		*(.ARM.attributes)
- 	}
- 
- 	. = KIMAGE_VADDR;
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
+@@ -761,7 +761,9 @@ static void __mlxsw_sp_port_get_stats(st
+ 	err = mlxsw_sp_get_hw_stats_by_group(&hw_stats, &len, grp);
+ 	if (err)
+ 		return;
+-	mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
++	err = mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
++	if (err)
++		return;
+ 	for (i = 0; i < len; i++) {
+ 		data[data_index + i] = hw_stats[i].getter(ppcnt_pl);
+ 		if (!hw_stats[i].cells_bytes)
 
 
