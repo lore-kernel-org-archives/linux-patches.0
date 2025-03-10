@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE23231A3B;
-	Mon, 10 Mar 2025 17:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D3E2D023;
+	Mon, 10 Mar 2025 17:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629426; cv=none; b=q5gPGNoV7VyvaGaj3tLfgRO91XEQy35Zne43idpNzM/j0Z5eNX3DJ7LVcS/s7y+KxbnQyHEOGaFlBExT4Z7E9LItPmPoHPaqzK/daOy3pulDP3Y7mXmGl7mU3CUHcvFtaDul8jONHXMpm66L906NF5VD+VER4Y5tNTwxPaeUPAU=
+	t=1741629429; cv=none; b=qWCrjv1OOMRkZulQ30AJwnhIxF+TghypvV03yqY6YV7ZoVT9Cir/n8uJjhszsm9hVZRvNnAvqkfGiy3NlslfwZKeElMoTMMvqQxkDojK88swReVGyONNnkYxgZxTTZW60WgsWrVdaPNPR7eHGVUWGqtDZuzFz5MBQSUuwcXz4tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629426; c=relaxed/simple;
-	bh=A+bFUrocG+p8EMkad3FHLF5TqI2srIKpJto5cCa9/C0=;
+	s=arc-20240116; t=1741629429; c=relaxed/simple;
+	bh=GIURcScTy8enw/Cs9Iop1ncVuyEL/vfXzT/gHjcVPdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QkMC/95uxtmxmQVuC74HdnBuCRCEV5DZcYRA0/5FsyekVchDXccrJyyJZZH9TnhL5bfEY8bajvizpwKKBMQYtqg13d6FmNg35oKlvyBcbZcQBJM8xS9DBrAqNbePuMRGXOcixENuUm7VSmAaR7C45cvuX70stxG1jHVAQg9kdRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsf1FhJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PAPKkSTF+NvP258yDCYGyNek0vobUkAXX6yNgy/hpG/6iz5T8JhG/3w6roNj1ykIXwkgGorxDjwFhZp0iHSIrRMWU8ehbDQbp+J7Qqmevxmwig3Hn/JXnQr2LZKMYc6vB/OPPORZqvZeP3Erb1laMfwxpR2k4CQ/UfbDMH5ieDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSo9Rdit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsf1FhJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29A4C4CEE5;
-	Mon, 10 Mar 2025 17:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSo9Rdit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1281C4CEE5;
+	Mon, 10 Mar 2025 17:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629426;
-	bh=A+bFUrocG+p8EMkad3FHLF5TqI2srIKpJto5cCa9/C0=;
+	s=korg; t=1741629429;
+	bh=GIURcScTy8enw/Cs9Iop1ncVuyEL/vfXzT/gHjcVPdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsf1FhJrcVwHVaq5xVKq3FDco25yp/RaW3hEngaae8YfsWWKEaUqSFeEJNFPRrDRh
-	 okoh60dtQbtN6eUsHuw5G6K/Y+vDKhGUuRDDb8LTZdlQ3tJCZ/pD3FZvUepZ7YCepf
-	 CM5KmxATweQnxoxEApHfEBa0XMqDzEbEqc4g1BHs=
+	b=pSo9RditBXlolN6YuRIjmrs8ySb898Vq/8XHSOfG0JGuBUeRg/gxCAo3r6fG8hCmY
+	 y1sy64d0cL3LBV7a7xi+P81FpL2ktttP3OaLYnx5RyIJdMALdoO5g7FJMOf/fadIhO
+	 xwMGUbHEH4OHR4ypNLFNZJi63NXWMKCRrj6f4Zww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Dengcheng Zhu <dzhu@wavecomp.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Ming Wang <wangming01@loongson.cn>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>
-Subject: [PATCH 5.15 291/620] mips/math-emu: fix emulation of the prefx instruction
-Date: Mon, 10 Mar 2025 18:02:17 +0100
-Message-ID: <20250310170557.107276170@linuxfoundation.org>
+	Tomasz Sikora <sikora.tomus@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.15 292/620] Revert "media: uvcvideo: Require entities to have a non-zero unique ID"
+Date: Mon, 10 Mar 2025 18:02:18 +0100
+Message-ID: <20250310170557.146839769@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -47,99 +48,190 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 42a39e4aa59a10aa4afdc14194f3ee63d2db94e1 upstream.
+commit 8004d635f27bbccaa5c083c50d4d5302a6ffa00e upstream.
 
-Currently, installation of Debian 12.8 for mipsel fails on machines
-without an FPU [1]. This is caused by the fact that zstd (which is used
-for initramfs compression) executes the prefx instruction, which is not
-emulated properly by the kernel.
+This reverts commit 3dd075fe8ebbc6fcbf998f81a75b8c4b159a6195.
 
-The prefx (Prefetch Indexed) instruction fetches data from memory into
-the cache without any side effects. Though functionally unrelated, it
-requires an FPU [2].
+Tomasz has reported that his device, Generalplus Technology Inc. 808 Camera,
+with ID 1b3f:2002, stopped being detected:
 
-Bytecode format of this instruction ends on "001111" binary:
+$ ls -l /dev/video*
+zsh: no matches found: /dev/video*
+[    7.230599] usb 3-2: Found multiple Units with ID 5
 
-	(prefx instruction format) & 0x0000003f = 0x0000000f
+This particular device is non-compliant, having both the Output Terminal
+and Processing Unit with ID 5. uvc_scan_fallback, though, is able to build
+a chain. However, when media elements are added and uvc_mc_create_links
+call uvc_entity_by_id, it will get the incorrect entity,
+media_create_pad_link will WARN, and it will fail to register the entities.
 
-The code in fpux_emu() runs like so:
+In order to reinstate support for such devices in a timely fashion,
+reverting the fix for these warnings is appropriate. A proper fix that
+considers the existence of such non-compliant devices will be submitted in
+a later development cycle.
 
-	#define MIPSInst(x) x
-	#define MIPSInst_FMA_FFMT(x) (MIPSInst(x) & 0x00000007)
-	#define MIPSInst_FUNC(x) (MIPSInst(x) & 0x0000003f)
-	enum cop1x_func { ..., pfetch_op = 0x0f, ... };
-
-	...
-
-	switch (MIPSInst_FMA_FFMT(ir)) {
-	...
-
-	case 0x3:
-		if (MIPSInst_FUNC(ir) != pfetch_op)
-			return SIGILL;
-
-		/* ignore prefx operation */
-		break;
-
-	default:
-		return SIGILL;
-	}
-
-That snippet above contains a logic error and the
-	if (MIPSInst_FUNC(ir) != pfetch_op)
-comparison always fires.
-
-When MIPSInst_FUNC(ir) is equal to pfetch_op, ir must end on 001111
-binary. In this case, MIPSInst_FMA_FFMT(ir) must be equal to 0x7, which
-does not match that case label.
-
-This causes emulation failure for the prefx instruction. Fix it.
-
-This has been broken by
-commit 919af8b96c89 ("MIPS: Make definitions of MIPSInst_FMA_{FUNC,FMTM} consistent with MIPS64 manual")
-which modified the MIPSInst_FMA_FFMT macro without updating the users.
-
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Cc: stable@vger.kernel.org # after 3 weeks
-Cc: Dengcheng Zhu <dzhu@wavecomp.com>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Fixes: 919af8b96c89 ("MIPS: Make definitions of MIPSInst_FMA_{FUNC,FMTM} consistent with MIPS64 manual")
+Reported-by: Tomasz Sikora <sikora.tomus@gmail.com>
+Fixes: 3dd075fe8ebb ("media: uvcvideo: Require entities to have a non-zero unique ID")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250114200045.1401644-1-cascardo@igalia.com
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1091858
-[2] MIPS Architecture For Programmers Volume II-A: The MIPS32 Instruction Set
-
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 ---
- arch/mips/math-emu/cp1emu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_driver.c |   70 ++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 43 deletions(-)
 
-diff --git a/arch/mips/math-emu/cp1emu.c b/arch/mips/math-emu/cp1emu.c
-index 265bc57819df..c89e70df43d8 100644
---- a/arch/mips/math-emu/cp1emu.c
-+++ b/arch/mips/math-emu/cp1emu.c
-@@ -1660,7 +1660,7 @@ static int fpux_emu(struct pt_regs *xcp, struct mips_fpu_struct *ctx,
- 		break;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1026,27 +1026,14 @@ static const u8 uvc_media_transport_inpu
+ 	UVC_GUID_UVC_MEDIA_TRANSPORT_INPUT;
+ static const u8 uvc_processing_guid[16] = UVC_GUID_UVC_PROCESSING;
+ 
+-static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
+-					       u16 id, unsigned int num_pads,
+-					       unsigned int extra_size)
++static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
++		unsigned int num_pads, unsigned int extra_size)
+ {
+ 	struct uvc_entity *entity;
+ 	unsigned int num_inputs;
+ 	unsigned int size;
+ 	unsigned int i;
+ 
+-	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
+-	if (id == 0) {
+-		dev_err(&dev->udev->dev, "Found Unit with invalid ID 0.\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
+-	if (uvc_entity_by_id(dev, id)) {
+-		dev_err(&dev->udev->dev, "Found multiple Units with ID %u\n", id);
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+ 	extra_size = roundup(extra_size, sizeof(*entity->pads));
+ 	if (num_pads)
+ 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
+@@ -1056,7 +1043,7 @@ static struct uvc_entity *uvc_alloc_new_
+ 	     + num_inputs;
+ 	entity = kzalloc(size, GFP_KERNEL);
+ 	if (entity == NULL)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 
+ 	entity->id = id;
+ 	entity->type = type;
+@@ -1146,10 +1133,10 @@ static int uvc_parse_vendor_control(stru
+ 			break;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
+-					    buffer[3], p + 1, 2 * n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
++					p + 1, 2*n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->guid, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
+@@ -1259,10 +1246,10 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
+-					    buffer[3], 1, n + p);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
++					1, n + p);
++		if (term == NULL)
++			return -ENOMEM;
+ 
+ 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
+ 			term->camera.bControlSize = n;
+@@ -1318,10 +1305,10 @@ static int uvc_parse_standard_control(st
+ 			return 0;
+ 		}
+ 
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
+-					    buffer[3], 1, 0);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
++					1, 0);
++		if (term == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(term->baSourceID, &buffer[7], 1);
+ 
+@@ -1342,10 +1329,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, 0);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->baSourceID, &buffer[5], p);
+ 
+@@ -1367,9 +1353,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->baSourceID, &buffer[4], 1);
+ 		unit->processing.wMaxMultiplier =
+@@ -1398,10 +1384,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->guid, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
+@@ -1543,10 +1528,9 @@ static int uvc_gpio_parse(struct uvc_dev
+ 		return irq;
  	}
  
--	case 0x3:
-+	case 0x7:
- 		if (MIPSInst_FUNC(ir) != pfetch_op)
- 			return SIGILL;
+-	unit = uvc_alloc_new_entity(dev, UVC_EXT_GPIO_UNIT,
+-				    UVC_EXT_GPIO_UNIT_ID, 0, 1);
+-	if (IS_ERR(unit))
+-		return PTR_ERR(unit);
++	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
++	if (!unit)
++		return -ENOMEM;
  
--- 
-2.48.1
-
+ 	unit->gpio.gpio_privacy = gpio_privacy;
+ 	unit->gpio.irq = irq;
 
 
