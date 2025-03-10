@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5819122154C;
-	Mon, 10 Mar 2025 17:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC9A226D0B;
+	Mon, 10 Mar 2025 17:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627292; cv=none; b=OLQ4SB6TRBfAfLGKdGzxMWLtlh9/hqilFFaHM7zbYb+gCMmlT5JfGIPWtSiZt0uSCzNu4GdXgOyuPUMAbLFHEjTHJMjhDUh8VOcSSRdGCTNUHJG8cP00c/Bg7mK+hnz1lMaxS3pJGJTzboR4JPqkInRSpmYqYAU9Sq8cucr6LRg=
+	t=1741627295; cv=none; b=k1mvBFxhXXXzXFg1QijxaNGozwR92OasrNvjarRSnY4efeg4fQamQbTbVOR6hW5W2i42jyXy9JideyuCPiigUtkhMEasx8LAwYOA+5wRJfrgZhndj+z/Lph5t+7ww/ukp35PTR9CkojJ8c+hLgi8qOxpPKLsqdE8ytRrpg6XMUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627292; c=relaxed/simple;
-	bh=xwyzZpXyiZNKilwOTU2+imPAauOHgP2BcGxiinGsxHY=;
+	s=arc-20240116; t=1741627295; c=relaxed/simple;
+	bh=HQZJtU9NJ/i09jXuopgpOMszbyGbCaVhyiPdu3/YsE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPNRWmRugAkIz2r4wqLL2wHhDbT9K2PSvrvD1MF0Wvit8ZYXrGJhneVyliK5p/nG/M9ilLNILmIIt+6nXBN+dM1oRLQVC361aKcGhuEYinHYED2WSCzp1XfLzmS0LNEbqRkh/FrCUOK12baegi0l+ROYnBlwyduHoOxRiLUom2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krzwLcW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3+z1bSkRgHFBj8D7Zz3McblugcIYScj02RSX5pXBpMO1JXtyLjqro+AzaoUNxeF2nudrEZI26zrIvxe2TBqbgBCauEDfRby/gAXrNkBexVS2jdYlNHvXVwNylNpOEApFg8V0N/MRcZgSTX1+EZFGSSdhAGq0D6jaWM5Y2FJRi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7H1+6hz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krzwLcW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A59C4CEE5;
-	Mon, 10 Mar 2025 17:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7H1+6hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6D5C4CEE5;
+	Mon, 10 Mar 2025 17:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627292;
-	bh=xwyzZpXyiZNKilwOTU2+imPAauOHgP2BcGxiinGsxHY=;
+	s=korg; t=1741627295;
+	bh=HQZJtU9NJ/i09jXuopgpOMszbyGbCaVhyiPdu3/YsE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krzwLcW0yjuan7VdTqM0rMsMHGtkLPKdqhYT8jXIZPzYZ2qtxFI2QrmgQdcGA6scj
-	 OImB69yxSMzDMwUTzj88VrEdZVvRL7uGPMfPZI9OpsXNA8rXn2Io8cLcJd2h+jJv2N
-	 zFOmrVuK+jtfksaoDURnmMRNm1y75jXmGEgpQq6Q=
+	b=O7H1+6hzJWFoRw/3bM7pE9HhNpJF1L7iLc28B4+9TndtEyAc2Qy7cusamf0BgOU9q
+	 B+WDZf68jqGTeHLO4blpqNT1w4pT4l0mNZz490AbH1XWskMK5l5jkBC6BGTf4rqflu
+	 vHK4IezgkHUDubBabTLAfKl6+Rat/n/3XrNDfeL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alice Ryhl <aliceryhl@google.com>,
 	Benno Lossin <benno.lossin@proton.me>,
-	Gary Guo <gary@garyguo.net>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 047/269] rust: alloc: implement `IntoIterator` for `Vec`
-Date: Mon, 10 Mar 2025 18:03:20 +0100
-Message-ID: <20250310170459.598815207@linuxfoundation.org>
+Subject: [PATCH 6.12 048/269] rust: alloc: implement `collect` for `IntoIter`
+Date: Mon, 10 Mar 2025 18:03:21 +0100
+Message-ID: <20250310170459.639354920@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -55,101 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-commit 1d1d223aa3b37c34271aefc2706340d0843bfcb2 upstream.
+commit 93e602310f87b7b515b86a8f919cc0799387e5c3 upstream.
 
-Implement `IntoIterator` for `Vec`, `Vec`'s `IntoIter` type, as well as
-`Iterator` for `IntoIter`.
+Currently, we can't implement `FromIterator`. There are a couple of
+issues with this trait in the kernel, namely:
 
-`Vec::into_iter` disassembles the `Vec` into its raw parts; additionally,
-`IntoIter` keeps track of a separate pointer, which is incremented
-correspondingly as the iterator advances, while the length, or the count
-of elements, is decremented.
+  - Rust's specialization feature is unstable. This prevents us to
+    optimize for the special case where `I::IntoIter` equals `Vec`'s
+    `IntoIter` type.
+  - We also can't use `I::IntoIter`'s type ID either to work around this,
+    since `FromIterator` doesn't require this type to be `'static`.
+  - `FromIterator::from_iter` does return `Self` instead of
+    `Result<Self, AllocError>`, hence we can't properly handle allocation
+    failures.
+  - Neither `Iterator::collect` nor `FromIterator::from_iter` can handle
+    additional allocation flags.
 
-This also means that `IntoIter` takes the ownership of the backing
-buffer and is responsible to drop the remaining elements and free the
-backing buffer, if it's dropped.
+Instead, provide `IntoIter::collect`, such that we can at least convert
+`IntoIter` into a `Vec` again.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Reviewed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20241004154149.93856-18-dakr@kernel.org
-[ Fixed typos. - Miguel ]
+Link: https://lore.kernel.org/r/20241004154149.93856-19-dakr@kernel.org
+[ Added newline in documentation, changed case of section to be
+  consistent with an existing one, fixed typo. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc.rs      |    1 
- rust/kernel/alloc/kvec.rs |  170 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 171 insertions(+)
+ rust/kernel/alloc/kvec.rs |   95 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 95 insertions(+)
 
---- a/rust/kernel/alloc.rs
-+++ b/rust/kernel/alloc.rs
-@@ -20,6 +20,7 @@ pub use self::kbox::KBox;
- pub use self::kbox::KVBox;
- pub use self::kbox::VBox;
- 
-+pub use self::kvec::IntoIter;
- pub use self::kvec::KVVec;
- pub use self::kvec::KVec;
- pub use self::kvec::VVec;
 --- a/rust/kernel/alloc/kvec.rs
 +++ b/rust/kernel/alloc/kvec.rs
-@@ -646,3 +646,173 @@ impl_slice_eq! {
-     [A: Allocator, const N: usize] Vec<T, A>, [U; N],
-     [A: Allocator, const N: usize] Vec<T, A>, &[U; N],
+@@ -692,6 +692,101 @@ pub struct IntoIter<T, A: Allocator> {
+     _p: PhantomData<A>,
  }
-+
-+impl<'a, T, A> IntoIterator for &'a Vec<T, A>
+ 
++impl<T, A> IntoIter<T, A>
 +where
 +    A: Allocator,
 +{
-+    type Item = &'a T;
-+    type IntoIter = slice::Iter<'a, T>;
-+
-+    fn into_iter(self) -> Self::IntoIter {
-+        self.iter()
++    fn into_raw_parts(self) -> (*mut T, NonNull<T>, usize, usize) {
++        let me = ManuallyDrop::new(self);
++        let ptr = me.ptr;
++        let buf = me.buf;
++        let len = me.len;
++        let cap = me.layout.len();
++        (ptr, buf, len, cap)
 +    }
-+}
 +
-+impl<'a, T, A: Allocator> IntoIterator for &'a mut Vec<T, A>
-+where
-+    A: Allocator,
-+{
-+    type Item = &'a mut T;
-+    type IntoIter = slice::IterMut<'a, T>;
-+
-+    fn into_iter(self) -> Self::IntoIter {
-+        self.iter_mut()
-+    }
-+}
-+
-+/// An [`Iterator`] implementation for [`Vec`] that moves elements out of a vector.
-+///
-+/// This structure is created by the [`Vec::into_iter`] method on [`Vec`] (provided by the
-+/// [`IntoIterator`] trait).
-+///
-+/// # Examples
-+///
-+/// ```
-+/// let v = kernel::kvec![0, 1, 2]?;
-+/// let iter = v.into_iter();
-+///
-+/// # Ok::<(), Error>(())
-+/// ```
-+pub struct IntoIter<T, A: Allocator> {
-+    ptr: *mut T,
-+    buf: NonNull<T>,
-+    len: usize,
-+    layout: ArrayLayout<T>,
-+    _p: PhantomData<A>,
-+}
-+
-+impl<T, A> Iterator for IntoIter<T, A>
-+where
-+    A: Allocator,
-+{
-+    type Item = T;
-+
++    /// Same as `Iterator::collect` but specialized for `Vec`'s `IntoIter`.
++    ///
 +    /// # Examples
 +    ///
 +    /// ```
@@ -157,116 +113,81 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +    /// let mut it = v.into_iter();
 +    ///
 +    /// assert_eq!(it.next(), Some(1));
-+    /// assert_eq!(it.next(), Some(2));
-+    /// assert_eq!(it.next(), Some(3));
-+    /// assert_eq!(it.next(), None);
++    ///
++    /// let v = it.collect(GFP_KERNEL);
++    /// assert_eq!(v, [2, 3]);
 +    ///
 +    /// # Ok::<(), Error>(())
 +    /// ```
-+    fn next(&mut self) -> Option<T> {
-+        if self.len == 0 {
-+            return None;
++    ///
++    /// # Implementation details
++    ///
++    /// Currently, we can't implement `FromIterator`. There are a couple of issues with this trait
++    /// in the kernel, namely:
++    ///
++    /// - Rust's specialization feature is unstable. This prevents us to optimize for the special
++    ///   case where `I::IntoIter` equals `Vec`'s `IntoIter` type.
++    /// - We also can't use `I::IntoIter`'s type ID either to work around this, since `FromIterator`
++    ///   doesn't require this type to be `'static`.
++    /// - `FromIterator::from_iter` does return `Self` instead of `Result<Self, AllocError>`, hence
++    ///   we can't properly handle allocation failures.
++    /// - Neither `Iterator::collect` nor `FromIterator::from_iter` can handle additional allocation
++    ///   flags.
++    ///
++    /// Instead, provide `IntoIter::collect`, such that we can at least convert a `IntoIter` into a
++    /// `Vec` again.
++    ///
++    /// Note that `IntoIter::collect` doesn't require `Flags`, since it re-uses the existing backing
++    /// buffer. However, this backing buffer may be shrunk to the actual count of elements.
++    pub fn collect(self, flags: Flags) -> Vec<T, A> {
++        let old_layout = self.layout;
++        let (mut ptr, buf, len, mut cap) = self.into_raw_parts();
++        let has_advanced = ptr != buf.as_ptr();
++
++        if has_advanced {
++            // Copy the contents we have advanced to at the beginning of the buffer.
++            //
++            // SAFETY:
++            // - `ptr` is valid for reads of `len * size_of::<T>()` bytes,
++            // - `buf.as_ptr()` is valid for writes of `len * size_of::<T>()` bytes,
++            // - `ptr` and `buf.as_ptr()` are not be subject to aliasing restrictions relative to
++            //   each other,
++            // - both `ptr` and `buf.ptr()` are properly aligned.
++            unsafe { ptr::copy(ptr, buf.as_ptr(), len) };
++            ptr = buf.as_ptr();
++
++            // SAFETY: `len` is guaranteed to be smaller than `self.layout.len()`.
++            let layout = unsafe { ArrayLayout::<T>::new_unchecked(len) };
++
++            // SAFETY: `buf` points to the start of the backing buffer and `len` is guaranteed to be
++            // smaller than `cap`. Depending on `alloc` this operation may shrink the buffer or leaves
++            // it as it is.
++            ptr = match unsafe {
++                A::realloc(Some(buf.cast()), layout.into(), old_layout.into(), flags)
++            } {
++                // If we fail to shrink, which likely can't even happen, continue with the existing
++                // buffer.
++                Err(_) => ptr,
++                Ok(ptr) => {
++                    cap = len;
++                    ptr.as_ptr().cast()
++                }
++            };
 +        }
 +
-+        let current = self.ptr;
-+
-+        // SAFETY: We can't overflow; decreasing `self.len` by one every time we advance `self.ptr`
-+        // by one guarantees that.
-+        unsafe { self.ptr = self.ptr.add(1) };
-+
-+        self.len -= 1;
-+
-+        // SAFETY: `current` is guaranteed to point at a valid element within the buffer.
-+        Some(unsafe { current.read() })
-+    }
-+
-+    /// # Examples
-+    ///
-+    /// ```
-+    /// let v: KVec<u32> = kernel::kvec![1, 2, 3]?;
-+    /// let mut iter = v.into_iter();
-+    /// let size = iter.size_hint().0;
-+    ///
-+    /// iter.next();
-+    /// assert_eq!(iter.size_hint().0, size - 1);
-+    ///
-+    /// iter.next();
-+    /// assert_eq!(iter.size_hint().0, size - 2);
-+    ///
-+    /// iter.next();
-+    /// assert_eq!(iter.size_hint().0, size - 3);
-+    ///
-+    /// # Ok::<(), Error>(())
-+    /// ```
-+    fn size_hint(&self) -> (usize, Option<usize>) {
-+        (self.len, Some(self.len))
++        // SAFETY: If the iterator has been advanced, the advanced elements have been copied to
++        // the beginning of the buffer and `len` has been adjusted accordingly.
++        //
++        // - `ptr` is guaranteed to point to the start of the backing buffer.
++        // - `cap` is either the original capacity or, after shrinking the buffer, equal to `len`.
++        // - `alloc` is guaranteed to be unchanged since `into_iter` has been called on the original
++        //   `Vec`.
++        unsafe { Vec::from_raw_parts(ptr, len, cap) }
 +    }
 +}
 +
-+impl<T, A> Drop for IntoIter<T, A>
-+where
-+    A: Allocator,
-+{
-+    fn drop(&mut self) {
-+        // SAFETY: `self.ptr` is guaranteed to be valid by the type invariant.
-+        unsafe { ptr::drop_in_place(ptr::slice_from_raw_parts_mut(self.ptr, self.len)) };
-+
-+        // SAFETY:
-+        // - `self.buf` was previously allocated with `A`.
-+        // - `self.layout` matches the `ArrayLayout` of the preceding allocation.
-+        unsafe { A::free(self.buf.cast(), self.layout.into()) };
-+    }
-+}
-+
-+impl<T, A> IntoIterator for Vec<T, A>
-+where
-+    A: Allocator,
-+{
-+    type Item = T;
-+    type IntoIter = IntoIter<T, A>;
-+
-+    /// Consumes the `Vec<T, A>` and creates an `Iterator`, which moves each value out of the
-+    /// vector (from start to end).
-+    ///
-+    /// # Examples
-+    ///
-+    /// ```
-+    /// let v = kernel::kvec![1, 2]?;
-+    /// let mut v_iter = v.into_iter();
-+    ///
-+    /// let first_element: Option<u32> = v_iter.next();
-+    ///
-+    /// assert_eq!(first_element, Some(1));
-+    /// assert_eq!(v_iter.next(), Some(2));
-+    /// assert_eq!(v_iter.next(), None);
-+    ///
-+    /// # Ok::<(), Error>(())
-+    /// ```
-+    ///
-+    /// ```
-+    /// let v = kernel::kvec![];
-+    /// let mut v_iter = v.into_iter();
-+    ///
-+    /// let first_element: Option<u32> = v_iter.next();
-+    ///
-+    /// assert_eq!(first_element, None);
-+    ///
-+    /// # Ok::<(), Error>(())
-+    /// ```
-+    #[inline]
-+    fn into_iter(self) -> Self::IntoIter {
-+        let buf = self.ptr;
-+        let layout = self.layout;
-+        let (ptr, len, _) = self.into_raw_parts();
-+
-+        IntoIter {
-+            ptr,
-+            buf,
-+            len,
-+            layout,
-+            _p: PhantomData::<A>,
-+        }
-+    }
-+}
+ impl<T, A> Iterator for IntoIter<T, A>
+ where
+     A: Allocator,
 
 
