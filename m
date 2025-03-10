@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459A1230D3A;
-	Mon, 10 Mar 2025 17:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A311C5F1B;
+	Mon, 10 Mar 2025 17:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627535; cv=none; b=VODG3fHgDzGH11t+2L9A10bWZbteQTHmX0QBuoCrPTbojHPQPEfshs0G+cppJ+HZbgTbePi1BxMdzINCYU9IL4SXmOKYZzJEO0SyLXPUblkkKIEznwzHgoxzq+Bn6lnBFADWHO85Q6Wme502MicP8YThqyX71Wk5M9mW3qjbbSg=
+	t=1741627538; cv=none; b=FaiLPhE3VRgBIYY0d0s0sj0vJWNuUbYJh0/UfyAiZ97F8nVthIUUlxozX4EgqaG/1BspEr/6WrY0QBv3MAXYYd7T89Y4wqTgZ0FmQGQtewwiMgcZHU9wRO4Y1uVTxFOSHQtyGvtDhuVIYOj3o4WSn6IAdLHoltrUPO86LY1PbwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627535; c=relaxed/simple;
-	bh=LJKCKaTkYHUYn23MS2Yuc3iRwAB4h2VSo42gTaxZIjo=;
+	s=arc-20240116; t=1741627538; c=relaxed/simple;
+	bh=WrKPHqA2O1no9e5PYAHmymPBAONXJfOPf1IeqUdIluw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VC4526nA6Nc+HVFI8Ntu/Rp+5HiM1X+eXSRXUsb2tUkLyVD+F2GLZ6IWTCFtqEayHYtYIzi8XInoQp8UHDGVTc7TkNpT7gS1Oz29EAz++zIRf3/ndHkI2PC5M/DGXCUr+ODDjOxD9d9nw6Znef8I5xB5DH6YKrcUBdL2tg6sk6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO6mJrg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHXQIQTOXyipwtD3VPzjKTX31RqWQxSKfllfTlZQeUNuBQe4fNFNCUDFOSt8zpPkmfUXoPEUAtcPY2LZcMurtbww4LgFi8po0FASbgqLES3hgffqUn5hx8evgY6RzOHm37jUlzGcxVj+FN1zJUL5FD9AkjYUtXPy9lhkeXJu4xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XS8KKoUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO6mJrg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03FAC4CEE5;
-	Mon, 10 Mar 2025 17:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XS8KKoUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98420C4CEE5;
+	Mon, 10 Mar 2025 17:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627535;
-	bh=LJKCKaTkYHUYn23MS2Yuc3iRwAB4h2VSo42gTaxZIjo=;
+	s=korg; t=1741627538;
+	bh=WrKPHqA2O1no9e5PYAHmymPBAONXJfOPf1IeqUdIluw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SO6mJrg+yCBPNK+mF4ctW8KMhhZ32e0D2nUxr6Jia7a75TZ17Fi38tgH9FqLIbMCh
-	 2pwlVmy4bL6NMOsZ4gjH1c8z7+avTHpDgxYAaMQS7AiRBOi0cqRSXfrBTMgMy2XD7K
-	 OGRDC6x1d7+5FMkbk2xuW05Q6//J+XQg9VEmcdts=
+	b=XS8KKoUXcEmkbaivJVXTSlW69LeIqUs+Qkp99riL7ulYTB1cFlAd0hpeGVYAQxuXO
+	 hyuNbwzITCWumxGIQnB/cpDIjrrdA9pi/8qFMu8dGoI19sIQElwhETyJOStMwh+L9W
+	 PJR/zS9dm79SVm10StDhvJ+ypTxEOky05rLF6J78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/269] nvme-tcp: add basic support for the C2HTermReq PDU
-Date: Mon, 10 Mar 2025 18:05:16 +0100
-Message-ID: <20250310170504.214831645@linuxfoundation.org>
+Subject: [PATCH 6.12 146/269] HID: google: fix unused variable warning under !CONFIG_ACPI
+Date: Mon, 10 Mar 2025 18:04:59 +0100
+Message-ID: <20250310170503.536553520@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -52,102 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit 84e009042d0f3dfe91bec60bcd208ee3f866cbcd ]
+[ Upstream commit 4bd0725c09f377ffaf22b834241f6c050742e4fc ]
 
-Previously, the NVMe/TCP host driver did not handle the C2HTermReq PDU,
-instead printing "unsupported pdu type (3)" when received. This patch adds
-support for processing the C2HTermReq PDU, allowing the driver
-to print the Fatal Error Status field.
+As reported by the kernel test robot, the following warning occurs:
 
-Example of output:
-nvme nvme4: Received C2HTermReq (FES = Invalid PDU Header Field)
+>> drivers/hid/hid-google-hammer.c:261:36: warning: 'cbas_ec_acpi_ids' defined but not used [-Wunused-const-variable=]
+     261 | static const struct acpi_device_id cbas_ec_acpi_ids[] = {
+         |                                    ^~~~~~~~~~~~~~~~
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: ad95bab0cd28 ("nvme-tcp: fix potential memory corruption in nvme_tcp_recv_pdu()")
+The 'cbas_ec_acpi_ids' array is only used when CONFIG_ACPI is enabled.
+Wrapping its definition and 'MODULE_DEVICE_TABLE' in '#ifdef CONFIG_ACPI'
+prevents a compiler warning when ACPI is disabled.
+
+Fixes: eb1aac4c8744f75 ("HID: google: add support tablet mode switch for Whiskers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501201141.jctFH5eB-lkp@intel.com/
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c  | 43 ++++++++++++++++++++++++++++++++++++++++
- include/linux/nvme-tcp.h |  2 ++
- 2 files changed, 45 insertions(+)
+ drivers/hid/hid-google-hammer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 840ae475074d0..749d464bef9f7 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -763,6 +763,40 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
- 	return 0;
+diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
+index 22683ec819aac..646ba5b92e0b2 100644
+--- a/drivers/hid/hid-google-hammer.c
++++ b/drivers/hid/hid-google-hammer.c
+@@ -268,11 +268,13 @@ static void cbas_ec_remove(struct platform_device *pdev)
+ 	mutex_unlock(&cbas_ec_reglock);
  }
  
-+static void nvme_tcp_handle_c2h_term(struct nvme_tcp_queue *queue,
-+		struct nvme_tcp_term_pdu *pdu)
-+{
-+	u16 fes;
-+	const char *msg;
-+	u32 plen = le32_to_cpu(pdu->hdr.plen);
-+
-+	static const char * const msg_table[] = {
-+		[NVME_TCP_FES_INVALID_PDU_HDR] = "Invalid PDU Header Field",
-+		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
-+		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
-+		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
-+		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
-+		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
-+	};
-+
-+	if (plen < NVME_TCP_MIN_C2HTERM_PLEN ||
-+	    plen > NVME_TCP_MAX_C2HTERM_PLEN) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"Received a malformed C2HTermReq PDU (plen = %u)\n",
-+			plen);
-+		return;
-+	}
-+
-+	fes = le16_to_cpu(pdu->fes);
-+	if (fes && fes < ARRAY_SIZE(msg_table))
-+		msg = msg_table[fes];
-+	else
-+		msg = "Unknown";
-+
-+	dev_err(queue->ctrl->ctrl.device,
-+		"Received C2HTermReq (FES = %s)\n", msg);
-+}
-+
- static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
- 		unsigned int *offset, size_t *len)
- {
-@@ -784,6 +818,15 @@ static int nvme_tcp_recv_pdu(struct nvme_tcp_queue *queue, struct sk_buff *skb,
- 		return 0;
++#ifdef CONFIG_ACPI
+ static const struct acpi_device_id cbas_ec_acpi_ids[] = {
+ 	{ "GOOG000B", 0 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, cbas_ec_acpi_ids);
++#endif
  
- 	hdr = queue->pdu;
-+	if (unlikely(hdr->type == nvme_tcp_c2h_term)) {
-+		/*
-+		 * C2HTermReq never includes Header or Data digests.
-+		 * Skip the checks.
-+		 */
-+		nvme_tcp_handle_c2h_term(queue, (void *)queue->pdu);
-+		return -EINVAL;
-+	}
-+
- 	if (queue->hdr_digest) {
- 		ret = nvme_tcp_verify_hdgst(queue, queue->pdu, hdr->hlen);
- 		if (unlikely(ret))
-diff --git a/include/linux/nvme-tcp.h b/include/linux/nvme-tcp.h
-index e07e8978d691b..e435250fcb4d0 100644
---- a/include/linux/nvme-tcp.h
-+++ b/include/linux/nvme-tcp.h
-@@ -13,6 +13,8 @@
- #define NVME_TCP_ADMIN_CCSZ	SZ_8K
- #define NVME_TCP_DIGEST_LENGTH	4
- #define NVME_TCP_MIN_MAXH2CDATA 4096
-+#define NVME_TCP_MIN_C2HTERM_PLEN	24
-+#define NVME_TCP_MAX_C2HTERM_PLEN	152
- 
- enum nvme_tcp_pfv {
- 	NVME_TCP_PFV_1_0 = 0x0,
+ #ifdef CONFIG_OF
+ static const struct of_device_id cbas_ec_of_match[] = {
 -- 
 2.39.5
 
