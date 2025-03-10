@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1684D154BE0;
-	Mon, 10 Mar 2025 17:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880C8154BE0;
+	Mon, 10 Mar 2025 17:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628787; cv=none; b=YIR2T2iN5/8jberKP4amMLpSgV2eRLFL6tFUNqyID8FI1T6U92aNkoZwj4Kf9R05GLZuf1tKkYcr8ynVluMnGb6px9fMBru2lpXOYnyRWlmukm222jqIT6VcVeMkMG2LKML7o6CR30mUQiG//szHOfxiA/TfDPHkPgEQDoak9CI=
+	t=1741628789; cv=none; b=NcplJWOgp1Vs6idwq9YsjRVTEBq8SURd5XmPs7HZ9jaY00H/09UIFsMidVmGDXgfuPijhkvHsmpYJIj7Cqx4/p/kgkswWfJqRPYlie8rmnUIBGBLgOLNmNXwI8+A82HjyDcPiluf755k/0vQfB8nxBlOk1qDqonAB/jgdN/nYJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628787; c=relaxed/simple;
-	bh=iDIyf7jmr18Y+6W5OqfrGspFGu3zexluvrjtI0YxLXc=;
+	s=arc-20240116; t=1741628789; c=relaxed/simple;
+	bh=bJM08IPsLUnQtXuzZB47QJo6UA5BQymbOIazH930n9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xz7fRdFsM5itb/uUGknmgE9j9XQe+dw1TYv+81LvCEC77IcHV10CoDcddMS79yNotAPgt64j/h/uFO75dLEpmkt7KNVuQr17jqMxByWUkbcWOiSSqHLVrsQjQg+mLloxCFp875yti1hSnbDol85fH4im2vfjFU3PzNcAq8U77Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muMzYLv+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2UK9DMBTs5VBkWBBK8UiRCk1xAL74D/VfoJViPD6N1qnhjODAKyHk6ofazV6MtA5ZXgX9/71tQbYAHB2GzJ3mH7KoM5qrrmpDB43QI2vqs07S9s6xmL2ut6rWCrWK2+yG7FlRsDUSg8y0ugf5p7a3cvnQYPQYU29p1fEPn/XG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOarwf1g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muMzYLv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF2BC4CEE5;
-	Mon, 10 Mar 2025 17:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOarwf1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1216DC4CEE5;
+	Mon, 10 Mar 2025 17:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628786;
-	bh=iDIyf7jmr18Y+6W5OqfrGspFGu3zexluvrjtI0YxLXc=;
+	s=korg; t=1741628789;
+	bh=bJM08IPsLUnQtXuzZB47QJo6UA5BQymbOIazH930n9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muMzYLv+HAmJQihwK6XArpsYPpT9TLlei7T1HISJmo5FYTm6j2gXaAf1DIjA6Md70
-	 2AqmUKUGRjSta0flg+iY1PpKS+NZy84FqeHpzfIZDVnkE3hsgp4BCUYKNd7Za99lNN
-	 0zIZ5zTmOqcaO40GI3L0zvqm9Z3IkuYM4iTyjnvg=
+	b=pOarwf1gDe0Dt43zQpYYhZoQZRYFq1jZUG3N7fIGKTr4r397B4979XDJkfCtJkrfB
+	 fALH7HPuYcW+t2rad2Q/wGJtIoIR/y7w0d4eieaSO2obpMxOBhGQF9kKFmmLOSN5Ge
+	 K/25hF6rI5v5kZ772Eljzr/9ggNgmmQ+mRciNtCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Liu Jian <liujian56@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/620] selftests/landlock: Fix error message
-Date: Mon, 10 Mar 2025 17:58:34 +0100
-Message-ID: <20250310170548.265147026@linuxfoundation.org>
+Subject: [PATCH 5.15 069/620] net: let net.core.dev_weight always be non-zero
+Date: Mon, 10 Mar 2025 17:58:35 +0100
+Message-ID: <20250310170548.303463744@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -45,43 +45,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 2107c35128ad751b201eb92fe91443450d9e5c37 ]
+[ Upstream commit d1f9f79fa2af8e3b45cffdeef66e05833480148a ]
 
-The global variable errno may not be set in test_execute().  Do not use
-it in related error message.
+The following problem was encountered during stability test:
 
-Cc: Günther Noack <gnoack@google.com>
-Fixes: e1199815b47b ("selftests/landlock: Add user space tests")
-Link: https://lore.kernel.org/r/20250108154338.1129069-21-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+(NULL net_device): NAPI poll function process_backlog+0x0/0x530 \
+	returned 1, exceeding its budget of 0.
+------------[ cut here ]------------
+list_add double add: new=ffff88905f746f48, prev=ffff88905f746f48, \
+	next=ffff88905f746e40.
+WARNING: CPU: 18 PID: 5462 at lib/list_debug.c:35 \
+	__list_add_valid_or_report+0xf3/0x130
+CPU: 18 UID: 0 PID: 5462 Comm: ping Kdump: loaded Not tainted 6.13.0-rc7+
+RIP: 0010:__list_add_valid_or_report+0xf3/0x130
+Call Trace:
+? __warn+0xcd/0x250
+? __list_add_valid_or_report+0xf3/0x130
+enqueue_to_backlog+0x923/0x1070
+netif_rx_internal+0x92/0x2b0
+__netif_rx+0x15/0x170
+loopback_xmit+0x2ef/0x450
+dev_hard_start_xmit+0x103/0x490
+__dev_queue_xmit+0xeac/0x1950
+ip_finish_output2+0x6cc/0x1620
+ip_output+0x161/0x270
+ip_push_pending_frames+0x155/0x1a0
+raw_sendmsg+0xe13/0x1550
+__sys_sendto+0x3bf/0x4e0
+__x64_sys_sendto+0xdc/0x1b0
+do_syscall_64+0x5b/0x170
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The reproduction command is as follows:
+  sysctl -w net.core.dev_weight=0
+  ping 127.0.0.1
+
+This is because when the napi's weight is set to 0, process_backlog() may
+return 0 and clear the NAPI_STATE_SCHED bit of napi->state, causing this
+napi to be re-polled in net_rx_action() until __do_softirq() times out.
+Since the NAPI_STATE_SCHED bit has been cleared, napi_schedule_rps() can
+be retriggered in enqueue_to_backlog(), causing this issue.
+
+Making the napi's weight always non-zero solves this problem.
+
+Triggering this issue requires system-wide admin (setting is
+not namespaced).
+
+Fixes: e38766054509 ("[NET]: Fix sysctl net.core.dev_weight")
+Fixes: 3d48b53fb2ae ("net: dev_weight: TX/RX orthogonality")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Link: https://patch.msgid.link/20250116143053.4146855-1-liujian56@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/fs_test.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/core/sysctl_net_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index ea988b3d6b2ed..47fc4392f412e 100644
---- a/tools/testing/selftests/landlock/fs_test.c
-+++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -1767,8 +1767,7 @@ static void test_execute(struct __test_metadata *const _metadata, const int err,
- 	ASSERT_EQ(1, WIFEXITED(status));
- 	ASSERT_EQ(err ? 2 : 0, WEXITSTATUS(status))
- 	{
--		TH_LOG("Unexpected return code for \"%s\": %s", path,
--		       strerror(errno));
-+		TH_LOG("Unexpected return code for \"%s\"", path);
- 	};
- }
+diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
+index ed20cbdd19315..60ea97aaea7d9 100644
+--- a/net/core/sysctl_net_core.c
++++ b/net/core/sysctl_net_core.c
+@@ -240,7 +240,7 @@ static int proc_do_dev_weight(struct ctl_table *table, int write,
+ 	int ret, weight;
  
+ 	mutex_lock(&dev_weight_mutex);
+-	ret = proc_dointvec(table, write, buffer, lenp, ppos);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+ 	if (!ret && write) {
+ 		weight = READ_ONCE(weight_p);
+ 		WRITE_ONCE(dev_rx_weight, weight * dev_weight_rx_bias);
+@@ -351,6 +351,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "dev_weight_rx_bias",
+@@ -358,6 +359,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "dev_weight_tx_bias",
+@@ -365,6 +367,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "netdev_max_backlog",
 -- 
 2.39.5
 
