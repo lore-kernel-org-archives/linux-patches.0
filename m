@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378F622B8BD;
-	Mon, 10 Mar 2025 17:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3874822CBED;
+	Mon, 10 Mar 2025 17:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627755; cv=none; b=em3Sh2yVR5M+uPmLWD8mJhIFw2KFfRdxBK52vA95Pozmbl/mqT9PFkOjKhKbqVFVQ8ASZBgBHGAYcwyR+Ltq68wh7UR2noErYU3+cVH/gNHrp2RAIzpst2/lu0tBmdZS1wUdukXWSQHKK8mw1D+Lw1madQSUdID8gfsfX926VNQ=
+	t=1741627758; cv=none; b=Mv6gQ954lewKxaIQrcmyneIDAQFWw0muj++ceG3oT9YgafHPoPtF9SvxDMktW2d8q1lHNoNW4ovlWGTx70aSgTJElGim0Vus5oQ25OEbNOhXh4pBT4H+7heTG6uJWInE+QNBq+Jga6kotpPgWoDJN1MkeXjTXK28WoEkfmU7elg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627755; c=relaxed/simple;
-	bh=z3v8a3vJZXXP6ZS0LJ+koUZVeU/Sp5f3X3dQcr9BDeI=;
+	s=arc-20240116; t=1741627758; c=relaxed/simple;
+	bh=M4ZnvdaR1hpiaVx9uWd7oBPASmZ166K6y75XaWw1DDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMdxEvx8i70TVSdsg1oQn98k5XMxELfSkpvbrRsC1UByvscmshZCb4XtPZXx3xTxEtAj7Xl1JpQSJlZwiwg7TnVJ3FGbs+nRHCGlTHurjATsloUmgpNgg9Tba0VYziyxW8a0BitoVCxKxKLHlteRiEsFWn+3Tpwo9vxZm4Mm6ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIfQFtEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jaMY6zFOYlc5ERNNaEJa1R5QJp4rSqZivfQ+cskN4EE+d1tNJG76JND81XepEmtYg80jEsRG2iDDFBMMiJUL6a1iWflBEuuJBOxZgHHqIKikHVNLRYvZvgvdx0x/bgHaSa64G8T6VM/YME5k9eUNQkx0YZvjyu76BUR1HUa1EgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvufOCN1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIfQFtEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE65C4CEE5;
-	Mon, 10 Mar 2025 17:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvufOCN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4DEC4CEE5;
+	Mon, 10 Mar 2025 17:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627755;
-	bh=z3v8a3vJZXXP6ZS0LJ+koUZVeU/Sp5f3X3dQcr9BDeI=;
+	s=korg; t=1741627758;
+	bh=M4ZnvdaR1hpiaVx9uWd7oBPASmZ166K6y75XaWw1DDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIfQFtEcE1L7EE4LERY3ImpratvsSLtk8fwMHgDinhlZloaDDsrTJu41Yh8RHTZ9Y
-	 +oZRdfOv7a4M4x7UT9K40GtAo+0j9Q33MKD/C7AzB7X/2BgNsRZFtqkUbXqVq1mkeL
-	 BI1v24T4BcmkH8cdFKgfPPR9BxKAeKDZWUJ+vtqM=
+	b=qvufOCN1VuXvf3Q1XJk48+Ggowjh2n71cSh0wiQOu65jUfXOzMfo/cthEPGbMWknS
+	 BpMdgJBlLyV84wV2A78HbowJCYAF127hmT2NkZphsAlt0eVG20ss48VtgsTlmGgYhs
+	 yb3FrvE5zH8/z5urf+YRmC1QvDxkRUGs/8G0D4f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.12 238/269] mei: me: add panther lake P DID
-Date: Mon, 10 Mar 2025 18:06:31 +0100
-Message-ID: <20250310170507.170147445@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 239/269] mei: vsc: Use "wakeuphostint" when getting the host wakeup GPIO
+Date: Mon, 10 Mar 2025 18:06:32 +0100
+Message-ID: <20250310170507.324072044@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,44 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit a8e8ffcc3afce2ee5fb70162aeaef3f03573ee1e upstream.
+commit fdb1ada57cf8b8752cdf54f08709d76d74999544 upstream.
 
-Add Panther Lake P device id.
+The _CRS ACPI resources table has 2 entries for the host wakeup GPIO,
+the first one being a regular GpioIo () resource while the second one
+is a GpioInt () resource for the same pin.
 
+The acpi_gpio_mapping table used by vsc-tp.c maps the first Gpio ()
+resource to "wakeuphost-gpios" where as the second GpioInt () entry
+is mapped to "wakeuphostint-gpios".
+
+Using "wakeuphost" to request the GPIO as was done until now, means
+that the gpiolib-acpi code does not know that the GPIO is active-low
+as that info is only available in the GpioInt () entry.
+
+Things were still working before due to the following happening:
+
+1. Since the 2 entries point to the same pin they share a struct gpio_desc
+2. The SPI core creates the SPI device vsc-tp.c binds to and calls
+   acpi_dev_gpio_irq_get(). This does use the second entry and sets
+   FLAG_ACTIVE_LOW in gpio_desc.flags .
+3. vsc_tp_probe() requests the "wakeuphost" GPIO and inherits the
+   active-low flag set by acpi_dev_gpio_irq_get()
+
+But there is a possible scenario where things do not work:
+
+1. - 3. happen as above
+4. After requesting the "wakeuphost" GPIO, the "resetfw" GPIO is requested
+   next, but its USB GPIO controller is not available yet, so this call
+   returns -EPROBE_DEFER.
+5. The gpio_desc for "wakeuphost" is put() and during this the active-low
+   flag is cleared from gpio_desc.flags .
+6. Later on vsc_tp_probe() requests the "wakeuphost" GPIO again, but now it
+   is not marked active-low.
+
+The difference can also be seen in /sys/kernel/debug/gpio, which contains
+the following line for this GPIO:
+
+ gpio-535 (                    |wakeuphost          ) in  hi IRQ ACTIVE LOW
+
+If the second scenario is hit the "ACTIVE LOW" at the end disappears and
+things do not work.
+
+Fix this by requesting the GPIO through the "wakeuphostint" mapping instead
+which provides active-low info without relying on acpi_dev_gpio_irq_get()
+pre-populating this info in the gpio_desc.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2316918
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://lore.kernel.org/r/20250209110550.1582982-1-alexander.usyskin@intel.com
+Link: https://lore.kernel.org/r/20250214212425.84021-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/misc/mei/vsc-tp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -117,6 +117,8 @@
+--- a/drivers/misc/mei/vsc-tp.c
++++ b/drivers/misc/mei/vsc-tp.c
+@@ -504,7 +504,7 @@ static int vsc_tp_probe(struct spi_devic
+ 	if (ret)
+ 		return ret;
  
- #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
+-	tp->wakeuphost = devm_gpiod_get(dev, "wakeuphost", GPIOD_IN);
++	tp->wakeuphost = devm_gpiod_get(dev, "wakeuphostint", GPIOD_IN);
+ 	if (IS_ERR(tp->wakeuphost))
+ 		return PTR_ERR(tp->wakeuphost);
  
-+#define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -124,6 +124,8 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
 
 
