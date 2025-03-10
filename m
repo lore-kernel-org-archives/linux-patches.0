@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABBA230D2B;
-	Mon, 10 Mar 2025 17:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56BC233700;
+	Mon, 10 Mar 2025 17:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626980; cv=none; b=lgu1/dPfAbGbEpMZ0jo/XmGY2F51jKtGRr0SHEvQy7UsGO2ev9P/Fr8xvlEU+cf5xKvQMmPekjKFNegUIrbkWjLWyCFXyFIWmXCpdQyMPCo4BYAujXnrizYTsqZF479vUGYUb/+tFfC7HxAkhTzsbaNBU9XQHB7XSxHJvCZOELM=
+	t=1741626983; cv=none; b=HIK6h+QYO1WxjKk9/zGxZp8nsQaS9l6JKZVx2koyOoaWRZ/2mc2+W2SpTwjsD+T9q9TwztrFOVAjMPLpq3eD7phn9OtCwnVJUsvMEiZtW7TnYKp22obX5FoOebsJiECFpEWmKMEHM9BX3Mx+GS8KhxNOyKk16UiGY3C3NMzrBYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626980; c=relaxed/simple;
-	bh=COgnYyJK431DT7jBl4MtZ/5nNwmswxiI3YrqhXnNyrs=;
+	s=arc-20240116; t=1741626983; c=relaxed/simple;
+	bh=Mbyy0O265FrzhyeiqJjy/oGp4Pch4AI2k032BhkxjsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRzZY11AxCYItJBW36hr59aKWp3ngzcmUyxqe9i99/i8I71qimCtXNrWEZ3RKalxfVRRXEtloQDeFKMCtpFGxcfRSgZCwGwKnhsC+OA2N96dTpUS4nj2NIDpQMC91y4hxNf7cshB+oS/gGBUFlV6Gb8LndldioSOkdNI/7z2+vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ub8lY5P6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwvyehlGqUaASFVp+y26fhD0i99JB+WgHVpHFJZRxFJlD12WJw/i5bloRRqXEr1kinLOxBkIK1fhAvKW7rZqAMERyk0tkj+1K7o6dDPjB9UIvL+EqFuAKiTjxTCkwE59uxKrukukJtPZNCILnHQmImS7QjKHsXN/SSoUUXUx4bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSP5vrGz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ub8lY5P6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1121FC4CEEB;
-	Mon, 10 Mar 2025 17:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSP5vrGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3785C4CEE5;
+	Mon, 10 Mar 2025 17:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626980;
-	bh=COgnYyJK431DT7jBl4MtZ/5nNwmswxiI3YrqhXnNyrs=;
+	s=korg; t=1741626983;
+	bh=Mbyy0O265FrzhyeiqJjy/oGp4Pch4AI2k032BhkxjsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ub8lY5P6aqc3Y5Gvsu9LkIaZkVHjln2e8jtP0K6zZwsLmVaCwIq+fFcH3uANehBaK
-	 DmhKYbBXYdoXs7yuhaDnSA/Zaib3l4YKxPK1KlYey/XqmajWqeF6ZzTkHr6np51ZV2
-	 7hR3BzJbxvezR9xfK88Fyjw9Q6v+WO+aDePTDJVY=
+	b=GSP5vrGz8sWdycT1mEhPsoiArux5xs3m+cQyLxlWoLabH3SLzlzmPJa6h0rr+Y+j9
+	 lQR26NBWmjtoy3rYN8OzCBKr+33pgaYSbFSnL384t3VQTK3yox9BfPxsCuolTSIT56
+	 02djdSGVWY+TeGjb4MZNmINUETmNyRd/frerEgjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 138/207] exfat: fix just enough dentries but allocate a new cluster to dir
-Date: Mon, 10 Mar 2025 18:05:31 +0100
-Message-ID: <20250310170453.284181671@linuxfoundation.org>
+	Naveen N Rao <naveen@kernel.org>,
+	Kim Phillips <kim.phillips@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.13 173/207] KVM: SVM: Save host DR masks on CPUs with DebugSwap
+Date: Mon, 10 Mar 2025 18:06:06 +0100
+Message-ID: <20250310170454.669386919@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,38 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 6697f819a10b238ccf01998c3f203d65d8374696 ]
+commit b2653cd3b75f62f29b72df4070e20357acb52bc4 upstream.
 
-This commit fixes the condition for allocating cluster to parent
-directory to avoid allocating new cluster to parent directory when
-there are just enough empty directory entries at the end of the
-parent directory.
+When running SEV-SNP guests on a CPU that supports DebugSwap, always save
+the host's DR0..DR3 mask MSR values irrespective of whether or not
+DebugSwap is enabled, to ensure the host values aren't clobbered by the
+CPU.  And for now, also save DR0..DR3, even though doing so isn't
+necessary (see below).
 
-Fixes: af02c72d0b62 ("exfat: convert exfat_find_empty_entry() to use dentry cache")
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+SVM_VMGEXIT_AP_CREATE is deeply flawed in that it allows the *guest* to
+create a VMSA with guest-controlled SEV_FEATURES.  A well behaved guest
+can inform the hypervisor, i.e. KVM, of its "requested" features, but on
+CPUs without ALLOWED_SEV_FEATURES support, nothing prevents the guest from
+lying about which SEV features are being enabled (or not!).
+
+If a misbehaving guest enables DebugSwap in a secondary vCPU's VMSA, the
+CPU will load the DR0..DR3 mask MSRs on #VMEXIT, i.e. will clobber the
+MSRs with '0' if KVM doesn't save its desired value.
+
+Note, DR0..DR3 themselves are "ok", as DR7 is reset on #VMEXIT, and KVM
+restores all DRs in common x86 code as needed via hw_breakpoint_restore().
+I.e. there is no risk of host DR0..DR3 being clobbered (when it matters).
+However, there is a flaw in the opposite direction; because the guest can
+lie about enabling DebugSwap, i.e. can *disable* DebugSwap without KVM's
+knowledge, KVM must not rely on the CPU to restore DRs.  Defer fixing
+that wart, as it's more of a documentation issue than a bug in the code.
+
+Note, KVM added support for DebugSwap on commit d1f85fbe836e ("KVM: SEV:
+Enable data breakpoints in SEV-ES"), but that is not an appropriate Fixes,
+as the underlying flaw exists in hardware, not in KVM.  I.e. all kernels
+that support SEV-SNP need to be patched, not just kernels with KVM's full
+support for DebugSwap (ignoring that DebugSwap support landed first).
+
+Opportunistically fix an incorrect statement in the comment; on CPUs
+without DebugSwap, the CPU does NOT save or load debug registers, i.e.
+
+Fixes: e366f92ea99e ("KVM: SEV: Support SEV-SNP AP Creation NAE event")
+Cc: stable@vger.kernel.org
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Kim Phillips <kim.phillips@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250227012541.3234589-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/namei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index 099f806450721..9996ca61c85b7 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -237,7 +237,7 @@ static int exfat_search_empty_slot(struct super_block *sb,
- 		dentry = 0;
- 	}
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4567,6 +4567,8 @@ void sev_es_vcpu_reset(struct vcpu_svm *
  
--	while (dentry + num_entries < total_entries &&
-+	while (dentry + num_entries <= total_entries &&
- 	       clu.dir != EXFAT_EOF_CLUSTER) {
- 		i = dentry & (dentries_per_clu - 1);
+ void sev_es_prepare_switch_to_guest(struct vcpu_svm *svm, struct sev_es_save_area *hostsa)
+ {
++	struct kvm *kvm = svm->vcpu.kvm;
++
+ 	/*
+ 	 * All host state for SEV-ES guests is categorized into three swap types
+ 	 * based on how it is handled by hardware during a world switch:
+@@ -4590,10 +4592,15 @@ void sev_es_prepare_switch_to_guest(stru
  
--- 
-2.39.5
-
+ 	/*
+ 	 * If DebugSwap is enabled, debug registers are loaded but NOT saved by
+-	 * the CPU (Type-B). If DebugSwap is disabled/unsupported, the CPU both
+-	 * saves and loads debug registers (Type-A).
++	 * the CPU (Type-B). If DebugSwap is disabled/unsupported, the CPU does
++	 * not save or load debug registers.  Sadly, on CPUs without
++	 * ALLOWED_SEV_FEATURES, KVM can't prevent SNP guests from enabling
++	 * DebugSwap on secondary vCPUs without KVM's knowledge via "AP Create".
++	 * Save all registers if DebugSwap is supported to prevent host state
++	 * from being clobbered by a misbehaving guest.
+ 	 */
+-	if (sev_vcpu_has_debug_swap(svm)) {
++	if (sev_vcpu_has_debug_swap(svm) ||
++	    (sev_snp_guest(kvm) && cpu_feature_enabled(X86_FEATURE_DEBUG_SWAP))) {
+ 		hostsa->dr0 = native_get_debugreg(0);
+ 		hostsa->dr1 = native_get_debugreg(1);
+ 		hostsa->dr2 = native_get_debugreg(2);
 
 
