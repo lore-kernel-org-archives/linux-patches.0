@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5490817CA12;
-	Mon, 10 Mar 2025 17:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6A622AE7C;
+	Mon, 10 Mar 2025 17:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629227; cv=none; b=Nhe0BD0Ed2DWwZi5L4j7RKZyD1yJUidHOxUTsYEJNpaCNx0ejwod20FanFR8XNHfRmUDa3K8XAIcAfEejfTvtY/WLjrFy1PYLp3WAyMZfuiYkQmcmAkGw3jks4Owq3Dj2aoMGohO4cm88z5XfS5scKIgeuxOwqxj5G9Oi5Dq5AQ=
+	t=1741629230; cv=none; b=DgI5zrbbytWfNP+oFBW7Efy4OdhtbFn1LUs9qWZxGG+xy3YdaVGx4k+970FNqsVEjEpYrCFgaSm/Df3mbLkEUNcW1cByPrmZAXEaBXlxV3WZ1urlw1sBiXxaLrX0fJlfgW0q6c7YL8N8LkB8Ccr2ySxrhYslyTlP1KnP+GZolss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629227; c=relaxed/simple;
-	bh=DHXA/iyvxg1z4jTz7Q+MjN/Sf3QkZcN4KmKCHUm05xU=;
+	s=arc-20240116; t=1741629230; c=relaxed/simple;
+	bh=I7qYiFGQMhMk/5BwkrUeQcVurWR7tKWjHxTcfxE19l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSBV2T71d5B6i7oJ3mkDMrCl48z6QZQIlMTxkY3GyiIGDFgpHQm9wD/LdOLvVQ3aaaDDSExtLbjDtNArgqggamBS23dudPKwOuviy+WxGM23B+jl+n5sVY1BWLeMT6+G37gRL4lJVEcKalZCe3HSvv9HP8b+XfGXXElL5FYvqZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8ECYYFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jbgHhqyDATjvaU4feORszgvhFZpwMnnn0+NTOfVmbRgZwW0nnw03umbyoZJLINcJunH9TWu47B1dRzuERaGQ5426i6i//ijyVg/9AX4cZNk3KAe/JmRAqj7IDDw7jbkQ78y4pmL3qgkSmLoJhHdhx1A2kY25nUlVGm9kd1CubWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGsaeCji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8ECYYFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5709C4CEE5;
-	Mon, 10 Mar 2025 17:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGsaeCji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31D7C4CEE5;
+	Mon, 10 Mar 2025 17:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629227;
-	bh=DHXA/iyvxg1z4jTz7Q+MjN/Sf3QkZcN4KmKCHUm05xU=;
+	s=korg; t=1741629230;
+	bh=I7qYiFGQMhMk/5BwkrUeQcVurWR7tKWjHxTcfxE19l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8ECYYFUnUrw1BJ1vFJDj6/q4rV/z1Hke34NXSpjDNm+YxKcb2PINNhjMtP+NnKLz
-	 C4q95A6rc/54f2yIVmO2Kksj0iHQz26AwKDM1J6ZElVIDxeFgABmWVY7bwK+mc54Ea
-	 kPuDNJcAmGfK01VVU5xLgGFiSGhYWf3xDVke8bxc=
+	b=YGsaeCjizCYZtDBcZGpzf6uKjWiiNjAlmTOY5nZ9aXm0RnpWq/dqyZ1MeKxp/xaF5
+	 0raNp4/+w8wm3d8OMQJocU8N1ifflcQxY30UGPxY7rN3HNM/rWanz0o3qki0AE9LXS
+	 N2+2ALUi7e6MBBU5CqetSjYglsGc/Qaor08ZLnvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
-	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Illia Ostapyshyn <illia@yshyn.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 214/620] HID: Wacom: Add PCI Wacom device support
-Date: Mon, 10 Mar 2025 18:01:00 +0100
-Message-ID: <20250310170554.073167486@linuxfoundation.org>
+Subject: [PATCH 5.15 223/620] Input: allocate keycode for phone linking
+Date: Mon, 10 Mar 2025 18:01:09 +0100
+Message-ID: <20250310170554.422360536@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -47,50 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Even Xu <even.xu@intel.com>
+From: Illia Ostapyshyn <illia@yshyn.com>
 
-[ Upstream commit c4c123504a65583e3689b3de04a61dc5272e453a ]
+[ Upstream commit 1bebc7869c99d466f819dd2cffaef0edf7d7a035 ]
 
-Add PCI device ID of wacom device into driver support list.
+The F11 key on the new Lenovo Thinkpad T14 Gen 5, T16 Gen 3, and P14s
+Gen 5 laptops includes a symbol showing a smartphone and a laptop
+chained together.  According to the user manual, it starts the Microsoft
+Phone Link software used to connect to Android/iOS devices and relay
+messages/calls or sync data.
 
-Signed-off-by: Even Xu <even.xu@intel.com>
-Tested-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+As there are no suitable keycodes for this action, introduce a new one.
+
+Signed-off-by: Illia Ostapyshyn <illia@yshyn.com>
+Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/20241114173930.44983-2-illia@yshyn.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/input-event-codes.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index 9a82cd124918f..a5e6c16c883dc 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -4882,6 +4882,10 @@ static const struct wacom_features wacom_features_0x94 =
- 	HID_DEVICE(BUS_I2C, HID_GROUP_WACOM, USB_VENDOR_ID_WACOM, prod),\
- 	.driver_data = (kernel_ulong_t)&wacom_features_##prod
+diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
+index bed20a89c14c1..6128146bb133b 100644
+--- a/include/uapi/linux/input-event-codes.h
++++ b/include/uapi/linux/input-event-codes.h
+@@ -519,6 +519,7 @@
+ #define KEY_NOTIFICATION_CENTER	0x1bc	/* Show/hide the notification center */
+ #define KEY_PICKUP_PHONE	0x1bd	/* Answer incoming call */
+ #define KEY_HANGUP_PHONE	0x1be	/* Decline incoming call */
++#define KEY_LINK_PHONE		0x1bf   /* AL Phone Syncing */
  
-+#define PCI_DEVICE_WACOM(prod)						\
-+	HID_DEVICE(BUS_PCI, HID_GROUP_WACOM, USB_VENDOR_ID_WACOM, prod),\
-+	.driver_data = (kernel_ulong_t)&wacom_features_##prod
-+
- #define USB_DEVICE_LENOVO(prod)					\
- 	HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, prod),			\
- 	.driver_data = (kernel_ulong_t)&wacom_features_##prod
-@@ -5051,6 +5055,7 @@ const struct hid_device_id wacom_ids[] = {
- 
- 	{ USB_DEVICE_WACOM(HID_ANY_ID) },
- 	{ I2C_DEVICE_WACOM(HID_ANY_ID) },
-+	{ PCI_DEVICE_WACOM(HID_ANY_ID) },
- 	{ BT_DEVICE_WACOM(HID_ANY_ID) },
- 	{ }
- };
+ #define KEY_DEL_EOL		0x1c0
+ #define KEY_DEL_EOS		0x1c1
 -- 
 2.39.5
 
