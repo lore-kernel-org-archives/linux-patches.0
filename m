@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0144322D786;
-	Mon, 10 Mar 2025 17:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D980A21E087;
+	Mon, 10 Mar 2025 17:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626995; cv=none; b=GmHHnDK/lt9ldbDP5is+MYG/6f2wmEWETKzY0uzJLddDceyqpOHkTKNhLFPxLSANlP0BxUhn0YcIgdXTZ5M4aRuNCKr99Eej8yq+gNqOdKFSIQ4kS7ugxpR9TCWBtWQUhrsqxgIxMoWxLWPllR/JAjP7QwSmo25LbLc4Ynqksnk=
+	t=1741626997; cv=none; b=X5KGdowA7ocdi9j80bzPf6bqNCL1Rfk8oWB/AeIHKkhYOfNXf+MtOuWshugmQtBlGTU3G7MeTe41Qj+ZrGkoFUQ3nSBPI7YelVulx3L0hadgwmAmIOwtpb1gj7vhK2P9svloRdhxw3nR988ZXmcq+Z4muHw+apXW3KpUTDooXYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626995; c=relaxed/simple;
-	bh=GUmmh+VA7XVi2PJuLSkurOlK7hF4motVTkSDayw3Igg=;
+	s=arc-20240116; t=1741626997; c=relaxed/simple;
+	bh=uvu/ku6+mejnkkWhS4aiFc3FotPHFr43bva/IC5VaPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIVToY0P4tfopJsKV4xuwPUcKl9p0saStngPkg5kqm1TT+GNsQTGyZE45VGQDDlcYyynzf6gHaTobqc4TxIn82kTeR+1ixUbXNGbmOw5z+5Yft2K0h5adYVtAQakR1fyqdU37Z7BbsRn8OKBvz4QWuL7WLVQq11qPUK8U1q3f34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGt+h966; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUs1P5j8SVaoFDm0dZTcUExowKi/IkMML4V6S3HpECTLL7Z1xj4LD5ebpHtuDjxYCmJLa0BGWTSss2myX25Cq1u2nUwYQBcMMcnli3jctw9foyEYyqGkUFrVqqu4+VrxX5dNWGdFlwPVDcmd6C9cnxlTOEJh8hmTd/y4Evv1yHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfuML2Gf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGt+h966"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D41C4CEE5;
-	Mon, 10 Mar 2025 17:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfuML2Gf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFECC4CEE5;
+	Mon, 10 Mar 2025 17:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626994;
-	bh=GUmmh+VA7XVi2PJuLSkurOlK7hF4motVTkSDayw3Igg=;
+	s=korg; t=1741626997;
+	bh=uvu/ku6+mejnkkWhS4aiFc3FotPHFr43bva/IC5VaPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGt+h966CyxRTjnvw2sg0ayTb9/j43U6zNaeJEV54FTXtfE8FgcCXh/5WfxuE22AO
-	 su0V0n/mYXkFBdw7Y4ASqiWKUZb1+miAntfpsJF7J7gyX5zH0WR/njss966LWpkhhF
-	 p90ElRPTvTWvv4KpsCI79McTPayD1+zRXBHFjbTI=
+	b=qfuML2Gf4zyH3Ipi/8ePmdfqquP9Zbqf1z/EJGsWqFGcGVeUQeChSHiFvRwPHn2vy
+	 gZCDBon6f0tbcOxrOK8faY30TFNbLgY92k6NL73Mw9oGGDx1P2Qq+07YXHb7NkRqW5
+	 ZeS4Dbd2JZN9eD5is3vHqz0UISIpdHAqSw502pls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.13 185/207] intel_th: pci: Add Panther Lake-P/U support
-Date: Mon, 10 Mar 2025 18:06:18 +0100
-Message-ID: <20250310170455.139995109@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.13 186/207] char: misc: deallocate static minor in error path
+Date: Mon, 10 Mar 2025 18:06:19 +0100
+Message-ID: <20250310170455.178304627@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,34 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 49114ff05770264ae233f50023fc64a719a9dcf9 upstream.
+commit 6d991f569c5ef6eaeadf1238df2c36e3975233ad upstream.
 
-Add support for the Trace Hub in Panther Lake-P/U.
+When creating sysfs files fail, the allocated minor must be freed such that
+it can be later reused. That is specially harmful for static minor numbers,
+since those would always fail to register later on.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20250211185017.1759193-6-alexander.shishkin@linux.intel.com
+Fixes: 6d04d2b554b1 ("misc: misc_minor_alloc to use ida for all dynamic/misc dynamic minors")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://lore.kernel.org/r/20250123123249.4081674-5-cascardo@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/char/misc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -345,6 +345,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Panther Lake-P/U */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xe424),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/drivers/char/misc.c
++++ b/drivers/char/misc.c
+@@ -264,8 +264,8 @@ int misc_register(struct miscdevice *mis
+ 		device_create_with_groups(&misc_class, misc->parent, dev,
+ 					  misc, misc->groups, "%s", misc->name);
+ 	if (IS_ERR(misc->this_device)) {
++		misc_minor_free(misc->minor);
+ 		if (is_dynamic) {
+-			misc_minor_free(misc->minor);
+ 			misc->minor = MISC_DYNAMIC_MINOR;
+ 		}
+ 		err = PTR_ERR(misc->this_device);
 
 
