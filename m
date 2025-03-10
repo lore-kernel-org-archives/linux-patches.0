@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF1823236E;
-	Mon, 10 Mar 2025 17:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BF62253FE;
+	Mon, 10 Mar 2025 17:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627902; cv=none; b=PSvzAKgUgddaekOcjJ1j1ucRwzWKLGz+QeIe168LibJ587dePgHbWEqs1N8ccGVLJTz8EdaXslUyMulTC8wxp68JrAWGJsjffoIn5TQrKu9p8d7tRRLEG83OLNwYZpA3FPW/moqrZC7y0QWtKBieeA/OZtGG4l36R5rW2iSoo/4=
+	t=1741627905; cv=none; b=WcqdRev1o32rcYnNO1js7DLsaYXC3ONgF8VaXdRkV8WM+G0VPupWGiYdAP5+7kbPdCo/54Qffa/dFW4W6Tyfh+KTY1dP/W1UEdhb2FCpBBBOVKeMQAeM8OdPUeTZYDoTMwLQECoH/hZpLpWL+iH/8fLEW5MtlpoH2j1pQZMirGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627902; c=relaxed/simple;
-	bh=mLN0Y1doX6hq+vIjRn8MbsMC21CvoqaBEMh4XA5KRPM=;
+	s=arc-20240116; t=1741627905; c=relaxed/simple;
+	bh=yyrHDpfsZMFhqfeBn9BR9U3ootYguqpT51wvxg+6o94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIU0BRqqN3xU4vwnY1/97UlC/yz7o8eiaqboQcedjQFXZD+/FHmzsE/E8liG/ex2/8TgBf+zZRLC4nH/8pC2f1GmizrhRK2hDD6qCz9qLQFLZVyvJx5gS7HN17GnOS1/PK5zzfmYXC38bG7lA7UKrjer3sQnhVixFg57+5YBkBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giieWT2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNLfXQCj0EGQngXu2ohKS9i9nJPuqcNgCtRS8XT2l1wD7IaPOBVB7ByRr7ngUv+DEijBeIg/7jeiaWQF2eyw+Ji3xzDMqct7fyDaH61Ei9PFv/csWmp+Sz4m/eaBZI9m8H3gDAb8j2VOa+K9hwlZ28YDmnFoo8unn4EcVxXz6s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAMGF5r/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giieWT2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B24C4CEE5;
-	Mon, 10 Mar 2025 17:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAMGF5r/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F71DC4CEE5;
+	Mon, 10 Mar 2025 17:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627902;
-	bh=mLN0Y1doX6hq+vIjRn8MbsMC21CvoqaBEMh4XA5KRPM=;
+	s=korg; t=1741627904;
+	bh=yyrHDpfsZMFhqfeBn9BR9U3ootYguqpT51wvxg+6o94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giieWT2KTPJ22lCTn81rn2viW6K5uS9nS5Lhys/VEjJghqNkrT0PecF8yX/l3yuAa
-	 Lrp/4s9xC7eIjwSrhj4tHpWpEeqlxkbK5uZYrtQt9TYelRIQTFidvl4kLsWu7BoWB3
-	 zBTneUtlCybXFyGtelLwVs+NK7yd5k2eVXk3T784=
+	b=kAMGF5r/XmDL74fwbjpI5ghdo6PxyqXWY8/V0LQYdFosF1N5MDxWQOudHUyehEUZ8
+	 pslu5aaaeajRxgCegtHrFhHYebtSaJiu3RGvU52f+oqoC+aCZvvt4vk5q0NHKy157H
+	 b0V414Qlquf0SAjJ2T8aSxoaFxfaszOZbaC/gh+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jones <pjones@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 002/145] efi: Dont map the entire mokvar table to determine its size
-Date: Mon, 10 Mar 2025 18:04:56 +0100
-Message-ID: <20250310170434.838505714@linuxfoundation.org>
+	Andrew Jones <ajones@ventanamicro.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 020/145] RISC-V: Enable cbo.zero in usermode
+Date: Mon, 10 Mar 2025 18:05:14 +0100
+Message-ID: <20250310170435.556027990@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,127 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Jones <pjones@redhat.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-commit 2b90e7ace79774a3540ce569e000388f8d22c9e0 upstream.
+[ Upstream commit 43c16d51a19b0ba2ed66978d5924d486ec1e42bc ]
 
-Currently, when validating the mokvar table, we (re)map the entire table
-on each iteration of the loop, adding space as we discover new entries.
-If the table grows over a certain size, this fails due to limitations of
-early_memmap(), and we get a failure and traceback:
+When Zicboz is present, enable its instruction (cbo.zero) in
+usermode by setting its respective senvcfg bit. We don't bother
+trying to set this bit per-task, which would also require an
+interface for tasks to request enabling and/or disabling. Instead,
+permanently set the bit for each hart which has the extension when
+bringing it online.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at mm/early_ioremap.c:139 __early_ioremap+0xef/0x220
-  ...
-  Call Trace:
-   <TASK>
-   ? __early_ioremap+0xef/0x220
-   ? __warn.cold+0x93/0xfa
-   ? __early_ioremap+0xef/0x220
-   ? report_bug+0xff/0x140
-   ? early_fixup_exception+0x5d/0xb0
-   ? early_idt_handler_common+0x2f/0x3a
-   ? __early_ioremap+0xef/0x220
-   ? efi_mokvar_table_init+0xce/0x1d0
-   ? setup_arch+0x864/0xc10
-   ? start_kernel+0x6b/0xa10
-   ? x86_64_start_reservations+0x24/0x30
-   ? x86_64_start_kernel+0xed/0xf0
-   ? common_startup_64+0x13e/0x141
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  mokvar: Failed to map EFI MOKvar config table pa=0x7c4c3000, size=265187.
+This patch also introduces riscv_cpu_has_extension_[un]likely()
+functions to check a specific hart's ISA bitmap for extensions.
+Prior to checking the specific hart's bitmap in these functions
+we try the bitmap which represents the LCD of extensions, but only
+when we know it will use its optimized, alternatives path by gating
+its call on CONFIG_RISCV_ALTERNATIVE. When alternatives are used, the
+compiler ensures that the invocation of the LCD search becomes a
+constant true or false. When it's true, even the new functions will
+completely vanish from their callsites. OTOH, when the LCD check is
+false, we need to do a search of the hart's ISA bitmap. Had we also
+checked the LCD bitmap without the use of alternatives, then we would
+have ended up with two bitmap searches instead of one.
 
-Mapping the entire structure isn't actually necessary, as we don't ever
-need more than one entry header mapped at once.
-
-Changes efi_mokvar_table_init() to only map each entry header, not the
-entire table, when determining the table size.  Since we're not mapping
-any data past the variable name, it also changes the code to enforce
-that each variable name is NUL terminated, rather than attempting to
-verify it in place.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Peter Jones <pjones@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230918131518.56803-10-ajones@ventanamicro.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: 564fc8eb6f78 ("riscv: signal: fix signal_minsigstksz")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/mokvar-table.c |   42 +++++++++++-------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+ arch/riscv/include/asm/cpufeature.h |  1 +
+ arch/riscv/include/asm/csr.h        |  1 +
+ arch/riscv/include/asm/hwcap.h      | 16 ++++++++++++++++
+ arch/riscv/kernel/cpufeature.c      |  6 ++++++
+ arch/riscv/kernel/setup.c           |  4 ++++
+ arch/riscv/kernel/smpboot.c         |  4 ++++
+ 6 files changed, 32 insertions(+)
 
---- a/drivers/firmware/efi/mokvar-table.c
-+++ b/drivers/firmware/efi/mokvar-table.c
-@@ -103,9 +103,7 @@ void __init efi_mokvar_table_init(void)
- 	void *va = NULL;
- 	unsigned long cur_offset = 0;
- 	unsigned long offset_limit;
--	unsigned long map_size = 0;
- 	unsigned long map_size_needed = 0;
--	unsigned long size;
- 	struct efi_mokvar_table_entry *mokvar_entry;
- 	int err;
+diff --git a/arch/riscv/include/asm/cpufeature.h b/arch/riscv/include/asm/cpufeature.h
+index d0345bd659c94..13b7d35648a9c 100644
+--- a/arch/riscv/include/asm/cpufeature.h
++++ b/arch/riscv/include/asm/cpufeature.h
+@@ -31,5 +31,6 @@ DECLARE_PER_CPU(long, misaligned_access_speed);
+ extern struct riscv_isainfo hart_isa[NR_CPUS];
  
-@@ -134,48 +132,34 @@ void __init efi_mokvar_table_init(void)
- 	 */
- 	err = -EINVAL;
- 	while (cur_offset + sizeof(*mokvar_entry) <= offset_limit) {
--		mokvar_entry = va + cur_offset;
--		map_size_needed = cur_offset + sizeof(*mokvar_entry);
--		if (map_size_needed > map_size) {
--			if (va)
--				early_memunmap(va, map_size);
--			/*
--			 * Map a little more than the fixed size entry
--			 * header, anticipating some data. It's safe to
--			 * do so as long as we stay within current memory
--			 * descriptor.
--			 */
--			map_size = min(map_size_needed + 2*EFI_PAGE_SIZE,
--				       offset_limit);
--			va = early_memremap(efi.mokvar_table, map_size);
--			if (!va) {
--				pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%lu.\n",
--				       efi.mokvar_table, map_size);
--				return;
--			}
--			mokvar_entry = va + cur_offset;
-+		if (va)
-+			early_memunmap(va, sizeof(*mokvar_entry));
-+		va = early_memremap(efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+		if (!va) {
-+			pr_err("Failed to map EFI MOKvar config table pa=0x%lx, size=%zu.\n",
-+			       efi.mokvar_table + cur_offset, sizeof(*mokvar_entry));
-+			return;
- 		}
-+		mokvar_entry = va;
+ void check_unaligned_access(int cpu);
++void riscv_user_isa_enable(void);
  
- 		/* Check for last sentinel entry */
- 		if (mokvar_entry->name[0] == '\0') {
- 			if (mokvar_entry->data_size != 0)
- 				break;
- 			err = 0;
-+			map_size_needed = cur_offset + sizeof(*mokvar_entry);
- 			break;
- 		}
+ #endif
+diff --git a/arch/riscv/include/asm/csr.h b/arch/riscv/include/asm/csr.h
+index 777cb8299551c..5fba25db82d2a 100644
+--- a/arch/riscv/include/asm/csr.h
++++ b/arch/riscv/include/asm/csr.h
+@@ -275,6 +275,7 @@
+ #define CSR_SIE			0x104
+ #define CSR_STVEC		0x105
+ #define CSR_SCOUNTEREN		0x106
++#define CSR_SENVCFG		0x10a
+ #define CSR_SSCRATCH		0x140
+ #define CSR_SEPC		0x141
+ #define CSR_SCAUSE		0x142
+diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
+index f4157034efa9c..e215d3399a179 100644
+--- a/arch/riscv/include/asm/hwcap.h
++++ b/arch/riscv/include/asm/hwcap.h
+@@ -70,6 +70,7 @@
+ #ifndef __ASSEMBLY__
  
--		/* Sanity check that the name is null terminated */
--		size = strnlen(mokvar_entry->name,
--			       sizeof(mokvar_entry->name));
--		if (size >= sizeof(mokvar_entry->name))
--			break;
-+		/* Enforce that the name is NUL terminated */
-+		mokvar_entry->name[sizeof(mokvar_entry->name) - 1] = '\0';
+ #include <linux/jump_label.h>
++#include <asm/cpufeature.h>
  
- 		/* Advance to the next entry */
--		cur_offset = map_size_needed + mokvar_entry->data_size;
-+		cur_offset += sizeof(*mokvar_entry) + mokvar_entry->data_size;
+ unsigned long riscv_get_elf_hwcap(void);
+ 
+@@ -137,6 +138,21 @@ riscv_has_extension_unlikely(const unsigned long ext)
+ 	return true;
+ }
+ 
++static __always_inline bool riscv_cpu_has_extension_likely(int cpu, const unsigned long ext)
++{
++	if (IS_ENABLED(CONFIG_RISCV_ALTERNATIVE) && riscv_has_extension_likely(ext))
++		return true;
++
++	return __riscv_isa_extension_available(hart_isa[cpu].isa, ext);
++}
++
++static __always_inline bool riscv_cpu_has_extension_unlikely(int cpu, const unsigned long ext)
++{
++	if (IS_ENABLED(CONFIG_RISCV_ALTERNATIVE) && riscv_has_extension_unlikely(ext))
++		return true;
++
++	return __riscv_isa_extension_available(hart_isa[cpu].isa, ext);
++}
+ #endif
+ 
+ #endif /* _ASM_RISCV_HWCAP_H */
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index bb5fb2b820a21..a6b6bbf3f8598 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -676,6 +676,12 @@ static int check_unaligned_access_boot_cpu(void)
+ 
+ arch_initcall(check_unaligned_access_boot_cpu);
+ 
++void riscv_user_isa_enable(void)
++{
++	if (riscv_cpu_has_extension_unlikely(smp_processor_id(), RISCV_ISA_EXT_ZICBOZ))
++		csr_set(CSR_SENVCFG, ENVCFG_CBZE);
++}
++
+ #ifdef CONFIG_RISCV_ALTERNATIVE
+ /*
+  * Alternative patch sites consider 48 bits when determining when to patch
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index ff802d100a571..89ff6395dadbc 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -26,6 +26,7 @@
+ #include <asm/acpi.h>
+ #include <asm/alternative.h>
+ #include <asm/cacheflush.h>
++#include <asm/cpufeature.h>
+ #include <asm/cpu_ops.h>
+ #include <asm/early_ioremap.h>
+ #include <asm/pgtable.h>
+@@ -307,10 +308,13 @@ void __init setup_arch(char **cmdline_p)
+ 	riscv_fill_hwcap();
+ 	init_rt_signal_env();
+ 	apply_boot_alternatives();
++
+ 	if (IS_ENABLED(CONFIG_RISCV_ISA_ZICBOM) &&
+ 	    riscv_isa_extension_available(NULL, ZICBOM))
+ 		riscv_noncoherent_supported();
+ 	riscv_set_dma_cache_alignment();
++
++	riscv_user_isa_enable();
+ }
+ 
+ static int __init topology_init(void)
+diff --git a/arch/riscv/kernel/smpboot.c b/arch/riscv/kernel/smpboot.c
+index 1b8da4e40a4d6..d1b0a6fc3adfc 100644
+--- a/arch/riscv/kernel/smpboot.c
++++ b/arch/riscv/kernel/smpboot.c
+@@ -25,6 +25,8 @@
+ #include <linux/of.h>
+ #include <linux/sched/task_stack.h>
+ #include <linux/sched/mm.h>
++
++#include <asm/cpufeature.h>
+ #include <asm/cpu_ops.h>
+ #include <asm/cpufeature.h>
+ #include <asm/irq.h>
+@@ -253,6 +255,8 @@ asmlinkage __visible void smp_callin(void)
+ 			elf_hwcap &= ~COMPAT_HWCAP_ISA_V;
  	}
  
- 	if (va)
--		early_memunmap(va, map_size);
-+		early_memunmap(va, sizeof(*mokvar_entry));
- 	if (err) {
- 		pr_err("EFI MOKvar config table is not valid\n");
- 		return;
++	riscv_user_isa_enable();
++
+ 	/*
+ 	 * Remote TLB flushes are ignored while the CPU is offline, so emit
+ 	 * a local TLB flush right now just in case.
+-- 
+2.39.5
+
 
 
