@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F09217CA12;
-	Mon, 10 Mar 2025 17:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3007B17CA12;
+	Mon, 10 Mar 2025 17:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629132; cv=none; b=l10EGKDCO4nCfd1d2fyHy3xrI9kXACZbrnSv9be9mYwMJx9n6e0BKybSb29Q/kpEEBwAYrM4+xSGOOVl7nGeSlkoByw19pqXqP4qFom7WhtgjwpCKUcuP55kpV4DfMP/XkU+3oOhwOVyxbM+scP0+DnlWdFeQblbJItToAEWXZQ=
+	t=1741629135; cv=none; b=kK+L0DurpovWS9xol8aKWMwJFYZYfIpK13ba/d1+gbqBZfFrB9MIdQC/wv3xeckcOzqAeYwyxFkIHUUf/wowQil8XcTH+xuqzImbl/K8P3dIty6EpoWKp9IkrlzRexwbjvFsJ4r5nLb6Y/uaG8EJDiiGc1BGoofgiP4VcIae+0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629132; c=relaxed/simple;
-	bh=NGyjM800FCvgNl2zHlnIMFYsc7h5z8N1YhJP+OXKoBY=;
+	s=arc-20240116; t=1741629135; c=relaxed/simple;
+	bh=HHMCLwpZjtvexxhHFDESUyhOg7A5mN55uLAz8jtlcFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHE/Jbz/kfLvYy7WOwcecv1s/NGoXzOtC1HjmpKwHPy1cw4VG2o+ghHcQqIQNXbo8wo5Iyz3JrAeH9DS+qBGlugVWNiDQqL/+/rmQDCBtSn/c1SogsGrB040Cb0h7g12s7Yywq22ZS9ljzsBqSWldizGtujU4JMMzDnPisFSt14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07acrBLR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6WvR/mar7DKiBqoYRFhWmJugPH76DcB6XntZ4V8gr7o+Flgt+eUax4X+UN+RjMRDQYSSw7wOxznAAz0k9+RY4vJ1F6xE+Z0fevoShLUcY4H8s/Oq2D2TxBzzOQf9lPizi67UW0IvFxAcJoUQrzZsD+XjX2iFpsiMpzcGyMjdko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVWvFglp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07acrBLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF4C4CEE5;
-	Mon, 10 Mar 2025 17:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVWvFglp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1442C4CEE5;
+	Mon, 10 Mar 2025 17:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629132;
-	bh=NGyjM800FCvgNl2zHlnIMFYsc7h5z8N1YhJP+OXKoBY=;
+	s=korg; t=1741629135;
+	bh=HHMCLwpZjtvexxhHFDESUyhOg7A5mN55uLAz8jtlcFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07acrBLRfbWFfNITC+/R6+MQyfFtvDUf8KNmZgymWuvqgMzNPnawutNIX1V33cje2
-	 Cri1aD1LhIoziWTqHe/yaqsw2YYAoIQvjlhRa5poLtecJVOXT3SrhJOIzyQkEHdmQn
-	 I4OTHgejQAH/qVDMPdvq+6MnMs20n5/lgA3N2Ov4=
+	b=qVWvFglpYxVMd6fFTvklYbiYYJrTJa+m/tvnp3ydF6LUdkMr8+0ZX3uCZxvuhJ9k9
+	 QIUQXVeuMLTtMENikh8sui4c3se2zgAkWm+LuY+XSCSMGgW5czML1fvamwviTGwP7/
+	 ZwWFHi9pIlhEPRc5CdcIMW0vmN+Mzgr0n2rWknic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	"Ricardo B. Marliere" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 189/620] ktest.pl: Check kernelrelease return in get_version
-Date: Mon, 10 Mar 2025 18:00:35 +0100
-Message-ID: <20250310170553.095504932@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 190/620] ALSA: usb-audio: Add delay quirk for iBasso DC07 Pro
+Date: Mon, 10 Mar 2025 18:00:36 +0100
+Message-ID: <20250310170553.135585368@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marliere <rbm@suse.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit a4e17a8f239a545c463f8ec27db4ed6e74b31841 upstream.
+commit d85fc52cbb9a719c8335d93a28d6a79d7acd419f upstream.
 
-In the case of a test that uses the special option ${KERNEL_VERSION} in one
-of its settings but has no configuration available in ${OUTPUT_DIR}, for
-example if it's a new empty directory, then the `make kernelrelease` call
-will fail and the subroutine will chomp an empty string, silently. Fix that
-by adding an empty configuration and retrying.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-Cc: stable@vger.kernel.org
-Cc: John Hawley <warthog9@eaglescrag.net>
-Fixes: 5f9b6ced04a4e ("ktest: Bisecting, install modules, add logging")
-Link: https://lore.kernel.org/20241205-ktest_kver_fallback-v2-1-869dae4c7777@suse.com
-Signed-off-by: Ricardo B. Marliere <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+usb 1-1: New USB device found, idVendor=2fc6, idProduct=f0b7
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: iBasso DC07 Pro
+usb 1-1: Manufacturer: iBasso
+usb 1-1: SerialNumber: CTUA171130B
+
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/TYUPR06MB62174A48D04E09A37996DF84D2ED2@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -2399,6 +2399,11 @@ sub get_version {
-     return if ($have_version);
-     doprint "$make kernelrelease ... ";
-     $version = `$make -s kernelrelease | tail -1`;
-+    if (!length($version)) {
-+	run_command "$make allnoconfig" or return 0;
-+	doprint "$make kernelrelease ... ";
-+	$version = `$make -s kernelrelease | tail -1`;
-+    }
-     chomp($version);
-     doprint "$version\n";
-     $have_version = 1;
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1934,6 +1934,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
 
 
