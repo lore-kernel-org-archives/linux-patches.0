@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A414622B8A5;
-	Mon, 10 Mar 2025 18:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875E717A2E8;
+	Mon, 10 Mar 2025 18:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629623; cv=none; b=eflZuVdU+mslgqivUAUF0lQUdaIwTgvW1BdCfxIvEV5GIcZ6l5QwUEUlWtOecGoDZ6pzXZpn1ZDRuNHsXaQetP5b/VIGSIb2kSzTUiYQFJAW0LCsPGuWC41XZwxc9C6UHPHnF/6io4UWUJOL3eHVtu7i00mUm8Jq1GPRG8ZfPDY=
+	t=1741629626; cv=none; b=Lv1zakXoPvS4KMBxCSWrhPLRbq3Ry0J5RP/5+U+AxOlt7nmYppmbz5ty7pLgW/uaulj48aQYitE9whsdrtuo1Iv6tM3Ly8o00OaBrtExaomDUSeiLidfuxP3FCh8UXlMtZkOe4HcheX22BFaSiDmL99JP+f15CKMus1H6fuSWCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629623; c=relaxed/simple;
-	bh=Fl16tFJU4CJEBp0z3fGcsLFoO70MqRT2HAv5qOyNhBA=;
+	s=arc-20240116; t=1741629626; c=relaxed/simple;
+	bh=SUtUdeaF4ljXG4VQeN80iCOAjxKSpBaShh9xvZsnbsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LE7XLlLjC4qDAG4F2+SB9534uc9qrAQUZgLRDjt56zNsv+blNz9WLwus2t9cbJqzepxXTOQ0WpjLf2BKuxofQjwFyVtph3238jnysfjr6XIq/I8hSdNS52HKnbgHVq/jl90FhWkRZWNpVoxPQy4MhLkIyJb8lCy4qx5esjdhaT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN0yqL6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOOZsrGU6uWjUzhnm3/St950v9Bl5CCOuv3Vbj7iQL8jtpb2PU46FsIBAEPuvAX0lU4tQ6U/KH1bYTioceSjssTM/EqOCuqDiOjdw32xvjvWWEe8LqknRqpiBSp3b7aFUj5kP/0nQZi0jqfKTwHWgoOM5Bo+YEkvrwcU2Savcus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmDIfjpM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN0yqL6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D39C4CEE5;
-	Mon, 10 Mar 2025 18:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmDIfjpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E67BC4CEE5;
+	Mon, 10 Mar 2025 18:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629623;
-	bh=Fl16tFJU4CJEBp0z3fGcsLFoO70MqRT2HAv5qOyNhBA=;
+	s=korg; t=1741629626;
+	bh=SUtUdeaF4ljXG4VQeN80iCOAjxKSpBaShh9xvZsnbsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FN0yqL6XWITXheFfLuYGnTEasTyZqC22H97Zb50rBZdRJC7FIpbGvt2WS55m7C44K
-	 yvM2iDv2hacXubiUvN2wHqiNukJq7w7Orz571EouDcL2doqAqw1riFLWSiu5L5s9Kx
-	 QYAY1Pfe4BIqZzLiGiYyENw9a1NFCIlqDIZloya4=
+	b=kmDIfjpMa5vgre3guTwOEuoJYsYIWKlbvuVTENRTaQs/APC0c86t/igOzh4loyurK
+	 FwX/736eo9zfBbiZfV5jiDvFL0dElfxYJLtkrjfs++Mq78LXkvUjwLksElTRsTyQQH
+	 OivQzLH9o6rNYrUB3YReqYbc0Mc6TSF38mD+vf08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 359/620] perf/x86/intel: Ensure LBRs are disabled when a CPU is starting
-Date: Mon, 10 Mar 2025 18:03:25 +0100
-Message-ID: <20250310170559.779860562@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 360/620] usb: roles: set switch registered flag early on
+Date: Mon, 10 Mar 2025 18:03:26 +0100
+Message-ID: <20250310170559.820052908@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,56 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Elson Roy Serrao <quic_eserrao@quicinc.com>
 
-commit c631a2de7ae48d50434bdc205d901423f8577c65 upstream.
+commit 634775a752a86784511018a108f3b530cc3399a7 upstream.
 
-Explicitly clear DEBUGCTL.LBR when a CPU is starting, prior to purging the
-LBR MSRs themselves, as at least one system has been found to transfer
-control to the kernel with LBRs enabled (it's unclear whether it's a BIOS
-flaw or a CPU goof).  Because the kernel preserves the original DEBUGCTL,
-even when toggling LBRs, leaving DEBUGCTL.LBR as is results in running
-with LBRs enabled at all times.
+The role switch registration and set_role() can happen in parallel as they
+are invoked independent of each other. There is a possibility that a driver
+might spend significant amount of time in usb_role_switch_register() API
+due to the presence of time intensive operations like component_add()
+which operate under common mutex. This leads to a time window after
+allocating the switch and before setting the registered flag where the set
+role notifications are dropped. Below timeline summarizes this behavior
 
-Closes: https://lore.kernel.org/all/c9d8269bff69f6359731d758e3b1135dedd7cc61.camel@redhat.com
-Reported-by: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250131010721.470503-1-seanjc@google.com
+Thread1				|	Thread2
+usb_role_switch_register()	|
+	|			|
+	---> allocate switch	|
+	|			|
+	---> component_add()	|	usb_role_switch_set_role()
+	|			|	|
+	|			|	--> Drop role notifications
+	|			|	    since sw->registered
+	|			|	    flag is not set.
+	|			|
+	--->Set registered flag.|
+
+To avoid this, set the registered flag early on in the switch register
+API.
+
+Fixes: b787a3e78175 ("usb: roles: don't get/set_role() when usb_role_switch is unregistered")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206193950.22421-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c     |    5 ++++-
- arch/x86/include/asm/msr-index.h |    3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/roles/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4364,8 +4364,11 @@ static void intel_pmu_cpu_starting(int c
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -354,14 +354,15 @@ usb_role_switch_register(struct device *
+ 	dev_set_name(&sw->dev, "%s-role-switch",
+ 		     desc->name ? desc->name : dev_name(parent));
  
- 	init_debug_store_on_cpu(cpu);
- 	/*
--	 * Deal with CPUs that don't clear their LBRs on power-up.
-+	 * Deal with CPUs that don't clear their LBRs on power-up, and that may
-+	 * even boot with LBRs enabled.
- 	 */
-+	if (!static_cpu_has(X86_FEATURE_ARCH_LBR) && x86_pmu.lbr_nr)
-+		msr_clear_bit(MSR_IA32_DEBUGCTLMSR, DEBUGCTLMSR_LBR_BIT);
- 	intel_pmu_lbr_reset();
++	sw->registered = true;
++
+ 	ret = device_register(&sw->dev);
+ 	if (ret) {
++		sw->registered = false;
+ 		put_device(&sw->dev);
+ 		return ERR_PTR(ret);
+ 	}
  
- 	cpuc->lbr_sel = NULL;
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -337,7 +337,8 @@
- #define MSR_IA32_PASID_VALID		BIT_ULL(31)
+-	sw->registered = true;
+-
+ 	/* TODO: Symlinks for the host port and the device controller. */
  
- /* DEBUGCTLMSR bits (others vary by model): */
--#define DEBUGCTLMSR_LBR			(1UL <<  0) /* last branch recording */
-+#define DEBUGCTLMSR_LBR_BIT		0	     /* last branch recording */
-+#define DEBUGCTLMSR_LBR			(1UL <<  DEBUGCTLMSR_LBR_BIT)
- #define DEBUGCTLMSR_BTF_SHIFT		1
- #define DEBUGCTLMSR_BTF			(1UL <<  1) /* single-step on branches */
- #define DEBUGCTLMSR_BUS_LOCK_DETECT	(1UL <<  2)
+ 	return sw;
 
 
