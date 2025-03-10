@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3669A230BF9;
-	Mon, 10 Mar 2025 18:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C5222576A;
+	Mon, 10 Mar 2025 18:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630933; cv=none; b=SS+vJSvbSgbbRvIi7A2AtgdeEnQ+w9qMnr0rLzWBVo0sj6r8heg1fKyj39zJSxSQqWaqMIJQeo3OHYEU5CUxjofVdd+qTn3FnKjZdeh6T6u382eeQhU69gPPKJb3nCSsi99zQRO6+1VLgufeqzur4w3KWilweDrsgaaIvG+yJIo=
+	t=1741630935; cv=none; b=bIl1L8I6tWl9l6oLYP/Bo/tEYDwD3f0nYKbvJE43g8ByJFn4s0QSdg9gsYiyToh8c2uQC0NiSkEEuZWhUrTbkFl4xfbMNPgmbVFiS4+u2kkOFDKu844lL0C0LVXp7/ChBXRvVXuRsrfduccNCQMSIXTTGpSesJEPsj2T0DDX0sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630933; c=relaxed/simple;
-	bh=kPGuL+NwJ3pvr8T0Hc9mDHFrDL53KE57GAkio42+fjc=;
+	s=arc-20240116; t=1741630935; c=relaxed/simple;
+	bh=2mmOC3S8YEUIcFYcmdfyTC0HFO2ikpUTQhAC/jtjvS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpwtT35p45G/VjV6ytfmhGihNp/BaV803lMF02fOUBDCO5Utyc77huswYkR9mwIlWLhgkpfBTWnsp30W4C3AKcYqRCRVzzeYlUBYeXyjjkBeLUNOsmZQkZHNYzNHSRJfS5DxxZZF74N/wJnVDBt+D4/txk+MNSspnYZALRNO1Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICj1DEtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qaUfyOqCxQl9+qnKDmkJ3Mu4V+LUiMG6N1OhR7i8RrhKv2aWXcGE5NPj2du5sIaSVmjurbcXmnHGLJsBbFe4LlDic9wGkeVYttzyTKlPJU/ahNU6cMYNb7Y5vEVRukQwYhRyZ2IQ58YuR6osgQlXQf+RJPD7A9s+SYE3JlLN3+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iq6qPJvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICj1DEtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AEDC4CEE5;
-	Mon, 10 Mar 2025 18:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iq6qPJvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D447C4CEE5;
+	Mon, 10 Mar 2025 18:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630932;
-	bh=kPGuL+NwJ3pvr8T0Hc9mDHFrDL53KE57GAkio42+fjc=;
+	s=korg; t=1741630935;
+	bh=2mmOC3S8YEUIcFYcmdfyTC0HFO2ikpUTQhAC/jtjvS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICj1DEtuUCN8j3qbtGFS9Jws+tSvs7l0hzLnH8n9ZoneQEb3Ovhy8Miti1wvL3wyf
-	 /KmaDfs42fNkuqNuWrkSQrZ+L8cHbCkAQ9p8GoNDokFNj6S1P2Pr7YWBr8TvnnxzFZ
-	 EVeYOGcIVxYm0PukP+clmGibGnkg52P4uWUgVnzs=
+	b=iq6qPJvRxriW7DNbBhF2q+GXvtd0kZjcNaVIBqoydMVRSoFaqTRkA6CRIkDJDNQer
+	 rY0YaDi1sNrClD7fef9DdaJ9/EIvsntXvkm+bHZBe+FyxLi5rA6MNqON/ZJBqfYXeq
+	 d+yBySwIXpktS2SSoSMUxBxp9khq8ech/WiCjpoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 584/620] usb: quirks: Add DELAY_INIT and NO_LPM for Prolific Mass Storage Card Reader
-Date: Mon, 10 Mar 2025 18:07:10 +0100
-Message-ID: <20250310170608.586282951@linuxfoundation.org>
+	Titus Rwantare <titusr@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 558/620] hwmon: (pmbus) Initialise page count in pmbus_identify()
+Date: Mon, 10 Mar 2025 18:06:44 +0100
+Message-ID: <20250310170607.571075058@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,36 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Titus Rwantare <titusr@google.com>
 
-commit ff712188daa3fe3ce7e11e530b4dca3826dae14a upstream.
+[ Upstream commit 6b6e2e8fd0de3fa7c6f4f8fe6841b01770b2e7bc ]
 
-When used on Huawei hisi platforms, Prolific Mass Storage Card Reader
-which the VID:PID is in 067b:2731 might fail to enumerate at boot time
-and doesn't work well with LPM enabled, combination quirks:
-	USB_QUIRK_DELAY_INIT + USB_QUIRK_NO_LPM
-fixed the problems.
+The `pmbus_identify()` function fails to correctly determine the number
+of supported pages on PMBus devices. This occurs because `info->pages`
+is implicitly zero-initialised, and `pmbus_set_page()` does not perform
+writes to the page register if `info->pages` is not yet initialised.
+Without this patch, `info->pages` is always set to the maximum after
+scanning.
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250304070757.139473-1-limiao870622@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch initialises `info->pages` to `PMBUS_PAGES` before the probing
+loop, enabling `pmbus_set_page()` writes to make it out onto the bus
+correctly identifying the number of pages. `PMBUS_PAGES` seemed like a
+reasonable non-zero number because that's the current result of the
+identification process.
+
+Testing was done with a PMBus device in QEMU.
+
+Signed-off-by: Titus Rwantare <titusr@google.com>
+Fixes: 442aba78728e7 ("hwmon: PMBus device driver")
+Link: https://lore.kernel.org/r/20250227222455.2583468-1-titusr@google.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/pmbus/pmbus.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -338,6 +338,10 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0638, 0x0a13), .driver_info =
- 	  USB_QUIRK_STRING_FETCH_255 },
+diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
+index d0d386990af5e..6366610a90827 100644
+--- a/drivers/hwmon/pmbus/pmbus.c
++++ b/drivers/hwmon/pmbus/pmbus.c
+@@ -103,6 +103,8 @@ static int pmbus_identify(struct i2c_client *client,
+ 		if (pmbus_check_byte_register(client, 0, PMBUS_PAGE)) {
+ 			int page;
  
-+	/* Prolific Single-LUN Mass Storage Card Reader */
-+	{ USB_DEVICE(0x067b, 0x2731), .driver_info = USB_QUIRK_DELAY_INIT |
-+	  USB_QUIRK_NO_LPM },
++			info->pages = PMBUS_PAGES;
 +
- 	/* Saitek Cyborg Gold Joystick */
- 	{ USB_DEVICE(0x06a3, 0x0006), .driver_info =
- 			USB_QUIRK_CONFIG_INTF_STRINGS },
+ 			for (page = 1; page < PMBUS_PAGES; page++) {
+ 				if (pmbus_set_page(client, page, 0xff) < 0)
+ 					break;
+-- 
+2.39.5
+
 
 
