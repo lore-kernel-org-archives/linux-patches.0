@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6451B3927;
-	Mon, 10 Mar 2025 17:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6C322FE18;
+	Mon, 10 Mar 2025 17:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627691; cv=none; b=Z0MaIT610nYVE2424qht181t7OLGYBjH/3Q4Kr0swO+yfLwpM6VQkLRteHXleH5Pw9l8S6YCv983+OdRWLx7fKaZd6cSaTa6JixSsv+Vw+wgQcnDbz1p7+ejaJJm2yf0s74W6L6GWDAY29W+8VGi3IiMsi8x9czkD3UtEWdihbw=
+	t=1741627694; cv=none; b=X+3+Vopot9CCpOpHLZM6lSUWkN55veb6rRxGynpPhmryGUSGnj//KwkfzWetmukyM1PWozCZhwxXHw/hWPh0RJV1kb9KAS42fcLV4D47EtHbVe+1uLX/OI2MfxzgB+EHySt5iGZhb4XZcpozI60OXGzXB4mCVd80fzxlvpeZ/6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627691; c=relaxed/simple;
-	bh=wTCri4Jlsh7Pjy2duu7Qm4sqSrmU9w9l/CGUlyownTk=;
+	s=arc-20240116; t=1741627694; c=relaxed/simple;
+	bh=qkBq99Ue2+DwG+JUiLkTnakek6KX6QD27xH2i3XuCE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVwAm/zs3OwDqMecaYzlus96z58rfaA/eJKLO8bSzJaEEydesfRm19Xwvm0NJWZ21fzgM/fr7p3ZSEzvT0MjTiyjYhHyfgxWqUk4pOCr7mqez5aZN3nQI4MxKAa79AdTF7tiPJgX9E8e7XTZ9d3YEckfkyUilvopKdzGeMM40CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJNcQtT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QGhmlSrweVeykQt6w0CfmR2hlFfqq89XvQ1evji16Ivj7HJ3z79MUyYDKyZrNeSB2QjQtPdqR+QLhCfuMvZgOJa5bNBzjjD6rXIHKFN0on8SHX4mQPCmpF+rKCWfMGyK9/V2OqPXavxZwKCto3RKikLhJmbrggLLRXwtv8VVmi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzUzBHhS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJNcQtT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35577C4CEE5;
-	Mon, 10 Mar 2025 17:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzUzBHhS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B160C4CEE5;
+	Mon, 10 Mar 2025 17:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627691;
-	bh=wTCri4Jlsh7Pjy2duu7Qm4sqSrmU9w9l/CGUlyownTk=;
+	s=korg; t=1741627694;
+	bh=qkBq99Ue2+DwG+JUiLkTnakek6KX6QD27xH2i3XuCE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJNcQtT6g5OggHIUKCMk6k7Pz22Kyzb+A/zOieG1S/SPt+S0c7rsAd3M1OFCbDMJi
-	 V3wKVetQSAynsRwsNE5p4v4pcqwv57MtgwxaPThGEeHwfKyYQPyP/eIkToKIIx4nVR
-	 0BYPd6FKiQYHOa76WD2evCCmcrfeC2ot4LYOksq4=
+	b=TzUzBHhSGFs5izlWlXjDrUia7+XOHIyUb5nSPfK2y8VAIJt3MQukA0D9+ngRgHkJm
+	 OLBVaebZFW65O7lC9Whi998z9UcCBM4ClVzgG6Al8d51WKFQy7KGQ5TQDFMcV7iPGQ
+	 xQfhIPu3nh1rvDqDDlOXaeK6G7MrR9w1z+oLYd6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Elder <elder@riscstar.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/269] net: ipa: Fix v4.7 resource group names
-Date: Mon, 10 Mar 2025 18:05:38 +0100
-Message-ID: <20250310170505.081101246@linuxfoundation.org>
+Subject: [PATCH 6.12 186/269] net: ipa: Fix QSB data for v4.7
+Date: Mon, 10 Mar 2025 18:05:39 +0100
+Message-ID: <20250310170505.120874504@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -54,72 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 5eb3dc1396aa7e315486b24df80df782912334b7 ]
+[ Upstream commit 6a2843aaf551d87beb92d774f7d5b8ae007fe774 ]
 
-In the downstream IPA driver there's only one group defined for source
-and destination, and the destination group doesn't have a _DPL suffix.
+As per downstream reference, max_writes should be 12 and max_reads
+should be 13.
 
 Fixes: b310de784bac ("net: ipa: add IPA v4.7 support")
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20250227-ipa-v4-7-fixes-v1-1-a88dd8249d8a@fairphone.com
+Link: https://patch.msgid.link/20250227-ipa-v4-7-fixes-v1-2-a88dd8249d8a@fairphone.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/data/ipa_data-v4.7.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/net/ipa/data/ipa_data-v4.7.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
-index c8c23d9be961b..7e315779e6648 100644
+index 7e315779e6648..e63dcf8d45567 100644
 --- a/drivers/net/ipa/data/ipa_data-v4.7.c
 +++ b/drivers/net/ipa/data/ipa_data-v4.7.c
-@@ -28,12 +28,10 @@ enum ipa_resource_type {
- enum ipa_rsrc_group_id {
- 	/* Source resource group identifiers */
- 	IPA_RSRC_GROUP_SRC_UL_DL			= 0,
--	IPA_RSRC_GROUP_SRC_UC_RX_Q,
- 	IPA_RSRC_GROUP_SRC_COUNT,	/* Last in set; not a source group */
- 
- 	/* Destination resource group identifiers */
--	IPA_RSRC_GROUP_DST_UL_DL_DPL			= 0,
--	IPA_RSRC_GROUP_DST_UNUSED_1,
-+	IPA_RSRC_GROUP_DST_UL_DL			= 0,
- 	IPA_RSRC_GROUP_DST_COUNT,	/* Last; not a destination group */
+@@ -38,8 +38,8 @@ enum ipa_rsrc_group_id {
+ /* QSB configuration data for an SoC having IPA v4.7 */
+ static const struct ipa_qsb_data ipa_qsb_data[] = {
+ 	[IPA_QSB_MASTER_DDR] = {
+-		.max_writes		= 8,
+-		.max_reads		= 0,	/* no limit (hardware max) */
++		.max_writes		= 12,
++		.max_reads		= 13,
+ 		.max_reads_beats	= 120,
+ 	},
  };
- 
-@@ -81,7 +79,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
- 		},
- 		.endpoint = {
- 			.config = {
--				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL_DPL,
-+				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL,
- 				.aggregation	= true,
- 				.status_enable	= true,
- 				.rx = {
-@@ -128,7 +126,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
- 		},
- 		.endpoint = {
- 			.config = {
--				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL_DPL,
-+				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL,
- 				.qmap		= true,
- 				.aggregation	= true,
- 				.rx = {
-@@ -197,12 +195,12 @@ static const struct ipa_resource ipa_resource_src[] = {
- /* Destination resource configuration data for an SoC having IPA v4.7 */
- static const struct ipa_resource ipa_resource_dst[] = {
- 	[IPA_RESOURCE_TYPE_DST_DATA_SECTORS] = {
--		.limits[IPA_RSRC_GROUP_DST_UL_DL_DPL] = {
-+		.limits[IPA_RSRC_GROUP_DST_UL_DL] = {
- 			.min = 7,	.max = 7,
- 		},
- 	},
- 	[IPA_RESOURCE_TYPE_DST_DPS_DMARS] = {
--		.limits[IPA_RSRC_GROUP_DST_UL_DL_DPL] = {
-+		.limits[IPA_RSRC_GROUP_DST_UL_DL] = {
- 			.min = 2,	.max = 2,
- 		},
- 	},
 -- 
 2.39.5
 
