@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AEB23373C;
-	Mon, 10 Mar 2025 17:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81239231CB0;
+	Mon, 10 Mar 2025 17:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627572; cv=none; b=I7Ev3Ri8+InycvuGSGB94eNi7yrLABaN5wnJRe6slJpKIKgR2lCBcZ8gRO7I7iJei+PcPsEMuJj1pka4hm7603Rexul2o2b6xI7B4dxvNRkrAvMWRpiWW+nS8rElGmWqeaeAwTA8momTSmpApyMGfsJjCR3RwoOG1qsokfFAFeQ=
+	t=1741627575; cv=none; b=ntMhuTCj6E36JEYsM71fdvy1uhWFKWA4GQKYAHIcgzszxHjYlMztZiqk/K7lfr9YtxJg2FhbUbgsxdb6HqFgsW2DpjzOUyPorJ3hqIIloB8N6qe8bcLUI3LruayMgdNcPnn6NEdDRzhPzvIJYZE/GbMFaIBGbqr3bXt2W7DddqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627572; c=relaxed/simple;
-	bh=gxKz7+Fkc8BkjdermLYwU4Vw4ZX7vj8A1zu7MbKCyqM=;
+	s=arc-20240116; t=1741627575; c=relaxed/simple;
+	bh=k0fDWkNdidrGZkxXFBJgYTSFvLRFdH7JtaDLJo2qDcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZOU6SxM/NSMsXj/EFt3zON13UH+AzGY6rgQe2YoqqcMKj+xFeQtnQOjm01aU/1pVS0DGa8YRMEhUtt9jXAGsdhjXffEUpUC2jeD8tomEmScLnwETGNiBHI5n5h8Am5OpSnxOatTJ8ETGbYV7MkWsNKiBZric6wbZdquLro0kIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgJOESZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+33ws73AWVB2VJLkBK7hNuH6+UCflsBxoVkMpxWyVq2zTtEhOKOmV8lmcOFifCBgtbOtTtbs9k+mhuxvkoQH4GHKNy4z4gLWGzY2vIC4F0f63ISFBL0D1mWDM8s3CC8cP6FgdLAp2CyVbnCaJLnTcpM9dqHgQsEeSkJ7cpK9dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVoCW/PL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgJOESZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF82C4CEE5;
-	Mon, 10 Mar 2025 17:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVoCW/PL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0920CC4CEEC;
+	Mon, 10 Mar 2025 17:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627572;
-	bh=gxKz7+Fkc8BkjdermLYwU4Vw4ZX7vj8A1zu7MbKCyqM=;
+	s=korg; t=1741627575;
+	bh=k0fDWkNdidrGZkxXFBJgYTSFvLRFdH7JtaDLJo2qDcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgJOESZsepJia/soH/diAlroESzqZ0Y7Omw6eNIRWgrRo9+mCbExuSP4U3q04ZApC
-	 /aLkHI4zk6A2vM9mmnXklC9rDI65/BBg3W9qsVEoH+jPIjltuICTRaEq72q793Ibwq
-	 KaYvENh1Zt4DEqoP9eZTgs+bWNpm99JzSIscKHV4=
+	b=UVoCW/PLhl10WLDFkj8ZVYkLQAqYtnZ5MB9YqiDRL8JTrjqs9Q5wh5a7zwh4d7LM5
+	 Ij7O9QR7tYSH6ehcHYzhl2DZ8YDcwhSgy0KFyJZO6wAGHjb/0FJyRNDfA6dQGY0Twi
+	 FNIz7ttVQVCE4toisR+INu8RnuzKKn7TU9vIBsg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/269] drm/imagination: Fix timestamps in firmware traces
-Date: Mon, 10 Mar 2025 18:05:27 +0100
-Message-ID: <20250310170504.649837008@linuxfoundation.org>
+Subject: [PATCH 6.12 175/269] ALSA: usx2y: validate nrpacks module parameter on probe
+Date: Mon, 10 Mar 2025 18:05:28 +0100
+Message-ID: <20250310170504.688025027@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,57 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Belle <alessio.belle@imgtec.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 1d2eabb6616433ccaa13927811bdfa205e91ba60 ]
+[ Upstream commit 172a0f509723fe4741d4b8e9190cf434b18320d8 ]
 
-When firmware traces are enabled, the firmware dumps 48-bit timestamps
-for each trace as two 32-bit values, highest 32 bits (of which only 16
-useful) first.
+The module parameter defines number of iso packets per one URB. User is
+allowed to set any value to the parameter of type int, which can lead to
+various kinds of weird and incorrect behavior like integer overflows,
+truncations, etc. Number of packets should be a small non-negative number.
 
-The driver was reassembling them the other way round i.e. interpreting
-the first value in memory as the lowest 32 bits, and the second value
-as the highest 32 bits (then truncated to 16 bits).
+Since this parameter is read-only, its value can be validated on driver
+probe.
 
-Due to this, firmware trace dumps showed very large timestamps even for
-traces recorded shortly after GPU boot. The timestamps in these dumps
-would also sometimes jump backwards because of the truncation.
-
-Example trace dumped after loading the powervr module and enabling
-firmware traces, where each line is commented with the timestamp value
-in hexadecimal to better show both issues:
-
-[93540092739584] : Host Sync Partition marker: 1    // 0x551300000000
-[28419798597632] : GPU units deinit                 // 0x19d900000000
-[28548647616512] : GPU deinit                       // 0x19f700000000
-
-Update logic to reassemble the timestamps halves in the correct order.
-
-Fixes: cb56cd610866 ("drm/imagination: Add firmware trace to debugfs")
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250221-fix-fw-trace-timestamps-v1-1-dba4aeb030ca@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250303100413.835-1-m.masimov@mt-integration.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_fw_trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/usx2y/usbusx2y.c      | 11 +++++++++++
+ sound/usb/usx2y/usbusx2y.h      | 26 ++++++++++++++++++++++++++
+ sound/usb/usx2y/usbusx2yaudio.c | 27 ---------------------------
+ 3 files changed, 37 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
-index 73707daa4e52d..5dbb636d7d4ff 100644
---- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
-+++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
-@@ -333,8 +333,8 @@ static int fw_trace_seq_show(struct seq_file *s, void *v)
- 	if (sf_id == ROGUE_FW_SF_LAST)
- 		return -EINVAL;
+diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
+index 5f81c68fd42b6..5756ff3528a2d 100644
+--- a/sound/usb/usx2y/usbusx2y.c
++++ b/sound/usb/usx2y/usbusx2y.c
+@@ -151,6 +151,12 @@ static int snd_usx2y_card_used[SNDRV_CARDS];
+ static void snd_usx2y_card_private_free(struct snd_card *card);
+ static void usx2y_unlinkseq(struct snd_usx2y_async_seq *s);
  
--	timestamp = read_fw_trace(trace_seq_data, 1) |
--		((u64)read_fw_trace(trace_seq_data, 2) << 32);
-+	timestamp = ((u64)read_fw_trace(trace_seq_data, 1) << 32) |
-+		read_fw_trace(trace_seq_data, 2);
- 	timestamp = (timestamp & ~ROGUE_FWT_TIMESTAMP_TIME_CLRMSK) >>
- 		ROGUE_FWT_TIMESTAMP_TIME_SHIFT;
++#ifdef USX2Y_NRPACKS_VARIABLE
++int nrpacks = USX2Y_NRPACKS; /* number of packets per urb */
++module_param(nrpacks, int, 0444);
++MODULE_PARM_DESC(nrpacks, "Number of packets per URB.");
++#endif
++
+ /*
+  * pipe 4 is used for switching the lamps, setting samplerate, volumes ....
+  */
+@@ -432,6 +438,11 @@ static int snd_usx2y_probe(struct usb_interface *intf,
+ 	struct snd_card *card;
+ 	int err;
  
++#ifdef USX2Y_NRPACKS_VARIABLE
++	if (nrpacks < 0 || nrpacks > USX2Y_NRPACKS_MAX)
++		return -EINVAL;
++#endif
++
+ 	if (le16_to_cpu(device->descriptor.idVendor) != 0x1604 ||
+ 	    (le16_to_cpu(device->descriptor.idProduct) != USB_ID_US122 &&
+ 	     le16_to_cpu(device->descriptor.idProduct) != USB_ID_US224 &&
+diff --git a/sound/usb/usx2y/usbusx2y.h b/sound/usb/usx2y/usbusx2y.h
+index 391fd7b4ed5ef..6a76d04bf1c7d 100644
+--- a/sound/usb/usx2y/usbusx2y.h
++++ b/sound/usb/usx2y/usbusx2y.h
+@@ -7,6 +7,32 @@
+ 
+ #define NRURBS	        2
+ 
++/* Default value used for nr of packs per urb.
++ * 1 to 4 have been tested ok on uhci.
++ * To use 3 on ohci, you'd need a patch:
++ * look for "0000425-linux-2.6.9-rc4-mm1_ohci-hcd.patch.gz" on
++ * "https://bugtrack.alsa-project.org/alsa-bug/bug_view_page.php?bug_id=0000425"
++ *
++ * 1, 2 and 4 work out of the box on ohci, if I recall correctly.
++ * Bigger is safer operation, smaller gives lower latencies.
++ */
++#define USX2Y_NRPACKS 4
++
++#define USX2Y_NRPACKS_MAX 1024
++
++/* If your system works ok with this module's parameter
++ * nrpacks set to 1, you might as well comment
++ * this define out, and thereby produce smaller, faster code.
++ * You'd also set USX2Y_NRPACKS to 1 then.
++ */
++#define USX2Y_NRPACKS_VARIABLE 1
++
++#ifdef USX2Y_NRPACKS_VARIABLE
++extern int nrpacks;
++#define nr_of_packs() nrpacks
++#else
++#define nr_of_packs() USX2Y_NRPACKS
++#endif
+ 
+ #define URBS_ASYNC_SEQ 10
+ #define URB_DATA_LEN_ASYNC_SEQ 32
+diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
+index f540f46a0b143..acca8bead82e5 100644
+--- a/sound/usb/usx2y/usbusx2yaudio.c
++++ b/sound/usb/usx2y/usbusx2yaudio.c
+@@ -28,33 +28,6 @@
+ #include "usx2y.h"
+ #include "usbusx2y.h"
+ 
+-/* Default value used for nr of packs per urb.
+- * 1 to 4 have been tested ok on uhci.
+- * To use 3 on ohci, you'd need a patch:
+- * look for "0000425-linux-2.6.9-rc4-mm1_ohci-hcd.patch.gz" on
+- * "https://bugtrack.alsa-project.org/alsa-bug/bug_view_page.php?bug_id=0000425"
+- *
+- * 1, 2 and 4 work out of the box on ohci, if I recall correctly.
+- * Bigger is safer operation, smaller gives lower latencies.
+- */
+-#define USX2Y_NRPACKS 4
+-
+-/* If your system works ok with this module's parameter
+- * nrpacks set to 1, you might as well comment
+- * this define out, and thereby produce smaller, faster code.
+- * You'd also set USX2Y_NRPACKS to 1 then.
+- */
+-#define USX2Y_NRPACKS_VARIABLE 1
+-
+-#ifdef USX2Y_NRPACKS_VARIABLE
+-static int nrpacks = USX2Y_NRPACKS; /* number of packets per urb */
+-#define  nr_of_packs() nrpacks
+-module_param(nrpacks, int, 0444);
+-MODULE_PARM_DESC(nrpacks, "Number of packets per URB.");
+-#else
+-#define nr_of_packs() USX2Y_NRPACKS
+-#endif
+-
+ static int usx2y_urb_capt_retire(struct snd_usx2y_substream *subs)
+ {
+ 	struct urb	*urb = subs->completed_urb;
 -- 
 2.39.5
 
