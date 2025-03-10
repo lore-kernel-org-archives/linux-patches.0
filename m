@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971AA17CA12;
-	Mon, 10 Mar 2025 17:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABEE17CA12;
+	Mon, 10 Mar 2025 17:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628858; cv=none; b=G6SexH5NCe2lM4F7vWaHDA+wAGswvPZn+gUcMYp4jRR1eTYa0xF+WBRWz8sbJs/85g762kzTwHKaMM9BntSLXZUGEWPT/o1R4A9Rm57OIncCP9G6Z+ONp0HsBm/xLND1e+y10ARr2hxgOuoL/TV+QyrEhaHRs373s5yKWYdAUD0=
+	t=1741628861; cv=none; b=tNiFkoKQ1l2b/B2o61jw55YmBib+JRhG1O0HplIR/DmSYSniGf6NOXMdgKdwK3dBChK1wy9cuqAIisjfg1HWiGprJvW/aCpxMUu59DUjaIZz+f/Dy/qXtpMCv7nJQvtLGij9ubCLbEyGdhH96p9HMQ3BfluumSV1kWq6Y7eD6pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628858; c=relaxed/simple;
-	bh=pzCxNkOPQCwjLE4aT4jEnqxGjpugCKQt7F7mYng1wxw=;
+	s=arc-20240116; t=1741628861; c=relaxed/simple;
+	bh=QjsCBBzTMMoQwxYYXNAPP8Q+mA+Mh+q67VNs3tDwqkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5jWkSyIvgncKeDgioiB9XwMEamgl5ID9oovL+tuTFT205hGhf0579oUfSwz6NWTk6FMZMcEt/hTpauAKmeQ/b1jb6fwjhWmn282312T/PIqLO5K61xjEE48rxmgVY1wnHTn2p9MawU6S0T8YDFqU6aSIhxmZtAWqxdhhjBKHCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SInEO1Ad; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPMApOGpTvHnSky54M5MgNDlx+T7bd7FVQAA5TfSFHEJVx11H8X0gBCFqYCCIMFPYvBl6EHQmVCt6PnnsYsUzqssHAd7qM1vGrZeMakMzZYWxJYTB21Ft/D5zZQIY35q7BdXidxa/Zf0+wYJ2eCoVbq43eTlwRgI2RT5FqyBqkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1KhfYKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SInEO1Ad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2CCC4CEE5;
-	Mon, 10 Mar 2025 17:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1KhfYKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6DBC4CEE5;
+	Mon, 10 Mar 2025 17:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628858;
-	bh=pzCxNkOPQCwjLE4aT4jEnqxGjpugCKQt7F7mYng1wxw=;
+	s=korg; t=1741628861;
+	bh=QjsCBBzTMMoQwxYYXNAPP8Q+mA+Mh+q67VNs3tDwqkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SInEO1Ad39l3cZ/vWX5d+6Lq4+E1SnCNd6iakVC60jdIz2HseN5Gvi6V5ApaXdISm
-	 9emEI9qyLXGeDZX1G3+VL/2Cgl+tA8wNGGF9V8kURJmgI9tSXyVtMc6QRUTaHlshbR
-	 0R1X0dq7XAxhVIJnMQlPoZrf+N4vRma5KzpK6Pd8=
+	b=r1KhfYKOpRM5UeUTwDqKzQiKg8Dz503CQh/gc1uf1Sb3yl9loO+F5CxG7WxMaud5v
+	 uhA3Xr93kTUodkrf9LTPow0wdad374tcvgfacX2kiOUHB/vUnguPouE5p1zgUEgUh9
+	 AyZIlK79H2k740nJJT7wdYrQ/fu2v5HO40CTMZyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+97da3d7e0112d59971de@syzkaller.appspotmail.com,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>,
+	Qu Zicheng <quzicheng@huawei.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/620] bpf: Send signals asynchronously if !preemptible
-Date: Mon, 10 Mar 2025 17:59:00 +0100
-Message-ID: <20250310170549.292728742@linuxfoundation.org>
+Subject: [PATCH 5.15 095/620] padata: fix UAF in padata_reorder
+Date: Mon, 10 Mar 2025 17:59:01 +0100
+Message-ID: <20250310170549.330701033@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,40 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 87c544108b612512b254c8f79aa5c0a8546e2cc4 ]
+[ Upstream commit e01780ea4661172734118d2a5f41bc9720765668 ]
 
-BPF programs can execute in all kinds of contexts and when a program
-running in a non-preemptible context uses the bpf_send_signal() kfunc,
-it will cause issues because this kfunc can sleep.
-Change `irqs_disabled()` to `!preemptible()`.
+A bug was found when run ltp test:
 
-Reported-by: syzbot+97da3d7e0112d59971de@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67486b09.050a0220.253251.0084.GAE@google.com/
-Fixes: 1bc7896e9ef4 ("bpf: Fix deadlock with rq_lock in bpf_send_signal()")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20250115103647.38487-1-puranjay@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+BUG: KASAN: slab-use-after-free in padata_find_next+0x29/0x1a0
+Read of size 4 at addr ffff88bbfe003524 by task kworker/u113:2/3039206
+
+CPU: 0 PID: 3039206 Comm: kworker/u113:2 Kdump: loaded Not tainted 6.6.0+
+Workqueue: pdecrypt_parallel padata_parallel_worker
+Call Trace:
+<TASK>
+dump_stack_lvl+0x32/0x50
+print_address_description.constprop.0+0x6b/0x3d0
+print_report+0xdd/0x2c0
+kasan_report+0xa5/0xd0
+padata_find_next+0x29/0x1a0
+padata_reorder+0x131/0x220
+padata_parallel_worker+0x3d/0xc0
+process_one_work+0x2ec/0x5a0
+
+If 'mdelay(10)' is added before calling 'padata_find_next' in the
+'padata_reorder' function, this issue could be reproduced easily with
+ltp test (pcrypt_aead01).
+
+This can be explained as bellow:
+
+pcrypt_aead_encrypt
+...
+padata_do_parallel
+refcount_inc(&pd->refcnt); // add refcnt
+...
+padata_do_serial
+padata_reorder // pd
+while (1) {
+padata_find_next(pd, true); // using pd
+queue_work_on
+...
+padata_serial_worker				crypto_del_alg
+padata_put_pd_cnt // sub refcnt
+						padata_free_shell
+						padata_put_pd(ps->pd);
+						// pd is freed
+// loop again, but pd is freed
+// call padata_find_next, UAF
+}
+
+In the padata_reorder function, when it loops in 'while', if the alg is
+deleted, the refcnt may be decreased to 0 before entering
+'padata_find_next', which leads to UAF.
+
+As mentioned in [1], do_serial is supposed to be called with BHs disabled
+and always happen under RCU protection, to address this issue, add
+synchronize_rcu() in 'padata_free_shell' wait for all _do_serial calls
+to finish.
+
+[1] https://lore.kernel.org/all/20221028160401.cccypv4euxikusiq@parnassus.localdomain/
+[2] https://lore.kernel.org/linux-kernel/jfjz5d7zwbytztackem7ibzalm5lnxldi2eofeiczqmqs2m7o6@fq426cwnjtkm/
+Fixes: b128a3040935 ("padata: allocate workqueue internally")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Qu Zicheng <quzicheng@huawei.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/padata.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 126754b61edc0..60acc3c76316f 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -799,7 +799,7 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
- 	if (unlikely(is_global_init(current)))
- 		return -EPERM;
+diff --git a/kernel/padata.c b/kernel/padata.c
+index a5699c5ba58da..9608a269f66f2 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -1110,6 +1110,12 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
  
--	if (irqs_disabled()) {
-+	if (!preemptible()) {
- 		/* Do an early check on signal validity. Otherwise,
- 		 * the error is lost in deferred irq_work.
- 		 */
++	/*
++	 * Wait for all _do_serial calls to finish to avoid touching
++	 * freed pd's and ps's.
++	 */
++	synchronize_rcu();
++
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
 -- 
 2.39.5
 
