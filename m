@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44FB233703;
-	Mon, 10 Mar 2025 17:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20352231A37;
+	Mon, 10 Mar 2025 17:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626520; cv=none; b=c5Ga/8rOiWUi/plyxslgovJ9Yp+SJ2STwH/8T+7Y8MeeJL9hU8hX6B+GsUnmBg5dPbf2DsoYE1bkS1S9i9n4Hk4H/b3iLbi6Czgs4mTzcVBMANbVGZv/VJEp1KAY6+ZYg8lxpFVkquiTl4ePw6nQ9KFjgG7qo4csx16/0Gd6Ojc=
+	t=1741626524; cv=none; b=NocwPhmOLUeWpuvzeaibMNqf913NFdXhjnsXMfG3J0yLGlD5zwJI1Vc0f1kz0WR+moifo6dGpWxZ3Q2y8BP5wO/2RRX2LcmqsFNTfe1kaYlPCqFkRwp7lxzjj2XX0ELTWeqftsZ+2OhP2+jRUHxcYIIXA9WIdQSTFBmf+fcXDPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626520; c=relaxed/simple;
-	bh=/l5F9d47GNBuZ20+mpZ7R1k86vd13J3UQXYjGfIozxU=;
+	s=arc-20240116; t=1741626524; c=relaxed/simple;
+	bh=dm1+6peYKhdDJ61SrGk5sjpX16gd6MEYSEjgK9wAxMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PTJx5eA3NMt4ublp599eAND+2e1YRPtYrM3gmYo+2FrZDNzWsBrwFoZUvGkcWXvT/DYEXP1baifUimrlFR1Zb76V+cNQk5j50vhh2L5tL3230s0MZ3ce1Zs5Zqripx3Z6F7QE68c8NBRYzi0wTlXY6vSYFRZW0gKqrMDbImJ+pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4ONvEHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvPf+TSoFPWoZmHTVYVvLBGtI8EmvgyFCHhn/lyji1ONqB5WZLFISIa/w1QsAWEJtfdebVcRKN9gBV/qILUkpZyP2scI1EShiAIcvC/h5L1l5RpTS8IUDJX4v0ugLYf86SNMg7xWn6kKtN/q9DABMKk79wnwNcN69mhYkUky6xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmEkKE+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4ONvEHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3E6C4CEE5;
-	Mon, 10 Mar 2025 17:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmEkKE+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A506C4CEE5;
+	Mon, 10 Mar 2025 17:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626520;
-	bh=/l5F9d47GNBuZ20+mpZ7R1k86vd13J3UQXYjGfIozxU=;
+	s=korg; t=1741626523;
+	bh=dm1+6peYKhdDJ61SrGk5sjpX16gd6MEYSEjgK9wAxMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4ONvEHeMJkxf+xFBE5ao4GWN+Uq7HzMFb67Wno3TCcmisuDft4TztrdC8loWMNZk
-	 ly/qq+ERnVGgjvLeDjG8SrMi695sdVlHoU5XW0mFq4Pa9JR2efxIl5aLX21LDePLUy
-	 UP8pTnpjuxnQWK+4l+EyQ1bJ+dFsLDOhL7NaSl1o=
+	b=cmEkKE+z42Ve6L3m5ibly60Z9IGRQeVlmTa9M9P33Rr3kzbZ4uhqyBCUtxk0h51fK
+	 GVu9btn4kBJsNoyVGBezJUq8IipONGnDZdFCIXcQTIKyLEDRQ/sD+XGb+Ke5+NbAcd
+	 dreiZkLljAaCeuT+SWb2vb/8UJIBXCZp+QL25zcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 003/207] cifs: Remove symlink member from cifs_open_info_data union
-Date: Mon, 10 Mar 2025 18:03:16 +0100
-Message-ID: <20250310170447.887763596@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.13 021/207] ksmbd: fix out-of-bounds in parse_sec_desc()
+Date: Mon, 10 Mar 2025 18:03:34 +0100
+Message-ID: <20250310170448.612373422@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -46,86 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 65c49767dd4fc058673f9259fda1772fd398eaa7 ]
+commit d6e13e19063db24f94b690159d0633aaf72a0f03 upstream.
 
-Member 'symlink' is part of the union in struct cifs_open_info_data. Its
-value is assigned on few places, but is always read through another union
-member 'reparse_point'. So to make code more readable, always use only
-'reparse_point' member and drop whole union structure. No function change.
+If osidoffset, gsidoffset and dacloffset could be greater than smb_ntsd
+struct size. If it is smaller, It could cause slab-out-of-bounds.
+And when validating sid, It need to check it included subauth array size.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 9df23801c83d ("smb311: failure to open files of length 1040 when mounting with SMB3.1.1 POSIX extensions")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h | 5 +----
- fs/smb/client/inode.c    | 2 +-
- fs/smb/client/smb1ops.c  | 4 ++--
- 3 files changed, 4 insertions(+), 7 deletions(-)
+ fs/smb/server/smbacl.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 1e6085f2f78ee..3877b861529ea 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -215,10 +215,7 @@ struct cifs_cred {
- 
- struct cifs_open_info_data {
- 	bool adjust_tz;
--	union {
--		bool reparse_point;
--		bool symlink;
--	};
-+	bool reparse_point;
- 	struct {
- 		/* ioctl response buffer */
- 		struct {
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 0d149b315a832..4d8effe78be57 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -990,7 +990,7 @@ cifs_get_file_info(struct file *filp)
- 		/* TODO: add support to query reparse tag */
- 		data.adjust_tz = false;
- 		if (data.symlink_target) {
--			data.symlink = true;
-+			data.reparse_point = true;
- 			data.reparse.tag = IO_REPARSE_TAG_SYMLINK;
- 		}
- 		path = build_path_from_dentry(dentry, page);
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index c70f4961c4eb7..bd791aa54681f 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -551,7 +551,7 @@ static int cifs_query_path_info(const unsigned int xid,
- 	int rc;
- 	FILE_ALL_INFO fi = {};
- 
--	data->symlink = false;
-+	data->reparse_point = false;
- 	data->adjust_tz = false;
- 
- 	/* could do find first instead but this returns more info */
-@@ -592,7 +592,7 @@ static int cifs_query_path_info(const unsigned int xid,
- 		/* Need to check if this is a symbolic link or not */
- 		tmprc = CIFS_open(xid, &oparms, &oplock, NULL);
- 		if (tmprc == -EOPNOTSUPP)
--			data->symlink = true;
-+			data->reparse_point = true;
- 		else if (tmprc == 0)
- 			CIFSSMBClose(xid, tcon, fid.netfid);
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -807,6 +807,13 @@ static int parse_sid(struct smb_sid *psi
+ 		return -EINVAL;
  	}
--- 
-2.39.5
-
+ 
++	if (!psid->num_subauth)
++		return 0;
++
++	if (psid->num_subauth > SID_MAX_SUB_AUTHORITIES ||
++	    end_of_acl < (char *)psid + 8 + sizeof(__le32) * psid->num_subauth)
++		return -EINVAL;
++
+ 	return 0;
+ }
+ 
+@@ -848,6 +855,9 @@ int parse_sec_desc(struct mnt_idmap *idm
+ 	pntsd->type = cpu_to_le16(DACL_PRESENT);
+ 
+ 	if (pntsd->osidoffset) {
++		if (le32_to_cpu(pntsd->osidoffset) < sizeof(struct smb_ntsd))
++			return -EINVAL;
++
+ 		rc = parse_sid(owner_sid_ptr, end_of_acl);
+ 		if (rc) {
+ 			pr_err("%s: Error %d parsing Owner SID\n", __func__, rc);
+@@ -863,6 +873,9 @@ int parse_sec_desc(struct mnt_idmap *idm
+ 	}
+ 
+ 	if (pntsd->gsidoffset) {
++		if (le32_to_cpu(pntsd->gsidoffset) < sizeof(struct smb_ntsd))
++			return -EINVAL;
++
+ 		rc = parse_sid(group_sid_ptr, end_of_acl);
+ 		if (rc) {
+ 			pr_err("%s: Error %d mapping Owner SID to gid\n",
+@@ -884,6 +897,9 @@ int parse_sec_desc(struct mnt_idmap *idm
+ 		pntsd->type |= cpu_to_le16(DACL_PROTECTED);
+ 
+ 	if (dacloffset) {
++		if (dacloffset < sizeof(struct smb_ntsd))
++			return -EINVAL;
++
+ 		parse_dacl(idmap, dacl_ptr, end_of_acl,
+ 			   owner_sid_ptr, group_sid_ptr, fattr);
+ 	}
 
 
