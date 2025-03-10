@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3C222D799;
-	Mon, 10 Mar 2025 17:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A00D22154C;
+	Mon, 10 Mar 2025 17:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627272; cv=none; b=eQrdp7kgs9Xp1NAvSL0ug5qEu9Msy3Mrpja7ArgHbZyGfzhTsls7Pin3k29dTKuqLYAHVXYlCDMdcNl3z1oExfq5fssXBl/AgFoDhpnhPDPwuSRINpii/DEhLyyoTl8P9yWf0BlUvZmy0ZjmXUOEjkyBAPRXr8FENXn/5zT/shY=
+	t=1741627275; cv=none; b=n77ZV4G8BjPgyeGdDSYXgu/9HqJQyCt/i038e6h09xqAVkbxwHUE69NE8Segh+ZcTvDv+9L9kRfjLQGLyNxYiG0fW4UUdTaPLnKYrGRF1rR3ZvLfrzp0NkZKnXsB3W0TO7Lt5tNSdYgmDTeQJfnOPobRVnjane+7Yt34qQeaDGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627272; c=relaxed/simple;
-	bh=8fsXcnz0IrFQreGsAWF7yVwcbpUzoeM/6l5+3e4ejpM=;
+	s=arc-20240116; t=1741627275; c=relaxed/simple;
+	bh=2HJS8GwaImbM1rvv4Gsh2QX73RLQpAokWR1QN8b5v4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hfu3Vk8XH+JH2IxNXAhyH6Q6TqHw1PpSoksHVE1PaljpYYfxZSQzNINMkzS8IClkcZ7DDyaFGZsMP2C0xJ89beJPKSpYKS14ok0nAjZNuc9mfHH1e4H4nRlUTBcHmmROktVwht5R9M0VEQQ24oqJu50Q3yKP6rTXxxXz3xuZ5fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5ZTPix7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlMKbL0T14NxR+b91EmXSJLR9uf9E+VsnkosvqcepBi0IiBnHtqA7PjKcUm8eSZZ2vrEItKo8FmTTHfTQr7Cz5K1xp3VGIzNcv6t/I57EfZZLULRURikfGIwVwZvOnAYWdGnxHoItJQEoW5PsJwAKlLplpVmTSrupDnWHFMhU/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHAGkOWX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5ZTPix7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DE6C4CEE5;
-	Mon, 10 Mar 2025 17:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHAGkOWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D94C4CEE5;
+	Mon, 10 Mar 2025 17:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627272;
-	bh=8fsXcnz0IrFQreGsAWF7yVwcbpUzoeM/6l5+3e4ejpM=;
+	s=korg; t=1741627275;
+	bh=2HJS8GwaImbM1rvv4Gsh2QX73RLQpAokWR1QN8b5v4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5ZTPix7bvjYbNlPbES47anGFTBuBytpol6vW3ZAs1xKXq//ELH6LIycjLOer8A1t
-	 cUwCUD/7wyp1bQCOVogooycP0wbaXt/aNLMm9rclAEPVU6rpGe/n9yPs5re4Y7ylio
-	 iIUmjACxouc2KsiwK0TZn49iyj02AGfUZortEpm8=
+	b=xHAGkOWXNI5J/clul0hlY6Y4TQsmjxpGbl6OTtSMp+R8qr87IyV8PtC16PzNka+qH
+	 uMYKL3CmaEt7MGbLiQX0PFZlJwt0LAA2kagk1pOIMvfEjC2I6b8SKOPmUCzWbphwpp
+	 lfEU1iI4Nk3Aub66pYjcvwrwMuf5Fc3jzjoqhwig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Asahi Lina <lina@asahilina.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Neal Gompa <neal@gompa.dev>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 071/269] rust: alloc: Fix `ArrayLayout` allocations
-Date: Mon, 10 Mar 2025 18:03:44 +0100
-Message-ID: <20250310170500.560529012@linuxfoundation.org>
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.12 072/269] Revert "of: reserved-memory: Fix using wrong number of cells to get property alignment"
+Date: Mon, 10 Mar 2025 18:03:45 +0100
+Message-ID: <20250310170500.598950909@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,37 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asahi Lina <lina@asahilina.net>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit b7ed2b6f4e8d7f64649795e76ee9db67300de8eb upstream.
+commit 75f1f311d883dfaffb98be3c1da208d6ed5d4df9 upstream.
 
-We were accidentally allocating a layout for the *square* of the object
-size due to a variable shadowing mishap.
+This reverts commit 267b21d0bef8e67dbe6c591c9991444e58237ec9.
 
-Fixes memory bloat and page allocation failures in drm/asahi.
+Turns out some DTs do depend on this behavior. Specifically, a
+downstream Pixel 6 DT. Revert the change at least until we can decide if
+the DT spec can be changed instead.
 
-Reported-by: Janne Grunau <j@jannau.net>
-Fixes: 9e7bbfa18276 ("rust: alloc: introduce `ArrayLayout`")
-Signed-off-by: Asahi Lina <lina@asahilina.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Link: https://lore.kernel.org/r/20241123-rust-fix-arraylayout-v1-1-197e64c95bd4@asahilina.net
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc/layout.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/of_reserved_mem.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/rust/kernel/alloc/layout.rs
-+++ b/rust/kernel/alloc/layout.rs
-@@ -45,7 +45,7 @@ impl<T> ArrayLayout<T> {
-     /// When `len * size_of::<T>()` overflows or when `len * size_of::<T>() > isize::MAX`.
-     pub const fn new(len: usize) -> Result<Self, LayoutError> {
-         match len.checked_mul(core::mem::size_of::<T>()) {
--            Some(len) if len <= ISIZE_MAX => {
-+            Some(size) if size <= ISIZE_MAX => {
-                 // INVARIANT: We checked above that `len * size_of::<T>() <= isize::MAX`.
-                 Ok(Self {
-                     len,
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -360,12 +360,12 @@ static int __init __reserved_mem_alloc_s
+ 
+ 	prop = of_get_flat_dt_prop(node, "alignment", &len);
+ 	if (prop) {
+-		if (len != dt_root_size_cells * sizeof(__be32)) {
++		if (len != dt_root_addr_cells * sizeof(__be32)) {
+ 			pr_err("invalid alignment property in '%s' node.\n",
+ 				uname);
+ 			return -EINVAL;
+ 		}
+-		align = dt_mem_next_cell(dt_root_size_cells, &prop);
++		align = dt_mem_next_cell(dt_root_addr_cells, &prop);
+ 	}
+ 
+ 	nomap = of_get_flat_dt_prop(node, "no-map", NULL) != NULL;
 
 
