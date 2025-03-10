@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5820022ACDC;
-	Mon, 10 Mar 2025 17:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A271DE89C;
+	Mon, 10 Mar 2025 17:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628141; cv=none; b=qKSEKqlxasAvmCAv1kKnFBLD+AsNf+uiEP5hfOd+B8JgZK4wn3qEH+ikxLsRzQBEN7v108KzIumTvS1Yu2QrzARHGYt4rw/zCHy8afkL84eyuFYh8cvjB8RpqZ83T40Sw6RUpyouHwXb1iZkw5fN50b/wGXW+/vyTRftDEOWJf0=
+	t=1741628144; cv=none; b=N8Ts8UEh2d6cTvKMoICG5LXJo2FDajpmddVO+Kly+IICwUUt0qe1scuLQwb3Tf5vYh23OhMcWkr5zs3+5fhjOBSJ4YEKyC03exvNFOzZWDFAX3H6qETuggqJGJKq4lSsDK8u0lEBzSxlpIDIEv72XYYo7Yir7pYxbEbPzKoxDH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628141; c=relaxed/simple;
-	bh=aF7YcOOFxbBql5p8WpnwA+5xzqscJH4E+H2LGCMu67U=;
+	s=arc-20240116; t=1741628144; c=relaxed/simple;
+	bh=SASKm0GO97jwCTisT2EXuU53rjTnwAQ9oNzKBLHfqyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HU5DKt9HW2vQrlaaCkw71nWJsXeM1frh41OeQnnsTiaj+WaT4vM5l02tmvUpdokmz1/l4ppEL1X9T5v67oYOqpHPmz7L88Rteg7vhupJpeyI5oKNMO047sh4E+ZFYQRV2hfIOmXu6QgN14ZDiJeDgJR9AQFtrgJEGZN/0XXxHHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojuCD/le; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s28CzbMl111XxxO0VMRPq1+4hh5gjemPi1zfVPaWST2/40RFaujL0u0Um4jxZ6a9r59UMhyfrcyoyg81HfEbHr88YqRPRKz0g9N+FiD/qqdUErwzC0E3FzqdJhK64xJtLHrAcRNka+uCmTj0bDyUBp1gj8J9tzrSj+eZB7cnwKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7UF0M4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojuCD/le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D697EC4CEE5;
-	Mon, 10 Mar 2025 17:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7UF0M4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF361C4CEE5;
+	Mon, 10 Mar 2025 17:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628141;
-	bh=aF7YcOOFxbBql5p8WpnwA+5xzqscJH4E+H2LGCMu67U=;
+	s=korg; t=1741628144;
+	bh=SASKm0GO97jwCTisT2EXuU53rjTnwAQ9oNzKBLHfqyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojuCD/leZyvNjBICPgT9pR/B5HfIM3UZljNED/0/LwJ2xnvkNCpCgume2oPil8TpC
-	 lYyc9O4tPZ7O1MdThBDU3jcNPUmjibAm+rViAH99YUHyAKfeOkHRFEvQVPHKmQh0wk
-	 mKQD4OJmlj1QpxeVZ/2mEKVtRjBkxMKMuAqp5EfE=
+	b=y7UF0M4zaPzWd/Eqqx8gfb1CzKsTWw3PaNhb9BgVAckA+42aDQC+Z1pnynNduzLmQ
+	 BgwIqgXkj2svyQDIXZUQKGPZq7+tCjXw3V2aNCnRwFs5mJqsGtyy8mLz0zUQDLL+QZ
+	 x9fZKK3A23s3UYXVxiRmT/dceXwU0uROuFRROb0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Schumacher <erik.schumacher@iris-sensing.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/145] hwmon: (ad7314) Validate leading zero bits and return error
-Date: Mon, 10 Mar 2025 18:06:03 +0100
-Message-ID: <20250310170437.534885552@linuxfoundation.org>
+Subject: [PATCH 6.6 070/145] tracing: probe-events: Remove unused MAX_ARG_BUF_LEN macro
+Date: Mon, 10 Mar 2025 18:06:04 +0100
+Message-ID: <20250310170437.575824143@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,63 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erik Schumacher <erik.schumacher@iris-sensing.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit e278d5e8aef4c0a1d9a9fa8b8910d713a89aa800 ]
+[ Upstream commit fd5ba38390c59e1c147480ae49b6133c4ac24001 ]
 
-Leading zero bits are sent on the bus before the temperature value is
-transmitted. If any of these bits are high, the connection might be
-unstable or there could be no AD7314 / ADT730x (or compatible) at all.
-Return -EIO in that case.
+Commit 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all
+function args") introduced MAX_ARG_BUF_LEN but it is not used.
+Remove it.
 
-Signed-off-by: Erik Schumacher <erik.schumacher@iris-sensing.com>
-Fixes: 4f3a659581cab ("hwmon: AD7314 driver (ported from IIO)")
-Link: https://lore.kernel.org/r/24a50c2981a318580aca8f50d23be7987b69ea00.camel@iris-sensing.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/all/174055075876.4079315.8805416872155957588.stgit@mhiramat.tok.corp.google.com/
+
+Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ad7314.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/trace/trace_probe.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/hwmon/ad7314.c b/drivers/hwmon/ad7314.c
-index 7802bbf5f9587..59424103f6348 100644
---- a/drivers/hwmon/ad7314.c
-+++ b/drivers/hwmon/ad7314.c
-@@ -22,11 +22,13 @@
-  */
- #define AD7314_TEMP_MASK		0x7FE0
- #define AD7314_TEMP_SHIFT		5
-+#define AD7314_LEADING_ZEROS_MASK	BIT(15)
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index cef3a50628a3e..48afed3c3f88e 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -35,7 +35,6 @@
+ #define MAX_ARG_NAME_LEN	32
+ #define MAX_BTF_ARGS_LEN	128
+ #define MAX_STRING_SIZE		PATH_MAX
+-#define MAX_ARG_BUF_LEN		(MAX_TRACE_ARGS * MAX_ARG_NAME_LEN)
  
- /*
-  * ADT7301 and ADT7302 temperature masks
-  */
- #define ADT7301_TEMP_MASK		0x3FFF
-+#define ADT7301_LEADING_ZEROS_MASK	(BIT(15) | BIT(14))
- 
- enum ad7314_variant {
- 	adt7301,
-@@ -65,12 +67,20 @@ static ssize_t ad7314_temperature_show(struct device *dev,
- 		return ret;
- 	switch (spi_get_device_id(chip->spi_dev)->driver_data) {
- 	case ad7314:
-+		if (ret & AD7314_LEADING_ZEROS_MASK) {
-+			/* Invalid read-out, leading zero part is missing */
-+			return -EIO;
-+		}
- 		data = (ret & AD7314_TEMP_MASK) >> AD7314_TEMP_SHIFT;
- 		data = sign_extend32(data, 9);
- 
- 		return sprintf(buf, "%d\n", 250 * data);
- 	case adt7301:
- 	case adt7302:
-+		if (ret & ADT7301_LEADING_ZEROS_MASK) {
-+			/* Invalid read-out, leading zero part is missing */
-+			return -EIO;
-+		}
- 		/*
- 		 * Documented as a 13 bit twos complement register
- 		 * with a sign bit - which is a 14 bit 2's complement
+ /* Reserved field names */
+ #define FIELD_STRING_IP		"__probe_ip"
 -- 
 2.39.5
 
