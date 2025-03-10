@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB5F1BBBFD;
-	Mon, 10 Mar 2025 18:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4DD374EA;
+	Mon, 10 Mar 2025 18:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630749; cv=none; b=u+xFY24KLnwRh0e4yt9Q4YYpzI1zxp91MxF7R3Xpjq2hzBpPxUv4p7Y8TlCUlukuJBY68kPcTNwIGBAWuna5R7CX7hfTyMI2IpmrAWlCEkRHKTaXu4BCH2JUuBPvbgBrz2ncd9hBpzrCO8r/ry8qzBC5szPJ0LNhFw9xLE1HVe8=
+	t=1741630752; cv=none; b=bKmbAllKnYzANr2J+2LKuhXtl13EPgwmEngIVfH+C3mXRGKEWlSi3QqfCm7/aqGlK9DGeN+i5v2qTu++MK1ehG4/78WUBWn/HmYCA7Fim75MWdkPx50Hrxcg0HnooMRlUEqMQ3sF9wXeEkh11qVtxUCnbfLOLEq8kBloCAVoxrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630749; c=relaxed/simple;
-	bh=9jDKiDlmmWRWWON+cxdG54kcMlQOF3ErFpj5Ik53EQI=;
+	s=arc-20240116; t=1741630752; c=relaxed/simple;
+	bh=ylwZ8VyUEp8XyAb4DQLsZ796QncVTFi59eLpuHgmqaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kc9So1x2jImhSPZ6H14g7gTVd0Uy+y9KEjhw5iVgNrNHzCAqDUinb2jsv0UGB+/hWGT0dkDEqeV8SuxODBi7l/Oxbkdr4BtPd32Mbvr8j2yHtNNwDCgxo/HHhD0v71DfROjxtVrAQMtstEds5NGQbLN8Wnmf+dSwgeKUPU7dpVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZavMkCZ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ide+gBfH8RvjNBsoPHfjMBkgDqjSJ27KXHWWh9jSvgTk86y+OS/TJVIpEFtIu0cfnTWIglscZOgDw9l7yZcp7i/Rm4z8d9EtoGUP82f8WpGFBq/I6zkq6WyuTDn/wVtT981lTICwJGlBgOj5DFyUzHplv2XylMVmNgob82AxJIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzfoUDQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZavMkCZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AE8C4CEE5;
-	Mon, 10 Mar 2025 18:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzfoUDQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F9C4CEE5;
+	Mon, 10 Mar 2025 18:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630749;
-	bh=9jDKiDlmmWRWWON+cxdG54kcMlQOF3ErFpj5Ik53EQI=;
+	s=korg; t=1741630752;
+	bh=ylwZ8VyUEp8XyAb4DQLsZ796QncVTFi59eLpuHgmqaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZavMkCZ+6KGpXctsi6VUIaxM8TcHbkpG9ehzrq71izWMRSK8sqn/oyaKJ8uCBppij
-	 FSEPA6cN+5I4V6P0jUDNX+MdlkAC7Hw8+teWhU0HJJUZmLPfukF4ZkdscBmZtQRUDU
-	 /EJoCWGWnVWd+ts3i7zXGfRtITnKkcfH8UgynEGw=
+	b=RzfoUDQ/Bm9SQKV+hQFhEoMIVcL6LgY02/uP+x5cnGdVX4r7gjeXIRmvkSTbzW5Ak
+	 2qAFmsTS7xa9kof7GQY5xBp5gVunbmLPXQmLmxUkn2WrwZuRHmPp5/F/c7odQlhlU6
+	 KEqN59QMuDaUl21c9/eo98uiQVvY/cUu9vDYhWhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 520/620] net: enetc: fix the off-by-one issue in enetc_map_tx_buffs()
-Date: Mon, 10 Mar 2025 18:06:06 +0100
-Message-ID: <20250310170606.080213518@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	John Garry <john.garry@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 490/620] scsi: core: Dont memset() the entire scsi_cmnd in scsi_init_command()
+Date: Mon, 10 Mar 2025 18:05:36 +0100
+Message-ID: <20250310170604.914108099@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,68 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 39ab773e4c120f7f98d759415ccc2aca706bbc10 upstream.
+[ Upstream commit 71bada345b33b9297e7cc9415db6328c99b554f9 ]
 
-When a DMA mapping error occurs while processing skb frags, it will free
-one more tx_swbd than expected, so fix this off-by-one issue.
+Replace the big fat memset that requires saving and restoring various
+fields with just initializing those fields that need initialization.
 
-Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
-Cc: stable@vger.kernel.org
-Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20250224111251.1061098-2-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+All the clearing to 0 is moved to scsi_prepare_cmd() as scsi_ioctl_reset()
+alreadly uses kzalloc() to allocate a pre-zeroed command.
+
+This is still conservative and can probably be optimized further.
+
+Link: https://lore.kernel.org/r/20220224175552.988286-3-hch@lst.de
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: dce5c4afd035 ("scsi: core: Clear driver private data when retrying request")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/scsi/scsi_lib.c | 60 +++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 32 deletions(-)
 
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -121,6 +121,24 @@ static int enetc_ptp_parse(struct sk_buf
- 	return 0;
- }
- 
-+/**
-+ * enetc_unwind_tx_frame() - Unwind the DMA mappings of a multi-buffer Tx frame
-+ * @tx_ring: Pointer to the Tx ring on which the buffer descriptors are located
-+ * @count: Number of Tx buffer descriptors which need to be unmapped
-+ * @i: Index of the last successfully mapped Tx buffer descriptor
-+ */
-+static void enetc_unwind_tx_frame(struct enetc_bdr *tx_ring, int count, int i)
-+{
-+	while (count--) {
-+		struct enetc_tx_swbd *tx_swbd = &tx_ring->tx_swbd[i];
-+
-+		enetc_free_tx_frame(tx_ring, tx_swbd);
-+		if (i == 0)
-+			i = tx_ring->bd_count;
-+		i--;
-+	}
-+}
-+
- static int enetc_map_tx_buffs(struct enetc_bdr *tx_ring, struct sk_buff *skb)
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 9721984fd9bc6..ddaffaea2c32c 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1114,45 +1114,16 @@ static void scsi_cleanup_rq(struct request *rq)
+ /* Called before a request is prepared. See also scsi_mq_prep_fn(). */
+ void scsi_init_command(struct scsi_device *dev, struct scsi_cmnd *cmd)
  {
- 	bool do_vlan, do_onestep_tstamp = false, do_twostep_tstamp = false;
-@@ -303,13 +321,7 @@ static int enetc_map_tx_buffs(struct ene
- dma_err:
- 	dev_err(tx_ring->dev, "DMA map error");
+-	void *buf = cmd->sense_buffer;
+-	void *prot = cmd->prot_sdb;
+ 	struct request *rq = scsi_cmd_to_rq(cmd);
+-	unsigned int flags = cmd->flags & SCMD_PRESERVED_FLAGS;
+-	unsigned long jiffies_at_alloc;
+-	int retries, to_clear;
+-	bool in_flight;
+-	int budget_token = cmd->budget_token;
+-
+-	if (!blk_rq_is_passthrough(rq) && !(flags & SCMD_INITIALIZED)) {
+-		flags |= SCMD_INITIALIZED;
++
++	if (!blk_rq_is_passthrough(rq) && !(cmd->flags & SCMD_INITIALIZED)) {
++		cmd->flags |= SCMD_INITIALIZED;
+ 		scsi_initialize_rq(rq);
+ 	}
  
--	do {
--		tx_swbd = &tx_ring->tx_swbd[i];
--		enetc_free_tx_frame(tx_ring, tx_swbd);
--		if (i == 0)
--			i = tx_ring->bd_count;
--		i--;
--	} while (count--);
-+	enetc_unwind_tx_frame(tx_ring, count, i);
- 
- 	return 0;
+-	jiffies_at_alloc = cmd->jiffies_at_alloc;
+-	retries = cmd->retries;
+-	in_flight = test_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+-	/*
+-	 * Zero out the cmd, except for the embedded scsi_request. Only clear
+-	 * the driver-private command data if the LLD does not supply a
+-	 * function to initialize that data.
+-	 */
+-	to_clear = sizeof(*cmd) - sizeof(cmd->req);
+-	if (!dev->host->hostt->init_cmd_priv)
+-		to_clear += dev->host->hostt->cmd_size;
+-	memset((char *)cmd + sizeof(cmd->req), 0, to_clear);
+-
+ 	cmd->device = dev;
+-	cmd->sense_buffer = buf;
+-	cmd->prot_sdb = prot;
+-	cmd->flags = flags;
+ 	INIT_LIST_HEAD(&cmd->eh_entry);
+ 	INIT_DELAYED_WORK(&cmd->abort_work, scmd_eh_abort_handler);
+-	cmd->jiffies_at_alloc = jiffies_at_alloc;
+-	cmd->retries = retries;
+-	if (in_flight)
+-		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+-	cmd->budget_token = budget_token;
+-
  }
+ 
+ static blk_status_t scsi_setup_scsi_cmnd(struct scsi_device *sdev,
+@@ -1539,10 +1510,35 @@ static blk_status_t scsi_prepare_cmd(struct request *req)
+ 	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(req);
+ 	struct scsi_device *sdev = req->q->queuedata;
+ 	struct Scsi_Host *shost = sdev->host;
++	bool in_flight = test_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+ 	struct scatterlist *sg;
+ 
+ 	scsi_init_command(sdev, cmd);
+ 
++	cmd->eh_eflags = 0;
++	cmd->allowed = 0;
++	cmd->prot_type = 0;
++	cmd->prot_flags = 0;
++	cmd->submitter = 0;
++	cmd->cmd_len = 0;
++	cmd->cmnd = NULL;
++	memset(&cmd->sdb, 0, sizeof(cmd->sdb));
++	cmd->underflow = 0;
++	cmd->transfersize = 0;
++	cmd->host_scribble = NULL;
++	cmd->result = 0;
++	cmd->extra_len = 0;
++	cmd->state = 0;
++	if (in_flight)
++		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
++
++	/*
++	 * Only clear the driver-private command data if the LLD does not supply
++	 * a function to initialize that data.
++	 */
++	if (!shost->hostt->init_cmd_priv)
++		memset(cmd + 1, 0, shost->hostt->cmd_size);
++
+ 	cmd->prot_op = SCSI_PROT_NORMAL;
+ 	if (blk_rq_bytes(req))
+ 		cmd->sc_data_direction = rq_dma_dir(req);
+-- 
+2.39.5
+
 
 
