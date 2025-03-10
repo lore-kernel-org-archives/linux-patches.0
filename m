@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A870223236F;
-	Mon, 10 Mar 2025 17:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8352122E00A;
+	Mon, 10 Mar 2025 17:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626810; cv=none; b=KrgL5Jyg5pYj9dsB94+CA+qPl01E2JOYr5/ZEHp+GKnU/axM5wBT3IBTRMjRtdwwAGFID8I20XjJWBJNWNKSy8ZMBfdQcDNDtc7I3MtIsE310PSXCl5eD/3cw5qI1BjRkkfUcYwkbftXqSX1mxW1aD7EtrnUFPJr24ZtUKfs9FA=
+	t=1741626813; cv=none; b=CNxCvg5RkLX+6oM9I3cBwZKe5Qjgq1fLEtm2vLBtLDhx8vFmeUup5kzpGY2yOOdfrtk/SMHmy11Nh3iOPKIvwpbcUJU+I9ZFltz77QD2dduslQd/V432RQ+x8DcZIX8tZ7GBvkFX0b1AYR76lzrPy3pB1VMd973ZP2hT9JwAAV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626810; c=relaxed/simple;
-	bh=fmp2LyLZBwD1s7zKTXtDw1G8sExS9Y4oImT3dMGaWJ0=;
+	s=arc-20240116; t=1741626813; c=relaxed/simple;
+	bh=OOodhBTwtEI6hGg0bc9xMy7d4cGc9ycdk+3vkVtWo4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3af+QXnEY5Sr5uqgOKdX5vqYcqD7C9Depycy0AnwUzyr7o2AFcUaM6tTSeI5Pagc8cIZ01wVMymML+kVq8RsJvvrgAHHxauEv58lCSR7jfcmfWhMUiKhB0Ml5qNiqTW+K4Xb7vMrtAsU0/9itGwwKXK9IPX6pB26N8aywrtk00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2wRWzUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i2KGlpigY65+OVPOWM9/5APe7RVwJa6qpyEsZnoOiSv6EKe1KPT4G/eDYL4wnrKkugWU11w+XK2/JC2ykDF0mfRzBV79JOKpaDnaeAAn6d7xPO/56+aBgz0+jzTITGyiGBbtJOGW4X9ABMp9KszkoUU4so3yvcJYYOfGwe42a9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6TKmI/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2wRWzUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C76C4CEE5;
-	Mon, 10 Mar 2025 17:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6TKmI/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B705C4CEE5;
+	Mon, 10 Mar 2025 17:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626810;
-	bh=fmp2LyLZBwD1s7zKTXtDw1G8sExS9Y4oImT3dMGaWJ0=;
+	s=korg; t=1741626813;
+	bh=OOodhBTwtEI6hGg0bc9xMy7d4cGc9ycdk+3vkVtWo4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2wRWzUb/aR5xa4pBeRv0F5884EROUV1Ig1QVY/8sTDxKNkY7Y7u7zEUA24tXYhXx
-	 qtyXLMSdkyq9aJYl+a+ny7/wRLib0JghVNdVrbCtjy/4uUMCPMUB3vn3kktRgznYWR
-	 S/Gud3FYYpGkxXpMjT+sPdl5OHzoKW+dV6Bkfpck=
+	b=D6TKmI/jyuHNeKcH1Xl7d4JUw1VO/q76OZ42usJiKGuc0cKMHpvHCi35Ck7sUxr1D
+	 Dlc9BLlVb/EsA5U/MUFVaGWLCCX+aDO8qU7TaRllsTg/PzjMATGe58CPjH+hMnDYVK
+	 dMUtFq6bIjprdg7oHDtsgn3/hrByK0gxxfZ++6mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+da65c993ae113742a25f@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 121/207] ALSA: usx2y: validate nrpacks module parameter on probe
-Date: Mon, 10 Mar 2025 18:05:14 +0100
-Message-ID: <20250310170452.618122833@linuxfoundation.org>
+Subject: [PATCH 6.13 122/207] llc: do not use skb_get() before dev_queue_xmit()
+Date: Mon, 10 Mar 2025 18:05:15 +0100
+Message-ID: <20250310170452.655707656@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,133 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 172a0f509723fe4741d4b8e9190cf434b18320d8 ]
+[ Upstream commit 64e6a754d33d31aa844b3ee66fb93ac84ca1565e ]
 
-The module parameter defines number of iso packets per one URB. User is
-allowed to set any value to the parameter of type int, which can lead to
-various kinds of weird and incorrect behavior like integer overflows,
-truncations, etc. Number of packets should be a small non-negative number.
+syzbot is able to crash hosts [1], using llc and devices
+not supporting IFF_TX_SKB_SHARING.
 
-Since this parameter is read-only, its value can be validated on driver
-probe.
+In this case, e1000 driver calls eth_skb_pad(), while
+the skb is shared.
+
+Simply replace skb_get() by skb_clone() in net/llc/llc_s_ac.c
+
+Note that e1000 driver might have an issue with pktgen,
+because it does not clear IFF_TX_SKB_SHARING, this is an
+orthogonal change.
+
+We need to audit other skb_get() uses in net/llc.
+
+[1]
+
+kernel BUG at net/core/skbuff.c:2178 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 16371 Comm: syz.2.2764 Not tainted 6.14.0-rc4-syzkaller-00052-gac9c34d1e45a #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+ RIP: 0010:pskb_expand_head+0x6ce/0x1240 net/core/skbuff.c:2178
+Call Trace:
+ <TASK>
+  __skb_pad+0x18a/0x610 net/core/skbuff.c:2466
+  __skb_put_padto include/linux/skbuff.h:3843 [inline]
+  skb_put_padto include/linux/skbuff.h:3862 [inline]
+  eth_skb_pad include/linux/etherdevice.h:656 [inline]
+  e1000_xmit_frame+0x2d99/0x5800 drivers/net/ethernet/intel/e1000/e1000_main.c:3128
+  __netdev_start_xmit include/linux/netdevice.h:5151 [inline]
+  netdev_start_xmit include/linux/netdevice.h:5160 [inline]
+  xmit_one net/core/dev.c:3806 [inline]
+  dev_hard_start_xmit+0x9a/0x7b0 net/core/dev.c:3822
+  sch_direct_xmit+0x1ae/0xc30 net/sched/sch_generic.c:343
+  __dev_xmit_skb net/core/dev.c:4045 [inline]
+  __dev_queue_xmit+0x13d4/0x43e0 net/core/dev.c:4621
+  dev_queue_xmit include/linux/netdevice.h:3313 [inline]
+  llc_sap_action_send_test_c+0x268/0x320 net/llc/llc_s_ac.c:144
+  llc_exec_sap_trans_actions net/llc/llc_sap.c:153 [inline]
+  llc_sap_next_state net/llc/llc_sap.c:182 [inline]
+  llc_sap_state_process+0x239/0x510 net/llc/llc_sap.c:209
+  llc_ui_sendmsg+0xd0d/0x14e0 net/llc/af_llc.c:993
+  sock_sendmsg_nosec net/socket.c:718 [inline]
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20250303100413.835-1-m.masimov@mt-integration.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+da65c993ae113742a25f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67c020c0.050a0220.222324.0011.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2y.c      | 11 +++++++++++
- sound/usb/usx2y/usbusx2y.h      | 26 ++++++++++++++++++++++++++
- sound/usb/usx2y/usbusx2yaudio.c | 27 ---------------------------
- 3 files changed, 37 insertions(+), 27 deletions(-)
+ net/llc/llc_s_ac.c | 49 +++++++++++++++++++++++++---------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
-index 5f81c68fd42b6..5756ff3528a2d 100644
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -151,6 +151,12 @@ static int snd_usx2y_card_used[SNDRV_CARDS];
- static void snd_usx2y_card_private_free(struct snd_card *card);
- static void usx2y_unlinkseq(struct snd_usx2y_async_seq *s);
- 
-+#ifdef USX2Y_NRPACKS_VARIABLE
-+int nrpacks = USX2Y_NRPACKS; /* number of packets per urb */
-+module_param(nrpacks, int, 0444);
-+MODULE_PARM_DESC(nrpacks, "Number of packets per URB.");
-+#endif
-+
- /*
-  * pipe 4 is used for switching the lamps, setting samplerate, volumes ....
-  */
-@@ -432,6 +438,11 @@ static int snd_usx2y_probe(struct usb_interface *intf,
- 	struct snd_card *card;
- 	int err;
- 
-+#ifdef USX2Y_NRPACKS_VARIABLE
-+	if (nrpacks < 0 || nrpacks > USX2Y_NRPACKS_MAX)
-+		return -EINVAL;
-+#endif
-+
- 	if (le16_to_cpu(device->descriptor.idVendor) != 0x1604 ||
- 	    (le16_to_cpu(device->descriptor.idProduct) != USB_ID_US122 &&
- 	     le16_to_cpu(device->descriptor.idProduct) != USB_ID_US224 &&
-diff --git a/sound/usb/usx2y/usbusx2y.h b/sound/usb/usx2y/usbusx2y.h
-index 391fd7b4ed5ef..6a76d04bf1c7d 100644
---- a/sound/usb/usx2y/usbusx2y.h
-+++ b/sound/usb/usx2y/usbusx2y.h
-@@ -7,6 +7,32 @@
- 
- #define NRURBS	        2
- 
-+/* Default value used for nr of packs per urb.
-+ * 1 to 4 have been tested ok on uhci.
-+ * To use 3 on ohci, you'd need a patch:
-+ * look for "0000425-linux-2.6.9-rc4-mm1_ohci-hcd.patch.gz" on
-+ * "https://bugtrack.alsa-project.org/alsa-bug/bug_view_page.php?bug_id=0000425"
-+ *
-+ * 1, 2 and 4 work out of the box on ohci, if I recall correctly.
-+ * Bigger is safer operation, smaller gives lower latencies.
-+ */
-+#define USX2Y_NRPACKS 4
-+
-+#define USX2Y_NRPACKS_MAX 1024
-+
-+/* If your system works ok with this module's parameter
-+ * nrpacks set to 1, you might as well comment
-+ * this define out, and thereby produce smaller, faster code.
-+ * You'd also set USX2Y_NRPACKS to 1 then.
-+ */
-+#define USX2Y_NRPACKS_VARIABLE 1
-+
-+#ifdef USX2Y_NRPACKS_VARIABLE
-+extern int nrpacks;
-+#define nr_of_packs() nrpacks
-+#else
-+#define nr_of_packs() USX2Y_NRPACKS
-+#endif
- 
- #define URBS_ASYNC_SEQ 10
- #define URB_DATA_LEN_ASYNC_SEQ 32
-diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
-index f540f46a0b143..acca8bead82e5 100644
---- a/sound/usb/usx2y/usbusx2yaudio.c
-+++ b/sound/usb/usx2y/usbusx2yaudio.c
-@@ -28,33 +28,6 @@
- #include "usx2y.h"
- #include "usbusx2y.h"
- 
--/* Default value used for nr of packs per urb.
-- * 1 to 4 have been tested ok on uhci.
-- * To use 3 on ohci, you'd need a patch:
-- * look for "0000425-linux-2.6.9-rc4-mm1_ohci-hcd.patch.gz" on
-- * "https://bugtrack.alsa-project.org/alsa-bug/bug_view_page.php?bug_id=0000425"
-- *
-- * 1, 2 and 4 work out of the box on ohci, if I recall correctly.
-- * Bigger is safer operation, smaller gives lower latencies.
-- */
--#define USX2Y_NRPACKS 4
+diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
+index 06fb8e6944b06..7a0cae9a81114 100644
+--- a/net/llc/llc_s_ac.c
++++ b/net/llc/llc_s_ac.c
+@@ -24,7 +24,7 @@
+ #include <net/llc_s_ac.h>
+ #include <net/llc_s_ev.h>
+ #include <net/llc_sap.h>
 -
--/* If your system works ok with this module's parameter
-- * nrpacks set to 1, you might as well comment
-- * this define out, and thereby produce smaller, faster code.
-- * You'd also set USX2Y_NRPACKS to 1 then.
-- */
--#define USX2Y_NRPACKS_VARIABLE 1
--
--#ifdef USX2Y_NRPACKS_VARIABLE
--static int nrpacks = USX2Y_NRPACKS; /* number of packets per urb */
--#define  nr_of_packs() nrpacks
--module_param(nrpacks, int, 0444);
--MODULE_PARM_DESC(nrpacks, "Number of packets per URB.");
--#else
--#define nr_of_packs() USX2Y_NRPACKS
--#endif
--
- static int usx2y_urb_capt_retire(struct snd_usx2y_substream *subs)
++#include <net/sock.h>
+ 
+ /**
+  *	llc_sap_action_unitdata_ind - forward UI PDU to network layer
+@@ -40,6 +40,26 @@ int llc_sap_action_unitdata_ind(struct llc_sap *sap, struct sk_buff *skb)
+ 	return 0;
+ }
+ 
++static int llc_prepare_and_xmit(struct sk_buff *skb)
++{
++	struct llc_sap_state_ev *ev = llc_sap_ev(skb);
++	struct sk_buff *nskb;
++	int rc;
++
++	rc = llc_mac_hdr_init(skb, ev->saddr.mac, ev->daddr.mac);
++	if (rc)
++		return rc;
++
++	nskb = skb_clone(skb, GFP_ATOMIC);
++	if (!nskb)
++		return -ENOMEM;
++
++	if (skb->sk)
++		skb_set_owner_w(nskb, skb->sk);
++
++	return dev_queue_xmit(nskb);
++}
++
+ /**
+  *	llc_sap_action_send_ui - sends UI PDU resp to UNITDATA REQ to MAC layer
+  *	@sap: SAP
+@@ -52,17 +72,12 @@ int llc_sap_action_unitdata_ind(struct llc_sap *sap, struct sk_buff *skb)
+ int llc_sap_action_send_ui(struct llc_sap *sap, struct sk_buff *skb)
  {
- 	struct urb	*urb = subs->completed_urb;
+ 	struct llc_sap_state_ev *ev = llc_sap_ev(skb);
+-	int rc;
+ 
+ 	llc_pdu_header_init(skb, LLC_PDU_TYPE_U, ev->saddr.lsap,
+ 			    ev->daddr.lsap, LLC_PDU_CMD);
+ 	llc_pdu_init_as_ui_cmd(skb);
+-	rc = llc_mac_hdr_init(skb, ev->saddr.mac, ev->daddr.mac);
+-	if (likely(!rc)) {
+-		skb_get(skb);
+-		rc = dev_queue_xmit(skb);
+-	}
+-	return rc;
++
++	return llc_prepare_and_xmit(skb);
+ }
+ 
+ /**
+@@ -77,17 +92,12 @@ int llc_sap_action_send_ui(struct llc_sap *sap, struct sk_buff *skb)
+ int llc_sap_action_send_xid_c(struct llc_sap *sap, struct sk_buff *skb)
+ {
+ 	struct llc_sap_state_ev *ev = llc_sap_ev(skb);
+-	int rc;
+ 
+ 	llc_pdu_header_init(skb, LLC_PDU_TYPE_U_XID, ev->saddr.lsap,
+ 			    ev->daddr.lsap, LLC_PDU_CMD);
+ 	llc_pdu_init_as_xid_cmd(skb, LLC_XID_NULL_CLASS_2, 0);
+-	rc = llc_mac_hdr_init(skb, ev->saddr.mac, ev->daddr.mac);
+-	if (likely(!rc)) {
+-		skb_get(skb);
+-		rc = dev_queue_xmit(skb);
+-	}
+-	return rc;
++
++	return llc_prepare_and_xmit(skb);
+ }
+ 
+ /**
+@@ -133,17 +143,12 @@ int llc_sap_action_send_xid_r(struct llc_sap *sap, struct sk_buff *skb)
+ int llc_sap_action_send_test_c(struct llc_sap *sap, struct sk_buff *skb)
+ {
+ 	struct llc_sap_state_ev *ev = llc_sap_ev(skb);
+-	int rc;
+ 
+ 	llc_pdu_header_init(skb, LLC_PDU_TYPE_U, ev->saddr.lsap,
+ 			    ev->daddr.lsap, LLC_PDU_CMD);
+ 	llc_pdu_init_as_test_cmd(skb);
+-	rc = llc_mac_hdr_init(skb, ev->saddr.mac, ev->daddr.mac);
+-	if (likely(!rc)) {
+-		skb_get(skb);
+-		rc = dev_queue_xmit(skb);
+-	}
+-	return rc;
++
++	return llc_prepare_and_xmit(skb);
+ }
+ 
+ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
 -- 
 2.39.5
 
