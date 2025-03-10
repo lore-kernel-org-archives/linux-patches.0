@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BAA232792;
-	Mon, 10 Mar 2025 17:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1312B22D7A6;
+	Mon, 10 Mar 2025 17:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628965; cv=none; b=T8IAAnMAEQVUg8wBGkB241pAHmAvi4j3Dxbbg/jZRWo2S5XTKvJp4ro9XmPd/ozKmv4/BzTxSH4Vn2QgokaR1bdOPvCbL2z+53xjSdyG7VDbVyKcRqgZReOfV11j1FrzSumlQqR9kvrJDzedMIcCeYKpYPlyHovxyjVkaOZBkCE=
+	t=1741628968; cv=none; b=VkqZDgJz5cAojBM6+sDQher1WnGMUdoY58lVpVaePmD+rk2zQuzMvhhPBA4VmHpJrnS5xU8hGJVXdAtPPg1iY2PK+6iY1QY2z4TsI89H2Sng1FHwfYHcoX7P/AveUBsK/ySdCo0bUhGZLJS8TOSNdp6c6K60polC10Jw6GRpsw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628965; c=relaxed/simple;
-	bh=pe9Xy/03BehZL23jKZNkmuNEF7BTfJ/A4lhdJ1RZCxs=;
+	s=arc-20240116; t=1741628968; c=relaxed/simple;
+	bh=GUvZV9tOLJ2jvCOF+Cnoz8yopUNgVP1RTYVjHJqpBfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SaTm1stUCZJ3nLtS/N0ooZ96yRFRZv/J36jiwP+knbyZ2B0b6pkQiHxlXify1O3rkoSZ5HzE15+X3H19XNZ0Aq/GwTGSx+feYUYh7ukMFrz/6Gln3hs/WxNHDD4nRzVjV24OYvMiOj3jxxRJ3lzkAl6BH7Je6tUI0LhdBu4tLMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w22WL46u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZ+zZklroYKftvWYTH3jQRdCFXW63zVuO2hmob/kfjjtGzvRym8HnIE3KQ1chpyNSi2sxSk67gTzAZ9ftBKM6ITHwVp79XbQ3abxaxukUTXNrIwG3/HRMwBl6qz9wk5DUQ/JnA4UAkEB4a/EkZNTFYHziph2A1/EQjph7TpAqYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2K8hken; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w22WL46u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B452BC4CEE5;
-	Mon, 10 Mar 2025 17:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2K8hken"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECE6C4CEE5;
+	Mon, 10 Mar 2025 17:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628965;
-	bh=pe9Xy/03BehZL23jKZNkmuNEF7BTfJ/A4lhdJ1RZCxs=;
+	s=korg; t=1741628967;
+	bh=GUvZV9tOLJ2jvCOF+Cnoz8yopUNgVP1RTYVjHJqpBfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w22WL46uM+SE/+O6/EFQ3oHOrXvzvawSHh/6WG169G2iBKy8oq9/IDYPPt+bWt9/l
-	 GnxJBGPM+WUSQv1vrHL/4jYuDd7H9SVz9POMRr8++RWF+EOZXDK09YPGpJ4vAyG60m
-	 v+wwO9E98JfRZ7//Iq92w3+tonC1fyq4f6oGZsi8=
+	b=w2K8hkenC2JLmOpiOTFoD5IGRVveeenW2Vo9PMkdgHEkpodP5RZCXjAD0+rcIPA8L
+	 yOunYd6a0VllNqF0gvsoorBOgEweno+5Hwpf4DqW0OxwwShVTr8y/7KjRBJXBEdB7i
+	 2duBHgw0uQxCFJ2xNVn5aIhlj1+cLBSq7YSzQfBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Guralnik <michaelgur@nvidia.com>,
+	Artemy Kovalyov <artemyko@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/620] RDMA/mlx5: Enforce umem boundaries for explicit ODP page faults
-Date: Mon, 10 Mar 2025 17:59:36 +0100
-Message-ID: <20250310170550.730866637@linuxfoundation.org>
+Subject: [PATCH 5.15 131/620] RDMA/mlx5: Fix indirect mkey ODP page count
+Date: Mon, 10 Mar 2025 17:59:37 +0100
+Message-ID: <20250310170550.771000183@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,95 +54,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 8c6d097d830f779fc1725fbaa1314f20a7a07b4b ]
+[ Upstream commit 235f238402194a78ac5fb882a46717eac817e5d1 ]
 
-The new memory scheme page faults are requesting the driver to fetch
-additinal pages to the faulted memory access.
-This is done in order to prefetch pages before and after the area that
-got the page fault, assuming this will reduce the total amount of page
-faults.
+Restrict the check for the number of pages handled during an ODP page
+fault to direct mkeys.
+Perform the check right after handling the page fault and don't
+propagate the number of handled pages to callers.
 
-The driver should ensure it handles only the pages that are within the
-umem range.
+Indirect mkeys and their associated direct mkeys can have different
+start addresses. As a result, the calculation of the number of pages to
+handle for an indirect mkey may not match the actual page fault
+handling done on the direct mkey.
 
+For example:
+A 4K sized page fault on a KSM mkey that has a start address that is not
+aligned to a page will result a calculation that assumes the number of
+pages required to handle are 2.
+While the underlying MTT might be aligned will require fetching only a
+single page.
+Thus, do the calculation and compare number of pages handled only per
+direct mkey.
+
+Fixes: db570d7deafb ("IB/mlx5: Add ODP support to MW")
 Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/20240909100504.29797-5-michaelgur@nvidia.com
+Reviewed-by: Artemy Kovalyov <artemyko@nvidia.com>
+Link: https://patch.msgid.link/86c483d9e75ce8fe14e9ff85b62df72b779f8ab1.1736187990.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 235f23840219 ("RDMA/mlx5: Fix indirect mkey ODP page count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/mlx5/odp.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 6ff65aaafcaa4..70d64a8378b5c 100644
+index 70d64a8378b5c..ec18f8dda94f9 100644
 --- a/drivers/infiniband/hw/mlx5/odp.c
 +++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -732,24 +732,31 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
-  *  >0: Number of pages mapped
-  */
- static int pagefault_mr(struct mlx5_ib_mr *mr, u64 io_virt, size_t bcnt,
--			u32 *bytes_mapped, u32 flags)
-+			u32 *bytes_mapped, u32 flags, bool permissive_fault)
+@@ -821,8 +821,7 @@ static int get_indirect_num_descs(struct mlx5_core_mkey *mmkey)
+ /*
+  * Handle a single data segment in a page-fault WQE or RDMA region.
+  *
+- * Returns number of OS pages retrieved on success. The caller may continue to
+- * the next data segment.
++ * Returns zero on success. The caller may continue to the next data segment.
+  * Can return the following error codes:
+  * -EAGAIN to designate a temporary error. The caller will abort handling the
+  *  page fault and resolve it.
+@@ -835,7 +834,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 					 u32 *bytes_committed,
+ 					 u32 *bytes_mapped)
  {
- 	struct ib_umem_odp *odp = to_ib_umem_odp(mr->umem);
- 
--	if (unlikely(io_virt < mr->ibmr.iova))
-+	if (unlikely(io_virt < mr->ibmr.iova) && !permissive_fault)
- 		return -EFAULT;
- 
- 	if (mr->umem->is_dmabuf)
- 		return pagefault_dmabuf_mr(mr, bcnt, bytes_mapped, flags);
- 
- 	if (!odp->is_implicit_odp) {
-+		u64 offset = io_virt < mr->ibmr.iova ? 0 : io_virt - mr->ibmr.iova;
- 		u64 user_va;
- 
--		if (check_add_overflow(io_virt - mr->ibmr.iova,
--				       (u64)odp->umem.address, &user_va))
-+		if (check_add_overflow(offset, (u64)odp->umem.address,
-+				       &user_va))
- 			return -EFAULT;
--		if (unlikely(user_va >= ib_umem_end(odp) ||
--			     ib_umem_end(odp) - user_va < bcnt))
-+
-+		if (permissive_fault) {
-+			if (user_va < ib_umem_start(odp))
-+				user_va = ib_umem_start(odp);
-+			if ((user_va + bcnt) > ib_umem_end(odp))
-+				bcnt = ib_umem_end(odp) - user_va;
-+		} else if (unlikely(user_va >= ib_umem_end(odp) ||
-+				    ib_umem_end(odp) - user_va < bcnt))
- 			return -EFAULT;
- 		return pagefault_real_mr(mr, odp, user_va, bcnt, bytes_mapped,
- 					 flags);
-@@ -872,7 +879,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+-	int npages = 0, ret, i, outlen, cur_outlen = 0, depth = 0;
++	int ret, i, outlen, cur_outlen = 0, depth = 0, pages_in_range;
+ 	struct pf_frame *head = NULL, *frame;
+ 	struct mlx5_core_mkey *mmkey;
+ 	struct mlx5_ib_mr *mr;
+@@ -879,13 +878,20 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
  	case MLX5_MKEY_MR:
  		mr = container_of(mmkey, struct mlx5_ib_mr, mmkey);
  
--		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0);
-+		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
++		pages_in_range = (ALIGN(io_virt + bcnt, PAGE_SIZE) -
++				  (io_virt & PAGE_MASK)) >>
++				 PAGE_SHIFT;
+ 		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
  		if (ret < 0)
  			goto end;
  
-@@ -1743,7 +1750,7 @@ static void mlx5_ib_prefetch_mr_work(struct work_struct *w)
- 	for (i = 0; i < work->num_sge; ++i) {
- 		ret = pagefault_mr(work->frags[i].mr, work->frags[i].io_virt,
- 				   work->frags[i].length, &bytes_mapped,
--				   work->pf_flags);
-+				   work->pf_flags, false);
- 		if (ret <= 0)
- 			continue;
- 		mlx5_update_odp_stats(work->frags[i].mr, prefetch, ret);
-@@ -1792,7 +1799,7 @@ static int mlx5_ib_prefetch_sg_list(struct ib_pd *pd,
- 		if (!mr)
- 			return -ENOENT;
- 		ret = pagefault_mr(mr, sg_list[i].addr, sg_list[i].length,
--				   &bytes_mapped, pf_flags);
-+				   &bytes_mapped, pf_flags, false);
- 		if (ret < 0) {
- 			mlx5r_deref_odp_mkey(&mr->mmkey);
- 			return ret;
+ 		mlx5_update_odp_stats(mr, faults, ret);
+ 
+-		npages += ret;
++		if (ret < pages_in_range) {
++			ret = -EFAULT;
++			goto end;
++		}
++
+ 		ret = 0;
+ 		break;
+ 
+@@ -978,7 +984,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 	kfree(out);
+ 
+ 	*bytes_committed = 0;
+-	return ret ? ret : npages;
++	return ret;
+ }
+ 
+ /*
+@@ -997,8 +1003,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+  *                   the committed bytes).
+  * @receive_queue: receive WQE end of sg list
+  *
+- * Returns the number of pages loaded if positive, zero for an empty WQE, or a
+- * negative error code.
++ * Returns zero for success or a negative error code.
+  */
+ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 				   struct mlx5_pagefault *pfault,
+@@ -1006,7 +1011,7 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 				   void *wqe_end, u32 *bytes_mapped,
+ 				   u32 *total_wqe_bytes, bool receive_queue)
+ {
+-	int ret = 0, npages = 0;
++	int ret = 0;
+ 	u64 io_virt;
+ 	u32 key;
+ 	u32 byte_count;
+@@ -1062,10 +1067,9 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 						    bytes_mapped);
+ 		if (ret < 0)
+ 			break;
+-		npages += ret;
+ 	}
+ 
+-	return ret < 0 ? ret : npages;
++	return ret;
+ }
+ 
+ /*
+@@ -1301,12 +1305,6 @@ static void mlx5_ib_mr_wqe_pfault_handler(struct mlx5_ib_dev *dev,
+ 	free_page((unsigned long)wqe_start);
+ }
+ 
+-static int pages_in_range(u64 address, u32 length)
+-{
+-	return (ALIGN(address + length, PAGE_SIZE) -
+-		(address & PAGE_MASK)) >> PAGE_SHIFT;
+-}
+-
+ static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
+ 					   struct mlx5_pagefault *pfault)
+ {
+@@ -1345,7 +1343,7 @@ static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
+ 	if (ret == -EAGAIN) {
+ 		/* We're racing with an invalidation, don't prefetch */
+ 		prefetch_activated = 0;
+-	} else if (ret < 0 || pages_in_range(address, length) > ret) {
++	} else if (ret < 0) {
+ 		mlx5_ib_page_fault_resume(dev, pfault, 1);
+ 		if (ret != -ENOENT)
+ 			mlx5_ib_dbg(dev, "PAGE FAULT error %d. QP 0x%x, type: 0x%x\n",
 -- 
 2.39.5
 
