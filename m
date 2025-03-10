@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D721022FF40;
-	Mon, 10 Mar 2025 17:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE20A17A31A;
+	Mon, 10 Mar 2025 17:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627878; cv=none; b=YNQqzdguh4dh6VMbG2KPTUyKY0wDicDXkiOiRSA7RV4Hbx9iOvhZHsRTeDpisAv896tNvpNX+gsCHlmnM9i5h0QMfZBncRZOrJvzLGtOqjiojaFqp4yRugySuNWmQEJ6UMrlish28gVo3EaVfusGZZ9DykKz/ubfe9F/s/57/rU=
+	t=1741627881; cv=none; b=jO+ZbisvhfOuQcpDBjz9BrXcoLC2fDvfkmqZXzvuxPvhnxSQX+Dax30vGK/dE5kivzFjfkC8iUwXWz5l2q0Nsj+B38Y9YfeVZoIpYdsYZihWVuYmRuBIfFLDUrhFpf19Gw8wSNAmpxFgZe7FgfOS6ukqnZ8jkQvNZd4sctBaIdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627878; c=relaxed/simple;
-	bh=iUWnYLr5h4XeDEVOWPYDFMZIuWDG0ZB1J8peLMx4Ukc=;
+	s=arc-20240116; t=1741627881; c=relaxed/simple;
+	bh=I0E/1rJiXKE2HNbYC14h7sGyJeeyk7KjLbt/RuKNR9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omidq7gl7OAFhWR3sukwFqxSsN5SL+GMIodK2IV9hH6s9bGbT6zFT7nIdZnBFfqqoG2PzBdbUTPSg7ESjA3sGjOcDFhm3FK71gk/G+tzzVcbYyDQuN64VfQzCS6TxAdwYufSq+dHZY6WnkvHhaBbcnOwVWlTLIDnWr0P4Mp+kNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k13iMEwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cNB4mq/DbO3PZUFNyijL9qglz4ktWNpX1Vdr/UUelk8nfceh6G5wb9IhMeXFiAhvtZFf544fd7bF++XGIHinijdXrUkoJUg48p/Sfdkv6UhV5/ddkrlDCYzFCIw8f3GPEi4q4tcxDAjjLB23YVquDfsCSyD2FSMqFoJQThJ6o0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIVoNZOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k13iMEwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF9AC4CEEC;
-	Mon, 10 Mar 2025 17:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIVoNZOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B16C4CEEE;
+	Mon, 10 Mar 2025 17:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627878;
-	bh=iUWnYLr5h4XeDEVOWPYDFMZIuWDG0ZB1J8peLMx4Ukc=;
+	s=korg; t=1741627881;
+	bh=I0E/1rJiXKE2HNbYC14h7sGyJeeyk7KjLbt/RuKNR9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k13iMEwgo4Wt6YCL+19I2yle53iPs8RPQGCGobVgSADRfPN6v5yornjuRMng0YhRT
-	 f179d6dKbvLrfVqIF25gZpz237WYBZhlIzZOOe23jM1vDvJFsJBMPmLHB5sZcM9kaK
-	 nC54DFvJFls3tUHs8RxT2kzMY8YTSVVhfmjhKwsA=
+	b=JIVoNZOBZTlwCoJ/bSmlJoSXQYLAq83TDsWcvBrJ+rf6sHBB894BpQiLR2ns5QgZq
+	 bHluFham17rOFnz8IBEoIe/ILaXJDSAva9lmWLoUd1Vi7xRtvkf/int248sLO7zism
+	 3Ftfui5CImj8cNLpO6O1iHnnRiWkuZtZpL1xmxSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Martyn Welch <martyn.welch@collabora.com>,
-	Simon Horman <horms@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/145] net: enetc: Replace ifdef with IS_ENABLED
-Date: Mon, 10 Mar 2025 18:05:06 +0100
-Message-ID: <20250310170435.238512982@linuxfoundation.org>
+Subject: [PATCH 6.6 013/145] net: enetc: VFs do not support HWTSTAMP_TX_ONESTEP_SYNC
+Date: Mon, 10 Mar 2025 18:05:07 +0100
+Message-ID: <20250310170435.278561778@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -53,157 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martyn Welch <martyn.welch@collabora.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 9c699a8f3b273c62f7b364ff999e873501a1e834 ]
+[ Upstream commit a562d0c4a893eae3ea51d512c4d90ab858a6b7ec ]
 
-The enetc driver uses ifdefs when checking whether
-CONFIG_FSL_ENETC_PTP_CLOCK is enabled in a number of places. This works
-if the driver is built-in but fails if the driver is available as a
-kernel module. Replace the instances of ifdef with use of the IS_ENABLED
-macro, that will evaluate as true when this feature is built as a kernel
-module and follows the kernel's coding style.
+Actually ENETC VFs do not support HWTSTAMP_TX_ONESTEP_SYNC because only
+ENETC PF can access PMa_SINGLE_STEP registers. And there will be a crash
+if VFs are used to test one-step timestamp, the crash log as follows.
 
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Martyn Welch <martyn.welch@collabora.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240912173742.484549-1-martyn.welch@collabora.com
+[  129.110909] Unable to handle kernel paging request at virtual address 00000000000080c0
+[  129.287769] Call trace:
+[  129.290219]  enetc_port_mac_wr+0x30/0xec (P)
+[  129.294504]  enetc_start_xmit+0xda4/0xe74
+[  129.298525]  enetc_xmit+0x70/0xec
+[  129.301848]  dev_hard_start_xmit+0x98/0x118
+
+Fixes: 41514737ecaa ("enetc: add get_ts_info interface for ethtool")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250224111251.1061098-5-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a562d0c4a893 ("net: enetc: VFs do not support HWTSTAMP_TX_ONESTEP_SYNC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c  | 22 ++++++++-----------
- drivers/net/ethernet/freescale/enetc/enetc.h  |  9 +++-----
- .../ethernet/freescale/enetc/enetc_ethtool.c  | 12 ++++++----
- 3 files changed, 20 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c         | 3 +++
+ drivers/net/ethernet/freescale/enetc/enetc_ethtool.c | 7 +++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 9aa57134f460c..30653830981d1 100644
+index 30653830981d1..8feb7d4226bb5 100644
 --- a/drivers/net/ethernet/freescale/enetc/enetc.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1023,7 +1023,6 @@ static int enetc_refill_rx_ring(struct enetc_bdr *rx_ring, const int buff_cnt)
- 	return j;
- }
- 
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
- static void enetc_get_rx_tstamp(struct net_device *ndev,
- 				union enetc_rx_bd *rxbd,
- 				struct sk_buff *skb)
-@@ -1047,7 +1046,6 @@ static void enetc_get_rx_tstamp(struct net_device *ndev,
- 		shhwtstamps->hwtstamp = ns_to_ktime(tstamp);
- 	}
- }
--#endif
- 
- static void enetc_get_offloads(struct enetc_bdr *rx_ring,
- 			       union enetc_rx_bd *rxbd, struct sk_buff *skb)
-@@ -1087,10 +1085,9 @@ static void enetc_get_offloads(struct enetc_bdr *rx_ring,
- 		__vlan_hwaccel_put_tag(skb, tpid, le16_to_cpu(rxbd->r.vlan_opt));
- 	}
- 
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
--	if (priv->active_offloads & ENETC_F_RX_TSTAMP)
-+	if (IS_ENABLED(CONFIG_FSL_ENETC_PTP_CLOCK) &&
-+	    (priv->active_offloads & ENETC_F_RX_TSTAMP))
- 		enetc_get_rx_tstamp(rx_ring->ndev, rxbd, skb);
--#endif
- }
- 
- /* This gets called during the non-XDP NAPI poll cycle as well as on XDP_PASS,
-@@ -2956,7 +2953,6 @@ void enetc_set_features(struct net_device *ndev, netdev_features_t features)
- }
- EXPORT_SYMBOL_GPL(enetc_set_features);
- 
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
- static int enetc_hwtstamp_set(struct net_device *ndev, struct ifreq *ifr)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
-@@ -3025,17 +3021,17 @@ static int enetc_hwtstamp_get(struct net_device *ndev, struct ifreq *ifr)
- 	return copy_to_user(ifr->ifr_data, &config, sizeof(config)) ?
- 	       -EFAULT : 0;
- }
--#endif
- 
- int enetc_ioctl(struct net_device *ndev, struct ifreq *rq, int cmd)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
--	if (cmd == SIOCSHWTSTAMP)
--		return enetc_hwtstamp_set(ndev, rq);
--	if (cmd == SIOCGHWTSTAMP)
--		return enetc_hwtstamp_get(ndev, rq);
--#endif
+@@ -2971,6 +2971,9 @@ static int enetc_hwtstamp_set(struct net_device *ndev, struct ifreq *ifr)
+ 		new_offloads |= ENETC_F_TX_TSTAMP;
+ 		break;
+ 	case HWTSTAMP_TX_ONESTEP_SYNC:
++		if (!enetc_si_is_pf(priv->si))
++			return -EOPNOTSUPP;
 +
-+	if (IS_ENABLED(CONFIG_FSL_ENETC_PTP_CLOCK)) {
-+		if (cmd == SIOCSHWTSTAMP)
-+			return enetc_hwtstamp_set(ndev, rq);
-+		if (cmd == SIOCGHWTSTAMP)
-+			return enetc_hwtstamp_get(ndev, rq);
-+	}
- 
- 	if (!priv->phylink)
- 		return -EOPNOTSUPP;
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
-index fcadb0848d254..860ecee302f1a 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -184,10 +184,9 @@ static inline union enetc_rx_bd *enetc_rxbd(struct enetc_bdr *rx_ring, int i)
- {
- 	int hw_idx = i;
- 
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
--	if (rx_ring->ext_en)
-+	if (IS_ENABLED(CONFIG_FSL_ENETC_PTP_CLOCK) && rx_ring->ext_en)
- 		hw_idx = 2 * i;
--#endif
-+
- 	return &(((union enetc_rx_bd *)rx_ring->bd_base)[hw_idx]);
- }
- 
-@@ -199,10 +198,8 @@ static inline void enetc_rxbd_next(struct enetc_bdr *rx_ring,
- 
- 	new_rxbd++;
- 
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
--	if (rx_ring->ext_en)
-+	if (IS_ENABLED(CONFIG_FSL_ENETC_PTP_CLOCK) && rx_ring->ext_en)
- 		new_rxbd++;
--#endif
- 
- 	if (unlikely(++new_index == rx_ring->bd_count)) {
- 		new_rxbd = rx_ring->bd_base;
+ 		new_offloads &= ~ENETC_F_TX_TSTAMP_MASK;
+ 		new_offloads |= ENETC_F_TX_ONESTEP_SYNC_TSTAMP;
+ 		break;
 diff --git a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-index aa7d427e654ff..39fbc465746f7 100644
+index 39fbc465746f7..1e3e0073276ec 100644
 --- a/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc_ethtool.c
-@@ -848,7 +848,12 @@ static int enetc_get_ts_info(struct net_device *ndev,
- 		symbol_put(enetc_phc_index);
- 	}
+@@ -840,6 +840,7 @@ static int enetc_set_coalesce(struct net_device *ndev,
+ static int enetc_get_ts_info(struct net_device *ndev,
+ 			     struct ethtool_ts_info *info)
+ {
++	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+ 	int *phc_idx;
  
--#ifdef CONFIG_FSL_ENETC_PTP_CLOCK
-+	if (!IS_ENABLED(CONFIG_FSL_ENETC_PTP_CLOCK)) {
-+		info->so_timestamping = SOF_TIMESTAMPING_TX_SOFTWARE;
-+
-+		return 0;
-+	}
-+
- 	info->so_timestamping = SOF_TIMESTAMPING_TX_HARDWARE |
- 				SOF_TIMESTAMPING_RX_HARDWARE |
- 				SOF_TIMESTAMPING_RAW_HARDWARE |
-@@ -857,11 +862,10 @@ static int enetc_get_ts_info(struct net_device *ndev,
+ 	phc_idx = symbol_get(enetc_phc_index);
+@@ -860,8 +861,10 @@ static int enetc_get_ts_info(struct net_device *ndev,
+ 				SOF_TIMESTAMPING_TX_SOFTWARE;
+ 
  	info->tx_types = (1 << HWTSTAMP_TX_OFF) |
- 			 (1 << HWTSTAMP_TX_ON) |
- 			 (1 << HWTSTAMP_TX_ONESTEP_SYNC);
+-			 (1 << HWTSTAMP_TX_ON) |
+-			 (1 << HWTSTAMP_TX_ONESTEP_SYNC);
++			 (1 << HWTSTAMP_TX_ON);
 +
++	if (enetc_si_is_pf(priv->si))
++		info->tx_types |= (1 << HWTSTAMP_TX_ONESTEP_SYNC);
+ 
  	info->rx_filters = (1 << HWTSTAMP_FILTER_NONE) |
  			   (1 << HWTSTAMP_FILTER_ALL);
--#else
--	info->so_timestamping = SOF_TIMESTAMPING_TX_SOFTWARE;
--#endif
-+
- 	return 0;
- }
- 
 -- 
 2.39.5
 
