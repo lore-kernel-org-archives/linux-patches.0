@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE16318FDAB;
-	Mon, 10 Mar 2025 17:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AEF22B5AD;
+	Mon, 10 Mar 2025 17:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628870; cv=none; b=R0EXwPm8K7v7Mij5/BBYNcdI6yGTLc3PhTsXk98pUcV6fTiJVO3cSU+uNUk19X2lh72DGhcfQj79h8d4GcDEMJ7cJ1P0fAfUDVCdf0eU5LfvX5mpK0Ki2z1qIOJjNRz5vtpSzWLNcE45o6Y7CNIdUnB5kTlQHGEtunDe3F8UNKE=
+	t=1741628872; cv=none; b=K6hLM/fXV+/ydFjMibKS4PwvmrXn0lcm5PH7qkU+ea1cTrxvFR8oPq4nXZPixU68XKJJ2irUMNZRgQiAvKw4Ly9e+dpSPPseCyggyObrdB7sOBbJMWhipgKEGcX56y51Rx14xEh6psLC3MOcd1uLdFeWWfmAdyAzwg38rt98uS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628870; c=relaxed/simple;
-	bh=jbxu27sSD5GlDpLZ8O+5BKP5GsvZbVDOIdi4HxP7Pew=;
+	s=arc-20240116; t=1741628872; c=relaxed/simple;
+	bh=BubPlfCpChbVtKfCxymN9B0MsUDv1tpetQ8sv2WaYOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYGL0O42WL8YT429I8ODhbKe2QBdjUW8gJiTEBw/+B+Q/8ddLiF8j7GcU5vwIkC66e7ZJQgyZUP21iU7U1piUE/GXu71toaSJTaMVgU/jRFSbeNCDscGzjY9wHJXxvAgjqafzQ7blxkdDFiAG5gKdmC+5wvRRSYOC4ZVyygwLQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJgn5OpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DjiUc2edU2kk7ykpvK+kAb83dTed3VdyI26DA4ez62hLCdPNSwE/NeePtsHpvI9VqLwizNnFq9vuwB+fVMjA1hrNGlnKZMDfaHCHtfjmRr+0WkvY8f+62iVoRcv38KnOihGxc7pX5ydCtwLyOgmmnu5v02+ycRFg9Mll4bIvn4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pptg9Ihb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJgn5OpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A11AC4CEE5;
-	Mon, 10 Mar 2025 17:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pptg9Ihb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A429C4CEE5;
+	Mon, 10 Mar 2025 17:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628869;
-	bh=jbxu27sSD5GlDpLZ8O+5BKP5GsvZbVDOIdi4HxP7Pew=;
+	s=korg; t=1741628872;
+	bh=BubPlfCpChbVtKfCxymN9B0MsUDv1tpetQ8sv2WaYOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJgn5OpL8IR/wdn6IgNB0tI5blukzXBzrConDIio3BjvMyatBf8W405fv0upxiwaj
-	 tP5tV20Nk+zLuvYMsFvp86RdOLueTTMRwEejQyh1IVf3BG5EGjVtF2/uIG0jqaCc8r
-	 3LJgN3E0wqsXua1mGwsmpYFIYfGC/8W/Tv4V5lao=
+	b=pptg9IhbEiuL04sKOBQ2pithA5dw/XK8UWCoxglZ2dU509dPGtb1U2o/DT7fkZFF3
+	 wey3juOGbm2XhUB946sFaWaBoSew19DpI3auHaXC0D8nUy1JAayhP5GCh8AHqwB++x
+	 i5SX1TeHJ1oJyaqEvlFqKAxmwdGrtOj1yBfTXfwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/620] padata: avoid UAF for reorder_work
-Date: Mon, 10 Mar 2025 17:59:03 +0100
-Message-ID: <20250310170549.409286295@linuxfoundation.org>
+Subject: [PATCH 5.15 098/620] ARM: at91: pm: change BU Power Switch to automatic mode
+Date: Mon, 10 Mar 2025 17:59:04 +0100
+Message-ID: <20250310170549.447129827@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,89 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit dd7d37ccf6b11f3d95e797ebe4e9e886d0332600 ]
+[ Upstream commit 6fc5bdfa872b7da51b5507a1327a17c3db2fcf95 ]
 
-Although the previous patch can avoid ps and ps UAF for _do_serial, it
-can not avoid potential UAF issue for reorder_work. This issue can
-happen just as below:
+Change how the Backup Unit Power is configured and force the
+automatic/hardware mode.
+This change eliminates the need for software management of the power
+switch, ensuring it transitions to the backup power source before
+entering low power modes.
 
-crypto_request			crypto_request		crypto_del_alg
-padata_do_serial
-  ...
-  padata_reorder
-    // processes all remaining
-    // requests then breaks
-    while (1) {
-      if (!padata)
-        break;
-      ...
-    }
+This is done in the only location where this switch was configured. It's
+usually done in the bootloader.
 
-				padata_do_serial
-				  // new request added
-				  list_add
-    // sees the new request
-    queue_work(reorder_work)
-				  padata_reorder
-				    queue_work_on(squeue->work)
-...
+Previously, the loss of the VDDANA (or VDDIN33) power source was not
+automatically compensated by an alternative power source. This resulted
+in the loss of Backup Unit content, including Backup Self-refresh low
+power mode information, OTP emulation configuration, and boot
+configuration, for instance.
 
-				<kworker context>
-				padata_serial_worker
-				// completes new request,
-				// no more outstanding
-				// requests
-
-							crypto_del_alg
-							  // free pd
-
-<kworker context>
-invoke_padata_reorder
-  // UAF of pd
-
-To avoid UAF for 'reorder_work', get 'pd' ref before put 'reorder_work'
-into the 'serial_wq' and put 'pd' ref until the 'serial_wq' finish.
-
-Fixes: bbefa1dd6a6d ("crypto: pcrypt - Avoid deadlock by using per-instance padata queues")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: ac809e7879b1 ("ARM: at91: pm: switch backup area to vbat in backup mode")
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20241125165648.509162-1-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/arm/mach-at91/pm.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index b5a1a31ce6c11..db45af7728cb2 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -344,8 +344,14 @@ static void padata_reorder(struct parallel_data *pd)
- 	smp_mb();
- 
- 	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
--	if (!list_empty(&reorder->list) && padata_find_next(pd, false))
-+	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
-+		/*
-+		 * Other context(eg. the padata_serial_worker) can finish the request.
-+		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
-+		 */
-+		padata_get_pd(pd);
- 		queue_work(pinst->serial_wq, &pd->reorder_work);
-+	}
+diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
+index c8cc993ca8ca1..91efc3d4de61d 100644
+--- a/arch/arm/mach-at91/pm.c
++++ b/arch/arm/mach-at91/pm.c
+@@ -403,7 +403,21 @@ static int at91_suspend_finish(unsigned long val)
+ 	return 0;
  }
  
- static void invoke_padata_reorder(struct work_struct *work)
-@@ -356,6 +362,8 @@ static void invoke_padata_reorder(struct work_struct *work)
- 	pd = container_of(work, struct parallel_data, reorder_work);
- 	padata_reorder(pd);
- 	local_bh_enable();
-+	/* Pairs with putting the reorder_work in the serial_wq */
-+	padata_put_pd(pd);
+-static void at91_pm_switch_ba_to_vbat(void)
++/**
++ * at91_pm_switch_ba_to_auto() - Configure Backup Unit Power Switch
++ * to automatic/hardware mode.
++ *
++ * The Backup Unit Power Switch can be managed either by software or hardware.
++ * Enabling hardware mode allows the automatic transition of power between
++ * VDDANA (or VDDIN33) and VDDBU (or VBAT, respectively), based on the
++ * availability of these power sources.
++ *
++ * If the Backup Unit Power Switch is already in automatic mode, no action is
++ * required. If it is in software-controlled mode, it is switched to automatic
++ * mode to enhance safety and eliminate the need for toggling between power
++ * sources.
++ */
++static void at91_pm_switch_ba_to_auto(void)
+ {
+ 	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
+ 	unsigned int val;
+@@ -414,24 +428,19 @@ static void at91_pm_switch_ba_to_vbat(void)
+ 
+ 	val = readl(soc_pm.data.sfrbu + offset);
+ 
+-	/* Already on VBAT. */
+-	if (!(val & soc_pm.sfrbu_regs.pswbu.state))
++	/* Already on auto/hardware. */
++	if (!(val & soc_pm.sfrbu_regs.pswbu.ctrl))
+ 		return;
+ 
+-	val &= ~soc_pm.sfrbu_regs.pswbu.softsw;
+-	val |= soc_pm.sfrbu_regs.pswbu.key | soc_pm.sfrbu_regs.pswbu.ctrl;
++	val &= ~soc_pm.sfrbu_regs.pswbu.ctrl;
++	val |= soc_pm.sfrbu_regs.pswbu.key;
+ 	writel(val, soc_pm.data.sfrbu + offset);
+-
+-	/* Wait for update. */
+-	val = readl(soc_pm.data.sfrbu + offset);
+-	while (val & soc_pm.sfrbu_regs.pswbu.state)
+-		val = readl(soc_pm.data.sfrbu + offset);
  }
  
- static void padata_serial_worker(struct work_struct *serial_work)
+ static void at91_pm_suspend(suspend_state_t state)
+ {
+ 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
+-		at91_pm_switch_ba_to_vbat();
++		at91_pm_switch_ba_to_auto();
+ 
+ 		cpu_suspend(0, at91_suspend_finish);
+ 
 -- 
 2.39.5
 
