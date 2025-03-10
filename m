@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007B2374EA;
-	Mon, 10 Mar 2025 18:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC32374EA;
+	Mon, 10 Mar 2025 18:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630787; cv=none; b=WHmXu+dEoc3z/M3IDSzhpZJmBR7VpES67b7uERHMhSvv/EdYOw+1iYI1jFOOpzk6F+pdfFT+aWxzFgDqHWcJNBFo93OYiQzx0hChuvtSoagseJFV/cvdd6CwZ+BWBptHX06LTI9CszOSpABpIHG7y/tIbXg7QPz/8AUcyNevnrQ=
+	t=1741630790; cv=none; b=BwKpcIbrdpfLoYotWyKwfFmdSbWZj7J6OXSKc0maSiasFJmEqLGN6b/9IL0ElK0uECqx/6OmuVTY6Hs606+zyOMZB/vidAGeKi5ok3HBEwy4Lhw9XKNsA4DPAvsksBtRfA1IJz5WVSuPV+RY0ReXCV+I5oVoGkpmo+u9UuU2548=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630787; c=relaxed/simple;
-	bh=6cnxiLS8MA4ELEiNRcQJUo0iOzVl431B3+EKF60sH8s=;
+	s=arc-20240116; t=1741630790; c=relaxed/simple;
+	bh=ipl4XrT52pFNmdDL1RAaCUZ65R8wd5kP5CIlAMFc+Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DCivj6RVW3OEZvRtI25L6K4aoB52Z/k5xRWgIJTXuVg9oXTuWBl5KIt9oJGlK9rO4bhLjlDma4PW76XzTrqRSqqU6S3x1ULvkPVEeIJqfgcZUMSDwjw9nQwAGxwgI1Mtce/UVIfixvLvWe0HGnnan3Kdn7eCwMmYTPD6afAuI8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6+Qclwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahrYxkT/0a7GaZGgHLIZFpcmBcq4Igk1p5QdHL9WO0mqnJPvzAytYzp8K9MUomnajzfuvo6jJ4GqJ9pSbd6bkRgXuUsO26VP6ijorKJvM6f37haaKPL+Ms1F5fX+3gmTvbcqKZAjc4TY/oZ5wOjtUZ6BmWjylH5Pl+GWuJnqN28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kfq2N6wO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6+Qclwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBECC4CEE5;
-	Mon, 10 Mar 2025 18:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kfq2N6wO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EE2C4CEE5;
+	Mon, 10 Mar 2025 18:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630786;
-	bh=6cnxiLS8MA4ELEiNRcQJUo0iOzVl431B3+EKF60sH8s=;
+	s=korg; t=1741630789;
+	bh=ipl4XrT52pFNmdDL1RAaCUZ65R8wd5kP5CIlAMFc+Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6+QclwuYXl46A33pGiNcEulJCvqbEvEsSJT9Se5Lu2nf0UDFEDTNqEZmxG7JXGKS
-	 O7qZztuWgqn9fSBniNIR5LjLGhodpfBu1RsWV/O3MchwoZaASxGdGr91v6GsobfrWT
-	 yoYSLrsTsByCh1lbbGPc4F4nGZOgHq6cRsVrOKzY=
+	b=Kfq2N6wOrJ9EJA/cfy5Hjmx64z3RbrFdjgqxa//ZWy9mdcjFS9CED8Wh9FDaMJtL0
+	 BCYqVOsF7DhXV+CJ1Zs8WeRyZONkbFWO0QX1HnCuBpwQdf1D9TnIk8tu/iGl25gUbM
+	 Z2s0k1VoJ/Ot0g1U9R3LvnWm2f0n6EvmrIp9V/DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Koichiro Den <koichiro.den@canonical.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5.15 535/620] gpio: rcar: Use raw_spinlock to protect register access
-Date: Mon, 10 Mar 2025 18:06:21 +0100
-Message-ID: <20250310170606.660387697@linuxfoundation.org>
+Subject: [PATCH 5.15 536/620] gpio: aggregator: protect driver attr handlers against module unload
+Date: Mon, 10 Mar 2025 18:06:22 +0100
+Message-ID: <20250310170606.698613575@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -45,189 +44,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Koichiro Den <koichiro.den@canonical.com>
 
-commit f02c41f87cfe61440c18bf77d1ef0a884b9ee2b5 upstream.
+commit 12f65d1203507f7db3ba59930fe29a3b8eee9945 upstream.
 
-Use raw_spinlock in order to fix spurious messages about invalid context
-when spinlock debugging is enabled. The lock is only used to serialize
-register access.
+Both new_device_store and delete_device_store touch module global
+resources (e.g. gpio_aggregator_lock). To prevent race conditions with
+module unload, a reference needs to be held.
 
-    [    4.239592] =============================
-    [    4.239595] [ BUG: Invalid wait context ]
-    [    4.239599] 6.13.0-rc7-arm64-renesas-05496-gd088502a519f #35 Not tainted
-    [    4.239603] -----------------------------
-    [    4.239606] kworker/u8:5/76 is trying to lock:
-    [    4.239609] ffff0000091898a0 (&p->lock){....}-{3:3}, at: gpio_rcar_config_interrupt_input_mode+0x34/0x164
-    [    4.239641] other info that might help us debug this:
-    [    4.239643] context-{5:5}
-    [    4.239646] 5 locks held by kworker/u8:5/76:
-    [    4.239651]  #0: ffff0000080fb148 ((wq_completion)async){+.+.}-{0:0}, at: process_one_work+0x190/0x62c
-    [    4.250180] OF: /soc/sound@ec500000/ports/port@0/endpoint: Read of boolean property 'frame-master' with a value.
-    [    4.254094]  #1: ffff80008299bd80 ((work_completion)(&entry->work)){+.+.}-{0:0}, at: process_one_work+0x1b8/0x62c
-    [    4.254109]  #2: ffff00000920c8f8
-    [    4.258345] OF: /soc/sound@ec500000/ports/port@1/endpoint: Read of boolean property 'bitclock-master' with a value.
-    [    4.264803]  (&dev->mutex){....}-{4:4}, at: __device_attach_async_helper+0x3c/0xdc
-    [    4.264820]  #3: ffff00000a50ca40 (request_class#2){+.+.}-{4:4}, at: __setup_irq+0xa0/0x690
-    [    4.264840]  #4:
-    [    4.268872] OF: /soc/sound@ec500000/ports/port@1/endpoint: Read of boolean property 'frame-master' with a value.
-    [    4.273275] ffff00000a50c8c8 (lock_class){....}-{2:2}, at: __setup_irq+0xc4/0x690
-    [    4.296130] renesas_sdhi_internal_dmac ee100000.mmc: mmc1 base at 0x00000000ee100000, max clock rate 200 MHz
-    [    4.304082] stack backtrace:
-    [    4.304086] CPU: 1 UID: 0 PID: 76 Comm: kworker/u8:5 Not tainted 6.13.0-rc7-arm64-renesas-05496-gd088502a519f #35
-    [    4.304092] Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
-    [    4.304097] Workqueue: async async_run_entry_fn
-    [    4.304106] Call trace:
-    [    4.304110]  show_stack+0x14/0x20 (C)
-    [    4.304122]  dump_stack_lvl+0x6c/0x90
-    [    4.304131]  dump_stack+0x14/0x1c
-    [    4.304138]  __lock_acquire+0xdfc/0x1584
-    [    4.426274]  lock_acquire+0x1c4/0x33c
-    [    4.429942]  _raw_spin_lock_irqsave+0x5c/0x80
-    [    4.434307]  gpio_rcar_config_interrupt_input_mode+0x34/0x164
-    [    4.440061]  gpio_rcar_irq_set_type+0xd4/0xd8
-    [    4.444422]  __irq_set_trigger+0x5c/0x178
-    [    4.448435]  __setup_irq+0x2e4/0x690
-    [    4.452012]  request_threaded_irq+0xc4/0x190
-    [    4.456285]  devm_request_threaded_irq+0x7c/0xf4
-    [    4.459398] ata1: link resume succeeded after 1 retries
-    [    4.460902]  mmc_gpiod_request_cd_irq+0x68/0xe0
-    [    4.470660]  mmc_start_host+0x50/0xac
-    [    4.474327]  mmc_add_host+0x80/0xe4
-    [    4.477817]  tmio_mmc_host_probe+0x2b0/0x440
-    [    4.482094]  renesas_sdhi_probe+0x488/0x6f4
-    [    4.486281]  renesas_sdhi_internal_dmac_probe+0x60/0x78
-    [    4.491509]  platform_probe+0x64/0xd8
-    [    4.495178]  really_probe+0xb8/0x2a8
-    [    4.498756]  __driver_probe_device+0x74/0x118
-    [    4.503116]  driver_probe_device+0x3c/0x154
-    [    4.507303]  __device_attach_driver+0xd4/0x160
-    [    4.511750]  bus_for_each_drv+0x84/0xe0
-    [    4.515588]  __device_attach_async_helper+0xb0/0xdc
-    [    4.520470]  async_run_entry_fn+0x30/0xd8
-    [    4.524481]  process_one_work+0x210/0x62c
-    [    4.528494]  worker_thread+0x1ac/0x340
-    [    4.532245]  kthread+0x10c/0x110
-    [    4.535476]  ret_from_fork+0x10/0x20
+Add try_module_get() in these handlers.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+For new_device_store, this eliminates what appears to be the most dangerous
+scenario: if an id is allocated from gpio_aggregator_idr but
+platform_device_register has not yet been called or completed, a concurrent
+module unload could fail to unregister/delete the device, leaving behind a
+dangling platform device/GPIO forwarder. This can result in various issues.
+The following simple reproducer demonstrates these problems:
+
+  #!/bin/bash
+  while :; do
+    # note: whether 'gpiochip0 0' exists or not does not matter.
+    echo 'gpiochip0 0' > /sys/bus/platform/drivers/gpio-aggregator/new_device
+  done &
+  while :; do
+    modprobe gpio-aggregator
+    modprobe -r gpio-aggregator
+  done &
+  wait
+
+  Starting with the following warning, several kinds of warnings will appear
+  and the system may become unstable:
+
+  ------------[ cut here ]------------
+  list_del corruption, ffff888103e2e980->next is LIST_POISON1 (dead000000000100)
+  WARNING: CPU: 1 PID: 1327 at lib/list_debug.c:56 __list_del_entry_valid_or_report+0xa3/0x120
+  [...]
+  RIP: 0010:__list_del_entry_valid_or_report+0xa3/0x120
+  [...]
+  Call Trace:
+   <TASK>
+   ? __list_del_entry_valid_or_report+0xa3/0x120
+   ? __warn.cold+0x93/0xf2
+   ? __list_del_entry_valid_or_report+0xa3/0x120
+   ? report_bug+0xe6/0x170
+   ? __irq_work_queue_local+0x39/0xe0
+   ? handle_bug+0x58/0x90
+   ? exc_invalid_op+0x13/0x60
+   ? asm_exc_invalid_op+0x16/0x20
+   ? __list_del_entry_valid_or_report+0xa3/0x120
+   gpiod_remove_lookup_table+0x22/0x60
+   new_device_store+0x315/0x350 [gpio_aggregator]
+   kernfs_fop_write_iter+0x137/0x1f0
+   vfs_write+0x262/0x430
+   ksys_write+0x60/0xd0
+   do_syscall_64+0x6c/0x180
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   [...]
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 828546e24280 ("gpio: Add GPIO Aggregator")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250121135833.3769310-1-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
+Link: https://lore.kernel.org/r/20250224143134.3024598-2-koichiro.den@canonical.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rcar.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/gpio/gpio-aggregator.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpio-rcar.c
-+++ b/drivers/gpio/gpio-rcar.c
-@@ -41,7 +41,7 @@ struct gpio_rcar_info {
+--- a/drivers/gpio/gpio-aggregator.c
++++ b/drivers/gpio/gpio-aggregator.c
+@@ -116,10 +116,15 @@ static ssize_t new_device_store(struct d
+ 	struct platform_device *pdev;
+ 	int res, id;
  
- struct gpio_rcar_priv {
- 	void __iomem *base;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	struct device *dev;
- 	struct gpio_chip gpio_chip;
- 	struct irq_chip irq_chip;
-@@ -121,7 +121,7 @@ static void gpio_rcar_config_interrupt_i
- 	 * "Setting Level-Sensitive Interrupt Input Mode"
- 	 */
++	if (!try_module_get(THIS_MODULE))
++		return -ENOENT;
++
+ 	/* kernfs guarantees string termination, so count + 1 is safe */
+ 	aggr = kzalloc(sizeof(*aggr) + count + 1, GFP_KERNEL);
+-	if (!aggr)
+-		return -ENOMEM;
++	if (!aggr) {
++		res = -ENOMEM;
++		goto put_module;
++	}
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
+ 	memcpy(aggr->args, buf, count + 1);
  
- 	/* Configure positive or negative logic in POSNEG */
- 	gpio_rcar_modify_bit(p, POSNEG, hwirq, !active_high_rising_edge);
-@@ -140,7 +140,7 @@ static void gpio_rcar_config_interrupt_i
- 	if (!level_trigger)
- 		gpio_rcar_write(p, INTCLR, BIT(hwirq));
- 
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
- }
- 
- static int gpio_rcar_irq_set_type(struct irq_data *d, unsigned int type)
-@@ -233,7 +233,7 @@ static void gpio_rcar_config_general_inp
- 	 * "Setting General Input Mode"
- 	 */
- 
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 
- 	/* Configure positive logic in POSNEG */
- 	gpio_rcar_modify_bit(p, POSNEG, gpio, false);
-@@ -248,7 +248,7 @@ static void gpio_rcar_config_general_inp
- 	if (p->info.has_outdtsel && output)
- 		gpio_rcar_modify_bit(p, OUTDTSEL, gpio, false);
- 
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
- }
- 
- static int gpio_rcar_request(struct gpio_chip *chip, unsigned offset)
-@@ -334,7 +334,7 @@ static int gpio_rcar_get_multiple(struct
- 		return 0;
+@@ -158,6 +163,7 @@ static ssize_t new_device_store(struct d
  	}
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 	outputs = gpio_rcar_read(p, INOUTSEL);
- 	m = outputs & bankmask;
- 	if (m)
-@@ -343,7 +343,7 @@ static int gpio_rcar_get_multiple(struct
- 	m = ~outputs & bankmask;
- 	if (m)
- 		val |= gpio_rcar_read(p, INDT) & m;
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
+ 	aggr->pdev = pdev;
++	module_put(THIS_MODULE);
+ 	return count;
  
- 	bits[0] = val;
- 	return 0;
-@@ -354,9 +354,9 @@ static void gpio_rcar_set(struct gpio_ch
- 	struct gpio_rcar_priv *p = gpiochip_get_data(chip);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 	gpio_rcar_modify_bit(p, OUTDT, offset, value);
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
+ remove_table:
+@@ -172,6 +178,8 @@ free_table:
+ 	kfree(aggr->lookups);
+ free_ga:
+ 	kfree(aggr);
++put_module:
++	module_put(THIS_MODULE);
+ 	return res;
  }
  
- static void gpio_rcar_set_multiple(struct gpio_chip *chip, unsigned long *mask,
-@@ -373,12 +373,12 @@ static void gpio_rcar_set_multiple(struc
- 	if (!bankmask)
- 		return;
+@@ -200,13 +208,19 @@ static ssize_t delete_device_store(struc
+ 	if (error)
+ 		return error;
  
--	spin_lock_irqsave(&p->lock, flags);
-+	raw_spin_lock_irqsave(&p->lock, flags);
- 	val = gpio_rcar_read(p, OUTDT);
- 	val &= ~bankmask;
- 	val |= (bankmask & bits[0]);
- 	gpio_rcar_write(p, OUTDT, val);
--	spin_unlock_irqrestore(&p->lock, flags);
-+	raw_spin_unlock_irqrestore(&p->lock, flags);
++	if (!try_module_get(THIS_MODULE))
++		return -ENOENT;
++
+ 	mutex_lock(&gpio_aggregator_lock);
+ 	aggr = idr_remove(&gpio_aggregator_idr, id);
+ 	mutex_unlock(&gpio_aggregator_lock);
+-	if (!aggr)
++	if (!aggr) {
++		module_put(THIS_MODULE);
+ 		return -ENOENT;
++	}
+ 
+ 	gpio_aggregator_free(aggr);
++	module_put(THIS_MODULE);
+ 	return count;
  }
- 
- static int gpio_rcar_direction_output(struct gpio_chip *chip, unsigned offset,
-@@ -491,7 +491,7 @@ static int gpio_rcar_probe(struct platfo
- 		return -ENOMEM;
- 
- 	p->dev = dev;
--	spin_lock_init(&p->lock);
-+	raw_spin_lock_init(&p->lock);
- 
- 	/* Get device configuration from DT node */
- 	ret = gpio_rcar_parse_dt(p, &npins);
+ static DRIVER_ATTR_WO(delete_device);
 
 
