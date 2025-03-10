@@ -1,71 +1,71 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4A52046BF
-	for <patches@lists.linux.dev>; Mon, 10 Mar 2025 07:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313ED22540B
+	for <patches@lists.linux.dev>; Mon, 10 Mar 2025 09:59:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741593000; cv=none; b=IuAWNLbgF3PdHxy87OUXvhsAtFLWhr+TqVHLhHguAmJh3LIdSGagjcWm6gOhZJkFDtzmaIrZ0CD6Bihvs1PytfNL4yRtwQpYaQdrvKxctTS8UOzMUwW939d4dKSF+JijuRUfQvN+GAVLmKwlpxk4PFKar4x+Nanx8THIX+JJRtw=
+	t=1741600800; cv=none; b=lgTbO/shA4wN6cHMgLOmzzMPb5vFUBgAtP/F9s7MWfq7rT4qlmYcA/kxEakV9/oGSeswFurX9TN2RFYmVdOWFLSUfGGQM1YSeOyd65HvNP6lehyHL0UckCQtk+tBp4WzLCNtc1phjCe4IP+RYruMNH7OsteUFsRdD8ujeW0+jIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741593000; c=relaxed/simple;
-	bh=2taqIQQXceogYRxl+WbwaFPfpyiONZBcxtV+IJvWGc8=;
+	s=arc-20240116; t=1741600800; c=relaxed/simple;
+	bh=V/WiqkuxA4YwLXvuQpcmscx/6nwwjOByTFAnW3PVYWE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NTm1cf9DFYs/FzdcqOxTCRtM55lRDGKvIvrJ3JZTa9wg74uYqQg42zUclUgJBvMudg+1YAy9JdT3ivGBMsD9RJetAR3Q0Zl2DAQNJn33nWX4+JgKeEXrTBYE7h1uu/XsYlCemnV05r1yzrj3uMBwmPKxJEhAAhCmadeMdsOvouc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Oz+0SvF8; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=E8dLzoNFE2eQb2JSs4jG88v+g3u8+cqw7nDbq7fpOhPZoFUOUc/hUmJyU/d3xT2u+yUId3tMZX3LDQ7phPQpra8c7dqncreFl6ZIBMQnt96y2D9vVO3TJDw+WVdfzYpgnajp8ISpZ5A1WMDGkgTh2UEmq03zuo6P+1Y9bJx79pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MNtj3T7X; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Oz+0SvF8"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MNtj3T7X"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1741592996;
+	s=mimecast20190719; t=1741600798;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=u5kIvy1af+TbHcL/hyxVpb8RVtEt62vD4Y3oqmjYEDE=;
-	b=Oz+0SvF8Zduz9Qld7rX+A8zfwGhUBqHrglcYglyP3rS3xwPS0i0akW/qHDrqdBJk/Xp0o0
-	BFxF+y1P5QpuedaO3z2pQtHLFDYgy2l/2XLsly8QmEtLc0KXjvxht6HgSHYrr2qA0RUGlc
-	aJLgKgCPcIwVLEIsze7rFJ/CGFRp1BQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=AQ+pSa8sIsuU2xtscwDYe98bcGEdRUw/0m+Fk+VSrb8=;
+	b=MNtj3T7XwPu4R7/eE77xgZVOX1xvKeyTI8h8WabR1nd8vNmRByNrKr85g2qZG+2R/ve6F8
+	1TeVZ9tgEJyBLo/dCxMhyvNUVXJLKkrTDFa4yaAPX9jlTDOCu7NQnkNbq86zEBEL5uEQ1k
+	n6zYt+UxStrkGp10yLtPahqBPSTMom0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-Xnwwup59OMe-2HQmOr4YxA-1; Mon, 10 Mar 2025 03:49:55 -0400
-X-MC-Unique: Xnwwup59OMe-2HQmOr4YxA-1
-X-Mimecast-MFC-AGG-ID: Xnwwup59OMe-2HQmOr4YxA_1741592994
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3912fc9861cso1458610f8f.1
-        for <patches@lists.linux.dev>; Mon, 10 Mar 2025 00:49:55 -0700 (PDT)
+ us-mta-609-y-frMhjoNDqDY5CXtEDkbQ-1; Mon, 10 Mar 2025 05:59:54 -0400
+X-MC-Unique: y-frMhjoNDqDY5CXtEDkbQ-1
+X-Mimecast-MFC-AGG-ID: y-frMhjoNDqDY5CXtEDkbQ_1741600794
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-39135d31ca4so1241889f8f.1
+        for <patches@lists.linux.dev>; Mon, 10 Mar 2025 02:59:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741592994; x=1742197794;
+        d=1e100.net; s=20230601; t=1741600794; x=1742205594;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u5kIvy1af+TbHcL/hyxVpb8RVtEt62vD4Y3oqmjYEDE=;
-        b=HZogoRPkN6JD1HlqDR43AGf5CXDPH4xZkDXOgoeHaeJXEXiPd4WfP6dGWmKikSOsxI
-         2T73vRIpv/rWhvGXEz262rFI919ThYZng6evhNssZLXlbVEZe3X2p9i/CfmcnoYAuRJ2
-         1oCly11zTvcr3K7cFzBbl03f5a1r7FXeuzyCr5pxyEdf0ZSEgw/HL1Rff9m6ViK6YcmR
-         WB0UFNyxfXsrlSa49AF87sPTNTw1/FU6w7hMvhDPlmq4pCm+xyV0/PNxJETQkRsplZXh
-         6TyldsAi75eMibLhKkVH9RXCMaDml2jEgGYGhmhCBzsXVjll4iX6MXP3sogd7VQ4coK2
-         hOKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUzuSAZ6hbzJxyOGvDU69Re6CjagsAfhTq3ICYj1PDWT/5lmyhLDxVe7Q1lejQA91Ny2i8YBHzR@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz3NmZw8wFkGjK/e9AH8Pmo3EPIO62czDQVYCTXiLjRAW/iFsMU
-	cmsMlPMD8FaHRm8166GnxUz9Zl6NpkJar3KIgkWNWDh11VDy1OflAy0LGDiL0b/fy1nSdMyEHh+
-	XRkNR1/ab/w0qoDHs9LV4rTzatd0ruOgzeSuJVwgkmQBIM9EM+fN6Su4=
-X-Gm-Gg: ASbGnctZ1AOEFFRFXjdRAtVvp5bFCuu5xnfMIeRGt6HNutX9fPEuel988gZIvrrVlnh
-	Zcd7fK8SrpxQ5MC+yS8WzUg10zVWVTJkNDTMHgj2lpdVXgPuToSJy7THTWBcx0MDjxmAsIAdH5D
-	EknchmShM0ClTGITY6IEveZezQP2uEd+FCHYlyUmRKc+8X+AdW3n3hgEJkBBSyYmpbCfy/pNQqy
-	pMeUarX4NYfAcpps7t46Ee47f/ekOzAHWH8oBsYDNcNyw6C/XqF56XshP6NDCZbsas5VKuTBiiV
-	+kYnGRyT+eCresWY+gw7ITuhzHruhyUDkugwH1u6/r63OocH1IoYWXc=
-X-Received: by 2002:a5d:6d09:0:b0:391:34:4fa9 with SMTP id ffacd0b85a97d-39132b56eccmr8992849f8f.0.1741592994110;
-        Mon, 10 Mar 2025 00:49:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFGDJo2dCkSOhn/W3s56Mf4MrQ0JYSQmeOFCRJ3rj6SEOpkuthbr1LKEQhE5Wn257lq7BmQQ==
-X-Received: by 2002:a5d:6d09:0:b0:391:34:4fa9 with SMTP id ffacd0b85a97d-39132b56eccmr8992816f8f.0.1741592993752;
-        Mon, 10 Mar 2025 00:49:53 -0700 (PDT)
+        bh=AQ+pSa8sIsuU2xtscwDYe98bcGEdRUw/0m+Fk+VSrb8=;
+        b=Zpl0H7DSS9DitSsbek/o7iMr8eNHnsoJI7uAbxp8cFom2gKyLBvEf2EoGscuG+Qvqc
+         nGJdG0V2A49T2ApLBtkUFG3fCKobS6IMCVKvy7Dz72WlftULf5TSUyciWiXK0G6h1wHO
+         TBnMFOfM03pvs9nc7vMBWggvLKRSM/iN1OLx0ZxvJgzIMa2z8yB4IeVsl1tkyGQCyDX9
+         VMYzsyzHGFyoJE8kPXYtqChMyYL93xqCrvd++AFSy5T+jfeq2yll6X8pRiuDD+++4SM0
+         VUzeaGDVyTjxLUQRLbN7r4IiDwltJY9IPbYdpRnIZqMev2vRkQ2C0z5jakiLxaldqrVK
+         tvkg==
+X-Forwarded-Encrypted: i=1; AJvYcCU9fD9Asrv8epjMD/P6rNPVEvWXVtDhrl99Cxh0GiWzvQz1tHe54iL0ycQnyFOr+OkENLjxUpw2@lists.linux.dev
+X-Gm-Message-State: AOJu0YwyvBHVehLC7qbOZwzbCnV06lyGlB+smKmA/pkM+qgZSyAgHrLU
+	m85uv3owyfqyZvPeFAOnmSTOZQQ1dBufYQNVRBCGKikvqT69aDKg/HIEDXOZrS/JaN5bxQe4PBE
+	HRgYMjYV5bl9HC0YF4fJxDHQNAARCjTeVcwPLM7Yxu4iv1gtGqNv4Xpc=
+X-Gm-Gg: ASbGnctf4MsPy2LZlX7wVIfxyeWyTghAB5tjmpP9+MukRlP2HdNWmP4Kj/o2FB/rmnJ
+	vDTduSzio1hKe95MSKO5GDzhOTeAWyYp8EX3er5DqAG4peGpz/4Y/iEFxGhkrT2Mrexg8YGXWlZ
+	HUvE03NIwaTqEneuURHe2TZ649WN89tDpYAhNYgQuMvu9v272M1Dy4cRnm+eRUQAkWuV7lMF3pe
+	hn6E+ByPCwIxi0zE+W3ugj2yyRNNfvekXjlrkFRH6r3gsmmprOpWVJv1HBq/LXalarJdDp69tvD
+	ZO7O7a8eKpmjox7mQRAYJ9C5iy4Z+clCdMcSjSxSO47bBQWaGhgkJOg=
+X-Received: by 2002:a05:6000:184b:b0:38f:23c4:208c with SMTP id ffacd0b85a97d-3913af2e472mr5013395f8f.18.1741600793701;
+        Mon, 10 Mar 2025 02:59:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX9wDZkgqzcXWNadk7lA63fXqzI59Xv6gjXmdznaOhUQyAtcnnGk1X47jRovjSDv9uACyJBg==
+X-Received: by 2002:a05:6000:184b:b0:38f:23c4:208c with SMTP id ffacd0b85a97d-3913af2e472mr5013370f8f.18.1741600793351;
+        Mon, 10 Mar 2025 02:59:53 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:c:37e0:ced3:55bd:f454:e722? ([2a01:e0a:c:37e0:ced3:55bd:f454:e722])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912c01cd31sm14138878f8f.52.2025.03.10.00.49.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912bfdfa52sm14018794f8f.21.2025.03.10.02.59.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Mar 2025 00:49:52 -0700 (PDT)
-Message-ID: <7fa51125-3015-446a-93b1-57b07a7ee8f5@redhat.com>
-Date: Mon, 10 Mar 2025 08:49:51 +0100
+        Mon, 10 Mar 2025 02:59:52 -0700 (PDT)
+Message-ID: <ca830ba6-5e02-446e-87d8-4e120c357312@redhat.com>
+Date: Mon, 10 Mar 2025 10:59:51 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,7 +73,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] drm/panic: use `div_ceil` to clean Clippy warning
+Subject: Re: [PATCH] drm/panic: clean Clippy warning
 To: Miguel Ojeda <ojeda@kernel.org>, =?UTF-8?Q?Thomas_B=C3=B6hler?=
  <witcher@wiredspace.de>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -86,71 +86,58 @@ Cc: dri-devel@lists.freedesktop.org, Boqun Feng <boqun.feng@gmail.com>,
  Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
  Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20250301231602.917580-1-ojeda@kernel.org>
+References: <20250303093242.1011790-1-ojeda@kernel.org>
 From: Jocelyn Falempe <jfalempe@redhat.com>
-In-Reply-To: <20250301231602.917580-1-ojeda@kernel.org>
+In-Reply-To: <20250303093242.1011790-1-ojeda@kernel.org>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GXU3XExaymp3NdztiH6pajHLR5RnDrJGuRAQi4mgXu4_1741592994
+X-Mimecast-MFC-PROC-ID: ghslxEINUwXx7oD2wiJ4AXFGhTkGCc8zKVA8bzmrpQw_1741600794
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US, fr
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 02/03/2025 00:16, Miguel Ojeda wrote:
-> Starting with the upcoming Rust 1.86.0 (to be released 2025-04-03),
+On 03/03/2025 10:32, Miguel Ojeda wrote:
 > Clippy warns:
 > 
->      error: manually reimplementing `div_ceil`
->         --> drivers/gpu/drm/drm_panic_qr.rs:548:26
+>      error: manual implementation of an assign operation
+>         --> drivers/gpu/drm/drm_panic_qr.rs:418:25
 >          |
->      548 |         let pad_offset = (offset + 7) / 8;
->          |                          ^^^^^^^^^^^^^^^^ help: consider using `.div_ceil()`: `offset.div_ceil(8)`
+>      418 |                         self.carry = self.carry % pow;
+>          |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace it with: `self.carry %= pow`
 >          |
->          = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_div_ceil
+>          = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assign_op_pattern
 > 
-> And similarly for `stride`. Thus apply the suggestion to both.
-> 
-> The behavior (and thus codegen) is not exactly equivalent [1][2], since
-> `div_ceil()` returns the right value for the values that currently
-> would overflow.
+> Thus clean it up.
 
-I pushed both patches to drm-misc-fixes, with the "Cc" tag added.
+Applied to drm-misc-next (because dbed4a797e00 is only present in this 
+branch).
 
-Thanks a lot for your contributions.
+Thanks for your contribution.
 
 -- 
 
 Jocelyn
+
 > 
-> Link: https://github.com/rust-lang/rust-clippy/issues/14333 [1]
-> Link: https://godbolt.org/z/dPq6nGnv3 [2]
+> Fixes: dbed4a797e00 ("drm/panic: Better binary encoding in QR code")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
->   drivers/gpu/drm/drm_panic_qr.rs | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   drivers/gpu/drm/drm_panic_qr.rs | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
-> index bcf248f69252..8bb5e52d75cc 100644
+> index 62cb8a162483..3b0dd59781d4 100644
 > --- a/drivers/gpu/drm/drm_panic_qr.rs
 > +++ b/drivers/gpu/drm/drm_panic_qr.rs
-> @@ -545,7 +545,7 @@ fn add_segments(&mut self, segments: &[&Segment<'_>]) {
->           }
->           self.push(&mut offset, (MODE_STOP, 4));
->   
-> -        let pad_offset = (offset + 7) / 8;
-> +        let pad_offset = offset.div_ceil(8);
->           for i in pad_offset..self.version.max_data() {
->               self.data[i] = PADDING[(i & 1) ^ (pad_offset & 1)];
->           }
-> @@ -659,7 +659,7 @@ struct QrImage<'a> {
->   impl QrImage<'_> {
->       fn new<'a, 'b>(em: &'b EncodedMsg<'b>, qrdata: &'a mut [u8]) -> QrImage<'a> {
->           let width = em.version.width();
-> -        let stride = (width + 7) / 8;
-> +        let stride = width.div_ceil(8);
->           let data = qrdata;
->   
->           let mut qr_image = QrImage {
+> @@ -415,7 +415,7 @@ fn next(&mut self) -> Option<Self::Item> {
+>                           self.carry_len -= out_len;
+>                           let pow = u64::pow(10, self.carry_len as u32);
+>                           let out = (self.carry / pow) as u16;
+> -                        self.carry = self.carry % pow;
+> +                        self.carry %= pow;
+>                           Some((out, NUM_CHARS_BITS[out_len]))
+>                       }
+>                   }
 > 
-> base-commit: d082ecbc71e9e0bf49883ee4afd435a77a5101b6
+> base-commit: c0eb65494e59d9834af7cbad983629e9017b25a1
 
