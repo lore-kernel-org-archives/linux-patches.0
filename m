@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B36231A2D;
-	Mon, 10 Mar 2025 17:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15A231A30;
+	Mon, 10 Mar 2025 17:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626492; cv=none; b=e0bkYayKudBQxjecV8os8PFae82cI3uVT5Tnicn3ZKgMzz4+e4/qWGCFZIqmX3e+6sPVs9Y3b5jLtyrwN2QiJFlLTlEFthkpiyTTjs4KW0H/hrVFcdF0Gx0K1kaNQDSQqWe5Ktp/j5wB671eIieMdvJlyVdPady08kBAuGSJSt0=
+	t=1741626494; cv=none; b=QXQkIUzZKmhkTUUm/+otCULxP9h4biKsYSC1T0/uvMjfimWi51H0m5E4GUhws4vLke6qQqxWcyYo7F7rrlXaSQsW3hCx9XXUCOlkpFEkhNCva3N9koqPSq4lFsboPg/JzpNaH75dfioyVbda9VksKtT0wuBYq3pz97lw64iStjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626492; c=relaxed/simple;
-	bh=p4X1MjHaqegkxzbOzWwxVO7twSPcWhxj6AYWwSiuWww=;
+	s=arc-20240116; t=1741626494; c=relaxed/simple;
+	bh=tNnHXWV1c5/Uh6Pes2bJ9aR2gIm+mSr79ICLwMzSyY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnRxMUfBH7rKboefnKCg1f5MC06e6v5kod1BbeTAQr0bxB7+/iOsZuFgRdC3hCmuAJVbK7kZ2idwoz3N9c7NTv7XJDqVAC4vAT7D6mWCQab/gMPplQa2TQHhQDmr7kz3lqeGl2SpXG48cJ9wQ1zax9nPkJ+Kcivh82fp2vQE0MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpBOjxNO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzkaD5mV8n6xndqDBf+1sgPZuT0lbfm+VgkMqorpDtKllBerEEcHU6csZFc4cGfikEvhtodFeynjl1Z21nd2ITPYZJDjolthLcsCZsWUzCtPfxIB59+SmfOf6k4W3G0pE7NWcq1VWbSbzB3rIU/gKQ/lF7PvQ2POgA6W56Y7zfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7jZPFub; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpBOjxNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257A9C4CEE5;
-	Mon, 10 Mar 2025 17:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7jZPFub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373EC4CEE5;
+	Mon, 10 Mar 2025 17:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626491;
-	bh=p4X1MjHaqegkxzbOzWwxVO7twSPcWhxj6AYWwSiuWww=;
+	s=korg; t=1741626494;
+	bh=tNnHXWV1c5/Uh6Pes2bJ9aR2gIm+mSr79ICLwMzSyY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpBOjxNOQfObkQhTzVuLI7V4uKFkVfK/Sy5vm9gHI6Zk2m2OCO+wQz6kSTGxYw4/o
-	 C9J1saoxIrW0aV2L+aMtZmrQ/AzzwRHVPJzEDA8wgnzUJJjYxHgqAu0exNRtHg2twX
-	 02zhgaua110e6ECHUZvEmnd6JUUFum+o7k+RfiWw=
+	b=Q7jZPFubrMI251ah3nGfNBa69ofNOOBrRoyUQxfMwZXETZVoK5foM6fQTr+YgMyu2
+	 CQAj+DbRGMPwqiXDZjPNi2bxpOXCqRE55prbUJJU9/WKvh7fZVlHIPgAIh+eXTdGtW
+	 zbLKEbUHUsjzQhHiRl5HvFgsn+w+eqR9BZuSKj4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Erpeng Xu <xuerpeng@uniontech.com>,
+	Yuli Wang <wangyuli@uniontech.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.13 011/207] LoongArch: Convert unreachable() to BUG()
-Date: Mon, 10 Mar 2025 18:03:24 +0100
-Message-ID: <20250310170448.214363483@linuxfoundation.org>
+Subject: [PATCH 6.13 012/207] LoongArch: Use polling play_dead() when resuming from hibernation
+Date: Mon, 10 Mar 2025 18:03:25 +0100
+Message-ID: <20250310170448.254364481@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,46 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit da64a2359092ceec4f9dea5b329d0aef20104217 upstream.
+commit c9117434c8f7523f0b77db4c5766f5011cc94677 upstream.
 
-When compiling on LoongArch, there exists the following objtool warning
-in arch/loongarch/kernel/machine_kexec.o:
+When CONFIG_RANDOM_KMALLOC_CACHES or other randomization infrastructrue
+enabled, the idle_task's stack may different between the booting kernel
+and target kernel. So when resuming from hibernation, an ACTION_BOOT_CPU
+IPI wakeup the idle instruction in arch_cpu_idle_dead() and jump to the
+interrupt handler. But since the stack pointer is changed, the interrupt
+handler cannot restore correct context.
 
-  kexec_reboot() falls through to next function crash_shutdown_secondary()
+So rename the current arch_cpu_idle_dead() to idle_play_dead(), make it
+as the default version of play_dead(), and the new arch_cpu_idle_dead()
+call play_dead() directly. For hibernation, implement an arch-specific
+hibernate_resume_nonboot_cpu_disable() to use the polling version (idle
+instruction is replace by nop, and irq is disabled) of play_dead(), i.e.
+poll_play_dead(), to avoid IPI handler corrupting the idle_task's stack
+when resuming from hibernation.
 
-Avoid using unreachable() as it can (and will in the absence of UBSAN)
-generate fall-through code. Use BUG() so we get a "break BRK_BUG" trap
-(with unreachable annotation).
+This solution is a little similar to commit 406f992e4a372dafbe3c ("x86 /
+hibernate: Use hlt_play_dead() when resuming from hibernation").
 
-Cc: stable@vger.kernel.org  # 6.12+
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: stable@vger.kernel.org
+Tested-by: Erpeng Xu <xuerpeng@uniontech.com>
+Tested-by: Yuli Wang <wangyuli@uniontech.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/machine_kexec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/kernel/smp.c |   47 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/machine_kexec.c
-+++ b/arch/loongarch/kernel/machine_kexec.c
-@@ -126,14 +126,14 @@ void kexec_reboot(void)
- 	/* All secondary cpus go to kexec_smp_wait */
- 	if (smp_processor_id() > 0) {
- 		relocated_kexec_smp_wait(NULL);
--		unreachable();
-+		BUG();
- 	}
- #endif
- 
- 	do_kexec = (void *)reboot_code_buffer;
- 	do_kexec(efi_boot, cmdline_ptr, systable_ptr, start_addr, first_ind_entry);
- 
--	unreachable();
-+	BUG();
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -19,6 +19,7 @@
+ #include <linux/smp.h>
+ #include <linux/threads.h>
+ #include <linux/export.h>
++#include <linux/suspend.h>
+ #include <linux/syscore_ops.h>
+ #include <linux/time.h>
+ #include <linux/tracepoint.h>
+@@ -423,7 +424,7 @@ void loongson_cpu_die(unsigned int cpu)
+ 	mb();
  }
  
+-void __noreturn arch_cpu_idle_dead(void)
++static void __noreturn idle_play_dead(void)
+ {
+ 	register uint64_t addr;
+ 	register void (*init_fn)(void);
+@@ -447,6 +448,50 @@ void __noreturn arch_cpu_idle_dead(void)
+ 	BUG();
+ }
  
++#ifdef CONFIG_HIBERNATION
++static void __noreturn poll_play_dead(void)
++{
++	register uint64_t addr;
++	register void (*init_fn)(void);
++
++	idle_task_exit();
++	__this_cpu_write(cpu_state, CPU_DEAD);
++
++	__smp_mb();
++	do {
++		__asm__ __volatile__("nop\n\t");
++		addr = iocsr_read64(LOONGARCH_IOCSR_MBUF0);
++	} while (addr == 0);
++
++	init_fn = (void *)TO_CACHE(addr);
++	iocsr_write32(0xffffffff, LOONGARCH_IOCSR_IPI_CLEAR);
++
++	init_fn();
++	BUG();
++}
++#endif
++
++static void (*play_dead)(void) = idle_play_dead;
++
++void __noreturn arch_cpu_idle_dead(void)
++{
++	play_dead();
++	BUG(); /* play_dead() doesn't return */
++}
++
++#ifdef CONFIG_HIBERNATION
++int hibernate_resume_nonboot_cpu_disable(void)
++{
++	int ret;
++
++	play_dead = poll_play_dead;
++	ret = suspend_disable_secondary_cpus();
++	play_dead = idle_play_dead;
++
++	return ret;
++}
++#endif
++
+ #endif
+ 
+ /*
 
 
