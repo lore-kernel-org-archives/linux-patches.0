@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A13D22576A;
-	Mon, 10 Mar 2025 18:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E232206BD;
+	Mon, 10 Mar 2025 18:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630430; cv=none; b=Jlr2M5zj/9qt2KXG9AI4Zu4c62PgP9og482CgASPr+WGYLZqNOx6RIkUYNIXwI4zld3Q4QOhUf0xaHraESPt+kSGOhhSi7hM9neH56mxmiSjPLSPQ8pEXTedj5xcgY77eICFv5uIF4qP3ywL5KbQBoP9lUpNAA0PQdFXaTvIcMo=
+	t=1741630432; cv=none; b=UwiAEtieKGIWcDLOKR9VHKlhAETIWDLv3oGu7xbkDCM2RA3tk7OFfWEjE3XheT0ykMC0mA8VSSLv2t+iYBiYkPv/X37fKUz3Eesb835VZR7HdTV2ZassIPgfKZV7THqA197bL2P3eZegwYmsnJE82t+zZsTcw8/PqntJKIeTSNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630430; c=relaxed/simple;
-	bh=f4bcPVqlQBKz4t+nHpapg4tPpqFDAAaL5VBaXEJYEIQ=;
+	s=arc-20240116; t=1741630432; c=relaxed/simple;
+	bh=ZgA4kHqqJVMGJhUT6P3VfVs6iMWIM/OM+ieLoXF01dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=heNOnx9QPgPhbIxlupQm/JPdv4B37nNfk66XcB5MDKY7OwD2WZ1dekbuA2rtB/113m4rgtWaCGuG3X3e36tBqn/0V2bsxLlKMzVsvRSh8E2+apVzV41gNuhz0bohY8+EuelM5j85cKgoh2+Mcc5w89W64fFg+WlHGXzBhOkADW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUrfMSjL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=No6gPumPiMZokjHrAx9YI3qjPpSvBMSihlqwXJ5tEdYJUJFmMuniqsK2x2RmcHoiYSh+1FgH2hOIfoBJk5zCXj8G2f2xlKWo5ng1hidlu97oE2RY9bnbSbAjAkW3waS+UVWJ+Z00FYFH89yOe8b9aprg1BfKZ21N3MgSIbDvL68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oL3QSDhN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUrfMSjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42024C4CEE5;
-	Mon, 10 Mar 2025 18:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL3QSDhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D909C4CEE5;
+	Mon, 10 Mar 2025 18:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630429;
-	bh=f4bcPVqlQBKz4t+nHpapg4tPpqFDAAaL5VBaXEJYEIQ=;
+	s=korg; t=1741630432;
+	bh=ZgA4kHqqJVMGJhUT6P3VfVs6iMWIM/OM+ieLoXF01dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUrfMSjLUgvVJ/fxEYMfPQFufoKugveQor2RK9NddRZiQhra3Ouvg8zD+3ubGhvHJ
-	 i3fBLzdL7H6/8FOKJtZkgzKUboVpHqPII4ngLAB2VjiCYjkdPgAJKBOqtnUUMlc1kW
-	 qJ+ZKwygu+vN49XYiFqcYLku3ditv7+KpKFC3Oy4=
+	b=oL3QSDhNFocaYsXzI9K/l8v6AtJrXWOmevBTNb3JUhNNvyd3lQBV9KIK3eOsQYsl9
+	 pi78+t8fYrnNrV/2GWkEP8Qm9NygvuBEdqaO0BsVcYL464eEQbq4xeEJO9za4pd4uA
+	 ISdTfvMCLxYQwCL1y6z1ISFav18QVCrzXdmrzpUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	Petr Machata <petrm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 403/620] ndisc: use RCU protection in ndisc_alloc_skb()
-Date: Mon, 10 Mar 2025 18:04:09 +0100
-Message-ID: <20250310170601.499605257@linuxfoundation.org>
+Subject: [PATCH 5.15 404/620] neighbour: delete redundant judgment statements
+Date: Mon, 10 Mar 2025 18:04:10 +0100
+Message-ID: <20250310170601.538889738@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,57 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 628e6d18930bbd21f2d4562228afe27694f66da9 ]
+[ Upstream commit c25bdd2ac8cf7da70a226f1a66cdce7af15ff86f ]
 
-ndisc_alloc_skb() can be called without RTNL or RCU being held.
+The initial value of err is -ENOBUFS, and err is guaranteed to be
+less than 0 before all goto errout. Therefore, on the error path
+of errout, there is no need to repeatedly judge that err is less than 0,
+and delete redundant judgments to make the code more concise.
 
-Add RCU protection to avoid possible UAF.
-
-Fixes: de09334b9326 ("ndisc: Introduce ndisc_alloc_skb() helper.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: becbd5850c03 ("neighbour: use RCU protection in __neigh_notify()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/core/neighbour.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 63c1420c58249..3972189c09b14 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -417,15 +417,11 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
- {
- 	int hlen = LL_RESERVED_SPACE(dev);
- 	int tlen = dev->needed_tailroom;
--	struct sock *sk = dev_net(dev)->ipv6.ndisc_sk;
- 	struct sk_buff *skb;
- 
- 	skb = alloc_skb(hlen + sizeof(struct ipv6hdr) + len + tlen, GFP_ATOMIC);
--	if (!skb) {
--		ND_PRINTK(0, err, "ndisc: %s failed to allocate an skb\n",
--			  __func__);
-+	if (!skb)
- 		return NULL;
--	}
- 
- 	skb->protocol = htons(ETH_P_IPV6);
- 	skb->dev = dev;
-@@ -436,7 +432,9 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
- 	/* Manually assign socket ownership as we avoid calling
- 	 * sock_alloc_send_pskb() to bypass wmem buffer limits
- 	 */
--	skb_set_owner_w(skb, sk);
-+	rcu_read_lock();
-+	skb_set_owner_w(skb, dev_net_rcu(dev)->ipv6.ndisc_sk);
-+	rcu_read_unlock();
- 
- 	return skb;
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 6f3bd1a4ec8ca..7fffbe0424342 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -3387,8 +3387,7 @@ static void __neigh_notify(struct neighbour *n, int type, int flags,
+ 	rtnl_notify(skb, net, 0, RTNLGRP_NEIGH, NULL, GFP_ATOMIC);
+ 	return;
+ errout:
+-	if (err < 0)
+-		rtnl_set_sk_err(net, RTNLGRP_NEIGH, err);
++	rtnl_set_sk_err(net, RTNLGRP_NEIGH, err);
  }
+ 
+ void neigh_app_ns(struct neighbour *n)
 -- 
 2.39.5
 
