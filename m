@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CFD230BED;
-	Mon, 10 Mar 2025 17:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCC422154C;
+	Mon, 10 Mar 2025 17:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627329; cv=none; b=I9zv2tT9+3Svj32UF90PMk5Wx4k/x7szVOs4GZelUDuEueKm+8+agBnktN6bUz/3v/jZUVM0yuMx/h5nPexVzaDAPvcvPoUiFuYU+mxaiHVf7PRPelLX5f1QsJ8OUqCHMvCzjtDxvSzs49a7bxXCG3FWDPUpSh/RTAOd7H3RugQ=
+	t=1741627332; cv=none; b=GfXPswlx3uylf4Omt3qVdDV23gjdVHSQhVrxfGbb3SIW7CvcsGAB8g9RHvfa/QFTirGL60cB1bVey+Ts5/bHR7Ff7ttBHGINgtpCeRkKcymlAahyeFpzk9FhFPKphRQ2suq5wj9EOx+KK0Iad/M801FLbH1WsoOCakuHzPwIjbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627329; c=relaxed/simple;
-	bh=imxFXcC169K/zP6QKaVG07ZbpQ0/61HOjGA0Cn+FPCE=;
+	s=arc-20240116; t=1741627332; c=relaxed/simple;
+	bh=gSbG8uCcllxKbVIa+rRvv4NBWSYZa4oPOK1DxVySQAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUzpklEXV8GZ3QZWYxnPOz7XNmbi3YXEj01VOTFzM3AznJQF6GVZjTjV09Rj+iU+SaMo44GFq2Lfme46i+Etw/RlleJKV+/faudQhkm84330GRsxjcLjTEL78p3xQ18A+JU7FHb48EqITiThgLRpyke/d43rC9ESS3VniWV8sJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7Kt+faA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2mmBP5i/qIv1LaOC8R26itEjsrVBxAj53IzjXJz8aidVdTk+L0keldU9yXMjJZs/vlBGAm+1+7KR1ZpHM79tJST9+hDtqMBARmKvtdOw6Ldd+4khlXkustAdbiR40LpPX+Pvgkj5HfEL6ATtZDep871fk8EgoMe/VodUN9GDrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSZHnoPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7Kt+faA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12848C4CEE5;
-	Mon, 10 Mar 2025 17:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSZHnoPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1BDC4CEE5;
+	Mon, 10 Mar 2025 17:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627329;
-	bh=imxFXcC169K/zP6QKaVG07ZbpQ0/61HOjGA0Cn+FPCE=;
+	s=korg; t=1741627332;
+	bh=gSbG8uCcllxKbVIa+rRvv4NBWSYZa4oPOK1DxVySQAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7Kt+faAxN9XagUd2TbQriOKN1HqDPyLx4iBf4Ts1cK19m+pOE0q+EOj1gd+xWNnf
-	 BBINu9UCHZfr0ibmnBkr4EiiR3z374RgoUzFuGjMLhj7Dpsq7u3Qs+KLiue7qZIKC4
-	 0D50nRrg/QUPgNItr6wDkY5XKXJobOMpS22Tfn9w=
+	b=lSZHnoPS9Yaid37CwU4mHPvwdWpi8sSKBOq3qamG4R5ZfLiHLjzRH1R0mWSA66e4v
+	 dWJbJ2KhgIrRPzh41isT8oCBfrpinQE7F56BtuUbvw+2+pFhpMJGpithVSD1EiD3yT
+	 JWVC9C4ZuSXIBTWNP+crcxiKxOK9oDCz5XgglbBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 093/269] btrfs: fix a leaked chunk map issue in read_one_chunk()
-Date: Mon, 10 Mar 2025 18:04:06 +0100
-Message-ID: <20250310170501.418917235@linuxfoundation.org>
+	Paul Fertser <fercerpav@gmail.com>,
+	Iwona Winiarska <iwona.winiarska@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 094/269] hwmon: (peci/dimmtemp) Do not provide fake thresholds data
+Date: Mon, 10 Mar 2025 18:04:07 +0100
+Message-ID: <20250310170501.457779521@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -52,33 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Paul Fertser <fercerpav@gmail.com>
 
-commit 35d99c68af40a8ca175babc5a89ef7e2226fb3ca upstream.
+commit 5797c04400ee117bfe459ff1e468d0ea38054ab4 upstream.
 
-Add btrfs_free_chunk_map() to free the memory allocated
-by btrfs_alloc_chunk_map() if btrfs_add_chunk_map() fails.
+When an Icelake or Sapphire Rapids CPU isn't providing the maximum and
+critical thresholds for particular DIMM the driver should return an
+error to the userspace instead of giving it stale (best case) or wrong
+(the structure contains all zeros after kzalloc() call) data.
 
-Fixes: 7dc66abb5a47 ("btrfs: use a dedicated data structure for chunk maps")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The issue can be reproduced by binding the peci driver while the host is
+fully booted and idle, this makes PECI interaction unreliable enough.
+
+Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
+Fixes: 621995b6d795 ("hwmon: (peci/dimmtemp) Add Sapphire Rapids support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
+Link: https://lore.kernel.org/r/20250123122003.6010-1-fercerpav@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/peci/dimmtemp.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7094,6 +7094,7 @@ static int read_one_chunk(struct btrfs_k
- 		btrfs_err(fs_info,
- 			  "failed to add chunk map, start=%llu len=%llu: %d",
- 			  map->start, map->chunk_len, ret);
-+		btrfs_free_chunk_map(map);
- 	}
+--- a/drivers/hwmon/peci/dimmtemp.c
++++ b/drivers/hwmon/peci/dimmtemp.c
+@@ -127,8 +127,6 @@ static int update_thresholds(struct peci
+ 		return 0;
  
- 	return ret;
+ 	ret = priv->gen_info->read_thresholds(priv, dimm_order, chan_rank, &data);
+-	if (ret == -ENODATA) /* Use default or previous value */
+-		return 0;
+ 	if (ret)
+ 		return ret;
+ 
+@@ -509,11 +507,11 @@ read_thresholds_icx(struct peci_dimmtemp
+ 
+ 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd4, &reg_val);
+ 	if (ret || !(reg_val & BIT(31)))
+-		return -ENODATA; /* Use default or previous value */
++		return -ENODATA;
+ 
+ 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd0, &reg_val);
+ 	if (ret)
+-		return -ENODATA; /* Use default or previous value */
++		return -ENODATA;
+ 
+ 	/*
+ 	 * Device 26, Offset 224e0: IMC 0 channel 0 -> rank 0
+@@ -546,11 +544,11 @@ read_thresholds_spr(struct peci_dimmtemp
+ 
+ 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd4, &reg_val);
+ 	if (ret || !(reg_val & BIT(31)))
+-		return -ENODATA; /* Use default or previous value */
++		return -ENODATA;
+ 
+ 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd0, &reg_val);
+ 	if (ret)
+-		return -ENODATA; /* Use default or previous value */
++		return -ENODATA;
+ 
+ 	/*
+ 	 * Device 26, Offset 219a8: IMC 0 channel 0 -> rank 0
 
 
