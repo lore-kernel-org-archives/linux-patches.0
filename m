@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2DA233710;
-	Mon, 10 Mar 2025 17:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64B9233D89;
+	Mon, 10 Mar 2025 17:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626587; cv=none; b=Iu8We/aM4/DGtb18Xng3+AVaJd/2vdeVf7G5/+SDskMlWYeqhMQvAyAwmnpth8AxDQ4DfDxprLLzIAa5Wz+gsPC2RuK/KuM2ymHmzdza8OAx6XgTbkzJPoY6FGMA08yAkeH1hT5L8Q/rutoNuzP1yn8611i3H9Is7v7nQbKgJa0=
+	t=1741626590; cv=none; b=fZ0TknNwICwTeOG0Cn3a8e52ELOnRXPzsBuhkJ4a4iVk7VkYUG4dcb+mlX3CweRTG5L9g2SouMU4purL37cbwp9GE24DG9GO22UI+MGyreSw9uaq4K0Br1zqWi02tQOTk15E+YX+Gb185Rgm7hYD2sbk1k1RNx3ltLtJ6yCEMEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626587; c=relaxed/simple;
-	bh=JzGrlxkpqQCUAyOwRXaeGQnxuDs9tMhWajShR4N8Fxw=;
+	s=arc-20240116; t=1741626590; c=relaxed/simple;
+	bh=Nlq03bjq53vs0OL7DCzheApyoIkjooQREIVfxMFegEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvOABDLJi8jvcYF5hB8+mwCCpLEB25yYXBIfHiAwXk8lX/ZcMlUXo4lUtt/+Ne/rWyPBiO+WVZXDsumA4sBSScsR2iZaKw6nbHkVm+8majLGw/576IUGYXK7ObUnAJtKF7dHfbBJmT1bt1oUB59fa/DD050RLFruRE4ko6fTeh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHaJO/BH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B5pdzscE0m1iXfwrxNc+Lw0zpAEUp5baucElO6GMCsT+MaW+v0ugV5yxg0WgjR3IseCn0FmDkqvPIrjNn2FYLLiLIJ1TiLt9mRHkgfTnQUESFuGKIzdZlu+HSESAr5RFy/NoTW010e1+r+47mdA/FIycu/14Amu6EJGI8miWKRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV6fQdkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHaJO/BH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B16C4CEED;
-	Mon, 10 Mar 2025 17:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV6fQdkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBB7C4CEED;
+	Mon, 10 Mar 2025 17:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626587;
-	bh=JzGrlxkpqQCUAyOwRXaeGQnxuDs9tMhWajShR4N8Fxw=;
+	s=korg; t=1741626590;
+	bh=Nlq03bjq53vs0OL7DCzheApyoIkjooQREIVfxMFegEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yHaJO/BHXMyxVFySrsmcks2e6Zd+rwwLSUxbwhn3TsqHlcB7MF1WX5/FzePRC29nK
-	 EK7vwiOgFBf4tln0PMq80K6YOSizVCfAmsmPmh/G/H+NFNH+roPW7Ot25kxHcjOofD
-	 XyqLNtJWaKUV5iIpGUjS/m1XgASupilAk1nrwuaQ=
+	b=UV6fQdkkguD3+ECYrlT7nL+5ekfUXg3bIg59kLtUYwfm0fLKoRuW5GM9/ZLmNiqQQ
+	 ddHe/gRfaf76xx50smfecCxNkXFxaNw6huaKKSX0YJg8vIkFR8twfnWi7Jyf0i8BQH
+	 8/XPyOPmAGwiNeAdjV1iMWoeUdgtIgPmqu+RkEgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.13 036/207] drm/amd/pm: always allow ih interrupt from fw
-Date: Mon, 10 Mar 2025 18:03:49 +0100
-Message-ID: <20250310170449.209077446@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.13 045/207] x86/cacheinfo: Validate CPUID leaf 0x2 EDX output
+Date: Mon, 10 Mar 2025 18:03:58 +0100
+Message-ID: <20250310170449.558482153@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -51,50 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit da552bda987420e877500fdd90bd0172e3bf412b upstream.
+commit 8177c6bedb7013cf736137da586cf783922309dd upstream.
 
-always allow ih interrupt from fw on smu v14 based on
-the interface requirement
+CPUID leaf 0x2 emits one-byte descriptors in its four output registers
+EAX, EBX, ECX, and EDX.  For these descriptors to be valid, the most
+significant bit (MSB) of each register must be clear.
 
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a3199eba46c54324193607d9114a1e321292d7a1)
-Cc: stable@vger.kernel.org # 6.12.x
+The historical Git commit:
+
+  019361a20f016 ("- pre6: Intel: start to add Pentium IV specific stuff (128-byte cacheline etc)...")
+
+introduced leaf 0x2 output parsing.  It only validated the MSBs of EAX,
+EBX, and ECX, but left EDX unchecked.
+
+Validate EDX's most-significant bit.
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250304085152.51092-2-darwi@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c |   12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ arch/x86/kernel/cpu/cacheinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c
-@@ -1899,16 +1899,6 @@ static int smu_v14_0_allow_ih_interrupt(
- 				    NULL);
- }
+--- a/arch/x86/kernel/cpu/cacheinfo.c
++++ b/arch/x86/kernel/cpu/cacheinfo.c
+@@ -808,7 +808,7 @@ void init_intel_cacheinfo(struct cpuinfo
+ 			cpuid(2, &regs[0], &regs[1], &regs[2], &regs[3]);
  
--static int smu_v14_0_process_pending_interrupt(struct smu_context *smu)
--{
--	int ret = 0;
--
--	if (smu_cmn_feature_is_enabled(smu, SMU_FEATURE_ACDC_BIT))
--		ret = smu_v14_0_allow_ih_interrupt(smu);
--
--	return ret;
--}
--
- int smu_v14_0_enable_thermal_alert(struct smu_context *smu)
- {
- 	int ret = 0;
-@@ -1920,7 +1910,7 @@ int smu_v14_0_enable_thermal_alert(struc
- 	if (ret)
- 		return ret;
+ 			/* If bit 31 is set, this is an unknown format */
+-			for (j = 0 ; j < 3 ; j++)
++			for (j = 0 ; j < 4 ; j++)
+ 				if (regs[j] & (1 << 31))
+ 					regs[j] = 0;
  
--	return smu_v14_0_process_pending_interrupt(smu);
-+	return smu_v14_0_allow_ih_interrupt(smu);
- }
- 
- int smu_v14_0_disable_thermal_alert(struct smu_context *smu)
 
 
