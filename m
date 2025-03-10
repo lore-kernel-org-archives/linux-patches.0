@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A52233159;
-	Mon, 10 Mar 2025 17:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3936226D0B;
+	Mon, 10 Mar 2025 17:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627958; cv=none; b=Wj46WroSSMXqrUMPxDGOUkicmYiPogzFszwnm4VtZqAx7VxCf6Y06dpZZzhfqh08fVydGw+xICs1si14HOydJdzb4XcDkFmYbDeIRFUFC5ofRu5ZkM7JXaen5N68Vu2VIz2o2/G5q2e4YQ0TNxiv5YjfhBp1eUqSb/Op6h2cuxg=
+	t=1741627961; cv=none; b=nPY94L7XB5NlZBZbkoQW86jFyw9kCnzXDcET0Yfk7vE5FvQJlezMKxftNen9y0BqnaM72EOlSpb/OpS0ZphV0B4owK1MUtJZ+V6rjPyQmF27e6N2te+LrkIP23VnvzgxUwlG+CvIUr2/Qm1SePYEHcVQP5rn5pKsMwKaUSRKHsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627958; c=relaxed/simple;
-	bh=XLJAH5nto5cRRu6zWihz3EZg0Kd8+F5njsmWg8z5Ltg=;
+	s=arc-20240116; t=1741627961; c=relaxed/simple;
+	bh=tfAqNmU0xtvtfLlHYX9ItvXVu3vurtc+nGeeiq7s+e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=but0CBjPSmFvau+iFOYzGQzDBaXJzhkZQKiAfeeqFNBRZCZiETYAExIUQe3LZX0/WgvyHbxrkfE0N4kS8wX29EsRnFiQiAK18PEBvp75TIm3MUwJxmovXKIndS5BR3LjKXT8H6EvIf6XodJvQsriozwDW/cDh0yhfnubUDZum44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr4CWvyB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoWZJ5/mMqsRckZiO/jtlfzNWkCsbjci05yo1GzD4SZ1jPxbJNLuGJUILUat9l0UEQlIJg7vP8HJSvfsEQqfzUvSJqYXiD9ouju7TI2vcAojqYiK62VAU9mLtZpTNMDlsd/cRPqAH0F+6c8CJ0R692T0bcQAqo70M8DgetcMEl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ/AT1DQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr4CWvyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DE3C4CEED;
-	Mon, 10 Mar 2025 17:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ/AT1DQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF91C4CEED;
+	Mon, 10 Mar 2025 17:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627958;
-	bh=XLJAH5nto5cRRu6zWihz3EZg0Kd8+F5njsmWg8z5Ltg=;
+	s=korg; t=1741627961;
+	bh=tfAqNmU0xtvtfLlHYX9ItvXVu3vurtc+nGeeiq7s+e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rr4CWvyBQxp+jlrKj66+bfcXDImzf82ONmrloozb7fEIs3DKFQE7TeS3Zsa1xilvL
-	 NAWDCPX3I38IiVVxb++45BAWzZUOnRj3aBAT6EZn59LPHwNIXHL3I25ABjr8P22TQp
-	 UF7xOE/kzaYYQAakur0JRAqOYsrFd4T9q9BxRZBo=
+	b=hQ/AT1DQgZ1P7kv1NDgFSYvkmRBgSsvFEPptj7NhY+6UqzOX896/EuYLSmJvgMPOF
+	 jUSMJedzmnax3D1DSv2hVgHQ+4Jo+7Ezet+qJzOXeKoBpq6J8+w6sTs25JZhf/lLwT
+	 iutg1uzF+WzuJSsZGV2LXtzeW82JtfIitMp35Gg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	Iwona Winiarska <iwona.winiarska@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 039/145] hwmon: (peci/dimmtemp) Do not provide fake thresholds data
-Date: Mon, 10 Mar 2025 18:05:33 +0100
-Message-ID: <20250310170436.312846426@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 040/145] drm/amd/display: Fix null check for pipe_ctx->plane_state in resource_build_scaling_params
+Date: Mon, 10 Mar 2025 18:05:34 +0100
+Message-ID: <20250310170436.352411857@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,68 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 5797c04400ee117bfe459ff1e468d0ea38054ab4 upstream.
+commit 374c9faac5a763a05bc3f68ad9f73dab3c6aec90 upstream.
 
-When an Icelake or Sapphire Rapids CPU isn't providing the maximum and
-critical thresholds for particular DIMM the driver should return an
-error to the userspace instead of giving it stale (best case) or wrong
-(the structure contains all zeros after kzalloc() call) data.
+Null pointer dereference issue could occur when pipe_ctx->plane_state
+is null. The fix adds a check to ensure 'pipe_ctx->plane_state' is not
+null before accessing. This prevents a null pointer dereference.
 
-The issue can be reproduced by binding the peci driver while the host is
-fully booted and idle, this makes PECI interaction unreliable enough.
+Found by code review.
 
-Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
-Fixes: 621995b6d795 ("hwmon: (peci/dimmtemp) Add Sapphire Rapids support")
+Fixes: 3be5262e353b ("drm/amd/display: Rename more dc_surface stuff to plane_state")
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 63e6a77ccf239337baa9b1e7787cde9fa0462092)
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Link: https://lore.kernel.org/r/20250123122003.6010-1-fercerpav@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/peci/dimmtemp.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/peci/dimmtemp.c
-+++ b/drivers/hwmon/peci/dimmtemp.c
-@@ -127,8 +127,6 @@ static int update_thresholds(struct peci
- 		return 0;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -1394,7 +1394,8 @@ bool resource_build_scaling_params(struc
+ 	DC_LOGGER_INIT(pipe_ctx->stream->ctx->logger);
  
- 	ret = priv->gen_info->read_thresholds(priv, dimm_order, chan_rank, &data);
--	if (ret == -ENODATA) /* Use default or previous value */
--		return 0;
- 	if (ret)
- 		return ret;
- 
-@@ -509,11 +507,11 @@ read_thresholds_icx(struct peci_dimmtemp
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd4, &reg_val);
- 	if (ret || !(reg_val & BIT(31)))
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd0, &reg_val);
- 	if (ret)
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	/*
- 	 * Device 26, Offset 224e0: IMC 0 channel 0 -> rank 0
-@@ -546,11 +544,11 @@ read_thresholds_spr(struct peci_dimmtemp
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd4, &reg_val);
- 	if (ret || !(reg_val & BIT(31)))
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd0, &reg_val);
- 	if (ret)
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	/*
- 	 * Device 26, Offset 219a8: IMC 0 channel 0 -> rank 0
+ 	/* Invalid input */
+-	if (!plane_state->dst_rect.width ||
++	if (!plane_state ||
++			!plane_state->dst_rect.width ||
+ 			!plane_state->dst_rect.height ||
+ 			!plane_state->src_rect.width ||
+ 			!plane_state->src_rect.height) {
 
 
