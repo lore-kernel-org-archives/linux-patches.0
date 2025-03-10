@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDC31E519;
-	Mon, 10 Mar 2025 17:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13274230BF3;
+	Mon, 10 Mar 2025 17:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626604; cv=none; b=CiPR5r/D5KCVZxabE6FHhc93aP9v14Jfe6u7Q3v5q1pLN1X+QcqyoToeyAG10rwRJP2D+0zun3ik8bE7L7P4ITyEQu2+vE7oY4zLs/iV/RNqSj7zZjX3tNCz1uvawQeE8t4SkFkIkI9fyXtVZwFMo1LIgKgFkt+tXCRPdO5G5+8=
+	t=1741626608; cv=none; b=n4Jr+PRBz1d4mTzWS1bE7by8Mua2ANq+GHn+t31KT/lT2oFFJdckIaSANnN4Ayvz956A2/kKWAEvy/HmuJcZOpwOBb84+rh56lXJDeFTvSWP6EAX/vmk/LyOS7iu2Nf4TlaEluX0X7jNXB0iU99a6Yi8ic/EtTBjkdE7MKGQW6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626604; c=relaxed/simple;
-	bh=yQ3Fo+g5PKr5ttCGfQ9Cn12uEOBsigEFdJrxfO5Q+6I=;
+	s=arc-20240116; t=1741626608; c=relaxed/simple;
+	bh=HAj3n3wZdS1Sg5EbevpnzuNqii0WNxp7Z98Rh01rUqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dB4zqsvX0cKkDRyI2pBj7qq7tx/5tXFTnHRbj3N3WyP3C1FHcsxB3JJKKto7g6DO5lI2CY6nu056qmWIBaJK/V70sqPRLmTOQNC8NybLX9PpL40rKWxxJ+377ElJDTYyLs1vXFEeilAIbe0jJYwUUzgeHZc5IxATPsGwTzvDLC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rm0pXZrs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Lr8Nuiuv5ubJG7f2mL6zRbFLOL7rpDscRFlI1prb+M19qkspRGJX2YWpvCHHGsn6QZSQvK151de4MTtfagtPWvAYyMJh4jyfpwcKRv55ak/8Doq7gLBaAceZXvtcr06WRXdK+JuAGV/+FmHcRG3uuhpWON5VBK2rQJx4U/jDe+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrMpo49w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rm0pXZrs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583C0C4CEE5;
-	Mon, 10 Mar 2025 17:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrMpo49w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F12EC4CEE5;
+	Mon, 10 Mar 2025 17:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626604;
-	bh=yQ3Fo+g5PKr5ttCGfQ9Cn12uEOBsigEFdJrxfO5Q+6I=;
+	s=korg; t=1741626607;
+	bh=HAj3n3wZdS1Sg5EbevpnzuNqii0WNxp7Z98Rh01rUqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rm0pXZrsDRgqj+D5bJNpUV0hN90kzet/tABrWQrrGlE04MRekDa9k8HZJceX+aeyw
-	 vCWQ9QO4WE2uUEk+OvjTSmaHVyXTFEotrAjynn8Z6NB3JYrNzZeY2lC/JlfDmS8jHB
-	 8vROQCGajgUBR+tvba4MRvoMft8Pmr/cdNPLGMLY=
+	b=MrMpo49wDJpZKZ/b93tYoYDAqmTEwx3DV+teLJv9B9S0+h0xZbKWy68PsP/qCJxF2
+	 63IBwzTEjyODMCZA1TLFiYHXHfidZQn4fkApVIBrBS5IJiDxg6nO2Ag5t278ltg7Ma
+	 Np4bFGmL6AjaRoQbynUiaRLfpOKYznxuOv6OyhmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oak Zeng <oak.zeng@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 050/207] drm/xe/hmm: Dont dereference struct page pointers without notifier lock
-Date: Mon, 10 Mar 2025 18:04:03 +0100
-Message-ID: <20250310170449.758277082@linuxfoundation.org>
+Subject: [PATCH 6.13 051/207] drm/xe/vm: Fix a misplaced #endif
+Date: Mon, 10 Mar 2025 18:04:04 +0100
+Message-ID: <20250310170449.797902911@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -56,213 +57,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 0a98219bcc961edd3388960576e4353e123b4a51 upstream.
+commit 1414d95d5805b1dc221d22db9b8dc5287ef083bc upstream.
 
-The pnfs that we obtain from hmm_range_fault() point to pages that
-we don't have a reference on, and the guarantee that they are still
-in the cpu page-tables is that the notifier lock must be held and the
-notifier seqno is still valid.
+Fix a (harmless) misplaced #endif leading to declarations
+appearing multiple times.
 
-So while building the sg table and marking the pages accesses / dirty
-we need to hold this lock with a validated seqno.
-
-However, the lock is reclaim tainted which makes
-sg_alloc_table_from_pages_segment() unusable, since it internally
-allocates memory.
-
-Instead build the sg-table manually. For the non-iommu case
-this might lead to fewer coalesces, but if that's a problem it can
-be fixed up later in the resource cursor code. For the iommu case,
-the whole sg-table may still be coalesced to a single contigous
-device va region.
-
-This avoids marking pages that we don't own dirty and accessed, and
-it also avoid dereferencing struct pages that we don't own.
-
-v2:
-- Use assert to check whether hmm pfns are valid (Matthew Auld)
-- Take into account that large pages may cross range boundaries
-  (Matthew Auld)
-
-v3:
-- Don't unnecessarily check for a non-freed sg-table. (Matthew Auld)
-- Add a missing up_read() in an error path. (Matthew Auld)
-
-Fixes: 81e058a3e7fd ("drm/xe: Introduce helper to populate userptr")
-Cc: Oak Zeng <oak.zeng@intel.com>
-Cc: <stable@vger.kernel.org> # v6.10+
+Fixes: 0eb2a18a8fad ("drm/xe: Implement VM snapshot support for BO's and userptr")
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Cc: <stable@vger.kernel.org> # v6.12+
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Acked-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250304173342.22009-3-thomas.hellstrom@linux.intel.com
-(cherry picked from commit ea3e66d280ce2576664a862693d1da8fd324c317)
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-3-thomas.hellstrom@linux.intel.com
+(cherry picked from commit fcc20a4c752214b3e25632021c57d7d1d71ee1dd)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_hmm.c |  120 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 90 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_hmm.c
-+++ b/drivers/gpu/drm/xe/xe_hmm.c
-@@ -42,6 +42,42 @@ static void xe_mark_range_accessed(struc
- 	}
- }
+--- a/drivers/gpu/drm/xe/xe_vm.h
++++ b/drivers/gpu/drm/xe/xe_vm.h
+@@ -275,9 +275,9 @@ static inline void vm_dbg(const struct d
+ 			  const char *format, ...)
+ { /* noop */ }
+ #endif
+-#endif
  
-+static int xe_alloc_sg(struct xe_device *xe, struct sg_table *st,
-+		       struct hmm_range *range, struct rw_semaphore *notifier_sem)
-+{
-+	unsigned long i, npages, hmm_pfn;
-+	unsigned long num_chunks = 0;
-+	int ret;
-+
-+	/* HMM docs says this is needed. */
-+	ret = down_read_interruptible(notifier_sem);
-+	if (ret)
-+		return ret;
-+
-+	if (mmu_interval_read_retry(range->notifier, range->notifier_seq)) {
-+		up_read(notifier_sem);
-+		return -EAGAIN;
-+	}
-+
-+	npages = xe_npages_in_range(range->start, range->end);
-+	for (i = 0; i < npages;) {
-+		unsigned long len;
-+
-+		hmm_pfn = range->hmm_pfns[i];
-+		xe_assert(xe, hmm_pfn & HMM_PFN_VALID);
-+
-+		len = 1UL << hmm_pfn_to_map_order(hmm_pfn);
-+
-+		/* If order > 0 the page may extend beyond range->start */
-+		len -= (hmm_pfn & ~HMM_PFN_FLAGS) & (len - 1);
-+		i += len;
-+		num_chunks++;
-+	}
-+	up_read(notifier_sem);
-+
-+	return sg_alloc_table(st, num_chunks, GFP_KERNEL);
-+}
-+
- /**
-  * xe_build_sg() - build a scatter gather table for all the physical pages/pfn
-  * in a hmm_range. dma-map pages if necessary. dma-address is save in sg table
-@@ -50,6 +86,7 @@ static void xe_mark_range_accessed(struc
-  * @range: the hmm range that we build the sg table from. range->hmm_pfns[]
-  * has the pfn numbers of pages that back up this hmm address range.
-  * @st: pointer to the sg table.
-+ * @notifier_sem: The xe notifier lock.
-  * @write: whether we write to this range. This decides dma map direction
-  * for system pages. If write we map it bi-diretional; otherwise
-  * DMA_TO_DEVICE
-@@ -76,38 +113,41 @@ static void xe_mark_range_accessed(struc
-  * Returns 0 if successful; -ENOMEM if fails to allocate memory
-  */
- static int xe_build_sg(struct xe_device *xe, struct hmm_range *range,
--		       struct sg_table *st, bool write)
-+		       struct sg_table *st,
-+		       struct rw_semaphore *notifier_sem,
-+		       bool write)
- {
-+	unsigned long npages = xe_npages_in_range(range->start, range->end);
- 	struct device *dev = xe->drm.dev;
--	struct page **pages;
--	u64 i, npages;
--	int ret;
--
--	npages = xe_npages_in_range(range->start, range->end);
--	pages = kvmalloc_array(npages, sizeof(*pages), GFP_KERNEL);
--	if (!pages)
--		return -ENOMEM;
--
--	for (i = 0; i < npages; i++) {
--		pages[i] = hmm_pfn_to_page(range->hmm_pfns[i]);
--		xe_assert(xe, !is_device_private_page(pages[i]));
--	}
--
--	ret = sg_alloc_table_from_pages_segment(st, pages, npages, 0, npages << PAGE_SHIFT,
--						xe_sg_segment_size(dev), GFP_KERNEL);
--	if (ret)
--		goto free_pages;
--
--	ret = dma_map_sgtable(dev, st, write ? DMA_BIDIRECTIONAL : DMA_TO_DEVICE,
--			      DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_NO_KERNEL_MAPPING);
--	if (ret) {
--		sg_free_table(st);
--		st = NULL;
-+	struct scatterlist *sgl;
-+	struct page *page;
-+	unsigned long i, j;
-+
-+	lockdep_assert_held(notifier_sem);
-+
-+	i = 0;
-+	for_each_sg(st->sgl, sgl, st->nents, j) {
-+		unsigned long hmm_pfn, size;
-+
-+		hmm_pfn = range->hmm_pfns[i];
-+		page = hmm_pfn_to_page(hmm_pfn);
-+		xe_assert(xe, !is_device_private_page(page));
-+
-+		size = 1UL << hmm_pfn_to_map_order(hmm_pfn);
-+		size -= page_to_pfn(page) & (size - 1);
-+		i += size;
-+
-+		if (unlikely(j == st->nents - 1)) {
-+			if (i > npages)
-+				size -= (i - npages);
-+			sg_mark_end(sgl);
-+		}
-+		sg_set_page(sgl, page, size << PAGE_SHIFT, 0);
- 	}
-+	xe_assert(xe, i == npages);
- 
--free_pages:
--	kvfree(pages);
--	return ret;
-+	return dma_map_sgtable(dev, st, write ? DMA_BIDIRECTIONAL : DMA_TO_DEVICE,
-+			       DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_NO_KERNEL_MAPPING);
- }
- 
- /**
-@@ -235,16 +275,36 @@ int xe_hmm_userptr_populate_range(struct
- 	if (ret)
- 		goto free_pfns;
- 
--	ret = xe_build_sg(vm->xe, &hmm_range, &userptr->sgt, write);
-+	ret = xe_alloc_sg(vm->xe, &userptr->sgt, &hmm_range, &vm->userptr.notifier_lock);
- 	if (ret)
- 		goto free_pfns;
- 
-+	ret = down_read_interruptible(&vm->userptr.notifier_lock);
-+	if (ret)
-+		goto free_st;
-+
-+	if (mmu_interval_read_retry(hmm_range.notifier, hmm_range.notifier_seq)) {
-+		ret = -EAGAIN;
-+		goto out_unlock;
-+	}
-+
-+	ret = xe_build_sg(vm->xe, &hmm_range, &userptr->sgt,
-+			  &vm->userptr.notifier_lock, write);
-+	if (ret)
-+		goto out_unlock;
-+
- 	xe_mark_range_accessed(&hmm_range, write);
- 	userptr->sg = &userptr->sgt;
- 	userptr->notifier_seq = hmm_range.notifier_seq;
-+	up_read(&vm->userptr.notifier_lock);
-+	kvfree(pfns);
-+	return 0;
- 
-+out_unlock:
-+	up_read(&vm->userptr.notifier_lock);
-+free_st:
-+	sg_free_table(&userptr->sgt);
- free_pfns:
- 	kvfree(pfns);
- 	return ret;
- }
--
+ struct xe_vm_snapshot *xe_vm_snapshot_capture(struct xe_vm *vm);
+ void xe_vm_snapshot_capture_delayed(struct xe_vm_snapshot *snap);
+ void xe_vm_snapshot_print(struct xe_vm_snapshot *snap, struct drm_printer *p);
+ void xe_vm_snapshot_free(struct xe_vm_snapshot *snap);
++#endif
 
 
