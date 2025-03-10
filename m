@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795BC232369;
-	Mon, 10 Mar 2025 17:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD01617CA12;
+	Mon, 10 Mar 2025 17:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628988; cv=none; b=NpVHLuGY2sKmWsPw6UYTC6hzmHaZ/tDKWSOVr8OfbMJv3qNs7YcSz32CoZbTgTLUXkpmxmyH/F5l/HtNBd9DUicrYUYklJ5UBu4QGclu85CxYtHmNAHyUIAQAh+ZQ69WDxXfDqkm6UKqAuwl0Ub55WpmpQgHUD3BA+RzTtl3ryc=
+	t=1741628991; cv=none; b=qrRJqW9pKh4xAcyM4BWuF0ZXwJ9cIrJUMAzkMJyAcZbKVjgVxsvIlaX/KcaUAnCniJ7c1l/O54DN530sJck7y6eAOuozz7ei3qmTyQjRPFFNUuv7NMZdPavGENY0eWSx7vtrCMGvSm3NkfGDa0aTSBj5D0fWWeURptVOUR7qJps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628988; c=relaxed/simple;
-	bh=RoCNLDPNcClAsDoCUpcjcyKG/JUDt4+DOHdhnr5cyFA=;
+	s=arc-20240116; t=1741628991; c=relaxed/simple;
+	bh=zPFvdKPfpIYldq0urnmzB76xIFqKg/Agv0dOigJJgVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VriUyuHA88pgEVP4GhwMwieKlTKvsUexM8tbmAOEoooMojB1UYfXI6Phczl7KbDMTd9mCFq9v+hbZ0+gU+vOkbTBubvQswKoK+iocwb39EkBuxrHKWTvsZbyHLPgl1CuPuv0By/8bk8kQUDh7n0d4tvc4KrOk/mY4NwfUcefQ5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPh7dy60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lzhklNLVKUqeim8ckYQCr3TkkYbc0YXhpe7WttiBbEixEyOUh7KX01Re1wxRGoUcTHDXQFoqzlC2wtWLFmLav3eKf5kbfKGtOSB4B/e9FLpJ3NIQpeAHRFrVRByARh3pRys5newKuvNP5HQwcDPakmg18BBh+/dXykEXn0gKlB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04O6Def6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPh7dy60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9F8C4CEE5;
-	Mon, 10 Mar 2025 17:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04O6Def6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439BFC4CEE5;
+	Mon, 10 Mar 2025 17:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628988;
-	bh=RoCNLDPNcClAsDoCUpcjcyKG/JUDt4+DOHdhnr5cyFA=;
+	s=korg; t=1741628991;
+	bh=zPFvdKPfpIYldq0urnmzB76xIFqKg/Agv0dOigJJgVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPh7dy60Qs/oioEQEcm/zjq2ilTpm4icXfmQthxf8awzTecM4bzHvHBniFJ8tOHsP
-	 9cPnJYWhYwWZFkKIg6xZqLgQeI9H5kveLl5e4Q4dmleBc7dDUmxTWXqI3HGsvl20kq
-	 JCvsQLcRPsOQqepso2SIc6tPVp8MMZH4hqKSIyM8=
+	b=04O6Def6sPt+bsP4OugQsFTx7mgmp8irFJxVPpEhRgAZxwBdydBplPNHf8p4b8S3c
+	 Py+3Hjnw5uZFDXBs1RC4WFzyfCCDV78YzFI8eBNYJ3moPfNCyBdpGVGVXgqPZYUBfY
+	 b4VDGG9fdmEKgzYrt4oFe/E8uRznWunYnLuSq76I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/620] PCI: endpoint: Destroy the EPC device in devm_pci_epc_destroy()
-Date: Mon, 10 Mar 2025 17:59:44 +0100
-Message-ID: <20250310170551.047894100@linuxfoundation.org>
+Subject: [PATCH 5.15 139/620] media: marvell: Add check for clk_enable()
+Date: Mon, 10 Mar 2025 17:59:45 +0100
+Message-ID: <20250310170551.085791441@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit d4929755e4d02bd3de3ae5569dab69cb9502c54f ]
+[ Upstream commit 11f68d2ba2e1521a608af773bf788e8cfa260f68 ]
 
-The devm_pci_epc_destroy() comment says destroys the EPC device, but it
-does not actually do that since devres_destroy() does not call
-devm_pci_epc_release(), and it also can not fully undo what the API
-devm_pci_epc_create() does, so it is faulty.
+Add check for the return value of clk_enable() to guarantee the success.
 
-Fortunately, the faulty API has not been used by current kernel tree.  Use
-devres_release() instead of devres_destroy() so the EPC device will be
-released.
-
-Link: https://lore.kernel.org/r/20241210-pci-epc-core_fix-v3-1-4d86dd573e4b@quicinc.com
-Fixes: 5e8cb4033807 ("PCI: endpoint: Add EP core layer to enable EP controller and EP functions")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+[Sakari Ailus: Fix spelling in commit message.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/marvell-ccic/mcam-core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-index ecbb0fb3b653c..64f9bae6d15b9 100644
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -740,7 +740,7 @@ void devm_pci_epc_destroy(struct device *dev, struct pci_epc *epc)
- {
- 	int r;
+diff --git a/drivers/media/platform/marvell-ccic/mcam-core.c b/drivers/media/platform/marvell-ccic/mcam-core.c
+index 58f9463f3b8ce..a8d3ed5dc206f 100644
+--- a/drivers/media/platform/marvell-ccic/mcam-core.c
++++ b/drivers/media/platform/marvell-ccic/mcam-core.c
+@@ -935,7 +935,12 @@ static int mclk_enable(struct clk_hw *hw)
+ 	ret = pm_runtime_resume_and_get(cam->dev);
+ 	if (ret < 0)
+ 		return ret;
+-	clk_enable(cam->clk[0]);
++	ret = clk_enable(cam->clk[0]);
++	if (ret) {
++		pm_runtime_put(cam->dev);
++		return ret;
++	}
++
+ 	mcam_reg_write(cam, REG_CLKCTRL, (mclk_src << 29) | mclk_div);
+ 	mcam_ctlr_power_up(cam);
  
--	r = devres_destroy(dev, devm_pci_epc_release, devm_pci_epc_match,
-+	r = devres_release(dev, devm_pci_epc_release, devm_pci_epc_match,
- 			   epc);
- 	dev_WARN_ONCE(dev, r, "couldn't find PCI EPC resource\n");
- }
 -- 
 2.39.5
 
