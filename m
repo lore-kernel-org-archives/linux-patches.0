@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3642F230BE3;
-	Mon, 10 Mar 2025 17:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1865B22D4C3;
+	Mon, 10 Mar 2025 17:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626891; cv=none; b=YwhrJtq0oxJbDTOM88QJMbG7vHxp0ZSlCsZSOU3QXtvNPPDStwHik9jbM4plJ6Za65DLNZoRvSTL+KfHrAdWcoZIaQU6+nISetHwlZI1RZAmOCPSCLo0S1f8OlLQyBM+ehdEaJ5pfD/Io/CXJnvboXlsZX862p4/+g+yKDijwQo=
+	t=1741626894; cv=none; b=i3cvnOUwwfDDPgxD01AMZzM8yTY1uQ1GwabYBVTV2Z0Xya3Hawa7wDl9YjcwulvwZPsijWnE5ozIoGmu1Y9MNxKkGJ58cbfkD4NUkGxnZAr6UCeQF49F1AP7j4BOUnRt+/SmO2XN3kd3cZIip2K1UWNFbs2p5ebhXO6GjxgTZ7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626891; c=relaxed/simple;
-	bh=N87DRX63Opy6Ag09OgvysO5lNcxMwSi8f7QzeigOUoo=;
+	s=arc-20240116; t=1741626894; c=relaxed/simple;
+	bh=AB9Jxl4riai5/r2LuXB0yehHPIzz0ri1i/qemd9742o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkkCGaSJP77OmqtYKd3qhB90rQ0qeKg0qChBfWiW+9sWEhh1JmFLIhfeJptd7o6b4wDLvIAPv1bdPJrg1/15d1+poBCAF8f0GYE+m0J9iEaf1j0dnmKVSZSid/OyN4IoqZBZm8CYovjma3iuYWptaMDnqHyN2L9f+99t17SbI+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukXMNiW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eysySXxN42mjJ6MnZ0Szr9NzBYQ6mCvIKpNcN3VA2LhyhzCf2PkQjEdyf3lL2SUQpnEd7DGDkJzRb0lVfyqVH+vy0QruJBOph9bF4GmrwniJOYVns8V1bhgd78Eq+6RFAP/y9kfVKBrdtDIsB8sbZveGpAG4WMMfjfstiGBnX18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJ7rDfNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukXMNiW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4A8C4CEE5;
-	Mon, 10 Mar 2025 17:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJ7rDfNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B41C4CEE5;
+	Mon, 10 Mar 2025 17:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626891;
-	bh=N87DRX63Opy6Ag09OgvysO5lNcxMwSi8f7QzeigOUoo=;
+	s=korg; t=1741626894;
+	bh=AB9Jxl4riai5/r2LuXB0yehHPIzz0ri1i/qemd9742o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukXMNiW0BMtr9+U8pb1YLpNywTfQQXSyS1q+mr4lzz5ZUaW8BhbhN3aDJJubVmf+G
-	 29c+u61b2hlODFSfUv91vZQCYH9aMXFdlauwUt1i9d+ps1DHxJUpBgbk3v22Idi0o0
-	 ue6ELUjHtSTHUVtaQNfi4W4k55LMeTLntgwKlARg=
+	b=uJ7rDfNiBPdVrGUUsJBHhBOW21v7BlxkSBoN0Ns9+h2yeaks427LvkHxz5WBNXwZF
+	 eoV/FGDnmTTxbq6RkeCG7o3gCNwCVvq1ZgOa9jk5waBQT9QOeqUObUVKYYJrLBNdYn
+	 /gmxejRq68u/gcebqBadoRtdO3UE9neMVpGfzL9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Herbert <tom@herbertland.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 149/207] net: ipv6: fix missing dst ref drop in ila lwtunnel
-Date: Mon, 10 Mar 2025 18:05:42 +0100
-Message-ID: <20250310170453.720346828@linuxfoundation.org>
+Subject: [PATCH 6.13 150/207] gpio: rcar: Fix missing of_node_put() call
+Date: Mon, 10 Mar 2025 18:05:43 +0100
+Message-ID: <20250310170453.760792402@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,35 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-[ Upstream commit 5da15a9c11c1c47ef573e6805b60a7d8a1687a2a ]
+[ Upstream commit 391b41f983bf7ff853de44704d8e14e7cc648a9b ]
 
-Add missing skb_dst_drop() to drop reference to the old dst before
-adding the new dst to the skb.
+of_parse_phandle_with_fixed_args() requires its caller to
+call into of_node_put() on the node pointer from the output
+structure, but such a call is currently missing.
 
-Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
-Cc: Tom Herbert <tom@herbertland.com>
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Link: https://patch.msgid.link/20250305081655.19032-1-justin.iurman@uliege.be
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Call into of_node_put() to rectify that.
+
+Fixes: 159f8a0209af ("gpio-rcar: Add DT support")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20250305163753.34913-2-fabrizio.castro.jz@renesas.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_lwt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/gpio-rcar.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
-index ac4bcc623603a..7d574f5132e2f 100644
---- a/net/ipv6/ila/ila_lwt.c
-+++ b/net/ipv6/ila/ila_lwt.c
-@@ -96,6 +96,7 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 		}
- 	}
+diff --git a/drivers/gpio/gpio-rcar.c b/drivers/gpio/gpio-rcar.c
+index 8e0544e924886..a7a1cdf7ac66d 100644
+--- a/drivers/gpio/gpio-rcar.c
++++ b/drivers/gpio/gpio-rcar.c
+@@ -468,7 +468,12 @@ static int gpio_rcar_parse_dt(struct gpio_rcar_priv *p, unsigned int *npins)
+ 	p->info = *info;
  
-+	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
- 	return dst_output(net, sk, skb);
+ 	ret = of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3, 0, &args);
+-	*npins = ret == 0 ? args.args[2] : RCAR_MAX_GPIO_PER_BANK;
++	if (ret) {
++		*npins = RCAR_MAX_GPIO_PER_BANK;
++	} else {
++		*npins = args.args[2];
++		of_node_put(args.np);
++	}
  
+ 	if (*npins == 0 || *npins > RCAR_MAX_GPIO_PER_BANK) {
+ 		dev_warn(p->dev, "Invalid number of gpio lines %u, using %u\n",
 -- 
 2.39.5
 
