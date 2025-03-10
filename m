@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFDE2253FE;
-	Mon, 10 Mar 2025 17:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A0622D7A6;
+	Mon, 10 Mar 2025 17:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628389; cv=none; b=NHyQcVbOTFcKx6DbgGx5+UreZfP3b3X3zOOz0eiNTGH+lgEC2MeBUw+8k7Vt105LGx0DjoHbrVGf1O+zNxC/Fg6iY/mADBov5rJKeqUsCfAPWDDNy989WBn6P/ZcvoAj+hl/XT3+dGFT1D4XpzuzCUCd5okLEtmy175Ix6iNhnY=
+	t=1741628392; cv=none; b=ZBFk6yYElTH+0BQWX+lMuaWtI5K1kEzGQuZSnqDhusRwQHuCNTQNGZ1UDMNxIbDbqWVK6+1DuLEvzS3BT1qvI0RsIgjBNRfYubnW1/UoxiNBFt5xOcqoWOKLpsjqjYTwyiOYKFQpN9MZ4ZweuHqQt781Z5dAbhQ3uVzKj2EYZtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628389; c=relaxed/simple;
-	bh=VNJiuGnvjWOP9AkZ0WhEmoMHWm1dJn5Rlwjacr3muMA=;
+	s=arc-20240116; t=1741628392; c=relaxed/simple;
+	bh=Pm8usQuwaxp0UIuwk/7VvznT4mKrgiuc/thYfOVudSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCYivzZSGejGWZ909vIq4FS9ij8RqShNc6QlRBeWsR5N3/Ya1kSGRvADHCYn69lxhnaky/vw1DuujnxZcH+LbPxin2TmO2VzT53QvN56McAO8bI+6I4PA78gyWq1zILszyGnLGLeK7L4Caw4KajWH64Mkhj7NYhgEN96o86mA8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKemKIg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A49sbH9xNgjpbGH8ihlq/4juWgmsrlhuDKodNK38jRp1BeoJ5stDtfGG6Fhye3h4/Fht1ISpoo3x6QEoVZLWVKf6IdxQNcEydAvD0zCuRK8RTz/rLnnDTUki4CnC8e42Gm92MdbT2nERXVWBE1XI2ICuBSkFN+84g2ekHlbaKrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1/dOQ/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKemKIg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD074C4CEE5;
-	Mon, 10 Mar 2025 17:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1/dOQ/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA557C4CEE5;
+	Mon, 10 Mar 2025 17:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628389;
-	bh=VNJiuGnvjWOP9AkZ0WhEmoMHWm1dJn5Rlwjacr3muMA=;
+	s=korg; t=1741628392;
+	bh=Pm8usQuwaxp0UIuwk/7VvznT4mKrgiuc/thYfOVudSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKemKIg1sRUyDXRwpgjjYVDl/OyF2l5lWUWQjb1hPAD5jokrCyeHDqCzY9n8/fO1q
-	 3Kmk1a4CzMYgItx+lcsFWx74oG9HYBQegrpv43S4Vk1nBn6/x4m/UdJMaiCqk9j/Rx
-	 XwZffgh2PLZsKs8BkEWDKNKV2YPWwA57K0c7Nnt4=
+	b=U1/dOQ/27ZZTMZ8/pPYzCkSiV7qFFaKNisQIyWr3lg29R1XawXofQse1uANLLLWQN
+	 KZk4WIDKi/EmnewWJduFOxVvgEc/xrvKedICCxnP49Pkqz7MW/wRUtb5jVcEbfJ+Vz
+	 c9aqWfWdltnEgVP3Nt4ojQIHigCe8gCnam1mDIbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meir Elisha <meir.elisha@volumez.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/109] nvmet-tcp: Fix a possible sporadic response drops in weakly ordered arch
-Date: Mon, 10 Mar 2025 18:06:25 +0100
-Message-ID: <20250310170429.192614390@linuxfoundation.org>
+Subject: [PATCH 6.1 042/109] net: gso: fix ownership in __udp_gso_segment
+Date: Mon, 10 Mar 2025 18:06:26 +0100
+Message-ID: <20250310170429.232215441@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -52,68 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meir Elisha <meir.elisha@volumez.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit a16f88964c647103dad7743a484b216d488a6352 ]
+[ Upstream commit ee01b2f2d7d0010787c2343463965bbc283a497f ]
 
-The order in which queue->cmd and rcv_state are updated is crucial.
-If these assignments are reordered by the compiler, the worker might not
-get queued in nvmet_tcp_queue_response(), hanging the IO. to enforce the
-the correct reordering, set rcv_state using smp_store_release().
+In __udp_gso_segment the skb destructor is removed before segmenting the
+skb but the socket reference is kept as-is. This is an issue if the
+original skb is later orphaned as we can hit the following bug:
 
-Fixes: bdaf13279192 ("nvmet-tcp: fix a segmentation fault during io parsing error")
+  kernel BUG at ./include/linux/skbuff.h:3312!  (skb_orphan)
+  RIP: 0010:ip_rcv_core+0x8b2/0xca0
+  Call Trace:
+   ip_rcv+0xab/0x6e0
+   __netif_receive_skb_one_core+0x168/0x1b0
+   process_backlog+0x384/0x1100
+   __napi_poll.constprop.0+0xa1/0x370
+   net_rx_action+0x925/0xe50
 
-Signed-off-by: Meir Elisha <meir.elisha@volumez.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+The above can happen following a sequence of events when using
+OpenVSwitch, when an OVS_ACTION_ATTR_USERSPACE action precedes an
+OVS_ACTION_ATTR_OUTPUT action:
+
+1. OVS_ACTION_ATTR_USERSPACE is handled (in do_execute_actions): the skb
+   goes through queue_gso_packets and then __udp_gso_segment, where its
+   destructor is removed.
+2. The segments' data are copied and sent to userspace.
+3. OVS_ACTION_ATTR_OUTPUT is handled (in do_execute_actions) and the
+   same original skb is sent to its path.
+4. If it later hits skb_orphan, we hit the bug.
+
+Fix this by also removing the reference to the socket in
+__udp_gso_segment.
+
+Fixes: ad405857b174 ("udp: better wmem accounting on gso")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20250226171352.258045-1-atenart@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ net/ipv4/udp_offload.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 81574500a57c7..125e22bd34e2a 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -520,10 +520,16 @@ static void nvmet_tcp_queue_response(struct nvmet_req *req)
- 	struct nvmet_tcp_cmd *cmd =
- 		container_of(req, struct nvmet_tcp_cmd, req);
- 	struct nvmet_tcp_queue	*queue = cmd->queue;
-+	enum nvmet_tcp_recv_state queue_state;
-+	struct nvmet_tcp_cmd *queue_cmd;
- 	struct nvme_sgl_desc *sgl;
- 	u32 len;
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 1456c8c2b8dbd..2f1f038b0dc1b 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -314,13 +314,17 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
  
--	if (unlikely(cmd == queue->cmd)) {
-+	/* Pairs with store_release in nvmet_prepare_receive_pdu() */
-+	queue_state = smp_load_acquire(&queue->rcv_state);
-+	queue_cmd = READ_ONCE(queue->cmd);
-+
-+	if (unlikely(cmd == queue_cmd)) {
- 		sgl = &cmd->req.cmd->common.dptr.sgl;
- 		len = le32_to_cpu(sgl->length);
+ 	/* clear destructor to avoid skb_segment assigning it to tail */
+ 	copy_dtor = gso_skb->destructor == sock_wfree;
+-	if (copy_dtor)
++	if (copy_dtor) {
+ 		gso_skb->destructor = NULL;
++		gso_skb->sk = NULL;
++	}
  
-@@ -532,7 +538,7 @@ static void nvmet_tcp_queue_response(struct nvmet_req *req)
- 		 * Avoid using helpers, this might happen before
- 		 * nvmet_req_init is completed.
- 		 */
--		if (queue->rcv_state == NVMET_TCP_RECV_PDU &&
-+		if (queue_state == NVMET_TCP_RECV_PDU &&
- 		    len && len <= cmd->req.port->inline_data_size &&
- 		    nvme_is_write(cmd->req.cmd))
- 			return;
-@@ -784,8 +790,9 @@ static void nvmet_prepare_receive_pdu(struct nvmet_tcp_queue *queue)
- {
- 	queue->offset = 0;
- 	queue->left = sizeof(struct nvme_tcp_hdr);
--	queue->cmd = NULL;
--	queue->rcv_state = NVMET_TCP_RECV_PDU;
-+	WRITE_ONCE(queue->cmd, NULL);
-+	/* Ensure rcv_state is visible only after queue->cmd is set */
-+	smp_store_release(&queue->rcv_state, NVMET_TCP_RECV_PDU);
- }
+ 	segs = skb_segment(gso_skb, features);
+ 	if (IS_ERR_OR_NULL(segs)) {
+-		if (copy_dtor)
++		if (copy_dtor) {
+ 			gso_skb->destructor = sock_wfree;
++			gso_skb->sk = sk;
++		}
+ 		return segs;
+ 	}
  
- static void nvmet_tcp_free_crypto(struct nvmet_tcp_queue *queue)
 -- 
 2.39.5
 
