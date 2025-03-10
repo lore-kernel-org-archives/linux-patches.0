@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5E222F164;
-	Mon, 10 Mar 2025 17:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060182309B0;
+	Mon, 10 Mar 2025 17:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628199; cv=none; b=DtLLN8XVJstmA95ga/KzxKOqmUm79e1NvtdDyPw+zsrN+1H1dfDjfhJm+q3aeN+jBfaL8R+vCk90SBy3ZVsY+j+Rfl4Hh7BEvaEJcgIhMGz4v1ddMinkQMkqw0tjLgLG67zsbmJ6LdisQW3gFjNjlWIEXJMba9qV++XqdcBErAM=
+	t=1741628202; cv=none; b=p505PbFskAlcTvyrdUKrbvTuT6i6T6bTs9OivoQAbViz85jd8U6VfqdNZgg9B9a8wPZ85jQS6KSAN60nCAh5MJHIhvntE/89Gq7Z9N9A1oJTei1SROyT9dHFZAYVuD709sFjVQ4bXSO145SbPTVIz9LpG3SfTxX2GyIwTnqIjtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628199; c=relaxed/simple;
-	bh=iK1mpza4dN83YUaPm3BcCxKd4dBaCkcBVP4Y5LfLAZU=;
+	s=arc-20240116; t=1741628202; c=relaxed/simple;
+	bh=+5f3pQIcrsht9TJNmeYDTh0g9iHNh1yJycuaysOWzXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYGSckCgys5I52pqd7NfEBrdV7VXKPfUxZjf7BzEHld9TvNoqx5RRry0nQoU+SPXFEwltBGtU1FwG4UE6GQkRLsPU3tmPItZBK//OWSg2wXyMwy34Btwiotq/0CJ2QOeFNVrRGcsbzQXmVX25AFCTKObuXwbJ8DEv4PR95UmgI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn1Yl3Td; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMwXPrHv/CcAlkdNo3q/2GY+BkrWxX9C2AuaKZEsZcQ3QnKZp+c8D6bV+l3cLc7B4aBg0QWjoJT3UcdO1sus32VughP6Qm83kK/YoFdRIZzH6feqZCvrhDtbb+XRWVFVt4MNn6QOkkORLwyk0Un9ijoTUI+G6bxfdcCUTYwWiLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiUd9Oa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn1Yl3Td"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99737C4CEE5;
-	Mon, 10 Mar 2025 17:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiUd9Oa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7C0C4CEE5;
+	Mon, 10 Mar 2025 17:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628199;
-	bh=iK1mpza4dN83YUaPm3BcCxKd4dBaCkcBVP4Y5LfLAZU=;
+	s=korg; t=1741628201;
+	bh=+5f3pQIcrsht9TJNmeYDTh0g9iHNh1yJycuaysOWzXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gn1Yl3Tdxa2Mk2QXbnXae/vWWggsW+Y5OwM8jS8B8irH+Ug6cwbvmFPNqq9mqZzTY
-	 MpwXJPvrBEOht/4g/dp9BFd1TIpS8cnWXQan2S3ZvHpHjybBs4NzCnfYhcfKaAlpk5
-	 r/JJFHyPR7HpCPDAJ0xWNutCgNd5srsZzaA7CMMg=
+	b=HiUd9Oa10SHHTXQrO9NOUikHkCssuWEoihcgRD3ngXfTJsA28OI4Y98wmbqYT968m
+	 OgGKf0t11jxTjKTa5nZUqLuu/F8gorFpyG51yavI8bKv5TMc2PCHB97jhyZ8C06HQC
+	 1r9ldybqSlo32nFqrn6by6OkXWOvHTcjG8Ve+qFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 121/145] bus: mhi: host: pci_generic: Use pci_try_reset_function() to avoid deadlock
-Date: Mon, 10 Mar 2025 18:06:55 +0100
-Message-ID: <20250310170439.653874095@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.6 122/145] eeprom: digsy_mtc: Make GPIO lookup table match the device
+Date: Mon, 10 Mar 2025 18:06:56 +0100
+Message-ID: <20250310170439.696873532@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -52,69 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit a321d163de3d8aa38a6449ab2becf4b1581aed96 upstream.
+commit 038ef0754aae76f79b147b8867f9250e6a976872 upstream.
 
-There are multiple places from where the recovery work gets scheduled
-asynchronously. Also, there are multiple places where the caller waits
-synchronously for the recovery to be completed. One such place is during
-the PM shutdown() callback.
+The dev_id value in the GPIO lookup table must match to
+the device instance name, which in this case is combined
+of name and platform device ID, i.e. "spi_gpio.1". But
+the table assumed that there was no platform device ID
+defined, which is wrong. Fix the dev_id value accordingly.
 
-If the device is not alive during recovery_work, it will try to reset the
-device using pci_reset_function(). This function internally will take the
-device_lock() first before resetting the device. By this time, if the lock
-has already been acquired, then recovery_work will get stalled while
-waiting for the lock. And if the lock was already acquired by the caller
-which waits for the recovery_work to be completed, it will lead to
-deadlock.
-
-This is what happened on the X1E80100 CRD device when the device died
-before shutdown() callback. Driver core calls the driver's shutdown()
-callback while holding the device_lock() leading to deadlock.
-
-And this deadlock scenario can occur on other paths as well, like during
-the PM suspend() callback, where the driver core would hold the
-device_lock() before calling driver's suspend() callback. And if the
-recovery_work was already started, it could lead to deadlock. This is also
-observed on the X1E80100 CRD.
-
-So to fix both issues, use pci_try_reset_function() in recovery_work. This
-function first checks for the availability of the device_lock() before
-trying to reset the device. If the lock is available, it will acquire it
-and reset the device. Otherwise, it will return -EAGAIN. If that happens,
-recovery_work will fail with the error message "Recovery failed" as not
-much could be done.
-
-Cc: stable@vger.kernel.org # 5.12
-Reported-by: Johan Hovold <johan@kernel.org>
-Closes: https://lore.kernel.org/mhi/Z1me8iaK7cwgjL92@hovoldconsulting.com
-Fixes: 7389337f0a78 ("mhi: pci_generic: Add suspend/resume/recovery procedure")
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Analyzed-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/mhi/Z2KKjWY2mPen6GPL@hovoldconsulting.com/
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
-Link: https://lore.kernel.org/r/20250108-mhi_recovery_fix-v1-1-a0a00a17da46@linaro.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 9b00bc7b901f ("spi: spi-gpio: Rewrite to use GPIO descriptors")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206220311.1554075-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/pci_generic.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/misc/eeprom/digsy_mtc_eeprom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -892,8 +892,9 @@ static void mhi_pci_recovery_work(struct
- err_unprepare:
- 	mhi_unprepare_after_power_down(mhi_cntrl);
- err_try_reset:
--	if (pci_reset_function(pdev))
--		dev_err(&pdev->dev, "Recovery failed\n");
-+	err = pci_try_reset_function(pdev);
-+	if (err)
-+		dev_err(&pdev->dev, "Recovery failed: %d\n", err);
- }
+--- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
++++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
+@@ -60,7 +60,7 @@ static struct platform_device digsy_mtc_
+ };
  
- static void health_check(struct timer_list *t)
+ static struct gpiod_lookup_table eeprom_spi_gpiod_table = {
+-	.dev_id         = "spi_gpio",
++	.dev_id         = "spi_gpio.1",
+ 	.table          = {
+ 		GPIO_LOOKUP("gpio@b00", GPIO_EEPROM_CLK,
+ 			    "sck", GPIO_ACTIVE_HIGH),
 
 
