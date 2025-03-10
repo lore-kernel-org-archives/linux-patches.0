@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783951C3F34;
-	Mon, 10 Mar 2025 18:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D691C3F34;
+	Mon, 10 Mar 2025 18:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630734; cv=none; b=Bsgq4F3JYQWa9VRNaIgPyI0wWc+JIwQTJplVfnWOrpPzQrP6L/lhzPinkTDzI+hmPhpdSELd6aYLh1ScmuPD+Ea7UYhSpJO0dbJKl1tKofRaBj3vwn3G3noS6rvfbs9SadT+DjkSNFSNxAiz0PMp0bdb3WlJz1RMrS/ILLzeCbs=
+	t=1741630738; cv=none; b=f0p0mPRmtXB00dR0NSl51QDD3hBunr0cMn+6a9eHrAT4rV/kifU4qZaB2rVglfsCVx5fCvKG3QM7xK1ZeMYNMDzBKti/8hiWfohtBzre8cDHrF0d3Jypbe8/IsVUY+Nie2Ko2xgr2a3Ha8q4p9OpE2J455NNUHi+Qp747HG8sY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630734; c=relaxed/simple;
-	bh=OfLPkag+Aiz0gV7wnWWcTIKV+DY0JLWgpsVLayUJeJA=;
+	s=arc-20240116; t=1741630738; c=relaxed/simple;
+	bh=7tz+K5dHSo+Ud2jCycnj0qpaNIdXtehQPyWcISuWPYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQUgmBMnOynmlgF/RbnY7QyH1miRvv8vPmVDz2QPO0z5G/7IdeXGeZjTMX1H/d1uvAEsRaZyZjgl9IjiKjXCT2P2SlE43gnEKrjZYbTYTug5RKCcyKtTOsxABKuY6hvtiSXNskfEahjXyV3k9+DlAqaxCfI/dvXXm/MAfmsFUyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJm6Dsc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGgNQczN42Qniit0Sne5k08GyJrQerxllUZnB4EDNmQBbz9FfOaF+jvnDDd93NsXvaVM1EoLczoVpqJDfnyAarlz/X43/PysVE0FyohYCKHUOYoA8xkLBmpfriZ5UZs+oArGxO3oeg7xxb1atdU/O88awGyiTWq9Bza7oyQMpwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyF8gy1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJm6Dsc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F404AC4CEED;
-	Mon, 10 Mar 2025 18:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyF8gy1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58442C4CEED;
+	Mon, 10 Mar 2025 18:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630734;
-	bh=OfLPkag+Aiz0gV7wnWWcTIKV+DY0JLWgpsVLayUJeJA=;
+	s=korg; t=1741630737;
+	bh=7tz+K5dHSo+Ud2jCycnj0qpaNIdXtehQPyWcISuWPYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJm6Dsc4BqUbw3bIHMLIYDpIFcUyt61CU5UuoKECWg/Jqlc2/6nKSwujfc01yvF6i
-	 Vl5FRiVbN3mUla+2We89mgkbybaZXUxBw+RObC8UW5hNyAbYOTLJoy7iqNpA64UX1L
-	 I91iNK7GVo/qTXpgKAVmXcqL5110YTdPrjZ1cL0Y=
+	b=WyF8gy1ChxXDTKHU4RSuoECanMsLl0jueHuCQ25QiUTAAQwR5zZF2dCa3a74grNCN
+	 I+llndOWfkwD+/rkkhl653xSaAFaEGCwZCGZdEgnw/oOAuGXRhyNoLeSFmS2XqhRil
+	 EtuziuzWYCUboJf7CwTDWD6y75KHJA3dXsN/HwmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 489/620] ovl: fix UAF in ovl_dentry_update_reval by moving dput() in ovl_link_up
-Date: Mon, 10 Mar 2025 18:05:35 +0100
-Message-ID: <20250310170604.875691972@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 516/620] perf/core: Fix low freq setting via IOC_PERIOD
+Date: Mon, 10 Mar 2025 18:06:02 +0100
+Message-ID: <20250310170605.924396695@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,70 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit c84e125fff2615b4d9c259e762596134eddd2f27 ]
+commit 0d39844150546fa1415127c5fbae26db64070dd3 upstream.
 
-The issue was caused by dput(upper) being called before
-ovl_dentry_update_reval(), while upper->d_flags was still
-accessed in ovl_dentry_remote().
+A low attr::freq value cannot be set via IOC_PERIOD on some platforms.
 
-Move dput(upper) after its last use to prevent use-after-free.
+The perf_event_check_period() introduced in:
 
-BUG: KASAN: slab-use-after-free in ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
-BUG: KASAN: slab-use-after-free in ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
+  81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0xc3/0x620 mm/kasan/report.c:488
- kasan_report+0xd9/0x110 mm/kasan/report.c:601
- ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
- ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
- ovl_link_up fs/overlayfs/copy_up.c:610 [inline]
- ovl_copy_up_one+0x2105/0x3490 fs/overlayfs/copy_up.c:1170
- ovl_copy_up_flags+0x18d/0x200 fs/overlayfs/copy_up.c:1223
- ovl_rename+0x39e/0x18c0 fs/overlayfs/dir.c:1136
- vfs_rename+0xf84/0x20a0 fs/namei.c:4893
-...
- </TASK>
+was intended to check the period, rather than the frequency.
+A low frequency may be mistakenly rejected by limit_period().
 
-Fixes: b07d5cc93e1b ("ovl: update of dentry revalidate flags after copy up")
-Reported-by: syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=316db8a1191938280eb6
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20250214215148.761147-1-kovalev@altlinux.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix it.
+
+Fixes: 81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250117151913.3043942-2-kan.liang@linux.intel.com
+Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 205238c73dbc5..5fc32483afed8 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -537,7 +537,6 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
- 	err = PTR_ERR(upper);
- 	if (!IS_ERR(upper)) {
- 		err = ovl_do_link(ofs, ovl_dentry_upper(c->dentry), udir, upper);
--		dput(upper);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5773,14 +5773,15 @@ static int _perf_event_period(struct per
+ 	if (!value)
+ 		return -EINVAL;
  
- 		if (!err) {
- 			/* Restore timestamps on parent (best effort) */
-@@ -545,6 +544,7 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
- 			ovl_dentry_set_upper_alias(c->dentry);
- 			ovl_dentry_update_reval(c->dentry, upper);
- 		}
-+		dput(upper);
- 	}
- 	inode_unlock(udir);
- 	if (err)
--- 
-2.39.5
-
+-	if (event->attr.freq && value > sysctl_perf_event_sample_rate)
+-		return -EINVAL;
+-
+-	if (perf_event_check_period(event, value))
+-		return -EINVAL;
+-
+-	if (!event->attr.freq && (value & (1ULL << 63)))
+-		return -EINVAL;
++	if (event->attr.freq) {
++		if (value > sysctl_perf_event_sample_rate)
++			return -EINVAL;
++	} else {
++		if (perf_event_check_period(event, value))
++			return -EINVAL;
++		if (value & (1ULL << 63))
++			return -EINVAL;
++	}
+ 
+ 	event_function_call(event, __perf_event_period, &value);
+ 
 
 
