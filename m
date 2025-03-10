@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7239230BED;
-	Mon, 10 Mar 2025 17:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163022B8A9;
+	Mon, 10 Mar 2025 17:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628036; cv=none; b=qZIqlH0sKb8/y3fscLHt/HE8DzfFD8hYZOg8S0XaMZKsR1k5FUHY/E8UQCLj0sq0Hi1BnGc7r19e/gjlDznbr2nItrvcFRx8JZqBj5i+mZd7GGCC1U+GlePSSsg0nb1SKY5GAdOtziZJyp/kMqSI7U6tTL5O0yave2vdKI1DAp8=
+	t=1741628039; cv=none; b=BbTmVrmeKHzMHswd3Si5hCoHXuayhvSH674vKu4RYV2DGVLcUfZLERVOnRQPM8+iJjna5wiLlE6QmTTGazgd7GsrNM1Mh11cwnNHQh31Y2ENEFsk0ZIdKBZlu8ndcbY0dLAcLcGMU75Ir7DqmEi+p3uYI/6lAqqzPVmLjeKe1kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628036; c=relaxed/simple;
-	bh=SFdCO42f1hsnV7YlboKbHcwQc74cIUTDstwPjus94BA=;
+	s=arc-20240116; t=1741628039; c=relaxed/simple;
+	bh=KCeSxgxvuQ8CLnyJX2nY5pduwUrOKpjxnNf2+raU7J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/GDxI/bf7zoVcTDzNpmclB30tM3Qu+/FDzF/yxMzkwPAkZgx2TFQOarSQrakc7QecjZ5a8IkkuGuhurBL7B9yibrWjHbUw/I4VGpC44WkWPjLjFGcgNN7JmbRacgDijsoWSqAgOQDuvXYhjTFXow1JQqmbL5IM6Sqht2ZV0GTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7yOc+qh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nB58RS4512vcnRETeHUCLDF0VnUTuU9AM1m7VSZ9s4aIiECVK6zDFXbCx5KkE4JBoGm4P8flLtn+e75e/YAkTg/NxucnO6uByUQVqOTe2KtLlU7/iDLS6o5nBUhuCZHdL1VeNSZTl2Z4RK29bCeTIwab1CxwIX9/rCUFs9vyj4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+RZT1O9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7yOc+qh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BECC4CEE5;
-	Mon, 10 Mar 2025 17:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+RZT1O9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6582C4CEEC;
+	Mon, 10 Mar 2025 17:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628036;
-	bh=SFdCO42f1hsnV7YlboKbHcwQc74cIUTDstwPjus94BA=;
+	s=korg; t=1741628039;
+	bh=KCeSxgxvuQ8CLnyJX2nY5pduwUrOKpjxnNf2+raU7J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7yOc+qhYM0F84irFgGLCZfD4WNLp3RcBHOfNU8iptU2NfiB+8hxOsTxi53QbEIXF
-	 UvLVtPT74ryhLHhAvH1mBDsJ0eCBPAmjro7S0ajYYvzly7TdfFMS0yidKkPy3FdNQK
-	 t01VBCSwnN4qGf+vAXVhs0bzceftUYfgLrSPOOmM=
+	b=H+RZT1O9ixwWGNsX0zUpdJ+EBezL4auIOf8h6rs4WqxIcUWbwLtld3Ldb1i6QWxuL
+	 nYV2HKiG6anflOt6EXAXPICPHWxyLjussuaD+AsDBBq644/YA4jRY2Sh1Dxor3xrsj
+	 2mec8nrbR5nYPtd7UNAtggUtOBZ+prm2d7P1eBJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 034/145] gpio: aggregator: protect driver attr handlers against module unload
-Date: Mon, 10 Mar 2025 18:05:28 +0100
-Message-ID: <20250310170436.109602369@linuxfoundation.org>
+	syzbot+4cb9fad083898f54c517@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 035/145] ALSA: seq: Avoid module auto-load handling at event delivery
+Date: Mon, 10 Mar 2025 18:05:29 +0100
+Message-ID: <20250310170436.149220990@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,132 +50,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 12f65d1203507f7db3ba59930fe29a3b8eee9945 upstream.
+commit c9ce148ea753bef66686460fa3cec6641cdfbb9f upstream.
 
-Both new_device_store and delete_device_store touch module global
-resources (e.g. gpio_aggregator_lock). To prevent race conditions with
-module unload, a reference needs to be held.
+snd_seq_client_use_ptr() is supposed to return the snd_seq_client
+object for the given client ID, and it tries to handle the module
+auto-loading when no matching object is found.  Although the module
+handling is performed only conditionally with "!in_interrupt()", this
+condition may be fragile, e.g. when the code is called from the ALSA
+timer callback where the spinlock is temporarily disabled while the
+irq is disabled.  Then his doesn't fit well and spews the error about
+sleep from invalid context, as complained recently by syzbot.
 
-Add try_module_get() in these handlers.
+Also, in general, handling the module-loading at each time if no
+matching object is found is really an overkill.  It can be still
+useful when performed at the top-level ioctl or proc reads, but it
+shouldn't be done at event delivery at all.
 
-For new_device_store, this eliminates what appears to be the most dangerous
-scenario: if an id is allocated from gpio_aggregator_idr but
-platform_device_register has not yet been called or completed, a concurrent
-module unload could fail to unregister/delete the device, leaving behind a
-dangling platform device/GPIO forwarder. This can result in various issues.
-The following simple reproducer demonstrates these problems:
+For addressing the issues above, this patch disables the module
+handling in snd_seq_client_use_ptr() in normal cases like event
+deliveries, but allow only in limited and safe situations.
+A new function client_load_and_use_ptr() is used for the cases where
+the module loading can be done safely, instead.
 
-  #!/bin/bash
-  while :; do
-    # note: whether 'gpiochip0 0' exists or not does not matter.
-    echo 'gpiochip0 0' > /sys/bus/platform/drivers/gpio-aggregator/new_device
-  done &
-  while :; do
-    modprobe gpio-aggregator
-    modprobe -r gpio-aggregator
-  done &
-  wait
-
-  Starting with the following warning, several kinds of warnings will appear
-  and the system may become unstable:
-
-  ------------[ cut here ]------------
-  list_del corruption, ffff888103e2e980->next is LIST_POISON1 (dead000000000100)
-  WARNING: CPU: 1 PID: 1327 at lib/list_debug.c:56 __list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  RIP: 0010:__list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  Call Trace:
-   <TASK>
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? __warn.cold+0x93/0xf2
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? report_bug+0xe6/0x170
-   ? __irq_work_queue_local+0x39/0xe0
-   ? handle_bug+0x58/0x90
-   ? exc_invalid_op+0x13/0x60
-   ? asm_exc_invalid_op+0x16/0x20
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   gpiod_remove_lookup_table+0x22/0x60
-   new_device_store+0x315/0x350 [gpio_aggregator]
-   kernfs_fop_write_iter+0x137/0x1f0
-   vfs_write+0x262/0x430
-   ksys_write+0x60/0xd0
-   do_syscall_64+0x6c/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [...]
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-
-Fixes: 828546e24280 ("gpio: Add GPIO Aggregator")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Link: https://lore.kernel.org/r/20250224143134.3024598-2-koichiro.den@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: syzbot+4cb9fad083898f54c517@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/67c272e5.050a0220.dc10f.0159.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250301114530.8975-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-aggregator.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ sound/core/seq/seq_clientmgr.c |   46 ++++++++++++++++++++++++++---------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
---- a/drivers/gpio/gpio-aggregator.c
-+++ b/drivers/gpio/gpio-aggregator.c
-@@ -121,10 +121,15 @@ static ssize_t new_device_store(struct d
- 	struct platform_device *pdev;
- 	int res, id;
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -106,7 +106,7 @@ static struct snd_seq_client *clientptr(
+ 	return clienttab[clientid];
+ }
  
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
-+
- 	/* kernfs guarantees string termination, so count + 1 is safe */
- 	aggr = kzalloc(sizeof(*aggr) + count + 1, GFP_KERNEL);
--	if (!aggr)
--		return -ENOMEM;
-+	if (!aggr) {
-+		res = -ENOMEM;
-+		goto put_module;
-+	}
- 
- 	memcpy(aggr->args, buf, count + 1);
- 
-@@ -163,6 +168,7 @@ static ssize_t new_device_store(struct d
+-struct snd_seq_client *snd_seq_client_use_ptr(int clientid)
++static struct snd_seq_client *client_use_ptr(int clientid, bool load_module)
+ {
+ 	unsigned long flags;
+ 	struct snd_seq_client *client;
+@@ -126,7 +126,7 @@ struct snd_seq_client *snd_seq_client_us
  	}
+ 	spin_unlock_irqrestore(&clients_lock, flags);
+ #ifdef CONFIG_MODULES
+-	if (!in_interrupt()) {
++	if (load_module) {
+ 		static DECLARE_BITMAP(client_requested, SNDRV_SEQ_GLOBAL_CLIENTS);
+ 		static DECLARE_BITMAP(card_requested, SNDRV_CARDS);
  
- 	aggr->pdev = pdev;
-+	module_put(THIS_MODULE);
- 	return count;
- 
- remove_table:
-@@ -177,6 +183,8 @@ free_table:
- 	kfree(aggr->lookups);
- free_ga:
- 	kfree(aggr);
-+put_module:
-+	module_put(THIS_MODULE);
- 	return res;
+@@ -168,6 +168,20 @@ struct snd_seq_client *snd_seq_client_us
+ 	return client;
  }
  
-@@ -205,13 +213,19 @@ static ssize_t delete_device_store(struc
- 	if (error)
- 		return error;
- 
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
++/* get snd_seq_client object for the given id quickly */
++struct snd_seq_client *snd_seq_client_use_ptr(int clientid)
++{
++	return client_use_ptr(clientid, false);
++}
 +
- 	mutex_lock(&gpio_aggregator_lock);
- 	aggr = idr_remove(&gpio_aggregator_idr, id);
- 	mutex_unlock(&gpio_aggregator_lock);
--	if (!aggr)
-+	if (!aggr) {
-+		module_put(THIS_MODULE);
- 		return -ENOENT;
-+	}
++/* get snd_seq_client object for the given id;
++ * if not found, retry after loading the modules
++ */
++static struct snd_seq_client *client_load_and_use_ptr(int clientid)
++{
++	return client_use_ptr(clientid, IS_ENABLED(CONFIG_MODULES));
++}
++
+ /* Take refcount and perform ioctl_mutex lock on the given client;
+  * used only for OSS sequencer
+  * Unlock via snd_seq_client_ioctl_unlock() below
+@@ -176,7 +190,7 @@ bool snd_seq_client_ioctl_lock(int clien
+ {
+ 	struct snd_seq_client *client;
  
- 	gpio_aggregator_free(aggr);
-+	module_put(THIS_MODULE);
- 	return count;
- }
- static DRIVER_ATTR_WO(delete_device);
+-	client = snd_seq_client_use_ptr(clientid);
++	client = client_load_and_use_ptr(clientid);
+ 	if (!client)
+ 		return false;
+ 	mutex_lock(&client->ioctl_mutex);
+@@ -1200,7 +1214,7 @@ static int snd_seq_ioctl_running_mode(st
+ 	int err = 0;
+ 
+ 	/* requested client number */
+-	cptr = snd_seq_client_use_ptr(info->client);
++	cptr = client_load_and_use_ptr(info->client);
+ 	if (cptr == NULL)
+ 		return -ENOENT;		/* don't change !!! */
+ 
+@@ -1262,7 +1276,7 @@ static int snd_seq_ioctl_get_client_info
+ 	struct snd_seq_client *cptr;
+ 
+ 	/* requested client number */
+-	cptr = snd_seq_client_use_ptr(client_info->client);
++	cptr = client_load_and_use_ptr(client_info->client);
+ 	if (cptr == NULL)
+ 		return -ENOENT;		/* don't change !!! */
+ 
+@@ -1397,7 +1411,7 @@ static int snd_seq_ioctl_get_port_info(s
+ 	struct snd_seq_client *cptr;
+ 	struct snd_seq_client_port *port;
+ 
+-	cptr = snd_seq_client_use_ptr(info->addr.client);
++	cptr = client_load_and_use_ptr(info->addr.client);
+ 	if (cptr == NULL)
+ 		return -ENXIO;
+ 
+@@ -1501,10 +1515,10 @@ static int snd_seq_ioctl_subscribe_port(
+ 	struct snd_seq_client *receiver = NULL, *sender = NULL;
+ 	struct snd_seq_client_port *sport = NULL, *dport = NULL;
+ 
+-	receiver = snd_seq_client_use_ptr(subs->dest.client);
++	receiver = client_load_and_use_ptr(subs->dest.client);
+ 	if (!receiver)
+ 		goto __end;
+-	sender = snd_seq_client_use_ptr(subs->sender.client);
++	sender = client_load_and_use_ptr(subs->sender.client);
+ 	if (!sender)
+ 		goto __end;
+ 	sport = snd_seq_port_use_ptr(sender, subs->sender.port);
+@@ -1865,7 +1879,7 @@ static int snd_seq_ioctl_get_client_pool
+ 	struct snd_seq_client_pool *info = arg;
+ 	struct snd_seq_client *cptr;
+ 
+-	cptr = snd_seq_client_use_ptr(info->client);
++	cptr = client_load_and_use_ptr(info->client);
+ 	if (cptr == NULL)
+ 		return -ENOENT;
+ 	memset(info, 0, sizeof(*info));
+@@ -1969,7 +1983,7 @@ static int snd_seq_ioctl_get_subscriptio
+ 	struct snd_seq_client_port *sport = NULL;
+ 
+ 	result = -EINVAL;
+-	sender = snd_seq_client_use_ptr(subs->sender.client);
++	sender = client_load_and_use_ptr(subs->sender.client);
+ 	if (!sender)
+ 		goto __end;
+ 	sport = snd_seq_port_use_ptr(sender, subs->sender.port);
+@@ -2000,7 +2014,7 @@ static int snd_seq_ioctl_query_subs(stru
+ 	struct list_head *p;
+ 	int i;
+ 
+-	cptr = snd_seq_client_use_ptr(subs->root.client);
++	cptr = client_load_and_use_ptr(subs->root.client);
+ 	if (!cptr)
+ 		goto __end;
+ 	port = snd_seq_port_use_ptr(cptr, subs->root.port);
+@@ -2067,7 +2081,7 @@ static int snd_seq_ioctl_query_next_clie
+ 	if (info->client < 0)
+ 		info->client = 0;
+ 	for (; info->client < SNDRV_SEQ_MAX_CLIENTS; info->client++) {
+-		cptr = snd_seq_client_use_ptr(info->client);
++		cptr = client_load_and_use_ptr(info->client);
+ 		if (cptr)
+ 			break; /* found */
+ 	}
+@@ -2090,7 +2104,7 @@ static int snd_seq_ioctl_query_next_port
+ 	struct snd_seq_client *cptr;
+ 	struct snd_seq_client_port *port = NULL;
+ 
+-	cptr = snd_seq_client_use_ptr(info->addr.client);
++	cptr = client_load_and_use_ptr(info->addr.client);
+ 	if (cptr == NULL)
+ 		return -ENXIO;
+ 
+@@ -2187,7 +2201,7 @@ static int snd_seq_ioctl_client_ump_info
+ 		size = sizeof(struct snd_ump_endpoint_info);
+ 	else
+ 		size = sizeof(struct snd_ump_block_info);
+-	cptr = snd_seq_client_use_ptr(client);
++	cptr = client_load_and_use_ptr(client);
+ 	if (!cptr)
+ 		return -ENOENT;
+ 
+@@ -2459,7 +2473,7 @@ int snd_seq_kernel_client_enqueue(int cl
+ 	if (check_event_type_and_length(ev))
+ 		return -EINVAL;
+ 
+-	cptr = snd_seq_client_use_ptr(client);
++	cptr = client_load_and_use_ptr(client);
+ 	if (cptr == NULL)
+ 		return -EINVAL;
+ 	
+@@ -2686,7 +2700,7 @@ void snd_seq_info_clients_read(struct sn
+ 
+ 	/* list the client table */
+ 	for (c = 0; c < SNDRV_SEQ_MAX_CLIENTS; c++) {
+-		client = snd_seq_client_use_ptr(c);
++		client = client_load_and_use_ptr(c);
+ 		if (client == NULL)
+ 			continue;
+ 		if (client->type == NO_CLIENT) {
 
 
