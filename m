@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C021C3F34;
-	Mon, 10 Mar 2025 17:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317A41C3F34;
+	Mon, 10 Mar 2025 17:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628824; cv=none; b=CCmGoAc0uNyiU6FCRUpQE94lFSUqH/ZaGCHoXPiJ8BRfOBtnJAXbcfyL4QGqyxGFt01Jln5N0Wpve9gdd9zw+6rMiQazWQ0d7auTeBK8AI2CFaMZtoYjEazO9Wjo1kFmMGuQ0gl2Ut43L+Fu8a+L0DLIBf472/qq6Swt3nUvzpM=
+	t=1741628827; cv=none; b=dgUbrq2a5UVOkoYOSfjV0w6CcTndHhO+TSx0Zjd+4/+Zov7cIRUUSFkc3smj8kJWWFIr3VOKaiqlQZwz6irz3At+pLK3GQvvDP011xf7f7LGa3yd4FrIwU6OB8FZjSqRN73JqotvstwaaXjge1fwZ8nSAJJfaBCEOIexhPZchLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628824; c=relaxed/simple;
-	bh=BSYvUhQfHXmFyk8lbWIse3YdKY4YRf3p4wrSJlXPae0=;
+	s=arc-20240116; t=1741628827; c=relaxed/simple;
+	bh=wnvGuRQXrCdvLWjgFwYSYtu+gs1GjpZ7pEt8HwO3ios=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Odv+kgE0W3SMq9tOXOkKwRphVzkbzsJhzTkFmCPkTP7Djmd/j81UYzyWkO0b2TRjP2pMEJikq8k7QI1Q8d7xIezAHwLaSstWNvqUPX2MwMw9tpRCWtuQyBT9Pb9NXTqzrQR0KyPYlYfSLW7RiF6iptKHxVfVp01/z2wkAPS+CF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlgNh9Vi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bgwhi/YR1I51jpSZYOFlRlm03pQ6H2myC0ty8+SBPTOJO10hUGtl0RSKbLlTCWQNOwG7s7iWYmyWQorgMZ4ZuLrOrx/aRG2D4WLeq729+UJWp7U04lJ4YGQVR2lQmgUaICgGK3oFcUKjIdBndQGJWfwYDWUZezk7/jKm3E+7ACY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvvQHSb5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlgNh9Vi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACDFC4CEE5;
-	Mon, 10 Mar 2025 17:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvvQHSb5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58907C4CEE5;
+	Mon, 10 Mar 2025 17:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628823;
-	bh=BSYvUhQfHXmFyk8lbWIse3YdKY4YRf3p4wrSJlXPae0=;
+	s=korg; t=1741628826;
+	bh=wnvGuRQXrCdvLWjgFwYSYtu+gs1GjpZ7pEt8HwO3ios=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlgNh9Vi7DQ7HEwfyAahVJLa7/FGIsXVzORqUqq0jy0JlP/5YCk2Ir1E1zJz7saL4
-	 llgMPVfPHaIFjLkywF7Dz+DUWRah20mi46xbdom8/uxtoEx+YBhDBcj7aXxX9AW36n
-	 t2xkKvTEKz6p5FtO2JZ7Ri9xrJ2OX0edpLUlV3Vc=
+	b=zvvQHSb5SddLB/6mty1nn2ucjhkxhc6nZ7GwwnFtvhWHD7stVw6GZFc8nsi6k8KBf
+	 Xgb10QR2/vQLsf5LoLj0fA3/oXL0wefRRvBx1HIO/PIQlFam7AkDkoS2NQUUcn7Mmy
+	 LX71LqZe2BV3WdiS9VrEIys6gk4qalQzsRq6csQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Rongguang <herongguang@linux.alibaba.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/620] cpupower: fix TSC MHz calculation
-Date: Mon, 10 Mar 2025 17:58:16 +0100
-Message-ID: <20250310170547.554760182@linuxfoundation.org>
+Subject: [PATCH 5.15 051/620] dt-bindings: mfd: bd71815: Fix rsense and typos
+Date: Mon, 10 Mar 2025 17:58:17 +0100
+Message-ID: <20250310170547.592393073@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,112 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: He Rongguang <herongguang@linux.alibaba.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 9d6c0e58514f8b57cd9c2c755e41623d6a966025 ]
+[ Upstream commit 6856edf7ead8c54803216a38a7b227bcb3dadff7 ]
 
-Commit 'cpupower: Make TSC read per CPU for Mperf monitor' (c2adb1877b7)
-changes TSC counter reads per cpu, but left time diff global (from start
-of all cpus to end of all cpus), thus diff(time) is too large for a
-cpu's tsc counting, resulting in far less than acutal TSC_Mhz and thus
-`cpupower monitor` showing far less than actual cpu realtime frequency.
+The sense resistor used for measuring currents is typically some tens of
+milli Ohms. It has accidentally been documented to be tens of mega Ohms.
+Fix the size of this resistor and a few copy-paste errors while at it.
 
-/proc/cpuinfo shows frequency:
-cat /proc/cpuinfo | egrep -e 'processor' -e 'MHz'
-...
-processor : 171
-cpu MHz   : 4108.498
-...
+Drop the unsuitable 'rohm,charger-sense-resistor-ohms' property (which
+can't represent resistors smaller than one Ohm), and introduce a new
+'rohm,charger-sense-resistor-micro-ohms' property with appropriate
+minimum, maximum and default values instead.
 
-before fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.77| 99.23|  2279||  0.00|  0.00|  0.00
-
-after fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.46| 99.54|  4095||  0.00|  0.00|  0.00
-
-Fixes: c2adb1877b76 ("cpupower: Make TSC read per CPU for Mperf monitor")
-Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 4238dc1e6490 ("dt_bindings: mfd: Add ROHM BD71815 PMIC")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/0efd8e9de0ae8d62ee4c6b78cc565b04007a245d.1731430700.git.mazziesaccount@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../cpupower/utils/idle_monitor/mperf_monitor.c   | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ .../bindings/mfd/rohm,bd71815-pmic.yaml       | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index ae6af354a81db..08a399b0be286 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -33,7 +33,7 @@ static int mperf_get_count_percent(unsigned int self_id, double *percent,
- 				   unsigned int cpu);
- static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 				unsigned int cpu);
--static struct timespec time_start, time_end;
-+static struct timespec *time_start, *time_end;
+diff --git a/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml b/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
+index fe265bcab50d9..91df60d566292 100644
+--- a/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
+@@ -50,15 +50,15 @@ properties:
+     minimum: 0
+     maximum: 1
  
- static cstate_t mperf_cstates[MPERF_CSTATE_COUNT] = {
- 	{
-@@ -174,7 +174,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
- 	} else if (max_freq_mode == MAX_FREQ_SYSFS) {
--		timediff = max_frequency * timespec_diff_us(time_start, time_end);
-+		timediff = max_frequency * timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		*percent = 100.0 * mperf_diff / timediff;
- 		dprint("%s: MAXFREQ - mperf_diff: %llu, time_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, timediff);
-@@ -207,7 +207,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
- 		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
--		time_diff = timespec_diff_us(time_start, time_end);
-+		time_diff = timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		max_frequency = tsc_diff / time_diff;
- 	}
+-  rohm,charger-sense-resistor-ohms:
+-    minimum: 10000000
+-    maximum: 50000000
++  rohm,charger-sense-resistor-micro-ohms:
++    minimum: 10000
++    maximum: 50000
+     description: |
+-      BD71827 and BD71828 have SAR ADC for measuring charging currents.
+-      External sense resistor (RSENSE in data sheet) should be used. If
+-      something other but 30MOhm resistor is used the resistance value
+-      should be given here in Ohms.
+-    default: 30000000
++      BD71815 has SAR ADC for measuring charging currents. External sense
++      resistor (RSENSE in data sheet) should be used. If something other
++      but a 30 mOhm resistor is used the resistance value should be given
++      here in micro Ohms.
++    default: 30000
  
-@@ -226,9 +226,8 @@ static int mperf_start(void)
- {
- 	int cpu;
+   regulators:
+     $ref: ../regulator/rohm,bd71815-regulator.yaml
+@@ -67,7 +67,7 @@ properties:
  
--	clock_gettime(CLOCK_REALTIME, &time_start);
--
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		clock_gettime(CLOCK_REALTIME, &time_start[cpu]);
- 		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
- 	}
-@@ -243,9 +242,9 @@ static int mperf_stop(void)
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
- 		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
- 	}
+   gpio-reserved-ranges:
+     description: |
+-      Usage of BD71828 GPIO pins can be changed via OTP. This property can be
++      Usage of BD71815 GPIO pins can be changed via OTP. This property can be
+       used to mark the pins which should not be configured for GPIO. Please see
+       the ../gpio/gpio.txt for more information.
  
--	clock_gettime(CLOCK_REALTIME, &time_end);
- 	return 0;
- }
+@@ -113,7 +113,7 @@ examples:
+             gpio-controller;
+             #gpio-cells = <2>;
  
-@@ -349,6 +348,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
-+	time_start = calloc(cpu_count, sizeof(struct timespec));
-+	time_end = calloc(cpu_count, sizeof(struct timespec));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -361,6 +362,8 @@ void mperf_unregister(void)
- 	free(aperf_current_count);
- 	free(tsc_at_measure_start);
- 	free(tsc_at_measure_end);
-+	free(time_start);
-+	free(time_end);
- 	free(is_valid);
- }
+-            rohm,charger-sense-resistor-ohms = <10000000>;
++            rohm,charger-sense-resistor-micro-ohms = <10000>;
  
+             regulators {
+                 buck1: buck1 {
 -- 
 2.39.5
 
