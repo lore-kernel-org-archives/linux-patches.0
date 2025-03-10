@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B2F22FF40;
-	Mon, 10 Mar 2025 18:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6FC1DE89C;
+	Mon, 10 Mar 2025 18:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630632; cv=none; b=k9ifTJHG+diZl+Ze7ykABiGQExjZgvxv8FB5o5rG/x67xuulq/Op2vOztqZB9zu086ljhvem0VCkPtjI1G1JW+Z18yQx+T9x+h7mvxWNRIVQGjR5yMpc3fKyaex3DL9rBQWkFCMinaf8uNXTKJ6R9oE1fWBGvyRzIhMiK0EAbVM=
+	t=1741630635; cv=none; b=b7gnimL4l29Eud1QEwioTV0ApIGe6wHDwzirlNSmHCjoElV4hqSyUZIKQpoF7cDxKubYy2mkKtNXzoh3QMB8nzaJ07hYRLaXoYPMcPfvaKTv0Z9eNKWEon40wqqkOf+IgGHZJRIMvmAVTLRwhj4/v6KXJ5ynEc4GtIQBXG+qj+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630632; c=relaxed/simple;
-	bh=zYnDHOFnp5mqZzvAxCypTdclzwTwhkfXx/l6+C4eFD4=;
+	s=arc-20240116; t=1741630635; c=relaxed/simple;
+	bh=36ajLsDaRSL1BNwxfBTee/ed6Dt3YFrjlMvsYpYXWGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOfg6vBt8DfD+9mn8pScDbSNZAj58MXElGXUceSrCn8mMdg4r60TkncZL3xO1XmDJN+1MQZOIxcgH7JIQLNXGKVMiCDWBj/tmqI9XlZMXPGYnDG44gCbRllquHDU/o96cp0XJwzeqwoiVPCA10EPR6E0F8+BuaTZ+Z0tKO9sMIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkHreA86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVSs21Vmq/MhoZ4bXe6oGqEfZVqGyqorAjMbaRK4V21ayintksHfvvh8yIFaUzEqVEGBWwUgr3B0D5rU3ZBueocWbKL8RCm7WT2P7TPfWWh02W9acP/5SCnI8sM8gKk09DSp6VapQT3q0NUa9qYE7SUW7PuQSg7SRkEHGOSog30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnmP7BwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkHreA86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D6C4CEE5;
-	Mon, 10 Mar 2025 18:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnmP7BwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC64AC4CEE5;
+	Mon, 10 Mar 2025 18:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630632;
-	bh=zYnDHOFnp5mqZzvAxCypTdclzwTwhkfXx/l6+C4eFD4=;
+	s=korg; t=1741630635;
+	bh=36ajLsDaRSL1BNwxfBTee/ed6Dt3YFrjlMvsYpYXWGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkHreA86T9R1HHoO0m1JuuxPYK1qASn5nJH1zhN/VpSCVphqzLAGqNvpin74Tj53n
-	 m3jPueaDJJHxdGTW0emgBLRb8MiIbaMrGY0h6QpJen6bV68xkFnKfO9X5LtEdWzQWt
-	 90+WhYH3o/8EWMp5pevw1s36PBTuGgwMIx9ubNow=
+	b=DnmP7BwX7pVbbgw38H357S7QKLQKno/KPswSsS7u0wMsL2fWhEYEegRj+j80MBO+B
+	 hnCfSW5+i56CJMitB3PkxNJioPJYy6EopGwoc4L7+vhYHiB1zs5VU9zTnkMDZM64lY
+	 A54b1Y85mrLVJ2g1KpgOtMHjpW1YeBSPurBo9BiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 481/620] acct: block access to kernel internal filesystems
-Date: Mon, 10 Mar 2025 18:05:27 +0100
-Message-ID: <20250310170604.559320445@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 455/620] media: uvcvideo: Only save async fh if success
+Date: Mon, 10 Mar 2025 18:05:01 +0100
+Message-ID: <20250310170603.545918690@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,47 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 890ed45bde808c422c3c27d3285fc45affa0f930 upstream.
+[ Upstream commit d9fecd096f67a4469536e040a8a10bbfb665918b ]
 
-There's no point in allowing anything kernel internal nor procfs or
-sysfs.
+Now we keep a reference to the active fh for any call to uvc_ctrl_set,
+regardless if it is an actual set or if it is a just a try or if the
+device refused the operation.
 
-Link: https://lore.kernel.org/r/20250127091811.3183623-1-quzicheng@huawei.com
-Link: https://lore.kernel.org/r/20250211-work-acct-v1-2-1c16aecab8b3@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reported-by: Zicheng Qu <quzicheng@huawei.com>
+We should only keep the file handle if the device actually accepted
+applying the operation.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-1-26c867231118@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/acct.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/media/usb/uvc/uvc_ctrl.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
---- a/kernel/acct.c
-+++ b/kernel/acct.c
-@@ -225,6 +225,20 @@ static int acct_on(struct filename *path
- 		return -EACCES;
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 7148dde023db2..6da8ce2e539dd 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1645,7 +1645,10 @@ int uvc_ctrl_begin(struct uvc_video_chain *chain)
+ }
+ 
+ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+-	struct uvc_entity *entity, int rollback, struct uvc_control **err_ctrl)
++				  struct uvc_fh *handle,
++				  struct uvc_entity *entity,
++				  int rollback,
++				  struct uvc_control **err_ctrl)
+ {
+ 	struct uvc_control *ctrl;
+ 	unsigned int i;
+@@ -1692,6 +1695,10 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 				*err_ctrl = ctrl;
+ 			return ret;
+ 		}
++
++		if (!rollback && handle &&
++		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
++			ctrl->handle = handle;
  	}
  
-+	/* Exclude kernel kernel internal filesystems. */
-+	if (file_inode(file)->i_sb->s_flags & (SB_NOUSER | SB_KERNMOUNT)) {
-+		kfree(acct);
-+		filp_close(file, NULL);
-+		return -EINVAL;
-+	}
-+
-+	/* Exclude procfs and sysfs. */
-+	if (file_inode(file)->i_sb->s_iflags & SB_I_USERNS_VISIBLE) {
-+		kfree(acct);
-+		filp_close(file, NULL);
-+		return -EINVAL;
-+	}
-+
- 	if (!(file->f_mode & FMODE_CAN_WRITE)) {
- 		kfree(acct);
- 		filp_close(file, NULL);
+ 	return 0;
+@@ -1728,8 +1735,8 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+ 
+ 	/* Find the control. */
+ 	list_for_each_entry(entity, &chain->entities, chain) {
+-		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
+-					     &err_ctrl);
++		ret = uvc_ctrl_commit_entity(chain->dev, handle, entity,
++					     rollback, &err_ctrl);
+ 		if (ret < 0) {
+ 			if (ctrls)
+ 				ctrls->error_idx =
+@@ -1864,9 +1871,6 @@ int uvc_ctrl_set(struct uvc_fh *handle,
+ 	mapping->set(mapping, value,
+ 		uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
+ 
+-	if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+-		ctrl->handle = handle;
+-
+ 	ctrl->dirty = 1;
+ 	ctrl->modified = 1;
+ 	return 0;
+@@ -2195,7 +2199,7 @@ int uvc_ctrl_restore_values(struct uvc_device *dev)
+ 			ctrl->dirty = 1;
+ 		}
+ 
+-		ret = uvc_ctrl_commit_entity(dev, entity, 0, NULL);
++		ret = uvc_ctrl_commit_entity(dev, NULL, entity, 0, NULL);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+-- 
+2.39.5
+
 
 
