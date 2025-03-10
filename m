@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66815233721;
-	Mon, 10 Mar 2025 17:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0B02309B3;
+	Mon, 10 Mar 2025 17:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628648; cv=none; b=ivJ/oIMLMOAaBTyfsiID5bP7NZSBMovyBRe1TY4AcOsD/mqoyiEz6UH21rCi0Pp4kEinnthbDRC8r+CpUbKVdZ3p2X1eHvmrp+CCy1y98T/JlfYXhsuOk1OH3NcMvP+A9gmzosfvY1TI3yeQW+hMzA+J2gEgCM2l8vkKctGg1dM=
+	t=1741628651; cv=none; b=P8im5YLDug0jJnr5+fyXGmr+BnKKfhklFUVlPu/0b1YQFzV37bXZjjZhYc1wv1EkNiJXIzOkwMCH+1gQ4CQG/0kdoHFEAoJcUXSBvdcmVcpXR7OerwRic8CWUvV7Qrp1nOH2jwKKQMRN7WyzRXLiH7UHCJLxdvDW9wlv4fsBUZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628648; c=relaxed/simple;
-	bh=fkvWwmXSMd+tz5IjMdYHqYTt7o6vDPCyEOG7E9L1Xb4=;
+	s=arc-20240116; t=1741628651; c=relaxed/simple;
+	bh=msXZn7RNtu67hYyJIDsuRp2grTSEyyFgl9Et/0ULDMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpQ4W/P67FTwhAD+T0rUSFzH6egKkzHQC+nhpoA+k2Gnb8DB9rCrS23DGsItVrdCogG0+nmfQGGf3rnVk749oRJIoEZECJ6awPVNalHaRTJaSOYlx4Udwaw+XwXrBKNkETXj/bppBqTMOIIHdMq45whEA4T2D6hEojHd6VBm2LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoceoJKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9GOqbt/4x6Td75tG0sfOv91tjT5i7iliYZuFRgFtYYr7O2qJzNFS0gT1CSoFGVgunDoVcyfLcPObHtFzHOB7YSjFGErPbHMLDbRPHtSNalDAJdYluwLEbLCvVdOFt4Uwslz9iv6bbA/Dk6MvM9B47TMWWOFTLPNZXiEtSRZTB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xulceqxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoceoJKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F8EC4CEEC;
-	Mon, 10 Mar 2025 17:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xulceqxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3C5C4CEE5;
+	Mon, 10 Mar 2025 17:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628648;
-	bh=fkvWwmXSMd+tz5IjMdYHqYTt7o6vDPCyEOG7E9L1Xb4=;
+	s=korg; t=1741628651;
+	bh=msXZn7RNtu67hYyJIDsuRp2grTSEyyFgl9Et/0ULDMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoceoJKwXPpB45yUjEu2NRLPc3ESv9+iIrBP55eBzhGQH2osLK1zd87fDBOe/d2P+
-	 +3qqR7Hdm+GttTxulix4fXT0+GZWTTo69W3JgjeOcmwy6o+VC3KF7AA3WZMaKKy132
-	 WNbNGp0e6hQDUcrzDSpktRPmv9nytoFuCqOI62Zk=
+	b=xulceqxPR4D1PHBLfHnDnQFYy21j+3sTBhzNvUPUinyT0HW02Wqr7J8BG12rcdg5d
+	 tycb+Cmuz3cr0vhQIJa7pijHZZlUia1z9KD3EzwlFMrZRrwy7bZti2liMNUmMGJZIN
+	 EFSVtYvMxIDKN5ORGMYBxx6CmoTUMxFIhgoIU7Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/620] drm/amdgpu: Fix potential NULL pointer dereference in atomctrl_get_smc_sclk_range_table
-Date: Mon, 10 Mar 2025 17:57:47 +0100
-Message-ID: <20250310170546.408727302@linuxfoundation.org>
+Subject: [PATCH 5.15 022/620] genirq: Make handle_enforce_irqctx() unconditionally available
+Date: Mon, 10 Mar 2025 17:57:48 +0100
+Message-ID: <20250310170546.450513506@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,41 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 357445e28ff004d7f10967aa93ddb4bffa5c3688 ]
+[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
 
-The function atomctrl_get_smc_sclk_range_table() does not check the return
-value of smu_atom_get_data_table(). If smu_atom_get_data_table() fails to
-retrieve SMU_Info table, it returns NULL which is later dereferenced.
+Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+sett the flag which enforces interrupt handling in interrupt context and
+prevents software base resends for ARM GIC v2/v3.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+But it missed that the helper function which checks the flag was hidden
+behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
 
-In practice this should never happen as this code only gets called
-on polaris chips and the vbios data table will always be present on
-those chips.
+Make the helper unconditionally available so that the enforcement actually
+works.
 
-Fixes: a23eefa2f461 ("drm/amd/powerplay: enable dpm for baffin.")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/irq/internals.h | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-index cc3b62f733941..1fbd23922082a 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-@@ -1420,6 +1420,8 @@ int atomctrl_get_smc_sclk_range_table(struct pp_hwmgr *hwmgr, struct pp_atom_ctr
- 			GetIndexIntoMasterTable(DATA, SMU_Info),
- 			&size, &frev, &crev);
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index f1d83a8b44171..da1f282d5a1d1 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -429,10 +429,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
+ {
+ 	return desc->pending_mask;
+ }
+-static inline bool handle_enforce_irqctx(struct irq_data *data)
+-{
+-	return irqd_is_handle_enforce_irqctx(data);
+-}
+ bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
+ #else /* CONFIG_GENERIC_PENDING_IRQ */
+ static inline bool irq_can_move_pcntxt(struct irq_data *data)
+@@ -459,11 +455,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
+ {
+ 	return false;
+ }
++#endif /* !CONFIG_GENERIC_PENDING_IRQ */
++
+ static inline bool handle_enforce_irqctx(struct irq_data *data)
+ {
+-	return false;
++	return irqd_is_handle_enforce_irqctx(data);
+ }
+-#endif /* !CONFIG_GENERIC_PENDING_IRQ */
  
-+	if (!psmu_info)
-+		return -EINVAL;
- 
- 	for (i = 0; i < psmu_info->ucSclkEntryNum; i++) {
- 		table->entry[i].ucVco_setting = psmu_info->asSclkFcwRangeEntry[i].ucVco_setting;
+ #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
+ static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
 -- 
 2.39.5
 
