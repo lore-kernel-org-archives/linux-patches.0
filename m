@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E5922D4C3;
-	Mon, 10 Mar 2025 17:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4158D22C336;
+	Mon, 10 Mar 2025 17:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627723; cv=none; b=dYJgjvBdiMMR6Tqt8rM5lwZ6eHbxEFfUTur9dpxsicVu8Q4thtJgBzN6U+Kz8jga6eujafKnlwGD68G5qBnsbXTqDYq5HrVnKPx8RVYNC5KqG0xo1H5jtZTimaDDdLexaNZAEGFKlgI18VfrI2iu3MJonTiOyvzZorvBlQJNOe8=
+	t=1741627726; cv=none; b=DjMWDcVICno6+C1cYZigd/WrNQKb+qlKj5sNT7BJjTlRkhLjskQvICJ654KXiwtR5w4BrkhbWIgk+U9jT2XHJdUhKifT2rrUNwLo8m/rNBBO57rvSLnamyX1mlb6NwtFi6Di0q1iTvFVbh5rX57j+f7bsp0PU/JiZsjTo95SqnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627723; c=relaxed/simple;
-	bh=NTli4D1i+Q6crMorWj0MBv6jhgoZX68OGoLzvw7cUj4=;
+	s=arc-20240116; t=1741627726; c=relaxed/simple;
+	bh=55uR/OHcS2e1gWz9Fa8kacf/fll5Jc1q4E3cycfTZxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIshfGU8vHlaPxMyCaeXrdCUZgXzg3TUBzbct5WYf8Nx6H8T7Ip/f9VbbLY7umAsrxK9No1XpWBXKRa8yLT/fP7wPoey0h1TMVpCCdtw/hvdQiinbuMgcutiDFPoWxYcrIaBBLZK9rT7jXm1dF2QqQmwFJYuoFFdbf6DkIdhv0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk+beIHT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKs1HC5W7DGd6kddLZlehsBDIpBIslhnwP/D7aGi0jm1Mvjqmg5A3TlKC3r9ZCo0sdkSKUBlwKPzPcjZATn9K+rmrIEOYZ4leY7MS0SoQfZwNLjt+nPVfXuYT01Zq+acrP3BndFQbsLKF3LN/WWqCFAXsXoZyI50k5NHhzmWWwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgzvU5Dg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk+beIHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D370AC4CEE5;
-	Mon, 10 Mar 2025 17:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgzvU5Dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28E8C4CEE5;
+	Mon, 10 Mar 2025 17:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627723;
-	bh=NTli4D1i+Q6crMorWj0MBv6jhgoZX68OGoLzvw7cUj4=;
+	s=korg; t=1741627726;
+	bh=55uR/OHcS2e1gWz9Fa8kacf/fll5Jc1q4E3cycfTZxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lk+beIHT9sQ9Lh2sWxy/F/stFmSmmfJ00J0qypXA2tSmkLfCZUX4FePmiX3eubUiL
-	 xU3ygFe/0shob6RD9kzMAiKxVF0nSTR9f1BZIo3mFspP6KGmoo2O8naDpLhEdvCD7l
-	 VrsM3mBMNzQuLg/JE4EKCs9sdbTxsNjmpDnss0BE=
+	b=SgzvU5DgBp7aVb1eL5oY0NytlzT3EnJS7BTalbkM1FgurGRHb/lLseH5zpKnwSzD7
+	 OWGqvjwZYxxeArb46SbvTuzG+6t0R2QRTMYCUDiDaPb0X7ZYbjyBKO7V9FJl7FzaCM
+	 bm84GlpdT6KRB4uBTTshVbpaQUNlC9rX+PYDnPQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 228/269] usb: xhci: Enable the TRB overfetch quirk on VIA VL805
-Date: Mon, 10 Mar 2025 18:06:21 +0100
-Message-ID: <20250310170506.776127553@linuxfoundation.org>
+	Doug Covelli <doug.covelli@broadcom.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 229/269] KVM: SVM: Set RFLAGS.IF=1 in C code, to get VMRUN out of the STI shadow
+Date: Mon, 10 Mar 2025 18:06:22 +0100
+Message-ID: <20250310170506.816341678@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -50,100 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c133ec0e5717868c9967fa3df92a55e537b1aead upstream.
+commit be45bc4eff33d9a7dae84a2150f242a91a617402 upstream.
 
-Raspberry Pi is a major user of those chips and they discovered a bug -
-when the end of a transfer ring segment is reached, up to four TRBs can
-be prefetched from the next page even if the segment ends with link TRB
-and on page boundary (the chip claims to support standard 4KB pages).
+Enable/disable local IRQs, i.e. set/clear RFLAGS.IF, in the common
+svm_vcpu_enter_exit() just after/before guest_state_{enter,exit}_irqoff()
+so that VMRUN is not executed in an STI shadow.  AMD CPUs have a quirk
+(some would say "bug"), where the STI shadow bleeds into the guest's
+intr_state field if a #VMEXIT occurs during injection of an event, i.e. if
+the VMRUN doesn't complete before the subsequent #VMEXIT.
 
-It also appears that if the prefetched TRBs belong to a different ring
-whose doorbell is later rung, they may be used without refreshing from
-system RAM and the endpoint will stay idle if their cycle bit is stale.
+The spurious "interrupts masked" state is relatively benign, as it only
+occurs during event injection and is transient.  Because KVM is already
+injecting an event, the guest can't be in HLT, and if KVM is querying IRQ
+blocking for injection, then KVM would need to force an immediate exit
+anyways since injecting multiple events is impossible.
 
-Other users complain about IOMMU faults on x86 systems, unsurprisingly.
+However, because KVM copies int_state verbatim from vmcb02 to vmcb12, the
+spurious STI shadow is visible to L1 when running a nested VM, which can
+trip sanity checks, e.g. in VMware's VMM.
 
-Deal with it by using existing quirk which allocates a dummy page after
-each transfer ring segment. This was seen to resolve both problems. RPi
-came up with a more efficient solution, shortening each segment by four
-TRBs, but it complicated the driver and they ditched it for this quirk.
+Hoist the STI+CLI all the way to C code, as the aforementioned calls to
+guest_state_{enter,exit}_irqoff() already inform lockdep that IRQs are
+enabled/disabled, and taking a fault on VMRUN with RFLAGS.IF=1 is already
+possible.  I.e. if there's kernel code that is confused by running with
+RFLAGS.IF=1, then it's already a problem.  In practice, since GIF=0 also
+blocks NMIs, the only change in exposure to non-KVM code (relative to
+surrounding VMRUN with STI+CLI) is exception handling code, and except for
+the kvm_rebooting=1 case, all exception in the core VM-Enter/VM-Exit path
+are fatal.
 
-Also rename the quirk and add VL805 device ID macro.
+Use the "raw" variants to enable/disable IRQs to avoid tracing in the
+"no instrumentation" code; the guest state helpers also take care of
+tracing IRQ state.
 
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://github.com/raspberrypi/linux/issues/4685
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=215906
-CC: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250225095927.2512358-2-mathias.nyman@linux.intel.com
+Oppurtunstically document why KVM needs to do STI in the first place.
+
+Reported-by: Doug Covelli <doug.covelli@broadcom.com>
+Closes: https://lore.kernel.org/all/CADH9ctBs1YPmE4aCfGPNBwA10cA8RuAk2gO7542DjMZgs4uzJQ@mail.gmail.com
+Fixes: f14eec0a3203 ("KVM: SVM: move more vmentry code to assembly")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250224165442.2338294-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    3 ++-
- drivers/usb/host/xhci-pci.c |   10 +++++++---
- drivers/usb/host/xhci.h     |    2 +-
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ arch/x86/kvm/svm/svm.c     |   14 ++++++++++++++
+ arch/x86/kvm/svm/vmenter.S |   10 +---------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2443,7 +2443,8 @@ int xhci_mem_init(struct xhci_hcd *xhci,
- 	 * and our use of dma addresses in the trb_address_map radix tree needs
- 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
- 	 */
--	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
-+	if (xhci->quirks & XHCI_TRB_OVERFETCH)
-+		/* Buggy HC prefetches beyond segment bounds - allocate dummy space at the end */
- 		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
- 				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
- 	else
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -38,6 +38,8 @@
- #define PCI_DEVICE_ID_EJ168		0x7023
- #define PCI_DEVICE_ID_EJ188		0x7052
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4176,6 +4176,18 @@ static noinstr void svm_vcpu_enter_exit(
  
-+#define PCI_DEVICE_ID_VIA_VL805			0x3483
+ 	guest_state_enter_irqoff();
+ 
++	/*
++	 * Set RFLAGS.IF prior to VMRUN, as the host's RFLAGS.IF at the time of
++	 * VMRUN controls whether or not physical IRQs are masked (KVM always
++	 * runs with V_INTR_MASKING_MASK).  Toggle RFLAGS.IF here to avoid the
++	 * temptation to do STI+VMRUN+CLI, as AMD CPUs bleed the STI shadow
++	 * into guest state if delivery of an event during VMRUN triggers a
++	 * #VMEXIT, and the guest_state transitions already tell lockdep that
++	 * IRQs are being enabled/disabled.  Note!  GIF=0 for the entirety of
++	 * this path, so IRQs aren't actually unmasked while running host code.
++	 */
++	raw_local_irq_enable();
 +
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI		0x8c31
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI		0x9c31
- #define PCI_DEVICE_ID_INTEL_WILDCATPOINT_LP_XHCI	0x9cb1
-@@ -424,8 +426,10 @@ static void xhci_pci_quirks(struct devic
- 			pdev->device == 0x3432)
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
+ 	amd_clear_divider();
  
--	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483)
-+	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
- 		xhci->quirks |= XHCI_LPM_SUPPORT;
-+		xhci->quirks |= XHCI_TRB_OVERFETCH;
-+	}
+ 	if (sev_es_guest(vcpu->kvm))
+@@ -4184,6 +4196,8 @@ static noinstr void svm_vcpu_enter_exit(
+ 	else
+ 		__svm_vcpu_run(svm, spec_ctrl_intercepted);
  
- 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
- 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI) {
-@@ -473,11 +477,11 @@ static void xhci_pci_quirks(struct devic
++	raw_local_irq_disable();
++
+ 	guest_state_exit_irqoff();
+ }
  
- 		if (pdev->device == 0x9202) {
- 			xhci->quirks |= XHCI_RESET_ON_RESUME;
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 		}
+--- a/arch/x86/kvm/svm/vmenter.S
++++ b/arch/x86/kvm/svm/vmenter.S
+@@ -170,12 +170,8 @@ SYM_FUNC_START(__svm_vcpu_run)
+ 	mov VCPU_RDI(%_ASM_DI), %_ASM_DI
  
- 		if (pdev->device == 0x9203)
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 	}
+ 	/* Enter guest mode */
+-	sti
+-
+ 3:	vmrun %_ASM_AX
+ 4:
+-	cli
+-
+ 	/* Pop @svm to RAX while it's the only available register. */
+ 	pop %_ASM_AX
  
- 	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1621,7 +1621,7 @@ struct xhci_hcd {
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
--#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
-+#define XHCI_TRB_OVERFETCH	BIT_ULL(45)
- #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
- #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
+@@ -340,12 +336,8 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
+ 	mov KVM_VMCB_pa(%rax), %rax
+ 
+ 	/* Enter guest mode */
+-	sti
+-
+ 1:	vmrun %rax
+-
+-2:	cli
+-
++2:
+ 	/* IMPORTANT: Stuff the RSB immediately after VM-Exit, before RET! */
+ 	FILL_RETURN_BUFFER %rax, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_VMEXIT
+ 
 
 
