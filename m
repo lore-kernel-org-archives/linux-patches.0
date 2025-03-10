@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE803223702;
-	Mon, 10 Mar 2025 17:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B539A1DE89C;
+	Mon, 10 Mar 2025 17:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628659; cv=none; b=Nw8fZqQ+66nwEmsnwUOJ7t2DS9d0XZo1q8WoPFGcX9N9GoXCJQopl9lP0h/DIgqeVQ+XwaP5QY+bGUsSznxgcayeT7BLVz1NyoYqtal+OF+MuwUjWkNvoamoqZVyLjCJpG9NWgcSPiQtdDudTVqFP1R8M11EPqesIUy5Eacc+HI=
+	t=1741628662; cv=none; b=eSiZStKP0IbfkoWHBGBb/dB188jju4Ehf78cBDmr9tOYGSvOKSPysoCUGjJ1ihKvKAMyqNBosipWaVxx2hBZCc8aJSK0Ob/yjI2zpwLtYskArlp/wogtKNAorGkOS9OOSzrQ1zLjv8r0kctzv5d8PfL3h6WS2z4TcGuvV4b/mGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628659; c=relaxed/simple;
-	bh=76zVm1FBVQ/GnJ6wcwyO1/ic5eHabJ7GT4XFv4zkt+g=;
+	s=arc-20240116; t=1741628662; c=relaxed/simple;
+	bh=y2ePZ7lsJ6WQVZAkPZSt+zerFfz5df6aQpaD1z7Ys+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OoDJZHznFiXST/2oIWqXlHv5R/fmLJW8ZuT/lBNxwugkQmROUdKM8o0hI2IvHtcHl7QYlZHvvV4MffuIub+UW1zcZDHL4cCvBxq2tFXpyLg5M08DrZ3txuPip25nLjmpA3qclI0mjp3nkM+6jj3c2xwqJy4Xyj/hNO5Y5OEGj7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ObbeEcN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CBLQXkO2zozIrOV+V59xXaaPhvg+gUwDVd7Z9qDWerdrUbpzHsRfZAPjvKLKpA8fLMNDZrSwtkYf2C/hLKshsUCi/2dJyB42SjPdcW3YKroEwi5bPVtiMmeXcs5wIcQ4H/RCA3gKuFyAFxdj6TVcCEPy44zrV2ZrXMWbhzB5OQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSYh3QAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ObbeEcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559DAC4CEE5;
-	Mon, 10 Mar 2025 17:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSYh3QAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA12C4CEE5;
+	Mon, 10 Mar 2025 17:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628659;
-	bh=76zVm1FBVQ/GnJ6wcwyO1/ic5eHabJ7GT4XFv4zkt+g=;
+	s=korg; t=1741628662;
+	bh=y2ePZ7lsJ6WQVZAkPZSt+zerFfz5df6aQpaD1z7Ys+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ObbeEcN3w6Rq3yCMEOLMLFKt8KT/v0znKebIxSwaTuUOgFqw5oW1Nkyx5z0HJVem
-	 YTmQrfcDs1XHSe0MfTjWigdT6dbyX36uwTfEBfY7xoXfcn85jYzHRt8nQYJnSvzJ3E
-	 YNrXW1anBInecpO6OJ2aa0r3dflDt8eO1oAgY4sU=
+	b=lSYh3QAPxMNS74w27w0A/By5W3cQQEYGqy0us6iXvl5+Jlv9S/ERrOtfpMU6KlJGc
+	 0EBnl+Q8pVurfliWhm36LhoiKC4qEseosbbVLSxZOnRvEDMKZEIbnd0i8YvBTrRfSQ
+	 AKlNxRRCDDMmlzs4BJ1aGu1mkPCXYErhr+/xbvr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/620] wifi: rtlwifi: rtl8192se: rise completion of firmware loading as last step
-Date: Mon, 10 Mar 2025 17:57:51 +0100
-Message-ID: <20250310170546.568607869@linuxfoundation.org>
+Subject: [PATCH 5.15 026/620] wifi: rtlwifi: wait for firmware loading before releasing memory
+Date: Mon, 10 Mar 2025 17:57:52 +0100
+Message-ID: <20250310170546.607182925@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,54 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 8559a9e0c457729fe3edb3176bbf7c7874f482b0 ]
+[ Upstream commit b4b26642b31ef282df6ff7ea8531985edfdef12a ]
 
-Just like in commit 4dfde294b979 ("rtlwifi: rise completion at the last
-step of firmware callback"), only signal completion once the function is
-finished. Otherwise, the module removal waiting for the completion could
-free the memory that the callback will still use before returning.
+At probe error path, the firmware loading work may have already been
+queued. In such a case, it will try to access memory allocated by the probe
+function, which is about to be released. In such paths, wait for the
+firmware worker to finish before releasing memory.
 
-Fixes: b0302aba812b ("rtlwifi: Convert to asynchronous firmware load")
+Fixes: a7f7c15e945a ("rtlwifi: rtl8192cu: Free ieee80211_hw if probing fails")
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241107133322.855112-3-cascardo@igalia.com
+Link: https://patch.msgid.link/20241107133322.855112-4-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192se/sw.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/sw.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/sw.c
-index 6d352a3161b8f..60d97e73ca28e 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192se/sw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192se/sw.c
-@@ -67,22 +67,23 @@ static void rtl92se_fw_cb(const struct firmware *firmware, void *context)
- 
- 	rtl_dbg(rtlpriv, COMP_ERR, DBG_LOUD,
- 		"Firmware callback routine entered!\n");
--	complete(&rtlpriv->firmware_loading_complete);
- 	if (!firmware) {
- 		pr_err("Firmware %s not available\n", fw_name);
- 		rtlpriv->max_fw_size = 0;
--		return;
-+		goto exit;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
+index c2a3c88ea1fcc..038d9bb652b64 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/usb.c
++++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
+@@ -1073,13 +1073,15 @@ int rtl_usb_probe(struct usb_interface *intf,
+ 	err = ieee80211_register_hw(hw);
+ 	if (err) {
+ 		pr_err("Can't register mac80211 hw.\n");
+-		goto error_out;
++		goto error_init_vars;
  	}
- 	if (firmware->size > rtlpriv->max_fw_size) {
- 		pr_err("Firmware is too big!\n");
- 		rtlpriv->max_fw_size = 0;
- 		release_firmware(firmware);
--		return;
-+		goto exit;
- 	}
- 	pfirmware = (struct rt_firmware *)rtlpriv->rtlhal.pfirmware;
- 	memcpy(pfirmware->sz_fw_tmpbuffer, firmware->data, firmware->size);
- 	pfirmware->sz_fw_tmpbufferlen = firmware->size;
- 	release_firmware(firmware);
-+exit:
-+	complete(&rtlpriv->firmware_loading_complete);
- }
+ 	rtlpriv->mac80211.mac80211_registered = 1;
  
- static int rtl92s_init_sw_vars(struct ieee80211_hw *hw)
+ 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
+ 	return 0;
+ 
++error_init_vars:
++	wait_for_completion(&rtlpriv->firmware_loading_complete);
+ error_out:
+ 	rtl_deinit_core(hw);
+ error_out2:
 -- 
 2.39.5
 
