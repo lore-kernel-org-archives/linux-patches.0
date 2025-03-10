@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4939F2236FB;
-	Mon, 10 Mar 2025 17:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2861422172E;
+	Mon, 10 Mar 2025 17:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628526; cv=none; b=XJJ/oAwarPTM3BdptoZ/2TjjURGohd8qx6XI/1EMUWFZfJ69vEbZWRksqcU9kkzI1WtxWynthdHkxiF6dBw/A7ojEtIqKKwT+aKoPaXlC6r9BEgATq8W1dv6VsQt4G4anaPTeQTEc365EbG4aS1BapgxGFjjs5tW+caJz6LBRfI=
+	t=1741628529; cv=none; b=IGYIqUXrfcsHirJbYAZ4C1g5Tv5hllqlKyaAvuyZEdnfgEXVFmF9HDYqsbhmO7aWSdkiQ/zYBhh/En9okEW9rWiUw2eqkGoq0+PhxKPUjI9HN14F85qvSFkWaK+OOoyKJj4a+6UYwlHtY8DjvAAiaWSbaTW2gQ8Ax0brOn42V44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628526; c=relaxed/simple;
-	bh=8Ev+4ma5r/QpxI7VSVkYwgj8lOteCLHUIYGCNXqJhlk=;
+	s=arc-20240116; t=1741628529; c=relaxed/simple;
+	bh=CEWxCi7hJ2ku2fbBThlHsqF5d/QE2AzMA9ZNALRvgkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+D79qcVeXmkapp9sTe2TvHHzQicEd+bN+PnMt3ljlgGPfuboxXQAYX5z205LKAI+AJFNIbvPcrsESvDwEMf6tZGb+5n3EyDwM/0MI8oUIuKU+XbYouUF1YRqmCMxdZa1GmOkMZt8Qmq1RcPx8TuWKhCRh/nFrDtSFvIq88irVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aO3MzHnJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUocD/7GoamGHyDU0FzKgfUQXGfUOax2eWI47/dEjUT4xGk04yQz/sfPgL/oTcwsWfBIXKRQTnx1OVhH0nkJwYecOGUpMXYoYgZBTFENy3GTAgc0N9fN1mlxDDOZGeUp+57UYaogudkUTa2YsahMJvV1SLZmLkmQBbBgtuuCYVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKPCypT0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aO3MzHnJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4292C4CEE5;
-	Mon, 10 Mar 2025 17:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKPCypT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F9DC4CEE5;
+	Mon, 10 Mar 2025 17:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628526;
-	bh=8Ev+4ma5r/QpxI7VSVkYwgj8lOteCLHUIYGCNXqJhlk=;
+	s=korg; t=1741628529;
+	bh=CEWxCi7hJ2ku2fbBThlHsqF5d/QE2AzMA9ZNALRvgkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aO3MzHnJxJ3QOyX78LaAFGOn0cykxxO+Pp1WHLTEb8se1BrwrckHzwlkee2wcMx3X
-	 ucIi/2o0msbT1gxbUJl3GHpRMsOXLYdskZt44/+F3eYl5PHJujppbknS97Xx5lF4hr
-	 0sPOMzF3JpB7942U2tN7fWbIv8DB0xs8Fwf/Amh4=
+	b=dKPCypT0aRmyUx78jRDgnMWEb6afd6MVlMl2yfxkgyNcU9KwOlph3HhoHjZZg7lRH
+	 taocHIU8TxZ0ehBdA8AWMddOE8skqZDkd4FdPwVjEp96/Mage3VcNyQ6Hhhfjhk64a
+	 msqLQoGyMlgAGIyLVWRbnx7ThXEoB+F6OIIvz/ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Kun Hu <huk23@m.fudan.edu.cn>
-Subject: [PATCH 6.1 056/109] exfat: fix soft lockup in exfat_clear_bitmap
-Date: Mon, 10 Mar 2025 18:06:40 +0100
-Message-ID: <20250310170429.799911159@linuxfoundation.org>
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 057/109] net-timestamp: support TCP GSO case for a few missing flags
+Date: Mon, 10 Mar 2025 18:06:41 +0100
+Message-ID: <20250310170429.840397134@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -52,127 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jason Xing <kerneljasonxing@gmail.com>
 
-[ Upstream commit 9da33619e0ca53627641bc97d1b93ec741299111 ]
+[ Upstream commit 3c9231ea6497dfc50ac0ef69fff484da27d0df66 ]
 
-bitmap clear loop will take long time in __exfat_free_cluster()
-if data size of file/dir enty is invalid.
-If cluster bit in bitmap is already clear, stop clearing bitmap go to
-out of loop.
+When I read through the TSO codes, I found out that we probably
+miss initializing the tx_flags of last seg when TSO is turned
+off, which means at the following points no more timestamp
+(for this last one) will be generated. There are three flags
+to be handled in this patch:
+1. SKBTX_HW_TSTAMP
+2. SKBTX_BPF
+3. SKBTX_SCHED_TSTAMP
+Note that SKBTX_BPF[1] was added in 6.14.0-rc2 by commit
+6b98ec7e882af ("bpf: Add BPF_SOCK_OPS_TSTAMP_SCHED_CB callback")
+and only belongs to net-next branch material for now. The common
+issue of the above three flags can be fixed by this single patch.
 
-Fixes: 31023864e67a ("exfat: add fat entry operations")
-Reported-by: Kun Hu <huk23@m.fudan.edu.cn>, Jiaji Qin <jjtan24@m.fudan.edu.cn>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+This patch initializes the tx_flags to SKBTX_ANY_TSTAMP like what
+the UDP GSO does to make the newly segmented last skb inherit the
+tx_flags so that requested timestamp will be generated in each
+certain layer, or else that last one has zero value of tx_flags
+which leads to no timestamp at all.
+
+Fixes: 4ed2d765dfacc ("net-timestamp: TCP timestamping")
+Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c   | 10 ++++++++--
- fs/exfat/exfat_fs.h |  2 +-
- fs/exfat/fatent.c   | 11 +++++++----
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ net/ipv4/tcp_offload.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 5b547a5963808..32209acd51be4 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -160,7 +160,7 @@ int exfat_set_bitmap(struct inode *inode, unsigned int clu, bool sync)
- 	return 0;
- }
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index 72a645bf05c92..ce84073e0b7bb 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -12,12 +12,15 @@
+ #include <net/tcp.h>
+ #include <net/protocol.h>
  
--void exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync)
-+int exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync)
+-static void tcp_gso_tstamp(struct sk_buff *skb, unsigned int ts_seq,
++static void tcp_gso_tstamp(struct sk_buff *skb, struct sk_buff *gso_skb,
+ 			   unsigned int seq, unsigned int mss)
  {
- 	int i, b;
- 	unsigned int ent_idx;
-@@ -169,13 +169,17 @@ void exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync)
- 	struct exfat_mount_options *opts = &sbi->options;
- 
- 	if (!is_valid_cluster(sbi, clu))
--		return;
-+		return -EIO;
- 
- 	ent_idx = CLUSTER_TO_BITMAP_ENT(clu);
- 	i = BITMAP_OFFSET_SECTOR_INDEX(sb, ent_idx);
- 	b = BITMAP_OFFSET_BIT_IN_SECTOR(sb, ent_idx);
- 
-+	if (!test_bit_le(b, sbi->vol_amap[i]->b_data))
-+		return -EIO;
++	u32 flags = skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP;
++	u32 ts_seq = skb_shinfo(gso_skb)->tskey;
 +
- 	clear_bit_le(b, sbi->vol_amap[i]->b_data);
-+
- 	exfat_update_bh(sbi->vol_amap[i], sync);
- 
- 	if (opts->discard) {
-@@ -190,6 +194,8 @@ void exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync)
- 			opts->discard = 0;
+ 	while (skb) {
+ 		if (before(ts_seq, seq + mss)) {
+-			skb_shinfo(skb)->tx_flags |= SKBTX_SW_TSTAMP;
++			skb_shinfo(skb)->tx_flags |= flags;
+ 			skb_shinfo(skb)->tskey = ts_seq;
+ 			return;
  		}
- 	}
-+
-+	return 0;
- }
+@@ -119,8 +122,8 @@ struct sk_buff *tcp_gso_segment(struct sk_buff *skb,
+ 	th = tcp_hdr(skb);
+ 	seq = ntohl(th->seq);
  
- /*
-diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
-index c79c78bf265ba..5a1251207ab22 100644
---- a/fs/exfat/exfat_fs.h
-+++ b/fs/exfat/exfat_fs.h
-@@ -419,7 +419,7 @@ int exfat_count_num_clusters(struct super_block *sb,
- int exfat_load_bitmap(struct super_block *sb);
- void exfat_free_bitmap(struct exfat_sb_info *sbi);
- int exfat_set_bitmap(struct inode *inode, unsigned int clu, bool sync);
--void exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync);
-+int exfat_clear_bitmap(struct inode *inode, unsigned int clu, bool sync);
- unsigned int exfat_find_free_bitmap(struct super_block *sb, unsigned int clu);
- int exfat_count_used_clusters(struct super_block *sb, unsigned int *ret_count);
- int exfat_trim_fs(struct inode *inode, struct fstrim_range *range);
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index fe007ae2f23c8..220ab671a8156 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -175,6 +175,7 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
- 		BITMAP_OFFSET_SECTOR_INDEX(sb, CLUSTER_TO_BITMAP_ENT(clu));
+-	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_SW_TSTAMP))
+-		tcp_gso_tstamp(segs, skb_shinfo(gso_skb)->tskey, seq, mss);
++	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP))
++		tcp_gso_tstamp(segs, gso_skb, seq, mss);
  
- 	if (p_chain->flags == ALLOC_NO_FAT_CHAIN) {
-+		int err;
- 		unsigned int last_cluster = p_chain->dir + p_chain->size - 1;
- 		do {
- 			bool sync = false;
-@@ -189,7 +190,9 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
- 				cur_cmap_i = next_cmap_i;
- 			}
+ 	newcheck = ~csum_fold(csum_add(csum_unfold(th->check), delta));
  
--			exfat_clear_bitmap(inode, clu, (sync && IS_DIRSYNC(inode)));
-+			err = exfat_clear_bitmap(inode, clu, (sync && IS_DIRSYNC(inode)));
-+			if (err)
-+				break;
- 			clu++;
- 			num_clusters++;
- 		} while (num_clusters < p_chain->size);
-@@ -210,12 +213,13 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
- 				cur_cmap_i = next_cmap_i;
- 			}
- 
--			exfat_clear_bitmap(inode, clu, (sync && IS_DIRSYNC(inode)));
-+			if (exfat_clear_bitmap(inode, clu, (sync && IS_DIRSYNC(inode))))
-+				break;
- 			clu = n_clu;
- 			num_clusters++;
- 
- 			if (err)
--				goto dec_used_clus;
-+				break;
- 
- 			if (num_clusters >= sbi->num_clusters - EXFAT_FIRST_CLUSTER) {
- 				/*
-@@ -229,7 +233,6 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
- 		} while (clu != EXFAT_EOF_CLUSTER);
- 	}
- 
--dec_used_clus:
- 	sbi->used_clusters -= num_clusters;
- 	return 0;
- }
 -- 
 2.39.5
 
