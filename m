@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E152D023;
-	Mon, 10 Mar 2025 17:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427482D023;
+	Mon, 10 Mar 2025 17:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629310; cv=none; b=MEiAhGmkRTqoo1v1SIX5gwMO6T/fEIkXlJUr7ZMs0IqEpaHosQB08RN7HXyq22M1bJC//RlO161BMA5yqvjkzK5iX3+kmZzkl6F3iGXnBnXsNkvqL47c7aK9xMywO5RwJKQOxFzqXi7Nce854WSkLRSKO11ct/IxAoqS5fzdFO0=
+	t=1741629313; cv=none; b=WGC9mCIKuqnSu1amOeBd81X5jqqvwf8Z8novLTp9bWbjj6zr8eKGceJZkYV4qaeLcfVXNj9G4q30XMFvkSKtkSfhcUdrk7mEVKv1Za3UUBJ1U/O7AlF5zjPrk9+ffjFtY12qv5Z8nFyrlUR6QJBgDzq89dhIt1E/oDT9sM5x948=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629310; c=relaxed/simple;
-	bh=7ZWAjMVQD4ufSk2ykDvo7OAKLx0YQXI+hSSBx3RlGg8=;
+	s=arc-20240116; t=1741629313; c=relaxed/simple;
+	bh=3hWrjsXxRMok3GfNHh7HMWyAL0KabPNsRNyM0sNPzAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfjGatKzUQcKD6mwnZo9w8OzFqU4hP0MLjyrfW1QXmyWIXi1LWhCNwUr0g36v85/kv9PZzpubANV7DUGzyGy6k+wZDLAybPncpCPlNLBSUI3szhbvRKg3SC3TtPT1iwljDFIAFpn5+HobvoHakSrdVe/2ejhAIyMEH4p+BucEJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWOk4Gxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDLx2j49J8fG3DPxeZz3VScVZd8wnLhAeLk1qV50EbscU44q1/livA9NyUQEh+HB9cFhlIetiCnhkCmjt5P9Gwv6E1L6qNGdvS8gpJxn37dBPZl98Lxd02RPfpMvR4CB2YT14vh1FHby2lC4Wpo94+MtvjCOfmT2PcLNwQlev38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJKUeAaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWOk4Gxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64C9C4CEE5;
-	Mon, 10 Mar 2025 17:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJKUeAaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AE6C4CEE5;
+	Mon, 10 Mar 2025 17:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629310;
-	bh=7ZWAjMVQD4ufSk2ykDvo7OAKLx0YQXI+hSSBx3RlGg8=;
+	s=korg; t=1741629313;
+	bh=3hWrjsXxRMok3GfNHh7HMWyAL0KabPNsRNyM0sNPzAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWOk4Gxozya9DVeoHenoST0LdL5c6Mxq8KFrx5r/zpiBvWdyZhf+aufS3pitmCw9b
-	 3sNLdkdv0D+CVG7OzIuRUWvIaqZYtdL+0FlWjXwwK9NOqBzPVWNqpdduo2vELsFgu5
-	 7QsPNMnb2O4K5GHRnF0cOHXul6xsysnf9n2RMmzU=
+	b=XJKUeAaXZaU1qoo45tQg4M87yMLw5aWNbq6vzGjYGCHGu32PrRYuNmO0+GudSJ8TX
+	 OxdeAMDmybWC5PaN3ZrD2XbsGqWTZjUxWEfgrY4rieK5kgDXiexbsJwiK/alUUx9U0
+	 XGuCwi30fX2ABhpa5iS9e+wCJhji58PgDwRmMdX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuanjie Yang <quic_yuanjiey@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 219/620] net: wwan: iosm: Fix hibernation by re-binding the driver around it
-Date: Mon, 10 Mar 2025 18:01:05 +0100
-Message-ID: <20250310170554.269081626@linuxfoundation.org>
+Subject: [PATCH 5.15 220/620] mmc: sdhci-msm: Correctly set the load for the regulator
+Date: Mon, 10 Mar 2025 18:01:06 +0100
+Message-ID: <20250310170554.306785687@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,144 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
 
-[ Upstream commit 0b6f6593aa8c3a05f155c12fd0e7ad33a5149c31 ]
+[ Upstream commit 20a0c37e44063997391430c4ae09973e9cbc3911 ]
 
-Currently, the driver is seriously broken with respect to the
-hibernation (S4): after image restore the device is back into
-IPC_MEM_EXEC_STAGE_BOOT (which AFAIK means bootloader stage) and needs
-full re-launch of the rest of its firmware, but the driver restore
-handler treats the device as merely sleeping and just sends it a
-wake-up command.
+Qualcomm regulator supports two power supply modes: HPM and LPM.
+Currently, the sdhci-msm.c driver does not set the load to adjust
+the current for eMMC and SD. If the regulator dont't set correct
+load in LPM state, it will lead to the inability to properly
+initialize eMMC and SD.
 
-This wake-up command times out but device nodes (/dev/wwan*) remain
-accessible.
-However attempting to use them causes the bootloader to crash and
-enter IPC_MEM_EXEC_STAGE_CD_READY stage (which apparently means "a crash
-dump is ready").
+Set the correct regulator current for eMMC and SD to ensure that the
+device can work normally even when the regulator is in LPM.
 
-It seems that the device cannot be re-initialized from this crashed
-stage without toggling some reset pin (on my test platform that's
-apparently what the device _RST ACPI method does).
-
-While it would theoretically be possible to rewrite the driver to tear
-down the whole MUX / IPC layers on hibernation (so the bootloader does
-not crash from improper access) and then re-launch the device on
-restore this would require significant refactoring of the driver
-(believe me, I've tried), since there are quite a few assumptions
-hard-coded in the driver about the device never being partially
-de-initialized (like channels other than devlink cannot be closed,
-for example).
-Probably this would also need some programming guide for this hardware.
-
-Considering that the driver seems orphaned [1] and other people are
-hitting this issue too [2] fix it by simply unbinding the PCI driver
-before hibernation and re-binding it after restore, much like
-USB_QUIRK_RESET_RESUME does for USB devices that exhibit a similar
-problem.
-
-Tested on XMM7360 in HP EliteBook 855 G7 both with s2idle (which uses
-the existing suspend / resume handlers) and S4 (which uses the new code).
-
-[1]: https://lore.kernel.org/all/c248f0b4-2114-4c61-905f-466a786bdebb@leemhuis.info/
-[2]:
-https://github.com/xmm7360/xmm7360-pci/issues/211#issuecomment-1804139413
-
-Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Signed-off-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Link: https://patch.msgid.link/e60287ebdb0ab54c4075071b72568a40a75d0205.1736372610.git.mail@maciej.szmigiero.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250114083514.258379-1-quic_yuanjiey@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_pcie.c | 56 ++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-msm.c | 53 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-index 8b4222b137d14..968ca9ff21df1 100644
---- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-@@ -6,6 +6,7 @@
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
- #include <linux/module.h>
-+#include <linux/suspend.h>
- #include <net/rtnetlink.h>
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 943fc7b7f4fb5..4b727754d8e3c 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -132,9 +132,18 @@
+ /* Timeout value to avoid infinite waiting for pwr_irq */
+ #define MSM_PWR_IRQ_TIMEOUT_MS 5000
  
- #include "iosm_ipc_imem.h"
-@@ -18,6 +19,7 @@ MODULE_LICENSE("GPL v2");
- /* WWAN GUID */
- static guid_t wwan_acpi_guid = GUID_INIT(0xbad01b75, 0x22a8, 0x4f48, 0x87, 0x92,
- 				       0xbd, 0xde, 0x94, 0x67, 0x74, 0x7d);
-+static bool pci_registered;
++/* Max load for eMMC Vdd supply */
++#define MMC_VMMC_MAX_LOAD_UA	570000
++
+ /* Max load for eMMC Vdd-io supply */
+ #define MMC_VQMMC_MAX_LOAD_UA	325000
  
- static void ipc_pcie_resources_release(struct iosm_pcie *ipc_pcie)
- {
-@@ -484,7 +486,6 @@ static struct pci_driver iosm_ipc_driver = {
- 	},
- 	.id_table = iosm_ipc_ids,
- };
--module_pci_driver(iosm_ipc_driver);
++/* Max load for SD Vdd supply */
++#define SD_VMMC_MAX_LOAD_UA	800000
++
++/* Max load for SD Vdd-io supply */
++#define SD_VQMMC_MAX_LOAD_UA	22000
++
+ #define msm_host_readl(msm_host, host, offset) \
+ 	msm_host->var_ops->msm_readl_relaxed(host, offset)
  
- int ipc_pcie_addr_map(struct iosm_pcie *ipc_pcie, unsigned char *data,
- 		      size_t size, dma_addr_t *mapping, int direction)
-@@ -566,3 +567,56 @@ void ipc_pcie_kfree_skb(struct iosm_pcie *ipc_pcie, struct sk_buff *skb)
- 	IPC_CB(skb)->mapping = 0;
- 	dev_kfree_skb(skb);
+@@ -1399,11 +1408,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+ 	return ret;
  }
-+
-+static int pm_notify(struct notifier_block *nb, unsigned long mode, void *_unused)
+ 
+-static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
++static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
 +{
-+	if (mode == PM_HIBERNATION_PREPARE || mode == PM_RESTORE_PREPARE) {
-+		if (pci_registered) {
-+			pci_unregister_driver(&iosm_ipc_driver);
-+			pci_registered = false;
-+		}
-+	} else if (mode == PM_POST_HIBERNATION || mode == PM_POST_RESTORE) {
-+		if (!pci_registered) {
-+			int ret;
++	int load;
 +
-+			ret = pci_register_driver(&iosm_ipc_driver);
-+			if (ret) {
-+				pr_err(KBUILD_MODNAME ": unable to re-register PCI driver: %d\n",
-+				       ret);
-+			} else {
-+				pci_registered = true;
-+			}
-+		}
-+	}
++	if (!hpm)
++		load = 0;
++	else if (!mmc->card)
++		load = max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA);
++	else if (mmc_card_mmc(mmc->card))
++		load = MMC_VMMC_MAX_LOAD_UA;
++	else if (mmc_card_sd(mmc->card))
++		load = SD_VMMC_MAX_LOAD_UA;
++	else
++		return;
 +
-+	return 0;
++	regulator_set_load(mmc->supply.vmmc, load);
 +}
 +
-+static struct notifier_block pm_notifier = {
-+	.notifier_call = pm_notify,
-+};
-+
-+static int __init iosm_ipc_driver_init(void)
++static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
 +{
-+	int ret;
++	int load;
 +
-+	ret = pci_register_driver(&iosm_ipc_driver);
-+	if (ret)
-+		return ret;
++	if (!hpm)
++		load = 0;
++	else if (!mmc->card)
++		load = max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA);
++	else if (mmc_card_sd(mmc->card))
++		load = SD_VQMMC_MAX_LOAD_UA;
++	else
++		return;
 +
-+	pci_registered = true;
-+
-+	register_pm_notifier(&pm_notifier);
-+
-+	return 0;
++	regulator_set_load(mmc->supply.vqmmc, load);
 +}
-+module_init(iosm_ipc_driver_init);
 +
-+static void __exit iosm_ipc_driver_exit(void)
-+{
-+	unregister_pm_notifier(&pm_notifier);
++static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool hpm)
+ {
+ 	if (IS_ERR(mmc->supply.vmmc))
+ 		return 0;
+ 
++	msm_config_vmmc_regulator(mmc, hpm);
 +
-+	if (pci_registered)
-+		pci_unregister_driver(&iosm_ipc_driver);
-+}
-+module_exit(iosm_ipc_driver_exit);
+ 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+ }
+ 
+@@ -1416,6 +1462,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+ 	if (msm_host->vqmmc_enabled == level)
+ 		return 0;
+ 
++	msm_config_vqmmc_regulator(mmc, level);
++
+ 	if (level) {
+ 		/* Set the IO voltage regulator to default voltage level */
+ 		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
+@@ -1638,7 +1686,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	}
+ 
+ 	if (pwr_state) {
+-		ret = sdhci_msm_set_vmmc(mmc);
++		ret = sdhci_msm_set_vmmc(msm_host, mmc,
++					 pwr_state & REQ_BUS_ON);
+ 		if (!ret)
+ 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+ 					pwr_state & REQ_BUS_ON);
 -- 
 2.39.5
 
