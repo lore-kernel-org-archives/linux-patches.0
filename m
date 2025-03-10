@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848B51C4A24;
-	Mon, 10 Mar 2025 18:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB341C3F34;
+	Mon, 10 Mar 2025 18:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629753; cv=none; b=qOt/kUozbbr51XyvSxfMJoEJOB8YZv63iuWpVmGPi6CVMl7Mg2TT3fRht6/6yFbkvboGYL8o9AN95V0/n0WCqguCzBz2MlXhogcRnY1sNEMj1vUGuZri9mRRJOz9QSs0E1kAi/OHlFbACJPAyiq1dlltOURfqQPMqgHhma8pbBA=
+	t=1741630408; cv=none; b=kM91UYFu9qCN3BJ1gajL5XYWOGKt6mCIZ0Rz0E4G7vzyPUtjtwLzyeDiGuipMZFPJP/+o84O/qNJ0GNo5+sE4iYvgZt2HAC7fbICie731wQvqtkjryBYdCLPFX5RTDpjaDwqXGuE4ni8ZYIm+cl4+OyyBm5jgNFXB+Fma839rYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629753; c=relaxed/simple;
-	bh=2T/S3LDjsr94lcEbq/7DH2xz0jSUL2bT2SaIRs2E/cw=;
+	s=arc-20240116; t=1741630408; c=relaxed/simple;
+	bh=JuihhxxGmv8Ehc4yuD9wtGLztx6+1ZQ169EzZXTKlZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUZFQUamrTYNaEdEYKaq9ccwNzJgyPHo56F14DnxPqEyGgDZ149XSb04kV3XscI3AzvJFJcqxEEVwwAueZ5FuoMidb8EZvKApL0khviOJ1ezTppYjbn2ZT3BfBXCEPhXBZ5hYKooPMeG3k6+r5tsDW7wxdt9xUvXSL0gvz7RZXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSR7nd+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGKyjByNJ1v8YkYDzJ+ie0SMIP/x9tcpqksxQ/bx3sIAmnBDhYLLwiY7Nw+vMAbovGi4CAx1FwUQZFndmV77HxX5/LuMe2hHr26xCAh8mJJlrjWeywWRf0HdlzPm79IC8IRP1/ip0IXPevvnU1fYPz/R+M0Gjiq6pFZWRcXxPxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8542KSo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSR7nd+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AA7C4CEE5;
-	Mon, 10 Mar 2025 18:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8542KSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2474CC4CEE5;
+	Mon, 10 Mar 2025 18:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629753;
-	bh=2T/S3LDjsr94lcEbq/7DH2xz0jSUL2bT2SaIRs2E/cw=;
+	s=korg; t=1741630407;
+	bh=JuihhxxGmv8Ehc4yuD9wtGLztx6+1ZQ169EzZXTKlZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSR7nd+979Tg7KU21oBB1E8k3tTEfgU8+bkXPT5x/FOwj8ZRqPc+OZ7qbLKX02K3T
-	 MU7L1wLsLF0ENoHKD1mMjzt9h0G189210ymD9V6alr0ELUxJOfb2AUhhlWJYJ8HPEY
-	 mqZbSd5pEe08DjR6WFVQGeO071zUeGFT+cGRToLQ=
+	b=c8542KSoQ27yX9weZHKL2rB5z8ij07PWV5lyYoKRm+FVYvEhSJTR3bxWadAd/C266
+	 lWIeOAhl1MvKrHC0z3rLu+3kSW6zQF3nwHvfUswdue5RIfXs2HstwAeNFyaAo3+hKk
+	 ligPpqjFSELkiMfG9nSSFaJRjuExRSqcN6QziDEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 384/620] partitions: mac: fix handling of bogus partition table
-Date: Mon, 10 Mar 2025 18:03:50 +0100
-Message-ID: <20250310170600.750537790@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 396/620] ipv4: use RCU protection in inet_select_addr()
+Date: Mon, 10 Mar 2025 18:04:02 +0100
+Message-ID: <20250310170601.223215257@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,69 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 80e648042e512d5a767da251d44132553fe04ae0 upstream.
+[ Upstream commit 719817cd293e4fa389e1f69c396f3f816ed5aa41 ]
 
-Fix several issues in partition probing:
+inet_select_addr() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
- - The bailout for a bad partoffset must use put_dev_sector(), since the
-   preceding read_part_sector() succeeded.
- - If the partition table claims a silly sector size like 0xfff bytes
-   (which results in partition table entries straddling sector boundaries),
-   bail out instead of accessing out-of-bounds memory.
- - We must not assume that the partition table contains proper NUL
-   termination - use strnlen() and strncmp() instead of strlen() and
-   strcmp().
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20250214-partition-mac-v1-1-c1c626dffbd5@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c4544c724322 ("[NETNS]: Process inet_select_addr inside a namespace.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250205155120.1676781-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/mac.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/ipv4/devinet.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/block/partitions/mac.c
-+++ b/block/partitions/mac.c
-@@ -51,13 +51,25 @@ int mac_partition(struct parsed_partitio
- 	}
- 	secsize = be16_to_cpu(md->block_size);
- 	put_dev_sector(sect);
-+
-+	/*
-+	 * If the "block size" is not a power of 2, things get weird - we might
-+	 * end up with a partition straddling a sector boundary, so we wouldn't
-+	 * be able to read a partition entry with read_part_sector().
-+	 * Real block sizes are probably (?) powers of two, so just require
-+	 * that.
-+	 */
-+	if (!is_power_of_2(secsize))
-+		return -1;
- 	datasize = round_down(secsize, 512);
- 	data = read_part_sector(state, datasize / 512, &sect);
- 	if (!data)
- 		return -1;
- 	partoffset = secsize % 512;
--	if (partoffset + sizeof(*part) > datasize)
-+	if (partoffset + sizeof(*part) > datasize) {
-+		put_dev_sector(sect);
- 		return -1;
-+	}
- 	part = (struct mac_partition *) (data + partoffset);
- 	if (be16_to_cpu(part->signature) != MAC_PARTITION_MAGIC) {
- 		put_dev_sector(sect);
-@@ -110,8 +122,8 @@ int mac_partition(struct parsed_partitio
- 				int i, l;
+diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
+index dcbc087fff179..33e87b442b475 100644
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -1316,10 +1316,11 @@ __be32 inet_select_addr(const struct net_device *dev, __be32 dst, int scope)
+ 	__be32 addr = 0;
+ 	unsigned char localnet_scope = RT_SCOPE_HOST;
+ 	struct in_device *in_dev;
+-	struct net *net = dev_net(dev);
++	struct net *net;
+ 	int master_idx;
  
- 				goodness++;
--				l = strlen(part->name);
--				if (strcmp(part->name, "/") == 0)
-+				l = strnlen(part->name, sizeof(part->name));
-+				if (strncmp(part->name, "/", sizeof(part->name)) == 0)
- 					goodness++;
- 				for (i = 0; i <= l - 4; ++i) {
- 					if (strncasecmp(part->name + i, "root",
+ 	rcu_read_lock();
++	net = dev_net_rcu(dev);
+ 	in_dev = __in_dev_get_rcu(dev);
+ 	if (!in_dev)
+ 		goto no_in_dev;
+-- 
+2.39.5
+
 
 
