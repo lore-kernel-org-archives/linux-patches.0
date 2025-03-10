@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD93B21E087;
-	Mon, 10 Mar 2025 17:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EEC1A315A;
+	Mon, 10 Mar 2025 17:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627000; cv=none; b=k7HYNU+3Zk3xmfbGLFIvah92i1g3OUjWaNFfT6efZ7n79xqljRDNHm/KQzf9jFaXT7CgJUTAK6x19OdLXFgqw+88yN+2oj3uYy7s9s+R/VsittqiRxsLxDffS75jx/ieriviI1wk9dMNKm2W5ZIl6FuSbJsjm2EMnPNQmAOaC/0=
+	t=1741627003; cv=none; b=R3RK7kmwrXEC09xDq/mfmbpHK5Bl3Ub6VvrocU1+6/FnPrR9Pi97FljOJKuRXAw9mMu1xeW/XjssapOrc5GgvAN0hDezbLH2E/WkwOuNLcOh0vRiB7nbWgVNkU/lSm3Es0JkebhmNVSZa+qszlFJnb9hGV8Dyd0Aue7kE/r+Lxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627000; c=relaxed/simple;
-	bh=xGia79jGQqqBFnJIvjrMymqc5aCuJTIvJAQ6G8/8AqY=;
+	s=arc-20240116; t=1741627003; c=relaxed/simple;
+	bh=mwcXsBTKC5r2HJy38BrF1A0qYBf/93AZIH4JCU+J1f4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lD8JqfFAHlu3ROVKh3nSEiM3tHzKjrSZMel4Ht/U0427g2GyYwaJkS3TNw1/ObiqHlRR8LdKdR3lus9r+blOFGIf4ptJ34MDFAcPx1ctvSEmyvwGkDHKm/BlLfmk12w5nT5xxoj4Kv7ijFxhphlpkYEALegDu+ycCANC44r/wOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJ7UJiO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tV4GJWO0zqIQO2ZroRTJf70OARia0IJ+cvYH3R1oZh1UwZZ177fq4xs0NnQS3wJwmecJGka73vZShq8ajcfEbN7ryusGs3qQJPOWclwdIpZRTL/G1KacNe8eE+pZfrB9y5Usg3bZRtCEmKtjXnK6RJecbA7MFhh+gmnm8pn4Cyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZEE6/4n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJ7UJiO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462F2C4CEE5;
-	Mon, 10 Mar 2025 17:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZEE6/4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BADAC4CEE5;
+	Mon, 10 Mar 2025 17:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627000;
-	bh=xGia79jGQqqBFnJIvjrMymqc5aCuJTIvJAQ6G8/8AqY=;
+	s=korg; t=1741627003;
+	bh=mwcXsBTKC5r2HJy38BrF1A0qYBf/93AZIH4JCU+J1f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJ7UJiO908FsBuj+eagJPtGvQ/wFdQIPznDy9e0TIe8xnjdQQT2AUMXKDQ2a17hYY
-	 m6ttQo5kcLpe5qz5VL1Jk34lO8QGgrmctO8VIW3l8J2D4BA13xcQQBg3jTl9REdpPM
-	 LeX4hvqlG0Tfxpin9nQ+5mXTajDrXxwJb1USPJjc=
+	b=rZEE6/4nGttweVlgPSkFQGVO/5AkehpyhiFhapT/xY1i1MXN0Q/2u6kkL/cgjH1xS
+	 Hy98HduqDVUuILn3hvXk6e1UNRGc6HF1xXRhiofC7vgXZWovftANjdm9p3NXZ1kMC/
+	 ptrRe44zn9EcA8zxIfb5ES+Te1YOi4m5zZdO62Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.13 187/207] drivers: core: fix device leak in __fw_devlink_relax_cycles()
-Date: Mon, 10 Mar 2025 18:06:20 +0100
-Message-ID: <20250310170455.217006123@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Visweswara Tanuku <quic_vtanuku@quicinc.com>
+Subject: [PATCH 6.13 188/207] slimbus: messaging: Free transaction ID in delayed interrupt scenario
+Date: Mon, 10 Mar 2025 18:06:21 +0100
+Message-ID: <20250310170455.256043227@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,35 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Visweswara Tanuku <quic_vtanuku@quicinc.com>
 
-commit 78eb41f518f414378643ab022241df2a9dcd008b upstream.
+commit dcb0d43ba8eb9517e70b1a0e4b0ae0ab657a0e5a upstream.
 
-Commit bac3b10b78e5 ("driver core: fw_devlink: Stop trying to optimize
-cycle detection logic") introduced a new struct device *con_dev and a
-get_dev_from_fwnode() call to get it, but without adding a corresponding
-put_device().
+In case of interrupt delay for any reason, slim_do_transfer()
+returns timeout error but the transaction ID (TID) is not freed.
+This results into invalid memory access inside
+qcom_slim_ngd_rx_msgq_cb() due to invalid TID.
 
-Closes: https://lore.kernel.org/all/20241204124826.2e055091@booty/
-Fixes: bac3b10b78e5 ("driver core: fw_devlink: Stop trying to optimize cycle detection logic")
-Cc: stable@vger.kernel.org
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://lore.kernel.org/r/20250213-fix__fw_devlink_relax_cycles_missing_device_put-v2-1-8cd3b03e6a3f@bootlin.com
+Fix the issue by freeing the TID in slim_do_transfer() before
+returning timeout error to avoid invalid memory access.
+
+Call trace:
+__memcpy_fromio+0x20/0x190
+qcom_slim_ngd_rx_msgq_cb+0x130/0x290 [slim_qcom_ngd_ctrl]
+vchan_complete+0x2a0/0x4a0
+tasklet_action_common+0x274/0x700
+tasklet_action+0x28/0x3c
+_stext+0x188/0x620
+run_ksoftirqd+0x34/0x74
+smpboot_thread_fn+0x1d8/0x464
+kthread+0x178/0x238
+ret_from_fork+0x10/0x20
+Code: aa0003e8 91000429 f100044a 3940002b (3800150b)
+---[ end trace 0fe00bec2b975c99 ]---
+Kernel panic - not syncing: Oops: Fatal exception in interrupt.
+
+Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
+Link: https://lore.kernel.org/r/20250124125740.16897-1-quic_vtanuku@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/slimbus/messaging.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2079,6 +2079,7 @@ static bool __fw_devlink_relax_cycles(st
- out:
- 	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
- 	put_device(sup_dev);
-+	put_device(con_dev);
- 	put_device(par_dev);
- 	return ret;
- }
+--- a/drivers/slimbus/messaging.c
++++ b/drivers/slimbus/messaging.c
+@@ -148,8 +148,9 @@ int slim_do_transfer(struct slim_control
+ 	}
+ 
+ 	ret = ctrl->xfer_msg(ctrl, txn);
+-
+-	if (!ret && need_tid && !txn->msg->comp) {
++	if (ret == -ETIMEDOUT) {
++		slim_free_txn_tid(ctrl, txn);
++	} else if (!ret && need_tid && !txn->msg->comp) {
+ 		unsigned long ms = txn->rl + HZ;
+ 
+ 		time_left = wait_for_completion_timeout(txn->comp,
 
 
