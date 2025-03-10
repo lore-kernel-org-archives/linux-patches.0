@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4996223535F;
-	Mon, 10 Mar 2025 17:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1824523026D;
+	Mon, 10 Mar 2025 17:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628185; cv=none; b=ouLBDHtbaa4//erXWA3UBQJNl5dkCoACOFI5ECGsmpY4dsSIgPPIvwksKqVurSwtI9OVDj4cU1D6T0CPyVDpC/DGdxVuhgPsu1rkg5C138fGGUnjMpHz5iO9hNOMgS3g0jb3XRnNdMRtNh/nOVYtQ97AqsJsInB+C7ePTNCfMrs=
+	t=1741628188; cv=none; b=C0CNwnF2nPOwb456OdNxCnMwuo+l0qbDRsyweHQFzN3v954KLZ1Arqq6hMDBFTmXhCk+RBs2rlLf0DbsNt1iBxj+DvaomKjZiwVWzogQosI9I9VKNRCu8ezP7GaSznawaDLTKkSiJBPY1seFGfJI/R0GjJ4pzPdmesJEpxnf+OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628185; c=relaxed/simple;
-	bh=c1kKYygG+kNCLBTHJ+Uidlhoq949N/jShltRBgyWwVA=;
+	s=arc-20240116; t=1741628188; c=relaxed/simple;
+	bh=kGJt/WI3IfNQfPwW2XhXB0oChH5b+QW3IuP+d+BoDJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ph+LojdY1FFJf7BT9f+GGM17qPVHL6pq7f0Hw4mLfVLdanUQFd+8gNZT8IRbns1aoJb8I5070Gw8rMYYV4OOR/MaQtoczWC6CnBkmEUazgRfp1pCZbCsn4kCOxNQaUv8eh/Y3PnwET3P9c8uFZuTJ0eGr5iLBhB7I1Q6NED6d2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRJKzhTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hghSh93QmoN4cXGypSs460XcZZ2LqGNPRNltumwQjiDuuqr+XQ52pTn+v8TL6wq3QJICe9NKDk9cHt0581LK/WCtIZGVbVyAWJkek33sKPI/Te+wz8FAk8cn4aZXqmwpfIwpNSYejaLZ0JTUvUkGUOwXpB4lCNFuRv91s/okYVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKgiPnyH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRJKzhTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5D5C4CEF5;
-	Mon, 10 Mar 2025 17:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKgiPnyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ED4C4CEED;
+	Mon, 10 Mar 2025 17:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628184;
-	bh=c1kKYygG+kNCLBTHJ+Uidlhoq949N/jShltRBgyWwVA=;
+	s=korg; t=1741628187;
+	bh=kGJt/WI3IfNQfPwW2XhXB0oChH5b+QW3IuP+d+BoDJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRJKzhTwevgxLrSN2JKSrIT6wEGWrGMMdLFeD4anl9dY/b71lY/rELwIZo2kzjyfV
-	 4ZN0TNbdtWviH5fKPRGzl1OYRv3H+peWHzki9AkXaIEqdPGy9lmnB7FP1cbQEu0yYo
-	 b4ZyFITeOG6AsZYfCxP/1IUssKDmAizhgAzj+0YU=
+	b=fKgiPnyHCdpoYXVm0yhd1i2wIRr/8/SOxczhtrsUiB1geHTeT+uSpXdchvEEsfyFQ
+	 uwIP7yJLscEJc8no9NGfFgxQCeaTHR4CwYPqA8bDSm6lByaByDOFzF0QCygdmAYk60
+	 X6Weo+k505YVGY9fwHk/elanc/wugkrXoYWzI4+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 117/145] intel_th: pci: Add Panther Lake-P/U support
-Date: Mon, 10 Mar 2025 18:06:51 +0100
-Message-ID: <20250310170439.482344399@linuxfoundation.org>
+	stable@kernel.org,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 100/145] usb: atm: cxacru: fix a flaw in existing endpoint checks
+Date: Mon, 10 Mar 2025 18:06:34 +0100
+Message-ID: <20250310170438.800976428@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,34 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 49114ff05770264ae233f50023fc64a719a9dcf9 upstream.
+commit c90aad369899a607cfbc002bebeafd51e31900cd upstream.
 
-Add support for the Trace Hub in Panther Lake-P/U.
+Syzbot once again identified a flaw in usb endpoint checking, see [1].
+This time the issue stems from a commit authored by me (2eabb655a968
+("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")).
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+While using usb_find_common_endpoints() may usually be enough to
+discard devices with wrong endpoints, in this case one needs more
+than just finding and identifying the sufficient number of endpoints
+of correct types - one needs to check the endpoint's address as well.
+
+Since cxacru_bind() fills URBs with CXACRU_EP_CMD address in mind,
+switch the endpoint verification approach to usb_check_XXX_endpoints()
+instead to fix incomplete ep testing.
+
+[1] Syzbot report:
+usb 5-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 0 PID: 1378 at drivers/usb/core/urb.c:504 usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
+...
+RIP: 0010:usb_submit_urb+0xc4e/0x18c0 drivers/usb/core/urb.c:503
+...
+Call Trace:
+ <TASK>
+ cxacru_cm+0x3c8/0xe50 drivers/usb/atm/cxacru.c:649
+ cxacru_card_status drivers/usb/atm/cxacru.c:760 [inline]
+ cxacru_bind+0xcf9/0x1150 drivers/usb/atm/cxacru.c:1223
+ usbatm_usb_probe+0x314/0x1d30 drivers/usb/atm/usbatm.c:1058
+ cxacru_usb_probe+0x184/0x220 drivers/usb/atm/cxacru.c:1377
+ usb_probe_interface+0x641/0xbb0 drivers/usb/core/driver.c:396
+ really_probe+0x2b9/0xad0 drivers/base/dd.c:658
+ __driver_probe_device+0x1a2/0x390 drivers/base/dd.c:800
+ driver_probe_device+0x50/0x430 drivers/base/dd.c:830
+...
+
+Reported-and-tested-by: syzbot+ccbbc229a024fa3e13b5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ccbbc229a024fa3e13b5
+Fixes: 2eabb655a968 ("usb: atm: cxacru: fix endpoint checking in cxacru_bind()")
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20250211185017.1759193-6-alexander.shishkin@linux.intel.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20250213122259.730772-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/atm/cxacru.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -340,6 +340,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Panther Lake-P/U */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xe424),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Alder Lake CPU */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -1131,7 +1131,10 @@ static int cxacru_bind(struct usbatm_dat
+ 	struct cxacru_data *instance;
+ 	struct usb_device *usb_dev = interface_to_usbdev(intf);
+ 	struct usb_host_endpoint *cmd_ep = usb_dev->ep_in[CXACRU_EP_CMD];
+-	struct usb_endpoint_descriptor *in, *out;
++	static const u8 ep_addrs[] = {
++		CXACRU_EP_CMD + USB_DIR_IN,
++		CXACRU_EP_CMD + USB_DIR_OUT,
++		0};
+ 	int ret;
+ 
+ 	/* instance init */
+@@ -1179,13 +1182,11 @@ static int cxacru_bind(struct usbatm_dat
+ 	}
+ 
+ 	if (usb_endpoint_xfer_int(&cmd_ep->desc))
+-		ret = usb_find_common_endpoints(intf->cur_altsetting,
+-						NULL, NULL, &in, &out);
++		ret = usb_check_int_endpoints(intf, ep_addrs);
+ 	else
+-		ret = usb_find_common_endpoints(intf->cur_altsetting,
+-						&in, &out, NULL, NULL);
++		ret = usb_check_bulk_endpoints(intf, ep_addrs);
+ 
+-	if (ret) {
++	if (!ret) {
+ 		usb_err(usbatm_instance, "cxacru_bind: interface has incorrect endpoints\n");
+ 		ret = -ENODEV;
+ 		goto fail;
 
 
