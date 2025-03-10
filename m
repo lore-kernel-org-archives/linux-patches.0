@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B06230BF9;
-	Mon, 10 Mar 2025 17:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AC522E418;
+	Mon, 10 Mar 2025 17:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628928; cv=none; b=Dw9Zu5IjZOdmdsTAk+q8HdegEzl9uKF6cNdwAG7+XsTBifqRR2tI0DFHpbcMO+40M8Sq1WXMqDCcGpffZ0z4+RpftKKYr1ulCHHhIm47/mGFUZReNWu4o/4Sk5md+XfTfgD6BK/cQ5kVomR9QyddzdfQkayYfiIoIjZ3k66dZ2A=
+	t=1741628931; cv=none; b=O1RnsYX4uGzK5sgeI8RyLB7jmPEgCPth1eL2wSeNzw2tZ3d+CxeSUdorUWORv8AEfqWPdVkP6iOoWq84ZwBgobipeNZlddEzq6N7OVSdP55Q/N6DLCc+Ss8OWqTNuwu0ebJ9DKUoq/tJYfYXhF1eKltQeEmEOLcplBwfdU2Tl5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628928; c=relaxed/simple;
-	bh=PuB0hZDH/bA16TpHl7k/P33bFPNhJl5yuWYejE+j1JU=;
+	s=arc-20240116; t=1741628931; c=relaxed/simple;
+	bh=/DEwEEhGfAj5zTjhRnqqQdApk8sjXY3nTVC7877Ej2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfEjOxZz9SH5dvEfOsERQMwOkn/g8TWFep86kriykxz+zz04eFy89BZUDmqQsQ1yr+TVP41A1Jkkb4EGAeQ9oJ6wAzrT5CeA7omqgqtds5GbkrWD/LX0nV+3mX9kvrdTVPfGJHC0yt12Obwc1RQYz2CdCFh03GPxgipUwhyF6oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSdm6fUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zgb5YvUZk4ZqkG5qCd2Sy2EJj8s/P17X2W3dLrFiSifThq+EBO3uRx6hJamVm8R5pLR0iaOeBV/076us2PN4islI/zB66ZZDamhRIJU2IIFMUGMxo4PqsNawWnGNui6PSVSoliILzL6MNKBnK5dqqJlWclyWCiCNpMfRBw/crmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc811nEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSdm6fUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B015C4CEE5;
-	Mon, 10 Mar 2025 17:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc811nEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5118CC4CEE5;
+	Mon, 10 Mar 2025 17:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628927;
-	bh=PuB0hZDH/bA16TpHl7k/P33bFPNhJl5yuWYejE+j1JU=;
+	s=korg; t=1741628930;
+	bh=/DEwEEhGfAj5zTjhRnqqQdApk8sjXY3nTVC7877Ej2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSdm6fUiaqyn+7352pj2o7kVe9KqxJupRsOcKUB7o2eEo1SRmdOyO72GEbFZocO5h
-	 uwuFyVJz3F05yKG1RNv5W9tlq3PrUlNly7VkxgKM1iL074BPIlyX0pI7qFBov/K1HK
-	 4tOutKTk/g45bbcR6dXXgeciZyyUnQtpKHe1FIbg=
+	b=Fc811nEKtGKA9XS63S4PxV46/n/WL8G/JLAFwOLeJFNkF7RCgRdOCl14p3dg0LQ8r
+	 f9IHqqR30tNSYEvA0fWT/5r1ckU5EX+yjNB8osLhttWOAeVOBnh+nrvyghtOQweX5J
+	 pIWqiWwAsQ01xy0UEHyd2twD4pz6f7MVLSvXEJ5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/620] net/rose: prevent integer overflows in rose_setsockopt()
-Date: Mon, 10 Mar 2025 17:58:42 +0100
-Message-ID: <20250310170548.585273209@linuxfoundation.org>
+Subject: [PATCH 5.15 111/620] arm64: dts: mediatek: mt8183: kenzo: Support second source touchscreen
+Date: Mon, 10 Mar 2025 17:59:17 +0100
+Message-ID: <20250310170549.989359368@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,88 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit d640627663bfe7d8963c7615316d7d4ef60f3b0b ]
+[ Upstream commit 5ec5dc73c5ac0c6e06803dc3b5aea4493e856568 ]
 
-In case of possible unpredictably large arguments passed to
-rose_setsockopt() and multiplied by extra values on top of that,
-integer overflows may occur.
+Some kenzo devices use second source touchscreen.
 
-Do the safest minimum and fix these issues by checking the
-contents of 'opt' and returning -EINVAL if they are too large. Also,
-switch to unsigned int and remove useless check for negative 'opt'
-in ROSE_IDLE case.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250115164220.19954-1-n.zhandarovich@fintech.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0a9cefe21aec ("arm64: dts: mt8183: Add kukui-jacuzzi-kenzo board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241213-touchscreen-v3-1-7c1f670913f9@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ .../dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 1d95ff34b13c9..65fd5b99f9dea 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -396,15 +396,15 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct rose_sock *rose = rose_sk(sk);
--	int opt;
-+	unsigned int opt;
- 
- 	if (level != SOL_ROSE)
- 		return -ENOPROTOOPT;
- 
--	if (optlen < sizeof(int))
-+	if (optlen < sizeof(unsigned int))
- 		return -EINVAL;
- 
--	if (copy_from_sockptr(&opt, optval, sizeof(int)))
-+	if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
- 		return -EFAULT;
- 
- 	switch (optname) {
-@@ -413,31 +413,31 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
- 		return 0;
- 
- 	case ROSE_T1:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t1 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_T2:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t2 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_T3:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t3 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_HOLDBACK:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->hb = opt * HZ;
- 		return 0;
- 
- 	case ROSE_IDLE:
--		if (opt < 0)
-+		if (opt > UINT_MAX / (60 * HZ))
- 			return -EINVAL;
- 		rose->idle = opt * 60 * HZ;
- 		return 0;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
+index 6f1aa692753ad..a477e2cce2048 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
+@@ -10,3 +10,18 @@
+ 	model = "Google kenzo sku17 board";
+ 	compatible = "google,juniper-sku17", "google,juniper", "mediatek,mt8183";
+ };
++
++&i2c0 {
++	touchscreen@40 {
++		compatible = "hid-over-i2c";
++		reg = <0x40>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&touchscreen_pins>;
++
++		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
++
++		post-power-on-delay-ms = <70>;
++		hid-descr-addr = <0x0001>;
++	};
++};
 -- 
 2.39.5
 
