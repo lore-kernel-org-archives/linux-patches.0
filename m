@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067FC1E519;
-	Mon, 10 Mar 2025 17:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25685230BF8;
+	Mon, 10 Mar 2025 17:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626718; cv=none; b=V9fAMRxwKYtACQb8qgRDb+kqe2MixhhFRmmP7ncKZKP9PC3hxlBnUoCCjlTnht76cuaeA8m7GLfFyPteL4Nw2/+H27QiVOMbtvy54iJSkHWEa9ivDYXTnbxliHWjzfqtvIW61pj4tpvr7DT4PBUohu9PAHSEvuW/2FE6Zs8sCes=
+	t=1741626721; cv=none; b=qdZXbtAaxIIPxjhG4gPKZU6XKC3S0hqj2BjuEI2RwB5IDtTWKEtE+pjVJeTo/Rqgr68oUNOwZWm1jEEbWFc5QOtKbaDYkq5c+J1KfuA2KAhbQJFOzIoP7cWM/esQXFrXi9VlGtiYFj3EOWDvqmgxpoxNGvv/xgnt7UzToW34Dzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626718; c=relaxed/simple;
-	bh=UPYWuaSx4CJecMOlOyEVJVv1eQQvQUU7kF4QHFi2Ix8=;
+	s=arc-20240116; t=1741626721; c=relaxed/simple;
+	bh=BwRJwRcwffq3SGGcaBbIJtCnFvBZYPNDgT9o1DwOU5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nnu66OWCm0CV2Zv5Roysy3M5dQNQVOl95mrVR/OM8idxYTd42AwYgtUo9FiCpkzlS/lde7Qc/TXjGASaBwUCXitE822k9988gs0GOSDHrRSlIcAAWUc3a0jJ96MJPqlbuHj+fzT+rEVvUeAF2kI4LGcLJqjDO1HmXKZdaLFASE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgrz/M1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1Sg5v7INyPQWOX26GQ0sUZTIGbEnSZcFi2CNgxHpZxJymtfp/KzFIpCQMjsIu244MubuPN5f779MzxFvXI2kdWqYItF8utaePY2TxcbulsktbL7iNVByI3NDqsLzVadjvQyUkIHDsuS4OZ5I2N0tAGgzd77Tcv1TUnn4CYMyGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZSkt+m6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgrz/M1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD0AC4CEE5;
-	Mon, 10 Mar 2025 17:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZSkt+m6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D3AC4CEE5;
+	Mon, 10 Mar 2025 17:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626717;
-	bh=UPYWuaSx4CJecMOlOyEVJVv1eQQvQUU7kF4QHFi2Ix8=;
+	s=korg; t=1741626720;
+	bh=BwRJwRcwffq3SGGcaBbIJtCnFvBZYPNDgT9o1DwOU5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgrz/M1ENnVmV84eaLoBGCXx/y5Z+I265bOFMxEcZwknkIK/zzPpVykJRbOMCmljT
-	 +P9ga3/zvo6Cz/XGAH0aAQBawouSEn3WtAljtrGKqLCa7ec+/W2FGYPVkZ41BwkN11
-	 Th6GO4ObaSMWyBOAskIxacw/b1eOMBiZotyoot6Y=
+	b=RZSkt+m6Fw1nwfFUVvQsYMj85TbAeBFkDBt05EldaTSuIEZipytkW8HvRSSTmoDes
+	 94dHEmqx+GYF9V8rczJhXt5mXIaHlFPpDnmdPJSeaHpeR5kZOIQuWfmZFv1fwfa76K
+	 ZobLmHVwSsZVvpNceZ6BwgtoIomBufo5qwE/miqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 089/207] HID: google: fix unused variable warning under !CONFIG_ACPI
-Date: Mon, 10 Mar 2025 18:04:42 +0100
-Message-ID: <20250310170451.296398727@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Ezra Buehler <ezra.buehler@husqvarnagroup.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Russel King <linux@armlinux.org.uk>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 072/207] arm: pgtable: fix NULL pointer dereference issue
+Date: Mon, 10 Mar 2025 18:04:25 +0100
+Message-ID: <20250310170450.625676290@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,50 +56,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Chun Lin <eleanor15x@gmail.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit 4bd0725c09f377ffaf22b834241f6c050742e4fc ]
+commit a564ccfe300fa6a065beda06ab7f3c140d6b4d63 upstream.
 
-As reported by the kernel test robot, the following warning occurs:
+When update_mmu_cache_range() is called by update_mmu_cache(), the vmf
+parameter is NULL, which will cause a NULL pointer dereference issue in
+adjust_pte():
 
->> drivers/hid/hid-google-hammer.c:261:36: warning: 'cbas_ec_acpi_ids' defined but not used [-Wunused-const-variable=]
-     261 | static const struct acpi_device_id cbas_ec_acpi_ids[] = {
-         |                                    ^~~~~~~~~~~~~~~~
+Unable to handle kernel NULL pointer dereference at virtual address 00000030 when read
+Hardware name: Atmel AT91SAM9
+PC is at update_mmu_cache_range+0x1e0/0x278
+LR is at pte_offset_map_rw_nolock+0x18/0x2c
+Call trace:
+ update_mmu_cache_range from remove_migration_pte+0x29c/0x2ec
+ remove_migration_pte from rmap_walk_file+0xcc/0x130
+ rmap_walk_file from remove_migration_ptes+0x90/0xa4
+ remove_migration_ptes from migrate_pages_batch+0x6d4/0x858
+ migrate_pages_batch from migrate_pages+0x188/0x488
+ migrate_pages from compact_zone+0x56c/0x954
+ compact_zone from compact_node+0x90/0xf0
+ compact_node from kcompactd+0x1d4/0x204
+ kcompactd from kthread+0x120/0x12c
+ kthread from ret_from_fork+0x14/0x38
+Exception stack(0xc0d8bfb0 to 0xc0d8bff8)
 
-The 'cbas_ec_acpi_ids' array is only used when CONFIG_ACPI is enabled.
-Wrapping its definition and 'MODULE_DEVICE_TABLE' in '#ifdef CONFIG_ACPI'
-prevents a compiler warning when ACPI is disabled.
+To fix it, do not rely on whether 'ptl' is equal to decide whether to hold
+the pte lock, but decide it by whether CONFIG_SPLIT_PTE_PTLOCKS is
+enabled.  In addition, if two vmas map to the same PTE page, there is no
+need to hold the pte lock again, otherwise a deadlock will occur.  Just
+add the need_lock parameter to let adjust_pte() know this information.
 
-Fixes: eb1aac4c8744f75 ("HID: google: add support tablet mode switch for Whiskers")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501201141.jctFH5eB-lkp@intel.com/
-Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250217024924.57996-1-zhengqi.arch@bytedance.com
+Fixes: fc9c45b71f43 ("arm: adjust_pte() use pte_offset_map_rw_nolock()")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reported-by: Ezra Buehler <ezra.buehler@husqvarnagroup.com>
+Closes: https://lore.kernel.org/lkml/CAM1KZSmZ2T_riHvay+7cKEFxoPgeVpHkVFTzVVEQ1BO0cLkHEQ@mail.gmail.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Tested-by: Ezra Buehler <ezra.buehler@husqvarnagroup.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Russel King <linux@armlinux.org.uk>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-google-hammer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mm/fault-armv.c |   37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
-index 0f292b5d3e26d..eb6fd2dc75d0a 100644
---- a/drivers/hid/hid-google-hammer.c
-+++ b/drivers/hid/hid-google-hammer.c
-@@ -268,11 +268,13 @@ static void cbas_ec_remove(struct platform_device *pdev)
- 	mutex_unlock(&cbas_ec_reglock);
+--- a/arch/arm/mm/fault-armv.c
++++ b/arch/arm/mm/fault-armv.c
+@@ -62,7 +62,7 @@ static int do_adjust_pte(struct vm_area_
  }
  
-+#ifdef CONFIG_ACPI
- static const struct acpi_device_id cbas_ec_acpi_ids[] = {
- 	{ "GOOG000B", 0 },
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, cbas_ec_acpi_ids);
-+#endif
+ static int adjust_pte(struct vm_area_struct *vma, unsigned long address,
+-		      unsigned long pfn, struct vm_fault *vmf)
++		      unsigned long pfn, bool need_lock)
+ {
+ 	spinlock_t *ptl;
+ 	pgd_t *pgd;
+@@ -99,12 +99,11 @@ again:
+ 	if (!pte)
+ 		return 0;
  
- #ifdef CONFIG_OF
- static const struct of_device_id cbas_ec_of_match[] = {
--- 
-2.39.5
-
+-	/*
+-	 * If we are using split PTE locks, then we need to take the page
+-	 * lock here.  Otherwise we are using shared mm->page_table_lock
+-	 * which is already locked, thus cannot take it.
+-	 */
+-	if (ptl != vmf->ptl) {
++	if (need_lock) {
++		/*
++		 * Use nested version here to indicate that we are already
++		 * holding one similar spinlock.
++		 */
+ 		spin_lock_nested(ptl, SINGLE_DEPTH_NESTING);
+ 		if (unlikely(!pmd_same(pmdval, pmdp_get_lockless(pmd)))) {
+ 			pte_unmap_unlock(pte, ptl);
+@@ -114,7 +113,7 @@ again:
+ 
+ 	ret = do_adjust_pte(vma, address, pfn, pte);
+ 
+-	if (ptl != vmf->ptl)
++	if (need_lock)
+ 		spin_unlock(ptl);
+ 	pte_unmap(pte);
+ 
+@@ -123,9 +122,10 @@ again:
+ 
+ static void
+ make_coherent(struct address_space *mapping, struct vm_area_struct *vma,
+-	      unsigned long addr, pte_t *ptep, unsigned long pfn,
+-	      struct vm_fault *vmf)
++	      unsigned long addr, pte_t *ptep, unsigned long pfn)
+ {
++	const unsigned long pmd_start_addr = ALIGN_DOWN(addr, PMD_SIZE);
++	const unsigned long pmd_end_addr = pmd_start_addr + PMD_SIZE;
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	struct vm_area_struct *mpnt;
+ 	unsigned long offset;
+@@ -142,6 +142,14 @@ make_coherent(struct address_space *mapp
+ 	flush_dcache_mmap_lock(mapping);
+ 	vma_interval_tree_foreach(mpnt, &mapping->i_mmap, pgoff, pgoff) {
+ 		/*
++		 * If we are using split PTE locks, then we need to take the pte
++		 * lock. Otherwise we are using shared mm->page_table_lock which
++		 * is already locked, thus cannot take it.
++		 */
++		bool need_lock = IS_ENABLED(CONFIG_SPLIT_PTE_PTLOCKS);
++		unsigned long mpnt_addr;
++
++		/*
+ 		 * If this VMA is not in our MM, we can ignore it.
+ 		 * Note that we intentionally mask out the VMA
+ 		 * that we are fixing up.
+@@ -151,7 +159,12 @@ make_coherent(struct address_space *mapp
+ 		if (!(mpnt->vm_flags & VM_MAYSHARE))
+ 			continue;
+ 		offset = (pgoff - mpnt->vm_pgoff) << PAGE_SHIFT;
+-		aliases += adjust_pte(mpnt, mpnt->vm_start + offset, pfn, vmf);
++		mpnt_addr = mpnt->vm_start + offset;
++
++		/* Avoid deadlocks by not grabbing the same PTE lock again. */
++		if (mpnt_addr >= pmd_start_addr && mpnt_addr < pmd_end_addr)
++			need_lock = false;
++		aliases += adjust_pte(mpnt, mpnt_addr, pfn, need_lock);
+ 	}
+ 	flush_dcache_mmap_unlock(mapping);
+ 	if (aliases)
+@@ -194,7 +207,7 @@ void update_mmu_cache_range(struct vm_fa
+ 		__flush_dcache_folio(mapping, folio);
+ 	if (mapping) {
+ 		if (cache_is_vivt())
+-			make_coherent(mapping, vma, addr, ptep, pfn, vmf);
++			make_coherent(mapping, vma, addr, ptep, pfn);
+ 		else if (vma->vm_flags & VM_EXEC)
+ 			__flush_icache_all();
+ 	}
 
 
