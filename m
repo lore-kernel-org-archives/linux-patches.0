@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E9B17CA12;
-	Mon, 10 Mar 2025 17:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B06230BF9;
+	Mon, 10 Mar 2025 17:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628925; cv=none; b=ALP3RgO7Wj3HwrErUtE6l4oAd4k/Fx2xOEo+ClM6qwQemGkbV/sPWmOLPQwte1Wba1fCASCsCE4sqhMy+y0jFPJvEVgTc7t7/jMsPX1WvzKEfJnZZqTWnjmFdGmkf3ACCKo2zE2EMCcS8RsfmuyLOCPFX6YzXb1+yq1o67Wdpm0=
+	t=1741628928; cv=none; b=Dw9Zu5IjZOdmdsTAk+q8HdegEzl9uKF6cNdwAG7+XsTBifqRR2tI0DFHpbcMO+40M8Sq1WXMqDCcGpffZ0z4+RpftKKYr1ulCHHhIm47/mGFUZReNWu4o/4Sk5md+XfTfgD6BK/cQ5kVomR9QyddzdfQkayYfiIoIjZ3k66dZ2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628925; c=relaxed/simple;
-	bh=c53ed6WC/8IFonWm9fSPQj2m/h2mzgxOuBUOQc7hRT8=;
+	s=arc-20240116; t=1741628928; c=relaxed/simple;
+	bh=PuB0hZDH/bA16TpHl7k/P33bFPNhJl5yuWYejE+j1JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdezMVPgLXgCDSfwgamPjWvMiFPfvkizsJDtmkN44/JtvrJZunulvzv6UbiNJFwY8mSshmzVyzjgWMYbahOliCB+h1kctT24KzbjNp1W7rvJNf3wZm0Zg+tBM/OvhqOkcss1Q95py52m18xM+7sXxg1OKIEMxoqhEwOmRnXNNe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oY/5UHLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MfEjOxZz9SH5dvEfOsERQMwOkn/g8TWFep86kriykxz+zz04eFy89BZUDmqQsQ1yr+TVP41A1Jkkb4EGAeQ9oJ6wAzrT5CeA7omqgqtds5GbkrWD/LX0nV+3mX9kvrdTVPfGJHC0yt12Obwc1RQYz2CdCFh03GPxgipUwhyF6oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSdm6fUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oY/5UHLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9130BC4CEE5;
-	Mon, 10 Mar 2025 17:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSdm6fUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B015C4CEE5;
+	Mon, 10 Mar 2025 17:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628925;
-	bh=c53ed6WC/8IFonWm9fSPQj2m/h2mzgxOuBUOQc7hRT8=;
+	s=korg; t=1741628927;
+	bh=PuB0hZDH/bA16TpHl7k/P33bFPNhJl5yuWYejE+j1JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oY/5UHLBlz0GlTkkoL5QJCRbhO6gf2Tv2PbDrGUTSxZVWSs2uZ8A+N6FNvMTi8xel
-	 mSTGiIghB08OwymnPk8IwxPIUZu9ffqsBQr2QNNIhmACc0L7CmCndPbsfzOjq04+oN
-	 FeBxBNRQwg9w/pSf6UBeo32sMsHkUuJ/sAlljIfI=
+	b=TSdm6fUiaqyn+7352pj2o7kVe9KqxJupRsOcKUB7o2eEo1SRmdOyO72GEbFZocO5h
+	 uwuFyVJz3F05yKG1RNv5W9tlq3PrUlNly7VkxgKM1iL074BPIlyX0pI7qFBov/K1HK
+	 4tOutKTk/g45bbcR6dXXgeciZyyUnQtpKHe1FIbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Ye <yekai13@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/620] crypto: hisilicon/sec - add some comments for soft fallback
-Date: Mon, 10 Mar 2025 17:58:51 +0100
-Message-ID: <20250310170548.939039271@linuxfoundation.org>
+Subject: [PATCH 5.15 076/620] net/rose: prevent integer overflows in rose_setsockopt()
+Date: Mon, 10 Mar 2025 17:58:42 +0100
+Message-ID: <20250310170548.585273209@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,77 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Ye <yekai13@huawei.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e764d81d58070e66e61fb1b972c81eb9d2ea971e ]
+[ Upstream commit d640627663bfe7d8963c7615316d7d4ef60f3b0b ]
 
-Modify the print of information that might lead to user misunderstanding.
-Currently only XTS mode need the fallback tfm when using 192bit key.
-Others algs not need soft fallback tfm. So others algs can return
-directly.
+In case of possible unpredictably large arguments passed to
+rose_setsockopt() and multiplied by extra values on top of that,
+integer overflows may occur.
 
-Signed-off-by: Kai Ye <yekai13@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: fd337f852b26 ("crypto: hisilicon/sec2 - fix for aead icv error")
+Do the safest minimum and fix these issues by checking the
+contents of 'opt' and returning -EINVAL if they are too large. Also,
+switch to unsigned int and remove useless check for negative 'opt'
+in ROSE_IDLE case.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250115164220.19954-1-n.zhandarovich@fintech.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/rose/af_rose.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 28c167e1be426..c8fa964238e7d 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -643,13 +643,15 @@ static int sec_skcipher_fbtfm_init(struct crypto_skcipher *tfm)
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 1d95ff34b13c9..65fd5b99f9dea 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -396,15 +396,15 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct rose_sock *rose = rose_sk(sk);
+-	int opt;
++	unsigned int opt;
  
- 	c_ctx->fallback = false;
-+
-+	/* Currently, only XTS mode need fallback tfm when using 192bit key */
- 	if (likely(strncmp(alg, "xts", SEC_XTS_NAME_SZ)))
+ 	if (level != SOL_ROSE)
+ 		return -ENOPROTOOPT;
+ 
+-	if (optlen < sizeof(int))
++	if (optlen < sizeof(unsigned int))
+ 		return -EINVAL;
+ 
+-	if (copy_from_sockptr(&opt, optval, sizeof(int)))
++	if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
+ 		return -EFAULT;
+ 
+ 	switch (optname) {
+@@ -413,31 +413,31 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
  		return 0;
  
- 	c_ctx->fbtfm = crypto_alloc_sync_skcipher(alg, 0,
- 						  CRYPTO_ALG_NEED_FALLBACK);
- 	if (IS_ERR(c_ctx->fbtfm)) {
--		pr_err("failed to alloc fallback tfm!\n");
-+		pr_err("failed to alloc xts mode fallback tfm!\n");
- 		return PTR_ERR(c_ctx->fbtfm);
- 	}
- 
-@@ -810,7 +812,7 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	}
- 
- 	memcpy(c_ctx->c_key, key, keylen);
--	if (c_ctx->fallback) {
-+	if (c_ctx->fallback && c_ctx->fbtfm) {
- 		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
- 		if (ret) {
- 			dev_err(dev, "failed to set fallback skcipher key!\n");
-@@ -2034,13 +2036,12 @@ static int sec_skcipher_soft_crypto(struct sec_ctx *ctx,
- 				    struct skcipher_request *sreq, bool encrypt)
- {
- 	struct sec_cipher_ctx *c_ctx = &ctx->c_ctx;
-+	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, c_ctx->fbtfm);
- 	struct device *dev = ctx->dev;
- 	int ret;
- 
--	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, c_ctx->fbtfm);
--
- 	if (!c_ctx->fbtfm) {
--		dev_err(dev, "failed to check fallback tfm\n");
-+		dev_err_ratelimited(dev, "the soft tfm isn't supported in the current system.\n");
- 		return -EINVAL;
- 	}
- 
-@@ -2258,7 +2259,6 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 	if (ctx->sec->qm.ver == QM_HW_V2) {
- 		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
- 		    req->cryptlen <= authsize))) {
--			dev_err(dev, "Kunpeng920 not support 0 length!\n");
- 			ctx->a_ctx.fallback = true;
+ 	case ROSE_T1:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
  			return -EINVAL;
- 		}
+ 		rose->t1 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_T2:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->t2 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_T3:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->t3 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_HOLDBACK:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->hb = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_IDLE:
+-		if (opt < 0)
++		if (opt > UINT_MAX / (60 * HZ))
+ 			return -EINVAL;
+ 		rose->idle = opt * 60 * HZ;
+ 		return 0;
 -- 
 2.39.5
 
