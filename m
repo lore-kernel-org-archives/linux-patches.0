@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D8C22154C;
-	Mon, 10 Mar 2025 17:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E601B22154C;
+	Mon, 10 Mar 2025 17:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627249; cv=none; b=C+dSaL+DoAelkNzKqodhTRj8afrevcd21DwzqRFFKewEv8/aDnUmXQZRUo7dzsYaCvgqCHdBVKmyv3wqY6kZ7hfFClYAb2oLHz0eBAIXh/Ke7QEhj+qixfw2arLe587RvQB9dqA+VZH8Y3EPL50l4Swyjf0mexwOjoz/T6PqoQM=
+	t=1741627252; cv=none; b=dk2HfvMJ9AgBsRVkRLlQbd+YetxL/zvECJYOI50wqugUNx/OUOI8LawHUTDzT4lZOXyCpojggGhlYfHJ1FptcU45BttPwL1g44VDIY5cbWEb7w6ARmQOzLA1+A5flbfLql+Ev+76sNFEQ7OQuEBBVFrGvcGsF8fhm5Wlp3in274=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627249; c=relaxed/simple;
-	bh=FNMe60scxyNNdl+KMpWpy794ZtLZgcxWrSIH8vUw5hI=;
+	s=arc-20240116; t=1741627252; c=relaxed/simple;
+	bh=+wONn944gk6wUas09GClsWjIPrM1j5PTy0cjOiootoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cYY2E3le0HePikhx5k3cWQU+BTH6UxTjcEf2A9Vuhw81ombIwEjnRM9FDxQDVKsJrKbjB27bYDi/776gySbxX47318SlSC3vjWQ+k2gH4sEkJmfE625cr0fM5bWLrs5OD/TgYB4jwKvoeV8uYrph/XO1sctS2eqeQ9ScTrLDZrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXHK6182; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AfLJTMMmfFyuU1XDPOwUcN4Uz8IbqCjv3Dgta1kNwa0czakFRKv3nRuA6n+iMlP3KeMxidcU7CmkQ010gu/AeC1WLVuAnNMwezvZP+MABQI0QiHJ63bqU65iwDSdOyRQd04L6ZB9zv0jr6ZW/zGZQcSIZD2OfiugesWDERkY4ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wc4L/DsN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXHK6182"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94247C4CEE5;
-	Mon, 10 Mar 2025 17:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wc4L/DsN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE18C4CEE5;
+	Mon, 10 Mar 2025 17:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627249;
-	bh=FNMe60scxyNNdl+KMpWpy794ZtLZgcxWrSIH8vUw5hI=;
+	s=korg; t=1741627251;
+	bh=+wONn944gk6wUas09GClsWjIPrM1j5PTy0cjOiootoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXHK6182Nfa65t692idTvW24xd0YqkdSrUvLbXHzsC+NlbrPkq5He71qD8uhUJrXB
-	 g27D7GPaWV6135xGvZfpblj28rrsaVtFiQkOwg4afEUTqVR2GdrDPtjsUN6vY8bQui
-	 ineu1K5sa8MVlWQntEuEFZTHKSyJwXy242Y2L7oI=
+	b=Wc4L/DsN4NnbRRhkyS92IqRSGTAUdfwcq/qZkJHLYFriqIFBL0pwxTxsAz4cbzbKr
+	 LfvtCkBlHmWBCaIRKnGRJLGlYxgo69Ystlw01DLFjI3NIB1S2R2LIom1XGqUExCTFh
+	 c6mRfHKmHDJ0q/9778plMzP40mL4ZSWhYElrZv2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	=?UTF-8?q?Thomas=20B=C3=B6hler?= <witcher@wiredspace.de>,
 	Jocelyn Falempe <jfalempe@redhat.com>
-Subject: [PATCH 6.12 064/269] drm/panic: correctly indent continuation of line in list item
-Date: Mon, 10 Mar 2025 18:03:37 +0100
-Message-ID: <20250310170500.281467014@linuxfoundation.org>
+Subject: [PATCH 6.12 065/269] drm/panic: allow verbose boolean for clarity
+Date: Mon, 10 Mar 2025 18:03:38 +0100
+Message-ID: <20250310170500.320472118@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -54,52 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Böhler <witcher@wiredspace.de>
 
-commit 5bb698e6fc514ddd9e23b6649b29a0934d8d8586 upstream.
+commit 27aef8a52e4b7f120ce47cd638d9d83065b759d2 upstream.
 
-It is common practice in Rust to indent the next line the same amount of
-space as the previous one if both belong to the same list item. Clippy
-checks for this with the lint `doc_lazy_continuation`.
+Clippy complains about a non-minimal boolean expression with
+`nonminimal_bool`:
 
-    error: doc list item without indentation
-    --> drivers/gpu/drm/drm_panic_qr.rs:979:5
+    error: this boolean expression can be simplified
+       --> drivers/gpu/drm/drm_panic_qr.rs:722:9
         |
-    979 | /// conversion to numeric segments.
-        |     ^
+    722 |         (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
+        |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         |
-        = help: if this is supposed to be its own paragraph, add a blank line
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_lazy_continuation
-        = note: `-D clippy::doc-lazy-continuation` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::doc_lazy_continuation)]`
-    help: indent this line
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#nonminimal_bool
+        = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
+    help: try
         |
-    979 | ///   conversion to numeric segments.
-        |     ++
+    722 |         !(x >= 8 || y >= 8 && y < end) || (x >= end && y < 8)
+        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    722 |         (y >= end || y < 8) && x < 8 || (x >= end && y < 8)
+        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Indent the offending line by 2 more spaces to remove this Clippy error.
+While this can be useful in a lot of cases, it isn't here because the
+line expresses clearly what the intention is. Simplifying the expression
+means losing clarity, so opt-out of this lint for the offending line.
 
 Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
 Reported-by: Miguel Ojeda <ojeda@kernel.org>
 Link: https://github.com/Rust-for-Linux/linux/issues/1123
 Signed-off-by: Thomas Böhler <witcher@wiredspace.de>
 Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241019084048.22336-6-witcher@wiredspace.de
-[ Reworded to indent Clippy's message. - Miguel ]
+Link: https://lore.kernel.org/r/20241019084048.22336-7-witcher@wiredspace.de
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panic_qr.rs |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/drm_panic_qr.rs
 +++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -975,7 +975,7 @@ pub unsafe extern "C" fn drm_panic_qr_ge
- /// * `url_len`: Length of the URL.
- ///
- /// * If `url_len` > 0, remove the 2 segments header/length and also count the
--/// conversion to numeric segments.
-+///   conversion to numeric segments.
- /// * If `url_len` = 0, only removes 3 bytes for 1 binary segment.
- #[no_mangle]
- pub extern "C" fn drm_panic_qr_max_data_size(version: u8, url_len: usize) -> usize {
+@@ -719,7 +719,10 @@ impl QrImage<'_> {
+ 
+     fn is_finder(&self, x: u8, y: u8) -> bool {
+         let end = self.width - 8;
+-        (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
++        #[expect(clippy::nonminimal_bool)]
++        {
++            (x < 8 && y < 8) || (x < 8 && y >= end) || (x >= end && y < 8)
++        }
+     }
+ 
+     // Alignment pattern: 5x5 squares in a grid.
 
 
