@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BDD17CA12;
-	Mon, 10 Mar 2025 17:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102DD231A21;
+	Mon, 10 Mar 2025 17:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626842; cv=none; b=aFpdl3cbMbK/o3rjaGNgjtFwU+ruKlrLT5sQEmjmKA3uLBLeZmGmgGfjptljc1a67fM6Qlo3UX5NbS2wPCY3Vg8hapc7UZ/FU2qvW9crSoF1X+BCPEJuOf49/JK8aApY+FIqU1D5gc2xL9sbc9mMTALj6lxGnXLrlTj7jHYZ7wg=
+	t=1741626845; cv=none; b=KBojbThGTWoMKvDyNEXS5yuADY/S4zsFK9mYWucGJ/1VtrsK+lKsKZkQ5YMsg+RpmyFLdDG9kCGw1GSLDm4OMx57B8AoZ1wBJRUItMuQkecrpp9LymF+jcf3IhEJDt6FNve7WhhjyEXWJCXKfvL0bPo9x6K5kml8c+Ko1WYxH7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626842; c=relaxed/simple;
-	bh=WCvdbi9jT4buUWKFmgz0vQ9gb8WUzgh9IQZEkCPa40E=;
+	s=arc-20240116; t=1741626845; c=relaxed/simple;
+	bh=pY9iw7fUoyzPjcf6orVWYCDML++Yy/YpZNaa/b8O1d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNqvWnuJYwkC3wt4CsZSAkUw7BSBP4xohzmb4B3sISO1JAd/ceH0g7TxW5XdpEj+h/aW1n77P24E2mOBHz6qrE6LmusG8TO7LOMt+NwSbBw9xRcqQQXTn5D85T/ZeXB9UAUm7xxuk0aZKiQOu9wFv0rtfkrzwjpbugwozevljvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGzIaDrK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOcl+jMXxtDFL/18m7O2ILNVUoPuqrWVfEyab8xBgYNmJeg//vOBPyN5aLNNpkzJADyHddFuW5S90HAQhYePkntIR2zmTQDXoqeaHM8x1rbxSARmqLh/Wq0Y7nm0tNr0JTM1W8EQkr8HmzPrYvyk/2Yn7/wAQQO2a8qQj3+CYOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqAgWsN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGzIaDrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A162EC4CEEB;
-	Mon, 10 Mar 2025 17:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqAgWsN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874DEC4CEE5;
+	Mon, 10 Mar 2025 17:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626842;
-	bh=WCvdbi9jT4buUWKFmgz0vQ9gb8WUzgh9IQZEkCPa40E=;
+	s=korg; t=1741626844;
+	bh=pY9iw7fUoyzPjcf6orVWYCDML++Yy/YpZNaa/b8O1d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGzIaDrKrrCCeN0lfzfNsg9JW9Xq2sB7kds6F5YmXFYPHbEpbxLVOiei8fAe0XeGN
-	 saQeTJoHBwlUxIQltWJP1pFC432qNzCVZGspFZFAHl9/1I7l8ZfgbCrKKwglTiVQR3
-	 xgl/UV3wyZ8IXKUHXKVlursZ0UlbmMhUVA2Uj5UM=
+	b=YqAgWsN/zpHeFObRqgFGTv7zqAIDglIKEadc9VUskqNSqivu7iYWDbLsrc8c6Gspd
+	 VtVaGTnXtJNA77rmT6RQq4C8ejAEwLj/OkVUW32/tzCuFdjDjST7o5CXY5rpSuLoTr
+	 r5u9svZYOfSe5SaXwdNtRw8X/G1XhPgD9LJxwvh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Alex Elder <elder@riscstar.com>,
+	Paul Mackerras <paulus@samba.org>,
+	syzbot+853242d9c9917165d791@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 131/207] net: ipa: Enable checksum for IPA_ENDPOINT_AP_MODEM_{RX,TX} for v4.7
-Date: Mon, 10 Mar 2025 18:05:24 +0100
-Message-ID: <20250310170453.010376378@linuxfoundation.org>
+Subject: [PATCH 6.13 132/207] ppp: Fix KMSAN uninit-value warning with bpf
+Date: Mon, 10 Mar 2025 18:05:25 +0100
+Message-ID: <20250310170453.049770819@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -52,44 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 934e69669e32eb653234898424ae007bae2f636e ]
+[ Upstream commit 4c2d14c40a68678d885eab4008a0129646805bae ]
 
-Enable the checksum option for these two endpoints in order to allow
-mobile data to actually work. Without this, no packets seem to make it
-through the IPA.
+Syzbot caught an "KMSAN: uninit-value" warning [1], which is caused by the
+ppp driver not initializing a 2-byte header when using socket filter.
 
-Fixes: b310de784bac ("net: ipa: add IPA v4.7 support")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20250227-ipa-v4-7-fixes-v1-3-a88dd8249d8a@fairphone.com
+The following code can generate a PPP filter BPF program:
+'''
+struct bpf_program fp;
+pcap_t *handle;
+handle = pcap_open_dead(DLT_PPP_PPPD, 65535);
+pcap_compile(handle, &fp, "ip and outbound", 0, 0);
+bpf_dump(&fp, 1);
+'''
+Its output is:
+'''
+(000) ldh [2]
+(001) jeq #0x21 jt 2 jf 5
+(002) ldb [0]
+(003) jeq #0x1 jt 4 jf 5
+(004) ret #65535
+(005) ret #0
+'''
+Wen can find similar code at the following link:
+https://github.com/ppp-project/ppp/blob/master/pppd/options.c#L1680
+The maintainer of this code repository is also the original maintainer
+of the ppp driver.
+
+As you can see the BPF program skips 2 bytes of data and then reads the
+'Protocol' field to determine if it's an IP packet. Then it read the first
+byte of the first 2 bytes to determine the direction.
+
+The issue is that only the first byte indicating direction is initialized
+in current ppp driver code while the second byte is not initialized.
+
+For normal BPF programs generated by libpcap, uninitialized data won't be
+used, so it's not a problem. However, for carefully crafted BPF programs,
+such as those generated by syzkaller [2], which start reading from offset
+0, the uninitialized data will be used and caught by KMSAN.
+
+[1] https://syzkaller.appspot.com/bug?extid=853242d9c9917165d791
+[2] https://syzkaller.appspot.com/text?tag=ReproC&x=11994913980000
+
+Cc: Paul Mackerras <paulus@samba.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+853242d9c9917165d791@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/bpf/000000000000dea025060d6bc3bc@google.com/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250228141408.393864-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/data/ipa_data-v4.7.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ipa/data/ipa_data-v4.7.c b/drivers/net/ipa/data/ipa_data-v4.7.c
-index e63dcf8d45567..41f212209993f 100644
---- a/drivers/net/ipa/data/ipa_data-v4.7.c
-+++ b/drivers/net/ipa/data/ipa_data-v4.7.c
-@@ -104,6 +104,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
- 			.filter_support	= true,
- 			.config = {
- 				.resource_group	= IPA_RSRC_GROUP_SRC_UL_DL,
-+				.checksum       = true,
- 				.qmap		= true,
- 				.status_enable	= true,
- 				.tx = {
-@@ -127,6 +128,7 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
- 		.endpoint = {
- 			.config = {
- 				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL,
-+				.checksum       = true,
- 				.qmap		= true,
- 				.aggregation	= true,
- 				.rx = {
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 4583e15ad03a0..1420c4efa48e6 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -72,6 +72,17 @@
+ #define PPP_PROTO_LEN	2
+ #define PPP_LCP_HDRLEN	4
+ 
++/* The filter instructions generated by libpcap are constructed
++ * assuming a four-byte PPP header on each packet, where the last
++ * 2 bytes are the protocol field defined in the RFC and the first
++ * byte of the first 2 bytes indicates the direction.
++ * The second byte is currently unused, but we still need to initialize
++ * it to prevent crafted BPF programs from reading them which would
++ * cause reading of uninitialized data.
++ */
++#define PPP_FILTER_OUTBOUND_TAG 0x0100
++#define PPP_FILTER_INBOUND_TAG  0x0000
++
+ /*
+  * An instance of /dev/ppp can be associated with either a ppp
+  * interface unit or a ppp channel.  In both cases, file->private_data
+@@ -1762,10 +1773,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 
+ 	if (proto < 0x8000) {
+ #ifdef CONFIG_PPP_FILTER
+-		/* check if we should pass this packet */
+-		/* the filter instructions are constructed assuming
+-		   a four-byte PPP header on each packet */
+-		*(u8 *)skb_push(skb, 2) = 1;
++		/* check if the packet passes the pass and active filters.
++		 * See comment for PPP_FILTER_OUTBOUND_TAG above.
++		 */
++		*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_OUTBOUND_TAG);
+ 		if (ppp->pass_filter &&
+ 		    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+ 			if (ppp->debug & 1)
+@@ -2482,14 +2493,13 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		/* network protocol frame - give it to the kernel */
+ 
+ #ifdef CONFIG_PPP_FILTER
+-		/* check if the packet passes the pass and active filters */
+-		/* the filter instructions are constructed assuming
+-		   a four-byte PPP header on each packet */
+ 		if (ppp->pass_filter || ppp->active_filter) {
+ 			if (skb_unclone(skb, GFP_ATOMIC))
+ 				goto err;
+-
+-			*(u8 *)skb_push(skb, 2) = 0;
++			/* Check if the packet passes the pass and active filters.
++			 * See comment for PPP_FILTER_INBOUND_TAG above.
++			 */
++			*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+ 			if (ppp->pass_filter &&
+ 			    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+ 				if (ppp->debug & 1)
 -- 
 2.39.5
 
