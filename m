@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0B123237B;
-	Mon, 10 Mar 2025 17:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA4F2253FE;
+	Mon, 10 Mar 2025 17:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627809; cv=none; b=vBRM6g7rNjWH7BNmQbXbkLA1GuS6v3MfooxJ7CnI6ve9IzwFWFZorurRAnWRjAZy+P144tlnkeLH5oNkXKqxiWqeNNYL978QG/ID5XrJu+bkDYQq0S9XQjiWlkcfpOWLKEZLn/RQcraXN2KpRHkGVbCywpqN47ZFSJVMZdcIed0=
+	t=1741627813; cv=none; b=Sbt/I2YtVTkzalipEksiMdvztMEQl3JojZWPiL2Sf1ArtR+b96uDE7S4lCYic/VrAn25GK7ooeU5LpvDDc5qXA3VgOWH3mpQAxbwh8PX0hg4kGKGXdnfUvjUNYU02I/sN8zdEwuUi4JgseqwbHg4QSb2SLVFpE9suFF4Pd5adtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627809; c=relaxed/simple;
-	bh=Lvk2fZdBptajIl8ZQ/212GVphBd8KB/4kzNxlrYIkRo=;
+	s=arc-20240116; t=1741627813; c=relaxed/simple;
+	bh=zy6TLv4fCa0/HqRGiRmEJDCON+Bm3LxFmrX7Jcw0mJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODwr54vKkK4XnHEGLO9gSV0yJo49c9/gryVQfGCRR0CHsAK9DosVCf9hm9BeVCqkt5gXhUYqVoFp/4QzLWD9CCrVVmCTZQwjbJmPd3oauIZcvigB2AV6Glji6Yf1aBoqVy8xBQukJ1WhXgR/TRasPMuK3LHvSPgPj+ptKDB2Abk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyLsd/N3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMeCbiZw+Bxz4JgdjcCxyyfgecCsifCu/8xyv85cF9cVV+uolfla6YHxRhzruFG+9o5NgOTHClR4ENP3IJs5qNsk4KW5WcXuKpvyGiUdD8cZQKbUMomRujRNMoIKrnE29ny6cUdm9VOXJTrWOZU1O5NuBMtYsFzsdi64MXs+/MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtilBSGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyLsd/N3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437AEC4CEE5;
-	Mon, 10 Mar 2025 17:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtilBSGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CD3C4CEE5;
+	Mon, 10 Mar 2025 17:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627809;
-	bh=Lvk2fZdBptajIl8ZQ/212GVphBd8KB/4kzNxlrYIkRo=;
+	s=korg; t=1741627812;
+	bh=zy6TLv4fCa0/HqRGiRmEJDCON+Bm3LxFmrX7Jcw0mJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NyLsd/N303BoeB8M+Jjnu3ViEygD0L9j7GQlBL6R7loQsmwcrMMfjvM/OCO03VHfW
-	 Y15Du0GBYm7Ole3arONqT+j8WoLJ7MI0AFuQHZGs/t2jR2GYZnOeDUR1BjiBfBmlvG
-	 8Ha+9hts6w1Y6e40xV3QlsTInvpVljAbVTZ31ek4=
+	b=jtilBSGAGHHC79XVUn6uGE35aEd1+pMZwsnN1h5v28jaiZYDFmaxT9WhMwqZVQiuI
+	 iwtynw5yeWJB+aXVHFtjhS5hDS24H1VkiHvbh8mQy/Ywd2j9zExUGj+t1LDRdpyDmi
+	 z8j0xV1YND6oY1eofVJXp9n9uA7CfkleHr4cYSsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 258/269] kbuild: hdrcheck: fix cross build with clang
-Date: Mon, 10 Mar 2025 18:06:51 +0100
-Message-ID: <20250310170508.075008581@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 259/269] ALSA: hda: realtek: fix incorrect IS_REACHABLE() usage
+Date: Mon, 10 Mar 2025 18:06:52 +0100
+Message-ID: <20250310170508.114092105@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,43 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 02e9a22ceef0227175e391902d8760425fa072c6 ]
+commit d0bbe332669c5db32c8c92bc967f8e7f8d460ddf upstream.
 
-The headercheck tries to call clang with a mix of compiler arguments
-that don't include the target architecture. When building e.g. x86
-headers on arm64, this produces a warning like
+The alternative path leads to a build error after a recent change:
 
-   clang: warning: unknown platform, assuming -mfloat-abi=soft
+sound/pci/hda/patch_realtek.c: In function 'alc233_fixup_lenovo_low_en_micmute_led':
+include/linux/stddef.h:9:14: error: called object is not a function or function pointer
+    9 | #define NULL ((void *)0)
+      |              ^
+sound/pci/hda/patch_realtek.c:5041:49: note: in expansion of macro 'NULL'
+ 5041 | #define alc233_fixup_lenovo_line2_mic_hotkey    NULL
+      |                                                 ^~~~
+sound/pci/hda/patch_realtek.c:5063:9: note: in expansion of macro 'alc233_fixup_lenovo_line2_mic_hotkey'
+ 5063 |         alc233_fixup_lenovo_line2_mic_hotkey(codec, fix, action);
 
-Add in the KBUILD_CPPFLAGS, which contain the target, in order to make it
-build properly.
+Using IS_REACHABLE() is somewhat questionable here anyway since it
+leads to the input code not working when the HDA driver is builtin
+but input is in a loadable module. Replace this with a hard compile-time
+dependency on CONFIG_INPUT. In practice this won't chance much
+other than solve the compiler error because it is rare to require
+sound output but no input support.
 
-See also 1b71c2fb04e7 ("kbuild: userprogs: fix bitsize and target
-detection on clang").
-
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Fixes: f603b159231b ("ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20250304142620.582191-1-arnd@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- usr/include/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/Kconfig         |    1 +
+ sound/pci/hda/patch_realtek.c |    5 -----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/usr/include/Makefile b/usr/include/Makefile
-index 771e32872b2ab..58173cfe5ff17 100644
---- a/usr/include/Makefile
-+++ b/usr/include/Makefile
-@@ -10,7 +10,7 @@ UAPI_CFLAGS := -std=c90 -Wall -Werror=implicit-function-declaration
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -208,6 +208,7 @@ comment "Set to Y if you want auto-loadi
  
- # In theory, we do not care -m32 or -m64 for header compile tests.
- # It is here just because CONFIG_CC_CAN_LINK is tested with -m32 or -m64.
--UAPI_CFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
-+UAPI_CFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
+ config SND_HDA_CODEC_REALTEK
+ 	tristate "Build Realtek HD-audio codec support"
++	depends on INPUT
+ 	select SND_HDA_GENERIC
+ 	select SND_HDA_GENERIC_LEDS
+ 	select SND_HDA_SCODEC_COMPONENT
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -5002,7 +5002,6 @@ static void alc298_fixup_samsung_amp_v2_
+ 		alc298_samsung_v2_init_amps(codec, 4);
+ }
  
- # USERCFLAGS might contain sysroot location for CC.
- UAPI_CFLAGS += $(USERCFLAGS)
--- 
-2.39.5
-
+-#if IS_REACHABLE(CONFIG_INPUT)
+ static void gpio2_mic_hotkey_event(struct hda_codec *codec,
+ 				   struct hda_jack_callback *event)
+ {
+@@ -5111,10 +5110,6 @@ static void alc233_fixup_lenovo_line2_mi
+ 		spec->kb_dev = NULL;
+ 	}
+ }
+-#else /* INPUT */
+-#define alc280_fixup_hp_gpio2_mic_hotkey	NULL
+-#define alc233_fixup_lenovo_line2_mic_hotkey	NULL
+-#endif /* INPUT */
+ 
+ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
 
 
