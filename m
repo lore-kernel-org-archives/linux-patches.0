@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960DC233136;
-	Mon, 10 Mar 2025 17:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94735230BF5;
+	Mon, 10 Mar 2025 17:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627425; cv=none; b=bLKN551pd3F3idnGk1jwoF0MpuOk/RJMFdEm9dalYZYiGRmTLxUkytjBU35ny6KkqCTKDThiJTWPb9HnL0JOyND8p+0bxEvtm34gfZf9Qw4Yls7pwjyRJn4/W1X6JzaGAvrvMEtWBlLxrNlZr+IE2VoacA5UYfbIVI2Zc8w145s=
+	t=1741627428; cv=none; b=endYcAT+DkDrIJ8FtRdwnh6O6rm1fpvdfATQs2QUBRByGwfo+d+/74mlOZea4kKh4rKUsHoY7dzCHggZ24CGmWXT5VXZE26rquzAUhBUhhDJftDjRgC++OBLIKsdER6HMm7c1DFUQFH17orTHh/DnJLnt43j8z1IbTBpmaW4TSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627425; c=relaxed/simple;
-	bh=qFvTlWBTth0Ja3TyDzgukrwKT4kWlRkyzSNPElwXtV0=;
+	s=arc-20240116; t=1741627428; c=relaxed/simple;
+	bh=/nrtmwo2zEhdptjqgof2mdx9hmXC3sAYLpvsIRgHH08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfFRZvsGll/566SEUA9TBDryLrkXvYpRTHKwhoH6NLH9GG+ju90xoqBWtb9ab/opgWgOpZ3KX7pyxJKH2LH5Uz6aT/o8YSxrIT/3B8DkcxsKekkD7nQwWRYDuEfwjGhDsobN9LvMUFzKU6SADRhMFQax5nHQkye/Lt3WNh5c5Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDpHp4Vs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JgRZc954R3MLAinJ1p/F21G6s75SweRrsY98J/B5QSbRS8UPcI+mey43KLYxq/JcplPXkf8eq8HRM2vOzqYo5Jyojv1bOUzDO8XOuKMRO75FaTY7FRaAo/+V9UJ+hAsIj0oWyYHOF5N/FKFNTy+dSK3IkSlASJWg8Joal68J8OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/aB+ouh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDpHp4Vs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15029C4CEE5;
-	Mon, 10 Mar 2025 17:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/aB+ouh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF428C4CEE5;
+	Mon, 10 Mar 2025 17:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627425;
-	bh=qFvTlWBTth0Ja3TyDzgukrwKT4kWlRkyzSNPElwXtV0=;
+	s=korg; t=1741627428;
+	bh=/nrtmwo2zEhdptjqgof2mdx9hmXC3sAYLpvsIRgHH08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDpHp4Vsv4fnCR9x7Zhw1jzzoDwVfHtcLvzHJOmA1I1ofpcTUFOsaltgHBRgeQBFX
-	 nXcLaXin4/OgetxBRk4cPVJ7azHV7n+/7LxvtFKyZZXXFsD3tblwAQ+zk8hU3hXVJH
-	 a5B8U5wYhM0JYnXLyWNr/+QIPqGZkErRrMpB0ku4=
+	b=D/aB+ouh3wJXXMVaQrvPh9B3F8lQXNFz94cRJ6WcXqnm8ROC7aUZHQqgrR2wooBtg
+	 C7gB5CfJI0pmqKM8OD+8kyGD6hm5uCm6MUOcymU74pCY8OEL4qwf1NvX/TB1Phj/sf
+	 Vpf7OH7g6KCyohu5pYUZtiqE6ZMaePoORwGxj7iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 126/269] selftests/damon/damon_nr_regions: sort collected regiosn before checking with min/max boundaries
-Date: Mon, 10 Mar 2025 18:04:39 +0100
-Message-ID: <20250310170502.745969271@linuxfoundation.org>
+Subject: [PATCH 6.12 127/269] rapidio: add check for rio_add_net() in rio_scan_alloc_net()
+Date: Mon, 10 Mar 2025 18:04:40 +0100
+Message-ID: <20250310170502.786007118@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,36 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 582ccf78f6090d88b1c7066b1e90b3d9ec952d08 upstream.
+commit e842f9a1edf306bf36fe2a4d847a0b0d458770de upstream.
 
-damon_nr_regions.py starts DAMON, periodically collect number of regions
-in snapshots, and see if it is in the requested range.  The check code
-assumes the numbers are sorted on the collection list, but there is no
-such guarantee.  Hence this can result in false positive test success.
-Sort the list before doing the check.
+The return value of rio_add_net() should be checked.  If it fails,
+put_device() should be called to free the memory and give up the reference
+initialized in rio_add_net().
 
-Link: https://lkml.kernel.org/r/20250225222333.505646-4-sj@kernel.org
-Fixes: 781497347d1b ("selftests/damon: implement test for min/max_nr_regions")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
+Link: https://lkml.kernel.org/r/20250227041131.3680761-1-haoxiang_li2024@163.com
+Fixes: e6b585ca6e81 ("rapidio: move net allocation into core code")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/damon/damon_nr_regions.py |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/rapidio/rio-scan.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/damon/damon_nr_regions.py
-+++ b/tools/testing/selftests/damon/damon_nr_regions.py
-@@ -65,6 +65,7 @@ def test_nr_regions(real_nr_regions, min
+--- a/drivers/rapidio/rio-scan.c
++++ b/drivers/rapidio/rio-scan.c
+@@ -871,7 +871,10 @@ static struct rio_net *rio_scan_alloc_ne
+ 		dev_set_name(&net->dev, "rnet_%d", net->id);
+ 		net->dev.parent = &mport->dev;
+ 		net->dev.release = rio_scan_release_dev;
+-		rio_add_net(net);
++		if (rio_add_net(net)) {
++			put_device(&net->dev);
++			net = NULL;
++		}
+ 	}
  
-     test_name = 'nr_regions test with %d/%d/%d real/min/max nr_regions' % (
-             real_nr_regions, min_nr_regions, max_nr_regions)
-+    collected_nr_regions.sort()
-     if (collected_nr_regions[0] < min_nr_regions or
-         collected_nr_regions[-1] > max_nr_regions):
-         print('fail %s' % test_name)
+ 	return net;
 
 
