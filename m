@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38021BBBFD;
-	Mon, 10 Mar 2025 18:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CD21C57B2;
+	Mon, 10 Mar 2025 18:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630766; cv=none; b=gQWhALfVoFVoBJe+Qqvjpbox+bPz7eFaINe3enuY5xirwueBZpANiGV1011/FFFC0JCMU8MBcG1j4El5vtfE9Cnue+rBQJ7PtgASdFbGK0PRZG4TaHtOPdlAhtWKfboP6CJ0lDzWa7b8ZmVkmvukq7FJdHzs1h3wNGbRwSdj3zk=
+	t=1741630769; cv=none; b=IOG+QSfuErCje8TeldU/IuLhNCLTASYWAx5kV4fxobzMCth0yydOMA/BmgxcfhdSb6rITV9DO4KWc71TxDGDQm94rSgONjYo3+fI9QJ3jMFZMA5Ixc2VhvLGwzb31ZrTpP8BUs61r9OOl6mT50S7KvwrlZaTTA1ygKEFUsKgXB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630766; c=relaxed/simple;
-	bh=lTZf9Q6rz1Dn9g4Wh5Z2kjNuCRhnzGmsrVwcU/Jm5ZE=;
+	s=arc-20240116; t=1741630769; c=relaxed/simple;
+	bh=M7NE7RQBxgl688kH8JYf5JapIXOjcmbaja9hIvsK1O0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dxmxsc+eG9cnn8wiVkWASZqVypOQGYt1PMwVTbSljAsESpYhahjHIwdTaTC4mA+8pHNrPtvl5duzcCuj5xrQk6gn9YIEKO7wcCYsbU5F1ZEU2YKLH108G5dodv4abcxWhB695PuHeznSyrtZR/9+6MkK/7Ub7JLeYR3X+nhPM1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHZ5h9BU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVL95Yuegvi9KZSZp1dlhzsc8zk9Qy5ZZ2JM219M+Z6Dvj8lK/40zYDPehMyuH6OqbXNRr603UIXrdmG08B2ANQRvzentz1QSdAXTpsrkZS44/96Hj6A5PxZe9vU4fanotYEZGxTjLpTdhgtmxRIp/4KiNBrrTXsnTmAwx0anYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXrtmtCx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHZ5h9BU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BB9C4CEE5;
-	Mon, 10 Mar 2025 18:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXrtmtCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17811C4CEE5;
+	Mon, 10 Mar 2025 18:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630766;
-	bh=lTZf9Q6rz1Dn9g4Wh5Z2kjNuCRhnzGmsrVwcU/Jm5ZE=;
+	s=korg; t=1741630769;
+	bh=M7NE7RQBxgl688kH8JYf5JapIXOjcmbaja9hIvsK1O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHZ5h9BUDTHx6RCHiqzWW7T8oPKNHm/sueyg0fSHpyKX8da9GLzUUnVxsBlXEINva
-	 AmX34VwVA8HKX8fWMICglyFnLMyW+oJ4bBD/fdxqCAGRRMjkJ5nLpKWvDTb2xtRrSF
-	 /Y7rOoZh5jXwZxkN8XFTqYZpvk36RHz5fQzWgNNs=
+	b=aXrtmtCx5ruo6OhvZjzGcIEKa+ZeaGEoEfk/VhQ7XjetNhHob/GJCnxHhWAaHelia
+	 xCsI6fNJrfmh1lFC2dbRtgxuV3LXZmxQzf8kxgETsNfYK46SlmobqsD9wdr2P0oPHD
+	 KSPUUJviEswlxP63nVgljBq4fL0OGwue+FZQjwXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 495/620] Bluetooth: L2CAP: Fix L2CAP_ECRED_CONN_RSP response
-Date: Mon, 10 Mar 2025 18:05:41 +0100
-Message-ID: <20250310170605.112261144@linuxfoundation.org>
+Subject: [PATCH 5.15 486/620] IB/mlx5: Set and get correct qp_num for a DCT QP
+Date: Mon, 10 Mar 2025 18:05:32 +0100
+Message-ID: <20250310170604.755187676@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,97 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit b25120e1d5f2ebb3db00af557709041f47f7f3d0 ]
+[ Upstream commit 12d044770e12c4205fa69535b4fa8a9981fea98f ]
 
-L2CAP_ECRED_CONN_RSP needs to respond DCID in the same order received as
-SCID but the order is reversed due to use of list_add which actually
-prepend channels to the list so the response is reversed:
+When a DCT QP is created on an active lag, it's dctc.port is assigned
+in a round-robin way, which is from 1 to dev->lag_port. In this case
+when querying this QP, we may get qp_attr.port_num > 2.
+Fix this by setting qp->port when modifying a DCT QP, and read port_num
+from qp->port instead of dctc.port when querying it.
 
-> ACL Data RX: Handle 16 flags 0x02 dlen 26
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 2 len 18
-        PSM: 39 (0x0027)
-        MTU: 256
-        MPS: 251
-        Credits: 65535
-        Source CID: 116
-        Source CID: 117
-        Source CID: 118
-        Source CID: 119
-        Source CID: 120
-< ACL Data TX: Handle 16 flags 0x00 dlen 26
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 2 len 18
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 68
-        Destination CID: 67
-        Destination CID: 66
-        Destination CID: 65
-        Destination CID: 64
-
-Also make sure the response don't include channels that are not on
-BT_CONNECT2 since the chan->ident can be set to the same value as in the
-following trace:
-
-< ACL Data TX: Handle 16 flags 0x00 dlen 12
-      LE L2CAP: LE Flow Control Credit (0x16) ident 6 len 4
-        Source CID: 64
-        Credits: 1
-...
-> ACL Data RX: Handle 16 flags 0x02 dlen 18
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 6 len 10
-        PSM: 39 (0x0027)
-        MTU: 517
-        MPS: 251
-        Credits: 255
-        Source CID: 70
-< ACL Data TX: Handle 16 flags 0x00 dlen 20
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 6 len 12
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 64
-        Destination CID: 68
-
-Closes: https://github.com/bluez/bluez/issues/1094
-Fixes: 9aa9d9473f15 ("Bluetooth: L2CAP: Fix responding with wrong PDU type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 7c4b1ab9f167 ("IB/mlx5: Add DCT RoCE LAG support")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/94c76bf0adbea997f87ffa27674e0a7118ad92a9.1737290358.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 496634c359eb7..2d451009a6477 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -632,7 +632,8 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
- 		hci_conn_hold(conn->hcon);
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index d2b4db783b254..d58ed4a09cd93 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -4461,6 +4461,8 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
  
--	list_add(&chan->list, &conn->chan_l);
-+	/* Append to the list since the order matters for ECRED */
-+	list_add_tail(&chan->list, &conn->chan_l);
- }
+ 		set_id = mlx5_ib_get_counters_id(dev, attr->port_num - 1);
+ 		MLX5_SET(dctc, dctc, counter_set_id, set_id);
++
++		qp->port = attr->port_num;
+ 	} else if (cur_state == IB_QPS_INIT && new_state == IB_QPS_RTR) {
+ 		struct mlx5_ib_modify_qp_resp resp = {};
+ 		u32 out[MLX5_ST_SZ_DW(create_dct_out)] = {};
+@@ -4949,7 +4951,7 @@ static int mlx5_ib_dct_query_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *mqp,
+ 	}
  
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
-@@ -3971,7 +3972,11 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- {
- 	struct l2cap_ecred_rsp_data *rsp = data;
- 
--	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+	/* Check if channel for outgoing connection or if it wasn't deferred
-+	 * since in those cases it must be skipped.
-+	 */
-+	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags) ||
-+	    !test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
- 		return;
- 
- 	/* Reset ident so only one response is sent */
+ 	if (qp_attr_mask & IB_QP_PORT)
+-		qp_attr->port_num = MLX5_GET(dctc, dctc, port);
++		qp_attr->port_num = mqp->port;
+ 	if (qp_attr_mask & IB_QP_MIN_RNR_TIMER)
+ 		qp_attr->min_rnr_timer = MLX5_GET(dctc, dctc, min_rnr_nak);
+ 	if (qp_attr_mask & IB_QP_AV) {
 -- 
 2.39.5
 
