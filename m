@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4CF81E;
-	Mon, 10 Mar 2025 17:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB905223702;
+	Mon, 10 Mar 2025 17:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628535; cv=none; b=bLh19Nb9P5bvWrpMEJ4D1nwdptNr0BLpGdaAHvf912445FcAPvZ9f1XEK4Q/dMi78Le3mYCkSuB8SusIsUb6OcpIme4HpvhwATIq2AvW4ppoBZSrbSl+jdjeAztKQZxlzovgDRz+q3kt9eE17gqBoUQENjhfenvOjscJBbgAz6I=
+	t=1741628537; cv=none; b=uLxlmvRdvu7LBg/wuRTTE6iGdfytL2vxReq2ibeaP7pcLa7PFhVbrbZPrxqCIIlm7mTpoyWPZNcfIQv8eSeGtx4Xo1CtkZ7OSLdAyMonyjnkkMoi7Ce+msAWd36gKNZOJ8PjgQv25fyH4+JFHxbTF9qj7G/dke48651Qa4/C6Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628535; c=relaxed/simple;
-	bh=fEBnFKoMLJBx99TmTGvLwqW9vLd1ymqK2vIHotP01mA=;
+	s=arc-20240116; t=1741628537; c=relaxed/simple;
+	bh=MgzduQdr9YtXFQpgidmUS7xK6wgxBiXVAGhV7bgthFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eM0kUHXy/MWHez2dFCnEb0OXbdge9ohx6MW1QADqE4YzZWYpQ65seuoa7ED+XTy22+7mV3S6lD656u1KAKuxAKnV6ZrQY902yjj6sE4sPTO8Hr4Wqy0bWD4ebF3CgqjXaEmqCTVqk8m0VEL7BhFHKXbt1FJrJBAki5OrmvSszu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDzq0Oe7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eh1/Y9aZJNeGtZj/w72lj69R1QI/B5gI5ES1XhdrTgHymPJj08pN9eH5IwG4yAzOO46HxbrEpBcA/v+xDPRAZbWTvh2ZgTtz8XKtbDRc2P160lctd3BVIsvlqQ/ySrigxMKdfFBHn4CDjFePOEu05IW8c9ts/mjYQO1EJ7Laej4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpFRWOQG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDzq0Oe7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74467C4CEE5;
-	Mon, 10 Mar 2025 17:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpFRWOQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63689C4CEEC;
+	Mon, 10 Mar 2025 17:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628534;
-	bh=fEBnFKoMLJBx99TmTGvLwqW9vLd1ymqK2vIHotP01mA=;
+	s=korg; t=1741628537;
+	bh=MgzduQdr9YtXFQpgidmUS7xK6wgxBiXVAGhV7bgthFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDzq0Oe7YSRdwIcrVYcul2+ybJinQSpGRm275+JDPh9SVhpYc80SPPWYllYeCeHpX
-	 oL4MV8C+DS6cIVgv3FjpyHMdgk2ICk5rbicoDcDhTqQF1qyWiuBdvXZ6WXq2gC2xiy
-	 ayTzSkD3XboVQmEm1Ld1aW5RJIrVAJqso9BuiGjs=
+	b=mpFRWOQGt045FhfXWWfXpCZIb/XCZrEOXA0giq4ZHVevNHuXyDGX8Hx7qXoXSVqpG
+	 O+LTQVMjPtFpKmTog1uyFYmbOLo1UgVpGvxifdSv9NTAlhulX9tLeaYdHHMGYd7YcU
+	 MC18PAuAdm+C3pfIe3G9Id/X/fCYtU3V6ZbkBBRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zecheng Li <zecheng@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>
-Subject: [PATCH 6.1 059/109] sched/fair: Fix potential memory corruption in child_cfs_rq_on_list
-Date: Mon, 10 Mar 2025 18:06:43 +0100
-Message-ID: <20250310170429.919497036@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 050/109] drm/sched: Fix preprocessor guard
+Date: Mon, 10 Mar 2025 18:06:34 +0100
+Message-ID: <20250310170429.556456996@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -53,68 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zecheng Li <zecheng@google.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit 3b4035ddbfc8e4521f85569998a7569668cccf51 ]
+[ Upstream commit 23e0832d6d7be2d3c713f9390c060b6f1c48bf36 ]
 
-child_cfs_rq_on_list attempts to convert a 'prev' pointer to a cfs_rq.
-This 'prev' pointer can originate from struct rq's leaf_cfs_rq_list,
-making the conversion invalid and potentially leading to memory
-corruption. Depending on the relative positions of leaf_cfs_rq_list and
-the task group (tg) pointer within the struct, this can cause a memory
-fault or access garbage data.
+When writing the header guard for gpu_scheduler_trace.h, a typo,
+apparently, occurred.
 
-The issue arises in list_add_leaf_cfs_rq, where both
-cfs_rq->leaf_cfs_rq_list and rq->leaf_cfs_rq_list are added to the same
-leaf list. Also, rq->tmp_alone_branch can be set to rq->leaf_cfs_rq_list.
+Fix the typo and document the scope of the guard.
 
-This adds a check `if (prev == &rq->leaf_cfs_rq_list)` after the main
-conditional in child_cfs_rq_on_list. This ensures that the container_of
-operation will convert a correct cfs_rq struct.
-
-This check is sufficient because only cfs_rqs on the same CPU are added
-to the list, so verifying the 'prev' pointer against the current rq's list
-head is enough.
-
-Fixes a potential memory corruption issue that due to current struct
-layout might not be manifesting as a crash but could lead to unpredictable
-behavior when the layout changes.
-
-Fixes: fdaba61ef8a2 ("sched/fair: Ensure that the CFS parent is added after unthrottling")
-Signed-off-by: Zecheng Li <zecheng@google.com>
-Reviewed-and-tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20250304214031.2882646-1-zecheng@google.com
+Fixes: 353da3c520b4 ("drm/amdgpu: add tracepoint for scheduler (v2)")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250218124149.118002-2-phasta@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/scheduler/gpu_scheduler_trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index eedbe66e05273..d30e0936cfecc 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3550,15 +3550,17 @@ static inline bool child_cfs_rq_on_list(struct cfs_rq *cfs_rq)
- {
- 	struct cfs_rq *prev_cfs_rq;
- 	struct list_head *prev;
-+	struct rq *rq = rq_of(cfs_rq);
+diff --git a/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h b/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
+index 3143ecaaff862..f7f10e97ac055 100644
+--- a/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
++++ b/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
+@@ -21,7 +21,7 @@
+  *
+  */
  
- 	if (cfs_rq->on_list) {
- 		prev = cfs_rq->leaf_cfs_rq_list.prev;
- 	} else {
--		struct rq *rq = rq_of(cfs_rq);
--
- 		prev = rq->tmp_alone_branch;
- 	}
+-#if !defined(_GPU_SCHED_TRACE_H) || defined(TRACE_HEADER_MULTI_READ)
++#if !defined(_GPU_SCHED_TRACE_H_) || defined(TRACE_HEADER_MULTI_READ)
+ #define _GPU_SCHED_TRACE_H_
  
-+	if (prev == &rq->leaf_cfs_rq_list)
-+		return false;
-+
- 	prev_cfs_rq = container_of(prev, struct cfs_rq, leaf_cfs_rq_list);
+ #include <linux/stringify.h>
+@@ -106,7 +106,7 @@ TRACE_EVENT(drm_sched_job_wait_dep,
+ 		      __entry->seqno)
+ );
  
- 	return (prev_cfs_rq->tg->parent == cfs_rq->tg);
+-#endif
++#endif /* _GPU_SCHED_TRACE_H_ */
+ 
+ /* This part must be outside protection */
+ #undef TRACE_INCLUDE_PATH
 -- 
 2.39.5
 
