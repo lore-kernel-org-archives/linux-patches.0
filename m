@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13274230BF3;
-	Mon, 10 Mar 2025 17:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A6230D14;
+	Mon, 10 Mar 2025 17:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626608; cv=none; b=n4Jr+PRBz1d4mTzWS1bE7by8Mua2ANq+GHn+t31KT/lT2oFFJdckIaSANnN4Ayvz956A2/kKWAEvy/HmuJcZOpwOBb84+rh56lXJDeFTvSWP6EAX/vmk/LyOS7iu2Nf4TlaEluX0X7jNXB0iU99a6Yi8ic/EtTBjkdE7MKGQW6M=
+	t=1741626610; cv=none; b=RHZdhIEoBP5cY1EcBcU7dwOF4+WcJMUHyl2lAX1t+Mo54l5k3+D9m3kJNri+wRenWj55dONPwWUdobJXRuvfV9G/MMDa45wsRX0Fto3rZKfHGbqUasthg+qxP7EVh9xq8P9mBam1aSUMcHK5MYYImcsTlfUUt52IYHaRNK9SwwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626608; c=relaxed/simple;
-	bh=HAj3n3wZdS1Sg5EbevpnzuNqii0WNxp7Z98Rh01rUqM=;
+	s=arc-20240116; t=1741626610; c=relaxed/simple;
+	bh=DRvwuyo7cbHn7JzOePf43EY6FBWKNE3hjIho7+0cCHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lr8Nuiuv5ubJG7f2mL6zRbFLOL7rpDscRFlI1prb+M19qkspRGJX2YWpvCHHGsn6QZSQvK151de4MTtfagtPWvAYyMJh4jyfpwcKRv55ak/8Doq7gLBaAceZXvtcr06WRXdK+JuAGV/+FmHcRG3uuhpWON5VBK2rQJx4U/jDe+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrMpo49w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eBzap8Utw6XZgFiPzogQ9ClryjbsyEMP8OrfjoCRNP60s17RootGlUgXvH/qMAKYVBw7WbOabalAK9CpyRS5/VxwjtHGVVK7IJR96Br8KBI87gRSv7iG1vGu/O2Ht5ueG+r8L6+TpxtBpE+pTBN8b0Bb+UdRcDK3Xr5jNGg3cGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qodfXue6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrMpo49w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F12EC4CEE5;
-	Mon, 10 Mar 2025 17:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qodfXue6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07194C4CEE5;
+	Mon, 10 Mar 2025 17:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626607;
-	bh=HAj3n3wZdS1Sg5EbevpnzuNqii0WNxp7Z98Rh01rUqM=;
+	s=korg; t=1741626610;
+	bh=DRvwuyo7cbHn7JzOePf43EY6FBWKNE3hjIho7+0cCHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MrMpo49wDJpZKZ/b93tYoYDAqmTEwx3DV+teLJv9B9S0+h0xZbKWy68PsP/qCJxF2
-	 63IBwzTEjyODMCZA1TLFiYHXHfidZQn4fkApVIBrBS5IJiDxg6nO2Ag5t278ltg7Ma
-	 Np4bFGmL6AjaRoQbynUiaRLfpOKYznxuOv6OyhmE=
+	b=qodfXue6s53GlBXigKBvsvMMcKfRyy03DithIz4du01C41D86JwSiNvANr7PhcPXD
+	 pKNdlWfXX/SeI/u6I4yHDh4IJRLG8KvYEfsAljU2D9PpMa9pyEKPWsclJNWSdYWO63
+	 gVZq7NF+iGOIrKh98syZAlyhB7DXFphMmdDxrKLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 051/207] drm/xe/vm: Fix a misplaced #endif
-Date: Mon, 10 Mar 2025 18:04:04 +0100
-Message-ID: <20250310170449.797902911@linuxfoundation.org>
+Subject: [PATCH 6.13 052/207] drm/xe/vm: Validate userptr during gpu vma prefetching
+Date: Mon, 10 Mar 2025 18:04:05 +0100
+Message-ID: <20250310170449.838632804@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -57,38 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 1414d95d5805b1dc221d22db9b8dc5287ef083bc upstream.
+commit e775e2a060d99180edc5366fb9f4299d0f07b66c upstream.
 
-Fix a (harmless) misplaced #endif leading to declarations
-appearing multiple times.
+If a userptr vma subject to prefetching was already invalidated
+or invalidated during the prefetch operation, the operation would
+repeatedly return -EAGAIN which would typically cause an infinite
+loop.
 
-Fixes: 0eb2a18a8fad ("drm/xe: Implement VM snapshot support for BO's and userptr")
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Cc: <stable@vger.kernel.org> # v6.12+
+Validate the userptr to ensure this doesn't happen.
+
+v2:
+- Don't fallthrough from UNMAP to PREFETCH (Matthew Brost)
+
+Fixes: 5bd24e78829a ("drm/xe/vm: Subclass userptr vmas")
+Fixes: 617eebb9c480 ("drm/xe: Fix array of binds")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.9+
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-3-thomas.hellstrom@linux.intel.com
-(cherry picked from commit fcc20a4c752214b3e25632021c57d7d1d71ee1dd)
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250228073058.59510-2-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 03c346d4d0d85d210d549d43c8cfb3dfb7f20e0a)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vm.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_vm.h
-+++ b/drivers/gpu/drm/xe/xe_vm.h
-@@ -275,9 +275,9 @@ static inline void vm_dbg(const struct d
- 			  const char *format, ...)
- { /* noop */ }
- #endif
--#endif
- 
- struct xe_vm_snapshot *xe_vm_snapshot_capture(struct xe_vm *vm);
- void xe_vm_snapshot_capture_delayed(struct xe_vm_snapshot *snap);
- void xe_vm_snapshot_print(struct xe_vm_snapshot *snap, struct drm_printer *p);
- void xe_vm_snapshot_free(struct xe_vm_snapshot *snap);
-+#endif
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -2284,8 +2284,17 @@ static int vm_bind_ioctl_ops_parse(struc
+ 			break;
+ 		}
+ 		case DRM_GPUVA_OP_UNMAP:
++			xe_vma_ops_incr_pt_update_ops(vops, op->tile_mask);
++			break;
+ 		case DRM_GPUVA_OP_PREFETCH:
+-			/* FIXME: Need to skip some prefetch ops */
++			vma = gpuva_to_vma(op->base.prefetch.va);
++
++			if (xe_vma_is_userptr(vma)) {
++				err = xe_vma_userptr_pin_pages(to_userptr_vma(vma));
++				if (err)
++					return err;
++			}
++
+ 			xe_vma_ops_incr_pt_update_ops(vops, op->tile_mask);
+ 			break;
+ 		default:
 
 
