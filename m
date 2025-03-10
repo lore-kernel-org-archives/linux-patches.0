@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390AF18DB24;
-	Mon, 10 Mar 2025 17:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1914417C225;
+	Mon, 10 Mar 2025 17:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627061; cv=none; b=rPgfYF3GyvPhfL0+CV/rd2d46b+af05QOG6hz3ve3Ds0Bk8E7cU2+VDLgw8QUfaNwYlhJuEdwsKVImNDXF9jMU7O33l1rIdIMmpY8iGWx8khkUhMqQnXeWgRVOKGlB2Me54hIRlm7VBAKqUoCssvo7p2DlbLVXKoIkUCNnYkW08=
+	t=1741627064; cv=none; b=kRzYTk/9lyI7bDSPzBOyhHhyrDppiHHIimNVgT0LF7RYWzx67T3Y6Bat6zDJr5Af+dgMV+PRYbXx0G0UlWpRQpWUm7NrvKCQ5vKtxyvrp1fsKMfKBZ6iE8oVAqw/+afZ1LUCQg10oRC+D1XKN63zeaotl5if2pEKbQsw1w5sqJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627061; c=relaxed/simple;
-	bh=xTFO5HTdi2uJmS4u9W+dN5rGgLslRnUkUcs1PTxljc4=;
+	s=arc-20240116; t=1741627064; c=relaxed/simple;
+	bh=zYS2pgcHe7ve3LfQjBpfk5pfSofZlRQNyvljRjJg1g8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cI6o66IiW3jVMwDhdUyPQkFT8L8UTu4nZ9E6xmGqGDs1E3JHrekbc4iQNKR8EAjRQSK7P9sWm90VgCjDx8mj1fotfdFKChfa39QXb/GHVcd/dbbVRs3JE8a0t1lTXyk0ZcG7CXVD2AzV24y+RMYPJ8PZb8LQ03hG6Pu8TFOKJ8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Upmfz1Qc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nBkhJeVC1n6EZMjxKQzQwJ+vt/+Xn0RuTDQcxPsfBCHcpJXRGJiYOWzBmxzO3CEkTofJpto03RlV6Zz6dhCyZFFnkDa7/w+myvfiVKfUaN7IHhLX3FVw3ZPdidxQr2PQt/C6wOOs6cJkEUOwPogQA2NeMaxJQIAjdlDjWf7SS40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu8lqwJR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Upmfz1Qc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63D7C4CEE5;
-	Mon, 10 Mar 2025 17:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu8lqwJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C63C4CEE5;
+	Mon, 10 Mar 2025 17:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627061;
-	bh=xTFO5HTdi2uJmS4u9W+dN5rGgLslRnUkUcs1PTxljc4=;
+	s=korg; t=1741627064;
+	bh=zYS2pgcHe7ve3LfQjBpfk5pfSofZlRQNyvljRjJg1g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Upmfz1QcNnvSwtDRghU4lpiX/ZK0AF4XSBK+iUn8WneEnjW6LKF9DqIFmQKnjG5Gx
-	 Si2FvKA/kxhAFZn2M3gV0wp7SJIJM8XVijVD0nvigJiTsJoKyEEnvGZfDsU5pOBP6O
-	 UPeQ5p7V1OZoYUhLmZmSx0xPiRHQ/EDYnOBQfKbw=
+	b=wu8lqwJRq2dT/Y2v7ofQIce0nKkJPjFkIr/OB5ZtoOuhXr/BIqgzPw3YN1Rb/zorG
+	 3FvXJc714obd2hacKFtyMxHC3NBpTZPyF9ECpqwniq3H95nioarmpwi5swr68HyaZH
+	 CyW8fMMcAoEgsWRmTkBvCM+4UVXiA1HOwlGqHrPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.13 206/207] ALSA: hda: realtek: fix incorrect IS_REACHABLE() usage
-Date: Mon, 10 Mar 2025 18:06:39 +0100
-Message-ID: <20250310170455.965311992@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>
+Subject: [PATCH 6.13 176/207] KVM: x86: Snapshot the hosts DEBUGCTL in common x86
+Date: Mon, 10 Mar 2025 18:06:09 +0100
+Message-ID: <20250310170454.787700921@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,69 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d0bbe332669c5db32c8c92bc967f8e7f8d460ddf upstream.
+commit fb71c795935652fa20eaf9517ca9547f5af99a76 upstream.
 
-The alternative path leads to a build error after a recent change:
+Move KVM's snapshot of DEBUGCTL to kvm_vcpu_arch and take the snapshot in
+common x86, so that SVM can also use the snapshot.
 
-sound/pci/hda/patch_realtek.c: In function 'alc233_fixup_lenovo_low_en_micmute_led':
-include/linux/stddef.h:9:14: error: called object is not a function or function pointer
-    9 | #define NULL ((void *)0)
-      |              ^
-sound/pci/hda/patch_realtek.c:5041:49: note: in expansion of macro 'NULL'
- 5041 | #define alc233_fixup_lenovo_line2_mic_hotkey    NULL
-      |                                                 ^~~~
-sound/pci/hda/patch_realtek.c:5063:9: note: in expansion of macro 'alc233_fixup_lenovo_line2_mic_hotkey'
- 5063 |         alc233_fixup_lenovo_line2_mic_hotkey(codec, fix, action);
+Opportunistically change the field to a u64.  While bits 63:32 are reserved
+on AMD, not mentioned at all in Intel's SDM, and managed as an "unsigned
+long" by the kernel, DEBUGCTL is an MSR and therefore a 64-bit value.
 
-Using IS_REACHABLE() is somewhat questionable here anyway since it
-leads to the input code not working when the HDA driver is builtin
-but input is in a loadable module. Replace this with a hard compile-time
-dependency on CONFIG_INPUT. In practice this won't chance much
-other than solve the compiler error because it is rare to require
-sound output but no input support.
-
-Fixes: f603b159231b ("ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250304142620.582191-1-arnd@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lore.kernel.org/r/20250227222411.3490595-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/Kconfig         |    1 +
- sound/pci/hda/patch_realtek.c |    5 -----
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ arch/x86/include/asm/kvm_host.h |    1 +
+ arch/x86/kvm/vmx/vmx.c          |    8 ++------
+ arch/x86/kvm/vmx/vmx.h          |    2 --
+ arch/x86/kvm/x86.c              |    1 +
+ 4 files changed, 4 insertions(+), 8 deletions(-)
 
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -208,6 +208,7 @@ comment "Set to Y if you want auto-loadi
- 
- config SND_HDA_CODEC_REALTEK
- 	tristate "Build Realtek HD-audio codec support"
-+	depends on INPUT
- 	select SND_HDA_GENERIC
- 	select SND_HDA_GENERIC_LEDS
- 	select SND_HDA_SCODEC_COMPONENT
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -5002,7 +5002,6 @@ static void alc298_fixup_samsung_amp_v2_
- 		alc298_samsung_v2_init_amps(codec, 4);
- }
- 
--#if IS_REACHABLE(CONFIG_INPUT)
- static void gpio2_mic_hotkey_event(struct hda_codec *codec,
- 				   struct hda_jack_callback *event)
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -761,6 +761,7 @@ struct kvm_vcpu_arch {
+ 	u32 pkru;
+ 	u32 hflags;
+ 	u64 efer;
++	u64 host_debugctl;
+ 	u64 apic_base;
+ 	struct kvm_lapic *apic;    /* kernel irqchip context */
+ 	bool load_eoi_exitmap_pending;
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -1514,16 +1514,12 @@ void vmx_vcpu_load_vmcs(struct kvm_vcpu
+  */
+ void vmx_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
  {
-@@ -5111,10 +5110,6 @@ static void alc233_fixup_lenovo_line2_mi
- 		spec->kb_dev = NULL;
- 	}
- }
--#else /* INPUT */
--#define alc280_fixup_hp_gpio2_mic_hotkey	NULL
--#define alc233_fixup_lenovo_line2_mic_hotkey	NULL
--#endif /* INPUT */
+-	struct vcpu_vmx *vmx = to_vmx(vcpu);
+-
+ 	if (vcpu->scheduled_out && !kvm_pause_in_guest(vcpu->kvm))
+ 		shrink_ple_window(vcpu);
  
- static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
+ 	vmx_vcpu_load_vmcs(vcpu, cpu, NULL);
+ 
+ 	vmx_vcpu_pi_load(vcpu, cpu);
+-
+-	vmx->host_debugctlmsr = get_debugctlmsr();
+ }
+ 
+ void vmx_vcpu_put(struct kvm_vcpu *vcpu)
+@@ -7469,8 +7465,8 @@ fastpath_t vmx_vcpu_run(struct kvm_vcpu
+ 	}
+ 
+ 	/* MSR_IA32_DEBUGCTLMSR is zeroed on vmexit. Restore it if needed */
+-	if (vmx->host_debugctlmsr)
+-		update_debugctlmsr(vmx->host_debugctlmsr);
++	if (vcpu->arch.host_debugctl)
++		update_debugctlmsr(vcpu->arch.host_debugctl);
+ 
+ #ifndef CONFIG_X86_64
+ 	/*
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -337,8 +337,6 @@ struct vcpu_vmx {
+ 	/* apic deadline value in host tsc */
+ 	u64 hv_deadline_tsc;
+ 
+-	unsigned long host_debugctlmsr;
+-
+ 	/*
+ 	 * Only bits masked by msr_ia32_feature_control_valid_bits can be set in
+ 	 * msr_ia32_feature_control. FEAT_CTL_LOCKED is always included
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -4976,6 +4976,7 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
+ 
+ 	/* Save host pkru register if supported */
+ 	vcpu->arch.host_pkru = read_pkru();
++	vcpu->arch.host_debugctl = get_debugctlmsr();
+ 
+ 	/* Apply any externally detected TSC adjustments (due to suspend) */
+ 	if (unlikely(vcpu->arch.tsc_offset_adjustment)) {
 
 
