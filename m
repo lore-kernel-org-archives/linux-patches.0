@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D821DE89C;
-	Mon, 10 Mar 2025 17:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833BB22B59D;
+	Mon, 10 Mar 2025 17:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628643; cv=none; b=h+xlT2MYODuLJCihO+8EPf6EVbk2NpSFmM6lQGje8MsB7DDiWfzGoZQDqDJ7oHh50hhhOr/C2+JYkh+l3xwhJS9H9PrmUrxQPKtTg+OfoUuuInVY/vAp5fBNCXaKSFj+7gKRGLPE3SpHA1XtaffDe5KIia0agK52YB/QE30xGOY=
+	t=1741628645; cv=none; b=cNm9Rp9TDe015CqejbTJ04HLqNDff3SZOyy7dSOByVwzXru3lRSvZ6AJ5orh0v98Svgd/XLlYYzgjgJhgSYwY2uQD6+NbJJWfgYnf/69TZg4A49Mrs6ltX36J2hXCokiUhzlcFThGzxhWj4O8HNmZv8bL551V3Usguy7QNo7Lr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628643; c=relaxed/simple;
-	bh=Fqq5YIP+Lw1VGv46loMRIm1s39nMls1pxstcI4UepCw=;
+	s=arc-20240116; t=1741628645; c=relaxed/simple;
+	bh=j/ANsJ0ZLHYSwjvS3gfFefYb0qc0eW7q5DfuyViRLRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJwigacGqdsXa+bdQEsOCbKXZqq7QtB5znXLVZlLxDhWpM8uNw2wI4lsQU7nOOuLzejT1eBuybXQHxDkODM3PiaTJ6Q2IPhVkKdnPLcNWJIDDV+r7iFsl0Dk0ItAGelkbhnRdJjxfF3rPuZ5yFJPr2Ij2DpgRSc7D5XGjZBP3lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrcqpdLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojdlY9M42OAnrxiG5qUbFppVJRAiWyiw6ZQytwLemlrfgKhq71JfaSNGKCP7Z8kyUUFuphD1Oxzx9x6/AAiAfi0FWO/AUlJb+QZnweIKz155pi49uQL2dgAocHtuKgHve1fJuVHf0v3suaXLYCpLVboeY/17GHVx9dnQOG9CUhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ12Jacs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrcqpdLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BEFC4CEED;
-	Mon, 10 Mar 2025 17:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ12Jacs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6CDC4CEE5;
+	Mon, 10 Mar 2025 17:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628642;
-	bh=Fqq5YIP+Lw1VGv46loMRIm1s39nMls1pxstcI4UepCw=;
+	s=korg; t=1741628645;
+	bh=j/ANsJ0ZLHYSwjvS3gfFefYb0qc0eW7q5DfuyViRLRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrcqpdLLnuEcx0ZvW+Oef5WMyJ8bDSpc4SRWRgoqRtZiHQW3BHARt+smRFHSwo8a1
-	 8/6jlMsSZF9QHXfbhV0qJE9GV4YYmEFDgXhSmyosSsl0DhyCxVGoXonuxpBuGEnB/z
-	 t5xn86dyG9gnxwzNKhy61iPdKJyIs1eFif7/EJX4=
+	b=qJ12Jacsh5tPypMvCGJdCypqnl0RnjW6/n681q6S+m+k+ZoSOQZpHo8jgL2kkG0dM
+	 cAyiWYYLWfunDGdN0FR0DXcS0v/5JKI3zfoSYtLBS5mDBBGaULjMSGXhIj/xFR57uN
+	 0QyeKhisvrhkj6mUmsmhj9eiPPKi/zo3iUDIcXUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/620] drm/etnaviv: Fix page property being used for non writecombine buffers
-Date: Mon, 10 Mar 2025 17:57:45 +0100
-Message-ID: <20250310170546.333459387@linuxfoundation.org>
+	syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.15 020/620] HID: core: Fix assumption that Resolution Multipliers must be in Logical Collections
+Date: Mon, 10 Mar 2025 17:57:46 +0100
+Message-ID: <20250310170546.371368707@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,59 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 834f304192834d6f0941954f3277ae0ba11a9a86 ]
+commit 64f2657b579343cf923aa933f08074e6258eb07b upstream.
 
-In the etnaviv_gem_vmap_impl() function, the driver vmap whatever buffers
-with write combine(WC) page property, this is incorrect. Cached buffers
-should be mapped with the cached page property and uncached buffers should
-be mapped with the uncached page property.
+A report in 2019 by the syzbot fuzzer was found to be connected to two
+errors in the HID core associated with Resolution Multipliers.  One of
+the errors was fixed by commit ea427a222d8b ("HID: core: Fix deadloop
+in hid_apply_multiplier."), but the other has not been fixed.
 
-Fixes: a0a5ab3e99b8 ("drm/etnaviv: call correct function when trying to vmap a DMABUF")
-Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This error arises because hid_apply_multipler() assumes that every
+Resolution Multiplier control is contained in a Logical Collection,
+i.e., there's no way the routine can ever set multiplier_collection to
+NULL.  This is in spite of the fact that the function starts with a
+big comment saying:
+
+	 * "The Resolution Multiplier control must be contained in the same
+	 * Logical Collection as the control(s) to which it is to be applied.
+	   ...
+	 *  If no Logical Collection is
+	 * defined, the Resolution Multiplier is associated with all
+	 * controls in the report."
+	 * HID Usage Table, v1.12, Section 4.3.1, p30
+	 *
+	 * Thus, search from the current collection upwards until we find a
+	 * logical collection...
+
+The comment and the code overlook the possibility that none of the
+collections found may be a Logical Collection.
+
+The fix is to set the multiplier_collection pointer to NULL if the
+collection found isn't a Logical Collection.
+
+Reported-by: syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000109c040597dc5843@google.com/
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: Peter Hutterer <peter.hutterer@who-t.net>
+Fixes: 5a4abb36f312 ("HID: core: process the Resolution Multiplier")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index 87da2278398ae..1d04232293e58 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -340,6 +340,7 @@ void *etnaviv_gem_vmap(struct drm_gem_object *obj)
- static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
- {
- 	struct page **pages;
-+	pgprot_t prot;
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1124,6 +1124,8 @@ static void hid_apply_multiplier(struct
+ 	while (multiplier_collection->parent_idx != -1 &&
+ 	       multiplier_collection->type != HID_COLLECTION_LOGICAL)
+ 		multiplier_collection = &hid->collection[multiplier_collection->parent_idx];
++	if (multiplier_collection->type != HID_COLLECTION_LOGICAL)
++		multiplier_collection = NULL;
  
- 	lockdep_assert_held(&obj->lock);
+ 	effective_multiplier = hid_calculate_multiplier(hid, multiplier);
  
-@@ -347,8 +348,19 @@ static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
- 	if (IS_ERR(pages))
- 		return NULL;
- 
--	return vmap(pages, obj->base.size >> PAGE_SHIFT,
--			VM_MAP, pgprot_writecombine(PAGE_KERNEL));
-+	switch (obj->flags & ETNA_BO_CACHE_MASK) {
-+	case ETNA_BO_CACHED:
-+		prot = PAGE_KERNEL;
-+		break;
-+	case ETNA_BO_UNCACHED:
-+		prot = pgprot_noncached(PAGE_KERNEL);
-+		break;
-+	case ETNA_BO_WC:
-+	default:
-+		prot = pgprot_writecombine(PAGE_KERNEL);
-+	}
-+
-+	return vmap(pages, obj->base.size >> PAGE_SHIFT, VM_MAP, prot);
- }
- 
- static inline enum dma_data_direction etnaviv_op_to_dma_dir(u32 op)
--- 
-2.39.5
-
 
 
