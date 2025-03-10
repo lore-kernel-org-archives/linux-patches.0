@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4052309A6;
-	Mon, 10 Mar 2025 17:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7CD1B3927;
+	Mon, 10 Mar 2025 17:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628312; cv=none; b=r22eAgRtdTHzzDwWu5PM5NdDwb3cSqkw8YxewHLdKTy2XFCBagei/OogWrBRDTkGwtoLTOpo0KMys/FTleUpfPRb+rFnDukINkLyFdoEZyM6X02Q/YAFDUaz7oO6EVxpFhhIJgOrIJZyYoreROWiFooz+zNnUQf580bw/da5sQ0=
+	t=1741628314; cv=none; b=uGEalQ1//hC+IqvDnx4+6a9BKXwoX5irIKWG3Fs7bPMzsxK1g8PbCNV0VieRBm1iugI2eRoqtks6Nx2SaxdRqAegWJH5DEP69jSWmLb0UwPyvP9gCpTU4B7kVJFoyZvxt4rlsGceAVOJid2KbOL34CzJmHQ9dJZIUTVIGzTPoXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628312; c=relaxed/simple;
-	bh=0VzJWoiJ9xvPxdbC1s5kYKo1lCJU4FtjQmM6e/aQABI=;
+	s=arc-20240116; t=1741628314; c=relaxed/simple;
+	bh=LWs2Ee9wnXDfAPAR0otQ7zAd7+jORXDdXmGUURgcX/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJq+qYqkVZhGmvPM4y9rC9WRQcLJo5cZ93sMsJt2uxITbWPifdIW9ghesZEGQc0zpWRb5KBilcrj7OG2YRLLeUCpZW+x4zfb5quqoaNrdFb4DpGy/UyYo7KxQtFKt7Wns+zIA8qIUJ4Fsl6OYdnynVNSgf8368SZkG00BNZh3F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aP1bexli; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J37M7IPymU0EHHe76AN0IXn9lReev7J8X66mXymqDqRQ76nz9q6JXJypEOH15U8EYgKArWJSvSiamRODURhFGkYTGxb27z0w/HQ0wLE9p/VT1BqWctgtNTTx8tPjo2CEVYKy+3Wu9+bDBBgg0R+SVOpWL9kYO5Rjy/s4CvKj8cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNPsIY2I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aP1bexli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6DAC4CEE5;
-	Mon, 10 Mar 2025 17:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNPsIY2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E2DC4CEE5;
+	Mon, 10 Mar 2025 17:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628311;
-	bh=0VzJWoiJ9xvPxdbC1s5kYKo1lCJU4FtjQmM6e/aQABI=;
+	s=korg; t=1741628314;
+	bh=LWs2Ee9wnXDfAPAR0otQ7zAd7+jORXDdXmGUURgcX/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aP1bexlimmj0D291oqWXFxIX43cAN05MoyTObmW0WmWiwzLZPUklfZukeRP3GBXdL
-	 IIM9+7XfKfoOHrBt9v0R7UAHrRm3rdurmU6b6Yr+ecJcL7SmQbEGubr7WMx7dYyME+
-	 zbzyPuQ8Xikzo+b/XqT+nLYmCZUSlgYCWZhmcNec=
+	b=TNPsIY2IyTjQIC/QkinvnkH4+yfS1xD0PYcCDDfKekJH4K88C/EcKFi9girAoIfNg
+	 yQIOSr2dCgJv5KcO3ylC+uXWPwqdD6SLBWWdu/o6Mzmv5vSJWCx/uWEnfuNICkTf6g
+	 Zy3h4Tvnj/wB27gfbJiuvFaj/VS3ESHXM+UxWouA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 015/109] gpio: aggregator: protect driver attr handlers against module unload
-Date: Mon, 10 Mar 2025 18:05:59 +0100
-Message-ID: <20250310170428.157502566@linuxfoundation.org>
+	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 002/109] ibmvnic: Inspect header requirements before using scrq direct
+Date: Mon, 10 Mar 2025 18:05:46 +0100
+Message-ID: <20250310170427.638809866@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170427.529761261@linuxfoundation.org>
 References: <20250310170427.529761261@linuxfoundation.org>
@@ -50,132 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-commit 12f65d1203507f7db3ba59930fe29a3b8eee9945 upstream.
+[ Upstream commit de390657b5d6f7deb9d1d36aaf45f02ba51ec9dc ]
 
-Both new_device_store and delete_device_store touch module global
-resources (e.g. gpio_aggregator_lock). To prevent race conditions with
-module unload, a reference needs to be held.
+Previously, the TX header requirement for standard frames was ignored.
+This requirement is a bitstring sent from the VIOS which maps to the
+type of header information needed during TX. If no header information,
+is needed then send subcrq direct can be used (which can be more
+performant).
 
-Add try_module_get() in these handlers.
+This bitstring was previously ignored for standard packets (AKA non LSO,
+non CSO) due to the belief that the bitstring was over-cautionary. It
+turns out that there are some configurations where the backing device
+does need header information for transmission of standard packets. If
+the information is not supplied then this causes continuous "Adapter
+error" transport events. Therefore, this bitstring should be respected
+and observed before considering the use of send subcrq direct.
 
-For new_device_store, this eliminates what appears to be the most dangerous
-scenario: if an id is allocated from gpio_aggregator_idr but
-platform_device_register has not yet been called or completed, a concurrent
-module unload could fail to unregister/delete the device, leaving behind a
-dangling platform device/GPIO forwarder. This can result in various issues.
-The following simple reproducer demonstrates these problems:
-
-  #!/bin/bash
-  while :; do
-    # note: whether 'gpiochip0 0' exists or not does not matter.
-    echo 'gpiochip0 0' > /sys/bus/platform/drivers/gpio-aggregator/new_device
-  done &
-  while :; do
-    modprobe gpio-aggregator
-    modprobe -r gpio-aggregator
-  done &
-  wait
-
-  Starting with the following warning, several kinds of warnings will appear
-  and the system may become unstable:
-
-  ------------[ cut here ]------------
-  list_del corruption, ffff888103e2e980->next is LIST_POISON1 (dead000000000100)
-  WARNING: CPU: 1 PID: 1327 at lib/list_debug.c:56 __list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  RIP: 0010:__list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  Call Trace:
-   <TASK>
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? __warn.cold+0x93/0xf2
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? report_bug+0xe6/0x170
-   ? __irq_work_queue_local+0x39/0xe0
-   ? handle_bug+0x58/0x90
-   ? exc_invalid_op+0x13/0x60
-   ? asm_exc_invalid_op+0x16/0x20
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   gpiod_remove_lookup_table+0x22/0x60
-   new_device_store+0x315/0x350 [gpio_aggregator]
-   kernfs_fop_write_iter+0x137/0x1f0
-   vfs_write+0x262/0x430
-   ksys_write+0x60/0xd0
-   do_syscall_64+0x6c/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [...]
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-
-Fixes: 828546e24280 ("gpio: Add GPIO Aggregator")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Link: https://lore.kernel.org/r/20250224143134.3024598-2-koichiro.den@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 74839f7a8268 ("ibmvnic: Introduce send sub-crq direct")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241001163200.1802522-2-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aggregator.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-aggregator.c
-+++ b/drivers/gpio/gpio-aggregator.c
-@@ -116,10 +116,15 @@ static ssize_t new_device_store(struct d
- 	struct platform_device *pdev;
- 	int res, id;
- 
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
-+
- 	/* kernfs guarantees string termination, so count + 1 is safe */
- 	aggr = kzalloc(sizeof(*aggr) + count + 1, GFP_KERNEL);
--	if (!aggr)
--		return -ENOMEM;
-+	if (!aggr) {
-+		res = -ENOMEM;
-+		goto put_module;
-+	}
- 
- 	memcpy(aggr->args, buf, count + 1);
- 
-@@ -158,6 +163,7 @@ static ssize_t new_device_store(struct d
- 	}
- 
- 	aggr->pdev = pdev;
-+	module_put(THIS_MODULE);
- 	return count;
- 
- remove_table:
-@@ -172,6 +178,8 @@ free_table:
- 	kfree(aggr->lookups);
- free_ga:
- 	kfree(aggr);
-+put_module:
-+	module_put(THIS_MODULE);
- 	return res;
- }
- 
-@@ -200,13 +208,19 @@ static ssize_t delete_device_store(struc
- 	if (error)
- 		return error;
- 
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
-+
- 	mutex_lock(&gpio_aggregator_lock);
- 	aggr = idr_remove(&gpio_aggregator_idr, id);
- 	mutex_unlock(&gpio_aggregator_lock);
--	if (!aggr)
-+	if (!aggr) {
-+		module_put(THIS_MODULE);
- 		return -ENOENT;
-+	}
- 
- 	gpio_aggregator_free(aggr);
-+	module_put(THIS_MODULE);
- 	return count;
- }
- static DRIVER_ATTR_WO(delete_device);
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 578b9b5460108..071dca86fc883 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -2300,9 +2300,11 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	/* if we are going to send_subcrq_direct this then we need to
+ 	 * update the checksum before copying the data into ltb. Essentially
+ 	 * these packets force disable CSO so that we can guarantee that
+-	 * FW does not need header info and we can send direct.
++	 * FW does not need header info and we can send direct. Also, vnic
++	 * server must be able to xmit standard packets without header data
+ 	 */
+-	if (!skb_is_gso(skb) && !ind_bufp->index && !netdev_xmit_more()) {
++	if (*hdrs == 0 && !skb_is_gso(skb) &&
++	    !ind_bufp->index && !netdev_xmit_more()) {
+ 		use_scrq_send_direct = true;
+ 		if (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 		    skb_checksum_help(skb))
+-- 
+2.39.5
+
 
 
