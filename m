@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C330B230988;
-	Mon, 10 Mar 2025 17:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FAE230BF6;
+	Mon, 10 Mar 2025 17:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626914; cv=none; b=dCPZTh7LCXGfFoXygyz9dBcrkXrOt9x89Qv/p9xSrMTpXc3Fe+QKDbL43LuO98qByxWTz3kJOwmEk/dvYW/NPPH4rNiTxb7Db9sNIcB0SDMCMHxuMGY045nVKuXOOMSv3pd266lkVmhHJbhmuy9s8Fx6j5zLFHRYMqRrs1I0KKA=
+	t=1741626917; cv=none; b=M0o5OD4tOk0tKSYiqrF5t9tk/gpThMSh2YVd2th1hTiA4Web/W2ufVN0tZv/V4BBLwl0rNNLTdh2DX4mPsAXtyMRce/8mFpFRlLVbrBI2Cnw6xydtcHC83N6d3jGiZLvRl+QY8swdGvgcBokrYiIpv7VvxmU5AebVmdy7XrwVPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626914; c=relaxed/simple;
-	bh=1AmeVFjHe+0LP4SSkNVGniDiUjFHVVnaswomeBpUmDE=;
+	s=arc-20240116; t=1741626917; c=relaxed/simple;
+	bh=WjAFfnTh5Oc7BQOzM2HBQN3XS+TahWRACsRnzoS51n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcD1e6gT7d08vwDIJA/uWH1bfkQy9CiaGq4zMbfyivTzAZ9wxBH83gpycrSqKoVe5yKQFxZxzCckseXZDGlazShMQtFkDDdPQIFFewi6l3VFyKQOTaLpQmXWXnk6PZOX3akGPNRq/Y21HaYtUL9oZaUxzEqYQyT93wHkTz3UsmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rc7l/d8V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFCUH5J1R1U3uMWpxQi4+9jY0A8AXTiszdhUbhgBGInh7DtbD8NWCt3pa0eDt9rAbxZN6kqWzUu98TL9kDDmvbPJbeul6Svgen0UJXQT7tluobLglkCNZde19Z6fDxhyPZvxpzj6NU5KeJId1cxYypQ2he+W1ZA/vNFg2liJ0tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaIzdtCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rc7l/d8V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43103C4CEEB;
-	Mon, 10 Mar 2025 17:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaIzdtCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA47C4CEEB;
+	Mon, 10 Mar 2025 17:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626914;
-	bh=1AmeVFjHe+0LP4SSkNVGniDiUjFHVVnaswomeBpUmDE=;
+	s=korg; t=1741626917;
+	bh=WjAFfnTh5Oc7BQOzM2HBQN3XS+TahWRACsRnzoS51n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rc7l/d8VwDQ2vjFCOOlWp+Y9cABpA85HyNfgOWilroc7bTuF7tWuHU5wPcLgiPNBM
-	 1x6VgV5Q7WtuqSFoJ5mXNshyjQM9eeRx5SNjOO6phBUZqvSUmT8K4cZGH2/H24qKAa
-	 w6SgmUMdvD/hn8Y8XOzwEAm667hQJxEi1yufalxo=
+	b=BaIzdtCcN8cSn+KFKS7LFTlLYH3maQUAlrwzJeFcXzlhsSKs27bOjxT8O1kxyaw0R
+	 UZzGcXjOgYLqNncVbVYdp2P3aDmH/cwLZvgmIKrauE5HEBMMutZhfYbvbPtQpWDPrW
+	 OKsdgWRmSaqayOLeJD46xOqU5G3pRtDzSTQSFOuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.13 157/207] usb: xhci: Fix host controllers "dying" after suspend and resume
-Date: Mon, 10 Mar 2025 18:05:50 +0100
-Message-ID: <20250310170454.034631245@linuxfoundation.org>
+	Noah <kernel-org-10@maxgrass.eu>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 140/207] exfat: short-circuit zero-byte writes in exfat_file_write_iter
+Date: Mon, 10 Mar 2025 18:05:33 +0100
+Message-ID: <20250310170453.367645683@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,63 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-commit c7c1f3b05c67173f462d73d301d572b3f9e57e3b upstream.
+[ Upstream commit fda94a9919fd632033979ad7765a99ae3cab9289 ]
 
-A recent cleanup went a bit too far and dropped clearing the cycle bit
-of link TRBs, so it stays different from the rest of the ring half of
-the time. Then a race occurs: if the xHC reaches such link TRB before
-more commands are queued, the link's cycle bit unintentionally matches
-the xHC's cycle so it follows the link and waits for further commands.
-If more commands are queued before the xHC gets there, inc_enq() flips
-the bit so the xHC later sees a mismatch and stops executing commands.
+When generic_write_checks() returns zero, it means that
+iov_iter_count() is zero, and there is no work to do.
 
-This function is called before suspend and 50% of times after resuming
-the xHC is doomed to get stuck sooner or later. Then some Stop Endpoint
-command fails to complete in 5 seconds and this shows up
+Simply return success like all other filesystems do, rather than
+proceeding down the write path, which today yields an -EFAULT in
+generic_perform_write() via the
+(fault_in_iov_iter_readable(i, bytes) == bytes) check when bytes
+== 0.
 
-xhci_hcd 0000:00:10.0: xHCI host not responding to stop endpoint command
-xhci_hcd 0000:00:10.0: xHCI host controller not responding, assume dead
-xhci_hcd 0000:00:10.0: HC died; cleaning up
-
-followed by loss of all USB decives on the affected bus. That's if you
-are lucky, because if Set Deq gets stuck instead, the failure is silent.
-
-Likely responsible for kernel bug 219824. I found this while searching
-for possible causes of that regression and reproduced it locally before
-hearing back from the reporter. To repro, simply wait for link cycle to
-become set (debugfs), then suspend, resume and wait. To accelerate the
-failure I used a script which repeatedly starts and stops a UVC camera.
-
-Some HCs get fully reinitialized on resume and they are not affected.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219824
-Fixes: 36b972d4b7ce ("usb: xhci: improve xhci_clear_command_ring()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250304113147.3322584-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
+Reported-by: Noah <kernel-org-10@maxgrass.eu>
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/exfat/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -779,8 +779,12 @@ static void xhci_clear_command_ring(stru
- 	struct xhci_segment *seg;
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 05b51e7217838..807349d8ea050 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -587,7 +587,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	valid_size = ei->valid_size;
  
- 	ring = xhci->cmd_ring;
--	xhci_for_each_ring_seg(ring->first_seg, seg)
-+	xhci_for_each_ring_seg(ring->first_seg, seg) {
-+		/* erase all TRBs before the link */
- 		memset(seg->trbs, 0, sizeof(union xhci_trb) * (TRBS_PER_SEGMENT - 1));
-+		/* clear link cycle bit */
-+		seg->trbs[TRBS_PER_SEGMENT - 1].link.control &= cpu_to_le32(~TRB_CYCLE);
-+	}
+ 	ret = generic_write_checks(iocb, iter);
+-	if (ret < 0)
++	if (ret <= 0)
+ 		goto unlock;
  
- 	xhci_initialize_ring_info(ring);
- 	/*
+ 	if (iocb->ki_flags & IOCB_DIRECT) {
+-- 
+2.39.5
+
 
 
