@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C82D023;
-	Mon, 10 Mar 2025 17:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D760232792;
+	Mon, 10 Mar 2025 17:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629287; cv=none; b=Bgl7HRiWC4IYvAiJJ8QF9QjpaED/ff/GMGOcFgVPamElH7GWfqmCiMVO1OTSfq46LeWDV2CogZ+4hg83UMua/yDYOIdfULLS+f1YPaXKbXns6YvUi+WYCFpT9dPhiJNFOKj/eS8QBVDTTsaB2ZOlmVJX/4AGhwdUAYnnvTtRqEk=
+	t=1741629290; cv=none; b=ZHd556J9VevT+k7aRrf8yx5y9PJA6OB5QuRefGTL81snF8SWW4G02bGVfoQWzje3YO7YR90q04zIBGQowCWdAw4eByymvbDF4SlgILuT+8rnL7E/R7Gv/f1P9mH7uKXWmwNesgOIq83DXxjWAyXhRYz5QVkCpFGfqhPiLlRMeYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629287; c=relaxed/simple;
-	bh=91JC+oDlxVGOCSdmWaGVcqI2PzZT3WxTMdTmTAh7M+E=;
+	s=arc-20240116; t=1741629290; c=relaxed/simple;
+	bh=FsbeXE5kb2/4ZRH9pOuMZTBavUPwi4cdqr9Qzo8f4JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8bgBAPlb/tZ9oMQA8hlZRlsZMdePBXYw5n38fcNMwf5tgUxU4kbByzrluI92NrE2za2wUKwy0zNdHlfLwj3ZPsX3wdPC+Sc1Bq7PP7kCRwRsSYLx8WbudFBWGn+HoiWXKU5rxCKYZkyjUBHRsRGh5KmrQAvuHml+vrh4nU2+gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L39kOpfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IM+mhxBV0eyfw1kvTjrZvc7mmdwKQH2Tt46fcZHdh6HlmwhPrT6XwAHh74EZpp8O9E+I5j/UnBdUUepVvR5cPZ0dSOXOkRlStJqsYVFfYBKxn/QTXcFhPIsifyBgWR3yP/vXqICwghMTGoBvGHUBwmqoq6Y2tiB4c1q/jhaI/yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBxL0cSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L39kOpfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA9FC4CEE5;
-	Mon, 10 Mar 2025 17:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBxL0cSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93E6C4CEE5;
+	Mon, 10 Mar 2025 17:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629287;
-	bh=91JC+oDlxVGOCSdmWaGVcqI2PzZT3WxTMdTmTAh7M+E=;
+	s=korg; t=1741629290;
+	bh=FsbeXE5kb2/4ZRH9pOuMZTBavUPwi4cdqr9Qzo8f4JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L39kOpfCgZFkryCAdcTQiwVBcqtVgr14bQjrDZce+BMxO6UykKXQc1ggkwC2oWWE3
-	 Ld5VQKE45gaR4TAblJ5/GiZRkK1yC+dky515pY+Cy/9DZCY8fVJT01sloa2iEtor36
-	 nS/ZYcc9s43anIJVl2nMXLblh/BEYxhaIJnCbpk4=
+	b=VBxL0cSF7CUQSsp7ztYttBSt1+W53NFqOiLTjr9J/atSGcNHgmIYDUyIhvbIlugK2
+	 0n3PHgtFXbn4cC5Eq28UkF6CuolTu4gWZrcZ2VYKA0ldZLz6a3VvzkUUmT5MVCBzWs
+	 dK71FvK3qaGe+yq9TY1sYUcdpWnLIxkOqyEODpzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Farblos <farblos@vodafonemail.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/620] gpu: drm_dp_cec: fix broken CEC adapter properties check
-Date: Mon, 10 Mar 2025 18:01:28 +0100
-Message-ID: <20250310170555.184014482@linuxfoundation.org>
+Subject: [PATCH 5.15 216/620] wifi: iwlwifi: avoid memory leak
+Date: Mon, 10 Mar 2025 18:01:02 +0100
+Message-ID: <20250310170554.151822908@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,88 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 6daaae5ff7f3b23a2dacc9c387ff3d4f95b67cad ]
+[ Upstream commit 80e96206a3ef348fbd658d98f2f43149c36df8bc ]
 
-If the hotplug detect of a display is low for longer than one second
-(configurable through drm_dp_cec_unregister_delay), then the CEC adapter
-is unregistered since we assume the display was disconnected. If the
-HPD went low for less than one second, then we check if the properties
-of the CEC adapter have changed, since that indicates that we actually
-switch to new hardware and we have to unregister the old CEC device and
-register a new one.
+A caller of iwl_acpi_get_dsm_object must free the returned object.
+iwl_acpi_get_dsm_integer returns immediately without freeing
+it if the expected size is more than 8 bytes. Fix that.
 
-Unfortunately, the test for changed properties was written poorly, and
-after a new CEC capability was added to the CEC core code the test always
-returned true (i.e. the properties had changed).
+Note that with the current code this will never happen, since the caller
+of iwl_acpi_get_dsm_integer already checks that the expected size if
+either 1 or 4 bytes, so it can't exceed 8 bytes.
 
-As a result the CEC device was unregistered and re-registered for every
-HPD toggle. If the CEC remote controller integration was also enabled
-(CONFIG_MEDIA_CEC_RC was set), then the corresponding input device was
-also unregistered and re-registered. As a result the input device in
-/sys would keep incrementing its number, e.g.:
+While at it, print the DSM value instead of the return value, as this
+was the intention in the first place.
 
-/sys/devices/pci0000:00/0000:00:08.1/0000:e7:00.0/rc/rc0/input20
-
-Since short HPD toggles are common, the number could over time get into
-the thousands.
-
-While not a serious issue (i.e. nothing crashes), it is not intended
-to work that way.
-
-This patch changes the test so that it only checks for the single CEC
-capability that can actually change, and it ignores any other
-capabilities, so this is now safe as well if new caps are added in
-the future.
-
-With the changed test the bit under #ifndef CONFIG_MEDIA_CEC_RC can be
-dropped as well, so that's a nice cleanup.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Reported-by: Farblos <farblos@vodafonemail.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 2c6d1fffa1d9 ("drm: add support for DisplayPort CEC-Tunneling-over-AUX")
-Tested-by: Farblos <farblos@vodafonemail.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/361bb03d-1691-4e23-84da-0861ead5dbdc@xs4all.nl
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241228223206.bf61eaab99f8.Ibdc5df02f885208c222456d42c889c43b7e3b2f7@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_dp_cec.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_dp_cec.c b/drivers/gpu/drm/drm_dp_cec.c
-index 3ab2609f9ec74..3ec770d602da6 100644
---- a/drivers/gpu/drm/drm_dp_cec.c
-+++ b/drivers/gpu/drm/drm_dp_cec.c
-@@ -310,16 +310,6 @@ void drm_dp_cec_set_edid(struct drm_dp_aux *aux, const struct edid *edid)
- 	if (!aux->transfer)
- 		return;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 0b1c6bf729c3e..eefd42ea535cd 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -98,7 +98,7 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 				    size_t expected_size)
+ {
+ 	union acpi_object *obj;
+-	int ret = 0;
++	int ret;
  
--#ifndef CONFIG_MEDIA_CEC_RC
--	/*
--	 * CEC_CAP_RC is part of CEC_CAP_DEFAULTS, but it is stripped by
--	 * cec_allocate_adapter() if CONFIG_MEDIA_CEC_RC is undefined.
--	 *
--	 * Do this here as well to ensure the tests against cec_caps are
--	 * correct.
--	 */
--	cec_caps &= ~CEC_CAP_RC;
--#endif
- 	cancel_delayed_work_sync(&aux->cec.unregister_work);
+ 	obj = iwl_acpi_get_dsm_object(dev, rev, func, NULL, guid);
+ 	if (IS_ERR(obj)) {
+@@ -113,8 +113,10 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 	} else if (obj->type == ACPI_TYPE_BUFFER) {
+ 		__le64 le_value = 0;
  
- 	mutex_lock(&aux->cec.lock);
-@@ -336,7 +326,9 @@ void drm_dp_cec_set_edid(struct drm_dp_aux *aux, const struct edid *edid)
- 		num_las = CEC_MAX_LOG_ADDRS;
+-		if (WARN_ON_ONCE(expected_size > sizeof(le_value)))
+-			return -EINVAL;
++		if (WARN_ON_ONCE(expected_size > sizeof(le_value))) {
++			ret = -EINVAL;
++			goto out;
++		}
  
- 	if (aux->cec.adap) {
--		if (aux->cec.adap->capabilities == cec_caps &&
-+		/* Check if the adapter properties have changed */
-+		if ((aux->cec.adap->capabilities & CEC_CAP_MONITOR_ALL) ==
-+		    (cec_caps & CEC_CAP_MONITOR_ALL) &&
- 		    aux->cec.adap->available_log_addrs == num_las) {
- 			/* Unchanged, so just set the phys addr */
- 			cec_s_phys_addr_from_edid(aux->cec.adap, edid);
+ 		/* if the buffer size doesn't match the expected size */
+ 		if (obj->buffer.length != expected_size)
+@@ -135,8 +137,9 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 	}
+ 
+ 	IWL_DEBUG_DEV_RADIO(dev,
+-			    "ACPI: DSM method evaluated: func=%d, ret=%d\n",
+-			    func, ret);
++			    "ACPI: DSM method evaluated: func=%d, value=%lld\n",
++			    func, *value);
++	ret = 0;
+ out:
+ 	ACPI_FREE(obj);
+ 	return ret;
 -- 
 2.39.5
 
