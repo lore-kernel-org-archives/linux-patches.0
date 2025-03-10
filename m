@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A0217CA12;
-	Mon, 10 Mar 2025 17:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2670E190072;
+	Mon, 10 Mar 2025 17:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628919; cv=none; b=NXVL6psaLrvLItC9f+qG2InUe5QZj5XFZgj7GgCnHJIPCt64Kl1P7O8865qcKIcAX/41Tk530Bf2dfV8imnCRL7YpJAVVDORBOhyBu1hn7nDnp3fQnuyTAqCGe/Vx3cTiJN4OwvBnksB/61EsUMpBZEP/scSzogsP/VAJeRdbXk=
+	t=1741628922; cv=none; b=pUPwyVhdyfYmanalX14UqXtWYNlLsX5Dm6vy7MHtTkCkv4qV+nMYPd8InEnCaePztY6Slvfr27VbkoB99qFruvb2ohKm77okQeUPE+Jwh+KW4Fzunz4Oo5v8uLCrpV6YavLxDwx0kbhRr4TjpsK4A0hbejkCH7K4hp2OuePrdC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628919; c=relaxed/simple;
-	bh=5Oolg+p3dvTPxeDf0zwL290izu+JvEnjPVKmsbmrpWo=;
+	s=arc-20240116; t=1741628922; c=relaxed/simple;
+	bh=n7ebw0cvCW4lReObTO2zz3IsTXGDVqiExXbrNBWJTNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNmQcKeEXRxO3zLH0OEO0m9FbdJO3sU/T0/Oo9PlJ49bUI/ZxYIeUvBg3R6vnyQD/tJAlz9NykHu+A/uux4dbCS28JxI9XnY5XzMUFDIcTs0Q/QpDbl7LOLLq/KVxzjiwQCIgcd5MkNuffXJCSKAaxriFsaCIjjsQXVJdTazz8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E05W3KqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a+dYEz24v2eSM+EdXomklRJF/UjoH0sBTRRxwUHtH3aPRsXskSZqYXuTbWzBFQJH5X9Xb1q0FGroyt9ktSVbwynJfHnxwpQ6ngNIkKA8YX52pmPB5kTIjHaAY8OPzAw+IdMRLC46Vm0g5a5wUF/QTjVKwqJV/vibWeGwwbFx2dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqgpwHYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E05W3KqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4FDC4CEE5;
-	Mon, 10 Mar 2025 17:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqgpwHYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4058C4CEE5;
+	Mon, 10 Mar 2025 17:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628919;
-	bh=5Oolg+p3dvTPxeDf0zwL290izu+JvEnjPVKmsbmrpWo=;
+	s=korg; t=1741628922;
+	bh=n7ebw0cvCW4lReObTO2zz3IsTXGDVqiExXbrNBWJTNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E05W3KqCGVs2qnO5H0HoMqC/K8F2L/FZrglhf5p0HwsAKVg+9pEFhpKiw/Escw0UP
-	 JJbaJRtTKgrIMkWl6Ffmwgqyk971d5eRFH0zM+Sabz708HpJv3zvRoUD9EtgcrXTAC
-	 xNslDH59OWu+Ny9w1nbldJ47ZKHddNA0Hx3IVwiA=
+	b=sqgpwHYoyPhvodEa2qnlaxBh8JaYpvx+8v0TgQD7d5eyYyAtDvD4RXERhDxA9eM0O
+	 SyodvWpQvJBKE8ecDElWdmqe8HDhRSGYivq3+WPoOjIN8o58/lTRweezyCnlX0jrvv
+	 0BhDhGQGZesJLu6qW89Xs6bs9ZFsBZ+B9CU5fHQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Ba Jing <bajing@cmss.chinamobile.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/620] ASoC: renesas: rz-ssi: Use only the proper amount of dividers
-Date: Mon, 10 Mar 2025 17:58:49 +0100
-Message-ID: <20250310170548.861098044@linuxfoundation.org>
+Subject: [PATCH 5.15 084/620] ktest.pl: Remove unused declarations in run_bisect_test function
+Date: Mon, 10 Mar 2025 17:58:50 +0100
+Message-ID: <20250310170548.901041981@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,39 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Ba Jing <bajing@cmss.chinamobile.com>
 
-[ Upstream commit 55c209cd4318c701e6e88e0b2512a0f12dd02a7d ]
+[ Upstream commit 776735b954f49f85fd19e1198efa421fae2ad77c ]
 
-There is no need to populate the ckdv[] with invalid dividers as that
-part will not be indexed anyway. The ssi->audio_mck/bclk_rate should
-always be >= 0. While at it, change the ckdv type as u8, as the divider
-128 was previously using the s8 sign bit.
+Since $output and $ret are not used in the subsequent code, the declarations
+should be removed.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Fixes: 03e786bd43410fa9 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20241210170953.2936724-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a75fececff3c ("ktest: Added sample.conf, new %default option format")
+Link: https://lore.kernel.org/20240902130735.6034-1-bajing@cmss.chinamobile.com
+Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rz-ssi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
-index 2e33a1fa0a6f4..9ef7d0a12d985 100644
---- a/sound/soc/sh/rz-ssi.c
-+++ b/sound/soc/sh/rz-ssi.c
-@@ -243,8 +243,7 @@ static void rz_ssi_stream_quit(struct rz_ssi_priv *ssi,
- static int rz_ssi_clk_setup(struct rz_ssi_priv *ssi, unsigned int rate,
- 			    unsigned int channels)
- {
--	static s8 ckdv[16] = { 1,  2,  4,  8, 16, 32, 64, 128,
--			       6, 12, 24, 48, 96, -1, -1, -1 };
-+	static u8 ckdv[] = { 1,  2,  4,  8, 16, 32, 64, 128, 6, 12, 24, 48, 96 };
- 	unsigned int channel_bits = 32;	/* System Word Length */
- 	unsigned long bclk_rate = rate * channels * channel_bits;
- 	unsigned int div;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 99e17a0a13649..f7f371a91ed97 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2939,8 +2939,6 @@ sub run_bisect_test {
+ 
+     my $failed = 0;
+     my $result;
+-    my $output;
+-    my $ret;
+ 
+     $in_bisect = 1;
+ 
 -- 
 2.39.5
 
