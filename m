@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCA41DE89C;
-	Mon, 10 Mar 2025 17:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7E518DB24;
+	Mon, 10 Mar 2025 17:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628265; cv=none; b=HD1L6VmeQobHvwx3JuIPRs+UiyCZ0ZiI2kvIZEZMrywvBSBOBxoQAtpu2WWEFGYkHpeF7coGR1BoulUqvKJqQJ/JZ5U9G7vtLIfojzZMLIP8Ot4Z/HzcjFTc/Iw5gSqiwirAt8Q8oWKQk8m8U4QzogsYkk+RPJTzHEAYYkIROL4=
+	t=1741628268; cv=none; b=Ats0xHvRfVrydRZzAC9WXY1xKsAnLnA65YOOt7L+M9v7GLscUuQNrbouhDRVCKuwCaIcgUbyXzkbVpZG/7Zd2mccVVwvRul1GAW4oyzlX7mk2pTUosh7DwzFqWNPfsnU8Mbec/MHMATISKn0AFKsmx0jNf94XhKEkHbSiu3Yz/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628265; c=relaxed/simple;
-	bh=D/kpPhGf+khtGv402LEZ8pgegc+eWBPMPdceUChZoFg=;
+	s=arc-20240116; t=1741628268; c=relaxed/simple;
+	bh=t3K9/WTSgo3gYvTbjKNJImJ++vR9VXnNnWNjPcLQ4FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fe1s7xHsbT3AAY4R1sberSVu/NrfaB5ltEI9E6/a9H2Vr9WII5W/4TvHmCZzmjAe/qew7/RiqzMHL7D+xGHGxXyjbn4eeYTx6EanQgbb2yQdjCvoXUi8a/TDcu4lWKG/XjJpuDvKx3ms+Z9LkoihjABhLMdUYqDBi7Bf8Pzv3VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRmyXplj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRX8Izhdto9DIDRpqbkMDpnVQEQCmhRd16eVjhPUn26XbfRNb33tZIL2k1zi1w2pQiP3FxRTINbk8APTqeq31t/RSeNGU+Wy6GizVkc4jCrzTXrtBfW2UnFw3EjvKesQk4oPbleXYsYqyoSP5pChfj2fakgOJ3qzOCY8NB+mQro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIkE6U8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRmyXplj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB520C4CEE5;
-	Mon, 10 Mar 2025 17:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIkE6U8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EC2C4CEEC;
+	Mon, 10 Mar 2025 17:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628265;
-	bh=D/kpPhGf+khtGv402LEZ8pgegc+eWBPMPdceUChZoFg=;
+	s=korg; t=1741628268;
+	bh=t3K9/WTSgo3gYvTbjKNJImJ++vR9VXnNnWNjPcLQ4FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRmyXpljPFW0C7Y4RsFzKdqqqqlrfH5cD59VR0FcFH9PO5jcyxVig5grj6YRxrCuX
-	 nKb5TLFviriuZeHKqe9+iXLhyObj5ruInzhd2II/oprqlIJcStTieu0nE6Y8qF0SB9
-	 n77tJGrgQrA+Cv+dR7EUEG8XB6W3eaHJduDVTX5s=
+	b=SIkE6U8aAPOjBv1os/5uOMHfhFfl/PihO3vUOaIGRgNnb7Se6W1CW2Wq3XoAQqKSp
+	 f455TZjVT9VVH6cTRHReNtgTI7Kr3iCOA0JD40uCX6MraYj00wQvHgjSMwbmY1EGhJ
+	 0grDw+P4gIaG21fbYyApnYNl1nsS6zgruArznyHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.6 145/145] kbuild: userprogs: use correct lld when linking through clang
-Date: Mon, 10 Mar 2025 18:07:19 +0100
-Message-ID: <20250310170440.608619703@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 134/145] Revert "KVM: PPC: e500: Use __kvm_faultin_pfn() to handle page faults"
+Date: Mon, 10 Mar 2025 18:07:08 +0100
+Message-ID: <20250310170440.167680294@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -45,57 +43,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Thomas Weiﬂschuh" <thomas.weissschuh@linutronix.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit dfc1b168a8c4b376fa222b27b97c2c4ad4b786e1 upstream.
+This reverts commit ba3cf83f4a5063edb6ee150633e641954ce30478 which is
+commit 419cfb983ca93e75e905794521afefcfa07988bb upstream.
 
-The userprog infrastructure links objects files through $(CC).
-Either explicitly by manually calling $(CC) on multiple object files or
-implicitly by directly compiling a source file to an executable.
-The documentation at Documentation/kbuild/llvm.rst indicates that ld.lld
-would be used for linking if LLVM=1 is specified.
-However clang instead will use either a globally installed cross linker
-from $PATH called ${target}-ld or fall back to the system linker, which
-probably does not support crosslinking.
-For the normal kernel build this is not an issue because the linker is
-always executed directly, without the compiler being involved.
+It should not have been applied.
 
-Explicitly pass --ld-path to clang so $(LD) is respected.
-As clang 13.0.1 is required to build the kernel, this option is available.
-
-Fixes: 7f3a59db274c ("kbuild: add infrastructure to build userspace programs")
-Cc: stable@vger.kernel.org # needs wrapping in $(cc-option) for < 6.9
-Signed-off-by: Thomas Wei√üschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-[nathan: use cc-option for 6.6 and older, as those trees support back to
-         clang-11]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/CABgObfb5U9zwTQBPkPB=mKu-vMrRspPCm4wfxoQpB+SyAnb5WQ@mail.gmail.com
+Reported-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/kvm/e500_mmu_host.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1057,6 +1057,11 @@ endif
- KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
- KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
+--- a/arch/powerpc/kvm/e500_mmu_host.c
++++ b/arch/powerpc/kvm/e500_mmu_host.c
+@@ -322,7 +322,6 @@ static inline int kvmppc_e500_shadow_map
+ {
+ 	struct kvm_memory_slot *slot;
+ 	unsigned long pfn = 0; /* silence GCC warning */
+-	struct page *page = NULL;
+ 	unsigned long hva;
+ 	int pfnmap = 0;
+ 	int tsize = BOOK3E_PAGESZ_4K;
+@@ -444,7 +443,7 @@ static inline int kvmppc_e500_shadow_map
  
-+# userspace programs are linked via the compiler, use the correct linker
-+ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
-+KBUILD_USERLDFLAGS += $(call cc-option, --ld-path=$(LD))
-+endif
-+
- # make the checker run with the right architecture
- CHECKFLAGS += --arch=$(ARCH)
+ 	if (likely(!pfnmap)) {
+ 		tsize_pages = 1UL << (tsize + 10 - PAGE_SHIFT);
+-		pfn = __kvm_faultin_pfn(slot, gfn, FOLL_WRITE, NULL, &page);
++		pfn = gfn_to_pfn_memslot(slot, gfn);
+ 		if (is_error_noslot_pfn(pfn)) {
+ 			if (printk_ratelimit())
+ 				pr_err("%s: real page not found for gfn %lx\n",
+@@ -489,6 +488,8 @@ static inline int kvmppc_e500_shadow_map
+ 		}
+ 	}
+ 	writable = kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
++	if (writable)
++		kvm_set_pfn_dirty(pfn);
  
+ 	kvmppc_e500_setup_stlbe(&vcpu_e500->vcpu, gtlbe, tsize,
+ 				ref, gvaddr, stlbe);
+@@ -497,7 +498,8 @@ static inline int kvmppc_e500_shadow_map
+ 	kvmppc_mmu_flush_icache(pfn);
+ 
+ out:
+-	kvm_release_faultin_page(kvm, page, !!ret, writable);
++	/* Drop refcount on page, so that mmu notifiers can clear it */
++	kvm_release_pfn_clean(pfn);
+ 	spin_unlock(&kvm->mmu_lock);
+ 	return ret;
+ }
 
 
