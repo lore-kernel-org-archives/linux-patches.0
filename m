@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDA1233730;
-	Mon, 10 Mar 2025 17:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D183722FE18;
+	Mon, 10 Mar 2025 17:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628277; cv=none; b=Umsqa9UgvFd9vxNZ52ObWcrI5qlJUCixfeRTHR8Zsm3kjW9jBp6piR0QDDwqcAxrbGXCpulLqrMvgnEPwaB13DasQO23zjbmrC40sv8omuiWEX7RAjCVxo1p5Y1keEDH7zw/kVdPgZwd1Rzdc9jvJSAs7O1hBTlYd5RkLoizcHo=
+	t=1741628279; cv=none; b=cX547YPwSSBRMxl4xAwbzjbwWnldk9dh0T2rfJErulU6wtQYlbI+D29e8zqK5SNBJRMyhvXfpvW1XJoBco3mOEnUZ4kAwfqcAaAq7WmQozpzWEx+iO4XCpTJM3W7pUrK7A+saYkIdrjV+DafCWb7v5BmxGVArDBNtbOh3jpBhy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628277; c=relaxed/simple;
-	bh=wUbxtYKpBEtVWNbuOvOc+blsTi9FyeecZ/dBT5oO6D4=;
+	s=arc-20240116; t=1741628279; c=relaxed/simple;
+	bh=6hJOoEhnweOuYOm69KbOwxy1chCQr3K2ed/K/NfQgb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpYP0wzPtm3mEZ/5tVmfzhmbGf4nptu6DdGflsdInldsHtwL72m50OvjpObpEeoZGwM9oG0746LiwxzuGFYVlyq6Rz4hR7LyHOXtwOD85zbZ1YZKEVnqH/p6CNuvTvQBbZVcMPM9r2dE3vQ1sjde8VLvQ6pWvNMy9ONK9j5ZTg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ng60YzHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=txsWYpZ6Vhjh0chd7MdOJuz5Ze9EHh0SafuO2b35HZ1PsdX5NKqaaSOifmEzvPffQx7+uae7QqAYSj+OOHJKNoTVp23f8cL1QnXTex9CKjZj020N5l+fJ3iji5D89Xryoc4mJDTmP+2PXTShOvKsMHrkRhNhTlBPSHzTtBfgnGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A47lc5G8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ng60YzHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D12C4CEEC;
-	Mon, 10 Mar 2025 17:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A47lc5G8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CD0C4CEF0;
+	Mon, 10 Mar 2025 17:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628276;
-	bh=wUbxtYKpBEtVWNbuOvOc+blsTi9FyeecZ/dBT5oO6D4=;
+	s=korg; t=1741628279;
+	bh=6hJOoEhnweOuYOm69KbOwxy1chCQr3K2ed/K/NfQgb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ng60YzHgcyos6SO4yzC9g5+DkHYtwU+imtnVoTxR4xoV1k4zUl96HC23/Gr4SeWiT
-	 gNYdebg4jRjmHy/EceA/RsyF5JmoVhFtp0zzoI4aiVoyUA0m+LYSyiXEigh1Fh/hsT
-	 fB4bkbmMvLkMxoiSI0BTDxIgSigrBPQVnnF0q3tU=
+	b=A47lc5G8zSeBCDA2lhQjMjAOM5om/Tte7y1nuPemP8mLiRKr+/O4gQAYe5oZAKQuU
+	 4O3EKe2AGwoOQq5D1l2lG1cw1GBNp1f7viNiDGAoKFSpVurSyrVYv7HiyazZ4pXyJN
+	 0bDlz2kfrJVVDOXIJmOcZIaR1Db3+b59qoE5fB6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 137/145] drm/i915/dsi: Use TRANS_DDI_FUNC_CTLs own port width macro
-Date: Mon, 10 Mar 2025 18:07:11 +0100
-Message-ID: <20250310170440.285686100@linuxfoundation.org>
+	Max Makarov <maxpain@linux.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Christian Simon <simon@swine.de>
+Subject: [PATCH 6.6 138/145] uprobes: Fix race in uprobe_free_utask
+Date: Mon, 10 Mar 2025 18:07:12 +0100
+Message-ID: <20250310170440.325783638@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,42 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 879f70382ff3e92fc854589ada3453e3f5f5b601 upstream.
+commit b583ef82b671c9a752fbe3e95bd4c1c51eab764d upstream.
 
-The format of the port width field in the DDI_BUF_CTL and the
-TRANS_DDI_FUNC_CTL registers are different starting with MTL, where the
-x3 lane mode for HDMI FRL has a different encoding in the two registers.
-To account for this use the TRANS_DDI_FUNC_CTL's own port width macro.
+Max Makarov reported kernel panic [1] in perf user callchain code.
 
-Cc: <stable@vger.kernel.org> # v6.5+
-Fixes: b66a8abaa48a ("drm/i915/display/mtl: Fill port width in DDI_BUF_/TRANS_DDI_FUNC_/PORT_BUF_CTL for HDMI")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250214142001.552916-2-imre.deak@intel.com
-(cherry picked from commit 76120b3a304aec28fef4910204b81a12db8974da)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Imre: Rebased on v6.6.y, due to upstream API changes for intel_de_read(),
- TRANS_DDI_FUNC_CTL()]
-Signed-off-by: Imre Deak <imre.deak@intel.com>
+The reason for that is the race between uprobe_free_utask and bpf
+profiler code doing the perf user stack unwind and is triggered
+within uprobe_free_utask function:
+  - after current->utask is freed and
+  - before current->utask is set to NULL
+
+ general protection fault, probably for non-canonical address 0x9e759c37ee555c76: 0000 [#1] SMP PTI
+ RIP: 0010:is_uprobe_at_func_entry+0x28/0x80
+ ...
+  ? die_addr+0x36/0x90
+  ? exc_general_protection+0x217/0x420
+  ? asm_exc_general_protection+0x26/0x30
+  ? is_uprobe_at_func_entry+0x28/0x80
+  perf_callchain_user+0x20a/0x360
+  get_perf_callchain+0x147/0x1d0
+  bpf_get_stackid+0x60/0x90
+  bpf_prog_9aac297fb833e2f5_do_perf_event+0x434/0x53b
+  ? __smp_call_single_queue+0xad/0x120
+  bpf_overflow_handler+0x75/0x110
+  ...
+  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+ RIP: 0010:__kmem_cache_free+0x1cb/0x350
+ ...
+  ? uprobe_free_utask+0x62/0x80
+  ? acct_collect+0x4c/0x220
+  uprobe_free_utask+0x62/0x80
+  mm_release+0x12/0xb0
+  do_exit+0x26b/0xaa0
+  __x64_sys_exit+0x1b/0x20
+  do_syscall_64+0x5a/0x80
+
+It can be easily reproduced by running following commands in
+separate terminals:
+
+  # while :; do bpftrace -e 'uprobe:/bin/ls:_start  { printf("hit\n"); }' -c ls; done
+  # bpftrace -e 'profile:hz:100000 { @[ustack()] = count(); }'
+
+Fixing this by making sure current->utask pointer is set to NULL
+before we start to release the utask object.
+
+[1] https://github.com/grafana/pyroscope/issues/3673
+
+Fixes: cfa7f3d2c526 ("perf,x86: avoid missing caller address in stack traces captured in uprobe")
+Reported-by: Max Makarov <maxpain@linux.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250109141440.2692173-1-jolsa@kernel.org
+[Christian Simon: Rebased for 6.12.y, due to mainline change https://lore.kernel.org/all/20240929144239.GA9475@redhat.com/]
+Signed-off-by: Christian Simon <simon@swine.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/uprobes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -797,8 +797,8 @@ gen11_dsi_configure_transcoder(struct in
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1721,6 +1721,7 @@ void uprobe_free_utask(struct task_struc
+ 	if (!utask)
+ 		return;
  
- 		/* select data lane width */
- 		tmp = intel_de_read(dev_priv, TRANS_DDI_FUNC_CTL(dsi_trans));
--		tmp &= ~DDI_PORT_WIDTH_MASK;
--		tmp |= DDI_PORT_WIDTH(intel_dsi->lane_count);
-+		tmp &= ~TRANS_DDI_PORT_WIDTH_MASK;
-+		tmp |= TRANS_DDI_PORT_WIDTH(intel_dsi->lane_count);
++	t->utask = NULL;
+ 	if (utask->active_uprobe)
+ 		put_uprobe(utask->active_uprobe);
  
- 		/* select input pipe */
- 		tmp &= ~TRANS_DDI_EDP_INPUT_MASK;
+@@ -1730,7 +1731,6 @@ void uprobe_free_utask(struct task_struc
+ 
+ 	xol_free_insn_slot(t);
+ 	kfree(utask);
+-	t->utask = NULL;
+ }
+ 
+ /*
 
 
