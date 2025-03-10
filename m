@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44690234971;
-	Mon, 10 Mar 2025 17:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0E922D786;
+	Mon, 10 Mar 2025 17:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627593; cv=none; b=SFhrJmnp2DnjKqAhXeRsW/QFvWanCSbxEdf0nbh+QCZR8RDj0f1qiWMZPQyZxEMZyms/4PHP7qOu6qJqaDDz4e7xTswqUJuIqZp+kFfHaqQU3aJnXZpXbiBsksm9bgKIAujFJgF9wueXKEns8+TJU+bdJunwXNFd824mYnMV/eI=
+	t=1741627596; cv=none; b=gbQ44uVGaiIdj+1Ur5DWiWimoS3MuOieSz8IC6mcSswUmzaFyFdSvV8+b+XsTTGYfATP4M0R55oFPcMERtsgjeWSeDe7a2DQQYHS7R65Z5v/TQpkCjtIF1LFd6+iLSZ7psKlrFszpkQ7uA7CAbcRU94SF3qJXqCJTNrHb8g5aa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627593; c=relaxed/simple;
-	bh=TnIxreXr0PUFSjY3x/dCG9Rd9omGLebuLoIhxas2SSY=;
+	s=arc-20240116; t=1741627596; c=relaxed/simple;
+	bh=+OjgeeHGTKLSmn3o/hrhdpeOdbAerngPef1rN3LXGoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eau8kGTdu+2fOvRWIXttgGGB2cDS426IH2PpxKXOGWvEExt8XtSXhBJSB6I01PVWQeqmt392h3f3phRmxxuRZ3LxCqSkLxhhlpwHGNeEhGSUzkYm13DqT7+EyByR9DIsBAW8Dz12w/PCdWOCqkVVqKAEFTMfGwVmwwKZVLEqmK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfBwz+ee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/1xtMCGU32bahn1tOrBnVRYlyAPw0cYp6xMNhQ/auVrYCU++5ES6oLP3KkH89BIso+444xWl6Bp+dxwIdwI4YMb7eNQS2ehBfSpZPUVz3iADOxG/iIsgV1tVuzeh8eNxWfRvRsEqCgLSEgea6SbnZf/yZhiXk2/LkjqtiZwHe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2loivsOh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfBwz+ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE99C4CEE5;
-	Mon, 10 Mar 2025 17:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2loivsOh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A57C4CEE5;
+	Mon, 10 Mar 2025 17:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627593;
-	bh=TnIxreXr0PUFSjY3x/dCG9Rd9omGLebuLoIhxas2SSY=;
+	s=korg; t=1741627596;
+	bh=+OjgeeHGTKLSmn3o/hrhdpeOdbAerngPef1rN3LXGoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfBwz+eehUm3PZ5+qUXxALag1CDtH06vtlo6cTiHNvlW/GAMljvGVNg5F/XeY0rdw
-	 qZ6S7CaQY8vAH1EyKBWWmdCIb8MHtUp6bvrPZecSXqSCKYGewlpLHWt3IxwZsAFUIj
-	 5qLQ65g5HF+rit4RQdOedwUleZpcCPGV14WR4lC8=
+	b=2loivsOhjEQOAvigN+u537n0QLVty5WWTz4Q7On9kpMDRRHpoH3YmSb7wNEuO7ps7
+	 92DaLIdanl3kuE21fPKr7Tv7g6ipJfWv5sUy+qGXtvdBf/SE3lIFiOYbZcl8q3MXrL
+	 zrwWbvhXyq4bCtrWV5k3iAjlTeU4OVu9QYhPsDcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/269] nvme-pci: add support for sgl metadata
-Date: Mon, 10 Mar 2025 18:05:03 +0100
-Message-ID: <20250310170503.696150381@linuxfoundation.org>
+Subject: [PATCH 6.12 151/269] nvme-pci: use sgls for all user requests if possible
+Date: Mon, 10 Mar 2025 18:05:04 +0100
+Message-ID: <20250310170503.738636812@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,335 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 979c6342f9c0a48696a6420f14f9dd409591657f ]
+[ Upstream commit 6fad84a4d624c300d03ebba457cc641765050c43 ]
 
-Supporting this mode allows creating and merging multi-segment metadata
-requests that wouldn't be possible otherwise. It also allows directly
-using user space requests that straddle physically discontiguous pages.
+If the device supports SGLs, use these for all user requests. This
+format encodes the expected transfer length so it can catch short buffer
+errors in a user command, whether it occurred accidently or maliciously.
+
+For controllers that support SGL data mode, this is a viable mitigation
+to CVE-2023-6238. For controllers that don't support SGLs, log a warning
+in the passthrough path since not having the capability can corrupt
+data if the interface is not used correctly.
 
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 00817f0f1c45 ("nvme-ioctl: fix leaked requests on mapping error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/nvme.h |   7 ++
- drivers/nvme/host/pci.c  | 144 +++++++++++++++++++++++++++++++++++----
- include/linux/nvme.h     |   1 +
- 3 files changed, 137 insertions(+), 15 deletions(-)
+ drivers/nvme/host/ioctl.c | 12 ++++++++++--
+ drivers/nvme/host/pci.c   |  5 +++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 61bba5513de05..dcdce7d12e441 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -1130,6 +1130,13 @@ static inline bool nvme_ctrl_sgl_supported(struct nvme_ctrl *ctrl)
- 	return ctrl->sgls & ((1 << 0) | (1 << 1));
- }
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index 61af1583356c2..d4b80938de09c 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -120,12 +120,20 @@ static int nvme_map_user_request(struct request *req, u64 ubuffer,
+ 	struct nvme_ns *ns = q->queuedata;
+ 	struct block_device *bdev = ns ? ns->disk->part0 : NULL;
+ 	bool supports_metadata = bdev && blk_get_integrity(bdev->bd_disk);
++	struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
+ 	bool has_metadata = meta_buffer && meta_len;
+ 	struct bio *bio = NULL;
+ 	int ret;
  
-+static inline bool nvme_ctrl_meta_sgl_supported(struct nvme_ctrl *ctrl)
-+{
-+	if (ctrl->ops->flags & NVME_F_FABRICS)
-+		return true;
-+	return ctrl->sgls & NVME_CTRL_SGLS_MSDS;
-+}
-+
- #ifdef CONFIG_NVME_HOST_AUTH
- int __init nvme_init_auth(void);
- void __exit nvme_exit_auth(void);
+-	if (has_metadata && !supports_metadata)
+-		return -EINVAL;
++	if (!nvme_ctrl_sgl_supported(ctrl))
++		dev_warn_once(ctrl->device, "using unchecked data buffer\n");
++	if (has_metadata) {
++		if (!supports_metadata)
++			return -EINVAL;
++		if (!nvme_ctrl_meta_sgl_supported(ctrl))
++			dev_warn_once(ctrl->device,
++				      "using unchecked metadata buffer\n");
++	}
+ 
+ 	if (ioucmd && (ioucmd->flags & IORING_URING_CMD_FIXED)) {
+ 		struct iov_iter iter;
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index cc74682dc0d4e..58bdd0da6b658 100644
+index 58bdd0da6b658..e1329d4974fd6 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -43,6 +43,7 @@
-  */
- #define NVME_MAX_KB_SZ	8192
- #define NVME_MAX_SEGS	128
-+#define NVME_MAX_META_SEGS 15
- #define NVME_MAX_NR_ALLOCATIONS	5
- 
- static int use_threaded_interrupts;
-@@ -143,6 +144,7 @@ struct nvme_dev {
- 	bool hmb;
- 
- 	mempool_t *iod_mempool;
-+	mempool_t *iod_meta_mempool;
- 
- 	/* shadow doorbell buffer support: */
- 	__le32 *dbbuf_dbs;
-@@ -238,6 +240,8 @@ struct nvme_iod {
- 	dma_addr_t first_dma;
- 	dma_addr_t meta_dma;
- 	struct sg_table sgt;
-+	struct sg_table meta_sgt;
-+	union nvme_descriptor meta_list;
- 	union nvme_descriptor list[NVME_MAX_NR_ALLOCATIONS];
- };
- 
-@@ -505,6 +509,14 @@ static void nvme_commit_rqs(struct blk_mq_hw_ctx *hctx)
- 	spin_unlock(&nvmeq->sq_lock);
+@@ -514,7 +514,8 @@ static inline bool nvme_pci_metadata_use_sgls(struct nvme_dev *dev,
+ {
+ 	if (!nvme_ctrl_meta_sgl_supported(&dev->ctrl))
+ 		return false;
+-	return req->nr_integrity_segments > 1;
++	return req->nr_integrity_segments > 1 ||
++		nvme_req(req)->flags & NVME_REQ_USERCMD;
  }
  
-+static inline bool nvme_pci_metadata_use_sgls(struct nvme_dev *dev,
-+					      struct request *req)
-+{
-+	if (!nvme_ctrl_meta_sgl_supported(&dev->ctrl))
-+		return false;
-+	return req->nr_integrity_segments > 1;
-+}
-+
  static inline bool nvme_pci_use_sgls(struct nvme_dev *dev, struct request *req,
- 				     int nseg)
- {
-@@ -517,6 +529,8 @@ static inline bool nvme_pci_use_sgls(struct nvme_dev *dev, struct request *req,
- 		return false;
- 	if (!nvmeq->qid)
- 		return false;
-+	if (nvme_pci_metadata_use_sgls(dev, req))
-+		return true;
+@@ -532,7 +533,7 @@ static inline bool nvme_pci_use_sgls(struct nvme_dev *dev, struct request *req,
+ 	if (nvme_pci_metadata_use_sgls(dev, req))
+ 		return true;
  	if (!sgl_threshold || avg_seg_size < sgl_threshold)
- 		return false;
+-		return false;
++		return nvme_req(req)->flags & NVME_REQ_USERCMD;
  	return true;
-@@ -779,7 +793,8 @@ static blk_status_t nvme_map_data(struct nvme_dev *dev, struct request *req,
- 		struct bio_vec bv = req_bvec(req);
- 
- 		if (!is_pci_p2pdma_page(bv.bv_page)) {
--			if ((bv.bv_offset & (NVME_CTRL_PAGE_SIZE - 1)) +
-+			if (!nvme_pci_metadata_use_sgls(dev, req) &&
-+			    (bv.bv_offset & (NVME_CTRL_PAGE_SIZE - 1)) +
- 			     bv.bv_len <= NVME_CTRL_PAGE_SIZE * 2)
- 				return nvme_setup_prp_simple(dev, req,
- 							     &cmnd->rw, &bv);
-@@ -823,11 +838,69 @@ static blk_status_t nvme_map_data(struct nvme_dev *dev, struct request *req,
- 	return ret;
  }
  
--static blk_status_t nvme_map_metadata(struct nvme_dev *dev, struct request *req,
--		struct nvme_command *cmnd)
-+static blk_status_t nvme_pci_setup_meta_sgls(struct nvme_dev *dev,
-+					     struct request *req)
-+{
-+	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
-+	struct nvme_rw_command *cmnd = &iod->cmd.rw;
-+	struct nvme_sgl_desc *sg_list;
-+	struct scatterlist *sgl, *sg;
-+	unsigned int entries;
-+	dma_addr_t sgl_dma;
-+	int rc, i;
-+
-+	iod->meta_sgt.sgl = mempool_alloc(dev->iod_meta_mempool, GFP_ATOMIC);
-+	if (!iod->meta_sgt.sgl)
-+		return BLK_STS_RESOURCE;
-+
-+	sg_init_table(iod->meta_sgt.sgl, req->nr_integrity_segments);
-+	iod->meta_sgt.orig_nents = blk_rq_map_integrity_sg(req,
-+							   iod->meta_sgt.sgl);
-+	if (!iod->meta_sgt.orig_nents)
-+		goto out_free_sg;
-+
-+	rc = dma_map_sgtable(dev->dev, &iod->meta_sgt, rq_dma_dir(req),
-+			     DMA_ATTR_NO_WARN);
-+	if (rc)
-+		goto out_free_sg;
-+
-+	sg_list = dma_pool_alloc(dev->prp_small_pool, GFP_ATOMIC, &sgl_dma);
-+	if (!sg_list)
-+		goto out_unmap_sg;
-+
-+	entries = iod->meta_sgt.nents;
-+	iod->meta_list.sg_list = sg_list;
-+	iod->meta_dma = sgl_dma;
-+
-+	cmnd->flags = NVME_CMD_SGL_METASEG;
-+	cmnd->metadata = cpu_to_le64(sgl_dma);
-+
-+	sgl = iod->meta_sgt.sgl;
-+	if (entries == 1) {
-+		nvme_pci_sgl_set_data(sg_list, sgl);
-+		return BLK_STS_OK;
-+	}
-+
-+	sgl_dma += sizeof(*sg_list);
-+	nvme_pci_sgl_set_seg(sg_list, sgl_dma, entries);
-+	for_each_sg(sgl, sg, entries, i)
-+		nvme_pci_sgl_set_data(&sg_list[i + 1], sg);
-+
-+	return BLK_STS_OK;
-+
-+out_unmap_sg:
-+	dma_unmap_sgtable(dev->dev, &iod->meta_sgt, rq_dma_dir(req), 0);
-+out_free_sg:
-+	mempool_free(iod->meta_sgt.sgl, dev->iod_meta_mempool);
-+	return BLK_STS_RESOURCE;
-+}
-+
-+static blk_status_t nvme_pci_setup_meta_mptr(struct nvme_dev *dev,
-+					     struct request *req)
- {
- 	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
- 	struct bio_vec bv = rq_integrity_vec(req);
-+	struct nvme_command *cmnd = &iod->cmd;
- 
- 	iod->meta_dma = dma_map_bvec(dev->dev, &bv, rq_dma_dir(req), 0);
- 	if (dma_mapping_error(dev->dev, iod->meta_dma))
-@@ -836,6 +909,13 @@ static blk_status_t nvme_map_metadata(struct nvme_dev *dev, struct request *req,
- 	return BLK_STS_OK;
- }
- 
-+static blk_status_t nvme_map_metadata(struct nvme_dev *dev, struct request *req)
-+{
-+	if (nvme_pci_metadata_use_sgls(dev, req))
-+		return nvme_pci_setup_meta_sgls(dev, req);
-+	return nvme_pci_setup_meta_mptr(dev, req);
-+}
-+
- static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
- {
- 	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
-@@ -844,6 +924,7 @@ static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
- 	iod->aborted = false;
- 	iod->nr_allocations = -1;
- 	iod->sgt.nents = 0;
-+	iod->meta_sgt.nents = 0;
- 
- 	ret = nvme_setup_cmd(req->q->queuedata, req);
- 	if (ret)
-@@ -856,7 +937,7 @@ static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
- 	}
- 
- 	if (blk_integrity_rq(req)) {
--		ret = nvme_map_metadata(dev, req, &iod->cmd);
-+		ret = nvme_map_metadata(dev, req);
- 		if (ret)
- 			goto out_unmap_data;
- 	}
-@@ -955,17 +1036,31 @@ static void nvme_queue_rqs(struct request **rqlist)
- 	*rqlist = requeue_list;
- }
- 
-+static __always_inline void nvme_unmap_metadata(struct nvme_dev *dev,
-+						struct request *req)
-+{
-+	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
-+
-+	if (!iod->meta_sgt.nents) {
-+		dma_unmap_page(dev->dev, iod->meta_dma,
-+			       rq_integrity_vec(req).bv_len,
-+			       rq_dma_dir(req));
-+		return;
-+	}
-+
-+	dma_pool_free(dev->prp_small_pool, iod->meta_list.sg_list,
-+		      iod->meta_dma);
-+	dma_unmap_sgtable(dev->dev, &iod->meta_sgt, rq_dma_dir(req), 0);
-+	mempool_free(iod->meta_sgt.sgl, dev->iod_meta_mempool);
-+}
-+
- static __always_inline void nvme_pci_unmap_rq(struct request *req)
- {
- 	struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
- 	struct nvme_dev *dev = nvmeq->dev;
- 
--	if (blk_integrity_rq(req)) {
--	        struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
--
--		dma_unmap_page(dev->dev, iod->meta_dma,
--			       rq_integrity_vec(req).bv_len, rq_dma_dir(req));
--	}
-+	if (blk_integrity_rq(req))
-+		nvme_unmap_metadata(dev, req);
- 
- 	if (blk_rq_nr_phys_segments(req))
- 		nvme_unmap_data(dev, req);
-@@ -2719,6 +2814,7 @@ static void nvme_release_prp_pools(struct nvme_dev *dev)
- 
- static int nvme_pci_alloc_iod_mempool(struct nvme_dev *dev)
- {
-+	size_t meta_size = sizeof(struct scatterlist) * (NVME_MAX_META_SEGS + 1);
- 	size_t alloc_size = sizeof(struct scatterlist) * NVME_MAX_SEGS;
- 
- 	dev->iod_mempool = mempool_create_node(1,
-@@ -2727,7 +2823,18 @@ static int nvme_pci_alloc_iod_mempool(struct nvme_dev *dev)
- 			dev_to_node(dev->dev));
- 	if (!dev->iod_mempool)
- 		return -ENOMEM;
-+
-+	dev->iod_meta_mempool = mempool_create_node(1,
-+			mempool_kmalloc, mempool_kfree,
-+			(void *)meta_size, GFP_KERNEL,
-+			dev_to_node(dev->dev));
-+	if (!dev->iod_meta_mempool)
-+		goto free;
-+
- 	return 0;
-+free:
-+	mempool_destroy(dev->iod_mempool);
-+	return -ENOMEM;
- }
- 
- static void nvme_free_tagset(struct nvme_dev *dev)
-@@ -2792,6 +2899,11 @@ static void nvme_reset_work(struct work_struct *work)
- 	if (result)
- 		goto out;
- 
-+	if (nvme_ctrl_meta_sgl_supported(&dev->ctrl))
-+		dev->ctrl.max_integrity_segments = NVME_MAX_META_SEGS;
-+	else
-+		dev->ctrl.max_integrity_segments = 1;
-+
- 	nvme_dbbuf_dma_alloc(dev);
- 
- 	result = nvme_setup_host_mem(dev);
-@@ -3061,11 +3173,6 @@ static struct nvme_dev *nvme_pci_alloc_dev(struct pci_dev *pdev,
- 	dev->ctrl.max_hw_sectors = min_t(u32,
- 		NVME_MAX_KB_SZ << 1, dma_opt_mapping_size(&pdev->dev) >> 9);
- 	dev->ctrl.max_segments = NVME_MAX_SEGS;
--
--	/*
--	 * There is no support for SGLs for metadata (yet), so we are limited to
--	 * a single integrity segment for the separate metadata pointer.
--	 */
- 	dev->ctrl.max_integrity_segments = 1;
- 	return dev;
- 
-@@ -3128,6 +3235,11 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (result)
- 		goto out_disable;
- 
-+	if (nvme_ctrl_meta_sgl_supported(&dev->ctrl))
-+		dev->ctrl.max_integrity_segments = NVME_MAX_META_SEGS;
-+	else
-+		dev->ctrl.max_integrity_segments = 1;
-+
- 	nvme_dbbuf_dma_alloc(dev);
- 
- 	result = nvme_setup_host_mem(dev);
-@@ -3170,6 +3282,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	nvme_free_queues(dev, 0);
- out_release_iod_mempool:
- 	mempool_destroy(dev->iod_mempool);
-+	mempool_destroy(dev->iod_meta_mempool);
- out_release_prp_pools:
- 	nvme_release_prp_pools(dev);
- out_dev_unmap:
-@@ -3235,6 +3348,7 @@ static void nvme_remove(struct pci_dev *pdev)
- 	nvme_dbbuf_dma_free(dev);
- 	nvme_free_queues(dev, 0);
- 	mempool_destroy(dev->iod_mempool);
-+	mempool_destroy(dev->iod_meta_mempool);
- 	nvme_release_prp_pools(dev);
- 	nvme_dev_unmap(dev);
- 	nvme_uninit_ctrl(&dev->ctrl);
-diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index b58d9405d65e0..1c101f6fad2f3 100644
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -388,6 +388,7 @@ enum {
- 	NVME_CTRL_CTRATT_PREDICTABLE_LAT	= 1 << 5,
- 	NVME_CTRL_CTRATT_NAMESPACE_GRANULARITY	= 1 << 7,
- 	NVME_CTRL_CTRATT_UUID_LIST		= 1 << 9,
-+	NVME_CTRL_SGLS_MSDS                     = 1 << 19,
- };
- 
- struct nvme_lbaf {
 -- 
 2.39.5
 
