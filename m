@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED5E1C4A24;
-	Mon, 10 Mar 2025 17:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01EC232369;
+	Mon, 10 Mar 2025 17:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628706; cv=none; b=UIshmzCcfx+r0BJwaDt6bP9J+L7i+IuYxlzDvMmcwb84LMrerFWpO6ypzd/ASBTWTfJlNvQ9oSotY0Dj4NnYAkP0H6jZknB/iANgxEkgrsg4n/7GY71ZuQdSWAHFXAE32/xv3BK9OJeOSQnnLGbAa5oznrrGNJuoBBmsGea1LQE=
+	t=1741628709; cv=none; b=N+S+0bVDdcSoxyWh/xkTPTTD7mM1izbFGz9mFDE/AwwOyshM5O/DsEDaf0KI78BFUmQQMNAVEHn9TZHxmH8NhW42+PBqJkrrO4su1XPpLGiiHosnDa/Lqy8vVDE/3QHAZGctBTGnXW0ej2ZGDfZFnEFE/MxWn52NN+ZlkA6XHAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628706; c=relaxed/simple;
-	bh=ms7AWOa7tmR60YLb7zSE7gRqnNc/Ml2eWIiZgE9+/04=;
+	s=arc-20240116; t=1741628709; c=relaxed/simple;
+	bh=Tx76jeaW1H62LJyEr5HrCzCGWa5P7uFNdbhtJn40zYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwR6afnUopkQYc9aNgflPx6GjDp2mgnqDWs35J4V2Hh0AhRXJ66TfX+8XTAbLkN4bqcEm53zqPRr0fnI1I3rDi0OZm7YUCCWU7TJY3TV/PaoywVeuAdcOTgzODLg5NVnpP8mLVkCr6Ot0rlHVnBOCXxWyUYjpckEcUsCZ9I9yCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=six9RyfY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l8002UM8hYNUm2Qc2YMcmNdkAEzcSyVOuImgXCoKM9LQVADGBneegNtg3wU64mu4U952sdX1l6rrhOCMXr59tSXwaFfXuHXI7mcaWbsdL5CtBSZkaDUI3FCf6gqDanNIUqEfh94Cs9HiZW6Uyupq6p2S3WHTLlHHdRKxH270M/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akV3myQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="six9RyfY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EEC4CEE5;
-	Mon, 10 Mar 2025 17:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akV3myQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64005C4CEEE;
+	Mon, 10 Mar 2025 17:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628705;
-	bh=ms7AWOa7tmR60YLb7zSE7gRqnNc/Ml2eWIiZgE9+/04=;
+	s=korg; t=1741628708;
+	bh=Tx76jeaW1H62LJyEr5HrCzCGWa5P7uFNdbhtJn40zYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=six9RyfYbzkSpBlZqe+e07ZfZHLIKIa6CfdphzLZyYxQzcR1z58lvKMuce1rUMegG
-	 /KkpbLAniAQPkRRwrxyopd8huiacrb/4oQpIX+YSQajvLO3HEVKlZf/yU4U+I6w7AZ
-	 LinqtFbKTMkxNkVs5+CZbw1976P6lCoU+1QN9Bi8=
+	b=akV3myQq0Aq2m3cbal11jZss+cwKgHzcgb7m0whkJFoTj2c4v1oV/IvFkUj3MI0qp
+	 jhEvEohZxaBM07zbVwI4weetk0dVvLotAgYeUBRcMeBtuSxRAuV5o5Vy5g5Gzren89
+	 a9jmqwVhp06Zt+7AAgodFI4gQd68dG3SgZklS2Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/620] wifi: rtlwifi: remove unused timer and related code
-Date: Mon, 10 Mar 2025 17:58:05 +0100
-Message-ID: <20250310170547.126285261@linuxfoundation.org>
+Subject: [PATCH 5.15 040/620] wifi: rtlwifi: remove unused dualmac control leftovers
+Date: Mon, 10 Mar 2025 17:58:06 +0100
+Message-ID: <20250310170547.165162725@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,91 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 358b94f0a7cadd2ec7824531d54dadaa8b71de04 ]
+[ Upstream commit 557123259200b30863e1b6a8f24a8c8060b6fc1d ]
 
-Drop unused 'dualmac_easyconcurrent_retrytimer' of 'struct rtl_works',
-corresponding 'rtl_easy_concurrent_retrytimer_callback()' handler,
-'dualmac_easy_concurrent' function pointer of 'struct rtl_hal_ops'
-and related call to 'timer_setup()' in '_rtl_init_deferred_work()'.
+Remove 'struct rtl_dualmac_easy_concurrent_ctl' of 'struct rtl_priv'
+and related code in '_rtl_pci_tx_chk_waitq()'.
 
 Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230602065940.149198-1-dmantipov@yandex.ru
+Link: https://lore.kernel.org/r/20230602065940.149198-2-dmantipov@yandex.ru
 Stable-dep-of: 2fdac64c3c35 ("wifi: rtlwifi: remove unused check_buddy_priv")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c | 16 +---------------
- drivers/net/wireless/realtek/rtlwifi/base.h |  1 -
- drivers/net/wireless/realtek/rtlwifi/wifi.h |  2 --
- 3 files changed, 1 insertion(+), 18 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c  | 5 -----
+ drivers/net/wireless/realtek/rtlwifi/wifi.h | 9 ---------
+ 2 files changed, 14 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index a7ef84f559399..e2552bcdc6a02 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -452,8 +452,7 @@ static int _rtl_init_deferred_work(struct ieee80211_hw *hw)
- 	/* <1> timer */
- 	timer_setup(&rtlpriv->works.watchdog_timer,
- 		    rtl_watch_dog_timer_callback, 0);
--	timer_setup(&rtlpriv->works.dualmac_easyconcurrent_retrytimer,
--		    rtl_easy_concurrent_retrytimer_callback, 0);
-+
- 	/* <2> work queue */
- 	rtlpriv->works.hw = hw;
- 	rtlpriv->works.rtl_wq = wq;
-@@ -2365,19 +2364,6 @@ static void rtl_c2hcmd_wq_callback(struct work_struct *work)
- 	rtl_c2hcmd_launcher(hw, 1);
- }
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index f17a365fba070..0dcf5350e0885 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -443,11 +443,6 @@ static void _rtl_pci_tx_chk_waitq(struct ieee80211_hw *hw)
+ 	if (!rtlpriv->rtlhal.earlymode_enable)
+ 		return;
  
--void rtl_easy_concurrent_retrytimer_callback(struct timer_list *t)
--{
--	struct rtl_priv *rtlpriv =
--		from_timer(rtlpriv, t, works.dualmac_easyconcurrent_retrytimer);
--	struct ieee80211_hw *hw = rtlpriv->hw;
--	struct rtl_priv *buddy_priv = rtlpriv->buddy_priv;
--
--	if (buddy_priv == NULL)
+-	if (rtlpriv->dm.supp_phymode_switch &&
+-	    (rtlpriv->easy_concurrent_ctl.switch_in_process ||
+-	    (rtlpriv->buddy_priv &&
+-	    rtlpriv->buddy_priv->easy_concurrent_ctl.switch_in_process)))
 -		return;
--
--	rtlpriv->cfg->ops->dualmac_easy_concurrent(hw);
--}
--
- /*********************************************************
-  *
-  * frame process functions
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.h b/drivers/net/wireless/realtek/rtlwifi/base.h
-index 0e4f8a8ae3a5f..f081a9a90563f 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.h
-@@ -124,7 +124,6 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
- u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
- void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
- u8 rtl_tid_to_ac(u8 tid);
--void rtl_easy_concurrent_retrytimer_callback(struct timer_list *t);
- extern struct rtl_global_var rtl_global_var;
- void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
- 
+ 	/* we just use em for BE/BK/VI/VO */
+ 	for (tid = 7; tid >= 0; tid--) {
+ 		u8 hw_queue = ac_to_hwq[rtl_tid_to_ac(tid)];
 diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-index 0bac788ccd6e3..1991cffd3dd4a 100644
+index 1991cffd3dd4a..d461c22aa9ed7 100644
 --- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
 +++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-@@ -2300,7 +2300,6 @@ struct rtl_hal_ops {
- 			  u32 regaddr, u32 bitmask, u32 data);
- 	void (*linked_set_reg)(struct ieee80211_hw *hw);
- 	void (*chk_switch_dmdp)(struct ieee80211_hw *hw);
--	void (*dualmac_easy_concurrent)(struct ieee80211_hw *hw);
- 	void (*dualmac_switch_to_dmdp)(struct ieee80211_hw *hw);
- 	bool (*phy_rf6052_config)(struct ieee80211_hw *hw);
- 	void (*phy_rf6052_set_cck_txpower)(struct ieee80211_hw *hw,
-@@ -2465,7 +2464,6 @@ struct rtl_works {
+@@ -2496,14 +2496,6 @@ struct rtl_debug {
+ #define MIMO_PS_DYNAMIC			1
+ #define MIMO_PS_NOLIMIT			3
  
- 	/*timer */
- 	struct timer_list watchdog_timer;
--	struct timer_list dualmac_easyconcurrent_retrytimer;
- 	struct timer_list fw_clockoff_timer;
- 	struct timer_list fast_antenna_training_timer;
- 	/*task */
+-struct rtl_dualmac_easy_concurrent_ctl {
+-	enum band_type currentbandtype_backfordmdp;
+-	bool close_bbandrf_for_dmsp;
+-	bool change_to_dmdp;
+-	bool change_to_dmsp;
+-	bool switch_in_process;
+-};
+-
+ struct rtl_dmsp_ctl {
+ 	bool activescan_for_slaveofdmsp;
+ 	bool scan_for_anothermac_fordmsp;
+@@ -2744,7 +2736,6 @@ struct rtl_priv {
+ 	struct list_head list;
+ 	struct rtl_priv *buddy_priv;
+ 	struct rtl_global_var *glb_var;
+-	struct rtl_dualmac_easy_concurrent_ctl easy_concurrent_ctl;
+ 	struct rtl_dmsp_ctl dmsp_ctl;
+ 	struct rtl_locks locks;
+ 	struct rtl_works works;
 -- 
 2.39.5
 
