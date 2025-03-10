@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B56017CA12;
-	Mon, 10 Mar 2025 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795BC232369;
+	Mon, 10 Mar 2025 17:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628985; cv=none; b=DPOBQziUV9jvKq0+79I5ker7xXlT/QbgExdZtz9hem7G4fHgibKu9THlh5PkC2o0nv03U5igXxBd4Ve/mFSj0UyALWdKh+TaU7x3t1y3/kReZsmFu6ZPxiKwzBUFkXbZLc7SdADmMzRS4M4iOuKoQXCHubwR8SqUESQpO9g/i2A=
+	t=1741628988; cv=none; b=NpVHLuGY2sKmWsPw6UYTC6hzmHaZ/tDKWSOVr8OfbMJv3qNs7YcSz32CoZbTgTLUXkpmxmyH/F5l/HtNBd9DUicrYUYklJ5UBu4QGclu85CxYtHmNAHyUIAQAh+ZQ69WDxXfDqkm6UKqAuwl0Ub55WpmpQgHUD3BA+RzTtl3ryc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628985; c=relaxed/simple;
-	bh=2MvqKoTEfznba3cuwL/N7PCiSgznzHTsxr1+Fejn3f4=;
+	s=arc-20240116; t=1741628988; c=relaxed/simple;
+	bh=RoCNLDPNcClAsDoCUpcjcyKG/JUDt4+DOHdhnr5cyFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAy2GS+eoGkTUgLG3+Hcd+I9BUI9V7tSGtDj9wmVADQZ2BO92l2dm7Eg6S0dHjR2LfnaFr5+ylvuM7DrmvvOcteZ4vmudX63fy+Tb2B2C+M9lWAMTa9ibEO9Xie7H0vYOiegg2JtgrWdHbyndKGysjP4gaHqoN0fjsXVrFhOm+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDpwts8L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VriUyuHA88pgEVP4GhwMwieKlTKvsUexM8tbmAOEoooMojB1UYfXI6Phczl7KbDMTd9mCFq9v+hbZ0+gU+vOkbTBubvQswKoK+iocwb39EkBuxrHKWTvsZbyHLPgl1CuPuv0By/8bk8kQUDh7n0d4tvc4KrOk/mY4NwfUcefQ5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPh7dy60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDpwts8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DF9C4CEE5;
-	Mon, 10 Mar 2025 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPh7dy60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9F8C4CEE5;
+	Mon, 10 Mar 2025 17:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628985;
-	bh=2MvqKoTEfznba3cuwL/N7PCiSgznzHTsxr1+Fejn3f4=;
+	s=korg; t=1741628988;
+	bh=RoCNLDPNcClAsDoCUpcjcyKG/JUDt4+DOHdhnr5cyFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDpwts8LR9KpIyDumBnWZP4xs/KquHn9vJ1JygxlxSAfSlsRNEgS5NWVIlCseJcHY
-	 UQJQE3Akbtksz3hOZApMOKha2dHVhQeFnnITJz9i8VfqJeS2cPfYfPyEtVn6fZyGO7
-	 S96LBa99JCrDIYgDHSgsqSXx9WaziUAjsNDW4FgY=
+	b=tPh7dy60Qs/oioEQEcm/zjq2ilTpm4icXfmQthxf8awzTecM4bzHvHBniFJ8tOHsP
+	 9cPnJYWhYwWZFkKIg6xZqLgQeI9H5kveLl5e4Q4dmleBc7dDUmxTWXqI3HGsvl20kq
+	 JCvsQLcRPsOQqepso2SIc6tPVp8MMZH4hqKSIyM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/620] media: lmedm04: Handle errors for lme2510_int_read
-Date: Mon, 10 Mar 2025 17:59:43 +0100
-Message-ID: <20250310170551.008744798@linuxfoundation.org>
+Subject: [PATCH 5.15 138/620] PCI: endpoint: Destroy the EPC device in devm_pci_epc_destroy()
+Date: Mon, 10 Mar 2025 17:59:44 +0100
+Message-ID: <20250310170551.047894100@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,56 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit a2836d3fe220220ff8c495ca9722f89cea8a67e7 ]
+[ Upstream commit d4929755e4d02bd3de3ae5569dab69cb9502c54f ]
 
-Add check for the return value of usb_pipe_endpoint() and
-usb_submit_urb() in order to catch the errors.
+The devm_pci_epc_destroy() comment says destroys the EPC device, but it
+does not actually do that since devres_destroy() does not call
+devm_pci_epc_release(), and it also can not fully undo what the API
+devm_pci_epc_create() does, so it is faulty.
 
-Fixes: 15e1ce33182d ("[media] lmedm04: Fix usb_submit_urb BOGUS urb xfer, pipe 1 != type 3 in interrupt urb")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20240521091042.1769684-1-nichen@iscas.ac.cn
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fortunately, the faulty API has not been used by current kernel tree.  Use
+devres_release() instead of devres_destroy() so the EPC device will be
+released.
+
+Link: https://lore.kernel.org/r/20241210-pci-epc-core_fix-v3-1-4d86dd573e4b@quicinc.com
+Fixes: 5e8cb4033807 ("PCI: endpoint: Add EP core layer to enable EP controller and EP functions")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/lmedm04.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/pci/endpoint/pci-epc-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/lmedm04.c b/drivers/media/usb/dvb-usb-v2/lmedm04.c
-index fe4d886442a41..220df46f56c57 100644
---- a/drivers/media/usb/dvb-usb-v2/lmedm04.c
-+++ b/drivers/media/usb/dvb-usb-v2/lmedm04.c
-@@ -373,6 +373,7 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
- 	struct dvb_usb_device *d = adap_to_d(adap);
- 	struct lme2510_state *lme_int = adap_to_priv(adap);
- 	struct usb_host_endpoint *ep;
-+	int ret;
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index ecbb0fb3b653c..64f9bae6d15b9 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -740,7 +740,7 @@ void devm_pci_epc_destroy(struct device *dev, struct pci_epc *epc)
+ {
+ 	int r;
  
- 	lme_int->lme_urb = usb_alloc_urb(0, GFP_KERNEL);
- 
-@@ -390,11 +391,20 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
- 
- 	/* Quirk of pipe reporting PIPE_BULK but behaves as interrupt */
- 	ep = usb_pipe_endpoint(d->udev, lme_int->lme_urb->pipe);
-+	if (!ep) {
-+		usb_free_urb(lme_int->lme_urb);
-+		return -ENODEV;
-+	}
- 
- 	if (usb_endpoint_type(&ep->desc) == USB_ENDPOINT_XFER_BULK)
- 		lme_int->lme_urb->pipe = usb_rcvbulkpipe(d->udev, 0xa);
- 
--	usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
-+	ret = usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
-+	if (ret) {
-+		usb_free_urb(lme_int->lme_urb);
-+		return ret;
-+	}
-+
- 	info("INT Interrupt Service Started");
- 
- 	return 0;
+-	r = devres_destroy(dev, devm_pci_epc_release, devm_pci_epc_match,
++	r = devres_release(dev, devm_pci_epc_release, devm_pci_epc_match,
+ 			   epc);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PCI EPC resource\n");
+ }
 -- 
 2.39.5
 
