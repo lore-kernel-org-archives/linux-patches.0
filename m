@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716DD17CA12;
-	Mon, 10 Mar 2025 17:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551E917CA12;
+	Mon, 10 Mar 2025 17:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629066; cv=none; b=GVJFo5CAx930nHms7Vd92Gy8WfBVRm7dptMV16s4/Ld6RCYG3++KAug+b20T6ljwaiZpE29L69tvJEFVimFKhWdrQ0kkGZcE7dKY4pvKBbqqlmMKCgtmgQD5aRTC8k+62zN2uwIuF/PN3N3T0vKzoF7evh2emMwSVGf6002WZWM=
+	t=1741629069; cv=none; b=Le4bU9lvHipa/Hk3exNYj7PPTykqMJWGhP/S3eBFLLthSf9JdeDnvQB53AXoPJv3fqq/9ZqAng9MT2u89ArTwxDSzv4C3Se9i26Oh0R8/HjbBHDrJYAVGnyHyN5aFhgwgmCGbUqxKOsrLFXjxFwX+AX51Rx72GbWLX8zmrieRPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629066; c=relaxed/simple;
-	bh=4n1HEHpN55C7bQkCmyKDm60yK/qjW6fKH/9NO64qdVM=;
+	s=arc-20240116; t=1741629069; c=relaxed/simple;
+	bh=/TaQ+T1gAJcPajJDjT9Kc4qQ6xgsUJsJ10UwDrWBG1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSgg/T/KMB2zGhqJEsyw2lRSjrnyh0VryU7NcbieEngL9IhSkrldIPbLipToiIkySoDbix34qJH4vAQOu+Huejb9LC9Oo4+c6ybrOhnf0Z/AqPYoA9QBm9SgYHPssyjv/6RGOJRBRGsjLc3XpLC8pm8pKMsjsxROQxh04VMxPyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFxu8FmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gj12iED0v0uWQdHJ/LS5A38PyU66VjfVOs3AdDAgevkpPmXr/vTcPZPHfRGJ1fycVB4bd8kWmXYsJCNLoN33hqt9qbMNrX/7Gk9Gb0X6tO4ahNHlC+Btea5W49EMLu693FsUjrqdLytZqc7hJLI9lVg2YlLiuPb6HR9d7iGDz5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTUv3f5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFxu8FmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBA6C4CEE5;
-	Mon, 10 Mar 2025 17:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTUv3f5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA092C4CEEC;
+	Mon, 10 Mar 2025 17:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629066;
-	bh=4n1HEHpN55C7bQkCmyKDm60yK/qjW6fKH/9NO64qdVM=;
+	s=korg; t=1741629069;
+	bh=/TaQ+T1gAJcPajJDjT9Kc4qQ6xgsUJsJ10UwDrWBG1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFxu8FmH2njpxx39DWBTsYKQLgy7VFP1yTVBvbdCpnBfjufGTFbcAjUGHSnJSVYzA
-	 F8fhDe1lzCjUPLIHpVlSDAo2Xse7T68ebCXi/4TzhBILI4WoKjcpuiDWu1TCpL7sBn
-	 0Znsk9rSJgI8itq5lxiGMlL/mNuRdkhC18WsFzV4=
+	b=jTUv3f5lsh32bxBedKhjGG9aEGGGOy8YE8a6LQ2fohZCQlxFE+dXELjpJo95FhKr4
+	 /jSIkhCbxEW06/ch7YnTqiewSkC8wXzxtzOz9zzbb8yD0djINa2SgjF7KbbaZEwmS0
+	 gtLYfW9R6L5vsoQOFEIA68GU5PTidppAlulhRUsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 165/620] PM: hibernate: Add error handling for syscore_suspend()
-Date: Mon, 10 Mar 2025 18:00:11 +0100
-Message-ID: <20250310170552.134750996@linuxfoundation.org>
+Subject: [PATCH 5.15 166/620] net: rose: fix timer races against user threads
+Date: Mon, 10 Mar 2025 18:00:12 +0100
+Message-ID: <20250310170552.174832902@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,56 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
+[ Upstream commit 5de7665e0a0746b5ad7943554b34db8f8614a196 ]
 
-In hibernation_platform_enter(), the code did not check the
-return value of syscore_suspend(), potentially leading to a
-situation where syscore_resume() would be called even if
-syscore_suspend() failed. This could cause unpredictable
-behavior or system instability.
+Rose timers only acquire the socket spinlock, without
+checking if the socket is owned by one user thread.
 
-Modify the code sequence in question to properly handle errors returned
-by syscore_suspend(). If an error occurs in the suspend path, the code
-now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
-only enabling interrupts after setting the system state to SYSTEM_RUNNING.
+Add a check and rearm the timers if needed.
 
-Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+BUG: KASAN: slab-use-after-free in rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
+Read of size 2 at addr ffff88802f09b82a by task swapper/0/0
+
+CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5-syzkaller-00172-gd1bf27c4e176 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <IRQ>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:489
+  kasan_report+0x143/0x180 mm/kasan/report.c:602
+  rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
+  call_timer_fn+0x187/0x650 kernel/time/timer.c:1793
+  expire_timers kernel/time/timer.c:1844 [inline]
+  __run_timers kernel/time/timer.c:2418 [inline]
+  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2430
+  run_timer_base kernel/time/timer.c:2439 [inline]
+  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2449
+  handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
+  __do_softirq kernel/softirq.c:595 [inline]
+  invoke_softirq kernel/softirq.c:435 [inline]
+  __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1049
+ </IRQ>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250122180244.1861468-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/hibernate.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/rose/rose_timer.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index 9abc73d500fbf..747c856411e39 100644
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -593,7 +593,11 @@ int hibernation_platform_enter(void)
+diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
+index f06ddbed3fed6..1525773e94aa1 100644
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -122,6 +122,10 @@ static void rose_heartbeat_expiry(struct timer_list *t)
+ 	struct rose_sock *rose = rose_sk(sk);
  
- 	local_irq_disable();
- 	system_state = SYSTEM_SUSPEND;
--	syscore_suspend();
-+
-+	error = syscore_suspend();
-+	if (error)
-+		goto Enable_irqs;
-+
- 	if (pm_wakeup_pending()) {
- 		error = -EAGAIN;
- 		goto Power_up;
-@@ -605,6 +609,7 @@ int hibernation_platform_enter(void)
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + HZ/20);
++		goto out;
++	}
+ 	switch (rose->state) {
+ 	case ROSE_STATE_0:
+ 		/* Magic here: If we listen() and a new link dies before it
+@@ -152,6 +156,7 @@ static void rose_heartbeat_expiry(struct timer_list *t)
+ 	}
  
-  Power_up:
- 	syscore_resume();
-+ Enable_irqs:
- 	system_state = SYSTEM_RUNNING;
- 	local_irq_enable();
+ 	rose_start_heartbeat(sk);
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
+@@ -162,6 +167,10 @@ static void rose_timer_expiry(struct timer_list *t)
+ 	struct sock *sk = &rose->sock;
  
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &rose->timer, jiffies + HZ/20);
++		goto out;
++	}
+ 	switch (rose->state) {
+ 	case ROSE_STATE_1:	/* T1 */
+ 	case ROSE_STATE_4:	/* T2 */
+@@ -182,6 +191,7 @@ static void rose_timer_expiry(struct timer_list *t)
+ 		}
+ 		break;
+ 	}
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
+@@ -192,6 +202,10 @@ static void rose_idletimer_expiry(struct timer_list *t)
+ 	struct sock *sk = &rose->sock;
+ 
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &rose->idletimer, jiffies + HZ/20);
++		goto out;
++	}
+ 	rose_clear_queues(sk);
+ 
+ 	rose_write_internal(sk, ROSE_CLEAR_REQUEST);
+@@ -207,6 +221,7 @@ static void rose_idletimer_expiry(struct timer_list *t)
+ 		sk->sk_state_change(sk);
+ 		sock_set_flag(sk, SOCK_DEAD);
+ 	}
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
 -- 
 2.39.5
 
