@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AF42253FE;
-	Mon, 10 Mar 2025 17:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55722253FE;
+	Mon, 10 Mar 2025 17:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627936; cv=none; b=GjrMpJjIO9/XrhEEOIMhl1wk2Q8PEEMXnA+JWPkMKCCAHRqeAn9Rpsd2UkbeU0if6tTQdNG8wntJHxFGlUEE+D5raG6IVQxFfPrmM2FiLSTPewazBNti7bxFSIbfP5rRchQbDYxHUakjTjOlT4LTIFZPBt5VA/M5U28cOzgOmMk=
+	t=1741627940; cv=none; b=tJ1oZL8sQguD5BV+wfH4SSpDULQUx8O8PqxiuEXm65qoJXkHjoiLHh8WLPbpdk/9Dw4Wm1nGbR8C58WJQcs/Jf/nZ+4Hglg6uxOGNDmBkP0FVYfP5XFso4I+eOJmmmFJvzjfpkvsrNq/AXgMLPxQNClzvSrkYLYVZ/XRwSxjHik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627936; c=relaxed/simple;
-	bh=tpp+wP6cNWZIpkhEGTxLkWw5mLV7EItUrmB2kZi4nnE=;
+	s=arc-20240116; t=1741627940; c=relaxed/simple;
+	bh=s4Lln56EgzLsOJIu/W6FLD7L7mQp7xNQHoEn3pYh+eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1N3xVJOnCGdUxE785745phmRM//xVVBjcrzNxNVEISI9aEDVS/v8QPNPyxX05ZOuSsRwbcXJ5BY+uF4/5XB8GdMAq9C15WD5VLiUpb/yfMK0LYTht66l1HlV/RSnbuX5ry2FkgVLLSrn/+blM72kjvfQJUckKIqMPRga+BXLMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQqaSX9M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFm2lyqY41c7jMedrc08iMQ2KAwpBtA6YSmpIFRECNkey8Bdq8U3OOPOZ3WjcdaQCaI7gGwvTQviYfF3iMY83kW3t0g05taBTBW1CN6MO0BR0cIljKf8u85bg0VbDLV5kD95kbN2D+W/KocyuHbvnrqPc2pGWu9mbiv8JJwXSXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7Q/9W/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQqaSX9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CCFC4CEE5;
-	Mon, 10 Mar 2025 17:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7Q/9W/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D549C4CEE5;
+	Mon, 10 Mar 2025 17:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627936;
-	bh=tpp+wP6cNWZIpkhEGTxLkWw5mLV7EItUrmB2kZi4nnE=;
+	s=korg; t=1741627939;
+	bh=s4Lln56EgzLsOJIu/W6FLD7L7mQp7xNQHoEn3pYh+eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQqaSX9MjP1oP3LJsXJHxiAGgb0lBDidXuGGasAmqON7VNWEiMFDWz22NA4Jm7wvy
-	 4nesdiAdmwBSeTxJMXB9W1SfPbC0G2mxKq2pgKLaaOdSboVwLko73HxQOqs5VCzKBC
-	 3HQIHEnC2q97qoAtHt2sUqKnR3mUniNoc/AE60kE=
+	b=p7Q/9W/Zq/TcP+NEvqMAf3ODP40tZGGb3BcQoxx/EZcM78A11JYLsMh0kSjvCYVW0
+	 WCe4+cnbCT5X2IiX0xFfX9wbpiIPtquo7Bgg6+GiYhnD6raYtJ6iFRXl4KkoXkX8/8
+	 UStxmeDyMxZy4IxiTE1NvkqIg0WC4yl/yFEZph/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farouk Bouabid <farouk.bouabid@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Horst Reiterer <horst.reiterer@fabasoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/145] arm64: dts: rockchip: add rs485 support on uart5 of px30-ringneck-haikou
-Date: Mon, 10 Mar 2025 18:04:59 +0100
-Message-ID: <20250310170434.958553347@linuxfoundation.org>
+Subject: [PATCH 6.6 006/145] smb: client: fix chmod(2) regression with ATTR_READONLY
+Date: Mon, 10 Mar 2025 18:05:00 +0100
+Message-ID: <20250310170434.997615091@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,45 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farouk Bouabid <farouk.bouabid@theobroma-systems.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 5963d97aa780619ffb66cf4886c0ca1175ccbd3e ]
+[ Upstream commit 654292a0b264e9b8c51b98394146218a21612aa1 ]
 
-A hardware switch can set the rs485 transceiver into half or full duplex
-mode.
+When the user sets a file or directory as read-only (e.g. ~S_IWUGO),
+the client will set the ATTR_READONLY attribute by sending an
+SMB2_SET_INFO request to the server in cifs_setattr_{,nounix}(), but
+cifsInodeInfo::cifsAttrs will be left unchanged as the client will
+only update the new file attributes in the next call to
+{smb311_posix,cifs}_get_inode_info() with the new metadata filled in
+@data parameter.
 
-Switching to the half-duplex mode requires the user to enable em485 on
-uart5 using ioctl, DE/RE are both connected to GPIO0_B5 which is the
-RTS signal for uart0. Implement GPIO0_B5 as rts-gpios with RTS_ON_SEND
-option enabled (default) so that driver mode gets enabled while sending
-(RTS high) and receiver mode gets enabled while not sending (RTS low).
+Commit a18280e7fdea ("smb: cilent: set reparse mount points as
+automounts") mistakenly removed the @data NULL check when calling
+is_inode_cache_good(), which broke the above case as the new
+ATTR_READONLY attribute would end up not being updated on files with a
+read lease.
 
-In full-duplex mode (em485 is disabled), DE is connected to GPIO0_B5 and
-RE is grounded (enabled). Since GPIO0_B5 is implemented as rts-gpios, the
-driver mode gets enabled whenever we want to send something and RE is not
-affected (always enabled) in this case by the state of RTS.
+Fix this by updating the inode whenever we have cached metadata in
+@data parameter.
 
-Signed-off-by: Farouk Bouabid <farouk.bouabid@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20240208-dev-rx-enable-v6-2-39e68e17a339@theobroma-systems.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: 5ae4dca718ea ("arm64: dts: rockchip: Disable DMA for uart5 on px30-ringneck")
+Reported-by: Horst Reiterer <horst.reiterer@fabasoft.com>
+Closes: https://lore.kernel.org/r/85a16504e09147a195ac0aac1c801280@fabasoft.com
+Fixes: a18280e7fdea ("smb: cilent: set reparse mount points as automounts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
-index de0a1f2af983b..56f73c17363fd 100644
---- a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
-+++ b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
-@@ -226,6 +226,7 @@ &uart0 {
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index b3e59a7c71205..dbb407d5e6dab 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -1320,7 +1320,7 @@ int cifs_get_inode_info(struct inode **inode,
+ 	struct cifs_fattr fattr = {};
+ 	int rc;
  
- &uart5 {
- 	pinctrl-0 = <&uart5_xfer>;
-+	rts-gpios = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
- };
+-	if (is_inode_cache_good(*inode)) {
++	if (!data && is_inode_cache_good(*inode)) {
+ 		cifs_dbg(FYI, "No need to revalidate cached inode sizes\n");
+ 		return 0;
+ 	}
+@@ -1419,7 +1419,7 @@ int smb311_posix_get_inode_info(struct inode **inode,
+ 	struct cifs_fattr fattr = {};
+ 	int rc;
  
+-	if (is_inode_cache_good(*inode)) {
++	if (!data && is_inode_cache_good(*inode)) {
+ 		cifs_dbg(FYI, "No need to revalidate cached inode sizes\n");
+ 		return 0;
+ 	}
 -- 
 2.39.5
 
