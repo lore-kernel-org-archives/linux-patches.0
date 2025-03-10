@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E3E2309B6;
-	Mon, 10 Mar 2025 17:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535CA233700;
+	Mon, 10 Mar 2025 17:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627552; cv=none; b=oDl+ZdiYBUgWRkRaLZ7yv8BnJg+qZ87NSxnAL1c3bQF4S7TYbyc0fkqWZm6N2RX9hyYS2O+Lqq0fe3v2/1Ehk0Bi2Ly7UwfpdeGIbGCdwczuH6FiiR6uYwGIf4GCNlurn2nvN09IcQYpBJXQJr4bY/THYRjw1aUjDYWOOCbiceQ=
+	t=1741627555; cv=none; b=W56ZuKaChAnt8lyhtXFstViPEVuOsyQpoGL7TdEI7slbDtfzm5xrpHDkjpmXyXULNRNtnw9AXf23f6rFrrDQJK2eSSk1RTZ3alIeEOgUVcdAt3S1o+DwbOUWyb7q6CPxylqHqPSlLTL+BiEmRmlFqqS4NlGV7RingXWt3mTLs/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627552; c=relaxed/simple;
-	bh=8kOOq+lB3hw8bjeYRJgmRHwkvge5rxOvBAq6eFy3WbY=;
+	s=arc-20240116; t=1741627555; c=relaxed/simple;
+	bh=s5Ty1FrENfhxl/CL0WM7pDOSp+DMG4YASZlo/sOKuto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEeNjo5RaXTMDxEd131o9RQasYVFptA5++/UdJhYwVxLHenw+g131xL/tEyuIkDF6Xj7VvB4ptJFvPKjsEjGFDfH29eeXOvtEUIFF4eVewrrckrYvbqu1MU0B35yubIPAG2UsGa13sceVi0qbCursfkwHmWRJWuaRP/4ZyK9TQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmnNmR5J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAGHnBT5FTj/rNrXBQmHhVXUBIItlIVhOc2fpsIGYyYVCDZDJz3jQTufaMu+4fFnP2zVYwb9xXI56heXoI151ssO/+ZNvRnWliti/8tfFGdh5Q9LBPngf4mLEv0QAHBlFzsqWN00yr4tmXCx+ddAnbkUEbecp6GUyfWkaUnPksc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1hnTlfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmnNmR5J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F225CC4CEE5;
-	Mon, 10 Mar 2025 17:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1hnTlfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCCAC4CEE5;
+	Mon, 10 Mar 2025 17:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627552;
-	bh=8kOOq+lB3hw8bjeYRJgmRHwkvge5rxOvBAq6eFy3WbY=;
+	s=korg; t=1741627555;
+	bh=s5Ty1FrENfhxl/CL0WM7pDOSp+DMG4YASZlo/sOKuto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmnNmR5JGP16UIQSfM9gzxmhz2mi23c5Pj2abyUrcUBb20diKmgeY87EGmF/03rLu
-	 1B10iusak6JoP8ITae1QxplCvidWkc0DytLFRPuz/7UI7be5m4nyW9q8Dij5YzsZCM
-	 ToMgKj9IthCekSz2W/TCyKEgUBL5PWI9b9ToUYbc=
+	b=N1hnTlfmk4FEZ/eI1HSssEAnD+AGZ3iAnLIcRfyULoZlmtMIRm4NgtB57Yz1970Em
+	 fY3gof0vMdrtQULQf+Zbsg3FxttuzGQCtdCd/z+noDUGSQfwrNKbcKXPHkcfPOGq0Q
+	 e82qons+Ip/XBACS8iYqUNiuK5A6aFUWQQIhMJ8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/269] caif_virtio: fix wrong pointer check in cfv_probe()
-Date: Mon, 10 Mar 2025 18:05:21 +0100
-Message-ID: <20250310170504.415896655@linuxfoundation.org>
+Subject: [PATCH 6.12 169/269] perf/core: Fix pmus_lock vs. pmus_srcu ordering
+Date: Mon, 10 Mar 2025 18:05:22 +0100
+Message-ID: <20250310170504.455428815@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -52,41 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit a466fd7e9fafd975949e5945e2f70c33a94b1a70 ]
+[ Upstream commit 2565e42539b120b81a68a58da961ce5d1e34eac8 ]
 
-del_vqs() frees virtqueues, therefore cfv->vq_tx pointer should be checked
-for NULL before calling it, not cfv->vdev. Also the current implementation
-is redundant because the pointer cfv->vdev is dereferenced before it is
-checked for NULL.
+Commit a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
+placed pmus_lock inside pmus_srcu, this makes perf_pmu_unregister()
+trip lockdep.
 
-Fix this by checking cfv->vq_tx for NULL instead of cfv->vdev before
-calling del_vqs().
+Move the locking about such that only pmu_idr and pmus (list) are
+modified while holding pmus_lock. This avoids doing synchronize_srcu()
+while holding pmus_lock and all is well again.
 
-Fixes: 0d2e1a2926b1 ("caif_virtio: Introduce caif over virtio")
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Link: https://patch.msgid.link/20250227184716.4715-1-v.shevtsov@mt-integration.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20241104135517.679556858@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/caif/caif_virtio.c b/drivers/net/caif/caif_virtio.c
-index 7fea00c7ca8a6..c60386bf2d1a4 100644
---- a/drivers/net/caif/caif_virtio.c
-+++ b/drivers/net/caif/caif_virtio.c
-@@ -745,7 +745,7 @@ static int cfv_probe(struct virtio_device *vdev)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index a0e1d2124727e..5fff74c736063 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11846,6 +11846,8 @@ void perf_pmu_unregister(struct pmu *pmu)
+ {
+ 	mutex_lock(&pmus_lock);
+ 	list_del_rcu(&pmu->entry);
++	idr_remove(&pmu_idr, pmu->type);
++	mutex_unlock(&pmus_lock);
  
- 	if (cfv->vr_rx)
- 		vdev->vringh_config->del_vrhs(cfv->vdev);
--	if (cfv->vdev)
-+	if (cfv->vq_tx)
- 		vdev->config->del_vqs(cfv->vdev);
- 	free_netdev(netdev);
- 	return err;
+ 	/*
+ 	 * We dereference the pmu list under both SRCU and regular RCU, so
+@@ -11855,7 +11857,6 @@ void perf_pmu_unregister(struct pmu *pmu)
+ 	synchronize_rcu();
+ 
+ 	free_percpu(pmu->pmu_disable_count);
+-	idr_remove(&pmu_idr, pmu->type);
+ 	if (pmu_bus_running && pmu->dev && pmu->dev != PMU_NULL_DEV) {
+ 		if (pmu->nr_addr_filters)
+ 			device_remove_file(pmu->dev, &dev_attr_nr_addr_filters);
+@@ -11863,7 +11864,6 @@ void perf_pmu_unregister(struct pmu *pmu)
+ 		put_device(pmu->dev);
+ 	}
+ 	free_pmu_context(pmu);
+-	mutex_unlock(&pmus_lock);
+ }
+ EXPORT_SYMBOL_GPL(perf_pmu_unregister);
+ 
 -- 
 2.39.5
 
