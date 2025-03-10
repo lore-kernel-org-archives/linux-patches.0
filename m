@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D363233156;
-	Mon, 10 Mar 2025 17:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5A5231A3B;
+	Mon, 10 Mar 2025 17:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629435; cv=none; b=Jaw6CMtqIP0Dn8ZrUeMns9awAs9bGry0Q6rXnpIykMWzRRn3jnRVJ2KhynfTvo4lKIrFbkfkNJTP/K2iC5mw9B5B+GrG/Y+yhKVtY+a9ZDewf60Jsuv6ll/Z5JKDMu4P8NkDHEJd3CTnKTk4TKqD2DSfH7SitEiEIygLZ1QAsRQ=
+	t=1741629438; cv=none; b=C1ovo5BW6eyrmMj0yhaO/yTZTKqv4AW1eKJztEvFj2jZCsh0vhC4O/TeJD2qtyC+YZkYJykkQ3bhd5tLfJSMaidzcplH6oRRjchpU/NSZ8w18I/XXO6X3A25Tj+vuHA9t9k2EuH/ou6pn+LWEBty9LFjOFnPiyp44Awk+Wk3nMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629435; c=relaxed/simple;
-	bh=pRWuoXyjfCgd8a63Okqk+XW3Fj++3ZYHf8v6hgER2Jk=;
+	s=arc-20240116; t=1741629438; c=relaxed/simple;
+	bh=Usyl3SPSrg+45pXFYH+UcaBUo84cEaAwrfoaIcLKGDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESCrOyEhe5S+tKWwXGFB2PdgVmjCCU5X8mufDTYL5dRFlc//fu9nvoPgRvvC3heLc6zH95hBgVV8gjBTAwLduKSIfAmwA4AdLLQlti2iPSZhHJ0x8ltmjWQxL/oxBpVYAIQr35NSu69ffqynrH5L6BpqlwvUrI0cLB+bjObaFYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw/Lc8UW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFyiRBc9Xw5rkxWRmg6vUaN9vSzCVTlpU+/gnlwPnia/WC+3TpwtgoRN/2Yayl1i+pa97zNPRKw21wnay9RLZzVyffvVjIKaeidTyTL9gVCwnUcT2Cx1MkriHDM+gt2d9YfuTbKhggL0bPNOioqv3fLPDD4VSmjOKySREKJFsRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMvMBWFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw/Lc8UW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A680CC4CEE5;
-	Mon, 10 Mar 2025 17:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMvMBWFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901B7C4CEE5;
+	Mon, 10 Mar 2025 17:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629435;
-	bh=pRWuoXyjfCgd8a63Okqk+XW3Fj++3ZYHf8v6hgER2Jk=;
+	s=korg; t=1741629438;
+	bh=Usyl3SPSrg+45pXFYH+UcaBUo84cEaAwrfoaIcLKGDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iw/Lc8UWhSjwDUtvKuZL2UNbEwvqkC66YND84uFVA7udllo0nCFORQD2vWRrY/hna
-	 +SGv8VlNB6hxdnOqFVsaVALF/sih0M0kOd0WNuk9FYUZKysyKgMNc02N18ezh3IJdq
-	 WXtN5UyyrYmrXrHqWX/okb32rQZZO3uJHUtHzmAU=
+	b=oMvMBWFemDeMXzeuRmOA8gHW9oTaJLmmq78QUzIijBV4/hg2oSCqb0F3GXVaOfrBx
+	 Uz+nZFQn2dMrpqphaE8DnVfzlmbsP6VuGP0fyO1IGB5+Lu517ddbZAhdGA+22VFkqC
+	 wXlP8iyOkhEftS3w35aTfO1UBf85ZDtHI7x0wWSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 5.15 294/620] PCI: endpoint: Finish virtual EP removal in pci_epf_remove_vepf()
-Date: Mon, 10 Mar 2025 18:02:20 +0100
-Message-ID: <20250310170557.223532094@linuxfoundation.org>
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 295/620] nvme-pci: Add TUXEDO InfinityFlex to Samsung sleep quirk
+Date: Mon, 10 Mar 2025 18:02:21 +0100
+Message-ID: <20250310170557.267058788@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -51,40 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Georg Gottleuber <ggo@tuxedocomputers.com>
 
-commit 3b9f942eb21c92041905e3943a8d5177c9a9d89d upstream.
+commit dbf2bb1a1319b7c7d8828905378a6696cca6b0f2 upstream.
 
-When removing a virtual Endpoint, pci_epf_remove_vepf() failed to clear
-epf_vf->epf_pf, which caused a subsequent pci_epf_add_vepf() to incorrectly
-return -EBUSY:
+On the TUXEDO InfinityFlex, a Samsung 990 Evo NVMe leads to a high power
+consumption in s2idle sleep (4 watts).
 
-  pci_epf_add_vepf(epf_pf, epf_vf)      // add
-  pci_epf_remove_vepf(epf_pf, epf_vf)   // remove
-  pci_epf_add_vepf(epf_pf, epf_vf)      // add again, -EBUSY error
+This patch applies 'Force No Simple Suspend' quirk to achieve a sleep with
+a lower power consumption, typically around 1.4 watts.
 
-Fix by clearing epf_vf->epf_pf in pci_epf_remove_vepf().
-
-Link: https://lore.kernel.org/r/20241210-pci-epc-core_fix-v3-3-4d86dd573e4b@quicinc.com
-Fixes: 1cf362e907f3 ("PCI: endpoint: Add support to add virtual function in endpoint core")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-epf-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/endpoint/pci-epf-core.c
-+++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -234,6 +234,7 @@ void pci_epf_remove_vepf(struct pci_epf
- 
- 	mutex_lock(&epf_pf->lock);
- 	clear_bit(epf_vf->vfunc_no, &epf_pf->vfunction_num_map);
-+	epf_vf->epf_pf = NULL;
- 	list_del(&epf_vf->list);
- 	mutex_unlock(&epf_pf->lock);
- }
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2975,7 +2975,8 @@ static unsigned long check_vendor_combin
+ 		 * because of high power consumption (> 2 Watt) in s2idle
+ 		 * sleep. Only some boards with Intel CPU are affected.
+ 		 */
+-		if (dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
++		if (dmi_match(DMI_BOARD_NAME, "DN50Z-140HC-YD") ||
++		    dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PG31") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1") ||
+ 		    dmi_match(DMI_BOARD_NAME, "PH6PG01_PH6PG71"))
 
 
