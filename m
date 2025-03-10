@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9E3235354;
-	Mon, 10 Mar 2025 18:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C45235354;
+	Mon, 10 Mar 2025 18:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741631008; cv=none; b=AiWLiOyuwp3+puocDfu2Alt96NdPtiQxPNQ1PXk1GUJ2IhFXTsSR1tDOjaKMlzr+oYBoJGwjMy8W4SYYyEKkKeG31/2Bzyh8EP7rvhTBVY+WIe7oe35a6uTkLzy8Cjo6Z0PFhyVKmPVw08UKBD1Comlsp5NvCkwwauay8S694QE=
+	t=1741631011; cv=none; b=rUbgpUqAOqNN/WtcMlUUzcjFkiGbpn6qA+WOcMsyskiSUmvK/6viSGkhjA/Ekq2QNP/wtFX80nZlbBXj83gY7KBAe0zNr44R8uLQY7RINVZ5M5Xgu3FxAt6G8tborDZqW5eV10O82VuAp+hH3CBfTeMAuFmv/HCqm2ozS9N3+oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741631008; c=relaxed/simple;
-	bh=smhZcVU9dBJ+Iw5QcjrxXDrYeD+91lcn9iFziT+0gyw=;
+	s=arc-20240116; t=1741631011; c=relaxed/simple;
+	bh=TTgm6s6Wy8AWoIzx7WxIMAXQzwo9pruzItAff+XoAAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsNvuKQRANUnYF0jWz0Esq28dUGC3+9jztUPgb1lznxv760CNqm73sP0Zlybk4yKxpK96bFR7DFJvumFLggSHp7X3LgZL/nFZ+r+oPSwwI0oSKp0W1W2Rtp4v5Ro2zGI1BDpWvWUTg3/Jb/jHUFU9E4uaHzFzGgrAK0qy02Rvbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcMn7jpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlyPlMPFHwcq44Va1SZJ3ep2RJA2MXXdkzWvwTsWhxyTD4e/e0KHvwOAMZNMblBIcfpK3+3hSphtb/Via7Q7KQnyzGUWnusEMgn8Sm/344HA60zECVIO9zKqgah9Y2DvW4+5qq7KrHcB0dMYNnXhPZ307nIKvqRT08J0eKfZ5+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR0106E8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcMn7jpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA342C4CEE5;
-	Mon, 10 Mar 2025 18:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR0106E8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A74C4CEE5;
+	Mon, 10 Mar 2025 18:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741631008;
-	bh=smhZcVU9dBJ+Iw5QcjrxXDrYeD+91lcn9iFziT+0gyw=;
+	s=korg; t=1741631011;
+	bh=TTgm6s6Wy8AWoIzx7WxIMAXQzwo9pruzItAff+XoAAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcMn7jpgMqkqj2pzgknwcQVwO1OHDCz0YNA61xUrJZWPtKJtNbtRyThBHEeHHtW7v
-	 ukSVFGI9lpNbKRIps48Z+JYTVbeos5jWNYW7ET4daYyZbZgEhaf2pzsf+hLeymlA1L
-	 GISJ++FgkUq3pSR6KprPxYZAUfVOYjznbtiSNHy0=
+	b=vR0106E8xG821wmjuMBHabBSJPGWtCAl8V/quISCjlAh7U+ZXYQOMCPtKMF9OjKci
+	 dg7QOL6XlRXGr2U/PKw1xq1VjjfMAT1UVTU2vCqdWDD+q2d6pyxnkmCglb2DqoygAo
+	 j66UXGQs4Cw5Ymfa98SoxDDWenBcFeAAmnXjWdYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 610/620] nilfs2: move page release outside of nilfs_delete_entry and nilfs_set_link
-Date: Mon, 10 Mar 2025 18:07:36 +0100
-Message-ID: <20250310170609.616353524@linuxfoundation.org>
+Subject: [PATCH 5.15 611/620] nilfs2: eliminate staggered calls to kunmap in nilfs_rename
+Date: Mon, 10 Mar 2025 18:07:37 +0100
+Message-ID: <20250310170609.655716335@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -53,172 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 584db20c181f5e28c0386d7987406ace7fbd3e49 upstream.
+commit 8cf57c6df818f58fdad16a909506be213623a88e upstream.
 
-Patch series "nilfs2: Folio conversions for directory paths".
+In nilfs_rename(), calls to nilfs_put_page() to release pages obtained
+with nilfs_find_entry() or nilfs_dotdot() are alternated in the normal
+path.
 
-This series applies page->folio conversions to nilfs2 directory
-operations.  This reduces hidden compound_head() calls and also converts
-deprecated kmap calls to kmap_local in the directory code.
+When replacing the kernel memory mapping method from kmap to
+kmap_local_{page,folio}, this violates the constraint on the calling order
+of kunmap_local().
 
-Although nilfs2 does not yet support large folios, Matthew has done his
-best here to include support for large folios, which will be needed for
-devices with large block sizes.
+Swap the order of nilfs_put_page calls where the kmap sections of multiple
+pages overlap so that they are nested, allowing direct replacement of
+nilfs_put_page() -> unmap_and_put_page().
 
-This series corresponds to the second half of the original post [1], but
-with two complementary patches inserted at the beginning and some
-adjustments, to prevent a kmap_local constraint violation found during
-testing with highmem mapping.
+Without this reordering, that replacement will cause a kernel WARNING in
+kunmap_local_indexed() on architectures with high memory mapping.
 
-[1] https://lkml.kernel.org/r/20231106173903.1734114-1-willy@infradead.org
-
-I have reviewed all changes and tested this for regular and small block
-sizes, both on machines with and without highmem mapping.  No issues
-found.
-
-
-This patch (of 17):
-
-In a few directory operations, the call to nilfs_put_page() for a page
-obtained using nilfs_find_entry() or nilfs_dotdot() is hidden in
-nilfs_set_link() and nilfs_delete_entry(), making it difficult to track
-page release and preventing change of its call position.
-
-By moving nilfs_put_page() out of these functions, this makes the page
-get/put correspondence clearer and makes it easier to swap
-nilfs_put_page() calls (and kunmap calls within them) when modifying
-multiple directory entries simultaneously in nilfs_rename().
-
-Also, update comments for nilfs_set_link() and nilfs_delete_entry() to
-reflect changes in their behavior.
-
-To make nilfs_put_page() visible from namei.c, this moves its definition
-to nilfs.h and replaces existing equivalents to use it, but the exposure
-of that definition is temporary and will be removed on a later kmap ->
-kmap_local conversion.
-
-Link: https://lkml.kernel.org/r/20231127143036.2425-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20231127143036.2425-2-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20231127143036.2425-3-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: ee70999a988b ("nilfs2: handle errors that nilfs_prepare_chunk() may return")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c   |   11 +----------
- fs/nilfs2/namei.c |   13 +++++++------
- fs/nilfs2/nilfs.h |    6 ++++++
- 3 files changed, 14 insertions(+), 16 deletions(-)
+ fs/nilfs2/namei.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -64,12 +64,6 @@ static inline unsigned int nilfs_chunk_s
- 	return inode->i_sb->s_blocksize;
- }
- 
--static inline void nilfs_put_page(struct page *page)
--{
--	kunmap(page);
--	put_page(page);
--}
--
- /*
-  * Return the offset into page `page_nr' of the last valid
-  * byte in that page, plus one.
-@@ -450,7 +444,6 @@ int nilfs_inode_by_name(struct inode *di
- 	return 0;
- }
- 
--/* Releases the page */
- void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
- 		    struct page *page, struct inode *inode)
- {
-@@ -465,7 +458,6 @@ void nilfs_set_link(struct inode *dir, s
- 	de->inode = cpu_to_le64(inode->i_ino);
- 	nilfs_set_de_type(de, inode);
- 	nilfs_commit_chunk(page, mapping, from, to);
--	nilfs_put_page(page);
- 	dir->i_mtime = dir->i_ctime = current_time(dir);
- }
- 
-@@ -569,7 +561,7 @@ out_unlock:
- 
- /*
-  * nilfs_delete_entry deletes a directory entry by merging it with the
-- * previous entry. Page is up-to-date. Releases the page.
-+ * previous entry. Page is up-to-date.
-  */
- int nilfs_delete_entry(struct nilfs_dir_entry *dir, struct page *page)
- {
-@@ -605,7 +597,6 @@ int nilfs_delete_entry(struct nilfs_dir_
- 	nilfs_commit_chunk(page, mapping, from, to);
- 	inode->i_ctime = inode->i_mtime = current_time(inode);
- out:
--	nilfs_put_page(page);
- 	return err;
- }
- 
 --- a/fs/nilfs2/namei.c
 +++ b/fs/nilfs2/namei.c
-@@ -297,6 +297,7 @@ static int nilfs_do_unlink(struct inode
- 		set_nlink(inode, 1);
- 	}
- 	err = nilfs_delete_entry(de, page);
-+	nilfs_put_page(page);
- 	if (err)
- 		goto out;
- 
-@@ -406,6 +407,7 @@ static int nilfs_rename(struct user_name
- 			goto out_dir;
- 		}
- 		nilfs_set_link(new_dir, new_de, new_page, old_inode);
-+		nilfs_put_page(new_page);
- 		nilfs_mark_inode_dirty(new_dir);
- 		new_inode->i_ctime = current_time(new_inode);
- 		if (dir_de)
-@@ -429,9 +431,11 @@ static int nilfs_rename(struct user_name
+@@ -431,13 +431,14 @@ static int nilfs_rename(struct user_name
  	old_inode->i_ctime = current_time(old_inode);
  
  	nilfs_delete_entry(old_de, old_page);
-+	nilfs_put_page(old_page);
+-	nilfs_put_page(old_page);
  
  	if (dir_de) {
  		nilfs_set_link(old_inode, dir_de, dir_page, new_dir);
-+		nilfs_put_page(dir_page);
+ 		nilfs_put_page(dir_page);
  		drop_nlink(old_dir);
  	}
- 	nilfs_mark_inode_dirty(old_dir);
-@@ -441,13 +445,10 @@ static int nilfs_rename(struct user_name
- 	return err;
- 
- out_dir:
--	if (dir_de) {
--		kunmap(dir_page);
--		put_page(dir_page);
--	}
-+	if (dir_de)
-+		nilfs_put_page(dir_page);
- out_old:
--	kunmap(old_page);
--	put_page(old_page);
 +	nilfs_put_page(old_page);
- out:
- 	nilfs_transaction_abort(old_dir->i_sb);
- 	return err;
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -243,6 +243,12 @@ extern struct nilfs_dir_entry *nilfs_dot
- extern void nilfs_set_link(struct inode *, struct nilfs_dir_entry *,
- 			   struct page *, struct inode *);
- 
-+static inline void nilfs_put_page(struct page *page)
-+{
-+	kunmap(page);
-+	put_page(page);
-+}
 +
- /* file.c */
- extern int nilfs_sync_file(struct file *, loff_t, loff_t, int);
+ 	nilfs_mark_inode_dirty(old_dir);
+ 	nilfs_mark_inode_dirty(old_inode);
  
 
 
