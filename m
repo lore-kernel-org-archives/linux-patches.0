@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C158233716;
-	Mon, 10 Mar 2025 17:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232FD232786;
+	Mon, 10 Mar 2025 17:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627922; cv=none; b=eVlFwPPlchYF2EF6PssWPmbmYxpd5bl8RBvcHQ9H83gXbq5+8PYKnxU5sDV2EgEJ7oRX5pbGqMtJfEyZIVH7UvLDXnC8Xy2j3emLGPcM3Z/lKCtlt53kGGS25c6Kg6EhhzbFuellefVe0pgOg7b3bA0nN8O+zjIu3zIuKxt2DVE=
+	t=1741627925; cv=none; b=nIjM6tqhlrSiwDvmQSqVnyFWM0ySTxK27kjEAgv9mRKlQz2kGPWCDelJ3y+kMa3P5n9BzeaMA62y0gak9hHN+7e4LwJ7Lb1wfVAVOH6sDl7IG2dxAqPIcBG4KjJv+rSqt+FCsbvunINW1VW8wTh7k5DjE8D3dQia21JJcXkrs1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627922; c=relaxed/simple;
-	bh=8rqbmhdA16jeLud7fwaukdu4HFmTm51OCf2jijtfnDo=;
+	s=arc-20240116; t=1741627925; c=relaxed/simple;
+	bh=FuYoNzOTqsOMaxo4FrreZBI3oXly7uiq82r/q9zLTaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2mMgpwAz1S+XFa1CRKn2JQWWxW70nc9nbldWAjYy76C09gpo+7eHkWr4KbCj5vZlSeUAQgK27ifGclZX5iYwC4u8i5t+Y9nRRrtXODqpYqLE3l84YW2XV0An6Yil0WSAM8uu1t9U3/SR0pWMQqG0/Ut6/iUECHjoFfxYdso7Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sJyy/py; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQWoVtLTIIUblwyhc15GDDwK0UqflYTE2smxEpHXqG/dFLQHqJNUwUL2LOVbWxNA804utN6rq/26NSXQj75/PDjSLR/1EIszc8/NS/urLu9qjA2VP5YRAtbGQBNQlb+4RPdwzSr/PkvVTObetcigXK7JUrxkDTKBewndHNW7jPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm9VMiPx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sJyy/py"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7788C4CEE5;
-	Mon, 10 Mar 2025 17:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm9VMiPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5EEC4CEE5;
+	Mon, 10 Mar 2025 17:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627922;
-	bh=8rqbmhdA16jeLud7fwaukdu4HFmTm51OCf2jijtfnDo=;
+	s=korg; t=1741627925;
+	bh=FuYoNzOTqsOMaxo4FrreZBI3oXly7uiq82r/q9zLTaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sJyy/pyclEyoBVIV6roQTZDaPb1kZgRR3ZRrX938ciyK9JtTFrYNt6OMdSN/mo2s
-	 0AU4tqL5N60t3P+KgVEK0KWMdDlMCmx1DXxtxu4NZbj/fdGWgREJH/dFp3E9fOP2zO
-	 H3mFfDadRGkq6znwXV/NyW7qnh2EPNqgm6XjZFyA=
+	b=mm9VMiPxuUuETbn6xadeaF/Y82fIW1gU5Yd7Vj3yIND0FAZZhXGHnpHYsuLo3ytuk
+	 MkH/qOf1tSByFsQsd2BwXD27INQEJvoMNC/42ro/Fbi1mj39XS6I7R3j6BuwwV0jG7
+	 9ocrqP3ira6GQiJxzTNVLiB2ddb3NG0XeBOo/8Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erpeng Xu <xuerpeng@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 026/145] LoongArch: Use polling play_dead() when resuming from hibernation
-Date: Mon, 10 Mar 2025 18:05:20 +0100
-Message-ID: <20250310170435.793116925@linuxfoundation.org>
+Subject: [PATCH 6.6 027/145] LoongArch: Set max_pfn with the PFN of the last page
+Date: Mon, 10 Mar 2025 18:05:21 +0100
+Message-ID: <20250310170435.833493470@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -51,106 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit c9117434c8f7523f0b77db4c5766f5011cc94677 upstream.
+commit c8477bb0a8e7f6b2e47952b403c5cb67a6929e55 upstream.
 
-When CONFIG_RANDOM_KMALLOC_CACHES or other randomization infrastructrue
-enabled, the idle_task's stack may different between the booting kernel
-and target kernel. So when resuming from hibernation, an ACTION_BOOT_CPU
-IPI wakeup the idle instruction in arch_cpu_idle_dead() and jump to the
-interrupt handler. But since the stack pointer is changed, the interrupt
-handler cannot restore correct context.
+The current max_pfn equals to zero. In this case, it causes user cannot
+get some page information through /proc filesystem such as kpagecount.
+The following message is displayed by stress-ng test suite with command
+"stress-ng --verbose --physpage 1 -t 1".
 
-So rename the current arch_cpu_idle_dead() to idle_play_dead(), make it
-as the default version of play_dead(), and the new arch_cpu_idle_dead()
-call play_dead() directly. For hibernation, implement an arch-specific
-hibernate_resume_nonboot_cpu_disable() to use the polling version (idle
-instruction is replace by nop, and irq is disabled) of play_dead(), i.e.
-poll_play_dead(), to avoid IPI handler corrupting the idle_task's stack
-when resuming from hibernation.
+ # stress-ng --verbose --physpage 1 -t 1
+ stress-ng: error: [1691] physpage: cannot read page count for address 0x134ac000 in /proc/kpagecount, errno=22 (Invalid argument)
+ stress-ng: error: [1691] physpage: cannot read page count for address 0x7ffff207c3a8 in /proc/kpagecount, errno=22 (Invalid argument)
+ stress-ng: error: [1691] physpage: cannot read page count for address 0x134b0000 in /proc/kpagecount, errno=22 (Invalid argument)
+ ...
 
-This solution is a little similar to commit 406f992e4a372dafbe3c ("x86 /
-hibernate: Use hlt_play_dead() when resuming from hibernation").
+After applying this patch, the kernel can pass the test.
 
-Cc: stable@vger.kernel.org
-Tested-by: Erpeng Xu <xuerpeng@uniontech.com>
-Tested-by: Yuli Wang <wangyuli@uniontech.com>
+ # stress-ng --verbose --physpage 1 -t 1
+ stress-ng: debug: [1701] physpage: [1701] started (instance 0 on CPU 3)
+ stress-ng: debug: [1701] physpage: [1701] exited (instance 0 on CPU 3)
+ stress-ng: debug: [1700] physpage: [1701] terminated (success)
+
+Cc: stable@vger.kernel.org  # 6.8+
+Fixes: ff6c3d81f2e8 ("NUMA: optimize detection of memory with no node id assigned by firmware")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/smp.c |   47 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/setup.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -18,6 +18,7 @@
- #include <linux/smp.h>
- #include <linux/threads.h>
- #include <linux/export.h>
-+#include <linux/suspend.h>
- #include <linux/syscore_ops.h>
- #include <linux/time.h>
- #include <linux/tracepoint.h>
-@@ -388,7 +389,7 @@ void loongson_cpu_die(unsigned int cpu)
- 	mb();
- }
- 
--void __noreturn arch_cpu_idle_dead(void)
-+static void __noreturn idle_play_dead(void)
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -400,6 +400,9 @@ static void __init check_kernel_sections
+  */
+ static void __init arch_mem_init(char **cmdline_p)
  {
- 	register uint64_t addr;
- 	register void (*init_fn)(void);
-@@ -412,6 +413,50 @@ void __noreturn arch_cpu_idle_dead(void)
- 	BUG();
- }
++	/* Recalculate max_low_pfn for "mem=xxx" */
++	max_pfn = max_low_pfn = PHYS_PFN(memblock_end_of_DRAM());
++
+ 	if (usermem)
+ 		pr_info("User-defined physical RAM map overwrite\n");
  
-+#ifdef CONFIG_HIBERNATION
-+static void __noreturn poll_play_dead(void)
-+{
-+	register uint64_t addr;
-+	register void (*init_fn)(void);
-+
-+	idle_task_exit();
-+	__this_cpu_write(cpu_state, CPU_DEAD);
-+
-+	__smp_mb();
-+	do {
-+		__asm__ __volatile__("nop\n\t");
-+		addr = iocsr_read64(LOONGARCH_IOCSR_MBUF0);
-+	} while (addr == 0);
-+
-+	init_fn = (void *)TO_CACHE(addr);
-+	iocsr_write32(0xffffffff, LOONGARCH_IOCSR_IPI_CLEAR);
-+
-+	init_fn();
-+	BUG();
-+}
-+#endif
-+
-+static void (*play_dead)(void) = idle_play_dead;
-+
-+void __noreturn arch_cpu_idle_dead(void)
-+{
-+	play_dead();
-+	BUG(); /* play_dead() doesn't return */
-+}
-+
-+#ifdef CONFIG_HIBERNATION
-+int hibernate_resume_nonboot_cpu_disable(void)
-+{
-+	int ret;
-+
-+	play_dead = poll_play_dead;
-+	ret = suspend_disable_secondary_cpus();
-+	play_dead = idle_play_dead;
-+
-+	return ret;
-+}
-+#endif
-+
- #endif
- 
- /*
 
 
