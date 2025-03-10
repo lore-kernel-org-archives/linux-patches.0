@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920461C3C1C;
-	Mon, 10 Mar 2025 18:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EF41C3C1C;
+	Mon, 10 Mar 2025 18:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630664; cv=none; b=MkEs4Z1IL66BdLwHJ6qDVUBIjoWSOl4Lal/M2c63jm1DVI0PuT1p59aTFlZui47g/zx8pkr4yB9+WX61TC1gNUFE3GGcCj3KcurAcE4/UGYzSSiATnum9ZCAaOv652bh3gckH5OY2U1Pjxt3o75M2H6bC8hjkXN5+xd8vL6ATuU=
+	t=1741630667; cv=none; b=mlazqXsaZKJzYmxqT8C1Embvvtm36Mc2DDb7ovoC4nPYPp/UyceenFBbgTzInTgOPoGSP+ZeKuz1BQTt4A5Yc4YWmWuBOubX5GfiuktUG0OnV/dkV8XgqObuy1OJaTII3kyzgFbmV7Tk9o6kiUkJy9q12Xv9S95lVMvu016Zogw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630664; c=relaxed/simple;
-	bh=gQGz4OS9oTKltBkvmkhEjKtOKyeeVFoDxJLyvmgZmMs=;
+	s=arc-20240116; t=1741630667; c=relaxed/simple;
+	bh=RDPsvh9SCtdQXWI/M3uxVAy1Y1MbWkC+zFUDl62U2Ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7Td/IoHOeI0tAZYV6QgHubEzebifWWKhNSoPbbZTgiy17wdPbGpykoZN4IuRmVj++EYLEMSLGKjvJwdx7zzbrEdFzt6KGvjVuTK3N363eZZ9hCUxmKNBVj2ilAvp7e65d1JAwDmCpcIjyI3E+EsWVIupJh0nMuPU8gT5N509jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5vRdNH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afQJZcpi5LXMu37Uyha7I/pYOWmFNM5WxC2+eLWP3wsa1lHlLcugSvETeDo9BzlrNY2uODuUCMRSAGiH5cpL+3UW1g/KIH/Exk+625AF/H1fm3OWJA9g9gOugctO9+2bIqWs+A8n+eA9LF7K11SYeEIcC5+kVZhSaGXaj2uutv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpskMkav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5vRdNH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCD9C4CEE5;
-	Mon, 10 Mar 2025 18:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpskMkav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6414C4CEEE;
+	Mon, 10 Mar 2025 18:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630664;
-	bh=gQGz4OS9oTKltBkvmkhEjKtOKyeeVFoDxJLyvmgZmMs=;
+	s=korg; t=1741630667;
+	bh=RDPsvh9SCtdQXWI/M3uxVAy1Y1MbWkC+zFUDl62U2Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5vRdNH0O49UfLPjAsbVkWx/VJKh3FOxZznttnToqL2WaYL+rfPewsfiWzS9KdgKf
-	 4w9+kYSCuDYR1d8bPrq2sSdmjsQVQe49FA1mCjyoV1AkeNIbeAySblRIZOUEdq55eA
-	 fV+HsRv9ZjDMj/V6Ar6jgL5wJDqiuQAOCQdaZWiE=
+	b=HpskMkavQZ8SrnfCPHnD8Q1MReHA4DjJqiEaUgquHusgWFstjbgHKL5KmX4RCkHgz
+	 1E6LvPLHt0fFqP9ZFQ/a56U/uO0dPWG/K609/BOBSzLAVaEhdrveMO1Gd8uBX84G/o
+	 M1e/FmwZZdWhzWqtkgXppJhF02G6kOFvksrXeXbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 461/620] powerpc/64s/mm: Move __real_pte stubs into hash-4k.h
-Date: Mon, 10 Mar 2025 18:05:07 +0100
-Message-ID: <20250310170603.782018756@linuxfoundation.org>
+Subject: [PATCH 5.15 452/620] soc: mediatek: mtk-devapc: Fix leaking IO map on driver remove
+Date: Mon, 10 Mar 2025 18:04:58 +0100
+Message-ID: <20250310170603.431895752@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,90 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8ae4f16f7d7b59cca55aeca6db7c9636ffe7fbaa ]
+[ Upstream commit c9c0036c1990da8d2dd33563e327e05a775fcf10 ]
 
-The stub versions of __real_pte() etc are only used with HPT & 4K pages,
-so move them into the hash-4k.h header.
+Driver removal should fully clean up - unmap the memory.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240821080729.872034-1-mpe@ellerman.id.au
-Stable-dep-of: 61bcc752d1b8 ("powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline")
+Fixes: 0890beb22618 ("soc: mediatek: add mt6779 devapc driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250104142012.115974-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/64/hash-4k.h | 20 +++++++++++++++
- arch/powerpc/include/asm/book3s/64/pgtable.h | 26 --------------------
- 2 files changed, 20 insertions(+), 26 deletions(-)
+ drivers/soc/mediatek/mtk-devapc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/include/asm/book3s/64/hash-4k.h b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-index b6ac4f86c87b4..5a79dd66b2ed0 100644
---- a/arch/powerpc/include/asm/book3s/64/hash-4k.h
-+++ b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-@@ -89,6 +89,26 @@ static inline int hash__hugepd_ok(hugepd_t hpd)
+diff --git a/drivers/soc/mediatek/mtk-devapc.c b/drivers/soc/mediatek/mtk-devapc.c
+index da075918424d3..56534d9a77513 100644
+--- a/drivers/soc/mediatek/mtk-devapc.c
++++ b/drivers/soc/mediatek/mtk-devapc.c
+@@ -290,6 +290,7 @@ static void mtk_devapc_remove(struct platform_device *pdev)
+ 	struct mtk_devapc_context *ctx = platform_get_drvdata(pdev);
+ 
+ 	stop_devapc(ctx);
++	iounmap(ctx->infra_base);
  }
- #endif
  
-+/*
-+ * With 4K page size the real_pte machinery is all nops.
-+ */
-+#define __real_pte(e, p, o)		((real_pte_t){(e)})
-+#define __rpte_to_pte(r)	((r).pte)
-+#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
-+
-+#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
-+	do {							         \
-+		index = 0;					         \
-+		shift = mmu_psize_defs[psize].shift;		         \
-+
-+#define pte_iterate_hashed_end() } while(0)
-+
-+/*
-+ * We expect this to be called only for user addresses or kernel virtual
-+ * addresses other than the linear mapping.
-+ */
-+#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
-+
- /*
-  * 4K PTE format is different from 64K PTE format. Saving the hash_slot is just
-  * a matter of returning the PTE bits that need to be modified. On 64K PTE,
-diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
-index 6866d860d4f30..cd9088673ceae 100644
---- a/arch/powerpc/include/asm/book3s/64/pgtable.h
-+++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
-@@ -336,32 +336,6 @@ extern unsigned long pci_io_base;
- 
- #ifndef __ASSEMBLY__
- 
--/*
-- * This is the default implementation of various PTE accessors, it's
-- * used in all cases except Book3S with 64K pages where we have a
-- * concept of sub-pages
-- */
--#ifndef __real_pte
--
--#define __real_pte(e, p, o)		((real_pte_t){(e)})
--#define __rpte_to_pte(r)	((r).pte)
--#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
--
--#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
--	do {							         \
--		index = 0;					         \
--		shift = mmu_psize_defs[psize].shift;		         \
--
--#define pte_iterate_hashed_end() } while(0)
--
--/*
-- * We expect this to be called only for user addresses or kernel virtual
-- * addresses other than the linear mapping.
-- */
--#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
--
--#endif /* __real_pte */
--
- static inline unsigned long pte_update(struct mm_struct *mm, unsigned long addr,
- 				       pte_t *ptep, unsigned long clr,
- 				       unsigned long set, int huge)
+ static struct platform_driver mtk_devapc_driver = {
 -- 
 2.39.5
 
