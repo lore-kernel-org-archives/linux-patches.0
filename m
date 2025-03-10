@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B3422B59D;
-	Mon, 10 Mar 2025 17:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07E722FF40;
+	Mon, 10 Mar 2025 17:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628697; cv=none; b=SNeTO2N+F1SF0B2hVmE/TGPNUBom+MEQZWG/CT3wNVwg6rk3OyVB5kxZUq5HNQv7PeYro8WVEsl5y7qHH6ydjtM5wqwGAa5EJmgmPtawtbGiBEDUFbc/r9BjITMxK4CGahZyALWPMftv3pU7+MJHn3iOOcNIXlEvT93Mc3xFe5c=
+	t=1741628700; cv=none; b=TCAh5BeZJlRsQPf9ZoHde3kHFCMOw5J/uKTYz8r6y40thwV7Dmnm4ZwSFjsVdZjbMHZKKo7NazM5438ONLVM40IXxxt2N3EY4sPE81j4wZfC2Ibsewx7zCVrX3nlwaAmzY7xSXVQqf6A8qZ/AfWwHZ7dpulJtRMYjT1yY96txRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628697; c=relaxed/simple;
-	bh=wpbUZinsMBtFJzrzfiv51ydG1oxOSZUxcuia1BqpD0g=;
+	s=arc-20240116; t=1741628700; c=relaxed/simple;
+	bh=+1DzazQBnn/A1a4rS/sKj+A6gRj6IWzAPV4Wf/XJLSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbWS+aKWo/uIoAozi9kAOYpQA5fbN5FMPpdJKmRhRSkV3iz8zwdGAVOrzB3LvdR7kNOJXSS0RBCBEg5cVQ7SgfN8JELfelUlrQAcOX42tSUGT9PPnNcDonON2B+PbN9GDpYqWSe6VlS4bR0GpwRdJ++HKNs8xKgbvuD856C6DTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHQWQS+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8uMVgvGT69kCy63yOsZpQ0vUK9ZfJK6hOP7ElopJc3m5o4RpWS+CaW+g5YNU/wa5FxufisXMoDc9nQ6Rdev1YhrpHO5hWIC1z/WKvkvGGitloqVrPqujpAUvvigRS27pe3+lEkbpmLrnSTznExm6k5deWREUpsWiFTwBTe1nDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7wuxUbH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHQWQS+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFE6C4CEE5;
-	Mon, 10 Mar 2025 17:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7wuxUbH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68775C4CEE5;
+	Mon, 10 Mar 2025 17:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628696;
-	bh=wpbUZinsMBtFJzrzfiv51ydG1oxOSZUxcuia1BqpD0g=;
+	s=korg; t=1741628699;
+	bh=+1DzazQBnn/A1a4rS/sKj+A6gRj6IWzAPV4Wf/XJLSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHQWQS+qhNGfBuZN8zKUMO1BmnnCpVlOxezzC4DR1yAtjSu+ggT6FC0j+AW3BEll9
-	 u1jkIk73U1VpCtpZHVUok5lPfUf9rh+Ihu9whXHm1KUr9801IX3uWcm7AAJaoT5N+7
-	 ctqK81nxUfaKfw0HEHZTF54wPnw+vuYtjG0eYSCI=
+	b=z7wuxUbHVLKGQIlguF8wNnFC9lKjoWE8wDVLjQ9DPHqCaFhYa1AHRrU5GigjeLsNG
+	 qiOgAVoPMgaBJ4qaqie58bD2s0QklwkgdmAYub8Zt4UK34kV4XvKXNJxAtccJ48jQa
+	 y2viwXdUluoMT8ipf2EBDWclQy2mGsNAgQrUwlwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/620] dt-bindings: leds: class-multicolor: Fix path to color definitions
-Date: Mon, 10 Mar 2025 17:58:03 +0100
-Message-ID: <20250310170547.042774069@linuxfoundation.org>
+Subject: [PATCH 5.15 011/620] nbd: dont allow reconnect after disconnect
+Date: Mon, 10 Mar 2025 17:57:37 +0100
+Message-ID: <20250310170546.021871757@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,36 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 609bc99a4452ffbce82d10f024a85d911c42e6cd ]
+[ Upstream commit 844b8cdc681612ff24df62cdefddeab5772fadf1 ]
 
-The LED color definitions have always been in
-include/dt-bindings/leds/common.h in upstream.
+Following process can cause nbd_config UAF:
 
-Fixes: 5c7f8ffe741daae7 ("dt: bindings: Add multicolor class dt bindings documention")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/a3c7ea92e90b77032f2e480d46418b087709286d.1731588129.git.geert+renesas@glider.be
-Signed-off-by: Lee Jones <lee@kernel.org>
+1) grab nbd_config temporarily;
+
+2) nbd_genl_disconnect() flush all recv_work() and release the
+initial reference:
+
+  nbd_genl_disconnect
+   nbd_disconnect_and_put
+    nbd_disconnect
+     flush_workqueue(nbd->recv_workq)
+    if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF, ...))
+     nbd_config_put
+     -> due to step 1), reference is still not zero
+
+3) nbd_genl_reconfigure() queue recv_work() again;
+
+  nbd_genl_reconfigure
+   config = nbd_get_config_unlocked(nbd)
+   if (!config)
+   -> succeed
+   if (!test_bit(NBD_RT_BOUND, ...))
+   -> succeed
+   nbd_reconnect_socket
+    queue_work(nbd->recv_workq, &args->work)
+
+4) step 1) release the reference;
+
+5) Finially, recv_work() will trigger UAF:
+
+  recv_work
+   nbd_config_put(nbd)
+   -> nbd_config is freed
+   atomic_dec(&config->recv_threads)
+   -> UAF
+
+Fix the problem by clearing NBD_RT_BOUND in nbd_genl_disconnect(), so
+that nbd_genl_reconfigure() will fail.
+
+Fixes: b7aa3d39385d ("nbd: add a reconfigure netlink command")
+Reported-by: syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/675bfb65.050a0220.1a2d0d.0006.GAE@google.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250103092859.3574648-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/leds/leds-class-multicolor.yaml         | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/nbd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
-index 12693483231f7..71fcd10cb9bc0 100644
---- a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
-+++ b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
-@@ -27,7 +27,7 @@ properties:
-     description: |
-       For multicolor LED support this property should be defined as either
-       LED_COLOR_ID_RGB or LED_COLOR_ID_MULTI which can be found in
--      include/linux/leds/common.h.
-+      include/dt-bindings/leds/common.h.
-     enum: [ 8, 9 ]
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index d12e9f1721c8e..1b04fd7c6b98a 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -2055,6 +2055,7 @@ static void nbd_disconnect_and_put(struct nbd_device *nbd)
+ 	flush_workqueue(nbd->recv_workq);
+ 	nbd_clear_que(nbd);
+ 	nbd->task_setup = NULL;
++	clear_bit(NBD_RT_BOUND, &nbd->config->runtime_flags);
+ 	mutex_unlock(&nbd->config_lock);
  
- required:
+ 	if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF,
 -- 
 2.39.5
 
