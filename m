@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664912D023;
-	Mon, 10 Mar 2025 17:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4E32D023;
+	Mon, 10 Mar 2025 17:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629342; cv=none; b=f6zNg/vDdIhpW/JqYoP4+Mi7DsuxpvbQCxc70i8JPweCldXRetyNX/1wiBXb6KSkyO3cdanl7RY2gmnR5AXJNHE7lyCwQZ4QXnpMjH/A8giXDEQCstLuuWeA+r+xhmRMgFXwAIJFGMy3nMayF2wuQ7RbDu/uNVqG7xa1wnYKuqo=
+	t=1741629345; cv=none; b=L2k7u+dHowYBOJlzIA2QAfFnbHrsCYFFEKmE9qley6iZsNdJbYTv47uH5GKoFqTvzVV16q6YL90W3BuK03Ldymukc1LLcY1ZxwBs3Dod9kbtJ9dfuVPQMV6HAA+iGJkLEvfH/xqkBSmqbJJ9MBklMm1L9qDM8wDhp3sOlsBEWNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629342; c=relaxed/simple;
-	bh=ldMkKIqzkeIVsMB2T4EVylegWe6s0xNC8OnFENajQ1s=;
+	s=arc-20240116; t=1741629345; c=relaxed/simple;
+	bh=cmCpbw0jC9W2elNSh31f92vGuX+yukurhwQClCOkrRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJN1uk7qaYh5Hvz6Z7OtIPZgJAdwm0ee9G/9YF4qXrnBgCkqk1kKzGG/FmxgkI6UIwyuKbFGYdmHA/y79gudo5MXVSzeBa+RxySUIrwjmJz8sEFPBj0O3Q1XB7KcgRE4wyv6huRkq3gcAr1+FRyHy7J3fL/1WX4/pQsnWJeKwF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLRLhxmt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lAs+wlDCfQb935mVOCB9az/mwVTAv0hOsS62OlnStcwVdTA1k4kFNrJF303I3wHddr+5hnE9LZkxvXhxA3EPGJePFYAOmUN7IXFC1pMx3BDqAyhPIlWecBv7wT1LW2Djt+FdxGo0vj/4HkISaxEmSK1zE+BwoFiGhnzpbNcAXDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTyUkawF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLRLhxmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC46C4CEE5;
-	Mon, 10 Mar 2025 17:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTyUkawF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB40FC4CEE5;
+	Mon, 10 Mar 2025 17:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629342;
-	bh=ldMkKIqzkeIVsMB2T4EVylegWe6s0xNC8OnFENajQ1s=;
+	s=korg; t=1741629345;
+	bh=cmCpbw0jC9W2elNSh31f92vGuX+yukurhwQClCOkrRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLRLhxmtBmPqJsbsC5Zyi091KfHdqYFjdrR55Ip+yKdpKWFeiUY38d4epdeyeLInk
-	 6NjgqcTkuXi25VpX1ynssQjhHu9VLb09yMhoqCF96g39GRKZs9QRT+4eexF3TU2Gyf
-	 pG/1Is9h29dISFamb/4sol4A7rWSl8rEYIqInoHA=
+	b=MTyUkawF0c6S8mKwcNMFJ4MARGtKrG1ioxImSufkLM+VXIfXXZ8DNZPci/I0Nwsqs
+	 zukKRsApWBx0vV63V9yZpKqOf4OS6bQ2nJv6vz58DIpANAD/iYZ6C8Ss0LCkccwvHV
+	 /hJ+nS4cQUyLr5uTQNKv4I3mI7oVKsaIoU1Cn8GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Subject: [PATCH 5.15 262/620] drm/komeda: Add check for komeda_get_layer_fourcc_list()
-Date: Mon, 10 Mar 2025 18:01:48 +0100
-Message-ID: <20250310170555.968634357@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.15 263/620] drm/i915: Drop 64bpp YUV formats from ICL+ SDR planes
+Date: Mon, 10 Mar 2025 18:01:49 +0100
+Message-ID: <20250310170556.007600560@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -44,42 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 79fc672a092d93a7eac24fe20a571d4efd8fa5a4 upstream.
+commit c7b49506b3ba7a62335e6f666a43f67d5cd9fd1e upstream.
 
-Add check for the return value of komeda_get_layer_fourcc_list()
-to catch the potential exception.
+I'm seeing underruns with these 64bpp YUV formats on TGL.
 
-Fixes: 5d51f6c0da1b ("drm/komeda: Add writeback support")
+The weird details:
+- only happens on pipe B/C/D SDR planes, pipe A SDR planes
+  seem fine, as do all HDR planes
+- somehow CDCLK related, higher CDCLK allows for bigger plane
+  with these formats without underruns. With 300MHz CDCLK I
+  can only go up to 1200 pixels wide or so, with 650MHz even
+  a 3840 pixel wide plane was OK
+- ICL and ADL so far appear unaffected
+
+So not really sure what's the deal with this, but bspec does
+state "64-bit formats supported only on the HDR planes" so
+let's just drop these formats from the SDR planes. We already
+disallow 64bpp RGB formats.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://lore.kernel.org/r/20241219090256.146424-1-haoxiang_li2024@163.com
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241218173650.19782-2-ville.syrjala@linux.intel.com
+Reviewed-by: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
+(cherry picked from commit 35e1aacfe536d6e8d8d440cd7155366da2541ad4)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/i915/display/skl_universal_plane.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
-@@ -160,6 +160,10 @@ static int komeda_wb_connector_add(struc
- 	formats = komeda_get_layer_fourcc_list(&mdev->fmt_tbl,
- 					       kwb_conn->wb_layer->layer_type,
- 					       &n_formats);
-+	if (!formats) {
-+		kfree(kwb_conn);
-+		return -ENOMEM;
-+	}
+--- a/drivers/gpu/drm/i915/display/skl_universal_plane.c
++++ b/drivers/gpu/drm/i915/display/skl_universal_plane.c
+@@ -98,8 +98,6 @@ static const u32 icl_sdr_y_plane_formats
+ 	DRM_FORMAT_Y216,
+ 	DRM_FORMAT_XYUV8888,
+ 	DRM_FORMAT_XVYU2101010,
+-	DRM_FORMAT_XVYU12_16161616,
+-	DRM_FORMAT_XVYU16161616,
+ };
  
- 	err = drm_writeback_connector_init(&kms->base, wb_conn,
- 					   &komeda_wb_connector_funcs,
+ static const u32 icl_sdr_uv_plane_formats[] = {
+@@ -126,8 +124,6 @@ static const u32 icl_sdr_uv_plane_format
+ 	DRM_FORMAT_Y216,
+ 	DRM_FORMAT_XYUV8888,
+ 	DRM_FORMAT_XVYU2101010,
+-	DRM_FORMAT_XVYU12_16161616,
+-	DRM_FORMAT_XVYU16161616,
+ };
+ 
+ static const u32 icl_hdr_plane_formats[] = {
 
 
