@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECCB2D023;
-	Mon, 10 Mar 2025 17:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67A22D023;
+	Mon, 10 Mar 2025 17:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741629324; cv=none; b=FnPDZ3SicLkaz3ax71cOtySTT0o52rG78M6baPcUYY2XbFbMEgy0uDrWKJZiLH9h++niUvYG78iyGNbhlPtk8tYHvtXxcEpqNPgGuBr/iwSiN08+HLvt1bOnzy+one1lzrNltbrLR0LKGbSjNNf1YybJ3CJrkPcMYec/YYazelU=
+	t=1741629327; cv=none; b=u04HZQQqRYFFpRW1LsQcqoAjY01sX7P+OsYY3eO4tyHlWHz57cbNT0mc1oj2jKmYcfsNs8BHzSgaZJPFO81NEI8BHyyAUya897YeTeRLXl98sRJhQQiZ3EafaETWx5joZ9sHbpDFxZfpDQuTAW0u7uDieoz/MCjkzjDUMBSD49A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741629324; c=relaxed/simple;
-	bh=jJLMK0mwJpWzC0HCUn0kJM3hVsH5g48jPMrbcQXxcYQ=;
+	s=arc-20240116; t=1741629327; c=relaxed/simple;
+	bh=6+IvV7UC+poDaNJ2LBTjXPO4jPlMxDtODu9fMh1DPeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIWJ7MnKrMZHwCfgWALgac2z9Zxm3nphXWZ1whRyeZX35rMdYYuzDxT1iZcwBrri/Gxal/nK6+IymShVhJLgQBzGWc4Q1Crig9n6wGAnRWCDlw8KJJ9k2TG0EHD/7yJUUs9e43YCFImGZ139o6Ou3FIRQ9supjdheOy4/vPJb+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odgI1jhc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/OHE5EhfHk2XZBjye9SEkiGtTUE4VdW3SCa7+wUXX32XJfP5bhgSTlwWac0zGrCxFsK3lrCkVRLmDJR7V4DdgzhaFWqWV9VLSTk0co2MC5290Bw6JD5tz/Xs4rA0ldBvrRLkNnbmLcuOhpW5dOAhgKljdmJdbTtCV9A9Kleak0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqzmq3Ev; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odgI1jhc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BD3C4CEE5;
-	Mon, 10 Mar 2025 17:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqzmq3Ev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B336C4CEE5;
+	Mon, 10 Mar 2025 17:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741629324;
-	bh=jJLMK0mwJpWzC0HCUn0kJM3hVsH5g48jPMrbcQXxcYQ=;
+	s=korg; t=1741629327;
+	bh=6+IvV7UC+poDaNJ2LBTjXPO4jPlMxDtODu9fMh1DPeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odgI1jhc9ayCBbFwE/7LF2AatKqjy71yu3gyCag8HwQykUzvPvvgk7e15tVhYu5tM
-	 FHwimJqJ2oM6respcAi1tu9LVoO2OdDC9KZKJDWao6J5gn8Pc8yIDXRNFlnRnxvGgN
-	 QfAl+soWJJUvkfo/hhDqnNkoZOgMBd50hkfBic8w=
+	b=yqzmq3EvAM1Pus7VZ2ajgIbTA7FPycxg64/ix04rLWS0mPiPx7SPO2HXGd6E2Zlxp
+	 VFRSoLDWiB+IEiZb+at+MPF3uWaeToYMCgANxhFxKeHHQPzpEEXiGaV8bcxACBRFVu
+	 VZf9qZ0z9s0j+nGnojlAPZlLVBNtFX6shKbHD9W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 248/620] x86/xen: fix xen_hypercall_hvm() to not clobber %rbx
-Date: Mon, 10 Mar 2025 18:01:34 +0100
-Message-ID: <20250310170555.417474946@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 5.15 257/620] binfmt_flat: Fix integer overflow bug on 32 bit systems
+Date: Mon, 10 Mar 2025 18:01:43 +0100
+Message-ID: <20250310170555.770109804@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 98a5cfd2320966f40fe049a9855f8787f0126825 ]
+commit 55cf2f4b945f6a6416cc2524ba740b83cc9af25a upstream.
 
-xen_hypercall_hvm(), which is used when running as a Xen PVH guest at
-most only once during early boot, is clobbering %rbx. Depending on
-whether the caller relies on %rbx to be preserved across the call or
-not, this clobbering might result in an early crash of the system.
+Most of these sizes and counts are capped at 256MB so the math doesn't
+result in an integer overflow.  The "relocs" count needs to be checked
+as well.  Otherwise on 32bit systems the calculation of "full_data"
+could be wrong.
 
-This can be avoided by using an already saved register instead of %rbx.
+	full_data = data_len + relocs * sizeof(unsigned long);
 
-Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c995ee28d29d ("binfmt_flat: prevent kernel dammage from corrupted executable headers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Nicolas Pitre <npitre@baylibre.com>
+Link: https://lore.kernel.org/r/5be17f6c-5338-43be-91ef-650153b975cb@stanley.mountain
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/xen-head.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/binfmt_flat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
-index 152bbe900a174..0dce73077c8cb 100644
---- a/arch/x86/xen/xen-head.S
-+++ b/arch/x86/xen/xen-head.S
-@@ -115,8 +115,8 @@ SYM_FUNC_START(xen_hypercall_hvm)
- 	pop %ebx
- 	pop %eax
- #else
--	lea xen_hypercall_amd(%rip), %rbx
--	cmp %rax, %rbx
-+	lea xen_hypercall_amd(%rip), %rcx
-+	cmp %rax, %rcx
- #ifdef CONFIG_FRAME_POINTER
- 	pop %rax	/* Dummy pop. */
- #endif
--- 
-2.39.5
-
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -542,7 +542,7 @@ static int load_flat_file(struct linux_b
+ 	 * 28 bits (256 MB) is way more than reasonable in this case.
+ 	 * If some top bits are set we have probable binary corruption.
+ 	*/
+-	if ((text_len | data_len | bss_len | stack_len | full_data) >> 28) {
++	if ((text_len | data_len | bss_len | stack_len | relocs | full_data) >> 28) {
+ 		pr_err("bad header\n");
+ 		ret = -ENOEXEC;
+ 		goto err;
 
 
