@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBD42253FE;
-	Mon, 10 Mar 2025 17:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084B17CA12;
+	Mon, 10 Mar 2025 17:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628042; cv=none; b=oxm/8cQBWUfqRHZpWPCy/nIP0trBsAfu6kMkVTOEgVlSPPvYJCf9VETxUXxUFkqJ3JH3lHNgejZxg2RPN9vR5mV+fBrii7mEnX+BUVasw7pEWLGRPVRUHnogU3awZyOLMFplt2r9FBi7RvBk4XCLfOFwejCwzJA5m/z4MSA968o=
+	t=1741628045; cv=none; b=W26vmWQsU8Mh/Pi7TpMMCxlWtn+IwxvXovghH+Nj0lyY6t1DCAR2InhhvYzJwaJQbvoTmkhPpBNa19qnSkFJGljTRz8OXBIqKPCNHQnoct9QYb2YnTDHOENL8EyKhFWe0uNZL0eFGmlDQ0uGtt5nvUUgG1ydejUAwh7htICQLpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628042; c=relaxed/simple;
-	bh=ArRubSPPYm4NSamvtpy6vMv1xVjMC88UKQ4NqsbrDTU=;
+	s=arc-20240116; t=1741628045; c=relaxed/simple;
+	bh=YC691CZIkhNoUUrr5sh7vAZuxb805heCex3RgsQjIug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOrLsEMrSkujPQGA6N97p6WVGdbwrchPyLUns8UaFFFz1R+9xTXcQysjWbmY23caFjf4Arf6dPlDsJJLwnNYCYyTuID0zUrNh8tP3TjlEj0oUV8CEBnKxbM6mxFHdZPahUUy2z7D4FtAg3xHwtOZR5DwGbRj2SFe0UG27OLIVUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIY2vY9l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZbJ0wnJb/3pUB6ewKQN13syuOTyUto6smb8b1VCYYwXpyW6uFUc6Oy3iKOeGemB22XuIDT2sRSUQUQTqlBGVqYKAZRrO2hFcIN9fvVNotrWuKxC2ATWU6Nhq64Scv0pHuf8ZkVB5Md9fi24YJenbMMGGNsvnOAYWmKBYJRWePQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtYyZ+We; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIY2vY9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A13C4CEE5;
-	Mon, 10 Mar 2025 17:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtYyZ+We"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFADC4CEEC;
+	Mon, 10 Mar 2025 17:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628042;
-	bh=ArRubSPPYm4NSamvtpy6vMv1xVjMC88UKQ4NqsbrDTU=;
+	s=korg; t=1741628045;
+	bh=YC691CZIkhNoUUrr5sh7vAZuxb805heCex3RgsQjIug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIY2vY9l+ShG6LoMBE7mUDNx9zI2urzumXDEe9ykar/nf6OIXaIy70W8nGSy4KZUZ
-	 yHlP9MMBp+gX9ibM0MXHk3UG+URKul3dBWo7usLfCdGaGZls8lyG1Q/q2C+u13HAn1
-	 h9ZdgS7L8QqnCS3qcM6psxKjYHg+ipSwxsAnAngc=
+	b=UtYyZ+WelN85Z4eMrrEjlWhHosN5XlzO7qcFye0wzVy9BsvenqsYRJlkFPlgjnWa+
+	 PCloehPWChtBWCxRgi5l951YGWOt887e10ogN1u45Ti7DP8ZqObHntTvT+yQ2xiV0/
+	 GyjwaJLrnrFvzj0cHah06lpxAiwFDbGe79SKdxwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hoku Ishibe <me@hokuishi.be>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 036/145] ALSA: hda: intel: Add Dell ALC3271 to power_save denylist
-Date: Mon, 10 Mar 2025 18:05:30 +0100
-Message-ID: <20250310170436.188003384@linuxfoundation.org>
+Subject: [PATCH 6.6 037/145] ALSA: hda/realtek - add supported Mic Mute LED for Lenovo platform
+Date: Mon, 10 Mar 2025 18:05:31 +0100
+Message-ID: <20250310170436.229785531@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -50,57 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hoku Ishibe <me@hokuishi.be>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 1ee5aa765c22a0577ec552d460bf2035300b4b51 upstream.
+commit f603b159231b0c58f0c27ab39348534063d38223 upstream.
 
-Dell XPS 13 7390 with the Realtek ALC3271 codec experiences
-persistent humming noise when the power_save mode is enabled.
-This issue occurs when the codec enters power saving mode,
-leading to unwanted noise from the speakers.
+Support Mic Mute LED for ThinkCentre M series.
 
-This patch adds the affected model (PCI ID 0x1028:0x0962) to the
-power_save denylist to ensure power_save is disabled by default,
-preventing power-off related noise issues.
-
-Steps to Reproduce
-1. Boot the system with `snd_hda_intel` loaded.
-2. Verify that `power_save` mode is enabled:
-```sh
-cat /sys/module/snd_hda_intel/parameters/power_save
-````
-output: 10 (default power save timeout)
-3. Wait for the power save timeout
-4. Observe a persistent humming noise from the speakers
-5. Disable `power_save` manually:
-```sh
-echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save
-````
-6. Confirm that the noise disappears immediately.
-
-This issue has been observed on my system, and this patch
-successfully eliminates the unwanted noise. If other users
-experience similar issues, additional reports would be helpful.
-
-Signed-off-by: Hoku Ishibe <me@hokuishi.be>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250224020517.51035-1-me@hokuishi.be
+Link: https://lore.kernel.org/c211a2702f1f411e86bd7420d7eebc03@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2222,6 +2222,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
- 	/* KONTRON SinglePC may cause a stall at runtime resume */
- 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
-+	/* Dell ALC3271 */
-+	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
- 	{}
- };
- #endif /* CONFIG_PM */
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4918,6 +4918,16 @@ static void alc269_fixup_hp_line1_mic1_l
+ 	}
+ }
+ 
++static void alc233_fixup_lenovo_low_en_micmute_led(struct hda_codec *codec,
++				const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->micmute_led_polarity = 1;
++	alc233_fixup_lenovo_line2_mic_hotkey(codec, fix, action);
++}
++
+ static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
+ {
+ 	if (delay <= 0)
+@@ -7295,6 +7305,7 @@ enum {
+ 	ALC275_FIXUP_DELL_XPS,
+ 	ALC293_FIXUP_LENOVO_SPK_NOISE,
+ 	ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY,
++	ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED,
+ 	ALC255_FIXUP_DELL_SPK_NOISE,
+ 	ALC225_FIXUP_DISABLE_MIC_VREF,
+ 	ALC225_FIXUP_DELL1_MIC_NO_PRESENCE,
+@@ -8282,6 +8293,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc233_fixup_lenovo_line2_mic_hotkey,
+ 	},
++	[ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc233_fixup_lenovo_low_en_micmute_led,
++	},
+ 	[ALC233_FIXUP_INTEL_NUC8_DMIC] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_inv_dmic,
+@@ -10343,6 +10358,9 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x17aa, 0x3178, "ThinkCentre Station", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x31af, "ThinkCentre Station", ALC623_FIXUP_LENOVO_THINKSTATION_P340),
+ 	SND_PCI_QUIRK(0x17aa, 0x334b, "Lenovo ThinkCentre M70 Gen5", ALC283_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x17aa, 0x3384, "ThinkCentre M90a PRO", ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED),
++	SND_PCI_QUIRK(0x17aa, 0x3386, "ThinkCentre M90a Gen6", ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED),
++	SND_PCI_QUIRK(0x17aa, 0x3387, "ThinkCentre M70a Gen6", ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED),
+ 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8 / DuetITL 2021", ALC287_FIXUP_LENOVO_14IRP8_DUETITL),
+ 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
 
 
