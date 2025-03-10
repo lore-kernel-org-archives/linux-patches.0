@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535CA233700;
-	Mon, 10 Mar 2025 17:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264B72309B6;
+	Mon, 10 Mar 2025 17:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627555; cv=none; b=W56ZuKaChAnt8lyhtXFstViPEVuOsyQpoGL7TdEI7slbDtfzm5xrpHDkjpmXyXULNRNtnw9AXf23f6rFrrDQJK2eSSk1RTZ3alIeEOgUVcdAt3S1o+DwbOUWyb7q6CPxylqHqPSlLTL+BiEmRmlFqqS4NlGV7RingXWt3mTLs/k=
+	t=1741627558; cv=none; b=Yxc9jD1npdw1g3I9hSW0isFpkYPwWVpU2H3rsYfUAuC8YS2j4nrBxQMIOadlbhtedFOMp1N967RSnHzpGAZtspNWRFu4y2+RYI11leG7Bvh0SyxtuUgZK6qqSZvIwSFjeskthXtJjQ3mKJuG0A3FW7hsutQU6KJSRmvcxGHT3Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627555; c=relaxed/simple;
-	bh=s5Ty1FrENfhxl/CL0WM7pDOSp+DMG4YASZlo/sOKuto=;
+	s=arc-20240116; t=1741627558; c=relaxed/simple;
+	bh=9l2GU0i4L03SJtG1J6OPNThI+/lFg+hYB2C+T5jxwxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAGHnBT5FTj/rNrXBQmHhVXUBIItlIVhOc2fpsIGYyYVCDZDJz3jQTufaMu+4fFnP2zVYwb9xXI56heXoI151ssO/+ZNvRnWliti/8tfFGdh5Q9LBPngf4mLEv0QAHBlFzsqWN00yr4tmXCx+ddAnbkUEbecp6GUyfWkaUnPksc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1hnTlfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdi84VRuSR3j2yKnh0Aju4edZvOBzGNVxZVTtnOZNNCctAJzIrz2T8FYQ5uM3pfe1+hMNhgwNy5uOJrCsfgZuLQyK8dWx6PwjD0rxlf40ErgFeZL9T4WsoNcPKoP5EiGNS8NVTEWsHQ5Y3mwQLX789M9rdxiaZvmWZu8hs3Zm4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7yJPSoj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1hnTlfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCCAC4CEE5;
-	Mon, 10 Mar 2025 17:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7yJPSoj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CE3C4CEE5;
+	Mon, 10 Mar 2025 17:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627555;
-	bh=s5Ty1FrENfhxl/CL0WM7pDOSp+DMG4YASZlo/sOKuto=;
+	s=korg; t=1741627558;
+	bh=9l2GU0i4L03SJtG1J6OPNThI+/lFg+hYB2C+T5jxwxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1hnTlfmk4FEZ/eI1HSssEAnD+AGZ3iAnLIcRfyULoZlmtMIRm4NgtB57Yz1970Em
-	 fY3gof0vMdrtQULQf+Zbsg3FxttuzGQCtdCd/z+noDUGSQfwrNKbcKXPHkcfPOGq0Q
-	 e82qons+Ip/XBACS8iYqUNiuK5A6aFUWQQIhMJ8s=
+	b=C7yJPSojJOI5eIAcYKW287aiFhu8j6kteQB/wCQpPKAYNsIg0FkIVLoK0tRELANzf
+	 vSh1SbxlVHfftjJUfaywcLquhsHNQED/vJ2GrAPKccz6t4ATrHN6SZw1eKpdjoTwuk
+	 t6D3oWSgCfLMxe0nnyRQZN3oRofyTEq6outELLSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Titus Rwantare <titusr@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 169/269] perf/core: Fix pmus_lock vs. pmus_srcu ordering
-Date: Mon, 10 Mar 2025 18:05:22 +0100
-Message-ID: <20250310170504.455428815@linuxfoundation.org>
+Subject: [PATCH 6.12 170/269] hwmon: (pmbus) Initialise page count in pmbus_identify()
+Date: Mon, 10 Mar 2025 18:05:23 +0100
+Message-ID: <20250310170504.493788543@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -51,56 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Titus Rwantare <titusr@google.com>
 
-[ Upstream commit 2565e42539b120b81a68a58da961ce5d1e34eac8 ]
+[ Upstream commit 6b6e2e8fd0de3fa7c6f4f8fe6841b01770b2e7bc ]
 
-Commit a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
-placed pmus_lock inside pmus_srcu, this makes perf_pmu_unregister()
-trip lockdep.
+The `pmbus_identify()` function fails to correctly determine the number
+of supported pages on PMBus devices. This occurs because `info->pages`
+is implicitly zero-initialised, and `pmbus_set_page()` does not perform
+writes to the page register if `info->pages` is not yet initialised.
+Without this patch, `info->pages` is always set to the maximum after
+scanning.
 
-Move the locking about such that only pmu_idr and pmus (list) are
-modified while holding pmus_lock. This avoids doing synchronize_srcu()
-while holding pmus_lock and all is well again.
+This patch initialises `info->pages` to `PMBUS_PAGES` before the probing
+loop, enabling `pmbus_set_page()` writes to make it out onto the bus
+correctly identifying the number of pages. `PMBUS_PAGES` seemed like a
+reasonable non-zero number because that's the current result of the
+identification process.
 
-Fixes: a63fbed776c7 ("perf/tracing/cpuhotplug: Fix locking order")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20241104135517.679556858@infradead.org
+Testing was done with a PMBus device in QEMU.
+
+Signed-off-by: Titus Rwantare <titusr@google.com>
+Fixes: 442aba78728e7 ("hwmon: PMBus device driver")
+Link: https://lore.kernel.org/r/20250227222455.2583468-1-titusr@google.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/pmbus/pmbus.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index a0e1d2124727e..5fff74c736063 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11846,6 +11846,8 @@ void perf_pmu_unregister(struct pmu *pmu)
- {
- 	mutex_lock(&pmus_lock);
- 	list_del_rcu(&pmu->entry);
-+	idr_remove(&pmu_idr, pmu->type);
-+	mutex_unlock(&pmus_lock);
+diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
+index ec40c5c599543..59424dc518c8f 100644
+--- a/drivers/hwmon/pmbus/pmbus.c
++++ b/drivers/hwmon/pmbus/pmbus.c
+@@ -103,6 +103,8 @@ static int pmbus_identify(struct i2c_client *client,
+ 		if (pmbus_check_byte_register(client, 0, PMBUS_PAGE)) {
+ 			int page;
  
- 	/*
- 	 * We dereference the pmu list under both SRCU and regular RCU, so
-@@ -11855,7 +11857,6 @@ void perf_pmu_unregister(struct pmu *pmu)
- 	synchronize_rcu();
- 
- 	free_percpu(pmu->pmu_disable_count);
--	idr_remove(&pmu_idr, pmu->type);
- 	if (pmu_bus_running && pmu->dev && pmu->dev != PMU_NULL_DEV) {
- 		if (pmu->nr_addr_filters)
- 			device_remove_file(pmu->dev, &dev_attr_nr_addr_filters);
-@@ -11863,7 +11864,6 @@ void perf_pmu_unregister(struct pmu *pmu)
- 		put_device(pmu->dev);
- 	}
- 	free_pmu_context(pmu);
--	mutex_unlock(&pmus_lock);
- }
- EXPORT_SYMBOL_GPL(perf_pmu_unregister);
- 
++			info->pages = PMBUS_PAGES;
++
+ 			for (page = 1; page < PMBUS_PAGES; page++) {
+ 				if (pmbus_set_page(client, page, 0xff) < 0)
+ 					break;
 -- 
 2.39.5
 
