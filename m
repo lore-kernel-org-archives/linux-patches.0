@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4158D22C336;
-	Mon, 10 Mar 2025 17:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D0D22D786;
+	Mon, 10 Mar 2025 17:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627726; cv=none; b=DjMWDcVICno6+C1cYZigd/WrNQKb+qlKj5sNT7BJjTlRkhLjskQvICJ654KXiwtR5w4BrkhbWIgk+U9jT2XHJdUhKifT2rrUNwLo8m/rNBBO57rvSLnamyX1mlb6NwtFi6Di0q1iTvFVbh5rX57j+f7bsp0PU/JiZsjTo95SqnM=
+	t=1741627729; cv=none; b=uMsN5Ws2j8u2Q/grIo0Mr/7JSnA4ZN+zIR6hxvTsTHDXhlTL/8EjBIKqb9eKRSroAdA2nWtstAIcprf++qebuVOiXMkeo96gqB/aRM5pAsUWLAPkcE7z50hdjlnuacNmeUTY7iPusjkB6ToLQb92ajFlTRfJqDUQft+TI7AZuCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627726; c=relaxed/simple;
-	bh=55uR/OHcS2e1gWz9Fa8kacf/fll5Jc1q4E3cycfTZxY=;
+	s=arc-20240116; t=1741627729; c=relaxed/simple;
+	bh=sEjJOQT74fDiMBpFK+KhraBLjAKlzvWKCjS0DkUJlWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKs1HC5W7DGd6kddLZlehsBDIpBIslhnwP/D7aGi0jm1Mvjqmg5A3TlKC3r9ZCo0sdkSKUBlwKPzPcjZATn9K+rmrIEOYZ4leY7MS0SoQfZwNLjt+nPVfXuYT01Zq+acrP3BndFQbsLKF3LN/WWqCFAXsXoZyI50k5NHhzmWWwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgzvU5Dg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVy0u+R4DIBm0r503uH8lMLZzq/w88/HQptMjAC1THs/RPE+QggqzqXQ8pMoVkhr18wG4duh5FqJ9YO1Luif6jiaaEqWSg5RBvQnAFlkl21z9MOjvyTm+Xgu2JBKFUF3IDLKeSgJOHPj8NzmNggccsc11RaBLLO0NLLS/4G7lhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEiLElxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgzvU5Dg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28E8C4CEE5;
-	Mon, 10 Mar 2025 17:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEiLElxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A635C4CEE5;
+	Mon, 10 Mar 2025 17:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627726;
-	bh=55uR/OHcS2e1gWz9Fa8kacf/fll5Jc1q4E3cycfTZxY=;
+	s=korg; t=1741627729;
+	bh=sEjJOQT74fDiMBpFK+KhraBLjAKlzvWKCjS0DkUJlWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgzvU5DgBp7aVb1eL5oY0NytlzT3EnJS7BTalbkM1FgurGRHb/lLseH5zpKnwSzD7
-	 OWGqvjwZYxxeArb46SbvTuzG+6t0R2QRTMYCUDiDaPb0X7ZYbjyBKO7V9FJl7FzaCM
-	 bm84GlpdT6KRB4uBTTshVbpaQUNlC9rX+PYDnPQY=
+	b=OEiLElxJHD1fvBXKFQJL8vKSxFGJMKksCukf/bBa5XrUaazUxp1sLAVdhUSSHhxqO
+	 xtOk2RQ9WWuoUL636VekrbhJTPZjE2J89KGLj5JH3oeXKOJhrabD5UzJ9j5JGY9odB
+	 CZuqQiEc2PQDETaTAbQXJeyPdrb0PvhpBTLeiD7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Covelli <doug.covelli@broadcom.com>,
-	Jim Mattson <jmattson@google.com>,
+	Naveen N Rao <naveen@kernel.org>,
+	Kim Phillips <kim.phillips@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 229/269] KVM: SVM: Set RFLAGS.IF=1 in C code, to get VMRUN out of the STI shadow
-Date: Mon, 10 Mar 2025 18:06:22 +0100
-Message-ID: <20250310170506.816341678@linuxfoundation.org>
+Subject: [PATCH 6.12 230/269] KVM: SVM: Save host DR masks on CPUs with DebugSwap
+Date: Mon, 10 Mar 2025 18:06:23 +0100
+Message-ID: <20250310170506.855508881@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,112 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit be45bc4eff33d9a7dae84a2150f242a91a617402 upstream.
+commit b2653cd3b75f62f29b72df4070e20357acb52bc4 upstream.
 
-Enable/disable local IRQs, i.e. set/clear RFLAGS.IF, in the common
-svm_vcpu_enter_exit() just after/before guest_state_{enter,exit}_irqoff()
-so that VMRUN is not executed in an STI shadow.  AMD CPUs have a quirk
-(some would say "bug"), where the STI shadow bleeds into the guest's
-intr_state field if a #VMEXIT occurs during injection of an event, i.e. if
-the VMRUN doesn't complete before the subsequent #VMEXIT.
+When running SEV-SNP guests on a CPU that supports DebugSwap, always save
+the host's DR0..DR3 mask MSR values irrespective of whether or not
+DebugSwap is enabled, to ensure the host values aren't clobbered by the
+CPU.  And for now, also save DR0..DR3, even though doing so isn't
+necessary (see below).
 
-The spurious "interrupts masked" state is relatively benign, as it only
-occurs during event injection and is transient.  Because KVM is already
-injecting an event, the guest can't be in HLT, and if KVM is querying IRQ
-blocking for injection, then KVM would need to force an immediate exit
-anyways since injecting multiple events is impossible.
+SVM_VMGEXIT_AP_CREATE is deeply flawed in that it allows the *guest* to
+create a VMSA with guest-controlled SEV_FEATURES.  A well behaved guest
+can inform the hypervisor, i.e. KVM, of its "requested" features, but on
+CPUs without ALLOWED_SEV_FEATURES support, nothing prevents the guest from
+lying about which SEV features are being enabled (or not!).
 
-However, because KVM copies int_state verbatim from vmcb02 to vmcb12, the
-spurious STI shadow is visible to L1 when running a nested VM, which can
-trip sanity checks, e.g. in VMware's VMM.
+If a misbehaving guest enables DebugSwap in a secondary vCPU's VMSA, the
+CPU will load the DR0..DR3 mask MSRs on #VMEXIT, i.e. will clobber the
+MSRs with '0' if KVM doesn't save its desired value.
 
-Hoist the STI+CLI all the way to C code, as the aforementioned calls to
-guest_state_{enter,exit}_irqoff() already inform lockdep that IRQs are
-enabled/disabled, and taking a fault on VMRUN with RFLAGS.IF=1 is already
-possible.  I.e. if there's kernel code that is confused by running with
-RFLAGS.IF=1, then it's already a problem.  In practice, since GIF=0 also
-blocks NMIs, the only change in exposure to non-KVM code (relative to
-surrounding VMRUN with STI+CLI) is exception handling code, and except for
-the kvm_rebooting=1 case, all exception in the core VM-Enter/VM-Exit path
-are fatal.
+Note, DR0..DR3 themselves are "ok", as DR7 is reset on #VMEXIT, and KVM
+restores all DRs in common x86 code as needed via hw_breakpoint_restore().
+I.e. there is no risk of host DR0..DR3 being clobbered (when it matters).
+However, there is a flaw in the opposite direction; because the guest can
+lie about enabling DebugSwap, i.e. can *disable* DebugSwap without KVM's
+knowledge, KVM must not rely on the CPU to restore DRs.  Defer fixing
+that wart, as it's more of a documentation issue than a bug in the code.
 
-Use the "raw" variants to enable/disable IRQs to avoid tracing in the
-"no instrumentation" code; the guest state helpers also take care of
-tracing IRQ state.
+Note, KVM added support for DebugSwap on commit d1f85fbe836e ("KVM: SEV:
+Enable data breakpoints in SEV-ES"), but that is not an appropriate Fixes,
+as the underlying flaw exists in hardware, not in KVM.  I.e. all kernels
+that support SEV-SNP need to be patched, not just kernels with KVM's full
+support for DebugSwap (ignoring that DebugSwap support landed first).
 
-Oppurtunstically document why KVM needs to do STI in the first place.
+Opportunistically fix an incorrect statement in the comment; on CPUs
+without DebugSwap, the CPU does NOT save or load debug registers, i.e.
 
-Reported-by: Doug Covelli <doug.covelli@broadcom.com>
-Closes: https://lore.kernel.org/all/CADH9ctBs1YPmE4aCfGPNBwA10cA8RuAk2gO7542DjMZgs4uzJQ@mail.gmail.com
-Fixes: f14eec0a3203 ("KVM: SVM: move more vmentry code to assembly")
+Fixes: e366f92ea99e ("KVM: SEV: Support SEV-SNP AP Creation NAE event")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20250224165442.2338294-2-seanjc@google.com
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Kim Phillips <kim.phillips@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20250227012541.3234589-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c     |   14 ++++++++++++++
- arch/x86/kvm/svm/vmenter.S |   10 +---------
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ arch/x86/kvm/svm/sev.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4176,6 +4176,18 @@ static noinstr void svm_vcpu_enter_exit(
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4579,6 +4579,8 @@ void sev_es_vcpu_reset(struct vcpu_svm *
  
- 	guest_state_enter_irqoff();
- 
-+	/*
-+	 * Set RFLAGS.IF prior to VMRUN, as the host's RFLAGS.IF at the time of
-+	 * VMRUN controls whether or not physical IRQs are masked (KVM always
-+	 * runs with V_INTR_MASKING_MASK).  Toggle RFLAGS.IF here to avoid the
-+	 * temptation to do STI+VMRUN+CLI, as AMD CPUs bleed the STI shadow
-+	 * into guest state if delivery of an event during VMRUN triggers a
-+	 * #VMEXIT, and the guest_state transitions already tell lockdep that
-+	 * IRQs are being enabled/disabled.  Note!  GIF=0 for the entirety of
-+	 * this path, so IRQs aren't actually unmasked while running host code.
-+	 */
-+	raw_local_irq_enable();
+ void sev_es_prepare_switch_to_guest(struct vcpu_svm *svm, struct sev_es_save_area *hostsa)
+ {
++	struct kvm *kvm = svm->vcpu.kvm;
 +
- 	amd_clear_divider();
+ 	/*
+ 	 * All host state for SEV-ES guests is categorized into three swap types
+ 	 * based on how it is handled by hardware during a world switch:
+@@ -4602,10 +4604,15 @@ void sev_es_prepare_switch_to_guest(stru
  
- 	if (sev_es_guest(vcpu->kvm))
-@@ -4184,6 +4196,8 @@ static noinstr void svm_vcpu_enter_exit(
- 	else
- 		__svm_vcpu_run(svm, spec_ctrl_intercepted);
- 
-+	raw_local_irq_disable();
-+
- 	guest_state_exit_irqoff();
- }
- 
---- a/arch/x86/kvm/svm/vmenter.S
-+++ b/arch/x86/kvm/svm/vmenter.S
-@@ -170,12 +170,8 @@ SYM_FUNC_START(__svm_vcpu_run)
- 	mov VCPU_RDI(%_ASM_DI), %_ASM_DI
- 
- 	/* Enter guest mode */
--	sti
--
- 3:	vmrun %_ASM_AX
- 4:
--	cli
--
- 	/* Pop @svm to RAX while it's the only available register. */
- 	pop %_ASM_AX
- 
-@@ -340,12 +336,8 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
- 	mov KVM_VMCB_pa(%rax), %rax
- 
- 	/* Enter guest mode */
--	sti
--
- 1:	vmrun %rax
--
--2:	cli
--
-+2:
- 	/* IMPORTANT: Stuff the RSB immediately after VM-Exit, before RET! */
- 	FILL_RETURN_BUFFER %rax, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_VMEXIT
- 
+ 	/*
+ 	 * If DebugSwap is enabled, debug registers are loaded but NOT saved by
+-	 * the CPU (Type-B). If DebugSwap is disabled/unsupported, the CPU both
+-	 * saves and loads debug registers (Type-A).
++	 * the CPU (Type-B). If DebugSwap is disabled/unsupported, the CPU does
++	 * not save or load debug registers.  Sadly, on CPUs without
++	 * ALLOWED_SEV_FEATURES, KVM can't prevent SNP guests from enabling
++	 * DebugSwap on secondary vCPUs without KVM's knowledge via "AP Create".
++	 * Save all registers if DebugSwap is supported to prevent host state
++	 * from being clobbered by a misbehaving guest.
+ 	 */
+-	if (sev_vcpu_has_debug_swap(svm)) {
++	if (sev_vcpu_has_debug_swap(svm) ||
++	    (sev_snp_guest(kvm) && cpu_feature_enabled(X86_FEATURE_DEBUG_SWAP))) {
+ 		hostsa->dr0 = native_get_debugreg(0);
+ 		hostsa->dr1 = native_get_debugreg(1);
+ 		hostsa->dr2 = native_get_debugreg(2);
 
 
