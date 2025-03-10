@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BDF1DE89C;
-	Mon, 10 Mar 2025 17:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACF71DE89C;
+	Mon, 10 Mar 2025 17:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628164; cv=none; b=T0i93Mdt408igO6AVNTQenChSeqEMFTCGe5bPfM6US+3atZbkHzTFu57Wb+AUxrvEkoplJy51Uaei15KGmUM/J7yLb3BOGRG1ox523sOG6DPrsyzOOuminqrETcb3jNgrhESAFZfrEZLS2js5p6AyfJA/AWaDAja3GydG+jrdo4=
+	t=1741628167; cv=none; b=camveBFyWfC5nO82GXCrG40oCefhSQWpi0QQAZEqrjGCEcgdnp62IhPn1h6tkESEs3IJx25JGweyY3VXD+9nA3q2xA5+CuCKi402UbBbukN+J7M0aY9mMkczRajANdfXDB5TXCs88bN7DPX4m3RQqAEaNgVyrfKU48KTaX4Qv9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628164; c=relaxed/simple;
-	bh=Vf1evhxe7wgfXxDGC9hYs2rN9gZKShP42Rd17QblQ0s=;
+	s=arc-20240116; t=1741628167; c=relaxed/simple;
+	bh=sUTe8fuMD9XgAfwsrX/uGSiNErP3RTPe/q1QpLOBiGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m9VUrRGSokoSpjnDyJaH+TQJ59Wr1lrdaq2seCCn74NG+pnbOLcvkiMFJy/40Zo4B65A2JohAtnRWpqIP9ATsXJoo1EbP05V9nApWECrhSvUkBTu/VpAa1ec/sp4m32eqpjOQjJM7tGZgpzzJjk7pK/FuEkx3mkcbU3Xb6UKStw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/GNGj3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAse4Rio2vxLa7aueUleiz6SYIoOM1rfjDRKonXus50SSvPi0bsFmUv471SP4ic9g5d+Bs8s3Pd7x530azwfvSJxRBB36HLgvKjMCivTRjKLLS5ipTpiLSULpB1ejMCiW2aak1gEzIesO/8kMtjAcqfDtuzMGURjhZBkPdfsOGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1usxPfV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/GNGj3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34BCC4CEE5;
-	Mon, 10 Mar 2025 17:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1usxPfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F95DC4CEE5;
+	Mon, 10 Mar 2025 17:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628164;
-	bh=Vf1evhxe7wgfXxDGC9hYs2rN9gZKShP42Rd17QblQ0s=;
+	s=korg; t=1741628166;
+	bh=sUTe8fuMD9XgAfwsrX/uGSiNErP3RTPe/q1QpLOBiGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/GNGj3XUpoUOj8gRfSoDzrlycFe4Jur34SVvQIg4bnkDflOzIN/zxakVe/6W7tqY
-	 EVT2HWB+Mh2Aq/ULtU7LKnOHi5nAeIsSZ19UpX0xBoo3w6eOvDSCnhYjoLyzzOYFYX
-	 BePCHHumEwor41ES6O/NyqTAMR27PJOM796YmkZc=
+	b=j1usxPfVILeEPnIqeWjBHXOYEt2JUuOrJ/56I0LWkIqxQ82KUXad4onI5t7wJihJo
+	 tlna2+1lfbwvBosmccxcALuPhPZ6Dc44+jAe1XP4J1IfH6jI+z3uJhaQBlYnmHA/6W
+	 oXBOQBysiDqBNoN7+fObwOF2/hnQjWxp3ZzxTEak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 110/145] KVM: SVM: Drop DEBUGCTL[5:2] from guests effective value
-Date: Mon, 10 Mar 2025 18:06:44 +0100
-Message-ID: <20250310170439.201487722@linuxfoundation.org>
+Subject: [PATCH 6.6 111/145] KVM: SVM: Suppress DEBUGCTL.BTF on AMD
+Date: Mon, 10 Mar 2025 18:06:45 +0100
+Message-ID: <20250310170439.240805863@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170434.733307314@linuxfoundation.org>
 References: <20250310170434.733307314@linuxfoundation.org>
@@ -44,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -53,65 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit ee89e8013383d50a27ea9bf3c8a69eed6799856f upstream.
+commit d0eac42f5cecce009d315655bee341304fbe075e upstream.
 
-Drop bits 5:2 from the guest's effective DEBUGCTL value, as AMD changed
-the architectural behavior of the bits and broke backwards compatibility.
-On CPUs without BusLockTrap (or at least, in APMs from before ~2023),
-bits 5:2 controlled the behavior of external pins:
+Mark BTF as reserved in DEBUGCTL on AMD, as KVM doesn't actually support
+BTF, and fully enabling BTF virtualization is non-trivial due to
+interactions with the emulator, guest_debug, #DB interception, nested SVM,
+etc.
 
-  Performance-Monitoring/Breakpoint Pin-Control (PBi)—Bits 5:2, read/write.
-  Software uses thesebits to control the type of information reported by
-  the four external performance-monitoring/breakpoint pins on the
-  processor. When a PBi bit is cleared to 0, the corresponding external pin
-  (BPi) reports performance-monitor information. When a PBi bit is set to
-  1, the corresponding external pin (BPi) reports breakpoint information.
+Don't inject #GP if the guest attempts to set BTF, as there's no way to
+communicate lack of support to the guest, and instead suppress the flag
+and treat the WRMSR as (partially) unsupported.
 
-With the introduction of BusLockTrap, presumably to be compatible with
-Intel CPUs, AMD redefined bit 2 to be BLCKDB:
+In short, make KVM behave the same on AMD and Intel (VMX already squashes
+BTF).
 
-  Bus Lock #DB Trap (BLCKDB)—Bit 2, read/write. Software sets this bit to
-  enable generation of a #DB trap following successful execution of a bus
-  lock when CPL is > 0.
-
-and redefined bits 5:3 (and bit 6) as "6:3 Reserved MBZ".
-
-Ideally, KVM would treat bits 5:2 as reserved.  Defer that change to a
-feature cleanup to avoid breaking existing guest in LTS kernels.  For now,
-drop the bits to retain backwards compatibility (of a sort).
-
-Note, dropping bits 5:2 is still a guest-visible change, e.g. if the guest
-is enabling LBRs *and* the legacy PBi bits, then the state of the PBi bits
-is visible to the guest, whereas now the guest will always see '0'.
+Note, due to other bugs in KVM's handling of DEBUGCTL, the only way BTF
+has "worked" in any capacity is if the guest simultaneously enables LBRs.
 
 Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Cc: stable@vger.kernel.org
 Reviewed-and-tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250227222411.3490595-2-seanjc@google.com
+Link: https://lore.kernel.org/r/20250227222411.3490595-3-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   12 ++++++++++++
+ arch/x86/kvm/svm/svm.c |    9 +++++++++
  arch/x86/kvm/svm/svm.h |    2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -3156,6 +3156,18 @@ static int svm_set_msr(struct kvm_vcpu *
- 			kvm_pr_unimpl_wrmsr(vcpu, ecx, data);
- 			break;
- 		}
-+
+@@ -3168,6 +3168,15 @@ static int svm_set_msr(struct kvm_vcpu *
+ 		 */
+ 		data &= ~GENMASK(5, 2);
+ 
 +		/*
-+		 * AMD changed the architectural behavior of bits 5:2.  On CPUs
-+		 * without BusLockTrap, bits 5:2 control "external pins", but
-+		 * on CPUs that support BusLockDetect, bit 2 enables BusLockTrap
-+		 * and bits 5:3 are reserved-to-zero.  Sadly, old KVM allowed
-+		 * the guest to set bits 5:2 despite not actually virtualizing
-+		 * Performance-Monitoring/Breakpoint external pins.  Drop bits
-+		 * 5:2 for backwards compatibility.
++		 * Suppress BTF as KVM doesn't virtualize BTF, but there's no
++		 * way to communicate lack of support to the guest.
 +		 */
-+		data &= ~GENMASK(5, 2);
++		if (data & DEBUGCTLMSR_BTF) {
++			kvm_pr_unimpl_wrmsr(vcpu, MSR_IA32_DEBUGCTLMSR, data);
++			data &= ~DEBUGCTLMSR_BTF;
++		}
 +
  		if (data & DEBUGCTL_RESERVED_BITS)
  			return 1;
@@ -122,8 +104,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  /* svm.c */
  #define MSR_INVALID				0xffffffffU
  
--#define DEBUGCTL_RESERVED_BITS (~(0x3fULL))
-+#define DEBUGCTL_RESERVED_BITS (~(DEBUGCTLMSR_BTF | DEBUGCTLMSR_LBR))
+-#define DEBUGCTL_RESERVED_BITS (~(DEBUGCTLMSR_BTF | DEBUGCTLMSR_LBR))
++#define DEBUGCTL_RESERVED_BITS (~DEBUGCTLMSR_LBR)
  
  extern bool dump_invalid_vmcb;
  
