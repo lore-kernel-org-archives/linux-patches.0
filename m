@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002192309B6;
-	Mon, 10 Mar 2025 17:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CBB230BC3;
+	Mon, 10 Mar 2025 17:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627631; cv=none; b=QIZdBHrf8qKbAhF6lk85rOUNJ9CX/jhLK9p8dao6x3iU+QC9URK50Sk5MNjBurXlHU1lVN4Gh8hYNbwpebsLFjz6AGXVYQJvsftKTr7Oq3f4bWelflQK8BwCRofZZT9KiWKey/LFipEve5mJTftfJScan+2pJ7iYdDtTlU4bA7w=
+	t=1741627633; cv=none; b=nVVAKCvrkpOIe1WRPP0RpGV26uINfUh/fSfWDUg6N8wnubYRBnrc+f7WzjTt65uG4htI422KlPMnx3BK0/uiwQTbTngfs7bv40bEMdIVwzix24IHpDgPjdcDGLgigvaNIS1apCDZjOHqOiL1zubdwXm7pewe2Vxh7EJ2cBlnuos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627631; c=relaxed/simple;
-	bh=MN37rKShezOXAk0tPfEIO7WkxPH54YitloPFUQz3bgk=;
+	s=arc-20240116; t=1741627633; c=relaxed/simple;
+	bh=4h5DEU5YzhKUlHRsAAFC3inR05CU5AQyVv2bt8Oo/Qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oD7dFoakiAlwrujo4vcOe92Q3v3hQPl0+LvY4JPudEyorARi/1UFG7COipTeUgFr5Kqg4e+CnIIDCJpktbcuqFKmgJk9fJYbJDc6u4+euZ+ob68rkAWWEDcGkx+4nHJKrnq2+pmtddGI9L/6TubL7CupAAHcSaq8JI4TIuHxo7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py1ZogNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EspPeltGrwI79lyWkHnsXrJsnUVnQPjz+kXdJqnOfu9tQflCzqnF3pGRYQzed5u4Uvdp5TDsFLHs8REVbeXIFSdncJddaAHg5lPF9DYpEIXKNUM3Fm6aAP8oALinqXaj8Esggk9Bjdgu1xIzEvVGMsYceEspWrY5in8xBVmFQDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBTzX2TR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py1ZogNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D7DC4CEE5;
-	Mon, 10 Mar 2025 17:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBTzX2TR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A233C4CEE5;
+	Mon, 10 Mar 2025 17:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741627630;
-	bh=MN37rKShezOXAk0tPfEIO7WkxPH54YitloPFUQz3bgk=;
+	s=korg; t=1741627633;
+	bh=4h5DEU5YzhKUlHRsAAFC3inR05CU5AQyVv2bt8Oo/Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=py1ZogNuV2LUq7TLxJjh43m1M1alccLxnjvxWbj8KYE3PCJPjjfIcJHMfE3SqAm9q
-	 taOyflW7IpaeCrfpZ2m8sqhpZdS5XUsrLymE/R09x2wEZxDMyaXPF5XAxGcElFNw4Y
-	 J0UJxsdTOp0pZPtpVTOkPI8Pzr5unj6kStOjdJtM=
+	b=aBTzX2TRJHSI9PG1r2BEHEMdtZ2zzNXX4KQo+RFQrit2loenOjqK4zPVOyqMISW/e
+	 CMHl+dOUOOnWftbJ1Fe9HzeetYPgte9qAODZMR2B0lcHgITE4xa6a/T6iVqTjhtgk9
+	 8x17DbvMGU0gzQm+HlJiPLDbCT9vxsQnYkGg1JeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noah <kernel-org-10@maxgrass.eu>,
-	Eric Sandeen <sandeen@redhat.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 196/269] exfat: short-circuit zero-byte writes in exfat_file_write_iter
-Date: Mon, 10 Mar 2025 18:05:49 +0100
-Message-ID: <20250310170505.512547072@linuxfoundation.org>
+Subject: [PATCH 6.12 197/269] net-timestamp: support TCP GSO case for a few missing flags
+Date: Mon, 10 Mar 2025 18:05:50 +0100
+Message-ID: <20250310170505.550212094@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170457.700086763@linuxfoundation.org>
 References: <20250310170457.700086763@linuxfoundation.org>
@@ -53,42 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Jason Xing <kerneljasonxing@gmail.com>
 
-[ Upstream commit fda94a9919fd632033979ad7765a99ae3cab9289 ]
+[ Upstream commit 3c9231ea6497dfc50ac0ef69fff484da27d0df66 ]
 
-When generic_write_checks() returns zero, it means that
-iov_iter_count() is zero, and there is no work to do.
+When I read through the TSO codes, I found out that we probably
+miss initializing the tx_flags of last seg when TSO is turned
+off, which means at the following points no more timestamp
+(for this last one) will be generated. There are three flags
+to be handled in this patch:
+1. SKBTX_HW_TSTAMP
+2. SKBTX_BPF
+3. SKBTX_SCHED_TSTAMP
+Note that SKBTX_BPF[1] was added in 6.14.0-rc2 by commit
+6b98ec7e882af ("bpf: Add BPF_SOCK_OPS_TSTAMP_SCHED_CB callback")
+and only belongs to net-next branch material for now. The common
+issue of the above three flags can be fixed by this single patch.
 
-Simply return success like all other filesystems do, rather than
-proceeding down the write path, which today yields an -EFAULT in
-generic_perform_write() via the
-(fault_in_iov_iter_readable(i, bytes) == bytes) check when bytes
-== 0.
+This patch initializes the tx_flags to SKBTX_ANY_TSTAMP like what
+the UDP GSO does to make the newly segmented last skb inherit the
+tx_flags so that requested timestamp will be generated in each
+certain layer, or else that last one has zero value of tx_flags
+which leads to no timestamp at all.
 
-Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
-Reported-by: Noah <kernel-org-10@maxgrass.eu>
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 4ed2d765dfacc ("net-timestamp: TCP timestamping")
+Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_offload.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 05b51e7217838..807349d8ea050 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -587,7 +587,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	valid_size = ei->valid_size;
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index 2308665b51c53..2dfac79dc78b8 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -13,12 +13,15 @@
+ #include <net/tcp.h>
+ #include <net/protocol.h>
  
- 	ret = generic_write_checks(iocb, iter);
--	if (ret < 0)
-+	if (ret <= 0)
- 		goto unlock;
+-static void tcp_gso_tstamp(struct sk_buff *skb, unsigned int ts_seq,
++static void tcp_gso_tstamp(struct sk_buff *skb, struct sk_buff *gso_skb,
+ 			   unsigned int seq, unsigned int mss)
+ {
++	u32 flags = skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP;
++	u32 ts_seq = skb_shinfo(gso_skb)->tskey;
++
+ 	while (skb) {
+ 		if (before(ts_seq, seq + mss)) {
+-			skb_shinfo(skb)->tx_flags |= SKBTX_SW_TSTAMP;
++			skb_shinfo(skb)->tx_flags |= flags;
+ 			skb_shinfo(skb)->tskey = ts_seq;
+ 			return;
+ 		}
+@@ -193,8 +196,8 @@ struct sk_buff *tcp_gso_segment(struct sk_buff *skb,
+ 	th = tcp_hdr(skb);
+ 	seq = ntohl(th->seq);
  
- 	if (iocb->ki_flags & IOCB_DIRECT) {
+-	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_SW_TSTAMP))
+-		tcp_gso_tstamp(segs, skb_shinfo(gso_skb)->tskey, seq, mss);
++	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP))
++		tcp_gso_tstamp(segs, gso_skb, seq, mss);
+ 
+ 	newcheck = ~csum_fold(csum_add(csum_unfold(th->check), delta));
+ 
 -- 
 2.39.5
 
