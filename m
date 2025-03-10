@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A023370F;
-	Mon, 10 Mar 2025 17:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87ADC233705;
+	Mon, 10 Mar 2025 17:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741626509; cv=none; b=mpK6zPufTxFaMOT8r9fRI2FpjewZDWRsh5fNVspQN0CcuJR4b1CM1F6UVidCv9COXYB9UOFIQNDYTw2zJQeuJCx1ylhwLC45KspMOm34MRMKcjjHcEqSa4RCSQy/L1bN3Zf5O/AZH/b1E1EUdAoVGcBef2MSro7R13oqFJ3iUFk=
+	t=1741626512; cv=none; b=DRgbUT9MlBVBryADtTSRanM6HgAerNIDhcrrj/Z/SHxtNGVUYxN7HaX8D9o3Yj7JcoOX4vXVMBC5RT+8w8LCPSlcLjqOKQBilTxkAj9FIai49tgs7ZFtCJCI74vn6RpI6IwbZCBFzp3y7XbnVxIIo+/1QOCBROUI6HawlRK3sR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741626509; c=relaxed/simple;
-	bh=JCTQwQMa8wrAlvzZfLOmM0UrMtr+5OPEJfs3JC0ntzs=;
+	s=arc-20240116; t=1741626512; c=relaxed/simple;
+	bh=SD3E+JobWaElRhLBfYFjaUyuL8IHJDmwjbWHPVJjGlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfK97kfXLyaE3iuWHdwAUkcyBI9Gx3pBOADiO5qxzBFcdC5/faLO/RWzqW62KKU1kNDHawQBVDDYAE4Jtyk1iP+vJ5q4j2AgqLLjMS8C3tXO+cUWUCEYPOrXeURum04B6e3qgcugKEkwMXlBBhfsHwdFvoUJ0t/DvYMahXxS0rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXpL1e5T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkfUwLMxRODCt92IIcqwHnpvTLeP/DbpO5dBG9UjQNTuJ6efeZb5niRQlzrZ/dqhbr6/r65nEHUZhTxL8H8NnbnCFGWxVUFQPUDj4MNAbSn2T1KJVosjINcXCZ+3fcGWK0kM5VKZGNzAjtIX0oZLsjUiYE7waYah3zPCepJqLpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLNBXVMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXpL1e5T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE18C4CEE5;
-	Mon, 10 Mar 2025 17:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLNBXVMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15D5C4CEE5;
+	Mon, 10 Mar 2025 17:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741626509;
-	bh=JCTQwQMa8wrAlvzZfLOmM0UrMtr+5OPEJfs3JC0ntzs=;
+	s=korg; t=1741626512;
+	bh=SD3E+JobWaElRhLBfYFjaUyuL8IHJDmwjbWHPVJjGlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXpL1e5TUelgsmqfFXBdf4CA7F51i7lWoUfymeb9EeyadUSZj+l90qrI6Dy5rZ2bW
-	 X45mfUxJD8v/P/AaVFhAkiNazNS1mOdf+BuHJH/q8iUW+fND3dQOTLHaQciY2rcpxa
-	 qJN7QF18TfAUwjmOGaBa6KwsluxUXXNNyfmiDfGg=
+	b=eLNBXVMwZXCykqIN8pzfp/hPuWjZxlu3NT3v4jExoeIgJ+hiXKOKgQ8vhUy1v9o/d
+	 YB6OaWnKLiTp+eUGDHzKj6NTRBA1GoWnZV8IamRWkpEh5LWTMjap6M+F/unG0qPfRO
+	 9O8MdAuY8RHZCZ5z5WgMh/8yrztkRA7x3nrXgdPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.13 017/207] LoongArch: KVM: Fix GPA size issue about VM
-Date: Mon, 10 Mar 2025 18:03:30 +0100
-Message-ID: <20250310170448.454327919@linuxfoundation.org>
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.13 018/207] HID: appleir: Fix potential NULL dereference at raw event handle
+Date: Mon, 10 Mar 2025 18:03:31 +0100
+Message-ID: <20250310170448.494719343@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170447.729440535@linuxfoundation.org>
 References: <20250310170447.729440535@linuxfoundation.org>
@@ -50,61 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-commit 6bdbb73dc8d99fbb77f5db79dbb6f108708090b4 upstream.
+commit 2ff5baa9b5275e3acafdf7f2089f74cccb2f38d1 upstream.
 
-Physical address space is 48 bit on Loongson-3A5000 physical machine,
-however it is 47 bit for VM on Loongson-3A5000 system. Size of physical
-address space of VM is the same with the size of virtual user space (a
-half) of physical machine.
+Syzkaller reports a NULL pointer dereference issue in input_event().
 
-Variable cpu_vabits represents user address space, kernel address space
-is not included (user space and kernel space are both a half of total).
-Here cpu_vabits, rather than cpu_vabits - 1, is to represent the size of
-guest physical address space.
+BUG: KASAN: null-ptr-deref in instrument_atomic_read include/linux/instrumented.h:68 [inline]
+BUG: KASAN: null-ptr-deref in _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
+BUG: KASAN: null-ptr-deref in is_event_supported drivers/input/input.c:67 [inline]
+BUG: KASAN: null-ptr-deref in input_event+0x42/0xa0 drivers/input/input.c:395
+Read of size 8 at addr 0000000000000028 by task syz-executor199/2949
 
-Also there is strict checking about page fault GPA address, inject error
-if it is larger than maximum GPA address of VM.
+CPU: 0 UID: 0 PID: 2949 Comm: syz-executor199 Not tainted 6.13.0-rc4-syzkaller-00076-gf097a36ef88d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ kasan_report+0xd9/0x110 mm/kasan/report.c:602
+ check_region_inline mm/kasan/generic.c:183 [inline]
+ kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+ instrument_atomic_read include/linux/instrumented.h:68 [inline]
+ _test_bit include/asm-generic/bitops/instrumented-non-atomic.h:141 [inline]
+ is_event_supported drivers/input/input.c:67 [inline]
+ input_event+0x42/0xa0 drivers/input/input.c:395
+ input_report_key include/linux/input.h:439 [inline]
+ key_down drivers/hid/hid-appleir.c:159 [inline]
+ appleir_raw_event+0x3e5/0x5e0 drivers/hid/hid-appleir.c:232
+ __hid_input_report.constprop.0+0x312/0x440 drivers/hid/hid-core.c:2111
+ hid_ctrl+0x49f/0x550 drivers/hid/usbhid/hid-core.c:484
+ __usb_hcd_giveback_urb+0x389/0x6e0 drivers/usb/core/hcd.c:1650
+ usb_hcd_giveback_urb+0x396/0x450 drivers/usb/core/hcd.c:1734
+ dummy_timer+0x17f7/0x3960 drivers/usb/gadget/udc/dummy_hcd.c:1993
+ __run_hrtimer kernel/time/hrtimer.c:1739 [inline]
+ __hrtimer_run_queues+0x20a/0xae0 kernel/time/hrtimer.c:1803
+ hrtimer_run_softirq+0x17d/0x350 kernel/time/hrtimer.c:1820
+ handle_softirqs+0x206/0x8d0 kernel/softirq.c:561
+ __do_softirq kernel/softirq.c:595 [inline]
+ invoke_softirq kernel/softirq.c:435 [inline]
+ __irq_exit_rcu+0xfa/0x160 kernel/softirq.c:662
+ irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+ instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+ sysvec_apic_timer_interrupt+0x90/0xb0 arch/x86/kernel/apic/apic.c:1049
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+ __mod_timer+0x8f6/0xdc0 kernel/time/timer.c:1185
+ add_timer+0x62/0x90 kernel/time/timer.c:1295
+ schedule_timeout+0x11f/0x280 kernel/time/sleep_timeout.c:98
+ usbhid_wait_io+0x1c7/0x380 drivers/hid/usbhid/hid-core.c:645
+ usbhid_init_reports+0x19f/0x390 drivers/hid/usbhid/hid-core.c:784
+ hiddev_ioctl+0x1133/0x15b0 drivers/hid/usbhid/hiddev.c:794
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl fs/ioctl.c:892 [inline]
+ __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
+This happens due to the malformed report items sent by the emulated device
+which results in a report, that has no fields, being added to the report list.
+Due to this appleir_input_configured() is never called, hidinput_connect()
+fails which results in the HID_CLAIMED_INPUT flag is not being set. However,
+it  does not make appleir_probe() fail and lets the event callback to be
+called without the associated input device.
+
+Thus, add a check for the HID_CLAIMED_INPUT flag and leave the event hook
+early if the driver didn't claim any input_dev for some reason. Moreover,
+some other hid drivers accessing input_dev in their event callbacks do have
+similar checks, too.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/exit.c |    6 ++++++
- arch/loongarch/kvm/vm.c   |    6 +++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/hid/hid-appleir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/exit.c
-+++ b/arch/loongarch/kvm/exit.c
-@@ -669,6 +669,12 @@ static int kvm_handle_rdwr_fault(struct
- 	struct kvm_run *run = vcpu->run;
- 	unsigned long badv = vcpu->arch.badv;
+--- a/drivers/hid/hid-appleir.c
++++ b/drivers/hid/hid-appleir.c
+@@ -188,7 +188,7 @@ static int appleir_raw_event(struct hid_
+ 	static const u8 flatbattery[] = { 0x25, 0x87, 0xe0 };
+ 	unsigned long flags;
  
-+	/* Inject ADE exception if exceed max GPA size */
-+	if (unlikely(badv >= vcpu->kvm->arch.gpa_size)) {
-+		kvm_queue_exception(vcpu, EXCCODE_ADE, EXSUBCODE_ADEM);
-+		return RESUME_GUEST;
-+	}
-+
- 	ret = kvm_handle_mm_fault(vcpu, badv, write);
- 	if (ret) {
- 		/* Treat as MMIO */
---- a/arch/loongarch/kvm/vm.c
-+++ b/arch/loongarch/kvm/vm.c
-@@ -48,7 +48,11 @@ int kvm_arch_init_vm(struct kvm *kvm, un
- 	if (kvm_pvtime_supported())
- 		kvm->arch.pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
+-	if (len != 5)
++	if (len != 5 || !(hid->claimed & HID_CLAIMED_INPUT))
+ 		goto out;
  
--	kvm->arch.gpa_size = BIT(cpu_vabits - 1);
-+	/*
-+	 * cpu_vabits means user address space only (a half of total).
-+	 * GPA size of VM is the same with the size of user address space.
-+	 */
-+	kvm->arch.gpa_size = BIT(cpu_vabits);
- 	kvm->arch.root_level = CONFIG_PGTABLE_LEVELS - 1;
- 	kvm->arch.invalid_ptes[0] = 0;
- 	kvm->arch.invalid_ptes[1] = (unsigned long)invalid_pte_table;
+ 	if (!memcmp(data, keydown, sizeof(keydown))) {
 
 
