@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A461C3F34;
-	Mon, 10 Mar 2025 17:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CB617CA12;
+	Mon, 10 Mar 2025 17:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628833; cv=none; b=srTR4ra4xgDuB2fB9IxmKsRhghKcFcC2LIoX/tyfoktR2lIoBcaTg6JU+Y8Qbe3J7OG2R0UnDtC37Vl/KmXTAiwboUthG9f0YHFoKcoXDV/Gh4EhZsff6TMKgNjmpIbK9yR1g8IJwfkmI3aIzPXpYzAxt5EIz/VJK59uWU7WEZ4=
+	t=1741628835; cv=none; b=oZVt47WOXpGhsGbvzudUgGytz/2gmNDD0vEmXUTDt+9pljoUwSCuc7dJrjQ2n8ZO545q9goG/4tu2nNWVMYo23YWnTFivn19u1d4FkAtgGVCiPr5v4o/t70UhOlyOQhDQQEtPbJxhObWtKBTL8yXHvEMyEHIolL9OdZ9bnukcLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628833; c=relaxed/simple;
-	bh=Zv7XqXC4YxQhi/pe8CbC53IyyRwi0eqNzFB0VM4pxuk=;
+	s=arc-20240116; t=1741628835; c=relaxed/simple;
+	bh=G9yyuew9FZAiAKVtFkhZAtOkEHT+22edJWh3nTf4Nug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lunncOUJkgz8hxbWdvT8i92/GqQbhAkkOolDtwd2SgE3/h/WvwXb82U5tgxEZYm76m5WZRhyQmmvWiseXNaLkSoc4gZC2SfFtfT6hIt+eCaLXUkIOJFI9r9NhORI0bKDDb85wMIWMtTjd8hWKQRVOQZnk0fyaoKQ4r8ReI/iRvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRfgAtSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMLlNQwQ7HGJR2xdK2pkqXjkdG4/W72TJYDZH5qQGjgEct5n9In4E9XE5KNFMJ5kdkIet6qC979U326n0IOzVbzeDvVmc7Z4PekqzriHz7mYgG1CKUqEtxbq/2bnfhiFgBTtn6kLpqFbPgrBSpmdmLyhZdpFY2okuB990jSjbkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOwZp46Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRfgAtSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A44C4CEE5;
-	Mon, 10 Mar 2025 17:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOwZp46Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC208C4CEE5;
+	Mon, 10 Mar 2025 17:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628832;
-	bh=Zv7XqXC4YxQhi/pe8CbC53IyyRwi0eqNzFB0VM4pxuk=;
+	s=korg; t=1741628835;
+	bh=G9yyuew9FZAiAKVtFkhZAtOkEHT+22edJWh3nTf4Nug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRfgAtSOkEpf5m9qViZDiFXiwgxCV5LSxUADSI9KxB6CGI9K6VYyTipEGnypILFit
-	 vR62WQZs3gZLOGln4IBUw6HrAvmhcPsxgOHaQNjrhNhYoL6p0sJpkDaRj5CjBBmbgJ
-	 JpHTm8MKpe/18SB21Oh+TXvX4ORyBaEv86JYgsMk=
+	b=zOwZp46ZegKlcXNAGT8JZGc8JBXm+suBE7aWPMFoE/UFH3v964YN+SGlxVy0w6fKw
+	 lsKJzl0ILCeG02ORQfZz5a3WcRYfk7dSQbnvILMyh2uu86cgcIBxeGJZUIsl2iBEm/
+	 6mXSUzQjWxpxYg7HHbfPbHESqHHpv1O2ElPoIbdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Leogrande <leogrande@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kai Ye <yekai13@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/620] tools/testing/selftests/bpf/test_tc_tunnel.sh: Fix wait for server bind
-Date: Mon, 10 Mar 2025 17:58:43 +0100
-Message-ID: <20250310170548.623309419@linuxfoundation.org>
+Subject: [PATCH 5.15 086/620] crypto: hisilicon/sec - delete redundant blank lines
+Date: Mon, 10 Mar 2025 17:58:52 +0100
+Message-ID: <20250310170548.977349009@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Leogrande <leogrande@google.com>
+From: Kai Ye <yekai13@huawei.com>
 
-[ Upstream commit e2f0791124a1b6ca8d570110cbd487969d9d41ef ]
+[ Upstream commit 0413623c27a380d0da7240717f9435d24776b985 ]
 
-Commit f803bcf9208a ("selftests/bpf: Prevent client connect before
-server bind in test_tc_tunnel.sh") added code that waits for the
-netcat server to start before the netcat client attempts to connect to
-it. However, not all calls to 'server_listen' were guarded.
+Some coding style fixes in sec crypto file.
 
-This patch adds the existing 'wait_for_port' guard after the remaining
-call to 'server_listen'.
-
-Fixes: f803bcf9208a ("selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh")
-Signed-off-by: Marco Leogrande <leogrande@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://lore.kernel.org/r/20241202204530.1143448-1-leogrande@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Kai Ye <yekai13@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: fd337f852b26 ("crypto: hisilicon/sec2 - fix for aead icv error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_tc_tunnel.sh | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-index 38c6e9f16f41e..88488779792ff 100755
---- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
-+++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-@@ -295,6 +295,7 @@ else
- 	client_connect
- 	verify_data
- 	server_listen
-+	wait_for_port ${port} ${netcat_opt}
- fi
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index c8fa964238e7d..72e26a4bfb8e6 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -1674,7 +1674,6 @@ static void sec_aead_callback(struct sec_ctx *c, struct sec_req *req, int err)
+ 					  aead_req->out_mac,
+ 					  authsize, a_req->cryptlen +
+ 					  a_req->assoclen);
+-
+ 		if (unlikely(sz != authsize)) {
+ 			dev_err(c->dev, "copy out mac err!\n");
+ 			err = -EINVAL;
+@@ -1961,7 +1960,6 @@ static int sec_aead_sha512_ctx_init(struct crypto_aead *tfm)
+ 	return sec_aead_ctx_init(tfm, "sha512");
+ }
  
- # bpf_skb_net_shrink does not take tunnel flags yet, cannot update L3.
+-
+ static int sec_skcipher_cryptlen_ckeck(struct sec_ctx *ctx,
+ 	struct sec_req *sreq)
+ {
 -- 
 2.39.5
 
