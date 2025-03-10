@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE3318FDAB;
-	Mon, 10 Mar 2025 17:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9F018FDAB;
+	Mon, 10 Mar 2025 17:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628841; cv=none; b=k5wiu8yULtKbU5r2+yprENlnTWJgfJj6qJPjRec6DzRvxuNO5aZqVsiUJ98R1wqte/AMQ53f9DYy0CTYyeACqUFA5ZMd37RSy+G4nQwZhjG3OjbE/C289F0MtQEgxPrs4R2rMMVw6qagGhDgwB4WLEvVpGDA7ebooy3RghMpioQ=
+	t=1741628844; cv=none; b=phRNB3UHHlhPfDGt3Ab1zoLCf60GEat1KeNRXSRJsdJFZWmczFiHHcvaDClDY3grEp0OZ3fhdJJ0fa8cnKLMEtN+45Ag7WmcRn1ViLZu2uMRpOEl01Zn+gr1Ao6FXY0YH9D1TZrv9+xoiI9XfmvlmvwyMFAkkRwdJPcXIEuea+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628841; c=relaxed/simple;
-	bh=I+ITd5NwftbaLvBSZxqaH0yXSuhBl1TTGg0YR/cMKBk=;
+	s=arc-20240116; t=1741628844; c=relaxed/simple;
+	bh=G8jObQPlROD0oGf8DcanYmjg3jw+Py3vDUeGZ/fBtng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+aElOavsiPBjkCVj6KfKqlwa/MuFkIoh/XUUTEc+Rs+G4/Ryc7RzsM/HRkylxHcYR7f8gfZl8rWj64uiUGi8c8UiW5WmpvAlAh7Zcq6n9PBTxT+k6q89JJjSGFlLkG7X1kque228yFbJS5jRufPJTJuhPDjKGWDZHfAp1cLOQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPVMeFMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEWEA3Utx3ZuxtDCtirXrLnuANPPQ8NSUmzZPoXWHg1JacarNDT9tGKNWeDmpWyeBJnUEht4ehrtbBnd1UrEm+aikQ9Ed6OahF3vXaURAPBlW+M5ldW3G5FTjQP2GyrETY52eZ9t1Nq3VHja6YUs3n9cYjFQ0npH/hWdo6FuKYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLxR6lwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPVMeFMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87281C4CEE5;
-	Mon, 10 Mar 2025 17:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLxR6lwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74885C4CEE5;
+	Mon, 10 Mar 2025 17:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628840;
-	bh=I+ITd5NwftbaLvBSZxqaH0yXSuhBl1TTGg0YR/cMKBk=;
+	s=korg; t=1741628843;
+	bh=G8jObQPlROD0oGf8DcanYmjg3jw+Py3vDUeGZ/fBtng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPVMeFMDg8eUg6Y6/yZrPeBLXZVCNbJbrWrMjdamDyi1EwI/gxQ+JsnHB0A/GjRZL
-	 1PAtIJe2QAgKnz33jx42vLcHbn2+1AhfegX2iPNPxhCvfGbJ0uVQdZcTCdMotADovF
-	 xZKdGPiAcmOjVEa3xqnB3WvtTy8mJLelx8Ydbg34=
+	b=zLxR6lwX97DIXlafV3hgPxPuK+JrXN5kcwskPnWeuYZL9c96weLeoTjpNlfcTDn2b
+	 Ulzil4jIwv6khIeY5PezZqKPWpGwmb3mSGmRKbZO3jlFCI0/5FWLryYdjvJROtonpH
+	 CJUdmYl4sBhEFW6gma8joCKe+Ie+b3X0cq+Yu3tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chenghai Huang <huangchenghai2@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/620] crypto: hisilicon/sec2 - fix for aead icv error
-Date: Mon, 10 Mar 2025 17:58:54 +0100
-Message-ID: <20250310170549.056447688@linuxfoundation.org>
+Subject: [PATCH 5.15 089/620] crypto: hisilicon/sec2 - fix for aead invalid authsize
+Date: Mon, 10 Mar 2025 17:58:55 +0100
+Message-ID: <20250310170549.094867585@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -54,15 +54,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit fd337f852b2677b53d0859a47b58e6e6bd189f30 ]
+[ Upstream commit a5a9d959936499a3106a1bf3b9070875d0d3dec4 ]
 
-When the AEAD algorithm is used for encryption or decryption,
-the input authentication length varies, the hardware needs to
-obtain the input length to pass the integrity check verification.
-Currently, the driver uses a fixed authentication length,which
-causes decryption failure, so the length configuration is modified.
-In addition, the step of setting the auth length is unnecessary,
-so it was deleted from the setkey function.
+When the digest alg is HMAC-SHAx or another, the authsize may be less
+than 4 bytes and mac_len of the BD is set to zero, the hardware considers
+it a BD configuration error and reports a ras error, so the sec driver
+needs to switch to software calculation in this case, this patch add a
+check for it and remove unnecessary check that has been done by crypto.
 
 Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
 Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
@@ -70,300 +68,187 @@ Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec.h        |   1 -
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 101 +++++++++------------
- drivers/crypto/hisilicon/sec2/sec_crypto.h |  11 ---
- 3 files changed, 44 insertions(+), 69 deletions(-)
+ drivers/crypto/hisilicon/sec2/sec.h        |  2 +-
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 64 +++++++++++-----------
+ 2 files changed, 34 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/crypto/hisilicon/sec2/sec.h b/drivers/crypto/hisilicon/sec2/sec.h
-index cff00fd297652..2dcb4f4c0629a 100644
+index 2dcb4f4c0629a..d3515d1ea5c27 100644
 --- a/drivers/crypto/hisilicon/sec2/sec.h
 +++ b/drivers/crypto/hisilicon/sec2/sec.h
-@@ -89,7 +89,6 @@ struct sec_auth_ctx {
- 	dma_addr_t a_key_dma;
- 	u8 *a_key;
- 	u8 a_key_len;
--	u8 mac_len;
- 	u8 a_alg;
- 	bool fallback;
- 	struct crypto_shash *hash_tfm;
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index dedcc7f743039..395758a29f4a3 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -907,15 +907,14 @@ static int sec_aead_mac_init(struct sec_aead_req *req)
- 	struct aead_request *aead_req = req->aead_req;
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(aead_req);
- 	size_t authsize = crypto_aead_authsize(tfm);
--	u8 *mac_out = req->out_mac;
- 	struct scatterlist *sgl = aead_req->src;
-+	u8 *mac_out = req->out_mac;
- 	size_t copy_size;
- 	off_t skip_size;
- 
- 	/* Copy input mac */
- 	skip_size = aead_req->assoclen + aead_req->cryptlen - authsize;
--	copy_size = sg_pcopy_to_buffer(sgl, sg_nents(sgl), mac_out,
--				       authsize, skip_size);
-+	copy_size = sg_pcopy_to_buffer(sgl, sg_nents(sgl), mac_out, authsize, skip_size);
- 	if (unlikely(copy_size != authsize))
- 		return -EINVAL;
- 
-@@ -1097,7 +1096,6 @@ static int sec_aead_fallback_setkey(struct sec_auth_ctx *a_ctx,
- static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 			   const u32 keylen, const enum sec_hash_alg a_alg,
- 			   const enum sec_calg c_alg,
--			   const enum sec_mac_len mac_len,
- 			   const enum sec_cmode c_mode)
- {
- 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
-@@ -1109,7 +1107,6 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 
- 	ctx->a_ctx.a_alg = a_alg;
- 	ctx->c_ctx.c_alg = c_alg;
--	ctx->a_ctx.mac_len = mac_len;
- 	c_ctx->c_mode = c_mode;
- 
- 	if (c_mode == SEC_CMODE_CCM || c_mode == SEC_CMODE_GCM) {
-@@ -1145,10 +1142,9 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 		goto bad_key;
- 	}
- 
--	if ((ctx->a_ctx.mac_len & SEC_SQE_LEN_RATE_MASK)  ||
--	    (ctx->a_ctx.a_key_len & SEC_SQE_LEN_RATE_MASK)) {
-+	if (ctx->a_ctx.a_key_len & SEC_SQE_LEN_RATE_MASK) {
- 		ret = -EINVAL;
--		dev_err(dev, "MAC or AUTH key length error!\n");
-+		dev_err(dev, "AUTH key length error!\n");
- 		goto bad_key;
- 	}
- 
-@@ -1160,27 +1156,19 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- }
- 
- 
--#define GEN_SEC_AEAD_SETKEY_FUNC(name, aalg, calg, maclen, cmode)	\
--static int sec_setkey_##name(struct crypto_aead *tfm, const u8 *key,	\
--	u32 keylen)							\
--{									\
--	return sec_aead_setkey(tfm, key, keylen, aalg, calg, maclen, cmode);\
--}
--
--GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha1, SEC_A_HMAC_SHA1,
--			 SEC_CALG_AES, SEC_HMAC_SHA1_MAC, SEC_CMODE_CBC)
--GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha256, SEC_A_HMAC_SHA256,
--			 SEC_CALG_AES, SEC_HMAC_SHA256_MAC, SEC_CMODE_CBC)
--GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha512, SEC_A_HMAC_SHA512,
--			 SEC_CALG_AES, SEC_HMAC_SHA512_MAC, SEC_CMODE_CBC)
--GEN_SEC_AEAD_SETKEY_FUNC(aes_ccm, 0, SEC_CALG_AES,
--			 SEC_HMAC_CCM_MAC, SEC_CMODE_CCM)
--GEN_SEC_AEAD_SETKEY_FUNC(aes_gcm, 0, SEC_CALG_AES,
--			 SEC_HMAC_GCM_MAC, SEC_CMODE_GCM)
--GEN_SEC_AEAD_SETKEY_FUNC(sm4_ccm, 0, SEC_CALG_SM4,
--			 SEC_HMAC_CCM_MAC, SEC_CMODE_CCM)
--GEN_SEC_AEAD_SETKEY_FUNC(sm4_gcm, 0, SEC_CALG_SM4,
--			 SEC_HMAC_GCM_MAC, SEC_CMODE_GCM)
-+#define GEN_SEC_AEAD_SETKEY_FUNC(name, aalg, calg, cmode)				\
-+static int sec_setkey_##name(struct crypto_aead *tfm, const u8 *key, u32 keylen)	\
-+{											\
-+	return sec_aead_setkey(tfm, key, keylen, aalg, calg, cmode);			\
-+}
-+
-+GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha1, SEC_A_HMAC_SHA1, SEC_CALG_AES, SEC_CMODE_CBC)
-+GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha256, SEC_A_HMAC_SHA256, SEC_CALG_AES, SEC_CMODE_CBC)
-+GEN_SEC_AEAD_SETKEY_FUNC(aes_cbc_sha512, SEC_A_HMAC_SHA512, SEC_CALG_AES, SEC_CMODE_CBC)
-+GEN_SEC_AEAD_SETKEY_FUNC(aes_ccm, 0, SEC_CALG_AES, SEC_CMODE_CCM)
-+GEN_SEC_AEAD_SETKEY_FUNC(aes_gcm, 0, SEC_CALG_AES, SEC_CMODE_GCM)
-+GEN_SEC_AEAD_SETKEY_FUNC(sm4_ccm, 0, SEC_CALG_SM4, SEC_CMODE_CCM)
-+GEN_SEC_AEAD_SETKEY_FUNC(sm4_gcm, 0, SEC_CALG_SM4, SEC_CMODE_GCM)
- 
- static int sec_aead_sgl_map(struct sec_ctx *ctx, struct sec_req *req)
- {
-@@ -1425,9 +1413,10 @@ static void sec_skcipher_callback(struct sec_ctx *ctx, struct sec_req *req,
- static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
- {
- 	struct aead_request *aead_req = req->aead_req.aead_req;
--	struct sec_cipher_req *c_req = &req->c_req;
-+	struct crypto_aead *tfm = crypto_aead_reqtfm(aead_req);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 	struct sec_aead_req *a_req = &req->aead_req;
--	size_t authsize = ctx->a_ctx.mac_len;
-+	struct sec_cipher_req *c_req = &req->c_req;
- 	u32 data_size = aead_req->cryptlen;
- 	u8 flage = 0;
- 	u8 cm, cl;
-@@ -1468,10 +1457,8 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
- static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
- {
- 	struct aead_request *aead_req = req->aead_req.aead_req;
--	struct crypto_aead *tfm = crypto_aead_reqtfm(aead_req);
--	size_t authsize = crypto_aead_authsize(tfm);
--	struct sec_cipher_req *c_req = &req->c_req;
- 	struct sec_aead_req *a_req = &req->aead_req;
-+	struct sec_cipher_req *c_req = &req->c_req;
- 
- 	memcpy(c_req->c_ivin, aead_req->iv, ctx->c_ctx.ivsize);
- 
-@@ -1479,15 +1466,11 @@ static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
- 		/*
- 		 * CCM 16Byte Cipher_IV: {1B_Flage,13B_IV,2B_counter},
- 		 * the  counter must set to 0x01
-+		 * CCM 16Byte Auth_IV: {1B_AFlage,13B_IV,2B_Ptext_length}
- 		 */
--		ctx->a_ctx.mac_len = authsize;
--		/* CCM 16Byte Auth_IV: {1B_AFlage,13B_IV,2B_Ptext_length} */
- 		set_aead_auth_iv(ctx, req);
--	}
--
--	/* GCM 12Byte Cipher_IV == Auth_IV */
--	if (ctx->c_ctx.c_mode == SEC_CMODE_GCM) {
--		ctx->a_ctx.mac_len = authsize;
-+	} else if (ctx->c_ctx.c_mode == SEC_CMODE_GCM) {
-+		/* GCM 12Byte Cipher_IV == Auth_IV */
- 		memcpy(a_req->a_ivin, c_req->c_ivin, SEC_AIV_SIZE);
- 	}
- }
-@@ -1497,9 +1480,11 @@ static void sec_auth_bd_fill_xcm(struct sec_auth_ctx *ctx, int dir,
- {
- 	struct sec_aead_req *a_req = &req->aead_req;
- 	struct aead_request *aq = a_req->aead_req;
-+	struct crypto_aead *tfm = crypto_aead_reqtfm(aq);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 
- 	/* C_ICV_Len is MAC size, 0x4 ~ 0x10 */
--	sec_sqe->type2.icvw_kmode |= cpu_to_le16((u16)ctx->mac_len);
-+	sec_sqe->type2.icvw_kmode |= cpu_to_le16((u16)authsize);
- 
- 	/* mode set to CCM/GCM, don't set {A_Alg, AKey_Len, MAC_Len} */
- 	sec_sqe->type2.a_key_addr = sec_sqe->type2.c_key_addr;
-@@ -1523,9 +1508,11 @@ static void sec_auth_bd_fill_xcm_v3(struct sec_auth_ctx *ctx, int dir,
- {
- 	struct sec_aead_req *a_req = &req->aead_req;
- 	struct aead_request *aq = a_req->aead_req;
-+	struct crypto_aead *tfm = crypto_aead_reqtfm(aq);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 
- 	/* C_ICV_Len is MAC size, 0x4 ~ 0x10 */
--	sqe3->c_icv_key |= cpu_to_le16((u16)ctx->mac_len << SEC_MAC_OFFSET_V3);
-+	sqe3->c_icv_key |= cpu_to_le16((u16)authsize << SEC_MAC_OFFSET_V3);
- 
- 	/* mode set to CCM/GCM, don't set {A_Alg, AKey_Len, MAC_Len} */
- 	sqe3->a_key_addr = sqe3->c_key_addr;
-@@ -1549,11 +1536,12 @@ static void sec_auth_bd_fill_ex(struct sec_auth_ctx *ctx, int dir,
- 	struct sec_aead_req *a_req = &req->aead_req;
- 	struct sec_cipher_req *c_req = &req->c_req;
- 	struct aead_request *aq = a_req->aead_req;
-+	struct crypto_aead *tfm = crypto_aead_reqtfm(aq);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 
- 	sec_sqe->type2.a_key_addr = cpu_to_le64(ctx->a_key_dma);
- 
--	sec_sqe->type2.mac_key_alg =
--			cpu_to_le32(ctx->mac_len / SEC_SQE_LEN_RATE);
-+	sec_sqe->type2.mac_key_alg = cpu_to_le32(authsize / SEC_SQE_LEN_RATE);
- 
- 	sec_sqe->type2.mac_key_alg |=
- 			cpu_to_le32((u32)((ctx->a_key_len) /
-@@ -1603,11 +1591,13 @@ static void sec_auth_bd_fill_ex_v3(struct sec_auth_ctx *ctx, int dir,
- 	struct sec_aead_req *a_req = &req->aead_req;
- 	struct sec_cipher_req *c_req = &req->c_req;
- 	struct aead_request *aq = a_req->aead_req;
-+	struct crypto_aead *tfm = crypto_aead_reqtfm(aq);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 
- 	sqe3->a_key_addr = cpu_to_le64(ctx->a_key_dma);
- 
- 	sqe3->auth_mac_key |=
--			cpu_to_le32((u32)(ctx->mac_len /
-+			cpu_to_le32((u32)(authsize /
- 			SEC_SQE_LEN_RATE) << SEC_MAC_OFFSET_V3);
- 
- 	sqe3->auth_mac_key |=
-@@ -1658,9 +1648,9 @@ static void sec_aead_callback(struct sec_ctx *c, struct sec_req *req, int err)
- {
- 	struct aead_request *a_req = req->aead_req.aead_req;
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(a_req);
-+	size_t authsize = crypto_aead_authsize(tfm);
- 	struct sec_aead_req *aead_req = &req->aead_req;
- 	struct sec_cipher_req *c_req = &req->c_req;
--	size_t authsize = crypto_aead_authsize(tfm);
- 	struct sec_qp_ctx *qp_ctx = req->qp_ctx;
- 	struct aead_request *backlog_aead_req;
- 	struct sec_req *backlog_req;
-@@ -1673,10 +1663,8 @@ static void sec_aead_callback(struct sec_ctx *c, struct sec_req *req, int err)
- 	if (!err && c_req->encrypt) {
- 		struct scatterlist *sgl = a_req->dst;
- 
--		sz = sg_pcopy_from_buffer(sgl, sg_nents(sgl),
--					  aead_req->out_mac,
--					  authsize, a_req->cryptlen +
--					  a_req->assoclen);
-+		sz = sg_pcopy_from_buffer(sgl, sg_nents(sgl), aead_req->out_mac,
-+					  authsize, a_req->cryptlen + a_req->assoclen);
- 		if (unlikely(sz != authsize)) {
- 			dev_err(c->dev, "copy out mac err!\n");
- 			err = -EINVAL;
-@@ -2204,7 +2192,7 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
- {
- 	struct aead_request *req = sreq->aead_req.aead_req;
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
--	size_t authsize = crypto_aead_authsize(tfm);
-+	size_t sz = crypto_aead_authsize(tfm);
- 	u8 c_mode = ctx->c_ctx.c_mode;
- 	struct device *dev = ctx->dev;
- 	int ret;
-@@ -2215,9 +2203,8 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 		return -EINVAL;
- 	}
- 
--	if (unlikely((c_mode == SEC_CMODE_GCM && authsize < DES_BLOCK_SIZE) ||
--	   (c_mode == SEC_CMODE_CCM && (authsize < MIN_MAC_LEN ||
--		authsize & MAC_LEN_MASK)))) {
-+	if (unlikely((c_mode == SEC_CMODE_GCM && sz < DES_BLOCK_SIZE) ||
-+		     (c_mode == SEC_CMODE_CCM && (sz < MIN_MAC_LEN || sz & MAC_LEN_MASK)))) {
- 		dev_err(dev, "aead input mac length error!\n");
- 		return -EINVAL;
- 	}
-@@ -2233,7 +2220,7 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 	if (sreq->c_req.encrypt)
- 		sreq->c_req.c_len = req->cryptlen;
- 	else
--		sreq->c_req.c_len = req->cryptlen - authsize;
-+		sreq->c_req.c_len = req->cryptlen - sz;
- 	if (c_mode == SEC_CMODE_CBC) {
- 		if (unlikely(sreq->c_req.c_len & (AES_BLOCK_SIZE - 1))) {
- 			dev_err(dev, "aead crypto length error!\n");
-@@ -2259,7 +2246,7 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 
- 	if (ctx->sec->qm.ver == QM_HW_V2) {
- 		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
--		    req->cryptlen <= authsize))) {
-+			     req->cryptlen <= authsize))) {
- 			ctx->a_ctx.fallback = true;
- 			return -EINVAL;
- 		}
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.h b/drivers/crypto/hisilicon/sec2/sec_crypto.h
-index ee2edaf5058df..4d7f917fbaf1c 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.h
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.h
-@@ -23,17 +23,6 @@ enum sec_hash_alg {
- 	SEC_A_HMAC_SHA512 = 0x15,
+@@ -36,6 +36,7 @@ struct sec_aead_req {
+ 	u8 *a_ivin;
+ 	dma_addr_t a_ivin_dma;
+ 	struct aead_request *aead_req;
++	bool fallback;
  };
  
--enum sec_mac_len {
--	SEC_HMAC_CCM_MAC   = 16,
--	SEC_HMAC_GCM_MAC   = 16,
--	SEC_SM3_MAC        = 32,
--	SEC_HMAC_SM3_MAC   = 32,
--	SEC_HMAC_MD5_MAC   = 16,
--	SEC_HMAC_SHA1_MAC   = 20,
--	SEC_HMAC_SHA256_MAC = 32,
--	SEC_HMAC_SHA512_MAC = 64,
--};
+ /* SEC request of Crypto */
+@@ -90,7 +91,6 @@ struct sec_auth_ctx {
+ 	u8 *a_key;
+ 	u8 a_key_len;
+ 	u8 a_alg;
+-	bool fallback;
+ 	struct crypto_shash *hash_tfm;
+ 	struct crypto_aead *fallback_aead_tfm;
+ };
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 395758a29f4a3..32150e05a2795 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -1077,10 +1077,7 @@ static int sec_aead_setauthsize(struct crypto_aead *aead, unsigned int authsize)
+ 	struct sec_ctx *ctx = crypto_tfm_ctx(tfm);
+ 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
+ 
+-	if (unlikely(a_ctx->fallback_aead_tfm))
+-		return crypto_aead_setauthsize(a_ctx->fallback_aead_tfm, authsize);
 -
- enum sec_cmode {
- 	SEC_CMODE_ECB    = 0x0,
- 	SEC_CMODE_CBC    = 0x1,
+-	return 0;
++	return crypto_aead_setauthsize(a_ctx->fallback_aead_tfm, authsize);
+ }
+ 
+ static int sec_aead_fallback_setkey(struct sec_auth_ctx *a_ctx,
+@@ -1117,13 +1114,7 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 		}
+ 		memcpy(c_ctx->c_key, key, keylen);
+ 
+-		if (unlikely(a_ctx->fallback_aead_tfm)) {
+-			ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
+-			if (ret)
+-				return ret;
+-		}
+-
+-		return 0;
++		return sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
+ 	}
+ 
+ 	ret = crypto_authenc_extractkeys(&keys, key, keylen);
+@@ -1148,6 +1139,12 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 		goto bad_key;
+ 	}
+ 
++	ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
++	if (ret) {
++		dev_err(dev, "set sec fallback key err!\n");
++		goto bad_key;
++	}
++
+ 	return 0;
+ 
+ bad_key:
+@@ -1873,8 +1870,10 @@ static void sec_aead_exit(struct crypto_aead *tfm)
+ 
+ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
+ {
++	struct aead_alg *alg = crypto_aead_alg(tfm);
+ 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
+-	struct sec_auth_ctx *auth_ctx = &ctx->a_ctx;
++	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
++	const char *aead_name = alg->base.cra_name;
+ 	int ret;
+ 
+ 	ret = sec_aead_init(tfm);
+@@ -1883,11 +1882,20 @@ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
+ 		return ret;
+ 	}
+ 
+-	auth_ctx->hash_tfm = crypto_alloc_shash(hash_name, 0, 0);
+-	if (IS_ERR(auth_ctx->hash_tfm)) {
++	a_ctx->hash_tfm = crypto_alloc_shash(hash_name, 0, 0);
++	if (IS_ERR(a_ctx->hash_tfm)) {
+ 		dev_err(ctx->dev, "aead alloc shash error!\n");
+ 		sec_aead_exit(tfm);
+-		return PTR_ERR(auth_ctx->hash_tfm);
++		return PTR_ERR(a_ctx->hash_tfm);
++	}
++
++	a_ctx->fallback_aead_tfm = crypto_alloc_aead(aead_name, 0,
++						     CRYPTO_ALG_NEED_FALLBACK | CRYPTO_ALG_ASYNC);
++	if (IS_ERR(a_ctx->fallback_aead_tfm)) {
++		dev_err(ctx->dev, "aead driver alloc fallback tfm error!\n");
++		crypto_free_shash(ctx->a_ctx.hash_tfm);
++		sec_aead_exit(tfm);
++		return PTR_ERR(a_ctx->fallback_aead_tfm);
+ 	}
+ 
+ 	return 0;
+@@ -1897,6 +1905,7 @@ static void sec_aead_ctx_exit(struct crypto_aead *tfm)
+ {
+ 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
+ 
++	crypto_free_aead(ctx->a_ctx.fallback_aead_tfm);
+ 	crypto_free_shash(ctx->a_ctx.hash_tfm);
+ 	sec_aead_exit(tfm);
+ }
+@@ -1923,7 +1932,6 @@ static int sec_aead_xcm_ctx_init(struct crypto_aead *tfm)
+ 		sec_aead_exit(tfm);
+ 		return PTR_ERR(a_ctx->fallback_aead_tfm);
+ 	}
+-	a_ctx->fallback = false;
+ 
+ 	return 0;
+ }
+@@ -2197,15 +2205,15 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 	struct device *dev = ctx->dev;
+ 	int ret;
+ 
+-	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
+-	    req->assoclen > SEC_MAX_AAD_LEN)) {
+-		dev_err(dev, "aead input spec error!\n");
++	/* Hardware does not handle cases where authsize is less than 4 bytes */
++	if (unlikely(sz < MIN_MAC_LEN)) {
++		sreq->aead_req.fallback = true;
+ 		return -EINVAL;
+ 	}
+ 
+-	if (unlikely((c_mode == SEC_CMODE_GCM && sz < DES_BLOCK_SIZE) ||
+-		     (c_mode == SEC_CMODE_CCM && (sz < MIN_MAC_LEN || sz & MAC_LEN_MASK)))) {
+-		dev_err(dev, "aead input mac length error!\n");
++	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
++	    req->assoclen > SEC_MAX_AAD_LEN)) {
++		dev_err(dev, "aead input spec error!\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -2247,7 +2255,7 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 	if (ctx->sec->qm.ver == QM_HW_V2) {
+ 		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
+ 			     req->cryptlen <= authsize))) {
+-			ctx->a_ctx.fallback = true;
++			sreq->aead_req.fallback = true;
+ 			return -EINVAL;
+ 		}
+ 	}
+@@ -2275,16 +2283,9 @@ static int sec_aead_soft_crypto(struct sec_ctx *ctx,
+ 				bool encrypt)
+ {
+ 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
+-	struct device *dev = ctx->dev;
+ 	struct aead_request *subreq;
+ 	int ret;
+ 
+-	/* Kunpeng920 aead mode not support input 0 size */
+-	if (!a_ctx->fallback_aead_tfm) {
+-		dev_err(dev, "aead fallback tfm is NULL!\n");
+-		return -EINVAL;
+-	}
+-
+ 	subreq = aead_request_alloc(a_ctx->fallback_aead_tfm, GFP_KERNEL);
+ 	if (!subreq)
+ 		return -ENOMEM;
+@@ -2316,10 +2317,11 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
+ 	req->aead_req.aead_req = a_req;
+ 	req->c_req.encrypt = encrypt;
+ 	req->ctx = ctx;
++	req->aead_req.fallback = false;
+ 
+ 	ret = sec_aead_param_check(ctx, req);
+ 	if (unlikely(ret)) {
+-		if (ctx->a_ctx.fallback)
++		if (req->aead_req.fallback)
+ 			return sec_aead_soft_crypto(ctx, a_req, encrypt);
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.5
 
