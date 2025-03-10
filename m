@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA05022576A;
-	Mon, 10 Mar 2025 18:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9675A2236E4;
+	Mon, 10 Mar 2025 18:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630853; cv=none; b=Icgpfx+8oOXOVMKUTSnhuSTk6zu/W8tP969bkg8JIt+lUvI36wD3E/4qo0A2vFzZr4hcV6yK4JU9NCOt0XYyZj2lXhZ+HTP05ltUvwQWyttbX83cZYiRU94dY+buTlIN+jzCgnBy85q9pNqlZD8vs78gi3gt8kdYnVKM/yv5OP0=
+	t=1741630856; cv=none; b=SHvmQtO9dKg++9uYA0uO1hSWl4thIAqGvxwKRF8iifHMtwmakl1hfSLOKFz58bd9rI4dMheyqmBXIiROy5HUR8m557GoI2X+iSkfrORDj3spszlerdXtWvehloOKN+wrQoz+8SJ7swnL3oyI7EYkrPWe89aQSnHRt/ZbSXsL+vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630853; c=relaxed/simple;
-	bh=SDAMIOE1OE0CEMgVs4HIQVmp4cxdRgfYUQixjDhbCHc=;
+	s=arc-20240116; t=1741630856; c=relaxed/simple;
+	bh=8O5bmcoSnHw54jmpj5V2OaiXud1EJ0IAEqTLQAYsbzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPSL58dOXwoeziaS/YU4BrOdjUcahf2lwC/+uWP80twOI0a1QO8BYsdkEoFJGLwLcZW8Qq67OI2MEQLGWMcuVyVdIk93ICajw+OIKmzGcoJWVYdXXR1YF2b7tGcTEbpuGcPNfbHE981InRw0eAkAZB8hc/hhk+LKV/39LcRLRCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwt08kIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NozDXoz1Qe9mFYyLTwLBTirxoDgfiUxvBpuaY6Y44K6S4uezBR/ITjQVRrqfzxy3QWKojiY1RhQCesKZCAYoTk6GnrVcwBK92E7fXhas+tPmKCUn404kLElIgWjTB5SzmbIiFRpCuHMwET8sGvRhNNp8Enw6xCj3y6nEVw3s110=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9pEzle9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwt08kIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE2AC4CEE5;
-	Mon, 10 Mar 2025 18:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9pEzle9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4F2C4CEE5;
+	Mon, 10 Mar 2025 18:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741630853;
-	bh=SDAMIOE1OE0CEMgVs4HIQVmp4cxdRgfYUQixjDhbCHc=;
+	s=korg; t=1741630856;
+	bh=8O5bmcoSnHw54jmpj5V2OaiXud1EJ0IAEqTLQAYsbzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwt08kIts28yXdOnPr7KjlGiboCGNxrnB8AQLcCkSSAEVZkkjRUvrgi4am0UHG+qU
-	 P7sJ1FYjNsEZsv8/Vd+7M2ywrHXo5E5UHhn+zPLLK63JQ8lLX0eHkp1iKtVJwGBjcw
-	 aYRRUh4jJanM6v25Kv6WowKy6sXhirctl8KKiy3Q=
+	b=U9pEzle950RBLRYAfhnJJwHxYXQu3c1k+1xTyQg4EeTIqhMFgcofVb9R+YWbpVaR4
+	 KNOTGeIyjabvvQs+0T0bD4QPtI8KLUBedduUrVFVu3V1pK8FCANTzN/OxHKFNRIDbW
+	 32TMOOS881WNYWyDsyPMQ3bXVuWplGcCnk450QJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 5.15 526/620] vmlinux.lds: Ensure that const vars with relocations are mapped R/O
-Date: Mon, 10 Mar 2025 18:06:12 +0100
-Message-ID: <20250310170606.311044508@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 527/620] sched/core: Prevent rescheduling when interrupts are disabled
+Date: Mon, 10 Mar 2025 18:06:13 +0100
+Message-ID: <20250310170606.348919968@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -50,52 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 68f3ea7ee199ef77551e090dfef5a49046ea8443 upstream.
+commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
 
-In the kernel, there are architectures (x86, arm64) that perform
-boot-time relocation (for KASLR) without relying on PIE codegen. In this
-case, all const global objects are emitted into .rodata, including const
-objects with fields that will be fixed up by the boot-time relocation
-code.  This implies that .rodata (and .text in some cases) need to be
-writable at boot, but they will usually be mapped read-only as soon as
-the boot completes.
+David reported a warning observed while loop testing kexec jump:
 
-When using PIE codegen, the compiler will emit const global objects into
-.data.rel.ro rather than .rodata if the object contains fields that need
-such fixups at boot-time. This permits the linker to annotate such
-regions as requiring read-write access only at load time, but not at
-execution time (in user space), while keeping .rodata truly const (in
-user space, this is important for reducing the CoW footprint of dynamic
-executables).
+  Interrupts enabled after irqrouter_resume+0x0/0x50
+  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
+   kernel_kexec+0xf6/0x180
+   __do_sys_reboot+0x206/0x250
+   do_syscall_64+0x95/0x180
 
-This distinction does not matter for the kernel, but it does imply that
-const data will end up in writable memory if the .data.rel.ro sections
-are not treated in a special way, as they will end up in the writable
-.data segment by default.
+The corresponding interrupt flag trace:
 
-So emit .data.rel.ro into the .rodata segment.
+  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
+  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
 
+That means __up_console_sem() was invoked with interrupts enabled. Further
+instrumentation revealed that in the interrupt disabled section of kexec
+jump one of the syscore_suspend() callbacks woke up a task, which set the
+NEED_RESCHED flag. A later callback in the resume path invoked
+cond_resched() which in turn led to the invocation of the scheduler:
+
+  __cond_resched+0x21/0x60
+  down_timeout+0x18/0x60
+  acpi_os_wait_semaphore+0x4c/0x80
+  acpi_ut_acquire_mutex+0x3d/0x100
+  acpi_ns_get_node+0x27/0x60
+  acpi_ns_evaluate+0x1cb/0x2d0
+  acpi_rs_set_srs_method_data+0x156/0x190
+  acpi_pci_link_set+0x11c/0x290
+  irqrouter_resume+0x54/0x60
+  syscore_resume+0x6a/0x200
+  kernel_kexec+0x145/0x1c0
+  __do_sys_reboot+0xeb/0x240
+  do_syscall_64+0x95/0x180
+
+This is a long standing problem, which probably got more visible with
+the recent printk changes. Something does a task wakeup and the
+scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
+invokes schedule() from a completely bogus context. The scheduler
+enables interrupts after context switching, which causes the above
+warning at the end.
+
+Quite some of the code paths in syscore_suspend()/resume() can result in
+triggering a wakeup with the exactly same consequences. They might not
+have done so yet, but as they share a lot of code with normal operations
+it's just a question of time.
+
+The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
+models. Full preemption is not affected as cond_resched() is disabled and
+the preemption check preemptible() takes the interrupt disabled flag into
+account.
+
+Cure the problem by adding a corresponding check into cond_resched().
+
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250221135704.431269-5-ardb+git@google.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    2 +-
+ kernel/sched/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -429,7 +429,7 @@
- 	. = ALIGN((align));						\
- 	.rodata           : AT(ADDR(.rodata) - LOAD_OFFSET) {		\
- 		__start_rodata = .;					\
--		*(.rodata) *(.rodata.*)					\
-+		*(.rodata) *(.rodata.*) *(.data.rel.ro*)		\
- 		SCHED_DATA						\
- 		RO_AFTER_INIT_DATA	/* Read only after init */	\
- 		. = ALIGN(8);						\
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8247,7 +8247,7 @@ SYSCALL_DEFINE0(sched_yield)
+ #if !defined(CONFIG_PREEMPTION) || defined(CONFIG_PREEMPT_DYNAMIC)
+ int __sched __cond_resched(void)
+ {
+-	if (should_resched(0)) {
++	if (should_resched(0) && !irqs_disabled()) {
+ 		preempt_schedule_common();
+ 		return 1;
+ 	}
 
 
