@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9F018FDAB;
-	Mon, 10 Mar 2025 17:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63A51C5F1B;
+	Mon, 10 Mar 2025 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741628844; cv=none; b=phRNB3UHHlhPfDGt3Ab1zoLCf60GEat1KeNRXSRJsdJFZWmczFiHHcvaDClDY3grEp0OZ3fhdJJ0fa8cnKLMEtN+45Ag7WmcRn1ViLZu2uMRpOEl01Zn+gr1Ao6FXY0YH9D1TZrv9+xoiI9XfmvlmvwyMFAkkRwdJPcXIEuea+o=
+	t=1741628846; cv=none; b=Me1sUc5opl532xuISljsYiZv64VkgkD3yl5uPKRUEAY2HInUNpR1eNvI3GoBb5qBsoDNiI8FdJaffkcXNlfYuZ2c6TlWEijIJoels7SYgDi2PMeXu56n5MWZZ36clMCGu0llkh4gMEKowgMPPlMfQv3DL+w+mk+7+Qy157KpmtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741628844; c=relaxed/simple;
-	bh=G8jObQPlROD0oGf8DcanYmjg3jw+Py3vDUeGZ/fBtng=;
+	s=arc-20240116; t=1741628846; c=relaxed/simple;
+	bh=Q7JBzymQ/ouwM+PoKgYYU6qJgZshkCh3+/fTb9Gyaj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEWEA3Utx3ZuxtDCtirXrLnuANPPQ8NSUmzZPoXWHg1JacarNDT9tGKNWeDmpWyeBJnUEht4ehrtbBnd1UrEm+aikQ9Ed6OahF3vXaURAPBlW+M5ldW3G5FTjQP2GyrETY52eZ9t1Nq3VHja6YUs3n9cYjFQ0npH/hWdo6FuKYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLxR6lwX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UyLp1n4U5PKmh2ojOS0HS9s4VycZcOL+hJ38LNIdmEfq05vlya1bE9CFzwxzJpq5SWCR+6lAwISPGS+MwZRp/LT8KTLu4v7wVg/8Z/4WEzNZXzGqA9O2QoBcKO1KhmOgl8wjUhHpe/JjTDfTu2x4RQ3+/OsUGjdRN8Dso4YNboM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf591pGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLxR6lwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74885C4CEE5;
-	Mon, 10 Mar 2025 17:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf591pGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FEF7C4CEE5;
+	Mon, 10 Mar 2025 17:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741628843;
-	bh=G8jObQPlROD0oGf8DcanYmjg3jw+Py3vDUeGZ/fBtng=;
+	s=korg; t=1741628846;
+	bh=Q7JBzymQ/ouwM+PoKgYYU6qJgZshkCh3+/fTb9Gyaj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zLxR6lwX97DIXlafV3hgPxPuK+JrXN5kcwskPnWeuYZL9c96weLeoTjpNlfcTDn2b
-	 Ulzil4jIwv6khIeY5PezZqKPWpGwmb3mSGmRKbZO3jlFCI0/5FWLryYdjvJROtonpH
-	 CJUdmYl4sBhEFW6gma8joCKe+Ie+b3X0cq+Yu3tY=
+	b=uf591pGUJlSWWtIFY+pxMbQP/UDyCF17nJ6Xe42wpublGhOQr043axUApCEDC5m7H
+	 f3yXdqRn272ndobhAIpCHUZX2qIhFmreYag0+MX5VPxfdXVdmqDVSrz9UZg4rQb7Mx
+	 j/JePVFibPDa7D/6T9QoiIG4tlqNPPlsNco2SNT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/620] crypto: hisilicon/sec2 - fix for aead invalid authsize
-Date: Mon, 10 Mar 2025 17:58:55 +0100
-Message-ID: <20250310170549.094867585@linuxfoundation.org>
+Subject: [PATCH 5.15 090/620] crypto: ixp4xx - fix OF node reference leaks in init_ixp_crypto()
+Date: Mon, 10 Mar 2025 17:58:56 +0100
+Message-ID: <20250310170549.134912571@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
 References: <20250310170545.553361750@linuxfoundation.org>
@@ -52,203 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit a5a9d959936499a3106a1bf3b9070875d0d3dec4 ]
+[ Upstream commit 472a989029aac2b78ef2f0b18b27c568bf76d104 ]
 
-When the digest alg is HMAC-SHAx or another, the authsize may be less
-than 4 bytes and mac_len of the BD is set to zero, the hardware considers
-it a BD configuration error and reports a ras error, so the sec driver
-needs to switch to software calculation in this case, this patch add a
-check for it and remove unnecessary check that has been done by crypto.
+init_ixp_crypto() calls of_parse_phandle_with_fixed_args() multiple
+times, but does not release all the obtained refcounts. Fix it by adding
+of_node_put() calls.
 
-Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+This bug was found by an experimental static analysis tool that I am
+developing.
+
+Fixes: 76f24b4f46b8 ("crypto: ixp4xx - Add device tree support")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec.h        |  2 +-
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 64 +++++++++++-----------
- 2 files changed, 34 insertions(+), 32 deletions(-)
+ drivers/crypto/ixp4xx_crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec.h b/drivers/crypto/hisilicon/sec2/sec.h
-index 2dcb4f4c0629a..d3515d1ea5c27 100644
---- a/drivers/crypto/hisilicon/sec2/sec.h
-+++ b/drivers/crypto/hisilicon/sec2/sec.h
-@@ -36,6 +36,7 @@ struct sec_aead_req {
- 	u8 *a_ivin;
- 	dma_addr_t a_ivin_dma;
- 	struct aead_request *aead_req;
-+	bool fallback;
- };
- 
- /* SEC request of Crypto */
-@@ -90,7 +91,6 @@ struct sec_auth_ctx {
- 	u8 *a_key;
- 	u8 a_key_len;
- 	u8 a_alg;
--	bool fallback;
- 	struct crypto_shash *hash_tfm;
- 	struct crypto_aead *fallback_aead_tfm;
- };
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 395758a29f4a3..32150e05a2795 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -1077,10 +1077,7 @@ static int sec_aead_setauthsize(struct crypto_aead *aead, unsigned int authsize)
- 	struct sec_ctx *ctx = crypto_tfm_ctx(tfm);
- 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
- 
--	if (unlikely(a_ctx->fallback_aead_tfm))
--		return crypto_aead_setauthsize(a_ctx->fallback_aead_tfm, authsize);
--
--	return 0;
-+	return crypto_aead_setauthsize(a_ctx->fallback_aead_tfm, authsize);
- }
- 
- static int sec_aead_fallback_setkey(struct sec_auth_ctx *a_ctx,
-@@ -1117,13 +1114,7 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+diff --git a/drivers/crypto/ixp4xx_crypto.c b/drivers/crypto/ixp4xx_crypto.c
+index 98730aab287c3..2bf315554f02a 100644
+--- a/drivers/crypto/ixp4xx_crypto.c
++++ b/drivers/crypto/ixp4xx_crypto.c
+@@ -470,6 +470,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
  		}
- 		memcpy(c_ctx->c_key, key, keylen);
+ 		npe_id = npe_spec.args[0];
++		of_node_put(npe_spec.np);
  
--		if (unlikely(a_ctx->fallback_aead_tfm)) {
--			ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
--			if (ret)
--				return ret;
--		}
--
--		return 0;
-+		return sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
- 	}
- 
- 	ret = crypto_authenc_extractkeys(&keys, key, keylen);
-@@ -1148,6 +1139,12 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 		goto bad_key;
- 	}
- 
-+	ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
-+	if (ret) {
-+		dev_err(dev, "set sec fallback key err!\n");
-+		goto bad_key;
-+	}
-+
- 	return 0;
- 
- bad_key:
-@@ -1873,8 +1870,10 @@ static void sec_aead_exit(struct crypto_aead *tfm)
- 
- static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
- {
-+	struct aead_alg *alg = crypto_aead_alg(tfm);
- 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
--	struct sec_auth_ctx *auth_ctx = &ctx->a_ctx;
-+	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
-+	const char *aead_name = alg->base.cra_name;
- 	int ret;
- 
- 	ret = sec_aead_init(tfm);
-@@ -1883,11 +1882,20 @@ static int sec_aead_ctx_init(struct crypto_aead *tfm, const char *hash_name)
- 		return ret;
- 	}
- 
--	auth_ctx->hash_tfm = crypto_alloc_shash(hash_name, 0, 0);
--	if (IS_ERR(auth_ctx->hash_tfm)) {
-+	a_ctx->hash_tfm = crypto_alloc_shash(hash_name, 0, 0);
-+	if (IS_ERR(a_ctx->hash_tfm)) {
- 		dev_err(ctx->dev, "aead alloc shash error!\n");
- 		sec_aead_exit(tfm);
--		return PTR_ERR(auth_ctx->hash_tfm);
-+		return PTR_ERR(a_ctx->hash_tfm);
-+	}
-+
-+	a_ctx->fallback_aead_tfm = crypto_alloc_aead(aead_name, 0,
-+						     CRYPTO_ALG_NEED_FALLBACK | CRYPTO_ALG_ASYNC);
-+	if (IS_ERR(a_ctx->fallback_aead_tfm)) {
-+		dev_err(ctx->dev, "aead driver alloc fallback tfm error!\n");
-+		crypto_free_shash(ctx->a_ctx.hash_tfm);
-+		sec_aead_exit(tfm);
-+		return PTR_ERR(a_ctx->fallback_aead_tfm);
- 	}
- 
- 	return 0;
-@@ -1897,6 +1905,7 @@ static void sec_aead_ctx_exit(struct crypto_aead *tfm)
- {
- 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
- 
-+	crypto_free_aead(ctx->a_ctx.fallback_aead_tfm);
- 	crypto_free_shash(ctx->a_ctx.hash_tfm);
- 	sec_aead_exit(tfm);
- }
-@@ -1923,7 +1932,6 @@ static int sec_aead_xcm_ctx_init(struct crypto_aead *tfm)
- 		sec_aead_exit(tfm);
- 		return PTR_ERR(a_ctx->fallback_aead_tfm);
- 	}
--	a_ctx->fallback = false;
- 
- 	return 0;
- }
-@@ -2197,15 +2205,15 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 	struct device *dev = ctx->dev;
- 	int ret;
- 
--	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
--	    req->assoclen > SEC_MAX_AAD_LEN)) {
--		dev_err(dev, "aead input spec error!\n");
-+	/* Hardware does not handle cases where authsize is less than 4 bytes */
-+	if (unlikely(sz < MIN_MAC_LEN)) {
-+		sreq->aead_req.fallback = true;
- 		return -EINVAL;
- 	}
- 
--	if (unlikely((c_mode == SEC_CMODE_GCM && sz < DES_BLOCK_SIZE) ||
--		     (c_mode == SEC_CMODE_CCM && (sz < MIN_MAC_LEN || sz & MAC_LEN_MASK)))) {
--		dev_err(dev, "aead input mac length error!\n");
-+	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
-+	    req->assoclen > SEC_MAX_AAD_LEN)) {
-+		dev_err(dev, "aead input spec error!\n");
- 		return -EINVAL;
- 	}
- 
-@@ -2247,7 +2255,7 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 	if (ctx->sec->qm.ver == QM_HW_V2) {
- 		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
- 			     req->cryptlen <= authsize))) {
--			ctx->a_ctx.fallback = true;
-+			sreq->aead_req.fallback = true;
- 			return -EINVAL;
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-rx", 1, 0,
+ 						       &queue_spec);
+@@ -478,6 +479,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
  		}
- 	}
-@@ -2275,16 +2283,9 @@ static int sec_aead_soft_crypto(struct sec_ctx *ctx,
- 				bool encrypt)
- {
- 	struct sec_auth_ctx *a_ctx = &ctx->a_ctx;
--	struct device *dev = ctx->dev;
- 	struct aead_request *subreq;
- 	int ret;
+ 		recv_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
  
--	/* Kunpeng920 aead mode not support input 0 size */
--	if (!a_ctx->fallback_aead_tfm) {
--		dev_err(dev, "aead fallback tfm is NULL!\n");
--		return -EINVAL;
--	}
--
- 	subreq = aead_request_alloc(a_ctx->fallback_aead_tfm, GFP_KERNEL);
- 	if (!subreq)
- 		return -ENOMEM;
-@@ -2316,10 +2317,11 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	req->aead_req.aead_req = a_req;
- 	req->c_req.encrypt = encrypt;
- 	req->ctx = ctx;
-+	req->aead_req.fallback = false;
- 
- 	ret = sec_aead_param_check(ctx, req);
- 	if (unlikely(ret)) {
--		if (ctx->a_ctx.fallback)
-+		if (req->aead_req.fallback)
- 			return sec_aead_soft_crypto(ctx, a_req, encrypt);
- 		return -EINVAL;
- 	}
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-txready", 1, 0,
+ 						       &queue_spec);
+@@ -486,6 +488,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
+ 		}
+ 		send_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
+ 	} else {
+ 		/*
+ 		 * Hardcoded engine when using platform data, this goes away
 -- 
 2.39.5
 
