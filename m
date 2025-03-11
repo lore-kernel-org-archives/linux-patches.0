@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461A249F9;
-	Tue, 11 Mar 2025 15:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FA725F78B;
+	Tue, 11 Mar 2025 15:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707143; cv=none; b=hdcS3nPrRzYjngUAXp23KBakDgzVRw54Kfx1x71v2R/MdnFRHdQGxnDtKHGm0ZhSqmjVr/rJqloL7i42wQOO2xYrZ89QpH5LQIxeNYlG8rd5KC2H9NxfaY+hlIUKJi2+ciC/5CRBpM7GGqAscbEOIijRb4rK5e2eQST6yHE2eQs=
+	t=1741707146; cv=none; b=qpT3NLT4QqMZwnX9X/U0vDnJP80IuCQH5qynWKGjoso9Wew4L67uRFlHFvxnrw3KHVZRYL4Ar5yHNLv/ctv5XsYC0FLppRA06CzUqL4ddXT1U+mn6eYkyla6I+daVMM1yqsbE5fQ+yVa5oFqg96yNtE5GTlpGXjMiDUWuZRK0EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707143; c=relaxed/simple;
-	bh=v3rRF61gX4eVYW4VCzyLFUaygF0EEDgtPBCsmLZ7aw8=;
+	s=arc-20240116; t=1741707146; c=relaxed/simple;
+	bh=M0Dn5Uq8ij6IIG6xAZ/kvWW+XUpsokzGI4MOMLv8PL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLP5X9ZjMlwhJLCVegt88rA5ssi4z1BI25O/a6qh87jXAL0cGIv+D7b7P5esNj2IJmIgelgUB+qKWxwSevtUnGP3OWFKq2X0YqzmLxqztQkePR8p0eJpNILp7DOuNdLymXjXJR9jKAmW+YxfM7voHQA7/E1DuK3ZXZxUm2ciwY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muYLhhKJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJBKFQwMx47Q/XTswf6t4GagkheJtpkIx859+YwC2U+cDbPZm9Wt7/c4gbEaHxMH7NmFp3hPZev9UbPw6uF9WT637CxHGtYE6ceOB8qmd3TxB2d4tQ0iM+NbGBTf/CHYbNAkiqCrbph1gFCwMlk/M1l377ndSYRptPEz3IfSt7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzKqlpUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muYLhhKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00A0C4CEE9;
-	Tue, 11 Mar 2025 15:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzKqlpUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2792C4CEEA;
+	Tue, 11 Mar 2025 15:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707143;
-	bh=v3rRF61gX4eVYW4VCzyLFUaygF0EEDgtPBCsmLZ7aw8=;
+	s=korg; t=1741707146;
+	bh=M0Dn5Uq8ij6IIG6xAZ/kvWW+XUpsokzGI4MOMLv8PL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muYLhhKJY9PZlUxqiKDdp2PJJpoAt4nMpge+6n7tuFCHMgX4hN51xYbpYM/0Jrb2c
-	 dd0C+cF1lOnNwRRTEBCpqf6fa3N8DAhO8/KICLExN+ta+NpsWNf+7fstwMLv5O/ubr
-	 J3KQyLPl26xs7gKxPzCn10yIbXQ8ov2xelu1WeQA=
+	b=MzKqlpUBS+E4byGmCNPCThGlqwEeH8mJY7WBEqBzBt/Vq4Q1xbwOvgcf6BC0V76w1
+	 jf1qELP8uZoIkbzLvVMfv3K9/9E4ImaCf9f0Y/nQzoSZG3GPVKcFkCMviOBGD2XOMa
+	 myK5bJ2mA6S+KgvNsiOmABy61SjTQzB3BxZ3vByY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 289/462] ndisc: extend RCU protection in ndisc_send_skb()
-Date: Tue, 11 Mar 2025 15:59:15 +0100
-Message-ID: <20250311145809.784670951@linuxfoundation.org>
+	Bin Liu <b-liu@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 5.10 290/462] drm/tidss: Fix issue in irq handling causing irq-flood issue
+Date: Tue, 11 Mar 2025 15:59:16 +0100
+Message-ID: <20250311145809.824492971@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,72 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit ed6ae1f325d3c43966ec1b62ac1459e2b8e45640 ]
+commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
 
-ndisc_send_skb() can be called without RTNL or RCU held.
+It has been observed that sometimes DSS will trigger an interrupt and
+the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
+VID level interrupt-statuses are zero.
 
-Acquire rcu_read_lock() earlier, so that we can use dev_net_rcu()
-and avoid a potential UAF.
+As the top level irqstatus is supposed to tell whether we have VP/VID
+interrupts, the thinking of the driver authors was that this particular
+case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
+bits which has corresponding interrupts in VP/VID status. So when this
+issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
+interrupt flood.
 
-Fixes: 1762f7e88eb3 ("[NETNS][IPV6] ndisc - make socket control per namespace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It is unclear why the issue happens. It could be a race issue in the
+driver, but no such race has been found. It could also be an issue with
+the HW. However a similar case can be easily triggered by manually
+writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
+DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
+the bit, we get an interrupt flood.
+
+To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
+solution is that if the top level irqstatus is the one that triggers the
+interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
+unhandled if VP/VID interrupt statuses have bits set. However, testing
+shows that if any of the irqstatuses is set (i.e. even if
+DISPC_IRQSTATUS == 0, but a VID irqstatus has a bit set), we will get an
+interrupt.
+
+Co-developed-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bin Liu <b-liu@ti.com>
+Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Cc: stable@vger.kernel.org
+Tested-by: Jonathan Cormier <jcormier@criticallink.com>
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-1-82ddaec94e4a@ideasonboard.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 2361f4af49e8f..43ad4e5db5941 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -471,16 +471,20 @@ static void ndisc_send_skb(struct sk_buff *skb,
- 			   const struct in6_addr *daddr,
- 			   const struct in6_addr *saddr)
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -676,24 +676,20 @@ static
+ void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t clearmask)
  {
-+	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net *net = dev_net(skb->dev);
--	struct sock *sk = net->ipv6.ndisc_sk;
- 	struct inet6_dev *idev;
-+	struct net *net;
-+	struct sock *sk;
- 	int err;
--	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
- 	u8 type;
+ 	unsigned int i;
+-	u32 top_clear = 0;
  
- 	type = icmp6h->icmp6_type;
+ 	for (i = 0; i < dispc->feat->num_vps; ++i) {
+-		if (clearmask & DSS_IRQ_VP_MASK(i)) {
++		if (clearmask & DSS_IRQ_VP_MASK(i))
+ 			dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(i);
+-		}
+ 	}
+ 	for (i = 0; i < dispc->feat->num_planes; ++i) {
+-		if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
++		if (clearmask & DSS_IRQ_PLANE_MASK(i))
+ 			dispc_k3_vid_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(4 + i);
+-		}
+ 	}
+ 	if (dispc->feat->subrev == DISPC_K2G)
+ 		return;
  
-+	rcu_read_lock();
-+
-+	net = dev_net_rcu(skb->dev);
-+	sk = net->ipv6.ndisc_sk;
- 	if (!dst) {
- 		struct flowi6 fl6;
- 		int oif = skb->dev->ifindex;
-@@ -488,6 +492,7 @@ static void ndisc_send_skb(struct sk_buff *skb,
- 		icmpv6_flow_init(sk, &fl6, type, saddr, daddr, oif);
- 		dst = icmp6_dst_alloc(skb->dev, &fl6);
- 		if (IS_ERR(dst)) {
-+			rcu_read_unlock();
- 			kfree_skb(skb);
- 			return;
- 		}
-@@ -502,7 +507,6 @@ static void ndisc_send_skb(struct sk_buff *skb,
+-	dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
++	/* always clear the top level irqstatus */
++	dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQSTATUS));
  
- 	ip6_nd_hdr(skb, saddr, daddr, inet6_sk(sk)->hop_limit, skb->len);
- 
--	rcu_read_lock();
- 	idev = __in6_dev_get(dst->dev);
- 	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
- 
--- 
-2.39.5
-
+ 	/* Flush posted writes */
+ 	dispc_read(dispc, DISPC_IRQSTATUS);
 
 
