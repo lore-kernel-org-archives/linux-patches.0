@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461C925E83F;
-	Tue, 11 Mar 2025 15:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2241E25E83F;
+	Tue, 11 Mar 2025 15:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707196; cv=none; b=FYc/zpjhv4fUeWpFXgvjWn/+GzFvfSZmvmZNAKqJsEwZTmcdUFGqqAFgrUuVyQjqsHau7up2WeGfyuXUgs65MTP3dbjARiO7ZzZ5G2nE/G+quurJyTn9ZMnjfn1np9CoRLMS9lK1aO6h1q/G9LOV/fHswJ3zQFHMH8EGecB1VM4=
+	t=1741707199; cv=none; b=pAovl/OrEGTomaGi38FRonoiQBcaZ0qklD40VSgS0JijkWwjrJ9GVrdOc6CISF6S1zSiWgpahvIATd/R4oucTwDkhxG0VRQcxbhuNLXq8E+GMr5VFCBapadoHcHSC0joHxUiKBdbB+01d6GExjlT+QSAnHAN3vh1/XR9sXSFE7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707196; c=relaxed/simple;
-	bh=M7ESSOg2l71dFmYCm4838JO5hst2+PCvVJ8UykAyQeI=;
+	s=arc-20240116; t=1741707199; c=relaxed/simple;
+	bh=MCqwH3mV4tj+FfJtnhU86SiwE0li2LEuzK+uGsmH31c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJ0aMmwbAWWbav8CkX2Iq6ECtDDp+JqqveOMGtATKV5LcR2f2pJBtUWz+m/3UxDMXfynwl3tGe8M0IQ3WxeCM7jKnodJnHxh6e1Sh4HuBjsQ89TXx5w8guBh7bWz+MbojGSiQnaSQDNRbOorzLD+p85TUDCj6WW6zW7n1pgcy88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLjZHC4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJVJrAZ72+ot2M+onT4606oDu6/xKWxVIzLXomYhYzFNJoa3ef/BhcBJby5hLkttRXCxD9eV3SKZs7VWRuUJ+0JwfSiIuSJ1+bkBmmTFX7qEMaDJ2iI2SgppcdGZqZB+JBjW6i9a0cZwp26PqFBzvJ5bNdQTAegig+ZcYrXU2R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvLV/qMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLjZHC4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31BEC4CEE9;
-	Tue, 11 Mar 2025 15:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvLV/qMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB57C4CEE9;
+	Tue, 11 Mar 2025 15:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707196;
-	bh=M7ESSOg2l71dFmYCm4838JO5hst2+PCvVJ8UykAyQeI=;
+	s=korg; t=1741707199;
+	bh=MCqwH3mV4tj+FfJtnhU86SiwE0li2LEuzK+uGsmH31c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLjZHC4tqCNmuJhCLwe0wTAjTeKC6opVKwZlBUOtLgzbWubtKKl9P7zW/f52Zl0HP
-	 47lxiLq40zCG+IorYovxzr0MwYbReE4QxQxCHI27VKRF44TeJqN3Ukon1bgFUEUuPR
-	 zrpZci6HRLZzP26IU6zuHyEOEnA9g9y2UExXS8+8=
+	b=jvLV/qMfeAJbtSnacTa9Y67EhcwwAJjT8nviK5qTHB1USYJIMyR3m7CdBJDOTP/Ij
+	 9dpzG7j4Z+ig1u6oQoQSrCfatybsmCRBsyWZxPDIEyY00OCKgp/FscJK3Y6z+5HMC8
+	 LgQMG4VJSEhUgTXmEwBEQi+auYHgJmJ4E5YFhKvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Koichiro Den <koichiro.den@canonical.com>
-Subject: [PATCH 5.10 306/462] btrfs: avoid monopolizing a core when activating a swap file
-Date: Tue, 11 Mar 2025 15:59:32 +0100
-Message-ID: <20250311145810.448583338@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 280/462] net: add dev_net_rcu() helper
+Date: Tue, 11 Mar 2025 15:59:06 +0100
+Message-ID: <20250311145809.432469354@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,39 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 2c8507c63f5498d4ee4af404a8e44ceae4345056 upstream.
+[ Upstream commit 482ad2a4ace2740ca0ff1cbc8f3c7f862f3ab507 ]
 
-This commit re-attempts the backport of the change to the linux-5.10.y
-branch. Commit a1c3a19446a4 ("btrfs: avoid monopolizing a core when
-activating a swap file") on this branch was reverted.
+dev->nd_net can change, readers should either
+use rcu_read_lock() or RTNL.
 
-During swap activation we iterate over the extents of a file and we can
-have many thousands of them, so we can end up in a busy loop monopolizing
-a core. Avoid this by doing a voluntary reschedule after processing each
-extent.
+We currently use a generic helper, dev_net() with
+no debugging support. We probably have many hidden bugs.
 
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add dev_net_rcu() helper for callers using rcu_read_lock()
+protection.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250205155120.1676781-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: dd205fcc33d9 ("ipv4: use RCU protection in rt_is_expired()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/netdevice.h   | 6 ++++++
+ include/net/net_namespace.h | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -10422,6 +10422,8 @@ static int btrfs_swap_activate(struct sw
- 		}
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 3380668478e8a..06b37f45b67c9 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -2361,6 +2361,12 @@ struct net *dev_net(const struct net_device *dev)
+ 	return read_pnet(&dev->nd_net);
+ }
  
- 		start += len;
++static inline
++struct net *dev_net_rcu(const struct net_device *dev)
++{
++	return read_pnet_rcu(&dev->nd_net);
++}
 +
-+		cond_resched();
- 	}
+ static inline
+ void dev_net_set(struct net_device *dev, struct net *net)
+ {
+diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
+index 0dfcf2f0ef62a..3cf6a5c17b84c 100644
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -340,7 +340,7 @@ static inline struct net *read_pnet(const possible_net_t *pnet)
+ #endif
+ }
  
- 	if (bsi.block_len)
+-static inline struct net *read_pnet_rcu(possible_net_t *pnet)
++static inline struct net *read_pnet_rcu(const possible_net_t *pnet)
+ {
+ #ifdef CONFIG_NET_NS
+ 	return rcu_dereference(pnet->net);
+-- 
+2.39.5
+
 
 
