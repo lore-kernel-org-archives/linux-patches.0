@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EBEBE67;
-	Tue, 11 Mar 2025 15:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAA83C0B;
+	Tue, 11 Mar 2025 15:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707578; cv=none; b=T6iCSROEd9cstb9qJzPy/cPIwo5lVyQBCMNxycfqxvrWhtDjAs1O3vm4D/GQPC1OVGv6BH5g5XJAhv/AbzUtHbWWWP1cAEUerRjxykYw8hQNFGZnWUVKHv4MrC99WyJGL3cHh1P+oOPOhg0x9XHgCJxyhSDt0Lp7TtEFuH3RAIE=
+	t=1741707581; cv=none; b=Nofm8Ri1MoS5GRgEEz7hcTHilwqR2deCrFrAjZEMU9vYel7Wjwip0Dmn/USTUUW0ifJOK9k/0a4LphZhmXfzpFleKjJQatzfScdY2QeyJ5sQzVxccRuYXBo9MDzz/3wRTxgtwKaVc6KwFsREUHgghcL28BJ+n/ZRIyu9WL+10+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707578; c=relaxed/simple;
-	bh=YP+yp7eLtRclfQJnqyo334ISQMHqf4tk9Cg7fJMejpM=;
+	s=arc-20240116; t=1741707581; c=relaxed/simple;
+	bh=/q5WZNe1oLYDXuGsO4dJRRW+MyE0YqULPFfIvBAhO4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVyHQCm8qURCJMA+ZS19DbTefS3TfmVHnb7GRvvQ7pCbkTtscy3Q/u50ZJXQwoMFui2DMJj64zXtwgdNmqMGICGlVmBZyJwj4Axxe4RtI+RFrx3gfjQzQEEy+b6Utx2W8YZ5kXE9Z7DVq/RGUGD235SJBmvofWxNYNH/W3hFBbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+qW/rFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEvy1pwdLP2A/THoU0zHgLN5hSS6rzTBrNHT5LETZCTdX+37NWWR47nM1L5EovgdCaGlRJWoxdScuNwbCREJYTBvjBtbCn6uUw/STXaGMmmMk6QWtVCkGUOiRt9x9rZoFXTe4KIiCuNxLvNk1qVNUISEiaJBA9xn4hSMfyTo/wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6K/vrao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+qW/rFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDAC4CEE9;
-	Tue, 11 Mar 2025 15:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6K/vrao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA606C4CEE9;
+	Tue, 11 Mar 2025 15:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707578;
-	bh=YP+yp7eLtRclfQJnqyo334ISQMHqf4tk9Cg7fJMejpM=;
+	s=korg; t=1741707581;
+	bh=/q5WZNe1oLYDXuGsO4dJRRW+MyE0YqULPFfIvBAhO4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+qW/rFZGCnwt94hNfMpB0guiAfUUWfzXiSHve0LmRYKMGxQzQWJzBVUDBGZ8TXTm
-	 rQvx2xMi1JNbsHLmHwk7BFmB3DXAgEiZL206WmTJTPRAtRRLdivQ9HjM6ZkkGAiv+F
-	 CdqfD2KPI8fBaQcQBbr9T8MZ5xL1l+qY/87FtFYA=
+	b=k6K/vraoPAWzp9KXqJVvWR4oZ8QygVRuLy2p4ka9U5xCwlbN9+Ev71ZN+cyBztrV3
+	 bmCrmcnl8uM+YYIBbFmZzjdgDbia18S7WjEVwCXS5mLOE9ol4GnOYe3/zPgvGjXGme
+	 HVoaYxIIOb+mwclULpgInYrRT13EqhI2TtheX3mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.10 436/462] xhci: pci: Fix indentation in the PCI device ID definitions
-Date: Tue, 11 Mar 2025 16:01:42 +0100
-Message-ID: <20250311145815.556641677@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	"Ubisectech Sirius" <bugreport@ubisectech.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.10 437/462] Squashfs: check the inode number is not the invalid value of zero
+Date: Tue, 11 Mar 2025 16:01:43 +0100
+Message-ID: <20250311145815.596459357@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -49,42 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 0309ed83791c079f239c13e0c605210425cd1a61 upstream.
+commit 9253c54e01b6505d348afbc02abaa4d9f8a01395 upstream.
 
-Some of the definitions are missing the one TAB, add it to them.
+Syskiller has produced an out of bounds access in fill_meta_index().
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-23-mathias.nyman@linux.intel.com
+That out of bounds access is ultimately caused because the inode
+has an inode number with the invalid value of zero, which was not checked.
+
+The reason this causes the out of bounds access is due to following
+sequence of events:
+
+1. Fill_meta_index() is called to allocate (via empty_meta_index())
+   and fill a metadata index.  It however suffers a data read error
+   and aborts, invalidating the newly returned empty metadata index.
+   It does this by setting the inode number of the index to zero,
+   which means unused (zero is not a valid inode number).
+
+2. When fill_meta_index() is subsequently called again on another
+   read operation, locate_meta_index() returns the previous index
+   because it matches the inode number of 0.  Because this index
+   has been returned it is expected to have been filled, and because
+   it hasn't been, an out of bounds access is performed.
+
+This patch adds a sanity check which checks that the inode number
+is not zero when the inode is created and returns -EINVAL if it is.
+
+[phillip@squashfs.org.uk: whitespace fix]
+  Link: https://lkml.kernel.org/r/20240409204723.446925-1-phillip@squashfs.org.uk
+Link: https://lkml.kernel.org/r/20240408220206.435788-1-phillip@squashfs.org.uk
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: "Ubisectech Sirius" <bugreport@ubisectech.com>
+Closes: https://lore.kernel.org/lkml/87f5c007-b8a5-41ae-8b57-431e924c5915.bugreport@ubisectech.com/
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/squashfs/inode.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -27,8 +27,8 @@
- #define SPARSE_CNTL_ENABLE	0xC12C
+--- a/fs/squashfs/inode.c
++++ b/fs/squashfs/inode.c
+@@ -48,6 +48,10 @@ static int squashfs_new_inode(struct sup
+ 	gid_t i_gid;
+ 	int err;
  
- /* Device for a quirk */
--#define PCI_VENDOR_ID_FRESCO_LOGIC	0x1b73
--#define PCI_DEVICE_ID_FRESCO_LOGIC_PDK	0x1000
-+#define PCI_VENDOR_ID_FRESCO_LOGIC		0x1b73
-+#define PCI_DEVICE_ID_FRESCO_LOGIC_PDK		0x1000
- #define PCI_DEVICE_ID_FRESCO_LOGIC_FL1009	0x1009
- #define PCI_DEVICE_ID_FRESCO_LOGIC_FL1100	0x1100
- #define PCI_DEVICE_ID_FRESCO_LOGIC_FL1400	0x1400
-@@ -37,8 +37,8 @@
- #define PCI_DEVICE_ID_EJ168		0x7023
- #define PCI_DEVICE_ID_EJ188		0x7052
++	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
++	if (inode->i_ino == 0)
++		return -EINVAL;
++
+ 	err = squashfs_get_id(sb, le16_to_cpu(sqsh_ino->uid), &i_uid);
+ 	if (err)
+ 		return err;
+@@ -58,7 +62,6 @@ static int squashfs_new_inode(struct sup
  
--#define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI	0x8c31
--#define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI	0x9c31
-+#define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI		0x8c31
-+#define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI		0x9c31
- #define PCI_DEVICE_ID_INTEL_WILDCATPOINT_LP_XHCI	0x9cb1
- #define PCI_DEVICE_ID_INTEL_CHERRYVIEW_XHCI		0x22b5
- #define PCI_DEVICE_ID_INTEL_SUNRISEPOINT_H_XHCI		0xa12f
+ 	i_uid_write(inode, i_uid);
+ 	i_gid_write(inode, i_gid);
+-	inode->i_ino = le32_to_cpu(sqsh_ino->inode_number);
+ 	inode->i_mtime.tv_sec = le32_to_cpu(sqsh_ino->mtime);
+ 	inode->i_atime.tv_sec = inode->i_mtime.tv_sec;
+ 	inode->i_ctime.tv_sec = inode->i_mtime.tv_sec;
 
 
