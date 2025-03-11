@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B81F25E83E;
-	Tue, 11 Mar 2025 15:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C56125B69D;
+	Tue, 11 Mar 2025 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707020; cv=none; b=igHZy7EYiwl5xYdI0G7/NqvitrJMlO3KbS5mTzhIexKps/r7/NLxXaNqdqFYscgskMWx0rFhk3arGomoUV0yjSiF3qGgU+0KWx+DXIoFydLkBntLf3Kh5byuim6lBrtJBisvVim8Wsp3jj3Flfr3i6yfg3/bAb+b2WZpeoq5gkw=
+	t=1741707023; cv=none; b=ZVjt03EZzn3HNt/2CmXt4i+qnFjuHeMtgzw3quYRUutS9kfhtk8U63y/mJ2YeKxfZkSVq16dpad+UqfKJezMZxMdyrDzXoKR8ifvZ3TUj6ucxtLOgGI9XPMRahS++dGWV9qEbwk4xhMhKl8kwlwanF10sA0+6tX7CK1Bqxzf4/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707020; c=relaxed/simple;
-	bh=rqIWR/EXAZIJDGiEnro8nxqOrSyUFp1Ow7tdB4zfqvo=;
+	s=arc-20240116; t=1741707023; c=relaxed/simple;
+	bh=U4V+RycGWHQMzcU5CFQ07j0RP+Q44ry/rsd6uTn+jyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5Ey7OIejUbJp2OfXrYDKNAzb13KdlDGwc8+Yo0zUHo90UGcg/uLk2euTxVthGOAuMeb2ywAdmg9QO5Aryysaz7bMRaljPChci6Eug2h74HjDTzLPNHP2FTMk+HteXjvyekRUge2AoAoFSS9sIIXXQ3jP+SmfrVYOgwCnvrjffc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKcDOczq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+nhqcy4uUiheDXR/TlzpFp6kdieO4y9FQRC4L62jDH31DMg6gwDevt/705dLHIPOyNDdlwAcWVFzWvlm9WyUIv+SVp7Xyc59tzr17g5vZYYiUlgoVRCQI9WxqPB/HePLdLn5Jk2shEmaiNO949QAFI97ten76v5ZT3nb33GnlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1vbs8Am; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKcDOczq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE542C4CEE9;
-	Tue, 11 Mar 2025 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1vbs8Am"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12C0C4CEE9;
+	Tue, 11 Mar 2025 15:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707020;
-	bh=rqIWR/EXAZIJDGiEnro8nxqOrSyUFp1Ow7tdB4zfqvo=;
+	s=korg; t=1741707023;
+	bh=U4V+RycGWHQMzcU5CFQ07j0RP+Q44ry/rsd6uTn+jyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKcDOczq92XGtnBKZ82JCKP9dGzYgqAWyLUAZ/3wGfrkxLzTS7nBNil8Cd1hivRh0
-	 ZYiPVCVNWIQJIc9jJHyRg2xpVSEHW1EA6QWIQFlzWRyHWSgH2db9FoG7QQ9A18TsLz
-	 BZS5EAngg0P6Xxq+WdLSX3+5ciVJPXoGE/n/Ls/U=
+	b=o1vbs8AmP+TA3F7+vl+IRzRTRYuAPdcLJWezscYBPPPBPNrhdvWeTcNozp6clYXzY
+	 dTZRBUyDtwjRfXJGgIWkTV5HnxMPMbOWB7qJokrN7JFbaUkpei68V0v0piofrd25ci
+	 aY08CKaZxl+qQ4UZp2RirH4FofFoHBGvBWpSq/zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Mark Tinguely <mark.tinguely@oracle.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 215/462] ocfs2: handle a symlink read error correctly
-Date: Tue, 11 Mar 2025 15:58:01 +0100
-Message-ID: <20250311145806.859791284@linuxfoundation.org>
+Subject: [PATCH 5.10 216/462] nilfs2: fix possible int overflows in nilfs_fiemap()
+Date: Tue, 11 Mar 2025 15:58:02 +0100
+Message-ID: <20250311145806.898059205@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -57,65 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 2b4c2094da6d84e69b843dd3317902e977bf64bd upstream.
+commit 6438ef381c183444f7f9d1de18f22661cba1e946 upstream.
 
-Patch series "Convert ocfs2 to use folios".
+Since nilfs_bmap_lookup_contig() in nilfs_fiemap() calculates its result
+by being prepared to go through potentially maxblocks == INT_MAX blocks,
+the value in n may experience an overflow caused by left shift of blkbits.
 
-Mark did a conversion of ocfs2 to use folios and sent it to me as a
-giant patch for review ;-)
+While it is extremely unlikely to occur, play it safe and cast right hand
+expression to wider type to mitigate the issue.
 
-So I've redone it as individual patches, and credited Mark for the patches
-where his code is substantially the same.  It's not a bad way to do it;
-his patch had some bugs and my patches had some bugs.  Hopefully all our
-bugs were different from each other.  And hopefully Mark likes all the
-changes I made to his code!
+Found by Linux Verification Center (linuxtesting.org) with static analysis
+tool SVACE.
 
-
-This patch (of 23):
-
-If we can't read the buffer, be sure to unlock the page before returning.
-
-Link: https://lkml.kernel.org/r/20241205171653.3179945-1-willy@infradead.org
-Link: https://lkml.kernel.org/r/20241205171653.3179945-2-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Mark Tinguely <mark.tinguely@oracle.com>
+Link: https://lkml.kernel.org/r/20250124222133.5323-1-konishi.ryusuke@gmail.com
+Fixes: 622daaff0a89 ("nilfs2: fiemap support")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/symlink.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nilfs2/inode.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/symlink.c
-+++ b/fs/ocfs2/symlink.c
-@@ -66,7 +66,7 @@ static int ocfs2_fast_symlink_readpage(s
- 
- 	if (status < 0) {
- 		mlog_errno(status);
--		return status;
-+		goto out;
- 	}
- 
- 	fe = (struct ocfs2_dinode *) bh->b_data;
-@@ -77,9 +77,10 @@ static int ocfs2_fast_symlink_readpage(s
- 	memcpy(kaddr, link, len + 1);
- 	kunmap_atomic(kaddr);
- 	SetPageUptodate(page);
-+out:
- 	unlock_page(page);
- 	brelse(bh);
--	return 0;
-+	return status;
- }
- 
- const struct address_space_operations ocfs2_fast_symlink_aops = {
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -1263,7 +1263,7 @@ int nilfs_fiemap(struct inode *inode, st
+ 			if (size) {
+ 				if (phys && blkphy << blkbits == phys + size) {
+ 					/* The current extent goes on */
+-					size += n << blkbits;
++					size += (u64)n << blkbits;
+ 				} else {
+ 					/* Terminate the current extent */
+ 					ret = fiemap_fill_next_extent(
+@@ -1276,14 +1276,14 @@ int nilfs_fiemap(struct inode *inode, st
+ 					flags = FIEMAP_EXTENT_MERGED;
+ 					logical = blkoff << blkbits;
+ 					phys = blkphy << blkbits;
+-					size = n << blkbits;
++					size = (u64)n << blkbits;
+ 				}
+ 			} else {
+ 				/* Start a new extent */
+ 				flags = FIEMAP_EXTENT_MERGED;
+ 				logical = blkoff << blkbits;
+ 				phys = blkphy << blkbits;
+-				size = n << blkbits;
++				size = (u64)n << blkbits;
+ 			}
+ 			blkoff += n;
+ 		}
 
 
