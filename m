@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BF3846D;
-	Tue, 11 Mar 2025 15:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1F31DF749;
+	Tue, 11 Mar 2025 15:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706591; cv=none; b=HeURtZLhXrLZe4xal3yGQkiKd/E7AOXZRI+TcpUBu4eO8b6yMMIfyxF06E02e4h7mJUs3mxC3NfTzyXoRrjB7nSVuQDY7XeJx2uIw8SLwagIvAtzl+BWI3+zEjni3MdMj8DpUIhzzCKoJmOlM5Wfdkv9uslHPIaY0UbR7/Yylok=
+	t=1741706593; cv=none; b=TAuJBpCA3LbVpM+IwRFKdzNuWVIK7y/avrn/IDa+2l5KJztVx32cpWG/NCh4gQKZJAZZYdB3bB5mGWVJnv4IgNr8aCtHsDbjn1ys6LCJQE4AdXR6MJy6dAaV8jQyEMSgLXQuLtHt7AyEhd7uy91BUbyX/I6ENPIx7LwNnsK+4S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706591; c=relaxed/simple;
-	bh=r176Aq6ZogtDwJ9B6hONn8duSL7EyJCg6JIbeIigmZU=;
+	s=arc-20240116; t=1741706593; c=relaxed/simple;
+	bh=wWWRUzX1Bkl8tavqZOwP7QgmOiYld/IvlB8MAHBvhxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1BpzAhKIdN89yQAf5ExY4T81Lale7BU25p1gJ3GnZe4CPUpL1grrnH0o2CUHb+zr5t1ppiDhOHUT2M7/A7rSGlcVSHpV1nZSgO/Ssgu7lGqRhkMTN0jdKXV6hJZ5o6KgMMmXx474mrc1tHUAf6XS4/BNcj2qGEdkfhx3AuFpz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgdrmqV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ypqpw1gO9ViV9LWO3buhlvGqkpubJrd1ZO1cSy5mBtutNHQxtyHAvh2GTtxQrHYoXZ6Yqc/CxOECD4+QhlvWBdOobfZMVpbAu8KUAPoTUkkERXgUjT93XRyZolngPuOt8R4BY64C37iydPXUCFLjzopJgJdaYqYmz2JHIdElhW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fB5zexab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgdrmqV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C8CC4CEE9;
-	Tue, 11 Mar 2025 15:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fB5zexab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62179C4CEE9;
+	Tue, 11 Mar 2025 15:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706590;
-	bh=r176Aq6ZogtDwJ9B6hONn8duSL7EyJCg6JIbeIigmZU=;
+	s=korg; t=1741706593;
+	bh=wWWRUzX1Bkl8tavqZOwP7QgmOiYld/IvlB8MAHBvhxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgdrmqV8tPou5zvrF2PBP0Gj7IcOW91Dken5s4TC3ZsaLQS5e6a2klAcNBz+13sfx
-	 H15EFfqKdWcfwMMtqN1BjTTRVNfIr6lP7a7ZfDUu1Jy0pHbaURgpokvu1kIRBV4P9Y
-	 jildOUNSzZtCTZgqh+espl09iAUPPm/HUb9+apBU=
+	b=fB5zexabXbCwR/5q4DHHBgtXQOR19aeFMYds3gy4oUmCfaUoteQNyBAjaI2jlYypC
+	 6tSwTvk5PuxN6xVKcxbYcmmK/dmiyiY+4VcxXeLxTyZ0OgmR8TP54Auon5dC7OiHmj
+	 mvrw3uOuMcPwnsbZ5SHBomvWtjmmmRk+BZlIFXrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 100/462] net: hns3: fix oops when unload drivers paralleling
-Date: Tue, 11 Mar 2025 15:56:06 +0100
-Message-ID: <20250311145802.312852021@linuxfoundation.org>
+Subject: [PATCH 5.10 101/462] net: fec: implement TSO descriptor cleanup
+Date: Tue, 11 Mar 2025 15:56:07 +0100
+Message-ID: <20250311145802.351539799@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,119 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
 
-[ Upstream commit 92e5995773774a3e70257e9c95ea03518268bea5 ]
+[ Upstream commit 61dc1fd9205bc9d9918aa933a847b08e80b4dc20 ]
 
-When unload hclge driver, it tries to disable sriov first for each
-ae_dev node from hnae3_ae_dev_list. If user unloads hns3 driver at
-the time, because it removes all the ae_dev nodes, and it may cause
-oops.
+Implement cleanup of descriptors in the TSO error path of
+fec_enet_txq_submit_tso(). The cleanup
 
-But we can't simply use hnae3_common_lock for this. Because in the
-process flow of pci_disable_sriov(), it will trigger the remove flow
-of VF, which will also take hnae3_common_lock.
+- Unmaps DMA buffers for data descriptors skipping TSO header
+- Clears all buffer descriptors
+- Handles extended descriptors by clearing cbd_esc when enabled
 
-To fixes it, introduce a new mutex to protect the unload process.
-
-Fixes: 0dd8a25f355b ("net: hns3: disable sriov before unload hclge layer")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20250118094741.3046663-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 79f339125ea3 ("net: fec: Add software TSO support")
+Signed-off-by: Dheeraj Reddy Jonnalagadda <dheeraj.linuxdev@gmail.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250120085430.99318-1-dheeraj.linuxdev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hnae3.c       | 15 +++++++++++++++
- drivers/net/ethernet/hisilicon/hns3/hnae3.h       |  2 ++
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c   |  2 ++
- .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c   |  2 ++
- .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c |  2 ++
- 5 files changed, 23 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 31 ++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.c b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-index 9a63fbc694083..b25fb400f4767 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-@@ -40,6 +40,21 @@ EXPORT_SYMBOL(hnae3_unregister_ae_algo_prepare);
-  */
- static DEFINE_MUTEX(hnae3_common_lock);
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index a591ca0b37787..8e30e999456d4 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -728,6 +728,8 @@ static int fec_enet_txq_submit_tso(struct fec_enet_priv_tx_q *txq,
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+ 	int hdr_len, total_len, data_left;
+ 	struct bufdesc *bdp = txq->bd.cur;
++	struct bufdesc *tmp_bdp;
++	struct bufdesc_ex *ebdp;
+ 	struct tso_t tso;
+ 	unsigned int index = 0;
+ 	int ret;
+@@ -801,7 +803,34 @@ static int fec_enet_txq_submit_tso(struct fec_enet_priv_tx_q *txq,
+ 	return 0;
  
-+/* ensure the drivers being unloaded one by one */
-+static DEFINE_MUTEX(hnae3_unload_lock);
+ err_release:
+-	/* TODO: Release all used data descriptors for TSO */
++	/* Release all used data descriptors for TSO */
++	tmp_bdp = txq->bd.cur;
 +
-+void hnae3_acquire_unload_lock(void)
-+{
-+	mutex_lock(&hnae3_unload_lock);
-+}
-+EXPORT_SYMBOL(hnae3_acquire_unload_lock);
++	while (tmp_bdp != bdp) {
++		/* Unmap data buffers */
++		if (tmp_bdp->cbd_bufaddr &&
++		    !IS_TSO_HEADER(txq, fec32_to_cpu(tmp_bdp->cbd_bufaddr)))
++			dma_unmap_single(&fep->pdev->dev,
++					 fec32_to_cpu(tmp_bdp->cbd_bufaddr),
++					 fec16_to_cpu(tmp_bdp->cbd_datlen),
++					 DMA_TO_DEVICE);
 +
-+void hnae3_release_unload_lock(void)
-+{
-+	mutex_unlock(&hnae3_unload_lock);
-+}
-+EXPORT_SYMBOL(hnae3_release_unload_lock);
++		/* Clear standard buffer descriptor fields */
++		tmp_bdp->cbd_sc = 0;
++		tmp_bdp->cbd_datlen = 0;
++		tmp_bdp->cbd_bufaddr = 0;
 +
- static bool hnae3_client_match(enum hnae3_client_type client_type)
- {
- 	if (client_type == HNAE3_CLIENT_KNIC ||
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-index 4a9576a449e10..25b6b4f780f1d 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-@@ -764,4 +764,6 @@ int hnae3_register_client(struct hnae3_client *client);
- void hnae3_set_client_init_flag(struct hnae3_client *client,
- 				struct hnae3_ae_dev *ae_dev,
- 				unsigned int inited);
-+void hnae3_acquire_unload_lock(void);
-+void hnae3_release_unload_lock(void);
- #endif
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 9ff5179b4d879..110baa9949a0c 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -4751,9 +4751,11 @@ module_init(hns3_init_module);
-  */
- static void __exit hns3_exit_module(void)
- {
-+	hnae3_acquire_unload_lock();
- 	pci_unregister_driver(&hns3_driver);
- 	hnae3_unregister_client(&client);
- 	hns3_dbg_unregister_debugfs();
-+	hnae3_release_unload_lock();
++		/* Handle extended descriptor if enabled */
++		if (fep->bufdesc_ex) {
++			ebdp = (struct bufdesc_ex *)tmp_bdp;
++			ebdp->cbd_esc = 0;
++		}
++
++		tmp_bdp = fec_enet_get_nextdesc(tmp_bdp, &txq->bd);
++	}
++
++	dev_kfree_skb_any(skb);
++
+ 	return ret;
  }
- module_exit(hns3_exit_module);
  
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 885793707a5f1..ec918f2981ec2 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11539,9 +11539,11 @@ static int hclge_init(void)
- 
- static void hclge_exit(void)
- {
-+	hnae3_acquire_unload_lock();
- 	hnae3_unregister_ae_algo_prepare(&ae_algo);
- 	hnae3_unregister_ae_algo(&ae_algo);
- 	destroy_workqueue(hclge_wq);
-+	hnae3_release_unload_lock();
- }
- module_init(hclge_init);
- module_exit(hclge_exit);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 755935f9efc81..aa026eb5cf588 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -3726,8 +3726,10 @@ static int hclgevf_init(void)
- 
- static void hclgevf_exit(void)
- {
-+	hnae3_acquire_unload_lock();
- 	hnae3_unregister_ae_algo(&ae_algovf);
- 	destroy_workqueue(hclgevf_wq);
-+	hnae3_release_unload_lock();
- }
- module_init(hclgevf_init);
- module_exit(hclgevf_exit);
 -- 
 2.39.5
 
