@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5571B1E9B06;
-	Tue, 11 Mar 2025 15:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5311E1E1A18;
+	Tue, 11 Mar 2025 15:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707295; cv=none; b=EQVluqpt7L0Ib+vWzoTj1syh2AghZkobGJwQf4RIEQuKKJnbTYKr+yb/KCNLeRVG5J0HiDI1h84+cikUMrWp62exYlSg65F91+m1sXhsnH657aFG3FEbyooC1eiLaVVvepATlpAPD7BkwbH+5YtbCW5vXs1+3Td4+W8oE2n0vlA=
+	t=1741707298; cv=none; b=MR5GUFgLf6vAGBdPWSFMpZaDMHIETc7dcnj8KPeYOmzMVd0IatP5Qy395Uq29H7dYdfgLj7G2/F9R6trXQFb9XT/eZUfXwa3jvT989RPtELJaLAcIMk8j8m2c/sgDkuaATKZQBfTBfKlEbOxkr6YILg1ToMbmFP7ShpUJaP6ZJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707295; c=relaxed/simple;
-	bh=o5FHVfqmiIAFz8V9DeIJYR2kCj8tPYjoX1Hssfb7TiU=;
+	s=arc-20240116; t=1741707298; c=relaxed/simple;
+	bh=hiMFaS+mEIMaAby7wdVgWRK8ieYHvdcB+08HWAbWQ+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go/9GarcJXn2v2b6aPwJAmfe/MRSrrFjQX2hJGIPpvG3cP75gbh1V59IvPwGPLWkHJSEJbsMOfh9PV36pLuZB/SEqL7E3VGoOcDMXLfOkn702h8RFeol3UHbqy3/UueSXlBhW3X138SA2/PIjOKcDto2GeBZ/E3U/8IoJ0PvQCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0aUdJZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPZZEE2Bo6golcSmRrPOSmqSCbEubCYJhrXrS74eFeZUXJzps+8dA05IbUG2SqviCAVTQY5Rzc66DcGdMCdPVqAE1anRTZRC2k6d/+oKShgXt5Wt1F0ejmaRg5aJslpukqZ89IS1Katsof3/MFOZhc0Wl0P9H+Jl2rjGf+hVM1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KP+Flsn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0aUdJZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EFFC4CEE9;
-	Tue, 11 Mar 2025 15:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KP+Flsn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E968C4CEE9;
+	Tue, 11 Mar 2025 15:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707294;
-	bh=o5FHVfqmiIAFz8V9DeIJYR2kCj8tPYjoX1Hssfb7TiU=;
+	s=korg; t=1741707297;
+	bh=hiMFaS+mEIMaAby7wdVgWRK8ieYHvdcB+08HWAbWQ+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0aUdJZG8r8eLQdQQgXzmCYiBCgNSyj6bB4jtLezXyEW4qzPwDAWDRZhqGAQpQrlO
-	 r/u3nrA1CByw2H2b5J7zdkh9uVXM7QOU8Dsd9ovKjXy8vEV2SmEaiurs6Dg9TrhV+m
-	 RT5s2/iCovL7N6B2vt8stbAZy9kMLDuvpYxMq92c=
+	b=KP+Flsn3XwxLe3gnlF8PhaIztFi7Is1I6PjQpLaKOTWKkfdjnbmjhRhTh8Irlb+yk
+	 XDLuO9bX7/cOWZgeuzeZHazRTulC41Gl8W1gxoCDcTb11mClPG6rR0asbBoHrgge7K
+	 iOLc35WLCZetRyvEvBX32/hX0T2M+AMJ758Ftee0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei He <helei.sig11@bytedance.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Qiang Zhang <dtzq01@gmail.com>,
+	Yoshiki Komachi <komachi.yoshiki@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/462] crypto: testmgr - fix wrong key length for pkcs1pad
-Date: Tue, 11 Mar 2025 15:59:39 +0100
-Message-ID: <20250311145810.727105690@linuxfoundation.org>
+Subject: [PATCH 5.10 340/462] flow_dissector: Fix port range key handling in BPF conversion
+Date: Tue, 11 Mar 2025 16:00:06 +0100
+Message-ID: <20250311145811.796825403@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,33 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei He <helei.sig11@bytedance.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 39ef08517082a424b5b65c3dbaa6c0fa9d3303b9 ]
+[ Upstream commit 69ab34f705fbfabcace64b5d53bb7a4450fac875 ]
 
-Fix wrong test data at testmgr.h, it seems to be caused
-by ignoring the last '\0' when calling sizeof.
+Fix how port range keys are handled in __skb_flow_bpf_to_target() by:
+- Separating PORTS and PORTS_RANGE key handling
+- Using correct key_ports_range structure for range keys
+- Properly initializing both key types independently
 
-Signed-off-by: Lei He <helei.sig11@bytedance.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This ensures port range information is correctly stored in its dedicated
+structure rather than incorrectly using the regular ports key structure.
+
+Fixes: 59fb9b62fb6c ("flow_dissector: Fix to use new variables for port ranges in bpf hook")
+Reported-by: Qiang Zhang <dtzq01@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAPx+-5uvFxkhkz4=j_Xuwkezjn9U6kzKTD5jz4tZ9msSJ0fOJA@mail.gmail.com/
+Cc: Yoshiki Komachi <komachi.yoshiki@gmail.com>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://patch.msgid.link/20250218043210.732959-4-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/testmgr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/flow_dissector.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/testmgr.h b/crypto/testmgr.h
-index 8c83811c0e351..b04e9943c8c7f 100644
---- a/crypto/testmgr.h
-+++ b/crypto/testmgr.h
-@@ -777,7 +777,7 @@ static const struct akcipher_testvec pkcs1pad_rsa_tv_template[] = {
- 	"\xd1\x86\x48\x55\xce\x83\xee\x8e\x51\xc7\xde\x32\x12\x47\x7d\x46"
- 	"\xb8\x35\xdf\x41\x02\x01\x00\x02\x01\x00\x02\x01\x00\x02\x01\x00"
- 	"\x02\x01\x00",
--	.key_len = 804,
-+	.key_len = 803,
- 	/*
- 	 * m is SHA256 hash of following message:
- 	 * "\x49\x41\xbe\x0a\x0c\xc9\xf6\x35\x51\xe4\x27\x56\x13\x71\x4b\xd0"
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 3f90f70d30060..cc9c63987dc36 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -792,6 +792,7 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
+ 				     struct flow_dissector *flow_dissector,
+ 				     void *target_container)
+ {
++	struct flow_dissector_key_ports_range *key_ports_range = NULL;
+ 	struct flow_dissector_key_ports *key_ports = NULL;
+ 	struct flow_dissector_key_control *key_control;
+ 	struct flow_dissector_key_basic *key_basic;
+@@ -836,20 +837,21 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
+ 		key_control->addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
+ 	}
+ 
+-	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS))
++	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS)) {
+ 		key_ports = skb_flow_dissector_target(flow_dissector,
+ 						      FLOW_DISSECTOR_KEY_PORTS,
+ 						      target_container);
+-	else if (dissector_uses_key(flow_dissector,
+-				    FLOW_DISSECTOR_KEY_PORTS_RANGE))
+-		key_ports = skb_flow_dissector_target(flow_dissector,
+-						      FLOW_DISSECTOR_KEY_PORTS_RANGE,
+-						      target_container);
+-
+-	if (key_ports) {
+ 		key_ports->src = flow_keys->sport;
+ 		key_ports->dst = flow_keys->dport;
+ 	}
++	if (dissector_uses_key(flow_dissector,
++			       FLOW_DISSECTOR_KEY_PORTS_RANGE)) {
++		key_ports_range = skb_flow_dissector_target(flow_dissector,
++							    FLOW_DISSECTOR_KEY_PORTS_RANGE,
++							    target_container);
++		key_ports_range->tp.src = flow_keys->sport;
++		key_ports_range->tp.dst = flow_keys->dport;
++	}
+ 
+ 	if (dissector_uses_key(flow_dissector,
+ 			       FLOW_DISSECTOR_KEY_FLOW_LABEL)) {
 -- 
 2.39.5
 
