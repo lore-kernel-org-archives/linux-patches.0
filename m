@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFD27E110;
-	Tue, 11 Mar 2025 15:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FB81BD00C;
+	Tue, 11 Mar 2025 15:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706295; cv=none; b=TZPgfk0i0Iar3p/JVkcoTw7nOHvOh2Sw73iZgLpZSmg/S57A8rjLNRrd6ek5BqyvPlDNuokSgnTV6+/g996nAgMAttsunHVPHEQWvsCLCYS7UpA50A+ixhw/xIgBsTKvcCa6AgLbiCsYx1WZZyLKdrU+oMozBcBZskyNF3/tH3A=
+	t=1741706298; cv=none; b=ZuH4DG8Jz2zXeVLrtVoAQU9SMkylkCEW78Hy0sWCMbOs/Qk2DKS5F59WpjGyxPs4wmSkWR5B6ZNtY19xTyOYy9pn7ihfM2FAh+WK1b31mR4KlFS0H410EOGbRY5gXQfSpOnY7tPqGxhnMuPlzGo9+DFfRi5viFhOr4XwooYKDnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706295; c=relaxed/simple;
-	bh=TGpPjInJ29f+hPylNgihQzk6lcDzsi5u0hUdWg0SRxo=;
+	s=arc-20240116; t=1741706298; c=relaxed/simple;
+	bh=CNj7WH6GKXQZ7hBz5CSmVVWFX2oobD5b4pq6Um/k0D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgD3DVgBNfMEAtidns+keb6cgd9Dy0ahYZhL7g/tM9q0HttzOvKiuAUCBzvAx+uuhu51ypTAhyP6wApH/KUzJkqjNk8fY3dJxxefIzyv1rJtNYpADz1PWgdqthhYhHBDzwQ7Ccwg5qR3I+c7g9nT64SI4siQIrYCSYWsD8EDUsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mO+r5lon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HoJUzKyk2nT2hz6V/lEPzoVvFRQCc/waZ8cizCnQwILxiHjxJfMBkTK8EjPxmuk0M9h1gcsGav7NFX5jyEHQg/fq6sMvWRcKRyI6pueHjMDf6dbWmBG9HnVXhqwJIYsKU9KNugcxYmtEfDVGf4PIzorCtF8y8Plzq2mDN6FpTwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4zeQwqy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mO+r5lon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A11C4CEE9;
-	Tue, 11 Mar 2025 15:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4zeQwqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09800C4CEE9;
+	Tue, 11 Mar 2025 15:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706295;
-	bh=TGpPjInJ29f+hPylNgihQzk6lcDzsi5u0hUdWg0SRxo=;
+	s=korg; t=1741706298;
+	bh=CNj7WH6GKXQZ7hBz5CSmVVWFX2oobD5b4pq6Um/k0D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mO+r5lon2336Iz7UJ+t1o5N0PJe/Q04SECzrzCZ+mA71fvaK+OOrWtyHbTpUh3DIn
-	 Fmu79MYwrYMrCHZp/ec5mGRvm0PfYXU53RrnZuQS1/GwHLyieIvNlbysaP7a9AJeJ6
-	 dUiwepeYhMNOnVkmpOO4AKGOrP8JjrtNJli8Yk98=
+	b=T4zeQwqy+FfPFyzflNbF2fpVW+2cvVrdMklC6s8EzZ9zr93fxfjh6tJPM962KJk2e
+	 UMFx6RNZ4kFb9Ff9qHibYJh7vpBwaItgVyjAMIEDjG+8Aic74sIW+sDJ6FU8shUBg5
+	 a5kCOj4ev/FXMRGB7mk8T14X0KNQ5F48+DjqjfZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 5.4 328/328] eeprom: digsy_mtc: Make GPIO lookup table match the device
-Date: Tue, 11 Mar 2025 16:01:38 +0100
-Message-ID: <20250311145727.930970870@linuxfoundation.org>
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 310/328] gpio: rcar: Fix missing of_node_put() call
+Date: Tue, 11 Mar 2025 16:01:20 +0100
+Message-ID: <20250311145727.229765393@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,35 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-commit 038ef0754aae76f79b147b8867f9250e6a976872 upstream.
+[ Upstream commit 391b41f983bf7ff853de44704d8e14e7cc648a9b ]
 
-The dev_id value in the GPIO lookup table must match to
-the device instance name, which in this case is combined
-of name and platform device ID, i.e. "spi_gpio.1". But
-the table assumed that there was no platform device ID
-defined, which is wrong. Fix the dev_id value accordingly.
+of_parse_phandle_with_fixed_args() requires its caller to
+call into of_node_put() on the node pointer from the output
+structure, but such a call is currently missing.
 
-Fixes: 9b00bc7b901f ("spi: spi-gpio: Rewrite to use GPIO descriptors")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250206220311.1554075-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Call into of_node_put() to rectify that.
+
+Fixes: 159f8a0209af ("gpio-rcar: Add DT support")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20250305163753.34913-2-fabrizio.castro.jz@renesas.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/eeprom/digsy_mtc_eeprom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-rcar.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
-+++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
-@@ -60,7 +60,7 @@ static struct platform_device digsy_mtc_
- };
+diff --git a/drivers/gpio/gpio-rcar.c b/drivers/gpio/gpio-rcar.c
+index f0b6c68e848e3..37b731d22cb00 100644
+--- a/drivers/gpio/gpio-rcar.c
++++ b/drivers/gpio/gpio-rcar.c
+@@ -418,7 +418,12 @@ static int gpio_rcar_parse_dt(struct gpio_rcar_priv *p, unsigned int *npins)
+ 	p->has_both_edge_trigger = info->has_both_edge_trigger;
  
- static struct gpiod_lookup_table eeprom_spi_gpiod_table = {
--	.dev_id         = "spi_gpio",
-+	.dev_id         = "spi_gpio.1",
- 	.table          = {
- 		GPIO_LOOKUP("gpio@b00", GPIO_EEPROM_CLK,
- 			    "sck", GPIO_ACTIVE_HIGH),
+ 	ret = of_parse_phandle_with_fixed_args(np, "gpio-ranges", 3, 0, &args);
+-	*npins = ret == 0 ? args.args[2] : RCAR_MAX_GPIO_PER_BANK;
++	if (ret) {
++		*npins = RCAR_MAX_GPIO_PER_BANK;
++	} else {
++		*npins = args.args[2];
++		of_node_put(args.np);
++	}
+ 
+ 	if (*npins == 0 || *npins > RCAR_MAX_GPIO_PER_BANK) {
+ 		dev_warn(p->dev, "Invalid number of gpio lines %u, using %u\n",
+-- 
+2.39.5
+
 
 
