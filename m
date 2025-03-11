@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FE71C3BEB;
-	Tue, 11 Mar 2025 15:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062FD25DAFF;
+	Tue, 11 Mar 2025 15:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705805; cv=none; b=qIR6qN4pDKbDTIzjYyi3BYq06Rz1kmx+y2z/ESHDOLDPJS9td5tFkDMZpHNBbompDkrbEJ9xHme0nRu5ofP7teeO0ZlFP38hoTaFcN949ZWAvGEFjIjIHbfTafljcYUpDiUSQyW8fROPZLmlYgbmML3tQZgXRf/Gi23RF8JPp4M=
+	t=1741705808; cv=none; b=nMzxecfyEfaMxMK2hZ1EfCy5zIpkSvp6YmBXtZGADNVUW5VuGnp9B14N1VuejwhCrz/lyQH8apO99UEDKwwDboc1HAbo1DyAuqObSTNLi3q+v04578QSoiJ1bwHoJUJkf9JEbf30awETE5xAZR7XxSUB/PysqjXv99JrW0rr5yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705805; c=relaxed/simple;
-	bh=FKDplNzf8UNKtiNYxj9Xzb6OlJYAoT5dIrx98cNMOPI=;
+	s=arc-20240116; t=1741705808; c=relaxed/simple;
+	bh=zXltKyRgoXI49LcXmdpsIHTMetd0FXglqVo5X0YdMqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJ7uv2RwcVqKqX+NOvoCDH7g85x3N70nrLZBMVBRwDSavIJguTdh2tCHfGqktQjVLMbrPXL2C1sVhImrq3iv2FPOyqVNqVBtxprSKY3Z7C0USJ47R8yw+AGG1cGmL7tk9Jp4w4NarFpoB3WGKPWNLMMjQfg2oUQjZ0SRFeLC5t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZh2Yfj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CjNR2ea2Adbp6e9IIIimzVZILRTmVLGmBpDDaigDb0OJ3ROVmvq0rbbES/88BleslY5zmchAaFknNcy81hjQNS9ZP8yWsCRAYqEFlLeE2uUEXzDTJL3JT/G4Z3ErLa/ovDLcoqlfsVrYshNu0d/JekUrL5EfDcjcJ/NHYighbwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OYuYhdx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZh2Yfj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923DDC4CEE9;
-	Tue, 11 Mar 2025 15:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OYuYhdx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D69C4CEF1;
+	Tue, 11 Mar 2025 15:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705805;
-	bh=FKDplNzf8UNKtiNYxj9Xzb6OlJYAoT5dIrx98cNMOPI=;
+	s=korg; t=1741705807;
+	bh=zXltKyRgoXI49LcXmdpsIHTMetd0FXglqVo5X0YdMqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZh2Yfj/+zlVGl6+UMUV4LHf96kyqYSIcnY4zmk0k+kHA+ucM/PIjvHngs8olrKS4
-	 /bdtZNNDMBkhhjrXRB/hdEVVBR4Y28CMQCxmOYpju7v+CQERjqwrpzn6Gf9Y9TRQF+
-	 pZbdfPLeIyKHQ2+iUiuq2Xbxdu03UywYRROBUBww=
+	b=2OYuYhdxCSKhNg43nnVw6t200Z+PCj9/+FpKozhUjtZrhrTW5UMSYgeH8AiZQoZ2D
+	 YiyXuGb3h4YgsVFTEuusdsIkCZ3VhOz4yMds60cAqzeOoRurZUqDR/AYO6267wGIEC
+	 vriSxGOo6bCIkU1deLl5Aus0j3YovzXvwtiCwOdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Narayana Murty N <nnmlinux@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.4 142/328] powerpc/pseries/eeh: Fix get PE state translation
-Date: Tue, 11 Mar 2025 15:58:32 +0100
-Message-ID: <20250311145720.552847873@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 143/328] kbuild: Move -Wenum-enum-conversion to W=2
+Date: Tue, 11 Mar 2025 15:58:33 +0100
+Message-ID: <20250311145720.593344367@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,54 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 11b93559000c686ad7e5ab0547e76f21cc143844 upstream.
+commit 8f6629c004b193d23612641c3607e785819e97ab upstream.
 
-The PE Reset State "0" returned by RTAS calls
-"ibm_read_slot_reset_[state|state2]" indicates that the reset is
-deactivated and the PE is in a state where MMIO and DMA are allowed.
-However, the current implementation of "pseries_eeh_get_state()" does
-not reflect this, causing drivers to incorrectly assume that MMIO and
-DMA operations cannot be resumed.
+-Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
+caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
+Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
+there were numerous instances that would break builds with -Werror.
+Unfortunately, this is not a full solution, as more and more developers,
+subsystems, and distributors are building with W=1 as well, so they
+continue to see the numerous instances of this warning.
 
-The userspace drivers as a part of EEH recovery using VFIO ioctls fail
-to detect when the recovery process is complete. The VFIO_EEH_PE_GET_STATE
-ioctl does not report the expected EEH_PE_STATE_NORMAL state, preventing
-userspace drivers from functioning properly on pseries systems.
+Since the move to W=1, there have not been many new instances that have
+appeared through various build reports and the ones that have appeared
+seem to be following similar existing patterns, suggesting that most
+instances of this warning will not be real issues. The only alternatives
+for silencing this warning are adding casts (which is generally seen as
+an ugly practice) or refactoring the enums to macro defines or a unified
+enum (which may be undesirable because of type safety in other parts of
+the code).
 
-The patch addresses this issue by updating 'pseries_eeh_get_state()'
-to include "EEH_STATE_MMIO_ENABLED" and "EEH_STATE_DMA_ENABLED" in
-the result mask for PE Reset State "0". This ensures correct state
-reporting to the callers, aligning the behavior with the PAPR specification
-and fixing the bug in EEH recovery for VFIO user workflows.
+Move the warning to W=2, where warnings that occur frequently but may be
+relevant should reside.
 
-Fixes: 00ba05a12b3c ("powerpc/pseries: Cleanup on pseries_eeh_get_state()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
-Link: https://lore.kernel.org/stable/20241212075044.10563-1-nnmlinux%40linux.ibm.com
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250116103954.17324-1-nnmlinux@linux.ibm.com
+Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
+Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/eeh_pseries.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/Makefile.extrawarn |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/pseries/eeh_pseries.c
-+++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
-@@ -472,8 +472,10 @@ static int pseries_eeh_get_state(struct
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -36,6 +36,10 @@ KBUILD_CFLAGS += $(call cc-option, -Wstr
+ KBUILD_CFLAGS += -Wno-missing-field-initializers
+ KBUILD_CFLAGS += -Wno-sign-compare
  
- 	switch(rets[0]) {
- 	case 0:
--		result = EEH_STATE_MMIO_ACTIVE |
--			 EEH_STATE_DMA_ACTIVE;
-+		result = EEH_STATE_MMIO_ACTIVE	|
-+			 EEH_STATE_DMA_ACTIVE	|
-+			 EEH_STATE_MMIO_ENABLED	|
-+			 EEH_STATE_DMA_ENABLED;
- 		break;
- 	case 1:
- 		result = EEH_STATE_RESET_ACTIVE |
++ifdef CONFIG_CC_IS_CLANG
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
++endif
++
+ KBUILD_CPPFLAGS += -DKBUILD_EXTRA_WARN1
+ 
+ else
+@@ -52,7 +56,6 @@ KBUILD_CFLAGS += $(call cc-disable-warni
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += $(call cc-disable-warning, cast-function-type-strict)
+ KBUILD_CFLAGS += -Wno-enum-compare-conditional
+-KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
+ 
+ endif
 
 
