@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0B325DD0B;
-	Tue, 11 Mar 2025 15:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F34325DAE8;
+	Tue, 11 Mar 2025 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705564; cv=none; b=ThZqjI7TD82qh2nkm5HG9MkFxjtLrO3FJQacQa5uqGIA9kNmC0SGCPnD+PS8lHSd3KL0ASJlURgv6UVdomKoBxH3b9Qu1pxbNdlAlftyyrqr0F9NIrJQqJa/4vj3ctZm3dwEwz8N+1X++lpE6Aid/NUNfnRp7uQI57FKX2eqmkY=
+	t=1741705567; cv=none; b=u/mt/HodTLD7IwAueiS/r1KMrnG6mT+3eXBqOKozQwYyFGM3PyiCI3cEqzDyLxjNajvoOum2tiC0TOt6KuRDumAZimi2TdQCQRKS0kkK+79+vQQ3y7fyC9HFFZtxqfLTlLSjdF7+sxgG2HDWSfiL0psChdCfqWWNtnHvCvW373U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705564; c=relaxed/simple;
-	bh=teU+hXn+Myk6jvRF7qkBDarMFZ6al5Sl9daMvda9Ukc=;
+	s=arc-20240116; t=1741705567; c=relaxed/simple;
+	bh=vQzrv8nD1EUn8FS/g6xgfli8sroI01FCDsrJataKlMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbXqlgnrJi3oxDyZWYNrioZxlngFKvPtB16soV7olAJ/QaiVARTiFCL92dQEl3aJ1gvykcIJVV0Gqe0SPKWerejLpGwfSmnOkWjwKEtW952Oi1nQrd1IlxZ4x0gb2gRXgQRd7hwqRgL9fM11QvglMfLsEAurhoCvMxT/9WgHDwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBaIM/Bq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ik/6DaNGf4j9GxMuVW2drLoyoVs0FfgT0DQOOoDQ7wsB2snUG6KLos8LmkCay4M1ZGgXUB6STu8p8zuEXSdgrr3Tpc03LlMLIizzb2t5SxzaAjUtY7W9TNoaDBTkLBGzkCLDyN0a2/GT7tI5LOteJMAB22917msbGfWCzhdZV/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEkqm6Wi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBaIM/Bq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A29C4CEEA;
-	Tue, 11 Mar 2025 15:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEkqm6Wi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D0FC4CEE9;
+	Tue, 11 Mar 2025 15:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705564;
-	bh=teU+hXn+Myk6jvRF7qkBDarMFZ6al5Sl9daMvda9Ukc=;
+	s=korg; t=1741705567;
+	bh=vQzrv8nD1EUn8FS/g6xgfli8sroI01FCDsrJataKlMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBaIM/Bqfh8/3MNUYVgxrIQJEhr6ZPeS/8BCrv5G8DdiayVywmIXTJkn3lDUoqxmj
-	 6aX6/T6KHlZSvrLWCxCEqBK5qan1qguUumpD6WriYfqMGhYKZV8hqSWJGyxW/yxriR
-	 Z4t6MvD1DXxlaQGpnFhBVM9cg4JtTijjp9QflCoE=
+	b=xEkqm6Wi7ftEc41nWFRKWseS8TdS0/5CKRKwk7BfF2+g0EWgyVKowk2WM6vch0jw1
+	 yb/SGX+CU1+re9/XRGjwkJgSqejVxmJbkMo4b98FhZcLZnjiZ0TObsYN5xBHShhxef
+	 IpPv9E0WXDNtlbqMauQjMk/5V6PPN/i9f8qLDiqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Helge Deller <deller@gmx.de>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Naveen N Rao <naveen@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>,
-	linux-parisc@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 059/328] module: Extend the preempt disabled section in dereference_symbol_descriptor().
-Date: Tue, 11 Mar 2025 15:57:09 +0100
-Message-ID: <20250311145717.241367846@linuxfoundation.org>
+Subject: [PATCH 5.4 060/328] dmaengine: ti: edma: fix OF node reference leaks in edma_driver
+Date: Tue, 11 Mar 2025 15:57:10 +0100
+Message-ID: <20250311145717.282034579@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -63,56 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit a145c848d69f9c6f32008d8319edaa133360dd74 ]
+[ Upstream commit e883c64778e5a9905fce955681f8ee38c7197e0f ]
 
-dereference_symbol_descriptor() needs to obtain the module pointer
-belonging to pointer in order to resolve that pointer.
-The returned mod pointer is obtained under RCU-sched/ preempt_disable()
-guarantees and needs to be used within this section to ensure that the
-module is not removed in the meantime.
+The .probe() of edma_driver calls of_parse_phandle_with_fixed_args() but
+does not release the obtained OF nodes. Thus add a of_node_put() call.
 
-Extend the preempt_disable() section to also cover
-dereference_module_function_descriptor().
+This bug was found by an experimental verification tool that I am
+developing.
 
-Fixes: 04b8eb7a4ccd9 ("symbol lookup: introduce dereference_symbol_descriptor()")
-Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Naveen N Rao <naveen@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>
-Cc: linux-parisc@vger.kernel.org
-Cc: linuxppc-dev@lists.ozlabs.org
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20250108090457.512198-2-bigeasy@linutronix.de
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Fixes: 1be5336bc7ba ("dmaengine: edma: New device tree binding")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20241219020507.1983124-3-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kallsyms.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/edma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
-index 1f96ce2b47df1..d84b677c728a9 100644
---- a/include/linux/kallsyms.h
-+++ b/include/linux/kallsyms.h
-@@ -63,10 +63,10 @@ static inline void *dereference_symbol_descriptor(void *ptr)
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index b570f08888eeb..01089e5c565f3 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -217,7 +217,6 @@ struct edma_desc {
+ struct edma_cc;
  
- 	preempt_disable();
- 	mod = __module_address((unsigned long)ptr);
--	preempt_enable();
+ struct edma_tc {
+-	struct device_node		*node;
+ 	u16				id;
+ };
  
- 	if (mod)
- 		ptr = dereference_module_function_descriptor(mod, ptr);
-+	preempt_enable();
- #endif
- 	return ptr;
- }
+@@ -2414,13 +2413,13 @@ static int edma_probe(struct platform_device *pdev)
+ 			if (ret || i == ecc->num_tc)
+ 				break;
+ 
+-			ecc->tc_list[i].node = tc_args.np;
+ 			ecc->tc_list[i].id = i;
+ 			queue_priority_mapping[i][1] = tc_args.args[0];
+ 			if (queue_priority_mapping[i][1] > lowest_priority) {
+ 				lowest_priority = queue_priority_mapping[i][1];
+ 				info->default_queue = i;
+ 			}
++			of_node_put(tc_args.np);
+ 		}
+ 	}
+ 
 -- 
 2.39.5
 
