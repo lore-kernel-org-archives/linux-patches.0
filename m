@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A50725EFA4;
-	Tue, 11 Mar 2025 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8953E25BAAA;
+	Tue, 11 Mar 2025 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707073; cv=none; b=S9+m6jaP1KDlDy4IgP0w9GhwirQ/v5m+hdewI5hY6N8mF++Kbs5IFW+Qp+k/6Iq6F1HmeSoIUvBYjEaGenAhhSt2dR0AyKO0HV4OfhhVHV/iwNCVbaASFMYjMfALhIuP2yUuZSg0p8CDHVTw3qYEuKON3lpAPEa6ZrF2mhZ551w=
+	t=1741707075; cv=none; b=gH95Uf6kYSSnE03hbPT+wrvP87RAoQ9a0Y6N7g/ZV7B3ft4BStCDpPYWCC1dQZ1Sn4k4ghtv4zVTgaYDVlWcseT4AgvKIFp38DVWamtqskfqQzSXsalZKEe/EtD4pwGl2wMLBZjCk1P0eEH8Mn89CCFZFylNLRVVssXVzX+aOlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707073; c=relaxed/simple;
-	bh=TJIcd67mGsg2lcLC5dTc76vuuTOT8zKnQsTF2OsxxD8=;
+	s=arc-20240116; t=1741707075; c=relaxed/simple;
+	bh=M244cNiTGIOXJn9+do7OoUwu3QAj4hvpbWtPWSGSvA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QdVgGRQ3H/RV9b2ZR4IVD2U+p6YKmg/y3vQl4FsuEANQkLXwobTvm+QTJBCFwhiUXsv9GaGz9OlMP9Ps7qAiM9cazxeKRFTNIZm0m6wwBPVmJZVFOpWwV20M3yPAGccLdiCbl8qtE/OFEQzxTUfPxRrt/w06O+kPEtHpbMgfiYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUAdrqLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atF65TN8SleArDhnBYrD5Cf7RFW3mmDUbVgliwZrUNRFYOKUM65gRqokUGkTQySfAZHOnAlaZ30vDKUWHi3bS3AWfmpqDBQEb7aMAVleGGt9jefGEnaktEiAuHtUUyvQOPouDb46VmWNvvYeHFv9qDeprNrV/i3mmXYP4u2EXco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2BkzS/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUAdrqLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE48C4CEE9;
-	Tue, 11 Mar 2025 15:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2BkzS/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC15C4CEE9;
+	Tue, 11 Mar 2025 15:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707072;
-	bh=TJIcd67mGsg2lcLC5dTc76vuuTOT8zKnQsTF2OsxxD8=;
+	s=korg; t=1741707075;
+	bh=M244cNiTGIOXJn9+do7OoUwu3QAj4hvpbWtPWSGSvA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUAdrqLrU3SRVkWLHlo7VV3hmeX4GP/IFkjisp0BEih1ILOPf7St3Y8jIVR8MEnkG
-	 1mjlDTWGTpRvjoK+joX09U99qduN/bm/pihZ5TEt+1aR+qI0/b6zpOxvK/UkBsa2xG
-	 o0fXAZbVVfx4eWH0Sl8zs+PzVglYCAnpguN6wrp8=
+	b=o2BkzS/V1JbMYcLcQWpKX4JXVkrrunU4YplVEctzbZ7vES5hcT10mG5O3PuUQAk84
+	 JveGYGsjiVAqemUn66abeTwnUfd/7YskVz9AAWpJYxyzFSLsLraNj7AqVJ6Va6uBg+
+	 ssNh85MZ1sjJKapHzd4z8I+6RBZ80ak4MiUv/B9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 264/462] can: j1939: j1939_sk_send_loop(): fix unable to send messages with data length zero
-Date: Tue, 11 Mar 2025 15:58:50 +0100
-Message-ID: <20250311145808.788752711@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Ivan Kokshaysky <ink@unseen.parts>
+Subject: [PATCH 5.10 265/462] alpha: make stack 16-byte aligned (most cases)
+Date: Tue, 11 Mar 2025 15:58:51 +0100
+Message-ID: <20250311145808.835258592@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -45,82 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Hölzl <alexander.hoelzl@gmx.net>
+From: Ivan Kokshaysky <ink@unseen.parts>
 
-commit 44de577e61ed239db09f0da9d436866bef9b77dd upstream.
+commit 0a0f7362b0367634a2d5cb7c96226afc116f19c9 upstream.
 
-The J1939 standard requires the transmission of messages of length 0.
+The problem is that GCC expects 16-byte alignment of the incoming stack
+since early 2004, as Maciej found out [1]:
+  Having actually dug speculatively I can see that the psABI was changed in
+ GCC 3.5 with commit e5e10fb4a350 ("re PR target/14539 (128-bit long double
+ improperly aligned)") back in Mar 2004, when the stack pointer alignment
+ was increased from 8 bytes to 16 bytes, and arch/alpha/kernel/entry.S has
+ various suspicious stack pointer adjustments, starting with SP_OFF which
+ is not a whole multiple of 16.
 
-For example proprietary messages are specified with a data length of 0
-to 1785. The transmission of such messages is not possible. Sending
-results in no error being returned but no corresponding can frame
-being generated.
+Also, as Magnus noted, "ALPHA Calling Standard" [2] required the same:
+ D.3.1 Stack Alignment
+  This standard requires that stacks be octaword aligned at the time a
+  new procedure is invoked.
 
-Enable the transmission of zero length J1939 messages. In order to
-facilitate this two changes are necessary:
+However:
+- the "normal" kernel stack is always misaligned by 8 bytes, thanks to
+  the odd number of 64-bit words in 'struct pt_regs', which is the very
+  first thing pushed onto the kernel thread stack;
+- syscall, fault, interrupt etc. handlers may, or may not, receive aligned
+  stack depending on numerous factors.
 
-1) If the transmission of a new message is requested from user space
-the message is segmented in j1939_sk_send_loop(). Let the segmentation
-take into account zero length messages, do not terminate immediately,
-queue the corresponding skb.
+Somehow we got away with it until recently, when we ended up with
+a stack corruption in kernel/smp.c:smp_call_function_single() due to
+its use of 32-byte aligned local data and the compiler doing clever
+things allocating it on the stack.
 
-2) j1939_session_skb_get_by_offset() selects the next skb to transmit
-for a session. Take into account that there might be zero length skbs
-in the queue.
+This adds padding between the PAL-saved and kernel-saved registers
+so that 'struct pt_regs' have an even number of 64-bit words.
+This makes the stack properly aligned for most of the kernel
+code, except two handlers which need special threatment.
 
-Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250205174651.103238-1-alexander.hoelzl@gmx.net
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Note: struct pt_regs doesn't belong in uapi/asm; this should be fixed,
+but let's put this off until later.
+
+Link: https://lore.kernel.org/rcu/alpine.DEB.2.21.2501130248010.18889@angie.orcam.me.uk/ [1]
+Link: https://bitsavers.org/pdf/dec/alpha/Alpha_Calling_Standard_Rev_2.0_19900427.pdf [2]
+
 Cc: stable@vger.kernel.org
-[mkl: commit message rephrased]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/socket.c    |    4 ++--
- net/can/j1939/transport.c |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ arch/alpha/include/uapi/asm/ptrace.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1055,7 +1055,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 	todo_size = size;
- 
--	while (todo_size) {
-+	do {
- 		struct j1939_sk_buff_cb *skcb;
- 
- 		segment_size = min_t(size_t, J1939_MAX_TP_PACKET_SIZE,
-@@ -1100,7 +1100,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 		todo_size -= segment_size;
- 		session->total_queued_size += segment_size;
--	}
-+	} while (todo_size);
- 
- 	switch (ret) {
- 	case 0: /* OK */
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -378,8 +378,9 @@ sk_buff *j1939_session_skb_get_by_offset
- 	skb_queue_walk(&session->skb_queue, do_skb) {
- 		do_skcb = j1939_skb_to_cb(do_skb);
- 
--		if (offset_start >= do_skcb->offset &&
--		    offset_start < (do_skcb->offset + do_skb->len)) {
-+		if ((offset_start >= do_skcb->offset &&
-+		     offset_start < (do_skcb->offset + do_skb->len)) ||
-+		     (offset_start == 0 && do_skcb->offset == 0 && do_skb->len == 0)) {
- 			skb = do_skb;
- 		}
- 	}
+--- a/arch/alpha/include/uapi/asm/ptrace.h
++++ b/arch/alpha/include/uapi/asm/ptrace.h
+@@ -42,6 +42,8 @@ struct pt_regs {
+ 	unsigned long trap_a0;
+ 	unsigned long trap_a1;
+ 	unsigned long trap_a2;
++/* This makes the stack 16-byte aligned as GCC expects */
++	unsigned long __pad0;
+ /* These are saved by PAL-code: */
+ 	unsigned long ps;
+ 	unsigned long pc;
 
 
