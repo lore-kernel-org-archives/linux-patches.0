@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DCA1CAA8F;
-	Tue, 11 Mar 2025 15:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A931CAA8F;
+	Tue, 11 Mar 2025 15:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707230; cv=none; b=nT9rNqohbKFUbco4I+LGbKyymiEjTrQkO2IHwwBBzxNw6puKtNy1QsN/pImmufOAvn/DWQMrog+sMmvAgRp+U/9WNduOnGFJ1+2zff161l1oMr7VxkZ8eL1uLYLr8Pwd5LkgEMS+aAGhDnmpQ0zpYsm43ojEcUalaetF6Is2GKc=
+	t=1741707233; cv=none; b=n4Z3IvYSSamDXKpduy2zE/1teGN9MH2CyK+VJcbeubhVztWYyU6/G6wzdJHeIM+brKolHVgFRCd6IC2i0tpkqXyIZkC/paPj9xYC7wriQn5Rs6BrufcOyP8iArXSFbvBOcG3wRlAMjXlMKxg++S1Ht8k3J5gGCk53sExcIG96Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707230; c=relaxed/simple;
-	bh=EUomllhsRYQvC2DZBl7xWsxNLF1y/O/lURcwdRIJLPg=;
+	s=arc-20240116; t=1741707233; c=relaxed/simple;
+	bh=ePLuQjOOMMSvam4k84YJ7+xxcQWfBkhJOrczCDq9MRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvViYRLzadvvfN8mJWDURQF+1IgcMawyyCwu5NCrtsUQewtuaTMYiscROv7uPQxy3G1s+hT2fCJei5QQ6Ryn6dhiQwbbEwHvPKOtGHP0PYlZ2oC3+03ifLCbmtgGDvKwFKdrKcG3EN7dTwFX2ZPLV8Wu/+ACphztgJs9WQqApEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMz8nqMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcRgSFxd4n5jSDe6LgaYO10/zAe1wu2WmW43EwcUAXjZzwJR0EZP6H14YpdTlpoa5EUrTf6uxpswcdLBa0bkCYI+AEtd/nSEiddh4UFLNqdJ3Nc+ZjrtE/CArhFj6MmLUb9jrmB+wGEUlwTXAhQ18i3iZV+yd01F3kM0nPKRdDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPTkuNXZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMz8nqMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B439C4CEE9;
-	Tue, 11 Mar 2025 15:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPTkuNXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3157AC4CEE9;
+	Tue, 11 Mar 2025 15:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707230;
-	bh=EUomllhsRYQvC2DZBl7xWsxNLF1y/O/lURcwdRIJLPg=;
+	s=korg; t=1741707233;
+	bh=ePLuQjOOMMSvam4k84YJ7+xxcQWfBkhJOrczCDq9MRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMz8nqMHBRGTUjemVUL9NKCwpcZsBm23lME3Cz6ZUpTlcjLzdwBFSVHtFgUiISJSL
-	 FdrqfA3l5+N259MwjA3amS2VeniKOtpgk2Phyqc7Dh+8sk666VwUO9NhZ9d8tP/+Tb
-	 ecWt/2nd71wp2xc63vQUPxrUEhbhxZ73wbezOyuE=
+	b=JPTkuNXZRoXhlZwFALG9kYEkKQkKibjT+gKv2/w5ASNjVekXm/jMcJgn2aMXEZDfW
+	 WyDUL5kSmrQORpI+/t8pBxeM9K1z4ipVRXOcZcOzNRlRXMGlNVIvFN2gP9HetT97QJ
+	 PDw1BIQisZ3GODZOtBxKD1I2zLkJxVVdBPvbkt/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Chen <cachen@purestorage.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Noah Meyerhans <noahm@debian.org>,
-	Yuanyuan Zhong <yzhong@purestorage.com>
-Subject: [PATCH 5.10 311/462] nvme-pci: fix multiple races in nvme_setup_io_queues
-Date: Tue, 11 Mar 2025 15:59:37 +0100
-Message-ID: <20250311145810.648754200@linuxfoundation.org>
+	Maxime Ripard <maxime@cerno.tech>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 320/462] drm/probe-helper: Create a HPD IRQ event helper for a single connector
+Date: Tue, 11 Mar 2025 15:59:46 +0100
+Message-ID: <20250311145811.001193775@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,222 +51,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Chen <cachen@purestorage.com>
+From: Maxime Ripard <maxime@cerno.tech>
 
-commit e4b9852a0f4afe40604afb442e3af4452722050a upstream.
+[ Upstream commit 0464ed1a79b818d5e3eda1ac3c23a057ac0cc7c3 ]
 
-Below two paths could overlap each other if we power off a drive quickly
-after powering it on. There are multiple races in nvme_setup_io_queues()
-because of shutdown_lock missing and improper use of NVMEQ_ENABLED bit.
+The drm_helper_hpd_irq_event() function is iterating over all the
+connectors when an hotplug event is detected.
 
-nvme_reset_work()                                nvme_remove()
-  nvme_setup_io_queues()                           nvme_dev_disable()
-  ...                                              ...
-A1  clear NVMEQ_ENABLED bit for admin queue          lock
-    retry:                                       B1  nvme_suspend_io_queues()
-A2    pci_free_irq() admin queue                 B2  nvme_suspend_queue() admin queue
-A3    pci_free_irq_vectors()                         nvme_pci_disable()
-A4    nvme_setup_irqs();                         B3    pci_free_irq_vectors()
-      ...                                            unlock
-A5    queue_request_irq() for admin queue
-      set NVMEQ_ENABLED bit
-      ...
-      nvme_create_io_queues()
-A6      result = queue_request_irq();
-        set NVMEQ_ENABLED bit
-      ...
-      fail to allocate enough IO queues:
-A7      nvme_suspend_io_queues()
-        goto retry
+During that iteration, it will call each connector detect function and
+figure out if its status changed.
 
-If B3 runs in between A1 and A2, it will crash if irqaction haven't
-been freed by A2. B2 is supposed to free admin queue IRQ but it simply
-can't fulfill the job as A1 has cleared NVMEQ_ENABLED bit.
+Finally, if any connector changed, it will notify the user-space and the
+clients that something changed on the DRM device.
 
-Fix: combine A1 A2 so IRQ get freed as soon as the NVMEQ_ENABLED bit
-gets cleared.
+This is supposed to be used for drivers that don't have a hotplug
+interrupt for individual connectors. However, drivers that can use an
+interrupt for a single connector are left in the dust and can either
+reimplement the logic used during the iteration for each connector or
+use that helper and iterate over all connectors all the time.
 
-After solved #1, A2 could race with B3 if A2 is freeing IRQ while B3
-is checking irqaction. A3 also could race with B2 if B2 is freeing
-IRQ while A3 is checking irqaction.
+Since both are suboptimal, let's create a helper that will only perform
+the status detection on a single connector.
 
-Fix: A2 and A3 take lock for mutual exclusion.
-
-A3 could race with B3 since they could run free_msi_irqs() in parallel.
-
-Fix: A3 takes lock for mutual exclusion.
-
-A4 could fail to allocate all needed IRQ vectors if A3 and A4 are
-interrupted by B3.
-
-Fix: A4 takes lock for mutual exclusion.
-
-If A5/A6 happened after B2/B1, B3 will crash since irqaction is not NULL.
-They are just allocated by A5/A6.
-
-Fix: Lock queue_request_irq() and setting of NVMEQ_ENABLED bit.
-
-A7 could get chance to pci_free_irq() for certain IO queue while B3 is
-checking irqaction.
-
-Fix: A7 takes lock.
-
-nvme_dev->online_queues need to be protected by shutdown_lock. Since it
-is not atomic, both paths could modify it using its own copy.
-
-Co-developed-by: Yuanyuan Zhong <yzhong@purestorage.com>
-Signed-off-by: Casey Chen <cachen@purestorage.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-[noahm@debian.org: backported to 5.10]
-Link: https://lore.kernel.org/linux-nvme/20210707211432.29536-1-cachen@purestorage.com/
-Signed-off-by: Noah Meyerhans <noahm@debian.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210914101724.266570-2-maxime@cerno.tech
+Stable-dep-of: 666e19604641 ("drm/rockchip: cdn-dp: Use drm_connector_helper_hpd_irq_event()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c |   66 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 58 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c | 116 +++++++++++++++++++++--------
+ include/drm/drm_probe_helper.h     |   1 +
+ 2 files changed, 86 insertions(+), 31 deletions(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1563,6 +1563,28 @@ static void nvme_init_queue(struct nvme_
- 	wmb(); /* ensure the first interrupt sees the initialization */
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index d3f0d048594e7..1421768a4f333 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -795,6 +795,86 @@ void drm_kms_helper_poll_fini(struct drm_device *dev)
  }
+ EXPORT_SYMBOL(drm_kms_helper_poll_fini);
  
-+/*
-+ * Try getting shutdown_lock while setting up IO queues.
-+ */
-+static int nvme_setup_io_queues_trylock(struct nvme_dev *dev)
++static bool check_connector_changed(struct drm_connector *connector)
 +{
-+	/*
-+	 * Give up if the lock is being held by nvme_dev_disable.
-+	 */
-+	if (!mutex_trylock(&dev->shutdown_lock))
-+		return -ENODEV;
++	struct drm_device *dev = connector->dev;
++	enum drm_connector_status old_status;
++	u64 old_epoch_counter;
 +
-+	/*
-+	 * Controller is in wrong state, fail early.
-+	 */
-+	if (dev->ctrl.state != NVME_CTRL_CONNECTING) {
-+		mutex_unlock(&dev->shutdown_lock);
-+		return -ENODEV;
++	/* Only handle HPD capable connectors. */
++	drm_WARN_ON(dev, !(connector->polled & DRM_CONNECTOR_POLL_HPD));
++
++	drm_WARN_ON(dev, !mutex_is_locked(&dev->mode_config.mutex));
++
++	old_status = connector->status;
++	old_epoch_counter = connector->epoch_counter;
++	connector->status = drm_helper_probe_detect(connector, NULL, false);
++
++	if (old_epoch_counter == connector->epoch_counter) {
++		drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Same epoch counter %llu\n",
++			    connector->base.id,
++			    connector->name,
++			    connector->epoch_counter);
++
++		return false;
 +	}
 +
-+	return 0;
++	drm_dbg_kms(dev, "[CONNECTOR:%d:%s] status updated from %s to %s\n",
++		    connector->base.id,
++		    connector->name,
++		    drm_get_connector_status_name(old_status),
++		    drm_get_connector_status_name(connector->status));
++
++	drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Changed epoch counter %llu => %llu\n",
++		    connector->base.id,
++		    connector->name,
++		    old_epoch_counter,
++		    connector->epoch_counter);
++
++	return true;
 +}
 +
- static int nvme_create_queue(struct nvme_queue *nvmeq, int qid, bool polled)
- {
- 	struct nvme_dev *dev = nvmeq->dev;
-@@ -1591,8 +1613,11 @@ static int nvme_create_queue(struct nvme
- 		goto release_cq;
- 
- 	nvmeq->cq_vector = vector;
--	nvme_init_queue(nvmeq, qid);
- 
-+	result = nvme_setup_io_queues_trylock(dev);
-+	if (result)
-+		return result;
-+	nvme_init_queue(nvmeq, qid);
- 	if (!polled) {
- 		result = queue_request_irq(nvmeq);
- 		if (result < 0)
-@@ -1600,10 +1625,12 @@ static int nvme_create_queue(struct nvme
- 	}
- 
- 	set_bit(NVMEQ_ENABLED, &nvmeq->flags);
-+	mutex_unlock(&dev->shutdown_lock);
- 	return result;
- 
- release_sq:
- 	dev->online_queues--;
-+	mutex_unlock(&dev->shutdown_lock);
- 	adapter_delete_sq(dev, qid);
- release_cq:
- 	adapter_delete_cq(dev, qid);
-@@ -2182,7 +2209,18 @@ static int nvme_setup_io_queues(struct n
- 	if (nr_io_queues == 0)
- 		return 0;
- 	
--	clear_bit(NVMEQ_ENABLED, &adminq->flags);
-+	/*
-+	 * Free IRQ resources as soon as NVMEQ_ENABLED bit transitions
-+	 * from set to unset. If there is a window to it is truely freed,
-+	 * pci_free_irq_vectors() jumping into this window will crash.
-+	 * And take lock to avoid racing with pci_free_irq_vectors() in
-+	 * nvme_dev_disable() path.
-+	 */
-+	result = nvme_setup_io_queues_trylock(dev);
-+	if (result)
-+		return result;
-+	if (test_and_clear_bit(NVMEQ_ENABLED, &adminq->flags))
-+		pci_free_irq(pdev, 0, adminq);
- 
- 	if (dev->cmb_use_sqes) {
- 		result = nvme_cmb_qdepth(dev, nr_io_queues,
-@@ -2198,14 +2236,17 @@ static int nvme_setup_io_queues(struct n
- 		result = nvme_remap_bar(dev, size);
- 		if (!result)
- 			break;
--		if (!--nr_io_queues)
--			return -ENOMEM;
-+		if (!--nr_io_queues) {
-+			result = -ENOMEM;
-+			goto out_unlock;
-+		}
- 	} while (1);
- 	adminq->q_db = dev->dbs;
- 
-  retry:
- 	/* Deregister the admin queue's interrupt */
--	pci_free_irq(pdev, 0, adminq);
-+	if (test_and_clear_bit(NVMEQ_ENABLED, &adminq->flags))
-+		pci_free_irq(pdev, 0, adminq);
- 
- 	/*
- 	 * If we enable msix early due to not intx, disable it again before
-@@ -2214,8 +2255,10 @@ static int nvme_setup_io_queues(struct n
- 	pci_free_irq_vectors(pdev);
- 
- 	result = nvme_setup_irqs(dev, nr_io_queues);
--	if (result <= 0)
--		return -EIO;
-+	if (result <= 0) {
-+		result = -EIO;
-+		goto out_unlock;
++/**
++ * drm_connector_helper_hpd_irq_event - hotplug processing
++ * @connector: drm_connector
++ *
++ * Drivers can use this helper function to run a detect cycle on a connector
++ * which has the DRM_CONNECTOR_POLL_HPD flag set in its &polled member.
++ *
++ * This helper function is useful for drivers which can track hotplug
++ * interrupts for a single connector. Drivers that want to send a
++ * hotplug event for all connectors or can't track hotplug interrupts
++ * per connector need to use drm_helper_hpd_irq_event().
++ *
++ * This function must be called from process context with no mode
++ * setting locks held.
++ *
++ * Note that a connector can be both polled and probed from the hotplug
++ * handler, in case the hotplug interrupt is known to be unreliable.
++ *
++ * Returns:
++ * A boolean indicating whether the connector status changed or not
++ */
++bool drm_connector_helper_hpd_irq_event(struct drm_connector *connector)
++{
++	struct drm_device *dev = connector->dev;
++	bool changed;
++
++	mutex_lock(&dev->mode_config.mutex);
++	changed = check_connector_changed(connector);
++	mutex_unlock(&dev->mode_config.mutex);
++
++	if (changed) {
++		drm_kms_helper_hotplug_event(dev);
++		drm_dbg_kms(dev, "[CONNECTOR:%d:%s] Sent hotplug event\n",
++			    connector->base.id,
++			    connector->name);
 +	}
++
++	return changed;
++}
++EXPORT_SYMBOL(drm_connector_helper_hpd_irq_event);
++
+ /**
+  * drm_helper_hpd_irq_event - hotplug processing
+  * @dev: drm_device
+@@ -808,9 +888,10 @@ EXPORT_SYMBOL(drm_kms_helper_poll_fini);
+  * interrupts for each connector.
+  *
+  * Drivers which support hotplug interrupts for each connector individually and
+- * which have a more fine-grained detect logic should bypass this code and
+- * directly call drm_kms_helper_hotplug_event() in case the connector state
+- * changed.
++ * which have a more fine-grained detect logic can use
++ * drm_connector_helper_hpd_irq_event(). Alternatively, they should bypass this
++ * code and directly call drm_kms_helper_hotplug_event() in case the connector
++ * state changed.
+  *
+  * This function must be called from process context with no mode
+  * setting locks held.
+@@ -822,9 +903,7 @@ bool drm_helper_hpd_irq_event(struct drm_device *dev)
+ {
+ 	struct drm_connector *connector;
+ 	struct drm_connector_list_iter conn_iter;
+-	enum drm_connector_status old_status;
+ 	bool changed = false;
+-	u64 old_epoch_counter;
  
- 	dev->num_vecs = result;
- 	result = max(result - 1, 1);
-@@ -2229,8 +2272,9 @@ static int nvme_setup_io_queues(struct n
- 	 */
- 	result = queue_request_irq(adminq);
- 	if (result)
--		return result;
-+		goto out_unlock;
- 	set_bit(NVMEQ_ENABLED, &adminq->flags);
-+	mutex_unlock(&dev->shutdown_lock);
+ 	if (!dev->mode_config.poll_enabled)
+ 		return false;
+@@ -836,33 +915,8 @@ bool drm_helper_hpd_irq_event(struct drm_device *dev)
+ 		if (!(connector->polled & DRM_CONNECTOR_POLL_HPD))
+ 			continue;
  
- 	result = nvme_create_io_queues(dev);
- 	if (result || dev->online_queues < 2)
-@@ -2239,6 +2283,9 @@ static int nvme_setup_io_queues(struct n
- 	if (dev->online_queues - 1 < dev->max_qid) {
- 		nr_io_queues = dev->online_queues - 1;
- 		nvme_disable_io_queues(dev);
-+		result = nvme_setup_io_queues_trylock(dev);
-+		if (result)
-+			return result;
- 		nvme_suspend_io_queues(dev);
- 		goto retry;
+-		old_status = connector->status;
+-
+-		old_epoch_counter = connector->epoch_counter;
+-
+-		DRM_DEBUG_KMS("[CONNECTOR:%d:%s] Old epoch counter %llu\n", connector->base.id,
+-			      connector->name,
+-			      old_epoch_counter);
+-
+-		connector->status = drm_helper_probe_detect(connector, NULL, false);
+-		DRM_DEBUG_KMS("[CONNECTOR:%d:%s] status updated from %s to %s\n",
+-			      connector->base.id,
+-			      connector->name,
+-			      drm_get_connector_status_name(old_status),
+-			      drm_get_connector_status_name(connector->status));
+-
+-		DRM_DEBUG_KMS("[CONNECTOR:%d:%s] New epoch counter %llu\n",
+-			      connector->base.id,
+-			      connector->name,
+-			      connector->epoch_counter);
+-
+-		/*
+-		 * Check if epoch counter had changed, meaning that we need
+-		 * to send a uevent.
+-		 */
+-		if (old_epoch_counter != connector->epoch_counter)
++		if (check_connector_changed(connector))
+ 			changed = true;
+-
  	}
-@@ -2247,6 +2294,9 @@ static int nvme_setup_io_queues(struct n
- 					dev->io_queues[HCTX_TYPE_READ],
- 					dev->io_queues[HCTX_TYPE_POLL]);
- 	return 0;
-+out_unlock:
-+	mutex_unlock(&dev->shutdown_lock);
-+	return result;
- }
+ 	drm_connector_list_iter_end(&conn_iter);
+ 	mutex_unlock(&dev->mode_config.mutex);
+diff --git a/include/drm/drm_probe_helper.h b/include/drm/drm_probe_helper.h
+index 8d3ed2834d345..04c57564c397d 100644
+--- a/include/drm/drm_probe_helper.h
++++ b/include/drm/drm_probe_helper.h
+@@ -18,6 +18,7 @@ int drm_helper_probe_detect(struct drm_connector *connector,
+ void drm_kms_helper_poll_init(struct drm_device *dev);
+ void drm_kms_helper_poll_fini(struct drm_device *dev);
+ bool drm_helper_hpd_irq_event(struct drm_device *dev);
++bool drm_connector_helper_hpd_irq_event(struct drm_connector *connector);
+ void drm_kms_helper_hotplug_event(struct drm_device *dev);
  
- static void nvme_del_queue_end(struct request *req, blk_status_t error)
+ void drm_kms_helper_poll_disable(struct drm_device *dev);
+-- 
+2.39.5
+
 
 
