@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5641225E832;
-	Tue, 11 Mar 2025 15:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC491CAA8F;
+	Tue, 11 Mar 2025 15:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707319; cv=none; b=cwAEQA9d1iOZVta41QpJ8EHDoQUmRCBZgN0eg7wLOuj7V+6vwB4M5i7aQ4veCJlckepIJr1p5hwBmAmNNEtkZFGHyt0y3QvLG4ICQXA0Rx5RSBhwgqBnhkvi6FFkeFcZ8y2AyH2HWE3uq2pKoHAon4LHiVjn1EOiDZocq9p3YJE=
+	t=1741707322; cv=none; b=P0Jzk3JOHxzjeo4mUV88Z6DQkMo1IQGqjS+V7B7zqquGVP294/o/2HHnbKXG7+UGjjKgFWux26br3rNLrMC719FCr1kBSh3lPcOrq1EEWlmofMBhwRpfbKJ+NcZkkA1FPYoZIu6fCSjyIqL97agRrRm/Tbw0CXB2kcl4rznogS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707319; c=relaxed/simple;
-	bh=5FgGN8H48hwFEQdakCbOMHFWSWGyu6phoceQUSMGa+c=;
+	s=arc-20240116; t=1741707322; c=relaxed/simple;
+	bh=PxcLw2wLvzSksRebik9jOiMYmCXo19Cd3nEWPOZH/Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5d1VaJlKtrGSJfCBe3YPFKnxPkeNoVf0R8ZNCbSvG8bClY/PnNEMfoWJGHCqogRRXSqcTj3u5GbxMXDfP8+ofO+7D7lKETQXt+X+kN2rpedOTJuD0QnpjxsGWWB0FpfjXgLGAi7I9832vovbInb+RY9q1+naDf31VsOWe2LSE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14ldRHFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A5QIaOIpDzWfktLJaj3OUpHA0godklWBVIDsj2pgs5N9ursjqQCY4mjIgWpFTXnoN1qfO733ToXL9LZDGVnUgWUMyxREFcEfOxQ2x0iIH5mEpOVq4L58HrpiiqlAqouRN1AH6LDGzOk+Ck4xTUVNwx7H5fdXZ0v1ozTW3fVenAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQ7dBvdw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14ldRHFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1240C4CEE9;
-	Tue, 11 Mar 2025 15:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQ7dBvdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEF5C4CEE9;
+	Tue, 11 Mar 2025 15:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707319;
-	bh=5FgGN8H48hwFEQdakCbOMHFWSWGyu6phoceQUSMGa+c=;
+	s=korg; t=1741707322;
+	bh=PxcLw2wLvzSksRebik9jOiMYmCXo19Cd3nEWPOZH/Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14ldRHFRCqhD/TA1t4fpbYJrjQgXBpNjt6MUbJf6AabCnQcjy3X0IQ+6znR6tU3hb
-	 Eb3pd/ZfJVDpCVYiRryDHGPs+8rsamesjaLEtvHhW2mCMSwUM03jE4ofZKkGVyvuoV
-	 7fdkg8Uv6lUM6ABLtkHa6mu5Qf9KzQGXfGsHE5qI=
+	b=wQ7dBvdwup1PSMV2cCYLik93EAxmr+KIkY7JktlXA2uWiJw4x82jC4tV1tJzHiJh5
+	 YUzQdPAyxRXTJOVAeqE28phOGc1JpxWsEmiuaNcg9Y4qms7bSsveMYXcACavS3hDns
+	 8/LS8I/gLHfkelGu73vAQa9t35eBNTcCNrIqKnNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Carlos Galo <carlosgalo@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 317/462] crypto: testmgr - some more fixes to RSA test vectors
-Date: Tue, 11 Mar 2025 15:59:43 +0100
-Message-ID: <20250311145810.883352963@linuxfoundation.org>
+Subject: [PATCH 5.10 318/462] mm: update mark_victim tracepoints fields
+Date: Tue, 11 Mar 2025 15:59:44 +0100
+Message-ID: <20250311145810.921541815@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -46,167 +50,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ignat Korchagin <ignat@cloudflare.com>
+From: Carlos Galo <carlosgalo@google.com>
 
-[ Upstream commit 9d2bb9a74b2877f100637d6ab5685bcd33c69d44 ]
+[ Upstream commit 72ba14deb40a9e9668ec5e66a341ed657e5215c2 ]
 
-Two more fixes:
+The current implementation of the mark_victim tracepoint provides only the
+process ID (pid) of the victim process.  This limitation poses challenges
+for userspace tools requiring real-time OOM analysis and intervention.
+Although this information is available from the kernel logs, it’s not
+the appropriate format to provide OOM notifications.  In Android, BPF
+programs are used with the mark_victim trace events to notify userspace of
+an OOM kill.  For consistency, update the trace event to include the same
+information about the OOMed victim as the kernel logs.
 
-  * some test vectors in commit 79e6e2f3f3ff ("crypto: testmgr - populate
-    RSA CRT parameters in RSA test vectors") had misplaced commas, which
-    break the test and trigger KASAN warnings at least on x86-64
+- UID
+   In Android each installed application has a unique UID. Including
+   the `uid` assists in correlating OOM events with specific apps.
 
-  * pkcs1pad test vector did not have its CRT parameters
+- Process Name (comm)
+   Enables identification of the affected process.
 
-Fixes: 79e6e2f3f3ff ("crypto: testmgr - populate RSA CRT parameters in RSA test vectors")
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+- OOM Score
+  Will allow userspace to get additional insight of the relative kill
+  priority of the OOM victim. In Android, the oom_score_adj is used to
+  categorize app state (foreground, background, etc.), which aids in
+  analyzing user-perceptible impacts of OOM events [1].
+
+- Total VM, RSS Stats, and pgtables
+  Amount of memory used by the victim that will, potentially, be freed up
+  by killing it.
+
+[1] https://cs.android.com/android/platform/superproject/main/+/246dc8fc95b6d93afcba5c6d6c133307abb3ac2e:frameworks/base/services/core/java/com/android/server/am/ProcessList.java;l=188-283
+Signed-off-by: Carlos Galo <carlosgalo@google.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/testmgr.h | 102 +++++++++++++++++++++++++++++------------------
- 1 file changed, 63 insertions(+), 39 deletions(-)
+ include/trace/events/oom.h | 36 ++++++++++++++++++++++++++++++++----
+ mm/oom_kill.c              |  6 +++++-
+ 2 files changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/testmgr.h b/crypto/testmgr.h
-index fd2376af5af01..2c9f9f555929c 100644
---- a/crypto/testmgr.h
-+++ b/crypto/testmgr.h
-@@ -271,7 +271,7 @@ static const struct akcipher_testvec rsa_tv_template[] = {
- 	"\x61\xAD\xBD\x3A\x8A\x7E\x99\x1C\x5C\x05\x56\xA9\x4C\x31\x46\xA7"
- 	"\xF9\x80\x3F\x8F\x6F\x8A\xE3\x42\xE9\x31\xFD\x8A\xE4\x7A\x22\x0D"
- 	"\x1B\x99\xA4\x95\x84\x98\x07\xFE\x39\xF9\x24\x5A\x98\x36\xDA\x3D"
--	"\x02\x41", /* coefficient - integer of 65 bytes */
-+	"\x02\x41" /* coefficient - integer of 65 bytes */
- 	"\x00\xB0\x6C\x4F\xDA\xBB\x63\x01\x19\x8D\x26\x5B\xDB\xAE\x94\x23"
- 	"\xB3\x80\xF2\x71\xF7\x34\x53\x88\x50\x93\x07\x7F\xCD\x39\xE2\x11"
- 	"\x9F\xC9\x86\x32\x15\x4F\x58\x83\xB1\x67\xA9\x67\xBF\x40\x2B\x4E"
-@@ -368,7 +368,7 @@ static const struct akcipher_testvec rsa_tv_template[] = {
- 	"\x6A\x37\x3B\x86\x6C\x51\x37\x5B\x1D\x79\xF2\xA3\x43\x10\xC6\xA7"
- 	"\x21\x79\x6D\xF9\xE9\x04\x6A\xE8\x32\xFF\xAE\xFD\x1C\x7B\x8C\x29"
- 	"\x13\xA3\x0C\xB2\xAD\xEC\x6C\x0F\x8D\x27\x12\x7B\x48\xB2\xDB\x31"
--	"\x02\x81\x81", /* coefficient - integer of 129 bytes */
-+	"\x02\x81\x81" /* coefficient - integer of 129 bytes */
- 	"\x00\x8D\x1B\x05\xCA\x24\x1F\x0C\x53\x19\x52\x74\x63\x21\xFA\x78"
- 	"\x46\x79\xAF\x5C\xDE\x30\xA4\x6C\x20\x38\xE6\x97\x39\xB8\x7A\x70"
- 	"\x0D\x8B\x6C\x6D\x13\x74\xD5\x1C\xDE\xA9\xF4\x60\x37\xFE\x68\x77"
-@@ -805,7 +805,7 @@ static const struct akcipher_testvec ecrdsa_tv_template[] = {
- static const struct akcipher_testvec pkcs1pad_rsa_tv_template[] = {
- 	{
- 	.key =
--	"\x30\x82\x03\x1f\x02\x01\x00\x02\x82\x01\x01\x00\xd7\x1e\x77\x82"
-+	"\x30\x82\x04\xa5\x02\x01\x00\x02\x82\x01\x01\x00\xd7\x1e\x77\x82"
- 	"\x8c\x92\x31\xe7\x69\x02\xa2\xd5\x5c\x78\xde\xa2\x0c\x8f\xfe\x28"
- 	"\x59\x31\xdf\x40\x9c\x60\x61\x06\xb9\x2f\x62\x40\x80\x76\xcb\x67"
- 	"\x4a\xb5\x59\x56\x69\x17\x07\xfa\xf9\x4c\xbd\x6c\x37\x7a\x46\x7d"
-@@ -821,42 +821,66 @@ static const struct akcipher_testvec pkcs1pad_rsa_tv_template[] = {
- 	"\x9e\x49\x63\x6e\x02\xc1\xc9\x3a\x9b\xa5\x22\x1b\x07\x95\xd6\x10"
- 	"\x02\x50\xfd\xfd\xd1\x9b\xbe\xab\xc2\xc0\x74\xd7\xec\x00\xfb\x11"
- 	"\x71\xcb\x7a\xdc\x81\x79\x9f\x86\x68\x46\x63\x82\x4d\xb7\xf1\xe6"
--	"\x16\x6f\x42\x63\xf4\x94\xa0\xca\x33\xcc\x75\x13\x02\x82\x01\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
--	"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x01"
--	"\x02\x82\x01\x00\x62\xb5\x60\x31\x4f\x3f\x66\x16\xc1\x60\xac\x47"
--	"\x2a\xff\x6b\x69\x00\x4a\xb2\x5c\xe1\x50\xb9\x18\x74\xa8\xe4\xdc"
--	"\xa8\xec\xcd\x30\xbb\xc1\xc6\xe3\xc6\xac\x20\x2a\x3e\x5e\x8b\x12"
--	"\xe6\x82\x08\x09\x38\x0b\xab\x7c\xb3\xcc\x9c\xce\x97\x67\xdd\xef"
--	"\x95\x40\x4e\x92\xe2\x44\xe9\x1d\xc1\x14\xfd\xa9\xb1\xdc\x71\x9c"
--	"\x46\x21\xbd\x58\x88\x6e\x22\x15\x56\xc1\xef\xe0\xc9\x8d\xe5\x80"
--	"\x3e\xda\x7e\x93\x0f\x52\xf6\xf5\xc1\x91\x90\x9e\x42\x49\x4f\x8d"
--	"\x9c\xba\x38\x83\xe9\x33\xc2\x50\x4f\xec\xc2\xf0\xa8\xb7\x6e\x28"
--	"\x25\x56\x6b\x62\x67\xfe\x08\xf1\x56\xe5\x6f\x0e\x99\xf1\xe5\x95"
--	"\x7b\xef\xeb\x0a\x2c\x92\x97\x57\x23\x33\x36\x07\xdd\xfb\xae\xf1"
--	"\xb1\xd8\x33\xb7\x96\x71\x42\x36\xc5\xa4\xa9\x19\x4b\x1b\x52\x4c"
--	"\x50\x69\x91\xf0\x0e\xfa\x80\x37\x4b\xb5\xd0\x2f\xb7\x44\x0d\xd4"
--	"\xf8\x39\x8d\xab\x71\x67\x59\x05\x88\x3d\xeb\x48\x48\x33\x88\x4e"
--	"\xfe\xf8\x27\x1b\xd6\x55\x60\x5e\x48\xb7\x6d\x9a\xa8\x37\xf9\x7a"
--	"\xde\x1b\xcd\x5d\x1a\x30\xd4\xe9\x9e\x5b\x3c\x15\xf8\x9c\x1f\xda"
--	"\xd1\x86\x48\x55\xce\x83\xee\x8e\x51\xc7\xde\x32\x12\x47\x7d\x46"
--	"\xb8\x35\xdf\x41\x02\x01\x00\x02\x01\x00\x02\x01\x00\x02\x01\x00"
--	"\x02\x01\x00",
--	.key_len = 803,
-+	"\x16\x6f\x42\x63\xf4\x94\xa0\xca\x33\xcc\x75\x13\x02\x03\x01\x00"
-+	"\x01\x02\x82\x01\x00\x62\xb5\x60\x31\x4f\x3f\x66\x16\xc1\x60\xac"
-+	"\x47\x2a\xff\x6b\x69\x00\x4a\xb2\x5c\xe1\x50\xb9\x18\x74\xa8\xe4"
-+	"\xdc\xa8\xec\xcd\x30\xbb\xc1\xc6\xe3\xc6\xac\x20\x2a\x3e\x5e\x8b"
-+	"\x12\xe6\x82\x08\x09\x38\x0b\xab\x7c\xb3\xcc\x9c\xce\x97\x67\xdd"
-+	"\xef\x95\x40\x4e\x92\xe2\x44\xe9\x1d\xc1\x14\xfd\xa9\xb1\xdc\x71"
-+	"\x9c\x46\x21\xbd\x58\x88\x6e\x22\x15\x56\xc1\xef\xe0\xc9\x8d\xe5"
-+	"\x80\x3e\xda\x7e\x93\x0f\x52\xf6\xf5\xc1\x91\x90\x9e\x42\x49\x4f"
-+	"\x8d\x9c\xba\x38\x83\xe9\x33\xc2\x50\x4f\xec\xc2\xf0\xa8\xb7\x6e"
-+	"\x28\x25\x56\x6b\x62\x67\xfe\x08\xf1\x56\xe5\x6f\x0e\x99\xf1\xe5"
-+	"\x95\x7b\xef\xeb\x0a\x2c\x92\x97\x57\x23\x33\x36\x07\xdd\xfb\xae"
-+	"\xf1\xb1\xd8\x33\xb7\x96\x71\x42\x36\xc5\xa4\xa9\x19\x4b\x1b\x52"
-+	"\x4c\x50\x69\x91\xf0\x0e\xfa\x80\x37\x4b\xb5\xd0\x2f\xb7\x44\x0d"
-+	"\xd4\xf8\x39\x8d\xab\x71\x67\x59\x05\x88\x3d\xeb\x48\x48\x33\x88"
-+	"\x4e\xfe\xf8\x27\x1b\xd6\x55\x60\x5e\x48\xb7\x6d\x9a\xa8\x37\xf9"
-+	"\x7a\xde\x1b\xcd\x5d\x1a\x30\xd4\xe9\x9e\x5b\x3c\x15\xf8\x9c\x1f"
-+	"\xda\xd1\x86\x48\x55\xce\x83\xee\x8e\x51\xc7\xde\x32\x12\x47\x7d"
-+	"\x46\xb8\x35\xdf\x41\x02\x81\x81\x00\xe4\x4c\xae\xde\x16\xfd\x9f"
-+	"\x83\x55\x5b\x84\x4a\xcf\x1c\xf1\x37\x95\xad\xca\x29\x7f\x2d\x6e"
-+	"\x32\x81\xa4\x2b\x26\x14\x96\x1d\x40\x05\xec\x0c\xaf\x3f\x2c\x6f"
-+	"\x2c\xe8\xbf\x1d\xee\xd0\xb3\xef\x7c\x5b\x9e\x88\x4f\x2a\x8b\x0e"
-+	"\x4a\xbd\xb7\x8c\xfa\x10\x0e\x3b\xda\x68\xad\x41\x2b\xe4\x96\xfa"
-+	"\x7f\x80\x52\x5f\x07\x9f\x0e\x3b\x5e\x96\x45\x1a\x13\x2b\x94\xce"
-+	"\x1f\x07\x69\x85\x35\xfc\x69\x63\x5b\xf8\xf8\x3f\xce\x9d\x40\x1e"
-+	"\x7c\xad\xfb\x9e\xce\xe0\x01\xf8\xef\x59\x5d\xdc\x00\x79\xab\x8a"
-+	"\x3f\x80\xa2\x76\x32\x94\xa9\xea\x65\x02\x81\x81\x00\xf1\x38\x60"
-+	"\x90\x0d\x0c\x2e\x3d\x34\xe5\x90\xea\x21\x43\x1f\x68\x63\x16\x7b"
-+	"\x25\x8d\xde\x82\x2b\x52\xf8\xa3\xfd\x0f\x39\xe7\xe9\x5e\x32\x75"
-+	"\x15\x7d\xd0\xc9\xce\x06\xe5\xfb\xa9\xcb\x22\xe5\xdb\x49\x09\xf2"
-+	"\xe6\xb7\xa5\xa7\x75\x2e\x91\x2d\x2b\x5d\xf1\x48\x61\x45\x43\xd7"
-+	"\xbd\xfc\x11\x73\xb5\x11\x9f\xb2\x18\x3a\x6f\x36\xa7\xc2\xd3\x18"
-+	"\x4d\xf0\xc5\x1f\x70\x8c\x9b\xc5\x1d\x95\xa8\x5a\x9e\x8c\xb1\x4b"
-+	"\x6a\x2a\x84\x76\x2c\xd8\x4f\x47\xb0\x81\x84\x02\x45\xf0\x85\xf8"
-+	"\x0c\x6d\xa7\x0c\x4d\x2c\xb2\x5b\x81\x70\xfd\x6e\x17\x02\x81\x81"
-+	"\x00\x8d\x07\xc5\xfa\x92\x4f\x48\xcb\xd3\xdd\xfe\x02\x4c\xa1\x7f"
-+	"\x6d\xab\xfc\x38\xe7\x9b\x95\xcf\xfe\x49\x51\xc6\x09\xf7\x2b\xa8"
-+	"\x94\x15\x54\x75\x9d\x88\xb4\x05\x55\xc3\xcd\xd4\x4a\xe4\x08\x53"
-+	"\xc8\x09\xbd\x0c\x4d\x83\x65\x75\x85\xbc\x5e\xf8\x2a\xbd\xe2\x5d"
-+	"\x1d\x16\x0e\xf9\x34\x89\x38\xaf\x34\x36\x6c\x2c\x22\x44\x22\x81"
-+	"\x90\x73\xd9\xea\x3a\xaf\x70\x74\x48\x7c\xc6\xb5\xb0\xdc\xe5\xa9"
-+	"\xa8\x76\x4b\xbc\xf7\x00\xf3\x4c\x22\x0f\x44\x62\x1d\x40\x0a\x57"
-+	"\xe2\x5b\xdd\x7c\x7b\x9a\xad\xda\x70\x52\x21\x8a\x4c\xc2\xc3\x98"
-+	"\x75\x02\x81\x81\x00\xed\x24\x5c\xa2\x21\x81\xa1\x0f\xa1\x2a\x33"
-+	"\x0e\x49\xc7\x00\x60\x92\x51\x6e\x9d\x9b\xdc\x6d\x22\x04\x7e\xd6"
-+	"\x51\x19\x9f\xf6\xe3\x91\x2c\x8f\xb8\xa2\x29\x19\xcc\x47\x31\xdf"
-+	"\xf8\xab\xf0\xd2\x02\x83\xca\x99\x16\xc2\xe2\xc3\x3f\x4b\x99\x83"
-+	"\xcb\x87\x9e\x86\x66\xc2\x3e\x91\x21\x80\x66\xf3\xd6\xc5\xcd\xb6"
-+	"\xbb\x64\xef\x22\xcf\x48\x94\x58\xe7\x7e\xd5\x7c\x34\x1c\xb7\xa2"
-+	"\xd0\x93\xe9\x9f\xb5\x11\x61\xd7\x5f\x37\x0f\x64\x52\x70\x11\x78"
-+	"\xcc\x08\x77\xeb\xf8\x30\x1e\xb4\x9e\x1b\x4a\xc7\xa8\x33\x51\xe0"
-+	"\xed\xdf\x53\xf6\xdf\x02\x81\x81\x00\x86\xd9\x4c\xee\x65\x61\xc1"
-+	"\x19\xa9\xd5\x74\x9b\xd5\xca\xf6\x83\x2b\x06\xb4\x20\xfe\x45\x29"
-+	"\xe8\xe3\xfa\xe1\x4f\x28\x8e\x63\x2f\x74\xc3\x3a\x5c\x9a\xf5\x9e"
-+	"\x0e\x0d\xc5\xfe\xa0\x4c\x00\xce\x7b\xa4\x19\x17\x59\xaf\x13\x3a"
-+	"\x03\x8f\x54\xf5\x60\x39\x2e\xd9\x06\xb3\x7c\xd6\x90\x06\x41\x77"
-+	"\xf3\x93\xe1\x7a\x01\x41\xc1\x8f\xfe\x4c\x88\x39\xdb\xde\x71\x9e"
-+	"\x58\xd1\x49\x50\x80\xb2\x5a\x4f\x69\x8b\xb8\xfe\x63\xd4\x42\x3d"
-+	"\x37\x61\xa8\x4c\xff\xb6\x99\x4c\xf4\x51\xe0\x44\xaa\x69\x79\x3f"
-+	"\x81\xa4\x61\x3d\x26\xe9\x04\x52\x64",
-+	.key_len = 1193,
- 	/*
- 	 * m is SHA256 hash of following message:
- 	 * "\x49\x41\xbe\x0a\x0c\xc9\xf6\x35\x51\xe4\x27\x56\x13\x71\x4b\xd0"
+diff --git a/include/trace/events/oom.h b/include/trace/events/oom.h
+index 26a11e4a2c361..b799f3bcba823 100644
+--- a/include/trace/events/oom.h
++++ b/include/trace/events/oom.h
+@@ -7,6 +7,8 @@
+ #include <linux/tracepoint.h>
+ #include <trace/events/mmflags.h>
+ 
++#define PG_COUNT_TO_KB(x) ((x) << (PAGE_SHIFT - 10))
++
+ TRACE_EVENT(oom_score_adj_update,
+ 
+ 	TP_PROTO(struct task_struct *task),
+@@ -72,19 +74,45 @@ TRACE_EVENT(reclaim_retry_zone,
+ );
+ 
+ TRACE_EVENT(mark_victim,
+-	TP_PROTO(int pid),
++	TP_PROTO(struct task_struct *task, uid_t uid),
+ 
+-	TP_ARGS(pid),
++	TP_ARGS(task, uid),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(int, pid)
++		__string(comm, task->comm)
++		__field(unsigned long, total_vm)
++		__field(unsigned long, anon_rss)
++		__field(unsigned long, file_rss)
++		__field(unsigned long, shmem_rss)
++		__field(uid_t, uid)
++		__field(unsigned long, pgtables)
++		__field(short, oom_score_adj)
+ 	),
+ 
+ 	TP_fast_assign(
+-		__entry->pid = pid;
++		__entry->pid = task->pid;
++		__assign_str(comm, task->comm);
++		__entry->total_vm = PG_COUNT_TO_KB(task->mm->total_vm);
++		__entry->anon_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_ANONPAGES));
++		__entry->file_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_FILEPAGES));
++		__entry->shmem_rss = PG_COUNT_TO_KB(get_mm_counter(task->mm, MM_SHMEMPAGES));
++		__entry->uid = uid;
++		__entry->pgtables = mm_pgtables_bytes(task->mm) >> 10;
++		__entry->oom_score_adj = task->signal->oom_score_adj;
+ 	),
+ 
+-	TP_printk("pid=%d", __entry->pid)
++	TP_printk("pid=%d comm=%s total-vm=%lukB anon-rss=%lukB file-rss:%lukB shmem-rss:%lukB uid=%u pgtables=%lukB oom_score_adj=%hd",
++		__entry->pid,
++		__get_str(comm),
++		__entry->total_vm,
++		__entry->anon_rss,
++		__entry->file_rss,
++		__entry->shmem_rss,
++		__entry->uid,
++		__entry->pgtables,
++		__entry->oom_score_adj
++	)
+ );
+ 
+ TRACE_EVENT(wake_reaper,
+diff --git a/mm/oom_kill.c b/mm/oom_kill.c
+index 3d7c557fb70c9..32ed968e5c2d4 100644
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -43,6 +43,7 @@
+ #include <linux/kthread.h>
+ #include <linux/init.h>
+ #include <linux/mmu_notifier.h>
++#include <linux/cred.h>
+ 
+ #include <asm/tlb.h>
+ #include "internal.h"
+@@ -723,6 +724,7 @@ static inline void queue_oom_reaper(struct task_struct *tsk)
+  */
+ static void mark_oom_victim(struct task_struct *tsk)
+ {
++	const struct cred *cred;
+ 	struct mm_struct *mm = tsk->mm;
+ 
+ 	WARN_ON(oom_killer_disabled);
+@@ -744,7 +746,9 @@ static void mark_oom_victim(struct task_struct *tsk)
+ 	 */
+ 	__thaw_task(tsk);
+ 	atomic_inc(&oom_victims);
+-	trace_mark_victim(tsk->pid);
++	cred = get_task_cred(tsk);
++	trace_mark_victim(tsk, cred->uid.val);
++	put_cred(cred);
+ }
+ 
+ /**
 -- 
 2.39.5
 
