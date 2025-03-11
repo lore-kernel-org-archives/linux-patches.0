@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37C0255E37;
-	Tue, 11 Mar 2025 15:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924AA1CAA8F;
+	Tue, 11 Mar 2025 15:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707271; cv=none; b=UNwdeVLGxt73d2Rrm6WRnW6cELSAvir1/5Ln53T3yMzUkCJMNf1nklMG6IFXU5gaNhZIUv5wzeG/BwTy68fDfdBtV4bJWl3lj62ctT2c7P0co7QYrezioyzr4fT3fNSxrGAv1NM6FXenFulf9YxCxvLhj7IPNk/M+L5HHAzpWY4=
+	t=1741707274; cv=none; b=nvmlUVA81eC4KNyEf4DJoxjYeBUU2pgnWkg6ITZYpRI5FjP8aGZYtCuShDdjdc3itTANkh4YFpq3foppi1k8SbIk6LjtFguVlq5po8gysdLFoRpgoWGaVSq6jk3yXE46W993wTe1G1+ZritLK7I41dIl7+3watd8ve9bTeid52c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707271; c=relaxed/simple;
-	bh=QssowxRwToPqvDABFQmpeuKff2uqDgzQpcIlM0b8NI4=;
+	s=arc-20240116; t=1741707274; c=relaxed/simple;
+	bh=TSecE3ZVCsxdPDiwOy4uJP6tDFvLsOWUYMFRKdAEBXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vFe7QfTJI907M+wuXlQrRJ1M3TuSTkvy/QgX9z97D5u9yWNi8WNJabThXYXcifJMbSRVtpSZbRVI7T0jXt2slzRTnsg2t11FB+sRA6gEwp2EttHyxafAI9o6/eEqlgIBrO38j+uYfyZSjLCKRea02VlB/GWNvjh0asxRQS+7+Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=il7ne402; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FI8FbnSuVso2PzmJesu12reCuUqQcbc+n2XG4j9diAF37acIDkUFY/WHB1BioQBRvMKZEW937ecW0aHst/eauCfypuvwX5TmTz+xgY1nFptEVBmx2OWeCr7WvMV3AsdkSVLr+T0x6DzXFdph0MKrZCQ60Fom5d89ab3G+apIu0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsLZPUHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="il7ne402"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD80C4CEE9;
-	Tue, 11 Mar 2025 15:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsLZPUHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C6CC4CEE9;
+	Tue, 11 Mar 2025 15:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707271;
-	bh=QssowxRwToPqvDABFQmpeuKff2uqDgzQpcIlM0b8NI4=;
+	s=korg; t=1741707274;
+	bh=TSecE3ZVCsxdPDiwOy4uJP6tDFvLsOWUYMFRKdAEBXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=il7ne402fIBBVzz46vuFDE8jwuhg9AVTzk/8js/pA6NqSgIexRLScm+mrT+Vw+z/3
-	 /yWaCSKpB4soVXq94oMc8UtC2P24eWMwtbzkKvgC6J9DId6M6yDBkRuWz9Ri+F5z26
-	 onXAMo+FoJ2EjnDpHv2RIA+nbA4ZCpsGtspYnvTM=
+	b=HsLZPUHRiXAqtNNpN9DV+UY8QOAfFpY4LeyumymYEWAsHv4Gfm7R9i7zAMM6Z541V
+	 iFk0jEu34DKfNjI1cXQ84g1A9XlpirjPMenoJFt5sUKOICxBAE5Lw0Kc16bQz+idaS
+	 TEJjjQmAjahf9mk6Ld028RFZOdyCo7PTs9/j49GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 332/462] powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline
-Date: Tue, 11 Mar 2025 15:59:58 +0100
-Message-ID: <20250311145811.478038813@linuxfoundation.org>
+Subject: [PATCH 5.10 333/462] ALSA: hda/realtek: Fixup ALC225 depop procedure
+Date: Tue, 11 Mar 2025 15:59:59 +0100
+Message-ID: <20250311145811.524208357@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,61 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 61bcc752d1b81fde3cae454ff20c1d3c359df500 ]
+[ Upstream commit 174448badb4409491bfba2e6b46f7aa078741c5e ]
 
-Rewrite __real_pte() and __rpte_to_hidx() as static inline in order to
-avoid following warnings/errors when building with 4k page size:
+Headset MIC will no function when power_save=0.
 
-	  CC      arch/powerpc/mm/book3s64/hash_tlb.o
-	arch/powerpc/mm/book3s64/hash_tlb.c: In function 'hpte_need_flush':
-	arch/powerpc/mm/book3s64/hash_tlb.c:49:16: error: variable 'offset' set but not used [-Werror=unused-but-set-variable]
-	   49 |         int i, offset;
-	      |                ^~~~~~
-
-	  CC      arch/powerpc/mm/book3s64/hash_native.o
-	arch/powerpc/mm/book3s64/hash_native.c: In function 'native_flush_hash_range':
-	arch/powerpc/mm/book3s64/hash_native.c:782:29: error: variable 'index' set but not used [-Werror=unused-but-set-variable]
-	  782 |         unsigned long hash, index, hidx, shift, slot;
-	      |                             ^~~~~
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501081741.AYFwybsq-lkp@intel.com/
-Fixes: ff31e105464d ("powerpc/mm/hash64: Store the slot information at the right offset for hugetlb")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/e0d340a5b7bd478ecbf245d826e6ab2778b74e06.1736706263.git.christophe.leroy@csgroup.eu
+Fixes: 1fd50509fe14 ("ALSA: hda/realtek: Update ALC225 depop procedure")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219743
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/0474a095ab0044d0939ec4bf4362423d@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/64/hash-4k.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/include/asm/book3s/64/hash-4k.h b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-index 5a79dd66b2ed0..433d164374cb6 100644
---- a/arch/powerpc/include/asm/book3s/64/hash-4k.h
-+++ b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-@@ -92,9 +92,17 @@ static inline int hash__hugepd_ok(hugepd_t hpd)
- /*
-  * With 4K page size the real_pte machinery is all nops.
-  */
--#define __real_pte(e, p, o)		((real_pte_t){(e)})
-+static inline real_pte_t __real_pte(pte_t pte, pte_t *ptep, int offset)
-+{
-+	return (real_pte_t){pte};
-+}
-+
- #define __rpte_to_pte(r)	((r).pte)
--#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
-+
-+static inline unsigned long __rpte_to_hidx(real_pte_t rpte, unsigned long index)
-+{
-+	return pte_val(__rpte_to_pte(rpte)) >> H_PAGE_F_GIX_SHIFT;
-+}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 2df73f59aea91..18730b0934fe1 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3713,6 +3713,7 @@ static void alc225_init(struct hda_codec *codec)
+ 				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
  
- #define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
- 	do {							         \
+ 		msleep(75);
++		alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
+ 		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
+ 	}
+ }
 -- 
 2.39.5
 
