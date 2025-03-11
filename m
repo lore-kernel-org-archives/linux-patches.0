@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5425DAFD;
-	Tue, 11 Mar 2025 15:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350DF1C3BEB;
+	Tue, 11 Mar 2025 15:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705964; cv=none; b=OkrGUnxbyfUjOogSEtrSxco3XiLxAb+MDNJ+f9lwh2fV9i1distUZ/kE1vzO54FCRYBaLDXqFL2xEsBpJDY2aiZn0rKgPk6vre74fuWVdeayiWlYgxRaPrKbIuLcZ4MCD8Dy63VoKPnOVPkVS/Vz5EhdTDUkjWnpV9MAE3QaYlA=
+	t=1741705967; cv=none; b=V+kBRyt6yQx2uzzhc4x3dYmbo3hHzxsrvYaxJEgDJsvgNFL8wPqNKp2eNxIO0pPLsCFtzIKY3Yr8jwUVxIaniIEQH0DyAJlgOByh4dij0gEcQ8Wof69gCbWQkF9PwvdIwJTF1oaqpJR+h0ev+yaRF9qIJY9r7FAI0P1+qoqkNp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705964; c=relaxed/simple;
-	bh=MZSPod3JaRGWs9c+aFPNvyxiC3Gm2dP7NtBgbTZPTnM=;
+	s=arc-20240116; t=1741705967; c=relaxed/simple;
+	bh=fuHgTMvEz2EuoyclTWwOB9c6RZb0DzPWRcOOmVRyHec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKEzhnrc5SZfiXbEjwqMJp4O7er4/W68+Ox30XpLP6LT0M8lUXMvK+m2IROtvbj7a2M7us/J5xjqHSADoNKdYqe9u6GefXvtlxjOsf0UibAyctP50DRr2LYagTe8yAbiMCplGFSuQUHTYnnbd2wBaPOavZWCdVMXmDDVQIdhBUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB5Onm2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0vnHnQDDeypFmKizYUx0koJvspHWA0fQ4d5keTKsLTCTb509Wut2VSCp/7EbF90mQVlIXkz5E8Jg936kKPUMw+XlF4sMWa2Isp0Ga0dAox718fJbfs5Y6lybCQuvP30TfEAtO53LL7t5WIgDyC2vieIjJJE3MTUd/d4B5luJ/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3T16sVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB5Onm2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CF3C4CEE9;
-	Tue, 11 Mar 2025 15:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3T16sVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B218EC4CEE9;
+	Tue, 11 Mar 2025 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705964;
-	bh=MZSPod3JaRGWs9c+aFPNvyxiC3Gm2dP7NtBgbTZPTnM=;
+	s=korg; t=1741705967;
+	bh=fuHgTMvEz2EuoyclTWwOB9c6RZb0DzPWRcOOmVRyHec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB5Onm2vWkQu3ecGJHIpZvYhTAnai49weGT+7wTuL9fUCt7s6NBmrsLlg1hoUAxWW
-	 tdtzZV8Au3qb25G9BVmIc/qKwc2gEn1+VAYW/cZTRIRhHJUenOXkK9IrWpW1d2VQD5
-	 vJLRkUCaW21dx3WbEAU+LiMOCEaCHc6nEURnK1nI=
+	b=s3T16sVEixBtDvCDPuNrL5/9djWiVQLtBCCmcrBD622gpv0rWEkniNBdEBCAdGbga
+	 PQcqNcldAHBQ4ksFQqyhhU/sz3tmfazqgtbcgdaUu6Cc2DjK7i8HoaGIQ1YtrhOFO5
+	 83HT8KlHhs6QKVqr9kOkSpjmHydS1xdW9rnmW7HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 5.4 216/328] can: ems_pci: move ASIX AX99100 ids to pci_ids.h
-Date: Tue, 11 Mar 2025 15:59:46 +0100
-Message-ID: <20250311145723.488826111@linuxfoundation.org>
+Subject: [PATCH 5.4 217/328] serial: 8250_pci: add support for ASIX AX99100
+Date: Tue, 11 Mar 2025 15:59:47 +0100
+Message-ID: <20250311145723.528874819@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -55,36 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 
-commit 3029ad91335353a70feb42acd24d580d70ab258b upstream.
+commit 0b32216557ce3b2a468d1282d99b428bf72ff532 upstream.
 
-Move PCI Vendor and Device ID of ASIX AX99100 PCIe to Multi I/O
-Controller to pci_ids.h for its serial and parallel port driver
-support in subsequent patches.
+Each of the 4 PCI functions on ASIX AX99100 PCIe to Multi I/O
+Controller can be configured as a single-port serial port controller.
+The subvendor id is 0x1000 when configured as serial port and MSI
+interrupts are supported.
 
 Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/r/20230724083933.3173513-3-jiaqing.zhao@linux.intel.com
-[Moeko: Drop changes in drivers/net/can/sja1000/ems_pci.c]
+Link: https://lore.kernel.org/r/20230724083933.3173513-4-jiaqing.zhao@linux.intel.com
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pci_ids.h |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -1764,6 +1764,10 @@
- #define PCI_SUBDEVICE_ID_AT_2700FX	0x2701
- #define PCI_SUBDEVICE_ID_AT_2701FX	0x2703
- 
-+#define PCI_VENDOR_ID_ASIX		0x125b
-+#define PCI_DEVICE_ID_ASIX_AX99100	0x9100
-+#define PCI_DEVICE_ID_ASIX_AX99100_LB	0x9110
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -67,6 +67,8 @@ static const struct pci_device_id pci_us
+ 			 0xA000, 0x1000) },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9922,
+ 			 0xA000, 0x1000) },
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_ASIX, PCI_DEVICE_ID_ASIX_AX99100,
++			 0xA000, 0x1000) },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_HP_3PAR, PCI_DEVICE_ID_HPE_PCI_SERIAL,
+ 			 PCI_ANY_ID, PCI_ANY_ID) },
+ 	{ }
+@@ -5757,6 +5759,14 @@ static const struct pci_device_id serial
+ 	{	PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9865,
+ 		0xA000, 0x3004,
+ 		0, 0, pbn_b0_bt_4_115200 },
 +
- #define PCI_VENDOR_ID_ESS		0x125d
- #define PCI_DEVICE_ID_ESS_ESS1968	0x1968
- #define PCI_DEVICE_ID_ESS_ESS1978	0x1978
++	/*
++	 * ASIX AX99100 PCIe to Multi I/O Controller
++	 */
++	{	PCI_VENDOR_ID_ASIX, PCI_DEVICE_ID_ASIX_AX99100,
++		0xA000, 0x1000,
++		0, 0, pbn_b0_1_115200 },
++
+ 	/* Intel CE4100 */
+ 	{	PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_CE4100_UART,
+ 		PCI_ANY_ID,  PCI_ANY_ID, 0, 0,
 
 
