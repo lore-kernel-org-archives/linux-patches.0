@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16EC3C0B;
-	Tue, 11 Mar 2025 15:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CF5237701;
+	Tue, 11 Mar 2025 15:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707406; cv=none; b=nHFK5ku5izl2NNeLPnKRqkWLG0Jjh/uQ9EcIpb+HIArMfc5GCMfyn9qPJ/mEloSLFCGBreJiktJkdUu1IVaoD4V7gHrV4osapg2c0Imhu6Eq5sSbM/VIlY1EqcL5VFpn0jr50u4BOe2bWLfp9HPDKJC4ox8nIgKedSa+GkAFec4=
+	t=1741707409; cv=none; b=D+s2YTVEz7ohqzmlmycfHpq2lBVkVgvuRNb1y4i/5Tq/TW9zOEoFB5leUKVcM3cUKFz6K9Acbm/cQmGS/x/VnS62yxPMJ9uKFDdyghvo+kbcjinlST0SpbyN1qila1buP4oGrNQVgrAcsN7ArZKz7SVL1ZPmEZxsAZxEUCEw1Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707406; c=relaxed/simple;
-	bh=Z/0ps8NnFALQdb/qNXj3rNllHEUgnPImxuhJS0F8Xag=;
+	s=arc-20240116; t=1741707409; c=relaxed/simple;
+	bh=h+0+rpQElP7E3upH7EFAtPocR+ZTPphJi498zYSGwVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5aUSQeylXCZ171aYnsnTNWB3wO5VwYYGoiAW222hzto4YP/EvMmhxqGWY72JIXxvXD+uYuRKvML0EFjVAi8drfvxLcRQlo81zX3f8vVCZHOZ98gfWi9BwqHxmLFkgQXNfLsWZ5apD+kM8ee6d3OPAwK4XPPQY96Bx0NRwdEb60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiZ5909G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uxLPFaXIOjglIJK0SVhOv3jITArfTEf1VCzokQNu8w1CV5NTRqEugZUFYPe5E4R2Po8O2MZ7fyBW40geUTcXFqkdW6fOPe4dXrvoWsbgRpyBjJSGxsDttE8i70rvYwiJMK1pIEWT1bJ08C+/ujZIly8iAUyr6/BIRgK9CRpWVe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=So0sT0Cb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiZ5909G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D4AC4CEE9;
-	Tue, 11 Mar 2025 15:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="So0sT0Cb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F82EC4CEE9;
+	Tue, 11 Mar 2025 15:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707406;
-	bh=Z/0ps8NnFALQdb/qNXj3rNllHEUgnPImxuhJS0F8Xag=;
+	s=korg; t=1741707409;
+	bh=h+0+rpQElP7E3upH7EFAtPocR+ZTPphJi498zYSGwVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yiZ5909GrLr245oUYaVikXVJ21gd92SEq9Z6BsA6ezB0j0iK1ZlXxRlMGC7/vzH6O
-	 1yN3hQ2cgExfRPKNkebSdcVepfOtFD/WaASVqiU+dHZZy3tzm6kTs13X9JA/qd5Q8Y
-	 TAHrybeAQBQqotHd1ifYP+wg1LGWL/bsRkX6DFYw=
+	b=So0sT0CbtX+0tRg18Am2xTNoI6bTmV1q2VpluSIaE4IDYVsJCeMLS/oF7faRV/kBg
+	 1S7zf5tONtOyOKeBjkDjN8YhjM55WUTB4qGUrjnzWqWVfizjjHoURQX0FEKF/uArRA
+	 bVvBFgWgtd6yU0c0n3uFJbgObt8KXbggL17FzE+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 377/462] sched/core: Prevent rescheduling when interrupts are disabled
-Date: Tue, 11 Mar 2025 16:00:43 +0100
-Message-ID: <20250311145813.244182538@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 348/462] mtd: rawnand: cadence: use dma_map_resource for sdma address
+Date: Tue, 11 Mar 2025 16:00:14 +0100
+Message-ID: <20250311145812.107895289@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,85 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
+commit d76d22b5096c5b05208fd982b153b3f182350b19 upstream.
 
-David reported a warning observed while loop testing kexec jump:
+Remap the slave DMA I/O resources to enhance driver portability.
+Using a physical address causes DMA translation failure when the
+ARM SMMU is enabled.
 
-  Interrupts enabled after irqrouter_resume+0x0/0x50
-  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
-   kernel_kexec+0xf6/0x180
-   __do_sys_reboot+0x206/0x250
-   do_syscall_64+0x95/0x180
-
-The corresponding interrupt flag trace:
-
-  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
-  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
-
-That means __up_console_sem() was invoked with interrupts enabled. Further
-instrumentation revealed that in the interrupt disabled section of kexec
-jump one of the syscore_suspend() callbacks woke up a task, which set the
-NEED_RESCHED flag. A later callback in the resume path invoked
-cond_resched() which in turn led to the invocation of the scheduler:
-
-  __cond_resched+0x21/0x60
-  down_timeout+0x18/0x60
-  acpi_os_wait_semaphore+0x4c/0x80
-  acpi_ut_acquire_mutex+0x3d/0x100
-  acpi_ns_get_node+0x27/0x60
-  acpi_ns_evaluate+0x1cb/0x2d0
-  acpi_rs_set_srs_method_data+0x156/0x190
-  acpi_pci_link_set+0x11c/0x290
-  irqrouter_resume+0x54/0x60
-  syscore_resume+0x6a/0x200
-  kernel_kexec+0x145/0x1c0
-  __do_sys_reboot+0xeb/0x240
-  do_syscall_64+0x95/0x180
-
-This is a long standing problem, which probably got more visible with
-the recent printk changes. Something does a task wakeup and the
-scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
-invokes schedule() from a completely bogus context. The scheduler
-enables interrupts after context switching, which causes the above
-warning at the end.
-
-Quite some of the code paths in syscore_suspend()/resume() can result in
-triggering a wakeup with the exactly same consequences. They might not
-have done so yet, but as they share a lot of code with normal operations
-it's just a question of time.
-
-The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
-models. Full preemption is not affected as cond_resched() is disabled and
-the preemption check preemptible() takes the interrupt disabled flag into
-account.
-
-Cure the problem by adding a corresponding check into cond_resched().
-
-Reported-by: David Woodhouse <dwmw@amazon.co.uk>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |   29 +++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6125,7 +6125,7 @@ SYSCALL_DEFINE0(sched_yield)
- #ifndef CONFIG_PREEMPTION
- int __sched _cond_resched(void)
- {
--	if (should_resched(0)) {
-+	if (should_resched(0) && !irqs_disabled()) {
- 		preempt_schedule_common();
- 		return 1;
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -469,6 +469,8 @@ struct cdns_nand_ctrl {
+ 	struct {
+ 		void __iomem *virt;
+ 		dma_addr_t dma;
++		dma_addr_t iova_dma;
++		u32 size;
+ 	} io;
+ 
+ 	int irq;
+@@ -1830,11 +1832,11 @@ static int cadence_nand_slave_dma_transf
  	}
+ 
+ 	if (dir == DMA_FROM_DEVICE) {
+-		src_dma = cdns_ctrl->io.dma;
++		src_dma = cdns_ctrl->io.iova_dma;
+ 		dst_dma = buf_dma;
+ 	} else {
+ 		src_dma = buf_dma;
+-		dst_dma = cdns_ctrl->io.dma;
++		dst_dma = cdns_ctrl->io.iova_dma;
+ 	}
+ 
+ 	tx = dmaengine_prep_dma_memcpy(cdns_ctrl->dmac, dst_dma, src_dma, len,
+@@ -2831,6 +2833,7 @@ cadence_nand_irq_cleanup(int irqnum, str
+ static int cadence_nand_init(struct cdns_nand_ctrl *cdns_ctrl)
+ {
+ 	dma_cap_mask_t mask;
++	struct dma_device *dma_dev = cdns_ctrl->dmac->device;
+ 	int ret;
+ 
+ 	cdns_ctrl->cdma_desc = dma_alloc_coherent(cdns_ctrl->dev,
+@@ -2874,6 +2877,16 @@ static int cadence_nand_init(struct cdns
+ 		}
+ 	}
+ 
++	cdns_ctrl->io.iova_dma = dma_map_resource(dma_dev->dev, cdns_ctrl->io.dma,
++						  cdns_ctrl->io.size,
++						  DMA_BIDIRECTIONAL, 0);
++
++	ret = dma_mapping_error(dma_dev->dev, cdns_ctrl->io.iova_dma);
++	if (ret) {
++		dev_err(cdns_ctrl->dev, "Failed to map I/O resource to DMA\n");
++		goto dma_release_chnl;
++	}
++
+ 	nand_controller_init(&cdns_ctrl->controller);
+ 	INIT_LIST_HEAD(&cdns_ctrl->chips);
+ 
+@@ -2884,18 +2897,22 @@ static int cadence_nand_init(struct cdns
+ 	if (ret) {
+ 		dev_err(cdns_ctrl->dev, "Failed to register MTD: %d\n",
+ 			ret);
+-		goto dma_release_chnl;
++		goto unmap_dma_resource;
+ 	}
+ 
+ 	kfree(cdns_ctrl->buf);
+ 	cdns_ctrl->buf = kzalloc(cdns_ctrl->buf_size, GFP_KERNEL);
+ 	if (!cdns_ctrl->buf) {
+ 		ret = -ENOMEM;
+-		goto dma_release_chnl;
++		goto unmap_dma_resource;
+ 	}
+ 
+ 	return 0;
+ 
++unmap_dma_resource:
++	dma_unmap_resource(dma_dev->dev, cdns_ctrl->io.iova_dma,
++			   cdns_ctrl->io.size, DMA_BIDIRECTIONAL, 0);
++
+ dma_release_chnl:
+ 	if (cdns_ctrl->dmac)
+ 		dma_release_channel(cdns_ctrl->dmac);
+@@ -2917,6 +2934,8 @@ free_buf_desc:
+ static void cadence_nand_remove(struct cdns_nand_ctrl *cdns_ctrl)
+ {
+ 	cadence_nand_chips_cleanup(cdns_ctrl);
++	dma_unmap_resource(cdns_ctrl->dmac->device->dev, cdns_ctrl->io.iova_dma,
++			   cdns_ctrl->io.size, DMA_BIDIRECTIONAL, 0);
+ 	cadence_nand_irq_cleanup(cdns_ctrl->irq, cdns_ctrl);
+ 	kfree(cdns_ctrl->buf);
+ 	dma_free_coherent(cdns_ctrl->dev, sizeof(struct cadence_nand_cdma_desc),
+@@ -2985,7 +3004,9 @@ static int cadence_nand_dt_probe(struct
+ 	cdns_ctrl->io.virt = devm_platform_get_and_ioremap_resource(ofdev, 1, &res);
+ 	if (IS_ERR(cdns_ctrl->io.virt))
+ 		return PTR_ERR(cdns_ctrl->io.virt);
++
+ 	cdns_ctrl->io.dma = res->start;
++	cdns_ctrl->io.size = resource_size(res);
+ 
+ 	dt->clk = devm_clk_get(cdns_ctrl->dev, "nf_clk");
+ 	if (IS_ERR(dt->clk))
 
 
