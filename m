@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A8D25B69D;
-	Tue, 11 Mar 2025 15:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0FD846D;
+	Tue, 11 Mar 2025 15:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706573; cv=none; b=e4wrBoUZH7/XqAoJkMm005FPezj/TuctmX1fzBDcoAX91MMqn6R+IF/W91wRZh7FyRC3KPgS+AEV8gCRJEfam6xgKgW2N4SLE5WqW6/tfSMZzhCN3QoBT7iHIvTwOWBeU+QR7if4uCkxZ7s6FNssZOQNacXmAEolaQ7U4RZI/ME=
+	t=1741706576; cv=none; b=FE1IWaORwHXFsCWyXlzgc1GMqw59uPuUoelk4ulTQwJ82qdHcy3Cc+hDt5dxhR5//er9W5L37RjizAqmC4bOTMZ6I2SFvfEKpjJmL857W5gek8hsMycPyx88LAg9yh+kktNUkVGzVCy9aCqVGse7W91txFtsvQqoHWsrevhEIB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706573; c=relaxed/simple;
-	bh=9g/H6p5VbIIXkp48LmMyCXltn0DhTmHmmYOFhRtnYD4=;
+	s=arc-20240116; t=1741706576; c=relaxed/simple;
+	bh=VVwmEQb+GvOfZlCxmr93QSh0GiJqLTK+9Wmk+0Gw838=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSIcnUmqVlSSvOJb8DUsrF1zyoLD6e5tQ2y/krJ9v6j9hVnax71Lvc+T/OzBVwHfPxFos/KzyrSyg7opxwQ+GUnut0Q9l5GHZ9XcUk1yQa/z2N1wTUV6nyfl+Rzg4NTxZFdE5QcIM8Y3SIcAz7BfwBMMnnVAmxXX3zimQj7ar2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVo99XYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCnvZlknwdqUA/yP1oMcO7UY/uCsFmNpfkgVBc8/uvnU+r6rxRi453/OVdFOL+rUrcXtPBtr3d6GtHCH2xpkQfSmfuEwLEjpRLEefZRbCyojMFBYzGLjgrLCedVGXP4IvKb3HsY45cFkcJFq66SDEl9XoNTdeFKKmQy0ctFcMVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvyTADf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVo99XYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DFBC4CEE9;
-	Tue, 11 Mar 2025 15:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvyTADf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98E7C4CEE9;
+	Tue, 11 Mar 2025 15:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706573;
-	bh=9g/H6p5VbIIXkp48LmMyCXltn0DhTmHmmYOFhRtnYD4=;
+	s=korg; t=1741706576;
+	bh=VVwmEQb+GvOfZlCxmr93QSh0GiJqLTK+9Wmk+0Gw838=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVo99XYR2CvBAEumapaiqWtNRtujowHgsB37kMRvTbvrWklG7ABYOhRIQqJL4XSMH
-	 5NGlyRlJm4tXGouaimHoqkpc0wnR5WInncLb01Ddwahc7UnsELZyR4f9JalwL+/GWD
-	 iLhlBxKOYLaUeDdOGiFDo8kXd7EhmmaQ2N3nsfck=
+	b=cvyTADf+ZDlpBV4ZcIHTSWUlDjcASe+xh5uhPaZ18nO1+tn8ih9cJTD0vPOYxWl0m
+	 VcJTdavDdNnVoheaycUpDLDul/nj/yHHB3yY+TzsEoN6P85q07ljXk5jkLiR1tKwtr
+	 8tDSB+sq7M4iKY3v94OSIPlmoxlATygsH6A0+3HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Luo Yifan <luoyifan@cmss.chinamobile.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 094/462] NFSv4.2: fix COPY_NOTIFY xdr buf size calculation
-Date: Tue, 11 Mar 2025 15:56:00 +0100
-Message-ID: <20250311145802.067357298@linuxfoundation.org>
+Subject: [PATCH 5.10 095/462] tools/bootconfig: Fix the wrong format specifier
+Date: Tue, 11 Mar 2025 15:56:01 +0100
+Message-ID: <20250311145802.107726853@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,36 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Luo Yifan <luoyifan@cmss.chinamobile.com>
 
-[ Upstream commit e8380c2d06055665b3df6c03964911375d7f9290 ]
+[ Upstream commit f6ab7384d554ba80ff4793259d75535874b366f5 ]
 
-We need to include sequence size in the compound.
+Use '%u' instead of '%d' for unsigned int.
 
-Fixes: 0491567b51ef ("NFS: add COPY_NOTIFY operation")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Link: https://lore.kernel.org/all/20241105011048.201629-1-luoyifan@cmss.chinamobile.com/
+
+Fixes: 973780011106 ("tools/bootconfig: Suppress non-error messages")
+Signed-off-by: Luo Yifan <luoyifan@cmss.chinamobile.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42xdr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/bootconfig/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
-index df5bee2f505c4..c9987d615ebc5 100644
---- a/fs/nfs/nfs42xdr.c
-+++ b/fs/nfs/nfs42xdr.c
-@@ -122,9 +122,11 @@
- 					 decode_putfh_maxsz + \
- 					 decode_offload_cancel_maxsz)
- #define NFS4_enc_copy_notify_sz		(compound_encode_hdr_maxsz + \
-+					 encode_sequence_maxsz + \
- 					 encode_putfh_maxsz + \
- 					 encode_copy_notify_maxsz)
- #define NFS4_dec_copy_notify_sz		(compound_decode_hdr_maxsz + \
-+					 decode_sequence_maxsz + \
- 					 decode_putfh_maxsz + \
- 					 decode_copy_notify_maxsz)
- #define NFS4_enc_deallocate_sz		(compound_encode_hdr_maxsz + \
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index 6cd6080cac04c..365c022fb7cdd 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -207,7 +207,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	/* Wrong Checksum */
+ 	rcsum = checksum((unsigned char *)*buf, size);
+ 	if (csum != rcsum) {
+-		pr_err("checksum error: %d != %d\n", csum, rcsum);
++		pr_err("checksum error: %u != %u\n", csum, rcsum);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -375,7 +375,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
+ 	printf("Apply %s to %s\n", xbc_path, path);
+ 	printf("\tNumber of nodes: %d\n", ret);
+ 	printf("\tSize: %u bytes\n", (unsigned int)size);
+-	printf("\tChecksum: %d\n", (unsigned int)csum);
++	printf("\tChecksum: %u\n", (unsigned int)csum);
+ 
+ 	/* TODO: Check the options by schema */
+ 	xbc_destroy_all();
 -- 
 2.39.5
 
