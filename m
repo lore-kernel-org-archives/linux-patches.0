@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB321CAA8F;
-	Tue, 11 Mar 2025 15:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EE0221DA5;
+	Tue, 11 Mar 2025 15:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707360; cv=none; b=K+WVqNaeqEx6EkV8pJ2WT4tpeOv18rm9TamZlPcD3Mjc7u0J9+yI2uJ+WPcSziavEYBo+z6xitAobsv0QdamH/ZG6F6aF+5/GI+wpPqwsr4MH9yUxeT6h2EgzFoNYsD9hw8BaioLHNG12zKs7OzrqtE6+0US7BNK8aBvYbdV8KI=
+	t=1741707363; cv=none; b=Egfm+XIL+c8ETIhADDgr7GKvAUGprN/a6cbcXE3Gt6xaQENKKxXhacwCgyKfXPiKX2YbgWs/EAvKQieEanMPe2hMxmuD7w1J1K24FcIAbIrZdAU3T4hiEwnQagze/AgqNIt+c2iDxxOWPDKylC+U7xqjjdF1KbSHjeUi69RJNvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707360; c=relaxed/simple;
-	bh=/JWRTt3HhCBtnsToHfN5wyAgKl1So1ZOZScf9QwX/sA=;
+	s=arc-20240116; t=1741707363; c=relaxed/simple;
+	bh=oPeeY4XF0BGFqeFnHLWjA9pR7SfE6YIy57AQwME7GpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5+0PQLYAvHrqALMVPmYCsJH4QagaSsU5asKQOIY9O5cfjAlTkUsOZ7nXFGokmTOHPHD7fHm1Rba3gTSdSZS5ZwDEHY+pNXwTXJM125Pq3Y5mVfpZUODe0dPkVDOTyNQonbk4pXYBoyUrsVBrDLt4+WYmeZI9pDEsnuZdXjdct8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXzXYyJb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiXcVIgnANLtpDkzD6qz0Y9cwlFAlm9824vr2syXzk07ZVJnkIwjP4tjtD433hcAc1F5rIVC+ZF1D14GpJS2ob9kTbEfLlBjwYhG2j4YT7peFSGDD4nhRsN0JTpZgkqbvVtHzki5d/Gw1cEOASIGKPZpCj8y8ngwyvEpz+Q/DgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpNXvg/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXzXYyJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684C1C4CEE9;
-	Tue, 11 Mar 2025 15:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpNXvg/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB8FC4CEE9;
+	Tue, 11 Mar 2025 15:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707359;
-	bh=/JWRTt3HhCBtnsToHfN5wyAgKl1So1ZOZScf9QwX/sA=;
+	s=korg; t=1741707362;
+	bh=oPeeY4XF0BGFqeFnHLWjA9pR7SfE6YIy57AQwME7GpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vXzXYyJbBgiHGXkpwUKXcD3lh16o7gjTOS+nfzjPKlrGuRgQuveZOYl3J/FosiXWx
-	 FoDymKi3nE/h3snREFu0jGE0vGjyinrsF3x7/6jbbz0VWpFMTOGb5/mrqyanOQn/BP
-	 LGitgV3VPLLirYQov06qT12LZXRtkchabs9g00qI=
+	b=cpNXvg/DB8G/e/jb7oZnJeW1csBWiFCPurCr/WEqDG3qf8NzeZkgI78ZrQNPxhVxu
+	 JSfrjq2MGCvQ/CP72Mh7TWsMF1E5w97dfIBOuXky/IHhHt4fihw9Noux+JjA15eSjf
+	 7HoHKOHokGx/zAzxROBzDzVpcnd/zXJRZk/QXkDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Vazquez <brianvv@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 363/462] net: use indirect call helpers for dst_input
-Date: Tue, 11 Mar 2025 16:00:29 +0100
-Message-ID: <20250311145812.693390477@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Zicheng Qu <quzicheng@huawei.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 346/462] acct: block access to kernel internal filesystems
+Date: Tue, 11 Mar 2025 16:00:12 +0100
+Message-ID: <20250311145812.030245014@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,63 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Vazquez <brianvv@google.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit e43b21906439ed14dda84f9784d38c03d0464607 ]
+commit 890ed45bde808c422c3c27d3285fc45affa0f930 upstream.
 
-This patch avoids the indirect call for the common case:
-ip_local_deliver and ip6_input
+There's no point in allowing anything kernel internal nor procfs or
+sysfs.
 
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 13e55fbaec17 ("net: ipv6: fix dst ref loop on input in rpl lwt")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20250127091811.3183623-1-quzicheng@huawei.com
+Link: https://lore.kernel.org/r/20250211-work-acct-v1-2-1c16aecab8b3@kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reported-by: Zicheng Qu <quzicheng@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst.h   | 6 +++++-
- net/ipv4/ip_input.c | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ kernel/acct.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 48e613420b952..907b4b5893a67 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -18,6 +18,7 @@
- #include <linux/refcount.h>
- #include <net/neighbour.h>
- #include <asm/processor.h>
-+#include <linux/indirect_call_wrapper.h>
+--- a/kernel/acct.c
++++ b/kernel/acct.c
+@@ -216,6 +216,20 @@ static int acct_on(struct filename *path
+ 		return -EACCES;
+ 	}
  
- struct sk_buff;
- 
-@@ -436,10 +437,13 @@ static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *s
- 	return skb_dst(skb)->output(net, sk, skb);
- }
- 
-+INDIRECT_CALLABLE_DECLARE(int ip6_input(struct sk_buff *));
-+INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
- /* Input packet from network to transport.  */
- static inline int dst_input(struct sk_buff *skb)
- {
--	return skb_dst(skb)->input(skb);
-+	return INDIRECT_CALL_INET(skb_dst(skb)->input,
-+				  ip6_input, ip_local_deliver, skb);
- }
- 
- static inline struct dst_entry *dst_check(struct dst_entry *dst, u32 cookie)
-diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
-index 372579686162b..3109bf6cdf283 100644
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -253,6 +253,7 @@ int ip_local_deliver(struct sk_buff *skb)
- 		       net, NULL, skb, skb->dev, NULL,
- 		       ip_local_deliver_finish);
- }
-+EXPORT_SYMBOL(ip_local_deliver);
- 
- static inline bool ip_rcv_options(struct sk_buff *skb, struct net_device *dev)
- {
--- 
-2.39.5
-
++	/* Exclude kernel kernel internal filesystems. */
++	if (file_inode(file)->i_sb->s_flags & (SB_NOUSER | SB_KERNMOUNT)) {
++		kfree(acct);
++		filp_close(file, NULL);
++		return -EINVAL;
++	}
++
++	/* Exclude procfs and sysfs. */
++	if (file_inode(file)->i_sb->s_iflags & SB_I_USERNS_VISIBLE) {
++		kfree(acct);
++		filp_close(file, NULL);
++		return -EINVAL;
++	}
++
+ 	if (!(file->f_mode & FMODE_CAN_WRITE)) {
+ 		kfree(acct);
+ 		filp_close(file, NULL);
 
 
