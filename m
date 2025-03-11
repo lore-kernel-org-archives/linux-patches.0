@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58E425B691;
-	Tue, 11 Mar 2025 15:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A048C255E37;
+	Tue, 11 Mar 2025 15:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707438; cv=none; b=Y/IOI0eLQCDJAGl4x7J97wbPbwStGWAtS3vbhjBWz4/BAN98A6DT5JYJntuWd1364ZfuzHI/0t0POQ4l1MK6cVRBMw6SmfaeSbPCEeKGg7SZd1e/q4V7Qb0KzmLRhlAmJP6yTtb5/SyPO60owiGhhBKpzgvTneZYuMrN4JCGJS8=
+	t=1741707441; cv=none; b=XEfCTiBl79EthRXMc4zaO/1sdxk3C3a6sKRHiVsQlLcF12YRI4Xq+w8ZXjngGbHJxHQq9lYuZEx5dTw8cieoVeFyh9qvpL5Kb8bYl8rh3m/BTAMCOuPUKt6tB6ldxuhea6y3UdmvQFu2QEi0XFO9xR2z0mqDTMB8S4X+1blKGpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707438; c=relaxed/simple;
-	bh=zVlNGeoHeG9x4da/9GpXLK5gN8oA+GKMqwXnU6oD1wg=;
+	s=arc-20240116; t=1741707441; c=relaxed/simple;
+	bh=NnqodH5BUV9T96sCQJ5EJ+io0jBphEtsWXsjR87UPb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTRwTccqWL7ZfFab5zhX/ih1MOqKkrs8QL09p+oWp24b1uNkZW+qNpk9QFq/hhVM+iDa23AvdMf+KxgS0iMa7a/iv07H7AY4sWVdcY0WDjIanP6kQVqch+bfo32EiQ5/s7hxfAlGEYmPq2ZpAka6NewccJUTfJbcPrpgSuvr2vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0OgTV6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiqfid8b7jwhaHQA6zwjM430iqxNTdSQUgSC3LN58bnXh6qeJwSdE8uK+omN5NSsXbJpHoRcWkjvyRxOchBDnFT1Aryjv7m0aA9Aa9PpFmRD4q11W21bVhneGMcjeG706cE05E4n798nfzAksESEdV4tyV7AHmGsE9KhHkYzJlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wyaf9BXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0OgTV6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB45C4CEE9;
-	Tue, 11 Mar 2025 15:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wyaf9BXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270DCC4CEE9;
+	Tue, 11 Mar 2025 15:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707438;
-	bh=zVlNGeoHeG9x4da/9GpXLK5gN8oA+GKMqwXnU6oD1wg=;
+	s=korg; t=1741707441;
+	bh=NnqodH5BUV9T96sCQJ5EJ+io0jBphEtsWXsjR87UPb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0OgTV6E1dTAseM6LGmqrsw4mU5gqBxlOgj7md+qMQezgk2ffdVv5fY4MFpjx9Dfl
-	 9FeNzYLwa+39Ub8I7Q1Uf6bz/LDKovF9dEwAnoXH+MdTSz3YpPp4H8XlkIGjMWSLaS
-	 +2RDlkToLmq5Ux2TTUd9PWi/S+Z6C7BSBG+I/3dc=
+	b=Wyaf9BXYj9OTARXKDpvzWQ2sdNSzPomnCa+5mV7Cp5HWbbDoxrv9t4WGBZ+mTAfBD
+	 NniaWsYOLLCg44Xw17IbUHW2UhMdJYk6pqcjOfYHgDLgtVC1q8hXsI8TRXUY1dbyr2
+	 NCXyqt/kOI5KkqlQZwIU5orPR1w97bFB5bNX4Ezk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5.10 390/462] gpio: aggregator: protect driver attr handlers against module unload
-Date: Tue, 11 Mar 2025 16:00:56 +0100
-Message-ID: <20250311145813.746852499@linuxfoundation.org>
+	Hoku Ishibe <me@hokuishi.be>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 391/462] ALSA: hda: intel: Add Dell ALC3271 to power_save denylist
+Date: Tue, 11 Mar 2025 16:00:57 +0100
+Message-ID: <20250311145813.784614105@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,132 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Hoku Ishibe <me@hokuishi.be>
 
-commit 12f65d1203507f7db3ba59930fe29a3b8eee9945 upstream.
+commit 1ee5aa765c22a0577ec552d460bf2035300b4b51 upstream.
 
-Both new_device_store and delete_device_store touch module global
-resources (e.g. gpio_aggregator_lock). To prevent race conditions with
-module unload, a reference needs to be held.
+Dell XPS 13 7390 with the Realtek ALC3271 codec experiences
+persistent humming noise when the power_save mode is enabled.
+This issue occurs when the codec enters power saving mode,
+leading to unwanted noise from the speakers.
 
-Add try_module_get() in these handlers.
+This patch adds the affected model (PCI ID 0x1028:0x0962) to the
+power_save denylist to ensure power_save is disabled by default,
+preventing power-off related noise issues.
 
-For new_device_store, this eliminates what appears to be the most dangerous
-scenario: if an id is allocated from gpio_aggregator_idr but
-platform_device_register has not yet been called or completed, a concurrent
-module unload could fail to unregister/delete the device, leaving behind a
-dangling platform device/GPIO forwarder. This can result in various issues.
-The following simple reproducer demonstrates these problems:
+Steps to Reproduce
+1. Boot the system with `snd_hda_intel` loaded.
+2. Verify that `power_save` mode is enabled:
+```sh
+cat /sys/module/snd_hda_intel/parameters/power_save
+````
+output: 10 (default power save timeout)
+3. Wait for the power save timeout
+4. Observe a persistent humming noise from the speakers
+5. Disable `power_save` manually:
+```sh
+echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save
+````
+6. Confirm that the noise disappears immediately.
 
-  #!/bin/bash
-  while :; do
-    # note: whether 'gpiochip0 0' exists or not does not matter.
-    echo 'gpiochip0 0' > /sys/bus/platform/drivers/gpio-aggregator/new_device
-  done &
-  while :; do
-    modprobe gpio-aggregator
-    modprobe -r gpio-aggregator
-  done &
-  wait
+This issue has been observed on my system, and this patch
+successfully eliminates the unwanted noise. If other users
+experience similar issues, additional reports would be helpful.
 
-  Starting with the following warning, several kinds of warnings will appear
-  and the system may become unstable:
-
-  ------------[ cut here ]------------
-  list_del corruption, ffff888103e2e980->next is LIST_POISON1 (dead000000000100)
-  WARNING: CPU: 1 PID: 1327 at lib/list_debug.c:56 __list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  RIP: 0010:__list_del_entry_valid_or_report+0xa3/0x120
-  [...]
-  Call Trace:
-   <TASK>
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? __warn.cold+0x93/0xf2
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   ? report_bug+0xe6/0x170
-   ? __irq_work_queue_local+0x39/0xe0
-   ? handle_bug+0x58/0x90
-   ? exc_invalid_op+0x13/0x60
-   ? asm_exc_invalid_op+0x16/0x20
-   ? __list_del_entry_valid_or_report+0xa3/0x120
-   gpiod_remove_lookup_table+0x22/0x60
-   new_device_store+0x315/0x350 [gpio_aggregator]
-   kernfs_fop_write_iter+0x137/0x1f0
-   vfs_write+0x262/0x430
-   ksys_write+0x60/0xd0
-   do_syscall_64+0x6c/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   [...]
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-
-Fixes: 828546e24280 ("gpio: Add GPIO Aggregator")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Link: https://lore.kernel.org/r/20250224143134.3024598-2-koichiro.den@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Hoku Ishibe <me@hokuishi.be>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250224020517.51035-1-me@hokuishi.be
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-aggregator.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ sound/pci/hda/hda_intel.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpio/gpio-aggregator.c
-+++ b/drivers/gpio/gpio-aggregator.c
-@@ -173,10 +173,15 @@ static ssize_t new_device_store(struct d
- 	struct platform_device *pdev;
- 	int res, id;
- 
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
-+
- 	/* kernfs guarantees string termination, so count + 1 is safe */
- 	aggr = kzalloc(sizeof(*aggr) + count + 1, GFP_KERNEL);
--	if (!aggr)
--		return -ENOMEM;
-+	if (!aggr) {
-+		res = -ENOMEM;
-+		goto put_module;
-+	}
- 
- 	memcpy(aggr->args, buf, count + 1);
- 
-@@ -215,6 +220,7 @@ static ssize_t new_device_store(struct d
- 	}
- 
- 	aggr->pdev = pdev;
-+	module_put(THIS_MODULE);
- 	return count;
- 
- remove_table:
-@@ -229,6 +235,8 @@ free_table:
- 	kfree(aggr->lookups);
- free_ga:
- 	kfree(aggr);
-+put_module:
-+	module_put(THIS_MODULE);
- 	return res;
- }
- 
-@@ -257,13 +265,19 @@ static ssize_t delete_device_store(struc
- 	if (error)
- 		return error;
- 
-+	if (!try_module_get(THIS_MODULE))
-+		return -ENOENT;
-+
- 	mutex_lock(&gpio_aggregator_lock);
- 	aggr = idr_remove(&gpio_aggregator_idr, id);
- 	mutex_unlock(&gpio_aggregator_lock);
--	if (!aggr)
-+	if (!aggr) {
-+		module_put(THIS_MODULE);
- 		return -ENOENT;
-+	}
- 
- 	gpio_aggregator_free(aggr);
-+	module_put(THIS_MODULE);
- 	return count;
- }
- static DRIVER_ATTR_WO(delete_device);
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2280,6 +2280,8 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
+ 	/* KONTRON SinglePC may cause a stall at runtime resume */
+ 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
++	/* Dell ALC3271 */
++	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
+ 	{}
+ };
+ #endif /* CONFIG_PM */
 
 
