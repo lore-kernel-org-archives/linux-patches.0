@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2941C3BEB;
-	Tue, 11 Mar 2025 15:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A241C3BEB;
+	Tue, 11 Mar 2025 15:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705640; cv=none; b=qFvwEKiFcay6Pu3JzhX6xT/Cz68WxR9v676YM1b5mR+TIfNyDy8Va0xfMOuE2POFxgsP6F9y3CLHHZ2hJeu5pxIChYzk5J2/B1tIKqb6fX7Uz2B/0H+2yYkoHHTW/fz8nwKxzvZ3oJxJFyq7Bq39cQx/PU6BGZxQ16O5RPdF5yc=
+	t=1741705643; cv=none; b=OPY8rq0pLxHlI3k7RmrhSA15fsiIJhl7cKZcQF8DOmZNnmpenVzCUSnaps0Te2nuiHrBkXumBUE7dPzCBKTt3kWzCnFFHrikQw7IBwZzxrXnizvcgygDLRInu1lTPB+8VnZMvhwfnD59fbwEG3mH7eLAaQ5qLfWOxXDsHRT0ukE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705640; c=relaxed/simple;
-	bh=DcdEPswytfy4wBw4Ims/cO784c7zDPy7RCXCs4yIWZA=;
+	s=arc-20240116; t=1741705643; c=relaxed/simple;
+	bh=OeXx6y7QpXUrthWx/FOHKTq7ixcZPeDwNtM0WJgu12Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyjpxwotJR2qVyH0obd9fRioSqiFdAGiBAYVgZ8Eto2yEsadBZgYoveA/I0LD/4Je0ciYd7O+ACuFBXx+ZEmFnce1lTbnOy1lTjYNQPiA6Uhf0ZemZ5QwpWrBm1+yZImBndiyTD4Am2vkQtk86nWFToGuDXNOpM44ef36Qm6SB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbgvScWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+NB9ZnDOY60UL/9wx8n/e73Dzkl6VyeHS8SP1LpEacCWSrp42SrmsbrMu0cLpET5E/M4BnsSdyzp1jo1R1pbWk1/kLpq8MhO2Cil7UvqHc7P1HRF64bNu8JKWR8Go7VeAxszLLiSnbCRuNFWhUeOe1VCmgYfHXYcbjl0IOjvio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeG+w1XL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbgvScWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05138C4CEE9;
-	Tue, 11 Mar 2025 15:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeG+w1XL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B6BC4CEED;
+	Tue, 11 Mar 2025 15:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705640;
-	bh=DcdEPswytfy4wBw4Ims/cO784c7zDPy7RCXCs4yIWZA=;
+	s=korg; t=1741705643;
+	bh=OeXx6y7QpXUrthWx/FOHKTq7ixcZPeDwNtM0WJgu12Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbgvScWCLzTuU6HsvTzwprGMh6RCR3M7I358OLDMI0q/yxd3BzhZmsvY15XULuEYH
-	 32OuNpymy61V9qp80Bv6HaCuG7UDwMwyhzCN+qdU0tqILidfPY1tI7p9QCRwmlQR6n
-	 Kis5Tfp6/bp8GRix1iBW9xwppOlFApJYCazEuRi0=
+	b=YeG+w1XLjnsJ+YjxcEJpmfj2U1U+flfiIROv5LyGD45tHyIxiIExb//d/gJOiB9Q0
+	 eUlWDvtjkIO4nHHrqLCeB8k5jotydP2J/Cp7YZZZweLVDRwzh5FAbQm/pHIjUBpJTV
+	 oswtZDWiFQpqJxF6dOLmWILaqakYG36R2ZnKj2Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 097/328] nilfs2: move page release outside of nilfs_delete_entry and nilfs_set_link
-Date: Tue, 11 Mar 2025 15:57:47 +0100
-Message-ID: <20250311145718.747561841@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 106/328] net: usb: rtl8150: enable basic endpoint checking
+Date: Tue, 11 Mar 2025 15:57:56 +0100
+Message-ID: <20250311145719.109617129@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,174 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 584db20c181f5e28c0386d7987406ace7fbd3e49 upstream.
+[ Upstream commit 90b7f2961798793275b4844348619b622f983907 ]
 
-Patch series "nilfs2: Folio conversions for directory paths".
+Syzkaller reports [1] encountering a common issue of utilizing a wrong
+usb endpoint type during URB submitting stage. This, in turn, triggers
+a warning shown below.
 
-This series applies page->folio conversions to nilfs2 directory
-operations.  This reduces hidden compound_head() calls and also converts
-deprecated kmap calls to kmap_local in the directory code.
+For now, enable simple endpoint checking (specifically, bulk and
+interrupt eps, testing control one is not essential) to mitigate
+the issue with a view to do other related cosmetic changes later,
+if they are necessary.
 
-Although nilfs2 does not yet support large folios, Matthew has done his
-best here to include support for large folios, which will be needed for
-devices with large block sizes.
+[1] Syzkaller report:
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 1 PID: 2586 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 driv>
+Modules linked in:
+CPU: 1 UID: 0 PID: 2586 Comm: dhcpcd Not tainted 6.11.0-rc4-syzkaller-00069-gfc88bb11617>
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+Code: 84 3c 02 00 00 e8 05 e4 fc fc 4c 89 ef e8 fd 25 d7 fe 45 89 e0 89 e9 4c 89 f2 48 8>
+RSP: 0018:ffffc9000441f740 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff888112487a00 RCX: ffffffff811a99a9
+RDX: ffff88810df6ba80 RSI: ffffffff811a99b6 RDI: 0000000000000001
+RBP: 0000000000000003 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000001
+R13: ffff8881023bf0a8 R14: ffff888112452a20 R15: ffff888112487a7c
+FS:  00007fc04eea5740(0000) GS:ffff8881f6300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f0a1de9f870 CR3: 000000010dbd0000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ rtl8150_open+0x300/0xe30 drivers/net/usb/rtl8150.c:733
+ __dev_open+0x2d4/0x4e0 net/core/dev.c:1474
+ __dev_change_flags+0x561/0x720 net/core/dev.c:8838
+ dev_change_flags+0x8f/0x160 net/core/dev.c:8910
+ devinet_ioctl+0x127a/0x1f10 net/ipv4/devinet.c:1177
+ inet_ioctl+0x3aa/0x3f0 net/ipv4/af_inet.c:1003
+ sock_do_ioctl+0x116/0x280 net/socket.c:1222
+ sock_ioctl+0x22e/0x6c0 net/socket.c:1341
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:907 [inline]
+ __se_sys_ioctl fs/ioctl.c:893 [inline]
+ __x64_sys_ioctl+0x193/0x220 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fc04ef73d49
+...
 
-This series corresponds to the second half of the original post [1], but
-with two complementary patches inserted at the beginning and some
-adjustments, to prevent a kmap_local constraint violation found during
-testing with highmem mapping.
+This change has not been tested on real hardware.
 
-[1] https://lkml.kernel.org/r/20231106173903.1734114-1-willy@infradead.org
-
-I have reviewed all changes and tested this for regular and small block
-sizes, both on machines with and without highmem mapping.  No issues
-found.
-
-
-This patch (of 17):
-
-In a few directory operations, the call to nilfs_put_page() for a page
-obtained using nilfs_find_entry() or nilfs_dotdot() is hidden in
-nilfs_set_link() and nilfs_delete_entry(), making it difficult to track
-page release and preventing change of its call position.
-
-By moving nilfs_put_page() out of these functions, this makes the page
-get/put correspondence clearer and makes it easier to swap
-nilfs_put_page() calls (and kunmap calls within them) when modifying
-multiple directory entries simultaneously in nilfs_rename().
-
-Also, update comments for nilfs_set_link() and nilfs_delete_entry() to
-reflect changes in their behavior.
-
-To make nilfs_put_page() visible from namei.c, this moves its definition
-to nilfs.h and replaces existing equivalents to use it, but the exposure
-of that definition is temporary and will be removed on a later kmap ->
-kmap_local conversion.
-
-Link: https://lkml.kernel.org/r/20231127143036.2425-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20231127143036.2425-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ee70999a988b ("nilfs2: handle errors that nilfs_prepare_chunk() may return")
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-and-tested-by: syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7e968426f644b567e31
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250124093020.234642-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c   |   11 +----------
- fs/nilfs2/namei.c |   13 +++++++------
- fs/nilfs2/nilfs.h |    6 ++++++
- 3 files changed, 14 insertions(+), 16 deletions(-)
+ drivers/net/usb/rtl8150.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -64,12 +64,6 @@ static inline unsigned int nilfs_chunk_s
- 	return inode->i_sb->s_blocksize;
- }
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index cbadb53bac441..3829b7eb3fc90 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -71,6 +71,14 @@
+ #define MSR_SPEED		(1<<3)
+ #define MSR_LINK		(1<<2)
  
--static inline void nilfs_put_page(struct page *page)
--{
--	kunmap(page);
--	put_page(page);
--}
--
- /*
-  * Return the offset into page `page_nr' of the last valid
-  * byte in that page, plus one.
-@@ -450,7 +444,6 @@ int nilfs_inode_by_name(struct inode *di
- 	return 0;
- }
- 
--/* Releases the page */
- void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
- 		    struct page *page, struct inode *inode)
- {
-@@ -465,7 +458,6 @@ void nilfs_set_link(struct inode *dir, s
- 	de->inode = cpu_to_le64(inode->i_ino);
- 	nilfs_set_de_type(de, inode);
- 	nilfs_commit_chunk(page, mapping, from, to);
--	nilfs_put_page(page);
- 	dir->i_mtime = dir->i_ctime = current_time(dir);
- }
- 
-@@ -569,7 +561,7 @@ out_unlock:
- 
- /*
-  * nilfs_delete_entry deletes a directory entry by merging it with the
-- * previous entry. Page is up-to-date. Releases the page.
-+ * previous entry. Page is up-to-date.
-  */
- int nilfs_delete_entry(struct nilfs_dir_entry *dir, struct page *page)
- {
-@@ -605,7 +597,6 @@ int nilfs_delete_entry(struct nilfs_dir_
- 	nilfs_commit_chunk(page, mapping, from, to);
- 	inode->i_ctime = inode->i_mtime = current_time(inode);
- out:
--	nilfs_put_page(page);
- 	return err;
- }
- 
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -295,6 +295,7 @@ static int nilfs_do_unlink(struct inode
- 		set_nlink(inode, 1);
- 	}
- 	err = nilfs_delete_entry(de, page);
-+	nilfs_put_page(page);
- 	if (err)
- 		goto out;
- 
-@@ -403,6 +404,7 @@ static int nilfs_rename(struct inode *ol
- 			goto out_dir;
- 		}
- 		nilfs_set_link(new_dir, new_de, new_page, old_inode);
-+		nilfs_put_page(new_page);
- 		nilfs_mark_inode_dirty(new_dir);
- 		new_inode->i_ctime = current_time(new_inode);
- 		if (dir_de)
-@@ -426,9 +428,11 @@ static int nilfs_rename(struct inode *ol
- 	old_inode->i_ctime = current_time(old_inode);
- 
- 	nilfs_delete_entry(old_de, old_page);
-+	nilfs_put_page(old_page);
- 
- 	if (dir_de) {
- 		nilfs_set_link(old_inode, dir_de, dir_page, new_dir);
-+		nilfs_put_page(dir_page);
- 		drop_nlink(old_dir);
- 	}
- 	nilfs_mark_inode_dirty(old_dir);
-@@ -438,13 +442,10 @@ static int nilfs_rename(struct inode *ol
- 	return err;
- 
- out_dir:
--	if (dir_de) {
--		kunmap(dir_page);
--		put_page(dir_page);
--	}
-+	if (dir_de)
-+		nilfs_put_page(dir_page);
- out_old:
--	kunmap(old_page);
--	put_page(old_page);
-+	nilfs_put_page(old_page);
- out:
- 	nilfs_transaction_abort(old_dir->i_sb);
- 	return err;
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -243,6 +243,12 @@ extern struct nilfs_dir_entry *nilfs_dot
- extern void nilfs_set_link(struct inode *, struct nilfs_dir_entry *,
- 			   struct page *, struct inode *);
- 
-+static inline void nilfs_put_page(struct page *page)
-+{
-+	kunmap(page);
-+	put_page(page);
-+}
++/* USB endpoints */
++enum rtl8150_usb_ep {
++	RTL8150_USB_EP_CONTROL = 0,
++	RTL8150_USB_EP_BULK_IN = 1,
++	RTL8150_USB_EP_BULK_OUT = 2,
++	RTL8150_USB_EP_INT_IN = 3,
++};
 +
- /* file.c */
- extern int nilfs_sync_file(struct file *, loff_t, loff_t, int);
+ /* Interrupt pipe data */
+ #define INT_TSR			0x00
+ #define INT_RSR			0x01
+@@ -886,6 +894,13 @@ static int rtl8150_probe(struct usb_interface *intf,
+ 	struct usb_device *udev = interface_to_usbdev(intf);
+ 	rtl8150_t *dev;
+ 	struct net_device *netdev;
++	static const u8 bulk_ep_addr[] = {
++		RTL8150_USB_EP_BULK_IN | USB_DIR_IN,
++		RTL8150_USB_EP_BULK_OUT | USB_DIR_OUT,
++		0};
++	static const u8 int_ep_addr[] = {
++		RTL8150_USB_EP_INT_IN | USB_DIR_IN,
++		0};
  
+ 	netdev = alloc_etherdev(sizeof(rtl8150_t));
+ 	if (!netdev)
+@@ -899,6 +914,13 @@ static int rtl8150_probe(struct usb_interface *intf,
+ 		return -ENOMEM;
+ 	}
+ 
++	/* Verify that all required endpoints are present */
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(&intf->dev, "couldn't find required endpoints\n");
++		goto out;
++	}
++
+ 	tasklet_setup(&dev->tl, rx_fixup);
+ 	spin_lock_init(&dev->rx_pool_lock);
+ 
+-- 
+2.39.5
+
 
 
