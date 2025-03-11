@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9381C249F9;
-	Tue, 11 Mar 2025 15:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96101C3BEB;
+	Tue, 11 Mar 2025 15:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706196; cv=none; b=Q2Wifl5Gm4zDNUtsWdtpcg/5mXypLkx9Kiel0hI4um+DtutGQj/qeFpTKYnUf1rJtUeW/E856xbekpnLuOhj297z4PudTWKnvzNa3iLNzbtQ1vI4cj2JLCeZY/AIKnRNfpzWh24om11paj6xpRa7y0w+kGAmrjFNb8VW84MC7zk=
+	t=1741706200; cv=none; b=GeIjsMOG2OoXOU6I8sUpaBPoW4231Zb9B2cb5R7QZE7c5/bNb/lWXB5a5pL72U8wfvgjPawJnHwQp/ajYCmrOD1F1VC8rZ9vPJ7jWY0ff+d5j1PmHSQ0WCLyhBIgQjukN0B9Xa/AHLcqbJ42i9fDnfxErgkR7skpUtViocJyNKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706196; c=relaxed/simple;
-	bh=tXmmBOUcHqxivsTqE3ADx+bPBmH0j/Yv3LZDuXMOyXk=;
+	s=arc-20240116; t=1741706200; c=relaxed/simple;
+	bh=wWOw7zQMYSSSGSGk6THglX/BV3W6QvVfO0BrX8LDtZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNBGAMW3KUFpocCjW5Hhutj65b6+hCACZlLahAW/Y6o+ObmHWwEd8RLE1nyCZQJ3MK4TY7W5TJ6BGblpEE40Ac2TKH5QdsLWvIRJkI5P0ShBLq/QWMucEDeszz2VnKDl7wUVT1nm/+gpfAZw3/mP84wwOqudhRrr+WLP20dbtXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M835Fcl6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RXf5qZDlQKynFVHstws70c0WGRZ6qe7ibIUzjh8+OsEG2juxITZG1Wpo2UaySzFNC/fcGBx0dydepdePwu5TS/uc7T01o+4OSKTQv67/HqwwShh7JvyR1h96Abew6ACPKq5hm2F4/B5aTK2BOjcBd5ivmKrq7n1naF8/NxIwcyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rt0kuWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M835Fcl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFB6C4CEE9;
-	Tue, 11 Mar 2025 15:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rt0kuWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC51FC4CEEC;
+	Tue, 11 Mar 2025 15:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706196;
-	bh=tXmmBOUcHqxivsTqE3ADx+bPBmH0j/Yv3LZDuXMOyXk=;
+	s=korg; t=1741706199;
+	bh=wWOw7zQMYSSSGSGk6THglX/BV3W6QvVfO0BrX8LDtZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M835Fcl6HXE13AF8R1DPGngJUgJ2XIp0WgR0mXHCozYYX+ghUBseS6fJGIh9yRNg3
-	 xrG6rY2eza8BFc1lldFf8NtS/72KD2eBK3WXJ45IF2mDNH53AaNxSTSIhbsDWU/33Q
-	 RcDPFuWVmIYhH593vOgbzjo7fu//GA0zvbUKNoB4=
+	b=2rt0kuWnH2cXfsBTwX/K9KVSkPNZoJ8nFVxfgdO2PBV7DQf9/MSCkvx9LPqXEoZHg
+	 +0fPl6Imxc/PD9EkgR6/Js3KswN5HCauaSYjQLn/W2WfCSi19tksql7IQBQXKt/Jws
+	 javSZ1bTM8XV9OaUd5/J17iTJK8Ypf/rvHhJo6Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 287/328] x86/cpu: Properly parse CPUID leaf 0x2 TLB descriptor 0x63
-Date: Tue, 11 Mar 2025 16:00:57 +0100
-Message-ID: <20250311145726.317252906@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 296/328] net: gso: fix ownership in __udp_gso_segment
+Date: Tue, 11 Mar 2025 16:01:06 +0100
+Message-ID: <20250311145726.671696992@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,119 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit f6bdaab79ee4228a143ee1b4cb80416d6ffc0c63 upstream.
+[ Upstream commit ee01b2f2d7d0010787c2343463965bbc283a497f ]
 
-CPUID leaf 0x2's one-byte TLB descriptors report the number of entries
-for specific TLB types, among other properties.
+In __udp_gso_segment the skb destructor is removed before segmenting the
+skb but the socket reference is kept as-is. This is an issue if the
+original skb is later orphaned as we can hit the following bug:
 
-Typically, each emitted descriptor implies the same number of entries
-for its respective TLB type(s).  An emitted 0x63 descriptor is an
-exception: it implies 4 data TLB entries for 1GB pages and 32 data TLB
-entries for 2MB or 4MB pages.
+  kernel BUG at ./include/linux/skbuff.h:3312!  (skb_orphan)
+  RIP: 0010:ip_rcv_core+0x8b2/0xca0
+  Call Trace:
+   ip_rcv+0xab/0x6e0
+   __netif_receive_skb_one_core+0x168/0x1b0
+   process_backlog+0x384/0x1100
+   __napi_poll.constprop.0+0xa1/0x370
+   net_rx_action+0x925/0xe50
 
-For the TLB descriptors parsing code, the entry count for 1GB pages is
-encoded at the intel_tlb_table[] mapping, but the 2MB/4MB entry count is
-totally ignored.
+The above can happen following a sequence of events when using
+OpenVSwitch, when an OVS_ACTION_ATTR_USERSPACE action precedes an
+OVS_ACTION_ATTR_OUTPUT action:
 
-Update leaf 0x2's parsing logic 0x2 to account for 32 data TLB entries
-for 2MB/4MB pages implied by the 0x63 descriptor.
+1. OVS_ACTION_ATTR_USERSPACE is handled (in do_execute_actions): the skb
+   goes through queue_gso_packets and then __udp_gso_segment, where its
+   destructor is removed.
+2. The segments' data are copied and sent to userspace.
+3. OVS_ACTION_ATTR_OUTPUT is handled (in do_execute_actions) and the
+   same original skb is sent to its path.
+4. If it later hits skb_orphan, we hit the bug.
 
-Fixes: e0ba94f14f74 ("x86/tlb_info: get last level TLB entry number of CPU")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250304085152.51092-4-darwi@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by also removing the reference to the socket in
+__udp_gso_segment.
+
+Fixes: ad405857b174 ("udp: better wmem accounting on gso")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20250226171352.258045-1-atenart@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/intel.c |   60 ++++++++++++++++++++++++++++----------------
- 1 file changed, 39 insertions(+), 21 deletions(-)
+ net/ipv4/udp_offload.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -795,26 +795,37 @@ static unsigned int intel_size_cache(str
- }
- #endif
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 487a92d75c703..6505a6fd245a6 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -204,13 +204,17 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
  
--#define TLB_INST_4K	0x01
--#define TLB_INST_4M	0x02
--#define TLB_INST_2M_4M	0x03
--
--#define TLB_INST_ALL	0x05
--#define TLB_INST_1G	0x06
--
--#define TLB_DATA_4K	0x11
--#define TLB_DATA_4M	0x12
--#define TLB_DATA_2M_4M	0x13
--#define TLB_DATA_4K_4M	0x14
--
--#define TLB_DATA_1G	0x16
--
--#define TLB_DATA0_4K	0x21
--#define TLB_DATA0_4M	0x22
--#define TLB_DATA0_2M_4M	0x23
--
--#define STLB_4K		0x41
--#define STLB_4K_2M	0x42
-+#define TLB_INST_4K		0x01
-+#define TLB_INST_4M		0x02
-+#define TLB_INST_2M_4M		0x03
-+
-+#define TLB_INST_ALL		0x05
-+#define TLB_INST_1G		0x06
-+
-+#define TLB_DATA_4K		0x11
-+#define TLB_DATA_4M		0x12
-+#define TLB_DATA_2M_4M		0x13
-+#define TLB_DATA_4K_4M		0x14
-+
-+#define TLB_DATA_1G		0x16
-+#define TLB_DATA_1G_2M_4M	0x17
-+
-+#define TLB_DATA0_4K		0x21
-+#define TLB_DATA0_4M		0x22
-+#define TLB_DATA0_2M_4M		0x23
-+
-+#define STLB_4K			0x41
-+#define STLB_4K_2M		0x42
-+
-+/*
-+ * All of leaf 0x2's one-byte TLB descriptors implies the same number of
-+ * entries for their respective TLB types.  The 0x63 descriptor is an
-+ * exception: it implies 4 dTLB entries for 1GB pages 32 dTLB entries
-+ * for 2MB or 4MB pages.  Encode descriptor 0x63 dTLB entry count for
-+ * 2MB/4MB pages here, as its count for dTLB 1GB pages is already at the
-+ * intel_tlb_table[] mapping.
-+ */
-+#define TLB_0x63_2M_4M_ENTRIES	32
+ 	/* clear destructor to avoid skb_segment assigning it to tail */
+ 	copy_dtor = gso_skb->destructor == sock_wfree;
+-	if (copy_dtor)
++	if (copy_dtor) {
+ 		gso_skb->destructor = NULL;
++		gso_skb->sk = NULL;
++	}
  
- static const struct _tlb_table intel_tlb_table[] = {
- 	{ 0x01, TLB_INST_4K,		32,	" TLB_INST 4 KByte pages, 4-way set associative" },
-@@ -836,7 +847,8 @@ static const struct _tlb_table intel_tlb
- 	{ 0x5c, TLB_DATA_4K_4M,		128,	" TLB_DATA 4 KByte and 4 MByte pages" },
- 	{ 0x5d, TLB_DATA_4K_4M,		256,	" TLB_DATA 4 KByte and 4 MByte pages" },
- 	{ 0x61, TLB_INST_4K,		48,	" TLB_INST 4 KByte pages, full associative" },
--	{ 0x63, TLB_DATA_1G,		4,	" TLB_DATA 1 GByte pages, 4-way set associative" },
-+	{ 0x63, TLB_DATA_1G_2M_4M,	4,	" TLB_DATA 1 GByte pages, 4-way set associative"
-+						" (plus 32 entries TLB_DATA 2 MByte or 4 MByte pages, not encoded here)" },
- 	{ 0x6b, TLB_DATA_4K,		256,	" TLB_DATA 4 KByte pages, 8-way associative" },
- 	{ 0x6c, TLB_DATA_2M_4M,		128,	" TLB_DATA 2 MByte or 4 MByte pages, 8-way associative" },
- 	{ 0x6d, TLB_DATA_1G,		16,	" TLB_DATA 1 GByte pages, fully associative" },
-@@ -936,6 +948,12 @@ static void intel_tlb_lookup(const unsig
- 		if (tlb_lld_4m[ENTRIES] < intel_tlb_table[k].entries)
- 			tlb_lld_4m[ENTRIES] = intel_tlb_table[k].entries;
- 		break;
-+	case TLB_DATA_1G_2M_4M:
-+		if (tlb_lld_2m[ENTRIES] < TLB_0x63_2M_4M_ENTRIES)
-+			tlb_lld_2m[ENTRIES] = TLB_0x63_2M_4M_ENTRIES;
-+		if (tlb_lld_4m[ENTRIES] < TLB_0x63_2M_4M_ENTRIES)
-+			tlb_lld_4m[ENTRIES] = TLB_0x63_2M_4M_ENTRIES;
-+		fallthrough;
- 	case TLB_DATA_1G:
- 		if (tlb_lld_1g[ENTRIES] < intel_tlb_table[k].entries)
- 			tlb_lld_1g[ENTRIES] = intel_tlb_table[k].entries;
+ 	segs = skb_segment(gso_skb, features);
+ 	if (IS_ERR_OR_NULL(segs)) {
+-		if (copy_dtor)
++		if (copy_dtor) {
+ 			gso_skb->destructor = sock_wfree;
++			gso_skb->sk = sk;
++		}
+ 		return segs;
+ 	}
+ 
+-- 
+2.39.5
+
 
 
