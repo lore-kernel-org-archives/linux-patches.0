@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9B815820C;
-	Tue, 11 Mar 2025 15:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886B225B676;
+	Tue, 11 Mar 2025 15:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706942; cv=none; b=L/eZXF3vqPPTomUZohRcW37DhuRQw0wz7hz9QRL+ELvBe3Csf6k9hR2Qqkm4HYzhJ9uq1SYnKiERfYeElHVTHGJoFBndMDBdsn5kW3h64X09hZfkQZyvnaQYF8UoAEIWqPrlj3ZaK+JpVclImv0hWT8EohfcjE/7PFIT6IIEulQ=
+	t=1741706944; cv=none; b=JEaz/bcI9/hFNK1w9K3sRWGBb3JzuT1XuB3OzAAeQSmUHzXzPfPNrrXW+wFrbCASRPac5W8k/sWmzkMdKeGznS+znmVb/J0BAN2/2qDBaHus0iUrn47tpsNCKRoGEpxnHECNDYyRdTrgFU4Xh5pUzgj3M+q1wtmeCZ/eOzCOs2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706942; c=relaxed/simple;
-	bh=IVDYb+FTgcn8F7v5ormP0lXXETl0I+wQ0lY7qRFRMpI=;
+	s=arc-20240116; t=1741706944; c=relaxed/simple;
+	bh=4bum8QGfOH1o57SL4cozCi/YEtO/jXU+m8ZZz2nyVyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IUQCHVcV75j7rP/wWvTsQtve0iZTrDedZYH14gz1pKplI2VEXQYsdp24CD/zkXFUbgMH+MazKZxrsSB5XrNARfzIw+Re/iMkyNXb+ZaXrRwtyzZwke7cty2osYUYOvFFecJEC2xPqp2LkdR7Gh7gilSGDnQnG/oMDVKq+PY4KbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eG8WR38W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AOVvrPZGPL3Ek2OFLf/UtwKFNmdvIsI76IXvHMBPtWBa7AVYPEKIzMkM9+Tq8lemszvVEXVrgiR5oVKNUJbdoPuEMFkGqGS94P7+NSWdiK4oumN27tLII6Mnlv7NCfDw19StSbiSLEMJaMi32mH3qHwX40/zfr709+O3J/pVmNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/9e5fNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eG8WR38W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2756BC4CEE9;
-	Tue, 11 Mar 2025 15:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/9e5fNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0413FC4CEED;
+	Tue, 11 Mar 2025 15:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706941;
-	bh=IVDYb+FTgcn8F7v5ormP0lXXETl0I+wQ0lY7qRFRMpI=;
+	s=korg; t=1741706944;
+	bh=4bum8QGfOH1o57SL4cozCi/YEtO/jXU+m8ZZz2nyVyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eG8WR38W8YJz4QpIZV7mH4XB0rilCVBanFQtxaQ0nWRBxUPQ/77fjhGmqLo1h/sTG
-	 yfkmmxuaE8Ys6M+YB571DN/Mz58WSS6NaBWD+pRnveSHCe9fsuvnJg0DORE+wnx2ez
-	 9bXL8F0ehtDVAkkWLTx9xN88i7G6Jbb+uFfaNiC0=
+	b=A/9e5fNZxs0AMQESnNdo2yv1I61ypT0bTH1SkEGtYBku3j9PBWlQZ9Hqk9XG/BfQI
+	 vRkz8+nwu59pWf1NLg0/UUE+VYeuY7sPI7rKmwLvuH0b53vlIzUPwHQOq10y7uG5an
+	 pZ3wU2eaAiP5gfJOhiG6AZZD3Dv38H3t06XivNoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 221/462] ptp: Ensure info->enable callback is always set
-Date: Tue, 11 Mar 2025 15:58:07 +0100
-Message-ID: <20250311145807.093448563@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.10 222/462] MIPS: ftrace: Declare ftrace_get_parent_ra_addr() as static
+Date: Tue, 11 Mar 2025 15:58:08 +0100
+Message-ID: <20250311145807.132506688@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,51 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit fd53aa40e65f518453115b6f56183b0c201db26b upstream.
+commit ddd068d81445b17ac0bed084dfeb9e58b4df3ddd upstream.
 
-The ioctl and sysfs handlers unconditionally call the ->enable callback.
-Not all drivers implement that callback, leading to NULL dereferences.
-Example of affected drivers: ptp_s390.c, ptp_vclock.c and ptp_mock.c.
+Declare ftrace_get_parent_ra_addr() as static to suppress clang
+compiler warning that 'no previous prototype'. This function is
+not intended to be called from other parts.
 
-Instead use a dummy callback if no better was specified by the driver.
+Fix follow error with clang-19:
 
-Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250123-ptp-enable-v1-1-b015834d3a47@weissschuh.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+arch/mips/kernel/ftrace.c:251:15: error: no previous prototype for function 'ftrace_get_parent_ra_addr' [-Werror,-Wmissing-prototypes]
+  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+      |               ^
+arch/mips/kernel/ftrace.c:251:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+      | ^
+      | static
+1 error generated.
+
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_clock.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/mips/kernel/ftrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -188,6 +188,11 @@ static void ptp_clock_release(struct dev
- 	kfree(ptp);
- }
+--- a/arch/mips/kernel/ftrace.c
++++ b/arch/mips/kernel/ftrace.c
+@@ -260,7 +260,7 @@ int ftrace_disable_ftrace_graph_caller(v
+ #define S_R_SP	(0xafb0 << 16)	/* s{d,w} R, offset(sp) */
+ #define OFFSET_MASK	0xffff	/* stack offset range: 0 ~ PT_SIZE */
  
-+static int ptp_enable(struct ptp_clock_info *ptp, struct ptp_clock_request *request, int on)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static void ptp_aux_kworker(struct kthread_work *work)
+-unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
++static unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+ 		old_parent_ra, unsigned long parent_ra_addr, unsigned long fp)
  {
- 	struct ptp_clock *ptp = container_of(work, struct ptp_clock,
-@@ -233,6 +238,9 @@ struct ptp_clock *ptp_clock_register(str
- 	mutex_init(&ptp->pincfg_mux);
- 	init_waitqueue_head(&ptp->tsev_wq);
- 
-+	if (!ptp->info->enable)
-+		ptp->info->enable = ptp_enable;
-+
- 	if (ptp->info->do_aux_work) {
- 		kthread_init_delayed_work(&ptp->aux_work, ptp_aux_kworker);
- 		ptp->kworker = kthread_create_worker(0, "ptp%d", ptp->index);
+ 	unsigned long sp, ip, tmp;
 
 
