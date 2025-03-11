@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033AF25BACC;
-	Tue, 11 Mar 2025 15:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D291DF749;
+	Tue, 11 Mar 2025 15:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706639; cv=none; b=et/dOIiWJ3Q5Yt641ApMVixLonS6D2GE5uoWakNjsBEGBTgnr7/nORFIL/MNCeqOGBedRRzKft+2uPnuoGxX2Qnmz4eqDliFPXpM9C4kedl2C59n/cqJcK2TyaYN3uxw+ap0rVMhVqbhSCfwc72rUb9W/k7HSQU4v+uEL6T70L0=
+	t=1741706642; cv=none; b=oH2XOre9H7yYvdE3+q7XvcAeEYfXXKrbIt54QSJhvluElcp/xvbG3WRUAzsewxROrVy+yBok0G7u5capFjZYMTmGXhasLMdeYid5WNNjdWTR2wr1c90sqMoLm0NZs47qMzqp6klM0Z+v0FWCrgyx0+AMvkRoS6zY8BW6IQXeVyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706639; c=relaxed/simple;
-	bh=7chqXzqRFTlP4bKYWBhhDNRGWytmXFMk0yy3ArKbMAs=;
+	s=arc-20240116; t=1741706642; c=relaxed/simple;
+	bh=aqxlDF+gFurza4xZ99gTuujUsi0BtfsRSySXoePZywc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bpbXndLpjlVRN8ZzS8bx5naPGqOF3K53SZRO7TQW8ABVpe6MTh5B9g0JzJpPICcl79zDgTQOZdpANJdC6mdcXR51SgKcvqRm/Pe0EtZ0wMNiVfezfnD6BJP8Us0Ln9ifMC9T6Tny7EmqbEX1KPtbeSD2PcKMJPLPn2G/q4/nEmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UT2gQA/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t9zs67slxE+cWTKMLAogCQK5U9tS2D6CgycI4rJgK5fWN5wtplN3TzralYpTRHRXN+pPgPw+DrlzstaIo+7+JhyVINPEfW72BL5qvd5vDu00FjwITgsErh3EVnC94M07rhZF/xNTX36VnH3NqXqqcm9iY3vdYOYa1WxsC7kww8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cK8mTHsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UT2gQA/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A654C4CEEA;
-	Tue, 11 Mar 2025 15:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK8mTHsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C38C4CEE9;
+	Tue, 11 Mar 2025 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706638;
-	bh=7chqXzqRFTlP4bKYWBhhDNRGWytmXFMk0yy3ArKbMAs=;
+	s=korg; t=1741706642;
+	bh=aqxlDF+gFurza4xZ99gTuujUsi0BtfsRSySXoePZywc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UT2gQA/L3yY52j1AR80DQ6jyVZwk58+JXxow5g9MM+BRfCiZQ8g90NYQSWw/mIwCy
-	 gJebHHq84XNpXHUj8BV1YMoe99tLOtMqEVerdGsJDARGjBEo6O2EycUKb/cl/besek
-	 xQRgU9nx7Th/5HLlkNYCKH753afn2Cz8ilXN2Wnc=
+	b=cK8mTHsJCtnu45Qaglxe7IyP5PnB4OT7aW6Sg1eooY5ZMPlqpGAotEBKKyG05BK+y
+	 o4p64CrQbn3551qYWwU0/6ekVoIFXn7gS6Bf6fX8awR+MNoI742R34mNi1Mqt+LSRV
+	 6FzWlqnVfePZuFRUIPB/0c0dzcmbelOPHFSh9xhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Simon Horman <horms@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/462] bgmac: reduce max frame size to support just MTU 1500
-Date: Tue, 11 Mar 2025 15:56:15 +0100
-Message-ID: <20250311145802.671375090@linuxfoundation.org>
+	John Hawley <warthog9@eaglescrag.net>,
+	"Ricardo B. Marliere" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 118/462] ktest.pl: Check kernelrelease return in get_version
+Date: Tue, 11 Mar 2025 15:56:24 +0100
+Message-ID: <20250311145803.023533715@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -47,77 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Ricardo B. Marliere <rbm@suse.com>
 
-[ Upstream commit 752e5fcc2e77358936d36ef8e522d6439372e201 ]
+commit a4e17a8f239a545c463f8ec27db4ed6e74b31841 upstream.
 
-bgmac allocates new replacement buffer before handling each received
-frame. Allocating & DMA-preparing 9724 B each time consumes a lot of CPU
-time. Ideally bgmac should just respect currently set MTU but it isn't
-the case right now. For now just revert back to the old limited frame
-size.
+In the case of a test that uses the special option ${KERNEL_VERSION} in one
+of its settings but has no configuration available in ${OUTPUT_DIR}, for
+example if it's a new empty directory, then the `make kernelrelease` call
+will fail and the subroutine will chomp an empty string, silently. Fix that
+by adding an empty configuration and retrying.
 
-This change bumps NAT masquerade speed by ~95%.
-
-Since commit 8218f62c9c9b ("mm: page_frag: use initial zero offset for
-page_frag_alloc_align()"), the bgmac driver fails to open its network
-interface successfully and runs out of memory in the following call
-stack:
-
-bgmac_open
-  -> bgmac_dma_init
-    -> bgmac_dma_rx_skb_for_slot
-      -> netdev_alloc_frag
-
-BGMAC_RX_ALLOC_SIZE = 10048 and PAGE_FRAG_CACHE_MAX_SIZE = 32768.
-
-Eventually we land into __page_frag_alloc_align() with the following
-parameters across multiple successive calls:
-
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=0
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=10048
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=20096
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=30144
-
-So in that case we do indeed have offset + fragsz (40192) > size (32768)
-and so we would eventually return NULL. Reverting to the older 1500
-bytes MTU allows the network driver to be usable again.
-
-Fixes: 8c7da63978f1 ("bgmac: configure MTU and add support for frames beyond 8192 byte size")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-[florian: expand commit message about recent commits]
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250127175159.1788246-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: John Hawley <warthog9@eaglescrag.net>
+Fixes: 5f9b6ced04a4e ("ktest: Bisecting, install modules, add logging")
+Link: https://lore.kernel.org/20241205-ktest_kver_fallback-v2-1-869dae4c7777@suse.com
+Signed-off-by: Ricardo B. Marliere <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
-index d1200b27af1ed..51ff5aceba99e 100644
---- a/drivers/net/ethernet/broadcom/bgmac.h
-+++ b/drivers/net/ethernet/broadcom/bgmac.h
-@@ -366,8 +366,7 @@
- #define BGMAC_RX_FRAME_OFFSET			30		/* There are 2 unused bytes between header and real data */
- #define BGMAC_RX_BUF_OFFSET			(NET_SKB_PAD + NET_IP_ALIGN - \
- 						 BGMAC_RX_FRAME_OFFSET)
--/* Jumbo frame size with FCS */
--#define BGMAC_RX_MAX_FRAME_SIZE			9724
-+#define BGMAC_RX_MAX_FRAME_SIZE			1536
- #define BGMAC_RX_BUF_SIZE			(BGMAC_RX_FRAME_OFFSET + BGMAC_RX_MAX_FRAME_SIZE)
- #define BGMAC_RX_ALLOC_SIZE			(SKB_DATA_ALIGN(BGMAC_RX_BUF_SIZE + BGMAC_RX_BUF_OFFSET) + \
- 						 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
--- 
-2.39.5
-
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2350,6 +2350,11 @@ sub get_version {
+     return if ($have_version);
+     doprint "$make kernelrelease ... ";
+     $version = `$make -s kernelrelease | tail -1`;
++    if (!length($version)) {
++	run_command "$make allnoconfig" or return 0;
++	doprint "$make kernelrelease ... ";
++	$version = `$make -s kernelrelease | tail -1`;
++    }
+     chomp($version);
+     doprint "$version\n";
+     $have_version = 1;
 
 
