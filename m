@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F34325DAE8;
-	Tue, 11 Mar 2025 15:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFD825EF8F;
+	Tue, 11 Mar 2025 15:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705567; cv=none; b=u/mt/HodTLD7IwAueiS/r1KMrnG6mT+3eXBqOKozQwYyFGM3PyiCI3cEqzDyLxjNajvoOum2tiC0TOt6KuRDumAZimi2TdQCQRKS0kkK+79+vQQ3y7fyC9HFFZtxqfLTlLSjdF7+sxgG2HDWSfiL0psChdCfqWWNtnHvCvW373U=
+	t=1741705571; cv=none; b=mBliKV8Doa6w8z3dNaz4+pvMWAShsElKbwwen1xEyVl5uX74RGEOztZTYDSt0jZrlKcTLmD6UUMe9x/LwkfB1XG4yBvKyceRJyZ7YVyUkzRKB1J/CJhnCK3jSiBO8Ul117ygb0KAEmT+nManpb+RU2/k4LTFwE1Rnb5YN/UEJTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705567; c=relaxed/simple;
-	bh=vQzrv8nD1EUn8FS/g6xgfli8sroI01FCDsrJataKlMY=;
+	s=arc-20240116; t=1741705571; c=relaxed/simple;
+	bh=zBhdzl1Kdik27C1Rn1sJR0HViHEHpmXddO3myRRlOUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ik/6DaNGf4j9GxMuVW2drLoyoVs0FfgT0DQOOoDQ7wsB2snUG6KLos8LmkCay4M1ZGgXUB6STu8p8zuEXSdgrr3Tpc03LlMLIizzb2t5SxzaAjUtY7W9TNoaDBTkLBGzkCLDyN0a2/GT7tI5LOteJMAB22917msbGfWCzhdZV/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEkqm6Wi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nH0fkFKJ5AacPqARi7LQn7oYIEroKSgGUSySdPhYnsONw6Iq2DgHYHbJ0pFPqqjP+nx4l5TA88fsHKjNjTIt8KTYwjZA8ZhqSPCuSfPs8N+Ejs3jaWYoqzXeA4yFlZ3A7GOtBRy2hjGDtnWdWZCj1gCLmyJiq+8R6VY6bIpAIBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1bQpfQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEkqm6Wi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D0FC4CEE9;
-	Tue, 11 Mar 2025 15:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1bQpfQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D71C4CEED;
+	Tue, 11 Mar 2025 15:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705567;
-	bh=vQzrv8nD1EUn8FS/g6xgfli8sroI01FCDsrJataKlMY=;
+	s=korg; t=1741705570;
+	bh=zBhdzl1Kdik27C1Rn1sJR0HViHEHpmXddO3myRRlOUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEkqm6Wi7ftEc41nWFRKWseS8TdS0/5CKRKwk7BfF2+g0EWgyVKowk2WM6vch0jw1
-	 yb/SGX+CU1+re9/XRGjwkJgSqejVxmJbkMo4b98FhZcLZnjiZ0TObsYN5xBHShhxef
-	 IpPv9E0WXDNtlbqMauQjMk/5V6PPN/i9f8qLDiqY=
+	b=C1bQpfQ/8478CSIJLXLI2U5m4O44mhbjAmeGOwfuM6f9bV10W7GtwzgGiyQI5ODMo
+	 IudQOgMnnZ3dYIqeZxYy8Q57oeAWHztiVjnGO9p2uXISMJQvxhYLfpSN8oSmNZYJWW
+	 4FMs0PuDTtq+texLNhVOj1a2ol1HVgwhxIryE9vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 060/328] dmaengine: ti: edma: fix OF node reference leaks in edma_driver
-Date: Tue, 11 Mar 2025 15:57:10 +0100
-Message-ID: <20250311145717.282034579@linuxfoundation.org>
+Subject: [PATCH 5.4 061/328] rtc: pcf85063: fix potential OOB write in PCF85063 NVMEM read
+Date: Tue, 11 Mar 2025 15:57:11 +0100
+Message-ID: <20250311145717.320183631@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,53 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit e883c64778e5a9905fce955681f8ee38c7197e0f ]
+[ Upstream commit 3ab8c5ed4f84fa20cd16794fe8dc31f633fbc70c ]
 
-The .probe() of edma_driver calls of_parse_phandle_with_fixed_args() but
-does not release the obtained OF nodes. Thus add a of_node_put() call.
+The nvmem interface supports variable buffer sizes, while the regmap
+interface operates with fixed-size storage. If an nvmem client uses a
+buffer size less than 4 bytes, regmap_read will write out of bounds
+as it expects the buffer to point at an unsigned int.
 
-This bug was found by an experimental verification tool that I am
-developing.
+Fix this by using an intermediary unsigned int to hold the value.
 
-Fixes: 1be5336bc7ba ("dmaengine: edma: New device tree binding")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20241219020507.1983124-3-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: fadfd092ee91 ("rtc: pcf85063: add nvram support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://lore.kernel.org/r/20241218-rtc-pcf85063-stack-corruption-v1-1-12fd0ee0f046@pengutronix.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rtc/rtc-pcf85063.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index b570f08888eeb..01089e5c565f3 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -217,7 +217,6 @@ struct edma_desc {
- struct edma_cc;
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 3e7ea5244562e..5251b6cc2def0 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -332,7 +332,16 @@ static const struct rtc_class_ops pcf85063_rtc_ops_alarm = {
+ static int pcf85063_nvmem_read(void *priv, unsigned int offset,
+ 			       void *val, size_t bytes)
+ {
+-	return regmap_read(priv, PCF85063_REG_RAM, val);
++	unsigned int tmp;
++	int ret;
++
++	ret = regmap_read(priv, PCF85063_REG_RAM, &tmp);
++	if (ret < 0)
++		return ret;
++
++	*(u8 *)val = tmp;
++
++	return 0;
+ }
  
- struct edma_tc {
--	struct device_node		*node;
- 	u16				id;
- };
- 
-@@ -2414,13 +2413,13 @@ static int edma_probe(struct platform_device *pdev)
- 			if (ret || i == ecc->num_tc)
- 				break;
- 
--			ecc->tc_list[i].node = tc_args.np;
- 			ecc->tc_list[i].id = i;
- 			queue_priority_mapping[i][1] = tc_args.args[0];
- 			if (queue_priority_mapping[i][1] > lowest_priority) {
- 				lowest_priority = queue_priority_mapping[i][1];
- 				info->default_queue = i;
- 			}
-+			of_node_put(tc_args.np);
- 		}
- 	}
- 
+ static int pcf85063_nvmem_write(void *priv, unsigned int offset,
 -- 
 2.39.5
 
