@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEC725E824;
-	Tue, 11 Mar 2025 15:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AC11BD00C;
+	Tue, 11 Mar 2025 15:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706258; cv=none; b=ORW4s86UnP6BNCqP3KkQYpU3WS1Sj5/QIO0wqJdkxJ2PNAlcwY9dxgp9T77g6CUT+cswlV09Zi66VkS6X5AdUV5wqVuVBaghbL7n736/Jc4SsrEBmITiavv8EFRqG6sfDm/Q+mEs2tnznJ1boIWD4GoKSROemS30hYQttcdKLKA=
+	t=1741706260; cv=none; b=jwSqF90BtU0Yld82TNZdRK7UPe+g06xmkUgabukDBFYD9Gw7hM5vYHoGxlxVYr1F6yzl85viMjrfe+qf/E9UeKXaIjGZkmt6eMZ/D02DLgDqxTFwAA+WYqs6w3iAd201YRLaTzU9ZviRklyKgv+2+zpA5IbenT9l76oocSdcJvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706258; c=relaxed/simple;
-	bh=X3HI5RqDy2KSJ2al6jwpufxy/m0rNpmJ9yT7mwcOfFc=;
+	s=arc-20240116; t=1741706260; c=relaxed/simple;
+	bh=i5xMx2i0cv5AHmxPBhn2dB1V87/zj+Ay56z9s60mpwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfeqR8c46Rzfja4e11pK1s1fEExFtXnb/GVs6ztgHHycl6hmZeunbmV7g+CdGm36md7xWYPJQJ3bh+JTT/lsPQJxf3IGHykfTKCOcQiTN7iB5CJ/GtPAyZYK7Gj5XMCqYI7FIFFaC0oDmUnarZrhWt3CGmDHt4oofk3dSG3RXnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHgijoIS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JC9LfMH4CZgRzPA6yAPJGIq267TH/bbyTLIl5vXEkGcKbWRMm0KkVqObcSdC12kQj5DnR8q41C6JyPhEvmNvKQf1vUuPBtKrVwsbbLnzrltzvaSDjEhNV56Txt3LWS1A806PrBWyH7vg+sPZi6wuvGIUdWLgzJ6ZPwajjJEffmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1g4bYDDv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHgijoIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E73C4CEF0;
-	Tue, 11 Mar 2025 15:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1g4bYDDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACF6C4CEE9;
+	Tue, 11 Mar 2025 15:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706257;
-	bh=X3HI5RqDy2KSJ2al6jwpufxy/m0rNpmJ9yT7mwcOfFc=;
+	s=korg; t=1741706260;
+	bh=i5xMx2i0cv5AHmxPBhn2dB1V87/zj+Ay56z9s60mpwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHgijoISwWReffOr8+doNMWf2N/+8xp9eZlNIb9z9EgQvsNtNZCGpYxuiFNjk7kj6
-	 fcjvVQsCVehl9AlGx139AGa05MEH9DKCfrmz/5yfcMrgVG5YS7VkCkhHQRg3CKWqXa
-	 jHpTalcheNtmcUOrs+O4cWJJwpmosCRSLzH+Y+rA=
+	b=1g4bYDDvzAcxR8XyBIV33AgvNMMCE5OybSqVqzmj2WKjlySUCOEE8IYJgBIRbmYJS
+	 Ln8EcMjC/J0qfXAqKVYEhnJEkFCgr8hVhXR3qhzs5fAZT30c285WpeGGBqCXkVXoOd
+	 tCQ7xdc1mUSnAFktAgr/KioJrZRc5VEwYoND5lF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Herbert <tom@herbertland.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 308/328] net: ipv6: fix dst ref loop in ila lwtunnel
-Date: Tue, 11 Mar 2025 16:01:18 +0100
-Message-ID: <20250311145727.148606714@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fedor Pchelkin <boddah8794@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.4 317/328] usb: typec: ucsi: increase timeout for PPM reset operations
+Date: Tue, 11 Mar 2025 16:01:27 +0100
+Message-ID: <20250311145727.501272953@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,41 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Fedor Pchelkin <boddah8794@gmail.com>
 
-[ Upstream commit 0e7633d7b95b67f1758aea19f8e85621c5f506a3 ]
+commit bf4f9ae1cb08ccaafbe6874be6c46f59b83ae778 upstream.
 
-This patch follows commit 92191dd10730 ("net: ipv6: fix dst ref loops in
-rpl, seg6 and ioam6 lwtunnels") and, on a second thought, the same patch
-is also needed for ila (even though the config that triggered the issue
-was pathological, but still, we don't want that to happen).
+It is observed that on some systems an initial PPM reset during the boot
+phase can trigger a timeout:
 
-Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
-Cc: Tom Herbert <tom@herbertland.com>
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Link: https://patch.msgid.link/20250304181039.35951-1-justin.iurman@uliege.be
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[    6.482546] ucsi_acpi USBC000:00: failed to reset PPM!
+[    6.482551] ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
+
+Still, increasing the timeout value, albeit being the most straightforward
+solution, eliminates the problem: the initial PPM reset may take up to
+~8000-10000ms on some Lenovo laptops. When it is reset after the above
+period of time (or even if ucsi_reset_ppm() is not called overall), UCSI
+works as expected.
+
+Moreover, if the ucsi_acpi module is loaded/unloaded manually after the
+system has booted, reading the CCI values and resetting the PPM works
+perfectly, without any timeout. Thus it's only a boot-time issue.
+
+The reason for this behavior is not clear but it may be the consequence
+of some tricks that the firmware performs or be an actual firmware bug.
+As a workaround, increase the timeout to avoid failing the UCSI
+initialization prematurely.
+
+Fixes: b1b59e16075f ("usb: typec: ucsi: Increase command completion timeout value")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fedor Pchelkin <boddah8794@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250217105442.113486-3-boddah8794@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ila/ila_lwt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
-index 6a6a30e82810d..dc01cdb043498 100644
---- a/net/ipv6/ila/ila_lwt.c
-+++ b/net/ipv6/ila/ila_lwt.c
-@@ -88,7 +88,8 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 			goto drop;
- 		}
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -28,7 +28,7 @@
+  * difficult to estimate the time it takes for the system to process the command
+  * before it is actually passed to the PPM.
+  */
+-#define UCSI_TIMEOUT_MS		5000
++#define UCSI_TIMEOUT_MS		10000
  
--		if (ilwt->connected) {
-+		/* cache only if we don't create a dst reference loop */
-+		if (ilwt->connected && orig_dst->lwtstate != dst->lwtstate) {
- 			local_bh_disable();
- 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
- 			local_bh_enable();
--- 
-2.39.5
-
+ /*
+  * UCSI_SWAP_TIMEOUT_MS - Timeout for role swap requests
 
 
