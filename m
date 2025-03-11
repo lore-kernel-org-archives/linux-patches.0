@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620D725DCE5;
-	Tue, 11 Mar 2025 15:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ED925C715;
+	Tue, 11 Mar 2025 15:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705987; cv=none; b=uT84VPih9OYt0NrUE5BeaW39Rm1Itpgbu/sM7eU3IqHrgHFd1c6zEn4raf94fH4RDEZDoU8jaEOGobd5C+MOpx4uAedneIM7NgAQJD1s9niEl4Mq3pJWFk2+UxLfDYS5jZ+xt0hpWZCjOkxuI38gNKSt8K1zeYm3oiKczDuudlE=
+	t=1741705990; cv=none; b=cGFxFoNHCgCwlbNJUGg120YhOxFsSA7oJPcKud3hPEk3HwKjR7Xs9wIM71VQp3V2qxF+/xHv9z6CbluMdCDHc+vj7E1KiMkMw+r2krALrtQmua7m3M1nxsi5lmhvjt/QgCceDE/Ejn0e4+r9fsVNFvqPdTDRJoPzWMP1+XNdE3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705987; c=relaxed/simple;
-	bh=lpx7osaaPRWZSbA1GdAMYTpRo0T8qjgGrSmWSDDIH8c=;
+	s=arc-20240116; t=1741705990; c=relaxed/simple;
+	bh=s00B+dSNut3PWhsPhrcELyxzriTrJAxu/B49gn2R1oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiUBlvzSGsqMnkoq/oShGSTYQ8SJ/xBKPC3QKfDueVNRTGeBH1/oYKJkNdpC0L2M/xkivnLKkrD1mlPtems5CcEdtfIdsbJgIE1+4wuXeLb6IWRy7W4Uh5XWBv21ihr4qmFegwDQsbVudkxEkn6O67pUFCm3mWWDKhNtKxBLEjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+W7XSky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FGYGaLww2Pkavq/5lxaR3En41fP1p1DNxcdI1z+LzX7DYt9a7ujKLCU+wqJTDYs0uKXM2dT9QbDk/lf8aYSxzTofcaXKEdwrTyBBcLAFBpgM2zAzqxYwodEeGxMskOGkjcnmHk6y6MQrvA8m+bl5HO0PqbURYc1VqvgD8EUwYC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8EYWZ1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+W7XSky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA520C4CEE9;
-	Tue, 11 Mar 2025 15:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8EYWZ1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DD7C4CEE9;
+	Tue, 11 Mar 2025 15:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705987;
-	bh=lpx7osaaPRWZSbA1GdAMYTpRo0T8qjgGrSmWSDDIH8c=;
+	s=korg; t=1741705990;
+	bh=s00B+dSNut3PWhsPhrcELyxzriTrJAxu/B49gn2R1oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+W7XSkyYg+0jf1LpbwGuL5uW+roLcZgdKqRfQKzVOxmQEJWYUSOuD06cxsmCv4UK
-	 M/rkYNLFVM4fz+P/X3a93p426Dt6Yg/I91SJXawZjJmJAui2wwRmuSmIxFTmrwQocH
-	 DUo3Tf5mUSMKRPaVXQNZvz+H4+idi16wZFaMpl3A=
+	b=Q8EYWZ1nAur1zKMARSzl0VGoMk/w9fmQC7hqHTjPsw+iAVbkN7HxC8ezo7w4VbS8+
+	 eB/T2jZfbO9Y0Y7Mr7FIgC+MTWsM2cwdauTsaQP7kkgkPsAOTvvBjjvhPjcF0XBVr2
+	 A8uiIK0C7ZeQda+5eAOdxdCZzbr+8qVx509pF6eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 205/328] ipv6: use RCU protection in ip6_default_advmss()
-Date: Tue, 11 Mar 2025 15:59:35 +0100
-Message-ID: <20250311145723.056258655@linuxfoundation.org>
+Subject: [PATCH 5.4 206/328] ndisc: use RCU protection in ndisc_alloc_skb()
+Date: Tue, 11 Mar 2025 15:59:36 +0100
+Message-ID: <20250311145723.094432887@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -54,45 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3c8ffcd248da34fc41e52a46e51505900115fc2a ]
+[ Upstream commit 628e6d18930bbd21f2d4562228afe27694f66da9 ]
 
-ip6_default_advmss() needs rcu protection to make
-sure the net structure it reads does not disappear.
+ndisc_alloc_skb() can be called without RTNL or RCU being held.
 
-Fixes: 5578689a4e3c ("[NETNS][IPV6] route6 - make route6 per namespace")
+Add RCU protection to avoid possible UAF.
+
+Fixes: de09334b9326 ("ndisc: Introduce ndisc_alloc_skb() helper.")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-11-edumazet@google.com
+Link: https://patch.msgid.link/20250207135841.1948589-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/ndisc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 364abcf4b6c14..99908861246d3 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3090,13 +3090,18 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 3096807caecab..92e35b3096dba 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -416,15 +416,11 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
  {
- 	struct net_device *dev = dst->dev;
- 	unsigned int mtu = dst_mtu(dst);
--	struct net *net = dev_net(dev);
-+	struct net *net;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
+-	struct sock *sk = dev_net(dev)->ipv6.ndisc_sk;
+ 	struct sk_buff *skb;
  
- 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+ 	skb = alloc_skb(hlen + sizeof(struct ipv6hdr) + len + tlen, GFP_ATOMIC);
+-	if (!skb) {
+-		ND_PRINTK(0, err, "ndisc: %s failed to allocate an skb\n",
+-			  __func__);
++	if (!skb)
+ 		return NULL;
+-	}
  
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 	skb->dev = dev;
+@@ -435,7 +431,9 @@ static struct sk_buff *ndisc_alloc_skb(struct net_device *dev,
+ 	/* Manually assign socket ownership as we avoid calling
+ 	 * sock_alloc_send_pskb() to bypass wmem buffer limits
+ 	 */
+-	skb_set_owner_w(skb, sk);
 +	rcu_read_lock();
-+
-+	net = dev_net_rcu(dev);
- 	if (mtu < net->ipv6.sysctl.ip6_rt_min_advmss)
- 		mtu = net->ipv6.sysctl.ip6_rt_min_advmss;
- 
++	skb_set_owner_w(skb, dev_net_rcu(dev)->ipv6.ndisc_sk);
 +	rcu_read_unlock();
-+
- 	/*
- 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
- 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
+ 
+ 	return skb;
+ }
 -- 
 2.39.5
 
