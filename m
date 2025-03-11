@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1364B249F9;
-	Tue, 11 Mar 2025 15:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A60F14BF89;
+	Tue, 11 Mar 2025 15:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707103; cv=none; b=SJRSlcwI9fYKotlZKUrN3/tIF6zV8TaZGLL+SXUD+8xK3xSgR6SBocEPvA8hpggH3L3zYzGQ0h7OZ9nxHCuH20dBhKjpcbMwWzPDoxg3PaAECSZ18vKjmj2d0ThhFbQ6Ip2dDTINZaj00ijd4+RGmwHJKzXg3RLySW3KbgrnqKQ=
+	t=1741707105; cv=none; b=QqrUQAjVp1qYgEMDMtscZfobDrfVmiUgScGM8MKDURHTRFxNtoOUYuhcyTl0p0+Wrl9Ww0i+B+7fZOkNog8OIMMKpJMOXYH+glyKaEysrG8FSLuCcLKXcLzELQMnPWkjyd+zWyvIIrtVaCAyXO57Fva491qmdTfH6E5S5wyyvfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707103; c=relaxed/simple;
-	bh=2ZBVz6s5IstM3dSSa0uurAA6Bynjyr4v5RuhRaxE72Q=;
+	s=arc-20240116; t=1741707105; c=relaxed/simple;
+	bh=2e2osuGQO47UJvZ+KAqoFuSOLZmQRds3TZgBTNf5p58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbH0GKLsI+4T9CDE+tusuDH6/GbdfjZMR9r30RBIdPho1zh9CJHP+7eCkU9dkJMWbbadG1Cn9zrAmW3UByhhlpc9kOwMtJF98pqrrNKxXrNiYIwSLrAWlXhlEOZFzzysWDcxHVFdCbcboJfYXkm3JxHbUwajKpzbLGIyRWp+T24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFmw1SFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ePdd193TLZZpulNeU7Xlzl2xlO8Vk5uQtk9aKD15w4y8MoH5W0/8bud6Axlh2x6xDwtSEsFc+N1Bu+PUFLRNW7j46jXA8uEDjbcJF2qhIy8kY2+kC6bDzN+klxVBbKoRA0u+eXH4O1M0hki0cytr5QUvnslchbHsEWyv6UgY5nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHduTKYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFmw1SFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392AAC4CEE9;
-	Tue, 11 Mar 2025 15:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHduTKYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226EDC4CEE9;
+	Tue, 11 Mar 2025 15:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707102;
-	bh=2ZBVz6s5IstM3dSSa0uurAA6Bynjyr4v5RuhRaxE72Q=;
+	s=korg; t=1741707105;
+	bh=2e2osuGQO47UJvZ+KAqoFuSOLZmQRds3TZgBTNf5p58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFmw1SFRgym1MD1FBoERx/0UrLluXBs+GKDsnnw10oxaJK5kUjteDmLZ8gatg/r8c
-	 FLiSQ4YFVWKH4hne18vcM319eTb7/s4jWM40VV60Muha06sgOdVd+p6epQ5+mloYOW
-	 icKYWOJBIQl3NUg9BSYL3Z0TcyFNpBE59rw026hg=
+	b=eHduTKYQk3O+UGIXm5S6/HnVeyz30pUltQAh/lXjejH7GvhjxmP4JFbhDW5ChErMg
+	 F3l5qvESVmcCOCZ4QRVJJ6VO4o2pu7udDjfGoOEwPEGZI8ETlpj4KFa8KttyxarJ88
+	 GwDrYiwXyk9sdFAT3XEJvMEjfhglMmtvsoDDLwGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 273/462] mlxsw: Add return value check for mlxsw_sp_port_get_stats_raw()
-Date: Tue, 11 Mar 2025 15:58:59 +0100
-Message-ID: <20250311145809.149072687@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Feng Tang <feng.tang@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 274/462] clocksource: Limit number of CPUs checked for clock synchronization
+Date: Tue, 11 Mar 2025 15:59:00 +0100
+Message-ID: <20250311145809.192269783@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,38 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit fee5d688940690cc845937459e340e4e02598e90 upstream.
+[ Upstream commit fa218f1cce6ba40069c8daab8821de7e6be1cdd0 ]
 
-Add a check for the return value of mlxsw_sp_port_get_stats_raw()
-in __mlxsw_sp_port_get_stats(). If mlxsw_sp_port_get_stats_raw()
-returns an error, exit the function to prevent further processing
-with potentially invalid data.
+Currently, if skew is detected on a clock marked CLOCK_SOURCE_VERIFY_PERCPU,
+that clock is checked on all CPUs.  This is thorough, but might not be
+what you want on a system with a few tens of CPUs, let alone a few hundred
+of them.
 
-Fixes: 614d509aa1e7 ("mlxsw: Move ethtool_ops to spectrum_ethtool.c")
-Cc: stable@vger.kernel.org # 5.9+
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20250212152311.1332-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Therefore, by default check only up to eight randomly chosen CPUs.  Also
+provide a new clocksource.verify_n_cpus kernel boot parameter.  A value of
+-1 says to check all of the CPUs, and a non-negative value says to randomly
+select that number of CPUs, without concern about selecting the same CPU
+multiple times.  However, make use of a cpumask so that a given CPU will be
+checked at most once.
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de> # For verify_n_cpus=1.
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Feng Tang <feng.tang@intel.com>
+Link: https://lore.kernel.org/r/20210527190124.440372-3-paulmck@kernel.org
+Stable-dep-of: 6bb05a33337b ("clocksource: Use migrate_disable() to avoid calling get_random_u32() in atomic context")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../admin-guide/kernel-parameters.txt         | 10 +++
+ kernel/time/clocksource.c                     | 74 ++++++++++++++++++-
+ 2 files changed, 82 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
-@@ -761,7 +761,9 @@ static void __mlxsw_sp_port_get_stats(st
- 	err = mlxsw_sp_get_hw_stats_by_group(&hw_stats, &len, grp);
- 	if (err)
- 		return;
--	mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
-+	err = mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
-+	if (err)
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 097ef49b3d3a0..88110e74b3f7a 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -583,6 +583,16 @@
+ 			unstable.  Defaults to three retries, that is,
+ 			four attempts to read the clock under test.
+ 
++	clocksource.verify_n_cpus= [KNL]
++			Limit the number of CPUs checked for clocksources
++			marked with CLOCK_SOURCE_VERIFY_PERCPU that
++			are marked unstable due to excessive skew.
++			A negative value says to check all CPUs, while
++			zero says not to check any.  Values larger than
++			nr_cpu_ids are silently truncated to nr_cpu_ids.
++			The actual CPUs are chosen randomly, with
++			no replacement if the same CPU is chosen twice.
++
+ 	clearcpuid=BITNUM[,BITNUM...] [X86]
+ 			Disable CPUID feature X for the kernel. See
+ 			arch/x86/include/asm/cpufeatures.h for the valid bit
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 754e93edb2f79..00cf99cb74496 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -14,6 +14,8 @@
+ #include <linux/sched.h> /* for spin_unlock_irq() using preempt_count() m68k */
+ #include <linux/tick.h>
+ #include <linux/kthread.h>
++#include <linux/prandom.h>
++#include <linux/cpu.h>
+ 
+ #include "tick-internal.h"
+ #include "timekeeping_internal.h"
+@@ -201,6 +203,8 @@ void clocksource_mark_unstable(struct clocksource *cs)
+ 
+ static ulong max_cswd_read_retries = 3;
+ module_param(max_cswd_read_retries, ulong, 0644);
++static int verify_n_cpus = 8;
++module_param(verify_n_cpus, int, 0644);
+ 
+ enum wd_read_status {
+ 	WD_READ_SUCCESS,
+@@ -263,6 +267,55 @@ static enum wd_read_status cs_watchdog_read(struct clocksource *cs, u64 *csnow,
+ static u64 csnow_mid;
+ static cpumask_t cpus_ahead;
+ static cpumask_t cpus_behind;
++static cpumask_t cpus_chosen;
++
++static void clocksource_verify_choose_cpus(void)
++{
++	int cpu, i, n = verify_n_cpus;
++
++	if (n < 0) {
++		/* Check all of the CPUs. */
++		cpumask_copy(&cpus_chosen, cpu_online_mask);
++		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 +		return;
- 	for (i = 0; i < len; i++) {
- 		data[data_index + i] = hw_stats[i].getter(ppcnt_pl);
- 		if (!hw_stats[i].cells_bytes)
++	}
++
++	/* If no checking desired, or no other CPU to check, leave. */
++	cpumask_clear(&cpus_chosen);
++	if (n == 0 || num_online_cpus() <= 1)
++		return;
++
++	/* Make sure to select at least one CPU other than the current CPU. */
++	cpu = cpumask_next(-1, cpu_online_mask);
++	if (cpu == smp_processor_id())
++		cpu = cpumask_next(cpu, cpu_online_mask);
++	if (WARN_ON_ONCE(cpu >= nr_cpu_ids))
++		return;
++	cpumask_set_cpu(cpu, &cpus_chosen);
++
++	/* Force a sane value for the boot parameter. */
++	if (n > nr_cpu_ids)
++		n = nr_cpu_ids;
++
++	/*
++	 * Randomly select the specified number of CPUs.  If the same
++	 * CPU is selected multiple times, that CPU is checked only once,
++	 * and no replacement CPU is selected.  This gracefully handles
++	 * situations where verify_n_cpus is greater than the number of
++	 * CPUs that are currently online.
++	 */
++	for (i = 1; i < n; i++) {
++		cpu = prandom_u32() % nr_cpu_ids;
++		cpu = cpumask_next(cpu - 1, cpu_online_mask);
++		if (cpu >= nr_cpu_ids)
++			cpu = cpumask_next(-1, cpu_online_mask);
++		if (!WARN_ON_ONCE(cpu >= nr_cpu_ids))
++			cpumask_set_cpu(cpu, &cpus_chosen);
++	}
++
++	/* Don't verify ourselves. */
++	cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
++}
+ 
+ static void clocksource_verify_one_cpu(void *csin)
+ {
+@@ -278,12 +331,22 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 	int cpu, testcpu;
+ 	s64 delta;
+ 
++	if (verify_n_cpus == 0)
++		return;
+ 	cpumask_clear(&cpus_ahead);
+ 	cpumask_clear(&cpus_behind);
++	get_online_cpus();
+ 	preempt_disable();
++	clocksource_verify_choose_cpus();
++	if (cpumask_weight(&cpus_chosen) == 0) {
++		preempt_enable();
++		put_online_cpus();
++		pr_warn("Not enough CPUs to check clocksource '%s'.\n", cs->name);
++		return;
++	}
+ 	testcpu = smp_processor_id();
+-	pr_warn("Checking clocksource %s synchronization from CPU %d.\n", cs->name, testcpu);
+-	for_each_online_cpu(cpu) {
++	pr_warn("Checking clocksource %s synchronization from CPU %d to CPUs %*pbl.\n", cs->name, testcpu, cpumask_pr_args(&cpus_chosen));
++	for_each_cpu(cpu, &cpus_chosen) {
+ 		if (cpu == testcpu)
+ 			continue;
+ 		csnow_begin = cs->read(cs);
+@@ -303,6 +366,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 			cs_nsec_min = cs_nsec;
+ 	}
+ 	preempt_enable();
++	put_online_cpus();
+ 	if (!cpumask_empty(&cpus_ahead))
+ 		pr_warn("        CPUs %*pbl ahead of CPU %d for clocksource %s.\n",
+ 			cpumask_pr_args(&cpus_ahead), testcpu, cs->name);
+@@ -427,6 +491,12 @@ static void clocksource_watchdog(struct timer_list *unused)
+ 				watchdog->name, wdnow, wdlast, watchdog->mask);
+ 			pr_warn("                      '%s' cs_now: %llx cs_last: %llx mask: %llx\n",
+ 				cs->name, csnow, cslast, cs->mask);
++			if (curr_clocksource == cs)
++				pr_warn("                      '%s' is current clocksource.\n", cs->name);
++			else if (curr_clocksource)
++				pr_warn("                      '%s' (not '%s') is current clocksource.\n", curr_clocksource->name, cs->name);
++			else
++				pr_warn("                      No current clocksource.\n");
+ 			__clocksource_unstable(cs);
+ 			continue;
+ 		}
+-- 
+2.39.5
+
 
 
