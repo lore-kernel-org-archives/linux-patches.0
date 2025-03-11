@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B979E1E98FB;
-	Tue, 11 Mar 2025 15:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B8D1E98FB;
+	Tue, 11 Mar 2025 15:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706137; cv=none; b=QRLYVQKoaZ8NlSfv7EF0AA/kfxVljFfL2rQMw9XqeH/673HqMI3dDTyha2LhL7TfiY6v2dGNk9rnQkf0kyZ0Uky12LBJxGE6ALJqorgQUiNMYYgvcBdENkvgySV6VLCX8S/OaOzmdFacSC749FvuuLhL9FAkamWyokMt7yC3PbA=
+	t=1741706141; cv=none; b=gvfTjEJAawh6F0xd5utmgLTX5wZ/Bvew3wTvxvhYGh2YKu+enn6z9P8+sWijBkOP5NVjYJu/vuJwUgkjdC3xlnZxNMIdVcWsU0V+IktRv6xGN2CqjYNYbkPQNjPlMXYwq3ckXwceZe8zCSwmQ7FQB7dmNjYxp1TehyVexJAdmdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706137; c=relaxed/simple;
-	bh=f8e8GQ4uNNpAmqGnnf7FhOyhe26nusYiBYWSfjk+lRM=;
+	s=arc-20240116; t=1741706141; c=relaxed/simple;
+	bh=DJ7V9WYhIEm1c8DxoQrtOCNJGZvJUKth2A6yEc2dbpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4pMjSexa3OqNYIHAUV5ZWqx0B8rzgrim+aULPK/mrfmgknue6pc8rbnwlkP6kGeiaKi5tnkJ9rX0gUfCWfSWW75K9YxC2hs6CKZkEwqORsIrnTyzH0c4rpG+A1pjviioavTvlY0iaN0VPB+gHpnIK1akHepKip+KeW6+CSbopw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUgYStoe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KSZ3Ysdv65te1+PsAEih7ATmUrbbFKUSI5zFRZFTE6AXT0haY1MKNjS2snT/V/mL6Y941972IH2fiJAIx4V18OfSvtIaFLFeqAi1cj3hR5L43UjtOJJXIvAFttemMU4c7CUM8lQRNHQZpVygxsHYTreAGb0tComifdDcFe/GFiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PzApdFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUgYStoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442E4C4CEE9;
-	Tue, 11 Mar 2025 15:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PzApdFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B23BC4CEE9;
+	Tue, 11 Mar 2025 15:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706137;
-	bh=f8e8GQ4uNNpAmqGnnf7FhOyhe26nusYiBYWSfjk+lRM=;
+	s=korg; t=1741706140;
+	bh=DJ7V9WYhIEm1c8DxoQrtOCNJGZvJUKth2A6yEc2dbpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUgYStoed0WAPYVM3FcjpTfzJ//PipMeHyBVenfdlg0cRHr2YeN6YcMphSwcp6inY
-	 CwXJ+td2kxl7kjqbCjDoUfAHIEyAwNBiMu1OCe8f4aV44QwlQ8vK13ZZKGc4ATrzGa
-	 /sMe0c1xh3JSn+2E5TJu5ZCUO3N5ZLLH9mwq33Gg=
+	b=2PzApdFw48upKtJrVounqpD3ZWP+xjmpBySFMUBSMDW+zC7KKh95Ic3LxaaCYPnFZ
+	 klRG3Rq/iLUgPL0xQM/I1JSZZYCKk9k77frAx9etUVvajwZBaCw377adW5vZ9BC+a9
+	 cVsw3tkymeyE8DIRwbgtdw0w//PMJHunWh+nWNUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 267/328] usbnet: gl620a: fix endpoint checking in genelink_bind()
-Date: Tue, 11 Mar 2025 16:00:37 +0100
-Message-ID: <20250311145725.521177991@linuxfoundation.org>
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 276/328] drm/amdgpu: skip BAR resizing if the bios already did it
+Date: Tue, 11 Mar 2025 16:00:46 +0100
+Message-ID: <20250311145725.883983495@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -45,99 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 1cf9631d836b289bd5490776551961c883ae8a4f upstream.
+[ Upstream commit b7221f2b4655bb9a95ed6f86658713c8dd543d41 ]
 
-Syzbot reports [1] a warning in usb_submit_urb() triggered by
-inconsistencies between expected and actually present endpoints
-in gl620a driver. Since genelink_bind() does not properly
-verify whether specified eps are in fact provided by the device,
-in this case, an artificially manufactured one, one may get a
-mismatch.
+No need to do it again.
 
-Fix the issue by resorting to a usbnet utility function
-usbnet_get_endpoints(), usually reserved for this very problem.
-Check for endpoints and return early before proceeding further if
-any are missing.
-
-[1] Syzbot report:
-usb 5-1: Manufacturer: syz
-usb 5-1: SerialNumber: syz
-usb 5-1: config 0 descriptor??
-gl620a 5-1:0.23 usb0: register 'gl620a' at usb-dummy_hcd.0-1, ...
-------------[ cut here ]------------
-usb 5-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 2 PID: 1841 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-Modules linked in:
-CPU: 2 UID: 0 PID: 1841 Comm: kworker/2:2 Not tainted 6.12.0-syzkaller-07834-g06afb0f36106 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Workqueue: mld mld_ifc_work
-RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-...
-Call Trace:
- <TASK>
- usbnet_start_xmit+0x6be/0x2780 drivers/net/usb/usbnet.c:1467
- __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
- netdev_start_xmit include/linux/netdevice.h:5011 [inline]
- xmit_one net/core/dev.c:3590 [inline]
- dev_hard_start_xmit+0x9a/0x7b0 net/core/dev.c:3606
- sch_direct_xmit+0x1ae/0xc30 net/sched/sch_generic.c:343
- __dev_xmit_skb net/core/dev.c:3827 [inline]
- __dev_queue_xmit+0x13d4/0x43e0 net/core/dev.c:4400
- dev_queue_xmit include/linux/netdevice.h:3168 [inline]
- neigh_resolve_output net/core/neighbour.c:1514 [inline]
- neigh_resolve_output+0x5bc/0x950 net/core/neighbour.c:1494
- neigh_output include/net/neighbour.h:539 [inline]
- ip6_finish_output2+0xb1b/0x2070 net/ipv6/ip6_output.c:141
- __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
- ip6_finish_output+0x3f9/0x1360 net/ipv6/ip6_output.c:226
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip6_output+0x1f8/0x540 net/ipv6/ip6_output.c:247
- dst_output include/net/dst.h:450 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- NF_HOOK include/linux/netfilter.h:308 [inline]
- mld_sendpack+0x9f0/0x11d0 net/ipv6/mcast.c:1819
- mld_send_cr net/ipv6/mcast.c:2120 [inline]
- mld_ifc_work+0x740/0xca0 net/ipv6/mcast.c:2651
- process_one_work+0x9c5/0x1ba0 kernel/workqueue.c:3229
- process_scheduled_works kernel/workqueue.c:3310 [inline]
- worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-
-Reported-by: syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d693c07c6f647e0388d3
-Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250224172919.1220522-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 099bffc7cadf ("drm/amdgpu: disable BAR resize on Dell G5 SE")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/gl620a.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/usb/gl620a.c
-+++ b/drivers/net/usb/gl620a.c
-@@ -179,9 +179,7 @@ static int genelink_bind(struct usbnet *
- {
- 	dev->hard_mtu = GL_RCV_BUF_SIZE;
- 	dev->net->hard_header_len += 4;
--	dev->in = usb_rcvbulkpipe(dev->udev, dev->driver_info->in);
--	dev->out = usb_sndbulkpipe(dev->udev, dev->driver_info->out);
--	return 0;
-+	return usbnet_get_endpoints(dev, intf);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 9dcb38bab0e10..49fcb69ca4a1b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -766,6 +766,11 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
  
- static const struct driver_info	genelink_info = {
++	/* skip if the bios has already enabled large BAR */
++	if (adev->gmc.real_vram_size &&
++	    (pci_resource_len(adev->pdev, 0) >= adev->gmc.real_vram_size))
++		return 0;
++
+ 	/* Check if the root BUS has 64bit memory resources */
+ 	root = adev->pdev->bus;
+ 	while (root->parent)
+-- 
+2.39.5
+
 
 
