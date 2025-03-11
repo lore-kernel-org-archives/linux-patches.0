@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E432A1CAA8F;
-	Tue, 11 Mar 2025 15:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D696A1CAA8F;
+	Tue, 11 Mar 2025 15:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707666; cv=none; b=IzhPU7p05Kj8CFGsWQyPLeLDVGBU7xUXqwXvMe0qhM6AXEMCrZOgMQ8xj9qIJ0b9EmHDvzh1+1ntz2bbae1qqK6HROwV+KIbjQcnx4lAnGGpKGKteyDULkFV9Lii5op6UySiQOUZ9rpvN6LGXqFY+Mr38cWd8UnrJdRDo8mPKG8=
+	t=1741707668; cv=none; b=jWQT6AYjJeURimxqpTMuILcBY4XrulAK1lHunEDuoAE75AezQkpwRcB9g0j+cAUasgz0dkKYxti4X3sHZa/qdPI1xob5hJGmcowY+ZqaPnpThXcM//1riXteaSGliQesIB3TZ7u1+jQmOCj54rDRs6evMKJ8BnFJi14oG5WA+Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707666; c=relaxed/simple;
-	bh=6HOQwr+dOgHljKIC+g7eRcmDY21UyAUTeTyFTAwnQGQ=;
+	s=arc-20240116; t=1741707668; c=relaxed/simple;
+	bh=Toer6gC3n7xNWYzUP3dHVZSIq16Nh1OcrBJhq/JmxCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhQdPf76RUH/j/WoReKoth+HpeLkWlQEZKVJJPWX+R0A8Yec20wXMh0vctQIFjUqyck7fWfhM/9MCDUeQdc14sb5DOdfdTzVtYpH4teGO6OrMsyp0ytXJLfu5lslTxCL8mJzC/IQj7lFHq4SwUcFENAK87jniW+vdUhAftCrKWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d28IzUji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+40vzVmpuI+9LUixfxksNINcSBdw1vN32Lb6rVWu+9rOXr5UJV9Tt2GhT6xXapHRQOoYl9LPtVy5yGev1Z4ZiOfN6YUABNFtNN9KbRUwB+OIdaS6Q9eVAdMpCHUL7+BoWycp1PpstLWhUf98HOZT513DPoUF0HzPfDQxAHGUK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKveZo1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d28IzUji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A91FC4CEE9;
-	Tue, 11 Mar 2025 15:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKveZo1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55930C4CEE9;
+	Tue, 11 Mar 2025 15:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707665;
-	bh=6HOQwr+dOgHljKIC+g7eRcmDY21UyAUTeTyFTAwnQGQ=;
+	s=korg; t=1741707668;
+	bh=Toer6gC3n7xNWYzUP3dHVZSIq16Nh1OcrBJhq/JmxCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d28IzUji+R8/Kk+VkyOUd9WVutOeVL6apLfuvucU8FICigQRlYlnRssZe4YB74++1
-	 eIQsvJ4lho+PqCIPO4npvz86PTMryDEayN940Xh2Y423PgsDTCiz5C3DC0wGM8Mwix
-	 iuus+r8A490njzL370jrbpfSaT7auNU98cbKJG/k=
+	b=lKveZo1Zc8MQ0oiMnmkPAF4Y5ejXiA8FDp1tPZLsjlSCwfLt1CUA1ura0Jt0Y++eN
+	 h05Qa9UAxBz7ZPZVlzAww9DkQhrseexg+x2CosIkEqQrUc35zXxgXdj5KHca45qHMf
+	 3a/7vm9mFIqv0zWK2h1k3ohXxAzEAKTX52dgQows=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Sikora <sikora.tomus@gmail.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.10 451/462] Revert "media: uvcvideo: Require entities to have a non-zero unique ID"
-Date: Tue, 11 Mar 2025 16:01:57 +0100
-Message-ID: <20250311145816.137163142@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 5.10 452/462] bpf, vsock: Invoke proto::close on close()
+Date: Tue, 11 Mar 2025 16:01:58 +0100
+Message-ID: <20250311145816.176686114@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -54,170 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 8004d635f27bbccaa5c083c50d4d5302a6ffa00e upstream.
+commit 135ffc7becc82cfb84936ae133da7969220b43b2 upstream.
 
-This reverts commit 3dd075fe8ebbc6fcbf998f81a75b8c4b159a6195.
+vsock defines a BPF callback to be invoked when close() is called. However,
+this callback is never actually executed. As a result, a closed vsock
+socket is not automatically removed from the sockmap/sockhash.
 
-Tomasz has reported that his device, Generalplus Technology Inc. 808 Camera,
-with ID 1b3f:2002, stopped being detected:
+Introduce a dummy vsock_close() and make vsock_release() call proto::close.
 
-$ ls -l /dev/video*
-zsh: no matches found: /dev/video*
-[    7.230599] usb 3-2: Found multiple Units with ID 5
+Note: changes in __vsock_release() look messy, but it's only due to indent
+level reduction and variables xmas tree reorder.
 
-This particular device is non-compliant, having both the Output Terminal
-and Processing Unit with ID 5. uvc_scan_fallback, though, is able to build
-a chain. However, when media elements are added and uvc_mc_create_links
-call uvc_entity_by_id, it will get the incorrect entity,
-media_create_pad_link will WARN, and it will fail to register the entities.
-
-In order to reinstate support for such devices in a timely fashion,
-reverting the fix for these warnings is appropriate. A proper fix that
-considers the existence of such non-compliant devices will be submitted in
-a later development cycle.
-
-Reported-by: Tomasz Sikora <sikora.tomus@gmail.com>
-Fixes: 3dd075fe8ebb ("media: uvcvideo: Require entities to have a non-zero unique ID")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20250114200045.1401644-1-cascardo@igalia.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 634f1a7110b4 ("vsock: support sockmap")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://lore.kernel.org/r/20241118-vsock-bpf-poll-close-v1-3-f1b9669cacdc@rbox.co
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+[LL: There is no sockmap support for this kernel version. This patch has
+been backported because it helps reduce conflicts on future backports]
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |   63 ++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 39 deletions(-)
+ net/vmw_vsock/af_vsock.c |   71 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 42 insertions(+), 29 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -1029,27 +1029,14 @@ error:
- 	return ret;
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -113,12 +113,14 @@
+ static int __vsock_bind(struct sock *sk, struct sockaddr_vm *addr);
+ static void vsock_sk_destruct(struct sock *sk);
+ static int vsock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb);
++static void vsock_close(struct sock *sk, long timeout);
+ 
+ /* Protocol family. */
+ static struct proto vsock_proto = {
+ 	.name = "AF_VSOCK",
+ 	.owner = THIS_MODULE,
+ 	.obj_size = sizeof(struct vsock_sock),
++	.close = vsock_close,
+ };
+ 
+ /* The default peer timeout indicates how long we will wait for a peer response
+@@ -767,39 +769,37 @@ static struct sock *__vsock_create(struc
+ 
+ static void __vsock_release(struct sock *sk, int level)
+ {
+-	if (sk) {
+-		struct sock *pending;
+-		struct vsock_sock *vsk;
++	struct vsock_sock *vsk;
++	struct sock *pending;
+ 
+-		vsk = vsock_sk(sk);
+-		pending = NULL;	/* Compiler warning. */
++	vsk = vsock_sk(sk);
++	pending = NULL;	/* Compiler warning. */
+ 
+-		/* When "level" is SINGLE_DEPTH_NESTING, use the nested
+-		 * version to avoid the warning "possible recursive locking
+-		 * detected". When "level" is 0, lock_sock_nested(sk, level)
+-		 * is the same as lock_sock(sk).
+-		 */
+-		lock_sock_nested(sk, level);
++	/* When "level" is SINGLE_DEPTH_NESTING, use the nested
++	 * version to avoid the warning "possible recursive locking
++	 * detected". When "level" is 0, lock_sock_nested(sk, level)
++	 * is the same as lock_sock(sk).
++	 */
++	lock_sock_nested(sk, level);
+ 
+-		if (vsk->transport)
+-			vsk->transport->release(vsk);
+-		else if (sk->sk_type == SOCK_STREAM)
+-			vsock_remove_sock(vsk);
+-
+-		sock_orphan(sk);
+-		sk->sk_shutdown = SHUTDOWN_MASK;
+-
+-		skb_queue_purge(&sk->sk_receive_queue);
+-
+-		/* Clean up any sockets that never were accepted. */
+-		while ((pending = vsock_dequeue_accept(sk)) != NULL) {
+-			__vsock_release(pending, SINGLE_DEPTH_NESTING);
+-			sock_put(pending);
+-		}
++	if (vsk->transport)
++		vsk->transport->release(vsk);
++	else if (sk->sk_type == SOCK_STREAM)
++		vsock_remove_sock(vsk);
+ 
+-		release_sock(sk);
+-		sock_put(sk);
++	sock_orphan(sk);
++	sk->sk_shutdown = SHUTDOWN_MASK;
++
++	skb_queue_purge(&sk->sk_receive_queue);
++
++	/* Clean up any sockets that never were accepted. */
++	while ((pending = vsock_dequeue_accept(sk)) != NULL) {
++		__vsock_release(pending, SINGLE_DEPTH_NESTING);
++		sock_put(pending);
+ 	}
++
++	release_sock(sk);
++	sock_put(sk);
  }
  
--static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
--					       u16 id, unsigned int num_pads,
--					       unsigned int extra_size)
-+static struct uvc_entity *uvc_alloc_entity(u16 type, u8 id,
-+		unsigned int num_pads, unsigned int extra_size)
+ static void vsock_sk_destruct(struct sock *sk)
+@@ -853,9 +853,22 @@ s64 vsock_stream_has_space(struct vsock_
+ }
+ EXPORT_SYMBOL_GPL(vsock_stream_has_space);
+ 
++/* Dummy callback required by sockmap.
++ * See unconditional call of saved_close() in sock_map_close().
++ */
++static void vsock_close(struct sock *sk, long timeout)
++{
++}
++
+ static int vsock_release(struct socket *sock)
  {
- 	struct uvc_entity *entity;
- 	unsigned int num_inputs;
- 	unsigned int size;
- 	unsigned int i;
+-	__vsock_release(sock->sk, 0);
++	struct sock *sk = sock->sk;
++
++	if (!sk)
++		return 0;
++
++	sk->sk_prot->close(sk, 0);
++	__vsock_release(sk, 0);
+ 	sock->sk = NULL;
+ 	sock->state = SS_FREE;
  
--	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
--	if (id == 0) {
--		dev_err(&dev->udev->dev, "Found Unit with invalid ID 0.\n");
--		return ERR_PTR(-EINVAL);
--	}
--
--	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
--	if (uvc_entity_by_id(dev, id)) {
--		dev_err(&dev->udev->dev, "Found multiple Units with ID %u\n", id);
--		return ERR_PTR(-EINVAL);
--	}
--
- 	extra_size = roundup(extra_size, sizeof(*entity->pads));
- 	if (num_pads)
- 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
-@@ -1059,7 +1046,7 @@ static struct uvc_entity *uvc_alloc_new_
- 	     + num_inputs;
- 	entity = kzalloc(size, GFP_KERNEL);
- 	if (entity == NULL)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	entity->id = id;
- 	entity->type = type;
-@@ -1130,10 +1117,10 @@ static int uvc_parse_vendor_control(stru
- 			break;
- 		}
- 
--		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
--					    buffer[3], p + 1, 2 * n);
--		if (IS_ERR(unit))
--			return PTR_ERR(unit);
-+		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
-+					p + 1, 2*n);
-+		if (unit == NULL)
-+			return -ENOMEM;
- 
- 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
-@@ -1244,10 +1231,10 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
--					    buffer[3], 1, n + p);
--		if (IS_ERR(term))
--			return PTR_ERR(term);
-+		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
-+					1, n + p);
-+		if (term == NULL)
-+			return -ENOMEM;
- 
- 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
- 			term->camera.bControlSize = n;
-@@ -1303,10 +1290,10 @@ static int uvc_parse_standard_control(st
- 			return 0;
- 		}
- 
--		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
--					    buffer[3], 1, 0);
--		if (IS_ERR(term))
--			return PTR_ERR(term);
-+		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
-+					1, 0);
-+		if (term == NULL)
-+			return -ENOMEM;
- 
- 		memcpy(term->baSourceID, &buffer[7], 1);
- 
-@@ -1327,10 +1314,9 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
--					    p + 1, 0);
--		if (IS_ERR(unit))
--			return PTR_ERR(unit);
-+		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
-+		if (unit == NULL)
-+			return -ENOMEM;
- 
- 		memcpy(unit->baSourceID, &buffer[5], p);
- 
-@@ -1352,9 +1338,9 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
--		if (IS_ERR(unit))
--			return PTR_ERR(unit);
-+		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
-+		if (unit == NULL)
-+			return -ENOMEM;
- 
- 		memcpy(unit->baSourceID, &buffer[4], 1);
- 		unit->processing.wMaxMultiplier =
-@@ -1383,10 +1369,9 @@ static int uvc_parse_standard_control(st
- 			return -EINVAL;
- 		}
- 
--		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
--					    p + 1, n);
--		if (IS_ERR(unit))
--			return PTR_ERR(unit);
-+		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
-+		if (unit == NULL)
-+			return -ENOMEM;
- 
- 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
- 		unit->extension.bNumControls = buffer[20];
 
 
