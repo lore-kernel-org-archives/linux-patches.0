@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133B225D8F9;
-	Tue, 11 Mar 2025 15:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8BE25E440;
+	Tue, 11 Mar 2025 15:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705970; cv=none; b=FYLsiIY+1PJJX90UnXyV+928cYMCG+cYes8IDEy91GZq7VHpm1ZllWyHIWivgJJEpF0FBluFMMBkzuSAdfhcss2xojoaJ55q8R4+uOUoLqQqCf8AcJaqiu+CF9RLCbhcNkgnkSA/Ksf5jEQjfCk2zJtBUgxkvBoBXKz3lMcskac=
+	t=1741705973; cv=none; b=IbaL/3K+MYShAwJV79LGksenKbnack4bWbg0PS/Ve1ekwdbr1SDu3oZM7U+WpCwvyTNCsLROSUnxgSodQC2TDiQH0b0/1jAzawTl/auakG4htQNtsrTdzUbuhZ2NwoifK9TEUF7jMW+ByjM9HYxwlAvbNEhyHp2u/m5sAhPXWP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705970; c=relaxed/simple;
-	bh=witE3sD9lM79GurezhQU6gZOzEpjQ2yBDp1bz+9pYKM=;
+	s=arc-20240116; t=1741705973; c=relaxed/simple;
+	bh=LfJtPdv2l7mutzWC2T2hbK+J16CmWWPrt6AHpgbZoys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfIkDOzWU0Eu75JSttzqrVjsoajmCqSqmcXd/UkWp78mKf8p5t0Te4qHfEiAjOi755pb3c+NTN9f1GAM5rK3ooEyoDVVf7DFD2MHU7g8yJFToIOV1nfqReBb9BsB8C/8VBdhtw0tIUD7elsCmD8x0oWTm83JzTDRs6wKryZhdSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4gx3f/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WF/Tkr9EHyhx9u0bSLnK1HNcbSjoxEoZBgvFzKL9XPX4XuicwZVRb5lUDXiJSzjtNwuwkZ6EDyxG5XBlOv4P5lVwcq8A7A8qSTP3Wtd3DR7EQLASSkynpjELmCylew1f74qQbQ7RNtGKDgBEL24SqlWhYOlzPC+gES8CdmyrOyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+u1eC3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4gx3f/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D078C4CEE9;
-	Tue, 11 Mar 2025 15:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+u1eC3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77615C4CEE9;
+	Tue, 11 Mar 2025 15:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705969;
-	bh=witE3sD9lM79GurezhQU6gZOzEpjQ2yBDp1bz+9pYKM=;
+	s=korg; t=1741705972;
+	bh=LfJtPdv2l7mutzWC2T2hbK+J16CmWWPrt6AHpgbZoys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4gx3f/0V3EhpwiU07clbxiNFQJ2B6q68UmlfhLbTaPpdOR4TpSY3mRW6hU70V/WG
-	 dCncBcLdrrFfJVEaH1MhOjGHCs+pY6ZzOptm2FBd7P4tRTFwpeyuMG4op1lD4eUruj
-	 75Xa7rcITMb5dO9iCvx0zkYMB2im95a/VQbJFtXs=
+	b=l+u1eC3MD0Svg8LG6bxJtoDKm5gsFKzEw2LW/Cux7R+3UGtpaX0UHYqsmtIM1RDz6
+	 ffJFsXn6LvMvt2Cc0djrvRVWu0wQYEJTzeO5s85VC/JECe7NoBRnGFYS/PhqbHbp6U
+	 rkQth8ShijNP/rTUqOxVIB8Dp05fUcPnaFApnRA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
-	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 5.4 218/328] parport_pc: add support for ASIX AX99100
-Date: Tue, 11 Mar 2025 15:59:48 +0100
-Message-ID: <20250311145723.567902924@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Michael Kelley <mhkelley@outlook.com>
+Subject: [PATCH 5.4 219/328] x86/i8253: Disable PIT timer 0 when not in use
+Date: Tue, 11 Mar 2025 15:59:49 +0100
+Message-ID: <20250311145723.607462486@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,52 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 16aae4c64600a6319a6f10dbff833fa198bf9599 upstream.
+commit 70e6b7d9ae3c63df90a7bba7700e8d5c300c3c60 upstream.
 
-The PCI function 2 on ASIX AX99100 PCIe to Multi I/O Controller can be
-configured as a single-port parallel port controller. The subvendor id
-is 0x2000 when configured as parallel port. It supports IEEE-1284 EPP /
-ECP with its ECR on BAR1.
+Leaving the PIT interrupt running can cause noticeable steal time for
+virtual guests. The VMM generally has a timer which toggles the IRQ input
+to the PIC and I/O APIC, which takes CPU time away from the guest. Even
+on real hardware, running the counter may use power needlessly (albeit
+not much).
 
-Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/20230724083933.3173513-5-jiaqing.zhao@linux.intel.com
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Make sure it's turned off if it isn't going to be used.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Michael Kelley <mhkelley@outlook.com>
+Link: https://lore.kernel.org/all/20240802135555.564941-1-dwmw2@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/parport_pc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/i8253.c     |   11 +++++++++--
+ drivers/clocksource/i8253.c |   13 +++++++++----
+ include/linux/i8253.h       |    1 +
+ 3 files changed, 19 insertions(+), 6 deletions(-)
 
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -2624,6 +2624,7 @@ enum parport_pc_pci_cards {
- 	netmos_9815,
- 	netmos_9901,
- 	netmos_9865,
-+	asix_ax99100,
- 	quatech_sppxp100,
- 	wch_ch382l,
- 	brainboxes_uc146,
-@@ -2689,6 +2690,7 @@ static struct parport_pc_pci {
- 	/* netmos_9815 */		{ 2, { { 0, 1 }, { 2, 3 }, } },
- 	/* netmos_9901 */               { 1, { { 0, -1 }, } },
- 	/* netmos_9865 */               { 1, { { 0, -1 }, } },
-+	/* asix_ax99100 */		{ 1, { { 0, 1 }, } },
- 	/* quatech_sppxp100 */		{ 1, { { 0, 1 }, } },
- 	/* wch_ch382l */		{ 1, { { 2, -1 }, } },
- 	/* brainboxes_uc146 */	{ 1, { { 3, -1 }, } },
-@@ -2779,6 +2781,9 @@ static const struct pci_device_id parpor
- 	  0xA000, 0x1000, 0, 0, netmos_9865 },
- 	{ PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9865,
- 	  0xA000, 0x2000, 0, 0, netmos_9865 },
-+	/* ASIX AX99100 PCIe to Multi I/O Controller */
-+	{ PCI_VENDOR_ID_ASIX, PCI_DEVICE_ID_ASIX_AX99100,
-+	  0xA000, 0x2000, 0, 0, asix_ax99100 },
- 	/* Quatech SPPXP-100 Parallel port PCI ExpressCard */
- 	{ PCI_VENDOR_ID_QUATECH, PCI_DEVICE_ID_QUATECH_SPPXP_100,
- 	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, quatech_sppxp100 },
+--- a/arch/x86/kernel/i8253.c
++++ b/arch/x86/kernel/i8253.c
+@@ -8,6 +8,7 @@
+ #include <linux/timex.h>
+ #include <linux/i8253.h>
+ 
++#include <asm/hypervisor.h>
+ #include <asm/apic.h>
+ #include <asm/hpet.h>
+ #include <asm/time.h>
+@@ -39,9 +40,15 @@ static bool __init use_pit(void)
+ 
+ bool __init pit_timer_init(void)
+ {
+-	if (!use_pit())
++	if (!use_pit()) {
++		/*
++		 * Don't just ignore the PIT. Ensure it's stopped, because
++		 * VMMs otherwise steal CPU time just to pointlessly waggle
++		 * the (masked) IRQ.
++		 */
++		clockevent_i8253_disable();
+ 		return false;
+-
++	}
+ 	clockevent_i8253_init(true);
+ 	global_clock_event = &i8253_clockevent;
+ 	return true;
+--- a/drivers/clocksource/i8253.c
++++ b/drivers/clocksource/i8253.c
+@@ -108,11 +108,8 @@ int __init clocksource_i8253_init(void)
+ #endif
+ 
+ #ifdef CONFIG_CLKEVT_I8253
+-static int pit_shutdown(struct clock_event_device *evt)
++void clockevent_i8253_disable(void)
+ {
+-	if (!clockevent_state_oneshot(evt) && !clockevent_state_periodic(evt))
+-		return 0;
+-
+ 	raw_spin_lock(&i8253_lock);
+ 
+ 	outb_p(0x30, PIT_MODE);
+@@ -123,6 +120,14 @@ static int pit_shutdown(struct clock_eve
+ 	}
+ 
+ 	raw_spin_unlock(&i8253_lock);
++}
++
++static int pit_shutdown(struct clock_event_device *evt)
++{
++	if (!clockevent_state_oneshot(evt) && !clockevent_state_periodic(evt))
++		return 0;
++
++	clockevent_i8253_disable();
+ 	return 0;
+ }
+ 
+--- a/include/linux/i8253.h
++++ b/include/linux/i8253.h
+@@ -24,6 +24,7 @@ extern raw_spinlock_t i8253_lock;
+ extern bool i8253_clear_counter_on_shutdown;
+ extern struct clock_event_device i8253_clockevent;
+ extern void clockevent_i8253_init(bool oneshot);
++extern void clockevent_i8253_disable(void);
+ 
+ extern void setup_pit_timer(void);
+ 
 
 
