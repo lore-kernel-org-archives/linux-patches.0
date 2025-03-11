@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E93225D8F9;
-	Tue, 11 Mar 2025 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EAA25C715;
+	Tue, 11 Mar 2025 15:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705889; cv=none; b=oh23y7Xsi50qShwGzCR5u5Wzcj1yL+wrx30qAoW2e80iTUStCRqwbr/LtR247bk3JY2jFQYI29Da4eGxT8Hbk5GHaykySxXT7Z9LJ6Aw/T4VtI7AolWmFKiUc+iJmXVWpEVZ1MX68/4cfAYJpW/schtTyOi/vWmknSV0X20rPlc=
+	t=1741705892; cv=none; b=XFtS9gunAO6L9e/H3GJCU8SLs4WhSkQUG4btg4tf5GfU/cKK5Dtcd4Toqte2o2dJPtQM7CNP2NizhNp0WqbTsD/MSliCgWIZMANVZB8RDpvgj/93cE05VpbCIzLi90VQ8xuxlhg0Kox4EdF31Uj6+3/tSC+kaUdUmrAkJz70NbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705889; c=relaxed/simple;
-	bh=m6GNFnZK+EqB+5UwBheXVT/AfejnbgbXUXVznenE/3w=;
+	s=arc-20240116; t=1741705892; c=relaxed/simple;
+	bh=NR1/0xhRUOIFoSi9QHQFGEWXLe+Aq1WbR2OBNs+UKKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqyLqlL67mhCsx/oqAiey4CR/2o10CPA2KCxoqRm4QdZk7Cfb2jg5EPAjWsK86Vphymh6borlOEgpDrDvm+Ji446OQN4FTAxkJidLerce1MO/8PIYMDqeab9WYi5BIx3l/iN3Xz4eMrgS5hRHNlnnt+9kA8icyeEd4z0FgI8pSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVesuLnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=udEamMuMuM/QfGne5sbo8faQOosf1oGh7ClMXWzxeb78oZlrbAgZgbSGn67vNyTgG/euIpX9G2cE53q1tW+AAsVcLcZTu35KRSW00b2A7+xdKxyQNmT1VdeE/Tw0LCk7a9Faph1T+5SsKOxIgD/cbLMXVxZvcCv+EvnEbGnnrgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0r4eNXqe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVesuLnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE8FC4CEE9;
-	Tue, 11 Mar 2025 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0r4eNXqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9D0C4CEE9;
+	Tue, 11 Mar 2025 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705889;
-	bh=m6GNFnZK+EqB+5UwBheXVT/AfejnbgbXUXVznenE/3w=;
+	s=korg; t=1741705892;
+	bh=NR1/0xhRUOIFoSi9QHQFGEWXLe+Aq1WbR2OBNs+UKKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVesuLnlGkAz6ZZoLYKd6CZ7WKyIZGkuRpw4Y4uXAL9BQH3kV/ZLART0HF+eerRoI
-	 rhCmuHBE9SnPdIU1cSljSx0WEIkxhso9WiLhmqxqSw8pt/7j7s3wk4F7+OBJnNShG8
-	 3qfuCKmy7tPI4c+1aVPs5+edKGT9Osn+GNsH+b4M=
+	b=0r4eNXqe9nLLy59ZxXpTVHY/WV87lRjKspILn4EtEC0JyC4Wehl3WzQhwTj1uhwMN
+	 Ts4kP4yB6PTTy3pI8gvi8nzxG8DAWOKB5r5kzZtePXuise0r+1nyKQpH4Nlhc6+enX
+	 Tqflw1eJ70wCtMl7e8Nexyk8UdydCHWT7jBdyijc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Huang <huanglei@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 182/328] USB: quirks: add USB_QUIRK_NO_LPM quirk for Teclast dist
-Date: Tue, 11 Mar 2025 15:59:12 +0100
-Message-ID: <20250311145722.135590790@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 191/328] USB: serial: option: fix Telit Cinterion FN990A name
+Date: Tue, 11 Mar 2025 15:59:21 +0100
+Message-ID: <20250311145722.490330873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,33 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Huang <huanglei@kylinos.cn>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit e169d96eecd447ff7fd7542ca5fa0911f5622054 upstream.
+commit 12606fe73f33647c5e79bf666833bf0b225e649d upstream.
 
-Teclast disk used on Huawei hisi platforms doesn't work well,
-losing connectivity intermittently if LPM is enabled.
-Add quirk disable LPM to resolve the issue.
+The correct name for FN990 is FN990A so use it in order to avoid
+confusion with FN990B.
 
-Signed-off-by: Lei Huang <huanglei@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250212093829.7379-1-huanglei814@163.com
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/option.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -520,6 +520,9 @@ static const struct usb_device_id usb_qu
- 	/* Blackmagic Design UltraStudio SDI */
- 	{ USB_DEVICE(0x1edb, 0xbd4f), .driver_info = USB_QUIRK_NO_LPM },
- 
-+	/* Teclast disk */
-+	{ USB_DEVICE(0x1f75, 0x0917), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* Hauppauge HVR-950q */
- 	{ USB_DEVICE(0x2040, 0x7200), .driver_info =
- 			USB_QUIRK_CONFIG_INTF_STRINGS },
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1370,15 +1370,15 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1063, 0xff),	/* Telit LN920 (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990 (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990A (rmnet) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990 (MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990A (MBIM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990 (RNDIS) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990A (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990 (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990 (PCIe) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
+ 	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
 
 
