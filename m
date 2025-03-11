@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8C125EFB4;
-	Tue, 11 Mar 2025 15:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A4D25C6F9;
+	Tue, 11 Mar 2025 15:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707486; cv=none; b=vEcJFYvUTA9nIhI8pdxLfDr8vL9a4sZboJbQhdqWHCeEX3uO7X9W1uMX9BTX+Si3mZ/Pq3XypgCLOiqE/UjBUIJm1vfpdQ3llaGNMHsxYQWoOwG/ODZfFWpbnWjrUeDh0s+HLpClU/ERgmmFyZsMSFEdd+tsvzeOIdzC0MaLf3w=
+	t=1741707489; cv=none; b=es8+txT99ezO7RbKBTj95SP7+cNMDkErKi560X+Lk4NuIuvpmOMaNGZSXA1JWw6jRzMR4aPMYC9esBkiSgxMFisv9q8mHpk7GjR0wiwUhVEX4uhqMQ7lCGBZj4QSDcJUoUnduJsVcgJ9baAtH+D+3IXPfHpFbibvhlYqLx0vG4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707486; c=relaxed/simple;
-	bh=w5fD5+8qb2KnQkWF6ASXfpE7oGWu9PBFDF4auzgb1iM=;
+	s=arc-20240116; t=1741707489; c=relaxed/simple;
+	bh=BbaLI/Wdzda8dR+AhNiFHrGMWyBvJI7HdvxxgXx/8So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnC0yOzrDqVY/Ku+1j/lMQEHEf9E5lIrFvsgMQ6IoJzcx66skfKPu97U/wwu3J6HSsiAERsqKcMQ+t+HBwNjitTysawZS29KLpwwAm/hJOWmSh5s65dwftgQ79VyZ2erBYcU917BSXwGSZFpnzDsNFq7+7FKipLYmY2pHD4mdqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMRd5wRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=agh7SVvzHttwvHNiKZvchmCf9XplvjrUcUbHRx0fswHnjB875z0e5AuAsUgpz7rjjAJrj3RTjRkx3A2K265IAJR9YopSbmtDgiXmdN/5jGBmaziusQOUH4VFfhpqXWI98o2mFhgtVGwmnQdjfkl+ZAQCDcAjPhsDAk4dJr1pU4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJhNH5ok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMRd5wRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C16C4CEEC;
-	Tue, 11 Mar 2025 15:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJhNH5ok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B0CC4CEE9;
+	Tue, 11 Mar 2025 15:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707486;
-	bh=w5fD5+8qb2KnQkWF6ASXfpE7oGWu9PBFDF4auzgb1iM=;
+	s=korg; t=1741707489;
+	bh=BbaLI/Wdzda8dR+AhNiFHrGMWyBvJI7HdvxxgXx/8So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMRd5wRB6bay/HGuB9Rtcd0YVNGtzU4x3rIqUtUsierg6zS59+O1jNtoDAjKoUF7p
-	 mwdbKYgZ9hPMO21ywdVQe0HlpPSICxIFksv1zbORX+nONPu+desNpghNWlSoTV+BbA
-	 Ibybgm/jj49MNt1Lzgm4sxGYviruQTmc06Q24bkk=
+	b=rJhNH5ok7NGVm4/GX4ZgaFUBxwwKrMnXTfe5lZNJzfpF8b2D6vQfZsqsX6Y9RzIUx
+	 WFAhFdsOmfHn2aalDVrfeYbw6AlkuotIK86nmtmWXeaINLJZbTd2oxhOND/9c83Hie
+	 2qhz4x4KT7q4xZVaFpDfAVosu3k1Nmo/BypKAIoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 405/462] wifi: iwlwifi: limit printed string from FW file
-Date: Tue, 11 Mar 2025 16:01:11 +0100
-Message-ID: <20250311145814.331859421@linuxfoundation.org>
+Subject: [PATCH 5.10 406/462] HID: google: fix unused variable warning under !CONFIG_ACPI
+Date: Tue, 11 Mar 2025 16:01:12 +0100
+Message-ID: <20250311145814.371786690@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,41 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit e0dc2c1bef722cbf16ae557690861e5f91208129 ]
+[ Upstream commit 4bd0725c09f377ffaf22b834241f6c050742e4fc ]
 
-There's no guarantee here that the file is always with a
-NUL-termination, so reading the string may read beyond the
-end of the TLV. If that's the last TLV in the file, it can
-perhaps even read beyond the end of the file buffer.
+As reported by the kernel test robot, the following warning occurs:
 
-Fix that by limiting the print format to the size of the
-buffer we have.
+>> drivers/hid/hid-google-hammer.c:261:36: warning: 'cbas_ec_acpi_ids' defined but not used [-Wunused-const-variable=]
+     261 | static const struct acpi_device_id cbas_ec_acpi_ids[] = {
+         |                                    ^~~~~~~~~~~~~~~~
 
-Fixes: aee1b6385e29 ("iwlwifi: support fseq tlv and print fseq version")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.cb5f9d0c2f5d.Idec695d53c6c2234aade306f7647b576c7e3d928@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The 'cbas_ec_acpi_ids' array is only used when CONFIG_ACPI is enabled.
+Wrapping its definition and 'MODULE_DEVICE_TABLE' in '#ifdef CONFIG_ACPI'
+prevents a compiler warning when ACPI is disabled.
+
+Fixes: eb1aac4c8744f75 ("HID: google: add support tablet mode switch for Whiskers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501201141.jctFH5eB-lkp@intel.com/
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-google-hammer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index bf00c2fede746..47eea2c2a739e 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1127,7 +1127,7 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
+diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
+index 2f4c5b45d4096..b0df025c6abaf 100644
+--- a/drivers/hid/hid-google-hammer.c
++++ b/drivers/hid/hid-google-hammer.c
+@@ -266,11 +266,13 @@ static int cbas_ec_remove(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 			if (tlv_len != sizeof(*fseq_ver))
- 				goto invalid_tlv_len;
--			IWL_INFO(drv, "TLV_FW_FSEQ_VERSION: %s\n",
-+			IWL_INFO(drv, "TLV_FW_FSEQ_VERSION: %.32s\n",
- 				 fseq_ver->version);
- 			}
- 			break;
++#ifdef CONFIG_ACPI
+ static const struct acpi_device_id cbas_ec_acpi_ids[] = {
+ 	{ "GOOG000B", 0 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, cbas_ec_acpi_ids);
++#endif
+ 
+ static struct platform_driver cbas_ec_driver = {
+ 	.probe = cbas_ec_probe,
 -- 
 2.39.5
 
