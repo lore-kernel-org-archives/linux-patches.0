@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD8E15820C;
-	Tue, 11 Mar 2025 15:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD301494BB;
+	Tue, 11 Mar 2025 15:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706892; cv=none; b=WHgPHU0XIDypkY7IUa8uyBPf+ewhP0Wmkib0v+ud26JXr/ffQUOBuAUO1eAAhVGLo6xwO10c14a/7Ja9JHGolld1JR4QbiSdEGAWH26kcdlEh5iWiUe2yFPkg9dM3aVTRgVviB0ZPfxG1LaIyEi9HDAnIaevz578WFHKDGNRCn8=
+	t=1741706895; cv=none; b=YJMOGN6EjcFiEdtDeensyJLgshs5xUcfdj+4vuizhDIUlh0damFO97vdTJlguX6UsU7CvDxdOHfDto2N6sAKbc3+CDXfQuBnrUtG4UV8N1esWoYoHDqF1uLanCJO6XJRXySbxd7G6fesd37nFrW9iwhvC81nl28HMHhDfFpVEs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706892; c=relaxed/simple;
-	bh=DnlB87Dw2bI0FZtpGf1Hn41Slz5S7enWzBU7xNwHgPc=;
+	s=arc-20240116; t=1741706895; c=relaxed/simple;
+	bh=4yZqwseOsZpkqDKxw3afWnaYvBj+nWe63iEuE61PyMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFr0bkDXGQuFNaJJZdjWozu6ep3XDSCRLDXNVSSZSZ8WdxQyOhshNd2eT3fB5yuowPx5eJZwoIRFuagGDvMAORvE/RiNeEOdb4v2Ly1+61qT9YAuJ939daoYMgyicrIfQm6pH+y/dvsMfHPS+Yn0ISwsJyg/20E3ddk+tutNkNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9lESnde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c8pJ0GXsgs/tIUzxCZdCmuDHtqYAxquqZrW6Qfm9cO7finZ9pKbvyM7jy3EjzvC5w4dGlO0bd2ivMs7fmyFnWkTW48V+/0RI4cwyimtdmnMj17Ewk2QZCe/41ymgysGJIzLDB8wWlzDbd4Oh6wgvwr7yJXw/sQJAU/qWTEF0LIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1E0ZfO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9lESnde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B2AC4CEE9;
-	Tue, 11 Mar 2025 15:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1E0ZfO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B27C4CEE9;
+	Tue, 11 Mar 2025 15:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706892;
-	bh=DnlB87Dw2bI0FZtpGf1Hn41Slz5S7enWzBU7xNwHgPc=;
+	s=korg; t=1741706895;
+	bh=4yZqwseOsZpkqDKxw3afWnaYvBj+nWe63iEuE61PyMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9lESndexUN0+R7njpYhf0/7BF/gHrd2q3aCo/HL/StaVfEQrjmtm3YtwGKH7u7n/
-	 ZDkfa9d24X9nXPKkRJO7pjuyJtoE7x/HJG5vj6Ju4Y3XZw7ghTBVi6K65nyuJ+S7MY
-	 kEUJkgJ/efzfKJrSTym9qTeiHd9NUW/1aPg4jpeY=
+	b=z1E0ZfO7RHtPsFC4QslrZufG2xa1gl/JyXnQ4duOa7jVsvXekGD+1uRxnAnKRdnXV
+	 3pygT9OVPaRDNoN4Ik/4kmy8dYFZ3z+drTJObcCYIPx/+lCCE6ra1HnPeg9lHcUcBl
+	 pQfHSM43ohrN9phs1q1VuBTEIU5+IHalMGXDpPAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 203/462] soc: qcom: smem_state: fix missing of_node_put in error path
-Date: Tue, 11 Mar 2025 15:57:49 +0100
-Message-ID: <20250311145806.373977080@linuxfoundation.org>
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.10 204/462] media: mc: fix endpoint iteration
+Date: Tue, 11 Mar 2025 15:57:50 +0100
+Message-ID: <20250311145806.413096547@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-commit 70096b4990848229d0784c5e51dc3c7c072f1111 upstream.
+commit fb2bd86270cd0ad004f4c614ba4f8c63a5720e25 upstream.
 
-If of_parse_phandle_with_args() succeeds, the OF node reference should
-be dropped, regardless of number of phandle arguments.
+When creating links from a subdev to a sink, the current logic tries to
+iterate over the endpoints of dev's fwnode.
 
+This might not be correct when the subdev uses a different fwnode
+compared to the dev's fwnode.
+
+If, when registering, the subdev's fwnode is not set, the code inside
+v4l2_async_register_subdev will set it to the dev's fwnode.
+
+To fix this, just use the subdev's fwnode.
+
+Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
+Fixes: 0d3c81e82da9 ("media: v4l2-mc: add v4l2_create_fwnode_links helpers")
 Cc: stable@vger.kernel.org
-Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240822164853.231087-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/smem_state.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-mc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/smem_state.c
-+++ b/drivers/soc/qcom/smem_state.c
-@@ -116,7 +116,8 @@ struct qcom_smem_state *qcom_smem_state_
+--- a/drivers/media/v4l2-core/v4l2-mc.c
++++ b/drivers/media/v4l2-core/v4l2-mc.c
+@@ -321,7 +321,7 @@ int v4l2_create_fwnode_links_to_pad(stru
  
- 	if (args.args_count != 1) {
- 		dev_err(dev, "invalid #qcom,smem-state-cells\n");
--		return ERR_PTR(-EINVAL);
-+		state = ERR_PTR(-EINVAL);
-+		goto put;
- 	}
+ 	sink_sd = media_entity_to_v4l2_subdev(sink->entity);
  
- 	state = of_node_to_state(args.np);
+-	fwnode_graph_for_each_endpoint(dev_fwnode(src_sd->dev), endpoint) {
++	fwnode_graph_for_each_endpoint(src_sd->fwnode, endpoint) {
+ 		struct fwnode_handle *remote_ep;
+ 		int src_idx, sink_idx, ret;
+ 		struct media_pad *src;
 
 
