@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A468325BAA1;
-	Tue, 11 Mar 2025 15:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6374A1EA80;
+	Tue, 11 Mar 2025 15:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706119; cv=none; b=qhnNPU+OJzQbMDzv71vriduwBHjppqS/ViYzP/pFxIULvflAVOODV8bSKaSJyjuD45xZl8dJvIGGCbkHXtduirulZgM3F301tRHwDtFdjxpXjwb9iYdneNyo2M/7lx9HrDPzchhIWTK10IowIpdq/uxWNaa2U0+cNZUTDlFpgt4=
+	t=1741706123; cv=none; b=Rksn/6pxxs+sU/Qikt1UQ4gvpvm5Dtj0bZqGBAPhVDgJMgk+wMxCQWDIYKTDTdfbmRRBTXlGNp43bBitJTx1lgluN0JMmifNM5E3krGJuxpHNrlY3FpS4pw9JVZFPdeURMGa2KomrBS4E7Qp7EaHHvx8x6hFgVai6E0PtvIae3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706119; c=relaxed/simple;
-	bh=RZk/e2qtZhBvN2GrV38ahQjNqhaQnqtsL/YYVvxMZ1I=;
+	s=arc-20240116; t=1741706123; c=relaxed/simple;
+	bh=jJVeMHcvGKDTqldAEyUaXcsKQMqhwX94/bDW8Y2s2QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjNLQ/bn2E6AjIhiZquORXlgFOHSsoBTH5dGLXuPBtyFZJrv6J0KX7B39i2F/HrqCJZPhfvKeAvsblnU6hXWE0sauVVwL5INFRCgQg50j8M3ciMeqRsTQHeeKIgr3Mc9jVIhJsJ1RZXdAcmWcsfXaltsPtWKDRm9hFjWANy8gX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eELqtjjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fJqgTJPVz3eQm1lTDOzEeGSxhdEtq4qoFBwgHWPNUFEcq73GgwuUFLiqP5ygx5OobHfkfz3U20bLgON0Xb2j5l5K6dJzAnctYitY3FtABW/bhvAN/EWWenFcZRvvj3oq9PkTQNhZvoJJe82+1PGENPir6gO9/djzG6sdUSY+ii8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svb/FYk5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eELqtjjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6D4C4CEE9;
-	Tue, 11 Mar 2025 15:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svb/FYk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EADC4CEEA;
+	Tue, 11 Mar 2025 15:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706119;
-	bh=RZk/e2qtZhBvN2GrV38ahQjNqhaQnqtsL/YYVvxMZ1I=;
+	s=korg; t=1741706123;
+	bh=jJVeMHcvGKDTqldAEyUaXcsKQMqhwX94/bDW8Y2s2QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eELqtjjjTIscd42oVpsMk0FOE1IUoE8iyGqCW/BW6YIHKdj77SB8584CbPKCBS9D9
-	 h2sFoOdt2NF/EhkiXG1vxaHWoWeucYM4W5ZiQo4erFUCejw+gP+MBHi/2wSrb5x02X
-	 vL9hkPu3+S70mDavZCbAmbu+zTjO8YcD0CNyI3gA=
+	b=svb/FYk5XWJvn3cFrChJ9poc9w94aEmf62qFj7HnATjKODVQiThbZZvI9GCIuTOm/
+	 hB3E/yvrmbUSsvytAIT9xMA2IKJ08lmDSW//oUX2dkFp+dWliVXGgpWbpgeakCNcCU
+	 5wHNwlyh93ECicsr4hwW7EDn/gV+iL9vl7oItWWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Zhang <dtzq01@gmail.com>,
-	Yoshiki Komachi <komachi.yoshiki@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 250/328] flow_dissector: Fix port range key handling in BPF conversion
-Date: Tue, 11 Mar 2025 16:00:20 +0100
-Message-ID: <20250311145724.846729640@linuxfoundation.org>
+Subject: [PATCH 5.4 251/328] power: supply: da9150-fg: fix potential overflow
+Date: Tue, 11 Mar 2025 16:00:21 +0100
+Message-ID: <20250311145724.887416862@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -55,74 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit 69ab34f705fbfabcace64b5d53bb7a4450fac875 ]
+[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
 
-Fix how port range keys are handled in __skb_flow_bpf_to_target() by:
-- Separating PORTS and PORTS_RANGE key handling
-- Using correct key_ports_range structure for range keys
-- Properly initializing both key types independently
+Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
+Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
 
-This ensures port range information is correctly stored in its dedicated
-structure rather than incorrectly using the regular ports key structure.
+The expression sd_gain * shunt_val is currently being evaluated using
+32-bit arithmetic. So during the multiplication an overflow may occur.
 
-Fixes: 59fb9b62fb6c ("flow_dissector: Fix to use new variables for port ranges in bpf hook")
-Reported-by: Qiang Zhang <dtzq01@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAPx+-5uvFxkhkz4=j_Xuwkezjn9U6kzKTD5jz4tZ9msSJ0fOJA@mail.gmail.com/
-Cc: Yoshiki Komachi <komachi.yoshiki@gmail.com>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250218043210.732959-4-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As the value of type 'u64' is used as storage for the eventual result, put
+ULL variable at the first position of each expression in order to give the
+compiler complete information about the proper arithmetic to use. According
+to C99 the guaranteed width for a variable of type 'unsigned long long' >=
+64 bits.
+
+Remove the explicit cast to u64 as it is meaningless.
+
+Just for the sake of consistency, perform the similar trick with another
+expression concerning 'iavg'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/power/supply/da9150-fg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index f4cc3710be94a..96d2635aaae07 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -781,6 +781,7 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
- 				     struct flow_dissector *flow_dissector,
- 				     void *target_container)
- {
-+	struct flow_dissector_key_ports_range *key_ports_range = NULL;
- 	struct flow_dissector_key_ports *key_ports = NULL;
- 	struct flow_dissector_key_control *key_control;
- 	struct flow_dissector_key_basic *key_basic;
-@@ -825,20 +826,21 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
- 		key_control->addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
- 	}
+diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
+index 6e367826aae92..d5e1fbac87f22 100644
+--- a/drivers/power/supply/da9150-fg.c
++++ b/drivers/power/supply/da9150-fg.c
+@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
+ 				      DA9150_QIF_SD_GAIN_SIZE);
+ 	da9150_fg_read_sync_end(fg);
  
--	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS))
-+	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS)) {
- 		key_ports = skb_flow_dissector_target(flow_dissector,
- 						      FLOW_DISSECTOR_KEY_PORTS,
- 						      target_container);
--	else if (dissector_uses_key(flow_dissector,
--				    FLOW_DISSECTOR_KEY_PORTS_RANGE))
--		key_ports = skb_flow_dissector_target(flow_dissector,
--						      FLOW_DISSECTOR_KEY_PORTS_RANGE,
--						      target_container);
--
--	if (key_ports) {
- 		key_ports->src = flow_keys->sport;
- 		key_ports->dst = flow_keys->dport;
- 	}
-+	if (dissector_uses_key(flow_dissector,
-+			       FLOW_DISSECTOR_KEY_PORTS_RANGE)) {
-+		key_ports_range = skb_flow_dissector_target(flow_dissector,
-+							    FLOW_DISSECTOR_KEY_PORTS_RANGE,
-+							    target_container);
-+		key_ports_range->tp.src = flow_keys->sport;
-+		key_ports_range->tp.dst = flow_keys->dport;
-+	}
+-	div = (u64) (sd_gain * shunt_val * 65536ULL);
++	div = 65536ULL * sd_gain * shunt_val;
+ 	do_div(div, 1000000);
+-	res = (u64) (iavg * 1000000ULL);
++	res = 1000000ULL * iavg;
+ 	do_div(res, div);
  
- 	if (dissector_uses_key(flow_dissector,
- 			       FLOW_DISSECTOR_KEY_FLOW_LABEL)) {
+ 	val->intval = (int) res;
 -- 
 2.39.5
 
