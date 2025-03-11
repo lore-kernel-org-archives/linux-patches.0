@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C2C25E808;
-	Tue, 11 Mar 2025 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BE01C5D77;
+	Tue, 11 Mar 2025 15:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705588; cv=none; b=CaOxe+U4VS6vfJyrqBAEnO8tk1396XMafyqF1KjGvdMU4of2BAJ6hjUwKvk9vUPPBIpW5phU4I6fQ1FwaXGNzTN/Fb59ahPCF84uXVjByJhuEfusKRUT7UMEnyPqi4ubOScZhTsQKflL3CRWtEZYWDVgTcUKl70BSKfBosuxXto=
+	t=1741705591; cv=none; b=Aiex5QHCYPr2SAVo3WXn+BBT3XWDO/rgKgWfzZ4QKgDvZsTYn8JaBtevZous2P2A1kEWNdgL4EqUcx3lx00PCxTVYnMNBkWFG1Cf+KBgFgD6YNMi4dX5LMPz75/99dD7Lc5U5aLZLP+/Qn+aonuCt7PJ8WtDG1FzS1+J1ZD+HoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705588; c=relaxed/simple;
-	bh=hn1DtNsiWbNuidKA+ATWAmUri529VLRwxoaiPPT2PKQ=;
+	s=arc-20240116; t=1741705591; c=relaxed/simple;
+	bh=RjtX8nYX/hblkEANiV3fmeiWU7TGzmkxS07WkAMbUjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/v7DFeDE9BD8w63K4LqMFWznYPgP+Xp3Ca++jdKhIhHnHEmT4IDg0Q56rKOrXrvVog8DWqvtEhisZl1098gNdXBXDtsnFDe93WwD+Ot+grYh71S0JnowdwPu2qo2gNkAoahulMnFK8zNum+Jm7FHvlnVKrgABX+v6lk8s0bhJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj4TpuKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EeNxF8kmggtITmwMmucg//wx8voM+gpSV6wI7GyUpFKuGAkDsP75FK4zFAojnJfcoC+8eUlzH3/P+TkmCVlNXrWmorHcN7sAcCQfQ3guz5WHtPXw2pla7G2iSXEFSFDHrE2vwTyeuIpyfDN6KQB7lLqwSk5axj2YfxuDFxe++08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoAThkQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj4TpuKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A4FC4CEE9;
-	Tue, 11 Mar 2025 15:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoAThkQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF10C4CEE9;
+	Tue, 11 Mar 2025 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705587;
-	bh=hn1DtNsiWbNuidKA+ATWAmUri529VLRwxoaiPPT2PKQ=;
+	s=korg; t=1741705590;
+	bh=RjtX8nYX/hblkEANiV3fmeiWU7TGzmkxS07WkAMbUjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mj4TpuKmxGSVQofBFVGOF77aG5iYRQquxQQpTSZn8mQu3FJf94ZGa9FYT2FRBWWPV
-	 vxjcUW4RjVntrcmbTrD4N74VulTXo5NLu5ZEdVPmT/Ggy1DtK1iANESpFmATNr4e0t
-	 QnKMKW9TEz0axTV9u7O4DVQZ04t6C7/hGl7+O1Kk=
+	b=JoAThkQuGO8aaz9q0buf917APjl4Ngish/jgFXrqUNEr4RMKo1QNxOKadd5hJRLfp
+	 ylrJL/T0S1dsacZEdNw4MPTD1Rjg1eJSTKKoEZhfPLhZ3QG8QVqTzrTD0TsAVas+YN
+	 yLcEskXyilMshOE8Ke5uRoMYq44FjdA1h75bwh0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Petr Mladek <pmladek@suse.com>,
+	Stas Sergeev <stsp2@yandex.ru>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/328] printk: Fix signed integer overflow when defining LOG_BUF_LEN_MAX
-Date: Tue, 11 Mar 2025 15:57:37 +0100
-Message-ID: <20250311145718.345963109@linuxfoundation.org>
+Subject: [PATCH 5.4 088/328] tun: fix group permission check
+Date: Tue, 11 Mar 2025 15:57:38 +0100
+Message-ID: <20250311145718.385711560@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,39 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Stas Sergeev <stsp2@yandex.ru>
 
-[ Upstream commit 3d6f83df8ff2d5de84b50377e4f0d45e25311c7a ]
+[ Upstream commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3 ]
 
-Shifting 1 << 31 on a 32-bit int causes signed integer overflow, which
-leads to undefined behavior. To prevent this, cast 1 to u32 before
-performing the shift, ensuring well-defined behavior.
+Currently tun checks the group permission even if the user have matched.
+Besides going against the usual permission semantic, this has a
+very interesting implication: if the tun group is not among the
+supplementary groups of the tun user, then effectively no one can
+access the tun device. CAP_SYS_ADMIN still can, but its the same as
+not setting the tun ownership.
 
-This change explicitly avoids any potential overflow by ensuring that
-the shift occurs on an unsigned 32-bit integer.
+This patch relaxes the group checking so that either the user match
+or the group match is enough. This avoids the situation when no one
+can access the device even though the ownership is properly set.
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Acked-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20240928113608.1438087-1-visitorckw@gmail.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Also I simplified the logic by removing the redundant inversions:
+tun_not_capable() --> !tun_capable()
+
+Signed-off-by: Stas Sergeev <stsp2@yandex.ru>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20241205073614.294773-1-stsp2@yandex.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/tun.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index ae1a97dd0c3cb..f6e1e154d9c18 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -457,7 +457,7 @@ static u32 clear_idx;
- /* record buffer */
- #define LOG_ALIGN __alignof__(struct printk_log)
- #define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
--#define LOG_BUF_LEN_MAX (u32)(1 << 31)
-+#define LOG_BUF_LEN_MAX ((u32)1 << 31)
- static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
- static char *log_buf = __log_buf;
- static u32 log_buf_len = __LOG_BUF_LEN;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 0adce9bf7a1e5..87cc7d778c3cf 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -636,14 +636,18 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
+ 	return ret;
+ }
+ 
+-static inline bool tun_not_capable(struct tun_struct *tun)
++static inline bool tun_capable(struct tun_struct *tun)
+ {
+ 	const struct cred *cred = current_cred();
+ 	struct net *net = dev_net(tun->dev);
+ 
+-	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
+-		  (gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
+-		!ns_capable(net->user_ns, CAP_NET_ADMIN);
++	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
++		return 1;
++	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
++		return 1;
++	if (gid_valid(tun->group) && in_egroup_p(tun->group))
++		return 1;
++	return 0;
+ }
+ 
+ static void tun_set_real_num_queues(struct tun_struct *tun)
+@@ -2838,7 +2842,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
+ 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 			return -EINVAL;
+ 
+-		if (tun_not_capable(tun))
++		if (!tun_capable(tun))
+ 			return -EPERM;
+ 		err = security_tun_dev_open(tun->security);
+ 		if (err < 0)
 -- 
 2.39.5
 
