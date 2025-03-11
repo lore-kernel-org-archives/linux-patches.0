@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6224025EFBB;
-	Tue, 11 Mar 2025 15:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DB625EFA9;
+	Tue, 11 Mar 2025 15:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707639; cv=none; b=srmPhDZ4Ll3xAK9+MgKxPUmkPcL6zZXHrzwJur7Nc+c9Q8AB70QCvT4dtUEHxI/9AxUcj2MtdJV6h2G9kuzDuZa5br8mx0FB4T4bs2m9LfmDEf4ilstvGkvBRFIH73mT3c9WHRmVu+rhSiL9AAsnQq35goH/464AUfRsrj9q+uU=
+	t=1741707642; cv=none; b=ajZBtAhxgcJ7f5WHrNQMjl2nXRWMa1l8tXDrompRtM55c/oq5KbF91pSVZmNRwjh41mKFijaq3xqQo3ksn2s/R6yPlX+bgpa9Yfg+uQksY1MnnBk4AQzqjPfejOi7oLOY/f2N9BS6O3k0Z/AhggicdCPmYPEQaJleYPNAbvTpr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707639; c=relaxed/simple;
-	bh=xf7M6BVFT8DAFcq/gg+MR74qJuXyUAQ6IqEImiReHu4=;
+	s=arc-20240116; t=1741707642; c=relaxed/simple;
+	bh=GUpCd/KXCLcXctAcITqz5QNDzzTzdtnRWL86X0QUi2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuojwaOs+SBAF+5qTBIJwMyPw1k47vc+rTOE5oIMN1gfAbtUZAOYKJ+RhXx89Ppilsn8WJSiE98orp/zKHFDre7waW8HRnhlZmRJlO3u7es9tswaHSli0p3o8pZ8PQgKVVBAwrHmeahJHLpLUiIOEokqS4TfY46bpqzofTMiJqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WddZQcYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GknwedEHAqF6B9OfeW5/wo5MNULahfA08YMJWETkFs0aXN8yWrP752IJcMyBE2MD1alqzLWmyHVVa8P4Xgmp1lK114IntQaXO3PDWrwbnh1s9K/NwL478TUW5YVu7MtWvCxcIV51lSBKCrC95Xx7lZVlKA/Yt81mHo82bvxmPhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rxk3bKq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WddZQcYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6B8C4CEEA;
-	Tue, 11 Mar 2025 15:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rxk3bKq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA38BC4CEEA;
+	Tue, 11 Mar 2025 15:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707639;
-	bh=xf7M6BVFT8DAFcq/gg+MR74qJuXyUAQ6IqEImiReHu4=;
+	s=korg; t=1741707642;
+	bh=GUpCd/KXCLcXctAcITqz5QNDzzTzdtnRWL86X0QUi2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WddZQcYDyCJ1Y3/gxML0klq5GVp0lzHsK8JCDIbJJLQx9xcyUD4fLQNC/UpctiVxu
-	 dtLFVq4lZemJDAbxnbLbynHzF7jU5EDAqzfp03E9s1cdU79G/Ty0J+5HL+Elct0kvN
-	 N55ZcKnBCdQRKhgADLFD9ty6RbRaK/UVR0hehThM=
+	b=Rxk3bKq0AHCWvvSapSc1riu2nz5pbsHRFUaGOmWJ30P6pad8ewLgIbGpMKhGJIh3R
+	 nTXDRIVZVU2ECr5oEmbtbyMO0JdCX3lS0J4jSnLfUB5CyELGfkHRk7wdoxb3JP296o
+	 YB/8kvU5fBHdvwJzRXIjneL0fqCQyoqgvJUVsDL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-btrfs@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pk <pkoroau@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>
-Subject: [PATCH 5.10 458/462] btrfs: bring back the incorrectly removed extent buffer lock recursion support
-Date: Tue, 11 Mar 2025 16:02:04 +0100
-Message-ID: <20250311145816.419610146@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 459/462] usb: xhci: Enable the TRB overfetch quirk on VIA VL805
+Date: Tue, 11 Mar 2025 16:02:05 +0100
+Message-ID: <20250311145816.459366747@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,150 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-Commit 51b03b7473a0 ("btrfs: locking: remove the recursion handling code")
-from the 5.10.233 stable tree removed the support for extent buffer lock
-recursion, but we need that code because in 5.10.x we load the free space
-cache synchronously - while modifying the extent tree and holding a write
-lock on some extent buffer, we may need to load the free space cache,
-which requires acquiring read locks on the extent tree and therefore
-result in a deadlock in case we need to read lock an extent buffer we had
-write locked while modifying the extent tree.
+commit c133ec0e5717868c9967fa3df92a55e537b1aead upstream.
 
-Backporting that commit from Linus' tree is therefore wrong, and was done
-so in order to backport upstream commit 97e86631bccd ("btrfs: don't set
-lock_owner when locking extent buffer for reading"). However we should
-have instead had the commit adapted to the 5.10 stable tree instead.
+Raspberry Pi is a major user of those chips and they discovered a bug -
+when the end of a transfer ring segment is reached, up to four TRBs can
+be prefetched from the next page even if the segment ends with link TRB
+and on page boundary (the chip claims to support standard 4KB pages).
 
-Note that the backport of that dependency is ok only for stable trees
-5.11+, because in those tree the space cache loading code is not
-synchronous anymore, so there is no need to have the lock recursion
-and indeed there are no users of the extent buffer lock recursion
-support. In other words, the backport is only valid for kernel releases
-that have the asynchrounous free space cache loading support, which
-was introduced in kernel 5.11 with commit e747853cae3a ("btrfs: load
-free space cache asynchronously").
+It also appears that if the prefetched TRBs belong to a different ring
+whose doorbell is later rung, they may be used without refreshing from
+system RAM and the endpoint will stay idle if their cycle bit is stale.
 
-This was causing deadlocks and reported by a user (see below Link tag).
+Other users complain about IOMMU faults on x86 systems, unsurprisingly.
 
-So revert commit 51b03b7473a0 ("btrfs: locking: remove the recursion
-handling code") while not undoing what commit d5a30a6117ea ("btrfs: don't
-set lock_owner when locking extent buffer for reading") from the 5.10.x
-stable tree did.
+Deal with it by using existing quirk which allocates a dummy page after
+each transfer ring segment. This was seen to resolve both problems. RPi
+came up with a more efficient solution, shortening each segment by four
+TRBs, but it complicated the driver and they ditched it for this quirk.
 
-Reported-by: pk <pkoroau@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAMNwjEKH6znTHE5hMc5er2dFs5ypw4Szx6TMDMb0H76yFq5DGQ@mail.gmail.com/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Also rename the quirk and add VL805 device ID macro.
+
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://github.com/raspberrypi/linux/issues/4685
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=215906
+CC: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250225095927.2512358-2-mathias.nyman@linux.intel.com
+[ Michal: merge conflict with white space and an unrelated quirk ]
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/locking.c |   68 +++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 64 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-mem.c |    3 ++-
+ drivers/usb/host/xhci-pci.c |    9 ++++++---
+ drivers/usb/host/xhci.h     |    2 +-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/locking.c
-+++ b/fs/btrfs/locking.c
-@@ -25,18 +25,43 @@
-  * - reader/reader sharing
-  * - try-lock semantics for readers and writers
-  *
-- * The rwsem implementation does opportunistic spinning which reduces number of
-- * times the locking task needs to sleep.
-+ * Additionally we need one level nesting recursion, see below. The rwsem
-+ * implementation does opportunistic spinning which reduces number of times the
-+ * locking task needs to sleep.
-+ *
-+ *
-+ * Lock recursion
-+ * --------------
-+ *
-+ * A write operation on a tree might indirectly start a look up on the same
-+ * tree.  This can happen when btrfs_cow_block locks the tree and needs to
-+ * lookup free extents.
-+ *
-+ * btrfs_cow_block
-+ *   ..
-+ *   alloc_tree_block_no_bg_flush
-+ *     btrfs_alloc_tree_block
-+ *       btrfs_reserve_extent
-+ *         ..
-+ *         load_free_space_cache
-+ *           ..
-+ *           btrfs_lookup_file_extent
-+ *             btrfs_search_slot
-+ *
-  */
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -2494,7 +2494,8 @@ int xhci_mem_init(struct xhci_hcd *xhci,
+ 	 * and our use of dma addresses in the trb_address_map radix tree needs
+ 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
+ 	 */
+-	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
++	if (xhci->quirks & XHCI_TRB_OVERFETCH)
++		/* Buggy HC prefetches beyond segment bounds - allocate dummy space at the end */
+ 		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
+ 				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
+ 	else
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -37,6 +37,8 @@
+ #define PCI_DEVICE_ID_EJ168		0x7023
+ #define PCI_DEVICE_ID_EJ188		0x7052
  
- /*
-  * __btrfs_tree_read_lock - lock extent buffer for read
-  * @eb:		the eb to be locked
-  * @nest:	the nesting level to be used for lockdep
-- * @recurse:	unused
-+ * @recurse:	if this lock is able to be recursed
-  *
-  * This takes the read lock on the extent buffer, using the specified nesting
-  * level for lockdep purposes.
-+ *
-+ * If you specify recurse = true, then we will allow this to be taken if we
-+ * currently own the lock already.  This should only be used in specific
-+ * usecases, and the subsequent unlock will not change the state of the lock.
-  */
- void __btrfs_tree_read_lock(struct extent_buffer *eb, enum btrfs_lock_nesting nest,
- 			    bool recurse)
-@@ -46,7 +71,31 @@ void __btrfs_tree_read_lock(struct exten
- 	if (trace_btrfs_tree_read_lock_enabled())
- 		start_ns = ktime_get_ns();
- 
-+	if (unlikely(recurse)) {
-+		/* First see if we can grab the lock outright */
-+		if (down_read_trylock(&eb->lock))
-+			goto out;
++#define PCI_DEVICE_ID_VIA_VL805				0x3483
 +
-+		/*
-+		 * Ok still doesn't necessarily mean we are already holding the
-+		 * lock, check the owner.
-+		 */
-+		if (eb->lock_owner != current->pid) {
-+			down_read_nested(&eb->lock, nest);
-+			goto out;
-+		}
-+
-+		/*
-+		 * Ok we have actually recursed, but we should only be recursing
-+		 * once, so blow up if we're already recursed, otherwise set
-+		 * ->lock_recursed and carry on.
-+		 */
-+		BUG_ON(eb->lock_recursed);
-+		eb->lock_recursed = true;
-+		goto out;
-+	}
- 	down_read_nested(&eb->lock, nest);
-+out:
- 	trace_btrfs_tree_read_lock(eb, start_ns);
- }
+ #define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI		0x8c31
+ #define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI		0x9c31
+ #define PCI_DEVICE_ID_INTEL_WILDCATPOINT_LP_XHCI	0x9cb1
+@@ -296,8 +298,9 @@ static void xhci_pci_quirks(struct devic
+ 			pdev->device == 0x3432)
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
  
-@@ -85,11 +134,22 @@ int btrfs_try_tree_write_lock(struct ext
- }
+-	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483) {
++	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
++		xhci->quirks |= XHCI_TRB_OVERFETCH;
+ 		xhci->quirks |= XHCI_EP_CTX_BROKEN_DCS;
+ 	}
  
- /*
-- * Release read lock.
-+ * Release read lock.  If the read lock was recursed then the lock stays in the
-+ * original state that it was before it was recursively locked.
-  */
- void btrfs_tree_read_unlock(struct extent_buffer *eb)
- {
- 	trace_btrfs_tree_read_unlock(eb);
-+	/*
-+	 * if we're nested, we have the write lock.  No new locking
-+	 * is needed as long as we are the lock owner.
-+	 * The write unlock will do a barrier for us, and the lock_recursed
-+	 * field only matters to the lock owner.
-+	 */
-+	if (eb->lock_recursed && current->pid == eb->lock_owner) {
-+		eb->lock_recursed = false;
-+		return;
-+	}
- 	up_read(&eb->lock);
- }
+@@ -347,11 +350,11 @@ static void xhci_pci_quirks(struct devic
  
+ 		if (pdev->device == 0x9202) {
+ 			xhci->quirks |= XHCI_RESET_ON_RESUME;
+-			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
++			xhci->quirks |= XHCI_TRB_OVERFETCH;
+ 		}
+ 
+ 		if (pdev->device == 0x9203)
+-			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
++			xhci->quirks |= XHCI_TRB_OVERFETCH;
+ 	}
+ 
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1902,7 +1902,7 @@ struct xhci_hcd {
+ #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
+ #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+-#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
++#define XHCI_TRB_OVERFETCH	BIT_ULL(45)
+ #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
+ 
+ 	unsigned int		num_active_eps;
 
 
