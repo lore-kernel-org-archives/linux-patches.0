@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DE81E9B06;
-	Tue, 11 Mar 2025 15:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678343C0B;
+	Tue, 11 Mar 2025 15:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707303; cv=none; b=Wv1rMtypDPk8+00wnEgiW3I3LXecpta6NkTA6E7DiqxSFocdzDjHLCXumqy9O7Dwt6+vDz+xEdyaT3KH4RKTTheHdwMaHbEyueXOP7XE6de1uVv/kd6VaJVR2pb5HwReOYBsLBzNcFxZLy7D6B85hz81OKJdSgxxk57+XOVy+nI=
+	t=1741707306; cv=none; b=dHRRRzbHghOx3TcKeYBAshRtseTvcPro3vP71mc/hWk+gCS/ZdI1Giach3tM82ptMvS98jE5oYDjxK18gp1IXyzLlA0F2UrrpJiRnSSKP5y6Zm5bjCpQvFlf25FH9g7PTNWFCPB+4ykL7EXRxSoHMLLzazFaJriv5Uc5qwEThLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707303; c=relaxed/simple;
-	bh=kDzOph7E7RgZbuac6dOhjgb+oG4sVt0LhTmKEmRdik0=;
+	s=arc-20240116; t=1741707306; c=relaxed/simple;
+	bh=RXTClNfUJuG7QJKIYzO0YoNpnePjXbWCd/1kHvbeg9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhAZ/oDzBtE5i/xYVjOpPUCaVoEnFD/4ZydiRAxHPT+Up3rnIDXD43hgCNsRgw2aelo3N5/n12hxxovBwZ/+GS5rczLASumZDXQ2z+CiCYs6hNhkQUau9yNG2vwut00DSremDirs03NyJYaF9zf9AoxfIZLm6hOppAWATHds+0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HouMISvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AI5yzm6X6fAlgTy9fp2rTr2IM4HfVRYFC/4T6ODd2SNPvjOid130ZfLbYrP2YDt4Z9zOAuDJ+/r7frtfpyp6TanxjSYkLrs0mvgluCr7+LqnuxzK9Leu+YkGrHYVSq5OJPcoDPy0kNgbyj83mgb2F8mTHUa6qQclFeWDP/3JVcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh27+B03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HouMISvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EE9C4CEE9;
-	Tue, 11 Mar 2025 15:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh27+B03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B5CC4CEE9;
+	Tue, 11 Mar 2025 15:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707303;
-	bh=kDzOph7E7RgZbuac6dOhjgb+oG4sVt0LhTmKEmRdik0=;
+	s=korg; t=1741707306;
+	bh=RXTClNfUJuG7QJKIYzO0YoNpnePjXbWCd/1kHvbeg9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HouMISvpqkkLrPJIQllM/MNVd+ePdZHALryh3tCHdt21aAqV7cyPt1yOuybuUjnrB
-	 laKgJme0yI7YEn1vCMCA38niGC/6uIGk3QuNF2HwBRjxWf5Gdx1AOF8VpB83dTZGMM
-	 mKDBGU1KAIP6FtsS0MOhDtGE7E56v6iMZn21CIyw=
+	b=Fh27+B03Zh2WQNtJy5+kiWmFEDEakAYoc06EdghyIGDa/zgP3QlfoRASrFdO6sX6t
+	 7JprNo/djT+ZQxlTv8LNJE2qxiNLWvWhk0W4NkF40IyFART+ewe2B84Cl2IgYkSAFF
+	 pHoItcrf+iOWGIe4ZTDUZK1U/QaUO4Ptf+11FdYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhai <yan@cloudflare.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 342/462] bpf: skip non exist keys in generic_map_lookup_batch
-Date: Tue, 11 Mar 2025 16:00:08 +0100
-Message-ID: <20250311145811.875099933@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 5.10 343/462] tee: optee: Fix supplicant wait loop
+Date: Tue, 11 Mar 2025 16:00:09 +0100
+Message-ID: <20250311145811.914056851@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,119 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-[ Upstream commit 5644c6b50ffee0a56c1e01430a8c88e34decb120 ]
+commit 70b0d6b0a199c5a3ee6c72f5e61681ed6f759612 upstream.
 
-The generic_map_lookup_batch currently returns EINTR if it fails with
-ENOENT and retries several times on bpf_map_copy_value. The next batch
-would start from the same location, presuming it's a transient issue.
-This is incorrect if a map can actually have "holes", i.e.
-"get_next_key" can return a key that does not point to a valid value. At
-least the array of maps type may contain such holes legitly. Right now
-these holes show up, generic batch lookup cannot proceed any more. It
-will always fail with EINTR errors.
+OP-TEE supplicant is a user-space daemon and it's possible for it
+be hung or crashed or killed in the middle of processing an OP-TEE
+RPC call. It becomes more complicated when there is incorrect shutdown
+ordering of the supplicant process vs the OP-TEE client application which
+can eventually lead to system hang-up waiting for the closure of the
+client application.
 
-Rather, do not retry in generic_map_lookup_batch. If it finds a non
-existing element, skip to the next key. This simple solution comes with
-a price that transient errors may not be recovered, and the iteration
-might cycle back to the first key under parallel deletion. For example,
-Hou Tao <houtao@huaweicloud.com> pointed out a following scenario:
+Allow the client process waiting in kernel for supplicant response to
+be killed rather than indefinitely waiting in an unkillable state. Also,
+a normal uninterruptible wait should not have resulted in the hung-task
+watchdog getting triggered, but the endless loop would.
 
-For LPM trie map:
-(1) ->map_get_next_key(map, prev_key, key) returns a valid key
+This fixes issues observed during system reboot/shutdown when supplicant
+got hung for some reason or gets crashed/killed which lead to client
+getting hung in an unkillable state. It in turn lead to system being in
+hung up state requiring hard power off/on to recover.
 
-(2) bpf_map_copy_value() return -ENOMENT
-It means the key must be deleted concurrently.
-
-(3) goto next_key
-It swaps the prev_key and key
-
-(4) ->map_get_next_key(map, prev_key, key) again
-prev_key points to a non-existing key, for LPM trie it will treat just
-like prev_key=NULL case, the returned key will be duplicated.
-
-With the retry logic, the iteration can continue to the key next to the
-deleted one. But if we directly skip to the next key, the iteration loop
-would restart from the first key for the lpm_trie type.
-
-However, not all races may be recovered. For example, if current key is
-deleted after instead of before bpf_map_copy_value, or if the prev_key
-also gets deleted, then the loop will still restart from the first key
-for lpm_tire anyway. For generic lookup it might be better to stay
-simple, i.e. just skip to the next key. To guarantee that the output
-keys are not duplicated, it is better to implement map type specific
-batch operations, which can properly lock the trie and synchronize with
-concurrent mutators.
-
-Fixes: cb4d03ab499d ("bpf: Add generic support for lookup batch op")
-Closes: https://lore.kernel.org/bpf/Z6JXtA1M5jAZx8xD@debian.debian/
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/85618439eea75930630685c467ccefeac0942e2b.1739171594.git.yan@cloudflare.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/syscall.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ drivers/tee/optee/supp.c |   35 ++++++++---------------------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index b5d9bba738347..008bb4e5c4ddc 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1406,8 +1406,6 @@ int generic_map_update_batch(struct bpf_map *map,
- 	return err;
- }
+--- a/drivers/tee/optee/supp.c
++++ b/drivers/tee/optee/supp.c
+@@ -80,7 +80,6 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	struct optee *optee = tee_get_drvdata(ctx->teedev);
+ 	struct optee_supp *supp = &optee->supp;
+ 	struct optee_supp_req *req;
+-	bool interruptable;
+ 	u32 ret;
  
--#define MAP_LOOKUP_RETRIES 3
--
- int generic_map_lookup_batch(struct bpf_map *map,
- 				    const union bpf_attr *attr,
- 				    union bpf_attr __user *uattr)
-@@ -1417,8 +1415,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 	void __user *values = u64_to_user_ptr(attr->batch.values);
- 	void __user *keys = u64_to_user_ptr(attr->batch.keys);
- 	void *buf, *buf_prevkey, *prev_key, *key, *value;
--	int err, retry = MAP_LOOKUP_RETRIES;
- 	u32 value_size, cp, max_count;
-+	int err;
- 
- 	if (attr->batch.elem_flags & ~BPF_F_LOCK)
- 		return -EINVAL;
-@@ -1464,14 +1462,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 		err = bpf_map_copy_value(map, key, value,
- 					 attr->batch.elem_flags);
- 
--		if (err == -ENOENT) {
--			if (retry) {
--				retry--;
--				continue;
+ 	/*
+@@ -111,36 +110,18 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	/*
+ 	 * Wait for supplicant to process and return result, once we've
+ 	 * returned from wait_for_completion(&req->c) successfully we have
+-	 * exclusive access again.
++	 * exclusive access again. Allow the wait to be killable such that
++	 * the wait doesn't turn into an indefinite state if the supplicant
++	 * gets hung for some reason.
+ 	 */
+-	while (wait_for_completion_interruptible(&req->c)) {
++	if (wait_for_completion_killable(&req->c)) {
+ 		mutex_lock(&supp->mutex);
+-		interruptable = !supp->ctx;
+-		if (interruptable) {
+-			/*
+-			 * There's no supplicant available and since the
+-			 * supp->mutex currently is held none can
+-			 * become available until the mutex released
+-			 * again.
+-			 *
+-			 * Interrupting an RPC to supplicant is only
+-			 * allowed as a way of slightly improving the user
+-			 * experience in case the supplicant hasn't been
+-			 * started yet. During normal operation the supplicant
+-			 * will serve all requests in a timely manner and
+-			 * interrupting then wouldn't make sense.
+-			 */
+-			if (req->in_queue) {
+-				list_del(&req->link);
+-				req->in_queue = false;
 -			}
--			err = -EINTR;
++		if (req->in_queue) {
++			list_del(&req->link);
++			req->in_queue = false;
+ 		}
+ 		mutex_unlock(&supp->mutex);
+-
+-		if (interruptable) {
+-			req->ret = TEEC_ERROR_COMMUNICATION;
 -			break;
 -		}
-+		if (err == -ENOENT)
-+			goto next_key;
- 
- 		if (err)
- 			goto free_buf;
-@@ -1486,12 +1478,12 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 			goto free_buf;
- 		}
- 
-+		cp++;
-+next_key:
- 		if (!prev_key)
- 			prev_key = buf_prevkey;
- 
- 		swap(prev_key, key);
--		retry = MAP_LOOKUP_RETRIES;
--		cp++;
- 		cond_resched();
++		req->ret = TEEC_ERROR_COMMUNICATION;
  	}
  
--- 
-2.39.5
-
+ 	ret = req->ret;
 
 
