@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EA925E83B;
-	Tue, 11 Mar 2025 15:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C5725E804;
+	Tue, 11 Mar 2025 15:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706474; cv=none; b=MhTqKHsLiDhuE2JjU/yKHzOeEV2pWV7d7J1q2FZEFij60ujG8YE3GKJpV5skJ0ORDFgtBUB9UPaPtCxlIJGgxsZMfzDQWHkoqBF3NzOq/xge2eIZGRABm+NfFQ3hBFyr97nxi4m+o5TYW1UFDao8jm7ZtODfcD6rFZrB05GtTsE=
+	t=1741706477; cv=none; b=DHrM+WzsWebRNywXQ3sT3//X0LaVMhY+k3sAV6dOsRAuzCDy5Dp6ggEdjp1waVMrk3lJWNuDN8gHU7PWfLMhfoUSvyRoASDYpprnrtZrMEJqHH4Zb0m0u9M+muXD42dQAds2eiEGNXVNftjF/7b5GEuQUDiH+0odtdI8DtXXFEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706474; c=relaxed/simple;
-	bh=t9EUY2PCC8kkQfHmLZoVxVYKkhX9MTzBVMhuJNTO9Yo=;
+	s=arc-20240116; t=1741706477; c=relaxed/simple;
+	bh=3vkRaXB0WU7x3no64YwTaeQnsIlNHgfnjWkPFZAQEjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GQdRE3eJadT5PZbGcPvDiJ3HjLtBtWO9LcUBRJdlGstOv+e7rt3AigHhAGvguLzW6F4+ckD83ttNZRkM/v/lPJ5uDUuTUexhCPRCEbulnCwazTSuQ1c7/kzv1KdzuRhvpLz6+WWGj+9sXObXje9GVbAqvlNwnjrcV7nToIMeIc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uL/unaPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pEpSvzS0ai/uyX76tLQw7G7q+m+KmBmDDY1Bk4iLBLb9mlGh9oFsl6yHH9htpqUw4xTFezRR5DQWuFwdKhUQkVbJsVU+3GW2JD7et/CHY7XJ2AeDoqx0lf+suOqENdn80GUFzo2ZSLxaC7NyD4GaNWawc/uEMiDsrSEVjh64BNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsHk/aIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uL/unaPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8760DC4CEE9;
-	Tue, 11 Mar 2025 15:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsHk/aIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E0DC4CEE9;
+	Tue, 11 Mar 2025 15:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706473;
-	bh=t9EUY2PCC8kkQfHmLZoVxVYKkhX9MTzBVMhuJNTO9Yo=;
+	s=korg; t=1741706476;
+	bh=3vkRaXB0WU7x3no64YwTaeQnsIlNHgfnjWkPFZAQEjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uL/unaPx1X39NueRJA5oe9KX1r1yFg/cZgxafM+2btKET/QeColOV64YX1PEUJVrx
-	 AZzmnEcE30SQcD8RZA9Er7BPXfCWYCaT9kjwxRKzYApGxzPBLL/mKokFoFZrDA+t4M
-	 s+g5cs527K1ZiDfz1jhFKGJ952xsdtTVtbXy/PRc=
+	b=EsHk/aIXkD0MuPAlMbCs1znWYDORKUvpXKkcsMavcjQatMoNUB4F9FWViSDVz8BTM
+	 O17htR8dM7qkVh/+DW0SXXh2naAXNxnTEpyiSBbLO13TJtQRXmHu+aAgl6R/vDlovH
+	 p5cILR8LYGzOFD1O6huEPJ5NEIt+vdpzrtgykJLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/462] pwm: stm32: Add check for clk_enable()
-Date: Tue, 11 Mar 2025 15:55:09 +0100
-Message-ID: <20250311145800.052007204@linuxfoundation.org>
+Subject: [PATCH 5.10 061/462] padata: add pd get/put refcnt helper
+Date: Tue, 11 Mar 2025 15:55:27 +0100
+Message-ID: <20250311145800.761119230@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -46,48 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit e8c59791ebb60790c74b2c3ab520f04a8a57219a ]
+[ Upstream commit ae154202cc6a189b035359f3c4e143d5c24d5352 ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+Add helpers for pd to get/put refcnt to make code consice.
 
-Fixes: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20241215224752.220318-1-zmw12306@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: dd7d37ccf6b1 ("padata: avoid UAF for reorder_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/padata.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 7146b3f6755bc..2ca2855255be1 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -634,8 +634,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
+diff --git a/kernel/padata.c b/kernel/padata.c
+index e4e0121ef3da2..02bb06a2c797d 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -60,6 +60,22 @@ struct padata_mt_job_state {
+ static void padata_free_pd(struct parallel_data *pd);
+ static void __init padata_mt_helper(struct work_struct *work);
  
- 	/* Initialize clock refcount to number of enabled PWM channels. */
--	for (i = 0; i < num_enabled; i++)
--		clk_enable(priv->clk);
-+	for (i = 0; i < num_enabled; i++) {
-+		ret = clk_enable(priv->clk);
-+		if (ret)
-+			return ret;
-+	}
++static inline void padata_get_pd(struct parallel_data *pd)
++{
++	refcount_inc(&pd->refcnt);
++}
++
++static inline void padata_put_pd_cnt(struct parallel_data *pd, int cnt)
++{
++	if (refcount_sub_and_test(cnt, &pd->refcnt))
++		padata_free_pd(pd);
++}
++
++static inline void padata_put_pd(struct parallel_data *pd)
++{
++	padata_put_pd_cnt(pd, 1);
++}
++
+ static int padata_index_to_cpu(struct parallel_data *pd, int cpu_index)
+ {
+ 	int cpu, target_cpu;
+@@ -211,7 +227,7 @@ int padata_do_parallel(struct padata_shell *ps,
+ 	if ((pinst->flags & PADATA_RESET))
+ 		goto out;
  
- 	ret = pwmchip_add(&priv->chip);
- 	if (ret < 0)
+-	refcount_inc(&pd->refcnt);
++	padata_get_pd(pd);
+ 	padata->pd = pd;
+ 	padata->cb_cpu = *cb_cpu;
+ 
+@@ -385,8 +401,7 @@ static void padata_serial_worker(struct work_struct *serial_work)
+ 	}
+ 	local_bh_enable();
+ 
+-	if (refcount_sub_and_test(cnt, &pd->refcnt))
+-		padata_free_pd(pd);
++	padata_put_pd_cnt(pd, cnt);
+ }
+ 
+ /**
+@@ -683,8 +698,7 @@ static int padata_replace(struct padata_instance *pinst)
+ 	synchronize_rcu();
+ 
+ 	list_for_each_entry_continue_reverse(ps, &pinst->pslist, list)
+-		if (refcount_dec_and_test(&ps->opd->refcnt))
+-			padata_free_pd(ps->opd);
++		padata_put_pd(ps->opd);
+ 
+ 	pinst->flags &= ~PADATA_RESET;
+ 
+@@ -1132,8 +1146,7 @@ void padata_free_shell(struct padata_shell *ps)
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
+-	if (refcount_dec_and_test(&pd->refcnt))
+-		padata_free_pd(pd);
++	padata_put_pd(pd);
+ 	mutex_unlock(&ps->pinst->lock);
+ 
+ 	kfree(ps);
 -- 
 2.39.5
 
