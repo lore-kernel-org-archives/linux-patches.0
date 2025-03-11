@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D207325DD08;
-	Tue, 11 Mar 2025 15:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A411A5BA4;
+	Tue, 11 Mar 2025 15:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706808; cv=none; b=uHRfXaAnPJTJe3fnLx+iBCVSmxoI04V9gQQsnrKk4erXr0FuLWDfAITE9YjyVbWs2xON9oijSrdC5elISxQyMLXXMVHGo9XzhblxBUqInvfADG9xf+17RLX/0iAA0OWKa4Q7PcPPaZUKqWuV39krT4N06DMBLGsDf1yAnSrfJsc=
+	t=1741706811; cv=none; b=pqB+m47tWiy8P1GNXILciPvf+3YnFLUz48umQseKuZ0GTs76R2rx4Nih+A4EcNVu6br+z6hS468kckuo3+70+PEI3a5uxShKSI6hJwmHpQBleLLkonCsZqQzpLgG9zE1LpkX4s6nxwp1pNMYdVDuiYfoggw1h6Y4fimBBdiriew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706808; c=relaxed/simple;
-	bh=FxAXkT/fBNEetaaG612kn7Mrh52qH3pXZ9WO4HeZxSw=;
+	s=arc-20240116; t=1741706811; c=relaxed/simple;
+	bh=n5YzSNXlrPJLF9wqOWtvpwGSOz69Ee3C7KEZKt4+oKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxps9ijUVYYSd6175vrqQZSoGUbUjAEX1u7uKeqnMKLs+0GXYEB/kPNNj8RSHIUo6WYEX29VGmkn3ZQ6BEYEWHum87Rs2mEeG28IkysjTXxwyROFWB6KF1EzcQHNmktg4fRU9L/RAHceJ1AHxTvCqxh68mkE5Jrvi9k3P/iKtxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMxMnSjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fN4nPw6Kr0IzqFuh6/3YSVhjuW4fYq9Ikh7Wtb+qmbMoChI68SmWg7dIiPUP4F6AxFq2fsgZytG1H2DOtaF8CNtrCCNE/8yrAcanpl9/pbTBmw2stib3qgXUFVU5+L8qOCiy8qoY6Ui6XXzlt4anGH03BUthh4NgPUoNWO/KOB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0fzKlg6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMxMnSjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596B0C4CEE9;
-	Tue, 11 Mar 2025 15:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0fzKlg6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA0DC4CEE9;
+	Tue, 11 Mar 2025 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706808;
-	bh=FxAXkT/fBNEetaaG612kn7Mrh52qH3pXZ9WO4HeZxSw=;
+	s=korg; t=1741706811;
+	bh=n5YzSNXlrPJLF9wqOWtvpwGSOz69Ee3C7KEZKt4+oKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMxMnSjEEdzfWsIhqGWR9eBTCq5jxrqRAaDJXVuCnAbf5SFEoU7X4U2eYwWZwG8LX
-	 Hs43XSFaLvLroEo1vtr8GNNnzKP+EN+QviYHhlKR7QslltqgltCdqWVo2LzlXNmHeL
-	 WyddElY+mIIH5iKeWgey6wTPphZMi2D/Fi6hDvLE=
+	b=E0fzKlg6CqHAM7EFFIWxLEdHEAnA2oy+/MeOp9t3UEh3dgQK3aPMxCkAd4+cECK+g
+	 fsXCDq9SKlpAdeza+5cmvSmzpcUAKEMYxN0L/41sv8/qFVbFnRn/7MnB7KWjqWi2pa
+	 3ZT3/r6XgYV0V0joaVJH6H7HQM7gspmmpcypeoJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 173/462] Bluetooth: L2CAP: handle NULL sock pointer in l2cap_sock_alloc
-Date: Tue, 11 Mar 2025 15:57:19 +0100
-Message-ID: <20250311145805.191063064@linuxfoundation.org>
+Subject: [PATCH 5.10 174/462] Bluetooth: L2CAP: accept zero as a special value for MTU auto-selection
+Date: Tue, 11 Mar 2025 15:57:20 +0100
+Message-ID: <20250311145805.229641063@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,43 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 5f397409f8ee5bc82901eeaf799e1cbc4f8edcf1 upstream.
+commit 5c61419e02033eaf01733d66e2fcd4044808f482 upstream.
 
-A NULL sock pointer is passed into l2cap_sock_alloc() when it is called
-from l2cap_sock_new_connection_cb() and the error handling paths should
-also be aware of it.
+One of the possible ways to enable the input MTU auto-selection for L2CAP
+connections is supposed to be through passing a special "0" value for it
+as a socket option. Commit [1] added one of those into avdtp. However, it
+simply wouldn't work because the kernel still treats the specified value
+as invalid and denies the setting attempt. Recorded BlueZ logs include the
+following:
 
-Seemingly a more elegant solution would be to swap bt_sock_alloc() and
-l2cap_chan_create() calls since they are not interdependent to that moment
-but then l2cap_chan_create() adds the soon to be deallocated and still
-dummy-initialized channel to the global list accessible by many L2CAP
-paths. The channel would be removed from the list in short period of time
-but be a bit more straight-forward here and just check for NULL instead of
-changing the order of function calls.
+  bluetoothd[496]: profiles/audio/avdtp.c:l2cap_connect() setsockopt(L2CAP_OPTIONS): Invalid argument (22)
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE static
-analysis tool.
+[1]: https://github.com/bluez/bluez/commit/ae5be371a9f53fed33d2b34748a95a5498fd4b77
 
-Fixes: 7c4f78cdb8e7 ("Bluetooth: L2CAP: do not leave dangling sk pointer on error in l2cap_sock_create()")
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 4b6e228e297b ("Bluetooth: Auto tune if input MTU is set to 0")
 Cc: stable@vger.kernel.org
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
-@@ -1864,7 +1864,8 @@ static struct sock *l2cap_sock_alloc(str
- 	chan = l2cap_chan_create();
- 	if (!chan) {
- 		sk_free(sk);
--		sock->sk = NULL;
-+		if (sock)
-+			sock->sk = NULL;
- 		return NULL;
+@@ -727,12 +727,12 @@ static bool l2cap_valid_mtu(struct l2cap
+ {
+ 	switch (chan->scid) {
+ 	case L2CAP_CID_ATT:
+-		if (mtu < L2CAP_LE_MIN_MTU)
++		if (mtu && mtu < L2CAP_LE_MIN_MTU)
+ 			return false;
+ 		break;
+ 
+ 	default:
+-		if (mtu < L2CAP_DEFAULT_MIN_MTU)
++		if (mtu && mtu < L2CAP_DEFAULT_MIN_MTU)
+ 			return false;
  	}
  
 
