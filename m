@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C610C1E98EC;
-	Tue, 11 Mar 2025 15:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9AE1E98EC;
+	Tue, 11 Mar 2025 15:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707531; cv=none; b=cSM7E/5YfRRwbCTWjk579gsaQdP87W3WfEVHpwdCyMwka3G99m9Yi6ohwO650NwLFIll15zzCr8DviQWIGYkYgOzzFP0awSdcqOwiEEOAx0snnf7KeRa++EVFR+xyxU19SgYNUD1jOSF3jFTVeMF64a/lMdyZRa0vMEroKdWFpU=
+	t=1741707534; cv=none; b=AIsZtYVLxS2RnwzSYef0b7OTg9zCN2GlEnXcV0F5ZvXIUJyG8mE41FnNkjxnHnCLIpOrHa448ALsmVorWbZlrmi4e8EAo/gt6WO0AC/3s6A0xZA+3iYn42oyxAUjP9P+25vdxgim/lIIzebtfBRgefZfBBYX73hg2d+K15qBHu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707531; c=relaxed/simple;
-	bh=sVzDzMYGqHnXQLu3h9/YG9OHpf8eeZuLtq9adn9fWqE=;
+	s=arc-20240116; t=1741707534; c=relaxed/simple;
+	bh=b0VNiRAegLgF+QuH7dIVcZkl1wMqKOszlgnl2i08NQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P83XjUelXIIa7JFao8uovJB1oVieik9QWx9T1j0aRAyXjYo5vSBtToqIIq/f+fbGL4ACNqrxwlvbWIe1sVrQvM8lpJeXpWaI0EpvceHP2JMxpnuZIrdUMIRIaJ+3kY70mEFXg29zJWTx6IEhBcm3OZutOARAP7nadXzxSSK3XS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAwo4cSK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kW1u0qsc6JoB7f1XoC3Dp6f4Qh4o9gCaJj3dPh+ALU3+EitVaT09IRQxGk9seUlon1OzM87ddO37juiHi/4ouuVItoTr/G3jXQZ4Y0XQFPIy3KmYkUmWLtRNq0JnNgWQ/3PY1iPLRVA/xifmqyY72K9Byg44XK8lRUxAbSS9vwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVB/1Q0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAwo4cSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC8DC4CEE9;
-	Tue, 11 Mar 2025 15:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVB/1Q0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42911C4CEE9;
+	Tue, 11 Mar 2025 15:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707531;
-	bh=sVzDzMYGqHnXQLu3h9/YG9OHpf8eeZuLtq9adn9fWqE=;
+	s=korg; t=1741707534;
+	bh=b0VNiRAegLgF+QuH7dIVcZkl1wMqKOszlgnl2i08NQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAwo4cSKqhogXBZ2GEylodp/QHMMALt907Ye+F/xTRKcnJFLYTKgxg+ezwNSB1YFZ
-	 TB4pU6SdfyoxSoSYWXl8TSyhfpy/wkWj2smyvCYqmfSLtB38G9pYuoAq9i4LM3FH8X
-	 pqd1AZJPWJvQWZ1KXj4CnEVgvn+QZ8gCMRfTwcg8=
+	b=dVB/1Q0Rkq0KiWI6g53eX39GfNEQVNhECWmE4iS9WQdsfyzCJM3FIN3r0Ju416KXy
+	 agfEyQjDWyYs2FPdnDwEYDWAlsexleb3bhGPz3Nq9/BDJHEPZ8+QF3ZoM6GX1548rv
+	 Vof6UXBNuA7J/TarZpz+zz+sNjnoOdTHRqwrAkPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tom Herbert <tom@herbertland.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 421/462] net-timestamp: support TCP GSO case for a few missing flags
-Date: Tue, 11 Mar 2025 16:01:27 +0100
-Message-ID: <20250311145814.967573874@linuxfoundation.org>
+Subject: [PATCH 5.10 422/462] net: ipv6: fix dst ref loop in ila lwtunnel
+Date: Tue, 11 Mar 2025 16:01:28 +0100
+Message-ID: <20250311145815.006485891@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,71 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kerneljasonxing@gmail.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 3c9231ea6497dfc50ac0ef69fff484da27d0df66 ]
+[ Upstream commit 0e7633d7b95b67f1758aea19f8e85621c5f506a3 ]
 
-When I read through the TSO codes, I found out that we probably
-miss initializing the tx_flags of last seg when TSO is turned
-off, which means at the following points no more timestamp
-(for this last one) will be generated. There are three flags
-to be handled in this patch:
-1. SKBTX_HW_TSTAMP
-2. SKBTX_BPF
-3. SKBTX_SCHED_TSTAMP
-Note that SKBTX_BPF[1] was added in 6.14.0-rc2 by commit
-6b98ec7e882af ("bpf: Add BPF_SOCK_OPS_TSTAMP_SCHED_CB callback")
-and only belongs to net-next branch material for now. The common
-issue of the above three flags can be fixed by this single patch.
+This patch follows commit 92191dd10730 ("net: ipv6: fix dst ref loops in
+rpl, seg6 and ioam6 lwtunnels") and, on a second thought, the same patch
+is also needed for ila (even though the config that triggered the issue
+was pathological, but still, we don't want that to happen).
 
-This patch initializes the tx_flags to SKBTX_ANY_TSTAMP like what
-the UDP GSO does to make the newly segmented last skb inherit the
-tx_flags so that requested timestamp will be generated in each
-certain layer, or else that last one has zero value of tx_flags
-which leads to no timestamp at all.
-
-Fixes: 4ed2d765dfacc ("net-timestamp: TCP timestamping")
-Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
+Cc: Tom Herbert <tom@herbertland.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Link: https://patch.msgid.link/20250304181039.35951-1-justin.iurman@uliege.be
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_offload.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/ipv6/ila/ila_lwt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
-index fc61cd3fea652..27b7887f4f4eb 100644
---- a/net/ipv4/tcp_offload.c
-+++ b/net/ipv4/tcp_offload.c
-@@ -11,12 +11,15 @@
- #include <net/tcp.h>
- #include <net/protocol.h>
- 
--static void tcp_gso_tstamp(struct sk_buff *skb, unsigned int ts_seq,
-+static void tcp_gso_tstamp(struct sk_buff *skb, struct sk_buff *gso_skb,
- 			   unsigned int seq, unsigned int mss)
- {
-+	u32 flags = skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP;
-+	u32 ts_seq = skb_shinfo(gso_skb)->tskey;
-+
- 	while (skb) {
- 		if (before(ts_seq, seq + mss)) {
--			skb_shinfo(skb)->tx_flags |= SKBTX_SW_TSTAMP;
-+			skb_shinfo(skb)->tx_flags |= flags;
- 			skb_shinfo(skb)->tskey = ts_seq;
- 			return;
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index 9d37f7164e732..6d37dda3d26fc 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -88,7 +88,8 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
  		}
-@@ -115,8 +118,8 @@ struct sk_buff *tcp_gso_segment(struct sk_buff *skb,
- 	th = tcp_hdr(skb);
- 	seq = ntohl(th->seq);
  
--	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_SW_TSTAMP))
--		tcp_gso_tstamp(segs, skb_shinfo(gso_skb)->tskey, seq, mss);
-+	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP))
-+		tcp_gso_tstamp(segs, gso_skb, seq, mss);
- 
- 	newcheck = ~csum_fold((__force __wsum)((__force u32)th->check +
- 					       (__force u32)delta));
+-		if (ilwt->connected) {
++		/* cache only if we don't create a dst reference loop */
++		if (ilwt->connected && orig_dst->lwtstate != dst->lwtstate) {
+ 			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
+ 			local_bh_enable();
 -- 
 2.39.5
 
