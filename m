@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E095D25D8F9;
-	Tue, 11 Mar 2025 15:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE8925EF84;
+	Tue, 11 Mar 2025 15:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705904; cv=none; b=Syue30hhTptR65SXcU1JnWt6fBuaS8p0qMadyLkNc6Wb4j4gF/1Wq9D2WwWDKG3RlhfqpPei3NhIoQGIBw1tt5UNJY9q+dM8VinId4fmSs8sPMUsKqTUDpq47Aagu6fS4isxiyLTfQp8VN4IG0uqSwtLCPelxuZzKPHZWoY9KGU=
+	t=1741705906; cv=none; b=bXF4w5i52yuuLd7YGDxITUHKYSegW6j31ygzt77Ypa5QbZ5Pn+Lt4MqAQwPFDS7LNAewk4gIzxC30yozov9h29Og4ZAWC/eXROlws3dM2guTPvN4xuvdIkuY1qp2J6ts33Lo3QG3EG+kH3I+cr4x6+rY/sfPYUJ6pxjhJ0yUJ2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705904; c=relaxed/simple;
-	bh=/fPQbJi4q/n5Tqb4Ht5wLR73okQPqmJLXr3zcZupgzA=;
+	s=arc-20240116; t=1741705906; c=relaxed/simple;
+	bh=cg4muBZACxpaT+35R+hCn1/tNokn+ztnJpgeRrF09BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMYFmdehHVFAHBu+wzFY8GQx2uux11+MRzGrWHQROP2a3fG7YGk0cIDg96gGH2dPKmlrhV4aeqhAhDrV7oh65maAsZjRoIMck7e5Kdnb+oxq5kSzChkOQ7XNyzbsdhv1DZBTaKxyKdotl8eTo5kwnBAeqB49c69h/1rTUphBANo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPGoy4Um; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLG6q4R+6vvx/4N7KeJyA5Viea76/aKEfgLPO76LABn5BE3tQXO+UaNxixSQl2P4hkivEh6QU9I4Vj25pM7pIuDzaW3AoppjYgQJObLZB1qjcfHlg7e3DChdFxEsdQQg61KiL+XjdKQAesMfqAvrQcOnHB4rlyccIj74PO5rYIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA8nArAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPGoy4Um"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A068C4CEE9;
-	Tue, 11 Mar 2025 15:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA8nArAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447FAC4CEED;
+	Tue, 11 Mar 2025 15:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705903;
-	bh=/fPQbJi4q/n5Tqb4Ht5wLR73okQPqmJLXr3zcZupgzA=;
+	s=korg; t=1741705906;
+	bh=cg4muBZACxpaT+35R+hCn1/tNokn+ztnJpgeRrF09BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EPGoy4UmreGIAmiHb7z9regm2zZf0VkR9HoZhcBPCC3FaleJs4eWwQXDAukI6g3vM
-	 XxRsXeSDI9e1u65a4+B6r0vgApbbilACLzTw8/j2ZZ8m5NQq4D7yL2nyIli0AZwb8Y
-	 XCjsxmwiMIxuElMEogOdBZ6ZZqNQk6AwvEhqihdc=
+	b=VA8nArAp6OsT9Kv5Cx6diC0iNCffS7Hpuy6Xl7L0sU7JduLdHBDIEmMj2258zjDYG
+	 1RGZgvdXK1obXmNrrtg8d+yWW15WzAad1MX8XpygMv2NRvzmJZJk6bPS2FBcop7OYZ
+	 MdgnOEK//P9UGf9EFqnTpM1dZDz04hLp+Q+am3MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>
-Subject: [PATCH 5.4 195/328] alpha: make stack 16-byte aligned (most cases)
-Date: Tue, 11 Mar 2025 15:59:25 +0100
-Message-ID: <20250311145722.651197149@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>
+Subject: [PATCH 5.4 196/328] serial: 8250: Fix fifo underflow on flush
+Date: Tue, 11 Mar 2025 15:59:26 +0100
+Message-ID: <20250311145722.689971257@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,69 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Kokshaysky <ink@unseen.parts>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-commit 0a0f7362b0367634a2d5cb7c96226afc116f19c9 upstream.
+commit 9e512eaaf8f4008c44ede3dfc0fbc9d9c5118583 upstream.
 
-The problem is that GCC expects 16-byte alignment of the incoming stack
-since early 2004, as Maciej found out [1]:
-  Having actually dug speculatively I can see that the psABI was changed in
- GCC 3.5 with commit e5e10fb4a350 ("re PR target/14539 (128-bit long double
- improperly aligned)") back in Mar 2004, when the stack pointer alignment
- was increased from 8 bytes to 16 bytes, and arch/alpha/kernel/entry.S has
- various suspicious stack pointer adjustments, starting with SP_OFF which
- is not a whole multiple of 16.
+When flushing the serial port's buffer, uart_flush_buffer() calls
+kfifo_reset() but if there is an outstanding DMA transfer then the
+completion function will consume data from the kfifo via
+uart_xmit_advance(), underflowing and leading to ongoing DMA as the
+driver tries to transmit another 2^32 bytes.
 
-Also, as Magnus noted, "ALPHA Calling Standard" [2] required the same:
- D.3.1 Stack Alignment
-  This standard requires that stacks be octaword aligned at the time a
-  new procedure is invoked.
+This is readily reproduced with serial-generic and amidi sending even
+short messages as closing the device on exit will wait for the fifo to
+drain and in the underflow case amidi hangs for 30 seconds on exit in
+tty_wait_until_sent().  A trace of that gives:
 
-However:
-- the "normal" kernel stack is always misaligned by 8 bytes, thanks to
-  the odd number of 64-bit words in 'struct pt_regs', which is the very
-  first thing pushed onto the kernel thread stack;
-- syscall, fault, interrupt etc. handlers may, or may not, receive aligned
-  stack depending on numerous factors.
+     kworker/1:1-84    [001]    51.769423: bprint:               serial8250_tx_dma: tx_size=3 fifo_len=3
+           amidi-763   [001]    51.769460: bprint:               uart_flush_buffer: resetting fifo
+ irq/21-fe530000-76    [000]    51.769474: bprint:               __dma_tx_complete: tx_size=3
+ irq/21-fe530000-76    [000]    51.769479: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294967293
+ irq/21-fe530000-76    [000]    51.781295: bprint:               __dma_tx_complete: tx_size=4096
+ irq/21-fe530000-76    [000]    51.781301: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294963197
+ irq/21-fe530000-76    [000]    51.793131: bprint:               __dma_tx_complete: tx_size=4096
+ irq/21-fe530000-76    [000]    51.793135: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294959101
+ irq/21-fe530000-76    [000]    51.804949: bprint:               __dma_tx_complete: tx_size=4096
 
-Somehow we got away with it until recently, when we ended up with
-a stack corruption in kernel/smp.c:smp_call_function_single() due to
-its use of 32-byte aligned local data and the compiler doing clever
-things allocating it on the stack.
+Since the port lock is held in when the kfifo is reset in
+uart_flush_buffer() and in __dma_tx_complete(), adding a flush_buffer
+hook to adjust the outstanding DMA byte count is sufficient to avoid the
+kfifo underflow.
 
-This adds padding between the PAL-saved and kernel-saved registers
-so that 'struct pt_regs' have an even number of 64-bit words.
-This makes the stack properly aligned for most of the kernel
-code, except two handlers which need special threatment.
-
-Note: struct pt_regs doesn't belong in uapi/asm; this should be fixed,
-but let's put this off until later.
-
-Link: https://lore.kernel.org/rcu/alpine.DEB.2.21.2501130248010.18889@angie.orcam.me.uk/ [1]
-Link: https://bitsavers.org/pdf/dec/alpha/Alpha_Calling_Standard_Rev_2.0_19900427.pdf [2]
-
-Cc: stable@vger.kernel.org
-Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Cc: stable <stable@kernel.org>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20250208124148.1189191-1-jkeeping@inmusicbrands.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/ptrace.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/8250/8250.h      |    2 ++
+ drivers/tty/serial/8250/8250_dma.c  |   16 ++++++++++++++++
+ drivers/tty/serial/8250/8250_port.c |    9 +++++++++
+ 3 files changed, 27 insertions(+)
 
---- a/arch/alpha/include/uapi/asm/ptrace.h
-+++ b/arch/alpha/include/uapi/asm/ptrace.h
-@@ -42,6 +42,8 @@ struct pt_regs {
- 	unsigned long trap_a0;
- 	unsigned long trap_a1;
- 	unsigned long trap_a2;
-+/* This makes the stack 16-byte aligned as GCC expects */
-+	unsigned long __pad0;
- /* These are saved by PAL-code: */
- 	unsigned long ps;
- 	unsigned long pc;
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -300,6 +300,7 @@ static inline int is_omap1510_8250(struc
+ 
+ #ifdef CONFIG_SERIAL_8250_DMA
+ extern int serial8250_tx_dma(struct uart_8250_port *);
++extern void serial8250_tx_dma_flush(struct uart_8250_port *);
+ extern int serial8250_rx_dma(struct uart_8250_port *);
+ extern void serial8250_rx_dma_flush(struct uart_8250_port *);
+ extern int serial8250_request_dma(struct uart_8250_port *);
+@@ -316,6 +317,7 @@ static inline int serial8250_tx_dma(stru
+ {
+ 	return -1;
+ }
++static inline void serial8250_tx_dma_flush(struct uart_8250_port *p) { }
+ static inline int serial8250_rx_dma(struct uart_8250_port *p)
+ {
+ 	return -1;
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -126,6 +126,22 @@ err:
+ 	return ret;
+ }
+ 
++void serial8250_tx_dma_flush(struct uart_8250_port *p)
++{
++	struct uart_8250_dma *dma = p->dma;
++
++	if (!dma->tx_running)
++		return;
++
++	/*
++	 * kfifo_reset() has been called by the serial core, avoid
++	 * advancing and underflowing in __dma_tx_complete().
++	 */
++	dma->tx_size = 0;
++
++	dmaengine_terminate_async(dma->rxchan);
++}
++
+ int serial8250_rx_dma(struct uart_8250_port *p)
+ {
+ 	struct uart_8250_dma		*dma = p->dma;
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2473,6 +2473,14 @@ static unsigned int npcm_get_divisor(str
+ 	return DIV_ROUND_CLOSEST(port->uartclk, 16 * baud + 2) - 2;
+ }
+ 
++static void serial8250_flush_buffer(struct uart_port *port)
++{
++	struct uart_8250_port *up = up_to_u8250p(port);
++
++	if (up->dma)
++		serial8250_tx_dma_flush(up);
++}
++
+ static unsigned int serial8250_do_get_divisor(struct uart_port *port,
+ 					      unsigned int baud,
+ 					      unsigned int *frac)
+@@ -3119,6 +3127,7 @@ static const struct uart_ops serial8250_
+ 	.break_ctl	= serial8250_break_ctl,
+ 	.startup	= serial8250_startup,
+ 	.shutdown	= serial8250_shutdown,
++	.flush_buffer	= serial8250_flush_buffer,
+ 	.set_termios	= serial8250_set_termios,
+ 	.set_ldisc	= serial8250_set_ldisc,
+ 	.pm		= serial8250_pm,
 
 
