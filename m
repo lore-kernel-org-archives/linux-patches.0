@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4461684AC;
-	Tue, 11 Mar 2025 15:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677C1A5BA4;
+	Tue, 11 Mar 2025 15:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706701; cv=none; b=mHjSPMXEBVH9GTyxEQshtTvz5hkVbPPgyfGOZ+8PqsmaAeEZL0YagTXqN3a/H5+wSSgErkRdg5P5YD02FZ2xXG8KEAJWPVcMQYwXQgO0BXiQ1Zbn9xgErglEPRc5u826uB0JBQnUHUoyVB4uPQKfbBHE+US36hQNTL/+CdGPufU=
+	t=1741706704; cv=none; b=FdXJPwfYJggw8ow2FFfUBLJFo+vKOUxNFIeOneAIUjslhwTLvZYul7xRb9MvzTaDO3MjJcLYKCChoJpJvt6felNZP20zeW2lcC80EcupAy6dbaO9gPOvkir/ZFj3OggBAfWjR8iz0/FrGE+wAn9bOBKiebdRxv+R7S0jBXUGM50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706701; c=relaxed/simple;
-	bh=tqKaQGlSIQTIqM8mQzzwEp3KfEgDy6jocl63CMS8DIE=;
+	s=arc-20240116; t=1741706704; c=relaxed/simple;
+	bh=T46g9sMNQ8IeWVH2mLMGt4/eZp19hgAgcdOFub2zaI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBmd4NE1XMnG4sdI6g/uCOkR1ysJej+9pUaRNEQdO8xsIUfbUiRyxx3A624sUgbR9bqT8lqYd4HpYtqn4qDF+6vlL6vfEI/fk6XCPWzN+X+BVl9FOaSc6wD8/+V/GpxkOFk9bLcTXBuL2CCQwbWl+s33Y5WFb6sAK6/V3VCOdIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRHKinrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALDycLjmSeFepBIOl7IiDydCrur5ilrT9YQoIODgL4tLKalpDsq1f31NPS1Ltl6ukJaloyQF4AjobeL1pFN4cECcCRST+QFQ6bI7SgKZz6GeH0d3PhdouzUdlwzPj3hh6s+V17RD2JS4NAKTBUQq+uRia3InsAtI53irUAelLUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt21r1aE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRHKinrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3ABC4CEE9;
-	Tue, 11 Mar 2025 15:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt21r1aE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0051DC4CEE9;
+	Tue, 11 Mar 2025 15:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706701;
-	bh=tqKaQGlSIQTIqM8mQzzwEp3KfEgDy6jocl63CMS8DIE=;
+	s=korg; t=1741706704;
+	bh=T46g9sMNQ8IeWVH2mLMGt4/eZp19hgAgcdOFub2zaI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRHKinrhxWRIWdloMBeQNBFAQdB6A2bIfdl6oA93o0BfceYgUIFvrmKJaM/2AJYuH
-	 VL4dgLM1asrAe3QPTKB2Sv32dSpl1sFNkNAzlIR5ng+mkRucLeYURnMPDAK6EJAiZq
-	 IqIIBG6LzzURsIx3IAdl7n+tBTNBVsEElLxlMBZk=
+	b=jt21r1aExUhPqzi49GvBXnn8DzitS+zGD+d03sywdzUU/Mo9VICzpRSWzv7LMRTE8
+	 OBkKpr5ZjvfXGjM9E7QMshb/p//Mij4qC3rUZ9l2wx/qsNtOMECARmNJ38/2t374Di
+	 idFe6uVuLSvOdwB0gN7Ku5aUKa5DoHRusewMEFLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Stephan Wurm <stephan.wurm@a-eberle.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/462] mfd: lpc_ich: Add another Gemini Lake ISA bridge PCI device-id
-Date: Tue, 11 Mar 2025 15:56:43 +0100
-Message-ID: <20250311145803.770761015@linuxfoundation.org>
+Subject: [PATCH 5.10 111/462] net: hsr: fix fill_frame_info() regression vs VLAN packets
+Date: Tue, 11 Mar 2025 15:56:17 +0100
+Message-ID: <20250311145802.749244083@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,40 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1e89d21f8189d286f80b900e1b7cf57cb1f3037e ]
+[ Upstream commit 0f5697f1a3f99bc2b674b8aa3c5da822c5673c11 ]
 
-On N4100 / N4120 Gemini Lake SoCs the ISA bridge PCI device-id is 31e8
-rather the 3197 found on e.g. the N4000 / N4020.
+Stephan Wurm reported that my recent patch broke VLAN support.
 
-While at fix the existing GLK PCI-id table entry breaking the table
-being sorted by device-id.
+Apparently skb->mac_len is not correct for VLAN traffic as
+shown by debug traces [1].
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241114193808.110132-1-hdegoede@redhat.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Use instead pskb_may_pull() to make sure the expected header
+is present in skb->head.
+
+Many thanks to Stephan for his help.
+
+[1]
+kernel: skb len=170 headroom=2 headlen=170 tailroom=20
+        mac=(2,14) mac_len=14 net=(16,-1) trans=-1
+        shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
+        csum(0x0 start=0 offset=0 ip_summed=0 complete_sw=0 valid=0 level=0)
+        hash(0x0 sw=0 l4=0) proto=0x0000 pkttype=0 iif=0
+        priority=0x0 mark=0x0 alloc_cpu=0 vlan_all=0x0
+        encapsulation=0 inner(proto=0x0000, mac=0, net=0, trans=0)
+kernel: dev name=prp0 feat=0x0000000000007000
+kernel: sk family=17 type=3 proto=0
+kernel: skb headroom: 00000000: 74 00
+kernel: skb linear:   00000000: 01 0c cd 01 00 01 00 d0 93 53 9c cb 81 00 80 00
+kernel: skb linear:   00000010: 88 b8 00 01 00 98 00 00 00 00 61 81 8d 80 16 52
+kernel: skb linear:   00000020: 45 47 44 4e 43 54 52 4c 2f 4c 4c 4e 30 24 47 4f
+kernel: skb linear:   00000030: 24 47 6f 43 62 81 01 14 82 16 52 45 47 44 4e 43
+kernel: skb linear:   00000040: 54 52 4c 2f 4c 4c 4e 30 24 44 73 47 6f 6f 73 65
+kernel: skb linear:   00000050: 83 07 47 6f 49 64 65 6e 74 84 08 67 8d f5 93 7e
+kernel: skb linear:   00000060: 76 c8 00 85 01 01 86 01 00 87 01 00 88 01 01 89
+kernel: skb linear:   00000070: 01 00 8a 01 02 ab 33 a2 15 83 01 00 84 03 03 00
+kernel: skb linear:   00000080: 00 91 08 67 8d f5 92 77 4b c6 1f 83 01 00 a2 1a
+kernel: skb linear:   00000090: a2 06 85 01 00 83 01 00 84 03 03 00 00 91 08 67
+kernel: skb linear:   000000a0: 8d f5 92 77 4b c6 1f 83 01 00
+kernel: skb tailroom: 00000000: 80 18 02 00 fe 4e 00 00 01 01 08 0a 4f fd 5e d1
+kernel: skb tailroom: 00000010: 4f fd 5e cd
+
+Fixes: b9653d19e556 ("net: hsr: avoid potential out-of-bound access in fill_frame_info()")
+Reported-by: Stephan Wurm <stephan.wurm@a-eberle.de>
+Tested-by: Stephan Wurm <stephan.wurm@a-eberle.de>
+Closes: https://lore.kernel.org/netdev/Z4o_UC0HweBHJ_cw@PC-LX-SteWu/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250129130007.644084-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/lpc_ich.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/hsr/hsr_forward.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/lpc_ich.c b/drivers/mfd/lpc_ich.c
-index 2411b7a2e6f47..4c21c00124d5e 100644
---- a/drivers/mfd/lpc_ich.c
-+++ b/drivers/mfd/lpc_ich.c
-@@ -687,8 +687,9 @@ static const struct pci_device_id lpc_ich_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0x2917), LPC_ICH9ME},
- 	{ PCI_VDEVICE(INTEL, 0x2918), LPC_ICH9},
- 	{ PCI_VDEVICE(INTEL, 0x2919), LPC_ICH9M},
--	{ PCI_VDEVICE(INTEL, 0x3197), LPC_GLK},
- 	{ PCI_VDEVICE(INTEL, 0x2b9c), LPC_COUGARMOUNTAIN},
-+	{ PCI_VDEVICE(INTEL, 0x3197), LPC_GLK},
-+	{ PCI_VDEVICE(INTEL, 0x31e8), LPC_GLK},
- 	{ PCI_VDEVICE(INTEL, 0x3a14), LPC_ICH10DO},
- 	{ PCI_VDEVICE(INTEL, 0x3a16), LPC_ICH10R},
- 	{ PCI_VDEVICE(INTEL, 0x3a18), LPC_ICH10},
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index a58c0be64272b..66df4d7cbfb1e 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -525,9 +525,12 @@ static int fill_frame_info(struct hsr_frame_info *frame,
+ 		frame->is_vlan = true;
+ 
+ 	if (frame->is_vlan) {
+-		if (skb->mac_len < offsetofend(struct hsr_vlan_ethhdr, vlanhdr))
++		/* Note: skb->mac_len might be wrong here. */
++		if (!pskb_may_pull(skb,
++				   skb_mac_offset(skb) +
++				   offsetofend(struct hsr_vlan_ethhdr, vlanhdr)))
+ 			return -EINVAL;
+-		vlan_hdr = (struct hsr_vlan_ethhdr *)ethhdr;
++		vlan_hdr = (struct hsr_vlan_ethhdr *)skb_mac_header(skb);
+ 		proto = vlan_hdr->vlanhdr.h_vlan_encapsulated_proto;
+ 		/* FIXME: */
+ 		netdev_warn_once(skb->dev, "VLAN not yet supported");
 -- 
 2.39.5
 
