@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BDF25D90F;
-	Tue, 11 Mar 2025 15:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0069F1C5D77;
+	Tue, 11 Mar 2025 15:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705860; cv=none; b=F10IBPlih0lbm6RF6mNJS57HnbdpkobOH04fsK9ftpmtnCimFYZUZQsHt/r1ocFOmDMTeWTxWXQxXQ1FPfYK+ok9Ri9PhoqN/TQzxKswKTnmnsxBorXPvgKZjoZ6rcWaQ1ILS9LFie6sCaA4ncfeLiV3juh/4aAv7xIzug2lwro=
+	t=1741705864; cv=none; b=sceDAcLGaz6ztN3UWe0UtnHptwgXmlJlr5KcXeHvb9ke3w0D+rDyWBF1+j5fltANKeTvfTMo1SXFmhT52SvhH2FZZdXDmLg77uHdaY4Ut2CxlUvngGfHpWjGcrhW0ow/6D/X/cYxtf4JcAYI/TJQSpRIssHBo12BKXnkWsTR48Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705860; c=relaxed/simple;
-	bh=MWjgLZPsTx9P/OMK0upGpTsJsJUi+uuzUEWlfQz1uzU=;
+	s=arc-20240116; t=1741705864; c=relaxed/simple;
+	bh=Mm0rmHrfIwcIQDbdztFSAGqQ8pJ7+30FGge9WigUOnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzTdldR1rkb4IRT/59eiw42tL2EuPc7ARmcwditKF179JtnaayXtR6MLHl97ORF0dvxWJjuVzybdHI40Qumjw5eET/eqhE+TshPSPg/bBsKwrqje2Ty5ipfzphKQJf74qOmEu9wwkgrrEG2AxT8cn4ew8zGiBLrpQ+GB+0OKwp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+r1YXzD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XsGNBE68Rk0CA44DM8D8fco39dacbRr3iYRud/CO4ZvLomH372lfevI5cmocSCJYkVNlqcgAtqbbcckNS7odQgbyF2OOAeRCLqfuKIESODkgi1kWzKYCLF5xjdxtUkG7pGznmlPNeBQpcMdCvNLARgZPOmoSOGglUYRkzC+74AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8V0X2AZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+r1YXzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7DEC4CEE9;
-	Tue, 11 Mar 2025 15:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8V0X2AZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FC1C4CEE9;
+	Tue, 11 Mar 2025 15:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705860;
-	bh=MWjgLZPsTx9P/OMK0upGpTsJsJUi+uuzUEWlfQz1uzU=;
+	s=korg; t=1741705863;
+	bh=Mm0rmHrfIwcIQDbdztFSAGqQ8pJ7+30FGge9WigUOnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+r1YXzDA2yYCPfekUgcgeGIOeoW3l/CMtXkKWCPB0S2JWaBt5WLheKEP6wusQwo4
-	 Ww/p057Ne9Xb05Qnm4NklT9fmPDyNmX+VHCpdEYdHOFVt35X+REO02O2NrSRw5ez4f
-	 IV61Lg7TDaSHnFIWcG9bVN43P5yviD7Fv4JWJ9hg=
+	b=H8V0X2AZA3a5glfeSEM/tmZUrbnNo4Juk/voCTUvBUsYotWDqjuxlP3LDkMOBJiev
+	 dal6D4UtP/xXzOF1QxXDJ9RcTyct4rDQx0mDEqTCvtcT9YiPthRX/cKOCt1uaqNusP
+	 5XPJm2CYX4uLf823TtZGF8C987fEigK4+KawBtO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Guo Ren <guoren@linux.alibaba.com>
-Subject: [PATCH 5.4 179/328] usb: gadget: udc: renesas_usb3: Fix compiler warning
-Date: Tue, 11 Mar 2025 15:59:09 +0100
-Message-ID: <20250311145722.018337685@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Subject: [PATCH 5.4 180/328] usb: dwc2: gadget: remove of_node reference upon udc_stop
+Date: Tue, 11 Mar 2025 15:59:10 +0100
+Message-ID: <20250311145722.057007373@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,38 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 335a1fc1193481f8027f176649c72868172f6f8b upstream.
+commit 58cd423820d5b5610977e55e4acdd06628829ede upstream.
 
-drivers/usb/gadget/udc/renesas_usb3.c: In function 'renesas_usb3_probe':
-drivers/usb/gadget/udc/renesas_usb3.c:2638:73: warning: '%d'
-directive output may be truncated writing between 1 and 11 bytes into a
-region of size 6 [-Wformat-truncation=]
-2638 |   snprintf(usb3_ep->ep_name, sizeof(usb3_ep->ep_name), "ep%d", i);
-                                    ^~~~~~~~~~~~~~~~~~~~~~~~     ^~   ^
+In dwc2_hsotg_udc_start(), e.g. when binding composite driver, "of_node"
+is set to hsotg->dev->of_node.
 
-Fixes: 746bfe63bba3 ("usb: gadget: renesas_usb3: add support for Renesas USB3.0 peripheral controller")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501201409.BIQPtkeB-lkp@intel.com/
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250122081231.47594-1-guoren@kernel.org
+It causes errors when binding the gadget driver several times, on
+stm32mp157c-ev1 board. Below error is seen:
+"pin PA10 already requested by 49000000.usb-otg; cannot claim for gadget.0"
+
+The first time, no issue is seen as when registering the driver, of_node
+isn't NULL:
+-> gadget_dev_desc_UDC_store
+  -> usb_gadget_register_driver_owner
+    -> driver_register
+    ...
+      -> really_probe -> pinctrl_bind_pins (no effect)
+
+Then dwc2_hsotg_udc_start() sets of_node.
+
+The second time (stop the gadget, reconfigure it, then start it again),
+of_node has been set, so the probing code tries to acquire pins for the
+gadget. These pins are hold by the controller, hence the error.
+
+So clear gadget.dev.of_node in udc_stop() routine to avoid the issue.
+
+Fixes: 7d7b22928b90 ("usb: gadget: s3c-hsotg: Propagate devicetree to gadget drivers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20250124173325.2747710-1-fabrice.gasnier@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/renesas_usb3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc2/gadget.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/udc/renesas_usb3.c
-+++ b/drivers/usb/gadget/udc/renesas_usb3.c
-@@ -306,7 +306,7 @@ struct renesas_usb3_request {
- 	struct list_head	queue;
- };
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4548,6 +4548,7 @@ static int dwc2_hsotg_udc_stop(struct us
+ 	spin_lock_irqsave(&hsotg->lock, flags);
  
--#define USB3_EP_NAME_SIZE	8
-+#define USB3_EP_NAME_SIZE	16
- struct renesas_usb3_ep {
- 	struct usb_ep ep;
- 	struct renesas_usb3 *usb3;
+ 	hsotg->driver = NULL;
++	hsotg->gadget.dev.of_node = NULL;
+ 	hsotg->gadget.speed = USB_SPEED_UNKNOWN;
+ 	hsotg->enabled = 0;
+ 
 
 
