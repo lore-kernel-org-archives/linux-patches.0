@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1319925DD12;
-	Tue, 11 Mar 2025 15:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1B625E81A;
+	Tue, 11 Mar 2025 15:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705732; cv=none; b=WO1QcYAEceaniZ6PkEuXTfRJT9O29Zrw8xqddwR481uDeNmJInv6WzZGpkGsqd7ugDaW+lUz+RQSkUN3nnwAdGYUr/74Y7q5RrZY4hOOCxqyrjxje4hJCrsacad5Pmfvyl38XGTdI6+cxej5zXSuH34jyer19XpKQd+Pa20YGeY=
+	t=1741705735; cv=none; b=teUsPzLhk1nLoVMKUS3hpYjTb/t+y1BOjycgwYnLGBxo0e550wJc9Tl9Frx8Ev2WLJ+yYf6QbU0+lmX3umlYrOtcDQ5Yi0jhzjs2WDP0J6FKca/lgWQG0PBq/NGOlJ7P68smUyXB56nw3fz96c/xF2ofIZK9XWmsHOJeM5AZX8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705732; c=relaxed/simple;
-	bh=OaOVF6FnHAKdVxOggTM04jt1zmaqestm4/c658i/xgQ=;
+	s=arc-20240116; t=1741705735; c=relaxed/simple;
+	bh=KJMUOincx0W8YXYymUxB8XU2qQzUXpo7kB41s6SClp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZf9hAs2mrcOJh/Ucuo40qdnBlOHUWbfh1a3mU077qfrx6SDQP+TkAXkBKV93f/UyVtnOfH9seJ1+PwpM4VHRTk7xccBaowbrNrUQEuU6u0LFxr9KU+sGL+lKquDQNQTRVuItz3sKOT47Sso7GZGrI1bcODCGlpjLLG0ZD8jwvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apoTAfCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOpvQBXUjPkfJVrlCGPcC5n1yKlO8n/xpnqKaF0PUUIGNFUSyGtY5ZcgB1U5udVi/grSdADTEiNnNoJ0iXxFp7IsODVwtHtF7KkYIod8KnWKtb/P9gypkn14TsDU2MfpDKZEUM22nukvMZBJ7JwCyVXMQ1c/H8Pvrb5zdf+2tQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Eb/j/x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apoTAfCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31881C4CEE9;
-	Tue, 11 Mar 2025 15:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Eb/j/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2072AC4CEE9;
+	Tue, 11 Mar 2025 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705731;
-	bh=OaOVF6FnHAKdVxOggTM04jt1zmaqestm4/c658i/xgQ=;
+	s=korg; t=1741705734;
+	bh=KJMUOincx0W8YXYymUxB8XU2qQzUXpo7kB41s6SClp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apoTAfCgsike3k/W0Nc6n8+ver6Iy+/haiBuz7FHcOThZiZ9u26hl82K0HS935VL9
-	 C+GPLS7V6i1JM/aYydDMDOx+2BKY7EIdMz2FZIv9bYwdqHmXq4nHoSmMFgLLSW5bp1
-	 1emlK8CUJEMlHdldsRdAUU3v/CYx7N/KLS+ww368=
+	b=X6Eb/j/xNDqKS1Ii+RzCC8c8jTYw0Qvq4FLawUxsv/6226SrhZZx9vGM1HzUacB1D
+	 OWH8i17Zk18lNaU3Sdh0GCJvQOv1W+DF/22cjZzM38OYPLJwWVjrMSylXTw/t/iAPs
+	 HGkM9oJbP1B5AcA7Li+sIm3DIQl4o5LRJP9qGqPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 136/328] usb: gadget: f_tcm: Decrement command ref count on cleanup
-Date: Tue, 11 Mar 2025 15:58:26 +0100
-Message-ID: <20250311145720.309782586@linuxfoundation.org>
+Subject: [PATCH 5.4 137/328] usb: gadget: f_tcm: ep_autoconfig with fullspeed endpoint
+Date: Tue, 11 Mar 2025 15:58:27 +0100
+Message-ID: <20250311145720.348582133@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,30 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 3b2a52e88ab0c9469eaadd4d4c8f57d072477820 upstream.
+commit 25224c1f07d31c261d04dfbc705a7a0f314a825d upstream.
 
-We submitted the command with TARGET_SCF_ACK_KREF, which requires
-acknowledgment of command completion. If the command fails, make sure to
-decrement the ref count.
+Match usb endpoint using fullspeed endpoint descriptor to make sure the
+wMaxPacketSize for fullspeed descriptors is automatically configured.
 
-Fixes: cff834c16d23 ("usb-gadget/tcm: Convert to TARGET_SCF_ACK_KREF I/O krefs")
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/3c667b4d9c8b0b580346a69ff53616b6a74cfea2.1733876548.git.Thinh.Nguyen@synopsys.com
+Link: https://lore.kernel.org/r/e4507bc824aed6e7c7f5a718392ab6a7c1480a7f.1733876548.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_tcm.c |   30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
 --- a/drivers/usb/gadget/function/f_tcm.c
 +++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -971,6 +971,7 @@ static void usbg_data_write_cmpl(struct
- 	return;
+@@ -2016,43 +2016,39 @@ static int tcm_bind(struct usb_configura
+ 	bot_intf_desc.bInterfaceNumber = iface;
+ 	uasp_intf_desc.bInterfaceNumber = iface;
+ 	fu->iface = iface;
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_bi_desc,
+-			&uasp_bi_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_bi_desc);
+ 	if (!ep)
+ 		goto ep_fail;
  
- cleanup:
-+	target_put_sess_cmd(se_cmd);
- 	transport_generic_free_cmd(&cmd->se_cmd, 0);
- }
+ 	fu->ep_in = ep;
  
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_bo_desc,
+-			&uasp_bo_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_bo_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_out = ep;
+ 
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_status_desc,
+-			&uasp_status_in_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_status_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_status = ep;
+ 
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_cmd_desc,
+-			&uasp_cmd_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_cmd_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_cmd = ep;
+ 
+ 	/* Assume endpoint addresses are the same for both speeds */
+-	uasp_bi_desc.bEndpointAddress =	uasp_ss_bi_desc.bEndpointAddress;
+-	uasp_bo_desc.bEndpointAddress = uasp_ss_bo_desc.bEndpointAddress;
++	uasp_bi_desc.bEndpointAddress =	uasp_fs_bi_desc.bEndpointAddress;
++	uasp_bo_desc.bEndpointAddress = uasp_fs_bo_desc.bEndpointAddress;
+ 	uasp_status_desc.bEndpointAddress =
+-		uasp_ss_status_desc.bEndpointAddress;
+-	uasp_cmd_desc.bEndpointAddress = uasp_ss_cmd_desc.bEndpointAddress;
++		uasp_fs_status_desc.bEndpointAddress;
++	uasp_cmd_desc.bEndpointAddress = uasp_fs_cmd_desc.bEndpointAddress;
+ 
+-	uasp_fs_bi_desc.bEndpointAddress = uasp_ss_bi_desc.bEndpointAddress;
+-	uasp_fs_bo_desc.bEndpointAddress = uasp_ss_bo_desc.bEndpointAddress;
+-	uasp_fs_status_desc.bEndpointAddress =
+-		uasp_ss_status_desc.bEndpointAddress;
+-	uasp_fs_cmd_desc.bEndpointAddress = uasp_ss_cmd_desc.bEndpointAddress;
++	uasp_ss_bi_desc.bEndpointAddress = uasp_fs_bi_desc.bEndpointAddress;
++	uasp_ss_bo_desc.bEndpointAddress = uasp_fs_bo_desc.bEndpointAddress;
++	uasp_ss_status_desc.bEndpointAddress =
++		uasp_fs_status_desc.bEndpointAddress;
++	uasp_ss_cmd_desc.bEndpointAddress = uasp_fs_cmd_desc.bEndpointAddress;
+ 
+ 	ret = usb_assign_descriptors(f, uasp_fs_function_desc,
+ 			uasp_hs_function_desc, uasp_ss_function_desc,
 
 
