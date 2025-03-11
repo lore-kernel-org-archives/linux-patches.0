@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0308A25B691;
-	Tue, 11 Mar 2025 15:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A5225EFB4;
+	Tue, 11 Mar 2025 15:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707561; cv=none; b=qtDXBjxSHMFns/8jiyOb0TG9p0QYLy9NDyR2fJUhRDnpN5kn7je3ogM0YyINQzFehmi1Z7/63x6fSeMCgmwlAoWi6EUOTuLr0Hk+ysImSQMBd2UCeDaqLQhW1b+S1+2qaoLBrqZjPDD0Wjt7U6x8W6+/DIqVPmcNuHuUoADLPOg=
+	t=1741707563; cv=none; b=B7U3j8/PN+4W8MawPRQ8Z/S616MPX1NoFwEEDWSK+FsH4YJgl6f/O279Yuo0ae5wmhFtaCjs6cw9Zy7Q6OUHtJLT5LT41N8QAebXhA6PW9E+s/6EhI01nQgIZHUG/BAsq8Yyy+lWzFTyNs/SgUuLQbPwkiZvwKbUez0NO03NT38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707561; c=relaxed/simple;
-	bh=7LJh5uSR09DRGc8gYaBvd8+GImI2YxAHfeosdKLz0no=;
+	s=arc-20240116; t=1741707563; c=relaxed/simple;
+	bh=hjwbALbaSPJdaIVjtnd/F8jwjwz+ZGekAd5eI8jJnpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkjwT0jAk3LepuXrZyjI2KxuGcCKpdSlCu5XEX9hgZvJNL4pYcuCqf7WjmyRLloRNPp6MBCYrLfzOd1YAwlRB92VZbepse/VB5f2XaABPNe5OoQ3uYUjHIOCR2bSNzixevWvTWPP+ReyAssljjs40/mkDqAWiuvOolTn9IEPz3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2RDZ+OB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sx6pIQ+pQpgo1UrnD6DI9JFlMEKqpQMmNUyTwKH13NIUYiE/i6FBxA0Uo/QJUhfmYJJ8D9d6lT8whs1Topf8MyFW7nRRAgP2E5fV5QtNM+J3wWAF3wKZGzRCeIVDyh24WcHhrXJw6MXHJbK8HTYJqg7fEqwp2uSQjX6D8P1VvlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGfkM2/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2RDZ+OB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753B0C4CEE9;
-	Tue, 11 Mar 2025 15:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGfkM2/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555ECC4CEE9;
+	Tue, 11 Mar 2025 15:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707560;
-	bh=7LJh5uSR09DRGc8gYaBvd8+GImI2YxAHfeosdKLz0no=;
+	s=korg; t=1741707563;
+	bh=hjwbALbaSPJdaIVjtnd/F8jwjwz+ZGekAd5eI8jJnpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2RDZ+OB4/MActr275nW+6jvchDlg0R58W8XnoTFbAtSH1mCrdQNbQhdc6LacHpMW
-	 QML8V+DjU8rEUzk6NcoZ5pbTiwY9IWtBepehGFXVgKvRNmrIe9gIWIaksKURI1kLc8
-	 l/8oWakbJuu9ARYDfy8FINieY78AGjH2ePoU3cog=
+	b=jGfkM2/VKr2pxgCpjtinZr1qK8R0f3vBHm7DZPjyYsqybSiuf60kF9oHk7XUls5qr
+	 rkRi+LF9xha7tn1bGS3vHMMw184ILJY9blMG+otCj5XxjXegqevmCkzJN06GaLU2FC
+	 1qVI4cm1Z3TPl+lXgECSi8YhBrJAm1liGrbQc65k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Schumacher <erik.schumacher@iris-sensing.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 413/462] hwmon: (ad7314) Validate leading zero bits and return error
-Date: Tue, 11 Mar 2025 16:01:19 +0100
-Message-ID: <20250311145814.648694975@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fedor Pchelkin <boddah8794@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 431/462] usb: typec: ucsi: increase timeout for PPM reset operations
+Date: Tue, 11 Mar 2025 16:01:37 +0100
+Message-ID: <20250311145815.361390948@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,65 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erik Schumacher <erik.schumacher@iris-sensing.com>
+From: Fedor Pchelkin <boddah8794@gmail.com>
 
-[ Upstream commit e278d5e8aef4c0a1d9a9fa8b8910d713a89aa800 ]
+commit bf4f9ae1cb08ccaafbe6874be6c46f59b83ae778 upstream.
 
-Leading zero bits are sent on the bus before the temperature value is
-transmitted. If any of these bits are high, the connection might be
-unstable or there could be no AD7314 / ADT730x (or compatible) at all.
-Return -EIO in that case.
+It is observed that on some systems an initial PPM reset during the boot
+phase can trigger a timeout:
 
-Signed-off-by: Erik Schumacher <erik.schumacher@iris-sensing.com>
-Fixes: 4f3a659581cab ("hwmon: AD7314 driver (ported from IIO)")
-Link: https://lore.kernel.org/r/24a50c2981a318580aca8f50d23be7987b69ea00.camel@iris-sensing.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[    6.482546] ucsi_acpi USBC000:00: failed to reset PPM!
+[    6.482551] ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
+
+Still, increasing the timeout value, albeit being the most straightforward
+solution, eliminates the problem: the initial PPM reset may take up to
+~8000-10000ms on some Lenovo laptops. When it is reset after the above
+period of time (or even if ucsi_reset_ppm() is not called overall), UCSI
+works as expected.
+
+Moreover, if the ucsi_acpi module is loaded/unloaded manually after the
+system has booted, reading the CCI values and resetting the PPM works
+perfectly, without any timeout. Thus it's only a boot-time issue.
+
+The reason for this behavior is not clear but it may be the consequence
+of some tricks that the firmware performs or be an actual firmware bug.
+As a workaround, increase the timeout to avoid failing the UCSI
+initialization prematurely.
+
+Fixes: b1b59e16075f ("usb: typec: ucsi: Increase command completion timeout value")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fedor Pchelkin <boddah8794@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250217105442.113486-3-boddah8794@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ad7314.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ad7314.c b/drivers/hwmon/ad7314.c
-index 7802bbf5f9587..59424103f6348 100644
---- a/drivers/hwmon/ad7314.c
-+++ b/drivers/hwmon/ad7314.c
-@@ -22,11 +22,13 @@
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -25,7 +25,7 @@
+  * difficult to estimate the time it takes for the system to process the command
+  * before it is actually passed to the PPM.
   */
- #define AD7314_TEMP_MASK		0x7FE0
- #define AD7314_TEMP_SHIFT		5
-+#define AD7314_LEADING_ZEROS_MASK	BIT(15)
+-#define UCSI_TIMEOUT_MS		5000
++#define UCSI_TIMEOUT_MS		10000
  
  /*
-  * ADT7301 and ADT7302 temperature masks
-  */
- #define ADT7301_TEMP_MASK		0x3FFF
-+#define ADT7301_LEADING_ZEROS_MASK	(BIT(15) | BIT(14))
- 
- enum ad7314_variant {
- 	adt7301,
-@@ -65,12 +67,20 @@ static ssize_t ad7314_temperature_show(struct device *dev,
- 		return ret;
- 	switch (spi_get_device_id(chip->spi_dev)->driver_data) {
- 	case ad7314:
-+		if (ret & AD7314_LEADING_ZEROS_MASK) {
-+			/* Invalid read-out, leading zero part is missing */
-+			return -EIO;
-+		}
- 		data = (ret & AD7314_TEMP_MASK) >> AD7314_TEMP_SHIFT;
- 		data = sign_extend32(data, 9);
- 
- 		return sprintf(buf, "%d\n", 250 * data);
- 	case adt7301:
- 	case adt7302:
-+		if (ret & ADT7301_LEADING_ZEROS_MASK) {
-+			/* Invalid read-out, leading zero part is missing */
-+			return -EIO;
-+		}
- 		/*
- 		 * Documented as a 13 bit twos complement register
- 		 * with a sign bit - which is a 14 bit 2's complement
--- 
-2.39.5
-
+  * UCSI_SWAP_TIMEOUT_MS - Timeout for role swap requests
 
 
