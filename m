@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD0725DD02;
-	Tue, 11 Mar 2025 15:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CFF25E806;
+	Tue, 11 Mar 2025 15:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705611; cv=none; b=M3bCekL1LKxIXMOAigolndpCluokca/6RoAx3yFNuY+2mjcQCfhZD/b0tqRLvnSxMhQOQiFVIyQrRDZ/yA7pdj7mPb3rYYmQ0p+Me5rmPxJcbwlrpwtbtbqvqUKAPDQY+b8use1H8scZ3gFPaXamj4u1LSynDh79NcpfDKbaqFM=
+	t=1741705614; cv=none; b=ZRMQ5CNEmms5nAewlwDhpo7DQJMXmfnvnHZQWf4owpvZDJdaRg6MrNQIpOHDRTO+rHtxqfc7EVRWLpvbm3p6Q90WKjo0qs51GsxvfmoRTxobwJ70nINGgxXRbp3yYLP3Ng0sOhF4O8YVNtFS4UuJ1ZuNfnkpXrE3jvnzrlL7Frk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705611; c=relaxed/simple;
-	bh=LmAu+5QNkv5Q9drm+US42GPj1DpNFU0VExyYw8MpqlA=;
+	s=arc-20240116; t=1741705614; c=relaxed/simple;
+	bh=xGERKXDn2RgYdaxTU0rkWKVjHRUdiSYKZWLCiiE9qSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5jt+5SWDTNyYNHQHU/2vnr25jRTBNjEETroxuYZZYSDoaTBpTgO2whw70PaB4915OKUq/AAp88+BYFEB5qsU9zI6u5g05wui8i/Lfls2IoGPqk8oVeWBakbWW8KeIVXa+2PReyzfqVdFPrSsGRInjWky0MAZvdjRRKX8eg5UeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0FPJ1y0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=It8pX2/EBS+BrP2ZJNzc9sr8GLK6QwflLAClJmirjVHQq5gPGzLHy+OD9F1HTLVrRTfQJRODbZ8ToomXU8sw6BWqHbe6KREMlkjzR5b+E8qgmA2og16ASFA5bzbfvR01OADtqTevQzLhN7LNiCT6wfYtEOjzbAhB8877XzLfca0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7vyUvcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0FPJ1y0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14850C4CEE9;
-	Tue, 11 Mar 2025 15:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7vyUvcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC06FC4CEEA;
+	Tue, 11 Mar 2025 15:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705611;
-	bh=LmAu+5QNkv5Q9drm+US42GPj1DpNFU0VExyYw8MpqlA=;
+	s=korg; t=1741705614;
+	bh=xGERKXDn2RgYdaxTU0rkWKVjHRUdiSYKZWLCiiE9qSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0FPJ1y0SLhcSEFL4Gk+rlvMrxHg+ObCCgwaaOAbcNMYbZo82x43WklxBqUeQPhfi
-	 IG2hQvWZrxLjMKwJWrwROyRMPmFfRjawYsz1zZjxpSrGjLNi2L5KGXhLQIhXFe2bw9
-	 rc6nlMJyfEjIrDD0plJiIUl5j393CnDgHMM2wKio=
+	b=d7vyUvcCGWv7SuOHJAJmKp3PVsVFm79OaBo5X9jCmMw5opeZGrj1j5KYWGom0advn
+	 ag3d2Wg+GTh49q0GDVxJLmhCX+RmSKUSw8vgYyi/4LhSU2Olk7c34GV4hw1VqYKKU1
+	 Ub+Utb6nKoGqa9Z6rBHODOdJj11s6fPiW5NGPJHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sean Rhodes <sean@starlabs.systems>
-Subject: [PATCH 5.4 077/328] drivers/card_reader/rtsx_usb: Restore interrupt based detection
-Date: Tue, 11 Mar 2025 15:57:27 +0100
-Message-ID: <20250311145717.949396272@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.4 095/328] x86/mm: Dont disable PCID when INVLPG has been fixed by microcode
+Date: Tue, 11 Mar 2025 15:57:45 +0100
+Message-ID: <20250311145718.668295448@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,59 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Rhodes <sean@starlabs.systems>
+From: Xi Ruoyao <xry111@xry111.site>
 
-commit 235b630eda072d7e7b102ab346d6b8a2c028a772 upstream.
+commit f24f669d03f884a6ef95cca84317d0f329e93961 upstream.
 
-This commit reintroduces interrupt-based card detection previously
-used in the rts5139 driver. This functionality was removed in commit
-00d8521dcd23 ("staging: remove rts5139 driver code").
+Per the "Processor Specification Update" documentations referred by
+the intel-microcode-20240312 release note, this microcode release has
+fixed the issue for all affected models.
 
-Reintroducing this mechanism fixes presence detection for certain card
-readers, which with the current driver, will taken approximately 20
-seconds to enter S3 as `mmc_rescan` has to be frozen.
+So don't disable PCID if the microcode is new enough.  The precise
+minimum microcode revision fixing the issue was provided by Pawan
+Intel.
 
-Fixes: 00d8521dcd23 ("staging: remove rts5139 driver code")
-Cc: stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sean Rhodes <sean@starlabs.systems>
-Link: https://lore.kernel.org/r/20241119085815.11769-1-sean@starlabs.systems
+[ dhansen: comment and changelog tweaks ]
+
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Link: https://lore.kernel.org/all/168436059559.404.13934972543631851306.tip-bot2@tip-bot2/
+Link: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20240312
+Link: https://cdrdv2.intel.com/v1/dl/getContent/740518 # RPL042, rev. 13
+Link: https://cdrdv2.intel.com/v1/dl/getContent/682436 # ADL063, rev. 24
+Link: https://lore.kernel.org/all/20240325231300.qrltbzf6twm43ftb@desk/
+Link: https://lore.kernel.org/all/20240522020625.69418-1-xry111%40xry111.site
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/cardreader/rtsx_usb.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/x86/mm/init.c |   32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/drivers/misc/cardreader/rtsx_usb.c
-+++ b/drivers/misc/cardreader/rtsx_usb.c
-@@ -286,6 +286,7 @@ static int rtsx_usb_get_status_with_bulk
- int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
- {
- 	int ret;
-+	u8 interrupt_val = 0;
- 	u16 *buf;
- 
- 	if (!status)
-@@ -308,6 +309,20 @@ int rtsx_usb_get_card_status(struct rtsx
- 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -211,33 +211,39 @@ static void __init probe_page_size_mask(
  	}
+ }
  
-+	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
-+	/* Cross check presence with interrupts */
-+	if (*status & XD_CD)
-+		if (!(interrupt_val & XD_INT))
-+			*status &= ~XD_CD;
+-#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
+-			      .family  = 6,			\
+-			      .model = _model,			\
+-			    }
++#define INTEL_MATCH(_model, ucode) { .vendor  = X86_VENDOR_INTEL,	\
++				     .family  = 6,			\
++				     .model = _model,			\
++				     .driver_data = ucode,		\
++				   }
+ /*
+- * INVLPG may not properly flush Global entries
+- * on these CPUs when PCIDs are enabled.
++ * INVLPG may not properly flush Global entries on
++ * these CPUs.  New microcode fixes the issue.
+  */
+ static const struct x86_cpu_id invlpg_miss_ids[] = {
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE,	0x2e),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L,	0x42c),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N,	0x11),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE,	0x118),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P,	0x4117),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S,	0x2e),
+ 	{}
+ };
+ 
+ static void setup_pcid(void)
+ {
++	const struct x86_cpu_id *invlpg_miss_match;
 +
-+	if (*status & SD_CD)
-+		if (!(interrupt_val & SD_INT))
-+			*status &= ~SD_CD;
+ 	if (!IS_ENABLED(CONFIG_X86_64))
+ 		return;
+ 
+ 	if (!boot_cpu_has(X86_FEATURE_PCID))
+ 		return;
+ 
+-	if (x86_match_cpu(invlpg_miss_ids)) {
++	invlpg_miss_match = x86_match_cpu(invlpg_miss_ids);
 +
-+	if (*status & MS_CD)
-+		if (!(interrupt_val & MS_INT))
-+			*status &= ~MS_CD;
-+
- 	/* usb_control_msg may return positive when success */
- 	if (ret < 0)
- 		return ret;
++	if (invlpg_miss_match &&
++	    boot_cpu_data.microcode < invlpg_miss_match->driver_data) {
+ 		pr_info("Incomplete global flushes, disabling PCID");
+ 		setup_clear_cpu_cap(X86_FEATURE_PCID);
+ 		return;
 
 
