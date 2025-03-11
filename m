@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3E825E446;
-	Tue, 11 Mar 2025 15:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA3425C715;
+	Tue, 11 Mar 2025 15:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705852; cv=none; b=lrJJBXH/wSXuGL+D0fVcmsdz2l/9RmfeuAQJdEpj5xXFz7YNug8gyAiF7EZhkVUmLdf8n7Ls1bIBHwfQbQljDy8mXagAnUfhRq08M5d0hQsV8mcdvLaPMHR5NnP96w21YblPw3lUChGOVRVETs0r8MiN2m8MLx8EuSx8FDd6sEk=
+	t=1741705855; cv=none; b=h6cPiMlYmfpTv8y/LHS4pujexmjXXnD+mPfEwjXDSbGh8gZnWn+hooFrpAxU0AKLXE8hmQ6TnI3IeiH1wotGP7p0wIc4DFoWnWkhEWUDcE6xuVmRFVUjKbwPA+gGmaESOtRBucOs9cdhCVSUStQwh7aCFHaqpGKZPSw1KEVyOlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705852; c=relaxed/simple;
-	bh=HHZJARZo1Lj8BUd0X9fbSiD9Qwyr4RLcwTHhqmSaGGM=;
+	s=arc-20240116; t=1741705855; c=relaxed/simple;
+	bh=ROSh81onf8aYwHrMx4a82HCllqTmm2H6SHZKk5ozhaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAoe38aUJwuLzv9tOdYFsVcnuPyE5Dk+UbPOnWkhfdX8bWG7PCLjoKPMjs5XPfQLNdKT0GIVPVXhggsYUtx8QnQ9aBT2aBxk45Bj1mB3VrF98eTVI0kK8VmGfTKh+HeRkVgIfHaXCw4Qz6j1C4NHmLjothZeDunVBIUZSHDrQ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fud8TfTN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T9geHjU/JlRqs96ztLVpZLTrYk5zZUeqTNqf5VUZfYyYwwlILT2k7FwCCTcHZMLdcMwrF1Y5+8eJwspI1UazplgcoTukcVlQ9b16Oe3cyaKsO7j5NNlOS/W7gp4I+gA5BkEIx01/MAp+fsx2zm3BurvSbUTrUlH1fWgZNoANzYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/dHXTQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fud8TfTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9F3C4CEE9;
-	Tue, 11 Mar 2025 15:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/dHXTQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7576FC4CEE9;
+	Tue, 11 Mar 2025 15:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705851;
-	bh=HHZJARZo1Lj8BUd0X9fbSiD9Qwyr4RLcwTHhqmSaGGM=;
+	s=korg; t=1741705854;
+	bh=ROSh81onf8aYwHrMx4a82HCllqTmm2H6SHZKk5ozhaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fud8TfTNPN9bscXKpS3mVYYS3ag/6iu5zJT5ZfJGTxVuPtR4fYf9PqXpQy/oloFBv
-	 4x2rg5pMI796/6WGdHNiXZpgDw7iEng4NTXwED3MTZauO+Mip1RAZeJo/bsQPPyUyo
-	 MyOgQA/NBxOtZGeg1F4v6GJ/u3hSCuDrROKqs3A4=
+	b=S/dHXTQN2I14EiyXo8FbbyLgdbSOWP7ZZccMGvfofPB7JNKLMRG44sO2vjhnCLt1J
+	 dY0mpAey3sWADZ4xvov94pSPUMwV3BXwFs+alwhw7S5KAF9eDWcwrEWFVrHuhbk+MR
+	 qJQN776C3VLdE0pou58DUf9XQbtCPt+wrRZdkY/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Strohman <andrew@andrewstrohman.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.4 177/328] batman-adv: fix panic during interface removal
-Date: Tue, 11 Mar 2025 15:59:07 +0100
-Message-ID: <20250311145721.940935839@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.4 178/328] usb: roles: set switch registered flag early on
+Date: Tue, 11 Mar 2025 15:59:08 +0100
+Message-ID: <20250311145721.980063204@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,81 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Strohman <andrew@andrewstrohman.com>
+From: Elson Roy Serrao <quic_eserrao@quicinc.com>
 
-commit ccb7276a6d26d6f8416e315b43b45e15ee7f29e2 upstream.
+commit 634775a752a86784511018a108f3b530cc3399a7 upstream.
 
-Reference counting is used to ensure that
-batadv_hardif_neigh_node and batadv_hard_iface
-are not freed before/during
-batadv_v_elp_throughput_metric_update work is
-finished.
+The role switch registration and set_role() can happen in parallel as they
+are invoked independent of each other. There is a possibility that a driver
+might spend significant amount of time in usb_role_switch_register() API
+due to the presence of time intensive operations like component_add()
+which operate under common mutex. This leads to a time window after
+allocating the switch and before setting the registered flag where the set
+role notifications are dropped. Below timeline summarizes this behavior
 
-But there isn't a guarantee that the hard if will
-remain associated with a soft interface up until
-the work is finished.
+Thread1				|	Thread2
+usb_role_switch_register()	|
+	|			|
+	---> allocate switch	|
+	|			|
+	---> component_add()	|	usb_role_switch_set_role()
+	|			|	|
+	|			|	--> Drop role notifications
+	|			|	    since sw->registered
+	|			|	    flag is not set.
+	|			|
+	--->Set registered flag.|
 
-This fixes a crash triggered by reboot that looks
-like this:
+To avoid this, set the registered flag early on in the switch register
+API.
 
-Call trace:
- batadv_v_mesh_free+0xd0/0x4dc [batman_adv]
- batadv_v_elp_throughput_metric_update+0x1c/0xa4
- process_one_work+0x178/0x398
- worker_thread+0x2e8/0x4d0
- kthread+0xd8/0xdc
- ret_from_fork+0x10/0x20
-
-(the batadv_v_mesh_free call is misleading,
-and does not actually happen)
-
-I was able to make the issue happen more reliably
-by changing hardif_neigh->bat_v.metric_work work
-to be delayed work. This allowed me to track down
-and confirm the fix.
-
-Cc: stable@vger.kernel.org
-Fixes: c833484e5f38 ("batman-adv: ELP - compute the metric based on the estimated throughput")
-Signed-off-by: Andy Strohman <andrew@andrewstrohman.com>
-[sven@narfation.org: prevent entering batadv_v_elp_get_throughput without
- soft_iface]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fixes: b787a3e78175 ("usb: roles: don't get/set_role() when usb_role_switch is unregistered")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206193950.22421-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_elp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/roles/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -65,12 +65,19 @@ static void batadv_v_elp_start_timer(str
- static u32 batadv_v_elp_get_throughput(struct batadv_hardif_neigh_node *neigh)
- {
- 	struct batadv_hard_iface *hard_iface = neigh->if_incoming;
-+	struct net_device *soft_iface = hard_iface->soft_iface;
- 	struct ethtool_link_ksettings link_settings;
- 	struct net_device *real_netdev;
- 	struct station_info sinfo;
- 	u32 throughput;
- 	int ret;
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -317,14 +317,15 @@ usb_role_switch_register(struct device *
+ 	sw->dev.type = &usb_role_dev_type;
+ 	dev_set_name(&sw->dev, "%s-role-switch", dev_name(parent));
  
-+	/* don't query throughput when no longer associated with any
-+	 * batman-adv interface
-+	 */
-+	if (!soft_iface)
-+		return BATADV_THROUGHPUT_DEFAULT_VALUE;
++	sw->registered = true;
 +
- 	/* if the user specified a customised value for this interface, then
- 	 * return it directly
- 	 */
-@@ -134,7 +141,7 @@ static u32 batadv_v_elp_get_throughput(s
+ 	ret = device_register(&sw->dev);
+ 	if (ret) {
++		sw->registered = false;
+ 		put_device(&sw->dev);
+ 		return ERR_PTR(ret);
+ 	}
  
- default_throughput:
- 	if (!(hard_iface->bat_v.flags & BATADV_WARNING_DEFAULT)) {
--		batadv_info(hard_iface->soft_iface,
-+		batadv_info(soft_iface,
- 			    "WiFi driver or ethtool info does not provide information about link speeds on interface %s, therefore defaulting to hardcoded throughput values of %u.%1u Mbps. Consider overriding the throughput manually or checking your driver.\n",
- 			    hard_iface->net_dev->name,
- 			    BATADV_THROUGHPUT_DEFAULT_VALUE / 10,
+-	sw->registered = true;
+-
+ 	/* TODO: Symlinks for the host port and the device controller. */
+ 
+ 	return sw;
 
 
