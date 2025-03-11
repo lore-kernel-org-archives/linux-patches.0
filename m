@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2A925DAFD;
-	Tue, 11 Mar 2025 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5425DAFD;
+	Tue, 11 Mar 2025 15:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705961; cv=none; b=hLcXh6LDBcmRpvfs+Lndnsy+pCfjX3lv+NWSLWLPXdgb4BquNPr7Qfa1W67/5oDTvI18HdCa7OMq/nOrwrket1nysysuzeXMLvzV7bIAQJl/3My2XzAY7wh3UysYhyS0m19EekmnH6gTATY8BtID9LvRSyXwSFftBPR+O4RiCw4=
+	t=1741705964; cv=none; b=OkrGUnxbyfUjOogSEtrSxco3XiLxAb+MDNJ+f9lwh2fV9i1distUZ/kE1vzO54FCRYBaLDXqFL2xEsBpJDY2aiZn0rKgPk6vre74fuWVdeayiWlYgxRaPrKbIuLcZ4MCD8Dy63VoKPnOVPkVS/Vz5EhdTDUkjWnpV9MAE3QaYlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705961; c=relaxed/simple;
-	bh=83PZAEAKi5qbRFDU4ynLXojYVaL+QgSd/OoVjRT8rPs=;
+	s=arc-20240116; t=1741705964; c=relaxed/simple;
+	bh=MZSPod3JaRGWs9c+aFPNvyxiC3Gm2dP7NtBgbTZPTnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GY98Zol+MzM+AtXGQE9XG0/LbBEfeRMSoSs8lKCrahOvp9Z1S2quyA3yJ9iGTa0RNpoaR1GUs9UXp53/eNIlpC1S26VLyoIgaddr0MLFyGY7ZIZhx/f6jQl9/JGdYQhganrp92IytBcTGswGqRa2DxClX2H3Pcvnlbf6NbQFHhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqZh1zXa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKEzhnrc5SZfiXbEjwqMJp4O7er4/W68+Ox30XpLP6LT0M8lUXMvK+m2IROtvbj7a2M7us/J5xjqHSADoNKdYqe9u6GefXvtlxjOsf0UibAyctP50DRr2LYagTe8yAbiMCplGFSuQUHTYnnbd2wBaPOavZWCdVMXmDDVQIdhBUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB5Onm2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqZh1zXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79D0C4CEE9;
-	Tue, 11 Mar 2025 15:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB5Onm2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CF3C4CEE9;
+	Tue, 11 Mar 2025 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705961;
-	bh=83PZAEAKi5qbRFDU4ynLXojYVaL+QgSd/OoVjRT8rPs=;
+	s=korg; t=1741705964;
+	bh=MZSPod3JaRGWs9c+aFPNvyxiC3Gm2dP7NtBgbTZPTnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqZh1zXaZph2po0J2KpLb4skx1mSj7zvpczMbiiSf1562XsnpTeOPhGcL0eDDycKM
-	 rJiYm5wVHUAB6VhTORNoMzK40VvuebgBRrFWR59UjWkJY3yALzqI/DkW6BcBGaJamD
-	 GsYaHSrumh2apcDdx3dOWpdN6jk2gDgYL9X1+VpY=
+	b=YB5Onm2vWkQu3ecGJHIpZvYhTAnai49weGT+7wTuL9fUCt7s6NBmrsLlg1hoUAxWW
+	 tdtzZV8Au3qb25G9BVmIc/qKwc2gEn1+VAYW/cZTRIRhHJUenOXkK9IrWpW1d2VQD5
+	 vJLRkUCaW21dx3WbEAU+LiMOCEaCHc6nEURnK1nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Subject: [PATCH 5.4 215/328] nilfs2: protect access to buffers with no active references
-Date: Tue, 11 Mar 2025 15:59:45 +0100
-Message-ID: <20250311145723.448656334@linuxfoundation.org>
+	Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH 5.4 216/328] can: ems_pci: move ASIX AX99100 ids to pci_ids.h
+Date: Tue, 11 Mar 2025 15:59:46 +0100
+Message-ID: <20250311145723.488826111@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,57 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 
-commit 367a9bffabe08c04f6d725032cce3d891b2b9e1a upstream.
+commit 3029ad91335353a70feb42acd24d580d70ab258b upstream.
 
-nilfs_lookup_dirty_data_buffers(), which iterates through the buffers
-attached to dirty data folios/pages, accesses the attached buffers without
-locking the folios/pages.
+Move PCI Vendor and Device ID of ASIX AX99100 PCIe to Multi I/O
+Controller to pci_ids.h for its serial and parallel port driver
+support in subsequent patches.
 
-For data cache, nilfs_clear_folio_dirty() may be called asynchronously
-when the file system degenerates to read only, so
-nilfs_lookup_dirty_data_buffers() still has the potential to cause use
-after free issues when buffers lose the protection of their dirty state
-midway due to this asynchronous clearing and are unintentionally freed by
-try_to_free_buffers().
-
-Eliminate this race issue by adjusting the lock section in this function.
-
-[konishi.ryusuke@gmail.com: adjusted for page/folio conversion]
-Link: https://lkml.kernel.org/r/20250107200202.6432-3-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/r/20230724083933.3173513-3-jiaqing.zhao@linux.intel.com
+[Moeko: Drop changes in drivers/net/can/sja1000/ems_pci.c]
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/pci_ids.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -732,7 +732,6 @@ static size_t nilfs_lookup_dirty_data_bu
- 		}
- 		if (!page_has_buffers(page))
- 			create_empty_buffers(page, i_blocksize(inode), 0);
--		unlock_page(page);
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -1764,6 +1764,10 @@
+ #define PCI_SUBDEVICE_ID_AT_2700FX	0x2701
+ #define PCI_SUBDEVICE_ID_AT_2701FX	0x2703
  
- 		bh = head = page_buffers(page);
- 		do {
-@@ -742,11 +741,14 @@ static size_t nilfs_lookup_dirty_data_bu
- 			list_add_tail(&bh->b_assoc_buffers, listp);
- 			ndirties++;
- 			if (unlikely(ndirties >= nlimit)) {
-+				unlock_page(page);
- 				pagevec_release(&pvec);
- 				cond_resched();
- 				return ndirties;
- 			}
- 		} while (bh = bh->b_this_page, bh != head);
++#define PCI_VENDOR_ID_ASIX		0x125b
++#define PCI_DEVICE_ID_ASIX_AX99100	0x9100
++#define PCI_DEVICE_ID_ASIX_AX99100_LB	0x9110
 +
-+		unlock_page(page);
- 	}
- 	pagevec_release(&pvec);
- 	cond_resched();
+ #define PCI_VENDOR_ID_ESS		0x125d
+ #define PCI_DEVICE_ID_ESS_ESS1968	0x1968
+ #define PCI_DEVICE_ID_ESS_ESS1978	0x1978
 
 
