@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E181525F986;
-	Tue, 11 Mar 2025 15:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233725E820;
+	Tue, 11 Mar 2025 15:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706442; cv=none; b=Nw4FkmQa/kYherOhZTdFgNVoXX0VA4pVBHJaHo6e8kd971NFclFrSGQsZ/ToCYQSIkYBfJL3F00pVQJ5VZV6ZbyEQ9zw/wMvydVFd4IfadIEFSF0xWstDrOhvsjbAUQKhpYaRsd9b7x0IO83y1RFHOZ/k0oVkXVymieRDQuYo/w=
+	t=1741706445; cv=none; b=YfA4eJGAe4t8qaabjUV21usFnnW/lXTDdalzBfjVMbLS7X6XxP6mhfuCiYffjbuCIb0Ozm5IqVFK19y0jcGs5sifJ0n8C3oJSgjyR6zMJuaYqGwOCkDHwpwLd2atRXEl+N7zGfhs1b/LzaS6G24z4aLb5SROXZe1Np9ZP1j41q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706442; c=relaxed/simple;
-	bh=mHqgdP8iamB5aVs0UFHsocuzpUO0VwBzEO3sr0xsWoA=;
+	s=arc-20240116; t=1741706445; c=relaxed/simple;
+	bh=og6QMxh9RwqLkj4aPusMTxv8/RhhvIz32h/lVhPd5wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKgUs84GZynFQd8gykBm9A5ANyC1/l3ZBbDVa7d2DAowBbeJnTYfKHSt9DiegJbw+oBKqSaClkSFCoseQqpKJ0B7rox6IyQArcDRsHnAp8fLJecGQCOR0pFHLKCEQT4IAAKxznsDUcbZ0fYj02L9TvcdgWbyZE+syG1eD4OXf1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMMykdLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MawNZzFGXCwujC/ZFQ81hvkLhZ6NG/spvbnbQ0mgvxS8J26NBHhZEuT9c1WADmwOY0pxVLuVszSuhF+t1IEv1RECGlXptS8eaCK5zCADwR9XphcsO4roBmnCdVkd6dfa8cNoFf0SE6NVb2RjZnmxeD1knjqc8tKkX2qzhPCZthA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soY5ulqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMMykdLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C42C4CEEA;
-	Tue, 11 Mar 2025 15:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soY5ulqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201A1C4CEEC;
+	Tue, 11 Mar 2025 15:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706441;
-	bh=mHqgdP8iamB5aVs0UFHsocuzpUO0VwBzEO3sr0xsWoA=;
+	s=korg; t=1741706444;
+	bh=og6QMxh9RwqLkj4aPusMTxv8/RhhvIz32h/lVhPd5wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMMykdLLM7d9xGpxIs3ve3dxyN3DhCCOOF/9XyvhtxUZkdRTrQHcnrIjyJ+EeGsFP
-	 a0kJrH9fP8sYMJyVmGaTogE396+FYmWP7JGI/NwOgF5h0TpE+Eu+CgO4kRM62NGJBX
-	 cUHNxDSg9rdZeb2cEKyvnErvFxTEwE0ziGwIEM6U=
+	b=soY5ulqLcIzu/2+fok83laiA2ApLwiOiA8A5q1bHUqM3giNsMDnesnKDTpKitEfx5
+	 kHQo+VNcQfazHzNvYv+0QbbgC+0yoyXLxAbyWBcJoPGD4BlaZM5eAxjy3mjT9fkANz
+	 TlvXROLpgih/ChkYpoJ9UuoH0fBQ/cE89QjfrGy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Gan <ganboing@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/462] clk: analogbits: Fix incorrect calculation of vco rate delta
-Date: Tue, 11 Mar 2025 15:55:08 +0100
-Message-ID: <20250311145800.013336216@linuxfoundation.org>
+Subject: [PATCH 5.10 051/462] perf header: Fix one memory leakage in process_bpf_btf()
+Date: Tue, 11 Mar 2025 15:55:17 +0100
+Message-ID: <20250311145800.369633891@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,39 +63,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bo Gan <ganboing@gmail.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit d7f12857f095ef38523399d47e68787b357232f6 ]
+[ Upstream commit 875d22980a062521beed7b5df71fb13a1af15d83 ]
 
-In wrpll_configure_for_rate() we try to determine the best PLL
-configuration for a target rate. However, in the loop where we try
-values of R, we should compare the derived `vco` with `target_vco_rate`.
-However, we were in fact comparing it with `target_rate`, which is
-actually after Q shift. This is incorrect, and sometimes can result in
-suboptimal clock rates. Fix it.
+If __perf_env__insert_btf() returns false due to a duplicate btf node
+insertion, the temporary node will leak. Add a check to ensure the memory
+is freed if the function returns false.
 
-Fixes: 7b9487a9a5c4 ("clk: analogbits: add Wide-Range PLL library")
-Signed-off-by: Bo Gan <ganboing@gmail.com>
-Link: https://lore.kernel.org/r/20240830061639.2316-1-ganboing@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: a70a1123174ab592 ("perf bpf: Save BTF information as headers to perf.data")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20241205084500.823660-2-quic_zhonhan@quicinc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/analogbits/wrpll-cln28hpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/header.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/analogbits/wrpll-cln28hpc.c b/drivers/clk/analogbits/wrpll-cln28hpc.c
-index 776ead319ae9c..9df572579afb4 100644
---- a/drivers/clk/analogbits/wrpll-cln28hpc.c
-+++ b/drivers/clk/analogbits/wrpll-cln28hpc.c
-@@ -287,7 +287,7 @@ int wrpll_configure_for_rate(struct wrpll_cfg *c, u32 target_rate,
- 			vco = vco_pre * f;
- 		}
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index d2812d98968df..a0a83e5de762a 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -2980,7 +2980,8 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
+ 		if (__do_read(ff, node->data, data_size))
+ 			goto out;
  
--		delta = abs(target_rate - vco);
-+		delta = abs(target_vco_rate - vco);
- 		if (delta < best_delta) {
- 			best_delta = delta;
- 			best_r = r;
+-		__perf_env__insert_btf(env, node);
++		if (!__perf_env__insert_btf(env, node))
++			free(node);
+ 		node = NULL;
+ 	}
+ 
 -- 
 2.39.5
 
