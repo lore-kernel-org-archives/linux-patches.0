@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202B21DF749;
-	Tue, 11 Mar 2025 15:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E942E25B69D;
+	Tue, 11 Mar 2025 15:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707029; cv=none; b=EwiEx3HHWXBFk+T5eQ16jXdxyD44H3vMxtFiEH5HcACojSXZpAX37siZyZa5aUgNfTOxIyXU303iJCuZpPBDFllK4A2XZHpFiNcib6P6vooNSJcFhX2jikmExpi20OPFbvtyTZHjbeGGps4SMLEYXJcb28bRb5e8eZdZyunxhkw=
+	t=1741707032; cv=none; b=AaJxsqlmWLT3Qkzwz/wNI9lvElMxRfJ0dnbOvfnafcjL6f/+vBjiOgMnsye4jIr/Tu5CBHpHJ2ElsAKGWLYLA00bzbTindOPRPqlws2ecR44wo7vgVz71sUI7iUXM+fFBpxhqJol6RiqLMf05g999I1Jpr/wGDqJxGCTJjiUCu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707029; c=relaxed/simple;
-	bh=Egjrp8vTtXDtXyT72sD73pK0NQo8qyVh8usbvvL5UTs=;
+	s=arc-20240116; t=1741707032; c=relaxed/simple;
+	bh=5kyjepotPYcLicoiFFZXPTaG7m7vFQjS8jzOn2Iw7As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNBmY6cpSv7pD6wuPaJ5i81JyVwjav/PfVlk0YlImOi3TTvEujCdlit0UBMrFxHN9U/dCg8RLqMnMUiuAcvW2kRyRDzJVfqqLwYeHkFU3mny0HyKK4dXyMxrBU5m+TOjHKvflxXwH50g49OVCc7leOF31Eyqe5WRiq2A3D0Jf80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pNbXYTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eWl1s2soR9jXw1yJtJ8pFVpFlEArjw4lMdmvbjSOebaQANnLxsMlN4bQ/FNAMNR2w85Q7TTOp3o3+PkV18u2esxqld5qdvb8alfXH3NfDwXTDMrGfqhaukekiaxSJsQxkMeRVtA7I2pvgI9090Fc/T7u+hMFW0eH5XyUUs+tGf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVR+y+MC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pNbXYTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E952C4CEE9;
-	Tue, 11 Mar 2025 15:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVR+y+MC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736CDC4CEE9;
+	Tue, 11 Mar 2025 15:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707029;
-	bh=Egjrp8vTtXDtXyT72sD73pK0NQo8qyVh8usbvvL5UTs=;
+	s=korg; t=1741707031;
+	bh=5kyjepotPYcLicoiFFZXPTaG7m7vFQjS8jzOn2Iw7As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pNbXYTSBYS9YJJ20R4L+ZYue79+0Y91Twk0xl5HaaL0hTUz/v68sQoyjyeDeg1lK
-	 3ARl4znWxPQCO2FzNBb7NzFplArLRTb4sHmFfKdql1h0093vJE+5HPVEwtGZ7LAV32
-	 1hNyBMLkcMm/b4JAyBk4inHS+EtpCBKBKnKDPMvQ=
+	b=HVR+y+MCXgaqeGFTs8zmhvEOybk1GcpjmEKB2eSzJ7+hxgk0v4+/yNvtobquXFLsI
+	 22iDxPDrgytuKzohL3DEtGnNEH7gVOLzYmltpaM8KVfGCMWativsIXWIBF1ACeZw0/
+	 sSBTTiOO9hEi+xixU67+QdaurVaHlN6Q9MDUN6bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 218/462] mtd: onenand: Fix uninitialized retlen in do_otp_read()
-Date: Tue, 11 Mar 2025 15:58:04 +0100
-Message-ID: <20250311145806.977265398@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 209/462] crypto: qce - unregister previously registered algos in error path
+Date: Tue, 11 Mar 2025 15:57:55 +0100
+Message-ID: <20250311145806.619497073@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,36 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 70a71f8151b9879b0950668ce3ad76263261fee0 upstream.
+commit e80cf84b608725303113d6fe98bb727bf7b7a40d upstream.
 
-The function do_otp_read() does not set the output parameter *retlen,
-which is expected to contain the number of bytes actually read.
-As a result, in onenand_otp_walk(), the tmp_retlen variable remains
-uninitialized after calling do_otp_walk() and used to change
-the values of the buf, len and retlen variables.
+If we encounter an error when registering alorithms with the crypto
+framework, we just bail out and don't unregister the ones we
+successfully registered in prior iterations of the loop.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Add code that goes back over the algos and unregisters them before
+returning an error from qce_register_algs().
 
-Fixes: 49dc08eeda70 ("[MTD] [OneNAND] fix numerous races")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/onenand/onenand_base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/qce/core.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/nand/onenand/onenand_base.c
-+++ b/drivers/mtd/nand/onenand/onenand_base.c
-@@ -2916,6 +2916,7 @@ static int do_otp_read(struct mtd_info *
- 	ret = ONENAND_IS_4KB_PAGE(this) ?
- 		onenand_mlc_read_ops_nolock(mtd, from, &ops) :
- 		onenand_read_ops_nolock(mtd, from, &ops);
-+	*retlen = ops.retlen;
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -45,16 +45,19 @@ static void qce_unregister_algs(struct q
+ static int qce_register_algs(struct qce_device *qce)
+ {
+ 	const struct qce_algo_ops *ops;
+-	int i, ret = -ENODEV;
++	int i, j, ret = -ENODEV;
  
- 	/* Exit OTP access mode */
- 	this->command(mtd, ONENAND_CMD_RESET, 0, 0);
+ 	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
+ 		ops = qce_ops[i];
+ 		ret = ops->register_algs(qce);
+-		if (ret)
+-			break;
++		if (ret) {
++			for (j = i - 1; j >= 0; j--)
++				ops->unregister_algs(qce);
++			return ret;
++		}
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int qce_handle_request(struct crypto_async_request *async_req)
 
 
