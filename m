@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E4A25DD0A;
-	Tue, 11 Mar 2025 15:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA153EA76;
+	Tue, 11 Mar 2025 15:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707034; cv=none; b=l5ZPnwhZ37vkIzp9GgIx/JfKjagJOm8BWlKnzve+fQenExniP+EN5k4H0sFXcYbPrJHODtRrIXBhPG9SC1V0orYuRQqqw9szR3q0Ln/U23U8qHrqTOXpgI7C5SOAotNSXgMPg+lDAwDR0IQLc2J3F9UlovzJs6ci7Crs4wdvcRc=
+	t=1741707038; cv=none; b=svuFkl5iCJrV8c8KAgT9vNk+Ggg/M0lYbRJmuuhAAb49OPle6S+LXX1oqGRb+G85SzMSFg3k0c3n1ViFW+lH7Gew9GYpD9J4GJp0/+0QLCz9NacIk78kuwotYBh3+47ZD1jZtfDYIljzjIZww3VNXDwxzjVTdzL2+tspbblTTwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707034; c=relaxed/simple;
-	bh=zQ3UnIiHw/hDFJgcQS7LJIdy3Dn/JQQUNfdAxcLa5sU=;
+	s=arc-20240116; t=1741707038; c=relaxed/simple;
+	bh=c4ynthUPRNcVJJ1p9buziHgRvHHehoY5GVVKwerHVBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CD/5MMBOp7qwVnO7T5tIbb1diVX0LUuNl1kLv+W5pmSssHcdRb4Ci4NFSt6ANhSuMm82lkjtqh/G9cN47VWNsAyYZK3A9y3ND/qzB0L7WWIWei6e7sK8yxERtyJa3/Iuvz4sxXzqO798Es50mh7DXN22fN3Y91uTAdwnC4Y8s9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6JRLTYB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJzlLXaygEaPz6WZoZh0ucxgJ/Ro4KIXZz05E0JSSMcpcBU1lBhkKwSxpD3L+w7yRN4+qmrpy0e6Cmbr3JqlvVaoJIVV9EuGvTWtOb13zWiQFZaCsFgm2iNvKslpeIf1aPS4/7oruDV7Y/sxgX+/injW6US3XgKQdZn9zSOb5Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4p+JFYf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6JRLTYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3FDC4CEE9;
-	Tue, 11 Mar 2025 15:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4p+JFYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE44C4CEE9;
+	Tue, 11 Mar 2025 15:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707034;
-	bh=zQ3UnIiHw/hDFJgcQS7LJIdy3Dn/JQQUNfdAxcLa5sU=;
+	s=korg; t=1741707037;
+	bh=c4ynthUPRNcVJJ1p9buziHgRvHHehoY5GVVKwerHVBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6JRLTYBaYzJNA2R/r1PQCtNhxRRfPbKfLtcXtvefdwIqk72T72+Qy1hjPTrlm3rh
-	 8aCGGVXKKtwLZ1w8bCJGMGPk0hUwVYfQwbieyBwb0g8oilIuBzCwkezcQgoumM/0Me
-	 FMAbstGIBRqHuIAArvSZqB2HzCC8d8enCLo2MTrY=
+	b=s4p+JFYfGwHLu07BME8ZbYEDw3NXBTlBpl7XyeoORedrZVz9MY/pzwCo+QbtGoaTu
+	 8fwD+X9KmzgdByQyP9rIjPH+PBYJI/c3BOKpWTfdi6FSPFCpxwCgmyW1DvaGJbgLbs
+	 n2pyUcCkT5WwgraySs20NkaWhRsE/VqR8ytNscwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Strohman <andrew@andrewstrohman.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.10 244/462] batman-adv: fix panic during interface removal
-Date: Tue, 11 Mar 2025 15:58:30 +0100
-Message-ID: <20250311145808.006708854@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Forest <forestix@nom.one>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 253/462] USB: Add USB_QUIRK_NO_LPM quirk for sony xperia xz1 smartphone
+Date: Tue, 11 Mar 2025 15:58:39 +0100
+Message-ID: <20250311145808.356225560@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,81 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Strohman <andrew@andrewstrohman.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit ccb7276a6d26d6f8416e315b43b45e15ee7f29e2 upstream.
+commit 159daf1258227f44b26b5d38f4aa8f37b8cca663 upstream.
 
-Reference counting is used to ensure that
-batadv_hardif_neigh_node and batadv_hard_iface
-are not freed before/during
-batadv_v_elp_throughput_metric_update work is
-finished.
+The fastboot tool for communicating with Android bootloaders does not
+work reliably with this device if USB 2 Link Power Management (LPM)
+is enabled.
 
-But there isn't a guarantee that the hard if will
-remain associated with a soft interface up until
-the work is finished.
+Various fastboot commands are affected, including the
+following, which usually reproduces the problem within two tries:
 
-This fixes a crash triggered by reboot that looks
-like this:
+  fastboot getvar kernel
+  getvar:kernel  FAILED (remote: 'GetVar Variable Not found')
 
-Call trace:
- batadv_v_mesh_free+0xd0/0x4dc [batman_adv]
- batadv_v_elp_throughput_metric_update+0x1c/0xa4
- process_one_work+0x178/0x398
- worker_thread+0x2e8/0x4d0
- kthread+0xd8/0xdc
- ret_from_fork+0x10/0x20
+This issue was hidden on many systems up until commit 63a1f8454962
+("xhci: stored cached port capability values in one place") as the xhci
+driver failed to detect USB 2 LPM support if USB 3 ports were listed
+before USB 2 ports in the "supported protocol capabilities".
 
-(the batadv_v_mesh_free call is misleading,
-and does not actually happen)
+Adding the quirk resolves the issue. No drawbacks are expected since
+the device uses different USB product IDs outside of fastboot mode, and
+since fastboot commands worked before, until LPM was enabled on the
+tested system by the aforementioned commit.
 
-I was able to make the issue happen more reliably
-by changing hardif_neigh->bat_v.metric_work work
-to be delayed work. This allowed me to track down
-and confirm the fix.
+Based on a patch from Forest <forestix@nom.one> from which most of the
+code and commit message is taken.
 
-Cc: stable@vger.kernel.org
-Fixes: c833484e5f38 ("batman-adv: ELP - compute the metric based on the estimated throughput")
-Signed-off-by: Andy Strohman <andrew@andrewstrohman.com>
-[sven@narfation.org: prevent entering batadv_v_elp_get_throughput without
- soft_iface]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Cc: stable <stable@kernel.org>
+Reported-by: Forest <forestix@nom.one>
+Closes: https://lore.kernel.org/hk8umj9lv4l4qguftdq1luqtdrpa1gks5l@sonic.net
+Tested-by: Forest <forestix@nom.one>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206151836.51742-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_elp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -66,12 +66,19 @@ static void batadv_v_elp_start_timer(str
- static u32 batadv_v_elp_get_throughput(struct batadv_hardif_neigh_node *neigh)
- {
- 	struct batadv_hard_iface *hard_iface = neigh->if_incoming;
-+	struct net_device *soft_iface = hard_iface->soft_iface;
- 	struct ethtool_link_ksettings link_settings;
- 	struct net_device *real_netdev;
- 	struct station_info sinfo;
- 	u32 throughput;
- 	int ret;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -430,6 +430,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0c45, 0x7056), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
  
-+	/* don't query throughput when no longer associated with any
-+	 * batman-adv interface
-+	 */
-+	if (!soft_iface)
-+		return BATADV_THROUGHPUT_DEFAULT_VALUE;
++	/* Sony Xperia XZ1 Compact (lilac) smartphone in fastboot mode */
++	{ USB_DEVICE(0x0fce, 0x0dde), .driver_info = USB_QUIRK_NO_LPM },
 +
- 	/* if the user specified a customised value for this interface, then
- 	 * return it directly
- 	 */
-@@ -142,7 +149,7 @@ static u32 batadv_v_elp_get_throughput(s
- 
- default_throughput:
- 	if (!(hard_iface->bat_v.flags & BATADV_WARNING_DEFAULT)) {
--		batadv_info(hard_iface->soft_iface,
-+		batadv_info(soft_iface,
- 			    "WiFi driver or ethtool info does not provide information about link speeds on interface %s, therefore defaulting to hardcoded throughput values of %u.%1u Mbps. Consider overriding the throughput manually or checking your driver.\n",
- 			    hard_iface->net_dev->name,
- 			    BATADV_THROUGHPUT_DEFAULT_VALUE / 10,
+ 	/* Action Semiconductor flash disk */
+ 	{ USB_DEVICE(0x10d6, 0x2200), .driver_info =
+ 			USB_QUIRK_STRING_FETCH_255 },
 
 
