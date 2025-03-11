@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA00A25DAEC;
-	Tue, 11 Mar 2025 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454E21494BB;
+	Tue, 11 Mar 2025 15:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706898; cv=none; b=rAzD/LQMPHEpW1Gl3IRbfGAs98XSlBF2nTTjtpPiq4OBXl1QXgzHexWFOjKRQO/eyu5Y5iFhYi8PA4P4X3E98rTlQA84WiD3W44IlsKed+kQtga/Qj3TBGQMlYlc8jmROww4/w0DONIX/vivvUBj80APDjYL9Vs2RWoL4zaOFm0=
+	t=1741706901; cv=none; b=E6LrowuaY4PhFk4m0yBBTdoM+RioW1JNnYssnoz/YXlUbwKS41JFCyIsNbns2fXjL19aYfEgh6mBdvhBk0KfeBLovVPuM+CNA41N+1mORqP+sDc3bdgJOgyi+kzUqBJ4q3dnvfpaKJFUNrJ/k2aotAJtpamyzL1k0GQI2MQYOlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706898; c=relaxed/simple;
-	bh=VmZK8qrSldPJOaAMjvc/XEl7QrT/Tz6XRzYOxXL6RrY=;
+	s=arc-20240116; t=1741706901; c=relaxed/simple;
+	bh=nYkz5d3OVoX75WchvP428m+RTwV6xUVeYVTfFE94MsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UpqfYf6e5XdInvapT38y8hbrJM8BbL7IXiji7N2Jbz9MA4C9Riier7Wb89Q5lRgDjr6jTIM5IzWsR/Y09XgI9PwI4+O7Q5grCi4msmDRioTdfFJmb6zMGrpIza0DlSVovZrGN/D7PiK4ESq0yWN1lLq4I5J1bWXYUaUDSr3wB5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtHocMv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uoHp9ipEJ7+scqskpmKfjkqLKK0wxt5tWHbhhv8FmGSoPbziJO82WRtuQdqg233lI0zTTUvXOCCj/PREVxWi5TIitUIMEz8385wtr5pKZZolumhizJw6p2e2vjwwl+KRxDl5/9I7A4Cez1a8lXRic5SvwMEkZK8+xENnB4pybHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et12Al1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtHocMv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DACC4CEE9;
-	Tue, 11 Mar 2025 15:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et12Al1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC21C4CEE9;
+	Tue, 11 Mar 2025 15:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706898;
-	bh=VmZK8qrSldPJOaAMjvc/XEl7QrT/Tz6XRzYOxXL6RrY=;
+	s=korg; t=1741706901;
+	bh=nYkz5d3OVoX75WchvP428m+RTwV6xUVeYVTfFE94MsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtHocMv0mlm9TQtWOeJ/oaquSv1c2hIuH2uk5OqIShSYtr8bWYoWraF/kr7+VGXJx
-	 qXrQ12Hv1YA+KW0qGMHrFWakUcJGjMrNqIE17vv+DNVWdmf8M/mxdv7DEHitb/mXLW
-	 4m2NGnW6rIe0hU39bJQqoQCUGEoTVr2PqlT4ltPU=
+	b=Et12Al1FDI/0uxShG9w2WPeW5KLlP8aycY2oLBOAUJo++4HxCFiUPvT3t5WzoSx0d
+	 DW0KY6vuTGopt3b8+Lk3+z32XIUgbioTYkW9/NUPpBebpb9JUe14C83Por8GTeFery
+	 fOTvYgSfZ0MwTML3NsG+h/AAlGBlca4kxBgRwyF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 5.10 178/462] blk-cgroup: Fix class @block_classs subsystem refcount leakage
-Date: Tue, 11 Mar 2025 15:57:24 +0100
-Message-ID: <20250311145805.386206843@linuxfoundation.org>
+	Sam Bobrowicz <sam@elite-embedded.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.10 205/462] media: ov5640: fix get_light_freq on auto
+Date: Tue, 11 Mar 2025 15:57:51 +0100
+Message-ID: <20250311145806.452003413@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -45,45 +46,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Sam Bobrowicz <sam@elite-embedded.com>
 
-commit d1248436cbef1f924c04255367ff4845ccd9025e upstream.
+commit 001d3753538d26ddcbef011f5643cfff58a7f672 upstream.
 
-blkcg_fill_root_iostats() iterates over @block_class's devices by
-class_dev_iter_(init|next)(), but does not end iterating with
-class_dev_iter_exit(), so causes the class's subsystem refcount leakage.
+Light frequency was not properly returned when in auto
+mode and the detected frequency was 60Hz.
 
-Fix by ending the iterating with class_dev_iter_exit().
-
-Fixes: ef45fe470e1e ("blk-cgroup: show global disk stats in root cgroup io.stat")
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
 Cc: stable@vger.kernel.org
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250105-class_fix-v6-2-3a2f1768d4d4@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sam Bobrowicz <sam@elite-embedded.com>
+Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    1 +
+ drivers/media/i2c/ov5640.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -851,6 +851,7 @@ static void blkcg_fill_root_iostats(void
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -1380,6 +1380,7 @@ static int ov5640_get_light_freq(struct
+ 			light_freq = 50;
+ 		} else {
+ 			/* 60Hz */
++			light_freq = 60;
  		}
- 		disk_put_part(part);
  	}
-+	class_dev_iter_exit(&iter);
- }
  
- static int blkcg_print_stat(struct seq_file *sf, void *v)
 
 
