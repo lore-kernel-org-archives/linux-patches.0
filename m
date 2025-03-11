@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A293925DD06;
-	Tue, 11 Mar 2025 15:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859E41A5BA4;
+	Tue, 11 Mar 2025 15:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706788; cv=none; b=SYmMviJYsipWuSGXUgO3JvCkDsi65eSNfNbzhMoTCVpLY3AVUacEyE2lNZEUKX7GVQfFRnW5Brlgq+zfGGaG5H93TedbOc46lqorTkDCnOzVeprCibFWIkkgWvoR6qUvfH0bI5TYfrM8C92AEuvLbe2dIu6kUgZwQQ3h98NiQQs=
+	t=1741706791; cv=none; b=KFn3fAA2/psai3IEpZzuYDO1U23up27Z8TLSRch7meiiyIBOiHhoQzouuiHu+YZOK8IllVtdDUG+U402u2eoNwmkGnq4IiYF1vAVq3CEosDPNzkJIx8VgnXJAhMmD1Fi4b0d4awho2af3kV9CudTlRazWEufbk8RwBzbnSmQ14k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706788; c=relaxed/simple;
-	bh=Jyzfswtbd02+H1SwTO3SSgnzdRQxYiZaNhQsjF2XmFE=;
+	s=arc-20240116; t=1741706791; c=relaxed/simple;
+	bh=lv4UpegVMBbc6vfD4d1ae3KYKZPhlvK4rv4f+2eMn2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUh2YiPDEzdKf8IWz6QM7Ubq1XyjNKWzG8JqXTGf4x422mklge1W3sxoafnK3mskw4v0d/s51BkOWKtiv5mwKDmXLuZMDUWUs+6uOilp4vDvfgbXd77uaXhsgH9necd0Hq1ZMVjhHTNPz1/YtwMuGcoWha1kbnp+TKOid9roQEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAjbL/I/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CX9Ic2q28GAdWYPdIzya6fHqC5g+24PqyEhmrjPyS0hB4uA0T1HyQhsPddyHBxSnjVk4Ue7yyzY75za+p8RI8xDSMrdPkZGg4kYSiBMp+3ycdQofWL/7A+I4yt8v6Vchd0f3wbTg2+CLhW+aPjPEpv2QFB1+e/Sm/6Ko5NCmtaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEe7Zgpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAjbL/I/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAB6C4CEE9;
-	Tue, 11 Mar 2025 15:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEe7Zgpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D3EC4CEE9;
+	Tue, 11 Mar 2025 15:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706788;
-	bh=Jyzfswtbd02+H1SwTO3SSgnzdRQxYiZaNhQsjF2XmFE=;
+	s=korg; t=1741706791;
+	bh=lv4UpegVMBbc6vfD4d1ae3KYKZPhlvK4rv4f+2eMn2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAjbL/I/vxRRdLGb5A0S/jIQ+/+yik2NXVyFeZND/IIvS0H2xVdDxf25vbqrnbPvu
-	 WlG5vf++zsKBFpAHusknq8DhYDRyznU0uRTVHb/q9/JDfnlVEwomrEwCw+Eo7ClzC9
-	 4jIJeAADnWrRHAwBJlbXY/REK0XDTU3zMcuzHTDo=
+	b=BEe7ZgpuC1DGytziouxHYVS2h4xxmXiUz1s8mZXrn+6RiwmhqGCW5UI+zFTIagw9P
+	 SETWpXk1AkigSc03EWDdHYW6C4KLSveiovfrA8/WOn/MhlSgQ19EtgA8EkuOsAP4Kr
+	 RuJDr2kh1luVSO+ORVGCP9zrDMQU14BgkzHPX83I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	kernel test robot <lkp@intel.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 167/462] m68k: vga: Fix I/O defines
-Date: Tue, 11 Mar 2025 15:57:13 +0100
-Message-ID: <20250311145804.950923052@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 5.10 168/462] binfmt_flat: Fix integer overflow bug on 32 bit systems
+Date: Tue, 11 Mar 2025 15:57:14 +0100
+Message-ID: <20250311145804.992859257@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -54,83 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 53036937a101b5faeaf98e7438555fa854a1a844 upstream.
+commit 55cf2f4b945f6a6416cc2524ba740b83cc9af25a upstream.
 
-Including m68k's <asm/raw_io.h> in vga.h on nommu platforms results
-in conflicting defines with io_no.h for various I/O macros from the
-__raw_read and __raw_write families. An example error is
+Most of these sizes and counts are capped at 256MB so the math doesn't
+result in an integer overflow.  The "relocs" count needs to be checked
+as well.  Otherwise on 32bit systems the calculation of "full_data"
+could be wrong.
 
-   In file included from arch/m68k/include/asm/vga.h:12,
-                 from include/video/vga.h:22,
-                 from include/linux/vgaarb.h:34,
-		 from drivers/video/aperture.c:12:
->> arch/m68k/include/asm/raw_io.h:39: warning: "__raw_readb" redefined
-      39 | #define __raw_readb in_8
-	 |
-   In file included from arch/m68k/include/asm/io.h:6,
-		    from include/linux/io.h:13,
-		    from include/linux/irq.h:20,
-		    from include/asm-generic/hardirq.h:17,
-		    from ./arch/m68k/include/generated/asm/hardirq.h:1,
-		    from include/linux/hardirq.h:11,
-		    from include/linux/interrupt.h:11,
-                    from include/linux/trace_recursion.h:5,
-		    from include/linux/ftrace.h:10,
-		    from include/linux/kprobes.h:28,
-		    from include/linux/kgdb.h:19,
-		    from include/linux/fb.h:6,
-		    from drivers/video/aperture.c:5:
-   arch/m68k/include/asm/io_no.h:16: note: this is the location of the previous definition
-      16 | #define __raw_readb(addr) \
-	 |
+	full_data = data_len + relocs * sizeof(unsigned long);
 
-Include <asm/io.h>, which avoids raw_io.h on nommu platforms.
-Also change the defined values of some of the read/write symbols in
-vga.h to __raw_read/__raw_write as the raw_in/raw_out symbols are not
-generally available.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501071629.DNEswlm8-lkp@intel.com/
-Fixes: 5c3f968712ce ("m68k/video: Create <asm/vga.h>")
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v3.5+
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/20250107095912.130530-1-tzimmermann@suse.de
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: c995ee28d29d ("binfmt_flat: prevent kernel dammage from corrupted executable headers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Nicolas Pitre <npitre@baylibre.com>
+Link: https://lore.kernel.org/r/5be17f6c-5338-43be-91ef-650153b975cb@stanley.mountain
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/include/asm/vga.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/binfmt_flat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/m68k/include/asm/vga.h
-+++ b/arch/m68k/include/asm/vga.h
-@@ -9,7 +9,7 @@
-  */
- #ifndef CONFIG_PCI
- 
--#include <asm/raw_io.h>
-+#include <asm/io.h>
- #include <asm/kmap.h>
- 
- /*
-@@ -29,9 +29,9 @@
- #define inw_p(port)		0
- #define outb_p(port, val)	do { } while (0)
- #define outw(port, val)		do { } while (0)
--#define readb			raw_inb
--#define writeb			raw_outb
--#define writew			raw_outw
-+#define readb			__raw_readb
-+#define writeb			__raw_writeb
-+#define writew			__raw_writew
- 
- #endif /* CONFIG_PCI */
- #endif /* _ASM_M68K_VGA_H */
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -534,7 +534,7 @@ static int load_flat_file(struct linux_b
+ 	 * 28 bits (256 MB) is way more than reasonable in this case.
+ 	 * If some top bits are set we have probable binary corruption.
+ 	*/
+-	if ((text_len | data_len | bss_len | stack_len | full_data) >> 28) {
++	if ((text_len | data_len | bss_len | stack_len | relocs | full_data) >> 28) {
+ 		pr_err("bad header\n");
+ 		ret = -ENOEXEC;
+ 		goto err;
 
 
