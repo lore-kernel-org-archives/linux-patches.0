@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095441C3BEB;
-	Tue, 11 Mar 2025 15:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D2125D908;
+	Tue, 11 Mar 2025 15:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705709; cv=none; b=GBweWGtUU4A/j+jLo/x+bbUnMM35bmjVWG4FEvjK9Wxrf2c5pXVHPhJ9R+peoFk0p6GekB5iPzEMm4y5deT/EDQbISKB3JDczP8OSFLbaCa4NZshU9irlejDYgNBkL2lMaVvCB9Xt0hatuq6oB9wcF1RV5eK8OO3nidk0SfruFE=
+	t=1741705711; cv=none; b=Q/ki09Bz4paSw1RxyPe4kd467K7iFUYcS/tQ4tW3qN+R4fp/XXkP4DjI3mU9LDsZO/9tNSFWQyWfjhkg3KcnZOoB/TqnB7xf8sqkNXe/heBqGHh6QBhxYzfdCva7Fa1NhygUufrrxwIPs3EpjmMkGVsYe1fbhj8NPatKfhPPLS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705709; c=relaxed/simple;
-	bh=nRuouzaw6vt0p0HwlNRV+AlYvvbvnMp0wlCI2ksfCAo=;
+	s=arc-20240116; t=1741705711; c=relaxed/simple;
+	bh=yc1lXOzDquYEBV5dxgoI8iFq3VW0JNgJxKUtEhjWGcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOU+gNFO2Qt9k0o4xRRFVLUQ8yDQiF4qwtdXr/GT2fWkmL9jBqG3EQYFokaLXqCwMixZC8wZzGA9VVPNoFJL/gl8N8aVMbjQsQNEgCBODkB5bQSPhkoRH3rDOZ46QcfGmieOFcUZpaOooxtzM9JdY3cdY77u6jAbbZVKYGvUEAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXIyFY/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KTxVIS+X6mzuqjVW6Sl/Il1uQ9VRsdFI4Nx7tTtiZqbFbzWypClVIDJKuzpatKjJz8XnEc5Nonq4W1TQV7RHopdY5OqYY4PIfTcd2NJJOvIUTv2c2D971cw0++VW0Nyc7bpPJtT7eET32SojZUvDB3WRkeyyu0Nx82dHuADElUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpXcpQOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXIyFY/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAA5C4CEE9;
-	Tue, 11 Mar 2025 15:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpXcpQOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFDEC4CEE9;
+	Tue, 11 Mar 2025 15:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705708;
-	bh=nRuouzaw6vt0p0HwlNRV+AlYvvbvnMp0wlCI2ksfCAo=;
+	s=korg; t=1741705711;
+	bh=yc1lXOzDquYEBV5dxgoI8iFq3VW0JNgJxKUtEhjWGcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXIyFY/QT/rd246Z5rQu7VPFBFQxCP5TuhEAlf4JaZeVJk8lrd6EvA95q6s1b2Y8U
-	 YuQgXN1SfO0VpsK9ptCHh0Tj+RGK3JQpksbCue7yfrZtHvyIY27W+nNOCXcFPUFj0X
-	 gw/LWxtOzQEEEmdanySIYEma/olbbTIRPxbAwfkc=
+	b=HpXcpQOEb8ZfPEcnzgezRFgOwaHHfNA47TdD8J1F4cWCqhBxrb93USC91lMCi6nFs
+	 TYgzj65Jhbf+KiqwueSH+nPA0H0ThKaaLs+LbIRj14awzXO39bB/608V/VxRnPYtc1
+	 RZCKChmZxjUnDJiVGrmKSSLe5wTIGq9YpmrDhm7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.4 128/328] clk: qcom: clk-rpmh: prevent integer overflow in recalc_rate
-Date: Tue, 11 Mar 2025 15:58:18 +0100
-Message-ID: <20250311145719.991403558@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 5.4 129/328] perf bench: Fix undefined behavior in cmpworker()
+Date: Tue, 11 Mar 2025 15:58:19 +0100
+Message-ID: <20250311145720.030837150@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 89aa5925d201b90a48416784831916ca203658f9 upstream.
+commit 62892e77b8a64b9dc0e1da75980aa145347b6820 upstream.
 
-aggr_state and unit fields are u32. The result of their
-multiplication may not fit in this type.
+The comparison function cmpworker() violates the C standard's
+requirements for qsort() comparison functions, which mandate symmetry
+and transitivity:
 
-Add explicit casting to prevent overflow.
+Symmetry: If x < y, then y > x.
+Transitivity: If x < y and y < z, then x < z.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+In its current implementation, cmpworker() incorrectly returns 0 when
+w1->tid < w2->tid, which breaks both symmetry and transitivity. This
+violation causes undefined behavior, potentially leading to issues such
+as memory corruption in glibc [1].
 
-Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Link: https://lore.kernel.org/r/20241203084231.6001-1-abelova@astralinux.ru
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix the issue by returning -1 when w1->tid < w2->tid, ensuring
+compliance with the C standard and preventing undefined behavior.
+
+Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
+Fixes: 121dd9ea0116 ("perf bench: Add epoll parallel epoll_wait benchmark")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250116110842.4087530-1-visitorckw@gmail.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-rpmh.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/bench/epoll-wait.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -331,7 +331,7 @@ static unsigned long clk_rpmh_bcm_recalc
- {
- 	struct clk_rpmh *c = to_clk_rpmh(hw);
+--- a/tools/perf/bench/epoll-wait.c
++++ b/tools/perf/bench/epoll-wait.c
+@@ -407,7 +407,12 @@ static int cmpworker(const void *p1, con
  
--	return c->aggr_state * c->unit;
-+	return (unsigned long)c->aggr_state * c->unit;
+ 	struct worker *w1 = (struct worker *) p1;
+ 	struct worker *w2 = (struct worker *) p2;
+-	return w1->tid > w2->tid;
++
++	if (w1->tid > w2->tid)
++		return 1;
++	if (w1->tid < w2->tid)
++		return -1;
++	return 0;
  }
  
- static const struct clk_ops clk_rpmh_bcm_ops = {
+ int bench_epoll_wait(int argc, const char **argv)
 
 
