@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C329E1EA80;
-	Tue, 11 Mar 2025 15:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5259B25E818;
+	Tue, 11 Mar 2025 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706146; cv=none; b=A5SKiG61rEp+uvrO7Ml4tyPKKqi23QjCZzxvbSrtZG1CJQ1rGKsqHeYwsB38QEEcMh2iTIeJkEzoJP7ksxU9lIhJgI5sHNy9UliR4QEBkdav7jhgBXN2ApCiTbALFxxn6o/zn2Oj1tbTqZ2tEKcK0KYQ5hu9/7ueuYKHWcmPZMM=
+	t=1741706149; cv=none; b=CQsM06G1LfWgXoR+p0MCNKyynwjxhMQzNe/Iwioa6GTCwNbR4nYere/bX1npQMnfEmzI1ogX//CjSAlWtz6wduZ9yrANVRqFSxVdHQBLBZUS1UNqHjr5tnWBg9ODCs/uFf/sNc1kA4lIrzmHzZd6EYH5IU1/t5ROlTfCwUXfg+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706146; c=relaxed/simple;
-	bh=1t/TFM5XFOOC5zVaHl5XXFRMna+o6Xe9KjiS3YRv+WI=;
+	s=arc-20240116; t=1741706149; c=relaxed/simple;
+	bh=HkvljbijVOE2x2lp/P5OoY4VLegOxoN0XOxXQwTIyUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rW5rgAC6nQpFVUC1m7EBpmaV3zkRk5NfLJ4TkFg2YxYeuFYW1UilynlThrBk4SfMLoV2KZqKQlurW9Dxifw9lfRLE2bSzEeftBz6mRrgqaJIyBmuCaDjRj5V4lt4w3RneD1qv/ItcXYuLYWwdn0XhzS//mtDZ/Y4TR6e1Ybv03s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUHCbVkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H1iBBpbnTuq7gCNcsbdI/nddE1MOaaoT6aKAfZiEBy/i1/YmUZkKWJlsL6vmtbrWP6AxKm5tzNEZRAx7jbV6JYQKUXX15EELjnWZx2E4MoMJNdBp96YgtmvuJxj435IBtnG968SfKjrE9Oq3x6/aqvO9vSMkbFL81pIlXogmcJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3Z7E+kz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUHCbVkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA66C4CEE9;
-	Tue, 11 Mar 2025 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3Z7E+kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB97C4CEED;
+	Tue, 11 Mar 2025 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706146;
-	bh=1t/TFM5XFOOC5zVaHl5XXFRMna+o6Xe9KjiS3YRv+WI=;
+	s=korg; t=1741706149;
+	bh=HkvljbijVOE2x2lp/P5OoY4VLegOxoN0XOxXQwTIyUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUHCbVkUs7vRMgi4R6ChcVRxWl+8V9ixD402t0p3TcWHrS0bfvjOEtO/CeE/uuEXY
-	 72ef/t1SE9/AhZDJXOm8JxkkiYqyPVQ34pMRGJSW3D0DEdHQMFvN3oGA//fC8CrmSc
-	 476rGRft2ihvDNIO8nEXHXq7/v0rujm84XZsk5/g=
+	b=V3Z7E+kz93tcA47slAINjqmvUQxd8NmtSrVNs86fEgfhkzOO/B+wGpDt9ZywH+UXL
+	 WXGR2/Ep/I/HxxNNJDEwTSmW4muCvDC/4+ckBwAoKpyG2FYYY3u5PIr5OWEc0K/GlL
+	 IEyiGXUM5Oq95ke7MC4A7nII/gSgZVvVyjreu9T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 278/328] drm/amdgpu: disable BAR resize on Dell G5 SE
-Date: Tue, 11 Mar 2025 16:00:48 +0100
-Message-ID: <20250311145725.966626873@linuxfoundation.org>
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.4 279/328] Revert "of: reserved-memory: Fix using wrong number of cells to get property alignment"
+Date: Tue, 11 Mar 2025 16:00:49 +0100
+Message-ID: <20250311145726.005219872@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,50 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 099bffc7cadff40bfab1517c3461c53a7a38a0d7 ]
+commit 75f1f311d883dfaffb98be3c1da208d6ed5d4df9 upstream.
 
-There was a quirk added to add a workaround for a Sapphire
-RX 5600 XT Pulse that didn't allow BAR resizing.  However,
-the quirk caused a regression with runtime pm on Dell laptops
-using those chips, rather than narrowing the scope of the
-resizing quirk, add a quirk to prevent amdgpu from resizing
-the BAR on those Dell platforms unless runtime pm is disabled.
+This reverts commit 267b21d0bef8e67dbe6c591c9991444e58237ec9.
 
-v2: update commit message, add runpm check
+Turns out some DTs do depend on this behavior. Specifically, a
+downstream Pixel 6 DT. Revert the change at least until we can decide if
+the DT spec can be changed instead.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1707
-Fixes: 907830b0fc9e ("PCI: Add a REBAR size quirk for Sapphire RX 5600 XT Pulse")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5235053f443cef4210606e5fb71f99b915a9723d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/of/of_reserved_mem.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index dc8ed896d05f0..69bfaa9a8f90b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -766,6 +766,13 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -96,12 +96,12 @@ static int __init __reserved_mem_alloc_s
  
-+	/* resizing on Dell G5 SE platforms causes problems with runtime pm */
-+	if ((amdgpu_runtime_pm != 0) &&
-+	    adev->pdev->vendor == PCI_VENDOR_ID_ATI &&
-+	    adev->pdev->device == 0x731f &&
-+	    adev->pdev->subsystem_vendor == PCI_VENDOR_ID_DELL)
-+		return 0;
-+
- 	/* PCI_EXT_CAP_ID_VNDR extended capability is located at 0x100 */
- 	if (!pci_find_ext_capability(adev->pdev, PCI_EXT_CAP_ID_VNDR))
- 		DRM_WARN("System can't access extended configuration space,please check!!\n");
--- 
-2.39.5
-
+ 	prop = of_get_flat_dt_prop(node, "alignment", &len);
+ 	if (prop) {
+-		if (len != dt_root_size_cells * sizeof(__be32)) {
++		if (len != dt_root_addr_cells * sizeof(__be32)) {
+ 			pr_err("invalid alignment property in '%s' node.\n",
+ 				uname);
+ 			return -EINVAL;
+ 		}
+-		align = dt_mem_next_cell(dt_root_size_cells, &prop);
++		align = dt_mem_next_cell(dt_root_addr_cells, &prop);
+ 	}
+ 
+ 	/* Need adjust the alignment to satisfy the CMA requirement */
 
 
