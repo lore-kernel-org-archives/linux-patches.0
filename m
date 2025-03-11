@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF91825E818;
-	Tue, 11 Mar 2025 15:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8776D25C6ED;
+	Tue, 11 Mar 2025 15:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706814; cv=none; b=C7PH1ELDwh4We6HznF1jYYogLrTeubKLOcEmP1UjC03iqp3DydVqICPU30sLFqQ7mUVZyG7tZkG4MkWsFBWwWK1LVNLd66doeUKJyJQ67wlEJlhua5UahVMeG7OxDPACdkBxiJoaPNUEHcdq+BZkTvB832OshASOCdHHLRRqMG4=
+	t=1741706817; cv=none; b=e7+Q+EUJAJQXZatNevkyO+YnlFJaGTEtMZ5X2cczL5h1EvTKJZdOELuvtfauFwUDB5LvsvTAHXETRKLxkkLRsg8AB5eEErvwXKUYAJZvZhdbt10JHSpgTxRGpxlzbyIwZWLI0LMbYtIFQ6ISCEEoShx7Qiv2p+7o9fnUdENXnbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706814; c=relaxed/simple;
-	bh=cMmaC/pfuFQtInEjnkWRJqPf/w2J9OCi7nGVQfdtuHQ=;
+	s=arc-20240116; t=1741706817; c=relaxed/simple;
+	bh=k3YqGFK91idIIqVFnqiYp8oAl7LaE4Ro/Xi4puZ1NVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5wB71Cqnai2PAGfGVzLXE/qyCk7Is9EkSYU6zB97nft7esFv0Q5X42uq3SJJG0haTh8o1WfBPIj2KuSJXhgGkYmGvzI4XKmmCfTLchCCABW4OmhI8ptgCqKRd8XqkeLjDIcOevQxX1vddMYWFRfL5v3SRlbctrgiPCDZAB2Bus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qqkoc7cW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gks6zmUp3hnxz2Kl888c3gECIzRe1xjULuRcmhCdpZpvBCoz173qS5NPm2TRshjl6TzwY48WDVP5U8YMeHCYQ/Pk1DRshjuC+WJ7FDfie/Bjwu+hWh4iECrm/Dc3A7q+qaoowgLJHHi7w1NWWQmjFckiYGsJP16nuRy7g9DIn4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EScrAbGG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qqkoc7cW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F17C4CEE9;
-	Tue, 11 Mar 2025 15:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EScrAbGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9D9C4CEEA;
+	Tue, 11 Mar 2025 15:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706814;
-	bh=cMmaC/pfuFQtInEjnkWRJqPf/w2J9OCi7nGVQfdtuHQ=;
+	s=korg; t=1741706817;
+	bh=k3YqGFK91idIIqVFnqiYp8oAl7LaE4Ro/Xi4puZ1NVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qqkoc7cWwtzw+iqYnUjY+e3NHMEdgrl+8iCIiNAnzbUn71tb9ygpoVoZ4wE5elRGE
-	 Sfvpfl+9vSl/RNdcpwURP0AMF3WPhO1dPbe9lu9wzydk9sGz6aD/hZvLNoObmSX9g5
-	 EQMKn8csdy2i0eCpaXqWg3zMatF/pxo5GFKBUb2o=
+	b=EScrAbGGqPFjKBoWcS24ec7Oht1tErl8AX1J0nYL6ietQ33sK/psGtw1fURGUBC5l
+	 90fAnUYusn/t9SI3Wj2wL6m499iKeV0Tnq0sEwQtsrL9NywH7qdtDNip2ZeEOR331p
+	 PwcG8xLO5XUYuMvnhqBNO8oANcRoGX5w5BHoY/eE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.10 146/462] x86/mm: Dont disable PCID when INVLPG has been fixed by microcode
-Date: Tue, 11 Mar 2025 15:56:52 +0100
-Message-ID: <20250311145804.120385209@linuxfoundation.org>
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 147/462] net: usb: rtl8150: use new tasklet API
+Date: Tue, 11 Mar 2025 15:56:53 +0100
+Message-ID: <20250311145804.159421665@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,79 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Emil Renner Berthing <kernel@esmil.dk>
 
-commit f24f669d03f884a6ef95cca84317d0f329e93961 upstream.
+[ Upstream commit 1999ad32d4ff00581007543adffc465694b2e77b ]
 
-Per the "Processor Specification Update" documentations referred by
-the intel-microcode-20240312 release note, this microcode release has
-fixed the issue for all affected models.
+This converts the driver to use the new tasklet API introduced in
+commit 12cc923f1ccc ("tasklet: Introduce new initialization API")
 
-So don't disable PCID if the microcode is new enough.  The precise
-minimum microcode revision fixing the issue was provided by Pawan
-Intel.
-
-[ dhansen: comment and changelog tweaks ]
-
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Link: https://lore.kernel.org/all/168436059559.404.13934972543631851306.tip-bot2@tip-bot2/
-Link: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20240312
-Link: https://cdrdv2.intel.com/v1/dl/getContent/740518 # RPL042, rev. 13
-Link: https://cdrdv2.intel.com/v1/dl/getContent/682436 # ADL063, rev. 24
-Link: https://lore.kernel.org/all/20240325231300.qrltbzf6twm43ftb@desk/
-Link: https://lore.kernel.org/all/20240522020625.69418-1-xry111%40xry111.site
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/init.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/net/usb/rtl8150.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -258,28 +258,33 @@ static void __init probe_page_size_mask(
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index d128b4ac7c9f0..c7137fa9eb269 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -577,9 +577,9 @@ static void free_skb_pool(rtl8150_t *dev)
+ 		dev_kfree_skb(dev->rx_skb_pool[i]);
  }
  
- /*
-- * INVLPG may not properly flush Global entries
-- * on these CPUs when PCIDs are enabled.
-+ * INVLPG may not properly flush Global entries on
-+ * these CPUs.  New microcode fixes the issue.
-  */
- static const struct x86_cpu_id invlpg_miss_ids[] = {
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
--	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
--	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0x2e),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0x42c),
-+	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0x11),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0x118),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0x4117),
-+	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0x2e),
- 	{}
- };
- 
- static void setup_pcid(void)
+-static void rx_fixup(unsigned long data)
++static void rx_fixup(struct tasklet_struct *t)
  {
-+	const struct x86_cpu_id *invlpg_miss_match;
-+
- 	if (!IS_ENABLED(CONFIG_X86_64))
- 		return;
+-	struct rtl8150 *dev = (struct rtl8150 *)data;
++	struct rtl8150 *dev = from_tasklet(dev, t, tl);
+ 	struct sk_buff *skb;
+ 	int status;
  
- 	if (!boot_cpu_has(X86_FEATURE_PCID))
- 		return;
+@@ -879,7 +879,7 @@ static int rtl8150_probe(struct usb_interface *intf,
+ 		return -ENOMEM;
+ 	}
  
--	if (x86_match_cpu(invlpg_miss_ids)) {
-+	invlpg_miss_match = x86_match_cpu(invlpg_miss_ids);
-+
-+	if (invlpg_miss_match &&
-+	    boot_cpu_data.microcode < invlpg_miss_match->driver_data) {
- 		pr_info("Incomplete global flushes, disabling PCID");
- 		setup_clear_cpu_cap(X86_FEATURE_PCID);
- 		return;
+-	tasklet_init(&dev->tl, rx_fixup, (unsigned long)dev);
++	tasklet_setup(&dev->tl, rx_fixup);
+ 	spin_lock_init(&dev->rx_pool_lock);
+ 
+ 	dev->udev = udev;
+-- 
+2.39.5
+
 
 
