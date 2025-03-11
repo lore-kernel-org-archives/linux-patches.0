@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EE0221DA5;
-	Tue, 11 Mar 2025 15:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1870A255E37;
+	Tue, 11 Mar 2025 15:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707363; cv=none; b=Egfm+XIL+c8ETIhADDgr7GKvAUGprN/a6cbcXE3Gt6xaQENKKxXhacwCgyKfXPiKX2YbgWs/EAvKQieEanMPe2hMxmuD7w1J1K24FcIAbIrZdAU3T4hiEwnQagze/AgqNIt+c2iDxxOWPDKylC+U7xqjjdF1KbSHjeUi69RJNvI=
+	t=1741707366; cv=none; b=g9vyXQBcMfO33Vkgmc5jC0Rn6fDTYBApqSl8oyD5a5TPMQBolROYaIfvxUZhFiEJYDMgpqdzjqUz1rUA/+g2t/ee7yJm6dnBr3KEg8Plmoqi6me6hbov48OIJ9SqgTqsosqrjH63dPWuQP6UcFoZ5ArJK4ktGds3m3R/UVEGA64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707363; c=relaxed/simple;
-	bh=oPeeY4XF0BGFqeFnHLWjA9pR7SfE6YIy57AQwME7GpE=;
+	s=arc-20240116; t=1741707366; c=relaxed/simple;
+	bh=tyh4ycTO/Tb2yG2DtgBQU791ttybsIVukaBJzKrD0nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QiXcVIgnANLtpDkzD6qz0Y9cwlFAlm9824vr2syXzk07ZVJnkIwjP4tjtD433hcAc1F5rIVC+ZF1D14GpJS2ob9kTbEfLlBjwYhG2j4YT7peFSGDD4nhRsN0JTpZgkqbvVtHzki5d/Gw1cEOASIGKPZpCj8y8ngwyvEpz+Q/DgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpNXvg/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB3lRE+s5rGHw12zFIYQhyzvcdorvdauzxNCPZvEdV2MdSeUcsk3uwQP0oBDh/fnORqlN2sehMvr7ei/goQhD+ZJRas3CbJrUC7m8DuWxkwdc4BhqrUfM9ztZWSW/B0s+ihcN1ktWO52dzG2jwhyzPlPBAKzmtBCTCaIpgd93GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MA0ag+1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpNXvg/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB8FC4CEE9;
-	Tue, 11 Mar 2025 15:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MA0ag+1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F59C4CEED;
+	Tue, 11 Mar 2025 15:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707362;
-	bh=oPeeY4XF0BGFqeFnHLWjA9pR7SfE6YIy57AQwME7GpE=;
+	s=korg; t=1741707366;
+	bh=tyh4ycTO/Tb2yG2DtgBQU791ttybsIVukaBJzKrD0nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpNXvg/DB8G/e/jb7oZnJeW1csBWiFCPurCr/WEqDG3qf8NzeZkgI78ZrQNPxhVxu
-	 JSfrjq2MGCvQ/CP72Mh7TWsMF1E5w97dfIBOuXky/IHhHt4fihw9Noux+JjA15eSjf
-	 7HoHKOHokGx/zAzxROBzDzVpcnd/zXJRZk/QXkDg=
+	b=MA0ag+1CJTwZ5u7fMEmWwEBpip7nRMZDD1QU2lNMIesMwHRe968Mzm8SMdrc3LqcF
+	 yQxWYhIVWkrnKX1rRP7N3umzL1Xd9Pbr6acwZdMw+1IpvTYOPyjG8OZe5X103gnPv7
+	 PsEK1O4RONREYqeBh9QazjQFvuuU+KwUHnvTrZ3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 346/462] acct: block access to kernel internal filesystems
-Date: Tue, 11 Mar 2025 16:00:12 +0100
-Message-ID: <20250311145812.030245014@linuxfoundation.org>
+	Brian Vazquez <brianvv@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 364/462] net: use indirect call helpers for dst_output
+Date: Tue, 11 Mar 2025 16:00:30 +0100
+Message-ID: <20250311145812.731372741@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,47 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Brian Vazquez <brianvv@google.com>
 
-commit 890ed45bde808c422c3c27d3285fc45affa0f930 upstream.
+[ Upstream commit 6585d7dc491d9d5e323ed52ee32ad071e04c9dfa ]
 
-There's no point in allowing anything kernel internal nor procfs or
-sysfs.
+This patch avoids the indirect call for the common case:
+ip6_output and ip_output
 
-Link: https://lore.kernel.org/r/20250127091811.3183623-1-quzicheng@huawei.com
-Link: https://lore.kernel.org/r/20250211-work-acct-v1-2-1c16aecab8b3@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reported-by: Zicheng Qu <quzicheng@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Brian Vazquez <brianvv@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 13e55fbaec17 ("net: ipv6: fix dst ref loop on input in rpl lwt")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/acct.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/net/dst.h     | 8 +++++++-
+ net/ipv4/ip_output.c  | 1 +
+ net/ipv6/ip6_output.c | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/acct.c
-+++ b/kernel/acct.c
-@@ -216,6 +216,20 @@ static int acct_on(struct filename *path
- 		return -EACCES;
- 	}
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 907b4b5893a67..af57a6284444c 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -431,10 +431,16 @@ static inline void dst_set_expires(struct dst_entry *dst, int timeout)
+ 		dst->expires = expires;
+ }
  
-+	/* Exclude kernel kernel internal filesystems. */
-+	if (file_inode(file)->i_sb->s_flags & (SB_NOUSER | SB_KERNMOUNT)) {
-+		kfree(acct);
-+		filp_close(file, NULL);
-+		return -EINVAL;
-+	}
-+
-+	/* Exclude procfs and sysfs. */
-+	if (file_inode(file)->i_sb->s_iflags & SB_I_USERNS_VISIBLE) {
-+		kfree(acct);
-+		filp_close(file, NULL);
-+		return -EINVAL;
-+	}
-+
- 	if (!(file->f_mode & FMODE_CAN_WRITE)) {
- 		kfree(acct);
- 		filp_close(file, NULL);
++INDIRECT_CALLABLE_DECLARE(int ip6_output(struct net *, struct sock *,
++					 struct sk_buff *));
++INDIRECT_CALLABLE_DECLARE(int ip_output(struct net *, struct sock *,
++					 struct sk_buff *));
+ /* Output packet to network from transport.  */
+ static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	return skb_dst(skb)->output(net, sk, skb);
++	return INDIRECT_CALL_INET(skb_dst(skb)->output,
++				  ip6_output, ip_output,
++				  net, sk, skb);
+ }
+ 
+ INDIRECT_CALLABLE_DECLARE(int ip6_input(struct sk_buff *));
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 12ee857d6cfe4..1e430e135aa60 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -441,6 +441,7 @@ int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			    ip_finish_output,
+ 			    !(IPCB(skb)->flags & IPSKB_REROUTED));
+ }
++EXPORT_SYMBOL(ip_output);
+ 
+ /*
+  * copy saddr and daddr, possibly using 64bit load/stores
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 4da3238836b73..5003c5a23fa70 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -236,6 +236,7 @@ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			    ip6_finish_output,
+ 			    !(IP6CB(skb)->flags & IP6SKB_REROUTED));
+ }
++EXPORT_SYMBOL(ip6_output);
+ 
+ bool ip6_autoflowlabel(struct net *net, const struct ipv6_pinfo *np)
+ {
+-- 
+2.39.5
+
 
 
