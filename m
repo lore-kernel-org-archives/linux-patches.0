@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D963C0B;
-	Tue, 11 Mar 2025 15:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156A21E9B06;
+	Tue, 11 Mar 2025 15:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707336; cv=none; b=R8VBBjIM11nR41wH63yKT4c6+9H6+TzUF0Rf9MYU7Yn0GBNd9xDKicB9HbwCM2wVxTrFZ3LIuUyHFbEYCt13TX4pgMxtv6ncW8WwgFZ2uO4Iq6BewMRN/RrGXttJ4oQwcQLJJerlgdnfFR8/rcWWMJsDopHCoUJcxcwVkEEWg3w=
+	t=1741707340; cv=none; b=QslBD/MF6Zin4oDLQYNeNXz/7F9LHqGxPv0orJZLvoPZ1A6XPcXKrlD0KiWPTOPSg2sPSh1Iqf52/SOx13SKtxdqjm2SlEV8SSe2eJbe0RQBy2kQMtIM9W74VgwWsMx6Sv2iJmKuujato5p0EoIGGfTkU/s7DDPFiEuIyQCRgLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707336; c=relaxed/simple;
-	bh=1Cuu5+HA7hH75cbcpZbx4NV4f2+oLvbFsF9jXgyket8=;
+	s=arc-20240116; t=1741707340; c=relaxed/simple;
+	bh=utDR1Mw6nR6tS5zAmcecFH1jX+B5U3MaPY0i8iuYi+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsK/idMKjFEtRONZh79Ke2xKmQgOw1UWO2HMh13WGysgzN3nHG5eo6v4zVeLGsOD2FFJYfJX9DRhRNAQvQudw9heyM+7jjqdxw18QJqBiBSQGEXkDP2blRbjDYO0WOWCS4KD6H869g6FudihRuv20MULuhrExPuQF6fXuCB97jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPpPLIwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrAejdqZNZOMRqRtv1b05Wb4gOD8AZw4D9568ZA1/bJWidv/q+FjRCO/scKfhZpdTvbiJBwzZhr8JTEm9byCFcxdRNh9EIZ/ibYw+eV/CF8OMvFJtFGb8KEbIMEQzAfXmCDvObs9dKKyg/fa9AaN2GoACycrby+j34qAA4XeGZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOFjVonp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPpPLIwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321B7C4CEE9;
-	Tue, 11 Mar 2025 15:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOFjVonp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA45C4CEE9;
+	Tue, 11 Mar 2025 15:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707336;
-	bh=1Cuu5+HA7hH75cbcpZbx4NV4f2+oLvbFsF9jXgyket8=;
+	s=korg; t=1741707339;
+	bh=utDR1Mw6nR6tS5zAmcecFH1jX+B5U3MaPY0i8iuYi+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPpPLIwAtbNNZr0hUq+e6hLHO9bhJgp9PwMrpCeWUFoHUfHL6wZ2oniQolC0IbKNc
-	 R1mTlWsmm34mOIRBxkJKu7OtgTBzUfmA7YGqR7COSH4m1fea4XRoloLLeEejjy4O2W
-	 zcQHS4ePNWz4IS8WTbF+KfsfScd9CQWRwXKkf0/g=
+	b=kOFjVonp6/2QLhOug6oBN2hCAPpVk1LWwCydoSyP7f6untX7l2tAwNryjtSiwnL3S
+	 2H3Ad4OXlH8vLKGbeEvf/PI2WeSj4aXBUXxx3cbJc54waxoM1HFZg6duK4cDE5YKvz
+	 ysA9aliUE6kcs40RK7L4qlfAki8l5NBQKsa0VhBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Florian Meister <fmei@sfs.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 355/462] Bluetooth: L2CAP: Fix L2CAP_ECRED_CONN_RSP response
-Date: Tue, 11 Mar 2025 16:00:21 +0100
-Message-ID: <20250311145812.381395828@linuxfoundation.org>
+Subject: [PATCH 5.10 356/462] net: loopback: Avoid sending IP packets without an Ethernet header
+Date: Tue, 11 Mar 2025 16:00:22 +0100
+Message-ID: <20250311145812.419528561@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,97 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit b25120e1d5f2ebb3db00af557709041f47f7f3d0 ]
+[ Upstream commit 0e4427f8f587c4b603475468bb3aee9418574893 ]
 
-L2CAP_ECRED_CONN_RSP needs to respond DCID in the same order received as
-SCID but the order is reversed due to use of list_add which actually
-prepend channels to the list so the response is reversed:
+After commit 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
+IPv4 neighbors can be constructed on the blackhole net device, but they
+are constructed with an output function (neigh_direct_output()) that
+simply calls dev_queue_xmit(). The latter will transmit packets via
+'skb->dev' which might not be the blackhole net device if dst_dev_put()
+switched 'dst->dev' to the blackhole net device while another CPU was
+using the dst entry in ip_output(), but after it already initialized
+'skb->dev' from 'dst->dev'.
 
-> ACL Data RX: Handle 16 flags 0x02 dlen 26
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 2 len 18
-        PSM: 39 (0x0027)
-        MTU: 256
-        MPS: 251
-        Credits: 65535
-        Source CID: 116
-        Source CID: 117
-        Source CID: 118
-        Source CID: 119
-        Source CID: 120
-< ACL Data TX: Handle 16 flags 0x00 dlen 26
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 2 len 18
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 68
-        Destination CID: 67
-        Destination CID: 66
-        Destination CID: 65
-        Destination CID: 64
+Specifically, the following can happen:
 
-Also make sure the response don't include channels that are not on
-BT_CONNECT2 since the chan->ident can be set to the same value as in the
-following trace:
+    CPU1                                      CPU2
 
-< ACL Data TX: Handle 16 flags 0x00 dlen 12
-      LE L2CAP: LE Flow Control Credit (0x16) ident 6 len 4
-        Source CID: 64
-        Credits: 1
-...
-> ACL Data RX: Handle 16 flags 0x02 dlen 18
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 6 len 10
-        PSM: 39 (0x0027)
-        MTU: 517
-        MPS: 251
-        Credits: 255
-        Source CID: 70
-< ACL Data TX: Handle 16 flags 0x00 dlen 20
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 6 len 12
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 64
-        Destination CID: 68
+udp_sendmsg(sk1)                          udp_sendmsg(sk2)
+udp_send_skb()                            [...]
+ip_output()
+    skb->dev = skb_dst(skb)->dev
+                                          dst_dev_put()
+                                              dst->dev = blackhole_netdev
+ip_finish_output2()
+    resolves neigh on dst->dev
+neigh_output()
+neigh_direct_output()
+dev_queue_xmit()
 
-Closes: https://github.com/bluez/bluez/issues/1094
-Fixes: 9aa9d9473f15 ("Bluetooth: L2CAP: Fix responding with wrong PDU type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This will result in IPv4 packets being sent without an Ethernet header
+via a valid net device:
+
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on enp9s0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+22:07:02.329668 20:00:40:11:18:fb > 45:00:00:44:f4:94, ethertype Unknown
+(0x58c6), length 68:
+        0x0000:  8dda 74ca f1ae ca6c ca6c 0098 969c 0400  ..t....l.l......
+        0x0010:  0000 4730 3f18 6800 0000 0000 0000 9971  ..G0?.h........q
+        0x0020:  c4c9 9055 a157 0a70 9ead bf83 38ca ab38  ...U.W.p....8..8
+        0x0030:  8add ab96 e052                           .....R
+
+Fix by making sure that neighbors are constructed on top of the
+blackhole net device with an output function that simply consumes the
+packets, in a similar fashion to dst_discard_out() and
+blackhole_netdev_xmit().
+
+Fixes: 8d7017fd621d ("blackhole_netdev: use blackhole_netdev to invalidate dst entries")
+Fixes: 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
+Reported-by: Florian Meister <fmei@sfs.com>
+Closes: https://lore.kernel.org/netdev/20250210084931.23a5c2e4@hermes.local/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250220072559.782296-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/loopback.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 23fc03f7bf312..be281a95a0a8b 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -632,7 +632,8 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
- 		hci_conn_hold(conn->hcon);
- 
--	list_add(&chan->list, &conn->chan_l);
-+	/* Append to the list since the order matters for ECRED */
-+	list_add_tail(&chan->list, &conn->chan_l);
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 498e5c8013efb..0160a4f57ce92 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -243,8 +243,22 @@ static netdev_tx_t blackhole_netdev_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
  }
  
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
-@@ -3967,7 +3968,11 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- {
- 	struct l2cap_ecred_rsp_data *rsp = data;
++static int blackhole_neigh_output(struct neighbour *n, struct sk_buff *skb)
++{
++	kfree_skb(skb);
++	return 0;
++}
++
++static int blackhole_neigh_construct(struct net_device *dev,
++				     struct neighbour *n)
++{
++	n->output = blackhole_neigh_output;
++	return 0;
++}
++
+ static const struct net_device_ops blackhole_netdev_ops = {
+ 	.ndo_start_xmit = blackhole_netdev_xmit,
++	.ndo_neigh_construct = blackhole_neigh_construct,
+ };
  
--	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+	/* Check if channel for outgoing connection or if it wasn't deferred
-+	 * since in those cases it must be skipped.
-+	 */
-+	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags) ||
-+	    !test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
- 		return;
- 
- 	/* Reset ident so only one response is sent */
+ /* This is a dst-dummy device used specifically for invalidated
 -- 
 2.39.5
 
