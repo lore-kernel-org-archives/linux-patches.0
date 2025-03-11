@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45FE25E807;
-	Tue, 11 Mar 2025 15:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2916925E807;
+	Tue, 11 Mar 2025 15:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706950; cv=none; b=G0Q4GooMrTcKubuBv0CHD8PZPPjHyU8Nfi4oD/lqVlx3cY3/GaA8rZPYp3eKJthyeWX6Z3YVMljHW1CS6bUXf6vmVg2HD8hPIiKuYijyFvXbNDcOIQJM7FNuCeTPEgUDMzlG0mOUULoHVibDF5TeQfNc3lWrhj293MAHO4qi+jE=
+	t=1741706953; cv=none; b=AypGSEqWPuk49dbtpYT7V/eXeQs9s2J4cBv8J5Cr/XuEfNEhhri3yx4oUcyBbH0GIxWjs77sY153wov0NgIHzjFVBwOjccDYWP4nkDYBAC/7ilvaf4dLxBLgxFXwkQMeEbr1CSp9Lu4RpUDokGqX/lkFrp1W3DhWIw0P0oP4KPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706950; c=relaxed/simple;
-	bh=BhEc1tKkjK+aqCNdI4k5ZCJRrhE4npCWfE20gZd7wgo=;
+	s=arc-20240116; t=1741706953; c=relaxed/simple;
+	bh=Aj0lcWdxbEIXQ7B5Ps8mZrWaskWlwdqO8Vcg7tBP7OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKJ5r0h/mciV+OX06zpGt0mwsrmjUjT9fyMdg1NE0S51vafei7NrbDbu1cCqHv//48t/Wq4EfPBE8x7pkQRvL9XJItZMGAPQjM30zBZqmRDx0R/RxxA+99Txchu6L5zeKmO1EsXYrmFh9B2JTksq7Cn3zaedPTLiRv9Xmge/KI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jQYlN9p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kek9w5CmSQuovj1URP04pCqB1OJyinOZRDbXLv9qwvC7dzoEoeAw0DLKtyqa2SM20K2NsnP+Ujs3DtYFsT374aK2x1LtxINH/PM7HKNN8BDdcyiaP1/8cykP5wkPaTUsRbKGxWkp7Dc8ypvIH4RMeGsdF9jnrF9zGxodkpcpcbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfqfeMlh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jQYlN9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C80C4CEEA;
-	Tue, 11 Mar 2025 15:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfqfeMlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2045C4CEE9;
+	Tue, 11 Mar 2025 15:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706950;
-	bh=BhEc1tKkjK+aqCNdI4k5ZCJRrhE4npCWfE20gZd7wgo=;
+	s=korg; t=1741706953;
+	bh=Aj0lcWdxbEIXQ7B5Ps8mZrWaskWlwdqO8Vcg7tBP7OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jQYlN9puUjLfR3zVoRYOsh8/mF0iFjhILttS2anbfjmjS2Ctz0TzK3x5glJ5H5mJ
-	 SL+zlMBQG/Jc/QvbdoKEf78zU+qjixrm8HUCLn1MISU72U+SVi+OlmSnZll9f9i4BT
-	 IsfuE33dBZssXC2q3qo7/V11zDH49kNTXtK92n9c=
+	b=tfqfeMlhBFlCW/WcwjpZ6OnphSWR3mN+ESZ8cpdKe1IgtjworGIfJgc6cQ2msB+hR
+	 yON3WO0o3YDp055XIOhFR5hMpbZiPkckuliidJPcz4eV6Hosih7X4un9ueWvCaWkhx
+	 oCE740qPLScqAIW8EyueAdNLDYIrFCgU8jLuUAJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 224/462] mptcp: prevent excessive coalescing on receive
-Date: Tue, 11 Mar 2025 15:58:10 +0100
-Message-ID: <20250311145807.211480144@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Rick Macklem <rmacklem@uoguelph.ca>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 225/462] nfsd: clear acl_access/acl_default after releasing them
+Date: Tue, 11 Mar 2025 15:58:11 +0100
+Message-ID: <20250311145807.250985806@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,38 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-commit 56b824eb49d6258aa0bad09a406ceac3f643cdae upstream.
+commit 7faf14a7b0366f153284db0ad3347c457ea70136 upstream.
 
-Currently the skb size after coalescing is only limited by the skb
-layout (the skb must not carry frag_list). A single coalesced skb
-covering several MSS can potentially fill completely the receive
-buffer. In such a case, the snd win will zero until the receive buffer
-will be empty again, affecting tput badly.
+If getting acl_default fails, acl_access and acl_default will be released
+simultaneously. However, acl_access will still retain a pointer pointing
+to the released posix_acl, which will trigger a WARNING in
+nfs3svc_release_getacl like this:
 
-Fixes: 8268ed4c9d19 ("mptcp: introduce and use mptcp_try_coalesce()")
-Cc: stable@vger.kernel.org # please delay 2 weeks after 6.13-final release
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241230-net-mptcp-rbuf-fixes-v1-3-8608af434ceb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 26 PID: 3199 at lib/refcount.c:28
+refcount_warn_saturate+0xb5/0x170
+Modules linked in:
+CPU: 26 UID: 0 PID: 3199 Comm: nfsd Not tainted
+6.12.0-rc6-00079-g04ae226af01f-dirty #8
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.16.1-2.fc37 04/01/2014
+RIP: 0010:refcount_warn_saturate+0xb5/0x170
+Code: cc cc 0f b6 1d b3 20 a5 03 80 fb 01 0f 87 65 48 d8 00 83 e3 01 75
+e4 48 c7 c7 c0 3b 9b 85 c6 05 97 20 a5 03 01 e8 fb 3e 30 ff <0f> 0b eb
+cd 0f b6 1d 8a3
+RSP: 0018:ffffc90008637cd8 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff83904fde
+RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff88871ed36380
+RBP: ffff888158beeb40 R08: 0000000000000001 R09: fffff520010c6f56
+R10: ffffc90008637ab7 R11: 0000000000000001 R12: 0000000000000001
+R13: ffff888140e77400 R14: ffff888140e77408 R15: ffffffff858b42c0
+FS:  0000000000000000(0000) GS:ffff88871ed00000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000562384d32158 CR3: 000000055cc6a000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? refcount_warn_saturate+0xb5/0x170
+ ? __warn+0xa5/0x140
+ ? refcount_warn_saturate+0xb5/0x170
+ ? report_bug+0x1b1/0x1e0
+ ? handle_bug+0x53/0xa0
+ ? exc_invalid_op+0x17/0x40
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? tick_nohz_tick_stopped+0x1e/0x40
+ ? refcount_warn_saturate+0xb5/0x170
+ ? refcount_warn_saturate+0xb5/0x170
+ nfs3svc_release_getacl+0xc9/0xe0
+ svc_process_common+0x5db/0xb60
+ ? __pfx_svc_process_common+0x10/0x10
+ ? __rcu_read_unlock+0x69/0xa0
+ ? __pfx_nfsd_dispatch+0x10/0x10
+ ? svc_xprt_received+0xa1/0x120
+ ? xdr_init_decode+0x11d/0x190
+ svc_process+0x2a7/0x330
+ svc_handle_xprt+0x69d/0x940
+ svc_recv+0x180/0x2d0
+ nfsd+0x168/0x200
+ ? __pfx_nfsd+0x10/0x10
+ kthread+0x1a2/0x1e0
+ ? kthread+0xf4/0x1e0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x34/0x60
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+Kernel panic - not syncing: kernel: panic_on_warn set ...
+
+Clear acl_access/acl_default after posix_acl_release is called to prevent
+UAF from being triggered.
+
+Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20241107014705.2509463-1-lilingfeng@huaweicloud.com/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Rick Macklem <rmacklem@uoguelph.ca>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs2acl.c |    2 ++
+ fs/nfsd/nfs3acl.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -125,6 +125,7 @@ static bool mptcp_try_coalesce(struct so
- 	int delta;
+--- a/fs/nfsd/nfs2acl.c
++++ b/fs/nfsd/nfs2acl.c
+@@ -84,6 +84,8 @@ out:
+ fail:
+ 	posix_acl_release(resp->acl_access);
+ 	posix_acl_release(resp->acl_default);
++	resp->acl_access = NULL;
++	resp->acl_default = NULL;
+ 	goto out;
+ }
  
- 	if (MPTCP_SKB_CB(from)->offset ||
-+	    ((to->len + from->len) > (sk->sk_rcvbuf >> 3)) ||
- 	    !skb_try_coalesce(to, from, &fragstolen, &delta))
- 		return false;
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -76,6 +76,8 @@ out:
+ fail:
+ 	posix_acl_release(resp->acl_access);
+ 	posix_acl_release(resp->acl_default);
++	resp->acl_access = NULL;
++	resp->acl_default = NULL;
+ 	goto out;
+ }
  
 
 
