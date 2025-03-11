@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852062571D8;
-	Tue, 11 Mar 2025 15:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC07E110;
+	Tue, 11 Mar 2025 15:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706327; cv=none; b=rjhiiBPmuNoq/nzY/8Nb6Hmrz5eMmTsM/QmCtqxqJCkZhH70urNrVEA4k1cI8LQph/uZX4tak4AktwalhFlGtG29bJFwRejUsp5TSdClmnxHHBUte4WrjWY0kSzYb7JSS5toRDPSRJRMC4QVbsCOOXd6w9ZjimlGl91hqRIaPL8=
+	t=1741706330; cv=none; b=hKBn9eH4W3sHLZInWAbZDuxYc1TCQ2x59SUq+/atgX+CKx4IgV1cLC7IiQNl3YmAYCyBym5+TTDqxhsVoMmaAmyaJavqimbwd8E5NzjlxfsAK7JW91fIBMu6X6YicGW2BqMLQSGAh7lPIktTVmdA/mbXeQ5SVDaLwMjgqk/BI+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706327; c=relaxed/simple;
-	bh=XqyQUGPGjDSNIYIj94RSb4hpfsCQLaqzuwKX5BXW1wk=;
+	s=arc-20240116; t=1741706330; c=relaxed/simple;
+	bh=9Sp66qqSj87YJxVUaX1BNghqUtoBraaHgIFZKrjsIbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCNpJmbfF60oi/AyXpXdBlu6kJ5IsnHs9Vv3hlgS+Ua9IQwn8gvfeKA8HxrwIL0D60hFMiENV6ByTyMnHfuOEhXEvmLFJAjnMeNxCFS0MDEI5YbPODJzvmjyGJx77AkVII5aj/IKf/9s78dI+i/hM3MiBOvlOJ4Z9JIw2S/BC5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eqt+N9Bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CC7//BDJlYrk0TX6lITTWWIAEXjV/Liw36Zl4fR/tmSfs2S8RDqQkhfB45Rft+3tInOKRPnziTFDqBbxwiP7QByZnqNxT8W3BpHTPDR78cDxYyMGX9aysdQLoRZ7Sk3JaDe0zG+0pC9mcrSwpP4Iv+cZ7d1k3WdzR1RaCM2affQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnatuViV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eqt+N9Bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC05C4CEEC;
-	Tue, 11 Mar 2025 15:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnatuViV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF52BC4CEE9;
+	Tue, 11 Mar 2025 15:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706327;
-	bh=XqyQUGPGjDSNIYIj94RSb4hpfsCQLaqzuwKX5BXW1wk=;
+	s=korg; t=1741706330;
+	bh=9Sp66qqSj87YJxVUaX1BNghqUtoBraaHgIFZKrjsIbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eqt+N9BoJm87uwJq67f89DcDktNH2HFXO0tsApUKq2xHl08fM6FkHP7csfNw5FbZ4
-	 4bS5KuxnOEBPxvRgrJNFX2kkr5iktAQakjfq47RCrSzt/6z0BNvc5AwiUDTFL0dgFr
-	 ClYktAx+9fE6J6fkiDulkvNldj69TzGnuqji23DM=
+	b=bnatuViVldHB9GIDXBWsCIaK+AsvrW244KFH86Udvz+j6axHfYHdw3+m1buiDI4Bh
+	 4MeW6NF/18xgNjBN6STFS0EpcU15DgL5Hia2oUvDn2TIknqlUdwZqYam6z7IS+bNbd
+	 +hpD5dz3TJftaZREv4U/g1PkoSQDAAV1yCLdtvGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com,
-	Yu Kuai <yukuai3@huawei.com>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
 	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/462] nbd: dont allow reconnect after disconnect
-Date: Tue, 11 Mar 2025 15:54:29 +0100
-Message-ID: <20250311145758.486123168@linuxfoundation.org>
+Subject: [PATCH 5.10 004/462] nvme: Add error check for xa_store in nvme_get_effects_log
+Date: Tue, 11 Mar 2025 15:54:30 +0100
+Message-ID: <20250311145758.525207463@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,73 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit 844b8cdc681612ff24df62cdefddeab5772fadf1 ]
+[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
 
-Following process can cause nbd_config UAF:
+The xa_store() may fail due to memory allocation failure because there
+is no guarantee that the index csi is already used. This fix adds an
+error check of the return value of xa_store() in nvme_get_effects_log().
 
-1) grab nbd_config temporarily;
-
-2) nbd_genl_disconnect() flush all recv_work() and release the
-initial reference:
-
-  nbd_genl_disconnect
-   nbd_disconnect_and_put
-    nbd_disconnect
-     flush_workqueue(nbd->recv_workq)
-    if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF, ...))
-     nbd_config_put
-     -> due to step 1), reference is still not zero
-
-3) nbd_genl_reconfigure() queue recv_work() again;
-
-  nbd_genl_reconfigure
-   config = nbd_get_config_unlocked(nbd)
-   if (!config)
-   -> succeed
-   if (!test_bit(NBD_RT_BOUND, ...))
-   -> succeed
-   nbd_reconnect_socket
-    queue_work(nbd->recv_workq, &args->work)
-
-4) step 1) release the reference;
-
-5) Finially, recv_work() will trigger UAF:
-
-  recv_work
-   nbd_config_put(nbd)
-   -> nbd_config is freed
-   atomic_dec(&config->recv_threads)
-   -> UAF
-
-Fix the problem by clearing NBD_RT_BOUND in nbd_genl_disconnect(), so
-that nbd_genl_reconfigure() will fail.
-
-Fixes: b7aa3d39385d ("nbd: add a reconfigure netlink command")
-Reported-by: syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/675bfb65.050a0220.1a2d0d.0006.GAE@google.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250103092859.3574648-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index d6e3edb404748..4776009587190 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2065,6 +2065,7 @@ static void nbd_disconnect_and_put(struct nbd_device *nbd)
- 		flush_workqueue(nbd->recv_workq);
- 	nbd_clear_que(nbd);
- 	nbd->task_setup = NULL;
-+	clear_bit(NBD_RT_BOUND, &nbd->config->runtime_flags);
- 	mutex_unlock(&nbd->config_lock);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c739ac1761ba6..f988a5e3f0e15 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3043,7 +3043,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
+ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
+ 				struct nvme_effects_log **log)
+ {
+-	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
++	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
+ 	int ret;
  
- 	if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF,
+ 	if (cel)
+@@ -3060,7 +3060,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
+ 		return ret;
+ 	}
+ 
+-	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
++	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
++	if (xa_is_err(old)) {
++		kfree(cel);
++		return xa_err(old);
++	}
+ out:
+ 	*log = cel;
+ 	return 0;
 -- 
 2.39.5
 
