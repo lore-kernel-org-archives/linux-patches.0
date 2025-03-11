@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9803625E831;
-	Tue, 11 Mar 2025 15:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5299925DD06;
+	Tue, 11 Mar 2025 15:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706543; cv=none; b=LxMl4EnBU/ifKqZgu7kH98mPA3NsFleoaCZEpVyeHO84AZax20tNH7Oct4Flqbp2RGcT1BMU5Fi13INtrARd6h71KMlZJqEU3iYo0u6MhO/5InEbulS/PjC7fyjr0qIDi1GmIkiUZe1F44y7Sy3O2DLXsRTMgu7PeXytp0PaCI8=
+	t=1741706546; cv=none; b=cZ4mvPhwUuH1cZ2ygdkWjI+/LXGCRNuDrsj4y7wsRIbdIV+fpIjxcFmGnKSRpIwafr9R5xH1Ef6laUseGggmmhqPdAOKIdVPOFTqTrDQHo8qSrY8HERFnEnT9GMTFcoR0ox4DZmgh1A4btgINRuhmrFtE/FvwlmIfstFLI3SqRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706543; c=relaxed/simple;
-	bh=ew7bH6fp7ponO6fDcSS5iVhgNw39eT5RPJbVSqeyRuk=;
+	s=arc-20240116; t=1741706546; c=relaxed/simple;
+	bh=ZZMaj3Ws8vTaXcXpoI/9vaRL2bmzeVxBdRS7wRwc80c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GHWfuZTaX3BPjyYLcXk/Ymtg6ixDA5x5Omdb/GWNTORMA7ImS0p9IN5UIhc0+jAcNHCNHY+TAlg5GZGUsKcwBlbWnamEv0zI6aJlweiYyEmdgQD1AM0Ef0uZWcTvPYARWz0zmDxmMhezfGlf781H9SitUoKQ8NQBSfwU1xF9kOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z63gy5wz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6faUlVS0oMG8p42Wrhd2KYoyz7ktHcen3hoXa6b8Dkzu5tyDabuQErQpFMbmM1gjZR8Tvtvp+rZp5lFw0i61HFvIa7sjlSgWU1WLBm9SXoJS7J+rMRjAH3hnoJ6zI1342Hz/vN+Vyu5PpOut466ea9B0dBfdGTRbnnaK3nnut0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtlv1Oi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z63gy5wz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10B8C4CEE9;
-	Tue, 11 Mar 2025 15:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtlv1Oi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFBEC4CEEA;
+	Tue, 11 Mar 2025 15:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706543;
-	bh=ew7bH6fp7ponO6fDcSS5iVhgNw39eT5RPJbVSqeyRuk=;
+	s=korg; t=1741706546;
+	bh=ZZMaj3Ws8vTaXcXpoI/9vaRL2bmzeVxBdRS7wRwc80c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z63gy5wzoRNkNw6YNPgRuDddl2dBcjSnSyCRU1CSJm2li6RrIzbIRQ1lZ+TAw/P6m
-	 EiRKUCyW8r+PqqaVY6Ojvf9XR+xPpfbgy/i8P/zfGEd6UY7bfAdNt6JYN/8zjc3owl
-	 i5ucS687lV6bjLNgMpSbUfx5pL3fXJw0hVUoi5Js=
+	b=wtlv1Oi0qxIcDFkQDNuCp1dutdea0itvUhGxsnWkp86pqdb1OFLgMdDmA3HIPFrl/
+	 jP5puHLBgphqoZ0LyHyMvb9DXh2+luxcsvVLzo4d4Lw36oVAPmWCeNU95MMobZgfll
+	 H1Ly1yxVBOr5tmBqKqOVek/0KNQNs8hvif4lpVAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/462] media: camif-core: Add check for clk_enable()
-Date: Tue, 11 Mar 2025 15:55:51 +0100
-Message-ID: <20250311145801.710229358@linuxfoundation.org>
+Subject: [PATCH 5.10 086/462] media: uvcvideo: Propagate buf->error to userspace
+Date: Tue, 11 Mar 2025 15:55:52 +0100
+Message-ID: <20250311145801.749379954@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,48 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 77ed2470ac09c2b0a33cf3f98cc51d18ba9ed976 ]
+[ Upstream commit 87ce177654e388451850905a1d376658aebe8699 ]
 
-Add check for the return value of clk_enable() to gurantee the success.
+Now we return VB2_BUF_STATE_DONE for valid and invalid frames. Propagate
+the correct value, so the user can know if the frame is valid or not via
+struct v4l2_buffer->flags.
 
-Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reported-by: Hans de Goede <hdegoede@redhat.com>
+Closes: https://lore.kernel.org/linux-media/84b0f212-cd88-46bb-8e6f-b94ec3eccba6@redhat.com
+Fixes: 6998b6fb4b1c ("[media] uvcvideo: Use videobuf2-vmalloc")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241218-uvc-deprecate-v2-1-ab814139e983@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s3c-camif/camif-core.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_queue.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/s3c-camif/camif-core.c b/drivers/media/platform/s3c-camif/camif-core.c
-index 422fd549e9c87..aa2427cb2e63b 100644
---- a/drivers/media/platform/s3c-camif/camif-core.c
-+++ b/drivers/media/platform/s3c-camif/camif-core.c
-@@ -529,10 +529,19 @@ static int s3c_camif_remove(struct platform_device *pdev)
- static int s3c_camif_runtime_resume(struct device *dev)
- {
- 	struct camif_dev *camif = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_enable(camif->clock[CLK_GATE]);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/media/usb/uvc/uvc_queue.c b/drivers/media/usb/uvc/uvc_queue.c
+index cd60c6c1749ea..6a9fdd32cfb86 100644
+--- a/drivers/media/usb/uvc/uvc_queue.c
++++ b/drivers/media/usb/uvc/uvc_queue.c
+@@ -486,7 +486,8 @@ static void uvc_queue_buffer_complete(struct kref *ref)
  
--	clk_enable(camif->clock[CLK_GATE]);
- 	/* null op on s3c244x */
--	clk_enable(camif->clock[CLK_CAM]);
-+	ret = clk_enable(camif->clock[CLK_CAM]);
-+	if (ret) {
-+		clk_disable(camif->clock[CLK_GATE]);
-+		return ret;
-+	}
-+
- 	return 0;
+ 	buf->state = buf->error ? UVC_BUF_STATE_ERROR : UVC_BUF_STATE_DONE;
+ 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, buf->bytesused);
+-	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
++	vb2_buffer_done(&buf->buf.vb2_buf, buf->error ? VB2_BUF_STATE_ERROR :
++							VB2_BUF_STATE_DONE);
  }
  
+ /*
 -- 
 2.39.5
 
