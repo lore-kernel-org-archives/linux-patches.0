@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD325E473;
-	Tue, 11 Mar 2025 15:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A3625EFBF;
+	Tue, 11 Mar 2025 15:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706556; cv=none; b=BCvYCErtd9wBSnDLiBoeAnX+tRwnR9pryyOayD5dZGSHuTnWmY2uY8r2exPq0O6QAy2Y517cY2FM37xl4sDjSKAjYE/HlBagE5LACFH3AySoShXzHoXHgGxjg1gn2RW5ujBNVI0LdjW18f+Idq6cr14ehQ7o0anmEhq7A0lOodw=
+	t=1741706559; cv=none; b=q1guApsrj58XuZuCcQ+GoKyRU04x+epslO3vbk88Ck+UxHqiJDdiBtawjxZBlMqkI2omcW5p/Tsp09oIJf/OeimGM4bMqXJpRhV/oFe94Q0dcyKi/QRgEyWLSo7RhahmGEJcHDMXC9v3VPZw7W+THsTf1yO+Bndtes/0pp5dkbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706556; c=relaxed/simple;
-	bh=6NFF8G70APIc6XO489Nvbea3AaJioVHTU6f0fOvvqwQ=;
+	s=arc-20240116; t=1741706559; c=relaxed/simple;
+	bh=1MZIIsqmTEBD/VpUTv2EzC3n8dHUIPVFEIsI4nc9N/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BZXIVa7KVSrd2sKZfU/ea3VClmHpHi0b6/CnlbOPOgqGBIE4zQKR6KZLIRP3wZX131nbM7K1Pc+wZi967peLnUx8zUl52sJi2SytQF7J100pCvZc22XsOuocrTutFiZfJpzMoAR1a9hCljDvSale7t7ru+94nEqzUGd2cGJ7epM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auUOR7uT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F69J7tLJLYG0P87DouNfjEuZ8mwmhQsuDQ1b5qF0rLob1UU112U5gQqXqlkyV4Fc7aZkDKetS5ZAwHRuP5U3a/qCAblI+HN2Kxurg+KO+v/PTOMeq/V00vanF+4tzsCRex1wet+PMdigrrSPX5WffVuFgWxJq3ITc2dMVFGp8ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnqIH1vK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auUOR7uT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F2C4CEE9;
-	Tue, 11 Mar 2025 15:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnqIH1vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02E2C4CEF0;
+	Tue, 11 Mar 2025 15:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706556;
-	bh=6NFF8G70APIc6XO489Nvbea3AaJioVHTU6f0fOvvqwQ=;
+	s=korg; t=1741706559;
+	bh=1MZIIsqmTEBD/VpUTv2EzC3n8dHUIPVFEIsI4nc9N/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auUOR7uToHrUQOS18f9425blIfnQ7IAA/6uwDNpq/F6Q9DepynFt4NK3yasE333h6
-	 G9U8g3hdQ/2Gb1/eV4K4ukgUYaSCjSFPQts8ZBilOe0uMBHc06PUChm7FvukGHvsN4
-	 yPXFiFWGJUFec271Hm6Zu2NNBXsRjs7FxgVBsPys=
+	b=LnqIH1vKPJPcaG0UOoKEYdnhv0zavS/QGUhEd93+LfRc53AizjxTwY5wDKqyNHHVV
+	 K2lY/0p0fJ6Ga4EE4XPi59talFBTxsje8zVWoBhQOzgufvXn5HSgnUn294azZZ0RbS
+	 FX7sq64kd1e4JPZWZhjbzNb+qfg8Qk17vJLw0plY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	King Dix <kingdix10@qq.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/462] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
-Date: Tue, 11 Mar 2025 15:55:55 +0100
-Message-ID: <20250311145801.866853758@linuxfoundation.org>
+Subject: [PATCH 5.10 090/462] scsi: mpt3sas: Set ioc->manu_pg11.EEDPTagMode directly to 1
+Date: Tue, 11 Mar 2025 15:55:56 +0100
+Message-ID: <20250311145801.909172360@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -47,70 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: King Dix <kingdix10@qq.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
+[ Upstream commit ad7c3c0cb8f61d6d5a48b83e62ca4a9fd2f26153 ]
 
-The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
-macro to request a needed resource. A string variable that lives on the
-stack is then used to store a dynamically computed resource name, which
-is then passed on as one of the macro arguments. This can lead to
-undefined behavior.
+Currently, the code does:
 
-Depending on the current contents of the memory, the manifestations of
-errors may vary. One possible output may be as follows:
+    if (x == 0) {
+    	x &= ~0x3;
+	x |= 0x1;
+    }
 
-  $ cat /proc/iomem
-  30000000-37ffffff :
-  38000000-3fffffff :
+Zeroing bits 0 and 1 of a variable that is 0 is not necessary. So directly
+set the variable to 1.
 
-Sometimes, garbage may appear after the colon.
-
-In very rare cases, if no NULL-terminator is found in memory, the system
-might crash because the string iterator will overrun which can lead to
-access of unmapped memory above the stack.
-
-Thus, fix this by replacing outbound_name with the name of the previously
-requested resource. With the changes applied, the output will be as
-follows:
-
-  $ cat /proc/iomem
-  30000000-37ffffff : memory2
-  38000000-3fffffff : memory3
-
-Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
-Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: King Dix <kingdix10@qq.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/r/20241212221817.78940-2-pmenzel@molgen.mpg.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rcar-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
-index c91d85b151290..fc85263797e91 100644
---- a/drivers/pci/controller/pcie-rcar-ep.c
-+++ b/drivers/pci/controller/pcie-rcar-ep.c
-@@ -110,7 +110,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
- 		}
- 		if (!devm_request_mem_region(&pdev->dev, res->start,
- 					     resource_size(res),
--					     outbound_name)) {
-+					     res->name)) {
- 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
- 				outbound_name);
- 			return -EIO;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 768635de93da9..78b178aa46e94 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -4771,8 +4771,7 @@ _base_static_config_pages(struct MPT3SAS_ADAPTER *ioc)
+ 	if (!ioc->is_gen35_ioc && ioc->manu_pg11.EEDPTagMode == 0) {
+ 		pr_err("%s: overriding NVDATA EEDPTagMode setting\n",
+ 		    ioc->name);
+-		ioc->manu_pg11.EEDPTagMode &= ~0x3;
+-		ioc->manu_pg11.EEDPTagMode |= 0x1;
++		ioc->manu_pg11.EEDPTagMode = 0x1;
+ 		mpt3sas_config_set_manufacturing_pg11(ioc, &mpi_reply,
+ 		    &ioc->manu_pg11);
+ 	}
 -- 
 2.39.5
 
