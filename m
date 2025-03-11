@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9365B1A5BA4;
-	Tue, 11 Mar 2025 15:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6AF25E805;
+	Tue, 11 Mar 2025 15:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707460; cv=none; b=b3iQX2B7qlmxQmR3shD6pKntC1+N+Iu8CPuLqO8rGNhXr8ozAlj6m9Fh4151qZlyu+apCCowSvmyBehwKVIGlFmA8M3XIp+BWKTeGRolyQAlUwyCkx/1Fvceqhy3UcXu74fTMAFHq75Ov4EG3m/mSkCM1bsxPXyqkijS9BIXiSg=
+	t=1741707463; cv=none; b=j1/vpxiTRnBAFKrDKFXtkiywoQCkaRBnHEZMhcOqmb4ovVWYSxMPSCMqZopOvH4VlNfY8ajf3zxz4RpaJGdd3AeGlOvjKkE58ruVJk1L9Eq1TLeePcMfuJXUJ7tGOEGg0EPDZokjGNW18pZOHN+tm3XKq4mlp9WHz7Zsqc5y4N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707460; c=relaxed/simple;
-	bh=91q8NUoW4In5l/4m4vVDxHkGjk9tXrsHQD19s5nWJlY=;
+	s=arc-20240116; t=1741707463; c=relaxed/simple;
+	bh=QNwo2hUuNwjkjYXSa/rYvech5QklOSPbAnplIeSlGP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azflvlwPK/az7Q/ny/TJvslbALf1on7tt9jhWKRb+AoH3EhtBhHsEz2fmrBQf/89iNHzfXMn4SKYMnDU83QNJ10/Y+l/SE+c9yac883mQ4PcyKhCnmuQKaW4Zoq+u3QqMloh013XcGcw77ivw/IkBr007P4UVPim8WVDO6EPK70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+NP1oNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UywXzIsROMKk46UlHVKLT1EzUrHsxD3kAOWS6NTxBo11TFZsyqjhPsMVyOrJOiNma2eZhsGjui207Z8P2NHp/QlaRXX4bpj7VA/Mnq8LJ7WakWhWfwbQjsfhknWXymzHnJJ1M3rl40nWssqY197M2pdM4gCCEH0NvM1pEofjJqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilaAYxGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+NP1oNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1668FC4CEE9;
-	Tue, 11 Mar 2025 15:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilaAYxGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B27C4CEE9;
+	Tue, 11 Mar 2025 15:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707460;
-	bh=91q8NUoW4In5l/4m4vVDxHkGjk9tXrsHQD19s5nWJlY=;
+	s=korg; t=1741707463;
+	bh=QNwo2hUuNwjkjYXSa/rYvech5QklOSPbAnplIeSlGP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+NP1oNAxIxgRTDRkMQzcboEFY18pCDdMubbfAEnVRNwjrpVHtTR1az97a8egEX9Z
-	 moouGdDMxMK3sjPxY6TXylwq0HcAyIrHywVZ7IxfXwx+mk0tkcTlJcmaL/pl7az4i8
-	 1vHFRYtRgw02B5NofWw7c5BMlqnLLzd54lFFmbdI=
+	b=ilaAYxGxvrB7B8MhoXLQfRpMQJMgXiutJtE7Ws4xV4RK6NoQuhJ+Mr1+B7mifOoHt
+	 df0fRdGMU8/4ESYWGUSMhVqWVz6pN2mo48w9d/2dkOw0qGCAoGZKx7HvhWmsu5UMtj
+	 PXrfVimBZazyw8yqkB0DE8PUEVNfNWFtBIFviQhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 397/462] x86/cpu: Properly parse CPUID leaf 0x2 TLB descriptor 0x63
-Date: Tue, 11 Mar 2025 16:01:03 +0100
-Message-ID: <20250311145814.018164624@linuxfoundation.org>
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 380/462] drop_monitor: fix incorrect initialization order
+Date: Tue, 11 Mar 2025 16:00:46 +0100
+Message-ID: <20250311145813.360928178@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,119 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-commit f6bdaab79ee4228a143ee1b4cb80416d6ffc0c63 upstream.
+[ Upstream commit 07b598c0e6f06a0f254c88dafb4ad50f8a8c6eea ]
 
-CPUID leaf 0x2's one-byte TLB descriptors report the number of entries
-for specific TLB types, among other properties.
+Syzkaller reports the following bug:
 
-Typically, each emitted descriptor implies the same number of entries
-for its respective TLB type(s).  An emitted 0x63 descriptor is an
-exception: it implies 4 data TLB entries for 1GB pages and 32 data TLB
-entries for 2MB or 4MB pages.
+BUG: spinlock bad magic on CPU#1, syz-executor.0/7995
+ lock: 0xffff88805303f3e0, .magic: 00000000, .owner: <none>/-1, .owner_cpu: 0
+CPU: 1 PID: 7995 Comm: syz-executor.0 Tainted: G            E     5.10.209+ #1
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x119/0x179 lib/dump_stack.c:118
+ debug_spin_lock_before kernel/locking/spinlock_debug.c:83 [inline]
+ do_raw_spin_lock+0x1f6/0x270 kernel/locking/spinlock_debug.c:112
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:117 [inline]
+ _raw_spin_lock_irqsave+0x50/0x70 kernel/locking/spinlock.c:159
+ reset_per_cpu_data+0xe6/0x240 [drop_monitor]
+ net_dm_cmd_trace+0x43d/0x17a0 [drop_monitor]
+ genl_family_rcv_msg_doit+0x22f/0x330 net/netlink/genetlink.c:739
+ genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
+ genl_rcv_msg+0x341/0x5a0 net/netlink/genetlink.c:800
+ netlink_rcv_skb+0x14d/0x440 net/netlink/af_netlink.c:2497
+ genl_rcv+0x29/0x40 net/netlink/genetlink.c:811
+ netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
+ netlink_unicast+0x54b/0x800 net/netlink/af_netlink.c:1348
+ netlink_sendmsg+0x914/0xe00 net/netlink/af_netlink.c:1916
+ sock_sendmsg_nosec net/socket.c:651 [inline]
+ __sock_sendmsg+0x157/0x190 net/socket.c:663
+ ____sys_sendmsg+0x712/0x870 net/socket.c:2378
+ ___sys_sendmsg+0xf8/0x170 net/socket.c:2432
+ __sys_sendmsg+0xea/0x1b0 net/socket.c:2461
+ do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x62/0xc7
+RIP: 0033:0x7f3f9815aee9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f3f972bf0c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f3f9826d050 RCX: 00007f3f9815aee9
+RDX: 0000000020000000 RSI: 0000000020001300 RDI: 0000000000000007
+RBP: 00007f3f981b63bd R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000006e R14: 00007f3f9826d050 R15: 00007ffe01ee6768
 
-For the TLB descriptors parsing code, the entry count for 1GB pages is
-encoded at the intel_tlb_table[] mapping, but the 2MB/4MB entry count is
-totally ignored.
+If drop_monitor is built as a kernel module, syzkaller may have time
+to send a netlink NET_DM_CMD_START message during the module loading.
+This will call the net_dm_monitor_start() function that uses
+a spinlock that has not yet been initialized.
 
-Update leaf 0x2's parsing logic 0x2 to account for 32 data TLB entries
-for 2MB/4MB pages implied by the 0x63 descriptor.
+To fix this, let's place resource initialization above the registration
+of a generic netlink family.
 
-Fixes: e0ba94f14f74 ("x86/tlb_info: get last level TLB entry number of CPU")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250304085152.51092-4-darwi@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller.
+
+Fixes: 9a8afc8d3962 ("Network Drop Monitor: Adding drop monitor implementation & Netlink protocol")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250213152054.2785669-1-Ilia.Gavrilov@infotecs.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/intel.c |   60 ++++++++++++++++++++++++++++----------------
- 1 file changed, 39 insertions(+), 21 deletions(-)
+ net/core/drop_monitor.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -747,26 +747,37 @@ static unsigned int intel_size_cache(str
+diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
+index 009b9e22c4e75..c8a3d6056365f 100644
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -1727,30 +1727,30 @@ static int __init init_net_drop_monitor(void)
+ 		return -ENOSPC;
+ 	}
+ 
+-	rc = genl_register_family(&net_drop_monitor_family);
+-	if (rc) {
+-		pr_err("Could not create drop monitor netlink family\n");
+-		return rc;
++	for_each_possible_cpu(cpu) {
++		net_dm_cpu_data_init(cpu);
++		net_dm_hw_cpu_data_init(cpu);
+ 	}
+-	WARN_ON(net_drop_monitor_family.mcgrp_offset != NET_DM_GRP_ALERT);
+ 
+ 	rc = register_netdevice_notifier(&dropmon_net_notifier);
+ 	if (rc < 0) {
+ 		pr_crit("Failed to register netdevice notifier\n");
++		return rc;
++	}
++
++	rc = genl_register_family(&net_drop_monitor_family);
++	if (rc) {
++		pr_err("Could not create drop monitor netlink family\n");
+ 		goto out_unreg;
+ 	}
++	WARN_ON(net_drop_monitor_family.mcgrp_offset != NET_DM_GRP_ALERT);
+ 
+ 	rc = 0;
+ 
+-	for_each_possible_cpu(cpu) {
+-		net_dm_cpu_data_init(cpu);
+-		net_dm_hw_cpu_data_init(cpu);
+-	}
+-
+ 	goto out;
+ 
+ out_unreg:
+-	genl_unregister_family(&net_drop_monitor_family);
++	WARN_ON(unregister_netdevice_notifier(&dropmon_net_notifier));
+ out:
+ 	return rc;
  }
- #endif
+@@ -1759,19 +1759,18 @@ static void exit_net_drop_monitor(void)
+ {
+ 	int cpu;
  
--#define TLB_INST_4K	0x01
--#define TLB_INST_4M	0x02
--#define TLB_INST_2M_4M	0x03
+-	BUG_ON(unregister_netdevice_notifier(&dropmon_net_notifier));
 -
--#define TLB_INST_ALL	0x05
--#define TLB_INST_1G	0x06
--
--#define TLB_DATA_4K	0x11
--#define TLB_DATA_4M	0x12
--#define TLB_DATA_2M_4M	0x13
--#define TLB_DATA_4K_4M	0x14
--
--#define TLB_DATA_1G	0x16
--
--#define TLB_DATA0_4K	0x21
--#define TLB_DATA0_4M	0x22
--#define TLB_DATA0_2M_4M	0x23
--
--#define STLB_4K		0x41
--#define STLB_4K_2M	0x42
-+#define TLB_INST_4K		0x01
-+#define TLB_INST_4M		0x02
-+#define TLB_INST_2M_4M		0x03
+ 	/*
+ 	 * Because of the module_get/put we do in the trace state change path
+ 	 * we are guarnateed not to have any current users when we get here
+ 	 */
++	BUG_ON(genl_unregister_family(&net_drop_monitor_family));
 +
-+#define TLB_INST_ALL		0x05
-+#define TLB_INST_1G		0x06
-+
-+#define TLB_DATA_4K		0x11
-+#define TLB_DATA_4M		0x12
-+#define TLB_DATA_2M_4M		0x13
-+#define TLB_DATA_4K_4M		0x14
-+
-+#define TLB_DATA_1G		0x16
-+#define TLB_DATA_1G_2M_4M	0x17
-+
-+#define TLB_DATA0_4K		0x21
-+#define TLB_DATA0_4M		0x22
-+#define TLB_DATA0_2M_4M		0x23
-+
-+#define STLB_4K			0x41
-+#define STLB_4K_2M		0x42
-+
-+/*
-+ * All of leaf 0x2's one-byte TLB descriptors implies the same number of
-+ * entries for their respective TLB types.  The 0x63 descriptor is an
-+ * exception: it implies 4 dTLB entries for 1GB pages 32 dTLB entries
-+ * for 2MB or 4MB pages.  Encode descriptor 0x63 dTLB entry count for
-+ * 2MB/4MB pages here, as its count for dTLB 1GB pages is already at the
-+ * intel_tlb_table[] mapping.
-+ */
-+#define TLB_0x63_2M_4M_ENTRIES	32
++	BUG_ON(unregister_netdevice_notifier(&dropmon_net_notifier));
  
- static const struct _tlb_table intel_tlb_table[] = {
- 	{ 0x01, TLB_INST_4K,		32,	" TLB_INST 4 KByte pages, 4-way set associative" },
-@@ -788,7 +799,8 @@ static const struct _tlb_table intel_tlb
- 	{ 0x5c, TLB_DATA_4K_4M,		128,	" TLB_DATA 4 KByte and 4 MByte pages" },
- 	{ 0x5d, TLB_DATA_4K_4M,		256,	" TLB_DATA 4 KByte and 4 MByte pages" },
- 	{ 0x61, TLB_INST_4K,		48,	" TLB_INST 4 KByte pages, full associative" },
--	{ 0x63, TLB_DATA_1G,		4,	" TLB_DATA 1 GByte pages, 4-way set associative" },
-+	{ 0x63, TLB_DATA_1G_2M_4M,	4,	" TLB_DATA 1 GByte pages, 4-way set associative"
-+						" (plus 32 entries TLB_DATA 2 MByte or 4 MByte pages, not encoded here)" },
- 	{ 0x6b, TLB_DATA_4K,		256,	" TLB_DATA 4 KByte pages, 8-way associative" },
- 	{ 0x6c, TLB_DATA_2M_4M,		128,	" TLB_DATA 2 MByte or 4 MByte pages, 8-way associative" },
- 	{ 0x6d, TLB_DATA_1G,		16,	" TLB_DATA 1 GByte pages, fully associative" },
-@@ -888,6 +900,12 @@ static void intel_tlb_lookup(const unsig
- 		if (tlb_lld_4m[ENTRIES] < intel_tlb_table[k].entries)
- 			tlb_lld_4m[ENTRIES] = intel_tlb_table[k].entries;
- 		break;
-+	case TLB_DATA_1G_2M_4M:
-+		if (tlb_lld_2m[ENTRIES] < TLB_0x63_2M_4M_ENTRIES)
-+			tlb_lld_2m[ENTRIES] = TLB_0x63_2M_4M_ENTRIES;
-+		if (tlb_lld_4m[ENTRIES] < TLB_0x63_2M_4M_ENTRIES)
-+			tlb_lld_4m[ENTRIES] = TLB_0x63_2M_4M_ENTRIES;
-+		fallthrough;
- 	case TLB_DATA_1G:
- 		if (tlb_lld_1g[ENTRIES] < intel_tlb_table[k].entries)
- 			tlb_lld_1g[ENTRIES] = intel_tlb_table[k].entries;
+ 	for_each_possible_cpu(cpu) {
+ 		net_dm_hw_cpu_data_fini(cpu);
+ 		net_dm_cpu_data_fini(cpu);
+ 	}
+-
+-	BUG_ON(genl_unregister_family(&net_drop_monitor_family));
+ }
+ 
+ module_init(init_net_drop_monitor);
+-- 
+2.39.5
+
 
 
