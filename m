@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B84249F9;
-	Tue, 11 Mar 2025 15:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3621EA80;
+	Tue, 11 Mar 2025 15:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706176; cv=none; b=gIf0Gjqa6hfz4Qne122+/bryCBeCBtgq3289OzXFWXnqqJKeRrycZ4VtFNprRGOQkJ3yvnLc00Ftmc0zKQA/GAWy8MGhrRta9+Gq1bl04GX1Y5yZKisOCR+jUEsxDIKHkj0nLSbHDn3kI1w6xdGA5GcKA0sMdgkhnxF4VYA4E5w=
+	t=1741706179; cv=none; b=u+d8eHnNmJJfXJu0ZN3KaFFTDmq2BPoz7YSbsIL/GQS0SBAnQFxt0ooh7gez4shR5aBHoC8+CH5MnqBWro6ygxQFrfayyvmMgG+1BS55WTRR9hrC5u8iXlC1RcHjpDwz2F8WsH+shKTbEr7cAw1B69jSCRSdXeEdHwLXJ7t4IrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706176; c=relaxed/simple;
-	bh=Gq4wNAv3unGBiXYv5qdNjyXq+iA1a10nTfXGnmcmf2M=;
+	s=arc-20240116; t=1741706179; c=relaxed/simple;
+	bh=NtEllXi31qcwRyJhPoO1VzNs3GeX7Upnq06pSEvXiEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLmPv8kx8JyOFKaGjb39LwVtMcc8gADMfAbD6mm3F0KUR4fdz2N5FDbNgYtR7mw9jJfvQtAwvOMa1CpI3nrD2oEn6/1JiSlwJo+So9mdBjcq5pyVuwCpvB7LenucR098oCa+nR1yWOuBUFN757bom54ErVUUBarrgHTGG89RkvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLtm04pm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z3iS3CLka3lVYxpCT3WsXORl9XM5O7b7ySYL0kNEc1ly92RgUpGJErYaUmHO5h0FV54MJkd1qtrDwUzs4CArYLzPzC406LMdAech9OCNy5ENSmL6Mje57rT1lba1LbRcZ1QH8nGTMkI05mzQzBihcVQeeisjbpfgOiMQFGGT0cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nd2r28mg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLtm04pm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D120C4CEE9;
-	Tue, 11 Mar 2025 15:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd2r28mg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C642C4CEE9;
+	Tue, 11 Mar 2025 15:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706176;
-	bh=Gq4wNAv3unGBiXYv5qdNjyXq+iA1a10nTfXGnmcmf2M=;
+	s=korg; t=1741706178;
+	bh=NtEllXi31qcwRyJhPoO1VzNs3GeX7Upnq06pSEvXiEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLtm04pmd/zKooPw8okYO74qTfvNDsOo3DFZ2dC30YMW1w4GcbV/A76Oht/1mj/zB
-	 UG3JyI8KDNDCa3DNeIZHf36/Y7BVAl5bsh/83UtuT6I8WPxzndCN37UMQG2z4zdqwh
-	 HUZC3erAEx85tf8GNapirFz4puS19XbZknqyhCXU=
+	b=Nd2r28mgHa0Q8eAeCoEnW2ZOEnPJOeojJIjhx3buBWUZ5Ip3JJlVjK3024whM6Fgw
+	 3Af4hkx/VHEqmwZOYph3/UxTqiV0386JcLVdrkusb786FkjySffFeW9tPpwgTlR5eb
+	 C55OlGAB8LSk969HWzqEiycLjRnvCnqELTYAAMvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 270/328] sched/core: Prevent rescheduling when interrupts are disabled
-Date: Tue, 11 Mar 2025 16:00:40 +0100
-Message-ID: <20250311145725.641131217@linuxfoundation.org>
+	Quang Le <quanglex97@gmail.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.4 271/328] pfifo_tail_enqueue: Drop new packet when sch->limit == 0
+Date: Tue, 11 Mar 2025 16:00:41 +0100
+Message-ID: <20250311145725.683049660@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,85 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Quang Le <quanglex97@gmail.com>
 
-commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
+commit 647cef20e649c576dff271e018d5d15d998b629d upstream.
 
-David reported a warning observed while loop testing kexec jump:
+Expected behaviour:
+In case we reach scheduler's limit, pfifo_tail_enqueue() will drop a
+packet in scheduler's queue and decrease scheduler's qlen by one.
+Then, pfifo_tail_enqueue() enqueue new packet and increase
+scheduler's qlen by one. Finally, pfifo_tail_enqueue() return
+`NET_XMIT_CN` status code.
 
-  Interrupts enabled after irqrouter_resume+0x0/0x50
-  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
-   kernel_kexec+0xf6/0x180
-   __do_sys_reboot+0x206/0x250
-   do_syscall_64+0x95/0x180
+Weird behaviour:
+In case we set `sch->limit == 0` and trigger pfifo_tail_enqueue() on a
+scheduler that has no packet, the 'drop a packet' step will do nothing.
+This means the scheduler's qlen still has value equal 0.
+Then, we continue to enqueue new packet and increase scheduler's qlen by
+one. In summary, we can leverage pfifo_tail_enqueue() to increase qlen by
+one and return `NET_XMIT_CN` status code.
 
-The corresponding interrupt flag trace:
+The problem is:
+Let's say we have two qdiscs: Qdisc_A and Qdisc_B.
+ - Qdisc_A's type must have '->graft()' function to create parent/child relationship.
+   Let's say Qdisc_A's type is `hfsc`. Enqueue packet to this qdisc will trigger `hfsc_enqueue`.
+ - Qdisc_B's type is pfifo_head_drop. Enqueue packet to this qdisc will trigger `pfifo_tail_enqueue`.
+ - Qdisc_B is configured to have `sch->limit == 0`.
+ - Qdisc_A is configured to route the enqueued's packet to Qdisc_B.
 
-  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
-  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
+Enqueue packet through Qdisc_A will lead to:
+ - hfsc_enqueue(Qdisc_A) -> pfifo_tail_enqueue(Qdisc_B)
+ - Qdisc_B->q.qlen += 1
+ - pfifo_tail_enqueue() return `NET_XMIT_CN`
+ - hfsc_enqueue() check for `NET_XMIT_SUCCESS` and see `NET_XMIT_CN` => hfsc_enqueue() don't increase qlen of Qdisc_A.
 
-That means __up_console_sem() was invoked with interrupts enabled. Further
-instrumentation revealed that in the interrupt disabled section of kexec
-jump one of the syscore_suspend() callbacks woke up a task, which set the
-NEED_RESCHED flag. A later callback in the resume path invoked
-cond_resched() which in turn led to the invocation of the scheduler:
+The whole process lead to a situation where Qdisc_A->q.qlen == 0 and Qdisc_B->q.qlen == 1.
+Replace 'hfsc' with other type (for example: 'drr') still lead to the same problem.
+This violate the design where parent's qlen should equal to the sum of its childrens'qlen.
 
-  __cond_resched+0x21/0x60
-  down_timeout+0x18/0x60
-  acpi_os_wait_semaphore+0x4c/0x80
-  acpi_ut_acquire_mutex+0x3d/0x100
-  acpi_ns_get_node+0x27/0x60
-  acpi_ns_evaluate+0x1cb/0x2d0
-  acpi_rs_set_srs_method_data+0x156/0x190
-  acpi_pci_link_set+0x11c/0x290
-  irqrouter_resume+0x54/0x60
-  syscore_resume+0x6a/0x200
-  kernel_kexec+0x145/0x1c0
-  __do_sys_reboot+0xeb/0x240
-  do_syscall_64+0x95/0x180
+Bug impact: This issue can be used for user->kernel privilege escalation when it is reachable.
 
-This is a long standing problem, which probably got more visible with
-the recent printk changes. Something does a task wakeup and the
-scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
-invokes schedule() from a completely bogus context. The scheduler
-enables interrupts after context switching, which causes the above
-warning at the end.
-
-Quite some of the code paths in syscore_suspend()/resume() can result in
-triggering a wakeup with the exactly same consequences. They might not
-have done so yet, but as they share a lot of code with normal operations
-it's just a question of time.
-
-The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
-models. Full preemption is not affected as cond_resched() is disabled and
-the preemption check preemptible() takes the interrupt disabled flag into
-account.
-
-Cure the problem by adding a corresponding check into cond_resched().
-
-Reported-by: David Woodhouse <dwmw@amazon.co.uk>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: David Woodhouse <dwmw@amazon.co.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
+Fixes: 57dbb2d83d10 ("sched: add head drop fifo queue")
+Reported-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Quang Le <quanglex97@gmail.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Link: https://patch.msgid.link/20250204005841.223511-2-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_fifo.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5714,7 +5714,7 @@ SYSCALL_DEFINE0(sched_yield)
- #ifndef CONFIG_PREEMPTION
- int __sched _cond_resched(void)
+--- a/net/sched/sch_fifo.c
++++ b/net/sched/sch_fifo.c
+@@ -38,6 +38,9 @@ static int pfifo_tail_enqueue(struct sk_
  {
--	if (should_resched(0)) {
-+	if (should_resched(0) && !irqs_disabled()) {
- 		preempt_schedule_common();
- 		return 1;
- 	}
+ 	unsigned int prev_backlog;
+ 
++	if (unlikely(READ_ONCE(sch->limit) == 0))
++		return qdisc_drop(skb, sch, to_free);
++
+ 	if (likely(sch->q.qlen < sch->limit))
+ 		return qdisc_enqueue_tail(skb, sch);
+ 
 
 
