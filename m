@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688A625D8E8;
-	Tue, 11 Mar 2025 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4DB25D8F9;
+	Tue, 11 Mar 2025 15:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705924; cv=none; b=BcsUeXKlwSohrExWkSsbLqy4hT0qfpL7NoxWYv4L7mfO5mnHKajCe5cP1StJENhCent41aeNOS/V4ZeEJ97MJEb4An5bmW4VHljuypGD1NydaXiudKSMng+V81hziIEJxiQWr2oLNz1y7gbPXMui32mOeOdP6WjjF6856RYJ01A=
+	t=1741705927; cv=none; b=Bc3ByZF3jfvSHs6UoScUF1H5g/hnnXO5ftIvlxp/qWDmUrwR7AmofiCnTeolKYlyw4OYTO5v8C0u1vi6QP6UITzXrYFvbR8VhWEHhoMPYjOIOyTwkQmKQchTG27KVBUwKev6p8Yi3qOqQkM0VDUWhceiVlgLNteJ7/Ck3QgY5uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705924; c=relaxed/simple;
-	bh=8Au0xJNj998sZmg/8D9Xt2xbONpZwdo5DTiNFMrRZlU=;
+	s=arc-20240116; t=1741705927; c=relaxed/simple;
+	bh=kCIzE4bC5v7a9XtVebO+g0CxUSpZcODjkjzIubvAMg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxQUVmnb90ZlvWQQ2NMahAqZP97FQ3ddZX2tOHM5SfSHkW99luPOdxppvGVhs6g4dGx0HHqm7svNbL0JnCFGWCzz9ctdhFOj+s+oOeJ1vN1/DbgATuXgLu2XLIOvYZTsQwrD6oLsEtOJ0833Y0EkNX4kytd1iP/8iDQVvXHXG+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N03hRhNU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AbtpQqHS0syNkIshUFbppa/CjdAnR8JNI3qhqU7u83jW8UA8Zh870N5A4iymfy9WOGaIX33qb1L0GS1T13a9dhA2Rw45XZPb6ZiRch+R2jojB8m5kPpCQacXj4mEhab09pf0CTvQJHbOFhYb70v1y4lhzSAjrlTs5V6ThjJ6b1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdGFhWzl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N03hRhNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2B0C4CEE9;
-	Tue, 11 Mar 2025 15:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdGFhWzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7270FC4CEF1;
+	Tue, 11 Mar 2025 15:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705923;
-	bh=8Au0xJNj998sZmg/8D9Xt2xbONpZwdo5DTiNFMrRZlU=;
+	s=korg; t=1741705926;
+	bh=kCIzE4bC5v7a9XtVebO+g0CxUSpZcODjkjzIubvAMg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N03hRhNU52PMsO3fl74Hfo+09GMmPbVVJJhWeffm/bMyXn/nKSKsC1rFmhLUYmEib
-	 YdMF9kEwbzyF9jilYvj6rT63WeBSUNmDPr8kVKc6EyebFsRze11dUh+FXlWopiMBUz
-	 D2f4TYhaz4OVy2hnZmMoY8ALJI4k8GBsfVJpFa28=
+	b=KdGFhWzlL0mdco7tfuy425DmApsoQDszHs7Nq9oLGdbwcZ4jdAQ47W+/TtqGFa0KT
+	 bQ44PkNZRVTraVwFo0MlnlsT2SbV6DOMy07oqQoLQ7RRsbgdWspvmStiwmgCb0/vzq
+	 GTn9x29Kw8T1bvF+hE0+yWYAxyyF1ur/8Oy7uc9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 201/328] net: treat possible_net_t net pointer as an RCU one and add read_pnet_rcu()
-Date: Tue, 11 Mar 2025 15:59:31 +0100
-Message-ID: <20250311145722.891533337@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 184/328] usb: gadget: f_midi: fix MIDI Streaming descriptor lengths
+Date: Tue, 11 Mar 2025 15:59:14 +0100
+Message-ID: <20250311145722.215381098@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,64 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 2034d90ae41ae93e30d492ebcf1f06f97a9cfba6 ]
+commit da1668997052ed1cb00322e1f3b63702615c9429 upstream.
 
-Make the net pointer stored in possible_net_t structure annotated as
-an RCU pointer. Change the access helpers to treat it as such.
-Introduce read_pnet_rcu() helper to allow caller to dereference
-the net pointer under RCU read lock.
+While the MIDI jacks are configured correctly, and the MIDIStreaming
+endpoint descriptors are filled with the correct information,
+bNumEmbMIDIJack and bLength are set incorrectly in these descriptors.
 
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: dd205fcc33d9 ("ipv4: use RCU protection in rt_is_expired()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This does not matter when the numbers of in and out ports are equal, but
+when they differ the host will receive broken descriptors with
+uninitialized stack memory leaking into the descriptor for whichever
+value is smaller.
+
+The precise meaning of "in" and "out" in the port counts is not clearly
+defined and can be confusing.  But elsewhere the driver consistently
+uses this to match the USB meaning of IN and OUT viewed from the host,
+so that "in" ports send data to the host and "out" ports receive data
+from it.
+
+Cc: stable <stable@kernel.org>
+Fixes: c8933c3f79568 ("USB: gadget: f_midi: allow a dynamic number of input and output ports")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250130195035.3883857-1-jkeeping@inmusicbrands.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/net_namespace.h | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_midi.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
-index 0d61b452b9082..6ce0ec2dd2032 100644
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -310,21 +310,30 @@ static inline int check_net(const struct net *net)
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -997,11 +997,11 @@ static int f_midi_bind(struct usb_config
+ 	}
  
- typedef struct {
- #ifdef CONFIG_NET_NS
--	struct net *net;
-+	struct net __rcu *net;
- #endif
- } possible_net_t;
+ 	/* configure the endpoint descriptors ... */
+-	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
+-	ms_out_desc.bNumEmbMIDIJack = midi->in_ports;
++	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
++	ms_out_desc.bNumEmbMIDIJack = midi->out_ports;
  
- static inline void write_pnet(possible_net_t *pnet, struct net *net)
- {
- #ifdef CONFIG_NET_NS
--	pnet->net = net;
-+	rcu_assign_pointer(pnet->net, net);
- #endif
- }
+-	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
+-	ms_in_desc.bNumEmbMIDIJack = midi->out_ports;
++	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
++	ms_in_desc.bNumEmbMIDIJack = midi->in_ports;
  
- static inline struct net *read_pnet(const possible_net_t *pnet)
- {
- #ifdef CONFIG_NET_NS
--	return pnet->net;
-+	return rcu_dereference_protected(pnet->net, true);
-+#else
-+	return &init_net;
-+#endif
-+}
-+
-+static inline struct net *read_pnet_rcu(possible_net_t *pnet)
-+{
-+#ifdef CONFIG_NET_NS
-+	return rcu_dereference(pnet->net);
- #else
- 	return &init_net;
- #endif
--- 
-2.39.5
-
+ 	/* ... and add them to the list */
+ 	endpoint_descriptor_index = i;
 
 
