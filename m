@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562DD25D8F9;
-	Tue, 11 Mar 2025 15:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF5825D8F9;
+	Tue, 11 Mar 2025 15:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706041; cv=none; b=OWIAmbGQZM9N8KtmUg0jBvTfjGiukm4Io5HMKV1uP6QopNpyYj5pgbTsVLAPiSwmqtda6bUsed+Nt1CX62qAuybNEshP6ZvYJILaJ9+q6XQ4HN3B2AnOz6tZJEt8w4DL6b7+w81KLjFs8HWHcOIRMrx03st0A5mRYJALgzbyImY=
+	t=1741706044; cv=none; b=ZYf7qGCmBh5dAgSCfKZBD6HZjP9gz/hyxBEf5w4GSjA0ViNWvXerYWQKpRHIp1KFheb+joJ8erxD73zTV6uOYkf0XFrNLcjZhwL077N4wvBpw82k/LAT8aljDgfHQdwXiKyMHOAkjHDSsHilxkfDNMowspI1DnuGipRuYVgDLhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706041; c=relaxed/simple;
-	bh=WmNGpJsdJm4bDqxjY15BVdH8rZDLgHnApw7NZ1A0ctU=;
+	s=arc-20240116; t=1741706044; c=relaxed/simple;
+	bh=EZ6dvufOJZQ8DdjjLmMTnWyWTPUFyJu3A1LJJe0oFZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFEShyzX1X4J9yrk4y51k4PyIkeS8mBp87O1Ekjl8nBvp05J5whSVpWosCeyYJvSURiMxR6stPaabvqxgQ7oh/+sHgZQUhwhVm49ZlT5u60/2fqAFkFYO5sN1JSznLSSWCOd6Ij+SEkYYByWffEX/gQHxNDXlFdPorDv9SPc4L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tg+FHdNv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRAwNPCfP/oUoe+bXBWVZ7t8bzOz+jyz5Dz8ckDjv1jTizhHjGCVYQrx7jZ50co8bKQwEtgYpHMyr4HgfW8tl/CQAbEDWU4MumugeApAZZC+2kRWfvt5rTRRNT+dFjRKXWmK5QXHIJsqphX9jkt6w7na1uod+McE88Jre3oi9dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuqD8zvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tg+FHdNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3928C4CEE9;
-	Tue, 11 Mar 2025 15:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuqD8zvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C263CC4CEE9;
+	Tue, 11 Mar 2025 15:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706041;
-	bh=WmNGpJsdJm4bDqxjY15BVdH8rZDLgHnApw7NZ1A0ctU=;
+	s=korg; t=1741706044;
+	bh=EZ6dvufOJZQ8DdjjLmMTnWyWTPUFyJu3A1LJJe0oFZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tg+FHdNvVx6JNQdK3Uj+1ZMC0Qy3rN7xv/TWe3kg1KRPCgCXtDZ7vJV0219iWridw
-	 bqcAVFet3W1RvoP8U5vdZcpylMZLXzj6bWYpq6RXbexkvdbhN/vRIOJ5cJOevdW1q4
-	 0XxgOdyUNeROv17JjG+OO5PkTCw7101LGzJ0+hKY=
+	b=JuqD8zvW5UJp4gmXlhzjKyOMO9FeL6vo0FvzQBcMzq/qsJAuyTE/hb7zlgfVJEDcv
+	 MF1KHhFLgQL4LdtpmEipSw8bTEocLY34aujJd1lX63MO60CMshQAG4Fo225p8/fLtq
+	 vvcwqKmRfes3dbcor2RA11g5/0fhf17UGCuHtiVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 242/328] ALSA: hda/realtek - Add type for ALC287
-Date: Tue, 11 Mar 2025 16:00:12 +0100
-Message-ID: <20250311145724.532213433@linuxfoundation.org>
+	Shuang Li <shuali@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Olivier Matz <olivier.matz@6wind.com>,
+	Ivan Delalande <colona@arista.com>
+Subject: [PATCH 5.4 225/328] vlan: move dev_put into vlan_dev_uninit
+Date: Tue, 11 Mar 2025 15:59:55 +0100
+Message-ID: <20250311145723.855037451@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,64 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 99cee034c28947fc122799b0b7714e01b047f3f3 ]
+commit d6ff94afd90b0ce8d1715f8ef77d4347d7a7f2c0 upstream.
 
-Add independent type for ALC287.
+Shuang Li reported an QinQ issue by simply doing:
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/2b7539c3e96f41a4ab458d53ea5f5784@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 174448badb44 ("ALSA: hda/realtek: Fixup ALC225 depop procedure")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  # ip link add dummy0 type dummy
+  # ip link add link dummy0 name dummy0.1 type vlan id 1
+  # ip link add link dummy0.1 name dummy0.1.2 type vlan id 2
+  # rmmod 8021q
+
+ unregister_netdevice: waiting for dummy0.1 to become free. Usage count = 1
+
+When rmmods 8021q, all vlan devs are deleted from their real_dev's vlan grp
+and added into list_kill by unregister_vlan_dev(). dummy0.1 is unregistered
+before dummy0.1.2, as it's using for_each_netdev() in __rtnl_kill_links().
+
+When unregisters dummy0.1, dummy0.1.2 is not unregistered in the event of
+NETDEV_UNREGISTER, as it's been deleted from dummy0.1's vlan grp. However,
+due to dummy0.1.2 still holding dummy0.1, dummy0.1 will keep waiting in
+netdev_wait_allrefs(), while dummy0.1.2 will never get unregistered and
+release dummy0.1, as it delays dev_put until calling dev->priv_destructor,
+vlan_dev_free().
+
+This issue was introduced by Commit 563bcbae3ba2 ("net: vlan: fix a UAF in
+vlan_dev_real_dev()"), and this patch is to fix it by moving dev_put() into
+vlan_dev_uninit(), which is called after NETDEV_UNREGISTER event but before
+netdev_wait_allrefs().
+
+Fixes: 563bcbae3ba2 ("net: vlan: fix a UAF in vlan_dev_real_dev()")
+Reported-by: Shuang Li <shuali@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Olivier Matz <olivier.matz@6wind.com>
+Signed-off-by: Ivan Delalande <colona@arista.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/8021q/vlan_dev.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 9b344b80f950a..069515b065386 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3111,6 +3111,7 @@ enum {
- 	ALC269_TYPE_ALC257,
- 	ALC269_TYPE_ALC215,
- 	ALC269_TYPE_ALC225,
-+	ALC269_TYPE_ALC287,
- 	ALC269_TYPE_ALC294,
- 	ALC269_TYPE_ALC300,
- 	ALC269_TYPE_ALC623,
-@@ -3147,6 +3148,7 @@ static int alc269_parse_auto_config(struct hda_codec *codec)
- 	case ALC269_TYPE_ALC257:
- 	case ALC269_TYPE_ALC215:
- 	case ALC269_TYPE_ALC225:
-+	case ALC269_TYPE_ALC287:
- 	case ALC269_TYPE_ALC294:
- 	case ALC269_TYPE_ALC300:
- 	case ALC269_TYPE_ALC623:
-@@ -9342,7 +9344,6 @@ static int patch_alc269(struct hda_codec *codec)
- 	case 0x10ec0215:
- 	case 0x10ec0245:
- 	case 0x10ec0285:
--	case 0x10ec0287:
- 	case 0x10ec0289:
- 		spec->codec_variant = ALC269_TYPE_ALC215;
- 		spec->shutup = alc225_shutup;
-@@ -9357,6 +9358,12 @@ static int patch_alc269(struct hda_codec *codec)
- 		spec->init_hook = alc225_init;
- 		spec->gen.mixer_nid = 0; /* no loopback on ALC225, ALC295 and ALC299 */
- 		break;
-+	case 0x10ec0287:
-+		spec->codec_variant = ALC269_TYPE_ALC287;
-+		spec->shutup = alc225_shutup;
-+		spec->init_hook = alc225_init;
-+		spec->gen.mixer_nid = 0; /* no loopback on ALC287 */
-+		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
- 	case 0x10ec0294:
--- 
-2.39.5
-
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -606,7 +606,12 @@ void vlan_dev_free_egress_priority(const
+ 
+ static void vlan_dev_uninit(struct net_device *dev)
+ {
++	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
++
+ 	vlan_dev_free_egress_priority(dev);
++
++	/* Get rid of the vlan's reference to real_dev */
++	dev_put(vlan->real_dev);
+ }
+ 
+ static netdev_features_t vlan_dev_fix_features(struct net_device *dev,
+@@ -798,9 +803,6 @@ static void vlan_dev_free(struct net_dev
+ 
+ 	free_percpu(vlan->vlan_pcpu_stats);
+ 	vlan->vlan_pcpu_stats = NULL;
+-
+-	/* Get rid of the vlan's reference to real_dev */
+-	dev_put(vlan->real_dev);
+ }
+ 
+ void vlan_setup(struct net_device *dev)
 
 
