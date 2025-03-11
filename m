@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5ED25DD0F;
-	Tue, 11 Mar 2025 15:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632725DD0F;
+	Tue, 11 Mar 2025 15:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705420; cv=none; b=TBk4GKofGM0nWjpGXdpRa4DIHLg8iANvsaK2JJS+n82RbK5aGWnRPdNWYyVMRqzBSUA+qdUggTtFyVw5ceVSUD5E1XArp+bUefS6DFH9UNukrLMV1MQgDBeG2V8DyRtF7vhgQ6EGEvi4FjliL8lJejtjG0ljDegkG6N1oi9gd/Y=
+	t=1741705422; cv=none; b=ZRwO4w8RyTRs/Hcs8KtgnJSNS0T2iNMW0BAlq0zCGkE2Qncc12sWzcSoWaivMBvu/DBYX3IXhIuBWOB6psf94siqaG2dA8glqEKbSE2ZrWMWvVdMuamWbEwZwH6PHvp/Pvikl4Tkue/2xTCDcylGlr8pwdVl7GRH+PQa+WTWQ8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705420; c=relaxed/simple;
-	bh=Xof3FgNAl+tkuzAsNgvord3SVgHY06+OfMAsVTFVVH8=;
+	s=arc-20240116; t=1741705422; c=relaxed/simple;
+	bh=yCXKJa9NPOnvx89/fRM599i4E5Re9qCPe2KqAeQG/Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaVnh3fk7Fo9cL30CAAgDuxF2aTEsi3bjrLh71g2oWZHEVeWNEinBUbCNfJhgE8hR3MP/t0kdXfD6ho0LRvmhRpOdttssDo7iakqkzyjNh6RO54ccxrq+x7C7eE+1fvHheP3gdkELLawjUETRTdF4o/8+hhIh1S1jz8/LN+H10U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJw5K4dG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fm0o74klifPbDS0SlG2fdfLvS2x666WLwRg/N5kA6io/e7oa1zaBiqlv8mYlsXLoWZBl/7fNh2z27OdZi+SWNmjB+/urfh2jP+aomhulmWEcpmasJhOIRhYZ4eeNzc3eRctb0kv42RFJkAMLIynjYwn9xDHmtipRXyGpbau4z0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dc2vEBn0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJw5K4dG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E90C4CEE9;
-	Tue, 11 Mar 2025 15:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dc2vEBn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E89C4CEE9;
+	Tue, 11 Mar 2025 15:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705419;
-	bh=Xof3FgNAl+tkuzAsNgvord3SVgHY06+OfMAsVTFVVH8=;
+	s=korg; t=1741705422;
+	bh=yCXKJa9NPOnvx89/fRM599i4E5Re9qCPe2KqAeQG/Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJw5K4dG7FGI4wQnM6B590rCqy7i3ttGa5CFEv05HFAtr3rLcfQM2N+4sUMlay9e4
-	 zHmEpWS7kNXxf687lt/oKCXnO7xWai9ODGnt9YXxc1uUFVKhmNVCybmdxVF7DZ8364
-	 kvGR8/xFng5kSO+BdF6WqhQqu2Ajh8CJaneW/vnk=
+	b=dc2vEBn0eis+R6xQTcWyUk0Qg0ahqD2u+yNmmRPekTAuNqEGhfdCisMbf/57kuvfL
+	 0nIauZ4Y7GgY2JfviTgc+RyRfFjP/OeSol9znc6pPQl7RyKh+ZIKlnoseX+RK6lSph
+	 jfPjIHzbpDVjrhqkFFXYJtYB++Z1vgYWdRD8BKpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Gan <ganboing@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/328] clk: analogbits: Fix incorrect calculation of vco rate delta
-Date: Tue, 11 Mar 2025 15:56:39 +0100
-Message-ID: <20250311145716.052261940@linuxfoundation.org>
+Subject: [PATCH 5.4 030/328] net: let net.core.dev_weight always be non-zero
+Date: Tue, 11 Mar 2025 15:56:40 +0100
+Message-ID: <20250311145716.092765704@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,39 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bo Gan <ganboing@gmail.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit d7f12857f095ef38523399d47e68787b357232f6 ]
+[ Upstream commit d1f9f79fa2af8e3b45cffdeef66e05833480148a ]
 
-In wrpll_configure_for_rate() we try to determine the best PLL
-configuration for a target rate. However, in the loop where we try
-values of R, we should compare the derived `vco` with `target_vco_rate`.
-However, we were in fact comparing it with `target_rate`, which is
-actually after Q shift. This is incorrect, and sometimes can result in
-suboptimal clock rates. Fix it.
+The following problem was encountered during stability test:
 
-Fixes: 7b9487a9a5c4 ("clk: analogbits: add Wide-Range PLL library")
-Signed-off-by: Bo Gan <ganboing@gmail.com>
-Link: https://lore.kernel.org/r/20240830061639.2316-1-ganboing@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+(NULL net_device): NAPI poll function process_backlog+0x0/0x530 \
+	returned 1, exceeding its budget of 0.
+------------[ cut here ]------------
+list_add double add: new=ffff88905f746f48, prev=ffff88905f746f48, \
+	next=ffff88905f746e40.
+WARNING: CPU: 18 PID: 5462 at lib/list_debug.c:35 \
+	__list_add_valid_or_report+0xf3/0x130
+CPU: 18 UID: 0 PID: 5462 Comm: ping Kdump: loaded Not tainted 6.13.0-rc7+
+RIP: 0010:__list_add_valid_or_report+0xf3/0x130
+Call Trace:
+? __warn+0xcd/0x250
+? __list_add_valid_or_report+0xf3/0x130
+enqueue_to_backlog+0x923/0x1070
+netif_rx_internal+0x92/0x2b0
+__netif_rx+0x15/0x170
+loopback_xmit+0x2ef/0x450
+dev_hard_start_xmit+0x103/0x490
+__dev_queue_xmit+0xeac/0x1950
+ip_finish_output2+0x6cc/0x1620
+ip_output+0x161/0x270
+ip_push_pending_frames+0x155/0x1a0
+raw_sendmsg+0xe13/0x1550
+__sys_sendto+0x3bf/0x4e0
+__x64_sys_sendto+0xdc/0x1b0
+do_syscall_64+0x5b/0x170
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The reproduction command is as follows:
+  sysctl -w net.core.dev_weight=0
+  ping 127.0.0.1
+
+This is because when the napi's weight is set to 0, process_backlog() may
+return 0 and clear the NAPI_STATE_SCHED bit of napi->state, causing this
+napi to be re-polled in net_rx_action() until __do_softirq() times out.
+Since the NAPI_STATE_SCHED bit has been cleared, napi_schedule_rps() can
+be retriggered in enqueue_to_backlog(), causing this issue.
+
+Making the napi's weight always non-zero solves this problem.
+
+Triggering this issue requires system-wide admin (setting is
+not namespaced).
+
+Fixes: e38766054509 ("[NET]: Fix sysctl net.core.dev_weight")
+Fixes: 3d48b53fb2ae ("net: dev_weight: TX/RX orthogonality")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Link: https://patch.msgid.link/20250116143053.4146855-1-liujian56@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/analogbits/wrpll-cln28hpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sysctl_net_core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/analogbits/wrpll-cln28hpc.c b/drivers/clk/analogbits/wrpll-cln28hpc.c
-index 776ead319ae9c..9df572579afb4 100644
---- a/drivers/clk/analogbits/wrpll-cln28hpc.c
-+++ b/drivers/clk/analogbits/wrpll-cln28hpc.c
-@@ -287,7 +287,7 @@ int wrpll_configure_for_rate(struct wrpll_cfg *c, u32 target_rate,
- 			vco = vco_pre * f;
- 		}
+diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
+index 586598887095d..b3b39b0e0745b 100644
+--- a/net/core/sysctl_net_core.c
++++ b/net/core/sysctl_net_core.c
+@@ -242,7 +242,7 @@ static int proc_do_dev_weight(struct ctl_table *table, int write,
+ 	int ret, weight;
  
--		delta = abs(target_rate - vco);
-+		delta = abs(target_vco_rate - vco);
- 		if (delta < best_delta) {
- 			best_delta = delta;
- 			best_r = r;
+ 	mutex_lock(&dev_weight_mutex);
+-	ret = proc_dointvec(table, write, buffer, lenp, ppos);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+ 	if (!ret && write) {
+ 		weight = READ_ONCE(weight_p);
+ 		WRITE_ONCE(dev_rx_weight, weight * dev_weight_rx_bias);
+@@ -356,6 +356,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "dev_weight_rx_bias",
+@@ -363,6 +364,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "dev_weight_tx_bias",
+@@ -370,6 +372,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_do_dev_weight,
++		.extra1         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "netdev_max_backlog",
 -- 
 2.39.5
 
