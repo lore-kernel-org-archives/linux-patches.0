@@ -1,94 +1,80 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3A11C3BEB
-	for <patches@lists.linux.dev>; Tue, 11 Mar 2025 15:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A0C1C3BEB;
+	Tue, 11 Mar 2025 15:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706131; cv=none; b=ro0PreFgyDmkKsYaJRm1yXvzjQDunSnKm95JwsINqrFSjqjG3FHi2oWdTdIM6F9F+3AVZ8OxpIm8L9zjfUNW6t609cIXV1VrUN/Kq9Uf2crEshLopeVz3NWaN+VLniadLVg4nmKg39Y7UQ/WlHc98JWfiauNE8QRuhOROsos48U=
+	t=1741706132; cv=none; b=AsgNf2TlC3VCpQHW4hgJ/if0wdGuFrV2KMq/sMPiIr3cwvMt7gqVifi7E/+FD4CIn/wxRwLo1bfSmmy/AotU7boBVzf74L0wtpIsea0ZTa+XeCkE/84tzcvFP0HfTN9qK+AXAAjbql3USbVOYbIKjzhRpAocIVk01uj2nQoo2LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706131; c=relaxed/simple;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eC+FPtp9BB8+SoKNKWqndiSkHvRqdrKJZj1n+Se7cp7B3Q0FNDwj7PQmbeOQfc7IWY187iNigxS9bxAJBskKNuqS363Sooko7OoTW1OQ7EHJLm1YCkf4vvohNhq++f+IMTSlJrhT7JE+CdFP2kjtGGeSGHGLoTZoGy3yRImFsI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=fH4zVI3k; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1741706132; c=relaxed/simple;
+	bh=vuQ2lbCOAx4Xsp8RevVqoGxkiNZk1FN/eCe74ikrwZk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NafR5N6rQ27W4EDM2oSrsTk7bcKD+TRG3NNO1PjA1T7fwvGjD1pPS9sk+8cishdCWO+JaVu+rKDvWu31jTREfI0WrnBEYuLU5E6pDeHmvZ0ImNlm0KtbHVaXaMfTCZu5dGVGD6f5I0H2fO7SJiiO+YASG/W8X2wVrqvkDiRGEwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rARGzDvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="fH4zVI3k"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1741706126; x=1742310926; i=rwarsow@gmx.de;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=fH4zVI3kI6XIc19fwiwSeNsWGSB2gy1m8YYiPUnOn3sJv6Ew86o99x/zyiB7Hqv/
-	 cdGocUAYYNIPULxbLrWlA7L3b/bwn9fsXZKdy2AaMsN5TYZJW0xGV9dLfetYRyztr
-	 Ln+gcb1N0ZgINg0/6dsJ12Q5gj0Yc+758Ncg7bHXereZ+r88SMolvP2d9bwu5VVkx
-	 MffGuNJrT1YEbdorKDQPe/8/3tjLSedtVS77EXwxugSHmSszcF5O81h0Fd+42X+C5
-	 oGtGyfMjzbp6NtdmE7ELUvAVfi6Ux4Pm1g88QHKKJaQz34UnIVzM7dwnBtcX60toZ
-	 okXUV+kb9yHd3srsUA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.200.20] ([46.142.32.160]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJVDM-1tcYsA1qAK-00RmpX; Tue, 11
- Mar 2025 16:15:26 +0100
-Message-ID: <f2ea4017-5a57-4fa1-aa73-90b3bfb699f5@gmx.de>
-Date: Tue, 11 Mar 2025 16:15:24 +0100
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rARGzDvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E770C4CEE9;
+	Tue, 11 Mar 2025 15:15:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1741706131;
+	bh=vuQ2lbCOAx4Xsp8RevVqoGxkiNZk1FN/eCe74ikrwZk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rARGzDvqiyFAIgivwvborYQKe0ti6epIcG/TjepDaVWPhyCkyI2feS0jYKnBfTewJ
+	 2PsRnrA3BaesI6e5Bkpjyv1MqG44scGS/DTK1A4pwnuzX6Tli3KCwbMqo8DDnIRqqa
+	 ZyGMbGTXCwLKjECj+83qUdZjjrtxmezEHL9/UuHg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	John Veness <john-linux@pelago.org.uk>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 254/328] ALSA: hda/conexant: Add quirk for HP ProBook 450 G4 mute LED
+Date: Tue, 11 Mar 2025 16:00:24 +0100
+Message-ID: <20250311145725.004836546@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
+References: <20250311145714.865727435@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 000/197] 6.13.7-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250311144241.070217339@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20250311144241.070217339@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:vTh0HqMWvP97ZqYVTQnETiTjR4dbW50Q3/iHpaWoQOc1nz7Jhs/
- pfwhYsRt0FiYmhy5pJGe2LkSAMPaVOv0lkcD69vVZyREpK7jqlFSdYV/ptUgafIXyLve1sH
- yUH5UhX5H/HLOfrA0SCo7cAusrYznslTvACBk9Ancz3ldcZEYV6QQIh9G273TRny97T7fU4
- lhBRqyOBZQ0qjQvDbA+OQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:YMPeiVQDR+Q=;KSuoMgpqlYg9R+ln+HdzfFom8PU
- P++JvP7awCR86BOe0QepLLFH/h74LohQkPC5GuPYOtTnUho2H5wxkHcBqa2hJ22HqV3RoU/Hl
- WSrgG62dl6c+ThpnrMCMsF6a726voxKJZQXUDS1gkHattw6LS/5kiaEqQ5VJbIfCgQGMUFbW6
- PbJhW7FyYSU7kmBG3na799G9KLECo239WiiVF2lLz4W+Fl+WEUDxhe7Zf9yh5tC4dztOvdqq3
- 29HXzRjexs1OoVKtk4DMgT+tZ0JNbNb+KYYO6DcpM4Sx6onXfQLkTivSgoBRCGHfpPYothpKc
- tqah1scPQiHCKB9zf3Fs2qYduF7tCISE/BZ2PGFME1Ewb/p0SW6SCgd6BEBw6w24qhx59G0Qi
- 412twVa5tvFNoAedS61m9XdHdJx9XVwHtpVdVP/5a2bFv+G2RUieLb+sgDLYbTTE2gVlZgbzd
- T1BmHKqoqpzgGdg2TwpGbaqFpBxHRDDoL7RUjZW8GhrhdQqoBue3hzPy8VmUOaehVlDMQAd7C
- QqhMzphoAlG63dv7kXCFIDigNscC4/jsPbGVFbYS/fFce4UP8rEjZI+mb/HOy3RknBYtSiyBR
- Ko7j6ORtSF0Qh+k56g4MER5785OWo49kye0sYvuEpmwcZbmyASeag7kseY3Ypq8Xb8iBSnUxR
- C91VoY2P03hbrOhWv7xBcLt2Sv5q6D2dMryLGExrmkOxigxODpxEzGiEv1iCQJdubV/h0ECUA
- 5z7XNq/8HkOHsX5Kq2CnDy1XNykEpDcAHiA2+BW2m82nY4LtYhDOMMpSMWr5kztfUjUuVc6/a
- 6zJiXxg1kn1ZEtqx4udSg5kN4JYbScM7gLtssBZ7jngytgSP5P7esWIRadpdnb012fdmMQ7iC
- J/wttx1uilIveU/D18Lk3eZjYQ0HwD4rY1mcIvxykn6GKbBOE1521uVcgb0WMz1Sh0go/h0Ny
- JAbdowYLL9U4Fi7AqBhgaHe1pCy/Qdt00Q+ZyMoaGWoJABs2ikRIAQ4m7UDLccD0rZYx6a5zQ
- 1bkBaykvRHPx5SHdWkl7GPl91MQsrnBMeizzbEZTg9iF3QN3da7p6YJc7eTSHuzkQsNsU9sFE
- hIPkfl2GsC6Iw0IqkNFFGVZb6Bkbeseyr4tdx8jDmJxValXyFWxRf4decegYBh24teLKhIvC4
- YXpnnOXkaj/vPHeF8SG+Rv2nBmjdJ+u44JRbfDpq7lu+7WVc8Ux3Afhqe38CHQPJ+eT2sQZG7
- 4idDPPRWsMr89fCGIB67kcyxAJWaaRg3BeFa9sPVC4l7wu1pLRbhPtaV1ETt3ZIVGMTv3eDaA
- emOk/SxhcgoP0l83bN7Sef0NuAtVUCxm2En+56DhGmMxk8uTWkK8cJeQ3TKdssjyStQ6ScS7U
- VRzFbUmkjGuDcM33YmgsFi5ob5SqmA/J5pHTk6KdeVXiFaJ8g09iWHcAzKR02ZUR2tNt0d8L5
- F++Ww2v+59G+W7anijCa28JaD8OA=
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
-no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+------------------
 
-Thanks
+From: John Veness <john-linux@pelago.org.uk>
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+commit 6d1f86610f23b0bc334d6506a186f21a98f51392 upstream.
+
+Allows the LED on the dedicated mute button on the HP ProBook 450 G4
+laptop to change colour correctly.
+
+Signed-off-by: John Veness <john-linux@pelago.org.uk>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/2fb55d48-6991-4a42-b591-4c78f2fad8d7@pelago.org.uk
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ sound/pci/hda/patch_conexant.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -949,6 +949,7 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x103c, 0x814f, "HP ZBook 15u G3", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x8174, "HP Spectre x360", CXT_FIXUP_HP_SPECTRE),
+ 	SND_PCI_QUIRK(0x103c, 0x822e, "HP ProBook 440 G4", CXT_FIXUP_MUTE_LED_GPIO),
++	SND_PCI_QUIRK(0x103c, 0x8231, "HP ProBook 450 G4", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x828c, "HP EliteBook 840 G4", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x8299, "HP 800 G3 SFF", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+
+
