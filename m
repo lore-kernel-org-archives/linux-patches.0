@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111621DF749;
-	Tue, 11 Mar 2025 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4841DF749;
+	Tue, 11 Mar 2025 15:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706832; cv=none; b=lRLhz2xjGJzCjlpDVwGlfIiMcFIDISD+OTg2RGKCiYWMslizq7gHRSyWbU45mCx/RCRR1VElNCFdZv/Ocp4f+7A2EEfv1wqEIXEdb0XYGmj/3PdoGdf3uDZGwI+SRL0C2DLrnUHojwGPYDYX2Gx4YW8fnYV+WkOpC3y1e6lpPAs=
+	t=1741706835; cv=none; b=fFGB0akPTCAi4ICAZKMeeW2TDQw8qrrm+q8w90zkGT/lhH4d0f7AjdTCS2kZoOAtXd2CkEpWkLhh0gdCw43ckpQCpir/FMD9iQgDLh729ivcUmc9bgHU4b/BTpTY5yVnNCEYbTQ+YN0DYwRM4Os1UW8fhdzgTTmmRtwu844j8n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706832; c=relaxed/simple;
-	bh=iKOBv68xWAnkPFpMeXEzQ0Zx2kz1oO2ZpIix+OPJx/A=;
+	s=arc-20240116; t=1741706835; c=relaxed/simple;
+	bh=sQjvohlMReDGeLrJU9dRAz6Mlve+axNVYWIEaus73Ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5inYQaLDdvV641Q7O7icWB9ZBFD+tNgpgjMjRhBXVU+boVndVohX7GagaGG49iWVMWWV8PXk0u5oLJLj1D0Q5lQ1n+OZTm/b3d7h5vQa5grFyqaYW83bl0fFOskeZF5izuppZGlbKHVh+K/x2PLdokgsrOUgMVAvdOODIOlFXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExWdfKw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFXNns/96tlcwHrVsO+/9LielHwVAWhfIIKCb68Ri9llyisURL/Ri1LbwJgdK19a7GV2B6j5j6hFHWcuAEW5KngZWpCgC9jxOl2H7Sa4+ChEJtOeIqAS+L10RCh6VEARAaMCvcYSn834E5ZmvWJtUTRNWIGBVwO4w2U8ouRUq3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi3rL/W3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExWdfKw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC77C4CEE9;
-	Tue, 11 Mar 2025 15:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi3rL/W3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7284AC4CEE9;
+	Tue, 11 Mar 2025 15:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706831;
-	bh=iKOBv68xWAnkPFpMeXEzQ0Zx2kz1oO2ZpIix+OPJx/A=;
+	s=korg; t=1741706834;
+	bh=sQjvohlMReDGeLrJU9dRAz6Mlve+axNVYWIEaus73Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExWdfKw1JO0UXkzlEwrvJcU+vVEo2pY8oZgnAT7sUEV3PJfF/G8J2zuiizSV8BXmb
-	 TXdevplKTap0CRJNHsNS/og1CciWoTbDDyb2btjWSa4wurKlBYXpp7+4p6BezQbELY
-	 R1UcKzFJmUzpEm0edNEytMfTkLUBsWqz9FaJ/QZk=
+	b=Mi3rL/W36Mo18hqix7xGkEecXHpv0jfJMFQVu6S135ealpaE4snv86l2WgynjOTaA
+	 ubCpPcFq3tMR/A2+RQaYCL4eaoHqZuluuf+uSaiE7h+ceHEQLrfWX4pR9H/RhY0GPU
+	 slt++d+W26rz4QigTcsFcWBOROmKIPpauTdtfkQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjie Yang <quic_yuanjiey@quicinc.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 142/462] mmc: sdhci-msm: Correctly set the load for the regulator
-Date: Tue, 11 Mar 2025 15:56:48 +0100
-Message-ID: <20250311145803.966590579@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 176/462] clk: qcom: clk-alpha-pll: fix alpha mode configuration
+Date: Tue, 11 Mar 2025 15:57:22 +0100
+Message-ID: <20250311145805.306799910@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,122 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 20a0c37e44063997391430c4ae09973e9cbc3911 ]
+commit 33f1722eb86e45320a3dd7b3d42f6593a1d595c2 upstream.
 
-Qualcomm regulator supports two power supply modes: HPM and LPM.
-Currently, the sdhci-msm.c driver does not set the load to adjust
-the current for eMMC and SD. If the regulator dont't set correct
-load in LPM state, it will lead to the inability to properly
-initialize eMMC and SD.
+Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
+added support for configuring alpha mode, but it seems that the feature
+was never working in practice.
 
-Set the correct regulator current for eMMC and SD to ensure that the
-device can work normally even when the regulator is in LPM.
+The value of the alpha_{en,mode}_mask members of the configuration gets
+added to the value parameter passed to the regmap_update_bits() function,
+however the same values are not getting applied to the bitmask. As the
+result, the respective bits in the USER_CTL register are never modifed
+which leads to improper configuration of several PLLs.
 
-Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+The following table shows the PLL configurations where the 'alpha_en_mask'
+member is set and which are passed as a parameter for the
+clk_alpha_pll_configure() function. In the table the 'expected rate' column
+shows the rate the PLL should run at with the given configuration, and
+the 'real rate' column shows the rate the PLL runs at actually. The real
+rates has been verified on hardwareOn IPQ* platforms, on other platforms,
+those are computed values only.
+
+      file                 pll         expected rate   real rate
+  dispcc-qcm2290.c     disp_cc_pll0      768.0 MHz     768.0 MHz
+  dispcc-sm6115.c      disp_cc_pll0      768.0 MHz     768.0 MHz
+  gcc-ipq5018.c        ubi32_pll        1000.0 MHz !=  984.0 MHz
+  gcc-ipq6018.c        nss_crypto_pll   1200.0 MHz    1200.0 MHz
+  gcc-ipq6018.c        ubi32_pll        1497.6 MHz != 1488.0 MHz
+  gcc-ipq8074.c        nss_crypto_pll   1200.0 MHz != 1190.4 MHz
+  gcc-qcm2290.c        gpll11            532.0 MHz !=  518.4 MHz
+  gcc-qcm2290.c        gpll8             533.2 MHz !=  518.4 MHz
+  gcc-qcs404.c         gpll3             921.6 MHz     921.6 MHz
+  gcc-sm6115.c         gpll11            600.0 MHz !=  595.2 MHz
+  gcc-sm6115.c         gpll8             800.0 MHz !=  787.2 MHz
+  gpucc-sdm660.c       gpu_cc_pll0       800.0 MHz !=  787.2 MHz
+  gpucc-sdm660.c       gpu_cc_pll1       740.0 MHz !=  729.6 MHz
+  gpucc-sm6115.c       gpu_cc_pll0      1200.0 MHz != 1190.4 MHz
+  gpucc-sm6115.c       gpu_cc_pll1       640.0 MHz !=  633.6 MHz
+  gpucc-sm6125.c       gpu_pll0         1020.0 MHz != 1017.6 MHz
+  gpucc-sm6125.c       gpu_pll1          930.0 MHz !=  921.6 MHz
+  mmcc-sdm660.c        mmpll8            930.0 MHz !=  921.6 MHz
+  mmcc-sdm660.c        mmpll5            825.0 MHz !=  806.4 MHz
+
+As it can be seen from the above, there are several PLLs which are
+configured incorrectly.
+
+Change the code to apply both 'alpha_en_mask' and 'alpha_mode_mask'
+values to the bitmask in order to configure the alpha mode correctly.
+
+Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
+in the table above. Since the 'alpha_mode_mask' is not used by any driver
+currently, that part of the change causes no functional changes.
+
+Cc: stable@vger.kernel.org
+Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250114083514.258379-1-quic_yuanjiey@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Tested-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 53 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 3366956a4ff18..c9298a986ef0a 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -131,9 +131,18 @@
- /* Timeout value to avoid infinite waiting for pwr_irq */
- #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -240,6 +240,8 @@ void clk_alpha_pll_configure(struct clk_
+ 	mask |= config->pre_div_mask;
+ 	mask |= config->post_div_mask;
+ 	mask |= config->vco_mask;
++	mask |= config->alpha_en_mask;
++	mask |= config->alpha_mode_mask;
  
-+/* Max load for eMMC Vdd supply */
-+#define MMC_VMMC_MAX_LOAD_UA	570000
-+
- /* Max load for eMMC Vdd-io supply */
- #define MMC_VQMMC_MAX_LOAD_UA	325000
+ 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
  
-+/* Max load for SD Vdd supply */
-+#define SD_VMMC_MAX_LOAD_UA	800000
-+
-+/* Max load for SD Vdd-io supply */
-+#define SD_VQMMC_MAX_LOAD_UA	22000
-+
- #define msm_host_readl(msm_host, host, offset) \
- 	msm_host->var_ops->msm_readl_relaxed(host, offset)
- 
-@@ -1383,11 +1392,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
- 	return ret;
- }
- 
--static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
-+static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
-+{
-+	int load;
-+
-+	if (!hpm)
-+		load = 0;
-+	else if (!mmc->card)
-+		load = max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA);
-+	else if (mmc_card_mmc(mmc->card))
-+		load = MMC_VMMC_MAX_LOAD_UA;
-+	else if (mmc_card_sd(mmc->card))
-+		load = SD_VMMC_MAX_LOAD_UA;
-+	else
-+		return;
-+
-+	regulator_set_load(mmc->supply.vmmc, load);
-+}
-+
-+static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
-+{
-+	int load;
-+
-+	if (!hpm)
-+		load = 0;
-+	else if (!mmc->card)
-+		load = max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA);
-+	else if (mmc_card_sd(mmc->card))
-+		load = SD_VQMMC_MAX_LOAD_UA;
-+	else
-+		return;
-+
-+	regulator_set_load(mmc->supply.vqmmc, load);
-+}
-+
-+static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
-+			      struct mmc_host *mmc, bool hpm)
- {
- 	if (IS_ERR(mmc->supply.vmmc))
- 		return 0;
- 
-+	msm_config_vmmc_regulator(mmc, hpm);
-+
- 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
- }
- 
-@@ -1400,6 +1446,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
- 	if (msm_host->vqmmc_enabled == level)
- 		return 0;
- 
-+	msm_config_vqmmc_regulator(mmc, level);
-+
- 	if (level) {
- 		/* Set the IO voltage regulator to default voltage level */
- 		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
-@@ -1622,7 +1670,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
- 	}
- 
- 	if (pwr_state) {
--		ret = sdhci_msm_set_vmmc(mmc);
-+		ret = sdhci_msm_set_vmmc(msm_host, mmc,
-+					 pwr_state & REQ_BUS_ON);
- 		if (!ret)
- 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
- 					pwr_state & REQ_BUS_ON);
--- 
-2.39.5
-
 
 
