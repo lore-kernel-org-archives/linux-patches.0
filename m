@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A101425EFB2;
-	Tue, 11 Mar 2025 15:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5F725E81A;
+	Tue, 11 Mar 2025 15:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705576; cv=none; b=Ks9EBoyIqWIkgVa+WJVb4DZMRT2BQPhgdYfb/p2HYKDC3FaxMDL/sJW1R3My4vwbzAIooJwoLiKu0kyEP4XEkmo8DFRfJVWtEMBSQcHE00XkGUNQntBiPKzISpnBZylBm7RdI5j7gd+nYbBWKg15yKosIBgBb+S6JWp6XgzKW7k=
+	t=1741705579; cv=none; b=OUcczF+xy+Tzui4L6tWc5gXvuVNlQ1LGBixKo7xNuprrEjef1dgyb30FMrvJluTcj2AD2VPAqQKIftnv6IqvrxezMEja8VivAMSZtjzF5NAE2tCEQR+XlG65ZhlKYr3z/EI9rrkbDoUuvt2Ngs6iYbi2mcwC818+seNes61SyVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705576; c=relaxed/simple;
-	bh=v0O7dDS8UJVRhfkD7298ncnDXTU0KWQAQ0kaDyJ9sdA=;
+	s=arc-20240116; t=1741705579; c=relaxed/simple;
+	bh=fY7AZMK8mgHf7Mr7KtLu7hhwSbZESfu3E1NgsXyQ+Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCa+nSu2UUZHiFR5x86GVFu4lgoiQGj2xMVpGa8lxeXDU+1wz1MwTV3GIgprLFuCShUIdJDg5RtrwFR6fEnf4MkTT+6RYkN1lOJDxfuWq3+BMrGdu/NvS8SZYQUmAg1W6f+C0ZrC9mJgE/BwB882F7sjmsecEY9oZCR6AewAzXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tr+/u/Ec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YrYXR4RxHF8pXntcdOnoUH0lmP5bSlinKZrB0zLjQwNDhLBjKdKEjNX0x6+yLoVPKkhQMpHYj0y0tP89vU1jh1ir931T8lpFxTHkDg/7+MXJY+fmiLCgimcdo2nzCRG9avwo/YPAjrxtghXXQ9hC/aW0TbU+NVP5GpOO6KRpp3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe53AFx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tr+/u/Ec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0651C4CEEF;
-	Tue, 11 Mar 2025 15:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe53AFx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EBDC4CEE9;
+	Tue, 11 Mar 2025 15:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705576;
-	bh=v0O7dDS8UJVRhfkD7298ncnDXTU0KWQAQ0kaDyJ9sdA=;
+	s=korg; t=1741705579;
+	bh=fY7AZMK8mgHf7Mr7KtLu7hhwSbZESfu3E1NgsXyQ+Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tr+/u/Ecf0M4C37e8e/gbRfuEiOBZWL8X34udLc0P2uUC1UJjx78sNXpmVX0oPtVy
-	 T4XFRzMaJG8EtZjFslP04Dl3YNtLd1ViMopCHvVirQrRbzqj6dctdQJdL8RVcZJ5aM
-	 gaEOSkeCWPHrcTF0ow2MEWnyq38MiuMy8oMWGw4o=
+	b=Oe53AFx2oBUDyA46Frj02jxzhcnPEHZBC2I0vp2QelEINkwBM59IzuJQ2T7YbeKZL
+	 K33wO2a5LpReoPN2Qzw0ks+CtTfBvS992amrS23GSuWrh33yXEn68PESS15X8LhhjQ
+	 4QZQbNSMVrbwRUqkcgSWYE0570YwZdSSBSB0TowU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 053/328] media: camif-core: Add check for clk_enable()
-Date: Tue, 11 Mar 2025 15:57:03 +0100
-Message-ID: <20250311145717.003397902@linuxfoundation.org>
+	John Hawley <warthog9@eaglescrag.net>,
+	"Ricardo B. Marliere" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.4 076/328] ktest.pl: Check kernelrelease return in get_version
+Date: Tue, 11 Mar 2025 15:57:26 +0100
+Message-ID: <20250311145717.910388206@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Ricardo B. Marliere <rbm@suse.com>
 
-[ Upstream commit 77ed2470ac09c2b0a33cf3f98cc51d18ba9ed976 ]
+commit a4e17a8f239a545c463f8ec27db4ed6e74b31841 upstream.
 
-Add check for the return value of clk_enable() to gurantee the success.
+In the case of a test that uses the special option ${KERNEL_VERSION} in one
+of its settings but has no configuration available in ${OUTPUT_DIR}, for
+example if it's a new empty directory, then the `make kernelrelease` call
+will fail and the subroutine will chomp an empty string, silently. Fix that
+by adding an empty configuration and retrying.
 
-Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: John Hawley <warthog9@eaglescrag.net>
+Fixes: 5f9b6ced04a4e ("ktest: Bisecting, install modules, add logging")
+Link: https://lore.kernel.org/20241205-ktest_kver_fallback-v2-1-869dae4c7777@suse.com
+Signed-off-by: Ricardo B. Marliere <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/s3c-camif/camif-core.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/platform/s3c-camif/camif-core.c b/drivers/media/platform/s3c-camif/camif-core.c
-index ee624804862e2..3c8c262e3c687 100644
---- a/drivers/media/platform/s3c-camif/camif-core.c
-+++ b/drivers/media/platform/s3c-camif/camif-core.c
-@@ -529,10 +529,19 @@ static int s3c_camif_remove(struct platform_device *pdev)
- static int s3c_camif_runtime_resume(struct device *dev)
- {
- 	struct camif_dev *camif = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_enable(camif->clock[CLK_GATE]);
-+	if (ret)
-+		return ret;
- 
--	clk_enable(camif->clock[CLK_GATE]);
- 	/* null op on s3c244x */
--	clk_enable(camif->clock[CLK_CAM]);
-+	ret = clk_enable(camif->clock[CLK_CAM]);
-+	if (ret) {
-+		clk_disable(camif->clock[CLK_GATE]);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
--- 
-2.39.5
-
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2319,6 +2319,11 @@ sub get_version {
+     return if ($have_version);
+     doprint "$make kernelrelease ... ";
+     $version = `$make -s kernelrelease | tail -1`;
++    if (!length($version)) {
++	run_command "$make allnoconfig" or return 0;
++	doprint "$make kernelrelease ... ";
++	$version = `$make -s kernelrelease | tail -1`;
++    }
+     chomp($version);
+     doprint "$version\n";
+     $have_version = 1;
 
 
