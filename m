@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1AE25F78A;
-	Tue, 11 Mar 2025 15:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A33825EF8E;
+	Tue, 11 Mar 2025 15:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707514; cv=none; b=Ku8Oete+EFYUfg/CNFl80TZYG5zX3d2iSAOI9+is6K3pUo8J1zaTUTzgcbGLIM6VvDSGwUNv5UcZ3R4jkfB7NX3026LQKX1FUWfvtZV4yiS0jL5J2m9ia1b+s42bFvR5bBYKbhmCd5zvsVJNZsdvssATon/F03GCd2bHybKHY5E=
+	t=1741707517; cv=none; b=P/3AO3rZ7fjzRafT8nrf2YMUB+efCueXXTC/lXylQuUjsJaEGjhExpKRcejcbzCpKgWILIdjSehNF6G4Ftb6FqhpbG4/METQ3F4hPBOaGQ4mZ2gsxsOO1OBEiVtEXMcW2V4fi6n+3czS4njLdrkMSHs6pwvp8QZNmGm/nEhMS6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707514; c=relaxed/simple;
-	bh=qVHgm5LDMoH4ntyK9wGhTJaanxvvrdUwkiCmN2ekzXw=;
+	s=arc-20240116; t=1741707517; c=relaxed/simple;
+	bh=6imcdZwZnve/AGqnG6lszDOknkldn32kM6HzxqL+hNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o67Ft/KKGvbORrOAytnGcE6iaDERRYG5U7P1yiMMHXjKRNB7z297tifknmRWR+u4hDSYRBObMDKghOwLdIvfOtFxYEWPpc2BZ++ya3ijekkU7DPAftp8gpMRy1fB8UnFTuTywPweUDD/oJMXmhZI570+boci1C8QBorCEhW2LUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gI+hNc8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BriicoXX4OifD0kVzCQ3KFuibiBeQUyd4ejBWGlbWz1dnbk34I4i3iISS8/y7rb8Eba3GVFCGnQS9BtFN+OK79NE+x3xyNnuR4FAxv1/AjRz+t+Qu+sBvMRR0Q+KL4csqqILLfgTrjwdC+P5j/QfvLDzCNhSThueIZR8sBPPuF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcbRXHUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gI+hNc8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC41C4CEE9;
-	Tue, 11 Mar 2025 15:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcbRXHUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E13C4CEE9;
+	Tue, 11 Mar 2025 15:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707514;
-	bh=qVHgm5LDMoH4ntyK9wGhTJaanxvvrdUwkiCmN2ekzXw=;
+	s=korg; t=1741707517;
+	bh=6imcdZwZnve/AGqnG6lszDOknkldn32kM6HzxqL+hNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gI+hNc8KPP0EFMUcz6cgL3hA5oPFFrG1aHHiRHG1CsquK4u453LcWj9lfu3LMLl5H
-	 Kz3m94AhwxSM3bCWbMqfo19q+fatvJ5k6qU/Mf++aN8CBnakljHsCl1atR1ezkX6o4
-	 32PnCDpIlAdS0Hh/H3eDbP6TDSZbZXPzPxJfq4O4=
+	b=VcbRXHUeL+dvea0tyLTnz8uk61ee2AEZY64Nt4a7AeO0s7Hh5PHFN4ZGZSmZa/xS6
+	 QHOY4f/+DkGEy0IA5WdbyEOgi3Bx9VCE+7HMeSVEQdP3kuZqq7UNhZbN2dzVEZLL6R
+	 VKTShsLDx37a/FqNv8mRPvr36ogUTiuKbJolKhC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Steve French <stfrench@microsoft.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 384/462] smb: client: Add check for next_buffer in receive_encrypted_standard()
-Date: Tue, 11 Mar 2025 16:00:50 +0100
-Message-ID: <20250311145813.516784294@linuxfoundation.org>
+Subject: [PATCH 5.10 385/462] drm/amdgpu: Check extended configuration space register when system uses large bar
+Date: Tue, 11 Mar 2025 16:00:51 +0100
+Message-ID: <20250311145813.556447625@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -45,43 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 860ca5e50f73c2a1cef7eefc9d39d04e275417f7 ]
+[ Upstream commit e372baeb3d336b20fd9463784c577fd8824497cd ]
 
-Add check for the return value of cifs_buf_get() and cifs_small_buf_get()
-in receive_encrypted_standard() to prevent null pointer dereference.
+Some customer platforms do not enable mmconfig for various reasons,
+such as bios bug, and therefore cannot access the GPU extend configuration
+space through mmio.
 
-Fixes: eec04ea11969 ("smb: client: fix OOB in receive_encrypted_standard()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When the system enters the d3cold state and resumes, the amdgpu driver
+fails to resume because the extend configuration space registers of
+GPU can't be restored. At this point, Usually we only see some failure
+dmesg log printed by amdgpu driver, it is difficult to find the root
+cause.
+
+Therefor print a warnning message if the system can't access the
+extended configuration space register when using large bar.
+
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 099bffc7cadf ("drm/amdgpu: disable BAR resize on Dell G5 SE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 4 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 68f93de2b1527..70a4d101b5428 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -4938,6 +4938,10 @@ receive_encrypted_standard(struct TCP_Server_Info *server,
- 			next_buffer = (char *)cifs_buf_get();
- 		else
- 			next_buffer = (char *)cifs_small_buf_get();
-+		if (!next_buffer) {
-+			cifs_server_dbg(VFS, "No memory for (large) SMB response\n");
-+			return -1;
-+		}
- 		memcpy(next_buffer, buf + next_cmd, pdu_length - next_cmd);
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 2f42471e578ad..edb1b1cf05f29 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1098,6 +1098,10 @@ int amdgpu_device_resize_fb_bar(struct amdgpu_device *adev)
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
  
++	/* PCI_EXT_CAP_ID_VNDR extended capability is located at 0x100 */
++	if (!pci_find_ext_capability(adev->pdev, PCI_EXT_CAP_ID_VNDR))
++		DRM_WARN("System can't access extended configuration space,please check!!\n");
++
+ 	/* skip if the bios has already enabled large BAR */
+ 	if (adev->gmc.real_vram_size &&
+ 	    (pci_resource_len(adev->pdev, 0) >= adev->gmc.real_vram_size))
 -- 
 2.39.5
 
