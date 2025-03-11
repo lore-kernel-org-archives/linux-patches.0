@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FBE25F783;
-	Tue, 11 Mar 2025 15:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C2C25E808;
+	Tue, 11 Mar 2025 15:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705585; cv=none; b=XqGi7VYCtpCsi+uy8P6CTv4FvY2SDngF5ZJ25GuolWVPI3os6FCuLurvJOsUjhns9Qi5DKXCBV8gnBPy9pcy9XB23YoP77akcg2YEmd2dN8N/69At2s4Mfmbu/qwLYbdGns4IlhKlQhc6TWrTz5AL15WQU00ZbSV6CsqQOzz34I=
+	t=1741705588; cv=none; b=CaOxe+U4VS6vfJyrqBAEnO8tk1396XMafyqF1KjGvdMU4of2BAJ6hjUwKvk9vUPPBIpW5phU4I6fQ1FwaXGNzTN/Fb59ahPCF84uXVjByJhuEfusKRUT7UMEnyPqi4ubOScZhTsQKflL3CRWtEZYWDVgTcUKl70BSKfBosuxXto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705585; c=relaxed/simple;
-	bh=m3XXxe8BRsCKg0ccgovl2urHpeYU2LqXuOoH5MacTsQ=;
+	s=arc-20240116; t=1741705588; c=relaxed/simple;
+	bh=hn1DtNsiWbNuidKA+ATWAmUri529VLRwxoaiPPT2PKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekV4AEZzu5AO4F4Fz3A0poThaobsd1hSw4f9iJ9eHMFasvoU/Ab/cmozzg+qQMWT2jjQdgIZRvkFptUScwbJhTd1ncbtXwK1y3ChzHYwqxR4+3h5BuyvNV3UTkyzxiBzquI6bQE7OlJ9dBrR2MFNeB8YGF5QaHbqkO8EsO8LWNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iMhC3Ms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/v7DFeDE9BD8w63K4LqMFWznYPgP+Xp3Ca++jdKhIhHnHEmT4IDg0Q56rKOrXrvVog8DWqvtEhisZl1098gNdXBXDtsnFDe93WwD+Ot+grYh71S0JnowdwPu2qo2gNkAoahulMnFK8zNum+Jm7FHvlnVKrgABX+v6lk8s0bhJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj4TpuKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iMhC3Ms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9463BC4AF09;
-	Tue, 11 Mar 2025 15:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj4TpuKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A4FC4CEE9;
+	Tue, 11 Mar 2025 15:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705585;
-	bh=m3XXxe8BRsCKg0ccgovl2urHpeYU2LqXuOoH5MacTsQ=;
+	s=korg; t=1741705587;
+	bh=hn1DtNsiWbNuidKA+ATWAmUri529VLRwxoaiPPT2PKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iMhC3MsAhDp85gjfc5RcygRRHvl49SRMh8m01Ki5jyglM4O79KqXM7xzfc/u1XPV
-	 m+QWhrd1EveQETK4hsZ/lORbeXKl51IJR2iS/F2zJqbjsg7KGVuGe4roP0QPC+IgQb
-	 y7SHOnKOQHkXyH0hS6lLwi/QBVlfyHYmJ/ks1v/M=
+	b=mj4TpuKmxGSVQofBFVGOF77aG5iYRQquxQQpTSZn8mQu3FJf94ZGa9FYT2FRBWWPV
+	 vxjcUW4RjVntrcmbTrD4N74VulTXo5NLu5ZEdVPmT/Ggy1DtK1iANESpFmATNr4e0t
+	 QnKMKW9TEz0axTV9u7O4DVQZ04t6C7/hGl7+O1Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 086/328] x86/amd_nb: Restrict init function to AMD-based systems
-Date: Tue, 11 Mar 2025 15:57:36 +0100
-Message-ID: <20250311145718.306645046@linuxfoundation.org>
+Subject: [PATCH 5.4 087/328] printk: Fix signed integer overflow when defining LOG_BUF_LEN_MAX
+Date: Tue, 11 Mar 2025 15:57:37 +0100
+Message-ID: <20250311145718.345963109@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,38 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit bee9e840609cc67d0a7d82f22a2130fb7a0a766d ]
+[ Upstream commit 3d6f83df8ff2d5de84b50377e4f0d45e25311c7a ]
 
-The code implicitly operates on AMD-based systems by matching on PCI
-IDs. However, the use of these IDs is going away.
+Shifting 1 << 31 on a 32-bit int causes signed integer overflow, which
+leads to undefined behavior. To prevent this, cast 1 to u32 before
+performing the shift, ensuring well-defined behavior.
 
-Add an explicit CPU vendor check instead of relying on PCI IDs.
+This change explicitly avoids any potential overflow by ensuring that
+the shift occurs on an unsigned 32-bit integer.
 
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20241206161210.163701-3-yazen.ghannam@amd.com
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Acked-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20240928113608.1438087-1-visitorckw@gmail.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/amd_nb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/printk/printk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
-index e3b5de7b95988..ead78f981345c 100644
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -538,6 +538,10 @@ static __init void fix_erratum_688(void)
- 
- static __init int init_amd_nbs(void)
- {
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
-+	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
-+		return 0;
-+
- 	amd_cache_northbridges();
- 	amd_cache_gart();
- 
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index ae1a97dd0c3cb..f6e1e154d9c18 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -457,7 +457,7 @@ static u32 clear_idx;
+ /* record buffer */
+ #define LOG_ALIGN __alignof__(struct printk_log)
+ #define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
+-#define LOG_BUF_LEN_MAX (u32)(1 << 31)
++#define LOG_BUF_LEN_MAX ((u32)1 << 31)
+ static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
+ static char *log_buf = __log_buf;
+ static u32 log_buf_len = __LOG_BUF_LEN;
 -- 
 2.39.5
 
