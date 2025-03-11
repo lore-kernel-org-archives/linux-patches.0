@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0FD1EA80;
-	Tue, 11 Mar 2025 15:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BE925EFB3;
+	Tue, 11 Mar 2025 15:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706537; cv=none; b=WOKvEhIdUzGJGkqym3WsL1FD+vDaioGDWni5hr+Wm2JD2DKcJUm9yRdTCM1Tn+qr2DUwqlKih5wq/pEPNQ318YglE32/PcPLFNkshx4zGIoUW1wxh4FJEbiHxj8EA3CwgZ6UhdefOIc5ZzVnfIDmgjZdNzsfLNgQAhxnuAk4kEQ=
+	t=1741706540; cv=none; b=qZlD9D8+nOs3WsulNjEl3IbqauSfMMEA6xJz0/sfa2qm5q4sq0mhROliC/I7OEvAlAn7HhKMmtfzTG86utjW1OFxof5RWY3WRlq5Yams4kKtPaHUdM1voLfv7xolNz5faToftDzaOsSejTKP12zuNnLfxaCFW/hGoHjcgTq7irQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706537; c=relaxed/simple;
-	bh=8y59aGgDHX5Nx9U2siixcPL3j0SE8IzlqX3C3p3yh1w=;
+	s=arc-20240116; t=1741706540; c=relaxed/simple;
+	bh=7bWmn/sJ8WxLimrvTnHmUjTIP6sjvbNBshDiwuUDX2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pevdeV0gxqZR58V9IL2jZDobM5gJDqIr0jItFhD5Lxgc6x252lwSMXsv3Ghw9WsNeccokHnqvCEuoXi/c8N/5GE5vbRCdR1xb03ugJ8Bs/bH56mmdeV1zIaPATKMZk+zGF7C2JLNsk5FomHz3gw5SZxJcsvInXKMs0UPYwxXbPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcVMauMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ah6GY2T5x78ntRoG78ZuCNd997l5O3m1U3MOC2wRPKWd1V3cdudxbPQ1MbCydf+MRPY6yAy+WuSTgXp2KwiDRYa1cNPC2IvsPrdYnbQ2bqDa+xEgrJYIROUgcsBKz0bwsW235lRTqeLMJqSFqqL+5GgK6Fjg0n7hRMldOQJndGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RR21zUCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcVMauMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E160FC4CEE9;
-	Tue, 11 Mar 2025 15:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RR21zUCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB55DC4CEE9;
+	Tue, 11 Mar 2025 15:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706537;
-	bh=8y59aGgDHX5Nx9U2siixcPL3j0SE8IzlqX3C3p3yh1w=;
+	s=korg; t=1741706540;
+	bh=7bWmn/sJ8WxLimrvTnHmUjTIP6sjvbNBshDiwuUDX2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcVMauMJ+82TNaYYJ/JzmFtsNQ5AiF84eMCH8IE1KYsjJFdawWkp3nSzixT+B1mnB
-	 CR5gPJhCMyYF5w1S6DwOkwA9XGxzswd3Iocw7IL2Ch38k+/puxFUUKKIT6+jpvUtqq
-	 PSJGu3ot+6nOyoYdfqdaYqYCjH1rcDHIcnDmirTQ=
+	b=RR21zUCqzzB7npqs6AKmpCCqZJ5NC3qZQLu6qhEY61JTzUgH18Q7+3eKjOmZ4tebf
+	 0BmNUf7a52kUEAb8rv9tO0ummmdVR2doLejnV6htuuyTu3JpqaPWqgzHkDcXb7GT44
+	 s7lHwOVzw8a/ryFuV7hpZg00FsUr0o4oFXEKREY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/462] arm64: dts: qcom: msm8994: correct sleep clock frequency
-Date: Tue, 11 Mar 2025 15:55:41 +0100
-Message-ID: <20250311145801.312157587@linuxfoundation.org>
+Subject: [PATCH 5.10 084/462] media: mipi-csis: Add check for clk_enable()
+Date: Tue, 11 Mar 2025 15:55:50 +0100
+Message-ID: <20250311145801.671200123@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,36 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit a4148d869d47d8c86da0291dd95d411a5ebe90c8 ]
+[ Upstream commit 125ad1aeec77eb55273b420be6894b284a01e4b6 ]
 
-The MSM8994 platform uses PM8994/6 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+Add check for the return value of clk_enable() to gurantee the success.
 
-Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-3-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: b5f1220d587d ("[media] v4l: Add v4l2 subdev driver for S5P/EXYNOS4 MIPI-CSI receivers")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/exynos4-is/mipi-csis.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index caaf7102f5798..9a8c365abbda4 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -24,7 +24,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 			clock-output-names = "sleep_clk";
- 		};
- 	};
+diff --git a/drivers/media/platform/exynos4-is/mipi-csis.c b/drivers/media/platform/exynos4-is/mipi-csis.c
+index ebf39c8568943..e6c86ba30fa32 100644
+--- a/drivers/media/platform/exynos4-is/mipi-csis.c
++++ b/drivers/media/platform/exynos4-is/mipi-csis.c
+@@ -939,13 +939,19 @@ static int s5pcsis_pm_resume(struct device *dev, bool runtime)
+ 					       state->supplies);
+ 			goto unlock;
+ 		}
+-		clk_enable(state->clock[CSIS_CLK_GATE]);
++		ret = clk_enable(state->clock[CSIS_CLK_GATE]);
++		if (ret) {
++			phy_power_off(state->phy);
++			regulator_bulk_disable(CSIS_NUM_SUPPLIES,
++					       state->supplies);
++			goto unlock;
++		}
+ 	}
+ 	if (state->flags & ST_STREAMING)
+ 		s5pcsis_start_stream(state);
+ 
+ 	state->flags &= ~ST_SUSPENDED;
+- unlock:
++unlock:
+ 	mutex_unlock(&state->lock);
+ 	return ret ? -EAGAIN : 0;
+ }
 -- 
 2.39.5
 
