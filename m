@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2751225DD12;
-	Tue, 11 Mar 2025 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F199125DAFF;
+	Tue, 11 Mar 2025 15:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705469; cv=none; b=FUDg23kX3Y5mvU8ih1VisY3foNmo/u2/KXq0ZjEkz3jGB6COM4xdxKbY2ZXbPR80DXGpyDMXBPxSVtNm1dBfuj2fAkFWkj+2/Gcp1i/wzCuGMXbnN2WA2aC64wh8HiJe65s68mvF8nYffynXeFdvfrgJhkDVoWm5wQ2TaAjRJjI=
+	t=1741705472; cv=none; b=RmO3M+jdalXB3/Ux0dMIzpWMlv0T5szI6/YyAqmkbmFYIsL9/EtIBbCu4yEfI5M8QDFpUHM1cmZ759Xl7wTPoVX2Hj4QWn7FW81P4fQQYOz5rI92o47rRVWa8NZj/iY5RF4WCSK7FmT9dBfAAB3sv1N84pAXpDzwHUpX7W+EPqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705469; c=relaxed/simple;
-	bh=6/nKgIlRV3zqvSbAbK3DgnHUvOGNBbPjC0M+IFnrHZ0=;
+	s=arc-20240116; t=1741705472; c=relaxed/simple;
+	bh=7eLP1PF0uu3uiUqfzC/VprYJKiq5bW2UDUMFmZ7rlcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qhwyr54CWN4Chnbl7CU3Ob4PfC2n/c/vAjgcqcBQWgXvpFyUMEYHvGgh+SApawLjuBbAILzRTQJ6nYv9AARoQz04972zNJB6yFkXM7zaYeKxIumc27A4x1HeffajS7ugcA84xmDTJoWA/rHW8uRrLoHGnTMfB04wcugHNFBjcLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSYu/Xxh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dm8rGHce0MeE/07LdNxmg3qMALGgO7cxb4CsEj1cEh8GDUVuimrpsZfzhjUoq038+3a2PRhmx6cxVDAUZ76btuTk8gDuLTDmwSd0ewwY2xNcpuQAPp9/zx71GyOKJ/rcr1zlLiTXuFbDSg9voBAeVnhlfG2BIxilXnv/Ghm6kFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcAcCEVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSYu/Xxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FDDC4CEE9;
-	Tue, 11 Mar 2025 15:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcAcCEVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A94AC4CEE9;
+	Tue, 11 Mar 2025 15:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705469;
-	bh=6/nKgIlRV3zqvSbAbK3DgnHUvOGNBbPjC0M+IFnrHZ0=;
+	s=korg; t=1741705471;
+	bh=7eLP1PF0uu3uiUqfzC/VprYJKiq5bW2UDUMFmZ7rlcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSYu/XxhNBu1+qiJ5Dvuc2MuqjuCEj9Pl2W32YMltfixnasdslbLVZ+uCVAbZs4JT
-	 0P7OfMSMqz6tqktpNcmixDZWra+nk6ZdCJ8NCusevGiHN0j+IEnlq4a/LK+bksdJC0
-	 4CU6YjrMKDK2f+3QQg8tKRzLF58cvIXZvp5oeiNQ=
+	b=YcAcCEVuBKAw7UdAgB8qbL0hTlSdTDYeN6JwfVhzMvGpUO4Ih1YfWNxFVVHEAMgEG
+	 /9WYI97flAuImvnoQvvjlCGMan7/5HvbboKXRSSXawxaZWguHFAJLajdfa2SDkTXxB
+	 e/gzGO6e2n9+OJ/cigcgGaothLBrOcs00CujCSpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-media@vger.kernel.org,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 046/328] ARM: dts: mediatek: mt7623: fix IR nodename
-Date: Tue, 11 Mar 2025 15:56:56 +0100
-Message-ID: <20250311145716.723106216@linuxfoundation.org>
+Subject: [PATCH 5.4 047/328] fbdev: omapfb: Fix an OF node leak in dss_of_port_get_parent_device()
+Date: Tue, 11 Mar 2025 15:56:57 +0100
+Message-ID: <20250311145716.762119412@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -46,44 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 90234cf9b37c57201a24b78c217a91a8af774109 ]
+[ Upstream commit de124b61e179e690277116e6be512e4f422b5dd8 ]
 
-Fix following validation error:
-arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: cir@10013000: $nodename:0: 'cir@10013000' does not match '^ir(-receiver)?(@[a-f0-9]+)?$'
-        from schema $id: http://devicetree.org/schemas/media/mediatek,mt7622-cir.yaml#
+dss_of_port_get_parent_device() leaks an OF node reference when i >= 2
+and struct device_node *np is present. Since of_get_next_parent()
+obtains a reference of the returned OF node, call of_node_put() before
+returning NULL.
 
-Fixes: 91044f38dae7 ("arm: dts: mt7623: add ir nodes to the mt7623.dtsi file")
-Cc: linux-media@vger.kernel.org
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20240617094634.23173-1-zajec5@gmail.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+This was found by an experimental verifier that I am developing, and no
+runtime test was able to be performed due to that lack of actual
+devices.
+
+Fixes: f76ee892a99e ("omapfb: copy omapdss & displays for omapfb")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/mt7623.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/omap2/omapfb/dss/dss-of.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/mt7623.dtsi b/arch/arm/boot/dts/mt7623.dtsi
-index a79f0b6c34293..2f9154c13ea89 100644
---- a/arch/arm/boot/dts/mt7623.dtsi
-+++ b/arch/arm/boot/dts/mt7623.dtsi
-@@ -320,7 +320,7 @@
- 		clock-names = "spi", "wrap";
- 	};
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c b/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
+index 0282d4eef139d..3b16c3342cb77 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
+@@ -102,6 +102,7 @@ struct device_node *dss_of_port_get_parent_device(struct device_node *port)
+ 		np = of_get_next_parent(np);
+ 	}
  
--	cir: cir@10013000 {
-+	cir: ir-receiver@10013000 {
- 		compatible = "mediatek,mt7623-cir";
- 		reg = <0 0x10013000 0 0x1000>;
- 		interrupts = <GIC_SPI 87 IRQ_TYPE_LEVEL_LOW>;
++	of_node_put(np);
+ 	return NULL;
+ }
+ 
 -- 
 2.39.5
 
