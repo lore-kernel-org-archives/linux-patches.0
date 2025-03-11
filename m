@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F7525E81B;
-	Tue, 11 Mar 2025 15:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BA25E831;
+	Tue, 11 Mar 2025 15:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706348; cv=none; b=Pow/hQxLZ3aZ3F6G+ZKaB1dKJ5JHkGoRNezV51/IvYnkMF4jbqPyBGz7dWsOyhet2B27vEoHz13xTBqJxsHTe4x1zpQ0sYenvtdMETroJqOJ9v1kV6BHHKD/qYahTHNEedT3lRd50TcfYd7geGiLdI3gP10mf6nEsr9CHyVtx4Q=
+	t=1741706351; cv=none; b=tDEhXzLgrDCHaAMClWoMJ1XSSV2W5PsuPBYC812O+Cw0KDFo6Drl0EB0DFXVNt93O4+Iq9UJ2udpXQXYMxoWdgyZ/3DdPXhenzBEQeH64pFe1a73hAVghYKMqXPfUviOwcGfTnQQw7q7TJxIHNUbtGNVky4KE/qPFJdth4ltqM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706348; c=relaxed/simple;
-	bh=pJ44pDbfpJwHbo7InH7ChF30mQqWhBJsyc2Abw+OAkQ=;
+	s=arc-20240116; t=1741706351; c=relaxed/simple;
+	bh=NG6V5d4kpyBvz5Z3FDG9Ov2RS4cc4LKfx1Cg31sP2q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGPM74Dhea/ZhWrf3xZiXe9M7ByBOMqc0yKmyOHOYZitH4SUSpeoSQV6NfKwL+raA1UC8WYsplROjDpD8Mb03nM1XmgESg7xV37MxqQGv4zplk0JIaZxYiC4xuc9Fb2X0YOaBbF6LLrksiPwsg/sK0hC4RKWC/T+RU+5ZwsAdEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgU04qjp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJ7IAdNRyQlgkMVoYqEbLFLIW54biSdjeW8zj1brRiy65IavLv5ED8ibLOsh2mFvoiYrVjlun4C7cFQe6WbTlAPeip3zAXbJhDcxDShxg3eJF2XYjy4sYNHmAvbnMAHNCnRlUd2OX6i+NveS+30txNow9e7Yh7tVjEu+uR6pFOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tudfDOs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgU04qjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9CAC4CEE9;
-	Tue, 11 Mar 2025 15:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tudfDOs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD14CC4CEEA;
+	Tue, 11 Mar 2025 15:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706348;
-	bh=pJ44pDbfpJwHbo7InH7ChF30mQqWhBJsyc2Abw+OAkQ=;
+	s=korg; t=1741706351;
+	bh=NG6V5d4kpyBvz5Z3FDG9Ov2RS4cc4LKfx1Cg31sP2q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgU04qjpdMWVupPMFtYUGfaOmPoBsRm9IdzFlcuf6gcFJT4zFrGUP0d6LsGNO+W8f
-	 73ui4iVpuIG3TiSAI5kw4aYXSJ2FuqPW7jjg8ZE6nYepTFy7o5PrWHFNq/6DEDVUVU
-	 PqolCVS2l2eFZKprx+cP2VyQ3KN0ALK+8F7blTL4=
+	b=tudfDOs3SBsSgCowq5Yi8koqwSMPC3rZIiUFE30XekVLxdNT91lNZRn8pwxR8oVbZ
+	 39ExnCahFd86OYO8EBP6wchnG/LvPJZdQUQXTGTpvZ9N3hJ15avJ/pSemkpo9xnPK6
+	 PZBeURlvXrpEHHtQsRh9bJdeylvtBrSmEcQNTd3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/462] spi: zynq-qspi: Add check for clk_enable()
-Date: Tue, 11 Mar 2025 15:54:44 +0100
-Message-ID: <20250311145759.070348113@linuxfoundation.org>
+Subject: [PATCH 5.10 019/462] dt-bindings: mmc: controller: clarify the address-cells description
+Date: Tue, 11 Mar 2025 15:54:45 +0100
+Message-ID: <20250311145759.109834585@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,51 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 8332e667099712e05ec87ba2058af394b51ebdc9 ]
+[ Upstream commit b2b8e93ec00b8110cb37cbde5400d5abfdaed6a7 ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+The term "slot ID" has nothing to do with the SDIO function number
+which is specified in the reg property of the subnodes, rephrase
+the description to be more accurate.
 
-Fixes: c618a90dcaf3 ("spi: zynq-qspi: Drop GPIO header")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20241207015206.3689364-1-zmw12306@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f9b7989859dd ("dt-bindings: mmc: Add YAML schemas for the generic MMC options")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Message-ID: <20241128-topic-amlogic-arm32-upstream-bindings-fixes-convert-meson-mx-sdio-v4-1-11d9f9200a59@linaro.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynq-qspi.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/mmc/mmc-controller.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
-index 13c0b15fe1764..2be764d5460d3 100644
---- a/drivers/spi/spi-zynq-qspi.c
-+++ b/drivers/spi/spi-zynq-qspi.c
-@@ -379,12 +379,21 @@ static int zynq_qspi_setup_op(struct spi_device *spi)
- {
- 	struct spi_controller *ctlr = spi->master;
- 	struct zynq_qspi *qspi = spi_controller_get_devdata(ctlr);
-+	int ret;
+diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+index 186f04ba93579..b7976809d8f68 100644
+--- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
++++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+@@ -25,7 +25,7 @@ properties:
+   "#address-cells":
+     const: 1
+     description: |
+-      The cell is the slot ID if a function subnode is used.
++      The cell is the SDIO function number if a function subnode is used.
  
- 	if (ctlr->busy)
- 		return -EBUSY;
- 
--	clk_enable(qspi->refclk);
--	clk_enable(qspi->pclk);
-+	ret = clk_enable(qspi->refclk);
-+	if (ret)
-+		return ret;
-+
-+	ret = clk_enable(qspi->pclk);
-+	if (ret) {
-+		clk_disable(qspi->refclk);
-+		return ret;
-+	}
-+
- 	zynq_qspi_write(qspi, ZYNQ_QSPI_ENABLE_OFFSET,
- 			ZYNQ_QSPI_ENABLE_ENABLE_MASK);
- 
+   "#size-cells":
+     const: 0
 -- 
 2.39.5
 
