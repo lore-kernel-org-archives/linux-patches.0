@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0DC249F9;
-	Tue, 11 Mar 2025 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A93C1C3BEB;
+	Tue, 11 Mar 2025 15:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706234; cv=none; b=EPYiUT2yYYQ1k/PNaEw2Sen0+et8bEXJizpr0Uad+utdR2cSl0g4L0Jq6Wc3qwbhwRJUvJusXx2bvPd0NCpSmRgaV5c4oIKyDejTyWCzJ10Jeg1HBZ/YGTRkflpmTfNBnylrLOj57++pKlcBqMqec4LwwkZCAXpdhD5FT6odCjg=
+	t=1741706237; cv=none; b=rd4lIiovCj/4smG8dKf2qhV5fI0ZOaQovJdCYnOXEvmBUm1bOqEuyCCpIxNsZlW7CSSm7cfvYlhUP7k/itVziuM2O4EmRG+Q6wirvUx393BrIkiDfmAI11nW09PMalmNIXJ8l2LGKd/qhyqSMkHUwe2mAt3U+eyhuwR0Uo71vg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706234; c=relaxed/simple;
-	bh=cVIePDYrJpEDoFDND2gO2HOxUMbZNg+Ml/nLj5PnFLA=;
+	s=arc-20240116; t=1741706237; c=relaxed/simple;
+	bh=GNLwTXT4kFEVzQ5TN+NQ+/XRxlYl33TvqYkddaUoA1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5IpDlsT1CCOs86ugfXYCnGh/EKL1ENLx51lat+9Wi8FvqxG5hJsZfAGMLgLUHxNQBG3dpFU1FbJFdBKMj7S55SG1Z02LAn7OjcW5fcS5LiasYQWgLx80lG1NuhjDsFRsyZSmYq+c3aH6p5VWZwtHedeIGQNw3evCYkXFLtH6IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LESExDX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbT0gbTcnWeglsn2B87nfrDuB9mPfcnQgpoidW/1KXtLUz32lZNlmf6cq+S0lOJTkWTbuoRgabZQf2VQgqMM+7527EqVUrCBdKrMbk0XIw0pyNlzpj7Ukic73oKF42J9bUuqJNh7s7aRFKquwaMfnWniUBUfq0KIvOAUUAyISsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0hOkyTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LESExDX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060EFC4CEE9;
-	Tue, 11 Mar 2025 15:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0hOkyTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A4FC4CEE9;
+	Tue, 11 Mar 2025 15:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706234;
-	bh=cVIePDYrJpEDoFDND2gO2HOxUMbZNg+Ml/nLj5PnFLA=;
+	s=korg; t=1741706237;
+	bh=GNLwTXT4kFEVzQ5TN+NQ+/XRxlYl33TvqYkddaUoA1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LESExDX5GAJAmXHU51vgADRqEEFwCeayL/8+7gIeZWsOyqBlZ2AhMCDDWD3n0qXOV
-	 limYx5amctmLg9CnV4vdvmzu/V7nFUZqNipJUdZg3ArOhUDEg0umyhrYTthkJunwKm
-	 hp0vHoDy+OxQ6t55w+KwNnZeUI82blFmgs+wqAiQ=
+	b=u0hOkyTbe3XCKDBsDFe95V8ijudMlMqYbc8mSR3CctahPFh3ubRmgmEhfmdOw/7f2
+	 16Hl3np0tBJXpBBlh1+eZ/fhpqkpgceMlNcManTrYD5wQ+D09EqpopAOWPWgU3J+ju
+	 vxFxjDVyLp53LwCPUZjzbN2EiugD6X6fthTiY6tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.4 289/328] wifi: nl80211: reject cooked mode if it is set along with other flags
-Date: Tue, 11 Mar 2025 16:00:59 +0100
-Message-ID: <20250311145726.397721630@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 290/328] rapidio: add check for rio_add_net() in rio_scan_alloc_net()
+Date: Tue, 11 Mar 2025 16:01:00 +0100
+Message-ID: <20250311145726.437458509@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,48 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 49f27f29446a5bfe633dd2cc0cfebd48a1a5e77f upstream.
+commit e842f9a1edf306bf36fe2a4d847a0b0d458770de upstream.
 
-It is possible to set both MONITOR_FLAG_COOK_FRAMES and MONITOR_FLAG_ACTIVE
-flags simultaneously on the same monitor interface from the userspace. This
-causes a sub-interface to be created with no IEEE80211_SDATA_IN_DRIVER bit
-set because the monitor interface is in the cooked state and it takes
-precedence over all other states. When the interface is then being deleted
-the kernel calls WARN_ONCE() from check_sdata_in_driver() because of missing
-that bit.
+The return value of rio_add_net() should be checked.  If it fails,
+put_device() should be called to free the memory and give up the reference
+initialized in rio_add_net().
 
-Fix this by rejecting MONITOR_FLAG_COOK_FRAMES if it is set along with
-other flags.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 66f7ac50ed7c ("nl80211: Add monitor interface configuration flags")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+2e5c1e55b9e5c28a3da7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e5c1e55b9e5c28a3da7
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Link: https://patch.msgid.link/20250131152657.5606-1-v.shevtsov@mt-integration.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lkml.kernel.org/r/20250227041131.3680761-1-haoxiang_li2024@163.com
+Fixes: e6b585ca6e81 ("rapidio: move net allocation into core code")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/rapidio/rio-scan.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3409,6 +3409,11 @@ static int parse_monitor_flags(struct nl
- 		if (flags[flag])
- 			*mntrflags |= (1<<flag);
+--- a/drivers/rapidio/rio-scan.c
++++ b/drivers/rapidio/rio-scan.c
+@@ -873,7 +873,10 @@ static struct rio_net *rio_scan_alloc_ne
+ 		dev_set_name(&net->dev, "rnet_%d", net->id);
+ 		net->dev.parent = &mport->dev;
+ 		net->dev.release = rio_scan_release_dev;
+-		rio_add_net(net);
++		if (rio_add_net(net)) {
++			put_device(&net->dev);
++			net = NULL;
++		}
+ 	}
  
-+	/* cooked monitor mode is incompatible with other modes */
-+	if (*mntrflags & MONITOR_FLAG_COOK_FRAMES &&
-+	    *mntrflags != MONITOR_FLAG_COOK_FRAMES)
-+		return -EOPNOTSUPP;
-+
- 	*mntrflags |= MONITOR_FLAG_CHANGED;
- 
- 	return 0;
+ 	return net;
 
 
