@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7ED25D8E8;
-	Tue, 11 Mar 2025 15:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F05F25E83B;
+	Tue, 11 Mar 2025 15:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705875; cv=none; b=kj7ll6Tskkn61tNAJhhO/aL3xdhUVWkU6WNRD9h3Y3emh21EolT9OmZ97cubJWM8C9aljQ15ZJku5j47PWBl01f3rK7hltNOCOOlWKOldTomVDRyHAiev20MeXAfdTsSNnaLZc7K0sNZRTkZfRlWdoahixy1aLx3jmiJodJHgTg=
+	t=1741705878; cv=none; b=D61eGlBisFWtteToEEFwyoBcWW6BvJUMJSOCILqUBl0SZabbfq8GT4jeTueaFu/xs3dLMjOkaIc0GONMp61YmFKdOwFQx8i7gP4BncHXKN0Qp8M6kYNKP/sLZOImsRQ5rzvFdtcxahfH4nyR1UUDWLt1UD61scP8aA/03JoAhRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705875; c=relaxed/simple;
-	bh=rFRVvN33Gqqfy2pmf9OyI6TXCwqiI/JIiH8Hxr/KPZM=;
+	s=arc-20240116; t=1741705878; c=relaxed/simple;
+	bh=CeDsqQKS6WLXPECIW/WEZ19Ap0h7L1oJelUSSuClPgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcaN369vj3EMQamzODlaDi0HnflyEqUd4DCXaP5He64LKW0JGdQQh4X+WsX39Cpn1OHTN+x1SHoI1UFjGjohrwYK1eoPy2Py9oFJDqbNPXKli6l7RPCgwnoO1G330Jaz7+t1oSXsbQCW7djgU+/6P+6lNo+ei0QV1/Ws5CEh84U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0U/auYI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUsL6v0HVqdeCTEiO33a6Y0zsvH/Ji3axywhyF091BHEmRw/IsEVwcklrXHM3fR+RrNrbwlY/45Cyri0bs9mrgAmwJ/F3D9RwWB6PYJKUXdiy/L+myY/8U4ztOrwunZeqHFi9XHvQAjE8ozzv1iiUH9GQc9rVENAKEwA9+O/TFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5cPuz6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0U/auYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9915EC4CEE9;
-	Tue, 11 Mar 2025 15:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5cPuz6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802AAC4CEE9;
+	Tue, 11 Mar 2025 15:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705875;
-	bh=rFRVvN33Gqqfy2pmf9OyI6TXCwqiI/JIiH8Hxr/KPZM=;
+	s=korg; t=1741705877;
+	bh=CeDsqQKS6WLXPECIW/WEZ19Ap0h7L1oJelUSSuClPgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0U/auYImvzgy192RZzKsFCZ6qTByZEDzcYpz9XyXoRArD86YDAb2NOVHSMb+tkIB
-	 mvZeGSrEMiqG9MUeTTPl4niBKE7L1j47Ca/20sfJMnRP+XffTCjf/2MFuBjF0TWpzn
-	 z2RxqOC+0dconGlQywbeykYMauXeC+A4Dz5Lr7cU=
+	b=S5cPuz6YmTY9MEQxuXwEUN2fyIvcy9oK4yPTcJdyh8EBuRhwx6eZpmWxZnAFYWtiM
+	 ymtkQGJTiNG1reFcQQxANNgKuhVrlY4oIMTkRlsOaqPhCYiW6uY0RBdAKDeId+Xvpg
+	 o4TW2MAUGskRzHAk/NKkModLBSAAbpPebRyiHzXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Radu Rendec <rrendec@redhat.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 165/328] team: better TEAM_OPTION_TYPE_STRING validation
-Date: Tue, 11 Mar 2025 15:58:55 +0100
-Message-ID: <20250311145721.465308348@linuxfoundation.org>
+Subject: [PATCH 5.4 166/328] arm64: cacheinfo: Avoid out-of-bounds write to cacheinfo array
+Date: Tue, 11 Mar 2025 15:58:56 +0100
+Message-ID: <20250311145721.504409803@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,74 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Radu Rendec <rrendec@redhat.com>
 
-[ Upstream commit 5bef3ac184b5626ea62385d6b82a1992b89d7940 ]
+[ Upstream commit 875d742cf5327c93cba1f11e12b08d3cce7a88d2 ]
 
-syzbot reported following splat [1]
+The loop that detects/populates cache information already has a bounds
+check on the array size but does not account for cache levels with
+separate data/instructions cache. Fix this by incrementing the index
+for any populated leaf (instead of any populated level).
 
-Make sure user-provided data contains one nul byte.
+Fixes: 5d425c186537 ("arm64: kernel: add support for cpu cache information")
 
-[1]
- BUG: KMSAN: uninit-value in string_nocheck lib/vsprintf.c:633 [inline]
- BUG: KMSAN: uninit-value in string+0x3ec/0x5f0 lib/vsprintf.c:714
-  string_nocheck lib/vsprintf.c:633 [inline]
-  string+0x3ec/0x5f0 lib/vsprintf.c:714
-  vsnprintf+0xa5d/0x1960 lib/vsprintf.c:2843
-  __request_module+0x252/0x9f0 kernel/module/kmod.c:149
-  team_mode_get drivers/net/team/team_core.c:480 [inline]
-  team_change_mode drivers/net/team/team_core.c:607 [inline]
-  team_mode_option_set+0x437/0x970 drivers/net/team/team_core.c:1401
-  team_option_set drivers/net/team/team_core.c:375 [inline]
-  team_nl_options_set_doit+0x1339/0x1f90 drivers/net/team/team_core.c:2662
-  genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-  genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-  genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2543
-  genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
-  netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
-  netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1348
-  netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1892
-  sock_sendmsg_nosec net/socket.c:718 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:733
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2573
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2627
-  __sys_sendmsg net/socket.c:2659 [inline]
-  __do_sys_sendmsg net/socket.c:2664 [inline]
-  __se_sys_sendmsg net/socket.c:2662 [inline]
-  __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2662
-  x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
-Reported-by: syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1fcd957a82e3a1baa94d
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250212134928.1541609-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Radu Rendec <rrendec@redhat.com>
+Link: https://lore.kernel.org/r/20250206174420.2178724-1-rrendec@redhat.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/cacheinfo.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index b0a9dd33a0196..197aea66b30dd 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -2663,7 +2663,9 @@ static int team_nl_cmd_options_set(struct sk_buff *skb, struct genl_info *info)
- 				ctx.data.u32_val = nla_get_u32(attr_data);
- 				break;
- 			case TEAM_OPTION_TYPE_STRING:
--				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN) {
-+				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN ||
-+				    !memchr(nla_data(attr_data), '\0',
-+					    nla_len(attr_data))) {
- 					err = -EINVAL;
- 					goto team_put;
- 				}
+diff --git a/arch/arm64/kernel/cacheinfo.c b/arch/arm64/kernel/cacheinfo.c
+index 97c42be71338a..1510f457b6154 100644
+--- a/arch/arm64/kernel/cacheinfo.c
++++ b/arch/arm64/kernel/cacheinfo.c
+@@ -87,16 +87,18 @@ int populate_cache_leaves(unsigned int cpu)
+ 	unsigned int level, idx;
+ 	enum cache_type type;
+ 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
+-	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
++	struct cacheinfo *infos = this_cpu_ci->info_list;
+ 
+ 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
+-	     idx < this_cpu_ci->num_leaves; idx++, level++) {
++	     idx < this_cpu_ci->num_leaves; level++) {
+ 		type = get_cache_type(level);
+ 		if (type == CACHE_TYPE_SEPARATE) {
+-			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+-			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
++			if (idx + 1 >= this_cpu_ci->num_leaves)
++				break;
++			ci_leaf_init(&infos[idx++], CACHE_TYPE_DATA, level);
++			ci_leaf_init(&infos[idx++], CACHE_TYPE_INST, level);
+ 		} else {
+-			ci_leaf_init(this_leaf++, type, level);
++			ci_leaf_init(&infos[idx++], type, level);
+ 		}
+ 	}
+ 	return 0;
 -- 
 2.39.5
 
