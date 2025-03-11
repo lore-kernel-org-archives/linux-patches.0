@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4749425DB0A;
-	Tue, 11 Mar 2025 15:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C381E9B06;
+	Tue, 11 Mar 2025 15:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706494; cv=none; b=kYwcB8+JfyXpRa4/GbPt0a6TA6D4f9ZxwDKBFZcznAPkyY6DYDdL1IFBjyi1HchafxowCBQbk4JwR82IKTZIOVe6oLYRpjy4Q6CZXiFSteulLAj3AeAACVsCyJaUA5SgmKBBOjGoRYoyBL++sdLaEDsGsmIcqFw5Gg8DRuyPQsg=
+	t=1741706497; cv=none; b=NNvxO1wggL3RKMWqlWRKNEFDF6YnPv1gdI2afyxkrmSJ/EY7wxG3qgAbsVeTSGHMINCkG2qTo3HxC93XjyWisoqvl/1HXQSD10vbb02DqN9M9HsRqs++cXAAVDebPR4Lp1BOo4C1jPkItRGW9WRebGe3TvuGz4K+8ddKSGxikP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706494; c=relaxed/simple;
-	bh=OrX93pBQXV42izM9Oe4rY37y5eDpjI7IUjAa3s+u5sA=;
+	s=arc-20240116; t=1741706497; c=relaxed/simple;
+	bh=Y8yYrhap6xKmPJyqjUNYg4/UMk7eLtIocfGb49+pdtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uu5J1kKorMMRXTkFLEt45SfCqCzXnzu2beLZfJwprQpy/aM70cGYRZmoI7F2zbQtqoD30jAA8PXPJRGiMepMSmkfAOsAncVShhfRX+UIW4B3MSWqGWu5M1WZLkMEWZWZe8ZOid6R7Qh0HctSC8igCEY1lRAkfOy9VgQJaVuO4yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RX+fiqUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rcv/IOIQNUhlYw/dU61lemPaHhqYyGcH6xGrQ7Jrqm3uuuWnhgsDBJfcFoz0tVgASlmqzl4+739FNS46z7pGiE1vmMrEdR9LqMbD11QGRjiJxRglMPeoVjWqancw4TyuY0PffsqLVTAa0r6ETwJMwTDwOMOAKvud7NDp1C4yIRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6QzEMWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RX+fiqUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3CFC4CEEF;
-	Tue, 11 Mar 2025 15:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6QzEMWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A22C4CEED;
+	Tue, 11 Mar 2025 15:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706494;
-	bh=OrX93pBQXV42izM9Oe4rY37y5eDpjI7IUjAa3s+u5sA=;
+	s=korg; t=1741706497;
+	bh=Y8yYrhap6xKmPJyqjUNYg4/UMk7eLtIocfGb49+pdtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RX+fiqUTyaTe/5V60rR2hrvwBeg6rG7MGFKCqsGpLRcq3i4wnezw5Kh9h3kreCY26
-	 /JlCkDzV6jE910WHOoy7iEMXlA/ksYY+OWgNc9f1xfuoQpvjS7Sc/pUaMHww3io2US
-	 qWMnmlrMwbAERC4+AvigXOn9GX4KRZGxbW05Ad/U=
+	b=k6QzEMWMHMDRlRN4+yhcpwl3maJ0hzuH5MVt1xm6PKmCQT/D9Zh4kCoNT8ocwpIKj
+	 I7ktSsBQjLTF97rrMMbfMwBeCZhHcwqenHn9APu3m5mYgWsEL64P9A53I7QDaDYgiJ
+	 ED8Vjk2gx0WOjFOS5p+CYxlwlVlz8X5mcHghlyDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/462] arm64: dts: mediatek: mt8516: reserve 192 KiB for TF-A
-Date: Tue, 11 Mar 2025 15:55:33 +0100
-Message-ID: <20250311145800.996546775@linuxfoundation.org>
+Subject: [PATCH 5.10 068/462] RDMA/mlx4: Avoid false error about access to uninitialized gids array
+Date: Tue, 11 Mar 2025 15:55:34 +0100
+Message-ID: <20250311145801.037438288@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 2561c7d5d497b988deccc36fe5eac7fd50b937f8 ]
+[ Upstream commit 1f53d88cbb0dcc7df235bf6611ae632b254fccd8 ]
 
-The Android DTB for the related MT8167 reserves 0x30000. This is likely
-correct for MT8516 Android devices as well, and there's never any harm
-in reserving 64KiB more.
+Smatch generates the following false error report:
+drivers/infiniband/hw/mlx4/main.c:393 mlx4_ib_del_gid() error: uninitialized symbol 'gids'.
 
-Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241204190524.21862-5-val@packett.cool
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Traditionally, we are not changing kernel code and asking people to fix
+the tools. However in this case, the fix can be done by simply rearranging
+the code to be more clear.
+
+Fixes: e26be1bfef81 ("IB/mlx4: Implement ib_device callbacks")
+Link: https://patch.msgid.link/6a3a1577463da16962463fcf62883a87506e9b62.1733233426.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx4/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-index 383ae46891ec2..afb66d1439511 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-@@ -144,10 +144,10 @@
- 		#size-cells = <2>;
- 		ranges;
+diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
+index c62cdd6456962..0c49f3f5e6247 100644
+--- a/drivers/infiniband/hw/mlx4/main.c
++++ b/drivers/infiniband/hw/mlx4/main.c
+@@ -391,10 +391,10 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
+ 	}
+ 	spin_unlock_bh(&iboe->lock);
  
--		/* 128 KiB reserved for ARM Trusted Firmware (BL31) */
-+		/* 192 KiB reserved for ARM Trusted Firmware (BL31) */
- 		bl31_secmon_reserved: secmon@43000000 {
- 			no-map;
--			reg = <0 0x43000000 0 0x20000>;
-+			reg = <0 0x43000000 0 0x30000>;
- 		};
- 	};
+-	if (!ret && hw_update) {
++	if (gids)
+ 		ret = mlx4_ib_update_gids(gids, ibdev, attr->port_num);
+-		kfree(gids);
+-	}
++
++	kfree(gids);
+ 	return ret;
+ }
  
 -- 
 2.39.5
