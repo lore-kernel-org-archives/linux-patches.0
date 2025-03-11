@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8324825EF8F;
-	Tue, 11 Mar 2025 15:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6B125EFB6;
+	Tue, 11 Mar 2025 15:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707633; cv=none; b=dBe0jDfaf6xfwNOPf+iQm7KCVkKD7OFG5Ki13J8LmQiLGuH/aJTQJNdG4FRO+mXRVvSRZiV6PQb3UgApA8V9KTfAvGa6cAM3qznHXc1jwhfsYx0K+V5KfRkTCks+c1JvNRv1Kt/VoVmwtxmDUT+RwfoJ0G6/aWw4fP+9joYWRb8=
+	t=1741707636; cv=none; b=jdFzQmnkOw3F8tPcaxr8xSugHw9GvvgtcqJElcA7PEC7xfEIPfdDT8Ricp5GT86hOIVjkO1xK9b1GG9QnVn4zZXCxvcyJFyUYoVftv2BLUVsIz7vRUITqohYUZcUfDZJY7Sb60+gmNDrdCiTIzg4W4Ly0ONpmDKcyJ0TkTGHmD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707633; c=relaxed/simple;
-	bh=9/+MnvOT/aoUYBoOChGcsG4osus12tfGdv1agI+bHbQ=;
+	s=arc-20240116; t=1741707636; c=relaxed/simple;
+	bh=bFzg5Zp4OVx6l0QR7ndAO4D5CKLFJFZXW1GWnws1Je0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tTyVd2T4X2QAy3ZOA87qz2bsiJzCHh53KXA9/OmB4Boj2zKng5V2xTLl3MNC8CTGTuS1rpFXC71byIFPA6/MYJUdQ+AgoaCC7P8F1xdn2Noc9f/PpjoOt1NjxQd3uxa1cEIHz55fPvkM679enijF1zRaiWO6dFGZUZsc9a4pDFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+hTEz7N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZH7f18JKtbp/BRSVT/uJ/yv3A+yT91a6FqZPL6d1KSU75fcWSpYYx4DUMlH8gOViP62YWGkntkePpqc4yJ4cc31GlvbnpEXUVWMq76DdWo04PQvh+L2KTzpXN/LSiFfCbwaqv3H7M5jkfccR/yAVA5FbhNsvEgGLTcPSd8w04U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOtKZbfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+hTEz7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A66C4CEE9;
-	Tue, 11 Mar 2025 15:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOtKZbfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73D9C4CEE9;
+	Tue, 11 Mar 2025 15:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707633;
-	bh=9/+MnvOT/aoUYBoOChGcsG4osus12tfGdv1agI+bHbQ=;
+	s=korg; t=1741707636;
+	bh=bFzg5Zp4OVx6l0QR7ndAO4D5CKLFJFZXW1GWnws1Je0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+hTEz7Nv2OVW8Oj0WmJ/2xAEPy0RKM3TAIq4QIG7Iqzl4KAxxpdTOrF6WQtV38U6
-	 zV7Ce3C8KvlBjVqEtsRk3f9+TlvqsjQ5GdxKWXgeKehcobBu63J7yqrVdBw/BKiqnw
-	 w5Z/DkcKotRi6GDny8ejXyHcuDEJASSpYtVklaRo=
+	b=fOtKZbfMMj7L9yOpx0YgOaVDKlLxX7Ph9nuqPp8qjlHXCRzxCgJ2J53r++HtFc10x
+	 ukJ6HhVDZm/TrUSUcEJG1iImDdo86f+iM05ahX/RXZfflS7oGcybmmRJTpcX9MtzxY
+	 LSW30kmhMZmS7i+8/ihD4SIVv+/Ip626ipV/128g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 5.10 456/462] kbuild: userprogs: use correct lld when linking through clang
-Date: Tue, 11 Mar 2025 16:02:02 +0100
-Message-ID: <20250311145816.339090592@linuxfoundation.org>
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.10 457/462] crypto: hisilicon/qm - inject error before stopping queue
+Date: Tue, 11 Mar 2025 16:02:03 +0100
+Message-ID: <20250311145816.379184930@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -45,57 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Thomas Weiﬂschuh" <thomas.weissschuh@linutronix.de>
+From: Weili Qian <qianweili@huawei.com>
 
-commit dfc1b168a8c4b376fa222b27b97c2c4ad4b786e1 upstream.
+commit b04f06fc0243600665b3b50253869533b7938468 upstream.
 
-The userprog infrastructure links objects files through $(CC).
-Either explicitly by manually calling $(CC) on multiple object files or
-implicitly by directly compiling a source file to an executable.
-The documentation at Documentation/kbuild/llvm.rst indicates that ld.lld
-would be used for linking if LLVM=1 is specified.
-However clang instead will use either a globally installed cross linker
-from $PATH called ${target}-ld or fall back to the system linker, which
-probably does not support crosslinking.
-For the normal kernel build this is not an issue because the linker is
-always executed directly, without the compiler being involved.
+The master ooo cannot be completely closed when the
+accelerator core reports memory error. Therefore, the driver
+needs to inject the qm error to close the master ooo. Currently,
+the qm error is injected after stopping queue, memory may be
+released immediately after stopping queue, causing the device to
+access the released memory. Therefore, error is injected to close master
+ooo before stopping queue to ensure that the device does not access
+the released memory.
 
-Explicitly pass --ld-path to clang so $(LD) is respected.
-As clang 13.0.1 is required to build the kernel, this option is available.
-
-Fixes: 7f3a59db274c ("kbuild: add infrastructure to build userspace programs")
-Cc: stable@vger.kernel.org # needs wrapping in $(cc-option) for < 6.9
-Signed-off-by: Thomas Wei√üschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-[nathan: use cc-option for 6.6 and older, as those trees support back to
-         clang-11]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 6c6dd5802c2d ("crypto: hisilicon/qm - add controller reset interface")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/crypto/hisilicon/qm.c |   46 +++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1022,6 +1022,11 @@ endif
- KBUILD_USERCFLAGS  += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
- KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -3354,6 +3354,27 @@ static int qm_set_vf_mse(struct hisi_qm
+ 	return -ETIMEDOUT;
+ }
  
-+# userspace programs are linked via the compiler, use the correct linker
-+ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
-+KBUILD_USERLDFLAGS += $(call cc-option, --ld-path=$(LD))
-+endif
++static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
++{
++	u32 nfe_enb = 0;
 +
- # make the checker run with the right architecture
- CHECKFLAGS += --arch=$(ARCH)
++	if (!qm->err_status.is_dev_ecc_mbit &&
++	    qm->err_status.is_qm_ecc_mbit &&
++	    qm->err_ini->close_axi_master_ooo) {
++
++		qm->err_ini->close_axi_master_ooo(qm);
++
++	} else if (qm->err_status.is_dev_ecc_mbit &&
++		   !qm->err_status.is_qm_ecc_mbit &&
++		   !qm->err_ini->close_axi_master_ooo) {
++
++		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
++		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
++		       qm->io_base + QM_RAS_NFE_ENABLE);
++		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
++	}
++}
++
+ static int qm_set_msi(struct hisi_qm *qm, bool set)
+ {
+ 	struct pci_dev *pdev = qm->pdev;
+@@ -3433,6 +3454,8 @@ static int qm_controller_reset_prepare(s
+ 		return ret;
+ 	}
  
++	qm_dev_ecc_mbit_handle(qm);
++
+ 	if (qm->vfs_num) {
+ 		ret = qm_vf_reset_prepare(qm, QM_SOFT_RESET);
+ 		if (ret) {
+@@ -3450,27 +3473,6 @@ static int qm_controller_reset_prepare(s
+ 	return 0;
+ }
+ 
+-static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
+-{
+-	u32 nfe_enb = 0;
+-
+-	if (!qm->err_status.is_dev_ecc_mbit &&
+-	    qm->err_status.is_qm_ecc_mbit &&
+-	    qm->err_ini->close_axi_master_ooo) {
+-
+-		qm->err_ini->close_axi_master_ooo(qm);
+-
+-	} else if (qm->err_status.is_dev_ecc_mbit &&
+-		   !qm->err_status.is_qm_ecc_mbit &&
+-		   !qm->err_ini->close_axi_master_ooo) {
+-
+-		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
+-		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
+-		       qm->io_base + QM_RAS_NFE_ENABLE);
+-		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
+-	}
+-}
+-
+ static int qm_soft_reset(struct hisi_qm *qm)
+ {
+ 	struct pci_dev *pdev = qm->pdev;
+@@ -3496,8 +3498,6 @@ static int qm_soft_reset(struct hisi_qm
+ 		return ret;
+ 	}
+ 
+-	qm_dev_ecc_mbit_handle(qm);
+-
+ 	/* OOO register set and check */
+ 	writel(ACC_MASTER_GLOBAL_CTRL_SHUTDOWN,
+ 	       qm->io_base + ACC_MASTER_GLOBAL_CTRL);
 
 
