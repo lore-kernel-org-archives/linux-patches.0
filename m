@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ABB25DB0D;
-	Tue, 11 Mar 2025 15:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CCB25EF80;
+	Tue, 11 Mar 2025 15:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705829; cv=none; b=Mv5s5T3prm3WSZ+QBsToTATkuKm1jUJORLn4sWmjkw4QNz6saAuP1LLwwikep8sIDr7aAUqSO2vrkqgV73cpusjrBIOdsNjOac0uawXKHE9KhWaneNAa0axcpE8Cl6Ybw8vZZd1GCxUqzdat0EixruPMMaEyrzptalWwL4XIXHY=
+	t=1741705831; cv=none; b=sXD3ZvxVHAJyOpqUoKddRDawDyBhtfHsrA+aED+n4WdJQUUje2vb+IMCpvMFV8DxqqbE9ID6J1qmHtChGzHgxLce2aTRD3XWpyiAKpPQI76ehnQv1k3cCmFeVRCaUYFYcmSyjM120qUY4Im4xfqlhvQNtpPFKzorByLiKY8lp+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705829; c=relaxed/simple;
-	bh=x+OiVJCv/XGs32VGxp+UX95FhKNMAo64KiZuyRd9ZQo=;
+	s=arc-20240116; t=1741705831; c=relaxed/simple;
+	bh=URZ2u/xfnt4GiM1rgRJ8ifEF4Es3IEMFw+3jH94r8J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ud6YO7ucD7L1pj5VgT4sVk19q7ekFWan7RR/TCuycxNbjSC/e7IPHIhgE8+Z0zH1/25PisGsws/+OrzJcEo4E4igh3gve70JMsMLir+3onm2+9kV075jj8r3MBytn/I4GS6Q3DPs64Pr+ddUJoit8eXoFwRLijH7+oOsQvnKoJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXAC2EIS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHK1owQlOQkxYVvEREuAvA2u6B1LO2u50HenNfPrRLzYRmqk6qkmkOcAp/Ad990CwdA2HhA62RJN+yTD36Gf0MOlaXHnonM7Nexy0CY0keigYIMz92KksWEwbJhqsZW/ZFrFtE1adRdesLdLeWNvF9B4rUkFG6jU7fj5StBDv2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ky+mWpjB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXAC2EIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8D3C4CEEA;
-	Tue, 11 Mar 2025 15:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ky+mWpjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F20C4CEED;
+	Tue, 11 Mar 2025 15:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705828;
-	bh=x+OiVJCv/XGs32VGxp+UX95FhKNMAo64KiZuyRd9ZQo=;
+	s=korg; t=1741705831;
+	bh=URZ2u/xfnt4GiM1rgRJ8ifEF4Es3IEMFw+3jH94r8J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXAC2EIS8jb2z9stqxzRnk9FMe7OZloyRI4j8oozSx873rvi2yy3oW29U4ymjoA+f
-	 qCPi1UhnmOG9BOt9EeAxGz2zQLXziaE/vohz922Ubk3/2TIapbXZzQTh+1V0T8J2Lj
-	 InAu/Pyob7IHYZXHarf7hiQUkpdDqStd32hCGnME=
+	b=ky+mWpjBoju5OdciVXYdan59Y0Wkedep5Mv7FfsfQjqZbRh6mxqf19P2esSS/u/tC
+	 Zi2VkwtRberxa0cKx380p0qCmL8jKmBtTDiJCNVftp3UnsMzvXpR4jRGb8zSOda92n
+	 UgzxHsYKIdIY25+Xvck5AI4eUv0CPXpW51pmDjGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Petr Tesarik <petr.tesarik.ext@huawei.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 169/328] gpio: bcm-kona: Add missing newline to dev_err format string
-Date: Tue, 11 Mar 2025 15:58:59 +0100
-Message-ID: <20250311145721.621875117@linuxfoundation.org>
+Subject: [PATCH 5.4 170/328] xen: remove a confusing comment on auto-translated guest I/O
+Date: Tue, 11 Mar 2025 15:59:00 +0100
+Message-ID: <20250311145721.666151323@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -54,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Petr Tesarik <petr.tesarik.ext@huawei.com>
 
-[ Upstream commit 615279db222c3ac56d5c93716efd72b843295c1f ]
+[ Upstream commit d826c9e61c99120f8996f8fed6417167e32eb922 ]
 
-Add a missing newline to the format string of the "Couldn't get IRQ
-for bank..." error message.
+After removing the conditional return from xen_create_contiguous_region(),
+the accompanying comment was left in place, but it now precedes an
+unrelated conditional and confuses readers.
 
-Fixes: 757651e3d60e ("gpio: bcm281xx: Add GPIO driver")
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Markus Mayer <mmayer@broadcom.com>
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250206-kona-gpio-fixes-v2-3-409135eab780@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 989513a735f5 ("xen: cleanup pvh leftovers from pv-only sources")
+Signed-off-by: Petr Tesarik <petr.tesarik.ext@huawei.com>
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Link: https://lore.kernel.org/r/20230802163151.1486-1-petrtesarik@huaweicloud.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: e93ec87286bd ("x86/xen: allow larger contiguous memory regions in PV guests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-bcm-kona.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/xen/mmu_pv.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/gpio/gpio-bcm-kona.c b/drivers/gpio/gpio-bcm-kona.c
-index aad1d5af6382b..35bf2ecc71b49 100644
---- a/drivers/gpio/gpio-bcm-kona.c
-+++ b/drivers/gpio/gpio-bcm-kona.c
-@@ -674,7 +674,7 @@ static int bcm_kona_gpio_probe(struct platform_device *pdev)
- 		bank->irq = platform_get_irq(pdev, i);
- 		bank->kona_gpio = kona_gpio;
- 		if (bank->irq < 0) {
--			dev_err(dev, "Couldn't get IRQ for bank %d", i);
-+			dev_err(dev, "Couldn't get IRQ for bank %d\n", i);
- 			ret = -ENOENT;
- 			goto err_irq_domain;
- 		}
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index c8dbee62ec2ab..5d54a75eb8781 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -2592,12 +2592,6 @@ int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
+ 	int            success;
+ 	unsigned long vstart = (unsigned long)phys_to_virt(pstart);
+ 
+-	/*
+-	 * Currently an auto-translated guest will not perform I/O, nor will
+-	 * it require PAE page directories below 4GB. Therefore any calls to
+-	 * this function are redundant and can be ignored.
+-	 */
+-
+ 	if (unlikely(order > MAX_CONTIG_ORDER))
+ 		return -ENOMEM;
+ 
 -- 
 2.39.5
 
