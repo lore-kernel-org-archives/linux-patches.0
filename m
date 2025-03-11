@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF4925D8F9;
-	Tue, 11 Mar 2025 15:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497F125C715;
+	Tue, 11 Mar 2025 15:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705895; cv=none; b=GXOU70cuiuWax/lSB96aPsynLNXzgOHrowE/GjPT/6rzmagYmhwtmT/CSobFjgdqnjVaWsUmLrhg1+7hZLZM0UOTYkyJzOxsaIHpsPHNzbqnxbd8WVZ4POLvlkXT3yp3Mqw8xXr599VQ5l2iiRrDKUkQpdCelaMlnOdfg3YV2j8=
+	t=1741705898; cv=none; b=AQ1kSZxiAbGqvLyp1cUp4SscpbUrMlanwSNWKCVgwE4RYnMNXM+bsQlnuT5aC4rVi2gVutazHZD00ys3Wo3whuIpH6LnhpKfCBTo/Hbnz+J7YWWelfoSsKseKNR55cxj44cnVQlEdfFhgZ5r+XemM5Dkklt1bvz7IkfR7d8PS4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705895; c=relaxed/simple;
-	bh=0wUSA8CGBeNTNwiTZUozt8pGIcXFy60KLqXSM7L2VdQ=;
+	s=arc-20240116; t=1741705898; c=relaxed/simple;
+	bh=6ZtGNptFug0eRvqDhIz1TVpTPFbFDOoKWirGlmr3xOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XE6xn2fIw3YCxt05eX1X2Prd4XhUCZERxl4z2PyjP/xtXon4U4Hr6LrSfxTK08JRTyUZ+oTxJaAHztaUXW5lUpyyVoXxiNIaNp6jaygiG8DnPv9VlCfGY6J0XrMObDrVfiO9oH8ttK1aurxUgypM9SEwC3gtVHZyWsHseJMELKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Etk8LhE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fAiGP0DCmbu/f/iC/iYW5aCWXw81g2Q7ban0QhZT65A0QQTzHJZIwgq766zusyWyoNEv7atpdz6IpCWAaNOzwIO2ETw/UMtvchwMbZJRALjvpw/3JFYan/FwzsrGV8dyDjCZjmF0Qe+HjeTwmIQRPnAQ/E0mQR9xdiUa3sKMYNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgLWz/7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Etk8LhE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4841C4CEE9;
-	Tue, 11 Mar 2025 15:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgLWz/7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D48C4CEE9;
+	Tue, 11 Mar 2025 15:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705895;
-	bh=0wUSA8CGBeNTNwiTZUozt8pGIcXFy60KLqXSM7L2VdQ=;
+	s=korg; t=1741705898;
+	bh=6ZtGNptFug0eRvqDhIz1TVpTPFbFDOoKWirGlmr3xOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Etk8LhEcPTMy5nRtS5BV89ocaSuE8uezq+KTJ+mAE1wH4GAvs+nrFHb04B5TWJXG
-	 +4gloOKc47MekvyWwIbwM7QbHC7KyE6P9Lzkor/4eWIAPB/4sOArFomQA0Hy2fCh81
-	 ZMd0Zs77hMYIFLugzyqy+3eD66zsTsc9fOP9ILvM=
+	b=xgLWz/7yFe09ANC2QS4iWhoU9OkEwoCPqcIZ++RXZkj9P+jP6vY95CIgjx24KYsM/
+	 85x94tlTT7G8eBdYVfdlWGuTrtKW4x6u9us1i2hEB2gOPeZnYJAHLqSXukvOALNqTZ
+	 sm1nDyEpya3SvV11jdpUXJTkg7SZDinjK+xg/JMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 192/328] USB: serial: option: drop MeiG Smart defines
-Date: Tue, 11 Mar 2025 15:59:22 +0100
-Message-ID: <20250311145722.529639846@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 193/328] can: c_can: fix unbalanced runtime PM disable in error path
+Date: Tue, 11 Mar 2025 15:59:23 +0100
+Message-ID: <20250311145722.573235659@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,74 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 6aa8a63c471eb6756aabd03f880feffe6a7af6c9 upstream.
+commit 257a2cd3eb578ee63d6bf90475dc4f4b16984139 upstream.
 
-Several MeiG Smart modems apparently use the same product id, making the
-defines even less useful.
+Runtime PM is enabled as one of the last steps of probe(), so all
+earlier gotos to "exit_free_device" label were not correct and were
+leading to unbalanced runtime PM disable depth.
 
-Drop them in favour of using comments consistently to make the id table
-slightly less unwieldy.
-
+Fixes: 6e2fe01dd6f9 ("can: c_can: move runtime PM enable/disable to c_can_platform")
 Cc: stable@vger.kernel.org
-Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250112-syscon-phandle-args-can-v1-1-314d9549906f@linaro.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ drivers/net/can/c_can/c_can_platform.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -619,18 +619,6 @@ static void option_instat_callback(struc
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+--- a/drivers/net/can/c_can/c_can_platform.c
++++ b/drivers/net/can/c_can/c_can_platform.c
+@@ -391,15 +391,16 @@ static int c_can_plat_probe(struct platf
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
+ 			KBUILD_MODNAME, ret);
+-		goto exit_free_device;
++		goto exit_pm_runtime;
+ 	}
  
--/* MeiG Smart Technology products */
--#define MEIGSMART_VENDOR_ID			0x2dee
--/*
-- * MeiG Smart SLM828, SRM815, and SRM825L use the same product ID. SLM828 is
-- * based on Qualcomm SDX12. SRM815 and SRM825L are based on Qualcomm 315.
-- */
--#define MEIGSMART_PRODUCT_SRM825L		0x4d22
--/* MeiG Smart SLM320 based on UNISOC UIS8910 */
--#define MEIGSMART_PRODUCT_SLM320		0x4d41
--/* MeiG Smart SLM770A based on ASR1803 */
--#define MEIGSMART_PRODUCT_SLM770A		0x4d57
--
- /* Device flags */
+ 	dev_info(&pdev->dev, "%s device registered (regs=%p, irq=%d)\n",
+ 		 KBUILD_MODNAME, priv->base, dev->irq);
+ 	return 0;
  
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2366,6 +2354,14 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a05, 0xff) },			/* Fibocom FM650-CN (NCM mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a06, 0xff) },			/* Fibocom FM650-CN (RNDIS mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a07, 0xff) },			/* Fibocom FM650-CN (MBIM mode) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d41, 0xff, 0, 0) },		/* MeiG Smart SLM320 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d57, 0xff, 0, 0) },		/* MeiG Smart SLM770A */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0, 0) },		/* MeiG Smart SRM815 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
-@@ -2422,14 +2418,6 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },	/* MeiG Smart SRM815 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
- 	  .driver_info = NCTRL(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
+-exit_free_device:
++exit_pm_runtime:
+ 	pm_runtime_disable(priv->device);
++exit_free_device:
+ 	free_c_can_dev(dev);
+ exit:
+ 	dev_err(&pdev->dev, "probe failed\n");
 
 
