@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E2A25E820;
-	Tue, 11 Mar 2025 15:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F292E25D8E8;
+	Tue, 11 Mar 2025 15:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705909; cv=none; b=NQeNzJXLwjd8eKN8ir5cESvaMBSFhB5YUhubzwGGfkozWfSyaNIBVHT/nBcrypZfmp4TWM/DLALfUWMH5m7RP2WpfawFFUQhDM4v24/mxgEdgjme0/PYjopiekv3cWPm/WCu9yEm8gZl+9fStVKx/ILHNqgkAnDyQPvw7BNhxwE=
+	t=1741705913; cv=none; b=GOm9avnY764KhOD/PdjZXnk2JCfzVdsT5pvqrVxxXRqxWbX0cROPPFfjfKyYLOZbcMsb0G4q8XM54h5Wbd3AD1CEockbqvDTVVMyBOCL/JYFISB0ClbS2ObYkD/+vviZsZ6lQ7e4ViJYAy64JpI0XEkXXP3RHSX7Yy2VUyoaYlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705909; c=relaxed/simple;
-	bh=paBkyUNNPH7xJLoStv0cWVm19fTcn9OLxbxOzpEj/t0=;
+	s=arc-20240116; t=1741705913; c=relaxed/simple;
+	bh=FzcLifCH+0ee7ooylg1DrdJp9ESu7nfD9XpEPWmtDiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAIcKLdQnKm3141I2HcGK6bQT07F+qegWX23BZwKqU0YUI7mJWVVOW15b7oij+pQf3jWmrvXoimZfNs3LUj5Z3k+n1e3A7qMs9B15iOVpJ8ne1yyOeUZFf3AlITu5aSktYOAx0235InQJFoO4XznoxTf2HWzbwelQdUCA5nBkHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWlgDcUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MlyBX8dkOWhxUPBWmmo0UFUuLFJvm3wGx3L7qGf5zAQeWSUAzlH4hWcWR2V+SSVLje45kwsxUUrJM5vDo6zwBgz7dXwrTcqFRToNVO0TjHZLviibTDmIl1qzTvTdKWNbJn7DuH9rnzJ8i+OQNL2B++owhDc50g23N9m1bDqGTao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHCX/xs7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWlgDcUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253CAC4CEF3;
-	Tue, 11 Mar 2025 15:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHCX/xs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1148AC4CEE9;
+	Tue, 11 Mar 2025 15:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705909;
-	bh=paBkyUNNPH7xJLoStv0cWVm19fTcn9OLxbxOzpEj/t0=;
+	s=korg; t=1741705912;
+	bh=FzcLifCH+0ee7ooylg1DrdJp9ESu7nfD9XpEPWmtDiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWlgDcUgMT+MY8XvJZV9A2Wpcaz+B6/WMjCA71lqw05Fr8qkridgfQIxkPcRYyjG/
-	 g8CpXeTlz1a8P3QPOLboIsQGIKr0hN0JAIi8k3yAnf61WG2i9SHdkoD+lWPl9bUjeX
-	 +agR8tXdnXmk9ZkCUvzznhdPeEJ7QfaOlTXSRw44=
+	b=AHCX/xs7OLTyw543y4GwIxt5GE/IAWZNx4D1mY7CY+JX3SgtlTLZ+SbyaSzD9HygF
+	 fDDKGxwLVQRTbuUGlItBW5U20hahYP0l9RHANZai+NKu88yg5Qz7zzEP01wktqoyNC
+	 q6cdnetuL24fjDYBFZjmp+7IpB7hEZVdm17/hVLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>
-Subject: [PATCH 5.4 197/328] alpha: align stack for page fault and user unaligned trap handlers
-Date: Tue, 11 Mar 2025 15:59:27 +0100
-Message-ID: <20250311145722.733081903@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.4 198/328] gpio: stmpe: Check return value of stmpe_reg_read in stmpe_gpio_irq_sync_unlock
+Date: Tue, 11 Mar 2025 15:59:28 +0100
+Message-ID: <20250311145722.773152011@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,129 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Kokshaysky <ink@unseen.parts>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 3b35a171060f846b08b48646b38c30b5d57d17ff upstream.
+commit b9644fbfbcab13da7f8b37bef7c51e5b8407d031 upstream.
 
-do_page_fault() and do_entUna() are special because they use
-non-standard stack frame layout. Fix them manually.
+The stmpe_reg_read function can fail, but its return value is not checked
+in stmpe_gpio_irq_sync_unlock. This can lead to silent failures and
+incorrect behavior if the hardware access fails.
 
-Cc: stable@vger.kernel.org
-Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+This patch adds checks for the return value of stmpe_reg_read. If the
+function fails, an error message is logged and the function returns
+early to avoid further issues.
+
+Fixes: b888fb6f2a27 ("gpio: stmpe: i2c transfer are forbiden in atomic context")
+Cc: stable@vger.kernel.org # 4.16+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20250212021849.275-1-vulab@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/entry.S |   20 ++++++++++----------
- arch/alpha/kernel/traps.c |    2 +-
- arch/alpha/mm/fault.c     |    4 ++--
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/gpio/gpio-stmpe.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -199,8 +199,8 @@ CFI_END_OSF_FRAME entArith
- CFI_START_OSF_FRAME entMM
- 	SAVE_ALL
- /* save $9 - $15 so the inline exception code can manipulate them.  */
--	subq	$sp, 56, $sp
--	.cfi_adjust_cfa_offset	56
-+	subq	$sp, 64, $sp
-+	.cfi_adjust_cfa_offset	64
- 	stq	$9, 0($sp)
- 	stq	$10, 8($sp)
- 	stq	$11, 16($sp)
-@@ -215,7 +215,7 @@ CFI_START_OSF_FRAME entMM
- 	.cfi_rel_offset	$13, 32
- 	.cfi_rel_offset	$14, 40
- 	.cfi_rel_offset	$15, 48
--	addq	$sp, 56, $19
-+	addq	$sp, 64, $19
- /* handle the fault */
- 	lda	$8, 0x3fff
- 	bic	$sp, $8, $8
-@@ -228,7 +228,7 @@ CFI_START_OSF_FRAME entMM
- 	ldq	$13, 32($sp)
- 	ldq	$14, 40($sp)
- 	ldq	$15, 48($sp)
--	addq	$sp, 56, $sp
-+	addq	$sp, 64, $sp
- 	.cfi_restore	$9
- 	.cfi_restore	$10
- 	.cfi_restore	$11
-@@ -236,7 +236,7 @@ CFI_START_OSF_FRAME entMM
- 	.cfi_restore	$13
- 	.cfi_restore	$14
- 	.cfi_restore	$15
--	.cfi_adjust_cfa_offset	-56
-+	.cfi_adjust_cfa_offset	-64
- /* finish up the syscall as normal.  */
- 	br	ret_from_sys_call
- CFI_END_OSF_FRAME entMM
-@@ -383,8 +383,8 @@ entUnaUser:
- 	.cfi_restore	$0
- 	.cfi_adjust_cfa_offset	-256
- 	SAVE_ALL		/* setup normal kernel stack */
--	lda	$sp, -56($sp)
--	.cfi_adjust_cfa_offset	56
-+	lda	$sp, -64($sp)
-+	.cfi_adjust_cfa_offset	64
- 	stq	$9, 0($sp)
- 	stq	$10, 8($sp)
- 	stq	$11, 16($sp)
-@@ -400,7 +400,7 @@ entUnaUser:
- 	.cfi_rel_offset	$14, 40
- 	.cfi_rel_offset	$15, 48
- 	lda	$8, 0x3fff
--	addq	$sp, 56, $19
-+	addq	$sp, 64, $19
- 	bic	$sp, $8, $8
- 	jsr	$26, do_entUnaUser
- 	ldq	$9, 0($sp)
-@@ -410,7 +410,7 @@ entUnaUser:
- 	ldq	$13, 32($sp)
- 	ldq	$14, 40($sp)
- 	ldq	$15, 48($sp)
--	lda	$sp, 56($sp)
-+	lda	$sp, 64($sp)
- 	.cfi_restore	$9
- 	.cfi_restore	$10
- 	.cfi_restore	$11
-@@ -418,7 +418,7 @@ entUnaUser:
- 	.cfi_restore	$13
- 	.cfi_restore	$14
- 	.cfi_restore	$15
--	.cfi_adjust_cfa_offset	-56
-+	.cfi_adjust_cfa_offset	-64
- 	br	ret_from_sys_call
- CFI_END_OSF_FRAME entUna
+--- a/drivers/gpio/gpio-stmpe.c
++++ b/drivers/gpio/gpio-stmpe.c
+@@ -188,7 +188,7 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 		[REG_IE][CSB] = STMPE_IDX_IEGPIOR_CSB,
+ 		[REG_IE][MSB] = STMPE_IDX_IEGPIOR_MSB,
+ 	};
+-	int i, j;
++	int ret, i, j;
  
---- a/arch/alpha/kernel/traps.c
-+++ b/arch/alpha/kernel/traps.c
-@@ -709,7 +709,7 @@ s_reg_to_mem (unsigned long s_reg)
- static int unauser_reg_offsets[32] = {
- 	R(r0), R(r1), R(r2), R(r3), R(r4), R(r5), R(r6), R(r7), R(r8),
- 	/* r9 ... r15 are stored in front of regs.  */
--	-56, -48, -40, -32, -24, -16, -8,
-+	-64, -56, -48, -40, -32, -24, -16,	/* padding at -8 */
- 	R(r16), R(r17), R(r18),
- 	R(r19), R(r20), R(r21), R(r22), R(r23), R(r24), R(r25), R(r26),
- 	R(r27), R(r28), R(gp),
---- a/arch/alpha/mm/fault.c
-+++ b/arch/alpha/mm/fault.c
-@@ -77,8 +77,8 @@ __load_new_mm_context(struct mm_struct *
+ 	/*
+ 	 * STMPE1600: to be able to get IRQ from pins,
+@@ -196,8 +196,16 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 	 * GPSR or GPCR registers
+ 	 */
+ 	if (stmpe->partnum == STMPE1600) {
+-		stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_LSB]);
+-		stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_CSB]);
++		ret = stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_LSB]);
++		if (ret < 0) {
++			dev_err(stmpe->dev, "Failed to read GPMR_LSB: %d\n", ret);
++			goto err;
++		}
++		ret = stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_CSB]);
++		if (ret < 0) {
++			dev_err(stmpe->dev, "Failed to read GPMR_CSB: %d\n", ret);
++			goto err;
++		}
+ 	}
  
- /* Macro for exception fixup code to access integer registers.  */
- #define dpf_reg(r)							\
--	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-16 :	\
--				 (r) <= 18 ? (r)+10 : (r)-10])
-+	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-17 :	\
-+				 (r) <= 18 ? (r)+11 : (r)-10])
+ 	for (i = 0; i < CACHE_NR_REGS; i++) {
+@@ -219,6 +227,7 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 		}
+ 	}
  
- asmlinkage void
- do_page_fault(unsigned long address, unsigned long mmcsr,
++err:
+ 	mutex_unlock(&stmpe_gpio->irq_lock);
+ }
+ 
 
 
