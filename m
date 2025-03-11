@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0D2255E37;
-	Tue, 11 Mar 2025 15:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD97249F9;
+	Tue, 11 Mar 2025 15:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705790; cv=none; b=dNWgnJxgiqdA60IfLPBcVi1MZITsiDjOhipMs+qUMY5l4TSEnCIvT0w17/jI8IkE9/4HfK/yhWhHBa1hBsCf49XjT3dR6ID9+Uy7aNUg2u1Qm+Z3Rjh9ojSBnYL+LMhHPZALSl0bSgEUa9le/uqIsHv3G6GFm95wEDD90gh98RE=
+	t=1741705793; cv=none; b=I6QszYwCMhpimnkA5NHGw2SnhoqMRiMG7vO6fxfGyRko9/gbiDnPoXhU8vB/3eZbfT6zJ+vcN7LzvyINrGli3Efju40BivmsoHi4I2Gu/w6eY+OSN6waMI60aigR8QhAAAlfjKiG9euSsL42Q848j3mJeFp0/g6oeUTGJBpGZcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705790; c=relaxed/simple;
-	bh=cZ7qjRxmkSkOulxg1PSgM5I9rpsM4FwUf5WtHv0gNRc=;
+	s=arc-20240116; t=1741705793; c=relaxed/simple;
+	bh=nTvGUiJy18WIv4rqglqGj2aPg0YnX4gdCQO39D3V/MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHtFFZ/F6ajsjjtwPgoDUjhGtIG2XNcZhn5rZklhGYioyyNqMckivg0oRRFHMzGX9VSnIwGvZSbuq08Aist0lFXH9Aik3TvxSt8/rd51lQJZ/275s9fXjCDyzE6E6QYa/Y/PfjYkkvL3WT7Fcw8NUuzOvRon5moHCbZjbPQxxgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWE1A7lX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VhB5AQUW4QemlHroeKwDeyJ3+u+Gz49XDHK7pila0ZaHm0zue/PJKhgFGvXPA+UrHgs77OQl7UqlNZjRvPB3DTPBBKdfJozAod6NG7H0z2isl8xO4MS4fMqW8jxXDtW1z3vDrbk6SFy2CCfqWILDMIlSDKNfjtMpzZtKpQ77ZSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4qyY9Fj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWE1A7lX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1692CC4CEE9;
-	Tue, 11 Mar 2025 15:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4qyY9Fj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DB4C4CEE9;
+	Tue, 11 Mar 2025 15:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705790;
-	bh=cZ7qjRxmkSkOulxg1PSgM5I9rpsM4FwUf5WtHv0gNRc=;
+	s=korg; t=1741705793;
+	bh=nTvGUiJy18WIv4rqglqGj2aPg0YnX4gdCQO39D3V/MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWE1A7lXuDCoD+VttTkYBb18ngnmPkEnAWs465t0VmRyAKI7uQOuJO0Y6beyhYj25
-	 sslVFyNVqni7pY60aks3YtYDL0ynWvbxF7FO4pAgUwWIlKXgH9FBR18pIpm20fSFsA
-	 p3IofcsXd1JvfIyt2N+YlP+VAGAXES4r9yD8Ku5E=
+	b=V4qyY9FjiIGWcTX9QLf13x9AhuF5EHJTEv0JByax0MBnswAMWDMZwg6edOjL6wOUE
+	 Mv3r9p89tUM3D+tHR0NRyLkHFKB8V3lsVd0Cf9+wC5Yt0/hqxgLtznOKgYhmGVyi7Z
+	 OkVeWNNqZQsZjrF7WREzTyjNqeOS/2HUp4eXNXNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 156/328] mtd: onenand: Fix uninitialized retlen in do_otp_read()
-Date: Tue, 11 Mar 2025 15:58:46 +0100
-Message-ID: <20250311145721.107366449@linuxfoundation.org>
+	stable@kernel.org,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.4 157/328] misc: fastrpc: Fix registered buffer page address
+Date: Tue, 11 Mar 2025 15:58:47 +0100
+Message-ID: <20250311145721.149846869@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,36 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 70a71f8151b9879b0950668ce3ad76263261fee0 upstream.
+commit 6ca4ea1f88a06a04ed7b2c9c6bf9f00833b68214 upstream.
 
-The function do_otp_read() does not set the output parameter *retlen,
-which is expected to contain the number of bytes actually read.
-As a result, in onenand_otp_walk(), the tmp_retlen variable remains
-uninitialized after calling do_otp_walk() and used to change
-the values of the buf, len and retlen variables.
+For registered  buffers, fastrpc driver sends the buffer information
+to remote subsystem. There is a problem with current implementation
+where the page address is being sent with an offset leading to
+improper buffer address on DSP. This is leads to functional failures
+as DSP expects base address in page information and extracts offset
+information from remote arguments. Mask the offset and pass the base
+page address to DSP.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This issue is observed is a corner case when some buffer which is registered
+with fastrpc framework is passed with some offset by user and then the DSP
+implementation tried to read the data. As DSP expects base address and takes
+care of offsetting with remote arguments, passing an offsetted address will
+result in some unexpected data read in DSP.
 
-Fixes: 49dc08eeda70 ("[MTD] [OneNAND] fix numerous races")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+All generic usecases usually pass the buffer as it is hence is problem is
+not usually observed. If someone tries to pass offsetted buffer and then
+tries to compare data at HLOS and DSP end, then the ambiguity will be observed.
+
+Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
+Cc: stable@kernel.org
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20250110134239.123603-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/onenand/onenand_base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/fastrpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/onenand/onenand_base.c
-+++ b/drivers/mtd/nand/onenand/onenand_base.c
-@@ -2921,6 +2921,7 @@ static int do_otp_read(struct mtd_info *
- 	ret = ONENAND_IS_4KB_PAGE(this) ?
- 		onenand_mlc_read_ops_nolock(mtd, from, &ops) :
- 		onenand_read_ops_nolock(mtd, from, &ops);
-+	*retlen = ops.retlen;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -801,7 +801,7 @@ static int fastrpc_get_args(u32 kernel,
  
- 	/* Exit OTP access mode */
- 	this->command(mtd, ONENAND_CMD_RESET, 0, 0);
+ 			vma = find_vma(current->mm, ctx->args[i].ptr);
+ 			if (vma)
+-				pages[i].addr += ctx->args[i].ptr -
++				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
+ 						 vma->vm_start;
+ 
+ 			pg_start = (ctx->args[i].ptr & PAGE_MASK) >> PAGE_SHIFT;
 
 
