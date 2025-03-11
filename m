@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9AE1E98EC;
-	Tue, 11 Mar 2025 15:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D021E98EC;
+	Tue, 11 Mar 2025 15:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707534; cv=none; b=AIsZtYVLxS2RnwzSYef0b7OTg9zCN2GlEnXcV0F5ZvXIUJyG8mE41FnNkjxnHnCLIpOrHa448ALsmVorWbZlrmi4e8EAo/gt6WO0AC/3s6A0xZA+3iYn42oyxAUjP9P+25vdxgim/lIIzebtfBRgefZfBBYX73hg2d+K15qBHu0=
+	t=1741707538; cv=none; b=BdAlLYmH1oI25j71HpjT8fDSu0psQ2WNOE0kbi6zFe4e1HSVtncUqKvW9yH2+JyI9zXFRRtCZc/9DMgWBm8Vz6niHmZFUu+A7J2Ste9f+MhqJshwgrwVsxK6Vz0JOJNhYwSJClFiCTeD1tJAEfqBJyxRiqfoC+oJuKcmHh6oWDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707534; c=relaxed/simple;
-	bh=b0VNiRAegLgF+QuH7dIVcZkl1wMqKOszlgnl2i08NQo=;
+	s=arc-20240116; t=1741707538; c=relaxed/simple;
+	bh=7hlwXxezaY8wMXZqnCdKndvbmCW3Gca8SfxLhMauflw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kW1u0qsc6JoB7f1XoC3Dp6f4Qh4o9gCaJj3dPh+ALU3+EitVaT09IRQxGk9seUlon1OzM87ddO37juiHi/4ouuVItoTr/G3jXQZ4Y0XQFPIy3KmYkUmWLtRNq0JnNgWQ/3PY1iPLRVA/xifmqyY72K9Byg44XK8lRUxAbSS9vwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVB/1Q0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d5JA7P6zId7rT8znquYghxp7CHJEqw/b5SSzzNhyTLnDtd3iZNym5dO0IvwCU+rVYIPHXYWC8EvUpdEF4tt6sPBcRq9hYtNL7EUtQrAMJ3T/+FnxiRT67fhLludmeikkRO5nGJDPN4VNuX6TnIV+0aKv701g/oou2ULJDoXFlSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvIvSyM4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVB/1Q0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42911C4CEE9;
-	Tue, 11 Mar 2025 15:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvIvSyM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A179C4CEE9;
+	Tue, 11 Mar 2025 15:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707534;
-	bh=b0VNiRAegLgF+QuH7dIVcZkl1wMqKOszlgnl2i08NQo=;
+	s=korg; t=1741707537;
+	bh=7hlwXxezaY8wMXZqnCdKndvbmCW3Gca8SfxLhMauflw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVB/1Q0Rkq0KiWI6g53eX39GfNEQVNhECWmE4iS9WQdsfyzCJM3FIN3r0Ju416KXy
-	 agfEyQjDWyYs2FPdnDwEYDWAlsexleb3bhGPz3Nq9/BDJHEPZ8+QF3ZoM6GX1548rv
-	 Vof6UXBNuA7J/TarZpz+zz+sNjnoOdTHRqwrAkPA=
+	b=qvIvSyM4ibF0p5QbBygIH65uRwNdhR3YhuCz1fgZZTJBVwiI6gCCXKOCVMjuxvKUK
+	 2fcgTNq5JjlIStAXxApxwd6d2KjUT1tsPx6fL+Z6wxeROTD/KLZ5nf9UztY32Yk//q
+	 1UPX/5ssyGVCK20kxXIwq9RnNLfd8q9cMS8b7x5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Iurman <justin.iurman@uliege.be>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 422/462] net: ipv6: fix dst ref loop in ila lwtunnel
-Date: Tue, 11 Mar 2025 16:01:28 +0100
-Message-ID: <20250311145815.006485891@linuxfoundation.org>
+Subject: [PATCH 5.10 423/462] net: ipv6: fix missing dst ref drop in ila lwtunnel
+Date: Tue, 11 Mar 2025 16:01:29 +0100
+Message-ID: <20250311145815.048981232@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -54,37 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 0e7633d7b95b67f1758aea19f8e85621c5f506a3 ]
+[ Upstream commit 5da15a9c11c1c47ef573e6805b60a7d8a1687a2a ]
 
-This patch follows commit 92191dd10730 ("net: ipv6: fix dst ref loops in
-rpl, seg6 and ioam6 lwtunnels") and, on a second thought, the same patch
-is also needed for ila (even though the config that triggered the issue
-was pathological, but still, we don't want that to happen).
+Add missing skb_dst_drop() to drop reference to the old dst before
+adding the new dst to the skb.
 
 Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
 Cc: Tom Herbert <tom@herbertland.com>
 Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Link: https://patch.msgid.link/20250304181039.35951-1-justin.iurman@uliege.be
+Link: https://patch.msgid.link/20250305081655.19032-1-justin.iurman@uliege.be
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_lwt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/ila/ila_lwt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
-index 9d37f7164e732..6d37dda3d26fc 100644
+index 6d37dda3d26fc..7397f764c66cc 100644
 --- a/net/ipv6/ila/ila_lwt.c
 +++ b/net/ipv6/ila/ila_lwt.c
-@@ -88,7 +88,8 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 			goto drop;
+@@ -96,6 +96,7 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
  		}
+ 	}
  
--		if (ilwt->connected) {
-+		/* cache only if we don't create a dst reference loop */
-+		if (ilwt->connected && orig_dst->lwtstate != dst->lwtstate) {
- 			local_bh_disable();
- 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
- 			local_bh_enable();
++	skb_dst_drop(skb);
+ 	skb_dst_set(skb, dst);
+ 	return dst_output(net, sk, skb);
+ 
 -- 
 2.39.5
 
