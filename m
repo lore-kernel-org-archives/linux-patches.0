@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2222D1DF749;
-	Tue, 11 Mar 2025 15:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE3E15820C;
+	Tue, 11 Mar 2025 15:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706919; cv=none; b=JhAJQxgk3k8pQouhHcO5yEUgsK/9nZw/wlPcZ11Af76QPkfecjBxFSla9606EFZ4MtBpga+RFHbdA1xdE51tMD2OdxZNIKbRxPQTiskGlBsJh8JB81r9Fd0qaNOHB5L3ipme4SDwnucoTGGPB0DvEfyxLbvmG9G0FDc10l1/elA=
+	t=1741706922; cv=none; b=W5EeALfM5LSlyPZmyPm9TuDye+UvZqa+BxI6LVSA4xsc3t2LPR9UEjsf1moM8s31zOATQvl+bZQhQLtOSmUGjsk43rEf7AcCSQKefrspuwqGVAMgpHUuwYA97T0yeTmpgKraY86wJIzg649Ei9Wips9JErL45eHitCljicIQXsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706919; c=relaxed/simple;
-	bh=cFeSBrY1sm/TpNSCY4yXUHe3mkhjMS/1LbyNJ6rIBU0=;
+	s=arc-20240116; t=1741706922; c=relaxed/simple;
+	bh=JTAZkLVowFQM2i2kWxx5XBm6bP0yiZpYCfVLKBesME8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ft/GkuYLHoqjlAlvNI89bJVqO+8dpx3/dRdb4FZOqCR3uU7At8VnoFP+2WXGbnXAyS080G2XMyh7GR5zMvysUGThiBX53bhfhhl85zoJyZlK6p5nEnOGffu5vvUiY/JbL+e0Vv3KFizsBdnA6iWj/aY7ucu1AbE2OmYYe6BIEpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=px8KpfkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mx/RtypX2gW/hMLpMHkgHrTrYMu2WC+TcalyERNBc2BepNGlmBwGrreOq1GBvZds0/YW/Y24ZVEKVG+9h0Kjjbu7dP1z4PVzPK38DIcVSj6PynFW6zfb9bt/zMDCSiZVfI2tHbVh82Yltp5tGji5e+udtDixJfzJclziqqGHq/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcQanFoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="px8KpfkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CCBC4CEEC;
-	Tue, 11 Mar 2025 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcQanFoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A01CC4CEEA;
+	Tue, 11 Mar 2025 15:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706918;
-	bh=cFeSBrY1sm/TpNSCY4yXUHe3mkhjMS/1LbyNJ6rIBU0=;
+	s=korg; t=1741706921;
+	bh=JTAZkLVowFQM2i2kWxx5XBm6bP0yiZpYCfVLKBesME8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=px8KpfkZuJJVh7M/ynDNEgWQqLVFghPWoqMbXnH8bKRe1lHj2+RVMe2UX9ROfb2yX
-	 SaYm+bJzf7nI7wtSI/dKtHWiRRFQxpa3oZXq3oI2nYmNmIewh/3KJaw6mWR5fOUglC
-	 U3DjhT1qEdwlvnb+LMr+fm2nogW42h6NcBTfI1U8=
+	b=CcQanFoDroSKClgiCquyvDISjxECXqGf0m0GWlKiOlTu+fGt5dbFasAO7oXWr1u/y
+	 /iwFnBFZjDfuwqQy8ZMrXMh8dddHC6gFRyd3rhTdbMUNII31Ny/BlQ8EP6GlPL18q2
+	 GIWSYTsJeskMLtFMZGhH5eR5uD/+0H8FiLNdsl1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zijun Hu <quic_zijuhu@quicinc.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.10 181/462] of: Correct child specifier used as input of the 2nd nexus node
-Date: Tue, 11 Mar 2025 15:57:27 +0100
-Message-ID: <20250311145805.504323953@linuxfoundation.org>
+Subject: [PATCH 5.10 182/462] of: Fix of_find_node_opts_by_path() handling of alias+path+options
+Date: Tue, 11 Mar 2025 15:57:28 +0100
+Message-ID: <20250311145805.542437185@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,48 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit e4c00c9b1f70cd11792ff5b825899a6ee0234a62 upstream.
+commit b9e58c934c56aa35b0fb436d9afd86ef326bae0e upstream.
 
-API of_parse_phandle_with_args_map() will use wrong input for nexus node
-Nexus_2 as shown below:
+of_find_node_opts_by_path() fails to find OF device node when its
+@path parameter have pattern below:
 
-    Node_1		Nexus_1                              Nexus_2
-&Nexus_1,arg_1 -> arg_1,&Nexus_2,arg_2' -> &Nexus_2,arg_2 -> arg_2,...
-		  map-pass-thru=<...>
+"alias-name/node-name-1/.../node-name-N:options".
 
-Nexus_1's output arg_2 should be used as input of Nexus_2, but the API
-wrongly uses arg_2' instead which != arg_2 due to Nexus_1's map-pass-thru.
+The reason is that alias name length calculated by the API is wrong, as
+explained by example below:
 
-Fix by always making @match_array point to @initial_match_array into
-which to store nexus output.
+"testcase-alias/phandle-tests/consumer-a:testaliasoption".
+ ^             ^                        ^
+ 0             14                       39
 
-Fixes: bd6f2fd5a1d5 ("of: Support parsing phandle argument lists through a nexus node")
+The right length of alias 'testcase-alias' is 14, but the result worked
+out by the API is 39 which is obvious wrong.
+
+Fix by using index of either '/' or ':' as the length who comes earlier.
+
+Fixes: 75c28c09af99 ("of: add optional options parameter to of_find_node_by_path()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250109-of_core_fix-v4-1-db8a72415b8c@quicinc.com
+Link: https://lore.kernel.org/r/20241216-of_core_fix-v2-1-e69b8f60da63@quicinc.com
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/base.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/of/base.c
 +++ b/drivers/of/base.c
-@@ -1659,7 +1659,6 @@ int of_parse_phandle_with_args_map(const
- 		 * specifier into the out_args structure, keeping the
- 		 * bits specified in <list>-map-pass-thru.
- 		 */
--		match_array = map - new_size;
- 		for (i = 0; i < new_size; i++) {
- 			__be32 val = *(map - new_size + i);
+@@ -926,10 +926,10 @@ struct device_node *of_find_node_opts_by
+ 	/* The path could begin with an alias */
+ 	if (*path != '/') {
+ 		int len;
+-		const char *p = separator;
++		const char *p = strchrnul(path, '/');
  
-@@ -1668,6 +1667,7 @@ int of_parse_phandle_with_args_map(const
- 				val |= cpu_to_be32(out_args->args[i]) & pass[i];
- 			}
+-		if (!p)
+-			p = strchrnul(path, '/');
++		if (separator && separator < p)
++			p = separator;
+ 		len = p - path;
  
-+			initial_match_array[i] = val;
- 			out_args->args[i] = be32_to_cpu(val);
- 		}
- 		out_args->args_count = list_size = new_size;
+ 		/* of_aliases must not be NULL */
 
 
