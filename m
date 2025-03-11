@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEEA25D908;
-	Tue, 11 Mar 2025 15:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB2F25DB0B;
+	Tue, 11 Mar 2025 15:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705700; cv=none; b=tKy+V5L2y8i62YaQAEP+gRmqR4+4Nqj5RhBKXUWy5RTp0sMsQBvjtq9bjbOJW8aa7H6nVNRPAYPR2Qshq2o1GMva+d3uMrn+Pui+IpdkNvODEVMezgOsMiAJzGWJ9U/TV3PUEvkf0OLTwrwJP0UFUjEaT54McHYaNgM+J1fsJcI=
+	t=1741705703; cv=none; b=pQozpAM/crYvrhVQqUaVrqYTgkM7rloa8k5w/5wSrS+C0karbJ9Bh0gFgE8sFPVZ2wwglaz1qwPsYWopk/fosFOCeLgV472wMUXyRJmeXYUAn6UxrWcooJs8NuV5CcLEi24Ib4DLWY2Iekwg4/olDjZvwteYsmozzUQd8SksesY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705700; c=relaxed/simple;
-	bh=qhdHe21oNq9cCTRf62YcsANo0iRE3krjSlxhYIE5jZI=;
+	s=arc-20240116; t=1741705703; c=relaxed/simple;
+	bh=CfkrHfSPi6rCcw4xXlo5kId5rgjpc/CMshDtMKpeFFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouvNMKyarKZE2KyeSHB6O0jCyRvP49kSsxLKHcrQwMcwu+jtShOQu5CmjsNCKtc3aohDseuXrkp86iShPTlTfuMApg5G4uz3FIr5Mv8uiK3xzIFnyqlBYWXpBeS1B8Mrp11ZVHoxdQFUHvUlfeNAx4urxpBQsz8QZ2A/Y1LnWAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGk9IJiH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPWedLvVndTRH8pNQU3slfT9HETntooKNNCV9sZtoroU0SNz5mppIVuBLIbd58WGqXImPlctbnQU1CRYd3uJnw+bbJiaEp8SnQHKZnxtg8saAIbYpghn/1HSFwEXnb11zTifcmWedCzR8D6B63XvQ0pfHIE7SsN51RCf+OX2z6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhJ9zDMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGk9IJiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86640C4CEE9;
-	Tue, 11 Mar 2025 15:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhJ9zDMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E75FC4CEE9;
+	Tue, 11 Mar 2025 15:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705699;
-	bh=qhdHe21oNq9cCTRf62YcsANo0iRE3krjSlxhYIE5jZI=;
+	s=korg; t=1741705702;
+	bh=CfkrHfSPi6rCcw4xXlo5kId5rgjpc/CMshDtMKpeFFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGk9IJiH15HfBfLPmXzumWk+f+6PMrs3X1SCVpp5j5Hn2YeyzW836b7WgH25911ur
-	 iMGbPtEJy8PjolGkdbVbNxdicdgS1oO6TzbybuYFUPhPNHrR3r2AADOgLNpafaupCu
-	 Jg6yHJ6pLTlsHMTfwZZlCVA/svtkQSjamMSxBH8c=
+	b=bhJ9zDMOOazsYQMO+usj5dB9Y6bsryoUsbvGo8C7GcLqk4Ze5hOW3BtgyE9o7TZCs
+	 drX0r/bRZspF6flWDNv/9vjXINiUWg+1t92N6OySG622B8kEg0alkQV4X5juU+kDiU
+	 k/+Sr/0nzAUyyhyK27OJ9YiOXdjU34JDBkidbp80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 105/328] net: usb: rtl8150: use new tasklet API
-Date: Tue, 11 Mar 2025 15:57:55 +0100
-Message-ID: <20250311145719.070654024@linuxfoundation.org>
+	Ralf Schlatterbeck <rsc@runtux.com>,
+	Mark Brown <broonie@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>
+Subject: [PATCH 5.4 096/328] spi-mxs: Fix chipselect glitch
+Date: Tue, 11 Mar 2025 15:57:46 +0100
+Message-ID: <20250311145718.708339936@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,48 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Renner Berthing <kernel@esmil.dk>
+From: Ralf Schlatterbeck <rsc@runtux.com>
 
-[ Upstream commit 1999ad32d4ff00581007543adffc465694b2e77b ]
+commit 269e31aecdd0b70f53a05def79480f15cbcc0fd6 upstream.
 
-This converts the driver to use the new tasklet API introduced in
-commit 12cc923f1ccc ("tasklet: Introduce new initialization API")
+There was a change in the mxs-dma engine that uses a new custom flag.
+The change was not applied to the mxs spi driver.
+This results in chipselect being deasserted too early.
+This fixes the chipselect problem by using the new flag in the mxs-spi
+driver.
 
-Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 90b7f2961798 ("net: usb: rtl8150: enable basic endpoint checking")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ceeeb99cd821 ("dmaengine: mxs: rename custom flag")
+Signed-off-by: Ralf Schlatterbeck <rsc@runtux.com>
+Link: https://msgid.link/r/20240202115330.wxkbfmvd76sy3a6a@runtux.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rtl8150.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-mxs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 387091cb91340..cbadb53bac441 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -597,9 +597,9 @@ static void free_skb_pool(rtl8150_t *dev)
- 		dev_kfree_skb(dev->rx_skb_pool[i]);
- }
+--- a/drivers/spi/spi-mxs.c
++++ b/drivers/spi/spi-mxs.c
+@@ -40,6 +40,7 @@
+ #include <linux/spi/spi.h>
+ #include <linux/spi/mxs-spi.h>
+ #include <trace/events/spi.h>
++#include <linux/dma/mxs-dma.h>
  
--static void rx_fixup(unsigned long data)
-+static void rx_fixup(struct tasklet_struct *t)
- {
--	struct rtl8150 *dev = (struct rtl8150 *)data;
-+	struct rtl8150 *dev = from_tasklet(dev, t, tl);
- 	struct sk_buff *skb;
- 	int status;
+ #define DRIVER_NAME		"mxs-spi"
  
-@@ -899,7 +899,7 @@ static int rtl8150_probe(struct usb_interface *intf,
- 		return -ENOMEM;
- 	}
+@@ -253,7 +254,7 @@ static int mxs_spi_txrx_dma(struct mxs_s
+ 		desc = dmaengine_prep_slave_sg(ssp->dmach,
+ 				&dma_xfer[sg_count].sg, 1,
+ 				(flags & TXRX_WRITE) ? DMA_MEM_TO_DEV : DMA_DEV_TO_MEM,
+-				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
++				DMA_PREP_INTERRUPT | MXS_DMA_CTRL_WAIT4END);
  
--	tasklet_init(&dev->tl, rx_fixup, (unsigned long)dev);
-+	tasklet_setup(&dev->tl, rx_fixup);
- 	spin_lock_init(&dev->rx_pool_lock);
- 
- 	dev->udev = udev;
--- 
-2.39.5
-
+ 		if (!desc) {
+ 			dev_err(ssp->dev,
 
 
