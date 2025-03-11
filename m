@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854DD1E98EC;
-	Tue, 11 Mar 2025 15:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B42255E37;
+	Tue, 11 Mar 2025 15:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707505; cv=none; b=Pb2wSWzL+EHRV3Ru/3FHdzYYQoF1rCfigsjHuSkiwYW/db3d2Di3DSvE3BWNbx/pNoB9T6aGTtVrCtuO+97Oj7agpNLuCG5iy0nA8PcfHoGx5tFVPEANCsC2w+nu9StbiRh+GqYZsQhX0jmAH5iJMUjdZbGiBPT2HJ0GWY7PhaM=
+	t=1741707508; cv=none; b=BvMtHPMfCqDU52Jsm/Fr3NmEUNn9rdtFI1TwTzIeMSpincIqeO/Myyaibbph/WZ7uM9RVABetuHKxtBIfLc9U5XaJVG+DR9moik8xj4hC42xNwwgRB1L8ZAheEjFawnoWMOuo4rYXXP+Ig6PYSeaHyYqC/0PjTsaXJbLJCS0BQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707505; c=relaxed/simple;
-	bh=rJocbMZYBBAO+SAVKjJirQntQSvOZo35jjdLBCIXx2M=;
+	s=arc-20240116; t=1741707508; c=relaxed/simple;
+	bh=oc+O386Yz6cwTDbYEFmBgrH+Bbk3ryPf6Yrdlv/hFu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aqm/x+Fs620cZJfTYcUOdijyXLCrWm1z+OF+7d84bttE1N4U35iZXnsHM9wPy7BJ43Aad6ESPuqTCViF8d59Qso+04rK8/rIHvi1NX0YYk3/cEgjgw7zGp1RZbsr25UeAMywXpVo+QMuXxRJu4UaAoqkjFL5ISww4QrWc2cULFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r46tusXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHE0BcOrwBoa82Bf0Yp1fgCakAVSSs7HqU1QFq5uaxVFWTcrV5cjIayDC8C+xYtbyjTVWtyTcG8z+8pe6XQdWWCYI51z2/aQQeqLR/LD6XRCV6JQFQGlu8YShnfYFiVF2MiW4OA5KbSfII3q2qNwiznQUUVKNtZGkzj+/LrKcHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsJGjbLa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r46tusXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A259C4CEE9;
-	Tue, 11 Mar 2025 15:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsJGjbLa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6768C4CEEA;
+	Tue, 11 Mar 2025 15:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707505;
-	bh=rJocbMZYBBAO+SAVKjJirQntQSvOZo35jjdLBCIXx2M=;
+	s=korg; t=1741707508;
+	bh=oc+O386Yz6cwTDbYEFmBgrH+Bbk3ryPf6Yrdlv/hFu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r46tusXhcWL2embqhBKSbEnhg1NPtA8JL8PfVSlyycIFnl2rvy4Q/+B6t/4gI180Y
-	 RRNmctdRNAuyYTpg5cRCdhISAf7FuTbCyb1LkGzfa1qYHku+wRbxb38krs6FXUD7NQ
-	 XBHQXzVN/+45aNp2QmhVPGcx5F8eLCqir4opF47Y=
+	b=YsJGjbLanV4Q2SzxjYETf57mr+Vw1qXqrXM7utpfLe/H0pVe34DGdUfFwwqzYqvzz
+	 RHI481aVrl1OyBXhiHaUB4NmTNYQGjtmjcL8tx2MlmYnp9u6RJqoyjm9eqzmuFOtYT
+	 9Vvvw0kLQ/SFOf6XksO5D570F4t/QhlgxzsCZRMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yang <yang.yang29@zte.com.cn>,
+	Zeal Robot <zealci@zte.com.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"sh_def@163.com" <sh_def@163.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 410/462] caif_virtio: fix wrong pointer check in cfv_probe()
-Date: Tue, 11 Mar 2025 16:01:16 +0100
-Message-ID: <20250311145814.529526142@linuxfoundation.org>
+Subject: [PATCH 5.10 382/462] kernel/acct.c: use dedicated helper to access rlimit values
+Date: Tue, 11 Mar 2025 16:00:48 +0100
+Message-ID: <20250311145813.439502106@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,41 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+From: Yang Yang <yang.yang29@zte.com.cn>
 
-[ Upstream commit a466fd7e9fafd975949e5945e2f70c33a94b1a70 ]
+[ Upstream commit 3c91dda97eea704ac257ddb138d1154adab8db62 ]
 
-del_vqs() frees virtqueues, therefore cfv->vq_tx pointer should be checked
-for NULL before calling it, not cfv->vdev. Also the current implementation
-is redundant because the pointer cfv->vdev is dereferenced before it is
-checked for NULL.
+Use rlimit() helper instead of manually writing whole chain from
+task to rlimit value. See patch "posix-cpu-timers: Use dedicated
+helper to access rlimit values".
 
-Fix this by checking cfv->vq_tx for NULL instead of cfv->vdev before
-calling del_vqs().
-
-Fixes: 0d2e1a2926b1 ("caif_virtio: Introduce caif over virtio")
-Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Link: https://patch.msgid.link/20250227184716.4715-1-v.shevtsov@mt-integration.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20210728030822.524789-1-yang.yang29@zte.com.cn
+Signed-off-by: Yang Yang <yang.yang29@zte.com.cn>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: sh_def@163.com <sh_def@163.com>
+Cc: Yang Yang <yang.yang29@zte.com.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 56d5f3eba3f5 ("acct: perform last write from workqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_virtio.c | 2 +-
+ kernel/acct.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/caif/caif_virtio.c b/drivers/net/caif/caif_virtio.c
-index a701932f5cc29..daeaf0ca12547 100644
---- a/drivers/net/caif/caif_virtio.c
-+++ b/drivers/net/caif/caif_virtio.c
-@@ -746,7 +746,7 @@ static int cfv_probe(struct virtio_device *vdev)
- 
- 	if (cfv->vr_rx)
- 		vdev->vringh_config->del_vrhs(cfv->vdev);
--	if (cfv->vdev)
-+	if (cfv->vq_tx)
- 		vdev->config->del_vqs(cfv->vdev);
- 	free_netdev(netdev);
- 	return err;
+diff --git a/kernel/acct.c b/kernel/acct.c
+index a7e29ca8f3591..2b2224b7ae55a 100644
+--- a/kernel/acct.c
++++ b/kernel/acct.c
+@@ -494,7 +494,7 @@ static void do_acct_process(struct bsd_acct_struct *acct)
+ 	/*
+ 	 * Accounting records are not subject to resource limits.
+ 	 */
+-	flim = current->signal->rlim[RLIMIT_FSIZE].rlim_cur;
++	flim = rlimit(RLIMIT_FSIZE);
+ 	current->signal->rlim[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
+ 	/* Perform file operations on behalf of whoever enabled accounting */
+ 	orig_cred = override_creds(file->f_cred);
 -- 
 2.39.5
 
