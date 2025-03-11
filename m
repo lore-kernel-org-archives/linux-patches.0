@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4728625F968;
-	Tue, 11 Mar 2025 15:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C610C1E98EC;
+	Tue, 11 Mar 2025 15:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707529; cv=none; b=gWuYQORP4Bn1qcIyBL4/P3o+bTUWK7Ni7K3yGkpbBGdu/YZVDsRMhZQ5/56a8sT4RVjaXzOV3srENxZmO6sFfG+u9u8mPME2mJVHNtvU2vSq6CNCzd4ePXeaCwrx//hm/jYnkoO3uJWvJCKfOQkaJPLFD/khpCn7BA8otteHBdc=
+	t=1741707531; cv=none; b=cSM7E/5YfRRwbCTWjk579gsaQdP87W3WfEVHpwdCyMwka3G99m9Yi6ohwO650NwLFIll15zzCr8DviQWIGYkYgOzzFP0awSdcqOwiEEOAx0snnf7KeRa++EVFR+xyxU19SgYNUD1jOSF3jFTVeMF64a/lMdyZRa0vMEroKdWFpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707529; c=relaxed/simple;
-	bh=1SBtfZ+GrBJJ6xlRG9H7q3/hARIY9kGW5iV6AGhplS8=;
+	s=arc-20240116; t=1741707531; c=relaxed/simple;
+	bh=sVzDzMYGqHnXQLu3h9/YG9OHpf8eeZuLtq9adn9fWqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXEgCVR8fvslyXyF2Id9GgDyNKDY3FTMocTo3C+TcZgQEKP2faG3nj6ZOEY9ooSjyznodNROdl4+Afldyvj7ZbXbUVU3KMstEHLKFxRiuhMi/yalTOQMAGLUmWDDRQjAyIyuRNj0twjpbDsQBI/aaA6gW12R9zes+pm9UDeGvnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7aorP8I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P83XjUelXIIa7JFao8uovJB1oVieik9QWx9T1j0aRAyXjYo5vSBtToqIIq/f+fbGL4ACNqrxwlvbWIe1sVrQvM8lpJeXpWaI0EpvceHP2JMxpnuZIrdUMIRIaJ+3kY70mEFXg29zJWTx6IEhBcm3OZutOARAP7nadXzxSSK3XS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAwo4cSK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7aorP8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C7DC4CEED;
-	Tue, 11 Mar 2025 15:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAwo4cSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC8DC4CEE9;
+	Tue, 11 Mar 2025 15:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707528;
-	bh=1SBtfZ+GrBJJ6xlRG9H7q3/hARIY9kGW5iV6AGhplS8=;
+	s=korg; t=1741707531;
+	bh=sVzDzMYGqHnXQLu3h9/YG9OHpf8eeZuLtq9adn9fWqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7aorP8I9g6Zygk46M4Z1wmxKOgB21/boOxYR0mOxnsQgAMUoOnJXRfimRy8sUIMv
-	 KsWJhROLurxS2oGZH6Ju1z+paidAW67broLdxXWAxwERNSZ9zte2z2I5pH9HgvxQy4
-	 srl+/MoajcIiojZAsEEPmUdkbvPJ9B3nqdETqDH0=
+	b=pAwo4cSKqhogXBZ2GEylodp/QHMMALt907Ye+F/xTRKcnJFLYTKgxg+ezwNSB1YFZ
+	 TB4pU6SdfyoxSoSYWXl8TSyhfpy/wkWj2smyvCYqmfSLtB38G9pYuoAq9i4LM3FH8X
+	 pqd1AZJPWJvQWZ1KXj4CnEVgvn+QZ8gCMRfTwcg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 412/462] hwmon: (ntc_thermistor) Fix the ncpXXxh103 sensor table
-Date: Tue, 11 Mar 2025 16:01:18 +0100
-Message-ID: <20250311145814.607949342@linuxfoundation.org>
+Subject: [PATCH 5.10 421/462] net-timestamp: support TCP GSO case for a few missing flags
+Date: Tue, 11 Mar 2025 16:01:27 +0100
+Message-ID: <20250311145814.967573874@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,106 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Jason Xing <kerneljasonxing@gmail.com>
 
-[ Upstream commit 1c7932d5ae0f5c22fa52ac811b4c427bbca5aff5 ]
+[ Upstream commit 3c9231ea6497dfc50ac0ef69fff484da27d0df66 ]
 
-I could not find a single table that has the values currently present in
-the table, change it to the actual values that can be found in [1]/[2]
-and [3] (page 15 column 2)
+When I read through the TSO codes, I found out that we probably
+miss initializing the tx_flags of last seg when TSO is turned
+off, which means at the following points no more timestamp
+(for this last one) will be generated. There are three flags
+to be handled in this patch:
+1. SKBTX_HW_TSTAMP
+2. SKBTX_BPF
+3. SKBTX_SCHED_TSTAMP
+Note that SKBTX_BPF[1] was added in 6.14.0-rc2 by commit
+6b98ec7e882af ("bpf: Add BPF_SOCK_OPS_TSTAMP_SCHED_CB callback")
+and only belongs to net-next branch material for now. The common
+issue of the above three flags can be fixed by this single patch.
 
-[1]: https://www.murata.com/products/productdetail?partno=NCP15XH103F03RC
-[2]: https://www.murata.com/products/productdata/8796836626462/NTHCG83.txt?1437969843000
-[3]: https://nl.mouser.com/datasheet/2/281/r44e-522712.pdf
+This patch initializes the tx_flags to SKBTX_ANY_TSTAMP like what
+the UDP GSO does to make the newly segmented last skb inherit the
+tx_flags so that requested timestamp will be generated in each
+certain layer, or else that last one has zero value of tx_flags
+which leads to no timestamp at all.
 
-Fixes: 54ce3a0d8011 ("hwmon: (ntc_thermistor) Add support for ncpXXxh103")
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Link: https://lore.kernel.org/r/20250227-ntc_thermistor_fixes-v1-3-70fa73200b52@gocontroll.com
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 4ed2d765dfacc ("net-timestamp: TCP timestamping")
+Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ntc_thermistor.c | 66 +++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ net/ipv4/tcp_offload.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/ntc_thermistor.c b/drivers/hwmon/ntc_thermistor.c
-index 7e20beb8b11f3..1305f81c4ae33 100644
---- a/drivers/hwmon/ntc_thermistor.c
-+++ b/drivers/hwmon/ntc_thermistor.c
-@@ -177,40 +177,40 @@ static const struct ntc_compensation ncpXXwf104[] = {
- };
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index fc61cd3fea652..27b7887f4f4eb 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -11,12 +11,15 @@
+ #include <net/tcp.h>
+ #include <net/protocol.h>
  
- static const struct ntc_compensation ncpXXxh103[] = {
--	{ .temp_c	= -40, .ohm	= 247565 },
--	{ .temp_c	= -35, .ohm	= 181742 },
--	{ .temp_c	= -30, .ohm	= 135128 },
--	{ .temp_c	= -25, .ohm	= 101678 },
--	{ .temp_c	= -20, .ohm	= 77373 },
--	{ .temp_c	= -15, .ohm	= 59504 },
--	{ .temp_c	= -10, .ohm	= 46222 },
--	{ .temp_c	= -5, .ohm	= 36244 },
--	{ .temp_c	= 0, .ohm	= 28674 },
--	{ .temp_c	= 5, .ohm	= 22878 },
--	{ .temp_c	= 10, .ohm	= 18399 },
--	{ .temp_c	= 15, .ohm	= 14910 },
--	{ .temp_c	= 20, .ohm	= 12169 },
-+	{ .temp_c	= -40, .ohm	= 195652 },
-+	{ .temp_c	= -35, .ohm	= 148171 },
-+	{ .temp_c	= -30, .ohm	= 113347 },
-+	{ .temp_c	= -25, .ohm	= 87559 },
-+	{ .temp_c	= -20, .ohm	= 68237 },
-+	{ .temp_c	= -15, .ohm	= 53650 },
-+	{ .temp_c	= -10, .ohm	= 42506 },
-+	{ .temp_c	= -5, .ohm	= 33892 },
-+	{ .temp_c	= 0, .ohm	= 27219 },
-+	{ .temp_c	= 5, .ohm	= 22021 },
-+	{ .temp_c	= 10, .ohm	= 17926 },
-+	{ .temp_c	= 15, .ohm	= 14674 },
-+	{ .temp_c	= 20, .ohm	= 12081 },
- 	{ .temp_c	= 25, .ohm	= 10000 },
--	{ .temp_c	= 30, .ohm	= 8271 },
--	{ .temp_c	= 35, .ohm	= 6883 },
--	{ .temp_c	= 40, .ohm	= 5762 },
--	{ .temp_c	= 45, .ohm	= 4851 },
--	{ .temp_c	= 50, .ohm	= 4105 },
--	{ .temp_c	= 55, .ohm	= 3492 },
--	{ .temp_c	= 60, .ohm	= 2985 },
--	{ .temp_c	= 65, .ohm	= 2563 },
--	{ .temp_c	= 70, .ohm	= 2211 },
--	{ .temp_c	= 75, .ohm	= 1915 },
--	{ .temp_c	= 80, .ohm	= 1666 },
--	{ .temp_c	= 85, .ohm	= 1454 },
--	{ .temp_c	= 90, .ohm	= 1275 },
--	{ .temp_c	= 95, .ohm	= 1121 },
--	{ .temp_c	= 100, .ohm	= 990 },
--	{ .temp_c	= 105, .ohm	= 876 },
--	{ .temp_c	= 110, .ohm	= 779 },
--	{ .temp_c	= 115, .ohm	= 694 },
--	{ .temp_c	= 120, .ohm	= 620 },
--	{ .temp_c	= 125, .ohm	= 556 },
-+	{ .temp_c	= 30, .ohm	= 8315 },
-+	{ .temp_c	= 35, .ohm	= 6948 },
-+	{ .temp_c	= 40, .ohm	= 5834 },
-+	{ .temp_c	= 45, .ohm	= 4917 },
-+	{ .temp_c	= 50, .ohm	= 4161 },
-+	{ .temp_c	= 55, .ohm	= 3535 },
-+	{ .temp_c	= 60, .ohm	= 3014 },
-+	{ .temp_c	= 65, .ohm	= 2586 },
-+	{ .temp_c	= 70, .ohm	= 2228 },
-+	{ .temp_c	= 75, .ohm	= 1925 },
-+	{ .temp_c	= 80, .ohm	= 1669 },
-+	{ .temp_c	= 85, .ohm	= 1452 },
-+	{ .temp_c	= 90, .ohm	= 1268 },
-+	{ .temp_c	= 95, .ohm	= 1110 },
-+	{ .temp_c	= 100, .ohm	= 974 },
-+	{ .temp_c	= 105, .ohm	= 858 },
-+	{ .temp_c	= 110, .ohm	= 758 },
-+	{ .temp_c	= 115, .ohm	= 672 },
-+	{ .temp_c	= 120, .ohm	= 596 },
-+	{ .temp_c	= 125, .ohm	= 531 },
- };
+-static void tcp_gso_tstamp(struct sk_buff *skb, unsigned int ts_seq,
++static void tcp_gso_tstamp(struct sk_buff *skb, struct sk_buff *gso_skb,
+ 			   unsigned int seq, unsigned int mss)
+ {
++	u32 flags = skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP;
++	u32 ts_seq = skb_shinfo(gso_skb)->tskey;
++
+ 	while (skb) {
+ 		if (before(ts_seq, seq + mss)) {
+-			skb_shinfo(skb)->tx_flags |= SKBTX_SW_TSTAMP;
++			skb_shinfo(skb)->tx_flags |= flags;
+ 			skb_shinfo(skb)->tskey = ts_seq;
+ 			return;
+ 		}
+@@ -115,8 +118,8 @@ struct sk_buff *tcp_gso_segment(struct sk_buff *skb,
+ 	th = tcp_hdr(skb);
+ 	seq = ntohl(th->seq);
  
- /*
+-	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_SW_TSTAMP))
+-		tcp_gso_tstamp(segs, skb_shinfo(gso_skb)->tskey, seq, mss);
++	if (unlikely(skb_shinfo(gso_skb)->tx_flags & SKBTX_ANY_TSTAMP))
++		tcp_gso_tstamp(segs, gso_skb, seq, mss);
+ 
+ 	newcheck = ~csum_fold((__force __wsum)((__force u32)th->check +
+ 					       (__force u32)delta));
 -- 
 2.39.5
 
