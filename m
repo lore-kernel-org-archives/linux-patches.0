@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7E2249F9;
-	Tue, 11 Mar 2025 15:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFD27E110;
+	Tue, 11 Mar 2025 15:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706292; cv=none; b=NwC8DGZG3rBMV3k3gFdOBD6YEjeYf00Zxuu/AFi5n1KgRNCkEOEU57X7qkXXzkZfcn2YfVaELTyITT0r9UNgI5Tye4TmW+Yr2yl1GtErIKuM96LHTYzxJvDcZ0h1obrk/HBkiBYNZ6/SQaALAhKlVA/05WPvs66VFlJW5Qu3BPE=
+	t=1741706295; cv=none; b=TZPgfk0i0Iar3p/JVkcoTw7nOHvOh2Sw73iZgLpZSmg/S57A8rjLNRrd6ek5BqyvPlDNuokSgnTV6+/g996nAgMAttsunHVPHEQWvsCLCYS7UpA50A+ixhw/xIgBsTKvcCa6AgLbiCsYx1WZZyLKdrU+oMozBcBZskyNF3/tH3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706292; c=relaxed/simple;
-	bh=wp47NKlEn12z7/0Z1Yg9ozr/OzcSI103E610BT2Zppg=;
+	s=arc-20240116; t=1741706295; c=relaxed/simple;
+	bh=TGpPjInJ29f+hPylNgihQzk6lcDzsi5u0hUdWg0SRxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWxzXdrgshUMLzuZfy9iOKjXy57MKwKycQ94O1y043GzkkQaokDsiTiBaKxIBdmJ8SvFnOkNISWWW40faaLQpk7u1bezXu/npXUurRTw+kdHC7vcDo/5eJV/K5/c64gsByeaJsaiESMj/AFd48mBR+CMBefei5rEW65aImiltUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyG0jOJO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DgD3DVgBNfMEAtidns+keb6cgd9Dy0ahYZhL7g/tM9q0HttzOvKiuAUCBzvAx+uuhu51ypTAhyP6wApH/KUzJkqjNk8fY3dJxxefIzyv1rJtNYpADz1PWgdqthhYhHBDzwQ7Ccwg5qR3I+c7g9nT64SI4siQIrYCSYWsD8EDUsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mO+r5lon; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyG0jOJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1BCC4CEE9;
-	Tue, 11 Mar 2025 15:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mO+r5lon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A11C4CEE9;
+	Tue, 11 Mar 2025 15:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706292;
-	bh=wp47NKlEn12z7/0Z1Yg9ozr/OzcSI103E610BT2Zppg=;
+	s=korg; t=1741706295;
+	bh=TGpPjInJ29f+hPylNgihQzk6lcDzsi5u0hUdWg0SRxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyG0jOJOZq/0sM62N46L1iic65fBLnVahldxuTuRRae9uz+I3t+I6dNO0mwlFwXd5
-	 GPXAtm6XuRq9Q7fLQww4xUmblyD1l57W9VYNYkthTezDXVOO8ypDJg86mexY6fEX4r
-	 3Qe5790XseMKiXSeMsphohp8lsQdfyBg+6XTV/aA=
+	b=mO+r5lon2336Iz7UJ+t1o5N0PJe/Q04SECzrzCZ+mA71fvaK+OOrWtyHbTpUh3DIn
+	 Fmu79MYwrYMrCHZp/ec5mGRvm0PfYXU53RrnZuQS1/GwHLyieIvNlbysaP7a9AJeJ6
+	 dUiwepeYhMNOnVkmpOO4AKGOrP8JjrtNJli8Yk98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Subject: [PATCH 5.4 327/328] slimbus: messaging: Free transaction ID in delayed interrupt scenario
-Date: Tue, 11 Mar 2025 16:01:37 +0100
-Message-ID: <20250311145727.892191152@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.4 328/328] eeprom: digsy_mtc: Make GPIO lookup table match the device
+Date: Tue, 11 Mar 2025 16:01:38 +0100
+Message-ID: <20250311145727.930970870@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,55 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Visweswara Tanuku <quic_vtanuku@quicinc.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit dcb0d43ba8eb9517e70b1a0e4b0ae0ab657a0e5a upstream.
+commit 038ef0754aae76f79b147b8867f9250e6a976872 upstream.
 
-In case of interrupt delay for any reason, slim_do_transfer()
-returns timeout error but the transaction ID (TID) is not freed.
-This results into invalid memory access inside
-qcom_slim_ngd_rx_msgq_cb() due to invalid TID.
+The dev_id value in the GPIO lookup table must match to
+the device instance name, which in this case is combined
+of name and platform device ID, i.e. "spi_gpio.1". But
+the table assumed that there was no platform device ID
+defined, which is wrong. Fix the dev_id value accordingly.
 
-Fix the issue by freeing the TID in slim_do_transfer() before
-returning timeout error to avoid invalid memory access.
-
-Call trace:
-__memcpy_fromio+0x20/0x190
-qcom_slim_ngd_rx_msgq_cb+0x130/0x290 [slim_qcom_ngd_ctrl]
-vchan_complete+0x2a0/0x4a0
-tasklet_action_common+0x274/0x700
-tasklet_action+0x28/0x3c
-_stext+0x188/0x620
-run_ksoftirqd+0x34/0x74
-smpboot_thread_fn+0x1d8/0x464
-kthread+0x178/0x238
-ret_from_fork+0x10/0x20
-Code: aa0003e8 91000429 f100044a 3940002b (3800150b)
----[ end trace 0fe00bec2b975c99 ]---
-Kernel panic - not syncing: Oops: Fatal exception in interrupt.
-
-Fixes: afbdcc7c384b ("slimbus: Add messaging APIs to slimbus framework")
+Fixes: 9b00bc7b901f ("spi: spi-gpio: Rewrite to use GPIO descriptors")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Link: https://lore.kernel.org/r/20250124125740.16897-1-quic_vtanuku@quicinc.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206220311.1554075-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/messaging.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/misc/eeprom/digsy_mtc_eeprom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -147,8 +147,9 @@ int slim_do_transfer(struct slim_control
- 	}
+--- a/drivers/misc/eeprom/digsy_mtc_eeprom.c
++++ b/drivers/misc/eeprom/digsy_mtc_eeprom.c
+@@ -60,7 +60,7 @@ static struct platform_device digsy_mtc_
+ };
  
- 	ret = ctrl->xfer_msg(ctrl, txn);
--
--	if (!ret && need_tid && !txn->msg->comp) {
-+	if (ret == -ETIMEDOUT) {
-+		slim_free_txn_tid(ctrl, txn);
-+	} else if (!ret && need_tid && !txn->msg->comp) {
- 		unsigned long ms = txn->rl + HZ;
- 
- 		timeout = wait_for_completion_timeout(txn->comp,
+ static struct gpiod_lookup_table eeprom_spi_gpiod_table = {
+-	.dev_id         = "spi_gpio",
++	.dev_id         = "spi_gpio.1",
+ 	.table          = {
+ 		GPIO_LOOKUP("gpio@b00", GPIO_EEPROM_CLK,
+ 			    "sck", GPIO_ACTIVE_HIGH),
 
 
