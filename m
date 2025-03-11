@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6374A1EA80;
-	Tue, 11 Mar 2025 15:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4754A25E808;
+	Tue, 11 Mar 2025 15:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706123; cv=none; b=Rksn/6pxxs+sU/Qikt1UQ4gvpvm5Dtj0bZqGBAPhVDgJMgk+wMxCQWDIYKTDTdfbmRRBTXlGNp43bBitJTx1lgluN0JMmifNM5E3krGJuxpHNrlY3FpS4pw9JVZFPdeURMGa2KomrBS4E7Qp7EaHHvx8x6hFgVai6E0PtvIae3s=
+	t=1741706126; cv=none; b=MgP2Ery5gn3zmmpZva8ujLq9c3k1K/f9yo77Gy8GvM2oqfPm1rmCBHhTLhTy9tqE0aBYMBeRRqPz8J+dzI6bKg8kW1SIPbK+NB+GgAJocBRyu1Tqx7oYihlJo6yqASwsMwxYLlalx5GeNuweJ0Mdwf/9rO4AiSe0t/Ax9hx1uFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706123; c=relaxed/simple;
-	bh=jJVeMHcvGKDTqldAEyUaXcsKQMqhwX94/bDW8Y2s2QM=;
+	s=arc-20240116; t=1741706126; c=relaxed/simple;
+	bh=RatL6JcAC4awk4KpDeObRnijXn15Z/keV/1gzJcAO/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJqgTJPVz3eQm1lTDOzEeGSxhdEtq4qoFBwgHWPNUFEcq73GgwuUFLiqP5ygx5OobHfkfz3U20bLgON0Xb2j5l5K6dJzAnctYitY3FtABW/bhvAN/EWWenFcZRvvj3oq9PkTQNhZvoJJe82+1PGENPir6gO9/djzG6sdUSY+ii8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svb/FYk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P6n0TopRwG+o0WJ5+ZaH6YJkMU/yTypFiCLpxf81gO5EYM7LtP9pNI+reR6T8fZFhy6kspG147eYyIAZNMHLA7u+9uuSkIZNJBTnm+yK1TELTu35uOwiZ7XtTmxeKTBMBgnouB00+ovyxe7jUAIKgCW889bwAc0CUB6+ZG+YKCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETNoOFbY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svb/FYk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EADC4CEEA;
-	Tue, 11 Mar 2025 15:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETNoOFbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C041FC4CEE9;
+	Tue, 11 Mar 2025 15:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706123;
-	bh=jJVeMHcvGKDTqldAEyUaXcsKQMqhwX94/bDW8Y2s2QM=;
+	s=korg; t=1741706126;
+	bh=RatL6JcAC4awk4KpDeObRnijXn15Z/keV/1gzJcAO/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svb/FYk5XWJvn3cFrChJ9poc9w94aEmf62qFj7HnATjKODVQiThbZZvI9GCIuTOm/
-	 hB3E/yvrmbUSsvytAIT9xMA2IKJ08lmDSW//oUX2dkFp+dWliVXGgpWbpgeakCNcCU
-	 5wHNwlyh93ECicsr4hwW7EDn/gV+iL9vl7oItWWs=
+	b=ETNoOFbY9/OXUiTH64TG4c0rWdUHBNcy91CjVlh376ILHmpoAVu7juJhqaAQM/OSr
+	 H2cnOPjD8pTotQQQhZrDFZFeXmJI3g0U2ykfvZ8X7tRU3/ekf8AVeEVliQZpOUTGj3
+	 UQ2FkIuVqoHZpmdXapPsRPEAiIZowYokO/we18mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Vatoropin <a.vatoropin@crpt.ru>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 251/328] power: supply: da9150-fg: fix potential overflow
-Date: Tue, 11 Mar 2025 16:00:21 +0100
-Message-ID: <20250311145724.887416862@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 5.4 252/328] tee: optee: Fix supplicant wait loop
+Date: Tue, 11 Mar 2025 16:00:22 +0100
+Message-ID: <20250311145724.926892454@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,56 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Vatoropin <a.vatoropin@crpt.ru>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
+commit 70b0d6b0a199c5a3ee6c72f5e61681ed6f759612 upstream.
 
-Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
-Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
+OP-TEE supplicant is a user-space daemon and it's possible for it
+be hung or crashed or killed in the middle of processing an OP-TEE
+RPC call. It becomes more complicated when there is incorrect shutdown
+ordering of the supplicant process vs the OP-TEE client application which
+can eventually lead to system hang-up waiting for the closure of the
+client application.
 
-The expression sd_gain * shunt_val is currently being evaluated using
-32-bit arithmetic. So during the multiplication an overflow may occur.
+Allow the client process waiting in kernel for supplicant response to
+be killed rather than indefinitely waiting in an unkillable state. Also,
+a normal uninterruptible wait should not have resulted in the hung-task
+watchdog getting triggered, but the endless loop would.
 
-As the value of type 'u64' is used as storage for the eventual result, put
-ULL variable at the first position of each expression in order to give the
-compiler complete information about the proper arithmetic to use. According
-to C99 the guaranteed width for a variable of type 'unsigned long long' >=
-64 bits.
+This fixes issues observed during system reboot/shutdown when supplicant
+got hung for some reason or gets crashed/killed which lead to client
+getting hung in an unkillable state. It in turn lead to system being in
+hung up state requiring hard power off/on to recover.
 
-Remove the explicit cast to u64 as it is meaningless.
-
-Just for the sake of consistency, perform the similar trick with another
-expression concerning 'iavg'.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
-Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
-Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/da9150-fg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tee/optee/supp.c |   35 ++++++++---------------------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
-index 6e367826aae92..d5e1fbac87f22 100644
---- a/drivers/power/supply/da9150-fg.c
-+++ b/drivers/power/supply/da9150-fg.c
-@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
- 				      DA9150_QIF_SD_GAIN_SIZE);
- 	da9150_fg_read_sync_end(fg);
+--- a/drivers/tee/optee/supp.c
++++ b/drivers/tee/optee/supp.c
+@@ -80,7 +80,6 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	struct optee *optee = tee_get_drvdata(ctx->teedev);
+ 	struct optee_supp *supp = &optee->supp;
+ 	struct optee_supp_req *req;
+-	bool interruptable;
+ 	u32 ret;
  
--	div = (u64) (sd_gain * shunt_val * 65536ULL);
-+	div = 65536ULL * sd_gain * shunt_val;
- 	do_div(div, 1000000);
--	res = (u64) (iavg * 1000000ULL);
-+	res = 1000000ULL * iavg;
- 	do_div(res, div);
+ 	/*
+@@ -111,36 +110,18 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	/*
+ 	 * Wait for supplicant to process and return result, once we've
+ 	 * returned from wait_for_completion(&req->c) successfully we have
+-	 * exclusive access again.
++	 * exclusive access again. Allow the wait to be killable such that
++	 * the wait doesn't turn into an indefinite state if the supplicant
++	 * gets hung for some reason.
+ 	 */
+-	while (wait_for_completion_interruptible(&req->c)) {
++	if (wait_for_completion_killable(&req->c)) {
+ 		mutex_lock(&supp->mutex);
+-		interruptable = !supp->ctx;
+-		if (interruptable) {
+-			/*
+-			 * There's no supplicant available and since the
+-			 * supp->mutex currently is held none can
+-			 * become available until the mutex released
+-			 * again.
+-			 *
+-			 * Interrupting an RPC to supplicant is only
+-			 * allowed as a way of slightly improving the user
+-			 * experience in case the supplicant hasn't been
+-			 * started yet. During normal operation the supplicant
+-			 * will serve all requests in a timely manner and
+-			 * interrupting then wouldn't make sense.
+-			 */
+-			if (req->in_queue) {
+-				list_del(&req->link);
+-				req->in_queue = false;
+-			}
++		if (req->in_queue) {
++			list_del(&req->link);
++			req->in_queue = false;
+ 		}
+ 		mutex_unlock(&supp->mutex);
+-
+-		if (interruptable) {
+-			req->ret = TEEC_ERROR_COMMUNICATION;
+-			break;
+-		}
++		req->ret = TEEC_ERROR_COMMUNICATION;
+ 	}
  
- 	val->intval = (int) res;
--- 
-2.39.5
-
+ 	ret = req->ret;
 
 
