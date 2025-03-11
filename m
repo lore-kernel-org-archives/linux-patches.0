@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B473225E83C;
-	Tue, 11 Mar 2025 15:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2161C25DCFA;
+	Tue, 11 Mar 2025 15:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707131; cv=none; b=PbHk6ufCr5scupvYazcVGblcTrX8n+XSQy3UUjnAFjAalxkMq8W/K1Kxlw0s6vLK84FOc5wrgVIq/V0x20rIKcbgGDI/Gb2w9MhtF1fukcRPW6FwvxUBnBLMUqR5BMf8974n//NhA6+DkgvlFnD3z2h017gPaYhjANNN/ho3R8U=
+	t=1741707135; cv=none; b=Wum2ztsZI89ZTYwYCVv7SKnny2YJ9BpdJBe4Bjvm2CNEKeAfSp6voeQziHsK45VRUC8aQEurd9yPu0cIM1EwGBWOB9suqwiieMD2sUuuxhf+plbZBcsXTsTRHa2vwij2ZV4yeWVlmeHPi920DoNgImaNuONLksN2PFPQZeJa+co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707131; c=relaxed/simple;
-	bh=sNVOQT7P+Ywk8VoCs99T9KU0DYWXA/0vpJpVRphaYbc=;
+	s=arc-20240116; t=1741707135; c=relaxed/simple;
+	bh=Wx2iLpF2obO2sFtbX03L778uq74+mMbmX022S6fquS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcT//xBFnu8IYN3lNTH2SCK/v6gCQqVgz68K2uFXRFCyZKD47cfyz79X2Nz595kFcUi2Nvfmf1qTVoz1ISY3ctNrA59Q/wnoA03OXlYfXRt8V9+HTSpO7Mcc3HSG4ouSbjfkDO9tahNWul/2397w+VOjdIB6XbvNFUFi3o34EDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGF9dePV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MzQ6LK8wN6+oA10hP78GgAx0RblTs9TyfAPEUPSmdfPSbBpAnH3sgmm9Wj5rZgkKtxfeTD8OQEvn7L7qn4lkss39j6a+N4x5HGVwmKg/B8ZOsqKa+r7fT81vjeR4RT0nPmdx/nkAEU/bmxpcnb4wm+wP+rcLTkBcnsO+8uK1MZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha1xA/LY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGF9dePV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBD9C4CEEA;
-	Tue, 11 Mar 2025 15:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha1xA/LY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C1CC4CEE9;
+	Tue, 11 Mar 2025 15:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707131;
-	bh=sNVOQT7P+Ywk8VoCs99T9KU0DYWXA/0vpJpVRphaYbc=;
+	s=korg; t=1741707134;
+	bh=Wx2iLpF2obO2sFtbX03L778uq74+mMbmX022S6fquS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGF9dePVkUfGICvMkSEvcL144ts7DDPSOu+AeHRqDQ8dLFVvKRY5h0IXR7sP1njyF
-	 0AWPh9LjDwuqcZZLSt86O0ilT0acTzaFbX86oAGe3KEpUz0GxM/RZZsyg/rLyX7vnx
-	 z9lz3RA39Qt3vwWdg4ZespmbY33D4g+ObqCDqlOw=
+	b=Ha1xA/LYa/J1d6pWlN3a4fqmb1tOUQOcYWWRiroab+5Bj+cqtDwESwA5wUyoCwUyO
+	 9knGjd/9n/G58D//8A/Od9WBThnJ06NyI4RQ6e7qspq0zUYoTAOHlokN6Xa5hKFpK5
+	 zaqnWcsxY8K36qSZQqYIxp0pKTqvfOCZjxj7mrLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Waiman Long <longman@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 243/462] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet 5V
-Date: Tue, 11 Mar 2025 15:58:29 +0100
-Message-ID: <20250311145807.968055466@linuxfoundation.org>
+Subject: [PATCH 5.10 278/462] clocksource: Use migrate_disable() to avoid calling get_random_u32() in atomic context
+Date: Tue, 11 Mar 2025 15:59:04 +0100
+Message-ID: <20250311145809.349732957@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,57 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 6917192378c1ce17ba31df51c4e0d8b1c97a453b ]
+[ Upstream commit 6bb05a33337b2c842373857b63de5c9bf1ae2a09 ]
 
-The Vexia EDU ATLA 10 tablet comes in 2 different versions with
-significantly different mainboards. The only outward difference is that
-the charging barrel on one is marked 5V and the other is marked 9V.
+The following bug report happened with a PREEMPT_RT kernel:
 
-The 5V version mostly works with the BYTCR defaults, except that it is
-missing a CHAN package in its ACPI tables and the default of using
-SSP0-AIF2 is wrong, instead SSP0-AIF1 must be used. That and its jack
-detect signal is not inverted as it usually is.
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 2012, name: kwatchdog
+  preempt_count: 1, expected: 0
+  RCU nest depth: 0, expected: 0
+  get_random_u32+0x4f/0x110
+  clocksource_verify_choose_cpus+0xab/0x1a0
+  clocksource_verify_percpu.part.0+0x6b/0x330
+  clocksource_watchdog_kthread+0x193/0x1a0
 
-Add a DMI quirk for the 5V version to fix sound not working.
+It is due to the fact that clocksource_verify_choose_cpus() is invoked with
+preemption disabled.  This function invokes get_random_u32() to obtain
+random numbers for choosing CPUs.  The batched_entropy_32 local lock and/or
+the base_crng.lock spinlock in driver/char/random.c will be acquired during
+the call. In PREEMPT_RT kernel, they are both sleeping locks and so cannot
+be acquired in atomic context.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20250123132507.18434-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this problem by using migrate_disable() to allow smp_processor_id() to
+be reliably used without introducing atomic context. preempt_disable() is
+then called after clocksource_verify_choose_cpus() but before the
+clocksource measurement is being run to avoid introducing unexpected
+latency.
+
+Fixes: 7560c02bdffb ("clocksource: Check per-CPU clock synchronization when marked unstable")
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/all/20250131173323.891943-2-longman@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ kernel/time/clocksource.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 6fc6a1fcd935e..06559f2afe326 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -935,7 +935,22 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF2 |
- 					BYT_RT5640_MCLK_EN),
- 	},
--	{	/* Vexia Edu Atla 10 tablet */
-+	{
-+		/* Vexia Edu Atla 10 tablet 5V version */
-+		.matches = {
-+			/* Having all 3 of these not set is somewhat unique */
-+			DMI_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			/* Above strings are too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/14/2015"),
-+		},
-+		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
-+					BYT_RT5640_JD_NOT_INV |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
-+	{	/* Vexia Edu Atla 10 tablet 9V version */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 21dfee6c0d936..b22508c5d2d96 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -336,10 +336,10 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 	cpumask_clear(&cpus_ahead);
+ 	cpumask_clear(&cpus_behind);
+ 	cpus_read_lock();
+-	preempt_disable();
++	migrate_disable();
+ 	clocksource_verify_choose_cpus();
+ 	if (cpumask_empty(&cpus_chosen)) {
+-		preempt_enable();
++		migrate_enable();
+ 		cpus_read_unlock();
+ 		pr_warn("Not enough CPUs to check clocksource '%s'.\n", cs->name);
+ 		return;
+@@ -347,6 +347,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 	testcpu = smp_processor_id();
+ 	pr_info("Checking clocksource %s synchronization from CPU %d to CPUs %*pbl.\n",
+ 		cs->name, testcpu, cpumask_pr_args(&cpus_chosen));
++	preempt_disable();
+ 	for_each_cpu(cpu, &cpus_chosen) {
+ 		if (cpu == testcpu)
+ 			continue;
+@@ -367,6 +368,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 			cs_nsec_min = cs_nsec;
+ 	}
+ 	preempt_enable();
++	migrate_enable();
+ 	cpus_read_unlock();
+ 	if (!cpumask_empty(&cpus_ahead))
+ 		pr_warn("        CPUs %*pbl ahead of CPU %d for clocksource %s.\n",
 -- 
 2.39.5
 
