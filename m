@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27263C0B;
-	Tue, 11 Mar 2025 15:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D963C0B;
+	Tue, 11 Mar 2025 15:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707333; cv=none; b=YweVWR7GAFcXSukwB7Uh8rJr1naR0dM+/4LLGUk4l1UuJwmme1qOw8qMAkZbOUFIz7HFJSqdnunrFsoaWIzbDKTwlHAHp7i7T+rg6N9riW3TpXJ6k/OPz+JpuOKWWNtSVFtAAuwLCZ663FfYizoMQU/1T4+3iTEAPUeooT1xs/w=
+	t=1741707336; cv=none; b=R8VBBjIM11nR41wH63yKT4c6+9H6+TzUF0Rf9MYU7Yn0GBNd9xDKicB9HbwCM2wVxTrFZ3LIuUyHFbEYCt13TX4pgMxtv6ncW8WwgFZ2uO4Iq6BewMRN/RrGXttJ4oQwcQLJJerlgdnfFR8/rcWWMJsDopHCoUJcxcwVkEEWg3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707333; c=relaxed/simple;
-	bh=LAJy2WxoAeTrZEX5liyxKSNS/UDc74L5JPfpASYFa1k=;
+	s=arc-20240116; t=1741707336; c=relaxed/simple;
+	bh=1Cuu5+HA7hH75cbcpZbx4NV4f2+oLvbFsF9jXgyket8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXSi28HZvKCgqvZrhqNeUYWCPoISTrsVS+qlh5q35wwtK4Hurmlo1P6+MsMMtwwv11SrxgUfMaQRilCP2qesaHF+e25wh9tMLmJlFtUXnzgsPxQVTLLt/92Q6GcvjXB+I1H+d7EkzEllVPo3Ml/H8Gvx5Ms4Nx/SqcvUXHjOrU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M02TD+BD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsK/idMKjFEtRONZh79Ke2xKmQgOw1UWO2HMh13WGysgzN3nHG5eo6v4zVeLGsOD2FFJYfJX9DRhRNAQvQudw9heyM+7jjqdxw18QJqBiBSQGEXkDP2blRbjDYO0WOWCS4KD6H869g6FudihRuv20MULuhrExPuQF6fXuCB97jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPpPLIwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M02TD+BD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5977EC4CEEA;
-	Tue, 11 Mar 2025 15:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPpPLIwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321B7C4CEE9;
+	Tue, 11 Mar 2025 15:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707333;
-	bh=LAJy2WxoAeTrZEX5liyxKSNS/UDc74L5JPfpASYFa1k=;
+	s=korg; t=1741707336;
+	bh=1Cuu5+HA7hH75cbcpZbx4NV4f2+oLvbFsF9jXgyket8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M02TD+BD7Ril26gLehk8DvINfDg7Y9v9EezsalzJmL9+OF7VkDEAhbmmruNIgG4fP
-	 A+0yGSbpaJnJU9DG4aZc0Zc4leLZBFjJA0UjaVpg3q2YjJKsnn1T4dN4mvBarCMD0/
-	 zZZ9FqSd8p6vqB+IAwt86YrEMJHy7EDmXeBX1Oo0=
+	b=TPpPLIwAtbNNZr0hUq+e6hLHO9bhJgp9PwMrpCeWUFoHUfHL6wZ2oniQolC0IbKNc
+	 R1mTlWsmm34mOIRBxkJKu7OtgTBzUfmA7YGqR7COSH4m1fea4XRoloLLeEejjy4O2W
+	 zcQHS4ePNWz4IS8WTbF+KfsfScd9CQWRwXKkf0/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	John Keeping <jkeeping@inmusicbrands.com>
-Subject: [PATCH 5.10 354/462] ALSA: usb-audio: Avoid dropping MIDI events at closing multiple ports
-Date: Tue, 11 Mar 2025 16:00:20 +0100
-Message-ID: <20250311145812.340090399@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 355/462] Bluetooth: L2CAP: Fix L2CAP_ECRED_CONN_RSP response
+Date: Tue, 11 Mar 2025 16:00:21 +0100
+Message-ID: <20250311145812.381395828@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,45 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit a3bdd8f5c2217e1cb35db02c2eed36ea20fb50f5 ]
+[ Upstream commit b25120e1d5f2ebb3db00af557709041f47f7f3d0 ]
 
-We fixed the UAF issue in USB MIDI code by canceling the pending work
-at closing each MIDI output device in the commit below.  However, this
-assumed that it's the only one that is tied with the endpoint, and it
-resulted in unexpected data truncations when multiple devices are
-assigned to a single endpoint and opened simultaneously.
+L2CAP_ECRED_CONN_RSP needs to respond DCID in the same order received as
+SCID but the order is reversed due to use of list_add which actually
+prepend channels to the list so the response is reversed:
 
-For addressing the unexpected MIDI message drops, simply replace
-cancel_work_sync() with flush_work().  The drain callback should have
-been already invoked before the close callback, hence the port->active
-flag must be already cleared.  So this just assures that the pending
-work is finished before freeing the resources.
+> ACL Data RX: Handle 16 flags 0x02 dlen 26
+      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 2 len 18
+        PSM: 39 (0x0027)
+        MTU: 256
+        MPS: 251
+        Credits: 65535
+        Source CID: 116
+        Source CID: 117
+        Source CID: 118
+        Source CID: 119
+        Source CID: 120
+< ACL Data TX: Handle 16 flags 0x00 dlen 26
+      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 2 len 18
+        MTU: 517
+        MPS: 247
+        Credits: 3
+        Result: Connection successful (0x0000)
+        Destination CID: 68
+        Destination CID: 67
+        Destination CID: 66
+        Destination CID: 65
+        Destination CID: 64
 
-Fixes: 0125de38122f ("ALSA: usb-audio: Cancel pending work at closing a MIDI substream")
-Reported-and-tested-by: John Keeping <jkeeping@inmusicbrands.com>
-Closes: https://lore.kernel.org/20250217111647.3368132-1-jkeeping@inmusicbrands.com
-Link: https://patch.msgid.link/20250218114024.23125-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Also make sure the response don't include channels that are not on
+BT_CONNECT2 since the chan->ident can be set to the same value as in the
+following trace:
+
+< ACL Data TX: Handle 16 flags 0x00 dlen 12
+      LE L2CAP: LE Flow Control Credit (0x16) ident 6 len 4
+        Source CID: 64
+        Credits: 1
+...
+> ACL Data RX: Handle 16 flags 0x02 dlen 18
+      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 6 len 10
+        PSM: 39 (0x0027)
+        MTU: 517
+        MPS: 251
+        Credits: 255
+        Source CID: 70
+< ACL Data TX: Handle 16 flags 0x00 dlen 20
+      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 6 len 12
+        MTU: 517
+        MPS: 247
+        Credits: 3
+        Result: Connection successful (0x0000)
+        Destination CID: 64
+        Destination CID: 68
+
+Closes: https://github.com/bluez/bluez/issues/1094
+Fixes: 9aa9d9473f15 ("Bluetooth: L2CAP: Fix responding with wrong PDU type")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index b02e1a33304f0..f0a70e912bddc 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1161,7 +1161,7 @@ static int snd_usbmidi_output_close(struct snd_rawmidi_substream *substream)
- {
- 	struct usbmidi_out_port *port = substream->runtime->private_data;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 23fc03f7bf312..be281a95a0a8b 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -632,7 +632,8 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ 	    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
+ 		hci_conn_hold(conn->hcon);
  
--	cancel_work_sync(&port->ep->work);
-+	flush_work(&port->ep->work);
- 	return substream_open(substream, 0, 0);
+-	list_add(&chan->list, &conn->chan_l);
++	/* Append to the list since the order matters for ECRED */
++	list_add_tail(&chan->list, &conn->chan_l);
  }
  
+ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+@@ -3967,7 +3968,11 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
+ {
+ 	struct l2cap_ecred_rsp_data *rsp = data;
+ 
+-	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
++	/* Check if channel for outgoing connection or if it wasn't deferred
++	 * since in those cases it must be skipped.
++	 */
++	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags) ||
++	    !test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
+ 		return;
+ 
+ 	/* Reset ident so only one response is sent */
 -- 
 2.39.5
 
