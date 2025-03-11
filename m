@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A672825DD00;
-	Tue, 11 Mar 2025 15:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F4E25DB0D;
+	Tue, 11 Mar 2025 15:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705688; cv=none; b=tICANb7H+1T8sZ9raJWy315E38jTMhCrljAGpoUjyG9XwQ4E7W6ZfYkSrz9eUHOlZ+qP1RDYMWVUO12TKLGpJwCTBrm5od1kTIR3cXKkpAiZhshIn1LNiMXFb38C9h32tm4zvvqAfauJj1d1ZhFxTYVmez/1mopfvTcY73eRpyw=
+	t=1741705691; cv=none; b=gmEG6RMIHWsU5oibkU8MSzoRzqAI1NuCZOljretWJU1smzZsgDYvjb/28PmVfQZnLvrByyCqlkGz9D89jpczbUoXY2qIxAzQoCdWjBpXVnVwW5voE7XE056tSAGNYDcaP/iSuGzf5q9QjQszVvIJ268AQD2Kxi60WSGOZ9pNtNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705688; c=relaxed/simple;
-	bh=9ohtoDRh+b6L7uKZtupF6+iDy8wtV+TKsKUG+aDHK+4=;
+	s=arc-20240116; t=1741705691; c=relaxed/simple;
+	bh=cAsFLGYiTK+Lyj6xgRaHp44FJWSyP49ZBPgFH3EEUjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnB4kTxUQiHMxBjUyDexD10iwv5fvwJ27znTIJgRWHXlhvnIppdC7xySlVDm/U2VwLen1jXyjqOv4uKTwZjxri+LK4tKUvx9OnKPdBFfI0Tw9yurrrj0SJiAvT6YkLyPkyhgWoVyP15s+/p5Bma/HrENl9yvEEuXtwRIaNGY6WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+f638eU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YQJdF3PlxRdPpwzHSl0k517TVpE6jEUD9xnrvGr4RrxoZt8SnglWVJWFF6bXhOWUy/bZMoKTkQ9WoceznxgF/Ok/SJZaNU6QyyHtx7wIylfV+uPOcFfF4Co+jIeMvtKQC9bDy7qBMfHacA9+kSfcLsUQtWF8VO95Wa3pTaoG/Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3qnBNZJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+f638eU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8906EC4CEE9;
-	Tue, 11 Mar 2025 15:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3qnBNZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40A2C4CEE9;
+	Tue, 11 Mar 2025 15:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705688;
-	bh=9ohtoDRh+b6L7uKZtupF6+iDy8wtV+TKsKUG+aDHK+4=;
+	s=korg; t=1741705691;
+	bh=cAsFLGYiTK+Lyj6xgRaHp44FJWSyP49ZBPgFH3EEUjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+f638eU6tC/mSFD7d2wBtovbUpJw7BmB4smif7nCfTiqDrGFUSSrpN8gRcTJ8KYh
-	 vHEsvBcvYx7rp8cebD0TxEwupd9APDapHtleHGo/3pRBMx0qnGgZEY1UGptrvOS53S
-	 X0QswAlEecguSOwQjfnDjCGV492VO8n/7xxgL59s=
+	b=E3qnBNZJd/F+iRsNxhDknyRjMDWLRtHg82uvU2S810qP852nX/U6VmCRhlv3y1C1h
+	 nLNRBZOBqp2JbINzy1U9Ob6fLT09ZE5FcRfTKghYoOKN8JaucJ9P0mB5IbpRkFk52j
+	 h7Y8EDaIBcpJ0OK+Q2iFdMq3wisreK5C7tW8Nxx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.4 101/328] media: uvcvideo: Remove dangling pointers
-Date: Tue, 11 Mar 2025 15:57:51 +0100
-Message-ID: <20250311145718.905962335@linuxfoundation.org>
+	syzbot+f63600d288bfb7057424@syzkaller.appspotmail.com,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Dave Taht <dave.taht@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.4 102/328] sched: sch_cake: add bounds checks to host bulk flow fairness counts
+Date: Tue, 11 Mar 2025 15:57:52 +0100
+Message-ID: <20250311145718.945383317@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -46,180 +48,292 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit 221cd51efe4565501a3dbf04cc011b537dcce7fb upstream.
+commit 737d4d91d35b5f7fa5bb442651472277318b0bfd upstream.
 
-When an async control is written, we copy a pointer to the file handle
-that started the operation. That pointer will be used when the device is
-done. Which could be anytime in the future.
+Even though we fixed a logic error in the commit cited below, syzbot
+still managed to trigger an underflow of the per-host bulk flow
+counters, leading to an out of bounds memory access.
 
-If the user closes that file descriptor, its structure will be freed,
-and there will be one dangling pointer per pending async control, that
-the driver will try to use.
+To avoid any such logic errors causing out of bounds memory accesses,
+this commit factors out all accesses to the per-host bulk flow counters
+to a series of helpers that perform bounds-checking before any
+increments and decrements. This also has the benefit of improving
+readability by moving the conditional checks for the flow mode into
+these helpers, instead of having them spread out throughout the
+code (which was the cause of the original logic error).
 
-Clean all the dangling pointers during release().
+As part of this change, the flow quantum calculation is consolidated
+into a helper function, which means that the dithering applied to the
+ost load scaling is now applied both in the DRR rotation and when a
+sparse flow's quantum is first initiated. The only user-visible effect
+of this is that the maximum packet size that can be sent while a flow
+stays sparse will now vary with +/- one byte in some cases. This should
+not make a noticeable difference in practice, and thus it's not worth
+complicating the code to preserve the old behaviour.
 
-To avoid adding a performance penalty in the most common case (no async
-operation), a counter has been introduced with some logic to make sure
-that it is properly handled.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-3-26c867231118@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 546ea84d07e3 ("sched: sch_cake: fix bulk flow accounting logic for host fairness")
+Reported-by: syzbot+f63600d288bfb7057424@syzkaller.appspotmail.com
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Dave Taht <dave.taht@gmail.com>
+Link: https://patch.msgid.link/20250107120105.70685-1-toke@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Hagar: needed contextual fixes due to missing commit 7e3cf0843fe5]
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Reviewed-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   63 +++++++++++++++++++++++++++++++++++++--
- drivers/media/usb/uvc/uvc_v4l2.c |    2 +
- drivers/media/usb/uvc/uvcvideo.h |    9 ++++-
- 3 files changed, 71 insertions(+), 3 deletions(-)
+ net/sched/sch_cake.c |  140 +++++++++++++++++++++++++++------------------------
+ 1 file changed, 75 insertions(+), 65 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1306,6 +1306,40 @@ static void uvc_ctrl_send_slave_event(st
- 	uvc_ctrl_send_event(chain, handle, ctrl, mapping, val, changes);
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -622,6 +622,63 @@ static bool cake_ddst(int flow_mode)
+ 	return (flow_mode & CAKE_FLOW_DUAL_DST) == CAKE_FLOW_DUAL_DST;
  }
  
-+static void uvc_ctrl_set_handle(struct uvc_fh *handle, struct uvc_control *ctrl,
-+				struct uvc_fh *new_handle)
++static void cake_dec_srchost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
 +{
-+	lockdep_assert_held(&handle->chain->ctrl_mutex);
-+
-+	if (new_handle) {
-+		if (ctrl->handle)
-+			dev_warn_ratelimited(&handle->stream->dev->udev->dev,
-+					     "UVC non compliance: Setting an async control with a pending operation.");
-+
-+		if (new_handle == ctrl->handle)
-+			return;
-+
-+		if (ctrl->handle) {
-+			WARN_ON(!ctrl->handle->pending_async_ctrls);
-+			if (ctrl->handle->pending_async_ctrls)
-+				ctrl->handle->pending_async_ctrls--;
-+		}
-+
-+		ctrl->handle = new_handle;
-+		handle->pending_async_ctrls++;
-+		return;
-+	}
-+
-+	/* Cannot clear the handle for a control not owned by us.*/
-+	if (WARN_ON(ctrl->handle != handle))
-+		return;
-+
-+	ctrl->handle = NULL;
-+	if (WARN_ON(!handle->pending_async_ctrls))
-+		return;
-+	handle->pending_async_ctrls--;
++	if (likely(cake_dsrc(flow_mode) &&
++		   q->hosts[flow->srchost].srchost_bulk_flow_count))
++		q->hosts[flow->srchost].srchost_bulk_flow_count--;
 +}
 +
- void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 			   struct uvc_control *ctrl, const u8 *data)
++static void cake_inc_srchost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_dsrc(flow_mode) &&
++		   q->hosts[flow->srchost].srchost_bulk_flow_count < CAKE_QUEUES))
++		q->hosts[flow->srchost].srchost_bulk_flow_count++;
++}
++
++static void cake_dec_dsthost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_ddst(flow_mode) &&
++		   q->hosts[flow->dsthost].dsthost_bulk_flow_count))
++		q->hosts[flow->dsthost].dsthost_bulk_flow_count--;
++}
++
++static void cake_inc_dsthost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_ddst(flow_mode) &&
++		   q->hosts[flow->dsthost].dsthost_bulk_flow_count < CAKE_QUEUES))
++		q->hosts[flow->dsthost].dsthost_bulk_flow_count++;
++}
++
++static u16 cake_get_flow_quantum(struct cake_tin_data *q,
++				 struct cake_flow *flow,
++				 int flow_mode)
++{
++	u16 host_load = 1;
++
++	if (cake_dsrc(flow_mode))
++		host_load = max(host_load,
++				q->hosts[flow->srchost].srchost_bulk_flow_count);
++
++	if (cake_ddst(flow_mode))
++		host_load = max(host_load,
++				q->hosts[flow->dsthost].dsthost_bulk_flow_count);
++
++	/* The shifted prandom_u32() is a way to apply dithering to avoid
++	 * accumulating roundoff errors
++	 */
++	return (q->flow_quantum * quantum_div[host_load] +
++		(prandom_u32() >> 16)) >> 16;
++}
++
+ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
+ 		     int flow_mode, u16 flow_override, u16 host_override)
  {
-@@ -1316,7 +1350,8 @@ void uvc_ctrl_status_event(struct uvc_vi
- 	mutex_lock(&chain->ctrl_mutex);
+@@ -753,10 +810,8 @@ skip_hash:
+ 		allocate_dst = cake_ddst(flow_mode);
  
- 	handle = ctrl->handle;
--	ctrl->handle = NULL;
-+	if (handle)
-+		uvc_ctrl_set_handle(handle, ctrl, NULL);
+ 		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
+-			if (allocate_src)
+-				q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
+-			if (allocate_dst)
+-				q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
++			cake_dec_srchost_bulk_flow_count(q, &q->flows[outer_hash + k], flow_mode);
++			cake_dec_dsthost_bulk_flow_count(q, &q->flows[outer_hash + k], flow_mode);
+ 		}
+ found:
+ 		/* reserve queue for future packets in same flow */
+@@ -781,9 +836,10 @@ found:
+ 			q->hosts[outer_hash + k].srchost_tag = srchost_hash;
+ found_src:
+ 			srchost_idx = outer_hash + k;
+-			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
+-				q->hosts[srchost_idx].srchost_bulk_flow_count++;
+ 			q->flows[reduced_hash].srchost = srchost_idx;
++
++			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
++				cake_inc_srchost_bulk_flow_count(q, &q->flows[reduced_hash], flow_mode);
+ 		}
  
- 	list_for_each_entry(mapping, &ctrl->info.mappings, list) {
- 		s32 value = __uvc_ctrl_get_value(mapping, data);
-@@ -1577,7 +1612,7 @@ static int uvc_ctrl_commit_entity(struct
- 
- 		if (!rollback && handle &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
--			ctrl->handle = handle;
-+			uvc_ctrl_set_handle(handle, ctrl, handle);
+ 		if (allocate_dst) {
+@@ -804,9 +860,10 @@ found_src:
+ 			q->hosts[outer_hash + k].dsthost_tag = dsthost_hash;
+ found_dst:
+ 			dsthost_idx = outer_hash + k;
+-			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
+-				q->hosts[dsthost_idx].dsthost_bulk_flow_count++;
+ 			q->flows[reduced_hash].dsthost = dsthost_idx;
++
++			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
++				cake_inc_dsthost_bulk_flow_count(q, &q->flows[reduced_hash], flow_mode);
+ 		}
  	}
  
- 	return 0;
-@@ -2378,6 +2413,30 @@ int uvc_ctrl_init_device(struct uvc_devi
- 	return 0;
- }
+@@ -1821,10 +1878,6 @@ static s32 cake_enqueue(struct sk_buff *
  
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle)
-+{
-+	struct uvc_entity *entity;
-+
-+	mutex_lock(&handle->chain->ctrl_mutex);
-+
-+	if (!handle->pending_async_ctrls) {
-+		mutex_unlock(&handle->chain->ctrl_mutex);
-+		return;
-+	}
-+
-+	list_for_each_entry(entity, &handle->chain->dev->entities, list) {
-+		unsigned int i;
-+		for (i = 0; i < entity->ncontrols; ++i) {
-+			if (entity->controls[i].handle != handle)
-+				continue;
-+			uvc_ctrl_set_handle(handle, &entity->controls[i], NULL);
-+		}
-+	}
-+
-+	WARN_ON(handle->pending_async_ctrls);
-+	mutex_unlock(&handle->chain->ctrl_mutex);
-+}
-+
- /*
-  * Cleanup device controls.
-  */
---- a/drivers/media/usb/uvc/uvc_v4l2.c
-+++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -589,6 +589,8 @@ static int uvc_v4l2_release(struct file
+ 	/* flowchain */
+ 	if (!flow->set || flow->set == CAKE_SET_DECAYING) {
+-		struct cake_host *srchost = &b->hosts[flow->srchost];
+-		struct cake_host *dsthost = &b->hosts[flow->dsthost];
+-		u16 host_load = 1;
+-
+ 		if (!flow->set) {
+ 			list_add_tail(&flow->flowchain, &b->new_flows);
+ 		} else {
+@@ -1834,18 +1887,8 @@ static s32 cake_enqueue(struct sk_buff *
+ 		flow->set = CAKE_SET_SPARSE;
+ 		b->sparse_flow_count++;
  
- 	uvc_trace(UVC_TRACE_CALLS, "uvc_v4l2_release\n");
+-		if (cake_dsrc(q->flow_mode))
+-			host_load = max(host_load, srchost->srchost_bulk_flow_count);
+-
+-		if (cake_ddst(q->flow_mode))
+-			host_load = max(host_load, dsthost->dsthost_bulk_flow_count);
+-
+-		flow->deficit = (b->flow_quantum *
+-				 quantum_div[host_load]) >> 16;
++		flow->deficit = cake_get_flow_quantum(b, flow, q->flow_mode);
+ 	} else if (flow->set == CAKE_SET_SPARSE_WAIT) {
+-		struct cake_host *srchost = &b->hosts[flow->srchost];
+-		struct cake_host *dsthost = &b->hosts[flow->dsthost];
+-
+ 		/* this flow was empty, accounted as a sparse flow, but actually
+ 		 * in the bulk rotation.
+ 		 */
+@@ -1853,12 +1896,8 @@ static s32 cake_enqueue(struct sk_buff *
+ 		b->sparse_flow_count--;
+ 		b->bulk_flow_count++;
  
-+	uvc_ctrl_cleanup_fh(handle);
-+
- 	/* Only free resources if this is a privileged handle. */
- 	if (uvc_has_privileges(handle))
- 		uvc_queue_release(&stream->queue);
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -447,7 +447,11 @@ struct uvc_video_chain {
- 	struct uvc_entity *processing;		/* Processing unit */
- 	struct uvc_entity *selector;		/* Selector unit */
+-		if (cake_dsrc(q->flow_mode))
+-			srchost->srchost_bulk_flow_count++;
+-
+-		if (cake_ddst(q->flow_mode))
+-			dsthost->dsthost_bulk_flow_count++;
+-
++		cake_inc_srchost_bulk_flow_count(b, flow, q->flow_mode);
++		cake_inc_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 	}
  
--	struct mutex ctrl_mutex;		/* Protects ctrl.info */
-+	struct mutex ctrl_mutex;		/*
-+						 * Protects ctrl.info,
-+						 * ctrl.handle and
-+						 * uvc_fh.pending_async_ctrls
-+						 */
+ 	if (q->buffer_used > q->buffer_max_used)
+@@ -1915,13 +1954,11 @@ static struct sk_buff *cake_dequeue(stru
+ {
+ 	struct cake_sched_data *q = qdisc_priv(sch);
+ 	struct cake_tin_data *b = &q->tins[q->cur_tin];
+-	struct cake_host *srchost, *dsthost;
+ 	ktime_t now = ktime_get();
+ 	struct cake_flow *flow;
+ 	struct list_head *head;
+ 	bool first_flow = true;
+ 	struct sk_buff *skb;
+-	u16 host_load;
+ 	u64 delay;
+ 	u32 len;
  
- 	struct v4l2_prio_state prio;		/* V4L2 priority state */
- 	u32 caps;				/* V4L2 chain-wide caps */
-@@ -693,6 +697,7 @@ struct uvc_fh {
- 	struct uvc_video_chain *chain;
- 	struct uvc_streaming *stream;
- 	enum uvc_handle_state state;
-+	unsigned int pending_async_ctrls;
- };
+@@ -2021,11 +2058,6 @@ retry:
+ 	q->cur_flow = flow - b->flows;
+ 	first_flow = false;
  
- struct uvc_driver {
-@@ -865,6 +870,8 @@ int uvc_ctrl_set(struct uvc_fh *handle,
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 		      struct uvc_xu_control_query *xqry);
+-	/* triple isolation (modified DRR++) */
+-	srchost = &b->hosts[flow->srchost];
+-	dsthost = &b->hosts[flow->dsthost];
+-	host_load = 1;
+-
+ 	/* flow isolation (DRR++) */
+ 	if (flow->deficit <= 0) {
+ 		/* Keep all flows with deficits out of the sparse and decaying
+@@ -2037,11 +2069,8 @@ retry:
+ 				b->sparse_flow_count--;
+ 				b->bulk_flow_count++;
  
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle);
-+
- /* Utility functions */
- void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
- 			   unsigned int n_terms, unsigned int threshold);
+-				if (cake_dsrc(q->flow_mode))
+-					srchost->srchost_bulk_flow_count++;
+-
+-				if (cake_ddst(q->flow_mode))
+-					dsthost->dsthost_bulk_flow_count++;
++				cake_inc_srchost_bulk_flow_count(b, flow, q->flow_mode);
++				cake_inc_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 
+ 				flow->set = CAKE_SET_BULK;
+ 			} else {
+@@ -2053,19 +2082,7 @@ retry:
+ 			}
+ 		}
+ 
+-		if (cake_dsrc(q->flow_mode))
+-			host_load = max(host_load, srchost->srchost_bulk_flow_count);
+-
+-		if (cake_ddst(q->flow_mode))
+-			host_load = max(host_load, dsthost->dsthost_bulk_flow_count);
+-
+-		WARN_ON(host_load > CAKE_QUEUES);
+-
+-		/* The shifted prandom_u32() is a way to apply dithering to
+-		 * avoid accumulating roundoff errors
+-		 */
+-		flow->deficit += (b->flow_quantum * quantum_div[host_load] +
+-				  (prandom_u32() >> 16)) >> 16;
++		flow->deficit += cake_get_flow_quantum(b, flow, q->flow_mode);
+ 		list_move_tail(&flow->flowchain, &b->old_flows);
+ 
+ 		goto retry;
+@@ -2089,11 +2106,8 @@ retry:
+ 				if (flow->set == CAKE_SET_BULK) {
+ 					b->bulk_flow_count--;
+ 
+-					if (cake_dsrc(q->flow_mode))
+-						srchost->srchost_bulk_flow_count--;
+-
+-					if (cake_ddst(q->flow_mode))
+-						dsthost->dsthost_bulk_flow_count--;
++					cake_dec_srchost_bulk_flow_count(b, flow, q->flow_mode);
++					cake_dec_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 
+ 					b->decaying_flow_count++;
+ 				} else if (flow->set == CAKE_SET_SPARSE ||
+@@ -2111,12 +2125,8 @@ retry:
+ 				else if (flow->set == CAKE_SET_BULK) {
+ 					b->bulk_flow_count--;
+ 
+-					if (cake_dsrc(q->flow_mode))
+-						srchost->srchost_bulk_flow_count--;
+-
+-					if (cake_ddst(q->flow_mode))
+-						dsthost->dsthost_bulk_flow_count--;
+-
++					cake_dec_srchost_bulk_flow_count(b, flow, q->flow_mode);
++					cake_dec_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 				} else
+ 					b->decaying_flow_count--;
+ 
 
 
