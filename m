@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D825E473;
-	Tue, 11 Mar 2025 15:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E181525F986;
+	Tue, 11 Mar 2025 15:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706439; cv=none; b=drK8GUfJ/dLvXqzFFllemICj5f9QynxVudUB4ItdqONoqS7lqEB5SFIAoEXhkskS/6RCXS1vetUHIzU2z5qcY+6CpwR8nIQf1ON39u7y5x8SEThs0pEmnzeVypO1LBqDD0Q3QY52kYRzXkRxUao6hUamTe+f5s38g7W1U5W1K8Q=
+	t=1741706442; cv=none; b=Nw4FkmQa/kYherOhZTdFgNVoXX0VA4pVBHJaHo6e8kd971NFclFrSGQsZ/ToCYQSIkYBfJL3F00pVQJ5VZV6ZbyEQ9zw/wMvydVFd4IfadIEFSF0xWstDrOhvsjbAUQKhpYaRsd9b7x0IO83y1RFHOZ/k0oVkXVymieRDQuYo/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706439; c=relaxed/simple;
-	bh=as8gJBDh5AsvZDHvWsjuXsp0TuqWFg5nZ5JZCb6QuCI=;
+	s=arc-20240116; t=1741706442; c=relaxed/simple;
+	bh=mHqgdP8iamB5aVs0UFHsocuzpUO0VwBzEO3sr0xsWoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+Qr+aihpVMe8KuJnNTKJY/Nz3kxgn+6HbIf/vLJCP0Sr5bs/jaFG16FgZfrRd8kDbwM+7Y4Lff2ufCO8W04kTIBEp0yiqLjLJZF0UQNwfJstF5IxuRi1SArVYLTfTlpiEooHPv9D4leo8X9oVLZZAHAh+NLeMkxQitmlW/E+qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ce1FrcYM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKgUs84GZynFQd8gykBm9A5ANyC1/l3ZBbDVa7d2DAowBbeJnTYfKHSt9DiegJbw+oBKqSaClkSFCoseQqpKJ0B7rox6IyQArcDRsHnAp8fLJecGQCOR0pFHLKCEQT4IAAKxznsDUcbZ0fYj02L9TvcdgWbyZE+syG1eD4OXf1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMMykdLL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ce1FrcYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66680C4CEE9;
-	Tue, 11 Mar 2025 15:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMMykdLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C42C4CEEA;
+	Tue, 11 Mar 2025 15:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706438;
-	bh=as8gJBDh5AsvZDHvWsjuXsp0TuqWFg5nZ5JZCb6QuCI=;
+	s=korg; t=1741706441;
+	bh=mHqgdP8iamB5aVs0UFHsocuzpUO0VwBzEO3sr0xsWoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ce1FrcYM2SZC3FuUGKdBD+5vzodSUtQ9mI+S1Pw9kTCPedKPu5YyF+GwFiHpoL3fs
-	 vP6yA3WmYEiyDLJC3jhwTRDVLaEeNzX25KQJXd+3Mfw7+C5mLnuTkjgWzUtZKKadNf
-	 +zf2iaswOCRDo2xzGzy0FTKeoI5oG1sVJbLi1A0c=
+	b=uMMykdLLM7d9xGpxIs3ve3dxyN3DhCCOOF/9XyvhtxUZkdRTrQHcnrIjyJ+EeGsFP
+	 a0kJrH9fP8sYMJyVmGaTogE396+FYmWP7JGI/NwOgF5h0TpE+Eu+CgO4kRM62NGJBX
+	 cUHNxDSg9rdZeb2cEKyvnErvFxTEwE0ziGwIEM6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Bo Gan <ganboing@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/462] drm/etnaviv: Fix page property being used for non writecombine buffers
-Date: Tue, 11 Mar 2025 15:54:34 +0100
-Message-ID: <20250311145758.681342616@linuxfoundation.org>
+Subject: [PATCH 5.10 042/462] clk: analogbits: Fix incorrect calculation of vco rate delta
+Date: Tue, 11 Mar 2025 15:55:08 +0100
+Message-ID: <20250311145800.013336216@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,57 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
+From: Bo Gan <ganboing@gmail.com>
 
-[ Upstream commit 834f304192834d6f0941954f3277ae0ba11a9a86 ]
+[ Upstream commit d7f12857f095ef38523399d47e68787b357232f6 ]
 
-In the etnaviv_gem_vmap_impl() function, the driver vmap whatever buffers
-with write combine(WC) page property, this is incorrect. Cached buffers
-should be mapped with the cached page property and uncached buffers should
-be mapped with the uncached page property.
+In wrpll_configure_for_rate() we try to determine the best PLL
+configuration for a target rate. However, in the loop where we try
+values of R, we should compare the derived `vco` with `target_vco_rate`.
+However, we were in fact comparing it with `target_rate`, which is
+actually after Q shift. This is incorrect, and sometimes can result in
+suboptimal clock rates. Fix it.
 
-Fixes: a0a5ab3e99b8 ("drm/etnaviv: call correct function when trying to vmap a DMABUF")
-Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Fixes: 7b9487a9a5c4 ("clk: analogbits: add Wide-Range PLL library")
+Signed-off-by: Bo Gan <ganboing@gmail.com>
+Link: https://lore.kernel.org/r/20240830061639.2316-1-ganboing@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/clk/analogbits/wrpll-cln28hpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index aa372982335e9..bdd3564634e79 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -351,6 +351,7 @@ void *etnaviv_gem_vmap(struct drm_gem_object *obj)
- static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
- {
- 	struct page **pages;
-+	pgprot_t prot;
+diff --git a/drivers/clk/analogbits/wrpll-cln28hpc.c b/drivers/clk/analogbits/wrpll-cln28hpc.c
+index 776ead319ae9c..9df572579afb4 100644
+--- a/drivers/clk/analogbits/wrpll-cln28hpc.c
++++ b/drivers/clk/analogbits/wrpll-cln28hpc.c
+@@ -287,7 +287,7 @@ int wrpll_configure_for_rate(struct wrpll_cfg *c, u32 target_rate,
+ 			vco = vco_pre * f;
+ 		}
  
- 	lockdep_assert_held(&obj->lock);
- 
-@@ -358,8 +359,19 @@ static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
- 	if (IS_ERR(pages))
- 		return NULL;
- 
--	return vmap(pages, obj->base.size >> PAGE_SHIFT,
--			VM_MAP, pgprot_writecombine(PAGE_KERNEL));
-+	switch (obj->flags & ETNA_BO_CACHE_MASK) {
-+	case ETNA_BO_CACHED:
-+		prot = PAGE_KERNEL;
-+		break;
-+	case ETNA_BO_UNCACHED:
-+		prot = pgprot_noncached(PAGE_KERNEL);
-+		break;
-+	case ETNA_BO_WC:
-+	default:
-+		prot = pgprot_writecombine(PAGE_KERNEL);
-+	}
-+
-+	return vmap(pages, obj->base.size >> PAGE_SHIFT, VM_MAP, prot);
- }
- 
- static inline enum dma_data_direction etnaviv_op_to_dma_dir(u32 op)
+-		delta = abs(target_rate - vco);
++		delta = abs(target_vco_rate - vco);
+ 		if (delta < best_delta) {
+ 			best_delta = delta;
+ 			best_r = r;
 -- 
 2.39.5
 
