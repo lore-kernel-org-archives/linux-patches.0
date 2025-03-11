@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D96225EF8E;
-	Tue, 11 Mar 2025 15:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4728625F968;
+	Tue, 11 Mar 2025 15:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707526; cv=none; b=JGIsUjlwB0ztKsE84dOaIXwKhsQq3mt4lrU+Kg/ePEetqn08XrAmc8SvjxpGJZKi9ONPLPMZAqG8OYH8Vml8Zn331Hatx2TnNG4XVYItNP6ArRGbGJUHFYuIBYrW/9dSJA1Y11F1poV07SFBkKD6lsJ7UqTEiZcE3NE+IhOMWKw=
+	t=1741707529; cv=none; b=gWuYQORP4Bn1qcIyBL4/P3o+bTUWK7Ni7K3yGkpbBGdu/YZVDsRMhZQ5/56a8sT4RVjaXzOV3srENxZmO6sFfG+u9u8mPME2mJVHNtvU2vSq6CNCzd4ePXeaCwrx//hm/jYnkoO3uJWvJCKfOQkaJPLFD/khpCn7BA8otteHBdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707526; c=relaxed/simple;
-	bh=KsoBRSEBCJ1z8rF40J/3VgJzAZUnK5qcIlouyeX+WXE=;
+	s=arc-20240116; t=1741707529; c=relaxed/simple;
+	bh=1SBtfZ+GrBJJ6xlRG9H7q3/hARIY9kGW5iV6AGhplS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNXpS20212HsvCWiGRnM8fbFsQJHJGz5PUif6PBDU3D1NBKSsdYR8GtnADDt3c/QXLhdD7Vd8O4L1hXE5vnTA/+WpuNaiYa5lXFwkMiTKDaIVAR9eN1P1VoUr5guFVdJ0W4pLHZfuEwsynLHue6YSdP8nKOyyY6cranpzmS8dLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAjuLMos; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXEgCVR8fvslyXyF2Id9GgDyNKDY3FTMocTo3C+TcZgQEKP2faG3nj6ZOEY9ooSjyznodNROdl4+Afldyvj7ZbXbUVU3KMstEHLKFxRiuhMi/yalTOQMAGLUmWDDRQjAyIyuRNj0twjpbDsQBI/aaA6gW12R9zes+pm9UDeGvnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7aorP8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAjuLMos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FF3C4CEE9;
-	Tue, 11 Mar 2025 15:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7aorP8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C7DC4CEED;
+	Tue, 11 Mar 2025 15:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707525;
-	bh=KsoBRSEBCJ1z8rF40J/3VgJzAZUnK5qcIlouyeX+WXE=;
+	s=korg; t=1741707528;
+	bh=1SBtfZ+GrBJJ6xlRG9H7q3/hARIY9kGW5iV6AGhplS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAjuLMoslqko4b/VhwZxFAhg85FeR4WLefYaateLkqhwx5cI1EnkxX9dsdKEkcA3I
-	 HKQtGC/+pnm6e4B5ZqcBR5EUNvbptRdLFyeqscvS7FRL0yOW08NFfbiywaWGP78Vy/
-	 NyhYVqSd8emuRZIi9jUamgVF01Z/w4+3UVUwvTmU=
+	b=H7aorP8I9g6Zygk46M4Z1wmxKOgB21/boOxYR0mOxnsQgAMUoOnJXRfimRy8sUIMv
+	 KsWJhROLurxS2oGZH6Ju1z+paidAW67broLdxXWAxwERNSZ9zte2z2I5pH9HgvxQy4
+	 srl+/MoajcIiojZAsEEPmUdkbvPJ9B3nqdETqDH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fab Stz <fabstz-it@yahoo.fr>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 378/462] intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly
-Date: Tue, 11 Mar 2025 16:00:44 +0100
-Message-ID: <20250311145813.282729948@linuxfoundation.org>
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 412/462] hwmon: (ntc_thermistor) Fix the ncpXXxh103 sensor table
+Date: Tue, 11 Mar 2025 16:01:18 +0100
+Message-ID: <20250311145814.607949342@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,54 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-commit c157d351460bcf202970e97e611cb6b54a3dd4a4 upstream.
+[ Upstream commit 1c7932d5ae0f5c22fa52ac811b4c427bbca5aff5 ]
 
-The Intel idle driver is preferred over the ACPI processor idle driver,
-but fails to implement the work around for Core2 generation CPUs, where
-the TSC stops in C2 and deeper C-states. This causes stalls and boot
-delays, when the clocksource watchdog does not catch the unstable TSC
-before the CPU goes deep idle for the first time.
+I could not find a single table that has the values currently present in
+the table, change it to the actual values that can be found in [1]/[2]
+and [3] (page 15 column 2)
 
-The ACPI driver marks the TSC unstable when it detects that the CPU
-supports C2 or deeper and the CPU does not have a non-stop TSC.
+[1]: https://www.murata.com/products/productdetail?partno=NCP15XH103F03RC
+[2]: https://www.murata.com/products/productdata/8796836626462/NTHCG83.txt?1437969843000
+[3]: https://nl.mouser.com/datasheet/2/281/r44e-522712.pdf
 
-Add the equivivalent work around to the Intel idle driver to cure that.
-
-Fixes: 18734958e9bf ("intel_idle: Use ACPI _CST for processor models without C-state tables")
-Reported-by: Fab Stz <fabstz-it@yahoo.fr>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Fab Stz <fabstz-it@yahoo.fr>
-Cc: All applicable <stable@vger.kernel.org>
-Closes: https://lore.kernel.org/all/10cf96aa-1276-4bd4-8966-c890377030c3@yahoo.fr
-Link: https://patch.msgid.link/87bjupfy7f.ffs@tglx
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 54ce3a0d8011 ("hwmon: (ntc_thermistor) Add support for ncpXXxh103")
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Link: https://lore.kernel.org/r/20250227-ntc_thermistor_fixes-v1-3-70fa73200b52@gocontroll.com
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/idle/intel_idle.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/ntc_thermistor.c | 66 +++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -56,6 +56,7 @@
- #include <asm/nospec-branch.h>
- #include <asm/mwait.h>
- #include <asm/msr.h>
-+#include <asm/tsc.h>
+diff --git a/drivers/hwmon/ntc_thermistor.c b/drivers/hwmon/ntc_thermistor.c
+index 7e20beb8b11f3..1305f81c4ae33 100644
+--- a/drivers/hwmon/ntc_thermistor.c
++++ b/drivers/hwmon/ntc_thermistor.c
+@@ -177,40 +177,40 @@ static const struct ntc_compensation ncpXXwf104[] = {
+ };
  
- #define INTEL_IDLE_VERSION "0.5.1"
+ static const struct ntc_compensation ncpXXxh103[] = {
+-	{ .temp_c	= -40, .ohm	= 247565 },
+-	{ .temp_c	= -35, .ohm	= 181742 },
+-	{ .temp_c	= -30, .ohm	= 135128 },
+-	{ .temp_c	= -25, .ohm	= 101678 },
+-	{ .temp_c	= -20, .ohm	= 77373 },
+-	{ .temp_c	= -15, .ohm	= 59504 },
+-	{ .temp_c	= -10, .ohm	= 46222 },
+-	{ .temp_c	= -5, .ohm	= 36244 },
+-	{ .temp_c	= 0, .ohm	= 28674 },
+-	{ .temp_c	= 5, .ohm	= 22878 },
+-	{ .temp_c	= 10, .ohm	= 18399 },
+-	{ .temp_c	= 15, .ohm	= 14910 },
+-	{ .temp_c	= 20, .ohm	= 12169 },
++	{ .temp_c	= -40, .ohm	= 195652 },
++	{ .temp_c	= -35, .ohm	= 148171 },
++	{ .temp_c	= -30, .ohm	= 113347 },
++	{ .temp_c	= -25, .ohm	= 87559 },
++	{ .temp_c	= -20, .ohm	= 68237 },
++	{ .temp_c	= -15, .ohm	= 53650 },
++	{ .temp_c	= -10, .ohm	= 42506 },
++	{ .temp_c	= -5, .ohm	= 33892 },
++	{ .temp_c	= 0, .ohm	= 27219 },
++	{ .temp_c	= 5, .ohm	= 22021 },
++	{ .temp_c	= 10, .ohm	= 17926 },
++	{ .temp_c	= 15, .ohm	= 14674 },
++	{ .temp_c	= 20, .ohm	= 12081 },
+ 	{ .temp_c	= 25, .ohm	= 10000 },
+-	{ .temp_c	= 30, .ohm	= 8271 },
+-	{ .temp_c	= 35, .ohm	= 6883 },
+-	{ .temp_c	= 40, .ohm	= 5762 },
+-	{ .temp_c	= 45, .ohm	= 4851 },
+-	{ .temp_c	= 50, .ohm	= 4105 },
+-	{ .temp_c	= 55, .ohm	= 3492 },
+-	{ .temp_c	= 60, .ohm	= 2985 },
+-	{ .temp_c	= 65, .ohm	= 2563 },
+-	{ .temp_c	= 70, .ohm	= 2211 },
+-	{ .temp_c	= 75, .ohm	= 1915 },
+-	{ .temp_c	= 80, .ohm	= 1666 },
+-	{ .temp_c	= 85, .ohm	= 1454 },
+-	{ .temp_c	= 90, .ohm	= 1275 },
+-	{ .temp_c	= 95, .ohm	= 1121 },
+-	{ .temp_c	= 100, .ohm	= 990 },
+-	{ .temp_c	= 105, .ohm	= 876 },
+-	{ .temp_c	= 110, .ohm	= 779 },
+-	{ .temp_c	= 115, .ohm	= 694 },
+-	{ .temp_c	= 120, .ohm	= 620 },
+-	{ .temp_c	= 125, .ohm	= 556 },
++	{ .temp_c	= 30, .ohm	= 8315 },
++	{ .temp_c	= 35, .ohm	= 6948 },
++	{ .temp_c	= 40, .ohm	= 5834 },
++	{ .temp_c	= 45, .ohm	= 4917 },
++	{ .temp_c	= 50, .ohm	= 4161 },
++	{ .temp_c	= 55, .ohm	= 3535 },
++	{ .temp_c	= 60, .ohm	= 3014 },
++	{ .temp_c	= 65, .ohm	= 2586 },
++	{ .temp_c	= 70, .ohm	= 2228 },
++	{ .temp_c	= 75, .ohm	= 1925 },
++	{ .temp_c	= 80, .ohm	= 1669 },
++	{ .temp_c	= 85, .ohm	= 1452 },
++	{ .temp_c	= 90, .ohm	= 1268 },
++	{ .temp_c	= 95, .ohm	= 1110 },
++	{ .temp_c	= 100, .ohm	= 974 },
++	{ .temp_c	= 105, .ohm	= 858 },
++	{ .temp_c	= 110, .ohm	= 758 },
++	{ .temp_c	= 115, .ohm	= 672 },
++	{ .temp_c	= 120, .ohm	= 596 },
++	{ .temp_c	= 125, .ohm	= 531 },
+ };
  
-@@ -1295,6 +1296,9 @@ static void __init intel_idle_init_cstat
- 		if (intel_idle_state_needs_timer_stop(state))
- 			state->flags |= CPUIDLE_FLAG_TIMER_STOP;
- 
-+		if (cx->type > ACPI_STATE_C1 && !boot_cpu_has(X86_FEATURE_NONSTOP_TSC))
-+			mark_tsc_unstable("TSC halts in idle");
-+
- 		state->enter = intel_idle;
- 		state->enter_s2idle = intel_idle_s2idle;
- 	}
+ /*
+-- 
+2.39.5
+
 
 
