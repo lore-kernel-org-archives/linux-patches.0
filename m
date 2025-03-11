@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850D11C3BEB;
-	Tue, 11 Mar 2025 15:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131B08632E;
+	Tue, 11 Mar 2025 15:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705746; cv=none; b=rEXwgrWq3LX4ERpb9t88YnvCRxFKoWef+YpZsDCd4eH96g8hxNTr7HlpG1aJrcdkmM+5LEX+mCyWWima+dZYZyt/7NvmsfOm+d9UiwOnxAPxlbPvDN3s1Uu5SKusF+Qng8EJ5um/nQ3192lYTxXzif+KQQ9X//c+ugojl0md+vI=
+	t=1741705749; cv=none; b=DPOgvhcaxnCOHBdYG5teYh+cYKgbaW6O3t8xYXd+oIbBD3BDXsoC3HqbEMOC4wlusGiZphg+k4ZmPkhuWC4GGghYDN9fjL6IeNyekaz7LVFDIK+NMiO63+M+NCQvX143lvuSZzeXHvVXP4nJ0s3xN2UByCXo4Z0mz1vluv6bpqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705746; c=relaxed/simple;
-	bh=DbuQ+Wwh4b0vO6ej4Yv5HwOL8MEheGWKjnegnPHzUD8=;
+	s=arc-20240116; t=1741705749; c=relaxed/simple;
+	bh=Ym2VEnu5WJVo97veq9NTRnECKNTMZSLl4EymodKE488=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdbbFTInfcVQMF4NDYf4X5ghTdOZgba7TFCWK+UUSWq3atp0mmNmcCL2vlzmCgvgFAfhjamKSfPXfcVXacMOrilFN0rI8MtEJiGlG9OEZyRbPtWWLmsbNkfDVhN6Wus9r9+2TeCeqy+pZjigIucahGAJfN9cvHvaswSq4TniBJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTzR/L7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1CykAknUbPvTuoYk63FXqFSvZNY3ZYGX6ErVv5PuUFRlKRYJyWVAruNGUW1Q9xzMZPSxROBg/MU4bBPjXFgNEcAx3+lKAcwHxEesNp8ySNKuHAVy/XB/0FtWzAh6sN2iHwreu9Pwnl4Gob3ot3iM8im22cA3PrYj9ubQR2pg4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+zQ1Tgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTzR/L7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C58C4CEE9;
-	Tue, 11 Mar 2025 15:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+zQ1Tgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C894C4CEE9;
+	Tue, 11 Mar 2025 15:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705746;
-	bh=DbuQ+Wwh4b0vO6ej4Yv5HwOL8MEheGWKjnegnPHzUD8=;
+	s=korg; t=1741705748;
+	bh=Ym2VEnu5WJVo97veq9NTRnECKNTMZSLl4EymodKE488=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTzR/L7R4kRmSKsfuzY7H++Qel2xXVXClNUlYeKMG0kIMPUqS2x3P8Ax6WV9SCCvK
-	 ImLbJUcQAaT5G5MRIY4aGbXqHfi6B4CeZnovfbrXTRz8uHS+4vCtQvUZJEuPdL6lLN
-	 eE5adlxfOt446rCsdTzsdhDM461Pbjb+rdDZHOqY=
+	b=A+zQ1TgvxLX6w+qbWzVcrqUqMyJfxenZ+tlUxbkwoJaDwNEuLUBAayR8b0K2hPaBd
+	 zLuJHb7HgKtgSzmOrSPQCATKGcGFzpCSZaV81eGR3P9L0cbtzleTFJ2aqdN5RpLkTE
+	 ylTJjhT5U5RxlUAhUgmgpMrOpufQN0N4+Nz5rvPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Michal Luczaj <mhal@rbox.co>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 123/328] KVM: Explicitly verify target vCPU is online in kvm_get_vcpu()
-Date: Tue, 11 Mar 2025 15:58:13 +0100
-Message-ID: <20250311145719.787007559@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christoph Schlameuss <schlameuss@linux.ibm.com>
+Subject: [PATCH 5.4 124/328] KVM: s390: vsie: fix some corner-cases when grabbing vsie pages
+Date: Tue, 11 Mar 2025 15:58:14 +0100
+Message-ID: <20250311145719.828332387@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,62 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 1e7381f3617d14b3c11da80ff5f8a93ab14cfc46 upstream.
+commit 5f230f41fdd9e799f43a699348dc572bca7159aa upstream.
 
-Explicitly verify the target vCPU is fully online _prior_ to clamping the
-index in kvm_get_vcpu().  If the index is "bad", the nospec clamping will
-generate '0', i.e. KVM will return vCPU0 instead of NULL.
+We try to reuse the same vsie page when re-executing the vsie with a
+given SCB address. The result is that we use the same shadow SCB --
+residing in the vsie page -- and can avoid flushing the TLB when
+re-running the vsie on a CPU.
 
-In practice, the bug is unlikely to cause problems, as it will only come
-into play if userspace or the guest is buggy or misbehaving, e.g. KVM may
-send interrupts to vCPU0 instead of dropping them on the floor.
+So, when we allocate a fresh vsie page, or when we reuse a vsie page for
+a different SCB address -- reusing the shadow SCB in different context --
+we set ihcpu=0xffff to trigger the flush.
 
-However, returning vCPU0 when it shouldn't exist per online_vcpus is
-problematic now that KVM uses an xarray for the vCPUs array, as KVM needs
-to insert into the xarray before publishing the vCPU to userspace (see
-commit c5b077549136 ("KVM: Convert the kvm->vcpus array to a xarray")),
-i.e. before vCPU creation is guaranteed to succeed.
+However, after we looked up the SCB address in the radix tree, but before
+we grabbed the vsie page by raising the refcount to 2, someone could reuse
+the vsie page for a different SCB address, adjusting page->index and the
+radix tree. In that case, we would be reusing the vsie page with a
+wrong page->index.
 
-As a result, incorrectly providing access to vCPU0 will trigger a
-use-after-free if vCPU0 is dereferenced and kvm_vm_ioctl_create_vcpu()
-bails out of vCPU creation due to an error and frees vCPU0.  Commit
-afb2acb2e3a3 ("KVM: Fix vcpu_array[0] races") papered over that issue, but
-in doing so introduced an unsolvable teardown conundrum.  Preventing
-accesses to vCPU0 before it's fully online will allow reverting commit
-afb2acb2e3a3, without re-introducing the vcpu_array[0] UAF race.
+Another corner case is that we might set the SCB address for a vsie
+page, but fail the insertion into the radix tree. Whoever would reuse
+that page would remove the corresponding radix tree entry -- which might
+now be a valid entry pointing at another page, resulting in the wrong
+vsie page getting removed from the radix tree.
 
-Fixes: 1d487e9bf8ba ("KVM: fix spectrev1 gadgets")
+Let's handle such races better, by validating that the SCB address of a
+vsie page didn't change after we grabbed it (not reuse for a different
+SCB; the alternative would be performing another tree lookup), and by
+setting the SCB address to invalid until the insertion in the tree
+succeeded (SCB addresses are aligned to 512, so ULONG_MAX is invalid).
+
+These scenarios are rare, the effects a bit unclear, and these issues were
+only found by code inspection. Let's CC stable to be safe.
+
+Fixes: a3508fbe9dc6 ("KVM: s390: vsie: initial support for nested virtualization")
 Cc: stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>
-Cc: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241009150455.1057573-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Tested-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Message-ID: <20250107154344.1003072-2-david@redhat.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kvm_host.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/s390/kvm/vsie.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -567,6 +567,15 @@ static inline struct kvm_io_bus *kvm_get
- static inline struct kvm_vcpu *kvm_get_vcpu(struct kvm *kvm, int i)
- {
- 	int num_vcpus = atomic_read(&kvm->online_vcpus);
-+
-+	/*
-+	 * Explicitly verify the target vCPU is online, as the anti-speculation
-+	 * logic only limits the CPU's ability to speculate, e.g. given a "bad"
-+	 * index, clamping the index to 0 would return vCPU0, not NULL.
-+	 */
-+	if (i >= num_vcpus)
-+		return NULL;
-+
- 	i = array_index_nospec(i, num_vcpus);
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -1228,8 +1228,14 @@ static struct vsie_page *get_vsie_page(s
+ 	page = radix_tree_lookup(&kvm->arch.vsie.addr_to_page, addr >> 9);
+ 	rcu_read_unlock();
+ 	if (page) {
+-		if (page_ref_inc_return(page) == 2)
+-			return page_to_virt(page);
++		if (page_ref_inc_return(page) == 2) {
++			if (page->index == addr)
++				return page_to_virt(page);
++			/*
++			 * We raced with someone reusing + putting this vsie
++			 * page before we grabbed it.
++			 */
++		}
+ 		page_ref_dec(page);
+ 	}
  
- 	/* Pairs with smp_wmb() in kvm_vm_ioctl_create_vcpu.  */
+@@ -1259,15 +1265,20 @@ static struct vsie_page *get_vsie_page(s
+ 			kvm->arch.vsie.next++;
+ 			kvm->arch.vsie.next %= nr_vcpus;
+ 		}
+-		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
++		if (page->index != ULONG_MAX)
++			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
++					  page->index >> 9);
+ 	}
+-	page->index = addr;
+-	/* double use of the same address */
++	/* Mark it as invalid until it resides in the tree. */
++	page->index = ULONG_MAX;
++
++	/* Double use of the same address or allocation failure. */
+ 	if (radix_tree_insert(&kvm->arch.vsie.addr_to_page, addr >> 9, page)) {
+ 		page_ref_dec(page);
+ 		mutex_unlock(&kvm->arch.vsie.mutex);
+ 		return NULL;
+ 	}
++	page->index = addr;
+ 	mutex_unlock(&kvm->arch.vsie.mutex);
+ 
+ 	vsie_page = page_to_virt(page);
+@@ -1360,7 +1371,9 @@ void kvm_s390_vsie_destroy(struct kvm *k
+ 		vsie_page = page_to_virt(page);
+ 		release_gmap_shadow(vsie_page);
+ 		/* free the radix tree entry */
+-		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
++		if (page->index != ULONG_MAX)
++			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
++					  page->index >> 9);
+ 		__free_page(page);
+ 	}
+ 	kvm->arch.vsie.page_count = 0;
 
 
