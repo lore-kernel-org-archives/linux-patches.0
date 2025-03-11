@@ -1,212 +1,197 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2044.outbound.protection.outlook.com [40.107.21.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226C2228C9D
-	for <patches@lists.linux.dev>; Tue, 11 Mar 2025 08:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741683110; cv=none; b=rccEkTnryYtpwIpyl5wECxIMjIrtwlQ0Js5dbyNro+PaumxYxJnXH5ApTQEruhnPqJjwnT1VP/hjv68iLTfo3/VEoM/xn8aAlh6UNwy8szEkbT+IG5R86IEPrageU3yXUJkubrG2tt1ZuJPmFBI8MKkkc2e8E+ERZAvb2jADzgI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741683110; c=relaxed/simple;
-	bh=HPNdhAS6q4hJlEkYVU8ify7rPXAu5A0kWRiO/Tjhf0Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oUOEzDG88athW5zT41ACgt0tngqTvjdK2fTuKFrn+HgYbnwAgwB5JcJQhp2G/YbRcHBzh6NHXw9ClKCVma/fqDJH2+8oo9kIpByei/8WpwcI2BMakT/TQWl24CdFQ6WiIZimnDqGPfru8wZ9kusdk/NCmpaAC7R9QEz+xHg8iqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lv2nVS9G; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4FD22E415
+	for <patches@lists.linux.dev>; Tue, 11 Mar 2025 09:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741683670; cv=fail; b=gj3QDCWvXd7ENfPfslovMs0TnheUZzCAcHZSkAwhPWrDiA79YJKFNrZoc2FqJC2wVOgsras6b4wkhuPWrQkRk+kLUOGbYvqB8+QsfLMi3zttynmIvRG5jcvI929SiT6WH2HJMxNvNupRt7a6sDXFI7JSYGDJA50MgN80l2Zi4E0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741683670; c=relaxed/simple;
+	bh=wX0DbzmfoyldiGOZt1p3Inw0N5BQpMQ7wAg/PNwBQTM=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=kLITEXRsfXh9Bej6tk1D0RLiCGa87uiIfhIU7g641iotma8M6lk5/rcAT8Ok383AJIAcVxFjPlfXTIIjJGABg4PH98/NFoTW79YxDMiMDBpxOyyePclcomBasfjx4vFzU+/xY1OIbXAiiJTiJ9ZARQufDRWUFeY+PaQSx9iPsv0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cherry.de; spf=pass smtp.mailfrom=cherry.de; dkim=pass (1024-bit key) header.d=cherry.de header.i=@cherry.de header.b=I7P/VljH; arc=fail smtp.client-ip=40.107.21.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cherry.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cherry.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lv2nVS9G"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-521b84da5e9so1875681e0c.0
-        for <patches@lists.linux.dev>; Tue, 11 Mar 2025 01:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741683107; x=1742287907; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pHVvdfi9fw3XBMolrd6Lm9XR3k0CHaCADu/v/LPpSJ8=;
-        b=Lv2nVS9GCSGncYpnbLylF/mjuQNhUTQqSSy4vQnhRIJJSZ8lsY85+MttVsVqXim/6a
-         cSHgs/dF5d7MyY1S52TQJnkqBUlt7PCh+NDLiOxkaPFusR14FQ/YhQ143GyymSpAW+rr
-         5qQ+DsKCQY21QfY+9RYFhjyy20rgGwnYDzCxL+23kK57xntHtPY06j3NSslxZ61wcPIs
-         eLsY/t4UiXNB0Wm3CsTJDFn3yhZjYQeCcJh2X9KNOl2KB+WsmbznHXlgQuDC0VrS+EHP
-         NUEfcIA2okikmO97NEKPXVeLbvbMmoPs63ihmhDpqx/qxgBvAw1HVdpKhVM5NIBEzUkg
-         1liQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741683107; x=1742287907;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pHVvdfi9fw3XBMolrd6Lm9XR3k0CHaCADu/v/LPpSJ8=;
-        b=w5Y8gz7RQ6Uzt0I3jvE9MHDaHq6n5XPQ+Jx/Y9ArJw9QcczoGf8rNKLNSM2BaitheJ
-         OkteY/Dkxyx+Rj8jMsvtQWk3Aua9oeUNoPCos2ZbDcqxm5NjNlNFPXSnIcMveZyogfys
-         kgRu8On/HVLk+Wz0aQjNZVPoCuMLsjScACoNt+rAQJcQCNtaC/WuE5G0IumWjWOx9Bb4
-         qQeFtE6BdpNO/A84L6aalJbL5nX9dmZNACuYjAmCwzDoC4YI6Ybcs28ljr3hwR7LpRz9
-         45Bb3khtBUzmq/ub3Xtdl+OIDgU0vvVUTQJ1b1SJNgQ1YkC4RoEiz0PXmsCke9NdWEJp
-         FQDw==
-X-Forwarded-Encrypted: i=1; AJvYcCV2Eu8SXRpo1w7+VZsHps6IetxTut4CPlR9PWyn+5PjOfzbD7Ay3x5X7YZ4/kBfJxiOCxknUcvJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YzVbSHKt+mLJ03lCpcR4/hL9NguV9dV5KrxbgrSlm8y27dCk/iB
-	xLyM4Sx79jaF7iDSOaQw6jEbYx+5OPozjsgSW6c6+g4Iic1sLOf+YxsomSGXiCHxgNfXjxf2iqb
-	W2BoGT/RApHh9u0aqGveJwKTXus25lb8DhAcuDg==
-X-Gm-Gg: ASbGncujexVn7hOAz0S1TRe9MB1Iovl+CexMyIosTpetveQJnaY5rhdfZPab5o3dYKD
-	Y0Vr8ajpAyaYNqheObAbW6OR7luDZ+1TbZ+hyXkgpVbI42EkIOp5p7ll+gL5+eO9EPriWsdpRuc
-	zLRljeUO2LicaUcOSIkPnkqH3kpQ5bqMVHglUY2C8//lTJu5TXFGfyn0oVxfMJLrwVYCuQ
-X-Google-Smtp-Source: AGHT+IFG87WJBUN07axEnNFBQO8GIGA3RY6dJYpFsIX3Fmx/B5ZuwEQC7eC7oUZsVpFKrBt8H5TzNtQSV0BzU0oig0M=
-X-Received: by 2002:a05:6102:3c91:b0:4c3:221:8f47 with SMTP id
- ada2fe7eead31-4c30a5ec42dmr9492887137.13.1741683107027; Tue, 11 Mar 2025
- 01:51:47 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=cherry.de header.i=@cherry.de header.b="I7P/VljH"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yp6bX9pa71I3HR9gMvttA0ChX8Ba11M2nzEtj++FT+tsS2066NgF+oAxSdj1iaSLh8JLHI1CHLSNxirquSZP/jHben2WxKqxBfeUYwiRP7cTLnrAgCzkU8EfthWv11fyM1xR0qRQzQcB1UdelD0LY+mJicUtwrNmPaLJx+6d20hRRzKmdNy1g92Ra5bvZY2I4rcE6dRNfEiwsirj1zJZ77yjTsA0k1sWyo3AVEqSq/yq3tKM4Mq6ypQgpsOJIlSLrG+5P+mnWDJAtVk7KDuNx/6QYIrWqRfQqP0675ryfLy1bslwHs9zcjqPTgW0a7zO6ihxtbxZj3HFPcQnfyMgKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d9LrznG2kNghNxdca79rWDVVqFyTONynWKzWPHfPCMM=;
+ b=UJ91KEmcnekIVUEZvesI6M1eh76JE3aVRTnu7lD0DGjtRKFSAxZ350zO5DZ40p/cWU0FT6yk6Xh1XXp8xNvL6BO/rSHZihEdtV8c+aBjQRr/RrmpjLTcxMRe4LknmSGdKyRKPftbq0u8mRzJHm4v52ob1uDOA7SH9Quz82pzaZdoiu4dMAhpFEaA6bRok/m8EWfj8JRnYPyNFZBSgU/ZdsDZE5t0zClYHHb28EXFLBmzhvcijvfFBU5rEFCtIxBSE84PqcmfkIOaHL3EyQHjrzZcerbZBuLsPwrQg706SwuldVtBOt9VFDN4Ktnz+e4/rI2OaGcZeRpN3yokiXI+og==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cherry.de; dmarc=pass action=none header.from=cherry.de;
+ dkim=pass header.d=cherry.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cherry.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d9LrznG2kNghNxdca79rWDVVqFyTONynWKzWPHfPCMM=;
+ b=I7P/VljHvgLdLlbuhFTaoxxwoGq+EfZV455cZ4aDDkR7eY7TyVjF1MjlP4KWUfTfSDMOQ3VJClhLq6CjCunIdilg22BgWyIVlssLNdbAZYCtcpV10y+fJJ3bqHJZFAJSbY6h4KYmOesf4Pdbp6VPdM9hRxzD4oHLVtWg5G5bmmE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cherry.de;
+Received: from AS8PR04MB8897.eurprd04.prod.outlook.com (2603:10a6:20b:42c::20)
+ by AS8PR04MB8593.eurprd04.prod.outlook.com (2603:10a6:20b:424::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Tue, 11 Mar
+ 2025 09:01:03 +0000
+Received: from AS8PR04MB8897.eurprd04.prod.outlook.com
+ ([fe80::35f6:bc7d:633:369a]) by AS8PR04MB8897.eurprd04.prod.outlook.com
+ ([fe80::35f6:bc7d:633:369a%6]) with mapi id 15.20.8511.026; Tue, 11 Mar 2025
+ 09:01:03 +0000
+Message-ID: <6fbfebac-2a36-4307-8e3f-3f5961fd12a1@cherry.de>
+Date: Tue, 11 Mar 2025 10:01:02 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 005/145] arm64: dts: rockchip: add rs485 support on
+ uart5 of px30-ringneck-haikou
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+ Farouk Bouabid <farouk.bouabid@theobroma-systems.com>,
+ Heiko Stuebner <heiko@sntech.de>, Sasha Levin <sashal@kernel.org>
+References: <20250310170434.733307314@linuxfoundation.org>
+ <20250310170434.958553347@linuxfoundation.org>
+Content-Language: en-US
+From: Quentin Schulz <quentin.schulz@cherry.de>
+In-Reply-To: <20250310170434.958553347@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR2P281CA0030.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:14::17) To AS8PR04MB8897.eurprd04.prod.outlook.com
+ (2603:10a6:20b:42c::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250310170545.553361750@linuxfoundation.org>
-In-Reply-To: <20250310170545.553361750@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 11 Mar 2025 14:21:35 +0530
-X-Gm-Features: AQ5f1JooV3MLbYovESnxXnmOYc1t9lEZkMPZWgF3fIOZCs9YHjSOSnUmd-UVZ5Y
-Message-ID: <CA+G9fYsm6xnNuPsCSt7zB+-z6xhKrdLkwnHLkFT9XBCPCBf76Q@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/620] 5.15.179-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR04MB8897:EE_|AS8PR04MB8593:EE_
+X-MS-Office365-Filtering-Correlation-Id: b847c5ea-82a8-4f4b-7859-08dd607b4062
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?YnFmbDdLK2lWYlZoNlVDNEt2TmF0dHpvU2JuZkwvK05JUGJNc05TQVJJbXpq?=
+ =?utf-8?B?UW1CdEs2MmFQeGp4OStZb3lQcHA2VENJRUppSnFTcElQKzVzSkVleDVZMkt0?=
+ =?utf-8?B?cUdXdkRLbFZQL1hKWGtHdWM4Z216QXNmbUFGRHdsWWJnb1Q4Y0tLYTdoYjJl?=
+ =?utf-8?B?WTZIVVRtYnNtcmUwL2VJSDZiL0FYODlZRk8rZ1FQZUFrUXVHNWFNUUtuZWZn?=
+ =?utf-8?B?SFVDL0NOWlcxRXJvelljQmNGNUtQaVVyOFh1V0tyYWNUSTRjUEpWYzlmL3JF?=
+ =?utf-8?B?WkZBWjVWbTNEZ09rT28zaU1PNTNJeE9PTVJUVnNpSlh1NGZ4c1YxQ0t0TG1X?=
+ =?utf-8?B?ZFlsUnZvVzNyV29OazEzbTQxazdFM28xYVJ3Y0RNYnZTR29kV0NiUVRYdlRG?=
+ =?utf-8?B?bmxvdzE1L29ObFAvUS8xZ3FTellwMkZpWmVGenBBbUZTajhIaUxDdmd1NTFm?=
+ =?utf-8?B?WUltNzM4UmxiRjBjbUZ6Wk1XMkM2VVJ4U3JhUDhtTUpVNzhaaFc4SmorMjZV?=
+ =?utf-8?B?Z1RualBld1VGeVZ6RWtmUFl3aDFGSnlhWTFBK0dyaUpEc3h0ZDhDdWdCUS81?=
+ =?utf-8?B?cFpUOTg4bWxobHVuc2YyT1pEd01QRjJEOUtTa1NoT3M4Z3paNXh6eG5sWVBK?=
+ =?utf-8?B?VEJuR0M0QUJqcGdjSTdhcnJtSUJiWmlDeGRSQXdRM2ZsTlYraVQrMGtkYUxD?=
+ =?utf-8?B?WTlMTkx0NkJweG40NnFZb0Z0RFVmNm0zV3M0TWNWVWtLTm1jYW1vazF2STlZ?=
+ =?utf-8?B?Q1R5RFg5TWtDcmZDRTBwbkFVUzFzd1FwZ1hQR3l6eDN4Q3Yrb2hBOUxpNWF0?=
+ =?utf-8?B?R2lzR2lLYlBwSFE2UVo1c0dHcG1GQlJOUHpuR3p6aSsydnZma3Z0ZWsrM2JN?=
+ =?utf-8?B?aThGYkxNNVVqaWh6eVdYZE92KzlNQnYyNEYwQmdXMWNJZ0VTVDVSNTIyZ0dT?=
+ =?utf-8?B?OGhWcGZoRDhTMVNWaFRxa1p3dVluc01IQnNxZVdMK1hGMXg1UDVCRFJWWk5w?=
+ =?utf-8?B?YnY3NFdpYUtpSnRUZ0pKaFFodjNMS3pNV01ITXZQMCszTUdpUk0rZWhVSmV2?=
+ =?utf-8?B?YjA4ZG9hM0J6cVBmQkp3NUozSUttbFFSbERwWjNlNVJXUzZMWUdsV3JJQUgz?=
+ =?utf-8?B?R3N0QVE2cU1XNWRlMWRtb0tBUWNyMjN3amFKR3luQ21TUEc1a1hXL2JPNUhk?=
+ =?utf-8?B?eUZQQjM5NVhlZXIwZmdUcU5rYW03NkE1Wk9RVjBhMHd5RXNGcmsycVlyR3NQ?=
+ =?utf-8?B?V1I0RE43cVNCd0F1UytNM3B5eE0zYXI3Z2lRVDE2MDNaZ3hwTnlRZlhxem94?=
+ =?utf-8?B?c3llZDZ5RVM2NGRBOVlOVWtwSmdxZ2o4RFBIQ0wyeUxtdlZweFdVQVc2QW1u?=
+ =?utf-8?B?K09NMzBZU2c0cWN4TnpBMnhMOEpmaklwWERMaitUSW1BZkZXZ2VZak1RRlRL?=
+ =?utf-8?B?UGFpSFMwYUxUNklMMTBQMTIvdnRaQkJjdjZaaHJrdTJBWUtPZUwweWQ1UVIz?=
+ =?utf-8?B?OTl3R2tpMTVPUFUyMGUwaVBUaHZwblBVNGJVRVVDTTdpUG1pRnNpZTJway9k?=
+ =?utf-8?B?U3R0NFFIWkdPQ1RUL1phSGplZjdYakJYM0EvT2M2RXlEem5SeHJNRnkvWmRL?=
+ =?utf-8?B?TWFObzF5Zy9DdFV0YVlqVExJWFRjYzFuWExabzduOStNSUtKNnF6bTBhMmJV?=
+ =?utf-8?B?dUdUQk0rZUNCbU1CRUNjQXFWKzVzS0dOR1hYRHFZbW5HVngrWW9JWDFMYmNr?=
+ =?utf-8?B?b2ZWUnR6TVV4SVhiTk9jV1I3aUZZMnVMckgyVkZScEVNdzVvejI2UkJjbUpI?=
+ =?utf-8?B?N2xNL1dobnpORFMxWmlDZjExd0srU2tWVUhSaVR5SktUdEt0d3Rhb21XYXpM?=
+ =?utf-8?Q?25f4inv0WtGuP?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8897.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ek1nRzQwVG9FbDlRUzQ2YUlUb1VVSnJwN25VOFZoczhyWjNlUkRKblVNeXVO?=
+ =?utf-8?B?ZXhadXVaVmxzQjFHWjRXRXdTSjBjNUFHYXF0SWlYbWhnY25uUy9Rd0pkcFlm?=
+ =?utf-8?B?Ukp0STUxMWxGc3N3L0pWcWdSelU0MUk2VzhBOWlRK3o2ZU1VcjNFQVRKVEg3?=
+ =?utf-8?B?ajU4UTdjRjFSTHNYSml4dkp2ck5tVThPSGlyNDROT3d5M3lRQzI1UklPTDJZ?=
+ =?utf-8?B?ZW16UnB3clZtRi9keVNQVGVXM2lHUEdWbjVLZG4zSTFJUVozSWR3NldXZzdv?=
+ =?utf-8?B?NVI2a1RxWHN3dkpqem5DeUNNT3pFWkwyZWpJK2lYV25uM2pFaHliTU1RU0Js?=
+ =?utf-8?B?dEFFYzRvei8wVkVKVHYzald6ZklvZUt5SUxGS3RrZnpZYnhuRUVwQjkzVFVW?=
+ =?utf-8?B?N2lvOEExYkhPdTZqWnRRZEJaSWplWFB4M0dYMXM0SEx5cGxPN0NWV2JJNW1q?=
+ =?utf-8?B?TXE2UjlNbkoyM244cGVnYmpTSEVQRHdZcGRSazhKTWZJcDBGUVYwN2VUbDhD?=
+ =?utf-8?B?eUZqVmNCeTAwWlpaeFRmM0JqUEV0a3o3SmtHUm8xSnVyZzVmak5xVmJuQTZq?=
+ =?utf-8?B?QmJoVUZSVjh5ZTk3MkdITFBkTWVHQWxoT3VZK1U5RS9VU1E4R1pVVUZpcHpo?=
+ =?utf-8?B?K21aVzkwV3pYV3hENzU1T2FSUkdYMHgyWURDWnBNQ2JYVE1yQUxyc2s2KzAy?=
+ =?utf-8?B?YkVoMlhISWVDQ3lrMUlhTWxSWGRkS3ladEp4aVRCRklFSWkwOHlNYVlsc1dt?=
+ =?utf-8?B?bE0vbnVPdTJleUZlQ29IWHFuTXdXeFZmTlJMc2dIZldjVS9yRk8vc1J0ZFE4?=
+ =?utf-8?B?UVV3ZFNHdUNpUUE4YTZGMEdKdkxISFlCY2JudVEvMy9tR3EvWm8zV2o0b3hh?=
+ =?utf-8?B?eEZjSmVyOU1iVTVJVGNJRXZQbTBQd2JtbnpXRktTOEU5NmxLUHFsVFVTeVd3?=
+ =?utf-8?B?amVuNEIxWFFLTUVOeDdzVU00bWlUL3pWQjc4TnFoUm1xMTBncmJiL09oN2xK?=
+ =?utf-8?B?VzVReTRBZVpCQ0ExWHM0ZDJHRHpkdm5DdlFYK1JnQXhJTEpJaDg4MExQUFJM?=
+ =?utf-8?B?YlFiS243WWJzZnFrNVVEa3JIcmFkY0FseUJ2bUhmdHg1M3MxSkNhdlFkQ2Ur?=
+ =?utf-8?B?Rkx4M0ZMK2NuL1pQK0V6T29UY0RPemIwdjNDWGhIUDltd3FYaTJyclE1bVVW?=
+ =?utf-8?B?YUZXMW1sMXh0REU2Y0tzVjF0Wmhqcms1d2thRmJLN2dpdkkwMENHWWkwMVJF?=
+ =?utf-8?B?L1BlZk5teWQ2TU5VcldydEpibmZZdVlLb29SMUE3RmZVbFlKMGpDeFc2eVkw?=
+ =?utf-8?B?RSt0Y2c3dWpldEFZRTdoSXV3b1hWYTB2ci83NGRRaGpBYWZORGQvYXNwRUVk?=
+ =?utf-8?B?bEVUOFdXQnJ3V1FTUUFnVi9MczdIcnZhRkZBc1ZheDlORlB2V0NHdGdFNUtB?=
+ =?utf-8?B?V1NDdFVwNFJ6MHVUdkJ0REN3TDI1WVcwamltSE9LRzI4OTNFdjUyQjVRcTZQ?=
+ =?utf-8?B?Q1RvK3REcjFRRjdvU0hiMEExRk9jNjlSekhheHpQbklxQ2ExMTNRdHJ6VVAv?=
+ =?utf-8?B?dkJyR2QyTnUxczEyRkFZZjRVV3p6ak9CTDlBcHN1R0dtK21lZTFwQVNiM3VU?=
+ =?utf-8?B?VWRrZGlhNXY1cmhHdE5vMDB4a0I4aTBjbWFNTGdXTHF6S3dNaEY2bEJjU1Rp?=
+ =?utf-8?B?YWlZbXZpWlkvRno3TEc4dFNPZmQrd1RqaVptYmx2S3ZSSGtXeXh0cnZmaXNx?=
+ =?utf-8?B?S3RXSFNidnRhN0pvcGxXRVorRGtWeGt1bnoySE1JQk1XRzRBUjRZc2ZMY3Rj?=
+ =?utf-8?B?ZTlaTnBmb2ZIbGI2TEt0VnF5NDQ1a3BXK3Y2QWFVdnppd1BUUGNvaHpyejJK?=
+ =?utf-8?B?NFZnRnVZOHNaS1gzTUVJMzIxWTVZenhuYkxZQzlrSldoOUxVM0lhb0VTUmk1?=
+ =?utf-8?B?eDdwZisxWFpLOGZFMnRQZWZxZitoTTY5SGhTc1NvRjUvNmFpT1BtSnY3bXdQ?=
+ =?utf-8?B?MDdRZDdZSVZ3N01nUHdwdE92c2c2d3IwOVp2cVpJQm0vZlRwR0FXT25sMWlF?=
+ =?utf-8?B?U0lMVCt6aWhScHg0TXJTVXpCK25yYmYwNSs5L2IrYWpxdDN0TUNXQjg1ckxn?=
+ =?utf-8?B?RDZUSi9TMVVtenREcHVxMkxGaWVKWVhqdnFvRlBxMWRXQXhZeUlmRWN2WnVI?=
+ =?utf-8?B?Smc9PQ==?=
+X-OriginatorOrg: cherry.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: b847c5ea-82a8-4f4b-7859-08dd607b4062
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8897.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2025 09:01:03.6736
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5e0e1b52-21b5-4e7b-83bb-514ec460677e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: N1eW0IOEDjfp6JzrGTN0BwppRaVEQ2J5YxfxSJ+0LnAPkJNM8JkX2KwteZw/39+VjnQWJffEGSWaUKKtw0E67VM89YoJrutxEjC//m45NN8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8593
 
-On Mon, 10 Mar 2025 at 23:13, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.15.179 release.
-> There are 620 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 12 Mar 2025 17:04:00 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.179-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi all,
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+On 3/10/25 6:04 PM, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Farouk Bouabid <farouk.bouabid@theobroma-systems.com>
+> 
+> [ Upstream commit 5963d97aa780619ffb66cf4886c0ca1175ccbd3e ]
+> 
+> A hardware switch can set the rs485 transceiver into half or full duplex
+> mode.
+> 
+> Switching to the half-duplex mode requires the user to enable em485 on
+> uart5 using ioctl, DE/RE are both connected to GPIO0_B5 which is the
+> RTS signal for uart0. Implement GPIO0_B5 as rts-gpios with RTS_ON_SEND
+> option enabled (default) so that driver mode gets enabled while sending
+> (RTS high) and receiver mode gets enabled while not sending (RTS low).
+> 
+> In full-duplex mode (em485 is disabled), DE is connected to GPIO0_B5 and
+> RE is grounded (enabled). Since GPIO0_B5 is implemented as rts-gpios, the
+> driver mode gets enabled whenever we want to send something and RE is not
+> affected (always enabled) in this case by the state of RTS.
+> 
+> Signed-off-by: Farouk Bouabid <farouk.bouabid@theobroma-systems.com>
+> Link: https://lore.kernel.org/r/20240208-dev-rx-enable-v6-2-39e68e17a339@theobroma-systems.com
+> Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+> Stable-dep-of: 5ae4dca718ea ("arm64: dts: rockchip: Disable DMA for uart5 on px30-ringneck")
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+I don't mind the backport of this 005/145 patch, but this Stable-dep-of 
+commit has already been merged in 6.6 with a conflict resolution, see 
+bcc87e2e01637a90d67c66ce6c2eb28a78bf79f2.
 
-## Build
-* kernel: 5.15.179-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: cfe01cd80d853c272b062feed8abd34216550de8
-* git describe: v5.15.178-621-gcfe01cd80d85
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.178-621-gcfe01cd80d85
-
-## Test Regressions (compared to v5.15.177-25-gcd260dae49a3)
-
-## Metric Regressions (compared to v5.15.177-25-gcd260dae49a3)
-
-## Test Fixes (compared to v5.15.177-25-gcd260dae49a3)
-
-## Metric Fixes (compared to v5.15.177-25-gcd260dae49a3)
-
-## Test result summary
-total: 43796, pass: 30152, fail: 2641, skip: 10731, xfail: 272
-
-## Build Summary
-* arc: 6 total, 5 passed, 1 failed
-* arm: 105 total, 105 passed, 0 failed
-* arm64: 32 total, 32 passed, 0 failed
-* i386: 25 total, 22 passed, 3 failed
-* mips: 25 total, 22 passed, 3 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 25 total, 24 passed, 1 failed
-* riscv: 10 total, 10 passed, 0 failed
-* s390: 12 total, 11 passed, 1 failed
-* sh: 12 total, 10 passed, 2 failed
-* sparc: 8 total, 7 passed, 1 failed
-* x86_64: 28 total, 28 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-crypto
-* ltp-cve
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Cheers,
+Quentin
