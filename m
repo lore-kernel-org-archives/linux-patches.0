@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1704625B68E;
-	Tue, 11 Mar 2025 15:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CBB3C0B;
+	Tue, 11 Mar 2025 15:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707584; cv=none; b=nIlv9RjmCvW4dghXOYd6n776L/69s5mdKog9tQqoShyHudpwvkg787t0O1hXM8BzDxEfyG8OpjZwMHGoP8yTxn95Wz8PO/hXAWbvFNfaL7K3AXMLcHl8kiUC5eNYd4y3kfP/cDP4+ug68Bu6CP0j8sW4bQtZQvK2n+Xn+m2bTXk=
+	t=1741707587; cv=none; b=KoWYZOUCL921xV8l0p5v8Qy4DnLNotdG7RcbH6lrceJ/ERnuq1wGHTSj3LmPrboCd+qttAE+i9tNDx7hLCLLHQ0vS8bzTz5/jnJpmIxCKzcJaUy/Z32iWvSLoZAweaO0WrPTYqqtMumq4Ft857uYhaSduc+RT5oBVZ/VOUsiH8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707584; c=relaxed/simple;
-	bh=rY3qzGnlFXVvnq6o1LkfE5deCyj7TyjvjaSP0tjkckY=;
+	s=arc-20240116; t=1741707587; c=relaxed/simple;
+	bh=KmK2QCtsscrE5hp4q5Vqh5+8dwdQIar4WXKPhlx9n4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li0sFp1857tV/0omnQtCjuVrdFGNP5slWau9cUmmWr2CXZY1F0qn3dzH+KKR3D2sj1SDu3AjpNuAcQFwYlqRzk0mo6sY55/NTM+qBXruY7hmJyDsOypr0rhlrQdMkOmJull3ZlkpUzRtF/6LpL+2m65X54AcclHY0amTDj3k3VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ikmw0/Mb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4IeMEuZfA6nVO5/mNZA7FrpL4H0OqWqoAshvhur2se79wHZkH8hu9GiQvNRslXICR+8zdTgV+a+VC/qGtdRlC85TBs0L90sQ1AZk5IWs22GXPWVtD4Pns47+maFuuiu9ksV2lCief7KnA13P/l/J49vvYVF22JD/LT/qo34rmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ukIJXQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ikmw0/Mb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E41AC4CEE9;
-	Tue, 11 Mar 2025 15:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ukIJXQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1EDC4CEE9;
+	Tue, 11 Mar 2025 15:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707584;
-	bh=rY3qzGnlFXVvnq6o1LkfE5deCyj7TyjvjaSP0tjkckY=;
+	s=korg; t=1741707586;
+	bh=KmK2QCtsscrE5hp4q5Vqh5+8dwdQIar4WXKPhlx9n4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ikmw0/Mbql9ZYnR7wILlUNdIOdPjvGd32DH0RAkThETJWNTKnJL1QMXpgXq0RSyFx
-	 w57f9CLwYi3btwfgBVWfoUtESnQcYRox4mElEZwRYN6mLwn7BhZp4T9ek5esBd5pE6
-	 TMRoGn6YjCPa/qG96C1LhoI4lDwWv0NBuxA/bXQU=
+	b=0ukIJXQSzv0otmYBKgFZUV5GYSkkK1Rpl1cY8HaXsQdMjZ2rYi5Z6qaR+NcN1QvGi
+	 Q6cNwkRbyRXV4faQp2m8D3FK0qXDV9Q+dOY8UJHVJMMI6ISOoZqF+PXIGE9j+NUHBJ
+	 JVbA9f0EOEcmGhyt5Tp7pLJkoSJdzActuhsqCf/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 5.10 438/462] mei: me: add panther lake P DID
-Date: Tue, 11 Mar 2025 16:01:44 +0100
-Message-ID: <20250311145815.635575283@linuxfoundation.org>
+	Pawel Chmielewski <pawel.chmielewski@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 439/462] intel_th: pci: Add Arrow Lake support
+Date: Tue, 11 Mar 2025 16:01:45 +0100
+Message-ID: <20250311145815.672914951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,44 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Pawel Chmielewski <pawel.chmielewski@intel.com>
 
-commit a8e8ffcc3afce2ee5fb70162aeaef3f03573ee1e upstream.
+commit b5edccae9f447a92d475267d94c33f4926963eec upstream.
 
-Add Panther Lake P device id.
+Add support for the Trace Hub in Arrow Lake.
 
-Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://lore.kernel.org/r/20250209110550.1582982-1-alexander.usyskin@intel.com
+Signed-off-by: Pawel Chmielewski <pawel.chmielewski@intel.com>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20250211185017.1759193-4-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -117,6 +117,8 @@
- 
- #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
- 
-+#define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -123,6 +123,8 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -330,6 +330,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Arrow Lake */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7724),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Alder Lake CPU */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x466f),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
