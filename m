@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5299925DD06;
-	Tue, 11 Mar 2025 15:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D6225DD08;
+	Tue, 11 Mar 2025 15:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706546; cv=none; b=cZ4mvPhwUuH1cZ2ygdkWjI+/LXGCRNuDrsj4y7wsRIbdIV+fpIjxcFmGnKSRpIwafr9R5xH1Ef6laUseGggmmhqPdAOKIdVPOFTqTrDQHo8qSrY8HERFnEnT9GMTFcoR0ox4DZmgh1A4btgINRuhmrFtE/FvwlmIfstFLI3SqRE=
+	t=1741706549; cv=none; b=KJTMXH2ZS3mz5dOTyRLhmYTUC8VPVvFobTHlmLslLin6cXI4sCXXhwgRnqbXFxmdqekrxvUPW8QxxrDqiOpRlvuidIxOk1gnv6hAUi084L4TSgchZ8EdHLWbBeTYlZul3hxYa2e962vre02/AfYFLHh6aFEQLW5SnJYzixicweo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706546; c=relaxed/simple;
-	bh=ZZMaj3Ws8vTaXcXpoI/9vaRL2bmzeVxBdRS7wRwc80c=;
+	s=arc-20240116; t=1741706549; c=relaxed/simple;
+	bh=ChAv4ydpYpRbvXCWG1nGxfBZCUajlTy5XqSHZB3Mupo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6faUlVS0oMG8p42Wrhd2KYoyz7ktHcen3hoXa6b8Dkzu5tyDabuQErQpFMbmM1gjZR8Tvtvp+rZp5lFw0i61HFvIa7sjlSgWU1WLBm9SXoJS7J+rMRjAH3hnoJ6zI1342Hz/vN+Vyu5PpOut466ea9B0dBfdGTRbnnaK3nnut0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtlv1Oi0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5OSTVuqp41y/pxf39M7KXlGmRl80CDdhr09zqVAVOXGi3DlToO+8D45ynqmJ1Xj76uSpyY7/dxCe8+yT6nNjmFT+SYgm7PvjDgPYaduyQDf4Be5A/sZWf/ax8V3+dq2hwVcH7A8UBuZUYMao5N9d3LKMGVqu2pUiiROhDBp5yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYlC8CUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtlv1Oi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFBEC4CEEA;
-	Tue, 11 Mar 2025 15:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYlC8CUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49E3C4CEE9;
+	Tue, 11 Mar 2025 15:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706546;
-	bh=ZZMaj3Ws8vTaXcXpoI/9vaRL2bmzeVxBdRS7wRwc80c=;
+	s=korg; t=1741706549;
+	bh=ChAv4ydpYpRbvXCWG1nGxfBZCUajlTy5XqSHZB3Mupo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtlv1Oi0qxIcDFkQDNuCp1dutdea0itvUhGxsnWkp86pqdb1OFLgMdDmA3HIPFrl/
-	 jP5puHLBgphqoZ0LyHyMvb9DXh2+luxcsvVLzo4d4Lw36oVAPmWCeNU95MMobZgfll
-	 H1Ly1yxVBOr5tmBqKqOVek/0KNQNs8hvif4lpVAA=
+	b=oYlC8CUSTAx03bco3seZqzCLxqQlzpAl5Ow9n3iT5BOtlrTGJowfAj320dql/dhz0
+	 ORgjUtAOBK0dEGqUwYqvrKYYYYSmt5uZolLK+TizBJ5qqXitda6yKcOqN7132H9g2R
+	 yXeRv/Kss9yh9g7cURr7VJljo3JPilzbQlFvJ2pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/462] media: uvcvideo: Propagate buf->error to userspace
-Date: Tue, 11 Mar 2025 15:55:52 +0100
-Message-ID: <20250311145801.749379954@linuxfoundation.org>
+Subject: [PATCH 5.10 087/462] mtd: hyperbus: hbmc-am654: fix an OF node reference leak
+Date: Tue, 11 Mar 2025 15:55:53 +0100
+Message-ID: <20250311145801.787832794@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,44 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 87ce177654e388451850905a1d376658aebe8699 ]
+[ Upstream commit bf5821909eb9c7f5d07d5c6e852ead2c373c94a0 ]
 
-Now we return VB2_BUF_STATE_DONE for valid and invalid frames. Propagate
-the correct value, so the user can know if the frame is valid or not via
-struct v4l2_buffer->flags.
+In am654_hbmc_platform_driver, .remove() and the error path of .probe()
+do not decrement the refcount of an OF node obtained by
+  of_get_next_child(). Fix this by adding of_node_put() calls.
 
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/84b0f212-cd88-46bb-8e6f-b94ec3eccba6@redhat.com
-Fixes: 6998b6fb4b1c ("[media] uvcvideo: Use videobuf2-vmalloc")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241218-uvc-deprecate-v2-1-ab814139e983@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: aca31ce96814 ("mtd: hyperbus: hbmc-am654: Fix direct mapping setup flash access")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_queue.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/hyperbus/hbmc-am654.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_queue.c b/drivers/media/usb/uvc/uvc_queue.c
-index cd60c6c1749ea..6a9fdd32cfb86 100644
---- a/drivers/media/usb/uvc/uvc_queue.c
-+++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -486,7 +486,8 @@ static void uvc_queue_buffer_complete(struct kref *ref)
+--- a/drivers/mtd/hyperbus/hbmc-am654.c
++++ b/drivers/mtd/hyperbus/hbmc-am654.c
+@@ -174,26 +174,30 @@ static int am654_hbmc_probe(struct platf
+ 	priv->hbdev.np = of_get_next_child(np, NULL);
+ 	ret = of_address_to_resource(priv->hbdev.np, 0, &res);
+ 	if (ret)
+-		return ret;
++		goto put_node;
  
- 	buf->state = buf->error ? UVC_BUF_STATE_ERROR : UVC_BUF_STATE_DONE;
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, buf->bytesused);
--	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
-+	vb2_buffer_done(&buf->buf.vb2_buf, buf->error ? VB2_BUF_STATE_ERROR :
-+							VB2_BUF_STATE_DONE);
+ 	if (of_property_read_bool(dev->of_node, "mux-controls")) {
+ 		struct mux_control *control = devm_mux_control_get(dev, NULL);
+ 
+-		if (IS_ERR(control))
+-			return PTR_ERR(control);
++		if (IS_ERR(control)) {
++			ret = PTR_ERR(control);
++			goto put_node;
++		}
+ 
+ 		ret = mux_control_select(control, 1);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to select HBMC mux\n");
+-			return ret;
++			goto put_node;
+ 		}
+ 		priv->mux_ctrl = control;
+ 	}
+ 
+ 	priv->hbdev.map.size = resource_size(&res);
+ 	priv->hbdev.map.virt = devm_ioremap_resource(dev, &res);
+-	if (IS_ERR(priv->hbdev.map.virt))
+-		return PTR_ERR(priv->hbdev.map.virt);
++	if (IS_ERR(priv->hbdev.map.virt)) {
++		ret = PTR_ERR(priv->hbdev.map.virt);
++		goto disable_mux;
++	}
+ 
+ 	priv->ctlr.dev = dev;
+ 	priv->ctlr.ops = &am654_hbmc_ops;
+@@ -226,6 +230,8 @@ release_dma:
+ disable_mux:
+ 	if (priv->mux_ctrl)
+ 		mux_control_deselect(priv->mux_ctrl);
++put_node:
++	of_node_put(priv->hbdev.np);
+ 	return ret;
  }
  
- /*
--- 
-2.39.5
-
+@@ -241,6 +247,7 @@ static int am654_hbmc_remove(struct plat
+ 
+ 	if (dev_priv->rx_chan)
+ 		dma_release_channel(dev_priv->rx_chan);
++	of_node_put(priv->hbdev.np);
+ 
+ 	return ret;
+ }
 
 
