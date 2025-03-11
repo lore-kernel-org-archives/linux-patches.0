@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B084F25DD06;
-	Tue, 11 Mar 2025 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7ECB25D8E8;
+	Tue, 11 Mar 2025 15:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705666; cv=none; b=khUbW5ep2upypKwRlLn3sTjHxe2xgx1i7sGR0l94WECqoUPgsXFEqdxnaxvMpFdlkIzjaJ2zIBFeyKdACcC+8SqThv6nKi1aahMP+yC29DOi4EgD+JqO8SAIGxydOT2kXnIo7E8mOdIPWOowepBpMH55wTRo8k/VTXGNAb7+mVs=
+	t=1741705672; cv=none; b=aQ4SfZEPw248Ev7lJR/kHa8T3AyIwJxR+AlHJkJJkPflkG6/TrlnKMUWeqphRCVdpDGto2AaoKnMKDMRi1uKD4GX4VaO6+KAMZN63W6NgWu9kXug22tq7TFhlxKAygtCK8nz/iZS5DSmSVruYaCRrma1MKLXlHOQ5ft2xHxM5wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705666; c=relaxed/simple;
-	bh=4JwZXzAeIZr5HdL4bifE/M6nYZ20KObPdDKlwvI5AQg=;
+	s=arc-20240116; t=1741705672; c=relaxed/simple;
+	bh=7us1H0Y8ZXGLq8oBNN6b8ovgQUoNgCFTaY19bVyZ51s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fONe4Bjenv2QNQTDLHNUtGOURm5DgLPJORgSjad9ZD5lBK30ZBS2n3vVUQk5JfsYSrWBYwEy1TLPfdJHO19jQjApa9IO2ncCHzSv0TTwelhr8Mdix6l9A1LQJF2gK3OxwE4OJak+ERADd2AmwciJrHtZOxMIBkaIxeT4y0p/vEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASKlwi4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sw7nSOae1FxN5t+6h1/HCJZlbChzI4oI5bNdl71pKFdliC+ZQLNa6C3ZaEdbj2n1awKXG4soy3Jgs92zkO40/ApO12t0CZyLN4L9oMvBs43C4qvJOw4KHqOIR0WueTjMLsZN0/6M/lISkiZB0bB/Fwxpb73foZ6JHR07P/jC2kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DllIP9Sr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASKlwi4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39338C4CEE9;
-	Tue, 11 Mar 2025 15:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DllIP9Sr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB769C4CEE9;
+	Tue, 11 Mar 2025 15:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705666;
-	bh=4JwZXzAeIZr5HdL4bifE/M6nYZ20KObPdDKlwvI5AQg=;
+	s=korg; t=1741705670;
+	bh=7us1H0Y8ZXGLq8oBNN6b8ovgQUoNgCFTaY19bVyZ51s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASKlwi4CeBdieDaq7zooKQeR6baBrCPmaT1xquQ+/BIzGx1l5XMy8G87WTMy+WLjY
-	 Cxy5cfgp7ukn62FMsJ7PzDa3weU3vEujxatl83kJ/s3xYbQxuuN9uObLqMGwPoLUld
-	 sueE8kT1yObjMNj8ajqEUgrjePpYILCnm0K2Z/1s=
+	b=DllIP9SrAU5P88VWPoUiH0otAqoUACxrhfk9gNTeGnMgE2QNEjchgUeYIFWUAV/Ov
+	 RLUQmMNyAI0uegepVBmb2uemyPT2ZiSurHvMIZ8bHvXPshzX+169RtRhBEx906st3v
+	 FDfvNdsSIxlDq4qpiFCmCfUPU5Cf+4GqIAA6mlM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Martin Ottens <martin.ottens@fau.de>,
+	Mingi Cho <mincho@theori.io>,
+	Cong Wang <cong.wang@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/328] net: rose: lock the socket in rose_bind()
-Date: Tue, 11 Mar 2025 15:58:04 +0100
-Message-ID: <20250311145719.428501654@linuxfoundation.org>
+Subject: [PATCH 5.4 115/328] netem: Update sch->q.qlen before qdisc_tree_reduce_backlog()
+Date: Tue, 11 Mar 2025 15:58:05 +0100
+Message-ID: <20250311145719.467358510@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,85 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit a1300691aed9ee852b0a9192e29e2bdc2411a7e6 ]
+[ Upstream commit 638ba5089324796c2ee49af10427459c2de35f71 ]
 
-syzbot reported a soft lockup in rose_loopback_timer(),
-with a repro calling bind() from multiple threads.
+qdisc_tree_reduce_backlog() notifies parent qdisc only if child
+qdisc becomes empty, therefore we need to reduce the backlog of the
+child qdisc before calling it. Otherwise it would miss the opportunity
+to call cops->qlen_notify(), in the case of DRR, it resulted in UAF
+since DRR uses ->qlen_notify() to maintain its active list.
 
-rose_bind() must lock the socket to avoid this issue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67a0f78d.050a0220.d7c5a.00a0.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250203170838.3521361-1-edumazet@google.com
+Fixes: f8d4bc455047 ("net/sched: netem: account for backlog updates from child qdisc")
+Cc: Martin Ottens <martin.ottens@fau.de>
+Reported-by: Mingi Cho <mincho@theori.io>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Link: https://patch.msgid.link/20250204005841.223511-4-xiyou.wangcong@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ net/sched/sch_netem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 9b36fb6aa3e13..cd9370e4b50bc 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -678,11 +678,9 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	struct net_device *dev;
- 	ax25_address *source;
- 	ax25_uid_assoc *user;
-+	int err = -EINVAL;
- 	int n;
- 
--	if (!sock_flag(sk, SOCK_ZAPPED))
--		return -EINVAL;
--
- 	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
- 		return -EINVAL;
- 
-@@ -695,8 +693,15 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
- 		return -EINVAL;
- 
--	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
--		return -EADDRNOTAVAIL;
-+	lock_sock(sk);
-+
-+	if (!sock_flag(sk, SOCK_ZAPPED))
-+		goto out_release;
-+
-+	err = -EADDRNOTAVAIL;
-+	dev = rose_dev_get(&addr->srose_addr);
-+	if (!dev)
-+		goto out_release;
- 
- 	source = &addr->srose_call;
- 
-@@ -707,7 +712,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	} else {
- 		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
- 			dev_put(dev);
--			return -EACCES;
-+			err = -EACCES;
-+			goto out_release;
- 		}
- 		rose->source_call   = *source;
- 	}
-@@ -729,8 +735,10 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	rose_insert_socket(sk);
- 
- 	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	return 0;
-+	err = 0;
-+out_release:
-+	release_sock(sk);
-+	return err;
- }
- 
- static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_len, int flags)
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 73c952d482752..27bd18c74e858 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -739,9 +739,9 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ 				if (err != NET_XMIT_SUCCESS) {
+ 					if (net_xmit_drop_count(err))
+ 						qdisc_qstats_drop(sch);
+-					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
+ 					sch->qstats.backlog -= pkt_len;
+ 					sch->q.qlen--;
++					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
+ 				}
+ 				goto tfifo_dequeue;
+ 			}
 -- 
 2.39.5
 
