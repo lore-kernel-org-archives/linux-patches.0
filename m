@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678343C0B;
-	Tue, 11 Mar 2025 15:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6523C0B;
+	Tue, 11 Mar 2025 15:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707306; cv=none; b=dHRRRzbHghOx3TcKeYBAshRtseTvcPro3vP71mc/hWk+gCS/ZdI1Giach3tM82ptMvS98jE5oYDjxK18gp1IXyzLlA0F2UrrpJiRnSSKP5y6Zm5bjCpQvFlf25FH9g7PTNWFCPB+4ykL7EXRxSoHMLLzazFaJriv5Uc5qwEThLc=
+	t=1741707309; cv=none; b=lqr9Kfrkua4vzbwi0a0cWkXeQ29x6MDK0mZN9s1gP/MaFORDpquI7FPNCJyc0Lj9nnXpmezpYRhcJB+TKUVmWgsmTShQu65qkwGvF6AXGH5eobFcR3uXzssFmSQasII61+F5FmqTQhvowm8FyoPfHs/06QWV4s7E1NxEmIi4/uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707306; c=relaxed/simple;
-	bh=RXTClNfUJuG7QJKIYzO0YoNpnePjXbWCd/1kHvbeg9U=;
+	s=arc-20240116; t=1741707309; c=relaxed/simple;
+	bh=92moPOtfdfSXNMPuR2zsJbU/87nVFTnitbqdetWtutQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AI5yzm6X6fAlgTy9fp2rTr2IM4HfVRYFC/4T6ODd2SNPvjOid130ZfLbYrP2YDt4Z9zOAuDJ+/r7frtfpyp6TanxjSYkLrs0mvgluCr7+LqnuxzK9Leu+YkGrHYVSq5OJPcoDPy0kNgbyj83mgb2F8mTHUa6qQclFeWDP/3JVcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh27+B03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lr+Npv+nlvaA3YWmz1yEwLKsj9Qfm5dqKFulQPbYc0I0qg+tlo0aO0FpK0ewnCr9zLJwfC7FpOwY37m4P6teU1C4FOMnhjFAk+ot8fF5X+uA0MtrH2Z1/K/HDTv3m8Kye3V+8wJw1pwUpgNfoeupuzGWA8GZdtmUq5m1DypWYFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThZGmRvK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh27+B03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B5CC4CEE9;
-	Tue, 11 Mar 2025 15:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThZGmRvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6922C4CEEA;
+	Tue, 11 Mar 2025 15:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707306;
-	bh=RXTClNfUJuG7QJKIYzO0YoNpnePjXbWCd/1kHvbeg9U=;
+	s=korg; t=1741707309;
+	bh=92moPOtfdfSXNMPuR2zsJbU/87nVFTnitbqdetWtutQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh27+B03Zh2WQNtJy5+kiWmFEDEakAYoc06EdghyIGDa/zgP3QlfoRASrFdO6sX6t
-	 7JprNo/djT+ZQxlTv8LNJE2qxiNLWvWhk0W4NkF40IyFART+ewe2B84Cl2IgYkSAFF
-	 pHoItcrf+iOWGIe4ZTDUZK1U/QaUO4Ptf+11FdYM=
+	b=ThZGmRvKZTVmo3B55CfoWT7swB6fmy1IegovoXJ8DVrP2n2jqp/WxYaEXwzuTGs70
+	 hZIlti/MimnMXflrlZ/K+RvOqiXr76TZxgVeGyPudk8lVTOVXUFAlA2RSII36xec+j
+	 13mjPi/FSAm8tDRqk2cC4la1wORwBvkncBS2c7Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 5.10 343/462] tee: optee: Fix supplicant wait loop
-Date: Tue, 11 Mar 2025 16:00:09 +0100
-Message-ID: <20250311145811.914056851@linuxfoundation.org>
+	Lei He <helei.sig11@bytedance.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 314/462] crypto: testmgr - Fix wrong test case of RSA
+Date: Tue, 11 Mar 2025 15:59:40 +0100
+Message-ID: <20250311145810.766386264@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,93 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Lei He <helei.sig11@bytedance.com>
 
-commit 70b0d6b0a199c5a3ee6c72f5e61681ed6f759612 upstream.
+[ Upstream commit a9887010ed2da3fddaff83ceec80e2b71be8a966 ]
 
-OP-TEE supplicant is a user-space daemon and it's possible for it
-be hung or crashed or killed in the middle of processing an OP-TEE
-RPC call. It becomes more complicated when there is incorrect shutdown
-ordering of the supplicant process vs the OP-TEE client application which
-can eventually lead to system hang-up waiting for the closure of the
-client application.
+According to the BER encoding rules, integer value should be encoded
+as two's complement, and if the highest bit of a positive integer
+is 1, should add a leading zero-octet.
 
-Allow the client process waiting in kernel for supplicant response to
-be killed rather than indefinitely waiting in an unkillable state. Also,
-a normal uninterruptible wait should not have resulted in the hung-task
-watchdog getting triggered, but the endless loop would.
+The kernel's built-in RSA algorithm cannot recognize negative numbers
+when parsing keys, so it can pass this test case.
 
-This fixes issues observed during system reboot/shutdown when supplicant
-got hung for some reason or gets crashed/killed which lead to client
-getting hung in an unkillable state. It in turn lead to system being in
-hung up state requiring hard power off/on to recover.
+Export the key to file and run the following command to verify the
+fix result:
 
-Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  openssl asn1parse -inform DER -in /path/to/key/file
+
+Signed-off-by: Lei He <helei.sig11@bytedance.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/supp.c |   35 ++++++++---------------------------
- 1 file changed, 8 insertions(+), 27 deletions(-)
+ crypto/testmgr.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/tee/optee/supp.c
-+++ b/drivers/tee/optee/supp.c
-@@ -80,7 +80,6 @@ u32 optee_supp_thrd_req(struct tee_conte
- 	struct optee *optee = tee_get_drvdata(ctx->teedev);
- 	struct optee_supp *supp = &optee->supp;
- 	struct optee_supp_req *req;
--	bool interruptable;
- 	u32 ret;
- 
- 	/*
-@@ -111,36 +110,18 @@ u32 optee_supp_thrd_req(struct tee_conte
- 	/*
- 	 * Wait for supplicant to process and return result, once we've
- 	 * returned from wait_for_completion(&req->c) successfully we have
--	 * exclusive access again.
-+	 * exclusive access again. Allow the wait to be killable such that
-+	 * the wait doesn't turn into an indefinite state if the supplicant
-+	 * gets hung for some reason.
- 	 */
--	while (wait_for_completion_interruptible(&req->c)) {
-+	if (wait_for_completion_killable(&req->c)) {
- 		mutex_lock(&supp->mutex);
--		interruptable = !supp->ctx;
--		if (interruptable) {
--			/*
--			 * There's no supplicant available and since the
--			 * supp->mutex currently is held none can
--			 * become available until the mutex released
--			 * again.
--			 *
--			 * Interrupting an RPC to supplicant is only
--			 * allowed as a way of slightly improving the user
--			 * experience in case the supplicant hasn't been
--			 * started yet. During normal operation the supplicant
--			 * will serve all requests in a timely manner and
--			 * interrupting then wouldn't make sense.
--			 */
--			if (req->in_queue) {
--				list_del(&req->link);
--				req->in_queue = false;
--			}
-+		if (req->in_queue) {
-+			list_del(&req->link);
-+			req->in_queue = false;
- 		}
- 		mutex_unlock(&supp->mutex);
--
--		if (interruptable) {
--			req->ret = TEEC_ERROR_COMMUNICATION;
--			break;
--		}
-+		req->ret = TEEC_ERROR_COMMUNICATION;
- 	}
- 
- 	ret = req->ret;
+diff --git a/crypto/testmgr.h b/crypto/testmgr.h
+index b04e9943c8c7f..24bc1924edb72 100644
+--- a/crypto/testmgr.h
++++ b/crypto/testmgr.h
+@@ -257,9 +257,9 @@ static const struct akcipher_testvec rsa_tv_template[] = {
+ 	}, {
+ #endif
+ 	.key =
+-	"\x30\x82\x02\x1F" /* sequence of 543 bytes */
++	"\x30\x82\x02\x20" /* sequence of 544 bytes */
+ 	"\x02\x01\x01" /* version - integer of 1 byte */
+-	"\x02\x82\x01\x00" /* modulus - integer of 256 bytes */
++	"\x02\x82\x01\x01\x00" /* modulus - integer of 256 bytes */
+ 	"\xDB\x10\x1A\xC2\xA3\xF1\xDC\xFF\x13\x6B\xED\x44\xDF\xF0\x02\x6D"
+ 	"\x13\xC7\x88\xDA\x70\x6B\x54\xF1\xE8\x27\xDC\xC3\x0F\x99\x6A\xFA"
+ 	"\xC6\x67\xFF\x1D\x1E\x3C\x1D\xC1\xB5\x5F\x6C\xC0\xB2\x07\x3A\x6D"
+@@ -299,7 +299,7 @@ static const struct akcipher_testvec rsa_tv_template[] = {
+ 	"\x02\x01\x00" /* exponent1 - integer of 1 byte */
+ 	"\x02\x01\x00" /* exponent2 - integer of 1 byte */
+ 	"\x02\x01\x00", /* coefficient - integer of 1 byte */
+-	.key_len = 547,
++	.key_len = 548,
+ 	.m = "\x54\x85\x9b\x34\x2c\x49\xea\x2a",
+ 	.c =
+ 	"\xb2\x97\x76\xb4\xae\x3e\x38\x3c\x7e\x64\x1f\xcc\xa2\x7f\xf6\xbe"
+-- 
+2.39.5
+
 
 
