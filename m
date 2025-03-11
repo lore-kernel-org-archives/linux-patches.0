@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C347325D8FF;
-	Tue, 11 Mar 2025 15:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF95D1684AC;
+	Tue, 11 Mar 2025 15:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706383; cv=none; b=l3Isc8TuCqomkIPHFtnoZvj9FyA+FDyjkGuHiulUxjzJ2O6CL8JmxNzYhkk8QDtn06eOTn7L9/fyAbaiJxMU/ANlSajkMuqK4JtEOSfNcSeDzx3L5N1F05TjOTfNA6Cqzhytq491ECtbvtrCdvBqGpXXLzmfGMpbfYnLNS4y3Jo=
+	t=1741706386; cv=none; b=WsLUghEMVXKRDqFmLvmpPLHtGmv9BPidO2iIiKLT8lyd+yfD565UVHlTYnXpUDwP+R2LrUIPIIfOJOLXIclrFqRl37JGYgSoE/yJaAcXSDqXYiR3jwy7vv8TuJxfG6eumTfhJFX8AnJDuG5HNYbB6irWKtMslAsd2n/lQ/dtBao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706383; c=relaxed/simple;
-	bh=ffmAEfRxmeFo+XKH/yAR4uWIM9fkhQrne6ovEa0JrpQ=;
+	s=arc-20240116; t=1741706386; c=relaxed/simple;
+	bh=omAiMqsqypSDnXMBuq47weAXDXvyP0mYPu5geSy7sRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kej7XgXQ/JIn3aXmhHlPoFV8WaZs/65vyhbldm97p2NhbAnKLkFMFbExFTTef64SEuh7mtTlRldNM2eFhOBwHZFNNA8jFV/PRtdlwHavYEy/4/0+iyLHXmxN9P/8fvo9H4dyk1HgW+zkC7Ie/wqAtlhFSfuXmpPKhZJcnfZavMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkTbtTdj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfjTLZzBvYoYuYUGgDnuhLS1cdek0v/u3X7oyIbGwRT/a44Hv7HaZM8w6Kgrx9YJahGdWlXDxL9pbjnqJBLd4kNwZamWwhpbCjRBR+ASNpZ8sXEDHKZZ7+vCL+uJoWkoHnJcps0JHu8YiXqIZ9w2w/0tp1LXJX0UBvLyHpB08pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXj4mcvX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkTbtTdj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E312C4CEE9;
-	Tue, 11 Mar 2025 15:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXj4mcvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379A0C4CEE9;
+	Tue, 11 Mar 2025 15:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706383;
-	bh=ffmAEfRxmeFo+XKH/yAR4uWIM9fkhQrne6ovEa0JrpQ=;
+	s=korg; t=1741706386;
+	bh=omAiMqsqypSDnXMBuq47weAXDXvyP0mYPu5geSy7sRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkTbtTdj5PNQ+75h/TVkve3a1igu66P7yP22hAKdqIfX1Cagi/ReFRrR1yKClWxg8
-	 gs4T2fas3QcbjI+gH1ZUxfTzxA+rXerhMPrZTc8qhhynRRr5zlMDTZUwZddBqohBVi
-	 hBQd8LVxhlPHvxWe3tEpj2oFnqe1c/i4nwvW7kgc=
+	b=qXj4mcvXNoycL91nRI8lic230eTy70qcDgsCfvqqTrpwMRQ6Ki8W3GGB+ccC39VHk
+	 mT7fDBdxmXwXC/KIv2a9rTvJ5c9EgfcYa98yzGIVCZVEOzzMtxcGY1hYMpCMEQ9v8R
+	 xvJmOmtmYttacSAMb6X2mpI8oBdH8pMuqHha0CyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Lee Jones <lee@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/462] leds: netxbig: Fix an OF node reference leak in netxbig_leds_get_of_pdata()
-Date: Tue, 11 Mar 2025 15:54:55 +0100
-Message-ID: <20250311145759.504674889@linuxfoundation.org>
+Subject: [PATCH 5.10 030/462] cpufreq: schedutil: Simplify sugov_update_next_freq()
+Date: Tue, 11 Mar 2025 15:54:56 +0100
+Message-ID: <20250311145759.543560986@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 0508316be63bb735f59bdc8fe4527cadb62210ca ]
+[ Upstream commit 90ac908a418b836427d6eaf84fbc5062881747fd ]
 
-netxbig_leds_get_of_pdata() does not release the OF node obtained by
-of_parse_phandle() when of_find_device_by_node() fails. Add an
-of_node_put() call to fix the leak.
+Rearrange a conditional to make it more straightforward.
 
-This bug was found by an experimental static analysis tool that I am
-developing.
-
-Fixes: 9af512e81964 ("leds: netxbig: Convert to use GPIO descriptors")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20241216074923.628509-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: 8e461a1cb43d ("cpufreq: schedutil: Fix superfluous updates caused by need_freq_update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-netxbig.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/cpufreq_schedutil.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/leds/leds-netxbig.c b/drivers/leds/leds-netxbig.c
-index 68fbf0b66fadd..c2cc45e19c4b2 100644
---- a/drivers/leds/leds-netxbig.c
-+++ b/drivers/leds/leds-netxbig.c
-@@ -440,6 +440,7 @@ static int netxbig_leds_get_of_pdata(struct device *dev,
- 	}
- 	gpio_ext_pdev = of_find_device_by_node(gpio_ext_np);
- 	if (!gpio_ext_pdev) {
-+		of_node_put(gpio_ext_np);
- 		dev_err(dev, "Failed to find platform device for gpio-ext\n");
- 		return -ENODEV;
- 	}
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 5e39da0ae0868..04295212ab500 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -102,12 +102,10 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
+ 				   unsigned int next_freq)
+ {
+-	if (!sg_policy->need_freq_update) {
+-		if (sg_policy->next_freq == next_freq)
+-			return false;
+-	} else {
++	if (sg_policy->need_freq_update)
+ 		sg_policy->need_freq_update = cpufreq_driver_test_flags(CPUFREQ_NEED_UPDATE_LIMITS);
+-	}
++	else if (sg_policy->next_freq == next_freq)
++		return false;
+ 
+ 	sg_policy->next_freq = next_freq;
+ 	sg_policy->last_freq_update_time = time;
 -- 
 2.39.5
 
