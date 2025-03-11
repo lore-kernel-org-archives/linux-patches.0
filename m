@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B3325C6F1;
-	Tue, 11 Mar 2025 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A04625EFA0;
+	Tue, 11 Mar 2025 15:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706514; cv=none; b=OB7b8yi0KnEUcrQY4B3NNDI5GJ+ukOgoX+vH03knfv4IJaxd95jxqYIg++fNs3UFHHWk3b1tGy09YZTwe9bwNoNtdFJEOHSblvsSRqgOR0D2pTueCiTJdDdIWiQbikS0E5dkPcd1ICg22O6bR0UsIJN851nK5sN7bpy+6c9Zlew=
+	t=1741706517; cv=none; b=o8fHbIBF9EduPQVfcIbb/rOa7916HbHWiAubgiR5WZgbi+RJv7ImFVVoVUueBa7tJXb48rjb/8Diib9vMp5rUqkON/WVCMVjy9pXeWwGH4UPP/6x3i3vB12onSWd3X0anXzuPMHAxlX5VT+vUxqkC/H4lO5xMEkNaBpZUkzieMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706514; c=relaxed/simple;
-	bh=Vs+9uHLWbgW7Uzy9tIUZJvr0/O3gEj6p0Dz8Jex9A10=;
+	s=arc-20240116; t=1741706517; c=relaxed/simple;
+	bh=NMcBZt7t0szXTc9FRjrdU6+szpQfQTktOESEkcgOkaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMSfPSacfwOarN9zpc4zzsGE5Z5Qw0McsH+qG1QDRGPAWHH/RIPAqHh3b5VMv0SOhB6gTSZwVuUKuf8FA7fAsLoq7yGsHLqg1zyGmgtLc6cpKb3QlY6wG4yyQWIfZt+9INa/XSC0K15JzDbaMzZHp1qHSNzX1Uh1S6dPdbHc36Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oX213ILG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oj9fm9ljXSh+f3JmoOEz476QLdQbwEgNiX6qIvt2FwACkk23FoWMJUQ+4msXfkZtrPmhglgDUVStvBF8y9a5yO13eCRpRBpA9d2LHHImbmvBz/zOIVY6IgvwyOwDMAdu0zkJI2abK4I82nJxEoMGWu3by/PMhoNAaRKJzWaITU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtQEbQMW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oX213ILG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19078C4CEEA;
-	Tue, 11 Mar 2025 15:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtQEbQMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA471C4CEE9;
+	Tue, 11 Mar 2025 15:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706514;
-	bh=Vs+9uHLWbgW7Uzy9tIUZJvr0/O3gEj6p0Dz8Jex9A10=;
+	s=korg; t=1741706517;
+	bh=NMcBZt7t0szXTc9FRjrdU6+szpQfQTktOESEkcgOkaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oX213ILG+lDvYa/ljEdX3rBikw2TATBgP3ZpMoPUUwG0NJr8Op9dgE6v2tSNhr0fp
-	 U8QJkQ5UX3PdybwiHP7iInhh0qNwcdj+dATTpvdWbmvlW7TlS1omOBRTJFbZRAHknU
-	 ddQn/EtA4dDjOqD2Jcwa+y0+44ahlmDISKlsQLCc=
+	b=DtQEbQMWK/RrA4P/oaiN/fNH4iEh1QXcKrw38mWWUaCdsNv1O6ZcprJFXYdlFHtw3
+	 U/qy4PMPPBCfWrS2jv6u7qR9kats8F+fMcBKXNhf5x02g/a8SquQODcwWfRYPnZ7E/
+	 N9WYSVaWxIeu4xodY+DKHPKSNWPC9TlTLLnOtE/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/462] arm64: dts: mediatek: mt8173-evb: Fix MT6397 PMIC sub-node names
-Date: Tue, 11 Mar 2025 15:55:39 +0100
-Message-ID: <20250311145801.234082596@linuxfoundation.org>
+Subject: [PATCH 5.10 045/462] net/mlxfw: Drop hard coded max FW flash image size
+Date: Tue, 11 Mar 2025 15:55:11 +0100
+Message-ID: <20250311145800.131290876@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,38 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 9545ba142865b9099d43c972b9ebcf463606499a ]
+[ Upstream commit 70d81f25cc92cc4e914516c9935ae752f27d78ad ]
 
-The MT6397 PMIC bindings specify exact names for its sub-nodes. The
-names used in the current dts don't match, causing a validation error.
+Currently, mlxfw kernel module limits FW flash image size to be
+10MB at most, preventing the ability to burn recent BlueField-3
+FW that exceeds the said size limit.
 
-Fix up the names. Also drop the label for the regulators node, since
-any reference should be against the individual regulator sub-nodes.
+Thus, drop the hard coded limit. Instead, rely on FW's
+max_component_size threshold that is reported in MCQI register
+as the size limit for FW image.
 
-Fixes: 16ea61fc5614 ("arm64: dts: mt8173-evb: Add PMIC support")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241210092614.3951748-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/1737030796-1441634-1-git-send-email-moshe@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-evb.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-index 66f0e5b24fda4..1158bee050e13 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-@@ -303,7 +303,7 @@
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
+diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
+index bcd166911d444..bbcaac4f99bc6 100644
+--- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
++++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
+@@ -14,7 +14,6 @@
+ #define MLXFW_FSM_STATE_WAIT_TIMEOUT_MS 30000
+ #define MLXFW_FSM_STATE_WAIT_ROUNDS \
+ 	(MLXFW_FSM_STATE_WAIT_TIMEOUT_MS / MLXFW_FSM_STATE_WAIT_CYCLE_MS)
+-#define MLXFW_FSM_MAX_COMPONENT_SIZE (10 * (1 << 20))
  
--		mt6397regulator: mt6397regulator {
-+		regulators {
- 			compatible = "mediatek,mt6397-regulator";
+ static const int mlxfw_fsm_state_errno[] = {
+ 	[MLXFW_FSM_STATE_ERR_ERROR] = -EIO,
+@@ -229,7 +228,6 @@ static int mlxfw_flash_component(struct mlxfw_dev *mlxfw_dev,
+ 		return err;
+ 	}
  
- 			mt6397_vpca15_reg: buck_vpca15 {
+-	comp_max_size = min_t(u32, comp_max_size, MLXFW_FSM_MAX_COMPONENT_SIZE);
+ 	if (comp->data_size > comp_max_size) {
+ 		MLXFW_ERR_MSG(mlxfw_dev, extack,
+ 			      "Component size is bigger than limit", -EINVAL);
 -- 
 2.39.5
 
