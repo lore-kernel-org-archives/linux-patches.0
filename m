@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8EF25F78D;
-	Tue, 11 Mar 2025 15:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69BD255E37;
+	Tue, 11 Mar 2025 15:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707622; cv=none; b=I2El+a0D6qSK+aBeKeyCiYVTa4U/eKRbdnGU5v6VlM/E0U2tzhC0aZXNFCjl0hjUWdAcX9uoCJ+eteOQFoUGhtwNtavdDsVrZ9r54RxeBZVmK1/vN4VO8eVK2fACZQBYzJ7wFS0dW1c69TVShW9N76XFnEMrlp1jBqglFJbsO8M=
+	t=1741707624; cv=none; b=mLxzyxTulWTq4qcAedilhOD1VrW1fwfoYZWIcPodZfuk68ZcngfUj9zsy0YJzvxYpVbfNGRzfe9IKI9AGYCgwd8OeyCDGozj26Jy1xVsXxtZ4ASKR6eKMeq80Phee+p/9Ooo8OQcXqSIg2s/Z7H76xAByl3FLPYQLq4gfXwgVHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707622; c=relaxed/simple;
-	bh=nowvR8z9b2cFXPbv49uUcxPzoqj0rXJT+zUTelPvP4I=;
+	s=arc-20240116; t=1741707624; c=relaxed/simple;
+	bh=Z/Q+vP7JYwfmzsFxWiajQ9U5D6LT4eqgZChYhUghVH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jI4mp0DSA5zmycXr4J7BLfrMoU9p+n+ON/dlW80/RFAuHRGRkI0qhBcV/a/4nhEGyQtIqsmyju7DZeJf+uTD+xugIG1I0mVMxomyLg3DjtP/Giwb7rhATpi6eB1FNuj5WTazWF4TzDHHXRUQmymr4e9tFd4+gEZedUBgj/H9qkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IefOVrF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmzZieUt4MV0R4ZJiIGHNfc9/DUTIjgt2BisnMFLyVyjvMAtpE7U0dhuZZa4b0l1NL+uJZV4kmUiFTWYFX/rFljXWmRYzalvznf0UD6R8onpaizv60xGr8Hbr2KuwKX0hY6psHawYNy9+/3Hc9/m15yXRj4AD9Cm43zXYBLxcMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjH3e/pD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IefOVrF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65656C4CEE9;
-	Tue, 11 Mar 2025 15:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjH3e/pD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F052C4CEE9;
+	Tue, 11 Mar 2025 15:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707621;
-	bh=nowvR8z9b2cFXPbv49uUcxPzoqj0rXJT+zUTelPvP4I=;
+	s=korg; t=1741707624;
+	bh=Z/Q+vP7JYwfmzsFxWiajQ9U5D6LT4eqgZChYhUghVH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IefOVrF548pGg6A8MzH8MBpWykVD1+Qz4rtlC54Zaw3L5iqtqPp5cwDF9WXesbo/y
-	 SthBgT7KG+VFP/j5bKL69CgclMNJmz+MINZdEeQGxxw+z87WnaHGWE4Z9aIUbtV1BP
-	 vx0Gq08CM/nq+63B2agzcJxjy2Wh+NXxuWQLVTzk=
+	b=gjH3e/pDwoYcxbVd6VSPYS3S78H7R4vawld+jqXZid2ihOrp1rUBkQc9qyuvFWso2
+	 NqfJV/f8NMyuz2OmBv4CXZNV50ERQxKS/LVP0LSJxNA/y3OiuAUo9khy7HBt5E1Jpw
+	 +b3iPMpBzvv+BYhyn20Xtj80uKwS0kKzgrIxInTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+91161fe81857b396c8a0@syzkaller.appspotmail.com,
-	Oscar Maes <oscmaes92@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Titus Rwantare <titusr@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 420/462] vlan: enforce underlying device type
-Date: Tue, 11 Mar 2025 16:01:26 +0100
-Message-ID: <20250311145814.927998772@linuxfoundation.org>
+Subject: [PATCH 5.10 411/462] hwmon: (pmbus) Initialise page count in pmbus_identify()
+Date: Tue, 11 Mar 2025 16:01:17 +0100
+Message-ID: <20250311145814.568710097@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,67 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Titus Rwantare <titusr@google.com>
 
-[ Upstream commit b33a534610067ade2bdaf2052900aaad99701353 ]
+[ Upstream commit 6b6e2e8fd0de3fa7c6f4f8fe6841b01770b2e7bc ]
 
-Currently, VLAN devices can be created on top of non-ethernet devices.
+The `pmbus_identify()` function fails to correctly determine the number
+of supported pages on PMBus devices. This occurs because `info->pages`
+is implicitly zero-initialised, and `pmbus_set_page()` does not perform
+writes to the page register if `info->pages` is not yet initialised.
+Without this patch, `info->pages` is always set to the maximum after
+scanning.
 
-Besides the fact that it doesn't make much sense, this also causes a
-bug which leaks the address of a kernel function to usermode.
+This patch initialises `info->pages` to `PMBUS_PAGES` before the probing
+loop, enabling `pmbus_set_page()` writes to make it out onto the bus
+correctly identifying the number of pages. `PMBUS_PAGES` seemed like a
+reasonable non-zero number because that's the current result of the
+identification process.
 
-When creating a VLAN device, we initialize GARP (garp_init_applicant)
-and MRP (mrp_init_applicant) for the underlying device.
+Testing was done with a PMBus device in QEMU.
 
-As part of the initialization process, we add the multicast address of
-each applicant to the underlying device, by calling dev_mc_add.
-
-__dev_mc_add uses dev->addr_len to determine the length of the new
-multicast address.
-
-This causes an out-of-bounds read if dev->addr_len is greater than 6,
-since the multicast addresses provided by GARP and MRP are only 6
-bytes long.
-
-This behaviour can be reproduced using the following commands:
-
-ip tunnel add gretest mode ip6gre local ::1 remote ::2 dev lo
-ip l set up dev gretest
-ip link add link gretest name vlantest type vlan id 100
-
-Then, the following command will display the address of garp_pdu_rcv:
-
-ip maddr show | grep 01:80:c2:00:00:21
-
-Fix the bug by enforcing the type of the underlying device during VLAN
-device initialization.
-
-Fixes: 22bedad3ce11 ("net: convert multicast list to list_head")
-Reported-by: syzbot+91161fe81857b396c8a0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/000000000000ca9a81061a01ec20@google.com/
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250303155619.8918-1-oscmaes92@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Titus Rwantare <titusr@google.com>
+Fixes: 442aba78728e7 ("hwmon: PMBus device driver")
+Link: https://lore.kernel.org/r/20250227222455.2583468-1-titusr@google.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-index 64a94c9812da1..b45b9c9b12684 100644
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -128,7 +128,8 @@ int vlan_check_real_dev(struct net_device *real_dev,
- {
- 	const char *name = real_dev->name;
+diff --git a/drivers/hwmon/pmbus/pmbus.c b/drivers/hwmon/pmbus/pmbus.c
+index 20f1af9165c2d..2bfccbfbc2896 100644
+--- a/drivers/hwmon/pmbus/pmbus.c
++++ b/drivers/hwmon/pmbus/pmbus.c
+@@ -103,6 +103,8 @@ static int pmbus_identify(struct i2c_client *client,
+ 		if (pmbus_check_byte_register(client, 0, PMBUS_PAGE)) {
+ 			int page;
  
--	if (real_dev->features & NETIF_F_VLAN_CHALLENGED) {
-+	if (real_dev->features & NETIF_F_VLAN_CHALLENGED ||
-+	    real_dev->type != ARPHRD_ETHER) {
- 		pr_info("VLANs not supported on %s\n", name);
- 		NL_SET_ERR_MSG_MOD(extack, "VLANs not supported on device");
- 		return -EOPNOTSUPP;
++			info->pages = PMBUS_PAGES;
++
+ 			for (page = 1; page < PMBUS_PAGES; page++) {
+ 				if (pmbus_set_page(client, page, 0xff) < 0)
+ 					break;
 -- 
 2.39.5
 
