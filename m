@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B22E25E816;
-	Tue, 11 Mar 2025 15:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1319925DD12;
+	Tue, 11 Mar 2025 15:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705729; cv=none; b=QFrFoJLnMjmabBAZFhFz09VtP6iaoBMRUpfSleXJdm2bDkuf2ZMxACBiqalPA514erVymB/g3mvWs7Xrar9D45+vPc4UE3Uk/sOfWWMAh5ZHZoC6H2+E0M72/5AfLDGVxlceP7HImA2sFu2v9vIZZLCb7NzX9q94YYztapUH/Dw=
+	t=1741705732; cv=none; b=WO1QcYAEceaniZ6PkEuXTfRJT9O29Zrw8xqddwR481uDeNmJInv6WzZGpkGsqd7ugDaW+lUz+RQSkUN3nnwAdGYUr/74Y7q5RrZY4hOOCxqyrjxje4hJCrsacad5Pmfvyl38XGTdI6+cxej5zXSuH34jyer19XpKQd+Pa20YGeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705729; c=relaxed/simple;
-	bh=B3pF5MB1yfqNHrxU5n6sTjayV9CkWJ6R8LcMUZEsmJw=;
+	s=arc-20240116; t=1741705732; c=relaxed/simple;
+	bh=OaOVF6FnHAKdVxOggTM04jt1zmaqestm4/c658i/xgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dughL6NRXf92h7Vh0u42zJNNUbol+hDI9Ct4tMt3zG9yFbBVTwrjCBuS/CRD5i8cUNF7wbtbAatzW4dtAi3TMVThRpInsG8/HCxSlo6AJIoizbnkmJRzNESnTK2DQ3DFoxzU31oUk171GOQfFbc9TBNyMGaFiBZ7HWg/JY+tLTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nubXYzO4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eZf9hAs2mrcOJh/Ucuo40qdnBlOHUWbfh1a3mU077qfrx6SDQP+TkAXkBKV93f/UyVtnOfH9seJ1+PwpM4VHRTk7xccBaowbrNrUQEuU6u0LFxr9KU+sGL+lKquDQNQTRVuItz3sKOT47Sso7GZGrI1bcODCGlpjLLG0ZD8jwvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apoTAfCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nubXYzO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0C3C4CEE9;
-	Tue, 11 Mar 2025 15:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apoTAfCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31881C4CEE9;
+	Tue, 11 Mar 2025 15:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705728;
-	bh=B3pF5MB1yfqNHrxU5n6sTjayV9CkWJ6R8LcMUZEsmJw=;
+	s=korg; t=1741705731;
+	bh=OaOVF6FnHAKdVxOggTM04jt1zmaqestm4/c658i/xgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nubXYzO4882bjGjdFXfu/BXSe9Ric3mgAEG4BzmnZaSwlQe84j8JOYhV5LPuH5Mpz
-	 J6OhBEI34gZPwpmdYHCSajVyTC5rmSAOaWWHwp+G9+ng2uXHro0JBDiK7PV01hKwSg
-	 ifZcQ7Zp/3iRL3zC6PhR4uyFTma/uOilDjTueQKY=
+	b=apoTAfCgsike3k/W0Nc6n8+ver6Iy+/haiBuz7FHcOThZiZ9u26hl82K0HS935VL9
+	 C+GPLS7V6i1JM/aYydDMDOx+2BKY7EIdMz2FZIv9bYwdqHmXq4nHoSmMFgLLSW5bp1
+	 1emlK8CUJEMlHdldsRdAUU3v/CYx7N/KLS+ww368=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 135/328] usb: gadget: f_tcm: Translate error to sense
-Date: Tue, 11 Mar 2025 15:58:25 +0100
-Message-ID: <20250311145720.269888506@linuxfoundation.org>
+Subject: [PATCH 5.4 136/328] usb: gadget: f_tcm: Decrement command ref count on cleanup
+Date: Tue, 11 Mar 2025 15:58:26 +0100
+Message-ID: <20250311145720.309782586@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,40 +51,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 98fa00fd3ae43b857b4976984a135483d89d9281 upstream.
+commit 3b2a52e88ab0c9469eaadd4d4c8f57d072477820 upstream.
 
-When respond with check_condition error status, clear from_transport
-input so the target layer can translate the sense reason reported by
-f_tcm.
+We submitted the command with TARGET_SCF_ACK_KREF, which requires
+acknowledgment of command completion. If the command fails, make sure to
+decrement the ref count.
 
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Fixes: cff834c16d23 ("usb-gadget/tcm: Convert to TARGET_SCF_ACK_KREF I/O krefs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/b2a5577efe7abd0af0051229622cf7d3be5cdcd0.1733876548.git.Thinh.Nguyen@synopsys.com
+Link: https://lore.kernel.org/r/3c667b4d9c8b0b580346a69ff53616b6a74cfea2.1733876548.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/usb/gadget/function/f_tcm.c
 +++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1063,7 +1063,7 @@ static void usbg_cmd_work(struct work_st
+@@ -971,6 +971,7 @@ static void usbg_data_write_cmpl(struct
+ 	return;
  
- out:
- 	transport_send_check_condition_and_sense(se_cmd,
--			TCM_UNSUPPORTED_SCSI_OPCODE, 1);
-+			TCM_UNSUPPORTED_SCSI_OPCODE, 0);
+ cleanup:
++	target_put_sess_cmd(se_cmd);
+ 	transport_generic_free_cmd(&cmd->se_cmd, 0);
  }
  
- static struct usbg_cmd *usbg_get_cmd(struct f_uas *fu,
-@@ -1192,7 +1192,7 @@ static void bot_cmd_work(struct work_str
- 
- out:
- 	transport_send_check_condition_and_sense(se_cmd,
--				TCM_UNSUPPORTED_SCSI_OPCODE, 1);
-+				TCM_UNSUPPORTED_SCSI_OPCODE, 0);
- }
- 
- static int bot_submit_command(struct f_uas *fu,
 
 
