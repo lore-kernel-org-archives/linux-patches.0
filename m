@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1A725F7B7;
-	Tue, 11 Mar 2025 15:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37C0255E37;
+	Tue, 11 Mar 2025 15:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707269; cv=none; b=BFWPAC/TpKpfwoWoFP8bXliBJP7mDNdI2b+XveJvP5rpxdmhfFVE+iGIvnvAjYCnIqozGliI858pWw+dWBrIOg6/Lq4cC7t86EOIfUmC1K6RUX8Q1qSIERpIG1Q4n1ErR1nZlbfB+NTFu01a6Jq2aRo+kux+m1hsUThjgCslXAE=
+	t=1741707271; cv=none; b=UNwdeVLGxt73d2Rrm6WRnW6cELSAvir1/5Ln53T3yMzUkCJMNf1nklMG6IFXU5gaNhZIUv5wzeG/BwTy68fDfdBtV4bJWl3lj62ctT2c7P0co7QYrezioyzr4fT3fNSxrGAv1NM6FXenFulf9YxCxvLhj7IPNk/M+L5HHAzpWY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707269; c=relaxed/simple;
-	bh=+ZF9YlLz+bx0RCjoQJk82isC0jIjgQgGUyR3ecrRj1w=;
+	s=arc-20240116; t=1741707271; c=relaxed/simple;
+	bh=QssowxRwToPqvDABFQmpeuKff2uqDgzQpcIlM0b8NI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnHjsA1FWOBaFcVQnJ/972hsdq9yTdjOBv2FSHwCgO5CyJioc1CqHySmm2hKmHkcsF/E7OYECMHEta6N9njp21oLEhVWmUCp2msxvXX642Ounw4tEfig1AQj34CaZszP43byffYD7psWLKJ79BhBtEPRfOH579ajWWqm9ZQzx54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/p9jR61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vFe7QfTJI907M+wuXlQrRJ1M3TuSTkvy/QgX9z97D5u9yWNi8WNJabThXYXcifJMbSRVtpSZbRVI7T0jXt2slzRTnsg2t11FB+sRA6gEwp2EttHyxafAI9o6/eEqlgIBrO38j+uYfyZSjLCKRea02VlB/GWNvjh0asxRQS+7+Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=il7ne402; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/p9jR61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546DEC4CEEC;
-	Tue, 11 Mar 2025 15:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="il7ne402"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD80C4CEE9;
+	Tue, 11 Mar 2025 15:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707268;
-	bh=+ZF9YlLz+bx0RCjoQJk82isC0jIjgQgGUyR3ecrRj1w=;
+	s=korg; t=1741707271;
+	bh=QssowxRwToPqvDABFQmpeuKff2uqDgzQpcIlM0b8NI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/p9jR61Kp8CbzEaLED5SvAvTZDxOhwmXgutvKRSK4w1StnRyvo7LYWP2fYQbAYPH
-	 9v40ofr74EzS0a9ToUsHL+qih0cm4ZvPhrrL4jV2O4uQVTQGccPpALCyVOuZ+E/91a
-	 jfnUAe2Ew0liG21utBhQ9csXciHDxKO3xiJ3cSyk=
+	b=il7ne402fIBBVzz46vuFDE8jwuhg9AVTzk/8js/pA6NqSgIexRLScm+mrT+Vw+z/3
+	 /yWaCSKpB4soVXq94oMc8UtC2P24eWMwtbzkKvgC6J9DId6M6yDBkRuWz9Ri+F5z26
+	 onXAMo+FoJ2EjnDpHv2RIA+nbA4ZCpsGtspYnvTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	kernel test robot <lkp@intel.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 331/462] powerpc/64s/mm: Move __real_pte stubs into hash-4k.h
-Date: Tue, 11 Mar 2025 15:59:57 +0100
-Message-ID: <20250311145811.438960148@linuxfoundation.org>
+Subject: [PATCH 5.10 332/462] powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline
+Date: Tue, 11 Mar 2025 15:59:58 +0100
+Message-ID: <20250311145811.478038813@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,90 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 8ae4f16f7d7b59cca55aeca6db7c9636ffe7fbaa ]
+[ Upstream commit 61bcc752d1b81fde3cae454ff20c1d3c359df500 ]
 
-The stub versions of __real_pte() etc are only used with HPT & 4K pages,
-so move them into the hash-4k.h header.
+Rewrite __real_pte() and __rpte_to_hidx() as static inline in order to
+avoid following warnings/errors when building with 4k page size:
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240821080729.872034-1-mpe@ellerman.id.au
-Stable-dep-of: 61bcc752d1b8 ("powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline")
+	  CC      arch/powerpc/mm/book3s64/hash_tlb.o
+	arch/powerpc/mm/book3s64/hash_tlb.c: In function 'hpte_need_flush':
+	arch/powerpc/mm/book3s64/hash_tlb.c:49:16: error: variable 'offset' set but not used [-Werror=unused-but-set-variable]
+	   49 |         int i, offset;
+	      |                ^~~~~~
+
+	  CC      arch/powerpc/mm/book3s64/hash_native.o
+	arch/powerpc/mm/book3s64/hash_native.c: In function 'native_flush_hash_range':
+	arch/powerpc/mm/book3s64/hash_native.c:782:29: error: variable 'index' set but not used [-Werror=unused-but-set-variable]
+	  782 |         unsigned long hash, index, hidx, shift, slot;
+	      |                             ^~~~~
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501081741.AYFwybsq-lkp@intel.com/
+Fixes: ff31e105464d ("powerpc/mm/hash64: Store the slot information at the right offset for hugetlb")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/e0d340a5b7bd478ecbf245d826e6ab2778b74e06.1736706263.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/64/hash-4k.h | 20 +++++++++++++++
- arch/powerpc/include/asm/book3s/64/pgtable.h | 26 --------------------
- 2 files changed, 20 insertions(+), 26 deletions(-)
+ arch/powerpc/include/asm/book3s/64/hash-4k.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/arch/powerpc/include/asm/book3s/64/hash-4k.h b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-index b6ac4f86c87b4..5a79dd66b2ed0 100644
+index 5a79dd66b2ed0..433d164374cb6 100644
 --- a/arch/powerpc/include/asm/book3s/64/hash-4k.h
 +++ b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-@@ -89,6 +89,26 @@ static inline int hash__hugepd_ok(hugepd_t hpd)
- }
- #endif
- 
-+/*
-+ * With 4K page size the real_pte machinery is all nops.
-+ */
-+#define __real_pte(e, p, o)		((real_pte_t){(e)})
-+#define __rpte_to_pte(r)	((r).pte)
-+#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
-+
-+#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
-+	do {							         \
-+		index = 0;					         \
-+		shift = mmu_psize_defs[psize].shift;		         \
-+
-+#define pte_iterate_hashed_end() } while(0)
-+
-+/*
-+ * We expect this to be called only for user addresses or kernel virtual
-+ * addresses other than the linear mapping.
-+ */
-+#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
-+
+@@ -92,9 +92,17 @@ static inline int hash__hugepd_ok(hugepd_t hpd)
  /*
-  * 4K PTE format is different from 64K PTE format. Saving the hash_slot is just
-  * a matter of returning the PTE bits that need to be modified. On 64K PTE,
-diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
-index 2b4af824bdc55..91ef9d47029b1 100644
---- a/arch/powerpc/include/asm/book3s/64/pgtable.h
-+++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
-@@ -332,32 +332,6 @@ extern unsigned long pci_io_base;
- 
- #ifndef __ASSEMBLY__
- 
--/*
-- * This is the default implementation of various PTE accessors, it's
-- * used in all cases except Book3S with 64K pages where we have a
-- * concept of sub-pages
-- */
--#ifndef __real_pte
--
+  * With 4K page size the real_pte machinery is all nops.
+  */
 -#define __real_pte(e, p, o)		((real_pte_t){(e)})
--#define __rpte_to_pte(r)	((r).pte)
++static inline real_pte_t __real_pte(pte_t pte, pte_t *ptep, int offset)
++{
++	return (real_pte_t){pte};
++}
++
+ #define __rpte_to_pte(r)	((r).pte)
 -#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
--
--#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
--	do {							         \
--		index = 0;					         \
--		shift = mmu_psize_defs[psize].shift;		         \
--
--#define pte_iterate_hashed_end() } while(0)
--
--/*
-- * We expect this to be called only for user addresses or kernel virtual
-- * addresses other than the linear mapping.
-- */
--#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
--
--#endif /* __real_pte */
--
- static inline unsigned long pte_update(struct mm_struct *mm, unsigned long addr,
- 				       pte_t *ptep, unsigned long clr,
- 				       unsigned long set, int huge)
++
++static inline unsigned long __rpte_to_hidx(real_pte_t rpte, unsigned long index)
++{
++	return pte_val(__rpte_to_pte(rpte)) >> H_PAGE_F_GIX_SHIFT;
++}
+ 
+ #define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
+ 	do {							         \
 -- 
 2.39.5
 
