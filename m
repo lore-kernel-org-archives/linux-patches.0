@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5B414BF89;
-	Tue, 11 Mar 2025 15:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22251EA80;
+	Tue, 11 Mar 2025 15:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706114; cv=none; b=FHIPPHi8oO/xSi7H37fdiBySNrFGiFEgBxc+zhwyMnc40YH+GAMvD0Xc00PBGRvDWRDaThj/xUygFNudv6Y0Hsou9jDrQVviKvHe2sotaR/SriLQWBaOHTDGWtx5tq2F71kqwBF38nhMJhvgPMwqdYBfOpotJ8W0gxdFBtN0bXo=
+	t=1741706116; cv=none; b=gAiyWZddZqUIrKoHc+PNAB2nbmoJPSHc0UI3V4u7Iq93FNqg7iphVkvBWSnCI1wtAkrGE14Q6KP1TxxXBQta0s1YXAtaviIQeUgAP2EDseLKn24V1hIvboFxxJ8YCgAjC0TwFQgaLFV3HmOXnroeI0XQIRcxUxmtrnhYLR0RBAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706114; c=relaxed/simple;
-	bh=OrT6x6EYLT7dQWd5f084i2XHWqJ/JASYfJhHMXenU6E=;
+	s=arc-20240116; t=1741706116; c=relaxed/simple;
+	bh=voTvg72XFtngNqi+OskHM2bvDQ6+QVOoLPuzVG0KLEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3vajHwkN97FpY5D/wuCXq9l+TsZ+Gj5Xm5ogPgJNhouWuJtTeh0iT0rZAZN7XouT//973SzBlkO/JzJ6XmIJegOlmabqY/mykb5cpF8N7PfDMqbgGyykCWP5QRCBOTHLnfpjYW9AWGz28cgQKYS+U6PaRGX0i2r+4yj8t/otK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3r7qCzM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ubc/eJ6P8wLk8We5WM1RtFIWqxw2kkDt3a0qTYciD3Tit++f4RxhmuJF60IxJKERooHo/CbEO1+ybV2GyTeYyF6OEDNt4W+ja7xyvkSPjnNdAg9iFJR9DjzhzeUgHEt0zwujkvpZC3VTzYLthNKKV9O+Z1yZZlBDSrrhQ/T4xeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYAtjhEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3r7qCzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A97C4CEE9;
-	Tue, 11 Mar 2025 15:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYAtjhEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4823FC4CEEA;
+	Tue, 11 Mar 2025 15:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706113;
-	bh=OrT6x6EYLT7dQWd5f084i2XHWqJ/JASYfJhHMXenU6E=;
+	s=korg; t=1741706116;
+	bh=voTvg72XFtngNqi+OskHM2bvDQ6+QVOoLPuzVG0KLEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3r7qCzMYdr29WHsiNVJqPZsLgubn1A8nEnmpaCX0Kq/PhDesPZto+HbGsKEZH4h4
-	 2jZ0ml41nO8Rvdqi2p1fFTGM6WWX2Yv6QMWh/S2gxUf8+GS55R2dHuZuEKvcs1VdOo
-	 NmUFGZcXvt1eUzE/rW0IoYFfa+eX8Leq9Aq5kIY4=
+	b=EYAtjhEn7iauJy238aX6njIe2ZzuENAh2BijGlbcZJpFMjQAXFb/G7jHEY+00E4/X
+	 fqenEuAiYd46N1DpklLwA0FKLnNzTiCf73ekxKX/2QbApgHuyzIR3Z+mXKA5/CzzjK
+	 aUemKhfqXfX1A/s53ikYS+HjncXFd5YDeA1ekcTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Volodymyr Mytnyk <volodymyr.mytnyk@plvision.eu>,
-	Maksym Glubokiy <maksym.glubokiy@plvision.eu>,
-	"David S. Miller" <davem@davemloft.net>,
+	Qiang Zhang <dtzq01@gmail.com>,
+	Yoshiki Komachi <komachi.yoshiki@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 248/328] net: extract port range fields from fl_flow_key
-Date: Tue, 11 Mar 2025 16:00:18 +0100
-Message-ID: <20250311145724.767027530@linuxfoundation.org>
+Subject: [PATCH 5.4 249/328] flow_dissector: Fix handling of mixed port and port-range keys
+Date: Tue, 11 Mar 2025 16:00:19 +0100
+Message-ID: <20250311145724.806485543@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,113 +56,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksym Glubokiy <maksym.glubokiy@plvision.eu>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 83d85bb069152b790caad905fa53e6d50cd3734d ]
+[ Upstream commit 3e5796862c692ea608d96f0a1437f9290f44953a ]
 
-So it can be used for port range filter offloading.
+This patch fixes a bug in TC flower filter where rules combining a
+specific destination port with a source port range weren't working
+correctly.
 
-Co-developed-by: Volodymyr Mytnyk <volodymyr.mytnyk@plvision.eu>
-Signed-off-by: Volodymyr Mytnyk <volodymyr.mytnyk@plvision.eu>
-Signed-off-by: Maksym Glubokiy <maksym.glubokiy@plvision.eu>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 3e5796862c69 ("flow_dissector: Fix handling of mixed port and port-range keys")
+The specific case was when users tried to configure rules like:
+
+tc filter add dev ens38 ingress protocol ip flower ip_proto udp \
+dst_port 5000 src_port 2000-3000 action drop
+
+The root cause was in the flow dissector code. While both
+FLOW_DISSECTOR_KEY_PORTS and FLOW_DISSECTOR_KEY_PORTS_RANGE flags
+were being set correctly in the classifier, the __skb_flow_dissect_ports()
+function was only populating one of them: whichever came first in
+the enum check. This meant that when the code needed both a specific
+port and a port range, one of them would be left as 0, causing the
+filter to not match packets as expected.
+
+Fix it by removing the either/or logic and instead checking and
+populating both key types independently when they're in use.
+
+Fixes: 8ffb055beae5 ("cls_flower: Fix the behavior using port ranges with hw-offload")
+Reported-by: Qiang Zhang <dtzq01@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAPx+-5uvFxkhkz4=j_Xuwkezjn9U6kzKTD5jz4tZ9msSJ0fOJA@mail.gmail.com/
+Cc: Yoshiki Komachi <komachi.yoshiki@gmail.com>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250218043210.732959-2-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/flow_dissector.h | 16 ++++++++++++++++
- include/net/flow_offload.h   |  6 ++++++
- net/core/flow_offload.c      |  7 +++++++
- net/sched/cls_flower.c       |  8 +-------
- 4 files changed, 30 insertions(+), 7 deletions(-)
+ net/core/flow_dissector.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/flow_dissector.h b/include/net/flow_dissector.h
-index 02171416c68eb..efd7987982a8c 100644
---- a/include/net/flow_dissector.h
-+++ b/include/net/flow_dissector.h
-@@ -158,6 +158,22 @@ struct flow_dissector_key_ports {
- 	};
- };
- 
-+/**
-+ * struct flow_dissector_key_ports_range
-+ * @tp: port number from packet
-+ * @tp_min: min port number in range
-+ * @tp_max: max port number in range
-+ */
-+struct flow_dissector_key_ports_range {
-+	union {
-+		struct flow_dissector_key_ports tp;
-+		struct {
-+			struct flow_dissector_key_ports tp_min;
-+			struct flow_dissector_key_ports tp_max;
-+		};
-+	};
-+};
-+
- /**
-  * flow_dissector_key_icmp:
-  *	@ports: type and code of ICMP header
-diff --git a/include/net/flow_offload.h b/include/net/flow_offload.h
-index c6f7bd22db609..dc4274dcdec7f 100644
---- a/include/net/flow_offload.h
-+++ b/include/net/flow_offload.h
-@@ -48,6 +48,10 @@ struct flow_match_ports {
- 	struct flow_dissector_key_ports *key, *mask;
- };
- 
-+struct flow_match_ports_range {
-+	struct flow_dissector_key_ports_range *key, *mask;
-+};
-+
- struct flow_match_icmp {
- 	struct flow_dissector_key_icmp *key, *mask;
- };
-@@ -90,6 +94,8 @@ void flow_rule_match_ip(const struct flow_rule *rule,
- 			struct flow_match_ip *out);
- void flow_rule_match_ports(const struct flow_rule *rule,
- 			   struct flow_match_ports *out);
-+void flow_rule_match_ports_range(const struct flow_rule *rule,
-+				 struct flow_match_ports_range *out);
- void flow_rule_match_tcp(const struct flow_rule *rule,
- 			 struct flow_match_tcp *out);
- void flow_rule_match_icmp(const struct flow_rule *rule,
-diff --git a/net/core/flow_offload.c b/net/core/flow_offload.c
-index 45b6a59ac1243..3d54eca5960dc 100644
---- a/net/core/flow_offload.c
-+++ b/net/core/flow_offload.c
-@@ -97,6 +97,13 @@ void flow_rule_match_ports(const struct flow_rule *rule,
- }
- EXPORT_SYMBOL(flow_rule_match_ports);
- 
-+void flow_rule_match_ports_range(const struct flow_rule *rule,
-+				 struct flow_match_ports_range *out)
-+{
-+	FLOW_DISSECTOR_MATCH(rule, FLOW_DISSECTOR_KEY_PORTS_RANGE, out);
-+}
-+EXPORT_SYMBOL(flow_rule_match_ports_range);
-+
- void flow_rule_match_tcp(const struct flow_rule *rule,
- 			 struct flow_match_tcp *out)
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 5daa72a930a9c..f4cc3710be94a 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -705,23 +705,30 @@ __skb_flow_dissect_ports(const struct sk_buff *skb,
+ 			 void *target_container, void *data, int nhoff,
+ 			 u8 ip_proto, int hlen)
  {
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index c92318f68f92d..803107b30814e 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -54,13 +54,7 @@ struct fl_flow_key {
- 	struct flow_dissector_key_ip ip;
- 	struct flow_dissector_key_ip enc_ip;
- 	struct flow_dissector_key_enc_opts enc_opts;
--	union {
--		struct flow_dissector_key_ports tp;
--		struct {
--			struct flow_dissector_key_ports tp_min;
--			struct flow_dissector_key_ports tp_max;
--		};
--	} tp_range;
-+	struct flow_dissector_key_ports_range tp_range;
- 	struct flow_dissector_key_ct ct;
- } __aligned(BITS_PER_LONG / 8); /* Ensure that we can do comparisons as longs. */
+-	enum flow_dissector_key_id dissector_ports = FLOW_DISSECTOR_KEY_MAX;
+-	struct flow_dissector_key_ports *key_ports;
++	struct flow_dissector_key_ports_range *key_ports_range = NULL;
++	struct flow_dissector_key_ports *key_ports = NULL;
++	__be32 ports;
  
+ 	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS))
+-		dissector_ports = FLOW_DISSECTOR_KEY_PORTS;
+-	else if (dissector_uses_key(flow_dissector,
+-				    FLOW_DISSECTOR_KEY_PORTS_RANGE))
+-		dissector_ports = FLOW_DISSECTOR_KEY_PORTS_RANGE;
++		key_ports = skb_flow_dissector_target(flow_dissector,
++						      FLOW_DISSECTOR_KEY_PORTS,
++						      target_container);
++
++	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS_RANGE))
++		key_ports_range = skb_flow_dissector_target(flow_dissector,
++							    FLOW_DISSECTOR_KEY_PORTS_RANGE,
++							    target_container);
+ 
+-	if (dissector_ports == FLOW_DISSECTOR_KEY_MAX)
++	if (!key_ports && !key_ports_range)
+ 		return;
+ 
+-	key_ports = skb_flow_dissector_target(flow_dissector,
+-					      dissector_ports,
+-					      target_container);
+-	key_ports->ports = __skb_flow_get_ports(skb, nhoff, ip_proto,
+-						data, hlen);
++	ports = __skb_flow_get_ports(skb, nhoff, ip_proto, data, hlen);
++
++	if (key_ports)
++		key_ports->ports = ports;
++
++	if (key_ports_range)
++		key_ports_range->tp.ports = ports;
+ }
+ 
+ static void
 -- 
 2.39.5
 
