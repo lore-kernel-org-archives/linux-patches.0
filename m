@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0C025FA14;
-	Tue, 11 Mar 2025 15:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFB725F7A9;
+	Tue, 11 Mar 2025 15:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707149; cv=none; b=f0xdrkdKH1CSEZFvRTlWMsgiDA0gmZ927lOIiDgnIsJ//m9I4Ws1yIPIOT/WZuzzESIvXiDUEeK+3Fi9kvO5uCo6QmqII+XPW7XCnX/wR09La9pliS7JCIQA9JCVmdvfzhPygUf5oU+Mvkn9XPgwPC+CYdpg4F4ERBmNvZhpEuk=
+	t=1741707152; cv=none; b=FSHfd/ilcf+TYzWzqrdHKWGF5e01Hs4dwpctRxndYFYYQ/KNQOLS5YEZTphb0eWseMzNKl5WdK256uZvJkmDzg/RgrLc0cP4GDt2HAO+s4iAqQWfu0aIo3jDmWoFrcHYVQLbYJzg4M9Ygx2PwSr3zImnTZE0J8DQu1ENX2tavRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707149; c=relaxed/simple;
-	bh=xcnKniclKUxTmLzFp2Uq8Jndjh0KGw9MGnkF7l94qcA=;
+	s=arc-20240116; t=1741707152; c=relaxed/simple;
+	bh=cqkqpzsHeBFE/X5R6sG2NnB9IZwazypF1YT8w992oEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Puc2XAVXlnRfbbarRQBXG3rNn6g/xso/1JnuZpA1bErH6Fct+O9RKtq2bNQRRwr8zr+p6AmvavipelmZj8JRsBuIa1bslno7ECXQDEy+wxNJksDwEUCjsNBFE+PAeJbitWb6Cynem/crJGe49cUAzOPmBJxKoaVcID64N0frCt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfX1bGdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plihQ/GTnnqI4cIv77UaxP1mplDeoLTke0ze0DL7+SA6k4mCBMkyOkQ4KUmseEcdkHzTBtknPgB4etsZOnb1FH4vgRmP8mAl0oygK9n/FXGG1jp+ZdHQlLhkh9cdFBcZRpBb9Pm3+aDA6jcz0exMRYXmiSurOHi50cpoAPx4NuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY1bPrxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfX1bGdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988CBC4CEF0;
-	Tue, 11 Mar 2025 15:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY1bPrxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EF4C4CEE9;
+	Tue, 11 Mar 2025 15:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707149;
-	bh=xcnKniclKUxTmLzFp2Uq8Jndjh0KGw9MGnkF7l94qcA=;
+	s=korg; t=1741707151;
+	bh=cqkqpzsHeBFE/X5R6sG2NnB9IZwazypF1YT8w992oEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfX1bGdUX9MACx6+SSCysfTipgDzbymME7er5ucQ/2McbtqHeHPuci80xzUUSs33Q
-	 eo7fgRU0ExnavCzroGQw8wtrkb1X5Fd08rceoRFBpNqaHUregldm+ILZPePOlohuVd
-	 DrsxEOZRiWrmUKUPZe79XctJR10tTknpfgefEkMI=
+	b=YY1bPrxKg+oMVOmqlNC8aepPxtjQq0sQz4l6AMnl+M3zr3frz9+PJ0zDzNybZ9xEy
+	 eybGHvI9qQ6SinaeF5uB8rOGaQBK/F/+Y64ER+CtcIzcJUc9Pq/T58C7/MT8NGX58J
+	 0+Pz5pOLfKpOzm5jtb6u852aCBHxADUr/c1PDQGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cormier <jcormier@criticallink.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 5.10 291/462] drm/tidss: Clear the interrupt status for interrupts being disabled
-Date: Tue, 11 Mar 2025 15:59:17 +0100
-Message-ID: <20250311145809.862886461@linuxfoundation.org>
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Brian Norris <briannorris@chromium.org>
+Subject: [PATCH 5.10 292/462] kdb: Do not assume write() callback available
+Date: Tue, 11 Mar 2025 15:59:18 +0100
+Message-ID: <20250311145809.902720261@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,72 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devarsh Thakkar <devarsht@ti.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-commit 361a2ebb5cad211732ec3c5d962de49b21895590 upstream.
+commit 6d3e0d8cc63221dec670d0ee92ac57961581e975 upstream.
 
-The driver does not touch the irqstatus register when it is disabling
-interrupts.  This might cause an interrupt to trigger for an interrupt
-that was just disabled.
+It is allowed for consoles to not provide a write() callback. For
+example ttynull does this.
 
-To fix the issue, clear the irqstatus registers right after disabling
-the interrupts.
+Check if a write() callback is available before using it.
 
-Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
-Cc: stable@vger.kernel.org
-Reported-by: Jonathan Cormier <jcormier@criticallink.com>
-Closes: https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1394222/am625-issue-about-tidss-rcu_preempt-self-detected-stall-on-cpu/5424479#5424479
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-[Tomi: mostly rewrote the patch]
-Reviewed-by: Jonathan Cormier <jcormier@criticallink.com>
-Tested-by: Jonathan Cormier <jcormier@criticallink.com>
-Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-5-82ddaec94e4a@ideasonboard.com
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230717194607.145135-2-john.ogness@linutronix.de
+Cc: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tidss/tidss_dispc.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/debug/kdb/kdb_io.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/tidss/tidss_dispc.c
-+++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -596,7 +596,7 @@ void dispc_k2g_set_irqenable(struct disp
- {
- 	dispc_irq_t old_mask = dispc_k2g_read_irqenable(dispc);
- 
--	/* clear the irqstatus for newly enabled irqs */
-+	/* clear the irqstatus for irqs that will be enabled */
- 	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & mask);
- 
- 	dispc_k2g_vp_set_irqenable(dispc, 0, mask);
-@@ -604,6 +604,9 @@ void dispc_k2g_set_irqenable(struct disp
- 
- 	dispc_write(dispc, DISPC_IRQENABLE_SET, (1 << 0) | (1 << 7));
- 
-+	/* clear the irqstatus for irqs that were disabled */
-+	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & old_mask);
-+
- 	/* flush posted write */
- 	dispc_k2g_read_irqenable(dispc);
- }
-@@ -735,7 +738,7 @@ static void dispc_k3_set_irqenable(struc
- 
- 	old_mask = dispc_k3_read_irqenable(dispc);
- 
--	/* clear the irqstatus for newly enabled irqs */
-+	/* clear the irqstatus for irqs that will be enabled */
- 	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & mask);
- 
- 	for (i = 0; i < dispc->feat->num_vps; ++i) {
-@@ -760,6 +763,9 @@ static void dispc_k3_set_irqenable(struc
- 	if (main_disable)
- 		dispc_write(dispc, DISPC_IRQENABLE_CLR, main_disable);
- 
-+	/* clear the irqstatus for irqs that were disabled */
-+	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & old_mask);
-+
- 	/* Flush posted writes */
- 	dispc_read(dispc, DISPC_IRQENABLE_SET);
- }
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -577,6 +577,8 @@ static void kdb_msg_write(const char *ms
+ 			continue;
+ 		if (c == dbg_io_ops->cons)
+ 			continue;
++		if (!c->write)
++			continue;
+ 		/*
+ 		 * Set oops_in_progress to encourage the console drivers to
+ 		 * disregard their internal spin locks: in the current calling
 
 
