@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4841DF749;
-	Tue, 11 Mar 2025 15:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF36A1DF749;
+	Tue, 11 Mar 2025 15:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706835; cv=none; b=fFGB0akPTCAi4ICAZKMeeW2TDQw8qrrm+q8w90zkGT/lhH4d0f7AjdTCS2kZoOAtXd2CkEpWkLhh0gdCw43ckpQCpir/FMD9iQgDLh729ivcUmc9bgHU4b/BTpTY5yVnNCEYbTQ+YN0DYwRM4Os1UW8fhdzgTTmmRtwu844j8n4=
+	t=1741706838; cv=none; b=MGgAgD+Uf3YAv8QSJI8ZHV9rFXJ8N5G1znS+L1Zkv6bhLEvwFzEh5oyju8Ln+OyRulkPE2gMYHeX2PLgU+1nQSuAtCJYz6O8ROABvHobWp8sYXEcI45ik5xqUsJX4Zv67PSgVCYy6MT+5LQpMXLpxL/odlbeXaRPt1rGBG0Erkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706835; c=relaxed/simple;
-	bh=sQjvohlMReDGeLrJU9dRAz6Mlve+axNVYWIEaus73Ps=;
+	s=arc-20240116; t=1741706838; c=relaxed/simple;
+	bh=fZRmwKT+nvf8KqP/z8aiKagrbirR0VFjK7y/UzXMRfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFXNns/96tlcwHrVsO+/9LielHwVAWhfIIKCb68Ri9llyisURL/Ri1LbwJgdK19a7GV2B6j5j6hFHWcuAEW5KngZWpCgC9jxOl2H7Sa4+ChEJtOeIqAS+L10RCh6VEARAaMCvcYSn834E5ZmvWJtUTRNWIGBVwO4w2U8ouRUq3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi3rL/W3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2Lpx8bEjh8yCTCVvZaWC+pDGLTzuhCToT6cNM8Mr3q2XJ9ya7HgO7rySx/ZBBAnni6J1mdPabi/tm8IxWEYvHAz8z38cWnr0waydyFAMAdzrsYyAm+dRheRyXRMRZ2gy/bpRXDNqqnb1f7DJOgw/qfGLftpGBQLg75rQ1/PteQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ee4Vi5Qp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi3rL/W3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7284AC4CEE9;
-	Tue, 11 Mar 2025 15:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ee4Vi5Qp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AB8C4CEE9;
+	Tue, 11 Mar 2025 15:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706834;
-	bh=sQjvohlMReDGeLrJU9dRAz6Mlve+axNVYWIEaus73Ps=;
+	s=korg; t=1741706837;
+	bh=fZRmwKT+nvf8KqP/z8aiKagrbirR0VFjK7y/UzXMRfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mi3rL/W36Mo18hqix7xGkEecXHpv0jfJMFQVu6S135ealpaE4snv86l2WgynjOTaA
-	 ubCpPcFq3tMR/A2+RQaYCL4eaoHqZuluuf+uSaiE7h+ceHEQLrfWX4pR9H/RhY0GPU
-	 slt++d+W26rz4QigTcsFcWBOROmKIPpauTdtfkQA=
+	b=ee4Vi5QpjGTXvw3En0KD+aYC8hMzYVm3/2/zXtQGtLC44hGI2Mj7BF2gm+FXEIDwx
+	 BSRb9+65gmmVHSyb3pB6LBuydcG88mA79icvigqAv77WhbSkUUoHECjftaUihkCFyH
+	 6isUb2J8XptBnUQYx8ZD7TxaNMzwyqjV/5182+Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 176/462] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-Date: Tue, 11 Mar 2025 15:57:22 +0100
-Message-ID: <20250311145805.306799910@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 5.10 185/462] wifi: rtlwifi: rtl8821ae: Fix media status report
+Date: Tue, 11 Mar 2025 15:57:31 +0100
+Message-ID: <20250311145805.667476414@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,81 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 33f1722eb86e45320a3dd7b3d42f6593a1d595c2 upstream.
+commit 66ef0289ac99e155d206ddaa0fdfad09ae3cd007 upstream.
 
-Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-added support for configuring alpha mode, but it seems that the feature
-was never working in practice.
+RTL8821AE is stuck transmitting at the lowest rate allowed by the rate
+mask. This is because the firmware doesn't know the device is connected
+to a network.
 
-The value of the alpha_{en,mode}_mask members of the configuration gets
-added to the value parameter passed to the regmap_update_bits() function,
-however the same values are not getting applied to the bitmask. As the
-result, the respective bits in the USER_CTL register are never modifed
-which leads to improper configuration of several PLLs.
+Fix the macros SET_H2CCMD_MSRRPT_PARM_OPMODE and
+SET_H2CCMD_MSRRPT_PARM_MACID_IND to work on the first byte of __cmd,
+not the second. Now the firmware is correctly notified when the device
+is connected to a network and it activates the rate control.
 
-The following table shows the PLL configurations where the 'alpha_en_mask'
-member is set and which are passed as a parameter for the
-clk_alpha_pll_configure() function. In the table the 'expected rate' column
-shows the rate the PLL should run at with the given configuration, and
-the 'real rate' column shows the rate the PLL runs at actually. The real
-rates has been verified on hardwareOn IPQ* platforms, on other platforms,
-those are computed values only.
+Before (MCS3):
 
-      file                 pll         expected rate   real rate
-  dispcc-qcm2290.c     disp_cc_pll0      768.0 MHz     768.0 MHz
-  dispcc-sm6115.c      disp_cc_pll0      768.0 MHz     768.0 MHz
-  gcc-ipq5018.c        ubi32_pll        1000.0 MHz !=  984.0 MHz
-  gcc-ipq6018.c        nss_crypto_pll   1200.0 MHz    1200.0 MHz
-  gcc-ipq6018.c        ubi32_pll        1497.6 MHz != 1488.0 MHz
-  gcc-ipq8074.c        nss_crypto_pll   1200.0 MHz != 1190.4 MHz
-  gcc-qcm2290.c        gpll11            532.0 MHz !=  518.4 MHz
-  gcc-qcm2290.c        gpll8             533.2 MHz !=  518.4 MHz
-  gcc-qcs404.c         gpll3             921.6 MHz     921.6 MHz
-  gcc-sm6115.c         gpll11            600.0 MHz !=  595.2 MHz
-  gcc-sm6115.c         gpll8             800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll0       800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll1       740.0 MHz !=  729.6 MHz
-  gpucc-sm6115.c       gpu_cc_pll0      1200.0 MHz != 1190.4 MHz
-  gpucc-sm6115.c       gpu_cc_pll1       640.0 MHz !=  633.6 MHz
-  gpucc-sm6125.c       gpu_pll0         1020.0 MHz != 1017.6 MHz
-  gpucc-sm6125.c       gpu_pll1          930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll8            930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll5            825.0 MHz !=  806.4 MHz
+[  5]   0.00-1.00   sec  12.5 MBytes   105 Mbits/sec    0    339 KBytes
+[  5]   1.00-2.00   sec  10.6 MBytes  89.1 Mbits/sec    0    339 KBytes
+[  5]   2.00-3.00   sec  10.6 MBytes  89.1 Mbits/sec    0    386 KBytes
+[  5]   3.00-4.00   sec  10.6 MBytes  89.1 Mbits/sec    0    386 KBytes
+[  5]   4.00-5.00   sec  10.2 MBytes  86.0 Mbits/sec    0    427 KBytes
 
-As it can be seen from the above, there are several PLLs which are
-configured incorrectly.
+After (MCS9):
 
-Change the code to apply both 'alpha_en_mask' and 'alpha_mode_mask'
-values to the bitmask in order to configure the alpha mode correctly.
+[  5]   0.00-1.00   sec  33.9 MBytes   284 Mbits/sec    0    771 KBytes
+[  5]   1.00-2.00   sec  31.6 MBytes   265 Mbits/sec    0    865 KBytes
+[  5]   2.00-3.00   sec  29.9 MBytes   251 Mbits/sec    0    963 KBytes
+[  5]   3.00-4.00   sec  28.2 MBytes   237 Mbits/sec    0    963 KBytes
+[  5]   4.00-5.00   sec  26.8 MBytes   224 Mbits/sec    0    963 KBytes
 
-Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
-in the table above. Since the 'alpha_mode_mask' is not used by any driver
-currently, that part of the change causes no functional changes.
-
+Fixes: 39f40710d0b5 ("rtlwifi: rtl88821ae: Remove usage of private bit manipulation macros")
 Cc: stable@vger.kernel.org
-Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/r/20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/754785b3-8a78-4554-b80d-de5f603b410b@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -240,6 +240,8 @@ void clk_alpha_pll_configure(struct clk_
- 	mask |= config->pre_div_mask;
- 	mask |= config->post_div_mask;
- 	mask |= config->vco_mask;
-+	mask |= config->alpha_en_mask;
-+	mask |= config->alpha_mode_mask;
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h
+@@ -197,9 +197,9 @@ enum rtl8821a_h2c_cmd {
  
- 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
+ /* _MEDIA_STATUS_RPT_PARM_CMD1 */
+ #define SET_H2CCMD_MSRRPT_PARM_OPMODE(__cmd, __value)	\
+-	u8p_replace_bits(__cmd + 1, __value, BIT(0))
++	u8p_replace_bits(__cmd, __value, BIT(0))
+ #define SET_H2CCMD_MSRRPT_PARM_MACID_IND(__cmd, __value)	\
+-	u8p_replace_bits(__cmd + 1, __value, BIT(1))
++	u8p_replace_bits(__cmd, __value, BIT(1))
  
+ /* AP_OFFLOAD */
+ #define SET_H2CCMD_AP_OFFLOAD_ON(__cmd, __value)	\
 
 
