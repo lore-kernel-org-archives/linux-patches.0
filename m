@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B0F1C3BEB;
-	Tue, 11 Mar 2025 15:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83E81E98FB;
+	Tue, 11 Mar 2025 15:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706158; cv=none; b=QeqiHpXxGO3KlpG6iW6Fz6ngR6bn4Dxd+nAW/iJSiHY8RfhszK0l9u/I+Fnxh+CgRS8CcmSxPMr1CZinkX8Py45VuS6P0uCIBV9MpND4vV0gEDiDutcx7RiCffS4pRntK22AKJitJGmi1kgNK06j8kcG8nVbsz2Zwzw9HWwYsw4=
+	t=1741706160; cv=none; b=jce2NCjEBMqaR6+wmeGmW+u1ZrA3IlNWFFp3tFl+lAdQqqKruzuNdNG00MUdjsikM7IuXcc4thiRWQoSV89dkAZ1lYNSTevsmWPEFk6jnxUG9geMGDisjvdHjJBQ+mLVvkVfQ4xyuw2GxdBGgS+n0vM3UKbUes0RKChImuOd61g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706158; c=relaxed/simple;
-	bh=WpwJQKclFWAVokTj2MnyCssfSuXrKpXoE1euMND4z44=;
+	s=arc-20240116; t=1741706160; c=relaxed/simple;
+	bh=HSlnpOqXoKynK7G/OwXeJ7r9elxBgnVkAt1x0U4OSKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZbdU7lLMC/e09C341HW+F8W7ES2zOIsf7zq1GVD9mAQqYTCy+ngcvYUrRK+JleWA5G+vTqtlQC+06j3NeaQsisrusr89Me0aQzRZPoITfMD3g2TTrKBPbDmpLGOuD1d61+3nuPbgxpIDRGzxEUaTyEfVhUvRVxPnXOduEfJMAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV4c7Lsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=noabIe5oBUxdec03S3NWvALvVMUCAGGmf4CMzOXZRB/ArIYkLxjt2tmA7BgkCXaV64INPmhYAi4HrMU7awWr0II+ZHfJJg4qq175wV1tXS4pcH0aAvAr4InOCRT6WoVNff9ut5ZReWZyIXjnzMzLugaBcK1eRrPogjOnbwn1CSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vamCTVNF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV4c7Lsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C213C4CEE9;
-	Tue, 11 Mar 2025 15:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vamCTVNF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E2FC4CEE9;
+	Tue, 11 Mar 2025 15:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706157;
-	bh=WpwJQKclFWAVokTj2MnyCssfSuXrKpXoE1euMND4z44=;
+	s=korg; t=1741706160;
+	bh=HSlnpOqXoKynK7G/OwXeJ7r9elxBgnVkAt1x0U4OSKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EV4c7LspNVVADm1gVS8gS0naf/ZeLqa4uI0Vwviruh7AP5V0OfF7pB1qTpOXrj2OB
-	 1qIStlGgbe6MDLoQU32+YYpmONCb+SDr/VcbMPOgadPIBisktQ6/KmqP5RrKoevuOG
-	 +0DTlTnwa2nSll26awQREwnG9sc0ivyEHxjcF8Rs=
+	b=vamCTVNFlkzDuBOr1yHz2doUS5GhARIOC8+a9Ow6RN1hYrPPe3oR2NLhSnCW3bst8
+	 6E71lAjeSdjgHe+UPLgGduGbubB7iTA6wR1sWQyzmGIdEq1MbRO6bjlXnkp4i7FgQJ
+	 2BsatjfSXpaAlqdNof9Fd+bL3Gz5YMtYf5q67UK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 282/328] ALSA: hda/realtek: update ALC222 depop optimize
-Date: Tue, 11 Mar 2025 16:00:52 +0100
-Message-ID: <20250311145726.122422647@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
+	Richard Thier <u9vata@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 283/328] drm/radeon: Fix rs400_gpu_init for ATI mobility radeon Xpress 200M
+Date: Tue, 11 Mar 2025 16:00:53 +0100
+Message-ID: <20250311145726.161243793@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -44,122 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Richard Thier <u9vata@gmail.com>
 
-commit ca0dedaff92307591f66c9206933fbdfe87add10 upstream.
+commit 29ffeb73b216ce3eff10229eb077cf9b7812119d upstream.
 
-Add ALC222 its own depop functions for alc_init and alc_shutup.
+num_gb_pipes was set to a wrong value using r420_pipe_config
 
-[note: this fixes pop noise issues on the models with two headphone
- jacks -- tiwai ]
+This have lead to HyperZ glitches on fast Z clearing.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Closes: https://bugs.freedesktop.org/show_bug.cgi?id=110897
+Reviewed-by: Marek Olšák <marek.olsak@amd.com>
+Signed-off-by: Richard Thier <u9vata@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 044e59a85c4d84e3c8d004c486e5c479640563a6)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   76 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+ drivers/gpu/drm/radeon/r300.c        |    3 ++-
+ drivers/gpu/drm/radeon/radeon_asic.h |    1 +
+ drivers/gpu/drm/radeon/rs400.c       |   18 ++++++++++++++++--
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3713,6 +3713,79 @@ static void alc225_shutup(struct hda_cod
- 	}
+--- a/drivers/gpu/drm/radeon/r300.c
++++ b/drivers/gpu/drm/radeon/r300.c
+@@ -361,7 +361,8 @@ int r300_mc_wait_for_idle(struct radeon_
+ 	return -1;
  }
  
-+static void alc222_init(struct hda_codec *codec)
-+{
-+	struct alc_spec *spec = codec->spec;
-+	hda_nid_t hp_pin = alc_get_hp_pin(spec);
-+	bool hp1_pin_sense, hp2_pin_sense;
-+
-+	if (!hp_pin)
-+		return;
-+
-+	msleep(30);
-+
-+	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
-+	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
-+
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		msleep(2);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+
-+		msleep(75);
-+	}
-+}
-+
-+static void alc222_shutup(struct hda_codec *codec)
-+{
-+	struct alc_spec *spec = codec->spec;
-+	hda_nid_t hp_pin = alc_get_hp_pin(spec);
-+	bool hp1_pin_sense, hp2_pin_sense;
-+
-+	if (!hp_pin)
-+		hp_pin = 0x21;
-+
-+	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
-+	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
-+
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		msleep(2);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x14, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+
-+		msleep(75);
-+	}
-+	alc_auto_setup_eapd(codec, false);
-+	alc_shutup_pins(codec);
-+}
-+
- static void alc_default_init(struct hda_codec *codec)
+-static void r300_gpu_init(struct radeon_device *rdev)
++/* rs400_gpu_init also calls this! */
++void r300_gpu_init(struct radeon_device *rdev)
  {
- 	struct alc_spec *spec = codec->spec;
-@@ -9377,8 +9450,11 @@ static int patch_alc269(struct hda_codec
- 		spec->codec_variant = ALC269_TYPE_ALC300;
- 		spec->gen.mixer_nid = 0; /* no loopback on ALC300 */
- 		break;
-+	case 0x10ec0222:
- 	case 0x10ec0623:
- 		spec->codec_variant = ALC269_TYPE_ALC623;
-+		spec->shutup = alc222_shutup;
-+		spec->init_hook = alc222_init;
- 		break;
- 	case 0x10ec0700:
- 	case 0x10ec0701:
+ 	uint32_t gb_tile_config, tmp;
+ 
+--- a/drivers/gpu/drm/radeon/radeon_asic.h
++++ b/drivers/gpu/drm/radeon/radeon_asic.h
+@@ -165,6 +165,7 @@ void r200_set_safe_registers(struct rade
+  */
+ extern int r300_init(struct radeon_device *rdev);
+ extern void r300_fini(struct radeon_device *rdev);
++extern void r300_gpu_init(struct radeon_device *rdev);
+ extern int r300_suspend(struct radeon_device *rdev);
+ extern int r300_resume(struct radeon_device *rdev);
+ extern int r300_asic_reset(struct radeon_device *rdev, bool hard);
+--- a/drivers/gpu/drm/radeon/rs400.c
++++ b/drivers/gpu/drm/radeon/rs400.c
+@@ -257,8 +257,22 @@ int rs400_mc_wait_for_idle(struct radeon
+ 
+ static void rs400_gpu_init(struct radeon_device *rdev)
+ {
+-	/* FIXME: is this correct ? */
+-	r420_pipes_init(rdev);
++	/* Earlier code was calling r420_pipes_init and then
++	 * rs400_mc_wait_for_idle(rdev). The problem is that
++	 * at least on my Mobility Radeon Xpress 200M RC410 card
++	 * that ends up in this code path ends up num_gb_pipes == 3
++	 * while the card seems to have only one pipe. With the
++	 * r420 pipe initialization method.
++	 *
++	 * Problems shown up as HyperZ glitches, see:
++	 * https://bugs.freedesktop.org/show_bug.cgi?id=110897
++	 *
++	 * Delegating initialization to r300 code seems to work
++	 * and results in proper pipe numbers. The rs400 cards
++	 * are said to be not r400, but r300 kind of cards.
++	 */
++	r300_gpu_init(rdev);
++
+ 	if (rs400_mc_wait_for_idle(rdev)) {
+ 		pr_warn("rs400: Failed to wait MC idle while programming pipes. Bad things might happen. %08x\n",
+ 			RREG32(RADEON_MC_STATUS));
 
 
