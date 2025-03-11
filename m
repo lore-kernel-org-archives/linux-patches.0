@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF6525E83F;
-	Tue, 11 Mar 2025 15:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFA825EFA0;
+	Tue, 11 Mar 2025 15:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707111; cv=none; b=py9bK6stPRm/ZbUG6M+cADMF42aiSaC1A1Mm1rcu9EHRwHMdEIGahfP3yWz4gsqJTvcUxIKxGPnatrFT9LxTGaAcGZX6fzMXbeOPsKbAivbpJwhC5VbZmMVFDgc4zUIAXr/MCKX6k1bgjxy++80vEZp7l2nZiDlayAJe4klJ15o=
+	t=1741707114; cv=none; b=umjeRsr7BcnKuHT0UhUBkHk3oYiTojjmXBsSzyXRH+J+1Yy8zFLoCYVn9VON/bR//ysJJv6Rpgp0GNACzrO4FnTfj+gSi8CQ2x19moOY8p8KFv+NaQ5ZwO5uG13BVSsPo6J5eyNHnPxpvcEJRt0BxJz+WcMyAlTqXOz9ynCP+g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707111; c=relaxed/simple;
-	bh=nJJx84pIg1EefgjoGX+YbswZLVsoekO6dr+uKUL1MwQ=;
+	s=arc-20240116; t=1741707114; c=relaxed/simple;
+	bh=B8hFl3mLUJb13gTo5B1fAL3jWLcMdCKe2fQ4fiEJ/f4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dF7J8F4uaFDSQ02e3yuEWD9FcIqA/IT/M5l52bI6RAA8eDAgt9fjR0DcjteAiHEYOjKNC5CT/SaaReAeivcdIbwPBESDneKkRFNCe1oMwP1XA9Q7/LCy//d+u4U511T2FvWiH8THPhHc4xzEb8T4wh8rWxbWJ0WypV3GiK+eRCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtE+oeg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoKg+7rMdV8NqQFSJtwBh0NRySfNEAkoyW4rKPIFr1elo58eZt+d+wekdaFuxVvT/MMU8NJ422AOzdhogL7REE0uSe3V3al1wYDIggVpu/Fmz+Aq2q4n96RXXZutVvT7jeYjYbszHO2zBV0MATOG7PVcKDynnpRghH+Vsr5m9iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npZCxdoE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtE+oeg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EF4C4CEE9;
-	Tue, 11 Mar 2025 15:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npZCxdoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BC0C4CEE9;
+	Tue, 11 Mar 2025 15:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707111;
-	bh=nJJx84pIg1EefgjoGX+YbswZLVsoekO6dr+uKUL1MwQ=;
+	s=korg; t=1741707114;
+	bh=B8hFl3mLUJb13gTo5B1fAL3jWLcMdCKe2fQ4fiEJ/f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtE+oeg1PvKQrm+ryMrb32J6l0LFDzSZV0NzO7Bx+yI6BGosSCRpUhKcVN6Tg0G9/
-	 w43yU/v84/P/nRqV79Z5UvHnxPRo8P36SYoBgHiOi4XvtJXjLzBPhGRKDdCULwqYKu
-	 SEechokxaCa1uygfBlAt997jQj/MRUS/hKKFjHuk=
+	b=npZCxdoESYFXdRxVDWdxmwebEFdz2I7+rlXoxiNvi/8R5NytLqxuNcgzmX/6TRBbc
+	 239XxXbXY0pHx4FiiCb728kIkXKYoL0NIKya9A4e6iTmKLoqRB8pob0WM73vLpgMN5
+	 3ghUhwpp6T8DADJn2Ll56o570VvwgYC1PjPkKBBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Norov <yury.norov@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/462] clocksource: Replace cpumask_weight() with cpumask_empty()
-Date: Tue, 11 Mar 2025 15:59:02 +0100
-Message-ID: <20250311145809.269877729@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 247/462] usb: roles: set switch registered flag early on
+Date: Tue, 11 Mar 2025 15:58:33 +0100
+Message-ID: <20250311145808.123185725@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,41 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <yury.norov@gmail.com>
+From: Elson Roy Serrao <quic_eserrao@quicinc.com>
 
-[ Upstream commit 8afbcaf8690dac19ebf570a4e4fef9c59c75bf8e ]
+commit 634775a752a86784511018a108f3b530cc3399a7 upstream.
 
-clocksource_verify_percpu() calls cpumask_weight() to check if any bit of a
-given cpumask is set.
+The role switch registration and set_role() can happen in parallel as they
+are invoked independent of each other. There is a possibility that a driver
+might spend significant amount of time in usb_role_switch_register() API
+due to the presence of time intensive operations like component_add()
+which operate under common mutex. This leads to a time window after
+allocating the switch and before setting the registered flag where the set
+role notifications are dropped. Below timeline summarizes this behavior
 
-This can be done more efficiently with cpumask_empty() because
-cpumask_empty() stops traversing the cpumask as soon as it finds first set
-bit, while cpumask_weight() counts all bits unconditionally.
+Thread1				|	Thread2
+usb_role_switch_register()	|
+	|			|
+	---> allocate switch	|
+	|			|
+	---> component_add()	|	usb_role_switch_set_role()
+	|			|	|
+	|			|	--> Drop role notifications
+	|			|	    since sw->registered
+	|			|	    flag is not set.
+	|			|
+	--->Set registered flag.|
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20220210224933.379149-24-yury.norov@gmail.com
-Stable-dep-of: 6bb05a33337b ("clocksource: Use migrate_disable() to avoid calling get_random_u32() in atomic context")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To avoid this, set the registered flag early on in the switch register
+API.
+
+Fixes: b787a3e78175 ("usb: roles: don't get/set_role() when usb_role_switch is unregistered")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206193950.22421-1-quic_eserrao@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/clocksource.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/roles/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index e44fb1e12a281..658b90755dd72 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -338,7 +338,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
- 	cpus_read_lock();
- 	preempt_disable();
- 	clocksource_verify_choose_cpus();
--	if (cpumask_weight(&cpus_chosen) == 0) {
-+	if (cpumask_empty(&cpus_chosen)) {
- 		preempt_enable();
- 		cpus_read_unlock();
- 		pr_warn("Not enough CPUs to check clocksource '%s'.\n", cs->name);
--- 
-2.39.5
-
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -345,14 +345,15 @@ usb_role_switch_register(struct device *
+ 	dev_set_name(&sw->dev, "%s-role-switch",
+ 		     desc->name ? desc->name : dev_name(parent));
+ 
++	sw->registered = true;
++
+ 	ret = device_register(&sw->dev);
+ 	if (ret) {
++		sw->registered = false;
+ 		put_device(&sw->dev);
+ 		return ERR_PTR(ret);
+ 	}
+ 
+-	sw->registered = true;
+-
+ 	/* TODO: Symlinks for the host port and the device controller. */
+ 
+ 	return sw;
 
 
