@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCD515820C;
-	Tue, 11 Mar 2025 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7307A1494BB;
+	Tue, 11 Mar 2025 15:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706872; cv=none; b=Sfg8OGQiKF2U247LVlSUBLmESgAQg76TVLDYgDvYPykJhSuDirJyLc/zMOsns0sZt9kBkKoO7ccpCGGzPslPo/Eky0Koqq/VHZiZX2kAQlYarzzw14dc2skiA2Eo1tRtYqNaX73TImFJwM17GleFfnH3SIoDggnvdiXpBwiNRsY=
+	t=1741706875; cv=none; b=p85G8Pcec7KQhaWFVrwW5V0sEM0L9ZzhzAcjalAHuTN43RWaA9HE5qPNAoJakPt4OXvt4p4hwUbiRwG4wuEYHp7YCbdneAeBo8RbA5uAwo6DesjGpCgj+qwt7mq1ZZiMt7REesFzs+n+QpT+82MwCjC529G/KEydZsqmjUC5aUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706872; c=relaxed/simple;
-	bh=NBU9EQZ4P4ze7iSVOPkzWRjVlVe7v70S/7Qbdo66yxU=;
+	s=arc-20240116; t=1741706875; c=relaxed/simple;
+	bh=joht2hkW01JWYFz1n+Bon+tK8wkXeuZ3Z6+RwS9QpI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKpjEDPsd4spdUO8PCX+wie0uLwg6/iPgQNFuWXaNCYAvx6NwR+rcZ0uQtrV+RXSC14iY8ODlkHBScvaO0cOx3FFd/vuV2edJdUXLAfghqgUmG323/vJ9qhJp2cBJfWMk39UyeTTa1vB3XMYvjZic2MMCVFMaTuJnusnZ6wfglk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjv2gaAY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xu3W3Tnp70gm/CBc3bCXhccP3DGgUnjoNM7vTOhdbtaUwXPoyEscr/sgV7cQRElTpRqqc4Lb0RsDp2Oie4A2tTmB1yTwFqYlO1C3C7Xv/hr1lVD3Z+HYIyYLvjYRrZ8UhorhPN0HiXq2FrOdQ3yDWQJY2y1JiRQohyvKKizOiUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvRgnPjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjv2gaAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139CDC4CEE9;
-	Tue, 11 Mar 2025 15:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvRgnPjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2DCC4CEE9;
+	Tue, 11 Mar 2025 15:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706872;
-	bh=NBU9EQZ4P4ze7iSVOPkzWRjVlVe7v70S/7Qbdo66yxU=;
+	s=korg; t=1741706875;
+	bh=joht2hkW01JWYFz1n+Bon+tK8wkXeuZ3Z6+RwS9QpI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjv2gaAYKbv6YTjJyh+f2pSRxc7928z/rfQe37Kqny/saHaNe/9ygpWRW56LrSrst
-	 Y5thGtMm0xKy+dPpvabNCeMByAat+sVpPoWX4zGPqdscg8+VuytHMltpnVRmDyIWk3
-	 QD34GlZzitoHVa3mZiqj6nZnrbh0qCiTzujgSDKc=
+	b=BvRgnPjLvL3lQS7UBYKJLwtuJSdZY8WizBQMLXT8pmJj4X5vZw6H/LVzdUaOFuiHf
+	 Z4Zpj3Vyt4xt1AM227zdkh2wl5GcJZMx0w2+zjXCH6bi6mwZfKt53NVymkNwGvcl/3
+	 udR5ej4ZZFWF2lUCyZcUnE9YPmQrSlehzZLB60N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 196/462] dm-crypt: track tag_offset in convert_context
-Date: Tue, 11 Mar 2025 15:57:42 +0100
-Message-ID: <20250311145806.100722370@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 197/462] ALSA: hda/realtek: Enable headset mic on Positivo C6400
+Date: Tue, 11 Mar 2025 15:57:43 +0100
+Message-ID: <20250311145806.138876752@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,96 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit 8b8f8037765757861f899ed3a2bfb34525b5c065 upstream.
+commit 1aec3ed2e3e1512aba15e7e790196a44efd5f0a7 upstream.
 
-dm-crypt uses tag_offset to index the integrity metadata for each crypt
-sector. When the initial crypt_convert() returns BLK_STS_DEV_RESOURCE,
-dm-crypt will try to continue the crypt/decrypt procedure in a kworker.
-However, it resets tag_offset as zero instead of using the tag_offset
-related with current sector. It may return unexpected data when using
-random IV or return unexpected integrity related error.
+Positivo C6400 is equipped with ALC269VB, and it needs
+ALC269VB_FIXUP_ASUS_ZENBOOK quirk to make its headset mic work.
+Also must to limits the microphone boost.
 
-Fix the problem by tracking tag_offset in per-IO convert_context.
-Therefore, when the crypt/decrypt procedure continues in a kworker, it
-could use the next tag_offset saved in convert_context.
-
-Fixes: 8abec36d1274 ("dm crypt: do not wait for backlogged crypto request completion in softirq")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250114170619.11510-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -52,6 +52,7 @@ struct convert_context {
- 	struct bio *bio_out;
- 	struct bvec_iter iter_out;
- 	atomic_t cc_pending;
-+	unsigned int tag_offset;
- 	u64 cc_sector;
- 	union {
- 		struct skcipher_request *req;
-@@ -1218,6 +1219,7 @@ static void crypt_convert_init(struct cr
- 	if (bio_out)
- 		ctx->iter_out = bio_out->bi_iter;
- 	ctx->cc_sector = sector + cc->iv_offset;
-+	ctx->tag_offset = 0;
- 	init_completion(&ctx->restart);
- }
- 
-@@ -1543,7 +1545,6 @@ static void crypt_free_req(struct crypt_
- static blk_status_t crypt_convert(struct crypt_config *cc,
- 			 struct convert_context *ctx, bool atomic, bool reset_pending)
- {
--	unsigned int tag_offset = 0;
- 	unsigned int sector_step = cc->sector_size >> SECTOR_SHIFT;
- 	int r;
- 
-@@ -1566,9 +1567,9 @@ static blk_status_t crypt_convert(struct
- 		atomic_inc(&ctx->cc_pending);
- 
- 		if (crypt_integrity_aead(cc))
--			r = crypt_convert_block_aead(cc, ctx, ctx->r.req_aead, tag_offset);
-+			r = crypt_convert_block_aead(cc, ctx, ctx->r.req_aead, ctx->tag_offset);
- 		else
--			r = crypt_convert_block_skcipher(cc, ctx, ctx->r.req, tag_offset);
-+			r = crypt_convert_block_skcipher(cc, ctx, ctx->r.req, ctx->tag_offset);
- 
- 		switch (r) {
- 		/*
-@@ -1588,8 +1589,8 @@ static blk_status_t crypt_convert(struct
- 					 * exit and continue processing in a workqueue
- 					 */
- 					ctx->r.req = NULL;
-+					ctx->tag_offset++;
- 					ctx->cc_sector += sector_step;
--					tag_offset++;
- 					return BLK_STS_DEV_RESOURCE;
- 				}
- 			} else {
-@@ -1603,8 +1604,8 @@ static blk_status_t crypt_convert(struct
- 		 */
- 		case -EINPROGRESS:
- 			ctx->r.req = NULL;
-+			ctx->tag_offset++;
- 			ctx->cc_sector += sector_step;
--			tag_offset++;
- 			continue;
- 		/*
- 		 * The request was already processed (synchronously).
-@@ -1612,7 +1613,7 @@ static blk_status_t crypt_convert(struct
- 		case 0:
- 			atomic_dec(&ctx->cc_pending);
- 			ctx->cc_sector += sector_step;
--			tag_offset++;
-+			ctx->tag_offset++;
- 			if (!atomic)
- 				cond_resched();
- 			continue;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9435,6 +9435,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x511f, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
+ 	SND_PCI_QUIRK(0x17aa, 0x9e54, "LENOVO NB", ALC269_FIXUP_LENOVO_EAPD),
+ 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
+ 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
 
 
