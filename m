@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C12249F9;
-	Tue, 11 Mar 2025 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B0F1C3BEB;
+	Tue, 11 Mar 2025 15:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706155; cv=none; b=XBWTDTtiUMbQUYKJZFnYO/S995SAaQkUrFAY8cKDzB35ADYid10YAtSgOAUVA/M6M6XntqGZ2mmAWJgUtWhuLYxueU/p5W0zAPps9zEhcWWQGC+CMk3Cef8xSax0bo4SKLul250Bdlt5hNWT3t9cbaRqOUOJIB8fFg1AIE4nOfE=
+	t=1741706158; cv=none; b=QeqiHpXxGO3KlpG6iW6Fz6ngR6bn4Dxd+nAW/iJSiHY8RfhszK0l9u/I+Fnxh+CgRS8CcmSxPMr1CZinkX8Py45VuS6P0uCIBV9MpND4vV0gEDiDutcx7RiCffS4pRntK22AKJitJGmi1kgNK06j8kcG8nVbsz2Zwzw9HWwYsw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706155; c=relaxed/simple;
-	bh=xVtMNozGGbzaE3MdwYEl8Ys9KCOwX3mX2C2ctIAhZvw=;
+	s=arc-20240116; t=1741706158; c=relaxed/simple;
+	bh=WpwJQKclFWAVokTj2MnyCssfSuXrKpXoE1euMND4z44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClQB89xWOWUBX0miAAkHe2YRipeyxwnD+aeBcWy+eeletZmtnS2HjpUe5lWr0GQYaIvL8SMRJcCCIXdpNdpyr9nB6K1pJPC9VwYgGdf8dNLPe0VSHx7Zcr9kxJhS7+BG6tkGwBVY65s5GGaMfjdntSLfY3MW8UmE9kgCtR2pGMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYcafrQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZbdU7lLMC/e09C341HW+F8W7ES2zOIsf7zq1GVD9mAQqYTCy+ngcvYUrRK+JleWA5G+vTqtlQC+06j3NeaQsisrusr89Me0aQzRZPoITfMD3g2TTrKBPbDmpLGOuD1d61+3nuPbgxpIDRGzxEUaTyEfVhUvRVxPnXOduEfJMAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV4c7Lsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYcafrQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CE4C4CEE9;
-	Tue, 11 Mar 2025 15:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV4c7Lsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C213C4CEE9;
+	Tue, 11 Mar 2025 15:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706155;
-	bh=xVtMNozGGbzaE3MdwYEl8Ys9KCOwX3mX2C2ctIAhZvw=;
+	s=korg; t=1741706157;
+	bh=WpwJQKclFWAVokTj2MnyCssfSuXrKpXoE1euMND4z44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jYcafrQJMN6Au0NNbYHRvbVs4RsZfV92PagmmMJRn/jVvVJXyQOJB/vbUIk9/PZdr
-	 RLEex/HAyGtl+lZQhC31NY/VNgJXBV0qFeERMqa5PwSgrX4NpwmTAw3HV+TmXtJS0I
-	 pJqwtmI+d/1ShIFfNQUMNztC1CzQgUjQSjv3IkJ8=
+	b=EV4c7LspNVVADm1gVS8gS0naf/ZeLqa4uI0Vwviruh7AP5V0OfF7pB1qTpOXrj2OB
+	 1qIStlGgbe6MDLoQU32+YYpmONCb+SDr/VcbMPOgadPIBisktQ6/KmqP5RrKoevuOG
+	 +0DTlTnwa2nSll26awQREwnG9sc0ivyEHxjcF8Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hoku Ishibe <me@hokuishi.be>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 281/328] ALSA: hda: intel: Add Dell ALC3271 to power_save denylist
-Date: Tue, 11 Mar 2025 16:00:51 +0100
-Message-ID: <20250311145726.083634959@linuxfoundation.org>
+Subject: [PATCH 5.4 282/328] ALSA: hda/realtek: update ALC222 depop optimize
+Date: Tue, 11 Mar 2025 16:00:52 +0100
+Message-ID: <20250311145726.122422647@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -50,57 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hoku Ishibe <me@hokuishi.be>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 1ee5aa765c22a0577ec552d460bf2035300b4b51 upstream.
+commit ca0dedaff92307591f66c9206933fbdfe87add10 upstream.
 
-Dell XPS 13 7390 with the Realtek ALC3271 codec experiences
-persistent humming noise when the power_save mode is enabled.
-This issue occurs when the codec enters power saving mode,
-leading to unwanted noise from the speakers.
+Add ALC222 its own depop functions for alc_init and alc_shutup.
 
-This patch adds the affected model (PCI ID 0x1028:0x0962) to the
-power_save denylist to ensure power_save is disabled by default,
-preventing power-off related noise issues.
+[note: this fixes pop noise issues on the models with two headphone
+ jacks -- tiwai ]
 
-Steps to Reproduce
-1. Boot the system with `snd_hda_intel` loaded.
-2. Verify that `power_save` mode is enabled:
-```sh
-cat /sys/module/snd_hda_intel/parameters/power_save
-````
-output: 10 (default power save timeout)
-3. Wait for the power save timeout
-4. Observe a persistent humming noise from the speakers
-5. Disable `power_save` manually:
-```sh
-echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save
-````
-6. Confirm that the noise disappears immediately.
-
-This issue has been observed on my system, and this patch
-successfully eliminates the unwanted noise. If other users
-experience similar issues, additional reports would be helpful.
-
-Signed-off-by: Hoku Ishibe <me@hokuishi.be>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250224020517.51035-1-me@hokuishi.be
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |   76 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2246,6 +2246,8 @@ static struct snd_pci_quirk power_save_b
- 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
- 	/* KONTRON SinglePC may cause a stall at runtime resume */
- 	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
-+	/* Dell ALC3271 */
-+	SND_PCI_QUIRK(0x1028, 0x0962, "Dell ALC3271", 0),
- 	{}
- };
- #endif /* CONFIG_PM */
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3713,6 +3713,79 @@ static void alc225_shutup(struct hda_cod
+ 	}
+ }
+ 
++static void alc222_init(struct hda_codec *codec)
++{
++	struct alc_spec *spec = codec->spec;
++	hda_nid_t hp_pin = alc_get_hp_pin(spec);
++	bool hp1_pin_sense, hp2_pin_sense;
++
++	if (!hp_pin)
++		return;
++
++	msleep(30);
++
++	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
++	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
++
++	if (hp1_pin_sense || hp2_pin_sense) {
++		msleep(2);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x14, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		msleep(75);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x14, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++
++		msleep(75);
++	}
++}
++
++static void alc222_shutup(struct hda_codec *codec)
++{
++	struct alc_spec *spec = codec->spec;
++	hda_nid_t hp_pin = alc_get_hp_pin(spec);
++	bool hp1_pin_sense, hp2_pin_sense;
++
++	if (!hp_pin)
++		hp_pin = 0x21;
++
++	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
++	hp2_pin_sense = snd_hda_jack_detect(codec, 0x14);
++
++	if (hp1_pin_sense || hp2_pin_sense) {
++		msleep(2);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x14, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++
++		msleep(75);
++
++		if (hp1_pin_sense)
++			snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++		if (hp2_pin_sense)
++			snd_hda_codec_write(codec, 0x14, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++
++		msleep(75);
++	}
++	alc_auto_setup_eapd(codec, false);
++	alc_shutup_pins(codec);
++}
++
+ static void alc_default_init(struct hda_codec *codec)
+ {
+ 	struct alc_spec *spec = codec->spec;
+@@ -9377,8 +9450,11 @@ static int patch_alc269(struct hda_codec
+ 		spec->codec_variant = ALC269_TYPE_ALC300;
+ 		spec->gen.mixer_nid = 0; /* no loopback on ALC300 */
+ 		break;
++	case 0x10ec0222:
+ 	case 0x10ec0623:
+ 		spec->codec_variant = ALC269_TYPE_ALC623;
++		spec->shutup = alc222_shutup;
++		spec->init_hook = alc222_init;
+ 		break;
+ 	case 0x10ec0700:
+ 	case 0x10ec0701:
 
 
