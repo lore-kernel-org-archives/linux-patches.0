@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FBA25E47F;
-	Tue, 11 Mar 2025 15:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB321CAA8F;
+	Tue, 11 Mar 2025 15:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707356; cv=none; b=d2LzNAP6G2k6hAYlR9Af7F9lO+owXHR991hNTCrzcZI320jIkOVyqs2FuP1TlGS/5RogmD5AbKu5u5aSorGUkpafHNXPz8TzdVZYzHkmMHUm0WQzw9GYoMOGJhz7pG7nFrVIoYj+RPwbYNDtTJ606NBTidGbMr+pzQ9+1dR7DRY=
+	t=1741707360; cv=none; b=K+WVqNaeqEx6EkV8pJ2WT4tpeOv18rm9TamZlPcD3Mjc7u0J9+yI2uJ+WPcSziavEYBo+z6xitAobsv0QdamH/ZG6F6aF+5/GI+wpPqwsr4MH9yUxeT6h2EgzFoNYsD9hw8BaioLHNG12zKs7OzrqtE6+0US7BNK8aBvYbdV8KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707356; c=relaxed/simple;
-	bh=VRtGZbuxxXoXW7eJJymHcRPB4P024Tllt8WpwJjfFU0=;
+	s=arc-20240116; t=1741707360; c=relaxed/simple;
+	bh=/JWRTt3HhCBtnsToHfN5wyAgKl1So1ZOZScf9QwX/sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndkd/IwwtfwSj45Cbzx6wFpLWnJveHNREcI/eCqSEtxR7xNcid/QZWppK5LGkSNo8HjogU7K55VHOVOGcNIEH7abLyErO+BL089Cr9/Hsb8IJ9B5Mn4TixAWFNzeQcGZsFyVYp51dv1FbqrXgZUhU3uT+AnM5A88JDGi8jf3bnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daa+GClV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5+0PQLYAvHrqALMVPmYCsJH4QagaSsU5asKQOIY9O5cfjAlTkUsOZ7nXFGokmTOHPHD7fHm1Rba3gTSdSZS5ZwDEHY+pNXwTXJM125Pq3Y5mVfpZUODe0dPkVDOTyNQonbk4pXYBoyUrsVBrDLt4+WYmeZI9pDEsnuZdXjdct8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXzXYyJb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daa+GClV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E34C4CEE9;
-	Tue, 11 Mar 2025 15:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXzXYyJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684C1C4CEE9;
+	Tue, 11 Mar 2025 15:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707356;
-	bh=VRtGZbuxxXoXW7eJJymHcRPB4P024Tllt8WpwJjfFU0=;
+	s=korg; t=1741707359;
+	bh=/JWRTt3HhCBtnsToHfN5wyAgKl1So1ZOZScf9QwX/sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daa+GClVz8Z2Wphk5lxsciz3ZAaexZj48qxHlyP53x99zkzj9mS8ciQxpa9q0JoYC
-	 tSeeR9fAOnBF8f672FWT+mrWHRCOM/RSzb3sBeMNtIyo6NKo0qwhzHKCi0RcKg2fsk
-	 ZFm0yqUY/S90l1ZE155VKA9octBuzLr9Jh5RvTFs=
+	b=vXzXYyJbBgiHGXkpwUKXcD3lh16o7gjTOS+nfzjPKlrGuRgQuveZOYl3J/FosiXWx
+	 FoDymKi3nE/h3snREFu0jGE0vGjyinrsF3x7/6jbbz0VWpFMTOGb5/mrqyanOQn/BP
+	 LGitgV3VPLLirYQov06qT12LZXRtkchabs9g00qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Brian Vazquez <brianvv@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 362/462] net: ipv6: rpl_iptunnel: simplify the return expression of rpl_do_srh()
-Date: Tue, 11 Mar 2025 16:00:28 +0100
-Message-ID: <20250311145812.653551827@linuxfoundation.org>
+Subject: [PATCH 5.10 363/462] net: use indirect call helpers for dst_input
+Date: Tue, 11 Mar 2025 16:00:29 +0100
+Message-ID: <20250311145812.693390477@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,44 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Brian Vazquez <brianvv@google.com>
 
-[ Upstream commit 9faad250ce66ed4159fa095a269690d7cfdb3ce3 ]
+[ Upstream commit e43b21906439ed14dda84f9784d38c03d0464607 ]
 
-Simplify the return expression.
+This patch avoids the indirect call for the common case:
+ip_local_deliver and ip6_input
 
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Brian Vazquez <brianvv@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 13e55fbaec17 ("net: ipv6: fix dst ref loop on input in rpl lwt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/rpl_iptunnel.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ include/net/dst.h   | 6 +++++-
+ net/ipv4/ip_input.c | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
-index 274593b7c6107..df835dfcc5b70 100644
---- a/net/ipv6/rpl_iptunnel.c
-+++ b/net/ipv6/rpl_iptunnel.c
-@@ -190,18 +190,13 @@ static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt)
- {
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct rpl_iptunnel_encap *tinfo;
--	int err = 0;
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 48e613420b952..907b4b5893a67 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -18,6 +18,7 @@
+ #include <linux/refcount.h>
+ #include <net/neighbour.h>
+ #include <asm/processor.h>
++#include <linux/indirect_call_wrapper.h>
  
- 	if (skb->protocol != htons(ETH_P_IPV6))
- 		return -EINVAL;
+ struct sk_buff;
  
- 	tinfo = rpl_encap_lwtunnel(dst->lwtstate);
- 
--	err = rpl_do_srh_inline(skb, rlwt, tinfo->srh);
--	if (err)
--		return err;
--
--	return 0;
-+	return rpl_do_srh_inline(skb, rlwt, tinfo->srh);
+@@ -436,10 +437,13 @@ static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *s
+ 	return skb_dst(skb)->output(net, sk, skb);
  }
  
- static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
++INDIRECT_CALLABLE_DECLARE(int ip6_input(struct sk_buff *));
++INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
+ /* Input packet from network to transport.  */
+ static inline int dst_input(struct sk_buff *skb)
+ {
+-	return skb_dst(skb)->input(skb);
++	return INDIRECT_CALL_INET(skb_dst(skb)->input,
++				  ip6_input, ip_local_deliver, skb);
+ }
+ 
+ static inline struct dst_entry *dst_check(struct dst_entry *dst, u32 cookie)
+diff --git a/net/ipv4/ip_input.c b/net/ipv4/ip_input.c
+index 372579686162b..3109bf6cdf283 100644
+--- a/net/ipv4/ip_input.c
++++ b/net/ipv4/ip_input.c
+@@ -253,6 +253,7 @@ int ip_local_deliver(struct sk_buff *skb)
+ 		       net, NULL, skb, skb->dev, NULL,
+ 		       ip_local_deliver_finish);
+ }
++EXPORT_SYMBOL(ip_local_deliver);
+ 
+ static inline bool ip_rcv_options(struct sk_buff *skb, struct net_device *dev)
+ {
 -- 
 2.39.5
 
