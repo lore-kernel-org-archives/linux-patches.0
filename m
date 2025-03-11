@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02D825E446;
-	Tue, 11 Mar 2025 15:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E136D25DD0B;
+	Tue, 11 Mar 2025 15:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705947; cv=none; b=DKyclDuzJwiLXmVO445QyX2O+T0GrDwPW9G5R6KfQT7Ytcn7Hxoph3fbhsaqJ7STwPjZdbc+3aDTJKBFTHk1s2yU0oK15rqABVwINzlsB5XEu7p115ILwxuufswSUyuAO6i0QJ7atABimg/XRmUFzetdjg5XiSMfgpBSqTg5EM8=
+	t=1741705950; cv=none; b=MlPO//o0tt5udNVpGLVTS54qa3tqnY4qTRY9RUk4Lpm85scnoZMVgln3mtLpRPfVb25IwHZjNeECGiwm6/lsZL5LNRC4MHUt8+4ELIc/qFhohiJ9Mmeg+ErzShdTVbGpB515PVl1RBBKqR7UI6JfT6eGXFdBY7h1CB6rl2a/nxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705947; c=relaxed/simple;
-	bh=bpxPJALYjDrt3O7uTJgtAgn8s+OY0skHS4xKspfpsMI=;
+	s=arc-20240116; t=1741705950; c=relaxed/simple;
+	bh=7N3a5h6knIjxQJTKzEVzofJ3DOrBsYwxVVCmcdaMYao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCUziYDRhdhr86cQaKjEaHBIJqG/OgdE9rjfHPfKec1AEgwZUWdcNW7v58CxKVTEBbmVzSF+67y+qgdmIFCG5KLkHic0FO1qsn3QkFnkypnt/FBloiUQCvsbLp15scHP1NZaiCqN/u4bcWNiwrVoJs1TjFxoO/T9+QpXVGrSdN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoxmWqec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=se3vzwtCk4MYjkrLEqXpEogB07xsRhTkXzUshPNI/ZlWjc1ike+M90ZxY9wuBPw2hIP+fmeq55QvKIDvIhH0K+k30ND+Hj9Je0UvqYepMbJK8pQRikpAL7zY7mg33ryKlEM2CnZotH1ZX+9NT9HRc72sn6HK8Fou1+PGyqnZ6b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9OqTU2d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoxmWqec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A6BC4CEED;
-	Tue, 11 Mar 2025 15:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9OqTU2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64265C4CEE9;
+	Tue, 11 Mar 2025 15:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705946;
-	bh=bpxPJALYjDrt3O7uTJgtAgn8s+OY0skHS4xKspfpsMI=;
+	s=korg; t=1741705949;
+	bh=7N3a5h6knIjxQJTKzEVzofJ3DOrBsYwxVVCmcdaMYao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoxmWqec3AvanwxxSFH40ynSB8JpAts/3/gaul1mPqADpQc5AOBxTwhlCHHjKXQ1H
-	 vTpIlruTF2IzpzaltXA+p7FSK8iY3lIVGHyrkxf2in96/uOJnxLIB3LrfOpXTABKcX
-	 +q3lcZT74D3qpb+UbQ9X7H/z4XkGKh/CBR66f4TA=
+	b=b9OqTU2dV0eSo6DnD288rBrtkExx2F4YDJVvRKXq7TMOarFiT8dEn1W3eyahx4uOM
+	 vTXqrLniqGbCAJP9RzAqXxa3bERfMk87WMvwT1i8TfArm7/H/T3CWphiaCzH+oEouy
+	 B0iKpP0PobA9pnq8ow4cmG2uWhiEQhLH/DBeHSdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Baoqi Zhang <zhangbaoqi@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 5.4 181/328] USB: pci-quirks: Fix HCCPARAMS register error for LS7A EHCI
-Date: Tue, 11 Mar 2025 15:59:11 +0100
-Message-ID: <20250311145722.096255037@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 203/328] ipv4: use RCU protection in rt_is_expired()
+Date: Tue, 11 Mar 2025 15:59:33 +0100
+Message-ID: <20250311145722.970388252@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-commit e71f7f42e3c874ac3314b8f250e8416a706165af upstream.
+[ Upstream commit dd205fcc33d92d54eee4d7f21bb073af9bd5ce2b ]
 
-LS7A EHCI controller doesn't have extended capabilities, so the EECP
-(EHCI Extended Capabilities Pointer) field of HCCPARAMS register should
-be 0x0, but it reads as 0xa0 now. This is a hardware flaw and will be
-fixed in future, now just clear the EECP field to avoid error messages
-on boot:
+rt_is_expired() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
-......
-[    0.581675] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581699] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581716] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581851] pci 0000:00:04.1: EHCI: unrecognized capability ff
-......
-[    0.581916] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.581951] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.582704] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.582799] pci 0000:00:05.1: EHCI: unrecognized capability ff
-......
-
-Cc: stable <stable@kernel.org>
-Signed-off-by: Baoqi Zhang <zhangbaoqi@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250202124935.480500-1-chenhuacai@loongson.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e84f84f27647 ("netns: place rt_genid into struct net")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250205155120.1676781-6-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/pci-quirks.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ipv4/route.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/pci-quirks.c
-+++ b/drivers/usb/host/pci-quirks.c
-@@ -945,6 +945,15 @@ static void quirk_usb_disable_ehci(struc
- 	 * booting from USB disk or using a usb keyboard
- 	 */
- 	hcc_params = readl(base + EHCI_HCC_PARAMS);
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index f3e77b1e1d4b9..da280a2df4e66 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -423,7 +423,13 @@ static inline int ip_rt_proc_init(void)
+ 
+ static inline bool rt_is_expired(const struct rtable *rth)
+ {
+-	return rth->rt_genid != rt_genid_ipv4(dev_net(rth->dst.dev));
++	bool res;
 +
-+	/* LS7A EHCI controller doesn't have extended capabilities, the
-+	 * EECP (EHCI Extended Capabilities Pointer) field of HCCPARAMS
-+	 * register should be 0x0 but it reads as 0xa0.  So clear it to
-+	 * avoid error messages on boot.
-+	 */
-+	if (pdev->vendor == PCI_VENDOR_ID_LOONGSON && pdev->device == 0x7a14)
-+		hcc_params &= ~(0xffL << 8);
++	rcu_read_lock();
++	res = rth->rt_genid != rt_genid_ipv4(dev_net_rcu(rth->dst.dev));
++	rcu_read_unlock();
 +
- 	offset = (hcc_params >> 8) & 0xff;
- 	while (offset && --count) {
- 		pci_read_config_dword(pdev, offset, &cap);
++	return res;
+ }
+ 
+ void rt_cache_flush(struct net *net)
+-- 
+2.39.5
+
 
 
