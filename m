@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF36B15820C;
-	Tue, 11 Mar 2025 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB1A15820C;
+	Tue, 11 Mar 2025 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706927; cv=none; b=J5AmTCwgHEc8PiauslkTKZxS78ldc8t6ZVS1CjxrgD/ImDYX4Iw9MYdnhUTxanR2txZnNO5eX1wDkMnCprJHASdWgRTpWGmSxEGNfec9AAIkpdR7KY5uYXX0LsV/n0+8uiH4wNkDoGfWIxkV1IVIMoc5gIQEjUwyCajLY05roDw=
+	t=1741706930; cv=none; b=FLai/odyorwFb7X9uauHZ4vkLSoT8sKh4n13pD4rgkRmdZL8k1Vz8VhLcFHOQPsK9GH4qwIiSCIerV5j8l9VcmAfNWeaeCMN3Xb8Q35NRhJV2iEF9wrm7mdexU8Wp8ykzymRSuqQ5XtOz/frq5JHreePyzJy+RtcuY99uk3/FAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706927; c=relaxed/simple;
-	bh=l+UceLeDjMxW1hk5MOfUHF9F2aVURmZo8i/GHcHYI+0=;
+	s=arc-20240116; t=1741706930; c=relaxed/simple;
+	bh=BK6mVohm96OPwdIhqnbY0hczz/s8s0cPifSsh1+wAAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hj/7dPwnQufxcEBiit5ieLC/rC9dvNYsNFvPBBx8cjSMtPHVj2158uV144ZcVUb91+bPBmrFRXUyP6kV7mF0LceCkCQIglz6jxG41+zGxo9EmzN9gcJXaaqS34rrg21vPRSXdDnhTKHglle8S9uZ7xuREDP1f0AV5gzgNzuWt30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgEn3ItB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLZnw8rFBBw1Ki3dkYZi7D4CdoBxqnbVY6ouaKASvDtYJ/kiismidqk7ASQLFLxenzdc4H7IgW5Sjz8OpfwbH1mODfhTZDmMv5yjGuVGV46yujPbngbSed7ZF7qY1QRg13fAUD1YRNR46m9haxCxX+lGM1mXqyjsEdu9QJG317E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl9BTZWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgEn3ItB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FE2C4CEE9;
-	Tue, 11 Mar 2025 15:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl9BTZWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34ECC4CEE9;
+	Tue, 11 Mar 2025 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706927;
-	bh=l+UceLeDjMxW1hk5MOfUHF9F2aVURmZo8i/GHcHYI+0=;
+	s=korg; t=1741706930;
+	bh=BK6mVohm96OPwdIhqnbY0hczz/s8s0cPifSsh1+wAAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgEn3ItBhl2M3vMQ3XIRYLUuB0s383DXxzJ+XwscntUc/KwPo/PGqF3KHAxbTApFJ
-	 uQKdU1/FDAuNqmPMj+g/qKZE19rIRhx1Pw7CjI+wj4gFS7I8Y9Q+En3wd35ij7Afx0
-	 SmBuGQAM/56nIQdUhFbibQz4SAbFMoDfanbd4ykA=
+	b=nl9BTZWISYydTolzCLM6STFNeaDFY8O3DhEK7RITfhV/tONCiS/Tz1gs2ArvF84+6
+	 udDlTLqdlWZkLgA+HHJIVF4LJ5Ptufafb3QLDFR11Y0kPbb2OFmiFRF3BVvvhDKisV
+	 BBtCBeX76VgMA7LjQCiBBv37KW0HxUHDjOY4KwQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 184/462] HID: hid-sensor-hub: dont use stale platform-data on remove
-Date: Tue, 11 Mar 2025 15:57:30 +0100
-Message-ID: <20250311145805.627635874@linuxfoundation.org>
+	Cody Eksal <masterr3c0rd@epochal.quest>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>
+Subject: [PATCH 5.10 175/462] clk: sunxi-ng: a100: enable MMC clock reparenting
+Date: Tue, 11 Mar 2025 15:57:21 +0100
+Message-ID: <20250311145805.267910214@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,84 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Cody Eksal <masterr3c0rd@epochal.quest>
 
-commit 8a5b38c3fd709e8acd2bfdedf66c25e6af759576 upstream.
+commit 16414720045de30945b8d14b7907e0cbf81a4b49 upstream.
 
-The hid-sensor-hub creates the individual device structs and transfers them
-to the created mfd platform-devices via the platform_data in the mfd_cell.
+While testing the MMC nodes proposed in [1], it was noted that mmc0/1
+would fail to initialize, with "mmc: fatal err update clk timeout" in
+the kernel logs. A closer look at the clock definitions showed that the MMC
+MPs had the "CLK_SET_RATE_NO_REPARENT" flag set. No reason was given for
+adding this flag in the first place, and its original purpose is unknown,
+but it doesn't seem to make sense and results in severe limitations to MMC
+speeds. Thus, remove this flag from the 3 MMC MPs.
 
-Before e651a1da442a ("HID: hid-sensor-hub: Allow parallel synchronous reads")
-the sensor-hub was managing access centrally, with one "completion" in the
-hub's data structure, which needed to be finished on removal at the latest.
+[1] https://msgid.link/20241024170540.2721307-10-masterr3c0rd@epochal.quest
 
-The mentioned commit then moved this central management to each hid sensor
-device, resulting on a completion in each struct hid_sensor_hub_device.
-The remove procedure was adapted to go through all sensor devices and
-finish any pending "completion".
-
-What this didn't take into account was, platform_device_add_data() that is
-used by mfd_add{_hotplug}_devices() does a kmemdup on the submitted
-platform-data. So the data the platform-device gets is a copy of the
-original data, meaning that the device worked on a different completion
-than what sensor_hub_remove() currently wants to access.
-
-To fix that, use device_for_each_child() to go through each child-device
-similar to how mfd_remove_devices() unregisters the devices later and
-with that get the live platform_data to finalize the correct completion.
-
-Fixes: e651a1da442a ("HID: hid-sensor-hub: Allow parallel synchronous reads")
+Fixes: fb038ce4db55 ("clk: sunxi-ng: add support for the Allwinner A100 CCU")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Link: https://lore.kernel.org/r/20241107114712.538976-2-heiko@sntech.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Cody Eksal <masterr3c0rd@epochal.quest>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20241109003739.3440904-1-masterr3c0rd@epochal.quest
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-hub.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun50i-a100.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-sensor-hub.c
-+++ b/drivers/hid/hid-sensor-hub.c
-@@ -730,23 +730,30 @@ err_stop_hw:
- 	return ret;
- }
+--- a/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
++++ b/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
+@@ -437,7 +437,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
  
-+static int sensor_hub_finalize_pending_fn(struct device *dev, void *data)
-+{
-+	struct hid_sensor_hub_device *hsdev = dev->platform_data;
-+
-+	if (hsdev->pending.status)
-+		complete(&hsdev->pending.ready);
-+
-+	return 0;
-+}
-+
- static void sensor_hub_remove(struct hid_device *hdev)
- {
- 	struct sensor_hub_data *data = hid_get_drvdata(hdev);
- 	unsigned long flags;
--	int i;
+ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc1_clk, "mmc1", mmc_parents, 0x834,
+ 					  0, 4,		/* M */
+@@ -445,7 +445,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
  
- 	hid_dbg(hdev, " hardware removed\n");
- 	hid_hw_close(hdev);
- 	hid_hw_stop(hdev);
-+
- 	spin_lock_irqsave(&data->lock, flags);
--	for (i = 0; i < data->hid_sensor_client_cnt; ++i) {
--		struct hid_sensor_hub_device *hsdev =
--			data->hid_sensor_hub_client_devs[i].platform_data;
--		if (hsdev->pending.status)
--			complete(&hsdev->pending.ready);
--	}
-+	device_for_each_child(&hdev->dev, NULL,
-+			      sensor_hub_finalize_pending_fn);
- 	spin_unlock_irqrestore(&data->lock, flags);
-+
- 	mfd_remove_devices(&hdev->dev);
- 	mutex_destroy(&data->mutex);
- }
+ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc2_clk, "mmc2", mmc_parents, 0x838,
+ 					  0, 4,		/* M */
+@@ -453,7 +453,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
+ 
+ static SUNXI_CCU_GATE(bus_mmc0_clk, "bus-mmc0", "ahb3", 0x84c, BIT(0), 0);
+ static SUNXI_CCU_GATE(bus_mmc1_clk, "bus-mmc1", "ahb3", 0x84c, BIT(1), 0);
 
 
