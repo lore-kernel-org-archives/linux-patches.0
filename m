@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42392405F9;
-	Tue, 11 Mar 2025 15:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80362571D8;
+	Tue, 11 Mar 2025 15:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706053; cv=none; b=E1XAK//+QUPbRVOWyFJi19MXAJXwei1k+3O7GsY8KUaignUWtDQ/VqgLnqA9JIPJyZnGkoN23IHvY92Y3GVpCjX2y1Sg5NLdKAevAqF678bkuo15P5dytOu3oEsmJPKCPQhAxWWRTlg9AFdVxvjc9m6vb6bP7uTD9DGjcn2uA74=
+	t=1741706055; cv=none; b=ZFTovWm7bqeudIhHNFhRnZUguEpiKckuXcYifO5+VZzOGt4ymgG2UURxbZOtj102gP/Oor+7XpA6S9LrfYelbl8cP9sge+67lujBxjHmI2Y72S8MliAUhIXgBqTG2BU+TUfRFV3ZiGg7rzK3rxSMB/KrrxFrVjox0PUxcReykhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706053; c=relaxed/simple;
-	bh=LYxtcVAdkmSoIdIdeVKSPmQQgKoA47L2HZDOfhwcx9M=;
+	s=arc-20240116; t=1741706055; c=relaxed/simple;
+	bh=uSvEpiD/I0l8cXzaz6Pqwa67pK5weTx9Q50RPL2iioY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqYIO1efIbpCnJmAhagfS5FeGNMQbXip7Uu5mwJ87D+s5dlmEWQ2VntI3brr2RdF+nLdce3x1jng/uvcjBw4yjTZXd0Lq+jr1atZG2wrcgl9lgWdzNKlhRVP3gnWQwNO5EZmEy2GJFPSJt+wvV5FtKa+cmjx1ea+iFt2AO2S094=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBxaXuAg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pe++SArnYWoFNKzWMBBgLlvM0dT7TtYlk6dOWC0X6U7c+5JlfzhE1s+iUtwSX7BTM/kouVn8NeFNd9SKiNkGGSKJBQU37Si1udxu3w01jZvOwiHV9XYyhILGv9FcHb3etrjxF+2Ve6BikDffUyNv+ZQt5M3hqX94eaj/fC7/9s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pae5mx5F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBxaXuAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3CDC4CEE9;
-	Tue, 11 Mar 2025 15:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pae5mx5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF2AC4CEE9;
+	Tue, 11 Mar 2025 15:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706052;
-	bh=LYxtcVAdkmSoIdIdeVKSPmQQgKoA47L2HZDOfhwcx9M=;
+	s=korg; t=1741706055;
+	bh=uSvEpiD/I0l8cXzaz6Pqwa67pK5weTx9Q50RPL2iioY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBxaXuAgC4j7IslW+9FHMbjC0aIXs3Kde/1+nzrj64a96o37SFFeRcJmqt17oFAgF
-	 eRT1xHkt44nN3NjwXhBnrFlkBE/0OJITh2/OQH2Bktvub2AxrPRgIpB2mlQvd0tqy7
-	 eY2zLdS1rRxmSw03nJMacPmjgXwp4EqV19MiM/H0=
+	b=pae5mx5FUTsXAuZvtcQwOczBMcaArwWVndPe1zkzqc9chrMAy7/qH5rr3UwsRybrK
+	 UZQQG5YZ7NBS/W5zrl4spn6fetO9DmueSxQE8szJsJCe6SFx7Ch3h0IFEutJC3WDZI
+	 dTIeDgRy/LSbnkcl9qMW9edXNawAYBFiUr9TK89M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Roman Kisel <romank@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Long Li <longli@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 226/328] scsi: storvsc: Set correct data length for sending SCSI command without payload
-Date: Tue, 11 Mar 2025 15:59:56 +0100
-Message-ID: <20250311145723.893946416@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Hagar Hemdan <hagarhem@amazon.com>
+Subject: [PATCH 5.4 227/328] driver core: bus: Fix double free in driver API bus_register()
+Date: Tue, 11 Mar 2025 15:59:57 +0100
+Message-ID: <20250311145723.933789056@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,45 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 87c4b5e8a6b65189abd9ea5010ab308941f964a4 upstream.
+commit bfa54a793ba77ef696755b66f3ac4ed00c7d1248 upstream.
 
-In StorVSC, payload->range.len is used to indicate if this SCSI command
-carries payload. This data is allocated as part of the private driver data
-by the upper layer and may get passed to lower driver uninitialized.
+For bus_register(), any error which happens after kset_register() will
+cause that @priv are freed twice, fixed by setting @priv with NULL after
+the first free.
 
-For example, the SCSI error handling mid layer may send TEST_UNIT_READY or
-REQUEST_SENSE while reusing the buffer from a failed command. The private
-data section may have stale data from the previous command.
-
-If the SCSI command doesn't carry payload, the driver may use this value as
-is for communicating with host, resulting in possible corruption.
-
-Fix this by always initializing this value.
-
-Fixes: be0cf6ca301c ("scsi: storvsc: Set the tablesize based on the information given by the host")
-Cc: stable@kernel.org
-Tested-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Long Li <longli@microsoft.com>
-Link: https://lore.kernel.org/r/1737601642-7759-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20240727-bus_register_fix-v1-1-fed8dd0dba7a@quicinc.com
+[ hagar : required setting bus->p with NULL instead of priv]
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/bus.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1639,6 +1639,7 @@ static int storvsc_queuecommand(struct S
- 	length = scsi_bufflen(scmnd);
- 	payload = (struct vmbus_packet_mpb_array *)&cmd_request->mpb;
- 	payload_sz = sizeof(cmd_request->mpb);
-+	payload->range.len = 0;
- 
- 	if (sg_count) {
- 		if (sg_count > MAX_PAGE_BUFFER_COUNT) {
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -873,6 +873,8 @@ bus_devices_fail:
+ 	bus_remove_file(bus, &bus_attr_uevent);
+ bus_uevent_fail:
+ 	kset_unregister(&bus->p->subsys);
++	/* Above kset_unregister() will kfree @bus->p */
++	bus->p = NULL;
+ out:
+ 	kfree(bus->p);
+ 	bus->p = NULL;
 
 
