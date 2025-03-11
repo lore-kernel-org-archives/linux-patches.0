@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B3C25D918;
-	Tue, 11 Mar 2025 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B979E1E98FB;
+	Tue, 11 Mar 2025 15:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706135; cv=none; b=sW/J7cB0VJRgA/LQVHIgf0rBRBfkrCB65cCv5ArdUNQ3lOg23AMMEd9GMIvjk3FExUn583I7SPJbVvkIB/L6euw7Xl/aKFEJ1FyQk1dm1vSq5VFlQoylYJR9hHT5NF2p6sTVSccOqVzJMqMJlxTAH8WwAtbkEDmDojoSg7J8bus=
+	t=1741706137; cv=none; b=QRLYVQKoaZ8NlSfv7EF0AA/kfxVljFfL2rQMw9XqeH/673HqMI3dDTyha2LhL7TfiY6v2dGNk9rnQkf0kyZ0Uky12LBJxGE6ALJqorgQUiNMYYgvcBdENkvgySV6VLCX8S/OaOzmdFacSC749FvuuLhL9FAkamWyokMt7yC3PbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706135; c=relaxed/simple;
-	bh=js08o6Pje6e0mth03oIjAmz78ISdNIbcsQ5NTRw4k4k=;
+	s=arc-20240116; t=1741706137; c=relaxed/simple;
+	bh=f8e8GQ4uNNpAmqGnnf7FhOyhe26nusYiBYWSfjk+lRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkZE4J1E8i/9Ifq7ZMCF5u+I3LMcQ+b7azvaX3psi0s7eV5v0g3AdIOfhMHlFl9Bf/6ZAkFPyW3mBxmEcIssuoF0tHjGcXYs/bjs5VqB2r1NHbN7cYkK21g0FHMwhksWgJk+GaZFxzvkESVYS1QbFxx104BuUM1ZM/XMqScRNxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezPYLhgk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4pMjSexa3OqNYIHAUV5ZWqx0B8rzgrim+aULPK/mrfmgknue6pc8rbnwlkP6kGeiaKi5tnkJ9rX0gUfCWfSWW75K9YxC2hs6CKZkEwqORsIrnTyzH0c4rpG+A1pjviioavTvlY0iaN0VPB+gHpnIK1akHepKip+KeW6+CSbopw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUgYStoe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezPYLhgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F2C4CEE9;
-	Tue, 11 Mar 2025 15:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUgYStoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442E4C4CEE9;
+	Tue, 11 Mar 2025 15:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706134;
-	bh=js08o6Pje6e0mth03oIjAmz78ISdNIbcsQ5NTRw4k4k=;
+	s=korg; t=1741706137;
+	bh=f8e8GQ4uNNpAmqGnnf7FhOyhe26nusYiBYWSfjk+lRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezPYLhgktTYkLd1Wc1KR6zhvfZaw4edCrr7IFnjMnjKB4rqC5aeLBa/uFtfxzipvO
-	 2xAuwHCfYHCqDQX9JqXpCcZO1oi8I1cjd8GX/vpyb+D3Mu/3hDzruEDQ3LcahLcxUS
-	 QHhe5JiPWI5uGpgZptvMI+UGOeX4+bchLQhgzigI=
+	b=xUgYStoed0WAPYVM3FcjpTfzJ//PipMeHyBVenfdlg0cRHr2YeN6YcMphSwcp6inY
+	 CwXJ+td2kxl7kjqbCjDoUfAHIEyAwNBiMu1OCe8f4aV44QwlQ8vK13ZZKGc4ATrzGa
+	 /sMe0c1xh3JSn+2E5TJu5ZCUO3N5ZLLH9mwq33Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 245/328] geneve: Fix use-after-free in geneve_find_dev().
-Date: Tue, 11 Mar 2025 16:00:15 +0100
-Message-ID: <20250311145724.648966871@linuxfoundation.org>
+	syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 267/328] usbnet: gl620a: fix endpoint checking in genelink_bind()
+Date: Tue, 11 Mar 2025 16:00:37 +0100
+Message-ID: <20250311145725.521177991@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,200 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 9593172d93b9f91c362baec4643003dc29802929 ]
+commit 1cf9631d836b289bd5490776551961c883ae8a4f upstream.
 
-syzkaller reported a use-after-free in geneve_find_dev() [0]
-without repro.
+Syzbot reports [1] a warning in usb_submit_urb() triggered by
+inconsistencies between expected and actually present endpoints
+in gl620a driver. Since genelink_bind() does not properly
+verify whether specified eps are in fact provided by the device,
+in this case, an artificially manufactured one, one may get a
+mismatch.
 
-geneve_configure() links struct geneve_dev.next to
-net_generic(net, geneve_net_id)->geneve_list.
+Fix the issue by resorting to a usbnet utility function
+usbnet_get_endpoints(), usually reserved for this very problem.
+Check for endpoints and return early before proceeding further if
+any are missing.
 
-The net here could differ from dev_net(dev) if IFLA_NET_NS_PID,
-IFLA_NET_NS_FD, or IFLA_TARGET_NETNSID is set.
+[1] Syzbot report:
+usb 5-1: Manufacturer: syz
+usb 5-1: SerialNumber: syz
+usb 5-1: config 0 descriptor??
+gl620a 5-1:0.23 usb0: register 'gl620a' at usb-dummy_hcd.0-1, ...
+------------[ cut here ]------------
+usb 5-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 2 PID: 1841 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+Modules linked in:
+CPU: 2 UID: 0 PID: 1841 Comm: kworker/2:2 Not tainted 6.12.0-syzkaller-07834-g06afb0f36106 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: mld mld_ifc_work
+RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+...
+Call Trace:
+ <TASK>
+ usbnet_start_xmit+0x6be/0x2780 drivers/net/usb/usbnet.c:1467
+ __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
+ netdev_start_xmit include/linux/netdevice.h:5011 [inline]
+ xmit_one net/core/dev.c:3590 [inline]
+ dev_hard_start_xmit+0x9a/0x7b0 net/core/dev.c:3606
+ sch_direct_xmit+0x1ae/0xc30 net/sched/sch_generic.c:343
+ __dev_xmit_skb net/core/dev.c:3827 [inline]
+ __dev_queue_xmit+0x13d4/0x43e0 net/core/dev.c:4400
+ dev_queue_xmit include/linux/netdevice.h:3168 [inline]
+ neigh_resolve_output net/core/neighbour.c:1514 [inline]
+ neigh_resolve_output+0x5bc/0x950 net/core/neighbour.c:1494
+ neigh_output include/net/neighbour.h:539 [inline]
+ ip6_finish_output2+0xb1b/0x2070 net/ipv6/ip6_output.c:141
+ __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
+ ip6_finish_output+0x3f9/0x1360 net/ipv6/ip6_output.c:226
+ NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+ ip6_output+0x1f8/0x540 net/ipv6/ip6_output.c:247
+ dst_output include/net/dst.h:450 [inline]
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ mld_sendpack+0x9f0/0x11d0 net/ipv6/mcast.c:1819
+ mld_send_cr net/ipv6/mcast.c:2120 [inline]
+ mld_ifc_work+0x740/0xca0 net/ipv6/mcast.c:2651
+ process_one_work+0x9c5/0x1ba0 kernel/workqueue.c:3229
+ process_scheduled_works kernel/workqueue.c:3310 [inline]
+ worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
 
-When dev_net(dev) is dismantled, geneve_exit_batch_rtnl() finally
-calls unregister_netdevice_queue() for each dev in the netns,
-and later the dev is freed.
-
-However, its geneve_dev.next is still linked to the backend UDP
-socket netns.
-
-Then, use-after-free will occur when another geneve dev is created
-in the netns.
-
-Let's call geneve_dellink() instead in geneve_destroy_tunnels().
-
-[0]:
-BUG: KASAN: slab-use-after-free in geneve_find_dev drivers/net/geneve.c:1295 [inline]
-BUG: KASAN: slab-use-after-free in geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
-Read of size 2 at addr ffff000054d6ee24 by task syz.1.4029/13441
-
-CPU: 1 UID: 0 PID: 13441 Comm: syz.1.4029 Not tainted 6.13.0-g0ad9617c78ac #24 dc35ca22c79fb82e8e7bc5c9c9adafea898b1e3d
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- show_stack+0x38/0x50 arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbc/0x108 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x16c/0x6f0 mm/kasan/report.c:489
- kasan_report+0xc0/0x120 mm/kasan/report.c:602
- __asan_report_load2_noabort+0x20/0x30 mm/kasan/report_generic.c:379
- geneve_find_dev drivers/net/geneve.c:1295 [inline]
- geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
- geneve_newlink+0xb8/0x128 drivers/net/geneve.c:1634
- rtnl_newlink_create+0x23c/0x868 net/core/rtnetlink.c:3795
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Allocated by task 13247:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_alloc_info+0x44/0x58 mm/kasan/generic.c:568
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x84/0xa0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4298 [inline]
- __kmalloc_node_noprof+0x2a0/0x560 mm/slub.c:4304
- __kvmalloc_node_noprof+0x9c/0x230 mm/util.c:645
- alloc_netdev_mqs+0xb8/0x11a0 net/core/dev.c:11470
- rtnl_create_link+0x2b8/0xb50 net/core/rtnetlink.c:3604
- rtnl_newlink_create+0x19c/0x868 net/core/rtnetlink.c:3780
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Freed by task 45:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_free_info+0x58/0x70 mm/kasan/generic.c:582
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x48/0x68 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2353 [inline]
- slab_free mm/slub.c:4613 [inline]
- kfree+0x140/0x420 mm/slub.c:4761
- kvfree+0x4c/0x68 mm/util.c:688
- netdev_release+0x94/0xc8 net/core/net-sysfs.c:2065
- device_release+0x98/0x1c0
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x2b0/0x438 lib/kobject.c:737
- netdev_run_todo+0xe5c/0xfc8 net/core/dev.c:11185
- rtnl_unlock+0x20/0x38 net/core/rtnetlink.c:151
- cleanup_net+0x4fc/0x8c0 net/core/net_namespace.c:648
- process_one_work+0x700/0x1398 kernel/workqueue.c:3236
- process_scheduled_works kernel/workqueue.c:3317 [inline]
- worker_thread+0x8c4/0xe10 kernel/workqueue.c:3398
- kthread+0x4bc/0x608 kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:862
-
-The buggy address belongs to the object at ffff000054d6e000
- which belongs to the cache kmalloc-cg-4k of size 4096
-The buggy address is located 3620 bytes inside of
- freed 4096-byte region [ffff000054d6e000, ffff000054d6f000)
-
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x94d68
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-memcg:ffff000016276181
-flags: 0x3fffe0000000040(head|node=0|zone=0|lastcpupid=0x1ffff)
-page_type: f5(slab)
-raw: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-head: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000003 fffffdffc1535a01 ffffffffffffffff 0000000000000000
-head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff000054d6ed00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ed80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff000054d6ee00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff000054d6ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ef00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 2d07dc79fe04 ("geneve: add initial netdev driver for GENEVE tunnels")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250213043354.91368-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d693c07c6f647e0388d3
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250224172919.1220522-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/geneve.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/net/usb/gl620a.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 961cbd2b377d1..3e8b96de72a74 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1872,16 +1872,11 @@ static void geneve_destroy_tunnels(struct net *net, struct list_head *head)
- 	/* gather any geneve devices that were moved into this ns */
- 	for_each_netdev_safe(net, dev, aux)
- 		if (dev->rtnl_link_ops == &geneve_link_ops)
--			unregister_netdevice_queue(dev, head);
-+			geneve_dellink(dev, head);
- 
- 	/* now gather any other geneve devices that were created in this ns */
--	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next) {
--		/* If geneve->dev is in the same netns, it was already added
--		 * to the list by the previous loop.
--		 */
--		if (!net_eq(dev_net(geneve->dev), net))
--			unregister_netdevice_queue(geneve->dev, head);
--	}
-+	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next)
-+		geneve_dellink(geneve->dev, head);
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -179,9 +179,7 @@ static int genelink_bind(struct usbnet *
+ {
+ 	dev->hard_mtu = GL_RCV_BUF_SIZE;
+ 	dev->net->hard_header_len += 4;
+-	dev->in = usb_rcvbulkpipe(dev->udev, dev->driver_info->in);
+-	dev->out = usb_sndbulkpipe(dev->udev, dev->driver_info->out);
+-	return 0;
++	return usbnet_get_endpoints(dev, intf);
  }
  
- static void __net_exit geneve_exit_batch_net(struct list_head *net_list)
--- 
-2.39.5
-
+ static const struct driver_info	genelink_info = {
 
 
