@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3451525EF82;
-	Tue, 11 Mar 2025 15:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64225DCFA;
+	Tue, 11 Mar 2025 15:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706962; cv=none; b=sDLLB5LJCE6UrfJ6AZyHyVXqxZPP4hTOGbzPAXAhyEREAPEh9Y1z9NFL5Dh0N0thkMs/iGQIUVo+idBtYDienzCF7ZpmPZLk8h6ww8seWAuWL97hjJIzOeulKnjYikcq0UqO5th72hvpdWcaUcjKnCAIMKJ4cqSbRQE1Ro3nuUo=
+	t=1741706964; cv=none; b=KhvAPSn80of3GBTHltYmc/qAdz2JhFuLh7XdVVmD+CQVAbiVOnBmTky7JkpaKbnwdkOPkvYGWFTrO7dMU8+NnmPrHIge7r/fkNlxT9xm6TdFsUPRHC84Q6lPMPjWQUxUEWZrTQDeqLLcsT2/8rRqQswjTkx3fP5jD2rtrsbbPhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706962; c=relaxed/simple;
-	bh=JUfLPdr3cBlXTxGPcVidw3nnSrsUbmJIIrdlR8LBWH4=;
+	s=arc-20240116; t=1741706964; c=relaxed/simple;
+	bh=lAmmVv3XdMEtAcqCkvN/o2/MFSTDUnSIb8abyR2vz1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZ2kfLZsE+G8gWmHFJrRDO2PaYRyZAT6moupUQvq/GXP+xGAWM/r+DqLDNFPMloyo1B5IIUy0D5Kqc0jidET0GD70LsHFP/uACNOgz6dcHuA34o3QVpC4uho8Gx56lCjdSFgqpyOKXnomLKYa3XdcAfChuWz9UFsS/nfKJpwmHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULxZljVg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buusgM+KiLImqGurKuKFVGiaIvIXH4soHMl0j4zAf6BkqnIc1Jo6JjI23CHrGPhg/aV8gdG0ytSBMhLZkCHcdxnYx/Ltjb8CFSx/A917ZY65ml0N+kEh3ltQKdcW5y1C4rklo7RQwyTjzSlWseg70QXosg8bXlMws4NLt7iMEd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0ucV9Xw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULxZljVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFF0C4CEE9;
-	Tue, 11 Mar 2025 15:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0ucV9Xw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220D1C4CEE9;
+	Tue, 11 Mar 2025 15:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706961;
-	bh=JUfLPdr3cBlXTxGPcVidw3nnSrsUbmJIIrdlR8LBWH4=;
+	s=korg; t=1741706964;
+	bh=lAmmVv3XdMEtAcqCkvN/o2/MFSTDUnSIb8abyR2vz1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULxZljVgFOmETBbnKJIGGFxL3ApmjuxZwFzOtWqtZ8AxlIc21KtwcwFKJd4FiwrwE
-	 MzWLh+IbbRFayNA7/PchPpbvb+8ce40xjzxsd04U81wOb6lOiCeCyx4zIhZjv7LMlC
-	 8vOmApZDA67ViYz/N3M3r81aGGr/KPYqiuxsSnWg=
+	b=z0ucV9XwD+8Q/FyOYTfUKauU4ij+pGA5CayVmKK+pxi3WI6WpdhdFb3jMp5jorTY0
+	 fwXVQQKocaiaWFQvsdSWWJkHC0g0y06rTMSTIIxHk2yc0EGnE0+G/tDXCZ3L7oYSkj
+	 lUM0n9PS953AILTqFyFrJMLRlSH15Nlu9T+g68kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Suryaputra <ssuryaextr@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 228/462] ndisc: ndisc_send_redirect() must use dev_get_by_index_rcu()
-Date: Tue, 11 Mar 2025 15:58:14 +0100
-Message-ID: <20250311145807.370339897@linuxfoundation.org>
+	Jennifer Berringer <jberring@redhat.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.10 211/462] nvmem: core: improve range check for nvmem_cell_write()
+Date: Tue, 11 Mar 2025 15:57:57 +0100
+Message-ID: <20250311145806.698257779@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -54,41 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jennifer Berringer <jberring@redhat.com>
 
-[ Upstream commit 48145a57d4bbe3496e8e4880b23ea6b511e6e519 ]
+commit 31507fc2ad36e0071751a710449db19c85d82a7f upstream.
 
-ndisc_send_redirect() is called under RCU protection, not RTNL.
+When __nvmem_cell_entry_write() is called for an nvmem cell that does
+not need bit shifting, it requires that the len parameter exactly
+matches the nvmem cell size. However, when the nvmem cell has a nonzero
+bit_offset, it was skipping this check.
 
-It must use dev_get_by_index_rcu() instead of __dev_get_by_index()
+Accepting values of len larger than the cell size results in
+nvmem_cell_prepare_write_buffer() trying to write past the end of a heap
+buffer that it allocates. Add a check to avoid that problem and instead
+return -EINVAL when len doesn't match the number of bits expected by the
+nvmem cell when bit_offset is nonzero.
 
-Fixes: 2f17becfbea5 ("vrf: check the original netdevice for generating redirect")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This check uses cell->nbits in order to allow providing the smaller size
+to cells that are shifted into another byte by bit_offset. For example,
+a cell with nbits=8 and nonzero bit_offset would have bytes=2 but should
+accept a 1-byte write here, although no current callers depend on this.
+
+Fixes: 69aba7948cbe ("nvmem: Add a simple NVMEM framework for consumers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jennifer Berringer <jberring@redhat.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20241230141901.263976-7-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 4f46b0a2e5680..c0a5552733177 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1607,7 +1607,7 @@ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
- 	bool ret;
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1362,6 +1362,8 @@ int nvmem_cell_write(struct nvmem_cell *
+ 		return -EINVAL;
  
- 	if (netif_is_l3_master(skb->dev)) {
--		dev = __dev_get_by_index(dev_net(skb->dev), IPCB(skb)->iif);
-+		dev = dev_get_by_index_rcu(dev_net(skb->dev), IPCB(skb)->iif);
- 		if (!dev)
- 			return;
- 	}
--- 
-2.39.5
-
+ 	if (cell->bit_offset || cell->nbits) {
++		if (len != BITS_TO_BYTES(cell->nbits) && len != cell->bytes)
++			return -EINVAL;
+ 		buf = nvmem_cell_prepare_write_buffer(cell, buf, len);
+ 		if (IS_ERR(buf))
+ 			return PTR_ERR(buf);
 
 
