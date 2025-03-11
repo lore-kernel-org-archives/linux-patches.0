@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637E425BAAA;
-	Tue, 11 Mar 2025 15:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2494625E818;
+	Tue, 11 Mar 2025 15:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707078; cv=none; b=fTeW4ffpw2yIHSMHaPYA7GjrXXJdU5Mghh/uQ5TTZqfACQUCrOHx5o0I79MuAnkuDpbiOasJyFjwekWGJOsAJKtAtkoFnW433Q66odnjQXw6vOdfD3VHiIcPkgH7nLDvdJ4abrJjwCxA7sIr4aGgHHE5a/YxiNbnaKJYFm2gDFY=
+	t=1741707081; cv=none; b=vBMdNTxNEdSEi7eiKc5NxiGCyMgifz15louu0yo4y8ZCMRNQVpoxSZlEMqu0DLk09xK7KvLI6zTasAJdqeRwUeZgRr7WANgS+TWYZZdrWzEk1jwniMv66K0ADiysg/kYy4djRfwwCHTXluhpMuZ0Uaefy9iWJbk6dwI9v0FXK/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707078; c=relaxed/simple;
-	bh=pFsR0SiFKrCu2qyQ1H8ophJmr11hbTRB5JOZ0YFn6sU=;
+	s=arc-20240116; t=1741707081; c=relaxed/simple;
+	bh=4rYzCf/dtEPlafpSFM3YiC9o3n3r02BPU41s4pAtugQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKmGhAqsrY2ETQ28FI2eg3mzLBE6CNk0rG3/7vpcH272wrOmmkksvzcvGehYLHwHE7Y7zsd1U2/+WfNEUYHLnLVyx/3lj+XbfkmRp4Y1nUtg8v5o4hz57KNT/WHl2PMnZASiApJbDU13qHia1qjbQCLmCiCEltWycElp+huw/FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXYk3VjB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=do7ATwI0o5mWOuOSWKHWl5NY/fa6CG+9otuy8PCHe4rsSfYfrhUBoy8S9jtwszEw5mQHfH/O2DdEjjxLwDC3XeUOS2FC849wXneiCUHVTl3a+3VxldQQmPVGrH/mu22Tm4yjBNWtxmySvI9w6zgSCx97T4Ki5BXH0rOCTYHMkng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5T6AQrm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXYk3VjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBE6C4CEE9;
-	Tue, 11 Mar 2025 15:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5T6AQrm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51DAC4CEEA;
+	Tue, 11 Mar 2025 15:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707078;
-	bh=pFsR0SiFKrCu2qyQ1H8ophJmr11hbTRB5JOZ0YFn6sU=;
+	s=korg; t=1741707081;
+	bh=4rYzCf/dtEPlafpSFM3YiC9o3n3r02BPU41s4pAtugQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXYk3VjBXxp3zJo3kHa8tKdHraj/Q5C5K4RUDSEAeaR4TrPLiBrmyTQRlNQRfFZQR
-	 mOghHG4rwGg4bXLslS26rZvnAFFuW1JmzmUBHkTv+ENYBzJPj+VnK2WgoocBW076LA
-	 Wunycn4OQ0J//z5abCN7vj4poJ5PaMLwsshO6/eM=
+	b=N5T6AQrmylLwKGVexqtyqmnegHyqLWFEgh6u8j7iiix5x8aijgweBh/0LSz7J3CcG
+	 i9f8woDmfSTpu/in7s7uy4tRQpehuE1ylQNQKLsvxskaIjuJ/HokIYlkax/TCMxhBY
+	 XW5pOvag8EwV85gaNXFJrgQjMIdKorLylZ5zkTT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.10 266/462] efi: Avoid cold plugged memory for placing the kernel
-Date: Tue, 11 Mar 2025 15:58:52 +0100
-Message-ID: <20250311145808.874787165@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>
+Subject: [PATCH 5.10 267/462] serial: 8250: Fix fifo underflow on flush
+Date: Tue, 11 Mar 2025 15:58:53 +0100
+Message-ID: <20250311145808.914735834@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -49,99 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-commit ba69e0750b0362870294adab09339a0c39c3beaf upstream.
+commit 9e512eaaf8f4008c44ede3dfc0fbc9d9c5118583 upstream.
 
-UEFI 2.11 introduced EFI_MEMORY_HOT_PLUGGABLE to annotate system memory
-regions that are 'cold plugged' at boot, i.e., hot pluggable memory that
-is available from early boot, and described as system RAM by the
-firmware.
+When flushing the serial port's buffer, uart_flush_buffer() calls
+kfifo_reset() but if there is an outstanding DMA transfer then the
+completion function will consume data from the kfifo via
+uart_xmit_advance(), underflowing and leading to ongoing DMA as the
+driver tries to transmit another 2^32 bytes.
 
-Existing loaders and EFI applications running in the boot context will
-happily use this memory for allocating data structures that cannot be
-freed or moved at runtime, and this prevents the memory from being
-unplugged. Going forward, the new EFI_MEMORY_HOT_PLUGGABLE attribute
-should be tested, and memory annotated as such should be avoided for
-such allocations.
+This is readily reproduced with serial-generic and amidi sending even
+short messages as closing the device on exit will wait for the fifo to
+drain and in the underflow case amidi hangs for 30 seconds on exit in
+tty_wait_until_sent().  A trace of that gives:
 
-In the EFI stub, there are a couple of occurrences where, instead of the
-high-level AllocatePages() UEFI boot service, a low-level code sequence
-is used that traverses the EFI memory map and carves out the requested
-number of pages from a free region. This is needed, e.g., for allocating
-as low as possible, or for allocating pages at random.
+     kworker/1:1-84    [001]    51.769423: bprint:               serial8250_tx_dma: tx_size=3 fifo_len=3
+           amidi-763   [001]    51.769460: bprint:               uart_flush_buffer: resetting fifo
+ irq/21-fe530000-76    [000]    51.769474: bprint:               __dma_tx_complete: tx_size=3
+ irq/21-fe530000-76    [000]    51.769479: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294967293
+ irq/21-fe530000-76    [000]    51.781295: bprint:               __dma_tx_complete: tx_size=4096
+ irq/21-fe530000-76    [000]    51.781301: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294963197
+ irq/21-fe530000-76    [000]    51.793131: bprint:               __dma_tx_complete: tx_size=4096
+ irq/21-fe530000-76    [000]    51.793135: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294959101
+ irq/21-fe530000-76    [000]    51.804949: bprint:               __dma_tx_complete: tx_size=4096
 
-While AllocatePages() should presumably avoid special purpose memory and
-cold plugged regions, this manual approach needs to incorporate this
-logic itself, in order to prevent the kernel itself from ending up in a
-hot unpluggable region, preventing it from being unplugged.
+Since the port lock is held in when the kfifo is reset in
+uart_flush_buffer() and in __dma_tx_complete(), adding a flush_buffer
+hook to adjust the outstanding DMA byte count is sufficient to avoid the
+kfifo underflow.
 
-So add the EFI_MEMORY_HOTPLUGGABLE macro definition, and check for it
-where appropriate.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Cc: stable <stable@kernel.org>
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20250208124148.1189191-1-jkeeping@inmusicbrands.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/efi.c                 |    6 ++++--
- drivers/firmware/efi/libstub/randomalloc.c |    3 +++
- drivers/firmware/efi/libstub/relocate.c    |    3 +++
- include/linux/efi.h                        |    1 +
- 4 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250.h      |    2 ++
+ drivers/tty/serial/8250/8250_dma.c  |   16 ++++++++++++++++
+ drivers/tty/serial/8250/8250_port.c |    9 +++++++++
+ 3 files changed, 27 insertions(+)
 
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -774,13 +774,15 @@ char * __init efi_md_typeattr_format(cha
- 		     EFI_MEMORY_WB | EFI_MEMORY_UCE | EFI_MEMORY_RO |
- 		     EFI_MEMORY_WP | EFI_MEMORY_RP | EFI_MEMORY_XP |
- 		     EFI_MEMORY_NV | EFI_MEMORY_SP | EFI_MEMORY_CPU_CRYPTO |
--		     EFI_MEMORY_RUNTIME | EFI_MEMORY_MORE_RELIABLE))
-+		     EFI_MEMORY_MORE_RELIABLE | EFI_MEMORY_HOT_PLUGGABLE |
-+		     EFI_MEMORY_RUNTIME))
- 		snprintf(pos, size, "|attr=0x%016llx]",
- 			 (unsigned long long)attr);
- 	else
- 		snprintf(pos, size,
--			 "|%3s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%3s|%2s|%2s|%2s|%2s]",
-+			 "|%3s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%2s|%3s|%2s|%2s|%2s|%2s]",
- 			 attr & EFI_MEMORY_RUNTIME		? "RUN" : "",
-+			 attr & EFI_MEMORY_HOT_PLUGGABLE	? "HP"  : "",
- 			 attr & EFI_MEMORY_MORE_RELIABLE	? "MR"  : "",
- 			 attr & EFI_MEMORY_CPU_CRYPTO   	? "CC"  : "",
- 			 attr & EFI_MEMORY_SP			? "SP"  : "",
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -24,6 +24,9 @@ static unsigned long get_entry_num_slots
- 	if (md->type != EFI_CONVENTIONAL_MEMORY)
- 		return 0;
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -325,6 +325,7 @@ static inline int is_omap1510_8250(struc
  
-+	if (md->attribute & EFI_MEMORY_HOT_PLUGGABLE)
-+		return 0;
+ #ifdef CONFIG_SERIAL_8250_DMA
+ extern int serial8250_tx_dma(struct uart_8250_port *);
++extern void serial8250_tx_dma_flush(struct uart_8250_port *);
+ extern int serial8250_rx_dma(struct uart_8250_port *);
+ extern void serial8250_rx_dma_flush(struct uart_8250_port *);
+ extern int serial8250_request_dma(struct uart_8250_port *);
+@@ -341,6 +342,7 @@ static inline int serial8250_tx_dma(stru
+ {
+ 	return -1;
+ }
++static inline void serial8250_tx_dma_flush(struct uart_8250_port *p) { }
+ static inline int serial8250_rx_dma(struct uart_8250_port *p)
+ {
+ 	return -1;
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -135,6 +135,22 @@ err:
+ 	return ret;
+ }
+ 
++void serial8250_tx_dma_flush(struct uart_8250_port *p)
++{
++	struct uart_8250_dma *dma = p->dma;
 +
- 	if (efi_soft_reserve_enabled() &&
- 	    (md->attribute & EFI_MEMORY_SP))
- 		return 0;
---- a/drivers/firmware/efi/libstub/relocate.c
-+++ b/drivers/firmware/efi/libstub/relocate.c
-@@ -62,6 +62,9 @@ efi_status_t efi_low_alloc_above(unsigne
- 		if (desc->type != EFI_CONVENTIONAL_MEMORY)
- 			continue;
- 
-+		if (desc->attribute & EFI_MEMORY_HOT_PLUGGABLE)
-+			continue;
++	if (!dma->tx_running)
++		return;
 +
- 		if (efi_soft_reserve_enabled() &&
- 		    (desc->attribute & EFI_MEMORY_SP))
- 			continue;
---- a/include/linux/efi.h
-+++ b/include/linux/efi.h
-@@ -125,6 +125,7 @@ typedef	struct {
- #define EFI_MEMORY_RO		((u64)0x0000000000020000ULL)	/* read-only */
- #define EFI_MEMORY_SP		((u64)0x0000000000040000ULL)	/* soft reserved */
- #define EFI_MEMORY_CPU_CRYPTO	((u64)0x0000000000080000ULL)	/* supports encryption */
-+#define EFI_MEMORY_HOT_PLUGGABLE	BIT_ULL(20)	/* supports unplugging at runtime */
- #define EFI_MEMORY_RUNTIME	((u64)0x8000000000000000ULL)	/* range requires runtime mapping */
- #define EFI_MEMORY_DESCRIPTOR_VERSION	1
++	/*
++	 * kfifo_reset() has been called by the serial core, avoid
++	 * advancing and underflowing in __dma_tx_complete().
++	 */
++	dma->tx_size = 0;
++
++	dmaengine_terminate_async(dma->rxchan);
++}
++
+ int serial8250_rx_dma(struct uart_8250_port *p)
+ {
+ 	struct uart_8250_dma		*dma = p->dma;
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2509,6 +2509,14 @@ static unsigned int npcm_get_divisor(str
+ 	return DIV_ROUND_CLOSEST(port->uartclk, 16 * baud + 2) - 2;
+ }
  
++static void serial8250_flush_buffer(struct uart_port *port)
++{
++	struct uart_8250_port *up = up_to_u8250p(port);
++
++	if (up->dma)
++		serial8250_tx_dma_flush(up);
++}
++
+ static unsigned int serial8250_do_get_divisor(struct uart_port *port,
+ 					      unsigned int baud,
+ 					      unsigned int *frac)
+@@ -3209,6 +3217,7 @@ static const struct uart_ops serial8250_
+ 	.break_ctl	= serial8250_break_ctl,
+ 	.startup	= serial8250_startup,
+ 	.shutdown	= serial8250_shutdown,
++	.flush_buffer	= serial8250_flush_buffer,
+ 	.set_termios	= serial8250_set_termios,
+ 	.set_ldisc	= serial8250_set_ldisc,
+ 	.pm		= serial8250_pm,
 
 
