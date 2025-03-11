@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B7C25DAFF;
-	Tue, 11 Mar 2025 15:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2AA25DAFF;
+	Tue, 11 Mar 2025 15:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705530; cv=none; b=hmk3/GPme3y20CSUTUcoT2ipD2hMJViOsh5WN6XGEHl3n7CjaY/jZ0AnETdeuNlRv1wii6r/g+/PBKlx4IKBAGeB51AI+ZmL34LSXB6eJNv8IaIldGi7Z88DkXWVMQgOaKUZH0gieKG3ztH+fBrqafJcoUtmkHqJTdw/upBwaPU=
+	t=1741705533; cv=none; b=uCXSvvFfaD5jMKkcoU0im1esoOHK/hdMPzqiJJbkVbveSUufcjb6xt1cwxQwUXAxoswrfr47IlUJPrV5V6l8KgFcgexSFXf6Is66r3urDOsx0BLiSdZ9MluXrsI7BLms9fYpFw6VjzuygIPas6DD9r/GgGDOQ3hwj94VRBfxz+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705530; c=relaxed/simple;
-	bh=G3O1D0gYw+TvdXJgZfDnHBDQaWGGHcYKITEq81szfmw=;
+	s=arc-20240116; t=1741705533; c=relaxed/simple;
+	bh=6xc3rIASQ0oUb+GyVrlQM/3j5a9lPwqfugJvINy55Zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DeXkquB9k5gqAwzyVAy7yhhybHjwjvG9AslPz97HjguV6j5No7kRpLxRCoWn9E/Vjpqp22oq9RsnECfpWdZ3PQ00Jh24FKcyE0k9ikSdxIjAilO9ji05+aqhZ/Jg15WlkcFw1gImlbTKjADMLhYo89534pp2by2WC5ku1Hmy8dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnWiMaHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGdl7RImil2mxCJ5a/6tEcPrxayZ88ZBCccEc1Dlt/LWw0P3UI7ed51/Ha5UB6H1kmDG+xykIAQ3ItjeunfeOSRkjXkYQb64abTQLFKv7nzLVC5kbIUgXzvItCNcmlqs8LMRveVEadcsCej11BuVtPbxA6GXis0KehCVyGlok/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqSjdoKN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnWiMaHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F7FC4CEE9;
-	Tue, 11 Mar 2025 15:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqSjdoKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C0FC4CEE9;
+	Tue, 11 Mar 2025 15:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705529;
-	bh=G3O1D0gYw+TvdXJgZfDnHBDQaWGGHcYKITEq81szfmw=;
+	s=korg; t=1741705532;
+	bh=6xc3rIASQ0oUb+GyVrlQM/3j5a9lPwqfugJvINy55Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnWiMaHSI5xU/xWuaMHvIVX/8JiCT3G3mHJ1tfUpvh5lRiXk6dT2NTKzqmAeQH4eu
-	 f8/D0flzA8QDKXXwSvaOGQa25AxovgpodMANEcbfCfyzUWwf7gb1HS4FoOUTXQNjF+
-	 qNwSZs258x9Mn9iuduSJHaGQfAqdFzaai/ceXp24=
+	b=aqSjdoKN78cn/9/huQK8qigMXQ2R2B2Cosu2ZJ58JCgWdNsBweWuRgKzT+rvC8JZ5
+	 praU6vZ2Fy8RkeBPWxomHkVdoJ8baL945DLEkjBMUYxi101lTZS1GBx2lWaeiZRehL
+	 HF/CObGtJ5Ub11EOsuU9JIF1chGN+BTEedWz8SwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Howard Chu <howardchu95@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/328] net: davicom: fix UAF in dm9000_drv_remove
-Date: Tue, 11 Mar 2025 15:57:17 +0100
-Message-ID: <20250311145717.557599910@linuxfoundation.org>
+Subject: [PATCH 5.4 068/328] perf trace: Fix runtime error of index out of bounds
+Date: Tue, 11 Mar 2025 15:57:18 +0100
+Message-ID: <20250311145717.596810473@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -46,54 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Howard Chu <howardchu95@gmail.com>
 
-[ Upstream commit 19e65c45a1507a1a2926649d2db3583ed9d55fd9 ]
+[ Upstream commit c7b87ce0dd10b64b68a0b22cb83bbd556e28fe81 ]
 
-dm is netdev private data and it cannot be
-used after free_netdev() call. Using dm after free_netdev()
-can cause UAF bug. Fix it by moving free_netdev() at the end of the
-function.
+libtraceevent parses and returns an array of argument fields, sometimes
+larger than RAW_SYSCALL_ARGS_NUM (6) because it includes "__syscall_nr",
+idx will traverse to index 6 (7th element) whereas sc->fmt->arg holds 6
+elements max, creating an out-of-bounds access. This runtime error is
+found by UBsan. The error message:
 
-This is similar to the issue fixed in commit
-ad297cd2db89 ("net: qcom/emac: fix UAF in emac_remove").
+  $ sudo UBSAN_OPTIONS=print_stacktrace=1 ./perf trace -a --max-events=1
+  builtin-trace.c:1966:35: runtime error: index 6 out of bounds for type 'syscall_arg_fmt [6]'
+    #0 0x5c04956be5fe in syscall__alloc_arg_fmts /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:1966
+    #1 0x5c04956c0510 in trace__read_syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2110
+    #2 0x5c04956c372b in trace__syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2436
+    #3 0x5c04956d2f39 in trace__init_syscalls_bpf_prog_array_maps /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:3897
+    #4 0x5c04956d6d25 in trace__run /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:4335
+    #5 0x5c04956e112e in cmd_trace /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:5502
+    #6 0x5c04956eda7d in run_builtin /home/howard/hw/linux-perf/tools/perf/perf.c:351
+    #7 0x5c04956ee0a8 in handle_internal_command /home/howard/hw/linux-perf/tools/perf/perf.c:404
+    #8 0x5c04956ee37f in run_argv /home/howard/hw/linux-perf/tools/perf/perf.c:448
+    #9 0x5c04956ee8e9 in main /home/howard/hw/linux-perf/tools/perf/perf.c:556
+    #10 0x79eb3622a3b7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #11 0x79eb3622a47a in __libc_start_main_impl ../csu/libc-start.c:360
+    #12 0x5c04955422d4 in _start (/home/howard/hw/linux-perf/tools/perf/perf+0x4e02d4) (BuildId: 5b6cab2d59e96a4341741765ad6914a4d784dbc6)
 
-This bug is detected by our static analysis tool.
+     0.000 ( 0.014 ms): Chrome_ChildIO/117244 write(fd: 238, buf: !, count: 1)                                      = 1
 
-Fixes: cf9e60aa69ae ("net: davicom: Fix regulator not turned off on driver removal")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-CC: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250123214213.623518-1-chenyuan0y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5e58fcfaf4c6 ("perf trace: Allow allocating sc->arg_fmt even without the syscall tracepoint")
+Signed-off-by: Howard Chu <howardchu95@gmail.com>
+Link: https://lore.kernel.org/r/20250122025519.361873-1-howardchu95@gmail.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/davicom/dm9000.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/davicom/dm9000.c b/drivers/net/ethernet/davicom/dm9000.c
-index 1d5d8984b49a3..fdf69fe78fbb6 100644
---- a/drivers/net/ethernet/davicom/dm9000.c
-+++ b/drivers/net/ethernet/davicom/dm9000.c
-@@ -1781,10 +1781,11 @@ dm9000_drv_remove(struct platform_device *pdev)
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index c8c01e706118e..6a444123a0954 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1582,8 +1582,12 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		return PTR_ERR(sc->tp_format);
+ 	}
  
- 	unregister_netdev(ndev);
- 	dm9000_release_board(pdev, dm);
--	free_netdev(ndev);		/* free device structure */
- 	if (dm->power_supply)
- 		regulator_disable(dm->power_supply);
++	/*
++	 * The tracepoint format contains __syscall_nr field, so it's one more
++	 * than the actual number of syscall arguments.
++	 */
+ 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
+-					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
++					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields - 1))
+ 		return -ENOMEM;
  
-+	free_netdev(ndev);		/* free device structure */
-+
- 	dev_dbg(&pdev->dev, "released and freed device\n");
- 	return 0;
- }
+ 	sc->args = sc->tp_format->format.fields;
 -- 
 2.39.5
 
