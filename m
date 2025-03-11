@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B136E1925AF;
-	Tue, 11 Mar 2025 15:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F171684AC;
+	Tue, 11 Mar 2025 15:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706596; cv=none; b=YEC2B/0OEkkZqFrtiLpGsJ0/VS0llfI0dd4kHY/sYmOfXOKZPY4fiH/WgaE25I0ofUopwUbRFglm9n9zyKfeu+fYZP6yE6GXrqTH+9Ttsv4TbUvYEuZLYlp+tsD+xATmaYuLuflVpads7MjCGtab9K60EU/jYaQjpZr+dW2cydc=
+	t=1741706599; cv=none; b=j6uJtIDJHcf2/3AYRgJyPBbpUO4l+U/mQU3L07Q170wfUoCt+HLzIhzAxOAPF0Jn0yTwYCjMI2PF3lg2KotqzOQA7vVV6C6nQM8PDxaVVmPtahSV6dkTc4xPar3W5ZD9iS2/FxltDbmK9Bns/icO2nVofLhHBCr7mcymuXGqLa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706596; c=relaxed/simple;
-	bh=9nKVx0zRN4TlKYbpBa9nuXTIma1n0E0ZE8q6lPHfoPA=;
+	s=arc-20240116; t=1741706599; c=relaxed/simple;
+	bh=ygmjU0NQ7AOM6BdPw+AXZ27S5jEdTIw2Tg1o6wFzxYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmFVL7EvV0PrTx4ME+ODbLwoAH7Vnqm5a4zv+Xh5oZugeug604XeE/fopoVlXbFHPeNtG8AuMaCrc1gX6FgsE2dnxtBZmW7Rkw+q2AXDeNsfaAyJVktG3nbi9SJ8dRsPqCsqgB/VqPPfCme4/pnRM3O7mCbOhknrXwOOT0UmdVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf8FYQCA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WB83QCkTlAZHmGNUqP3h3OztxUG4/suctnGi4vQ/P/YfYqn/fKrohN0t3sa9XNroVui7mv4YsUbXSfHwL86hogmaxWbLyjreuuyTyx+v779f2pG8gf7RH/VexJBJQKI80hmOCe376UDTaRWrGj3IQEhTe3g3DftSVqMcTY3/0MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/LSxLJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf8FYQCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B076C4CEE9;
-	Tue, 11 Mar 2025 15:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/LSxLJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A5EC4CEE9;
+	Tue, 11 Mar 2025 15:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706596;
-	bh=9nKVx0zRN4TlKYbpBa9nuXTIma1n0E0ZE8q6lPHfoPA=;
+	s=korg; t=1741706599;
+	bh=ygmjU0NQ7AOM6BdPw+AXZ27S5jEdTIw2Tg1o6wFzxYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf8FYQCARDbE4/h+fAw6E2NqiQS63eX5lhIEv0X8ICKp1TA+srCMzgM3h7VAwc2LA
-	 4Zgjvh0pmfkxYekVI6EJ60Eep25So7Zu2r16s163swBdJwhwgDcSZ5qgyhWX3d6fda
-	 chwF2Nix6ozONiqy9mhGHqoFPYWB2d081wKFdy1w=
+	b=w/LSxLJew315aEFCzXjkXTZWga7yLZFQzatXK0ljoQUnuA/e+2PcRe2F7MXtqt4zC
+	 7eaRDr4Gd4DGMvwYhCEndwxFir3yhCExkBr4hIKpg+ty6IPR4YLahxfwXq2E0hUkGK
+	 chmF3g0ug4ajRI8X8RHMFUe0qw3xX7+crvUzF2Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/462] ipmr: do not call mr_mfc_uses_dev() for unres entries
-Date: Tue, 11 Mar 2025 15:56:08 +0100
-Message-ID: <20250311145802.389857370@linuxfoundation.org>
+Subject: [PATCH 5.10 103/462] PM: hibernate: Add error handling for syscore_suspend()
+Date: Tue, 11 Mar 2025 15:56:09 +0100
+Message-ID: <20250311145802.433734400@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,69 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 15a901361ec3fb1c393f91880e1cbf24ec0a88bd ]
+[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
 
-syzbot found that calling mr_mfc_uses_dev() for unres entries
-would crash [1], because c->mfc_un.res.minvif / c->mfc_un.res.maxvif
-alias to "struct sk_buff_head unresolved", which contain two pointers.
+In hibernation_platform_enter(), the code did not check the
+return value of syscore_suspend(), potentially leading to a
+situation where syscore_resume() would be called even if
+syscore_suspend() failed. This could cause unpredictable
+behavior or system instability.
 
-This code never worked, lets remove it.
+Modify the code sequence in question to properly handle errors returned
+by syscore_suspend(). If an error occurs in the suspend path, the code
+now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
+only enabling interrupts after setting the system state to SYSTEM_RUNNING.
 
-[1]
-Unable to handle kernel paging request at virtual address ffff5fff2d536613
-KASAN: maybe wild-memory-access in range [0xfffefff96a9b3098-0xfffefff96a9b309f]
-Modules linked in:
-CPU: 1 UID: 0 PID: 7321 Comm: syz.0.16 Not tainted 6.13.0-rc7-syzkaller-g1950a0af2d55 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline]
- pc : mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334
- lr : mr_mfc_uses_dev net/ipv4/ipmr_base.c:289 [inline]
- lr : mr_table_dump+0x694/0x8b0 net/ipv4/ipmr_base.c:334
-Call trace:
-  mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline] (P)
-  mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334 (P)
-  mr_rtm_dumproute+0x254/0x454 net/ipv4/ipmr_base.c:382
-  ipmr_rtm_dumproute+0x248/0x4b4 net/ipv4/ipmr.c:2648
-  rtnl_dump_all+0x2e4/0x4e8 net/core/rtnetlink.c:4327
-  rtnl_dumpit+0x98/0x1d0 net/core/rtnetlink.c:6791
-  netlink_dump+0x4f0/0xbc0 net/netlink/af_netlink.c:2317
-  netlink_recvmsg+0x56c/0xe64 net/netlink/af_netlink.c:1973
-  sock_recvmsg_nosec net/socket.c:1033 [inline]
-  sock_recvmsg net/socket.c:1055 [inline]
-  sock_read_iter+0x2d8/0x40c net/socket.c:1125
-  new_sync_read fs/read_write.c:484 [inline]
-  vfs_read+0x740/0x970 fs/read_write.c:565
-  ksys_read+0x15c/0x26c fs/read_write.c:708
-
-Fixes: cb167893f41e ("net: Plumb support for filtering ipv4 and ipv6 multicast route dumps")
-Reported-by: syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/678fe2d1.050a0220.15cac.00b3.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250121181241.841212-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr_base.c | 3 ---
- 1 file changed, 3 deletions(-)
+ kernel/power/hibernate.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index c45cb7cb57590..8b5b6f196cdc4 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -321,9 +321,6 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
- 	list_for_each_entry(mfc, &mrt->mfc_unres_queue, list) {
- 		if (e < s_e)
- 			goto next_entry2;
--		if (filter->dev &&
--		    !mr_mfc_uses_dev(mrt, mfc, filter->dev))
--			goto next_entry2;
+diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
+index 59a1b126c369b..f2b2a2dcdb87b 100644
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -590,7 +590,11 @@ int hibernation_platform_enter(void)
  
- 		err = fill(mrt, skb, NETLINK_CB(cb->skb).portid,
- 			   cb->nlh->nlmsg_seq, mfc, RTM_NEWROUTE, flags);
+ 	local_irq_disable();
+ 	system_state = SYSTEM_SUSPEND;
+-	syscore_suspend();
++
++	error = syscore_suspend();
++	if (error)
++		goto Enable_irqs;
++
+ 	if (pm_wakeup_pending()) {
+ 		error = -EAGAIN;
+ 		goto Power_up;
+@@ -602,6 +606,7 @@ int hibernation_platform_enter(void)
+ 
+  Power_up:
+ 	syscore_resume();
++ Enable_irqs:
+ 	system_state = SYSTEM_RUNNING;
+ 	local_irq_enable();
+ 
 -- 
 2.39.5
 
