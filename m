@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6B125EFB6;
-	Tue, 11 Mar 2025 15:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6224025EFBB;
+	Tue, 11 Mar 2025 15:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707636; cv=none; b=jdFzQmnkOw3F8tPcaxr8xSugHw9GvvgtcqJElcA7PEC7xfEIPfdDT8Ricp5GT86hOIVjkO1xK9b1GG9QnVn4zZXCxvcyJFyUYoVftv2BLUVsIz7vRUITqohYUZcUfDZJY7Sb60+gmNDrdCiTIzg4W4Ly0ONpmDKcyJ0TkTGHmD0=
+	t=1741707639; cv=none; b=srmPhDZ4Ll3xAK9+MgKxPUmkPcL6zZXHrzwJur7Nc+c9Q8AB70QCvT4dtUEHxI/9AxUcj2MtdJV6h2G9kuzDuZa5br8mx0FB4T4bs2m9LfmDEf4ilstvGkvBRFIH73mT3c9WHRmVu+rhSiL9AAsnQq35goH/464AUfRsrj9q+uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707636; c=relaxed/simple;
-	bh=bFzg5Zp4OVx6l0QR7ndAO4D5CKLFJFZXW1GWnws1Je0=;
+	s=arc-20240116; t=1741707639; c=relaxed/simple;
+	bh=xf7M6BVFT8DAFcq/gg+MR74qJuXyUAQ6IqEImiReHu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZH7f18JKtbp/BRSVT/uJ/yv3A+yT91a6FqZPL6d1KSU75fcWSpYYx4DUMlH8gOViP62YWGkntkePpqc4yJ4cc31GlvbnpEXUVWMq76DdWo04PQvh+L2KTzpXN/LSiFfCbwaqv3H7M5jkfccR/yAVA5FbhNsvEgGLTcPSd8w04U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOtKZbfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RuojwaOs+SBAF+5qTBIJwMyPw1k47vc+rTOE5oIMN1gfAbtUZAOYKJ+RhXx89Ppilsn8WJSiE98orp/zKHFDre7waW8HRnhlZmRJlO3u7es9tswaHSli0p3o8pZ8PQgKVVBAwrHmeahJHLpLUiIOEokqS4TfY46bpqzofTMiJqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WddZQcYD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOtKZbfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73D9C4CEE9;
-	Tue, 11 Mar 2025 15:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WddZQcYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6B8C4CEEA;
+	Tue, 11 Mar 2025 15:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707636;
-	bh=bFzg5Zp4OVx6l0QR7ndAO4D5CKLFJFZXW1GWnws1Je0=;
+	s=korg; t=1741707639;
+	bh=xf7M6BVFT8DAFcq/gg+MR74qJuXyUAQ6IqEImiReHu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOtKZbfMMj7L9yOpx0YgOaVDKlLxX7Ph9nuqPp8qjlHXCRzxCgJ2J53r++HtFc10x
-	 ukJ6HhVDZm/TrUSUcEJG1iImDdo86f+iM05ahX/RXZfflS7oGcybmmRJTpcX9MtzxY
-	 LSW30kmhMZmS7i+8/ihD4SIVv+/Ip626ipV/128g=
+	b=WddZQcYDyCJ1Y3/gxML0klq5GVp0lzHsK8JCDIbJJLQx9xcyUD4fLQNC/UpctiVxu
+	 dtLFVq4lZemJDAbxnbLbynHzF7jU5EDAqzfp03E9s1cdU79G/Ty0J+5HL+Elct0kvN
+	 N55ZcKnBCdQRKhgADLFD9ty6RbRaK/UVR0hehThM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-btrfs@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 457/462] crypto: hisilicon/qm - inject error before stopping queue
-Date: Tue, 11 Mar 2025 16:02:03 +0100
-Message-ID: <20250311145816.379184930@linuxfoundation.org>
+	pk <pkoroau@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>
+Subject: [PATCH 5.10 458/462] btrfs: bring back the incorrectly removed extent buffer lock recursion support
+Date: Tue, 11 Mar 2025 16:02:04 +0100
+Message-ID: <20250311145816.419610146@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,104 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit b04f06fc0243600665b3b50253869533b7938468 upstream.
+Commit 51b03b7473a0 ("btrfs: locking: remove the recursion handling code")
+from the 5.10.233 stable tree removed the support for extent buffer lock
+recursion, but we need that code because in 5.10.x we load the free space
+cache synchronously - while modifying the extent tree and holding a write
+lock on some extent buffer, we may need to load the free space cache,
+which requires acquiring read locks on the extent tree and therefore
+result in a deadlock in case we need to read lock an extent buffer we had
+write locked while modifying the extent tree.
 
-The master ooo cannot be completely closed when the
-accelerator core reports memory error. Therefore, the driver
-needs to inject the qm error to close the master ooo. Currently,
-the qm error is injected after stopping queue, memory may be
-released immediately after stopping queue, causing the device to
-access the released memory. Therefore, error is injected to close master
-ooo before stopping queue to ensure that the device does not access
-the released memory.
+Backporting that commit from Linus' tree is therefore wrong, and was done
+so in order to backport upstream commit 97e86631bccd ("btrfs: don't set
+lock_owner when locking extent buffer for reading"). However we should
+have instead had the commit adapted to the 5.10 stable tree instead.
 
-Fixes: 6c6dd5802c2d ("crypto: hisilicon/qm - add controller reset interface")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Note that the backport of that dependency is ok only for stable trees
+5.11+, because in those tree the space cache loading code is not
+synchronous anymore, so there is no need to have the lock recursion
+and indeed there are no users of the extent buffer lock recursion
+support. In other words, the backport is only valid for kernel releases
+that have the asynchrounous free space cache loading support, which
+was introduced in kernel 5.11 with commit e747853cae3a ("btrfs: load
+free space cache asynchronously").
+
+This was causing deadlocks and reported by a user (see below Link tag).
+
+So revert commit 51b03b7473a0 ("btrfs: locking: remove the recursion
+handling code") while not undoing what commit d5a30a6117ea ("btrfs: don't
+set lock_owner when locking extent buffer for reading") from the 5.10.x
+stable tree did.
+
+Reported-by: pk <pkoroau@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAMNwjEKH6znTHE5hMc5er2dFs5ypw4Szx6TMDMb0H76yFq5DGQ@mail.gmail.com/
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/qm.c |   46 +++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ fs/btrfs/locking.c |   68 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 64 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -3354,6 +3354,27 @@ static int qm_set_vf_mse(struct hisi_qm
- 	return -ETIMEDOUT;
- }
+--- a/fs/btrfs/locking.c
++++ b/fs/btrfs/locking.c
+@@ -25,18 +25,43 @@
+  * - reader/reader sharing
+  * - try-lock semantics for readers and writers
+  *
+- * The rwsem implementation does opportunistic spinning which reduces number of
+- * times the locking task needs to sleep.
++ * Additionally we need one level nesting recursion, see below. The rwsem
++ * implementation does opportunistic spinning which reduces number of times the
++ * locking task needs to sleep.
++ *
++ *
++ * Lock recursion
++ * --------------
++ *
++ * A write operation on a tree might indirectly start a look up on the same
++ * tree.  This can happen when btrfs_cow_block locks the tree and needs to
++ * lookup free extents.
++ *
++ * btrfs_cow_block
++ *   ..
++ *   alloc_tree_block_no_bg_flush
++ *     btrfs_alloc_tree_block
++ *       btrfs_reserve_extent
++ *         ..
++ *         load_free_space_cache
++ *           ..
++ *           btrfs_lookup_file_extent
++ *             btrfs_search_slot
++ *
+  */
  
-+static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
-+{
-+	u32 nfe_enb = 0;
+ /*
+  * __btrfs_tree_read_lock - lock extent buffer for read
+  * @eb:		the eb to be locked
+  * @nest:	the nesting level to be used for lockdep
+- * @recurse:	unused
++ * @recurse:	if this lock is able to be recursed
+  *
+  * This takes the read lock on the extent buffer, using the specified nesting
+  * level for lockdep purposes.
++ *
++ * If you specify recurse = true, then we will allow this to be taken if we
++ * currently own the lock already.  This should only be used in specific
++ * usecases, and the subsequent unlock will not change the state of the lock.
+  */
+ void __btrfs_tree_read_lock(struct extent_buffer *eb, enum btrfs_lock_nesting nest,
+ 			    bool recurse)
+@@ -46,7 +71,31 @@ void __btrfs_tree_read_lock(struct exten
+ 	if (trace_btrfs_tree_read_lock_enabled())
+ 		start_ns = ktime_get_ns();
+ 
++	if (unlikely(recurse)) {
++		/* First see if we can grab the lock outright */
++		if (down_read_trylock(&eb->lock))
++			goto out;
 +
-+	if (!qm->err_status.is_dev_ecc_mbit &&
-+	    qm->err_status.is_qm_ecc_mbit &&
-+	    qm->err_ini->close_axi_master_ooo) {
++		/*
++		 * Ok still doesn't necessarily mean we are already holding the
++		 * lock, check the owner.
++		 */
++		if (eb->lock_owner != current->pid) {
++			down_read_nested(&eb->lock, nest);
++			goto out;
++		}
 +
-+		qm->err_ini->close_axi_master_ooo(qm);
-+
-+	} else if (qm->err_status.is_dev_ecc_mbit &&
-+		   !qm->err_status.is_qm_ecc_mbit &&
-+		   !qm->err_ini->close_axi_master_ooo) {
-+
-+		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
-+		       qm->io_base + QM_RAS_NFE_ENABLE);
-+		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
++		/*
++		 * Ok we have actually recursed, but we should only be recursing
++		 * once, so blow up if we're already recursed, otherwise set
++		 * ->lock_recursed and carry on.
++		 */
++		BUG_ON(eb->lock_recursed);
++		eb->lock_recursed = true;
++		goto out;
 +	}
-+}
-+
- static int qm_set_msi(struct hisi_qm *qm, bool set)
- {
- 	struct pci_dev *pdev = qm->pdev;
-@@ -3433,6 +3454,8 @@ static int qm_controller_reset_prepare(s
- 		return ret;
- 	}
- 
-+	qm_dev_ecc_mbit_handle(qm);
-+
- 	if (qm->vfs_num) {
- 		ret = qm_vf_reset_prepare(qm, QM_SOFT_RESET);
- 		if (ret) {
-@@ -3450,27 +3473,6 @@ static int qm_controller_reset_prepare(s
- 	return 0;
+ 	down_read_nested(&eb->lock, nest);
++out:
+ 	trace_btrfs_tree_read_lock(eb, start_ns);
  }
  
--static void qm_dev_ecc_mbit_handle(struct hisi_qm *qm)
--{
--	u32 nfe_enb = 0;
--
--	if (!qm->err_status.is_dev_ecc_mbit &&
--	    qm->err_status.is_qm_ecc_mbit &&
--	    qm->err_ini->close_axi_master_ooo) {
--
--		qm->err_ini->close_axi_master_ooo(qm);
--
--	} else if (qm->err_status.is_dev_ecc_mbit &&
--		   !qm->err_status.is_qm_ecc_mbit &&
--		   !qm->err_ini->close_axi_master_ooo) {
--
--		nfe_enb = readl(qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(nfe_enb & QM_RAS_NFE_MBIT_DISABLE,
--		       qm->io_base + QM_RAS_NFE_ENABLE);
--		writel(QM_ECC_MBIT, qm->io_base + QM_ABNORMAL_INT_SET);
--	}
--}
--
- static int qm_soft_reset(struct hisi_qm *qm)
- {
- 	struct pci_dev *pdev = qm->pdev;
-@@ -3496,8 +3498,6 @@ static int qm_soft_reset(struct hisi_qm
- 		return ret;
- 	}
+@@ -85,11 +134,22 @@ int btrfs_try_tree_write_lock(struct ext
+ }
  
--	qm_dev_ecc_mbit_handle(qm);
--
- 	/* OOO register set and check */
- 	writel(ACC_MASTER_GLOBAL_CTRL_SHUTDOWN,
- 	       qm->io_base + ACC_MASTER_GLOBAL_CTRL);
+ /*
+- * Release read lock.
++ * Release read lock.  If the read lock was recursed then the lock stays in the
++ * original state that it was before it was recursively locked.
+  */
+ void btrfs_tree_read_unlock(struct extent_buffer *eb)
+ {
+ 	trace_btrfs_tree_read_unlock(eb);
++	/*
++	 * if we're nested, we have the write lock.  No new locking
++	 * is needed as long as we are the lock owner.
++	 * The write unlock will do a barrier for us, and the lock_recursed
++	 * field only matters to the lock owner.
++	 */
++	if (eb->lock_recursed && current->pid == eb->lock_owner) {
++		eb->lock_recursed = false;
++		return;
++	}
+ 	up_read(&eb->lock);
+ }
+ 
 
 
