@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4463A25C6ED;
-	Tue, 11 Mar 2025 15:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E66249F9;
+	Tue, 11 Mar 2025 15:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706333; cv=none; b=qdt4eA69UReZfHKM4k/1KvXXoxMf53pnyMAfLsKDWS+Lk3tEbWsWXGgR6i0N71T/dRmV4T6ffAzIcUrKuVKAWm3bT93c7TOI15oE6j6GRDBAosBFGZcpeoVMxtu4UmfBDGSCKO473Hr+gQB7LuMsQC60wEHDI7+VzhYDgs0gBx4=
+	t=1741706336; cv=none; b=sy2EC0KYAJV555kvxr6xYhxQPCKMpnpwDal66dyzvlxVhcfP3/nl+Igz/2ZTynPTf8zjmyaDn6UeNlnnQE1AEV/02IfQtxS4/joeggg2jFs3LC0BdNa2BAsSneIH9H/cbAFgJBy/Yv1Bwxh13rm2vmTn5URMG0WxD5Gnd76g5y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706333; c=relaxed/simple;
-	bh=3TmBcZWRER99nuczwGNegVQY50T8/D6HZBw/hyIBMpI=;
+	s=arc-20240116; t=1741706336; c=relaxed/simple;
+	bh=kzS51p2HxKzqOrzPNgyDylNkNv5MA7oJJFa7anSJRko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJePBIahh2ICPGBHs4o883KZcB+yuhE6qPvaISjVa1ORtivghWxwLzmw2IWM+qqd8YgIO+1SEyRrElkZeGPzEksyld+qisTVsI6Gvqa5q5oxsTZRfpYApbatiZLUs8Mb8BCE3vOeZDYCr/bU9Gu4gcYxZr8OPfeRiJugkfE1Sg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RASKpL2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sla8I4G/5Fa2lLH01wUT9fe24vZ3tjg6H1R/Guu2Lpd92OG97FeU4MRMEhrCRgasZmukfMLOwRYr/ge/qaT4f0kutwnktSTAr0uO7tNFtGyYxXRDn25VBYHskzVteAIcaJE5yZ8ks2T0uc663ZxMGJG/28t6CLlvBIgDAYSHodo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKoXs5HL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RASKpL2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA3FC4CEE9;
-	Tue, 11 Mar 2025 15:18:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKoXs5HL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB252C4CEE9;
+	Tue, 11 Mar 2025 15:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706333;
-	bh=3TmBcZWRER99nuczwGNegVQY50T8/D6HZBw/hyIBMpI=;
+	s=korg; t=1741706336;
+	bh=kzS51p2HxKzqOrzPNgyDylNkNv5MA7oJJFa7anSJRko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RASKpL2SwBJlaoTC0hiZPZ3r/sVX0qYgvKGrTHs0A/7aoupTqi7tuA9YpHoJHw8ku
-	 gwW1ZeN7hwUpEs3tC+8kGfDXUMqxyE7TlyukjmaY8HD9jIt6sQfa3J8+mc+9lKhWoS
-	 ZiA9t/DoSMiqGnlHd9duU2yl5OEtZy+dc8KsyVUo=
+	b=qKoXs5HLdNoyDlYEL6fR0ZmzpuCFQjOWN5DQ+QqTccThfPUuQRZPjdBHvWwFBt5iR
+	 9S65IhUYSNLmxYU3jiM79GU6SWb9bD0QgUSLmct9GXanH7LVZALBx+BSHQvErOBhUY
+	 j9auP03JHyP3MEkCZ3c/bst4D6bOceU5pmQ1biJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Richard Russon (FlatCap)" <ldm@flatcap.org>,
-	linux-ntfs-dev@lists.sourceforge.net,
-	Jens Axboe <axboe@kernel.dk>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/462] partitions: ldm: remove the initial kernel-doc notation
-Date: Tue, 11 Mar 2025 15:54:31 +0100
-Message-ID: <20250311145758.563836381@linuxfoundation.org>
+Subject: [PATCH 5.10 006/462] select: Fix unbalanced user_access_end()
+Date: Tue, 11 Mar 2025 15:54:32 +0100
+Message-ID: <20250311145758.603210064@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,39 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit e494e451611a3de6ae95f99e8339210c157d70fb ]
+[ Upstream commit 344af27715ddbf357cf76978d674428b88f8e92d ]
 
-Remove the file's first comment describing what the file is.
-This comment is not in kernel-doc format so it causes a kernel-doc
-warning.
+While working on implementing user access validation on powerpc
+I got the following warnings on a pmac32_defconfig build:
 
-ldm.h:13: warning: expecting prototype for ldm(). Prototype was for _FS_PT_LDM_H_() instead
+	  CC      fs/select.o
+	fs/select.o: warning: objtool: sys_pselect6+0x1bc: redundant UACCESS disable
+	fs/select.o: warning: objtool: sys_pselect6_time32+0x1bc: redundant UACCESS disable
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Richard Russon (FlatCap) <ldm@flatcap.org>
-Cc: linux-ntfs-dev@lists.sourceforge.net
-Cc: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/20250111062758.910458-1-rdunlap@infradead.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+On powerpc/32s, user_read_access_begin/end() are no-ops, but the
+failure path has a user_access_end() instead of user_read_access_end()
+which means an access end without any prior access begin.
+
+Replace that user_access_end() by user_read_access_end().
+
+Fixes: 7e71609f64ec ("pselect6() and friends: take handling the combined 6th/7th args into helper")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/a7139e28d767a13e667ee3c79599a8047222ef36.1736751221.git.christophe.leroy@csgroup.eu
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/ldm.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/select.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/partitions/ldm.h b/block/partitions/ldm.h
-index 8693704dcf5e9..84a66b51cd2ab 100644
---- a/block/partitions/ldm.h
-+++ b/block/partitions/ldm.h
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/**
-+/*
-  * ldm - Part of the Linux-NTFS project.
-  *
-  * Copyright (C) 2001,2002 Richard Russon <ldm@flatcap.org>
+diff --git a/fs/select.c b/fs/select.c
+index 668a5200503ae..7ce67428582e6 100644
+--- a/fs/select.c
++++ b/fs/select.c
+@@ -787,7 +787,7 @@ static inline int get_sigset_argpack(struct sigset_argpack *to,
+ 	}
+ 	return 0;
+ Efault:
+-	user_access_end();
++	user_read_access_end();
+ 	return -EFAULT;
+ }
+ 
+@@ -1360,7 +1360,7 @@ static inline int get_compat_sigset_argpack(struct compat_sigset_argpack *to,
+ 	}
+ 	return 0;
+ Efault:
+-	user_access_end();
++	user_read_access_end();
+ 	return -EFAULT;
+ }
+ 
 -- 
 2.39.5
 
