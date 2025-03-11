@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143931EA80;
-	Tue, 11 Mar 2025 15:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD325E473;
+	Tue, 11 Mar 2025 15:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706552; cv=none; b=NWEbHxui9GW+wcMYbShdPRw9/8M/Xmvbsjr5efKGQkxFMKXH/njP51BQcl3/du64SkQelDxw162oKCKbts/KojMI/ywcYWD3Vx8UhkA+aUAvTaAcRTxcZSWeIyVHtG+dHdWe5BbO82/TesIPOekv0XWw4Ft3jZbaIMljnni9+I0=
+	t=1741706556; cv=none; b=BCvYCErtd9wBSnDLiBoeAnX+tRwnR9pryyOayD5dZGSHuTnWmY2uY8r2exPq0O6QAy2Y517cY2FM37xl4sDjSKAjYE/HlBagE5LACFH3AySoShXzHoXHgGxjg1gn2RW5ujBNVI0LdjW18f+Idq6cr14ehQ7o0anmEhq7A0lOodw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706552; c=relaxed/simple;
-	bh=vOfRs41frOn8ICbus7T47GjrC9wyrXL7p9CZaGQu7Lo=;
+	s=arc-20240116; t=1741706556; c=relaxed/simple;
+	bh=6NFF8G70APIc6XO489Nvbea3AaJioVHTU6f0fOvvqwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NO5kQCrugI2rmEMSajD7s6sgM6sGlNfmp/0jl4kF8YsvD/qBVKsvfFOhXhS6NlLUZrIc6px+eR4piKJ7ZUoZeDdqK8qaMYfKIGZite5+JwWVa22AyUqr9kwjxwuASxQF4FYPw5W69ZoumfAsafUE4qnXNAlEXAJT9lnRVfH+lEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re8fR9Rq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BZXIVa7KVSrd2sKZfU/ea3VClmHpHi0b6/CnlbOPOgqGBIE4zQKR6KZLIRP3wZX131nbM7K1Pc+wZi967peLnUx8zUl52sJi2SytQF7J100pCvZc22XsOuocrTutFiZfJpzMoAR1a9hCljDvSale7t7ru+94nEqzUGd2cGJ7epM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auUOR7uT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re8fR9Rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92374C4CEE9;
-	Tue, 11 Mar 2025 15:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auUOR7uT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F2C4CEE9;
+	Tue, 11 Mar 2025 15:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706552;
-	bh=vOfRs41frOn8ICbus7T47GjrC9wyrXL7p9CZaGQu7Lo=;
+	s=korg; t=1741706556;
+	bh=6NFF8G70APIc6XO489Nvbea3AaJioVHTU6f0fOvvqwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Re8fR9Rq3iicM+gJfVcjllcCO1pJp8BPYY2lcbvnspZMyKtiW4l+vvtnpMHbxEEN6
-	 fJ79sUYeqBVy5cINhW7eM6YhFDtpVranxBS0Rb0p9lMHNcP6lkUuYzAyx+YlwZjbqU
-	 PFBbVp37EB1ZZxsSVOL9vjpAGJTjIYd3gbOWwois=
+	b=auUOR7uToHrUQOS18f9425blIfnQ7IAA/6uwDNpq/F6Q9DepynFt4NK3yasE333h6
+	 G9U8g3hdQ/2Gb1/eV4K4ukgUYaSCjSFPQts8ZBilOe0uMBHc06PUChm7FvukGHvsN4
+	 yPXFiFWGJUFec271Hm6Zu2NNBXsRjs7FxgVBsPys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	King Dix <kingdix10@qq.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/462] staging: media: imx: fix OF node leak in imx_media_add_of_subdevs()
-Date: Tue, 11 Mar 2025 15:55:54 +0100
-Message-ID: <20250311145801.827383936@linuxfoundation.org>
+Subject: [PATCH 5.10 089/462] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
+Date: Tue, 11 Mar 2025 15:55:55 +0100
+Message-ID: <20250311145801.866853758@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -47,62 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: King Dix <kingdix10@qq.com>
 
-[ Upstream commit 094f5c315f756b19198e6c401aa821ac0e868750 ]
+[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
 
-imx_media_add_of_subdevs() calls of_parse_phandle() and passes the
-obtained node to imx_media_of_add_csi(). The passed node is used in
-v4l2_async_nf_add_fwnode(), which increments the refcount of the node.
-Therefore, while the current implementation only releases the node when
-imx_media_of_add_csi() fails, but should always release it. Call
-of_node_put() right after imx_media_of_add_csi().
+The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
+macro to request a needed resource. A string variable that lives on the
+stack is then used to store a dynamically computed resource name, which
+is then passed on as one of the macro arguments. This can lead to
+undefined behavior.
 
-Fixes: dee747f88167 ("media: imx: Don't register IPU subdevs/links if CSI port missing")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Depending on the current contents of the memory, the manifestations of
+errors may vary. One possible output may be as follows:
+
+  $ cat /proc/iomem
+  30000000-37ffffff :
+  38000000-3fffffff :
+
+Sometimes, garbage may appear after the colon.
+
+In very rare cases, if no NULL-terminator is found in memory, the system
+might crash because the string iterator will overrun which can lead to
+access of unmapped memory above the stack.
+
+Thus, fix this by replacing outbound_name with the name of the previously
+requested resource. With the changes applied, the output will be as
+follows:
+
+  $ cat /proc/iomem
+  30000000-37ffffff : memory2
+  38000000-3fffffff : memory3
+
+Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
+Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: King Dix <kingdix10@qq.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/imx/imx-media-of.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-rcar-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/imx/imx-media-of.c b/drivers/staging/media/imx/imx-media-of.c
-index 82e13e972e233..566e133ad3f42 100644
---- a/drivers/staging/media/imx/imx-media-of.c
-+++ b/drivers/staging/media/imx/imx-media-of.c
-@@ -55,22 +55,18 @@ int imx_media_add_of_subdevs(struct imx_media_dev *imxmd,
- 			break;
- 
- 		ret = imx_media_of_add_csi(imxmd, csi_np);
-+		of_node_put(csi_np);
- 		if (ret) {
- 			/* unavailable or already added is not an error */
- 			if (ret == -ENODEV || ret == -EEXIST) {
--				of_node_put(csi_np);
- 				continue;
- 			}
- 
- 			/* other error, can't continue */
--			goto err_out;
-+			return ret;
+diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
+index c91d85b151290..fc85263797e91 100644
+--- a/drivers/pci/controller/pcie-rcar-ep.c
++++ b/drivers/pci/controller/pcie-rcar-ep.c
+@@ -110,7 +110,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
  		}
- 	}
- 
- 	return 0;
--
--err_out:
--	of_node_put(csi_np);
--	return ret;
- }
- EXPORT_SYMBOL_GPL(imx_media_add_of_subdevs);
+ 		if (!devm_request_mem_region(&pdev->dev, res->start,
+ 					     resource_size(res),
+-					     outbound_name)) {
++					     res->name)) {
+ 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
+ 				outbound_name);
+ 			return -EIO;
 -- 
 2.39.5
 
