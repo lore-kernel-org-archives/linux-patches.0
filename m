@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D29725F798;
-	Tue, 11 Mar 2025 15:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111621DF749;
+	Tue, 11 Mar 2025 15:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706829; cv=none; b=Qmf33ZvqnkLTsG3dGAB0D9zPAY3i6qey7HJ6eYPHdLws0KbJ4/68DB1a/dLYOrJ7l3ug5A63vegq+Tk0ufWEVc23WkkDywK6qbfZGUAsJMk8utd/3BFdjl8kNxL8oTLsTmLS6a8JuH972mjFFMxbol8lswR9FWohwu2RpOKy/As=
+	t=1741706832; cv=none; b=lRLhz2xjGJzCjlpDVwGlfIiMcFIDISD+OTg2RGKCiYWMslizq7gHRSyWbU45mCx/RCRR1VElNCFdZv/Ocp4f+7A2EEfv1wqEIXEdb0XYGmj/3PdoGdf3uDZGwI+SRL0C2DLrnUHojwGPYDYX2Gx4YW8fnYV+WkOpC3y1e6lpPAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706829; c=relaxed/simple;
-	bh=v0MjPKoUin3oJjIXWBLSg0y/VEy+wCzM3EDxtSSilo4=;
+	s=arc-20240116; t=1741706832; c=relaxed/simple;
+	bh=iKOBv68xWAnkPFpMeXEzQ0Zx2kz1oO2ZpIix+OPJx/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guSR5712/+cWtd7O/LEI+Jr+wqhnpAJdVwnkJD32XdRhUmkd5W+vJoKK9iqlqOT0Q23KDjjgnqTJBz6EeJvYmDfUjPAkEE1NtCClyIgF+bkbMJxp6DajUK7CZzxKB888nYudNUVSUFwQR6Ia6EJgfmAlZ1kYotwEd0WDYgxCzys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT9regvb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5inYQaLDdvV641Q7O7icWB9ZBFD+tNgpgjMjRhBXVU+boVndVohX7GagaGG49iWVMWWV8PXk0u5oLJLj1D0Q5lQ1n+OZTm/b3d7h5vQa5grFyqaYW83bl0fFOskeZF5izuppZGlbKHVh+K/x2PLdokgsrOUgMVAvdOODIOlFXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExWdfKw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT9regvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A805CC4CEE9;
-	Tue, 11 Mar 2025 15:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExWdfKw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC77C4CEE9;
+	Tue, 11 Mar 2025 15:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706829;
-	bh=v0MjPKoUin3oJjIXWBLSg0y/VEy+wCzM3EDxtSSilo4=;
+	s=korg; t=1741706831;
+	bh=iKOBv68xWAnkPFpMeXEzQ0Zx2kz1oO2ZpIix+OPJx/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fT9regvbC61X0eW9BRFfxRGgOUm7BKxPT9EcVP247IJVKslSxSReQoTb9vspBocAK
-	 ycIpeCRu9paFJDOWf4XxAxKEfUmLGaM7VDsv4XvTH4IgJcrhhSGzd9qNjnNGl6o54l
-	 QGxGSaV4E39D1C8Kl4Ze4lqtYjqYVKBmwqjVLitU=
+	b=ExWdfKw1JO0UXkzlEwrvJcU+vVEo2pY8oZgnAT7sUEV3PJfF/G8J2zuiizSV8BXmb
+	 TXdevplKTap0CRJNHsNS/og1CciWoTbDDyb2btjWSa4wurKlBYXpp7+4p6BezQbELY
+	 R1UcKzFJmUzpEm0edNEytMfTkLUBsWqz9FaJ/QZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
+	Yuanjie Yang <quic_yuanjiey@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/462] nvme: handle connectivity loss in nvme_set_queue_count
-Date: Tue, 11 Mar 2025 15:56:57 +0100
-Message-ID: <20250311145804.315974585@linuxfoundation.org>
+Subject: [PATCH 5.10 142/462] mmc: sdhci-msm: Correctly set the load for the regulator
+Date: Tue, 11 Mar 2025 15:56:48 +0100
+Message-ID: <20250311145803.966590579@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -54,51 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
 
-[ Upstream commit 294b2b7516fd06a8dd82e4a6118f318ec521e706 ]
+[ Upstream commit 20a0c37e44063997391430c4ae09973e9cbc3911 ]
 
-When the set feature attempts fails with any NVME status code set in
-nvme_set_queue_count, the function still report success. Though the
-numbers of queues set to 0. This is done to support controllers in
-degraded state (the admin queue is still up and running but no IO
-queues).
+Qualcomm regulator supports two power supply modes: HPM and LPM.
+Currently, the sdhci-msm.c driver does not set the load to adjust
+the current for eMMC and SD. If the regulator dont't set correct
+load in LPM state, it will lead to the inability to properly
+initialize eMMC and SD.
 
-Though there is an exception. When nvme_set_features reports an host
-path error, nvme_set_queue_count should propagate this error as the
-connectivity is lost, which means also the admin queue is not working
-anymore.
+Set the correct regulator current for eMMC and SD to ensure that the
+device can work normally even when the regulator is in LPM.
 
-Fixes: 9a0be7abb62f ("nvme: refactor set_queue_count")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250114083514.258379-1-quic_yuanjiey@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-msm.c | 53 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f988a5e3f0e15..019a6dbdcbc28 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1491,7 +1491,13 @@ int nvme_set_queue_count(struct nvme_ctrl *ctrl, int *count)
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 3366956a4ff18..c9298a986ef0a 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -131,9 +131,18 @@
+ /* Timeout value to avoid infinite waiting for pwr_irq */
+ #define MSM_PWR_IRQ_TIMEOUT_MS 5000
  
- 	status = nvme_set_features(ctrl, NVME_FEAT_NUM_QUEUES, q_count, NULL, 0,
- 			&result);
--	if (status < 0)
++/* Max load for eMMC Vdd supply */
++#define MMC_VMMC_MAX_LOAD_UA	570000
 +
-+	/*
-+	 * It's either a kernel error or the host observed a connection
-+	 * lost. In either case it's not possible communicate with the
-+	 * controller and thus enter the error code path.
-+	 */
-+	if (status < 0 || status == NVME_SC_HOST_PATH_ERROR)
- 		return status;
+ /* Max load for eMMC Vdd-io supply */
+ #define MMC_VQMMC_MAX_LOAD_UA	325000
  
- 	/*
++/* Max load for SD Vdd supply */
++#define SD_VMMC_MAX_LOAD_UA	800000
++
++/* Max load for SD Vdd-io supply */
++#define SD_VQMMC_MAX_LOAD_UA	22000
++
+ #define msm_host_readl(msm_host, host, offset) \
+ 	msm_host->var_ops->msm_readl_relaxed(host, offset)
+ 
+@@ -1383,11 +1392,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
+ 	return ret;
+ }
+ 
+-static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
++static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
++{
++	int load;
++
++	if (!hpm)
++		load = 0;
++	else if (!mmc->card)
++		load = max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA);
++	else if (mmc_card_mmc(mmc->card))
++		load = MMC_VMMC_MAX_LOAD_UA;
++	else if (mmc_card_sd(mmc->card))
++		load = SD_VMMC_MAX_LOAD_UA;
++	else
++		return;
++
++	regulator_set_load(mmc->supply.vmmc, load);
++}
++
++static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
++{
++	int load;
++
++	if (!hpm)
++		load = 0;
++	else if (!mmc->card)
++		load = max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA);
++	else if (mmc_card_sd(mmc->card))
++		load = SD_VQMMC_MAX_LOAD_UA;
++	else
++		return;
++
++	regulator_set_load(mmc->supply.vqmmc, load);
++}
++
++static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
++			      struct mmc_host *mmc, bool hpm)
+ {
+ 	if (IS_ERR(mmc->supply.vmmc))
+ 		return 0;
+ 
++	msm_config_vmmc_regulator(mmc, hpm);
++
+ 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
+ }
+ 
+@@ -1400,6 +1446,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
+ 	if (msm_host->vqmmc_enabled == level)
+ 		return 0;
+ 
++	msm_config_vqmmc_regulator(mmc, level);
++
+ 	if (level) {
+ 		/* Set the IO voltage regulator to default voltage level */
+ 		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
+@@ -1622,7 +1670,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	}
+ 
+ 	if (pwr_state) {
+-		ret = sdhci_msm_set_vmmc(mmc);
++		ret = sdhci_msm_set_vmmc(msm_host, mmc,
++					 pwr_state & REQ_BUS_ON);
+ 		if (!ret)
+ 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
+ 					pwr_state & REQ_BUS_ON);
 -- 
 2.39.5
 
