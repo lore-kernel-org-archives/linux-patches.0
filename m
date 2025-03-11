@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C0225D8FF;
-	Tue, 11 Mar 2025 15:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10EE25C715;
+	Tue, 11 Mar 2025 15:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705883; cv=none; b=GePmStuA+gEXA0imHekYA6W+r8svK3IB1UdrOiqD8OfgoocFJj+qHCTpiBXEYUqBDm3RyqAp3jY2f9cFFcXCjUsbJosapy3Ff8yJpIB7YNgBq4B7LKXmKfsioZcP3kzc1dWsYnmaktVExJ/FwWqnmqVkyca4DJ/R0IfSsIfg7pM=
+	t=1741705886; cv=none; b=Tnj5huH9XyqZq6IHUcI78ovsnRNJuKP9mYAQegbQIZfhzc2A1P3FsZQ/xoR3HzhPOmL4ZSHBITOKZZsNbWAUosm9dbPGhbo4B7NOrCWzDrPtD/B8wANIaeHzKa+NhB2m3yroybKghRK57HqqeGKd5Ln1wSR4NAPqEnAF+wwiRss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705883; c=relaxed/simple;
-	bh=O0hEDV5dVZ7BzccQRdq94Ux1av0k9YqPkvha06QUXcU=;
+	s=arc-20240116; t=1741705886; c=relaxed/simple;
+	bh=tHi5KybfWqbeVUS7pF7TAs8U6mGSGtrOsO1vApzORtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GP9ZX/08goYTnyfdo2P8oErgRWvg8Ga0ectrGF26rMhv3pC+mZG5nFSfsc1rZdTnfOSSrcc2tD3BCGLf8CY7jANA55Ty3iXSRw1dQLwQAK8VrwrC5SMWN2Q6BzO9V9W0LMMtJj7F8F4+7yoXjPZQybotCBM3ol2SVfO2iTO2Rbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nn3Uku5G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=askpdIiGcM6Jrw3sOGkOdrtrQox5OLQuF2bLBeJIzNWtMsqYXZ9dhD9ERNFEs6/lwivp+10CjJV6ESpD4sBjkiA/lTuZ9DRkQhcxgJ7Iy4DhSHQHrl4bk1l/u4M8cgqUVlCq5VdRIqc91RLLzqJHYCK6dXzuZHNC0o44qB+o75U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fg1nI3q8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nn3Uku5G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBD7C4CEE9;
-	Tue, 11 Mar 2025 15:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fg1nI3q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C8CC4CEE9;
+	Tue, 11 Mar 2025 15:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705883;
-	bh=O0hEDV5dVZ7BzccQRdq94Ux1av0k9YqPkvha06QUXcU=;
+	s=korg; t=1741705886;
+	bh=tHi5KybfWqbeVUS7pF7TAs8U6mGSGtrOsO1vApzORtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nn3Uku5GOqpNqvN2MS/JZL4IL9vputFfNhlPw/64kBNIeJj8jC4DriJRx6wxd//G/
-	 GVzZ0CsX277lbcURaaPbPrS1kez3XdlSv7SUBxjTRu5r2pljD3+rGNiHuhJOt9uu/5
-	 XCuiUL+4S6RGr2fOhuebcUtQ/WJyFlc6s8Ihd5MI=
+	b=fg1nI3q8ayuvPj9AVv9lMqrigIMipb+KIQGhyXLQ61YUY2RZaT0TEoRbYZGhPtTrT
+	 H7DGgGMJ1psC/9H0XVHz3YsavTNcWRTI6Q/kzMDIw8DQV/l0de1TR4JLB+bE8XeN9p
+	 nFvBzO0v13/OXEYxxn6OBTcR0Ulxh3E2urCHnxEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 168/328] gpio: bcm-kona: Make sure GPIO bits are unlocked when requesting IRQ
-Date: Tue, 11 Mar 2025 15:58:58 +0100
-Message-ID: <20250311145721.583144179@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 159/328] ptp: Ensure info->enable callback is always set
+Date: Tue, 11 Mar 2025 15:58:49 +0100
+Message-ID: <20250311145721.227499832@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -48,166 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 57f5db77a915cc29461a679a6bcae7097967be1a ]
+commit fd53aa40e65f518453115b6f56183b0c201db26b upstream.
 
-The settings for all GPIOs are locked by default in bcm_kona_gpio_reset.
-The settings for a GPIO are unlocked when requesting it as a GPIO, but
-not when requesting it as an interrupt, causing the IRQ settings to not
-get applied.
+The ioctl and sysfs handlers unconditionally call the ->enable callback.
+Not all drivers implement that callback, leading to NULL dereferences.
+Example of affected drivers: ptp_s390.c, ptp_vclock.c and ptp_mock.c.
 
-Fix this by making sure to unlock the right bits when an IRQ is requested.
-To avoid a situation where an IRQ being released causes a lock despite
-the same GPIO being used by a GPIO request or vice versa, add an unlock
-counter and only lock if it reaches 0.
+Instead use a dummy callback if no better was specified by the driver.
 
-Fixes: 757651e3d60e ("gpio: bcm281xx: Add GPIO driver")
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Markus Mayer <mmayer@broadcom.com>
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250206-kona-gpio-fixes-v2-2-409135eab780@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250123-ptp-enable-v1-1-b015834d3a47@weissschuh.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-bcm-kona.c | 67 +++++++++++++++++++++++++++++-------
- 1 file changed, 55 insertions(+), 12 deletions(-)
+ drivers/ptp/ptp_clock.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpio/gpio-bcm-kona.c b/drivers/gpio/gpio-bcm-kona.c
-index 840a4b7e6c4d1..aad1d5af6382b 100644
---- a/drivers/gpio/gpio-bcm-kona.c
-+++ b/drivers/gpio/gpio-bcm-kona.c
-@@ -77,6 +77,22 @@ struct bcm_kona_gpio {
- struct bcm_kona_gpio_bank {
- 	int id;
- 	int irq;
-+	/*
-+	 * Used to keep track of lock/unlock operations for each GPIO in the
-+	 * bank.
-+	 *
-+	 * All GPIOs are locked by default (see bcm_kona_gpio_reset), and the
-+	 * unlock count for all GPIOs is 0 by default. Each unlock increments
-+	 * the counter, and each lock decrements the counter.
-+	 *
-+	 * The lock function only locks the GPIO once its unlock counter is
-+	 * down to 0. This is necessary because the GPIO is unlocked in two
-+	 * places in this driver: once for requested GPIOs, and once for
-+	 * requested IRQs. Since it is possible for a GPIO to be requested
-+	 * as both a GPIO and an IRQ, we need to ensure that we don't lock it
-+	 * too early.
-+	 */
-+	u8 gpio_unlock_count[GPIO_PER_BANK];
- 	/* Used in the interrupt handler */
- 	struct bcm_kona_gpio *kona_gpio;
- };
-@@ -95,14 +111,23 @@ static void bcm_kona_gpio_lock_gpio(struct bcm_kona_gpio *kona_gpio,
- 	unsigned long flags;
- 	int bank_id = GPIO_BANK(gpio);
- 	int bit = GPIO_BIT(gpio);
-+	struct bcm_kona_gpio_bank *bank = &kona_gpio->banks[bank_id];
- 
--	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
-+	if (bank->gpio_unlock_count[bit] == 0) {
-+		dev_err(kona_gpio->gpio_chip.parent,
-+			"Unbalanced locks for GPIO %u\n", gpio);
-+		return;
-+	}
- 
--	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
--	val |= BIT(bit);
--	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
-+	if (--bank->gpio_unlock_count[bit] == 0) {
-+		raw_spin_lock_irqsave(&kona_gpio->lock, flags);
- 
--	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
-+		val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
-+		val |= BIT(bit);
-+		bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
-+
-+		raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
-+	}
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -178,6 +178,11 @@ static void ptp_clock_release(struct dev
+ 	kfree(ptp);
  }
  
- static void bcm_kona_gpio_unlock_gpio(struct bcm_kona_gpio *kona_gpio,
-@@ -112,14 +137,19 @@ static void bcm_kona_gpio_unlock_gpio(struct bcm_kona_gpio *kona_gpio,
- 	unsigned long flags;
- 	int bank_id = GPIO_BANK(gpio);
- 	int bit = GPIO_BIT(gpio);
-+	struct bcm_kona_gpio_bank *bank = &kona_gpio->banks[bank_id];
- 
--	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
-+	if (bank->gpio_unlock_count[bit] == 0) {
-+		raw_spin_lock_irqsave(&kona_gpio->lock, flags);
- 
--	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
--	val &= ~BIT(bit);
--	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
-+		val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
-+		val &= ~BIT(bit);
-+		bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
- 
--	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
-+		raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
-+	}
++static int ptp_enable(struct ptp_clock_info *ptp, struct ptp_clock_request *request, int on)
++{
++	return -EOPNOTSUPP;
++}
 +
-+	++bank->gpio_unlock_count[bit];
- }
- 
- static int bcm_kona_gpio_get_dir(struct gpio_chip *chip, unsigned gpio)
-@@ -370,6 +400,7 @@ static void bcm_kona_gpio_irq_mask(struct irq_data *d)
- 
- 	kona_gpio = irq_data_get_irq_chip_data(d);
- 	reg_base = kona_gpio->reg_base;
-+
- 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
- 
- 	val = readl(reg_base + GPIO_INT_MASK(bank_id));
-@@ -392,6 +423,7 @@ static void bcm_kona_gpio_irq_unmask(struct irq_data *d)
- 
- 	kona_gpio = irq_data_get_irq_chip_data(d);
- 	reg_base = kona_gpio->reg_base;
-+
- 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
- 
- 	val = readl(reg_base + GPIO_INT_MSKCLR(bank_id));
-@@ -489,15 +521,26 @@ static void bcm_kona_gpio_irq_handler(struct irq_desc *desc)
- static int bcm_kona_gpio_irq_reqres(struct irq_data *d)
+ static void ptp_aux_kworker(struct kthread_work *work)
  {
- 	struct bcm_kona_gpio *kona_gpio = irq_data_get_irq_chip_data(d);
-+	unsigned int gpio = d->hwirq;
+ 	struct ptp_clock *ptp = container_of(work, struct ptp_clock,
+@@ -223,6 +228,9 @@ struct ptp_clock *ptp_clock_register(str
+ 	mutex_init(&ptp->pincfg_mux);
+ 	init_waitqueue_head(&ptp->tsev_wq);
+ 
++	if (!ptp->info->enable)
++		ptp->info->enable = ptp_enable;
 +
-+	/*
-+	 * We need to unlock the GPIO before any other operations are performed
-+	 * on the relevant GPIO configuration registers
-+	 */
-+	bcm_kona_gpio_unlock_gpio(kona_gpio, gpio);
- 
--	return gpiochip_reqres_irq(&kona_gpio->gpio_chip, d->hwirq);
-+	return gpiochip_reqres_irq(&kona_gpio->gpio_chip, gpio);
- }
- 
- static void bcm_kona_gpio_irq_relres(struct irq_data *d)
- {
- 	struct bcm_kona_gpio *kona_gpio = irq_data_get_irq_chip_data(d);
-+	unsigned int gpio = d->hwirq;
-+
-+	/* Once we no longer use it, lock the GPIO again */
-+	bcm_kona_gpio_lock_gpio(kona_gpio, gpio);
- 
--	gpiochip_relres_irq(&kona_gpio->gpio_chip, d->hwirq);
-+	gpiochip_relres_irq(&kona_gpio->gpio_chip, gpio);
- }
- 
- static struct irq_chip bcm_gpio_irq_chip = {
--- 
-2.39.5
-
+ 	if (ptp->info->do_aux_work) {
+ 		kthread_init_delayed_work(&ptp->aux_work, ptp_aux_kworker);
+ 		ptp->kworker = kthread_create_worker(0, "ptp%d", ptp->index);
 
 
