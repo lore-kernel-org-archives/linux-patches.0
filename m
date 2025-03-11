@@ -1,82 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E6125DD06;
-	Tue, 11 Mar 2025 15:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3A11C3BEB
+	for <patches@lists.linux.dev>; Tue, 11 Mar 2025 15:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706129; cv=none; b=jnA1faxHCe6kLPNWiK/ryDRm0Tn6p0zb4XiuPILqZsSepESRY1v07HPlu7SdOezJchN1j/mmR9nvCQQRRE7pyiqHaerWUl871DhhoKojI5Vqwf563ZjYz1sRysiKK3COipSsaqA6Pna9WBGvd/2ckJYwX5q674KunefAwjeEpZo=
+	t=1741706131; cv=none; b=ro0PreFgyDmkKsYaJRm1yXvzjQDunSnKm95JwsINqrFSjqjG3FHi2oWdTdIM6F9F+3AVZ8OxpIm8L9zjfUNW6t609cIXV1VrUN/Kq9Uf2crEshLopeVz3NWaN+VLniadLVg4nmKg39Y7UQ/WlHc98JWfiauNE8QRuhOROsos48U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706129; c=relaxed/simple;
-	bh=hNgopTKv8Ic/T9+iHrbit02UT3TqlZsp4/mZ0/Cb4Ig=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPwlZSv0/rSOgWMPhP/X3lTVnPuY3sV0chJuGDIpx9OeL/rUGt8zkIkYezGvl8lTWebFtL83ICWjy75HR/BxRx7F7c1nFYv0AnWhizA8uCh9Iv68uAFgQe7U9ANhL8ee9W0WozBmAPHPXohpx8EFSINaai2spc1ERMF8dFCW7rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mu8ArXOM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741706131; c=relaxed/simple;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eC+FPtp9BB8+SoKNKWqndiSkHvRqdrKJZj1n+Se7cp7B3Q0FNDwj7PQmbeOQfc7IWY187iNigxS9bxAJBskKNuqS363Sooko7OoTW1OQ7EHJLm1YCkf4vvohNhq++f+IMTSlJrhT7JE+CdFP2kjtGGeSGHGLoTZoGy3yRImFsI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=fH4zVI3k; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mu8ArXOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9621AC4CEE9;
-	Tue, 11 Mar 2025 15:15:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706129;
-	bh=hNgopTKv8Ic/T9+iHrbit02UT3TqlZsp4/mZ0/Cb4Ig=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mu8ArXOMmJkZumvQC52DRR/vaEZtoR4ZxHJPxhKcrkmTPxxhFfaqFqhY1CJAVh0eJ
-	 UZZWCx94UBTIh9x1NOlTF+Sw1hAvrPrEPbDoyondiHyum4q+jW76RMSYadTujPrXIz
-	 2UvcPk0RbROOPEB+K1HpA9tymFSHUSMDuqvfXtHI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 253/328] nfp: bpf: Add check for nfp_app_ctrl_msg_alloc()
-Date: Tue, 11 Mar 2025 16:00:23 +0100
-Message-ID: <20250311145724.965956789@linuxfoundation.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
-References: <20250311145714.865727435@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="fH4zVI3k"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1741706126; x=1742310926; i=rwarsow@gmx.de;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=fH4zVI3kI6XIc19fwiwSeNsWGSB2gy1m8YYiPUnOn3sJv6Ew86o99x/zyiB7Hqv/
+	 cdGocUAYYNIPULxbLrWlA7L3b/bwn9fsXZKdy2AaMsN5TYZJW0xGV9dLfetYRyztr
+	 Ln+gcb1N0ZgINg0/6dsJ12Q5gj0Yc+758Ncg7bHXereZ+r88SMolvP2d9bwu5VVkx
+	 MffGuNJrT1YEbdorKDQPe/8/3tjLSedtVS77EXwxugSHmSszcF5O81h0Fd+42X+C5
+	 oGtGyfMjzbp6NtdmE7ELUvAVfi6Ux4Pm1g88QHKKJaQz34UnIVzM7dwnBtcX60toZ
+	 okXUV+kb9yHd3srsUA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.32.160]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJVDM-1tcYsA1qAK-00RmpX; Tue, 11
+ Mar 2025 16:15:26 +0100
+Message-ID: <f2ea4017-5a57-4fa1-aa73-90b3bfb699f5@gmx.de>
+Date: Tue, 11 Mar 2025 16:15:24 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.13 000/197] 6.13.7-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250311144241.070217339@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20250311144241.070217339@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:vTh0HqMWvP97ZqYVTQnETiTjR4dbW50Q3/iHpaWoQOc1nz7Jhs/
+ pfwhYsRt0FiYmhy5pJGe2LkSAMPaVOv0lkcD69vVZyREpK7jqlFSdYV/ptUgafIXyLve1sH
+ yUH5UhX5H/HLOfrA0SCo7cAusrYznslTvACBk9Ancz3ldcZEYV6QQIh9G273TRny97T7fU4
+ lhBRqyOBZQ0qjQvDbA+OQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YMPeiVQDR+Q=;KSuoMgpqlYg9R+ln+HdzfFom8PU
+ P++JvP7awCR86BOe0QepLLFH/h74LohQkPC5GuPYOtTnUho2H5wxkHcBqa2hJ22HqV3RoU/Hl
+ WSrgG62dl6c+ThpnrMCMsF6a726voxKJZQXUDS1gkHattw6LS/5kiaEqQ5VJbIfCgQGMUFbW6
+ PbJhW7FyYSU7kmBG3na799G9KLECo239WiiVF2lLz4W+Fl+WEUDxhe7Zf9yh5tC4dztOvdqq3
+ 29HXzRjexs1OoVKtk4DMgT+tZ0JNbNb+KYYO6DcpM4Sx6onXfQLkTivSgoBRCGHfpPYothpKc
+ tqah1scPQiHCKB9zf3Fs2qYduF7tCISE/BZ2PGFME1Ewb/p0SW6SCgd6BEBw6w24qhx59G0Qi
+ 412twVa5tvFNoAedS61m9XdHdJx9XVwHtpVdVP/5a2bFv+G2RUieLb+sgDLYbTTE2gVlZgbzd
+ T1BmHKqoqpzgGdg2TwpGbaqFpBxHRDDoL7RUjZW8GhrhdQqoBue3hzPy8VmUOaehVlDMQAd7C
+ QqhMzphoAlG63dv7kXCFIDigNscC4/jsPbGVFbYS/fFce4UP8rEjZI+mb/HOy3RknBYtSiyBR
+ Ko7j6ORtSF0Qh+k56g4MER5785OWo49kye0sYvuEpmwcZbmyASeag7kseY3Ypq8Xb8iBSnUxR
+ C91VoY2P03hbrOhWv7xBcLt2Sv5q6D2dMryLGExrmkOxigxODpxEzGiEv1iCQJdubV/h0ECUA
+ 5z7XNq/8HkOHsX5Kq2CnDy1XNykEpDcAHiA2+BW2m82nY4LtYhDOMMpSMWr5kztfUjUuVc6/a
+ 6zJiXxg1kn1ZEtqx4udSg5kN4JYbScM7gLtssBZ7jngytgSP5P7esWIRadpdnb012fdmMQ7iC
+ J/wttx1uilIveU/D18Lk3eZjYQ0HwD4rY1mcIvxykn6GKbBOE1521uVcgb0WMz1Sh0go/h0Ny
+ JAbdowYLL9U4Fi7AqBhgaHe1pCy/Qdt00Q+ZyMoaGWoJABs2ikRIAQ4m7UDLccD0rZYx6a5zQ
+ 1bkBaykvRHPx5SHdWkl7GPl91MQsrnBMeizzbEZTg9iF3QN3da7p6YJc7eTSHuzkQsNsU9sFE
+ hIPkfl2GsC6Iw0IqkNFFGVZb6Bkbeseyr4tdx8jDmJxValXyFWxRf4decegYBh24teLKhIvC4
+ YXpnnOXkaj/vPHeF8SG+Rv2nBmjdJ+u44JRbfDpq7lu+7WVc8Ux3Afhqe38CHQPJ+eT2sQZG7
+ 4idDPPRWsMr89fCGIB67kcyxAJWaaRg3BeFa9sPVC4l7wu1pLRbhPtaV1ETt3ZIVGMTv3eDaA
+ emOk/SxhcgoP0l83bN7Sef0NuAtVUCxm2En+56DhGmMxk8uTWkK8cJeQ3TKdssjyStQ6ScS7U
+ VRzFbUmkjGuDcM33YmgsFi5ob5SqmA/J5pHTk6KdeVXiFaJ8g09iWHcAzKR02ZUR2tNt0d8L5
+ F++Ww2v+59G+W7anijCa28JaD8OA=
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg
 
-------------------
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+Thanks
 
-commit 878e7b11736e062514e58f3b445ff343e6705537 upstream.
-
-Add check for the return value of nfp_app_ctrl_msg_alloc() in
-nfp_bpf_cmsg_alloc() to prevent null pointer dereference.
-
-Fixes: ff3d43f7568c ("nfp: bpf: implement helpers for FW map ops")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20250218030409.2425798-1-haoxiang_li2024@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/netronome/nfp/bpf/cmsg.c |    2 ++
- 1 file changed, 2 insertions(+)
-
---- a/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
-+++ b/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
-@@ -20,6 +20,8 @@ nfp_bpf_cmsg_alloc(struct nfp_app_bpf *b
- 	struct sk_buff *skb;
- 
- 	skb = nfp_app_ctrl_msg_alloc(bpf->app, size, GFP_KERNEL);
-+	if (!skb)
-+		return NULL;
- 	skb_put(skb, size);
- 
- 	return skb;
-
-
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
