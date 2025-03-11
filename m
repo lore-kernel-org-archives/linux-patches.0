@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F80E25F785;
-	Tue, 11 Mar 2025 15:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A6D255E37;
+	Tue, 11 Mar 2025 15:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707424; cv=none; b=Y2s/2z3DVqUUoFa6ViKzSC6Cudcv3Fnyq3IBaaZ3KTXOomTIYn8QAY334Xv9z2RHZis5eP7kylI0ArD+pgZbNUQCTKUAj5vpVP68y1Nj1cMheqD7Wa3S8iPJbLXsZ73Ec6B1gBMUtS2OwFQO+DN44LE3MGFkV9RoyWgXUU2p6ZE=
+	t=1741707427; cv=none; b=DrxjLnOilstxM5e1eFy2pmOLU7iipzuumQSvNBpxZWtD6RkC5WnI4gs8yikVXmzArbrS5/tKSmqiV+xJL2JLTEuesATV6TY6tSZ4C9t/yl85k2v+8N+RP819hJA/88zwIA0XDEDkGVolw3iXsDI1uIrd8nZLgMGlnlNefgMnugk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707424; c=relaxed/simple;
-	bh=PsuhaR2X64gTlOFudbr7m3zq5scY2WscD6WaxSXmRgE=;
+	s=arc-20240116; t=1741707427; c=relaxed/simple;
+	bh=q2aMG1BIkL6+3PzzkGWsqL8JMnFGE7jN8UhYFSwrINM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEDDUj0ZSUv8BSm4RrqScEnctiQrF3WIdj9PiYI+bpqI6lBETjY9d8Kqz7VBTeT2l5S9SR5DdGi7673iAbr92SHpwKfBOs+C4yBv7iFoNzkQeYpcZnlRiUaBCHvzCpBTcxtmUzpWI/zw0q2+ZRBLXXuruhKd0VyeGBE2jETKT6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJOG7YmU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iz1eLaig1/n3AThexduzC9czgkHsTpHbcn9at1n+b46VHP+s+RWMC9F2GYlkqXB39dDNwsz8NeAfZXmee2hrSyU83ED+Ly9+dSVD9zX5cqf1gDe5I8YiWyeQ55+87icNNmHyopoqWzeYVIorxCMfkQRHdLHK0Vm0nhLJV1NzJ1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REb1BDMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJOG7YmU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD433C4CEED;
-	Tue, 11 Mar 2025 15:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REb1BDMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD580C4CEEA;
+	Tue, 11 Mar 2025 15:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707424;
-	bh=PsuhaR2X64gTlOFudbr7m3zq5scY2WscD6WaxSXmRgE=;
+	s=korg; t=1741707427;
+	bh=q2aMG1BIkL6+3PzzkGWsqL8JMnFGE7jN8UhYFSwrINM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJOG7YmU9zHnm8R+xHa+uwHVOQ8/A2wWcKmWpq3FZxwOwEV0pPHZsO3E1mPeksOk3
-	 EHSa+OHQl3diU1VJx6FKoE84delpHH0R9Ero1sD2wWBwh+T71zPPDHdJqq03SAoAxn
-	 qyEfVpt0HHFVBqiyV59mxmzbCUmmZXlYEdHPpLrY=
+	b=REb1BDMMsRZBZiMuib7MVWU3Q/4Nw7Y+OgsxPpuWaYlvilfmStX9/0Xj3U5ysSPGe
+	 sRuXfTECQJzkRwLL7DzxNJ6XLKJGP50SaiTYeIy8jWm2I8SOtTa0EdB5jpJOXfpOt3
+	 c29u9deFnva6TM0Z3/0LZvREvX1WEUwwDmirdQCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 353/462] sunrpc: suppress warnings for unused procfs functions
-Date: Tue, 11 Mar 2025 16:00:19 +0100
-Message-ID: <20250311145812.301280181@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 344/462] nfp: bpf: Add check for nfp_app_ctrl_msg_alloc()
+Date: Tue, 11 Mar 2025 16:00:10 +0100
+Message-ID: <20250311145811.953351304@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,71 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 1f7a4f98c11fbeb18ed21f3b3a497e90a50ad2e0 ]
+commit 878e7b11736e062514e58f3b445ff343e6705537 upstream.
 
-There is a warning about unused variables when building with W=1 and no procfs:
+Add check for the return value of nfp_app_ctrl_msg_alloc() in
+nfp_bpf_cmsg_alloc() to prevent null pointer dereference.
 
-net/sunrpc/cache.c:1660:30: error: 'cache_flush_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1660 | static const struct proc_ops cache_flush_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~~~~~
-net/sunrpc/cache.c:1622:30: error: 'content_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1622 | static const struct proc_ops content_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~
-net/sunrpc/cache.c:1598:30: error: 'cache_channel_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1598 | static const struct proc_ops cache_channel_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~~~~~~~
-
-These are used inside of an #ifdef, so replacing that with an
-IS_ENABLED() check lets the compiler see how they are used while
-still dropping them during dead code elimination.
-
-Fixes: dbf847ecb631 ("knfsd: allow cache_register to return error on failure")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ff3d43f7568c ("nfp: bpf: implement helpers for FW map ops")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250218030409.2425798-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/cache.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/netronome/nfp/bpf/cmsg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index 522e43f66ecd0..486c466ab4668 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -1678,12 +1678,14 @@ static void remove_cache_proc_entries(struct cache_detail *cd)
- 	}
- }
+--- a/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
++++ b/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
+@@ -20,6 +20,8 @@ nfp_bpf_cmsg_alloc(struct nfp_app_bpf *b
+ 	struct sk_buff *skb;
  
--#ifdef CONFIG_PROC_FS
- static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
- {
- 	struct proc_dir_entry *p;
- 	struct sunrpc_net *sn;
+ 	skb = nfp_app_ctrl_msg_alloc(bpf->app, size, GFP_KERNEL);
++	if (!skb)
++		return NULL;
+ 	skb_put(skb, size);
  
-+	if (!IS_ENABLED(CONFIG_PROC_FS))
-+		return 0;
-+
- 	sn = net_generic(net, sunrpc_net_id);
- 	cd->procfs = proc_mkdir(cd->name, sn->proc_net_rpc);
- 	if (cd->procfs == NULL)
-@@ -1711,12 +1713,6 @@ static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
- 	remove_cache_proc_entries(cd);
- 	return -ENOMEM;
- }
--#else /* CONFIG_PROC_FS */
--static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
--{
--	return 0;
--}
--#endif
- 
- void __init cache_initialize(void)
- {
--- 
-2.39.5
-
+ 	return skb;
 
 
