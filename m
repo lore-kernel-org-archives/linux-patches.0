@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4843325DB0A;
-	Tue, 11 Mar 2025 15:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207F21DF749;
+	Tue, 11 Mar 2025 15:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706710; cv=none; b=a5R3gRUWmouKu7tgTyIrU8BUwDywsLtLnbujFlChjBFBu2S1bjYiAIEu6Y7bqlw2OjMV3Ypnlm5QYiH4wUdTxsbMJx9jIlZg96bHhkdA2Ynffi+W9QdffReekaQ5mVHh/WB5Pgsznr1sQLQQefbqqu7uozX9IYIxmMIov9kVe+A=
+	t=1741706713; cv=none; b=MvLXYwC6fpmXnGswQKhzsekSY5vho0IBxb47d9Kz8k6RPVMtsIdi40cyC2J7I+xIQL4ZijpLljcvvSGSo16ZcuJoy8S3ad3i+7X8RFDOyWsBOBCZo/yp2kd/cW7B7SCA0b3TOY6HfJoayno4OdOq1RsW/R1YJS3tJwSJqAcdmr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706710; c=relaxed/simple;
-	bh=u7wCV+MLHfHhoy3JJkdVHIP67TezJDjSx+K1zUz0/rg=;
+	s=arc-20240116; t=1741706713; c=relaxed/simple;
+	bh=yXrWHI76+XXsxkyTNKSF9kZjnzj5XXlNiMOhUUVA85c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qu6dCKGKIB6N0vY2nMix89usfYkIP9klNxLz30ZyGYXqiDstUCuyfatj50By9U8F0rlAgccCN3wdq5ZnsX1Yj3itbxoU791HUW2haZgC3noqEF99Q0C6Nmh4EjU6ULn7W9rxj9j+MVNuA8gR8OQKObm4wRgPYwQUWpMwvlj5gOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU3fyGsh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2KOaZlH1WZ0kvuR0GHx67XdFXY5zghV64v2xaqMTRHckUtlhxH6DCYNnNx4vktRuNSODAxtlnm5DeAc0+bpwxm+M4OixB1VsBWJP05m5N6ckPyIjyx0gZ8ttjv7iSqWuaTKIPHHkNARjqk4qBrBbJ9pHaKd9SUh+qbmYcUkDyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxdAQhYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU3fyGsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2243C4CEE9;
-	Tue, 11 Mar 2025 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxdAQhYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A42CC4CEEC;
+	Tue, 11 Mar 2025 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706710;
-	bh=u7wCV+MLHfHhoy3JJkdVHIP67TezJDjSx+K1zUz0/rg=;
+	s=korg; t=1741706713;
+	bh=yXrWHI76+XXsxkyTNKSF9kZjnzj5XXlNiMOhUUVA85c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xU3fyGshgvp5HNtqF4ZeL4RBcRhKFVzk2i+d3ujonlWGC63R4GxVXf5xQv6xhJQq8
-	 r8g3L8sMW42I7sQBY3Xv4oYcvZT1RwHQbrYz3/i+n/ntB6rt346V1ibaxgI76fC0sb
-	 jqXe+5f85sutC/dc1lGw5Ne0ASghfUT7isA/PlMI=
+	b=vxdAQhYCNqm1ncG/q2Gfizfw/2pqcaKqpZnx8fQQSjPkah62UBGTyzCC/eDPPI5fz
+	 i138Yt8ol/buTtHKQVBcDciO/7qSDitcjd3MmPAKp3O2Z/7oOj11fxRC0u18NbGP5Q
+	 TtPwX4u0ZJ2JMl9IhVpSx8puHlCAJK/QPy/OfO+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Randolph Ha <rha051117@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/462] net/mlx5: use do_aux_work for PHC overflow checks
-Date: Tue, 11 Mar 2025 15:56:45 +0100
-Message-ID: <20250311145803.849918888@linuxfoundation.org>
+Subject: [PATCH 5.10 140/462] i2c: Force ELAN06FA touchpad I2C bus freq to 100KHz
+Date: Tue, 11 Mar 2025 15:56:46 +0100
+Message-ID: <20250311145803.888932404@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,127 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Randolph Ha <rha051117@gmail.com>
 
-[ Upstream commit e61e6c415ba9ff2b32bb6780ce1b17d1d76238f1 ]
+[ Upstream commit bfd74cd1fbc026f04446e67d6915c7e199c2bffd ]
 
-The overflow_work is using system wq to do overflow checks and updates
-for PHC device timecounter, which might be overhelmed by other tasks.
-But there is dedicated kthread in PTP subsystem designed for such
-things. This patch changes the work queue to proper align with PTP
-subsystem and to avoid overloading system work queue.
-The adjfine() function acts the same way as overflow check worker,
-we can postpone ptp aux worker till the next overflow period after
-adjfine() was called.
+When a 400KHz freq is used on this model of ELAN touchpad in Linux,
+excessive smoothing (similar to when the touchpad's firmware detects
+a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
+V15 G4) ACPI tables specify a 400KHz frequency for this device and
+some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
+force the speed to 100KHz as a workaround.
 
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250107104812.380225-1-vadfed@meta.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+For future investigation: This problem may be related to the default
+HCNT/LCNT values given by some busses' drivers, because they are not
+specified in the aforementioned devices' ACPI tables, and because
+the device works without issues on Windows at what is expected to be
+a 400KHz frequency. The root cause of the issue is not known.
+
+Signed-off-by: Randolph Ha <rha051117@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/lib/clock.c   | 24 ++++++++++---------
- include/linux/mlx5/driver.h                   |  1 -
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-index 80dee8c692495..3d0029fb5b579 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -150,17 +150,16 @@ static void mlx5_pps_out(struct work_struct *work)
- 	}
- }
- 
--static void mlx5_timestamp_overflow(struct work_struct *work)
-+static long mlx5_timestamp_overflow(struct ptp_clock_info *ptp_info)
- {
--	struct delayed_work *dwork = to_delayed_work(work);
- 	struct mlx5_core_dev *mdev;
- 	struct mlx5_timer *timer;
- 	struct mlx5_clock *clock;
- 	unsigned long flags;
- 
--	timer = container_of(dwork, struct mlx5_timer, overflow_work);
--	clock = container_of(timer, struct mlx5_clock, timer);
-+	clock = container_of(ptp_info, struct mlx5_clock, ptp_info);
- 	mdev = container_of(clock, struct mlx5_core_dev, clock);
-+	timer = &clock->timer;
- 
- 	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)
- 		goto out;
-@@ -171,7 +170,7 @@ static void mlx5_timestamp_overflow(struct work_struct *work)
- 	write_sequnlock_irqrestore(&clock->lock, flags);
- 
- out:
--	schedule_delayed_work(&timer->overflow_work, timer->overflow_period);
-+	return timer->overflow_period;
- }
- 
- static int mlx5_ptp_settime(struct ptp_clock_info *ptp, const struct timespec64 *ts)
-@@ -253,6 +252,7 @@ static int mlx5_ptp_adjfreq(struct ptp_clock_info *ptp, s32 delta)
- 				       timer->nominal_c_mult + diff;
- 	mlx5_update_clock_info_page(mdev);
- 	write_sequnlock_irqrestore(&clock->lock, flags);
-+	ptp_schedule_worker(clock->ptp, timer->overflow_period);
- 
- 	return 0;
- }
-@@ -467,6 +467,7 @@ static const struct ptp_clock_info mlx5_ptp_clock_info = {
- 	.settime64	= mlx5_ptp_settime,
- 	.enable		= NULL,
- 	.verify		= NULL,
-+	.do_aux_work	= mlx5_timestamp_overflow,
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 4b136d8710743..e7aed9442d56d 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -299,6 +299,25 @@ static const struct acpi_device_id i2c_acpi_force_400khz_device_ids[] = {
+ 	{}
  };
  
- static int mlx5_query_mtpps_pin_mode(struct mlx5_core_dev *mdev, u8 pin,
-@@ -649,12 +650,11 @@ static void mlx5_init_overflow_period(struct mlx5_clock *clock)
- 	do_div(ns, NSEC_PER_SEC / HZ);
- 	timer->overflow_period = ns;
- 
--	INIT_DELAYED_WORK(&timer->overflow_work, mlx5_timestamp_overflow);
--	if (timer->overflow_period)
--		schedule_delayed_work(&timer->overflow_work, 0);
--	else
-+	if (!timer->overflow_period) {
-+		timer->overflow_period = HZ;
- 		mlx5_core_warn(mdev,
--			       "invalid overflow period, overflow_work is not scheduled\n");
-+			       "invalid overflow period, overflow_work is scheduled once per second\n");
-+	}
- 
- 	if (clock_info)
- 		clock_info->overflow_period = timer->overflow_period;
-@@ -718,6 +718,9 @@ void mlx5_init_clock(struct mlx5_core_dev *mdev)
- 
- 	MLX5_NB_INIT(&clock->pps_nb, mlx5_pps_event, PPS_EVENT);
- 	mlx5_eq_notifier_register(mdev, &clock->pps_nb);
++static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
++	/*
++	 * When a 400KHz freq is used on this model of ELAN touchpad in Linux,
++	 * excessive smoothing (similar to when the touchpad's firmware detects
++	 * a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
++	 * V15 G4) ACPI tables specify a 400KHz frequency for this device and
++	 * some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
++	 * force the speed to 100KHz as a workaround.
++	 *
++	 * For future investigation: This problem may be related to the default
++	 * HCNT/LCNT values given by some busses' drivers, because they are not
++	 * specified in the aforementioned devices' ACPI tables, and because
++	 * the device works without issues on Windows at what is expected to be
++	 * a 400KHz frequency. The root cause of the issue is not known.
++	 */
++	{ "ELAN06FA", 0 },
++	{}
++};
 +
-+	if (clock->ptp)
-+		ptp_schedule_worker(clock->ptp, 0);
+ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
+ 					   void *data, void **return_value)
+ {
+@@ -320,6 +339,9 @@ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
+ 	if (acpi_match_device_ids(adev, i2c_acpi_force_400khz_device_ids) == 0)
+ 		lookup->force_speed = I2C_MAX_FAST_MODE_FREQ;
+ 
++	if (acpi_match_device_ids(adev, i2c_acpi_force_100khz_device_ids) == 0)
++		lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ;
++
+ 	return AE_OK;
  }
  
- void mlx5_cleanup_clock(struct mlx5_core_dev *mdev)
-@@ -734,7 +737,6 @@ void mlx5_cleanup_clock(struct mlx5_core_dev *mdev)
- 	}
- 
- 	cancel_work_sync(&clock->pps_info.out_work);
--	cancel_delayed_work_sync(&clock->timer.overflow_work);
- 
- 	if (mdev->clock_info) {
- 		free_page((unsigned long)mdev->clock_info);
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 68a12caf5eb16..56cb2fbc496e6 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -651,7 +651,6 @@ struct mlx5_timer {
- 	struct timecounter         tc;
- 	u32                        nominal_c_mult;
- 	unsigned long              overflow_period;
--	struct delayed_work        overflow_work;
- };
- 
- struct mlx5_clock {
 -- 
 2.39.5
 
