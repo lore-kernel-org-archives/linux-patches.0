@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8D025DCFA;
-	Tue, 11 Mar 2025 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A8D25B69D;
+	Tue, 11 Mar 2025 15:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706571; cv=none; b=Szxl188JMOUQCDKr2YILSXhc+Hr22Rp82HASgkjsQzgfXFbDLJiz9Nbl/FTTBUQix0KxgkvDBLrcIG+Qkb/HMXQQMKaYIYWKrWZiiMjDTxscOcuoztD4Xktgwsff5FG3JMSk8BEeryZKl+79x6u4S2zv2PorJFRVBT+iVRHGbSs=
+	t=1741706573; cv=none; b=e4wrBoUZH7/XqAoJkMm005FPezj/TuctmX1fzBDcoAX91MMqn6R+IF/W91wRZh7FyRC3KPgS+AEV8gCRJEfam6xgKgW2N4SLE5WqW6/tfSMZzhCN3QoBT7iHIvTwOWBeU+QR7if4uCkxZ7s6FNssZOQNacXmAEolaQ7U4RZI/ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706571; c=relaxed/simple;
-	bh=YAXx8Zb2mEv523JFEhXoD80MrJ9IXGKshwukvALRT30=;
+	s=arc-20240116; t=1741706573; c=relaxed/simple;
+	bh=9g/H6p5VbIIXkp48LmMyCXltn0DhTmHmmYOFhRtnYD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYzb75m+stp82QezruEzNZ6RkRYaELUdem9xwoDQcLVGFttZizqaLJTjXzr9UkWIJ5lkvzf8Tj4vchGOPobF3LGgDwHo5iueVfezTXI/DbpfpkEB/q76B5EHZZkTWZYeHvm+gkBHQJBLMshiEKU791CPHBWZD2+ejeILbnaSh7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5/VfDTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSIcnUmqVlSSvOJb8DUsrF1zyoLD6e5tQ2y/krJ9v6j9hVnax71Lvc+T/OzBVwHfPxFos/KzyrSyg7opxwQ+GUnut0Q9l5GHZ9XcUk1yQa/z2N1wTUV6nyfl+Rzg4NTxZFdE5QcIM8Y3SIcAz7BfwBMMnnVAmxXX3zimQj7ar2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVo99XYR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5/VfDTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30249C4CEE9;
-	Tue, 11 Mar 2025 15:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVo99XYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DFBC4CEE9;
+	Tue, 11 Mar 2025 15:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706570;
-	bh=YAXx8Zb2mEv523JFEhXoD80MrJ9IXGKshwukvALRT30=;
+	s=korg; t=1741706573;
+	bh=9g/H6p5VbIIXkp48LmMyCXltn0DhTmHmmYOFhRtnYD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5/VfDTELfuYjzjxXxBbKPjgmtHOv79xVNZXhbMHvSUzhiJC63cUVa5c4hvNpGS5H
-	 y3D3xhixVRi0Ax5r4cdPKnjPu/p3Ttt3Gb5bQueoPaD4uxmvJsYSzhQohQBp5tuK+j
-	 jShq4mzmm95xqfFVzDAPTEWpbpQcbQfx9Da3jCLg=
+	b=XVo99XYR2CvBAEumapaiqWtNRtujowHgsB37kMRvTbvrWklG7ABYOhRIQqJL4XSMH
+	 5NGlyRlJm4tXGouaimHoqkpc0wnR5WInncLb01Ddwahc7UnsELZyR4f9JalwL+/GWD
+	 iLhlBxKOYLaUeDdOGiFDo8kXd7EhmmaQ2N3nsfck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/462] arm64: dts: qcom: sm8250: correct sleep clock frequency
-Date: Tue, 11 Mar 2025 15:55:42 +0100
-Message-ID: <20250311145801.352018547@linuxfoundation.org>
+Subject: [PATCH 5.10 094/462] NFSv4.2: fix COPY_NOTIFY xdr buf size calculation
+Date: Tue, 11 Mar 2025 15:56:00 +0100
+Message-ID: <20250311145802.067357298@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit 75420e437eed69fa95d1d7c339dad86dea35319a ]
+[ Upstream commit e8380c2d06055665b3df6c03964911375d7f9290 ]
 
-The SM8250 platform uses PM8150 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+We need to include sequence size in the compound.
 
-Fixes: 9ff8b0591fcf ("arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-13-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 0491567b51ef ("NFS: add COPY_NOTIFY operation")
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs42xdr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index ec356fe07ac8a..025503ce88780 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -75,7 +75,7 @@
- 
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
- 	};
+diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
+index df5bee2f505c4..c9987d615ebc5 100644
+--- a/fs/nfs/nfs42xdr.c
++++ b/fs/nfs/nfs42xdr.c
+@@ -122,9 +122,11 @@
+ 					 decode_putfh_maxsz + \
+ 					 decode_offload_cancel_maxsz)
+ #define NFS4_enc_copy_notify_sz		(compound_encode_hdr_maxsz + \
++					 encode_sequence_maxsz + \
+ 					 encode_putfh_maxsz + \
+ 					 encode_copy_notify_maxsz)
+ #define NFS4_dec_copy_notify_sz		(compound_decode_hdr_maxsz + \
++					 decode_sequence_maxsz + \
+ 					 decode_putfh_maxsz + \
+ 					 decode_copy_notify_maxsz)
+ #define NFS4_enc_deallocate_sz		(compound_encode_hdr_maxsz + \
 -- 
 2.39.5
 
