@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E12E25C6ED;
-	Tue, 11 Mar 2025 15:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3102425DD08;
+	Tue, 11 Mar 2025 15:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706759; cv=none; b=BdHNGElwpOyCKVLSD8DmYr0MEMxYgcn/WC0wamdmmrXdqv3OUwdpNu1lILuFZgtAyasqwkQVVxg4WPZaGTT1RJbbkX53EzuatRGrO03S58mdc2Mpth1YRyQ+TBiBjhFYWOQ8MH3A/48zzJdNJqp7AyFiurihlXaPZaGaMrODFQ4=
+	t=1741706762; cv=none; b=c72qh2bAdvXfsR435FKyIxZkSJKZvfG+o2UOrHOD7W5EYKesxa3WO+GYKxYrl/+zSRj0OZ5mZx92dnS2FrJVc81udgM2DU40yDVLHVgf1RvtkQ+t1JxTmjTqFo4i2U2Kisi0a0fyG/FYYR7l3glg+n/iz0dfyrPpTK7MdMavT1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706759; c=relaxed/simple;
-	bh=xSVrL8P5EMjbuWns6Ws/gPhlMv3Cs3JKduUmD89TX5k=;
+	s=arc-20240116; t=1741706762; c=relaxed/simple;
+	bh=hnjVQsCIbFaXL7UCtCx+HvRK7tiX3nxeLDqpqEhuDME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0VDnwuXTFngqTLrwIc/xhgOPn0KOXe8bbix4NjjZyyxhzMZVgr6L0eS5mf3Bvs+ExcY3NjZCzIO0bPSghyIGS03fNi74EnYsW9rdYmgS2mbvV12/8YOnHCB+YjMmvpB9/2gBVF2OS9rb4Cw6I1ao8pTGqLk4FcGfXG5thlC5c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XW07AG4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMKaxHEfueiuBnRJywg9uAYBQGzB/Mq8eKyuIr4u63n++Y0tFOCZnJGUMf2gwsNucJCxLYKcev/X54Ay7FUJIyJmmcc9zB4d2TU2Qm+Avm6qBBdu8EYDR5+jm+u9hfKxRyf/sU/Mdcg73JjH9S0mBRLcQKlV/GKJ2b1M7m2ldX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNOEmg5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XW07AG4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBED2C4CEF4;
-	Tue, 11 Mar 2025 15:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNOEmg5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8EFC4CEE9;
+	Tue, 11 Mar 2025 15:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706759;
-	bh=xSVrL8P5EMjbuWns6Ws/gPhlMv3Cs3JKduUmD89TX5k=;
+	s=korg; t=1741706762;
+	bh=hnjVQsCIbFaXL7UCtCx+HvRK7tiX3nxeLDqpqEhuDME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XW07AG4tFmevPlBLZEtjB9kHK9gTwWfWDsn9sErXaPCzwOm/8LHIIthkdMQrVJvYG
-	 Bpg65seIp0OaZhuwUE0aq+516WjxS9DyZnAcaMbxwL47wsSdwB1y77Ln2UEfSvg78J
-	 UUc+2SGQ7xQV3IiD4brWnd810ituoK6XVvJECUH4=
+	b=dNOEmg5yZXUco5Kt4EeVKwknAGg+FYMij5TTsqUTjBqGpA6bD8MoaW92pGMIaDUbd
+	 8Ag1p+hwM56yLehAeFTBZV19EUZMCdGMgZEodBp+Mk0h/7k87ppiR+cjC83tn1xAHc
+	 RlX4MK4uLZsq3L1j0EleWAHqG3xYn40h7pF2ZPOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/462] net: rose: lock the socket in rose_bind()
-Date: Tue, 11 Mar 2025 15:57:04 +0100
-Message-ID: <20250311145804.587198650@linuxfoundation.org>
+Subject: [PATCH 5.10 159/462] x86/xen: fix xen_hypercall_hvm() to not clobber %rbx
+Date: Tue, 11 Mar 2025 15:57:05 +0100
+Message-ID: <20250311145804.625513231@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,85 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit a1300691aed9ee852b0a9192e29e2bdc2411a7e6 ]
+[ Upstream commit 98a5cfd2320966f40fe049a9855f8787f0126825 ]
 
-syzbot reported a soft lockup in rose_loopback_timer(),
-with a repro calling bind() from multiple threads.
+xen_hypercall_hvm(), which is used when running as a Xen PVH guest at
+most only once during early boot, is clobbering %rbx. Depending on
+whether the caller relies on %rbx to be preserved across the call or
+not, this clobbering might result in an early crash of the system.
 
-rose_bind() must lock the socket to avoid this issue.
+This can be avoided by using an already saved register instead of %rbx.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67a0f78d.050a0220.d7c5a.00a0.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250203170838.3521361-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ arch/x86/xen/xen-head.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 65fd5b99f9dea..f8cd085c42345 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -700,11 +700,9 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	struct net_device *dev;
- 	ax25_address *source;
- 	ax25_uid_assoc *user;
-+	int err = -EINVAL;
- 	int n;
- 
--	if (!sock_flag(sk, SOCK_ZAPPED))
--		return -EINVAL;
--
- 	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
- 		return -EINVAL;
- 
-@@ -717,8 +715,15 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
- 		return -EINVAL;
- 
--	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
--		return -EADDRNOTAVAIL;
-+	lock_sock(sk);
-+
-+	if (!sock_flag(sk, SOCK_ZAPPED))
-+		goto out_release;
-+
-+	err = -EADDRNOTAVAIL;
-+	dev = rose_dev_get(&addr->srose_addr);
-+	if (!dev)
-+		goto out_release;
- 
- 	source = &addr->srose_call;
- 
-@@ -729,7 +734,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	} else {
- 		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
- 			dev_put(dev);
--			return -EACCES;
-+			err = -EACCES;
-+			goto out_release;
- 		}
- 		rose->source_call   = *source;
- 	}
-@@ -751,8 +757,10 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	rose_insert_socket(sk);
- 
- 	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	return 0;
-+	err = 0;
-+out_release:
-+	release_sock(sk);
-+	return err;
- }
- 
- static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_len, int flags)
+diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
+index 152bbe900a174..0dce73077c8cb 100644
+--- a/arch/x86/xen/xen-head.S
++++ b/arch/x86/xen/xen-head.S
+@@ -115,8 +115,8 @@ SYM_FUNC_START(xen_hypercall_hvm)
+ 	pop %ebx
+ 	pop %eax
+ #else
+-	lea xen_hypercall_amd(%rip), %rbx
+-	cmp %rax, %rbx
++	lea xen_hypercall_amd(%rip), %rcx
++	cmp %rax, %rcx
+ #ifdef CONFIG_FRAME_POINTER
+ 	pop %rax	/* Dummy pop. */
+ #endif
 -- 
 2.39.5
 
