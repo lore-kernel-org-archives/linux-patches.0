@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDB1249F9;
-	Tue, 11 Mar 2025 15:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110A01684AC;
+	Tue, 11 Mar 2025 15:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706252; cv=none; b=Sg6VFgtBn8nU2D7z3p9e4Jxa2X+HiRiP9l3EPNTT1Oq6nj7GG9/qskm4MFX8BONB17l/qvSFCEU9hhBmxAo3v046/y3Yrg0cxJ5DhumrKSiUOcQZWPkdMrFdhTnuLWt8EQeyvPpJYBoSbTmoiQxz+JkqkuwKwK0BTdZmlANn0Cs=
+	t=1741706255; cv=none; b=UJUFao/86rNDr2uDBDTwWh6Wqk7Oey7OVqmo0Dw5vxvATQtLODNsPcUNW+sMIrTmE0pOVlrFDyuDkJOdJPcxs4qcPauCO5QpSMN5Ucwo06uzTUH8pS7ylrruxSnMGz6bKdByr6MeEllicAEOmf21FnTVYNrlau281CApUUh1iIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706252; c=relaxed/simple;
-	bh=gwdFMQJFulB0SCO9XUvEewwWrvBOjqq9dUCSN7yJMLA=;
+	s=arc-20240116; t=1741706255; c=relaxed/simple;
+	bh=zG0wujAKIiITMjj2h7pTB9RcIll38Qvy+Hmz2m30l1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjdYf19gI504ZiDxNEhbR+ONoOE9f9YU1rKmuvsOUE/Dyvnj/TAlpRy2cgYqmrBcp7bJpNVRK56Qxy+4XQ+6KzM0RTGHrVLzzuDfTf1V1oQLUrRe3sJbcZI+vhwFxsbR3wuJYeD6iqs0VPz78wwIQwizRLf91e3i7zlPZ/tMry8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRNeDk3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTwV33XTne+/r1Vp5Lg91hzHNElgLDi1nnNEw/EdlrRNQqBRkLlveTHYX48nfUuvr+2dP8fygC6G6yV1dzJHCu+iIgg5PPWVocEw1GuBOdgKTFVXYqMvP90wsdpMfjz+XZNNw5qSKV7FwmYgq/b3wagdsUYY8brI/I0ftGHiHYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBQo9YDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRNeDk3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7D4C4CEE9;
-	Tue, 11 Mar 2025 15:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBQo9YDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAF7C4CEE9;
+	Tue, 11 Mar 2025 15:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706252;
-	bh=gwdFMQJFulB0SCO9XUvEewwWrvBOjqq9dUCSN7yJMLA=;
+	s=korg; t=1741706254;
+	bh=zG0wujAKIiITMjj2h7pTB9RcIll38Qvy+Hmz2m30l1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRNeDk3K5ZFpy7Jd9dUqgSy35eNz7L3aMsvLNqz47xDNvhkvu3vnpXHkbv3Asb37C
-	 FbWPNPRfXVmTcIh22m3dinDAB73+41/IKrdxOl4L6yoVdx7OAn9k/MAYOMpHmd20nG
-	 I81MFjKtg45IbsCmGvQDB16llwCwrGhj6UYlSg5Q=
+	b=rBQo9YDXOedxXG3MAQeJeCyb8i/PbaSotyG87sgRhLqZsAT2cZdcNtnDjPSPrfnan
+	 Y8JAvls1eKKZelvBZ032+lwNUk/nG689msU+Iyqnm2bBUeN6lmica/4VryfLdaDY9U
+	 CIXac+5ZpplIkN6yUHCbz5HjRyuCDRFGBozjqX4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 295/328] HID: intel-ish-hid: Fix use-after-free issue in ishtp_hid_remove()
-Date: Tue, 11 Mar 2025 16:01:05 +0100
-Message-ID: <20250311145726.631749743@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	stable@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 286/328] x86/cpu: Validate CPUID leaf 0x2 EDX output
+Date: Tue, 11 Mar 2025 16:00:56 +0100
+Message-ID: <20250311145726.276074156@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,55 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit 07583a0010696a17fb0942e0b499a62785c5fc9f ]
+commit 1881148215c67151b146450fb89ec22fd92337a7 upstream.
 
-The system can experience a random crash a few minutes after the driver is
-removed. This issue occurs due to improper handling of memory freeing in
-the ishtp_hid_remove() function.
+CPUID leaf 0x2 emits one-byte descriptors in its four output registers
+EAX, EBX, ECX, and EDX.  For these descriptors to be valid, the most
+significant bit (MSB) of each register must be clear.
 
-The function currently frees the `driver_data` directly within the loop
-that destroys the HID devices, which can lead to accessing freed memory.
-Specifically, `hid_destroy_device()` uses `driver_data` when it calls
-`hid_ishtp_set_feature()` to power off the sensor, so freeing
-`driver_data` beforehand can result in accessing invalid memory.
+Leaf 0x2 parsing at intel.c only validated the MSBs of EAX, EBX, and
+ECX, but left EDX unchecked.
 
-This patch resolves the issue by storing the `driver_data` in a temporary
-variable before calling `hid_destroy_device()`, and then freeing the
-`driver_data` after the device is destroyed.
+Validate EDX's most-significant bit as well.
 
-Fixes: 0b28cb4bcb17 ("HID: intel-ish-hid: ISH HID client driver")
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e0ba94f14f74 ("x86/tlb_info: get last level TLB entry number of CPU")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@kernel.org
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250304085152.51092-3-darwi@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-ish-hid/ishtp-hid.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/intel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp-hid.c b/drivers/hid/intel-ish-hid/ishtp-hid.c
-index b8aae69ad15d7..ef52368557715 100644
---- a/drivers/hid/intel-ish-hid/ishtp-hid.c
-+++ b/drivers/hid/intel-ish-hid/ishtp-hid.c
-@@ -263,12 +263,14 @@ int ishtp_hid_probe(unsigned int cur_hid_dev,
-  */
- void ishtp_hid_remove(struct ishtp_cl_data *client_data)
- {
-+	void *data;
- 	int i;
+--- a/arch/x86/kernel/cpu/intel.c
++++ b/arch/x86/kernel/cpu/intel.c
+@@ -959,7 +959,7 @@ static void intel_detect_tlb(struct cpui
+ 		cpuid(2, &regs[0], &regs[1], &regs[2], &regs[3]);
  
- 	for (i = 0; i < client_data->num_hid_devices; ++i) {
- 		if (client_data->hid_sensor_hubs[i]) {
--			kfree(client_data->hid_sensor_hubs[i]->driver_data);
-+			data = client_data->hid_sensor_hubs[i]->driver_data;
- 			hid_destroy_device(client_data->hid_sensor_hubs[i]);
-+			kfree(data);
- 			client_data->hid_sensor_hubs[i] = NULL;
- 		}
- 	}
--- 
-2.39.5
-
+ 		/* If bit 31 is set, this is an unknown format */
+-		for (j = 0 ; j < 3 ; j++)
++		for (j = 0 ; j < 4 ; j++)
+ 			if (regs[j] & (1 << 31))
+ 				regs[j] = 0;
+ 
 
 
