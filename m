@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BA32405F9;
-	Tue, 11 Mar 2025 15:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9850225E808;
+	Tue, 11 Mar 2025 15:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706093; cv=none; b=MG7bgZB90LP6De6uZe0smYHhilUeHla4NTgTEGrZg2tNADpN4T+vouJ4gvltO/OQU2P612Ifk0pCEtKpJIveXVMFXZFI2Ch+NETsRkR/H5RCDFit48vLnmiQ5nNK2zPgRLldICYfc81FktDhoEY8n4em5mB6Ll+/YMA358RT6I8=
+	t=1741706096; cv=none; b=dDQjorgPuUqPtMb8IoiMW/T+xWBKHt0nunLJPkt1pPB4fZMoNyQQHG9FE2+SNrKtul6Imy/Eovwu90uEUASmpZtDEeoXDJQ/VS+gaNQrp9jf6ihki9l9KzSfZd481qllzi8s9+J+kvAnMTyXFrM+hNQKSKPvnzvlWaN66OBDjnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706093; c=relaxed/simple;
-	bh=V5AMt6MUNNeeQujYqtVWUObYTuItePT0+Ko6wiya7Yc=;
+	s=arc-20240116; t=1741706096; c=relaxed/simple;
+	bh=1PyaJFzgTxOstllkpDSJpAgr++VFHqzSHTsgFCTHR7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpD1fbXym/qHXO/UfK4TKj1nLCgPa8lbNMCEOIExUJVg9HLpB7s5BydQNoID0G6rzhwnDCW3hCvjTHG9OQ2e/+fVYEcJz5rq9QbSxoF1Yt3T9hsPjifykDW/aaY6pJS1XFBouaRI239Z7yjeq7RireFlbmuoyWluRHjSFg11PvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JJES1t4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iK2h5caHjoXm/fIFzmvNUowIQSZZIVNhfZTRACAWaYzdOY4t+KnB98suk1vKgQDKru2RqDBjw5QBJTe9aKfxtw6W8FnMh5s3CpWBkeL1C7XQjhddf5A4JAxYJ3N0aV3XsGMR8FuVsSj8IvWCkLtrKtEp8M01mb2cRAp/5DHG0hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIJtGZmD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JJES1t4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D15C4CEE9;
-	Tue, 11 Mar 2025 15:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIJtGZmD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAE5C4CEF3;
+	Tue, 11 Mar 2025 15:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706093;
-	bh=V5AMt6MUNNeeQujYqtVWUObYTuItePT0+Ko6wiya7Yc=;
+	s=korg; t=1741706096;
+	bh=1PyaJFzgTxOstllkpDSJpAgr++VFHqzSHTsgFCTHR7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JJES1t4YRzzLS7yAZz7CI5/60zILBvvythnKGw5IInm460gMOrzI+QTF6D2A64L0
-	 hee3NPga/ZaA5P8X7yChjJAWz4/EwQwt9LNT3EAvNouAhbBP+/zbkmfYrSY7AKVepF
-	 YEjwobIEJud92XCnq8NvutARs32MP37ZdneOe1xI=
+	b=iIJtGZmDKeIvcBZVBIHcGVLm8u5BtKqRyavCamxQtFEwnKozQX83LqUCZdk7+HHh0
+	 vKOnjPG/rJ0qVKQi9sl6YbM8lmcbPZx1pSo++frCRWYlFivcCYxeBRQcCyQ+zTgCUn
+	 eRq1ZZnSo/u2biB5BL0SEVWClQjg1pLyXofIT5vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 260/328] net: cadence: macb: Synchronize stats calculations
-Date: Tue, 11 Mar 2025 16:00:30 +0100
-Message-ID: <20250311145725.240781525@linuxfoundation.org>
+Subject: [PATCH 5.4 261/328] ASoC: es8328: fix route from DAC to output
+Date: Tue, 11 Mar 2025 16:00:31 +0100
+Message-ID: <20250311145725.282689560@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,113 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit fa52f15c745ce55261b92873676f64f7348cfe82 ]
+[ Upstream commit 5b0c02f9b8acf2a791e531bbc09acae2d51f4f9b ]
 
-Stats calculations involve a RMW to add the stat update to the existing
-value. This is currently not protected by any synchronization mechanism,
-so data races are possible. Add a spinlock to protect the update. The
-reader side could be protected using u64_stats, but we would still need
-a spinlock for the update side anyway. And we always do an update
-immediately before reading the stats anyway.
+The ES8328 codec driver, which is also used for the ES8388 chip that
+appears to have an identical register map, claims that the output can
+either take the route from DAC->Mixer->Output or through DAC->Output
+directly. To the best of what I could find, this is not true, and
+creates problems.
 
-Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250220162950.95941-1-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Without DACCONTROL17 bit index 7 set for the left channel, as well as
+DACCONTROL20 bit index 7 set for the right channel, I cannot get any
+analog audio out on Left Out 2 and Right Out 2 respectively, despite the
+DAPM routes claiming that this should be possible. Furthermore, the same
+is the case for Left Out 1 and Right Out 1, showing that those two don't
+have a direct route from DAC to output bypassing the mixer either.
+
+Those control bits toggle whether the DACs are fed (stale bread?) into
+their respective mixers. If one "unmutes" the mixer controls in
+alsamixer, then sure, the audio output works, but if it doesn't work
+without the mixer being fed the DAC input then evidently it's not a
+direct output from the DAC.
+
+ES8328/ES8388 are seemingly not alone in this. ES8323, which uses a
+separate driver for what appears to be a very similar register map,
+simply flips those two bits on in its probe function, and then pretends
+there is no power management whatsoever for the individual controls.
+Fair enough.
+
+My theory as to why nobody has noticed this up to this point is that
+everyone just assumes it's their fault when they had to unmute an
+additional control in ALSA.
+
+Fix this in the es8328 driver by removing the erroneous direct route,
+then get rid of the playback switch controls and have those bits tied to
+the mixer's widget instead, which until now had no register to play
+with.
+
+Fixes: 567e4f98922c ("ASoC: add es8328 codec driver")
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://patch.msgid.link/20250222-es8328-route-bludgeoning-v1-1-99bfb7fb22d9@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb.h      |  2 ++
- drivers/net/ethernet/cadence/macb_main.c | 12 ++++++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ sound/soc/codecs/es8328.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
-index 03983bd46eef4..bf864b2d0cac4 100644
---- a/drivers/net/ethernet/cadence/macb.h
-+++ b/drivers/net/ethernet/cadence/macb.h
-@@ -1177,6 +1177,8 @@ struct macb {
- 	struct clk		*rx_clk;
- 	struct clk		*tsu_clk;
- 	struct net_device	*dev;
-+	/* Protects hw_stats and ethtool_stats */
-+	spinlock_t		stats_lock;
- 	union {
- 		struct macb_stats	macb;
- 		struct gem_stats	gem;
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 12dd18cbdba34..a750c752846cf 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1483,10 +1483,12 @@ static irqreturn_t macb_interrupt(int irq, void *dev_id)
+diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
+index 4117ab6e9b6ff..83ffdb7e51200 100644
+--- a/sound/soc/codecs/es8328.c
++++ b/sound/soc/codecs/es8328.c
+@@ -234,7 +234,6 @@ static const struct snd_kcontrol_new es8328_right_line_controls =
  
- 		if (status & MACB_BIT(ISR_ROVR)) {
- 			/* We missed at least one packet */
-+			spin_lock(&bp->stats_lock);
- 			if (macb_is_gem(bp))
- 				bp->hw_stats.gem.rx_overruns++;
- 			else
- 				bp->hw_stats.macb.rx_overruns++;
-+			spin_unlock(&bp->stats_lock);
+ /* Left Mixer */
+ static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
+-	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL17, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL17, 6, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Playback Switch", ES8328_DACCONTROL18, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL18, 6, 1, 0),
+@@ -244,7 +243,6 @@ static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
+ static const struct snd_kcontrol_new es8328_right_mixer_controls[] = {
+ 	SOC_DAPM_SINGLE("Left Playback Switch", ES8328_DACCONTROL19, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL19, 6, 1, 0),
+-	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL20, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL20, 6, 1, 0),
+ };
  
- 			if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
- 				queue_writel(queue, ISR, MACB_BIT(ISR_ROVR));
-@@ -2567,6 +2569,7 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
- 	if (!netif_running(bp->dev))
- 		return nstat;
+@@ -337,10 +335,10 @@ static const struct snd_soc_dapm_widget es8328_dapm_widgets[] = {
+ 	SND_SOC_DAPM_DAC("Left DAC", "Left Playback", ES8328_DACPOWER,
+ 			ES8328_DACPOWER_LDAC_OFF, 1),
  
-+	spin_lock_irq(&bp->stats_lock);
- 	gem_update_stats(bp);
+-	SND_SOC_DAPM_MIXER("Left Mixer", SND_SOC_NOPM, 0, 0,
++	SND_SOC_DAPM_MIXER("Left Mixer", ES8328_DACCONTROL17, 7, 0,
+ 		&es8328_left_mixer_controls[0],
+ 		ARRAY_SIZE(es8328_left_mixer_controls)),
+-	SND_SOC_DAPM_MIXER("Right Mixer", SND_SOC_NOPM, 0, 0,
++	SND_SOC_DAPM_MIXER("Right Mixer", ES8328_DACCONTROL20, 7, 0,
+ 		&es8328_right_mixer_controls[0],
+ 		ARRAY_SIZE(es8328_right_mixer_controls)),
  
- 	nstat->rx_errors = (hwstat->rx_frame_check_sequence_errors +
-@@ -2596,6 +2599,7 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
- 	nstat->tx_aborted_errors = hwstat->tx_excessive_collisions;
- 	nstat->tx_carrier_errors = hwstat->tx_carrier_sense_errors;
- 	nstat->tx_fifo_errors = hwstat->tx_underrun;
-+	spin_unlock_irq(&bp->stats_lock);
+@@ -419,19 +417,14 @@ static const struct snd_soc_dapm_route es8328_dapm_routes[] = {
+ 	{ "Right Line Mux", "PGA", "Right PGA Mux" },
+ 	{ "Right Line Mux", "Differential", "Differential Mux" },
  
- 	return nstat;
- }
-@@ -2603,12 +2607,13 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
- static void gem_get_ethtool_stats(struct net_device *dev,
- 				  struct ethtool_stats *stats, u64 *data)
- {
--	struct macb *bp;
-+	struct macb *bp = netdev_priv(dev);
+-	{ "Left Out 1", NULL, "Left DAC" },
+-	{ "Right Out 1", NULL, "Right DAC" },
+-	{ "Left Out 2", NULL, "Left DAC" },
+-	{ "Right Out 2", NULL, "Right DAC" },
+-
+-	{ "Left Mixer", "Playback Switch", "Left DAC" },
++	{ "Left Mixer", NULL, "Left DAC" },
+ 	{ "Left Mixer", "Left Bypass Switch", "Left Line Mux" },
+ 	{ "Left Mixer", "Right Playback Switch", "Right DAC" },
+ 	{ "Left Mixer", "Right Bypass Switch", "Right Line Mux" },
  
--	bp = netdev_priv(dev);
-+	spin_lock_irq(&bp->stats_lock);
- 	gem_update_stats(bp);
- 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
- 			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
-+	spin_unlock_irq(&bp->stats_lock);
- }
+ 	{ "Right Mixer", "Left Playback Switch", "Left DAC" },
+ 	{ "Right Mixer", "Left Bypass Switch", "Left Line Mux" },
+-	{ "Right Mixer", "Playback Switch", "Right DAC" },
++	{ "Right Mixer", NULL, "Right DAC" },
+ 	{ "Right Mixer", "Right Bypass Switch", "Right Line Mux" },
  
- static int gem_get_sset_count(struct net_device *dev, int sset)
-@@ -2658,6 +2663,7 @@ static struct net_device_stats *macb_get_stats(struct net_device *dev)
- 		return gem_get_stats(bp);
- 
- 	/* read stats from hardware */
-+	spin_lock_irq(&bp->stats_lock);
- 	macb_update_stats(bp);
- 
- 	/* Convert HW stats into netdevice stats */
-@@ -2691,6 +2697,7 @@ static struct net_device_stats *macb_get_stats(struct net_device *dev)
- 	nstat->tx_carrier_errors = hwstat->tx_carrier_errors;
- 	nstat->tx_fifo_errors = hwstat->tx_underruns;
- 	/* Don't know about heartbeat or window errors... */
-+	spin_unlock_irq(&bp->stats_lock);
- 
- 	return nstat;
- }
-@@ -4306,6 +4313,7 @@ static int macb_probe(struct platform_device *pdev)
- 	device_set_wakeup_capable(&pdev->dev, bp->wol & MACB_WOL_HAS_MAGIC_PACKET);
- 
- 	spin_lock_init(&bp->lock);
-+	spin_lock_init(&bp->stats_lock);
- 
- 	/* setup capabilities */
- 	macb_configure_caps(bp, macb_config);
+ 	{ "DAC DIG", NULL, "DAC STM" },
 -- 
 2.39.5
 
