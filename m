@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DB625EFA9;
-	Tue, 11 Mar 2025 15:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253D925EF89;
+	Tue, 11 Mar 2025 15:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707642; cv=none; b=ajZBtAhxgcJ7f5WHrNQMjl2nXRWMa1l8tXDrompRtM55c/oq5KbF91pSVZmNRwjh41mKFijaq3xqQo3ksn2s/R6yPlX+bgpa9Yfg+uQksY1MnnBk4AQzqjPfejOi7oLOY/f2N9BS6O3k0Z/AhggicdCPmYPEQaJleYPNAbvTpr8=
+	t=1741707645; cv=none; b=a6PlVggl9BAHs92JTMWzxWfWWiIecyYi8H2OzQ4decMM6UShYyqZqS7P4QbJ9LkTmQCojRYvmHjJtZG84b68Mt18PkCOLLsHD37hWYvawy2ntqt7OJgSRjDADoLkv9OfHEzPGUvxeaprCNCeJLo63/SkzCE0zPENEisMVIXAFRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707642; c=relaxed/simple;
-	bh=GUpCd/KXCLcXctAcITqz5QNDzzTzdtnRWL86X0QUi2s=;
+	s=arc-20240116; t=1741707645; c=relaxed/simple;
+	bh=jxegrlck94WitTi3oUMYWG5QfSQqiY66xGBLtiXMLlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GknwedEHAqF6B9OfeW5/wo5MNULahfA08YMJWETkFs0aXN8yWrP752IJcMyBE2MD1alqzLWmyHVVa8P4Xgmp1lK114IntQaXO3PDWrwbnh1s9K/NwL478TUW5YVu7MtWvCxcIV51lSBKCrC95Xx7lZVlKA/Yt81mHo82bvxmPhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rxk3bKq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jLA/FFLuGk5Zn/ehy06BHsosv/TVxfGLK25E4/5xiS/VySKJ3gLAPUnkdjPq2yHUeet03O6wxZx+OX521vEYuhvK7Ltf9v9RNyw3WgvzWl+k1BjlP2SsPBxhqtNZbuKAgyTj05ZwruEStDSrJ5I1pR6Ppg3Qybv8EoT97b0w/yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtTHv2C2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rxk3bKq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA38BC4CEEA;
-	Tue, 11 Mar 2025 15:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtTHv2C2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1017C4CEE9;
+	Tue, 11 Mar 2025 15:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707642;
-	bh=GUpCd/KXCLcXctAcITqz5QNDzzTzdtnRWL86X0QUi2s=;
+	s=korg; t=1741707645;
+	bh=jxegrlck94WitTi3oUMYWG5QfSQqiY66xGBLtiXMLlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rxk3bKq0AHCWvvSapSc1riu2nz5pbsHRFUaGOmWJ30P6pad8ewLgIbGpMKhGJIh3R
-	 nTXDRIVZVU2ECr5oEmbtbyMO0JdCX3lS0J4jSnLfUB5CyELGfkHRk7wdoxb3JP296o
-	 YB/8kvU5fBHdvwJzRXIjneL0fqCQyoqgvJUVsDL0=
+	b=YtTHv2C2gX3gnt9NcfXFhFWHkqM3qkrWelTx3+N74HVfhjaTn/KgDsteeOzmOls08
+	 ztfmnS7L4ufOJIy1YkR9+vJ6uKPuNhErXFteBBFC25oq9D1g5g2sJuZA7XwF7k/K5h
+	 G1QM4SrAP+AVCCj/dGxlYw6mPR/Oskk3cN3FolkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.10 459/462] usb: xhci: Enable the TRB overfetch quirk on VIA VL805
-Date: Tue, 11 Mar 2025 16:02:05 +0100
-Message-ID: <20250311145816.459366747@linuxfoundation.org>
+	James Clark <james.clark@linaro.org>,
+	Ben Hutchings <benh@debian.org>
+Subject: [PATCH 5.10 460/462] perf cs-etm: Add missing variable in cs_etm__process_queues()
+Date: Tue, 11 Mar 2025 16:02:06 +0100
+Message-ID: <20250311145816.498568322@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,101 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit c133ec0e5717868c9967fa3df92a55e537b1aead upstream.
+Commit 5afd032961e8 "perf cs-etm: Don't flush when packet_queue fills
+up" uses i as a loop counter in cs_etm__process_queues().  It was
+backported to the 5.4 and 5.10 stable branches, but the i variable
+doesn't exist there as it was only added in 5.15.
 
-Raspberry Pi is a major user of those chips and they discovered a bug -
-when the end of a transfer ring segment is reached, up to four TRBs can
-be prefetched from the next page even if the segment ends with link TRB
-and on page boundary (the chip claims to support standard 4KB pages).
+Declare i with the expected type.
 
-It also appears that if the prefetched TRBs belong to a different ring
-whose doorbell is later rung, they may be used without refreshing from
-system RAM and the endpoint will stay idle if their cycle bit is stale.
-
-Other users complain about IOMMU faults on x86 systems, unsurprisingly.
-
-Deal with it by using existing quirk which allocates a dummy page after
-each transfer ring segment. This was seen to resolve both problems. RPi
-came up with a more efficient solution, shortening each segment by four
-TRBs, but it complicated the driver and they ditched it for this quirk.
-
-Also rename the quirk and add VL805 device ID macro.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://github.com/raspberrypi/linux/issues/4685
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=215906
-CC: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250225095927.2512358-2-mathias.nyman@linux.intel.com
-[ Michal: merge conflict with white space and an unrelated quirk ]
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Fixes: 1ed167325c32 ("perf cs-etm: Don't flush when packet_queue fills up")
+Fixes: 26db806fa23e ("perf cs-etm: Don't flush when packet_queue fills up")
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    3 ++-
- drivers/usb/host/xhci-pci.c |    9 ++++++---
- drivers/usb/host/xhci.h     |    2 +-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ tools/perf/util/cs-etm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2494,7 +2494,8 @@ int xhci_mem_init(struct xhci_hcd *xhci,
- 	 * and our use of dma addresses in the trb_address_map radix tree needs
- 	 * TRB_SEGMENT_SIZE alignment, so we pick the greater alignment need.
- 	 */
--	if (xhci->quirks & XHCI_ZHAOXIN_TRB_FETCH)
-+	if (xhci->quirks & XHCI_TRB_OVERFETCH)
-+		/* Buggy HC prefetches beyond segment bounds - allocate dummy space at the end */
- 		xhci->segment_pool = dma_pool_create("xHCI ring segments", dev,
- 				TRB_SEGMENT_SIZE * 2, TRB_SEGMENT_SIZE * 2, xhci->page_size * 2);
- 	else
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -37,6 +37,8 @@
- #define PCI_DEVICE_ID_EJ168		0x7023
- #define PCI_DEVICE_ID_EJ188		0x7052
- 
-+#define PCI_DEVICE_ID_VIA_VL805				0x3483
-+
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_XHCI		0x8c31
- #define PCI_DEVICE_ID_INTEL_LYNXPOINT_LP_XHCI		0x9c31
- #define PCI_DEVICE_ID_INTEL_WILDCATPOINT_LP_XHCI	0x9cb1
-@@ -296,8 +298,9 @@ static void xhci_pci_quirks(struct devic
- 			pdev->device == 0x3432)
- 		xhci->quirks |= XHCI_BROKEN_STREAMS;
- 
--	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == 0x3483) {
-+	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
- 		xhci->quirks |= XHCI_LPM_SUPPORT;
-+		xhci->quirks |= XHCI_TRB_OVERFETCH;
- 		xhci->quirks |= XHCI_EP_CTX_BROKEN_DCS;
- 	}
- 
-@@ -347,11 +350,11 @@ static void xhci_pci_quirks(struct devic
- 
- 		if (pdev->device == 0x9202) {
- 			xhci->quirks |= XHCI_RESET_ON_RESUME;
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 		}
- 
- 		if (pdev->device == 0x9203)
--			xhci->quirks |= XHCI_ZHAOXIN_TRB_FETCH;
-+			xhci->quirks |= XHCI_TRB_OVERFETCH;
- 	}
- 
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1902,7 +1902,7 @@ struct xhci_hcd {
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
--#define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
-+#define XHCI_TRB_OVERFETCH	BIT_ULL(45)
- #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
- 
- 	unsigned int		num_active_eps;
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -2171,7 +2171,7 @@ static int cs_etm__process_timeless_queu
+ static int cs_etm__process_queues(struct cs_etm_auxtrace *etm)
+ {
+ 	int ret = 0;
+-	unsigned int cs_queue_nr, queue_nr;
++	unsigned int cs_queue_nr, queue_nr, i;
+ 	u8 trace_chan_id;
+ 	u64 timestamp;
+ 	struct auxtrace_queue *queue;
 
 
