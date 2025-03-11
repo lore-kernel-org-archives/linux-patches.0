@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE910846D;
-	Tue, 11 Mar 2025 15:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2D725DCE3;
+	Tue, 11 Mar 2025 15:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706750; cv=none; b=lCvYbX/f/ZpQSEbEFwSr9uiuUP9BOuQM/ypIq8DmcSXJVjCW0NiYh9P1nZ5R7eff0kpX22gpoVtvB6Cp48MR1bSkvSA5n7r61fLlkI/crgHA+r26UoIOo6y4zB/+KVLdK4Br5GOL74doOoSXKluwcJ+ujBCcHmz7VcIEfXCYJeg=
+	t=1741706753; cv=none; b=tqYkKDEfbH34+A+oSojzsBt25y0M4RQ5SrAc5uEjW78gbw/4nUwMbfsMbpM4yzWSk/RWU+lGn4QEkGB0kxA7uXu44Q4+3g1RBLabFnbg5gKSkLIiWqnk26J/YBNnyCgjfJQc/KCNMa7TNZHnr7VNEySQB27vzPlw5c8RO9h9JSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706750; c=relaxed/simple;
-	bh=uc3amqgBRrMon90x6KAhrcgNa0eqDXg3buXP5cxNCRY=;
+	s=arc-20240116; t=1741706753; c=relaxed/simple;
+	bh=jjcw0lhuLcDNdmRQePQ+/sBsmYzUupkXZCWgL5gu93o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOxSwZhtOuo1ZhBe77HqwLBwlPYoSxqAXPAABIk4Hoz9NjF3lomRXLUjswGkp8wEuH387vbFrVqRg8yDs4wu+J/PaS8vBvuzkWRDbmMB/TtOrFwlXvM65u9fD+KgkdX/nBlVFDl0S4c6JFvzM+tolbmfJBEB+y1Ed76zQJiYWQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiJzkDuS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qieKmD9lkSSoI/u/L8+P3U5/Mqs9gvKhsIwn4De0/rWTYl2OTp6J2vqZEIJ2aSFFaKfebPPJ+ZvUGfOmcBfeCgxZq4yvdpHaIq7NV2ElTUCYXGumDKbHYq6qYTyqMYAtnKTGqKjJSMtKMFMBajowFgaynKlQKPwWIR/3WBXgmvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXwFnChD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiJzkDuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33406C4CEE9;
-	Tue, 11 Mar 2025 15:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXwFnChD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1027FC4CEE9;
+	Tue, 11 Mar 2025 15:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706750;
-	bh=uc3amqgBRrMon90x6KAhrcgNa0eqDXg3buXP5cxNCRY=;
+	s=korg; t=1741706753;
+	bh=jjcw0lhuLcDNdmRQePQ+/sBsmYzUupkXZCWgL5gu93o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MiJzkDuStFLkx9OtL0JDcga/2QIn0ZfuZNdOvxZ/cS0ex70ICfy7m+xQ0HY7ZVEYk
-	 bhoNEaexBG3XPlbdKy+xb9T9F8r7etpLpoRZ0ITqPGJqLzMJOH4MTPedEpW95aRKuL
-	 KD+69TD6S2cLr5hRjqrfeWeqpBHakgipZjXo/dis=
+	b=dXwFnChDfeBHMuDmub5O9qNtqSr98qmC0mxf2MeaYUg+U5kqyWvFnqPMYzYrLBbsS
+	 Um14uLmkb8tXEFlJjjth0p5UDHv81HOucFHBRK+QuvL38TRXVH+wGuWLF42rJ/S6qT
+	 /++Ob9NemhWX69gJ82qRHTruwA9k6bE+DMxYq0QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhai <yan@cloudflare.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/462] udp: gso: do not drop small packets when PMTU reduces
-Date: Tue, 11 Mar 2025 15:57:01 +0100
-Message-ID: <20250311145804.471602761@linuxfoundation.org>
+Subject: [PATCH 5.10 156/462] gpio: pca953x: Improve interrupt support
+Date: Tue, 11 Mar 2025 15:57:02 +0100
+Message-ID: <20250311145804.509759784@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,111 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-[ Upstream commit 235174b2bed88501fda689c113c55737f99332d8 ]
+[ Upstream commit d6179f6c6204f9932aed3a7a2100b4a295dfed9d ]
 
-Commit 4094871db1d6 ("udp: only do GSO if # of segs > 1") avoided GSO
-for small packets. But the kernel currently dismisses GSO requests only
-after checking MTU/PMTU on gso_size. This means any packets, regardless
-of their payload sizes, could be dropped when PMTU becomes smaller than
-requested gso_size. We encountered this issue in production and it
-caused a reliability problem that new QUIC connection cannot be
-established before PMTU cache expired, while non GSO sockets still
-worked fine at the same time.
+The GPIO drivers with latch interrupt support (typically types starting
+with PCAL) have interrupt status registers to determine which particular
+inputs have caused an interrupt. Unfortunately there is no atomic
+operation to read these registers and clear the interrupt. Clearing the
+interrupt is done by reading the input registers.
 
-Ideally, do not check any GSO related constraints when payload size is
-smaller than requested gso_size, and return EMSGSIZE instead of EINVAL
-on MTU/PMTU check failure to be more specific on the error cause.
+The code was reading the interrupt status registers, and then reading
+the input registers. If an input changed between these two events it was
+lost.
 
-Fixes: 4094871db1d6 ("udp: only do GSO if # of segs > 1")
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The solution in this patch is to revert to the non-latch version of
+code, i.e. remembering the previous input status, and looking for the
+changes. This system results in no more I2C transfers, so is no slower.
+The latch property of the device still means interrupts will still be
+noticed if the input changes back to its initial state.
+
+Fixes: 44896beae605 ("gpio: pca953x: add PCAL9535 interrupt support for Galileo Gen2")
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240606033102.2271916-1-mark.tomlinson@alliedtelesis.co.nz
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c                       |  4 ++--
- net/ipv6/udp.c                       |  4 ++--
- tools/testing/selftests/net/udpgso.c | 26 ++++++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 6ad25dc9710c1..b801759147a68 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -923,9 +923,9 @@ static int udp_send_skb(struct sk_buff *skb, struct flowi4 *fl4,
- 		const int hlen = skb_network_header_len(skb) +
- 				 sizeof(struct udphdr);
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 3ad1a9e432c8a..64a4128b9a422 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -732,25 +732,6 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	DECLARE_BITMAP(trigger, MAX_LINE);
+ 	int ret;
  
--		if (hlen + cork->gso_size > cork->fragsize) {
-+		if (hlen + min(datalen, cork->gso_size) > cork->fragsize) {
- 			kfree_skb(skb);
--			return -EINVAL;
-+			return -EMSGSIZE;
- 		}
- 		if (datalen > cork->gso_size * UDP_MAX_SEGMENTS) {
- 			kfree_skb(skb);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 203a6d64d7e99..224339c3d831d 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1210,9 +1210,9 @@ static int udp_v6_send_skb(struct sk_buff *skb, struct flowi6 *fl6,
- 		const int hlen = skb_network_header_len(skb) +
- 				 sizeof(struct udphdr);
- 
--		if (hlen + cork->gso_size > cork->fragsize) {
-+		if (hlen + min(datalen, cork->gso_size) > cork->fragsize) {
- 			kfree_skb(skb);
--			return -EINVAL;
-+			return -EMSGSIZE;
- 		}
- 		if (datalen > cork->gso_size * UDP_MAX_SEGMENTS) {
- 			kfree_skb(skb);
-diff --git a/tools/testing/selftests/net/udpgso.c b/tools/testing/selftests/net/udpgso.c
-index 7badaf215de28..0e137182a4f40 100644
---- a/tools/testing/selftests/net/udpgso.c
-+++ b/tools/testing/selftests/net/udpgso.c
-@@ -94,6 +94,19 @@ struct testcase testcases_v4[] = {
- 		.gso_len = CONST_MSS_V4,
- 		.r_num_mss = 1,
- 	},
-+	{
-+		/* datalen <= MSS < gso_len: will fall back to no GSO */
-+		.tlen = CONST_MSS_V4,
-+		.gso_len = CONST_MSS_V4 + 1,
-+		.r_num_mss = 0,
-+		.r_len_last = CONST_MSS_V4,
-+	},
-+	{
-+		/* MSS < datalen < gso_len: fail */
-+		.tlen = CONST_MSS_V4 + 1,
-+		.gso_len = CONST_MSS_V4 + 2,
-+		.tfail = true,
-+	},
- 	{
- 		/* send a single MSS + 1B */
- 		.tlen = CONST_MSS_V4 + 1,
-@@ -197,6 +210,19 @@ struct testcase testcases_v6[] = {
- 		.gso_len = CONST_MSS_V6,
- 		.r_num_mss = 1,
- 	},
-+	{
-+		/* datalen <= MSS < gso_len: will fall back to no GSO */
-+		.tlen = CONST_MSS_V6,
-+		.gso_len = CONST_MSS_V6 + 1,
-+		.r_num_mss = 0,
-+		.r_len_last = CONST_MSS_V6,
-+	},
-+	{
-+		/* MSS < datalen < gso_len: fail */
-+		.tlen = CONST_MSS_V6 + 1,
-+		.gso_len = CONST_MSS_V6 + 2,
-+		.tfail = true
-+	},
- 	{
- 		/* send a single MSS + 1B */
- 		.tlen = CONST_MSS_V6 + 1,
+-	if (chip->driver_data & PCA_PCAL) {
+-		/* Read the current interrupt status from the device */
+-		ret = pca953x_read_regs(chip, PCAL953X_INT_STAT, trigger);
+-		if (ret)
+-			return false;
+-
+-		/* Check latched inputs and clear interrupt status */
+-		ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+-		if (ret)
+-			return false;
+-
+-		/* Apply filter for rising/falling edge selection */
+-		bitmap_replace(new_stat, chip->irq_trig_fall, chip->irq_trig_raise, cur_stat, gc->ngpio);
+-
+-		bitmap_and(pending, new_stat, trigger, gc->ngpio);
+-
+-		return !bitmap_empty(pending, gc->ngpio);
+-	}
+-
+ 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+ 	if (ret)
+ 		return false;
 -- 
 2.39.5
 
