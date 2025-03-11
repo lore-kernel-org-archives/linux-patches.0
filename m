@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4F525E832;
-	Tue, 11 Mar 2025 15:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080F2255E37;
+	Tue, 11 Mar 2025 15:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707648; cv=none; b=YCERQ/72FI1SuclsDfrRSxY5JE9BD3uRFAF1mNUk3xUEagIuIE2hFU9eHb8Kxc/s4We7Ccd54dQRMrb+ihGo1RCIp5YlLf5ES0f6NYwwQGwn9ggPBO2gvuI7MpNzggvJIQMj7yVaKFB4tg4V55c7+DyfPlZU+Ww566ezW2E0/JY=
+	t=1741707651; cv=none; b=Az6rSAu9M7yPIhVg97NN0cB87tbWpvXCs0SDy7ewUm2hJCdK8R91tOmzFXCH0oPoEijHRG6kfaKa/Ym9hoRPR9VH2kN0MnV/H0ospwrjaMOYJfG9j2q0rCjgL6TbaLBdHaa/QllGp0AWEnWKhCVqPAi+Bl3xLjSWPCtNKr3w6fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707648; c=relaxed/simple;
-	bh=GSYTkhRst+F2k6XuCgyqkKYeXEHkDEq4TxlMouqe0u0=;
+	s=arc-20240116; t=1741707651; c=relaxed/simple;
+	bh=4NL50cxg1MWCvQQuwPRp123jfIXrOfYEmiKruKrJT6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAVMl1xA5I/ereFTnx1eE70LDoKGbTm4QXTIEQTSjlfXm+mGwNxHpNExqL64Af+2NDEwGSX+pkTr07zNG0AxEdxmLNpQ8YVwfxZ2ep/45zdYl+F57oGO9Vj3reJ5TuWRkC1GNcOo6M1mRtHmZ2MqGM6iVi+n1iO1Q+XKylWiYvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlYrYzVg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXKYi+EXZuBq43/0npylVqPuON0Gd0jrS5zbalh6eITgp/V3vj4/DCGmvyM1rhkWQZRbRrtgpAFiwj0kfaAnbQPD7+wAxbBwZ95gvXR6eW1pK8ickTvsxWNUCPjfXBHtLTbgIZ7hUO8JN+X99Pl3ndE+re+P5YR8CMRoo7CezhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qm8EQn9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlYrYzVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925C5C4CEF1;
-	Tue, 11 Mar 2025 15:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qm8EQn9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8173BC4CEE9;
+	Tue, 11 Mar 2025 15:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707648;
-	bh=GSYTkhRst+F2k6XuCgyqkKYeXEHkDEq4TxlMouqe0u0=;
+	s=korg; t=1741707650;
+	bh=4NL50cxg1MWCvQQuwPRp123jfIXrOfYEmiKruKrJT6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlYrYzVgCPk6EmAoOCoiyrmGQ93JDxy7Q70Stzih02Ug7YbN8sXpvixZDayNGjgAf
-	 iitV7ADZKfRhs5Nflwxfy1TO37PQVLwVT4P1LiygXdkca67ycowH194LGtQeUo8Uf+
-	 PoWOH5ORLrKjMI/PeyemwlVofqpYmmsclE/l9B0M=
+	b=qm8EQn9S74d64V59h4N65V/y89f93C2TjGA/8TuGBbSxwnzi0C6bz79zZV8TlQoSz
+	 g5+kGqKeDb3WMfo6IxRjr0KhoJlskSY+45lPalJxlJTgGYt2uXJNY6S6ZLS/b0SwVF
+	 5HmNyQ/sr+EBcRYUS5zwd3AX8QTARSoxwr1u1hAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ben Hutchings <benh@debian.org>
-Subject: [PATCH 5.10 461/462] udf: Fix use of check_add_overflow() with mixed type arguments
-Date: Tue, 11 Mar 2025 16:02:07 +0100
-Message-ID: <20250311145816.547428886@linuxfoundation.org>
+	Justin Iurman <justin.iurman@uliege.be>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 462/462] net: ipv6: fix dst refleaks in rpl, seg6 and ioam6 lwtunnels
+Date: Tue, 11 Mar 2025 16:02:08 +0100
+Message-ID: <20250311145816.586107514@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,39 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-Commit ebbe26fd54a9 "udf: Avoid excessive partition lengths"
-introduced a use of check_add_overflow() with argument types u32,
-size_t, and u32 *.
+commit c71a192976ded2f2f416d03c4f595cdd4478b825 upstream.
 
-This was backported to the 5.x stable branches, where in 64-bit
-configurations it results in a build error (with older compilers) or a
-warning.  Before commit d219d2a9a92e "overflow: Allow mixed type
-arguments", which went into Linux 6.1, mixed type arguments are not
-supported.  That cannot be backported to 5.4 or 5.10 as it would raise
-the minimum compiler version for these kernel versions.
+dst_cache_get() gives us a reference, we need to release it.
 
-Add a cast to make the argument types compatible.
+Discovered by the ioam6.sh test, kmemleak was recently fixed
+to catch per-cpu memory leaks.
 
-Fixes: 1497a4484cdb ("udf: Avoid excessive partition lengths")
-Fixes: 551966371e17 ("udf: Avoid excessive partition lengths")
-Signed-off-by: Ben Hutchings <benh@debian.org>
+Fixes: 985ec6f5e623 ("net: ipv6: rpl_iptunnel: mitigate 2-realloc issue")
+Fixes: 40475b63761a ("net: ipv6: seg6_iptunnel: mitigate 2-realloc issue")
+Fixes: dce525185bc9 ("net: ipv6: ioam6_iptunnel: mitigate 2-realloc issue")
+Reviewed-by: Justin Iurman <justin.iurman@uliege.be>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250130031519.2716843-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/rpl_iptunnel.c  |    6 ++++--
+ net/ipv6/seg6_iptunnel.c |    2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1153,7 +1153,7 @@ static int udf_fill_partdesc_info(struct
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_BITMAP;
- 		/* Check whether math over bitmap won't overflow. */
- 		if (check_add_overflow(map->s_partition_len,
--				       sizeof(struct spaceBitmapDesc) << 3,
-+				       (u32)(sizeof(struct spaceBitmapDesc) << 3),
- 				       &sum)) {
- 			udf_err(sb, "Partition %d is too long (%u)\n", p_index,
- 				map->s_partition_len);
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -232,7 +232,6 @@ static int rpl_output(struct net *net, s
+ 		dst = ip6_route_output(net, NULL, &fl6);
+ 		if (dst->error) {
+ 			err = dst->error;
+-			dst_release(dst);
+ 			goto drop;
+ 		}
+ 
+@@ -251,6 +250,7 @@ static int rpl_output(struct net *net, s
+ 	return dst_output(net, sk, skb);
+ 
+ drop:
++	dst_release(dst);
+ 	kfree_skb(skb);
+ 	return err;
+ }
+@@ -277,8 +277,10 @@ static int rpl_input(struct sk_buff *skb
+ 	local_bh_enable();
+ 
+ 	err = rpl_do_srh(skb, rlwt, dst);
+-	if (unlikely(err))
++	if (unlikely(err)) {
++		dst_release(dst);
+ 		goto drop;
++	}
+ 
+ 	skb_dst_drop(skb);
+ 
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -380,7 +380,6 @@ static int seg6_output(struct net *net,
+ 		dst = ip6_route_output(net, NULL, &fl6);
+ 		if (dst->error) {
+ 			err = dst->error;
+-			dst_release(dst);
+ 			goto drop;
+ 		}
+ 
+@@ -398,6 +397,7 @@ static int seg6_output(struct net *net,
+ 
+ 	return dst_output(net, sk, skb);
+ drop:
++	dst_release(dst);
+ 	kfree_skb(skb);
+ 	return err;
+ }
 
 
