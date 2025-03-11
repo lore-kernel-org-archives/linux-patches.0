@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475AA25EF80;
-	Tue, 11 Mar 2025 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6750C1925AF;
+	Tue, 11 Mar 2025 15:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706579; cv=none; b=Xqq09bWA17lUlaH4I03V4KX9KBG5DYWdX8mGgyViORd5WSTfvnd38aPxI8B/jNLCbdLb2vXe55xyHVFk6IcCyUzw388aH8yuD4b8Ezs44wFg1iP5m+r0OinTZGasxwwK5+VRAqqr5AUbEOZ0gBKWJcSEBaWie0+7L001GW7+OUw=
+	t=1741706582; cv=none; b=drt0xSABN4pSmRUAhbDBavl/8VH4zv/YoUHokUDFW3eVHhUOVBqcFUHSanROgnFOHJiVKOu0I+Z74WctC0ypaITCBimPVEurwQDnp5QuXSbGFd3E2+i4PTnnZ5prq1eebXMEq+YyhAK5NLpFfmb1yRr6C3VJTIX/wk5XkISOwrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706579; c=relaxed/simple;
-	bh=bSlRghUto02kAnii+2SgsWg+k9NXLZ1FE4ysB0ht/6U=;
+	s=arc-20240116; t=1741706582; c=relaxed/simple;
+	bh=e4RRsmXWLjy3bRKAA4SH6vvqrgIxl0LFMiYmZDD4YiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsU2NWL1K6F8NooBTRHz8Bbu4BaXecRCxd/jqVhUb3PxqUIHkUgf4pqb3GRYDb27ReFsGsIJR2Fz7GER9WxNI4C2rjXPVPCtN02/6zRJfH3088zjsdwwKv3SX6vvBcJpKR/sSsmulrzr4rLcP/MydChY/m9EczKi8rC5Yn+WplY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcxRl9g1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z60jQ5MvQKGq8smtoggvyuyP4Of3x/70fkf9wkyqWG7HMRffncV1eL7/ofiKrkM8hFuxbFXqPC0JFV5cNBBq+3q6WM1bVc3xgxdNWerUuAK0b44G4Qm7DsBIRBNKrdJNBE42hdyE/IllZZ7L5+fgHDDDZABCcjSj1vt3njTy/W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGEZOPr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcxRl9g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE8BC4CEE9;
-	Tue, 11 Mar 2025 15:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGEZOPr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA078C4CEE9;
+	Tue, 11 Mar 2025 15:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706579;
-	bh=bSlRghUto02kAnii+2SgsWg+k9NXLZ1FE4ysB0ht/6U=;
+	s=korg; t=1741706582;
+	bh=e4RRsmXWLjy3bRKAA4SH6vvqrgIxl0LFMiYmZDD4YiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcxRl9g1Lg1NX4LB+n7Rzhi+ZxKVDPQKPvv9ztj1QKhd7zRi5QW0DDTz/tdT2qcQm
-	 lw2MmxAtRxdNTgHdw8QBpu9QmhtoPA4T6791cZ3xBUE+fz9XqKUJJtOIBMSZFOyh08
-	 jx+J2niP4o//W4Ul05RKVuKjD3owtu7xtguApOLg=
+	b=IGEZOPr3/d1oZgZxaTfYKz3Noy8OVn4t45yD3G5VzzJA11gV1q/nllxYJcs9q+vZ4
+	 DIj+iDRqxNliDRwv6Hn2L4y3jqAWxNd9ORscwjJvCLKG7F2KgpVGTj7OyWHn6o32+b
+	 iZf7FldTMiJR/lT8mj4povvEtSyZ+zgqnFHMrwLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/462] xfrm: replay: Fix the update of replay_esn->oseq_hi for GSO
-Date: Tue, 11 Mar 2025 15:56:02 +0100
-Message-ID: <20250311145802.152089971@linuxfoundation.org>
+Subject: [PATCH 5.10 097/462] dmaengine: ti: edma: fix OF node reference leaks in edma_driver
+Date: Tue, 11 Mar 2025 15:56:03 +0100
+Message-ID: <20250311145802.191400875@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,59 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit c05c5e5aa163f4682ca97a2f0536575fc7dbdecb ]
+[ Upstream commit e883c64778e5a9905fce955681f8ee38c7197e0f ]
 
-When skb needs GSO and wrap around happens, if xo->seq.low (seqno of
-the first skb segment) is before the last seq number but oseq (seqno
-of the last segment) is after it, xo->seq.low is still bigger than
-replay_esn->oseq while oseq is smaller than it, so the update of
-replay_esn->oseq_hi is missed for this case wrap around because of
-the change in the cited commit.
+The .probe() of edma_driver calls of_parse_phandle_with_fixed_args() but
+does not release the obtained OF nodes. Thus add a of_node_put() call.
 
-For example, if sending a packet with gso_segs=3 while old
-replay_esn->oseq=0xfffffffe, we calculate:
-    xo->seq.low = 0xfffffffe + 1 = 0x0xffffffff
-    oseq = 0xfffffffe + 3 = 0x1
-(oseq < replay_esn->oseq) is true, but (xo->seq.low <
-replay_esn->oseq) is false, so replay_esn->oseq_hi is not incremented.
+This bug was found by an experimental verification tool that I am
+developing.
 
-To fix this issue, change the outer checking back for the update of
-replay_esn->oseq_hi. And add new checking inside for the update of
-packet's oseq_hi.
-
-Fixes: 4b549ccce941 ("xfrm: replay: Fix ESN wrap around for GSO")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 1be5336bc7ba ("dmaengine: edma: New device tree binding")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20241219020507.1983124-3-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_replay.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/dma/ti/edma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
-index 65d009e3b6bbe..aedc61ceadb30 100644
---- a/net/xfrm/xfrm_replay.c
-+++ b/net/xfrm/xfrm_replay.c
-@@ -657,10 +657,12 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
- 			oseq += skb_shinfo(skb)->gso_segs;
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index 69292d4a0c441..560fe658b8942 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -217,7 +217,6 @@ struct edma_desc {
+ struct edma_cc;
+ 
+ struct edma_tc {
+-	struct device_node		*node;
+ 	u16				id;
+ };
+ 
+@@ -2524,13 +2523,13 @@ static int edma_probe(struct platform_device *pdev)
+ 			if (ret || i == ecc->num_tc)
+ 				break;
+ 
+-			ecc->tc_list[i].node = tc_args.np;
+ 			ecc->tc_list[i].id = i;
+ 			queue_priority_mapping[i][1] = tc_args.args[0];
+ 			if (queue_priority_mapping[i][1] > lowest_priority) {
+ 				lowest_priority = queue_priority_mapping[i][1];
+ 				info->default_queue = i;
+ 			}
++			of_node_put(tc_args.np);
  		}
  
--		if (unlikely(xo->seq.low < replay_esn->oseq)) {
--			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
--			xo->seq.hi = oseq_hi;
--			replay_esn->oseq_hi = oseq_hi;
-+		if (unlikely(oseq < replay_esn->oseq)) {
-+			replay_esn->oseq_hi = ++oseq_hi;
-+			if (xo->seq.low < replay_esn->oseq) {
-+				XFRM_SKB_CB(skb)->seq.output.hi = oseq_hi;
-+				xo->seq.hi = oseq_hi;
-+			}
- 			if (replay_esn->oseq_hi == 0) {
- 				replay_esn->oseq--;
- 				replay_esn->oseq_hi--;
+ 		/* See if we have optional dma-channel-mask array */
 -- 
 2.39.5
 
