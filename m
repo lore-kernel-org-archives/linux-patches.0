@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4641C3BEB;
-	Tue, 11 Mar 2025 15:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDB1249F9;
+	Tue, 11 Mar 2025 15:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706249; cv=none; b=sg58cqD3jdbFOteC/Y1aCq2GfmVgPv2mmP3H/eHDgCDr31kD2bJqO1LCe1ybROROfPlgnFNGKkgAMDKZf6z4s34bDUbmSI1qD9b3/fW2o8VQr6CL3uGzkjbCPDje8HtsE0jWiJyKGWZbGuyCB8SchED0pN2bv2E7ImdkV0gMUeM=
+	t=1741706252; cv=none; b=Sg6VFgtBn8nU2D7z3p9e4Jxa2X+HiRiP9l3EPNTT1Oq6nj7GG9/qskm4MFX8BONB17l/qvSFCEU9hhBmxAo3v046/y3Yrg0cxJ5DhumrKSiUOcQZWPkdMrFdhTnuLWt8EQeyvPpJYBoSbTmoiQxz+JkqkuwKwK0BTdZmlANn0Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706249; c=relaxed/simple;
-	bh=IuMNf2qjzsDk3z43tS4wYBRBDS0Fj8aenDjZswFaYyE=;
+	s=arc-20240116; t=1741706252; c=relaxed/simple;
+	bh=gwdFMQJFulB0SCO9XUvEewwWrvBOjqq9dUCSN7yJMLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn8a578HDgXvo9rmY63pt8PhCnlj/oP30dVMCq8gROaFgFPiaGxWjQbFcDKMA836GPsUt8HEnDGADAwrCtQXJ/Rkz6YjHwWYjtNil3hfCETZ1vjkLx5i3zoKe6OjTK9Rfg1E/+dlFucORwmZajy2pz4/3a6syzl8kWHUfNfPTgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuV/fYP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjdYf19gI504ZiDxNEhbR+ONoOE9f9YU1rKmuvsOUE/Dyvnj/TAlpRy2cgYqmrBcp7bJpNVRK56Qxy+4XQ+6KzM0RTGHrVLzzuDfTf1V1oQLUrRe3sJbcZI+vhwFxsbR3wuJYeD6iqs0VPz78wwIQwizRLf91e3i7zlPZ/tMry8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRNeDk3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuV/fYP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AF9C4CEEA;
-	Tue, 11 Mar 2025 15:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRNeDk3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7D4C4CEE9;
+	Tue, 11 Mar 2025 15:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706249;
-	bh=IuMNf2qjzsDk3z43tS4wYBRBDS0Fj8aenDjZswFaYyE=;
+	s=korg; t=1741706252;
+	bh=gwdFMQJFulB0SCO9XUvEewwWrvBOjqq9dUCSN7yJMLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuV/fYP390isCYYHTE9dJL8OezMCwFJeJS2ypKh2rKRkFxH9RSUuh6PELPZB1SVHY
-	 Zy5GIFGn+U1ezUobPnyU8/qFGXWZscHexGeWjJJt4fHgoCah0aPZPVo1efE6Dyu5Pc
-	 1VO8v7iJU/bDO6CkoGfLd9sNYNjHrTYXI6m5XSFE=
+	b=uRNeDk3K5ZFpy7Jd9dUqgSy35eNz7L3aMsvLNqz47xDNvhkvu3vnpXHkbv3Asb37C
+	 FbWPNPRfXVmTcIh22m3dinDAB73+41/IKrdxOl4L6yoVdx7OAn9k/MAYOMpHmd20nG
+	 I81MFjKtg45IbsCmGvQDB16llwCwrGhj6UYlSg5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 294/328] HID: google: fix unused variable warning under !CONFIG_ACPI
-Date: Tue, 11 Mar 2025 16:01:04 +0100
-Message-ID: <20250311145726.592916386@linuxfoundation.org>
+Subject: [PATCH 5.4 295/328] HID: intel-ish-hid: Fix use-after-free issue in ishtp_hid_remove()
+Date: Tue, 11 Mar 2025 16:01:05 +0100
+Message-ID: <20250311145726.631749743@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -52,48 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Chun Lin <eleanor15x@gmail.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 4bd0725c09f377ffaf22b834241f6c050742e4fc ]
+[ Upstream commit 07583a0010696a17fb0942e0b499a62785c5fc9f ]
 
-As reported by the kernel test robot, the following warning occurs:
+The system can experience a random crash a few minutes after the driver is
+removed. This issue occurs due to improper handling of memory freeing in
+the ishtp_hid_remove() function.
 
->> drivers/hid/hid-google-hammer.c:261:36: warning: 'cbas_ec_acpi_ids' defined but not used [-Wunused-const-variable=]
-     261 | static const struct acpi_device_id cbas_ec_acpi_ids[] = {
-         |                                    ^~~~~~~~~~~~~~~~
+The function currently frees the `driver_data` directly within the loop
+that destroys the HID devices, which can lead to accessing freed memory.
+Specifically, `hid_destroy_device()` uses `driver_data` when it calls
+`hid_ishtp_set_feature()` to power off the sensor, so freeing
+`driver_data` beforehand can result in accessing invalid memory.
 
-The 'cbas_ec_acpi_ids' array is only used when CONFIG_ACPI is enabled.
-Wrapping its definition and 'MODULE_DEVICE_TABLE' in '#ifdef CONFIG_ACPI'
-prevents a compiler warning when ACPI is disabled.
+This patch resolves the issue by storing the `driver_data` in a temporary
+variable before calling `hid_destroy_device()`, and then freeing the
+`driver_data` after the device is destroyed.
 
-Fixes: eb1aac4c8744f75 ("HID: google: add support tablet mode switch for Whiskers")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501201141.jctFH5eB-lkp@intel.com/
-Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Fixes: 0b28cb4bcb17 ("HID: intel-ish-hid: ISH HID client driver")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-google-hammer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/intel-ish-hid/ishtp-hid.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
-index 2ebad3ed4e3af..727c5c018cb92 100644
---- a/drivers/hid/hid-google-hammer.c
-+++ b/drivers/hid/hid-google-hammer.c
-@@ -258,11 +258,13 @@ static int cbas_ec_remove(struct platform_device *pdev)
- 	return 0;
- }
+diff --git a/drivers/hid/intel-ish-hid/ishtp-hid.c b/drivers/hid/intel-ish-hid/ishtp-hid.c
+index b8aae69ad15d7..ef52368557715 100644
+--- a/drivers/hid/intel-ish-hid/ishtp-hid.c
++++ b/drivers/hid/intel-ish-hid/ishtp-hid.c
+@@ -263,12 +263,14 @@ int ishtp_hid_probe(unsigned int cur_hid_dev,
+  */
+ void ishtp_hid_remove(struct ishtp_cl_data *client_data)
+ {
++	void *data;
+ 	int i;
  
-+#ifdef CONFIG_ACPI
- static const struct acpi_device_id cbas_ec_acpi_ids[] = {
- 	{ "GOOG000B", 0 },
- 	{ }
- };
- MODULE_DEVICE_TABLE(acpi, cbas_ec_acpi_ids);
-+#endif
- 
- static struct platform_driver cbas_ec_driver = {
- 	.probe = cbas_ec_probe,
+ 	for (i = 0; i < client_data->num_hid_devices; ++i) {
+ 		if (client_data->hid_sensor_hubs[i]) {
+-			kfree(client_data->hid_sensor_hubs[i]->driver_data);
++			data = client_data->hid_sensor_hubs[i]->driver_data;
+ 			hid_destroy_device(client_data->hid_sensor_hubs[i]);
++			kfree(data);
+ 			client_data->hid_sensor_hubs[i] = NULL;
+ 		}
+ 	}
 -- 
 2.39.5
 
