@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF45125D8EB;
-	Tue, 11 Mar 2025 15:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60BF1C3BEB;
+	Tue, 11 Mar 2025 15:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705816; cv=none; b=XMhNog/k/g+91LLo4Km2XdmzcZcxHnTltn+dF26VdIKmVi68AMa1PJCKCT7YwJzVbj/86Obxifq3E8onrU8Rnuaw6JyBS97pVjF4izLcDbzBSIlDoASckCrgKychNUXwvgbrP2U7XgDi2WaBMvDWQtOgCv2lU08/WSTu0m14UcY=
+	t=1741705819; cv=none; b=cRE6RCRC4vd1CP8r99RRbPrHNafZLVhW8DETQhqHa+WYwCOL59mKmUoZzvyMKVhDIsItb5BbzGXEX6UomA8crFTgDxXRQxMRbkr9DcGS8S4oGfEVSqVZ7W4BLalDe1AA60lHLw2B6+SNiYjWh8gNr1v8lb6R5hqaPKcqe+gJIsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705816; c=relaxed/simple;
-	bh=5A8DjUzRA2L5uxeDf0neXh1lv8xoQTI1udVko8Bjh7g=;
+	s=arc-20240116; t=1741705819; c=relaxed/simple;
+	bh=kXrhC85VwMPPVZqtbiPKoHRQQW1Ks/2aRgyLzwZvgxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rI5OJyUMOGZnbc0yZ3sMoVwrgMODFl6UXTQkcYJWv1sDmvZj8YOMYHl0QPuXRFe/XyTDf12NicbBqjaLa7023G8CqJQ4/UWMi94zs4U3lbV38CObuNqgUyHIGsqCn3rUyR9dnGpeWkEY+J2IB7NA4IOhCZPykjOw6osWxGb+1IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCctN/7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cb7CU1wut9kFJM0ZpMFet8rvYQQjGOqQDPvt+NG6sho3B0EPF8MyeCTkqOqdtQCEg0j4uPltYngwP8cRfSWpGCTUiThwRxfeU87UVh6XWV0tUKCXa0g1IVKxhjEyNH+U7nFcmjHQWcKuSuoimQi9rZVR2nxWRofeEcF/nSlrA+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em5PH8aC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCctN/7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D3DC4CEEA;
-	Tue, 11 Mar 2025 15:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em5PH8aC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DE2C4CEEA;
+	Tue, 11 Mar 2025 15:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705816;
-	bh=5A8DjUzRA2L5uxeDf0neXh1lv8xoQTI1udVko8Bjh7g=;
+	s=korg; t=1741705819;
+	bh=kXrhC85VwMPPVZqtbiPKoHRQQW1Ks/2aRgyLzwZvgxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCctN/7m7xtEEEZBEVe4iX5ZU8cZtHoEOS1vkgupw4ENKDFIU5SHVFmKNZTdM5gFG
-	 MyZF1daFJJeb8tRZTl3KyKY1AMxE60XAUU/laWml+i7IUn4nweQYOura/1oqmRJUf+
-	 5XTlI0KN4nwEOQ2qUeK4UHJWX/jZLwIkZvjvH2qk=
+	b=Em5PH8aCASoZa5qeGzkynjEBCdQexJyyE4c7uiyNQYIsYjnrW/zrhq1pbKIXBoS9+
+	 G8kJCCZneByOKZ9tguLNlgKkhJP1yDRRdN5YniWObClfQgjrsls0R0eImxh/NYc+Lp
+	 S+3cmePNMUGAFEFhH8V4oiWPIF/HIFI66glgxcqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.4 146/328] media: uvcvideo: Fix event flags in uvc_ctrl_send_events
-Date: Tue, 11 Mar 2025 15:58:36 +0100
-Message-ID: <20250311145720.709774618@linuxfoundation.org>
+Subject: [PATCH 5.4 147/328] media: uvcvideo: Remove redundant NULL assignment
+Date: Tue, 11 Mar 2025 15:58:37 +0100
+Message-ID: <20250311145720.748844734@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,44 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit c31cffd5ae2c3d7ef21d9008977a9d117ce7a64e upstream.
+commit 04d3398f66d2d31c4b8caea88f051a4257b7a161 upstream.
 
-If there is an event that needs the V4L2_EVENT_CTRL_CH_FLAGS flag, all
-the following events will have that flag, regardless if they need it or
-not.
-
-This is because we keep using the same variable all the time and we do
-not reset its original value.
+ctrl->handle will only be different than NULL for controls that have
+mappings. This is because that assignment is only done inside
+uvc_ctrl_set() for mapped controls.
 
 Cc: stable@vger.kernel.org
-Fixes: 805e9b4a06bf ("[media] uvcvideo: Send control change events for slave ctrls when the master changes")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241114-uvc-roi-v15-1-64cfeb56b6f8@chromium.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-2-26c867231118@chromium.org
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1400,13 +1400,13 @@ static void uvc_ctrl_send_events(struct
- {
- 	struct uvc_control_mapping *mapping;
- 	struct uvc_control *ctrl;
--	u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
- 	unsigned int i;
- 	unsigned int j;
+@@ -1367,10 +1367,8 @@ bool uvc_ctrl_status_event_async(struct
+ 	struct uvc_device *dev = chain->dev;
+ 	struct uvc_ctrl_work *w = &dev->async_ctrl;
  
- 	for (i = 0; i < xctrls_count; ++i) {
--		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
-+		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
+-	if (list_empty(&ctrl->info.mappings)) {
+-		ctrl->handle = NULL;
++	if (list_empty(&ctrl->info.mappings))
+ 		return false;
+-	}
  
-+		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
- 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			/* Notification will be sent from an Interrupt event. */
- 			continue;
+ 	w->data = data;
+ 	w->urb = urb;
 
 
