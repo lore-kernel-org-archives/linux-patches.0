@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3BB15820C;
-	Tue, 11 Mar 2025 15:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EBD1DF749;
+	Tue, 11 Mar 2025 15:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706794; cv=none; b=etb4EMhruH1/HssG6+b8UNGKjI1leY4fwPBDgXb13Kiwh4akRn5JbgpHuMP+kBnJHauMj2OSlnbx5AkcBILhIL5xWAAeyayatg9KPMVAE2P4QwgRARgYJE5w3K4IVD535wlhojAiBMXCY0wUPJ9l7YQ+VdKFa57/0Aw9CzHHdNk=
+	t=1741706797; cv=none; b=eqVDpWuKGEBemSeybwD4VXwmfxofwwjOY17h6Umq1bEzuIFrTwEo2PD25oCt87wHbPcYBxvDv6D6a1Fubn55t7xhI1fElGhQSSBm0016HOAOFjsNfNv/oDwaig6oOF+SnRJnVl+tWYQzH4peLBlByhrwKnRdO9TlPzTjjPu7rho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706794; c=relaxed/simple;
-	bh=O7Mzw92EVQ1waAgiGe8lsxEuuAQFDuEimOCPDrD2kJU=;
+	s=arc-20240116; t=1741706797; c=relaxed/simple;
+	bh=Wz8RcnS3U6a8RHf38kfH8oJuzMkMNpJ+fqZyavtN3wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l3T5g+wgQ0LUrU2wyXCGQEDbDd5TPcEyh0j1gnGo3vTQvTIpiyFxwQUTq9mkq9UYkzss3ZKTOMfTfG/ClLZnIZFBveQwXKwmmrTTVrvB/t6Jd3qUs+e4XJLDC7ZarQFQhntycJaSB23bCy/jnCJ7Tmd+MlY7Mo33T0w0PMTkUgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTkysdnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGaTL+BW9l6/XzconmDWPzy20wysAQ0d/9zRnIXMmwe2W+I20FkKauUvIFF1irt6CARHnv2i1bbPFmTGleYYxKqQO3xis9gSLn7JqDQvPwl/pK3d2wh4TZrH6TBCeMqTQGy0KG3OCw5Zx1fOlQ2g/j9bz7lRKwkUM7ffbUKQBZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFwss2Ie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTkysdnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AEAC4CEE9;
-	Tue, 11 Mar 2025 15:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFwss2Ie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED567C4CEE9;
+	Tue, 11 Mar 2025 15:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706794;
-	bh=O7Mzw92EVQ1waAgiGe8lsxEuuAQFDuEimOCPDrD2kJU=;
+	s=korg; t=1741706797;
+	bh=Wz8RcnS3U6a8RHf38kfH8oJuzMkMNpJ+fqZyavtN3wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTkysdnrAMxf9oxd+U9WuO9LfQNU+Wi21l7aUEwN9wq7pkVp2lPJx5q4qDpIs6+Va
-	 5K8DgFDc6n951NChPeQjFRmEs4H8c7Jj4bJhLrtE+yt+yGLg9B4hiKeU/rniNpuiP4
-	 G4mGp7FsAbyBWszSKhC8gZI02wMOtwU+jtD0C0gM=
+	b=OFwss2Ier2vJKPh65d7gL830FVZN13+Ain+u9K4D9tNsOBUxkGWc3xqNM4K7aSDBc
+	 d5v9C/EzBgtIREnjJkK/f8Y49fzH+zVir3lmNrKBTxIISDAFN6mY620yV0wHI3EhY7
+	 LxnIwdzrEnsIsyRz3J3Dn8ZclOAjj3izs1kKNGnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.10 169/462] arm64: dts: rockchip: increase gmac rx_delay on rk3399-puma
-Date: Tue, 11 Mar 2025 15:57:15 +0100
-Message-ID: <20250311145805.031766893@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Michal Luczaj <mhal@rbox.co>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.10 170/462] KVM: Explicitly verify target vCPU is online in kvm_get_vcpu()
+Date: Tue, 11 Mar 2025 15:57:16 +0100
+Message-ID: <20250311145805.072182489@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,60 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakob Unterwurzacher <jakobunt@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 9d241b06802c6c2176ae7aa4f9f17f8a577ed337 upstream.
+commit 1e7381f3617d14b3c11da80ff5f8a93ab14cfc46 upstream.
 
-During mass manufacturing, we noticed the mmc_rx_crc_error counter,
-as reported by "ethtool -S eth0 | grep mmc_rx_crc_error", to increase
-above zero during nuttcp speedtests. Most of the time, this did not
-affect the achieved speed, but it prompted this investigation.
+Explicitly verify the target vCPU is fully online _prior_ to clamping the
+index in kvm_get_vcpu().  If the index is "bad", the nospec clamping will
+generate '0', i.e. KVM will return vCPU0 instead of NULL.
 
-Cycling through the rx_delay range on six boards (see table below) of
-various ages shows that there is a large good region from 0x12 to 0x35
-where we see zero crc errors on all tested boards.
+In practice, the bug is unlikely to cause problems, as it will only come
+into play if userspace or the guest is buggy or misbehaving, e.g. KVM may
+send interrupts to vCPU0 instead of dropping them on the floor.
 
-The old rx_delay value (0x10) seems to have always been on the edge for
-the KSZ9031RNX that is usually placed on Puma.
+However, returning vCPU0 when it shouldn't exist per online_vcpus is
+problematic now that KVM uses an xarray for the vCPUs array, as KVM needs
+to insert into the xarray before publishing the vCPU to userspace (see
+commit c5b077549136 ("KVM: Convert the kvm->vcpus array to a xarray")),
+i.e. before vCPU creation is guaranteed to succeed.
 
-Choose "rx_delay = 0x23" to put us smack in the middle of the good
-region. This works fine as well with the KSZ9131RNX PHY that was used
-for a small number of boards during the COVID chip shortages.
+As a result, incorrectly providing access to vCPU0 will trigger a
+use-after-free if vCPU0 is dereferenced and kvm_vm_ioctl_create_vcpu()
+bails out of vCPU creation due to an error and frees vCPU0.  Commit
+afb2acb2e3a3 ("KVM: Fix vcpu_array[0] races") papered over that issue, but
+in doing so introduced an unsolvable teardown conundrum.  Preventing
+accesses to vCPU0 before it's fully online will allow reverting commit
+afb2acb2e3a3, without re-introducing the vcpu_array[0] UAF race.
 
-	Board S/N        PHY        rx_delay good region
-	---------        ---        --------------------
-	Puma TT0069903   KSZ9031RNX 0x11 0x35
-	Puma TT0157733   KSZ9031RNX 0x11 0x35
-	Puma TT0681551   KSZ9031RNX 0x12 0x37
-	Puma TT0681156   KSZ9031RNX 0x10 0x38
-	Puma 17496030079 KSZ9031RNX 0x10 0x37 (Puma v1.2 from 2017)
-	Puma TT0681720   KSZ9131RNX 0x02 0x39 (alternative PHY used in very few boards)
-
-	Intersection of good regions = 0x12 0x35
-	Middle of good region = 0x23
-
-Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Fixes: 1d487e9bf8ba ("KVM: fix spectrev1 gadgets")
 Cc: stable@vger.kernel.org
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # Puma v2.1 and v2.3 with KSZ9031
-Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>
-Link: https://lore.kernel.org/r/20241213-puma_rx_delay-v4-1-8e8e11cc6ed7@cherry.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Cc: Will Deacon <will@kernel.org>
+Cc: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20241009150455.1057573-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/kvm_host.h |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-@@ -176,7 +176,7 @@
- 	snps,reset-active-low;
- 	snps,reset-delays-us = <0 10000 50000>;
- 	tx_delay = <0x10>;
--	rx_delay = <0x10>;
-+	rx_delay = <0x23>;
- 	status = "okay";
- };
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -575,6 +575,15 @@ static inline struct kvm_io_bus *kvm_get
+ static inline struct kvm_vcpu *kvm_get_vcpu(struct kvm *kvm, int i)
+ {
+ 	int num_vcpus = atomic_read(&kvm->online_vcpus);
++
++	/*
++	 * Explicitly verify the target vCPU is online, as the anti-speculation
++	 * logic only limits the CPU's ability to speculate, e.g. given a "bad"
++	 * index, clamping the index to 0 would return vCPU0, not NULL.
++	 */
++	if (i >= num_vcpus)
++		return NULL;
++
+ 	i = array_index_nospec(i, num_vcpus);
  
+ 	/* Pairs with smp_wmb() in kvm_vm_ioctl_create_vcpu.  */
 
 
