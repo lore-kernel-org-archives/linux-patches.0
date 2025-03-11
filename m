@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7725DCE5;
-	Tue, 11 Mar 2025 15:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD0725DD02;
+	Tue, 11 Mar 2025 15:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705608; cv=none; b=pcHRGkBAZDPzLgg7LKLwnGV9AESzdU9QqJe8NwJsArik8OPvrm+SLSEZWVW1TdY48ERBdsJeOyx9dLXXJ4xmsHDG+x1podk28ONLjW0n1KY8MrKr2nNSuW3WNN+cVN+PyPioNFJLpTwWQGfTVUIYiYqrO1Z14hzvgvGKH3s7rbk=
+	t=1741705611; cv=none; b=M3bCekL1LKxIXMOAigolndpCluokca/6RoAx3yFNuY+2mjcQCfhZD/b0tqRLvnSxMhQOQiFVIyQrRDZ/yA7pdj7mPb3rYYmQ0p+Me5rmPxJcbwlrpwtbtbqvqUKAPDQY+b8use1H8scZ3gFPaXamj4u1LSynDh79NcpfDKbaqFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705608; c=relaxed/simple;
-	bh=YXKMS3tFC2cMAk+DhA17hP9q9JQhOsEaHmfI7F5kBx8=;
+	s=arc-20240116; t=1741705611; c=relaxed/simple;
+	bh=LmAu+5QNkv5Q9drm+US42GPj1DpNFU0VExyYw8MpqlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faPe3VpyEig6FCbnrnPAoO/3n7MgIbrobc6TcgBpLHQSojShUewX2FnTihSXpaFdAeM1wJOYXu7ky7nPX2PYpXZ3fBtUzGexmv7FLL+Q5wOTkimQiBhfBp41oqYUeVGy11GsW3V0ggb9/XNKoFE1DJ+ECGBHkgwf3yFFQo2CZpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3XDhVRo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5jt+5SWDTNyYNHQHU/2vnr25jRTBNjEETroxuYZZYSDoaTBpTgO2whw70PaB4915OKUq/AAp88+BYFEB5qsU9zI6u5g05wui8i/Lfls2IoGPqk8oVeWBakbWW8KeIVXa+2PReyzfqVdFPrSsGRInjWky0MAZvdjRRKX8eg5UeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0FPJ1y0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3XDhVRo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A257C4CEEC;
-	Tue, 11 Mar 2025 15:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0FPJ1y0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14850C4CEE9;
+	Tue, 11 Mar 2025 15:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705608;
-	bh=YXKMS3tFC2cMAk+DhA17hP9q9JQhOsEaHmfI7F5kBx8=;
+	s=korg; t=1741705611;
+	bh=LmAu+5QNkv5Q9drm+US42GPj1DpNFU0VExyYw8MpqlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3XDhVRomsbVYNfm6tOTXiYPNA3IXoM011ROM4aQN5quITZhk2LqwXNOUdgvgXkay
-	 NqYl2diPp2YNRv+957g0b0gb9xWGDqN/ezHMcgAmoJNMGT5x6JkcB+AYqDeVcW/WNa
-	 vft1on39oaR4HC/M7aEmvs2pqyJXsa2NiVCmhUbI=
+	b=p0FPJ1y0SLhcSEFL4Gk+rlvMrxHg+ObCCgwaaOAbcNMYbZo82x43WklxBqUeQPhfi
+	 IG2hQvWZrxLjMKwJWrwROyRMPmFfRjawYsz1zZjxpSrGjLNi2L5KGXhLQIhXFe2bw9
+	 rc6nlMJyfEjIrDD0plJiIUl5j393CnDgHMM2wKio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@linux.alibaba.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/328] APEI: GHES: Have GHES honor the panic= setting
-Date: Tue, 11 Mar 2025 15:57:44 +0100
-Message-ID: <20250311145718.628610427@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sean Rhodes <sean@starlabs.systems>
+Subject: [PATCH 5.4 077/328] drivers/card_reader/rtsx_usb: Restore interrupt based detection
+Date: Tue, 11 Mar 2025 15:57:27 +0100
+Message-ID: <20250311145717.949396272@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,67 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov <bp@alien8.de>
+From: Sean Rhodes <sean@starlabs.systems>
 
-[ Upstream commit 5c0e00a391dd0099fe95991bb2f962848d851916 ]
+commit 235b630eda072d7e7b102ab346d6b8a2c028a772 upstream.
 
-The GHES driver overrides the panic= setting by force-rebooting the
-system after a fatal hw error has been reported. The intent being that
-such an error would be reported earlier.
+This commit reintroduces interrupt-based card detection previously
+used in the rts5139 driver. This functionality was removed in commit
+00d8521dcd23 ("staging: remove rts5139 driver code").
 
-However, this is not optimal when a hard-to-debug issue requires long
-time to reproduce and when that happens, the box will get rebooted after
-30 seconds and thus destroy the whole hw context of when the error
-happened.
+Reintroducing this mechanism fixes presence detection for certain card
+readers, which with the current driver, will taken approximately 20
+seconds to enter S3 as `mmc_rescan` has to be frozen.
 
-So rip out the default GHES panic timeout and honor the global one.
-
-In the panic disabled (panic=0) case, the error will still be logged to
-dmesg for later inspection and if panic after a hw error is really
-required, then that can be controlled the usual way - use panic= on the
-cmdline or set it in the kernel .config's CONFIG_PANIC_TIMEOUT.
-
-Reported-by: Feng Tang <feng.tang@linux.alibaba.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20250113125224.GFZ4UMiNtWIJvgpveU@fat_crate.local
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 00d8521dcd23 ("staging: remove rts5139 driver code")
+Cc: stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Rhodes <sean@starlabs.systems>
+Link: https://lore.kernel.org/r/20241119085815.11769-1-sean@starlabs.systems
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/apei/ghes.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/misc/cardreader/rtsx_usb.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -128,8 +128,6 @@ static unsigned long ghes_estatus_pool_s
- static struct ghes_estatus_cache *ghes_estatus_caches[GHES_ESTATUS_CACHES_SIZE];
- static atomic_t ghes_estatus_cache_alloced;
- 
--static int ghes_panic_timeout __read_mostly = 30;
--
- static void __iomem *ghes_map(u64 pfn, enum fixed_addresses fixmap_idx)
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -286,6 +286,7 @@ static int rtsx_usb_get_status_with_bulk
+ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
  {
- 	phys_addr_t paddr;
-@@ -707,14 +705,16 @@ static void __ghes_panic(struct ghes *gh
- 			 struct acpi_hest_generic_status *estatus,
- 			 u64 buf_paddr, enum fixed_addresses fixmap_idx)
- {
-+	const char *msg = GHES_PFX "Fatal hardware error";
+ 	int ret;
++	u8 interrupt_val = 0;
+ 	u16 *buf;
+ 
+ 	if (!status)
+@@ -308,6 +309,20 @@ int rtsx_usb_get_card_status(struct rtsx
+ 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
+ 	}
+ 
++	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
++	/* Cross check presence with interrupts */
++	if (*status & XD_CD)
++		if (!(interrupt_val & XD_INT))
++			*status &= ~XD_CD;
 +
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
- 
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
--	/* reboot to log the error! */
- 	if (!panic_timeout)
--		panic_timeout = ghes_panic_timeout;
--	panic("Fatal hardware error!");
-+		pr_emerg("%s but panic disabled\n", msg);
++	if (*status & SD_CD)
++		if (!(interrupt_val & SD_INT))
++			*status &= ~SD_CD;
 +
-+	panic(msg);
- }
- 
- static int ghes_proc(struct ghes *ghes)
++	if (*status & MS_CD)
++		if (!(interrupt_val & MS_INT))
++			*status &= ~MS_CD;
++
+ 	/* usb_control_msg may return positive when success */
+ 	if (ret < 0)
+ 		return ret;
 
 
