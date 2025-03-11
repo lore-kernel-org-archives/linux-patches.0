@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4754A25E808;
-	Tue, 11 Mar 2025 15:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E6125DD06;
+	Tue, 11 Mar 2025 15:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706126; cv=none; b=MgP2Ery5gn3zmmpZva8ujLq9c3k1K/f9yo77Gy8GvM2oqfPm1rmCBHhTLhTy9tqE0aBYMBeRRqPz8J+dzI6bKg8kW1SIPbK+NB+GgAJocBRyu1Tqx7oYihlJo6yqASwsMwxYLlalx5GeNuweJ0Mdwf/9rO4AiSe0t/Ax9hx1uFo=
+	t=1741706129; cv=none; b=jnA1faxHCe6kLPNWiK/ryDRm0Tn6p0zb4XiuPILqZsSepESRY1v07HPlu7SdOezJchN1j/mmR9nvCQQRRE7pyiqHaerWUl871DhhoKojI5Vqwf563ZjYz1sRysiKK3COipSsaqA6Pna9WBGvd/2ckJYwX5q674KunefAwjeEpZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706126; c=relaxed/simple;
-	bh=RatL6JcAC4awk4KpDeObRnijXn15Z/keV/1gzJcAO/Q=;
+	s=arc-20240116; t=1741706129; c=relaxed/simple;
+	bh=hNgopTKv8Ic/T9+iHrbit02UT3TqlZsp4/mZ0/Cb4Ig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6n0TopRwG+o0WJ5+ZaH6YJkMU/yTypFiCLpxf81gO5EYM7LtP9pNI+reR6T8fZFhy6kspG147eYyIAZNMHLA7u+9uuSkIZNJBTnm+yK1TELTu35uOwiZ7XtTmxeKTBMBgnouB00+ovyxe7jUAIKgCW889bwAc0CUB6+ZG+YKCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETNoOFbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPwlZSv0/rSOgWMPhP/X3lTVnPuY3sV0chJuGDIpx9OeL/rUGt8zkIkYezGvl8lTWebFtL83ICWjy75HR/BxRx7F7c1nFYv0AnWhizA8uCh9Iv68uAFgQe7U9ANhL8ee9W0WozBmAPHPXohpx8EFSINaai2spc1ERMF8dFCW7rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mu8ArXOM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETNoOFbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C041FC4CEE9;
-	Tue, 11 Mar 2025 15:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mu8ArXOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9621AC4CEE9;
+	Tue, 11 Mar 2025 15:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706126;
-	bh=RatL6JcAC4awk4KpDeObRnijXn15Z/keV/1gzJcAO/Q=;
+	s=korg; t=1741706129;
+	bh=hNgopTKv8Ic/T9+iHrbit02UT3TqlZsp4/mZ0/Cb4Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETNoOFbY9/OXUiTH64TG4c0rWdUHBNcy91CjVlh376ILHmpoAVu7juJhqaAQM/OSr
-	 H2cnOPjD8pTotQQQhZrDFZFeXmJI3g0U2ykfvZ8X7tRU3/ekf8AVeEVliQZpOUTGj3
-	 UQ2FkIuVqoHZpmdXapPsRPEAiIZowYokO/we18mQ=
+	b=Mu8ArXOMmJkZumvQC52DRR/vaEZtoR4ZxHJPxhKcrkmTPxxhFfaqFqhY1CJAVh0eJ
+	 UZZWCx94UBTIh9x1NOlTF+Sw1hAvrPrEPbDoyondiHyum4q+jW76RMSYadTujPrXIz
+	 2UvcPk0RbROOPEB+K1HpA9tymFSHUSMDuqvfXtHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 5.4 252/328] tee: optee: Fix supplicant wait loop
-Date: Tue, 11 Mar 2025 16:00:22 +0100
-Message-ID: <20250311145724.926892454@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 253/328] nfp: bpf: Add check for nfp_app_ctrl_msg_alloc()
+Date: Tue, 11 Mar 2025 16:00:23 +0100
+Message-ID: <20250311145724.965956789@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,93 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 70b0d6b0a199c5a3ee6c72f5e61681ed6f759612 upstream.
+commit 878e7b11736e062514e58f3b445ff343e6705537 upstream.
 
-OP-TEE supplicant is a user-space daemon and it's possible for it
-be hung or crashed or killed in the middle of processing an OP-TEE
-RPC call. It becomes more complicated when there is incorrect shutdown
-ordering of the supplicant process vs the OP-TEE client application which
-can eventually lead to system hang-up waiting for the closure of the
-client application.
+Add check for the return value of nfp_app_ctrl_msg_alloc() in
+nfp_bpf_cmsg_alloc() to prevent null pointer dereference.
 
-Allow the client process waiting in kernel for supplicant response to
-be killed rather than indefinitely waiting in an unkillable state. Also,
-a normal uninterruptible wait should not have resulted in the hung-task
-watchdog getting triggered, but the endless loop would.
-
-This fixes issues observed during system reboot/shutdown when supplicant
-got hung for some reason or gets crashed/killed which lead to client
-getting hung in an unkillable state. It in turn lead to system being in
-hung up state requiring hard power off/on to recover.
-
-Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: ff3d43f7568c ("nfp: bpf: implement helpers for FW map ops")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250218030409.2425798-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/optee/supp.c |   35 ++++++++---------------------------
- 1 file changed, 8 insertions(+), 27 deletions(-)
+ drivers/net/ethernet/netronome/nfp/bpf/cmsg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tee/optee/supp.c
-+++ b/drivers/tee/optee/supp.c
-@@ -80,7 +80,6 @@ u32 optee_supp_thrd_req(struct tee_conte
- 	struct optee *optee = tee_get_drvdata(ctx->teedev);
- 	struct optee_supp *supp = &optee->supp;
- 	struct optee_supp_req *req;
--	bool interruptable;
- 	u32 ret;
+--- a/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
++++ b/drivers/net/ethernet/netronome/nfp/bpf/cmsg.c
+@@ -20,6 +20,8 @@ nfp_bpf_cmsg_alloc(struct nfp_app_bpf *b
+ 	struct sk_buff *skb;
  
- 	/*
-@@ -111,36 +110,18 @@ u32 optee_supp_thrd_req(struct tee_conte
- 	/*
- 	 * Wait for supplicant to process and return result, once we've
- 	 * returned from wait_for_completion(&req->c) successfully we have
--	 * exclusive access again.
-+	 * exclusive access again. Allow the wait to be killable such that
-+	 * the wait doesn't turn into an indefinite state if the supplicant
-+	 * gets hung for some reason.
- 	 */
--	while (wait_for_completion_interruptible(&req->c)) {
-+	if (wait_for_completion_killable(&req->c)) {
- 		mutex_lock(&supp->mutex);
--		interruptable = !supp->ctx;
--		if (interruptable) {
--			/*
--			 * There's no supplicant available and since the
--			 * supp->mutex currently is held none can
--			 * become available until the mutex released
--			 * again.
--			 *
--			 * Interrupting an RPC to supplicant is only
--			 * allowed as a way of slightly improving the user
--			 * experience in case the supplicant hasn't been
--			 * started yet. During normal operation the supplicant
--			 * will serve all requests in a timely manner and
--			 * interrupting then wouldn't make sense.
--			 */
--			if (req->in_queue) {
--				list_del(&req->link);
--				req->in_queue = false;
--			}
-+		if (req->in_queue) {
-+			list_del(&req->link);
-+			req->in_queue = false;
- 		}
- 		mutex_unlock(&supp->mutex);
--
--		if (interruptable) {
--			req->ret = TEEC_ERROR_COMMUNICATION;
--			break;
--		}
-+		req->ret = TEEC_ERROR_COMMUNICATION;
- 	}
+ 	skb = nfp_app_ctrl_msg_alloc(bpf->app, size, GFP_KERNEL);
++	if (!skb)
++		return NULL;
+ 	skb_put(skb, size);
  
- 	ret = req->ret;
+ 	return skb;
 
 
