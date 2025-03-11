@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516E125DD00;
-	Tue, 11 Mar 2025 15:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF8125E820;
+	Tue, 11 Mar 2025 15:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705547; cv=none; b=DPPjSxZoov7Ns0Egof1F2M/n+dUCz9faAgr1xF6WkzSbfCVEKr7cKji1V7c0cicDlbIf/Rzkg3nI+Xlh9WZ6+JFRP9bz1POyVTaCYCehq/dOh6XXhB5me7fx9HGr3haxFXOr7ptX41dzNZmn3f6fEPFTZeW9VsRqZMNPeyWEfU4=
+	t=1741705550; cv=none; b=Pqw4q4ScUt2ZgJ6xCLprJLsj9vzdDvk8bwplpGhHEtNDUQ5/dDDg1GwOEHp3O4Fm8mOVOxNRZvBZhHrmjky4AuSFRVt/fs0YLT9U1QKG6mgBeATItIAdhHrWW4jPYvj4NnXZCPQuW+9HONMKxNLcfL4+Kq//b81+QZx5wfB8lv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705547; c=relaxed/simple;
-	bh=JCs2ZuVQgJSCewp0K6SlKOl2/XaV3aGun7qj+nztoiM=;
+	s=arc-20240116; t=1741705550; c=relaxed/simple;
+	bh=JSIwbr8WVHw8ZWfbSjCJK77jgefgHVOgvEmCQZ612Z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPRb6KAVAaiFpiK5b8kl4t04WR3UJqltjMXkFZ9BhwwbrI9oGtx6ZfL4nspF+wT8uHs9SZi0YgTHUTlOgJ9s6yGaQB7SPHyU/B0IEe8Hj1emDE1c53L2bx+9m+ZZZmyt9mzBBBTIe5xnzDgRLKJ0SsPRbK5X5PxwiAAmmeBLnYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tcQ6RLw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/1Y6DsZ1O9kuDu0QMGFGVt0tHt+N3emd3mfMWPP7gQNtisXrHh5cJBtZC3BaJ9/5Z93ovdLKo3CXCDdHloIN0THZOkEnjlXymX4r1xifP//GtrtaQZab0FCnk7hbLq5KmRDM69fAFznPHe1NEIqHXnoIjq84Hj74dPasBVMeyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSZwa5uP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tcQ6RLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD411C4CEE9;
-	Tue, 11 Mar 2025 15:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSZwa5uP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1BDC4CEE9;
+	Tue, 11 Mar 2025 15:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705547;
-	bh=JCs2ZuVQgJSCewp0K6SlKOl2/XaV3aGun7qj+nztoiM=;
+	s=korg; t=1741705550;
+	bh=JSIwbr8WVHw8ZWfbSjCJK77jgefgHVOgvEmCQZ612Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tcQ6RLwvFxYqENsJC2ecsmsy4XekT8Yf1to9AYkbY/zrtWXwDcS1frxObU2u3eqr
-	 APzW4jmDrAYK+NOaPB8eR8fNVM22a1Qqxj/CmfUBzK12JdMPOyH/n73Harlngt72wb
-	 srUgHLkQlYf8Bdu8k+1mYRiDxzYySnrtI/DT9onM=
+	b=OSZwa5uPjZSHPW05+tpRk2mLhdzf3/S9uwxrZw2DjGxc07/xOBy2rMZy5hr7hkzl9
+	 IJ/VPmQmmx2RWe3dXCXZ4a1Vm6LCg8Lc8Q35+TwAY+WgMUaXG5MZbUEs+aYAQYODRW
+	 LpQy6EunbSLWwtI9tIsUWYcc9Z+IGc7Ao+cew8ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	kernel test robot <lkp@intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Brian Cain <bcain@quicinc.com>,
+	Brian Cain <brian.cain@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/328] staging: media: imx: fix OF node leak in imx_media_add_of_subdevs()
-Date: Tue, 11 Mar 2025 15:57:05 +0100
-Message-ID: <20250311145717.086918563@linuxfoundation.org>
+Subject: [PATCH 5.4 073/328] hexagon: fix using plain integer as NULL pointer warning in cmpxchg
+Date: Tue, 11 Mar 2025 15:57:23 +0100
+Message-ID: <20250311145717.794126755@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,57 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 094f5c315f756b19198e6c401aa821ac0e868750 ]
+[ Upstream commit 8a20030038742b9915c6d811a4e6c14b126cafb4 ]
 
-imx_media_add_of_subdevs() calls of_parse_phandle() and passes the
-obtained node to imx_media_of_add_csi(). The passed node is used in
-v4l2_async_nf_add_fwnode(), which increments the refcount of the node.
-Therefore, while the current implementation only releases the node when
-imx_media_of_add_csi() fails, but should always release it. Call
-of_node_put() right after imx_media_of_add_csi().
+Sparse reports
 
-Fixes: dee747f88167 ("media: imx: Don't register IPU subdevs/links if CSI port missing")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+    net/ipv4/inet_diag.c:1511:17: sparse: sparse: Using plain integer as NULL pointer
+
+Due to this code calling cmpxchg on a non-integer type
+struct inet_diag_handler *
+
+    return !cmpxchg((const struct inet_diag_handler**)&inet_diag_table[type],
+                    NULL, h) ? 0 : -EEXIST;
+
+While hexagon's cmpxchg assigns an integer value to a variable of this
+type.
+
+    __typeof__(*(ptr)) __oldval = 0;
+
+Update this assignment to cast 0 to the correct type.
+
+The original issue is easily reproduced at head with the below block,
+and is absent after this change.
+
+    make LLVM=1 ARCH=hexagon defconfig
+    make C=1 LLVM=1 ARCH=hexagon net/ipv4/inet_diag.o
+
+Fixes: 99a70aa051d2 ("Hexagon: Add processor and system headers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411091538.PGSTqUBi-lkp@intel.com/
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Tested-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://lore.kernel.org/r/20241203221736.282020-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Brian Cain <bcain@quicinc.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/imx/imx-media-of.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ arch/hexagon/include/asm/cmpxchg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/imx/imx-media-of.c b/drivers/staging/media/imx/imx-media-of.c
-index 2d3efd2a6dde0..d9b34605ff9bc 100644
---- a/drivers/staging/media/imx/imx-media-of.c
-+++ b/drivers/staging/media/imx/imx-media-of.c
-@@ -55,23 +55,19 @@ int imx_media_add_of_subdevs(struct imx_media_dev *imxmd,
- 			break;
- 
- 		ret = imx_media_of_add_csi(imxmd, csi_np);
-+		of_node_put(csi_np);
- 		if (ret) {
- 			/* unavailable or already added is not an error */
- 			if (ret == -ENODEV || ret == -EEXIST) {
--				of_node_put(csi_np);
- 				continue;
- 			}
- 
- 			/* other error, can't continue */
--			goto err_out;
-+			return ret;
- 		}
- 	}
- 
- 	return 0;
--
--err_out:
--	of_node_put(csi_np);
--	return ret;
- }
- EXPORT_SYMBOL_GPL(imx_media_add_of_subdevs);
- 
+diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
+index 92b8a02e588ac..9c5f07749933e 100644
+--- a/arch/hexagon/include/asm/cmpxchg.h
++++ b/arch/hexagon/include/asm/cmpxchg.h
+@@ -56,7 +56,7 @@ static inline unsigned long __xchg(unsigned long x, volatile void *ptr,
+ 	__typeof__(ptr) __ptr = (ptr);				\
+ 	__typeof__(*(ptr)) __old = (old);			\
+ 	__typeof__(*(ptr)) __new = (new);			\
+-	__typeof__(*(ptr)) __oldval = 0;			\
++	__typeof__(*(ptr)) __oldval = (__typeof__(*(ptr))) 0;	\
+ 								\
+ 	asm volatile(						\
+ 		"1:	%0 = memw_locked(%1);\n"		\
 -- 
 2.39.5
 
