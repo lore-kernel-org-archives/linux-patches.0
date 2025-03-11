@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C381E9B06;
-	Tue, 11 Mar 2025 15:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB525BAAA;
+	Tue, 11 Mar 2025 15:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706497; cv=none; b=NNvxO1wggL3RKMWqlWRKNEFDF6YnPv1gdI2afyxkrmSJ/EY7wxG3qgAbsVeTSGHMINCkG2qTo3HxC93XjyWisoqvl/1HXQSD10vbb02DqN9M9HsRqs++cXAAVDebPR4Lp1BOo4C1jPkItRGW9WRebGe3TvuGz4K+8ddKSGxikP0=
+	t=1741706500; cv=none; b=G9weyOUwfcL3eMppmwOX9wlmtaELplYMI0UdQg7VJar+5bQhQIHu+jTgO76TRQqWO8C/7Zxt09D41Wk7i/EdtCvSuK9YSTBux9UAsAUTvTHQQpI8RCfaXxkqwWlf9FtR9q1bFd4b3c3sPBLncKy/0SQnDoq9CzTPtbEvfPeOFi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706497; c=relaxed/simple;
-	bh=Y8yYrhap6xKmPJyqjUNYg4/UMk7eLtIocfGb49+pdtE=;
+	s=arc-20240116; t=1741706500; c=relaxed/simple;
+	bh=9uE7DrzWvaCOIqC/e48xCRUsfrKB6WABTvvJjy1Qdjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rcv/IOIQNUhlYw/dU61lemPaHhqYyGcH6xGrQ7Jrqm3uuuWnhgsDBJfcFoz0tVgASlmqzl4+739FNS46z7pGiE1vmMrEdR9LqMbD11QGRjiJxRglMPeoVjWqancw4TyuY0PffsqLVTAa0r6ETwJMwTDwOMOAKvud7NDp1C4yIRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6QzEMWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtAKSIDsvd09w5OgoXSpwr/KX0W0AVMTohzXgl4emfQITmZQl0wT9oYe6QRgjjSkHhPOdfE5OyoEPYPJjO8X6uNmVw8nFHZ5+VpkuYqGLMtei0IuSrb+Zi/ODZJ/aXUrw75//h+ZicikQnkpTGG7Q9q89S9xVLP5wF0WUavu00M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZN0E1Rm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6QzEMWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A22C4CEED;
-	Tue, 11 Mar 2025 15:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZN0E1Rm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F1AC4CEED;
+	Tue, 11 Mar 2025 15:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706497;
-	bh=Y8yYrhap6xKmPJyqjUNYg4/UMk7eLtIocfGb49+pdtE=;
+	s=korg; t=1741706500;
+	bh=9uE7DrzWvaCOIqC/e48xCRUsfrKB6WABTvvJjy1Qdjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6QzEMWMHMDRlRN4+yhcpwl3maJ0hzuH5MVt1xm6PKmCQT/D9Zh4kCoNT8ocwpIKj
-	 I7ktSsBQjLTF97rrMMbfMwBeCZhHcwqenHn9APu3m5mYgWsEL64P9A53I7QDaDYgiJ
-	 ED8Vjk2gx0WOjFOS5p+CYxlwlVlz8X5mcHghlyDE=
+	b=hZN0E1RmIgwcgmWSouS0MUfjZddO8tVw5e9cG1SgvcCvZu6XFgfeojYhR9WafGxhZ
+	 IOwzDM2Ce9YB3u0Z/ZH8JIEo04PAQwd4VoFseHO/qGrrFqNS8oG8p2jwOz/b7ewW5I
+	 exMXFSNzNbxs9bKXl5C/HnzwwMj4BWTKUpYufbgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/462] RDMA/mlx4: Avoid false error about access to uninitialized gids array
-Date: Tue, 11 Mar 2025 15:55:34 +0100
-Message-ID: <20250311145801.037438288@linuxfoundation.org>
+Subject: [PATCH 5.10 069/462] rdma/cxgb4: Prevent potential integer overflow on 32bit
+Date: Tue, 11 Mar 2025 15:55:35 +0100
+Message-ID: <20250311145801.077451856@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -50,42 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1f53d88cbb0dcc7df235bf6611ae632b254fccd8 ]
+[ Upstream commit bd96a3935e89486304461a21752f824fc25e0f0b ]
 
-Smatch generates the following false error report:
-drivers/infiniband/hw/mlx4/main.c:393 mlx4_ib_del_gid() error: uninitialized symbol 'gids'.
+The "gl->tot_len" variable is controlled by the user.  It comes from
+process_responses().  On 32bit systems, the "gl->tot_len + sizeof(struct
+cpl_pass_accept_req) + sizeof(struct rss_header)" addition could have an
+integer wrapping bug.  Use size_add() to prevent this.
 
-Traditionally, we are not changing kernel code and asking people to fix
-the tools. However in this case, the fix can be done by simply rearranging
-the code to be more clear.
-
-Fixes: e26be1bfef81 ("IB/mlx4: Implement ib_device callbacks")
-Link: https://patch.msgid.link/6a3a1577463da16962463fcf62883a87506e9b62.1733233426.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 1cab775c3e75 ("RDMA/cxgb4: Fix LE hash collision bug for passive open connection")
+Link: https://patch.msgid.link/r/86b404e1-4a75-4a35-a34e-e3054fa554c7@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/cxgb4/device.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
-index c62cdd6456962..0c49f3f5e6247 100644
---- a/drivers/infiniband/hw/mlx4/main.c
-+++ b/drivers/infiniband/hw/mlx4/main.c
-@@ -391,10 +391,10 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
- 	}
- 	spin_unlock_bh(&iboe->lock);
- 
--	if (!ret && hw_update) {
-+	if (gids)
- 		ret = mlx4_ib_update_gids(gids, ibdev, attr->port_num);
--		kfree(gids);
--	}
-+
-+	kfree(gids);
- 	return ret;
- }
+diff --git a/drivers/infiniband/hw/cxgb4/device.c b/drivers/infiniband/hw/cxgb4/device.c
+index 541dbcf22d0eb..13e4b2c40d835 100644
+--- a/drivers/infiniband/hw/cxgb4/device.c
++++ b/drivers/infiniband/hw/cxgb4/device.c
+@@ -1114,8 +1114,10 @@ static inline struct sk_buff *copy_gl_to_skb_pkt(const struct pkt_gl *gl,
+ 	 * The math here assumes sizeof cpl_pass_accept_req >= sizeof
+ 	 * cpl_rx_pkt.
+ 	 */
+-	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req) +
+-			sizeof(struct rss_header) - pktshift, GFP_ATOMIC);
++	skb = alloc_skb(size_add(gl->tot_len,
++				 sizeof(struct cpl_pass_accept_req) +
++				 sizeof(struct rss_header)) - pktshift,
++			GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return NULL;
  
 -- 
 2.39.5
