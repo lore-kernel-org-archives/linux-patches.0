@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CBB3C0B;
-	Tue, 11 Mar 2025 15:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F316E3C0B;
+	Tue, 11 Mar 2025 15:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707587; cv=none; b=KoWYZOUCL921xV8l0p5v8Qy4DnLNotdG7RcbH6lrceJ/ERnuq1wGHTSj3LmPrboCd+qttAE+i9tNDx7hLCLLHQ0vS8bzTz5/jnJpmIxCKzcJaUy/Z32iWvSLoZAweaO0WrPTYqqtMumq4Ft857uYhaSduc+RT5oBVZ/VOUsiH8Q=
+	t=1741707590; cv=none; b=n1qJe0wk2rpIp4r8SkybE3IIwmDb6jhoHVmbrABxQxGWwPqNlVYm9pVqhOhwnQWZV0U7g+w4PvzcXmrP5hLxovTUou5Vhq7qZ7SM6d5kM/IpDLvzPCZFOzX5IidkNRFnIWmgosXO6VESNcA/U4nRUoeoxWzb6HE8sOV++4QlOfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707587; c=relaxed/simple;
-	bh=KmK2QCtsscrE5hp4q5Vqh5+8dwdQIar4WXKPhlx9n4M=;
+	s=arc-20240116; t=1741707590; c=relaxed/simple;
+	bh=GIL91lvsQFxeTYuakV1F3cQqcFpHOigbvu5dQ6Wl4oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4IeMEuZfA6nVO5/mNZA7FrpL4H0OqWqoAshvhur2se79wHZkH8hu9GiQvNRslXICR+8zdTgV+a+VC/qGtdRlC85TBs0L90sQ1AZk5IWs22GXPWVtD4Pns47+maFuuiu9ksV2lCief7KnA13P/l/J49vvYVF22JD/LT/qo34rmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ukIJXQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeF8mCPw+wW4FDxmYmmivFoVwyrcFdZHK/upFLwdqSWPU+S7SLkwOBCQF/44CfUNRcCHerWW0fqJLJo1vWXtNH8BRmTjB45KCDtogWBaqV7e4MbEpqC2S5hcFl7ai/qwRwo3CRnWgQD/xCj/4yzrsW4jLRDrgDKm5vAJ2GdBfIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsvRQLsd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ukIJXQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1EDC4CEE9;
-	Tue, 11 Mar 2025 15:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsvRQLsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61106C4CEE9;
+	Tue, 11 Mar 2025 15:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707586;
-	bh=KmK2QCtsscrE5hp4q5Vqh5+8dwdQIar4WXKPhlx9n4M=;
+	s=korg; t=1741707589;
+	bh=GIL91lvsQFxeTYuakV1F3cQqcFpHOigbvu5dQ6Wl4oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ukIJXQSzv0otmYBKgFZUV5GYSkkK1Rpl1cY8HaXsQdMjZ2rYi5Z6qaR+NcN1QvGi
-	 Q6cNwkRbyRXV4faQp2m8D3FK0qXDV9Q+dOY8UJHVJMMI6ISOoZqF+PXIGE9j+NUHBJ
-	 JVbA9f0EOEcmGhyt5Tp7pLJkoSJdzActuhsqCf/U=
+	b=vsvRQLsdVAmxZsiPRJJidwudZDqb0DMOs7xGqo5dMOQTAzLapC1RXVM4YzYaW1ZIi
+	 ViC4n5q0M9yQDF1u7S+jVtlZ+mySr1CBEpKKN+kb9DQYSzFJTjbg7nmRtcdRb3N+4t
+	 douSO7EOxaHPiSFGJT9wbLHjor38xaPu6g+orZWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Chmielewski <pawel.chmielewski@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	stable@kernel.org
-Subject: [PATCH 5.10 439/462] intel_th: pci: Add Arrow Lake support
-Date: Tue, 11 Mar 2025 16:01:45 +0100
-Message-ID: <20250311145815.672914951@linuxfoundation.org>
+Subject: [PATCH 5.10 440/462] intel_th: pci: Add Panther Lake-H support
+Date: Tue, 11 Mar 2025 16:01:46 +0100
+Message-ID: <20250311145815.713512035@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,17 +51,16 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Chmielewski <pawel.chmielewski@intel.com>
+From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit b5edccae9f447a92d475267d94c33f4926963eec upstream.
+commit a70034d6c0d5f3cdee40bb00a578e17fd2ebe426 upstream.
 
-Add support for the Trace Hub in Arrow Lake.
+Add support for the Trace Hub in Panther Lake-H.
 
-Signed-off-by: Pawel Chmielewski <pawel.chmielewski@intel.com>
 Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20250211185017.1759193-4-alexander.shishkin@linux.intel.com
+Link: https://lore.kernel.org/r/20250211185017.1759193-5-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/hwtracing/intel_th/pci.c |    5 +++++
@@ -70,12 +68,12 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/hwtracing/intel_th/pci.c
 +++ b/drivers/hwtracing/intel_th/pci.c
-@@ -330,6 +330,11 @@ static const struct pci_device_id intel_
+@@ -335,6 +335,11 @@ static const struct pci_device_id intel_
  		.driver_data = (kernel_ulong_t)&intel_th_2x,
  	},
  	{
-+		/* Arrow Lake */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7724),
++		/* Panther Lake-H */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xe324),
 +		.driver_data = (kernel_ulong_t)&intel_th_2x,
 +	},
 +	{
