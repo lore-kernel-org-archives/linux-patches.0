@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD69325DCE5;
-	Tue, 11 Mar 2025 15:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D15025E836;
+	Tue, 11 Mar 2025 15:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705538; cv=none; b=OM3qy13hCJbN3rOray5p+lMz11oqb2krggaPlDqAcb+jXfLN9+zFoORf9UMkkCkoTLnxlGFJJ7bCH01/AFnqUjKsk9DGy6sK+M42Q1gdhbYsZHylDJIzYTPoZQawCt20fMEjHo4J0AIe8PQkHlU76FMxFtF2Wk+9bWMq64hfjHM=
+	t=1741705541; cv=none; b=hcH/DC8cjpCLMIfhBqFF4yakVwVTs1jIOFj7y4ewMWftDlhDmoxnRTq/rZxprhtFD+EjEfBLJlEj1phm30OPfgstx/HtYjvtYuZcJ6CZHtLtMmrG4al/4w3GokHEGu9pEXzlMMFyUj1B3UmWqmYL4Rn60K/SIfPPoZ0KP3QYV7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705538; c=relaxed/simple;
-	bh=Gq4HFUEgpQ0p4A1eN0ZnmxbRXdnUPYU0CHjEdqUjOJo=;
+	s=arc-20240116; t=1741705541; c=relaxed/simple;
+	bh=Uvrr5a4fzGB7RDIJ+pSYQpKAgP5x/uEbF7/uAESJvk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ueth9cbd6Ss61rSks3EyQOwAeT5nT58N/ZO6tKY5T5xmByXbrasV+aS1Y0fWwMmXkkxOQssP+WfZkbWzJ4Qn5gZe/zLfJdPvE5F79BymytLiYXu9vPYV0OoDCmjBLiLWb31RotfAAxCMhpJ2rIe52iDUDSwtHS/eM2wamtOq8eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BF/3KUcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ElyQ8SB32DwPWE+qKBSS5lMnI8LOpanT1opNtNIEl/jnFqUcMyi/6RySL4XcwFlLeiGJEFFLjacsREYryJdnWhEkYY366NVFUn95WO8Prgnap6nVwAy1dfVXq75Y4tEae30U1i1Tqa5VLSwN/XY3R54Pcb+6zA6pljuWbOGS8ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0iPndUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BF/3KUcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D778C4CEE9;
-	Tue, 11 Mar 2025 15:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0iPndUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15810C4CEEC;
+	Tue, 11 Mar 2025 15:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705538;
-	bh=Gq4HFUEgpQ0p4A1eN0ZnmxbRXdnUPYU0CHjEdqUjOJo=;
+	s=korg; t=1741705541;
+	bh=Uvrr5a4fzGB7RDIJ+pSYQpKAgP5x/uEbF7/uAESJvk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BF/3KUcd+t8r4IfG6B/q+2705UuqAKsXFjOCoN7M+f8Enpsmevtx9pOMxxA8TnYRZ
-	 XM5gLPmYJxDmLk0OERUd+BtqvVqqRhq3bMFGF/tXIjcyY42DHKf/+eE30CRS+PHEUh
-	 ZXzhOf4Fuplt7umc0WzCplLT+gPyXDnHi2XKZ0Ew=
+	b=Y0iPndUCVFL2/WfVjpewqhoWtQBrkToTycUlVbXGC1+ajEnqD9b93+TLjUe8WZUq6
+	 YNpHsUY4/CuN5FKBr2cSXG2NYq4kFrXL7e/tApYOovJ6mtwAf9jm0727IUtdioFee+
+	 Px09Amr6Ebf0gbvoVk0Y3i0nNV3QAzZNzRJLwLkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 070/328] net: sh_eth: Fix missing rtnl lock in suspend/resume path
-Date: Tue, 11 Mar 2025 15:57:20 +0100
-Message-ID: <20250311145717.675514749@linuxfoundation.org>
+Subject: [PATCH 5.4 071/328] genksyms: fix memory leak when the same symbol is added from source
+Date: Tue, 11 Mar 2025 15:57:21 +0100
+Message-ID: <20250311145717.714735283@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -47,62 +44,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit b95102215a8d0987789715ce11c0d4ec031cbfbe ]
+[ Upstream commit 45c9c4101d3d2fdfa00852274bbebba65fcc3cf2 ]
 
-Fix the suspend/resume path by ensuring the rtnl lock is held where
-required. Calls to sh_eth_close, sh_eth_open and wol operations must be
-performed under the rtnl lock to prevent conflicts with ongoing ndo
-operations.
+When a symbol that is already registered is added again, __add_symbol()
+returns without freeing the symbol definition, making it unreachable.
 
-Fixes: b71af04676e9 ("sh_eth: add more PM methods")
-Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The following test cases demonstrate different memory leak points.
+
+[Test Case 1]
+
+Forward declaration with exactly the same definition
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 2]
+
+Forward declaration with a different definition (e.g. attribute)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  __attribute__((__section__(".ref.text"))) void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 3]
+
+Preserving an overridden symbol (compile with KBUILD_PRESERVE=1)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) { }
+  EXPORT_SYMBOL(foo);
+
+  $ cat foo.symref
+  override foo void foo ( int )
+
+The memory leaks in Test Case 1 and 2 have existed since the introduction
+of genksyms into the kernel tree. [1]
+
+The memory leak in Test Case 3 was introduced by commit 5dae9a550a74
+("genksyms: allow to ignore symbol checksum changes").
+
+When multiple init_declarators are reduced to an init_declarator_list,
+the decl_spec must be duplicated. Otherwise, the following Test Case 4
+would result in a double-free bug.
+
+[Test Case 4]
+
+  $ cat foo.c
+  #include <linux/export.h>
+
+  extern int foo, bar;
+
+  int foo, bar;
+  EXPORT_SYMBOL(foo);
+
+In this case, 'foo' and 'bar' share the same decl_spec, 'int'. It must
+be unshared before being passed to add_symbol().
+
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=46bd1da672d66ccd8a639d3c1f8a166048cca608
+
+Fixes: 5dae9a550a74 ("genksyms: allow to ignore symbol checksum changes")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/sh_eth.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ scripts/genksyms/genksyms.c |  3 +++
+ scripts/genksyms/parse.y    | 14 ++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
-index 50d85d0372302..f808e60b4ee4f 100644
---- a/drivers/net/ethernet/renesas/sh_eth.c
-+++ b/drivers/net/ethernet/renesas/sh_eth.c
-@@ -3496,10 +3496,12 @@ static int sh_eth_suspend(struct device *dev)
+diff --git a/scripts/genksyms/genksyms.c b/scripts/genksyms/genksyms.c
+index 23eff234184f3..d74bad87ef1a7 100644
+--- a/scripts/genksyms/genksyms.c
++++ b/scripts/genksyms/genksyms.c
+@@ -241,6 +241,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 						"unchanged\n");
+ 				}
+ 				sym->is_declared = 1;
++				free_list(defn, NULL);
+ 				return sym;
+ 			} else if (!sym->is_declared) {
+ 				if (sym->is_override && flag_preserve) {
+@@ -249,6 +250,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 					print_type_name(type, name);
+ 					fprintf(stderr, " modversion change\n");
+ 					sym->is_declared = 1;
++					free_list(defn, NULL);
+ 					return sym;
+ 				} else {
+ 					status = is_unknown_symbol(sym) ?
+@@ -256,6 +258,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 				}
+ 			} else {
+ 				error_with_pos("redefinition of %s", name);
++				free_list(defn, NULL);
+ 				return sym;
+ 			}
+ 			break;
+diff --git a/scripts/genksyms/parse.y b/scripts/genksyms/parse.y
+index e22b42245bcc2..7df3fe290d535 100644
+--- a/scripts/genksyms/parse.y
++++ b/scripts/genksyms/parse.y
+@@ -149,14 +149,19 @@ simple_declaration:
+ 	;
  
- 	netif_device_detach(ndev);
+ init_declarator_list_opt:
+-	/* empty */				{ $$ = NULL; }
+-	| init_declarator_list
++	/* empty */			{ $$ = NULL; }
++	| init_declarator_list		{ free_list(decl_spec, NULL); $$ = $1; }
+ 	;
  
-+	rtnl_lock();
- 	if (mdp->wol_enabled)
- 		ret = sh_eth_wol_setup(ndev);
- 	else
- 		ret = sh_eth_close(ndev);
-+	rtnl_unlock();
- 
- 	return ret;
- }
-@@ -3513,10 +3515,12 @@ static int sh_eth_resume(struct device *dev)
- 	if (!netif_running(ndev))
- 		return 0;
- 
-+	rtnl_lock();
- 	if (mdp->wol_enabled)
- 		ret = sh_eth_wol_restore(ndev);
- 	else
- 		ret = sh_eth_open(ndev);
-+	rtnl_unlock();
- 
- 	if (ret < 0)
- 		return ret;
+ init_declarator_list:
+ 	init_declarator
+ 		{ struct string_list *decl = *$1;
+ 		  *$1 = NULL;
++
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
++
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
+@@ -167,6 +172,11 @@ init_declarator_list:
+ 		  *$3 = NULL;
+ 		  free_list(*$2, NULL);
+ 		  *$2 = decl_spec;
++
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
++
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
 -- 
 2.39.5
 
