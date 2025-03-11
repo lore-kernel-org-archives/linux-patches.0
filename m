@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF2925DD00;
-	Tue, 11 Mar 2025 15:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF4B1C5D77;
+	Tue, 11 Mar 2025 15:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741705486; cv=none; b=X9opgCQ44EzXbpwDPZ+pfCb9DO+gyXWJcabvyMSrtX/pPcd7FxLoXQLhtzr3lU9rKg2WDPMntMh5hj+/+W78/yaq/QuHATapaBK37UGiryKH5gbBeo3tLaPSwaMa6SfoY51LLyYUchYnnimJtWE+uJh1V9vg9J+fnmoTTXUnR+c=
+	t=1741705489; cv=none; b=sht0DnF4+88czFnjcC2IUq3lZbcT358tgzaothrFi9IoCmobkiAqwXVtWEvhsV5cyxVPRnCPEvvBrinE9wKWp2Ww+azmuTmFNVJIlTItRUMNWDLJCz4f3FsdNlwzPIThJezddu8d9YGg11adN/T4usttxVMCnAwL9tJQWe4eBp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741705486; c=relaxed/simple;
-	bh=siH+yEDM+r2KT7t6ztvH9ZMg4g8/ddIBx2YRTPIOikI=;
+	s=arc-20240116; t=1741705489; c=relaxed/simple;
+	bh=nszJ7hRn5z8Z9tM1cuWV7KHYpB0Zzy6KTsajACJBmRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfUtIr7qijJ16p2hOF7AtsJTz+bLt2XBA6OfGcrwReUImL6uu+KoS8TmsvVFbv0MtA/khlCYxw+SqoytScrVRinCietfY3tWTyTNvR4b3giNOGwm5H2ZHDsjfPZVPX6uqemTOjXkURCMwGMbuwivqbKwPW4x20tbJZWdezh8wg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsOjsW8y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Saj+mR4dHJBiDbxnhT0XG9NqeA1EJBifRbr1mXQuyJnu7/B/Oi9S8BG1e7Bf6Z5/zEROaJzIEcPYbCaCNSSalwgc7Bhvrc/A4fTEjpO4J6Wf/1NljsLGLqhHfc5n2i4HT2ns0uDdouOT7kcZ7z0FmXUhmKd5plQyQO00jPoshmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1HQdBdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsOjsW8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48183C4CEE9;
-	Tue, 11 Mar 2025 15:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1HQdBdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A65C4CEE9;
+	Tue, 11 Mar 2025 15:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741705486;
-	bh=siH+yEDM+r2KT7t6ztvH9ZMg4g8/ddIBx2YRTPIOikI=;
+	s=korg; t=1741705489;
+	bh=nszJ7hRn5z8Z9tM1cuWV7KHYpB0Zzy6KTsajACJBmRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsOjsW8yk3Kxkh3r1UdcseuOSOVEXf17Xr0KN2OGcPQiNRHA8DtKtsLE3ITWhCkX8
-	 QSxXehcKD5NhYvL58Ovk0Nj9UESLPklNR5oZ9idDgaLjrDKPxm7C0btIyoGsGNAX+6
-	 CE4B+9UxlznORAGjUrCDTkKsacwfZX7EbWDEpuXM=
+	b=U1HQdBdcAy7L6CDbHlbBT9gAF3SoAVdEGJqUx7Nh3Ngtm74rbhvswCKhyNpz47RAs
+	 Pg0XO4HTMtGTTCEzz9JLL81oOjrQNMFP6RRz+ERa1wGi0ooqIJjmO3HJuTkZe57IXt
+	 +XY+GB3zamdeudVCAxywcp9iEkPFuQeMDR8aJTw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/328] media: mipi-csis: Add check for clk_enable()
-Date: Tue, 11 Mar 2025 15:57:02 +0100
-Message-ID: <20250311145716.963981390@linuxfoundation.org>
+Subject: [PATCH 5.4 036/328] perf header: Fix one memory leakage in process_bpf_prog_info()
+Date: Tue, 11 Mar 2025 15:56:46 +0100
+Message-ID: <20250311145716.330138681@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,48 +63,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit 125ad1aeec77eb55273b420be6894b284a01e4b6 ]
+[ Upstream commit a7da6c7030e1aec32f0a41c7b4fa70ec96042019 ]
 
-Add check for the return value of clk_enable() to gurantee the success.
+Function __perf_env__insert_bpf_prog_info() will return without inserting
+bpf prog info node into perf env again due to a duplicate bpf prog info
+node insertion, causing the temporary info_linear and info_node memory to
+leak. Modify the return type of this function to bool and add a check to
+ensure the memory is freed if the function returns false.
 
-Fixes: b5f1220d587d ("[media] v4l: Add v4l2 subdev driver for S5P/EXYNOS4 MIPI-CSI receivers")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 606f972b1361f477 ("perf bpf: Save bpf_prog_info information as headers to perf.data")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20241205084500.823660-3-quic_zhonhan@quicinc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/exynos4-is/mipi-csis.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/util/env.c    | 5 +++--
+ tools/perf/util/env.h    | 2 +-
+ tools/perf/util/header.c | 5 ++++-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/exynos4-is/mipi-csis.c b/drivers/media/platform/exynos4-is/mipi-csis.c
-index 1aac167abb175..6a2a85cc3e5f9 100644
---- a/drivers/media/platform/exynos4-is/mipi-csis.c
-+++ b/drivers/media/platform/exynos4-is/mipi-csis.c
-@@ -941,13 +941,19 @@ static int s5pcsis_pm_resume(struct device *dev, bool runtime)
- 					       state->supplies);
- 			goto unlock;
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index 953db9dd25eb0..f8239fbe6b09d 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -21,7 +21,7 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 	up_write(&env->bpf_progs.lock);
+ }
+ 
+-void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
++bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ {
+ 	__u32 prog_id = info_node->info_linear->info.id;
+ 	struct bpf_prog_info_node *node;
+@@ -39,13 +39,14 @@ void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info
+ 			p = &(*p)->rb_right;
+ 		} else {
+ 			pr_debug("duplicated bpf prog info %u\n", prog_id);
+-			return;
++			return false;
  		}
--		clk_enable(state->clock[CSIS_CLK_GATE]);
-+		ret = clk_enable(state->clock[CSIS_CLK_GATE]);
-+		if (ret) {
-+			phy_power_off(state->phy);
-+			regulator_bulk_disable(CSIS_NUM_SUPPLIES,
-+					       state->supplies);
-+			goto unlock;
+ 	}
+ 
+ 	rb_link_node(&info_node->rb_node, parent, p);
+ 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
+ 	env->bpf_progs.infos_cnt++;
++	return true;
+ }
+ 
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index b0778483fa04b..9c5777a2ea7e0 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -117,7 +117,7 @@ const char *perf_env__raw_arch(struct perf_env *env);
+ int perf_env__nr_cpus_avail(struct perf_env *env);
+ 
+ void perf_env__init(struct perf_env *env);
+-void __perf_env__insert_bpf_prog_info(struct perf_env *env,
++bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				      struct bpf_prog_info_node *info_node);
+ void perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 6dc99378b191b..a66a05091a974 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -2724,7 +2724,10 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
+ 		/* after reading from file, translate offset to address */
+ 		bpf_program__bpil_offs_to_addr(info_linear);
+ 		info_node->info_linear = info_linear;
+-		__perf_env__insert_bpf_prog_info(env, info_node);
++		if (!__perf_env__insert_bpf_prog_info(env, info_node)) {
++			free(info_linear);
++			free(info_node);
 +		}
  	}
- 	if (state->flags & ST_STREAMING)
- 		s5pcsis_start_stream(state);
  
- 	state->flags &= ~ST_SUSPENDED;
-- unlock:
-+unlock:
- 	mutex_unlock(&state->lock);
- 	return ret ? -EAGAIN : 0;
- }
+ 	up_write(&env->bpf_progs.lock);
 -- 
 2.39.5
 
