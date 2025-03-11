@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E66249F9;
-	Tue, 11 Mar 2025 15:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B12E25E83C;
+	Tue, 11 Mar 2025 15:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706336; cv=none; b=sy2EC0KYAJV555kvxr6xYhxQPCKMpnpwDal66dyzvlxVhcfP3/nl+Igz/2ZTynPTf8zjmyaDn6UeNlnnQE1AEV/02IfQtxS4/joeggg2jFs3LC0BdNa2BAsSneIH9H/cbAFgJBy/Yv1Bwxh13rm2vmTn5URMG0WxD5Gnd76g5y0=
+	t=1741706339; cv=none; b=fixzxt92kBF7XN8dxesmkKUIeAJylltx1o3AtjJ8XSyLz85fw99kWdtjNsrZlYQQvc6cSZkAp0SEd6aE1C6GTurtjQ+6zB7qN9w1ueR1nzI/M5bNi6a2FR812jcrBDqoKOQZqnkIFXa4JY6+wLlBMYwa0WEUHgMpIJvnhDKSidE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706336; c=relaxed/simple;
-	bh=kzS51p2HxKzqOrzPNgyDylNkNv5MA7oJJFa7anSJRko=;
+	s=arc-20240116; t=1741706339; c=relaxed/simple;
+	bh=U2Jazm27t4HK4IHcVBjXOzzTh+Uc9beePo3+39gKWmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sla8I4G/5Fa2lLH01wUT9fe24vZ3tjg6H1R/Guu2Lpd92OG97FeU4MRMEhrCRgasZmukfMLOwRYr/ge/qaT4f0kutwnktSTAr0uO7tNFtGyYxXRDn25VBYHskzVteAIcaJE5yZ8ks2T0uc663ZxMGJG/28t6CLlvBIgDAYSHodo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKoXs5HL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+qVT/DetRzodBcE7NWhNrDvGevbmfDGSzZQqd4Adt0b33KYjR7NRF/DGgJ+mSHLeH/FqmVXBDkLI6w0rcTSf9aMwhBOh4BxR5P4FCC6ivYoJUcQsufRquPyFXVIpFR5uG/G4YJaWihXYZVwiAjZMKRB9vA9VFF3fAAyBMDe9aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kubdPM/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKoXs5HL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB252C4CEE9;
-	Tue, 11 Mar 2025 15:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kubdPM/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947E9C4CEEC;
+	Tue, 11 Mar 2025 15:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706336;
-	bh=kzS51p2HxKzqOrzPNgyDylNkNv5MA7oJJFa7anSJRko=;
+	s=korg; t=1741706339;
+	bh=U2Jazm27t4HK4IHcVBjXOzzTh+Uc9beePo3+39gKWmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKoXs5HLdNoyDlYEL6fR0ZmzpuCFQjOWN5DQ+QqTccThfPUuQRZPjdBHvWwFBt5iR
-	 9S65IhUYSNLmxYU3jiM79GU6SWb9bD0QgUSLmct9GXanH7LVZALBx+BSHQvErOBhUY
-	 j9auP03JHyP3MEkCZ3c/bst4D6bOceU5pmQ1biJQ=
+	b=kubdPM/tsfN9g2FyFIQCXkm2iXzXcB2Q9+HL5+B+IPzbdQg2RVjnZJye5dolhcO/8
+	 yC1Isu0MlcG3N5VaBno1VIyeGbkJkZgck47u683D7s9gp2/c5HhAk7wFTS6/8nSJ8h
+	 UCvgmkRfCyJ/eozPWYItjx87sVXtbugzk3vkAjR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/462] select: Fix unbalanced user_access_end()
-Date: Tue, 11 Mar 2025 15:54:32 +0100
-Message-ID: <20250311145758.603210064@linuxfoundation.org>
+Subject: [PATCH 5.10 007/462] afs: Fix the fallback handling for the YFS.RemoveFile2 RPC call
+Date: Tue, 11 Mar 2025 15:54:33 +0100
+Message-ID: <20250311145758.642598367@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -51,54 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 344af27715ddbf357cf76978d674428b88f8e92d ]
+[ Upstream commit e30458d690f35abb01de8b3cbc09285deb725d00 ]
 
-While working on implementing user access validation on powerpc
-I got the following warnings on a pmac32_defconfig build:
+Fix a pair of bugs in the fallback handling for the YFS.RemoveFile2 RPC
+call:
 
-	  CC      fs/select.o
-	fs/select.o: warning: objtool: sys_pselect6+0x1bc: redundant UACCESS disable
-	fs/select.o: warning: objtool: sys_pselect6_time32+0x1bc: redundant UACCESS disable
+ (1) Fix the abort code check to also look for RXGEN_OPCODE.  The lack of
+     this masks the second bug.
 
-On powerpc/32s, user_read_access_begin/end() are no-ops, but the
-failure path has a user_access_end() instead of user_read_access_end()
-which means an access end without any prior access begin.
+ (2) call->server is now not used for ordinary filesystem RPC calls that
+     have an operation descriptor.  Fix to use call->op->server instead.
 
-Replace that user_access_end() by user_read_access_end().
-
-Fixes: 7e71609f64ec ("pselect6() and friends: take handling the combined 6th/7th args into helper")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/a7139e28d767a13e667ee3c79599a8047222ef36.1736751221.git.christophe.leroy@csgroup.eu
+Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/109541.1736865963@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/select.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/afs/yfsclient.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/select.c b/fs/select.c
-index 668a5200503ae..7ce67428582e6 100644
---- a/fs/select.c
-+++ b/fs/select.c
-@@ -787,7 +787,7 @@ static inline int get_sigset_argpack(struct sigset_argpack *to,
+diff --git a/fs/afs/yfsclient.c b/fs/afs/yfsclient.c
+index 5b2ef5ffd716f..171de355a7e58 100644
+--- a/fs/afs/yfsclient.c
++++ b/fs/afs/yfsclient.c
+@@ -689,8 +689,9 @@ static int yfs_deliver_fs_remove_file2(struct afs_call *call)
+ static void yfs_done_fs_remove_file2(struct afs_call *call)
+ {
+ 	if (call->error == -ECONNABORTED &&
+-	    call->abort_code == RX_INVALID_OPERATION) {
+-		set_bit(AFS_SERVER_FL_NO_RM2, &call->server->flags);
++	    (call->abort_code == RX_INVALID_OPERATION ||
++	     call->abort_code == RXGEN_OPCODE)) {
++		set_bit(AFS_SERVER_FL_NO_RM2, &call->op->server->flags);
+ 		call->op->flags |= AFS_OPERATION_DOWNGRADE;
  	}
- 	return 0;
- Efault:
--	user_access_end();
-+	user_read_access_end();
- 	return -EFAULT;
  }
- 
-@@ -1360,7 +1360,7 @@ static inline int get_compat_sigset_argpack(struct compat_sigset_argpack *to,
- 	}
- 	return 0;
- Efault:
--	user_access_end();
-+	user_read_access_end();
- 	return -EFAULT;
- }
- 
 -- 
 2.39.5
 
