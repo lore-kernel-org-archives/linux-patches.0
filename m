@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED35B1684AC;
-	Tue, 11 Mar 2025 15:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79DC25E83E;
+	Tue, 11 Mar 2025 15:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706716; cv=none; b=dOIq9kf4p44/ooyfUgUmlg6mrYdMGT9oIk4MjRxh8jmmbQ8lBARCBmlwND+qeCDjbwJIUhCOB7SXoBOib2IevLhTC+VhiH3e09I2kPVITugZZ++1ZjuOD/yYQiqxWYpxLEU04VA/5ow18Ux5iHTBUNcmm11j+9JDci4LEdlkcB0=
+	t=1741706719; cv=none; b=fI3QpkCXkJWqFq4P1f10KlkKO3iSmtudo0DXxXqM0qEV/oYMPSYQE4KR25oUOaeclQGdXfh3x2/+/7r79hDpiWLSt5aBcrFQI1Qe1/EdUDBkbOy3NDDR69vFHwRgpr7VeQVXFdhHHIzX9kMBj+FnErcparLT42mCPy7yf0LPtOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706716; c=relaxed/simple;
-	bh=zP9IZ49SBSvdxCfs4zu8X8O8emftP9G4Q7PZ3aG91ao=;
+	s=arc-20240116; t=1741706719; c=relaxed/simple;
+	bh=S0CGSYJa1j/CJJoimXeacX3uPL2S5hQEKePF9Sl8Vzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzBvHALO7bu+V6LdwChtx764b4ZRKjucSntcGMr63faQP1CNVZy307g/RKrNGF++5NJJ2QIHVfaK/KyRwgP5l9Uq52qF3FUniJPWEa/s/LAvzSM3/dBSJO4c5wYzLbEOguif7aVUpSiRZmxM7lzVqGbB5Ia9pXJ1QSF0vYD+KVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCeiw6fG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kvgu1iJNJh4eGf/e4N4FpgdcOIxMjrtGMDBur7br3La0uQFZ9/ujIZh6bRs6Z0HSwNPcTmQA2dBm9Sq3Oe/RsDE+Elqrl0fyE9H905MIZDITCCuMoqMT+K/STPJ+hieXWPb+1GXRWSo0SMrlPsUpBlhcLWXt4vXsfBOyFxKml7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8xN/f8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCeiw6fG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C90C4CEED;
-	Tue, 11 Mar 2025 15:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8xN/f8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F376C4CEEC;
+	Tue, 11 Mar 2025 15:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706715;
-	bh=zP9IZ49SBSvdxCfs4zu8X8O8emftP9G4Q7PZ3aG91ao=;
+	s=korg; t=1741706718;
+	bh=S0CGSYJa1j/CJJoimXeacX3uPL2S5hQEKePF9Sl8Vzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCeiw6fGftLNzV5Aw/eKQjepU336DH6UVnj9X+RTi4zzYuNUISx6hCiIG40XXVPGd
-	 PH3v8yekmeWBAbvvXN0hVkm/H+kSyP1/Xmv/7MZr/LCsILQDcIwELKkEtkIIo4ZNdM
-	 34q+4H69yweKwXMSIubcdLc15WFOTc1WcNQNsoVA=
+	b=I8xN/f8EcrweKZGQf12RWxeQQZ+ygAQXAsapppm/AZ0XQoggwMheyAc94UrM1JUjG
+	 AQTLstUnm9DFFmPyqMRpBprzGcw8yqYv8edHQIx/09Xr3y37GjnfLCj/BRmcuGFq9Y
+	 uCJwf1xRnEBmLsAgXWizbUu6ykZCb04H4Le3DTck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@linux.alibaba.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/462] APEI: GHES: Have GHES honor the panic= setting
-Date: Tue, 11 Mar 2025 15:56:47 +0100
-Message-ID: <20250311145803.927474604@linuxfoundation.org>
+Subject: [PATCH 5.10 112/462] genksyms: fix memory leak when the same symbol is added from source
+Date: Tue, 11 Mar 2025 15:56:18 +0100
+Message-ID: <20250311145802.787822281@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,70 +50,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov <bp@alien8.de>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 5c0e00a391dd0099fe95991bb2f962848d851916 ]
+[ Upstream commit 45c9c4101d3d2fdfa00852274bbebba65fcc3cf2 ]
 
-The GHES driver overrides the panic= setting by force-rebooting the
-system after a fatal hw error has been reported. The intent being that
-such an error would be reported earlier.
+When a symbol that is already registered is added again, __add_symbol()
+returns without freeing the symbol definition, making it unreachable.
 
-However, this is not optimal when a hard-to-debug issue requires long
-time to reproduce and when that happens, the box will get rebooted after
-30 seconds and thus destroy the whole hw context of when the error
-happened.
+The following test cases demonstrate different memory leak points.
 
-So rip out the default GHES panic timeout and honor the global one.
+[Test Case 1]
 
-In the panic disabled (panic=0) case, the error will still be logged to
-dmesg for later inspection and if panic after a hw error is really
-required, then that can be controlled the usual way - use panic= on the
-cmdline or set it in the kernel .config's CONFIG_PANIC_TIMEOUT.
+Forward declaration with exactly the same definition
 
-Reported-by: Feng Tang <feng.tang@linux.alibaba.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20250113125224.GFZ4UMiNtWIJvgpveU@fat_crate.local
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 2]
+
+Forward declaration with a different definition (e.g. attribute)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  __attribute__((__section__(".ref.text"))) void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 3]
+
+Preserving an overridden symbol (compile with KBUILD_PRESERVE=1)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) { }
+  EXPORT_SYMBOL(foo);
+
+  $ cat foo.symref
+  override foo void foo ( int )
+
+The memory leaks in Test Case 1 and 2 have existed since the introduction
+of genksyms into the kernel tree. [1]
+
+The memory leak in Test Case 3 was introduced by commit 5dae9a550a74
+("genksyms: allow to ignore symbol checksum changes").
+
+When multiple init_declarators are reduced to an init_declarator_list,
+the decl_spec must be duplicated. Otherwise, the following Test Case 4
+would result in a double-free bug.
+
+[Test Case 4]
+
+  $ cat foo.c
+  #include <linux/export.h>
+
+  extern int foo, bar;
+
+  int foo, bar;
+  EXPORT_SYMBOL(foo);
+
+In this case, 'foo' and 'bar' share the same decl_spec, 'int'. It must
+be unshared before being passed to add_symbol().
+
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=46bd1da672d66ccd8a639d3c1f8a166048cca608
+
+Fixes: 5dae9a550a74 ("genksyms: allow to ignore symbol checksum changes")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ scripts/genksyms/genksyms.c |  3 +++
+ scripts/genksyms/parse.y    | 14 ++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 160606af8b4f5..a6c8514110736 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -155,8 +155,6 @@ static unsigned long ghes_estatus_pool_size_request;
- static struct ghes_estatus_cache *ghes_estatus_caches[GHES_ESTATUS_CACHES_SIZE];
- static atomic_t ghes_estatus_cache_alloced;
+diff --git a/scripts/genksyms/genksyms.c b/scripts/genksyms/genksyms.c
+index 23eff234184f3..d74bad87ef1a7 100644
+--- a/scripts/genksyms/genksyms.c
++++ b/scripts/genksyms/genksyms.c
+@@ -241,6 +241,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 						"unchanged\n");
+ 				}
+ 				sym->is_declared = 1;
++				free_list(defn, NULL);
+ 				return sym;
+ 			} else if (!sym->is_declared) {
+ 				if (sym->is_override && flag_preserve) {
+@@ -249,6 +250,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 					print_type_name(type, name);
+ 					fprintf(stderr, " modversion change\n");
+ 					sym->is_declared = 1;
++					free_list(defn, NULL);
+ 					return sym;
+ 				} else {
+ 					status = is_unknown_symbol(sym) ?
+@@ -256,6 +258,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 				}
+ 			} else {
+ 				error_with_pos("redefinition of %s", name);
++				free_list(defn, NULL);
+ 				return sym;
+ 			}
+ 			break;
+diff --git a/scripts/genksyms/parse.y b/scripts/genksyms/parse.y
+index e22b42245bcc2..7df3fe290d535 100644
+--- a/scripts/genksyms/parse.y
++++ b/scripts/genksyms/parse.y
+@@ -149,14 +149,19 @@ simple_declaration:
+ 	;
  
--static int ghes_panic_timeout __read_mostly = 30;
--
- static void __iomem *ghes_map(u64 pfn, enum fixed_addresses fixmap_idx)
- {
- 	phys_addr_t paddr;
-@@ -858,14 +856,16 @@ static void __ghes_panic(struct ghes *ghes,
- 			 struct acpi_hest_generic_status *estatus,
- 			 u64 buf_paddr, enum fixed_addresses fixmap_idx)
- {
-+	const char *msg = GHES_PFX "Fatal hardware error";
+ init_declarator_list_opt:
+-	/* empty */				{ $$ = NULL; }
+-	| init_declarator_list
++	/* empty */			{ $$ = NULL; }
++	| init_declarator_list		{ free_list(decl_spec, NULL); $$ = $1; }
+ 	;
+ 
+ init_declarator_list:
+ 	init_declarator
+ 		{ struct string_list *decl = *$1;
+ 		  *$1 = NULL;
 +
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
- 
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
--	/* reboot to log the error! */
- 	if (!panic_timeout)
--		panic_timeout = ghes_panic_timeout;
--	panic("Fatal hardware error!");
-+		pr_emerg("%s but panic disabled\n", msg);
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
 +
-+	panic(msg);
- }
- 
- static int ghes_proc(struct ghes *ghes)
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
+@@ -167,6 +172,11 @@ init_declarator_list:
+ 		  *$3 = NULL;
+ 		  free_list(*$2, NULL);
+ 		  *$2 = decl_spec;
++
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
++
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
 -- 
 2.39.5
 
