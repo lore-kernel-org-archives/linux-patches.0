@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2025B68E;
-	Tue, 11 Mar 2025 15:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E432A1CAA8F;
+	Tue, 11 Mar 2025 15:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707663; cv=none; b=tSlgZ1xw3j5OfXC1cYeSnSx8DvBceXxHZBEaO7lqMK/kkdyLQix+umS5g0WDxRZQkUd+mwlxP30RRpKTgSnWlOCU5mPeU19eTzko2WaxC2rfNMxfevEetXi29fp38Kc2PKdYbCB9/dLqU6rwpBozYdw4btUNeQ4gontCepkecbo=
+	t=1741707666; cv=none; b=IzhPU7p05Kj8CFGsWQyPLeLDVGBU7xUXqwXvMe0qhM6AXEMCrZOgMQ8xj9qIJ0b9EmHDvzh1+1ntz2bbae1qqK6HROwV+KIbjQcnx4lAnGGpKGKteyDULkFV9Lii5op6UySiQOUZ9rpvN6LGXqFY+Mr38cWd8UnrJdRDo8mPKG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707663; c=relaxed/simple;
-	bh=+CQiC/avMRUXXVeA7mqdo9W0F4jvtDFJ1CAJEvM43kQ=;
+	s=arc-20240116; t=1741707666; c=relaxed/simple;
+	bh=6HOQwr+dOgHljKIC+g7eRcmDY21UyAUTeTyFTAwnQGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2ei6RbkcUTcu1ynq1+HOSYOu7Bc7ZlV5FyDn7A5WS3FcRL5GRrN8YK9wyjpuIkdvADvfwLkFGcc9ue8jG3b3S0Ad+XRkfxqGVizt7mv6/jUnuQeXUPODsOY+5qaKNN/KFoU6wr75Zjd7XwpAl/d+35IoGo4K0Ug2mBJ2OawkdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0i5mzAm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hhQdPf76RUH/j/WoReKoth+HpeLkWlQEZKVJJPWX+R0A8Yec20wXMh0vctQIFjUqyck7fWfhM/9MCDUeQdc14sb5DOdfdTzVtYpH4teGO6OrMsyp0ytXJLfu5lslTxCL8mJzC/IQj7lFHq4SwUcFENAK87jniW+vdUhAftCrKWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d28IzUji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0i5mzAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F9AC4CEED;
-	Tue, 11 Mar 2025 15:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d28IzUji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A91FC4CEE9;
+	Tue, 11 Mar 2025 15:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707662;
-	bh=+CQiC/avMRUXXVeA7mqdo9W0F4jvtDFJ1CAJEvM43kQ=;
+	s=korg; t=1741707665;
+	bh=6HOQwr+dOgHljKIC+g7eRcmDY21UyAUTeTyFTAwnQGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0i5mzAmEC/wZU35X+NL9YvjY4MhlwA9SRyiAXDTqFaQ+P2KsydhNkg6kBuHKS9MS
-	 OHObemO2RciGitorKItUe/Ox4nqJ1yhtK4Kxnj1VM29xosE0XHFX6DUTs7nJWaC8dZ
-	 dDa0Mo8xHgpakGoyehUaxRFxlUJSwNdjMb4xP1NE=
+	b=d28IzUji+R8/Kk+VkyOUd9WVutOeVL6apLfuvucU8FICigQRlYlnRssZe4YB74++1
+	 eIQsvJ4lho+PqCIPO4npvz86PTMryDEayN940Xh2Y423PgsDTCiz5C3DC0wGM8Mwix
+	 iuus+r8A490njzL370jrbpfSaT7auNU98cbKJG/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tomasz Sikora <sikora.tomus@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 5.10 450/462] media: uvcvideo: Remove dangling pointers
-Date: Tue, 11 Mar 2025 16:01:56 +0100
-Message-ID: <20250311145816.099271568@linuxfoundation.org>
+Subject: [PATCH 5.10 451/462] Revert "media: uvcvideo: Require entities to have a non-zero unique ID"
+Date: Tue, 11 Mar 2025 16:01:57 +0100
+Message-ID: <20250311145816.137163142@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,174 +54,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit 221cd51efe4565501a3dbf04cc011b537dcce7fb upstream.
+commit 8004d635f27bbccaa5c083c50d4d5302a6ffa00e upstream.
 
-When an async control is written, we copy a pointer to the file handle
-that started the operation. That pointer will be used when the device is
-done. Which could be anytime in the future.
+This reverts commit 3dd075fe8ebbc6fcbf998f81a75b8c4b159a6195.
 
-If the user closes that file descriptor, its structure will be freed,
-and there will be one dangling pointer per pending async control, that
-the driver will try to use.
+Tomasz has reported that his device, Generalplus Technology Inc. 808 Camera,
+with ID 1b3f:2002, stopped being detected:
 
-Clean all the dangling pointers during release().
+$ ls -l /dev/video*
+zsh: no matches found: /dev/video*
+[    7.230599] usb 3-2: Found multiple Units with ID 5
 
-To avoid adding a performance penalty in the most common case (no async
-operation), a counter has been introduced with some logic to make sure
-that it is properly handled.
+This particular device is non-compliant, having both the Output Terminal
+and Processing Unit with ID 5. uvc_scan_fallback, though, is able to build
+a chain. However, when media elements are added and uvc_mc_create_links
+call uvc_entity_by_id, it will get the incorrect entity,
+media_create_pad_link will WARN, and it will fail to register the entities.
 
+In order to reinstate support for such devices in a timely fashion,
+reverting the fix for these warnings is appropriate. A proper fix that
+considers the existence of such non-compliant devices will be submitted in
+a later development cycle.
+
+Reported-by: Tomasz Sikora <sikora.tomus@gmail.com>
+Fixes: 3dd075fe8ebb ("media: uvcvideo: Require entities to have a non-zero unique ID")
 Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-3-26c867231118@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250114200045.1401644-1-cascardo@igalia.com
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   63 +++++++++++++++++++++++++++++++++++++--
- drivers/media/usb/uvc/uvc_v4l2.c |    2 +
- drivers/media/usb/uvc/uvcvideo.h |    9 ++++-
- 3 files changed, 71 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |   63 ++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 39 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1306,6 +1306,40 @@ static void uvc_ctrl_send_slave_event(st
- 	uvc_ctrl_send_event(chain, handle, ctrl, mapping, val, changes);
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1029,27 +1029,14 @@ error:
+ 	return ret;
  }
  
-+static void uvc_ctrl_set_handle(struct uvc_fh *handle, struct uvc_control *ctrl,
-+				struct uvc_fh *new_handle)
-+{
-+	lockdep_assert_held(&handle->chain->ctrl_mutex);
-+
-+	if (new_handle) {
-+		if (ctrl->handle)
-+			dev_warn_ratelimited(&handle->stream->dev->udev->dev,
-+					     "UVC non compliance: Setting an async control with a pending operation.");
-+
-+		if (new_handle == ctrl->handle)
-+			return;
-+
-+		if (ctrl->handle) {
-+			WARN_ON(!ctrl->handle->pending_async_ctrls);
-+			if (ctrl->handle->pending_async_ctrls)
-+				ctrl->handle->pending_async_ctrls--;
-+		}
-+
-+		ctrl->handle = new_handle;
-+		handle->pending_async_ctrls++;
-+		return;
-+	}
-+
-+	/* Cannot clear the handle for a control not owned by us.*/
-+	if (WARN_ON(ctrl->handle != handle))
-+		return;
-+
-+	ctrl->handle = NULL;
-+	if (WARN_ON(!handle->pending_async_ctrls))
-+		return;
-+	handle->pending_async_ctrls--;
-+}
-+
- void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 			   struct uvc_control *ctrl, const u8 *data)
+-static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
+-					       u16 id, unsigned int num_pads,
+-					       unsigned int extra_size)
++static struct uvc_entity *uvc_alloc_entity(u16 type, u8 id,
++		unsigned int num_pads, unsigned int extra_size)
  {
-@@ -1316,7 +1350,8 @@ void uvc_ctrl_status_event(struct uvc_vi
- 	mutex_lock(&chain->ctrl_mutex);
+ 	struct uvc_entity *entity;
+ 	unsigned int num_inputs;
+ 	unsigned int size;
+ 	unsigned int i;
  
- 	handle = ctrl->handle;
--	ctrl->handle = NULL;
-+	if (handle)
-+		uvc_ctrl_set_handle(handle, ctrl, NULL);
+-	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
+-	if (id == 0) {
+-		dev_err(&dev->udev->dev, "Found Unit with invalid ID 0.\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
+-	if (uvc_entity_by_id(dev, id)) {
+-		dev_err(&dev->udev->dev, "Found multiple Units with ID %u\n", id);
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+ 	extra_size = roundup(extra_size, sizeof(*entity->pads));
+ 	if (num_pads)
+ 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
+@@ -1059,7 +1046,7 @@ static struct uvc_entity *uvc_alloc_new_
+ 	     + num_inputs;
+ 	entity = kzalloc(size, GFP_KERNEL);
+ 	if (entity == NULL)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
  
- 	list_for_each_entry(mapping, &ctrl->info.mappings, list) {
- 		s32 value = __uvc_ctrl_get_value(mapping, data);
-@@ -1575,7 +1610,7 @@ static int uvc_ctrl_commit_entity(struct
+ 	entity->id = id;
+ 	entity->type = type;
+@@ -1130,10 +1117,10 @@ static int uvc_parse_vendor_control(stru
+ 			break;
+ 		}
  
- 		if (!rollback && handle &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
--			ctrl->handle = handle;
-+			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
+-		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
+-					    buffer[3], p + 1, 2 * n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
++					p + 1, 2*n);
++		if (unit == NULL)
++			return -ENOMEM;
  
- 	return 0;
-@@ -2369,6 +2404,30 @@ int uvc_ctrl_init_device(struct uvc_devi
- 	return 0;
- }
+ 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
+@@ -1244,10 +1231,10 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
  
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle)
-+{
-+	struct uvc_entity *entity;
-+
-+	mutex_lock(&handle->chain->ctrl_mutex);
-+
-+	if (!handle->pending_async_ctrls) {
-+		mutex_unlock(&handle->chain->ctrl_mutex);
-+		return;
-+	}
-+
-+	list_for_each_entry(entity, &handle->chain->dev->entities, list) {
-+		unsigned int i;
-+		for (i = 0; i < entity->ncontrols; ++i) {
-+			if (entity->controls[i].handle != handle)
-+				continue;
-+			uvc_ctrl_set_handle(handle, &entity->controls[i], NULL);
-+		}
-+	}
-+
-+	WARN_ON(handle->pending_async_ctrls);
-+	mutex_unlock(&handle->chain->ctrl_mutex);
-+}
-+
- /*
-  * Cleanup device controls.
-  */
---- a/drivers/media/usb/uvc/uvc_v4l2.c
-+++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -593,6 +593,8 @@ static int uvc_v4l2_release(struct file
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
+-					    buffer[3], 1, n + p);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
++					1, n + p);
++		if (term == NULL)
++			return -ENOMEM;
  
- 	uvc_trace(UVC_TRACE_CALLS, "uvc_v4l2_release\n");
+ 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
+ 			term->camera.bControlSize = n;
+@@ -1303,10 +1290,10 @@ static int uvc_parse_standard_control(st
+ 			return 0;
+ 		}
  
-+	uvc_ctrl_cleanup_fh(handle);
-+
- 	/* Only free resources if this is a privileged handle. */
- 	if (uvc_has_privileges(handle))
- 		uvc_queue_release(&stream->queue);
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -453,7 +453,11 @@ struct uvc_video_chain {
- 	struct uvc_entity *processing;		/* Processing unit */
- 	struct uvc_entity *selector;		/* Selector unit */
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
+-					    buffer[3], 1, 0);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
++					1, 0);
++		if (term == NULL)
++			return -ENOMEM;
  
--	struct mutex ctrl_mutex;		/* Protects ctrl.info */
-+	struct mutex ctrl_mutex;		/*
-+						 * Protects ctrl.info,
-+						 * ctrl.handle and
-+						 * uvc_fh.pending_async_ctrls
-+						 */
+ 		memcpy(term->baSourceID, &buffer[7], 1);
  
- 	struct v4l2_prio_state prio;		/* V4L2 priority state */
- 	u32 caps;				/* V4L2 chain-wide caps */
-@@ -699,6 +703,7 @@ struct uvc_fh {
- 	struct uvc_video_chain *chain;
- 	struct uvc_streaming *stream;
- 	enum uvc_handle_state state;
-+	unsigned int pending_async_ctrls;
- };
+@@ -1327,10 +1314,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
  
- struct uvc_driver {
-@@ -871,6 +876,8 @@ int uvc_ctrl_set(struct uvc_fh *handle,
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 		      struct uvc_xu_control_query *xqry);
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, 0);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
++		if (unit == NULL)
++			return -ENOMEM;
  
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle);
-+
- /* Utility functions */
- void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
- 			   unsigned int n_terms, unsigned int threshold);
+ 		memcpy(unit->baSourceID, &buffer[5], p);
+ 
+@@ -1352,9 +1338,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->baSourceID, &buffer[4], 1);
+ 		unit->processing.wMaxMultiplier =
+@@ -1383,10 +1369,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->extension.guidExtensionCode, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
 
 
