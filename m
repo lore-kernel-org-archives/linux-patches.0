@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7E91E9B06;
-	Tue, 11 Mar 2025 15:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196C825DD08;
+	Tue, 11 Mar 2025 15:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706727; cv=none; b=gW9Jgr3ZeEOSY4kyWg/Tp8BdKWaKbEuxZpUlL/JG7xsGuyspWrntckiqrMh5Kobvd7O/rWfssl+H00CMYQ7r8D3IlDVQLE6wU/MHohAD4dQIB0iRrOhYkmCmvW4e+jhLEjdXqDwGOArEHiE4o+lgrdvmHeKHy2p4BeBCMT6i704=
+	t=1741706731; cv=none; b=T+tx9/kPpWfvf8X31yuhGkJhLhXdBtdSip7t0JYjwqgJNKnQ6tIu7Ww5xlVve8UFe51UIyn4h/8GM9Wbwone/Q8jwJkqetcJOBcgxfSpfuyeHn6bYu3fZtIkgNNAuNZ4GHi9xQke6zP8UtUhcoo1qhw1DxkNnQIavI8EiHsouEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706727; c=relaxed/simple;
-	bh=eZ9N7stQq0QF4Pu4E6V7qCbVuH//hn8MLbh7aaF3NaE=;
+	s=arc-20240116; t=1741706731; c=relaxed/simple;
+	bh=X12N2x4MczGfoQ5i7tWiPQQijuOO3C9mvOAklRIR3Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsRWwSL/bn6k03nw+23qMwtOIdMvbeopY1DZRODk8gnuBSr83OwgR98A388pPXKXavAMz45p5zko9XKrVi/4d4DERdY0d2IbBrAq8bZ2KO5D0ATKLjpUOJxQ4n64k8fg5TXMCfbcmNdhjjPrOiRxoj70bIfovQoV3OYv6T/N3Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM1uga7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fVCep964/MQ6fFLhp1Sq9jycFkJBrnokSLrHSqHDPXQO95Mbc0rcc+SG+LJvWGoimy0ti5HEM6yTWVKTxJS3BvI5NAFxnYM20PA22E4h+veSAsWBlQhPYIFRSgHhSktSKhb8aklnILRnDGD/0ByN5j0tjPbfR/Yn2DL1iZNmMk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELFBbuXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM1uga7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21895C4CEE9;
-	Tue, 11 Mar 2025 15:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELFBbuXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2121FC4CEEC;
+	Tue, 11 Mar 2025 15:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706727;
-	bh=eZ9N7stQq0QF4Pu4E6V7qCbVuH//hn8MLbh7aaF3NaE=;
+	s=korg; t=1741706730;
+	bh=X12N2x4MczGfoQ5i7tWiPQQijuOO3C9mvOAklRIR3Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zM1uga7OweDjQOMX3vr3sda3RMuFVXz5kZGuOqCkRXRJbJEx9lP7pDAmBLTb22KCd
-	 1UO5VgssC0TqqkM5XrbLD0BkI4x9aG0I8en/rzsk5qWBiie8jdcvehJsTxZvokaPrI
-	 2sd8d0MTAwejAkcOGVFe41xi9Jx3tT3mXkVPe7nU=
+	b=ELFBbuXYi4yaDqyIOt6KUKwxzN+sxBleKPIw1N3/V7FiQx3S04ilqDXBBl4z+RmRR
+	 Vk1gwfdMsuqOw90uiR7ySpTr0Wp8LZaSfpKqUc4S+IcHPJJPI++nfGrrUR1bjb7T90
+	 afs8b4T+CkezctiNACCciBkWVcDxzTLIHM79fjZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Yujun <linyujun809@huawei.com>,
-	Brian Cain <bcain@quicinc.com>,
-	Brian Cain <brian.cain@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/462] hexagon: Fix unbalanced spinlock in die()
-Date: Tue, 11 Mar 2025 15:56:21 +0100
-Message-ID: <20250311145802.906192970@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 116/462] NFSD: Reset cb_seq_status after NFS4ERR_DELAY
+Date: Tue, 11 Mar 2025 15:56:22 +0100
+Message-ID: <20250311145802.945080637@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -52,45 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Yujun <linyujun809@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 03410e87563a122075c3721acc7d5510e41d8332 ]
+commit 961b4b5e86bf56a2e4b567f81682defa5cba957e upstream.
 
-die executes holding the spinlock of &die.lock and unlock
-it after printing the oops message.
-However in the code if the notify_die() returns NOTIFY_STOP
-, die() exit with returning 1 but never unlocked the spinlock.
+I noticed that once an NFSv4.1 callback operation gets a
+NFS4ERR_DELAY status on CB_SEQUENCE and then the connection is lost,
+the callback client loops, resending it indefinitely.
 
-Fix this by adding spin_unlock_irq(&die.lock) before returning.
+The switch arm in nfsd4_cb_sequence_done() that handles
+NFS4ERR_DELAY uses rpc_restart_call() to rearm the RPC state machine
+for the retransmit, but that path does not call the rpc_prepare_call
+callback again. Thus cb_seq_status is set to -10008 by the first
+NFS4ERR_DELAY result, but is never set back to 1 for the retransmits.
 
-Fixes: cf9750bae262 ("Hexagon: Provide basic debugging and system trap support.")
-Signed-off-by: Lin Yujun <linyujun809@huawei.com>
-Link: https://lore.kernel.org/r/20230522025608.2515558-1-linyujun809@huawei.com
-Signed-off-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+nfsd4_cb_sequence_done() thinks it's getting nothing but a
+long series of CB_SEQUENCE NFS4ERR_DELAY replies.
+
+Fixes: 7ba6cad6c88f ("nfsd: New helper nfsd4_cb_sequence_done() for processing more cb errors")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/kernel/traps.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4callback.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
-index b334e80717099..653328606ef31 100644
---- a/arch/hexagon/kernel/traps.c
-+++ b/arch/hexagon/kernel/traps.c
-@@ -199,8 +199,10 @@ int die(const char *str, struct pt_regs *regs, long err)
- 	printk(KERN_EMERG "Oops: %s[#%d]:\n", str, ++die.counter);
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1202,6 +1202,7 @@ static bool nfsd4_cb_sequence_done(struc
+ 		ret = false;
+ 		break;
+ 	case -NFS4ERR_DELAY:
++		cb->cb_seq_status = 1;
+ 		if (!rpc_restart_call(task))
+ 			goto out;
  
- 	if (notify_die(DIE_OOPS, str, regs, err, pt_cause(regs), SIGSEGV) ==
--	    NOTIFY_STOP)
-+	    NOTIFY_STOP) {
-+		spin_unlock_irq(&die.lock);
- 		return 1;
-+	}
- 
- 	print_modules();
- 	show_regs(regs);
--- 
-2.39.5
-
 
 
