@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110A01684AC;
-	Tue, 11 Mar 2025 15:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEC725E824;
+	Tue, 11 Mar 2025 15:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706255; cv=none; b=UJUFao/86rNDr2uDBDTwWh6Wqk7Oey7OVqmo0Dw5vxvATQtLODNsPcUNW+sMIrTmE0pOVlrFDyuDkJOdJPcxs4qcPauCO5QpSMN5Ucwo06uzTUH8pS7ylrruxSnMGz6bKdByr6MeEllicAEOmf21FnTVYNrlau281CApUUh1iIM=
+	t=1741706258; cv=none; b=ORW4s86UnP6BNCqP3KkQYpU3WS1Sj5/QIO0wqJdkxJ2PNAlcwY9dxgp9T77g6CUT+cswlV09Zi66VkS6X5AdUV5wqVuVBaghbL7n736/Jc4SsrEBmITiavv8EFRqG6sfDm/Q+mEs2tnznJ1boIWD4GoKSROemS30hYQttcdKLKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706255; c=relaxed/simple;
-	bh=zG0wujAKIiITMjj2h7pTB9RcIll38Qvy+Hmz2m30l1I=;
+	s=arc-20240116; t=1741706258; c=relaxed/simple;
+	bh=X3HI5RqDy2KSJ2al6jwpufxy/m0rNpmJ9yT7mwcOfFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTwV33XTne+/r1Vp5Lg91hzHNElgLDi1nnNEw/EdlrRNQqBRkLlveTHYX48nfUuvr+2dP8fygC6G6yV1dzJHCu+iIgg5PPWVocEw1GuBOdgKTFVXYqMvP90wsdpMfjz+XZNNw5qSKV7FwmYgq/b3wagdsUYY8brI/I0ftGHiHYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBQo9YDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfeqR8c46Rzfja4e11pK1s1fEExFtXnb/GVs6ztgHHycl6hmZeunbmV7g+CdGm36md7xWYPJQJ3bh+JTT/lsPQJxf3IGHykfTKCOcQiTN7iB5CJ/GtPAyZYK7Gj5XMCqYI7FIFFaC0oDmUnarZrhWt3CGmDHt4oofk3dSG3RXnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHgijoIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBQo9YDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAF7C4CEE9;
-	Tue, 11 Mar 2025 15:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHgijoIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E73C4CEF0;
+	Tue, 11 Mar 2025 15:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706254;
-	bh=zG0wujAKIiITMjj2h7pTB9RcIll38Qvy+Hmz2m30l1I=;
+	s=korg; t=1741706257;
+	bh=X3HI5RqDy2KSJ2al6jwpufxy/m0rNpmJ9yT7mwcOfFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBQo9YDXOedxXG3MAQeJeCyb8i/PbaSotyG87sgRhLqZsAT2cZdcNtnDjPSPrfnan
-	 Y8JAvls1eKKZelvBZ032+lwNUk/nG689msU+Iyqnm2bBUeN6lmica/4VryfLdaDY9U
-	 CIXac+5ZpplIkN6yUHCbz5HjRyuCDRFGBozjqX4Q=
+	b=kHgijoISwWReffOr8+doNMWf2N/+8xp9eZlNIb9z9EgQvsNtNZCGpYxuiFNjk7kj6
+	 fcjvVQsCVehl9AlGx139AGa05MEH9DKCfrmz/5yfcMrgVG5YS7VkCkhHQRg3CKWqXa
+	 jHpTalcheNtmcUOrs+O4cWJJwpmosCRSLzH+Y+rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 286/328] x86/cpu: Validate CPUID leaf 0x2 EDX output
-Date: Tue, 11 Mar 2025 16:00:56 +0100
-Message-ID: <20250311145726.276074156@linuxfoundation.org>
+	Tom Herbert <tom@herbertland.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 308/328] net: ipv6: fix dst ref loop in ila lwtunnel
+Date: Tue, 11 Mar 2025 16:01:18 +0100
+Message-ID: <20250311145727.148606714@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -53,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-commit 1881148215c67151b146450fb89ec22fd92337a7 upstream.
+[ Upstream commit 0e7633d7b95b67f1758aea19f8e85621c5f506a3 ]
 
-CPUID leaf 0x2 emits one-byte descriptors in its four output registers
-EAX, EBX, ECX, and EDX.  For these descriptors to be valid, the most
-significant bit (MSB) of each register must be clear.
+This patch follows commit 92191dd10730 ("net: ipv6: fix dst ref loops in
+rpl, seg6 and ioam6 lwtunnels") and, on a second thought, the same patch
+is also needed for ila (even though the config that triggered the issue
+was pathological, but still, we don't want that to happen).
 
-Leaf 0x2 parsing at intel.c only validated the MSBs of EAX, EBX, and
-ECX, but left EDX unchecked.
-
-Validate EDX's most-significant bit as well.
-
-Fixes: e0ba94f14f74 ("x86/tlb_info: get last level TLB entry number of CPU")
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250304085152.51092-3-darwi@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 79ff2fc31e0f ("ila: Cache a route to translated address")
+Cc: Tom Herbert <tom@herbertland.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Link: https://patch.msgid.link/20250304181039.35951-1-justin.iurman@uliege.be
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/intel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ila/ila_lwt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -959,7 +959,7 @@ static void intel_detect_tlb(struct cpui
- 		cpuid(2, &regs[0], &regs[1], &regs[2], &regs[3]);
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index 6a6a30e82810d..dc01cdb043498 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -88,7 +88,8 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
  
- 		/* If bit 31 is set, this is an unknown format */
--		for (j = 0 ; j < 3 ; j++)
-+		for (j = 0 ; j < 4 ; j++)
- 			if (regs[j] & (1 << 31))
- 				regs[j] = 0;
- 
+-		if (ilwt->connected) {
++		/* cache only if we don't create a dst reference loop */
++		if (ilwt->connected && orig_dst->lwtstate != dst->lwtstate) {
+ 			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
+ 			local_bh_enable();
+-- 
+2.39.5
+
 
 
