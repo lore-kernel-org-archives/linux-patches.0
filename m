@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B48625EFBF;
-	Tue, 11 Mar 2025 15:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B81F25E83E;
+	Tue, 11 Mar 2025 15:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741707017; cv=none; b=KkI2Qzgk23gcKpeurF8Tc2xSNdN26wMQngbkD2PXPn+HhOP2rgSnz7I/SduNaNLLELAq8jgXC4IHf1lNAegx555orKW1hwh1JvAxaWbTcu+qqm5dXks+wkE4WpYyoptBxPpX74/5vYGiwWVAA3fb4s0bSm3YfpimK+R1KoN9tK8=
+	t=1741707020; cv=none; b=igHZy7EYiwl5xYdI0G7/NqvitrJMlO3KbS5mTzhIexKps/r7/NLxXaNqdqFYscgskMWx0rFhk3arGomoUV0yjSiF3qGgU+0KWx+DXIoFydLkBntLf3Kh5byuim6lBrtJBisvVim8Wsp3jj3Flfr3i6yfg3/bAb+b2WZpeoq5gkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741707017; c=relaxed/simple;
-	bh=igb4BbSqJ4YuFgC9O2jU+IJ3Wo8SWab2j1WYQa4SnUI=;
+	s=arc-20240116; t=1741707020; c=relaxed/simple;
+	bh=rqIWR/EXAZIJDGiEnro8nxqOrSyUFp1Ow7tdB4zfqvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVoax0hjS2S23a0KPBSC8GqUOr3gDQcgYR3gzS4W0Oey2XeQPPop7T8K5XAaE2C59jrYc2jLebVM5He6ap6PO4AdFh2HZFZMbYvarU/N3c+dQJ5PbeueG3D3OZOvPbtzD6qr1TUWfwI30uV+i59+sD8fyKbDQ1PwDdkhbhS92d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqb1L/cs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t5Ey7OIejUbJp2OfXrYDKNAzb13KdlDGwc8+Yo0zUHo90UGcg/uLk2euTxVthGOAuMeb2ywAdmg9QO5Aryysaz7bMRaljPChci6Eug2h74HjDTzLPNHP2FTMk+HteXjvyekRUge2AoAoFSS9sIIXXQ3jP+SmfrVYOgwCnvrjffc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKcDOczq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqb1L/cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1135EC4CEE9;
-	Tue, 11 Mar 2025 15:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKcDOczq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE542C4CEE9;
+	Tue, 11 Mar 2025 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741707017;
-	bh=igb4BbSqJ4YuFgC9O2jU+IJ3Wo8SWab2j1WYQa4SnUI=;
+	s=korg; t=1741707020;
+	bh=rqIWR/EXAZIJDGiEnro8nxqOrSyUFp1Ow7tdB4zfqvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqb1L/csaqZrAazyp0eOZ9+XpBsuJeOIh5JWM/A87/jDJfCg9ObgVhwHmOB9wUq6l
-	 49v2+3obbcuixyq/1Mii98TSySu4SV6pSpSlQP/0TkeSY7o4RIgtbcG7p5LLtTgbwZ
-	 sH35TPLlY+1oHx4b5YTXNZZEPlGbMWMgju60vsXM=
+	b=NKcDOczq92XGtnBKZ82JCKP9dGzYgqAWyLUAZ/3wGfrkxLzTS7nBNil8Cd1hivRh0
+	 ZYiPVCVNWIQJIc9jJHyRg2xpVSEHW1EA6QWIQFlzWRyHWSgH2db9FoG7QQ9A18TsLz
+	 BZS5EAngg0P6Xxq+WdLSX3+5ciVJPXoGE/n/Ls/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
 	Jun Piao <piaojun@huawei.com>,
+	Mark Tinguely <mark.tinguely@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 214/462] ocfs2: fix incorrect CPU endianness conversion causing mount failure
-Date: Tue, 11 Mar 2025 15:58:00 +0100
-Message-ID: <20250311145806.821647742@linuxfoundation.org>
+Subject: [PATCH 5.10 215/462] ocfs2: handle a symlink read error correctly
+Date: Tue, 11 Mar 2025 15:58:01 +0100
+Message-ID: <20250311145806.859791284@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -56,41 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit f921da2c34692dfec5f72b5ae347b1bea22bb369 upstream.
+commit 2b4c2094da6d84e69b843dd3317902e977bf64bd upstream.
 
-Commit 23aab037106d ("ocfs2: fix UBSAN warning in ocfs2_verify_volume()")
-introduced a regression bug.  The blksz_bits value is already converted to
-CPU endian in the previous code; therefore, the code shouldn't use
-le32_to_cpu() anymore.
+Patch series "Convert ocfs2 to use folios".
 
-Link: https://lkml.kernel.org/r/20250121112204.12834-1-heming.zhao@suse.com
-Fixes: 23aab037106d ("ocfs2: fix UBSAN warning in ocfs2_verify_volume()")
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Mark did a conversion of ocfs2 to use folios and sent it to me as a
+giant patch for review ;-)
+
+So I've redone it as individual patches, and credited Mark for the patches
+where his code is substantially the same.  It's not a bad way to do it;
+his patch had some bugs and my patches had some bugs.  Hopefully all our
+bugs were different from each other.  And hopefully Mark likes all the
+changes I made to his code!
+
+
+This patch (of 23):
+
+If we can't read the buffer, be sure to unlock the page before returning.
+
+Link: https://lkml.kernel.org/r/20241205171653.3179945-1-willy@infradead.org
+Link: https://lkml.kernel.org/r/20241205171653.3179945-2-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
+Cc: Mark Tinguely <mark.tinguely@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/symlink.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -2350,7 +2350,7 @@ static int ocfs2_verify_volume(struct oc
- 			mlog(ML_ERROR, "found superblock with incorrect block "
- 			     "size bits: found %u, should be 9, 10, 11, or 12\n",
- 			     blksz_bits);
--		} else if ((1 << le32_to_cpu(blksz_bits)) != blksz) {
-+		} else if ((1 << blksz_bits) != blksz) {
- 			mlog(ML_ERROR, "found superblock with incorrect block "
- 			     "size: found %u, should be %u\n", 1 << blksz_bits, blksz);
- 		} else if (le16_to_cpu(di->id2.i_super.s_major_rev_level) !=
+--- a/fs/ocfs2/symlink.c
++++ b/fs/ocfs2/symlink.c
+@@ -66,7 +66,7 @@ static int ocfs2_fast_symlink_readpage(s
+ 
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		return status;
++		goto out;
+ 	}
+ 
+ 	fe = (struct ocfs2_dinode *) bh->b_data;
+@@ -77,9 +77,10 @@ static int ocfs2_fast_symlink_readpage(s
+ 	memcpy(kaddr, link, len + 1);
+ 	kunmap_atomic(kaddr);
+ 	SetPageUptodate(page);
++out:
+ 	unlock_page(page);
+ 	brelse(bh);
+-	return 0;
++	return status;
+ }
+ 
+ const struct address_space_operations ocfs2_fast_symlink_aops = {
 
 
