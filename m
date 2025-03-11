@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2D825E813;
-	Tue, 11 Mar 2025 15:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7176F25E813;
+	Tue, 11 Mar 2025 15:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706774; cv=none; b=TM34wJpntjEckC3IrjmcaEgrKPqsEO4QTfcpX89qI2LRdz5MRjVnN2pQFKfPt4fRIAL7zLBq6TOfuRmXEpNa1RXWrvJzeiujXO411Cd/OnVb9BIOHTXsS5c/oc2Q7Qpdf6OVrCXThx+z/BhAIwVIY1hPZd9qXS65UiemUBhnrUw=
+	t=1741706777; cv=none; b=G1T2lb8DoUxvPyXv8nnyAISPC6aXYKSAsxpmpxMNFbXg6fBRPzqPWNQmGDoNSW3IGsGmNVbSUM58hmF7mVNKAYRGVeSFk4zWYjrzh4rpnibIe0GwT2GmXBLE8IeIzPpsT52iHpmszZnrqMpBJIHItYRVzULsBcryP2F/uRlmiTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706774; c=relaxed/simple;
-	bh=U4nQGqDYEYau6BF7jp3wLufIqNPDGygBh/pgS7Wg79E=;
+	s=arc-20240116; t=1741706777; c=relaxed/simple;
+	bh=6+yqkTO0PdTuHvDyd2f6M5PD04a4qU7wsFNvcyo7wBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rE7WtIzjnC6a/d+9Lo6I8qwSEcB8UAQEL6IB3vmwkl4Q4M7xf+UfNhKGK18xKwSQTZ+DMIHrmmE+SCAO6NFgdMs8UdYotDyB4g2bgJ2inm54yNIRcpij/gkJ6radMHAWj30CnboVpqZw+fWxRl5Db4MDmplZ6o1ZIkuBCb6okyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3uf9QZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gLmQcZWKdI5CzmR56K0+j2F8/Sxv5EuHTXA+9JvThDAlAp1/oUtoYP3GbCJyGp1ruOGCN9MBYfWmPh0Nhsab6qnMK7Gko5q21exEaM+cJ9gUA0Bs2ZeNr/wh7oHpbI2m4x5do7mplEZHKueGRKfvjaqvXgovsQwGh4sF6ssmFjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4mPiQJE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3uf9QZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2422C4CEE9;
-	Tue, 11 Mar 2025 15:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4mPiQJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89244C4CEE9;
+	Tue, 11 Mar 2025 15:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706774;
-	bh=U4nQGqDYEYau6BF7jp3wLufIqNPDGygBh/pgS7Wg79E=;
+	s=korg; t=1741706776;
+	bh=6+yqkTO0PdTuHvDyd2f6M5PD04a4qU7wsFNvcyo7wBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3uf9QZIjVXh0MXUm/ESybzrLjzwK92RWA+UgPy4euEKlBuHFITHrqJ1Eesu2Lmky
-	 PlHkdISZrF2kUjUoYL7ahsrnPpCPbqEHTU1fQwyAvB6SiBgKbbtiT6sW+87oCbprF6
-	 U86/I5RYPzal5YsDHviEzNpWMjY6P8xd++NscW3I=
+	b=z4mPiQJEzgCQscJ0lGNt0vaF+m6u1GPmakwimtIpUdEB7eNqbRnYXfPf8qI/wWMpF
+	 69aCXFpeyUij8bwgPTYqq9SyDwtDXCrTR1QmXcK21pIX3CAz/r4JTDI/gk5fj09wSn
+	 K+AeICTgPnuBI9+CrfZUavZf5rbsPQ8+u4IZx5tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Stas Sergeev <stsp2@yandex.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/462] tun: revert fix group permission check
-Date: Tue, 11 Mar 2025 15:57:08 +0100
-Message-ID: <20250311145804.743040165@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 163/462] cpufreq: s3c64xx: Fix compilation warning
+Date: Tue, 11 Mar 2025 15:57:09 +0100
+Message-ID: <20250311145804.784333135@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 References: <20250311145758.343076290@linuxfoundation.org>
@@ -53,75 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit a70c7b3cbc0688016810bb2e0b9b8a0d6a530045 ]
+commit 43855ac61483cb914f060851535ea753c094b3e0 upstream.
 
-This reverts commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3.
+The driver generates following warning when regulator support isn't
+enabled in the kernel. Fix it.
 
-The blamed commit caused a regression when neither tun->owner nor
-tun->group is set. This is intended to be allowed, but now requires
-CAP_NET_ADMIN.
+   drivers/cpufreq/s3c64xx-cpufreq.c: In function 's3c64xx_cpufreq_set_target':
+>> drivers/cpufreq/s3c64xx-cpufreq.c:55:22: warning: variable 'old_freq' set but not used [-Wunused-but-set-variable]
+      55 |         unsigned int old_freq, new_freq;
+         |                      ^~~~~~~~
+>> drivers/cpufreq/s3c64xx-cpufreq.c:54:30: warning: variable 'dvfs' set but not used [-Wunused-but-set-variable]
+      54 |         struct s3c64xx_dvfs *dvfs;
+         |                              ^~~~
 
-Discussion in the referenced thread pointed out that the original
-issue that prompted this patch can be resolved in userspace.
-
-The relaxed access control may also make a device accessible when it
-previously wasn't, while existing users may depend on it to not be.
-
-This is a clean pure git revert, except for fixing the indentation on
-the gid_valid line that checkpatch correctly flagged.
-
-Fixes: 3ca459eaba1b ("tun: fix group permission check")
-Link: https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Cc: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Stas Sergeev <stsp2@yandex.ru>
-Link: https://patch.msgid.link/20250204161015.739430-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501191803.CtfT7b2o-lkp@intel.com/
+Cc: 5.4+ <stable@vger.kernel.org> # v5.4+
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/236b227e929e5adc04d1e9e7af6845a46c8e9432.1737525916.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/cpufreq/s3c64xx-cpufreq.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 52ea9f81d388b..3a89f9457fa24 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -586,18 +586,14 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
- 	return ret;
- }
+--- a/drivers/cpufreq/s3c64xx-cpufreq.c
++++ b/drivers/cpufreq/s3c64xx-cpufreq.c
+@@ -24,6 +24,7 @@ struct s3c64xx_dvfs {
+ 	unsigned int vddarm_max;
+ };
  
--static inline bool tun_capable(struct tun_struct *tun)
-+static inline bool tun_not_capable(struct tun_struct *tun)
++#ifdef CONFIG_REGULATOR
+ static struct s3c64xx_dvfs s3c64xx_dvfs_table[] = {
+ 	[0] = { 1000000, 1150000 },
+ 	[1] = { 1050000, 1150000 },
+@@ -31,6 +32,7 @@ static struct s3c64xx_dvfs s3c64xx_dvfs_
+ 	[3] = { 1200000, 1350000 },
+ 	[4] = { 1300000, 1350000 },
+ };
++#endif
+ 
+ static struct cpufreq_frequency_table s3c64xx_freq_table[] = {
+ 	{ 0, 0,  66000 },
+@@ -51,15 +53,16 @@ static struct cpufreq_frequency_table s3
+ static int s3c64xx_cpufreq_set_target(struct cpufreq_policy *policy,
+ 				      unsigned int index)
  {
- 	const struct cred *cred = current_cred();
- 	struct net *net = dev_net(tun->dev);
+-	struct s3c64xx_dvfs *dvfs;
+-	unsigned int old_freq, new_freq;
++	unsigned int new_freq = s3c64xx_freq_table[index].frequency;
+ 	int ret;
  
--	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
--		return 1;
--	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
--		return 1;
--	if (gid_valid(tun->group) && in_egroup_p(tun->group))
--		return 1;
--	return 0;
-+	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
-+		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
-+		!ns_capable(net->user_ns, CAP_NET_ADMIN);
- }
++#ifdef CONFIG_REGULATOR
++	struct s3c64xx_dvfs *dvfs;
++	unsigned int old_freq;
++
+ 	old_freq = clk_get_rate(policy->clk) / 1000;
+-	new_freq = s3c64xx_freq_table[index].frequency;
+ 	dvfs = &s3c64xx_dvfs_table[s3c64xx_freq_table[index].driver_data];
  
- static void tun_set_real_num_queues(struct tun_struct *tun)
-@@ -2776,7 +2772,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
- 		    !!(tun->flags & IFF_MULTI_QUEUE))
- 			return -EINVAL;
- 
--		if (!tun_capable(tun))
-+		if (tun_not_capable(tun))
- 			return -EPERM;
- 		err = security_tun_dev_open(tun->security);
- 		if (err < 0)
--- 
-2.39.5
-
+-#ifdef CONFIG_REGULATOR
+ 	if (vddarm && new_freq > old_freq) {
+ 		ret = regulator_set_voltage(vddarm,
+ 					    dvfs->vddarm_min,
 
 
