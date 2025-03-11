@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B344C25E83B;
-	Tue, 11 Mar 2025 15:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DD825BACC;
+	Tue, 11 Mar 2025 15:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706216; cv=none; b=bq7UaDEt+CbbH811ryPKyoO6CnfrGfaswLVrxBZJcol4DGmDVTMCJsxr6BrmT8VPjCqdKTRtSMUGQdbjvMGOK9lkYEKwOA31QqTyzr9oQH8pImIbTTAjbclIE1yutudl/qDst35CmWeZ0oK1mOW7RnVcLWizCevLV0RW13Tut/c=
+	t=1741706219; cv=none; b=tVoMJfJKUr5wIyliwstmrWUgum1uzckaY6iCwA3XUV5c390yI/MepQjT4CvAMcHlwDeWKUBNdTDiQaXseXfxhME27su4v7HkQKrI2fsnEFQK3yctmmWXswGMSwDydFwnI4wRIAF4QaON4XAk6NucClxEd8q7F70tLm22cjGSGi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706216; c=relaxed/simple;
-	bh=2rOzjLWupE/+qGhGqGgEPmt+o6VKbyh8d7/z19yyLbg=;
+	s=arc-20240116; t=1741706219; c=relaxed/simple;
+	bh=JAomuqRT7RiwNi2PkFcuDGFeKAAHfsvriFsiS15YEHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRbWCAcsaHqLs/cP5WCa1qjWfp3HeNZizjBvQkPIOwt0LOx1NrDXprHVJdhcYP6Pwut4+cXsqDjNTLKOnSyMXrQ7T1ZipTsChClOEnfqLdj0uNHFrLn2ioqheEXAbOVS2qH2/c9pHvCQxJZyS9THd8SFkL9uw+wIRRVD5v1jJkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoFLoahm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QShtexyFuK8tMWYX3dkOudPylqvYyJhwnRwB8wRcx7+6tXhe+FiHQYS/xvLvoQpPIPr8Cmvb0QPSLWfXKetofaY3lRefP31bkt53kNkZ25uf1cZAYqyxQO0Wq4r06inrlAgxAPrHxtZkdGCmTwgOY/lgStj/jCWJp8vJ23/60SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDxUEESA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoFLoahm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8BDC4CEED;
-	Tue, 11 Mar 2025 15:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDxUEESA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA43C4CEE9;
+	Tue, 11 Mar 2025 15:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741706216;
-	bh=2rOzjLWupE/+qGhGqGgEPmt+o6VKbyh8d7/z19yyLbg=;
+	s=korg; t=1741706219;
+	bh=JAomuqRT7RiwNi2PkFcuDGFeKAAHfsvriFsiS15YEHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zoFLoahm+a2apKXfdRW2uC6JczY6GueouD0FfwMIRqHNAkIFqBQCpkVk4m9liHmGJ
-	 VjcHBmoXqCY9TLrcAT0tSuCafODStYCXmEAojATnu/ktuHSfqSs2MdP/AK5SzPA1PE
-	 rBm/j/QEi+GE1mjoPKe7Qdcvospv+mJIbLuqVcMM=
+	b=WDxUEESA6Tgbk3QP4oQfoOecW/dyr8khsnoTCX1poBlTtjg0x1RHRs+fH7MQbU9LO
+	 Ihl05hq9EiO06s+hXzuS5jK+3DRZZM52wH7KHcSQdxBj+OH5lycoTjMIz+MnjulC/i
+	 sO3etZ94XhphwkJ1vxlqgVeblTdR4+zKOJDuJMtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinghuo Chen <xinghuo.chen@foxmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 302/328] hwmon: fix a NULL vs IS_ERR_OR_NULL() check in xgene_hwmon_probe()
-Date: Tue, 11 Mar 2025 16:01:12 +0100
-Message-ID: <20250311145726.909443738@linuxfoundation.org>
+Subject: [PATCH 5.4 303/328] drm/sched: Fix preprocessor guard
+Date: Tue, 11 Mar 2025 16:01:13 +0100
+Message-ID: <20250311145726.950683818@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
 References: <20250311145714.865727435@linuxfoundation.org>
@@ -51,35 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xinghuo Chen <xinghuo.chen@foxmail.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit 10fce7ebe888fa8c97eee7e317a47e7603e5e78d ]
+[ Upstream commit 23e0832d6d7be2d3c713f9390c060b6f1c48bf36 ]
 
-The devm_memremap() function returns error pointers on error,
-it doesn't return NULL.
+When writing the header guard for gpu_scheduler_trace.h, a typo,
+apparently, occurred.
 
-Fixes: c7cefce03e69 ("hwmon: (xgene) access mailbox as RAM")
-Signed-off-by: Xinghuo Chen <xinghuo.chen@foxmail.com>
-Link: https://lore.kernel.org/r/tencent_9AD8E7683EC29CAC97496B44F3F865BA070A@qq.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fix the typo and document the scope of the guard.
+
+Fixes: 353da3c520b4 ("drm/amdgpu: add tracepoint for scheduler (v2)")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250218124149.118002-2-phasta@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/xgene-hwmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/gpu_scheduler_trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/xgene-hwmon.c b/drivers/hwmon/xgene-hwmon.c
-index f5d3cf86753f7..559a73bab51e8 100644
---- a/drivers/hwmon/xgene-hwmon.c
-+++ b/drivers/hwmon/xgene-hwmon.c
-@@ -719,7 +719,7 @@ static int xgene_hwmon_probe(struct platform_device *pdev)
- 			goto out;
- 		}
+diff --git a/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h b/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
+index d79086498affe..4fe2a87705040 100644
+--- a/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
++++ b/drivers/gpu/drm/scheduler/gpu_scheduler_trace.h
+@@ -21,7 +21,7 @@
+  *
+  */
  
--		if (!ctx->pcc_comm_addr) {
-+		if (IS_ERR_OR_NULL(ctx->pcc_comm_addr)) {
- 			dev_err(&pdev->dev,
- 				"Failed to ioremap PCC comm region\n");
- 			rc = -ENOMEM;
+-#if !defined(_GPU_SCHED_TRACE_H) || defined(TRACE_HEADER_MULTI_READ)
++#if !defined(_GPU_SCHED_TRACE_H_) || defined(TRACE_HEADER_MULTI_READ)
+ #define _GPU_SCHED_TRACE_H_
+ 
+ #include <linux/stringify.h>
+@@ -96,7 +96,7 @@ TRACE_EVENT(drm_sched_job_wait_dep,
+ 		      __entry->seqno)
+ );
+ 
+-#endif
++#endif /* _GPU_SCHED_TRACE_H_ */
+ 
+ /* This part must be outside protection */
+ #undef TRACE_INCLUDE_PATH
 -- 
 2.39.5
 
