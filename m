@@ -1,324 +1,170 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2062.outbound.protection.outlook.com [40.107.93.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3D7243965
-	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 12:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741784350; cv=none; b=T/Kjr0oCnLcN8WawxMVRE/ME50050Bnl2Iv+9iraBiiIc5TcSeIaFLcj5I+T0bCz07HzEa27I7sRk9kPbXfIUoBR+kd+IXTHmC33Zaa8TFx/TxR7yMv0ZnNCZ1VbPeJH4I1HVEnbIHC02a62kC1cnqYQka4akot22hOdOi67vzg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741784350; c=relaxed/simple;
-	bh=OXwVk7cSVE+TDqEc3HVraviwVrXEEbqZxuHx7kPXpwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N3bu1vKa0pFdhGXe2Je4/+jHD9iZpz38QzZPT5OKCQuXcp+/6To54TJJRC2ARVtAE9jf6c3TDFlE6TcnODDfAp9yjQZDSfRX1CRo8ZD45uUGBVYlE7ZDXYYDT/Ei7eh3ASvkrTj1S69qToKq3mFaU0L7zMc0MpbdadNZnbIyQa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D9Qz6xkS; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE9B1C5F0E;
+	Wed, 12 Mar 2025 16:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741795923; cv=fail; b=hl+P3QkcqA0Zd2Y80BveSgFYRMQfCw2DeQWZQsmJIa+WaU8orJUutLJ2EGuk5u7OH9oGTIhiT4xdCwDMXBopEyduBBe3PmY1HqJ3faj9/HaXoPAgK8veEjAzUFyzDecokSauOf4JP4TXICj/3ErRUngc9fh3CSYDAdDB+uRwer0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741795923; c=relaxed/simple;
+	bh=wn2S7zuTKMr0kXE4Nub6Z0wrF66o9WMsc7lVxtgT7lU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ueXbDL4wfTlLEl9KS94ufT+ijkoTAHyNhdaT2zBSiolxdhp2KUXZhAvLleW2EZturSGZM2d87pTFjt3TaV0p81ld2DRxoODJEXiX0UG45CxEMarXL12DUHEiUl+UsHdC6Iu2Bs5lzf5c7MsK+WEgc+OnWKdyzPPQ/nm8qu9Lyf8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rnXY6dOZ; arc=fail smtp.client-ip=40.107.93.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D9Qz6xkS"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-438d9c391fcso45265e9.0
-        for <patches@lists.linux.dev>; Wed, 12 Mar 2025 05:59:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741784345; x=1742389145; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4hVHQpBdFL8A1OMCaWXXGUDiGHIY98dt+fAh5aFuAqk=;
-        b=D9Qz6xkSOrH0IqrYZ9Obk6GawBoUfMbuO9z0siGRbezV/t7WTxAeeo74IEkSQsF+Bk
-         2PJSFo5Wnlt6UGbdLC8sBs1CUAFFqOPceQSVAAgswovtLCJg/iaovRMXhGuk3jOjGR3n
-         OivJNmEUgeRDXLnFH6Xc2Ku4t4L01dMe6iHMbCff+5Mty4681527opc+0LSSIeoG16Od
-         DhJYVZ6ngaWDld8kPGjZnmdIBJ3ZEtSrRS3PHlc22EHemD1YwW/BUSe7IOuNyvSRrlM3
-         +qW1p5njtIaqyQ3rb7Sp844lCJCqOkMnJ2Crf3mBY7eHbxCWoIhuHkNuh6Sh29iwzdk2
-         LY5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741784345; x=1742389145;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4hVHQpBdFL8A1OMCaWXXGUDiGHIY98dt+fAh5aFuAqk=;
-        b=Ydqwz+qnsHymlx0nBZ3UaQ3D+aNq7AqLmcESXK2FSgha1vvY5elxejCqSidARvtKIs
-         AkouxodcNYZDsl+PO/Zhk9LBUEEn+grmpntTt32wAUC5t1IExg7F4St2TdEJM8ZzoJZb
-         75s7yDLwzUt4N3JbpC1KKaN1kqAxxRCgn6Q+LU9gUKxCrpZt/dJhYLVl0HO8i5eAMHew
-         lEC6WwqtJdQfnJv6AHA0n0tEPEHenJzTGV+GW1OhB06zCpdkETjfj12GlZRvQyGTqYiQ
-         Yh4FfDHf3VdTNU8XZcRUOLDHeJ1fFjn7D6fSEY27rxSTPrZvB98oBhCy7Y1um4YejFio
-         oJvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWR2xeKt+NwtHnLBwctUZxM3pj9gWvM5Tkc6XuEft4iop3B+XcX7wdGfB2eRSKHuKRd1e64LVGZ@lists.linux.dev
-X-Gm-Message-State: AOJu0YysbbNj8MXpQUzJoNVm0ydNgA9TVAvfmG9w6mVVEEKkSfMZwrzc
-	Cie6EQ6czmbVUJfLQlXrLw5T0dgKRz7vPmCZ2UczZqTuA3HD1bumKwWVwvUccw==
-X-Gm-Gg: ASbGnctSl9ocUEECJY2+AN2zY5EIvR5wL0Sp2HipjVjXm7X+TcvWnorgukh7v5g6OCZ
-	YP/BejUHOv92dQSG7FEzvPLz7EbuBWtBTqjBvqbNJTlUEJAaFo1bbZiOzSOffFlWRHvqCuORABd
-	DJtMRn3xt2/B+QtI8NykJ2suoWycvj5EmlgN5dmn2vqDtMkOUz7gc6TACKK7W+67as7LFagS2Om
-	P3OzIG4ivAY9ugv4eFanvjADn1DI3nTx8IZMTWapqa8DDpVXgSjOMufSIhe5kpq7W0jNJX76tOb
-	OXayrqN2bAwbefFCwKr43YDYd5tmSbz9bhGoDnU+5MSH50rffVVEHSqMd16OcLuNFQy+wbRjX8A
-	Xy2nu
-X-Google-Smtp-Source: AGHT+IGv3VwL/nDTfZJkT02Z+Ln6cpEc0JtjX8qb40ZbVAGSWsBoi80OOQ8vIb/VOjdd5NkKwgkkDw==
-X-Received: by 2002:a05:600c:1c11:b0:439:9434:1b66 with SMTP id 5b1f17b1804b1-43d0a5e3299mr1028055e9.1.1741784344924;
-        Wed, 12 Mar 2025 05:59:04 -0700 (PDT)
-Received: from google.com (88.140.78.34.bc.googleusercontent.com. [34.78.140.88])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3947a24449bsm1688998f8f.45.2025.03.12.05.59.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 05:59:04 -0700 (PDT)
-Date: Wed, 12 Mar 2025 12:59:00 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hector Martin <marcan@marcan.st>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Krishna Reddy <vdumpa@nvidia.com>, Chen-Yu Tsai <wens@csie.org>,
-	Will Deacon <will@kernel.org>, Bagas Sanjaya <bagasdotme@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	David Rientjes <rientjes@google.com>,
-	Matthew Wilcox <willy@infradead.org>
-Subject: Re: [PATCH v3 20/23] iommu: Update various drivers to pass in lg2sz
- instead of order to iommu pages
-Message-ID: <Z9GFFBvUFg7a9WEg@google.com>
-References: <0-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
- <20-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rnXY6dOZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fHpqJNHGjq5Djz9Bfh8iL7H7/cAnh3RFD3hAeOlGPUJC93t4WSmYowu15R8kZxTqODsvUlDw4Dp4083jxFwytT/wOdZHHgKOgmrGpecxCFUN0uH672qZ/ybErln+FML0oAEQ9MXacWAlKuuHjsW7MMZM4DCm5JTrI3djlxh9edMj2hQOAM75C3UjO1cao3NyJg9tNEMt5iWVg4A80aVYCIcEONI2dUHsQ5a00cm7m1+ncDHg/MP1nZbTpZITXH914E8M2/T/a9g4yWynTdfh2Qotcz5zOqrCpQD0fth1ALCD/D/P4ukjFMDYeABxMcvWYlI6WiYsTdPNslu36EUhWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gpnmuU6UnZU/vhW0oJrfVwZD1paxBq+c03L92hggNdo=;
+ b=bEYMBc3GV3xNxg89trPLJ8GpvdhxWegRDkYwOS2N2hIH3ZkHBnw56FRzJKIoo2Tbp1OkEgLnqCsolKObiIsyxCS+36vHs4ulGGu0/okNhV/8lxW3GZw6aJSJwlGFrNbTXQOouzpsy2v8VYmVGdVPtfz7eekXZw3ajSn6/gYYjx+W67ooI3LqESMk2r+G+DYXdBXToemMnP44/1dbu5buVfqhuQl+rkGvI/93PBYoGwYS7hFuEsi/50bvwYYP9lYfJ7G6wL0wjJQOaEQJWQ0STH1uRZ+gpH2SvWmTAnlA0DEEsG2jMkZZxt2NnDz/+C57iKnt6b0f9SWDOK8+EqU/Nw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gpnmuU6UnZU/vhW0oJrfVwZD1paxBq+c03L92hggNdo=;
+ b=rnXY6dOZglEmT+ZzXyoo5BkUKZxHkdJ/BCpJyyj8zhqOiqU/m4KvMgkY2pgvhfsg676ol7UjGklYzCHakyCXCjAufBKZPF7nPzM0dKOCYWyTZJN/CUpo90lIAgjtF8XE38qGVS1PM8vFxTX3GwgTtfTHKAj2LXHX24KF9qznXjwyBAbWNVjsDJ5gzcuQPA0UriIPzFFCq/kzM+M4jvk6xvSA2nhROA3qb8di3H/GYII//ULzxWh1PU6JKsDnspTw9V4mR11kTzn50MGkbtmy6M6LM3Qx0UBC4b7kaA4ElJsy8NRfbOJHFQ7eHZYDzvGE9f1jpo4HdTtMVOy2wwOlYw==
+Received: from BL1PR13CA0277.namprd13.prod.outlook.com (2603:10b6:208:2bc::12)
+ by MW4PR12MB7438.namprd12.prod.outlook.com (2603:10b6:303:219::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Wed, 12 Mar
+ 2025 16:11:55 +0000
+Received: from BL02EPF0002992A.namprd02.prod.outlook.com
+ (2603:10b6:208:2bc:cafe::65) by BL1PR13CA0277.outlook.office365.com
+ (2603:10b6:208:2bc::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.25 via Frontend Transport; Wed,
+ 12 Mar 2025 16:11:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BL02EPF0002992A.mail.protection.outlook.com (10.167.249.55) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8534.20 via Frontend Transport; Wed, 12 Mar 2025 16:11:55 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 12 Mar
+ 2025 09:11:36 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 12 Mar
+ 2025 09:11:35 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 12 Mar 2025 09:11:34 -0700
+Date: Wed, 12 Mar 2025 09:11:27 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Alexey Kardashevskiy <aik@amd.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <joro@8bytes.org>,
+	<suravee.suthikulpanit@amd.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+	<dwmw2@infradead.org>, <shuah@kernel.org>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <baolu.lu@linux.intel.com>,
+	<eric.auger@redhat.com>, <jean-philippe@linaro.org>, <mdf@kernel.org>,
+	<mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
+	<smostafa@google.com>, <yi.l.liu@intel.com>, <zhangfei.gao@linaro.org>,
+	<patches@lists.linux.dev>, Jason Gunthorpe <jgg@nvidia.com>
+Subject: Re: [PATCH v7 00/10] iommufd: Add vIOMMU infrastructure (Part-2:
+ vDEVICE)
+Message-ID: <Z9GyL0Cvzf0/imHU@Asurada-Nvidia>
+References: <cover.1730836308.git.nicolinc@nvidia.com>
+ <20241112174507.GA35230@nvidia.com>
+ <da17905b-f877-477f-bbca-9f9ba3483c05@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+In-Reply-To: <da17905b-f877-477f-bbca-9f9ba3483c05@amd.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0002992A:EE_|MW4PR12MB7438:EE_
+X-MS-Office365-Filtering-Correlation-Id: 733a67ae-ab06-44be-a3e0-08dd61809bf4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|36860700013|376014|82310400026|7416014|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?ZUxVWR2OthR3I3SOo1kYtMEsI379fAFrCciSihGgqDEasQ7MXVeBRyBeOtLz?=
+ =?us-ascii?Q?uNpGvETWNyMF7zCdWjvc2dMqkZjVeZTWc0xH9Jji0/FYxh92vwmk+WizWilV?=
+ =?us-ascii?Q?AiDVfNz15W4ILVD5psq7jvT+y6dxdLc187eGCfC7kBua0naJYUgAEbWhMgw7?=
+ =?us-ascii?Q?fM4sgV2s9BnNWwlu6lrXQlliXwGKhxBn8tWDJXB46en9Nn5GNSvwrTqSXWEd?=
+ =?us-ascii?Q?8j636Zw9qhfMa2h1JZGlFgOXnlFcTOaMCIo4nNcxLFUuviP4IlaGvLxO0OFm?=
+ =?us-ascii?Q?+FlFZURrzBTHdxF+umnxWMbKC7M9PCUDLBJZmUAOezeGVhu3/DeyXygTY1BI?=
+ =?us-ascii?Q?IdCJ5txKtct5BZVXri5z5EJ/Jl4vkKoOSwcuackxOi2+dFzzcusr6mSGg2Qw?=
+ =?us-ascii?Q?cRuS8gxL9lRNXxTeCXfmALZjZhc1D3rKsYVWPFtMHWyh9ty9XRXS9dO8F2ob?=
+ =?us-ascii?Q?S8wUfabui3Kt8AFUDh5NMSz/ZdxQPGMi6dWlAOV6U2KTOKuE5o9o8TlHEVam?=
+ =?us-ascii?Q?8cwtB19cAXEoEdN9UmIoJjRmqK86vQdhUV62fHHuZtKR9HizGwXXjKyBuuBg?=
+ =?us-ascii?Q?CfVqS1/NYkTnUIxuwXubVvV7LBbhMsWLFg4SH2JgGP9K0kOxVKKwyk2jUZv3?=
+ =?us-ascii?Q?02UOJ0bjLzToFRcz+NAaZ+vId56Y3809HDD/0vQiZxMlPye+jmfHCiEzXPqA?=
+ =?us-ascii?Q?5U1Ht6b/FPl8yzUmG4ssCIhRcW8YFoVk6+Q7lFxHf4rLab3KSeFHzZ59IL1U?=
+ =?us-ascii?Q?zTlrzTRXlQ/MnW/aHRCSCD1jMIC9Myb8q0VJ7UKctmP3ANxgxvHVeM2KRXwy?=
+ =?us-ascii?Q?1HL4mTut8A2L2vZIsETd22FO0X1FDf14Q0SkB/vXeAV52LsMt/k7SBjAilV8?=
+ =?us-ascii?Q?MKQiBRq55Q7PoEU1iHS8v6d8ehJxY6SN94UzYeCRbYkTlg9I7vHniGyWodkH?=
+ =?us-ascii?Q?af/chIVFDaDTlAvYxxOG0hhEqrHn89/qJC5N8M9LmVgpaplELHZOwc/jq4sr?=
+ =?us-ascii?Q?4QxC68CZERfOMtT6q2Y6RJUeZ4AHPfziToBdAS7aqOR7MboHG7cS1fCU67kf?=
+ =?us-ascii?Q?ouY+VQxNgTlZ5GuitaqqVjlXLYYKNx0gmAWIeIqFF/jWtQKVKaChiNK8FWTL?=
+ =?us-ascii?Q?92Vuu5mGIN1PyQDBIo/DlGZUw9uv5qL4TcVDE8K3D2TP5S+zeOLMZdEe5PS2?=
+ =?us-ascii?Q?y1hKVOJEU0UM+150GgcINpPU43J/P/mZdJ9w7qVxox4B8LeyV9klFK9i4EXx?=
+ =?us-ascii?Q?gc5R5W06Lw73NZWV/PHvQaPz/NWYr2+glddRbc/05/Yc7VkzInhjaXRXPJpR?=
+ =?us-ascii?Q?4DaQdN5J6RLvC6wecPZJMTjtlw3r+Eou1pZ/0LD9L2YObQ3+U5UQ3T2FZMbX?=
+ =?us-ascii?Q?tlgz9ptlmLuAMzbFE2qjRavm34xhHAknM/lwEzet9rprM4B7ILg0seX6Vt89?=
+ =?us-ascii?Q?uF7FM5zzzIwQG4ICZDuheaXfKhSl/tRl1VzqqI/ML1Bu88CwLVJeT/VXQh7v?=
+ =?us-ascii?Q?VFOM8gUYxGzJCvI=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026)(7416014)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Mar 2025 16:11:55.4656
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 733a67ae-ab06-44be-a3e0-08dd61809bf4
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0002992A.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7438
 
-On Tue, Feb 25, 2025 at 03:39:37PM -0400, Jason Gunthorpe wrote:
-> Convert most of the places calling get_order() as an argument to the
-> iommu-pages allocator into order_base_2() or the _sz flavour
-> instead. These places already have an exact size, there is no particular
-> reason to use order here.
+On Wed, Mar 12, 2025 at 04:27:55PM +1100, Alexey Kardashevskiy wrote:
+> On 13/11/24 04:45, Jason Gunthorpe wrote:
+> > On Tue, Nov 05, 2024 at 12:05:08PM -0800, Nicolin Chen wrote:
+> > > Jason Gunthorpe (1):
+> > >    iommu: Add iommu_copy_struct_from_full_user_array helper
+> > > 
+> > > Nicolin Chen (9):
+> > >    iommufd/viommu: Add IOMMUFD_OBJ_VDEVICE and IOMMU_VDEVICE_ALLOC ioctl
+> > >    iommufd/selftest: Add IOMMU_VDEVICE_ALLOC test coverage
+> > >    iommu/viommu: Add cache_invalidate to iommufd_viommu_ops
+> > >    iommufd: Allow hwpt_id to carry viommu_id for IOMMU_HWPT_INVALIDATE
+> > >    iommufd/viommu: Add iommufd_viommu_find_dev helper
+> > >    iommufd/selftest: Add mock_viommu_cache_invalidate
+> > >    iommufd/selftest: Add IOMMU_TEST_OP_DEV_CHECK_CACHE test command
+> > >    iommufd/selftest: Add vIOMMU coverage for IOMMU_HWPT_INVALIDATE ioctl
+> > >    Documentation: userspace-api: iommufd: Update vDEVICE
+> > 
+> > Applied to iommufd for-next
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/amd/init.c        | 29 +++++++++++++++--------------
->  drivers/iommu/intel/dmar.c      |  6 +++---
->  drivers/iommu/io-pgtable-arm.c  |  3 +--
->  drivers/iommu/io-pgtable-dart.c | 12 +++---------
->  drivers/iommu/sun50i-iommu.c    |  4 ++--
->  5 files changed, 24 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-> index e3f4283ebbc201..a5720df7b22397 100644
-> --- a/drivers/iommu/amd/init.c
-> +++ b/drivers/iommu/amd/init.c
-> @@ -635,8 +635,8 @@ static int __init find_last_devid_acpi(struct acpi_table_header *table, u16 pci_
->  /* Allocate per PCI segment device table */
->  static inline int __init alloc_dev_table(struct amd_iommu_pci_seg *pci_seg)
->  {
-> -	pci_seg->dev_table = iommu_alloc_pages(GFP_KERNEL | GFP_DMA32,
-> -					       get_order(pci_seg->dev_table_size));
-> +	pci_seg->dev_table = iommu_alloc_pages_sz(GFP_KERNEL | GFP_DMA32,
-> +						  pci_seg->dev_table_size);
->  	if (!pci_seg->dev_table)
->  		return -ENOMEM;
->  
-> @@ -716,8 +716,7 @@ static void __init free_alias_table(struct amd_iommu_pci_seg *pci_seg)
->   */
->  static int __init alloc_command_buffer(struct amd_iommu *iommu)
->  {
-> -	iommu->cmd_buf = iommu_alloc_pages(GFP_KERNEL,
-> -					   get_order(CMD_BUFFER_SIZE));
-> +	iommu->cmd_buf = iommu_alloc_pages_sz(GFP_KERNEL, CMD_BUFFER_SIZE);
->  
->  	return iommu->cmd_buf ? 0 : -ENOMEM;
->  }
-> @@ -820,14 +819,16 @@ static void __init free_command_buffer(struct amd_iommu *iommu)
->  void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
->  				  size_t size)
->  {
-> -	int order = get_order(size);
-> -	void *buf = iommu_alloc_pages(gfp, order);
-> +	void *buf;
->  
-> -	if (buf &&
-> -	    check_feature(FEATURE_SNP) &&
-> -	    set_memory_4k((unsigned long)buf, (1 << order))) {
-> +	size = PAGE_ALIGN(size);
-> +	buf = iommu_alloc_pages_sz(gfp, size);
-> +	if (!buf)
-> +		return NULL;
-> +	if (check_feature(FEATURE_SNP) &&
-> +	    set_memory_4k((unsigned long)buf, size / PAGE_SIZE)) {
->  		iommu_free_pages(buf);
-> -		buf = NULL;
-> +		return NULL;
->  	}
->  
->  	return buf;
-> @@ -922,11 +923,11 @@ static int iommu_init_ga_log(struct amd_iommu *iommu)
->  	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
->  		return 0;
->  
-> -	iommu->ga_log = iommu_alloc_pages(GFP_KERNEL, get_order(GA_LOG_SIZE));
-> +	iommu->ga_log = iommu_alloc_pages_sz(GFP_KERNEL, GA_LOG_SIZE);
->  	if (!iommu->ga_log)
->  		goto err_out;
->  
-> -	iommu->ga_log_tail = iommu_alloc_pages(GFP_KERNEL, get_order(8));
-> +	iommu->ga_log_tail = iommu_alloc_pages_sz(GFP_KERNEL, 8);
->  	if (!iommu->ga_log_tail)
->  		goto err_out;
->  
-> @@ -1021,8 +1022,8 @@ static bool __copy_device_table(struct amd_iommu *iommu)
->  	if (!old_devtb)
->  		return false;
->  
-> -	pci_seg->old_dev_tbl_cpy = iommu_alloc_pages(GFP_KERNEL | GFP_DMA32,
-> -						     get_order(pci_seg->dev_table_size));
-> +	pci_seg->old_dev_tbl_cpy = iommu_alloc_pages_sz(
-> +		GFP_KERNEL | GFP_DMA32, pci_seg->dev_table_size);
->  	if (pci_seg->old_dev_tbl_cpy == NULL) {
->  		pr_err("Failed to allocate memory for copying old device table!\n");
->  		memunmap(old_devtb);
-> diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-> index c812c83d77da10..4c7ce92acf6976 100644
-> --- a/drivers/iommu/intel/dmar.c
-> +++ b/drivers/iommu/intel/dmar.c
-> @@ -1681,7 +1681,6 @@ int dmar_enable_qi(struct intel_iommu *iommu)
->  {
->  	struct q_inval *qi;
->  	void *desc;
-> -	int order;
->  
->  	if (!ecap_qis(iommu->ecap))
->  		return -ENOENT;
-> @@ -1702,8 +1701,9 @@ int dmar_enable_qi(struct intel_iommu *iommu)
->  	 * Need two pages to accommodate 256 descriptors of 256 bits each
->  	 * if the remapping hardware supports scalable mode translation.
->  	 */
-> -	order = ecap_smts(iommu->ecap) ? 1 : 0;
-> -	desc = iommu_alloc_pages_node(iommu->node, GFP_ATOMIC, order);
-> +	desc = iommu_alloc_pages_node_sz(iommu->node, GFP_ATOMIC,
-> +					 ecap_smts(iommu->ecap) ? SZ_8K :
-> +								  SZ_4K);
->  	if (!desc) {
->  		kfree(qi);
->  		iommu->qi = NULL;
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 08d0f62abe8a09..d13149ec5be77e 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -263,14 +263,13 @@ static void *__arm_lpae_alloc_pages(size_t size, gfp_t gfp,
->  				    void *cookie)
->  {
->  	struct device *dev = cfg->iommu_dev;
-> -	int order = get_order(size);
->  	dma_addr_t dma;
->  	void *pages;
->  
->  	if (cfg->alloc)
->  		pages = cfg->alloc(cookie, size, gfp);
->  	else
-> -		pages = iommu_alloc_pages_node(dev_to_node(dev), gfp, order);
-> +		pages = iommu_alloc_pages_node_sz(dev_to_node(dev), gfp, size);
+> Is QEMU support coming soon, or any WIP patches to try? I am trying
+> d0375b6e85be5c71 from Nicolin's wip/for_iommufd_veventq-v9 for now. Thanks,
 
-Although, the current implementation of iommu_alloc_pages_node_sz() would round
-the size to order, but this is not correct according to the API definition
-"The returned allocation is round_up_pow_two(size) big, and is physically aligned
-to its size."
+Shameer sent RFCv2 recently:
+https://lore.kernel.org/qemu-devel/20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com/
 
-SMMUv3 has special alignment with small number of entries at the start level,
-according the manual:
-	A 64-byte minimum alignment on starting-level translation table addresses
-	is imposed when TG0 selects 64KB granules and the effective IPS value
-	indicates 52-bit output. In this case bits [5:0] are treated as zero.
-
-And according to the Arm Arm (ex D24.2.195 in Version L)
-	- Bits A[(x-1):0] of the stage 1 translation table base address are zero.
-	... The smallest permitted value of x is 5.
-Which 32 bytes
-
-For a case as (which is valid in Linux)
-- S1 with IAS 40-bits and 4K, start level has 2 entries (16 bytes) but alignment
-  must be at least 32 bytes.
-
-- Similarly with 16K and 48 bits.
-
-I'd say we can align the size or use min with 64 bytes before calling the
-function would be enough (or change the API to state that allocations
-are rounded to order)
-
-Thanks,
-Mostafa
-
->  
->  	if (!pages)
->  		return NULL;
-> diff --git a/drivers/iommu/io-pgtable-dart.c b/drivers/iommu/io-pgtable-dart.c
-> index ebf330e67bfa30..a0988669bb951a 100644
-> --- a/drivers/iommu/io-pgtable-dart.c
-> +++ b/drivers/iommu/io-pgtable-dart.c
-> @@ -107,13 +107,6 @@ static phys_addr_t iopte_to_paddr(dart_iopte pte,
->  	return paddr;
->  }
->  
-> -static void *__dart_alloc_pages(size_t size, gfp_t gfp)
-> -{
-> -	int order = get_order(size);
-> -
-> -	return iommu_alloc_pages(gfp, order);
-> -}
-> -
->  static int dart_init_pte(struct dart_io_pgtable *data,
->  			     unsigned long iova, phys_addr_t paddr,
->  			     dart_iopte prot, int num_entries,
-> @@ -255,7 +248,7 @@ static int dart_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
->  
->  	/* no L2 table present */
->  	if (!pte) {
-> -		cptep = __dart_alloc_pages(tblsz, gfp);
-> +		cptep = iommu_alloc_pages_sz(gfp, tblsz);
->  		if (!cptep)
->  			return -ENOMEM;
->  
-> @@ -412,7 +405,8 @@ apple_dart_alloc_pgtable(struct io_pgtable_cfg *cfg, void *cookie)
->  	cfg->apple_dart_cfg.n_ttbrs = 1 << data->tbl_bits;
->  
->  	for (i = 0; i < cfg->apple_dart_cfg.n_ttbrs; ++i) {
-> -		data->pgd[i] = __dart_alloc_pages(DART_GRANULE(data), GFP_KERNEL);
-> +		data->pgd[i] =
-> +			iommu_alloc_pages_sz(GFP_KERNEL, DART_GRANULE(data));
->  		if (!data->pgd[i])
->  			goto out_free_data;
->  		cfg->apple_dart_cfg.ttbr[i] = virt_to_phys(data->pgd[i]);
-> diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> index 6385560dbc3fb0..76c9620af4bba8 100644
-> --- a/drivers/iommu/sun50i-iommu.c
-> +++ b/drivers/iommu/sun50i-iommu.c
-> @@ -690,8 +690,8 @@ sun50i_iommu_domain_alloc_paging(struct device *dev)
->  	if (!sun50i_domain)
->  		return NULL;
->  
-> -	sun50i_domain->dt = iommu_alloc_pages(GFP_KERNEL | GFP_DMA32,
-> -					      get_order(DT_SIZE));
-> +	sun50i_domain->dt =
-> +		iommu_alloc_pages_sz(GFP_KERNEL | GFP_DMA32, DT_SIZE);
->  	if (!sun50i_domain->dt)
->  		goto err_free_domain;
->  
-> -- 
-> 2.43.0
-> 
+Thanks
+Nicolin
