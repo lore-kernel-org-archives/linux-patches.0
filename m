@@ -1,163 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5131B6CF1;
-	Wed, 12 Mar 2025 08:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E692343B6
+	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 09:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741769711; cv=none; b=ufHJPabCJteXxC0pxCEAt5EwMgl5zjJ+rYAXMVSedwUuwCZsCDqMrt/6s3WK16sbnU7OVruiNK7Z4rH/RjvY32mZskc46uKQ+vMFxc8gHgvJ31DtzNFS9b/jgHyXp86BcBOqmOITSQkmj3rS6VlcnjSnnfx39TPvCu0u0ajhSRc=
+	t=1741772117; cv=none; b=Cs25GoKYlLb37JhF4hSEFlAhJNrxDu2zQzJRYxMQ2B8SygGS5uEJhj/4cP5frBDpN0oHooZRQg6ANBZyl8RyL7cLI4lWAFC+jjtMJUzwEjLiLQUXpGfMXAWJdgaZ3xx0ziAS+dy2v0Wq5HVsTmdJbWntkK6n0T614YJ9O/q59MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741769711; c=relaxed/simple;
-	bh=S1tFmuXwGba1cP+NtLc50X0fV+fYWhECovNzMFafSUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pAjMbfSEVhjHsgbYEGOePH2P3o1yyB48X6P+/ho5cC300WHuKE6RGTNrz88ui6/8SrD/EIavTkgiJQDNSEkDdnoy+p1mqNRwSpPF8KNx3niPm7hpyQVkyvhKqJea+tZY7ykbltM9oZYMuZWqg4esAmUA2TMeUODpe3JKrcrDfOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkYlsS2w; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741772117; c=relaxed/simple;
+	bh=PmzjR4Cpz/cGaEj6B7a8P4PKsIGJbrlzZH11KwxHt3Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uqMI0SUNmK2u4b3daPg+R5HppxQE91DQDhNwDDtW/1a1rFuT3mL5+2Ars3y70MGlKWAtWIFfUsLh27ykGhJzsnnKLPPVdV31AcK/eIkdbG/2ZwQaXH6yECA2TZPnfcb+ZfkVnDV+7/euvNRoznWxeqGt4sVcDe0YLeXsg8XMZEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DcZxW3V1; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkYlsS2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADBEC4CEE3;
-	Wed, 12 Mar 2025 08:55:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741769710;
-	bh=S1tFmuXwGba1cP+NtLc50X0fV+fYWhECovNzMFafSUc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QkYlsS2w3Cs4I5KMVQgmx7RuT/R5QlhPnW2BCqDaUrJug92bdyIPPjCUYgZdk4T8g
-	 3ztoLBveYNRQc1qw8jkyYyP3u7tP4wHmYlA7UFewk+N6N8n0xTpVqV8yzZowlwHpNJ
-	 wuGRY1U0HTP7f+TUTAEXIMy0mDH1STSi9b+J0ieA=
-Date: Wed, 12 Mar 2025 09:55:07 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: David Woodhouse <dwmw2@infradead.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Ingo Molnar <mingo@kernel.org>,
-	Baoquan He <bhe@redhat.com>, Vivek Goyal <vgoyal@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [EXTERNAL] [PATCH 6.13 089/443] x86/kexec: Allocate PGD for
- x86_64 transition page tables separately
-Message-ID: <2025031235-universal-volumes-a2ce@gregkh>
-References: <20250213142440.609878115@linuxfoundation.org>
- <20250213142444.044525855@linuxfoundation.org>
- <c4a1af46f7edcdf20274e384ec3b48781a350aaa.camel@infradead.org>
- <2025031203-scoring-overpass-0e1a@gregkh>
- <CAMj1kXH6oWVkUeU6+JYCuarzc5+AQxfyBzehfmLFRdKXg86qaA@mail.gmail.com>
- <2025031218-cardboard-pushcart-4211@gregkh>
- <CAMj1kXG6HRbQG2XJk=-TOZpDsKMAeVZ0=JO=8KLZ0-YFu2v_tw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DcZxW3V1"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ff6ae7667dso12326699a91.0
+        for <patches@lists.linux.dev>; Wed, 12 Mar 2025 02:35:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741772114; x=1742376914; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ttwRvArVp1ym17d1zB0rA2V5k7MFc9PYa4gsOt24iR8=;
+        b=DcZxW3V1nTnH5kiZg1i6B+PEc5PbpnibJeao47zpFncF7vwFNZWsIrst011Fp9PJtB
+         iXJQuB0vX57sY1j3gppdhsDqq03NGK57s1lRZTY5NbLiqJL29voJxmxmwx+Pshy2IhpH
+         aNux1JwaNw1w2WfsuIvxNXBgI/XfHMucy40sp5GCk2vJShQPxvz1wW837+S9Q9rPzxiN
+         3rpr0G9/Km5q5X1K5LU8S1Yjd+EasO0SNK0PAeYBsMqvMaWw3MXajqT8in2u3XvacPfN
+         0mr8Kn1k8T62EtUWAxVFpaKxp2LJWB8o2d/x2xAsbwJHgiIFs9FCemePx4oxD6tMos1z
+         NBHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741772114; x=1742376914;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ttwRvArVp1ym17d1zB0rA2V5k7MFc9PYa4gsOt24iR8=;
+        b=v2W7R6PcJOkWNFJzUb9GSpslF+NtNu63MsedWjZWKtBnIc0Ra6hGMcFPSjiba1nm+0
+         EsYz2vm13Va8GnMXAcW79/Kqbh7RC1MwPZjmjl4SJkrnO9918QYfnMJAWYNsupATiZCt
+         wOG63qcbFqKYUMToTRQywd4CXvax84lK7gmTvRLQ1vQMm1c6Hr8h7RZQ6aZPe4565Oah
+         rmzDQlcpFnnimmsL+YDAhJZMnO9lT9lghYbEp8Xolvfc/ITW7s1ImLPzfiXT/BLz7gwZ
+         AWWCg7kQOpUeSETLm1+Fzxg70CRMlLB21dvMNJk6NtvksWL6SzYvWcFvJuzreS3JbyDj
+         wD9A==
+X-Forwarded-Encrypted: i=1; AJvYcCXQHOCAAISh8dtvKYaSV932asyqKvHwLhpkGgJ9E9koF8IfTwrfC8DJkgwo3WIIXhcTNiggAlxc@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4nEoyYOQLMj0CTsbxUlm4wfigSictcCh2csMvuLCcTTSuunCH
+	JcYKUYmmutVQrlMfd7J+V3d0EG2ZsDPWJR7/FZCkbFfhIuBhw7XNdnbTv4qyKwAVB4/BLZt0KDj
+	XLcju0SoGbW4qDFpA6VcPTsIj578GmRpRAfVgsg==
+X-Gm-Gg: ASbGncvO0RMfFh7Snk55Tx2Dph1oi4x4reWblLTtXA3v0iFfWdrkIzGA7yAjNkdi1IM
+	QS/HlLWNhITDB7K+J9zEtWhHaJoavRagBX9bA9INTuDGLELjT0+BWJsEr77/Ib3jNAIsL+/Svun
+	BMLU5NrV7oE+aL/GLMA2jgUCuoIiU=
+X-Google-Smtp-Source: AGHT+IEYSRe0gRR5yo1g7wU440dBsuRnZCe/vswTvp6uZ5rlXqRYBZ9uB2Uyw4ni/IgE8JGFvBGWEL/ibOE2TyQi0Es=
+X-Received: by 2002:a17:90a:bb8d:b0:2fe:b016:a6ac with SMTP id
+ 98e67ed59e1d1-2ff7cf5f7aemr32864523a91.15.1741772114286; Wed, 12 Mar 2025
+ 02:35:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXG6HRbQG2XJk=-TOZpDsKMAeVZ0=JO=8KLZ0-YFu2v_tw@mail.gmail.com>
+References: <20250311144241.070217339@linuxfoundation.org> <2b269f01-e508-4940-81ea-31c5cd961bb1@drhqmail201.nvidia.com>
+In-Reply-To: <2b269f01-e508-4940-81ea-31c5cd961bb1@drhqmail201.nvidia.com>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Wed, 12 Mar 2025 09:35:00 +0000
+X-Gm-Features: AQ5f1Jq0KNR5demOD7iOfh9YAuVYOUcWURsYUGw0TJtcXQdVfw8evk7uh_JbE1w
+Message-ID: <CADo9pHgbPPFZW=TMBw9mF15f9hsro4E3bw8FnQUsABZEqROBCg@mail.gmail.com>
+Subject: Re: [PATCH 6.13 000/197] 6.13.7-rc2 review
+To: Jon Hunter <jonathanh@nvidia.com>, Luna Jernberg <droidbittin@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	linux-tegra@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Mar 12, 2025 at 09:31:47AM +0100, Ard Biesheuvel wrote:
-> On Wed, 12 Mar 2025 at 09:16, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+Works fine on my Dell Latitude 7390 laptop with model name    :
+Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz
+and Arch Linux with testing repos enabled
+
+Tested-by: Luna Jernberg <droidbittin@gmail.com>
+
+Den tis 11 mars 2025 kl 20:42 skrev Jon Hunter <jonathanh@nvidia.com>:
+>
+> On Tue, 11 Mar 2025 15:48:06 +0100, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.13.7 release.
+> > There are 197 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > >
-> > On Wed, Mar 12, 2025 at 08:54:52AM +0100, Ard Biesheuvel wrote:
-> > > On Wed, 12 Mar 2025 at 08:47, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > On Tue, Mar 11, 2025 at 04:45:26PM +0100, David Woodhouse wrote:
-> > > > > On Thu, 2025-02-13 at 15:24 +0100, Greg Kroah-Hartman wrote:
-> > > > > > 6.13-stable review patch.  If anyone has any objections, please let me know.
-> > > > > >
-> > > > > > ------------------
-> > > > > >
-> > > > > > From: David Woodhouse <dwmw@amazon.co.uk>
-> > > > > >
-> > > > > > [ Upstream commit 4b5bc2ec9a239bce261ffeafdd63571134102323 ]
-> > > > > >
-> > > > > > Now that the following fix:
-> > > > > >
-> > > > > >   d0ceea662d45 ("x86/mm: Add _PAGE_NOPTISHADOW bit to avoid updating userspace page tables")
-> > > > > >
-> > > > > > stops kernel_ident_mapping_init() from scribbling over the end of a
-> > > > > > 4KiB PGD by assuming the following 4KiB will be a userspace PGD,
-> > > > > > there's no good reason for the kexec PGD to be part of a single
-> > > > > > 8KiB allocation with the control_code_page.
-> > > > > >
-> > > > > > ( It's not clear that that was the reason for x86_64 kexec doing it that
-> > > > > >   way in the first place either; there were no comments to that effect and
-> > > > > >   it seems to have been the case even before PTI came along. It looks like
-> > > > > >   it was just a happy accident which prevented memory corruption on kexec. )
-> > > > > >
-> > > > > > Either way, it definitely isn't needed now. Just allocate the PGD
-> > > > > > separately on x86_64, like i386 already does.
-> > > > >
-> > > > > No objection (which is just as well given how late I am in replying)
-> > > > > but I'm just not sure *why*. This doesn't fix a real bug; it's just a
-> > > > > cleanup.
-> > > > >
-> > > > > Does this mean I should have written my original commit message better,
-> > > > > to make it clearer that this *isn't* a bugfix?
-> > > >
-> > > > Yes, that's why it was picked up.
-> > > >
-> > >
-> > > The patch has no fixes: tag and no cc:stable. The burden shouldn't be
-> > > on the patch author to sprinkle enough of the right keywords over the
-> > > commit log to convince the bot that this is not a suitable stable
-> > > candidate, just because it happens to apply without conflicts.
+> > Responses should be made by Thu, 13 Mar 2025 14:41:52 +0000.
+> > Anything received after that time might be too late.
 > >
-> > The burden is not there to do that, this came in from the AUTOSEL stuff.
-> 
-> Yeah, that is what I figured. Can we *please* stop doing stupid stuff
-> like that for arch code, especially arch/x86, which is well looked
-> after? (In my personal opinion, we should not be using AUTOSEL at all,
-> but that seems to be a lost battle)
-> 
-> Especially for this patch in particular, which touches the kexec code,
-> which is easy to break and difficult to fix. Whether the patch applies
-> without breaking the build is entirely irrelevant (and even that seems
-> a high bar for stable trees these days). Nobody should be touching any
-> of that code without actually testing whether or not kexec still
-> works.
-
-Maintainers can ask for their portions of the kernel to be not included
-in the AUTOSEL work, and many have, please see:
-	https://web.git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/ignore_list
-for the current list of things that are excluded.
-
-> > It was sent to everyone on Jan 26:
-> >         https://lore.kernel.org/r/20250126150720.961959-3-sashal@kernel.org
-> > so there was 1 1/2 weeks chance to say something before Sasha committed
-> > it to the stable queue.  Then it was sent out again here in the -rc
-> > releases for review, for anyone to object to.
+> > The whole patch series can be found in one patch at:
+> >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.7-rc2.gz
+> > or in the git tree and branch at:
+> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
+> > and the diffstat can be found below.
 > >
-> 
-> There should not be a need for people to object to something that no
-> actual person ever suggested in the first place.
-> 
-> The only responsible way to use AUTOSEL is to make it opt-in rather
-> than opt-out. And I object to the idea that it is ok for someone like
-> Sasha to run a bot that generates lots of emails to lots of people,
-> and put the burden on everyone else to spend actual time and mental
-> effort to go over all those patches and decide whether or not they
-> might the stable candidates, especially without any due diligence
-> whatsoever regarding whether the resulting kernel still boots and runs
-> correctly on a system that actually exercises the updated code.
-
-That does not work at all.  The whole reason AUTOSEL is used is because
-maintainers and developers are NOT tagging things that are bugfixes.  We
-have whole subsystems that just don't do anything, and this is the only
-way we can get fixes for that area included in stable kernels.
-
-Again, we allow any subsystem to opt-out entirely from this if they so
-desire, AND we allow many chances for a patch to be dropped, AND we
-later allow anything to be reverted.  Heck, we have maintainers who just
-don't want to deal with stable kernels at all, and that's fine, I'm not
-going to impose that burden on them if they do not want to.  But in that
-case, we will do spelunking through the tree to find stuff that affects
-users.
-
-If you look at the history of AUTOSEL, I think the number of real bugs
-has shown that overall, it works really well.  Sure it will mess up at
-times, we're all human, and all we can do then is to be sure to react
-and fix the issue.
-
-thanks,
-
-greg k-h
+> > thanks,
+> >
+> > greg k-h
+>
+> All tests passing for Tegra ...
+>
+> Test results for stable-v6.13:
+>     10 builds:  10 pass, 0 fail
+>     28 boots:   28 pass, 0 fail
+>     116 tests:  116 pass, 0 fail
+>
+> Linux version:  6.13.7-rc2-gfca1356f3f51
+> Boards tested:  tegra124-jetson-tk1, tegra186-p2771-0000,
+>                 tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
+>                 tegra194-p3509-0000+p3668-0000, tegra20-ventana,
+>                 tegra210-p2371-2180, tegra210-p3450-0000,
+>                 tegra30-cardhu-a04
+>
+> Tested-by: Jon Hunter <jonathanh@nvidia.com>
+>
+> Jon
+>
