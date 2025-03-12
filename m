@@ -1,28 +1,28 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C9CB198E76
-	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 17:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A9B2356D8
+	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 17:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741800374; cv=none; b=YsAyNRm4QJaqFSuBS/c2Fe9qOP75sxj3TU9YmXOp+i7oDVBAt7u5K1f837JD7TUaMx7FfScSjkEUDA1Fdt+2lyGMObof8Wo4D50VsDQeAt6/ylIWytBt517YWiQFBVG3gCCvC79ByO/ZeBwka+jtDnREsJabCjjYWfKGdbo3XoU=
+	t=1741800530; cv=none; b=aUADZ/c5i006uXgDa4FU1Qq0tCj17SaPmY6XJyMsN8ejlYFG1eagwXghRXoy/Nat4R/4lYafwZtjsKXfFq6XTkwtUUs9rlA0qmpW5gWX3BL2OQFlapKfw+eIN9EbQPh4q2lHxOhAebETykToip6ZU2zCtm2jyrWhIH3FQDAEAM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741800374; c=relaxed/simple;
-	bh=JOWnneXAyqBfqddBG5tsff/Auz+WF75L9dIWo0FxoKE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=M3jnsTx3G0n2HrTZDUduDMHFu67mx5YAz5JtkXzkpymNmoPk8OIilOzlId3RaQB/c2RfFdrwJK3qVqiSmIlot6HfTnHppHDYYvF92Xd6Fax6CQQ82gAqStuY5EqSRVXVxOrU2iTQ3EFaXIp2soqDI66BQNoUJQX47T+4SX9BYGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=jy+JBRqS; arc=none smtp.client-ip=13.77.154.182
+	s=arc-20240116; t=1741800530; c=relaxed/simple;
+	bh=V52VOIG+AN8GNl0MT+KjeTlqmFc1TeXWtkQxXGBTtdE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=Ghywq4IdfBY0EYQ4HmfH21qmTNlejKfIDLELp6jdjr4CHUi1pQoseqjIRx7wZFHgJECE+giKS0Jdvwo2EcKATG4OnTPynLZ32xOC3sqqHF660VEG/btY6fnBbhGU9+0DeoGJ9Q4vmBKZ1MfZR2SF2pZdajRPsTqFMSt2EUbhtJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=UG2Yvg3x; arc=none smtp.client-ip=13.77.154.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="jy+JBRqS"
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="UG2Yvg3x"
 Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id C1B8F210B151; Wed, 12 Mar 2025 10:26:12 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C1B8F210B151
+	id 7FED5210B151; Wed, 12 Mar 2025 10:28:47 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7FED5210B151
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1741800372;
-	bh=5svUKRr1DYZIIpqZe+Y0nxIMjCWyuwNYeHx2kgMYoMg=;
+	s=default; t=1741800527;
+	bh=uouLbv7KI5UpdtrF4kAaKELsEwGPcWJyJ3L5pY9vXBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jy+JBRqSQhNhU8PNtHuWhNwaHXoSSSl++t7PHTOs23mnPq+N8iwdyFSdKJfw6UAjQ
-	 ww9RbYv7dI9CEC+dJBzOfcIcnQ5EixrO2htofA1G/hyuHPrr4xLB+dNJ4Y1YNzHbOf
-	 guIgOUr28paP1jlNP+Ea11fCkkNNGvRYGYVY9vFw=
+	b=UG2Yvg3xl4eOJxBz53EICZ1jssHBLgDOJ9IYMl2MP54YxOXFYoqU22/qRtbsk708s
+	 fSc6vinjv2hl0OlSFTVIX506w+aJbDt/KKTNY7MijSxrUh4JrbuKSCEhG7VNmdlbJ+
+	 SF007T5Vl7Mx0w1tUGhVpqBLHXiyMr+k+dsnPlbY=
 From: Hardik Garg <hargar@linux.microsoft.com>
 To: gregkh@linuxfoundation.org
 Cc: akpm@linux-foundation.org,
@@ -43,27 +43,29 @@ Cc: akpm@linux-foundation.org,
 	stable@vger.kernel.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.6 000/144] 6.6.83-rc2 review
-Date: Wed, 12 Mar 2025 10:26:12 -0700
-Message-Id: <1741800372-18626-1-git-send-email-hargar@linux.microsoft.com>
+Subject: Re: [PATCH 6.13 000/197] 6.13.7-rc2 review
+Date: Wed, 12 Mar 2025 10:28:47 -0700
+Message-Id: <1741800527-19107-1-git-send-email-hargar@linux.microsoft.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250311135648.989667520@linuxfoundation.org>
-References: <20250311135648.989667520@linuxfoundation.org>
+In-Reply-To: <20250311144241.070217339@linuxfoundation.org>
+References: <20250311144241.070217339@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-The kernel, bpf tool, perf tool, and kselftest builds fine for v6.6.83-rc2 on x86 and arm64 Azure VM.
+The kernel, bpf tool, perf tool, and kselftest builds fine for v6.13.7-rc2 on x86 and arm64 Azure VM.
 
 Kernel binary size for x86 build:
 text      data      bss      dec       hex      filename
-27318015  16713718  4644864  48676597  2e6bef5  vmlinux
+29937477  17837074  6320128  54094679  3396b57  vmlinux
 
 Kernel binary size for arm64 build:
-text      data      bss     dec       hex      filename
-34688768  13844986  970368  49504122  2f35f7a  vmlinux
+text      data      bss      dec       hex      filename
+36684481  15081117  1054416  52820014  325f82e  vmlinux
+
+
 
 Tested-by: Hardik Garg <hargar@linux.microsoft.com>
 
