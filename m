@@ -1,106 +1,79 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C76CA5E
-	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 01:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9671B14A095
+	for <patches@lists.linux.dev>; Wed, 12 Mar 2025 02:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741741281; cv=none; b=ur8r77pYjbkKIHU9QoVFDOoQd1c+RAs1jfWLEP4s87DhPO0OUNFhrQiByd+j5uiXKme7tbhCyF7ojtHkN1rRZXwmrD+c1u+Lx42RCLASXjpuaOId4szYIILavQdc0yd0IfnGzs/EK+9yPuI1/aoJCFENeRv9MO8b3vUGmKPkJw8=
+	t=1741746350; cv=none; b=MorpjfGUHBJG+dKQoRsHLWfnbfCXx0O4WmNK3nkczghn6yusplU+3k4Qtlwwgp57nKh5yZRxDUnm34UV0zAvOgrrZzgq6jNlEbmSSBKyRf3mwxv7V7Ds939CREkJNWNu54gC7pJwNoJks6ct38rv9MU2xFIU6N2rxd/8NnaQ1mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741741281; c=relaxed/simple;
-	bh=pqTs6PSez0/L6cWDvEZMc3ndJbwA7vVw//pZkJYuDZI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K4JUtzvCLBaKt1sOfWRSX41LgwzJNC5kL3mf2hdT08TloTzPrsH5qufo6VWn2337dkkKD0s1jp4ETOrMHqJOyaQkCjnh4848LjCjgr3Dq/xnpqCMhZLVbhQqfX0SbpAX38LYQjrT7iqBcPdjwWAhtVB/69Gr406W+v1K60aVnZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EP2GvjkU; arc=none smtp.client-ip=209.85.166.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1741746350; c=relaxed/simple;
+	bh=Hr/1dHLIsfiK72NXU8O7a2kmn9+MqEJsBHS60mQomZg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h12BeuE0dodw0xNyaFHuB1oN8FMUTR6HgewItZfegytP3+cFd/d2o/rrRE2RRBFayjTDylpATlSK/rzhPdUHjlAOBo1ckWSdgbcugNrkKlIUQZSGNkxDKEXZA7fwA57XtQgohuY9xNR+6P77GSxeBVZJjkUxPhkrTYrewn1DXoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=NkobOy/Z; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EP2GvjkU"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3d44369e87aso1505855ab.1
-        for <patches@lists.linux.dev>; Tue, 11 Mar 2025 18:01:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1741741278; x=1742346078; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JkhqhD/I8qtsdXa25766C/WcZA5mOA1TQObYPvGOQ1U=;
-        b=EP2GvjkUyM5CLHTmry10/7scdZgBaRMk8NDzozVFWM4/dFBUhwL7mUQJwpMP3zm1hd
-         notr8GTKDvaoeKqdB2jPTXxjMefubwkzEszZKImLGx5lfEeT6l/doc0j6EUOPRR6aU7m
-         vTUiuMCgHI9+9fZTEDueTqWa0D+u4EliaPwec=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741741278; x=1742346078;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JkhqhD/I8qtsdXa25766C/WcZA5mOA1TQObYPvGOQ1U=;
-        b=KMn/tVL2iyqwRwJmE5k4GRleCajvgwdoJa1l2FeepPn1wAoBYHWqlifzIur/9pC/Tg
-         p2MR83Aoei5ufAnkELZNegsUpOri5xKx+ZsihLfL+6YKa2RX//T/lK+9ERMjOJeEmfDF
-         wvR22QPQtOcKg/hn14w7IbPCKt8jHZvVw85CLbYYJVinzDWR+EAPbTb6QVuy4oCNURfI
-         Ij7CECUwfP5hFxgwhfUc1Rv+wrtz8IVrgqlsYScNSyf0FQsl3uZF0WZnWPH7RUY9DOJQ
-         ayPLSFpspps3/n1+PAS3PsrbNUE98AAdcomtiwfvUqzosDUFVymyqkzzK9BFJ8XqAwCm
-         rm8g==
-X-Gm-Message-State: AOJu0YyfKvEboTSMNR8UYvyaZ/2L2yZRow9OgviqbPMf2lUJC0+3ZBO9
-	Ldt/SbaAwxttybdd24N6pglszahCi/DFvcDrOpxh92J4RKn5giZzY/N7WauS45g=
-X-Gm-Gg: ASbGncusYXhvH088rDqwn8cGdpGeLE1YHgmqv6VpfS6laJBgpFZZ35AFfy7WiDPoMEf
-	Lp+PvpGeuFE6DP6fY2h4JN8Y/5FFOf7ed9zDSpqlJdhZqqVA7C+2t6GcjEexNtRpzJZ+OMna/qR
-	D33xfH7YLHq26SP4zdzgd9tgtoxENdH/KT1J/J4oPf2/54vsVh80RASK7v+rL72wsuv94BO8nsG
-	v+2EFN//MdKlXfb2s3NfICMvpPSsIigefjWK9GFQ4edo2rggtIABfSo9wTkNfMf7Rwe88Aj2Mh5
-	1fvRKoXVD7F8SSsiHQEVMri1uvAaMFB7/sFSeYXotHEix7fdnqOAkw9Qm9ltGQdDiA==
-X-Google-Smtp-Source: AGHT+IFwl/yS9RjSTW02QbwqxgrQUdpwIRAbglibdgwGcM7oscbPj55DnQ4Alu/un3yCdOV/hEuAjg==
-X-Received: by 2002:a05:6e02:3683:b0:3d1:84ad:165e with SMTP id e9e14a558f8ab-3d4691c7983mr57874765ab.7.1741741278248;
-        Tue, 11 Mar 2025 18:01:18 -0700 (PDT)
-Received: from [192.168.1.14] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f209df4c5fsm3045120173.1.2025.03.11.18.01.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Mar 2025 18:01:17 -0700 (PDT)
-Message-ID: <bd63889b-7b7a-40f2-9236-3dc974221723@linuxfoundation.org>
-Date: Tue, 11 Mar 2025 19:01:16 -0600
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="NkobOy/Z"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 861AC14C2D3;
+	Wed, 12 Mar 2025 03:25:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1741746339;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=n0UXwm9U1+SO+FdlbueVqMzEiFAsmmq/d8t9Dl1Wxe0=;
+	b=NkobOy/ZxQoxQPBrL4ueN8DEerlqkpPNDD3baNtmrA5PUbKBhSqAEWGZ+qCMHzntSy26Zu
+	LQxX7/Q25wS/gOHEQlYBR2zLGHz/tx0tYHVQY6gyZ6/DnPJLQ5GXHB4jBRRmOf8CVSNQoK
+	OkOPjhiocGMOzWOSkWDbN+Tlhcx8ilRdMZaGon2sIwpc+8N2QHJ9I1UCIkl1bMgG9BAbUt
+	yG1KbmaafU0v86mpLPGTVhQuS2/TSyT9AFI4ziZmab1ALFxh7/YHlhaGRlmx6kqmUMJtQs
+	a7CUoKXjr140hgfUCGfVKWUU79obqsBpiJelp8j4kCEaYBm0fr2jx+52xqbCUQ==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 644963db;
+	Wed, 12 Mar 2025 02:25:32 +0000 (UTC)
+Date: Wed, 12 Mar 2025 11:25:17 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/462] 5.10.235-rc1 review
+Message-ID: <Z9DwjfdmtFZRZe6X@codewreck.org>
+References: <20250311145758.343076290@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/328] 5.4.291-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20250311145714.865727435@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250311145758.343076290@linuxfoundation.org>
 
-On 3/11/25 08:56, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.291 release.
-> There are 328 patches in this series, all will be posted as a response
+Greg Kroah-Hartman wrote on Tue, Mar 11, 2025 at 03:54:26PM +0100:
+> This is the start of the stable review cycle for the 5.10.235 release.
+> There are 462 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Thu, 13 Mar 2025 14:56:14 +0000.
+> Responses should be made by Thu, 13 Mar 2025 14:56:39 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.291-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.235-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Tested 92c950d96187 ("Linux 5.10.235-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinet
