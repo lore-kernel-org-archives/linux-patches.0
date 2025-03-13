@@ -1,224 +1,175 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442AC1FBEB7
-	for <patches@lists.linux.dev>; Thu, 13 Mar 2025 07:19:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35CB1FC7C9
+	for <patches@lists.linux.dev>; Thu, 13 Mar 2025 07:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741850379; cv=none; b=ft28tJ8szv9bujzbU0ZERC2fb2jPZEfSWRWOFMsc3UwH9bMyZDgtwYfxUc9dTcYR30uMc38poVggJtkU51BgS3NUMuv/JnSDqWZfG6HiSPgjGHyUb/+UmthKKqRh4edBKmcfmF3WvJGxTsjiyttu53HwID+gfNH6tOF3xvL57Hg=
+	t=1741850568; cv=none; b=IDfv39szA8XcEjAugoBZ5gnWiI+/ymCc/n4qJvpWiHPZHBIJuywCcP3cXnYpZi/j8UDskEutVbedg7j5a5dNH8Ne7lNp+pLH42pdHa9c2AZ8MPRlBLrDG7VR2+MfaWQmhaRvzzcILmOyiI/o/b8vl8YoRREEn4ww2zMhnADl7Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741850379; c=relaxed/simple;
-	bh=tvrIWAJJ2tNps0LjZcZloUQVbHDHX3SZ9LzINjvttfI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SRZ2dMZfD9zzyVeJsswzOZ5O5woV0tNliqiBOKh4PKxuCiZfZYxV87wF+MnHHtJKLEr3WnK5TjD/Qj/eqBD6pWcXrbu0U0OG5UML2HezkKYRwToN6zVeIBMVVAZJ/j27N4jCcXaRyH8763IO5Tjx4uRtNLeayUZxI4dM1Twf61o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wp2e4XMf; arc=none smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wp2e4XMf"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-86c29c0acdfso328067241.3
-        for <patches@lists.linux.dev>; Thu, 13 Mar 2025 00:19:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741850375; x=1742455175; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aAZsZ1wRYrAZzl/Zgd8kqSQ9r3vpzwVRs5a6xcEHCI0=;
-        b=Wp2e4XMf7OuKswawFMyoQ6HY07lm92zrtkmn2vzAO89Hr8saEV1iAv0ImuamvovlkP
-         K4yWCIBC4wRB+V/Zim5rvtOXysyr/Bkoumm2Pa96pcXB+adVVYuZW0Uaymb/3TaWV6g6
-         Y7T9nxBUCi4o4/5epaHOx7k78UgQmBMWZZAS47Y27625rv8Ax27iYFDKpV8jF46op3A9
-         BfYyTTdE6LRCyzjJiZ44hFZ7Zlvrt2vr32sQxp5C2vxNwnh5limIY9bxCEbYLwESPGJo
-         n36FldoEoIIWmd2ahI6DgCqXpWyX0Yhf+10G0AA7764YmA2l/V57PeV1u1k0KwX0hG7t
-         XHrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741850375; x=1742455175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aAZsZ1wRYrAZzl/Zgd8kqSQ9r3vpzwVRs5a6xcEHCI0=;
-        b=PahNzeanh95o35TPo55C2Sq7N/PJS4XbWpXcHeZynThel6xYwh1TL+tuw522v5lQ6M
-         CfGWYkbgCAp+c3KA+6bZiY7IDdWnpXG/4jhvSH1KF2R2sNwT5xCUMGD6JqG3XpDF6IeI
-         yK1kT/GkqUudKGtszu5fUrj6A+H+AlJWbCgkr6pQQ35/Ck5ABLbImWGxG702BoQ7GWhx
-         SOgeRhZ6PDww5F065XLE3kUx7jvIekopzSQZWH+lMf/ibygpMuAkCKd+ZbN8XtbYaoTm
-         aFENld/xAuSw0KJGRD7qWczStHDy0loFONq/zidycnrBVdN45h880u5tCZ4/w0iFtRnW
-         qmfw==
-X-Forwarded-Encrypted: i=1; AJvYcCXjxO5Wb3gI7D0QvMtCqnCtVUXE6jcHrQhPg0ORzc3E1v6sKBTUX1UavfpKUGSbbpno8hvwjG5D@lists.linux.dev
-X-Gm-Message-State: AOJu0YwA5auYO7NZa+SF28+izXK8AGVVakxEjrN+FJUUwRp0ozrTmDD0
-	8OOV4+bTAfsExwadZBAcV36KYDCVgXCeG51wf2ASEt/mfZ1PLOrkq9AGsJ76Ah18fh+fcS7C8TY
-	sr37WEFVAORT6l5iV7W/Xjqc3FOpgfoIxVeSFjA==
-X-Gm-Gg: ASbGncteWUIya2mME1uTXNor8ztrTONOttRb2aL6UDxbVeQs8KN0WwdW48Fyjg2nwDy
-	wZxM2O6QEqZ5LzWf285Cpe0eocvmRdlGTDobXLeXf6yjfIz2M/jPt/gbGM+jxBCKxujaP7tdxfn
-	0Vasmx1PO2ASwRlJFNwOlOGsLmuotXIh4aRH3yARVw3jA/Nc++dHcsdOUuFG8=
-X-Google-Smtp-Source: AGHT+IEV/rGOaoEuK3zniqwPgl/moqYdxmVdVff00QTaFe19FzRCQOIbMxDf+H94F4ZKWQ/VkTHqVRxX6Wom9nlJVLw=
-X-Received: by 2002:a05:6102:508e:b0:4c1:9695:c7c with SMTP id
- ada2fe7eead31-4c34d37b464mr11680214137.24.1741850375129; Thu, 13 Mar 2025
- 00:19:35 -0700 (PDT)
+	s=arc-20240116; t=1741850568; c=relaxed/simple;
+	bh=+4UJPRqu7JasO2Yf/capeBLoYVmF+HrA7u/DJDlT/1s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=how2Fge73THjKoCt6k9AaZArO+gUU5R11O/WB4sDnwZMgYOkvhqLlokAL/BDPzhnVPybuq4Q5udvfv/LcizB/orNZy21lPOkA8XghesqYduAK7sXkie7+Y5yXQKrfWRZkAdh33NUF0WnNQ65hRTwx8zqRVPqYH65Y11URdRWoL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52D6vRg3030456;
+	Thu, 13 Mar 2025 00:22:01 -0700
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45b0j4smsa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Thu, 13 Mar 2025 00:22:00 -0700 (PDT)
+Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Thu, 13 Mar 2025 00:22:00 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Thu, 13 Mar 2025 00:21:56 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <andrii@kernel.org>, <ast@kernel.org>,
+        <daniel@iogearbox.net>, <martin.lau@linux.dev>, <song@kernel.org>,
+        <yonghong.song@linux.dev>, <john.fastabend@gmail.com>,
+        <kpsingh@kernel.org>, <sdf@google.com>, <haoluo@google.com>,
+        <jolsa@kernel.org>, <bpf@vger.kernel.org>, <bgrech@redhat.com>,
+        <wander.lairson@gmail.com>, <wander@redhat.com>
+Subject: [PATCH 6.6.y] bpf: Use raw_spinlock_t in ringbuf
+Date: Thu, 13 Mar 2025 15:21:55 +0800
+Message-ID: <20250313072155.167331-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250311145714.865727435@linuxfoundation.org>
-In-Reply-To: <20250311145714.865727435@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 13 Mar 2025 12:49:23 +0530
-X-Gm-Features: AQ5f1JpCEAGT2FPlxBRj2m9Ee0zjW6ymNv1xOATnxXBPZ3MffwHeWFUXuP9Bz9U
-Message-ID: <CA+G9fYtG9K8ywO4w2ys=UEuD_r1LgOuZhG4cg62YKAX0qK35cg@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/328] 5.4.291-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Authority-Analysis: v=2.4 cv=Cc0I5Krl c=1 sm=1 tr=0 ts=67d28798 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=pGLkceISAAAA:8 a=hWMQpYRtAAAA:8 a=t7CeM3EgAAAA:8
+ a=mcpU0V_MDO7S8Gi0BcUA:9 a=KCsI-UfzjElwHeZNREa_:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-ORIG-GUID: 6AKU1_7RwWQ6zb2c0cXbhaimSrxOWr14
+X-Proofpoint-GUID: 6AKU1_7RwWQ6zb2c0cXbhaimSrxOWr14
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-13_03,2025-03-11_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.21.0-2502280000 definitions=main-2503130057
 
-On Tue, 11 Mar 2025 at 20:33, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.4.291 release.
-> There are 328 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 13 Mar 2025 14:56:14 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.4.291-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+From: Wander Lairson Costa <wander.lairson@gmail.com>
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+[ Upstream commit 8b62645b09f870d70c7910e7550289d444239a46 ]
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+The function __bpf_ringbuf_reserve is invoked from a tracepoint, which
+disables preemption. Using spinlock_t in this context can lead to a
+"sleep in atomic" warning in the RT variant. This issue is illustrated
+in the example below:
 
-NOTE:
-The following build errors noticed on arm, arm64 and x86 builds
-net/ipv4/udp.c: In function 'udp_send_skb':
-include/linux/kernel.h:843:43: warning: comparison of distinct pointer
-types lacks a cast
-  843 |                 (!!(sizeof((typeof(x) *)1 =3D=3D (typeof(y) *)1)))
-      |                                           ^~
- Link:
-  - ttps://storage.tuxsuite.com/public/linaro/anders/builds/2uDcpdUQnEV7etY=
-kHnVyp963joS/
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556208, name: test_progs
+preempt_count: 1, expected: 0
+RCU nest depth: 1, expected: 1
+INFO: lockdep is turned off.
+Preemption disabled at:
+[<ffffd33a5c88ea44>] migrate_enable+0xc0/0x39c
+CPU: 7 PID: 556208 Comm: test_progs Tainted: G
+Hardware name: Qualcomm SA8775P Ride (DT)
+Call trace:
+ dump_backtrace+0xac/0x130
+ show_stack+0x1c/0x30
+ dump_stack_lvl+0xac/0xe8
+ dump_stack+0x18/0x30
+ __might_resched+0x3bc/0x4fc
+ rt_spin_lock+0x8c/0x1a4
+ __bpf_ringbuf_reserve+0xc4/0x254
+ bpf_ringbuf_reserve_dynptr+0x5c/0xdc
+ bpf_prog_ac3d15160d62622a_test_read_write+0x104/0x238
+ trace_call_bpf+0x238/0x774
+ perf_call_bpf_enter.isra.0+0x104/0x194
+ perf_syscall_enter+0x2f8/0x510
+ trace_sys_enter+0x39c/0x564
+ syscall_trace_enter+0x220/0x3c0
+ do_el0_svc+0x138/0x1dc
+ el0_svc+0x54/0x130
+ el0t_64_sync_handler+0x134/0x150
+ el0t_64_sync+0x17c/0x180
 
-## Build
-* kernel: 5.4.291-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: fb482243c16ebfe8776fcd52223351b4061c1729
-* git describe: v5.4.290-329-gfb482243c16e
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
-90-329-gfb482243c16e
+Switch the spinlock to raw_spinlock_t to avoid this error.
 
-## Test Regressions (compared to v5.4.289-95-gb4cc7cb40189)
+Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
+Reported-by: Brian Grech <bgrech@redhat.com>
+Signed-off-by: Wander Lairson Costa <wander.lairson@gmail.com>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20240920190700.617253-1-wander@redhat.com
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ kernel/bpf/ringbuf.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-## Metric Regressions (compared to v5.4.289-95-gb4cc7cb40189)
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 528f4d634226..6aff5ee483b6 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -29,7 +29,7 @@ struct bpf_ringbuf {
+ 	u64 mask;
+ 	struct page **pages;
+ 	int nr_pages;
+-	spinlock_t spinlock ____cacheline_aligned_in_smp;
++	raw_spinlock_t spinlock ____cacheline_aligned_in_smp;
+ 	/* For user-space producer ring buffers, an atomic_t busy bit is used
+ 	 * to synchronize access to the ring buffers in the kernel, rather than
+ 	 * the spinlock that is used for kernel-producer ring buffers. This is
+@@ -173,7 +173,7 @@ static struct bpf_ringbuf *bpf_ringbuf_alloc(size_t data_sz, int numa_node)
+ 	if (!rb)
+ 		return NULL;
+ 
+-	spin_lock_init(&rb->spinlock);
++	raw_spin_lock_init(&rb->spinlock);
+ 	atomic_set(&rb->busy, 0);
+ 	init_waitqueue_head(&rb->waitq);
+ 	init_irq_work(&rb->work, bpf_ringbuf_notify);
+@@ -417,10 +417,10 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 	cons_pos = smp_load_acquire(&rb->consumer_pos);
+ 
+ 	if (in_nmi()) {
+-		if (!spin_trylock_irqsave(&rb->spinlock, flags))
++		if (!raw_spin_trylock_irqsave(&rb->spinlock, flags))
+ 			return NULL;
+ 	} else {
+-		spin_lock_irqsave(&rb->spinlock, flags);
++		raw_spin_lock_irqsave(&rb->spinlock, flags);
+ 	}
+ 
+ 	pend_pos = rb->pending_pos;
+@@ -446,7 +446,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 	 */
+ 	if (new_prod_pos - cons_pos > rb->mask ||
+ 	    new_prod_pos - pend_pos > rb->mask) {
+-		spin_unlock_irqrestore(&rb->spinlock, flags);
++		raw_spin_unlock_irqrestore(&rb->spinlock, flags);
+ 		return NULL;
+ 	}
+ 
+@@ -458,7 +458,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ 	/* pairs with consumer's smp_load_acquire() */
+ 	smp_store_release(&rb->producer_pos, new_prod_pos);
+ 
+-	spin_unlock_irqrestore(&rb->spinlock, flags);
++	raw_spin_unlock_irqrestore(&rb->spinlock, flags);
+ 
+ 	return (void *)hdr + BPF_RINGBUF_HDR_SZ;
+ }
+-- 
+2.25.1
 
-## Test Fixes (compared to v5.4.289-95-gb4cc7cb40189)
-
-## Metric Fixes (compared to v5.4.289-95-gb4cc7cb40189)
-
-## Build Summary
-* arc: 6 total, 5 passed, 1 failed
-* arm: 137 total, 137 passed, 0 failed
-* arm64: 37 total, 35 passed, 2 failed
-* i386: 22 total, 16 passed, 6 failed
-* mips: 29 total, 27 passed, 2 failed
-* parisc: 4 total, 0 passed, 4 failed
-* powerpc: 30 total, 28 passed, 2 failed
-* riscv: 12 total, 4 passed, 8 failed
-* s390: 8 total, 8 passed, 0 failed
-* sh: 12 total, 10 passed, 2 failed
-* sparc: 8 total, 7 passed, 1 failed
-* x86_64: 33 total, 33 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
