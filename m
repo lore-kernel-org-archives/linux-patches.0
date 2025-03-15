@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB2F1DFED;
-	Fri, 14 Mar 2025 21:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E1E1917E4;
+	Sat, 15 Mar 2025 19:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741988046; cv=none; b=dM3MQTAO/Zjqfxam2dhAiMtfK97H46kakri09CA3jnFF32C8HNWdUGZn1wYLhWkRdazVVBoNOHX17x609v2EEcDwJJlRsAdN0KMJNOYJ64dp0OCnKdpg9CA35s30SBUJUATdG5sMkb3XSr+bGVFp0QzeLNInNihKAZI90hK8EvE=
+	t=1742067659; cv=none; b=IQX9i+6KV34R9s4dD2ja81X2zNx6UOP+YPEZgkCLxk127JEWhO4Qg4s9LGBpaD0Nd/+841TCQj5FzgQwWasNes5ZAv2qw3TAgIcCg81E4kp9cYgsRd6u1pqyLgGyCa6Wqd16pH22spB5gexAabEY2HRJWrwkOlOpeXQOIaegEII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741988046; c=relaxed/simple;
-	bh=yZIuloNXhuF5Z8BfZA1mYt0ELvR7GzpoA/U2KGPfEG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ORidebA/y4uAibrF2+g2ABcgf2fDAWmlS13SeZMrFPIikTe7ym7+TB370WfOI6A18LE/ACPVK9x/POP4SaRA5+H8fS6ppUU3fqr/od1kofkVVek5ZqXqHv3iQ2BQrJ9s2xeUZrDEPKeUGi73A6I/ZbODNiM7hmzOcc0Xw//wUns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=reyiEnln; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742067659; c=relaxed/simple;
+	bh=laZAIbEZVXCBq3fZOiRaGSFxCaavR5HOBVJ9LIzb2q8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qxKo402wI1tL+y78+2quAxmia3IoudHlxb+F57G2JOKFI/zeMVtjHuDD5rYPaby70qKXcQ09IFB0lY/3lrBXgcbY1xeNcrEHSp1wVHK5QS35m92nOeXpkaOVVAJ4trEnBUpUKvAHKxGhBtXnSW368F0lAHfg4WdkLsU40/Lo3xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H1qYZBlI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="reyiEnln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52649C4CEE3;
-	Fri, 14 Mar 2025 21:34:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H1qYZBlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3C6C4CEE5;
+	Sat, 15 Mar 2025 19:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741988045;
-	bh=yZIuloNXhuF5Z8BfZA1mYt0ELvR7GzpoA/U2KGPfEG4=;
+	s=k20201202; t=1742067658;
+	bh=laZAIbEZVXCBq3fZOiRaGSFxCaavR5HOBVJ9LIzb2q8=;
 	h=From:To:Cc:Subject:Date:From;
-	b=reyiEnlndX4MH+SxzFQI5HynnCqCV/TbbnGqI+cipORUKHkt4djDi32ZPQGv4TD6C
-	 1EI1hBg2jm7w7UbtuuU54dAynixRlzk7OcRXWGohlRFjaqnzm8Kb1m7h3TESeuhXDJ
-	 DdKid1+AUVAFlmqcyxk/qbW98KQsjh26WgnIWV8Yjjbo2AjuZmsMfUGEWMEjcE7qQG
-	 RF/IXF7v/ken/ZC/o6sHk4ynJ8q5sj8dexqe5WD9ssawvWsc8UCkQ95i+kHgLc+sc8
-	 gSWwxCPjIuI7+pG8z0fmNDbQVjM5o6dfbGOijMppStvyJxR+Z1m0biTpopmmISAJbp
-	 UHXv9CVRZbnoQ==
+	b=H1qYZBlIMNjF3EdiBtzLFp4vbmq9Uz9BMYWCJeFP6JRlMk2CcFsRtMMIkyCJjefqx
+	 6J273h+GaDISyfFYvsPL5x4gF/eo690xAAnXZdbzzsnB7hF+2CfcIrlbMWhHtXVRcx
+	 /mHr3OtZpKkUQyHFL1x4oxKGX3y79ibBJupH3IEawknSQTqYQlMypNT2SFkR4eXGa7
+	 yFmESW+HC3EbEQfhb5fOvetiPNTQCaA3WZMm3PpC1y/we+TXKqd1xTOv9VhJMMGWoV
+	 s23zE68GkQ1RwhC5YqrWtrCCKRPiUNATwcYDL8dhNq8eoXVSP5AH5ZeWjmLOMfNlmU
+	 x3vo8ckKkzJPQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Masahiro Yamada <masahiroy@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
@@ -40,12 +40,13 @@ Cc: Nathan Chancellor <nathan@kernel.org>,
 	Alice Ryhl <aliceryhl@google.com>,
 	Trevor Gross <tmgross@umich.edu>,
 	Danilo Krummrich <dakr@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH] rust: kbuild: skip `--remap-path-prefix` for `rustdoc`
-Date: Fri, 14 Mar 2025 22:33:33 +0100
-Message-ID: <20250314213333.2230670-1-ojeda@kernel.org>
+Subject: [PATCH v2] rust: kbuild: skip `--remap-path-prefix` for `rustdoc`
+Date: Sat, 15 Mar 2025 20:40:45 +0100
+Message-ID: <20250315194045.2353200-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,25 +71,32 @@ upstream [1].
 Thus workaround both issues by simply skipping the flag when generating
 the docs -- it is not critical there anyway.
 
+The ICE does not reproduce under `--test`, but we still need to skip
+the flag as well for `RUSTDOC TK` since it is not recognized.
+
 Fixes: 6b5747d07138 ("kbuild, rust: use -fremap-path-prefix to make paths relative")
 Link: https://github.com/rust-lang/rust/issues/138520 [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+v2:
+  - Skip the flag also in `RUSTDOC TK`. The ICE does not apply there,
+    but we still need to skip the flag.
+
+ rust/Makefile | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/rust/Makefile b/rust/Makefile
-index ea3849eb78f6..6586a7aa007e 100644
+index ea3849eb78f6..089473a89d46 100644
 --- a/rust/Makefile
 +++ b/rust/Makefile
 @@ -57,10 +57,14 @@ endif
  core-cfgs = \
      --cfg no_fp_fmt_parse
- 
+
 +# `rustc` recognizes `--remap-path-prefix` since 1.26.0, but `rustdoc` only
 +# since Rust 1.81.0. Moreover, `rustdoc` ICEs on out-of-tree builds since Rust
 +# 1.82.0 (https://github.com/rust-lang/rust/issues/138520). Thus workaround both
-+# issues skipping the flag.
++# issues skipping the flag. The former also applies to `RUSTDOC TK`.
  quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
        cmd_rustdoc = \
  	OBJTREE=$(abspath $(objtree)) \
@@ -97,8 +105,16 @@ index ea3849eb78f6..6586a7aa007e 100644
  		$(rustc_target_flags) -L$(objtree)/$(obj) \
  		-Zunstable-options --generate-link-to-definition \
  		--output $(rustdoc_output) \
+@@ -171,7 +175,7 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
+ 	rm -rf $(objtree)/$(obj)/test/doctests/kernel; \
+ 	mkdir -p $(objtree)/$(obj)/test/doctests/kernel; \
+ 	OBJTREE=$(abspath $(objtree)) \
+-	$(RUSTDOC) --test $(rust_flags) \
++	$(RUSTDOC) --test $(filter-out --remap-path-prefix=%,$(rust_flags)) \
+ 		-L$(objtree)/$(obj) --extern ffi --extern kernel \
+ 		--extern build_error --extern macros \
+ 		--extern bindings --extern uapi \
 
 base-commit: bc5431693696b3f928b0b7acf8d7a120127db7a4
--- 
+--
 2.49.0
-
