@@ -1,58 +1,41 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE7519E994
-	for <patches@lists.linux.dev>; Sat, 15 Mar 2025 20:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4C92030A
+	for <patches@lists.linux.dev>; Sun, 16 Mar 2025 02:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742069570; cv=none; b=nWOAf5/uO8CJ4t082WVQl1nFoGVvmIvg0YZdxsvvxzM1Nxrv0IrRtyqNMbi96Hxml1RQt0zh+Ab+jTSVC1wG+DWOFgsVvpczjAhxhe6wDmALmCWRvUcxH1r9D9+54NHY0JX9io2ApY1rx6gtvhI4T1HvUyCvnyQ1Fe9E456v+Mk=
+	t=1742090500; cv=none; b=TAAf66GS9L7Oz5G0KnGVpKQiTJZoypvOOnQilBQfTGesGNpUvl7uBkYDg3oqVQx1WdbEyj7KmUn6sBhajhZXPP1djx6hya3Ne0GUXEsf/Ll6V8jjHq6TH3DDduk5r7rI7+6qqTTXj3vPQvK5qcL/BZO1uXQGxE0D9iiQLCtfkWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742069570; c=relaxed/simple;
-	bh=QDbqp1bEfuNRkAkeWgCe8le/REa+td5CGaS1SXutrYc=;
+	s=arc-20240116; t=1742090500; c=relaxed/simple;
+	bh=2Arjfizzb2gSNR+WjTG8lT9cZFk0IOT5NlnWiOw5AcM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jaj84yPaGzjuVn4gZc4XKrcWnm39fdp9sEQqFxZJYBbIzK0agLkkUu8KkixhsxfvB/AlP1OVHmPmmgHvyIj1c8IEb2IY+XMqHfcGb05sza2YZaeu4hC225LjCMwW9GtvUKDSSJ1Y/RIQMswVqx8H33wOG+SfQsihovvjDAX3fhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rlv+C2H5; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=LHJdRfG/l9cYgf7RmVVnSbvdL8dlTrpWZOo4gC4yeVjzQRJJe0BSrTjeZ9i417EQXFAkwcU5hiio6O/gDXZZ3fjzCLca5i0ppIupEhlfYYXaKDxfJ/1ms6AwFiQ7QG6vNDkPejlSRPCl22bMRiG6SShZY3+kMm2SwDYCXmjNv4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pa/FB3Ap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rlv+C2H5"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-30bf251025aso27673821fa.1
-        for <patches@lists.linux.dev>; Sat, 15 Mar 2025 13:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742069567; x=1742674367; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3phS/r1RDvxvQ2MTiit7eQFWn/59+JXZG3F6Hx5Hm8I=;
-        b=Rlv+C2H5rVE4vaYq5FuOb/jJzOKZ5tf3kSPwwyq9vq4HxtBCDAD3uqyMC8/nB1uPrv
-         WiMAN0JHMyEaeIgzl+TEnX5pUsGKoyQWRgfEl6TjWOuspLeSzxZBVs1DN5xBZmJiLISx
-         9JLrFkGDSkGTwZtGCGFuT97pl9f9ZEzXfQVW49NbveJyX4xjsQ2FAgAbNhqfKiC9XGsD
-         di+UNl/bX/AKQXxpgT++ErdaHGORpkvmY4m2DZujUg4fJtDA2L0kVmSiqt/38mJmWnBU
-         Bo9IUbXmBryG2E+NJEj50fXFycEhl9c6SluAoMgBjW7/zRpEwETTX7MzTDfyFwhc+sdI
-         KzCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742069567; x=1742674367;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3phS/r1RDvxvQ2MTiit7eQFWn/59+JXZG3F6Hx5Hm8I=;
-        b=m18i16MW2TXQTNVdtoynxtccrCQyXsWZ5Wt26PzM6TwZ+8aO39jOsAj9mDU187+HJJ
-         xU7URhdy6mLp0yTsHb8D7OLMuIV4kbGD0kTYgBZLxaKXKwQVWqMoOs9TtKLH5LY5Pz3o
-         baH/v3flRHI9ZuqQnxyBdho9aYGQR31cZvUZ3wa7hKqte12PyB2FQmJfmT/IbtHXMVBu
-         2m8WEriy0ODQN9eOj1maNyt3Pf+vOnHwYJj5gOX2mm5WFn6fkcCqm8MAPKM4KZGWDc5N
-         IgMBW/JKLKsmagLRZCU6RfphGQR3BH8Dd3riK9GHggJ8mIPDkZqJs4hyqNIx48FHpf9L
-         3cEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKO8IPJ3EiQnOcsVfqc+3aDk6BKJ11qFarPQCtgLV6za0hU1OnG1vD+t2WcGMPn/Nj/MPMYefj@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUFXLKiNtnhrbER4Iepezcnmeici+m+Do77C45nMwZzONX0Dv8
-	pWdTm1jSHF+s1faKU2hRI7UVbALN3MwDRZB1fykm5Sp2YvDe0BBNeyTZSogJrdr7MuHsWUeJYCM
-	jRCwoZgkReXHvxDT6uFc0htxAJXU=
-X-Gm-Gg: ASbGncsEzs+y3sSBbusFovrhiI1vVFke/B7UolJUmwEzXGPPOgGW7sW23zEULANMBm7
-	1K/BcNtM1qg0zAUKkfMWe1xo4HYkW+v0LtMHOk+BpjEpQe4nFQmfKIq6dQXStGS8l1JJ4NPuVys
-	AsLnjQ8znTM0CBlvE/oCRxVHjPzTpv2QkX3wruLPH2/Xf9dK5jUSubwUnupfVl
-X-Google-Smtp-Source: AGHT+IFm7u/ca+fpxCQ+7+YMZzrKOStRLWcuvfvFBYSJTa+No/pqBu7Qqr1e6HCaZmCkLCgP+lX+Ttx/F2r2o7AdNoE=
-X-Received: by 2002:a2e:b895:0:b0:30c:1af6:b41a with SMTP id
- 38308e7fff4ca-30c4a8769fcmr32496991fa.18.1742069566448; Sat, 15 Mar 2025
- 13:12:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pa/FB3Ap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B172EC4CEEE
+	for <patches@lists.linux.dev>; Sun, 16 Mar 2025 02:01:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742090499;
+	bh=2Arjfizzb2gSNR+WjTG8lT9cZFk0IOT5NlnWiOw5AcM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=pa/FB3Apbu9QlSUxKPWng5A/TGin832UA7TOq+VIVbcrOYf0Rzd6awNSCoqhPlULV
+	 W9gdh/cGCZg2wvf16M47ebiE0IN4axN7mFGwQvIvOa0YtDdnR3sh9uH2LLAOj3GUhR
+	 7gpCzIyqAyF9GTYr0JiSEAFN88a/coyD+LIBxWNFH4TAwWLC5RJpcK5EVs92loEYY3
+	 ZtseYLwww1jVYH75qYfnKSZ1iU+kMQy/5cmfRSHJxCW6f9WAQ5VeZNjpxOJMWDLJbD
+	 fX+twUWZHZkaiByf1Fi3bz0Kt5+z1FP5SMm24MG069ZEX4Psn+U6JUFJ76VPiZvrVG
+	 Xw1VUtkHqNSPQ==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30795988ebeso34333871fa.3
+        for <patches@lists.linux.dev>; Sat, 15 Mar 2025 19:01:39 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU7s8qQyuLrJW1JklddWCU1m0Q7y0NJDmlppxVExGQYY+AyXKkazQKRYLQ57DlsyzTRYSfyoZL1@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw1NSFSrxRlcL72rCF6l4JPAnYeREK5pVn7NihY7J1yVCXJozfw
+	9LaHaGDfNvGro9aoab0hY411McC4Gt/xC72EwsOiWrIyIq/QYkB7OkEfLH2KRySU31Kd4slxTB7
+	+3/oPAR+c4G0eM3obXlOKAObS40o=
+X-Google-Smtp-Source: AGHT+IFxa4d1/tQXHJ1+iZsSL1Rrhqc7WpycIqFFXpi5pz+aSLjYUG5l3bMLK7CtiNadloFwe4WxtjLZLSReotL56FM=
+X-Received: by 2002:a05:6512:31d5:b0:549:39ca:13fc with SMTP id
+ 2adb3069b0e04-549c394fdffmr2992262e87.49.1742090498341; Sat, 15 Mar 2025
+ 19:01:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,14 +44,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250315194045.2353200-1-ojeda@kernel.org>
 In-Reply-To: <20250315194045.2353200-1-ojeda@kernel.org>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Sat, 15 Mar 2025 16:12:10 -0400
-X-Gm-Features: AQ5f1JoSHl9Pk5sGde8YLinE1OIhoyWuxkSyv0i4A4qoM-oYiV0cuN7rEeMjPpY
-Message-ID: <CAJ-ks9kk-31CfavAHqgzmZMXcaq07ZwMyButDVqNG-g5RMSD6A@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 16 Mar 2025 11:01:02 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQaXXWCJtrt+wp3jr4GEC4M8QknKouWSOQ-eqpVkak5Pw@mail.gmail.com>
+X-Gm-Features: AQ5f1JreqjeN0HiiGMEIFMWQpGk6bl16687TeIEZofS1RjmgnF6S_TivIYKx2jA
+Message-ID: <CAK7LNAQaXXWCJtrt+wp3jr4GEC4M8QknKouWSOQ-eqpVkak5Pw@mail.gmail.com>
 Subject: Re: [PATCH v2] rust: kbuild: skip `--remap-path-prefix` for `rustdoc`
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
@@ -79,7 +63,7 @@ Cc: Masahiro Yamada <masahiroy@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 15, 2025 at 3:41=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Sun, Mar 16, 2025 at 4:40=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
 > `rustdoc` only recognizes `--remap-path-prefix` starting with
@@ -103,6 +87,22 @@ te:
 >
 > Fixes: 6b5747d07138 ("kbuild, rust: use -fremap-path-prefix to make paths=
  relative")
+
+Applied to linux-kbuild. Thanks.
+
+Please note I locally modified the Fixes tag as follows:
+
+Fixes: dbdffaf50ff9 ("kbuild, rust: use -fremap-path-prefix to make
+paths relative")
+
+I rebased in order to fix my missing Signed-off-by,
+so the commit ID of the former commits changed.
+
+
+
+
+
+
 > Link: https://github.com/rust-lang/rust/issues/138520 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
@@ -152,6 +152,9 @@ gs)) \
 > base-commit: bc5431693696b3f928b0b7acf8d7a120127db7a4
 > --
 > 2.49.0
->
 
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+
+
+--=20
+Best Regards
+Masahiro Yamada
