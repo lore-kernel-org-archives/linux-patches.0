@@ -1,92 +1,67 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2040.outbound.protection.outlook.com [40.107.94.40])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2044.outbound.protection.outlook.com [40.107.92.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E6BEACD;
-	Mon, 17 Mar 2025 13:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2161D2451F0
+	for <patches@lists.linux.dev>; Mon, 17 Mar 2025 14:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742218509; cv=fail; b=cxWydkl61JF0YJwMrNC4kpJLPIf8eiDyxfDNIEKY6/BDt4vybX8pryHDbAf8vmw4Pvmtn11Y+xMaujTeqjk/CDLhIIVitFYFfi1+63Pivv9GaszgiXxMzYboKkN4AEvvdyQT9d3YjEbxB2sGT38FbO9UacT+6VYuVL5kj4aG8rY=
+	t=1742223307; cv=fail; b=KA025qMZn9nKrnXLACCEWzy+cc9Ag2JvQbOEZ5IWNRbrqhwITr/QpRfgtWDreH2iPC+/6wWgN1dt2r9VIlkBpgYAGVwrtKpxYdhXy3dusC4Rwc31iMeTv2A3Xtx9NGbDVbpuOOZVBjQrmL6zaUB1cO5iHlpNrAk2z3PNELa/Sp0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742218509; c=relaxed/simple;
-	bh=Y5M8+csDZQ3aHOaNzP56HHpXXSYM7jkj6oh2WGwaMk8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=DKLwm3nAldaC6bI0Rl34VCtfJjlmbxRjsX3ltM8KyuJmJuOKG/aAOuYLVQJzEdrnd18uUdNURVvD2pYtkjatNwmoFKAbUYBCPrs9Syq9S7+DKGikqt2aoaGFQsi5k5hEMfOfu5TQr8DhJMFsbiKGpFJLopxQBANLrffJSlokZSw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dh5TA+Cr; arc=fail smtp.client-ip=40.107.94.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1742223307; c=relaxed/simple;
+	bh=9OW95KOnCkb/6W9VOCKM5PDwSrQvVIjdLod5/3ctiVM=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=JeJNEZ2r+mvr+yJ0Zu5uOOsy2xrE8LVuq82CXifj4ZyTIsZYVRBhHFkG60rygQScGVNx42RZEhB6kVcRhJJV1ydIW1n1A8aZbg95xMIxSGhBrJil6prLUxDqlZrdF7CrLJ9GSurGVLPUWE5+iO1llBGWvara9MprfS6WGF71ato=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=xmLihGxs; arc=fail smtp.client-ip=40.107.92.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dh5TA+Cr"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="xmLihGxs"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=R4JFDgbB+/rDELzQmoUMSKdSTaebqjnt8r+g07pcdde106csMgIPYA/UbJrL8unzN9k1ObhS7AUV9jCHWTd2XUV7AfhKifqFji6npQv2Fh+IDGIoplqB9ovS4OIwWs6oAyMMf/rALEAlqfv8U0qJwyDAMmLz9OYvoW7oBikQZipkW4z8Q1G0J4C1R5mCP4i6vmF1f4zBSkQeHH7BGQjm5sJ7Ict3GOOwPoAn2edvVz3ltzFruM1+c9c4epc4T5ISBDr3JCEkzojVImN7RfvAMoeAchzyXZOzyZNjsqqDW4n9oWZ8x4VOt6qXiIG2WzruYt8pgSo3Rt6eLcp/VmEMkQ==
+ b=qUM4q3uPrY+uem4lRM1386A2lVJP5dYktiA/3dIQIabyRHJKD3xePBU9cbQX492skcf7/aownbCN/EEarlc9qgCoKaX+NDCrGtGhouH+KvsaiIXqONBiJg0Wl4Fhy+HAU4uyJh98jS7lh8g557Z44ykadZcxR+ftKhklk/IEoQfpCGyv7ILbAP1rYul9aladwn1fyNzQvbAA1EabvGKQUnnR7P2Q66lMUAfp9WKjMXPooDD20wHyaEs5HYXCx9H9PdhoZ6UhT32JnLqMKMTva+U2ivgG6Z6v7KkSyHHUlmxHbv/uqXOmvdBcPUX9v9oY+UIflGd+8oMXSefnLjm7iA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QVpmREWUg9a8YZJByOGNqEoHBBTPLjNhi5JntbtUWso=;
- b=yUung9teO2WkWBkKvZLc2bey32SwnmYzQ5UuxviRV+IC53NFLwNiWf2qKj785GU37eLNw7u5IppfLeudI/Q6N/L6WgpD1dFwYMR7tzSYUCTkNA95CjTjihL313AXChTvJa2q1QfBH2slKiVrXq9OmJRVAzZcDnN/s+77KbmI4aK80xIoM/F/lP130NzBJUKULRMCNHqcWjvCybpZrPVldJRZ80JUrG1uYdqUXujLh6gX1ZKVoCFrIUF6nlqB7y+BtGr5tqMhztCfoovH5wxiOVqZ0dP8fIxUHOumFIghUc0Bs4hhmbzmZlFU1rCrlOG7DUNPOG1Zs5uM/xCRh/fXcw==
+ bh=2UY0cFrHCybx5mwMDU8SfY7lfikLXeyim83RC9g+hXo=;
+ b=ajgANIc6Db11PoepTZqvBZa6TduBGZ48Ftx/7phHc7R5Pjxnwsj2nl/wj4XgCLn9u1fGDxcZgwBk0c4JZI2mdr+Q5x2mf8lOPJE7Mc0RYOKbHqGnLYakHx87OeLVZF379LxTfjvJQd8wg5ENtdE+NG10AeTN0MTGgDVL9CiUetUqhxIsqQ1KXeKplwntgHi05XWkw8SRbT8Zff71ABMSmS3YJEmSBM0MNY7omSBeBeCqFxdseDVpJ/T4z1u0l64RQdfw+EYZTgXpak+uXCVVpISY3atU8cM+yIUvGeLmqDjfK3UkV4olwM1lXAONwWnv23hj9SjMxYNME0xB4F4gMQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QVpmREWUg9a8YZJByOGNqEoHBBTPLjNhi5JntbtUWso=;
- b=dh5TA+CrMpG8lvyAa6MPyfAnUBsCguXEvGpY4XwIgA8eoMVWnVZFNUeY29m04Bh0m5ai9sPEAv1Ish4g9QKoqrVWZSCGw2r4mzk6273+xbYdlMG8AFGYcz+isuECBe9If42bCk2tWu6A8ZMeADjpZ6KrRlAslKnu8AAyt/qnWjwMlQAPQA26bgJLPLvAfJLZkZUqezO+R37lmEAl3wVDM/RfDA3BtU+Q5p/pG3QUSsbS8oDvO85YJN4bSQdSpXyZy7BtQk1ydgZWtdzYkMib93atgvD6ohojDhvwTchJgY9bExOtjpX+o9SZIjjCsuyAsoA1B0SbQshkFWN8vvDmoQ==
+ bh=2UY0cFrHCybx5mwMDU8SfY7lfikLXeyim83RC9g+hXo=;
+ b=xmLihGxs0cdXizZhPqtyBc19EOGPkDl4+Wepl3mcOLR7E5wp8ACyngxVaAfvPl1n+dPf6cB5sekimZMZKFUCUlR3Fd0VBB2yw2kngxR+exXyARvRKyNZUWNtI98XkcTv9tXy9zb31RqGze1kLT6tuV+rfMlxuuNYSqNBapyhGIU=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by PH8PR12MB6698.namprd12.prod.outlook.com (2603:10b6:510:1cd::14) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by MN6PR12MB8568.namprd12.prod.outlook.com (2603:10b6:208:471::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Mon, 17 Mar
- 2025 13:35:01 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8534.031; Mon, 17 Mar 2025
- 13:35:01 +0000
-Date: Mon, 17 Mar 2025 10:35:00 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Mostafa Saleh <smostafa@google.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hector Martin <marcan@marcan.st>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Krishna Reddy <vdumpa@nvidia.com>, Chen-Yu Tsai <wens@csie.org>,
-	Will Deacon <will@kernel.org>, Bagas Sanjaya <bagasdotme@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	David Rientjes <rientjes@google.com>,
-	Matthew Wilcox <willy@infradead.org>
-Subject: Re: [PATCH v3 20/23] iommu: Update various drivers to pass in lg2sz
- instead of order to iommu pages
-Message-ID: <20250317133500.GC9311@nvidia.com>
-References: <0-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
- <20-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
- <Z9GFFBvUFg7a9WEg@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z9GFFBvUFg7a9WEg@google.com>
-X-ClientProxiedBy: BN9PR03CA0490.namprd03.prod.outlook.com
- (2603:10b6:408:130::15) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+ 2025 14:55:02 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87%4]) with mapi id 15.20.8534.031; Mon, 17 Mar 2025
+ 14:55:02 +0000
+Message-ID: <d4263bf7-9bd1-447f-976c-69fd96d3f204@amd.com>
+Date: Mon, 17 Mar 2025 09:54:59 -0500
+User-Agent: Mozilla Thunderbird
+Reply-To: babu.moger@amd.com
+Subject: Re: [PATCH] x86/resctrl: Refactor to make adding extra MBM events
+ easy
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+ Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>,
+ Drew Fustini <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20250314202609.5753-1-tony.luck@intel.com>
+Content-Language: en-US
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <20250314202609.5753-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA9PR11CA0017.namprd11.prod.outlook.com
+ (2603:10b6:806:6e::22) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -94,122 +69,633 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|PH8PR12MB6698:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8864a866-d4a2-49c2-7c3a-08dd65588462
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|MN6PR12MB8568:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb93192f-b8f5-4ee9-5224-08dd6563b229
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|1800799024|366016|7053199007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dm2wKysOZKcS2iA9ccaDPOlpmobmsYLHBSFHXDqYq0YPtUux89H70gfzutxN?=
- =?us-ascii?Q?P3IGyYPpP5GNZezRYcuFAc+GBulXK02g0bT6xNbQHZz13sKWtWHILYILvtS8?=
- =?us-ascii?Q?YPJkowhYJC9YbA0LwGIq6IzkfXAtH9QC4C0CerQQabu1K7jVViMH9fkU1f8n?=
- =?us-ascii?Q?ROlEOC9ZUNPb9KZvCheE3ZIz2JbzD/WMIHw1GlJ0pykFp4xnpJWEseHc10PO?=
- =?us-ascii?Q?k+ewbt7eBmHvH5/aUJibP/YVq27OU6bw66SCZXB6drdAnSCRbleR9fq/AD9r?=
- =?us-ascii?Q?TbEdQ4INcEKz1JPqTmwaVWTiNkLVbA8q6A7Pw1NdH7s2olbK1359tJq9dq9B?=
- =?us-ascii?Q?8qZEF8Wad6mA1xf8iEDgX188mr5hF4zSowC8oKg9dzkRzdcGLhXe+OL4rLPV?=
- =?us-ascii?Q?bOH0I6406gj1AjrMHq5LApCooUC1khCpTkm6sRPdhejm28VRefjeyuXgnQOf?=
- =?us-ascii?Q?710t8Eu0UOa/M/3X2wz92sQjF50DTfluCRx1JqHhAEfmTwaxkLlmCEqzIanR?=
- =?us-ascii?Q?Z6oji9UOTNQIA4VFAI58kuCaJ9mmEwWIX/JV0M44QCN+NJzDmcwpQ4MElDF1?=
- =?us-ascii?Q?BFbB06HQ5ek3wm7ZTn7Cz3M20NLA7X2yI7ogBN+MqfrrfoafP2WvuKs+iELP?=
- =?us-ascii?Q?AYOQUV/uS5iEdwsM/iUo1+c3XHBDmSU1Rq2MAruL1/cA1aZpA1S5d7IMKlNT?=
- =?us-ascii?Q?QVseLHJmFJQ/mQ9hx6Mkj103XvARFOigat0bnxkeL+2Xew81edryaOeP5fdH?=
- =?us-ascii?Q?/icGKXnMg0FY/5o73L5yTz5jEqhK2BhI/yAVrtz5bihv6Xy83ZxTB8Xpo42R?=
- =?us-ascii?Q?aqmZiebzVKgkVta+zBA1HEvWdG4ook0Pu92c0YrX9qE7hV0fYzY2UzEtviJN?=
- =?us-ascii?Q?6hpcW3PaSVwwUTMocqMQQSHlhL0ML54TZyqu7v52O1PlT7RDs4efebaYG0t+?=
- =?us-ascii?Q?4ZwFVafeDUhccrYVXYFy4KqGjrIR3DCe0ZUTKpIniO410k0y8DUchGq/i05O?=
- =?us-ascii?Q?JFB8C3k24CwZVdv7keZZHu6MhDuDNm3h53f0mRiJzaDpIl2P2ehgWvwoVoRO?=
- =?us-ascii?Q?oPf09w80ryiWKPHWPs1OHUvld+fve6ISO3m6OEUU5T8S5x7Gy/hd3LMv5PrL?=
- =?us-ascii?Q?qkcspGY7y8vSSRqtClZ+DRPqrYtw7hXvNLfMt63G0nB3jYIqnGgpP1z0qIEB?=
- =?us-ascii?Q?ujHAAFH1crIUws7C00XjHTFlYmV/UoRV/lwgXvarK/XKXMau/o8mlHfl4y+V?=
- =?us-ascii?Q?PdKO9/IKMHTvDEDO7IoGxMoqPYIBi1eVwt7SVP7Ay5lOK5kXvXv4Hg29n26v?=
- =?us-ascii?Q?w5pcRoxR/b01Om8CN/boKEhzyDftRQUtSMy9L3lDJSTt80YDOxPUyGRxiLuW?=
- =?us-ascii?Q?bvvC/pg2E4Jp+IH3NUfX7M4DzyJL?=
+	=?utf-8?B?U2d3bnZLbGxvS3pNenRLRVByNkR2bXB5UkIzL0xvTUIzVGx0c25XNnVxWTdH?=
+ =?utf-8?B?ZVEwTFhoYjRwWk1lVzd3OGc0R0EyNjZuL21uQnMwN0FmTCtDODRHS2VnMklM?=
+ =?utf-8?B?bWVtMGFtSTBwaFZRdlkvWXdFQW1iL1dHNnIxZ21UL2NZYm1id085RENJNi9m?=
+ =?utf-8?B?b0llYm5pM0VjMWduV2NiUWw0SzlrWnhlOE5QQmlCdGVENFFYR3p4cEc1SFRy?=
+ =?utf-8?B?L2s5bmNjKzY3RHRjL3M1OVJCMWUwRStzR2lPS2o1R2YxcVdwQ1dWbWw4L3ZV?=
+ =?utf-8?B?a2lubDZJN0Q2MnpjRUI3T1p4VFduVWptRHQ2dVk0TTFlWFdXR0YyUGVpL3lh?=
+ =?utf-8?B?QUdUWS9QWWlZR3g0OWZ1M1M5M0h6elZyZDJuMFdBYzJ0R0VyKzRFTjA4bktN?=
+ =?utf-8?B?Y01JMjY2c3RIeGxkdTV2RXR1MXlia2ZPVkNxb2NqbGliSDVBRk1raDREaXhn?=
+ =?utf-8?B?S3RHYnE2dXNtSjR6OEYxajhidW5ncmxrYnFTZFdXbHQyVXJXeDFxWXZqY09J?=
+ =?utf-8?B?anMvZkI1bkxKMnZOcTZQUVIxZXc4ekxPU2FVc3d3RHVqQUZuYWpTNzA0cXlE?=
+ =?utf-8?B?QkJoWVkvVDNSUkpGSFQxaWlOL1RFN1Z5SW5uOGIyT0kyRW9qK1RtWklkNHZP?=
+ =?utf-8?B?eVliY08zeWR6TWRMY1FYbEcrb3RlMWhjcWlIMGpJZmpvL3ZQWm5SZG5icUs5?=
+ =?utf-8?B?OEUyYmEvdGdab0J6NmFtaElGc3U1ZVdzSlBSeWVMaFlPWDVxMFViUlh4cUov?=
+ =?utf-8?B?MENiN3lHT2NDclZrc2hzeGJoU3VlbWVBRld4OXdpOGhUU2ZTc3JYVklMQU55?=
+ =?utf-8?B?c0JMYitmbFA3U3BMUHFwU2Y3UjkvWDRsNkcrclhqalowekxWajFwSzRCVFVD?=
+ =?utf-8?B?VjdHZlFNUkl6OXVtQ015dVRScDJzU0dYTmh1eXBMYVljeFhzdnk1ZWFYR2dL?=
+ =?utf-8?B?b0lPRHFjRXQ0K1d2dS9TSGx0VXkxVVV5MlZ2YzNxbFJSaGxxdnpzT1hxQzBl?=
+ =?utf-8?B?V1ZkczBteENOV1RCUzhhbTdsUVdFaTk2ZGtFQW9IWmxkbVBJbnlJUmlDWExh?=
+ =?utf-8?B?YVhUUnplNjJWNm1mQklNR2xNSktWM3ZUblI3YWtDOHFvaHlwK0RnUW5rc0pq?=
+ =?utf-8?B?bGozY0h3YkwxR054R1RnUzRITUhKMThtUzQ1SnZhbGNmTjJTclpzbSt1bFZm?=
+ =?utf-8?B?RCtUQkx2MFdJVU1CRXF6dStrMGZHdXJYRm9nTitQbkI1Ti8rdmRPUFFYZzVO?=
+ =?utf-8?B?bWRLY0ZwT1ZLMC95N1gwYTdUS0kyK3JSSWZnbFRvQllibW9HSnhCL2hRRUNn?=
+ =?utf-8?B?SHFEcXlwZzB5U29iTEQ4TGdrK0NxSk5zTlRRa0tuZUN4N2Q2WUpxTHdvOXVP?=
+ =?utf-8?B?d1Myb1NLb3A5dkdCc2J1a2tVWDhKbEpscVpCUnFVaUdpUmtjRmxwT2c4Z0dQ?=
+ =?utf-8?B?WEJrZU8yTU5peU1rWXd0YnZudkJ3aW1sNjArOGpEKzkrMVJibCtHNjdrTE9a?=
+ =?utf-8?B?Rjd2bUFXSkpWQ3pQVXJ6d0E4RHlTMzdIdmIxdFF1bU1TWjBLN085UVpSVDR0?=
+ =?utf-8?B?SWNTU1pGSTRteDlibVhJRWNEQis4UDcxeHMvNHZKcTFTZlJiS3RCRjdITFAx?=
+ =?utf-8?B?Z2JPK25YbmpjUXlRZ1lWOGpIOUhXYmhRdlA3U1l3WVNVcTliUXExc090bi9s?=
+ =?utf-8?B?cWdoL2ExQlNsUk5LMThRWmc1ZTM4NXBDcTJiRlpzRWN3OVRoUWxSK25BRGlu?=
+ =?utf-8?B?NjVXOTU3V3N3ZW5NZEJkOUdnc0xSbS9EMDBTRkZiM0Z5RFVhVTZwenUvQnpS?=
+ =?utf-8?B?NDFhSy94bnJxQTlYaU9hUC9PaHgvZHFoMTg0WW9ESTB3Y1JGQXdUZXpubXFT?=
+ =?utf-8?Q?9ZsS82iSdwIAj?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?9/tYovh1Sd1Pp5AsYoyo0sVnNIob+XlG72pHIw05rRevClzz8gOQoTc0/Mg2?=
- =?us-ascii?Q?jbYlsR6T86UFEhb66QJMwbJ58vp5VpAj9jJrKk//LehJ/VFFqBndDErqeVSb?=
- =?us-ascii?Q?7/KE9JeSRxP1a8oHllJMae6lPoqcXU6h8402pLhWW9vCBPmqpQENfT+ej4fc?=
- =?us-ascii?Q?bRW5wxP9jbTmMh/relrVcb8Es1Gj60IxMJfGgqi0C4ykO9AIGxuZlam/p3wa?=
- =?us-ascii?Q?piHOJhxcPPSsHCiJJSw+NQi36bnEF4doFcmyliLGwtNRZCCWkYLb6M2STupZ?=
- =?us-ascii?Q?p9amCjJTFtUunRqDYiGu0NH8A6R4GAEnKju9/8c5arFQs7U2ItwMrZ6MaBBk?=
- =?us-ascii?Q?9Pb2KNmCr8M38CBe9UXgbHlsOIJnWPpkRnygSLUqNK7qNt8rlM3UjezeUqYv?=
- =?us-ascii?Q?vMA49cfBfQ8WJqGUvC4wumnY/0Z/E19QDDNHVngKvzMPg2PRZFVJCEVO1Wv+?=
- =?us-ascii?Q?i4TyoWHWJJhT+CIT2F2utqWIguOfmeBZ799RmZVCPPgsgKSoeORVUnuhFIwx?=
- =?us-ascii?Q?oYd0AuhThvpbECCK8CqeBwJumDoNi3QmjlBIRx2xdiG3xJK1iJ3qakPCD7+U?=
- =?us-ascii?Q?GYgTWz6ISLR06hIEHR5SuwI7v9DVQCFGJ4oA5x4+yLAnZeAxdyuxXXf6x8X8?=
- =?us-ascii?Q?IA5Ru52sQ7uJrNGsK64M+OyJ67ihWL3eqlXTblorbQfewFRbZZnGE4w821xS?=
- =?us-ascii?Q?DsWcflOisZFZrASO3Dq5sIhvzLH+xTGnEiVooe/7FGXwyMgHpZwflJZSD/FC?=
- =?us-ascii?Q?zRTHENdmSImwEY+bbsEf3tWofWQBUYN42fZfUvEbCgRmDsXcqMAOaygAZgex?=
- =?us-ascii?Q?K1QGIgSK6huN6bAC60jka4Yy5SP13b+qJ27AC+gZbvNIBPAvGvPj5F9dmNfT?=
- =?us-ascii?Q?DkRd2bRTSSBr4itTUjaCe6x3s/+O8ftFacLnZKEzlAFf2eIiKDz7Y5fa4HY5?=
- =?us-ascii?Q?XCpj7dFF31SpXvTT+IxmkmuL0NcxK2jroHMpX6KovSQMFGpKdXt+30Kccime?=
- =?us-ascii?Q?MSixvAqU8V0PhE6yB7oKOcj0yp+VKyOZneOz72EYyqz6nf1PVKjInPmXFg72?=
- =?us-ascii?Q?RkIomuVEJg5oDYd1/xs5d3BEHVNOl6C0PCngSEuCoIOGWKfgFwA36PqNJHIu?=
- =?us-ascii?Q?MBSsJSQs/q/kO8NQI1X+7a5wmzU+Cf2/zjEFJT6AQXvIRDD/SM3SrG/u88xN?=
- =?us-ascii?Q?yzvFoPRrOzkNYXjQdtA6dXB8BC+YzTEzGIWnjVvMQkMD6FDFvZfiF89XebOn?=
- =?us-ascii?Q?U2/Es4gDDh8at5xMfRg4Ihrhp4+MdOTI2/VJiylDKAiBaAH8UOGdj+ID13FW?=
- =?us-ascii?Q?OHPThQ4lJKhX8fQNcKB3Vk5+ezDB5onyx5VeKWrhSoJjANpukhU9iKwI1Oq4?=
- =?us-ascii?Q?eeyyWWLbg5kgPruhiTTNcXEjX2cHx8ywG4gjkg6rpzbQUyulqHgQ1mo1WCc6?=
- =?us-ascii?Q?m115uU9QJqdwqlFYwXGFiesQJoSO/oti4VYTBZ+Tzd5Jo8AsSrCbU4ZY/p6M?=
- =?us-ascii?Q?jyEXUfAeWr3dOp2WTndCuQ9lnt+74cvJpSOXEd5Ww/U2no6/HVOw0Y5TNE50?=
- =?us-ascii?Q?XVbGt1c0ZhqR2KTuGZc=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8864a866-d4a2-49c2-7c3a-08dd65588462
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+	=?utf-8?B?T1M1ZXBkU3RvbUZhOXJndjV6MlVNL1ZKVkhTQmtaTlFobXJXdkNkTVlvc3Z4?=
+ =?utf-8?B?MU95UDVzSkNwdkl2N0hhbm1KY3l0aTNIK25RK05ocm1OaG9EZUFrS3BFOVNV?=
+ =?utf-8?B?dVFRN1ZjeTUyYlU3aTNFYXlGSWxQRFdXUkpxM0pzZE9TaS9CV0gwTzJ5ZkNN?=
+ =?utf-8?B?elBMQ2V1ZXRaRjZaZHpTNGQ3MUU5Z2ZvMjgrbytpemIvdzdyUXhScUJybUVt?=
+ =?utf-8?B?aC9Lc0ZZN3d6aExpdmhpS3N0Z2ViTng3RHZReDFYVmxaaENUZHdoT1M3dGFG?=
+ =?utf-8?B?Rm8rdmRjelMzRVQwYlllbE83WHh3QjdMQStYYXpXOWhlMm1LUkY0UTZxQk1X?=
+ =?utf-8?B?eWJaNzZBTHZvWlpMT2lkZDNMZDBoUTFHREw5T1ZmbVRDNmdYYllMMHNDRmZJ?=
+ =?utf-8?B?QzluS2s5cGFqeW50NEFvWWJpQVlCZWszZG1INTcwRVEwWUpYNHhsRjJ3NW9O?=
+ =?utf-8?B?dmQvVkM3SVNzUk5qeWxZbnRhMFlsZXZFd3MwOXNscHl1bkJqdVY4SGhSNG50?=
+ =?utf-8?B?bEY0TGNzNXlaL3hUZmZOSlpSbmdhT3FoenZVTTVhM0FwRStoQWZwUTFGdjVE?=
+ =?utf-8?B?YWZkWDBKc0RDT1JOdUltcmpjTFpZT0NsVkNEM2VzS0xBY2RDNjc1WEJmZG1K?=
+ =?utf-8?B?VmxjcVh0Ym9UeFpmdTJ6R1BweTN4UFJOVlhQRkF0TnZZYmlkTS9ja1dBQlo4?=
+ =?utf-8?B?ZnBmWktWbkVIVSsyWUlYWjlrQjNmWlh0ZWRxK3lNYjUySDliUStNWmtoUk5l?=
+ =?utf-8?B?aVNQUGkwRFQ0Sy9oeTUxMGRPajlDUTZxQlhwUmo3WlRjandSdXN4WUJySmJk?=
+ =?utf-8?B?VnhuTkRGdWNrdzBRd0ZJWnFYakVndTBjaWphbUltaytyUmMreFhzVHB4R2hM?=
+ =?utf-8?B?TU5XT05YUVJ6WkgyanJHVUhWUFpzRWFIeDA4UjVJVmc1ekdOSXVibmZUMTRN?=
+ =?utf-8?B?YU0xNGg2a1hFSTcrclg0WnI2TXBzODhMdzhFSFFrK3NIN01ZVlhiVjJxRStj?=
+ =?utf-8?B?Wllka1lNYi8vYzNWSjZncW1PSDd4QnYxZ2VjTFRQVlV2SlpPMFF6cDFHSEd3?=
+ =?utf-8?B?S1ZNb09mUjMwNWFFYWp0cjRrakoxSERDN0VLVzlSRFovT0VuRTUvQ3pKOWN2?=
+ =?utf-8?B?bEFwa3AxMHhicmR6TlB2cEhIWk9ScmVtKzBsbTRhbWNUak82a24zblBGbWdW?=
+ =?utf-8?B?cjFpcTBJeEtHb0N4YS9Bb2UwS2ZqOXZZZDd5ZThpUFE2K1BjT2pqMkliakh1?=
+ =?utf-8?B?YjVYa0tLL1NQZ1VtbWE0TEhVM0NjRmcwZUlNbkFSdW94WElFV1VmTkZkLzVx?=
+ =?utf-8?B?b0F5c0xqQTliSHg3SHFoN0hsVFc4OFZqZExjRFBRK2ROSHlFTytTbW1vblBh?=
+ =?utf-8?B?NWR3ME1DdjNwdWlUcVVnT2hDRDJIRG80eHpNTllwSm84ckhHUWlaUUtqNjJh?=
+ =?utf-8?B?a1VRREJSTWlieENVY3BIZUhtYktJR05RU0Jkd3BsWWpYS1N4VkFodUpyVVhQ?=
+ =?utf-8?B?YlZQeDQ0QnVoVmwrcVp2enpTSEZDQVVZbU9FeksrNHBLa0RnQVdiN2FaaEpq?=
+ =?utf-8?B?QThxMXhSR21JbnFvSkRvdWU1cy90aThCQmNNeTYvRWlCZmdJYjhnM1VSNGtU?=
+ =?utf-8?B?bExwaGFLZ0pJNlF6ZkpkNXpYdll3RU0zaHFGMzQwNExJbkxHWGw1bVRKWElY?=
+ =?utf-8?B?MEJPckJYN3UyOUsrczAwNTB2TWVZY1BXWFBFbVd2VkxydVYzQ056UkJaQm9Y?=
+ =?utf-8?B?aXpyZllhTkphU2JyR1FNZDJOYzVnc3RxWEN6MmtJYUpBVEFxVnZSa3dmb3FO?=
+ =?utf-8?B?dldQRjRqL3lPeGxyVWx2dFFBREZMMmVZQlVqcUNteGRSOWdSWnFKa2R1KzQ0?=
+ =?utf-8?B?VVBWREk1VG91aXEvZkllMGExekV6bWVYNEZ3Y3JDV1BCcnNiOHZ6VGEwRms3?=
+ =?utf-8?B?UVlGUTZSbytYQlpBd01nb05kVC9CV0NxeVhXZFI1bHE1V0hIVDUvVnU3WXpM?=
+ =?utf-8?B?b2txNk5DVUMyS1BJTzRCOVJoa0NhQ2xoRkFCam1FN3cybDVFTWlSd1VBTm5L?=
+ =?utf-8?B?SnZReUp4a2d2UjlDYTQ1Nld6R0xxQzdlcVlrUmF3dEN0czhqT3lIZFhiSjVE?=
+ =?utf-8?Q?nlvk=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb93192f-b8f5-4ee9-5224-08dd6563b229
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2025 13:35:01.1663
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2025 14:55:02.2831
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1r79D9N92GH0VlXTY8ANVxs948ij5kn6KL+g7m/TOO2O74FKbytqc+bBw2qwIdfd
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6698
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3hy6+q614MONslaVJ8CB0iznvvsnoT/WUPUW5Bik4ZTZpfxVAKUOmEZEzTS+k5nw
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8568
 
-On Wed, Mar 12, 2025 at 12:59:00PM +0000, Mostafa Saleh wrote:
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -263,14 +263,13 @@ static void *__arm_lpae_alloc_pages(size_t size, gfp_t gfp,
-> >  				    void *cookie)
-> >  {
-> >  	struct device *dev = cfg->iommu_dev;
-> > -	int order = get_order(size);
-> >  	dma_addr_t dma;
-> >  	void *pages;
-> >  
-> >  	if (cfg->alloc)
-> >  		pages = cfg->alloc(cookie, size, gfp);
-> >  	else
-> > -		pages = iommu_alloc_pages_node(dev_to_node(dev), gfp, order);
-> > +		pages = iommu_alloc_pages_node_sz(dev_to_node(dev), gfp, size);
+Hi Tony,
+
+On 3/14/25 15:26, Tony Luck wrote:
+> Preamble
+> --------
+> I wrote this to play with some experimental MBM-like events
+> that may or may not ever see the light of day. I'm amused that
+> this refactor reduced the number of lines of code by enough
+> that the patch to support the new events basically just got
+> back to parity with current code size.
 > 
-> Although, the current implementation of iommu_alloc_pages_node_sz() would round
-> the size to order, but this is not correct according to the API definition
-> "The returned allocation is round_up_pow_two(size) big, and is physically aligned
-> to its size."
+> While the resulting code looks cleaner that the original, I'm
+> not sure there is much motivation to apply this change at the
+> moment. Just posting for casual reading and to archive it in
+> case I do need it someday.
+> 
+> Based on TIP x86/cache.
+> 
+> Commit message
+> --------------
+> There's a rule in computer programming that objects appear zero,
+> once, or many times. So code accordingly.
+> 
+> There are two MBM events and resctrl coded with a lot of
+> 	if (local)
+> 		do one thing
+> 	if (total)
+> 		do a different thing
+> 
+> Simplify the code by coding for many events using loops on
+> which are enabled.
+> 
+> Rename resctrl_is_mbm_event() to resctrl_arch_is_mbm_event()
+> and move to <asm/resctrl.h> as it gets used by core.c
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  include/linux/resctrl.h                   |   6 +-
+>  include/linux/resctrl_types.h             |   2 +
+>  arch/x86/include/asm/resctrl.h            |   8 +-
+>  arch/x86/kernel/cpu/resctrl/internal.h    |   8 +-
+>  arch/x86/kernel/cpu/resctrl/core.c        |  34 ++++---
+>  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  41 ++-------
+>  arch/x86/kernel/cpu/resctrl/monitor.c     | 104 +++++++++++-----------
+>  arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  42 ++++-----
+>  8 files changed, 108 insertions(+), 137 deletions(-)
+> 
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 880351ca3dfc..aaec3083db46 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -147,8 +147,7 @@ struct rdt_ctrl_domain {
+>   * @hdr:		common header for different domain types
+>   * @ci:			cache info for this domain
+>   * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
+> - * @mbm_total:		saved state for MBM total bandwidth
+> - * @mbm_local:		saved state for MBM local bandwidth
+> + * @mbm_states:		saved state for each QOS MBM event
+>   * @mbm_over:		worker to periodically read MBM h/w counters
+>   * @cqm_limbo:		worker to periodically read CQM h/w counters
+>   * @mbm_work_cpu:	worker CPU for MBM h/w counters
+> @@ -158,8 +157,7 @@ struct rdt_mon_domain {
+>  	struct rdt_domain_hdr		hdr;
+>  	struct cacheinfo		*ci;
+>  	unsigned long			*rmid_busy_llc;
+> -	struct mbm_state		*mbm_total;
+> -	struct mbm_state		*mbm_local;
+> +	struct mbm_state		*mbm_states[QOS_L3_NUM_EVENTS];
+>  	struct delayed_work		mbm_over;
+>  	struct delayed_work		cqm_limbo;
+>  	int				mbm_work_cpu;
+> diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
+> index f26450b3326b..ecca6f419a1d 100644
+> --- a/include/linux/resctrl_types.h
+> +++ b/include/linux/resctrl_types.h
+> @@ -51,4 +51,6 @@ enum resctrl_event_id {
+>  	QOS_L3_MBM_LOCAL_EVENT_ID	= 0x03,
+>  };
+>  
+> +#define QOS_L3_NUM_EVENTS (QOS_L3_MBM_LOCAL_EVENT_ID + 1)
+> +
+>  #endif /* __LINUX_RESCTRL_TYPES_H */
+> diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+> index 011bf67a1866..25fb4121afa5 100644
+> --- a/arch/x86/include/asm/resctrl.h
+> +++ b/arch/x86/include/asm/resctrl.h
+> @@ -42,7 +42,7 @@ DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+>  
+>  extern bool rdt_alloc_capable;
+>  extern bool rdt_mon_capable;
+> -extern unsigned int rdt_mon_features;
+> +extern unsigned long rdt_mon_features;
+>  
+>  DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+>  DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+> @@ -97,6 +97,12 @@ static inline bool resctrl_arch_is_mbm_local_enabled(void)
+>  	return (rdt_mon_features & (1 << QOS_L3_MBM_LOCAL_EVENT_ID));
+>  }
+>  
+> +static inline bool resctrl_arch_is_mbm_event(int e)
+> +{
+> +	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
+> +		e <= QOS_L3_MBM_LOCAL_EVENT_ID);
+> +}
+> +
+>  /*
+>   * __resctrl_sched_in() - Writes the task's CLOSid/RMID to IA32_PQR_MSR
+>   *
+> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> index c44c5b496355..ffba9ac73be1 100644
+> --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> @@ -333,15 +333,13 @@ struct rdt_hw_ctrl_domain {
+>   * struct rdt_hw_mon_domain - Arch private attributes of a set of CPUs that share
+>   *			      a resource for a monitor function
+>   * @d_resctrl:	Properties exposed to the resctrl file system
+> - * @arch_mbm_total:	arch private state for MBM total bandwidth
+> - * @arch_mbm_local:	arch private state for MBM local bandwidth
+> + * @arch_mbm_states: arch private state for each MBM event
+>   *
+>   * Members of this structure are accessed via helpers that provide abstraction.
+>   */
+>  struct rdt_hw_mon_domain {
+>  	struct rdt_mon_domain		d_resctrl;
+> -	struct arch_mbm_state		*arch_mbm_total;
+> -	struct arch_mbm_state		*arch_mbm_local;
+> +	struct arch_mbm_state		*arch_mbm_states[QOS_L3_NUM_EVENTS];
+>  };
+>  
+>  static inline struct rdt_hw_ctrl_domain *resctrl_to_arch_ctrl_dom(struct rdt_ctrl_domain *r)
+> @@ -504,6 +502,8 @@ void resctrl_file_fflags_init(const char *config, unsigned long fflags);
+>  void rdt_staged_configs_clear(void);
+>  bool closid_allocated(unsigned int closid);
+>  int resctrl_find_cleanest_closid(void);
+> +int rdt_lookup_evtid_by_name(char *name);
+> +char *rdt_event_name(enum resctrl_event_id evt);
+>  
+>  #ifdef CONFIG_RESCTRL_FS_PSEUDO_LOCK
+>  int rdtgroup_locksetup_enter(struct rdtgroup *rdtgrp);
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> index cf29681d01e0..695c9742212a 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -383,8 +383,8 @@ static void ctrl_domain_free(struct rdt_hw_ctrl_domain *hw_dom)
+>  
+>  static void mon_domain_free(struct rdt_hw_mon_domain *hw_dom)
+>  {
+> -	kfree(hw_dom->arch_mbm_total);
+> -	kfree(hw_dom->arch_mbm_local);
+> +	for (int i = 0; i < QOS_L3_NUM_EVENTS; i++)
+> +		kfree(hw_dom->arch_mbm_states[i]);
+>  	kfree(hw_dom);
+>  }
+>  
+> @@ -418,25 +418,23 @@ static int domain_setup_ctrlval(struct rdt_resource *r, struct rdt_ctrl_domain *
+>   */
+>  static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_mon_domain *hw_dom)
+>  {
+> -	size_t tsize;
+> -
+> -	if (resctrl_arch_is_mbm_total_enabled()) {
+> -		tsize = sizeof(*hw_dom->arch_mbm_total);
+> -		hw_dom->arch_mbm_total = kcalloc(num_rmid, tsize, GFP_KERNEL);
+> -		if (!hw_dom->arch_mbm_total)
+> -			return -ENOMEM;
+> -	}
+> -	if (resctrl_arch_is_mbm_local_enabled()) {
+> -		tsize = sizeof(*hw_dom->arch_mbm_local);
+> -		hw_dom->arch_mbm_local = kcalloc(num_rmid, tsize, GFP_KERNEL);
+> -		if (!hw_dom->arch_mbm_local) {
+> -			kfree(hw_dom->arch_mbm_total);
+> -			hw_dom->arch_mbm_total = NULL;
+> -			return -ENOMEM;
+> -		}
+> +	size_t tsize = sizeof(struct arch_mbm_state);
+> +	int evt;
+> +
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features)) {
+> +		if (!resctrl_arch_is_mbm_event(evt))
+> +			continue;
+> +		hw_dom->arch_mbm_states[evt] = kcalloc(num_rmid, tsize, GFP_KERNEL);
+> +		if (!hw_dom->arch_mbm_states[evt])
+> +			goto cleanup;
+>  	}
+>  
+>  	return 0;
+> +cleanup:
+> +	for (evt = 0; evt < QOS_L3_NUM_EVENTS; evt++)
+> +		kfree(hw_dom->arch_mbm_states[evt]);
+> +
+> +	return -ENOMEM;
+>  }
+>  
+>  static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
+> diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> index 0a0ac5f6112e..be0652361949 100644
+> --- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> +++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> @@ -545,56 +545,29 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+>  	}
+>  	rdt_last_cmd_clear();
+>  
+> -	if (!strcmp(buf, "mbm_local_bytes")) {
+> -		if (resctrl_arch_is_mbm_local_enabled())
+> -			rdtgrp->mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+> -		else
+> -			ret = -EINVAL;
+> -	} else if (!strcmp(buf, "mbm_total_bytes")) {
+> -		if (resctrl_arch_is_mbm_total_enabled())
+> -			rdtgrp->mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
+> -		else
+> -			ret = -EINVAL;
+> -	} else {
+> -		ret = -EINVAL;
+> -	}
+> -
+> -	if (ret)
+> +	ret = rdt_lookup_evtid_by_name(buf);
+> +	if (ret < 0)
+>  		rdt_last_cmd_printf("Unsupported event id '%s'\n", buf);
+> +	else
+> +		rdtgrp->mba_mbps_event = ret;
+>  
+>  	rdtgroup_kn_unlock(of->kn);
+>  
+> -	return ret ?: nbytes;
+> +	return ret < 0 ? ret : nbytes;
+>  }
+>  
+>  int rdtgroup_mba_mbps_event_show(struct kernfs_open_file *of,
+>  				 struct seq_file *s, void *v)
+>  {
+>  	struct rdtgroup *rdtgrp;
+> -	int ret = 0;
+>  
+>  	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+>  
+> -	if (rdtgrp) {
+> -		switch (rdtgrp->mba_mbps_event) {
+> -		case QOS_L3_MBM_LOCAL_EVENT_ID:
+> -			seq_puts(s, "mbm_local_bytes\n");
+> -			break;
+> -		case QOS_L3_MBM_TOTAL_EVENT_ID:
+> -			seq_puts(s, "mbm_total_bytes\n");
+> -			break;
+> -		default:
+> -			pr_warn_once("Bad event %d\n", rdtgrp->mba_mbps_event);
+> -			ret = -EINVAL;
+> -			break;
+> -		}
+> -	} else {
+> -		ret = -ENOENT;
+> -	}
+> +	seq_printf(s, "%s\n", rdt_event_name(rdtgrp->mba_mbps_event));
+>  
+>  	rdtgroup_kn_unlock(of->kn);
+>  
+> -	return ret;
+> +	return 0;
+>  }
+>  
+>  struct rdt_domain_hdr *resctrl_find_domain(struct list_head *h, int id,
+> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+> index a93ed7d2a160..4f355d3ec2d3 100644
+> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> @@ -84,7 +84,7 @@ bool rdt_mon_capable;
+>  /*
+>   * Global to indicate which monitoring events are enabled.
+>   */
+> -unsigned int rdt_mon_features;
+> +unsigned long rdt_mon_features;
+>  
+>  /*
+>   * This is the threshold cache occupancy in bytes at which we will consider an
+> @@ -253,19 +253,11 @@ static struct arch_mbm_state *get_arch_mbm_state(struct rdt_hw_mon_domain *hw_do
+>  						 u32 rmid,
+>  						 enum resctrl_event_id eventid)
+>  {
+> -	switch (eventid) {
+> -	case QOS_L3_OCCUP_EVENT_ID:
+> -		return NULL;
+> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
+> -		return &hw_dom->arch_mbm_total[rmid];
+> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
+> -		return &hw_dom->arch_mbm_local[rmid];
+> -	}
+> +	struct arch_mbm_state *state;
+>  
+> -	/* Never expect to get here */
+> -	WARN_ON_ONCE(1);
+> +	state = hw_dom->arch_mbm_states[eventid];
+>  
+> -	return NULL;
+> +	return state ? &state[rmid] : NULL;
+>  }
+>  
+>  void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
+> @@ -294,14 +286,14 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
+>  void resctrl_arch_reset_rmid_all(struct rdt_resource *r, struct rdt_mon_domain *d)
+>  {
+>  	struct rdt_hw_mon_domain *hw_dom = resctrl_to_arch_mon_dom(d);
+> +	int evt;
+>  
+> -	if (resctrl_arch_is_mbm_total_enabled())
+> -		memset(hw_dom->arch_mbm_total, 0,
+> -		       sizeof(*hw_dom->arch_mbm_total) * r->num_rmid);
+> -
+> -	if (resctrl_arch_is_mbm_local_enabled())
+> -		memset(hw_dom->arch_mbm_local, 0,
+> -		       sizeof(*hw_dom->arch_mbm_local) * r->num_rmid);
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features)) {
+> +		if (!hw_dom->arch_mbm_states[evt])
+> +			continue;
+> +		memset(hw_dom->arch_mbm_states[evt], 0,
+> +		       sizeof(struct arch_mbm_state) * r->num_rmid);
+> +	}
+>  }
+>  
+>  static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
+> @@ -579,15 +571,11 @@ static struct mbm_state *get_mbm_state(struct rdt_mon_domain *d, u32 closid,
+>  				       u32 rmid, enum resctrl_event_id evtid)
+>  {
+>  	u32 idx = resctrl_arch_rmid_idx_encode(closid, rmid);
+> +	struct mbm_state *states;
+>  
+> -	switch (evtid) {
+> -	case QOS_L3_MBM_TOTAL_EVENT_ID:
+> -		return &d->mbm_total[idx];
+> -	case QOS_L3_MBM_LOCAL_EVENT_ID:
+> -		return &d->mbm_local[idx];
+> -	default:
+> -		return NULL;
+> -	}
+> +	states = d->mbm_states[evtid];
+> +
+> +	return states ? &states[idx] : NULL;
+>  }
+>  
+>  static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+> @@ -864,15 +852,14 @@ static void mbm_update_one_event(struct rdt_resource *r, struct rdt_mon_domain *
+>  static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
+>  		       u32 closid, u32 rmid)
+>  {
+> +	int evt;
+> +
+>  	/*
+>  	 * This is protected from concurrent reads from user as both
+>  	 * the user and overflow handler hold the global mutex.
+>  	 */
+> -	if (resctrl_arch_is_mbm_total_enabled())
+> -		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_TOTAL_EVENT_ID);
+> -
+> -	if (resctrl_arch_is_mbm_local_enabled())
+> -		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_LOCAL_EVENT_ID);
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features))
+> +		mbm_update_one_event(r, d, closid, rmid, evt);
 
-Yes.. The current implementation is limited to full PAGE_SIZE only,
-the documentation imagines a future where it is not. Drivers should
-ideally not assume the PAGE_SIZE limit during this conversion.
+You need a check resctrl_arch_is_mbm_event() here.
 
-> I'd say we can align the size or use min with 64 bytes before calling the
-> function would be enough (or change the API to state that allocations
-> are rounded to order)
+Will that be reason for your hang issue?
 
-OK, like this:
 
-	if (cfg->alloc) {
-		pages = cfg->alloc(cookie, size, gfp);
-	} else {
-		/*
-		 * For very small starting-level translation tables the HW
-		 * requires a minimum alignment of at least 64 to cover all
-		 * cases.
-		 */
-		pages = iommu_alloc_pages_node_sz(dev_to_node(dev), gfp,
-						  max(size, 64));
-	}
+>  }
+>  
+>  /*
+> @@ -1075,20 +1062,37 @@ static void dom_data_exit(struct rdt_resource *r)
+>  	mutex_unlock(&rdtgroup_mutex);
+>  }
+>  
+> -static struct mon_evt llc_occupancy_event = {
+> -	.name		= "llc_occupancy",
+> -	.evtid		= QOS_L3_OCCUP_EVENT_ID,
+> +static struct mon_evt all_events[] = {
 
-Thanks,
-Jason
+There is one empty event here. You may need to make that clear.
+
+> +	[QOS_L3_OCCUP_EVENT_ID] = {
+> +		.name		= "llc_occupancy",
+> +		.evtid		= QOS_L3_OCCUP_EVENT_ID,
+> +	},
+> +	[QOS_L3_MBM_TOTAL_EVENT_ID] = {
+> +		.name		= "mbm_total_bytes",
+> +		.evtid		= QOS_L3_MBM_TOTAL_EVENT_ID,
+> +	},
+> +	[QOS_L3_MBM_LOCAL_EVENT_ID] = {
+> +		.name		= "mbm_local_bytes",
+> +		.evtid		= QOS_L3_MBM_LOCAL_EVENT_ID,
+> +	},
+>  };
+>  
+> -static struct mon_evt mbm_total_event = {
+> -	.name		= "mbm_total_bytes",
+> -	.evtid		= QOS_L3_MBM_TOTAL_EVENT_ID,
+> -};
+> +int rdt_lookup_evtid_by_name(char *name)
+> +{
+> +	int evt;
+>  
+> -static struct mon_evt mbm_local_event = {
+> -	.name		= "mbm_local_bytes",
+> -	.evtid		= QOS_L3_MBM_LOCAL_EVENT_ID,
+> -};
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features))
+> +		if (!strcmp(name, all_events[evt].name))
+> +			return evt;
+> +	return -EINVAL;
+> +}
+> +
+> +char *rdt_event_name(enum resctrl_event_id evt)
+> +{
+> +	if (!(rdt_mon_features & BIT(evt)))
+> +		return NULL;
+> +	return all_events[evt].name;
+> +}
+>  
+>  /*
+>   * Initialize the event list for the resource.
+> @@ -1099,14 +1103,12 @@ static struct mon_evt mbm_local_event = {
+>   */
+>  static void l3_mon_evt_init(struct rdt_resource *r)
+>  {
+> +	int evt;
+> +
+>  	INIT_LIST_HEAD(&r->evt_list);
+>  
+> -	if (resctrl_arch_is_llc_occupancy_enabled())
+> -		list_add_tail(&llc_occupancy_event.list, &r->evt_list);
+> -	if (resctrl_arch_is_mbm_total_enabled())
+> -		list_add_tail(&mbm_total_event.list, &r->evt_list);
+> -	if (resctrl_arch_is_mbm_local_enabled())
+> -		list_add_tail(&mbm_local_event.list, &r->evt_list);
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features))
+> +		list_add_tail(&all_events[evt].list, &r->evt_list);
+>  }
+>  
+>  /*
+> @@ -1219,12 +1221,12 @@ int __init resctrl_mon_resource_init(void)
+>  	l3_mon_evt_init(r);
+>  
+>  	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+> -		mbm_total_event.configurable = true;
+> +		all_events[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
+>  		resctrl_file_fflags_init("mbm_total_bytes_config",
+>  					 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
+>  	}
+>  	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_LOCAL_EVENT_ID)) {
+> -		mbm_local_event.configurable = true;
+> +		all_events[QOS_L3_MBM_LOCAL_EVENT_ID].configurable = true;
+>  		resctrl_file_fflags_init("mbm_local_bytes_config",
+>  					 RFTYPE_MON_INFO | RFTYPE_RES_CACHE);
+>  	}
+> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> index c6274d40b217..3d46551f39f6 100644
+> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+> @@ -123,12 +123,6 @@ static bool resctrl_is_mbm_enabled(void)
+>  		resctrl_arch_is_mbm_local_enabled());
+>  }
+>  
+> -static bool resctrl_is_mbm_event(int e)
+> -{
+> -	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
+> -		e <= QOS_L3_MBM_LOCAL_EVENT_ID);
+> -}
+> -
+>  /*
+>   * Trivial allocator for CLOSIDs. Since h/w only supports a small number,
+>   * we can keep a bitmap of free CLOSIDs in a single integer.
+> @@ -3168,7 +3162,7 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
+>  		if (ret)
+>  			return ret;
+>  
+> -		if (!do_sum && resctrl_is_mbm_event(mevt->evtid))
+> +		if (!do_sum && resctrl_arch_is_mbm_event(mevt->evtid))
+>  			mon_event_read(&rr, r, d, prgrp, &d->hdr.cpu_mask, mevt->evtid, true);
+>  	}
+>  
+> @@ -4100,8 +4094,8 @@ static void __init rdtgroup_setup_default(void)
+>  static void domain_destroy_mon_state(struct rdt_mon_domain *d)
+>  {
+>  	bitmap_free(d->rmid_busy_llc);
+> -	kfree(d->mbm_total);
+> -	kfree(d->mbm_local);
+> +	for (int i = 0; i < QOS_L3_NUM_EVENTS; i++)
+> +		kfree(d->mbm_states[i]);
+>  }
+>  
+>  void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
+> @@ -4162,31 +4156,29 @@ static int domain_setup_mon_state(struct rdt_resource *r, struct rdt_mon_domain
+>  {
+>  	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+>  	size_t tsize;
+> +	int evt;
+>  
+>  	if (resctrl_arch_is_llc_occupancy_enabled()) {
+>  		d->rmid_busy_llc = bitmap_zalloc(idx_limit, GFP_KERNEL);
+>  		if (!d->rmid_busy_llc)
+>  			return -ENOMEM;
+>  	}
+> -	if (resctrl_arch_is_mbm_total_enabled()) {
+> -		tsize = sizeof(*d->mbm_total);
+> -		d->mbm_total = kcalloc(idx_limit, tsize, GFP_KERNEL);
+> -		if (!d->mbm_total) {
+> -			bitmap_free(d->rmid_busy_llc);
+> -			return -ENOMEM;
+> -		}
+> -	}
+> -	if (resctrl_arch_is_mbm_local_enabled()) {
+> -		tsize = sizeof(*d->mbm_local);
+> -		d->mbm_local = kcalloc(idx_limit, tsize, GFP_KERNEL);
+> -		if (!d->mbm_local) {
+> -			bitmap_free(d->rmid_busy_llc);
+> -			kfree(d->mbm_total);
+> -			return -ENOMEM;
+> -		}
+> +
+> +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features)) {
+> +		if (!resctrl_arch_is_mbm_event(evt))
+> +			continue;
+> +		d->mbm_states[evt] = kcalloc(idx_limit, tsize, GFP_KERNEL);
+> +		if (!d->mbm_states[evt])
+> +			goto cleanup;
+>  	}
+>  
+>  	return 0;
+> +cleanup:
+> +	bitmap_free(d->rmid_busy_llc);
+> +	for (evt = 0; evt < QOS_L3_NUM_EVENTS; evt++)
+> +		kfree(d->mbm_states[evt]);
+> +
+> +	return -ENOMEM;
+>  }
+>  
+>  int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
+
+-- 
+Thanks
+Babu Moger
