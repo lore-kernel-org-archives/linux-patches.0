@@ -1,201 +1,123 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2084.outbound.protection.outlook.com [40.107.244.84])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554AE24C67B;
-	Mon, 17 Mar 2025 15:44:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.84
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742226268; cv=fail; b=tA2vf5LqUmFhcU6FN0d9HFixY1TwNRrHQ87ClI6hZShBHrcHUzpERkimUfUkUkSpcvgk3mkagPghJ4Gb1i2hnOQPUvHdxFyQWrOmNV9ygzb4gHQ8IvffxzNmkuaWYFWJzrxYVNDw8cFRhI3nJWT3TQFMuln4mwHCzR2Gnzsdrt0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742226268; c=relaxed/simple;
-	bh=Lea25lKFSmOE5HZLI6Nt1fKkC3UKGFpZXXigE4zf/sk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=BNVGTQTq8UOh1mRd23Rh+q936P7npke+A/ci0MIxoCie+Pw+N9n8ZsLnD6v7JUICn43CRF3qha2u6m1bIc7oxKXbqdqRTlRQE66k0/XLNaQ8ukz3B0pZwILbYIpywELuApb17YYDlaG3yiotQ67fLj8wxUxpuPkeh86I1RKW3LE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OEP8971H; arc=fail smtp.client-ip=40.107.244.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6884B165EFC
+	for <patches@lists.linux.dev>; Mon, 17 Mar 2025 16:37:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1742229436; cv=none; b=bL09A/O1P8G4Wvbg703+/AV3LRAJBM4UrqRyGJtk5cPOXIaW8tg+W5AU9ktNWL2WQqOc99ESF2w7r3g1SCSi9IJt6YVJe60zX1xJZgO03xleeHsS0LHL0HCoDH669SwWiYsGA8DvqJbaK+Piliu1nqUN9+zINlblyzfdJ+5uGXI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1742229436; c=relaxed/simple;
+	bh=S6I2WavCtsoOuWUc2oZMW7mzzqpQSM5n/x+IPgYbHFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=piot4yb9qD0huoHvM8PmmtTa+vm7rnj2QXs2Qtrs7GTkcAdpbCqs2tFKAC3i/QmL0pwzKUZas6v/xoef2KKkC6XpwQQFRkHvrbMjddekhcERG3/NSDVaL+RB8GCg5MXf2OjHuDA/vRTfG3uzEgk27EMxOs5ArxM7FlJkH9GDfDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dN6e5qID; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OEP8971H"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uQpLn/Erel9/sJTa/8MEHIqyhJd/4w8/9i48OEJg5Go0S7F9jV4dnYPAXTDKmzKgu1hd15GoiLs857GOxfByEVay1d0kwwZzdT12r2ZKs3lySkbAHSEXWk2GYU6TywQUV9hzy5S1PtG88W4/x/p6Imr2N9lrp6iMb2dNUXbJUqgnJvSRENnbAe/+0RqabD+rOhxXWL+q4soUoWdbghuLo+bykjrODvn/VZdmZ0r62u1ft+8C9JaxJBOvoTU+DWaZ2CRr3i78LnLnm7IDCITuaVjcVpT45pprGZhF9LHSdWzLSi+MyePKG1V4bYVcKVW6HxQs08L6chW259a/UinOeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uEcjsd3wijmq3a8c+wEVG39qKMo6JcztjhYTYEyxOsg=;
- b=uByEAb4XxinrhN+2q6HWQRMUY2wuojBnhT4dhnBqtvBIMT3OPPVua7zDj/ZYCUCmZ6x8vU+3YwSy5Gnvr+zPYj90BVMlV8PKdMgF1dJa923uiPRiAaLd76kAVpYZuXWywct35lJ4bkBbhmzAIoXqXRZM1uS6Fe3aX6HYF2t48db8i4XIZQfs1OvJoS7NgcymCc91XH9zOjpvR/KMZ2nQUtILIsejGohMZH6vihRhkPgL2EnkV5BzyLZML/V6L6avsHOFc5kDBNBX6dL92+1B/3Rgelw++chV960hhkZhlG5EWWIWX+1inJVskxtTtjH57aZlfbp+OfrzqrcYD+xu2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uEcjsd3wijmq3a8c+wEVG39qKMo6JcztjhYTYEyxOsg=;
- b=OEP8971HkLdL09YbxIjwy9cn3+eJdnscfprUJICAX5Lw4aW2HHEW8F9RvD1ygsoePd6lAZVXPhpLdHgKEhWFPtHAjqCwtAd30s9ytNhzb6YYhsVEaIwaW8J4c8aIupx9MGeeglrevvPeDzeylEqUHtiloaUxdafG8Ve97dUvl3+e+C8YNnp1dOchFuwJzdKpNZBAh2DzcGaPwrsg1TFxMgMlSbT8uPiyBm88Edtp410MQbNt5yvKsZXtgG6G/3Rh08ClgC2c+KD1D2YEDFomc83LkQEflT4sUBzhbiZ7XtzAtAaZxBsiFbHC+u0fTUUkWbJDt1gW73oaEY07Lf8txw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by SJ1PR12MB6316.namprd12.prod.outlook.com (2603:10b6:a03:455::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.27; Mon, 17 Mar
- 2025 15:44:24 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8534.031; Mon, 17 Mar 2025
- 15:44:23 +0000
-Date: Mon, 17 Mar 2025 12:44:23 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: Will Deacon <will@kernel.org>, kevin.tian@intel.com, corbet@lwn.net,
-	joro@8bytes.org, suravee.suthikulpanit@amd.com,
-	robin.murphy@arm.com, dwmw2@infradead.org, baolu.lu@linux.intel.com,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
-	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
-	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
-	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
-	praan@google.com, patches@lists.linux.dev
-Subject: Re: [PATCH v8 12/14] iommu/arm-smmu-v3: Introduce struct
- arm_smmu_vmaster
-Message-ID: <20250317154423.GI9311@nvidia.com>
-References: <cover.1740504232.git.nicolinc@nvidia.com>
- <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
- <20250311155714.GC5138@willie-the-truck>
- <Z9B2LMIi+88hlfza@Asurada-Nvidia>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z9B2LMIi+88hlfza@Asurada-Nvidia>
-X-ClientProxiedBy: MN0P222CA0016.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:208:531::14) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dN6e5qID"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1742229434; x=1773765434;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=S6I2WavCtsoOuWUc2oZMW7mzzqpQSM5n/x+IPgYbHFE=;
+  b=dN6e5qID5fgx94o0b7P/wrDW6vq0UUAb45g6TiJGLgNilFZ29eh51rNx
+   PYU/pf8fy3G0g7z8344nnGlWcTlKTywt4MlEo4pTiWcVfh5NVqIPNPNbp
+   9LoD/dRRN5opMvhAfR5QY73L9YByKx1GKu0EiJiuKN3nS44TbHsOtmMEH
+   aBpkMgpPUct7E4/diftv6tFrCZ0sD+HW8ZzDXKHveEHDV/E2osf56uTJm
+   6Sie1jGjuM6ZyNGrl6SaE/qCJdMeJzHt53yr43nIyE4dW16Ng2p6OL0iH
+   TTa5TyDAderfW7Aw3ElyQwT1YsvJyw3r/pFs4TNzRPoCnov/DejCAzf6z
+   g==;
+X-CSE-ConnectionGUID: zxi3haZlR/+mCH1/7oF8RA==
+X-CSE-MsgGUID: y1aLkiqDSWeOHQ9cQ5jXkA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="30916549"
+X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; 
+   d="scan'208";a="30916549"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2025 09:37:13 -0700
+X-CSE-ConnectionGUID: A270ThBuSMyycNnywtyPVA==
+X-CSE-MsgGUID: jDdGIhg1QGm8sCV4sXP7Yg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,254,1736841600"; 
+   d="scan'208";a="122487177"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2025 09:37:13 -0700
+Date: Mon, 17 Mar 2025 09:37:12 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Moger, Babu" <babu.moger@amd.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] x86/resctrl: Refactor to make adding extra MBM events
+ easy
+Message-ID: <Z9hPuMV5n_FY02MM@agluck-desk3>
+References: <20250314202609.5753-1-tony.luck@intel.com>
+ <d4263bf7-9bd1-447f-976c-69fd96d3f204@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ1PR12MB6316:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86188aee-f6f7-43e8-20c3-08dd656a9760
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?e29XWDx+sMc77zi47XenRjQ+odk++NVgjR3VB79ZgXthMqeLX+zgoJPwn55r?=
- =?us-ascii?Q?BripOkeHjiPP1DLJlBHpKlNew+rD+5MM781Pm2+eAmdSFpIBsXt5nSR38SZV?=
- =?us-ascii?Q?x/2AG0vUMuCYm2Ljm1dockctDknZCX+6ky/jBwHyA+1GMx6XINXiBWLSEAcA?=
- =?us-ascii?Q?0azYw5d9wszDG+J7xM1hIq1rB5odq5fk5enOJ8O3HxpEFF5Kdt3pSnQ2TByI?=
- =?us-ascii?Q?XiwUZVL9AjhuzQ8giYiEiRpqbj1/Avthg0/HylKhJhWMNGwHyUp9adVdhiW7?=
- =?us-ascii?Q?YeyVeuHO6ilLh9EVmrmhWZYlaouzYlel89m4YrxSoeofPGVSu/N99AayrsR/?=
- =?us-ascii?Q?Zbvc6JwcYaoiFlI10RlRlzZNPyNtKlMYlfUNL3A2rHMmVNZb4wpbbpwbEXAN?=
- =?us-ascii?Q?E/vHt/VW5AVXw2nVJieeF0RQPdP//16kubO2FpoKhqHpprfyrXN7NLtjfXf+?=
- =?us-ascii?Q?lyh1OwzcaiIhLHFMbggsjasonEeZ9LzJtZ4fpoaQl3Tjo0082k5DdVV/RClv?=
- =?us-ascii?Q?cDRWtQN002dfYHZ6x8HiKCBezplK8+ftJ0PD2WsloE57UnKT3907hNTqnOXH?=
- =?us-ascii?Q?YSomaezXriK/+FAK1WmzCE2YJdrq9kvRjgYjUBUw7twfK5GV3mfldEmyb3iM?=
- =?us-ascii?Q?ho1TnmCrgnWpeqokBWdUVUjt+QY4K+v1DlZqZ1b03rMsIOtMMbzjdIUOw5Zv?=
- =?us-ascii?Q?LJQq7Oa1IrWAtVv5xTWefvySYi3sSync2DDTr4J0oUrI9mqqunlm8bjRwqTq?=
- =?us-ascii?Q?b/IjBPyHkDp43BAjzkfXq6Z7vz+Q3lb481A146n9KZ0Dkf8AfDXIVbBJdleO?=
- =?us-ascii?Q?pdLNccjwNTkY8CwrjEV/K202yBdKH3H6OSD5R3D2lDc0cvY08WMuFvJNdhl/?=
- =?us-ascii?Q?9k083Unasv0UqBg4qm0jLegYmQ88OmqTuW5NE912qDN4lvqYuZeXLN02oFJY?=
- =?us-ascii?Q?ZNt+XmdnIfv/ynQ85l1CGxOq8Ir33nRmzZDe4RWXGD9C+4GC++M4ZsIFLuDY?=
- =?us-ascii?Q?g6b+dAa1gT/Z7BBrJkS4wLt5XaGEIgZTixBmwftaW4SsHuQz5+J3W/2VJA4q?=
- =?us-ascii?Q?AGSpV5EMCWX370vwcrKmmCMAljx4YHF0J3GGe4pKyB4CJJAIXxEJMQm2H/m1?=
- =?us-ascii?Q?2jVNYQK+e80hzqQGnM4zOtgmQJqOmsNB7knrp/18iTekLHIIkGbdzOidE711?=
- =?us-ascii?Q?mmTlE+l6Uf9lHylioXnBzDbf9B5CtdmBWejZJkV8WvDUZPj7dgk8wyhkfGaW?=
- =?us-ascii?Q?khSeNbO/aLL73xkMxOWVNQIlCvnf3FfdJPtMMmDzdydl5sggSaKmUau/Rn+B?=
- =?us-ascii?Q?LYmusyRkwx09HUFUMcs9tDS0dhW+NH7wdefoae366sl686Jf80l12Y/TiK18?=
- =?us-ascii?Q?bvFnc6mjh2H//D2Za7ugeaEmSIbd?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?5WA6SxbOAzPvfQMGNrOh+4/tlVH2ZG+2Liegxmoc1hcOQ9eWKsuRtcGQxyCN?=
- =?us-ascii?Q?Y7f7OxyiCYuj9oYlF91rCk/XLWxzkOKSBnv2swQeRh73zrgoHH2LPqGwT1Fi?=
- =?us-ascii?Q?V2dXPEZ1fTeW2GJcoFx2eMKdhXQfu+perabAkwS2fkk6dgrOmcqaTyyk2Kkr?=
- =?us-ascii?Q?86OgHrdbz2KyGo10iL7D0m0B5Qur0NchY4p0iG+rWulDXMBOXWG3LTpktODS?=
- =?us-ascii?Q?00R8vi5STQpY52OZyAyDOguHKTJGTUQlvow17TCeZRg170Y42diqPzknLP2h?=
- =?us-ascii?Q?l9dRcO9vWhro1fcubBtp/i8FDjp1CBTG8lrVo3onO9JMPZB4AUpUjmZdkKOx?=
- =?us-ascii?Q?+pXmzEuzPGVdXuPsQQ5crDjbydQQD92vhG9WtmnDRdmvelbnT+UwwAMcFQNt?=
- =?us-ascii?Q?JnGOfjazLKmVVnT1HjaGMCTycJiq5A54tWxFbc8hFBXurtC3mNhCzbRe/lCv?=
- =?us-ascii?Q?maW05J8QPTi/W/74T1wpLLEiSkK86VxdAJNarshbjDeFgA+CZ7X3XraMqxV1?=
- =?us-ascii?Q?3R1iTEw/M418vdHyuZSZO3Ka100c2xtWEJRkPoWQCFDqf29vcFrfqthuudMa?=
- =?us-ascii?Q?AImRdqv/SWO93EEPP8zYcWTRQutLf6DzZoAJvh/a++iwxLLk57/OWIScgQZ6?=
- =?us-ascii?Q?nv8i+zBVBV/tIXMNS/6yLSFhIECxVAxUnyn65Q4blDdO+zdCGk54TC7WVpvz?=
- =?us-ascii?Q?/PC9f8Udf6yYR3zqrPiAh1G2BWZgSQkhwf3I8jqdo813U7EDXC/B+tsL1b3B?=
- =?us-ascii?Q?Cy3tjRlYv/MWgWtpqzqRW+uJjEOhHBgDvMleC0kVUTOwTGjuLzkmEubYkLmO?=
- =?us-ascii?Q?8zuJH/U0gWx8p5P8gsQl5Cj0hYEqIrtq/wIOxVoDKbRI0egYFIqxNoRVZdf0?=
- =?us-ascii?Q?EzCtR89Ek/rbWN7ABgDUQ6A753QOxL679mRmFZUO57ttAuipPKxr1/zWiA9X?=
- =?us-ascii?Q?LBjnlvYfGm+Giaen1qXr0TmYZtgYmmNoegUXOiQMvIfEEZ8AxafafS5Zlp1d?=
- =?us-ascii?Q?XkP6Gji+nOXHkhlnafwYjWQsQN/61++yyaqD332kZme+TRcgwrNz8mzrjT8O?=
- =?us-ascii?Q?Gjwoizwd9q6rXJvIFbaR49GpcJbxEQ0/DJj1QRIg30Vx7lgzkT+tyfYhP47v?=
- =?us-ascii?Q?TADUopxOFsdHVuylDm9S8xlT87CQoJx7IJnION95IckFhSZu6FFdkalA5uYm?=
- =?us-ascii?Q?VqhGtpxKGv4XOyPg5eei89WFhzWKfKa3qzlQBPlVuawUNxqrs5PZ/Hwt+46s?=
- =?us-ascii?Q?1ZY234OgHsVo6X6fQE0cNorcljxen6aH5Y1xwmJVE/doBmK1JwEprriAU4ZM?=
- =?us-ascii?Q?rdWebPYW1g5Nca4nuYHtwLLc8mr83BGhVYEF7xtDc3o8Om33rKrxXgBKz8IS?=
- =?us-ascii?Q?MvFpmnkItdnNkRwZXi8VXNCfy48Vdgl14VHzXmZ2HLix9xM/zYQb2M3HYk8E?=
- =?us-ascii?Q?HExYAgDW1z/8aUZtlqLbD0hDLnCra+oTYEI6uZYT80OOLfLjM7KK7eWbaeTH?=
- =?us-ascii?Q?0kcB9gciU3xatul4a3bJm3+VU6lbQin2rsGS9m0XpZN66+9pYzGajWniusL6?=
- =?us-ascii?Q?2eOe1y4VqXTgIqgpvNBS2OZQrmh0Gsr5zl+SqVUH?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86188aee-f6f7-43e8-20c3-08dd656a9760
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2025 15:44:23.8994
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PYnyYQOGovTwJ2XMAeGRjxZhCbLHBrPyypr7TJKt1W9I2/nsamT9oEbeTZy3nEjy
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6316
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d4263bf7-9bd1-447f-976c-69fd96d3f204@amd.com>
 
-On Tue, Mar 11, 2025 at 10:43:08AM -0700, Nicolin Chen wrote:
-> > > +int arm_smmu_attach_prepare_vmaster(struct arm_smmu_attach_state *state,
-> > > +				    struct arm_smmu_nested_domain *nested_domain)
-> > > +{
-> > > +	struct arm_smmu_vmaster *vmaster;
-> > > +	unsigned long vsid;
-> > > +	int ret;
-> > > +
-> > > +	iommu_group_mutex_assert(state->master->dev);
-> > > +
-> > > +	/* Skip invalid vSTE */
-> > > +	if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> > > +		return 0;
-> > 
-> > Ok, and we don't need to set 'state->vmaster' in this case because we
-> > only report stage-1 faults back to the vSMMU?
+Hi Babu,
+
+Thanks for taking a look.
+
+On Mon, Mar 17, 2025 at 09:54:59AM -0500, Moger, Babu wrote:
+> >  static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
+> >  		       u32 closid, u32 rmid)
+> >  {
+> > +	int evt;
+> > +
+> >  	/*
+> >  	 * This is protected from concurrent reads from user as both
+> >  	 * the user and overflow handler hold the global mutex.
+> >  	 */
+> > -	if (resctrl_arch_is_mbm_total_enabled())
+> > -		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_TOTAL_EVENT_ID);
+> > -
+> > -	if (resctrl_arch_is_mbm_local_enabled())
+> > -		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_LOCAL_EVENT_ID);
+> > +	for_each_set_bit(evt, &rdt_mon_features, sizeof(rdt_mon_features))
+> > +		mbm_update_one_event(r, d, closid, rmid, evt);
 > 
-> This is a good question that I didn't ask myself hard enough..
+> You need a check resctrl_arch_is_mbm_event() here.
+
+Right. This is definitely broken. Needs that check.
+
+> Will that be reason for your hang issue?
+
+Might have. But it isn't my only problem. After fixing this my
+kernel dies on a deref NULL.
+
+> > @@ -1075,20 +1062,37 @@ static void dom_data_exit(struct rdt_resource *r)
+> >  	mutex_unlock(&rdtgroup_mutex);
+> >  }
+> >  
+> > -static struct mon_evt llc_occupancy_event = {
+> > -	.name		= "llc_occupancy",
+> > -	.evtid		= QOS_L3_OCCUP_EVENT_ID,
+> > +static struct mon_evt all_events[] = {
 > 
-> I think we should probably drop it. An invalid STE should trigger
-> a C_BAD_STE event that is in the supported vEVENT list. I'll run
-> some test before removing this line from v9.
+> There is one empty event here. You may need to make that clear.
 
-It won't trigger C_BAD_STE, recall Robin was opposed to thatm so we have this:
+Yes. I went with "some wasted space" for code simplicity just
+using the bit numbers in rdt_mon_features to index this array.
 
-static void arm_smmu_make_nested_domain_ste(
-	struct arm_smmu_ste *target, struct arm_smmu_master *master,
-	struct arm_smmu_nested_domain *nested_domain, bool ats_enabled)
-{
-	unsigned int cfg =
-		FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(nested_domain->ste[0]));
+Also applies to the mbm_states[] field in rdt_mon_domain and
+the arch_mbm_states[] array in rdt_hw_mon_domain. The wasted
+space could be reclaimed with some macros to convert from
+bit numbers to array indices should this patch ever be
+considered for inclusion.
 
-	/*
-	 * Userspace can request a non-valid STE through the nesting interface.
-	 * We relay that into an abort physical STE with the intention that
-	 * C_BAD_STE for this SID can be generated to userspace.
-	 */
-	if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
-		cfg = STRTAB_STE_0_CFG_ABORT;
-
-So, in the case of a non-valid STE, and a device access, the HW will
-generate one of the translation faults and that will be forwarded.
-
-Some software component will have to transform those fault events into
-C_BAD_STE for the VM.
-
-I imagined userspace would do this, but it could be done in the kernel
-too. Regardless, I think Will is right and the the viommu should be
-set even in this case to capture the events.
-
-Jason
+-Tony
