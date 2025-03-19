@@ -1,104 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597881DE3AA;
-	Wed, 19 Mar 2025 16:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A7C18FC74
+	for <patches@lists.linux.dev>; Wed, 19 Mar 2025 16:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742400492; cv=none; b=LOXWoB2GjWOM66ALWZnEN5a+kebaN8eJzYchwzCE7Vsy3vPzCir50oqajiWvbvWZJeuLWVW15qYmrkb6TthmaqFqRlJBzUVVaz3xNWtMRs2hBKo+L/PswfkRQlyVpgsbdHCa6eaWBpAmzbFfNgUGowM9plCjrTh0Pvq5+ZXquo4=
+	t=1742402015; cv=none; b=P+oaJtnKvP4TnxrPKqqG/FGF8JnhOlIhizxA+Isa35UDtoWOhU3l37UYNbCV3uL1329nNG8mKyG+zjL8zEvyCunREgquCgGRAYSoGp6k46DcdFJmMfJSVrCPISvj1LjNzNBmBm+Wf0/HIwUEMawSfSak5jl6I5UUHdK8NJeJPIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742400492; c=relaxed/simple;
-	bh=ZgQibqnYOqFsCMWXhLzNKeBk1b2KjH8VJddDDteh1cI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VH/p625krh9bANaARJOgvhwJOv9uBIolnJwjx1Y3QROTH8iAsfLQijnekMP/AlRC865IfGYVBcN1B1l0OaHvcClovI+QTYH+uIxJEzh17hdbEIys1OBPFGjTuAQZepAvLpnM6cCBspQrtx16Ikw5cro0e3BD4Jbu+dTfATmkf2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7hn4knW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742402015; c=relaxed/simple;
+	bh=b5JoerGjzoODytPs4/JCCgsORTIkD1OWdTmBFC8AjPo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RHPMlKT8ZcwSwEUZ7gJShltzmpoTiUhacdK2iHC1uy6DX7PcuJfJWEs8NU7cVL8sLce3fpft6aYLg1/cr+LSzaBdAcPlpH6GLq8crW/kq1id08jZfXD2fd/Asqp7mUBjl87Agi/lipHINvgkiP6hiYVVcRIA5nBQ5L7dUO2uMAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wnpPoQyN; arc=none smtp.client-ip=209.85.222.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7hn4knW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B063C4CEE8;
-	Wed, 19 Mar 2025 16:08:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742400491;
-	bh=ZgQibqnYOqFsCMWXhLzNKeBk1b2KjH8VJddDDteh1cI=;
-	h=From:Date:Subject:To:Cc:From;
-	b=V7hn4knWJ6YXhzBccFogxrOttg65IlcaiZtOT4Q332gBSwu6eDswCj8ymLjyfweNN
-	 fZiFjKzpmAVxH+e6/gc1/6cqONePhrRpSmLvQOmUUsMoi81OIyMlDydNzKiRVqyTvm
-	 4kQuPTZXEBPBuLsM8Bhc54P5sh9fPjS40uSVY79YeFC7uARceDqmu/NZrcGWWdfLF3
-	 HYFtZp3zNXQK8z20NnYXrvfXa3F8GpGwNbyuJ0GH/mBjIwCcRdBCGJ3snCWujK3A5I
-	 V0kQvTbNLWv0bSAhaGPOffNqFSD8SYrWr0IM++c+CU7hXlEbPi3uJPAFijRVEqXz8a
-	 rKfo7h8KWvJtw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 19 Mar 2025 09:08:01 -0700
-Subject: [PATCH] i3c: master: svc: Fix implicit fallthrough in
- svc_i3c_master_ibi_work()
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wnpPoQyN"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-86dde90e7a3so972992241.1
+        for <patches@lists.linux.dev>; Wed, 19 Mar 2025 09:33:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742402013; x=1743006813; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OVuqKpUv1pEU4LzOHuIA6EH8XUgNHnH2M2llTP84R4g=;
+        b=wnpPoQyNTkytKDvzAZuxfaH5l4MDvVpaypn8p7aHPdo7dSOvqLxLgk9Hhs66e7SIy0
+         bVpQ8FSlyx97BGdYsYDggrT9UUfUJbMgpJcUQA7cjYfvP+s369h7G4vFyyS+8tOz1gP8
+         MqbAd3NQ/eFi2E9nHJ4MsoO5U+MXVN7X4ZHzWTT3pINCN4KP483HNJuhMWHfXF1SD4rI
+         1+mzJBfGuzpTbBZV3p9kViVqvNpyrFUB1VbcU0kNVs7dGiQpbNjVHFrGcGECJzoow2Ls
+         Ov0IINsPsvMW/ocrtcdYSkzTbR94znx57VA1bxe2vgdps4Md6/RRm8jmE4IWeFTKpTNh
+         CBVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742402013; x=1743006813;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OVuqKpUv1pEU4LzOHuIA6EH8XUgNHnH2M2llTP84R4g=;
+        b=Nf0z7PablkKgAnox2t63zi5E0cCnbaCmgrCzd5QYNEeCp8Z5Tot7baku9bX7aQOK2T
+         u2Hp9NgBEUMdSSGEZHsT9IwkHvJqVaHA/6EtqcO93eYyVdwu5rc7dHpp9MDjsgJR5dId
+         ZD23qBosCaAYyMR1849zrFaEE73DLxTQbtl/OJiHe62QGWvJymB/y5MD6IXlpC+M52R+
+         0mvylqnizIl/Ms0KiLNaxmmY0zUSwfe9gkS/BLyHV2oY3mU6OUnb8hXBgbTiF4tXkecE
+         SgZ27/hGEvfFudo+b/csfzjt4Gwh7n6zeNLoBtB7umdSRalA6FjN+/lihmnfQyYxIshd
+         p+Dw==
+X-Forwarded-Encrypted: i=1; AJvYcCUgS3scFi6uiM9NgPVEvdDiPHY3DJOGx4l33liG+Tsrd/gOsTilmv9wuXIlKKpSbNK1Cgko7JKA@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJUkUvu2Krf7SAMeuYnZyE/+Xq2VFIwqpfqzKr8VThgCmLNhvZ
+	tBVD9Q03itZlLk8PZ9gztMEsJjqoYmS8ZvouZK+ikFGHNv4mcSlwqY2icZzS9vnhK3Ms0kfSMY4
+	lBK21lbUlo/BfjO/6KWMnO0mIWWy6hWEziSbhGw==
+X-Gm-Gg: ASbGncuE0FdZ3O5voAURI9BXK712ro0MYZOUlGfCvYmHzn81rkydB60qoN6FjphZlsc
+	I3EfGmZPLVDqtiANcPD28cfJxLZJUtr0B/cgczJ4CSZey4njr6o5UJywNYhA4gpi2rtmbHb7YwP
+	m5PfEyS87OlppeqTZDshJi72O8YiyzWrdAT8bGDqDM31wYyIULZg4V6Rg=
+X-Google-Smtp-Source: AGHT+IHWmBTfBeI+pX6l/d4K6vWO07nXM028XzAozff8NwOIYDbLIFEeoObpskDnFhKhHnfnKlb6wiHJoN9ZGxWxSfQ=
+X-Received: by 2002:a05:6122:8890:b0:525:9440:243c with SMTP id
+ 71dfb90a1353d-525944025e4mr695738e0c.11.1742402012994; Wed, 19 Mar 2025
+ 09:33:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250319-i3c-fix-clang-fallthrough-v1-1-d8e02be1ef5c@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAODr2mcC/x2MSwqAMAwFryJZG/BDKfUq4kJi2gaKSqsiiHc3u
- BzevHmgcBYuMFQPZL6kyLYqtHUFFOc1MMqiDF3TmaZvHUpP6OVGSrqin1M6Yt7OENF5Q5a8Yes
- c6H/PrOLfHqf3/QCnyO4qawAAAA==
-X-Change-ID: 20250319-i3c-fix-clang-fallthrough-9f5c7cf5e799
-To: Miquel Raynal <miquel.raynal@bootlin.com>, Frank Li <Frank.Li@nxp.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Stanley Chu <yschu@nuvoton.com>, linux-i3c@lists.infradead.org, 
- imx@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1618; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ZgQibqnYOqFsCMWXhLzNKeBk1b2KjH8VJddDDteh1cI=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOm3Xr/UcwnsnaaTeu/iZ+s1S65X16vqNQasCJwSI2v7Q
- 0+zRSSto5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEwkXZ2RYcLcHRt+pF05Uhb3
- UNAmTM65y+P/XvkosfjtBuLP1J5kzWFkWFD0ccYyqVtTyy5OUOyqdOyV+dJ/lPP+gikK5rHSVw1
- EGQE=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20250319143019.983527953@linuxfoundation.org>
+In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 19 Mar 2025 22:03:20 +0530
+X-Gm-Features: AQ5f1JqIqR8G0jdBi-EqCaYlr4_sxu0nohARN-WaSCDfLRpd0KihGkC9ntbmtXw
+Message-ID: <CA+G9fYvM_riojtryOUb3UrYbtw6yUZTTnbP+_X96nJLCcWYwBA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/166] 6.6.84-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, Jens Axboe <axboe@kernel.dk>, 
+	Pavel Begunkov <asml.silence@gmail.com>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, io-uring@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On Wed, 19 Mar 2025 at 20:09, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.84 release.
+> There are 166 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 21 Mar 2025 14:29:55 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.84-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-  drivers/i3c/master/svc-i3c-master.c:596:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-    596 |         default:
-        |         ^
-  drivers/i3c/master/svc-i3c-master.c:596:2: note: insert 'break;' to avoid fall-through
-    596 |         default:
-        |         ^
-        |         break;
-  1 error generated.
+Regressions on mips the rt305x_defconfig builds failed with gcc-12
+the stable-rc v6.6.83-167-gd16a828e7b09
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return. Add the missing break to silence
-the warning.
+First seen on the v6.6.83-167-gd16a828e7b09
+ Good: v6.6.83
+ Bad: v6.6.83-167-gd16a828e7b09
 
-Fixes: 0430bf9bc1ac ("i3c: master: svc: Fix missing STOP for master request")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/i3c/master/svc-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+* mips, build
+  - gcc-12-rt305x_defconfig
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index e0cd3ce28b7f..85e16de208d3 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -593,6 +593,7 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
- 		svc_i3c_master_emit_stop(master);
-+		break;
- 	default:
- 		break;
- 	}
+Regression Analysis:
+ - New regression? Yes
+ - Reproducibility? Yes
 
----
-base-commit: 0430bf9bc1ac068c8b8c540eb93e5751872efc51
-change-id: 20250319-i3c-fix-clang-fallthrough-9f5c7cf5e799
+Build regression: mips implicit declaration of function 'vunmap'
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+## Build log
+io_uring/io_uring.c: In function 'io_pages_unmap':
+io_uring/io_uring.c:2708:17: error: implicit declaration of function
+'vunmap'; did you mean 'kunmap'?
+[-Werror=implicit-function-declaration]
+ 2708 |                 vunmap(ptr);
+      |                 ^~~~~~
+      |                 kunmap
+io_uring/io_uring.c: In function '__io_uaddr_map':
+io_uring/io_uring.c:2784:21: error: implicit declaration of function
+'vmap'; did you mean 'kmap'? [-Werror=implicit-function-declaration]
+ 2784 |         page_addr = vmap(page_array, nr_pages, VM_MAP, PAGE_KERNEL);
+      |                     ^~~~
+      |                     kmap
+io_uring/io_uring.c:2784:48: error: 'VM_MAP' undeclared (first use in
+this function); did you mean 'VM_MTE'?
+ 2784 |         page_addr = vmap(page_array, nr_pages, VM_MAP, PAGE_KERNEL);
+      |                                                ^~~~~~
+      |                                                VM_MTE
 
+## Source
+* Kernel version: 6.6.84-rc1
+* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* Git sha: d16a828e7b0965ca37245ebea19052ad7b4b2f9b
+* Git describe: v6.6.83-167-gd16a828e7b09
+* Project details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.83-167-gd16a828e7b09/
+
+## Build
+* Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.83-167-gd16a828e7b09/testrun/27677634/suite/build/test/gcc-12-rt305x_defconfig/log
+* Build history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.83-167-gd16a828e7b09/testrun/27677634/suite/build/test/gcc-12-rt305x_defconfig/history/
+* Build details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.83-167-gd16a828e7b09/testrun/27677634/suite/build/test/gcc-12-rt305x_defconfig/
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2uXZlKzVxja3mOQfRLlPRxHzd5L/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2uXZlKzVxja3mOQfRLlPRxHzd5L/config
+
+## Steps to reproduce
+ - tuxmake --runtime podman --target-arch mips --toolchain gcc-12
+--kconfig rt305x_defconfig
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
