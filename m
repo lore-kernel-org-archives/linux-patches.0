@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AE11C9EAA;
-	Wed, 19 Mar 2025 14:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700731C8618;
+	Wed, 19 Mar 2025 14:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394980; cv=none; b=oin5EPi7Rb1r1NUy28cnFznxjoY5iHCR8XRQJiW4jBfx4MmZOHNGdQ04a6Z78HID8rcZ6sGU2oUFGKo9zP2CrEc9PKM/PXiO7hKPMuafURaDvymeW/m43cuyC3Zvsag0Ed36pah8ogm2XxfJk/2fTnoyZa8AkX44z82Cw2jyfrk=
+	t=1742394981; cv=none; b=YxHG/se0YZ7jHCA4Ti1Z/sGT9+kaUCTaRf20Wbf92vDbTJK8HZoXo1ryMUrjUV1T1ErR4gD8KR9E0IkwuKuxCYeX7e6fvjjgl0S5kncIhaXlkpEzyx7cZYYnv7gmSed0+ztqXHS8yjkNqBhSZQ1LJF5OmRxGQ7lPr+a31utdqLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394980; c=relaxed/simple;
-	bh=5V6mPOluwy37qDnOgT4CqS6tekHjtYOzs36ZMlm+yOU=;
+	s=arc-20240116; t=1742394981; c=relaxed/simple;
+	bh=4DPvxJ9U5EG8nCJILSjfEcgkNHS3uGjBWl5a6ozVZgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdH8pRwlpKLqNN/e1cmB2deT2102QhaTfPAb5SGfkE81E/JjdLpdCr8/bzPN18feqA2rIuGJQYiZxGcNLW3PP64G8zFRkiG4+kGRNzGEYtM2GgmRpkwjpL9eFMqBO+NMlGfOtXnKmQkaiQ4upciaQReooSF8HbtvKqPAOsI5qeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2q7Jui1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMiwTOK3bwegvrY9hP8KGDpSme8VL6VVGc8lCi7nhDQzx0x8Drh8KsVlO8vumFIktWRTzFcbzLqGYdyBHstoTnlf9YtEv482GtO0CLlrPPxaRQdWXLIALe08XmuiMBhQUHi9dCWOl61txU/8UgojO/3HhwVx6KRwJYifGbeztk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkSOQVDj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2q7Jui1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C78C4CEE4;
-	Wed, 19 Mar 2025 14:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkSOQVDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469C3C4CEE4;
+	Wed, 19 Mar 2025 14:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394980;
-	bh=5V6mPOluwy37qDnOgT4CqS6tekHjtYOzs36ZMlm+yOU=;
+	s=korg; t=1742394981;
+	bh=4DPvxJ9U5EG8nCJILSjfEcgkNHS3uGjBWl5a6ozVZgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2q7Jui1R8dnfy5JSO66t7yTWvA9pzM1l2JJLke/BNDRXZ+xrH0iVBVyxxmrp3FvE
-	 JIExR8GyiDx9eqDPTt7uRHuWPz1NnmEqtQFi8gN33hHAaFrsbSEDAgq0l3gsvXSyyS
-	 p0eS5DE6klGBclys/KtkilniN9LokBbUL6KYQLT4=
+	b=AkSOQVDjbW0kM8CN2fZhIH3wM9qfiFz7SQans7aBEUerzLPXSyiEWN2yJJrcq+zJ9
+	 UJ62sUI9kSQhT+wV79uF/9UZbr6YDpam9+6/SUIEaGvglrzP1BTswV6uMNDPnVyTTE
+	 ff8/tIDT80xufAJNra+2vXb/NSLVA02qK/Nj0Fhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Behrens <me@kloenk.dev>,
 	Tamir Duberstein <tamird@gmail.com>,
 	Andreas Hindborg <a.hindborg@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Chayim Refael Friedman <chayimfr@gmail.com>
-Subject: [PATCH 6.13 219/241] scripts: generate_rust_analyzer: add missing macros deps
-Date: Wed, 19 Mar 2025 07:31:29 -0700
-Message-ID: <20250319143033.164566114@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 220/241] scripts: generate_rust_analyzer: add missing include_dirs
+Date: Wed, 19 Mar 2025 07:31:30 -0700
+Message-ID: <20250319143033.190235159@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -56,108 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Tamir Duberstein <tamird@gmail.com>
 
-[ Upstream commit 2e0f91aba507a3cb59f7a12fc3ea2b7d4d6675b7 ]
+[ Upstream commit d1f928052439cad028438a8b8b34c1f01bc06068 ]
 
-The macros crate has depended on std and proc_macro since its
-introduction in commit 1fbde52bde73 ("rust: add `macros` crate"). These
-dependencies were omitted from commit 8c4555ccc55c ("scripts: add
-`generate_rust_analyzer.py`") resulting in missing go-to-definition and
-autocomplete, and false-positive warnings emitted from rust-analyzer
-such as:
+Commit 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+specified OBJTREE for the bindings crate, and `source.include_dirs` for
+the kernel crate, likely in an attempt to support out-of-source builds
+for those crates where the generated files reside in `objtree` rather
+than `srctree`. This was insufficient because both bits of configuration
+are required for each crate; the result is that rust-analyzer is unable
+to resolve generated files for either crate in an out-of-source build.
 
-  [{
-  	"resource": "/Users/tamird/src/linux/rust/macros/module.rs",
-  	"owner": "_generated_diagnostic_collection_name_#1",
-  	"code": {
-  		"value": "non_snake_case",
-  		"target": {
-  			"$mid": 1,
-  			"path": "/rustc/",
-  			"scheme": "https",
-  			"authority": "doc.rust-lang.org",
-  			"query": "search=non_snake_case"
-  		}
-  	},
-  	"severity": 4,
-  	"message": "Variable `None` should have snake_case name, e.g. `none`",
-  	"source": "rust-analyzer",
-  	"startLineNumber": 123,
-  	"startColumn": 17,
-  	"endLineNumber": 123,
-  	"endColumn": 21
-  }]
+  [ Originally we were not using `OBJTREE` in the `kernel` crate, but
+    we did pass the variable anyway, so conceptually it could have been
+    there since then.
 
-Add the missing dependencies to improve the developer experience.
+    Regarding `include_dirs`, it started in `kernel` before being in
+    mainline because we included the bindings directly there (i.e.
+    there was no `bindings` crate). However, when that crate got
+    created, we moved the `OBJTREE` there but not the `include_dirs`.
+    Nowadays, though, we happen to need the `include_dirs` also in
+    the `kernel` crate for `generated_arch_static_branch_asm.rs` which
+    was not there back then -- Tamir confirms it is indeed required
+    for that reason. - Miguel ]
 
-  [ Fiona had a different approach (thanks!) at:
-
-        https://lore.kernel.org/rust-for-linux/20241205115438.234221-1-me@kloenk.dev/
-
-    But Tamir and Fiona agreed to this one. - Miguel ]
+Add the missing bits to improve the developer experience.
 
 Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Diagnosed-by: Chayim Refael Friedman <chayimfr@gmail.com>
-Link: https://github.com/rust-lang/rust-analyzer/issues/17759#issuecomment-2646328275
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://lore.kernel.org/r/20250210-rust-analyzer-macros-core-dep-v3-1-45eb4836f218@gmail.com
-[ Removed `return`. Changed tag name. Added Link. Slightly
-  reworded. - Miguel ]
+Link: https://lore.kernel.org/r/20250210-rust-analyzer-bindings-include-v2-1-23dff845edc3@gmail.com
+[ Slightly reworded title. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/generate_rust_analyzer.py | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ scripts/generate_rust_analyzer.py | 42 +++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/scripts/generate_rust_analyzer.py b/scripts/generate_rust_analyzer.py
-index 09e1d166d8d23..8cf278aceba7b 100755
+index 8cf278aceba7b..2a64067b09b0c 100755
 --- a/scripts/generate_rust_analyzer.py
 +++ b/scripts/generate_rust_analyzer.py
-@@ -49,14 +49,26 @@ def generate_crates(srctree, objtree, sysroot_src, external_src, cfgs):
-             }
-         })
+@@ -90,27 +90,27 @@ def generate_crates(srctree, objtree, sysroot_src, external_src, cfgs):
+         ["core", "compiler_builtins"],
+     )
  
--    # First, the ones in `rust/` since they are a bit special.
 -    append_crate(
--        "core",
--        sysroot_src / "core" / "src" / "lib.rs",
--        [],
--        cfg=crates_cfgs.get("core", []),
--        is_workspace_member=False,
+-        "bindings",
+-        srctree / "rust"/ "bindings" / "lib.rs",
+-        ["core"],
+-        cfg=cfg,
 -    )
-+    def append_sysroot_crate(
+-    crates[-1]["env"]["OBJTREE"] = str(objtree.resolve(True))
+-
+-    append_crate(
+-        "kernel",
+-        srctree / "rust" / "kernel" / "lib.rs",
+-        ["core", "macros", "build_error", "bindings"],
+-        cfg=cfg,
+-    )
+-    crates[-1]["source"] = {
+-        "include_dirs": [
+-            str(srctree / "rust" / "kernel"),
+-            str(objtree / "rust")
+-        ],
+-        "exclude_dirs": [],
+-    }
++    def append_crate_with_generated(
 +        display_name,
 +        deps,
-+        cfg=[],
 +    ):
 +        append_crate(
 +            display_name,
-+            sysroot_src / display_name / "src" / "lib.rs",
++            srctree / "rust"/ display_name / "lib.rs",
 +            deps,
-+            cfg,
-+            is_workspace_member=False,
++            cfg=cfg,
 +        )
++        crates[-1]["env"]["OBJTREE"] = str(objtree.resolve(True))
++        crates[-1]["source"] = {
++            "include_dirs": [
++                str(srctree / "rust" / display_name),
++                str(objtree / "rust")
++            ],
++            "exclude_dirs": [],
++        }
 +
-+    # NB: sysroot crates reexport items from one another so setting up our transitive dependencies
-+    # here is important for ensuring that rust-analyzer can resolve symbols. The sources of truth
-+    # for this dependency graph are `(sysroot_src / crate / "Cargo.toml" for crate in crates)`.
-+    append_sysroot_crate("core", [], cfg=crates_cfgs.get("core", []))
-+    append_sysroot_crate("alloc", ["core"])
-+    append_sysroot_crate("std", ["alloc", "core"])
-+    append_sysroot_crate("proc_macro", ["core", "std"])
++    append_crate_with_generated("bindings", ["core"])
++    append_crate_with_generated("kernel", ["core", "macros", "build_error", "bindings"])
  
-     append_crate(
-         "compiler_builtins",
-@@ -67,7 +79,7 @@ def generate_crates(srctree, objtree, sysroot_src, external_src, cfgs):
-     append_crate(
-         "macros",
-         srctree / "rust" / "macros" / "lib.rs",
--        [],
-+        ["std", "proc_macro"],
-         is_proc_macro=True,
-     )
-     crates[-1]["proc_macro_dylib_path"] = f"{objtree}/rust/libmacros.so"
+     def is_root_crate(build_file, target):
+         try:
 -- 
 2.39.5
 
