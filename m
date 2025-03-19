@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D1B18C322;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACD618C322;
 	Wed, 19 Mar 2025 14:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394840; cv=none; b=W32LIW0d7zi5XnKt4yGq4lM47Kg28OFwJghU8F28vfPmwfzY0aEwIAa2TguMj5OzZYIqbLHcFwSgvc8zTMenchf7GPkKH2j1xURCMQM7oELtf4rwyqanMXbWXStfDLjeIL7GeX9RZ2fkm1PDYn7RSX3a1KRWdTevliv14qbNYsE=
+	t=1742394841; cv=none; b=ZqG1R5nVNAW/lZDkk+lGs/sqKki8J/ImHGgpHHmqLH+Yi+bb206LyQLao3QRhBtH8HiXCyZgmSOp05skM9rjslBQ0JaLD5B6cjxkDkxilWO10Pu/R4FUp/laZaHoF8Q7X4ENrRULMZUF02rnbD6JS6qOhVp92gsrMV17ZeRj1ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394840; c=relaxed/simple;
-	bh=o9Fv8FOwOe+iaurStz/htY5RcqPD8APuv40oX98JFso=;
+	s=arc-20240116; t=1742394841; c=relaxed/simple;
+	bh=5qai4ggVuxTeQ4pPyvuepTpHIPuZ03v8RVFiaCNzInk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0VNSZrM+ZZ6a5j449Rw7U7d9HIXXzgs+FuoC1nkAtLDAcpSZ3HGTsUuzIbRUZiE2nkRPh90wes+jnPC2g5z2B6jkokI3mML3CALHyMMjs/M43DXi26wI4nPZTUAQRErgkw/PbBqyfJJ6sOjRO2tHqW7I0O25noLSVFbA6hRjJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0X1AsDjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WboBNvnnSNcEuFalwbFzSpcyQFWnd1YlQba7sDCKhMw+4TC1K0k8wgAspmJyNRMgYgdD0u53E5Y3uAxlDFHx2FkOEUr1vANzPOcL9wbFuQCbN3bBVv8j/NbLOi+D/+02ORmKtM4AMM6BIapUHPnj47aOWougZHbXJyoLEwL4jKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGz4Emnc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0X1AsDjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7886C4CEE4;
-	Wed, 19 Mar 2025 14:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGz4Emnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8799FC4CEE8;
+	Wed, 19 Mar 2025 14:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394839;
-	bh=o9Fv8FOwOe+iaurStz/htY5RcqPD8APuv40oX98JFso=;
+	s=korg; t=1742394840;
+	bh=5qai4ggVuxTeQ4pPyvuepTpHIPuZ03v8RVFiaCNzInk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0X1AsDjM4iCwpOvQQ2UoASWBMggYDYThyYiut3GSj3XK0gvXUqDFV0rtRdA9SQcYc
-	 tj3paBEVJvwGmgAkWg9wLlTxeOAYYUtDl1BjkgkVuOip143bUr+cc2boh1BmrQGaV7
-	 +WwSc6PPQYFlOjQruk+9kmtUbSg8qWnFDCkiphj0=
+	b=CGz4EmnceS2LCSqxPw4tR4r470mMhKyONSo3KL2g53EH3WpdbAQf45f68rRmPyvU7
+	 6k4N+POTM3wmlaVOj4FwiVrk4vI4gKC34pVuGY20iHEtovdh77zJ1R0MUAAwDhrJ54
+	 7MxTSE+x134vECc+8g0uNZqTqHB/bHrvToWK/45k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.13 003/241] mm/slab/kvfree_rcu: Switch to WQ_MEM_RECLAIM wq
-Date: Wed, 19 Mar 2025 07:27:53 -0700
-Message-ID: <20250319143027.780388921@linuxfoundation.org>
+	Alexey Kardashevskiy <aik@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikunj A Dadhania <nikunj@amd.com>
+Subject: [PATCH 6.13 004/241] virt: sev-guest: Move SNP Guest Request data pages handling under snp_cmd_mutex
+Date: Wed, 19 Mar 2025 07:27:54 -0700
+Message-ID: <20250319143027.805085158@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,142 +51,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Alexey Kardashevskiy <aik@amd.com>
 
-commit dfd3df31c9db752234d7d2e09bef2aeabb643ce4 upstream.
+commit 3e385c0d6ce88ac9916dcf84267bd5855d830748 upstream.
 
-Currently kvfree_rcu() APIs use a system workqueue which is
-"system_unbound_wq" to driver RCU machinery to reclaim a memory.
+Compared to the SNP Guest Request, the "Extended" version adds data pages for
+receiving certificates. If not enough pages provided, the HV can report to the
+VM how much is needed so the VM can reallocate and repeat.
 
-Recently, it has been noted that the following kernel warning can
-be observed:
+Commit
 
-<snip>
-workqueue: WQ_MEM_RECLAIM nvme-wq:nvme_scan_work is flushing !WQ_MEM_RECLAIM events_unbound:kfree_rcu_work
-  WARNING: CPU: 21 PID: 330 at kernel/workqueue.c:3719 check_flush_dependency+0x112/0x120
-  Modules linked in: intel_uncore_frequency(E) intel_uncore_frequency_common(E) skx_edac(E) ...
-  CPU: 21 UID: 0 PID: 330 Comm: kworker/u144:6 Tainted: G            E      6.13.2-0_g925d379822da #1
-  Hardware name: Wiwynn Twin Lakes MP/Twin Lakes Passive MP, BIOS YMM20 02/01/2023
-  Workqueue: nvme-wq nvme_scan_work
-  RIP: 0010:check_flush_dependency+0x112/0x120
-  Code: 05 9a 40 14 02 01 48 81 c6 c0 00 00 00 48 8b 50 18 48 81 c7 c0 00 00 00 48 89 f9 48 ...
-  RSP: 0018:ffffc90000df7bd8 EFLAGS: 00010082
-  RAX: 000000000000006a RBX: ffffffff81622390 RCX: 0000000000000027
-  RDX: 00000000fffeffff RSI: 000000000057ffa8 RDI: ffff88907f960c88
-  RBP: 0000000000000000 R08: ffffffff83068e50 R09: 000000000002fffd
-  R10: 0000000000000004 R11: 0000000000000000 R12: ffff8881001a4400
-  R13: 0000000000000000 R14: ffff88907f420fb8 R15: 0000000000000000
-  FS:  0000000000000000(0000) GS:ffff88907f940000(0000) knlGS:0000000000000000
-  CR2: 00007f60c3001000 CR3: 000000107d010005 CR4: 00000000007726f0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   ? __warn+0xa4/0x140
-   ? check_flush_dependency+0x112/0x120
-   ? report_bug+0xe1/0x140
-   ? check_flush_dependency+0x112/0x120
-   ? handle_bug+0x5e/0x90
-   ? exc_invalid_op+0x16/0x40
-   ? asm_exc_invalid_op+0x16/0x20
-   ? timer_recalc_next_expiry+0x190/0x190
-   ? check_flush_dependency+0x112/0x120
-   ? check_flush_dependency+0x112/0x120
-   __flush_work.llvm.1643880146586177030+0x174/0x2c0
-   flush_rcu_work+0x28/0x30
-   kvfree_rcu_barrier+0x12f/0x160
-   kmem_cache_destroy+0x18/0x120
-   bioset_exit+0x10c/0x150
-   disk_release.llvm.6740012984264378178+0x61/0xd0
-   device_release+0x4f/0x90
-   kobject_put+0x95/0x180
-   nvme_put_ns+0x23/0xc0
-   nvme_remove_invalid_namespaces+0xb3/0xd0
-   nvme_scan_work+0x342/0x490
-   process_scheduled_works+0x1a2/0x370
-   worker_thread+0x2ff/0x390
-   ? pwq_release_workfn+0x1e0/0x1e0
-   kthread+0xb1/0xe0
-   ? __kthread_parkme+0x70/0x70
-   ret_from_fork+0x30/0x40
-   ? __kthread_parkme+0x70/0x70
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-<snip>
+  ae596615d93d ("virt: sev-guest: Reduce the scope of SNP command mutex")
 
-To address this switch to use of independent WQ_MEM_RECLAIM
-workqueue, so the rules are not violated from workqueue framework
-point of view.
+moved handling of the allocated/desired pages number out of scope of said
+mutex and create a possibility for a race (multiple instances trying to
+trigger Extended request in a VM) as there is just one instance of
+snp_msg_desc per /dev/sev-guest and no locking other than snp_cmd_mutex.
 
-Apart of that, since kvfree_rcu() does reclaim memory it is worth
-to go with WQ_MEM_RECLAIM type of wq because it is designed for
-this purpose.
+Fix the issue by moving the data blob/size and the GHCB input struct
+(snp_req_data) into snp_guest_req which is allocated on stack now and accessed
+by the GHCB caller under that mutex.
 
-Fixes: 6c6c47b063b5 ("mm, slab: call kvfree_rcu_barrier() from kmem_cache_destroy()"),
-Reported-by: Keith Busch <kbusch@kernel.org>
-Closes: https://lore.kernel.org/all/Z7iqJtCjHKfo8Kho@kbusch-mbp/
+Stop allocating SEV_FW_BLOB_MAX_SIZE in snp_msg_alloc() as only one of four
+callers needs it. Free the received blob in get_ext_report() right after it is
+copied to the userspace. Possible future users of snp_send_guest_request() are
+likely to have different ideas about the buffer size anyways.
+
+Fixes: ae596615d93d ("virt: sev-guest: Reduce the scope of SNP command mutex")
+Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Link: https://lore.kernel.org/r/20250307013700.437505-3-aik@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -3191,6 +3191,8 @@ void call_rcu(struct rcu_head *head, rcu
- }
- EXPORT_SYMBOL_GPL(call_rcu);
- 
-+static struct workqueue_struct *rcu_reclaim_wq;
+---
+ arch/x86/include/asm/sev.h              |    6 +--
+ drivers/virt/coco/sev-guest/sev-guest.c |   63 +++++++++++++++++++-------------
+ 2 files changed, 42 insertions(+), 27 deletions(-)
+
+--- a/arch/x86/include/asm/sev.h
++++ b/arch/x86/include/asm/sev.h
+@@ -185,6 +185,9 @@ struct snp_guest_req {
+ 	unsigned int vmpck_id;
+ 	u8 msg_version;
+ 	u8 msg_type;
 +
- /* Maximum number of jiffies to wait before draining a batch. */
- #define KFREE_DRAIN_JIFFIES (5 * HZ)
- #define KFREE_N_BATCHES 2
-@@ -3519,10 +3521,10 @@ __schedule_delayed_monitor_work(struct k
- 	if (delayed_work_pending(&krcp->monitor_work)) {
- 		delay_left = krcp->monitor_work.timer.expires - jiffies;
- 		if (delay < delay_left)
--			mod_delayed_work(system_unbound_wq, &krcp->monitor_work, delay);
-+			mod_delayed_work(rcu_reclaim_wq, &krcp->monitor_work, delay);
- 		return;
++	struct snp_req_data input;
++	void *certs_data;
+ };
+ 
+ /*
+@@ -245,9 +248,6 @@ struct snp_msg_desc {
+ 	struct snp_guest_msg secret_request, secret_response;
+ 
+ 	struct snp_secrets_page *secrets;
+-	struct snp_req_data input;
+-
+-	void *certs_data;
+ 
+ 	struct aesgcm_ctx *ctx;
+ 
+--- a/drivers/virt/coco/sev-guest/sev-guest.c
++++ b/drivers/virt/coco/sev-guest/sev-guest.c
+@@ -249,7 +249,7 @@ retry_request:
+ 	 * sequence number must be incremented or the VMPCK must be deleted to
+ 	 * prevent reuse of the IV.
+ 	 */
+-	rc = snp_issue_guest_request(req, &mdesc->input, rio);
++	rc = snp_issue_guest_request(req, &req->input, rio);
+ 	switch (rc) {
+ 	case -ENOSPC:
+ 		/*
+@@ -259,7 +259,7 @@ retry_request:
+ 		 * order to increment the sequence number and thus avoid
+ 		 * IV reuse.
+ 		 */
+-		override_npages = mdesc->input.data_npages;
++		override_npages = req->input.data_npages;
+ 		req->exit_code	= SVM_VMGEXIT_GUEST_REQUEST;
+ 
+ 		/*
+@@ -315,7 +315,7 @@ retry_request:
  	}
--	queue_delayed_work(system_unbound_wq, &krcp->monitor_work, delay);
-+	queue_delayed_work(rcu_reclaim_wq, &krcp->monitor_work, delay);
+ 
+ 	if (override_npages)
+-		mdesc->input.data_npages = override_npages;
++		req->input.data_npages = override_npages;
+ 
+ 	return rc;
+ }
+@@ -354,6 +354,11 @@ static int snp_send_guest_request(struct
+ 	memcpy(mdesc->request, &mdesc->secret_request,
+ 	       sizeof(mdesc->secret_request));
+ 
++	/* initial the input address for guest request */
++	req->input.req_gpa = __pa(mdesc->request);
++	req->input.resp_gpa = __pa(mdesc->response);
++	req->input.data_gpa = req->certs_data ? __pa(req->certs_data) : 0;
++
+ 	rc = __handle_guest_request(mdesc, req, rio);
+ 	if (rc) {
+ 		if (rc == -EIO &&
+@@ -495,6 +500,7 @@ static int get_ext_report(struct snp_gue
+ 	struct snp_guest_req req = {};
+ 	int ret, npages = 0, resp_len;
+ 	sockptr_t certs_address;
++	struct page *page;
+ 
+ 	if (sockptr_is_null(io->req_data) || sockptr_is_null(io->resp_data))
+ 		return -EINVAL;
+@@ -528,8 +534,20 @@ static int get_ext_report(struct snp_gue
+ 	 * the host. If host does not supply any certs in it, then copy
+ 	 * zeros to indicate that certificate data was not provided.
+ 	 */
+-	memset(mdesc->certs_data, 0, report_req->certs_len);
+ 	npages = report_req->certs_len >> PAGE_SHIFT;
++	page = alloc_pages(GFP_KERNEL_ACCOUNT | __GFP_ZERO,
++			   get_order(report_req->certs_len));
++	if (!page)
++		return -ENOMEM;
++
++	req.certs_data = page_address(page);
++	ret = set_memory_decrypted((unsigned long)req.certs_data, npages);
++	if (ret) {
++		pr_err("failed to mark page shared, ret=%d\n", ret);
++		__free_pages(page, get_order(report_req->certs_len));
++		return -EFAULT;
++	}
++
+ cmd:
+ 	/*
+ 	 * The intermediate response buffer is used while decrypting the
+@@ -538,10 +556,12 @@ cmd:
+ 	 */
+ 	resp_len = sizeof(report_resp->data) + mdesc->ctx->authsize;
+ 	report_resp = kzalloc(resp_len, GFP_KERNEL_ACCOUNT);
+-	if (!report_resp)
+-		return -ENOMEM;
++	if (!report_resp) {
++		ret = -ENOMEM;
++		goto e_free_data;
++	}
+ 
+-	mdesc->input.data_npages = npages;
++	req.input.data_npages = npages;
+ 
+ 	req.msg_version = arg->msg_version;
+ 	req.msg_type = SNP_MSG_REPORT_REQ;
+@@ -556,7 +576,7 @@ cmd:
+ 
+ 	/* If certs length is invalid then copy the returned length */
+ 	if (arg->vmm_error == SNP_GUEST_VMM_ERR_INVALID_LEN) {
+-		report_req->certs_len = mdesc->input.data_npages << PAGE_SHIFT;
++		report_req->certs_len = req.input.data_npages << PAGE_SHIFT;
+ 
+ 		if (copy_to_sockptr(io->req_data, report_req, sizeof(*report_req)))
+ 			ret = -EFAULT;
+@@ -565,7 +585,7 @@ cmd:
+ 	if (ret)
+ 		goto e_free;
+ 
+-	if (npages && copy_to_sockptr(certs_address, mdesc->certs_data, report_req->certs_len)) {
++	if (npages && copy_to_sockptr(certs_address, req.certs_data, report_req->certs_len)) {
+ 		ret = -EFAULT;
+ 		goto e_free;
+ 	}
+@@ -575,6 +595,13 @@ cmd:
+ 
+ e_free:
+ 	kfree(report_resp);
++e_free_data:
++	if (npages) {
++		if (set_memory_encrypted((unsigned long)req.certs_data, npages))
++			WARN_ONCE(ret, "failed to restore encryption mask (leak it)\n");
++		else
++			__free_pages(page, get_order(report_req->certs_len));
++	}
+ 	return ret;
  }
  
- static void
-@@ -3620,7 +3622,7 @@ kvfree_rcu_queue_batch(struct kfree_rcu_
- 			// "free channels", the batch can handle. Break
- 			// the loop since it is done with this CPU thus
- 			// queuing an RCU work is _always_ success here.
--			queued = queue_rcu_work(system_unbound_wq, &krwp->rcu_work);
-+			queued = queue_rcu_work(rcu_reclaim_wq, &krwp->rcu_work);
- 			WARN_ON_ONCE(!queued);
- 			break;
- 		}
-@@ -3708,7 +3710,7 @@ run_page_cache_worker(struct kfree_rcu_c
- 	if (rcu_scheduler_active == RCU_SCHEDULER_RUNNING &&
- 			!atomic_xchg(&krcp->work_in_progress, 1)) {
- 		if (atomic_read(&krcp->backoff_page_cache_fill)) {
--			queue_delayed_work(system_unbound_wq,
-+			queue_delayed_work(rcu_reclaim_wq,
- 				&krcp->page_cache_work,
- 					msecs_to_jiffies(rcu_delay_page_cache_fill_msec));
- 		} else {
-@@ -5654,6 +5656,10 @@ static void __init kfree_rcu_batch_init(
- 	int i, j;
- 	struct shrinker *kfree_rcu_shrinker;
+@@ -1048,35 +1075,26 @@ static int __init sev_guest_probe(struct
+ 	if (!mdesc->response)
+ 		goto e_free_request;
  
-+	rcu_reclaim_wq = alloc_workqueue("kvfree_rcu_reclaim",
-+			WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
-+	WARN_ON(!rcu_reclaim_wq);
-+
- 	/* Clamp it to [0:100] seconds interval. */
- 	if (rcu_delay_page_cache_fill_msec < 0 ||
- 		rcu_delay_page_cache_fill_msec > 100 * MSEC_PER_SEC) {
+-	mdesc->certs_data = alloc_shared_pages(dev, SEV_FW_BLOB_MAX_SIZE);
+-	if (!mdesc->certs_data)
+-		goto e_free_response;
+-
+ 	ret = -EIO;
+ 	mdesc->ctx = snp_init_crypto(mdesc->vmpck, VMPCK_KEY_LEN);
+ 	if (!mdesc->ctx)
+-		goto e_free_cert_data;
++		goto e_free_response;
+ 
+ 	misc = &snp_dev->misc;
+ 	misc->minor = MISC_DYNAMIC_MINOR;
+ 	misc->name = DEVICE_NAME;
+ 	misc->fops = &snp_guest_fops;
+ 
+-	/* Initialize the input addresses for guest request */
+-	mdesc->input.req_gpa = __pa(mdesc->request);
+-	mdesc->input.resp_gpa = __pa(mdesc->response);
+-	mdesc->input.data_gpa = __pa(mdesc->certs_data);
+-
+ 	/* Set the privlevel_floor attribute based on the vmpck_id */
+ 	sev_tsm_ops.privlevel_floor = vmpck_id;
+ 
+ 	ret = tsm_register(&sev_tsm_ops, snp_dev);
+ 	if (ret)
+-		goto e_free_cert_data;
++		goto e_free_response;
+ 
+ 	ret = devm_add_action_or_reset(&pdev->dev, unregister_sev_tsm, NULL);
+ 	if (ret)
+-		goto e_free_cert_data;
++		goto e_free_response;
+ 
+ 	ret =  misc_register(misc);
+ 	if (ret)
+@@ -1088,8 +1106,6 @@ static int __init sev_guest_probe(struct
+ 
+ e_free_ctx:
+ 	kfree(mdesc->ctx);
+-e_free_cert_data:
+-	free_shared_pages(mdesc->certs_data, SEV_FW_BLOB_MAX_SIZE);
+ e_free_response:
+ 	free_shared_pages(mdesc->response, sizeof(struct snp_guest_msg));
+ e_free_request:
+@@ -1104,7 +1120,6 @@ static void __exit sev_guest_remove(stru
+ 	struct snp_guest_dev *snp_dev = platform_get_drvdata(pdev);
+ 	struct snp_msg_desc *mdesc = snp_dev->msg_desc;
+ 
+-	free_shared_pages(mdesc->certs_data, SEV_FW_BLOB_MAX_SIZE);
+ 	free_shared_pages(mdesc->response, sizeof(struct snp_guest_msg));
+ 	free_shared_pages(mdesc->request, sizeof(struct snp_guest_msg));
+ 	kfree(mdesc->ctx);
 
 
