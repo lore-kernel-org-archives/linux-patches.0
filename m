@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A09C1EF394;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9671EF38C;
 	Wed, 19 Mar 2025 14:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395149; cv=none; b=QDPj7PZgD1YDOaKtk8XVh602RQFSauSffOOP1tFBYbHaAE+ssy1egiqWInRiJOnfBDcyOuNy0qMrW+9WVqUzm0O2edAuF+WuWyYZLtwdWvHpA/9J6y4l/I+Lq7+nABNOKMTGC+6Wc3TyJWbgAPmFd8Klq+eLUKQ+Dg5e/aL3b78=
+	t=1742395149; cv=none; b=u2RgGmls50xyU4w5mzxwP2ukl1r4143C3L2xBC4g2+whmd1EJ/OdW8exx0ucSfaOM2jbAYErrFKMSrnsOeQ2jdnQRS6HWUTC+on4qTn5pHmhyrk7oipo7CR3v6yWrfF9qUj/VJ9jEdE24mst0NnRF8xpbJWoNIVLkTnnPzouR6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395149; c=relaxed/simple;
-	bh=vyDrr9yv015p7d+c9qFOLyAULdOGetg3MEAWLxl4QrE=;
+	bh=TZghvX4NJFCEi3dhYhBsAq6he0WcIq0NRaEcgerOo+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTsZawzVitWD26YVXy2ram1mGnUf++jZTKLq2a2Qf4YBiUKJR6Yw54GfvTVBi6qsbEDI9p2igmnn5eQmH81AIbgeDFG7g0C4PF0cicT+EDhw+cefoNrICJSU/4/q8U7d0hNfedcJUbFjJHIfz0H+orwehMmJovDKGgu5VVnvMW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqd7R6UZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C4fvwD1itmzJkza5Fp4B1MVK73qYFWhqFCJov5mhkHeH0woCmAopdWjBo9483mTeIve9bE5co/dwkQpNqAjjsQVtMOMn+no2W7tI4+Xrs2cQzdNRIBUCN6rUBIJVsxobZi7+pMasvw76Wx1nK3JkMx2Pr+jcU7+rmpjrxlySDGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydHBeJsC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqd7R6UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7A0C4CEE8;
-	Wed, 19 Mar 2025 14:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydHBeJsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FCEC4CEE4;
+	Wed, 19 Mar 2025 14:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395148;
-	bh=vyDrr9yv015p7d+c9qFOLyAULdOGetg3MEAWLxl4QrE=;
+	s=korg; t=1742395149;
+	bh=TZghvX4NJFCEi3dhYhBsAq6he0WcIq0NRaEcgerOo+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqd7R6UZ3QTS83gpDTkUGi0OtLJ0ZnWKtPjbXfPRS+KHpxOMfcQ0ZXjFMMKkpv8wu
-	 SS/df8OXkAkliVUTXVkSSENJMfxSbM7IJTo7XIhxsjN97MyJHXY4gaR2kgWO7D96ji
-	 b2yWB9KI2zKXsvYoqWUaWawDAovyp6n4YC4suV6w=
+	b=ydHBeJsCO/jCOmDRngDmsthsS4UaHW648EakwK7X4fe2KBWpzDWN6inH5S+jJxYEd
+	 mQEG5FyPbprLYeWO/TtBgPAzsYjXadwTH7ucuy+h5wSSPM3ifeMRW50wD0TDz0/CGA
+	 +4I69DSlVCsgNff0oPjdvqC7z61FsNg1yGlMOiSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Ge Yang <yangge1116@126.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <21cnbao@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/231] i2c: sis630: Fix an error handling path in sis630_probe()
-Date: Wed, 19 Mar 2025 07:31:55 -0700
-Message-ID: <20250319143032.322407652@linuxfoundation.org>
+Subject: [PATCH 6.12 223/231] mm/hugetlb: wait for hugetlb folios to be freed
+Date: Wed, 19 Mar 2025 07:31:56 -0700
+Message-ID: <20250319143032.346103891@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,53 +56,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ge Yang <yangge1116@126.com>
 
-[ Upstream commit 2b22459792fcb4def9f0936d64575ac11a95a58d ]
+[ Upstream commit 67bab13307c83fb742c2556b06cdc39dbad27f07 ]
 
-If i2c_add_adapter() fails, the request_region() call in sis630_setup()
-must be undone by a corresponding release_region() call, as done in the
-remove function.
+Since the introduction of commit c77c0a8ac4c52 ("mm/hugetlb: defer freeing
+of huge pages if in non-task context"), which supports deferring the
+freeing of hugetlb pages, the allocation of contiguous memory through
+cma_alloc() may fail probabilistically.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/3d607601f2c38e896b10207963c6ab499ca5c307.1741033587.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+In the CMA allocation process, if it is found that the CMA area is
+occupied by in-use hugetlb folios, these in-use hugetlb folios need to be
+migrated to another location.  When there are no available hugetlb folios
+in the free hugetlb pool during the migration of in-use hugetlb folios,
+new folios are allocated from the buddy system.  A temporary state is set
+on the newly allocated folio.  Upon completion of the hugetlb folio
+migration, the temporary state is transferred from the new folios to the
+old folios.  Normally, when the old folios with the temporary state are
+freed, it is directly released back to the buddy system.  However, due to
+the deferred freeing of hugetlb pages, the PageBuddy() check fails,
+ultimately leading to the failure of cma_alloc().
+
+Here is a simplified call trace illustrating the process:
+cma_alloc()
+    ->__alloc_contig_migrate_range() // Migrate in-use hugetlb folios
+        ->unmap_and_move_huge_page()
+            ->folio_putback_hugetlb() // Free old folios
+    ->test_pages_isolated()
+        ->__test_page_isolated_in_pageblock()
+             ->PageBuddy(page) // Check if the page is in buddy
+
+To resolve this issue, we have implemented a function named
+wait_for_freed_hugetlb_folios().  This function ensures that the hugetlb
+folios are properly released back to the buddy system after their
+migration is completed.  By invoking wait_for_freed_hugetlb_folios()
+before calling PageBuddy(), we ensure that PageBuddy() will succeed.
+
+Link: https://lkml.kernel.org/r/1739936804-18199-1-git-send-email-yangge1116@126.com
+Fixes: c77c0a8ac4c5 ("mm/hugetlb: defer freeing of huge pages if in non-task context")
+Signed-off-by: Ge Yang <yangge1116@126.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-sis630.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h |  5 +++++
+ mm/hugetlb.c            |  8 ++++++++
+ mm/page_isolation.c     | 10 ++++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-sis630.c b/drivers/i2c/busses/i2c-sis630.c
-index 3505cf29cedda..a19c3d251804d 100644
---- a/drivers/i2c/busses/i2c-sis630.c
-+++ b/drivers/i2c/busses/i2c-sis630.c
-@@ -509,6 +509,8 @@ MODULE_DEVICE_TABLE(pci, sis630_ids);
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 25a7b13574c28..12f7a7b9c06e9 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -687,6 +687,7 @@ struct huge_bootmem_page {
+ };
  
- static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
- {
-+	int ret;
-+
- 	if (sis630_setup(dev)) {
- 		dev_err(&dev->dev,
- 			"SIS630 compatible bus not detected, "
-@@ -522,7 +524,15 @@ static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	snprintf(sis630_adapter.name, sizeof(sis630_adapter.name),
- 		 "SMBus SIS630 adapter at %04x", smbus_base + SMB_STS);
- 
--	return i2c_add_adapter(&sis630_adapter);
-+	ret = i2c_add_adapter(&sis630_adapter);
-+	if (ret)
-+		goto release_region;
-+
-+	return 0;
-+
-+release_region:
-+	release_region(smbus_base + SMB_STS, SIS630_SMB_IOREGION);
-+	return ret;
+ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list);
++void wait_for_freed_hugetlb_folios(void);
+ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 				unsigned long addr, int avoid_reserve);
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+@@ -1057,6 +1058,10 @@ static inline int isolate_or_dissolve_huge_page(struct page *page,
+ 	return -ENOMEM;
  }
  
- static void sis630_remove(struct pci_dev *dev)
++static inline void wait_for_freed_hugetlb_folios(void)
++{
++}
++
+ static inline struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 					   unsigned long addr,
+ 					   int avoid_reserve)
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 1e9aa6de4e21e..e28e820fdb775 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2955,6 +2955,14 @@ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list)
+ 	return ret;
+ }
+ 
++void wait_for_freed_hugetlb_folios(void)
++{
++	if (llist_empty(&hpage_freelist))
++		return;
++
++	flush_work(&free_hpage_work);
++}
++
+ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 				    unsigned long addr, int avoid_reserve)
+ {
+diff --git a/mm/page_isolation.c b/mm/page_isolation.c
+index 7e04047977cfe..6989c5ffd4741 100644
+--- a/mm/page_isolation.c
++++ b/mm/page_isolation.c
+@@ -611,6 +611,16 @@ int test_pages_isolated(unsigned long start_pfn, unsigned long end_pfn,
+ 	struct zone *zone;
+ 	int ret;
+ 
++	/*
++	 * Due to the deferred freeing of hugetlb folios, the hugepage folios may
++	 * not immediately release to the buddy system. This can cause PageBuddy()
++	 * to fail in __test_page_isolated_in_pageblock(). To ensure that the
++	 * hugetlb folios are properly released back to the buddy system, we
++	 * invoke the wait_for_freed_hugetlb_folios() function to wait for the
++	 * release to complete.
++	 */
++	wait_for_freed_hugetlb_folios();
++
+ 	/*
+ 	 * Note: pageblock_nr_pages != MAX_PAGE_ORDER. Then, chunks of free
+ 	 * pages are not aligned to pageblock_nr_pages.
 -- 
 2.39.5
 
