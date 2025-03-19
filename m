@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233C61C5D4D;
-	Wed, 19 Mar 2025 14:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A2219DF99;
+	Wed, 19 Mar 2025 14:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394879; cv=none; b=O5CYeMRxHQGWKZbDsrjWEe8X/d9zCcPUzvlfVjOnUObCf8RQUEjeLEHuSHyuuiZu9kWucZjheIApaOLzMsHAizNH9oMFkRiILVispRmXwTuUjU0IjeDZnRxuniwtD9fUVQyzloUBQW5uDVMozBTqHvkbW1WKyDnL1GjSw0cpEqE=
+	t=1742394880; cv=none; b=mnj2NWGIOssCmn+g6/LSfIQFHko/LwhgHcvFpsGwSuYOlLPEOKK4eqh4Wno4z4EXqg9crr7JmAbGx/KHObPn5x7wDISX+rPWxufwAfMJ83GC1cxWmEpxS0K/zBLwIoqg4A3/hVK6XCpfcfa2XI3vDmHmhLIj+BkeH4iCuy6KjE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394879; c=relaxed/simple;
-	bh=mRcrd3PtWNj8dotA/fGOTyV1XvC5wvH/aeuXshfIoFg=;
+	s=arc-20240116; t=1742394880; c=relaxed/simple;
+	bh=Qp53RVcPYvP4NFO2YWORC5E/nfAHRmV/MY6zrgI/BYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2bHRi4t21eEqjsjwGwfNa09HfCTBSdbMlml+Kx9Ibcw/5MJHx5d3mGF91TqwGQ27hhYiZiBk3pd6i99qnieSiGr1QnTKFtIJJWDsvFz0hwHdH4rmQ38rDEtaDgq82HQjv2l3kRU15FxFOp31WcCkZDzP0Bke2U3SRbQDtoF0ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/PMZgL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+etyZzbOs3K6DJjCeqwyz129Q+d38wZD8oCCqj1r6G8fMbq8lM7rQeMZL5FGmdHO/fdeOxPgKu5pkQHrV9MgTpvzGQg5hTijoINf/bZ06VNkTE0jm7eLtKaBFrjhSp2zusGmcDyVBEPJA7DqY45S+lDHPzoJ5c38SEeU/G4n40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEOY+KPJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/PMZgL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E74C4CEE4;
-	Wed, 19 Mar 2025 14:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEOY+KPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47968C4CEE8;
+	Wed, 19 Mar 2025 14:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394879;
-	bh=mRcrd3PtWNj8dotA/fGOTyV1XvC5wvH/aeuXshfIoFg=;
+	s=korg; t=1742394880;
+	bh=Qp53RVcPYvP4NFO2YWORC5E/nfAHRmV/MY6zrgI/BYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/PMZgL7SCtxMT+Nt3UqnRlSRw7iBtwvnBm8CNrxLBBDIT7q4dg7+vP/q9YmDYKmz
-	 b7fmZDD1RaGmwLwYggD9+SPwVgmEmsCDb/WYBbGiopeZLN9MfIXjF2c+OKW5S35pSR
-	 +h9bKcsAEl478NwFphCFEmHYInU0EoNGjVJ3eMJQ=
+	b=UEOY+KPJxI6O1yZhysidYByLGfB+yCPH8n03/lP0+uLzs4qnLtimpGi6O5f0c2weF
+	 eJYD5EsOgi365Lr40p4AvTxy4ZwOhlO3uJM2s0kopzAKGTjpxyrlAu9BpXInrrxCav
+	 bVx6/u91Pc/CxJWMgI3yyzFbit2qagUldZUpuLbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Eugeny Shcheglov <eugenyshcheglov@gmail.com>,
+	Vicki Pfau <vi@endrift.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 078/241] HID: intel-ish-hid: Send clock sync message immediately after reset
-Date: Wed, 19 Mar 2025 07:29:08 -0700
-Message-ID: <20250319143029.662534744@linuxfoundation.org>
+Subject: [PATCH 6.13 080/241] HID: hid-steam: Fix issues with disabling both gamepad mode and lizard mode
+Date: Wed, 19 Mar 2025 07:29:10 -0700
+Message-ID: <20250319143029.711627027@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,75 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit 7e0d1cff12b895f44f4ddc8cf50311bc1f775201 ]
+[ Upstream commit 05c4ede6951b5d8e083b6bb237950cac59bdeb92 ]
 
-The ISH driver performs a clock sync with the firmware once at system
-startup and then every 20 seconds. If a firmware reset occurs right
-after a clock sync, the driver would wait 20 seconds before performing
-another clock sync with the firmware. This is particularly problematic
-with the introduction of the "load firmware from host" feature, where
-the driver performs a clock sync with the bootloader and then has to
-wait 20 seconds before syncing with the main firmware.
+When lizard mode is disabled, there were two issues:
 
-This patch clears prev_sync immediately upon receiving an IPC reset,
-so that the main firmware and driver will perform a clock sync
-immediately after completing the IPC handshake.
+1. Switching between gamepad mode and desktop mode still functioned, even
+though desktop mode did not. This lead to the ability to "break" gamepad mode
+by holding down the Options key even while lizard mode is disabled
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+2. If you were in desktop mode when lizard mode is disabled, you would
+immediately enter this faulty mode.
+
+This patch properly disables the ability to switch between gamepad mode and the
+faulty desktop mode by holding the Options key, as well as effectively removing
+the faulty mode by bypassing the early returns if lizard mode is disabled.
+
+Reported-by: Eugeny Shcheglov <eugenyshcheglov@gmail.com>
+Signed-off-by: Vicki Pfau <vi@endrift.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/ipc.c         | 9 ++++++---
- drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h | 2 ++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/hid/hid-steam.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
-index cb956a8c386cb..4c861119e97aa 100644
---- a/drivers/hid/intel-ish-hid/ipc/ipc.c
-+++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
-@@ -517,6 +517,10 @@ static int ish_fw_reset_handler(struct ishtp_device *dev)
- 	/* ISH FW is dead */
- 	if (!ish_is_input_ready(dev))
- 		return	-EPIPE;
-+
-+	/* Send clock sync at once after reset */
-+	ishtp_dev->prev_sync = 0;
-+
- 	/*
- 	 * Set HOST2ISH.ILUP. Apparently we need this BEFORE sending
- 	 * RESET_NOTIFY_ACK - FW will be checking for it
-@@ -577,13 +581,12 @@ static void fw_reset_work_fn(struct work_struct *work)
-  */
- static void _ish_sync_fw_clock(struct ishtp_device *dev)
- {
--	static unsigned long	prev_sync;
- 	struct ipc_time_update_msg time = {};
- 
--	if (prev_sync && time_before(jiffies, prev_sync + 20 * HZ))
-+	if (dev->prev_sync && time_before(jiffies, dev->prev_sync + 20 * HZ))
+diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
+index 03e57d8acdadf..10460b7bde1a2 100644
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -1051,10 +1051,10 @@ static void steam_mode_switch_cb(struct work_struct *work)
+ 							struct steam_device, mode_switch);
+ 	unsigned long flags;
+ 	bool client_opened;
+-	steam->gamepad_mode = !steam->gamepad_mode;
+ 	if (!lizard_mode)
  		return;
  
--	prev_sync = jiffies;
-+	dev->prev_sync = jiffies;
- 	/* The fields of time would be updated while sending message */
- 	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &time, sizeof(time));
- }
-diff --git a/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h b/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-index effbb442c7277..dfc8cfd393532 100644
---- a/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-+++ b/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-@@ -254,6 +254,8 @@ struct ishtp_device {
- 	unsigned int	ipc_tx_cnt;
- 	unsigned long long	ipc_tx_bytes_cnt;
++	steam->gamepad_mode = !steam->gamepad_mode;
+ 	if (steam->gamepad_mode)
+ 		steam_set_lizard_mode(steam, false);
+ 	else {
+@@ -1623,7 +1623,7 @@ static void steam_do_deck_input_event(struct steam_device *steam,
+ 		schedule_delayed_work(&steam->mode_switch, 45 * HZ / 100);
+ 	}
  
-+	/* Time of the last clock sync */
-+	unsigned long prev_sync;
- 	const struct ishtp_hw_ops *ops;
- 	size_t	mtu;
- 	uint32_t	ishtp_msg_hdr;
+-	if (!steam->gamepad_mode)
++	if (!steam->gamepad_mode && lizard_mode)
+ 		return;
+ 
+ 	lpad_touched = b10 & BIT(3);
+@@ -1693,7 +1693,7 @@ static void steam_do_deck_sensors_event(struct steam_device *steam,
+ 	 */
+ 	steam->sensor_timestamp_us += 4000;
+ 
+-	if (!steam->gamepad_mode)
++	if (!steam->gamepad_mode && lizard_mode)
+ 		return;
+ 
+ 	input_event(sensors, EV_MSC, MSC_TIMESTAMP, steam->sensor_timestamp_us);
 -- 
 2.39.5
 
