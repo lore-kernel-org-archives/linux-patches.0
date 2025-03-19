@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FF91B2194;
-	Wed, 19 Mar 2025 14:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EF31B2194;
+	Wed, 19 Mar 2025 14:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395075; cv=none; b=WMMr9JJFmbb0njNcVFhyZchXJp0BhlA82ItKXD7f4XRZMDkqQlB5wcCFQ80oa7vIgDT8YU/HlYC3dKvu7Jl11a30QTBin1MQn3gbfmcJv4xZhLrnwgyDVZ+gRye/Ubd+f/gnnF8K2xf0D1vdKz5Uy8ki4INi7Nq6abldUIuQJ2I=
+	t=1742395076; cv=none; b=QvhX/2CiFctqWWhtm7ZJaWkVcroyheLhZw9qh91HpddfO2YGsZCKPsz9Ol0M2Ujdlscj58XhK2Kj7LDTDtB0ozzptFXuQwCHdui1/IggBso/N/MjQj21O/yPejhtX68HZudoE3YgMSczTDugYpUo5cNzRl7o2XiUBkGCtvxfJlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395075; c=relaxed/simple;
-	bh=epNXuh4+ihME+kXhGoSJXaaBeEBfc5LsBFApvCW6gc8=;
+	s=arc-20240116; t=1742395076; c=relaxed/simple;
+	bh=VNLOgO2QvWoYsOWCNlRdNj8iiCXfuqlNPTU07FxdSgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vgb6twu74kMjwNgfTi2wgavInvnb3qGZcUYsCG1DJ2yJCePseDX2/OY7c8SEgSnTqcwJCQUnsP35LL4fMClKjCJ38Du98dplaOC83o5QjyvWw9aEl1NBjxNYI67l3A8M6UzJRvcX4q+gO3OXmrXzt6TZgcRjcyYr3Lmdv2FGqWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CZqCIta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tke0VdNYJlseXVLsm8OdRZjMYbURLBFlUcvHe89Svt3EuToNEl89QNLVNvjlFvRPH6VNldXtmcbqebqgs05BRbFaUkr1++QSDH4314Tj/3enKQRUA00kHcvKMiIYCWwWgecZEGcTzZZCAWldmE1RXRjnLs01TMgHQgCXuL7V9ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmRtOtzK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CZqCIta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE96C4CEE4;
-	Wed, 19 Mar 2025 14:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmRtOtzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C86AC4CEE4;
+	Wed, 19 Mar 2025 14:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395075;
-	bh=epNXuh4+ihME+kXhGoSJXaaBeEBfc5LsBFApvCW6gc8=;
+	s=korg; t=1742395076;
+	bh=VNLOgO2QvWoYsOWCNlRdNj8iiCXfuqlNPTU07FxdSgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CZqCItawOUwbcwaGgk+9f9JjT5/tMdMfZZFbiBRDkb5uwAVEmqp9qaPDuZU3Ty4p
-	 RaArgJ2nXmjglEW8Ptc4kavZMOoXIqD7A1SlDf55/h0kaPrkZJ18/YMoGILbQ8RYRz
-	 gLz7XSenjcx01sH6qpzBBXTpOaNIWOODZuTrwUqc=
+	b=nmRtOtzKg4HS8kVKOTh9m1uAQntGRdjqNeGfZE0MngrSlZhE7oQTqT87bS7BLhu/H
+	 wya3cmamx0KGOzjjesUfjyh5DWnRep0DFWjvZW5RfN8/IMQ/eNSIrdUVdkAVHuPu74
+	 TCUz0PAhWeVch9oTrFaQh12V4gIHTwnbZTrxRIt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/231] ALSA: hda: intel-dsp-config: Add PTL-H support
-Date: Wed, 19 Mar 2025 07:30:07 -0700
-Message-ID: <20250319143029.661568158@linuxfoundation.org>
+Subject: [PATCH 6.12 115/231] ASoC: SOF: Intel: pci-ptl: Add support for PTL-H
+Date: Wed, 19 Mar 2025 07:30:08 -0700
+Message-ID: <20250319143029.687952830@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -54,39 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 214e6be2d91d5d58f28d3a37630480077a1aafbd ]
+[ Upstream commit 4e9c87cfcd0584f2a2e2f352a43ff003d688f3a4 ]
 
-Use same recipes as PTL for PTL-H.
+PTL-H uses the same configuration as PTL.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250210081730.22916-3-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20250210081730.22916-4-peter.ujfalusi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-dsp-config.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/sof/intel/pci-ptl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
-index 9f849e05ce79f..34825b2f3b108 100644
---- a/sound/hda/intel-dsp-config.c
-+++ b/sound/hda/intel-dsp-config.c
-@@ -539,6 +539,11 @@ static const struct config_entry config_table[] = {
- 		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
- 		.device = PCI_DEVICE_ID_INTEL_HDA_PTL,
- 	},
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = PCI_DEVICE_ID_INTEL_HDA_PTL_H,
-+	},
-+
- #endif
- 
+diff --git a/sound/soc/sof/intel/pci-ptl.c b/sound/soc/sof/intel/pci-ptl.c
+index 69195b5e7b1a9..f54d098d616f6 100644
+--- a/sound/soc/sof/intel/pci-ptl.c
++++ b/sound/soc/sof/intel/pci-ptl.c
+@@ -50,6 +50,7 @@ static const struct sof_dev_desc ptl_desc = {
+ /* PCI IDs */
+ static const struct pci_device_id sof_pci_ids[] = {
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_PTL, &ptl_desc) }, /* PTL */
++	{ PCI_DEVICE_DATA(INTEL, HDA_PTL_H, &ptl_desc) }, /* PTL-H */
+ 	{ 0, }
  };
+ MODULE_DEVICE_TABLE(pci, sof_pci_ids);
 -- 
 2.39.5
 
