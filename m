@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502E21F872A;
-	Wed, 19 Mar 2025 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EFE1DDA36;
+	Wed, 19 Mar 2025 14:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394975; cv=none; b=j0HsTKM7NvymDKcX3NI2lZlRKfv6MzcxI5y158FuYpHNjaCV9LZeBwAJkrFDRjIzOWkJjmcNpT3RFlZcL/mHWa5jJIcL8uNXpcQpZRYgMU8wJWKAGY+Y7qVtwoN8oe7eCH3u6Tk2MDhMAkAxj/JyvDw8gFn9a9p8brfBRV/GejA=
+	t=1742394976; cv=none; b=Hdij0BBFZkAytAi2R1Z+1+w/5KbYhJgpGTOm8y38xYWU8dHESfUVuq08OOGESYgA2c4czjb98NXHuxbEV+zkkATfKuxm/DKG5xuTvcZnWnWgm/fK7sEJ5DFken9TYJmN4+vkriWLTF4bctEAx2gTiZSsxdgY3NlrzAgdYISSd/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394975; c=relaxed/simple;
-	bh=A4JuUUsWpdrLeDliUlfF1J2OAn7TP14ejV9At+cQNCU=;
+	s=arc-20240116; t=1742394976; c=relaxed/simple;
+	bh=6TS9stL3s4EqzJ2kkj0gsg+Sk7Zo0r1N2TXlssGLbHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGtgbUhksAGrd1YaG1EcK54E6vqOJaoabVg7K6AOeyzeyK00sEQCMCCuGkibSQ+B8v84BEZNq9bCtRS6bqAOTQUeUJwwHta7Pb1R3h6iyM4Dq0r6fDkJfZygTWpAyqm1cqwxDQ+RbplVVloSC7vL0XMROms15IwEaEuvM0ZcwzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYK2g/VH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmO1Uk04qsoLIIF4CTW50Vsq8ulQttcQfvQpjcHHERIKvJ46df6KHGFQYEaPI8Uv8NRz1V2cOfQkP8rRo74fey/EOR6Psnaa8MTDqHQHoFs7+z20LYzVlG11T7+ZWXkvIrTZZcZLbFvA41T3hLm/3C+BxsZQXqxMyoa4b3j8+G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGUcmkBk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYK2g/VH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DC0C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGUcmkBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF57CC4CEE4;
 	Wed, 19 Mar 2025 14:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394975;
-	bh=A4JuUUsWpdrLeDliUlfF1J2OAn7TP14ejV9At+cQNCU=;
+	bh=6TS9stL3s4EqzJ2kkj0gsg+Sk7Zo0r1N2TXlssGLbHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYK2g/VHPDj+bq8V+2sc5sZbEMS4jIJgRfdixWcapE21rpUT5ARTERlHevuLz41xG
-	 mMsUpRFv3clXTxQNW4xrkZn2rkgUuXDKuu5dspZ4wpInhwlTntWbS7Ohfor63Kg/yp
-	 mEt/6CGvsCScp+5qhTLVVVT+gNom+hq40ryld1/g=
+	b=IGUcmkBkUgvXK2OeWFWEKQ0iPm4JWJGd00tu9e2ZkuNtKP//oNdXA4ddWpVYeJ6xn
+	 1ZQWEYaQ4nDYwzZqVBtMsnQY4yWkM1TFyAmgYDIdSNmMNXSsDLb7Cn62uTRw+GtLUh
+	 XHf8SsiIPBTn1m8h5Rh1CCB/jlAFYxNS4BJZaXVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 212/241] drm/xe: cancel pending job timer before freeing scheduler
-Date: Wed, 19 Mar 2025 07:31:22 -0700
-Message-ID: <20250319143032.998317154@linuxfoundation.org>
+	Thomas Mizrahi <thomasmizra@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.13 195/241] ASoC: amd: yc: Support mic on another Lenovo ThinkPad E16 Gen 2 model
+Date: Wed, 19 Mar 2025 07:31:05 -0700
+Message-ID: <20250319143032.544874540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,48 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+From: Thomas Mizrahi <thomasmizra@gmail.com>
 
-[ Upstream commit 12c2f962fe71f390951d9242725bc7e608f55927 ]
+commit 0704a15b930cf97073ce091a0cd7ad32f2304329 upstream.
 
-The async call to __guc_exec_queue_fini_async frees the scheduler
-while a submission may time out and restart. To prevent this race
-condition, the pending job timer should be canceled before freeing
-the scheduler.
+The internal microphone on the Lenovo ThinkPad E16 model requires a
+quirk entry to work properly. This was fixed in a previous patch (linked
+below), but depending on the specific variant of the model, the product
+name may be "21M5" or "21M6".
 
-V3(MattB):
- - Adjust position of cancel pending job
- - Remove gitlab issue# from commit message
-V2(MattB):
- - Cancel pending jobs before scheduler finish
+The following patch fixed this issue for the 21M5 variant:
+  https://lore.kernel.org/all/20240725065442.9293-1-tiwai@suse.de/
 
-Fixes: a20c75dba192 ("drm/xe: Call __guc_exec_queue_fini_async direct for KERNEL exec_queues")
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250225045754.600905-1-tejas.upadhyay@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 18fbd567e75f9b97b699b2ab4f1fa76b7cf268f6)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 10c7988418d8 ("drm/xe: Release guc ids before cancelling work")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch adds support for the microphone on the 21M6 variant.
+
+Link: https://github.com/ramaureirac/thinkpad-e14-linux/issues/31
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Mizrahi <thomasmizra@gmail.com>
+Link: https://patch.msgid.link/20250308041303.198765-1-thomasmizra@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 6f4a9812b4f4a..fe17e9ba86725 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -1238,6 +1238,8 @@ static void __guc_exec_queue_fini_async(struct work_struct *w)
- 
- 	if (xe_exec_queue_is_lr(q))
- 		cancel_work_sync(&ge->lr_tdr);
-+	/* Confirm no work left behind accessing device structures */
-+	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
- 	release_guc_id(guc, q);
- 	xe_sched_entity_fini(&ge->entity);
- 	xe_sched_fini(&ge->sched);
--- 
-2.39.5
-
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -252,6 +252,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M6"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
+ 		}
+ 	},
 
 
