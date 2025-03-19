@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067831C9B6C;
-	Wed, 19 Mar 2025 14:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8C71C9B6C;
+	Wed, 19 Mar 2025 14:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394870; cv=none; b=q3aI2ukiEHiM4iwHHAQEwgRvhfQUKPfTwm7WzmCDxdlZo+t8XCx/zh6B+p0uHerRVLxPp2SXz0c8Apue2Lxc8ZvHpBMZJ0aT8kqkInLKICQNTyjRjW0aKb1NgyMU+4A4qqgtlXMiNOiVT3eY9TYRxVFup1DT5NlBkXIwlgFJ9Qs=
+	t=1742394871; cv=none; b=PUCMoxLZLG1sU4oaJAW+UJFeFiJl7adaXhMgYyG7mjxbumoPU3pRCzvMmqSKCykgASd3daiPaHmFyuQwVL1wL75E0j7brzKSoyecbbYWDG6SPhxSvGk45RDMr3yCEobclNA70J9Fjr+dcqWLMg25DjtrDloy8FaNW4IldzJ7I3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394870; c=relaxed/simple;
-	bh=tkcJbZ+RGTz54T6EV01DN6d/FdDF1fHwNzYlyOB99c0=;
+	s=arc-20240116; t=1742394871; c=relaxed/simple;
+	bh=yQiDEIKV2t1mp2RGAnpziuIPNVq13SGP9wzs5i6qRWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6XQpu0NV1GzOfy5hXK9wIwvRdVKHESR6O85MavQjK6DNCZHchm5Lb9LqPtYc3s10Rb7LglunpSlqef1egQ+Vss2hbib5GOnhFMP9HlUrgaRW1AN+56sFzpxzEhuHzOayMWC+d90XJmjBGJVNnHs5GY3syCK91RT+dCFm4JBMok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdJ/FGHV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJruqfloYyYYhQokVHEkINTPN3/hug7YT7iPGaUKSmg3YNnj+QXUzCtm2ZIUx6imERjCuSwIlY2oQkUnKJ4my7TO9ihQPUchZu6nkVwkup/NU7tqIqC1WqEoVUFr9XJiq6dpg4EkzC+Xnyq6bd8yZQA8k7sBPVmEjx31yEJzpoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ybapy3tL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdJ/FGHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC729C4CEE4;
-	Wed, 19 Mar 2025 14:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ybapy3tL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A93C4CEE8;
+	Wed, 19 Mar 2025 14:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394869;
-	bh=tkcJbZ+RGTz54T6EV01DN6d/FdDF1fHwNzYlyOB99c0=;
+	s=korg; t=1742394871;
+	bh=yQiDEIKV2t1mp2RGAnpziuIPNVq13SGP9wzs5i6qRWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdJ/FGHVueE5ZPb/mLj+2YBmQ4McIZaRUXCV/6j0ceZrENygSjtA87LY4xkszFYrm
-	 Du5Saqx7zyF+Wmdk0VU5mqBrMdWdiseixFNfkeagPpW3b1W+8n5HCouC9vmSRI/s83
-	 Kkk4cNzAhzOwmidzHWtNJWq5OP39Ey1dm+hDst04=
+	b=Ybapy3tLgL9eDUAzAsJ7+kEu8blN9BFHliYCiH0E07YbGnx1DRQo8H/8JkDa3p5YS
+	 OvT42SWBiWftejdSXFrN+q6gtd5Dpp5Mx369gxPgTSfTA8EXw2BNd1yibhIc4wSN0N
+	 O74fJZsFt0Y1lP3pCjWKK+TvDHDSJsOAUf3koXd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Lu <luxu.kernel@bytedance.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 062/241] irqchip/riscv: Ensure ordering of memory writes and IPI writes
-Date: Wed, 19 Mar 2025 07:28:52 -0700
-Message-ID: <20250319143029.262965797@linuxfoundation.org>
+Subject: [PATCH 6.13 026/241] drm/hyperv: Fix address space leak when Hyper-V DRM device is removed
+Date: Wed, 19 Mar 2025 07:28:16 -0700
+Message-ID: <20250319143028.357315986@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,65 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Lu <luxu.kernel@bytedance.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 825c78e6a60c309a59d18d5ac5968aa79cef0bd6 ]
+[ Upstream commit aed709355fd05ef747e1af24a1d5d78cd7feb81e ]
 
-RISC-V distinguishes between memory accesses and device I/O and uses FENCE
-instruction to order them as viewed by other RISC-V harts and external
-devices or coprocessors. The FENCE instruction can order any combination of
-device input(I), device output(O), memory reads(R) and memory
-writes(W). For example, 'fence w, o' is used to ensure all memory writes
-from instructions preceding the FENCE instruction appear earlier in the
-global memory order than device output writes from instructions after the
-FENCE instruction.
+When a Hyper-V DRM device is probed, the driver allocates MMIO space for
+the vram, and maps it cacheable. If the device removed, or in the error
+path for device probing, the MMIO space is released but no unmap is done.
+Consequently the kernel address space for the mapping is leaked.
 
-RISC-V issues IPIs by writing to the IMSIC/ACLINT MMIO registers, which is
-regarded as device output operation. However, the existing implementation
-of the IMSIC/ACLINT drivers issue the IPI via writel_relaxed(), which does
-not guarantee the order of device output operation and preceding memory
-writes. As a consequence the hart receiving the IPI might not observe the
-IPI related data.
+Fix this by adding iounmap() calls in the device removal path, and in the
+error path during device probing.
 
-Fix this by replacing writel_relaxed() with writel() when issuing IPIs,
-which uses 'fence w, o' to ensure all previous writes made by the current
-hart are visible to other harts before they receive the IPI.
-
-Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250127093846.98625-1-luxu.kernel@bytedance.com
+Fixes: f1f63cbb705d ("drm/hyperv: Fix an error handling path in hyperv_vmbus_probe()")
+Fixes: a0ab5abced55 ("drm/hyperv : Removing the restruction of VRAM allocation with PCI bar size")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250210193441.2414-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250210193441.2414-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-imsic-early.c      | 2 +-
- drivers/irqchip/irq-thead-c900-aclint-sswi.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-riscv-imsic-early.c b/drivers/irqchip/irq-riscv-imsic-early.c
-index c5c2e6929a2f5..275df50057057 100644
---- a/drivers/irqchip/irq-riscv-imsic-early.c
-+++ b/drivers/irqchip/irq-riscv-imsic-early.c
-@@ -27,7 +27,7 @@ static void imsic_ipi_send(unsigned int cpu)
- {
- 	struct imsic_local_config *local = per_cpu_ptr(imsic->global.local, cpu);
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+index e0953777a2066..b491827941f19 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+@@ -156,6 +156,7 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
+ 	return 0;
  
--	writel_relaxed(IMSIC_IPI_ID, local->msi_va);
-+	writel(IMSIC_IPI_ID, local->msi_va);
+ err_free_mmio:
++	iounmap(hv->vram);
+ 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
+ err_vmbus_close:
+ 	vmbus_close(hdev->channel);
+@@ -174,6 +175,7 @@ static void hyperv_vmbus_remove(struct hv_device *hdev)
+ 	vmbus_close(hdev->channel);
+ 	hv_set_drvdata(hdev, NULL);
+ 
++	iounmap(hv->vram);
+ 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
  }
  
- static void imsic_ipi_starting_cpu(void)
-diff --git a/drivers/irqchip/irq-thead-c900-aclint-sswi.c b/drivers/irqchip/irq-thead-c900-aclint-sswi.c
-index b0e366ade4271..8ff6e7a1363bd 100644
---- a/drivers/irqchip/irq-thead-c900-aclint-sswi.c
-+++ b/drivers/irqchip/irq-thead-c900-aclint-sswi.c
-@@ -31,7 +31,7 @@ static DEFINE_PER_CPU(void __iomem *, sswi_cpu_regs);
- 
- static void thead_aclint_sswi_ipi_send(unsigned int cpu)
- {
--	writel_relaxed(0x1, per_cpu(sswi_cpu_regs, cpu));
-+	writel(0x1, per_cpu(sswi_cpu_regs, cpu));
- }
- 
- static void thead_aclint_sswi_ipi_clear(void)
 -- 
 2.39.5
 
