@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E6215F78;
-	Wed, 19 Mar 2025 14:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962AF215F78;
+	Wed, 19 Mar 2025 14:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395082; cv=none; b=o52foWmmx7B/aihlrm9Do274YW43IiqSwdDpznpkLUi6umiF4QTZxPu8tQcOdIRfzZLhVJ3efw4t5fYFEGxHx1S+pj9KLJh5j7mvgOF9SEbpYnAJaZhTA3QPU3OeCcQolwHzS9z1CSe+FmtVOoX+t0yBtNzwE+dhTP2XwTy7eNc=
+	t=1742395082; cv=none; b=haDYzDxuUK4ZHN9k/aGaF4PXHEedOlr+Wdki0K386K2wHOc9w4uZGTsvflEICMnoJqoDEO1Q2l8ZRlj53vF2jHuBaaLjoFWvLr36kZA78s+Yb/PGcMN2YVeX3c1VxDH1h5Y6aO5QLfKwXOdwcE6NcTpSKI/KXcuYrF1XmNQ9XC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395082; c=relaxed/simple;
-	bh=SAP1bF47rpw1G++TYoWut0K2Hfk9VKNDW+YjsabTyPI=;
+	bh=Gro3hXV9cCAsY14nJHbqeQqZb/cd2vqcz27sxc1kYsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5ST04lYuScBKSke5JrBMevBwsTpfsQUkOVUKJfyd24EBJaZuZbRj+UTW7VK+sbRU0eqLWOMRNXmFC3YOsOJX9bw04hqPQzh3WFvpWypc2gf6BU6DQSbD3DdmF75cr/rfcJv74Q6unMINqF8VVe5CTgT9m2reDO3/pCi+NLl2Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1pC9Fg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VXKp+NwYp6TEt+IFTpuCYl2yE1aAvXEo4zglq4xGc2OOmPGL6S92ptL9OnXiK3LNTIcSlgtwWDezX5F0AnwUySOEoxhhcUSbTLuKKz6oYviu+HuPBUvdSwH3KiOYZYldpzRLsvMdfPsbliBPwkI4aUBC0qvP3p4xiIIRIKyXXHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdHFaBhg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1pC9Fg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A701AC4CEE8;
-	Wed, 19 Mar 2025 14:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdHFaBhg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2FBC4CEE8;
+	Wed, 19 Mar 2025 14:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395081;
-	bh=SAP1bF47rpw1G++TYoWut0K2Hfk9VKNDW+YjsabTyPI=;
+	s=korg; t=1742395082;
+	bh=Gro3hXV9cCAsY14nJHbqeQqZb/cd2vqcz27sxc1kYsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1pC9Fg5whuOp257ssf/+ADYZ0Xp8IFpwVc1nXthQE42hYzM366oXyFJUCUsNQbdn
-	 h3O3UY5LjPJw1L8Je6zO98RBo5aOlFZXyHvDxm7z0ZC3v/H0/DjDLrvyFxqsBAIwyC
-	 pgmq3QfGXqJyytx7KyIrzbZc2l05rkhUktgqa1Zo=
+	b=NdHFaBhglpEEhUbK1b6x4Efvx1LEjoCfVgSB+IBOOVMpl66EMHpe9k+HXILTCB7jv
+	 XLWAQpan0KehL1YEO4SEsWm44gTuY5X0saJaiInx6C480qK+qfY5S2CWRs406eUKlo
+	 u4QWQVWqILwBY/uTuvk3ep4PWN33UrZv+yXA/CpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hector Martin <marcan@marcan.st>,
+	Neal Gompa <neal@gompa.dev>,
+	Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/231] sched: Clarify wake_up_q()s write to task->wake_q.next
-Date: Wed, 19 Mar 2025 07:29:40 -0700
-Message-ID: <20250319143028.990754799@linuxfoundation.org>
+Subject: [PATCH 6.12 123/231] apple-nvme: Release power domains when probe fails
+Date: Wed, 19 Mar 2025 07:30:16 -0700
+Message-ID: <20250319143029.879913644@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,39 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit bcc6244e13b4d4903511a1ea84368abf925031c0 ]
+[ Upstream commit eefa72a15ea03fd009333aaa9f0e360b2578e434 ]
 
-Clarify that wake_up_q() does an atomic write to task->wake_q.next, after
-which a concurrent __wake_q_add() can immediately overwrite
-task->wake_q.next again.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250129-sched-wakeup-prettier-v1-1-2f51f5f663fa@google.com
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/apple.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9803f10a082a7..1f817d0c5d2d0 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1058,9 +1058,10 @@ void wake_up_q(struct wake_q_head *head)
- 		struct task_struct *task;
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index b1387dc459a32..df054cd38c3e3 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1518,6 +1518,7 @@ static struct apple_nvme *apple_nvme_alloc(struct platform_device *pdev)
  
- 		task = container_of(node, struct task_struct, wake_q);
--		/* Task can safely be re-inserted now: */
- 		node = node->next;
--		task->wake_q.next = NULL;
-+		/* pairs with cmpxchg_relaxed() in __wake_q_add() */
-+		WRITE_ONCE(task->wake_q.next, NULL);
-+		/* Task can safely be re-inserted now. */
+ 	return anv;
+ put_dev:
++	apple_nvme_detach_genpd(anv);
+ 	put_device(anv->dev);
+ 	return ERR_PTR(ret);
+ }
+@@ -1551,6 +1552,7 @@ static int apple_nvme_probe(struct platform_device *pdev)
+ 	nvme_uninit_ctrl(&anv->ctrl);
+ out_put_ctrl:
+ 	nvme_put_ctrl(&anv->ctrl);
++	apple_nvme_detach_genpd(anv);
+ 	return ret;
+ }
  
- 		/*
- 		 * wake_up_process() executes a full barrier, which pairs with
 -- 
 2.39.5
 
