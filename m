@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D405221F1B;
-	Wed, 19 Mar 2025 14:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E44518BC36;
+	Wed, 19 Mar 2025 14:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395243; cv=none; b=JVT8IYIHjXhn2kmUiWLLFlvt7GzPKN35Vkj/XOZgye/eYsR4RZXhFO0WTExBTO1Rxe5hXUoYSl9MbUor4h7tVxGFYT8j0L+7VNOqcbED+MHyph0yu6zr+JtrJu92sq1O3ypMaJuByT7qJySHNwem4NY66t9YATfLPJP63HyHOzs=
+	t=1742395244; cv=none; b=AgRR9dQc17W0BZqjM9wjBVP7o3RWN+zMGleP3Y2eC5K/xGWwAi3CoHLgVrC3ipImWThfIZCzgFLn+u75MFHQYg7ykrIdyD3TnQn6VFngajviwpuLiPMF4ra+GoB4YvjMQawpm091cDqoAo1GXe9rLrgyvdBYboAX3x8lxVzNWQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395243; c=relaxed/simple;
-	bh=RaLWivR68e46AjEn/YfYRN6lH4ePLrCEzbsLNymWCC4=;
+	s=arc-20240116; t=1742395244; c=relaxed/simple;
+	bh=BjPGh+rQ4tY1x1f1FAC0J3dj9ra8I1dSUklBrEA+tjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l8JmCEJEKz4bDZYf1POLe5u8aWuT+W+dLfjDk0NzM5LGJwhKJkof/WbLKkyx+YwkPYoUtgyVzB8RX4nmwBvQfEy1SPRikwS8FtNXOibVZAnca7UrZTO8uplYktl0flijgK0A+6h/7sUUVVjGFDa2sZygmyjBaQnhcYXaw+s6zXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwNg4VOW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dp350eUcIEcS7q7QVEiIY+twUNVoNeVNM0Ubf0ikbIP6tKnn12mYHcdmmgb+ZqSkRTl/W5TpIvajLhPbTlYlsGSOPtHLsI4m4v7EWa3k1Y397ReJL/Ze2wOMlnz7XBSg/TgHcI86prDGHHSs2N2HZP7REnYg0ANnnivEx8ipboM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnJcbACW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwNg4VOW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFAFC4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnJcbACW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7079C4CEE4;
 	Wed, 19 Mar 2025 14:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395243;
-	bh=RaLWivR68e46AjEn/YfYRN6lH4ePLrCEzbsLNymWCC4=;
+	s=korg; t=1742395244;
+	bh=BjPGh+rQ4tY1x1f1FAC0J3dj9ra8I1dSUklBrEA+tjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwNg4VOWDbHcsQtso4A5EiDV6dUxDORZKJhHeGOZAjWnd0XHZsGgBcvfx9bteS5f0
-	 hvx7pPY8XDVFqo9+dUGXSMPFa0LqUgicvVIAquyd0VFog/vkV8iOFLpf2Y6yrcY9XY
-	 gAxhRjsGMn4P9/u4sg/1ovFQWOAE4Jqz6zphVkVQ=
+	b=dnJcbACWyaBKHV9EwSXs7DzRvfHLq33NSE79TB28/vFIJ3yXFlGTGCIa/A5XamWFz
+	 r8oamuSSYShX8ba+ydSzw7r4KiErKKIhYrKGX60CS7rk0OzX+HTklTqAofgnWK72Rr
+	 aMIEj8rIxx6j8Cxs46RJQNRJsmgUZtV+gI/9yk3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/166] cifs: Treat unhandled directory name surrogate reparse points as mount directory nodes
-Date: Wed, 19 Mar 2025 07:30:51 -0700
-Message-ID: <20250319143022.180181699@linuxfoundation.org>
+Subject: [PATCH 6.6 081/166] sctp: Fix undefined behavior in left shift operation
+Date: Wed, 19 Mar 2025 07:30:52 -0700
+Message-ID: <20250319143022.209806284@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -45,74 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit b587fd128660d48cd2122f870f720ff8e2b4abb3 ]
+[ Upstream commit 606572eb22c1786a3957d24307f5760bb058ca19 ]
 
-If the reparse point was not handled (indicated by the -EOPNOTSUPP from
-ops->parse_reparse_point() call) but reparse tag is of type name surrogate
-directory type, then treat is as a new mount point.
+According to the C11 standard (ISO/IEC 9899:2011, 6.5.7):
+"If E1 has a signed type and E1 x 2^E2 is not representable in the result
+type, the behavior is undefined."
 
-Name surrogate reparse point represents another named entity in the system.
+Shifting 1 << 31 causes signed integer overflow, which leads to undefined
+behavior.
 
->From SMB client point of view, this another entity is resolved on the SMB
-server, and server serves its content automatically. Therefore from Linux
-client point of view, this name surrogate reparse point of directory type
-crosses mount point.
+Fix this by explicitly using '1U << 31' to ensure the shift operates on
+an unsigned type, avoiding undefined behavior.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Link: https://patch.msgid.link/20250218081217.3468369-1-eleanor15x@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c    | 13 +++++++++++++
- fs/smb/common/smbfsctl.h |  3 +++
- 2 files changed, 16 insertions(+)
+ net/sctp/stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index dbb407d5e6dab..b9cf05e0940d0 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1132,6 +1132,19 @@ static int reparse_info_to_fattr(struct cifs_open_info_data *data,
- 			rc = server->ops->parse_reparse_point(cifs_sb,
- 							      full_path,
- 							      iov, data);
-+			/*
-+			 * If the reparse point was not handled but it is the
-+			 * name surrogate which points to directory, then treat
-+			 * is as a new mount point. Name surrogate reparse point
-+			 * represents another named entity in the system.
-+			 */
-+			if (rc == -EOPNOTSUPP &&
-+			    IS_REPARSE_TAG_NAME_SURROGATE(data->reparse.tag) &&
-+			    (le32_to_cpu(data->fi.Attributes) & ATTR_DIRECTORY)) {
-+				rc = 0;
-+				cifs_create_junction_fattr(fattr, sb);
-+				goto out;
-+			}
- 		}
- 		break;
- 	}
-diff --git a/fs/smb/common/smbfsctl.h b/fs/smb/common/smbfsctl.h
-index a94d658b88e86..6eff3a8bde096 100644
---- a/fs/smb/common/smbfsctl.h
-+++ b/fs/smb/common/smbfsctl.h
-@@ -158,6 +158,9 @@
- #define IO_REPARSE_TAG_LX_CHR	     0x80000025
- #define IO_REPARSE_TAG_LX_BLK	     0x80000026
+diff --git a/net/sctp/stream.c b/net/sctp/stream.c
+index c241cc552e8d5..bfcff6d6a4386 100644
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -735,7 +735,7 @@ struct sctp_chunk *sctp_process_strreset_tsnreq(
+ 	 *     value SHOULD be the smallest TSN not acknowledged by the
+ 	 *     receiver of the request plus 2^31.
+ 	 */
+-	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1 << 31);
++	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1U << 31);
+ 	sctp_tsnmap_init(&asoc->peer.tsn_map, SCTP_TSN_MAP_INITIAL,
+ 			 init_tsn, GFP_ATOMIC);
  
-+/* If Name Surrogate Bit is set, the file or directory represents another named entity in the system. */
-+#define IS_REPARSE_TAG_NAME_SURROGATE(tag) (!!((tag) & 0x20000000))
-+
- /* fsctl flags */
- /* If Flags is set to this value, the request is an FSCTL not ioctl request */
- #define SMB2_0_IOCTL_IS_FSCTL		0x00000001
 -- 
 2.39.5
 
