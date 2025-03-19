@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70646221D9B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FA0209F50;
 	Wed, 19 Mar 2025 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395229; cv=none; b=jQrBs8gQHZnOuoXjCLzccnz7Pzcc9aIRSC2+56PzUMETmF8HfbniPm7KT3urhYiYRpwR5h+HLV94fUPBQxTdueBg1Aj/PmTUnYV3avCMyZFwg3D8WbXy1h+VQIWpuNWJ7hOMcmJi0TKwFSY/yVmSxLvKQMpYM+OCsaEdbKakOhw=
+	t=1742395229; cv=none; b=HxiWMJXcKb8TD9/mknxFvTVbKL2avHnjsLQjLcgyL+TxvFoD7bDMp8q3rnYaeKs42ik0nAuDCkTivGoEP9kjhE/GyRkIZN7nfts8q4XWto4iqfqGG/OL4hQQIRETSZ6VtnzUqo9gojP2TFJUimDvpAhf6ZIa8FStNXpARXKRXjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395229; c=relaxed/simple;
-	bh=LORcam1fmhKB7VPS+Ej75jVTxjAjPZoXGeG5fkBM1aE=;
+	bh=mr+B9fVcZBD8oWOkm1G4EuClIv22IrDF7dX3IJJDDWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nlh7u3ky51TH5UeYoIT+dUZHXRSyo5cz04xE1+iNQrECFrfH8enT1s4AVyznkns/3DbR8SpqGDYQoQbGMgiFgQmvQ2GPTAUj4YRdtEyPPFS2jj8DBI+aoCmgY0KMDg9UKK4DM1GCPF7Q3SpFXEMemR97kT+bqf9J9rZCRMnGe64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERyQcefM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZieCficNZkwr+bQ3FvK3kk8QyqdMbVQ0I62BGIS1riiCwekyQLOUFKOtjEMY6Fds7hxyfpaY1+34mrXxWiOZBmfhTO4Fr/g5w61Tn3+h8t+IZXdZlst2bcVhOSU+h8WlNE1p+mB4UQNUXtJKrfIUHC7jmdJ6RtMA9wTHatfsgvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf+BNOkS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERyQcefM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFC8C4CEE9;
-	Wed, 19 Mar 2025 14:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf+BNOkS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1E7C4CEE8;
+	Wed, 19 Mar 2025 14:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395228;
-	bh=LORcam1fmhKB7VPS+Ej75jVTxjAjPZoXGeG5fkBM1aE=;
+	s=korg; t=1742395229;
+	bh=mr+B9fVcZBD8oWOkm1G4EuClIv22IrDF7dX3IJJDDWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERyQcefM7eL4zTrwjeI2GUqTe3PUVcCJkTGvAOqQlYWtlyzYsuIFk2QjdQQnKmMJe
-	 DnaZwptmZ6XkwHaMX+7s5dNHKlqlDHyRglLJQsKqEmcdm0HT88ASFW/mh+yFf6EeqI
-	 tjuiBRx6f6XBIEwmm2l9toijYR7ujxcvibX2NWaI=
+	b=Pf+BNOkS00qPtpsGWM3XcAZyEBN6AWM5S2qBMn1mLn9PwWhPzuENoyIdKvqJwhmoQ
+	 +wKDn6ZP/8y2axhVnY03e3skMptoQRojQDN/DD97Wv/+Ra6VcoLd21Kvl5NkfFNEiX
+	 uNyo0Lo2baWexD1htyYGStDP68CCiqRXFZLunUY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 099/166] io_uring: unify io_pin_pages()
-Date: Wed, 19 Mar 2025 07:31:10 -0700
-Message-ID: <20250319143022.697173971@linuxfoundation.org>
+Subject: [PATCH 6.6 100/166] io_uring/kbuf: vmap pinned buffer ring
+Date: Wed, 19 Mar 2025 07:31:11 -0700
+Message-ID: <20250319143022.725359077@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,154 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit 1943f96b3816e0f0d3d6686374d6e1d617c8b42c upstream.
+Commit e270bfd22a2a10d1cfbaddf23e79b6d0b405d21e upstream.
 
-Move it into io_uring.c where it belongs, and use it in there as well
-rather than have two implementations of this.
+This avoids needing to care about HIGHMEM, and it makes the buffer
+indexing easier as both ring provided buffer methods are now virtually
+mapped in a contigious fashion.
 
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   61 +++++++++++++++++++++++++++++++++++-----------------
- io_uring/rsrc.c     |   39 ---------------------------------
- 2 files changed, 42 insertions(+), 58 deletions(-)
+ io_uring/kbuf.c |   39 +++++++++++++++------------------------
+ 1 file changed, 15 insertions(+), 24 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2738,33 +2738,57 @@ static void io_pages_free(struct page **
- 	*pages = NULL;
- }
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -7,6 +7,7 @@
+ #include <linux/slab.h>
+ #include <linux/namei.h>
+ #include <linux/poll.h>
++#include <linux/vmalloc.h>
+ #include <linux/io_uring.h>
  
-+struct page **io_pin_pages(unsigned long uaddr, unsigned long len, int *npages)
-+{
-+	unsigned long start, end, nr_pages;
-+	struct page **pages;
-+	int ret;
-+
-+	end = (uaddr + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	start = uaddr >> PAGE_SHIFT;
-+	nr_pages = end - start;
-+	if (WARN_ON_ONCE(!nr_pages))
-+		return ERR_PTR(-EINVAL);
-+
-+	pages = kvmalloc_array(nr_pages, sizeof(struct page *), GFP_KERNEL);
-+	if (!pages)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ret = pin_user_pages_fast(uaddr, nr_pages, FOLL_WRITE | FOLL_LONGTERM,
-+					pages);
-+	/* success, mapped all pages */
-+	if (ret == nr_pages) {
-+		*npages = nr_pages;
-+		return pages;
-+	}
-+
-+	/* partial map, or didn't map anything */
-+	if (ret >= 0) {
-+		/* if we did partial map, release any pages we did get */
-+		if (ret)
-+			unpin_user_pages(pages, ret);
-+		ret = -EFAULT;
-+	}
-+	kvfree(pages);
-+	return ERR_PTR(ret);
-+}
-+
- static void *__io_uaddr_map(struct page ***pages, unsigned short *npages,
- 			    unsigned long uaddr, size_t size)
+ #include <uapi/linux/io_uring.h>
+@@ -153,15 +154,7 @@ static void __user *io_ring_buffer_selec
+ 		return NULL;
+ 
+ 	head &= bl->mask;
+-	/* mmaped buffers are always contig */
+-	if (bl->is_mmap || head < IO_BUFFER_LIST_BUF_PER_PAGE) {
+-		buf = &br->bufs[head];
+-	} else {
+-		int off = head & (IO_BUFFER_LIST_BUF_PER_PAGE - 1);
+-		int index = head / IO_BUFFER_LIST_BUF_PER_PAGE;
+-		buf = page_address(bl->buf_pages[index]);
+-		buf += off;
+-	}
++	buf = &br->bufs[head];
+ 	if (*len == 0 || *len > buf->len)
+ 		*len = buf->len;
+ 	req->flags |= REQ_F_BUFFER_RING;
+@@ -249,6 +242,7 @@ static int __io_remove_buffers(struct io
+ 			for (j = 0; j < bl->buf_nr_pages; j++)
+ 				unpin_user_page(bl->buf_pages[j]);
+ 			kvfree(bl->buf_pages);
++			vunmap(bl->buf_ring);
+ 			bl->buf_pages = NULL;
+ 			bl->buf_nr_pages = 0;
+ 		}
+@@ -501,9 +495,9 @@ err:
+ static int io_pin_pbuf_ring(struct io_uring_buf_reg *reg,
+ 			    struct io_buffer_list *bl)
  {
- 	struct page **page_array;
- 	unsigned int nr_pages;
- 	void *page_addr;
--	int ret, pinned;
+-	struct io_uring_buf_ring *br;
++	struct io_uring_buf_ring *br = NULL;
++	int nr_pages, ret, i;
+ 	struct page **pages;
+-	int i, nr_pages;
  
- 	*npages = 0;
+ 	pages = io_pin_pages(reg->ring_addr,
+ 			     flex_array_size(br, bufs, reg->ring_entries),
+@@ -511,18 +505,12 @@ static int io_pin_pbuf_ring(struct io_ur
+ 	if (IS_ERR(pages))
+ 		return PTR_ERR(pages);
  
- 	if (uaddr & (PAGE_SIZE - 1) || !size)
- 		return ERR_PTR(-EINVAL);
+-	/*
+-	 * Apparently some 32-bit boxes (ARM) will return highmem pages,
+-	 * which then need to be mapped. We could support that, but it'd
+-	 * complicate the code and slowdown the common cases quite a bit.
+-	 * So just error out, returning -EINVAL just like we did on kernels
+-	 * that didn't support mapped buffer rings.
+-	 */
+-	for (i = 0; i < nr_pages; i++)
+-		if (PageHighMem(pages[i]))
+-			goto error_unpin;
++	br = vmap(pages, nr_pages, VM_MAP, PAGE_KERNEL);
++	if (!br) {
++		ret = -ENOMEM;
++		goto error_unpin;
++	}
  
--	nr_pages = (size + PAGE_SIZE - 1) >> PAGE_SHIFT;
--	if (nr_pages > USHRT_MAX)
--		return ERR_PTR(-EINVAL);
--	page_array = kvmalloc_array(nr_pages, sizeof(struct page *), GFP_KERNEL);
--	if (!page_array)
--		return ERR_PTR(-ENOMEM);
--
--
--	pinned = pin_user_pages_fast(uaddr, nr_pages, FOLL_WRITE | FOLL_LONGTERM,
--				     page_array);
--	if (pinned != nr_pages) {
--		ret = (pinned < 0) ? pinned : -EFAULT;
--		goto free_pages;
--	}
-+	nr_pages = 0;
-+	page_array = io_pin_pages(uaddr, size, &nr_pages);
-+	if (IS_ERR(page_array))
-+		return page_array;
- 
- 	page_addr = vmap(page_array, nr_pages, VM_MAP, PAGE_KERNEL);
- 	if (page_addr) {
-@@ -2772,10 +2796,9 @@ static void *__io_uaddr_map(struct page
- 		*npages = nr_pages;
- 		return page_addr;
- 	}
--	ret = -ENOMEM;
--free_pages:
--	io_pages_free(&page_array, pinned > 0 ? pinned : 0);
--	return ERR_PTR(ret);
-+
-+	io_pages_free(&page_array, nr_pages);
-+	return ERR_PTR(-ENOMEM);
+-	br = page_address(pages[0]);
+ #ifdef SHM_COLOUR
+ 	/*
+ 	 * On platforms that have specific aliasing requirements, SHM_COLOUR
+@@ -533,8 +521,10 @@ static int io_pin_pbuf_ring(struct io_ur
+ 	 * should use IOU_PBUF_RING_MMAP instead, and liburing will handle
+ 	 * this transparently.
+ 	 */
+-	if ((reg->ring_addr | (unsigned long) br) & (SHM_COLOUR - 1))
++	if ((reg->ring_addr | (unsigned long) br) & (SHM_COLOUR - 1)) {
++		ret = -EINVAL;
+ 		goto error_unpin;
++	}
+ #endif
+ 	bl->buf_pages = pages;
+ 	bl->buf_nr_pages = nr_pages;
+@@ -546,7 +536,8 @@ error_unpin:
+ 	for (i = 0; i < nr_pages; i++)
+ 		unpin_user_page(pages[i]);
+ 	kvfree(pages);
+-	return -EINVAL;
++	vunmap(br);
++	return ret;
  }
  
- static void *io_rings_map(struct io_ring_ctx *ctx, unsigned long uaddr,
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -873,45 +873,6 @@ static int io_buffer_account_pin(struct
- 	return ret;
- }
- 
--struct page **io_pin_pages(unsigned long ubuf, unsigned long len, int *npages)
--{
--	unsigned long start, end, nr_pages;
--	struct page **pages = NULL;
--	int pret, ret = -ENOMEM;
--
--	end = (ubuf + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
--	start = ubuf >> PAGE_SHIFT;
--	nr_pages = end - start;
--
--	pages = kvmalloc_array(nr_pages, sizeof(struct page *), GFP_KERNEL);
--	if (!pages)
--		goto done;
--
--	ret = 0;
--	mmap_read_lock(current->mm);
--	pret = pin_user_pages(ubuf, nr_pages, FOLL_WRITE | FOLL_LONGTERM,
--			      pages);
--	if (pret == nr_pages)
--		*npages = nr_pages;
--	else
--		ret = pret < 0 ? pret : -EFAULT;
--
--	mmap_read_unlock(current->mm);
--	if (ret) {
--		/* if we did partial map, release any pages we did get */
--		if (pret > 0)
--			unpin_user_pages(pages, pret);
--		goto done;
--	}
--	ret = 0;
--done:
--	if (ret < 0) {
--		kvfree(pages);
--		pages = ERR_PTR(ret);
--	}
--	return pages;
--}
--
- static int io_sqe_buffer_register(struct io_ring_ctx *ctx, struct iovec *iov,
- 				  struct io_mapped_ubuf **pimu,
- 				  struct page **last_hpage)
+ /*
 
 
