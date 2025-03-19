@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C96C1D6DBF;
-	Wed, 19 Mar 2025 14:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A310F1E5216;
+	Wed, 19 Mar 2025 14:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394938; cv=none; b=ZGmpTOlnyAr4SKE2wArVkEsRIC75qQJAa0vxavjl1A292iWQctYPYW6B9Q8mYa4HwU0Jh0mvoCySE+m+LT8Ow2zV+0PFAjx66wRwS3IYmx84okokGBDNGXHJTR9AjA6dTjighbjTvV0np3f353GMiwTC1TsLJmEVMiNa+T1A7kM=
+	t=1742394938; cv=none; b=XVijnH0O5OmktBB4TBsxvH4Jv5JW0D85R657lpcpGyAoTVRxfOTWQFju7k9FnCDml+qdknS/FPcPYFt0YTlI4TwK5J3Y60cqCYeRcfAUf4L+Y+kgRD3W+er9i+JN3gEbMClhzxW0VGs6YlhkSHLGoE2Jtf4FIQSy5z/speB25zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394938; c=relaxed/simple;
-	bh=CvWICiI/YEW2d+jCav7w5ECqH+m9QhEJTFdSXibiZUA=;
+	bh=PlOObE7wVbXJoLMJfxohyfrHr4LdBfClUrYkCy73pvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u8muJOwiUTaRunZw3/GMgrCzTw+OyhhiDm/KGOixlvf0E1jMb1A79xe8CEdUSWcl719KMboidf+IPePqv1KlP2w4+POotUAXyTa266OLuINXM6reVpo9em7TOCl6SPxkMSfu4cJM6DGyOMf/4TiDTK8hgWNsK6I08KPbGcWT108=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAa8ypDz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBXOecRodttBW8HgCOgDzJqOoTL3UqA70jYXwvSXXvbZyDANRO0HwKxkTWbTp8/jeWSmfj/LNnrNftz3UD5bHntuidTIDRpqIBEnXBEBG3ynCwYZijulDteDYTDCdWWwotJASTc2UUQACS3dbYgDLGPnfVBq12jWO1Fx/kYcgWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlOjw22a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAa8ypDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AF3C4CEE4;
-	Wed, 19 Mar 2025 14:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlOjw22a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7007AC4CEE8;
+	Wed, 19 Mar 2025 14:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394937;
-	bh=CvWICiI/YEW2d+jCav7w5ECqH+m9QhEJTFdSXibiZUA=;
+	s=korg; t=1742394938;
+	bh=PlOObE7wVbXJoLMJfxohyfrHr4LdBfClUrYkCy73pvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAa8ypDzgEVu2ykAbxk7K71arPIh08Gym2zrNbyG9J00VMLRClpHSa7URLjO7OjAq
-	 zWsqOoJJe4lCuwYCozqexwvQHZXYOBxH6pkQ1Mfkkahe1HTg0IytcmOEVVqO8yte9f
-	 +syhh2UmL857JjyrQ5n3fuPkcXgNhidVVcCd5uJg=
+	b=vlOjw22aQvTr9LaQSgz0QOAZG/VQNq2a0OUAhOLCpy9Eh/dXCJfw9g1A22RbRIRFF
+	 V6NWbO3fpZQ4/mOJE4o77U8e03hnlpai12nezvPjz6kWuJniwePcIgsinWCHYDL24e
+	 VqtGyVWUYtZUqOeLV+wopot4SF2sOie8JqgKPww0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Cheong <htcheong@chromium.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Johny Lin <lpg76627@gmail.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 116/241] ASoC: SOF: Intel: hda: add softdep pre to snd-hda-codec-hdmi module
-Date: Wed, 19 Mar 2025 07:29:46 -0700
-Message-ID: <20250319143030.592278235@linuxfoundation.org>
+Subject: [PATCH 6.13 107/241] ASoC: Intel: sof_sdw: Add quirk for Asus Zenbook S14
+Date: Wed, 19 Mar 2025 07:29:37 -0700
+Message-ID: <20250319143030.369125606@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -48,46 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Terry Cheong <htcheong@chromium.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 33b7dc7843dbdc9b90c91d11ba30b107f9138ffd ]
+[ Upstream commit 0843449708085c4fb45a3c325c2fbced556f6abf ]
 
-In enviornment without KMOD requesting module may fail to load
-snd-hda-codec-hdmi, resulting in HDMI audio not usable.
-Add softdep to loading HDMI codec module first to ensure we can load it
-correctly.
+Asus laptops with sound PCI subsystem ID 1043:1e13 have the DMICs
+connected to the host instead of the CS42L43 so need the
+SOC_SDW_CODEC_MIC quirk.
 
-Signed-off-by: Terry Cheong <htcheong@chromium.org>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Johny Lin <lpg76627@gmail.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250206094723.18013-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250204053943.93596-3-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-codec.c | 1 +
+ sound/soc/intel/boards/sof_sdw.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
-index 568f3dfe822f5..2f9925830d1d5 100644
---- a/sound/soc/sof/intel/hda-codec.c
-+++ b/sound/soc/sof/intel/hda-codec.c
-@@ -454,6 +454,7 @@ int hda_codec_i915_exit(struct snd_sof_dev *sdev)
- }
- EXPORT_SYMBOL_NS_GPL(hda_codec_i915_exit, "SND_SOC_SOF_HDA_AUDIO_CODEC_I915");
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 62e71f56269d8..352c7a84cc2e8 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -751,6 +751,7 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ };
  
-+MODULE_SOFTDEP("pre: snd-hda-codec-hdmi");
- #endif
+ static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
++	SND_PCI_QUIRK(0x1043, 0x1e13, "ASUS Zenbook S14", SOC_SDW_CODEC_MIC),
+ 	{}
+ };
  
- MODULE_LICENSE("Dual BSD/GPL");
 -- 
 2.39.5
 
