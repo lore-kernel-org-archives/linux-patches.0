@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E355D1DF986;
-	Wed, 19 Mar 2025 14:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9931DF986;
+	Wed, 19 Mar 2025 14:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395021; cv=none; b=D0Gn5rGguEWtcU84mfJHp3wc7l501Ef+akHgmki65k2Uw3BVEx8MxeeKex22hvTG3AE8hWDexRkD9bQhF2u+dC/fQknxvuQbquh6AkcaylODuTXSg2st8iO1dRRJCZ8qgWlPY78VK52n9ZVKnNmp8PXqiv/FLzfh4vfOomf+wMM=
+	t=1742395021; cv=none; b=uH7VVFnnsGO+DjT0twhY7JNttdZq5DvC/wBl1O/C9GJcMYRxitSVufZOID/RiJNAvHkHZrGecmZ4VJP1qg8Z5SJfHd9Le4KreZtYcy+YqeBSyPE0a5GPU1vkYvOSa6A3sSegPHd0pSurj30CL6ha9kkoFZfB71nFZj8tKWFXYS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395021; c=relaxed/simple;
-	bh=IMdLFumwj1sP0csNTcXrmp/0+qTIRvF2ACybEt/jgL4=;
+	bh=1YzsugiqYM2Ltd+d+IIML9rEaS51YMLRIiphjyhVRLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbucKiaPUiW+137YQG7xYg+W6Il1tjzKMhnUpT2rRrZO/ZWHMTwT4Mw3RU3ZthwwJZxbcEjlsQMWjBDunG16qyoUZEypCa0FQM8WHfTtmi68wCUVTHtWrzfAjS1r+EpsoJBVUMLno7Y2UD0pGz1JOHctpqfr+ldgV3Ae5vTXX00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djrtkK3v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DWvmMH/8RElAZ4rdEymLkrdwbSuhcF06j7kdmuUsSPchvYFd/fKXleCZ3jUfX52zK0Pnt2BSVIHlysRwcQ+fUNjXK+0cHfkUrYGe1ttc9mG2X+PtqRdoSVivF6wH7rMzYYUQKb3ZusULeSdYMtg9TrwetlsKxQ7b4tN07H2M7G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSQyG5uS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djrtkK3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDA0C4CEE4;
-	Wed, 19 Mar 2025 14:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSQyG5uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B03C4CEE4;
+	Wed, 19 Mar 2025 14:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395020;
-	bh=IMdLFumwj1sP0csNTcXrmp/0+qTIRvF2ACybEt/jgL4=;
+	s=korg; t=1742395021;
+	bh=1YzsugiqYM2Ltd+d+IIML9rEaS51YMLRIiphjyhVRLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djrtkK3vyFwDJTZBRIT+jsn5L1BMMIaqlrwOklt7okucHzGef7QHIJXV96VHHDBd+
-	 LD2PQxbUApj5pU1WPqsl5E04NTafUI8Yw6j422DybOFXloDRsZBKD3jFYoLE/UySAZ
-	 CoNaXiQ3I5KEAkq8TS35Ul/Zdr4LsqNAbBEM23AE=
+	b=iSQyG5uSCdvrMx2eAGqJR0y5Z5VdRGPM+3yckZ2LjsQVFuy1QCiZLDqvRzjBXBe2N
+	 usKHX8IqEvQOVolW+oM1UVxLmpvmWKO3+qWHCLt6YVXpClrbbiMeD4inFO3/ZGsKZ6
+	 wkOjnGtvS+Abk4Atz390sW/D9idhGM/IWtm4fVLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/231] eth: bnxt: fix kernel panic in the bnxt_get_queue_stats{rx | tx}
-Date: Wed, 19 Mar 2025 07:28:47 -0700
-Message-ID: <20250319143027.656446936@linuxfoundation.org>
+Subject: [PATCH 6.12 035/231] eth: bnxt: use page pool for head frags
+Date: Wed, 19 Mar 2025 07:28:48 -0700
+Message-ID: <20250319143027.679641867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,98 +50,273 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f09af5fdfbd9b0fcee73aab1116904c53b199e97 ]
+[ Upstream commit 7ed816be35abc3d5bed39d3edc5f2efed2ca5216 ]
 
-When qstats-get operation is executed, callbacks of netdev_stats_ops
-are called. The bnxt_get_queue_stats{rx | tx} collect per-queue stats
-from sw_stats in the rings.
-But {rx | tx | cp}_ring are allocated when the interface is up.
-So, these rings are not allocated when the interface is down.
+Testing small size RPCs (300B-400B) on a large AMD system suggests
+that page pool recycling is very useful even for just the head frags.
+With this patch (and copy break disabled) I see a 30% performance
+improvement (82Gbps -> 106Gbps).
 
-The qstats-get is allowed even if the interface is down. However,
-the bnxt_get_queue_stats{rx | tx}() accesses cp_ring and tx_ring
-without null check.
-So, it needs to avoid accessing rings if the interface is down.
+Convert bnxt from normal page frags to page pool frags for head buffers.
 
-Reproducer:
- ip link set $interface down
- ./cli.py --spec netdev.yaml --dump qstats-get
-OR
- ip link set $interface down
- python ./stats.py
+On systems with small page size we can use the same pool as for TPA
+pages. On systems with large pages the frag allocation logic of the
+page pool is already used to split a large page into TPA chunks.
+TPA chunks are much larger than heads (8k or 64k, AFAICT vs 1kB)
+and we always allocate the same sized chunks. Mixing allocation
+of TPA and head pages would lead to sub-optimal memory use.
+Plus Taehee's work on zero-copy / devmem will need to differentiate
+between TPA and non-TPA page pool, anyway. Conditionally allocate
+a new page pool for heads.
 
-Splat looks like:
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 1680fa067 P4D 1680fa067 PUD 16be3b067 PMD 0
- Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 0 UID: 0 PID: 1495 Comm: python3 Not tainted 6.14.0-rc4+ #32 5cd0f999d5a15c574ac72b3e4b907341
- Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
- RIP: 0010:bnxt_get_queue_stats_rx+0xf/0x70 [bnxt_en]
- Code: c6 87 b5 18 00 00 02 eb a2 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 01
- RSP: 0018:ffffabef43cdb7e0 EFLAGS: 00010282
- RAX: 0000000000000000 RBX: ffffffffc04c8710 RCX: 0000000000000000
- RDX: ffffabef43cdb858 RSI: 0000000000000000 RDI: ffff8d504e850000
- RBP: ffff8d506c9f9c00 R08: 0000000000000004 R09: ffff8d506bcd901c
- R10: 0000000000000015 R11: ffff8d506bcd9000 R12: 0000000000000000
- R13: ffffabef43cdb8c0 R14: ffff8d504e850000 R15: 0000000000000000
- FS:  00007f2c5462b080(0000) GS:ffff8d575f600000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000000167fd0000 CR4: 00000000007506f0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ? __die+0x20/0x70
-  ? page_fault_oops+0x15a/0x460
-  ? sched_balance_find_src_group+0x58d/0xd10
-  ? exc_page_fault+0x6e/0x180
-  ? asm_exc_page_fault+0x22/0x30
-  ? bnxt_get_queue_stats_rx+0xf/0x70 [bnxt_en cdd546fd48563c280cfd30e9647efa420db07bf1]
-  netdev_nl_stats_by_netdev+0x2b1/0x4e0
-  ? xas_load+0x9/0xb0
-  ? xas_find+0x183/0x1d0
-  ? xa_find+0x8b/0xe0
-  netdev_nl_qstats_get_dumpit+0xbf/0x1e0
-  genl_dumpit+0x31/0x90
-  netlink_dump+0x1a8/0x360
-
-Fixes: af7b3b4adda5 ("eth: bnxt: support per-queue statistics")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Link: https://patch.msgid.link/20250309134219.91670-6-ap420073@gmail.com
+Link: https://patch.msgid.link/20241109035119.3391864-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 87dd2850835d ("eth: bnxt: fix memory leak in queue reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 98 ++++++++++++-----------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |  1 +
+ 2 files changed, 51 insertions(+), 48 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 7293d7732d6ce..eba0f9991476c 100644
+index eba0f9991476c..b97bced5c002c 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -15032,6 +15032,9 @@ static void bnxt_get_queue_stats_rx(struct net_device *dev, int i,
- 	struct bnxt_cp_ring_info *cpr;
- 	u64 *sw;
+@@ -864,6 +864,11 @@ static void bnxt_tx_int(struct bnxt *bp, struct bnxt_napi *bnapi, int budget)
+ 		bnapi->events &= ~BNXT_TX_CMP_EVENT;
+ }
  
-+	if (!bp->bnapi)
-+		return;
++static bool bnxt_separate_head_pool(void)
++{
++	return PAGE_SIZE > BNXT_RX_PAGE_SIZE;
++}
 +
- 	cpr = &bp->bnapi[i]->cp_ring;
- 	sw = cpr->stats.sw_stats;
+ static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
+ 					 struct bnxt_rx_ring_info *rxr,
+ 					 unsigned int *offset,
+@@ -886,27 +891,19 @@ static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
+ }
  
-@@ -15055,6 +15058,9 @@ static void bnxt_get_queue_stats_tx(struct net_device *dev, int i,
- 	struct bnxt_napi *bnapi;
- 	u64 *sw;
+ static inline u8 *__bnxt_alloc_rx_frag(struct bnxt *bp, dma_addr_t *mapping,
++				       struct bnxt_rx_ring_info *rxr,
+ 				       gfp_t gfp)
+ {
+-	u8 *data;
+-	struct pci_dev *pdev = bp->pdev;
++	unsigned int offset;
++	struct page *page;
  
-+	if (!bp->tx_ring)
-+		return;
+-	if (gfp == GFP_ATOMIC)
+-		data = napi_alloc_frag(bp->rx_buf_size);
+-	else
+-		data = netdev_alloc_frag(bp->rx_buf_size);
+-	if (!data)
++	page = page_pool_alloc_frag(rxr->head_pool, &offset,
++				    bp->rx_buf_size, gfp);
++	if (!page)
+ 		return NULL;
+ 
+-	*mapping = dma_map_single_attrs(&pdev->dev, data + bp->rx_dma_offset,
+-					bp->rx_buf_use_size, bp->rx_dir,
+-					DMA_ATTR_WEAK_ORDERING);
+-
+-	if (dma_mapping_error(&pdev->dev, *mapping)) {
+-		skb_free_frag(data);
+-		data = NULL;
+-	}
+-	return data;
++	*mapping = page_pool_get_dma_addr(page) + bp->rx_dma_offset + offset;
++	return page_address(page) + offset;
+ }
+ 
+ int bnxt_alloc_rx_data(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+@@ -928,7 +925,7 @@ int bnxt_alloc_rx_data(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 		rx_buf->data = page;
+ 		rx_buf->data_ptr = page_address(page) + offset + bp->rx_offset;
+ 	} else {
+-		u8 *data = __bnxt_alloc_rx_frag(bp, &mapping, gfp);
++		u8 *data = __bnxt_alloc_rx_frag(bp, &mapping, rxr, gfp);
+ 
+ 		if (!data)
+ 			return -ENOMEM;
+@@ -1179,13 +1176,14 @@ static struct sk_buff *bnxt_rx_skb(struct bnxt *bp,
+ 	}
+ 
+ 	skb = napi_build_skb(data, bp->rx_buf_size);
+-	dma_unmap_single_attrs(&bp->pdev->dev, dma_addr, bp->rx_buf_use_size,
+-			       bp->rx_dir, DMA_ATTR_WEAK_ORDERING);
++	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, bp->rx_buf_use_size,
++				bp->rx_dir);
+ 	if (!skb) {
+-		skb_free_frag(data);
++		page_pool_free_va(rxr->head_pool, data, true);
+ 		return NULL;
+ 	}
+ 
++	skb_mark_for_recycle(skb);
+ 	skb_reserve(skb, bp->rx_offset);
+ 	skb_put(skb, offset_and_len & 0xffff);
+ 	return skb;
+@@ -1840,7 +1838,8 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		u8 *new_data;
+ 		dma_addr_t new_mapping;
+ 
+-		new_data = __bnxt_alloc_rx_frag(bp, &new_mapping, GFP_ATOMIC);
++		new_data = __bnxt_alloc_rx_frag(bp, &new_mapping, rxr,
++						GFP_ATOMIC);
+ 		if (!new_data) {
+ 			bnxt_abort_tpa(cpr, idx, agg_bufs);
+ 			cpr->sw_stats->rx.rx_oom_discards += 1;
+@@ -1852,16 +1851,16 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 		tpa_info->mapping = new_mapping;
+ 
+ 		skb = napi_build_skb(data, bp->rx_buf_size);
+-		dma_unmap_single_attrs(&bp->pdev->dev, mapping,
+-				       bp->rx_buf_use_size, bp->rx_dir,
+-				       DMA_ATTR_WEAK_ORDERING);
++		dma_sync_single_for_cpu(&bp->pdev->dev, mapping,
++					bp->rx_buf_use_size, bp->rx_dir);
+ 
+ 		if (!skb) {
+-			skb_free_frag(data);
++			page_pool_free_va(rxr->head_pool, data, true);
+ 			bnxt_abort_tpa(cpr, idx, agg_bufs);
+ 			cpr->sw_stats->rx.rx_oom_discards += 1;
+ 			return NULL;
+ 		}
++		skb_mark_for_recycle(skb);
+ 		skb_reserve(skb, bp->rx_offset);
+ 		skb_put(skb, len);
+ 	}
+@@ -3325,28 +3324,22 @@ static void bnxt_free_tx_skbs(struct bnxt *bp)
+ 
+ static void bnxt_free_one_rx_ring(struct bnxt *bp, struct bnxt_rx_ring_info *rxr)
+ {
+-	struct pci_dev *pdev = bp->pdev;
+ 	int i, max_idx;
+ 
+ 	max_idx = bp->rx_nr_pages * RX_DESC_CNT;
+ 
+ 	for (i = 0; i < max_idx; i++) {
+ 		struct bnxt_sw_rx_bd *rx_buf = &rxr->rx_buf_ring[i];
+-		dma_addr_t mapping = rx_buf->mapping;
+ 		void *data = rx_buf->data;
+ 
+ 		if (!data)
+ 			continue;
+ 
+ 		rx_buf->data = NULL;
+-		if (BNXT_RX_PAGE_MODE(bp)) {
++		if (BNXT_RX_PAGE_MODE(bp))
+ 			page_pool_recycle_direct(rxr->page_pool, data);
+-		} else {
+-			dma_unmap_single_attrs(&pdev->dev, mapping,
+-					       bp->rx_buf_use_size, bp->rx_dir,
+-					       DMA_ATTR_WEAK_ORDERING);
+-			skb_free_frag(data);
+-		}
++		else
++			page_pool_free_va(rxr->head_pool, data, true);
+ 	}
+ }
+ 
+@@ -3373,7 +3366,6 @@ static void bnxt_free_one_rx_agg_ring(struct bnxt *bp, struct bnxt_rx_ring_info
+ static void bnxt_free_one_rx_ring_skbs(struct bnxt *bp, int ring_nr)
+ {
+ 	struct bnxt_rx_ring_info *rxr = &bp->rx_ring[ring_nr];
+-	struct pci_dev *pdev = bp->pdev;
+ 	struct bnxt_tpa_idx_map *map;
+ 	int i;
+ 
+@@ -3387,13 +3379,8 @@ static void bnxt_free_one_rx_ring_skbs(struct bnxt *bp, int ring_nr)
+ 		if (!data)
+ 			continue;
+ 
+-		dma_unmap_single_attrs(&pdev->dev, tpa_info->mapping,
+-				       bp->rx_buf_use_size, bp->rx_dir,
+-				       DMA_ATTR_WEAK_ORDERING);
+-
+ 		tpa_info->data = NULL;
+-
+-		skb_free_frag(data);
++		page_pool_free_va(rxr->head_pool, data, false);
+ 	}
+ 
+ skip_rx_tpa_free:
+@@ -3609,7 +3596,9 @@ static void bnxt_free_rx_rings(struct bnxt *bp)
+ 			xdp_rxq_info_unreg(&rxr->xdp_rxq);
+ 
+ 		page_pool_destroy(rxr->page_pool);
+-		rxr->page_pool = NULL;
++		if (rxr->page_pool != rxr->head_pool)
++			page_pool_destroy(rxr->head_pool);
++		rxr->page_pool = rxr->head_pool = NULL;
+ 
+ 		kfree(rxr->rx_agg_bmap);
+ 		rxr->rx_agg_bmap = NULL;
+@@ -3627,6 +3616,7 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
+ 				   int numa_node)
+ {
+ 	struct page_pool_params pp = { 0 };
++	struct page_pool *pool;
+ 
+ 	pp.pool_size = bp->rx_agg_ring_size;
+ 	if (BNXT_RX_PAGE_MODE(bp))
+@@ -3639,14 +3629,25 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
+ 	pp.max_len = PAGE_SIZE;
+ 	pp.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
+ 
+-	rxr->page_pool = page_pool_create(&pp);
+-	if (IS_ERR(rxr->page_pool)) {
+-		int err = PTR_ERR(rxr->page_pool);
++	pool = page_pool_create(&pp);
++	if (IS_ERR(pool))
++		return PTR_ERR(pool);
++	rxr->page_pool = pool;
+ 
+-		rxr->page_pool = NULL;
+-		return err;
++	if (bnxt_separate_head_pool()) {
++		pp.pool_size = max(bp->rx_ring_size, 1024);
++		pool = page_pool_create(&pp);
++		if (IS_ERR(pool))
++			goto err_destroy_pp;
+ 	}
++	rxr->head_pool = pool;
 +
- 	bnapi = bp->tx_ring[bp->tx_ring_map[i]].bnapi;
- 	sw = bnapi->cp_ring.stats.sw_stats;
+ 	return 0;
++
++err_destroy_pp:
++	page_pool_destroy(rxr->page_pool);
++	rxr->page_pool = NULL;
++	return PTR_ERR(pool);
+ }
  
+ static int bnxt_alloc_rx_rings(struct bnxt *bp)
+@@ -4197,7 +4198,8 @@ static int bnxt_alloc_one_rx_ring(struct bnxt *bp, int ring_nr)
+ 		u8 *data;
+ 
+ 		for (i = 0; i < bp->max_tpa; i++) {
+-			data = __bnxt_alloc_rx_frag(bp, &mapping, GFP_KERNEL);
++			data = __bnxt_alloc_rx_frag(bp, &mapping, rxr,
++						    GFP_KERNEL);
+ 			if (!data)
+ 				return -ENOMEM;
+ 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index bee645f58d0bd..1758edcd1db42 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1108,6 +1108,7 @@ struct bnxt_rx_ring_info {
+ 	struct bnxt_ring_struct	rx_agg_ring_struct;
+ 	struct xdp_rxq_info	xdp_rxq;
+ 	struct page_pool	*page_pool;
++	struct page_pool	*head_pool;
+ };
+ 
+ struct bnxt_rx_sw_stats {
 -- 
 2.39.5
 
