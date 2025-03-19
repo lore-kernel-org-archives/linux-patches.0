@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD7320AF67;
-	Wed, 19 Mar 2025 14:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1A0221F2E;
+	Wed, 19 Mar 2025 14:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395248; cv=none; b=i96xqP7On7m2oQtLaiYCFR8Nz5MUnMnEMf6nAQigBrVjV8sFI1OlnRr8k5xWnWDqfwj7DxssWgvZHl7JIpFDyo+LsS2++vqFaCUSWaRWsEKx3rGwc9N4qhE3LYzsgzubD+vUYx1IQlzrmWWd00Mk6xGd/JECiMAd5JjNQ6XvVIU=
+	t=1742395249; cv=none; b=oz+rg5NbauJJy2WfMsQXM1/4AegXCnzpLAbsfvJhfvk56k7XEPPT25z8Jn5axiArNSTMEogyrbqX0QlMci9Im7fDWK7JmuyO5merYLCsBVQ1Zapw2kFYxZt6WQznl1+PMLdqPRPYoKBI33D2Y1G4DvbFZKO98qbOYEHoKTrmWPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395248; c=relaxed/simple;
-	bh=htYRCph1yTMM2kbjwLDJbXY8t2GXmlfhRykAzF3C7IA=;
+	s=arc-20240116; t=1742395249; c=relaxed/simple;
+	bh=1vAWMRmg3gyFxi2tHvUbWlCQsLLfYAiDbvmvof9/Pqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlIn4PSgjixApW7SbXWvUEe+VmIzSFuLHx6bFkaOtHXl136fzWOUViOZBoyG81ie8H0BBzEWitgwSN2mO6Br0vAieFtRx1u8WculAcGOBTyGgOP0RK1spBTSS57vOhCc0h1hKVkht4Z0S/0MmszDe8UH0/lUmsrDXQq0mBSPzE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNPy5Z9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUTD/B5g7Fo78MnMV815oiLHBczHqoov0E1SG9KfdtMiEBNplumxijPFwei3zXwTU1rvxaF4p43Jx9Ie7wpTzygJQt6kYKz/5MSAuPv3BwOEdTRAaGFgTrEDK65yLeMu5SCCWhmv5oHSzeDW9n00+BNbqr5jrgUkmSeJ/uGVK/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSALsLz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNPy5Z9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE576C4CEE8;
-	Wed, 19 Mar 2025 14:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSALsLz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E678C4CEE8;
+	Wed, 19 Mar 2025 14:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395248;
-	bh=htYRCph1yTMM2kbjwLDJbXY8t2GXmlfhRykAzF3C7IA=;
+	s=korg; t=1742395249;
+	bh=1vAWMRmg3gyFxi2tHvUbWlCQsLLfYAiDbvmvof9/Pqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNPy5Z9Ss1od7WVjqftKt7RvwMdOIpfzhGaszS8slhwP1JNB3Ver6TMPuxqmW67XY
-	 q54BgX+p1MR9T8RbSgqLsHW0kwT+XsoQiYQXzq0sVyCrQAT6S9MOfjfrkymuLG6SOz
-	 uNDHVpHbUfRHIGpOO14yTAntPbokwFWlsk9t7e2g=
+	b=BSALsLz92s4u3IrRwRAIW9zHB1OvtSzYHw0neZ4eAo4DIVEki4vlyAV3BZlBGyrjW
+	 tmWTnPPmEXiZh262QxEM/3R74AWSq7PNdwnZp56Li/Chwn1KOEdAOtFKrojNqvOUoK
+	 oJ4NP4cnheu2ztk/bYwFQ+wjJ5B4WxpxcXO9shPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Varada Pavani <v.pavani@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.6 129/166] clk: samsung: update PLL locktime for PLL142XX used on FSD platform
-Date: Wed, 19 Mar 2025 07:31:40 -0700
-Message-ID: <20250319143023.508785062@linuxfoundation.org>
+	Thomas Mizrahi <thomasmizra@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 130/166] ASoC: amd: yc: Support mic on another Lenovo ThinkPad E16 Gen 2 model
+Date: Wed, 19 Mar 2025 07:31:41 -0700
+Message-ID: <20250319143023.534308114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -50,45 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varada Pavani <v.pavani@samsung.com>
+From: Thomas Mizrahi <thomasmizra@gmail.com>
 
-commit 53517a70873c7a91675f7244768aad5006cc45de upstream.
+commit 0704a15b930cf97073ce091a0cd7ad32f2304329 upstream.
 
-Currently PLL142XX locktime is 270. As per spec, it should be 150. Hence
-update PLL142XX controller locktime to 150.
+The internal microphone on the Lenovo ThinkPad E16 model requires a
+quirk entry to work properly. This was fixed in a previous patch (linked
+below), but depending on the specific variant of the model, the product
+name may be "21M5" or "21M6".
 
+The following patch fixed this issue for the 21M5 variant:
+  https://lore.kernel.org/all/20240725065442.9293-1-tiwai@suse.de/
+
+This patch adds support for the microphone on the 21M6 variant.
+
+Link: https://github.com/ramaureirac/thinkpad-e14-linux/issues/31
 Cc: stable@vger.kernel.org
-Fixes: 4f346005aaed ("clk: samsung: fsd: Add initial clock support")
-Signed-off-by: Varada Pavani <v.pavani@samsung.com>
-Link: https://lore.kernel.org/r/20250225131918.50925-3-v.pavani@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Thomas Mizrahi <thomasmizra@gmail.com>
+Link: https://patch.msgid.link/20250308041303.198765-1-thomasmizra@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-pll.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/clk/samsung/clk-pll.c
-+++ b/drivers/clk/samsung/clk-pll.c
-@@ -206,6 +206,7 @@ static const struct clk_ops samsung_pll3
-  */
- /* Maximum lock time can be 270 * PDIV cycles */
- #define PLL35XX_LOCK_FACTOR	(270)
-+#define PLL142XX_LOCK_FACTOR	(150)
- 
- #define PLL35XX_MDIV_MASK       (0x3FF)
- #define PLL35XX_PDIV_MASK       (0x3F)
-@@ -272,7 +273,11 @@ static int samsung_pll35xx_set_rate(stru
- 	}
- 
- 	/* Set PLL lock time. */
--	writel_relaxed(rate->pdiv * PLL35XX_LOCK_FACTOR,
-+	if (pll->type == pll_142xx)
-+		writel_relaxed(rate->pdiv * PLL142XX_LOCK_FACTOR,
-+			pll->lock_reg);
-+	else
-+		writel_relaxed(rate->pdiv * PLL35XX_LOCK_FACTOR,
- 			pll->lock_reg);
- 
- 	/* Change PLL PMS values */
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -252,6 +252,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M6"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
+ 		}
+ 	},
 
 
