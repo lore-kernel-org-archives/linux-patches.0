@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9671EF38C;
-	Wed, 19 Mar 2025 14:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C941DE4E0;
+	Wed, 19 Mar 2025 14:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395149; cv=none; b=u2RgGmls50xyU4w5mzxwP2ukl1r4143C3L2xBC4g2+whmd1EJ/OdW8exx0ucSfaOM2jbAYErrFKMSrnsOeQ2jdnQRS6HWUTC+on4qTn5pHmhyrk7oipo7CR3v6yWrfF9qUj/VJ9jEdE24mst0NnRF8xpbJWoNIVLkTnnPzouR6Y=
+	t=1742395150; cv=none; b=fUIsw41yEQGO9SG+UEP376LBtuunRebw15Elpi29KbtsN9SFYf22qluPjbhkg255UKqjGzEguO6rZUzh/N6kiXPKS8XNU/LWhYBKDQbNJpWG8C73Ax9MGvLVa6BTLNEHpobHpw8hKcSWMZvBOtARRgrwYZXCeSpBGUgSLlZU+so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395149; c=relaxed/simple;
-	bh=TZghvX4NJFCEi3dhYhBsAq6he0WcIq0NRaEcgerOo+A=;
+	s=arc-20240116; t=1742395150; c=relaxed/simple;
+	bh=+5KJTNngA54WDvNL6BCm5X24mb0y4f4xypr6Kt45yVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4fvwD1itmzJkza5Fp4B1MVK73qYFWhqFCJov5mhkHeH0woCmAopdWjBo9483mTeIve9bE5co/dwkQpNqAjjsQVtMOMn+no2W7tI4+Xrs2cQzdNRIBUCN6rUBIJVsxobZi7+pMasvw76Wx1nK3JkMx2Pr+jcU7+rmpjrxlySDGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydHBeJsC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjPb0Q1o3Xc00amtoJd3OkUdMPqF8nS3d0o6htXDxb1IqI7Plv2mUjT4ZJ43dvup+4mZ60lHi+1aUGzGcGrX/5ubXydq1/D1PjQGt6ptIGoboc2UnhasYmuuF9lZo5nPBtjeIqP1f+4neY2aCW36FpqQR7osC2MCIc9vq/LSgow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWuUdfZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydHBeJsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FCEC4CEE4;
-	Wed, 19 Mar 2025 14:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWuUdfZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45225C4CEE4;
+	Wed, 19 Mar 2025 14:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395149;
-	bh=TZghvX4NJFCEi3dhYhBsAq6he0WcIq0NRaEcgerOo+A=;
+	s=korg; t=1742395150;
+	bh=+5KJTNngA54WDvNL6BCm5X24mb0y4f4xypr6Kt45yVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydHBeJsCO/jCOmDRngDmsthsS4UaHW648EakwK7X4fe2KBWpzDWN6inH5S+jJxYEd
-	 mQEG5FyPbprLYeWO/TtBgPAzsYjXadwTH7ucuy+h5wSSPM3ifeMRW50wD0TDz0/CGA
-	 +4I69DSlVCsgNff0oPjdvqC7z61FsNg1yGlMOiSE=
+	b=wWuUdfZI8wb8/zUPs/lRDaVPdzF0YJIGkMZPEVEQVJFE4aTRAYiFTG2mKJjLAhH4w
+	 1omM9TlxxE83iUTYv3YD6zHFtf4wg6zZUMKtML0RV0RJVWQ/lArsJLMy6xViDjTXw8
+	 ZShsuxvOzbHxnsfv5dUbMY+n8yN9AvsmM1zozWvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ge Yang <yangge1116@126.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <21cnbao@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/231] mm/hugetlb: wait for hugetlb folios to be freed
-Date: Wed, 19 Mar 2025 07:31:56 -0700
-Message-ID: <20250319143032.346103891@linuxfoundation.org>
+Subject: [PATCH 6.12 224/231] smb3: add support for IAKerb
+Date: Wed, 19 Mar 2025 07:31:57 -0700
+Message-ID: <20250319143032.371155652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -56,122 +50,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ge Yang <yangge1116@126.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 67bab13307c83fb742c2556b06cdc39dbad27f07 ]
+[ Upstream commit eea5119fa5979c350af5783a8148eacdd4219715 ]
 
-Since the introduction of commit c77c0a8ac4c52 ("mm/hugetlb: defer freeing
-of huge pages if in non-task context"), which supports deferring the
-freeing of hugetlb pages, the allocation of contiguous memory through
-cma_alloc() may fail probabilistically.
+There are now more servers which advertise support for IAKerb (passthrough
+Kerberos authentication via proxy).  IAKerb is a public extension industry
+standard Kerberos protocol that allows a client without line-of-sight
+to a Domain Controller to authenticate. There can be cases where we
+would fail to mount if the server only advertises the OID for IAKerb
+in SPNEGO/GSSAPI.  Add code to allow us to still upcall to userspace
+in these cases to obtain the Kerberos ticket.
 
-In the CMA allocation process, if it is found that the CMA area is
-occupied by in-use hugetlb folios, these in-use hugetlb folios need to be
-migrated to another location.  When there are no available hugetlb folios
-in the free hugetlb pool during the migration of in-use hugetlb folios,
-new folios are allocated from the buddy system.  A temporary state is set
-on the newly allocated folio.  Upon completion of the hugetlb folio
-migration, the temporary state is transferred from the new folios to the
-old folios.  Normally, when the old folios with the temporary state are
-freed, it is directly released back to the buddy system.  However, due to
-the deferred freeing of hugetlb pages, the PageBuddy() check fails,
-ultimately leading to the failure of cma_alloc().
-
-Here is a simplified call trace illustrating the process:
-cma_alloc()
-    ->__alloc_contig_migrate_range() // Migrate in-use hugetlb folios
-        ->unmap_and_move_huge_page()
-            ->folio_putback_hugetlb() // Free old folios
-    ->test_pages_isolated()
-        ->__test_page_isolated_in_pageblock()
-             ->PageBuddy(page) // Check if the page is in buddy
-
-To resolve this issue, we have implemented a function named
-wait_for_freed_hugetlb_folios().  This function ensures that the hugetlb
-folios are properly released back to the buddy system after their
-migration is completed.  By invoking wait_for_freed_hugetlb_folios()
-before calling PageBuddy(), we ensure that PageBuddy() will succeed.
-
-Link: https://lkml.kernel.org/r/1739936804-18199-1-git-send-email-yangge1116@126.com
-Fixes: c77c0a8ac4c5 ("mm/hugetlb: defer freeing of huge pages if in non-task context")
-Signed-off-by: Ge Yang <yangge1116@126.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <21cnbao@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 605b249ea967 ("smb: client: Fix match_session bug preventing session reuse")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h |  5 +++++
- mm/hugetlb.c            |  8 ++++++++
- mm/page_isolation.c     | 10 ++++++++++
- 3 files changed, 23 insertions(+)
+ fs/smb/client/asn1.c        | 2 ++
+ fs/smb/client/cifs_spnego.c | 4 +++-
+ fs/smb/client/cifsglob.h    | 4 ++++
+ fs/smb/client/sess.c        | 3 ++-
+ fs/smb/client/smb2pdu.c     | 2 +-
+ 5 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 25a7b13574c28..12f7a7b9c06e9 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -687,6 +687,7 @@ struct huge_bootmem_page {
+diff --git a/fs/smb/client/asn1.c b/fs/smb/client/asn1.c
+index b5724ef9f182f..214a44509e7b9 100644
+--- a/fs/smb/client/asn1.c
++++ b/fs/smb/client/asn1.c
+@@ -52,6 +52,8 @@ int cifs_neg_token_init_mech_type(void *context, size_t hdrlen,
+ 		server->sec_kerberos = true;
+ 	else if (oid == OID_ntlmssp)
+ 		server->sec_ntlmssp = true;
++	else if (oid == OID_IAKerb)
++		server->sec_iakerb = true;
+ 	else {
+ 		char buf[50];
+ 
+diff --git a/fs/smb/client/cifs_spnego.c b/fs/smb/client/cifs_spnego.c
+index af7849e5974ff..2ad067886ec3f 100644
+--- a/fs/smb/client/cifs_spnego.c
++++ b/fs/smb/client/cifs_spnego.c
+@@ -130,11 +130,13 @@ cifs_get_spnego_key(struct cifs_ses *sesInfo,
+ 
+ 	dp = description + strlen(description);
+ 
+-	/* for now, only sec=krb5 and sec=mskrb5 are valid */
++	/* for now, only sec=krb5 and sec=mskrb5 and iakerb are valid */
+ 	if (server->sec_kerberos)
+ 		sprintf(dp, ";sec=krb5");
+ 	else if (server->sec_mskerberos)
+ 		sprintf(dp, ";sec=mskrb5");
++	else if (server->sec_iakerb)
++		sprintf(dp, ";sec=iakerb");
+ 	else {
+ 		cifs_dbg(VFS, "unknown or missing server auth type, use krb5\n");
+ 		sprintf(dp, ";sec=krb5");
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index b630beb757a44..a8484af7a2fbc 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -151,6 +151,7 @@ enum securityEnum {
+ 	NTLMv2,			/* Legacy NTLM auth with NTLMv2 hash */
+ 	RawNTLMSSP,		/* NTLMSSP without SPNEGO, NTLMv2 hash */
+ 	Kerberos,		/* Kerberos via SPNEGO */
++	IAKerb,			/* Kerberos proxy */
  };
  
- int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list);
-+void wait_for_freed_hugetlb_folios(void);
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 				unsigned long addr, int avoid_reserve);
- struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
-@@ -1057,6 +1058,10 @@ static inline int isolate_or_dissolve_huge_page(struct page *page,
- 	return -ENOMEM;
- }
- 
-+static inline void wait_for_freed_hugetlb_folios(void)
-+{
-+}
-+
- static inline struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 					   unsigned long addr,
- 					   int avoid_reserve)
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 1e9aa6de4e21e..e28e820fdb775 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2955,6 +2955,14 @@ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list)
- 	return ret;
- }
- 
-+void wait_for_freed_hugetlb_folios(void)
-+{
-+	if (llist_empty(&hpage_freelist))
-+		return;
-+
-+	flush_work(&free_hpage_work);
-+}
-+
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 				    unsigned long addr, int avoid_reserve)
- {
-diff --git a/mm/page_isolation.c b/mm/page_isolation.c
-index 7e04047977cfe..6989c5ffd4741 100644
---- a/mm/page_isolation.c
-+++ b/mm/page_isolation.c
-@@ -611,6 +611,16 @@ int test_pages_isolated(unsigned long start_pfn, unsigned long end_pfn,
- 	struct zone *zone;
- 	int ret;
- 
-+	/*
-+	 * Due to the deferred freeing of hugetlb folios, the hugepage folios may
-+	 * not immediately release to the buddy system. This can cause PageBuddy()
-+	 * to fail in __test_page_isolated_in_pageblock(). To ensure that the
-+	 * hugetlb folios are properly released back to the buddy system, we
-+	 * invoke the wait_for_freed_hugetlb_folios() function to wait for the
-+	 * release to complete.
-+	 */
-+	wait_for_freed_hugetlb_folios();
-+
- 	/*
- 	 * Note: pageblock_nr_pages != MAX_PAGE_ORDER. Then, chunks of free
- 	 * pages are not aligned to pageblock_nr_pages.
+ enum cifs_reparse_type {
+@@ -743,6 +744,7 @@ struct TCP_Server_Info {
+ 	bool	sec_kerberosu2u;	/* supports U2U Kerberos */
+ 	bool	sec_kerberos;		/* supports plain Kerberos */
+ 	bool	sec_mskerberos;		/* supports legacy MS Kerberos */
++	bool	sec_iakerb;		/* supports pass-through auth for Kerberos (krb5 proxy) */
+ 	bool	large_buf;		/* is current buffer large? */
+ 	/* use SMBD connection instead of socket */
+ 	bool	rdma;
+@@ -2115,6 +2117,8 @@ static inline char *get_security_type_str(enum securityEnum sectype)
+ 		return "Kerberos";
+ 	case NTLMv2:
+ 		return "NTLMv2";
++	case IAKerb:
++		return "IAKerb";
+ 	default:
+ 		return "Unknown";
+ 	}
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index c88e9657f47a8..95e14977baeab 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -1263,12 +1263,13 @@ cifs_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
+ 		switch (requested) {
+ 		case Kerberos:
+ 		case RawNTLMSSP:
++		case IAKerb:
+ 			return requested;
+ 		case Unspecified:
+ 			if (server->sec_ntlmssp &&
+ 			    (global_secflags & CIFSSEC_MAY_NTLMSSP))
+ 				return RawNTLMSSP;
+-			if ((server->sec_kerberos || server->sec_mskerberos) &&
++			if ((server->sec_kerberos || server->sec_mskerberos || server->sec_iakerb) &&
+ 			    (global_secflags & CIFSSEC_MAY_KRB5))
+ 				return Kerberos;
+ 			fallthrough;
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 89a9b8ffe9d92..75b13175a2e78 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1435,7 +1435,7 @@ smb2_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
+ 		if (server->sec_ntlmssp &&
+ 			(global_secflags & CIFSSEC_MAY_NTLMSSP))
+ 			return RawNTLMSSP;
+-		if ((server->sec_kerberos || server->sec_mskerberos) &&
++		if ((server->sec_kerberos || server->sec_mskerberos || server->sec_iakerb) &&
+ 			(global_secflags & CIFSSEC_MAY_KRB5))
+ 			return Kerberos;
+ 		fallthrough;
 -- 
 2.39.5
 
