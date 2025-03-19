@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DB41DF267;
-	Wed, 19 Mar 2025 14:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6F41C5D4D;
+	Wed, 19 Mar 2025 14:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394877; cv=none; b=URdRLDAHGId2vZqU9Op6cP4otrzciKGT3RZ0ulsi9iJVmdSDIQ2wgqp0LPJ3G84/Q7GFt7oWxnPGnb2BvEnnA1k0TA9w3oPfQYtbsEjnTCAzyJuEoCKVmwwncKX+RCrbYTSUyUYtIn+jRdUHVUMdVa8r3Hdh2aspwzn9QLxFiog=
+	t=1742394878; cv=none; b=fXqgdC/d48gVtqvCNHl2YVum4y0LowWgtNLfm+pbclmoBVtqSEY9OY5p75reEQmkaRi9VrFo4DcQcew9RO2cwmPQPwgMsgdjLPoo7qFksT8UXqt6kDEEZZrAItjYPtev7mNIww9zYFPBgZ5AcsHaRJX0DuAy9aHS31a3MF9secU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394877; c=relaxed/simple;
-	bh=vZyfbP6iYVzRQJXcF+GYRGMBgeAY1gGAD3UmOKs4s0s=;
+	s=arc-20240116; t=1742394878; c=relaxed/simple;
+	bh=mmYgaWc0H85fCqYKw/EgFTtn8PpYZyBSfCGMfIjTb6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bI/kmPjZsvMP1QlbdomI0pBsCcEmdria2lBLSyJIscXJbmZOjrvrUcu/P7X+BPHQveuCoTRVQRzXXVCfrmrFqvxE0R1rhZdz40FmorGO2PU4YrP889TVTXUUSa42pMNaPAfuRcED5xSq+aqhLadhfciXhQ7fn4wlTULKDy5Sn9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtLZBYvk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfG6mLNef1Ld4kdMzhsKF1aBpshxJm+Jd22zy7tjzxvcEqx1qcIftUPaDLvqKzUFga1x2yF9bfi7UbbX/edpMJadoYBLRFtxIdogFuTzoOhMhS0diUubxsebvVxgyO2Lu04vwVTbpWajtlKGlKluBIoQnCwv7IuJc8WvrhZ3m20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff5bqo2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtLZBYvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8DFC4CEE8;
-	Wed, 19 Mar 2025 14:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff5bqo2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420E8C4CEE4;
+	Wed, 19 Mar 2025 14:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394877;
-	bh=vZyfbP6iYVzRQJXcF+GYRGMBgeAY1gGAD3UmOKs4s0s=;
+	s=korg; t=1742394878;
+	bh=mmYgaWc0H85fCqYKw/EgFTtn8PpYZyBSfCGMfIjTb6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtLZBYvk3jb00jFMQEoJ3mOfugOTfPR384RHueWHZ6kSLy0bbxa6USgvomZjAbveg
-	 cnOknDmoIM+Fou1FOXvFsTeFBlXa3hwtRV2Nm6CM/5RuZAywh/nIABEIFPKFCg49gv
-	 3NZfdc6eVikjHHWgfE1n/nQPZVywcGxw399I77M4=
+	b=ff5bqo2DKFlIQN1RcFfHdviJJ/YSgMrGsPEW2zNy8rYVf5hSmNHIhMcXcVe5F/40L
+	 8mUB+O4jIYMOnNDq4kP+xLMwwICJypztRaI4dPBMwTFENSFD9bNXDJkNcX3JTWTVAv
+	 kDijguWkOSP2TvZCW7TBa0GfOqF7KZmeXul2tfGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Ihor Solodrai <ihor.solodrai@pm.me>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 076/241] sched_ext: selftests/dsp_local_on: Fix sporadic failures
-Date: Wed, 19 Mar 2025 07:29:06 -0700
-Message-ID: <20250319143029.609053139@linuxfoundation.org>
+Subject: [PATCH 6.13 077/241] HID: intel-ish-hid: fix the length of MNG_SYNC_FW_CLOCK in doorbell
+Date: Wed, 19 Mar 2025 07:29:07 -0700
+Message-ID: <20250319143029.636432860@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,44 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit e9fe182772dcb2630964724fd93e9c90b68ea0fd ]
+[ Upstream commit 4b54ae69197b9f416baa0fceadff7e89075f8454 ]
 
-dsp_local_on has several incorrect assumptions, one of which is that
-p->nr_cpus_allowed always tracks p->cpus_ptr. This is not true when a task
-is scheduled out while migration is disabled - p->cpus_ptr is temporarily
-overridden to the previous CPU while p->nr_cpus_allowed remains unchanged.
+The timestamps in the Firmware log and HID sensor samples are incorrect.
+They show 1970-01-01 because the current IPC driver only uses the first
+8 bytes of bootup time when synchronizing time with the firmware. The
+firmware converts the bootup time to UTC time, which results in the
+display of 1970-01-01.
 
-This led to sporadic test faliures when dsp_local_on_dispatch() tries to put
-a migration disabled task to a different CPU. Fix it by keeping the previous
-CPU when migration is disabled.
+In write_ipc_from_queue(), when sending the MNG_SYNC_FW_CLOCK message,
+the clock is updated according to the definition of ipc_time_update_msg.
+However, in _ish_sync_fw_clock(), the message length is specified as the
+size of uint64_t when building the doorbell. As a result, the firmware
+only receives the first 8 bytes of struct ipc_time_update_msg.
+This patch corrects the length in the doorbell to ensure the entire
+ipc_time_update_msg is sent, fixing the timestamp issue.
 
-There are SCX schedulers that make use of p->nr_cpus_allowed. They should
-also implement explicit handling for p->migration_disabled.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Ihor Solodrai <ihor.solodrai@pm.me>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Changwoo Min <changwoo@igalia.com>
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sched_ext/dsp_local_on.bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/intel-ish-hid/ipc/ipc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-index fbda6bf546712..758b479bd1ee1 100644
---- a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-+++ b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-@@ -43,7 +43,7 @@ void BPF_STRUCT_OPS(dsp_local_on_dispatch, s32 cpu, struct task_struct *prev)
- 	if (!p)
+diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
+index 3cd53fc80634a..cb956a8c386cb 100644
+--- a/drivers/hid/intel-ish-hid/ipc/ipc.c
++++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
+@@ -578,14 +578,14 @@ static void fw_reset_work_fn(struct work_struct *work)
+ static void _ish_sync_fw_clock(struct ishtp_device *dev)
+ {
+ 	static unsigned long	prev_sync;
+-	uint64_t	usec;
++	struct ipc_time_update_msg time = {};
+ 
+ 	if (prev_sync && time_before(jiffies, prev_sync + 20 * HZ))
  		return;
  
--	if (p->nr_cpus_allowed == nr_cpus)
-+	if (p->nr_cpus_allowed == nr_cpus && !p->migration_disabled)
- 		target = bpf_get_prandom_u32() % nr_cpus;
- 	else
- 		target = scx_bpf_task_cpu(p);
+ 	prev_sync = jiffies;
+-	usec = ktime_to_us(ktime_get_boottime());
+-	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &usec, sizeof(uint64_t));
++	/* The fields of time would be updated while sending message */
++	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &time, sizeof(time));
+ }
+ 
+ /**
 -- 
 2.39.5
 
