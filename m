@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB0A1C4609;
-	Wed, 19 Mar 2025 14:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D2C1C4609;
+	Wed, 19 Mar 2025 14:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394964; cv=none; b=Jx/ihooEHFttZmdg+B94kcytvXFmLTNaflCYtdmLWBHAr7JVe8qS7ixcYUyCM+Ckr0A5X31oSPyyu08cxFMj3FEf2zLdN+Hu0Lno7E1W4OycA/9sxAqQR6rG8+j20ul1btFQHWZJGOZJWUWCi3s8rS1gUhqvlMw29NssMKoaJb0=
+	t=1742394965; cv=none; b=DJAyOMV1wioPR9o3Z+MmnWep7Kx7gwfRkCPhW9a6Wt2/1TjBpRofH7spDI0oUT7QTHC4tBOc+7tPkeoQpmKDSwG5sf36pufsU4MhRX6yDZGPsuLtQfMcHMb0gE9poZnzdP/ueybx6l06F00uPwndILBz/0ZNOjQ2t6qHkUuI6As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394964; c=relaxed/simple;
-	bh=+pOQRdiq6s7Dfw/FIiEBJctdaJo2jIKHzUa/WHQATmQ=;
+	s=arc-20240116; t=1742394965; c=relaxed/simple;
+	bh=UNtmFUgfxRdl4lrgGRFdEXvx1jc62A3BoeVho7rL8Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj2B1NznaKtq3rIfjbbwIwwlKSmxq7AZ5elpAJGzBXxl05vvnEfbygJDCdqnur1+lSUgVgMgsV8WaE7psw0g8ctbhtCqTfeA99lAhm02CEoEL6s+wXMvlfwuz+hnznPg2ouzTZ0EVQ+/aM9IfGVzGOjYMZWoA7vgvzLK3YWuw7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGO76gw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OM0LyUOmwanjo81U+uC3LmXMIsp8GEMDMBFyhdMeJLQRoBDgEWebLF4MeGGKeUVIVyoozg6mxf6dinncvkKm1nlr0gkFClfAZIdxI4yrfY+j1t94lQN8kyExXOoqtV7FzV7LbFQAjH1qLujXvKB4FIMaT1u5H30N3wKIC09rctc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIFBiQPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGO76gw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231E7C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIFBiQPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCADC4CEE4;
 	Wed, 19 Mar 2025 14:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394964;
-	bh=+pOQRdiq6s7Dfw/FIiEBJctdaJo2jIKHzUa/WHQATmQ=;
+	bh=UNtmFUgfxRdl4lrgGRFdEXvx1jc62A3BoeVho7rL8Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGO76gw0f7DYTdwf6iHipHhyuECLWwtCemaNPbuNHvoQwrSVIYtadnaTGe0n/CU12
-	 yiop0ssjlAO1/QxxFsI4+D7a5NPXhfihLJoxO/2CByso3t9Zrl0I5C+SFbJxLka2TU
-	 A5cWNCq3zUWzyWrVqBW0/ySOXPCGAFAgAWHkG9T0=
+	b=AIFBiQPSJs1mPZ9fdVmMut+rCf2bXIPbRwOo2wJunHMrJ46V7qgV130ZMsUB322IU
+	 BCnH2ki2QVEf+JuuRXfQRGaaAf9XwKnEZOFxFmZONTNeLjhvkvtiRn65aZZtmJ4AP2
+	 fq1DiG1Q9DWxjLj6FESluOO1jnL8IIejGbSkvmsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Antheas Kapenekakis <lkml@antheas.dev>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.13 155/241] Input: xpad - add support for ZOTAC Gaming Zone
-Date: Wed, 19 Mar 2025 07:30:25 -0700
-Message-ID: <20250319143031.558208645@linuxfoundation.org>
+Subject: [PATCH 6.13 156/241] Input: xpad - add support for TECNO Pocket Go
+Date: Wed, 19 Mar 2025 07:30:26 -0700
+Message-ID: <20250319143031.584266065@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,15 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 709329c48214ad2acf12eed1b5c0eb798e40a64c upstream.
+commit 95a54a96f657fd069d2a9922b6c2d293a72a001f upstream.
 
-ZOTAC Gaming Zone is ZOTAC's 2024 handheld release. As it is common
-with these handhelds, it uses a hybrid USB device with an xpad
-endpoint, a keyboard endpoint, and a vendor-specific endpoint for
-RGB control et al.
+TECNO Pocket Go is a kickstarter handheld by manufacturer TECNO Mobile.
+It poses a unique feature: it does not have a display. Instead, the
+handheld is essentially a pc in a controller. As customary, it has an
+xpad endpoint, a keyboard endpoint, and a vendor endpoint for its
+vendor software.
 
 Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://lore.kernel.org/r/20250222170010.188761-2-lkml@antheas.dev
+Link: https://lore.kernel.org/r/20250222170010.188761-3-lkml@antheas.dev
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -70,21 +71,21 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -349,6 +349,7 @@ static const struct xpad_device {
- 	{ 0x1bad, 0xfa01, "MadCatz GamePad", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0xfd00, "Razer Onza TE", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0xfd01, "Razer Onza", 0, XTYPE_XBOX360 },
-+	{ 0x1ee9, 0x1590, "ZOTAC Gaming Zone", 0, XTYPE_XBOX360 },
- 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
- 	{ 0x20d6, 0x281f, "PowerA Wired Controller For Xbox 360", 0, XTYPE_XBOX360 },
-@@ -538,6 +539,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* QH Electronics */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
-+	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
- 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
- 	XPAD_XBOXONE_VENDOR(0x20d6),		/* PowerA controllers */
- 	XPAD_XBOX360_VENDOR(0x2345),		/* Machenike Controllers */
+@@ -382,6 +382,7 @@ static const struct xpad_device {
+ 	{ 0x2563, 0x058d, "OneXPlayer Gamepad", 0, XTYPE_XBOX360 },
+ 	{ 0x294b, 0x3303, "Snakebyte GAMEPAD BASE X", 0, XTYPE_XBOXONE },
+ 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
++	{ 0x2993, 0x2001, "TECNO Pocket Go", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
+@@ -548,6 +549,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x2563),		/* OneXPlayer Gamepad */
+ 	XPAD_XBOX360_VENDOR(0x260d),		/* Dareu H101 */
+ 	XPAD_XBOXONE_VENDOR(0x294b),		/* Snakebyte */
++	XPAD_XBOX360_VENDOR(0x2993),		/* TECNO Mobile */
+ 	XPAD_XBOX360_VENDOR(0x2c22),		/* Qanba Controllers */
+ 	XPAD_XBOX360_VENDOR(0x2dc8),		/* 8BitDo Controllers */
+ 	XPAD_XBOXONE_VENDOR(0x2dc8),		/* 8BitDo Controllers */
 
 
