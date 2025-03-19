@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F131FCCF2;
-	Wed, 19 Mar 2025 14:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB741DDA36;
+	Wed, 19 Mar 2025 14:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394979; cv=none; b=Rwc2LYDOzV7r6kLiitAnDuLQ4xn2Tz7mbmU1oDGX8RWRhoRItkE2u2Ndb8eq7hhX4Hfb1zuwkRjV/K9dFZGO8GyIgwy8KHg9x+QyyFZ1N8pAnCJAH+Yf4dFxNRP5oLy5GQb1uxmvVuMF1rvgEuffz6B2vHeWu00yGarb0onM74E=
+	t=1742394980; cv=none; b=aEWguskkb3HuYwa+ZxomN2HWdNc6RIA9uJB5R42J2eQhd8dJi+obTlvgmURd9pePGiYTNJGC2/d/JO1iuCVRjn8qIsvn1iIvShkOKPfqlmQdP+5AP6I5YXkTIykobmRpmeahn5KDWeTQpFY3dXv2o9XRFv6VV8CmzavepJjXTqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394979; c=relaxed/simple;
-	bh=cisNbSetQLtzeZC1197lOJrkVZQBtIQaqusx5xwMSHQ=;
+	s=arc-20240116; t=1742394980; c=relaxed/simple;
+	bh=TM9RzQBsv/Cz2xixmjmfE+uAknx1jxYerQAfONB90II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AV/sE2nAljrAJT64tpQNANj3TjXOBNbOYNZWLdsFj5uVrBCQN+SNDMLI2Bq/DNCwFlvpjMQ/okQ5NMQNW/lBgkjWDn2VhiKaMTnUobM35AKgCqhICI7D1t1wKH13ELEcNw0Ly1QzW/mK+juyF9c55y/2lKm4yV+4aLbNajWiTCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hk72CllN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HALKA2RizsPoONLtyDAPJz9R6mG0lIdcwdX6hXkkM3sdfs3c0bxOxtTuJfJaYR7tB6QY3VMDCqUz+8nCLhQowK4V/iprZCDRXKqUD5CAwinCzLXkL/tWTmC3vXLFX2HZC7LyW+TmPPDvsaOW4O4BhJC2QwjV7kQj5Vkju0O+qtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YafZKPdX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk72CllN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C801C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YafZKPdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0D1C4CEE4;
 	Wed, 19 Mar 2025 14:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394979;
-	bh=cisNbSetQLtzeZC1197lOJrkVZQBtIQaqusx5xwMSHQ=;
+	s=korg; t=1742394980;
+	bh=TM9RzQBsv/Cz2xixmjmfE+uAknx1jxYerQAfONB90II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hk72CllNyhsK0GLQLrnfmt8zWL61cvrsPngp/84a/FmLSI0RHs6xFh82NmDc0Bvfn
-	 AqwpZ3wsL4BGkVZf8P27aNauEgLbpXIbzTp58WaZ+5AtXovcYfL/3F8cl8B1VELGqz
-	 qya4rinWIO1eaZLS0vX3UripQAq2dcuewu58j0L8=
+	b=YafZKPdXosXo1VVayHMv+U6DYNJMyE2vgr24lLzewMAfcZnF1wn+/R4QsKLsVwmsb
+	 eSnf6JyK55SVh8Hlz5Bp+OD5pyIXokhfKj7/miHYPm8hT7NR8ujNXR5ime3+bM7LBc
+	 LXYsB9Gajjp3jF6Do6f9//FfICqWzGS8ZvCcPMag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 217/241] ASoC: codecs: wm0010: Fix error handling path in wm0010_spi_probe()
-Date: Wed, 19 Mar 2025 07:31:27 -0700
-Message-ID: <20250319143033.118485519@linuxfoundation.org>
+Subject: [PATCH 6.13 218/241] drm/i915: Increase I915_PARAM_MMAP_GTT_VERSION version to indicate support for partial mmaps
+Date: Wed, 19 Mar 2025 07:31:28 -0700
+Message-ID: <20250319143033.140880796@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -46,63 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: José Roberto de Souza <jose.souza@intel.com>
 
-[ Upstream commit ed92bc5264c4357d4fca292c769ea9967cd3d3b6 ]
+[ Upstream commit a8045e46c508b70fe4b30cc020fd0a2b0709b2e5 ]
 
-Free some resources in the error handling path of the probe, as already
-done in the remove function.
+Commit 255fc1703e42 ("drm/i915/gem: Calculate object page offset for partial memory mapping")
+was the last patch of several patches fixing multiple partial mmaps.
+But without a bump in I915_PARAM_MMAP_GTT_VERSION there is no clean
+way for UMD to know if it can do multiple partial mmaps.
 
-Fixes: e3523e01869d ("ASoC: wm0010: Add initial wm0010 DSP driver")
-Fixes: fd8b96574456 ("ASoC: wm0010: Clear IRQ as wake source and include missing header")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/5139ba1ab8c4c157ce04e56096a0f54a1683195c.1741549792.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 255fc1703e42 ("drm/i915/gem: Calculate object page offset for partial memory mapping")
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250306210827.171147-1-jose.souza@intel.com
+(cherry picked from commit bfef148f3680e6b9d28e7fca46d9520f80c5e50e)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm0010.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_mman.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm0010.c b/sound/soc/codecs/wm0010.c
-index edd2cb185c42c..9e67fbfc2ccaf 100644
---- a/sound/soc/codecs/wm0010.c
-+++ b/sound/soc/codecs/wm0010.c
-@@ -920,7 +920,7 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 	if (ret) {
- 		dev_err(wm0010->dev, "Failed to set IRQ %d as wake source: %d\n",
- 			irq, ret);
--		return ret;
-+		goto free_irq;
- 	}
- 
- 	if (spi->max_speed_hz)
-@@ -932,9 +932,18 @@ static int wm0010_spi_probe(struct spi_device *spi)
- 				     &soc_component_dev_wm0010, wm0010_dai,
- 				     ARRAY_SIZE(wm0010_dai));
- 	if (ret < 0)
--		return ret;
-+		goto disable_irq_wake;
- 
- 	return 0;
-+
-+disable_irq_wake:
-+	irq_set_irq_wake(wm0010->irq, 0);
-+
-+free_irq:
-+	if (wm0010->irq)
-+		free_irq(wm0010->irq, wm0010);
-+
-+	return ret;
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+index 21274aa9bdddc..c3dabb8579605 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+@@ -164,6 +164,9 @@ static unsigned int tile_row_pages(const struct drm_i915_gem_object *obj)
+  * 4 - Support multiple fault handlers per object depending on object's
+  *     backing storage (a.k.a. MMAP_OFFSET).
+  *
++ * 5 - Support multiple partial mmaps(mmap part of BO + unmap a offset, multiple
++ *     times with different size and offset).
++ *
+  * Restrictions:
+  *
+  *  * snoopable objects cannot be accessed via the GTT. It can cause machine
+@@ -191,7 +194,7 @@ static unsigned int tile_row_pages(const struct drm_i915_gem_object *obj)
+  */
+ int i915_gem_mmap_gtt_version(void)
+ {
+-	return 4;
++	return 5;
  }
  
- static void wm0010_spi_remove(struct spi_device *spi)
+ static inline struct i915_gtt_view
 -- 
 2.39.5
 
