@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA5B20468F;
-	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAE01C8618;
+	Wed, 19 Mar 2025 14:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394985; cv=none; b=GyqXYTXPSppR621szeFu5q72oBCX/4MY3Ky5gkIeEK4JIVCeTOTRenN4zbLC9SMESZ+AGKAWKytgbBU6LNJ9LcoEtZ8FkbqVTfNrrUyN8gceWbSXps2y5aGtzpJBRCQCp0dUV0wbsY8+O035itgc/4Ycyh6BP5Qe76xQP/5EQfM=
+	t=1742394985; cv=none; b=VcyofTNe8/zlyBXV2x72/ndwMDKiujle9AUayg8TMSeX2nfci15r6pSkpAoCbyu/o/729WvybegkUDwBx3+G8PvHxfTjwkIM0lzA9jRPqqMjfwRQpt9lDh9Ui8c+QDT9f+KESRun6oaq3W+SI0E+JZDmKrZ8lAUYlbjMbCVUXRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394985; c=relaxed/simple;
-	bh=QtJkF/b54DUQq0aonzSGbQConOnqmTz+lAnluJ91hPQ=;
+	bh=dAkLYV+QPBfjl1tRRr28vGJ9TMrCVC/9mHEncv8wzkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDsaqRd9Rjv1nsKcSk0fw5C5yys4bWc41DKqnm+IlUBIl358SIXCZGzFcO3kH9BWoO/wWWrSy8kEri5sLGZun4fLKtbGQDrT2gXWAlLUL6OzwVQeMBgiasXe4H8QUVsfDHg69/1hBsWmqLANsvzoRLGDXMLqH4L9YlEodN9qY1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7uyZexK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UC8YUj9gpiMRFNQm9kouB490Ln2ZZL8VPvvggCqUzx3KQymxF1nQTIA1N9ZzadEYSwCiqGBZxXJDDUizbvMdEFVS+DijjpNc/xiUPblRohRwVk8mg51WdzXaE1M9oK6e9wmjO110TkMhBtFgZV54iDmGaqCFIdXlTOpbI8OT06k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11psIZaj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7uyZexK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B160BC4CEE8;
-	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11psIZaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F3FC4CEE8;
+	Wed, 19 Mar 2025 14:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394984;
-	bh=QtJkF/b54DUQq0aonzSGbQConOnqmTz+lAnluJ91hPQ=;
+	s=korg; t=1742394985;
+	bh=dAkLYV+QPBfjl1tRRr28vGJ9TMrCVC/9mHEncv8wzkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7uyZexKSnIScXz6YkALyeAWMhXCpY1gXMh314PY8qUpU0PRnAtXRrwkwmARH4qxj
-	 HZoTCmY5VAWOe/8fsSS5jEzUxcwhgPOF42/MhFgd0alHPfpQZMlbdqyrRviT6JUXSH
-	 N0GWi2+avVSPVE++M5uoZsjbUkbhIjqI+Kwcl6a4=
+	b=11psIZajDE5R7c1xQ99A6+XNgB5v4+09a+T4aoTYnWkoV1U3iy2rkmG2LLCVkxC+s
+	 vPWUfr0Y7E9DYoF30V+HwxpNg6NWaCfaqttfh/2oOR8CMXtKCRCiN4yQhcHL13MxN6
+	 JF47Dnr8u8a8MGPxmW24VBUujQu8XMWIgPAuFL1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Murad Masimov <m.masimov@mt-integration.ru>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 224/241] cifs: Fix integer overflow while processing acregmax mount option
-Date: Wed, 19 Mar 2025 07:31:34 -0700
-Message-ID: <20250319143033.289098363@linuxfoundation.org>
+Subject: [PATCH 6.13 225/241] cifs: Fix integer overflow while processing acdirmax mount option
+Date: Wed, 19 Mar 2025 07:31:35 -0700
+Message-ID: <20250319143033.313408929@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,15 +53,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 7489161b1852390b4413d57f2457cd40b34da6cc ]
+[ Upstream commit 5b29891f91dfb8758baf1e2217bef4b16b2b165b ]
 
-User-provided mount parameter acregmax of type u32 is intended to have
+User-provided mount parameter acdirmax of type u32 is intended to have
 an upper limit, but before it is validated, the value is converted from
 seconds to jiffies which can lead to an integer overflow.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 5780464614f6 ("cifs: Add new parameter "acregmax" for distinct file and directory metadata timeout")
+Fixes: 4c9f948142a5 ("cifs: Add new mount parameter "acdirmax" to allow caching directory metadata")
 Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -70,23 +70,23 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 2d307dd03fbc4..0fae0afa12626 100644
+index 0fae0afa12626..6d7091ddec16e 100644
 --- a/fs/smb/client/fs_context.c
 +++ b/fs/smb/client/fs_context.c
-@@ -1284,11 +1284,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 		}
- 		break;
- 	case Opt_acregmax:
--		ctx->acregmax = HZ * result.uint_32;
--		if (ctx->acregmax > CIFS_MAX_ACTIMEO) {
-+		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
- 			cifs_errorf(fc, "acregmax too large\n");
- 			goto cifs_parse_mount_err;
- 		}
-+		ctx->acregmax = HZ * result.uint_32;
+@@ -1291,11 +1291,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		ctx->acregmax = HZ * result.uint_32;
  		break;
  	case Opt_acdirmax:
- 		ctx->acdirmax = HZ * result.uint_32;
+-		ctx->acdirmax = HZ * result.uint_32;
+-		if (ctx->acdirmax > CIFS_MAX_ACTIMEO) {
++		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
+ 			cifs_errorf(fc, "acdirmax too large\n");
+ 			goto cifs_parse_mount_err;
+ 		}
++		ctx->acdirmax = HZ * result.uint_32;
+ 		break;
+ 	case Opt_actimeo:
+ 		if (HZ * result.uint_32 > CIFS_MAX_ACTIMEO) {
 -- 
 2.39.5
 
