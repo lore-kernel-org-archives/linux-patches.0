@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BFB1E5B97;
-	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BAB1DE2C6;
+	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395127; cv=none; b=tDXBo38sAzwivrXjDnxTaR4H9c7EbmUAkDVfaXBhdtFzicx5XjcYKxnkUNOxEb9TrjiAw6I/aLJphJMNt4bReqOHMo9XvPjR4mhgVtz7J4uuU4hb3Vr5CPlDf3yoWxxEDPvSQfQuJkUx9EwsZA4IQ+uawoNKw1t67OVKCABPcc0=
+	t=1742395127; cv=none; b=Cmd8FW2zIKKQ2+sJJQklbiS8HuQprf60YcoZX9IxIQWmihel986faZpYylwnB6+keTcNiMHAZr9tBPcV6tYxKgzsP7FT3ewEHUcXXXUjltX4840W2R3jBORJWd/v2SUBczvxoSkRSd6+Ga71cHjnov2jgScdHYaUg6cVzWOgrxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395127; c=relaxed/simple;
-	bh=YFBICstWxpffwNxwueTN4b5VogK/xkEWRnFFF7uJiwM=;
+	bh=D/WvpTSq751G9avZCR5jAl5xB9BwMyGa2wJI9qc1rg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lt9cAJuqB4oPh7zg5GdtCrdPfyEFMMBjH/eCkvFlbYLLFHAqzZ3UHs2SCICHxcSHpzRYSk5y6wlx43zEioDrA7IeHn+Gsnt/xoMN+bj/jgUhi2itW+rK+3f8kaV8JBeQNKNKcdDOa/P2T4CLd3AqbJI5/v32YpYx+i97eQ8TjFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxMEN5JV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/8ST4XAc1TQgAOr24wq9rbo/juPxWlVKwdHC2QgjbTeM3sfRo1fIBb9iISrlXhiO4oNIuAT/r28reFdAsttJF4p0Y/g/QSszsqZwK3ASU+wqtTwBJQvMporNjJL2uz6KpjFhys5vzREgFIRqTDGKungHaLe8CuUH3JRw/nmy0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJJwbsGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxMEN5JV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD4DC4CEE9;
-	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJJwbsGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7194C4CEE4;
+	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395127;
-	bh=YFBICstWxpffwNxwueTN4b5VogK/xkEWRnFFF7uJiwM=;
+	s=korg; t=1742395125;
+	bh=D/WvpTSq751G9avZCR5jAl5xB9BwMyGa2wJI9qc1rg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxMEN5JVhQJCBSbz7tpIY9x6FoioYv3hjihYnd7MIST35mOplQmEJhgiky3BW/zaE
-	 KDIsfPC9Lr/ijBe0C871thZ8rOnUh4qVo5zVuz8nxe04A82mDtxcb1a/ZODZkMG5ml
-	 pGtojeYf4wIQByyG4XPzseLCdkHhD/GE0fE1aP4E=
+	b=BJJwbsGuWM0KqxH/+LCtyqoDCTBxEgzFMLmz2FIwAdJfpMwyur8B2RfM4RTQMrp2+
+	 DOGyIBpnuaIhxa9Nb1142KR3/IdeG2owui4xfxXgT32/D3tR0D5e7QkkTLPPjohsmP
+	 vpjfDIaG5XybFi4rwlpEonFrpOzEOftxvKHi2rMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 190/231] dm-flakey: Fix memory corruption in optional corrupt_bio_byte feature
-Date: Wed, 19 Mar 2025 07:31:23 -0700
-Message-ID: <20250319143031.532089248@linuxfoundation.org>
+	Thomas Mizrahi <thomasmizra@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 188/231] ASoC: amd: yc: Support mic on another Lenovo ThinkPad E16 Gen 2 model
+Date: Wed, 19 Mar 2025 07:31:21 -0700
+Message-ID: <20250319143031.480653566@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -50,31 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Overstreet <kent.overstreet@linux.dev>
+From: Thomas Mizrahi <thomasmizra@gmail.com>
 
-commit 57e9417f69839cb10f7ffca684c38acd28ceb57b upstream.
+commit 0704a15b930cf97073ce091a0cd7ad32f2304329 upstream.
 
-Fix memory corruption due to incorrect parameter being passed to bio_init
+The internal microphone on the Lenovo ThinkPad E16 model requires a
+quirk entry to work properly. This was fixed in a previous patch (linked
+below), but depending on the specific variant of the model, the product
+name may be "21M5" or "21M6".
 
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org	# v6.5+
-Fixes: 1d9a94389853 ("dm flakey: clone pages on write bio before corrupting them")
+The following patch fixed this issue for the 21M5 variant:
+  https://lore.kernel.org/all/20240725065442.9293-1-tiwai@suse.de/
+
+This patch adds support for the microphone on the 21M6 variant.
+
+Link: https://github.com/ramaureirac/thinkpad-e14-linux/issues/31
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Mizrahi <thomasmizra@gmail.com>
+Link: https://patch.msgid.link/20250308041303.198765-1-thomasmizra@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-flakey.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/md/dm-flakey.c
-+++ b/drivers/md/dm-flakey.c
-@@ -426,7 +426,7 @@ static struct bio *clone_bio(struct dm_t
- 	if (!clone)
- 		return NULL;
- 
--	bio_init(clone, fc->dev->bdev, bio->bi_inline_vecs, nr_iovecs, bio->bi_opf);
-+	bio_init(clone, fc->dev->bdev, clone->bi_inline_vecs, nr_iovecs, bio->bi_opf);
- 
- 	clone->bi_iter.bi_sector = flakey_map_sector(ti, bio->bi_iter.bi_sector);
- 	clone->bi_private = bio;
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -252,6 +252,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M6"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
+ 		}
+ 	},
 
 
