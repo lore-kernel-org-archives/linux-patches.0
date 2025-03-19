@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9AA1CAA81;
-	Wed, 19 Mar 2025 14:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FEF20A5D3;
+	Wed, 19 Mar 2025 14:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395236; cv=none; b=Z4AIbgKW0mdBK05cj/qNOtXSI/41WzMXkcnO7kmNWg0dQMnQ8xOUl00aQmVsH2HuER+hWMYvC0lHgIZraYZXT0G+tYTONs1r2nJa2pRAA9+EtWeTuUY5tNId+7aZ63M+PDu6P2Hy4Ph6vBKPaR8+wp9IdGvmqfTjeTTmR6bIg0Y=
+	t=1742395237; cv=none; b=Z+H0Bjxp045GnG71klekj+At2PHgZRgZLQ0QwOy1baVBL95EzU6khP8HATEpD7CAj5qQGJFRChI+BEBQeFnq10npFX8Hctq56Kzfik9lh6T/+xYhpZPw74BhEKf8xVEu3e1Uxb6HvxW2ts/eVyb+BhycZfbxtyzoIVRZteeIrCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395236; c=relaxed/simple;
-	bh=F0UowwDkyxtpazBxWwIfZP2kf2JlCuOdy2qG5YP/4ik=;
+	s=arc-20240116; t=1742395237; c=relaxed/simple;
+	bh=6Gd4oHg2VT2EgqUKhDS79l5EywiyKarpZnSTHJxgkoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7PqXyq3hPtKhm+E1qJukBwkKula5zJoEeJIxNNxQ3Ad/mGUEHfzqlhEsGOI2r5nMe70OPhuqAx2JN8gO2jqPgxRPcaxCO4bxfaOtEj+QjMVsgVKcGFBVbsCko9Y/6jmw6CLIrJut2WUsaoif2xaJ+k15r/dqJTozpLz8AS64uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejzJm66E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHeZLzQvbu5tdG52bjo8gEXebYzftudR2i8Xu7MnxbW4PjmJQJtiGCUngApVfs/1/MJJZ722e1jOIQiIf8ZnpxFPjtZX3vhv8fc3EqGtGxpIMhsrivT7N92w2Y1YjED8BXDZpIts9AD6JLMuRry1dPm6fC/6XsijTUqgMJRx8JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCaP2W5d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejzJm66E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D188C4CEE4;
-	Wed, 19 Mar 2025 14:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCaP2W5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C969C4CEE4;
+	Wed, 19 Mar 2025 14:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395236;
-	bh=F0UowwDkyxtpazBxWwIfZP2kf2JlCuOdy2qG5YP/4ik=;
+	s=korg; t=1742395237;
+	bh=6Gd4oHg2VT2EgqUKhDS79l5EywiyKarpZnSTHJxgkoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejzJm66EQZk+4ohcJcqVW5LgEMMW+6RgwvswzxeOfs9BykQ3y6Jyt4HL/MejoYZwJ
-	 EvEDKzFVarh7nzMs45UvqwAa0/J2qR44sSmSi5j+83C+4MTe0gKiPENDotG47DR8/N
-	 /n6jPoTiftOnKmH05zd5ADlg0LB84lIfJ9iJ5WZk=
+	b=SCaP2W5dqyueAOvNvtUHfiNN1BHaKkUxNUZln1/joi4wQIFmRrGXiHCN7hkO9DKgB
+	 thPXcj/LN8rdn3XrzgT4E5UBQqxjaqw+H6H8iJDq+XCgkJ6fK/djtoeI7vJnNZrLAP
+	 FUvIGeY8baXpEwoyeXRoN7tqkknE5H2b6ZM3OWiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Antheas Kapenekakis <lkml@antheas.dev>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 109/166] Input: xpad - add support for TECNO Pocket Go
-Date: Wed, 19 Mar 2025 07:31:20 -0700
-Message-ID: <20250319143022.968564887@linuxfoundation.org>
+Subject: [PATCH 6.6 110/166] Input: xpad - rename QH controller to Legion Go S
+Date: Wed, 19 Mar 2025 07:31:21 -0700
+Message-ID: <20250319143022.996508372@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -52,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 95a54a96f657fd069d2a9922b6c2d293a72a001f upstream.
+commit 659a7614dd72e2835ac0b220c2fa68fabd8d1df9 upstream.
 
-TECNO Pocket Go is a kickstarter handheld by manufacturer TECNO Mobile.
-It poses a unique feature: it does not have a display. Instead, the
-handheld is essentially a pc in a controller. As customary, it has an
-xpad endpoint, a keyboard endpoint, and a vendor endpoint for its
-vendor software.
+The QH controller is actually the controller of the Legion Go S, with
+the manufacturer string wch.cn and product name Legion Go S in its
+USB descriptor. A cursory lookup of the VID reveals the same.
+
+Therefore, rename the xpad entries to match.
 
 Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://lore.kernel.org/r/20250222170010.188761-3-lkml@antheas.dev
+Link: https://lore.kernel.org/r/20250222170010.188761-4-lkml@antheas.dev
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/joystick/xpad.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -381,6 +381,7 @@ static const struct xpad_device {
- 	{ 0x2563, 0x058d, "OneXPlayer Gamepad", 0, XTYPE_XBOX360 },
- 	{ 0x294b, 0x3303, "Snakebyte GAMEPAD BASE X", 0, XTYPE_XBOXONE },
- 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
-+	{ 0x2993, 0x2001, "TECNO Pocket Go", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
- 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
-@@ -546,6 +547,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x2563),		/* OneXPlayer Gamepad */
- 	XPAD_XBOX360_VENDOR(0x260d),		/* Dareu H101 */
- 	XPAD_XBOXONE_VENDOR(0x294b),		/* Snakebyte */
-+	XPAD_XBOX360_VENDOR(0x2993),		/* TECNO Mobile */
- 	XPAD_XBOX360_VENDOR(0x2c22),		/* Qanba Controllers */
- 	XPAD_XBOX360_VENDOR(0x2dc8),		/* 8BitDo Controllers */
- 	XPAD_XBOXONE_VENDOR(0x2dc8),		/* 8BitDo Controllers */
+@@ -312,7 +312,7 @@ static const struct xpad_device {
+ 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+ 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
+-	{ 0x1a86, 0xe310, "QH Electronics Controller", 0, XTYPE_XBOX360 },
++	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0130, "Ion Drum Rocker", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+@@ -537,7 +537,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
+ 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
+ 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
+-	XPAD_XBOX360_VENDOR(0x1a86),		/* QH Electronics */
++	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x1ee9),		/* ZOTAC Technology Limited */
+ 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
 
 
