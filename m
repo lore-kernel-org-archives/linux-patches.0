@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF2B1C7013;
-	Wed, 19 Mar 2025 14:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B31C82F4;
+	Wed, 19 Mar 2025 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394864; cv=none; b=QQy6KCgCxa9gVh3cPF9dveBpgvhhwda+r0nZuRaiX9KWlSw1M36A8m3mCaunteaJ8cCdA++O2f5hY5zUK1/wa4/tNgxMOQ60E1cfLrGxIXIn9DYyZn72sfaYqkpGDSZzwBtW4qJsFyG1FcvyIY0ADT2CY57c7g+RnnPmc89Nd5w=
+	t=1742394865; cv=none; b=H4/Z3WNMKUp8JUZok74ZX4wJSWTlfg9WCBNjTcABZngJ4K+UGSa8FLtskxNZf/IKgnKNKSpORjRZUqiKfwoiGWjqvpsyWRW3DwTnMCGGeEodKh7NpqlzJeFBbQzbVCmY9uEV3o5u3pTYgGF8YxLTqQLcUWijejWvPYHK1CLlTNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394864; c=relaxed/simple;
-	bh=XKuNocVFsgddL+zS69tHYFmBXW6WVjhgHf88zCCkfDo=;
+	s=arc-20240116; t=1742394865; c=relaxed/simple;
+	bh=VrW6lo59zgyovGXjntg6XCKQ70n9Ufvgvg/UFYwS42k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkDt1RaBN77kdPD7HZPAemQT0aIhBWKmVWvYQ9HDe5zUwTAySR83rCKBnk6ty4lbKJ1sh9E4STBz7UpD4lCqRbWu+y6Cy38/1UdNLRVjCIgQsp5RjCZuKqkia9qGR0z0KQvtrkTwOMZDyh4BEDWkMT+MVoDm57hp6zynNMHGynw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoSxoj/k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQDxctZIicYTUPl7f0HfY9oiTHIQh+0LCa/PNtGIxA2FteHRoceJQZ29ewZVfSQL5sVDwvzzKsNvrn1sOvCJqBuLVQ4W4R60rA8PPcwrYymIaXy/ckwaUetAIpD/fSI9oUv3hQTzxinwnIXpK+Su0Kg9RAfARtnVJ7qn4Kp89LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5VRq1tD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoSxoj/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DFCC4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5VRq1tD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F4AC4CEE9;
 	Wed, 19 Mar 2025 14:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394864;
-	bh=XKuNocVFsgddL+zS69tHYFmBXW6WVjhgHf88zCCkfDo=;
+	s=korg; t=1742394865;
+	bh=VrW6lo59zgyovGXjntg6XCKQ70n9Ufvgvg/UFYwS42k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qoSxoj/kguCkAVqYETpenRCxb6l6OrjVQzNgVfxWm3jCL1017WCZk15fifIazrC1s
-	 JDSWamWqo1cdDXXQhJs2mb1UmJ2u4v6Qbo3mcTUzIClRxUGrhG1seS01cpSG1MDfwt
-	 AU2xIFSn6P/gN7ov8ETAr0NC4N29qigUg0+WtxDU=
+	b=l5VRq1tDTeoGRJdQUTzdWedHFIUk23604yZJo7dJfKQJboTvq8oVMZAPxLaIeTaC6
+	 mIipSHs/3DygIPZblGW95k0jBSTBbOmWbNl7dA3QNVdyHBJ5N6CoS3FHkCAxkCa1hn
+	 IV+zqrUiAOp47XgnOhsGQa+7Kvdd8znVteYNfbsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 055/241] net/mlx5e: Prevent bridge link show failure for non-eswitch-allowed devices
-Date: Wed, 19 Mar 2025 07:28:45 -0700
-Message-ID: <20250319143029.087180227@linuxfoundation.org>
+Subject: [PATCH 6.13 056/241] nvme-fc: go straight to connecting state when initializing
+Date: Wed, 19 Mar 2025 07:28:46 -0700
+Message-ID: <20250319143029.116304197@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -54,50 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit e92df790d07a8eea873efcb84776e7b71f81c7d5 ]
+[ Upstream commit d3d380eded7ee5fc2fc53b3b0e72365ded025c4a ]
 
-mlx5_eswitch_get_vepa returns -EPERM if the device lacks
-eswitch_manager capability, blocking mlx5e_bridge_getlink from
-retrieving VEPA mode. Since mlx5e_bridge_getlink implements
-ndo_bridge_getlink, returning -EPERM causes bridge link show to fail
-instead of skipping devices without this capability.
+The initial controller initialization mimiks the reconnect loop
+behavior by switching from NEW to RESETTING and then to CONNECTING.
 
-To avoid this, return -EOPNOTSUPP from mlx5e_bridge_getlink when
-mlx5_eswitch_get_vepa fails, ensuring the command continues processing
-other devices while ignoring those without the necessary capability.
+The transition from NEW to CONNECTING is a valid transition, so there is
+no point entering the RESETTING state. TCP and RDMA also transition
+directly to CONNECTING state.
 
-Fixes: 4b89251de024 ("net/mlx5: Support ndo bridge_setlink and getlink")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1741644104-97767-7-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/nvme/host/fc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index cb93f46eaa7c3..e02bb589104a5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5131,11 +5131,9 @@ static int mlx5e_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 	u8 mode, setting;
--	int err;
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 682234da2fabe..a458d939ab662 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3582,8 +3582,7 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+ 	list_add_tail(&ctrl->ctrl_list, &rport->ctrl_list);
+ 	spin_unlock_irqrestore(&rport->lock, flags);
  
--	err = mlx5_eswitch_get_vepa(mdev->priv.eswitch, &setting);
--	if (err)
--		return err;
-+	if (mlx5_eswitch_get_vepa(mdev->priv.eswitch, &setting))
-+		return -EOPNOTSUPP;
- 	mode = setting ? BRIDGE_MODE_VEPA : BRIDGE_MODE_VEB;
- 	return ndo_dflt_bridge_getlink(skb, pid, seq, dev,
- 				       mode,
+-	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_RESETTING) ||
+-	    !nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
++	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
+ 		dev_err(ctrl->ctrl.device,
+ 			"NVME-FC{%d}: failed to init ctrl state\n", ctrl->cnum);
+ 		goto fail_ctrl;
 -- 
 2.39.5
 
