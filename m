@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4A1B87D5;
-	Wed, 19 Mar 2025 14:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9F21B87D5;
+	Wed, 19 Mar 2025 14:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394929; cv=none; b=ZIqn6caiZxAMi1DxERJxSuFCu2v2wMEKSP50CxKcFQIQFu2psWVRiNsMB/kY4wEyb6werKQFFVgaH4EuqIVna2i5awJMQDjEBzTcvqBEDs0ok4HjfnEF9gywnLgIxmsTdfXBG610uU7gtv0QphVsl4pvSVRI4MdZRKebWmGNqyM=
+	t=1742394930; cv=none; b=ZbaJIRV3YC4TezH9vayMW2eau9cxbT1oGbEEmCGuU20iKijJ9lnYpVifPOd2Vrou6t9Ou1NmzDofi8V+RAwGtGNrr26lXKBAZDAX/dk2OfM/IABeHyj62iQDRwzHBZrZkCJm5dPh/tfxaHzkBFt4ztMdl+NCWgoeWIzKIe3vkR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394929; c=relaxed/simple;
-	bh=ojSokHxlVtWA95bo+2u2QJUr6XRhqy4lFEZbCRVZfxA=;
+	s=arc-20240116; t=1742394930; c=relaxed/simple;
+	bh=crgJ0APOhzY52Zzpi+5H/1Gpzgb0MubFQULIYOApS6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGC26dVdevBRp9JqEEZmLwig8QCVP2h4RU0G2hUb+4SeUx7yVwwkkeHgrZAsGvBVOg6xb1Bh+mTTOnxzo42GgossPAEkEfSwhmWFaaynuQLEyU/l9GZRH+Cwao1/B+HX7NWS5u0j5CFbTU/pVumk856T2GN4pQRSr/viKcGVZqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9Cl6woi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HuMk3W0nXkzOL8CGMrSWPTbDKPN1e4OD6oWWjN9wSyYoYGSGSGFd6t5J0WNKd7+EwwwpaYcYiyR49E2Ino6uAlSulpgUuP67Av5+IBQpsP/M21VptG7M+tx3Ju3vKBCwTsM14LhX9jZun86jRZorTxADMflajJ7stPBwNn6OIpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2b3YRccX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9Cl6woi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4F1C4CEE4;
-	Wed, 19 Mar 2025 14:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2b3YRccX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF38C4CEE4;
+	Wed, 19 Mar 2025 14:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394929;
-	bh=ojSokHxlVtWA95bo+2u2QJUr6XRhqy4lFEZbCRVZfxA=;
+	s=korg; t=1742394930;
+	bh=crgJ0APOhzY52Zzpi+5H/1Gpzgb0MubFQULIYOApS6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9Cl6woitEv+1iUTzTcOw8yZdr0UX4e5Rvom3Amz2SVtBbO79sEV2B935DxfDrXzP
-	 Zf3djdJhvlRVJpcRagknHofOtLDKF8bRnb3YPkRCmyzUUVyBOI5FKmMxlkNmOJovMo
-	 F9VI/b227/sp7RsO5RcVjEb6Nn52iYMm9/sqhnmU=
+	b=2b3YRccXkAbzopSgtydiNyPAC3Cz/QYaKFJg7WzXNtGRnai/u4G8blH7AGvErnmdk
+	 bkqHryzwcTGEudTzZS9DR3KuR1M5G+MNIKQIl3ARSH8WFpKOEm1ftP+mVJyMQpVVXL
+	 ArYGe07xS4JSEhvR7bMZvZJHysfyNkkL55Q+hCkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Aaron Ma <aaron.ma@canonical.com>,
 	Ingo Molnar <mingo@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 143/241] x86/irq: Define trace events conditionally
-Date: Wed, 19 Mar 2025 07:30:13 -0700
-Message-ID: <20250319143031.261235666@linuxfoundation.org>
+Subject: [PATCH 6.13 144/241] perf/x86/rapl: Add support for Intel Arrow Lake U
+Date: Wed, 19 Mar 2025 07:30:14 -0700
+Message-ID: <20250319143031.285408054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,46 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 9de7695925d5d2d2085681ba935857246eb2817d ]
+[ Upstream commit 68a9b0e313302451468c0b0eda53c383fa51a8f4 ]
 
-When both of X86_LOCAL_APIC and X86_THERMAL_VECTOR are disabled,
-the irq tracing produces a W=1 build warning for the tracing
-definitions:
+Add Arrow Lake U model for RAPL:
 
-  In file included from include/trace/trace_events.h:27,
-                 from include/trace/define_trace.h:113,
-                 from arch/x86/include/asm/trace/irq_vectors.h:383,
-                 from arch/x86/kernel/irq.c:29:
-  include/trace/stages/init.h:2:23: error: 'str__irq_vectors__trace_system_name' defined but not used [-Werror=unused-const-variable=]
+  $ ls -1 /sys/devices/power/events/
+  energy-cores
+  energy-cores.scale
+  energy-cores.unit
+  energy-gpu
+  energy-gpu.scale
+  energy-gpu.unit
+  energy-pkg
+  energy-pkg.scale
+  energy-pkg.unit
+  energy-psys
+  energy-psys.scale
+  energy-psys.unit
 
-Make the tracepoints conditional on the same symbosl that guard
-their usage.
+The same output as ArrowLake:
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+  $ perf stat -a -I 1000 --per-socket -e power/energy-pkg/
+
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250225213236.3141752-1-arnd@kernel.org
+Acked-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://lore.kernel.org/r/20241224145516.349028-1-aaron.ma@canonical.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/irq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/events/rapl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index 385e3a5fc3045..feca4f20b06aa 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -25,8 +25,10 @@
- #include <asm/posted_intr.h>
- #include <asm/irq_remapping.h>
- 
-+#if defined(CONFIG_X86_LOCAL_APIC) || defined(CONFIG_X86_THERMAL_VECTOR)
- #define CREATE_TRACE_POINTS
- #include <asm/trace/irq_vectors.h>
-+#endif
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(irq_cpustat_t, irq_stat);
- EXPORT_PER_CPU_SYMBOL(irq_stat);
+diff --git a/arch/x86/events/rapl.c b/arch/x86/events/rapl.c
+index a8defc813c369..7e493963d0576 100644
+--- a/arch/x86/events/rapl.c
++++ b/arch/x86/events/rapl.c
+@@ -796,6 +796,7 @@ static const struct x86_cpu_id rapl_model_match[] __initconst = {
+ 	X86_MATCH_VFM(INTEL_METEORLAKE_L,	&model_skl),
+ 	X86_MATCH_VFM(INTEL_ARROWLAKE_H,	&model_skl),
+ 	X86_MATCH_VFM(INTEL_ARROWLAKE,		&model_skl),
++	X86_MATCH_VFM(INTEL_ARROWLAKE_U,	&model_skl),
+ 	X86_MATCH_VFM(INTEL_LUNARLAKE_M,	&model_skl),
+ 	{},
+ };
 -- 
 2.39.5
 
