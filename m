@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CA91E102E;
-	Wed, 19 Mar 2025 14:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE991D5AC6;
+	Wed, 19 Mar 2025 14:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395038; cv=none; b=F7Amuf9zhwnt3lLA4Dnp2bqA6lZ3N8vjEVIkeQIJf3Vze5Elv5ejryBNrO8C67PFMWO7z+bh4ys3APP1JOZnjch2PMphjM17RZePHOKjvM/j2pmHOsHc+dpOh0BKXk3+OOwDzReF1LP1r8pLK1uJcT9P0UrOTqmARvT0mCAQjGc=
+	t=1742395039; cv=none; b=IU6nVe8+85fwrSckVMe5R60MJXyIHvqxzghKNvb/M8sRqGK9pgpdHWygBX2+m4vdVLVUNJnimWBEScGVEt6J4VLOOfKo4mx4mXgg76DyLlFGj76nS6ZT+lBLl0BX8yn4HI/SfxJK1OEg9fZuA+iq8unk7eAWCGzNMcbKWl5ymOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395038; c=relaxed/simple;
-	bh=+WvMtUZqmz0jZHU5SLvVAgGpuHgY3iE5RJwZLk44cIs=;
+	s=arc-20240116; t=1742395039; c=relaxed/simple;
+	bh=2bu8bsZwZHZpFF1mTma1jVELCuMcuvAVKyLpCupeLf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvJnXRQ1iOr3nLYJBp2Oc2scQNBqaLOJX61Ze+e8sIp0o9lm6TKxgzLe4S7yvlYj8Cvj4JLkdQXSCb0Stwx7+/u3xsDQeFjJFftQn4d4OmBJxF1AD21X9uBSUdVMpE6+nVQXtZXHDRqy6LHLfbTS1vozilOThtUXCCnJOF2kVqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFa49ReM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjd6UqkhmPWFTvOdB4xGVcVzLN+WsJ5AWA2FYDnV29SNgKCq4y4oC1wcsm2hQW2OVqUuuZcuZB0bfnUH5REs/3XxH2nAvB9XCro4ijIg69kq1MGvq2fJV2m2kWnYZGEK7NSXWLPC38q7RBshjHxOHomb6/qG0rJ5YYiRBE8sxbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S38bGn7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFa49ReM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A41C4CEE4;
-	Wed, 19 Mar 2025 14:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S38bGn7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BBFC4CEE4;
+	Wed, 19 Mar 2025 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395038;
-	bh=+WvMtUZqmz0jZHU5SLvVAgGpuHgY3iE5RJwZLk44cIs=;
+	s=korg; t=1742395039;
+	bh=2bu8bsZwZHZpFF1mTma1jVELCuMcuvAVKyLpCupeLf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFa49ReMWxsMljxPShdbpnDrbYZyRV3O7LL7hJ3xQsLlSg7jM7iTMt4rEk29lppVG
-	 kyt7XGSm3bQ8FumjsPvMK8/JRLkvu1s3JeDldPcX7Cd8vhD03PKuYxxrAYkSM8+HMO
-	 7Og9RLyvw+ipKtFjO8BWkQDWGCIfdLvhFUtoXOfk=
+	b=S38bGn7wWeixBU6zbd2a/gsLH+pxCPcGQKyeYOmMKpcVDrtb+n7FTjcy3b9IFZdCs
+	 qsWitU6K0VB+EbnFbvK1geqyGkyIdamZxf/6tLv7y1zZQ7KcneF4cUakPMZhHFyP5r
+	 Mfl2EHuzTe6igy3EKSifXS5DEbHBE6qZb1lChFgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Chengen Du <chengen.du@canonical.com>,
+	Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/231] futex: Pass in task to futex_queue()
-Date: Wed, 19 Mar 2025 07:29:14 -0700
-Message-ID: <20250319143028.332939046@linuxfoundation.org>
+Subject: [PATCH 6.12 062/231] iscsi_ibft: Fix UBSAN shift-out-of-bounds warning in ibft_attr_show_nic()
+Date: Wed, 19 Mar 2025 07:29:15 -0700
+Message-ID: <20250319143028.357251907@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,146 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Chengen Du <chengen.du@canonical.com>
 
-[ Upstream commit 5e0e02f0d7e52cfc8b1adfc778dd02181d8b47b4 ]
+[ Upstream commit 07e0d99a2f701123ad3104c0f1a1e66bce74d6e5 ]
 
-futex_queue() -> __futex_queue() uses 'current' as the task to store in
-the struct futex_q->task field. This is fine for synchronous usage of
-the futex infrastructure, but it's not always correct when used by
-io_uring where the task doing the initial futex_queue() might not be
-available later on. This doesn't lead to any issues currently, as the
-io_uring side doesn't support PI futexes, but it does leave a
-potentially dangling pointer which is never a good idea.
+When performing an iSCSI boot using IPv6, iscsistart still reads the
+/sys/firmware/ibft/ethernetX/subnet-mask entry. Since the IPv6 prefix
+length is 64, this causes the shift exponent to become negative,
+triggering a UBSAN warning. As the concept of a subnet mask does not
+apply to IPv6, the value is set to ~0 to suppress the warning message.
 
-Have futex_queue() take a task_struct argument, and have the regular
-callers pass in 'current' for that. Meanwhile io_uring can just pass in
-NULL, as the task should never be used off that path. In theory
-req->tctx->task could be used here, but there's no point populating it
-with a task field that will never be used anyway.
-
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/22484a23-542c-4003-b721-400688a0d055@kernel.dk
+Signed-off-by: Chengen Du <chengen.du@canonical.com>
+Signed-off-by: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/futex.c        |  2 +-
- kernel/futex/core.c     |  5 +++--
- kernel/futex/futex.h    | 11 ++++++++---
- kernel/futex/pi.c       |  2 +-
- kernel/futex/waitwake.c |  4 ++--
- 5 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/firmware/iscsi_ibft.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/futex.c b/io_uring/futex.c
-index 914848f46beb2..01f044f89f8fa 100644
---- a/io_uring/futex.c
-+++ b/io_uring/futex.c
-@@ -349,7 +349,7 @@ int io_futex_wait(struct io_kiocb *req, unsigned int issue_flags)
- 		hlist_add_head(&req->hash_node, &ctx->futex_list);
- 		io_ring_submit_unlock(ctx, issue_flags);
- 
--		futex_queue(&ifd->q, hb);
-+		futex_queue(&ifd->q, hb, NULL);
- 		return IOU_ISSUE_SKIP_COMPLETE;
- 	}
- 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index 136768ae26375..010607a991949 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -554,7 +554,8 @@ void futex_q_unlock(struct futex_hash_bucket *hb)
- 	futex_hb_waiters_dec(hb);
- }
- 
--void __futex_queue(struct futex_q *q, struct futex_hash_bucket *hb)
-+void __futex_queue(struct futex_q *q, struct futex_hash_bucket *hb,
-+		   struct task_struct *task)
- {
- 	int prio;
- 
-@@ -570,7 +571,7 @@ void __futex_queue(struct futex_q *q, struct futex_hash_bucket *hb)
- 
- 	plist_node_init(&q->list, prio);
- 	plist_add(&q->list, &hb->chain);
--	q->task = current;
-+	q->task = task;
- }
- 
- /**
-diff --git a/kernel/futex/futex.h b/kernel/futex/futex.h
-index 8b195d06f4e8e..12e47386232ed 100644
---- a/kernel/futex/futex.h
-+++ b/kernel/futex/futex.h
-@@ -230,13 +230,15 @@ extern int futex_get_value_locked(u32 *dest, u32 __user *from);
- extern struct futex_q *futex_top_waiter(struct futex_hash_bucket *hb, union futex_key *key);
- 
- extern void __futex_unqueue(struct futex_q *q);
--extern void __futex_queue(struct futex_q *q, struct futex_hash_bucket *hb);
-+extern void __futex_queue(struct futex_q *q, struct futex_hash_bucket *hb,
-+				struct task_struct *task);
- extern int futex_unqueue(struct futex_q *q);
- 
- /**
-  * futex_queue() - Enqueue the futex_q on the futex_hash_bucket
-  * @q:	The futex_q to enqueue
-  * @hb:	The destination hash bucket
-+ * @task: Task queueing this futex
-  *
-  * The hb->lock must be held by the caller, and is released here. A call to
-  * futex_queue() is typically paired with exactly one call to futex_unqueue().  The
-@@ -244,11 +246,14 @@ extern int futex_unqueue(struct futex_q *q);
-  * or nothing if the unqueue is done as part of the wake process and the unqueue
-  * state is implicit in the state of woken task (see futex_wait_requeue_pi() for
-  * an example).
-+ *
-+ * Note that @task may be NULL, for async usage of futexes.
-  */
--static inline void futex_queue(struct futex_q *q, struct futex_hash_bucket *hb)
-+static inline void futex_queue(struct futex_q *q, struct futex_hash_bucket *hb,
-+			       struct task_struct *task)
- 	__releases(&hb->lock)
- {
--	__futex_queue(q, hb);
-+	__futex_queue(q, hb, task);
- 	spin_unlock(&hb->lock);
- }
- 
-diff --git a/kernel/futex/pi.c b/kernel/futex/pi.c
-index 5722467f27379..8ec12f1aff83b 100644
---- a/kernel/futex/pi.c
-+++ b/kernel/futex/pi.c
-@@ -981,7 +981,7 @@ int futex_lock_pi(u32 __user *uaddr, unsigned int flags, ktime_t *time, int tryl
- 	/*
- 	 * Only actually queue now that the atomic ops are done:
- 	 */
--	__futex_queue(&q, hb);
-+	__futex_queue(&q, hb, current);
- 
- 	if (trylock) {
- 		ret = rt_mutex_futex_trylock(&q.pi_state->pi_mutex);
-diff --git a/kernel/futex/waitwake.c b/kernel/futex/waitwake.c
-index 3a10375d95218..a9056acb75eef 100644
---- a/kernel/futex/waitwake.c
-+++ b/kernel/futex/waitwake.c
-@@ -350,7 +350,7 @@ void futex_wait_queue(struct futex_hash_bucket *hb, struct futex_q *q,
- 	 * access to the hash list and forcing another memory barrier.
- 	 */
- 	set_current_state(TASK_INTERRUPTIBLE|TASK_FREEZABLE);
--	futex_queue(q, hb);
-+	futex_queue(q, hb, current);
- 
- 	/* Arm the timer */
- 	if (timeout)
-@@ -461,7 +461,7 @@ int futex_wait_multiple_setup(struct futex_vector *vs, int count, int *woken)
- 			 * next futex. Queue each futex at this moment so hb can
- 			 * be unlocked.
- 			 */
--			futex_queue(q, hb);
-+			futex_queue(q, hb, current);
- 			continue;
- 		}
- 
+diff --git a/drivers/firmware/iscsi_ibft.c b/drivers/firmware/iscsi_ibft.c
+index 6e9788324fea5..371f24569b3b2 100644
+--- a/drivers/firmware/iscsi_ibft.c
++++ b/drivers/firmware/iscsi_ibft.c
+@@ -310,7 +310,10 @@ static ssize_t ibft_attr_show_nic(void *data, int type, char *buf)
+ 		str += sprintf_ipaddr(str, nic->ip_addr);
+ 		break;
+ 	case ISCSI_BOOT_ETH_SUBNET_MASK:
+-		val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
++		if (nic->subnet_mask_prefix > 32)
++			val = cpu_to_be32(~0);
++		else
++			val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
+ 		str += sprintf(str, "%pI4", &val);
+ 		break;
+ 	case ISCSI_BOOT_ETH_PREFIX_LEN:
 -- 
 2.39.5
 
