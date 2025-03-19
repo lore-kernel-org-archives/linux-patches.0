@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1672D1D88D7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A951C3BE8;
 	Wed, 19 Mar 2025 14:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394863; cv=none; b=bgO5LniHLuY+AfGINCPGixhA0nJLK3YmtkFYnU+rDE86TCK+C3fbf/1eqGfDMjgF4UZWggAxWPgqmbnSxKTmu6FsW0hSLo06IpipVUtPvDADcB9gquLEJlXlD7lYlATlfQdYuy5b7Q2QF5+cV9VP3xSaHSNLLn6Co2r61OQ4yRM=
+	t=1742394863; cv=none; b=r7YL3CEXu36+eReYb9jcM8lRokYQbB009cz9CEuvDJDyZkfu0aME/qvvmCkiymzjwQvLzmH7TxbBVTfRq+O5DiTZxSs/DtpjIvDmA0rpmARDvkzXsudAw9UmJoZgi/0M+imIF56hxVpUMD66fG2bYm9ofWAkDM5gQcpmGvndR5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394863; c=relaxed/simple;
-	bh=IgEaHfxoJmJv3xznWilGiIL5KfgZV0Qu5bY+aYXVRm4=;
+	bh=28S3DYb5TsDDer6dUFSLAymqSyPkPXi5I0YAkF6r3Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ths60LW4er2t4RS3b4B9zSlWJozzYSGLw7RP4monpHC0Hrb8wHuuaks//LKZ4xo7wYjiTXQs4VeZkEqu3fAiZfBBCWeox61preoUp5AqB5ki3qCL2jW4sq5Wb5kKDfJDxf67WuuK/wSarX3khBcdyaJyddI2eyTieWWCwdNQkKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrFtsKKP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqFcxCvtnMkLW6cQ7UHOnjDQTLRUcikpKrZTM0TgULlyp7M7Zg3zjrLhS/1m0qz4na/D47nYikVqCUbMNbzeEh7fMDe9jdTxfhkEJ3QDtaKqTA5SmWeT7cmGR/7M9wTjpkMsbIp8I4Lk7CLyaqz/YFiLNtwZMxgrKWuC+OJJUMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkU4WvLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrFtsKKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5648C4CEEA;
-	Wed, 19 Mar 2025 14:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkU4WvLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89364C4CEEA;
+	Wed, 19 Mar 2025 14:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394862;
-	bh=IgEaHfxoJmJv3xznWilGiIL5KfgZV0Qu5bY+aYXVRm4=;
+	s=korg; t=1742394863;
+	bh=28S3DYb5TsDDer6dUFSLAymqSyPkPXi5I0YAkF6r3Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrFtsKKPbz9XYWlK6Uj8vNB1N9dXH659WPYChsRam6PLtDmdAZFaVENLp6WdGStx+
-	 hJYYJURCF2Mql+kS5x5LH8DtWBPqpdIJNgmgFNIlZRkrO8h8v1maTgbEGrCGfgIfaW
-	 J5cT1TPDgbOmhCBe+zdfLVmQOuNb2A/tH/yDrFUs=
+	b=OkU4WvLE0+f3d++XLsCKj+RdNwc2LrNTyOqPLKWJXAW4EV3+FBhn7bzQvcrK1HGb/
+	 /M9YEmxr69ZrvT5TTxzwdRoXwSPt17j37d0XujmocZ8LCXpGEr5/MfJpJKYUl+k2ez
+	 A1nmz3f5+OxMotlz52L8jw99rRWuLZe7hPTxl9Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 053/241] net/mlx5: Lag, Check shared fdb before creating MultiPort E-Switch
-Date: Wed, 19 Mar 2025 07:28:43 -0700
-Message-ID: <20250319143029.040296992@linuxfoundation.org>
+Subject: [PATCH 6.13 054/241] net/mlx5: Bridge, fix the crash caused by LAG state check
+Date: Wed, 19 Mar 2025 07:28:44 -0700
+Message-ID: <20250319143029.063209336@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -54,76 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 32966984bee1defd9f5a8f9be274d7c32f911ba1 ]
+[ Upstream commit 4b8eeed4fb105770ce6dc84a2c6ef953c7b71cbb ]
 
-Currently, MultiPort E-Switch is requesting to create a LAG with shared
-FDB without checking the LAG is supporting shared FDB.
-Add the check.
+When removing LAG device from bridge, NETDEV_CHANGEUPPER event is
+triggered. Driver finds the lower devices (PFs) to flush all the
+offloaded entries. And mlx5_lag_is_shared_fdb is checked, it returns
+false if one of PF is unloaded. In such case,
+mlx5_esw_bridge_lag_rep_get() and its caller return NULL, instead of
+the alive PF, and the flush is skipped.
 
-Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Besides, the bridge fdb entry's lastuse is updated in mlx5 bridge
+event handler. But this SWITCHDEV_FDB_ADD_TO_BRIDGE event can be
+ignored in this case because the upper interface for bond is deleted,
+and the entry will never be aged because lastuse is never updated.
+
+To make things worse, as the entry is alive, mlx5 bridge workqueue
+keeps sending that event, which is then handled by kernel bridge
+notifier. It causes the following crash when accessing the passed bond
+netdev which is already destroyed.
+
+To fix this issue, remove such checks. LAG state is already checked in
+commit 15f8f168952f ("net/mlx5: Bridge, verify LAG state when adding
+bond to bridge"), driver still need to skip offload if LAG becomes
+invalid state after initialization.
+
+ Oops: stack segment: 0000 [#1] SMP
+ CPU: 3 UID: 0 PID: 23695 Comm: kworker/u40:3 Tainted: G           OE      6.11.0_mlnx #1
+ Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+ Workqueue: mlx5_bridge_wq mlx5_esw_bridge_update_work [mlx5_core]
+ RIP: 0010:br_switchdev_event+0x2c/0x110 [bridge]
+ Code: 44 00 00 48 8b 02 48 f7 00 00 02 00 00 74 69 41 54 55 53 48 83 ec 08 48 8b a8 08 01 00 00 48 85 ed 74 4a 48 83 fe 02 48 89 d3 <4c> 8b 65 00 74 23 76 49 48 83 fe 05 74 7e 48 83 fe 06 75 2f 0f b7
+ RSP: 0018:ffffc900092cfda0 EFLAGS: 00010297
+ RAX: ffff888123bfe000 RBX: ffffc900092cfe08 RCX: 00000000ffffffff
+ RDX: ffffc900092cfe08 RSI: 0000000000000001 RDI: ffffffffa0c585f0
+ RBP: 6669746f6e690a30 R08: 0000000000000000 R09: ffff888123ae92c8
+ R10: 0000000000000000 R11: fefefefefefefeff R12: ffff888123ae9c60
+ R13: 0000000000000001 R14: ffffc900092cfe08 R15: 0000000000000000
+ FS:  0000000000000000(0000) GS:ffff88852c980000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f15914c8734 CR3: 0000000002830005 CR4: 0000000000770ef0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  ? __die_body+0x1a/0x60
+  ? die+0x38/0x60
+  ? do_trap+0x10b/0x120
+  ? do_error_trap+0x64/0xa0
+  ? exc_stack_segment+0x33/0x50
+  ? asm_exc_stack_segment+0x22/0x30
+  ? br_switchdev_event+0x2c/0x110 [bridge]
+  ? sched_balance_newidle.isra.149+0x248/0x390
+  notifier_call_chain+0x4b/0xa0
+  atomic_notifier_call_chain+0x16/0x20
+  mlx5_esw_bridge_update+0xec/0x170 [mlx5_core]
+  mlx5_esw_bridge_update_work+0x19/0x40 [mlx5_core]
+  process_scheduled_works+0x81/0x390
+  worker_thread+0x106/0x250
+  ? bh_worker+0x110/0x110
+  kthread+0xb7/0xe0
+  ? kthread_park+0x80/0x80
+  ret_from_fork+0x2d/0x50
+  ? kthread_park+0x80/0x80
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: ff9b7521468b ("net/mlx5: Bridge, support LAG")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1741644104-97767-5-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1741644104-97767-6-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c   | 4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h   | 1 +
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en/rep/bridge.c  | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 7f68468c2e759..4b3da7ebd6310 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -859,7 +859,7 @@ void mlx5_disable_lag(struct mlx5_lag *ldev)
- 				mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+index 5d128c5b4529a..0f5d7ea8956f7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+@@ -48,15 +48,10 @@ mlx5_esw_bridge_lag_rep_get(struct net_device *dev, struct mlx5_eswitch *esw)
+ 	struct list_head *iter;
  
--static bool mlx5_shared_fdb_supported(struct mlx5_lag *ldev)
-+bool mlx5_lag_shared_fdb_supported(struct mlx5_lag *ldev)
- {
- 	struct mlx5_core_dev *dev;
- 	int i;
-@@ -937,7 +937,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 	netdev_for_each_lower_dev(dev, lower, iter) {
+-		struct mlx5_core_dev *mdev;
+-		struct mlx5e_priv *priv;
+-
+ 		if (!mlx5e_eswitch_rep(lower))
+ 			continue;
+ 
+-		priv = netdev_priv(lower);
+-		mdev = priv->mdev;
+-		if (mlx5_lag_is_shared_fdb(mdev) && mlx5_esw_bridge_dev_same_esw(lower, esw))
++		if (mlx5_esw_bridge_dev_same_esw(lower, esw))
+ 			return lower;
  	}
  
- 	if (do_bond && !__mlx5_lag_is_active(ldev)) {
--		bool shared_fdb = mlx5_shared_fdb_supported(ldev);
-+		bool shared_fdb = mlx5_lag_shared_fdb_supported(ldev);
- 
- 		roce_lag = mlx5_lag_is_roce_lag(ldev);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-index 50fcb1eee5748..48a5f3e7b91a8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-@@ -92,6 +92,7 @@ mlx5_lag_is_ready(struct mlx5_lag *ldev)
- 	return test_bit(MLX5_LAG_FLAG_NDEVS_READY, &ldev->state_flags);
+@@ -125,7 +120,7 @@ static bool mlx5_esw_bridge_is_local(struct net_device *dev, struct net_device *
+ 	priv = netdev_priv(rep);
+ 	mdev = priv->mdev;
+ 	if (netif_is_lag_master(dev))
+-		return mlx5_lag_is_shared_fdb(mdev) && mlx5_lag_is_master(mdev);
++		return mlx5_lag_is_master(mdev);
+ 	return true;
  }
  
-+bool mlx5_lag_shared_fdb_supported(struct mlx5_lag *ldev);
- bool mlx5_lag_check_prereq(struct mlx5_lag *ldev);
- void mlx5_modify_lag(struct mlx5_lag *ldev,
- 		     struct lag_tracker *tracker);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index 571ea26edd0ca..2381a0eec1900 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -81,7 +81,8 @@ static int enable_mpesw(struct mlx5_lag *ldev)
- 	if (mlx5_eswitch_mode(dev0) != MLX5_ESWITCH_OFFLOADS ||
- 	    !MLX5_CAP_PORT_SELECTION(dev0, port_select_flow_table) ||
- 	    !MLX5_CAP_GEN(dev0, create_lag_when_not_master_up) ||
--	    !mlx5_lag_check_prereq(ldev))
-+	    !mlx5_lag_check_prereq(ldev) ||
-+	    !mlx5_lag_shared_fdb_supported(ldev))
- 		return -EOPNOTSUPP;
+@@ -455,6 +450,9 @@ static int mlx5_esw_bridge_switchdev_event(struct notifier_block *nb,
+ 	if (!rep)
+ 		return NOTIFY_DONE;
  
- 	err = mlx5_mpesw_metadata_set(ldev);
++	if (netif_is_lag_master(dev) && !mlx5_lag_is_shared_fdb(esw->dev))
++		return NOTIFY_DONE;
++
+ 	switch (event) {
+ 	case SWITCHDEV_FDB_ADD_TO_BRIDGE:
+ 		fdb_info = container_of(info,
 -- 
 2.39.5
 
