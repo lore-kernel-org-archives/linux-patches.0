@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718461DE899;
-	Wed, 19 Mar 2025 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0651DE899;
+	Wed, 19 Mar 2025 14:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395176; cv=none; b=Ohe8EwWgg4LrfhLUzZTvLu+IwtS+mgtK7hTHjzvfCwwa2AiIngJri6OCVEa9B0/YPFKPUk6Blp6AWNTP7Qwqyv3pC8pLgFusXAifZsuSjYkRq67Yp7jv0LK6gMLX0Ngsb46ojUrLCOfonO/Km0G/GtFdAgGdWhQzHDCot6tvCtQ=
+	t=1742395177; cv=none; b=jgMAHcSty2KAj4c8unQtBhhC2R3YSawesfGVnP7gGfx0Ch7Is6DFtLY754rodFRduilhn5v0H+yOs0EbK+uavISm6GaHRejT1uQsNCy24KzuDer7r5SYjtUGi/+Ur4XFTxeWzfiqHZxJjbhq/CyhX9rotEYxgCq4Fedres3a5j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395176; c=relaxed/simple;
-	bh=5fFidt2jkPa2UCaSzGbft0f8rJD2gIgD8v9JlxmndRw=;
+	s=arc-20240116; t=1742395177; c=relaxed/simple;
+	bh=vuO+k1qiKOoe0+dNAQAo+egwhXpl066byXSob5QnAbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfQKZVJJkTMAjGuwaQ/MOdzTiVRN3H7iytsSG1yXwofvMqhSLryxkGennsPqhLjFE6XkjrBFx6gFS6Nk9Uk6LftXbMl7z1Q93EULBDq1nsHxWFr9jPG2l108FuMuBB5BFdrTU5Iy2GrC6U4rh0ZNdNXAOLl/QR3EgThKsR7JV94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMRFowzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jn5Dmn0dXKv0mXzSEJimIvD9jLag7dVCMg0H5Ieq5w48BqxI3JNPFhRpXwwnPPTg063YPkOO7Vz4VY2u4EstO27ILxDaHrJYpNlGKdXv2V2o52R/XV+b3uNROfqQX2y2eCF29TdfBnd/Px/uHAhRddSkgq3xVJTvksRpQgFAkvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJc7QOpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMRFowzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C56C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJc7QOpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96EDC4CEE4;
 	Wed, 19 Mar 2025 14:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395176;
-	bh=5fFidt2jkPa2UCaSzGbft0f8rJD2gIgD8v9JlxmndRw=;
+	s=korg; t=1742395177;
+	bh=vuO+k1qiKOoe0+dNAQAo+egwhXpl066byXSob5QnAbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMRFowzxscpBu6FrCRR5cuxd33Uy8/W9yrA0HR8HlnHjENJupD1eyACsncDT6hY6e
-	 yPRzQols4NxXsXSNIniTd4Zt2dcyWjyxp9wpjAcPBtWKhIJRILk16SfclarnVCDEkf
-	 HDjOWYh8jEWvTaw9IY/+DUGhWthxKPNjAKktednw=
+	b=tJc7QOpQPniKD3MqwqVoE6X/yPA8vtKwMtJgmA6610ggGGJ7ddS6QOPWMAJmh2wgL
+	 IHWF1E5hSK0V6wtNJ+K5fu0WUnHHFIwX1Upk3/ivSc8V1Zu1yxSIH3rMf0yccZpZM5
+	 geT1abbHtTZlFR7njHC5VREDCjMJ2sSDJiBrx5yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 004/166] hrtimer: Use and report correct timerslack values for realtime tasks
-Date: Wed, 19 Mar 2025 07:29:35 -0700
-Message-ID: <20250319143020.101232223@linuxfoundation.org>
+	Brian Grech <bgrech@redhat.com>,
+	Wander Lairson Costa <wander.lairson@gmail.com>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.6 005/166] bpf: Use raw_spinlock_t in ringbuf
+Date: Wed, 19 Mar 2025 07:29:36 -0700
+Message-ID: <20250319143020.126083600@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -50,167 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Moessbauer <felix.moessbauer@siemens.com>
+From: Wander Lairson Costa <wander.lairson@gmail.com>
 
-commit ed4fb6d7ef68111bb539283561953e5c6e9a6e38 upstream.
+commit 8b62645b09f870d70c7910e7550289d444239a46 upstream.
 
-The timerslack_ns setting is used to specify how much the hardware
-timers should be delayed, to potentially dispatch multiple timers in a
-single interrupt. This is a performance optimization. Timers of
-realtime tasks (having a realtime scheduling policy) should not be
-delayed.
+The function __bpf_ringbuf_reserve is invoked from a tracepoint, which
+disables preemption. Using spinlock_t in this context can lead to a
+"sleep in atomic" warning in the RT variant. This issue is illustrated
+in the example below:
 
-This logic was inconsitently applied to the hrtimers, leading to delays
-of realtime tasks which used timed waits for events (e.g. condition
-variables). Due to the downstream override of the slack for rt tasks,
-the procfs reported incorrect (non-zero) timerslack_ns values.
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 556208, name: test_progs
+preempt_count: 1, expected: 0
+RCU nest depth: 1, expected: 1
+INFO: lockdep is turned off.
+Preemption disabled at:
+[<ffffd33a5c88ea44>] migrate_enable+0xc0/0x39c
+CPU: 7 PID: 556208 Comm: test_progs Tainted: G
+Hardware name: Qualcomm SA8775P Ride (DT)
+Call trace:
+ dump_backtrace+0xac/0x130
+ show_stack+0x1c/0x30
+ dump_stack_lvl+0xac/0xe8
+ dump_stack+0x18/0x30
+ __might_resched+0x3bc/0x4fc
+ rt_spin_lock+0x8c/0x1a4
+ __bpf_ringbuf_reserve+0xc4/0x254
+ bpf_ringbuf_reserve_dynptr+0x5c/0xdc
+ bpf_prog_ac3d15160d62622a_test_read_write+0x104/0x238
+ trace_call_bpf+0x238/0x774
+ perf_call_bpf_enter.isra.0+0x104/0x194
+ perf_syscall_enter+0x2f8/0x510
+ trace_sys_enter+0x39c/0x564
+ syscall_trace_enter+0x220/0x3c0
+ do_el0_svc+0x138/0x1dc
+ el0_svc+0x54/0x130
+ el0t_64_sync_handler+0x134/0x150
+ el0t_64_sync+0x17c/0x180
 
-This is changed by setting the timer_slack_ns task attribute to 0 for
-all tasks with a rt policy. By that, downstream users do not need to
-specially handle rt tasks (w.r.t. the slack), and the procfs entry
-shows the correct value of "0". Setting non-zero slack values (either
-via procfs or PR_SET_TIMERSLACK) on tasks with a rt policy is ignored,
-as stated in "man 2 PR_SET_TIMERSLACK":
+Switch the spinlock to raw_spinlock_t to avoid this error.
 
-  Timer slack is not applied to threads that are scheduled under a
-  real-time scheduling policy (see sched_setscheduler(2)).
-
-The special handling of timerslack on rt tasks in downstream users
-is removed as well.
-
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240814121032.368444-2-felix.moessbauer@siemens.com
+Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
+Reported-by: Brian Grech <bgrech@redhat.com>
+Signed-off-by: Wander Lairson Costa <wander.lairson@gmail.com>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20240920190700.617253-1-wander@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
- fs/proc/base.c        |    9 +++++----
- fs/select.c           |   11 ++++-------
- kernel/sched/core.c   |    8 ++++++++
- kernel/sys.c          |    2 ++
- kernel/time/hrtimer.c |   18 +++---------------
- 5 files changed, 22 insertions(+), 26 deletions(-)
+ kernel/bpf/ringbuf.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -2633,10 +2633,11 @@ static ssize_t timerslack_ns_write(struc
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -29,7 +29,7 @@ struct bpf_ringbuf {
+ 	u64 mask;
+ 	struct page **pages;
+ 	int nr_pages;
+-	spinlock_t spinlock ____cacheline_aligned_in_smp;
++	raw_spinlock_t spinlock ____cacheline_aligned_in_smp;
+ 	/* For user-space producer ring buffers, an atomic_t busy bit is used
+ 	 * to synchronize access to the ring buffers in the kernel, rather than
+ 	 * the spinlock that is used for kernel-producer ring buffers. This is
+@@ -173,7 +173,7 @@ static struct bpf_ringbuf *bpf_ringbuf_a
+ 	if (!rb)
+ 		return NULL;
+ 
+-	spin_lock_init(&rb->spinlock);
++	raw_spin_lock_init(&rb->spinlock);
+ 	atomic_set(&rb->busy, 0);
+ 	init_waitqueue_head(&rb->waitq);
+ 	init_irq_work(&rb->work, bpf_ringbuf_notify);
+@@ -417,10 +417,10 @@ static void *__bpf_ringbuf_reserve(struc
+ 	cons_pos = smp_load_acquire(&rb->consumer_pos);
+ 
+ 	if (in_nmi()) {
+-		if (!spin_trylock_irqsave(&rb->spinlock, flags))
++		if (!raw_spin_trylock_irqsave(&rb->spinlock, flags))
+ 			return NULL;
+ 	} else {
+-		spin_lock_irqsave(&rb->spinlock, flags);
++		raw_spin_lock_irqsave(&rb->spinlock, flags);
  	}
  
- 	task_lock(p);
--	if (slack_ns == 0)
--		p->timer_slack_ns = p->default_timer_slack_ns;
--	else
--		p->timer_slack_ns = slack_ns;
-+	if (task_is_realtime(p))
-+		slack_ns = 0;
-+	else if (slack_ns == 0)
-+		slack_ns = p->default_timer_slack_ns;
-+	p->timer_slack_ns = slack_ns;
- 	task_unlock(p);
+ 	pend_pos = rb->pending_pos;
+@@ -446,7 +446,7 @@ static void *__bpf_ringbuf_reserve(struc
+ 	 */
+ 	if (new_prod_pos - cons_pos > rb->mask ||
+ 	    new_prod_pos - pend_pos > rb->mask) {
+-		spin_unlock_irqrestore(&rb->spinlock, flags);
++		raw_spin_unlock_irqrestore(&rb->spinlock, flags);
+ 		return NULL;
+ 	}
  
- out:
---- a/fs/select.c
-+++ b/fs/select.c
-@@ -77,19 +77,16 @@ u64 select_estimate_accuracy(struct time
- {
- 	u64 ret;
- 	struct timespec64 now;
-+	u64 slack = current->timer_slack_ns;
+@@ -458,7 +458,7 @@ static void *__bpf_ringbuf_reserve(struc
+ 	/* pairs with consumer's smp_load_acquire() */
+ 	smp_store_release(&rb->producer_pos, new_prod_pos);
  
--	/*
--	 * Realtime tasks get a slack of 0 for obvious reasons.
--	 */
--
--	if (rt_task(current))
-+	if (slack == 0)
- 		return 0;
+-	spin_unlock_irqrestore(&rb->spinlock, flags);
++	raw_spin_unlock_irqrestore(&rb->spinlock, flags);
  
- 	ktime_get_ts64(&now);
- 	now = timespec64_sub(*tv, now);
- 	ret = __estimate_accuracy(&now);
--	if (ret < current->timer_slack_ns)
--		return current->timer_slack_ns;
-+	if (ret < slack)
-+		return slack;
- 	return ret;
+ 	return (void *)hdr + BPF_RINGBUF_HDR_SZ;
  }
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7530,6 +7530,14 @@ static void __setscheduler_params(struct
- 	else if (fair_policy(policy))
- 		p->static_prio = NICE_TO_PRIO(attr->sched_nice);
- 
-+	/* rt-policy tasks do not have a timerslack */
-+	if (task_is_realtime(p)) {
-+		p->timer_slack_ns = 0;
-+	} else if (p->timer_slack_ns == 0) {
-+		/* when switching back to non-rt policy, restore timerslack */
-+		p->timer_slack_ns = p->default_timer_slack_ns;
-+	}
-+
- 	/*
- 	 * __sched_setscheduler() ensures attr->sched_priority == 0 when
- 	 * !rt_policy. Always setting this ensures that things like
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2535,6 +2535,8 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
- 			error = current->timer_slack_ns;
- 		break;
- 	case PR_SET_TIMERSLACK:
-+		if (task_is_realtime(current))
-+			break;
- 		if (arg2 <= 0)
- 			current->timer_slack_ns =
- 					current->default_timer_slack_ns;
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2093,14 +2093,9 @@ long hrtimer_nanosleep(ktime_t rqtp, con
- 	struct restart_block *restart;
- 	struct hrtimer_sleeper t;
- 	int ret = 0;
--	u64 slack;
--
--	slack = current->timer_slack_ns;
--	if (rt_task(current))
--		slack = 0;
- 
- 	hrtimer_init_sleeper_on_stack(&t, clockid, mode);
--	hrtimer_set_expires_range_ns(&t.timer, rqtp, slack);
-+	hrtimer_set_expires_range_ns(&t.timer, rqtp, current->timer_slack_ns);
- 	ret = do_nanosleep(&t, mode);
- 	if (ret != -ERESTART_RESTARTBLOCK)
- 		goto out;
-@@ -2281,7 +2276,7 @@ void __init hrtimers_init(void)
- /**
-  * schedule_hrtimeout_range_clock - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-+ * @delta:	slack in expires timeout (ktime_t)
-  * @mode:	timer mode
-  * @clock_id:	timer clock to be used
-  */
-@@ -2308,13 +2303,6 @@ schedule_hrtimeout_range_clock(ktime_t *
- 		return -EINTR;
- 	}
- 
--	/*
--	 * Override any slack passed by the user if under
--	 * rt contraints.
--	 */
--	if (rt_task(current))
--		delta = 0;
--
- 	hrtimer_init_sleeper_on_stack(&t, clock_id, mode);
- 	hrtimer_set_expires_range_ns(&t.timer, *expires, delta);
- 	hrtimer_sleeper_start_expires(&t, mode);
-@@ -2334,7 +2322,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
- /**
-  * schedule_hrtimeout_range - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-+ * @delta:	slack in expires timeout (ktime_t)
-  * @mode:	timer mode
-  *
-  * Make the current task sleep until the given expiry time has
 
 
