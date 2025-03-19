@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD1E1C5F26;
-	Wed, 19 Mar 2025 14:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947301C1F02;
+	Wed, 19 Mar 2025 14:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394857; cv=none; b=QCs2MhZNKIpxqaCtXGsTeGe0m9fgz/S2vltCmn7pTv3iCBsuGMLmQSXJNA6iaC29fSk4NnsyPOa2TKW9yBnYUpBNVhYyiVWuT68udcML2rtnU+it1fkXo29Kf8h9gq8vbvwhrvUNQbMxSb197XhcZafHF3HWbM1lsXsW0sDWr6k=
+	t=1742394857; cv=none; b=tSc8WqE2w8H3xH6PsA3o4deeURsTRML6tjCE7Rd6PPuUu3BJ7OxLTmkxoOceJR9oJHwUG/4gnQqJdBvCoYJAVQCf7Xn99+E9PENarDjqb4at77/mzJ4fa4kJ7b72oE4iRHAsT9/x0IUZaokrvIgRNl9W+Z05gMN9jqmB2CxUWmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394857; c=relaxed/simple;
-	bh=ulLwxkscGtLiDwKGt4jAC777deW5Wjm8poFLavZNWQA=;
+	bh=Rl2t7T/CIXOCiopS6FrMjVXZBMDXjkiY0ZjijWjiiuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sn0Owx2aFRxv3kXeAOgFWe23ILlxcnO9TzippL55nelpCCiycKUw4jWWSDd5lTxa6441ml6L6sa2y9CeLsSvgE2rKVcYK4HsqSz41YYqLDHI+nTF2+9+61Vhz9aKO3N+qS6kCe4gxWO6ytCBXjSh+jpSBwXVucT2w7Tt5n1Aj8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMBC+wl6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwFErKJA2mrsvgKAgmlJfPLuL/878d8G2NvrA1KZtbzorVeva51QdRWAYGZz4VU+6aT2jlAwboKG/l6BY8lz8n5piSwaAu6hAL/2O6GFv8bM9cfDiE4oGR3BVHCZ811D1BrTv5+KRT+mqnD8aZL3fb7UcxOsJfa85Pt5S3+DCYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlsqEMsu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMBC+wl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F36C4CEEC;
-	Wed, 19 Mar 2025 14:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlsqEMsu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C35C4CEE8;
+	Wed, 19 Mar 2025 14:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394856;
-	bh=ulLwxkscGtLiDwKGt4jAC777deW5Wjm8poFLavZNWQA=;
+	s=korg; t=1742394857;
+	bh=Rl2t7T/CIXOCiopS6FrMjVXZBMDXjkiY0ZjijWjiiuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMBC+wl6lsZfB4xNQuCGrt1X0O3FcaoGfnVdRK/fpeDQQzPkKkFkGrYf6HMcOIxVQ
-	 9CGjqM/aDKgNeMVP0jrwWN3Ye4ImgJ57X0mD7wlGuwh+PdsGHiRBHNMTLpY82iRB7o
-	 TwD5wgcukF0BhqHdbLSNL375BLabQ2CjHVcJ/Wxs=
+	b=RlsqEMsuBjn3rNtgsYzcv7aAUpg86P8tSIGa6L8vaPVPxVOXY28L9wg9mja3GzQR+
+	 g9XeMwSD7EzA6fYkvUzwVORsoTq4crtjGPO8t++6XH5xHHS5BitSR7qWrLnGtYae/V
+	 U4ipZI773df/u08810vQKU4jJCHUJXIMmzYgddEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mingi Cho <mincho@theori.io>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 045/241] ipvs: prevent integer overflow in do_ip_vs_get_ctl()
-Date: Wed, 19 Mar 2025 07:28:35 -0700
-Message-ID: <20250319143028.835592846@linuxfoundation.org>
+Subject: [PATCH 6.13 046/241] net_sched: Prevent creation of classes with TC_H_ROOT
+Date: Wed, 19 Mar 2025 07:28:36 -0700
+Message-ID: <20250319143028.861921413@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,66 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 80b78c39eb86e6b55f56363b709eb817527da5aa ]
+[ Upstream commit 0c3057a5a04d07120b3d0ec9c79568fceb9c921e ]
 
-The get->num_services variable is an unsigned int which is controlled by
-the user.  The struct_size() function ensures that the size calculation
-does not overflow an unsigned long, however, we are saving the result to
-an int so the calculation can overflow.
+The function qdisc_tree_reduce_backlog() uses TC_H_ROOT as a termination
+condition when traversing up the qdisc tree to update parent backlog
+counters. However, if a class is created with classid TC_H_ROOT, the
+traversal terminates prematurely at this class instead of reaching the
+actual root qdisc, causing parent statistics to be incorrectly maintained.
+In case of DRR, this could lead to a crash as reported by Mingi Cho.
 
-Both "len" and "get->num_services" come from the user.  This check is
-just a sanity check to help the user and ensure they are using the API
-correctly.  An integer overflow here is not a big deal.  This has no
-security impact.
+Prevent the creation of any Qdisc class with classid TC_H_ROOT
+(0xFFFFFFFF) across all qdisc types, as suggested by Jamal.
 
-Save the result from struct_size() type size_t to fix this integer
-overflow bug.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Mingi Cho <mincho@theori.io>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 066a3b5b2346 ("[NET_SCHED] sch_api: fix qdisc_tree_decrease_qlen() loop")
+Link: https://patch.msgid.link/20250306232355.93864-2-xiyou.wangcong@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/sch_api.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 7d13110ce1882..0633276d96bfb 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -3091,12 +3091,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_SERVICES:
- 	{
- 		struct ip_vs_get_services *get;
--		int size;
-+		size_t size;
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index fac9c946a4c75..778cf54df69b0 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -2254,6 +2254,12 @@ static int tc_ctl_tclass(struct sk_buff *skb, struct nlmsghdr *n,
+ 		return -EOPNOTSUPP;
+ 	}
  
- 		get = (struct ip_vs_get_services *)arg;
- 		size = struct_size(get, entrytable, get->num_services);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
-@@ -3132,12 +3132,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_DESTS:
- 	{
- 		struct ip_vs_get_dests *get;
--		int size;
-+		size_t size;
- 
- 		get = (struct ip_vs_get_dests *)arg;
- 		size = struct_size(get, entrytable, get->num_dests);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
++	/* Prevent creation of traffic classes with classid TC_H_ROOT */
++	if (clid == TC_H_ROOT) {
++		NL_SET_ERR_MSG(extack, "Cannot create traffic class with classid TC_H_ROOT");
++		return -EINVAL;
++	}
++
+ 	new_cl = cl;
+ 	err = -EOPNOTSUPP;
+ 	if (cops->change)
 -- 
 2.39.5
 
