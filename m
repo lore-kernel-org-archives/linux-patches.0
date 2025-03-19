@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B391DE899;
-	Wed, 19 Mar 2025 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718461DE899;
+	Wed, 19 Mar 2025 14:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395175; cv=none; b=f48EHTp3f5mbySRsj6/YWhym0iLbBSLDfMEfgH5R9F1S1IcfD6Fq8dNHqj7mvl1jZ0A8wkrNLpcCPTg1BKk+s4hBMvOu49eA02tFJUSYeq6HEV6GiurhpatC6mASZlcUrDzwC/r2tyND99DUCYBITiD8h1hD3xUWrQwAxlkFpDM=
+	t=1742395176; cv=none; b=Ohe8EwWgg4LrfhLUzZTvLu+IwtS+mgtK7hTHjzvfCwwa2AiIngJri6OCVEa9B0/YPFKPUk6Blp6AWNTP7Qwqyv3pC8pLgFusXAifZsuSjYkRq67Yp7jv0LK6gMLX0Ngsb46ojUrLCOfonO/Km0G/GtFdAgGdWhQzHDCot6tvCtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395175; c=relaxed/simple;
-	bh=3/SitdCYhoWCs+ioEioUh0JFWg0gY4nCxbMnVf8yeGE=;
+	s=arc-20240116; t=1742395176; c=relaxed/simple;
+	bh=5fFidt2jkPa2UCaSzGbft0f8rJD2gIgD8v9JlxmndRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hv2q/Et4PFG913wEX9hdqF+makIGpUCqjPWTu52jk3PW57Q20rj1c4I3CtgyeJDq1/AGelHaEuXTewqq3iQA53gvMc7lhQ4cvvUfjr/w8RPnbi5olsrmKRClsgOt8VjztdDh5aWSMPG9H7N0CBmgIaXnREHdbxydQUeviSw75W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmSgWMBV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfQKZVJJkTMAjGuwaQ/MOdzTiVRN3H7iytsSG1yXwofvMqhSLryxkGennsPqhLjFE6XkjrBFx6gFS6Nk9Uk6LftXbMl7z1Q93EULBDq1nsHxWFr9jPG2l108FuMuBB5BFdrTU5Iy2GrC6U4rh0ZNdNXAOLl/QR3EgThKsR7JV94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMRFowzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmSgWMBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D54C4CEE4;
-	Wed, 19 Mar 2025 14:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMRFowzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C56C4CEE4;
+	Wed, 19 Mar 2025 14:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395175;
-	bh=3/SitdCYhoWCs+ioEioUh0JFWg0gY4nCxbMnVf8yeGE=;
+	s=korg; t=1742395176;
+	bh=5fFidt2jkPa2UCaSzGbft0f8rJD2gIgD8v9JlxmndRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmSgWMBVE3i4AUMPK/VXBP0T5hruwXGN0XAuyXQLgwfuvF29d2uBTHZzszblBtLqv
-	 a9THRMpm48lnBpLnBnyK/e/8wNYL3iIkmu06SWGJz7sff1ZICDHbTmF+qzAT/TzjdO
-	 v0z8ROaK8RGV7Nr1IgnflOEPJfaXrTkXCK49S5h0=
+	b=bMRFowzxscpBu6FrCRR5cuxd33Uy8/W9yrA0HR8HlnHjENJupD1eyACsncDT6hY6e
+	 yPRzQols4NxXsXSNIniTd4Zt2dcyWjyxp9wpjAcPBtWKhIJRILk16SfclarnVCDEkf
+	 HDjOWYh8jEWvTaw9IY/+DUGhWthxKPNjAKktednw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/166] ipvs: prevent integer overflow in do_ip_vs_get_ctl()
-Date: Wed, 19 Mar 2025 07:29:59 -0700
-Message-ID: <20250319143020.747473697@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.6 004/166] hrtimer: Use and report correct timerslack values for realtime tasks
+Date: Wed, 19 Mar 2025 07:29:35 -0700
+Message-ID: <20250319143020.101232223@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -52,68 +50,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-[ Upstream commit 80b78c39eb86e6b55f56363b709eb817527da5aa ]
+commit ed4fb6d7ef68111bb539283561953e5c6e9a6e38 upstream.
 
-The get->num_services variable is an unsigned int which is controlled by
-the user.  The struct_size() function ensures that the size calculation
-does not overflow an unsigned long, however, we are saving the result to
-an int so the calculation can overflow.
+The timerslack_ns setting is used to specify how much the hardware
+timers should be delayed, to potentially dispatch multiple timers in a
+single interrupt. This is a performance optimization. Timers of
+realtime tasks (having a realtime scheduling policy) should not be
+delayed.
 
-Both "len" and "get->num_services" come from the user.  This check is
-just a sanity check to help the user and ensure they are using the API
-correctly.  An integer overflow here is not a big deal.  This has no
-security impact.
+This logic was inconsitently applied to the hrtimers, leading to delays
+of realtime tasks which used timed waits for events (e.g. condition
+variables). Due to the downstream override of the slack for rt tasks,
+the procfs reported incorrect (non-zero) timerslack_ns values.
 
-Save the result from struct_size() type size_t to fix this integer
-overflow bug.
+This is changed by setting the timer_slack_ns task attribute to 0 for
+all tasks with a rt policy. By that, downstream users do not need to
+specially handle rt tasks (w.r.t. the slack), and the procfs entry
+shows the correct value of "0". Setting non-zero slack values (either
+via procfs or PR_SET_TIMERSLACK) on tasks with a rt policy is ignored,
+as stated in "man 2 PR_SET_TIMERSLACK":
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Timer slack is not applied to threads that are scheduled under a
+  real-time scheduling policy (see sched_setscheduler(2)).
+
+The special handling of timerslack on rt tasks in downstream users
+is removed as well.
+
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240814121032.368444-2-felix.moessbauer@siemens.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/proc/base.c        |    9 +++++----
+ fs/select.c           |   11 ++++-------
+ kernel/sched/core.c   |    8 ++++++++
+ kernel/sys.c          |    2 ++
+ kernel/time/hrtimer.c |   18 +++---------------
+ 5 files changed, 22 insertions(+), 26 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index dec5309d9f1f5..ae76542de3e98 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -3091,12 +3091,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_SERVICES:
- 	{
- 		struct ip_vs_get_services *get;
--		int size;
-+		size_t size;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -2633,10 +2633,11 @@ static ssize_t timerslack_ns_write(struc
+ 	}
  
- 		get = (struct ip_vs_get_services *)arg;
- 		size = struct_size(get, entrytable, get->num_services);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
-@@ -3132,12 +3132,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_DESTS:
- 	{
- 		struct ip_vs_get_dests *get;
--		int size;
-+		size_t size;
+ 	task_lock(p);
+-	if (slack_ns == 0)
+-		p->timer_slack_ns = p->default_timer_slack_ns;
+-	else
+-		p->timer_slack_ns = slack_ns;
++	if (task_is_realtime(p))
++		slack_ns = 0;
++	else if (slack_ns == 0)
++		slack_ns = p->default_timer_slack_ns;
++	p->timer_slack_ns = slack_ns;
+ 	task_unlock(p);
  
- 		get = (struct ip_vs_get_dests *)arg;
- 		size = struct_size(get, entrytable, get->num_dests);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
--- 
-2.39.5
-
+ out:
+--- a/fs/select.c
++++ b/fs/select.c
+@@ -77,19 +77,16 @@ u64 select_estimate_accuracy(struct time
+ {
+ 	u64 ret;
+ 	struct timespec64 now;
++	u64 slack = current->timer_slack_ns;
+ 
+-	/*
+-	 * Realtime tasks get a slack of 0 for obvious reasons.
+-	 */
+-
+-	if (rt_task(current))
++	if (slack == 0)
+ 		return 0;
+ 
+ 	ktime_get_ts64(&now);
+ 	now = timespec64_sub(*tv, now);
+ 	ret = __estimate_accuracy(&now);
+-	if (ret < current->timer_slack_ns)
+-		return current->timer_slack_ns;
++	if (ret < slack)
++		return slack;
+ 	return ret;
+ }
+ 
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7530,6 +7530,14 @@ static void __setscheduler_params(struct
+ 	else if (fair_policy(policy))
+ 		p->static_prio = NICE_TO_PRIO(attr->sched_nice);
+ 
++	/* rt-policy tasks do not have a timerslack */
++	if (task_is_realtime(p)) {
++		p->timer_slack_ns = 0;
++	} else if (p->timer_slack_ns == 0) {
++		/* when switching back to non-rt policy, restore timerslack */
++		p->timer_slack_ns = p->default_timer_slack_ns;
++	}
++
+ 	/*
+ 	 * __sched_setscheduler() ensures attr->sched_priority == 0 when
+ 	 * !rt_policy. Always setting this ensures that things like
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -2535,6 +2535,8 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
+ 			error = current->timer_slack_ns;
+ 		break;
+ 	case PR_SET_TIMERSLACK:
++		if (task_is_realtime(current))
++			break;
+ 		if (arg2 <= 0)
+ 			current->timer_slack_ns =
+ 					current->default_timer_slack_ns;
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -2093,14 +2093,9 @@ long hrtimer_nanosleep(ktime_t rqtp, con
+ 	struct restart_block *restart;
+ 	struct hrtimer_sleeper t;
+ 	int ret = 0;
+-	u64 slack;
+-
+-	slack = current->timer_slack_ns;
+-	if (rt_task(current))
+-		slack = 0;
+ 
+ 	hrtimer_init_sleeper_on_stack(&t, clockid, mode);
+-	hrtimer_set_expires_range_ns(&t.timer, rqtp, slack);
++	hrtimer_set_expires_range_ns(&t.timer, rqtp, current->timer_slack_ns);
+ 	ret = do_nanosleep(&t, mode);
+ 	if (ret != -ERESTART_RESTARTBLOCK)
+ 		goto out;
+@@ -2281,7 +2276,7 @@ void __init hrtimers_init(void)
+ /**
+  * schedule_hrtimeout_range_clock - sleep until timeout
+  * @expires:	timeout value (ktime_t)
+- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
++ * @delta:	slack in expires timeout (ktime_t)
+  * @mode:	timer mode
+  * @clock_id:	timer clock to be used
+  */
+@@ -2308,13 +2303,6 @@ schedule_hrtimeout_range_clock(ktime_t *
+ 		return -EINTR;
+ 	}
+ 
+-	/*
+-	 * Override any slack passed by the user if under
+-	 * rt contraints.
+-	 */
+-	if (rt_task(current))
+-		delta = 0;
+-
+ 	hrtimer_init_sleeper_on_stack(&t, clock_id, mode);
+ 	hrtimer_set_expires_range_ns(&t.timer, *expires, delta);
+ 	hrtimer_sleeper_start_expires(&t, mode);
+@@ -2334,7 +2322,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
+ /**
+  * schedule_hrtimeout_range - sleep until timeout
+  * @expires:	timeout value (ktime_t)
+- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
++ * @delta:	slack in expires timeout (ktime_t)
+  * @mode:	timer mode
+  *
+  * Make the current task sleep until the given expiry time has
 
 
