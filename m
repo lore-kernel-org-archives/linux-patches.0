@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEC01DB122;
-	Wed, 19 Mar 2025 14:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453CF1DB15C;
+	Wed, 19 Mar 2025 14:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394935; cv=none; b=Z+4UWopT7apVEMUztwh83OhGB/MjyCl8EYPyYRO2bBc0gccnhNJESfTDbVxqDelx8HliHDyxOhJ1pXKTgtzLPJDEJKjnXoscsVsqiKlSvychnuwEl44gde++SRZyp8vtu2kXm0id3458xooS7B5s1gdZ6o6R/i6/2WAg7u1dZ6w=
+	t=1742394935; cv=none; b=oogdIrfw3nq9dLouRUN0zQao01xWzzMJvW9S740tSBSx2/BXMmb3Z7LTxWspxFgviBCQmE9Qh0LJ4lUElPNs05Gwjh+dyEcnF8JFDPFrR+i5zMW9B/VtHLtDWc+ulzPhcbuf7f3sI9vYwXXrA2FtMDnynGhsceJy1tNcAU9HyCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394935; c=relaxed/simple;
-	bh=HvHDul91zpTaoK4hlN/gDBiH6lHfMiIpUG6N9HrDDOY=;
+	bh=XNS5jSISiRUURaKPBWlQcF9K1lNWgXfVy4BldSO8Nfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZpPkykf71sslpWfqEZbPAJTlw1MldosuUCx4L2gHKPoD40nFXVkgbGLNPQKPDDd5ntgt4KLASJQERz8ovrkfv8DbYiZ0QZiu0RVDyRM+XiYqIKFpMJjkXB81AKl37W6GmJD0SuoDS9dB8SW4baurWfn5YSoftoYBlyPGRqMHDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUMau3ID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKIg1LgblgLCPZlGjnLIGyIuzpscbmI13t+SwYKGp/hmDUZQzu9YHTVOhSJN1i4zOjB4Dh5xdn/fTa9Qum1AkS6T8XsQXT5xdHz1W6HJ8/oEqJGpgVolSnuJhXr+BcnrqGo+d2fiWkuAdRvFMwFEw9RlaPDevyrgHKuhoQQlTfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7KejjJz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUMau3ID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141E5C4CEE8;
-	Wed, 19 Mar 2025 14:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7KejjJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9914C4CEE4;
+	Wed, 19 Mar 2025 14:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394935;
-	bh=HvHDul91zpTaoK4hlN/gDBiH6lHfMiIpUG6N9HrDDOY=;
+	s=korg; t=1742394933;
+	bh=XNS5jSISiRUURaKPBWlQcF9K1lNWgXfVy4BldSO8Nfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUMau3IDUpztEynzMM3jHTxyTRFBRWrZkRvlqRKQkNgOLKd8LaPpWaXQw8VrmFGMu
-	 B3s4jf0s2Xpb2oRhGeJoY4tQFS1KzLjXQDUo3piSeK24doxhLsYrgcdNJ2Word3n+1
-	 jxIq0ZBQPLrLZPUBy9s6AQBT+1F5E2+rxVfg2qhY=
+	b=I7KejjJzGGI3ZV7zwY8ngkHIIJduuyE9l9oKjXC/r0dBYBUx8SFrbUOBTO695wk0W
+	 q89RYAkO6w1M8KOSLzG9deeyvvF+SpirFMPfkZy/2mCgOSQE5jWk5ZC/OMUQtu15H5
+	 pua9pNxra1sdmCoYicEnTtGpeK+LRMbS5UfVUasU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 112/241] ASoC: rsnd: indicate unsupported clock rate
-Date: Wed, 19 Mar 2025 07:29:42 -0700
-Message-ID: <20250319143030.495969995@linuxfoundation.org>
+Subject: [PATCH 6.13 148/241] block: fix kmem_cache of name bio-108 already exists
+Date: Wed, 19 Mar 2025 07:30:18 -0700
+Message-ID: <20250319143031.377190648@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 796106e29e5df6cd4b4e2b51262a8a19e9fa0625 ]
+[ Upstream commit b654f7a51ffb386131de42aa98ed831f8c126546 ]
 
-It will indicate "unsupported clock rate" when setup clock failed.
-But it is unclear what kind of rate was failed. Indicate it.
+Device mapper bioset often has big bio_slab size, which can be more than
+1000, then 8byte can't hold the slab name any more, cause the kmem_cache
+allocation warning of 'kmem_cache of name 'bio-108' already exists'.
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/874j192qej.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the warning by extending bio_slab->name to 12 bytes, but fix output
+of /proc/slabinfo
+
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250228132656.2838008-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/renesas/rcar/ssi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/bio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/renesas/rcar/ssi.c b/sound/soc/renesas/rcar/ssi.c
-index b3d4e8ae07eff..0c6424a1fcac0 100644
---- a/sound/soc/renesas/rcar/ssi.c
-+++ b/sound/soc/renesas/rcar/ssi.c
-@@ -336,7 +336,8 @@ static int rsnd_ssi_master_clk_start(struct rsnd_mod *mod,
- 	return 0;
- 
- rate_err:
--	dev_err(dev, "unsupported clock rate\n");
-+	dev_err(dev, "unsupported clock rate (%d)\n", rate);
-+
- 	return ret;
- }
- 
+diff --git a/block/bio.c b/block/bio.c
+index d5bdc31d88d32..f54e8572affc1 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -77,7 +77,7 @@ struct bio_slab {
+ 	struct kmem_cache *slab;
+ 	unsigned int slab_ref;
+ 	unsigned int slab_size;
+-	char name[8];
++	char name[12];
+ };
+ static DEFINE_MUTEX(bio_slab_lock);
+ static DEFINE_XARRAY(bio_slabs);
 -- 
 2.39.5
 
