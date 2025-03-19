@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393E01DEFD8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BB71DEFD8;
 	Wed, 19 Mar 2025 14:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395211; cv=none; b=dxLa6t3qs94VE1t53fgk5mfDEeAAWIyuq2Rdb8VpOFCOH4xpi9N5bYrbNiBSF4TZ72LbklvmZNzVgAQZ94UDzk/55eD+q+Y62M+1azPe0aKtMARk+B/lIRoGeT94BNCKa+/Tr6kAUFiSMuTK93P0thMV48SUPehXQoGzBq4ngpk=
+	t=1742395212; cv=none; b=Hq+LdQV5Y/+NH1XaK86vB3p0DiTGci1Sx7GgGOfCuhR9MN/fWyUMcDq7y+x0pZX7qSrN52WmDf7AqRteUyQ8WbvhgaYs0fkdcE2srBUwGLS2EvIUqvWp0HL1AwhmgW2zCs19+ES8+i5vOC2FV6ETb9KkFS6e3hLJGX9YSiygYys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395211; c=relaxed/simple;
-	bh=BO5/yqfXmMAy4FmzIFrsLRv+Mm0p0OKu59q5d1C8UUM=;
+	s=arc-20240116; t=1742395212; c=relaxed/simple;
+	bh=IAIaVO9Pg/Wnn1Aj8X4lR/bFxT/NO/niRfMy8NVZvuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgNiEqDc+tULbHSzF00wEdqskcCuf23onEvedf2izOWShZ0hrb7bwaMn+N5jP7sXIO8IuBGPWJUvtI3Mfi5+o14y3Zr6wZm29P3HU+Y7ECxaUdRSijrEYleUwn7B4PZFC1BXIxEeijQ2/Z9hRwl23kfzUqNIOhMxx0ZZXN7G4ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gF0OCOn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Auu7MjiTilZMIWEILJBvzIxtUE4C0Tp9jknNvoB4Zggz0gIVIQQKyYiEK5qhH3zjhiBm2ON67Gxx8/i14wtLwL3M6RSkzZMEcIjXp54Q/0Rlj9ST3BTfk4E+L950GUHxQkfR2fp/Q/X0PM87pLC0HQfm7Qu4UYXEra6JCopWLeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUW3Q8q+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gF0OCOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B497C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUW3Q8q+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5382C4CEE4;
 	Wed, 19 Mar 2025 14:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395211;
-	bh=BO5/yqfXmMAy4FmzIFrsLRv+Mm0p0OKu59q5d1C8UUM=;
+	bh=IAIaVO9Pg/Wnn1Aj8X4lR/bFxT/NO/niRfMy8NVZvuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gF0OCOnPxDVq9PhW1WRE+6fco/LgrhEbGtS/P/cOzfmb8oGfGyx4U3sGembrFuL+
-	 LCUM4IxcUMvto84k2xZsAAAsSyZv0RpBDSXkDu+0fLrFqgs0ZhN2PUXLR5blIcnESU
-	 Wxb2bV0EdjhEEwU+EQvrNCSqykkPm9nLCNfMJN9s=
+	b=NUW3Q8q+9wLyfjMdi8oS2p5iAydb4l1Kz3UiVhw4F6rJyu/bdfcv66N9nH6YpWNkE
+	 oDKM08yYPqngQLapuC1cBDaPJL0bYZx5beE6G96DzdfTX8phKU2Qzjn2osr4LWovNX
+	 GGIWPEYATvIMXrxP+PDX7bcv7foxAyuHFCVk8VOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingi Cho <mincho@theori.io>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/166] net_sched: Prevent creation of classes with TC_H_ROOT
-Date: Wed, 19 Mar 2025 07:30:00 -0700
-Message-ID: <20250319143020.775321143@linuxfoundation.org>
+Subject: [PATCH 6.6 073/166] ASoC: SOF: amd: Handle IPC replies before FW_BOOT_COMPLETE
+Date: Wed, 19 Mar 2025 07:30:44 -0700
+Message-ID: <20250319143021.989432108@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -53,48 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 0c3057a5a04d07120b3d0ec9c79568fceb9c921e ]
+[ Upstream commit ac84ca815adb4171a4276b1d44096b75f6a150b7 ]
 
-The function qdisc_tree_reduce_backlog() uses TC_H_ROOT as a termination
-condition when traversing up the qdisc tree to update parent backlog
-counters. However, if a class is created with classid TC_H_ROOT, the
-traversal terminates prematurely at this class instead of reaching the
-actual root qdisc, causing parent statistics to be incorrectly maintained.
-In case of DRR, this could lead to a crash as reported by Mingi Cho.
+In some cases, e.g. during resuming from suspend, there is a possibility
+that some IPC reply messages get received by the host while the DSP
+firmware has not yet reached the complete boot state.
 
-Prevent the creation of any Qdisc class with classid TC_H_ROOT
-(0xFFFFFFFF) across all qdisc types, as suggested by Jamal.
+Detect when this happens and do not attempt to process the unexpected
+replies from DSP.  Instead, provide proper debugging support.
 
-Reported-by: Mingi Cho <mincho@theori.io>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 066a3b5b2346 ("[NET_SCHED] sch_api: fix qdisc_tree_decrease_qlen() loop")
-Link: https://patch.msgid.link/20250306232355.93864-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20250207-sof-vangogh-fixes-v1-3-67824c1e4c9a@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/sof/amd/acp-ipc.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 7cddaa6321c7c..df89790c459ad 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -2197,6 +2197,12 @@ static int tc_ctl_tclass(struct sk_buff *skb, struct nlmsghdr *n,
- 		return -EOPNOTSUPP;
+diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
+index fcb54f545fea3..a4e9bc20adaff 100644
+--- a/sound/soc/sof/amd/acp-ipc.c
++++ b/sound/soc/sof/amd/acp-ipc.c
+@@ -167,6 +167,7 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
+ 
+ 	if (sdev->first_boot && sdev->fw_state != SOF_FW_BOOT_COMPLETE) {
+ 		acp_mailbox_read(sdev, sdev->dsp_box.offset, &status, sizeof(status));
++
+ 		if ((status & SOF_IPC_PANIC_MAGIC_MASK) == SOF_IPC_PANIC_MAGIC) {
+ 			snd_sof_dsp_panic(sdev, sdev->dsp_box.offset + sizeof(status),
+ 					  true);
+@@ -188,13 +189,21 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
+ 
+ 	dsp_ack = snd_sof_dsp_read(sdev, ACP_DSP_BAR, ACP_SCRATCH_REG_0 + dsp_ack_write);
+ 	if (dsp_ack) {
+-		spin_lock_irq(&sdev->ipc_lock);
+-		/* handle immediate reply from DSP core */
+-		acp_dsp_ipc_get_reply(sdev);
+-		snd_sof_ipc_reply(sdev, 0);
+-		/* set the done bit */
+-		acp_dsp_ipc_dsp_done(sdev);
+-		spin_unlock_irq(&sdev->ipc_lock);
++		if (likely(sdev->fw_state == SOF_FW_BOOT_COMPLETE)) {
++			spin_lock_irq(&sdev->ipc_lock);
++
++			/* handle immediate reply from DSP core */
++			acp_dsp_ipc_get_reply(sdev);
++			snd_sof_ipc_reply(sdev, 0);
++			/* set the done bit */
++			acp_dsp_ipc_dsp_done(sdev);
++
++			spin_unlock_irq(&sdev->ipc_lock);
++		} else {
++			dev_dbg_ratelimited(sdev->dev, "IPC reply before FW_BOOT_COMPLETE: %#x\n",
++					    dsp_ack);
++		}
++
+ 		ipc_irq = true;
  	}
  
-+	/* Prevent creation of traffic classes with classid TC_H_ROOT */
-+	if (clid == TC_H_ROOT) {
-+		NL_SET_ERR_MSG(extack, "Cannot create traffic class with classid TC_H_ROOT");
-+		return -EINVAL;
-+	}
-+
- 	new_cl = cl;
- 	err = -EOPNOTSUPP;
- 	if (cops->change)
 -- 
 2.39.5
 
