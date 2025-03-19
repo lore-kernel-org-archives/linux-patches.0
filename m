@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ABD1DED78;
-	Wed, 19 Mar 2025 14:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701CE1DED78;
+	Wed, 19 Mar 2025 14:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395194; cv=none; b=NZiwhSZHFhf+os8NOYo9nZZeOuGLnbwYqLU6qmO89pxjrhDQ5GIkle9+stYzD4Y107NolJD9qsMp9fMpXHlX+zMOiwnqO+ihWDPh3EZzpxJuEBFWw12hPY0NsKiQiGZyf4fbF/swQfML5j76kzFx/Et8plYb8Y8CYKYnpR/TO44=
+	t=1742395195; cv=none; b=ZOUOQJBKKoUKDtkQrQGV6mIoY8LDiH/2Pz0h/g8p6dCltrPbT5iLv5pr5r08yvGYpoux9vuuAF3jW5V5hwQhivOy1QVhTye0ni8yzs0w6GwcYCVqo60/YaRfiG8T8HWegl29cb8LdcNqzzd+IDvtVQ/ZIJhZ+UjyW9qWfUyj99A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395194; c=relaxed/simple;
-	bh=hA13pnhR5PWvSm1G4B1J1v800qwZNH8jOoI4m++ozIw=;
+	s=arc-20240116; t=1742395195; c=relaxed/simple;
+	bh=HbvNzl3FQu/X1b3xW87I9dsbgEYuE86MIui3oWV8bZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WheVtRT8fnSRYXteQT9EWRN5U3fEPT4fOX3xzC2ePRxYN/Qt0C95yjFHPK+bdMw9sRotGjLmNYgefWuFen6LSvBJXqt7K4eHmmErzW7ZCOAYoyy8Dp2gwKQsONDc/xf2SOLRPOjGat2yifz94HipaALM/kKjEV9JwRpKGBtK6E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIrKg3Nw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F02lFl9rpDnXwfKWEazO58755NZUfYQp11xkvpwe8OM6YT12H/oMg3Mgme15VCy0twxY4vaGPV12cFU8xz7nGgKd/I7iqBK1xCLP/tttqDeIOBmnS8oZ/RQD7TunQuMWjSngPCvllgLsBCDQMLpMIqazrIHlkval0nhRMwQSgyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgRyqMR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIrKg3Nw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978E7C4CEE4;
-	Wed, 19 Mar 2025 14:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgRyqMR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BFFC4CEE4;
+	Wed, 19 Mar 2025 14:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395194;
-	bh=hA13pnhR5PWvSm1G4B1J1v800qwZNH8jOoI4m++ozIw=;
+	s=korg; t=1742395195;
+	bh=HbvNzl3FQu/X1b3xW87I9dsbgEYuE86MIui3oWV8bZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIrKg3Nwg+41rcs3F/NEeujbmk3A2f77FRPSZ/Td/ak/IHEjYFHNZlPpXl8ileXI6
-	 qUFJzZT7d4xu06+luM42eG7xFLRu0qKGCwL9ZTvVOzuF+SXOM58aO/feuNHzHXk/X/
-	 jgCuHt9goTZApVLKlJPH9UKoG1+xosec32KtCNRM=
+	b=cgRyqMR3Ps/Kl5YGxediju6yBWGNx4Q6j9/lXzoZ0DC9m746uAjORDUboeF3jezY4
+	 MOc3HpNxpjDrVa4aafjKGkvc4MWsEi2X1jg08YNxKvphBDtoSLfCbwjAJ0vFlub9tG
+	 frY7cflNl9cY+Fpk2oE9DNWtK/fLK0iXwUkyK0YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ievgen Vovk <YevgenVovk@ukr.net>,
+	Alex Henrie <alexhenrie24@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/166] HID: hid-apple: Apple Magic Keyboard a3203 USB-C support
-Date: Wed, 19 Mar 2025 07:30:26 -0700
-Message-ID: <20250319143021.485682751@linuxfoundation.org>
+Subject: [PATCH 6.6 056/166] HID: apple: fix up the F6 key on the Omoton KB066 keyboard
+Date: Wed, 19 Mar 2025 07:30:27 -0700
+Message-ID: <20250319143021.514694111@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,57 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ievgen Vovk <YevgenVovk@ukr.net>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit 2813e00dcd748cef47d2bffaa04071de93fddf00 ]
+[ Upstream commit 819083cb6eedcc8495cbf84845877bcc741b93b3 ]
 
-Add Apple Magic Keyboard 2024 model (with USB-C port) device ID (0320)
-to those recognized by the hid-apple driver. Keyboard is otherwise
-compatible with the existing implementation for its earlier 2021 model.
+The Omoton KB066 is an Apple A1255 keyboard clone (HID product code
+05ac:022c). On both keyboards, the F6 key becomes Num Lock when the Fn
+key is held. But unlike its Apple exemplar, when the Omoton's F6 key is
+pressed without Fn, it sends the usage code 0xC0301 from the reserved
+section of the consumer page instead of the standard F6 usage code
+0x7003F from the keyboard page. The nonstandard code is translated to
+KEY_UNKNOWN and becomes useless on Linux. The Omoton KB066 is a pretty
+popular keyboard, judging from its 29,058 reviews on Amazon at time of
+writing, so let's account for its quirk to make it more usable.
 
-Signed-off-by: Ievgen Vovk <YevgenVovk@ukr.net>
+By the way, it would be nice if we could automatically set fnmode to 0
+for Omoton keyboards because they handle the Fn key internally and the
+kernel's Fn key handling creates undesirable side effects such as making
+F1 and F2 always Brightness Up and Brightness Down in fnmode=1 (the
+default) or always F1 and F2 in fnmode=2. Unfortunately I don't think
+there's a way to identify Bluetooth keyboards more specifically than the
+HID product code which is obviously inaccurate. Users of Omoton
+keyboards will just have to set fnmode to 0 manually to get full Fn key
+functionality.
+
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 5 +++++
- drivers/hid/hid-ids.h   | 1 +
- 2 files changed, 6 insertions(+)
+ drivers/hid/hid-apple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index d9e9829b22001..9ff40f3b98064 100644
+index 9ff40f3b98064..9f3480ef524c1 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
-@@ -459,6 +459,7 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
- 			 hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_NUMPAD_2015)
- 			table = magic_keyboard_2015_fn_keys;
- 		else if (hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2021 ||
-+			 hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2024 ||
- 			 hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_FINGERPRINT_2021 ||
- 			 hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_NUMPAD_2021)
- 			table = apple2021_fn_keys;
-@@ -1064,6 +1065,10 @@ static const struct hid_device_id apple_devices[] = {
- 		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK | APPLE_RDESC_BATTERY },
- 	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2021),
- 		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2024),
-+		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK | APPLE_RDESC_BATTERY },
-+	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2024),
-+		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_FINGERPRINT_2021),
- 		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK | APPLE_RDESC_BATTERY },
- 	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_FINGERPRINT_2021),
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index b807d01ecca6e..09090803f1dd2 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -184,6 +184,7 @@
- #define USB_DEVICE_ID_APPLE_IRCONTROL4	0x8242
- #define USB_DEVICE_ID_APPLE_IRCONTROL5	0x8243
- #define USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2021   0x029c
-+#define USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2024   0x0320
- #define USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_FINGERPRINT_2021   0x029a
- #define USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_NUMPAD_2021   0x029f
- #define USB_DEVICE_ID_APPLE_TOUCHBAR_BACKLIGHT 0x8102
+@@ -531,6 +531,9 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
+ 		}
+ 	}
+ 
++	if (usage->hid == 0xc0301) /* Omoton KB066 quirk */
++		code = KEY_F6;
++
+ 	if (usage->code != code) {
+ 		input_event_with_scancode(input, usage->type, code, usage->hid, value);
+ 
 -- 
 2.39.5
 
