@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEDF1E32DD;
-	Wed, 19 Mar 2025 14:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF511D8DE4;
+	Wed, 19 Mar 2025 14:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394927; cv=none; b=U6Gibi6CAS5mwf3WNKY9DPe6mrckh+jCOb0lws1yHdpi9SK0Im6hD3P7bwoHAWYrqUUQxO/TjN5tGTJk6iShlq6TNuB+XRubrFttXK8+d5vR7axsdkVV4lHmvj1/5yzYh+zEvccJmL677keV7o3WvZaKRnc8B72GlZSPEKgNjoI=
+	t=1742394927; cv=none; b=EEXOOYmVEUGLgSMlCd1xO4gb6vfYzgM5F2zf+rDhEtF+C0Q/BZOSMvrrMyJ608bYg3yf6reYCdVvsGXgg513uCmceDryMendrCDcSjg5youmyQq4aiEUUN9759IBFEm4gzj2RXPqGIB28yV2WN0nZIGGLsNCCicwienQWdaR04U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394927; c=relaxed/simple;
-	bh=xjQLqPLsS2V+hZK5oEY5x9zv0iGPMQxMeKsXv01Tdn0=;
+	bh=3l+3xV29Nzg26NWbYitWV3YkAV4fW1nFGfpwdt0J4t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M814zsCStPBCzwUd1NlLe3HIFgO4LRKIl1QeCi2HRB2qmT6qlKxOzY4A01WqVJ6TiPj3QNYF3BH5nFhJEJ9JPT5OgC3sLbJtNPm/k7CATxtuVecYEfSe9ppk9Ta1D5+LF+9EnvsUqilQW5dDSGD/jmF5xrexfzbANU/eFNg744s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTI2TGYr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HgHxkCohFD9TaJDxQMjjejlBuU4a1g8exS2jaVIRcbqDeNNP0f0aA4E9LD+7XDfabBubHu8m9MVxuAs1i6PmywM3/a/Nk+Qy5J7g9TuhahXMGQOD6LW53KTf0fyI4GpbKkYdsYqjNbCrwGTtJAq/vmOA390gm8Hjtt72Eumi2QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMA1gToH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTI2TGYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4FEC4CEE4;
-	Wed, 19 Mar 2025 14:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMA1gToH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FF8C4CEE4;
+	Wed, 19 Mar 2025 14:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394926;
-	bh=xjQLqPLsS2V+hZK5oEY5x9zv0iGPMQxMeKsXv01Tdn0=;
+	s=korg; t=1742394927;
+	bh=3l+3xV29Nzg26NWbYitWV3YkAV4fW1nFGfpwdt0J4t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTI2TGYrc3n4veW7morSZrPqorA7ADg5yaXc2M/8C6cmcdVLlMVkZMCEAaCVOeTbC
-	 xUTQsFS2UHmiwKyoY3Oo/NBOFduU4uFNtD70mTMa1RQZ93/s/PlwIjQa3F5MUgt0Fj
-	 P1RJsfGj0XEV0tEGElOBAMcv34XXuG326fRsfVFo=
+	b=EMA1gToH+9gAy9Axg3es4FSsye/znD/I7BqiYJ+L3nix+CTDgfILviO/mU3kDMY2F
+	 x/VTfQlHs4x4VR/eQw5XJBxQAMdXxxsYvoDK1qwP6RclSbLHjXtE/q5m94sCfZjNXk
+	 C/eRoeT+NZLrG3UNAA+rs05AuXHB5LNM+7U7B//k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 139/241] ASoC: SOF: Intel: dont check number of sdw links when set dmic_fixup
-Date: Wed, 19 Mar 2025 07:30:09 -0700
-Message-ID: <20250319143031.162693452@linuxfoundation.org>
+Subject: [PATCH 6.13 140/241] drm/vkms: Round fixp2int conversion in lerp_u16
+Date: Wed, 19 Mar 2025 07:30:10 -0700
+Message-ID: <20250319143031.186117442@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -47,62 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 56a677293509b2a0d39ac8d02b583c1ab1fe4d94 ]
+[ Upstream commit 8ec43c58d3be615a71548bc09148212013fb7e5f ]
 
-Currently, we assume that the PCH DMIC pins are pin-muxed with SoundWire
-links. However, we do see a HW design that use PCH DMIC along with 3
-SoundWire links. Remove the check now.
-With this change the PCM DMIC will be presented if it is reported by the
-BIOS irrespective of whether there are SDW links present or not.
+fixp2int always rounds down, fixp2int_ceil rounds up. We need
+the new fixp2int_round.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250225093716.67240-2-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241220043410.416867-3-alex.hung@amd.com
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda.c | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/vkms/vkms_composer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index be689f6e10c81..a1ccd95da8bb7 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -1312,22 +1312,8 @@ struct snd_soc_acpi_mach *hda_machine_select(struct snd_sof_dev *sdev)
- 		/* report to machine driver if any DMICs are found */
- 		mach->mach_params.dmic_num = check_dmic_num(sdev);
+diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
+index 3f0977d746bee..87dfb9f69ee5b 100644
+--- a/drivers/gpu/drm/vkms/vkms_composer.c
++++ b/drivers/gpu/drm/vkms/vkms_composer.c
+@@ -98,7 +98,7 @@ static u16 lerp_u16(u16 a, u16 b, s64 t)
  
--		if (sdw_mach_found) {
--			/*
--			 * DMICs use up to 4 pins and are typically pin-muxed with SoundWire
--			 * link 2 and 3, or link 1 and 2, thus we only try to enable dmics
--			 * if all conditions are true:
--			 * a) 2 or fewer links are used by SoundWire
--			 * b) the NHLT table reports the presence of microphones
--			 */
--			if (hweight_long(mach->link_mask) <= 2)
--				dmic_fixup = true;
--			else
--				mach->mach_params.dmic_num = 0;
--		} else {
--			if (mach->tplg_quirk_mask & SND_SOC_ACPI_TPLG_INTEL_DMIC_NUMBER)
--				dmic_fixup = true;
--		}
-+		if (sdw_mach_found || mach->tplg_quirk_mask & SND_SOC_ACPI_TPLG_INTEL_DMIC_NUMBER)
-+			dmic_fixup = true;
+ 	s64 delta = drm_fixp_mul(b_fp - a_fp,  t);
  
- 		if (tplg_fixup &&
- 		    dmic_fixup &&
+-	return drm_fixp2int(a_fp + delta);
++	return drm_fixp2int_round(a_fp + delta);
+ }
+ 
+ static s64 get_lut_index(const struct vkms_color_lut *lut, u16 channel_value)
 -- 
 2.39.5
 
