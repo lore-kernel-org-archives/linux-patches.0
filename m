@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66901E231A;
-	Wed, 19 Mar 2025 14:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB5F215076;
+	Wed, 19 Mar 2025 14:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395063; cv=none; b=KQn7lxOkvqpbzUGAwe4nRssG99Rp3kxeT8KGR46yBU1RFOvXLM+L9uYlsIQopMgXXCrzNHVI2aNlVCltkLhkG73KmAuxVSsqsc/g4zIxqzJqdhYqNyyPR/GkE3MErSeqR+wtWrpIvII37ManPhL+k59z0gy/qbTwb5dnncDCLGA=
+	t=1742395064; cv=none; b=kJaN7jf0sC9PdeptOs81nVdQ6D1YDrRR7PDiEu99xUQkatb6UsJ1wj5MVxBf5EjsLg+lPtf5AQ9SglgNcSLVy12I4AMg2rlV+/eJJLNJQ622sBThMe/ZUuyk0O+lc1pXj+8mZA2PB3LNIz/oYMBxjS651T7TM0nA8MjYwsBAzjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395063; c=relaxed/simple;
-	bh=nRJDILvpdRkA3onb9r8AoM2jMJkIDNnYIzPUNBTAe6g=;
+	s=arc-20240116; t=1742395064; c=relaxed/simple;
+	bh=0Sw1VnzyLiE14Ad6XA4jPs1DcObPR9AZtkTbW6Vp1EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLxkpPr4tghllK/4ASwdZdyTpSIpqkxOJYJJaQKPe5w8zMpCN5y+J0yUOxb6vJ/1sTLCX5fTKDVdZ+GG+7QyZyIPe9XYBKBgSeVRRv67W+4doS2YZt+EPa0ojwd/+dpeRpHTDniuYiftwfl+2VObtVxsfbdi/dTLiS7zeSYydpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Alxmr8Up; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcZlnOxZH9SdpsWrkkOhlVfg9OjQbI8GIzSzHyDIWJcHrZ+Od6mZkI0oEtfv8sbNWUgFXwBFt0cWxvInQGSIOQWJvw2Y6AOcIoAQEC7Dfp7cUDEcnN1GjdqSWN+rpPJc4DvwyfsSWUh/Ea2ZhsKHXfaL/w2Ns2ZgAxbVAZyV0ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKhaB8xB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Alxmr8Up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA0C4CEE4;
-	Wed, 19 Mar 2025 14:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKhaB8xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0940C4CEE4;
+	Wed, 19 Mar 2025 14:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395062;
-	bh=nRJDILvpdRkA3onb9r8AoM2jMJkIDNnYIzPUNBTAe6g=;
+	s=korg; t=1742395064;
+	bh=0Sw1VnzyLiE14Ad6XA4jPs1DcObPR9AZtkTbW6Vp1EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Alxmr8UpQPz6rgYTA345hrhjGfccl3gLI1eZXxwYFem9G6Ge6joZ/M9Tce9C8lYs8
-	 gmBB0CeJ1dczcoec+WaHqk05jX30zO60NhdPR1ppkJkhnemqxy12ZuMymznXaREVvI
-	 HekQqwz6Y6ezATvbYkzxJTcOg1nd/w0F4emwdzOs=
+	b=GKhaB8xBlQSbFHTaar/G6Z5YzehPuawa38gO0ikhkZ7P8cRlpgtVxfvfPmjqx3Ylr
+	 UrMwr7o0BAVfBR11iNk5ZxKUaSfMzZ8mxlU1x0ISk9tWKGVxOdw4M8m99aopTp94om
+	 kn4esMhXm6okVjjcNDz7wmLpGCtCUUZemVDLkSuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beata Michalska <beata.michalska@arm.com>,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/231] arm64: amu: Delay allocating cpumask for AMU FIE support
-Date: Wed, 19 Mar 2025 07:29:49 -0700
-Message-ID: <20250319143029.214673579@linuxfoundation.org>
+Subject: [PATCH 6.12 099/231] drm/tests: hdmi: Remove redundant assignments
+Date: Wed, 19 Mar 2025 07:29:52 -0700
+Message-ID: <20250319143029.286513087@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -54,75 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beata Michalska <beata.michalska@arm.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit d923782b041218ef3804b2fed87619b5b1a497f3 ]
+[ Upstream commit bb4f929a8875b4801db95b8cf3b2c527c1e475e0 ]
 
-For the time being, the amu_fie_cpus cpumask is being exclusively used
-by the AMU-related internals of FIE support and is guaranteed to be
-valid on every access currently made. Still the mask is not being
-invalidated on one of the error handling code paths, which leaves
-a soft spot with theoretical risk of UAF for CPUMASK_OFFSTACK cases.
-To make things sound, delay allocating said cpumask
-(for CPUMASK_OFFSTACK) avoiding otherwise nasty sanitising case failing
-to register the cpufreq policy notifications.
+Some tests have the drm pointer assigned multiple times to the same
+value. Drop the redundant assignments.
 
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
-Reviewed-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20250131155842.3839098-1-beata.michalska@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250129-test-kunit-v2-2-fe59c43805d5@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/topology.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 1a2c72f3e7f80..cb180684d10d5 100644
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -194,12 +194,19 @@ static void amu_fie_setup(const struct cpumask *cpus)
- 	int cpu;
+diff --git a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+index cbd9584af3299..4e7369caa7369 100644
+--- a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
++++ b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+@@ -450,7 +450,6 @@ static void drm_test_check_broadcast_rgb_auto_cea_mode_vic_1(struct kunit *test)
+ 	mode = drm_kunit_display_mode_from_cea_vic(test, drm, 1);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
  
- 	/* We are already set since the last insmod of cpufreq driver */
--	if (unlikely(cpumask_subset(cpus, amu_fie_cpus)))
-+	if (cpumask_available(amu_fie_cpus) &&
-+	    unlikely(cpumask_subset(cpus, amu_fie_cpus)))
- 		return;
+-	drm = &priv->drm;
+ 	crtc = priv->crtc;
+ 	ret = light_up_connector(test, drm, crtc, conn, mode, ctx);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+@@ -564,7 +563,6 @@ static void drm_test_check_broadcast_rgb_full_cea_mode_vic_1(struct kunit *test)
+ 	mode = drm_kunit_display_mode_from_cea_vic(test, drm, 1);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
  
--	for_each_cpu(cpu, cpus) {
-+	for_each_cpu(cpu, cpus)
- 		if (!freq_counters_valid(cpu))
- 			return;
-+
-+	if (!cpumask_available(amu_fie_cpus) &&
-+	    !zalloc_cpumask_var(&amu_fie_cpus, GFP_KERNEL)) {
-+		WARN_ONCE(1, "Failed to allocate FIE cpumask for CPUs[%*pbl]\n",
-+			  cpumask_pr_args(cpus));
-+		return;
- 	}
+-	drm = &priv->drm;
+ 	crtc = priv->crtc;
+ 	ret = light_up_connector(test, drm, crtc, conn, mode, ctx);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+@@ -680,7 +678,6 @@ static void drm_test_check_broadcast_rgb_limited_cea_mode_vic_1(struct kunit *te
+ 	mode = drm_kunit_display_mode_from_cea_vic(test, drm, 1);
+ 	KUNIT_ASSERT_NOT_NULL(test, mode);
  
- 	cpumask_or(amu_fie_cpus, amu_fie_cpus, cpus);
-@@ -237,17 +244,8 @@ static struct notifier_block init_amu_fie_notifier = {
+-	drm = &priv->drm;
+ 	crtc = priv->crtc;
+ 	ret = light_up_connector(test, drm, crtc, conn, mode, ctx);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+@@ -1282,7 +1279,6 @@ static void drm_test_check_output_bpc_format_vic_1(struct kunit *test)
+ 	rate = mode->clock * 1500;
+ 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
  
- static int __init init_amu_fie(void)
- {
--	int ret;
--
--	if (!zalloc_cpumask_var(&amu_fie_cpus, GFP_KERNEL))
--		return -ENOMEM;
--
--	ret = cpufreq_register_notifier(&init_amu_fie_notifier,
-+	return cpufreq_register_notifier(&init_amu_fie_notifier,
- 					CPUFREQ_POLICY_NOTIFIER);
--	if (ret)
--		free_cpumask_var(amu_fie_cpus);
--
--	return ret;
- }
- core_initcall(init_amu_fie);
- 
+-	drm = &priv->drm;
+ 	crtc = priv->crtc;
+ 	ret = light_up_connector(test, drm, crtc, conn, mode, ctx);
+ 	KUNIT_EXPECT_EQ(test, ret, 0);
 -- 
 2.39.5
 
