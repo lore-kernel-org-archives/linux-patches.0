@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397441DDA36;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEB41DDA36;
 	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394971; cv=none; b=i32aBSDNEtaZoYhc/Ts3G8zjbvdd1WS+MWvdJjsGrSiQBIY1UDzS9bvk3TrOBCybcDqSFWU+OO5g9BFePRNy126XIRD36OciiXeLWB674bBdkCpsOmLVVW8cX8kNB3P2UyMPOwy8zGP4wSiqJqg97VlKhA8elckS6RXINpjz0sU=
+	t=1742394972; cv=none; b=DtIcqevAnhxQEkcSVQpelkoMdr22gaLizZ3I/cRcqiJbNbm4+EmZ3/64YFv3S3wvTryPdkO0T7YV217XZzL2O0adrW1ZgvWjZpMy0LHp09fXLQYiRWAnT7/PwpXczM/r1/GrxOyMyZGw5b1k42F01GS1+uy1Jxp3NvtI7xPGuhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394971; c=relaxed/simple;
-	bh=Vv6BcZOoQs77XM0ybLoyPTCNx7taN5WO3CH3lACtQ/A=;
+	s=arc-20240116; t=1742394972; c=relaxed/simple;
+	bh=XZgxHZv4yPo1SUB9pIayEgyWWSQJ9NQYkHm24x+wYjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kn+0A5k/FqB2tl7GCef0r5lsOYjRpWwUCCyg9SYJESQ3xX2hromuKtD02jxTGKCFbj7vD6TmfQNR6KtvzQfdEDenZiXvARaBOk5IBZiHrXCrRvS1/1IoGmjV8STWsTlChep32fS/7F6DytmsDc/7vVbgXMVMFFHPsBrImtUvP48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2o2h1tS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RLm2Uyg5RAwz0DwgDnSBtL/rewAWR8vIFHex87Ou/T2KCkf5YxOQ5TOddmIaXbzynMosGiO5g1NRulXUA+7BlC0z9jxqw3aDQnbuTERd+mvQzIdENzKlglI0x4ypqzNJJVBw/iTMrjv3OJSsEpScoZnpb2GpqNjIZ5fe+FEufnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIjB0SeM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2o2h1tS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E916C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIjB0SeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1460C4CEE4;
 	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394971;
-	bh=Vv6BcZOoQs77XM0ybLoyPTCNx7taN5WO3CH3lACtQ/A=;
+	bh=XZgxHZv4yPo1SUB9pIayEgyWWSQJ9NQYkHm24x+wYjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2o2h1tSMqUu40fPU1HgzaRm1EH+iMsicgSXLFNdwdHs/S/yIeBj+2kON2tYhrqtN
-	 Y+Vj12bZs+ygRMNMuXH++HDgx9ndoOA+/ChN59L0DQJu34P+UjMfPdrQKBu9qgYj1Q
-	 HDCa8SOnxbJtlus6LsnaJZbE3aNwLkoGk6vcjdPE=
+	b=PIjB0SeM+Mi+1a6SprkckRJi8l11HUbgcJgQ6UZA9747vSDIU42SL09FSBL92d+9Y
+	 LqL9gc4qnVBGREKHi69BDwjFQnK6c0SRkw3dloBe9hwP5rVAXAh1mVlH+uyvjEVWAU
+	 Pi+TVo+YDoAtcRAWVuCtyAzTbDmD0fS0vOFOaduM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alban Kurti <kurti@invicto.ai>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 206/241] ASoC: ops: Consistently treat platform_max as control value
-Date: Wed, 19 Mar 2025 07:31:16 -0700
-Message-ID: <20250319143032.837093344@linuxfoundation.org>
+Subject: [PATCH 6.13 207/241] rust: error: add missing newline to pr_warn! calls
+Date: Wed, 19 Mar 2025 07:31:17 -0700
+Message-ID: <20250319143032.864618407@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,104 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Alban Kurti <kurti@invicto.ai>
 
-[ Upstream commit 0eba2a7e858907a746ba69cd002eb9eb4dbd7bf3 ]
+[ Upstream commit 6f5c36f56d475732981dcf624e0ac0cc7c8984c8 ]
 
-This reverts commit 9bdd10d57a88 ("ASoC: ops: Shift tested values in
-snd_soc_put_volsw() by +min"), and makes some additional related
-updates.
+Added missing newline at the end of pr_warn! usage
+so the log is not missed.
 
-There are two ways the platform_max could be interpreted; the maximum
-register value, or the maximum value the control can be set to. The
-patch moved from treating the value as a control value to a register
-one. When the patch was applied it was technically correct as
-snd_soc_limit_volume() also used the register interpretation. However,
-even then most of the other usages treated platform_max as a
-control value, and snd_soc_limit_volume() has since been updated to
-also do so in commit fb9ad24485087 ("ASoC: ops: add correct range
-check for limiting volume"). That patch however, missed updating
-snd_soc_put_volsw() back to the control interpretation, and fixing
-snd_soc_info_volsw_range(). The control interpretation makes more
-sense as limiting is typically done from the machine driver, so it is
-appropriate to use the customer facing representation rather than the
-internal codec representation. Update all the code to consistently use
-this interpretation of platform_max.
-
-Finally, also add some comments to the soc_mixer_control struct to
-hopefully avoid further patches switching between the two approaches.
-
-Fixes: fb9ad24485087 ("ASoC: ops: add correct range check for limiting volume")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250228151456.3703342-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6551a7fe0acb ("rust: error: Add Error::from_errno{_unchecked}()")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/1139
+Signed-off-by: Alban Kurti <kurti@invicto.ai>
+Link: https://lore.kernel.org/r/20250206-printing_fix-v3-2-a85273b501ae@invicto.ai
+[ Replaced Closes with Link since it fixes part of the issue. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc.h |  5 ++++-
- sound/soc/soc-ops.c | 15 +++++++--------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ rust/kernel/error.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index 4f5d411e3823f..355575c63a130 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -1251,7 +1251,10 @@ void snd_soc_close_delayed_work(struct snd_soc_pcm_runtime *rtd);
- 
- /* mixer control */
- struct soc_mixer_control {
--	int min, max, platform_max;
-+	/* Minimum and maximum specified as written to the hardware */
-+	int min, max;
-+	/* Limited maximum value specified as presented through the control */
-+	int platform_max;
- 	int reg, rreg;
- 	unsigned int shift, rshift;
- 	unsigned int sign_bit;
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index 19928f098d8dc..b0e4e4168f38d 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -337,7 +337,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
- 	if (ucontrol->value.integer.value[0] < 0)
- 		return -EINVAL;
- 	val = ucontrol->value.integer.value[0];
--	if (mc->platform_max && ((int)val + min) > mc->platform_max)
-+	if (mc->platform_max && val > mc->platform_max)
- 		return -EINVAL;
- 	if (val > max - min)
- 		return -EINVAL;
-@@ -350,7 +350,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
- 		if (ucontrol->value.integer.value[1] < 0)
- 			return -EINVAL;
- 		val2 = ucontrol->value.integer.value[1];
--		if (mc->platform_max && ((int)val2 + min) > mc->platform_max)
-+		if (mc->platform_max && val2 > mc->platform_max)
- 			return -EINVAL;
- 		if (val2 > max - min)
- 			return -EINVAL;
-@@ -503,17 +503,16 @@ int snd_soc_info_volsw_range(struct snd_kcontrol *kcontrol,
- {
- 	struct soc_mixer_control *mc =
- 		(struct soc_mixer_control *)kcontrol->private_value;
--	int platform_max;
--	int min = mc->min;
-+	int max;
- 
--	if (!mc->platform_max)
--		mc->platform_max = mc->max;
--	platform_max = mc->platform_max;
-+	max = mc->max - mc->min;
-+	if (mc->platform_max && mc->platform_max < max)
-+		max = mc->platform_max;
- 
- 	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
- 	uinfo->count = snd_soc_volsw_is_stereo(mc) ? 2 : 1;
- 	uinfo->value.integer.min = 0;
--	uinfo->value.integer.max = platform_max - min;
-+	uinfo->value.integer.max = max;
- 
- 	return 0;
- }
+diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
+index 5fece574ec023..4911b294bfe66 100644
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -104,7 +104,7 @@ impl Error {
+         if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
+             // TODO: Make it a `WARN_ONCE` once available.
+             crate::pr_warn!(
+-                "attempted to create `Error` with out of range `errno`: {}",
++                "attempted to create `Error` with out of range `errno`: {}\n",
+                 errno
+             );
+             return code::EINVAL;
 -- 
 2.39.5
 
