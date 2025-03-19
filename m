@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59F81D54F4;
-	Wed, 19 Mar 2025 14:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E67D1D54EF;
+	Wed, 19 Mar 2025 14:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394852; cv=none; b=JefVuWkgosSeWlIovja/AY/R0zHFt7+KE1z3MtSxbjsZjN7YtPWTwcmvkBhrETENna8QtewxlFLqeXPsZIRA48EAsMOl19TtrWrLn46lMepA0kuBAJpbYxXu7NGmO7AE/RXS2afXafahGP+lpZXl85yISLaMLzrOJdjHY5gunh4=
+	t=1742394853; cv=none; b=q+fZkKU88vv4Qo9E0OH6jCu8Sw1poF2b8ZsJmmLQNMRqssBE3XM4R5/iFKdPp0GRbzxhAVPJM1AOgwaamCsQgF2GrxjCAEaVd+aPzItdhxwzecDCritUesDfOtlrp1fktLFIEotvx1HZQ4hYRPQDYNR+zxo48T/kDXFPpgmwW+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394852; c=relaxed/simple;
-	bh=Ln5XnP0WPnW6JwH/Y04pY36rwDDIKhYYVefFLL6xvpo=;
+	s=arc-20240116; t=1742394853; c=relaxed/simple;
+	bh=op0fHuWkVAbsTkunmFFnElDJCZ4c/46CQonnWqq+0EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8NUb5LFJU3dTfu/5TP/dgWNKcnp5ZxyEXrz/kqCgHTgjNaCJ2OaCIcIQDw0tQNY+3btZyWSurz3ME+ziWICxS2wA8wgPnwEmERLIlz8vtPGIBnZAAWcjUyjPYJd4joS3yX5KPwkMMMEqXtS92dqGl/TphkYyFou9iTi1FScFlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8R8tbv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQ40Y4CrB/+KG58JJjXymfjIEjcloC353/FT/jFuiWoPF0iTFkfs6ERUDLWRmdaurwJuu0aHf4s4ZQ5XLnUFcAyvhdpJZRtmRD4I5APrZ8+w0978ifUOsBDEVHiMg3Aik3hh9PgahhksV2Y+setHA/ZM/PuuRf7YoQ/yogZzGlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjdaRwmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8R8tbv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736D6C4CEE8;
-	Wed, 19 Mar 2025 14:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjdaRwmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4048CC4CEE4;
+	Wed, 19 Mar 2025 14:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394852;
-	bh=Ln5XnP0WPnW6JwH/Y04pY36rwDDIKhYYVefFLL6xvpo=;
+	s=korg; t=1742394853;
+	bh=op0fHuWkVAbsTkunmFFnElDJCZ4c/46CQonnWqq+0EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8R8tbv6DVTT2DFhswDQqcQYD0G35/NDPI8xxBGW6hg2KrceWgVxeI0aHbbzO9qBh
-	 GCugvEqjWP/Zl6joUpFiMNnhfy+JAh17OR3Wm1vxd2ebs4acnk8+oWxh8SM8Prh8ob
-	 lav94m3cRnhx7vfvrwUfWCoPEuOJPmF8u8XTwGJg=
+	b=gjdaRwmcTTUfg5JxCsGnL7ov6gyQqVRzUi6kdHq0WoxgbqkFe0x7y8RLbPX/ODwNB
+	 RPUMUrFdPyjaHZYmbfDq2UvTEJMZLIGdwMafPvTlmgLqV6BtO9qFTzOpK2jj6rtrkv
+	 ZpL6d16uui+njsWG60bmtLg9DFdfPl4RGsObU3ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 040/241] bonding: fix incorrect MAC address setting to receive NS messages
-Date: Wed, 19 Mar 2025 07:28:30 -0700
-Message-ID: <20250319143028.710739026@linuxfoundation.org>
+Subject: [PATCH 6.13 023/241] net: mctp i3c: Copy headers if cloned
+Date: Wed, 19 Mar 2025 07:28:13 -0700
+Message-ID: <20250319143028.281741690@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -54,129 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 0c5e145a350de3b38cd5ae77a401b12c46fb7c1d ]
+[ Upstream commit 26db9c9ee19c36a97dbb1cfef007a3c189c4c874 ]
 
-When validation on the backup slave is enabled, we need to validate the
-Neighbor Solicitation (NS) messages received on the backup slave. To
-receive these messages, the correct destination MAC address must be added
-to the slave. However, the target in bonding is a unicast address, which
-we cannot use directly. Instead, we should first convert it to a
-Solicited-Node Multicast Address and then derive the corresponding MAC
-address.
+Use skb_cow_head() prior to modifying the tx skb. This is necessary
+when the skb has been cloned, to avoid modifying other shared clones.
 
-Fix the incorrect MAC address setting on both slave_set_ns_maddr() and
-slave_set_ns_maddrs(). Since the two function names are similar. Add
-some description for the functions. Also only use one mac_addr variable
-in slave_set_ns_maddr() to save some code and logic.
-
-Fixes: 8eb36164d1a6 ("bonding: add ns target multicast address to slave device")
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250306023923.38777-2-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Fixes: c8755b29b58e ("mctp i3c: MCTP I3C driver")
+Link: https://patch.msgid.link/20250306-matt-i3c-cow-head-v1-1-d5e6a5495227@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_options.c | 55 +++++++++++++++++++++++++-----
- 1 file changed, 47 insertions(+), 8 deletions(-)
+ drivers/net/mctp/mctp-i3c.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index 327b6ecdc77e0..d1b095af253bd 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -1242,10 +1242,28 @@ static bool slave_can_set_ns_maddr(const struct bonding *bond, struct slave *sla
- 	       slave->dev->flags & IFF_MULTICAST;
- }
- 
-+/**
-+ * slave_set_ns_maddrs - add/del all NS mac addresses for slave
-+ * @bond: bond device
-+ * @slave: slave device
-+ * @add: add or remove all the NS mac addresses
-+ *
-+ * This function tries to add or delete all the NS mac addresses on the slave
-+ *
-+ * Note, the IPv6 NS target address is the unicast address in Neighbor
-+ * Solicitation (NS) message. The dest address of NS message should be
-+ * solicited-node multicast address of the target. The dest mac of NS message
-+ * is converted from the solicited-node multicast address.
-+ *
-+ * This function is called when
-+ *   * arp_validate changes
-+ *   * enslaving, releasing new slaves
-+ */
- static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool add)
+diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
+index c1e72253063b5..c678f79aa3561 100644
+--- a/drivers/net/mctp/mctp-i3c.c
++++ b/drivers/net/mctp/mctp-i3c.c
+@@ -506,10 +506,15 @@ static int mctp_i3c_header_create(struct sk_buff *skb, struct net_device *dev,
+ 	   const void *saddr, unsigned int len)
  {
- 	struct in6_addr *targets = bond->params.ns_targets;
- 	char slot_maddr[MAX_ADDR_LEN];
-+	struct in6_addr mcaddr;
- 	int i;
+ 	struct mctp_i3c_internal_hdr *ihdr;
++	int rc;
  
- 	if (!slave_can_set_ns_maddr(bond, slave))
-@@ -1255,7 +1273,8 @@ static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool
- 		if (ipv6_addr_any(&targets[i]))
- 			break;
+ 	if (!daddr || !saddr)
+ 		return -EINVAL;
  
--		if (!ndisc_mc_map(&targets[i], slot_maddr, slave->dev, 0)) {
-+		addrconf_addr_solict_mult(&targets[i], &mcaddr);
-+		if (!ndisc_mc_map(&mcaddr, slot_maddr, slave->dev, 0)) {
- 			if (add)
- 				dev_mc_add(slave->dev, slot_maddr);
- 			else
-@@ -1278,23 +1297,43 @@ void bond_slave_ns_maddrs_del(struct bonding *bond, struct slave *slave)
- 	slave_set_ns_maddrs(bond, slave, false);
- }
- 
-+/**
-+ * slave_set_ns_maddr - set new NS mac address for slave
-+ * @bond: bond device
-+ * @slave: slave device
-+ * @target: the new IPv6 target
-+ * @slot: the old IPv6 target in the slot
-+ *
-+ * This function tries to replace the old mac address to new one on the slave.
-+ *
-+ * Note, the target/slot IPv6 address is the unicast address in Neighbor
-+ * Solicitation (NS) message. The dest address of NS message should be
-+ * solicited-node multicast address of the target. The dest mac of NS message
-+ * is converted from the solicited-node multicast address.
-+ *
-+ * This function is called when
-+ *   * An IPv6 NS target is added or removed.
-+ */
- static void slave_set_ns_maddr(struct bonding *bond, struct slave *slave,
- 			       struct in6_addr *target, struct in6_addr *slot)
- {
--	char target_maddr[MAX_ADDR_LEN], slot_maddr[MAX_ADDR_LEN];
-+	char mac_addr[MAX_ADDR_LEN];
-+	struct in6_addr mcast_addr;
- 
- 	if (!bond->params.arp_validate || !slave_can_set_ns_maddr(bond, slave))
- 		return;
- 
--	/* remove the previous maddr from slave */
-+	/* remove the previous mac addr from slave */
-+	addrconf_addr_solict_mult(slot, &mcast_addr);
- 	if (!ipv6_addr_any(slot) &&
--	    !ndisc_mc_map(slot, slot_maddr, slave->dev, 0))
--		dev_mc_del(slave->dev, slot_maddr);
-+	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
-+		dev_mc_del(slave->dev, mac_addr);
- 
--	/* add new maddr on slave if target is set */
-+	/* add new mac addr on slave if target is set */
-+	addrconf_addr_solict_mult(target, &mcast_addr);
- 	if (!ipv6_addr_any(target) &&
--	    !ndisc_mc_map(target, target_maddr, slave->dev, 0))
--		dev_mc_add(slave->dev, target_maddr);
-+	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
-+		dev_mc_add(slave->dev, mac_addr);
- }
- 
- static void _bond_options_ns_ip6_target_set(struct bonding *bond, int slot,
++	rc = skb_cow_head(skb, sizeof(struct mctp_i3c_internal_hdr));
++	if (rc)
++		return rc;
++
+ 	skb_push(skb, sizeof(struct mctp_i3c_internal_hdr));
+ 	skb_reset_mac_header(skb);
+ 	ihdr = (void *)skb_mac_header(skb);
 -- 
 2.39.5
 
