@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B7E1DE2B2;
-	Wed, 19 Mar 2025 14:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1171EF386;
+	Wed, 19 Mar 2025 14:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395141; cv=none; b=fpfI9LWatohhSr2RI/x4XYhtoRiekVvrml34KLVcyzv8YYwxpeXC4cA6k4G8bJbOa4pglHZT4QvkiYaV1bNcZKo/DxTlGj4U/U8gTd59WMd+qqUYm8c7SPK2LzkI/QI3weBl9xtmYQ0CzFRawWwPBpFr4Jlo6pNdEtmnwCCPHRw=
+	t=1742395141; cv=none; b=AIOlJqIabLJdMmI4BkNyZyoooFt69T5q/bkwy7j1KvhuwLssVKpqb7XBWeCuDr00k1Le9yHHWt2j6Tcw9GiY/u5AqTZ2u+bvEQbc/lIjM0eUjkL/dPo1bEvVaTh+/6YByabNAtBdkBPrMtbIFzjYJPjdML0aC/SdHn0PQ2RMsfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395141; c=relaxed/simple;
-	bh=YD1TmsQ8Hm9Uqa3Nfx6NfBFTFKj2xGwY7KyrtkFrMrc=;
+	bh=LLxQ5+vu8djUMD5Be+PJ+JcbymlPg2yQ0TbAkdQx3dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oc0sAAS4xGOLdtaQ949Zq0giSnQSTsNEosx5QPBEitYAnPwrnYhEpVaVpkY4gWLylk+Yc611tPLI/PjJGscKIMi77yL+DMdIBbOddBjmb7zLjcXKWXxvS3w4fXH7eo4tQXPK0Bk52WwqH/JHxWcjtDrI8jw0D5UTu9aFq/6hJGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mLkweQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTRMstKtQmvpqAhovZUkgkC3TH+KVyDpkmzG1zPo3fPLWb/z0BN7HivNkhGwgztfCCXG6fDzKlMJVlbhmiz99N8ECv5hiZyG43tHz+7pVZ0ofhpaJ3P/yVjNSbYC0v2ZycDQcpQ7IRbpZK4YcDiGA2RkiCG8trCW0tVaIJUZlSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfBEJrzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mLkweQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83735C4CEE4;
-	Wed, 19 Mar 2025 14:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfBEJrzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30964C4CEE8;
+	Wed, 19 Mar 2025 14:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395140;
-	bh=YD1TmsQ8Hm9Uqa3Nfx6NfBFTFKj2xGwY7KyrtkFrMrc=;
+	s=korg; t=1742395141;
+	bh=LLxQ5+vu8djUMD5Be+PJ+JcbymlPg2yQ0TbAkdQx3dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0mLkweQbJCFqeXduKjY1k4Zq5f/yIVYfV93fXzpqb4qmTxd9AWYLiRqVo3T1BjuoU
-	 StziTL0esRCWZ51RyOYKgtokJup9jTZ9WS1XgZFB5aykB4pmd36P8oYoxcK8qYogtN
-	 vZ9nIH6mrTwOvv3DlItIgcJyS+u/WXVlo9O9Cc7A=
+	b=LfBEJrzcsUqdQKt0+ChKgx5ZynUlDNArZ7GeUlzsusMDmBZUsogdgcYQEagxGy1z5
+	 HCEPwnm3Vks2qYKhc3W5sI4W9Wfe+jCw/mtYRnXKFwOoD+tFLppfM6+2qS8d1uYq/d
+	 SkTih+WCNgNEAvvDT7b8ngN37XdG0mnz/4ZfCH8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
-Subject: [PATCH 6.12 172/231] drm/atomic: Filter out redundant DPMS calls
-Date: Wed, 19 Mar 2025 07:31:05 -0700
-Message-ID: <20250319143031.093387558@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 208/231] nvme: move error logging from nvme_end_req() to __nvme_end_req()
+Date: Wed, 19 Mar 2025 07:31:41 -0700
+Message-ID: <20250319143031.988342134@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -44,67 +47,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit de93ddf88088f7624b589d0ff3af9effb87e8f3b upstream.
+[ Upstream commit e5c2bcc0cd47321d78bb4e865d7857304139f95d ]
 
-Video players (eg. mpv) do periodic XResetScreenSaver() calls to
-keep the screen on while the video playing. The modesetting ddx
-plumbs these straight through into the kernel as DPMS setproperty
-ioctls, without any filtering whatsoever. When implemented via
-atomic these end up as empty commits on the crtc (which will
-nonetheless take one full frame), which leads to a dropped
-frame every time XResetScreenSaver() is called.
+Before the Commit 1f47ed294a2b ("block: cleanup and fix batch completion
+adding conditions"), blk_mq_add_to_batch() did not add failed
+passthrough requests to batch, and returned false. After the commit,
+blk_mq_add_to_batch() always adds passthrough requests to batch
+regardless of whether the request failed or not, and returns true. This
+affected error logging feature in the NVME driver.
 
-Let's just filter out redundant DPMS property changes in the
-kernel to avoid this issue.
+Before the commit, the call chain of failed passthrough request was as
+follows:
 
-v2: Explain the resulting commits a bit better (Sima)
-    Document the behaviour in uapi docs (Sima)
+nvme_handle_cqe()
+ blk_mq_add_to_batch() .. false is returned, then call nvme_pci_complete_rq()
+ nvme_pci_complete_rq()
+  nvme_complete_rq()
+   nvme_end_req()
+    nvme_log_err_passthru() .. error logging
+    __nvme_end_req()        .. end of the rqeuest
 
-Cc: stable@vger.kernel.org
-Testcase: igt/kms_flip/flip-vs-dpms-on-nop
-Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250219160239.17502-1-ville.syrjala@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+After the commit, the call chain is as follows:
+
+nvme_handle_cqe()
+ blk_mq_add_to_batch() .. true is returned, then set nvme_pci_complete_batch()
+ ..
+ nvme_pci_complete_batch()
+  nvme_complete_batch()
+   nvme_complete_batch_req()
+    __nvme_end_req() .. end of the request, without error logging
+
+To make the error logging feature work again for passthrough requests, move the
+nvme_log_err_passthru() call from nvme_end_req() to __nvme_end_req().
+
+While at it, move nvme_log_error() call for non-passthrough requests together
+with nvme_log_err_passthru(). Even though the trigger commit does not affect
+non-passthrough requests, move it together for code simplicity.
+
+Fixes: 1f47ed294a2b ("block: cleanup and fix batch completion adding conditions")
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250311104359.1767728-2-shinichiro.kawasaki@wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |    4 ++++
- drivers/gpu/drm/drm_connector.c   |    4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/nvme/host/core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -956,6 +956,10 @@ int drm_atomic_connector_commit_dpms(str
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index a950aa780d1f6..9bdf6fc53697c 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -429,6 +429,12 @@ static inline void nvme_end_req_zoned(struct request *req)
  
- 	if (mode != DRM_MODE_DPMS_ON)
- 		mode = DRM_MODE_DPMS_OFF;
-+
-+	if (connector->dpms == mode)
-+		goto out;
-+
- 	connector->dpms = mode;
+ static inline void __nvme_end_req(struct request *req)
+ {
++	if (unlikely(nvme_req(req)->status && !(req->rq_flags & RQF_QUIET))) {
++		if (blk_rq_is_passthrough(req))
++			nvme_log_err_passthru(req);
++		else
++			nvme_log_error(req);
++	}
+ 	nvme_end_req_zoned(req);
+ 	nvme_trace_bio_complete(req);
+ 	if (req->cmd_flags & REQ_NVME_MPATH)
+@@ -439,12 +445,6 @@ void nvme_end_req(struct request *req)
+ {
+ 	blk_status_t status = nvme_error_status(nvme_req(req)->status);
  
- 	crtc = connector->state->crtc;
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -1308,6 +1308,10 @@ EXPORT_SYMBOL(drm_hdmi_connector_get_out
-  * 	callback. For atomic drivers the remapping to the "ACTIVE" property is
-  * 	implemented in the DRM core.
-  *
-+ * 	On atomic drivers any DPMS setproperty ioctl where the value does not
-+ * 	change is completely skipped, otherwise a full atomic commit will occur.
-+ * 	On legacy drivers the exact behavior is driver specific.
-+ *
-  * 	Note that this property cannot be set through the MODE_ATOMIC ioctl,
-  * 	userspace must use "ACTIVE" on the CRTC instead.
-  *
+-	if (unlikely(nvme_req(req)->status && !(req->rq_flags & RQF_QUIET))) {
+-		if (blk_rq_is_passthrough(req))
+-			nvme_log_err_passthru(req);
+-		else
+-			nvme_log_error(req);
+-	}
+ 	__nvme_end_req(req);
+ 	blk_mq_end_request(req, status);
+ }
+-- 
+2.39.5
+
 
 
