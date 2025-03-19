@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0A01D63E3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E651D63FC;
 	Wed, 19 Mar 2025 14:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395057; cv=none; b=PABjD+rmaXq5Clj/vziHKmHn0wwmCZr5eUwpX9XrlgeN9WTaeskH1qrVrzNqsaxuqbY+UZXk7+cHbrP/v958YeBqBC8nAPzjo7z+BucuFNe5QQlhbT8pYCEUHpLLRVhar1alf+dM2lw8eseDROiqTdYxTMTzAvAD3jOhTA/sOB8=
+	t=1742395058; cv=none; b=t9yvdDV2juPQx+g4eYpesAwN/7qX0pTmKBrJ/0O/csXSwltV1qlzswS1zlm+wvGJS13B1+5aKMBgY2E8KYO6n5y1nLG+XI7ybTevQZTbOQKXdq5ex7iT3/cnBA7B6J0qSfuHQsGedRagD80AnjAB2lgTBIpSnzjCQ0404S7oGoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395057; c=relaxed/simple;
-	bh=DQ6MBOjQm72p8U4PILn/kvDBaDqMDYb5leaQU3jZVKc=;
+	s=arc-20240116; t=1742395058; c=relaxed/simple;
+	bh=DRHY7+Jl+CCQK8CZhD0k/+r16WPuF5b16PqOmkLnrxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9nJvjtsalqGlr9CJHWBt9+KjpwspVknzFB2e6qhZiaKgqb19ctFhbJfzFt0gyrs+RvcFXzqm/XmApXqMSGyoaRsJtzRmxr2FK24m34hMBFhMPbD7K8zmDniLD8SH+l5+krPYZveEucAttP3xj1lx+4KeT6ryu6wbruFQymKjWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTAcLEPF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPcaW0nm8PIVhrLX21YaVIKZFkBp8OCttU/ATZXY+8bdty0mg2XZDPLKWpW4MbMN/Zmjf3or3/xJjCXMlp7fOQpFEDpvvjUt1L7q18PgiNQnI7KYAeKC0Mu93vhloNLDu4NvB97OE7GyaI5BubMrHOZblxGlU9Vq46A6SiTMOGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL49SjEY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTAcLEPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF90C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL49SjEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A68C4CEE4;
 	Wed, 19 Mar 2025 14:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395057;
-	bh=DQ6MBOjQm72p8U4PILn/kvDBaDqMDYb5leaQU3jZVKc=;
+	bh=DRHY7+Jl+CCQK8CZhD0k/+r16WPuF5b16PqOmkLnrxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTAcLEPFSfhbDWNOnbGy7b5r8ts6zt38Ga4aNtSAxgDglvQMOHI3xEL0M+hKhwEOm
-	 fMTFgKvbbZSUV4ITieoB0/QkC6shRIp8OpUjmRuaLQP1xNHm3QEtr7zrOxxEh7c07Q
-	 JvQbCIBraaAt26jEUyTZhcyFnMo4mF5P5zpZoHp4=
+	b=aL49SjEYoQODcJYK5tcpg2KL7tUnxoqk8XHONSLyrZBB2VRRVDQV3dyFYT6Y3qE+o
+	 PjUdaPrWIHzqf05NajEPD3hvhHjrTEKjiynjXVuMvSxjmHmXRKthy94rKqc5i+u8cW
+	 BQIxQOTG8UHWM96L937/BEOEPaUOVF97ikOVuY2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/231] gre: Fix IPv6 link-local address generation.
-Date: Wed, 19 Mar 2025 07:29:01 -0700
-Message-ID: <20250319143028.009049963@linuxfoundation.org>
+Subject: [PATCH 6.12 049/231] net: openvswitch: remove misbehaving actions length check
+Date: Wed, 19 Mar 2025 07:29:02 -0700
+Message-ID: <20250319143028.035388859@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,108 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 183185a18ff96751db52a46ccf93fff3a1f42815 ]
+[ Upstream commit a1e64addf3ff9257b45b78bc7d743781c3f41340 ]
 
-Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
-devices in most cases and fall back to using add_v4_addrs() only in
-case the GRE configuration is incompatible with addrconf_addr_gen().
+The actions length check is unreliable and produces different results
+depending on the initial length of the provided netlink attribute and
+the composition of the actual actions inside of it.  For example, a
+user can add 4088 empty clone() actions without triggering -EMSGSIZE,
+on attempt to add 4089 such actions the operation will fail with the
+-EMSGSIZE verdict.  However, if another 16 KB of other actions will
+be *appended* to the previous 4089 clone() actions, the check passes
+and the flow is successfully installed into the openvswitch datapath.
 
-GRE used to use addrconf_addr_gen() until commit e5dd729460ca
-("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL
-address") restricted this use to gretap and ip6gretap devices, and
-created add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
+The reason for a such a weird behavior is the way memory is allocated.
+When ovs_flow_cmd_new() is invoked, it calls ovs_nla_copy_actions(),
+that in turn calls nla_alloc_flow_actions() with either the actual
+length of the user-provided actions or the MAX_ACTIONS_BUFSIZE.  The
+function adds the size of the sw_flow_actions structure and then the
+actually allocated memory is rounded up to the closest power of two.
 
-The original problem came when commit 9af28511be10 ("addrconf: refuse
-isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
-addr parameter was 0. The commit says that this would create an invalid
-address, however, I couldn't find any RFC saying that the generated
-interface identifier would be wrong. Anyway, since gre over IPv4
-devices pass their local tunnel address to __ipv6_isatap_ifid(), that
-commit broke their IPv6 link-local address generation when the local
-address was unspecified.
+So, if the user-provided actions are larger than MAX_ACTIONS_BUFSIZE,
+then MAX_ACTIONS_BUFSIZE + sizeof(*sfa) rounded up is 32K + 24 -> 64K.
+Later, while copying individual actions, we look at ksize(), which is
+64K, so this way the MAX_ACTIONS_BUFSIZE check is not actually
+triggered and the user can easily allocate almost 64 KB of actions.
 
-Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
-interfaces when computing v6LL address") tried to fix that case by
-defining add_v4_addrs() and calling it to generate the IPv6 link-local
-address instead of using addrconf_addr_gen() (apart for gretap and
-ip6gretap devices, which would still use the regular
-addrconf_addr_gen(), since they have a MAC address).
+However, when the initial size is less than MAX_ACTIONS_BUFSIZE, but
+the actions contain ones that require size increase while copying
+(such as clone() or sample()), then the limit check will be performed
+during the reserve_sfa_size() and the user will not be allowed to
+create actions that yield more than 32 KB internally.
 
-That broke several use cases because add_v4_addrs() isn't properly
-integrated into the rest of IPv6 Neighbor Discovery code. Several of
-these shortcomings have been fixed over time, but add_v4_addrs()
-remains broken on several aspects. In particular, it doesn't send any
-Router Sollicitations, so the SLAAC process doesn't start until the
-interface receives a Router Advertisement. Also, add_v4_addrs() mostly
-ignores the address generation mode of the interface
-(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
-IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
+This is one part of the problem.  The other part is that it's not
+actually possible for the userspace application to know beforehand
+if the particular set of actions will be rejected or not.
 
-Fix the situation by using add_v4_addrs() only in the specific scenario
-where the normal method would fail. That is, for interfaces that have
-all of the following characteristics:
+Certain actions require more space in the internal representation,
+e.g. an empty clone() takes 4 bytes in the action list passed in by
+the user, but it takes 12 bytes in the internal representation due
+to an extra nested attribute, and some actions require less space in
+the internal representations, e.g. set(tunnel(..)) normally takes
+64+ bytes in the action list provided by the user, but only needs to
+store a single pointer in the internal implementation, since all the
+data is stored in the tunnel_info structure instead.
 
-  * run over IPv4,
-  * transport IP packets directly, not Ethernet (that is, not gretap
-    interfaces),
-  * tunnel endpoint is INADDR_ANY (that is, 0),
-  * device address generation mode is EUI64.
+And the action size limit is applied to the internal representation,
+not to the action list passed by the user.  So, it's not possible for
+the userpsace application to predict if the certain combination of
+actions will be rejected or not, because it is not possible for it to
+calculate how much space these actions will take in the internal
+representation without knowing kernel internals.
 
-In all other cases, revert back to the regular addrconf_addr_gen().
+All that is causing random failures in ovs-vswitchd in userspace and
+inability to handle certain traffic patterns as a result.  For example,
+it is reported that adding a bit more than a 1100 VMs in an OpenStack
+setup breaks the network due to OVS not being able to handle ARP
+traffic anymore in some cases (it tries to install a proper datapath
+flow, but the kernel rejects it with -EMSGSIZE, even though the action
+list isn't actually that large.)
 
-Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
-since ip6gre devices now always use addrconf_addr_gen() instead.
+Kernel behavior must be consistent and predictable in order for the
+userspace application to use it in a reasonable way.  ovs-vswitchd has
+a mechanism to re-direct parts of the traffic and partially handle it
+in userspace if the required action list is oversized, but that doesn't
+work properly if we can't actually tell if the action list is oversized
+or not.
 
-Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/559c32ce5c9976b269e6337ac9abb6a96abe5096.1741375285.git.gnault@redhat.com
+Solution for this is to check the size of the user-provided actions
+instead of the internal representation.  This commit just removes the
+check from the internal part because there is already an implicit size
+check imposed by the netlink protocol.  The attribute can't be larger
+than 64 KB.  Realistically, we could reduce the limit to 32 KB, but
+we'll be risking to break some existing setups that rely on the fact
+that it's possible to create nearly 64 KB action lists today.
+
+Vast majority of flows in real setups are below 100-ish bytes.  So
+removal of the limit will not change real memory consumption on the
+system.  The absolutely worst case scenario is if someone adds a flow
+with 64 KB of empty clone() actions.  That will yield a 192 KB in the
+internal representation consuming 256 KB block of memory.  However,
+that list of actions is not meaningful and also a no-op.  Real world
+very large action lists (that can occur for a rare cases of BUM
+traffic handling) are unlikely to contain a large number of clones and
+will likely have a lot of tunnel attributes making the internal
+representation comparable in size to the original action list.
+So, it should be fine to just remove the limit.
+
+Commit in the 'Fixes' tag is the first one that introduced the
+difference between internal representation and the user-provided action
+lists, but there were many more afterwards that lead to the situation
+we have today.
+
+Fixes: 7d5437c709de ("openvswitch: Add tunneling interface.")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250308004609.2881861-1-i.maximets@ovn.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/openvswitch/flow_netlink.c | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index f7c17388ff6aa..26cdb66574757 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -3237,16 +3237,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
- 	struct in6_addr addr;
- 	struct net_device *dev;
- 	struct net *net = dev_net(idev->dev);
--	int scope, plen, offset = 0;
-+	int scope, plen;
- 	u32 pflags = 0;
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 729ef582a3a8b..0df89240b7336 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2317,14 +2317,10 @@ int ovs_nla_put_mask(const struct sw_flow *flow, struct sk_buff *skb)
+ 				OVS_FLOW_ATTR_MASK, true, skb);
+ }
  
- 	ASSERT_RTNL();
+-#define MAX_ACTIONS_BUFSIZE	(32 * 1024)
+-
+ static struct sw_flow_actions *nla_alloc_flow_actions(int size)
+ {
+ 	struct sw_flow_actions *sfa;
  
- 	memset(&addr, 0, sizeof(struct in6_addr));
--	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
--	if (idev->dev->addr_len == sizeof(struct in6_addr))
--		offset = sizeof(struct in6_addr) - 4;
--	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
-+	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
+-	WARN_ON_ONCE(size > MAX_ACTIONS_BUFSIZE);
+-
+ 	sfa = kmalloc(kmalloc_size_roundup(sizeof(*sfa) + size), GFP_KERNEL);
+ 	if (!sfa)
+ 		return ERR_PTR(-ENOMEM);
+@@ -2480,15 +2476,6 @@ static struct nlattr *reserve_sfa_size(struct sw_flow_actions **sfa,
  
- 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
- 		scope = IPV6_ADDR_COMPATv4;
-@@ -3557,7 +3554,13 @@ static void addrconf_gre_config(struct net_device *dev)
- 		return;
- 	}
+ 	new_acts_size = max(next_offset + req_size, ksize(*sfa) * 2);
  
--	if (dev->type == ARPHRD_ETHER) {
-+	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
-+	 * unless we have an IPv4 GRE device not bound to an IP address and
-+	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
-+	 * case). Such devices fall back to add_v4_addrs() instead.
-+	 */
-+	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
-+	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
- 		addrconf_addr_gen(idev, true);
- 		return;
- 	}
+-	if (new_acts_size > MAX_ACTIONS_BUFSIZE) {
+-		if ((next_offset + req_size) > MAX_ACTIONS_BUFSIZE) {
+-			OVS_NLERR(log, "Flow action size exceeds max %u",
+-				  MAX_ACTIONS_BUFSIZE);
+-			return ERR_PTR(-EMSGSIZE);
+-		}
+-		new_acts_size = MAX_ACTIONS_BUFSIZE;
+-	}
+-
+ 	acts = nla_alloc_flow_actions(new_acts_size);
+ 	if (IS_ERR(acts))
+ 		return ERR_CAST(acts);
+@@ -3545,7 +3532,7 @@ int ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 	int err;
+ 	u32 mpls_label_count = 0;
+ 
+-	*sfa = nla_alloc_flow_actions(min(nla_len(attr), MAX_ACTIONS_BUFSIZE));
++	*sfa = nla_alloc_flow_actions(nla_len(attr));
+ 	if (IS_ERR(*sfa))
+ 		return PTR_ERR(*sfa);
+ 
 -- 
 2.39.5
 
