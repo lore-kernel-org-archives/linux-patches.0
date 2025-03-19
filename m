@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B9D1C82F4;
-	Wed, 19 Mar 2025 14:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD4F1C82F4;
+	Wed, 19 Mar 2025 14:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395110; cv=none; b=LOBFauwt2X7MdI2ugyIaQgwg5kzLfYgbF7H8MP6rn2DKU1pcY2uMIkHzwZ9eaBFlXc68tZGacp4eZwqdRkKJRm2bbmqRzXQcfx13IipvmK7sY8bzreVMOHKkrVVeJ1/VZG9scqRyrzWs5t0auKZ9L4520l0PMVsiQcLf/wLoF4Q=
+	t=1742395111; cv=none; b=Y2c9rrNKybHq1FH0WLZsttkmzFWsVcYP22SekG9E4m2RBTg+y48GTxh7MJIO6eTtgQ5VndWZiNrA0vqlQ3DrhszlIq1JpdSXIpk+tYpt7g9hqXJE4QTVu+2CXMTP5zrqUv2M1qFQGaiLEbdW4CjE8ol15avyxh73/N3qQrnfxso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395110; c=relaxed/simple;
-	bh=mhDozVV6EqDbX7b3r6vNI/9dXnnQJPx8AIAGRfUuHQw=;
+	s=arc-20240116; t=1742395111; c=relaxed/simple;
+	bh=/i6SHqbDrDql4mtbJUEaF0kI2sowVmt2tFe0r9ygCNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlRLeAO6HgUWOKkt4BOvzIt3Ri7m8yrO6KBSB+SeyqDMbDneJJI21W64LTRUd1XoQg+cJUHQ8FwdSOo6Qq20wclZAXX2nzBcCKMxlUN78/TTqSoZoPatblBNAirMLwVIKDz0WDA2dft6brjEZHVojyEjZvlop9RBnsKUFk32X/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TjAmmJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSN0pMTcvpa2IIEoP57GZjNFnhvHLw00rg0lDvfDcnvpSZMn84iDQq0QMBAzgRCaXH8vcWapzrLZ7AewVTay0FPXJ7wEPq29mZPgx5AjJ4itWUVjGpEXicL5lS06DZOSdm+iCmVIR9fQPm+AjeXvQv0PLjIPGzZ+ml0byovAs2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bp4b9skX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TjAmmJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9781AC4CEE4;
-	Wed, 19 Mar 2025 14:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bp4b9skX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5239FC4CEE4;
+	Wed, 19 Mar 2025 14:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395110;
-	bh=mhDozVV6EqDbX7b3r6vNI/9dXnnQJPx8AIAGRfUuHQw=;
+	s=korg; t=1742395111;
+	bh=/i6SHqbDrDql4mtbJUEaF0kI2sowVmt2tFe0r9ygCNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TjAmmJrtUeiguycCEQxFj/VpZQ5Zg1LZLpgXVwNVpEBgRU0mSb1WlDILv2CZFeKt
-	 hMB/o2MZcUHLfbcSSw1wGMxv8opyYh8RzdJkAJXmLFmMpeOELmt83+pXnfGPluh2Zm
-	 CWcl/14QJm0xv5M78wi3FwCBDAgE7KER3ijkjEsM=
+	b=Bp4b9skXusLtd6g+U81TlP0DViLlg8lt5t7+m8rNoRTpDXNsTpY9rD+yO0mrqM08v
+	 bgtJRN6No1Te7m0XSUu2iIY6zxU8AK5qX/pq3GB90WXpc3t20jo6VyTN1hrDOMtm1l
+	 5VoYr21mOeSLg1veKxeauEExSo+RVfXOrU/zcDxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Hector Martin <marcan@marcan.st>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/231] ASoC: tas2764: Fix power control mask
-Date: Wed, 19 Mar 2025 07:30:22 -0700
-Message-ID: <20250319143030.022299263@linuxfoundation.org>
+	Matthew Maurer <mmaurer@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 165/231] rust: Disallow BTF generation with Rust + LTO
+Date: Wed, 19 Mar 2025 07:30:58 -0700
+Message-ID: <20250319143030.917300876@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -53,35 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Matthew Maurer <mmaurer@google.com>
 
-[ Upstream commit a3f172359e22b2c11b750d23560481a55bf86af1 ]
+commit 5daa0c35a1f0e7a6c3b8ba9cb721e7d1ace6e619 upstream.
 
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250218-apple-codec-changes-v2-1-932760fd7e07@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The kernel cannot currently self-parse BTF containing Rust debug
+information. pahole uses the language of the CU to determine whether to
+filter out debug information when generating the BTF. When LTO is
+enabled, Rust code can cross CU boundaries, resulting in Rust debug
+information in CUs labeled as C. This results in a system which cannot
+parse its own BTF.
+
+Signed-off-by: Matthew Maurer <mmaurer@google.com>
+Cc: stable@vger.kernel.org
+Fixes: c1177979af9c ("btf, scripts: Exclude Rust CUs with pahole")
+Link: https://lore.kernel.org/r/20250108-rust-btf-lto-incompat-v1-1-60243ff6d820@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2764.h | 2 +-
+ init/Kconfig |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2764.h b/sound/soc/codecs/tas2764.h
-index 168af772a898f..d13ecae9c9c2f 100644
---- a/sound/soc/codecs/tas2764.h
-+++ b/sound/soc/codecs/tas2764.h
-@@ -25,7 +25,7 @@
- 
- /* Power Control */
- #define TAS2764_PWR_CTRL		TAS2764_REG(0X0, 0x02)
--#define TAS2764_PWR_CTRL_MASK		GENMASK(1, 0)
-+#define TAS2764_PWR_CTRL_MASK		GENMASK(2, 0)
- #define TAS2764_PWR_CTRL_ACTIVE		0x0
- #define TAS2764_PWR_CTRL_MUTE		BIT(0)
- #define TAS2764_PWR_CTRL_SHUTDOWN	BIT(1)
--- 
-2.39.5
-
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1958,7 +1958,7 @@ config RUST
+ 	depends on !MODVERSIONS
+ 	depends on !GCC_PLUGIN_RANDSTRUCT
+ 	depends on !RANDSTRUCT
+-	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
++	depends on !DEBUG_INFO_BTF || (PAHOLE_HAS_LANG_EXCLUDE && !LTO)
+ 	depends on !CFI_CLANG || HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
+ 	select CFI_ICALL_NORMALIZE_INTEGERS if CFI_CLANG
+ 	depends on !CALL_PADDING || RUSTC_VERSION >= 108100
 
 
