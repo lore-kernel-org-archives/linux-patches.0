@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D061E8322;
-	Wed, 19 Mar 2025 14:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787E1E8322;
+	Wed, 19 Mar 2025 14:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395116; cv=none; b=ALXyI7M65kmrmS7jLEpbGoKnLSruJZ/+7VcxNTVp32vG9dVaT7vQAb23sC9zYtxpKvBhGqkGxsj/oK26Uocq8tANvctUfAU4VyDofcuo2a66l/rXBjVWqJaZ3UYKqR1MUPJcWZg6KWaTrklKEQRj1KK3auz5hdf6Q1qJEUSwKH0=
+	t=1742395117; cv=none; b=Hu+WvoElmAnXi7CRmVSzeXBmp0WL+ScCofXX+Rdwj+cdVtHzvYvHJTa0zuTO3drGa75C6jI8FGcSZO+/mo+wYc83Bca34sEjdlzcdilR3TyvGKB+kFPUQqf/Hd0/HJbYKxSCo8G3aabrEe91hT/aQiJ4peFHI4uBeM3EA4mZ1S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395116; c=relaxed/simple;
-	bh=WJ4VoFhyce+voy4fwTsARW7DSstEXwzlGGZBxS53ujg=;
+	s=arc-20240116; t=1742395117; c=relaxed/simple;
+	bh=dmuwcabb7HRpwstnjqEKEbIu8yfbJrU+8Z9JWbi2+CQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GbLPtxEFZIF2RnBH+YKDrRAEZDKLlkygo/OSG8NrvccPS+FSXvElaxHa0Y3n5ysb4cL1U3YOSAnm9DMYrVdTgmP1p10JDKpYJKhADoUwltUxmmGauhux+maSrF+E4aLHQ+UTxS2BCb8E46/H72S8l1enHtPZxOGTNYbm8lB86nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IUbVkqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdBtecITl+EtR7Ez8HbSWnWY+sAw1qVeaMeGnOnmZZA2T0M2OKmajJbgxXDVCA8tgUQKJzRxd487+Vz27+9f5L6jLIeg1ksTAQQajSQYc3jIXH+1BmT5+3paht/yepkSzQd/a/bDKoRSxjFkhufYzBK0hLc9ZITRDVcWuvNai9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zN8PVm21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IUbVkqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D659C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zN8PVm21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00277C4CEE4;
 	Wed, 19 Mar 2025 14:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395116;
-	bh=WJ4VoFhyce+voy4fwTsARW7DSstEXwzlGGZBxS53ujg=;
+	s=korg; t=1742395117;
+	bh=dmuwcabb7HRpwstnjqEKEbIu8yfbJrU+8Z9JWbi2+CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2IUbVkqMIQNMD30ShUkOBUxDdUl2fptfk5heIXPh+El4t6e3qBXXUG88FzoqFo3uq
-	 A6oC5dMgYaFYobH2M+DicXZOnuX7+YCVJ/eSIoBfUK8KOlNY8eX18uwAlOEfXZyJYU
-	 Rf8I/BRGv6iJ/dQbSnvA1oK6vlH6Rb1q0J0rwWFA=
+	b=zN8PVm21b+sMt8N1duaSPouLDt06IThp45RFHrm2+g8ToICugodxICkJEIrjQ2IeX
+	 PVNkNDM6NxYGp2F+l87ZbpYY8aMe2B8uuB7BFRBEHzIk+0zDen1m2WlBH0QzyMU0+8
+	 Y1y4xotBeDADFv8Cj2eD23x4zwAB0F9AFW+0MarQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/231] drm/vkms: Round fixp2int conversion in lerp_u16
-Date: Wed, 19 Mar 2025 07:30:27 -0700
-Message-ID: <20250319143030.143860079@linuxfoundation.org>
+Subject: [PATCH 6.12 125/231] sctp: Fix undefined behavior in left shift operation
+Date: Wed, 19 Mar 2025 07:30:18 -0700
+Message-ID: <20250319143029.928103531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,36 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit 8ec43c58d3be615a71548bc09148212013fb7e5f ]
+[ Upstream commit 606572eb22c1786a3957d24307f5760bb058ca19 ]
 
-fixp2int always rounds down, fixp2int_ceil rounds up. We need
-the new fixp2int_round.
+According to the C11 standard (ISO/IEC 9899:2011, 6.5.7):
+"If E1 has a signed type and E1 x 2^E2 is not representable in the result
+type, the behavior is undefined."
 
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241220043410.416867-3-alex.hung@amd.com
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Shifting 1 << 31 causes signed integer overflow, which leads to undefined
+behavior.
+
+Fix this by explicitly using '1U << 31' to ensure the shift operates on
+an unsigned type, avoiding undefined behavior.
+
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Link: https://patch.msgid.link/20250218081217.3468369-1-eleanor15x@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_composer.c | 2 +-
+ net/sctp/stream.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
-index e7441b227b3ce..3d6785d081f2c 100644
---- a/drivers/gpu/drm/vkms/vkms_composer.c
-+++ b/drivers/gpu/drm/vkms/vkms_composer.c
-@@ -98,7 +98,7 @@ static u16 lerp_u16(u16 a, u16 b, s64 t)
+diff --git a/net/sctp/stream.c b/net/sctp/stream.c
+index c241cc552e8d5..bfcff6d6a4386 100644
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -735,7 +735,7 @@ struct sctp_chunk *sctp_process_strreset_tsnreq(
+ 	 *     value SHOULD be the smallest TSN not acknowledged by the
+ 	 *     receiver of the request plus 2^31.
+ 	 */
+-	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1 << 31);
++	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1U << 31);
+ 	sctp_tsnmap_init(&asoc->peer.tsn_map, SCTP_TSN_MAP_INITIAL,
+ 			 init_tsn, GFP_ATOMIC);
  
- 	s64 delta = drm_fixp_mul(b_fp - a_fp,  t);
- 
--	return drm_fixp2int(a_fp + delta);
-+	return drm_fixp2int_round(a_fp + delta);
- }
- 
- static s64 get_lut_index(const struct vkms_color_lut *lut, u16 channel_value)
 -- 
 2.39.5
 
