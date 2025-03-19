@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F8C18BC36;
-	Wed, 19 Mar 2025 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9390818BC36;
+	Wed, 19 Mar 2025 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395252; cv=none; b=G2fmB5hA1SMg63GZOBmMpo8qmpuzMkYl700eQADmcP899kHWpA+fAh4es+EbDHzg3Cbv47hh9h6xjJBIVITDPHAFZL41jw4s7XunbeuFe0Cr7bjuochh+5an8JiCfWC8jQOLd7yl0PKY7A2KGjXLJ+tpCRLsCkeoEkAwyKV7Vjs=
+	t=1742395253; cv=none; b=t0/+rok1/Y659XTvnzbxl5gw5AIJalPmPHKBxrQAl3imPgUzJ6S/h9Pxo0nUydO0BDCOWkMu6UobuO62K83lUUmohyO+v5oqf3Ski4Wn7JrKuW4YOcBUE2Nl1rv2VYb7DYZvzF5F5rMySyrputxHk/wUqkunDtkMBYxoASDuGF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395252; c=relaxed/simple;
-	bh=xpfLSWvbq8z+zeiBY1FvjD3TDi0JGlnrjOGwbQwdhHA=;
+	s=arc-20240116; t=1742395253; c=relaxed/simple;
+	bh=rgxEptthWvxCW7KZtRJaeIQ4mFF7Fe8aandiQdVQRys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cCe9LAN6ZdNeWiebb0Fsg9J/18VUhLOb/C3Z7ZcPXkuXdwEhbjCBLsyW4+v4xZCMgDilGdhAatAhgPXk+z7gt8UEQ2eChGTIebkyXzxaGKY26/e1KwFSb51xtKuW42I3ISFYJOnjriqpFX2+HQWom3gfH385fBJUYz7A/9BTqPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AS92WRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RbDniXe6psd6zYV5vuYNWFpAhcPLlEhL1gmR2gZvybGLFd710F6NTOS7FrF0j3bCOdoH6L3DXMzaMUWMkOhzbT0JqafMz/5J4RUIutCC7qkfcBuoeDG0heB9RoBIPlRYolqifqUoQOjsIyMwpo0BJV+ALjyfUOViK/hq4KGS0t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4ueFq4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AS92WRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB06C4CEE4;
-	Wed, 19 Mar 2025 14:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4ueFq4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEC2C4CEE4;
+	Wed, 19 Mar 2025 14:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395252;
-	bh=xpfLSWvbq8z+zeiBY1FvjD3TDi0JGlnrjOGwbQwdhHA=;
+	s=korg; t=1742395253;
+	bh=rgxEptthWvxCW7KZtRJaeIQ4mFF7Fe8aandiQdVQRys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AS92WRPGgxN7nyNakVGZqTu7hg52c7NXso+dJ4633r1Eg6Wz/QbRZ8lnCGGmWgla
-	 vthC2ZYShklaA0W9Y5O9EqkW+IjJB+PkzYDwFbvjz6So8JGAToEfo5Vfhtkd1ee6jf
-	 PuLChAaVLhzMhnZ3BHqFbfVoh9Ls09b9czDwjjcI=
+	b=Z4ueFq4DPkyfG5EqAWv4jcV/wml9pjLuL3EXa3QkMVuXtfC85VgTLsVZJRji6x6mP
+	 06h1Z2islpH3WzYBUfz2hHuMNLsrbYzpq/r2ztlKrFn6rnGHMA25VF6IZHONPZ6qth
+	 SZkbLKsUhvHvLNODYvSheFgX2vGy/0dw0iQJRSXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 117/166] USB: serial: option: fix Telit Cinterion FE990A name
-Date: Wed, 19 Mar 2025 07:31:28 -0700
-Message-ID: <20250319143023.183260773@linuxfoundation.org>
+	Matthew Maurer <mmaurer@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.6 135/166] rust: Disallow BTF generation with Rust + LTO
+Date: Wed, 19 Mar 2025 07:31:46 -0700
+Message-ID: <20250319143023.672161394@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -50,40 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Matthew Maurer <mmaurer@google.com>
 
-commit 6232f0d8e100a26275bbd773fc56a60af2c95322 upstream.
+commit 5daa0c35a1f0e7a6c3b8ba9cb721e7d1ace6e619 upstream.
 
-The correct name for FE990 is FE990A so use it in order to avoid
-confusion with FE990B.
+The kernel cannot currently self-parse BTF containing Rust debug
+information. pahole uses the language of the CU to determine whether to
+filter out debug information when generating the BTF. When LTO is
+enabled, Rust code can cross CU boundaries, resulting in Rust debug
+information in CUs labeled as C. This results in a system which cannot
+parse its own BTF.
 
+Signed-off-by: Matthew Maurer <mmaurer@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: c1177979af9c ("btf, scripts: Exclude Rust CUs with pahole")
+Link: https://lore.kernel.org/r/20250108-rust-btf-lto-incompat-v1-1-60243ff6d820@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ init/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1368,13 +1368,13 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
- 	  .driver_info = RSVD(0) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990A (rmnet) */
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990 (MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990A (MBIM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990 (RNDIS) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990A (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990A (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1908,7 +1908,7 @@ config RUST
+ 	depends on !GCC_PLUGINS
+ 	depends on !RANDSTRUCT
+ 	depends on !SHADOW_CALL_STACK
+-	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
++	depends on !DEBUG_INFO_BTF || (PAHOLE_HAS_LANG_EXCLUDE && !LTO)
+ 	help
+ 	  Enables Rust support in the kernel.
+ 
 
 
