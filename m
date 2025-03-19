@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32CB1C8618;
-	Wed, 19 Mar 2025 14:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D8A1C8618;
+	Wed, 19 Mar 2025 14:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395196; cv=none; b=OEMJ3IkMVHw2DaJ6GDlPLyLdYMP5wtSSgEltPJugrF9+adcYwZo323Dz2DnnrQt+AhDJXKsNzW/u3w6ugBX9FH+P/MDsgLC5pb0uud1wVfxlNJbl3krie5ITO2NhYn6MapiABwY0y9QCgypd5fawZgKS4xM4FbSLfCau8WIRbDk=
+	t=1742395197; cv=none; b=sa2b5StACNh0zSaV+S6PELRzFfp+s1XGQeEpYs9pB9qsQ47T88BRE3hDK/J0cn9BogERkIannh9aD+2gU9Aa5RslI6+x8J8E1VzcrOnzrpNOl2FzbU7xkYdcMQt6eD1BQQaojLTrWO1fB1MSD4Kffkzqs7S952PZr5CwXN/tC3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395196; c=relaxed/simple;
-	bh=OKnEojHfHU5kkE7EwkhT00ULSyyf1pnYruAQd1LfxUA=;
+	s=arc-20240116; t=1742395197; c=relaxed/simple;
+	bh=ihbKsClGsnSiALq3gkost3thQBqtx3EuOeR7Ts4bNJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRkYLz4i1Nd00l/g9V/DqqwLiVSSdUlziMO7y1pik+U64LCc4RuEvgQITruuMfNYRrCJN++lHwMufkpPvVDjcQ4k42mOWTWKESlFe6H1oRWGyBMNbFWBIvGrkeuJN79sW7gjEQRySqrKvvTT/3j48qX5SGTJtfXboOhh3ldQb2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f4GTYES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGZ+X4d7uCmAbCW2FzMX17xOZXo5dbnAYWcckGYjj8/tnuumg/33+Uh7NA4Y+05Twxmx4nr45bYXPtvH1uVJCX1WPFg8sbwFdfnSox23H3UnkJPw+C4mzDgaVNal7Sora8HoQ2lJ+y5I46Bq7AH7A8ewTgx5kQAzTKgxwiRFznY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPcGyGWi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f4GTYES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A821DC4CEE4;
-	Wed, 19 Mar 2025 14:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPcGyGWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B11C4CEE4;
+	Wed, 19 Mar 2025 14:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395196;
-	bh=OKnEojHfHU5kkE7EwkhT00ULSyyf1pnYruAQd1LfxUA=;
+	s=korg; t=1742395197;
+	bh=ihbKsClGsnSiALq3gkost3thQBqtx3EuOeR7Ts4bNJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1f4GTYEStMOS4ubHBi2yfy2X4qAaHRyUVw7WeM9r0ks5PWsDNZ+8SdVMEWN01MFlj
-	 y7vlMz2YrJaoRVxnPjD1SUmghALELtTuB5eNct9KIKbs7etIfN69t2/ahkmU1bzOUi
-	 k1Gn71sJGHlTUOnQLzK727SRVUlI6oVleUYA7jA8=
+	b=sPcGyGWiuGzHto/ps20ts4sV+FrDa7EO7TR70LypInbgKbYEatCvMPZ+zBxSM/5y7
+	 QSF7aVDbh8rEmqJO9yR3jbt+jTi4ai0DtmumosL/TOLQfzwp3a4fj/89cMoCji74Ys
+	 NttpeGYwVXH1NoQCd/2Ky+f2LfPMw7OMvj1hQUbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/166] sched: Clarify wake_up_q()s write to task->wake_q.next
-Date: Wed, 19 Mar 2025 07:30:29 -0700
-Message-ID: <20250319143021.569035432@linuxfoundation.org>
+Subject: [PATCH 6.6 032/166] net: openvswitch: remove misbehaving actions length check
+Date: Wed, 19 Mar 2025 07:30:03 -0700
+Message-ID: <20250319143020.859047462@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,39 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit bcc6244e13b4d4903511a1ea84368abf925031c0 ]
+[ Upstream commit a1e64addf3ff9257b45b78bc7d743781c3f41340 ]
 
-Clarify that wake_up_q() does an atomic write to task->wake_q.next, after
-which a concurrent __wake_q_add() can immediately overwrite
-task->wake_q.next again.
+The actions length check is unreliable and produces different results
+depending on the initial length of the provided netlink attribute and
+the composition of the actual actions inside of it.  For example, a
+user can add 4088 empty clone() actions without triggering -EMSGSIZE,
+on attempt to add 4089 such actions the operation will fail with the
+-EMSGSIZE verdict.  However, if another 16 KB of other actions will
+be *appended* to the previous 4089 clone() actions, the check passes
+and the flow is successfully installed into the openvswitch datapath.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250129-sched-wakeup-prettier-v1-1-2f51f5f663fa@google.com
+The reason for a such a weird behavior is the way memory is allocated.
+When ovs_flow_cmd_new() is invoked, it calls ovs_nla_copy_actions(),
+that in turn calls nla_alloc_flow_actions() with either the actual
+length of the user-provided actions or the MAX_ACTIONS_BUFSIZE.  The
+function adds the size of the sw_flow_actions structure and then the
+actually allocated memory is rounded up to the closest power of two.
+
+So, if the user-provided actions are larger than MAX_ACTIONS_BUFSIZE,
+then MAX_ACTIONS_BUFSIZE + sizeof(*sfa) rounded up is 32K + 24 -> 64K.
+Later, while copying individual actions, we look at ksize(), which is
+64K, so this way the MAX_ACTIONS_BUFSIZE check is not actually
+triggered and the user can easily allocate almost 64 KB of actions.
+
+However, when the initial size is less than MAX_ACTIONS_BUFSIZE, but
+the actions contain ones that require size increase while copying
+(such as clone() or sample()), then the limit check will be performed
+during the reserve_sfa_size() and the user will not be allowed to
+create actions that yield more than 32 KB internally.
+
+This is one part of the problem.  The other part is that it's not
+actually possible for the userspace application to know beforehand
+if the particular set of actions will be rejected or not.
+
+Certain actions require more space in the internal representation,
+e.g. an empty clone() takes 4 bytes in the action list passed in by
+the user, but it takes 12 bytes in the internal representation due
+to an extra nested attribute, and some actions require less space in
+the internal representations, e.g. set(tunnel(..)) normally takes
+64+ bytes in the action list provided by the user, but only needs to
+store a single pointer in the internal implementation, since all the
+data is stored in the tunnel_info structure instead.
+
+And the action size limit is applied to the internal representation,
+not to the action list passed by the user.  So, it's not possible for
+the userpsace application to predict if the certain combination of
+actions will be rejected or not, because it is not possible for it to
+calculate how much space these actions will take in the internal
+representation without knowing kernel internals.
+
+All that is causing random failures in ovs-vswitchd in userspace and
+inability to handle certain traffic patterns as a result.  For example,
+it is reported that adding a bit more than a 1100 VMs in an OpenStack
+setup breaks the network due to OVS not being able to handle ARP
+traffic anymore in some cases (it tries to install a proper datapath
+flow, but the kernel rejects it with -EMSGSIZE, even though the action
+list isn't actually that large.)
+
+Kernel behavior must be consistent and predictable in order for the
+userspace application to use it in a reasonable way.  ovs-vswitchd has
+a mechanism to re-direct parts of the traffic and partially handle it
+in userspace if the required action list is oversized, but that doesn't
+work properly if we can't actually tell if the action list is oversized
+or not.
+
+Solution for this is to check the size of the user-provided actions
+instead of the internal representation.  This commit just removes the
+check from the internal part because there is already an implicit size
+check imposed by the netlink protocol.  The attribute can't be larger
+than 64 KB.  Realistically, we could reduce the limit to 32 KB, but
+we'll be risking to break some existing setups that rely on the fact
+that it's possible to create nearly 64 KB action lists today.
+
+Vast majority of flows in real setups are below 100-ish bytes.  So
+removal of the limit will not change real memory consumption on the
+system.  The absolutely worst case scenario is if someone adds a flow
+with 64 KB of empty clone() actions.  That will yield a 192 KB in the
+internal representation consuming 256 KB block of memory.  However,
+that list of actions is not meaningful and also a no-op.  Real world
+very large action lists (that can occur for a rare cases of BUM
+traffic handling) are unlikely to contain a large number of clones and
+will likely have a lot of tunnel attributes making the internal
+representation comparable in size to the original action list.
+So, it should be fine to just remove the limit.
+
+Commit in the 'Fixes' tag is the first one that introduced the
+difference between internal representation and the user-provided action
+lists, but there were many more afterwards that lead to the situation
+we have today.
+
+Fixes: 7d5437c709de ("openvswitch: Add tunneling interface.")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250308004609.2881861-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/openvswitch/flow_netlink.c | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 3d6dc03e4a7d3..942734bf7347d 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1019,9 +1019,10 @@ void wake_up_q(struct wake_q_head *head)
- 		struct task_struct *task;
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index ebc5728aab4ea..9c13e14034d3b 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2304,14 +2304,10 @@ int ovs_nla_put_mask(const struct sw_flow *flow, struct sk_buff *skb)
+ 				OVS_FLOW_ATTR_MASK, true, skb);
+ }
  
- 		task = container_of(node, struct task_struct, wake_q);
--		/* Task can safely be re-inserted now: */
- 		node = node->next;
--		task->wake_q.next = NULL;
-+		/* pairs with cmpxchg_relaxed() in __wake_q_add() */
-+		WRITE_ONCE(task->wake_q.next, NULL);
-+		/* Task can safely be re-inserted now. */
+-#define MAX_ACTIONS_BUFSIZE	(32 * 1024)
+-
+ static struct sw_flow_actions *nla_alloc_flow_actions(int size)
+ {
+ 	struct sw_flow_actions *sfa;
  
- 		/*
- 		 * wake_up_process() executes a full barrier, which pairs with
+-	WARN_ON_ONCE(size > MAX_ACTIONS_BUFSIZE);
+-
+ 	sfa = kmalloc(kmalloc_size_roundup(sizeof(*sfa) + size), GFP_KERNEL);
+ 	if (!sfa)
+ 		return ERR_PTR(-ENOMEM);
+@@ -2467,15 +2463,6 @@ static struct nlattr *reserve_sfa_size(struct sw_flow_actions **sfa,
+ 
+ 	new_acts_size = max(next_offset + req_size, ksize(*sfa) * 2);
+ 
+-	if (new_acts_size > MAX_ACTIONS_BUFSIZE) {
+-		if ((next_offset + req_size) > MAX_ACTIONS_BUFSIZE) {
+-			OVS_NLERR(log, "Flow action size exceeds max %u",
+-				  MAX_ACTIONS_BUFSIZE);
+-			return ERR_PTR(-EMSGSIZE);
+-		}
+-		new_acts_size = MAX_ACTIONS_BUFSIZE;
+-	}
+-
+ 	acts = nla_alloc_flow_actions(new_acts_size);
+ 	if (IS_ERR(acts))
+ 		return (void *)acts;
+@@ -3502,7 +3489,7 @@ int ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 	int err;
+ 	u32 mpls_label_count = 0;
+ 
+-	*sfa = nla_alloc_flow_actions(min(nla_len(attr), MAX_ACTIONS_BUFSIZE));
++	*sfa = nla_alloc_flow_actions(nla_len(attr));
+ 	if (IS_ERR(*sfa))
+ 		return PTR_ERR(*sfa);
+ 
 -- 
 2.39.5
 
