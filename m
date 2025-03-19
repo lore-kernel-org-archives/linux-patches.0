@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDE81B0F32;
-	Wed, 19 Mar 2025 14:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EF61C5F26;
+	Wed, 19 Mar 2025 14:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394855; cv=none; b=GElQOD7XcKuZ6bEs9m7TpvfmUo0K7xCSjQ39imdG6h9WvdfD5Pk9AsQ2JK0L1Vr/PPYaXWrqSKgQkPJE26U45XJw6Vu7gLx7BxFV6uivZKrgy1CNgn/6uTjGbM4DOgZpsEJ/yhdFwBRaNMAk4Kn8PyX8MCu83gORVzgg+97og5Y=
+	t=1742394856; cv=none; b=F03xASpqlSDOo2FkTNZA520LR0m08GacBRwlY9Uw6QSnAU7zHfD/YkRg3adEHh2mak99SmUhhAOyJrnL7VwPxErWHjtX22ld+Sab5xspejnZofSJ+41dVh0toGYnI1sj22CqZnenb4SF+EwmMwjuAlLo8IppBQXMNqLO1PunnBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394855; c=relaxed/simple;
-	bh=Vs04rKv5Cc2os1UZWBb1hOJ6zV5pgiMUCnF6AvJkF/I=;
+	s=arc-20240116; t=1742394856; c=relaxed/simple;
+	bh=224z7gH6Z5oNPuKaq1xm4y7ABw1H+zDUYdd0Q3qYI6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvvLhVHGfpltsZ24YAdmi8DBe6/kBvTgHdBaezzAZD/12g9ihvn4MfPtFCHz17/TRor77vs36COKZqvsnvkMpTHTTPDIyGN3x03q27WPP8krz74rWD528JJLk0X2e8Jl2p9jhIOu59f8LKudF7FTjItTBFWt7wP4Gw7BvSNFCQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urhQrl6E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUQ857JEd/UBuAxiIOWRMnq2y9cXgxCPkL8Gc4YbaWHsoYXLeI4O79hgzdU39kRrBQLdRbJIDkm1EYMH11samIsNcCMm1ryz4vcCW9wuE3fay3UAXZ1zkO7Ilv21xu34O4JZdjjx4xU5VmdLnn9Xl4OxsXLY3+0iUHSTkiK2nSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH3NXWLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urhQrl6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539DCC4CEE8;
-	Wed, 19 Mar 2025 14:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH3NXWLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08438C4CEE4;
+	Wed, 19 Mar 2025 14:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394855;
-	bh=Vs04rKv5Cc2os1UZWBb1hOJ6zV5pgiMUCnF6AvJkF/I=;
+	s=korg; t=1742394856;
+	bh=224z7gH6Z5oNPuKaq1xm4y7ABw1H+zDUYdd0Q3qYI6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=urhQrl6E3mAPeUL2Viy3LG2xIVzydaj2DvSXzke2pMZ2k9qNKmJmgVIdU3aKg20h3
-	 p8Mpu2u6ydtl0cc1Qw4Ob5N8VQGcHkIrmIIfP/Ugj+DE14iLJQKFiR9Xmenxjy02B+
-	 fAmNxdW6L99d4IVzCLfsbyJOeMLLlUp5LRkiiN8I=
+	b=qH3NXWLKNRab1tbgFdgjY7NMFyYmCYDVhtF2gJ8sKvhkjzbVHW9hH43hTLXhNhQtw
+	 9t6VqnXNn9u3qQPn3xI3Bj3FRML7qo7rDKvOWYDJZpi40ygjHZPXqVMacOnS/g4pAU
+	 LbMFLdjUmqUQkDjFPGKBbPRF/P1C5GQmCrA6rppw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+83fed965338b573115f7@syzkaller.appspotmail.com,
+	Kohei Enju <enjuk@amazon.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 043/241] wifi: mac80211: fix MPDU length parsing for EHT 5/6 GHz
-Date: Wed, 19 Mar 2025 07:28:33 -0700
-Message-ID: <20250319143028.786253831@linuxfoundation.org>
+Subject: [PATCH 6.13 044/241] netfilter: nf_conncount: Fully initialize struct nf_conncount_tuple in insert_tree()
+Date: Wed, 19 Mar 2025 07:28:34 -0700
+Message-ID: <20250319143028.811380894@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,51 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit 8ae227f8a7749eec92fc381dfbe213429c852278 ]
+[ Upstream commit d653bfeb07ebb3499c403404c21ac58a16531607 ]
 
-The MPDU length is only configured using the EHT capabilities element on
-2.4 GHz. On 5/6 GHz it is configured using the VHT or HE capabilities
-respectively.
+Since commit b36e4523d4d5 ("netfilter: nf_conncount: fix garbage
+collection confirm race"), `cpu` and `jiffies32` were introduced to
+the struct nf_conncount_tuple.
 
-Fixes: cf0079279727 ("wifi: mac80211: parse A-MSDU len from EHT capabilities")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://patch.msgid.link/20250311121704.0634d31f0883.I28063e4d3ef7d296b7e8a1c303460346a30bf09c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The commit made nf_conncount_add() initialize `conn->cpu` and
+`conn->jiffies32` when allocating the struct.
+In contrast, count_tree() was not changed to initialize them.
+
+By commit 34848d5c896e ("netfilter: nf_conncount: Split insert and
+traversal"), count_tree() was split and the relevant allocation
+code now resides in insert_tree().
+Initialize `conn->cpu` and `conn->jiffies32` in insert_tree().
+
+BUG: KMSAN: uninit-value in find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+BUG: KMSAN: uninit-value in __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+ __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ count_tree net/netfilter/nf_conncount.c:438 [inline]
+ nf_conncount_count+0x82f/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4121 [inline]
+ slab_alloc_node mm/slub.c:4164 [inline]
+ kmem_cache_alloc_noprof+0x915/0xe10 mm/slub.c:4171
+ insert_tree net/netfilter/nf_conncount.c:372 [inline]
+ count_tree net/netfilter/nf_conncount.c:450 [inline]
+ nf_conncount_count+0x1415/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+
+Reported-by: syzbot+83fed965338b573115f7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=83fed965338b573115f7
+Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/eht.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/eht.c b/net/mac80211/eht.c
-index 7a3116c36df9f..fd41046e3b681 100644
---- a/net/mac80211/eht.c
-+++ b/net/mac80211/eht.c
-@@ -2,7 +2,7 @@
- /*
-  * EHT handling
-  *
-- * Copyright(c) 2021-2024 Intel Corporation
-+ * Copyright(c) 2021-2025 Intel Corporation
-  */
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index ebe38ed2e6f4f..913ede2f57f9a 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -377,6 +377,8 @@ insert_tree(struct net *net,
  
- #include "ieee80211_i.h"
-@@ -76,6 +76,13 @@ ieee80211_eht_cap_ie_to_sta_eht_cap(struct ieee80211_sub_if_data *sdata,
- 	link_sta->cur_max_bandwidth = ieee80211_sta_cap_rx_bw(link_sta);
- 	link_sta->pub->bandwidth = ieee80211_sta_cur_vht_bw(link_sta);
+ 	conn->tuple = *tuple;
+ 	conn->zone = *zone;
++	conn->cpu = raw_smp_processor_id();
++	conn->jiffies32 = (u32)jiffies;
+ 	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
  
-+	/*
-+	 * The MPDU length bits are reserved on all but 2.4 GHz and get set via
-+	 * VHT (5 GHz) or HE (6 GHz) capabilities.
-+	 */
-+	if (sband->band != NL80211_BAND_2GHZ)
-+		return;
-+
- 	switch (u8_get_bits(eht_cap->eht_cap_elem.mac_cap_info[0],
- 			    IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK)) {
- 	case IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454:
+ 	nf_conncount_list_init(&rbconn->list);
 -- 
 2.39.5
 
