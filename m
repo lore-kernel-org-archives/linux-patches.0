@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0B21DDC0F;
-	Wed, 19 Mar 2025 14:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6511DDC2D;
+	Wed, 19 Mar 2025 14:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394945; cv=none; b=UUszTCDWDPj4gxeokUA0b8dpn+anEiYoUxAzlfYAjGNC7Q3l5Gky7XgRAqYZ0df+N2hoXmbgbDCVahZeYQIkG29Ve/ZrQCm61wE/Iblou8pwAX5INJBAaX7Fh71q2izT2TF+cMvd0Seuz1Vj1VIOMS3wODMVu2G89Pc7xHYGo14=
+	t=1742394946; cv=none; b=O7CPU7BYwo3fzzorsRdwbcowpDAkdIqPOEUBLRJ+eKinRSrOvGOTTMUcOMqRDVHX7e9fFfzhPk/gXXzGD5YvMa22oZOmp3b9e1wWfkJ/JEmvvD/lxR0rRBQ3OzICxwvBulTyAxhrFreDVLmvha+TZvGebcThBSDTwsah+dPlltI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394945; c=relaxed/simple;
-	bh=ivPmp4ljzvfst/IqrSt25DzU+/N07Sg1uht4qaaWfOE=;
+	s=arc-20240116; t=1742394946; c=relaxed/simple;
+	bh=oKzjSAmskOPg3GKFnq8rSO7YKPXNI7z1gN/eHKBIgRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pti8O79i6IMXSwxomAfdn73aneBsQ84BHFYgrxB9zxpxmb+/0dgrCPs1BAqAfvbpK2V5zhoePpA2IpS7LYLoTt0xz2iFzO0oKsd2IHmglBTrcRzVP3uN8v4NVeI2xAXedtFIl8+wEhcuzI9MsgzOa8B8eIQhr9jCvjb6Bxk6fsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em2Kspar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afrIaiOxkwBvw8fW2RYwv6CsYW0Zupm7qWb3HDnCCynQN519HJMuevJW034jqqisYKwv6Uai3KDcSReFy22OgBP1dDVstUPctti6EdtvEWpYvdc+mr38AfwTQWYBVz7EdwaPP4kIUity4nq+mjfCwMcXCJVIuZTs/DepeO1NOPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrMdNect; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em2Kspar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E1DC4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrMdNect"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB50C4CEE4;
 	Wed, 19 Mar 2025 14:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394945;
-	bh=ivPmp4ljzvfst/IqrSt25DzU+/N07Sg1uht4qaaWfOE=;
+	s=korg; t=1742394946;
+	bh=oKzjSAmskOPg3GKFnq8rSO7YKPXNI7z1gN/eHKBIgRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Em2Kspar4Yn2lj0TQrjh6OBL2H9xMsAL5wUm4q2UfdabXWTyosZMnJBPl/TZ+rRat
-	 a4EgqsnzCQ/sY2u2WQhMOjU//A9Np3lJUtZQlTqo4g6fx3dvI8qyzTfKLKlgrRWZxo
-	 pYSTH1VlrDH7y0Vg7aFrCygMGL85H5dtfvJDUEjg=
+	b=JrMdNectEs8lBz/3kAr0nkN6FgyfuAdDARptNnn+tGpEIGL37rDrvoVqpK32Z41iZ
+	 9zTFg37KBrpyjWjM7CZ8jQlt3UpBnl3PVqGWSoM0NubbqEtEFKL/ovdZHD96K6sVtb
+	 W2SzeamXzzeAOY3B4/B4FBIj1N9ViEWB4fxeInvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Danilo Krummrich <dakr@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
+	Tamir Duberstein <tamird@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.13 168/241] rust: remove leftover mentions of the `alloc` crate
-Date: Wed, 19 Mar 2025 07:30:38 -0700
-Message-ID: <20250319143031.880790495@linuxfoundation.org>
+Subject: [PATCH 6.13 169/241] rust: alloc: satisfy POSIX alignment requirement
+Date: Wed, 19 Mar 2025 07:30:39 -0700
+Message-ID: <20250319143031.909191595@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,62 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Tamir Duberstein <tamird@gmail.com>
 
-commit 374908a15af4cd60862ebc51a6e012ace2212c76 upstream.
+commit ff64846bee0e7e3e7bc9363ebad3bab42dd27e24 upstream.
 
-In commit 392e34b6bc22 ("kbuild: rust: remove the `alloc` crate and
-`GlobalAlloc`") we stopped using the upstream `alloc` crate.
+ISO C's `aligned_alloc` is partially implementation-defined; on some
+systems it inherits stricter requirements from POSIX's `posix_memalign`.
 
-Thus remove a few leftover mentions treewide.
+This causes the call added in commit dd09538fb409 ("rust: alloc:
+implement `Cmalloc` in module allocator_test") to fail on macOS because
+it doesn't meet the requirements of `posix_memalign`.
 
-Cc: stable@vger.kernel.org # Also to 6.12.y after the `alloc` backport lands
-Fixes: 392e34b6bc22 ("kbuild: rust: remove the `alloc` crate and `GlobalAlloc`")
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://lore.kernel.org/r/20250303171030.1081134-1-ojeda@kernel.org
+Adjust the call to meet the POSIX requirement and add a comment. This
+fixes failures in `make rusttest` on macOS.
+
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: dd09538fb409 ("rust: alloc: implement `Cmalloc` in module allocator_test")
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20250213-aligned-alloc-v7-1-d2a2d0be164b@gmail.com
+[ Added Cc: stable. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/rust/quick-start.rst |    2 +-
- rust/kernel/lib.rs                 |    2 +-
- scripts/rustdoc_test_gen.rs        |    4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ rust/kernel/alloc/allocator_test.rs |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/Documentation/rust/quick-start.rst
-+++ b/Documentation/rust/quick-start.rst
-@@ -145,7 +145,7 @@ Rust standard library source
- ****************************
+--- a/rust/kernel/alloc/allocator_test.rs
++++ b/rust/kernel/alloc/allocator_test.rs
+@@ -62,6 +62,24 @@ unsafe impl Allocator for Cmalloc {
+             ));
+         }
  
- The Rust standard library source is required because the build system will
--cross-compile ``core`` and ``alloc``.
-+cross-compile ``core``.
- 
- If ``rustup`` is being used, run::
- 
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -6,7 +6,7 @@
- //! usage by Rust code in the kernel and is shared by all of them.
- //!
- //! In other words, all the rest of the Rust code in the kernel (e.g. kernel
--//! modules written in Rust) depends on [`core`], [`alloc`] and this crate.
-+//! modules written in Rust) depends on [`core`] and this crate.
- //!
- //! If you need a kernel C API that is not ported or wrapped yet here, then
- //! do so first instead of bypassing this crate.
---- a/scripts/rustdoc_test_gen.rs
-+++ b/scripts/rustdoc_test_gen.rs
-@@ -15,8 +15,8 @@
- //!   - Test code should be able to define functions and call them, without having to carry
- //!     the context.
- //!
--//!   - Later on, we may want to be able to test non-kernel code (e.g. `core`, `alloc` or
--//!     third-party crates) which likely use the standard library `assert*!` macros.
-+//!   - Later on, we may want to be able to test non-kernel code (e.g. `core` or third-party
-+//!     crates) which likely use the standard library `assert*!` macros.
- //!
- //! For this reason, instead of the passed context, `kunit_get_current_test()` is used instead
- //! (i.e. `current->kunit_test`).
++        // ISO C (ISO/IEC 9899:2011) defines `aligned_alloc`:
++        //
++        // > The value of alignment shall be a valid alignment supported by the implementation
++        // [...].
++        //
++        // As an example of the "supported by the implementation" requirement, POSIX.1-2001 (IEEE
++        // 1003.1-2001) defines `posix_memalign`:
++        //
++        // > The value of alignment shall be a power of two multiple of sizeof (void *).
++        //
++        // and POSIX-based implementations of `aligned_alloc` inherit this requirement. At the time
++        // of writing, this is known to be the case on macOS (but not in glibc).
++        //
++        // Satisfy the stricter requirement to avoid spurious test failures on some platforms.
++        let min_align = core::mem::size_of::<*const crate::ffi::c_void>();
++        let layout = layout.align_to(min_align).map_err(|_| AllocError)?;
++        let layout = layout.pad_to_align();
++
+         // SAFETY: Returns either NULL or a pointer to a memory allocation that satisfies or
+         // exceeds the given size and alignment requirements.
+         let dst = unsafe { libc_aligned_alloc(layout.align(), layout.size()) } as *mut u8;
 
 
