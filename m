@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E1D2054EF;
-	Wed, 19 Mar 2025 14:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED431CAA60;
+	Wed, 19 Mar 2025 14:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394986; cv=none; b=ZPJ9r9DgNvfXPNkNPsiQiJSgqU/oYqF1GmCZ0zOC5GxdQNTDsO1k5n2UkUTob9177ut9lzVLifsyZ8eoisJG2bzMRIuQT1d6wPYhEfVjYUuQjSY+7Vuduc493YvPCZ69IT2thERbIzu/saCo6XDpV7uKG6hoYhXPn4Vk6TAbffc=
+	t=1742394987; cv=none; b=nLVW+Tm0rnorhr31ujPEovqmkEJn2/256UNHr6cKraAzf2bY53SuaS32EXq2ABb4ZE2vdxJqdXGRr6ONpcE5d9vDLCXarmSsmJP+26boCaJkTY+ZcyQeDFm3ci77TjNslgMZmJGpkHMeiDMCPxSttnHqukC+3Qd7nOmqyYF3UXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394986; c=relaxed/simple;
-	bh=qaO/8g0pc2iwnBEWC+/rKo/USxWj1vRNlc5OZrPYtCY=;
+	s=arc-20240116; t=1742394987; c=relaxed/simple;
+	bh=P2zgmam0jaUCd+hAdhpYtXjtaF3pP2fXaFASFxTBZ/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFXFM5pyfm3JYsXUv8yiu6IN3l+yJmxGv6TTra9jQlZZFMUcjU+YEy4fYmOgmXcZrhBneNuhAT1OUOOAmqxMHrqRm7nJEWBgMku4FoB/zRfEJVqNWMQTywpcrt2N4vAAfOSOBrp2XnzwTBtlVSbafeDm87VKQQ0Hezp4+QW3YRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9jjCQFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1Zc/0USzWlzxcMOvS1oy+NHyTgip0f6b/DMB87AahwHucTBMgCs8duyKNY02iJGJeVKBVCagbImgpcOol9nEZZ+6sh6AHAjJmYm5iVvZ906AcnjVU3J/bPOgnQjbhH9vRakac9xu3ObEPmuOxSnPOs0ZEPADhDzrG6F4va2vwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtkilE5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9jjCQFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531F0C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtkilE5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AB3C4CEE9;
 	Wed, 19 Mar 2025 14:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394986;
-	bh=qaO/8g0pc2iwnBEWC+/rKo/USxWj1vRNlc5OZrPYtCY=;
+	s=korg; t=1742394987;
+	bh=P2zgmam0jaUCd+hAdhpYtXjtaF3pP2fXaFASFxTBZ/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9jjCQFSZh/UZaVbtmSp/yuta0LPvqIe3b5n3mENN4x49YD9RmSp6Ws49D+WfgmaI
-	 bP3bLyDZqjlQCsSTJ/KGtL0ThMdOqjO+eL3PBSK1fVTSAtR5A6wLze6NrHIKHD/EW9
-	 UwOMhMSYo1uvXUIDf8UU7hFBaEz3wzJgFjonEp+E=
+	b=UtkilE5c9TjCciGv26x2J7KDJBTYXOEz3y10O4pnkumlVYSgi79DT3+Ws88oP+auI
+	 Mk84xczGMF2pldcKBaQDn/YEyEGuR136qP15dJNmTTI9aPmEqVZSjY08Pv3NtjHNDp
+	 QmRhmgJQ706P56WAP1KXqNN/xKTtvutI0IJasCx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Murad Masimov <m.masimov@mt-integration.ru>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 226/241] cifs: Fix integer overflow while processing actimeo mount option
-Date: Wed, 19 Mar 2025 07:31:36 -0700
-Message-ID: <20250319143033.335920393@linuxfoundation.org>
+Subject: [PATCH 6.13 227/241] cifs: Fix integer overflow while processing closetimeo mount option
+Date: Wed, 19 Mar 2025 07:31:37 -0700
+Message-ID: <20250319143033.358946249@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,35 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 64f690ee22c99e16084e0e45181b2a1eed2fa149 ]
+[ Upstream commit d5a30fddfe2f2e540f6c43b59cf701809995faef ]
 
-User-provided mount parameter actimeo of type u32 is intended to have
+User-provided mount parameter closetimeo of type u32 is intended to have
 an upper limit, but before it is validated, the value is converted from
 seconds to jiffies which can lead to an integer overflow.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 6d20e8406f09 ("cifs: add attribute cache timeout (actimeo) tunable")
+Fixes: 5efdd9122eff ("smb3: allow deferred close timeout to be configurable")
 Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/fs_context.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/fs_context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index 6d7091ddec16e..55bc036b243e4 100644
+index 55bc036b243e4..c85285bf730e9 100644
 --- a/fs/smb/client/fs_context.c
 +++ b/fs/smb/client/fs_context.c
-@@ -1298,7 +1298,7 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 		ctx->acdirmax = HZ * result.uint_32;
+@@ -1310,11 +1310,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		ctx->acdirmax = ctx->acregmax = HZ * result.uint_32;
  		break;
- 	case Opt_actimeo:
--		if (HZ * result.uint_32 > CIFS_MAX_ACTIMEO) {
-+		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
- 			cifs_errorf(fc, "timeout too large\n");
+ 	case Opt_closetimeo:
+-		ctx->closetimeo = HZ * result.uint_32;
+-		if (ctx->closetimeo > SMB3_MAX_DCLOSETIMEO) {
++		if (result.uint_32 > SMB3_MAX_DCLOSETIMEO / HZ) {
+ 			cifs_errorf(fc, "closetimeo too large\n");
  			goto cifs_parse_mount_err;
  		}
++		ctx->closetimeo = HZ * result.uint_32;
+ 		break;
+ 	case Opt_echo_interval:
+ 		ctx->echo_interval = result.uint_32;
 -- 
 2.39.5
 
