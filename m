@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBF11DF98E;
-	Wed, 19 Mar 2025 14:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6E7211704;
+	Wed, 19 Mar 2025 14:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395015; cv=none; b=MvUymwecgI2X71Ze9IIsZiNsxdtwRehdSJjnyb9gnHEW17lH58U46fpqoSqO3DbYfBDIQc0OqG98Prlf8L/BzSzhUhptYdQJJbfsnc+2e3utZVd75lQHiwTKolPdGM6HmEN8egRq3eouATARkXYJU2qUgYuzPuQNOBwQ1gklAwY=
+	t=1742395016; cv=none; b=Du87ikc2MK7gaArS5wFChMdrxPTT1ONMIktvAf3XBN9ILKDG9r0uQN0rZMSB4GtMYn1R/sk65WKp3vdxzje+FRjvDkYW+fDOrmCbW6jJvyy/jsxaKVfqDrnUnP+DqX81/oB5mCkFQcBYzmDuoctgzU69aUt1ETDZ8qPltOtJc+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395015; c=relaxed/simple;
-	bh=V3BtB8bS98KBqj1dEkfRvbBBA7ynGH/2CaGOufpwrjk=;
+	s=arc-20240116; t=1742395016; c=relaxed/simple;
+	bh=0TAoP2BZPZ9Y7c9A1/rqBMO8WwxoU/SXp9u8tiymNN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+78raCHs/uSYZct6pn1vGwvGozlOPYvFW4Pl0WXBw8LaifnzXMIC6+1ZrOR4IKvSJ6+8CXzTnUaejSOsh1hxE+vQJXZe6hV5b9X1J7Yw2VNNjXXlJC0L3t+pg0adOfoSLvzwZPT/u6hbypIpp0H+AGccfo+FmPi1B7vA8ZhTTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTIgvVoE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQPa8IF5BQVAIbFIKiKYceVsaIgtKjal3gNvAtYugoOlaG4DM/XLn8LXQEfNMbOiZW09V3cnoxUjlWeQDwzb4VmKziZgTC/buKK9f1b3g8xPHamwAwQ+XHW14tlsQc0IJUKxpXo1RZf/Qv8V1bI66WmUdLCF8soHhRMQcMReh4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVRftCNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTIgvVoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F60C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVRftCNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A16C4CEE4;
 	Wed, 19 Mar 2025 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395015;
-	bh=V3BtB8bS98KBqj1dEkfRvbBBA7ynGH/2CaGOufpwrjk=;
+	s=korg; t=1742395016;
+	bh=0TAoP2BZPZ9Y7c9A1/rqBMO8WwxoU/SXp9u8tiymNN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTIgvVoE6EdFyZSi15qZUYmb3E1fghDxTqq14veFfH9Nk/cDgMktILavjxpVIOU+N
-	 +kIf+jp0njoLBRctbBNgkrs+pVAuGXbCYhEY9RC3UytfkugctBWDr4pP5/iAJBiP4j
-	 oILLU7iz5fwofI8OozSy+jCS0JYVNr2ZHKuAt20w=
+	b=tVRftCNimqb1qi+8QCK4P+gXIWoHj0QXJT8uL2XnppTarQ2AfJFR6w24AcoPqx0bK
+	 fKWxCOjWi0CbnLS5oVjYO6Pp1upraezYCwHXeQeXtvekEMKIvonx++V1WsAEHi+nRr
+	 nayoZ5+fohN5PZiRBqfqNRH7tSUj04bdM5ylE9yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
 	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/231] fbdev: hyperv_fb: Allow graceful removal of framebuffer
-Date: Wed, 19 Mar 2025 07:28:40 -0700
-Message-ID: <20250319143027.494134892@linuxfoundation.org>
+Subject: [PATCH 6.12 028/231] Drivers: hv: vmbus: Dont release fb_mmio resource in vmbus_free_mmio()
+Date: Wed, 19 Mar 2025 07:28:41 -0700
+Message-ID: <20250319143027.518519978@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,115 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit ea2f45ab0e53b255f72c85ccd99e2b394fc5fceb ]
+[ Upstream commit 73fe9073c0cc28056cb9de0c8a516dac070f1d1f ]
 
-When a Hyper-V framebuffer device is unbind, hyperv_fb driver tries to
-release the framebuffer forcefully. If this framebuffer is in use it
-produce the following WARN and hence this framebuffer is never released.
+The VMBus driver manages the MMIO space it owns via the hyperv_mmio
+resource tree. Because the synthetic video framebuffer portion of the
+MMIO space is initially setup by the Hyper-V host for each guest, the
+VMBus driver does an early reserve of that portion of MMIO space in the
+hyperv_mmio resource tree. It saves a pointer to that resource in
+fb_mmio. When a VMBus driver requests MMIO space and passes "true"
+for the "fb_overlap_ok" argument, the reserved framebuffer space is
+used if possible. In that case it's not necessary to do another request
+against the "shadow" hyperv_mmio resource tree because that resource
+was already requested in the early reserve steps.
 
-[   44.111220] WARNING: CPU: 35 PID: 1882 at drivers/video/fbdev/core/fb_info.c:70 framebuffer_release+0x2c/0x40
-< snip >
-[   44.111289] Call Trace:
-[   44.111290]  <TASK>
-[   44.111291]  ? show_regs+0x6c/0x80
-[   44.111295]  ? __warn+0x8d/0x150
-[   44.111298]  ? framebuffer_release+0x2c/0x40
-[   44.111300]  ? report_bug+0x182/0x1b0
-[   44.111303]  ? handle_bug+0x6e/0xb0
-[   44.111306]  ? exc_invalid_op+0x18/0x80
-[   44.111308]  ? asm_exc_invalid_op+0x1b/0x20
-[   44.111311]  ? framebuffer_release+0x2c/0x40
-[   44.111313]  ? hvfb_remove+0x86/0xa0 [hyperv_fb]
-[   44.111315]  vmbus_remove+0x24/0x40 [hv_vmbus]
-[   44.111323]  device_remove+0x40/0x80
-[   44.111325]  device_release_driver_internal+0x20b/0x270
-[   44.111327]  ? bus_find_device+0xb3/0xf0
+However, the vmbus_free_mmio() function currently does no special
+handling for the fb_mmio resource. When a framebuffer device is
+removed, or the driver is unbound, the current code for
+vmbus_free_mmio() releases the reserved resource, leaving fb_mmio
+pointing to memory that has been freed. If the same or another
+driver is subsequently bound to the device, vmbus_allocate_mmio()
+checks against fb_mmio, and potentially gets garbage. Furthermore
+a second unbind operation produces this "nonexistent resource" error
+because of the unbalanced behavior between vmbus_allocate_mmio() and
+vmbus_free_mmio():
 
-Fix this by moving the release of framebuffer and assosiated memory
-to fb_ops.fb_destroy function, so that framebuffer framework handles
-it gracefully.
+[   55.499643] resource: Trying to free nonexistent
+			resource <0x00000000f0000000-0x00000000f07fffff>
 
-While we fix this, also replace manual registrations/unregistration of
-framebuffer with devm_register_framebuffer.
+Fix this by adding logic to vmbus_free_mmio() to recognize when
+MMIO space in the fb_mmio reserved area would be released, and don't
+release it. This filtering ensures the fb_mmio resource always exists,
+and makes vmbus_free_mmio() more parallel with vmbus_allocate_mmio().
 
-Fixes: 68a2d20b79b1 ("drivers/video: add Hyper-V Synthetic Video Frame Buffer Driver")
-
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1740845791-19977-3-git-send-email-ssengar@linux.microsoft.com
+Fixes: be000f93e5d7 ("drivers:hv: Track allocations of children of hv_vmbus in private resource tree")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250310035208.275764-1-mhklinux@outlook.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1740845791-19977-3-git-send-email-ssengar@linux.microsoft.com>
+Message-ID: <20250310035208.275764-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/hyperv_fb.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/hv/vmbus_drv.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index 9798a34ac571f..75338ffc703fb 100644
---- a/drivers/video/fbdev/hyperv_fb.c
-+++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -282,6 +282,8 @@ static uint screen_depth;
- static uint screen_fb_size;
- static uint dio_fb_size; /* FB size for deferred IO */
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 9b15f7daf5059..2b6749c9712ef 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2262,12 +2262,25 @@ void vmbus_free_mmio(resource_size_t start, resource_size_t size)
+ 	struct resource *iter;
  
-+static void hvfb_putmem(struct fb_info *info);
+ 	mutex_lock(&hyperv_mmio_lock);
 +
- /* Send message to Hyper-V host */
- static inline int synthvid_send(struct hv_device *hdev,
- 				struct synthvid_msg *msg)
-@@ -862,6 +864,17 @@ static void hvfb_ops_damage_area(struct fb_info *info, u32 x, u32 y, u32 width,
- 		hvfb_ondemand_refresh_throttle(par, x, y, width, height);
- }
- 
-+/*
-+ * fb_ops.fb_destroy is called by the last put_fb_info() call at the end
-+ * of unregister_framebuffer() or fb_release(). Do any cleanup related to
-+ * framebuffer here.
-+ */
-+static void hvfb_destroy(struct fb_info *info)
-+{
-+	hvfb_putmem(info);
-+	framebuffer_release(info);
-+}
++	/*
++	 * If all bytes of the MMIO range to be released are within the
++	 * special case fb_mmio shadow region, skip releasing the shadow
++	 * region since no corresponding __request_region() was done
++	 * in vmbus_allocate_mmio().
++	 */
++	if (fb_mmio && start >= fb_mmio->start &&
++	    (start + size - 1 <= fb_mmio->end))
++		goto skip_shadow_release;
 +
- /*
-  * TODO: GEN1 codepaths allocate from system or DMA-able memory. Fix the
-  *       driver to use the _SYSMEM_ or _DMAMEM_ helpers in these cases.
-@@ -877,6 +890,7 @@ static const struct fb_ops hvfb_ops = {
- 	.fb_set_par = hvfb_set_par,
- 	.fb_setcolreg = hvfb_setcolreg,
- 	.fb_blank = hvfb_blank,
-+	.fb_destroy	= hvfb_destroy,
- };
+ 	for (iter = hyperv_mmio; iter; iter = iter->sibling) {
+ 		if ((iter->start >= start + size) || (iter->end <= start))
+ 			continue;
  
- /* Get options from kernel paramenter "video=" */
-@@ -1178,7 +1192,7 @@ static int hvfb_probe(struct hv_device *hdev,
- 	if (ret)
- 		goto error;
+ 		__release_region(iter, start, size);
+ 	}
++
++skip_shadow_release:
+ 	release_mem_region(start, size);
+ 	mutex_unlock(&hyperv_mmio_lock);
  
--	ret = register_framebuffer(info);
-+	ret = devm_register_framebuffer(&hdev->device, info);
- 	if (ret) {
- 		pr_err("Unable to register framebuffer\n");
- 		goto error;
-@@ -1226,14 +1240,10 @@ static void hvfb_remove(struct hv_device *hdev)
- 
- 	fb_deferred_io_cleanup(info);
- 
--	unregister_framebuffer(info);
- 	cancel_delayed_work_sync(&par->dwork);
- 
- 	vmbus_close(hdev->channel);
- 	hv_set_drvdata(hdev, NULL);
--
--	hvfb_putmem(info);
--	framebuffer_release(info);
- }
- 
- static int hvfb_suspend(struct hv_device *hdev)
 -- 
 2.39.5
 
