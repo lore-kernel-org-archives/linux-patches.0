@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270161C5F26;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63F51C5F26;
 	Wed, 19 Mar 2025 14:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395060; cv=none; b=r5DMbnwg928BJlG8o38sDWTsvFD0Gy4UYVbmBzpY/ATROO57N9xXOoVLcXO57Uv2diJNpYVEQn5Lt1+h+RgpGMpI0BPg+m02RYfRLnvMtWFUhm1hgI8tss79l11tb0Yg9lZFwRpmemonCHYjk4xXcEKR08YgKSfYROqt43jIXXQ=
+	t=1742395060; cv=none; b=D1IpRVdhLexvpL97TagwW1Hjgo7quk43UTot6/JZACYq/rhoqRaoL1HPweE4zaJph8wdalXPsSbNBBulbe5t+hjdT3ZkGLplpb4DmvRDbv60tzzLt7pA1W1I2QsFMngVa33bETtYOJPJK2kOhhDD+9xF3qgfIk2DMhhk+y+WvYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395060; c=relaxed/simple;
-	bh=7NTwrxyaDnfhoVKE7HK6M/gHxDtSkeWRn3keqMz+pCw=;
+	bh=Ph/mIF0AIwe8gUB+s+ZYhCBUIQjpy3RN/29SyDhkde8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWe+TAKgOz81qKF8sue6wvpsZvnO+0HN5tKkepXTtrmLoMFIeMzSvabOVd51W16x6tpsfn7HtMKL/3+Lu/6h30oqTwo7qZPJiS14QMEJ4DFZ0lwOGDqbgTS3f3jHxySpKdzf+4lfhudUmk10pcLGrweY2B1HzREgycQrZ5Sndng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQzQURcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6dSd8zKlki0cR0JbLRnknCRVz7Yskh8g4EM07VsO/MsYuB/jsZK7Ck/VldlY8DcRD4d9fWawUbbrFS/gI61OzEjZz9RcI6mu+2oVjjqGl9oHgnXZT5xoGauau8wUOElTbz99meIYZh47zczUI+bKSyslh5LuAFE1MwcmCO6t0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3OKGg9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQzQURcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB26FC4CEE4;
-	Wed, 19 Mar 2025 14:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3OKGg9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99934C4CEE9;
+	Wed, 19 Mar 2025 14:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395060;
-	bh=7NTwrxyaDnfhoVKE7HK6M/gHxDtSkeWRn3keqMz+pCw=;
+	bh=Ph/mIF0AIwe8gUB+s+ZYhCBUIQjpy3RN/29SyDhkde8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQzQURcGcCPJFJI6+EGP/ufTNBT/DKm++4OACO+7flfyNymdMX2BcVlWqhSFJAm59
-	 mebYecQHw0ORoOyWWSVSEH2M6V7mG/Kk0c9Bb/wAO9Xw7xRizMfGeFrxJDWOB2LXB7
-	 mzUzc9OzB2xlhfIwUR78CGRj+MTWkObH6BCroFa0=
+	b=D3OKGg9LHe+RT+sHAb+YSgpubQ36ID43aJRhaX55jzvFw4qKvYmoqAt98wiAYeKra
+	 pj6J+uDjPWT9BcTYYwxNGHmoubVFUCEDDmOSxh3vt32VDWxV1J6NjXu8GXeFqFo1uJ
+	 bHAfIqaQmN8GtYTHoDBTHTdW4akm47wIr6VugGY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/231] thermal/cpufreq_cooling: Remove structure member documentation
-Date: Wed, 19 Mar 2025 07:29:46 -0700
-Message-ID: <20250319143029.141390824@linuxfoundation.org>
+Subject: [PATCH 6.12 094/231] LoongArch: Fix kernel_page_present() for KPRANGE/XKPRANGE
+Date: Wed, 19 Mar 2025 07:29:47 -0700
+Message-ID: <20250319143029.165108042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -53,39 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit a6768c4f92e152265590371975d44c071a5279c7 ]
+[ Upstream commit 619b52777a4972bdb6ddf86ac54c6f68a47b51c4 ]
 
-The structure member documentation refers to a member which does not
-exist any more. Remove it.
+Now kernel_page_present() always return true for KPRANGE/XKPRANGE
+addresses, this isn't correct because hibernation (ACPI S4) use it
+to distinguish whether a page is saveable. If all KPRANGE/XKPRANGE
+addresses are considered as saveable, then reserved memory such as
+EFI_RUNTIME_SERVICES_CODE / EFI_RUNTIME_SERVICES_DATA will also be
+saved and restored.
 
-Link: https://lore.kernel.org/all/202501220046.h3PMBCti-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501220046.h3PMBCti-lkp@intel.com/
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20250211084712.2746705-1-daniel.lezcano@linaro.org
-[ rjw: Minor changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix this by returning true only if the KPRANGE/XKPRANGE address is in
+memblock.memory.
+
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/cpufreq_cooling.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/loongarch/mm/pageattr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/cpufreq_cooling.c b/drivers/thermal/cpufreq_cooling.c
-index 280071be30b15..6b7ab1814c12d 100644
---- a/drivers/thermal/cpufreq_cooling.c
-+++ b/drivers/thermal/cpufreq_cooling.c
-@@ -57,8 +57,6 @@ struct time_in_idle {
-  * @max_level: maximum cooling level. One less than total number of valid
-  *	cpufreq frequencies.
-  * @em: Reference on the Energy Model of the device
-- * @cdev: thermal_cooling_device pointer to keep track of the
-- *	registered cooling device.
-  * @policy: cpufreq policy.
-  * @cooling_ops: cpufreq callbacks to thermal cooling device ops
-  * @idle_time: idle time stats
+diff --git a/arch/loongarch/mm/pageattr.c b/arch/loongarch/mm/pageattr.c
+index ffd8d76021d47..aca4e86d2d888 100644
+--- a/arch/loongarch/mm/pageattr.c
++++ b/arch/loongarch/mm/pageattr.c
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2024 Loongson Technology Corporation Limited
+  */
+ 
++#include <linux/memblock.h>
+ #include <linux/pagewalk.h>
+ #include <linux/pgtable.h>
+ #include <asm/set_memory.h>
+@@ -167,7 +168,7 @@ bool kernel_page_present(struct page *page)
+ 	unsigned long addr = (unsigned long)page_address(page);
+ 
+ 	if (addr < vm_map_base)
+-		return true;
++		return memblock_is_memory(__pa(addr));
+ 
+ 	pgd = pgd_offset_k(addr);
+ 	if (pgd_none(pgdp_get(pgd)))
 -- 
 2.39.5
 
