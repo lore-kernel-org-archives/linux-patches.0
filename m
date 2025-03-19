@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6511DDC2D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94B31E7C02;
 	Wed, 19 Mar 2025 14:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394946; cv=none; b=O7CPU7BYwo3fzzorsRdwbcowpDAkdIqPOEUBLRJ+eKinRSrOvGOTTMUcOMqRDVHX7e9fFfzhPk/gXXzGD5YvMa22oZOmp3b9e1wWfkJ/JEmvvD/lxR0rRBQ3OzICxwvBulTyAxhrFreDVLmvha+TZvGebcThBSDTwsah+dPlltI=
+	t=1742394946; cv=none; b=BXKNkaxXZhtjLsUEm8QHrXot95/nbR03gVbZnz1lfWC0GnuTrbIdBXbuShewSr5GJ67v+Yi3L0WUj5Xt6vBnpoA4JFAvXpCnDe9+9kJTRJ/0EjKUptUoAEThLvQdTHCeEfNMfjchnJpSyeOa9YCDWZoIwv1S6rdHmdjMApDNK4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394946; c=relaxed/simple;
-	bh=oKzjSAmskOPg3GKFnq8rSO7YKPXNI7z1gN/eHKBIgRI=;
+	bh=Ly8NxlVppfm59r9odiEMPQ86H0qkgz24gWN3IFbdvsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afrIaiOxkwBvw8fW2RYwv6CsYW0Zupm7qWb3HDnCCynQN519HJMuevJW034jqqisYKwv6Uai3KDcSReFy22OgBP1dDVstUPctti6EdtvEWpYvdc+mr38AfwTQWYBVz7EdwaPP4kIUity4nq+mjfCwMcXCJVIuZTs/DepeO1NOPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrMdNect; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDgLxhBw/GNBCdvLiCSqKtpfPcQgrK0QlFnpXcA9hyyfInB6/hDf8x4PGTdaD6QPfim9WAvFMOh2Cue5Pl9icTUaM8ShCaPRXgzAaPKbSoCJbNqnRlJwZwxVmrHc9FhvDmvQHPn1fiEPgjoS5PWInIFixWrh/EEUFPnNYo9EHsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJIXIuQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrMdNect"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB50C4CEE4;
-	Wed, 19 Mar 2025 14:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJIXIuQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D637C4CEE8;
+	Wed, 19 Mar 2025 14:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394946;
-	bh=oKzjSAmskOPg3GKFnq8rSO7YKPXNI7z1gN/eHKBIgRI=;
+	bh=Ly8NxlVppfm59r9odiEMPQ86H0qkgz24gWN3IFbdvsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrMdNectEs8lBz/3kAr0nkN6FgyfuAdDARptNnn+tGpEIGL37rDrvoVqpK32Z41iZ
-	 9zTFg37KBrpyjWjM7CZ8jQlt3UpBnl3PVqGWSoM0NubbqEtEFKL/ovdZHD96K6sVtb
-	 W2SzeamXzzeAOY3B4/B4FBIj1N9ViEWB4fxeInvM=
+	b=bJIXIuQd7EO4+ik0b8qdMUySweMpRjVWwcoDssVpXVR5lY2V9rPo7obI8K7ii4I3h
+	 KH97YFPTTML+vIVxto6O3COQYCU+UCifDQL6O6FIHxQH/yCPhJ1l+8nJ8lrmhyBJL8
+	 JJkphpIbU+X8lNl05qDuOLVe565fJPnSO0DkYvmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Tamir Duberstein <tamird@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.13 169/241] rust: alloc: satisfy POSIX alignment requirement
-Date: Wed, 19 Mar 2025 07:30:39 -0700
-Message-ID: <20250319143031.909191595@linuxfoundation.org>
+	Jeff LaBundy <jeff@labundy.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.13 152/241] Input: iqs7222 - preserve system status register
+Date: Wed, 19 Mar 2025 07:30:22 -0700
+Message-ID: <20250319143031.480822111@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,59 +50,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamir Duberstein <tamird@gmail.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-commit ff64846bee0e7e3e7bc9363ebad3bab42dd27e24 upstream.
+commit a2add513311b48cc924a699a8174db2c61ed5e8a upstream.
 
-ISO C's `aligned_alloc` is partially implementation-defined; on some
-systems it inherits stricter requirements from POSIX's `posix_memalign`.
+Some register groups reserve a byte at the end of their continuous
+address space. Depending on the variant of silicon, this field may
+share the same memory space as the lower byte of the system status
+register (0x10).
 
-This causes the call added in commit dd09538fb409 ("rust: alloc:
-implement `Cmalloc` in module allocator_test") to fail on macOS because
-it doesn't meet the requirements of `posix_memalign`.
+In these cases, caching the reserved byte and writing it later may
+effectively reset the device depending on what happened in between
+the read and write operations.
 
-Adjust the call to meet the POSIX requirement and add a comment. This
-fixes failures in `make rusttest` on macOS.
+Solve this problem by avoiding any access to this last byte within
+offending register groups. This method replaces a workaround which
+attempted to write the reserved byte with up-to-date contents, but
+left a small window in which updates by the device could have been
+clobbered.
 
-Acked-by: Danilo Krummrich <dakr@kernel.org>
+Now that the driver does not touch these reserved bytes, the order
+in which the device's registers are written no longer matters, and
+they can be written in their natural order. The new method is also
+much more generic, and can be more easily extended to new variants
+of silicon with different register maps.
+
+As part of this change, the register read and write functions must
+be gently updated to support byte access instead of word access.
+
+Fixes: 2e70ef525b73 ("Input: iqs7222 - acknowledge reset before writing registers")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Link: https://lore.kernel.org/r/Z85Alw+d9EHKXx2e@nixie71
 Cc: stable@vger.kernel.org
-Fixes: dd09538fb409 ("rust: alloc: implement `Cmalloc` in module allocator_test")
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20250213-aligned-alloc-v7-1-d2a2d0be164b@gmail.com
-[ Added Cc: stable. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/alloc/allocator_test.rs |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/input/misc/iqs7222.c |   50 ++++++++++++++++++-------------------------
+ 1 file changed, 22 insertions(+), 28 deletions(-)
 
---- a/rust/kernel/alloc/allocator_test.rs
-+++ b/rust/kernel/alloc/allocator_test.rs
-@@ -62,6 +62,24 @@ unsafe impl Allocator for Cmalloc {
-             ));
-         }
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -100,11 +100,11 @@ enum iqs7222_reg_key_id {
  
-+        // ISO C (ISO/IEC 9899:2011) defines `aligned_alloc`:
-+        //
-+        // > The value of alignment shall be a valid alignment supported by the implementation
-+        // [...].
-+        //
-+        // As an example of the "supported by the implementation" requirement, POSIX.1-2001 (IEEE
-+        // 1003.1-2001) defines `posix_memalign`:
-+        //
-+        // > The value of alignment shall be a power of two multiple of sizeof (void *).
-+        //
-+        // and POSIX-based implementations of `aligned_alloc` inherit this requirement. At the time
-+        // of writing, this is known to be the case on macOS (but not in glibc).
-+        //
-+        // Satisfy the stricter requirement to avoid spurious test failures on some platforms.
-+        let min_align = core::mem::size_of::<*const crate::ffi::c_void>();
-+        let layout = layout.align_to(min_align).map_err(|_| AllocError)?;
-+        let layout = layout.pad_to_align();
-+
-         // SAFETY: Returns either NULL or a pointer to a memory allocation that satisfies or
-         // exceeds the given size and alignment requirements.
-         let dst = unsafe { libc_aligned_alloc(layout.align(), layout.size()) } as *mut u8;
+ enum iqs7222_reg_grp_id {
+ 	IQS7222_REG_GRP_STAT,
+-	IQS7222_REG_GRP_FILT,
+ 	IQS7222_REG_GRP_CYCLE,
+ 	IQS7222_REG_GRP_GLBL,
+ 	IQS7222_REG_GRP_BTN,
+ 	IQS7222_REG_GRP_CHAN,
++	IQS7222_REG_GRP_FILT,
+ 	IQS7222_REG_GRP_SLDR,
+ 	IQS7222_REG_GRP_TPAD,
+ 	IQS7222_REG_GRP_GPIO,
+@@ -286,6 +286,7 @@ static const struct iqs7222_event_desc i
+ 
+ struct iqs7222_reg_grp_desc {
+ 	u16 base;
++	u16 val_len;
+ 	int num_row;
+ 	int num_col;
+ };
+@@ -342,6 +343,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAC00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -400,6 +402,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAC00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -454,6 +457,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xC400,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -496,6 +500,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xC400,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -543,6 +548,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAA00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -600,6 +606,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAA00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -656,6 +663,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAE00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -712,6 +720,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAE00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -768,6 +777,7 @@ static const struct iqs7222_dev_desc iqs
+ 			},
+ 			[IQS7222_REG_GRP_FILT] = {
+ 				.base = 0xAE00,
++				.val_len = 3,
+ 				.num_row = 1,
+ 				.num_col = 2,
+ 			},
+@@ -1604,7 +1614,7 @@ static int iqs7222_force_comms(struct iq
+ }
+ 
+ static int iqs7222_read_burst(struct iqs7222_private *iqs7222,
+-			      u16 reg, void *val, u16 num_val)
++			      u16 reg, void *val, u16 val_len)
+ {
+ 	u8 reg_buf[sizeof(__be16)];
+ 	int ret, i;
+@@ -1619,7 +1629,7 @@ static int iqs7222_read_burst(struct iqs
+ 		{
+ 			.addr = client->addr,
+ 			.flags = I2C_M_RD,
+-			.len = num_val * sizeof(__le16),
++			.len = val_len,
+ 			.buf = (u8 *)val,
+ 		},
+ 	};
+@@ -1675,7 +1685,7 @@ static int iqs7222_read_word(struct iqs7
+ 	__le16 val_buf;
+ 	int error;
+ 
+-	error = iqs7222_read_burst(iqs7222, reg, &val_buf, 1);
++	error = iqs7222_read_burst(iqs7222, reg, &val_buf, sizeof(val_buf));
+ 	if (error)
+ 		return error;
+ 
+@@ -1685,10 +1695,9 @@ static int iqs7222_read_word(struct iqs7
+ }
+ 
+ static int iqs7222_write_burst(struct iqs7222_private *iqs7222,
+-			       u16 reg, const void *val, u16 num_val)
++			       u16 reg, const void *val, u16 val_len)
+ {
+ 	int reg_len = reg > U8_MAX ? sizeof(reg) : sizeof(u8);
+-	int val_len = num_val * sizeof(__le16);
+ 	int msg_len = reg_len + val_len;
+ 	int ret, i;
+ 	struct i2c_client *client = iqs7222->client;
+@@ -1747,7 +1756,7 @@ static int iqs7222_write_word(struct iqs
+ {
+ 	__le16 val_buf = cpu_to_le16(val);
+ 
+-	return iqs7222_write_burst(iqs7222, reg, &val_buf, 1);
++	return iqs7222_write_burst(iqs7222, reg, &val_buf, sizeof(val_buf));
+ }
+ 
+ static int iqs7222_ati_trigger(struct iqs7222_private *iqs7222)
+@@ -1831,30 +1840,14 @@ static int iqs7222_dev_init(struct iqs72
+ 
+ 	/*
+ 	 * Acknowledge reset before writing any registers in case the device
+-	 * suffers a spurious reset during initialization. Because this step
+-	 * may change the reserved fields of the second filter beta register,
+-	 * its cache must be updated.
+-	 *
+-	 * Writing the second filter beta register, in turn, may clobber the
+-	 * system status register. As such, the filter beta register pair is
+-	 * written first to protect against this hazard.
++	 * suffers a spurious reset during initialization.
+ 	 */
+ 	if (dir == WRITE) {
+-		u16 reg = dev_desc->reg_grps[IQS7222_REG_GRP_FILT].base + 1;
+-		u16 filt_setup;
+-
+ 		error = iqs7222_write_word(iqs7222, IQS7222_SYS_SETUP,
+ 					   iqs7222->sys_setup[0] |
+ 					   IQS7222_SYS_SETUP_ACK_RESET);
+ 		if (error)
+ 			return error;
+-
+-		error = iqs7222_read_word(iqs7222, reg, &filt_setup);
+-		if (error)
+-			return error;
+-
+-		iqs7222->filt_setup[1] &= GENMASK(7, 0);
+-		iqs7222->filt_setup[1] |= (filt_setup & ~GENMASK(7, 0));
+ 	}
+ 
+ 	/*
+@@ -1883,6 +1876,7 @@ static int iqs7222_dev_init(struct iqs72
+ 		int num_col = dev_desc->reg_grps[i].num_col;
+ 		u16 reg = dev_desc->reg_grps[i].base;
+ 		__le16 *val_buf;
++		u16 val_len = dev_desc->reg_grps[i].val_len ? : num_col * sizeof(*val_buf);
+ 		u16 *val;
+ 
+ 		if (!num_col)
+@@ -1900,7 +1894,7 @@ static int iqs7222_dev_init(struct iqs72
+ 			switch (dir) {
+ 			case READ:
+ 				error = iqs7222_read_burst(iqs7222, reg,
+-							   val_buf, num_col);
++							   val_buf, val_len);
+ 				for (k = 0; k < num_col; k++)
+ 					val[k] = le16_to_cpu(val_buf[k]);
+ 				break;
+@@ -1909,7 +1903,7 @@ static int iqs7222_dev_init(struct iqs72
+ 				for (k = 0; k < num_col; k++)
+ 					val_buf[k] = cpu_to_le16(val[k]);
+ 				error = iqs7222_write_burst(iqs7222, reg,
+-							    val_buf, num_col);
++							    val_buf, val_len);
+ 				break;
+ 
+ 			default:
+@@ -1962,7 +1956,7 @@ static int iqs7222_dev_info(struct iqs72
+ 	int error, i;
+ 
+ 	error = iqs7222_read_burst(iqs7222, IQS7222_PROD_NUM, dev_id,
+-				   ARRAY_SIZE(dev_id));
++				   sizeof(dev_id));
+ 	if (error)
+ 		return error;
+ 
+@@ -2915,7 +2909,7 @@ static int iqs7222_report(struct iqs7222
+ 	__le16 status[IQS7222_MAX_COLS_STAT];
+ 
+ 	error = iqs7222_read_burst(iqs7222, IQS7222_SYS_STATUS, status,
+-				   num_stat);
++				   num_stat * sizeof(*status));
+ 	if (error)
+ 		return error;
+ 
 
 
