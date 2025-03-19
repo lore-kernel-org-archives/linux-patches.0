@@ -1,74 +1,75 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2821194A44
-	for <patches@lists.linux.dev>; Wed, 19 Mar 2025 18:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C6E1E8323;
+	Wed, 19 Mar 2025 18:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742407809; cv=none; b=H2zge4bv6AqiuYB6LJWkgCHVwAKR4tFfLaLUlkqYnJ2D8/BaMwX39g9uTI+bGAS64PLGBuPhUNNnbVPRiai3hGr9yDDYc2sMtArFKeofjXLJcnQ6wflvbTK69o0rkZaE0eC8BrOKwCcC3Ro5cD+eIfbSWno6L2IH+7oTLJG40Gs=
+	t=1742407851; cv=none; b=KoXAIhjxf4m0ujZLV12oEZ3pcPL7apQ9FTm/ieu3PGEjpAUsRTpoDhWHmMxDnFokXe6uH3CSFOvvEEJ7TerRTx8wsMKsOobIbd5dMXSSNdrlTtk6LTpLsdotwf0jYi82zSh/NjoDxcfjfZbJPeztvF5r2aJKNRaqK1qdaaQN6Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742407809; c=relaxed/simple;
-	bh=TwOD3C/pbMPzv15fU55e+IUWyz4niy9wUDhHGyPZfxw=;
+	s=arc-20240116; t=1742407851; c=relaxed/simple;
+	bh=NRDBPEHgXUupa2eHopjm+NVMZxrKrUuYtULMiQNFxdw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JTpnby/yJaHlBq2jXVgSl31EOLTKGSW+KrL4nxg5HStQHJv7z3GoNS6qRUTpJHQb6m15mzkoikU+7JjHeHRXbWneyEN2s/S2llmoaK3N4DImCCl+kY451jxrgvzoZQ0h8Y/ujPqSjDylwrTrDFt01A+swEQFJKWglS+vuQq0jmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LCA0aNVH; arc=none smtp.client-ip=209.85.128.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=FeEQ1qRKn1McVLRz7tWTL0Vc5No7xOZJA8X5lt0S2T9Xhs6PWeS3w/jA2q/ZTIYwDukJjEhcKhrMnwPYUfSG7NoRIWGYs0TzwDbVlxoCRQWjZ9fbYmFA+xISkqCex++nmOZKscDtLekOUj28YDuz+h0RQ0pMX+9KMmAJoxly5Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=by4Ngmdq; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LCA0aNVH"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so53896425e9.2
-        for <patches@lists.linux.dev>; Wed, 19 Mar 2025 11:10:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="by4Ngmdq"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so33018585e9.1;
+        Wed, 19 Mar 2025 11:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742407806; x=1743012606; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1742407846; x=1743012646; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eJKGXNaEOrFu3JsjmJdQhGviNYlOYhskFV2OB3dd63g=;
-        b=LCA0aNVHfrYcivUnF5ZV39zxMLNlceNc24Jrqft6TRofi/XNQtBscnbwH+DCkqU1mq
-         cBTXhdl5MReYUuznjsoF+AjbclYpTVCJBrLLLwN85YW5JNKzwt3v2Tk57kJvHct7pAie
-         ZyFGnJ8/L5+5Hh3Gt23B2yLgtPB3O5QCQbdFlJt3xjcJ68HTg72ItOhp5cDvTAbZOBDG
-         ypFHb6qvduEZynGRL8atExZwM2xubvQ3n3jy4m3Xzm9ZOl3JBHc8wQcet3+2nn65ad0n
-         h9Gv94LbxNybVfQ80FydyrQWrl+1Tsa98gpB+bELMFkLfPB4EzaO/Sz8/PuyoX2oPqjC
-         nadQ==
+        bh=NRDBPEHgXUupa2eHopjm+NVMZxrKrUuYtULMiQNFxdw=;
+        b=by4NgmdqYY0WagEdCD5/BKFKqu3NB73BGTzbA1Yi+W9R2tcNtLffH3Sl1/9pCUsv08
+         HD9mBhy+Gza/4NHpQCN1fJP7+pTeR3edLpz1Ia6pWmhfus9CyZy2hnHWvZhJvboOBozl
+         UJP+H3Fjqi8Thur45JDlI9mvx+3SzHJntIDV7gUpramqMMBhWLGq++TuJB9UFp71DLAp
+         aWstCzwn3A/9wpu2RUeMi+R+9SH4ZNik44BWINBlw0X0fxNxzwrRLqK+DqV36x1oT+wH
+         8q2z7D1pS5L5kNdZJhSY162MXEfXxHXB9DSF++x5iIQtqwq58JkiKMZ31qWfsk/vDp2v
+         ZSXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742407806; x=1743012606;
+        d=1e100.net; s=20230601; t=1742407846; x=1743012646;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eJKGXNaEOrFu3JsjmJdQhGviNYlOYhskFV2OB3dd63g=;
-        b=mibEgt2xLZwtqrjXDd3IW/ru04atpmQHqn455GeSdT6rYXjEuYZOqcjaVM+B4OkTe/
-         1tGiBlVpm4usfSIl/UAut8XAtpXZniR3FzozVPUHNIz/tloOkL2aX34XP4C6OLMX1o8c
-         jJCWfjk6uaMF5HE9WDVSCAfNuMphqruLVOPxC3iCric3bHZI5Av7kPDiDEWHqOhFahu0
-         2svGv8PSiZWxCBeaigYGTWL4R20mxR7KOu3milPUyL9FhRF7tkaxwc5/b6UmjLNA/Q0O
-         8LSmj1rD4iUHj08kuWzVFuxsqzrxIYMsgK8mGs7UNoQaQf+vCCRsGfPkk7O9bFsZJLcJ
-         GJJA==
-X-Forwarded-Encrypted: i=1; AJvYcCWEv0GCnZPTsANE3s39cv5VEEKejXlq90d1/YdcFE0Ef+IkS/IMaXEni6xNn9aWdia6D+cUKsI4@lists.linux.dev
-X-Gm-Message-State: AOJu0YyGgM46VtRDpv6U+O1Lcr+mPJ9SkJdCkXNzIJXGN5dV33muIffr
-	z2oZMFfCheYuRN5ei8yop+cncq+I1h0rL9p0I9CuQ3o5ngHfWI9d
-X-Gm-Gg: ASbGncuhGaBwtxGkurcEvajbhkMxOGKKpYsUhDAe+l6pml3cGSlVE+yj1DDx07HYP4A
-	lw6P5LefrAUjqzZC4C7mHzjWbBVrEV16fVbN1jdJluLch73KXx0WOj56GuDhnZTHeJVbFGUyhZi
-	i6Ly5Q7MfB7WXv5Nwx9Jdwfo1CLVm0JUbCdS4FIOyDdJcHgTxZx1n1BEBs/gyKh5djduS6C8CDF
-	lMPP9wVnu4eMsbyHFIEc5Vt3LRDw2JY1LmXZKA1i8+TO2vmlAwCeCME2pl/IDuEMuhJ+cvI+67M
-	NrE78Wb1ZfSgmfhAYKQJ1nsODjfEf/zA0UJBgxOsUnNDkBLJV2gUnsTz+rnZp4WxKxf7IztnX0Z
-	Vqg+t21OBY8f4WMkaT7Cp58R9mg/K90mxtTh1RRy0bg==
-X-Google-Smtp-Source: AGHT+IGqcQWiFzsnHo4CbIBWjtZCrTWOdeRB60hVLIrA/XtjazKLtNUS4dMjFqQzIzL/9B206PI+DQ==
-X-Received: by 2002:a05:6000:4014:b0:391:ccf:2d17 with SMTP id ffacd0b85a97d-39979554699mr431114f8f.0.1742407805428;
-        Wed, 19 Mar 2025 11:10:05 -0700 (PDT)
+        bh=NRDBPEHgXUupa2eHopjm+NVMZxrKrUuYtULMiQNFxdw=;
+        b=QlEoEjiPacJijQJv7QEN0A5BxTRqVE9t001K1LTdKfbjtLqG4W2HdFGMdFV3NlbPzf
+         Mkt+KOnVQpouaph962+7yR2FUtD3UzrAHia1DkG4EbgdphWNom1LXtW63Iu1NB9tEh+N
+         hzy9erUVPqMg518wdaT/NU/xXbQ+SA/4rYyrOmj7s0ZDYdxgIjKU2MxXx+oNpvcxgGbF
+         djDYc0fdxLd4raFR6NhnIf3d+1IoWYelpfLy33AUEDANdyhWyQ/3zzBsgbGQm9jjoSGN
+         WPGrI2upzGE0PSa8PSyRehQ3ZP+9jEkTd8U7hjd/w/KJzdMddI/zFCNAFaZ5e5qRe7Bk
+         2hvg==
+X-Forwarded-Encrypted: i=1; AJvYcCU59oBzagu89l4W4drRgacIvV22/WWtncvT9ziqfWRL5iBmmc1khFORMu2rBtDsEloJ4ELUVp2mFWOQ10k=@lists.linux.dev, AJvYcCVnM/GSDKNecRhe91p+3ySGlX1cLZu9xSIeTfM9f1Kv6KqK8IblXIa+45pzFGk7AtSO3Noa9eyV@lists.linux.dev
+X-Gm-Message-State: AOJu0YxUQRvDspZFuFVA8ehP5v5/qnn8Ba7RIdl9H7EwXBSCXrrU05er
+	Wmp8Ir26wZkhRwqQsBSN/Wqmn730hWAolG6iXxRUBHUfDAkeaQ7q
+X-Gm-Gg: ASbGncvrfF4TP2JnV/QNqPodry4TbVk39IVNUY/0UECj3CxowYrYJJGgpszi2KU+Al7
+	0/MorR3SYxPcvl/F5/FU9FO/8NoJ5LiDW6jjgtzGEoTWIDNyHVMeByxVR9WGNValzkewOUoRonA
+	aB4TI10i+lbBiN/PplszzusQKkvi4ycjIAb1hbTZB+D8Z+WT6z4b9FgmPa4keLaR0wZY7Wup4x2
+	xleGQAh7Tx2u1gNDrzAIAc84z7jcjDoB+oSDJ4oQDKBHM6OiiJoCu2eW1W/mjbN23hg40r9FWlR
+	x2i/6Ya5E/orb9Dzj1JyB+Uv4qqeeobLTpZQVWmRsrP/BEpDnOs7Vs7yytYUTc6GhwAhTJ2pnTx
+	GOfxjcq173/jDBT8GBVs1nC/2fbfy5eE=
+X-Google-Smtp-Source: AGHT+IHYFWZdONoLhtaU63p45Xf9+bWz8YoVzEW+0yAcNTLY2gKQG7/aemrHzQVaMzVWmdFrLB4q/A==
+X-Received: by 2002:a05:600c:348e:b0:43c:f16a:641e with SMTP id 5b1f17b1804b1-43d43781690mr33983605e9.6.1742407846139;
+        Wed, 19 Mar 2025 11:10:46 -0700 (PDT)
 Received: from orome (p200300e41f3a9f00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f3a:9f00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d43f33242sm25582455e9.5.2025.03.19.11.10.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c8881187sm21267993f8f.41.2025.03.19.11.10.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 11:10:04 -0700 (PDT)
-Date: Wed, 19 Mar 2025 19:10:02 +0100
+        Wed, 19 Mar 2025 11:10:45 -0700 (PDT)
+Date: Wed, 19 Mar 2025 19:10:43 +0100
 From: Thierry Reding <thierry.reding@gmail.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org, 
-	linux-tegra@vger.kernel.org, Mikko Perttunen <mperttunen@nvidia.com>, 
-	Simona Vetter <simona@ffwll.ch>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>, Joerg Roedel <jroedel@suse.de>, 
-	Jerry Snitselaar <jsnitsel@redhat.com>, patches@lists.linux.dev
+To: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>, 
+	dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Simona Vetter <simona@ffwll.ch>, 
+	Lu Baolu <baolu.lu@linux.intel.com>, Joerg Roedel <jroedel@suse.de>, 
+	Jerry Snitselaar <jsnitsel@redhat.com>, patches@lists.linux.dev, regressions@lists.linux.dev
 Subject: Re: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means
  no DMA IOMMU
-Message-ID: <5epualwpswqk674jhoq7lo542g7fc33vemzs4v2usou7ibijrw@uroxzqtbayix>
+Message-ID: <vn6lqxfqvi6tbxomrvn6ct3ezvegx3y2q4sdwpjkvbehzzs3gl@ctek3pks5y3e>
 References: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
+ <19478509-5007-4a20-9512-b965126b7026@tecnico.ulisboa.pt>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -76,12 +77,12 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="eqydumr5po2uxfmv"
+	protocol="application/pgp-signature"; boundary="3vs3sblqwnplgzuh"
 Content-Disposition: inline
-In-Reply-To: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
+In-Reply-To: <19478509-5007-4a20-9512-b965126b7026@tecnico.ulisboa.pt>
 
 
---eqydumr5po2uxfmv
+--3vs3sblqwnplgzuh
 Content-Type: text/plain; protected-headers=v1; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -89,54 +90,62 @@ Subject: Re: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means
  no DMA IOMMU
 MIME-Version: 1.0
 
-On Tue, Feb 04, 2025 at 03:18:19PM -0400, Jason Gunthorpe wrote:
-> Previously with tegra-smmu, even with CONFIG_IOMMU_DMA, the default domain
-> could have been left as NULL. The NULL domain is specially recognized by
-> host1x_iommu_attach() as meaning it is not the DMA domain and
-> should be replaced with the special shared domain.
+On Mon, Mar 10, 2025 at 12:34:35PM +0000, Diogo Ivo wrote:
 >=20
-> This happened prior to the below commit because tegra-smmu was using the
-> NULL domain to mean IDENTITY.
+> Hello again,
 >=20
-> Now that the domain is properly labled the test in DRM doesn't see NULL.
-> Check for IDENTITY as well to enable the special domains.
+> On 2/4/25 7:18 PM, Jason Gunthorpe wrote:
+> > Previously with tegra-smmu, even with CONFIG_IOMMU_DMA, the default dom=
+ain
+> > could have been left as NULL. The NULL domain is specially recognized by
+> > host1x_iommu_attach() as meaning it is not the DMA domain and
+> > should be replaced with the special shared domain.
+> >=20
+> > This happened prior to the below commit because tegra-smmu was using the
+> > NULL domain to mean IDENTITY.
+> >=20
+> > Now that the domain is properly labled the test in DRM doesn't see NULL.
+> > Check for IDENTITY as well to enable the special domains.
+> >=20
+> > This is the same issue and basic fix as seen in
+> > commit fae6e669cdc5 ("drm/tegra: Do not assume that a NULL domain means=
+ no
+> > DMA IOMMU").
+> >=20
+> > Fixes: c8cc2655cc6c ("iommu/tegra-smmu: Implement an IDENTITY domain")
+> > Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+> > Closes: https://lore.kernel.org/all/c6a6f114-3acd-4d56-a13b-b88978e927d=
+c@tecnico.ulisboa.pt/
+> > Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 >=20
-> This is the same issue and basic fix as seen in
-> commit fae6e669cdc5 ("drm/tegra: Do not assume that a NULL domain means no
-> DMA IOMMU").
->=20
-> Fixes: c8cc2655cc6c ("iommu/tegra-smmu: Implement an IDENTITY domain")
-> Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-> Closes: https://lore.kernel.org/all/c6a6f114-3acd-4d56-a13b-b88978e927dc@=
-tecnico.ulisboa.pt/
-> Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/gpu/host1x/dev.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> Any news on this patch or any other solutions for this regression? It's
+> not great if this falls through the cracks, especially when there is a
+> solution for the problem.
 
-Applied to drm-misc-fixes now. Sorry for the delay.
+Looks like I had marked this as applied by mistake. Thanks for the
+reminder, it's applied now.
 
 Thierry
 
---eqydumr5po2uxfmv
+--3vs3sblqwnplgzuh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmfbCHkACgkQ3SOs138+
-s6E9XQ//dZrGX9bTbogtguhwFF/4IRrRe4qeEdzOV0hWNrSI/AgrCcZXVt8jyCRl
-cMyrljBynGAY/Aza57MvNyWi9pMblhNdW3X8z0rhvRph4NFVqb6ABlkGm4YVKHuC
-xVWTclRfb7oG7OpRAd/FaGbdEINE4UAJPXT+BIOkkjaTh8LSBlINLSpLOUTbu2aY
-r47yrFhcVh0GHPPZ8tcUbYqyVdJdJGMnuulwfhPVwvgotzcIFNgzNHyHvC9Z4TsX
-/HKZvXjSSCTjR1kzUvbt8pmKEKKqqCvCFULT2llTniiTwflqxjuPKCS8wYj5mueY
-OJvQxghdYvfXNLMnTplQoOOWOWLTOc3/37OYGJIEziubEOx676+v78Uur+9107VY
-lKDonC6ketIV49JGF6dxp5sH3FdzONG6LNYRSEEz9ATri/havxpHe54nH55gK0Tn
-qwnMUymUJmVcl326K30czWhxtx50Fuucn+vjagmOKGdr4qY6+l8eZ2naxyqtAcDx
-zznVflHEAIwi+iBVsETWaQZILbjpfoocGq86fsqMY08tY6+KdP7q3lk2gTX6PWz9
-bAn72EIlZFUBTOSo7vmlHAlUghj1sm8PhfFiMIIGBrend2hHgdxvb4QLlDQZIIbz
-anf189zuSi/kEoQzXuaryOoRdUXJx8wdEmcDL1Z138Ab6aD4hN4=
-=levc
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmfbCKMACgkQ3SOs138+
+s6Gc0A//TrzbaprQO4xc8Hgq6tcEIg3KdqfdbBdYgELgL6bY+60NkY0cm5wcsUaG
+he5y3ZfuZLUBjV2rlhJAuyOdpScrjekO0lB12wmnTKypOsp/ugFDTgDnrdgIgQU9
+Brs4DDAVu9AB/pjN8jHnQ0wOYpR5yXW69ZKGZuu+FAlscC8hVQ2SoyAUP9WDBcw5
+cy2E5pZuVs7ti6MhF4MaL1hkFz4QjPnlupAxwBEMslsf/6vzJeTwVwAB9wq6aoj7
+43NFJ2U7VLPMBQA0DfdPMI50gJGeAkKfBWuQMIXwRsH2XUT93uzXrJr0qKDWROUA
+/s8z6kuKi1jnUZ+gbUUZauQyHFF9OT8sJAND9Tx2bnDUncfmj7ZSrP4MU0F6uYJV
+PU13U30Dm76w6IV0X+zNfDUyRUoapVBAbpFRtlKX8yn+mGrZy5vMJdGiu+AUZJBS
+hbuEAg5qW+DDcwwJsrjMpOTfIPAEWJ6Kxm2t5Qr/Jtd1WpiCmQD6pDrxud24yEBt
+DQ897YMsOP7DT5UJG8B7IXFL95OTyDYTXcSFK8D802Il1tBfjh1jZnoteva8VhHd
+wI0bHAyWDdND+KrX8WbtLeDzCc97vw9yJ4RfI7ZI9G2waRmQBdpWXTv1K8lt5gDy
+03jmd6jX8CfULyXueikrm5+Br92M9afX66J+ubSq1o2QPn9R+UU=
+=aAbR
 -----END PGP SIGNATURE-----
 
---eqydumr5po2uxfmv--
+--3vs3sblqwnplgzuh--
