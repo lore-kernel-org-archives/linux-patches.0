@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281921DE4FB;
-	Wed, 19 Mar 2025 14:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340781DED78;
+	Wed, 19 Mar 2025 14:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395188; cv=none; b=Zoh6IRhFaF3afi1iBNbxsbL6WCOc+rgBJK2vz46lDdKnKTS3qC/HsEyFLLsBsVqkYF9yHsgJ8MvgdEmlpMluJBt5dQZufCyuTr3dDbSN0wb7nsiBaiMKDbZ6HDjgsIHeXKMNh7o2nwboAF/HTo0lFioMwAHlPlQJAkanNAUpndk=
+	t=1742395189; cv=none; b=KMULQ2rRk83Klg1zGw45A/T5y3rzjdzDAbq46UOXIx2mtefmbbeBBgqaVLZLtZNqoaK/xmfRiWA769mJZKdutjND77kNgMfhukk4woCvcTwafklmS/zQ6FYCXwSQQojzwPKl/JKIU86M0LSIwvv3XlMW8uIo++EZhd3xtUOT4Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395188; c=relaxed/simple;
-	bh=ltPrECMu3vT2wOmM7T2K5ToOxWvKxf63qO/rXBZliuI=;
+	s=arc-20240116; t=1742395189; c=relaxed/simple;
+	bh=JVF9R4d5EyFBPzjk2sgF8/M0tIZ4pzdyJ2NHLG1sLg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RknJ4e72ly5JxwHDlOF7lJrJDLzXzz0UrQ5JKlN6H7FMQtjZiWHIiNxMjKcMPwb9z6FtrBcCTb5+/MSajGaNuA2Rf/jfUNS6K3fekRxlYPbXcaFMLyh5J82R3T8eL2rfxWTcigbZ1RL1Yo690vSfLz17WmLu/5Ajy9ggU0UFATk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWBSzO57; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqouXh1wdOfxmy/QOrkCZb+nS7dywntIJSWfkEgviLXQjLXjj1gmXLMK4sq+XrVjtpy8aKXdzWenr7B50Uddx0B7ML2IlaDgrLkXjPfGr946jZlzIMHcuJT2wKTwIN+8fzkgtMr7xQu8R8QeTHZTEVIWBpkm15mUd6HlI0mteCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHAe0Ywe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWBSzO57"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C53C4CEE4;
-	Wed, 19 Mar 2025 14:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHAe0Ywe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DDCC4CEE4;
+	Wed, 19 Mar 2025 14:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395188;
-	bh=ltPrECMu3vT2wOmM7T2K5ToOxWvKxf63qO/rXBZliuI=;
+	s=korg; t=1742395189;
+	bh=JVF9R4d5EyFBPzjk2sgF8/M0tIZ4pzdyJ2NHLG1sLg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWBSzO57x9IpDiJbEP/uwRljnD0nUmj2OhwZuucVhjmPClvAtcRgFwepZFpW1Cxr3
-	 xeNB2zUGd4phvMvXMZUhzbM70DYQwhQG7r+fGATcQHk1k8PpS/3gF6idAlksNrmrFz
-	 wB1oLAyltZy4F4fNzXN0KHKr8/e85h6u6ztRQbX4=
+	b=YHAe0Ywew/RhBfzVv07jKIQ11ZQEBjIy8NEDiEwnJsy83vriyZRpEIO1L0Oh93ltN
+	 xNVpu2J5+CM6N2SaJKwd/yckQ0Mu2p3+0LNaXmRXrrAjm7UG8Ov68fRayg2x5FnEfh
+	 8J7mWjadrallfmGpBfLTcViTquSNSn5wTkYCpcSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Richard Henderson <richard.henderson@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/166] smb: client: fix noisy when tree connecting to DFS interlink targets
-Date: Wed, 19 Mar 2025 07:30:18 -0700
-Message-ID: <20250319143021.265999846@linuxfoundation.org>
+Subject: [PATCH 6.6 048/166] alpha/elf: Fix misc/setarch test of util-linux by removing 32bit support
+Date: Wed, 19 Mar 2025 07:30:19 -0700
+Message-ID: <20250319143021.291619248@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,42 +54,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit 773dc23ff81838b6f74d7fabba5a441cc6a93982 ]
+[ Upstream commit b029628be267cba3c7684ec684749fe3e4372398 ]
 
-When the client attempts to tree connect to a domain-based DFS
-namespace from a DFS interlink target, the server will return
-STATUS_BAD_NETWORK_NAME and the following will appear on dmesg:
+Richard Henderson <richard.henderson@linaro.org> writes[1]:
 
-	CIFS: VFS:  BAD_NETWORK_NAME: \\dom\dfs
+> There was a Spec benchmark (I forget which) which was memory bound and ran
+> twice as fast with 32-bit pointers.
+>
+> I copied the idea from DEC to the ELF abi, but never did all the other work
+> to allow the toolchain to take advantage.
+>
+> Amusingly, a later Spec changed the benchmark data sets to not fit into a
+> 32-bit address space, specifically because of this.
+>
+> I expect one could delete the ELF bit and personality and no one would
+> notice. Not even the 10 remaining Alpha users.
 
-Since a DFS share might contain several DFS interlinks and they expire
-after 10 minutes, the above message might end up being flooded on
-dmesg when mounting or accessing them.
+In [2] it was pointed out that parts of setarch weren't working
+properly on alpha because it has it's own SET_PERSONALITY
+implementation.  In the discussion that followed Richard Henderson
+pointed out that the 32bit pointer support for alpha was never
+completed.
 
-Print this only once per share.
+Fix this by removing alpha's 32bit pointer support.
 
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+As a bit of paranoia refuse to execute any alpha binaries that have
+the EF_ALPHA_32BIT flag set.  Just in case someone somewhere has
+binaries that try to use alpha's 32bit pointer support.
+
+Link: https://lkml.kernel.org/r/CAFXwXrkgu=4Qn-v1PjnOR4SG0oUb9LSa0g6QXpBq4ttm52pJOQ@mail.gmail.com [1]
+Link: https://lkml.kernel.org/r/20250103140148.370368-1-glaubitz@physik.fu-berlin.de [2]
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/87y0zfs26i.fsf_-_@email.froward.int.ebiederm.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/alpha/include/asm/elf.h       |  6 +-----
+ arch/alpha/include/asm/pgtable.h   |  2 +-
+ arch/alpha/include/asm/processor.h |  8 ++------
+ arch/alpha/kernel/osf_sys.c        | 11 ++---------
+ 4 files changed, 6 insertions(+), 21 deletions(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 24b1738a35a15..1b6cb533f5b87 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2162,7 +2162,7 @@ SMB2_tcon(const unsigned int xid, struct cifs_ses *ses, const char *tree,
+diff --git a/arch/alpha/include/asm/elf.h b/arch/alpha/include/asm/elf.h
+index e6da23f1da830..adc87404ef87f 100644
+--- a/arch/alpha/include/asm/elf.h
++++ b/arch/alpha/include/asm/elf.h
+@@ -74,7 +74,7 @@ typedef elf_fpreg_t elf_fpregset_t[ELF_NFPREG];
+ /*
+  * This is used to ensure we don't load something for the wrong architecture.
+  */
+-#define elf_check_arch(x) ((x)->e_machine == EM_ALPHA)
++#define elf_check_arch(x) (((x)->e_machine == EM_ALPHA) && !((x)->e_flags & EF_ALPHA_32BIT))
  
- tcon_error_exit:
- 	if (rsp && rsp->hdr.Status == STATUS_BAD_NETWORK_NAME)
--		cifs_tcon_dbg(VFS, "BAD_NETWORK_NAME: %s\n", tree);
-+		cifs_dbg(VFS | ONCE, "BAD_NETWORK_NAME: %s\n", tree);
- 	goto tcon_exit;
+ /*
+  * These are used to set parameters in the core dumps.
+@@ -139,10 +139,6 @@ extern int dump_elf_task(elf_greg_t *dest, struct task_struct *task);
+ 	: amask (AMASK_CIX) ? "ev6" : "ev67");	\
+ })
+ 
+-#define SET_PERSONALITY(EX)					\
+-	set_personality(((EX).e_flags & EF_ALPHA_32BIT)		\
+-	   ? PER_LINUX_32BIT : PER_LINUX)
+-
+ extern int alpha_l1i_cacheshape;
+ extern int alpha_l1d_cacheshape;
+ extern int alpha_l2_cacheshape;
+diff --git a/arch/alpha/include/asm/pgtable.h b/arch/alpha/include/asm/pgtable.h
+index 635f0a5f5bbde..02e8817a89212 100644
+--- a/arch/alpha/include/asm/pgtable.h
++++ b/arch/alpha/include/asm/pgtable.h
+@@ -360,7 +360,7 @@ static inline pte_t pte_swp_clear_exclusive(pte_t pte)
+ 
+ extern void paging_init(void);
+ 
+-/* We have our own get_unmapped_area to cope with ADDR_LIMIT_32BIT.  */
++/* We have our own get_unmapped_area */
+ #define HAVE_ARCH_UNMAPPED_AREA
+ 
+ #endif /* _ALPHA_PGTABLE_H */
+diff --git a/arch/alpha/include/asm/processor.h b/arch/alpha/include/asm/processor.h
+index 55bb1c09fd39d..5dce5518a2111 100644
+--- a/arch/alpha/include/asm/processor.h
++++ b/arch/alpha/include/asm/processor.h
+@@ -8,23 +8,19 @@
+ #ifndef __ASM_ALPHA_PROCESSOR_H
+ #define __ASM_ALPHA_PROCESSOR_H
+ 
+-#include <linux/personality.h>	/* for ADDR_LIMIT_32BIT */
+-
+ /*
+  * We have a 42-bit user address space: 4TB user VM...
+  */
+ #define TASK_SIZE (0x40000000000UL)
+ 
+-#define STACK_TOP \
+-  (current->personality & ADDR_LIMIT_32BIT ? 0x80000000 : 0x00120000000UL)
++#define STACK_TOP (0x00120000000UL)
+ 
+ #define STACK_TOP_MAX	0x00120000000UL
+ 
+ /* This decides where the kernel will search for a free chunk of vm
+  * space during mmap's.
+  */
+-#define TASK_UNMAPPED_BASE \
+-  ((current->personality & ADDR_LIMIT_32BIT) ? 0x40000000 : TASK_SIZE / 2)
++#define TASK_UNMAPPED_BASE (TASK_SIZE / 2)
+ 
+ /* This is dead.  Everything has been moved to thread_info.  */
+ struct thread_struct { };
+diff --git a/arch/alpha/kernel/osf_sys.c b/arch/alpha/kernel/osf_sys.c
+index 5db88b6274396..ebd076fad804f 100644
+--- a/arch/alpha/kernel/osf_sys.c
++++ b/arch/alpha/kernel/osf_sys.c
+@@ -1211,8 +1211,7 @@ SYSCALL_DEFINE1(old_adjtimex, struct timex32 __user *, txc_p)
+ 	return ret;
  }
  
+-/* Get an address range which is currently unmapped.  Similar to the
+-   generic version except that we know how to honor ADDR_LIMIT_32BIT.  */
++/* Get an address range which is currently unmapped. */
+ 
+ static unsigned long
+ arch_get_unmapped_area_1(unsigned long addr, unsigned long len,
+@@ -1234,13 +1233,7 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
+ 		       unsigned long len, unsigned long pgoff,
+ 		       unsigned long flags)
+ {
+-	unsigned long limit;
+-
+-	/* "32 bit" actually means 31 bit, since pointers sign extend.  */
+-	if (current->personality & ADDR_LIMIT_32BIT)
+-		limit = 0x80000000;
+-	else
+-		limit = TASK_SIZE;
++	unsigned long limit = TASK_SIZE;
+ 
+ 	if (len > limit)
+ 		return -ENOMEM;
 -- 
 2.39.5
 
