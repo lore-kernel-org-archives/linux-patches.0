@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAAF1C82F4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B9D1C82F4;
 	Wed, 19 Mar 2025 14:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395110; cv=none; b=P6j9sbjVX2wuBOlc30r6Hz9iW95TEVVaOwKgut2PSdCkakAbSxaB18UE+N/WOU6xBQjWu/6px3SFVPn1V9S40oPkDt/geKzbCrOekCQyoUpCFC37W9KNWygiicOt2z/A/mPKC7vrqpkRSEUD6tPEuHff8efGzI3TgUXgIi9v19c=
+	t=1742395110; cv=none; b=LOBFauwt2X7MdI2ugyIaQgwg5kzLfYgbF7H8MP6rn2DKU1pcY2uMIkHzwZ9eaBFlXc68tZGacp4eZwqdRkKJRm2bbmqRzXQcfx13IipvmK7sY8bzreVMOHKkrVVeJ1/VZG9scqRyrzWs5t0auKZ9L4520l0PMVsiQcLf/wLoF4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395110; c=relaxed/simple;
-	bh=tWUWwBSJp4HJ4b/iSeUFtJJGPIoN4RwlHD0VPXUCGIk=;
+	bh=mhDozVV6EqDbX7b3r6vNI/9dXnnQJPx8AIAGRfUuHQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h52MkLktYKsM1ogppqL6SUaDmcWXfawtb9Hi1OesPfp+dSWcRx8ojeOhW6A8o16GlcbUZj8fKYADIg6zugA9cBGJZiBEslibLpnciynriMJjaiHGINZSe+wtTIR84caecRXLpGk1ZN+EmZJNGxhYGDxN5dWPO8UTlldvF2XhSco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpQ8Qn3n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DlRLeAO6HgUWOKkt4BOvzIt3Ri7m8yrO6KBSB+SeyqDMbDneJJI21W64LTRUd1XoQg+cJUHQ8FwdSOo6Qq20wclZAXX2nzBcCKMxlUN78/TTqSoZoPatblBNAirMLwVIKDz0WDA2dft6brjEZHVojyEjZvlop9RBnsKUFk32X/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TjAmmJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpQ8Qn3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC66AC4CEE4;
-	Wed, 19 Mar 2025 14:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TjAmmJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9781AC4CEE4;
+	Wed, 19 Mar 2025 14:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395110;
-	bh=tWUWwBSJp4HJ4b/iSeUFtJJGPIoN4RwlHD0VPXUCGIk=;
+	bh=mhDozVV6EqDbX7b3r6vNI/9dXnnQJPx8AIAGRfUuHQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpQ8Qn3n/GP6Sriyf+3cGIOk0UZWLRXmoYL55KGXX5Fptq44Z2wBIyINq+TcdUUKS
-	 SLundyiIua1HYZ/QvF/u3/lIptP1C6Ofg5+cgdZ1Jnaz6tYKVJjk6AA/w57UIWlH5/
-	 g5TSELr+6ahg52SQ+/n5DvDT6nizpSZz2xXjawZw=
+	b=2TjAmmJrtUeiguycCEQxFj/VpZQ5Zg1LZLpgXVwNVpEBgRU0mSb1WlDILv2CZFeKt
+	 hMB/o2MZcUHLfbcSSw1wGMxv8opyYh8RzdJkAJXmLFmMpeOELmt83+pXnfGPluh2Zm
+	 CWcl/14QJm0xv5M78wi3FwCBDAgE7KER3ijkjEsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Tamir Duberstein <tamird@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 164/231] rust: alloc: satisfy POSIX alignment requirement
-Date: Wed, 19 Mar 2025 07:30:57 -0700
-Message-ID: <20250319143030.892916572@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 129/231] ASoC: tas2764: Fix power control mask
+Date: Wed, 19 Mar 2025 07:30:22 -0700
+Message-ID: <20250319143030.022299263@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,59 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamir Duberstein <tamird@gmail.com>
+From: Hector Martin <marcan@marcan.st>
 
-commit ff64846bee0e7e3e7bc9363ebad3bab42dd27e24 upstream.
+[ Upstream commit a3f172359e22b2c11b750d23560481a55bf86af1 ]
 
-ISO C's `aligned_alloc` is partially implementation-defined; on some
-systems it inherits stricter requirements from POSIX's `posix_memalign`.
-
-This causes the call added in commit dd09538fb409 ("rust: alloc:
-implement `Cmalloc` in module allocator_test") to fail on macOS because
-it doesn't meet the requirements of `posix_memalign`.
-
-Adjust the call to meet the POSIX requirement and add a comment. This
-fixes failures in `make rusttest` on macOS.
-
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: dd09538fb409 ("rust: alloc: implement `Cmalloc` in module allocator_test")
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20250213-aligned-alloc-v7-1-d2a2d0be164b@gmail.com
-[ Added Cc: stable. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250218-apple-codec-changes-v2-1-932760fd7e07@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/alloc/allocator_test.rs |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/soc/codecs/tas2764.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/alloc/allocator_test.rs
-+++ b/rust/kernel/alloc/allocator_test.rs
-@@ -62,6 +62,24 @@ unsafe impl Allocator for Cmalloc {
-             ));
-         }
+diff --git a/sound/soc/codecs/tas2764.h b/sound/soc/codecs/tas2764.h
+index 168af772a898f..d13ecae9c9c2f 100644
+--- a/sound/soc/codecs/tas2764.h
++++ b/sound/soc/codecs/tas2764.h
+@@ -25,7 +25,7 @@
  
-+        // ISO C (ISO/IEC 9899:2011) defines `aligned_alloc`:
-+        //
-+        // > The value of alignment shall be a valid alignment supported by the implementation
-+        // [...].
-+        //
-+        // As an example of the "supported by the implementation" requirement, POSIX.1-2001 (IEEE
-+        // 1003.1-2001) defines `posix_memalign`:
-+        //
-+        // > The value of alignment shall be a power of two multiple of sizeof (void *).
-+        //
-+        // and POSIX-based implementations of `aligned_alloc` inherit this requirement. At the time
-+        // of writing, this is known to be the case on macOS (but not in glibc).
-+        //
-+        // Satisfy the stricter requirement to avoid spurious test failures on some platforms.
-+        let min_align = core::mem::size_of::<*const crate::ffi::c_void>();
-+        let layout = layout.align_to(min_align).map_err(|_| AllocError)?;
-+        let layout = layout.pad_to_align();
-+
-         // SAFETY: Returns either NULL or a pointer to a memory allocation that satisfies or
-         // exceeds the given size and alignment requirements.
-         let dst = unsafe { libc_aligned_alloc(layout.align(), layout.size()) } as *mut u8;
+ /* Power Control */
+ #define TAS2764_PWR_CTRL		TAS2764_REG(0X0, 0x02)
+-#define TAS2764_PWR_CTRL_MASK		GENMASK(1, 0)
++#define TAS2764_PWR_CTRL_MASK		GENMASK(2, 0)
+ #define TAS2764_PWR_CTRL_ACTIVE		0x0
+ #define TAS2764_PWR_CTRL_MUTE		BIT(0)
+ #define TAS2764_PWR_CTRL_SHUTDOWN	BIT(1)
+-- 
+2.39.5
+
 
 
