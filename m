@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E6A1DE4FF;
-	Wed, 19 Mar 2025 14:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503EE1F5849;
+	Wed, 19 Mar 2025 14:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395167; cv=none; b=kC8TkryK9l3pjBftGnoXe2CZ/NDstVjR9Z9t9/KYwYB6bPHmGMbvORpiJ6VWgrYYnqDSCAfNBBV3fAvlXq9E8RrQlzo0+CasEKWoSkyWjVpTemPpVRxUkjJDLJQhIKLhrSKocoKAitMmA+tvPDKejQwykzquH1D3RumoUX1gYl8=
+	t=1742395168; cv=none; b=XRxflw6mcI/rVmm0s+k2JjWRopBa/ZqTWhzGfgKqBahDr0a00PBxEEsm8ZKOtANwJL2ddLkYln7vGDHW5c7w4Rakx9B/GTjls0ASfuMEbhQad33RWYmG32QGW9WzJn/rDPc0HN7qTG8+4xK8gNdIvcpRJs5jkZwCrLXWOodLm8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395167; c=relaxed/simple;
-	bh=kIxAx/tlXnvggueC7HNkmUhgScjDtfm+eUMjJ4J4PIs=;
+	s=arc-20240116; t=1742395168; c=relaxed/simple;
+	bh=lsrX9+stBPohQ2S/m1yYj9oNzbqja8wQO1r6zwjpiFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3hS2y1J04g5TQBlqvc6kqYAP1a/D6Ip1r22ZnMdY2V4UMaZh4hd2vz1sgrUrUb2xE4Aik5V36jCYMOlRJ4yKgtU4knCIusw26Gwom7W1UuKGBCr87L6c+PuWRN9qYi8G+nHfuIzH6hZeCzYrReOW8/aaEFSqbplaWLL94uYMdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/yG2e4V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGFBqjUkty6ncTWexd3H/t8cGj9naqMwgUs5ut6p2HKKYSWRwiVCzlLnUzFVZdP+jXrQvM1w+LHUIAnhXCEf6vQdEV4WlL2KvVFWEcjbTEcPC02zwmFjX1Y7hw/2yrhzPvy1H0rJaD0mpwwwnjD+mVtL4SK/s4+aVRCB1Pc0qQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0KL4c9u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/yG2e4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6D2C4CEE4;
-	Wed, 19 Mar 2025 14:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0KL4c9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA12C4CEE8;
+	Wed, 19 Mar 2025 14:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395167;
-	bh=kIxAx/tlXnvggueC7HNkmUhgScjDtfm+eUMjJ4J4PIs=;
+	s=korg; t=1742395168;
+	bh=lsrX9+stBPohQ2S/m1yYj9oNzbqja8wQO1r6zwjpiFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/yG2e4VfvxEANUDuLGk6n8d72rcR4tOUMVsHJA7uIv/F518kDF+owDL4xZ9vYtSF
-	 uAoXIVysoO5CkDmJ2aXeNOMnBbIFdmuy3G2qE4yUwkdD+np2t7/7Utn8ZQr98q1C/Q
-	 fExK+ftcIATZFXQ/8nLdmWWWfDOlyEjBYarc2e1w=
+	b=X0KL4c9u2gRYqwRgJ+dKbvwIwqXSYh0cyd2vBr7TrMUPlKHtiPMj8nC6TmXPG5Ams
+	 8yFW7T8sz0IdNur9fHZmH9UWlXf1TVi3vC0Fo0uzu4afVbFUEAlWsC5JU1LuZN1mgz
+	 2fS829+JB+P7RKJiETLsawx1VXmuITeCQ5wAQ5aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
+	Joseph Huang <Joseph.Huang@garmin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/166] net/mlx5: Fill out devlink dev info only for PFs
-Date: Wed, 19 Mar 2025 07:29:48 -0700
-Message-ID: <20250319143020.448346514@linuxfoundation.org>
+Subject: [PATCH 6.6 018/166] net: dsa: mv88e6xxx: Verify after ATU Load ops
+Date: Wed, 19 Mar 2025 07:29:49 -0700
+Message-ID: <20250319143020.476275451@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -54,43 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Joseph Huang <Joseph.Huang@garmin.com>
 
-[ Upstream commit d749d901b2168389f060b654fdaa08acf6b367d2 ]
+[ Upstream commit dc5340c3133a3ebe54853fd299116149e528cfaa ]
 
-Firmware version query is supported on the PFs. Due to this
-following kernel warning log is observed:
+ATU Load operations could fail silently if there's not enough space
+on the device to hold the new entry. When this happens, the symptom
+depends on the unknown flood settings. If unknown multicast flood is
+disabled, the multicast packets are dropped when the ATU table is
+full. If unknown multicast flood is enabled, the multicast packets
+will be flooded to all ports. Either way, IGMP snooping is broken
+when the ATU Load operation fails silently.
 
-[  188.590344] mlx5_core 0000:08:00.2: mlx5_fw_version_query:816:(pid 1453): fw query isn't supported by the FW
+Do a Read-After-Write verification after each fdb/mdb add operation
+to make sure that the operation was really successful, and return
+-ENOSPC otherwise.
 
-Fix it by restricting the query and devlink info to the PF.
-
-Fixes: 8338d9378895 ("net/mlx5: Added devlink info callback")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Link: https://patch.msgid.link/20250306212529.429329-1-tariqt@nvidia.com
+Fixes: defb05b9b9b4 ("net: dsa: mv88e6xxx: Add support for fdb_add, fdb_del, and fdb_getnext")
+Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250306172306.3859214-1-Joseph.Huang@garmin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 59 ++++++++++++++++++++++++++------
+ 1 file changed, 48 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 1bccb5633ab4b..f66788a2ed77e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -46,6 +46,9 @@ mlx5_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
- 	u32 running_fw, stored_fw;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 062bcbe6255cf..a39b33353ca6c 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2125,13 +2125,11 @@ mv88e6xxx_port_vlan_prepare(struct dsa_switch *ds, int port,
+ 	return err;
+ }
+ 
+-static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+-					const unsigned char *addr, u16 vid,
+-					u8 state)
++static int mv88e6xxx_port_db_get(struct mv88e6xxx_chip *chip,
++				 const unsigned char *addr, u16 vid,
++				 u16 *fid, struct mv88e6xxx_atu_entry *entry)
+ {
+-	struct mv88e6xxx_atu_entry entry;
+ 	struct mv88e6xxx_vtu_entry vlan;
+-	u16 fid;
  	int err;
  
-+	if (!mlx5_core_is_pf(dev))
-+		return 0;
+ 	/* Ports have two private address databases: one for when the port is
+@@ -2142,7 +2140,7 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+ 	 * VLAN ID into the port's database used for VLAN-unaware bridging.
+ 	 */
+ 	if (vid == 0) {
+-		fid = MV88E6XXX_FID_BRIDGED;
++		*fid = MV88E6XXX_FID_BRIDGED;
+ 	} else {
+ 		err = mv88e6xxx_vtu_get(chip, vid, &vlan);
+ 		if (err)
+@@ -2152,14 +2150,39 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+ 		if (!vlan.valid)
+ 			return -EOPNOTSUPP;
+ 
+-		fid = vlan.fid;
++		*fid = vlan.fid;
+ 	}
+ 
+-	entry.state = 0;
+-	ether_addr_copy(entry.mac, addr);
+-	eth_addr_dec(entry.mac);
++	entry->state = 0;
++	ether_addr_copy(entry->mac, addr);
++	eth_addr_dec(entry->mac);
 +
- 	err = devlink_info_version_fixed_put(req, "fw.psid", dev->board_id);
++	return mv88e6xxx_g1_atu_getnext(chip, *fid, entry);
++}
++
++static bool mv88e6xxx_port_db_find(struct mv88e6xxx_chip *chip,
++				   const unsigned char *addr, u16 vid)
++{
++	struct mv88e6xxx_atu_entry entry;
++	u16 fid;
++	int err;
+ 
+-	err = mv88e6xxx_g1_atu_getnext(chip, fid, &entry);
++	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
++	if (err)
++		return false;
++
++	return entry.state && ether_addr_equal(entry.mac, addr);
++}
++
++static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
++					const unsigned char *addr, u16 vid,
++					u8 state)
++{
++	struct mv88e6xxx_atu_entry entry;
++	u16 fid;
++	int err;
++
++	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
  	if (err)
  		return err;
+ 
+@@ -2757,6 +2780,13 @@ static int mv88e6xxx_port_fdb_add(struct dsa_switch *ds, int port,
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = mv88e6xxx_port_db_load_purge(chip, port, addr, vid,
+ 					   MV88E6XXX_G1_ATU_DATA_STATE_UC_STATIC);
++	if (err)
++		goto out;
++
++	if (!mv88e6xxx_port_db_find(chip, addr, vid))
++		err = -ENOSPC;
++
++out:
+ 	mv88e6xxx_reg_unlock(chip);
+ 
+ 	return err;
+@@ -6454,6 +6484,13 @@ static int mv88e6xxx_port_mdb_add(struct dsa_switch *ds, int port,
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = mv88e6xxx_port_db_load_purge(chip, port, mdb->addr, mdb->vid,
+ 					   MV88E6XXX_G1_ATU_DATA_STATE_MC_STATIC);
++	if (err)
++		goto out;
++
++	if (!mv88e6xxx_port_db_find(chip, mdb->addr, mdb->vid))
++		err = -ENOSPC;
++
++out:
+ 	mv88e6xxx_reg_unlock(chip);
+ 
+ 	return err;
 -- 
 2.39.5
 
