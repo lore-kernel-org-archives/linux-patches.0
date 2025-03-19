@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCB41CC89D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69A51C2DC8;
 	Wed, 19 Mar 2025 14:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394886; cv=none; b=mXzvYXkFfItgyJA7ksIjckQ8+7Xih8m6LGHxt1TLM+C0/uiB1LL2o3LwkJNOZ396wh+n7LaTsCC9b39jVemHQVLhJy68wW3IgXprxBROJtABYwPhyz/EwlPAKYBFmLBXoSXrw2w92KmCAooukrJ5UXCbKuGpmtjP132GstWJcZg=
+	t=1742394886; cv=none; b=ED+OwQt0uQ6RkOeF5r0uwcMB5GdAxg10/FSuA1sdDLSRwZ0ngqR1i+CBdnltppfGXFrzHU1i3UO47C/WEA62HxIP6+iv74oJtYhrqFL3BRYUjGiO0JglOei5SeBwWWq/iD83rq6JCABrDftW5oQNTssKcxiXbVWK0njQFmP8YEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394886; c=relaxed/simple;
-	bh=Ox0J3c6cYs1ft96R7YhLolj/pBUsycNrvt0kPYaEJsU=;
+	bh=4+pW2ICK93zOFHQP5zTlFFo/emBngBSM7uzinVJMPP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slL0dzGKbC0JV+Rhud9HdA1bwfX5jpANpt0ZcaV9DkaszY8+TYAx5gwsfWAxVD++uf0C28RkMqcw4kO6v3u4BANtz+xVC56M7FVfY3cjoAGPaFxxIe7kUfUScN8M0OYRXt8rR9UkeS/SLt14tUQdySCp2k5nEqn3A739DTg9Amc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySJJzd6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyorpjUBuGH9lgdiMEajAznRBKf2h2YwRH69VgVZ1nZB1xP89PZOS6/WDawfJ28II415cfQGicMkEGz/RV20yymIr1/dt9GfjYig+a3q/Fpi9KiQo5fhzSSvCIzn6GSVcYWmn61NVoq+h/LxQTvuudoGnzKiap2k4v5KEEPvNg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sU+RuNfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySJJzd6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4862C4CEE4;
-	Wed, 19 Mar 2025 14:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sU+RuNfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BED0C4CEE4;
+	Wed, 19 Mar 2025 14:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394885;
-	bh=Ox0J3c6cYs1ft96R7YhLolj/pBUsycNrvt0kPYaEJsU=;
+	s=korg; t=1742394886;
+	bh=4+pW2ICK93zOFHQP5zTlFFo/emBngBSM7uzinVJMPP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySJJzd6j4Y4Aph0T4iF8E+jb/K0JupKF+gDJB3AzOl/TMGawgT7TUjNxB+kd/HuTm
-	 AlLn93VAkijo5yaaGB4oBzKNlfxoWkzyTh79o1eU1cSqcQcY+axvZeDVbH4ju63l1l
-	 o+QZeST09ac413gbgCn3WqAbwyXzjgo8vmeMq+Bg=
+	b=sU+RuNfr7eV6NXs6ZJIcMCR0Lnsu1PzifRCLHcE3pcaEovD8FOE3yHdTLbUe/2xh8
+	 v72WAaPsbB23IoW7DaMMGKSKHb2d69TjL+mHbyh3IQCn8Fbx8FG1BWj0yt8liMCQUC
+	 xFl/3TnBItAdEo5I83/m2biZq+pNkd2pZblihaW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Sterba <dsterba@suse.com>,
+	Klaus Kusche <klaus.kusche@computerix.info>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 087/241] btrfs: fix two misuses of folio_shift()
-Date: Wed, 19 Mar 2025 07:29:17 -0700
-Message-ID: <20250319143029.879559913@linuxfoundation.org>
+Subject: [PATCH 6.13 088/241] objtool: Ignore dangling jump table entries
+Date: Wed, 19 Mar 2025 07:29:18 -0700
+Message-ID: <20250319143029.903576039@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,68 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 01af106a076352182b2916b143fc50272600bd81 ]
+[ Upstream commit 3724062ca2b1364f02cf44dbea1a552227844ad1 ]
 
-It is meaningless to shift a byte count by folio_shift().  The folio index
-is in units of PAGE_SIZE, not folio_size().  We can use folio_contains()
-to make this work for arbitrary-order folios, so remove the assertion
-that the folios are of order 0.
+Clang sometimes leaves dangling unused jump table entries which point to
+the end of the function.  Ignore them.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Closes: https://lore.kernel.org/20250113235835.vqgvb7cdspksy5dn@jpoimboe
+Reported-by: Klaus Kusche <klaus.kusche@computerix.info>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/ee25c0b7e80113e950bd1d4c208b671d35774ff4.1736891751.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ tools/objtool/check.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 0dd24d1289863..95d3cf2e15c84 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -526,8 +526,6 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
- 		u64 end;
- 		u32 len;
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 6691bd106e4b6..6f3f408d0a019 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2061,6 +2061,14 @@ static int add_jump_table(struct objtool_file *file, struct instruction *insn,
+ 		    reloc_addend(reloc) == pfunc->offset)
+ 			break;
  
--		/* For now only order 0 folios are supported for data. */
--		ASSERT(folio_order(folio) == 0);
- 		btrfs_debug(fs_info,
- 			"%s: bi_sector=%llu, err=%d, mirror=%u",
- 			__func__, bio->bi_iter.bi_sector, bio->bi_status,
-@@ -555,7 +553,6 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
- 
- 		if (likely(uptodate)) {
- 			loff_t i_size = i_size_read(inode);
--			pgoff_t end_index = i_size >> folio_shift(folio);
- 
- 			/*
- 			 * Zero out the remaining part if this range straddles
-@@ -564,9 +561,11 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
- 			 * Here we should only zero the range inside the folio,
- 			 * not touch anything else.
- 			 *
--			 * NOTE: i_size is exclusive while end is inclusive.
-+			 * NOTE: i_size is exclusive while end is inclusive and
-+			 * folio_contains() takes PAGE_SIZE units.
- 			 */
--			if (folio_index(folio) == end_index && i_size <= end) {
-+			if (folio_contains(folio, i_size >> PAGE_SHIFT) &&
-+			    i_size <= end) {
- 				u32 zero_start = max(offset_in_folio(folio, i_size),
- 						     offset_in_folio(folio, start));
- 				u32 zero_len = offset_in_folio(folio, end) + 1 -
-@@ -960,7 +959,7 @@ static int btrfs_do_readpage(struct folio *folio, struct extent_map **em_cached,
- 		return ret;
++		/*
++		 * Clang sometimes leaves dangling unused jump table entries
++		 * which point to the end of the function.  Ignore them.
++		 */
++		if (reloc->sym->sec == pfunc->sec &&
++		    reloc_addend(reloc) == pfunc->offset + pfunc->len)
++			goto next;
++
+ 		dest_insn = find_insn(file, reloc->sym->sec, reloc_addend(reloc));
+ 		if (!dest_insn)
+ 			break;
+@@ -2078,6 +2086,7 @@ static int add_jump_table(struct objtool_file *file, struct instruction *insn,
+ 		alt->insn = dest_insn;
+ 		alt->next = insn->alts;
+ 		insn->alts = alt;
++next:
+ 		prev_offset = reloc_offset(reloc);
  	}
  
--	if (folio->index == last_byte >> folio_shift(folio)) {
-+	if (folio_contains(folio, last_byte >> PAGE_SHIFT)) {
- 		size_t zero_offset = offset_in_folio(folio, last_byte);
- 
- 		if (zero_offset) {
 -- 
 2.39.5
 
