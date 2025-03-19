@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430971DED54;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA5B20468F;
 	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394984; cv=none; b=S2C+fC2NtG2VJBH0PV+ye9swIt2XaknGAX6ZloMbG4+PuuwgsGG9UasHhA5jsmB0mDC36+CDZ36aFnXCHPIk1MwbBrZVhnS6PA6lT2VCqcz+jJIDBfITBRHUnp9m2CagaarFgxVKLNGA7HpZoPUTm9K1CrFG5GZDkq7ife8K+Pk=
+	t=1742394985; cv=none; b=GyqXYTXPSppR621szeFu5q72oBCX/4MY3Ky5gkIeEK4JIVCeTOTRenN4zbLC9SMESZ+AGKAWKytgbBU6LNJ9LcoEtZ8FkbqVTfNrrUyN8gceWbSXps2y5aGtzpJBRCQCp0dUV0wbsY8+O035itgc/4Ycyh6BP5Qe76xQP/5EQfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394984; c=relaxed/simple;
-	bh=rfJbMEXGED84BgqTzF2TNHrgmjcscDiwRk2/1IumLCs=;
+	s=arc-20240116; t=1742394985; c=relaxed/simple;
+	bh=QtJkF/b54DUQq0aonzSGbQConOnqmTz+lAnluJ91hPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHXqdzVxQc1YXBlEj3W0BYxyVH8qHOz4Y8QJdsvgmzRQxauChF1nXQ/70V1kClVB5W7cH/MI2amDLttjKh7hFKak4vzd2jMQrtbV5qpsdY9I4rL2vZ0GQt8FaiNvl+tO8NdYI2/HVYMOCv7usxZA+SNmLqCPjvS2hcXB/EswiMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEJlMnyg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDsaqRd9Rjv1nsKcSk0fw5C5yys4bWc41DKqnm+IlUBIl358SIXCZGzFcO3kH9BWoO/wWWrSy8kEri5sLGZun4fLKtbGQDrT2gXWAlLUL6OzwVQeMBgiasXe4H8QUVsfDHg69/1hBsWmqLANsvzoRLGDXMLqH4L9YlEodN9qY1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7uyZexK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEJlMnyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D960C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7uyZexK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B160BC4CEE8;
 	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394984;
-	bh=rfJbMEXGED84BgqTzF2TNHrgmjcscDiwRk2/1IumLCs=;
+	bh=QtJkF/b54DUQq0aonzSGbQConOnqmTz+lAnluJ91hPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEJlMnygmWSAUMCQN1cmocV5SpJ9FiaTNbT7TMHEQI3SK4rboeSKTIPbouk0FCdIq
-	 mS0vzsG2lcPnweuvKFcWuGQECM8ceKwLKxDZ5VqT4l1A92CoM7hpP8tFzUjm2wo+hM
-	 7q9Jqn5i/nFUACtfa8iPJt6jnMlpngX3vOVpLl7I=
+	b=T7uyZexKSnIScXz6YkALyeAWMhXCpY1gXMh314PY8qUpU0PRnAtXRrwkwmARH4qxj
+	 HZoTCmY5VAWOe/8fsSS5jEzUxcwhgPOF42/MhFgd0alHPfpQZMlbdqyrRviT6JUXSH
+	 N0GWi2+avVSPVE++M5uoZsjbUkbhIjqI+Kwcl6a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jander <david@protonic.nl>,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 223/241] gpio: cdev: use raw notifier for line state events
-Date: Wed, 19 Mar 2025 07:31:33 -0700
-Message-ID: <20250319143033.264835125@linuxfoundation.org>
+Subject: [PATCH 6.13 224/241] cifs: Fix integer overflow while processing acregmax mount option
+Date: Wed, 19 Mar 2025 07:31:34 -0700
+Message-ID: <20250319143033.289098363@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,134 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit dcb73cbaaeb39c9fd00bf2e019f911725945e2fe ]
+[ Upstream commit 7489161b1852390b4413d57f2457cd40b34da6cc ]
 
-We use a notifier to implement the mechanism of informing the user-space
-about changes in GPIO line status. We register with the notifier when
-the GPIO character device file is opened and unregister when the last
-reference to the associated file descriptor is dropped.
+User-provided mount parameter acregmax of type u32 is intended to have
+an upper limit, but before it is validated, the value is converted from
+seconds to jiffies which can lead to an integer overflow.
 
-Since commit fcc8b637c542 ("gpiolib: switch the line state notifier to
-atomic") we use the atomic notifier variant. Atomic notifiers call
-rcu_synchronize in atomic_notifier_chain_unregister() which caused a
-significant performance regression in some circumstances, observed by
-user-space when calling close() on the GPIO device file descriptor.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Replace the atomic notifier with the raw variant and provide
-synchronization with a read-write spinlock.
-
-Fixes: fcc8b637c542 ("gpiolib: switch the line state notifier to atomic")
-Reported-by: David Jander <david@protonic.nl>
-Closes: https://lore.kernel.org/all/20250311110034.53959031@erd003.prtnl/
-Tested-by: David Jander <david@protonic.nl>
-Tested-by: Kent Gibson <warthog618@gmail.com>
-Link: https://lore.kernel.org/r/20250311-gpiolib-line-state-raw-notifier-v2-1-138374581e1e@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 5780464614f6 ("cifs: Add new parameter "acregmax" for distinct file and directory metadata timeout")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 15 +++++++++------
- drivers/gpio/gpiolib.c      |  8 +++++---
- drivers/gpio/gpiolib.h      |  5 ++++-
- 3 files changed, 18 insertions(+), 10 deletions(-)
+ fs/smb/client/fs_context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 40f76a90fd7db..107d75558b5a8 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2729,8 +2729,9 @@ static int gpio_chrdev_open(struct inode *inode, struct file *file)
- 	cdev->gdev = gpio_device_get(gdev);
- 
- 	cdev->lineinfo_changed_nb.notifier_call = lineinfo_changed_notify;
--	ret = atomic_notifier_chain_register(&gdev->line_state_notifier,
--					     &cdev->lineinfo_changed_nb);
-+	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
-+		ret = raw_notifier_chain_register(&gdev->line_state_notifier,
-+						  &cdev->lineinfo_changed_nb);
- 	if (ret)
- 		goto out_free_bitmap;
- 
-@@ -2754,8 +2755,9 @@ static int gpio_chrdev_open(struct inode *inode, struct file *file)
- 	blocking_notifier_chain_unregister(&gdev->device_notifier,
- 					   &cdev->device_unregistered_nb);
- out_unregister_line_notifier:
--	atomic_notifier_chain_unregister(&gdev->line_state_notifier,
--					 &cdev->lineinfo_changed_nb);
-+	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
-+		raw_notifier_chain_unregister(&gdev->line_state_notifier,
-+					      &cdev->lineinfo_changed_nb);
- out_free_bitmap:
- 	gpio_device_put(gdev);
- 	bitmap_free(cdev->watched_lines);
-@@ -2779,8 +2781,9 @@ static int gpio_chrdev_release(struct inode *inode, struct file *file)
- 
- 	blocking_notifier_chain_unregister(&gdev->device_notifier,
- 					   &cdev->device_unregistered_nb);
--	atomic_notifier_chain_unregister(&gdev->line_state_notifier,
--					 &cdev->lineinfo_changed_nb);
-+	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
-+		raw_notifier_chain_unregister(&gdev->line_state_notifier,
-+					      &cdev->lineinfo_changed_nb);
- 	bitmap_free(cdev->watched_lines);
- 	gpio_device_put(gdev);
- 	kfree(cdev);
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 19878bc75e94c..2509b723b34db 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1025,7 +1025,8 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 2d307dd03fbc4..0fae0afa12626 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1284,11 +1284,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
  		}
- 	}
- 
--	ATOMIC_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
-+	rwlock_init(&gdev->line_state_lock);
-+	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
- 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
- 
- 	ret = init_srcu_struct(&gdev->srcu);
-@@ -4171,8 +4172,9 @@ EXPORT_SYMBOL_GPL(gpiod_set_array_value_cansleep);
- 
- void gpiod_line_state_notify(struct gpio_desc *desc, unsigned long action)
- {
--	atomic_notifier_call_chain(&desc->gdev->line_state_notifier,
--				   action, desc);
-+	guard(read_lock_irqsave)(&desc->gdev->line_state_lock);
-+
-+	raw_notifier_call_chain(&desc->gdev->line_state_notifier, action, desc);
- }
- 
- /**
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index 147156ec502b2..c129a03e20408 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -16,6 +16,7 @@
- #include <linux/gpio/driver.h>
- #include <linux/module.h>
- #include <linux/notifier.h>
-+#include <linux/spinlock.h>
- #include <linux/srcu.h>
- #include <linux/workqueue.h>
- 
-@@ -45,6 +46,7 @@
-  * @list: links gpio_device:s together for traversal
-  * @line_state_notifier: used to notify subscribers about lines being
-  *                       requested, released or reconfigured
-+ * @line_state_lock: RW-spinlock protecting the line state notifier
-  * @line_state_wq: used to emit line state events from a separate thread in
-  *                 process context
-  * @device_notifier: used to notify character device wait queues about the GPIO
-@@ -72,7 +74,8 @@ struct gpio_device {
- 	const char		*label;
- 	void			*data;
- 	struct list_head        list;
--	struct atomic_notifier_head line_state_notifier;
-+	struct raw_notifier_head line_state_notifier;
-+	rwlock_t		line_state_lock;
- 	struct workqueue_struct	*line_state_wq;
- 	struct blocking_notifier_head device_notifier;
- 	struct srcu_struct	srcu;
+ 		break;
+ 	case Opt_acregmax:
+-		ctx->acregmax = HZ * result.uint_32;
+-		if (ctx->acregmax > CIFS_MAX_ACTIMEO) {
++		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
+ 			cifs_errorf(fc, "acregmax too large\n");
+ 			goto cifs_parse_mount_err;
+ 		}
++		ctx->acregmax = HZ * result.uint_32;
+ 		break;
+ 	case Opt_acdirmax:
+ 		ctx->acdirmax = HZ * result.uint_32;
 -- 
 2.39.5
 
