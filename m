@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4B0209F50;
-	Wed, 19 Mar 2025 14:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A621DF271;
+	Wed, 19 Mar 2025 14:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395230; cv=none; b=J6NgM0Q/qhyDXwSG9QWc/nqRDEZ+XIjcO5gzhJK2c5c1MU6lFaCPcZKn/UphAFwRremBFxK7h9f+Qz/bzhFF6LLmqD5QMkselKj6b0lNS2/vpFkeweyWlgu8mi4BRc3blNqLUR89IEpz/SlrebSmIMv8G2zpGPRUkVcnRIf6Drk=
+	t=1742395231; cv=none; b=Sspc5Rx9I7rf6be2ht8iybIhoj7NmQLE5CT5/L1PeNzKPIUwlvHz3omc1HzoGgMdcaVZGCgmneV5BkozuYk6eai1ZeHfBAE+RN2A1I25rr2OiSOFC+ii8ykvf4lB7MRLeyZeD+SxyR+8It5jrUUGC3uepkbhws7vU+cmlkwq0nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395230; c=relaxed/simple;
-	bh=tDp1fjyav11A1qg6TLkHfkMxOXsEtnVdi9Q8cf9uSHY=;
+	s=arc-20240116; t=1742395231; c=relaxed/simple;
+	bh=Ti5GG6H58c8aIJr6csCcAUPaibNYdNIFJPs6k3ofi4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQ/PwZb1bmHWBYXHneMNVp9lAZPUgLG67pxMrbjt826EXdTG3dIDIXLVR5x2YI9qo+89qo6SHocluFtQCM91IXX0qAykH4/Qg+aItX55jP5V6adfTXIBM1GA2XESF4J5AvP844FsC/fhcZq/ghdhketcP4jZkPhugorggtWXc0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1gVJhwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2VCM6bMv6rsyixCupTYdOvZ2zFx+rXs/6Cs85qg2MIUZsNLx5/GKCJn+Lmqvw7YoRrl5Nu2kakLFJV8HcRPF2xg7ulyfN3liXVQOLLsmAPv31p8vLwnqakGgIgCklgDIIyBWKAqMSPkC4k1sTAnELMQ3QyO6TDga1Rfz9oUfWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udp+6A9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1gVJhwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23215C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udp+6A9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F12C4CEE4;
 	Wed, 19 Mar 2025 14:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395230;
-	bh=tDp1fjyav11A1qg6TLkHfkMxOXsEtnVdi9Q8cf9uSHY=;
+	bh=Ti5GG6H58c8aIJr6csCcAUPaibNYdNIFJPs6k3ofi4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1gVJhwbqLTi9ka5/Q/ve2MbogEGLGFkovSV0hIyqLBMDENvBWsWmJjtDmSGvVhjW
-	 NMefTBrIRN8wMhGK6r0Tca71XfICGabgccHeCJVZrnRT+DbeKZi+jJVK+MmFcT9UNh
-	 WNzcNxuh+ekzzI6gbrNnZTJk/CObt8bNtg+sYCbs=
+	b=udp+6A9h0MdGZlNl4Kq1VznuhGBzPfyimV8FvXwJQ24NOygWSriWnQnTWp730NCik
+	 qIWWYNSwtPcCJmpiTwtkjQyajlEkSTU7DAmCxTQl3lHDTpGH2WR4aAYecyidSDXhUJ
+	 wbFyUD0H+V/Y1HVnhoPaSkJ8L65eya4TeQoawaZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 101/166] io_uring/kbuf: use vm_insert_pages() for mmaped pbuf ring
-Date: Wed, 19 Mar 2025 07:31:12 -0700
-Message-ID: <20250319143022.752117347@linuxfoundation.org>
+	Uday Shankar <ushankar@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 075/166] io-wq: backoff when retrying worker creation
+Date: Wed, 19 Mar 2025 07:30:46 -0700
+Message-ID: <20250319143022.042233241@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -49,423 +51,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Uday Shankar <ushankar@purestorage.com>
 
-Commit 87585b05757dc70545efb434669708d276125559 upstream.
+[ Upstream commit 13918315c5dc5a515926c8799042ea6885c2b734 ]
 
-Rather than use remap_pfn_range() for this and manually free later,
-switch to using vm_insert_page() and have it Just Work.
+When io_uring submission goes async for the first time on a given task,
+we'll try to create a worker thread to handle the submission. Creating
+this worker thread can fail due to various transient conditions, such as
+an outstanding signal in the forking thread, so we have retry logic with
+a limit of 3 retries. However, this retry logic appears to be too
+aggressive/fast - we've observed a thread blowing through the retry
+limit while having the same outstanding signal the whole time. Here's an
+excerpt of some tracing that demonstrates the issue:
 
-This requires a bit of effort on the mmap lookup side, as the ctx
-uring_lock isn't held, which  otherwise protects buffer_lists from being
-torn down, and it's not safe to grab from mmap context that would
-introduce an ABBA deadlock between the mmap lock and the ctx uring_lock.
-Instead, lookup the buffer_list under RCU, as the the list is RCU freed
-already. Use the existing reference count to determine whether it's
-possible to safely grab a reference to it (eg if it's not zero already),
-and drop that reference when done with the mapping. If the mmap
-reference is the last one, the buffer_list and the associated memory can
-go away, since the vma insertion has references to the inserted pages at
-that point.
+First, signal 26 is generated for the process. It ends up getting routed
+to thread 92942.
 
+ 0)   cbd-92284    /* signal_generate: sig=26 errno=0 code=-2 comm=psblkdASD pid=92934 grp=1 res=0 */
+
+This causes create_io_thread in the signalled thread to fail with
+ERESTARTNOINTR, and thus a retry is queued.
+
+13) task_th-92942  /* io_uring_queue_async_work: ring 000000007325c9ae, request 0000000080c96d8e, user_data 0x0, opcode URING_CMD, flags 0x8240001, normal queue, work 000000006e96dd3f */
+13) task_th-92942  io_wq_enqueue() {
+13) task_th-92942    _raw_spin_lock();
+13) task_th-92942    io_wq_activate_free_worker();
+13) task_th-92942    _raw_spin_lock();
+13) task_th-92942    create_io_worker() {
+13) task_th-92942      __kmalloc_cache_noprof();
+13) task_th-92942      __init_swait_queue_head();
+13) task_th-92942      kprobe_ftrace_handler() {
+13) task_th-92942        get_kprobe();
+13) task_th-92942        aggr_pre_handler() {
+13) task_th-92942          pre_handler_kretprobe();
+13) task_th-92942          /* create_enter: (create_io_thread+0x0/0x50) fn=0xffffffff8172c0e0 arg=0xffff888996bb69c0 node=-1 */
+13) task_th-92942        } /* aggr_pre_handler */
+...
+13) task_th-92942        } /* copy_process */
+13) task_th-92942      } /* create_io_thread */
+13) task_th-92942      kretprobe_rethook_handler() {
+13) task_th-92942        /* create_exit: (create_io_worker+0x8a/0x1a0 <- create_io_thread) arg1=0xfffffffffffffdff */
+13) task_th-92942      } /* kretprobe_rethook_handler */
+13) task_th-92942    queue_work_on() {
+...
+
+The CPU is then handed to a kworker to process the queued retry:
+
+------------------------------------------
+ 13) task_th-92942  => kworker-54154
+------------------------------------------
+13) kworker-54154  io_workqueue_create() {
+13) kworker-54154    io_queue_worker_create() {
+13) kworker-54154      task_work_add() {
+13) kworker-54154        wake_up_state() {
+13) kworker-54154          try_to_wake_up() {
+13) kworker-54154            _raw_spin_lock_irqsave();
+13) kworker-54154            _raw_spin_unlock_irqrestore();
+13) kworker-54154          } /* try_to_wake_up */
+13) kworker-54154        } /* wake_up_state */
+13) kworker-54154        kick_process();
+13) kworker-54154      } /* task_work_add */
+13) kworker-54154    } /* io_queue_worker_create */
+13) kworker-54154  } /* io_workqueue_create */
+
+And then we immediately switch back to the original task to try creating
+a worker again. This fails, because the original task still hasn't
+handled its signal.
+
+-----------------------------------------
+ 13) kworker-54154  => task_th-92942
+------------------------------------------
+13) task_th-92942  create_worker_cont() {
+13) task_th-92942    kprobe_ftrace_handler() {
+13) task_th-92942      get_kprobe();
+13) task_th-92942      aggr_pre_handler() {
+13) task_th-92942        pre_handler_kretprobe();
+13) task_th-92942        /* create_enter: (create_io_thread+0x0/0x50) fn=0xffffffff8172c0e0 arg=0xffff888996bb69c0 node=-1 */
+13) task_th-92942      } /* aggr_pre_handler */
+13) task_th-92942    } /* kprobe_ftrace_handler */
+13) task_th-92942    create_io_thread() {
+13) task_th-92942      copy_process() {
+13) task_th-92942        task_active_pid_ns();
+13) task_th-92942        _raw_spin_lock_irq();
+13) task_th-92942        recalc_sigpending();
+13) task_th-92942        _raw_spin_lock_irq();
+13) task_th-92942      } /* copy_process */
+13) task_th-92942    } /* create_io_thread */
+13) task_th-92942    kretprobe_rethook_handler() {
+13) task_th-92942      /* create_exit: (create_worker_cont+0x35/0x1b0 <- create_io_thread) arg1=0xfffffffffffffdff */
+13) task_th-92942    } /* kretprobe_rethook_handler */
+13) task_th-92942    io_worker_release();
+13) task_th-92942    queue_work_on() {
+13) task_th-92942      clear_pending_if_disabled();
+13) task_th-92942      __queue_work() {
+13) task_th-92942      } /* __queue_work */
+13) task_th-92942    } /* queue_work_on */
+13) task_th-92942  } /* create_worker_cont */
+
+The pattern repeats another couple times until we blow through the retry
+counter, at which point we give up. All outstanding work is canceled,
+and the io_uring command which triggered all this is failed with
+ECANCELED:
+
+13) task_th-92942  io_acct_cancel_pending_work() {
+...
+13) task_th-92942  /* io_uring_complete: ring 000000007325c9ae, req 0000000080c96d8e, user_data 0x0, result -125, cflags 0x0 extra1 0 extra2 0  */
+
+Finally, the task gets around to processing its outstanding signal 26,
+but it's too late.
+
+13) task_th-92942  /* signal_deliver: sig=26 errno=0 code=-2 sa_handler=59566a0 sa_flags=14000000 */
+
+Try to address this issue by adding a small scaling delay when retrying
+worker creation. This should give the forking thread time to handle its
+signal in the above case. This isn't a particularly satisfying solution,
+as sufficiently paradoxical scheduling would still have us hitting the
+same issue, and I'm open to suggestions for something better. But this
+is likely to prevent this (already rare) issue from hitting in practice.
+
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Link: https://lore.kernel.org/r/20250208-wq_retry-v2-1-4f6f5041d303@purestorage.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/io_uring_types.h |    3 
- io_uring/io_uring.c            |   58 ++++-------------
- io_uring/io_uring.h            |    6 +
- io_uring/kbuf.c                |  137 ++++++++---------------------------------
- io_uring/kbuf.h                |    3 
- 5 files changed, 48 insertions(+), 159 deletions(-)
+ io_uring/io-wq.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -326,9 +326,6 @@ struct io_ring_ctx {
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index a1e31723c9ed6..93f3e4d1df853 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -65,7 +65,7 @@ struct io_worker {
  
- 	struct list_head	io_buffers_cache;
- 
--	/* deferred free list, protected by ->uring_lock */
--	struct hlist_head	io_buf_list;
--
- 	/* Keep this last, we don't need it for the fast path */
- 	struct wait_queue_head		poll_wq;
- 	struct io_restriction		restrictions;
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -311,7 +311,6 @@ static __cold struct io_ring_ctx *io_rin
- 	INIT_LIST_HEAD(&ctx->sqd_list);
- 	INIT_LIST_HEAD(&ctx->cq_overflow_list);
- 	INIT_LIST_HEAD(&ctx->io_buffers_cache);
--	INIT_HLIST_HEAD(&ctx->io_buf_list);
- 	io_alloc_cache_init(&ctx->rsrc_node_cache, IO_NODE_ALLOC_CACHE_MAX,
- 			    sizeof(struct io_rsrc_node));
- 	io_alloc_cache_init(&ctx->apoll_cache, IO_ALLOC_CACHE_MAX,
-@@ -2682,15 +2681,15 @@ static int io_cqring_wait(struct io_ring
- 	return READ_ONCE(rings->cq.head) == READ_ONCE(rings->cq.tail) ? ret : 0;
- }
- 
--static void io_pages_unmap(void *ptr, struct page ***pages,
--			   unsigned short *npages)
-+void io_pages_unmap(void *ptr, struct page ***pages, unsigned short *npages,
-+		    bool put_pages)
- {
- 	bool do_vunmap = false;
- 
- 	if (!ptr)
- 		return;
- 
--	if (*npages) {
-+	if (put_pages && *npages) {
- 		struct page **to_free = *pages;
- 		int i;
- 
-@@ -2712,14 +2711,6 @@ static void io_pages_unmap(void *ptr, st
- 	*npages = 0;
- }
- 
--void io_mem_free(void *ptr)
--{
--	if (!ptr)
--		return;
--
--	folio_put(virt_to_folio(ptr));
--}
--
- static void io_pages_free(struct page ***pages, int npages)
- {
- 	struct page **page_array;
-@@ -2818,8 +2809,10 @@ static void *io_sqes_map(struct io_ring_
- static void io_rings_free(struct io_ring_ctx *ctx)
- {
- 	if (!(ctx->flags & IORING_SETUP_NO_MMAP)) {
--		io_pages_unmap(ctx->rings, &ctx->ring_pages, &ctx->n_ring_pages);
--		io_pages_unmap(ctx->sq_sqes, &ctx->sqe_pages, &ctx->n_sqe_pages);
-+		io_pages_unmap(ctx->rings, &ctx->ring_pages, &ctx->n_ring_pages,
-+				true);
-+		io_pages_unmap(ctx->sq_sqes, &ctx->sqe_pages, &ctx->n_sqe_pages,
-+				true);
- 	} else {
- 		io_pages_free(&ctx->ring_pages, ctx->n_ring_pages);
- 		ctx->n_ring_pages = 0;
-@@ -2876,8 +2869,8 @@ err:
- 	return ERR_PTR(-ENOMEM);
- }
- 
--static void *io_pages_map(struct page ***out_pages, unsigned short *npages,
--			  size_t size)
-+void *io_pages_map(struct page ***out_pages, unsigned short *npages,
-+		   size_t size)
- {
- 	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN;
- 	struct page **pages;
-@@ -2909,17 +2902,6 @@ fail:
- 	return ret;
- }
- 
--void *io_mem_alloc(size_t size)
--{
--	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN | __GFP_COMP;
--	void *ret;
--
--	ret = (void *) __get_free_pages(gfp, get_order(size));
--	if (ret)
--		return ret;
--	return ERR_PTR(-ENOMEM);
--}
--
- static unsigned long rings_size(struct io_ring_ctx *ctx, unsigned int sq_entries,
- 				unsigned int cq_entries, size_t *sq_offset)
- {
-@@ -3073,7 +3055,6 @@ static __cold void io_ring_ctx_free(stru
- 		ctx->mm_account = NULL;
- 	}
- 	io_rings_free(ctx);
--	io_kbuf_mmap_list_free(ctx);
- 
- 	percpu_ref_exit(&ctx->refs);
- 	free_uid(ctx->user);
-@@ -3563,10 +3544,8 @@ static void *io_uring_validate_mmap_requ
- {
- 	struct io_ring_ctx *ctx = file->private_data;
- 	loff_t offset = pgoff << PAGE_SHIFT;
--	struct page *page;
--	void *ptr;
- 
--	switch (offset & IORING_OFF_MMAP_MASK) {
-+	switch ((pgoff << PAGE_SHIFT) & IORING_OFF_MMAP_MASK) {
- 	case IORING_OFF_SQ_RING:
- 	case IORING_OFF_CQ_RING:
- 		/* Don't allow mmap if the ring was setup without it */
-@@ -3581,6 +3560,7 @@ static void *io_uring_validate_mmap_requ
- 	case IORING_OFF_PBUF_RING: {
- 		struct io_buffer_list *bl;
- 		unsigned int bgid;
-+		void *ptr;
- 
- 		bgid = (offset & ~IORING_OFF_MMAP_MASK) >> IORING_OFF_PBUF_SHIFT;
- 		bl = io_pbuf_get_bl(ctx, bgid);
-@@ -3588,17 +3568,11 @@ static void *io_uring_validate_mmap_requ
- 			return bl;
- 		ptr = bl->buf_ring;
- 		io_put_bl(ctx, bl);
--		break;
-+		return ptr;
- 		}
--	default:
--		return ERR_PTR(-EINVAL);
- 	}
- 
--	page = virt_to_head_page(ptr);
--	if (sz > page_size(page))
--		return ERR_PTR(-EINVAL);
--
--	return ptr;
-+	return ERR_PTR(-EINVAL);
- }
- 
- int io_uring_mmap_pages(struct io_ring_ctx *ctx, struct vm_area_struct *vma,
-@@ -3618,7 +3592,6 @@ static __cold int io_uring_mmap(struct f
- 	size_t sz = vma->vm_end - vma->vm_start;
- 	long offset = vma->vm_pgoff << PAGE_SHIFT;
- 	unsigned int npages;
--	unsigned long pfn;
- 	void *ptr;
- 
- 	ptr = io_uring_validate_mmap_request(file, vma->vm_pgoff, sz);
-@@ -3633,10 +3606,11 @@ static __cold int io_uring_mmap(struct f
- 	case IORING_OFF_SQES:
- 		return io_uring_mmap_pages(ctx, vma, ctx->sqe_pages,
- 						ctx->n_sqe_pages);
-+	case IORING_OFF_PBUF_RING:
-+		return io_pbuf_mmap(file, vma);
- 	}
- 
--	pfn = virt_to_phys(ptr) >> PAGE_SHIFT;
--	return remap_pfn_range(vma, vma->vm_start, pfn, sz, vma->vm_page_prot);
-+	return -EINVAL;
- }
- 
- static unsigned long io_uring_mmu_get_unmapped_area(struct file *filp,
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -93,8 +93,10 @@ bool __io_alloc_req_refill(struct io_rin
- bool io_match_task_safe(struct io_kiocb *head, struct task_struct *task,
- 			bool cancel_all);
- 
--void *io_mem_alloc(size_t size);
--void io_mem_free(void *ptr);
-+void *io_pages_map(struct page ***out_pages, unsigned short *npages,
-+		   size_t size);
-+void io_pages_unmap(void *ptr, struct page ***pages, unsigned short *npages,
-+		    bool put_pages);
- 
- #if defined(CONFIG_PROVE_LOCKING)
- static inline void io_lockdep_assert_cq_locked(struct io_ring_ctx *ctx)
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -30,25 +30,12 @@ struct io_provide_buf {
- 	__u16				bid;
+ 	union {
+ 		struct rcu_head rcu;
+-		struct work_struct work;
++		struct delayed_work work;
+ 	};
  };
  
--static inline struct io_buffer_list *__io_buffer_get_list(struct io_ring_ctx *ctx,
--							  unsigned int bgid)
--{
--	return xa_load(&ctx->io_bl_xa, bgid);
--}
--
--struct io_buf_free {
--	struct hlist_node		list;
--	void				*mem;
--	size_t				size;
--	int				inuse;
--};
--
- static inline struct io_buffer_list *io_buffer_get_list(struct io_ring_ctx *ctx,
- 							unsigned int bgid)
- {
- 	lockdep_assert_held(&ctx->uring_lock);
- 
--	return __io_buffer_get_list(ctx, bgid);
-+	return xa_load(&ctx->io_bl_xa, bgid);
+@@ -771,6 +771,18 @@ static inline bool io_should_retry_thread(struct io_worker *worker, long err)
+ 	}
  }
  
- static int io_buffer_add_list(struct io_ring_ctx *ctx,
-@@ -199,24 +186,6 @@ void __user *io_buffer_select(struct io_
- 	return ret;
- }
- 
--/*
-- * Mark the given mapped range as free for reuse
-- */
--static void io_kbuf_mark_free(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
--{
--	struct io_buf_free *ibf;
--
--	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
--		if (bl->buf_ring == ibf->mem) {
--			ibf->inuse = 0;
--			return;
--		}
--	}
--
--	/* can't happen... */
--	WARN_ON_ONCE(1);
--}
--
- static int __io_remove_buffers(struct io_ring_ctx *ctx,
- 			       struct io_buffer_list *bl, unsigned nbufs)
- {
-@@ -228,23 +197,16 @@ static int __io_remove_buffers(struct io
- 
- 	if (bl->is_mapped) {
- 		i = bl->buf_ring->tail - bl->head;
--		if (bl->is_mmap) {
--			/*
--			 * io_kbuf_list_free() will free the page(s) at
--			 * ->release() time.
--			 */
--			io_kbuf_mark_free(ctx, bl);
--			bl->buf_ring = NULL;
--			bl->is_mmap = 0;
--		} else if (bl->buf_nr_pages) {
-+		if (bl->buf_nr_pages) {
- 			int j;
- 
--			for (j = 0; j < bl->buf_nr_pages; j++)
--				unpin_user_page(bl->buf_pages[j]);
--			kvfree(bl->buf_pages);
--			vunmap(bl->buf_ring);
--			bl->buf_pages = NULL;
--			bl->buf_nr_pages = 0;
-+			if (!bl->is_mmap) {
-+				for (j = 0; j < bl->buf_nr_pages; j++)
-+					unpin_user_page(bl->buf_pages[j]);
-+			}
-+			io_pages_unmap(bl->buf_ring, &bl->buf_pages,
-+					&bl->buf_nr_pages, bl->is_mmap);
-+			bl->is_mmap = 0;
- 		}
- 		/* make sure it's seen as empty */
- 		INIT_LIST_HEAD(&bl->buf_list);
-@@ -540,63 +502,17 @@ error_unpin:
- 	return ret;
- }
- 
--/*
-- * See if we have a suitable region that we can reuse, rather than allocate
-- * both a new io_buf_free and mem region again. We leave it on the list as
-- * even a reused entry will need freeing at ring release.
-- */
--static struct io_buf_free *io_lookup_buf_free_entry(struct io_ring_ctx *ctx,
--						    size_t ring_size)
--{
--	struct io_buf_free *ibf, *best = NULL;
--	size_t best_dist;
--
--	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
--		size_t dist;
--
--		if (ibf->inuse || ibf->size < ring_size)
--			continue;
--		dist = ibf->size - ring_size;
--		if (!best || dist < best_dist) {
--			best = ibf;
--			if (!dist)
--				break;
--			best_dist = dist;
--		}
--	}
--
--	return best;
--}
--
- static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
- 			      struct io_uring_buf_reg *reg,
- 			      struct io_buffer_list *bl)
- {
--	struct io_buf_free *ibf;
- 	size_t ring_size;
--	void *ptr;
- 
- 	ring_size = reg->ring_entries * sizeof(struct io_uring_buf_ring);
- 
--	/* Reuse existing entry, if we can */
--	ibf = io_lookup_buf_free_entry(ctx, ring_size);
--	if (!ibf) {
--		ptr = io_mem_alloc(ring_size);
--		if (IS_ERR(ptr))
--			return PTR_ERR(ptr);
--
--		/* Allocate and store deferred free entry */
--		ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
--		if (!ibf) {
--			io_mem_free(ptr);
--			return -ENOMEM;
--		}
--		ibf->mem = ptr;
--		ibf->size = ring_size;
--		hlist_add_head(&ibf->list, &ctx->io_buf_list);
--	}
--	ibf->inuse = 1;
--	bl->buf_ring = ibf->mem;
-+	bl->buf_ring = io_pages_map(&bl->buf_pages, &bl->buf_nr_pages, ring_size);
-+	if (!bl->buf_ring)
-+		return -ENOMEM;
- 	bl->is_mapped = 1;
- 	bl->is_mmap = 1;
- 	return 0;
-@@ -719,18 +635,19 @@ struct io_buffer_list *io_pbuf_get_bl(st
- 	return ERR_PTR(-EINVAL);
- }
- 
--/*
-- * Called at or after ->release(), free the mmap'ed buffers that we used
-- * for memory mapped provided buffer rings.
-- */
--void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx)
--{
--	struct io_buf_free *ibf;
--	struct hlist_node *tmp;
--
--	hlist_for_each_entry_safe(ibf, tmp, &ctx->io_buf_list, list) {
--		hlist_del(&ibf->list);
--		io_mem_free(ibf->mem);
--		kfree(ibf);
--	}
-+int io_pbuf_mmap(struct file *file, struct vm_area_struct *vma)
++static void queue_create_worker_retry(struct io_worker *worker)
 +{
-+	struct io_ring_ctx *ctx = file->private_data;
-+	loff_t pgoff = vma->vm_pgoff << PAGE_SHIFT;
-+	struct io_buffer_list *bl;
-+	int bgid, ret;
++	/*
++	 * We only bother retrying because there's a chance that the
++	 * failure to create a worker is due to some temporary condition
++	 * in the forking task (e.g. outstanding signal); give the task
++	 * some time to clear that condition.
++	 */
++	schedule_delayed_work(&worker->work,
++			      msecs_to_jiffies(worker->init_retries * 5));
++}
 +
-+	bgid = (pgoff & ~IORING_OFF_MMAP_MASK) >> IORING_OFF_PBUF_SHIFT;
-+	bl = io_pbuf_get_bl(ctx, bgid);
-+	if (IS_ERR(bl))
-+		return PTR_ERR(bl);
-+
-+	ret = io_uring_mmap_pages(ctx, vma, bl->buf_pages, bl->buf_nr_pages);
-+	io_put_bl(ctx, bl);
-+	return ret;
- }
---- a/io_uring/kbuf.h
-+++ b/io_uring/kbuf.h
-@@ -54,8 +54,6 @@ int io_provide_buffers(struct io_kiocb *
- int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
- int io_unregister_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
- 
--void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx);
--
- unsigned int __io_put_kbuf(struct io_kiocb *req, unsigned issue_flags);
- 
- void io_kbuf_recycle_legacy(struct io_kiocb *req, unsigned issue_flags);
-@@ -63,6 +61,7 @@ void io_kbuf_recycle_legacy(struct io_ki
- void io_put_bl(struct io_ring_ctx *ctx, struct io_buffer_list *bl);
- struct io_buffer_list *io_pbuf_get_bl(struct io_ring_ctx *ctx,
- 				      unsigned long bgid);
-+int io_pbuf_mmap(struct file *file, struct vm_area_struct *vma);
- 
- static inline void io_kbuf_recycle_ring(struct io_kiocb *req)
+ static void create_worker_cont(struct callback_head *cb)
  {
+ 	struct io_worker *worker;
+@@ -810,12 +822,13 @@ static void create_worker_cont(struct callback_head *cb)
+ 
+ 	/* re-create attempts grab a new worker ref, drop the existing one */
+ 	io_worker_release(worker);
+-	schedule_work(&worker->work);
++	queue_create_worker_retry(worker);
+ }
+ 
+ static void io_workqueue_create(struct work_struct *work)
+ {
+-	struct io_worker *worker = container_of(work, struct io_worker, work);
++	struct io_worker *worker = container_of(work, struct io_worker,
++						work.work);
+ 	struct io_wq_acct *acct = io_wq_get_acct(worker);
+ 
+ 	if (!io_queue_worker_create(worker, acct, create_worker_cont))
+@@ -856,8 +869,8 @@ static bool create_io_worker(struct io_wq *wq, int index)
+ 		kfree(worker);
+ 		goto fail;
+ 	} else {
+-		INIT_WORK(&worker->work, io_workqueue_create);
+-		schedule_work(&worker->work);
++		INIT_DELAYED_WORK(&worker->work, io_workqueue_create);
++		queue_create_worker_retry(worker);
+ 	}
+ 
+ 	return true;
+-- 
+2.39.5
+
 
 
