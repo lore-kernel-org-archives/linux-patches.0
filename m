@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6B519DF99;
-	Wed, 19 Mar 2025 14:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4071C5D57;
+	Wed, 19 Mar 2025 14:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394836; cv=none; b=h47FY42IvrCN5zsxUqEQq+xZlURrWf4p21Itpsl0+L6XclgVNLiOaTLGJrXQcNnLknoT1UeBuoGVNk11215ZtIQKBUP9vUboItaB+RU2Deu9YC1+xTIEJrseRVHB01Itl1DKSb/BJ2+u5EnEW20ohwGkB7sZbmX1f1bUqgI7WTc=
+	t=1742394836; cv=none; b=rk5Ws1BkIHRCuHxaJKE3iGsb+Cl4a+P6cE6wg4O4wq26MqmWqQBDqnOslfxkajC7CrQX16wSJPkcDEW1iq8rD3vNTpwghgFVu5hUCHwp10CP6miQVQWAC2BYqdBsobP2RevP7nteUwzbg1I0zzQ2nA/yJ75mGXzdtCvCGqMntpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394836; c=relaxed/simple;
-	bh=EOK1Cwr55eXyOwko7mT7pLTQ5zVssn1yer7LDu/gOD0=;
+	bh=yUHNTDehW+fyTidVHUK0cU1FDfQztc8ebXx8/B9yL4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eT6nSUGXQeGUxnxZj2QmIOhrwd8iNhf22UmphbraK6TjBf3bN3gUj0EyloXrRqnlDTpguyzWLUv3I+yOd7NpkOpGhVkhI15sIOML2nDTIx/g1oGHOUk0hKi6CZJubAlJ/0xmpyzRMgjjhjC5ELoGh9V0TfrMZZQ+lBIBgw1OnHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UaHFFBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fq9gHBhwr4grhCnhZogVhjmb88PAlsKZBwApQ4V2D3dz/BgNHE0tA9/Wtxwc1uIYHURbGeSd/9W0gWXfvUbTdiFFOJPrdaYN3+PaVBlnRhJbDNmFyadgz0qKVfNhZwwgO4+SWnLnMq0hgeKJCvoOl3GW/0PR8HHeJjiJy0mCaEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3Ua0dNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UaHFFBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EF6C4CEE8;
-	Wed, 19 Mar 2025 14:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3Ua0dNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238C3C4CEE4;
+	Wed, 19 Mar 2025 14:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394835;
-	bh=EOK1Cwr55eXyOwko7mT7pLTQ5zVssn1yer7LDu/gOD0=;
+	s=korg; t=1742394836;
+	bh=yUHNTDehW+fyTidVHUK0cU1FDfQztc8ebXx8/B9yL4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UaHFFBaY6+OlkNOqlWFAzDfEzRo3hWHTA6mMoh7S1Zw8zEdbjD9x0HEpSF8n9Zad
-	 CqLF1U7007b0yAKDOh6sfYQoq98DsMGy7qwSxLTA2TRAaeN5cbwdWOHytoMunBCemz
-	 8mUcaFPGS57H4oqg93SvWEROSvsgexlOg2HuqYGc=
+	b=P3Ua0dNpvpgiEhQFBib6LboX3RQq1G5us3AqrU24QqDuysVHEDVAREHVW/lUROG0V
+	 nxgcf8yvAihN7/HDaegBE6xk455UNw9ZO8IEhILcCQ/Fi0K0dl9lUevAWOIxIAvo5+
+	 m/EJyPfwFBRLZMc6XSCtXR8R0lmfzgA6oAO4eaBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 016/241] wifi: mac80211: dont queue sdata::work for a non-running sdata
-Date: Wed, 19 Mar 2025 07:28:06 -0700
-Message-ID: <20250319143028.110714481@linuxfoundation.org>
+Subject: [PATCH 6.13 017/241] wifi: cfg80211: cancel wiphy_work before freeing wiphy
+Date: Wed, 19 Mar 2025 07:28:07 -0700
+Message-ID: <20250319143028.134546063@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,48 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 20d5a0b9cd0ccb32e886cf6baecf14936325bf10 ]
+[ Upstream commit 72d520476a2fab6f3489e8388ab524985d6c4b90 ]
 
-The worker really shouldn't be queued for a non-running interface.
-Also, if ieee80211_setup_sdata is called between queueing and executing
-the wk, it will be initialized, which will corrupt wiphy_work_list.
+A wiphy_work can be queued from the moment the wiphy is allocated and
+initialized (i.e. wiphy_new_nm). When a wiphy_work is queued, the
+rdev::wiphy_work is getting queued.
 
-Fixes: f8891461a277 ("mac80211: do not start any work during reconfigure flow")
+If wiphy_free is called before the rdev::wiphy_work had a chance to run,
+the wiphy memory will be freed, and then when it eventally gets to run
+it'll use invalid memory.
+
+Fix this by canceling the work before freeing the wiphy.
+
+Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20250306123626.1e02caf82640.I4949e71ed56e7186ed4968fa9ddff477473fa2f4@changeid
+Link: https://patch.msgid.link/20250306123626.efd1d19f6e07.I48229f96f4067ef73f5b87302335e2fd750136c9@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/wireless/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index dc0b74443c8d1..5ee7fc81ff8cf 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -6,7 +6,7 @@
-  * Copyright 2007	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright (C) 2015-2017	Intel Deutschland GmbH
-- * Copyright (C) 2018-2024 Intel Corporation
-+ * Copyright (C) 2018-2025 Intel Corporation
-  *
-  * utilities for mac80211
-  */
-@@ -2190,8 +2190,10 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 		ieee80211_reconfig_roc(local);
- 
- 		/* Requeue all works */
--		list_for_each_entry(sdata, &local->interfaces, list)
--			wiphy_work_queue(local->hw.wiphy, &sdata->work);
-+		list_for_each_entry(sdata, &local->interfaces, list) {
-+			if (ieee80211_sdata_running(sdata))
-+				wiphy_work_queue(local->hw.wiphy, &sdata->work);
-+		}
- 	}
- 
- 	ieee80211_wake_queues_by_reason(hw, IEEE80211_MAX_QUEUE_MAP,
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index afbdc549fb4a5..8baf22758ac12 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1198,6 +1198,13 @@ void cfg80211_dev_free(struct cfg80211_registered_device *rdev)
+ {
+ 	struct cfg80211_internal_bss *scan, *tmp;
+ 	struct cfg80211_beacon_registration *reg, *treg;
++	unsigned long flags;
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	WARN_ON(!list_empty(&rdev->wiphy_work_list));
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++	cancel_work_sync(&rdev->wiphy_work);
++
+ 	rfkill_destroy(rdev->wiphy.rfkill);
+ 	list_for_each_entry_safe(reg, treg, &rdev->beacon_registrations, list) {
+ 		list_del(&reg->list);
 -- 
 2.39.5
 
