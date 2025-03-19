@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23B61CAA81;
-	Wed, 19 Mar 2025 14:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747541CAA81;
+	Wed, 19 Mar 2025 14:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395233; cv=none; b=ozZj73IBt/hpZDe85iKzQQLkqNcm6wzOYMLDE6SLd6M1go8W5iMBtIGfZH1tqfYfpZO4A2AyiodRugmBCGRK7sgGbv29pm/6ocL1rFvkVU/Qz7nBp0DUETp4AAxtJx1ZdBi5CUh8BELBz3REEILDgadJTfrsQpEjyRVO6Vc/nXQ=
+	t=1742395234; cv=none; b=LNiAIqZecWmsRquev6FCtLB1DRm76r8FodCg7PEBz7LRq7HiwabdWyT5IxqWMKLVqvH2/xskiT445GGP14dx5Imsn66mi7XoBByn7Zw2Z3q/I2svcE9TqFQu00t5fnN1XaXqyWBJKTGoEw4bRilM/u67ixrBeYcK8hozcXUIVqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395233; c=relaxed/simple;
-	bh=idJjtViYpvgW4kY3UD0BsPTX2xgm1rwPNh/Gr901FAE=;
+	s=arc-20240116; t=1742395234; c=relaxed/simple;
+	bh=qppdT5KaA1d9WhQeIxMtFPlDtGrgJhuk8lxupS3vMMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ab7Pta/vYCRu3+CoJi14s/peOgW7GEQnB/en1aePE3SqnDE2gPiXMedAJ8gfcj14l3GKGr07Ec7cTdOKeN9ZpcQuyqpqlGTxcGw9AwNpfVPCnkyVA+3QaGdT3DdGkiunjCjM8BXzqC3YO5QbN4tLo1AdNrAUPSs66jvNmOqvxUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2Qs3A50; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYjgB+8ut/r43d93prQLQQTS4U4UqN9Tgd6Fr81R1wnl2whz5tUDsDKQ6vXk0W5ql7lqdpJHLtOXsu0e0AsyOU/aV5vwG5tnjwu794Lf1Qmj0tIAT8mD0OzvB1hhwL5RkKIqSukoZ6dVSGXQffg1dF+4d4JR1NaGOROrfk3Uk/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQr+gnLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2Qs3A50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9185EC4CEE8;
-	Wed, 19 Mar 2025 14:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQr+gnLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4910FC4CEE4;
+	Wed, 19 Mar 2025 14:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395233;
-	bh=idJjtViYpvgW4kY3UD0BsPTX2xgm1rwPNh/Gr901FAE=;
+	s=korg; t=1742395234;
+	bh=qppdT5KaA1d9WhQeIxMtFPlDtGrgJhuk8lxupS3vMMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2Qs3A50eq+PXdOl7+eVxnhCnNONMgS0LXVybOfY7ITxCkcZIBELK6aCAGIXLigTp
-	 03EwVtSiYmj4hhjsC/OazAQFD7EUnLdOnX8jgd/pzf6gpPdRIh3TB0aEVLijpK1IoF
-	 1HuIc3w2okMUbaHfjA2d3BtvSNNBpVcMK44HNRZ4=
+	b=hQr+gnLq0Clky8Qefb9YbQKso0F2d9dkmqw4AZC2c57+vOQ6yblaYJDolXHGVQOdz
+	 j7RA/u+PazcWVGZAttVIiDJQFquh6VbDl+wP6bEpEALT9vTi5jt1cIgKjjVJg4UzFk
+	 hCfIaVX160kpXIMEyUETvZPjU75FuMmMlC403mzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
+	Nilton Perim Neto <niltonperimneto@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 105/166] Input: iqs7222 - preserve system status register
-Date: Wed, 19 Mar 2025 07:31:16 -0700
-Message-ID: <20250319143022.862148910@linuxfoundation.org>
+Subject: [PATCH 6.6 106/166] Input: xpad - add 8BitDo SN30 Pro, Hyperkin X91 and Gamesir G7 SE controllers
+Date: Wed, 19 Mar 2025 07:31:17 -0700
+Message-ID: <20250319143022.888550614@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -50,262 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Nilton Perim Neto <niltonperimneto@gmail.com>
 
-commit a2add513311b48cc924a699a8174db2c61ed5e8a upstream.
+commit 36e093c8dcc585d0a9e79a005f721f01f3365eba upstream.
 
-Some register groups reserve a byte at the end of their continuous
-address space. Depending on the variant of silicon, this field may
-share the same memory space as the lower byte of the system status
-register (0x10).
+Add 8BitDo SN30 Pro, Hyperkin X91 and Gamesir G7 SE to the list of
+recognized controllers, and update vendor comments to match.
 
-In these cases, caching the reserved byte and writing it later may
-effectively reset the device depending on what happened in between
-the read and write operations.
-
-Solve this problem by avoiding any access to this last byte within
-offending register groups. This method replaces a workaround which
-attempted to write the reserved byte with up-to-date contents, but
-left a small window in which updates by the device could have been
-clobbered.
-
-Now that the driver does not touch these reserved bytes, the order
-in which the device's registers are written no longer matters, and
-they can be written in their natural order. The new method is also
-much more generic, and can be more easily extended to new variants
-of silicon with different register maps.
-
-As part of this change, the register read and write functions must
-be gently updated to support byte access instead of word access.
-
-Fixes: 2e70ef525b73 ("Input: iqs7222 - acknowledge reset before writing registers")
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Link: https://lore.kernel.org/r/Z85Alw+d9EHKXx2e@nixie71
+Signed-off-by: Nilton Perim Neto <niltonperimneto@gmail.com>
+Link: https://lore.kernel.org/r/20250122214814.102311-2-niltonperimneto@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/iqs7222.c |   50 ++++++++++++++++++-------------------------
- 1 file changed, 22 insertions(+), 28 deletions(-)
+ drivers/input/joystick/xpad.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/input/misc/iqs7222.c
-+++ b/drivers/input/misc/iqs7222.c
-@@ -100,11 +100,11 @@ enum iqs7222_reg_key_id {
- 
- enum iqs7222_reg_grp_id {
- 	IQS7222_REG_GRP_STAT,
--	IQS7222_REG_GRP_FILT,
- 	IQS7222_REG_GRP_CYCLE,
- 	IQS7222_REG_GRP_GLBL,
- 	IQS7222_REG_GRP_BTN,
- 	IQS7222_REG_GRP_CHAN,
-+	IQS7222_REG_GRP_FILT,
- 	IQS7222_REG_GRP_SLDR,
- 	IQS7222_REG_GRP_TPAD,
- 	IQS7222_REG_GRP_GPIO,
-@@ -286,6 +286,7 @@ static const struct iqs7222_event_desc i
- 
- struct iqs7222_reg_grp_desc {
- 	u16 base;
-+	u16 val_len;
- 	int num_row;
- 	int num_col;
- };
-@@ -342,6 +343,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAC00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -400,6 +402,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAC00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -454,6 +457,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xC400,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -496,6 +500,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xC400,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -543,6 +548,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAA00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -600,6 +606,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAA00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -656,6 +663,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAE00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -712,6 +720,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAE00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -768,6 +777,7 @@ static const struct iqs7222_dev_desc iqs
- 			},
- 			[IQS7222_REG_GRP_FILT] = {
- 				.base = 0xAE00,
-+				.val_len = 3,
- 				.num_row = 1,
- 				.num_col = 2,
- 			},
-@@ -1604,7 +1614,7 @@ static int iqs7222_force_comms(struct iq
- }
- 
- static int iqs7222_read_burst(struct iqs7222_private *iqs7222,
--			      u16 reg, void *val, u16 num_val)
-+			      u16 reg, void *val, u16 val_len)
- {
- 	u8 reg_buf[sizeof(__be16)];
- 	int ret, i;
-@@ -1619,7 +1629,7 @@ static int iqs7222_read_burst(struct iqs
- 		{
- 			.addr = client->addr,
- 			.flags = I2C_M_RD,
--			.len = num_val * sizeof(__le16),
-+			.len = val_len,
- 			.buf = (u8 *)val,
- 		},
- 	};
-@@ -1675,7 +1685,7 @@ static int iqs7222_read_word(struct iqs7
- 	__le16 val_buf;
- 	int error;
- 
--	error = iqs7222_read_burst(iqs7222, reg, &val_buf, 1);
-+	error = iqs7222_read_burst(iqs7222, reg, &val_buf, sizeof(val_buf));
- 	if (error)
- 		return error;
- 
-@@ -1685,10 +1695,9 @@ static int iqs7222_read_word(struct iqs7
- }
- 
- static int iqs7222_write_burst(struct iqs7222_private *iqs7222,
--			       u16 reg, const void *val, u16 num_val)
-+			       u16 reg, const void *val, u16 val_len)
- {
- 	int reg_len = reg > U8_MAX ? sizeof(reg) : sizeof(u8);
--	int val_len = num_val * sizeof(__le16);
- 	int msg_len = reg_len + val_len;
- 	int ret, i;
- 	struct i2c_client *client = iqs7222->client;
-@@ -1747,7 +1756,7 @@ static int iqs7222_write_word(struct iqs
- {
- 	__le16 val_buf = cpu_to_le16(val);
- 
--	return iqs7222_write_burst(iqs7222, reg, &val_buf, 1);
-+	return iqs7222_write_burst(iqs7222, reg, &val_buf, sizeof(val_buf));
- }
- 
- static int iqs7222_ati_trigger(struct iqs7222_private *iqs7222)
-@@ -1831,30 +1840,14 @@ static int iqs7222_dev_init(struct iqs72
- 
- 	/*
- 	 * Acknowledge reset before writing any registers in case the device
--	 * suffers a spurious reset during initialization. Because this step
--	 * may change the reserved fields of the second filter beta register,
--	 * its cache must be updated.
--	 *
--	 * Writing the second filter beta register, in turn, may clobber the
--	 * system status register. As such, the filter beta register pair is
--	 * written first to protect against this hazard.
-+	 * suffers a spurious reset during initialization.
- 	 */
- 	if (dir == WRITE) {
--		u16 reg = dev_desc->reg_grps[IQS7222_REG_GRP_FILT].base + 1;
--		u16 filt_setup;
--
- 		error = iqs7222_write_word(iqs7222, IQS7222_SYS_SETUP,
- 					   iqs7222->sys_setup[0] |
- 					   IQS7222_SYS_SETUP_ACK_RESET);
- 		if (error)
- 			return error;
--
--		error = iqs7222_read_word(iqs7222, reg, &filt_setup);
--		if (error)
--			return error;
--
--		iqs7222->filt_setup[1] &= GENMASK(7, 0);
--		iqs7222->filt_setup[1] |= (filt_setup & ~GENMASK(7, 0));
- 	}
- 
- 	/*
-@@ -1883,6 +1876,7 @@ static int iqs7222_dev_init(struct iqs72
- 		int num_col = dev_desc->reg_grps[i].num_col;
- 		u16 reg = dev_desc->reg_grps[i].base;
- 		__le16 *val_buf;
-+		u16 val_len = dev_desc->reg_grps[i].val_len ? : num_col * sizeof(*val_buf);
- 		u16 *val;
- 
- 		if (!num_col)
-@@ -1900,7 +1894,7 @@ static int iqs7222_dev_init(struct iqs72
- 			switch (dir) {
- 			case READ:
- 				error = iqs7222_read_burst(iqs7222, reg,
--							   val_buf, num_col);
-+							   val_buf, val_len);
- 				for (k = 0; k < num_col; k++)
- 					val[k] = le16_to_cpu(val_buf[k]);
- 				break;
-@@ -1909,7 +1903,7 @@ static int iqs7222_dev_init(struct iqs72
- 				for (k = 0; k < num_col; k++)
- 					val_buf[k] = cpu_to_le16(val[k]);
- 				error = iqs7222_write_burst(iqs7222, reg,
--							    val_buf, num_col);
-+							    val_buf, val_len);
- 				break;
- 
- 			default:
-@@ -1962,7 +1956,7 @@ static int iqs7222_dev_info(struct iqs72
- 	int error, i;
- 
- 	error = iqs7222_read_burst(iqs7222, IQS7222_PROD_NUM, dev_id,
--				   ARRAY_SIZE(dev_id));
-+				   sizeof(dev_id));
- 	if (error)
- 		return error;
- 
-@@ -2917,7 +2911,7 @@ static int iqs7222_report(struct iqs7222
- 	__le16 status[IQS7222_MAX_COLS_STAT];
- 
- 	error = iqs7222_read_burst(iqs7222, IQS7222_SYS_STATUS, status,
--				   num_stat);
-+				   num_stat * sizeof(*status));
- 	if (error)
- 		return error;
- 
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -375,8 +375,10 @@ static const struct xpad_device {
+ 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
++	{ 0x2dc8, 0x6001, "8BitDo SN30 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
++	{ 0x2e24, 0x1688, "Hyperkin X91 X-Box One pad", 0, XTYPE_XBOXONE },
+ 	{ 0x31e3, 0x1100, "Wooting One", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1200, "Wooting Two", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1210, "Wooting Lekker", 0, XTYPE_XBOX360 },
+@@ -388,6 +390,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0646, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
++	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+ 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0000, 0x0000, "Generic X-Box pad", 0, XTYPE_UNKNOWN }
+@@ -526,12 +529,12 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOXONE_VENDOR(0x24c6),		/* PowerA controllers */
+ 	XPAD_XBOX360_VENDOR(0x2563),		/* OneXPlayer Gamepad */
+ 	XPAD_XBOX360_VENDOR(0x260d),		/* Dareu H101 */
+-       XPAD_XBOXONE_VENDOR(0x294b),            /* Snakebyte */
++	XPAD_XBOXONE_VENDOR(0x294b),		/* Snakebyte */
+ 	XPAD_XBOX360_VENDOR(0x2c22),		/* Qanba Controllers */
+-	XPAD_XBOX360_VENDOR(0x2dc8),            /* 8BitDo Pro 2 Wired Controller */
+-	XPAD_XBOXONE_VENDOR(0x2dc8),		/* 8BitDo Pro 2 Wired Controller for Xbox */
+-	XPAD_XBOXONE_VENDOR(0x2e24),		/* Hyperkin Duke Xbox One pad */
+-	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir controllers */
++	XPAD_XBOX360_VENDOR(0x2dc8),		/* 8BitDo Controllers */
++	XPAD_XBOXONE_VENDOR(0x2dc8),		/* 8BitDo Controllers */
++	XPAD_XBOXONE_VENDOR(0x2e24),		/* Hyperkin Controllers */
++	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir Controllers */
+ 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
+ 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
+ 	XPAD_XBOXONE_VENDOR(0x3285),		/* Nacon Evol-X */
 
 
