@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CE01DDA36;
-	Wed, 19 Mar 2025 14:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397441DDA36;
+	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394970; cv=none; b=q8wMDHPmXUtdIxyDwvU0K/1lZeibp4yZ6UDtnPl6TohK30qmfDAca4qbIg5SDideHZFPjOyLoO3fDzLEbinvq9KmhcKe/ez5hAT14oWlsgbid8ld4NMreSyheSHk4kCwoQsoGECr3SE88jbVYjdG/9frDCzMxV0kf4992yft23Y=
+	t=1742394971; cv=none; b=i32aBSDNEtaZoYhc/Ts3G8zjbvdd1WS+MWvdJjsGrSiQBIY1UDzS9bvk3TrOBCybcDqSFWU+OO5g9BFePRNy126XIRD36OciiXeLWB674bBdkCpsOmLVVW8cX8kNB3P2UyMPOwy8zGP4wSiqJqg97VlKhA8elckS6RXINpjz0sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394970; c=relaxed/simple;
-	bh=A1H/Y6g6rYQO7Qlfs3wvqL8+aD+hl5zqV92bIXom4/E=;
+	s=arc-20240116; t=1742394971; c=relaxed/simple;
+	bh=Vv6BcZOoQs77XM0ybLoyPTCNx7taN5WO3CH3lACtQ/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvDvd3dR+HBu26E4quefM2u0g+NOuIZX5ONHxrDP1EBEz9kib0PbRk8dmXnm450C1yIqNeuNkcOw7oFCh/AxbmkjLEUYSeknSLZHEiJgY/jznG6yQS+3PaRCET7EbHlyVcBNV58gQ7hB8IjJe5HhQCvhzqNN8BXaaIDNyTUc6uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ant/1QOs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kn+0A5k/FqB2tl7GCef0r5lsOYjRpWwUCCyg9SYJESQ3xX2hromuKtD02jxTGKCFbj7vD6TmfQNR6KtvzQfdEDenZiXvARaBOk5IBZiHrXCrRvS1/1IoGmjV8STWsTlChep32fS/7F6DytmsDc/7vVbgXMVMFFHPsBrImtUvP48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2o2h1tS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ant/1QOs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59397C4CEE4;
-	Wed, 19 Mar 2025 14:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2o2h1tS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E916C4CEE4;
+	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394970;
-	bh=A1H/Y6g6rYQO7Qlfs3wvqL8+aD+hl5zqV92bIXom4/E=;
+	s=korg; t=1742394971;
+	bh=Vv6BcZOoQs77XM0ybLoyPTCNx7taN5WO3CH3lACtQ/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ant/1QOspKNf1vax7h6o44EuRn2ffSYer1QAtKml3TFXRplSj5TzKULUHQQqN6vDM
-	 xJiCp1DRkiKLt9bfeBqT/f6ohTa67SPpCf+Y+WFJiGDNxg1IwwJBpUuBy0j7zavXMf
-	 bnIECfuekaR8L+wKUnev7EH6CAZAv/MjRuAeUNM4=
+	b=D2o2h1tSMqUu40fPU1HgzaRm1EH+iMsicgSXLFNdwdHs/S/yIeBj+2kON2tYhrqtN
+	 Y+Vj12bZs+ygRMNMuXH++HDgx9ndoOA+/ChN59L0DQJu34P+UjMfPdrQKBu9qgYj1Q
+	 HDCa8SOnxbJtlus6LsnaJZbE3aNwLkoGk6vcjdPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.13 205/241] sched_ext: Validate prev_cpu in scx_bpf_select_cpu_dfl()
-Date: Wed, 19 Mar 2025 07:31:15 -0700
-Message-ID: <20250319143032.809824260@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 206/241] ASoC: ops: Consistently treat platform_max as control value
+Date: Wed, 19 Mar 2025 07:31:16 -0700
+Message-ID: <20250319143032.837093344@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -50,37 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-commit 9360dfe4cbd62ff1eb8217b815964931523b75b3 upstream.
+[ Upstream commit 0eba2a7e858907a746ba69cd002eb9eb4dbd7bf3 ]
 
-If a BPF scheduler provides an invalid CPU (outside the nr_cpu_ids
-range) as prev_cpu to scx_bpf_select_cpu_dfl() it can cause a kernel
-crash.
+This reverts commit 9bdd10d57a88 ("ASoC: ops: Shift tested values in
+snd_soc_put_volsw() by +min"), and makes some additional related
+updates.
 
-To prevent this, validate prev_cpu in scx_bpf_select_cpu_dfl() and
-trigger an scx error if an invalid CPU is specified.
+There are two ways the platform_max could be interpreted; the maximum
+register value, or the maximum value the control can be set to. The
+patch moved from treating the value as a control value to a register
+one. When the patch was applied it was technically correct as
+snd_soc_limit_volume() also used the register interpretation. However,
+even then most of the other usages treated platform_max as a
+control value, and snd_soc_limit_volume() has since been updated to
+also do so in commit fb9ad24485087 ("ASoC: ops: add correct range
+check for limiting volume"). That patch however, missed updating
+snd_soc_put_volsw() back to the control interpretation, and fixing
+snd_soc_info_volsw_range(). The control interpretation makes more
+sense as limiting is typically done from the machine driver, so it is
+appropriate to use the customer facing representation rather than the
+internal codec representation. Update all the code to consistently use
+this interpretation of platform_max.
 
-Fixes: f0e1a0643a59b ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Finally, also add some comments to the soc_mixer_control struct to
+hopefully avoid further patches switching between the two approaches.
+
+Fixes: fb9ad24485087 ("ASoC: ops: add correct range check for limiting volume")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250228151456.3703342-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c |    3 +++
- 1 file changed, 3 insertions(+)
+ include/sound/soc.h |  5 ++++-
+ sound/soc/soc-ops.c | 15 +++++++--------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6376,6 +6376,9 @@ __bpf_kfunc_start_defs();
- __bpf_kfunc s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
- 				       u64 wake_flags, bool *is_idle)
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index 4f5d411e3823f..355575c63a130 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1251,7 +1251,10 @@ void snd_soc_close_delayed_work(struct snd_soc_pcm_runtime *rtd);
+ 
+ /* mixer control */
+ struct soc_mixer_control {
+-	int min, max, platform_max;
++	/* Minimum and maximum specified as written to the hardware */
++	int min, max;
++	/* Limited maximum value specified as presented through the control */
++	int platform_max;
+ 	int reg, rreg;
+ 	unsigned int shift, rshift;
+ 	unsigned int sign_bit;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 19928f098d8dc..b0e4e4168f38d 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -337,7 +337,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 	if (ucontrol->value.integer.value[0] < 0)
+ 		return -EINVAL;
+ 	val = ucontrol->value.integer.value[0];
+-	if (mc->platform_max && ((int)val + min) > mc->platform_max)
++	if (mc->platform_max && val > mc->platform_max)
+ 		return -EINVAL;
+ 	if (val > max - min)
+ 		return -EINVAL;
+@@ -350,7 +350,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 		if (ucontrol->value.integer.value[1] < 0)
+ 			return -EINVAL;
+ 		val2 = ucontrol->value.integer.value[1];
+-		if (mc->platform_max && ((int)val2 + min) > mc->platform_max)
++		if (mc->platform_max && val2 > mc->platform_max)
+ 			return -EINVAL;
+ 		if (val2 > max - min)
+ 			return -EINVAL;
+@@ -503,17 +503,16 @@ int snd_soc_info_volsw_range(struct snd_kcontrol *kcontrol,
  {
-+	if (!ops_cpu_valid(prev_cpu, NULL))
-+		goto prev_cpu;
-+
- 	if (!static_branch_likely(&scx_builtin_idle_enabled)) {
- 		scx_ops_error("built-in idle tracking is disabled");
- 		goto prev_cpu;
+ 	struct soc_mixer_control *mc =
+ 		(struct soc_mixer_control *)kcontrol->private_value;
+-	int platform_max;
+-	int min = mc->min;
++	int max;
+ 
+-	if (!mc->platform_max)
+-		mc->platform_max = mc->max;
+-	platform_max = mc->platform_max;
++	max = mc->max - mc->min;
++	if (mc->platform_max && mc->platform_max < max)
++		max = mc->platform_max;
+ 
+ 	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+ 	uinfo->count = snd_soc_volsw_is_stereo(mc) ? 2 : 1;
+ 	uinfo->value.integer.min = 0;
+-	uinfo->value.integer.max = platform_max - min;
++	uinfo->value.integer.max = max;
+ 
+ 	return 0;
+ }
+-- 
+2.39.5
+
 
 
