@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0408213E7A;
-	Wed, 19 Mar 2025 14:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934ED2139D4;
+	Wed, 19 Mar 2025 14:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395031; cv=none; b=YpcvmXVbjNVafY+NTolnM52FkBTqFDLIxUH6sxd7sEX91zpm29eDvaCO0POIPqt+puV3MtPBT6yejhLw3xR7TE6bDWOL8LgUFg9oLGTXkYH3n33dCpTFzy4uiy6H5oCIGTPZAXWugnfgtJ1JSx/siNQdTDOv/WsgSciSvuKapw8=
+	t=1742395031; cv=none; b=Y/2pD92kltZJbGCkuFzQKzYz2FALK6bxakTpcjQrVqAoc7DCtluHiaVBSzn1O/IbL44QBkks9bQOmWGQ4QnaSKi9BEmzeH3qLblA5MU0EL4ZdVQO1eYIPV/lpyOyGLXVeqnlexuw+jZJ+qKp24ruMQslZdI5QojN0DSQUKbqxT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395031; c=relaxed/simple;
-	bh=xD8ENVPOpajLy54rVbUNXkQMB4lqS8dLDjTEp+UHOBQ=;
+	bh=EkSy2jhAu7lXscssGDOKWZdW3svYLaTj2/Zoi9+u8tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d4fO9Qe9ZH+/1Rt6fvmVDAzeM9YB8yEbRwaQmdblUpoyx1ZSPQUGAEcvv3FJaetpRdXjTRDgu6zso7YSDln34lqkmFXIXPlTxaN5rsgqn0SCBPWU5D9OcVlSQNisLND/wjA6Bm9cYhiFozaKe7+3CGDK+JHs1EhsXPfKNBiQUYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfQhcA94; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9HO0S1cnsH82iQXS5f5eYTJGWdWvvIQt1+kG9+xZ6LKo7vbhyHa3o1ds04pWOGQ0nE+S7JjKHMQ1Bf1NXWkADFa+rIYsCjWvioY4z3HYGlCHS1FImUNUYFAeHtk5pTA0w+pKdGkuvSBoL9p6Kx0f5MRFFnSBWQPuaMNXWf35As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtS5PxNO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfQhcA94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A490C4CEE4;
-	Wed, 19 Mar 2025 14:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtS5PxNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08799C4CEE8;
+	Wed, 19 Mar 2025 14:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395030;
-	bh=xD8ENVPOpajLy54rVbUNXkQMB4lqS8dLDjTEp+UHOBQ=;
+	s=korg; t=1742395031;
+	bh=EkSy2jhAu7lXscssGDOKWZdW3svYLaTj2/Zoi9+u8tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfQhcA94PrKsyKdy4An5seTM8H76N54Ca+VvWnV9F1c4Mnl7govtCeLjLd/3aPXP0
-	 PsYW6FxDmMMNIYiXvZ8kVMyR7hq/55b9Nny4Mk7GtCr3bm70Z9uKaQN+JERP7xUW1A
-	 /qfuquvSQtBASkMjm2eaKpCLLCktrufhUyYFv4ZQ=
+	b=qtS5PxNOtKxTy4T4+Rv8cWIMCesrCBAsbMKDgJ+GMySzAf1EuUs+5wgBQhh3Wl/4z
+	 GXllDBQemW5+EpynWHqfwYL/6M9geSnuE+cyk95rVUYoShztVM5y8pCCsHgxtygWBJ
+	 2K0+GE9f6R9Twg7wJjJ1LcvuyL35mdKKbRh8o9nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
+	Vlad Dogaru <vdogaru@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/231] Revert "openvswitch: switch to per-action label counting in conntrack"
-Date: Wed, 19 Mar 2025 07:29:03 -0700
-Message-ID: <20250319143028.061602842@linuxfoundation.org>
+Subject: [PATCH 6.12 051/231] net/mlx5: HWS, Rightsize bwc matcher priority
+Date: Wed, 19 Mar 2025 07:29:04 -0700
+Message-ID: <20250319143028.086877790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -47,140 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-[ Upstream commit 1063ae07383c0ddc5bcce170260c143825846b03 ]
+[ Upstream commit 521992337f67f71ce4436b98bc32563ddb1a5ce3 ]
 
-Currently, ovs_ct_set_labels() is only called for confirmed conntrack
-entries (ct) within ovs_ct_commit(). However, if the conntrack entry
-does not have the labels_ext extension, attempting to allocate it in
-ovs_ct_get_conn_labels() for a confirmed entry triggers a warning in
-nf_ct_ext_add():
+The bwc layer was clamping the matcher priority from 32 bits to 16 bits.
+This didn't show up until a matcher was resized, since the initial
+native matcher was created using the correct 32 bit value.
 
-  WARN_ON(nf_ct_is_confirmed(ct));
+The fix also reorders fields to avoid some padding.
 
-This happens when the conntrack entry is created externally before OVS
-increments net->ct.labels_used. The issue has become more likely since
-commit fcb1aa5163b1 ("openvswitch: switch to per-action label counting
-in conntrack"), which changed to use per-action label counting and
-increment net->ct.labels_used when a flow with ct action is added.
-
-Since there’s no straightforward way to fully resolve this issue at the
-moment, this reverts the commit to avoid breaking existing use cases.
-
-Fixes: fcb1aa5163b1 ("openvswitch: switch to per-action label counting in conntrack")
-Reported-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/1bdeb2f3a812bca016a225d3de714427b2cd4772.1741457143.git.lucien.xin@gmail.com
+Fixes: 2111bb970c78 ("net/mlx5: HWS, added backward-compatible API handling")
+Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1741644104-97767-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/conntrack.c | 30 ++++++++++++++++++------------
- net/openvswitch/datapath.h  |  3 +++
- 2 files changed, 21 insertions(+), 12 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.h  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
-index 3bb4810234aac..e573e92213029 100644
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1368,8 +1368,11 @@ bool ovs_ct_verify(struct net *net, enum ovs_key_attr attr)
- 	    attr == OVS_KEY_ATTR_CT_MARK)
- 		return true;
- 	if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS) &&
--	    attr == OVS_KEY_ATTR_CT_LABELS)
--		return true;
-+	    attr == OVS_KEY_ATTR_CT_LABELS) {
-+		struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
-+
-+		return ovs_net->xt_label;
-+	}
- 
- 	return false;
- }
-@@ -1378,7 +1381,6 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
- 		       const struct sw_flow_key *key,
- 		       struct sw_flow_actions **sfa,  bool log)
- {
--	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
- 	struct ovs_conntrack_info ct_info;
- 	const char *helper = NULL;
- 	u16 family;
-@@ -1407,12 +1409,6 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
- 		return -ENOMEM;
- 	}
- 
--	if (nf_connlabels_get(net, n_bits - 1)) {
--		nf_ct_tmpl_free(ct_info.ct);
--		OVS_NLERR(log, "Failed to set connlabel length");
--		return -EOPNOTSUPP;
--	}
--
- 	if (ct_info.timeout[0]) {
- 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
- 				      ct_info.timeout))
-@@ -1581,7 +1577,6 @@ static void __ovs_ct_free_action(struct ovs_conntrack_info *ct_info)
- 	if (ct_info->ct) {
- 		if (ct_info->timeout[0])
- 			nf_ct_destroy_timeout(ct_info->ct);
--		nf_connlabels_put(nf_ct_net(ct_info->ct));
- 		nf_ct_tmpl_free(ct_info->ct);
- 	}
- }
-@@ -2006,9 +2001,17 @@ struct genl_family dp_ct_limit_genl_family __ro_after_init = {
- 
- int ovs_ct_init(struct net *net)
- {
--#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
-+	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
- 
-+	if (nf_connlabels_get(net, n_bits - 1)) {
-+		ovs_net->xt_label = false;
-+		OVS_NLERR(true, "Failed to set connlabel length");
-+	} else {
-+		ovs_net->xt_label = true;
-+	}
-+
-+#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	return ovs_ct_limit_init(net, ovs_net);
- #else
- 	return 0;
-@@ -2017,9 +2020,12 @@ int ovs_ct_init(struct net *net)
- 
- void ovs_ct_exit(struct net *net)
- {
--#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
- 
-+#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	ovs_ct_limit_exit(net, ovs_net);
- #endif
-+
-+	if (ovs_net->xt_label)
-+		nf_connlabels_put(net);
- }
-diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
-index 365b9bb7f546e..9ca6231ea6470 100644
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -160,6 +160,9 @@ struct ovs_net {
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	struct ovs_ct_limit_info *ct_limit_info;
- #endif
-+
-+	/* Module reference for configuring conntrack. */
-+	bool xt_label;
- };
- 
- /**
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.h
+index 4fe8c32d8fbe8..681fb73f00bbf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.h
+@@ -16,8 +16,8 @@ struct mlx5hws_bwc_matcher {
+ 	struct mlx5hws_matcher *matcher;
+ 	struct mlx5hws_match_template *mt;
+ 	struct mlx5hws_action_template *at[MLX5HWS_BWC_MATCHER_ATTACH_AT_NUM];
++	u32 priority;
+ 	u8 num_of_at;
+-	u16 priority;
+ 	u8 size_log;
+ 	u32 num_of_rules; /* atomically accessed */
+ 	struct list_head *rules;
 -- 
 2.39.5
 
