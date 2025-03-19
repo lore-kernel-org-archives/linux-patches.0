@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF801E2834;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F055D1E2834;
 	Wed, 19 Mar 2025 14:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395072; cv=none; b=KE5omnYfEaZnvp1KVmdNvryBqV+ia5gUnlkzJriC52WEhreTG53ijr9dqK9h++kHFxQNORQ9p9LnW11TT/e2CqyOpetvldlwz49ANGgLJma9HaneuYRhxI0/M0/SJSpap4h8NK+Rjct+0JbQXGE+/vZHSANOEFkTGN1ym5/agMs=
+	t=1742395073; cv=none; b=q4vPM8P5pwbvoekisBBHkVCfWFzH4OPlFGhpsWLzyFYZUl/05jGYa6pI7mjWWC/3PXl05VBUpr8anQ54zX4mBFlfk1nY+fdrcXRC5RY56y+8Sx5H95Q6wIcKGndQGjx5HO57r+7hExcI1rk0Jxv0dpGfHfuUNnJqT01rRvGt/IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395072; c=relaxed/simple;
-	bh=31g12/a7DhEOgggP8Ax8vWMlfK49eTRO0JwvlWakx+E=;
+	s=arc-20240116; t=1742395073; c=relaxed/simple;
+	bh=V8fCT3sVTG/a19Eoc36XslV7NnohUPPuaIOJojlDtfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0JRGgPQHLDI7A4cTy71r2mCxTHy5X4ZThZs4AHUZtRf+KF8um1ldfsLGo6gdbr/PjFMizd9sMLxxhG35VspZmCnRryNbalKQja7yeGhBshk146Z3uGEWcxIY16KEWaX9R1oUAdGpWnjYFzpDdlaYjP/aBXYv2Z+jARQ7OKApyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIV8QpfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=py20KyUZLP0Z8dA6L4duIVP42urIFz+GWvP8qD9Xs9cCSW1Qjfe+O7yx7wg/ewXz3vSWUUQnrLhR11QvZl5w2tn1t2tq8zngxKHGSbhDoIVZpWSL/f8TSqsCmcXHj9Y3X+eep5ym9d7/cq3LP/ycjGZogTA6DtqpfrxuRNSGZi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbNEytEO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIV8QpfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117F9C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbNEytEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CF2C4CEE4;
 	Wed, 19 Mar 2025 14:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395072;
-	bh=31g12/a7DhEOgggP8Ax8vWMlfK49eTRO0JwvlWakx+E=;
+	bh=V8fCT3sVTG/a19Eoc36XslV7NnohUPPuaIOJojlDtfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIV8QpfMebJhs4XHC8tKME5wqOlnqdi4gh3eaUsInd/wA78qnpJvCtJczlL1eXhAY
-	 7QaZzJFBf3lrzumzcSIHfTQNTtEBo1pXVikNPNn3dK3q/KvLzjYuZvOxbaAqD87zqH
-	 I6GvHCj7IbMgTKazbuDnekmSkkLvgzfRFgHkXeOU=
+	b=WbNEytEOzv0/e5e8+Q66xUgb7h3AqY0DxxF375QcHXiyZEGi7KwKx2fkNtNxOKjj2
+	 tsnkh/D9jAL7Vf72hTOYbewu8GpyHUNIoci3oHB/J2YCmtoE7eloRTTrfEIvQpKHgr
+	 LIjfDFb5W840/XtN3ohHOEx0pAuwFxlu+BcQ6clo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/231] ASoC: rsnd: adjust convert rate limitation
-Date: Wed, 19 Mar 2025 07:30:03 -0700
-Message-ID: <20250319143029.555770306@linuxfoundation.org>
+Subject: [PATCH 6.12 111/231] ASoC: arizona/madera: use fsleep() in up/down DAPM event delays.
+Date: Wed, 19 Mar 2025 07:30:04 -0700
+Message-ID: <20250319143029.580932784@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,214 +52,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-[ Upstream commit 89f9cf185885d4358aa92b48e51d0f09b71775aa ]
+[ Upstream commit 679074942c2502a95842a80471d8fb718165ac77 ]
 
-Current rsnd driver supports Synchronous SRC Mode, but HW allow to update
-rate only within 1% from current rate. Adjust to it.
+Using `fsleep` instead of `msleep` resolves some customer complaints
+regarding the precision of up/down DAPM event timing. `fsleep()`
+automatically selects the appropriate sleep function, making the delay
+time more predictable.
 
-Becially, this feature is used to fine-tune subtle difference that occur
-during sampling rate conversion in SRC. So, it should be called within 1%
-margin of rate difference.
-
-If there was difference over 1%, it will apply with 1% increments by using
-loop without indicating error message.
-
-Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/871pwd2qe8.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250205160849.500306-1-vitalyr@opensource.cirrus.com
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rcar/src.c | 98 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 76 insertions(+), 22 deletions(-)
+ sound/soc/codecs/arizona.c | 14 +++++++-------
+ sound/soc/codecs/madera.c  | 10 +++++-----
+ sound/soc/codecs/wm5110.c  |  8 ++++----
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
-index 3099180297722..7d73b183bda68 100644
---- a/sound/soc/sh/rcar/src.c
-+++ b/sound/soc/sh/rcar/src.c
-@@ -35,6 +35,7 @@ struct rsnd_src {
- 	struct rsnd_mod *dma;
- 	struct rsnd_kctrl_cfg_s sen;  /* sync convert enable */
- 	struct rsnd_kctrl_cfg_s sync; /* sync convert */
-+	u32 current_sync_rate;
- 	int irq;
- };
+diff --git a/sound/soc/codecs/arizona.c b/sound/soc/codecs/arizona.c
+index 402b9a2ff0240..68cdb1027d0c0 100644
+--- a/sound/soc/codecs/arizona.c
++++ b/sound/soc/codecs/arizona.c
+@@ -967,7 +967,7 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 		case ARIZONA_OUT3L_ENA_SHIFT:
+ 		case ARIZONA_OUT3R_ENA_SHIFT:
+ 			priv->out_up_pending++;
+-			priv->out_up_delay += 17;
++			priv->out_up_delay += 17000;
+ 			break;
+ 		case ARIZONA_OUT4L_ENA_SHIFT:
+ 		case ARIZONA_OUT4R_ENA_SHIFT:
+@@ -977,7 +977,7 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 			case WM8997:
+ 				break;
+ 			default:
+-				priv->out_up_delay += 10;
++				priv->out_up_delay += 10000;
+ 				break;
+ 			}
+ 			break;
+@@ -999,7 +999,7 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 			if (!priv->out_up_pending && priv->out_up_delay) {
+ 				dev_dbg(component->dev, "Power up delay: %d\n",
+ 					priv->out_up_delay);
+-				msleep(priv->out_up_delay);
++				fsleep(priv->out_up_delay);
+ 				priv->out_up_delay = 0;
+ 			}
+ 			break;
+@@ -1017,7 +1017,7 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 		case ARIZONA_OUT3L_ENA_SHIFT:
+ 		case ARIZONA_OUT3R_ENA_SHIFT:
+ 			priv->out_down_pending++;
+-			priv->out_down_delay++;
++			priv->out_down_delay += 1000;
+ 			break;
+ 		case ARIZONA_OUT4L_ENA_SHIFT:
+ 		case ARIZONA_OUT4R_ENA_SHIFT:
+@@ -1028,10 +1028,10 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 				break;
+ 			case WM8998:
+ 			case WM1814:
+-				priv->out_down_delay += 5;
++				priv->out_down_delay += 5000;
+ 				break;
+ 			default:
+-				priv->out_down_delay++;
++				priv->out_down_delay += 1000;
+ 				break;
+ 			}
+ 			break;
+@@ -1053,7 +1053,7 @@ int arizona_out_ev(struct snd_soc_dapm_widget *w,
+ 			if (!priv->out_down_pending && priv->out_down_delay) {
+ 				dev_dbg(component->dev, "Power down delay: %d\n",
+ 					priv->out_down_delay);
+-				msleep(priv->out_down_delay);
++				fsleep(priv->out_down_delay);
+ 				priv->out_down_delay = 0;
+ 			}
+ 			break;
+diff --git a/sound/soc/codecs/madera.c b/sound/soc/codecs/madera.c
+index b24d6472ad5fc..fbfd7fb7f1685 100644
+--- a/sound/soc/codecs/madera.c
++++ b/sound/soc/codecs/madera.c
+@@ -2322,10 +2322,10 @@ int madera_out_ev(struct snd_soc_dapm_widget *w,
+ 	case CS42L92:
+ 	case CS47L92:
+ 	case CS47L93:
+-		out_up_delay = 6;
++		out_up_delay = 6000;
+ 		break;
+ 	default:
+-		out_up_delay = 17;
++		out_up_delay = 17000;
+ 		break;
+ 	}
  
-@@ -100,7 +101,7 @@ static u32 rsnd_src_convert_rate(struct rsnd_dai_stream *io,
- 	if (!rsnd_src_sync_is_enabled(mod))
- 		return rsnd_io_converted_rate(io);
- 
--	convert_rate = src->sync.val;
-+	convert_rate = src->current_sync_rate;
- 
- 	if (!convert_rate)
- 		convert_rate = rsnd_io_converted_rate(io);
-@@ -201,13 +202,73 @@ static const u32 chan222222[] = {
- static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
- 				      struct rsnd_mod *mod)
- {
-+	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
- 	struct rsnd_priv *priv = rsnd_mod_to_priv(mod);
--	struct device *dev = rsnd_priv_to_dev(priv);
-+	struct rsnd_src *src = rsnd_mod_to_src(mod);
-+	u32 fin, fout, new_rate;
-+	int inc, cnt, rate;
-+	u64 base, val;
-+
-+	if (!runtime)
-+		return;
-+
-+	if (!rsnd_src_sync_is_enabled(mod))
-+		return;
-+
-+	fin	= rsnd_src_get_in_rate(priv, io);
-+	fout	= rsnd_src_get_out_rate(priv, io);
-+
-+	new_rate = src->sync.val;
-+
-+	if (!new_rate)
-+		new_rate = fout;
-+
-+	/* Do nothing if no diff */
-+	if (new_rate == src->current_sync_rate)
-+		return;
-+
-+	/*
-+	 * SRCm_IFSVR::INTIFS can change within 1%
-+	 * see
-+	 *	SRCm_IFSVR::INTIFS Note
-+	 */
-+	inc = fout / 100;
-+	cnt = abs(new_rate - fout) / inc;
-+	if (fout > new_rate)
-+		inc *= -1;
-+
-+	/*
-+	 * After start running SRC, we can update only SRC_IFSVR
-+	 * for Synchronous Mode
-+	 */
-+	base = (u64)0x0400000 * fin;
-+	rate  = fout;
-+	for (int i = 0; i < cnt; i++) {
-+		val   = base;
-+		rate += inc;
-+		do_div(val, rate);
-+
-+		rsnd_mod_write(mod, SRC_IFSVR, val);
-+	}
-+	val   = base;
-+	do_div(val, new_rate);
-+
-+	rsnd_mod_write(mod, SRC_IFSVR, val);
-+
-+	/* update current_sync_rate */
-+	src->current_sync_rate = new_rate;
-+}
-+
-+static void rsnd_src_init_convert_rate(struct rsnd_dai_stream *io,
-+				       struct rsnd_mod *mod)
-+{
- 	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
-+	struct rsnd_priv *priv = rsnd_mod_to_priv(mod);
-+	struct device *dev = rsnd_priv_to_dev(priv);
- 	int is_play = rsnd_io_is_play(io);
- 	int use_src = 0;
- 	u32 fin, fout;
--	u32 ifscr, fsrate, adinr;
-+	u32 ifscr, adinr;
- 	u32 cr, route;
- 	u32 i_busif, o_busif, tmp;
- 	const u32 *bsdsr_table;
-@@ -245,26 +306,15 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
- 	adinr = rsnd_get_adinr_bit(mod, io) | chan;
- 
- 	/*
--	 * SRC_IFSCR / SRC_IFSVR
--	 */
--	ifscr = 0;
--	fsrate = 0;
--	if (use_src) {
--		u64 n;
--
--		ifscr = 1;
--		n = (u64)0x0400000 * fin;
--		do_div(n, fout);
--		fsrate = n;
--	}
--
--	/*
-+	 * SRC_IFSCR
- 	 * SRC_SRCCR / SRC_ROUTE_MODE0
- 	 */
-+	ifscr	= 0;
- 	cr	= 0x00011110;
- 	route	= 0x0;
- 	if (use_src) {
- 		route	= 0x1;
-+		ifscr	= 0x1;
- 
- 		if (rsnd_src_sync_is_enabled(mod)) {
- 			cr |= 0x1;
-@@ -335,7 +385,6 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
- 	rsnd_mod_write(mod, SRC_SRCIR, 1);	/* initialize */
- 	rsnd_mod_write(mod, SRC_ADINR, adinr);
- 	rsnd_mod_write(mod, SRC_IFSCR, ifscr);
--	rsnd_mod_write(mod, SRC_IFSVR, fsrate);
- 	rsnd_mod_write(mod, SRC_SRCCR, cr);
- 	rsnd_mod_write(mod, SRC_BSDSR, bsdsr_table[idx]);
- 	rsnd_mod_write(mod, SRC_BSISR, bsisr_table[idx]);
-@@ -348,6 +397,9 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
- 
- 	rsnd_adg_set_src_timesel_gen2(mod, io, fin, fout);
- 
-+	/* update SRC_IFSVR */
-+	rsnd_src_set_convert_rate(io, mod);
-+
- 	return;
- 
- convert_rate_err:
-@@ -467,7 +519,8 @@ static int rsnd_src_init(struct rsnd_mod *mod,
- 	int ret;
- 
- 	/* reset sync convert_rate */
--	src->sync.val = 0;
-+	src->sync.val		=
-+	src->current_sync_rate	= 0;
- 
- 	ret = rsnd_mod_power_on(mod);
- 	if (ret < 0)
-@@ -475,7 +528,7 @@ static int rsnd_src_init(struct rsnd_mod *mod,
- 
- 	rsnd_src_activation(mod);
- 
--	rsnd_src_set_convert_rate(io, mod);
-+	rsnd_src_init_convert_rate(io, mod);
- 
- 	rsnd_src_status_clear(mod);
- 
-@@ -493,7 +546,8 @@ static int rsnd_src_quit(struct rsnd_mod *mod,
- 	rsnd_mod_power_off(mod);
- 
- 	/* reset sync convert_rate */
--	src->sync.val = 0;
-+	src->sync.val		=
-+	src->current_sync_rate	= 0;
- 
- 	return 0;
- }
-@@ -601,7 +655,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
- 			       "SRC Out Rate Switch" :
- 			       "SRC In Rate Switch",
- 			       rsnd_kctrl_accept_anytime,
--			       rsnd_src_set_convert_rate,
-+			       rsnd_src_init_convert_rate,
- 			       &src->sen, 1);
- 	if (ret < 0)
- 		return ret;
+@@ -2356,7 +2356,7 @@ int madera_out_ev(struct snd_soc_dapm_widget *w,
+ 		case MADERA_OUT3R_ENA_SHIFT:
+ 			priv->out_up_pending--;
+ 			if (!priv->out_up_pending) {
+-				msleep(priv->out_up_delay);
++				fsleep(priv->out_up_delay);
+ 				priv->out_up_delay = 0;
+ 			}
+ 			break;
+@@ -2375,7 +2375,7 @@ int madera_out_ev(struct snd_soc_dapm_widget *w,
+ 		case MADERA_OUT3L_ENA_SHIFT:
+ 		case MADERA_OUT3R_ENA_SHIFT:
+ 			priv->out_down_pending++;
+-			priv->out_down_delay++;
++			priv->out_down_delay += 1000;
+ 			break;
+ 		default:
+ 			break;
+@@ -2392,7 +2392,7 @@ int madera_out_ev(struct snd_soc_dapm_widget *w,
+ 		case MADERA_OUT3R_ENA_SHIFT:
+ 			priv->out_down_pending--;
+ 			if (!priv->out_down_pending) {
+-				msleep(priv->out_down_delay);
++				fsleep(priv->out_down_delay);
+ 				priv->out_down_delay = 0;
+ 			}
+ 			break;
+diff --git a/sound/soc/codecs/wm5110.c b/sound/soc/codecs/wm5110.c
+index 502196253d42a..64eee0d2347da 100644
+--- a/sound/soc/codecs/wm5110.c
++++ b/sound/soc/codecs/wm5110.c
+@@ -302,7 +302,7 @@ static int wm5110_hp_pre_enable(struct snd_soc_dapm_widget *w)
+ 		} else {
+ 			wseq = wm5110_no_dre_left_enable;
+ 			nregs = ARRAY_SIZE(wm5110_no_dre_left_enable);
+-			priv->out_up_delay += 10;
++			priv->out_up_delay += 10000;
+ 		}
+ 		break;
+ 	case ARIZONA_OUT1R_ENA_SHIFT:
+@@ -312,7 +312,7 @@ static int wm5110_hp_pre_enable(struct snd_soc_dapm_widget *w)
+ 		} else {
+ 			wseq = wm5110_no_dre_right_enable;
+ 			nregs = ARRAY_SIZE(wm5110_no_dre_right_enable);
+-			priv->out_up_delay += 10;
++			priv->out_up_delay += 10000;
+ 		}
+ 		break;
+ 	default:
+@@ -338,7 +338,7 @@ static int wm5110_hp_pre_disable(struct snd_soc_dapm_widget *w)
+ 			snd_soc_component_update_bits(component,
+ 						      ARIZONA_SPARE_TRIGGERS,
+ 						      ARIZONA_WS_TRG1, 0);
+-			priv->out_down_delay += 27;
++			priv->out_down_delay += 27000;
+ 		}
+ 		break;
+ 	case ARIZONA_OUT1R_ENA_SHIFT:
+@@ -350,7 +350,7 @@ static int wm5110_hp_pre_disable(struct snd_soc_dapm_widget *w)
+ 			snd_soc_component_update_bits(component,
+ 						      ARIZONA_SPARE_TRIGGERS,
+ 						      ARIZONA_WS_TRG2, 0);
+-			priv->out_down_delay += 27;
++			priv->out_down_delay += 27000;
+ 		}
+ 		break;
+ 	default:
 -- 
 2.39.5
 
