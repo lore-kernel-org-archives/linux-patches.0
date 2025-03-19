@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8AC17A30D;
-	Wed, 19 Mar 2025 14:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4D31DEFD6;
+	Wed, 19 Mar 2025 14:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394992; cv=none; b=ihuR28FJXNXy1y+xI6xsECtl/BABCSCTDqQ7lumkv8/sXw0UxQOlD54tE3zhay6YOIthmkC0pCG93LtmLBPSznXBZH5QhLOjM4RLnCrVkc9z4bS6rZsmyXzX9gJmuXHJTVI4wBGggZ/gTNyrYqUirweKgVey56WtONbcNH+rttc=
+	t=1742394993; cv=none; b=BigjPCs4TW5QrO3TkDFmkhAE8xl9nZPBzB7ykFA+Ok8azYPvca3MEGNLxunqOzKvZSWi6u7miO1JGaxxWag46Tn5xgwy1x84RO5NFJr6ZypNl6PAGQM9rfTLJvJ28IfV7rx5S+AOhRn4J2psEqETJiwgCn8GXRYc187Fg9D04L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394992; c=relaxed/simple;
-	bh=fiyPU+ch/9LBhH5vpjh7z9bDArjjOAmcPbo78xDsTuE=;
+	s=arc-20240116; t=1742394993; c=relaxed/simple;
+	bh=li+smUdeICT5ooo14itJ12GVRuWzpIn+gWuH8CTa7os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELi9TKWODkpEkwN4iR0yHJTQreBa+r48rTyuRCriTtHNUm35PlKowQbtmCvCLYHlsuGxkI+zcCfzlK6WmgF69TaPIV1UuiIDZPD0zoPYskG6PtJnGgmk7dtyP8aucRW9ZdOtntUBgAYYsmH2A3GLl2+wESQAtGVFb6jRPWpD5Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hG7VR3lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/iZY9zZdKWHt5fyNnJ32ms72Trrbw/osJhr1cfq/2WALtBhZwssqj6EVF6X8zLxEYZ6stGZpvJDDlA8riIEilcw0PnYjEbtUXG0pdIcqV5AUh8XY7+7pYvuHXmZsJucFJUNmBZaxo/9HnVqH4fqW1s3GPsU/t1n5/Y8r/AsaSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNf5rg4T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hG7VR3lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82269C4CEE4;
-	Wed, 19 Mar 2025 14:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNf5rg4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4265CC4CEE4;
+	Wed, 19 Mar 2025 14:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394992;
-	bh=fiyPU+ch/9LBhH5vpjh7z9bDArjjOAmcPbo78xDsTuE=;
+	s=korg; t=1742394993;
+	bh=li+smUdeICT5ooo14itJ12GVRuWzpIn+gWuH8CTa7os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hG7VR3lvE1qSt2XRYxP17EmmMdA1qWeNxNwTLPljYOlbLMjNEvx1iGKiCZmEJoO9W
-	 QM6wToOWo6Xp1WL5fd6h0aizphyBGn5U+uO3hxdat14ktdEo2rSwRHLugb0jWrCx/1
-	 OFrV14Mv5F7ub1bHpzIDNXoYI6czFMi2jn/g1TJs=
+	b=TNf5rg4Tn8rPf0AbDWvUAqkiyPx1SpayzBzJJfiwXHByrvyggtpdfsM6qXX94zPtD
+	 +fK7kEnr/kvHpEozfvN/qJnPlC+f533EJKJ9i3HqvgBzl91RP9Qj94S/EiQ4eRu38r
+	 ItPThxJM5RHc4N9pA6k0wQ/++e0EVpEakCp9qS1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 234/241] smb: client: Fix match_session bug preventing session reuse
-Date: Wed, 19 Mar 2025 07:31:44 -0700
-Message-ID: <20250319143033.532107044@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.13 198/241] arm64: mm: Populate vmemmap at the page level if not section aligned
+Date: Wed, 19 Mar 2025 07:31:08 -0700
+Message-ID: <20250319143032.616878676@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -52,72 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 
-[ Upstream commit 605b249ea96770ac4fac4b8510a99e0f8442be5e ]
+commit d4234d131b0a3f9e65973f1cdc71bb3560f5d14b upstream.
 
-Fix a bug in match_session() that can causes the session to not be
-reused in some cases.
+On the arm64 platform with 4K base page config, SECTION_SIZE_BITS is set
+to 27, making one section 128M. The related page struct which vmemmap
+points to is 2M then.
+Commit c1cc1552616d ("arm64: MMU initialisation") optimizes the
+vmemmap to populate at the PMD section level which was suitable
+initially since hot plug granule is always one section(128M). However,
+commit ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+introduced a 2M(SUBSECTION_SIZE) hot plug granule, which disrupted the
+existing arm64 assumptions.
 
-Reproduction steps:
+The first problem is that if start or end is not aligned to a section
+boundary, such as when a subsection is hot added, populating the entire
+section is wasteful.
 
-mount.cifs //server/share /mnt/a -o credentials=creds
-mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
-cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+The next problem is if we hotplug something that spans part of 128 MiB
+section (subsections, let's call it memblock1), and then hotplug something
+that spans another part of a 128 MiB section(subsections, let's call it
+memblock2), and subsequently unplug memblock1, vmemmap_free() will clear
+the entire PMD entry which also supports memblock2 even though memblock2
+is still active.
 
-mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
-mount.cifs //server/share /mnt/a -o credentials=creds
-cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+Assuming hotplug/unplug sizes are guaranteed to be symmetric. Do the
+fix similar to x86-64: populate to pages levels if start/end is not aligned
+with section boundary.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.4+
+Fixes: ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250304072700.3405036-1-quic_zhenhuah@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ arch/arm64/mm/mmu.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index eaa6be4456d0e..a5d443c42996c 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1873,9 +1873,8 @@ static int match_session(struct cifs_ses *ses,
- 			 struct smb3_fs_context *ctx,
- 			 bool match_super)
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1176,8 +1176,11 @@ int __meminit vmemmap_populate(unsigned
+ 		struct vmem_altmap *altmap)
  {
--	if (ctx->sectype != Unspecified &&
--	    ctx->sectype != ses->sectype)
--		return 0;
-+	struct TCP_Server_Info *server = ses->server;
-+	enum securityEnum ctx_sec, ses_sec;
+ 	WARN_ON((start < VMEMMAP_START) || (end > VMEMMAP_END));
++	/* [start, end] should be within one section */
++	WARN_ON_ONCE(end - start > PAGES_PER_SECTION * sizeof(struct page));
  
- 	if (!match_super && ctx->dfs_root_ses != ses->dfs_root_ses)
- 		return 0;
-@@ -1887,11 +1886,20 @@ static int match_session(struct cifs_ses *ses,
- 	if (ses->chan_max < ctx->max_channels)
- 		return 0;
- 
--	switch (ses->sectype) {
-+	ctx_sec = server->ops->select_sectype(server, ctx->sectype);
-+	ses_sec = server->ops->select_sectype(server, ses->sectype);
-+
-+	if (ctx_sec != ses_sec)
-+		return 0;
-+
-+	switch (ctx_sec) {
-+	case IAKerb:
- 	case Kerberos:
- 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
- 			return 0;
- 		break;
-+	case NTLMv2:
-+	case RawNTLMSSP:
- 	default:
- 		/* NULL username means anonymous session */
- 		if (ses->user_name == NULL) {
--- 
-2.39.5
-
+-	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES))
++	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES) ||
++	    (end - start < PAGES_PER_SECTION * sizeof(struct page)))
+ 		return vmemmap_populate_basepages(start, end, node, altmap);
+ 	else
+ 		return vmemmap_populate_hugepages(start, end, node, altmap);
 
 
