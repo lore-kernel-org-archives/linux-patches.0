@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FA21E8855;
-	Wed, 19 Mar 2025 14:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7EA21B9D9;
+	Wed, 19 Mar 2025 14:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395122; cv=none; b=Yf3mDHII10/so9T5gEZLksL7UYgUjnD4G8xsJwI22Yu7b89tuH197S03tn6B4ZSWFW/cFz7CNwTW8lR/k3OFJRtN6S1HTUVaMkQ5RwQ1ZJ4K+GWkcE06BGHrT/54tEJCg02jYzYaLoOm/WxR3mnwtv7SgbMhAYP24FAEhetUVuc=
+	t=1742395123; cv=none; b=GWDsjPWaBHV6bRfMbw8+ScGq2rmf+xruL0AS+XDMKI+r0HU88tKLDbeVY0L4AVwtkFE8cJt1wrA6FUEYcO74UP+PRdulZxrLJCVkXLEUKDVuPWFIqda38NtCr7R7ux1hwDD6IocScFS2awRuFKHeyUB5aO4ZUOgiCPg5nD0bNbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395122; c=relaxed/simple;
-	bh=w34KXIhktEa5+tGeM5jVKrKwZb+ED2gCQ2T4iidXAoU=;
+	s=arc-20240116; t=1742395123; c=relaxed/simple;
+	bh=2iST6pOLZR8JZT3BI38RMgjURTx0i5hhb1Rq8pNXMDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MF2ENrKlM6g+gwO357VBZa83rfH3qlwSQVbuFaaJdwPcvIMMsRK0Tin9UNOTf3dkKjUTnyKThMWtDou5ZxJItXHN4pSmcTy94cBu+82796G0MarwPIk5Ss4qBMOCOYWYfiGd7XsuHG/2xX6Y68F5ODAm6hydjaNsH/epAgiek+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIOfgDUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SObojknMXVDlO3WGG/lFFpeHYqfClj1PfzgjuGhELB0mZgr5joOTY/a4+CMIcUitUOEa29XR8DcNgOz6iIWqr6bm164/QuqbGc1pcX/ve0DuMYUfobtEqKidO1lNZN52bHgOKKvOHQuP01CKuAWClELG+oS3J26j5K/0SxjI7wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoaES6Mg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIOfgDUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD34C4CEE4;
-	Wed, 19 Mar 2025 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoaES6Mg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1EBC4CEE4;
+	Wed, 19 Mar 2025 14:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395122;
-	bh=w34KXIhktEa5+tGeM5jVKrKwZb+ED2gCQ2T4iidXAoU=;
+	s=korg; t=1742395123;
+	bh=2iST6pOLZR8JZT3BI38RMgjURTx0i5hhb1Rq8pNXMDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIOfgDUgK9vt5+btn3zwJDVe6IPQGhojykjc2u2MrxlAg+rF4kN7L0bHlYFMsN6Ut
-	 gv/37kwnmGp4D4LN0fkIqtjkMhSv4kxHLdc2oKmTxilon4q30sEp9drZy/vUiUGyxf
-	 kGmNgodgeSjHZGpU4bDNZ0LCpxZa37RsYKGIXGTc=
+	b=eoaES6Mg/kL3CSo78Z2EEgbAzHQs/uCWsqqw9QfcPzTIIIigGSodEXGyO5iTk4eEe
+	 R0k+B1CpwizoTl+muSOW7dZMYBrXkEafLFv/pTGERXz1IaOXbqwfe7+hd6BijHCGhz
+	 KanbPmhsy+UcwzZiNG5drFGc1icO5qWd1DqdjepQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 184/231] ksmbd: prevent connection release during oplock break notification
-Date: Wed, 19 Mar 2025 07:31:17 -0700
-Message-ID: <20250319143031.378323424@linuxfoundation.org>
+	Varada Pavani <v.pavani@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.12 185/231] clk: samsung: update PLL locktime for PLL142XX used on FSD platform
+Date: Wed, 19 Mar 2025 07:31:18 -0700
+Message-ID: <20250319143031.401985960@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,146 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Varada Pavani <v.pavani@samsung.com>
 
-commit 3aa660c059240e0c795217182cf7df32909dd917 upstream.
+commit 53517a70873c7a91675f7244768aad5006cc45de upstream.
 
-ksmbd_work could be freed when after connection release.
-Increment r_count of ksmbd_conn to indicate that requests
-are not finished yet and to not release the connection.
+Currently PLL142XX locktime is 270. As per spec, it should be 150. Hence
+update PLL142XX controller locktime to 150.
 
 Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 4f346005aaed ("clk: samsung: fsd: Add initial clock support")
+Signed-off-by: Varada Pavani <v.pavani@samsung.com>
+Link: https://lore.kernel.org/r/20250225131918.50925-3-v.pavani@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |   20 ++++++++++++++++++++
- fs/smb/server/connection.h |    2 ++
- fs/smb/server/oplock.c     |    6 ++++++
- fs/smb/server/server.c     |   14 ++------------
- 4 files changed, 30 insertions(+), 12 deletions(-)
+ drivers/clk/samsung/clk-pll.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -432,6 +432,26 @@ void ksmbd_conn_init_server_callbacks(st
- 	default_conn_ops.terminate_fn = ops->terminate_fn;
- }
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -206,6 +206,7 @@ static const struct clk_ops samsung_pll3
+  */
+ /* Maximum lock time can be 270 * PDIV cycles */
+ #define PLL35XX_LOCK_FACTOR	(270)
++#define PLL142XX_LOCK_FACTOR	(150)
  
-+void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn)
-+{
-+	atomic_inc(&conn->r_count);
-+}
-+
-+void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn)
-+{
-+	/*
-+	 * Checking waitqueue to dropping pending requests on
-+	 * disconnection. waitqueue_active is safe because it
-+	 * uses atomic operation for condition.
-+	 */
-+	atomic_inc(&conn->refcnt);
-+	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
-+		wake_up(&conn->r_count_q);
-+
-+	if (atomic_dec_and_test(&conn->refcnt))
-+		kfree(conn);
-+}
-+
- int ksmbd_conn_transport_init(void)
- {
- 	int ret;
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -168,6 +168,8 @@ int ksmbd_conn_transport_init(void);
- void ksmbd_conn_transport_destroy(void);
- void ksmbd_conn_lock(struct ksmbd_conn *conn);
- void ksmbd_conn_unlock(struct ksmbd_conn *conn);
-+void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn);
-+void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn);
+ #define PLL35XX_MDIV_MASK       (0x3FF)
+ #define PLL35XX_PDIV_MASK       (0x3F)
+@@ -272,7 +273,11 @@ static int samsung_pll35xx_set_rate(stru
+ 	}
  
- /*
-  * WARNING
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -634,6 +634,7 @@ static void __smb2_oplock_break_noti(str
- {
- 	struct smb2_oplock_break *rsp = NULL;
- 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
-+	struct ksmbd_conn *conn = work->conn;
- 	struct oplock_break_info *br_info = work->request_buf;
- 	struct smb2_hdr *rsp_hdr;
- 	struct ksmbd_file *fp;
-@@ -689,6 +690,7 @@ static void __smb2_oplock_break_noti(str
+ 	/* Set PLL lock time. */
+-	writel_relaxed(rate->pdiv * PLL35XX_LOCK_FACTOR,
++	if (pll->type == pll_142xx)
++		writel_relaxed(rate->pdiv * PLL142XX_LOCK_FACTOR,
++			pll->lock_reg);
++	else
++		writel_relaxed(rate->pdiv * PLL35XX_LOCK_FACTOR,
+ 			pll->lock_reg);
  
- out:
- 	ksmbd_free_work_struct(work);
-+	ksmbd_conn_r_count_dec(conn);
- }
- 
- /**
-@@ -723,6 +725,7 @@ static int smb2_oplock_break_noti(struct
- 	work->sess = opinfo->sess;
- 
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
-+		ksmbd_conn_r_count_inc(conn);
- 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
- 		ksmbd_queue_work(work);
- 
-@@ -744,6 +747,7 @@ static void __smb2_lease_break_noti(stru
- {
- 	struct smb2_lease_break *rsp = NULL;
- 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
-+	struct ksmbd_conn *conn = work->conn;
- 	struct lease_break_info *br_info = work->request_buf;
- 	struct smb2_hdr *rsp_hdr;
- 
-@@ -790,6 +794,7 @@ static void __smb2_lease_break_noti(stru
- 
- out:
- 	ksmbd_free_work_struct(work);
-+	ksmbd_conn_r_count_dec(conn);
- }
- 
- /**
-@@ -829,6 +834,7 @@ static int smb2_lease_break_noti(struct
- 	work->sess = opinfo->sess;
- 
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
-+		ksmbd_conn_r_count_inc(conn);
- 		INIT_WORK(&work->work, __smb2_lease_break_noti);
- 		ksmbd_queue_work(work);
- 		wait_for_break_ack(opinfo);
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -270,17 +270,7 @@ static void handle_ksmbd_work(struct wor
- 
- 	ksmbd_conn_try_dequeue_request(work);
- 	ksmbd_free_work_struct(work);
--	/*
--	 * Checking waitqueue to dropping pending requests on
--	 * disconnection. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	atomic_inc(&conn->refcnt);
--	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
--		wake_up(&conn->r_count_q);
--
--	if (atomic_dec_and_test(&conn->refcnt))
--		kfree(conn);
-+	ksmbd_conn_r_count_dec(conn);
- }
- 
- /**
-@@ -310,7 +300,7 @@ static int queue_ksmbd_work(struct ksmbd
- 	conn->request_buf = NULL;
- 
- 	ksmbd_conn_enqueue_request(work);
--	atomic_inc(&conn->r_count);
-+	ksmbd_conn_r_count_inc(conn);
- 	/* update activity on connection */
- 	conn->last_active = jiffies;
- 	INIT_WORK(&work->work, handle_ksmbd_work);
+ 	/* Change PLL PMS values */
 
 
