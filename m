@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340781DED78;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCC41DED78;
 	Wed, 19 Mar 2025 14:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395189; cv=none; b=KMULQ2rRk83Klg1zGw45A/T5y3rzjdzDAbq46UOXIx2mtefmbbeBBgqaVLZLtZNqoaK/xmfRiWA769mJZKdutjND77kNgMfhukk4woCvcTwafklmS/zQ6FYCXwSQQojzwPKl/JKIU86M0LSIwvv3XlMW8uIo++EZhd3xtUOT4Vk=
+	t=1742395189; cv=none; b=kMSD1lmuHverp6EaU0gVrH1xOTbRcjxoMO43/oo17Eu1jaPeVfFhaqeV/vfMZwX+MnObOC1Xbw7wKYV1YatFhe6Tr7NJG038fZyIlqIWUuI4opicKLOWw3vrM0tzi4Pd5RMC4Y2HFHhQW2mp+x+ckNvdn5EQImhfBHivs6Qvu+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395189; c=relaxed/simple;
-	bh=JVF9R4d5EyFBPzjk2sgF8/M0tIZ4pzdyJ2NHLG1sLg0=;
+	bh=TI1zHPCpjHcKgQvv6E4bYZVhRd22mqdOJ0iQc+uK7Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqouXh1wdOfxmy/QOrkCZb+nS7dywntIJSWfkEgviLXQjLXjj1gmXLMK4sq+XrVjtpy8aKXdzWenr7B50Uddx0B7ML2IlaDgrLkXjPfGr946jZlzIMHcuJT2wKTwIN+8fzkgtMr7xQu8R8QeTHZTEVIWBpkm15mUd6HlI0mteCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHAe0Ywe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gi2KJluB5u8FJVk2jhEF4YrIXBFQ703ZeEeDoE0Ujq6XAoNx4XaczGvoy1ickGu6Jjv64BBox00JepxelPvAzLtl/gMJwfQoQnDxPxbEZd8Rgc0jpCeVCQM5WTorMpzZiAaaUDfswU6hKu9H7c08/psHv5sh7Snlwa5ks/K3K1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vq4k3uN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHAe0Ywe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DDCC4CEE4;
-	Wed, 19 Mar 2025 14:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vq4k3uN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A39C4CEE4;
+	Wed, 19 Mar 2025 14:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395189;
-	bh=JVF9R4d5EyFBPzjk2sgF8/M0tIZ4pzdyJ2NHLG1sLg0=;
+	bh=TI1zHPCpjHcKgQvv6E4bYZVhRd22mqdOJ0iQc+uK7Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHAe0Ywew/RhBfzVv07jKIQ11ZQEBjIy8NEDiEwnJsy83vriyZRpEIO1L0Oh93ltN
-	 xNVpu2J5+CM6N2SaJKwd/yckQ0Mu2p3+0LNaXmRXrrAjm7UG8Ov68fRayg2x5FnEfh
-	 8J7mWjadrallfmGpBfLTcViTquSNSn5wTkYCpcSg=
+	b=vq4k3uN8FqGMZiKP4XrGSUGK3Z09yerjgWhPmXfBBmigVsvRtarCE03v7UBW2eu63
+	 tHRtX6HlNGB+Oy8R3AcmHb2q7HNJA9AgKGrR0a96Q75cwVJOv3d5O15gIqORuhC74d
+	 DoZbl7jZN4yZjLJ27Lta3aUmXSaxpbVmdmDa1Jws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Kees Cook <kees@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/166] alpha/elf: Fix misc/setarch test of util-linux by removing 32bit support
-Date: Wed, 19 Mar 2025 07:30:19 -0700
-Message-ID: <20250319143021.291619248@linuxfoundation.org>
+Subject: [PATCH 6.6 031/166] gre: Fix IPv6 link-local address generation.
+Date: Wed, 19 Mar 2025 07:30:02 -0700
+Message-ID: <20250319143020.831390683@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -54,149 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric W. Biederman <ebiederm@xmission.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit b029628be267cba3c7684ec684749fe3e4372398 ]
+[ Upstream commit 183185a18ff96751db52a46ccf93fff3a1f42815 ]
 
-Richard Henderson <richard.henderson@linaro.org> writes[1]:
+Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
+devices in most cases and fall back to using add_v4_addrs() only in
+case the GRE configuration is incompatible with addrconf_addr_gen().
 
-> There was a Spec benchmark (I forget which) which was memory bound and ran
-> twice as fast with 32-bit pointers.
->
-> I copied the idea from DEC to the ELF abi, but never did all the other work
-> to allow the toolchain to take advantage.
->
-> Amusingly, a later Spec changed the benchmark data sets to not fit into a
-> 32-bit address space, specifically because of this.
->
-> I expect one could delete the ELF bit and personality and no one would
-> notice. Not even the 10 remaining Alpha users.
+GRE used to use addrconf_addr_gen() until commit e5dd729460ca
+("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL
+address") restricted this use to gretap and ip6gretap devices, and
+created add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
 
-In [2] it was pointed out that parts of setarch weren't working
-properly on alpha because it has it's own SET_PERSONALITY
-implementation.  In the discussion that followed Richard Henderson
-pointed out that the 32bit pointer support for alpha was never
-completed.
+The original problem came when commit 9af28511be10 ("addrconf: refuse
+isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
+addr parameter was 0. The commit says that this would create an invalid
+address, however, I couldn't find any RFC saying that the generated
+interface identifier would be wrong. Anyway, since gre over IPv4
+devices pass their local tunnel address to __ipv6_isatap_ifid(), that
+commit broke their IPv6 link-local address generation when the local
+address was unspecified.
 
-Fix this by removing alpha's 32bit pointer support.
+Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
+interfaces when computing v6LL address") tried to fix that case by
+defining add_v4_addrs() and calling it to generate the IPv6 link-local
+address instead of using addrconf_addr_gen() (apart for gretap and
+ip6gretap devices, which would still use the regular
+addrconf_addr_gen(), since they have a MAC address).
 
-As a bit of paranoia refuse to execute any alpha binaries that have
-the EF_ALPHA_32BIT flag set.  Just in case someone somewhere has
-binaries that try to use alpha's 32bit pointer support.
+That broke several use cases because add_v4_addrs() isn't properly
+integrated into the rest of IPv6 Neighbor Discovery code. Several of
+these shortcomings have been fixed over time, but add_v4_addrs()
+remains broken on several aspects. In particular, it doesn't send any
+Router Sollicitations, so the SLAAC process doesn't start until the
+interface receives a Router Advertisement. Also, add_v4_addrs() mostly
+ignores the address generation mode of the interface
+(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
+IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
 
-Link: https://lkml.kernel.org/r/CAFXwXrkgu=4Qn-v1PjnOR4SG0oUb9LSa0g6QXpBq4ttm52pJOQ@mail.gmail.com [1]
-Link: https://lkml.kernel.org/r/20250103140148.370368-1-glaubitz@physik.fu-berlin.de [2]
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/87y0zfs26i.fsf_-_@email.froward.int.ebiederm.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fix the situation by using add_v4_addrs() only in the specific scenario
+where the normal method would fail. That is, for interfaces that have
+all of the following characteristics:
+
+  * run over IPv4,
+  * transport IP packets directly, not Ethernet (that is, not gretap
+    interfaces),
+  * tunnel endpoint is INADDR_ANY (that is, 0),
+  * device address generation mode is EUI64.
+
+In all other cases, revert back to the regular addrconf_addr_gen().
+
+Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
+since ip6gre devices now always use addrconf_addr_gen() instead.
+
+Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/559c32ce5c9976b269e6337ac9abb6a96abe5096.1741375285.git.gnault@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/elf.h       |  6 +-----
- arch/alpha/include/asm/pgtable.h   |  2 +-
- arch/alpha/include/asm/processor.h |  8 ++------
- arch/alpha/kernel/osf_sys.c        | 11 ++---------
- 4 files changed, 6 insertions(+), 21 deletions(-)
+ net/ipv6/addrconf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/alpha/include/asm/elf.h b/arch/alpha/include/asm/elf.h
-index e6da23f1da830..adc87404ef87f 100644
---- a/arch/alpha/include/asm/elf.h
-+++ b/arch/alpha/include/asm/elf.h
-@@ -74,7 +74,7 @@ typedef elf_fpreg_t elf_fpregset_t[ELF_NFPREG];
- /*
-  * This is used to ensure we don't load something for the wrong architecture.
-  */
--#define elf_check_arch(x) ((x)->e_machine == EM_ALPHA)
-+#define elf_check_arch(x) (((x)->e_machine == EM_ALPHA) && !((x)->e_flags & EF_ALPHA_32BIT))
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 8360939acf85a..db07d3bbaf379 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3189,16 +3189,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
+ 	struct in6_addr addr;
+ 	struct net_device *dev;
+ 	struct net *net = dev_net(idev->dev);
+-	int scope, plen, offset = 0;
++	int scope, plen;
+ 	u32 pflags = 0;
  
- /*
-  * These are used to set parameters in the core dumps.
-@@ -139,10 +139,6 @@ extern int dump_elf_task(elf_greg_t *dest, struct task_struct *task);
- 	: amask (AMASK_CIX) ? "ev6" : "ev67");	\
- })
+ 	ASSERT_RTNL();
  
--#define SET_PERSONALITY(EX)					\
--	set_personality(((EX).e_flags & EF_ALPHA_32BIT)		\
--	   ? PER_LINUX_32BIT : PER_LINUX)
--
- extern int alpha_l1i_cacheshape;
- extern int alpha_l1d_cacheshape;
- extern int alpha_l2_cacheshape;
-diff --git a/arch/alpha/include/asm/pgtable.h b/arch/alpha/include/asm/pgtable.h
-index 635f0a5f5bbde..02e8817a89212 100644
---- a/arch/alpha/include/asm/pgtable.h
-+++ b/arch/alpha/include/asm/pgtable.h
-@@ -360,7 +360,7 @@ static inline pte_t pte_swp_clear_exclusive(pte_t pte)
+ 	memset(&addr, 0, sizeof(struct in6_addr));
+-	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
+-	if (idev->dev->addr_len == sizeof(struct in6_addr))
+-		offset = sizeof(struct in6_addr) - 4;
+-	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
++	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
  
- extern void paging_init(void);
+ 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
+ 		scope = IPV6_ADDR_COMPATv4;
+@@ -3508,7 +3505,13 @@ static void addrconf_gre_config(struct net_device *dev)
+ 		return;
+ 	}
  
--/* We have our own get_unmapped_area to cope with ADDR_LIMIT_32BIT.  */
-+/* We have our own get_unmapped_area */
- #define HAVE_ARCH_UNMAPPED_AREA
- 
- #endif /* _ALPHA_PGTABLE_H */
-diff --git a/arch/alpha/include/asm/processor.h b/arch/alpha/include/asm/processor.h
-index 55bb1c09fd39d..5dce5518a2111 100644
---- a/arch/alpha/include/asm/processor.h
-+++ b/arch/alpha/include/asm/processor.h
-@@ -8,23 +8,19 @@
- #ifndef __ASM_ALPHA_PROCESSOR_H
- #define __ASM_ALPHA_PROCESSOR_H
- 
--#include <linux/personality.h>	/* for ADDR_LIMIT_32BIT */
--
- /*
-  * We have a 42-bit user address space: 4TB user VM...
-  */
- #define TASK_SIZE (0x40000000000UL)
- 
--#define STACK_TOP \
--  (current->personality & ADDR_LIMIT_32BIT ? 0x80000000 : 0x00120000000UL)
-+#define STACK_TOP (0x00120000000UL)
- 
- #define STACK_TOP_MAX	0x00120000000UL
- 
- /* This decides where the kernel will search for a free chunk of vm
-  * space during mmap's.
-  */
--#define TASK_UNMAPPED_BASE \
--  ((current->personality & ADDR_LIMIT_32BIT) ? 0x40000000 : TASK_SIZE / 2)
-+#define TASK_UNMAPPED_BASE (TASK_SIZE / 2)
- 
- /* This is dead.  Everything has been moved to thread_info.  */
- struct thread_struct { };
-diff --git a/arch/alpha/kernel/osf_sys.c b/arch/alpha/kernel/osf_sys.c
-index 5db88b6274396..ebd076fad804f 100644
---- a/arch/alpha/kernel/osf_sys.c
-+++ b/arch/alpha/kernel/osf_sys.c
-@@ -1211,8 +1211,7 @@ SYSCALL_DEFINE1(old_adjtimex, struct timex32 __user *, txc_p)
- 	return ret;
- }
- 
--/* Get an address range which is currently unmapped.  Similar to the
--   generic version except that we know how to honor ADDR_LIMIT_32BIT.  */
-+/* Get an address range which is currently unmapped. */
- 
- static unsigned long
- arch_get_unmapped_area_1(unsigned long addr, unsigned long len,
-@@ -1234,13 +1233,7 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
- 		       unsigned long len, unsigned long pgoff,
- 		       unsigned long flags)
- {
--	unsigned long limit;
--
--	/* "32 bit" actually means 31 bit, since pointers sign extend.  */
--	if (current->personality & ADDR_LIMIT_32BIT)
--		limit = 0x80000000;
--	else
--		limit = TASK_SIZE;
-+	unsigned long limit = TASK_SIZE;
- 
- 	if (len > limit)
- 		return -ENOMEM;
+-	if (dev->type == ARPHRD_ETHER) {
++	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
++	 * unless we have an IPv4 GRE device not bound to an IP address and
++	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
++	 * case). Such devices fall back to add_v4_addrs() instead.
++	 */
++	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
++	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
+ 		addrconf_addr_gen(idev, true);
+ 		return;
+ 	}
 -- 
 2.39.5
 
