@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEB41DDA36;
-	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE951DDA36;
+	Wed, 19 Mar 2025 14:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394972; cv=none; b=DtIcqevAnhxQEkcSVQpelkoMdr22gaLizZ3I/cRcqiJbNbm4+EmZ3/64YFv3S3wvTryPdkO0T7YV217XZzL2O0adrW1ZgvWjZpMy0LHp09fXLQYiRWAnT7/PwpXczM/r1/GrxOyMyZGw5b1k42F01GS1+uy1Jxp3NvtI7xPGuhQ=
+	t=1742394972; cv=none; b=sL8t1wkAHHhSWOf9joFAw5MVpWNojy5GS1pwt3/Fzo11Ec/vF2jXKVju6s9mxCoDQ4urjFE5rHJlMuBXf6rqJMBoiu0YXEZiY4TZINyQ1N+OAHtZE9fsYS8IA6QBWemgtCuHDy6KvkbG4BdH4qqACH0ExD2L1tLsErzIzJVvt80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394972; c=relaxed/simple;
-	bh=XZgxHZv4yPo1SUB9pIayEgyWWSQJ9NQYkHm24x+wYjg=;
+	bh=mIdnJjTtqdPEVgGq5OEFteQfxfcIP3dH9AIPH5WpMvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLm2Uyg5RAwz0DwgDnSBtL/rewAWR8vIFHex87Ou/T2KCkf5YxOQ5TOddmIaXbzynMosGiO5g1NRulXUA+7BlC0z9jxqw3aDQnbuTERd+mvQzIdENzKlglI0x4ypqzNJJVBw/iTMrjv3OJSsEpScoZnpb2GpqNjIZ5fe+FEufnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIjB0SeM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VVQdcZKy7YtxSNbBSAK1mIGOYaLYu373Q6qz2u5hMoz2yoISUVR2zy9yjs8Wc0aVT+mMPANgJVbVsNJgu26OnWxYECMUnaRuVMtVYjzjb9YHxYBzB4GecHRxGUsS9Fnfm95MkooIid4l/m1upbOj/8BDlqMdDFXKzBlaRdhhC4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4I8qXee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIjB0SeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1460C4CEE4;
-	Wed, 19 Mar 2025 14:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4I8qXee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651BCC4CEE4;
+	Wed, 19 Mar 2025 14:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394971;
-	bh=XZgxHZv4yPo1SUB9pIayEgyWWSQJ9NQYkHm24x+wYjg=;
+	s=korg; t=1742394972;
+	bh=mIdnJjTtqdPEVgGq5OEFteQfxfcIP3dH9AIPH5WpMvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIjB0SeM+Mi+1a6SprkckRJi8l11HUbgcJgQ6UZA9747vSDIU42SL09FSBL92d+9Y
-	 LqL9gc4qnVBGREKHi69BDwjFQnK6c0SRkw3dloBe9hwP5rVAXAh1mVlH+uyvjEVWAU
-	 Pi+TVo+YDoAtcRAWVuCtyAzTbDmD0fS0vOFOaduM=
+	b=w4I8qXeesq6bPC51zVE90873WJnxeE1kEq4AvKF9cqtJHnFhbOifh7WXfQZdG48xB
+	 1UD0MmCQPcsUGWvXbfwz040duRE+E93f2lVvi+t3ybp9HV5ilrPEgemxz5ldkjGIwp
+	 JvFEpduLdq3l6F4hblwD8xxkiBIZcJOl7x7JmG7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alban Kurti <kurti@invicto.ai>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 207/241] rust: error: add missing newline to pr_warn! calls
-Date: Wed, 19 Mar 2025 07:31:17 -0700
-Message-ID: <20250319143032.864618407@linuxfoundation.org>
+Subject: [PATCH 6.13 208/241] drm/gma500: Add NULL check for pci_gfx_root in mid_get_vbt_data()
+Date: Wed, 19 Mar 2025 07:31:18 -0700
+Message-ID: <20250319143032.890385936@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Kurti <kurti@invicto.ai>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 6f5c36f56d475732981dcf624e0ac0cc7c8984c8 ]
+[ Upstream commit 9af152dcf1a06f589f44a74da4ad67e365d4db9a ]
 
-Added missing newline at the end of pr_warn! usage
-so the log is not missed.
+Since pci_get_domain_bus_and_slot() can return NULL, add NULL check for
+pci_gfx_root in the mid_get_vbt_data().
 
-Fixes: 6551a7fe0acb ("rust: error: Add Error::from_errno{_unchecked}()")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1139
-Signed-off-by: Alban Kurti <kurti@invicto.ai>
-Link: https://lore.kernel.org/r/20250206-printing_fix-v3-2-a85273b501ae@invicto.ai
-[ Replaced Closes with Link since it fixes part of the issue. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+This change is similar to the checks implemented in mid_get_fuse_settings()
+and mid_get_pci_revID(), which were introduced by commit 0cecdd818cd7
+("gma500: Final enables for Oaktrail") as "additional minor
+bulletproofing".
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: f910b411053f ("gma500: Add the glue to the various BIOS and firmware interfaces")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250306112046.17144-1-i.abramov@mt-integration.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/error.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/gma500/mid_bios.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index 5fece574ec023..4911b294bfe66 100644
---- a/rust/kernel/error.rs
-+++ b/rust/kernel/error.rs
-@@ -104,7 +104,7 @@ impl Error {
-         if errno < -(bindings::MAX_ERRNO as i32) || errno >= 0 {
-             // TODO: Make it a `WARN_ONCE` once available.
-             crate::pr_warn!(
--                "attempted to create `Error` with out of range `errno`: {}",
-+                "attempted to create `Error` with out of range `errno`: {}\n",
-                 errno
-             );
-             return code::EINVAL;
+diff --git a/drivers/gpu/drm/gma500/mid_bios.c b/drivers/gpu/drm/gma500/mid_bios.c
+index 7e76790c6a81f..cba97d7db131d 100644
+--- a/drivers/gpu/drm/gma500/mid_bios.c
++++ b/drivers/gpu/drm/gma500/mid_bios.c
+@@ -279,6 +279,11 @@ static void mid_get_vbt_data(struct drm_psb_private *dev_priv)
+ 					    0, PCI_DEVFN(2, 0));
+ 	int ret = -1;
+ 
++	if (pci_gfx_root == NULL) {
++		WARN_ON(1);
++		return;
++	}
++
+ 	/* Get the address of the platform config vbt */
+ 	pci_read_config_dword(pci_gfx_root, 0xFC, &addr);
+ 	pci_dev_put(pci_gfx_root);
 -- 
 2.39.5
 
