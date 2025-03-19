@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D74520AF8E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0DA20AF8E;
 	Wed, 19 Mar 2025 14:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394998; cv=none; b=CllSJul5eHAy5gNY7thdAhNTfDrLUxX/xyMXsu3FVgYFyp6bH35m3h2zersOETJefq4oTvn6UxgNqXfJBurYGdioxSVvBHrCJooC/5vmRrzJ6XhjYuAg6wVfm78YOKR7+PyvWYCdqdoj8QA//Nvco6CLbncs/zAkQRVKEbS2wh8=
+	t=1742394998; cv=none; b=djytz+alOs7D6rLObanXe7fcC7GGkm/mmAHjCOj5oiCPZcGnHQVGDGA2UKVoMnTSga/YPJ73jv7G2PHeB5awclkxhucOBXUAaooEeCOQ9oghcgkBgMXfR8JiHv350pmalQ3NOItjWz9c17PFaRvXSemoANKmD+y7YMDY1h/HJsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394998; c=relaxed/simple;
-	bh=D+ly6aE25l6GHtaHRuRVa+OVvvGEExQJxe4El1AGkdQ=;
+	bh=aEmFkHctHjYIJASUORz/QFZP13/wlvM82I2Mp/9ZAcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bijcBu1p7ayW8G17jZMMMdJt67qLaHMA3Exp3zFQ7Zq2dOpEracbeNhJNpFWATfT0yP4xaBL4WCr9wtmwjcDqceKeWKAvxWCYVGp10w88/dMzQYRoA8YKW6Lv56t14mrRqYLsvcesOSXepXUNzUGg0Vc6bHDg9avOo5Dxu5hwBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/sg7PHw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbw74tzdb1M/qVjlOp2MsE7Lusd6oNyVD12lGOa/5LJ1D/X1yf3VokuTFvLIBGhYrs6F53f/MXBGERsc5xLXVhsvXYMMqOFiiCrQJbXkBuyjP5ys1T/rx8Aeh+myU3KzjlrsubgxWEfDr+8pSUPIkKdUDqx7UDRfTAHNMB8QHw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpVVctD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/sg7PHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A6CC4CEE4;
-	Wed, 19 Mar 2025 14:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpVVctD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1AAC4CEE4;
+	Wed, 19 Mar 2025 14:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394998;
-	bh=D+ly6aE25l6GHtaHRuRVa+OVvvGEExQJxe4El1AGkdQ=;
+	bh=aEmFkHctHjYIJASUORz/QFZP13/wlvM82I2Mp/9ZAcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/sg7PHwJChkSNkhNpMj4fPf4EBdzsARLPQgrpINbnr80yW0EEbiiMd9XwvyzyP6r
-	 o+WRI0ywCZKZQ8voaxd2Jz3tj1xPpi14TkYfwZBDPM0kJ3qR5QdaQ+GfF/7ORW12h0
-	 m4XeeBni6PaFr/FAhsdOqXjVUW0pdrdsoOkpheqA=
+	b=KpVVctD8A/NyAVgfCEErWsGAXStxhDYtkWD/Zc1RB/SX5tg+a42fuPcxBpqPYEPHc
+	 G9Yt1ukyh1NMivETGOV7gno657w9wcSNBOqaZm+oReZZLxabZGntzPksNJx1a/8ken
+	 ddFQ1wHWfiC9QX6hAxbKW5zldWhyMdB5Rfv1D0Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.13 237/241] drm/xe/guc: Fix size_t print format
-Date: Wed, 19 Mar 2025 07:31:47 -0700
-Message-ID: <20250319143033.602371289@linuxfoundation.org>
+	syzbot+10bd8fe6741eedd2be2e@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.13 238/241] Bluetooth: L2CAP: Fix corrupted list in hci_chan_del
+Date: Wed, 19 Mar 2025 07:31:48 -0700
+Message-ID: <20250319143033.625391955@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -46,61 +45,666 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 213e24250feed3bcf58d7594298df2d7e78a88ab upstream.
+commit ab4eedb790cae44313759b50fe47da285e2519d5 upstream.
 
-Use %zx format to print size_t to remove the following warning when
-building for i386:
+This fixes the following trace by reworking the locking of l2cap_conn
+so instead of only locking when changing the chan_l list this promotes
+chan_lock to a general lock of l2cap_conn so whenever it is being held
+it would prevents the likes of l2cap_conn_del to run:
 
->> drivers/gpu/drm/xe/xe_guc_ct.c:1727:43: warning: format specifies type 'unsigned long' but the argument has type 'size_t' (aka 'unsigned int') [-Wformat]
-    1727 |                         drm_printf(p, "[CTB].length: 0x%lx\n", snapshot->ctb_size);
-         |                                                        ~~~     ^~~~~~~~~~~~~~~~~~
-         |                                                        %zx
+list_del corruption, ffff888021297e00->prev is LIST_POISON2 (dead000000000122)
+------------[ cut here ]------------
+kernel BUG at lib/list_debug.c:61!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 UID: 0 PID: 5896 Comm: syz-executor213 Not tainted 6.14.0-rc1-next-20250204-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+RIP: 0010:__list_del_entry_valid_or_report+0x12c/0x190 lib/list_debug.c:59
+Code: 8c 4c 89 fe 48 89 da e8 32 8c 37 fc 90 0f 0b 48 89 df e8 27 9f 14 fd 48 c7 c7 a0 c0 60 8c 4c 89 fe 48 89 da e8 15 8c 37 fc 90 <0f> 0b 4c 89 e7 e8 0a 9f 14 fd 42 80 3c 2b 00 74 08 4c 89 e7 e8 cb
+RSP: 0018:ffffc90003f6f998 EFLAGS: 00010246
+RAX: 000000000000004e RBX: dead000000000122 RCX: 01454d423f7fbf00
+RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff819f077c R09: 1ffff920007eded0
+R10: dffffc0000000000 R11: fffff520007eded1 R12: dead000000000122
+R13: dffffc0000000000 R14: ffff8880352248d8 R15: ffff888021297e00
+FS:  00007f7ace6686c0(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7aceeeb1d0 CR3: 000000003527c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __list_del_entry_valid include/linux/list.h:124 [inline]
+ __list_del_entry include/linux/list.h:215 [inline]
+ list_del_rcu include/linux/rculist.h:168 [inline]
+ hci_chan_del+0x70/0x1b0 net/bluetooth/hci_conn.c:2858
+ l2cap_conn_free net/bluetooth/l2cap_core.c:1816 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ l2cap_conn_put+0x70/0xe0 net/bluetooth/l2cap_core.c:1830
+ l2cap_sock_shutdown+0xa8a/0x1020 net/bluetooth/l2cap_sock.c:1377
+ l2cap_sock_release+0x79/0x1d0 net/bluetooth/l2cap_sock.c:1416
+ __sock_release net/socket.c:642 [inline]
+ sock_close+0xbc/0x240 net/socket.c:1393
+ __fput+0x3e9/0x9f0 fs/file_table.c:448
+ task_work_run+0x24f/0x310 kernel/task_work.c:227
+ ptrace_notify+0x2d2/0x380 kernel/signal.c:2522
+ ptrace_report_syscall include/linux/ptrace.h:415 [inline]
+ ptrace_report_syscall_exit include/linux/ptrace.h:477 [inline]
+ syscall_exit_work+0xc7/0x1d0 kernel/entry/common.c:173
+ syscall_exit_to_user_mode_prepare kernel/entry/common.c:200 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:205 [inline]
+ syscall_exit_to_user_mode+0x24a/0x340 kernel/entry/common.c:218
+ do_syscall_64+0x100/0x230 arch/x86/entry/common.c:89
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f7aceeaf449
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 41 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f7ace668218 EFLAGS: 00000246 ORIG_RAX: 000000000000002a
+RAX: fffffffffffffffc RBX: 00007f7acef39328 RCX: 00007f7aceeaf449
+RDX: 000000000000000e RSI: 0000000020000100 RDI: 0000000000000004
+RBP: 00007f7acef39320 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
+R13: 0000000000000004 R14: 00007f7ace668670 R15: 000000000000000b
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:__list_del_entry_valid_or_report+0x12c/0x190 lib/list_debug.c:59
+Code: 8c 4c 89 fe 48 89 da e8 32 8c 37 fc 90 0f 0b 48 89 df e8 27 9f 14 fd 48 c7 c7 a0 c0 60 8c 4c 89 fe 48 89 da e8 15 8c 37 fc 90 <0f> 0b 4c 89 e7 e8 0a 9f 14 fd 42 80 3c 2b 00 74 08 4c 89 e7 e8 cb
+RSP: 0018:ffffc90003f6f998 EFLAGS: 00010246
+RAX: 000000000000004e RBX: dead000000000122 RCX: 01454d423f7fbf00
+RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff819f077c R09: 1ffff920007eded0
+R10: dffffc0000000000 R11: fffff520007eded1 R12: dead000000000122
+R13: dffffc0000000000 R14: ffff8880352248d8 R15: ffff888021297e00
+FS:  00007f7ace6686c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7acef05b08 CR3: 000000003527c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501281627.H6nj184e-lkp@intel.com/
-Fixes: 643f209ba3fd ("drm/xe: Make GUC binaries dump consistent with other binaries in devcoredump")
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250128154242.3371687-1-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 7748289df510638ba61fed86b59ce7d2fb4a194c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reported-by: syzbot+10bd8fe6741eedd2be2e@syzkaller.appspotmail.com
+Tested-by: syzbot+10bd8fe6741eedd2be2e@syzkaller.appspotmail.com
+Fixes: b4f82f9ed43a ("Bluetooth: L2CAP: Fix slab-use-after-free Read in l2cap_send_cmd")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c  |    2 +-
- drivers/gpu/drm/xe/xe_guc_log.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/net/bluetooth/l2cap.h |    3 
+ net/bluetooth/l2cap_core.c    |  138 ++++++++++++++----------------------------
+ net/bluetooth/l2cap_sock.c    |   15 ++--
+ 3 files changed, 58 insertions(+), 98 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -1700,7 +1700,7 @@ void xe_guc_ct_snapshot_print(struct xe_
- 			   snapshot->g2h_outstanding);
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -668,7 +668,7 @@ struct l2cap_conn {
+ 	struct l2cap_chan	*smp;
  
- 		if (snapshot->ctb) {
--			drm_printf(p, "[CTB].length: 0x%lx\n", snapshot->ctb_size);
-+			drm_printf(p, "[CTB].length: 0x%zx\n", snapshot->ctb_size);
- 			xe_print_blob_ascii85(p, "[CTB].data", '\n',
- 					      snapshot->ctb, 0, snapshot->ctb_size);
+ 	struct list_head	chan_l;
+-	struct mutex		chan_lock;
++	struct mutex		lock;
+ 	struct kref		ref;
+ 	struct list_head	users;
+ };
+@@ -970,6 +970,7 @@ void l2cap_chan_del(struct l2cap_chan *c
+ void l2cap_send_conn_req(struct l2cap_chan *chan);
+ 
+ struct l2cap_conn *l2cap_conn_get(struct l2cap_conn *conn);
++struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *conn);
+ void l2cap_conn_put(struct l2cap_conn *conn);
+ 
+ int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user);
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -119,7 +119,6 @@ static struct l2cap_chan *l2cap_get_chan
+ {
+ 	struct l2cap_chan *c;
+ 
+-	mutex_lock(&conn->chan_lock);
+ 	c = __l2cap_get_chan_by_scid(conn, cid);
+ 	if (c) {
+ 		/* Only lock if chan reference is not 0 */
+@@ -127,7 +126,6 @@ static struct l2cap_chan *l2cap_get_chan
+ 		if (c)
+ 			l2cap_chan_lock(c);
+ 	}
+-	mutex_unlock(&conn->chan_lock);
+ 
+ 	return c;
+ }
+@@ -140,7 +138,6 @@ static struct l2cap_chan *l2cap_get_chan
+ {
+ 	struct l2cap_chan *c;
+ 
+-	mutex_lock(&conn->chan_lock);
+ 	c = __l2cap_get_chan_by_dcid(conn, cid);
+ 	if (c) {
+ 		/* Only lock if chan reference is not 0 */
+@@ -148,7 +145,6 @@ static struct l2cap_chan *l2cap_get_chan
+ 		if (c)
+ 			l2cap_chan_lock(c);
+ 	}
+-	mutex_unlock(&conn->chan_lock);
+ 
+ 	return c;
+ }
+@@ -418,7 +414,7 @@ static void l2cap_chan_timeout(struct wo
+ 	if (!conn)
+ 		return;
+ 
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
+ 	 * this work. No need to call l2cap_chan_hold(chan) here again.
+ 	 */
+@@ -439,7 +435,7 @@ static void l2cap_chan_timeout(struct wo
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ struct l2cap_chan *l2cap_chan_create(void)
+@@ -642,9 +638,9 @@ void __l2cap_chan_add(struct l2cap_conn
+ 
+ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ {
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 	__l2cap_chan_add(conn, chan);
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ void l2cap_chan_del(struct l2cap_chan *chan, int err)
+@@ -732,9 +728,9 @@ void l2cap_chan_list(struct l2cap_conn *
+ 	if (!conn)
+ 		return;
+ 
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 	__l2cap_chan_list(conn, func, data);
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ EXPORT_SYMBOL_GPL(l2cap_chan_list);
+@@ -746,7 +742,7 @@ static void l2cap_conn_update_id_addr(st
+ 	struct hci_conn *hcon = conn->hcon;
+ 	struct l2cap_chan *chan;
+ 
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 
+ 	list_for_each_entry(chan, &conn->chan_l, list) {
+ 		l2cap_chan_lock(chan);
+@@ -755,7 +751,7 @@ static void l2cap_conn_update_id_addr(st
+ 		l2cap_chan_unlock(chan);
+ 	}
+ 
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ static void l2cap_chan_le_connect_reject(struct l2cap_chan *chan)
+@@ -1508,8 +1504,6 @@ static void l2cap_conn_start(struct l2ca
+ 
+ 	BT_DBG("conn %p", conn);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
+ 		l2cap_chan_lock(chan);
+ 
+@@ -1578,8 +1572,6 @@ static void l2cap_conn_start(struct l2ca
+ 
+ 		l2cap_chan_unlock(chan);
+ 	}
+-
+-	mutex_unlock(&conn->chan_lock);
+ }
+ 
+ static void l2cap_le_conn_ready(struct l2cap_conn *conn)
+@@ -1625,7 +1617,7 @@ static void l2cap_conn_ready(struct l2ca
+ 	if (hcon->type == ACL_LINK)
+ 		l2cap_request_info(conn);
+ 
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 
+ 	list_for_each_entry(chan, &conn->chan_l, list) {
+ 
+@@ -1643,7 +1635,7 @@ static void l2cap_conn_ready(struct l2ca
+ 		l2cap_chan_unlock(chan);
+ 	}
+ 
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ 
+ 	if (hcon->type == LE_LINK)
+ 		l2cap_le_conn_ready(conn);
+@@ -1658,14 +1650,10 @@ static void l2cap_conn_unreliable(struct
+ 
+ 	BT_DBG("conn %p", conn);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	list_for_each_entry(chan, &conn->chan_l, list) {
+ 		if (test_bit(FLAG_FORCE_RELIABLE, &chan->flags))
+ 			l2cap_chan_set_err(chan, err);
+ 	}
+-
+-	mutex_unlock(&conn->chan_lock);
+ }
+ 
+ static void l2cap_info_timeout(struct work_struct *work)
+@@ -1676,7 +1664,9 @@ static void l2cap_info_timeout(struct wo
+ 	conn->info_state |= L2CAP_INFO_FEAT_MASK_REQ_DONE;
+ 	conn->info_ident = 0;
+ 
++	mutex_lock(&conn->lock);
+ 	l2cap_conn_start(conn);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ /*
+@@ -1768,6 +1758,8 @@ static void l2cap_conn_del(struct hci_co
+ 
+ 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
+ 
++	mutex_lock(&conn->lock);
++
+ 	kfree_skb(conn->rx_skb);
+ 
+ 	skb_queue_purge(&conn->pending_rx);
+@@ -1786,8 +1778,6 @@ static void l2cap_conn_del(struct hci_co
+ 	/* Force the connection to be immediately dropped */
+ 	hcon->disc_timeout = 0;
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	/* Kill channels */
+ 	list_for_each_entry_safe(chan, l, &conn->chan_l, list) {
+ 		l2cap_chan_hold(chan);
+@@ -1801,12 +1791,14 @@ static void l2cap_conn_del(struct hci_co
+ 		l2cap_chan_put(chan);
+ 	}
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_SENT)
+ 		cancel_delayed_work_sync(&conn->info_timer);
+ 
++	hci_chan_del(conn->hchan);
++	conn->hchan = NULL;
++
+ 	hcon->l2cap_data = NULL;
++	mutex_unlock(&conn->lock);
+ 	l2cap_conn_put(conn);
+ }
+ 
+@@ -1814,7 +1806,6 @@ static void l2cap_conn_free(struct kref
+ {
+ 	struct l2cap_conn *conn = container_of(ref, struct l2cap_conn, ref);
+ 
+-	hci_chan_del(conn->hchan);
+ 	hci_conn_put(conn->hcon);
+ 	kfree(conn);
+ }
+@@ -2925,8 +2916,6 @@ static void l2cap_raw_recv(struct l2cap_
+ 
+ 	BT_DBG("conn %p", conn);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	list_for_each_entry(chan, &conn->chan_l, list) {
+ 		if (chan->chan_type != L2CAP_CHAN_RAW)
+ 			continue;
+@@ -2941,8 +2930,6 @@ static void l2cap_raw_recv(struct l2cap_
+ 		if (chan->ops->recv(chan, nskb))
+ 			kfree_skb(nskb);
+ 	}
+-
+-	mutex_unlock(&conn->chan_lock);
+ }
+ 
+ /* ---- L2CAP signalling commands ---- */
+@@ -3965,7 +3952,6 @@ static void l2cap_connect(struct l2cap_c
+ 		goto response;
+ 	}
+ 
+-	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_lock(pchan);
+ 
+ 	/* Check if the ACL is secure enough (if not SDP) */
+@@ -4072,7 +4058,6 @@ response:
+ 	}
+ 
+ 	l2cap_chan_unlock(pchan);
+-	mutex_unlock(&conn->chan_lock);
+ 	l2cap_chan_put(pchan);
+ }
+ 
+@@ -4111,27 +4096,19 @@ static int l2cap_connect_create_rsp(stru
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
+ 	       dcid, scid, result, status);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	if (scid) {
+ 		chan = __l2cap_get_chan_by_scid(conn, scid);
+-		if (!chan) {
+-			err = -EBADSLT;
+-			goto unlock;
+-		}
++		if (!chan)
++			return -EBADSLT;
+ 	} else {
+ 		chan = __l2cap_get_chan_by_ident(conn, cmd->ident);
+-		if (!chan) {
+-			err = -EBADSLT;
+-			goto unlock;
+-		}
++		if (!chan)
++			return -EBADSLT;
+ 	}
+ 
+ 	chan = l2cap_chan_hold_unless_zero(chan);
+-	if (!chan) {
+-		err = -EBADSLT;
+-		goto unlock;
+-	}
++	if (!chan)
++		return -EBADSLT;
+ 
+ 	err = 0;
+ 
+@@ -4169,9 +4146,6 @@ static int l2cap_connect_create_rsp(stru
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+-unlock:
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return err;
+ }
+ 
+@@ -4459,11 +4433,7 @@ static inline int l2cap_disconnect_req(s
+ 
+ 	chan->ops->set_shutdown(chan);
+ 
+-	l2cap_chan_unlock(chan);
+-	mutex_lock(&conn->chan_lock);
+-	l2cap_chan_lock(chan);
+ 	l2cap_chan_del(chan, ECONNRESET);
+-	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+@@ -4500,11 +4470,7 @@ static inline int l2cap_disconnect_rsp(s
+ 		return 0;
+ 	}
+ 
+-	l2cap_chan_unlock(chan);
+-	mutex_lock(&conn->chan_lock);
+-	l2cap_chan_lock(chan);
+ 	l2cap_chan_del(chan, 0);
+-	mutex_unlock(&conn->chan_lock);
+ 
+ 	chan->ops->close(chan);
+ 
+@@ -4702,13 +4668,9 @@ static int l2cap_le_connect_rsp(struct l
+ 	BT_DBG("dcid 0x%4.4x mtu %u mps %u credits %u result 0x%2.2x",
+ 	       dcid, mtu, mps, credits, result);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	chan = __l2cap_get_chan_by_ident(conn, cmd->ident);
+-	if (!chan) {
+-		err = -EBADSLT;
+-		goto unlock;
+-	}
++	if (!chan)
++		return -EBADSLT;
+ 
+ 	err = 0;
+ 
+@@ -4756,9 +4718,6 @@ static int l2cap_le_connect_rsp(struct l
+ 
+ 	l2cap_chan_unlock(chan);
+ 
+-unlock:
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return err;
+ }
+ 
+@@ -4870,7 +4829,6 @@ static int l2cap_le_connect_req(struct l
+ 		goto response;
+ 	}
+ 
+-	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_lock(pchan);
+ 
+ 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
+@@ -4936,7 +4894,6 @@ static int l2cap_le_connect_req(struct l
+ 
+ response_unlock:
+ 	l2cap_chan_unlock(pchan);
+-	mutex_unlock(&conn->chan_lock);
+ 	l2cap_chan_put(pchan);
+ 
+ 	if (result == L2CAP_CR_PEND)
+@@ -5070,7 +5027,6 @@ static inline int l2cap_ecred_conn_req(s
+ 		goto response;
+ 	}
+ 
+-	mutex_lock(&conn->chan_lock);
+ 	l2cap_chan_lock(pchan);
+ 
+ 	if (!smp_sufficient_security(conn->hcon, pchan->sec_level,
+@@ -5145,7 +5101,6 @@ static inline int l2cap_ecred_conn_req(s
+ 
+ unlock:
+ 	l2cap_chan_unlock(pchan);
+-	mutex_unlock(&conn->chan_lock);
+ 	l2cap_chan_put(pchan);
+ 
+ response:
+@@ -5182,8 +5137,6 @@ static inline int l2cap_ecred_conn_rsp(s
+ 	BT_DBG("mtu %u mps %u credits %u result 0x%4.4x", mtu, mps, credits,
+ 	       result);
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	cmd_len -= sizeof(*rsp);
+ 
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
+@@ -5269,8 +5222,6 @@ static inline int l2cap_ecred_conn_rsp(s
+ 		l2cap_chan_unlock(chan);
+ 	}
+ 
+-	mutex_unlock(&conn->chan_lock);
+-
+ 	return err;
+ }
+ 
+@@ -5383,8 +5334,6 @@ static inline int l2cap_le_command_rej(s
+ 	if (cmd_len < sizeof(*rej))
+ 		return -EPROTO;
+ 
+-	mutex_lock(&conn->chan_lock);
+-
+ 	chan = __l2cap_get_chan_by_ident(conn, cmd->ident);
+ 	if (!chan)
+ 		goto done;
+@@ -5399,7 +5348,6 @@ static inline int l2cap_le_command_rej(s
+ 	l2cap_chan_put(chan);
+ 
+ done:
+-	mutex_unlock(&conn->chan_lock);
+ 	return 0;
+ }
+ 
+@@ -6854,8 +6802,12 @@ static void process_pending_rx(struct wo
+ 
+ 	BT_DBG("");
+ 
++	mutex_lock(&conn->lock);
++
+ 	while ((skb = skb_dequeue(&conn->pending_rx)))
+ 		l2cap_recv_frame(conn, skb);
++
++	mutex_unlock(&conn->lock);
+ }
+ 
+ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+@@ -6894,7 +6846,7 @@ static struct l2cap_conn *l2cap_conn_add
+ 		conn->local_fixed_chan |= L2CAP_FC_SMP_BREDR;
+ 
+ 	mutex_init(&conn->ident_lock);
+-	mutex_init(&conn->chan_lock);
++	mutex_init(&conn->lock);
+ 
+ 	INIT_LIST_HEAD(&conn->chan_l);
+ 	INIT_LIST_HEAD(&conn->users);
+@@ -7085,7 +7037,7 @@ int l2cap_chan_connect(struct l2cap_chan
  		}
---- a/drivers/gpu/drm/xe/xe_guc_log.c
-+++ b/drivers/gpu/drm/xe/xe_guc_log.c
-@@ -208,7 +208,7 @@ void xe_guc_log_snapshot_print(struct xe
- 	drm_printf(p, "GuC timestamp: 0x%08llX [%llu]\n", snapshot->stamp, snapshot->stamp);
- 	drm_printf(p, "Log level: %u\n", snapshot->level);
+ 	}
  
--	drm_printf(p, "[LOG].length: 0x%lx\n", snapshot->size);
-+	drm_printf(p, "[LOG].length: 0x%zx\n", snapshot->size);
- 	remain = snapshot->size;
- 	for (i = 0; i < snapshot->num_chunks; i++) {
- 		size_t size = min(GUC_LOG_CHUNK_SIZE, remain);
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 	l2cap_chan_lock(chan);
+ 
+ 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
+@@ -7126,7 +7078,7 @@ int l2cap_chan_connect(struct l2cap_chan
+ 
+ chan_unlock:
+ 	l2cap_chan_unlock(chan);
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ done:
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+@@ -7339,7 +7291,7 @@ static void l2cap_security_cfm(struct hc
+ 
+ 	BT_DBG("conn %p status 0x%2.2x encrypt %u", conn, status, encrypt);
+ 
+-	mutex_lock(&conn->chan_lock);
++	mutex_lock(&conn->lock);
+ 
+ 	list_for_each_entry(chan, &conn->chan_l, list) {
+ 		l2cap_chan_lock(chan);
+@@ -7413,7 +7365,7 @@ static void l2cap_security_cfm(struct hc
+ 		l2cap_chan_unlock(chan);
+ 	}
+ 
+-	mutex_unlock(&conn->chan_lock);
++	mutex_unlock(&conn->lock);
+ }
+ 
+ /* Append fragment into frame respecting the maximum len of rx_skb */
+@@ -7480,8 +7432,11 @@ static void l2cap_recv_reset(struct l2ca
+ 	conn->rx_len = 0;
+ }
+ 
+-static struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
++struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
+ {
++	if (!c)
++		return NULL;
++
+ 	BT_DBG("conn %p orig refcnt %u", c, kref_read(&c->ref));
+ 
+ 	if (!kref_get_unless_zero(&c->ref))
+@@ -7507,11 +7462,15 @@ void l2cap_recv_acldata(struct hci_conn
+ 
+ 	hci_dev_unlock(hcon->hdev);
+ 
+-	if (!conn)
+-		goto drop;
++	if (!conn) {
++		kfree_skb(skb);
++		return;
++	}
+ 
+ 	BT_DBG("conn %p len %u flags 0x%x", conn, skb->len, flags);
+ 
++	mutex_lock(&conn->lock);
++
+ 	switch (flags) {
+ 	case ACL_START:
+ 	case ACL_START_NO_FLUSH:
+@@ -7536,7 +7495,7 @@ void l2cap_recv_acldata(struct hci_conn
+ 		if (len == skb->len) {
+ 			/* Complete frame received */
+ 			l2cap_recv_frame(conn, skb);
+-			return;
++			goto unlock;
+ 		}
+ 
+ 		BT_DBG("Start: total len %d, frag len %u", len, skb->len);
+@@ -7598,10 +7557,11 @@ void l2cap_recv_acldata(struct hci_conn
+ 		break;
+ 	}
+ 
+-	l2cap_conn_put(conn);
+-
+ drop:
+ 	kfree_skb(skb);
++unlock:
++	mutex_unlock(&conn->lock);
++	l2cap_conn_put(conn);
+ }
+ 
+ static struct hci_cb l2cap_cb = {
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1326,9 +1326,10 @@ static int l2cap_sock_shutdown(struct so
+ 	/* prevent sk structure from being freed whilst unlocked */
+ 	sock_hold(sk);
+ 
+-	chan = l2cap_pi(sk)->chan;
+ 	/* prevent chan structure from being freed whilst unlocked */
+-	l2cap_chan_hold(chan);
++	chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
++	if (!chan)
++		goto shutdown_already;
+ 
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+ 
+@@ -1358,22 +1359,20 @@ static int l2cap_sock_shutdown(struct so
+ 	release_sock(sk);
+ 
+ 	l2cap_chan_lock(chan);
+-	conn = chan->conn;
+-	if (conn)
+-		/* prevent conn structure from being freed */
+-		l2cap_conn_get(conn);
++	/* prevent conn structure from being freed */
++	conn = l2cap_conn_hold_unless_zero(chan->conn);
+ 	l2cap_chan_unlock(chan);
+ 
+ 	if (conn)
+ 		/* mutex lock must be taken before l2cap_chan_lock() */
+-		mutex_lock(&conn->chan_lock);
++		mutex_lock(&conn->lock);
+ 
+ 	l2cap_chan_lock(chan);
+ 	l2cap_chan_close(chan, 0);
+ 	l2cap_chan_unlock(chan);
+ 
+ 	if (conn) {
+-		mutex_unlock(&conn->chan_lock);
++		mutex_unlock(&conn->lock);
+ 		l2cap_conn_put(conn);
+ 	}
+ 
 
 
