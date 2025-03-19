@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787E1E8322;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C860721B9C0;
 	Wed, 19 Mar 2025 14:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395117; cv=none; b=Hu+WvoElmAnXi7CRmVSzeXBmp0WL+ScCofXX+Rdwj+cdVtHzvYvHJTa0zuTO3drGa75C6jI8FGcSZO+/mo+wYc83Bca34sEjdlzcdilR3TyvGKB+kFPUQqf/Hd0/HJbYKxSCo8G3aabrEe91hT/aQiJ4peFHI4uBeM3EA4mZ1S4=
+	t=1742395117; cv=none; b=XVq1gV/5Pf51FW1agr+A/q2JN/LGBLjw9vhENIDaLdfDua/DX+e327PSkYC6btykSnKUGIRCydYh/JUpsVhq/kS4OGnHwZ1P09w0OOpd0oJZtggTcaWMsgpEZg5APmY0T6gJnRbBpVf4V2Zfb+cK8Gme/EJEfxAqEDi1C95P/bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395117; c=relaxed/simple;
-	bh=dmuwcabb7HRpwstnjqEKEbIu8yfbJrU+8Z9JWbi2+CQ=;
+	bh=O8spj2uLW8+SBJNamKIlsNXit5s2v6/zZvZwVVXhOSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdBtecITl+EtR7Ez8HbSWnWY+sAw1qVeaMeGnOnmZZA2T0M2OKmajJbgxXDVCA8tgUQKJzRxd487+Vz27+9f5L6jLIeg1ksTAQQajSQYc3jIXH+1BmT5+3paht/yepkSzQd/a/bDKoRSxjFkhufYzBK0hLc9ZITRDVcWuvNai9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zN8PVm21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KtNYa/IFPk1UbPIPHnfXQ9HBKjugQtTeTSYYSKVFjs8bcDSLjfpsZ4JyxvKcpgzOrn0/REkA0rm6aGckUWtoZ9kntIXXUS3viUd/GivDmDHWhGhgDcB4aYW+2KXYgM3hnCop0b3rQdVJpPmHOFFwWnNWZbx20xM8TBjh9wDiv4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClwQgHz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zN8PVm21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00277C4CEE4;
-	Wed, 19 Mar 2025 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClwQgHz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC9C4CEE4;
+	Wed, 19 Mar 2025 14:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395117;
-	bh=dmuwcabb7HRpwstnjqEKEbIu8yfbJrU+8Z9JWbi2+CQ=;
+	bh=O8spj2uLW8+SBJNamKIlsNXit5s2v6/zZvZwVVXhOSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zN8PVm21b+sMt8N1duaSPouLDt06IThp45RFHrm2+g8ToICugodxICkJEIrjQ2IeX
-	 PVNkNDM6NxYGp2F+l87ZbpYY8aMe2B8uuB7BFRBEHzIk+0zDen1m2WlBH0QzyMU0+8
-	 Y1y4xotBeDADFv8Cj2eD23x4zwAB0F9AFW+0MarQ=
+	b=ClwQgHz8HQQlu2ScoACq76NneENdKpGLGC8iHArlnS8MXbXvb1NZiuvcCR86EZmca
+	 APwQv6Z4Ya76JGvoDDfB6B/T3DtftrRrVO8T1q0ATCcFzhsV7iYswnGUjPPneBjFR5
+	 qN/ij8H/g4BuHUhb8vMl2vtSbAd+2Wv8vpexFZB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu-Chun Lin <eleanor15x@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/231] sctp: Fix undefined behavior in left shift operation
-Date: Wed, 19 Mar 2025 07:30:18 -0700
-Message-ID: <20250319143029.928103531@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Vinod Govindapillai <vinod.govindapillai@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 169/231] drm/i915/cdclk: Do cdclk post plane programming later
+Date: Wed, 19 Mar 2025 07:31:02 -0700
+Message-ID: <20250319143031.019050494@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -45,49 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu-Chun Lin <eleanor15x@gmail.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 606572eb22c1786a3957d24307f5760bb058ca19 ]
+commit 6266f4a78131c795631440ea9c7b66cdfd399484 upstream.
 
-According to the C11 standard (ISO/IEC 9899:2011, 6.5.7):
-"If E1 has a signed type and E1 x 2^E2 is not representable in the result
-type, the behavior is undefined."
+We currently call intel_set_cdclk_post_plane_update() far
+too early. When pipes are active during the reprogramming
+the current spot only works for the cd2x divider update
+case, as that is synchronize to the pipe's vblank. Squashing
+and crawling are not synchronized in any way, so doing the
+programming while the pipes/planes are potentially still using
+the old hardware state could lead to underruns.
 
-Shifting 1 << 31 causes signed integer overflow, which leads to undefined
-behavior.
+Move the post plane reprgramming to a spot where we know
+that the pipes/planes have switched over the new hardware
+state.
 
-Fix this by explicitly using '1U << 31' to ensure the shift operates on
-an unsigned type, avoiding undefined behavior.
-
-Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-Link: https://patch.msgid.link/20250218081217.3468369-1-eleanor15x@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250218211913.27867-2-ville.syrjala@linux.intel.com
+Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
+(cherry picked from commit fb64f5568c0e0b5730733d70a012ae26b1a55815)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index c241cc552e8d5..bfcff6d6a4386 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -735,7 +735,7 @@ struct sctp_chunk *sctp_process_strreset_tsnreq(
- 	 *     value SHOULD be the smallest TSN not acknowledged by the
- 	 *     receiver of the request plus 2^31.
- 	 */
--	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1 << 31);
-+	init_tsn = sctp_tsnmap_get_ctsn(&asoc->peer.tsn_map) + (1U << 31);
- 	sctp_tsnmap_init(&asoc->peer.tsn_map, SCTP_TSN_MAP_INITIAL,
- 			 init_tsn, GFP_ATOMIC);
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -7438,9 +7438,6 @@ static void intel_atomic_commit_tail(str
+ 	/* Now enable the clocks, plane, pipe, and connectors that we set up. */
+ 	dev_priv->display.funcs.display->commit_modeset_enables(state);
  
--- 
-2.39.5
-
+-	if (state->modeset)
+-		intel_set_cdclk_post_plane_update(state);
+-
+ 	intel_wait_for_vblank_workers(state);
+ 
+ 	/* FIXME: We should call drm_atomic_helper_commit_hw_done() here
+@@ -7521,6 +7518,8 @@ static void intel_atomic_commit_tail(str
+ 		intel_verify_planes(state);
+ 
+ 	intel_sagv_post_plane_update(state);
++	if (state->modeset)
++		intel_set_cdclk_post_plane_update(state);
+ 	intel_pmdemand_post_plane_update(state);
+ 
+ 	drm_atomic_helper_commit_hw_done(&state->base);
 
 
