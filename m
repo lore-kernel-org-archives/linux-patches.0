@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D641C5F26;
-	Wed, 19 Mar 2025 14:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845351E2613;
+	Wed, 19 Mar 2025 14:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395067; cv=none; b=ApeM6MaOk19fbeKnSubmXt/3V6HN1dB+aPt50zKYKH9s/vGSctw2wueFPgXnAT1x5EcmRWr3PNZxFu30ry+rocRWWeeNtkx3z9rkRE0eVCxhDsFdb7+VirlUGyJBp59XeAYSklmY7ac2BTbfJqnEI6xKh5vTAnugzqzKLdxp3vA=
+	t=1742395067; cv=none; b=uESY0kJ9kntaleseJyZIjNuhTvRvfEJWoAEhhBGT3plc5JPbrBEq53jdE4twk/HThkODSjJRjzbtXJ+Frl5VDFwydptzFGsKWhZPxGMJfLutDivg29Z4KwZcxcOUOPK/kgAh4Mt/z/h0JW1C4xD/BX5JxnDLQdcv1Rv9lcpIb9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395067; c=relaxed/simple;
-	bh=6oFD7YDyJ/bMc52zIjUP4sArlpxPzw6Hxb/x/77uyac=;
+	bh=N+2GN/VhrLqFHi6/NsrejQ4/suV4Yr/lGH4gVB9OnH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWdSVOjwgs5QQ0lWf9SPVj9O/ksUQEOBxVnaU8BRwbEotcVjBs9OtZwj+AuwLRSx+vNYD8i1kt1/RluSyWUXsVY4f8Hj64hh4bhxXDM6arKrVf++Hb4h/tMVzbtyf2qkjXseoAmNr5gZW+/jjUoOzkYK9dwb5ktvCcmUxYw9CjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mdb1W5/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHBj5l9lVNM/g2wwHA4OOV60rfnJ6C1qp0EGKrz/+W3heh4cbHdPHF0Z8h5FlA/zoZ4LUPL+H08XZ3iKDeh7kyeIyuy3l+gG3znUtCJltbaalVmvpxTEDnt8hCHcQ7wpnJSedtXMDzobGq8ZXPOeZu4TUsG+GQ2sJxgIMCLw2as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygaPf7T3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mdb1W5/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E9BC4CEE4;
-	Wed, 19 Mar 2025 14:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygaPf7T3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D0FC4CEE8;
+	Wed, 19 Mar 2025 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395066;
-	bh=6oFD7YDyJ/bMc52zIjUP4sArlpxPzw6Hxb/x/77uyac=;
+	s=korg; t=1742395067;
+	bh=N+2GN/VhrLqFHi6/NsrejQ4/suV4Yr/lGH4gVB9OnH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mdb1W5/BzOeGa3VaoiAW7RMG3YUBIcnmm3eiE2fsjb7DmL2hpiyyfXL306pxivIRH
-	 SOOpkBP4CaHHFzP0XrZcdX3vHs/Ut6Avk1RW/bjwEgzaKH60sFu5rDQwQah7SY1yeK
-	 Xj96s1BIo4OFTGMWEJzCL5zzVJaOf/STx5XeZ28M=
+	b=ygaPf7T3mftra9hRw/6gwnLX8Ub6AW2Jn3ZwtlcY8G3dCnqV/V0yMKOmKxJ0SHNPy
+	 AWE8kuQNPy4NzOX06gweTvypkdjkq8svdYP9wYvjv17wh+20ojI1xrZFkMZ5Fc6Urs
+	 K+GSZYLBcsiUh6lbwojpXlWdphCPGAlqZmjsTLZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Sterba <dsterba@suse.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/231] btrfs: fix two misuses of folio_shift()
-Date: Wed, 19 Mar 2025 07:29:38 -0700
-Message-ID: <20250319143028.940757134@linuxfoundation.org>
+Subject: [PATCH 6.12 103/231] ASoC: Intel: sof_sdw: Add lookup of quirk using PCI subsystem ID
+Date: Wed, 19 Mar 2025 07:29:56 -0700
+Message-ID: <20250319143029.380206761@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,68 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 01af106a076352182b2916b143fc50272600bd81 ]
+[ Upstream commit fc016ef7da64fd473d73ee6c261ba1b0b47afe2b ]
 
-It is meaningless to shift a byte count by folio_shift().  The folio index
-is in units of PAGE_SIZE, not folio_size().  We can use folio_contains()
-to make this work for arbitrary-order folios, so remove the assertion
-that the folios are of order 0.
+Add lookup of PCI subsystem vendor:device ID to find a quirk.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The subsystem ID (SSID) is part of the PCI specification to uniquely
+identify a particular system-specific implementation of a hardware
+device.
+
+Unlike DMI information, it identifies the sound hardware itself, rather
+than a specific model of PC. SSID can be more reliable and stable than
+DMI strings, and is preferred by some vendors as the way to identify
+the actual sound hardware.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250204053943.93596-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 660a5b9c08e9e..6551fb003eed2 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -526,8 +526,6 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
- 		u64 end;
- 		u32 len;
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 84fc35d88b926..8f2416b73dc43 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -13,6 +13,7 @@
+ #include <linux/soundwire/sdw.h>
+ #include <linux/soundwire/sdw_type.h>
+ #include <linux/soundwire/sdw_intel.h>
++#include <sound/core.h>
+ #include <sound/soc-acpi.h>
+ #include "sof_sdw_common.h"
+ #include "../../codecs/rt711.h"
+@@ -685,6 +686,22 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 	{}
+ };
  
--		/* For now only order 0 folios are supported for data. */
--		ASSERT(folio_order(folio) == 0);
- 		btrfs_debug(fs_info,
- 			"%s: bi_sector=%llu, err=%d, mirror=%u",
- 			__func__, bio->bi_iter.bi_sector, bio->bi_status,
-@@ -555,7 +553,6 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
++static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
++	{}
++};
++
++static void sof_sdw_check_ssid_quirk(const struct snd_soc_acpi_mach *mach)
++{
++	const struct snd_pci_quirk *quirk_entry;
++
++	quirk_entry = snd_pci_quirk_lookup_id(mach->mach_params.subsystem_vendor,
++					      mach->mach_params.subsystem_device,
++					      sof_sdw_ssid_quirk_table);
++
++	if (quirk_entry)
++		sof_sdw_quirk = quirk_entry->value;
++}
++
+ static struct snd_soc_dai_link_component platform_component[] = {
+ 	{
+ 		/* name might be overridden during probe */
+@@ -1212,6 +1229,13 @@ static int mc_probe(struct platform_device *pdev)
  
- 		if (likely(uptodate)) {
- 			loff_t i_size = i_size_read(inode);
--			pgoff_t end_index = i_size >> folio_shift(folio);
+ 	snd_soc_card_set_drvdata(card, ctx);
  
- 			/*
- 			 * Zero out the remaining part if this range straddles
-@@ -564,9 +561,11 @@ static void end_bbio_data_read(struct btrfs_bio *bbio)
- 			 * Here we should only zero the range inside the folio,
- 			 * not touch anything else.
- 			 *
--			 * NOTE: i_size is exclusive while end is inclusive.
-+			 * NOTE: i_size is exclusive while end is inclusive and
-+			 * folio_contains() takes PAGE_SIZE units.
- 			 */
--			if (folio_index(folio) == end_index && i_size <= end) {
-+			if (folio_contains(folio, i_size >> PAGE_SHIFT) &&
-+			    i_size <= end) {
- 				u32 zero_start = max(offset_in_folio(folio, i_size),
- 						     offset_in_folio(folio, start));
- 				u32 zero_len = offset_in_folio(folio, end) + 1 -
-@@ -960,7 +959,7 @@ static int btrfs_do_readpage(struct folio *folio, struct extent_map **em_cached,
++	if (mach->mach_params.subsystem_id_set) {
++		snd_soc_card_set_pci_ssid(card,
++					  mach->mach_params.subsystem_vendor,
++					  mach->mach_params.subsystem_device);
++		sof_sdw_check_ssid_quirk(mach);
++	}
++
+ 	dmi_check_system(sof_sdw_quirk_table);
+ 
+ 	if (quirk_override != -1) {
+@@ -1227,12 +1251,6 @@ static int mc_probe(struct platform_device *pdev)
+ 	for (i = 0; i < ctx->codec_info_list_count; i++)
+ 		codec_info_list[i].amp_num = 0;
+ 
+-	if (mach->mach_params.subsystem_id_set) {
+-		snd_soc_card_set_pci_ssid(card,
+-					  mach->mach_params.subsystem_vendor,
+-					  mach->mach_params.subsystem_device);
+-	}
+-
+ 	ret = sof_card_dai_links_create(card);
+ 	if (ret < 0)
  		return ret;
- 	}
- 
--	if (folio->index == last_byte >> folio_shift(folio)) {
-+	if (folio_contains(folio, last_byte >> PAGE_SHIFT)) {
- 		size_t zero_offset = offset_in_folio(folio, last_byte);
- 
- 		if (zero_offset) {
 -- 
 2.39.5
 
