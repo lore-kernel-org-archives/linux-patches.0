@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F711E2850;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7A81C5F2C;
 	Wed, 19 Mar 2025 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395070; cv=none; b=QtWuqlxhTvh2aAp09K0c9p4G+peRNAtyHSzQ/S1bVYPVE57xpNU5OVVNJapXI3FDiGNpwRBRwr8SXX2KcjJWecGD314K0l5fed7ujtE+sy4hj9JGaDRrYCRiN5C7d1vYgjKMpQ+GVbKCIrkSPdb5D0AXcSWyn5Sj76+G3LHJPBw=
+	t=1742395071; cv=none; b=lD3rOPSxpPIjcMB8HPBBoRMzSZjmnHUbgJuj+0Ez/xftWFZirSKVXUCUz70mFNEXoQIumhdERlHiVEbIiGqm5ZQ9Dp+rOj5Hx1GKYUV4kfiNi9kvMSrVEAbiWMS8ME5wdg9Bx8mWN3uB1pcUx4BXYBmBAeFpYkPYJ7m0FdcZ/AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395070; c=relaxed/simple;
-	bh=nrU2WL3rALmHnF08F7UPXRGO4C/Y8XxQZv6JcSAmQSc=;
+	s=arc-20240116; t=1742395071; c=relaxed/simple;
+	bh=ZljLT3wFVjO7naAwuTtkAgBPMpKrvtYdXMr5cKq9vwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKY4IXqgxdRZwl8VVM1xX4LwSpENyxMLkqrPbvkv3nbz/XM5JR9BNncr51LFHeVpFZHkCd5Ja7xbARMek3tQMLK8tpNT+LY9Jj/GVpFmBoA/qt8TiVx/gdZ/dnrPOeZMhzjXiYYdvvkDQJ7xKXGyIXcvVAHkYW9e4XXwatTFOCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHthDEEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLyL0ji54FzhbxkUANODILx0JZnVo+tb+irZaBeYZpTdH49kbNsr8qmZdhhT6rSfwSOco9z00rcwJfv5VETRkxtwa9XWu69Zae2DBrpp1Tv6oP19xJo77W5+cwXaZiO/U3jVobm1OlgtlRU/6OxjwpKFxKOeZP7KKyAWTTgVQ5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaOF1btG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHthDEEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DE4C4CEE8;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaOF1btG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB824C4CEE4;
 	Wed, 19 Mar 2025 14:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395070;
-	bh=nrU2WL3rALmHnF08F7UPXRGO4C/Y8XxQZv6JcSAmQSc=;
+	bh=ZljLT3wFVjO7naAwuTtkAgBPMpKrvtYdXMr5cKq9vwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHthDEEyhzs97RZ2Jo57vj1Ut4kDXtfDv0eHkMfuxRl5/aip3atl1MyN/DiuUI7W4
-	 NLRc6ApQMM29wKi0OVahAhOtXTc4anV0OcbZEyksHex/sMsYR+pIQrXVNRhJFeQO65
-	 xSIhHvtoAU3RXy3CLew3E90fyi9YS+PjVd8JRi3o=
+	b=CaOF1btGRX4Ogp/VNABnHsPYEwA4MBvjGy5pGKHXoFzlyKXL9oTdZKZItg0NY4rDw
+	 sNsOAqCLxstx/oZWy6Kj4TrQekDMnLoX4+RmkTb1b3+sWn293LW1zuRXsIb0fVIif6
+	 4zVgTh/N//N808gm2EIHjL4V62se/X7IgxUEwd0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/231] ALSA: hda/realtek: Limit mic boost on Positivo ARN50
-Date: Wed, 19 Mar 2025 07:30:00 -0700
-Message-ID: <20250319143029.481987156@linuxfoundation.org>
+Subject: [PATCH 6.12 108/231] ASoC: rsnd: indicate unsupported clock rate
+Date: Wed, 19 Mar 2025 07:30:01 -0700
+Message-ID: <20250319143029.506568909@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 76b0a22d4cf7dc9091129560fdc04e73eb9db4cb ]
+[ Upstream commit 796106e29e5df6cd4b4e2b51262a8a19e9fa0625 ]
 
-The internal mic boost on the Positivo ARN50 is too high.
-Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
-to limit the gain.
+It will indicate "unsupported clock rate" when setup clock failed.
+But it is unclear what kind of rate was failed. Indicate it.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://patch.msgid.link/20250201143930.25089-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/874j192qej.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/sh/rcar/ssi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index b559f0d4e3488..3949e2614a663 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11064,6 +11064,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+diff --git a/sound/soc/sh/rcar/ssi.c b/sound/soc/sh/rcar/ssi.c
+index b3d4e8ae07eff..0c6424a1fcac0 100644
+--- a/sound/soc/sh/rcar/ssi.c
++++ b/sound/soc/sh/rcar/ssi.c
+@@ -336,7 +336,8 @@ static int rsnd_ssi_master_clk_start(struct rsnd_mod *mod,
+ 	return 0;
+ 
+ rate_err:
+-	dev_err(dev, "unsupported clock rate\n");
++	dev_err(dev, "unsupported clock rate (%d)\n", rate);
++
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
