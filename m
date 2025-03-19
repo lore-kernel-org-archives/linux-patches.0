@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EEC1A841C;
-	Wed, 19 Mar 2025 14:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7421B1A841C;
+	Wed, 19 Mar 2025 14:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395142; cv=none; b=SNUlTglzdZCsE7q1vtkOkU8gL45udUffbY8rwJeSMOrE0MJimMCDlFC2oXAsspOjGwDRCRLrJis2faf+LILamOAjW6eutJ/n/E543y/7H8JZOmhIxeFYGJV10reaaxQViIn8ou3gUOJhvg0tgn9DpUVYURlR0+L4B6Z/S3xVM2g=
+	t=1742395143; cv=none; b=tpizz2To3kXUwzWgC5hkikNs2ZVVJhA7sC9wFs+OlghQ4Gyo6QSFbhXNn+9vbVM/22kwHKw75Ua7NSe0cP4ack6ruelzCSlL+8tL8mKERY8kX9DsuDf4VP9DLJeS7Tfsb494rzUHadmkDB5C+HTqJDVRqZJfUO4YfT89cTMFOtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395142; c=relaxed/simple;
-	bh=H137YHE3XHz57/2N+0igsRM2qAh/UKbQjxd9wS3buXE=;
+	s=arc-20240116; t=1742395143; c=relaxed/simple;
+	bh=dkHILbvVyT/nvtuvIonUaheG++Stis2IJ4rPh7vx++I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RB+RFpcHBCyXlk4HJbAqVmPqAol+F7kKgZECIKk1yvBCBLcvMmWGq4236r3naS+shD85EzVFqbjpT8QMbqq1y+5phH2icODu/ba+5fNyhTK1OJPNQWF77vaTda17NR/cgqwlPhpM3gt1asWiA+QfmGc2hWvtanh9QZ+Aqbssz8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0C6CFbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkCz+eeUL/T9eS832GImLr9zWvuGTJLtrSaMq7s1GCg5U9TAffVAvcr6PZJ/Se+ucuCcfArVKIONoxQCSiFHiWUj/5a7oVTtQDOz0cuXVgy7Y38OHWnUQS8v0Oq9JTVKNsnW6yMX+htIz2Y16rduN+Jaqa0KYZWQZpgAuY4oV3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2tZtQER; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0C6CFbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D441C4CEE4;
-	Wed, 19 Mar 2025 14:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2tZtQER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB6AC4CEEA;
+	Wed, 19 Mar 2025 14:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395142;
-	bh=H137YHE3XHz57/2N+0igsRM2qAh/UKbQjxd9wS3buXE=;
+	s=korg; t=1742395143;
+	bh=dkHILbvVyT/nvtuvIonUaheG++Stis2IJ4rPh7vx++I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0C6CFbZn6ov6F2LZ8DvM6D+gCvDwXycFdDaLjWPTcSCqcqD4grQHNOMYzoQG8aOG
-	 vliOil1PkLEuXloPDVx/khYNx1nUELHBfFEQQCMeASRdswMQRkIjwXdgYSEdveGPS6
-	 2wq5Q/uhAumUpAEOkkdhau5mubtpKVxlHs6Er+WI=
+	b=Z2tZtQERU/iGxXRmH8oSGf1jmaU89dzlnd3Sd5C29MnvN0xBXUnk6Jmh1X3H/FMtd
+	 UYwH0Xr+53iHj2nFvb4USLJ67PG/o7s0FOpN+5G/jpkPQ4kPMZAY754xwS9udAbKpM
+	 7f2BTu46B1rupfQzyV2oVnoR8bafhaq4kUXSohd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 210/231] drm/i915: Increase I915_PARAM_MMAP_GTT_VERSION version to indicate support for partial mmaps
-Date: Wed, 19 Mar 2025 07:31:43 -0700
-Message-ID: <20250319143032.039194576@linuxfoundation.org>
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 6.12 173/231] drm/dp_mst: Fix locking when skipping CSN before topology probing
+Date: Wed, 19 Mar 2025 07:31:06 -0700
+Message-ID: <20250319143031.116498473@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -48,61 +45,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Roberto de Souza <jose.souza@intel.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit a8045e46c508b70fe4b30cc020fd0a2b0709b2e5 ]
+commit 12d8f318347b1d4feac48e8ac351d3786af39599 upstream.
 
-Commit 255fc1703e42 ("drm/i915/gem: Calculate object page offset for partial memory mapping")
-was the last patch of several patches fixing multiple partial mmaps.
-But without a bump in I915_PARAM_MMAP_GTT_VERSION there is no clean
-way for UMD to know if it can do multiple partial mmaps.
+The handling of the MST Connection Status Notify message is skipped if
+the probing of the topology is still pending. Acquiring the
+drm_dp_mst_topology_mgr::probe_lock for this in
+drm_dp_mst_handle_up_req() is problematic: the task/work this function
+is called from is also responsible for handling MST down-request replies
+(in drm_dp_mst_handle_down_rep()). Thus drm_dp_mst_link_probe_work() -
+holding already probe_lock - could be blocked waiting for an MST
+down-request reply while drm_dp_mst_handle_up_req() is waiting for
+probe_lock while processing a CSN message. This leads to the probe
+work's down-request message timing out.
 
-Fixes: 255fc1703e42 ("drm/i915/gem: Calculate object page offset for partial memory mapping")
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
-Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250306210827.171147-1-jose.souza@intel.com
-(cherry picked from commit bfef148f3680e6b9d28e7fca46d9520f80c5e50e)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A scenario similar to the above leading to a down-request timeout is
+handling a CSN message in drm_dp_mst_handle_conn_stat(), holding the
+probe_lock and sending down-request messages while a second CSN message
+sent by the sink subsequently is handled by drm_dp_mst_handle_up_req().
+
+Fix the above by moving the logic to skip the CSN handling to
+drm_dp_mst_process_up_req(). This function is called from a work
+(separate from the task/work handling new up/down messages), already
+holding probe_lock. This solves the above timeout issue, since handling
+of down-request replies won't be blocked by probe_lock.
+
+Fixes: ddf983488c3e ("drm/dp_mst: Skip CSN if topology probing is not done yet")
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: stable@vger.kernel.org # v6.6+
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250307183152.3822170-1-imre.deak@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |   40 +++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-index 21274aa9bdddc..c3dabb8579605 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -164,6 +164,9 @@ static unsigned int tile_row_pages(const struct drm_i915_gem_object *obj)
-  * 4 - Support multiple fault handlers per object depending on object's
-  *     backing storage (a.k.a. MMAP_OFFSET).
-  *
-+ * 5 - Support multiple partial mmaps(mmap part of BO + unmap a offset, multiple
-+ *     times with different size and offset).
-+ *
-  * Restrictions:
-  *
-  *  * snoopable objects cannot be accessed via the GTT. It can cause machine
-@@ -191,7 +194,7 @@ static unsigned int tile_row_pages(const struct drm_i915_gem_object *obj)
-  */
- int i915_gem_mmap_gtt_version(void)
- {
--	return 4;
-+	return 5;
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -4034,6 +4034,22 @@ out:
+ 	return 0;
  }
  
- static inline struct i915_gtt_view
--- 
-2.39.5
-
++static bool primary_mstb_probing_is_done(struct drm_dp_mst_topology_mgr *mgr)
++{
++	bool probing_done = false;
++
++	mutex_lock(&mgr->lock);
++
++	if (mgr->mst_primary && drm_dp_mst_topology_try_get_mstb(mgr->mst_primary)) {
++		probing_done = mgr->mst_primary->link_address_sent;
++		drm_dp_mst_topology_put_mstb(mgr->mst_primary);
++	}
++
++	mutex_unlock(&mgr->lock);
++
++	return probing_done;
++}
++
+ static inline bool
+ drm_dp_mst_process_up_req(struct drm_dp_mst_topology_mgr *mgr,
+ 			  struct drm_dp_pending_up_req *up_req)
+@@ -4064,8 +4080,12 @@ drm_dp_mst_process_up_req(struct drm_dp_
+ 
+ 	/* TODO: Add missing handler for DP_RESOURCE_STATUS_NOTIFY events */
+ 	if (msg->req_type == DP_CONNECTION_STATUS_NOTIFY) {
+-		dowork = drm_dp_mst_handle_conn_stat(mstb, &msg->u.conn_stat);
+-		hotplug = true;
++		if (!primary_mstb_probing_is_done(mgr)) {
++			drm_dbg_kms(mgr->dev, "Got CSN before finish topology probing. Skip it.\n");
++		} else {
++			dowork = drm_dp_mst_handle_conn_stat(mstb, &msg->u.conn_stat);
++			hotplug = true;
++		}
+ 	}
+ 
+ 	drm_dp_mst_topology_put_mstb(mstb);
+@@ -4144,10 +4164,11 @@ static int drm_dp_mst_handle_up_req(stru
+ 	drm_dp_send_up_ack_reply(mgr, mst_primary, up_req->msg.req_type,
+ 				 false);
+ 
++	drm_dp_mst_topology_put_mstb(mst_primary);
++
+ 	if (up_req->msg.req_type == DP_CONNECTION_STATUS_NOTIFY) {
+ 		const struct drm_dp_connection_status_notify *conn_stat =
+ 			&up_req->msg.u.conn_stat;
+-		bool handle_csn;
+ 
+ 		drm_dbg_kms(mgr->dev, "Got CSN: pn: %d ldps:%d ddps: %d mcs: %d ip: %d pdt: %d\n",
+ 			    conn_stat->port_number,
+@@ -4156,16 +4177,6 @@ static int drm_dp_mst_handle_up_req(stru
+ 			    conn_stat->message_capability_status,
+ 			    conn_stat->input_port,
+ 			    conn_stat->peer_device_type);
+-
+-		mutex_lock(&mgr->probe_lock);
+-		handle_csn = mst_primary->link_address_sent;
+-		mutex_unlock(&mgr->probe_lock);
+-
+-		if (!handle_csn) {
+-			drm_dbg_kms(mgr->dev, "Got CSN before finish topology probing. Skip it.");
+-			kfree(up_req);
+-			goto out_put_primary;
+-		}
+ 	} else if (up_req->msg.req_type == DP_RESOURCE_STATUS_NOTIFY) {
+ 		const struct drm_dp_resource_status_notify *res_stat =
+ 			&up_req->msg.u.resource_stat;
+@@ -4180,9 +4191,6 @@ static int drm_dp_mst_handle_up_req(stru
+ 	list_add_tail(&up_req->next, &mgr->up_req_list);
+ 	mutex_unlock(&mgr->up_req_lock);
+ 	queue_work(system_long_wq, &mgr->up_req_work);
+-
+-out_put_primary:
+-	drm_dp_mst_topology_put_mstb(mst_primary);
+ out_clear_reply:
+ 	memset(&mgr->up_req_recv, 0, sizeof(struct drm_dp_sideband_msg_rx));
+ 	return 0;
 
 
