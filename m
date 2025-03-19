@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87D01DDC2B;
-	Wed, 19 Mar 2025 14:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480D61D5CE7;
+	Wed, 19 Mar 2025 14:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394958; cv=none; b=juYPvJCXXqKpYehyD8TqxeD4DeS/E8FX/CHuRgR3oIzxXhALyXcir0FMEu2QuLERkjGPwqkWxHswV3T9TVKzvFrtu2OogdSumo5VtMeLwUgxAJM+PAwwIz9TaxaX+c0751FNcqc8M2Uq/8xkJf4WhzVvwP1dXongMzevfm2Rdhw=
+	t=1742394958; cv=none; b=uRhbhNXGexXGBebnxsQG58PaGnt8vNbGdDnky2aDQYzaO/CKiSDBF9mdQ3ZsRT5T26+K1obwUK4OzB2BBi+aqFRFQTDP14fAJjQBK9s04hxWCAE/6hhQKVqBX77V9VQ/3WyKQETr74qmrT2PuQ81+ybnNwK3MBtGsW5tBOWubQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394958; c=relaxed/simple;
-	bh=Guaxbmu5t03lw85qw2N0xHhzReyNXv0p3iBhmqluzhs=;
+	bh=b49l/ssMd2ANf4SzlMzCgVWzcVneS14vxUhGfpxJiOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWcCcGEL+TTf/3UyfUHtTpPobcwUHMDH6e4LoXKFisebayfZF723akugQm3/A5jAfG3e/pRGRv/T0n+vRsmbED+yCkXMxEM3cbqbHntibdBOeda3NZ+cYpWzGzQyfE8tNLhBYXe8fPOUXQKMibfa/MfBUcoC9IfZR0ScI+w6BVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPmQJul8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQAuW7C10BZyDzlPF+ON6/KQGrQXiSnC2djzGQ4ja6zTFcFde7CvC7IyCwfDO9d2Q0K/+bZ7ZKVPBuVkXXViXD/3gbCi3MCykvKbK/CDrfptkC4KIHi8nwFhEMvkpgOst7Sj+JnjPTkefY/0XSVqD7kRHxArKOK8yHewAaafidM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQXUZrNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPmQJul8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E25BC4CEE4;
-	Wed, 19 Mar 2025 14:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQXUZrNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDA6C4CEE4;
+	Wed, 19 Mar 2025 14:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394957;
-	bh=Guaxbmu5t03lw85qw2N0xHhzReyNXv0p3iBhmqluzhs=;
+	s=korg; t=1742394958;
+	bh=b49l/ssMd2ANf4SzlMzCgVWzcVneS14vxUhGfpxJiOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPmQJul87HkkbJ6f6a7EJEGN7k6drx3NIE9Zmf4VsItDPGCyTPfH5kVW6z9jB+LEL
-	 DM9+Ba0P2fYrkhq850WQpnTZoGpxTxc754w0hdqbfPTRuoUqYjThW/PVsb3kXuC5YI
-	 hQQx0r4jBQDIYwTcs8e6aijUI8ZHsi4bxQCqSqWg=
+	b=rQXUZrNxpBsnONe28I0h6ZRa9o1+J3tX0Jrvb6CxcoDSN0JvvtVepL8oTZ286Pueu
+	 fftF6yesH1GHum0WIs62FS09aALqdvHJBnXTp2uikbtmw+e/lmVnQPrLQHrVUSBtCc
+	 wD1fqxoF2gBOCqTn/lGoiX+lY3f8QH5mQLttlxHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Aliaksei Urbanski <aliaksei.urbanski@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.13 184/241] drm/amd/display: fix default brightness
-Date: Wed, 19 Mar 2025 07:30:54 -0700
-Message-ID: <20250319143032.277023829@linuxfoundation.org>
+Subject: [PATCH 6.13 185/241] drm/amd/display: fix missing .is_two_pixels_per_container
+Date: Wed, 19 Mar 2025 07:30:55 -0700
+Message-ID: <20250319143032.300328576@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Aliaksei Urbanski <aliaksei.urbanski@gmail.com>
 
-commit b5a981e1b34e44f94a5967f730fff4166f2101e8 upstream.
+commit e204aab79e01bc8ff750645666993ed8b719de57 upstream.
 
-[Why]
-To avoid flickering during boot default brightness level set by BIOS
-should be maintained for as much of the boot as feasible.
-commit 2fe87f54abdc ("drm/amd/display: Set default brightness according
-to ACPI") attempted to set the right levels for AC vs DC, but brightness
-still got reset to maximum level in initialization code for
-setup_backlight_device().
+Starting from 6.11, AMDGPU driver, while being loaded with amdgpu.dc=1,
+due to lack of .is_two_pixels_per_container function in dce60_tg_funcs,
+causes a NULL pointer dereference on PCs with old GPUs, such as R9 280X.
 
-[How]
-Remove the hardcoded initialization in setup_backlight_device() and
-instead program brightness value to match BIOS (AC or DC).  This avoids a
-brightness flicker from kernel changing the value.  Userspace may however
-still change it during boot.
+So this fix adds missing .is_two_pixels_per_container to dce60_tg_funcs.
 
-Fixes: 2fe87f54abdc ("drm/amd/display: Set default brightness according to ACPI")
-Acked-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reported-by: Rosen Penev <rosenp@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3942
+Fixes: e6a901a00822 ("drm/amd/display: use even ODM slice width for two pixels per container")
+Signed-off-by: Aliaksei Urbanski <aliaksei.urbanski@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0747acf3311229e22009bec4a9e7fc30c879e842)
+(cherry picked from commit bd4b125eb949785c6f8a53b0494e32795421209d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dce60/dce60_timing_generator.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4848,6 +4848,7 @@ amdgpu_dm_register_backlight_device(stru
- 	dm->backlight_dev[aconnector->bl_idx] =
- 		backlight_device_register(bl_name, aconnector->base.kdev, dm,
- 					  &amdgpu_dm_backlight_ops, &props);
-+	dm->brightness[aconnector->bl_idx] = props.brightness;
+--- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_timing_generator.c
++++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_timing_generator.c
+@@ -239,6 +239,7 @@ static const struct timing_generator_fun
+ 				dce60_timing_generator_enable_advanced_request,
+ 		.configure_crc = dce60_configure_crc,
+ 		.get_crc = dce110_get_crc,
++		.is_two_pixels_per_container = dce110_is_two_pixels_per_container,
+ };
  
- 	if (IS_ERR(dm->backlight_dev[aconnector->bl_idx])) {
- 		DRM_ERROR("DM: Backlight registration failed!\n");
-@@ -4915,7 +4916,6 @@ static void setup_backlight_device(struc
- 	aconnector->bl_idx = bl_idx;
- 
- 	amdgpu_dm_update_backlight_caps(dm, bl_idx);
--	dm->brightness[bl_idx] = AMDGPU_MAX_BL_LEVEL;
- 	dm->backlight_link[bl_idx] = link;
- 	dm->num_of_edps++;
- 
+ void dce60_timing_generator_construct(
 
 
