@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4072208993;
-	Wed, 19 Mar 2025 14:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBF11DF98E;
+	Wed, 19 Mar 2025 14:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395014; cv=none; b=l/taurHAtXM8CdZRDGdJE/KS//NvYZOLRZRMqnUKbKbQ1De1a/XTG1ap2re48cF0soirkRIwSLmuJY2w4xoN5RaPGViWVUqLOueHyw/ijS4f/Sx5eDZ6Pq4iI3FBWw4XxLV4EdxXOyaowxnKtwWNQP80moeU6sBaEUmlkYyxsDc=
+	t=1742395015; cv=none; b=MvUymwecgI2X71Ze9IIsZiNsxdtwRehdSJjnyb9gnHEW17lH58U46fpqoSqO3DbYfBDIQc0OqG98Prlf8L/BzSzhUhptYdQJJbfsnc+2e3utZVd75lQHiwTKolPdGM6HmEN8egRq3eouATARkXYJU2qUgYuzPuQNOBwQ1gklAwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395014; c=relaxed/simple;
-	bh=qzKVeO4Q7gbDHska1BFZQo9UwGSbOhMlPmPQzL6z1kQ=;
+	s=arc-20240116; t=1742395015; c=relaxed/simple;
+	bh=V3BtB8bS98KBqj1dEkfRvbBBA7ynGH/2CaGOufpwrjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y1IiQOFiUJ4E3Tzn5hMr+FCDHwIzNjoPDKCfSk5ppI2VsqEX194DdtrFk1FSfownJALAGGkMhEOP30Ce7pPKppeynqLYJPbvqiUMbHcLTSrymVIisjQzbCZ6XLDISnKUUNOPvV2lxeoNdFLTIQEJsHIPVyYL1rzj8vsJ+A5ohF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fp/WcXKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+78raCHs/uSYZct6pn1vGwvGozlOPYvFW4Pl0WXBw8LaifnzXMIC6+1ZrOR4IKvSJ6+8CXzTnUaejSOsh1hxE+vQJXZe6hV5b9X1J7Yw2VNNjXXlJC0L3t+pg0adOfoSLvzwZPT/u6hbypIpp0H+AGccfo+FmPi1B7vA8ZhTTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTIgvVoE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fp/WcXKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F34C4CEE4;
-	Wed, 19 Mar 2025 14:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTIgvVoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F60C4CEE8;
+	Wed, 19 Mar 2025 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395014;
-	bh=qzKVeO4Q7gbDHska1BFZQo9UwGSbOhMlPmPQzL6z1kQ=;
+	s=korg; t=1742395015;
+	bh=V3BtB8bS98KBqj1dEkfRvbBBA7ynGH/2CaGOufpwrjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fp/WcXKtmlOonS7G0P1neIIavHQwdBuQlBAyr9Qs9j8pDgNOosLV/NXAQKL2HhIaO
-	 rqyOOEPtattwRIj2LWu+/lzBE0vqeTRsx2KyxD70Lh2DNJx/VDvVfP0vsXrq2z4JZo
-	 uB1i5GPy3iKVKoqg1T+IyYwurqSoJF4gW/88O5bo=
+	b=aTIgvVoE6EdFyZSi15qZUYmb3E1fghDxTqq14veFfH9Nk/cDgMktILavjxpVIOU+N
+	 +kIf+jp0njoLBRctbBNgkrs+pVAuGXbCYhEY9RC3UytfkugctBWDr4pP5/iAJBiP4j
+	 oILLU7iz5fwofI8OozSy+jCS0JYVNr2ZHKuAt20w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Kelley <mhklinux@outlook.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/231] fbdev: hyperv_fb: Simplify hvfb_putmem
-Date: Wed, 19 Mar 2025 07:28:39 -0700
-Message-ID: <20250319143027.471029818@linuxfoundation.org>
+Subject: [PATCH 6.12 027/231] fbdev: hyperv_fb: Allow graceful removal of framebuffer
+Date: Wed, 19 Mar 2025 07:28:40 -0700
+Message-ID: <20250319143027.494134892@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -54,83 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit f5e728a50bb17336a20803dde488515b833ecd1d ]
+[ Upstream commit ea2f45ab0e53b255f72c85ccd99e2b394fc5fceb ]
 
-The device object required in 'hvfb_release_phymem' function
-for 'dma_free_coherent' can also be obtained from the 'info'
-pointer, making 'hdev' parameter in 'hvfb_putmem' redundant.
-Remove the unnecessary 'hdev' argument from 'hvfb_putmem'.
+When a Hyper-V framebuffer device is unbind, hyperv_fb driver tries to
+release the framebuffer forcefully. If this framebuffer is in use it
+produce the following WARN and hence this framebuffer is never released.
+
+[   44.111220] WARNING: CPU: 35 PID: 1882 at drivers/video/fbdev/core/fb_info.c:70 framebuffer_release+0x2c/0x40
+< snip >
+[   44.111289] Call Trace:
+[   44.111290]  <TASK>
+[   44.111291]  ? show_regs+0x6c/0x80
+[   44.111295]  ? __warn+0x8d/0x150
+[   44.111298]  ? framebuffer_release+0x2c/0x40
+[   44.111300]  ? report_bug+0x182/0x1b0
+[   44.111303]  ? handle_bug+0x6e/0xb0
+[   44.111306]  ? exc_invalid_op+0x18/0x80
+[   44.111308]  ? asm_exc_invalid_op+0x1b/0x20
+[   44.111311]  ? framebuffer_release+0x2c/0x40
+[   44.111313]  ? hvfb_remove+0x86/0xa0 [hyperv_fb]
+[   44.111315]  vmbus_remove+0x24/0x40 [hv_vmbus]
+[   44.111323]  device_remove+0x40/0x80
+[   44.111325]  device_release_driver_internal+0x20b/0x270
+[   44.111327]  ? bus_find_device+0xb3/0xf0
+
+Fix this by moving the release of framebuffer and assosiated memory
+to fb_ops.fb_destroy function, so that framebuffer framework handles
+it gracefully.
+
+While we fix this, also replace manual registrations/unregistration of
+framebuffer with devm_register_framebuffer.
+
+Fixes: 68a2d20b79b1 ("drivers/video: add Hyper-V Synthetic Video Frame Buffer Driver")
 
 Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
 Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/1740845791-19977-2-git-send-email-ssengar@linux.microsoft.com
+Link: https://lore.kernel.org/r/1740845791-19977-3-git-send-email-ssengar@linux.microsoft.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <1740845791-19977-2-git-send-email-ssengar@linux.microsoft.com>
-Stable-dep-of: ea2f45ab0e53 ("fbdev: hyperv_fb: Allow graceful removal of framebuffer")
+Message-ID: <1740845791-19977-3-git-send-email-ssengar@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/hyperv_fb.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/hyperv_fb.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index ce23d0ef5702a..9798a34ac571f 100644
+index 9798a34ac571f..75338ffc703fb 100644
 --- a/drivers/video/fbdev/hyperv_fb.c
 +++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -952,7 +952,7 @@ static phys_addr_t hvfb_get_phymem(struct hv_device *hdev,
+@@ -282,6 +282,8 @@ static uint screen_depth;
+ static uint screen_fb_size;
+ static uint dio_fb_size; /* FB size for deferred IO */
+ 
++static void hvfb_putmem(struct fb_info *info);
++
+ /* Send message to Hyper-V host */
+ static inline int synthvid_send(struct hv_device *hdev,
+ 				struct synthvid_msg *msg)
+@@ -862,6 +864,17 @@ static void hvfb_ops_damage_area(struct fb_info *info, u32 x, u32 y, u32 width,
+ 		hvfb_ondemand_refresh_throttle(par, x, y, width, height);
  }
  
- /* Release contiguous physical memory */
--static void hvfb_release_phymem(struct hv_device *hdev,
-+static void hvfb_release_phymem(struct device *device,
- 				phys_addr_t paddr, unsigned int size)
- {
- 	unsigned int order = get_order(size);
-@@ -960,7 +960,7 @@ static void hvfb_release_phymem(struct hv_device *hdev,
- 	if (order <= MAX_PAGE_ORDER)
- 		__free_pages(pfn_to_page(paddr >> PAGE_SHIFT), order);
- 	else
--		dma_free_coherent(&hdev->device,
-+		dma_free_coherent(device,
- 				  round_up(size, PAGE_SIZE),
- 				  phys_to_virt(paddr),
- 				  paddr);
-@@ -1080,7 +1080,7 @@ static int hvfb_getmem(struct hv_device *hdev, struct fb_info *info)
- }
- 
- /* Release the framebuffer */
--static void hvfb_putmem(struct hv_device *hdev, struct fb_info *info)
-+static void hvfb_putmem(struct fb_info *info)
- {
- 	struct hvfb_par *par = info->par;
- 
-@@ -1089,7 +1089,7 @@ static void hvfb_putmem(struct hv_device *hdev, struct fb_info *info)
- 		iounmap(par->mmio_vp);
- 		vmbus_free_mmio(par->mem->start, screen_fb_size);
- 	} else {
--		hvfb_release_phymem(hdev, info->fix.smem_start,
-+		hvfb_release_phymem(info->device, info->fix.smem_start,
- 				    screen_fb_size);
- 	}
- 
-@@ -1203,7 +1203,7 @@ static int hvfb_probe(struct hv_device *hdev,
- 
- error:
- 	fb_deferred_io_cleanup(info);
--	hvfb_putmem(hdev, info);
++/*
++ * fb_ops.fb_destroy is called by the last put_fb_info() call at the end
++ * of unregister_framebuffer() or fb_release(). Do any cleanup related to
++ * framebuffer here.
++ */
++static void hvfb_destroy(struct fb_info *info)
++{
 +	hvfb_putmem(info);
- error2:
- 	vmbus_close(hdev->channel);
- error1:
-@@ -1232,7 +1232,7 @@ static void hvfb_remove(struct hv_device *hdev)
++	framebuffer_release(info);
++}
++
+ /*
+  * TODO: GEN1 codepaths allocate from system or DMA-able memory. Fix the
+  *       driver to use the _SYSMEM_ or _DMAMEM_ helpers in these cases.
+@@ -877,6 +890,7 @@ static const struct fb_ops hvfb_ops = {
+ 	.fb_set_par = hvfb_set_par,
+ 	.fb_setcolreg = hvfb_setcolreg,
+ 	.fb_blank = hvfb_blank,
++	.fb_destroy	= hvfb_destroy,
+ };
+ 
+ /* Get options from kernel paramenter "video=" */
+@@ -1178,7 +1192,7 @@ static int hvfb_probe(struct hv_device *hdev,
+ 	if (ret)
+ 		goto error;
+ 
+-	ret = register_framebuffer(info);
++	ret = devm_register_framebuffer(&hdev->device, info);
+ 	if (ret) {
+ 		pr_err("Unable to register framebuffer\n");
+ 		goto error;
+@@ -1226,14 +1240,10 @@ static void hvfb_remove(struct hv_device *hdev)
+ 
+ 	fb_deferred_io_cleanup(info);
+ 
+-	unregister_framebuffer(info);
+ 	cancel_delayed_work_sync(&par->dwork);
+ 
  	vmbus_close(hdev->channel);
  	hv_set_drvdata(hdev, NULL);
- 
--	hvfb_putmem(hdev, info);
-+	hvfb_putmem(info);
- 	framebuffer_release(info);
+-
+-	hvfb_putmem(info);
+-	framebuffer_release(info);
  }
  
+ static int hvfb_suspend(struct hv_device *hdev)
 -- 
 2.39.5
 
