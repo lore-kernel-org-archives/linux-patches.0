@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6E41B2194;
-	Wed, 19 Mar 2025 14:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E905F214A9E;
+	Wed, 19 Mar 2025 14:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395069; cv=none; b=lU+F5sj+66X0/eQmc3yh0QFaLkVYu7/U2QKUdid60p1Q3WLclDSxdhUGwbN+pG+ZiHTQjbITMoIX0uHKfJ3ZlCx8YaZfxY0jYkhu6BZ8PGzc/B4f98ism+nDnzXwpwSU8v6FzrN4nqQEHPiBJKc3PtqmVXr2A0LQpRjNDoDRhQE=
+	t=1742395070; cv=none; b=jXJSUJFCGZ6SBevwOpLhUVfQ3ojnkadhShwyN+FCA5cN34HIemdrmTBvz8OpKsUE5L4fLKJQBv/+9j/jJOMZQYFYwy0QXNwAVt2FkAVEdF2Uqcg7aYAl1qYV2Rrwr98Uii/fm3QAUlXmGVVOloTVPwXsy8HQeRM7ur5Nft67qoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395069; c=relaxed/simple;
-	bh=la5yIppOsrKin9x9/QgAz4T9SrWyoP63x80yvsvN+9A=;
+	s=arc-20240116; t=1742395070; c=relaxed/simple;
+	bh=wPDXHV2kcXRpWgMdDHC63YcXS9xxRCVMXsyRhcmo3Qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=az0rQl/VIg7r+lqbHDz4du0/ri0CHSePlvc3Svjw3W6QPWXHrgk65VPUNiK0aTdnPkbYSi7d783OAc+c8yvRdOdTNU7U5qT5WNmKALgLyBINDJkSaRHCMikuowsGqRhmxycXsdB0PoJGF9qCtr2reY7Atcyno5q0b87HPc3+H+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhdmCqkQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aao3Sa++ss+6voML2m5dd+bvoiTbezaSKHkxqDoIdIYOBWAoPqBhTYwbRlx3fiGuJq/B6XG4FPD5v+vvk7MornX68Sd3tu6UqSOb9RzjQsEY1QzXCvOCLi8P2YIRKOsQ911L7wKmDmStpXZ1p4d224qhlx2Ka9R+4S6VJ1J9cQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ts2BTMxI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhdmCqkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BC2C4CEE4;
-	Wed, 19 Mar 2025 14:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ts2BTMxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD5C4CEE4;
+	Wed, 19 Mar 2025 14:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395068;
-	bh=la5yIppOsrKin9x9/QgAz4T9SrWyoP63x80yvsvN+9A=;
+	s=korg; t=1742395069;
+	bh=wPDXHV2kcXRpWgMdDHC63YcXS9xxRCVMXsyRhcmo3Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhdmCqkQzHCuY1JLuZ//mvoZOeBZRNoln8M14kfgbqSTGWvd+wNVeMrv7dUyf371Y
-	 KiBCjXy4XCa6VOHuA4t2DbdyDgUIqAPs0bRv2sXvAioKar2+UrA4NNVLWFthtKlECC
-	 Sw4XZNc118V9jxRTzGpZCaHPBJNH/DRUBdcPOoEg=
+	b=ts2BTMxIpb9o5nkr6WgKh2nEvKlCifMdfYvARsPpXaNfml24aVxRwVfus4YjG5W4O
+	 XNqGa5gg9uoRml8mx3wA50f43Drc5hNgJuK1yD2CRkQLCKm4aexuCq21qqAHdbOkDc
+	 xfZM5xegXcOjggTQOJQwfMqUggqoqqlEch9TLsNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/231] ASoC: Intel: soc-acpi-intel-mtl-match: declare adr as ull
-Date: Wed, 19 Mar 2025 07:29:58 -0700
-Message-ID: <20250319143029.431515205@linuxfoundation.org>
+Subject: [PATCH 6.12 106/231] ASoC: simple-card-utils.c: add missing dlc->of_node
+Date: Wed, 19 Mar 2025 07:29:59 -0700
+Message-ID: <20250319143029.456657195@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -47,42 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 20efccc53abf99fa52ea30a43dec758f6b6b9940 ]
+[ Upstream commit dabbd325b25edb5cdd99c94391817202dd54b651 ]
 
-The adr is u64.
+commit 90de551c1bf ("ASoC: simple-card-utils.c: enable multi Component
+support") added muiti Component support, but was missing to add
+dlc->of_node. Because of it, Sound device list will indicates strange
+name if it was DPCM connection and driver supports dai->driver->dai_args,
+like below
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20250204033134.92332-3-yung-chuan.liao@linux.intel.com
+	> aplay -l
+	card X: sndulcbmix [xxxx], device 0: fe.(null).rsnd-dai.0 (*) []
+	...                                     ^^^^^^
+
+It will be fixed by this patch
+
+	> aplay -l
+	card X: sndulcbmix [xxxx], device 0: fe.sound@ec500000.rsnd-dai.0 (*) []
+	...                                     ^^^^^^^^^^^^^^
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/87ikpp2rtb.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-mtl-match.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/generic/simple-card-utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
-index fd02c864e25ef..a3f7917656371 100644
---- a/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-mtl-match.c
-@@ -297,7 +297,7 @@ static const struct snd_soc_acpi_adr_device rt1316_3_single_adr[] = {
- 
- static const struct snd_soc_acpi_adr_device rt1318_1_single_adr[] = {
- 	{
--		.adr = 0x000130025D131801,
-+		.adr = 0x000130025D131801ull,
- 		.num_endpoints = 1,
- 		.endpoints = &single_endpoint,
- 		.name_prefix = "rt1318-1"
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index fedae7f6f70cc..975ffd2cad292 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -1097,6 +1097,7 @@ int graph_util_parse_dai(struct device *dev, struct device_node *ep,
+ 	args.np = ep;
+ 	dai = snd_soc_get_dai_via_args(&args);
+ 	if (dai) {
++		dlc->of_node  = node;
+ 		dlc->dai_name = snd_soc_dai_name_get(dai);
+ 		dlc->dai_args = snd_soc_copy_dai_args(dev, &args);
+ 		if (!dlc->dai_args)
 -- 
 2.39.5
 
