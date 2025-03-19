@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEC1DF73E;
-	Wed, 19 Mar 2025 14:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619E01DF73E;
+	Wed, 19 Mar 2025 14:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395276; cv=none; b=FQ1s0hNmufXW3MmB0C1DZ7B78sUscS+Khfkxj13cMzAlewUILu/Xc6nz0QtXJnBqwc9l/qv16c/jXEnncvYsQWBAwEcstQXH8qxzFK7u84TI7pI1qICVwDfRO8M4M/yah+pY/YTt2Jxr3etX3qcRlheJ9gpONuJDnwfDpcBEhMI=
+	t=1742395277; cv=none; b=mDT2OnVu5dwlG3XQA9PJLtppE7iUw7S3hNGy8lrW81QZbu/+dE8goVrblIa/6FVQxJ1eDsc0PBiB9U3r/g7POkXkdaIm1p0UKDHWbJIcLI7cG4ukolIacssi3ZhsZ5qq/vdY03eZ/FFUpPRcLo1E2VgUmnBryQHcPF4ddeehJcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395276; c=relaxed/simple;
-	bh=XTknMGRFawRHsBgWc98yfSkjEKd+z0wvMelgsIjW+4k=;
+	s=arc-20240116; t=1742395277; c=relaxed/simple;
+	bh=ZeUdUmOff5Vcb+Hz7zaHlnaigTrijcuPc4Ml2OBQ4fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1X1UBikiB1mFXwWR2wpvXM8ml6Ozl7VhCuF9l4TlJjMD3ITeOVBV7oD7oLywXhuPg3BL+X4/gGAXmpnXh4kbv8Our6viB2U9OrLJbNBKRXEBqEyop/b9njDzOiOpW+QSrgZ85LF+9TpXlvm3Ku2sXAXYcboVxpW6xCBY+mekTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5BeSACN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRlmAzo3zttWouN8bptTVyS6JfG/iGxouFb+IFF9pMTJpIwO/UeshWJohkLrGn8tnL2HUyhUCQPYfAGLxzq+W0kzI+VzWaXg6/AkFJlSWGAqQOvVybybFFx6Wmbf6MzgeM8/uCinn2G36Bd+s6sOdiIkWAm53VwhTIOl6mS18r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI0mPTps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5BeSACN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8768DC4CEE4;
-	Wed, 19 Mar 2025 14:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI0mPTps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EF4C4CEE4;
+	Wed, 19 Mar 2025 14:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395276;
-	bh=XTknMGRFawRHsBgWc98yfSkjEKd+z0wvMelgsIjW+4k=;
+	s=korg; t=1742395277;
+	bh=ZeUdUmOff5Vcb+Hz7zaHlnaigTrijcuPc4Ml2OBQ4fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5BeSACN/DtHw6Sv2sv5iBAzMIjwdfjEoIHmCPjakGqSnMEmQFZ7QRTu5SotW52X3
-	 XMUnRQ/FnBA2BjoT56BsDMyKTngpMFzd6J6BFwzKtiKwETvCiiFJqcfGJhKWrhHFLq
-	 ef94FlJabXUCvKlyHhH/Ts6FFVjHu+EMrhE/AEMQ=
+	b=mI0mPTpshhVGbKN+tIugMRNY7ReYwOO9WoHbeye5qh3UZDU9QyXGkA5BC/XDP/XMQ
+	 rbqYmQ1PGNTxNV42cClOynppvYwhNED42ZAiEKjZEeDO9MW9QIR87GonKkvmXA4HWT
+	 AO40St/nII/x+tkV/VuRRJOf+V4ogMvp3hGLPCZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 162/166] nvme-tcp: Fix a C2HTermReq error message
-Date: Wed, 19 Mar 2025 07:32:13 -0700
-Message-ID: <20250319143024.416411466@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Benno Lossin <benno.lossin@proton.me>
+Subject: [PATCH 6.6 163/166] rust: lockdep: Remove support for dynamically allocated LockClassKeys
+Date: Wed, 19 Mar 2025 07:32:14 -0700
+Message-ID: <20250319143024.442659502@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,33 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Mitchell Levy <levymitchell0@gmail.com>
 
-commit afb41b08c44e5386f2f52fa859010ac4afd2b66f upstream.
+commit 966944f3711665db13e214fef6d02982c49bb972 upstream.
 
-In H2CTermReq, a FES with value 0x05 means "R2T Limit Exceeded"; but
-in C2HTermReq the same value has a different meaning (Data Transfer Limit
-Exceeded).
+Currently, dynamically allocated LockCLassKeys can be used from the Rust
+side without having them registered. This is a soundness issue, so
+remove them.
 
-Fixes: 84e009042d0f ("nvme-tcp: add basic support for the C2HTermReq PDU")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 6ea5aa08857a ("rust: sync: introduce `LockClassKey`")
+Suggested-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250307232717.1759087-11-boqun.feng@gmail.com
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/sync.rs |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -719,7 +719,7 @@ static void nvme_tcp_handle_c2h_term(str
- 		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
- 		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
- 		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
--		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
-+		[NVME_TCP_FES_DATA_LIMIT_EXCEEDED] = "Data Transfer Limit Exceeded",
- 		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
- 	};
+--- a/rust/kernel/sync.rs
++++ b/rust/kernel/sync.rs
+@@ -26,11 +26,6 @@ pub struct LockClassKey(Opaque<bindings:
+ unsafe impl Sync for LockClassKey {}
  
+ impl LockClassKey {
+-    /// Creates a new lock class key.
+-    pub const fn new() -> Self {
+-        Self(Opaque::uninit())
+-    }
+-
+     pub(crate) fn as_ptr(&self) -> *mut bindings::lock_class_key {
+         self.0.get()
+     }
+@@ -41,7 +36,10 @@ impl LockClassKey {
+ #[macro_export]
+ macro_rules! static_lock_class {
+     () => {{
+-        static CLASS: $crate::sync::LockClassKey = $crate::sync::LockClassKey::new();
++        static CLASS: $crate::sync::LockClassKey =
++            // SAFETY: lockdep expects uninitialized memory when it's handed a statically allocated
++            // lock_class_key
++            unsafe { ::core::mem::MaybeUninit::uninit().assume_init() };
+         &CLASS
+     }};
+ }
 
 
