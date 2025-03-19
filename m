@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F7421D011;
-	Wed, 19 Mar 2025 14:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9491DE4C9;
+	Wed, 19 Mar 2025 14:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395151; cv=none; b=QvmcYm5P4HONGq38qVtemj2TlAY4mIEKXUhSPjJ8jkd0qfpd0YPuyZatVFUeTY/2xs6rXkILOLDBdnYh7VpMHREWMlHev15Rkwf4fyaHYes98wrbNrWHs/Hrwb5KplulzHMCgonsmxOPA6R06FUfurqSe9bENLyIh/neAOt212Y=
+	t=1742395152; cv=none; b=lgBl+B7ZOJs/5Ae/LavbZymNd3o8rwkCb5U0WNW3INWQ1RgCMoo4XqJhC8i+tIb2hGPkMMsSDjWAZxxj6Vu+JerEet26Si5fn8FvAoPzuy2KYrCQEtXKSS4aWJ/DqIBbLf3LjfdSgOYmMEGsie9rKuOiyEJWeNgCbnMr/SJC1us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395151; c=relaxed/simple;
-	bh=Sngmd6U3Rnkf5K7O0sq5ZxXysZudZb2snCg5L5f2loI=;
+	s=arc-20240116; t=1742395152; c=relaxed/simple;
+	bh=IZc+1CsldkWqz1WmVsQaQKJs5lnbAsKF/CnHkIED7uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpfNPvA7cxfmiWwEk6MVeD8pthPs2dqYiwyp4qTY0+E/onMUGrnXdtK46acexafArnMN9fbvaqzqV/ataJDQo5WiVpcT1OCRBGXpURVq2LlchZTarsWkJCYxVKIS8Bix2tGv0HRiQrW9zBLukESym3OEC/8UeOMlqVzQBggj2yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qK3LyWjb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SKJJKJz3fHJsKhbfDOHX9us8qjVPcFEOkLigsNVATTg14XaMJpWzArEhPpQ1YKKUtcLiXwwr1RduNiuqboHGix6+JxWK2WlSMj/XdMhNakMwha7QmmppA7JctOkRYhXI4KYlexa97GWLr5ZveejvrkU1ugDcZ/nn2cHpPjJwp1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYoXVsBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK3LyWjb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982BEC4CEE4;
-	Wed, 19 Mar 2025 14:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYoXVsBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4186BC4CEE4;
+	Wed, 19 Mar 2025 14:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395151;
-	bh=Sngmd6U3Rnkf5K7O0sq5ZxXysZudZb2snCg5L5f2loI=;
+	s=korg; t=1742395152;
+	bh=IZc+1CsldkWqz1WmVsQaQKJs5lnbAsKF/CnHkIED7uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qK3LyWjbA3vXuqEixYtdBeJ8lAPM2JZaMuTOuPvjOB7dcF6CIgIjZZIkZrxeEEI8c
-	 UNlZ1k8CMCnMTcRQrffTfyGtSuiIztgJq7kpkAa80JYxWCSngSdkxC3RdbEI0ca02P
-	 KpGSecLspwNemoHFlNESONE/zVmINLMQxpHg28w8=
+	b=AYoXVsBtIamkQ21hoTpm+xhB3e41WZFUj9KRlIAaFWJLaOY05opwD194PH2cTDBKC
+	 Rpv0MQAP+f5eCXH5VFTKL7FybTDelvmsmG+9NHnIRvt1d7CnhaJP06iDfImWuW/GLf
+	 NszUKnbd/KG+H70MpsvESbwxayZHLDZiKGfWRU40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrea Righi <arighi@nvidia.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 226/231] sched_ext: selftests/dsp_local_on: Fix selftest on UP systems
-Date: Wed, 19 Mar 2025 07:31:59 -0700
-Message-ID: <20250319143032.422892176@linuxfoundation.org>
+Subject: [PATCH 6.12 227/231] tools/sched_ext: Add helper to check task migration state
+Date: Wed, 19 Mar 2025 07:32:00 -0700
+Message-ID: <20250319143032.447732222@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,29 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Righi <arighi@nvidia.com>
 
-commit 3c7d51b0d29954c40ea3a097e0ec7884b4344331 upstream.
+commit 5f52bbf2f6e0997394cf9c449d44e1c80ff4282c upstream.
 
-In UP systems p->migration_disabled is not available. Fix this by using
-the portable helper is_migration_disabled(p).
+Introduce a new helper for BPF schedulers to determine whether a task
+can migrate or not (supporting both SMP and UP systems).
 
 Fixes: e9fe182772dc ("sched_ext: selftests/dsp_local_on: Fix sporadic failures")
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/sched_ext/dsp_local_on.bpf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/sched_ext/include/scx/common.bpf.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-+++ b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-@@ -43,7 +43,7 @@ void BPF_STRUCT_OPS(dsp_local_on_dispatc
- 	if (!p)
- 		return;
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -333,6 +333,17 @@ static __always_inline const struct cpum
+ 	return (const struct cpumask *)mask;
+ }
  
--	if (p->nr_cpus_allowed == nr_cpus && !p->migration_disabled)
-+	if (p->nr_cpus_allowed == nr_cpus && !is_migration_disabled(p))
- 		target = bpf_get_prandom_u32() % nr_cpus;
- 	else
- 		target = scx_bpf_task_cpu(p);
++/*
++ * Return true if task @p cannot migrate to a different CPU, false
++ * otherwise.
++ */
++static inline bool is_migration_disabled(const struct task_struct *p)
++{
++	if (bpf_core_field_exists(p->migration_disabled))
++		return p->migration_disabled;
++	return false;
++}
++
+ /* rcu */
+ void bpf_rcu_read_lock(void) __ksym;
+ void bpf_rcu_read_unlock(void) __ksym;
 
 
