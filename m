@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C941DE4E0;
-	Wed, 19 Mar 2025 14:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251051C8602;
+	Wed, 19 Mar 2025 14:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395150; cv=none; b=fUIsw41yEQGO9SG+UEP376LBtuunRebw15Elpi29KbtsN9SFYf22qluPjbhkg255UKqjGzEguO6rZUzh/N6kiXPKS8XNU/LWhYBKDQbNJpWG8C73Ax9MGvLVa6BTLNEHpobHpw8hKcSWMZvBOtARRgrwYZXCeSpBGUgSLlZU+so=
+	t=1742395151; cv=none; b=Kv9wl1EE2ayrl2SruVnp2kaE0iL+a6kEQicDa+AePnF4WzlzWBulqi4Ur3Jc+zDlVMNSwAeiWAJoip9O4U+rscgubDBFWvid3H9mQDJyoWq44n1gH0eHBa/BzATxGgTGbBpY57m/fYtUOCjK1xik+XgORhKIoPVJjEd4+xszV4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395150; c=relaxed/simple;
-	bh=+5KJTNngA54WDvNL6BCm5X24mb0y4f4xypr6Kt45yVk=;
+	s=arc-20240116; t=1742395151; c=relaxed/simple;
+	bh=ue7YCMPK/QyxbPrM1GBc+PyWou6ejFSL0dsIWJmMA6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjPb0Q1o3Xc00amtoJd3OkUdMPqF8nS3d0o6htXDxb1IqI7Plv2mUjT4ZJ43dvup+4mZ60lHi+1aUGzGcGrX/5ubXydq1/D1PjQGt6ptIGoboc2UnhasYmuuF9lZo5nPBtjeIqP1f+4neY2aCW36FpqQR7osC2MCIc9vq/LSgow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWuUdfZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVRYscZ6EsvOg17SxvICCgxVHHXfSgRzeBKY7ecYGejF2/dTVPhT8QRDoaS5X1EUeKBWnVOcMxBGCAKinlNbaAcl+8GC20Ia1mdZF1orXRrzsibKoVlINonySKcM4/vqmUpKwAR4FFh3Y0WW+Ryc6jRCSEV/Uj/DUlYo9AO0uUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3B+kPiz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWuUdfZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45225C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3B+kPiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1E9C4CEE4;
 	Wed, 19 Mar 2025 14:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395150;
-	bh=+5KJTNngA54WDvNL6BCm5X24mb0y4f4xypr6Kt45yVk=;
+	s=korg; t=1742395151;
+	bh=ue7YCMPK/QyxbPrM1GBc+PyWou6ejFSL0dsIWJmMA6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWuUdfZI8wb8/zUPs/lRDaVPdzF0YJIGkMZPEVEQVJFE4aTRAYiFTG2mKJjLAhH4w
-	 1omM9TlxxE83iUTYv3YD6zHFtf4wg6zZUMKtML0RV0RJVWQ/lArsJLMy6xViDjTXw8
-	 ZShsuxvOzbHxnsfv5dUbMY+n8yN9AvsmM1zozWvU=
+	b=Q3B+kPizjCiffJ2yHz7L00cRcadc+bSkMAgIO0c9gJrCk0SM/GVIMzurQ4AK1ky9J
+	 y4ECRRp/GDqkntB59Ri2tHpTTJGXXmpalj91wJKah01+AQxZxZux2hv+UhJST3w+E6
+	 eALpwVpo7l8sBaMXZyR6Em/FDR1jbpHegQ6LCx6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/231] smb3: add support for IAKerb
-Date: Wed, 19 Mar 2025 07:31:57 -0700
-Message-ID: <20250319143032.371155652@linuxfoundation.org>
+Subject: [PATCH 6.12 225/231] smb: client: Fix match_session bug preventing session reuse
+Date: Wed, 19 Mar 2025 07:31:58 -0700
+Message-ID: <20250319143032.397309933@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -50,122 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit eea5119fa5979c350af5783a8148eacdd4219715 ]
+[ Upstream commit 605b249ea96770ac4fac4b8510a99e0f8442be5e ]
 
-There are now more servers which advertise support for IAKerb (passthrough
-Kerberos authentication via proxy).  IAKerb is a public extension industry
-standard Kerberos protocol that allows a client without line-of-sight
-to a Domain Controller to authenticate. There can be cases where we
-would fail to mount if the server only advertises the OID for IAKerb
-in SPNEGO/GSSAPI.  Add code to allow us to still upcall to userspace
-in these cases to obtain the Kerberos ticket.
+Fix a bug in match_session() that can causes the session to not be
+reused in some cases.
 
+Reproduction steps:
+
+mount.cifs //server/share /mnt/a -o credentials=creds
+mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
+cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+
+mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
+mount.cifs //server/share /mnt/a -o credentials=creds
+cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 605b249ea967 ("smb: client: Fix match_session bug preventing session reuse")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/asn1.c        | 2 ++
- fs/smb/client/cifs_spnego.c | 4 +++-
- fs/smb/client/cifsglob.h    | 4 ++++
- fs/smb/client/sess.c        | 3 ++-
- fs/smb/client/smb2pdu.c     | 2 +-
- 5 files changed, 12 insertions(+), 3 deletions(-)
+ fs/smb/client/connect.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/asn1.c b/fs/smb/client/asn1.c
-index b5724ef9f182f..214a44509e7b9 100644
---- a/fs/smb/client/asn1.c
-+++ b/fs/smb/client/asn1.c
-@@ -52,6 +52,8 @@ int cifs_neg_token_init_mech_type(void *context, size_t hdrlen,
- 		server->sec_kerberos = true;
- 	else if (oid == OID_ntlmssp)
- 		server->sec_ntlmssp = true;
-+	else if (oid == OID_IAKerb)
-+		server->sec_iakerb = true;
- 	else {
- 		char buf[50];
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index fb51cdf552061..d327f31b317db 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1873,9 +1873,8 @@ static int match_session(struct cifs_ses *ses,
+ 			 struct smb3_fs_context *ctx,
+ 			 bool match_super)
+ {
+-	if (ctx->sectype != Unspecified &&
+-	    ctx->sectype != ses->sectype)
+-		return 0;
++	struct TCP_Server_Info *server = ses->server;
++	enum securityEnum ctx_sec, ses_sec;
  
-diff --git a/fs/smb/client/cifs_spnego.c b/fs/smb/client/cifs_spnego.c
-index af7849e5974ff..2ad067886ec3f 100644
---- a/fs/smb/client/cifs_spnego.c
-+++ b/fs/smb/client/cifs_spnego.c
-@@ -130,11 +130,13 @@ cifs_get_spnego_key(struct cifs_ses *sesInfo,
+ 	if (!match_super && ctx->dfs_root_ses != ses->dfs_root_ses)
+ 		return 0;
+@@ -1887,11 +1886,20 @@ static int match_session(struct cifs_ses *ses,
+ 	if (ses->chan_max < ctx->max_channels)
+ 		return 0;
  
- 	dp = description + strlen(description);
- 
--	/* for now, only sec=krb5 and sec=mskrb5 are valid */
-+	/* for now, only sec=krb5 and sec=mskrb5 and iakerb are valid */
- 	if (server->sec_kerberos)
- 		sprintf(dp, ";sec=krb5");
- 	else if (server->sec_mskerberos)
- 		sprintf(dp, ";sec=mskrb5");
-+	else if (server->sec_iakerb)
-+		sprintf(dp, ";sec=iakerb");
- 	else {
- 		cifs_dbg(VFS, "unknown or missing server auth type, use krb5\n");
- 		sprintf(dp, ";sec=krb5");
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index b630beb757a44..a8484af7a2fbc 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -151,6 +151,7 @@ enum securityEnum {
- 	NTLMv2,			/* Legacy NTLM auth with NTLMv2 hash */
- 	RawNTLMSSP,		/* NTLMSSP without SPNEGO, NTLMv2 hash */
- 	Kerberos,		/* Kerberos via SPNEGO */
-+	IAKerb,			/* Kerberos proxy */
- };
- 
- enum cifs_reparse_type {
-@@ -743,6 +744,7 @@ struct TCP_Server_Info {
- 	bool	sec_kerberosu2u;	/* supports U2U Kerberos */
- 	bool	sec_kerberos;		/* supports plain Kerberos */
- 	bool	sec_mskerberos;		/* supports legacy MS Kerberos */
-+	bool	sec_iakerb;		/* supports pass-through auth for Kerberos (krb5 proxy) */
- 	bool	large_buf;		/* is current buffer large? */
- 	/* use SMBD connection instead of socket */
- 	bool	rdma;
-@@ -2115,6 +2117,8 @@ static inline char *get_security_type_str(enum securityEnum sectype)
- 		return "Kerberos";
- 	case NTLMv2:
- 		return "NTLMv2";
+-	switch (ses->sectype) {
++	ctx_sec = server->ops->select_sectype(server, ctx->sectype);
++	ses_sec = server->ops->select_sectype(server, ses->sectype);
++
++	if (ctx_sec != ses_sec)
++		return 0;
++
++	switch (ctx_sec) {
 +	case IAKerb:
-+		return "IAKerb";
+ 	case Kerberos:
+ 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
+ 			return 0;
+ 		break;
++	case NTLMv2:
++	case RawNTLMSSP:
  	default:
- 		return "Unknown";
- 	}
-diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
-index c88e9657f47a8..95e14977baeab 100644
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -1263,12 +1263,13 @@ cifs_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
- 		switch (requested) {
- 		case Kerberos:
- 		case RawNTLMSSP:
-+		case IAKerb:
- 			return requested;
- 		case Unspecified:
- 			if (server->sec_ntlmssp &&
- 			    (global_secflags & CIFSSEC_MAY_NTLMSSP))
- 				return RawNTLMSSP;
--			if ((server->sec_kerberos || server->sec_mskerberos) &&
-+			if ((server->sec_kerberos || server->sec_mskerberos || server->sec_iakerb) &&
- 			    (global_secflags & CIFSSEC_MAY_KRB5))
- 				return Kerberos;
- 			fallthrough;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 89a9b8ffe9d92..75b13175a2e78 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1435,7 +1435,7 @@ smb2_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
- 		if (server->sec_ntlmssp &&
- 			(global_secflags & CIFSSEC_MAY_NTLMSSP))
- 			return RawNTLMSSP;
--		if ((server->sec_kerberos || server->sec_mskerberos) &&
-+		if ((server->sec_kerberos || server->sec_mskerberos || server->sec_iakerb) &&
- 			(global_secflags & CIFSSEC_MAY_KRB5))
- 			return Kerberos;
- 		fallthrough;
+ 		/* NULL username means anonymous session */
+ 		if (ses->user_name == NULL) {
 -- 
 2.39.5
 
