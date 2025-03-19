@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09831C4A24;
-	Wed, 19 Mar 2025 14:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CE01DDA36;
+	Wed, 19 Mar 2025 14:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394969; cv=none; b=L9QgOAxb63GFtB+tpHxXFGxYpcKuaJrAzesGJDMZzXNv9rNqzkjT9dE1P8p+sJtmpmk03lw2AZuyFxrr5axSHLrGpYPtFFY5Hb1twrQt+mxwxllX23SbSei5eblkepXG+HZRvTa3CBs2lf9/SNY+ZGYtIl9lKUwUMsEWyzHJGhg=
+	t=1742394970; cv=none; b=q8wMDHPmXUtdIxyDwvU0K/1lZeibp4yZ6UDtnPl6TohK30qmfDAca4qbIg5SDideHZFPjOyLoO3fDzLEbinvq9KmhcKe/ez5hAT14oWlsgbid8ld4NMreSyheSHk4kCwoQsoGECr3SE88jbVYjdG/9frDCzMxV0kf4992yft23Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394969; c=relaxed/simple;
-	bh=Z8qXk3FDcUMq72bUmMyVsP8LifMfQc7B6iCuUramaYU=;
+	s=arc-20240116; t=1742394970; c=relaxed/simple;
+	bh=A1H/Y6g6rYQO7Qlfs3wvqL8+aD+hl5zqV92bIXom4/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uJV1Ug/LaiJPZJO+Q9Dd6J2cPNrxNeBco/hRLpZgtzhw/uMhh9pR1BURfiMFC66XIDKdttbu4t1qX6+SCzFmgoxR0aLs3eY5yeDTCimr2XPsOmFzJoUyQDK46B/x+QeA69S22h6ryVvo5cpF0bKoMrO2i/TVTDX7aQpI11mPNZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPLHiu8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvDvd3dR+HBu26E4quefM2u0g+NOuIZX5ONHxrDP1EBEz9kib0PbRk8dmXnm450C1yIqNeuNkcOw7oFCh/AxbmkjLEUYSeknSLZHEiJgY/jznG6yQS+3PaRCET7EbHlyVcBNV58gQ7hB8IjJe5HhQCvhzqNN8BXaaIDNyTUc6uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ant/1QOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPLHiu8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5773C4CEE4;
-	Wed, 19 Mar 2025 14:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ant/1QOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59397C4CEE4;
+	Wed, 19 Mar 2025 14:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394969;
-	bh=Z8qXk3FDcUMq72bUmMyVsP8LifMfQc7B6iCuUramaYU=;
+	s=korg; t=1742394970;
+	bh=A1H/Y6g6rYQO7Qlfs3wvqL8+aD+hl5zqV92bIXom4/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPLHiu8hfUY/ejT1js6v8akyB/X31vrZ2nljol2Ja1HvaFzHQuS+kq5PAtkFggkFo
-	 WCKf3YGdQHAhed4g/kyvB6bXn8sXW0ut44hvAkOHyWOLVgf18cfMsMOSYnsIdGgiNC
-	 S/GUa5yTrgg4a6zwtiu/rRS5sCnWv2T7wKZMRHpQ=
+	b=Ant/1QOspKNf1vax7h6o44EuRn2ffSYer1QAtKml3TFXRplSj5TzKULUHQQqN6vDM
+	 xJiCp1DRkiKLt9bfeBqT/f6ohTa67SPpCf+Y+WFJiGDNxg1IwwJBpUuBy0j7zavXMf
+	 bnIECfuekaR8L+wKUnev7EH6CAZAv/MjRuAeUNM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Botila <andrei.botila@oss.nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.13 204/241] net: phy: nxp-c45-tja11xx: add TJA112XB SGMII PCS restart errata
-Date: Wed, 19 Mar 2025 07:31:14 -0700
-Message-ID: <20250319143032.776492507@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.13 205/241] sched_ext: Validate prev_cpu in scx_bpf_select_cpu_dfl()
+Date: Wed, 19 Mar 2025 07:31:15 -0700
+Message-ID: <20250319143032.809824260@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -44,85 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Botila <andrei.botila@oss.nxp.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-commit 48939523843e4813e78920f54937944a8787134b upstream.
+commit 9360dfe4cbd62ff1eb8217b815964931523b75b3 upstream.
 
-TJA1120B/TJA1121B can achieve a stable operation of SGMII after
-a startup event by putting the SGMII PCS into power down mode and
-restart afterwards.
+If a BPF scheduler provides an invalid CPU (outside the nr_cpu_ids
+range) as prev_cpu to scx_bpf_select_cpu_dfl() it can cause a kernel
+crash.
 
-It is necessary to put the SGMII PCS into power down mode and back up.
+To prevent this, validate prev_cpu in scx_bpf_select_cpu_dfl() and
+trigger an scx error if an invalid CPU is specified.
 
-Cc: stable@vger.kernel.org
-Fixes: f1fe5dff2b8a ("net: phy: nxp-c45-tja11xx: add TJA1120 support")
-Signed-off-by: Andrei Botila <andrei.botila@oss.nxp.com>
-Link: https://patch.msgid.link/20250304160619.181046-3-andrei.botila@oss.nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f0e1a0643a59b ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/nxp-c45-tja11xx.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ kernel/sched/ext.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/phy/nxp-c45-tja11xx.c
-+++ b/drivers/net/phy/nxp-c45-tja11xx.c
-@@ -114,6 +114,9 @@
- #define MII_BASIC_CONFIG_RMII		0x5
- #define MII_BASIC_CONFIG_MII		0x4
- 
-+#define VEND1_SGMII_BASIC_CONTROL	0xB000
-+#define SGMII_LPM			BIT(11)
-+
- #define VEND1_SYMBOL_ERROR_CNT_XTD	0x8351
- #define EXTENDED_CNT_EN			BIT(15)
- #define VEND1_MONITOR_STATUS		0xAC80
-@@ -1598,11 +1601,11 @@ static int nxp_c45_set_phy_mode(struct p
- 	return 0;
- }
- 
--/* Errata: ES_TJA1120 and ES_TJA1121 Rev. 1.0 — 28 November 2024 Section 3.1 */
-+/* Errata: ES_TJA1120 and ES_TJA1121 Rev. 1.0 — 28 November 2024 Section 3.1 & 3.2 */
- static void nxp_c45_tja1120_errata(struct phy_device *phydev)
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6376,6 +6376,9 @@ __bpf_kfunc_start_defs();
+ __bpf_kfunc s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
+ 				       u64 wake_flags, bool *is_idle)
  {
-+	bool macsec_ability, sgmii_ability;
- 	int silicon_version, sample_type;
--	bool macsec_ability;
- 	int phy_abilities;
- 	int ret = 0;
- 
-@@ -1619,6 +1622,7 @@ static void nxp_c45_tja1120_errata(struc
- 	phy_abilities = phy_read_mmd(phydev, MDIO_MMD_VEND1,
- 				     VEND1_PORT_ABILITIES);
- 	macsec_ability = !!(phy_abilities & MACSEC_ABILITY);
-+	sgmii_ability = !!(phy_abilities & SGMII_ABILITY);
- 	if ((!macsec_ability && silicon_version == 2) ||
- 	    (macsec_ability && silicon_version == 1)) {
- 		/* TJA1120/TJA1121 PHY configuration errata workaround.
-@@ -1639,6 +1643,18 @@ static void nxp_c45_tja1120_errata(struc
- 
- 		phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F8, 0x0);
- 		phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F9, 0x0);
++	if (!ops_cpu_valid(prev_cpu, NULL))
++		goto prev_cpu;
 +
-+		if (sgmii_ability) {
-+			/* TJA1120B/TJA1121B SGMII PCS restart errata workaround.
-+			 * Put SGMII PCS into power down mode and back up.
-+			 */
-+			phy_set_bits_mmd(phydev, MDIO_MMD_VEND1,
-+					 VEND1_SGMII_BASIC_CONTROL,
-+					 SGMII_LPM);
-+			phy_clear_bits_mmd(phydev, MDIO_MMD_VEND1,
-+					   VEND1_SGMII_BASIC_CONTROL,
-+					   SGMII_LPM);
-+		}
- 	}
- }
- 
+ 	if (!static_branch_likely(&scx_builtin_idle_enabled)) {
+ 		scx_ops_error("built-in idle tracking is disabled");
+ 		goto prev_cpu;
 
 
