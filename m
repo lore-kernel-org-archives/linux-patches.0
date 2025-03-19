@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC771D5CEA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E132144DB;
 	Wed, 19 Mar 2025 14:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395044; cv=none; b=Jt7FiAv3d56spuME1VSUs/o98Kq7UlNTJOR7VxjJvGBq+8sLJwjXnFVJ5Jp7L/6cC8ZiIjxkq0d3Aqvkm9nn95VOMWuwfYZ6+qHNrEVd5jFMIsShMyuugeiwR4FR4bUkVPfesaV+1edpGogk36w4eWLSXa6aHzg0EdnmM3b1o1A=
+	t=1742395044; cv=none; b=IzH56APm1GIqQ1yrXLXVSi76yoS1ET0LOqZobv45WEmW0KWdKbcueWIm1cC8DWgk/D51tV1abjXUA/khnWeWohIgjWIZV27e6G6yS5lcWRqeefx4bFOgLIQT5sdc4EafBlq/Jjf5o8KAymdsFBqaNCBUig5EN5ff9+JtJ4HN968=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395044; c=relaxed/simple;
-	bh=7hUG8WHpQ3ynOIsJTSWMaIjkY0qvzHqDVs5vt1X1e7A=;
+	bh=VeaTGD0ou/V63ug1bDJMRn4bwKJ9pp9QZxBdFrXP9sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gnSzi6GbS/R94q73QxE8hzbruigfRYUbazwXo5Kutg6bbBUbOwe0o/QXFGKlZ1z0RKChrHkpsq9FD78IYqH6SdeGJc6mprVanyOdJI9Y8HO+c2bcgVbcN3jJ8u3Tmr0aKAimUS/qNBfS3cphRO15ZuYwxcEPsBNmVimJzisxR3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15MxjMtS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JcdlolFnOJ2cMzNyUq2sxw4wbvSdxIuq9mti6fhXScvfMF2V4mjH/kORPFulPN6143ESNGJH1O5WJGrutfo4iMc7tcFSZ6ce5kqHxxxP6qFo38oLT6O9vbK7C3cUO9pL21WfWQL8qRnEZ5ciuzkKkuU7UhF7hGVRvq90X1Tq8VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVX3wvV6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15MxjMtS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BDAC4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVX3wvV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9245C4CEE4;
 	Wed, 19 Mar 2025 14:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395044;
-	bh=7hUG8WHpQ3ynOIsJTSWMaIjkY0qvzHqDVs5vt1X1e7A=;
+	bh=VeaTGD0ou/V63ug1bDJMRn4bwKJ9pp9QZxBdFrXP9sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15MxjMtS6MJBc8kEaFhXylmVQXn/60EHOHq0ZEKWw5xKSkMNvNROxemJtnPggFSaU
-	 QXNzCY0e/EZWTYyBXqyJnonvkYX7igHqk1nqFqqWrhoEoLJI+IjRyhMZSa/BiAw3mY
-	 gVsSSTbs1PLgDQP77QX/PB0WLX6mm3k8y9qjWsdY=
+	b=cVX3wvV6YTc9AZ4IWenYz6T7h28aug8kYUAuB2EC/g+C7emhk0emasaCwzIfMp4xk
+	 krVjUAiUdMg8Uu0sY9J+lAMTmRHrhIQYwjbXGkzGHa1XB4JKht/yZFJPC2Zy/tVyvc
+	 YnGfYb1WYwRvNcJiENya2vri4orpaBR9+3YbAtHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gannon Kolding <gannon.kolding@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Justin Lai <justinlai0215@realtek.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/231] ACPI: resource: IRQ override for Eluktronics MECH-17
-Date: Wed, 19 Mar 2025 07:29:22 -0700
-Message-ID: <20250319143028.537258313@linuxfoundation.org>
+Subject: [PATCH 6.12 043/231] rtase: Fix improper release of ring list entries in rtase_sw_reset
+Date: Wed, 19 Mar 2025 07:28:56 -0700
+Message-ID: <20250319143027.878152871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,41 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gannon Kolding <gannon.kolding@gmail.com>
+From: Justin Lai <justinlai0215@realtek.com>
 
-[ Upstream commit 607ab6f85f4194b644ea95ac5fe660ef575db3b4 ]
+[ Upstream commit 415f135ace7fd824cde083184a922e39156055b5 ]
 
-The Eluktronics MECH-17 (GM7RG7N) needs IRQ overriding for the
-keyboard to work.
+Since rtase_init_ring, which is called within rtase_sw_reset, adds ring
+entries already present in the ring list back into the list, it causes
+the ring list to form a cycle. This results in list_for_each_entry_safe
+failing to find an endpoint during traversal, leading to an error.
+Therefore, it is necessary to remove the previously added ring_list nodes
+before calling rtase_init_ring.
 
-Adding a DMI_MATCH entry for this laptop model makes the internal
-keyboard function normally.
-
-Signed-off-by: Gannon Kolding <gannon.kolding@gmail.com>
-Link: https://patch.msgid.link/20250127093902.328361-1-gannon.kolding@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 079600489960 ("rtase: Implement net_device_ops")
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250306070510.18129-1-justinlai0215@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/realtek/rtase/rtase_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 90aaec923889c..b4cd14e7fa76c 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -563,6 +563,12 @@ static const struct dmi_system_id irq1_edge_low_force_override[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
-+			DMI_MATCH(DMI_BOARD_NAME, "MECH-17"),
-+		},
-+	},
- 	{
- 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
- 		.matches = {
+diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+index 14ffd45e9a25a..86dd034fdddc5 100644
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -1501,7 +1501,10 @@ static void rtase_wait_for_quiescence(const struct net_device *dev)
+ static void rtase_sw_reset(struct net_device *dev)
+ {
+ 	struct rtase_private *tp = netdev_priv(dev);
++	struct rtase_ring *ring, *tmp;
++	struct rtase_int_vector *ivec;
+ 	int ret;
++	u32 i;
+ 
+ 	netif_stop_queue(dev);
+ 	netif_carrier_off(dev);
+@@ -1512,6 +1515,13 @@ static void rtase_sw_reset(struct net_device *dev)
+ 	rtase_tx_clear(tp);
+ 	rtase_rx_clear(tp);
+ 
++	for (i = 0; i < tp->int_nums; i++) {
++		ivec = &tp->int_vector[i];
++		list_for_each_entry_safe(ring, tmp, &ivec->ring_list,
++					 ring_entry)
++			list_del(&ring->ring_entry);
++	}
++
+ 	ret = rtase_init_ring(dev);
+ 	if (ret) {
+ 		netdev_err(dev, "unable to init ring\n");
 -- 
 2.39.5
 
