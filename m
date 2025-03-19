@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EB81DED44;
-	Wed, 19 Mar 2025 14:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430971DED54;
+	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394983; cv=none; b=UA5fuG3HuSpGEfeE9dmQOp7O3B6y6ae9RlesRMyT72r/eWrSTPuazW5SJU4udADkQwVYahLlCt/ljNVX4PZ4X9rmGZ+8tMiFaoQJzqMduolqP/uePL6+oOJzgTsWHwuW6kv7e8p9cXtxoNcMm6M/7VAYOkb5/H+l1WLRGeLos1M=
+	t=1742394984; cv=none; b=S2C+fC2NtG2VJBH0PV+ye9swIt2XaknGAX6ZloMbG4+PuuwgsGG9UasHhA5jsmB0mDC36+CDZ36aFnXCHPIk1MwbBrZVhnS6PA6lT2VCqcz+jJIDBfITBRHUnp9m2CagaarFgxVKLNGA7HpZoPUTm9K1CrFG5GZDkq7ife8K+Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394983; c=relaxed/simple;
-	bh=0m9GeUBnmtlBItobqB1YP/u9fDC/8J9Zfqwse8G4sPs=;
+	s=arc-20240116; t=1742394984; c=relaxed/simple;
+	bh=rfJbMEXGED84BgqTzF2TNHrgmjcscDiwRk2/1IumLCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugxUy0h1NU6TtciWR5e/DlZTuz2njMl0vxJRFFOgjne0CImuFPbn1ttaVMpOlCNMpt43o7Rni7n3NbkBoSPz0WOTxyaWaeNt8lhXArVXKuzk6Ppz2126r0tCUYXdrjcp0oferGzG/8f4YOKCwHaNE5CcVFUV+e9uCQaS3rC2crI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wv5/l6V0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHXqdzVxQc1YXBlEj3W0BYxyVH8qHOz4Y8QJdsvgmzRQxauChF1nXQ/70V1kClVB5W7cH/MI2amDLttjKh7hFKak4vzd2jMQrtbV5qpsdY9I4rL2vZ0GQt8FaiNvl+tO8NdYI2/HVYMOCv7usxZA+SNmLqCPjvS2hcXB/EswiMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEJlMnyg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wv5/l6V0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B896C4CEE4;
-	Wed, 19 Mar 2025 14:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEJlMnyg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D960C4CEE8;
+	Wed, 19 Mar 2025 14:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394983;
-	bh=0m9GeUBnmtlBItobqB1YP/u9fDC/8J9Zfqwse8G4sPs=;
+	s=korg; t=1742394984;
+	bh=rfJbMEXGED84BgqTzF2TNHrgmjcscDiwRk2/1IumLCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wv5/l6V0RpU7nRhY3hINBErRwsAk6RsAqHMEr3j2++RL0b2CvEX0cWslC5hZuTRUh
-	 k2/az4FNY85njdliQqu2wv5c0QpPFk/AvBEkrTiY/ffcwDRvCchkuFC2+Z3wZhSJJA
-	 pMG3/I1KkJvfJ5eulkmcuffSFbnDUHJNlxJEOVMY=
+	b=lEJlMnygmWSAUMCQN1cmocV5SpJ9FiaTNbT7TMHEQI3SK4rboeSKTIPbouk0FCdIq
+	 mS0vzsG2lcPnweuvKFcWuGQECM8ceKwLKxDZ5VqT4l1A92CoM7hpP8tFzUjm2wo+hM
+	 7q9Jqn5i/nFUACtfa8iPJt6jnMlpngX3vOVpLl7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Mina Almasry <almasrymina@google.com>
-Subject: [PATCH 6.13 196/241] netmem: prevent TX of unreadable skbs
-Date: Wed, 19 Mar 2025 07:31:06 -0700
-Message-ID: <20250319143032.568317796@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 223/241] gpio: cdev: use raw notifier for line state events
+Date: Wed, 19 Mar 2025 07:31:33 -0700
+Message-ID: <20250319143033.264835125@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -50,51 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit f3600c867c99a2cc8038680ecf211089c50e7971 upstream.
+[ Upstream commit dcb73cbaaeb39c9fd00bf2e019f911725945e2fe ]
 
-Currently on stable trees we have support for netmem/devmem RX but not
-TX. It is not safe to forward/redirect an RX unreadable netmem packet
-into the device's TX path, as the device may call dma-mapping APIs on
-dma addrs that should not be passed to it.
+We use a notifier to implement the mechanism of informing the user-space
+about changes in GPIO line status. We register with the notifier when
+the GPIO character device file is opened and unregister when the last
+reference to the associated file descriptor is dropped.
 
-Fix this by preventing the xmit of unreadable skbs.
+Since commit fcc8b637c542 ("gpiolib: switch the line state notifier to
+atomic") we use the atomic notifier variant. Atomic notifiers call
+rcu_synchronize in atomic_notifier_chain_unregister() which caused a
+significant performance regression in some circumstances, observed by
+user-space when calling close() on the GPIO device file descriptor.
 
-Tested by configuring tc redirect:
+Replace the atomic notifier with the raw variant and provide
+synchronization with a read-write spinlock.
 
-sudo tc qdisc add dev eth1 ingress
-sudo tc filter add dev eth1 ingress protocol ip prio 1 flower ip_proto \
-	tcp src_ip 192.168.1.12 action mirred egress redirect dev eth1
-
-Before, I see unreadable skbs in the driver's TX path passed to dma
-mapping APIs.
-
-After, I don't see unreadable skbs in the driver's TX path passed to dma
-mapping APIs.
-
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250306215520.1415465-1-almasrymina@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fcc8b637c542 ("gpiolib: switch the line state notifier to atomic")
+Reported-by: David Jander <david@protonic.nl>
+Closes: https://lore.kernel.org/all/20250311110034.53959031@erd003.prtnl/
+Tested-by: David Jander <david@protonic.nl>
+Tested-by: Kent Gibson <warthog618@gmail.com>
+Link: https://lore.kernel.org/r/20250311-gpiolib-line-state-raw-notifier-v2-1-138374581e1e@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpiolib-cdev.c | 15 +++++++++------
+ drivers/gpio/gpiolib.c      |  8 +++++---
+ drivers/gpio/gpiolib.h      |  5 ++++-
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3725,6 +3725,9 @@ static struct sk_buff *validate_xmit_skb
- {
- 	netdev_features_t features;
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index 40f76a90fd7db..107d75558b5a8 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2729,8 +2729,9 @@ static int gpio_chrdev_open(struct inode *inode, struct file *file)
+ 	cdev->gdev = gpio_device_get(gdev);
  
-+	if (!skb_frags_readable(skb))
-+		goto out_kfree_skb;
+ 	cdev->lineinfo_changed_nb.notifier_call = lineinfo_changed_notify;
+-	ret = atomic_notifier_chain_register(&gdev->line_state_notifier,
+-					     &cdev->lineinfo_changed_nb);
++	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
++		ret = raw_notifier_chain_register(&gdev->line_state_notifier,
++						  &cdev->lineinfo_changed_nb);
+ 	if (ret)
+ 		goto out_free_bitmap;
+ 
+@@ -2754,8 +2755,9 @@ static int gpio_chrdev_open(struct inode *inode, struct file *file)
+ 	blocking_notifier_chain_unregister(&gdev->device_notifier,
+ 					   &cdev->device_unregistered_nb);
+ out_unregister_line_notifier:
+-	atomic_notifier_chain_unregister(&gdev->line_state_notifier,
+-					 &cdev->lineinfo_changed_nb);
++	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
++		raw_notifier_chain_unregister(&gdev->line_state_notifier,
++					      &cdev->lineinfo_changed_nb);
+ out_free_bitmap:
+ 	gpio_device_put(gdev);
+ 	bitmap_free(cdev->watched_lines);
+@@ -2779,8 +2781,9 @@ static int gpio_chrdev_release(struct inode *inode, struct file *file)
+ 
+ 	blocking_notifier_chain_unregister(&gdev->device_notifier,
+ 					   &cdev->device_unregistered_nb);
+-	atomic_notifier_chain_unregister(&gdev->line_state_notifier,
+-					 &cdev->lineinfo_changed_nb);
++	scoped_guard(write_lock_irqsave, &gdev->line_state_lock)
++		raw_notifier_chain_unregister(&gdev->line_state_notifier,
++					      &cdev->lineinfo_changed_nb);
+ 	bitmap_free(cdev->watched_lines);
+ 	gpio_device_put(gdev);
+ 	kfree(cdev);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 19878bc75e94c..2509b723b34db 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1025,7 +1025,8 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 		}
+ 	}
+ 
+-	ATOMIC_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
++	rwlock_init(&gdev->line_state_lock);
++	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
+ 
+ 	ret = init_srcu_struct(&gdev->srcu);
+@@ -4171,8 +4172,9 @@ EXPORT_SYMBOL_GPL(gpiod_set_array_value_cansleep);
+ 
+ void gpiod_line_state_notify(struct gpio_desc *desc, unsigned long action)
+ {
+-	atomic_notifier_call_chain(&desc->gdev->line_state_notifier,
+-				   action, desc);
++	guard(read_lock_irqsave)(&desc->gdev->line_state_lock);
 +
- 	features = netif_skb_features(skb);
- 	skb = validate_xmit_vlan(skb, features);
- 	if (unlikely(!skb))
++	raw_notifier_call_chain(&desc->gdev->line_state_notifier, action, desc);
+ }
+ 
+ /**
+diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
+index 147156ec502b2..c129a03e20408 100644
+--- a/drivers/gpio/gpiolib.h
++++ b/drivers/gpio/gpiolib.h
+@@ -16,6 +16,7 @@
+ #include <linux/gpio/driver.h>
+ #include <linux/module.h>
+ #include <linux/notifier.h>
++#include <linux/spinlock.h>
+ #include <linux/srcu.h>
+ #include <linux/workqueue.h>
+ 
+@@ -45,6 +46,7 @@
+  * @list: links gpio_device:s together for traversal
+  * @line_state_notifier: used to notify subscribers about lines being
+  *                       requested, released or reconfigured
++ * @line_state_lock: RW-spinlock protecting the line state notifier
+  * @line_state_wq: used to emit line state events from a separate thread in
+  *                 process context
+  * @device_notifier: used to notify character device wait queues about the GPIO
+@@ -72,7 +74,8 @@ struct gpio_device {
+ 	const char		*label;
+ 	void			*data;
+ 	struct list_head        list;
+-	struct atomic_notifier_head line_state_notifier;
++	struct raw_notifier_head line_state_notifier;
++	rwlock_t		line_state_lock;
+ 	struct workqueue_struct	*line_state_wq;
+ 	struct blocking_notifier_head device_notifier;
+ 	struct srcu_struct	srcu;
+-- 
+2.39.5
+
 
 
