@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510671DEFD6;
-	Wed, 19 Mar 2025 14:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C3E1DEFEC;
+	Wed, 19 Mar 2025 14:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394875; cv=none; b=erdchbT26RgVvEX2wKI3zcAEyhInZM9bpE0Mcdv6D5yzrXfqamEcDYjsOQambH/JaIIcCehvZ8icPV6fPzlU6/rDrH8/4Fn6wAJ6YgTA8geKfLeUV3Vnv6wrxaoyimfKH9Z8uuviYsJcUUeyC8G6/PHyN12ue6B7VRiZHcyBSKA=
+	t=1742394875; cv=none; b=KbmzjeSecX9Lkyazcu21iKsKYW/f4lvuLLVsplALTY59ptLvzo7AFcFyy42HgBTsuWOaWEXS/TN9mmPPeZKDHdP/QESKZFF6RsymmY83zKudxD0QTi1Px3h41HKuchqhINdUYnXmWk6wacdSU2yJm30I8gtdkFIKwbLs1hjV09g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394875; c=relaxed/simple;
-	bh=1+dQhc/bWHcKfj1l2JbCuRr/y3sxVCeQ5FQSslXeJLI=;
+	bh=cSO+iCZPUbjgqZfsCLJvIjDq0Gj4rQlygvbhfPkxS00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aw5axEenGlSJaT9MoQVs4YH0cnU+xlb4HH2urNV4qI0H4n/azZPAgm2Kohm3NvQrZL+tPAX96UAwa708qQ6XHhNW4s3AKMt5VCYTo3rhwZiRv0RykkJ6VeSSplrbvyHwKxVYPu86LKHj5Mu9koYtez3c7y3t6dBwvYwBIejyxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKAbg56a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g4qN+trT+it2CyvI40JOxnsby1iosoSzSfxtCVifdaFC7v0wXACfunVoeaIPSRHGhC19a7pVFJ7y7njkFk65P6kkyasWmAWrSNut/kIoWPceFHvKDRO5aNgApJ6v9gKlRa0+SqG5xwqo2l+iOcbM7AwJRgRiotXclBjt9+tmVX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LileyClJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKAbg56a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0019C4CEE4;
-	Wed, 19 Mar 2025 14:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LileyClJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C8EC4CEE4;
+	Wed, 19 Mar 2025 14:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394874;
-	bh=1+dQhc/bWHcKfj1l2JbCuRr/y3sxVCeQ5FQSslXeJLI=;
+	s=korg; t=1742394875;
+	bh=cSO+iCZPUbjgqZfsCLJvIjDq0Gj4rQlygvbhfPkxS00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKAbg56aijG5EaTKHrrfWmbIQB771kOUqV4wCop8dB1ykzOFgHm9H5vWtjrBy/vhA
-	 dcLbuqXNmgFDMeqSxms2A55cgYIz0kJbP1clKEmWNnjjI3EoPOrN+2oq3xfxwFEJD2
-	 q+vv7Iq/IxHKWOUPG1GxSZ+EvsMlUj420u8GdF6I=
+	b=LileyClJHhiwXOPI4PVHwh4J6B3dV1d0+1ZOWBTF8u3vhur2j5CGICJadGviyvXeU
+	 TbJExYJXuSlip6AS3++24uI7sOBus2+ZNlbMQmdxlPxTYYOs/4olrRXpQ2+e3f72c9
+	 YIPRCnPFj4x4tQH7sr+o6CIDO4gm9Ln1bLE9k8do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
+	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 021/241] net/mlx5: Fill out devlink dev info only for PFs
-Date: Wed, 19 Mar 2025 07:28:11 -0700
-Message-ID: <20250319143028.232075534@linuxfoundation.org>
+Subject: [PATCH 6.13 065/241] platform/x86/intel: pmc: fix ltr decode in pmc_core_ltr_show()
+Date: Wed, 19 Mar 2025 07:28:55 -0700
+Message-ID: <20250319143029.332543849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -48,49 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit d749d901b2168389f060b654fdaa08acf6b367d2 ]
+[ Upstream commit 583ef25bb2a094813351a727ddec38b35a15b9f8 ]
 
-Firmware version query is supported on the PFs. Due to this
-following kernel warning log is observed:
+In pmc_core_ltr_show(), promote 'val' to 'u64' to avoid possible integer
+overflow. Values (10 bit) are multiplied by the scale, the result of
+expression is in a range from 1 to 34,326,183,936 which is bigger then
+UINT32_MAX. Compile tested only.
 
-[  188.590344] mlx5_core 0000:08:00.2: mlx5_fw_version_query:816:(pid 1453): fw query isn't supported by the FW
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix it by restricting the query and devlink info to the PF.
-
-Fixes: 8338d9378895 ("net/mlx5: Added devlink info callback")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Link: https://patch.msgid.link/20250306212529.429329-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250123220739.68087-1-d.kandybka@gmail.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/intel/pmc/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 98d4306929f3e..a2cf3e79693dd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -46,6 +46,9 @@ mlx5_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
- 	u32 running_fw, stored_fw;
- 	int err;
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index 3e7f99ac8c941..c5dae640a0b2b 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -625,8 +625,8 @@ static u32 convert_ltr_scale(u32 val)
+ static int pmc_core_ltr_show(struct seq_file *s, void *unused)
+ {
+ 	struct pmc_dev *pmcdev = s->private;
+-	u64 decoded_snoop_ltr, decoded_non_snoop_ltr;
+-	u32 ltr_raw_data, scale, val;
++	u64 decoded_snoop_ltr, decoded_non_snoop_ltr, val;
++	u32 ltr_raw_data, scale;
+ 	u16 snoop_ltr, nonsnoop_ltr;
+ 	unsigned int i, index, ltr_index = 0;
  
-+	if (!mlx5_core_is_pf(dev))
-+		return 0;
-+
- 	err = devlink_info_version_fixed_put(req, "fw.psid", dev->board_id);
- 	if (err)
- 		return err;
 -- 
 2.39.5
 
