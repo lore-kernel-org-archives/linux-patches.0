@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEA41DE4EA;
-	Wed, 19 Mar 2025 14:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273C71DE4FA;
+	Wed, 19 Mar 2025 14:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395163; cv=none; b=V8IzvYAEgP7rJayNMSse5rneG8weXYAq8wsRG42IN6+np9tPDA7HrNXWQReTGdOdVLJ2aDNaMb7dn9F+7wYgzJd/XN3POEBqTDiLCL6rO+En8wWEC2EBCd+ZPRHkUo2V51GlGKhINiYUU2CRiHCfyFI+Ep3gvpuZDFlpfkQXefE=
+	t=1742395164; cv=none; b=XqfVxjT6B5ejPH3sokR8vulIZwrS+TbQS7pdtN9vLN+iz4F2w7oQ0zHpQ9G/dqPevJO4iEDmrN8bsdefOUmZup16tyyNj7MgGxDe3G+7VuwLvWVDAP5RXM3bnuS97ozj4fAiEawJwum9pat6n64+tXpDygeBRUAjd5CnzEKkhNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395163; c=relaxed/simple;
-	bh=Hofi9DAOxFZ/1tCuZdYDtV0hQYXPL5gFNi3lyy3xTnw=;
+	s=arc-20240116; t=1742395164; c=relaxed/simple;
+	bh=NKQ92+qSiFNM5vUT4RsnJCbdCM9pqABjqDso9uCjZBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPpfuC4Gk/qQceb45430UUL0RF6aJ9//XzCSvYVRiP2HGpk0xCWaAqEi99sEQPI+y9P52dXXMz9GdgHWEV4A0wVsX2ipWyJVX+u/JetN/TcrzEiaYZUAV2HowcoS3Vbgu01u2nC+XzZfuWZUHFZBRwEMFJjMNTZEN58VwPUfJU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/voabCs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjwFxJoy8UfejMWjMoiIp3sNpGM7YyJ1FHmRA5YneYomeK42XWoHMuPLuFlr9+I0BXHuzvEqu896MTFbqJrP6cJ4Lp/uW7vaePUMCx3TprOQBf1yCd39xVBKsOphaanZPQxAac9KjSXkQAyU4/KPV5laBYfz16HzkadBRsXMWiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFAoiOwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/voabCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559DEC4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFAoiOwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F272DC4CEE4;
 	Wed, 19 Mar 2025 14:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395163;
-	bh=Hofi9DAOxFZ/1tCuZdYDtV0hQYXPL5gFNi3lyy3xTnw=;
+	s=korg; t=1742395164;
+	bh=NKQ92+qSiFNM5vUT4RsnJCbdCM9pqABjqDso9uCjZBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/voabCs6tiokxR2ml++kMKUX1ZoBmIwX3ueJcdOhflAz8wMMi5gdWKekF5do100G
-	 LRzn9zfkC6qWf5eeEVzsp85xSjQOOhS04doilOrfXVGyShsfNSjqc0I4GGBd/+iXvB
-	 3lf4sFX2ew3hqCJBowTKWD0k1ctWPgP6CLjFtQBU=
+	b=UFAoiOwW5r0Cs/Lnsnkfy1iVkYrkJ9nVeM8zrFtXW4E5gxm7BfrnQKy2hkEG+bOUi
+	 oEBLtMuXAkZNfARl0f0ZE/aBu7BTp5baf1LZV+b23/ne5OE77DKcwnhfHnEHpfc53o
+	 u77V2AU3tiXoYNqfqCseafiKfIA0Tc+qOV1grR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 011/166] ice: fix memory leak in aRFS after reset
-Date: Wed, 19 Mar 2025 07:29:42 -0700
-Message-ID: <20250319143020.289602728@linuxfoundation.org>
+	Nicklas Bo Jensen <njensen@akamai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 012/166] netfilter: nf_conncount: garbage collection is not skipped when jiffies wrap around
+Date: Wed, 19 Mar 2025 07:29:43 -0700
+Message-ID: <20250319143020.319279191@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -54,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Nicklas Bo Jensen <njensen@akamai.com>
 
-[ Upstream commit 23d97f18901ef5e4e264e3b1777fe65c760186b5 ]
+[ Upstream commit df08c94baafb001de6cf44bb7098bb557f36c335 ]
 
-Fix aRFS (accelerated Receive Flow Steering) structures memory leak by
-adding a checker to verify if aRFS memory is already allocated while
-configuring VSI. aRFS objects are allocated in two cases:
-- as part of VSI initialization (at probe), and
-- as part of reset handling
+nf_conncount is supposed to skip garbage collection if it has already
+run garbage collection in the same jiffy. Unfortunately, this is broken
+when jiffies wrap around which this patch fixes.
 
-However, VSI reconfiguration executed during reset involves memory
-allocation one more time, without prior releasing already allocated
-resources. This led to the memory leak with the following signature:
+The problem is that last_gc in the nf_conncount_list struct is an u32,
+but jiffies is an unsigned long which is 8 bytes on my systems. When
+those two are compared it only works until last_gc wraps around.
 
-[root@os-delivery ~]# cat /sys/kernel/debug/kmemleak
-unreferenced object 0xff3c1ca7252e6000 (size 8192):
-  comm "kworker/0:0", pid 8, jiffies 4296833052
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    [<ffffffff991ec485>] __kmalloc_cache_noprof+0x275/0x340
-    [<ffffffffc0a6e06a>] ice_init_arfs+0x3a/0xe0 [ice]
-    [<ffffffffc09f1027>] ice_vsi_cfg_def+0x607/0x850 [ice]
-    [<ffffffffc09f244b>] ice_vsi_setup+0x5b/0x130 [ice]
-    [<ffffffffc09c2131>] ice_init+0x1c1/0x460 [ice]
-    [<ffffffffc09c64af>] ice_probe+0x2af/0x520 [ice]
-    [<ffffffff994fbcd3>] local_pci_probe+0x43/0xa0
-    [<ffffffff98f07103>] work_for_cpu_fn+0x13/0x20
-    [<ffffffff98f0b6d9>] process_one_work+0x179/0x390
-    [<ffffffff98f0c1e9>] worker_thread+0x239/0x340
-    [<ffffffff98f14abc>] kthread+0xcc/0x100
-    [<ffffffff98e45a6d>] ret_from_fork+0x2d/0x50
-    [<ffffffff98e083ba>] ret_from_fork_asm+0x1a/0x30
-    ...
+See bug report: https://bugzilla.netfilter.org/show_bug.cgi?id=1778
+for more details.
 
-Fixes: 28bf26724fdb ("ice: Implement aRFS")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Signed-off-by: Nicklas Bo Jensen <njensen@akamai.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_arfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_arfs.c b/drivers/net/ethernet/intel/ice/ice_arfs.c
-index cca0e753f38ff..d7e0116f67737 100644
---- a/drivers/net/ethernet/intel/ice/ice_arfs.c
-+++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
-@@ -510,7 +510,7 @@ void ice_init_arfs(struct ice_vsi *vsi)
- 	struct hlist_head *arfs_fltr_list;
- 	unsigned int i;
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 5885810da412f..71869ad466467 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -132,7 +132,7 @@ static int __nf_conncount_add(struct net *net,
+ 	struct nf_conn *found_ct;
+ 	unsigned int collect = 0;
  
--	if (!vsi || vsi->type != ICE_VSI_PF)
-+	if (!vsi || vsi->type != ICE_VSI_PF || ice_is_arfs_active(vsi))
- 		return;
+-	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
++	if ((u32)jiffies == list->last_gc)
+ 		goto add_new_node;
  
- 	arfs_fltr_list = kcalloc(ICE_MAX_ARFS_LIST, sizeof(*arfs_fltr_list),
+ 	/* check the saved connections */
+@@ -234,7 +234,7 @@ bool nf_conncount_gc_list(struct net *net,
+ 	bool ret = false;
+ 
+ 	/* don't bother if we just did GC */
+-	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
++	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
+ 
+ 	/* don't bother if other cpu is already doing GC */
 -- 
 2.39.5
 
