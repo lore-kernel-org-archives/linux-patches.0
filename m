@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BAB1DE2C6;
-	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E934F1DDC0F;
+	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395127; cv=none; b=Cmd8FW2zIKKQ2+sJJQklbiS8HuQprf60YcoZX9IxIQWmihel986faZpYylwnB6+keTcNiMHAZr9tBPcV6tYxKgzsP7FT3ewEHUcXXXUjltX4840W2R3jBORJWd/v2SUBczvxoSkRSd6+Ga71cHjnov2jgScdHYaUg6cVzWOgrxc=
+	t=1742395128; cv=none; b=Nwc3WEbgGRNljOzZHgHwsYjVUoUzG+aW204LiB6bPbxJ+0/O3Ot8bKCLtYjZL7klLBEDgX/duU1NysYCz0wHOGG8/dufiaIipt5TYvduWyiZVbMjdhkW/ybUq1IcUs6O0oh60t40FvjLUCVYTSZy1MCYTARz8D78HGh/iI9oReo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395127; c=relaxed/simple;
-	bh=D/WvpTSq751G9avZCR5jAl5xB9BwMyGa2wJI9qc1rg0=;
+	s=arc-20240116; t=1742395128; c=relaxed/simple;
+	bh=fl0tynh98PQ+yXOzivFBDzkaJ6AiKo+3ur30Gyl0wFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/8ST4XAc1TQgAOr24wq9rbo/juPxWlVKwdHC2QgjbTeM3sfRo1fIBb9iISrlXhiO4oNIuAT/r28reFdAsttJF4p0Y/g/QSszsqZwK3ASU+wqtTwBJQvMporNjJL2uz6KpjFhys5vzREgFIRqTDGKungHaLe8CuUH3JRw/nmy0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJJwbsGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SEWiqdD8WfchrbC0zLa0Xi/B2Sw85AXG7AUg9ovbRkSHdtb84NYg9yzDWx4Sb69ZoGfSkhWwGJmAiD/T2vdAx6vxWos5a+WoBMK4B7AEy2G5ooIUUccYjBFJGuCTRRQbtzXpjH6RQAPj5WMEa5UUSVSGL3np7YJdq/5yQ3mh8E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGBu47JR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJJwbsGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7194C4CEE4;
-	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGBu47JR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB18C4CEE4;
+	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395125;
-	bh=D/WvpTSq751G9avZCR5jAl5xB9BwMyGa2wJI9qc1rg0=;
+	s=korg; t=1742395127;
+	bh=fl0tynh98PQ+yXOzivFBDzkaJ6AiKo+3ur30Gyl0wFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJJwbsGuWM0KqxH/+LCtyqoDCTBxEgzFMLmz2FIwAdJfpMwyur8B2RfM4RTQMrp2+
-	 DOGyIBpnuaIhxa9Nb1142KR3/IdeG2owui4xfxXgT32/D3tR0D5e7QkkTLPPjohsmP
-	 vpjfDIaG5XybFi4rwlpEonFrpOzEOftxvKHi2rMI=
+	b=IGBu47JRkQf/mo9ykI3D4rLIGqAwB1golbl+s9M8xVYmPg9cBA4BQnYzn5JVpK8Gq
+	 fzwDkr8Vnn0lGIAluHBroRT2F0zNfhpksQg8IP+JlYFJy8xspsuirnOGuwsgS/E6yE
+	 MIwW31HrkcfKsftxsCZY6ncwT196TUzNr6fqhk+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Mizrahi <thomasmizra@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 188/231] ASoC: amd: yc: Support mic on another Lenovo ThinkPad E16 Gen 2 model
-Date: Wed, 19 Mar 2025 07:31:21 -0700
-Message-ID: <20250319143031.480653566@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 191/231] arm64: mm: Populate vmemmap at the page level if not section aligned
+Date: Wed, 19 Mar 2025 07:31:24 -0700
+Message-ID: <20250319143031.559633317@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -50,45 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Mizrahi <thomasmizra@gmail.com>
+From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 
-commit 0704a15b930cf97073ce091a0cd7ad32f2304329 upstream.
+commit d4234d131b0a3f9e65973f1cdc71bb3560f5d14b upstream.
 
-The internal microphone on the Lenovo ThinkPad E16 model requires a
-quirk entry to work properly. This was fixed in a previous patch (linked
-below), but depending on the specific variant of the model, the product
-name may be "21M5" or "21M6".
+On the arm64 platform with 4K base page config, SECTION_SIZE_BITS is set
+to 27, making one section 128M. The related page struct which vmemmap
+points to is 2M then.
+Commit c1cc1552616d ("arm64: MMU initialisation") optimizes the
+vmemmap to populate at the PMD section level which was suitable
+initially since hot plug granule is always one section(128M). However,
+commit ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+introduced a 2M(SUBSECTION_SIZE) hot plug granule, which disrupted the
+existing arm64 assumptions.
 
-The following patch fixed this issue for the 21M5 variant:
-  https://lore.kernel.org/all/20240725065442.9293-1-tiwai@suse.de/
+The first problem is that if start or end is not aligned to a section
+boundary, such as when a subsection is hot added, populating the entire
+section is wasteful.
 
-This patch adds support for the microphone on the 21M6 variant.
+The next problem is if we hotplug something that spans part of 128 MiB
+section (subsections, let's call it memblock1), and then hotplug something
+that spans another part of a 128 MiB section(subsections, let's call it
+memblock2), and subsequently unplug memblock1, vmemmap_free() will clear
+the entire PMD entry which also supports memblock2 even though memblock2
+is still active.
 
-Link: https://github.com/ramaureirac/thinkpad-e14-linux/issues/31
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Mizrahi <thomasmizra@gmail.com>
-Link: https://patch.msgid.link/20250308041303.198765-1-thomasmizra@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assuming hotplug/unplug sizes are guaranteed to be symmetric. Do the
+fix similar to x86-64: populate to pages levels if start/end is not aligned
+with section boundary.
+
+Cc: stable@vger.kernel.org # v5.4+
+Fixes: ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250304072700.3405036-1-quic_zhenhuah@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/mm/mmu.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -252,6 +252,13 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21M6"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21ME"),
- 		}
- 	},
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1176,8 +1176,11 @@ int __meminit vmemmap_populate(unsigned
+ 		struct vmem_altmap *altmap)
+ {
+ 	WARN_ON((start < VMEMMAP_START) || (end > VMEMMAP_END));
++	/* [start, end] should be within one section */
++	WARN_ON_ONCE(end - start > PAGES_PER_SECTION * sizeof(struct page));
+ 
+-	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES))
++	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES) ||
++	    (end - start < PAGES_PER_SECTION * sizeof(struct page)))
+ 		return vmemmap_populate_basepages(start, end, node, altmap);
+ 	else
+ 		return vmemmap_populate_hugepages(start, end, node, altmap);
 
 
