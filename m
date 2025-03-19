@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2B51C1F02;
-	Wed, 19 Mar 2025 14:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178E81C1F02;
+	Wed, 19 Mar 2025 14:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395078; cv=none; b=mikur593a5Hom9x2fpnUQ34jYGvv7BhI/rbitZTg6ght3oiAND96oFavBQeHEeun7S1pjLikg6GSPxPiO5VbAob+yedvqwSCR3GbS53Cad6T0V3QVyNR/FizwXlXoe7MOBJd1JNuxePRNIK8YXSRB2zPtjE4U2QcCh+8MMNeifU=
+	t=1742395079; cv=none; b=rlG/oC0dIpEN6LtCmP5XQzrZRKIVx6Dw4+I6pkALlNpKs5fFNKsGckpVLz3I6Hqm0hlx2z/jNxXbyvxoCd5erpme8CwmA4UV6PJruRV/1AVTg0IUrCvpRQqCvIDWKK/WWBZqOQV8N6k65WmRkSOB+lcKShRkIIB3BNt8wxH1kDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395078; c=relaxed/simple;
-	bh=px755rGebE2EFa7CaLU96aTx38Jd+L5ubZLYEEpRRCA=;
+	s=arc-20240116; t=1742395079; c=relaxed/simple;
+	bh=IHGYgn5DiuNODoDMr214mn2ajZiR1KWWf1Qz2C16Pog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIXABS/yN1ch7b0IlhKACoHrtEzECFjwfou2SA6shPt7ELERsNOA7xeED7FtecU2mFlcps+QCuS/L5pEdeNCuTccSv45i7ZxpjalD+u7SOtuaQo6n6Oqg4CaVlSMndP4jt/X8AjO48C8aPcmv7eIH688aIxoAvCVX8TlPeopCo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NneyxBeJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbezcVuBpinB9g0XpcvRReFgST569kW9jQF9wXL06+mMNHASa5/KxL4nJy3HlyzyW8QbSxg6dKbM1xX8E5WRr/VipjFODKM0xsKIgnon9opUCxvKOlxXWe9ygzvfuwoofqcjVHfnF6jFxYSFIKYxsS0eFLCp5OGYE6eiAlfn/dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCNqs5Qn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NneyxBeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300D1C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCNqs5Qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE48C4CEE4;
 	Wed, 19 Mar 2025 14:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395078;
-	bh=px755rGebE2EFa7CaLU96aTx38Jd+L5ubZLYEEpRRCA=;
+	s=korg; t=1742395079;
+	bh=IHGYgn5DiuNODoDMr214mn2ajZiR1KWWf1Qz2C16Pog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NneyxBeJlfwX8oTvE6vTgmaLTKYrOAf4HscGTFL1DiQdEnE6juZCA/pQrWkCKtVTb
-	 PJic97N0iV+ulcHOZl5oRMZi5lzqQpDrf2qN/dgd0tbsYjQlMLizaKDrERF/1trBqf
-	 4vYqY5bwZkFTaJE/lGUdbdLhN3bz5MS9VGmIf7r0=
+	b=QCNqs5QnpzDkOFFZpAL0E7bWQoSsxu6LufmwZ7+RWd1ClpgzVwaM7HQRnA7X6PmMN
+	 kgaK+4RjLMqyBX7uh9LTY4CkgZV4nbkqHJPrgRmNRQxgqq4Gs0iNrEmvbqC2AJHNqN
+	 v5eH2UeuLcOiaeA+NblsuPDrx9DDM5mpQ0F6HVB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/231] ASoC: SOF: amd: Handle IPC replies before FW_BOOT_COMPLETE
-Date: Wed, 19 Mar 2025 07:30:11 -0700
-Message-ID: <20250319143029.759493449@linuxfoundation.org>
+Subject: [PATCH 6.12 119/231] net: wwan: mhi_wwan_mbim: Silence sequence number glitch errors
+Date: Wed, 19 Mar 2025 07:30:12 -0700
+Message-ID: <20250319143029.783177254@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,66 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit ac84ca815adb4171a4276b1d44096b75f6a150b7 ]
+[ Upstream commit 0d1fac6d26aff5df21bb4ec980d9b7a11c410b96 ]
 
-In some cases, e.g. during resuming from suspend, there is a possibility
-that some IPC reply messages get received by the host while the DSP
-firmware has not yet reached the complete boot state.
+When using the Qualcomm X55 modem on the ThinkPad X13s, the kernel log is
+constantly being filled with errors related to a "sequence number glitch",
+e.g.:
 
-Detect when this happens and do not attempt to process the unexpected
-replies from DSP.  Instead, provide proper debugging support.
+	[ 1903.284538] sequence number glitch prev=16 curr=0
+	[ 1913.812205] sequence number glitch prev=50 curr=0
+	[ 1923.698219] sequence number glitch prev=142 curr=0
+	[ 2029.248276] sequence number glitch prev=1555 curr=0
+	[ 2046.333059] sequence number glitch prev=70 curr=0
+	[ 2076.520067] sequence number glitch prev=272 curr=0
+	[ 2158.704202] sequence number glitch prev=2655 curr=0
+	[ 2218.530776] sequence number glitch prev=2349 curr=0
+	[ 2225.579092] sequence number glitch prev=6 curr=0
 
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20250207-sof-vangogh-fixes-v1-3-67824c1e4c9a@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Internet connectivity is working fine, so this error seems harmless. It
+looks like modem does not preserve the sequence number when entering low
+power state; the amount of errors depends on how actively the modem is
+being used.
+
+A similar issue has also been seen on USB-based MBIM modems [1]. However,
+in cdc_ncm.c the "sequence number glitch" message is a debug message
+instead of an error. Apply the same to the mhi_wwan_mbim.c driver to
+silence these errors when using the modem.
+
+[1]: https://lists.freedesktop.org/archives/libmbim-devel/2016-November/000781.html
+
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://patch.msgid.link/20250212-mhi-wwan-mbim-sequence-glitch-v1-1-503735977cbd@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp-ipc.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/net/wwan/mhi_wwan_mbim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
-index b44b1b1adb6ed..cf3994a705f94 100644
---- a/sound/soc/sof/amd/acp-ipc.c
-+++ b/sound/soc/sof/amd/acp-ipc.c
-@@ -167,6 +167,7 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
- 
- 	if (sdev->first_boot && sdev->fw_state != SOF_FW_BOOT_COMPLETE) {
- 		acp_mailbox_read(sdev, sdev->dsp_box.offset, &status, sizeof(status));
-+
- 		if ((status & SOF_IPC_PANIC_MAGIC_MASK) == SOF_IPC_PANIC_MAGIC) {
- 			snd_sof_dsp_panic(sdev, sdev->dsp_box.offset + sizeof(status),
- 					  true);
-@@ -188,13 +189,21 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
- 
- 	dsp_ack = snd_sof_dsp_read(sdev, ACP_DSP_BAR, ACP_SCRATCH_REG_0 + dsp_ack_write);
- 	if (dsp_ack) {
--		spin_lock_irq(&sdev->ipc_lock);
--		/* handle immediate reply from DSP core */
--		acp_dsp_ipc_get_reply(sdev);
--		snd_sof_ipc_reply(sdev, 0);
--		/* set the done bit */
--		acp_dsp_ipc_dsp_done(sdev);
--		spin_unlock_irq(&sdev->ipc_lock);
-+		if (likely(sdev->fw_state == SOF_FW_BOOT_COMPLETE)) {
-+			spin_lock_irq(&sdev->ipc_lock);
-+
-+			/* handle immediate reply from DSP core */
-+			acp_dsp_ipc_get_reply(sdev);
-+			snd_sof_ipc_reply(sdev, 0);
-+			/* set the done bit */
-+			acp_dsp_ipc_dsp_done(sdev);
-+
-+			spin_unlock_irq(&sdev->ipc_lock);
-+		} else {
-+			dev_dbg_ratelimited(sdev->dev, "IPC reply before FW_BOOT_COMPLETE: %#x\n",
-+					    dsp_ack);
-+		}
-+
- 		ipc_irq = true;
+diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
+index d5a9360323d29..8755c5e6a65b3 100644
+--- a/drivers/net/wwan/mhi_wwan_mbim.c
++++ b/drivers/net/wwan/mhi_wwan_mbim.c
+@@ -220,7 +220,7 @@ static int mbim_rx_verify_nth16(struct mhi_mbim_context *mbim, struct sk_buff *s
+ 	if (mbim->rx_seq + 1 != le16_to_cpu(nth16->wSequence) &&
+ 	    (mbim->rx_seq || le16_to_cpu(nth16->wSequence)) &&
+ 	    !(mbim->rx_seq == 0xffff && !le16_to_cpu(nth16->wSequence))) {
+-		net_err_ratelimited("sequence number glitch prev=%d curr=%d\n",
++		net_dbg_ratelimited("sequence number glitch prev=%d curr=%d\n",
+ 				    mbim->rx_seq, le16_to_cpu(nth16->wSequence));
  	}
- 
+ 	mbim->rx_seq = le16_to_cpu(nth16->wSequence);
 -- 
 2.39.5
 
