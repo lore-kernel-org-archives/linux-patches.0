@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8691C1F09BD;
-	Wed, 19 Mar 2025 14:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D16B1F09A2;
+	Wed, 19 Mar 2025 14:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395165; cv=none; b=TZUEphnPrHXRjGi3a9JTAlgRR24z4AonfDgedHxsg4wcGsBO7ouCDjTSl2yNnHOFKR/4za9YzJEpD79Gs5IY/9yLqw7wSEWWIEWRy5d8oZpQwlvXtu0yUhv6VyzZOoWxI+PFnshRtF6LkhSbBXCEW3vUvMOTW4GS+Nje4hiCZ54=
+	t=1742395166; cv=none; b=B4Etl/f7l1J5VaTHETC7ZR8p6GNLskyklPGujGp6zAMqwpaGPlGJPsT3M3D+Fm72q52phPEJmzFt6XqFT195wb6LrAnJzMUj4U8nqGUXmovcUNED1iNFm0qcjTiAwBrItctq/kg7je+ttVEbH0ZIlrP3WxeArSMIF0A+PoQKHOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395165; c=relaxed/simple;
-	bh=GoAwHghT1E+Mt2PnG1gDlvkQZsp+OyG28FcDvrBGGMs=;
+	s=arc-20240116; t=1742395166; c=relaxed/simple;
+	bh=zngIUVi0A1eXVt0mCLZncDIOEBPR1IC0aysjgmfGHE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBGOeuhv4bGwZTJJgmYXYwp9oKXQx1wUt4KtLQCPXKVOC0IUecyUWHFj9syUWHixPHOxT1BIiTAaPmRp3Y7MaKe/20z8OiR5DwdmXYfEdiIq1m9nr7+ypjWlBowbixDITlvDn/yZ35KPK+g/0IPNoI0Cte8fC2EWRKteHrpV5HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIjeG29G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IG6ve7DvTE3oxl9Qlz2rco6Wk4NxcWC1sPX8GNzJNlscTZR+7xVX7BWBKiEAirNOkc2CV+8qPTWBAnZFvhHz2+kKMtDjfB8GdY6j9DCyjWXIwzA8KoCj4feovYCXE1ff9hpPxWRQLUipHv2FlVmZFjY6Jsy85R5xx5NObW/bAr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IInqopI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIjeG29G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B09BC4CEE4;
-	Wed, 19 Mar 2025 14:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IInqopI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C743C4CEE4;
+	Wed, 19 Mar 2025 14:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395165;
-	bh=GoAwHghT1E+Mt2PnG1gDlvkQZsp+OyG28FcDvrBGGMs=;
+	s=korg; t=1742395166;
+	bh=zngIUVi0A1eXVt0mCLZncDIOEBPR1IC0aysjgmfGHE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIjeG29Gfs5UNrrH55sgFuo3uIJAf/opG8VJCSURRtILnt/tUxRacUylFF/lntAW9
-	 Gc6E12OdeUtFjXDesniacnpHntGE+UP3EpU/4bZRqMuenAlBQNnPXNeVkn6mz4swxT
-	 ns0NJR41LN383upau0BcAU/GJ4alCKKQmecWrZOI=
+	b=0IInqopIW836WPjarlMcAQrglUekYrj9HeHHScxmQedDPsxcHZxDjb/6q43CHZTOI
+	 LhRe9LTUcPDxVB2q68ImPz47eGQcBQbrPW67Ouwrn53q9pdAtmDzoO5t1d0C5jXqpi
+	 GbDq9i7fTB4NfHvzebfr9H1ceDzLooQS9ZE8eSbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/166] wifi: cfg80211: cancel wiphy_work before freeing wiphy
-Date: Wed, 19 Mar 2025 07:29:45 -0700
-Message-ID: <20250319143020.369687543@linuxfoundation.org>
+Subject: [PATCH 6.6 015/166] Bluetooth: hci_event: Fix enabling passive scanning
+Date: Wed, 19 Mar 2025 07:29:46 -0700
+Message-ID: <20250319143020.395875497@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,48 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 72d520476a2fab6f3489e8388ab524985d6c4b90 ]
+[ Upstream commit 0bdd88971519cfa8a76d1a4dde182e74cfbd5d5c ]
 
-A wiphy_work can be queued from the moment the wiphy is allocated and
-initialized (i.e. wiphy_new_nm). When a wiphy_work is queued, the
-rdev::wiphy_work is getting queued.
+Passive scanning shall only be enabled when disconnecting LE links,
+otherwise it may start result in triggering scanning when e.g. an ISO
+link disconnects:
 
-If wiphy_free is called before the rdev::wiphy_work had a chance to run,
-the wiphy memory will be freed, and then when it eventally gets to run
-it'll use invalid memory.
+> HCI Event: LE Meta Event (0x3e) plen 29
+      LE Connected Isochronous Stream Established (0x19)
+        Status: Success (0x00)
+        Connection Handle: 257
+        CIG Synchronization Delay: 0 us (0x000000)
+        CIS Synchronization Delay: 0 us (0x000000)
+        Central to Peripheral Latency: 10000 us (0x002710)
+        Peripheral to Central Latency: 10000 us (0x002710)
+        Central to Peripheral PHY: LE 2M (0x02)
+        Peripheral to Central PHY: LE 2M (0x02)
+        Number of Subevents: 1
+        Central to Peripheral Burst Number: 1
+        Peripheral to Central Burst Number: 1
+        Central to Peripheral Flush Timeout: 2
+        Peripheral to Central Flush Timeout: 2
+        Central to Peripheral MTU: 320
+        Peripheral to Central MTU: 160
+        ISO Interval: 10.00 msec (0x0008)
+...
+> HCI Event: Disconnect Complete (0x05) plen 4
+        Status: Success (0x00)
+        Handle: 257
+        Reason: Remote User Terminated Connection (0x13)
+< HCI Command: LE Set Extended Scan Enable (0x08|0x0042) plen 6
+        Extended scan: Enabled (0x01)
+        Filter duplicates: Enabled (0x01)
+        Duration: 0 msec (0x0000)
+        Period: 0.00 sec (0x0000)
 
-Fix this by canceling the work before freeing the wiphy.
-
-Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20250306123626.efd1d19f6e07.I48229f96f4067ef73f5b87302335e2fd750136c9@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 9fcb18ef3acb ("Bluetooth: Introduce LE auto connect options")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/hci_event.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 3c1247933ae92..a2b15349324b6 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1151,6 +1151,13 @@ void cfg80211_dev_free(struct cfg80211_registered_device *rdev)
- {
- 	struct cfg80211_internal_bss *scan, *tmp;
- 	struct cfg80211_beacon_registration *reg, *treg;
-+	unsigned long flags;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 01e51e1dc9b33..1e689d8c00a50 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3394,23 +3394,30 @@ static void hci_disconn_complete_evt(struct hci_dev *hdev, void *data,
+ 		hci_update_scan(hdev);
+ 	}
+ 
+-	params = hci_conn_params_lookup(hdev, &conn->dst, conn->dst_type);
+-	if (params) {
+-		switch (params->auto_connect) {
+-		case HCI_AUTO_CONN_LINK_LOSS:
+-			if (ev->reason != HCI_ERROR_CONNECTION_TIMEOUT)
++	/* Re-enable passive scanning if disconnected device is marked
++	 * as auto-connectable.
++	 */
++	if (conn->type == LE_LINK) {
++		params = hci_conn_params_lookup(hdev, &conn->dst,
++						conn->dst_type);
++		if (params) {
++			switch (params->auto_connect) {
++			case HCI_AUTO_CONN_LINK_LOSS:
++				if (ev->reason != HCI_ERROR_CONNECTION_TIMEOUT)
++					break;
++				fallthrough;
 +
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	WARN_ON(!list_empty(&rdev->wiphy_work_list));
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+	cancel_work_sync(&rdev->wiphy_work);
-+
- 	rfkill_destroy(rdev->wiphy.rfkill);
- 	list_for_each_entry_safe(reg, treg, &rdev->beacon_registrations, list) {
- 		list_del(&reg->list);
++			case HCI_AUTO_CONN_DIRECT:
++			case HCI_AUTO_CONN_ALWAYS:
++				hci_pend_le_list_del_init(params);
++				hci_pend_le_list_add(params,
++						     &hdev->pend_le_conns);
++				hci_update_passive_scan(hdev);
+ 				break;
+-			fallthrough;
+ 
+-		case HCI_AUTO_CONN_DIRECT:
+-		case HCI_AUTO_CONN_ALWAYS:
+-			hci_pend_le_list_del_init(params);
+-			hci_pend_le_list_add(params, &hdev->pend_le_conns);
+-			hci_update_passive_scan(hdev);
+-			break;
+-
+-		default:
+-			break;
++			default:
++				break;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.39.5
 
