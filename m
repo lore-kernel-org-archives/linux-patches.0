@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102291CAA60;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE5A1CAA60;
 	Wed, 19 Mar 2025 14:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395205; cv=none; b=oA95tioLKGyORqfOTgtB3raPGkVNnxyAmXLyRiINu/Ht0mxOw0z/kGH2xUvXSFzNjXOgJi3JuUB3F+NMFf52tPGXxmB0IUf9gMgn1s/DAeqzP3525OCkXi0NcsycrEmcoP8rlZCRQaKNAxvzYA4Yu3PGtH7zSzEUQD82npXEkQA=
+	t=1742395205; cv=none; b=amXEcEotKcCbkKcqogeUzr5z6XLIvMtCRA0ZDT/arsQcw1O8TsGHRVaAQj73Bf8KkH85DGHrjdL6Qf7pcsHyEX3BJq9QfDVL1Sfi1L11ynRWnicswkV6DnoSsN/i2pO0hU8m82Jpvr+NOb4PKJ3eQVY4l5brWlLaoUSkjuOPOwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395205; c=relaxed/simple;
-	bh=dXvuQ2oRs+87MX+TkTPZBvUM1PhOCjt0mJrR9XpBnYo=;
+	bh=UnEQ49rQCVKVdIq+9IJwafsgKgwnmvFMcQ7G7B/7JPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6hITpeSpOcYx36ZbReRLzTjM5X9Bx97bYRy24M+J1AYnf3s9XEx17Faf07WZZBFv1Cgv/EftWfEd7QxN1PO1LAYZcFkRvA8+pj+0VDX/jM8HjLfOJ32IQ6+rE4ydH0Y7nsEc68/ZxFq9xFFXaZnla0kV73Cu2Fo9CO2fL2OuEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZ07qHAL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=loh8pHJM4wKeHznBCHCXuAFFjrjqOayJxZVhU9PiCMlI3FDgZFO2q12oxhwj4m8r0vLXWW/FHyoApKK1hLfHzKHVkw9JLgv5EqJDM21OMO4fBzq2VhbDrSg3K3zpHcDlCMajh4jwQ95AiAR1+aB8SOb03jWDwmgWvKQYy15/wlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkWWKx2H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZ07qHAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEECC4CEE4;
-	Wed, 19 Mar 2025 14:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkWWKx2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83585C4CEE4;
+	Wed, 19 Mar 2025 14:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395204;
-	bh=dXvuQ2oRs+87MX+TkTPZBvUM1PhOCjt0mJrR9XpBnYo=;
+	s=korg; t=1742395205;
+	bh=UnEQ49rQCVKVdIq+9IJwafsgKgwnmvFMcQ7G7B/7JPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZ07qHALc46ENlZTAncj5V+9HaS6X8rtYbc+jsAFoimaSEDLSAuDCVI25X1W/OJ49
-	 RS6atZu2MZSA3VFjaGb42Sp4vBvOPx1EfXFfo4YsdF0sL694E14g1ubEaHYF754dJa
-	 LnlIxJs6NtjacKPd5VChiBjjAP+iuygDe+F+uRoQ=
+	b=VkWWKx2H793uHmsdkpkLMbed2noLvFfMsj8azN8epdCV1F71nLiPxGbuRTN6aCrHb
+	 FSI8rhv/VsOvOuO5EBNvIKMGcMOhy2lodmtkx18I4o5vaU2m5MG0ffhkYO4/L/ytoZ
+	 muH8yLZ9p6u8sASI29khPuSqGrSoKEX+G1XgHKhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/166] net/mlx5: Lag, Check shared fdb before creating MultiPort E-Switch
-Date: Wed, 19 Mar 2025 07:30:04 -0700
-Message-ID: <20250319143020.887363072@linuxfoundation.org>
+Subject: [PATCH 6.6 069/166] ASoC: rsnd: dont indicate warning on rsnd_kctrl_accept_runtime()
+Date: Wed, 19 Mar 2025 07:30:40 -0700
+Message-ID: <20250319143021.885805303@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -54,76 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 32966984bee1defd9f5a8f9be274d7c32f911ba1 ]
+[ Upstream commit c3fc002b206c6c83d1e3702b979733002ba6fb2c ]
 
-Currently, MultiPort E-Switch is requesting to create a LAG with shared
-FDB without checking the LAG is supporting shared FDB.
-Add the check.
+rsnd_kctrl_accept_runtime() (1) is used for runtime convert rate
+(= Synchronous SRC Mode). Now, rsnd driver has 2 kctrls for it
 
-Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1741644104-97767-5-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+(A):	"SRC Out Rate Switch"
+(B):	"SRC Out Rate"		// it calls (1)
+
+(A): can be called anytime
+(B): can be called only runtime, and will indicate warning if it was used
+   at non-runtime.
+
+To use runtime convert rate (= Synchronous SRC Mode), user might uses
+command in below order.
+
+(X):	> amixer set "SRC Out Rate" on
+	> aplay xxx.wav &
+(Y):	> amixer set "SRC Out Rate" 48010 // convert rate to 48010Hz
+
+(Y): calls B
+(X): calls both A and B.
+
+In this case, when user calls (X), it calls both (A) and (B), but it is not
+yet start running. So, (B) will indicate warning.
+
+This warning was added by commit b5c088689847 ("ASoC: rsnd: add warning
+message to rsnd_kctrl_accept_runtime()"), but the message sounds like the
+operation was not correct. Let's update warning message.
+
+The message is very SRC specific, implement it in src.c
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/8734gt2qed.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c   | 4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h   | 1 +
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/sh/rcar/core.c | 14 --------------
+ sound/soc/sh/rcar/rsnd.h |  1 -
+ sound/soc/sh/rcar/src.c  | 18 +++++++++++++++++-
+ 3 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 18cf756bad8cc..f6b1ac80c0af9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -823,7 +823,7 @@ void mlx5_disable_lag(struct mlx5_lag *ldev)
- 				mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
+index 98c7be340a536..3cd14fbca28ea 100644
+--- a/sound/soc/sh/rcar/core.c
++++ b/sound/soc/sh/rcar/core.c
+@@ -1775,20 +1775,6 @@ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io)
+ 	return 1;
  }
  
--static bool mlx5_shared_fdb_supported(struct mlx5_lag *ldev)
-+bool mlx5_lag_shared_fdb_supported(struct mlx5_lag *ldev)
+-int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io)
+-{
+-	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
+-	struct rsnd_priv *priv = rsnd_io_to_priv(io);
+-	struct device *dev = rsnd_priv_to_dev(priv);
+-
+-	if (!runtime) {
+-		dev_warn(dev, "Can't update kctrl when idle\n");
+-		return 0;
+-	}
+-
+-	return 1;
+-}
+-
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg)
  {
- 	struct mlx5_core_dev *dev;
- 	int i;
-@@ -900,7 +900,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
- 	}
+ 	cfg->cfg.val = cfg->val;
+diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
+index 43c0d675cc343..1214dbba6898b 100644
+--- a/sound/soc/sh/rcar/rsnd.h
++++ b/sound/soc/sh/rcar/rsnd.h
+@@ -755,7 +755,6 @@ struct rsnd_kctrl_cfg_s {
+ #define rsnd_kctrl_vals(x)	((x).val)	/* = (x).cfg.val[0] */
  
- 	if (do_bond && !__mlx5_lag_is_active(ldev)) {
--		bool shared_fdb = mlx5_shared_fdb_supported(ldev);
-+		bool shared_fdb = mlx5_lag_shared_fdb_supported(ldev);
- 
- 		roce_lag = mlx5_lag_is_roce_lag(ldev);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-index 481e92f39fe61..b7ccf0e955f56 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.h
-@@ -92,6 +92,7 @@ mlx5_lag_is_ready(struct mlx5_lag *ldev)
- 	return test_bit(MLX5_LAG_FLAG_NDEVS_READY, &ldev->state_flags);
+ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io);
+-int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io);
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg);
+ struct rsnd_kctrl_cfg *rsnd_kctrl_init_s(struct rsnd_kctrl_cfg_s *cfg);
+ int rsnd_kctrl_new(struct rsnd_mod *mod,
+diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
+index f832165e46bc0..9893839666d7b 100644
+--- a/sound/soc/sh/rcar/src.c
++++ b/sound/soc/sh/rcar/src.c
+@@ -530,6 +530,22 @@ static irqreturn_t rsnd_src_interrupt(int irq, void *data)
+ 	return IRQ_HANDLED;
  }
  
-+bool mlx5_lag_shared_fdb_supported(struct mlx5_lag *ldev);
- bool mlx5_lag_check_prereq(struct mlx5_lag *ldev);
- void mlx5_modify_lag(struct mlx5_lag *ldev,
- 		     struct lag_tracker *tracker);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index 6b0413a3987ce..8a07fdf295056 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -81,7 +81,8 @@ static int enable_mpesw(struct mlx5_lag *ldev)
- 	if (mlx5_eswitch_mode(dev0) != MLX5_ESWITCH_OFFLOADS ||
- 	    !MLX5_CAP_PORT_SELECTION(dev0, port_select_flow_table) ||
- 	    !MLX5_CAP_GEN(dev0, create_lag_when_not_master_up) ||
--	    !mlx5_lag_check_prereq(ldev))
-+	    !mlx5_lag_check_prereq(ldev) ||
-+	    !mlx5_lag_shared_fdb_supported(ldev))
- 		return -EOPNOTSUPP;
++static int rsnd_src_kctrl_accept_runtime(struct rsnd_dai_stream *io)
++{
++	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
++
++	if (!runtime) {
++		struct rsnd_priv *priv = rsnd_io_to_priv(io);
++		struct device *dev = rsnd_priv_to_dev(priv);
++
++		dev_warn(dev, "\"SRC Out Rate\" can use during running\n");
++
++		return 0;
++	}
++
++	return 1;
++}
++
+ static int rsnd_src_probe_(struct rsnd_mod *mod,
+ 			   struct rsnd_dai_stream *io,
+ 			   struct rsnd_priv *priv)
+@@ -593,7 +609,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
+ 			       rsnd_io_is_play(io) ?
+ 			       "SRC Out Rate" :
+ 			       "SRC In Rate",
+-			       rsnd_kctrl_accept_runtime,
++			       rsnd_src_kctrl_accept_runtime,
+ 			       rsnd_src_set_convert_rate,
+ 			       &src->sync, 192000);
  
- 	err = mlx5_mpesw_metadata_set(ldev);
 -- 
 2.39.5
 
