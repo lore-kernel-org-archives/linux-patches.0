@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F22F21CC51;
-	Wed, 19 Mar 2025 14:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DCE21CC55;
+	Wed, 19 Mar 2025 14:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395137; cv=none; b=QuUt7RlRFO2lOLcy/yZrLx7cSMuWMtcJnvGnPuQQ40rW9MqGFL6YkPYEedw8N8JGKp11EXaYFIyxdVLU4p+5OkObgnC5mT6FC2m1wl6lHayLSF05j+HakT2j68MzwcfYSYyzlvjWTLOk1U1JiOW2Uu2YuVVhRrvHL2qFsD9Kr7k=
+	t=1742395137; cv=none; b=OyFcOrl7qfNBhpiX1Mz3ziruqBSCFRWyuSDeLbaeS953i/oBGzFezx/E8syatEmNI2tYd/szCn6Hvq1hl/qPbfhLMND7q5w3KN2MX2JcHnxNgByM7d6KLK1gKuOMHDRcuBHTFooIev5gF8t4/vaVS2sNynGxcgkozSUFHxdMEYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395137; c=relaxed/simple;
-	bh=0BPZ7hqfCQQiCzD2ZqECW38VSCKvRK/sZPJILZYWweM=;
+	bh=w67TLsNIhvYRQl+eku/O1OAvWEAUH8TT1xVRTrUJqbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxzUgHuafxycmRwN9m4dDc8xo9kna9W+ddsdscvJ3T+ygk+KS38N/HCyGVXhJAkf7+eUQk1Oj8TBLBl+jNfCpIeyZ2y2Tjwx5TRv9W1AME39Wn5CDq801r1bMAY57Hr/Bi73gNxSCJ1K4b85GHGaamD5H00zrMw4X5oSOrX337Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKKkedlz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BvPpfP0+GMevm4MlX3BhroQHaWGFy3N+RBDXBVhW5w0sOUN9MwPOEI+5ArwgAEZK0a+lWU8f2AWn02MaohF1CaXr5SFHioZv02JZrLRuJYCqSHJYpBc1+YqJcVCLf/dgzcrYANByRJ1VTWSwuQMC96P+wG7KnfghYWS8Bfnyp74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocQX1i34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKKkedlz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE17FC4CEE8;
-	Wed, 19 Mar 2025 14:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocQX1i34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD32C4CEE4;
+	Wed, 19 Mar 2025 14:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395136;
-	bh=0BPZ7hqfCQQiCzD2ZqECW38VSCKvRK/sZPJILZYWweM=;
+	s=korg; t=1742395137;
+	bh=w67TLsNIhvYRQl+eku/O1OAvWEAUH8TT1xVRTrUJqbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKKkedlzOQn38+V9O6hTNQZsWNYJ5ZUMt0hj4aQqEPHJIDt1sA+OQlHBv4zaimOEU
-	 DHFp1um+UpiTwl2hJHZ425jf1jRrEx/qBK9ziInQdF+dxNkp1hh3bFVquvjju/ceih
-	 qUxxSG2D7akcVhLuh+SI5XoKt06QCG2rCF1GmgRI=
+	b=ocQX1i34pWZJT0h4jMjg9n+zWZO61WZlFEJFSZTV44y5Pk5nx6BCRQRFaxE+FZSy7
+	 7Ssceivwc4yLnDMpKOWFWcc2rdPnOkmTiyEoNY2M0OVzWdl50TShPmzFpP1r0hdp2P
+	 3VzT7EO2giL8ZpZ/3PsvyQbrMCGM7QdZWAOEl3m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/231] ASoC: rt722-sdca: add missing readable registers
-Date: Wed, 19 Mar 2025 07:31:36 -0700
-Message-ID: <20250319143031.858147104@linuxfoundation.org>
+Subject: [PATCH 6.12 204/231] drm/xe: cancel pending job timer before freeing scheduler
+Date: Wed, 19 Mar 2025 07:31:37 -0700
+Message-ID: <20250319143031.880769977@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -53,42 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 247fba13416af65b155949bae582d55c310f58b6 ]
+[ Upstream commit 12c2f962fe71f390951d9242725bc7e608f55927 ]
 
-SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15,
-RT722_SDCA_CTL_FU_CH_GAIN, CH_01) ... SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY,
-RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN, CH_04) are used by the
-"FU15 Boost Volume" control, but not marked as readable.
-And the mbq size are 2 for those registers.
+The async call to __guc_exec_queue_fini_async frees the scheduler
+while a submission may time out and restart. To prevent this race
+condition, the pending job timer should be canceled before freeing
+the scheduler.
 
-Fixes: 7f5d6036ca005 ("ASoC: rt722-sdca: Add RT722 SDCA driver")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20250310080440.58797-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+V3(MattB):
+ - Adjust position of cancel pending job
+ - Remove gitlab issue# from commit message
+V2(MattB):
+ - Cancel pending jobs before scheduler finish
+
+Fixes: a20c75dba192 ("drm/xe: Call __guc_exec_queue_fini_async direct for KERNEL exec_queues")
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250225045754.600905-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 18fbd567e75f9b97b699b2ab4f1fa76b7cf268f6)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt722-sdca-sdw.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_submit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
-index d5c985ff5ac55..5449d6b5cf3d1 100644
---- a/sound/soc/codecs/rt722-sdca-sdw.c
-+++ b/sound/soc/codecs/rt722-sdca-sdw.c
-@@ -86,6 +86,10 @@ static bool rt722_sdca_mbq_readable_register(struct device *dev, unsigned int re
- 	case 0x6100067:
- 	case 0x6100070 ... 0x610007c:
- 	case 0x6100080:
-+	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN,
-+			  CH_01) ...
-+	     SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN,
-+			  CH_04):
- 	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E, RT722_SDCA_CTL_FU_VOLUME,
- 			CH_01):
- 	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E, RT722_SDCA_CTL_FU_VOLUME,
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index fed23304e4da5..3fd2b28b91ab9 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1215,6 +1215,8 @@ static void __guc_exec_queue_fini_async(struct work_struct *w)
+ 
+ 	if (xe_exec_queue_is_lr(q))
+ 		cancel_work_sync(&ge->lr_tdr);
++	/* Confirm no work left behind accessing device structures */
++	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
+ 	release_guc_id(guc, q);
+ 	xe_sched_entity_fini(&ge->entity);
+ 	xe_sched_fini(&ge->sched);
 -- 
 2.39.5
 
