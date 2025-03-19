@@ -1,42 +1,42 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E0E1C6B4
-	for <patches@lists.linux.dev>; Wed, 19 Mar 2025 02:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12CB524F
+	for <patches@lists.linux.dev>; Wed, 19 Mar 2025 03:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742351874; cv=none; b=lza+fdCdBfWygH4zlRLLIKgK3hjEe8tept0ToMFDjU3LJNiatmx4i2Zo3YMZj5LVDXwKeWHBp665S9JV+Q/qrZ1ae1E6+WwhhOxqLU/ECcQiBk1eGMm+73iwp+fUcctxIqXZOXXns4B41inRVcpp42xnhix16THgGs8KeE6kI74=
+	t=1742353307; cv=none; b=Il0N/zLJGZ1jkcBXpmljr6pXU+WT2RMRUGzjLoOaYuPzFiBcDBtJfuC1y1DgWtVLIpFo2XrgrJfA5RtquHqCl6P3aI23UBVdo/lA9gN3DxSbnLGnLzKHtY2HvIdcB0/v5AVrL6BFMzcCm3DGMWFxlujOghZ4GPcEiAj3nz3Qd+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742351874; c=relaxed/simple;
-	bh=UK+DFx0zekguPPA1xLGOZkgkPBl0vVGvugn2cPZEb2s=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=adRd7kK2le7rqvy5xwtPDjuoQFRSM9w5lKj+q76dXCKYWRaiOY9w4fuvt/RsF/juoBwz3BFB5yUhQ/n4DyBSqswiisfELJKE/gt4FGF4U/bx5r0jrWzt5firSzpcn7ueToCAJJTbaKA9K0vaGmEbSFnf9vYFY7+5VLXYAQqvfoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
+	s=arc-20240116; t=1742353307; c=relaxed/simple;
+	bh=73sJN9RX4iQ9NGIl0uW9R3rvI9b1tby7yCaJMySlhX8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OPMC7N1Gtf5LYhk2UKYKM51CwhjC1cOZySiV4aO4hgA0lGxVySp/ld3HYfsXh7wwMEW64c/V7J6EoE2TPONCFclA6VPLL7Y92DJ9MDnx3IaGh/rAmzw0/kxHB7GQcTc+Auy0VT7Ok9dy6RYb16IitYfuY78mJeV5PPqwf2TyNso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J1S3fv015231;
-	Wed, 19 Mar 2025 02:37:46 GMT
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45cxs0v53g-1
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52J1qtxJ005416;
+	Tue, 18 Mar 2025 20:01:43 -0700
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45d92jus4b-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Wed, 19 Mar 2025 02:37:46 +0000 (GMT)
+	Tue, 18 Mar 2025 20:01:43 -0700 (PDT)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Tue, 18 Mar 2025 19:37:45 -0700
+ 15.1.2507.43; Tue, 18 Mar 2025 20:01:43 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Tue, 18 Mar 2025 19:37:42 -0700
+ 15.1.2507.43 via Frontend Transport; Tue, 18 Mar 2025 20:01:40 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <sfrench@samba.org>, <pc@cjr.nz>,
-        <lsahlber@redhat.com>, <sprasad@microsoft.com>, <tom@talpey.com>,
-        <linux-cifs@vger.kernel.org>, <samba-technical@lists.samba.org>,
-        <pc@manguebit.com>, <stfrench@microsoft.com>
-Subject: [PATCH 6.1.y] smb: client: fix potential UAF in cifs_dump_full_key()
-Date: Wed, 19 Mar 2025 10:37:41 +0800
-Message-ID: <20250319023741.922528-1-jianqi.ren.cn@windriver.com>
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
+        <sfrench@samba.org>, <linux-cifs@vger.kernel.org>,
+        <samba-technical@lists.samba.org>, <pc@manguebit.com>,
+        <stfrench@microsoft.com>
+Subject: [PATCH 5.15.y] smb: client: fix potential UAF in cifs_debug_files_proc_show()
+Date: Wed, 19 Mar 2025 11:01:39 +0800
+Message-ID: <20250319030139.953922-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,23 +46,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: NdeE3YcFlthwkM3I29nemHpK4f04O29Y
-X-Proofpoint-GUID: NdeE3YcFlthwkM3I29nemHpK4f04O29Y
-X-Authority-Analysis: v=2.4 cv=NY/m13D4 c=1 sm=1 tr=0 ts=67da2dfa cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=Vs1iUdzkB0EA:10 a=Li1AiuEPAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=1_rInJw21EjIxf1COpsA:9
+X-Authority-Analysis: v=2.4 cv=QdRmvtbv c=1 sm=1 tr=0 ts=67da3397 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=Vs1iUdzkB0EA:10 a=Li1AiuEPAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=F951-fjzzYaKpzs5SyQA:9
  a=qGKPP_lnpMOaqR3bcYHU:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-ORIG-GUID: l-zFfN9MBIYO6W5Jpo0ILgYzr1VYOz2D
+X-Proofpoint-GUID: l-zFfN9MBIYO6W5Jpo0ILgYzr1VYOz2D
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-18_10,2025-03-17_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- spamscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1011 mlxlogscore=999 impostorscore=0 adultscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2503190017
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=997 impostorscore=0
+ mlxscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2503190020
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 58acd1f497162e7d282077f816faa519487be045 ]
+[ Upstream commit ca545b7f0823f19db0f1148d59bc5e1a56634502 ]
 
 Skip sessions that are being teared down (status == SES_EXITING) to
 avoid UAF.
@@ -70,41 +70,48 @@ avoid UAF.
 Cc: stable@vger.kernel.org
 Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+[This patch removes lock/unlock operation in routine cifs_ses_exiting()
+for ses_lock is not present in v5.15 and not ported yet. ses->status
+is protected by a global lock, cifs_tcp_ses_lock, in v5.15.]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- fs/smb/client/ioctl.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/cifs/cifs_debug.c | 2 ++
+ fs/cifs/cifsglob.h   | 8 ++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
-index ae9905e2b9d4..7402070b7a06 100644
---- a/fs/smb/client/ioctl.c
-+++ b/fs/smb/client/ioctl.c
-@@ -246,7 +246,9 @@ static int cifs_dump_full_key(struct cifs_tcon *tcon, struct smb3_full_key_debug
- 		spin_lock(&cifs_tcp_ses_lock);
- 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
- 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
--				if (ses_it->Suid == out.session_id) {
-+				spin_lock(&ses_it->ses_lock);
-+				if (ses_it->ses_status != SES_EXITING &&
-+				    ses_it->Suid == out.session_id) {
- 					ses = ses_it;
- 					/*
- 					 * since we are using the session outside the crit
-@@ -254,9 +256,11 @@ static int cifs_dump_full_key(struct cifs_tcon *tcon, struct smb3_full_key_debug
- 					 * so increment its refcount
- 					 */
- 					ses->ses_count++;
-+					spin_unlock(&ses_it->ses_lock);
- 					found = true;
- 					goto search_end;
- 				}
-+				spin_unlock(&ses_it->ses_lock);
- 			}
- 		}
- search_end:
+diff --git a/fs/cifs/cifs_debug.c b/fs/cifs/cifs_debug.c
+index e7501533c2ec..8eb91bd18439 100644
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -183,6 +183,8 @@ static int cifs_debug_files_proc_show(struct seq_file *m, void *v)
+ 	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
+ 		list_for_each(tmp, &server->smb_ses_list) {
+ 			ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
++			if (cifs_ses_exiting(ses))
++				continue;
+ 			list_for_each(tmp1, &ses->tcon_list) {
+ 				tcon = list_entry(tmp1, struct cifs_tcon, tcon_list);
+ 				spin_lock(&tcon->open_file_lock);
+diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
+index 2ee67a27020d..7b57cc5d7022 100644
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -2041,4 +2041,12 @@ static inline struct scatterlist *cifs_sg_set_buf(struct scatterlist *sg,
+ 	return sg;
+ }
+ 
++static inline bool cifs_ses_exiting(struct cifs_ses *ses)
++{
++	bool ret;
++
++	ret = ses->status == CifsExiting;
++	return ret;
++}
++
+ #endif	/* _CIFS_GLOB_H */
 -- 
 2.25.1
 
