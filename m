@@ -1,113 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D571420AF89;
-	Wed, 19 Mar 2025 17:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2821194A44
+	for <patches@lists.linux.dev>; Wed, 19 Mar 2025 18:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742403823; cv=none; b=FjvKS8PqeEP+uaT+njFM7ydgy6Km7AEVwSGL3drKtCxHwEBS9Gq8moaMPZ5ZHTz1Q85+Y3PP8TEXxwxj+ww6Iji5KmQ+4AL6VZkX4nYiUL/ZRD2SB9bOTkqetpaXviRsm9EJCRhi5mHH/49LJaj/qcoGm5hdntFaEeEx7TJN4wU=
+	t=1742407809; cv=none; b=H2zge4bv6AqiuYB6LJWkgCHVwAKR4tFfLaLUlkqYnJ2D8/BaMwX39g9uTI+bGAS64PLGBuPhUNNnbVPRiai3hGr9yDDYc2sMtArFKeofjXLJcnQ6wflvbTK69o0rkZaE0eC8BrOKwCcC3Ro5cD+eIfbSWno6L2IH+7oTLJG40Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742403823; c=relaxed/simple;
-	bh=Qv38L81UNzByka/yp6W1flq2uBbtdhvWbJRCkyQW9WE=;
+	s=arc-20240116; t=1742407809; c=relaxed/simple;
+	bh=TwOD3C/pbMPzv15fU55e+IUWyz4niy9wUDhHGyPZfxw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AIJ6R3wZSpS552/F0IqufyjhH2RoniXXp6PwxmStyA45OZ23uGKMPJpyG3IC9FZnpm+Hl+CmaF7m5WZQBmac7i/P0xKaXjWwXab0e2m3SwPHjhQM9trRK2aev9Hnoie+FSF+MKsG0kVhr/zDeoCIYhu1McSGtWNLzuwU8dgKsFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFrmmcsp; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JTpnby/yJaHlBq2jXVgSl31EOLTKGSW+KrL4nxg5HStQHJv7z3GoNS6qRUTpJHQb6m15mzkoikU+7JjHeHRXbWneyEN2s/S2llmoaK3N4DImCCl+kY451jxrgvzoZQ0h8Y/ujPqSjDylwrTrDFt01A+swEQFJKWglS+vuQq0jmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LCA0aNVH; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFrmmcsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435C7C4CEEC;
-	Wed, 19 Mar 2025 17:03:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742403819;
-	bh=Qv38L81UNzByka/yp6W1flq2uBbtdhvWbJRCkyQW9WE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kFrmmcspcgUl+x4P8Uw/D3GJD9o7l1x+qIXguOEcDwbDnCn+sw4VaCbn/eyNEgvLa
-	 jr/zBhEcmCmrYiSd3BM2LfIu321IKjBMshYMhJJZ/E8NQBnfiqTvvGbcxBEZDsfmhJ
-	 /X+iyRCYf3EYALe5iwE6i4MaSnkn4ptxXOckWXiM=
-Date: Wed, 19 Mar 2025 10:02:20 -0700
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>, io-uring@vger.kernel.org
-Subject: Re: [PATCH 6.6 000/166] 6.6.84-rc1 review
-Message-ID: <2025031957-cage-enrage-7789@gregkh>
-References: <20250319143019.983527953@linuxfoundation.org>
- <CA+G9fYvM_riojtryOUb3UrYbtw6yUZTTnbP+_X96nJLCcWYwBA@mail.gmail.com>
- <2deb9e86-7ca8-4baf-8576-83dad1ea065f@kernel.dk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LCA0aNVH"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so53896425e9.2
+        for <patches@lists.linux.dev>; Wed, 19 Mar 2025 11:10:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742407806; x=1743012606; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eJKGXNaEOrFu3JsjmJdQhGviNYlOYhskFV2OB3dd63g=;
+        b=LCA0aNVHfrYcivUnF5ZV39zxMLNlceNc24Jrqft6TRofi/XNQtBscnbwH+DCkqU1mq
+         cBTXhdl5MReYUuznjsoF+AjbclYpTVCJBrLLLwN85YW5JNKzwt3v2Tk57kJvHct7pAie
+         ZyFGnJ8/L5+5Hh3Gt23B2yLgtPB3O5QCQbdFlJt3xjcJ68HTg72ItOhp5cDvTAbZOBDG
+         ypFHb6qvduEZynGRL8atExZwM2xubvQ3n3jy4m3Xzm9ZOl3JBHc8wQcet3+2nn65ad0n
+         h9Gv94LbxNybVfQ80FydyrQWrl+1Tsa98gpB+bELMFkLfPB4EzaO/Sz8/PuyoX2oPqjC
+         nadQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742407806; x=1743012606;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eJKGXNaEOrFu3JsjmJdQhGviNYlOYhskFV2OB3dd63g=;
+        b=mibEgt2xLZwtqrjXDd3IW/ru04atpmQHqn455GeSdT6rYXjEuYZOqcjaVM+B4OkTe/
+         1tGiBlVpm4usfSIl/UAut8XAtpXZniR3FzozVPUHNIz/tloOkL2aX34XP4C6OLMX1o8c
+         jJCWfjk6uaMF5HE9WDVSCAfNuMphqruLVOPxC3iCric3bHZI5Av7kPDiDEWHqOhFahu0
+         2svGv8PSiZWxCBeaigYGTWL4R20mxR7KOu3milPUyL9FhRF7tkaxwc5/b6UmjLNA/Q0O
+         8LSmj1rD4iUHj08kuWzVFuxsqzrxIYMsgK8mGs7UNoQaQf+vCCRsGfPkk7O9bFsZJLcJ
+         GJJA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEv0GCnZPTsANE3s39cv5VEEKejXlq90d1/YdcFE0Ef+IkS/IMaXEni6xNn9aWdia6D+cUKsI4@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGgM46VtRDpv6U+O1Lcr+mPJ9SkJdCkXNzIJXGN5dV33muIffr
+	z2oZMFfCheYuRN5ei8yop+cncq+I1h0rL9p0I9CuQ3o5ngHfWI9d
+X-Gm-Gg: ASbGncuhGaBwtxGkurcEvajbhkMxOGKKpYsUhDAe+l6pml3cGSlVE+yj1DDx07HYP4A
+	lw6P5LefrAUjqzZC4C7mHzjWbBVrEV16fVbN1jdJluLch73KXx0WOj56GuDhnZTHeJVbFGUyhZi
+	i6Ly5Q7MfB7WXv5Nwx9Jdwfo1CLVm0JUbCdS4FIOyDdJcHgTxZx1n1BEBs/gyKh5djduS6C8CDF
+	lMPP9wVnu4eMsbyHFIEc5Vt3LRDw2JY1LmXZKA1i8+TO2vmlAwCeCME2pl/IDuEMuhJ+cvI+67M
+	NrE78Wb1ZfSgmfhAYKQJ1nsODjfEf/zA0UJBgxOsUnNDkBLJV2gUnsTz+rnZp4WxKxf7IztnX0Z
+	Vqg+t21OBY8f4WMkaT7Cp58R9mg/K90mxtTh1RRy0bg==
+X-Google-Smtp-Source: AGHT+IGqcQWiFzsnHo4CbIBWjtZCrTWOdeRB60hVLIrA/XtjazKLtNUS4dMjFqQzIzL/9B206PI+DQ==
+X-Received: by 2002:a05:6000:4014:b0:391:ccf:2d17 with SMTP id ffacd0b85a97d-39979554699mr431114f8f.0.1742407805428;
+        Wed, 19 Mar 2025 11:10:05 -0700 (PDT)
+Received: from orome (p200300e41f3a9f00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f3a:9f00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d43f33242sm25582455e9.5.2025.03.19.11.10.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 11:10:04 -0700 (PDT)
+Date: Wed, 19 Mar 2025 19:10:02 +0100
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org, 
+	linux-tegra@vger.kernel.org, Mikko Perttunen <mperttunen@nvidia.com>, 
+	Simona Vetter <simona@ffwll.ch>, Lu Baolu <baolu.lu@linux.intel.com>, 
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>, Joerg Roedel <jroedel@suse.de>, 
+	Jerry Snitselaar <jsnitsel@redhat.com>, patches@lists.linux.dev
+Subject: Re: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means
+ no DMA IOMMU
+Message-ID: <5epualwpswqk674jhoq7lo542g7fc33vemzs4v2usou7ibijrw@uroxzqtbayix>
+References: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="eqydumr5po2uxfmv"
 Content-Disposition: inline
-In-Reply-To: <2deb9e86-7ca8-4baf-8576-83dad1ea065f@kernel.dk>
+In-Reply-To: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
 
-On Wed, Mar 19, 2025 at 10:37:20AM -0600, Jens Axboe wrote:
-> On 3/19/25 10:33 AM, Naresh Kamboju wrote:
-> > On Wed, 19 Mar 2025 at 20:09, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> >>
-> >> This is the start of the stable review cycle for the 6.6.84 release.
-> >> There are 166 patches in this series, all will be posted as a response
-> >> to this one.  If anyone has any issues with these being applied, please
-> >> let me know.
-> >>
-> >> Responses should be made by Fri, 21 Mar 2025 14:29:55 +0000.
-> >> Anything received after that time might be too late.
-> >>
-> >> The whole patch series can be found in one patch at:
-> >>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.84-rc1.gz
-> >> or in the git tree and branch at:
-> >>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> >> and the diffstat can be found below.
-> >>
-> >> thanks,
-> >>
-> >> greg k-h
-> > 
-> > Regressions on mips the rt305x_defconfig builds failed with gcc-12
-> > the stable-rc v6.6.83-167-gd16a828e7b09
-> > 
-> > First seen on the v6.6.83-167-gd16a828e7b09
-> >  Good: v6.6.83
-> >  Bad: v6.6.83-167-gd16a828e7b09
-> > 
-> > * mips, build
-> >   - gcc-12-rt305x_defconfig
-> > 
-> > Regression Analysis:
-> >  - New regression? Yes
-> >  - Reproducibility? Yes
-> > 
-> > Build regression: mips implicit declaration of function 'vunmap'
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> Ah that's my fault, forgot to include the backport of:
-> 
-> commit 62346c6cb28b043f2a6e95337d9081ec0b37b5f5
-> Author: Jens Axboe <axboe@kernel.dk>
-> Date:   Sat Mar 16 07:21:43 2024 -0600
-> 
->     mm: add nommu variant of vm_insert_pages()
-> 
-> for 6.1-stable and 6.6-stable. Greg, can you just cherry pick that one?
-> It'll pick cleanly into both, should go before the io_uring mmap series
-> obviously.
-> 
-> Sorry about that! I did have it in my local trees, but for some reason
-> forgot to include it in the sent in series.
 
-No worries, will do in a few hours and will push out a -rc2.
+--eqydumr5po2uxfmv
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means
+ no DMA IOMMU
+MIME-Version: 1.0
 
-greg k-h
+On Tue, Feb 04, 2025 at 03:18:19PM -0400, Jason Gunthorpe wrote:
+> Previously with tegra-smmu, even with CONFIG_IOMMU_DMA, the default domain
+> could have been left as NULL. The NULL domain is specially recognized by
+> host1x_iommu_attach() as meaning it is not the DMA domain and
+> should be replaced with the special shared domain.
+>=20
+> This happened prior to the below commit because tegra-smmu was using the
+> NULL domain to mean IDENTITY.
+>=20
+> Now that the domain is properly labled the test in DRM doesn't see NULL.
+> Check for IDENTITY as well to enable the special domains.
+>=20
+> This is the same issue and basic fix as seen in
+> commit fae6e669cdc5 ("drm/tegra: Do not assume that a NULL domain means no
+> DMA IOMMU").
+>=20
+> Fixes: c8cc2655cc6c ("iommu/tegra-smmu: Implement an IDENTITY domain")
+> Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+> Closes: https://lore.kernel.org/all/c6a6f114-3acd-4d56-a13b-b88978e927dc@=
+tecnico.ulisboa.pt/
+> Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/gpu/host1x/dev.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+
+Applied to drm-misc-fixes now. Sorry for the delay.
+
+Thierry
+
+--eqydumr5po2uxfmv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmfbCHkACgkQ3SOs138+
+s6E9XQ//dZrGX9bTbogtguhwFF/4IRrRe4qeEdzOV0hWNrSI/AgrCcZXVt8jyCRl
+cMyrljBynGAY/Aza57MvNyWi9pMblhNdW3X8z0rhvRph4NFVqb6ABlkGm4YVKHuC
+xVWTclRfb7oG7OpRAd/FaGbdEINE4UAJPXT+BIOkkjaTh8LSBlINLSpLOUTbu2aY
+r47yrFhcVh0GHPPZ8tcUbYqyVdJdJGMnuulwfhPVwvgotzcIFNgzNHyHvC9Z4TsX
+/HKZvXjSSCTjR1kzUvbt8pmKEKKqqCvCFULT2llTniiTwflqxjuPKCS8wYj5mueY
+OJvQxghdYvfXNLMnTplQoOOWOWLTOc3/37OYGJIEziubEOx676+v78Uur+9107VY
+lKDonC6ketIV49JGF6dxp5sH3FdzONG6LNYRSEEz9ATri/havxpHe54nH55gK0Tn
+qwnMUymUJmVcl326K30czWhxtx50Fuucn+vjagmOKGdr4qY6+l8eZ2naxyqtAcDx
+zznVflHEAIwi+iBVsETWaQZILbjpfoocGq86fsqMY08tY6+KdP7q3lk2gTX6PWz9
+bAn72EIlZFUBTOSo7vmlHAlUghj1sm8PhfFiMIIGBrend2hHgdxvb4QLlDQZIIbz
+anf189zuSi/kEoQzXuaryOoRdUXJx8wdEmcDL1Z138Ab6aD4hN4=
+=levc
+-----END PGP SIGNATURE-----
+
+--eqydumr5po2uxfmv--
