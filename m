@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7D11DEFD6;
-	Wed, 19 Mar 2025 14:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE55F20B1F9;
+	Wed, 19 Mar 2025 14:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395261; cv=none; b=sv0GRufyB4CA1ROMrZOgA8kEUHS+XpC1aM+a6ys/hhBbyXxrztau+94uVz7Gi0TRVqtS2fA3y/KpFBjqD6zCl9iwC5wsqJPIOyrxK0aFZGrE9l5rE1WD6aCValHu9ZM/1uFPc+y5uPQBnvah0bglXh1DZJB/DxIIftiyIHQV2YE=
+	t=1742395262; cv=none; b=aypqO1ZHxa7mffGxcOqKYomi6KREdl4ogPCkWWR7prVzg1DDjeoZ54yHgniK47hKHdlRrP1DEip8aHK9dLkT28UP+N0RzR3yCSjkxBapB5qo9+dROFEMnlt3pOqz3Xx0//BxkbXYa8alYaEodMBHMginc5UsN7ewhJl0avdWL6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395261; c=relaxed/simple;
-	bh=mswuODvXakAtDvSCj7UbCOGGakB21diBaGyKd5rdSOE=;
+	s=arc-20240116; t=1742395262; c=relaxed/simple;
+	bh=J0AH9sojMX8WHIJ3wRIdj10+KlY2Do9eArL4YxsvRRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMECfML+Ds8fJIJGxUnOZ0yl3xJw0XXOwc91vMU/i57SvNdcxvciunQ15B7W36JZ5v96Kf6uQfxaTKfJEtfdKrDvJO6NK8YjtddFKkBkJlfuXhp0FngR10c2Vx5fuCfXMwRgxYxylYaeXvcD4LRuWq7FVWwc0rI50J68qUCGUZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00leedIH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TicI2GrEmplJxfp0e2ZSvUnyJ9aVo3LxvLG7pNMiVdumtSyKnxkGlIJUqJ3R6A8aoJlBo/HgrsTMV5tGlJBDgZwkZaz/HB5RLI3jX53hZb65faUB/w8g2luE+cqJyNMWJmHT1cvG32tNqskvEVoa4RnWr8Noin0giQldEOYP7KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgX3irLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00leedIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC44C4CEE4;
-	Wed, 19 Mar 2025 14:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgX3irLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4796FC4CEE4;
+	Wed, 19 Mar 2025 14:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395261;
-	bh=mswuODvXakAtDvSCj7UbCOGGakB21diBaGyKd5rdSOE=;
+	s=korg; t=1742395262;
+	bh=J0AH9sojMX8WHIJ3wRIdj10+KlY2Do9eArL4YxsvRRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00leedIHHvrKmMiePX0MIaDY1s4X04gSeKEAsfhu9mNJcyAlGlwVEVi4v0XYFvtaP
-	 Ec+no/g3gVfwMwDzH3gdCMLacjNKtKFL/22ETUR23xaSGHW2A0grW+NeAYW7DZEr3V
-	 2zpd6WJiqVrwzzJfAZ0P+l98yrF+3mSSKn5sTr40=
+	b=TgX3irLpUQ1oPmmIfQC5o1PrcbbcNuj03vwq67B81o7y955KG/GT8IBbn+9APHbDx
+	 piPYm654Bc6+AjNA8gQZA1GzkVHRQj8aNJCze3xnAtVhIr515is3ARwaGYnxPh+z0q
+	 IRLViqO9Y24OWjtyIG0rWcy5kRHmFQs2fa9k1KC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Behrens <me@kloenk.dev>,
-	Tamir Duberstein <tamird@gmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Chayim Refael Friedman <chayimfr@gmail.com>
-Subject: [PATCH 6.6 146/166] scripts: generate_rust_analyzer: add missing macros deps
-Date: Wed, 19 Mar 2025 07:31:57 -0700
-Message-ID: <20250319143023.979002652@linuxfoundation.org>
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 147/166] cifs: Fix integer overflow while processing acregmax mount option
+Date: Wed, 19 Mar 2025 07:31:58 -0700
+Message-ID: <20250319143024.007730182@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -54,110 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamir Duberstein <tamird@gmail.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 2e0f91aba507a3cb59f7a12fc3ea2b7d4d6675b7 ]
+[ Upstream commit 7489161b1852390b4413d57f2457cd40b34da6cc ]
 
-The macros crate has depended on std and proc_macro since its
-introduction in commit 1fbde52bde73 ("rust: add `macros` crate"). These
-dependencies were omitted from commit 8c4555ccc55c ("scripts: add
-`generate_rust_analyzer.py`") resulting in missing go-to-definition and
-autocomplete, and false-positive warnings emitted from rust-analyzer
-such as:
+User-provided mount parameter acregmax of type u32 is intended to have
+an upper limit, but before it is validated, the value is converted from
+seconds to jiffies which can lead to an integer overflow.
 
-  [{
-  	"resource": "/Users/tamird/src/linux/rust/macros/module.rs",
-  	"owner": "_generated_diagnostic_collection_name_#1",
-  	"code": {
-  		"value": "non_snake_case",
-  		"target": {
-  			"$mid": 1,
-  			"path": "/rustc/",
-  			"scheme": "https",
-  			"authority": "doc.rust-lang.org",
-  			"query": "search=non_snake_case"
-  		}
-  	},
-  	"severity": 4,
-  	"message": "Variable `None` should have snake_case name, e.g. `none`",
-  	"source": "rust-analyzer",
-  	"startLineNumber": 123,
-  	"startColumn": 17,
-  	"endLineNumber": 123,
-  	"endColumn": 21
-  }]
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Add the missing dependencies to improve the developer experience.
-
-  [ Fiona had a different approach (thanks!) at:
-
-        https://lore.kernel.org/rust-for-linux/20241205115438.234221-1-me@kloenk.dev/
-
-    But Tamir and Fiona agreed to this one. - Miguel ]
-
-Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Diagnosed-by: Chayim Refael Friedman <chayimfr@gmail.com>
-Link: https://github.com/rust-lang/rust-analyzer/issues/17759#issuecomment-2646328275
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://lore.kernel.org/r/20250210-rust-analyzer-macros-core-dep-v3-1-45eb4836f218@gmail.com
-[ Removed `return`. Changed tag name. Added Link. Slightly
-  reworded. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 5780464614f6 ("cifs: Add new parameter "acregmax" for distinct file and directory metadata timeout")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/generate_rust_analyzer.py | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fs/smb/client/fs_context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/generate_rust_analyzer.py b/scripts/generate_rust_analyzer.py
-index fc52bc41d3e7b..c99173e4b8f3e 100755
---- a/scripts/generate_rust_analyzer.py
-+++ b/scripts/generate_rust_analyzer.py
-@@ -49,14 +49,26 @@ def generate_crates(srctree, objtree, sysroot_src, external_src, cfgs):
-             }
-         })
- 
--    # First, the ones in `rust/` since they are a bit special.
--    append_crate(
--        "core",
--        sysroot_src / "core" / "src" / "lib.rs",
--        [],
--        cfg=crates_cfgs.get("core", []),
--        is_workspace_member=False,
--    )
-+    def append_sysroot_crate(
-+        display_name,
-+        deps,
-+        cfg=[],
-+    ):
-+        append_crate(
-+            display_name,
-+            sysroot_src / display_name / "src" / "lib.rs",
-+            deps,
-+            cfg,
-+            is_workspace_member=False,
-+        )
-+
-+    # NB: sysroot crates reexport items from one another so setting up our transitive dependencies
-+    # here is important for ensuring that rust-analyzer can resolve symbols. The sources of truth
-+    # for this dependency graph are `(sysroot_src / crate / "Cargo.toml" for crate in crates)`.
-+    append_sysroot_crate("core", [], cfg=crates_cfgs.get("core", []))
-+    append_sysroot_crate("alloc", ["core"])
-+    append_sysroot_crate("std", ["alloc", "core"])
-+    append_sysroot_crate("proc_macro", ["core", "std"])
- 
-     append_crate(
-         "compiler_builtins",
-@@ -74,7 +86,7 @@ def generate_crates(srctree, objtree, sysroot_src, external_src, cfgs):
-     append_crate(
-         "macros",
-         srctree / "rust" / "macros" / "lib.rs",
--        [],
-+        ["std", "proc_macro"],
-         is_proc_macro=True,
-     )
-     crates[-1]["proc_macro_dylib_path"] = f"{objtree}/rust/libmacros.so"
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 249dd3f4904e3..82a0987f4f868 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1266,11 +1266,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		}
+ 		break;
+ 	case Opt_acregmax:
+-		ctx->acregmax = HZ * result.uint_32;
+-		if (ctx->acregmax > CIFS_MAX_ACTIMEO) {
++		if (result.uint_32 > CIFS_MAX_ACTIMEO / HZ) {
+ 			cifs_errorf(fc, "acregmax too large\n");
+ 			goto cifs_parse_mount_err;
+ 		}
++		ctx->acregmax = HZ * result.uint_32;
+ 		break;
+ 	case Opt_acdirmax:
+ 		ctx->acdirmax = HZ * result.uint_32;
 -- 
 2.39.5
 
