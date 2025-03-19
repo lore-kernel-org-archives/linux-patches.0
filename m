@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D8A1C8618;
-	Wed, 19 Mar 2025 14:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C241C8618;
+	Wed, 19 Mar 2025 14:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395197; cv=none; b=sa2b5StACNh0zSaV+S6PELRzFfp+s1XGQeEpYs9pB9qsQ47T88BRE3hDK/J0cn9BogERkIannh9aD+2gU9Aa5RslI6+x8J8E1VzcrOnzrpNOl2FzbU7xkYdcMQt6eD1BQQaojLTrWO1fB1MSD4Kffkzqs7S952PZr5CwXN/tC3k=
+	t=1742395198; cv=none; b=jvzt1PR8VilqNgVJfMPm6qMKckO7FA2bjsRjtNi1amelgK2KArBu6CRAATbHS4PY3Ek/lti+sqnePaEs66xqCMejC8STW73YqU6UTiSZO5ggQMCsLFJqqIs5izsxC+oIp+o4MAKs2q0c7Q/AYy8fW6527+isJarRVcRmuubzDJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395197; c=relaxed/simple;
-	bh=ihbKsClGsnSiALq3gkost3thQBqtx3EuOeR7Ts4bNJo=;
+	s=arc-20240116; t=1742395198; c=relaxed/simple;
+	bh=Qf6HPdgRJ+W2kYrSEZqBtIUWm50ct3mIroMgy7ZrfBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGZ+X4d7uCmAbCW2FzMX17xOZXo5dbnAYWcckGYjj8/tnuumg/33+Uh7NA4Y+05Twxmx4nr45bYXPtvH1uVJCX1WPFg8sbwFdfnSox23H3UnkJPw+C4mzDgaVNal7Sora8HoQ2lJ+y5I46Bq7AH7A8ewTgx5kQAzTKgxwiRFznY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPcGyGWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RQnqdO+X+su+jWE3OTTTsd3hYMZARcGmowkalpirG4aENXoWxGYNqbjFKdO1i9GFp6eJst4jm75JolJ520aCBqOf+bk0qJ4sxhFElpxBgmt0F6icnMbJMOznB771G6lbXRlo4qPwqg3apJcU7+CO2GXp9C9FW3mU1/ctHfNVjj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxbtrV1I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPcGyGWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B11C4CEE4;
-	Wed, 19 Mar 2025 14:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxbtrV1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074E0C4CEE4;
+	Wed, 19 Mar 2025 14:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395197;
-	bh=ihbKsClGsnSiALq3gkost3thQBqtx3EuOeR7Ts4bNJo=;
+	s=korg; t=1742395198;
+	bh=Qf6HPdgRJ+W2kYrSEZqBtIUWm50ct3mIroMgy7ZrfBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPcGyGWiuGzHto/ps20ts4sV+FrDa7EO7TR70LypInbgKbYEatCvMPZ+zBxSM/5y7
-	 QSF7aVDbh8rEmqJO9yR3jbt+jTi4ai0DtmumosL/TOLQfzwp3a4fj/89cMoCji74Ys
-	 NttpeGYwVXH1NoQCd/2Ky+f2LfPMw7OMvj1hQUbs=
+	b=dxbtrV1IJiC2y8aBY++FDxb638ObZPZDfLGBCpeDpaJolKAMihl5axTT15A0/X0F/
+	 +/sNEVQSRMSS7CtjNQR1nYgCuMkekuYRB378kWIpZhc2xjN93/Te4MeCkNi8rVyG0S
+	 cYKbMwGpNq15w+oDghQLd+Rop8jbTgrP4LipMElw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sybil Isabel Dorsett <sybdorsett@proton.me>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/166] net: openvswitch: remove misbehaving actions length check
-Date: Wed, 19 Mar 2025 07:30:03 -0700
-Message-ID: <20250319143020.859047462@linuxfoundation.org>
+Subject: [PATCH 6.6 059/166] platform/x86: thinkpad_acpi: Fix invalid fan speed on ThinkPad X120e
+Date: Wed, 19 Mar 2025 07:30:30 -0700
+Message-ID: <20250319143021.601938624@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -46,158 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Sybil Isabel Dorsett <sybdorsett@proton.me>
 
-[ Upstream commit a1e64addf3ff9257b45b78bc7d743781c3f41340 ]
+[ Upstream commit 1046cac109225eda0973b898e053aeb3d6c10e1d ]
 
-The actions length check is unreliable and produces different results
-depending on the initial length of the provided netlink attribute and
-the composition of the actual actions inside of it.  For example, a
-user can add 4088 empty clone() actions without triggering -EMSGSIZE,
-on attempt to add 4089 such actions the operation will fail with the
--EMSGSIZE verdict.  However, if another 16 KB of other actions will
-be *appended* to the previous 4089 clone() actions, the check passes
-and the flow is successfully installed into the openvswitch datapath.
+On ThinkPad X120e, fan speed is reported in ticks per revolution
+rather than RPM.
 
-The reason for a such a weird behavior is the way memory is allocated.
-When ovs_flow_cmd_new() is invoked, it calls ovs_nla_copy_actions(),
-that in turn calls nla_alloc_flow_actions() with either the actual
-length of the user-provided actions or the MAX_ACTIONS_BUFSIZE.  The
-function adds the size of the sw_flow_actions structure and then the
-actually allocated memory is rounded up to the closest power of two.
+Recalculate the fan speed value reported for ThinkPad X120e
+to RPM based on a 22.5 kHz clock.
 
-So, if the user-provided actions are larger than MAX_ACTIONS_BUFSIZE,
-then MAX_ACTIONS_BUFSIZE + sizeof(*sfa) rounded up is 32K + 24 -> 64K.
-Later, while copying individual actions, we look at ksize(), which is
-64K, so this way the MAX_ACTIONS_BUFSIZE check is not actually
-triggered and the user can easily allocate almost 64 KB of actions.
+Based on the information on
+https://www.thinkwiki.org/wiki/How_to_control_fan_speed,
+the same problem is highly likely to be relevant to at least Edge11,
+but Edge11 is not addressed in this patch.
 
-However, when the initial size is less than MAX_ACTIONS_BUFSIZE, but
-the actions contain ones that require size increase while copying
-(such as clone() or sample()), then the limit check will be performed
-during the reserve_sfa_size() and the user will not be allowed to
-create actions that yield more than 32 KB internally.
-
-This is one part of the problem.  The other part is that it's not
-actually possible for the userspace application to know beforehand
-if the particular set of actions will be rejected or not.
-
-Certain actions require more space in the internal representation,
-e.g. an empty clone() takes 4 bytes in the action list passed in by
-the user, but it takes 12 bytes in the internal representation due
-to an extra nested attribute, and some actions require less space in
-the internal representations, e.g. set(tunnel(..)) normally takes
-64+ bytes in the action list provided by the user, but only needs to
-store a single pointer in the internal implementation, since all the
-data is stored in the tunnel_info structure instead.
-
-And the action size limit is applied to the internal representation,
-not to the action list passed by the user.  So, it's not possible for
-the userpsace application to predict if the certain combination of
-actions will be rejected or not, because it is not possible for it to
-calculate how much space these actions will take in the internal
-representation without knowing kernel internals.
-
-All that is causing random failures in ovs-vswitchd in userspace and
-inability to handle certain traffic patterns as a result.  For example,
-it is reported that adding a bit more than a 1100 VMs in an OpenStack
-setup breaks the network due to OVS not being able to handle ARP
-traffic anymore in some cases (it tries to install a proper datapath
-flow, but the kernel rejects it with -EMSGSIZE, even though the action
-list isn't actually that large.)
-
-Kernel behavior must be consistent and predictable in order for the
-userspace application to use it in a reasonable way.  ovs-vswitchd has
-a mechanism to re-direct parts of the traffic and partially handle it
-in userspace if the required action list is oversized, but that doesn't
-work properly if we can't actually tell if the action list is oversized
-or not.
-
-Solution for this is to check the size of the user-provided actions
-instead of the internal representation.  This commit just removes the
-check from the internal part because there is already an implicit size
-check imposed by the netlink protocol.  The attribute can't be larger
-than 64 KB.  Realistically, we could reduce the limit to 32 KB, but
-we'll be risking to break some existing setups that rely on the fact
-that it's possible to create nearly 64 KB action lists today.
-
-Vast majority of flows in real setups are below 100-ish bytes.  So
-removal of the limit will not change real memory consumption on the
-system.  The absolutely worst case scenario is if someone adds a flow
-with 64 KB of empty clone() actions.  That will yield a 192 KB in the
-internal representation consuming 256 KB block of memory.  However,
-that list of actions is not meaningful and also a no-op.  Real world
-very large action lists (that can occur for a rare cases of BUM
-traffic handling) are unlikely to contain a large number of clones and
-will likely have a lot of tunnel attributes making the internal
-representation comparable in size to the original action list.
-So, it should be fine to just remove the limit.
-
-Commit in the 'Fixes' tag is the first one that introduced the
-difference between internal representation and the user-provided action
-lists, but there were many more afterwards that lead to the situation
-we have today.
-
-Fixes: 7d5437c709de ("openvswitch: Add tunneling interface.")
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250308004609.2881861-1-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sybil Isabel Dorsett <sybdorsett@proton.me>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250203163255.5525-1-sybdorsett@proton.me
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index ebc5728aab4ea..9c13e14034d3b 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2304,14 +2304,10 @@ int ovs_nla_put_mask(const struct sw_flow *flow, struct sk_buff *skb)
- 				OVS_FLOW_ATTR_MASK, true, skb);
- }
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 692bd6fea3744..b11f5ac658e01 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -7961,6 +7961,7 @@ static struct ibm_struct volume_driver_data = {
  
--#define MAX_ACTIONS_BUFSIZE	(32 * 1024)
--
- static struct sw_flow_actions *nla_alloc_flow_actions(int size)
- {
- 	struct sw_flow_actions *sfa;
+ #define FAN_NS_CTRL_STATUS	BIT(2)		/* Bit which determines control is enabled or not */
+ #define FAN_NS_CTRL		BIT(4)		/* Bit which determines control is by host or EC */
++#define FAN_CLOCK_TPM		(22500*60)	/* Ticks per minute for a 22.5 kHz clock */
  
--	WARN_ON_ONCE(size > MAX_ACTIONS_BUFSIZE);
--
- 	sfa = kmalloc(kmalloc_size_roundup(sizeof(*sfa) + size), GFP_KERNEL);
- 	if (!sfa)
- 		return ERR_PTR(-ENOMEM);
-@@ -2467,15 +2463,6 @@ static struct nlattr *reserve_sfa_size(struct sw_flow_actions **sfa,
+ enum {					/* Fan control constants */
+ 	fan_status_offset = 0x2f,	/* EC register 0x2f */
+@@ -8014,6 +8015,7 @@ static int fan_watchdog_maxinterval;
  
- 	new_acts_size = max(next_offset + req_size, ksize(*sfa) * 2);
+ static bool fan_with_ns_addr;
+ static bool ecfw_with_fan_dec_rpm;
++static bool fan_speed_in_tpr;
  
--	if (new_acts_size > MAX_ACTIONS_BUFSIZE) {
--		if ((next_offset + req_size) > MAX_ACTIONS_BUFSIZE) {
--			OVS_NLERR(log, "Flow action size exceeds max %u",
--				  MAX_ACTIONS_BUFSIZE);
--			return ERR_PTR(-EMSGSIZE);
--		}
--		new_acts_size = MAX_ACTIONS_BUFSIZE;
--	}
--
- 	acts = nla_alloc_flow_actions(new_acts_size);
- 	if (IS_ERR(acts))
- 		return (void *)acts;
-@@ -3502,7 +3489,7 @@ int ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 	int err;
- 	u32 mpls_label_count = 0;
+ static struct mutex fan_mutex;
  
--	*sfa = nla_alloc_flow_actions(min(nla_len(attr), MAX_ACTIONS_BUFSIZE));
-+	*sfa = nla_alloc_flow_actions(nla_len(attr));
- 	if (IS_ERR(*sfa))
- 		return PTR_ERR(*sfa);
+@@ -8195,8 +8197,11 @@ static int fan_get_speed(unsigned int *speed)
+ 			     !acpi_ec_read(fan_rpm_offset + 1, &hi)))
+ 			return -EIO;
  
+-		if (likely(speed))
++		if (likely(speed)) {
+ 			*speed = (hi << 8) | lo;
++			if (fan_speed_in_tpr && *speed != 0)
++				*speed = FAN_CLOCK_TPM / *speed;
++		}
+ 		break;
+ 	case TPACPI_FAN_RD_TPEC_NS:
+ 		if (!acpi_ec_read(fan_rpm_status_ns, &lo))
+@@ -8229,8 +8234,11 @@ static int fan2_get_speed(unsigned int *speed)
+ 		if (rc)
+ 			return -EIO;
+ 
+-		if (likely(speed))
++		if (likely(speed)) {
+ 			*speed = (hi << 8) | lo;
++			if (fan_speed_in_tpr && *speed != 0)
++				*speed = FAN_CLOCK_TPM / *speed;
++		}
+ 		break;
+ 
+ 	case TPACPI_FAN_RD_TPEC_NS:
+@@ -8758,6 +8766,7 @@ static const struct attribute_group fan_driver_attr_group = {
+ #define TPACPI_FAN_NOFAN	0x0008		/* no fan available */
+ #define TPACPI_FAN_NS		0x0010		/* For EC with non-Standard register addresses */
+ #define TPACPI_FAN_DECRPM	0x0020		/* For ECFW's with RPM in register as decimal */
++#define TPACPI_FAN_TPR		0x0040		/* Fan speed is in Ticks Per Revolution */
+ 
+ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
+ 	TPACPI_QEC_IBM('1', 'Y', TPACPI_FAN_Q1),
+@@ -8780,6 +8789,7 @@ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
+ 	TPACPI_Q_LNV3('N', '2', 'U', TPACPI_FAN_NS),	/* X13 Yoga Gen 2*/
+ 	TPACPI_Q_LNV3('N', '1', 'O', TPACPI_FAN_NOFAN),	/* X1 Tablet (2nd gen) */
+ 	TPACPI_Q_LNV3('R', '0', 'Q', TPACPI_FAN_DECRPM),/* L480 */
++	TPACPI_Q_LNV('8', 'F', TPACPI_FAN_TPR),		/* ThinkPad x120e */
+ };
+ 
+ static int __init fan_init(struct ibm_init_struct *iibm)
+@@ -8843,6 +8853,8 @@ static int __init fan_init(struct ibm_init_struct *iibm)
+ 
+ 			if (quirks & TPACPI_FAN_Q1)
+ 				fan_quirk1_setup();
++			if (quirks & TPACPI_FAN_TPR)
++				fan_speed_in_tpr = true;
+ 			/* Try and probe the 2nd fan */
+ 			tp_features.second_fan = 1; /* needed for get_speed to work */
+ 			res = fan2_get_speed(&speed);
 -- 
 2.39.5
 
