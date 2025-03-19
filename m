@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C860721B9C0;
-	Wed, 19 Mar 2025 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849C821B9C0;
+	Wed, 19 Mar 2025 14:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395117; cv=none; b=XVq1gV/5Pf51FW1agr+A/q2JN/LGBLjw9vhENIDaLdfDua/DX+e327PSkYC6btykSnKUGIRCydYh/JUpsVhq/kS4OGnHwZ1P09w0OOpd0oJZtggTcaWMsgpEZg5APmY0T6gJnRbBpVf4V2Zfb+cK8Gme/EJEfxAqEDi1C95P/bY=
+	t=1742395118; cv=none; b=PGU4qOlUWlAb6LVt4kuQPzS3HvJsxMtBQ7xAcHh6/XYo5wLgK/e9xwOYQ7dY8h6rsM3/qYzlK9Jyn42tWW7iP7PFY/FPcA+8RgTyOZ4mNzbfbjBWzBDg9nc3y5nNBPEM/VwGkJF9PxSnpINrik5ixrKKmB+Is3V292CED6NNojY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395117; c=relaxed/simple;
-	bh=O8spj2uLW8+SBJNamKIlsNXit5s2v6/zZvZwVVXhOSI=;
+	s=arc-20240116; t=1742395118; c=relaxed/simple;
+	bh=E/YjpBNM8ezPnqLCQEMZe4umP1eJ/kT6pP1Kqms2Q9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KtNYa/IFPk1UbPIPHnfXQ9HBKjugQtTeTSYYSKVFjs8bcDSLjfpsZ4JyxvKcpgzOrn0/REkA0rm6aGckUWtoZ9kntIXXUS3viUd/GivDmDHWhGhgDcB4aYW+2KXYgM3hnCop0b3rQdVJpPmHOFFwWnNWZbx20xM8TBjh9wDiv4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClwQgHz8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XPvzzrLMxd8VvwxuN6yFQ93jx6sLSVAH002due6H5Uf3sXmRWC1QU0YIhKH8yr2WKVjTo6XLMpOlHJ0G8RIOY4xh1cqpKIgM4JemhxwjOVebyeYerGA+8/fFMqAuo6idRfba9JoNcOkFSW4gat87mZ3ahQriNI6kEm3vtPu4Ci8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNujpLVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClwQgHz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC9C4CEE4;
-	Wed, 19 Mar 2025 14:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNujpLVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52050C4CEE4;
+	Wed, 19 Mar 2025 14:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395117;
-	bh=O8spj2uLW8+SBJNamKIlsNXit5s2v6/zZvZwVVXhOSI=;
+	s=korg; t=1742395118;
+	bh=E/YjpBNM8ezPnqLCQEMZe4umP1eJ/kT6pP1Kqms2Q9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClwQgHz8HQQlu2ScoACq76NneENdKpGLGC8iHArlnS8MXbXvb1NZiuvcCR86EZmca
-	 APwQv6Z4Ya76JGvoDDfB6B/T3DtftrRrVO8T1q0ATCcFzhsV7iYswnGUjPPneBjFR5
-	 qN/ij8H/g4BuHUhb8vMl2vtSbAd+2Wv8vpexFZB0=
+	b=vNujpLVk0xcM0FjU0k8TSFo+G5HzwvVhulX2DbjolrJimtA4lnWMfs5+o6NBUCmb4
+	 lFo19IGgggXDaXQyRn0uILsjFSDXaYLCohJ5r3oNuJ+pWUtOT7P19T1BAgD1qBlba2
+	 ide6t4k4Dq3C10SeGMJ+WeZ2OQVL0Npqi9AB54p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 169/231] drm/i915/cdclk: Do cdclk post plane programming later
-Date: Wed, 19 Mar 2025 07:31:02 -0700
-Message-ID: <20250319143031.019050494@linuxfoundation.org>
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 178/231] drm/amd/display: fix default brightness
+Date: Wed, 19 Mar 2025 07:31:11 -0700
+Message-ID: <20250319143031.235605244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -45,60 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 6266f4a78131c795631440ea9c7b66cdfd399484 upstream.
+commit b5a981e1b34e44f94a5967f730fff4166f2101e8 upstream.
 
-We currently call intel_set_cdclk_post_plane_update() far
-too early. When pipes are active during the reprogramming
-the current spot only works for the cd2x divider update
-case, as that is synchronize to the pipe's vblank. Squashing
-and crawling are not synchronized in any way, so doing the
-programming while the pipes/planes are potentially still using
-the old hardware state could lead to underruns.
+[Why]
+To avoid flickering during boot default brightness level set by BIOS
+should be maintained for as much of the boot as feasible.
+commit 2fe87f54abdc ("drm/amd/display: Set default brightness according
+to ACPI") attempted to set the right levels for AC vs DC, but brightness
+still got reset to maximum level in initialization code for
+setup_backlight_device().
 
-Move the post plane reprgramming to a spot where we know
-that the pipes/planes have switched over the new hardware
-state.
+[How]
+Remove the hardcoded initialization in setup_backlight_device() and
+instead program brightness value to match BIOS (AC or DC).  This avoids a
+brightness flicker from kernel changing the value.  Userspace may however
+still change it during boot.
 
+Fixes: 2fe87f54abdc ("drm/amd/display: Set default brightness according to ACPI")
+Acked-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0747acf3311229e22009bec4a9e7fc30c879e842)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250218211913.27867-2-ville.syrjala@linux.intel.com
-Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
-(cherry picked from commit fb64f5568c0e0b5730733d70a012ae26b1a55815)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -7438,9 +7438,6 @@ static void intel_atomic_commit_tail(str
- 	/* Now enable the clocks, plane, pipe, and connectors that we set up. */
- 	dev_priv->display.funcs.display->commit_modeset_enables(state);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4822,6 +4822,7 @@ amdgpu_dm_register_backlight_device(stru
+ 	dm->backlight_dev[aconnector->bl_idx] =
+ 		backlight_device_register(bl_name, aconnector->base.kdev, dm,
+ 					  &amdgpu_dm_backlight_ops, &props);
++	dm->brightness[aconnector->bl_idx] = props.brightness;
  
--	if (state->modeset)
--		intel_set_cdclk_post_plane_update(state);
--
- 	intel_wait_for_vblank_workers(state);
+ 	if (IS_ERR(dm->backlight_dev[aconnector->bl_idx])) {
+ 		DRM_ERROR("DM: Backlight registration failed!\n");
+@@ -4889,7 +4890,6 @@ static void setup_backlight_device(struc
+ 	aconnector->bl_idx = bl_idx;
  
- 	/* FIXME: We should call drm_atomic_helper_commit_hw_done() here
-@@ -7521,6 +7518,8 @@ static void intel_atomic_commit_tail(str
- 		intel_verify_planes(state);
+ 	amdgpu_dm_update_backlight_caps(dm, bl_idx);
+-	dm->brightness[bl_idx] = AMDGPU_MAX_BL_LEVEL;
+ 	dm->backlight_link[bl_idx] = link;
+ 	dm->num_of_edps++;
  
- 	intel_sagv_post_plane_update(state);
-+	if (state->modeset)
-+		intel_set_cdclk_post_plane_update(state);
- 	intel_pmdemand_post_plane_update(state);
- 
- 	drm_atomic_helper_commit_hw_done(&state->base);
 
 
