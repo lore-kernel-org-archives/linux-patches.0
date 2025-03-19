@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B911EF398;
-	Wed, 19 Mar 2025 14:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4B1DE4C6;
+	Wed, 19 Mar 2025 14:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394961; cv=none; b=dY5AOLpLDzFiz0ocyuxSRt307v4vK4fpo5I4bQoouxqYrVxAjR/VGJPi8yrMkIp5EdmkqnkspuhqhctaIVtlyBwVGi9S1ZJce5oxktaKoC3gJTDMfsbfkGUy2XyOMQ7CiOJo/dYmrue6zi1tlW1wkvt/zzVDhrqu7lGzunM2ZMw=
+	t=1742394962; cv=none; b=SC3rKzbHOs/r83ChQIqNmWuH01LsLU7zwBQpyyt13LUKv2HMNkLhXYG+SxevpotfGErpZpiZbHLSP9729CKBNw8VSn3PJ7K2XZ85ljlqyc02uJUgTI5SslaEXtSnYkiReUM7Ea/ZCAknZ08TLCbuj3Mj+3iS2GEaLVI1Zs3XO+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394961; c=relaxed/simple;
-	bh=RwJNqV1W+MNdFVtw3uQDDen4aCt2Le5pIJMYplYaRaE=;
+	s=arc-20240116; t=1742394962; c=relaxed/simple;
+	bh=UZMAnwIn1E7x4NbidLbKeOndymcJVqk6FKkWQYy2Tuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKS5p6nMC3x9XGWrTPg12pL67mgm9fK/EZewaCPreLY/7gPMRw+gu/qifJ/ulbjOlxTDh5gpRMomy8VDTBJLtIg5/NMHpbw9MUHKobFQHtYKHAlcu3mMj3d6z5uq2gsQSYfNIS/DVbjev1GxNK/Vkvgita9BCVgCYdzi56TXlh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yW/NPC7u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4aY7710kywbIpI8r01xPjQRQC9E54u7AmDakpAjkWJFtbeTM44fWQj4yKcJIbeXh89cVB0kSgoQGzf2iBa9vNShPXgC66gTz2OyjZO8CdqG+IxEOhVSqnLy4ceD/xaGv3OB74p4GkeJ0u57WqTzIuWiHf7uNbGWzPPLXoMNgVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U11rl8d8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yW/NPC7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7EDC4CEE4;
-	Wed, 19 Mar 2025 14:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U11rl8d8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C411C4CEE4;
+	Wed, 19 Mar 2025 14:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394961;
-	bh=RwJNqV1W+MNdFVtw3uQDDen4aCt2Le5pIJMYplYaRaE=;
+	s=korg; t=1742394962;
+	bh=UZMAnwIn1E7x4NbidLbKeOndymcJVqk6FKkWQYy2Tuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yW/NPC7uL2BUPj61r87RJs9qcpUJoHTVxefM2SWcp/pQSXVkPW/ahhUDrfXyHgxgO
-	 Mdbw0MOQD9qDVU+JloLKnYocdipIoHxV7lSYr8cDPqk0bEdm/cuThnA7T4W2A79W56
-	 Hi/5TGPJwiCn5mucleknm/d50yrozMPr36RAaA3A=
+	b=U11rl8d8W7JMPBRlndTxvRDwQcWL9clLFiX6x6e6lGnLtLEuTLJAj9AlQvh0AJukg
+	 jHS6rAFVeEEPW+Ro7aHXo3uc1zECRiomw2I4W7hLPykZk1lGOxE35RArNjOffRKfb2
+	 kj8lH0OBsW4X0de9XjOTIoM931iz/4OJCAsdTcDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Rojtberg <rojtberg@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.13 154/241] Input: xpad - add multiple supported devices
-Date: Wed, 19 Mar 2025 07:30:24 -0700
-Message-ID: <20250319143031.531810858@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.13 190/241] ksmbd: prevent connection release during oplock break notification
+Date: Wed, 19 Mar 2025 07:31:00 -0700
+Message-ID: <20250319143032.422722058@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -50,134 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Rojtberg <rojtberg@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 3492321e2e60ddfe91aa438bb9ac209016f48f7a upstream.
+commit 3aa660c059240e0c795217182cf7df32909dd917 upstream.
 
-This is based on multiple commits at https://github.com/paroj/xpad
-that had bouncing email addresses and were not signed off.
+ksmbd_work could be freed when after connection release.
+Increment r_count of ksmbd_conn to indicate that requests
+are not finished yet and to not release the connection.
 
-Signed-off-by: Pavel Rojtberg <rojtberg@gmail.com>
-Link: https://lore.kernel.org/r/20250123175404.23254-1-rojtberg@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ fs/smb/server/connection.c |   20 ++++++++++++++++++++
+ fs/smb/server/connection.h |    2 ++
+ fs/smb/server/oplock.c     |    6 ++++++
+ fs/smb/server/server.c     |   14 ++------------
+ 4 files changed, 30 insertions(+), 12 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -140,6 +140,7 @@ static const struct xpad_device {
- 	{ 0x044f, 0x0f00, "Thrustmaster Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0x0f03, "Thrustmaster Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
-+	{ 0x044f, 0xd01e, "ThrustMaster, Inc. ESWAP X 2 ELDEN RING EDITION", 0, XTYPE_XBOXONE },
- 	{ 0x044f, 0x0f10, "Thrustmaster Modena GT Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0xb326, "Thrustmaster Gamepad GP XID", 0, XTYPE_XBOX360 },
- 	{ 0x045e, 0x0202, "Microsoft X-Box pad v1 (US)", 0, XTYPE_XBOX },
-@@ -177,6 +178,7 @@ static const struct xpad_device {
- 	{ 0x06a3, 0x0200, "Saitek Racing Wheel", 0, XTYPE_XBOX },
- 	{ 0x06a3, 0x0201, "Saitek Adrenalin", 0, XTYPE_XBOX },
- 	{ 0x06a3, 0xf51a, "Saitek P3600", 0, XTYPE_XBOX360 },
-+	{ 0x0738, 0x4503, "Mad Catz Racing Wheel", 0, XTYPE_XBOXONE },
- 	{ 0x0738, 0x4506, "Mad Catz 4506 Wireless Controller", 0, XTYPE_XBOX },
- 	{ 0x0738, 0x4516, "Mad Catz Control Pad", 0, XTYPE_XBOX },
- 	{ 0x0738, 0x4520, "Mad Catz Control Pad Pro", 0, XTYPE_XBOX },
-@@ -238,6 +240,7 @@ static const struct xpad_device {
- 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
-+	{ 0x0e6f, 0x015d, "PDP Mirror's Edge Official Wired Controller for Xbox One", XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0162, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0163, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
-@@ -276,12 +279,15 @@ static const struct xpad_device {
- 	{ 0x0f0d, 0x0078, "Hori Real Arcade Pro V Kai Xbox One", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0f0d, 0x00c5, "Hori Fighting Commander ONE", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0f0d, 0x00dc, "HORIPAD FPS for Nintendo Switch", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
-+	{ 0x0f0d, 0x0151, "Hori Racing Wheel Overdrive for Xbox Series X", 0, XTYPE_XBOXONE },
-+	{ 0x0f0d, 0x0152, "Hori Racing Wheel Overdrive for Xbox Series X", 0, XTYPE_XBOXONE },
- 	{ 0x0f30, 0x010b, "Philips Recoil", 0, XTYPE_XBOX },
- 	{ 0x0f30, 0x0202, "Joytech Advanced Controller", 0, XTYPE_XBOX },
- 	{ 0x0f30, 0x8888, "BigBen XBMiniPad Controller", 0, XTYPE_XBOX },
- 	{ 0x102c, 0xff0c, "Joytech Wireless Advanced Controller", 0, XTYPE_XBOX },
- 	{ 0x1038, 0x1430, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
- 	{ 0x1038, 0x1431, "SteelSeries Stratus Duo", 0, XTYPE_XBOX360 },
-+	{ 0x10f5, 0x7005, "Turtle Beach Recon Controller", 0, XTYPE_XBOXONE },
- 	{ 0x11c9, 0x55f0, "Nacon GC-100XF", 0, XTYPE_XBOX360 },
- 	{ 0x11ff, 0x0511, "PXN V900", 0, XTYPE_XBOX360 },
- 	{ 0x1209, 0x2882, "Ardwiino Controller", 0, XTYPE_XBOX360 },
-@@ -366,6 +372,7 @@ static const struct xpad_device {
- 	{ 0x24c6, 0x5510, "Hori Fighting Commander ONE (Xbox 360/PC Mode)", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
- 	{ 0x24c6, 0x551a, "PowerA FUSION Pro Controller", 0, XTYPE_XBOXONE },
- 	{ 0x24c6, 0x561a, "PowerA FUSION Controller", 0, XTYPE_XBOXONE },
-+	{ 0x24c6, 0x581a, "ThrustMaster XB1 Classic Controller", 0, XTYPE_XBOXONE },
- 	{ 0x24c6, 0x5b00, "ThrustMaster Ferrari 458 Racing Wheel", 0, XTYPE_XBOX360 },
- 	{ 0x24c6, 0x5b02, "Thrustmaster, Inc. GPX Controller", 0, XTYPE_XBOX360 },
- 	{ 0x24c6, 0x5b03, "Thrustmaster Ferrari 458 Racing Wheel", 0, XTYPE_XBOX360 },
-@@ -376,10 +383,12 @@ static const struct xpad_device {
- 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
- 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
- 	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
--	{ 0x2dc8, 0x6001, "8BitDo SN30 Pro", 0, XTYPE_XBOX360 },
-+	{ 0x2dc8, 0x3109, "8BitDo Ultimate Wireless Bluetooth", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
-+	{ 0x2dc8, 0x6001, "8BitDo SN30 Pro", 0, XTYPE_XBOX360 },
- 	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
- 	{ 0x2e24, 0x1688, "Hyperkin X91 X-Box One pad", 0, XTYPE_XBOXONE },
-+	{ 0x2e95, 0x0504, "SCUF Gaming Controller", MAP_SELECT_BUTTON, XTYPE_XBOXONE },
- 	{ 0x31e3, 0x1100, "Wooting One", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1200, "Wooting Two", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1210, "Wooting Lekker", 0, XTYPE_XBOX360 },
-@@ -387,12 +396,16 @@ static const struct xpad_device {
- 	{ 0x31e3, 0x1230, "Wooting Two HE (ARM)", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1300, "Wooting 60HE (AVR)", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1310, "Wooting 60HE (ARM)", 0, XTYPE_XBOX360 },
-+	{ 0x3285, 0x0603, "Nacon Pro Compact controller for Xbox", 0, XTYPE_XBOXONE },
- 	{ 0x3285, 0x0607, "Nacon GC-100", 0, XTYPE_XBOX360 },
-+	{ 0x3285, 0x0614, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
- 	{ 0x3285, 0x0646, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
-+	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
- 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
- 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
- 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
- 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
-+	{ 0x413d, 0x2104, "Black Shark Green Ghost Gamepad", 0, XTYPE_XBOX360 },
- 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
- 	{ 0x0000, 0x0000, "Generic X-Box pad", 0, XTYPE_UNKNOWN }
- };
-@@ -491,6 +504,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x03f0),		/* HP HyperX Xbox 360 controllers */
- 	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One controllers */
- 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster Xbox 360 controllers */
-+	XPAD_XBOXONE_VENDOR(0x044f),		/* Thrustmaster Xbox One controllers */
- 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft Xbox 360 controllers */
- 	XPAD_XBOXONE_VENDOR(0x045e),		/* Microsoft Xbox One controllers */
- 	XPAD_XBOX360_VENDOR(0x046d),		/* Logitech Xbox 360-style controllers */
-@@ -537,11 +551,13 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOXONE_VENDOR(0x2dc8),		/* 8BitDo Controllers */
- 	XPAD_XBOXONE_VENDOR(0x2e24),		/* Hyperkin Controllers */
- 	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir Controllers */
-+	XPAD_XBOXONE_VENDOR(0x2e95),		/* SCUF Gaming Controller */
- 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
- 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
- 	XPAD_XBOXONE_VENDOR(0x3285),		/* Nacon Evol-X */
- 	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
- 	XPAD_XBOXONE_VENDOR(0x3537),		/* GameSir Controllers */
-+	XPAD_XBOX360_VENDOR(0x413d),		/* Black Shark Green Ghost Controller */
- 	{ }
- };
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -433,6 +433,26 @@ void ksmbd_conn_init_server_callbacks(st
+ 	default_conn_ops.terminate_fn = ops->terminate_fn;
+ }
  
-@@ -694,7 +710,9 @@ static const struct xboxone_init_packet
- 	XBOXONE_INIT_PKT(0x045e, 0x0b00, xboxone_s_init),
- 	XBOXONE_INIT_PKT(0x045e, 0x0b00, extra_input_packet_init),
- 	XBOXONE_INIT_PKT(0x0e6f, 0x0000, xboxone_pdp_led_on),
-+	XBOXONE_INIT_PKT(0x20d6, 0xa01a, xboxone_pdp_led_on),
- 	XBOXONE_INIT_PKT(0x0e6f, 0x0000, xboxone_pdp_auth),
-+	XBOXONE_INIT_PKT(0x20d6, 0xa01a, xboxone_pdp_auth),
- 	XBOXONE_INIT_PKT(0x24c6, 0x541a, xboxone_rumblebegin_init),
- 	XBOXONE_INIT_PKT(0x24c6, 0x542a, xboxone_rumblebegin_init),
- 	XBOXONE_INIT_PKT(0x24c6, 0x543a, xboxone_rumblebegin_init),
++void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn)
++{
++	atomic_inc(&conn->r_count);
++}
++
++void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn)
++{
++	/*
++	 * Checking waitqueue to dropping pending requests on
++	 * disconnection. waitqueue_active is safe because it
++	 * uses atomic operation for condition.
++	 */
++	atomic_inc(&conn->refcnt);
++	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
++		wake_up(&conn->r_count_q);
++
++	if (atomic_dec_and_test(&conn->refcnt))
++		kfree(conn);
++}
++
+ int ksmbd_conn_transport_init(void)
+ {
+ 	int ret;
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -168,6 +168,8 @@ int ksmbd_conn_transport_init(void);
+ void ksmbd_conn_transport_destroy(void);
+ void ksmbd_conn_lock(struct ksmbd_conn *conn);
+ void ksmbd_conn_unlock(struct ksmbd_conn *conn);
++void ksmbd_conn_r_count_inc(struct ksmbd_conn *conn);
++void ksmbd_conn_r_count_dec(struct ksmbd_conn *conn);
+ 
+ /*
+  * WARNING
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -634,6 +634,7 @@ static void __smb2_oplock_break_noti(str
+ {
+ 	struct smb2_oplock_break *rsp = NULL;
+ 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
++	struct ksmbd_conn *conn = work->conn;
+ 	struct oplock_break_info *br_info = work->request_buf;
+ 	struct smb2_hdr *rsp_hdr;
+ 	struct ksmbd_file *fp;
+@@ -689,6 +690,7 @@ static void __smb2_oplock_break_noti(str
+ 
+ out:
+ 	ksmbd_free_work_struct(work);
++	ksmbd_conn_r_count_dec(conn);
+ }
+ 
+ /**
+@@ -723,6 +725,7 @@ static int smb2_oplock_break_noti(struct
+ 	work->sess = opinfo->sess;
+ 
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
++		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
+ 		ksmbd_queue_work(work);
+ 
+@@ -744,6 +747,7 @@ static void __smb2_lease_break_noti(stru
+ {
+ 	struct smb2_lease_break *rsp = NULL;
+ 	struct ksmbd_work *work = container_of(wk, struct ksmbd_work, work);
++	struct ksmbd_conn *conn = work->conn;
+ 	struct lease_break_info *br_info = work->request_buf;
+ 	struct smb2_hdr *rsp_hdr;
+ 
+@@ -790,6 +794,7 @@ static void __smb2_lease_break_noti(stru
+ 
+ out:
+ 	ksmbd_free_work_struct(work);
++	ksmbd_conn_r_count_dec(conn);
+ }
+ 
+ /**
+@@ -829,6 +834,7 @@ static int smb2_lease_break_noti(struct
+ 	work->sess = opinfo->sess;
+ 
+ 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
++		ksmbd_conn_r_count_inc(conn);
+ 		INIT_WORK(&work->work, __smb2_lease_break_noti);
+ 		ksmbd_queue_work(work);
+ 		wait_for_break_ack(opinfo);
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -270,17 +270,7 @@ static void handle_ksmbd_work(struct wor
+ 
+ 	ksmbd_conn_try_dequeue_request(work);
+ 	ksmbd_free_work_struct(work);
+-	/*
+-	 * Checking waitqueue to dropping pending requests on
+-	 * disconnection. waitqueue_active is safe because it
+-	 * uses atomic operation for condition.
+-	 */
+-	atomic_inc(&conn->refcnt);
+-	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
+-		wake_up(&conn->r_count_q);
+-
+-	if (atomic_dec_and_test(&conn->refcnt))
+-		kfree(conn);
++	ksmbd_conn_r_count_dec(conn);
+ }
+ 
+ /**
+@@ -310,7 +300,7 @@ static int queue_ksmbd_work(struct ksmbd
+ 	conn->request_buf = NULL;
+ 
+ 	ksmbd_conn_enqueue_request(work);
+-	atomic_inc(&conn->r_count);
++	ksmbd_conn_r_count_inc(conn);
+ 	/* update activity on connection */
+ 	conn->last_active = jiffies;
+ 	INIT_WORK(&work->work, handle_ksmbd_work);
 
 
