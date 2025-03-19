@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3602818BC36;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F8C18BC36;
 	Wed, 19 Mar 2025 14:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395252; cv=none; b=U9ayXu3x/thNbTfvStOB4T5IhTBruEoU4KhRKCIkXwwX3p9rodbu/XP17HUNbRGcaqJJL2h5RZzMLg+2xK01ZGH1Vb48MInXfJJ5jaX0RzdIeNz+Qa7shkOQUvdFQRJVuTGKuTtNPdiXanc1IlEQQ6aXa3BoCPAubbK/Ed3DtxI=
+	t=1742395252; cv=none; b=G2fmB5hA1SMg63GZOBmMpo8qmpuzMkYl700eQADmcP899kHWpA+fAh4es+EbDHzg3Cbv47hh9h6xjJBIVITDPHAFZL41jw4s7XunbeuFe0Cr7bjuochh+5an8JiCfWC8jQOLd7yl0PKY7A2KGjXLJ+tpCRLsCkeoEkAwyKV7Vjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395252; c=relaxed/simple;
-	bh=8lJ1gcrweoaNa+PI0ugq/R4MVKVLy/8/t69PmHIzQVs=;
+	bh=xpfLSWvbq8z+zeiBY1FvjD3TDi0JGlnrjOGwbQwdhHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bE+R1+dlpLRo1UXOG7Z/p8G4iXkyIDpEmJo2yLtcPVog6n6QCz97TZC/Nil380GrOErp0HFAFpVlMzVbD0+yGU+50ece35XBlcb+myPAfUK0UQPQx53Ny3axdsiI+CQAY28nXsfKryTHrjZVJpXpeLbbnZj//vmY0/NsNAtex24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XOGB50V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCe9LAN6ZdNeWiebb0Fsg9J/18VUhLOb/C3Z7ZcPXkuXdwEhbjCBLsyW4+v4xZCMgDilGdhAatAhgPXk+z7gt8UEQ2eChGTIebkyXzxaGKY26/e1KwFSb51xtKuW42I3ISFYJOnjriqpFX2+HQWom3gfH385fBJUYz7A/9BTqPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AS92WRP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XOGB50V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A64C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AS92WRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB06C4CEE4;
 	Wed, 19 Mar 2025 14:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395252;
-	bh=8lJ1gcrweoaNa+PI0ugq/R4MVKVLy/8/t69PmHIzQVs=;
+	bh=xpfLSWvbq8z+zeiBY1FvjD3TDi0JGlnrjOGwbQwdhHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XOGB50VmE4HCwHYH4kSPDWJpaM6g/FLKWAilFfoOal4U3ed1JmfrDCe4p78h8sjb
-	 8SSRVzkJQodStBK8OJFuoSxoocNsuRiLzMkYSMF7TBcY0BbhoTBmd3SeEA8scIvwSM
-	 Hn71b8aov3b6xAveUUfmb/DtjbrdYX/ct/luOVJs=
+	b=2AS92WRPGgxN7nyNakVGZqTu7hg52c7NXso+dJ4633r1Eg6Wz/QbRZ8lnCGGmWgla
+	 vthC2ZYShklaA0W9Y5O9EqkW+IjJB+PkzYDwFbvjz6So8JGAToEfo5Vfhtkd1ee6jf
+	 PuLChAaVLhzMhnZ3BHqFbfVoh9Ls09b9czDwjjcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Williamson <awilliam@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 134/166] smb: client: fix regression with guest option
-Date: Wed, 19 Mar 2025 07:31:45 -0700
-Message-ID: <20250319143023.645222607@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 117/166] USB: serial: option: fix Telit Cinterion FE990A name
+Date: Wed, 19 Mar 2025 07:31:28 -0700
+Message-ID: <20250319143023.183260773@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,50 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit fc99045effa81fdf509c2a97cbb7e6e8f2fd4443 upstream.
+commit 6232f0d8e100a26275bbd773fc56a60af2c95322 upstream.
 
-When mounting a CIFS share with 'guest' mount option, mount.cifs(8)
-will set empty password= and password2= options.  Currently we only
-handle empty strings from user= and password= options, so the mount
-will fail with
+The correct name for FE990 is FE990A so use it in order to avoid
+confusion with FE990B.
 
-	cifs: Bad value for 'password2'
-
-Fix this by handling empty string from password2= option as well.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=303927
-Reported-by: Adam Williamson <awilliam@redhat.com>
-Closes: https://lore.kernel.org/r/83c00b5fea81c07f6897a5dd3ef50fd3b290f56c.camel@redhat.com
-Fixes: 35f834265e0d ("smb3: fix broken reconnect when password changing on the server by allowing password rotation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/option.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -162,6 +162,7 @@ const struct fs_parameter_spec smb3_fs_p
- 	fsparam_string("username", Opt_user),
- 	fsparam_string("pass", Opt_pass),
- 	fsparam_string("password", Opt_pass),
-+	fsparam_string("pass2", Opt_pass2),
- 	fsparam_string("password2", Opt_pass2),
- 	fsparam_string("ip", Opt_ip),
- 	fsparam_string("addr", Opt_ip),
-@@ -1041,6 +1042,9 @@ static int smb3_fs_context_parse_param(s
- 		} else if (!strcmp("user", param->key) || !strcmp("username", param->key)) {
- 			skip_parsing = true;
- 			opt = Opt_user;
-+		} else if (!strcmp("pass2", param->key) || !strcmp("password2", param->key)) {
-+			skip_parsing = true;
-+			opt = Opt_pass2;
- 		}
- 	}
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1368,13 +1368,13 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
+ 	  .driver_info = RSVD(0) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990A (rmnet) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990 (MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1081, 0xff),	/* Telit FE990A (MBIM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990 (RNDIS) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1082, 0xff),	/* Telit FE990A (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990 (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1083, 0xff),	/* Telit FE990A (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
 
 
