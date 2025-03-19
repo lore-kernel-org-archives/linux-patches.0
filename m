@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8C621C9E5;
-	Wed, 19 Mar 2025 14:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF47521C9ED;
+	Wed, 19 Mar 2025 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395130; cv=none; b=lZQeqnLTz/GGgjmGnsD0l4ga/3C/HuB9CY7GnYeLG2/XMWKZZIAXdakdA7yrQu08vfxkk102AyYFskwpOtvRpxx39bYeGRfnIO4B2FYN9JyA4VDjku/jf1BZXW7yu9SfuF+O31ibaaSuDVPim0qFjf16guycR0Z9OCJC8Q1GNsc=
+	t=1742395130; cv=none; b=n5/ssfYGVOBCj5hTKVp7nSS4+P7D1CmN8qlxff0HZg8lfHBjCh/LQbt1xojMYppc96diN0Xprue8Sqbl/WhEfQPPfNoCBYRO5uZ01XXpKjwzaNIWitpeKMVPiiMWI2BROr8vHiEJQh6BQncduz9j5eHTbNelcF4P7I2kSijimFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395130; c=relaxed/simple;
-	bh=ODFVkCoL2FzGrmJ1EqiUrw2ziPwbHLPjjSC0MsN4EHY=;
+	bh=kDhoAYXGB7A8CD6GvCmwV5BeR0/H8EzuTpP2yuNZKVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDZICXn9bNQ20yfZ3QjaDEtlfJgfL+DVUgEl1PttUKfORI53svneTo3CijwKEDKAz1VwB8MQ1AAR40S8WeaiTBmBzUFsb7rTn1WehYCsig/oPev4edV9QySNq0CPF+PEaWKxd6+/kTM7CJH/LYODoak+Ixz+MYnWt2vTIJNQHRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBZWtZXG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gvPFtmujxk3xV2psA4PWQdqIX93TsG6mmvpdbtsY+dtSMmA4pIZriCo9s2sQYs5lOsIJNuoz4Nl/z4JQo65pQLcOkfNMrsIdzqrEy7ja9KLD6Cy7PodmKwgNN39dJM2kyRwULvwRrzSsIyl3bJBYdH+dz3Vgzw5530ul+zWDQy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g60yX4iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBZWtZXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB294C4CEE4;
-	Wed, 19 Mar 2025 14:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g60yX4iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A210C4CEE8;
+	Wed, 19 Mar 2025 14:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395129;
-	bh=ODFVkCoL2FzGrmJ1EqiUrw2ziPwbHLPjjSC0MsN4EHY=;
+	s=korg; t=1742395130;
+	bh=kDhoAYXGB7A8CD6GvCmwV5BeR0/H8EzuTpP2yuNZKVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBZWtZXGI0dUBTYl1501A4ROyLajnYRIUVMJjpFabIWept5Bz1d/j/pnRmquJqXhI
-	 c6MOGCUl/dhnE2I551nizZZJtoj270pXyukZwIw3WasjUSsNo5FJW97iEmFssCi40X
-	 MoSRssn3S4s6kDcP3kC8LqLvC3E3yhigv14rvyRM=
+	b=g60yX4iyYWE+HipbScyqqGVVkQmavLYMcoeI2j2JmV3sU0vC3+QMM8gSaJVilvzjX
+	 7mmF2CZbH4/SMrxEhXzo8UGnOFgx9eozYa2XtU+tblKwUvy9fX2aAd0azw8AMLGLvB
+	 IHA3bsupEbSQVnmRKobOWKgc2eX1Ies9/bvofus0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Williamson <awilliam@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 194/231] smb: client: fix regression with guest option
-Date: Wed, 19 Mar 2025 07:31:27 -0700
-Message-ID: <20250319143031.633707200@linuxfoundation.org>
+	Andrei Botila <andrei.botila@oss.nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 195/231] net: phy: nxp-c45-tja11xx: add TJA112X PHY configuration errata
+Date: Wed, 19 Mar 2025 07:31:28 -0700
+Message-ID: <20250319143031.657877283@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -45,56 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Andrei Botila <andrei.botila@oss.nxp.com>
 
-commit fc99045effa81fdf509c2a97cbb7e6e8f2fd4443 upstream.
+commit a07364b394697d2e0baffeb517f41385259aa484 upstream.
 
-When mounting a CIFS share with 'guest' mount option, mount.cifs(8)
-will set empty password= and password2= options.  Currently we only
-handle empty strings from user= and password= options, so the mount
-will fail with
+The most recent sillicon versions of TJA1120 and TJA1121 can achieve
+full silicon performance by putting the PHY in managed mode.
 
-	cifs: Bad value for 'password2'
+It is necessary to apply these PHY writes before link gets established.
+Application of this fix is required after restart of device and wakeup
+from sleep.
 
-Fix this by handling empty string from password2= option as well.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=303927
-Reported-by: Adam Williamson <awilliam@redhat.com>
-Closes: https://lore.kernel.org/r/83c00b5fea81c07f6897a5dd3ef50fd3b290f56c.camel@redhat.com
-Fixes: 35f834265e0d ("smb3: fix broken reconnect when password changing on the server by allowing password rotation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: f1fe5dff2b8a ("net: phy: nxp-c45-tja11xx: add TJA1120 support")
+Signed-off-by: Andrei Botila <andrei.botila@oss.nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250304160619.181046-2-andrei.botila@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/phy/nxp-c45-tja11xx.c |   52 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -164,6 +164,7 @@ const struct fs_parameter_spec smb3_fs_p
- 	fsparam_string("username", Opt_user),
- 	fsparam_string("pass", Opt_pass),
- 	fsparam_string("password", Opt_pass),
-+	fsparam_string("pass2", Opt_pass2),
- 	fsparam_string("password2", Opt_pass2),
- 	fsparam_string("ip", Opt_ip),
- 	fsparam_string("addr", Opt_ip),
-@@ -1041,6 +1042,9 @@ static int smb3_fs_context_parse_param(s
- 		} else if (!strcmp("user", param->key) || !strcmp("username", param->key)) {
- 			skip_parsing = true;
- 			opt = Opt_user;
-+		} else if (!strcmp("pass2", param->key) || !strcmp("password2", param->key)) {
-+			skip_parsing = true;
-+			opt = Opt_pass2;
- 		}
- 	}
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -21,6 +21,11 @@
+ #define PHY_ID_TJA_1103			0x001BB010
+ #define PHY_ID_TJA_1120			0x001BB031
+ 
++#define VEND1_DEVICE_ID3		0x0004
++#define TJA1120_DEV_ID3_SILICON_VERSION	GENMASK(15, 12)
++#define TJA1120_DEV_ID3_SAMPLE_TYPE	GENMASK(11, 8)
++#define DEVICE_ID3_SAMPLE_TYPE_R	0x9
++
+ #define VEND1_DEVICE_CONTROL		0x0040
+ #define DEVICE_CONTROL_RESET		BIT(15)
+ #define DEVICE_CONTROL_CONFIG_GLOBAL_EN	BIT(14)
+@@ -1583,6 +1588,50 @@ static int nxp_c45_set_phy_mode(struct p
+ 	return 0;
+ }
+ 
++/* Errata: ES_TJA1120 and ES_TJA1121 Rev. 1.0 — 28 November 2024 Section 3.1 */
++static void nxp_c45_tja1120_errata(struct phy_device *phydev)
++{
++	int silicon_version, sample_type;
++	bool macsec_ability;
++	int phy_abilities;
++	int ret = 0;
++
++	ret = phy_read_mmd(phydev, MDIO_MMD_VEND1, VEND1_DEVICE_ID3);
++	if (ret < 0)
++		return;
++
++	sample_type = FIELD_GET(TJA1120_DEV_ID3_SAMPLE_TYPE, ret);
++	if (sample_type != DEVICE_ID3_SAMPLE_TYPE_R)
++		return;
++
++	silicon_version = FIELD_GET(TJA1120_DEV_ID3_SILICON_VERSION, ret);
++
++	phy_abilities = phy_read_mmd(phydev, MDIO_MMD_VEND1,
++				     VEND1_PORT_ABILITIES);
++	macsec_ability = !!(phy_abilities & MACSEC_ABILITY);
++	if ((!macsec_ability && silicon_version == 2) ||
++	    (macsec_ability && silicon_version == 1)) {
++		/* TJA1120/TJA1121 PHY configuration errata workaround.
++		 * Apply PHY writes sequence before link up.
++		 */
++		if (!macsec_ability) {
++			phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F8, 0x4b95);
++			phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F9, 0xf3cd);
++		} else {
++			phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F8, 0x89c7);
++			phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F9, 0x0893);
++		}
++
++		phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x0476, 0x58a0);
++
++		phy_write_mmd(phydev, MDIO_MMD_PMAPMD, 0x8921, 0xa3a);
++		phy_write_mmd(phydev, MDIO_MMD_PMAPMD, 0x89F1, 0x16c1);
++
++		phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F8, 0x0);
++		phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F9, 0x0);
++	}
++}
++
+ static int nxp_c45_config_init(struct phy_device *phydev)
+ {
+ 	int ret;
+@@ -1599,6 +1648,9 @@ static int nxp_c45_config_init(struct ph
+ 	phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F8, 1);
+ 	phy_write_mmd(phydev, MDIO_MMD_VEND1, 0x01F9, 2);
+ 
++	if (phy_id_compare(phydev->phy_id, PHY_ID_TJA_1120, GENMASK(31, 4)))
++		nxp_c45_tja1120_errata(phydev);
++
+ 	phy_set_bits_mmd(phydev, MDIO_MMD_VEND1, VEND1_PHY_CONFIG,
+ 			 PHY_CONFIG_AUTO);
  
 
 
