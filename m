@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA101FDE39;
-	Wed, 19 Mar 2025 14:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3221D1FDE39;
+	Wed, 19 Mar 2025 14:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395185; cv=none; b=tGfEJoyqu5f1TpRNYS1Cl9H6HOb9GnzxUcbfDi+9IEc6G1BuyyywFzA+xZIcxj0C+SE6Zc5S4TkiKAUYAhJOTo6a6sytyhP7PfCWuFsx4ppExL9UP0hntQvQwSt45aguLH0lM986h8ySkDMG8ls8oU7to24kmYmUZPECMkz9f8s=
+	t=1742395186; cv=none; b=J9W1tgJr2h1aA0A6K3cMH8Ci9xVGKcKgsb8R3eCsdXD6SLfVNIZEGKDrlmMaBjg5Qtx8THbblw6s9+E60yclwCtgTiFv589ED+52AORr/9n2bQs4AabP3ny9cb6/d+ownvGQP3LyDhgxJ0od1o6TnlIFAvTEqqFTKDIgOH5X4S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395185; c=relaxed/simple;
-	bh=QhRdMUM9C05PjpDlD0k2QAGsyVUdtH4KsPJOp37JC7g=;
+	s=arc-20240116; t=1742395186; c=relaxed/simple;
+	bh=slCl2vYTn0Zy6K+DTEU0bIRVcCt//ngQUkmmpWfEPWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TkO7fdw1HOjdNAgzjAEarACNtUMShVvoxVoH1HKSbVlyQn4bLa646I19m1MqmTlok03xhdTnKfNhg3Yz//S5oN7L3XQn/TeTQouRFcNBVvOlRBTTvbrlUxQ5WG9UdAr3Kxn68tpOlCqLOSRlewElnzg2I0tUVzLcj5oV/KEkWLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptNSoJaJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qo9mfZxKTwjHv98M5U5daLMz/0rQfbWWP3FamsOERQarHBMTL91xPlwcYOH3IEPndVqA2Iy5ZahrsT7fCVBGc9dp8Uc7OqW+6x/2cl0uI4cK4+eVG7OBbgyYcKFQxhrvDTs6sU2kgubkzW+ddabwBkAhvk9RhJrDk1FAc8NkGSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHLOj53I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptNSoJaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C8BC4CEE4;
-	Wed, 19 Mar 2025 14:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHLOj53I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E62C4CEE4;
+	Wed, 19 Mar 2025 14:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395185;
-	bh=QhRdMUM9C05PjpDlD0k2QAGsyVUdtH4KsPJOp37JC7g=;
+	s=korg; t=1742395186;
+	bh=slCl2vYTn0Zy6K+DTEU0bIRVcCt//ngQUkmmpWfEPWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptNSoJaJSMnQWjT2YiIb2Yqwaeu7MP+xhpPqmnAzqRfoSmKw5ytgATTAUoRQfIicp
-	 jfEYnJXFuLWXUv9wN5bRu6AGfyGdJFsFmmH2Mr1TnqwFxLV8i3DeMBoLh1lceltxch
-	 VJ/MMnCnf/Ai3quig9y7U/Wui6mSpE/N0gO16Bjc=
+	b=lHLOj53IUyzFK2NDn+fOmOe4fQW3HWrpEhhNhTfRVebFGy8urAmBvUmmrpFOOBZg2
+	 vgelC09oJ+6kCs0xH0i777CNWBvoIyV+MPd9fgD6Ud3Jo1jVn4+ubn5m4rnjkOGo3c
+	 jRXQke9Jpj3m1P5Ejza9h25IgpzZ+dED1kgrbvYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marc=20Aur=C3=A8le=20La=20France?= <tsi@tuyoix.net>,
-	Rik van Riel <riel@surriel.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Seunghui Lee <sh043.lee@samsung.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/166] scsi: core: Use GFP_NOIO to avoid circular locking dependency
-Date: Wed, 19 Mar 2025 07:30:14 -0700
-Message-ID: <20250319143021.158155039@linuxfoundation.org>
+Subject: [PATCH 6.6 044/166] scsi: ufs: core: Fix error return with query response
+Date: Wed, 19 Mar 2025 07:30:15 -0700
+Message-ID: <20250319143021.185507910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -47,61 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Seunghui Lee <sh043.lee@samsung.com>
 
-[ Upstream commit 5363ee9d110e139584c2d92a0b640bc210588506 ]
+[ Upstream commit 1a78a56ea65252bb089e0daace989167227f2d31 ]
 
-Filesystems can write to disk from page reclaim with __GFP_FS
-set. Marc found a case where scsi_realloc_sdev_budget_map() ends up in
-page reclaim with GFP_KERNEL, where it could try to take filesystem
-locks again, leading to a deadlock.
+There is currently no mechanism to return error from query responses.
+Return the error and print the corresponding error message with it.
 
-WARNING: possible circular locking dependency detected
-6.13.0 #1 Not tainted
-------------------------------------------------------
-kswapd0/70 is trying to acquire lock:
-ffff8881025d5d78 (&q->q_usage_counter(io)){++++}-{0:0}, at: blk_mq_submit_bio+0x461/0x6e0
-
-but task is already holding lock:
-ffffffff81ef5f40 (fs_reclaim){+.+.}-{0:0}, at: balance_pgdat+0x9f/0x760
-
-The full lockdep splat can be found in Marc's report:
-
-https://lkml.org/lkml/2025/1/24/1101
-
-Avoid the potential deadlock by doing the allocation with GFP_NOIO, which
-prevents both filesystem and block layer recursion.
-
-Reported-by: Marc Aurèle La France <tsi@tuyoix.net>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/r/20250129104525.0ae8421e@fangorn
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Seunghui Lee <sh043.lee@samsung.com>
+Link: https://lore.kernel.org/r/20250118023808.24726-1-sh043.lee@samsung.com
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index ca99be7341d9b..cead0fbbe5dbd 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -245,7 +245,7 @@ static int scsi_realloc_sdev_budget_map(struct scsi_device *sdev,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 6d53dd7d411a8..cb5611cbf4547 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3027,8 +3027,13 @@ ufshcd_dev_cmd_completion(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
+ 	case UPIU_TRANSACTION_QUERY_RSP: {
+ 		u8 response = lrbp->ucd_rsp_ptr->header.response;
+ 
+-		if (response == 0)
++		if (response == 0) {
+ 			err = ufshcd_copy_query_response(hba, lrbp);
++		} else {
++			err = -EINVAL;
++			dev_err(hba->dev, "%s: unexpected response in Query RSP: %x\n",
++					__func__, response);
++		}
+ 		break;
  	}
- 	ret = sbitmap_init_node(&sdev->budget_map,
- 				scsi_device_max_queue_depth(sdev),
--				new_shift, GFP_KERNEL,
-+				new_shift, GFP_NOIO,
- 				sdev->request_queue->node, false, true);
- 	if (!ret)
- 		sbitmap_resize(&sdev->budget_map, depth);
+ 	case UPIU_TRANSACTION_REJECT_UPIU:
 -- 
 2.39.5
 
