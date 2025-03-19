@@ -1,40 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58D120A5E1;
-	Wed, 19 Mar 2025 14:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A599C18BC36;
+	Wed, 19 Mar 2025 14:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395255; cv=none; b=MD9E5Zx4bwVR+QPtjYjB6vKZ5zqek2wqn9IjqWCrqunLqrH/YB/mRBDGeL45ekVMLWDp4bvtzAGicub3i2lh+yPuoXX1nTAccgZWaPB9dN6o+3yXwR2FkzCor0q2LtwMdfUFQdJ3txLxld+rQ5FINCdFjRRV6EDsp4Lbct9Hkzk=
+	t=1742395255; cv=none; b=D/AWNQMTyfKVvRjjvsTCUQkCgx9JvG57W0OynqPEEclZ4WR50a78iHZDuNmncJHJ0BZawVe99jnnPzsxUA0oqyKXzE01VR7w4dHbZThnNa+C9mM5FJ2e0ghE3FJJn4tVVBg6iE+EOz9y+i1Wh5iamWreD7OpTgT+7oshty2O+lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395255; c=relaxed/simple;
-	bh=y0Jn+I1BWXUcEsX/WqJhK/YA+MQcgHoFrm53sXyQBi0=;
+	bh=C9SsyNzc5D7dyoyBYlIeJgXCLydxGXhI+8g9gjc7pcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtfQaC8cnIE0g/Tt+ZZxF4QZoi5jPCcvQQga5AV0KMmkiWlTsA/olmoK0dAVqyezk4yi9TRNI00RO0p8LZhzHc4YOG+Rwh+COSVMN/M7kSFWHdCiWt7uITK2+7V/amOnBdAobohbQSluugfr2cvQ5mFpZrDFATX0rpUs0sTSGzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO9j8JXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUOkGNpp0143KxtMl/h/FFWFxgyLJptpwigJBYuRmOBxsYiDQzafNGbHj5/Auuws5rVK2oyxdMR3X0qkF9vg+FoTMDCRpfdC7tsXESJEGanr6fV4FI8sGGGK1hxbRK4Rot9xau0Ec3KVeK3IejF21+yzIuyBmc/iF0iDMJk/TyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGtf307u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO9j8JXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A8BC4CEE8;
-	Wed, 19 Mar 2025 14:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGtf307u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703BAC4CEE8;
+	Wed, 19 Mar 2025 14:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395254;
-	bh=y0Jn+I1BWXUcEsX/WqJhK/YA+MQcgHoFrm53sXyQBi0=;
+	s=korg; t=1742395255;
+	bh=C9SsyNzc5D7dyoyBYlIeJgXCLydxGXhI+8g9gjc7pcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SO9j8JXqQIrcWA4z4CT9fqYLukQgU5zEOqM1Bv7UmxwKkExCRn7Qtuvb2BPojYJvA
-	 J0cYJU9xgJI/SOwLio1/MQkfspV8HECdsdmtXAuPn3uwOg3eZgvp5MojLAxDIpZyx6
-	 zCcTs+5wIGdVmAIq3RUfdENeo0v/zU/bgGyF3Gk8=
+	b=mGtf307uoN9xA0ZUmamnQ3ZafMBkMkmKNIkx27neQ1VqlQxvoV788/f2zqvW/RF3f
+	 lPCFyIYZtcgagv45bezmFVnWiMCrOMCqQs00lCwx8HgfUdS8BGE10tM0imlHPW2JAz
+	 OvCUUKBJzdAqgFUXTH5P4p2zwnnrw2/TxFuNNlTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Lai <yi1.lai@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Chen Linxuan <chenlinxuan@deepin.org>
-Subject: [PATCH 6.6 137/166] lib/buildid: Handle memfd_secret() files in build_id_parse()
-Date: Wed, 19 Mar 2025 07:31:48 -0700
-Message-ID: <20250319143023.729253896@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com,
+	Jann Horn <jannh@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+	Eric Snowberg <eric.snowberg@oracle.com>,
+	James Morris <jmorris@namei.org>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Shu Han <ebpqwerty472123@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.6 138/166] mm: split critical region in remap_file_pages() and invoke LSMs in between
+Date: Wed, 19 Mar 2025 07:31:49 -0700
+Message-ID: <20250319143023.755578926@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -53,62 +66,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 5ac9b4e935dfc6af41eee2ddc21deb5c36507a9f upstream.
+commit 58a039e679fe72bd0efa8b2abe669a7914bb4429 upstream.
 
->From memfd_secret(2) manpage:
+Commit ea7e2d5e49c0 ("mm: call the security_mmap_file() LSM hook in
+remap_file_pages()") fixed a security issue, it added an LSM check when
+trying to remap file pages, so that LSMs have the opportunity to evaluate
+such action like for other memory operations such as mmap() and
+mprotect().
 
-  The memory areas backing the file created with memfd_secret(2) are
-  visible only to the processes that have access to the file descriptor.
-  The memory region is removed from the kernel page tables and only the
-  page tables of the processes holding the file descriptor map the
-  corresponding physical memory. (Thus, the pages in the region can't be
-  accessed by the kernel itself, so that, for example, pointers to the
-  region can't be passed to system calls.)
+However, that commit called security_mmap_file() inside the mmap_lock
+lock, while the other calls do it before taking the lock, after commit
+8b3ec6814c83 ("take security_mmap_file() outside of ->mmap_sem").
 
-We need to handle this special case gracefully in build ID fetching
-code. Return -EFAULT whenever secretmem file is passed to build_id_parse()
-family of APIs. Original report and repro can be found in [0].
+This caused lock inversion issue with IMA which was taking the mmap_lock
+and i_mutex lock in the opposite way when the remap_file_pages() system
+call was called.
 
-  [0] https://lore.kernel.org/bpf/ZwyG8Uro%2FSyTXAni@ly-workstation/
+Solve the issue by splitting the critical region in remap_file_pages() in
+two regions: the first takes a read lock of mmap_lock, retrieves the VMA
+and the file descriptor associated, and calculates the 'prot' and 'flags'
+variables; the second takes a write lock on mmap_lock, checks that the VMA
+flags and the VMA file descriptor are the same as the ones obtained in the
+first critical region (otherwise the system call fails), and calls
+do_mmap().
 
-Fixes: de3ec364c3c3 ("lib/buildid: add single folio-based file reader abstraction")
-Reported-by: Yi Lai <yi1.lai@intel.com>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://lore.kernel.org/bpf/20241017175431.6183-A-hca@linux.ibm.com
-Link: https://lore.kernel.org/bpf/20241017174713.2157873-1-andrii@kernel.org
-[ Chen Linxuan: backport same logic without folio-based changes ]
-Fixes: 88a16a130933 ("perf: Add build id data in mmap2 event")
-Signed-off-by: Chen Linxuan <chenlinxuan@deepin.org>
+In between, after releasing the read lock and before taking the write
+lock, call security_mmap_file(), and solve the lock inversion issue.
+
+Link: https://lkml.kernel.org/r/20241018161415.3845146-1-roberto.sassu@huaweicloud.com
+Fixes: ea7e2d5e49c0 ("mm: call the security_mmap_file() LSM hook in remap_file_pages()")
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reported-by: syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-security-module/66f7b10e.050a0220.46d20.0036.GAE@google.com/
+Tested-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Tested-by: syzbot+1cd571a672400ef3a930@syzkaller.appspotmail.com
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
+Cc: Eric Snowberg <eric.snowberg@oracle.com>
+Cc: James Morris <jmorris@namei.org>
+Cc: Mimi Zohar <zohar@linux.ibm.com>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Cc: Shu Han <ebpqwerty472123@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/buildid.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ mm/mmap.c |   69 ++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 17 deletions(-)
 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -5,6 +5,7 @@
- #include <linux/elf.h>
- #include <linux/kernel.h>
- #include <linux/pagemap.h>
-+#include <linux/secretmem.h>
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -2981,6 +2981,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
+ 	unsigned long populate = 0;
+ 	unsigned long ret = -EINVAL;
+ 	struct file *file;
++	vm_flags_t vm_flags;
  
- #define BUILD_ID 3
+ 	pr_warn_once("%s (%d) uses deprecated remap_file_pages() syscall. See Documentation/mm/remap_file_pages.rst.\n",
+ 		     current->comm, current->pid);
+@@ -2997,12 +2998,60 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
+ 	if (pgoff + (size >> PAGE_SHIFT) < pgoff)
+ 		return ret;
  
-@@ -157,6 +158,10 @@ int build_id_parse(struct vm_area_struct
- 	if (!vma->vm_file)
- 		return -EINVAL;
+-	if (mmap_write_lock_killable(mm))
++	if (mmap_read_lock_killable(mm))
+ 		return -EINTR;
  
-+	/* reject secretmem folios created with memfd_secret() */
-+	if (vma_is_secretmem(vma))
-+		return -EFAULT;
++	/*
++	 * Look up VMA under read lock first so we can perform the security
++	 * without holding locks (which can be problematic). We reacquire a
++	 * write lock later and check nothing changed underneath us.
++	 */
+ 	vma = vma_lookup(mm, start);
+ 
+-	if (!vma || !(vma->vm_flags & VM_SHARED))
++	if (!vma || !(vma->vm_flags & VM_SHARED)) {
++		mmap_read_unlock(mm);
++		return -EINVAL;
++	}
 +
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
++	prot |= vma->vm_flags & VM_READ ? PROT_READ : 0;
++	prot |= vma->vm_flags & VM_WRITE ? PROT_WRITE : 0;
++	prot |= vma->vm_flags & VM_EXEC ? PROT_EXEC : 0;
++
++	flags &= MAP_NONBLOCK;
++	flags |= MAP_SHARED | MAP_FIXED | MAP_POPULATE;
++	if (vma->vm_flags & VM_LOCKED)
++		flags |= MAP_LOCKED;
++
++	/* Save vm_flags used to calculate prot and flags, and recheck later. */
++	vm_flags = vma->vm_flags;
++	file = get_file(vma->vm_file);
++
++	mmap_read_unlock(mm);
++
++	/* Call outside mmap_lock to be consistent with other callers. */
++	ret = security_mmap_file(file, prot, flags);
++	if (ret) {
++		fput(file);
++		return ret;
++	}
++
++	ret = -EINVAL;
++
++	/* OK security check passed, take write lock + let it rip. */
++	if (mmap_write_lock_killable(mm)) {
++		fput(file);
++		return -EINTR;
++	}
++
++	vma = vma_lookup(mm, start);
++
++	if (!vma)
++		goto out;
++
++	/* Make sure things didn't change under us. */
++	if (vma->vm_flags != vm_flags)
++		goto out;
++	if (vma->vm_file != file)
+ 		goto out;
+ 
+ 	if (start + size > vma->vm_end) {
+@@ -3030,25 +3079,11 @@ SYSCALL_DEFINE5(remap_file_pages, unsign
+ 			goto out;
+ 	}
+ 
+-	prot |= vma->vm_flags & VM_READ ? PROT_READ : 0;
+-	prot |= vma->vm_flags & VM_WRITE ? PROT_WRITE : 0;
+-	prot |= vma->vm_flags & VM_EXEC ? PROT_EXEC : 0;
+-
+-	flags &= MAP_NONBLOCK;
+-	flags |= MAP_SHARED | MAP_FIXED | MAP_POPULATE;
+-	if (vma->vm_flags & VM_LOCKED)
+-		flags |= MAP_LOCKED;
+-
+-	file = get_file(vma->vm_file);
+-	ret = security_mmap_file(vma->vm_file, prot, flags);
+-	if (ret)
+-		goto out_fput;
+ 	ret = do_mmap(vma->vm_file, start, size,
+ 			prot, flags, 0, pgoff, &populate, NULL);
+-out_fput:
+-	fput(file);
+ out:
+ 	mmap_write_unlock(mm);
++	fput(file);
+ 	if (populate)
+ 		mm_populate(ret, populate);
+ 	if (!IS_ERR_VALUE(ret))
 
 
