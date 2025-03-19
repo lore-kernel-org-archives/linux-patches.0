@@ -1,49 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA441DEFD6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6558209F4B;
 	Wed, 19 Mar 2025 14:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394994; cv=none; b=XR7NUXC350cUMI2TgLHfDI2g04cBX70oZyfqpmRANatnn93fNf2vkzXG8HUzdomDp7rII+fEn3ZOFbCn9VDI0wbkoQoa8cDSbO7blK96tlxSgrdNaTv69MtN4OQ8KdsoSESKmHm/Zs6TGbHdqUlxeaOOR/fRh4utnWa2zlZ9XpQ=
+	t=1742394994; cv=none; b=KzwSYC0UWsV7bArUqiGhMwju2aY9D0TqgVe/dnY+uZFJC07kenahmllZxy3mRVxL28uzQftbj1Gxd2WcmijpvikfqBIZXPAsrp2/efLhm497GBVB5wzmj/GHe3G4pqFaBWhahukgXLVNXJMq5codfgld/GRQIo0VaBUZ3/yA+VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742394994; c=relaxed/simple;
-	bh=/SqmxPhiN7ldbpBkht0grZFZ+2BUSs0J1qDm57iP3MU=;
+	bh=0S+PucrAQkiXKwvwBfrzrAMJ5P8P8PC2LHuX5sjH/BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ms6tkkCT6g3hfl/I1/kRXRZrK1J4jSFd1HfcfqgUcBCNIldkYyqizi2ibqU16XBxP/FcO2+7dwTt/zTRKaMJlMIRXEtk06ucJNK5x6Ad1+1Hc/2xc7wQV7rxhyizprKudA9ICwZ4DE+f3aOPFk68lGdlz/vGcEr9GHxRnaNiAzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pejy3geX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGtwlfjAGDcknY1LNBOKuXB/gcetkvR4EfAbFMllMzY17aVWU/VHSW1E5xR0Z7ZOvedB2RhruUtGNsxTQ6FQSjmzIw3kg2RZn2ZIf5UhFxHcmKd7Tg6gW6cRmM/JLzHYdWnmAcRsvyMBc/j5jwzNhVW8gMXsRGCwrRJzPbrIiSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPkf+ozv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pejy3geX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC93C4CEE4;
-	Wed, 19 Mar 2025 14:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPkf+ozv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF9BC4CEE4;
+	Wed, 19 Mar 2025 14:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742394994;
-	bh=/SqmxPhiN7ldbpBkht0grZFZ+2BUSs0J1qDm57iP3MU=;
+	bh=0S+PucrAQkiXKwvwBfrzrAMJ5P8P8PC2LHuX5sjH/BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pejy3geX6HMsej2duFXbby43pJnEHkvTB8kODukJVPqU23+Aq8Mxpr7EHFgvCA2Ef
-	 eyKOLzHU6K2wbRAMK1Cx/JxluU4DkN1c/4twMStWEzABMHZynFkI6OAQVnNRQ5IAVu
-	 ozIycKvcG3YX6Ct+tAz08s5Mue5zHql6jyix57o4=
+	b=qPkf+ozvtUK8Bqsfiyz+g0GHnbbQBBl0TPOm344lGP3uxdMnoNZO/mCIl+F6QD2XS
+	 hoH9lvhhGP/14DbhSkFofd51z+AgMA4cK2LcNmOpXiR7I90lo7Nc8FEtjBvXlOSdfs
+	 uCG14SPDM4EtH7BF6zEB8/FnUpiZXe7pah7+NzLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Jaroszynski <pjaroszynski@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	SeongJae Park <sj@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.13 199/241] Fix mmu notifiers for range-based invalidates
-Date: Wed, 19 Mar 2025 07:31:09 -0700
-Message-ID: <20250319143032.645686776@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.13 200/241] qlcnic: fix memory leak issues in qlcnic_sriov_common.c
+Date: Wed, 19 Mar 2025 07:31:10 -0700
+Message-ID: <20250319143032.671451469@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -62,98 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Jaroszynski <pjaroszynski@nvidia.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit f7edb07ad7c66eab3dce57384f33b9799d579133 upstream.
+commit d2b9d97e89c79c95f8b517e4fa43fd100f936acc upstream.
 
-Update the __flush_tlb_range_op macro not to modify its parameters as
-these are unexepcted semantics. In practice, this fixes the call to
-mmu_notifier_arch_invalidate_secondary_tlbs() in
-__flush_tlb_range_nosync() to use the correct range instead of an empty
-range with start=end. The empty range was (un)lucky as it results in
-taking the invalidate-all path that doesn't cause correctness issues,
-but can certainly result in suboptimal perf.
+Add qlcnic_sriov_free_vlans() in qlcnic_sriov_alloc_vlans() if
+any sriov_vlans fails to be allocated.
+Add qlcnic_sriov_free_vlans() to free the memory allocated by
+qlcnic_sriov_alloc_vlans() if "sriov->allowed_vlans" fails to
+be allocated.
 
-This has been broken since commit 6bbd42e2df8f ("mmu_notifiers: call
-invalidate_range() when invalidating TLBs") when the call to the
-notifiers was added to __flush_tlb_range(). It predates the addition of
-the __flush_tlb_range_op() macro from commit 360839027a6e ("arm64: tlb:
-Refactor the core flush algorithm of __flush_tlb_range") that made the
-bug hard to spot.
-
-Fixes: 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when invalidating TLBs")
-
-Signed-off-by: Piotr Jaroszynski <pjaroszynski@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Raghavendra Rao Ananta <rananta@google.com>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: iommu@lists.linux.dev
-Cc: linux-mm@kvack.org
-Cc: linux-kernel@vger.kernel.org
+Fixes: 91b7282b613d ("qlcnic: Support VLAN id config.")
 Cc: stable@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Link: https://lore.kernel.org/r/20250304085127.2238030-1-pjaroszynski@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250307094952.14874-1-haoxiang_li2024@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/tlbflush.h |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/tlbflush.h
-+++ b/arch/arm64/include/asm/tlbflush.h
-@@ -396,33 +396,35 @@ static inline void arch_tlbbatch_flush(s
- #define __flush_tlb_range_op(op, start, pages, stride,			\
- 				asid, tlb_level, tlbi_user, lpa2)	\
- do {									\
-+	typeof(start) __flush_start = start;				\
-+	typeof(pages) __flush_pages = pages;				\
- 	int num = 0;							\
- 	int scale = 3;							\
- 	int shift = lpa2 ? 16 : PAGE_SHIFT;				\
- 	unsigned long addr;						\
- 									\
--	while (pages > 0) {						\
-+	while (__flush_pages > 0) {					\
- 		if (!system_supports_tlb_range() ||			\
--		    pages == 1 ||					\
--		    (lpa2 && start != ALIGN(start, SZ_64K))) {		\
--			addr = __TLBI_VADDR(start, asid);		\
-+		    __flush_pages == 1 ||				\
-+		    (lpa2 && __flush_start != ALIGN(__flush_start, SZ_64K))) {	\
-+			addr = __TLBI_VADDR(__flush_start, asid);	\
- 			__tlbi_level(op, addr, tlb_level);		\
- 			if (tlbi_user)					\
- 				__tlbi_user_level(op, addr, tlb_level);	\
--			start += stride;				\
--			pages -= stride >> PAGE_SHIFT;			\
-+			__flush_start += stride;			\
-+			__flush_pages -= stride >> PAGE_SHIFT;		\
- 			continue;					\
- 		}							\
- 									\
--		num = __TLBI_RANGE_NUM(pages, scale);			\
-+		num = __TLBI_RANGE_NUM(__flush_pages, scale);		\
- 		if (num >= 0) {						\
--			addr = __TLBI_VADDR_RANGE(start >> shift, asid, \
-+			addr = __TLBI_VADDR_RANGE(__flush_start >> shift, asid, \
- 						scale, num, tlb_level);	\
- 			__tlbi(r##op, addr);				\
- 			if (tlbi_user)					\
- 				__tlbi_user(r##op, addr);		\
--			start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
--			pages -= __TLBI_RANGE_PAGES(num, scale);	\
-+			__flush_start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
-+			__flush_pages -= __TLBI_RANGE_PAGES(num, scale);\
- 		}							\
- 		scale--;						\
- 	}								\
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -454,8 +454,10 @@ static int qlcnic_sriov_set_guest_vlan_m
+ 
+ 	num_vlans = sriov->num_allowed_vlans;
+ 	sriov->allowed_vlans = kcalloc(num_vlans, sizeof(u16), GFP_KERNEL);
+-	if (!sriov->allowed_vlans)
++	if (!sriov->allowed_vlans) {
++		qlcnic_sriov_free_vlans(adapter);
+ 		return -ENOMEM;
++	}
+ 
+ 	vlans = (u16 *)&cmd->rsp.arg[3];
+ 	for (i = 0; i < num_vlans; i++)
+@@ -2167,8 +2169,10 @@ int qlcnic_sriov_alloc_vlans(struct qlcn
+ 		vf = &sriov->vf_info[i];
+ 		vf->sriov_vlans = kcalloc(sriov->num_allowed_vlans,
+ 					  sizeof(*vf->sriov_vlans), GFP_KERNEL);
+-		if (!vf->sriov_vlans)
++		if (!vf->sriov_vlans) {
++			qlcnic_sriov_free_vlans(adapter);
+ 			return -ENOMEM;
++		}
+ 	}
+ 
+ 	return 0;
 
 
