@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249551C1F02;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E6215F78;
 	Wed, 19 Mar 2025 14:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395081; cv=none; b=IAEH++4ca22OXBE0NV70pMGIplmfsL1C34ixW9lwoWl3G0rKdu0zEwSgyvfwyNv9xd1VL0YpwjzRY1HWhyNJ/FQAi00e9oK/xDXZMGEG4eaOuD4OdGNtIVoRUGcmf/e2A7lgOC18b0F3IcdTjdSJ0Ph+GzYN42dqaim6UKEu1eE=
+	t=1742395082; cv=none; b=o52foWmmx7B/aihlrm9Do274YW43IiqSwdDpznpkLUi6umiF4QTZxPu8tQcOdIRfzZLhVJ3efw4t5fYFEGxHx1S+pj9KLJh5j7mvgOF9SEbpYnAJaZhTA3QPU3OeCcQolwHzS9z1CSe+FmtVOoX+t0yBtNzwE+dhTP2XwTy7eNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395081; c=relaxed/simple;
-	bh=P97PoLt/0SLun+zt06zNiCL3r8t+MCEOirsukKvbIvI=;
+	s=arc-20240116; t=1742395082; c=relaxed/simple;
+	bh=SAP1bF47rpw1G++TYoWut0K2Hfk9VKNDW+YjsabTyPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6hdMKijseKhDo44tKgHpzPYTKJjdvPLQVwJFv2Zaols1G98KPhw/b3H9OGPDJ+jtJWNDbccPIqSTZ1DpytqBmhDFHKWotXc06Qg6yHomup9oj28FIxy10OX3ljn1X8WNCmAZc0m6bRcFIXOHH+iVQ71WxfKBlfqemkh594f/6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXSRAqE+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d5ST04lYuScBKSke5JrBMevBwsTpfsQUkOVUKJfyd24EBJaZuZbRj+UTW7VK+sbRU0eqLWOMRNXmFC3YOsOJX9bw04hqPQzh3WFvpWypc2gf6BU6DQSbD3DdmF75cr/rfcJv74Q6unMINqF8VVe5CTgT9m2reDO3/pCi+NLl2Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1pC9Fg5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXSRAqE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94CDC4CEE4;
-	Wed, 19 Mar 2025 14:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1pC9Fg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A701AC4CEE8;
+	Wed, 19 Mar 2025 14:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395081;
-	bh=P97PoLt/0SLun+zt06zNiCL3r8t+MCEOirsukKvbIvI=;
+	bh=SAP1bF47rpw1G++TYoWut0K2Hfk9VKNDW+YjsabTyPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXSRAqE++ZsM+Ed+88GL2/xItq5wgo52HvDBf2NbOZkMnLnJNQEej+s3UclRldzMQ
-	 +PthZT44mR0cHpORSwo6bQ/LMChWnfhwu+XbF2iNgHYcWrWgG6Usk05I+VsZxy1fiQ
-	 wPppirnZ58raY9yAI6lmoKONC0qY0sDzCmttv4Hk=
+	b=w1pC9Fg5whuOp257ssf/+ADYZ0Xp8IFpwVc1nXthQE42hYzM366oXyFJUCUsNQbdn
+	 h3O3UY5LjPJw1L8Je6zO98RBo5aOlFZXyHvDxm7z0ZC3v/H0/DjDLrvyFxqsBAIwyC
+	 pgmq3QfGXqJyytx7KyIrzbZc2l05rkhUktgqa1Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruozhu Li <david.li@jaguarmicro.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/231] nvmet-rdma: recheck queue state is LIVE in state lock in recv done
-Date: Wed, 19 Mar 2025 07:30:15 -0700
-Message-ID: <20250319143029.855429323@linuxfoundation.org>
+Subject: [PATCH 6.12 087/231] sched: Clarify wake_up_q()s write to task->wake_q.next
+Date: Wed, 19 Mar 2025 07:29:40 -0700
+Message-ID: <20250319143028.990754799@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,77 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruozhu Li <david.li@jaguarmicro.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 3988ac1c67e6e84d2feb987d7b36d5791174b3da ]
+[ Upstream commit bcc6244e13b4d4903511a1ea84368abf925031c0 ]
 
-The queue state checking in nvmet_rdma_recv_done is not in queue state
-lock.Queue state can transfer to LIVE in cm establish handler between
-state checking and state lock here, cause a silent drop of nvme connect
-cmd.
-Recheck queue state whether in LIVE state in state lock to prevent this
-issue.
+Clarify that wake_up_q() does an atomic write to task->wake_q.next, after
+which a concurrent __wake_q_add() can immediately overwrite
+task->wake_q.next again.
 
-Signed-off-by: Ruozhu Li <david.li@jaguarmicro.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250129-sched-wakeup-prettier-v1-1-2f51f5f663fa@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ kernel/sched/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 1afd93026f9bf..2a4536ef61848 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -996,6 +996,27 @@ static void nvmet_rdma_handle_command(struct nvmet_rdma_queue *queue,
- 	nvmet_req_complete(&cmd->req, status);
- }
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 9803f10a082a7..1f817d0c5d2d0 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1058,9 +1058,10 @@ void wake_up_q(struct wake_q_head *head)
+ 		struct task_struct *task;
  
-+static bool nvmet_rdma_recv_not_live(struct nvmet_rdma_queue *queue,
-+		struct nvmet_rdma_rsp *rsp)
-+{
-+	unsigned long flags;
-+	bool ret = true;
-+
-+	spin_lock_irqsave(&queue->state_lock, flags);
-+	/*
-+	 * recheck queue state is not live to prevent a race condition
-+	 * with RDMA_CM_EVENT_ESTABLISHED handler.
-+	 */
-+	if (queue->state == NVMET_RDMA_Q_LIVE)
-+		ret = false;
-+	else if (queue->state == NVMET_RDMA_Q_CONNECTING)
-+		list_add_tail(&rsp->wait_list, &queue->rsp_wait_list);
-+	else
-+		nvmet_rdma_put_rsp(rsp);
-+	spin_unlock_irqrestore(&queue->state_lock, flags);
-+	return ret;
-+}
-+
- static void nvmet_rdma_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- {
- 	struct nvmet_rdma_cmd *cmd =
-@@ -1038,17 +1059,9 @@ static void nvmet_rdma_recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	rsp->n_rdma = 0;
- 	rsp->invalidate_rkey = 0;
+ 		task = container_of(node, struct task_struct, wake_q);
+-		/* Task can safely be re-inserted now: */
+ 		node = node->next;
+-		task->wake_q.next = NULL;
++		/* pairs with cmpxchg_relaxed() in __wake_q_add() */
++		WRITE_ONCE(task->wake_q.next, NULL);
++		/* Task can safely be re-inserted now. */
  
--	if (unlikely(queue->state != NVMET_RDMA_Q_LIVE)) {
--		unsigned long flags;
--
--		spin_lock_irqsave(&queue->state_lock, flags);
--		if (queue->state == NVMET_RDMA_Q_CONNECTING)
--			list_add_tail(&rsp->wait_list, &queue->rsp_wait_list);
--		else
--			nvmet_rdma_put_rsp(rsp);
--		spin_unlock_irqrestore(&queue->state_lock, flags);
-+	if (unlikely(queue->state != NVMET_RDMA_Q_LIVE) &&
-+	    nvmet_rdma_recv_not_live(queue, rsp))
- 		return;
--	}
- 
- 	nvmet_rdma_handle_command(queue, rsp);
- }
+ 		/*
+ 		 * wake_up_process() executes a full barrier, which pairs with
 -- 
 2.39.5
 
