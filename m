@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5EC1DEFD9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49351DEFD9;
 	Wed, 19 Mar 2025 14:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395003; cv=none; b=XlIhCTNZYgq3WRP88so2UN7v5ikJdMzEmG6yc2Dg9ppNJXcHaFAJjmDb67ww5xixYmTnJIFZrcGz9qSILHeeIQlYTM3lJWOYNoqArEsQFjTZ3zhk77HKlw47jyDCYhb4KRjY2mmuJHWBDELoihxelw6r0TofaC0Z309k/gNyKd8=
+	t=1742395003; cv=none; b=sKsuCqMbZFAfll9BRmlCcpxI1CD8JnQ0RD1op54VvfzKpMbR8sQA5zMU1zZAHQgOOPsGIymhy7ze2e+xh6Yks0ES/AZrxPDZonJdmFSKW70/vYQc6EN5zz3YO7Kp3D+ihovVY6YxPH/kB8naaClZZFD4UJldy14zzoXNcFaGRPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395003; c=relaxed/simple;
-	bh=Q4khvRpB79gQUjknxgZpCKnoojxuX0D5eCJ5VGHsynU=;
+	bh=1C3wBngThNTroShwA9O+t+uk51Qo12yR24LwF28KI/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N98YqsCcUO3hmeQBNnlE4eGpvRnr7O59q0DcVYMJkTAE85nckO+NjvG26HTMqotdrxwjExKkfL7ojoWk2kELZIWvpDzm5POyKVwGjz6yXYBCyGK2PNac/WY/UfAD/Fhwh+PfUjSz71EOBHPdmUaHbttDHVq2VeWjFJa5pWD0KxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UE+aXj69; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8EpE+NHIxBPdFAu3EbCbMk8vat9HdDbIxivLK0LC3QZI1rUovh686fCdulV0dTHb3kGFPw6uPHRRT0j8AqxXqOlvWijNWupQ0rExU9i73wbfdlXHf+3Gkt1FPoAD4zpxGp3OUq4o7WshCa7B/ZN9rRrsGqy21KttQ+b1XCW6yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6rqk/SS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UE+aXj69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28DDC4CEE4;
-	Wed, 19 Mar 2025 14:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6rqk/SS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C9BC4CEE4;
+	Wed, 19 Mar 2025 14:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395002;
-	bh=Q4khvRpB79gQUjknxgZpCKnoojxuX0D5eCJ5VGHsynU=;
+	s=korg; t=1742395003;
+	bh=1C3wBngThNTroShwA9O+t+uk51Qo12yR24LwF28KI/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UE+aXj69PviyOluLDOTXoFnKacs3vpXXrfj/Gqis2YTzC82p80JXRFmw9CRoANPjZ
-	 ujZmfUO7HJO9XNSBR5jFwmbZW0qci9sSij9FS9aWBsrcWD7yXSnUXgSwCuDUKcoWac
-	 zLQvCtFoAGoRl6wMZZXgpmlv/IhCvNbWQG+uLG7g=
+	b=S6rqk/SSkKY/PXbfq5DObDyF5foMeEACCDQDbriwluglXGK1SBKx7FrrcGZkkCnuf
+	 WGlI42wlULCbI4JH0U248GEjKoynxyXP1xti7ltd8Br8jIssf1q3pO+/xW0HObVVF6
+	 hsbO8cFr46UHgQgwmpipIc4QIJ10xKSXGxcauwhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Nicklas Bo Jensen <njensen@akamai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/231] ice: Fix switchdev slow-path in LAG
-Date: Wed, 19 Mar 2025 07:28:23 -0700
-Message-ID: <20250319143027.113915401@linuxfoundation.org>
+Subject: [PATCH 6.12 011/231] netfilter: nf_conncount: garbage collection is not skipped when jiffies wrap around
+Date: Wed, 19 Mar 2025 07:28:24 -0700
+Message-ID: <20250319143027.139001998@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -55,114 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Nicklas Bo Jensen <njensen@akamai.com>
 
-[ Upstream commit dce97cb0a3e34204c0b99345418a714eac85953f ]
+[ Upstream commit df08c94baafb001de6cf44bb7098bb557f36c335 ]
 
-Ever since removing switchdev control VSI and using PF for port
-representor Tx/Rx, switchdev slow-path has been working improperly after
-failover in SR-IOV LAG. LAG assumes that the first uplink to be added to
-the aggregate will own VFs and have switchdev configured. After
-failing-over to the other uplink, representors are still configured to
-Tx through the uplink they are set up on, which fails because that
-uplink is now down.
+nf_conncount is supposed to skip garbage collection if it has already
+run garbage collection in the same jiffy. Unfortunately, this is broken
+when jiffies wrap around which this patch fixes.
 
-On failover, update all PRs on primary uplink to use the currently
-active uplink for Tx. Call netif_keep_dst(), as the secondary uplink
-might not be in switchdev mode. Also make sure to call
-ice_eswitch_set_target_vsi() if uplink is in LAG.
+The problem is that last_gc in the nf_conncount_list struct is an u32,
+but jiffies is an unsigned long which is 8 bytes on my systems. When
+those two are compared it only works until last_gc wraps around.
 
-On the Rx path, representors are already working properly, because
-default Tx from VFs is set to PF owning the eswitch. After failover the
-same PF is receiving traffic from VFs, even though link is down.
+See bug report: https://bugzilla.netfilter.org/show_bug.cgi?id=1778
+for more details.
 
-Fixes: defd52455aee ("ice: do Tx through PF netdev in slow-path")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Signed-off-by: Nicklas Bo Jensen <njensen@akamai.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lag.c  | 27 +++++++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_txrx.c |  4 +++-
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 1ccb572ce285d..22371011c2492 100644
---- a/drivers/net/ethernet/intel/ice/ice_lag.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lag.c
-@@ -1000,6 +1000,28 @@ static void ice_lag_link(struct ice_lag *lag)
- 	netdev_info(lag->netdev, "Shared SR-IOV resources in bond are active\n");
- }
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 4890af4dc263f..ebe38ed2e6f4f 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -132,7 +132,7 @@ static int __nf_conncount_add(struct net *net,
+ 	struct nf_conn *found_ct;
+ 	unsigned int collect = 0;
  
-+/**
-+ * ice_lag_config_eswitch - configure eswitch to work with LAG
-+ * @lag: lag info struct
-+ * @netdev: active network interface device struct
-+ *
-+ * Updates all port representors in eswitch to use @netdev for Tx.
-+ *
-+ * Configures the netdev to keep dst metadata (also used in representor Tx).
-+ * This is required for an uplink without switchdev mode configured.
-+ */
-+static void ice_lag_config_eswitch(struct ice_lag *lag,
-+				   struct net_device *netdev)
-+{
-+	struct ice_repr *repr;
-+	unsigned long id;
-+
-+	xa_for_each(&lag->pf->eswitch.reprs, id, repr)
-+		repr->dst->u.port_info.lower_dev = netdev;
-+
-+	netif_keep_dst(netdev);
-+}
-+
- /**
-  * ice_lag_unlink - handle unlink event
-  * @lag: LAG info struct
-@@ -1021,6 +1043,9 @@ static void ice_lag_unlink(struct ice_lag *lag)
- 			ice_lag_move_vf_nodes(lag, act_port, pri_port);
- 		lag->primary = false;
- 		lag->active_port = ICE_LAG_INVALID_PORT;
-+
-+		/* Config primary's eswitch back to normal operation. */
-+		ice_lag_config_eswitch(lag, lag->netdev);
- 	} else {
- 		struct ice_lag *primary_lag;
+-	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
++	if ((u32)jiffies == list->last_gc)
+ 		goto add_new_node;
  
-@@ -1419,6 +1444,7 @@ static void ice_lag_monitor_active(struct ice_lag *lag, void *ptr)
- 				ice_lag_move_vf_nodes(lag, prim_port,
- 						      event_port);
- 			lag->active_port = event_port;
-+			ice_lag_config_eswitch(lag, event_netdev);
- 			return;
- 		}
+ 	/* check the saved connections */
+@@ -234,7 +234,7 @@ bool nf_conncount_gc_list(struct net *net,
+ 	bool ret = false;
  
-@@ -1428,6 +1454,7 @@ static void ice_lag_monitor_active(struct ice_lag *lag, void *ptr)
- 		/* new active port */
- 		ice_lag_move_vf_nodes(lag, lag->active_port, event_port);
- 		lag->active_port = event_port;
-+		ice_lag_config_eswitch(lag, event_netdev);
- 	} else {
- 		/* port not set as currently active (e.g. new active port
- 		 * has already claimed the nodes and filters
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index f12fb3a2b6ad9..f522dd42093a9 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -2424,7 +2424,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- 					ICE_TXD_CTX_QW1_CMD_S);
+ 	/* don't bother if we just did GC */
+-	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
++	if ((u32)jiffies == READ_ONCE(list->last_gc))
+ 		return false;
  
- 	ice_tstamp(tx_ring, skb, first, &offload);
--	if (ice_is_switchdev_running(vsi->back) && vsi->type != ICE_VSI_SF)
-+	if ((ice_is_switchdev_running(vsi->back) ||
-+	     ice_lag_is_switchdev_running(vsi->back)) &&
-+	    vsi->type != ICE_VSI_SF)
- 		ice_eswitch_set_target_vsi(skb, &offload);
- 
- 	if (offload.cd_qw1 & ICE_TX_DESC_DTYPE_CTX) {
+ 	/* don't bother if other cpu is already doing GC */
 -- 
 2.39.5
 
