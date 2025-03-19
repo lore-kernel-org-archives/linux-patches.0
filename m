@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAA81DE8AB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D291DE8AB;
 	Wed, 19 Mar 2025 14:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395182; cv=none; b=bIA/P3Iuf+ZnS6kH46cKH8ewaBAp3ncT3WJPC8pxzLWTt67EZ+LR/lonN40wIAlQpxTjJUSNeMlkr+RK+oOF3so+cMZirsNX1QhtVT+FgQCSthGguGO+jwdNp5Q7WHc3OVHCvX3YnXm+G30lsYVj0vPfLuvgSRvwQQgTMJIP1NE=
+	t=1742395182; cv=none; b=cSBXBxm1LQlYTzLfoa2O8peTX80d/L/xF6yoPb5mCiKIY3QzgGnGhcZ+EM+Bv52bU/I8X7Xvqj399Et4Zgdnnb1FFyp+mG3Ahu/CJlDZ8qRQdq9EBhkcp2L66MjRt/4CCByZQcn0fTNgTcJw6qsE+leXmwsX1jrjawjqZ4dDYeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395182; c=relaxed/simple;
-	bh=ihHSWmtROSMWsN5vZxeYdUH3vdFNbUbvuS++ZIio+TI=;
+	bh=y2874EppX31QrvfZERnxmRGhX9VcH3JJ4Nh7eXBYi38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZR2fHCsaoaxGWZY+F0QzK0vrxqSUFoMJxsPKtmMd7p04SVFIzMn4jTnjd9yY8hrJRfrBvoX+Fhcnfl/879E0e8uRybz/xg4isF4/81JSsT2fW378KUsn0jCFqQg+lYui0JBNLyYW8fXADreYbRU6nvYUwJzGBHanTxfWc+5VEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCbH7WRT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMmqnXVNTQIa7m2162iInlrKqLLNvz3mLPQZueuuVN5U2Bm6yhsAj7h3cGySa4zkG4hU+kmciGR3Ovd/g8v7mhSzNhUIAVxSdc1D7zk6PLEkXsx9A1jwLtPF995hqeprKY3cDGtS5tOKM3vpeFWWGzCCKcGmDCBkUtE8z5AqUSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXcYQhmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCbH7WRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42D8C4CEE4;
-	Wed, 19 Mar 2025 14:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXcYQhmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FF4C4CEE4;
+	Wed, 19 Mar 2025 14:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395182;
-	bh=ihHSWmtROSMWsN5vZxeYdUH3vdFNbUbvuS++ZIio+TI=;
+	bh=y2874EppX31QrvfZERnxmRGhX9VcH3JJ4Nh7eXBYi38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCbH7WRTgREF+uieJQlCjdyXOPnKQP8QPx6nLxDrlMFkug3JYrNnlT75PjDSNoY8R
-	 4CyYcmWPK9LQkf3epwVGupnadVDLrxxZcHUCG3Tn1PWGaBySgeegEtwg+dBdsBefrK
-	 RNdmHGsNPBGbBoIyPueKl1NR31uIHddq2uv2sXlU=
+	b=UXcYQhmB1AfXldEH0rUpVytDKpOIIzFmpeUeftncN9G5oueZBxtJpDrgziWkqPlyz
+	 f0R/1jlVWbUfQjgMvLSSq5MKejly65upzTb5PcbkO5Ak8nz6HIzUOoNoUHWBOXgNSR
+	 OLk5dm23svHtIQLZAfx7UkgvMIDgtaCL/J18ik8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kashavkin <akashavkin@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/166] netfilter: nft_exthdr: fix offset with ipv4_find_option()
-Date: Wed, 19 Mar 2025 07:30:01 -0700
-Message-ID: <20250319143020.801881914@linuxfoundation.org>
+Subject: [PATCH 6.6 039/166] powercap: call put_device() on an error path in powercap_register_control_type()
+Date: Wed, 19 Mar 2025 07:30:10 -0700
+Message-ID: <20250319143021.048939461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -52,76 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kashavkin <akashavkin@gmail.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 6edd78af9506bb182518da7f6feebd75655d9a0e ]
+[ Upstream commit 93c66fbc280747ea700bd6199633d661e3c819b3 ]
 
-There is an incorrect calculation in the offset variable which causes
-the nft_skb_copy_to_reg() function to always return -EFAULT. Adding the
-start variable is redundant. In the __ip_options_compile() function the
-correct offset is specified when finding the function. There is no need
-to add the size of the iphdr structure to the offset.
+powercap_register_control_type() calls device_register(), but does not
+release the refcount of the device when it fails.
 
-Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
-Signed-off-by: Alexey Kashavkin <akashavkin@gmail.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Call put_device() before returning an error to balance the refcount.
+
+Since the kfree(control_type) will be done by powercap_release(), remove
+the lines in powercap_register_control_type() before returning the error.
+
+This bug was found by an experimental verifier that I am developing.
+
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20250110010554.1583411-1-joe@pf.is.s.u-tokyo.ac.jp
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/powercap/powercap_sys.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index 6eb571d0c3fdf..cfa90ab660cfe 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -85,7 +85,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	unsigned char optbuf[sizeof(struct ip_options) + 40];
- 	struct ip_options *opt = (struct ip_options *)optbuf;
- 	struct iphdr *iph, _iph;
--	unsigned int start;
- 	bool found = false;
- 	__be32 info;
- 	int optlen;
-@@ -93,7 +92,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	iph = skb_header_pointer(skb, 0, sizeof(_iph), &_iph);
- 	if (!iph)
- 		return -EBADMSG;
--	start = sizeof(struct iphdr);
- 
- 	optlen = iph->ihl * 4 - (int)sizeof(struct iphdr);
- 	if (optlen <= 0)
-@@ -103,7 +101,7 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	/* Copy the options since __ip_options_compile() modifies
- 	 * the options.
- 	 */
--	if (skb_copy_bits(skb, start, opt->__data, optlen))
-+	if (skb_copy_bits(skb, sizeof(struct iphdr), opt->__data, optlen))
- 		return -EBADMSG;
- 	opt->optlen = optlen;
- 
-@@ -118,18 +116,18 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 		found = target == IPOPT_SSRR ? opt->is_strictroute :
- 					       !opt->is_strictroute;
- 		if (found)
--			*offset = opt->srr + start;
-+			*offset = opt->srr;
- 		break;
- 	case IPOPT_RR:
- 		if (!opt->rr)
- 			break;
--		*offset = opt->rr + start;
-+		*offset = opt->rr;
- 		found = true;
- 		break;
- 	case IPOPT_RA:
- 		if (!opt->router_alert)
- 			break;
--		*offset = opt->router_alert + start;
-+		*offset = opt->router_alert;
- 		found = true;
- 		break;
- 	default:
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index 52c32dcbf7d84..4112a00973382 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -627,8 +627,7 @@ struct powercap_control_type *powercap_register_control_type(
+ 	dev_set_name(&control_type->dev, "%s", name);
+ 	result = device_register(&control_type->dev);
+ 	if (result) {
+-		if (control_type->allocated)
+-			kfree(control_type);
++		put_device(&control_type->dev);
+ 		return ERR_PTR(result);
+ 	}
+ 	idr_init(&control_type->idr);
 -- 
 2.39.5
 
