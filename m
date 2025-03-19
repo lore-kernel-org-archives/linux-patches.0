@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2231DF258;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEC1DF73E;
 	Wed, 19 Mar 2025 14:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395276; cv=none; b=BU/D8zEoJ5HsyK8Bmiyn1LCO/gqJ27niy+90kIqxdjxeruY78yDZ9sC2ppdyOwghcwj73h6BV+5YGNZHkHsUXLWFC0tmzy5NXLOJUEcz9XcO/+UEiNKV2VAlKi3ZN5eX8WsvmxyXty2oCnyaJFmcv83ovlFTF+2IEbloC66KXz0=
+	t=1742395276; cv=none; b=FQ1s0hNmufXW3MmB0C1DZ7B78sUscS+Khfkxj13cMzAlewUILu/Xc6nz0QtXJnBqwc9l/qv16c/jXEnncvYsQWBAwEcstQXH8qxzFK7u84TI7pI1qICVwDfRO8M4M/yah+pY/YTt2Jxr3etX3qcRlheJ9gpONuJDnwfDpcBEhMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395276; c=relaxed/simple;
-	bh=A2WOIAWZ/vpSysGGsvqMKlesIt9f76PO01DVlP7WIOE=;
+	bh=XTknMGRFawRHsBgWc98yfSkjEKd+z0wvMelgsIjW+4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRGxO0xQueDWMRslJya3ol1q7tPQqrSUS/O0P4/rDLkXxAXOFycIXiadk4slzRt8wefE3rI2uSxAy7xRlYrfJJLqp/jGvLyTC9UGMZI/cBWBOQFc9nubc51FURXfyzkY4xUWwI1edzSqOZPMuxFRGHaeX72AUrAe/andx2B/v4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4gD7DC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1X1UBikiB1mFXwWR2wpvXM8ml6Ozl7VhCuF9l4TlJjMD3ITeOVBV7oD7oLywXhuPg3BL+X4/gGAXmpnXh4kbv8Our6viB2U9OrLJbNBKRXEBqEyop/b9njDzOiOpW+QSrgZ85LF+9TpXlvm3Ku2sXAXYcboVxpW6xCBY+mekTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5BeSACN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4gD7DC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8077C4CEE4;
-	Wed, 19 Mar 2025 14:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5BeSACN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8768DC4CEE4;
+	Wed, 19 Mar 2025 14:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395275;
-	bh=A2WOIAWZ/vpSysGGsvqMKlesIt9f76PO01DVlP7WIOE=;
+	s=korg; t=1742395276;
+	bh=XTknMGRFawRHsBgWc98yfSkjEKd+z0wvMelgsIjW+4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4gD7DC0zDJiKFFeT8gPTwN4znoYQSdDCJqwMljEgNvQRWc+JT78lqUOs7xBe2lod
-	 IhWE6R3C+kBQ9cwMHMsGGVTiR376qF+HhRHQa3xFVATRgZQVC3or2qh9WiY9QAc6h/
-	 LOThR8bRQLBpmuD1ajArzUIfQfuTxBJ+8Tn7KpI8=
+	b=e5BeSACN/DtHw6Sv2sv5iBAzMIjwdfjEoIHmCPjakGqSnMEmQFZ7QRTu5SotW52X3
+	 XMUnRQ/FnBA2BjoT56BsDMyKTngpMFzd6J6BFwzKtiKwETvCiiFJqcfGJhKWrhHFLq
+	 ef94FlJabXUCvKlyHhH/Ts6FFVjHu+EMrhE/AEMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Aditya Garg <gargaditya08@live.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 161/166] HID: apple: disable Fn key handling on the Omoton KB066
-Date: Wed, 19 Mar 2025 07:32:12 -0700
-Message-ID: <20250319143024.387505913@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 162/166] nvme-tcp: Fix a C2HTermReq error message
+Date: Wed, 19 Mar 2025 07:32:13 -0700
+Message-ID: <20250319143024.416411466@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,72 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 221cea1003d8a412e5ec64a58df7ab19b654f490 upstream.
+commit afb41b08c44e5386f2f52fa859010ac4afd2b66f upstream.
 
-Remove the fixup to make the Omoton KB066's F6 key F6 when not holding
-Fn. That was really just a hack to allow typing F6 in fnmode>0, and it
-didn't fix any of the other F keys that were likewise untypable in
-fnmode>0. Instead, because the Omoton's Fn key is entirely internal to
-the keyboard, completely disable Fn key translation when an Omoton is
-detected, which will prevent the hid-apple driver from interfering with
-the keyboard's built-in Fn key handling. All of the F keys, including
-F6, are then typable when Fn is held.
+In H2CTermReq, a FES with value 0x05 means "R2T Limit Exceeded"; but
+in C2HTermReq the same value has a different meaning (Data Transfer Limit
+Exceeded).
 
-The Omoton KB066 and the Apple A1255 both have HID product code
-05ac:022c. The self-reported name of every original A1255 when they left
-the factory was "Apple Wireless Keyboard". By default, Mac OS changes
-the name to "<username>'s keyboard" when pairing with the keyboard, but
-Mac OS allows the user to set the internal name of Apple keyboards to
-anything they like. The Omoton KB066's name, on the other hand, is not
-configurable: It is always "Bluetooth Keyboard". Because that name is so
-generic that a user might conceivably use the same name for a real Apple
-keyboard, detect Omoton keyboards based on both having that exact name
-and having HID product code 022c.
-
-Fixes: 819083cb6eed ("HID: apple: fix up the F6 key on the Omoton KB066 keyboard")
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Reviewed-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 84e009042d0f ("nvme-tcp: add basic support for the C2HTermReq PDU")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-apple.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/nvme/host/tcp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -363,6 +363,12 @@ static bool apple_is_non_apple_keyboard(
- 	return false;
- }
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -719,7 +719,7 @@ static void nvme_tcp_handle_c2h_term(str
+ 		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
+ 		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
+ 		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
+-		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
++		[NVME_TCP_FES_DATA_LIMIT_EXCEEDED] = "Data Transfer Limit Exceeded",
+ 		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
+ 	};
  
-+static bool apple_is_omoton_kb066(struct hid_device *hdev)
-+{
-+	return hdev->product == USB_DEVICE_ID_APPLE_ALU_WIRELESS_ANSI &&
-+		strcmp(hdev->name, "Bluetooth Keyboard") == 0;
-+}
-+
- static inline void apple_setup_key_translation(struct input_dev *input,
- 		const struct apple_key_translation *table)
- {
-@@ -531,9 +537,6 @@ static int hidinput_apple_event(struct h
- 		}
- 	}
- 
--	if (usage->hid == 0xc0301) /* Omoton KB066 quirk */
--		code = KEY_F6;
--
- 	if (usage->code != code) {
- 		input_event_with_scancode(input, usage->type, code, usage->hid, value);
- 
-@@ -713,7 +716,7 @@ static int apple_input_configured(struct
- {
- 	struct apple_sc *asc = hid_get_drvdata(hdev);
- 
--	if ((asc->quirks & APPLE_HAS_FN) && !asc->fn_found) {
-+	if (((asc->quirks & APPLE_HAS_FN) && !asc->fn_found) || apple_is_omoton_kb066(hdev)) {
- 		hid_info(hdev, "Fn key not found (Apple Wireless Keyboard clone?), disabling Fn key handling\n");
- 		asc->quirks &= ~APPLE_HAS_FN;
- 	}
 
 
