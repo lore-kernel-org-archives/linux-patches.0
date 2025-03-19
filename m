@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9EC213E79;
-	Wed, 19 Mar 2025 14:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0408213E7A;
+	Wed, 19 Mar 2025 14:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395030; cv=none; b=e/J93uVnLSzhV2pOeyj9Xl2IACexxwdWB8/fV9BsBLiEGteqlyWci6UidWwF6491vPQsDEu2iyWnR+rg0qoACGEgj0RiIyVTzoM3l66y3SqkXwSlUmHa1H3H07lDNhWtkaVS6JTUakG4UNIPZL7vNwCm7WmFpUPFUOJizQq921c=
+	t=1742395031; cv=none; b=YpcvmXVbjNVafY+NTolnM52FkBTqFDLIxUH6sxd7sEX91zpm29eDvaCO0POIPqt+puV3MtPBT6yejhLw3xR7TE6bDWOL8LgUFg9oLGTXkYH3n33dCpTFzy4uiy6H5oCIGTPZAXWugnfgtJ1JSx/siNQdTDOv/WsgSciSvuKapw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395030; c=relaxed/simple;
-	bh=/f1QS6wf3joohSTwC/VTPTkHeazGtbFRX33SJpljYQw=;
+	s=arc-20240116; t=1742395031; c=relaxed/simple;
+	bh=xD8ENVPOpajLy54rVbUNXkQMB4lqS8dLDjTEp+UHOBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkJJA8YC8a9mgeZ1COnLoigxPeT2ylNRBw79CgDJl8/N+Pp6VTtYfqb3a3VhyoGz/HgkmHbKbYX0OpHLedl8nwyB44DPPBidHZ7gGjWe12o9JRk+GJQdE551nuam6/9h2vyRkhFw/TEqUnBnkBI//AvlA885YC2Hz0D6p7JjERQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLbFtc52; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d4fO9Qe9ZH+/1Rt6fvmVDAzeM9YB8yEbRwaQmdblUpoyx1ZSPQUGAEcvv3FJaetpRdXjTRDgu6zso7YSDln34lqkmFXIXPlTxaN5rsgqn0SCBPWU5D9OcVlSQNisLND/wjA6Bm9cYhiFozaKe7+3CGDK+JHs1EhsXPfKNBiQUYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfQhcA94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLbFtc52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D44C4CEE4;
-	Wed, 19 Mar 2025 14:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfQhcA94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A490C4CEE4;
+	Wed, 19 Mar 2025 14:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395029;
-	bh=/f1QS6wf3joohSTwC/VTPTkHeazGtbFRX33SJpljYQw=;
+	s=korg; t=1742395030;
+	bh=xD8ENVPOpajLy54rVbUNXkQMB4lqS8dLDjTEp+UHOBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLbFtc52wunKDWzEiwLVk1paRT9SfvfuO5C0tG1tjhOa4EKjkzN4MJzDlhEUmFTy6
-	 TuyzN3KsvwbBQaROvPnkVzn+72zxFKySrm7m2FN86yLfN1yKDycWwcYBc/E8hwVJCq
-	 3fe0Dcqav8gcyo4GY8pucnmXaxZQGQBi428KgHFk=
+	b=cfQhcA94PrKsyKdy4An5seTM8H76N54Ca+VvWnV9F1c4Mnl7govtCeLjLd/3aPXP0
+	 PsYW6FxDmMMNIYiXvZ8kVMyR7hq/55b9Nny4Mk7GtCr3bm70Z9uKaQN+JERP7xUW1A
+	 /qfuquvSQtBASkMjm2eaKpCLLCktrufhUyYFv4ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Aaron Conole <aconole@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/231] bonding: fix incorrect MAC address setting to receive NS messages
-Date: Wed, 19 Mar 2025 07:28:54 -0700
-Message-ID: <20250319143027.830163359@linuxfoundation.org>
+Subject: [PATCH 6.12 050/231] Revert "openvswitch: switch to per-action label counting in conntrack"
+Date: Wed, 19 Mar 2025 07:29:03 -0700
+Message-ID: <20250319143028.061602842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -48,135 +47,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 0c5e145a350de3b38cd5ae77a401b12c46fb7c1d ]
+[ Upstream commit 1063ae07383c0ddc5bcce170260c143825846b03 ]
 
-When validation on the backup slave is enabled, we need to validate the
-Neighbor Solicitation (NS) messages received on the backup slave. To
-receive these messages, the correct destination MAC address must be added
-to the slave. However, the target in bonding is a unicast address, which
-we cannot use directly. Instead, we should first convert it to a
-Solicited-Node Multicast Address and then derive the corresponding MAC
-address.
+Currently, ovs_ct_set_labels() is only called for confirmed conntrack
+entries (ct) within ovs_ct_commit(). However, if the conntrack entry
+does not have the labels_ext extension, attempting to allocate it in
+ovs_ct_get_conn_labels() for a confirmed entry triggers a warning in
+nf_ct_ext_add():
 
-Fix the incorrect MAC address setting on both slave_set_ns_maddr() and
-slave_set_ns_maddrs(). Since the two function names are similar. Add
-some description for the functions. Also only use one mac_addr variable
-in slave_set_ns_maddr() to save some code and logic.
+  WARN_ON(nf_ct_is_confirmed(ct));
 
-Fixes: 8eb36164d1a6 ("bonding: add ns target multicast address to slave device")
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250306023923.38777-2-liuhangbin@gmail.com
+This happens when the conntrack entry is created externally before OVS
+increments net->ct.labels_used. The issue has become more likely since
+commit fcb1aa5163b1 ("openvswitch: switch to per-action label counting
+in conntrack"), which changed to use per-action label counting and
+increment net->ct.labels_used when a flow with ct action is added.
+
+Since there’s no straightforward way to fully resolve this issue at the
+moment, this reverts the commit to avoid breaking existing use cases.
+
+Fixes: fcb1aa5163b1 ("openvswitch: switch to per-action label counting in conntrack")
+Reported-by: Jianbo Liu <jianbol@nvidia.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/1bdeb2f3a812bca016a225d3de714427b2cd4772.1741457143.git.lucien.xin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_options.c | 55 +++++++++++++++++++++++++-----
- 1 file changed, 47 insertions(+), 8 deletions(-)
+ net/openvswitch/conntrack.c | 30 ++++++++++++++++++------------
+ net/openvswitch/datapath.h  |  3 +++
+ 2 files changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index 327b6ecdc77e0..d1b095af253bd 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -1242,10 +1242,28 @@ static bool slave_can_set_ns_maddr(const struct bonding *bond, struct slave *sla
- 	       slave->dev->flags & IFF_MULTICAST;
- }
+diff --git a/net/openvswitch/conntrack.c b/net/openvswitch/conntrack.c
+index 3bb4810234aac..e573e92213029 100644
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -1368,8 +1368,11 @@ bool ovs_ct_verify(struct net *net, enum ovs_key_attr attr)
+ 	    attr == OVS_KEY_ATTR_CT_MARK)
+ 		return true;
+ 	if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS) &&
+-	    attr == OVS_KEY_ATTR_CT_LABELS)
+-		return true;
++	    attr == OVS_KEY_ATTR_CT_LABELS) {
++		struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
++
++		return ovs_net->xt_label;
++	}
  
-+/**
-+ * slave_set_ns_maddrs - add/del all NS mac addresses for slave
-+ * @bond: bond device
-+ * @slave: slave device
-+ * @add: add or remove all the NS mac addresses
-+ *
-+ * This function tries to add or delete all the NS mac addresses on the slave
-+ *
-+ * Note, the IPv6 NS target address is the unicast address in Neighbor
-+ * Solicitation (NS) message. The dest address of NS message should be
-+ * solicited-node multicast address of the target. The dest mac of NS message
-+ * is converted from the solicited-node multicast address.
-+ *
-+ * This function is called when
-+ *   * arp_validate changes
-+ *   * enslaving, releasing new slaves
-+ */
- static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool add)
+ 	return false;
+ }
+@@ -1378,7 +1381,6 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
+ 		       const struct sw_flow_key *key,
+ 		       struct sw_flow_actions **sfa,  bool log)
  {
- 	struct in6_addr *targets = bond->params.ns_targets;
- 	char slot_maddr[MAX_ADDR_LEN];
-+	struct in6_addr mcaddr;
- 	int i;
+-	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
+ 	struct ovs_conntrack_info ct_info;
+ 	const char *helper = NULL;
+ 	u16 family;
+@@ -1407,12 +1409,6 @@ int ovs_ct_copy_action(struct net *net, const struct nlattr *attr,
+ 		return -ENOMEM;
+ 	}
  
- 	if (!slave_can_set_ns_maddr(bond, slave))
-@@ -1255,7 +1273,8 @@ static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool
- 		if (ipv6_addr_any(&targets[i]))
- 			break;
- 
--		if (!ndisc_mc_map(&targets[i], slot_maddr, slave->dev, 0)) {
-+		addrconf_addr_solict_mult(&targets[i], &mcaddr);
-+		if (!ndisc_mc_map(&mcaddr, slot_maddr, slave->dev, 0)) {
- 			if (add)
- 				dev_mc_add(slave->dev, slot_maddr);
- 			else
-@@ -1278,23 +1297,43 @@ void bond_slave_ns_maddrs_del(struct bonding *bond, struct slave *slave)
- 	slave_set_ns_maddrs(bond, slave, false);
+-	if (nf_connlabels_get(net, n_bits - 1)) {
+-		nf_ct_tmpl_free(ct_info.ct);
+-		OVS_NLERR(log, "Failed to set connlabel length");
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	if (ct_info.timeout[0]) {
+ 		if (nf_ct_set_timeout(net, ct_info.ct, family, key->ip.proto,
+ 				      ct_info.timeout))
+@@ -1581,7 +1577,6 @@ static void __ovs_ct_free_action(struct ovs_conntrack_info *ct_info)
+ 	if (ct_info->ct) {
+ 		if (ct_info->timeout[0])
+ 			nf_ct_destroy_timeout(ct_info->ct);
+-		nf_connlabels_put(nf_ct_net(ct_info->ct));
+ 		nf_ct_tmpl_free(ct_info->ct);
+ 	}
  }
+@@ -2006,9 +2001,17 @@ struct genl_family dp_ct_limit_genl_family __ro_after_init = {
  
-+/**
-+ * slave_set_ns_maddr - set new NS mac address for slave
-+ * @bond: bond device
-+ * @slave: slave device
-+ * @target: the new IPv6 target
-+ * @slot: the old IPv6 target in the slot
-+ *
-+ * This function tries to replace the old mac address to new one on the slave.
-+ *
-+ * Note, the target/slot IPv6 address is the unicast address in Neighbor
-+ * Solicitation (NS) message. The dest address of NS message should be
-+ * solicited-node multicast address of the target. The dest mac of NS message
-+ * is converted from the solicited-node multicast address.
-+ *
-+ * This function is called when
-+ *   * An IPv6 NS target is added or removed.
-+ */
- static void slave_set_ns_maddr(struct bonding *bond, struct slave *slave,
- 			       struct in6_addr *target, struct in6_addr *slot)
+ int ovs_ct_init(struct net *net)
  {
--	char target_maddr[MAX_ADDR_LEN], slot_maddr[MAX_ADDR_LEN];
-+	char mac_addr[MAX_ADDR_LEN];
-+	struct in6_addr mcast_addr;
+-#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
++	unsigned int n_bits = sizeof(struct ovs_key_ct_labels) * BITS_PER_BYTE;
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
  
- 	if (!bond->params.arp_validate || !slave_can_set_ns_maddr(bond, slave))
- 		return;
++	if (nf_connlabels_get(net, n_bits - 1)) {
++		ovs_net->xt_label = false;
++		OVS_NLERR(true, "Failed to set connlabel length");
++	} else {
++		ovs_net->xt_label = true;
++	}
++
++#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	return ovs_ct_limit_init(net, ovs_net);
+ #else
+ 	return 0;
+@@ -2017,9 +2020,12 @@ int ovs_ct_init(struct net *net)
  
--	/* remove the previous maddr from slave */
-+	/* remove the previous mac addr from slave */
-+	addrconf_addr_solict_mult(slot, &mcast_addr);
- 	if (!ipv6_addr_any(slot) &&
--	    !ndisc_mc_map(slot, slot_maddr, slave->dev, 0))
--		dev_mc_del(slave->dev, slot_maddr);
-+	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
-+		dev_mc_del(slave->dev, mac_addr);
+ void ovs_ct_exit(struct net *net)
+ {
+-#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	struct ovs_net *ovs_net = net_generic(net, ovs_net_id);
  
--	/* add new maddr on slave if target is set */
-+	/* add new mac addr on slave if target is set */
-+	addrconf_addr_solict_mult(target, &mcast_addr);
- 	if (!ipv6_addr_any(target) &&
--	    !ndisc_mc_map(target, target_maddr, slave->dev, 0))
--		dev_mc_add(slave->dev, target_maddr);
-+	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
-+		dev_mc_add(slave->dev, mac_addr);
++#if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	ovs_ct_limit_exit(net, ovs_net);
+ #endif
++
++	if (ovs_net->xt_label)
++		nf_connlabels_put(net);
  }
+diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
+index 365b9bb7f546e..9ca6231ea6470 100644
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -160,6 +160,9 @@ struct ovs_net {
+ #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
+ 	struct ovs_ct_limit_info *ct_limit_info;
+ #endif
++
++	/* Module reference for configuring conntrack. */
++	bool xt_label;
+ };
  
- static void _bond_options_ns_ip6_target_set(struct bonding *bond, int slot,
+ /**
 -- 
 2.39.5
 
