@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2CC211299;
-	Wed, 19 Mar 2025 14:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E721C5D57;
+	Wed, 19 Mar 2025 14:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395018; cv=none; b=pS6dBj/E8NfCw/K1vk4Zooern/ECk2KWSe4bbOnqDmezDvfnTxJQTkzALtDWvvzcVSbq5sEmUrLWSFmTcPdUnl6IAGx2RWLPX2pGtqTk9fZGehC+pd82iJYgen0qLzvG77GJkoyt18IAbss64Yvy3d99mi6hczpRPX4/OUBhLwI=
+	t=1742395019; cv=none; b=Aah/4IBkXNruukLPgMPK85c5hmIvhzZ+cLMTcIzkKAh4ldIscY38OcqcezQ/rWex25FGWNqvhppQdQgtzrZGECA/vigEMgMXRjCFHzfo/NlsKkr3nUoqzdf3UB5pa9di2T/60Xx3RXdQE2wKRtH+NYFFiS/Vh1h8fduflOXKq9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395018; c=relaxed/simple;
-	bh=VVeUAgrBbCZ9OtaL2vYPPi+woxGIfV/6XSxl2AJDRY4=;
+	s=arc-20240116; t=1742395019; c=relaxed/simple;
+	bh=o8iqoPcFSVcIEpr43GBgy/o9RkY4sZgGmicz55tiiMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bBZPcy7I2+Okm7iOMskLF88Yn+isK6OFg7YBgOjp+vjipz/J2WG+0kmOmcozUJH/zfcEZXMG2g6rDZrK2qAg18oo+oqIHgn5jN02GVX9rnEQk2xFmhrngTZsNkn0Jdf7u1LGjygo4TVZ553O+NQek114zh1PpioyHzwQs//INdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPer3Tl4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ebb4BMOgiL9hIMLYNKbe8yFj9wZroicch2w0f/9f+Tg+lcmLRLUXJgzHb1UsiiAgsRwxLdkNEaWLVkOBIFlWeOvtLt6MM7mj70ntCP3RlwnVUsCTKcji3TRlk19ZCizDLejGpW4cGLgSYg0sdW9/Q7sGSkjvP+dKjlFmJyU/FCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiKKwlLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPer3Tl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF73C4CEE4;
-	Wed, 19 Mar 2025 14:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiKKwlLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CDBC4CEE4;
+	Wed, 19 Mar 2025 14:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395016;
-	bh=VVeUAgrBbCZ9OtaL2vYPPi+woxGIfV/6XSxl2AJDRY4=;
+	s=korg; t=1742395018;
+	bh=o8iqoPcFSVcIEpr43GBgy/o9RkY4sZgGmicz55tiiMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPer3Tl4uwGbGVh20TSwvOfStOYRy3OkgqUKaOWMXUn75HKZQZ7Lw8Qfdzp2v95jb
-	 TD4hWwAREIgkmhozALumyFAPxH0fQUSqysKqLtVvJAcnnUraE9zp+ZhLtSE3sfP/52
-	 V0mQ55bmvUjYNrbX8aFvv067by1AsF96hgjnsW+Y=
+	b=uiKKwlLDxYbOTOhoZPnhkhufVbLxCThn9qZvxCqXtRGczFpATWFqz8+QC8DI5C4bE
+	 PGQ5pC3bPWA8foh79cVanJVWVHQeiZoUwAsi1sqn0+MlVPydXMxDF94yu2mIZBfnoS
+	 qVIFytcCOv49kkhx6d3Flj/29plImHVsnGIjr8qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/231] net/mlx5: handle errors in mlx5_chains_create_table()
-Date: Wed, 19 Mar 2025 07:28:42 -0700
-Message-ID: <20250319143027.542322445@linuxfoundation.org>
+Subject: [PATCH 6.12 031/231] eth: bnxt: return fail if interface is down in bnxt_queue_mem_alloc()
+Date: Wed, 19 Mar 2025 07:28:44 -0700
+Message-ID: <20250319143027.585335618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -46,48 +47,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit eab0396353be1c778eba1c0b5180176f04dd21ce ]
+[ Upstream commit ca2456e073957781e1184de68551c65161b2bd30 ]
 
-In mlx5_chains_create_table(), the return value of mlx5_get_fdb_sub_ns()
-and mlx5_get_flow_namespace() must be checked to prevent NULL pointer
-dereferences. If either function fails, the function should log error
-message with mlx5_core_warn() and return error pointer.
+The bnxt_queue_mem_alloc() is called to allocate new queue memory when
+a queue is restarted.
+It internally accesses rx buffer descriptor corresponding to the index.
+The rx buffer descriptor is allocated and set when the interface is up
+and it's freed when the interface is down.
+So, if queue is restarted if interface is down, kernel panic occurs.
 
-Fixes: 39ac237ce009 ("net/mlx5: E-Switch, Refactor chains and priorities")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250307021820.2646-1-vulab@iscas.ac.cn
+Splat looks like:
+ BUG: unable to handle page fault for address: 000000000000b240
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+ CPU: 3 UID: 0 PID: 1563 Comm: ncdevmem2 Not tainted 6.14.0-rc2+ #9 844ddba6e7c459cafd0bf4db9a3198e
+ Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
+ RIP: 0010:bnxt_queue_mem_alloc+0x3f/0x4e0 [bnxt_en]
+ Code: 41 54 4d 89 c4 4d 69 c0 c0 05 00 00 55 48 89 f5 53 48 89 fb 4c 8d b5 40 05 00 00 48 83 ec 15
+ RSP: 0018:ffff9dcc83fef9e8 EFLAGS: 00010202
+ RAX: ffffffffc0457720 RBX: ffff934ed8d40000 RCX: 0000000000000000
+ RDX: 000000000000001f RSI: ffff934ea508f800 RDI: ffff934ea508f808
+ RBP: ffff934ea508f800 R08: 000000000000b240 R09: ffff934e84f4b000
+ R10: ffff9dcc83fefa30 R11: ffff934e84f4b000 R12: 000000000000001f
+ R13: ffff934ed8d40ac0 R14: ffff934ea508fd40 R15: ffff934e84f4b000
+ FS:  00007fa73888c740(0000) GS:ffff93559f780000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000000000000b240 CR3: 0000000145a2e000 CR4: 00000000007506f0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x70
+  ? page_fault_oops+0x15a/0x460
+  ? exc_page_fault+0x6e/0x180
+  ? asm_exc_page_fault+0x22/0x30
+  ? __pfx_bnxt_queue_mem_alloc+0x10/0x10 [bnxt_en 7f85e76f4d724ba07471d7e39d9e773aea6597b7]
+  ? bnxt_queue_mem_alloc+0x3f/0x4e0 [bnxt_en 7f85e76f4d724ba07471d7e39d9e773aea6597b7]
+  netdev_rx_queue_restart+0xc5/0x240
+  net_devmem_bind_dmabuf_to_queue+0xf8/0x200
+  netdev_nl_bind_rx_doit+0x3a7/0x450
+  genl_family_rcv_msg_doit+0xd9/0x130
+  genl_rcv_msg+0x184/0x2b0
+  ? __pfx_netdev_nl_bind_rx_doit+0x10/0x10
+  ? __pfx_genl_rcv_msg+0x10/0x10
+  netlink_rcv_skb+0x54/0x100
+  genl_rcv+0x24/0x40
+...
+
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2d694c27d32e ("bnxt_en: implement netdev_queue_mgmt_ops")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250309134219.91670-3-ap420073@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-index a80ecb672f33d..711d14dea2485 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-@@ -196,6 +196,11 @@ mlx5_chains_create_table(struct mlx5_fs_chains *chains,
- 		ns = mlx5_get_flow_namespace(chains->dev, chains->ns);
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 39a5ea4d3b4ea..a476f9da40c27 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -15108,6 +15108,9 @@ static int bnxt_queue_mem_alloc(struct net_device *dev, void *qmem, int idx)
+ 	struct bnxt_ring_struct *ring;
+ 	int rc;
  
-+	if (!ns) {
-+		mlx5_core_warn(chains->dev, "Failed to get flow namespace\n");
-+		return ERR_PTR(-EOPNOTSUPP);
-+	}
++	if (!bp->rx_ring)
++		return -ENETDOWN;
 +
- 	ft_attr.autogroup.num_reserved_entries = 2;
- 	ft_attr.autogroup.max_num_groups = chains->group_num;
- 	ft = mlx5_create_auto_grouped_flow_table(ns, &ft_attr);
+ 	rxr = &bp->rx_ring[idx];
+ 	clone = qmem;
+ 	memcpy(clone, rxr, sizeof(*rxr));
 -- 
 2.39.5
 
