@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3CB1DDC2B;
-	Wed, 19 Mar 2025 14:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF9A1DE3A9;
+	Wed, 19 Mar 2025 14:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394865; cv=none; b=uLd0iP0dc6d5Nli8sYhgL4KfCkKjaSRRFpujCBKUPcNVlAFR+dFL1tpQSpL9g0qk69/regYnbevfPB5GZJ9Uttu6FcY/4GTnuzUR1npbXQJ9GE3NMsOqrmrhRB+Dd0u9YRp79xY41qGUYoENM96iv1Afq3rKZqqetA4jdiGuOJc=
+	t=1742394866; cv=none; b=IHSYrKnY1Vdpy8kklJqtoqWR4fRNlPl3kGAsaajsWptV3GJ9+VinLs9CmKDoTVbZ2OejxmvsYLR+hMzfODuoMjdOEV44qwiD6heC6/WuGCFBzj+Mzb6AM3zMtLXawLm+jw3+dp8CRcUp0RVcdc0IbLGoABaAQD6Cw53M6pgkPl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394865; c=relaxed/simple;
-	bh=5m8pOX++51foNTi7T/eZUKAHO2B/bYecrj6ibbAIA+U=;
+	s=arc-20240116; t=1742394866; c=relaxed/simple;
+	bh=XHW6wOlt1PUP9Py1grXvM4HWNuKkQGgVd8AmX+DUtPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQ8Ub32f6XvpmZDvgdM5N+hstm5ZO0GUNprIBV2murro+KoRZ7vbKChwk0DDWMsHcuCcVjX2NYUTcGrgFfStLYzHLqZMlnA6haxCqQ5ug0aG38mc2mmNkvv1NM+Ee1A6Hm7IRfRb8nBVU86we/npsOpUiYGfUjaG8a5bfuaxvWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss3Ea3++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnBtjBnDdIW/k9fRLq6k4KRD+KZF2Fbt3ew7t6WQBnwBfk64bch5MX/oOu0fx8IfGvyN2E4BJVs9xqQtOD4eAAVc7Bxz3iVh9fEwS0HgZbMDsw17rqR8wHwbLpTFzuoDCceaBFZazFnO7nl8jHolXdb7nXFnkBrGCzQ+ggYwo+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO5+cTid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss3Ea3++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E817C4CEED;
-	Wed, 19 Mar 2025 14:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO5+cTid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DC2C4CEE4;
+	Wed, 19 Mar 2025 14:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394865;
-	bh=5m8pOX++51foNTi7T/eZUKAHO2B/bYecrj6ibbAIA+U=;
+	s=korg; t=1742394866;
+	bh=XHW6wOlt1PUP9Py1grXvM4HWNuKkQGgVd8AmX+DUtPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ss3Ea3++R7h54+Rpt9bnvpnkL6A0QUnToaPs/hwvZi06gIkeE9P4HRpt2YPnaI0lw
-	 xSm6+uG/qCAwc9JT0qK5kyuKYqqZsigqsYMRZ6W5eNJYFze9pu4tOMMffdpJ3vQGME
-	 mfMd3d1D5xIx8b+0egM4ZVmehxvTeMOxaaxrQBWE=
+	b=jO5+cTid1VFijfsVk6BWdaqXWdZg1HWrKDrZM7pTFCLh84v5lhiPWJlRlJgNCvpu7
+	 6h2HW3KeVWKTIWQJ+K8f2P4RXxCIZyTqDIfigvtjCe+QIX2hIwMZgGhO/cD64l6QV6
+	 KQ5wzI4CbO2lGp9jqszLtErVPGXQ7RDj5CjecrZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <wagi@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 057/241] nvme-fc: do not ignore connectivity loss during connecting
-Date: Wed, 19 Mar 2025 07:28:47 -0700
-Message-ID: <20250319143029.141076346@linuxfoundation.org>
+Subject: [PATCH 6.13 058/241] hrtimers: Mark is_migration_base() with __always_inline
+Date: Wed, 19 Mar 2025 07:28:48 -0700
+Message-ID: <20250319143029.165539708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -53,111 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit ee59e3820ca92a9f4307ae23dfc7229dc8b8d400 ]
+[ Upstream commit 27af31e44949fa85550176520ef7086a0d00fd7b ]
 
-When a connectivity loss occurs while nvme_fc_create_assocation is
-being executed, it's possible that the ctrl ends up stuck in the LIVE
-state:
+When is_migration_base() is unused, it prevents kernel builds
+with clang, `make W=1` and CONFIG_WERROR=y:
 
-  1) nvme nvme10: NVME-FC{10}: create association : ...
-  2) nvme nvme10: NVME-FC{10}: controller connectivity lost.
-                  Awaiting Reconnect
-     nvme nvme10: queue_size 128 > ctrl maxcmd 32, reducing to maxcmd
-  3) nvme nvme10: Could not set queue count (880)
-     nvme nvme10: Failed to configure AEN (cfg 900)
-  4) nvme nvme10: NVME-FC{10}: controller connect complete
-  5) nvme nvme10: failed nvme_keep_alive_end_io error=4
+kernel/time/hrtimer.c:156:20: error: unused function 'is_migration_base' [-Werror,-Wunused-function]
+  156 | static inline bool is_migration_base(struct hrtimer_clock_base *base)
+      |                    ^~~~~~~~~~~~~~~~~
 
-A connection attempt starts 1) and the ctrl is in state CONNECTING.
-Shortly after the LLDD driver detects a connection lost event and calls
-nvme_fc_ctrl_connectivity_loss 2). Because we are still in CONNECTING
-state, this event is ignored.
+Fix this by marking it with __always_inline.
 
-nvme_fc_create_association continues to run in parallel and tries to
-communicate with the controller and these commands will fail. Though
-these errors are filtered out, e.g in 3) setting the I/O queues numbers
-fails which leads to an early exit in nvme_fc_create_io_queues. Because
-the number of IO queues is 0 at this point, there is nothing left in
-nvme_fc_create_association which could detected the connection drop.
-Thus the ctrl enters LIVE state 4).
+[ tglx: Use __always_inline instead of __maybe_unused and move it into the
+  	usage sites conditional ]
 
-Eventually the keep alive handler times out 5) but because nothing is
-being done, the ctrl stays in LIVE state.
-
-There is already the ASSOC_FAILED flag to track connectivity loss event
-but this bit is set too late in the recovery code path. Move this into
-the connectivity loss event handler and synchronize it with the state
-change. This ensures that the ASSOC_FAILED flag is seen by
-nvme_fc_create_io_queues and it does not enter the LIVE state after a
-connectivity loss event. If the connectivity loss event happens after we
-entered the LIVE state the normal error recovery path is executed.
-
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250116160745.243358-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ kernel/time/hrtimer.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index a458d939ab662..a12a1474bef7b 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -782,11 +782,19 @@ nvme_fc_abort_lsops(struct nvme_fc_rport *rport)
- static void
- nvme_fc_ctrl_connectivity_loss(struct nvme_fc_ctrl *ctrl)
- {
-+	enum nvme_ctrl_state state;
-+	unsigned long flags;
-+
- 	dev_info(ctrl->ctrl.device,
- 		"NVME-FC{%d}: controller connectivity lost. Awaiting "
- 		"Reconnect", ctrl->cnum);
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 36dd2f5c30da1..3e7554597be24 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -156,11 +156,6 @@ static struct hrtimer_cpu_base migration_cpu_base = {
  
--	switch (nvme_ctrl_state(&ctrl->ctrl)) {
-+	spin_lock_irqsave(&ctrl->lock, flags);
-+	set_bit(ASSOC_FAILED, &ctrl->flags);
-+	state = nvme_ctrl_state(&ctrl->ctrl);
-+	spin_unlock_irqrestore(&ctrl->lock, flags);
-+
-+	switch (state) {
- 	case NVME_CTRL_NEW:
- 	case NVME_CTRL_LIVE:
- 		/*
-@@ -2546,7 +2554,6 @@ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
- 	 */
- 	if (state == NVME_CTRL_CONNECTING) {
- 		__nvme_fc_abort_outstanding_ios(ctrl, true);
--		set_bit(ASSOC_FAILED, &ctrl->flags);
- 		dev_warn(ctrl->ctrl.device,
- 			"NVME-FC{%d}: transport error during (re)connect\n",
- 			ctrl->cnum);
-@@ -3171,12 +3178,18 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
- 		else
- 			ret = nvme_fc_recreate_io_queues(ctrl);
+ #define migration_base	migration_cpu_base.clock_base[0]
+ 
+-static inline bool is_migration_base(struct hrtimer_clock_base *base)
+-{
+-	return base == &migration_base;
+-}
+-
+ /*
+  * We are using hashed locking: holding per_cpu(hrtimer_bases)[n].lock
+  * means that all timers which are tied to this base via timer->base are
+@@ -312,11 +307,6 @@ switch_hrtimer_base(struct hrtimer *timer, struct hrtimer_clock_base *base,
+ 
+ #else /* CONFIG_SMP */
+ 
+-static inline bool is_migration_base(struct hrtimer_clock_base *base)
+-{
+-	return false;
+-}
+-
+ static inline struct hrtimer_clock_base *
+ lock_hrtimer_base(const struct hrtimer *timer, unsigned long *flags)
+ 	__acquires(&timer->base->cpu_base->lock)
+@@ -1432,6 +1422,18 @@ static void hrtimer_sync_wait_running(struct hrtimer_cpu_base *cpu_base,
  	}
--	if (!ret && test_bit(ASSOC_FAILED, &ctrl->flags))
--		ret = -EIO;
- 	if (ret)
- 		goto out_term_aen_ops;
+ }
  
--	changed = nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_LIVE);
-+	spin_lock_irqsave(&ctrl->lock, flags);
-+	if (!test_bit(ASSOC_FAILED, &ctrl->flags))
-+		changed = nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_LIVE);
-+	else
-+		ret = -EIO;
-+	spin_unlock_irqrestore(&ctrl->lock, flags);
++#ifdef CONFIG_SMP
++static __always_inline bool is_migration_base(struct hrtimer_clock_base *base)
++{
++	return base == &migration_base;
++}
++#else
++static __always_inline bool is_migration_base(struct hrtimer_clock_base *base)
++{
++	return false;
++}
++#endif
 +
-+	if (ret)
-+		goto out_term_aen_ops;
- 
- 	ctrl->ctrl.nr_reconnects = 0;
- 
+ /*
+  * This function is called on PREEMPT_RT kernels when the fast path
+  * deletion of a timer failed because the timer callback function was
 -- 
 2.39.5
 
