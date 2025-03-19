@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C721C5F26;
-	Wed, 19 Mar 2025 14:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5971C5F26;
+	Wed, 19 Mar 2025 14:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395065; cv=none; b=adKzOJB4+H3lcWsnmZgofx1t6HX+4SBrf0KOt+QboL2TlW7EOSpW5tfiKHZoUl6XosoVuo2IEbNQnGcPUQ74wkGPeIupt75C/z5chdIFpsURwtDe+dxHf3oGJzUmBpw8J8P5vZwLm+N7vDqv+znDr8PwWIW8TNAfFPjY98bL/Eo=
+	t=1742395066; cv=none; b=A6f/pOU0xY6JbuDaUFwbRMFcaItQTfpD2OuBkrccYlQyrjklyewS1lYvarBHacViypUttxigEoz4YXc8s8FeITBsN/vBhFUJc6Uz1Ng6C6sS+P47f+pWQNOLdGOs/55GG7i2wL1ZIZ5zyUHQWKjK88OnRcrMfKEMqivXlvhr3hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395065; c=relaxed/simple;
-	bh=u23H56AMD10V832nFKYCl66g3RUHpCy4YbuRp61u8O8=;
+	s=arc-20240116; t=1742395066; c=relaxed/simple;
+	bh=LtI97epBYjFykA8TJYPpF5C1UlBUM6EGgrUjoAIRBu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g32Abe9QhCG7pnvvvRWG9LsXe1ZiyTH+Yn6oJQeEgKqqPn6EavD8GulOnnWKDAgzhv7r0Tv4A9abXUbRUG9OH3xbrvpTVJHw8ZsmX5EijyWO11msq2WIAQ+JdSqUct8JJ39fI/X6Kl3dfxiIh8ULZr5OyCdjeqvz3VyDS168qvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn3RtMBM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7p+YfqyXESr7f3WerkD2su9TojZ5loG5y5oWMA9+0azQz9BoK86WrFHD25V3Rc4GujnBMzVL9sgfzxiecump1px9N3a5b68ie9esKBYgXVg4SYQdNk0q/fYa74kWo25vNOmOkOq8XS80n7AzTQQ0UXqgTJGGSg+4hVDfHWpdoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCE8xjJt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn3RtMBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D085C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCE8xjJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F071BC4CEE4;
 	Wed, 19 Mar 2025 14:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395065;
-	bh=u23H56AMD10V832nFKYCl66g3RUHpCy4YbuRp61u8O8=;
+	s=korg; t=1742395066;
+	bh=LtI97epBYjFykA8TJYPpF5C1UlBUM6EGgrUjoAIRBu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zn3RtMBMoGrhzcrcQE0e7odLdqDZTlFeMqjzPyrpXoR9Ctao1EC8cOauNynNwZnDY
-	 NRnE/gjIjHwgeKtPjZuih8y20V/h76BsjfbhQH4lA61SXz0HhmFFzs4ta3w5KxGN8B
-	 08WNbwBffk8stqKz+sQkAVV7Dp/unexde+bTsNRA=
+	b=cCE8xjJtYMLuKhddXifM79NM3a3Iocsog2caLPvHqR4IfXBrnTN9mrGAsEoED6BC3
+	 xzcr1LOcuZFEdU+wEJPE4eIWO6gmIoaWVMWVOVzCdiykt4i8FswB9y8ETz5CB+NWDF
+	 9zncbC6U284nSlPSOdUtBE+dkystMRuPRi3jmXNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Maxime Ripard <mripard@kernel.org>,
+	Jiayuan Chen <mrpre@163.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/231] drm/tests: hdmi: Fix recursive locking
-Date: Wed, 19 Mar 2025 07:29:54 -0700
-Message-ID: <20250319143029.332216126@linuxfoundation.org>
+Subject: [PATCH 6.12 102/231] selftests/bpf: Fix invalid flag of recv()
+Date: Wed, 19 Mar 2025 07:29:55 -0700
+Message-ID: <20250319143029.356084427@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,367 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Jiayuan Chen <mrpre@163.com>
 
-[ Upstream commit 5d14c08a47460e8eedf0185a28b116420ea7f29d ]
+[ Upstream commit a0c11149509aa905aeec10cf9998091443472b0b ]
 
-The find_preferred_mode() functions takes the mode_config mutex, but due
-to the order most tests have, is called with the crtc_ww_class_mutex
-taken. This raises a warning for a circular dependency when running the
-tests with lockdep.
+SOCK_NONBLOCK flag is only effective during socket creation, not during
+recv. Use MSG_DONTWAIT instead.
 
-Reorder the tests to call find_preferred_mode before the acquire context
-has been created to avoid the issue.
-
-Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250129-test-kunit-v2-4-fe59c43805d5@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://patch.msgid.link/20250122100917.49845-5-mrpre@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/tests/drm_hdmi_state_helper_test.c    | 114 +++++++++---------
- 1 file changed, 57 insertions(+), 57 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/sockmap_basic.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-index 1dfd346c6fb39..383fbe128348e 100644
---- a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-+++ b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-@@ -262,12 +262,12 @@ static void drm_test_check_broadcast_rgb_crtc_mode_changed(struct kunit *test)
- 	crtc = priv->crtc;
- 	conn = &priv->connector;
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
+index 82bfb266741cf..fb08c565d6aad 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
+@@ -492,8 +492,8 @@ static void test_sockmap_skb_verdict_shutdown(void)
+ 	if (!ASSERT_EQ(err, 1, "epoll_wait(fd)"))
+ 		goto out_close;
  
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -326,12 +326,12 @@ static void drm_test_check_broadcast_rgb_crtc_mode_not_changed(struct kunit *tes
- 	crtc = priv->crtc;
- 	conn = &priv->connector;
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -391,13 +391,13 @@ static void drm_test_check_broadcast_rgb_auto_cea_mode(struct kunit *test)
- 	conn = &priv->connector;
- 	KUNIT_ASSERT_TRUE(test, conn->display_info.is_hdmi);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_NE(test, drm_match_cea_mode(preferred), 1);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -502,13 +502,13 @@ static void drm_test_check_broadcast_rgb_full_cea_mode(struct kunit *test)
- 	conn = &priv->connector;
- 	KUNIT_ASSERT_TRUE(test, conn->display_info.is_hdmi);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_NE(test, drm_match_cea_mode(preferred), 1);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -617,13 +617,13 @@ static void drm_test_check_broadcast_rgb_limited_cea_mode(struct kunit *test)
- 	conn = &priv->connector;
- 	KUNIT_ASSERT_TRUE(test, conn->display_info.is_hdmi);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_NE(test, drm_match_cea_mode(preferred), 1);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -737,12 +737,12 @@ static void drm_test_check_output_bpc_crtc_mode_changed(struct kunit *test)
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
- 	KUNIT_ASSERT_GT(test, ret, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -811,12 +811,12 @@ static void drm_test_check_output_bpc_crtc_mode_not_changed(struct kunit *test)
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
- 	KUNIT_ASSERT_GT(test, ret, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -885,12 +885,12 @@ static void drm_test_check_output_bpc_dvi(struct kunit *test)
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_FALSE(test, info->is_hdmi);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -929,13 +929,13 @@ static void drm_test_check_tmds_char_rate_rgb_8bpc(struct kunit *test)
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_max_200mhz));
- 	KUNIT_ASSERT_GT(test, ret, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_FALSE(test, preferred->flags & DRM_MODE_FLAG_DBLCLK);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -976,13 +976,13 @@ static void drm_test_check_tmds_char_rate_rgb_10bpc(struct kunit *test)
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz));
- 	KUNIT_ASSERT_GT(test, ret, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_FALSE(test, preferred->flags & DRM_MODE_FLAG_DBLCLK);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -1023,13 +1023,13 @@ static void drm_test_check_tmds_char_rate_rgb_12bpc(struct kunit *test)
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz));
- 	KUNIT_ASSERT_GT(test, ret, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_FALSE(test, preferred->flags & DRM_MODE_FLAG_DBLCLK);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -1070,12 +1070,12 @@ static void drm_test_check_hdmi_funcs_reject_rate(struct kunit *test)
- 	crtc = priv->crtc;
- 	conn = &priv->connector;
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -1135,9 +1135,6 @@ static void drm_test_check_max_tmds_rate_bpc_fallback(struct kunit *test)
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_FALSE(test, preferred->flags & DRM_MODE_FLAG_DBLCLK);
-@@ -1148,6 +1145,9 @@ static void drm_test_check_max_tmds_rate_bpc_fallback(struct kunit *test)
- 	rate = drm_hdmi_compute_mode_clock(preferred, 10, HDMI_COLORSPACE_RGB);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -1204,9 +1204,6 @@ static void drm_test_check_max_tmds_rate_format_fallback(struct kunit *test)
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 	KUNIT_ASSERT_FALSE(test, preferred->flags & DRM_MODE_FLAG_DBLCLK);
-@@ -1220,6 +1217,9 @@ static void drm_test_check_max_tmds_rate_format_fallback(struct kunit *test)
- 	rate = drm_hdmi_compute_mode_clock(preferred, 12, HDMI_COLORSPACE_YUV422);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -1266,9 +1266,6 @@ static void drm_test_check_output_bpc_format_vic_1(struct kunit *test)
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	mode = drm_kunit_display_mode_from_cea_vic(test, drm, 1);
- 	KUNIT_ASSERT_NOT_NULL(test, mode);
- 
-@@ -1282,6 +1279,9 @@ static void drm_test_check_output_bpc_format_vic_1(struct kunit *test)
- 	rate = mode->clock * 1500;
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	crtc = priv->crtc;
- 	ret = light_up_connector(test, drm, crtc, conn, mode, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
-@@ -1327,9 +1327,6 @@ static void drm_test_check_output_bpc_format_driver_rgb_only(struct kunit *test)
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-@@ -1348,6 +1345,9 @@ static void drm_test_check_output_bpc_format_driver_rgb_only(struct kunit *test)
- 	rate = drm_hdmi_compute_mode_clock(preferred, 12, HDMI_COLORSPACE_YUV422);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -1394,9 +1394,6 @@ static void drm_test_check_output_bpc_format_display_rgb_only(struct kunit *test
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-@@ -1415,6 +1412,9 @@ static void drm_test_check_output_bpc_format_display_rgb_only(struct kunit *test
- 	rate = drm_hdmi_compute_mode_clock(preferred, 12, HDMI_COLORSPACE_YUV422);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -1460,9 +1460,6 @@ static void drm_test_check_output_bpc_format_driver_8bpc_only(struct kunit *test
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-@@ -1473,6 +1470,9 @@ static void drm_test_check_output_bpc_format_driver_8bpc_only(struct kunit *test
- 	rate = drm_hdmi_compute_mode_clock(preferred, 12, HDMI_COLORSPACE_RGB);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
- 
-@@ -1520,9 +1520,6 @@ static void drm_test_check_output_bpc_format_display_8bpc_only(struct kunit *tes
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
- 	KUNIT_ASSERT_GT(test, info->max_tmds_clock, 0);
- 
--	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
--	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
--
- 	preferred = find_preferred_mode(conn);
- 	KUNIT_ASSERT_NOT_NULL(test, preferred);
- 
-@@ -1533,6 +1530,9 @@ static void drm_test_check_output_bpc_format_display_8bpc_only(struct kunit *tes
- 	rate = drm_hdmi_compute_mode_clock(preferred, 12, HDMI_COLORSPACE_RGB);
- 	KUNIT_ASSERT_LT(test, rate, info->max_tmds_clock * 1000);
- 
-+	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+
- 	ret = light_up_connector(test, drm, crtc, conn, preferred, ctx);
- 	KUNIT_EXPECT_EQ(test, ret, 0);
+-	n = recv(c1, &b, 1, SOCK_NONBLOCK);
+-	ASSERT_EQ(n, 0, "recv_timeout(fin)");
++	n = recv(c1, &b, 1, MSG_DONTWAIT);
++	ASSERT_EQ(n, 0, "recv(fin)");
+ out_close:
+ 	close(c1);
+ 	close(p1);
+@@ -546,7 +546,7 @@ static void test_sockmap_skb_verdict_fionread(bool pass_prog)
+ 	ASSERT_EQ(avail, expected, "ioctl(FIONREAD)");
+ 	/* On DROP test there will be no data to read */
+ 	if (pass_prog) {
+-		recvd = recv_timeout(c1, &buf, sizeof(buf), SOCK_NONBLOCK, IO_TIMEOUT_SEC);
++		recvd = recv_timeout(c1, &buf, sizeof(buf), MSG_DONTWAIT, IO_TIMEOUT_SEC);
+ 		ASSERT_EQ(recvd, sizeof(buf), "recv_timeout(c0)");
+ 	}
  
 -- 
 2.39.5
