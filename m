@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FE21D47C3;
-	Wed, 19 Mar 2025 14:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A097E1D47C3;
+	Wed, 19 Mar 2025 14:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395023; cv=none; b=SG3EcogW9MjNXY5o+ZLdiSAwC//lOa+s9vdOKiEfOvoS0n9exo7xxW/R884kBSAWBY3uP0cpk6YqchqJ0x+XSdo6rBt1lIfVcvXZfJqLgYY7rcFtVPextdoGLIU2k660GU6mTOzzeKfMlfZ7Nz99uIPOIHxWUQhhXUmik8OiQDo=
+	t=1742395023; cv=none; b=Rri9MVhJtV0Jgp/OcJtloy1OEKZMxBBXLuevGpylO4dz7sIwsgifMruKHbJrxU4hxHzkni90O2EG3zYi2X/YjkXOcAay2JO9wrcrrrGUkMCi4WNVtu/+Qt+xuExIT/uLz88JVtn8OfFGc186xinL2Ox3xY5JfdYcUhf+B3agzh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395023; c=relaxed/simple;
-	bh=Jj1jZoile5EOrcH6hY1xUKwpoqqkr1bp7m8DKkQr/sk=;
+	bh=vMSFtvD8H0tXVIXRvxaAtcmWKBefTDUZGekZ3Y4HLjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFfIibI2DwDG6koLmE8K3NMgsAnJuJV5tR99yx0vEqlzvslGA1J5bAONtOBdiJtsg9hFcsT095btqJt1bLQf3AnSZ5CNOFEmRLkXuXfa30ZG7A191cwCf+JrgBthr8fhqsyX4JhAZG3XzERAtW0o6kZeZTpIqidtUTZjs2GuSJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHgAbprR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJExylq0XyqBiqHrB+k8N9+L5jMsQDLhofDxr7Qn1tJMzlkW9yGKERZ36AQZjR4zJLmanKnPWlCyPGYFfj3g+sUZgr9OTUkOWhhhxj2k6Kwqcea00OywWW+OBaRZI0He9gYxhcgpMSESJatHP/uLjEbDHtvkRyHN7ql+G/6BRYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyouoDy/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHgAbprR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC52BC4CEE4;
-	Wed, 19 Mar 2025 14:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyouoDy/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F39FC4CEE4;
+	Wed, 19 Mar 2025 14:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395022;
-	bh=Jj1jZoile5EOrcH6hY1xUKwpoqqkr1bp7m8DKkQr/sk=;
+	s=korg; t=1742395023;
+	bh=vMSFtvD8H0tXVIXRvxaAtcmWKBefTDUZGekZ3Y4HLjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHgAbprRnnFqYVCLhrRxd1YEyjpAGtvi522Yz6UaK6suh+se7T3vf815ngOcDfr8J
-	 xFz6WVOj7vjNvvU9HlgnZNgNb2x+uPFUiE7jA04XT+TUr0p/1UtyKfhAe+umNk5SSo
-	 Pi2SCYCphyiofjlDavNRvNZoe1U6gm6rSLvCKE/8=
+	b=oyouoDy/X9oWDVT/RTbECQdu4mfJ9s1oN/Fii9uzny+9bIcMSL2OtlukmYDmezR0H
+	 MTIf1sseZms0ks7m8WOhV41tWE3mmkKTZFZL4Fw0Feb+or3N3QFLIAcSQCezIRCjGq
+	 MYpM/+vjF/hk93/eEspQbYkRxULpqVZwaYnhRnCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Taehee Yoo <ap420073@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/231] bnxt_en: handle tpa_info in queue API implementation
-Date: Wed, 19 Mar 2025 07:28:50 -0700
-Message-ID: <20250319143027.729123968@linuxfoundation.org>
+Subject: [PATCH 6.12 038/231] eth: bnxt: fix memory leak in queue reset
+Date: Wed, 19 Mar 2025 07:28:51 -0700
+Message-ID: <20250319143027.754999239@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,126 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wei <dw@davidwei.uk>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit bd649c5cc958169b8a8a3e77ea926d92d472b02a ]
+[ Upstream commit 87dd2850835dd7886726b428a8ef7d73a60520c7 ]
 
-Commit 7ed816be35ab ("eth: bnxt: use page pool for head frags") added a
-page pool for header frags, which may be distinct from the existing pool
-for the aggregation ring. Prior to this change, frags used in the TPA
-ring rx_tpa were allocated from system memory e.g. napi_alloc_frag()
-meaning their lifetimes were not associated with a page pool. They can
-be returned at any time and so the queue API did not alloc or free
-rx_tpa.
+When the queue is reset, the bnxt_alloc_one_tpa_info() is called to
+allocate tpa_info for the new queue.
+And then the old queue's tpa_info should be removed by the
+bnxt_free_one_tpa_info(), but it is not called.
+So memory leak occurs.
+It adds the bnxt_free_one_tpa_info() in the bnxt_queue_mem_free().
 
-But now frags come from a separate head_pool which may be different to
-page_pool. Without allocating and freeing rx_tpa, frags allocated from
-the old head_pool may be returned to a different new head_pool which
-causes a mismatch between the pp hold/release count.
+unreferenced object 0xffff888293cc0000 (size 16384):
+  comm "ncdevmem", pid 2076, jiffies 4296604081
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 40 75 78 93 82 88 ff ff  ........@ux.....
+    40 75 78 93 02 00 00 00 00 00 00 00 00 00 00 00  @ux.............
+  backtrace (crc 5d7d4798):
+    ___kmalloc_large_node+0x10d/0x1b0
+    __kmalloc_large_node_noprof+0x17/0x60
+    __kmalloc_noprof+0x3f6/0x520
+    bnxt_alloc_one_tpa_info+0x5f/0x300 [bnxt_en]
+    bnxt_queue_mem_alloc+0x8e8/0x14f0 [bnxt_en]
+    netdev_rx_queue_restart+0x233/0x620
+    net_devmem_bind_dmabuf_to_queue+0x2a3/0x600
+    netdev_nl_bind_rx_doit+0xc00/0x10a0
+    genl_family_rcv_msg_doit+0x1d4/0x2b0
+    genl_rcv_msg+0x3fb/0x6c0
+    netlink_rcv_skb+0x12c/0x360
+    genl_rcv+0x24/0x40
+    netlink_unicast+0x447/0x710
+    netlink_sendmsg+0x712/0xbc0
+    __sys_sendto+0x3fd/0x4d0
+    __x64_sys_sendto+0xdc/0x1b0
 
-Fix this problem by properly freeing and allocating rx_tpa in the queue
-API implementation.
-
-Signed-off-by: David Wei <dw@davidwei.uk>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20241204041022.56512-4-dw@davidwei.uk
+Fixes: 2d694c27d32e ("bnxt_en: implement netdev_queue_mgmt_ops")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20250309134219.91670-7-ap420073@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 87dd2850835d ("eth: bnxt: fix memory leak in queue reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 27 +++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 800a63daba2b4..ee52ac821ef9a 100644
+index ee52ac821ef9a..e7580df13229a 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -3623,7 +3623,7 @@ static void bnxt_free_rx_rings(struct bnxt *bp)
- 			xdp_rxq_info_unreg(&rxr->xdp_rxq);
- 
- 		page_pool_destroy(rxr->page_pool);
--		if (rxr->page_pool != rxr->head_pool)
-+		if (bnxt_separate_head_pool())
- 			page_pool_destroy(rxr->head_pool);
- 		rxr->page_pool = rxr->head_pool = NULL;
- 
-@@ -15199,15 +15199,25 @@ static int bnxt_queue_mem_alloc(struct net_device *dev, void *qmem, int idx)
- 			goto err_free_rx_agg_ring;
- 	}
- 
-+	if (bp->flags & BNXT_FLAG_TPA) {
-+		rc = bnxt_alloc_one_tpa_info(bp, clone);
-+		if (rc)
-+			goto err_free_tpa_info;
-+	}
-+
- 	bnxt_init_one_rx_ring_rxbd(bp, clone);
- 	bnxt_init_one_rx_agg_ring_rxbd(bp, clone);
- 
- 	bnxt_alloc_one_rx_ring_skb(bp, clone, idx);
- 	if (bp->flags & BNXT_FLAG_AGG_RINGS)
- 		bnxt_alloc_one_rx_ring_page(bp, clone, idx);
-+	if (bp->flags & BNXT_FLAG_TPA)
-+		bnxt_alloc_one_tpa_info_data(bp, clone);
- 
- 	return 0;
- 
-+err_free_tpa_info:
-+	bnxt_free_one_tpa_info(bp, clone);
- err_free_rx_agg_ring:
- 	bnxt_free_ring(bp, &clone->rx_agg_ring_struct.ring_mem);
- err_free_rx_ring:
-@@ -15215,9 +15225,11 @@ static int bnxt_queue_mem_alloc(struct net_device *dev, void *qmem, int idx)
- err_rxq_info_unreg:
- 	xdp_rxq_info_unreg(&clone->xdp_rxq);
- err_page_pool_destroy:
--	clone->page_pool->p.napi = NULL;
- 	page_pool_destroy(clone->page_pool);
-+	if (bnxt_separate_head_pool())
-+		page_pool_destroy(clone->head_pool);
- 	clone->page_pool = NULL;
-+	clone->head_pool = NULL;
- 	return rc;
- }
- 
-@@ -15227,13 +15239,15 @@ static void bnxt_queue_mem_free(struct net_device *dev, void *qmem)
- 	struct bnxt *bp = netdev_priv(dev);
+@@ -15240,6 +15240,7 @@ static void bnxt_queue_mem_free(struct net_device *dev, void *qmem)
  	struct bnxt_ring_struct *ring;
  
--	bnxt_free_one_rx_ring(bp, rxr);
--	bnxt_free_one_rx_agg_ring(bp, rxr);
-+	bnxt_free_one_rx_ring_skbs(bp, rxr);
+ 	bnxt_free_one_rx_ring_skbs(bp, rxr);
++	bnxt_free_one_tpa_info(bp, rxr);
  
  	xdp_rxq_info_unreg(&rxr->xdp_rxq);
  
- 	page_pool_destroy(rxr->page_pool);
-+	if (bnxt_separate_head_pool())
-+		page_pool_destroy(rxr->head_pool);
- 	rxr->page_pool = NULL;
-+	rxr->head_pool = NULL;
- 
- 	ring = &rxr->rx_ring_struct;
- 	bnxt_free_ring(bp, &ring->ring_mem);
-@@ -15315,7 +15329,10 @@ static int bnxt_queue_start(struct net_device *dev, void *qmem, int idx)
- 	rxr->rx_agg_prod = clone->rx_agg_prod;
- 	rxr->rx_sw_agg_prod = clone->rx_sw_agg_prod;
- 	rxr->rx_next_cons = clone->rx_next_cons;
-+	rxr->rx_tpa = clone->rx_tpa;
-+	rxr->rx_tpa_idx_map = clone->rx_tpa_idx_map;
- 	rxr->page_pool = clone->page_pool;
-+	rxr->head_pool = clone->head_pool;
- 	rxr->xdp_rxq = clone->xdp_rxq;
- 
- 	bnxt_copy_rx_ring(bp, rxr, clone);
-@@ -15376,6 +15393,8 @@ static int bnxt_queue_stop(struct net_device *dev, void *qmem, int idx)
- 	bnxt_hwrm_rx_agg_ring_free(bp, rxr, false);
- 	rxr->rx_next_cons = 0;
- 	page_pool_disable_direct_recycling(rxr->page_pool);
-+	if (bnxt_separate_head_pool())
-+		page_pool_disable_direct_recycling(rxr->head_pool);
- 
- 	memcpy(qmem, rxr, sizeof(*rxr));
- 	bnxt_init_rx_ring_struct(bp, qmem);
 -- 
 2.39.5
 
