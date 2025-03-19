@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D291DE8AB;
-	Wed, 19 Mar 2025 14:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714AF1DED55;
+	Wed, 19 Mar 2025 14:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395182; cv=none; b=cSBXBxm1LQlYTzLfoa2O8peTX80d/L/xF6yoPb5mCiKIY3QzgGnGhcZ+EM+Bv52bU/I8X7Xvqj399Et4Zgdnnb1FFyp+mG3Ahu/CJlDZ8qRQdq9EBhkcp2L66MjRt/4CCByZQcn0fTNgTcJw6qsE+leXmwsX1jrjawjqZ4dDYeU=
+	t=1742395183; cv=none; b=N2iat0JL4FUBKYbefhC5qsHT8YdmJEnb/b84t28kkLS/CeOkvmX3vXAu8RT8iM76g923gFDBRevTnrIGB8Vu6xw+8c2ZF5XXRPnjxEB1TTdqolmzKaJtSfNAwd4QLrlL17PLxTAnT3r/YDw17MYXXiAy/37WMtIuVtHEFMUhPLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395182; c=relaxed/simple;
-	bh=y2874EppX31QrvfZERnxmRGhX9VcH3JJ4Nh7eXBYi38=;
+	s=arc-20240116; t=1742395183; c=relaxed/simple;
+	bh=te0soK4010KEW3k6Stu2r6ezUOiH5AymhOgUKVMmJSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMmqnXVNTQIa7m2162iInlrKqLLNvz3mLPQZueuuVN5U2Bm6yhsAj7h3cGySa4zkG4hU+kmciGR3Ovd/g8v7mhSzNhUIAVxSdc1D7zk6PLEkXsx9A1jwLtPF995hqeprKY3cDGtS5tOKM3vpeFWWGzCCKcGmDCBkUtE8z5AqUSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXcYQhmB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MeIXxjK7W7rJbO5it7KWsYCz7TtyPREy15iDyPQWrXT9iEtiT+scQIwa1U8fNAYL6OyzHaAJYsW74uOl6QlBtWBC0FL9UPmt57Rpazz6z/aihbDPzJoXA3Xhb7L3h/9qT/c1h1eT4vh7F7K37OiTeriuuaxqNYyIeKipjIp4JU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQ1reGuy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXcYQhmB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FF4C4CEE4;
-	Wed, 19 Mar 2025 14:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQ1reGuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EB1C4CEE4;
+	Wed, 19 Mar 2025 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395182;
-	bh=y2874EppX31QrvfZERnxmRGhX9VcH3JJ4Nh7eXBYi38=;
+	s=korg; t=1742395183;
+	bh=te0soK4010KEW3k6Stu2r6ezUOiH5AymhOgUKVMmJSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXcYQhmB1AfXldEH0rUpVytDKpOIIzFmpeUeftncN9G5oueZBxtJpDrgziWkqPlyz
-	 f0R/1jlVWbUfQjgMvLSSq5MKejly65upzTb5PcbkO5Ak8nz6HIzUOoNoUHWBOXgNSR
-	 OLk5dm23svHtIQLZAfx7UkgvMIDgtaCL/J18ik8o=
+	b=XQ1reGuyWrDOhgN/ZrhBbZ+kRl7J9ruJ28yftsa9ej1WfqieeLlOvYuAoIcC2ABtb
+	 l4ypxGEBck6KgynmlF1jhVkK6KkszQyYp+YOtcyItFrjlzCIQLvDqrkUNyxfRLqqn5
+	 DSFatJMijErE7Uhr7rMMuwA4PkN418s0S/QFmI8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chengen Du <chengen.du@canonical.com>,
+	Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/166] powercap: call put_device() on an error path in powercap_register_control_type()
-Date: Wed, 19 Mar 2025 07:30:10 -0700
-Message-ID: <20250319143021.048939461@linuxfoundation.org>
+Subject: [PATCH 6.6 040/166] iscsi_ibft: Fix UBSAN shift-out-of-bounds warning in ibft_attr_show_nic()
+Date: Wed, 19 Mar 2025 07:30:11 -0700
+Message-ID: <20250319143021.077177115@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
@@ -51,43 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Chengen Du <chengen.du@canonical.com>
 
-[ Upstream commit 93c66fbc280747ea700bd6199633d661e3c819b3 ]
+[ Upstream commit 07e0d99a2f701123ad3104c0f1a1e66bce74d6e5 ]
 
-powercap_register_control_type() calls device_register(), but does not
-release the refcount of the device when it fails.
+When performing an iSCSI boot using IPv6, iscsistart still reads the
+/sys/firmware/ibft/ethernetX/subnet-mask entry. Since the IPv6 prefix
+length is 64, this causes the shift exponent to become negative,
+triggering a UBSAN warning. As the concept of a subnet mask does not
+apply to IPv6, the value is set to ~0 to suppress the warning message.
 
-Call put_device() before returning an error to balance the refcount.
-
-Since the kfree(control_type) will be done by powercap_release(), remove
-the lines in powercap_register_control_type() before returning the error.
-
-This bug was found by an experimental verifier that I am developing.
-
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20250110010554.1583411-1-joe@pf.is.s.u-tokyo.ac.jp
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Chengen Du <chengen.du@canonical.com>
+Signed-off-by: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/powercap_sys.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/firmware/iscsi_ibft.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
-index 52c32dcbf7d84..4112a00973382 100644
---- a/drivers/powercap/powercap_sys.c
-+++ b/drivers/powercap/powercap_sys.c
-@@ -627,8 +627,7 @@ struct powercap_control_type *powercap_register_control_type(
- 	dev_set_name(&control_type->dev, "%s", name);
- 	result = device_register(&control_type->dev);
- 	if (result) {
--		if (control_type->allocated)
--			kfree(control_type);
-+		put_device(&control_type->dev);
- 		return ERR_PTR(result);
- 	}
- 	idr_init(&control_type->idr);
+diff --git a/drivers/firmware/iscsi_ibft.c b/drivers/firmware/iscsi_ibft.c
+index 6e9788324fea5..371f24569b3b2 100644
+--- a/drivers/firmware/iscsi_ibft.c
++++ b/drivers/firmware/iscsi_ibft.c
+@@ -310,7 +310,10 @@ static ssize_t ibft_attr_show_nic(void *data, int type, char *buf)
+ 		str += sprintf_ipaddr(str, nic->ip_addr);
+ 		break;
+ 	case ISCSI_BOOT_ETH_SUBNET_MASK:
+-		val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
++		if (nic->subnet_mask_prefix > 32)
++			val = cpu_to_be32(~0);
++		else
++			val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
+ 		str += sprintf(str, "%pI4", &val);
+ 		break;
+ 	case ISCSI_BOOT_ETH_PREFIX_LEN:
 -- 
 2.39.5
 
