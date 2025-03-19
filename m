@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E934F1DDC0F;
-	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035641DDC0F;
+	Wed, 19 Mar 2025 14:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395128; cv=none; b=Nwc3WEbgGRNljOzZHgHwsYjVUoUzG+aW204LiB6bPbxJ+0/O3Ot8bKCLtYjZL7klLBEDgX/duU1NysYCz0wHOGG8/dufiaIipt5TYvduWyiZVbMjdhkW/ybUq1IcUs6O0oh60t40FvjLUCVYTSZy1MCYTARz8D78HGh/iI9oReo=
+	t=1742395129; cv=none; b=eGnkLY8P8j+/FSTfc5BJtrC3MEInU7O/16r0gWrBgCmwWskeJpwKdVjx6TZT8xipHgUICcbP0SaYVxz/W096hCHOe9SlRqV+wQfw//G6A8ufK5JbBQlC9b8QPvCiQujvXR7EzDUOuDDrA4EpFdrRbZKwwnGC2FUAnPBxEJqhwKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395128; c=relaxed/simple;
-	bh=fl0tynh98PQ+yXOzivFBDzkaJ6AiKo+3ur30Gyl0wFg=;
+	s=arc-20240116; t=1742395129; c=relaxed/simple;
+	bh=HSWc5fCxV7lvtTayJJEkLzGhrj+YsdPXh/awgWGIBfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SEWiqdD8WfchrbC0zLa0Xi/B2Sw85AXG7AUg9ovbRkSHdtb84NYg9yzDWx4Sb69ZoGfSkhWwGJmAiD/T2vdAx6vxWos5a+WoBMK4B7AEy2G5ooIUUccYjBFJGuCTRRQbtzXpjH6RQAPj5WMEa5UUSVSGL3np7YJdq/5yQ3mh8E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGBu47JR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQ7BgAnuAYR6iWlUS8+M/x1P6Xpm7vq0COYai5wmGZvG7HcIJVPBriGCAbFba0CxGMdLfb4g2seiNEJ3otyUkYZxegVSXfn3IFQOi/t+ST7KbKkvq/y1sct4zZUKGX2nPUqay6i46QKNwI1nOCKlCX4Rt4emf1GIUmoGfxJpBro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYv+gBfT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGBu47JR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB18C4CEE4;
-	Wed, 19 Mar 2025 14:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYv+gBfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3E8C4CEE4;
+	Wed, 19 Mar 2025 14:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395127;
-	bh=fl0tynh98PQ+yXOzivFBDzkaJ6AiKo+3ur30Gyl0wFg=;
+	s=korg; t=1742395128;
+	bh=HSWc5fCxV7lvtTayJJEkLzGhrj+YsdPXh/awgWGIBfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGBu47JRkQf/mo9ykI3D4rLIGqAwB1golbl+s9M8xVYmPg9cBA4BQnYzn5JVpK8Gq
-	 fzwDkr8Vnn0lGIAluHBroRT2F0zNfhpksQg8IP+JlYFJy8xspsuirnOGuwsgS/E6yE
-	 MIwW31HrkcfKsftxsCZY6ncwT196TUzNr6fqhk+8=
+	b=CYv+gBfTwi8EAhXxb+4WyEiVps2/1qJYhaC1m8pbHiCREaVSXfLdCDu/Xy97IB7WD
+	 P6h7aRQDphmJJ+bYn2I+CEmDmy3dcr7TsRQ2KfwqkTKm7aTXoxBfUvnBMuVv2amxow
+	 w3kkTwZG+/yXsZn9DaL5SI1PBVPTfOxiiE5T2pfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Piotr Jaroszynski <pjaroszynski@nvidia.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 191/231] arm64: mm: Populate vmemmap at the page level if not section aligned
-Date: Wed, 19 Mar 2025 07:31:24 -0700
-Message-ID: <20250319143031.559633317@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Raghavendra Rao Ananta <rananta@google.com>,
+	SeongJae Park <sj@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.12 192/231] Fix mmu notifiers for range-based invalidates
+Date: Wed, 19 Mar 2025 07:31:25 -0700
+Message-ID: <20250319143031.585102708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -53,62 +62,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+From: Piotr Jaroszynski <pjaroszynski@nvidia.com>
 
-commit d4234d131b0a3f9e65973f1cdc71bb3560f5d14b upstream.
+commit f7edb07ad7c66eab3dce57384f33b9799d579133 upstream.
 
-On the arm64 platform with 4K base page config, SECTION_SIZE_BITS is set
-to 27, making one section 128M. The related page struct which vmemmap
-points to is 2M then.
-Commit c1cc1552616d ("arm64: MMU initialisation") optimizes the
-vmemmap to populate at the PMD section level which was suitable
-initially since hot plug granule is always one section(128M). However,
-commit ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
-introduced a 2M(SUBSECTION_SIZE) hot plug granule, which disrupted the
-existing arm64 assumptions.
+Update the __flush_tlb_range_op macro not to modify its parameters as
+these are unexepcted semantics. In practice, this fixes the call to
+mmu_notifier_arch_invalidate_secondary_tlbs() in
+__flush_tlb_range_nosync() to use the correct range instead of an empty
+range with start=end. The empty range was (un)lucky as it results in
+taking the invalidate-all path that doesn't cause correctness issues,
+but can certainly result in suboptimal perf.
 
-The first problem is that if start or end is not aligned to a section
-boundary, such as when a subsection is hot added, populating the entire
-section is wasteful.
+This has been broken since commit 6bbd42e2df8f ("mmu_notifiers: call
+invalidate_range() when invalidating TLBs") when the call to the
+notifiers was added to __flush_tlb_range(). It predates the addition of
+the __flush_tlb_range_op() macro from commit 360839027a6e ("arm64: tlb:
+Refactor the core flush algorithm of __flush_tlb_range") that made the
+bug hard to spot.
 
-The next problem is if we hotplug something that spans part of 128 MiB
-section (subsections, let's call it memblock1), and then hotplug something
-that spans another part of a 128 MiB section(subsections, let's call it
-memblock2), and subsequently unplug memblock1, vmemmap_free() will clear
-the entire PMD entry which also supports memblock2 even though memblock2
-is still active.
+Fixes: 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when invalidating TLBs")
 
-Assuming hotplug/unplug sizes are guaranteed to be symmetric. Do the
-fix similar to x86-64: populate to pages levels if start/end is not aligned
-with section boundary.
-
-Cc: stable@vger.kernel.org # v5.4+
-Fixes: ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
-Acked-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Signed-off-by: Piotr Jaroszynski <pjaroszynski@nvidia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: iommu@lists.linux.dev
+Cc: linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20250304072700.3405036-1-quic_zhenhuah@quicinc.com
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Link: https://lore.kernel.org/r/20250304085127.2238030-1-pjaroszynski@nvidia.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/tlbflush.h |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1176,8 +1176,11 @@ int __meminit vmemmap_populate(unsigned
- 		struct vmem_altmap *altmap)
- {
- 	WARN_ON((start < VMEMMAP_START) || (end > VMEMMAP_END));
-+	/* [start, end] should be within one section */
-+	WARN_ON_ONCE(end - start > PAGES_PER_SECTION * sizeof(struct page));
- 
--	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES))
-+	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES) ||
-+	    (end - start < PAGES_PER_SECTION * sizeof(struct page)))
- 		return vmemmap_populate_basepages(start, end, node, altmap);
- 	else
- 		return vmemmap_populate_hugepages(start, end, node, altmap);
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -396,33 +396,35 @@ static inline void arch_tlbbatch_flush(s
+ #define __flush_tlb_range_op(op, start, pages, stride,			\
+ 				asid, tlb_level, tlbi_user, lpa2)	\
+ do {									\
++	typeof(start) __flush_start = start;				\
++	typeof(pages) __flush_pages = pages;				\
+ 	int num = 0;							\
+ 	int scale = 3;							\
+ 	int shift = lpa2 ? 16 : PAGE_SHIFT;				\
+ 	unsigned long addr;						\
+ 									\
+-	while (pages > 0) {						\
++	while (__flush_pages > 0) {					\
+ 		if (!system_supports_tlb_range() ||			\
+-		    pages == 1 ||					\
+-		    (lpa2 && start != ALIGN(start, SZ_64K))) {		\
+-			addr = __TLBI_VADDR(start, asid);		\
++		    __flush_pages == 1 ||				\
++		    (lpa2 && __flush_start != ALIGN(__flush_start, SZ_64K))) {	\
++			addr = __TLBI_VADDR(__flush_start, asid);	\
+ 			__tlbi_level(op, addr, tlb_level);		\
+ 			if (tlbi_user)					\
+ 				__tlbi_user_level(op, addr, tlb_level);	\
+-			start += stride;				\
+-			pages -= stride >> PAGE_SHIFT;			\
++			__flush_start += stride;			\
++			__flush_pages -= stride >> PAGE_SHIFT;		\
+ 			continue;					\
+ 		}							\
+ 									\
+-		num = __TLBI_RANGE_NUM(pages, scale);			\
++		num = __TLBI_RANGE_NUM(__flush_pages, scale);		\
+ 		if (num >= 0) {						\
+-			addr = __TLBI_VADDR_RANGE(start >> shift, asid, \
++			addr = __TLBI_VADDR_RANGE(__flush_start >> shift, asid, \
+ 						scale, num, tlb_level);	\
+ 			__tlbi(r##op, addr);				\
+ 			if (tlbi_user)					\
+ 				__tlbi_user(r##op, addr);		\
+-			start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
+-			pages -= __TLBI_RANGE_PAGES(num, scale);	\
++			__flush_start += __TLBI_RANGE_PAGES(num, scale) << PAGE_SHIFT; \
++			__flush_pages -= __TLBI_RANGE_PAGES(num, scale);\
+ 		}							\
+ 		scale--;						\
+ 	}								\
 
 
