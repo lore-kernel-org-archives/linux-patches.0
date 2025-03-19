@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE991D5AC6;
-	Wed, 19 Mar 2025 14:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BF1D5AC6;
+	Wed, 19 Mar 2025 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395039; cv=none; b=IU6nVe8+85fwrSckVMe5R60MJXyIHvqxzghKNvb/M8sRqGK9pgpdHWygBX2+m4vdVLVUNJnimWBEScGVEt6J4VLOOfKo4mx4mXgg76DyLlFGj76nS6ZT+lBLl0BX8yn4HI/SfxJK1OEg9fZuA+iq8unk7eAWCGzNMcbKWl5ymOE=
+	t=1742395040; cv=none; b=ozoi1r2EtjiHk06QTdbhIoU2Im9mG8js+R++ovhP0dC9o5+nZtpIOPmWo9683YDK/ExX9fifNO/Pu9bLG7qWvNmt4O/ZTi6z7n4BNmB/zOVC6LgSTTeXJVcxLI2mL00GCO8h323HXzDoDgSCEn1RPefUIslShyp6pdc5kHrk7zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395039; c=relaxed/simple;
-	bh=2bu8bsZwZHZpFF1mTma1jVELCuMcuvAVKyLpCupeLf0=;
+	s=arc-20240116; t=1742395040; c=relaxed/simple;
+	bh=d3sCLBfsojkHNWNY8DGkJ1PLo9tHnNND3vgu3peHg8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjd6UqkhmPWFTvOdB4xGVcVzLN+WsJ5AWA2FYDnV29SNgKCq4y4oC1wcsm2hQW2OVqUuuZcuZB0bfnUH5REs/3XxH2nAvB9XCro4ijIg69kq1MGvq2fJV2m2kWnYZGEK7NSXWLPC38q7RBshjHxOHomb6/qG0rJ5YYiRBE8sxbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S38bGn7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OeDd94SyOaI3kSLusuWGcpHDPkuH+bDSL82t/7Jt7vQsc0fAQsFOaPCDpCTzh4DqgIHGOtaK0pw5Majcq4s86zpCLJsYJWRTeasaVflShOQW7+LWMv/HQvmsvq149/8HYk03r6uYvk30CULcNNkd6xDoVz1HJtdsxuhlYGGzW30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J11uSUd3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S38bGn7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BBFC4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J11uSUd3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D500FC4CEE4;
 	Wed, 19 Mar 2025 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395039;
-	bh=2bu8bsZwZHZpFF1mTma1jVELCuMcuvAVKyLpCupeLf0=;
+	bh=d3sCLBfsojkHNWNY8DGkJ1PLo9tHnNND3vgu3peHg8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S38bGn7wWeixBU6zbd2a/gsLH+pxCPcGQKyeYOmMKpcVDrtb+n7FTjcy3b9IFZdCs
-	 qsWitU6K0VB+EbnFbvK1geqyGkyIdamZxf/6tLv7y1zZQ7KcneF4cUakPMZhHFyP5r
-	 Mfl2EHuzTe6igy3EKSifXS5DEbHBE6qZb1lChFgU=
+	b=J11uSUd36R2iSQAGzzmHVKx1lyVgdTw22kCgQ5cBvIeOZqysVmolVBeIfE/7pRaBB
+	 +I9NCkzhe+ib8YuyuxDZoeT0JzL2W64sGyG98oM9TR358FuRRQpjiUqeTs5y+Il8l6
+	 CCx4tEUEoegfzjxLl0Y0cFDVuOr6HOS2gijvgVbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengen Du <chengen.du@canonical.com>,
-	Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/231] iscsi_ibft: Fix UBSAN shift-out-of-bounds warning in ibft_attr_show_nic()
-Date: Wed, 19 Mar 2025 07:29:15 -0700
-Message-ID: <20250319143028.357251907@linuxfoundation.org>
+Subject: [PATCH 6.12 063/231] sched/debug: Provide slice length for fair tasks
+Date: Wed, 19 Mar 2025 07:29:16 -0700
+Message-ID: <20250319143028.381502631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 07e0d99a2f701123ad3104c0f1a1e66bce74d6e5 ]
+[ Upstream commit 9065ce69754dece78606c8bbb3821449272e56bf ]
 
-When performing an iSCSI boot using IPv6, iscsistart still reads the
-/sys/firmware/ibft/ethernetX/subnet-mask entry. Since the IPv6 prefix
-length is 64, this causes the shift exponent to become negative,
-triggering a UBSAN warning. As the concept of a subnet mask does not
-apply to IPv6, the value is set to ~0 to suppress the warning message.
+Since commit:
 
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Signed-off-by: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
+  857b158dc5e8 ("sched/eevdf: Use sched_attr::sched_runtime to set request/slice suggestion")
+
+... we have the userspace per-task tunable slice length, which is
+a key parameter that is otherwise difficult to obtain, so provide
+it in /proc/$PID/sched.
+
+[ mingo: Clarified the changelog. ]
+
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/453349b1-1637-42f5-a7b2-2385392b5956@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/iscsi_ibft.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/sched/debug.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/iscsi_ibft.c b/drivers/firmware/iscsi_ibft.c
-index 6e9788324fea5..371f24569b3b2 100644
---- a/drivers/firmware/iscsi_ibft.c
-+++ b/drivers/firmware/iscsi_ibft.c
-@@ -310,7 +310,10 @@ static ssize_t ibft_attr_show_nic(void *data, int type, char *buf)
- 		str += sprintf_ipaddr(str, nic->ip_addr);
- 		break;
- 	case ISCSI_BOOT_ETH_SUBNET_MASK:
--		val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
-+		if (nic->subnet_mask_prefix > 32)
-+			val = cpu_to_be32(~0);
-+		else
-+			val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
- 		str += sprintf(str, "%pI4", &val);
- 		break;
- 	case ISCSI_BOOT_ETH_PREFIX_LEN:
+diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
+index 82b165bf48c42..1e3bc0774efd5 100644
+--- a/kernel/sched/debug.c
++++ b/kernel/sched/debug.c
+@@ -1264,6 +1264,8 @@ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
+ 	if (task_has_dl_policy(p)) {
+ 		P(dl.runtime);
+ 		P(dl.deadline);
++	} else if (fair_policy(p->policy)) {
++		P(se.slice);
+ 	}
+ #ifdef CONFIG_SCHED_CLASS_EXT
+ 	__PS("ext.enabled", task_on_scx(p));
 -- 
 2.39.5
 
