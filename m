@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441231E5B63;
-	Wed, 19 Mar 2025 14:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044271E5B63;
+	Wed, 19 Mar 2025 14:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395105; cv=none; b=OlO44f8vXPM0K85WN0ua6k9WoZovFV8wZuu2Lgf7lygwjXnVzH5uQmr5+YGbMUrSS7qb8UgWnhSjAx3yivycqX24iL1tEjAI/qyiVVoQ0g10InSGs7stZzwBqLBE12d0XoPqC5MHgDf4i+aFIsXLAXGgp0rxU2zgWsQ7Cro1jHU=
+	t=1742395106; cv=none; b=k9C0atTLol/gV3Bng1SBytucagEyU2A0qbGP+os3EfazqUAfiak9l2gDarPrMri2uxgV+fgAT8FAsQCefWCqrIckRRZT3ho3HFVRYMdyEL4hNEqJoySA9U+x4HgIX+DSqX+ww900QtOh+tJGyHODjntrn0L/8smQY2g70motp28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395105; c=relaxed/simple;
-	bh=q/UX7LM5HXLDbQjOq9kQTxzkMHb15qYZuLGAQ0y7hCE=;
+	s=arc-20240116; t=1742395106; c=relaxed/simple;
+	bh=XPiP+uho+W97Luot7y8HzXhyGugp9x2fxD8/MkQ9rfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lE+Q2BzgPFxPCPtglei+JHldvtQALnp/OlsEVcArLWYa/RzW+0l3aRIyLNuFtXd5ivRoIuXJBV3DtKvP4OSEmgGoHHYqiDfq3ZMcwbVmOzca3ukeoh39UX0MFEtefWGFD8fmiA/DRanrlvHXevnVKrYpI+bnAviEnH/QrJ5oiB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+1ASs45; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwdGQumdSb2hbpJPDXF9LbP1a4n611F6IszCtKN+pknSy1NwN4mLaxVH0H+vuj7jC0gw7oKEsnDiv4iABofpa8FVA+OOeGKVgABLWA8bquyubDE2bmW/39rG7JjYlXTctZ9a76u9BEMq6hQgsuH8ANyq4iQ4Jh3AFcwAdeUhTG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOFm8Y6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+1ASs45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19162C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOFm8Y6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD606C4CEEA;
 	Wed, 19 Mar 2025 14:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395105;
-	bh=q/UX7LM5HXLDbQjOq9kQTxzkMHb15qYZuLGAQ0y7hCE=;
+	bh=XPiP+uho+W97Luot7y8HzXhyGugp9x2fxD8/MkQ9rfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+1ASs45e8psmYr5ttXf23aNRZMJvRHbvoTi8JbKG0i+7cJV+H7KBBC1Ss81wf54I
-	 JsLe4T5B+YOYmLPA2sYjMZRKxHX1YYVTyVmpvRgaJUsMbfjyYf3AUj4aY46kVU+DzI
-	 r1Cs2Gn+p8B9/Kkgzo0gZ4swM4V+olPqPWaDLLWA=
+	b=gOFm8Y6DLLDjdA1NWRE+XfhY060x89c1IGRpOVx9gF+z234hzVOrqEUqSMDOTBYSt
+	 oCVTOTuvVIVgy1z8ypipH7+Fku5QSVqFtWMku5el+Q2+FchqrD070OojOwLD0oflBQ
+	 Ero+AnwLOENcNFfSd651XOVlypSBeTv/QlG8WZeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 157/231] Input: i8042 - swap old quirk combination with new quirk for more devices
-Date: Wed, 19 Mar 2025 07:30:50 -0700
-Message-ID: <20250319143030.717582536@linuxfoundation.org>
+	Boon Khai Ng <boon.khai.ng@intel.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 158/231] USB: serial: ftdi_sio: add support for Altera USB Blaster 3
+Date: Wed, 19 Mar 2025 07:30:51 -0700
+Message-ID: <20250319143030.742783136@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -50,125 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Boon Khai Ng <boon.khai.ng@intel.com>
 
-commit d85862ccca452eeb19329e9f4f9a6ce1d1e53561 upstream.
+commit 18e0885bd2ca738407036434418a26a58394a60e upstream.
 
-Some older Clevo barebones have problems like no or laggy keyboard after
-resume or boot which can be fixed with the SERIO_QUIRK_FORCENORESTORE
-quirk.
+The Altera USB Blaster 3, available as both a cable and an on-board
+solution, is primarily used for programming and debugging FPGAs.
 
-We could not activly retest these devices because we no longer have them in
-our archive, but based on the other old Clevo barebones we tested where the
-new quirk had the same or a better behaviour I think it would be good to
-apply it on these too.
+It interfaces with host software such as Quartus Programmer,
+System Console, SignalTap, and Nios Debugger. The device utilizes
+either an FT2232 or FT4232 chip.
 
+Enabling the support for various configurations of the on-board
+USB Blaster 3 by including the appropriate VID/PID pairs,
+allowing it to function as a serial device via ftdi_sio.
+
+Note that this check-in does not include support for the
+cable solution, as it does not support UART functionality.
+The supported configurations are determined by the
+hardware design and include:
+
+1) PID 0x6022, FT2232, 1 JTAG port (Port A) + Port B as UART
+2) PID 0x6025, FT4232, 1 JTAG port (Port A) + Port C as UART
+3) PID 0x6026, FT4232, 1 JTAG port (Port A) + Port C, D as UART
+4) PID 0x6029, FT4232, 1 JTAG port (Port B) + Port C as UART
+5) PID 0x602a, FT4232, 1 JTAG port (Port B) + Port C, D as UART
+6) PID 0x602c, FT4232, 1 JTAG port (Port A) + Port B as UART
+7) PID 0x602d, FT4232, 1 JTAG port (Port A) + Port B, C as UART
+8) PID 0x602e, FT4232, 1 JTAG port (Port A) + Port B, C, D as UART
+
+These configurations allow for flexibility in how the USB Blaster 3 is
+used, depending on the specific needs of the hardware design.
+
+Signed-off-by: Boon Khai Ng <boon.khai.ng@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://lore.kernel.org/r/20250221230137.70292-4-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |   31 ++++++++++---------------------
- 1 file changed, 10 insertions(+), 21 deletions(-)
+ drivers/usb/serial/ftdi_sio.c     |   14 ++++++++++++++
+ drivers/usb/serial/ftdi_sio_ids.h |   13 +++++++++++++
+ 2 files changed, 27 insertions(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1157,9 +1157,7 @@ static const struct dmi_system_id i8042_
- 	},
- 	/*
- 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
--	 * after suspend fixable with nomux + reset + noloop + nopnp. Luckily,
--	 * none of them have an external PS/2 port so this can safely be set for
--	 * all of them.
-+	 * after suspend fixable with the forcenorestore quirk.
- 	 * Clevo barebones come with board_vendor and/or system_vendor set to
- 	 * either the very generic string "Notebook" and/or a different value
- 	 * for each individual reseller. The only somewhat universal way to
-@@ -1175,22 +1173,19 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "LAPQC71B"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "N140CU"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "N141CU"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		.matches = {
-@@ -1250,8 +1245,7 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "NJ50_70CU"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		.matches = {
-@@ -1268,16 +1262,14 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "P65xH"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		/* Clevo P650RS, 650RP6, Sager NP8152-S, and others */
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "P65xRP"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		/*
-@@ -1288,8 +1280,7 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "P65_P67H"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		/*
-@@ -1300,8 +1291,7 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "P65_67RP"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		/*
-@@ -1323,8 +1313,7 @@ static const struct dmi_system_id i8042_
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "P67xRP"),
- 		},
--		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
--					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
- 	},
- 	{
- 		.matches = {
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1079,6 +1079,20 @@ static const struct usb_device_id id_tab
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
+ 	/* GMC devices */
+ 	{ USB_DEVICE(GMC_VID, GMC_Z216C_PID) },
++	/* Altera USB Blaster 3 */
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_6022_PID, 1) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_6025_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_6026_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_6026_PID, 3) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_6029_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602A_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602A_PID, 3) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602C_PID, 1) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602D_PID, 1) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602D_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 1) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 2) },
++	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 3) },
+ 	{ }					/* Terminating entry */
+ };
+ 
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1612,3 +1612,16 @@
+  */
+ #define GMC_VID				0x1cd7
+ #define GMC_Z216C_PID			0x0217 /* GMC Z216C Adapter IR-USB */
++
++/*
++ *  Altera USB Blaster 3 (http://www.altera.com).
++ */
++#define ALTERA_VID			0x09fb
++#define ALTERA_UB3_6022_PID		0x6022
++#define ALTERA_UB3_6025_PID		0x6025
++#define ALTERA_UB3_6026_PID		0x6026
++#define ALTERA_UB3_6029_PID		0x6029
++#define ALTERA_UB3_602A_PID		0x602a
++#define ALTERA_UB3_602C_PID		0x602c
++#define ALTERA_UB3_602D_PID		0x602d
++#define ALTERA_UB3_602E_PID		0x602e
 
 
