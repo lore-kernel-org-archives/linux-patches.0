@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108491E0DDF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B974225760;
 	Wed, 19 Mar 2025 14:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395025; cv=none; b=eMv1mmU/jmRYAROWMh4VfjnbWZh/ibOGvnIVgWDsGDsA01g2icAoegxXrL9dT3e2+Aa9jacOQ1pz2hJsMcPK1AMRKM6mtu1qQ+UqyGJcTrJlmt6oDJDrkKP5geapmM0fuAz4m/G2fVlaF8iEmQfOKUBH9Ep1UT2AO0sEZy3NJuA=
+	t=1742395025; cv=none; b=I1roOIcBAKcch6Lv7aTXXGJoGESrlWk/m/ofD++vnAlv9fisGfVF25GnHfWtWCx49LRaw9tB3FU8qRViU1NmwST36VntUlFFarX+UFhIDuEutLeRuvuhTvhshgmvJcXFnaIkftOydn8pkKoKhaPOE6fJ453gsHIlNwZs6OF2xdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395025; c=relaxed/simple;
-	bh=88tYN/DOG1Jl9uMTxPxSZkoTGAJWVNqyNUSlZtMbKCs=;
+	bh=ZBexT3evC1u1WAEdgyWuq5lRtWmY1nvjH29htKAGpSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcjKf4gN1+mw53I3OxenJ+dC6WFLcIoEeUC43CFlAnpuRkK3xHcpouPoHA9nipdKpPn/ZuzNBvF7KCJY9l8Q01/P0TymD8rbH4SfRK8/sOYOsEh/JtJ2qyGdJ10LK5F/KOgChmyonKLbhHIv5wggx+80MerTqqshQVjmTgKvi+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRLrgPJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d4x2wW9JXvrcQi2XBbFp1XKlCGul35HXJ/9bozBqcwSKRKIpZ5Xd96TPMsJa+8M8OrzYOeeeRgxne5SiF04GoOIJ3zIrDwBYtL5E7hKQbzSYjoDtnMH/s9ztp0g1m6VstlJjncPymg5F6vJfl7vDa6DgE2nZ29Rk2FxUDm/qhIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuQ2SPP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRLrgPJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8607C4CEE8;
-	Wed, 19 Mar 2025 14:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuQ2SPP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD6FC4CEE4;
+	Wed, 19 Mar 2025 14:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395024;
-	bh=88tYN/DOG1Jl9uMTxPxSZkoTGAJWVNqyNUSlZtMbKCs=;
+	s=korg; t=1742395025;
+	bh=ZBexT3evC1u1WAEdgyWuq5lRtWmY1nvjH29htKAGpSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRLrgPJUr/57aVL60ifjx4nGHLk2QeQp+rk8/yfgbBxUHOy3UlGHeI6+fFkwqV0wX
-	 ihqqPosvYxrIXde4/cCxYk4Do1JP4BV0wmFFFu9IxhES+KzCmBUCR/opNthMnq0fmw
-	 VfqCiIWd4uhWj87Nkq8pZbYaTVFxy31s6h3rx8dU=
+	b=RuQ2SPP91wX9RkQcDB4DdyqEfiuqMuRYWcnhHxsRyF652J2nor8qaXjoomDiT/CQp
+	 1HzTQS1Y7xr8+YbS5KaVpzK5UZC2wyiClUK+l0dE/sNnEbHf09W/FLjUG79QMSFvng
+	 YcGTmpubqYb2I4WoxRRuc6nYUHXgXZ1fL5KCnPxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/231] fbdev: hyperv_fb: iounmap() the correct memory when removing a device
-Date: Wed, 19 Mar 2025 07:28:17 -0700
-Message-ID: <20250319143026.975567276@linuxfoundation.org>
+Subject: [PATCH 6.12 005/231] pinctrl: bcm281xx: Fix incorrect regmap max_registers value
+Date: Wed, 19 Mar 2025 07:28:18 -0700
+Message-ID: <20250319143026.999437370@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -52,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 7241c886a71797cc51efc6fadec7076fcf6435c2 ]
+[ Upstream commit 68283c1cb573143c0b7515e93206f3503616bc10 ]
 
-When a Hyper-V framebuffer device is removed, or the driver is unbound
-from a device, any allocated and/or mapped memory must be released. In
-particular, MMIO address space that was mapped to the framebuffer must
-be unmapped. Current code unmaps the wrong address, resulting in an
-error like:
+The max_registers value does not take into consideration the stride;
+currently, it's set to the number of the last pin, but this does not
+accurately represent the final register.
 
-[ 4093.980597] iounmap: bad address 00000000c936c05c
+Fix this by multiplying the current value by 4.
 
-followed by a stack dump.
-
-Commit d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for
-Hyper-V frame buffer driver") changed the kind of address stored in
-info->screen_base, and the iounmap() call in hvfb_putmem() was not
-updated accordingly.
-
-Fix this by updating hvfb_putmem() to unmap the correct address.
-
-Fixes: d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for Hyper-V frame buffer driver")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250209235252.2987-1-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250209235252.2987-1-mhklinux@outlook.com>
+Fixes: 54b1aa5a5b16 ("ARM: pinctrl: Add Broadcom Capri pinctrl driver")
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Link: https://lore.kernel.org/20250207-bcm21664-pinctrl-v1-2-e7cfac9b2d3b@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/hyperv_fb.c | 2 +-
+ drivers/pinctrl/bcm/pinctrl-bcm281xx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index 7fdb5edd7e2e8..363e4ccfcdb77 100644
---- a/drivers/video/fbdev/hyperv_fb.c
-+++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -1080,7 +1080,7 @@ static void hvfb_putmem(struct hv_device *hdev, struct fb_info *info)
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm281xx.c b/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
+index 73dbf29c002f3..cf6efa9c0364a 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
+@@ -974,7 +974,7 @@ static const struct regmap_config bcm281xx_pinctrl_regmap_config = {
+ 	.reg_bits = 32,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+-	.max_register = BCM281XX_PIN_VC_CAM3_SDA,
++	.max_register = BCM281XX_PIN_VC_CAM3_SDA * 4,
+ };
  
- 	if (par->need_docopy) {
- 		vfree(par->dio_vp);
--		iounmap(info->screen_base);
-+		iounmap(par->mmio_vp);
- 		vmbus_free_mmio(par->mem->start, screen_fb_size);
- 	} else {
- 		hvfb_release_phymem(hdev, info->fix.smem_start,
+ static int bcm281xx_pinctrl_get_groups_count(struct pinctrl_dev *pctldev)
 -- 
 2.39.5
 
