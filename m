@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDBC1E5B97;
-	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCF51E5B97;
+	Wed, 19 Mar 2025 14:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395125; cv=none; b=aiHd0QGnMyyY7TMceI+dEdInYcfW0PqJGh75ptJopfInqwlGHkcGp4PVbW9lTloItbdq/+qY+AqiC4BY9O9yOvLaKcdtR1/oqd4ApNKJ6PBswPP2EdYOj/1FVdG1lypy5tb3w7vkcFs6JvvVC/Gu0+Mr6ERyKAFC4VLNHNy+hjs=
+	t=1742395126; cv=none; b=GuqQN06up0REcFHLBOM4Lrj/LbQb2HQCFAozeN4oKCZrwE5gjrftq77Tx+/rwMkCB9GIc5Ih0In7ptAQ7Jp7yVC0AEgu2cwy1+HlkZFJZKUthoTjKDAQ+eSbG76XtaNbVct0015dD6Jkfk6sl644LI579ib581VcfaNbiuayji0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395125; c=relaxed/simple;
-	bh=GTV8lyNPHG3WWCO8Ed1sLChvUmiiac5vZw00a6P2Qvc=;
+	s=arc-20240116; t=1742395126; c=relaxed/simple;
+	bh=WmxnX+pVBhrAhDeRqQKzQ6h69LjuTj4GtmO7FxJ9BXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OtgIyf9Dcrvj7wrSOKem2FZbxTXtyL0v2NREGa3nKIGLFQwRPHAyT+ruk/hRMLpn0/dV/WcXRmQ9X/y93yzZUlMuCR2FyhwjskWzoFtk/M76Cyxdqlx7IpwapvpvbPynDH2Vjv55PR/n3Q2LdzWpo3+HazLminr0+cIr+XbTgVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iieHEkgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyUUbpphrv5Y8r8TokgpohZ4Db8DpsuoZ70TeMtA3/CBnCLQWjCwwWl9ZxBuESiUZRo6AsUi8r29yoQ7odMrYt1sl1OeX1pKJK5ihhCi0khpl342982Aoa1RF6pdPFOhNv6/Wanv5YRMGlzGv8ZXA6bOYobI4An+MSPuOMJyW/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PadSFvyG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iieHEkgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B430C4CEE4;
-	Wed, 19 Mar 2025 14:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PadSFvyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5438DC4CEE9;
+	Wed, 19 Mar 2025 14:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742395125;
-	bh=GTV8lyNPHG3WWCO8Ed1sLChvUmiiac5vZw00a6P2Qvc=;
+	s=korg; t=1742395126;
+	bh=WmxnX+pVBhrAhDeRqQKzQ6h69LjuTj4GtmO7FxJ9BXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iieHEkgttCPmsTMOH6f2LHwyihTplCWdJYusJkqC40mOaCYCVSWxac2tqp2sE6k0e
-	 OR3GfhY3oDL4RyzZ1feKtEbq4/EGe67r5FJ6KGFmQe/wFZ9Ec0IXAAF20Cx2bU3dnd
-	 8pc/+iLIJ9Nt7xns54nNfbAO0+9ZpOoJySqHltRc=
+	b=PadSFvyGqbinMsEstnd/mXREcubbMfBLGBXuD8hPc1QirgYkg0jasaOHvCG7vvLeu
+	 UV7HJ3BKKXqH/mfK/bFVuUJ7PneMh/tA4LGnwyHhJNTNNru2QC0HkNp3fL1BFdy5aJ
+	 f8JGEU7qnQrqRiB+scd92Z6qulxwciNH48JnFNqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>
-Subject: [PATCH 6.12 170/231] drm/panic: use `div_ceil` to clean Clippy warning
-Date: Wed, 19 Mar 2025 07:31:03 -0700
-Message-ID: <20250319143031.044112464@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Mina Almasry <almasrymina@google.com>
+Subject: [PATCH 6.12 189/231] netmem: prevent TX of unreadable skbs
+Date: Wed, 19 Mar 2025 07:31:22 -0700
+Message-ID: <20250319143031.505256910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,65 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Mina Almasry <almasrymina@google.com>
 
-commit 986c2e9ca818b0b74cfc737517549fd0b80ff15d upstream.
+commit f3600c867c99a2cc8038680ecf211089c50e7971 upstream.
 
-Starting with the upcoming Rust 1.86.0 (to be released 2025-04-03),
-Clippy warns:
+Currently on stable trees we have support for netmem/devmem RX but not
+TX. It is not safe to forward/redirect an RX unreadable netmem packet
+into the device's TX path, as the device may call dma-mapping APIs on
+dma addrs that should not be passed to it.
 
-    error: manually reimplementing `div_ceil`
-       --> drivers/gpu/drm/drm_panic_qr.rs:548:26
-        |
-    548 |         let pad_offset = (offset + 7) / 8;
-        |                          ^^^^^^^^^^^^^^^^ help: consider using `.div_ceil()`: `offset.div_ceil(8)`
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#manual_div_ceil
+Fix this by preventing the xmit of unreadable skbs.
 
-And similarly for `stride`. Thus apply the suggestion to both.
+Tested by configuring tc redirect:
 
-The behavior (and thus codegen) is not exactly equivalent [1][2], since
-`div_ceil()` returns the right value for the values that currently
-would overflow.
+sudo tc qdisc add dev eth1 ingress
+sudo tc filter add dev eth1 ingress protocol ip prio 1 flower ip_proto \
+	tcp src_ip 192.168.1.12 action mirred egress redirect dev eth1
 
-Link: https://github.com/rust-lang/rust-clippy/issues/14333 [1]
-Link: https://godbolt.org/z/dPq6nGnv3 [2]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-Cc: stable@vger.kernel.org # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250301231602.917580-1-ojeda@kernel.org
+Before, I see unreadable skbs in the driver's TX path passed to dma
+mapping APIs.
+
+After, I don't see unreadable skbs in the driver's TX path passed to dma
+mapping APIs.
+
+Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250306215520.1415465-1-almasrymina@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/dev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
-index ef2d490965ba..56692c6be219 100644
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -545,7 +545,7 @@ impl EncodedMsg<'_> {
-         }
-         self.push(&mut offset, (MODE_STOP, 4));
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3723,6 +3723,9 @@ static struct sk_buff *validate_xmit_skb
+ {
+ 	netdev_features_t features;
  
--        let pad_offset = (offset + 7) / 8;
-+        let pad_offset = offset.div_ceil(8);
-         for i in pad_offset..self.version.max_data() {
-             self.data[i] = PADDING[(i & 1) ^ (pad_offset & 1)];
-         }
-@@ -659,7 +659,7 @@ struct QrImage<'a> {
- impl QrImage<'_> {
-     fn new<'a, 'b>(em: &'b EncodedMsg<'b>, qrdata: &'a mut [u8]) -> QrImage<'a> {
-         let width = em.version.width();
--        let stride = (width + 7) / 8;
-+        let stride = width.div_ceil(8);
-         let data = qrdata;
- 
-         let mut qr_image = QrImage {
--- 
-2.48.1
-
++	if (!skb_frags_readable(skb))
++		goto out_kfree_skb;
++
+ 	features = netif_skb_features(skb);
+ 	skb = validate_xmit_vlan(skb, features);
+ 	if (unlikely(!skb))
 
 
