@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334E01DC9A7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D776221ABB9;
 	Wed, 19 Mar 2025 14:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395103; cv=none; b=Xh5FcUiAVKLTRvTQ7i1Hi38V+PmVyJ4hgaVhZRSTk7AX7U/oycbYVfjW8+G26QSsENJBp+XiXHHsbrRUfKH1CAFPA5tgnC21ov1xV+5a6qAOAHU9jCR9fdh3zma0REFloO0XIW+JqkfLhUV6tvx0J4ZJmT8D2o0xKRDu3X9Wj5M=
+	t=1742395103; cv=none; b=rrUTzwFWSD4gzIkD7MtuZgmoJChUNFX10Ujbx6VK6q6cAev/sNbte+/r/0ZugxSvMk3p9pGz0cdfDOqpAtJnxrqbp3y8hBdtxmGHqweXrg6vq14V+ZHqK3/6ORjMWuHyWyywo9mGmrzMci58eEi5Rb1ogej1TbyGwlW0/362VeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742395103; c=relaxed/simple;
-	bh=D0Sd18Ycv7nCo2nHn+XZm3Y/0gETg1hpHupOLEsKgUg=;
+	bh=S0cjj1F9U3/7stkTzX7RlkrO/0YK1rcoO/LAwweV+ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLYbsMsvS0wle2dQCMclz+EeXRMvhR0cGkg9d/eTA3MVS6ZXvpZ6SzPNFczqKddHrmr69GuspDQjL8++OLC6XPS/FC2C3b9Ak8nTLtK2joJUuJC0jj8DDs6xItL/PeSpD/Y7ArNxdrEKRPoCv20n9MBzBrIC1C6w2f6WIOMfGVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIHKWgHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7h+BZLh1xlfc9H4L3+c1PswIAryth8uj3alqTEhnVAy+6aRIFlQCCfY629dyuITTIYJuNkdaRjYPNNkCJcYsTJz7ZxvOxQwV5FDgd6lysX7wTZJ5DXqW2YCdHhbSrUedeBTGtYxwoxj0dK37H4DMaw0lvkAJXxqfl4Pvski+yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6bu8uXw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIHKWgHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C68C4CEE4;
-	Wed, 19 Mar 2025 14:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6bu8uXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8027C4CEE4;
+	Wed, 19 Mar 2025 14:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1742395103;
-	bh=D0Sd18Ycv7nCo2nHn+XZm3Y/0gETg1hpHupOLEsKgUg=;
+	bh=S0cjj1F9U3/7stkTzX7RlkrO/0YK1rcoO/LAwweV+ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIHKWgHJYWwxG3KzHkw4v9mAOM4HTwfenNiwdnHbnfL2PMjBNqXPZH6mARMN/sWbl
-	 +1sk/yH7S9uTk7t4b7MmCi6snEr/dT55+QeC7aQjTDqUlxH4AioMVlLqnBE4oXp7qA
-	 +0RvGwHghmpBbqiIBKtJ+Om0DX9FDB1aOw+jA7yQ=
+	b=P6bu8uXw4knVNezwYV0y6glCeFya1t2PHG9tyQID7xaRIBdyWaat3F/BFK5ks+deg
+	 G/NPpkzfCyB12XH2xpsShRxAN/OiJQ98zmVIN07mBvE5MsRl5gM0B7UXFeIUdgRvmd
+	 FhnKSij894yk79R+wZ8h2Xm7rJNL5pNZ3EoHEhCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/231] ASoC: tas2770: Fix volume scale
-Date: Wed, 19 Mar 2025 07:30:21 -0700
-Message-ID: <20250319143029.999819818@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 155/231] Input: i8042 - add required quirks for missing old boardnames
+Date: Wed, 19 Mar 2025 07:30:48 -0700
+Message-ID: <20250319143030.665345076@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143026.865956961@linuxfoundation.org>
 References: <20250319143026.865956961@linuxfoundation.org>
@@ -51,36 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 579cd64b9df8a60284ec3422be919c362de40e41 ]
+commit 9ed468e17d5b80e7116fd35842df3648e808ae47 upstream.
 
-The scale starts at -100dB, not -128dB.
+Some older Clevo barebones have problems like no or laggy keyboard after
+resume or boot which can be fixed with the SERIO_QUIRK_FORCENORESTORE
+quirk.
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2770-v1-1-cf50ff1d59a3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The PB71RD keyboard is sometimes laggy after resume and the PC70DR, PB51RF,
+P640RE, and PCX0DX_GN20 keyboard is sometimes unresponsive after resume.
+This quirk fixes that.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://lore.kernel.org/r/20250221230137.70292-2-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2770.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 9f93b230652a5..863c3f672ba98 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -506,7 +506,7 @@ static int tas2770_codec_probe(struct snd_soc_component *component)
- }
- 
- static DECLARE_TLV_DB_SCALE(tas2770_digital_tlv, 1100, 50, 0);
--static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -12750, 50, 0);
-+static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -10050, 50, 0);
- 
- static const struct snd_kcontrol_new tas2770_snd_controls[] = {
- 	SOC_SINGLE_TLV("Speaker Playback Volume", TAS2770_PLAY_CFG_REG2,
--- 
-2.39.5
-
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1261,6 +1261,12 @@ static const struct dmi_system_id i8042_
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
+ 	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "P640RE"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
++	},
++	{
+ 		/*
+ 		 * This is only a partial board_name and might be followed by
+ 		 * another letter or number. DMI_MATCH however does do partial
+@@ -1337,11 +1343,35 @@ static const struct dmi_system_id i8042_
+ 	},
+ 	{
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PB51RF"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PB71RD"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PC70DR"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
++	},
++	{
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "PCX0DX"),
+ 		},
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "PCX0DX_GN20"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_FORCENORESTORE)
++	},
+ 	/* See comment on TUXEDO InfinityBook S17 Gen6 / Clevo NS70MU above */
+ 	{
+ 		.matches = {
 
 
