@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059711DDA36;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBBC1DE89C;
 	Wed, 19 Mar 2025 14:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394974; cv=none; b=jo+mDBwfgUGj/VWGxjaUIdO0ZU2X+Xuox5XJHzojl9G4y6gazRQZ7jo59vo0DXdxHxr135LCjT9VAmWNRXnhZjAX2KmFsvAgS/cfzszlUQwiXV1Kuv3NCbchQ9YA8cX7/RG8gB24u4X4L452l3lw9+nIqU77kIXuZeDqr7IzYv0=
+	t=1742394975; cv=none; b=SZMBEhi/g4p14IuwOVhlxpRziQDrkY62vtcfCsdc1BAD1YwaXRwLGzEo8ZREcqK+bbhysiwUDWPPvcnHP61Inzt4kCN7+qlgFR+84e4akL9CSG60to0nHpN3QzcBXwjGWD8r14EF1e/Ntln/iDKexNq2v82Py0C5P5Rufo5K62k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394974; c=relaxed/simple;
-	bh=f63KNTfZ/KPJ0rO7cEi3cUW2wVVwVDSp1tErh4ipiz4=;
+	s=arc-20240116; t=1742394975; c=relaxed/simple;
+	bh=UVPI1uX79bBVScglC0chtxirVfShLf59aFO1p0mLC6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMCrEQ3CLvN2BDtAqpYdke1Lo7bpOVR9vyzmF2nGW9r2d2Vqx8wts6oJGKh4ENkMzfrBx76v6Y598bY7Pw8/MGl5UW7lBA6QtRF6cHCvkGqTQBfPWNyJLZhfSzn0FCCgB30Ib16AC7eu807PRKMIwS5+8nbcDdbnAL5VxvfvXSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsHwavdi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkdJ2poqq/7nQjrxZcN4NF5Sfm64Nl7dE4t+3KdE21Sb5K+EoDxeTVq882hddz2AfVGn3zvfjKmT614MxVoRnjExmaOKndtKnUzS0E7wPm6Hi746BSdt6OqSEcx4AbNU8QMh/gY3dj6MaS3+g4dOmAf/VVIA63UHs6I5yo1K+yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmddBv8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsHwavdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80E3C4CEE8;
-	Wed, 19 Mar 2025 14:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmddBv8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771FEC4CEE4;
+	Wed, 19 Mar 2025 14:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394973;
-	bh=f63KNTfZ/KPJ0rO7cEi3cUW2wVVwVDSp1tErh4ipiz4=;
+	s=korg; t=1742394974;
+	bh=UVPI1uX79bBVScglC0chtxirVfShLf59aFO1p0mLC6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsHwavdi1gICKlXzmXzLHDCvjUSXscMC2T80NDnD0ZkcwJh0I+O1iPNneJcsvXe0q
-	 8BEv9O9YAu6684MvpXBKvEUjgZmLSVduXnpoJVv0Vb8UnMYneM/V8h93YLTzgrN4JG
-	 l6WL0O35K0ZowrnsDr3VTAjMh82RKSsRVyu0HDfk=
+	b=wmddBv8q2AZWpOt5/qu4huvhp5uD52oaNSKMaljN5Lr2IqrgEFkEfgFZCwiF4X8a/
+	 5L+RV5WByRx5FH2v7eJCxD0xI/nWdQb7TAiP9oZACPt4ktz4ADJyAOyyOZ4OxdRL8D
+	 T1rclD2cb9S6Xg99TRbwoGTj+aV3VOnsoeM87C3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alban Kurti <kurti@invicto.ai>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 210/241] rust: init: add missing newline to pr_info! calls
-Date: Wed, 19 Mar 2025 07:31:20 -0700
-Message-ID: <20250319143032.945182658@linuxfoundation.org>
+Subject: [PATCH 6.13 211/241] ASoC: rt722-sdca: add missing readable registers
+Date: Wed, 19 Mar 2025 07:31:21 -0700
+Message-ID: <20250319143032.971630959@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,121 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Kurti <kurti@invicto.ai>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 6933c1067fe6df8ddb34dd68bdb2aa172cbd08c8 ]
+[ Upstream commit 247fba13416af65b155949bae582d55c310f58b6 ]
 
-Several pr_info! calls in rust/kernel/init.rs (both in code examples
-and macro documentation) were missing a newline, causing logs to
-run together. This commit updates these calls to include a trailing
-newline, improving readability and consistency with the C side.
+SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15,
+RT722_SDCA_CTL_FU_CH_GAIN, CH_01) ... SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY,
+RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN, CH_04) are used by the
+"FU15 Boost Volume" control, but not marked as readable.
+And the mbq size are 2 for those registers.
 
-Fixes: 6841d45a3030 ("rust: init: add `stack_pin_init!` macro")
-Fixes: 7f8977a7fe6d ("rust: init: add `{pin_}chain` functions to `{Pin}Init<T, E>`")
-Fixes: d0fdc3961270 ("rust: init: add `PinnedDrop` trait and macros")
-Fixes: 4af84c6a85c6 ("rust: init: update expanded macro explanation")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1139
-Signed-off-by: Alban Kurti <kurti@invicto.ai>
-Link: https://lore.kernel.org/r/20250206-printing_fix-v3-3-a85273b501ae@invicto.ai
-[ Replaced Closes with Link since it fixes part of the issue. Added
-  one more Fixes tag (still same set of stable kernels). - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 7f5d6036ca005 ("ASoC: rt722-sdca: Add RT722 SDCA driver")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20250310080440.58797-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/init.rs        | 12 ++++++------
- rust/kernel/init/macros.rs |  6 +++---
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ sound/soc/codecs/rt722-sdca-sdw.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index d201954bd43f0..90bfb5cb26cd7 100644
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -259,7 +259,7 @@ pub mod macros;
- ///     },
- /// }));
- /// let foo: Pin<&mut Foo> = foo;
--/// pr_info!("a: {}", &*foo.a.lock());
-+/// pr_info!("a: {}\n", &*foo.a.lock());
- /// ```
- ///
- /// # Syntax
-@@ -311,7 +311,7 @@ macro_rules! stack_pin_init {
- ///     }, GFP_KERNEL)?,
- /// }));
- /// let foo = foo.unwrap();
--/// pr_info!("a: {}", &*foo.a.lock());
-+/// pr_info!("a: {}\n", &*foo.a.lock());
- /// ```
- ///
- /// ```rust,ignore
-@@ -336,7 +336,7 @@ macro_rules! stack_pin_init {
- ///         x: 64,
- ///     }, GFP_KERNEL)?,
- /// }));
--/// pr_info!("a: {}", &*foo.a.lock());
-+/// pr_info!("a: {}\n", &*foo.a.lock());
- /// # Ok::<_, AllocError>(())
- /// ```
- ///
-@@ -866,7 +866,7 @@ pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
-     ///
-     /// impl Foo {
-     ///     fn setup(self: Pin<&mut Self>) {
--    ///         pr_info!("Setting up foo");
-+    ///         pr_info!("Setting up foo\n");
-     ///     }
-     /// }
-     ///
-@@ -970,7 +970,7 @@ pub unsafe trait Init<T: ?Sized, E = Infallible>: PinInit<T, E> {
-     ///
-     /// impl Foo {
-     ///     fn setup(&mut self) {
--    ///         pr_info!("Setting up foo");
-+    ///         pr_info!("Setting up foo\n");
-     ///     }
-     /// }
-     ///
-@@ -1318,7 +1318,7 @@ impl<T> InPlaceWrite<T> for UniqueArc<MaybeUninit<T>> {
- /// #[pinned_drop]
- /// impl PinnedDrop for Foo {
- ///     fn drop(self: Pin<&mut Self>) {
--///         pr_info!("Foo is being dropped!");
-+///         pr_info!("Foo is being dropped!\n");
- ///     }
- /// }
- /// ```
-diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-index 1fd146a832416..b7213962a6a5a 100644
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -45,7 +45,7 @@
- //! #[pinned_drop]
- //! impl PinnedDrop for Foo {
- //!     fn drop(self: Pin<&mut Self>) {
--//!         pr_info!("{self:p} is getting dropped.");
-+//!         pr_info!("{self:p} is getting dropped.\n");
- //!     }
- //! }
- //!
-@@ -412,7 +412,7 @@
- //! #[pinned_drop]
- //! impl PinnedDrop for Foo {
- //!     fn drop(self: Pin<&mut Self>) {
--//!         pr_info!("{self:p} is getting dropped.");
-+//!         pr_info!("{self:p} is getting dropped.\n");
- //!     }
- //! }
- //! ```
-@@ -423,7 +423,7 @@
- //! // `unsafe`, full path and the token parameter are added, everything else stays the same.
- //! unsafe impl ::kernel::init::PinnedDrop for Foo {
- //!     fn drop(self: Pin<&mut Self>, _: ::kernel::init::__internal::OnlyCallFromDrop) {
--//!         pr_info!("{self:p} is getting dropped.");
-+//!         pr_info!("{self:p} is getting dropped.\n");
- //!     }
- //! }
- //! ```
+diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
+index 25fc13687bc83..4d3043627bd04 100644
+--- a/sound/soc/codecs/rt722-sdca-sdw.c
++++ b/sound/soc/codecs/rt722-sdca-sdw.c
+@@ -86,6 +86,10 @@ static bool rt722_sdca_mbq_readable_register(struct device *dev, unsigned int re
+ 	case 0x6100067:
+ 	case 0x6100070 ... 0x610007c:
+ 	case 0x6100080:
++	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN,
++			  CH_01) ...
++	     SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_FU15, RT722_SDCA_CTL_FU_CH_GAIN,
++			  CH_04):
+ 	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E, RT722_SDCA_CTL_FU_VOLUME,
+ 			CH_01):
+ 	case SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT_USER_FU1E, RT722_SDCA_CTL_FU_VOLUME,
 -- 
 2.39.5
 
