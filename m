@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4071C5D57;
-	Wed, 19 Mar 2025 14:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487301B0F32;
+	Wed, 19 Mar 2025 14:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394836; cv=none; b=rk5Ws1BkIHRCuHxaJKE3iGsb+Cl4a+P6cE6wg4O4wq26MqmWqQBDqnOslfxkajC7CrQX16wSJPkcDEW1iq8rD3vNTpwghgFVu5hUCHwp10CP6miQVQWAC2BYqdBsobP2RevP7nteUwzbg1I0zzQ2nA/yJ75mGXzdtCvCGqMntpI=
+	t=1742394837; cv=none; b=ScRRVqDietzE4tKO8xoiA/So4LvLlSKnNGrWZ2hkX2aqSoNmm9ta012KRLYjCa39rb8Jw/Q+6hnsraXV9i6gTIrtciEGlWmZJrZVU9++AU2hxVjVmMK1Zx4J2dqLwIdOY7FxXxu5lWGz07PryoVyxwi6VU/oi/ymWSn0Kv1N4Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394836; c=relaxed/simple;
-	bh=yUHNTDehW+fyTidVHUK0cU1FDfQztc8ebXx8/B9yL4c=;
+	s=arc-20240116; t=1742394837; c=relaxed/simple;
+	bh=ZFsE6W7iwbJybHhCZiHzcXeKHXv5UNGbyTtquKD2Js8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fq9gHBhwr4grhCnhZogVhjmb88PAlsKZBwApQ4V2D3dz/BgNHE0tA9/Wtxwc1uIYHURbGeSd/9W0gWXfvUbTdiFFOJPrdaYN3+PaVBlnRhJbDNmFyadgz0qKVfNhZwwgO4+SWnLnMq0hgeKJCvoOl3GW/0PR8HHeJjiJy0mCaEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3Ua0dNp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VIRuFLlqAuWvvprDYL/b4J5O8XIXNpgBknS2+XNyfJ5Kj6m3udI7azYbgOTs1dHFGrtK92+G9kIdfJgNcZzYEduLGkdM9lX90cp/gOjOrfzvxmQnjNVffW9fR1IUAUSXXp4/YsVpmiHD2zIQnxfB2sv2F9tZ5a9yb3WL/pOHP5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnGghMIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3Ua0dNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238C3C4CEE4;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnGghMIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BBCC4CEE4;
 	Wed, 19 Mar 2025 14:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742394836;
-	bh=yUHNTDehW+fyTidVHUK0cU1FDfQztc8ebXx8/B9yL4c=;
+	s=korg; t=1742394837;
+	bh=ZFsE6W7iwbJybHhCZiHzcXeKHXv5UNGbyTtquKD2Js8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3Ua0dNpvpgiEhQFBib6LboX3RQq1G5us3AqrU24QqDuysVHEDVAREHVW/lUROG0V
-	 nxgcf8yvAihN7/HDaegBE6xk455UNw9ZO8IEhILcCQ/Fi0K0dl9lUevAWOIxIAvo5+
-	 m/EJyPfwFBRLZMc6XSCtXR8R0lmfzgA6oAO4eaBk=
+	b=hnGghMIVxCZI4wf5gSdtxQAM1+6AygO+1Dka/APbg55//HA92HfkQf49RG1i0W9V+
+	 pWBvT11GCDjqsem229wCZtoeH+nTmjvACcQibtOhKDwmoviLtyDhsWYADTqwnVlPwp
+	 irIzjuyOotAKi+YXjNSxjK1q+Zv25Poyur1xFtN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 017/241] wifi: cfg80211: cancel wiphy_work before freeing wiphy
-Date: Wed, 19 Mar 2025 07:28:07 -0700
-Message-ID: <20250319143028.134546063@linuxfoundation.org>
+Subject: [PATCH 6.13 018/241] Bluetooth: SCO: fix sco_conn refcounting on sco_conn_ready
+Date: Wed, 19 Mar 2025 07:28:08 -0700
+Message-ID: <20250319143028.159792999@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
 References: <20250319143027.685727358@linuxfoundation.org>
@@ -51,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 72d520476a2fab6f3489e8388ab524985d6c4b90 ]
+[ Upstream commit 8d74c9106be8da051b22f0cd81e665f17d51ba5d ]
 
-A wiphy_work can be queued from the moment the wiphy is allocated and
-initialized (i.e. wiphy_new_nm). When a wiphy_work is queued, the
-rdev::wiphy_work is getting queued.
+sco_conn refcount shall not be incremented a second time if the sk
+already owns the refcount, so hold only when adding new chan.
 
-If wiphy_free is called before the rdev::wiphy_work had a chance to run,
-the wiphy memory will be freed, and then when it eventally gets to run
-it'll use invalid memory.
+Add sco_conn_hold() for clarity, as refcnt is never zero here due to the
+sco_conn_add().
 
-Fix this by canceling the work before freeing the wiphy.
+Fixes SCO socket shutdown not actually closing the SCO connection.
 
-Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20250306123626.efd1d19f6e07.I48229f96f4067ef73f5b87302335e2fd750136c9@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: ed9588554943 ("Bluetooth: SCO: remove the redundant sco_conn_put")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/sco.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index afbdc549fb4a5..8baf22758ac12 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1198,6 +1198,13 @@ void cfg80211_dev_free(struct cfg80211_registered_device *rdev)
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index aa7bfe26cb40f..ed6846864ea93 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -107,6 +107,14 @@ static void sco_conn_put(struct sco_conn *conn)
+ 	kref_put(&conn->ref, sco_conn_free);
+ }
+ 
++static struct sco_conn *sco_conn_hold(struct sco_conn *conn)
++{
++	BT_DBG("conn %p refcnt %u", conn, kref_read(&conn->ref));
++
++	kref_get(&conn->ref);
++	return conn;
++}
++
+ static struct sco_conn *sco_conn_hold_unless_zero(struct sco_conn *conn)
  {
- 	struct cfg80211_internal_bss *scan, *tmp;
- 	struct cfg80211_beacon_registration *reg, *treg;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	WARN_ON(!list_empty(&rdev->wiphy_work_list));
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
-+	cancel_work_sync(&rdev->wiphy_work);
-+
- 	rfkill_destroy(rdev->wiphy.rfkill);
- 	list_for_each_entry_safe(reg, treg, &rdev->beacon_registrations, list) {
- 		list_del(&reg->list);
+ 	if (!conn)
+@@ -1353,6 +1361,7 @@ static void sco_conn_ready(struct sco_conn *conn)
+ 		bacpy(&sco_pi(sk)->src, &conn->hcon->src);
+ 		bacpy(&sco_pi(sk)->dst, &conn->hcon->dst);
+ 
++		sco_conn_hold(conn);
+ 		hci_conn_hold(conn->hcon);
+ 		__sco_chan_add(conn, sk, parent);
+ 
+@@ -1411,8 +1420,10 @@ static void sco_connect_cfm(struct hci_conn *hcon, __u8 status)
+ 		struct sco_conn *conn;
+ 
+ 		conn = sco_conn_add(hcon);
+-		if (conn)
++		if (conn) {
+ 			sco_conn_ready(conn);
++			sco_conn_put(conn);
++		}
+ 	} else
+ 		sco_conn_del(hcon, bt_to_errno(status));
+ }
 -- 
 2.39.5
 
