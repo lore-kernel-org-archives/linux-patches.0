@@ -1,136 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DB82AE99;
-	Thu, 20 Mar 2025 13:23:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6713A1E5739
+	for <patches@lists.linux.dev>; Thu, 20 Mar 2025 16:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742477040; cv=none; b=IHuJRUZ1200kLx2/Bvv9oXdx/bo7Fgt5KAh5jsksTVczfeFI/IM1PjoyvxW1dr97nQiXilXTrXU7cQILDdT0b1niG86bsFpAx1KH11nIymJ22My+A2Z45stU/YNsBkU51mrmhTjoQFmnj6HOIP2Q0xc6vFC2olBMYIJeruK27LY=
+	t=1742488044; cv=none; b=bYMrWEu4i4FPjq6fd2eeeROwxalZq8+voT07rVItPVnVoQ7zYElE+/9/3pbHpkjMb7TyTKOATwOIFG5lBotn7DtULnOQl+/anD6VMLjsPYOQwQ9BNa1duiVBiNgzEJkTgtyjnMXpxb4FqLs9uxkTFd8r4s+1RAEcJGR1om9+58A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742477040; c=relaxed/simple;
-	bh=yXpAdwA2wl9V0/3d11cnGwhrhvLntuVhj2WqTNZoesc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VnsKBZQaVDca+pxcWKEXrcs3uEJpWF0BhEheIH1U7gGurFdM/aY6MlLa2x8Icy4PZen6TwCGw5YJ2kdbC5QyJ6ne/YgxDhxnlUn+J4HLRRhxsFf+JNtC0ygOs3KBd3ilgpD68gysMWPjgLWC3ddAb22fuD6wkT79PdkpxV4vR4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imA9543D; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742488044; c=relaxed/simple;
+	bh=bfhieFFF5xFk6YbXZg31H+sZx2cavKu2QXKL1UtFJM8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=gKqbaES7Mn6v4zcOx3onY2hqmCynysfcndapDurh4vAdrRJjzpc+l4W91Bbt5TfAVzqS0o4eWuxdFmhGSmZ951mWi+rA5M+WdgCYorcWbcoqkeK1NiP6Sra4l7uZIX6+FterXYuyjCwn8K+59/DYN/V6eol96CQ5PqjoCrokdGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=DjPOXP8K; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imA9543D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827C9C4CEDD;
-	Thu, 20 Mar 2025 13:23:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742477039;
-	bh=yXpAdwA2wl9V0/3d11cnGwhrhvLntuVhj2WqTNZoesc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=imA9543DJ5p7W1TnaDybPi40iJGhQojll3ucOtdIcsIz9/4H1vVOLmiiwksPt0oS+
-	 kiD5jANyRvdNomXm/w6YxLRNKXigdJ8hqxC7dLQWUZ4io3ckAcAl4jv8hLAKbVFTDQ
-	 6iyFUitOX8WzTxnpMhpqKTRQxdPXq3D0zl48FvMs=
-Date: Thu, 20 Mar 2025 06:22:40 -0700
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>, io-uring@vger.kernel.org
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="DjPOXP8K"
+Received: by linux.microsoft.com (Postfix, from userid 1158)
+	id D85A32116B4D; Thu, 20 Mar 2025 09:27:21 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D85A32116B4D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1742488041;
+	bh=k46qvSEd0Lp8ccJUs1FV6dMFtYIyo56KkHz/uKLy7zk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=DjPOXP8KQjLGpzJ9B3DVK53xn4qiuw4bJbB2jEyNo/j7MG8m+UfSV4o2v/fv+9Ud8
+	 VYbl/N+WMcHL5Y6NaoH58Tjnf2jlOWMeALo1Cm4C9QusiROL6I/OVtrwBM9LMGw5QA
+	 GSZDfxIfuabgVRp8X+9ee0RF9OfEv1ihjqf+pJgY=
+From: Hardik Garg <hargar@linux.microsoft.com>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
 Subject: Re: [PATCH 6.6 000/166] 6.6.84-rc1 review
-Message-ID: <2025032031-negative-wreckage-dedf@gregkh>
+Date: Thu, 20 Mar 2025 09:27:21 -0700
+Message-Id: <1742488041-4614-1-git-send-email-hargar@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <20250319143019.983527953@linuxfoundation.org>
 References: <20250319143019.983527953@linuxfoundation.org>
- <CA+G9fYvM_riojtryOUb3UrYbtw6yUZTTnbP+_X96nJLCcWYwBA@mail.gmail.com>
- <2deb9e86-7ca8-4baf-8576-83dad1ea065f@kernel.dk>
- <2025031910-poking-crusher-b38f@gregkh>
- <3dc5b070-0837-4737-be78-ba846016c02e@kernel.dk>
- <412b08d9-17fc-4a62-afd3-7371cf479f2d@kernel.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <412b08d9-17fc-4a62-afd3-7371cf479f2d@kernel.dk>
 
-On Thu, Mar 20, 2025 at 07:02:23AM -0600, Jens Axboe wrote:
-> On 3/20/25 6:55 AM, Jens Axboe wrote:
-> > On 3/19/25 5:51 PM, Greg Kroah-Hartman wrote:
-> >> On Wed, Mar 19, 2025 at 10:37:20AM -0600, Jens Axboe wrote:
-> >>> On 3/19/25 10:33 AM, Naresh Kamboju wrote:
-> >>>> On Wed, 19 Mar 2025 at 20:09, Greg Kroah-Hartman
-> >>>> <gregkh@linuxfoundation.org> wrote:
-> >>>>>
-> >>>>> This is the start of the stable review cycle for the 6.6.84 release.
-> >>>>> There are 166 patches in this series, all will be posted as a response
-> >>>>> to this one.  If anyone has any issues with these being applied, please
-> >>>>> let me know.
-> >>>>>
-> >>>>> Responses should be made by Fri, 21 Mar 2025 14:29:55 +0000.
-> >>>>> Anything received after that time might be too late.
-> >>>>>
-> >>>>> The whole patch series can be found in one patch at:
-> >>>>>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.84-rc1.gz
-> >>>>> or in the git tree and branch at:
-> >>>>>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> >>>>> and the diffstat can be found below.
-> >>>>>
-> >>>>> thanks,
-> >>>>>
-> >>>>> greg k-h
-> >>>>
-> >>>> Regressions on mips the rt305x_defconfig builds failed with gcc-12
-> >>>> the stable-rc v6.6.83-167-gd16a828e7b09
-> >>>>
-> >>>> First seen on the v6.6.83-167-gd16a828e7b09
-> >>>>  Good: v6.6.83
-> >>>>  Bad: v6.6.83-167-gd16a828e7b09
-> >>>>
-> >>>> * mips, build
-> >>>>   - gcc-12-rt305x_defconfig
-> >>>>
-> >>>> Regression Analysis:
-> >>>>  - New regression? Yes
-> >>>>  - Reproducibility? Yes
-> >>>>
-> >>>> Build regression: mips implicit declaration of function 'vunmap'
-> >>>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> >>>
-> >>> Ah that's my fault, forgot to include the backport of:
-> >>>
-> >>> commit 62346c6cb28b043f2a6e95337d9081ec0b37b5f5
-> >>> Author: Jens Axboe <axboe@kernel.dk>
-> >>> Date:   Sat Mar 16 07:21:43 2024 -0600
-> >>>
-> >>>     mm: add nommu variant of vm_insert_pages()
-> >>>
-> >>> for 6.1-stable and 6.6-stable. Greg, can you just cherry pick that one?
-> >>> It'll pick cleanly into both, should go before the io_uring mmap series
-> >>> obviously.
-> >>>
-> >>> Sorry about that! I did have it in my local trees, but for some reason
-> >>> forgot to include it in the sent in series.
-> >>
-> >> Wait, this is already in the 6.6.y and 6.1.y queues, so this can't be
-> >> the fix.  Was there a fixup for that commit somewhere else that I'm
-> >> missing?
-> > 
-> > Huh indeed, guess I didn't mess up in the first place. What is going on
-> > here indeed... Is that mips config NOMMU yet doesn't link in mm/nommu.o?
-> > 
-> > Checking, and no, it definitely has MMU=y in the config. Guess I
-> > should've read the initial report more closely, it's simply missing the
-> > vunmap definition. Adding linux/vmalloc.h to io_uring/io_uring.c should
-> > fix it.
-> > 
-> > How do we want to deal with this?
-> 
-> Either fold in the hunk from the previous email, or replace patch 2 in
-> the series I sent with this one instead, which adds the vmalloc.h
-> include. That should sort out the issue without needing add-on patches
-> that don't exist upstream.
+The kernel, bpf tool, perf tool, and kselftest builds fine for v6.6.84-rc1 on x86 and arm64 Azure VM.
 
-Now replaced, thanks!
+Kernel binary size for x86 build:
+text      data      bss      dec       hex      filename
+27318662  16715490  4640768  48674920  2e6b868  vmlinux
+
+Kernel binary size for arm64 build:
+text      data      bss      dec       hex      filename
+34684949  13845466  970368   49500783  2f3526f  vmlinux
+
+
+Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+
+
+
+
+Thanks,
+Hardik
