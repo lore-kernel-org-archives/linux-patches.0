@@ -1,88 +1,122 @@
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33E3EEB3;
-	Fri, 21 Mar 2025 11:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18E07E1
+	for <patches@lists.linux.dev>; Fri, 21 Mar 2025 13:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742555138; cv=none; b=P+NO1P3vMHMsEAEiI2g1ZNcALZVIbkVrJ+o1NN3sX068WJCPZVdngm9hKjo8zeAM0ZVlQw/vszhYCmu/UpsY43DSdPR07FSFVr2YjyfvagHyomOwLJojwSszheS6X28JBGA3c2d+vgTqQ9UIm3ud0dJP+g1DHYbTwjHLl1yx3fQ=
+	t=1742564866; cv=none; b=ccvVv8Hy7QrrpO+0VrIqE8huatHz2ISiygidACIpA9plOWvppsw051QG2N4jAs9qmfUOSP1wndwkpmSvzC5d6JYd4FjtWhExEroTAvN4gmvDVB5vDFILm4YMzCzUOUQqrDKI0JZHOBeQ+SqzVrDJO8FPedU8lQUcPBT1+UeKnb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742555138; c=relaxed/simple;
-	bh=B4IzFYj788tU7aJFc3RiDB0Q4xbYY17WUUF0Lub25L8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=palRdk9KP/wWd/w7gBRV2Fx2GMZMnBFNSZbxW8HogQUzjvjOjAewrVVvdqOSBr4PDA1onUVz0oooDWCkSY62XOeiyDrq/DG0et8pKSFh5BdMFdA4hBHIspaKFW6E8ClvTfZ2lYw0ETlcuDG55ZsLgT2bSttmYfCmn0V8xMpCa18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b=a+LqpFZq; arc=none smtp.client-ip=144.6.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+	s=arc-20240116; t=1742564866; c=relaxed/simple;
+	bh=zto+hD4T8Rl0wGhIV/0xoa9IwhY4ZDqaQa3d6Xj1HKA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tS+pKWUTlqTa3KmfaNJPY/jNWtvZhTuakcGmDRNhDAakjzSiEIFxyavXFaHgU5C/+bgFX/xH5VcFKaruavUpoxFjTZgyctoNuEaZsnKlJg03gWOvhrcWqcmuKYHMAbmdglz3vkm0zXsimuyUNMwio67qxpcTur0owsOIM9azmtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=cToAyQy8; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b="a+LqpFZq"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
-	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=SVnbEUv45EGKp5GEwds5oMcm/dliN8kRkMXwmns82v8=; b=a+LqpFZqXExI6tCRc0I+T69kVy
-	1W/SAMZ5YnZWHEgr4FatGlbEoyVoNb2oWORAlQ0+iaze+G3jNwhK7Volde9pNgwrS0WiT+TMR5fiF
-	hqpQVYZoljjNaITg4Rm9Ym3kj8rQzDldcdKFl3dxeVO/4vjPzCEyuvEW2qV/I3XZc6zNlFKCTXb9B
-	QIQ/Y8mYZ9fIPWEZHGllFTXfdPWJ+Ts7ReyX0dQUviovqFpkeUt+L/m0vDd0O3rRkoXrvhxASfoEC
-	OMDYFfCRawkPd+SLDn+96c97e+BkHp5xSdlpXFyRI+w3z03J6eSZ4UmlkLmk0oV4nw84Ee2c2wG14
-	Zc2GxeiA==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1tvaBs-0090DE-06;
-	Fri, 21 Mar 2025 19:05:29 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 21 Mar 2025 19:05:28 +0800
-Date: Fri, 21 Mar 2025 19:05:28 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Akhil R <akhilrajeev@nvidia.com>, linux-crypto@vger.kernel.org,
-	linux-tegra@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] crypto: tegra - Fix format specifier in
- tegra_sha_prep_cmd()
-Message-ID: <Z91H-DiWq15lozQj@gondor.apana.org.au>
-References: <20250313-crypto-tegra-fix-format-specifier-for-size_t-v1-1-0b957726c9e5@kernel.org>
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="cToAyQy8"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3012a0c8496so2564863a91.2
+        for <patches@lists.linux.dev>; Fri, 21 Mar 2025 06:47:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1742564864; x=1743169664; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O8nQgLdmlUqdr9aYe+VPc8RjHS/d3j/W4qOBy0BpvdI=;
+        b=cToAyQy8qKQthemvaCrjFTYqXhsgQuFbS1I1HQMU3DiPsBqkOQgFTRWjXcJ+CqFKZe
+         /BeZFo7CA4cLgdyU24qPb4/dHu3ctxGT4IcPq6AueRuiKSuppKZaXo2l5CsTizwkMC+b
+         Tjln7Msz1qg7SqgttO61vl8aiNptlt9dt76d+/1cU94aLcFGpzDL8+oOvBMgRMAyrDnS
+         2a+iWRjmBqdsxF/CEmKznofbpKFTPLdP+2tsftYsv0yiIkZobTsSCE0KI7VPLwkUIQfp
+         CzAz1Cb7CbIkm42GGzn4/YmgYTMczPQGf4flI4A4RwUnIeztN1D7L2212T0czwUlZp66
+         89pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742564864; x=1743169664;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=O8nQgLdmlUqdr9aYe+VPc8RjHS/d3j/W4qOBy0BpvdI=;
+        b=EthhWFwywbrP5NJW7SrX+9EtjA009cPk4ykzsY0lSMEE7vTduK8sn7EVPd/xTGE5Ub
+         ZMs839ny1LimsjAsYr5TOkuBRNZz4jrUDwlRvaY/OLs8Mf3J1Ki6lgN1+Xpls3R4QDY6
+         tOXJTw38y+Od+ROpv3IEZuLR2XBX/zJGN3DTti0qB2MK3hjBNr4mdYEb+LwtK0RfNi9E
+         5RaymThN8L102e6Reb1/LQxzS5YOD0dE62NALt5RRFwwhIIAegyeaLkzRRngfq2tDVU2
+         cTvDsV4u2nuH+3WPDK0GFa7HDprkMwRhw+25IMQD1rLEj4vKjGJsG893hv9UjsEudU2A
+         qEWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjO4JnOoViEgpntE5Bw3vpvgOuBM01ZLZqMcMkgWYCKMLnB+G6sxNg9IhYC+F8lhJ/tnKEmWmy@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzta17rz4JUQWhi5efYg1UTAxXG/QtpiCPHZDZ17Vy4efunP5LE
+	rk8AB/8XWkEG2KKD7XVmB8F+KiYpirCPmtycgDWpM+NcAkd5OVyXzdmbuSQRXKnGt38gSnR6Mqt
+	OmqGcmPevEY3rr2tYkpXkKb39p4d8bdeQZmiI4w==
+X-Gm-Gg: ASbGncskG+mwOtZdjS4LSmo1fiVC9CSCgMM1B9Zs8XkLeU8lP7mTSt5hWWGfoRqM9Lx
+	ERfXWaEhzu9+iSUvMQU9SNCDTWP+1YeTH2NzN+t0MRRDLqlvV4W8ENNUHSV8C9T2AlSgZYj3r5G
+	cwujVitC5J0potIpW9/9M76sotukffu6kO4HwW
+X-Google-Smtp-Source: AGHT+IG9gHzXZS2MDHa4IE9fwTzJ1H0FhHqAo4iMsZRn/mh9NpHgxYoGlNF8O6uvXxiYLj+Zs6L/giMBpxyi7SPgYGU=
+X-Received: by 2002:a17:90b:2dc8:b0:2ee:f80c:6889 with SMTP id
+ 98e67ed59e1d1-3030ff07367mr5795406a91.33.1742564864003; Fri, 21 Mar 2025
+ 06:47:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250313-crypto-tegra-fix-format-specifier-for-size_t-v1-1-0b957726c9e5@kernel.org>
+References: <20250319143027.685727358@linuxfoundation.org>
+In-Reply-To: <20250319143027.685727358@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 21 Mar 2025 22:47:27 +0900
+X-Gm-Features: AQ5f1Jq_-0xkKqLvecUc-RyuF4NKyutsPZK2DjPZzNY6v7pHHsBsKKACW7x7r0o
+Message-ID: <CAKL4bV6JL0A2eqhC3wkppUyJLEXfTZW9qqVOHnY4p4qy8zLjAw@mail.gmail.com>
+Subject: Re: [PATCH 6.13 000/241] 6.13.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 13, 2025 at 04:29:31PM +0100, Nathan Chancellor wrote:
-> When building for 32-bit targets, for which ssize_t is 'int' instead of
-> 'long', there is a warning due to an incorrect format specifier:
-> 
->   In file included from include/linux/printk.h:610,
->                    from include/linux/kernel.h:31,
->                    from include/linux/clk.h:13,
->                    from drivers/crypto/tegra/tegra-se-hash.c:7:
->   drivers/crypto/tegra/tegra-se-hash.c: In function 'tegra_sha_prep_cmd':
->   drivers/crypto/tegra/tegra-se-hash.c:343:26: error: format '%lu' expects argument of type 'long unsigned int', but argument 6 has type 'ssize_t' {aka 'int'} [-Werror=format=]
->     343 |         dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
->         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   ...
->   drivers/crypto/tegra/tegra-se-hash.c:343:59: note: format string is defined here
->     343 |         dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
->         |                                                         ~~^
->         |                                                           |
->         |                                                           long unsigned int
->         |                                                         %u
->   cc1: all warnings being treated as errors
-> 
-> Use '%zd', the proper specifier for ssize_t, to resolve the warning.
-> 
-> Fixes: ff4b7df0b511 ("crypto: tegra - Fix HASH intermediate result handling")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/crypto/tegra/tegra-se-hash.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Greg
 
-Patch applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+On Wed, Mar 19, 2025 at 11:35=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.13.8 release.
+> There are 241 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 21 Mar 2025 14:29:55 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.13.8-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.13.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+
+6.13.8-rc1 tested.
+
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.13.8-rc1rv-g14de9a7d510f
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20250207, GNU ld (GNU
+Binutils) 2.44) #1 SMP PREEMPT_DYNAMIC Fri Mar 21 21:51:52 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
