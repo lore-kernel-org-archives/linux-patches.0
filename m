@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8072343BE
-	for <patches@lists.linux.dev>; Fri, 21 Mar 2025 23:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540F9234966
+	for <patches@lists.linux.dev>; Fri, 21 Mar 2025 23:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742598988; cv=none; b=gSM+Ss7ZLrRZ8GieWf5i3D2pVip1JAyxTe77MFdB/40eRfoVgJqdMtKNT+KS+4xUkTflqV1osd4Nq7GdzLBX71fNmYigPgvVHFgqRJUP9z361ose+YGUBxs9iL3L5J5QyACAl2LwLmK/3xV6QyiXiroAXw8q4Yk6tY+O1C+R1xY=
+	t=1742598989; cv=none; b=rbetmqnARcq/UQ7aVYafQ7Pym1og2QcMrickTt0fyici0fXgRQMmCa9x77G+plumcmW/f4pIR401y65TgWa589fW2ii0h1o0Qa8dy37HLy5arwTH8zNaSkr0Kd8wmmEZCzoadMyAWcyecZyEm0HgAna1GhpEZ9oyPXvBKUKCySc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742598988; c=relaxed/simple;
-	bh=cCNSar58WlYhHdFeOp9gxfKGPr/CcucOc0z3EF+w1bE=;
+	s=arc-20240116; t=1742598989; c=relaxed/simple;
+	bh=1AOS5NOV/X2OFLA9OJSrKtuSZLspIDShcAFxfbEWq0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+CYO87wLWYMNGrLzD5CGoQLh45E9QSlIsKq3jF/Q1S5VXudcFeD3iv1lN0qKNG1/Te9biFFrB7rPLA+KINlBJqF636m9Z2nuQ8ecqmBIvgvKXJTS7JZJO4B+p7MrA2Iq3MDsDH2XwCJ+XjjZVgAyjski1z8wU2POMVB8FOco6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Tq+LrrEl; arc=none smtp.client-ip=198.175.65.20
+	 MIME-Version; b=qpM46k4ljTY58Ho8pe6fwurxUVfEfargMJuAQ6Uf/G+M8VA0Jd35ym8grGONah1b+sPhgKqUe0fD5Wbs8wHHxcM9FSgB7bfLNEnvOqvMn0hoYK8B3u+GorPkzW0f0uE2ZOUPbLjQ6NFUb/ujKtM2XfcyP4fVlg9kYPejosZrHKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X+FiSC5P; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Tq+LrrEl"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X+FiSC5P"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1742598987; x=1774134987;
+  t=1742598988; x=1774134988;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=cCNSar58WlYhHdFeOp9gxfKGPr/CcucOc0z3EF+w1bE=;
-  b=Tq+LrrElwDKniiBcquTjH71vTmFwaOYwKAT2Q8pDP6VtL0oS/3pxlall
-   p/mj9digXNsSpkdEYIdhBdFBRqP3fmwRQOoHEkins8GATAWyeOqzGuWTe
-   j+6ogc9A7GRiimibKOSvOy9+ra3+1vTD3KPFyl02vNcVjtbngCE9bFhvv
-   FsyFUDocdAtq5z7c+vV6/XxllL7jQCePNjtWwFhOrPAKu8LeABhJ5c5MC
-   KjXud2/5PuVwcWBMR3GsVmvUw/JWLOUqCqcXYUsc9Y7z8RQ5eSN19xqzy
-   C9BZN/0Qe0nhAU9sE1Lemw3/cMlVDvMigq9vgdVbFpxPI5ISqF+o6KGws
+  bh=1AOS5NOV/X2OFLA9OJSrKtuSZLspIDShcAFxfbEWq0E=;
+  b=X+FiSC5P4/tV/hxhrgjXYoxKnPo7lmfA+5oLeTeMwbh0mWZ+CQHOforD
+   qvj77zzPatbU21ZYYB/Y12XGkNrMu/zP1efUmURbRgthRZ2BgRIJvKXrY
+   csF7dc+J37Dpc2UPuXnnTzl2WiXQAhGym4TAF3QZDz8wdIGCv08MZyoJL
+   GBgD9vxa9/L4mW4KKDwIDRNHgqbumLUPKW43PhPOi/mA6eWsFy4UkOxwY
+   VSTFC6BLhrUayDvTDDose3NSuGYFHX/ol2wElOMowYZJVmWXAhZ5d4nBr
+   4bzmC5vqO7tsmFI4tlWiATxxaOgAoVb0KhAzScYFHB3kAIs6ls7tfhiOm
    w==;
-X-CSE-ConnectionGUID: PaiokZ9yRZudGkCG7NDtaA==
-X-CSE-MsgGUID: jKJnRJoaRsqq/R7ThoeNFg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11380"; a="43604613"
+X-CSE-ConnectionGUID: eMvP/gBCQ1ye3bo15M0fvw==
+X-CSE-MsgGUID: A3w03WS2SJ2L3nqcj61Q/Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11380"; a="43604620"
 X-IronPort-AV: E=Sophos;i="6.14,266,1736841600"; 
-   d="scan'208";a="43604613"
+   d="scan'208";a="43604620"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
   by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2025 16:16:23 -0700
-X-CSE-ConnectionGUID: 6OtA2PDcRQyzQSn3ckEVdQ==
-X-CSE-MsgGUID: LojECj1aTE+LzbfmCtuksw==
+X-CSE-ConnectionGUID: 1BZc1KJHQNKJiCDrwZSnGw==
+X-CSE-MsgGUID: fQ8gWGcQQeCHK72VLxeifQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.14,266,1736841600"; 
-   d="scan'208";a="128354318"
+   d="scan'208";a="128354321"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2025 16:16:23 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -55,9 +55,9 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2 10/16] x86/resctrl: Allocate per-package structures for known events
-Date: Fri, 21 Mar 2025 16:16:00 -0700
-Message-ID: <20250321231609.57418-11-tony.luck@intel.com>
+Subject: [PATCH v2 11/16] x86/resctrl: Link known events onto RDT_RESOURCE_INTEL_AET.evt_list
+Date: Fri, 21 Mar 2025 16:16:01 -0700
+Message-ID: <20250321231609.57418-12-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250321231609.57418-1-tony.luck@intel.com>
 References: <20250321231609.57418-1-tony.luck@intel.com>
@@ -69,144 +69,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use the per-package counts of known events to allocate arrays to
-make a copy of just the known events.
-
-Add hook into resctrl_exit() to cleanup.
+Core code uses this list to populate "mon_data" directories.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h  |  2 +
- arch/x86/kernel/cpu/resctrl/core.c      |  2 +
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 60 ++++++++++++++++++++++++-
- 3 files changed, 63 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index ada402c7678b..2503a24e4177 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -170,8 +170,10 @@ int rdt_get_mon_l3_config(struct rdt_resource *r);
- 
- #ifdef CONFIG_INTEL_AET_RESCTRL
- int rdt_get_intel_aet_mon_config(void);
-+void rdt_intel_aet_exit(void);
- #else
- static inline int rdt_get_intel_aet_mon_config(void) { return 0; }
-+static inline void rdt_intel_aet_exit(void) { };
- #endif
- 
- bool rdt_cpu_has(int flag);
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 2adf40d8de32..d011c095aafa 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1095,6 +1095,8 @@ static void __exit resctrl_arch_exit(void)
- {
- 	cpuhp_remove_state(rdt_online);
- 
-+	rdt_intel_aet_exit();
-+
- 	resctrl_exit();
- }
- 
 diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 67862e81b9e0..e2d8eab997fc 100644
+index e2d8eab997fc..9ac912742ef1 100644
 --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
 +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -188,6 +188,26 @@ static bool count_events(struct pkg_info *pkg, int max_pkgs, struct pmt_feature_
- 	return found;
- }
+@@ -13,6 +13,7 @@
  
-+static int setup(struct pkg_info *pkg, int pkgnum, struct pmt_feature_group *p, int slot)
-+{
+ #include <linux/cpu.h>
+ #include <linux/cleanup.h>
++#include <linux/minmax.h>
+ #include <linux/slab.h>
+ #include "fake_intel_aet_features.h"
+ #include <linux/intel_vsec.h>
+@@ -308,14 +309,34 @@ void rdt_get_intel_aet_mount(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_INTEL_AET].r_resctrl;
+ 	struct rdt_core_mon_domain *d, *tmp;
 +	struct telem_entry **tentry;
-+
-+	for (int i = 0; i < p->count; i++) {
-+		for (tentry = telem_entry; *tentry; tentry++) {
-+			if (!(*tentry)->active)
-+				continue;
-+			if (pkgnum != p->regions[i].plat_info.package_id)
-+				continue;
-+			if (p->regions[i].guid != (*tentry)->guid)
-+				continue;
-+
-+			pkg[pkgnum].regions[slot++] =  p->regions[i];
-+		}
-+	}
-+
-+	return slot;
-+}
-+
- DEFINE_FREE(intel_pmt_put_feature_group, struct pmt_feature_group *,	\
- 	if (!IS_ERR_OR_NULL(_T))					\
- 		intel_pmt_put_feature_group(_T))
-@@ -202,6 +222,8 @@ static bool get_events(void)
- 	struct pmt_feature_group *p2 __free(intel_pmt_put_feature_group) = NULL;
- 	int num_pkgs = topology_max_packages();
- 	struct pkg_info *pkg __free(kfree) = NULL;
-+	bool found_known_features = false;
-+	int i, slot;
+ 	static int do_one_time;
++	struct mon_evt *evt;
++	bool ret = false;
  
- 	pkg = kmalloc_array(num_pkgs, sizeof(*pkg_info), GFP_KERNEL | __GFP_ZERO);
- 	if (!pkg)
-@@ -220,13 +242,32 @@ static bool get_events(void)
- 		if (!count_events(pkg, num_pkgs, p2))
- 			intel_pmt_put_feature_group(no_free_ptr(p2));
+ 	if (do_one_time)
+ 		return;
  
-+	for (i = 0; i < num_pkgs; i++) {
-+		if (!pkg[i].count)
+ 	do_one_time = 1;
+ 
+-	if (!get_events()) {
++	if (!get_events())
++		goto done;
++
++	for (tentry = telem_entry; *tentry; tentry++) {
++		if (!(*tentry)->active)
 +			continue;
-+		found_known_features = true;
-+		pkg[i].regions = kmalloc_array(pkg[i].count, sizeof(*pkg[i].regions), GFP_KERNEL);
-+		if (!pkg[i].regions)
-+			goto fail;
-+
-+		slot = 0;
-+		if (!IS_ERR_VALUE(p1))
-+			slot = setup(pkg, i, p1, slot);
-+		if (!IS_ERR_VALUE(p2))
-+			slot = setup(pkg, i, p2, slot);
++		for (int i = 0; (*tentry)->evts[i].evt.name; i++) {
++			evt = &(*tentry)->evts[i].evt;
++			list_add_tail(&evt->list, &r->evt_list);
++			ret = true;
++		}
++		if (!r->num_rmid)
++			r->num_rmid = (*tentry)->num_rmids;
++		else
++			r->num_rmid = min(r->num_rmid, (*tentry)->num_rmids);
 +	}
-+
- 	if (!IS_ERR_OR_NULL(p1))
- 		feat_energy = no_free_ptr(p1);
- 	if (!IS_ERR_OR_NULL(p2))
- 		feat_perf = no_free_ptr(p2);
- 	pkg_info = no_free_ptr(pkg);
- 
--	return true;
-+	return found_known_features;
-+fail:
-+	while (--i > 0)
-+		kfree(pkg[i].regions);
-+	return false;
- }
- 
- /*
-@@ -242,6 +283,23 @@ int rdt_get_intel_aet_mon_config(void)
- 	return 1;
- }
- 
-+/* Clean up when resctrl shuts down completely */
-+void rdt_intel_aet_exit(void)
-+{
-+	int num_pkgs = topology_max_packages();
-+
-+	if (pkg_info) {
-+		for (int i = 0; i < num_pkgs; i++)
-+			kfree(pkg_info[i].regions);
-+		kfree(pkg_info);
-+	}
-+
-+	if (feat_energy)
-+		intel_pmt_put_feature_group(feat_energy);
-+	if (feat_perf)
-+		intel_pmt_put_feature_group(feat_perf);
-+}
-+
- /*
-  * Late (first mount) initialization. Safe to ask OOBMSM which telemetry
-  * event groups are supported.
++done:
++	if (!ret) {
+ 		list_for_each_entry_safe(d, tmp, &r->mon_domains, hdr.list)
+ 			kfree(d);
+ 		r->mon_capable = false;
 -- 
 2.48.1
 
