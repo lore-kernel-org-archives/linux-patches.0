@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57641DED76;
-	Mon, 24 Mar 2025 21:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301931DE8A5;
+	Mon, 24 Mar 2025 21:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742850255; cv=none; b=f8uvoNxoGmgrXSwuljQzZ9s1MSTw/1ZKdQxJ3yNv3g15QfuTY+zJ+1xVsSnbg8Ne9gl1gxj2sOwl6ItzQwhl2f+nyBWKV38clImIIXCCM+X/v4Yg3RekHqPOAx1Zx9ReijKslsqz3QIybAp+e0hS/GqPjRCEjoyG9qJBgYUi4Mc=
+	t=1742850261; cv=none; b=trsLw3N6TfwHu/tZk8c5XZ/lQynMlwTlK4nbyqB2LgJAI9K/JfI/p0SPsvqIv1O7EpFRDFqgIqb4lE9E845CcpIHmbA1BqvRGC6cXZGsK4YDBWA/J4tcDRlw2lGWdyOsmNWd/nW1RCmBCjKgbJ8T3XOZILDMdkbmfsxDmxFLXX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742850255; c=relaxed/simple;
-	bh=tUz2qusKTvBmkeN4ksXUVEfMZCjH960Ip+LLkF/SukA=;
+	s=arc-20240116; t=1742850261; c=relaxed/simple;
+	bh=UzO1Is65wUucYlG6zCoHXjenv9hb72i1myTEfKlskho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJdXiyZYCjyxgw0EqBVuwpHu59ZH14/oRHvM90TUOQcvORzbjTT+VtvVNyT3PwbgYe58yhEtbbNZaupkhbt/5qidoBqu5PNuogFdtEndjdyWgufNdUcjEnGRT05o9JHXDBveGQxQmmvOlHMuyj7r3HFnX6tZvffwlQF/ewFaIDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fEBpWuZM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnT0jae9uBqq+L9sqzXvuS/lybTXz3sIeP/vhMjlrKIXgAJ4JlXREVuJvSIJDOXBhyuY9TYgQ5qBT/EgcadSAuKeqHf3897W1+sVLhth0IGcfDs0raAZMWoXp7DdeZRd4e55pKB18LC2uS0xOLFLnIlnMRYH9MKYYd2AzvnEaj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4+igZhq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fEBpWuZM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCE8C4CEDD;
-	Mon, 24 Mar 2025 21:04:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4+igZhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A75EC4CEDD;
+	Mon, 24 Mar 2025 21:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742850255;
-	bh=tUz2qusKTvBmkeN4ksXUVEfMZCjH960Ip+LLkF/SukA=;
+	s=k20201202; t=1742850260;
+	bh=UzO1Is65wUucYlG6zCoHXjenv9hb72i1myTEfKlskho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEBpWuZMI5f1ITtXzDBgzx5iItfrlmMCtExT7IrgeGZeKJIZyePfm6qWjI9vODnna
-	 UWyFDDhVZabVaJ9bZY8BT0s64Y7rCxpsNWxYcb5A2KejRjp43IsfjO91mSNhdRRaOj
-	 xBMmeZG3sohkGZp3h7kYw+qOQh6qnI/S6THpHSGmwjTFU5pIaJ7IbMurNnCqS8Xo9S
-	 V/p4gNbFJWjKfbRQcJRH6sKrGBG0fxhdsxNnO0JYkh+O2khYqH8K/KJZTgxBWBec1A
-	 hu0HXWHfsJi2jkRxrUDaWw4omFyewPLLz92rqmt0jSFEXaA0FEdL0ZAc61FAxmCWnB
-	 FP2PccIYo8EzA==
+	b=h4+igZhqO54dAYRBs+zJfRMVWtgbX3T5GhiNbnXs2j0tPYqLG+wQIPB9QEOQscOkY
+	 iU75GRTGoSJyxe3cTemmAeZOtKzoMCIVC4aOmjxLWSU04vEtHfSQnXcb/QNiNqjoDm
+	 Fkocgl/3sf3EPnzVQXBLCfXlHMPEKCRkQSK7hKlNkN+/3ZdFlOhNWusk+0eoxsE6gD
+	 Zif5P5Gl2WADshm8ZKGHe3NA7VECgcRFjzfkjrfLEDlij2jTbPWlCCA0Y0TeiJabnc
+	 v2pAe+R+VGMYXGHjq0D/UMsugsk5DfPldgs6BFVSBYZnhKR1Vi1NlAH3M8MkA6T5ki
+	 za/U0OzTFmC3A==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -47,9 +47,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Simona Vetter <simona@ffwll.ch>,
 	Jocelyn Falempe <jfalempe@redhat.com>,
 	dri-devel@lists.freedesktop.org
-Subject: [PATCH 01/10] drm/panic: add missing space
-Date: Mon, 24 Mar 2025 22:03:48 +0100
-Message-ID: <20250324210359.1199574-2-ojeda@kernel.org>
+Subject: [PATCH 02/10] drm/panic: add missing Markdown code span
+Date: Mon, 24 Mar 2025 22:03:49 +0100
+Message-ID: <20250324210359.1199574-3-ojeda@kernel.org>
 In-Reply-To: <20250324210359.1199574-1-ojeda@kernel.org>
 References: <20250324210359.1199574-1-ojeda@kernel.org>
 Precedence: bulk
@@ -60,7 +60,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add missing space in sentence.
+Add missing Markdown code span.
 
 This was found using the Clippy `doc_markdown` lint, which we may want
 to enable.
@@ -72,18 +72,18 @@ Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
-index ecd87e8ffe05..9bd4d131f033 100644
+index 9bd4d131f033..a8f832598c70 100644
 --- a/drivers/gpu/drm/drm_panic_qr.rs
 +++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -5,7 +5,7 @@
- //! It is called from a panic handler, so it should't allocate memory and
- //! does all the work on the stack or on the provided buffers. For
- //! simplification, it only supports low error correction, and applies the
--//! first mask (checkerboard). It will draw the smallest QRcode that can
-+//! first mask (checkerboard). It will draw the smallest QR code that can
- //! contain the string passed as parameter. To get the most compact
- //! QR code, the start of the URL is encoded as binary, and the
- //! compressed kmsg is encoded as numeric.
+@@ -914,7 +914,7 @@ fn draw_all(&mut self, data: impl Iterator<Item = u8>) {
+ ///    will be encoded as binary segment, otherwise it will be encoded
+ ///    efficiently as a numeric segment, and appended to the URL.
+ /// * `data_len`: Length of the data, that needs to be encoded, must be less
+-///    than data_size.
++///    than `data_size`.
+ /// * `data_size`: Size of data buffer, it should be at least 4071 bytes to hold
+ ///    a V40 QR code. It will then be overwritten with the QR code image.
+ /// * `tmp`: A temporary buffer that the QR code encoder will use, to write the
 -- 
 2.49.0
 
