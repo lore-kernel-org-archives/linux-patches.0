@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7081F5612;
-	Mon, 24 Mar 2025 21:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2DF1F4E5B;
+	Mon, 24 Mar 2025 21:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742850281; cv=none; b=PHGwjpQ4V8C5bx/SJlidOY/7H1wj9Gi2yUvl44d2Ja0XVjZARdZe2HMrQtY7ttb4V4VnZpHPjIULojkZhHhI+/LYY0ed5p/ylAaJRYMm9aKz/8m+8HNU63jQBwM4dw71R5VFL7AaDth6/IOiKkA1uHdeMxkakcD6RWXA1oW1Z1M=
+	t=1742850286; cv=none; b=FoZyC+7DGgQAWGHPKS7E7lBRz9CQkTCVixpU4p36F96yKWArEnt8HO/rh1zj87xlNtAGq8VEzpBGLVutQqVuqdekGaoX7/yQGlFXDuOMmYshzox9sdSGS87i2G5gL7sBOVedDVkPrIbdBxPaSoZTSKTH0oA9lSbqJ4TXuIdpfC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742850281; c=relaxed/simple;
-	bh=uzAUre8yuO6JwarGjgA4aQIOBg6xu8RcbsiMQ1Dc8bw=;
+	s=arc-20240116; t=1742850286; c=relaxed/simple;
+	bh=mHKeb8XQeBT7AknJSDbq+TI1Xp0mqj3SSJYVGRZPVMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diFSsx87ofeTsj/7V6ZahopNWaNcTQm6H4SdF2g2h9mxJrKXtUf7Auo+1ijTb/aHiK4fZMtcYHRz8qGc3yvSlaxvmDMn7FCjPcZdNQg5S81CnCGp9GmPr2/7PV91Yqe387LlqForlhmv8AAFmmun3fntd/8ctbtipL3AVe2YT7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SPnkrEsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRB28WQS9dXV8yByz1HRdsm4pUohrxgqxiDRiZvesdQTDGpaeJmzicasC9/a0B3Mkf+YGXhbBy4by0YRDC1RbZ33NjIfElk8r68AXAYt6bvhe9afubb/gnrGQvRzuNm8WsGF1IA4cEVM5ns+N1UYS8pdPYknCFs9PWqzQ3JcpmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KO2bVP0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SPnkrEsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A81C4CEE4;
-	Mon, 24 Mar 2025 21:04:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KO2bVP0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4481C4CEDD;
+	Mon, 24 Mar 2025 21:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742850281;
-	bh=uzAUre8yuO6JwarGjgA4aQIOBg6xu8RcbsiMQ1Dc8bw=;
+	s=k20201202; t=1742850285;
+	bh=mHKeb8XQeBT7AknJSDbq+TI1Xp0mqj3SSJYVGRZPVMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPnkrEsXOmUDJzEecsqBY8IqTHbrzWVOIVp4ZH0q09kXxD0MATIitKGZPcE+kshve
-	 YKppWsQF7wqCekLU1SkD8x1R8mgXH3UUrR9HKkO89NRseE5hcn/M58CqxHR42TpEpX
-	 aGisoO4BJlS5Sn5gCiSDFSXKpqWonY4muGVaO/0pG0m0FbhY/lskx5PNGFvXxzIBxP
-	 bc+499waM6p/G4zL50h/jrA6NR+LVTCMxAxAFz/H0Gm9qmSnWclSx5dBpOUmnrR7Cp
-	 OHmf+WfFPztgtLq93HQS+9ydFtQvAWE6iNRAH7dDtDDRX5mCh70zPlUZoTJP2R6mCA
-	 ZxICxNHS/iDXQ==
+	b=KO2bVP0QCbiSlPBF7HbKfjISsbwpN3I2YuiLadpf+X4lQlNaC6Ko6SDimMgEEr02x
+	 9OsH5OhSEz6w5GwNSleBC2ilKo8kcMJLI2zoadcmIQkh5zbQ7OConF5HpSGyURasnj
+	 fKxA8UwZisYul/Y4iaC6GOO55VLcV0VNn94wx09PD0lrmd7WecbysC6RdjgFcVqtFd
+	 tkh8uIItoqd7A1HzE+N27OqejS/3KaMwo01+3YMbQ0edwN+X9eel+bRomgBu82TrsE
+	 q84sJAdU6apr0YRk0M57ZSaY+3CXK7fnVHmYFbCOnzpwBdU4ag+YQ6S2M8ZsuLoi+O
+	 cJ5lr1bxLBrxQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -40,13 +40,12 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-pci@vger.kernel.org
-Subject: [PATCH 07/10] rust: pci: fix docs related to missing Markdown code spans
-Date: Mon, 24 Mar 2025 22:03:54 +0100
-Message-ID: <20250324210359.1199574-8-ojeda@kernel.org>
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 08/10] rust: platform: fix docs related to missing Markdown code spans
+Date: Mon, 24 Mar 2025 22:03:55 +0100
+Message-ID: <20250324210359.1199574-9-ojeda@kernel.org>
 In-Reply-To: <20250324210359.1199574-1-ojeda@kernel.org>
 References: <20250324210359.1199574-1-ojeda@kernel.org>
 Precedence: bulk
@@ -57,64 +56,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In particular:
-
-  - Add missing Markdown code spans.
-
-  - Improve title for `DeviceId`, adding a link to the struct in the
-    C side, rather than referring to `bindings::`.
-
-  - Convert `TODO` from documentation to a normal comment, and put code
-    in block.
+Convert `TODO` from documentation to a normal comment, and put code in
+block.
 
 This was found using the Clippy `doc_markdown` lint, which we may want
 to enable.
 
-Fixes: 1bd8b6b2c5d3 ("rust: pci: add basic PCI device / driver abstractions")
+Fixes: 683a63befc73 ("rust: platform: add basic platform device / driver abstractions")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/pci.rs | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ rust/kernel/platform.rs | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/rust/kernel/pci.rs b/rust/kernel/pci.rs
-index f7b2743828ae..99413607c2b6 100644
---- a/rust/kernel/pci.rs
-+++ b/rust/kernel/pci.rs
-@@ -115,7 +115,9 @@ macro_rules! module_pci_driver {
- };
- }
-
--/// Abstraction for bindings::pci_device_id.
-+/// Abstraction for the PCI device ID structure ([`pci_device_id`]).
-+///
-+/// [`pci_device_id`]: https://docs.kernel.org/PCI/pci.html#c.pci_device_id
- #[repr(transparent)]
- #[derive(Clone, Copy)]
- pub struct DeviceId(bindings::pci_device_id);
-@@ -170,7 +172,7 @@ fn index(&self) -> usize {
-     }
- }
-
--/// IdTable type for PCI
-+/// `IdTable` type for PCI.
- pub type IdTable<T> = &'static dyn kernel::device_id::IdTable<DeviceId, T>;
-
- /// Create a PCI `IdTable` with its alias for modpost.
-@@ -221,10 +223,11 @@ macro_rules! pci_device_table {
- /// `Adapter` documentation for an example.
+diff --git a/rust/kernel/platform.rs b/rust/kernel/platform.rs
+index 1297f5292ba9..2426eaf915bb 100644
+--- a/rust/kernel/platform.rs
++++ b/rust/kernel/platform.rs
+@@ -147,10 +147,11 @@ macro_rules! module_platform_driver {
+ ///```
  pub trait Driver {
-     /// The type holding information about each device id supported by the driver.
+     /// The type holding driver private data about each device id supported by the driver.
 -    ///
 -    /// TODO: Use associated_type_defaults once stabilized:
 -    ///
 -    /// type IdInfo: 'static = ();
-+    // TODO: Use `associated_type_defaults` once stabilized:
++    // TODO: Use associated_type_defaults once stabilized:
 +    //
 +    // ```
 +    // type IdInfo: 'static = ();
 +    // ```
      type IdInfo: 'static;
 
-     /// The table of device ids supported by the driver.
+     /// The table of OF device ids supported by the driver.
 --
 2.49.0
