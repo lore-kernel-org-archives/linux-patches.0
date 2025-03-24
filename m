@@ -1,44 +1,41 @@
 Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C101C17BEBF;
-	Mon, 24 Mar 2025 07:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6422A134D4
+	for <patches@lists.linux.dev>; Mon, 24 Mar 2025 07:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742801090; cv=none; b=dmsnt4gTKGWmH1nE5kKBsKAhQTwbihwqf3D9gUkJXCM7S3eSWden4goEmYQt3lfFp7BXxg97JCP8TGeMVN+URhDObHb0ZZFROfCbeuEXjWcMHg89Z4jtHev0CYzBIQmvyKu+X2Mt34va3OVtZXsQwfdfMzt2a8Z6eaVtJZzaZ2s=
+	t=1742801704; cv=none; b=Vz7/3qR6uOMoVLNx3H4qL6Vejl1p7QzZGW/ccG88t0bcu21A1aPpCxEGXSH9OdBZ7NWGDNShSMcB6VfvlN1ShAGgcD2+wOt8TLZfRq6XoJ9ClEWu/8rN16b22XLR/0iuqxZDp7ijc9E+j56+J577Lb/JAh+PGghsxfZsvEXAS9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742801090; c=relaxed/simple;
-	bh=fmrdMorHUIYIjq2+A+VxG0w07gVfjpPytidFn/XNkas=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bqTTtHT31awZOi8qvJCYfzMB7dgAEaGc2oxNMrdyGjXWzNLGlElCY6pYjQLUYKY7ZjK/+ukziWTJ3zy1FYJqrqZv6g3Nhpa25M5GgR6II0TJ0BQ5k08esvfWFQevoZQKauG2/f60BndbLNjaQw5vfrs4etUjgAApaNvXFQZ/hxM=
+	s=arc-20240116; t=1742801704; c=relaxed/simple;
+	bh=kNdkIG9UPAH3v2U1o048RTeCISVVguBVoM06LHnz1Ds=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LxrMXg3f4Rhs6ZIqPm+2N9WD7OgxDCmFV1PafHWtBr2h+0QLwlKgqj/6astHJiahbMRPr2xBDSTHrPm8AuNpAqTn+ns+aDkOzo3pKQO7RGZc/Fr4rLhElurzj18L2M/61nIEdu9Xnfd2JPN0e38psKrPnOIBJKqRFuX9mEty1ZQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O60Pgx012093;
-	Mon, 24 Mar 2025 00:24:37 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hvqk9fjv-1
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O60OUf018528;
+	Mon, 24 Mar 2025 00:34:59 -0700
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hrg41mrd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 24 Mar 2025 00:24:37 -0700 (PDT)
+	Mon, 24 Mar 2025 00:34:58 -0700 (PDT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 24 Mar 2025 00:24:37 -0700
+ 15.1.2507.43; Mon, 24 Mar 2025 00:34:57 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 24 Mar 2025 00:24:33 -0700
+ 15.1.2507.43 via Frontend Transport; Mon, 24 Mar 2025 00:34:55 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
         <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <gregory.greenman@intel.com>, <kvalo@kernel.org>,
-        <johannes.berg@intel.com>, <sashal@kernel.org>,
-        <miriam.rachel.korenblit@intel.com>, <yedidya.ben.shimol@intel.com>,
-        <daniel.gabay@intel.com>, <shaul.triebitz@intel.com>,
-        <benjamin.berg@intel.com>, <linux-wireless@vger.kernel.org>
-Subject: [PATCH 6.1.y] wifi: iwlwifi: mvm: ensure offloading TID queue exists
-Date: Mon, 24 Mar 2025 15:24:33 +0800
-Message-ID: <20250324072433.3796220-1-jianqi.ren.cn@windriver.com>
+        <clm@fb.com>, <josef@toxicpanda.com>, <dsterba@suse.com>,
+        <linux-btrfs@vger.kernel.org>, <llfamsec@gmail.com>, <wqu@suse.com>
+Subject: [PATCH 6.6.y] btrfs: make sure that WRITTEN is set on all metadata blocks
+Date: Mon, 24 Mar 2025 15:34:54 +0800
+Message-ID: <20250324073454.3796450-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -48,132 +45,170 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=XNkwSRhE c=1 sm=1 tr=0 ts=67e108b5 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=Vs1iUdzkB0EA:10 a=bC-a23v3AAAA:8 a=QyXUC8HyAAAA:8 a=t7CeM3EgAAAA:8 a=dhpSTt-VO9tcCkpurSoA:9 a=-FEs8UIgK8oA:10
- a=FO4_E8m0qiDe52t0p3_H:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: 6-fA1YJeTypOe1mTG6mX2IYkoANMBYgj
-X-Proofpoint-ORIG-GUID: 6-fA1YJeTypOe1mTG6mX2IYkoANMBYgj
+X-Authority-Analysis: v=2.4 cv=HZwUTjE8 c=1 sm=1 tr=0 ts=67e10b22 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=gEA-OUY-moF3Uf1y:21 a=Vs1iUdzkB0EA:10 a=maIFttP_AAAA:8 a=pGLkceISAAAA:8 a=VwQbUJbxAAAA:8 a=iox4zFpeAAAA:8
+ a=t7CeM3EgAAAA:8 a=xqbIuppjPMaPyYIW3jgA:9 a=qR24C9TJY6iBuJVj_x8Y:22 a=WzC6qhA0u3u7Ye7llzcV:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: XKmDfec6X6tV-aNjrxe3Hfm0-dMsJgX6
+X-Proofpoint-ORIG-GUID: XKmDfec6X6tV-aNjrxe3Hfm0-dMsJgX6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-24_03,2025-03-21_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- mlxscore=0 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 malwarescore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0 adultscore=0
+ clxscore=1011 impostorscore=0 spamscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2503240053
+ definitions=main-2503240054
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 78f65fbf421a61894c14a1b91fe2fb4437b3fe5f ]
+[ Upstream commit e03418abde871314e1a3a550f4c8afb7b89cb273 ]
 
-The resume code path assumes that the TX queue for the offloading TID
-has been configured. At resume time it then tries to sync the write
-pointer as it may have been updated by the firmware.
+We previously would call btrfs_check_leaf() if we had the check
+integrity code enabled, which meant that we could only run the extended
+leaf checks if we had WRITTEN set on the header flags.
 
-In the unusual event that no packets have been send on TID 0, the queue
-will not have been allocated and this causes a crash. Fix this by
-ensuring the queue exist at suspend time.
+This leaves a gap in our checking, because we could end up with
+corruption on disk where WRITTEN isn't set on the leaf, and then the
+extended leaf checks don't get run which we rely on to validate all of
+the item pointers to make sure we don't access memory outside of the
+extent buffer.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240218194912.6632e6dc7b35.Ie6e6a7488c9c7d4529f13d48f752b5439d8ac3c4@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, since 732fab95abe2 ("btrfs: check-integrity: remove
+CONFIG_BTRFS_FS_CHECK_INTEGRITY option") we no longer call
+btrfs_check_leaf() from btrfs_mark_buffer_dirty(), which means we only
+ever call it on blocks that are being written out, and thus have WRITTEN
+set, or that are being read in, which should have WRITTEN set.
+
+Add checks to make sure we have WRITTEN set appropriately, and then make
+sure __btrfs_check_leaf() always does the item checking.  This will
+protect us from file systems that have been corrupted and no longer have
+WRITTEN set on some of the blocks.
+
+This was hit on a crafted image tweaking the WRITTEN bit and reported by
+KASAN as out-of-bound access in the eb accessors. The example is a dir
+item at the end of an eb.
+
+  [2.042] BTRFS warning (device loop1): bad eb member start: ptr 0x3fff start 30572544 member offset 16410 size 2
+  [2.040] general protection fault, probably for non-canonical address 0xe0009d1000000003: 0000 [#1] PREEMPT SMP KASAN NOPTI
+  [2.537] KASAN: maybe wild-memory-access in range [0x0005088000000018-0x000508800000001f]
+  [2.729] CPU: 0 PID: 2587 Comm: mount Not tainted 6.8.2 #1
+  [2.729] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  [2.621] RIP: 0010:btrfs_get_16+0x34b/0x6d0
+  [2.621] RSP: 0018:ffff88810871fab8 EFLAGS: 00000206
+  [2.621] RAX: 0000a11000000003 RBX: ffff888104ff8720 RCX: ffff88811b2288c0
+  [2.621] RDX: dffffc0000000000 RSI: ffffffff81dd8aca RDI: ffff88810871f748
+  [2.621] RBP: 000000000000401a R08: 0000000000000001 R09: ffffed10210e3ee9
+  [2.621] R10: ffff88810871f74f R11: 205d323430333737 R12: 000000000000001a
+  [2.621] R13: 000508800000001a R14: 1ffff110210e3f5d R15: ffffffff850011e8
+  [2.621] FS:  00007f56ea275840(0000) GS:ffff88811b200000(0000) knlGS:0000000000000000
+  [2.621] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [2.621] CR2: 00007febd13b75c0 CR3: 000000010bb50000 CR4: 00000000000006f0
+  [2.621] Call Trace:
+  [2.621]  <TASK>
+  [2.621]  ? show_regs+0x74/0x80
+  [2.621]  ? die_addr+0x46/0xc0
+  [2.621]  ? exc_general_protection+0x161/0x2a0
+  [2.621]  ? asm_exc_general_protection+0x26/0x30
+  [2.621]  ? btrfs_get_16+0x33a/0x6d0
+  [2.621]  ? btrfs_get_16+0x34b/0x6d0
+  [2.621]  ? btrfs_get_16+0x33a/0x6d0
+  [2.621]  ? __pfx_btrfs_get_16+0x10/0x10
+  [2.621]  ? __pfx_mutex_unlock+0x10/0x10
+  [2.621]  btrfs_match_dir_item_name+0x101/0x1a0
+  [2.621]  btrfs_lookup_dir_item+0x1f3/0x280
+  [2.621]  ? __pfx_btrfs_lookup_dir_item+0x10/0x10
+  [2.621]  btrfs_get_tree+0xd25/0x1910
+
+Reported-by: lei lu <llfamsec@gmail.com>
+CC: stable@vger.kernel.org # 6.7+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ copy more details from report ]
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c  |  9 ++++++-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c | 28 ++++++++++++++++++++
- drivers/net/wireless/intel/iwlwifi/mvm/sta.h |  3 ++-
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ fs/btrfs/tree-checker.c | 30 +++++++++++++++---------------
+ fs/btrfs/tree-checker.h |  1 +
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 53302c29c229..f8af851474e5 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -1286,7 +1286,9 @@ static int __iwl_mvm_suspend(struct ieee80211_hw *hw,
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index 53c74010140e..6d16506bbdc0 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1889,6 +1889,11 @@ enum btrfs_tree_block_status __btrfs_check_leaf(struct extent_buffer *leaf)
+ 		return BTRFS_TREE_BLOCK_INVALID_LEVEL;
+ 	}
  
- 		mvm->net_detect = true;
- 	} else {
--		struct iwl_wowlan_config_cmd wowlan_config_cmd = {};
-+		struct iwl_wowlan_config_cmd wowlan_config_cmd = {
-+			.offloading_tid = 0,
-+		};
++	if (unlikely(!btrfs_header_flag(leaf, BTRFS_HEADER_FLAG_WRITTEN))) {
++		generic_err(leaf, 0, "invalid flag for leaf, WRITTEN not set");
++		return BTRFS_TREE_BLOCK_WRITTEN_NOT_SET;
++	}
++
+ 	/*
+ 	 * Extent buffers from a relocation tree have a owner field that
+ 	 * corresponds to the subvolume tree they are based on. So just from an
+@@ -1950,6 +1955,7 @@ enum btrfs_tree_block_status __btrfs_check_leaf(struct extent_buffer *leaf)
+ 	for (slot = 0; slot < nritems; slot++) {
+ 		u32 item_end_expected;
+ 		u64 item_data_end;
++		enum btrfs_tree_block_status ret;
  
- 		wowlan_config_cmd.sta_id = mvmvif->ap_sta_id;
+ 		btrfs_item_key_to_cpu(leaf, &key, slot);
  
-@@ -1298,6 +1300,11 @@ static int __iwl_mvm_suspend(struct ieee80211_hw *hw,
- 			goto out_noreset;
+@@ -2005,21 +2011,10 @@ enum btrfs_tree_block_status __btrfs_check_leaf(struct extent_buffer *leaf)
+ 			return BTRFS_TREE_BLOCK_INVALID_OFFSETS;
  		}
  
-+		ret = iwl_mvm_sta_ensure_queue(
-+			mvm, ap_sta->txq[wowlan_config_cmd.offloading_tid]);
-+		if (ret)
-+			goto out_noreset;
-+
- 		ret = iwl_mvm_get_wowlan_config(mvm, wowlan, &wowlan_config_cmd,
- 						vif, mvmvif, ap_sta);
- 		if (ret)
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 6b52afcf0272..46bf158eb4b3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -1419,6 +1419,34 @@ static int iwl_mvm_sta_alloc_queue(struct iwl_mvm *mvm,
- 	return ret;
- }
+-		/*
+-		 * We only want to do this if WRITTEN is set, otherwise the leaf
+-		 * may be in some intermediate state and won't appear valid.
+-		 */
+-		if (btrfs_header_flag(leaf, BTRFS_HEADER_FLAG_WRITTEN)) {
+-			enum btrfs_tree_block_status ret;
+-
+-			/*
+-			 * Check if the item size and content meet other
+-			 * criteria
+-			 */
+-			ret = check_leaf_item(leaf, &key, slot, &prev_key);
+-			if (unlikely(ret != BTRFS_TREE_BLOCK_CLEAN))
+-				return ret;
+-		}
++		/* Check if the item size and content meet other criteria. */
++		ret = check_leaf_item(leaf, &key, slot, &prev_key);
++		if (unlikely(ret != BTRFS_TREE_BLOCK_CLEAN))
++			return ret;
  
-+int iwl_mvm_sta_ensure_queue(struct iwl_mvm *mvm,
-+			     struct ieee80211_txq *txq)
-+{
-+	struct iwl_mvm_txq *mvmtxq = iwl_mvm_txq_from_mac80211(txq);
-+	int ret = -EINVAL;
-+
-+	lockdep_assert_held(&mvm->mutex);
-+
-+	if (likely(test_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state)) ||
-+	    !txq->sta) {
-+		return 0;
+ 		prev_key.objectid = key.objectid;
+ 		prev_key.type = key.type;
+@@ -2049,6 +2044,11 @@ enum btrfs_tree_block_status __btrfs_check_node(struct extent_buffer *node)
+ 	int level = btrfs_header_level(node);
+ 	u64 bytenr;
+ 
++	if (unlikely(!btrfs_header_flag(node, BTRFS_HEADER_FLAG_WRITTEN))) {
++		generic_err(node, 0, "invalid flag for node, WRITTEN not set");
++		return BTRFS_TREE_BLOCK_WRITTEN_NOT_SET;
 +	}
 +
-+	if (!iwl_mvm_sta_alloc_queue(mvm, txq->sta, txq->ac, txq->tid)) {
-+		set_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
-+		ret = 0;
-+	}
-+
-+	local_bh_disable();
-+	spin_lock(&mvm->add_stream_lock);
-+	if (!list_empty(&mvmtxq->list))
-+		list_del_init(&mvmtxq->list);
-+	spin_unlock(&mvm->add_stream_lock);
-+	local_bh_enable();
-+
-+	return ret;
-+}
-+
- void iwl_mvm_add_new_dqa_stream_wk(struct work_struct *wk)
- {
- 	struct iwl_mvm *mvm = container_of(wk, struct iwl_mvm,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.h b/drivers/net/wireless/intel/iwlwifi/mvm/sta.h
-index f1a4fc3e4038..5f7e9311e7e5 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ 	if (unlikely(level <= 0 || level >= BTRFS_MAX_LEVEL)) {
+ 		generic_err(node, 0,
+ 			"invalid level for node, have %d expect [1, %d]",
+diff --git a/fs/btrfs/tree-checker.h b/fs/btrfs/tree-checker.h
+index 3c2a02a72f64..43f2ceb78f34 100644
+--- a/fs/btrfs/tree-checker.h
++++ b/fs/btrfs/tree-checker.h
+@@ -51,6 +51,7 @@ enum btrfs_tree_block_status {
+ 	BTRFS_TREE_BLOCK_INVALID_BLOCKPTR,
+ 	BTRFS_TREE_BLOCK_INVALID_ITEM,
+ 	BTRFS_TREE_BLOCK_INVALID_OWNER,
++	BTRFS_TREE_BLOCK_WRITTEN_NOT_SET,
+ };
+ 
  /*
-- * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
-  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
-  * Copyright (C) 2015-2016 Intel Deutschland GmbH
-  */
-@@ -544,6 +544,7 @@ void iwl_mvm_modify_all_sta_disable_tx(struct iwl_mvm *mvm,
- 				       struct iwl_mvm_vif *mvmvif,
- 				       bool disable);
- void iwl_mvm_csa_client_absent(struct iwl_mvm *mvm, struct ieee80211_vif *vif);
-+int iwl_mvm_sta_ensure_queue(struct iwl_mvm *mvm, struct ieee80211_txq *txq);
- void iwl_mvm_add_new_dqa_stream_wk(struct work_struct *wk);
- int iwl_mvm_add_pasn_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 			 struct iwl_mvm_int_sta *sta, u8 *addr, u32 cipher,
 -- 
 2.25.1
 
