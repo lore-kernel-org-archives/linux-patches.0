@@ -1,46 +1,42 @@
 Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114E5202C22
-	for <patches@lists.linux.dev>; Mon, 24 Mar 2025 06:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483A924F599
+	for <patches@lists.linux.dev>; Mon, 24 Mar 2025 07:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742799208; cv=none; b=pvoDmDi9ZwCPgAcejfHxNeIo3Y53PJ+8PVtWRmd81h3lHrLPYedoR8WuHq6oufj2W2oiQgBfVnCqY7RcYskVvHjMfIdfTdGdRXAoBrPzXho+edyJzrekLN1OFF/2nOn/GaVa+2AraJKUOo317vuzD7iKU4SHNNqUHe1WFDh6FM0=
+	t=1742800053; cv=none; b=GceAYLIgFHT6qdlxd4rWV7i15MgroDN4tWcNY7WN3ajphtgMdxeZrRsXyDU3GaHtSwFKAo872ZjNkz+TnpQg1P+h+TNuiAOnCR53A6gVyXl2GTlmrPb0IIt+MJ78Y+9+hYauo+6BWd4wZm02UcXLmzMY7viQtxZROKvqAzN9TZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742799208; c=relaxed/simple;
-	bh=nkrvSw/90gggkSHojkoVxU+WAa1fXW0Z4hxUc0n7bRM=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fumHYafTt76skfr7jfxLbIsIg5Mz0jejbMohD4UB0Cx0quQ8fFWAkQYeySN9aKFVaM4b0qGzlJkoA0qA/qEgI0dtx+F4axrA/eLKETFRuq2Y1/AmUnHYw2c65B5mo5fc+yIEohKuYfaYUtFwzZ+Mjd5W4Bez3JhPWkBjzLU1I+w=
+	s=arc-20240116; t=1742800053; c=relaxed/simple;
+	bh=lT/G5ebUQsfhVTZGeDZJIGq6e6SHkR/ih9Do+8d01Tw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=S02TXZ4zHrdNRgPf7P1ataiQqijotekVEwZfYTIc+76cELq4IB5N++kfRyF6zBmrhtn3Oc/xzPf6KnsjsdzmaUYqFeqAyg2nVnNzJo6T1p05cqINEfHLUGggFQ+jTd/USdweeL7tln/wTNvOEfRdNyEJfpGuFqXQ+6HGorkU8YY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O5jeav006903;
-	Mon, 24 Mar 2025 06:53:06 GMT
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52O5NIpn006164;
+	Mon, 24 Mar 2025 07:07:30 GMT
 Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hje1hth0-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hje1htv9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 24 Mar 2025 06:53:06 +0000 (GMT)
+	Mon, 24 Mar 2025 07:07:29 +0000 (GMT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Sun, 23 Mar 2025 23:53:04 -0700
+ 15.1.2507.43; Mon, 24 Mar 2025 00:07:28 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Sun, 23 Mar 2025 23:52:59 -0700
+ 15.1.2507.43 via Frontend Transport; Mon, 24 Mar 2025 00:07:25 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
         <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <shravya.k-n@broadcom.com>, <michael.chan@broadcom.com>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <ast@kernel.org>, <daniel@iogearbox.net>,
-        <hawk@kernel.org>, <john.fastabend@gmail.com>,
-        <somnath.kotur@broadcom.com>, <ajit.khaparde@broadcom.com>,
-        <andrew.gospodarek@broadcom.com>, <netdev@vger.kernel.org>,
-        <bpf@vger.kernel.org>
-Subject: [PATCH 6.6.y] bnxt_en: Fix receive ring space parameters when XDP is active
-Date: Mon, 24 Mar 2025 14:52:58 +0800
-Message-ID: <20250324065258.3795814-1-jianqi.ren.cn@windriver.com>
+        <sfrench@samba.org>, <linux-cifs@vger.kernel.org>,
+        <samba-technical@lists.samba.org>, <pc@manguebit.com>,
+        <stfrench@microsoft.com>
+Subject: [PATCH 5.15.y] smb: client: fix potential UAF in cifs_dump_full_key()
+Date: Mon, 24 Mar 2025 15:07:25 +0800
+Message-ID: <20250324070725.3795964-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,105 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=KPVaDEFo c=1 sm=1 tr=0 ts=67e10152 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=Vs1iUdzkB0EA:10 a=Q-fNiiVtAAAA:8 a=20KFwNOVAAAA:8 a=t7CeM3EgAAAA:8 a=fl9wSW5VptL9eKRiuLsA:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: AvZ1eSOouUOQTrkOF6mQ1EP2wtzvCLn0
-X-Proofpoint-ORIG-GUID: AvZ1eSOouUOQTrkOF6mQ1EP2wtzvCLn0
+X-Authority-Analysis: v=2.4 cv=KPVaDEFo c=1 sm=1 tr=0 ts=67e104b1 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=Vs1iUdzkB0EA:10 a=Li1AiuEPAAAA:8 a=VwQbUJbxAAAA:8 a=yMhMjlubAAAA:8 a=t7CeM3EgAAAA:8 a=gpnyTqItCnq42K53HI0A:9
+ a=qGKPP_lnpMOaqR3bcYHU:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: jWlaP7A7xVBIQgn3nbhROLKWb8Vbiv5J
+X-Proofpoint-ORIG-GUID: jWlaP7A7xVBIQgn3nbhROLKWb8Vbiv5J
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-03-24_03,2025-03-21_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- adultscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
+ adultscore=0 impostorscore=0 mlxlogscore=971 malwarescore=0 spamscore=0
  bulkscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2503240049
+ definitions=main-2503240051
 
-From: Shravya KN <shravya.k-n@broadcom.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 3051a77a09dfe3022aa012071346937fdf059033 ]
+commit 58acd1f497162e7d282077f816faa519487be045 upstream.
 
-The MTU setting at the time an XDP multi-buffer is attached
-determines whether the aggregation ring will be used and the
-rx_skb_func handler.  This is done in bnxt_set_rx_skb_mode().
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-If the MTU is later changed, the aggregation ring setting may need
-to be changed and it may become out-of-sync with the settings
-initially done in bnxt_set_rx_skb_mode().  This may result in
-random memory corruption and crashes as the HW may DMA data larger
-than the allocated buffer size, such as:
-
-BUG: kernel NULL pointer dereference, address: 00000000000003c0
-PGD 0 P4D 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 17 PID: 0 Comm: swapper/17 Kdump: loaded Tainted: G S         OE      6.1.0-226bf9805506 #1
-Hardware name: Wiwynn Delta Lake PVT BZA.02601.0150/Delta Lake-Class1, BIOS F0E_3A12 08/26/2021
-RIP: 0010:bnxt_rx_pkt+0xe97/0x1ae0 [bnxt_en]
-Code: 8b 95 70 ff ff ff 4c 8b 9d 48 ff ff ff 66 41 89 87 b4 00 00 00 e9 0b f7 ff ff 0f b7 43 0a 49 8b 95 a8 04 00 00 25 ff 0f 00 00 <0f> b7 14 42 48 c1 e2 06 49 03 95 a0 04 00 00 0f b6 42 33f
-RSP: 0018:ffffa19f40cc0d18 EFLAGS: 00010202
-RAX: 00000000000001e0 RBX: ffff8e2c805c6100 RCX: 00000000000007ff
-RDX: 0000000000000000 RSI: ffff8e2c271ab990 RDI: ffff8e2c84f12380
-RBP: ffffa19f40cc0e48 R08: 000000000001000d R09: 974ea2fcddfa4cbf
-R10: 0000000000000000 R11: ffffa19f40cc0ff8 R12: ffff8e2c94b58980
-R13: ffff8e2c952d6600 R14: 0000000000000016 R15: ffff8e2c271ab990
-FS:  0000000000000000(0000) GS:ffff8e3b3f840000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000000003c0 CR3: 0000000e8580a004 CR4: 00000000007706e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <IRQ>
- __bnxt_poll_work+0x1c2/0x3e0 [bnxt_en]
-
-To address the issue, we now call bnxt_set_rx_skb_mode() within
-bnxt_change_mtu() to properly set the AGG rings configuration and
-update rx_skb_func based on the new MTU value.
-Additionally, BNXT_FLAG_NO_AGG_RINGS is cleared at the beginning of
-bnxt_set_rx_skb_mode() to make sure it gets set or cleared based on
-the current MTU.
-
-Fixes: 08450ea98ae9 ("bnxt_en: Fix max_mtu setting for multi-buf XDP")
-Co-developed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[This patch removes lock/unlock operation in routine cifs_dump_full_key()
+for ses_lock is not present in v5.15 and not ported yet. ses->status
+is protected by a global lock, cifs_tcp_ses_lock, in v5.15.]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/cifs/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index c440f4d8d43a..1dd873338ec0 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -3986,7 +3986,7 @@ int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
- 	struct net_device *dev = bp->dev;
- 
- 	if (page_mode) {
--		bp->flags &= ~BNXT_FLAG_AGG_RINGS;
-+		bp->flags &= ~(BNXT_FLAG_AGG_RINGS | BNXT_FLAG_NO_AGG_RINGS);
- 		bp->flags |= BNXT_FLAG_RX_PAGE_MODE;
- 
- 		if (bp->xdp_prog->aux->xdp_has_frags)
-@@ -12795,6 +12795,14 @@ static int bnxt_change_mtu(struct net_device *dev, int new_mtu)
- 		bnxt_close_nic(bp, true, false);
- 
- 	dev->mtu = new_mtu;
-+
-+	/* MTU change may change the AGG ring settings if an XDP multi-buffer
-+	 * program is attached.  We need to set the AGG rings settings and
-+	 * rx_skb_func accordingly.
-+	 */
-+	if (READ_ONCE(bp->xdp_prog))
-+		bnxt_set_rx_skb_mode(bp, true);
-+
- 	bnxt_set_ring_params(bp);
- 
- 	if (netif_running(dev))
+diff --git a/fs/cifs/ioctl.c b/fs/cifs/ioctl.c
+index 71883ba9e567..e846c18b71d2 100644
+--- a/fs/cifs/ioctl.c
++++ b/fs/cifs/ioctl.c
+@@ -232,7 +232,8 @@ static int cifs_dump_full_key(struct cifs_tcon *tcon, struct smb3_full_key_debug
+ 		spin_lock(&cifs_tcp_ses_lock);
+ 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
+ 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
+-				if (ses_it->Suid == out.session_id) {
++				if (ses_it->status != CifsExiting &&
++				    ses_it->Suid == out.session_id) {
+ 					ses = ses_it;
+ 					/*
+ 					 * since we are using the session outside the crit
 -- 
 2.25.1
 
