@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1601F4281;
-	Mon, 24 Mar 2025 21:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54001F4739;
+	Mon, 24 Mar 2025 21:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742850268; cv=none; b=K+iW75Hlnba5Y0vmf7II/in4Z7X+T8QqZYWx4KJnAjf9K/Npw1WBOQFx20Sko8FGyTmQi+WtruLQC2vaGt9t1Q+XQvNAquY9BRv45WPcGbXZUtMhyV1rBNTthxOZo7ntkPZZCN0YWvFMEYgf3DJdtYA7iDklOiRwJEu+LYmK+Qw=
+	t=1742850272; cv=none; b=eikch1UIxCrE/msp2zivbDlrFnSrowtVXmSFSutTxSxejQb3ptAMnqqYRVdqXqOhuRHz2XflsrbANnfo8jxvgcnUWcjpSefLq18QvHnx7LdaV65YlOB13hwtln1PY5KQ/zNsdQMNOSG3rr58CFrzlgHg/oCgtqfMzsQvuocdflc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742850268; c=relaxed/simple;
-	bh=raN/DrVca3eWEseg36QZs2qjbG2u7DBN1E3/rJC0TSY=;
+	s=arc-20240116; t=1742850272; c=relaxed/simple;
+	bh=0enSYOwK08uB3YnLYrHQQ3uuBPHb0fjo6/NAEt+1y+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfLSoFbMoUQ+CigpriDMVt23tPG3JTX9Tb4OdpJKFgPQcS+CMU6vPA4ZH4xL/f/GLkVCY3ZBHycM/GylQ+HEn2ilFCbi2u0Diz6YU/euCu4Yt/bdCSG1c1Pw24x29rkVIDH+H2WO0s4RDOt7HneiCegRVMBio+wljqlpsrfb8Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VMU4GBld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHf+TVcC4eV6Bz+g9PWJHHpe9yZP4wdZiesaW53EOYETa/3kWmoSZ8z/StD2wLdMaHnJ57pfXykCAyHckLZpOIytOf+A/BYEAqnJm8jlDmg1pk0CMPefST14XiLquxcLX+BmKg6l9ObI4YF6jc4u+bbPmi97Wbx7L3k1TUpJQm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=spl0Fgsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMU4GBld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E42FC4CEEE;
-	Mon, 24 Mar 2025 21:04:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="spl0Fgsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC742C4CEDD;
+	Mon, 24 Mar 2025 21:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742850268;
-	bh=raN/DrVca3eWEseg36QZs2qjbG2u7DBN1E3/rJC0TSY=;
+	s=k20201202; t=1742850272;
+	bh=0enSYOwK08uB3YnLYrHQQ3uuBPHb0fjo6/NAEt+1y+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMU4GBld/nQdkpBXYug2C/p9qV9t0uDvSU02BlLHGQO5KM4o84WiR6bt0VWyIo0zb
-	 mLHK8lcxDDyaRaGmQusldlQz5qgqWtVEH73KN7A2TP90WHkPDtj7lRD5yQQsWyqIP1
-	 vMtr+fkyMhFZ3W/vaYaqX4NtP6flmZ8xZ4GE3LbPPR4Gvzq7xHlZnR1SroK0qdyhb8
-	 TzEq/YvaXLNXjMS2ytnaH9nVBdoUF1eOsrlvAMOBEKB/WJrw+j+dv2wHd2x48jAbj0
-	 sp7JbE8smYsqm3P8+15td+Gm3ICr4ragNDZOL6071CgWwMPAV/VDvV7mbMLORnFH9R
-	 P/57msj55mhMg==
+	b=spl0FgsvLeA4Nkl3liUcUnrM5Bv5Qrhr7J+CtS6tnLIj1W+GKeIO1FBa0fIDP/Zqq
+	 fxYUkKa5mu2q8j5J4/M7p/K6YJd+pfMZa5yY0SyGSjemn6SC7ev1farinhUL2rs61m
+	 sRq/i/yxlIyNJe4ZoNw80vzDfQ6IgprtTTGSUbQ9w/BkrcvXPZIJWrhvoLaSGtm8M3
+	 9wqw6dGuaEjycfRNakj7cx8b72AyxEEothSjXqBZAiDht2s3ZrehY4xEgcdumPPfp7
+	 HNmyCr4WwasIKdlPpWA6iv6i0XHewo9zN/RvWwDu/n0jgezRZ1ENBD5gq7xcbygXhz
+	 58XBPfiPaeqmQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -39,10 +39,13 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 04/10] rust: alloc: add missing Markdown code span
-Date: Mon, 24 Mar 2025 22:03:51 +0100
-Message-ID: <20250324210359.1199574-5-ojeda@kernel.org>
+	patches@lists.linux.dev,
+	Abdiel Janulgue <abdiel.janulgue@gmail.com>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Robin Murphy <robin.murphy@arm.com>
+Subject: [PATCH 05/10] rust: dma: add missing Markdown code span
+Date: Mon, 24 Mar 2025 22:03:52 +0100
+Message-ID: <20250324210359.1199574-6-ojeda@kernel.org>
 In-Reply-To: <20250324210359.1199574-1-ojeda@kernel.org>
 References: <20250324210359.1199574-1-ojeda@kernel.org>
 Precedence: bulk
@@ -58,25 +61,25 @@ Add missing Markdown code span.
 This was found using the Clippy `doc_markdown` lint, which we may want
 to enable.
 
-Fixes: dd09538fb409 ("rust: alloc: implement `Cmalloc` in module allocator_test")
+Fixes: ad2907b4e308 ("rust: add dma coherent allocator abstraction")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/alloc/allocator_test.rs | 2 +-
+ rust/kernel/dma.rs | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/kernel/alloc/allocator_test.rs b/rust/kernel/alloc/allocator_test.rs
-index e3240d16040b..039cd1e36c21 100644
---- a/rust/kernel/alloc/allocator_test.rs
-+++ b/rust/kernel/alloc/allocator_test.rs
-@@ -4,7 +4,7 @@
- //! of those types (e.g. `CString`) use kernel allocators for instantiation.
- //!
- //! In order to allow userspace test cases to make use of such types as well, implement the
--//! `Cmalloc` allocator within the allocator_test module and type alias all kernel allocators to
-+//! `Cmalloc` allocator within the `allocator_test` module and type alias all kernel allocators to
- //! `Cmalloc`. The `Cmalloc` allocator uses libc's `realloc()` function as allocator backend.
+diff --git a/rust/kernel/dma.rs b/rust/kernel/dma.rs
+index 8cdc76043ee7..35fd8a638473 100644
+--- a/rust/kernel/dma.rs
++++ b/rust/kernel/dma.rs
+@@ -94,7 +94,7 @@ pub mod attrs {
+     pub const DMA_ATTR_ALLOC_SINGLE_PAGES: Attrs = Attrs(bindings::DMA_ATTR_ALLOC_SINGLE_PAGES);
  
- #![allow(missing_docs)]
+     /// This tells the DMA-mapping subsystem to suppress allocation failure reports (similarly to
+-    /// __GFP_NOWARN).
++    /// `__GFP_NOWARN`).
+     pub const DMA_ATTR_NO_WARN: Attrs = Attrs(bindings::DMA_ATTR_NO_WARN);
+ 
+     /// Used to indicate that the buffer is fully accessible at an elevated privilege level (and
 -- 
 2.49.0
 
