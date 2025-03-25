@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20724265601;
-	Tue, 25 Mar 2025 12:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750CF2566F6;
+	Tue, 25 Mar 2025 12:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905545; cv=none; b=flVxO7mkjIXQvoDwKceramvQQnQgwBLMsGKrN/SixXu7h28QJaef1Tz7gUtsGtSqKT3rK/XbSy8ep5eZcnoTLWqx3scVZZAt2swy9DXZgng0x2q3MuchiKMXjZUee/Kuer3B8l3eycqDPG/gaPnsBxuCovsSi0OTHh3MAd3g9g4=
+	t=1742905547; cv=none; b=Fia38qac4pSCa8w7joEtx1CuGJ/iKTdzGAYtaXVbZWZ5X9jtjiHHLrG5U/TibnFzGyvUxnoBedsQn4tJSixraBnUbMhjJ+5E6byXKZmZFDiW40+10Dj+0Ub/7ztSDS36iw6oMRJqp5Gx0NBTUXoIu21NMuNSe5OB9Nm3HGQWpSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905545; c=relaxed/simple;
-	bh=M/3KxLJXZZkk5zsWkFN5q6YuSPrcJhq1W6MW50a1yIo=;
+	s=arc-20240116; t=1742905547; c=relaxed/simple;
+	bh=4d6hEOHyQVxPnLMuaBnpkCZcfWGfKdEf3S7YQ509Of4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaLs0fKHLaoxz7PnScWQ82qDygHHg5SKq/wQj+q6nggFePQhLKQAxpynb6TWf4QBZ/sb/TDGZVWvYfqV+1M+N1UCDBhl49/p0RcnjD8cgeSA5HBsOBMGHXirG5/HLGRFyiRUmnI4FTMYtgdN/wciaWsNFZ8YAEcW2vyejO/QN5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIqezQOk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XeD56wuTpeobSja0UEGZA5QNwG5JvpK1L36hYgR5LVVGPrvENoBCQT4RT9zTq2xdgvu9oYxhbEH9GtvXLgwsPiB66Q0o3vW7e+PWhwLcLFzhBJbBJ2efT6St3uatndN2BwFpp+F32bINrnIE/QKF+AFr3qHnjR0ux5DqdmQatKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5n+hqWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIqezQOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71A3C4CEE9;
-	Tue, 25 Mar 2025 12:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5n+hqWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA04AC4CEE9;
+	Tue, 25 Mar 2025 12:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905545;
-	bh=M/3KxLJXZZkk5zsWkFN5q6YuSPrcJhq1W6MW50a1yIo=;
+	s=korg; t=1742905547;
+	bh=4d6hEOHyQVxPnLMuaBnpkCZcfWGfKdEf3S7YQ509Of4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIqezQOkQhi2Fa6i9BM4N5JqcSls7HAKnHvP6YEMkYotdGnTmk/lPycXbThNdPzz2
-	 JPtcbJ+c4xKZS9RHuAQLUMN1SBjjKbtCQhU6UooyWL0FxB4G/hsr+NDvKaLDoHyUlX
-	 MhgMpoyHFNUVRZ3xHk1r+SBAiC55EvTyOOriOyHM=
+	b=M5n+hqWK0LV4Sy4WgWXz1AqU5cZQ/RyXNagyuCNqYvD8ytGqOrn4geP9bxgT1zDfF
+	 ngCw0XwzhaU/2+FoPTouWVr16+zEO4wejso1HNWmp94WbOHUQt0gIkrY5VzbW62xKM
+	 JbqszPrrdzS9Sy+2Tx+piV+5h//2CHkjyOGvjJfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/198] hrtimers: Mark is_migration_base() with __always_inline
-Date: Tue, 25 Mar 2025 08:19:54 -0400
-Message-ID: <20250325122157.484468808@linuxfoundation.org>
+Subject: [PATCH 6.1 033/198] powercap: call put_device() on an error path in powercap_register_control_type()
+Date: Tue, 25 Mar 2025 08:19:55 -0400
+Message-ID: <20250325122157.508646676@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,77 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 27af31e44949fa85550176520ef7086a0d00fd7b ]
+[ Upstream commit 93c66fbc280747ea700bd6199633d661e3c819b3 ]
 
-When is_migration_base() is unused, it prevents kernel builds
-with clang, `make W=1` and CONFIG_WERROR=y:
+powercap_register_control_type() calls device_register(), but does not
+release the refcount of the device when it fails.
 
-kernel/time/hrtimer.c:156:20: error: unused function 'is_migration_base' [-Werror,-Wunused-function]
-  156 | static inline bool is_migration_base(struct hrtimer_clock_base *base)
-      |                    ^~~~~~~~~~~~~~~~~
+Call put_device() before returning an error to balance the refcount.
 
-Fix this by marking it with __always_inline.
+Since the kfree(control_type) will be done by powercap_release(), remove
+the lines in powercap_register_control_type() before returning the error.
 
-[ tglx: Use __always_inline instead of __maybe_unused and move it into the
-  	usage sites conditional ]
+This bug was found by an experimental verifier that I am developing.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250116160745.243358-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20250110010554.1583411-1-joe@pf.is.s.u-tokyo.ac.jp
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/powercap/powercap_sys.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index f6d799646dd9c..e60863ab74b50 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -145,11 +145,6 @@ static struct hrtimer_cpu_base migration_cpu_base = {
- 
- #define migration_base	migration_cpu_base.clock_base[0]
- 
--static inline bool is_migration_base(struct hrtimer_clock_base *base)
--{
--	return base == &migration_base;
--}
--
- /*
-  * We are using hashed locking: holding per_cpu(hrtimer_bases)[n].lock
-  * means that all timers which are tied to this base via timer->base are
-@@ -274,11 +269,6 @@ switch_hrtimer_base(struct hrtimer *timer, struct hrtimer_clock_base *base,
- 
- #else /* CONFIG_SMP */
- 
--static inline bool is_migration_base(struct hrtimer_clock_base *base)
--{
--	return false;
--}
--
- static inline struct hrtimer_clock_base *
- lock_hrtimer_base(const struct hrtimer *timer, unsigned long *flags)
- {
-@@ -1378,6 +1368,18 @@ static void hrtimer_sync_wait_running(struct hrtimer_cpu_base *cpu_base,
+diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
+index ff736b006198f..fd475e463d1fa 100644
+--- a/drivers/powercap/powercap_sys.c
++++ b/drivers/powercap/powercap_sys.c
+@@ -626,8 +626,7 @@ struct powercap_control_type *powercap_register_control_type(
+ 	dev_set_name(&control_type->dev, "%s", name);
+ 	result = device_register(&control_type->dev);
+ 	if (result) {
+-		if (control_type->allocated)
+-			kfree(control_type);
++		put_device(&control_type->dev);
+ 		return ERR_PTR(result);
  	}
- }
- 
-+#ifdef CONFIG_SMP
-+static __always_inline bool is_migration_base(struct hrtimer_clock_base *base)
-+{
-+	return base == &migration_base;
-+}
-+#else
-+static __always_inline bool is_migration_base(struct hrtimer_clock_base *base)
-+{
-+	return false;
-+}
-+#endif
-+
- /*
-  * This function is called on PREEMPT_RT kernels when the fast path
-  * deletion of a timer failed because the timer callback function was
+ 	idr_init(&control_type->idr);
 -- 
 2.39.5
 
