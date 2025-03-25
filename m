@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6DA2571AC;
-	Tue, 25 Mar 2025 12:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B018269CE6;
+	Tue, 25 Mar 2025 12:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906117; cv=none; b=IaRCZQpo4TSjjIoPcQreUixuvyBrHdh+Eo/nJlb3M5njwEQB2BgYCseMhP9ETnw31eVwC1HJ9tLzM4AxOrycMFzo2BRHvjHFWHNa8Flv7q8XXSdQCIJdujyVVYZglzzCKprJReSV6Fw5nDjyqIHBD7SkW1H6yeN/aNXWeNGiZzs=
+	t=1742906119; cv=none; b=mbI8mi/rVBGCmHmRe1O+yj5KCxESjOitxhTrFHB/obL2jnyDz8PYYYMUO8ULxRtp0SQcGhSCTRDl7nSrFkHMM0EkdqCdsKHePzk5n/H6DYGTf8g6WRQudbQz0DGshOdjXBft9IoMfKZiinuZ5zz+jTawrPy4L/bLN9x2P9aRo3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906117; c=relaxed/simple;
-	bh=Azv1tyy1/NzwPk4RVtJuyJ2zj9zOF4dXCBkPi0yyihs=;
+	s=arc-20240116; t=1742906119; c=relaxed/simple;
+	bh=VEgZ969WZaHYrCT3uN53jGdsLXK2uL2eQkRsnHbEJkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0Sm8zX3RnaCp0MOfymw4PsY+Cd/u1NVgP10aJlVB59tHpsoyckleSayt5M3g7A7sMsz6iQRVss1Ed8aV+zkcQr8G02UlXA3PFWxfk9iIKEp12wBqLuDunggKBo2jJlQL5w1o6g3hA35s2n5ZD+ofcDrcXxbrTo4S/PR1Q1iWoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6jwtBrS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=flGvQRnrMMPwYFo5znRr+iQCefK3w7gP16C4V80yra5oLRqMyFwxGop15aYFJJsqBwHr8SxOiv2zXWsvoKvyrUe7SgF5kpkYOHn+383pSZfEFyaPCYwhhKyqgA4PLHigSs9s/2qwpFbiGAUwZ8mAzholOSRNccCZV+c9akbLLb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dl9xJRBn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6jwtBrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16A5C4CEE4;
-	Tue, 25 Mar 2025 12:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dl9xJRBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDEAC4CEE9;
+	Tue, 25 Mar 2025 12:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906117;
-	bh=Azv1tyy1/NzwPk4RVtJuyJ2zj9zOF4dXCBkPi0yyihs=;
+	s=korg; t=1742906119;
+	bh=VEgZ969WZaHYrCT3uN53jGdsLXK2uL2eQkRsnHbEJkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6jwtBrSfoYhbtEoZVHNp8Sz0NyJQixOnWb0FfNrxoiGtyGTCg2j1g/Goe3DIaJ9E
-	 kt1lflsw0sAk0vvxHg9ZggM8F3tPFjlG2zQdwMHRspp9M8v98ojhRSvskKMwJd+T+M
-	 BsOmvpUD1IKWfZ86tvFEyz1OD4m2t6B5mwW1TClY=
+	b=Dl9xJRBn+kr/dAxTWU4oc4F3+UbUeQQoTxy5wFtJFXKhYa6zkTi6yfgVoo4V8uy0f
+	 qELdY5tvJBJLAsQ6iZr6Vb9y+hSJLszx7ssjjXdVquTo+U9Q8VRD+DvpvNk2FFouc/
+	 5QYKmgbdjwnqQCzQA2ZCSyW1d3VKaklosMuNG9Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 23/77] ipv6: Fix memleak of nhc_pcpu_rth_output in fib_check_nh_v6_gw().
-Date: Tue, 25 Mar 2025 08:22:18 -0400
-Message-ID: <20250325122144.960288088@linuxfoundation.org>
+Subject: [PATCH 6.6 24/77] ipv6: Set errno after ip_fib_metrics_init() in ip6_route_info_create().
+Date: Tue, 25 Mar 2025 08:22:19 -0400
+Message-ID: <20250325122144.986680404@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -53,45 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 9740890ee20e01f99ff1dde84c63dcf089fabb98 ]
+[ Upstream commit 9a81fc3480bf5dbe2bf80e278c440770f6ba2692 ]
 
-fib_check_nh_v6_gw() expects that fib6_nh_init() cleans up everything
-when it fails.
+While creating a new IPv6, we could get a weird -ENOMEM when
+RTA_NH_ID is set and either of the conditions below is true:
 
-Commit 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
-moved fib_nh_common_init() before alloc_percpu_gfp() within fib6_nh_init()
-but forgot to add cleanup for fib6_nh->nh_common.nhc_pcpu_rth_output in
-case it fails to allocate fib6_nh->rt6i_pcpu, resulting in memleak.
+  1) CONFIG_IPV6_SUBTREES is enabled and rtm_src_len is specified
+  2) nexthop_get() fails
 
-Let's call fib_nh_common_release() and clear nhc_pcpu_rth_output in the
-error path.
+e.g.)
 
-Note that we can remove the fib6_nh_release() call in nh_create_ipv6()
-later in net-next.git.
+  # strace ip -6 route add fe80::dead:beef:dead:beef nhid 1 from ::
+  recvmsg(3, {msg_iov=[{iov_base=[...[
+    {error=-ENOMEM, msg=[... [...]]},
+    [{nla_len=49, nla_type=NLMSGERR_ATTR_MSG}, "Nexthops can not be used with so"...]
+  ]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 148
 
-Fixes: 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
+Let's set err explicitly after ip_fib_metrics_init() in
+ip6_route_info_create().
+
+Fixes: f88d8ea67fbd ("ipv6: Plumb support for nexthop object in a fib6_info")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250312010333.56001-1-kuniyu@amazon.com
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250312013854.61125-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/route.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 5715d54f3d0be..f13b2eb904633 100644
+index f13b2eb904633..3ab5ea55ff8c3 100644
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -3636,7 +3636,8 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
- 		in6_dev_put(idev);
- 
- 	if (err) {
--		lwtstate_put(fib6_nh->fib_nh_lws);
-+		fib_nh_common_release(&fib6_nh->nh_common);
-+		fib6_nh->nh_common.nhc_pcpu_rth_output = NULL;
- 		fib6_nh->fib_nh_lws = NULL;
- 		netdev_put(dev, dev_tracker);
- 	}
+@@ -3797,10 +3797,12 @@ static struct fib6_info *ip6_route_info_create(struct fib6_config *cfg,
+ 	if (nh) {
+ 		if (rt->fib6_src.plen) {
+ 			NL_SET_ERR_MSG(extack, "Nexthops can not be used with source routing");
++			err = -EINVAL;
+ 			goto out_free;
+ 		}
+ 		if (!nexthop_get(nh)) {
+ 			NL_SET_ERR_MSG(extack, "Nexthop has been deleted");
++			err = -ENOENT;
+ 			goto out_free;
+ 		}
+ 		rt->nh = nh;
 -- 
 2.39.5
 
