@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBA429B208;
-	Tue, 25 Mar 2025 12:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EE4267F43;
+	Tue, 25 Mar 2025 12:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905849; cv=none; b=BPoRyRFwwBwv5Q4vJtt5ZbueqQONwsWkU3V7AL3FXNr5zvPX/Drewp9QnRDqOw4QEF09qwG3Ff4bqzNntTu7JIQkWx6KnO1ZY/gtKEt0yBgAaHeuGpXbeAREaWqb5eUeaR1PcMXh4m/bi5+3Ri1wRxkAEjfXqc0xfUQODjUeFJE=
+	t=1742905850; cv=none; b=BdZAUormcrCVn0UOMJ2s+rMSfMg83p4MErV4ssfMyjidzPkrT8b32huTQuMpFgE4O412Q6sj85r535XmXnHNGVBGGKgfwt6eWG24hJuiyUz/iGwyuEFYtZp4eQI0bbioRJvnRPRHii84ld5L4ZkgRV0spf+guTu/NXr27TTmfqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905849; c=relaxed/simple;
-	bh=erWvd3YnNmOhYENWoJe1gqTg4OMMQ0TzBmt04xirGAU=;
+	s=arc-20240116; t=1742905850; c=relaxed/simple;
+	bh=PsICdO/nhkyjuaBXM42CuW5gfiQseWBXzRT+FOQ7DtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkDtbFYSx1p/he6Vh7SKg9SV9LWLmJwtFOvGGT2wnvh+83ESEi5O3uJ9zwhmUBoKSkMLw7uWymVF1GScR/E1kuuPD2tevu9n3LxhTS3ui4C7XMwb2sua0dVfMlYAFAt8dvix13W2QieICpDDxIgdWP8y2cyXpKpD76VG6rj+dhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LpKvpsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brYImBgL/brJ32hNI6IkGriBgmCcypL12DFEXg2rNMFXmGzy20DTL7qAXiHdIkOCRmioVmUteoYdf3oY+Rz7doUk81+HFU3DrIAnsVa+H1iAl8HjTyZuEf0qwmulEh5pvUigrwqf4OrM8XEVWQlZxCbiOC9acmALFK1bAfWzaNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Nzmwjpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LpKvpsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AC4C4CEE4;
-	Tue, 25 Mar 2025 12:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Nzmwjpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2479DC4CEED;
+	Tue, 25 Mar 2025 12:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905848;
-	bh=erWvd3YnNmOhYENWoJe1gqTg4OMMQ0TzBmt04xirGAU=;
+	s=korg; t=1742905850;
+	bh=PsICdO/nhkyjuaBXM42CuW5gfiQseWBXzRT+FOQ7DtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LpKvpsVEn+bSzxIZCWkcbMOC+5Nbqk762F0pVfsQqhonVtYpNudYTsTuhrFme/d3
-	 IxY65jtFs9GlMbTnYW1tP9mqtltabxFfG4D0i9ICA5+zdDkxd8O2Nj6biQOT2zaAqg
-	 9KERLFWGcFaK3Re5vM+6bXuLrJbtfrtE+5Tl1Y8g=
+	b=0NzmwjpuBgwA4KhiZ1hcA1vwdkaTm+D38sZr3A96TP944vbf/SpCQHBoP7Q9FMR2I
+	 wwOifjjP+MVs8ew1JS3wVTtdFTdkuIABZd8sa8LC+FvUvAHWKhm9PND9FzvI/bZjd+
+	 yrzcKWsQbeHiVcssdepuM1bzBh06iAxabNArBgz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 196/198] wifi: iwlwifi: mvm: ensure offloading TID queue exists
-Date: Tue, 25 Mar 2025 08:22:38 -0400
-Message-ID: <20250325122201.794384576@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 197/198] mm/migrate: fix shmem xarray update during migration
+Date: Tue, 25 Mar 2025 08:22:39 -0400
+Message-ID: <20250325122201.821083234@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,110 +60,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 78f65fbf421a61894c14a1b91fe2fb4437b3fe5f upstream.
+commit 60cf233b585cdf1f3c5e52d1225606b86acd08b0 upstream.
 
-The resume code path assumes that the TX queue for the offloading TID
-has been configured. At resume time it then tries to sync the write
-pointer as it may have been updated by the firmware.
+A shmem folio can be either in page cache or in swap cache, but not at the
+same time.  Namely, once it is in swap cache, folio->mapping should be
+NULL, and the folio is no longer in a shmem mapping.
 
-In the unusual event that no packets have been send on TID 0, the queue
-will not have been allocated and this causes a crash. Fix this by
-ensuring the queue exist at suspend time.
+In __folio_migrate_mapping(), to determine the number of xarray entries to
+update, folio_test_swapbacked() is used, but that conflates shmem in page
+cache case and shmem in swap cache case.  It leads to xarray multi-index
+entry corruption, since it turns a sibling entry to a normal entry during
+xas_store() (see [1] for a userspace reproduction).  Fix it by only using
+folio_test_swapcache() to determine whether xarray is storing swap cache
+entries or not to choose the right number of xarray entries to update.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240218194912.6632e6dc7b35.Ie6e6a7488c9c7d4529f13d48f752b5439d8ac3c4@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+[1] https://lore.kernel.org/linux-mm/Z8idPCkaJW1IChjT@casper.infradead.org/
+
+Note:
+In __split_huge_page(), folio_test_anon() && folio_test_swapcache() is
+used to get swap_cache address space, but that ignores the shmem folio in
+swap cache case.  It could lead to NULL pointer dereferencing when a
+in-swap-cache shmem folio is split at __xa_store(), since
+!folio_test_anon() is true and folio->mapping is NULL.  But fortunately,
+its caller split_huge_page_to_list_to_order() bails out early with EBUSY
+when folio->mapping is NULL.  So no need to take care of it here.
+
+Link: https://lkml.kernel.org/r/20250305200403.2822855-1-ziy@nvidia.com
+Fixes: fc346d0a70a1 ("mm: migrate high-order folios in swap cache correctly")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Liu Shixin <liushixin2@huawei.com>
+Closes: https://lore.kernel.org/all/28546fb4-5210-bf75-16d6-43e1f8646080@huawei.com/
+Suggested-by: Hugh Dickins <hughd@google.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Charan Teja Kalla <quic_charante@quicinc.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lance Yang <ioworker0@gmail.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c  |    9 +++++++-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c |   28 +++++++++++++++++++++++++++
- drivers/net/wireless/intel/iwlwifi/mvm/sta.h |    3 +-
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ mm/migrate.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -1286,7 +1286,9 @@ static int __iwl_mvm_suspend(struct ieee
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -420,19 +420,17 @@ int folio_migrate_mapping(struct address
+ 	newfolio->index = folio->index;
+ 	newfolio->mapping = folio->mapping;
+ 	folio_ref_add(newfolio, nr); /* add cache reference */
+-	if (folio_test_swapbacked(folio)) {
++	if (folio_test_swapbacked(folio))
+ 		__folio_set_swapbacked(newfolio);
+-		if (folio_test_swapcache(folio)) {
+-			int i;
++    if (folio_test_swapcache(folio)) {
++        int i;
  
- 		mvm->net_detect = true;
+-			folio_set_swapcache(newfolio);
+-			for (i = 0; i < nr; i++)
+-				set_page_private(folio_page(newfolio, i),
+-					page_private(folio_page(folio, i)));
+-		}
++        folio_set_swapcache(newfolio);
++        for (i = 0; i < nr; i++)
++            set_page_private(folio_page(newfolio, i),
++                page_private(folio_page(folio, i)));
+ 		entries = nr;
  	} else {
--		struct iwl_wowlan_config_cmd wowlan_config_cmd = {};
-+		struct iwl_wowlan_config_cmd wowlan_config_cmd = {
-+			.offloading_tid = 0,
-+		};
+-		VM_BUG_ON_FOLIO(folio_test_swapcache(folio), folio);
+ 		entries = 1;
+ 	}
  
- 		wowlan_config_cmd.sta_id = mvmvif->ap_sta_id;
- 
-@@ -1298,6 +1300,11 @@ static int __iwl_mvm_suspend(struct ieee
- 			goto out_noreset;
- 		}
- 
-+		ret = iwl_mvm_sta_ensure_queue(
-+			mvm, ap_sta->txq[wowlan_config_cmd.offloading_tid]);
-+		if (ret)
-+			goto out_noreset;
-+
- 		ret = iwl_mvm_get_wowlan_config(mvm, wowlan, &wowlan_config_cmd,
- 						vif, mvmvif, ap_sta);
- 		if (ret)
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -1419,6 +1419,34 @@ out_err:
- 	return ret;
- }
- 
-+int iwl_mvm_sta_ensure_queue(struct iwl_mvm *mvm,
-+			     struct ieee80211_txq *txq)
-+{
-+	struct iwl_mvm_txq *mvmtxq = iwl_mvm_txq_from_mac80211(txq);
-+	int ret = -EINVAL;
-+
-+	lockdep_assert_held(&mvm->mutex);
-+
-+	if (likely(test_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state)) ||
-+	    !txq->sta) {
-+		return 0;
-+	}
-+
-+	if (!iwl_mvm_sta_alloc_queue(mvm, txq->sta, txq->ac, txq->tid)) {
-+		set_bit(IWL_MVM_TXQ_STATE_READY, &mvmtxq->state);
-+		ret = 0;
-+	}
-+
-+	local_bh_disable();
-+	spin_lock(&mvm->add_stream_lock);
-+	if (!list_empty(&mvmtxq->list))
-+		list_del_init(&mvmtxq->list);
-+	spin_unlock(&mvm->add_stream_lock);
-+	local_bh_enable();
-+
-+	return ret;
-+}
-+
- void iwl_mvm_add_new_dqa_stream_wk(struct work_struct *wk)
- {
- 	struct iwl_mvm *mvm = container_of(wk, struct iwl_mvm,
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
-  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
-  * Copyright (C) 2015-2016 Intel Deutschland GmbH
-  */
-@@ -544,6 +544,7 @@ void iwl_mvm_modify_all_sta_disable_tx(s
- 				       struct iwl_mvm_vif *mvmvif,
- 				       bool disable);
- void iwl_mvm_csa_client_absent(struct iwl_mvm *mvm, struct ieee80211_vif *vif);
-+int iwl_mvm_sta_ensure_queue(struct iwl_mvm *mvm, struct ieee80211_txq *txq);
- void iwl_mvm_add_new_dqa_stream_wk(struct work_struct *wk);
- int iwl_mvm_add_pasn_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 			 struct iwl_mvm_int_sta *sta, u8 *addr, u32 cipher,
 
 
