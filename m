@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1144525C717;
-	Tue, 25 Mar 2025 12:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6379026B2CC;
+	Tue, 25 Mar 2025 12:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906260; cv=none; b=uU3GS4uFyZXFgkP20ymMCsBJ0aWjoycOTI4mNyrXYA/h5bhxjBqmam1WhoIrq6IM1mEhj43bxGiRvSkBybuyHXVWuHIBFwyH1bbzyYVaWKGcW5Bbo9K9Et4aAPtUjYdPEWt9QRl4KjzbC5ahxd9tzX9juW9VulQcjrbBwDNgi5w=
+	t=1742906262; cv=none; b=sE6W/50mkonvyb8P40E7lRn4uoUaFTWcn+p4sHjd3FgK6TNYF5d2NAa+9enx7JOGDjLh3CLLUxOHgSwVKZZYF5C7wppx5kmbeiK1pRqNxLLJvf3LptrD6dk+3r+IltWHtpLzodwdDtBruuKeVFZFu1qRHsQHVy+Q4RFe22g8n7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906260; c=relaxed/simple;
-	bh=he2HYiAAnHOMYLX4QYDfddtxUcK70wb0KmqDPkCBTlo=;
+	s=arc-20240116; t=1742906262; c=relaxed/simple;
+	bh=ZAF5z880Us0cWvze1dsVcuhZCW4FfjbntzmOBQ1cEZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwrAadBFeZbdPzgcb+uSHO/bRfIeA0mLnFGsGB5EOfPN3ZEEC1/brYwp+6ekFJOBIx/eQW5OwRROdltnCDAEEuhl+/pX7kgYTxPOqFDkYy+ieCpEgWKi9sPCVniWKKOAgRlg1VT4sWGtI0RLE+SkcJO4aAKcWUYdUMvA9JmbYbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+E1ouhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W5zHxMHjtqoLSyU3ZXHN/oNDYYmf7h7hYZ8Ztumh+om3rDOZ/u4Dpt77FaOzre+ZVI0YKcdQFjhP7JN9db1lmmCeGNCaIeRQaCv2/tA5r6tRlMIA3gxTzmkYrvr/aiRnE00mhKCuCwE7AU9FkCVHWfchJG5UHwdxRl85YQGZvMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWu+ALY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+E1ouhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93F5C4CEE4;
-	Tue, 25 Mar 2025 12:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWu+ALY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65C9C4CEE4;
+	Tue, 25 Mar 2025 12:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906259;
-	bh=he2HYiAAnHOMYLX4QYDfddtxUcK70wb0KmqDPkCBTlo=;
+	s=korg; t=1742906261;
+	bh=ZAF5z880Us0cWvze1dsVcuhZCW4FfjbntzmOBQ1cEZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+E1ouhS00tIW0/p930cYBie7XrjeTgbpTS+ObXdxK3U2xrWiZNOm/t8NiHv+ff2V
-	 ya54sN+T0GQk2ixo3MzrxBZpVtwKHAopx0T0/6lu98zWD8OWwRCCR0ymEnubksZOdF
-	 MuhLesNRxnetBKI6A/Q0i43fyOndrCWtQdKtGYSA=
+	b=ZWu+ALY36gnLSf3oiMgbROQZ9u2AukYA2tqD8OWpRz+bGXpjFKOCqhAy6FK/QAXLA
+	 x+E7GNpJKzkNwp26w6H/0eqaYoMbfctBbLZxA87y9mQt+RMkW5eMD0gVsMU244434i
+	 2YZBFlzl9g3aTZBcT4vVYjckMLkLS6jTNcS3xhP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/116] dma-mapping: fix missing clear bdr in check_ram_in_range_map()
-Date: Tue, 25 Mar 2025 08:21:49 -0400
-Message-ID: <20250325122149.785195450@linuxfoundation.org>
+Subject: [PATCH 6.12 023/116] RDMA/bnxt_re: Avoid clearing VLAN_ID mask in modify qp path
+Date: Tue, 25 Mar 2025 08:21:50 -0400
+Message-ID: <20250325122149.809306042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,77 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 
-[ Upstream commit 8324993f60305e50f27b98358b01b9837e10d159 ]
+[ Upstream commit 81c0db302a674f8004ed805393d17fd76f552e83 ]
 
-As discussed in [1], if 'bdr' is set once, it would never get
-cleared, hence 0 is always returned.
+Driver is always clearing the mask that sets the VLAN ID/Service Level
+in the adapter. Recent change for supporting multiple traffic class
+exposed this issue.
 
-Refactor the range check hunk into a new helper dma_find_range(),
-which allows 'bdr' to be cleared in each iteration.
+Allow setting SL and VLAN_ID while QP is moved from INIT to RTR state.
 
-Link: https://lore.kernel.org/all/64931fac-085b-4ff3-9314-84bac2fa9bdb@quicinc.com/ # [1]
-Fixes: a409d9600959 ("dma-mapping: fix dma_addressing_limited() if dma_range_map can't cover all system RAM")
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://lore.kernel.org/r/20250307030350.69144-1-quic_bqiang@quicinc.com
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Fixes: c64b16a37b6d ("RDMA/bnxt_re: Support different traffic class")
+Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1741670196-2919-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index 5b4e6d3bf7bcc..b8fe0b3d0ffb6 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -584,6 +584,22 @@ int dma_direct_supported(struct device *dev, u64 mask)
- 	return mask >= phys_to_dma_unencrypted(dev, min_mask);
- }
- 
-+static const struct bus_dma_region *dma_find_range(struct device *dev,
-+						   unsigned long start_pfn)
-+{
-+	const struct bus_dma_region *m;
-+
-+	for (m = dev->dma_range_map; PFN_DOWN(m->size); m++) {
-+		unsigned long cpu_start_pfn = PFN_DOWN(m->cpu_start);
-+
-+		if (start_pfn >= cpu_start_pfn &&
-+		    start_pfn - cpu_start_pfn < PFN_DOWN(m->size))
-+			return m;
-+	}
-+
-+	return NULL;
-+}
-+
- /*
-  * To check whether all ram resource ranges are covered by dma range map
-  * Returns 0 when further check is needed
-@@ -593,20 +609,12 @@ static int check_ram_in_range_map(unsigned long start_pfn,
- 				  unsigned long nr_pages, void *data)
- {
- 	unsigned long end_pfn = start_pfn + nr_pages;
--	const struct bus_dma_region *bdr = NULL;
--	const struct bus_dma_region *m;
- 	struct device *dev = data;
- 
- 	while (start_pfn < end_pfn) {
--		for (m = dev->dma_range_map; PFN_DOWN(m->size); m++) {
--			unsigned long cpu_start_pfn = PFN_DOWN(m->cpu_start);
-+		const struct bus_dma_region *bdr;
- 
--			if (start_pfn >= cpu_start_pfn &&
--			    start_pfn - cpu_start_pfn < PFN_DOWN(m->size)) {
--				bdr = m;
--				break;
--			}
--		}
-+		bdr = dma_find_range(dev, start_pfn);
- 		if (!bdr)
- 			return 1;
- 
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 613b5fc70e13e..7436ce5515797 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -1216,8 +1216,6 @@ static void __modify_flags_from_init_state(struct bnxt_qplib_qp *qp)
+ 			qp->path_mtu =
+ 				CMDQ_MODIFY_QP_PATH_MTU_MTU_2048;
+ 		}
+-		qp->modify_flags &=
+-			~CMDQ_MODIFY_QP_MODIFY_MASK_VLAN_ID;
+ 		/* Bono FW require the max_dest_rd_atomic to be >= 1 */
+ 		if (qp->max_dest_rd_atomic < 1)
+ 			qp->max_dest_rd_atomic = 1;
 -- 
 2.39.5
 
