@@ -1,111 +1,94 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9361CAA9C
-	for <patches@lists.linux.dev>; Tue, 25 Mar 2025 19:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F721F3B90
+	for <patches@lists.linux.dev>; Tue, 25 Mar 2025 20:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742932112; cv=none; b=i69SQEF0Dy5n9czDfDtI/bGw4ICmJKk/1RfpyWhIGFUkdVo2txfIS5AWeLmGVXRizcyi1u1XJ7MNPxFqJ5DgRYKqRq66bfQSX3XaC2j01lDgbrgpFNX2T+aAPtPrvGrOpW0TJU/Rg3qKapz2AnTGZapNnAmCn8s77dvV/IvcYmE=
+	t=1742932978; cv=none; b=PNheV/pdbDhr1aWbFgHypz7R9MPM6qMmo4j/39UV+2aI+3S2ZL5lsWTZsqiaDEt+fLMq6XOE7fwpLquMnUc29MxIVNHEsMSvKDbmEdOUTi6pjFISJENU6trbz1JS9aQRmjgr/F+UHyLowZyrWuZOV7gptpk10UXunxls6fxMuek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742932112; c=relaxed/simple;
-	bh=kWRz7TnGEyqbpdoqqbqwf78f4CQUMOrIDZK4ebHnEkI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K2nwpS8nOPssCcxy8OAIACxXdo5YV02jk5lExqnlv71wI88I539kZsADfypPQQHEmk0NT6r/sgO966LeLlCuakuuCs9grSeOoHh/cKwjjjVpu5T3P69FYMXZzNOp1R9O2PamrzuW5Ow107DqNsr832xIgm/+TYDjP1lDuRM3/OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YN8I1KK0; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742932978; c=relaxed/simple;
+	bh=cbmLoEWlZon0vzHEOJFV0hxaxKAZ97oF9421UQ8WQ/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dJEryTDFi7pqOnnfLF5sElg+vQi06us3dZP2W8wuyxn5ss+3ZgSza/qfe3QTbM0SnNYLgwbnk5yOuzpYxOqERnpW5Fb+BAL0idvd0MR9noQ2OPHxQMnfpS8dCIAhHRCQG7J8woHZjc2lHT3xyd2nIqhBe7QH5Az4dcC4LeNIHXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=QzZpH2fj; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YN8I1KK0"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22403c99457so14007035ad.3
-        for <patches@lists.linux.dev>; Tue, 25 Mar 2025 12:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742932110; x=1743536910; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N8OkNb0Gk1huvCdNeb+R5YeTaXEOuCO6fGN5IzB1KVw=;
-        b=YN8I1KK0WLpltv0F2D2IYHLA4/eMvLmq+Xobiiv6kHJLRi9TTzrr0e6rxIMDiKP8c6
-         e8aY/emdncuFY0WPvVVjVTaiDnij6zPQBvAo1PvJ8rCpCcs+201gW/zHBN0H8M2Md1Zs
-         1y3ifgogAjDeb7itzLqM7iiCgWus1Z3LTzVSfzzzQZcvPen81sPJK3fHTqmyUYY9/gPH
-         L9gTYFvDJX+QfUT9oYia0q8HnrrlD3hSZfW7p5wpexh8lLFJC3YesRifFdKL+uRN9vLK
-         0+FKZ+7GUIApAiVba+74Y3Xdp7VvfwSgYG8tlYHij1GbyDo1wSq+uCkdJeQ2yvBuJUIx
-         yS6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742932110; x=1743536910;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N8OkNb0Gk1huvCdNeb+R5YeTaXEOuCO6fGN5IzB1KVw=;
-        b=VWEBG9cvtqdMCU7S3l+awX/J+XtWPLEkT7KWyW/1YJV5XlExWkfGXydBONwWTYFODJ
-         eRezs4j1THf8c0nWeIkWpwlM1+9Cb5LSXBAdd8x7nAZDh9vaiyK02T/yjjhPEaYe9ni9
-         x6Et8Eg8lqhrWILww+OYVhIMN+LdG96MSxym/3hDB/f9E/t6xECUV00IrTHnAkcPi+Yz
-         lWPTyj1uGP1pR5EH1+sr45dxFohSLhoohNglZdbg8aid793L5VhAUdZy5/O/Sz3p5EdY
-         lOb0wi+zC0EhVW8+bxdpe3IUSL6sBt848ruGohkWlkkM0+oXJzh4/nVvZEC6Eqe3GDja
-         ji7w==
-X-Forwarded-Encrypted: i=1; AJvYcCX/HNJh0z35bOrWM2muEOtMFtSwcovG9G9SRYubxbKcK5ogaWSHg/W3vISc5A2ttojglCe/CLBI@lists.linux.dev
-X-Gm-Message-State: AOJu0YxH2j2e2xrxT4zwWvLE+r68JHsuzqDklh0Dm4xzES6e/mdM+3UJ
-	YeNMJbmU6cndYUXtdpaBvMGebj2/62fmtzmG+8rPcePP/nSyGyrW+L9iieR/CV2Ow9KE3QtBsoq
-	D6JyLcmclAeHt/OvS+i0jNLu/Uko=
-X-Gm-Gg: ASbGncvfnu1B0wHdTIPvTq9BWKJYviWvIqZhzX6/dcxQA5CsAAn6P2DoTCOt5t5Kzy7
-	joRd+mE9simy0R6Qavws4g2ziu8azGNqEREKl+702sk8DTMhIDoTWK2cG8QChtA95qmDujA+sMm
-	WYQyNEbgGL70Cts0wySxm2WUmv2g==
-X-Google-Smtp-Source: AGHT+IFxBWD68KB8/HxS5e8dGM3BB7KTxo4N4mhnjuZj5L+9yyTC70mMnIp1cyTclOTT83cY3hEXidYZMRLFX4HVM5Y=
-X-Received: by 2002:a17:903:234e:b0:223:5525:622f with SMTP id
- d9443c01a7336-22780c503a9mr99495195ad.1.1742932109937; Tue, 25 Mar 2025
- 12:48:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="QzZpH2fj"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1E2AD102F66E4;
+	Tue, 25 Mar 2025 21:02:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1742932968; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=z0p1QvEp0YYkteZsnU0p3bMImz2zA6MjGTdNDg5orFY=;
+	b=QzZpH2fjDPVo2JMxtNJzov6a9K/NxgG0oLz/AkRQJRA21WfBXvywL2kRXKpROqcoIIjbrP
+	u2KozEFY+TsmM+0yldrabV0l4/EKinn+UvV29/X8tzpJmNIVL8KJRGv/BScUsnEkMXlBJd
+	7PTGzkMud2Vw1OctGoqeraP3GuV3ZdL8Qjy2XJCvP16v77tyUXAVqIS8mwBcDx0cAVINMh
+	SYAyOfUs67J/jd/RwhvDZxVKJhyR5vUJ2lxlyIkWFMUNy46y8CkkNds1l/hjVjcjTlN1zx
+	dNFVFVKRT5viC51pEUF13ywrWXk5meKkdCNVJPm5PXFrOdlKC1yN+FeIBdBPEA==
+Date: Tue, 25 Mar 2025 21:02:40 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/198] 6.1.132-rc1 review
+Message-ID: <Z+ML4M4d1m4vALAE@duo.ucw.cz>
+References: <20250325122156.633329074@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250325184309.97170-1-ojeda@kernel.org>
-In-Reply-To: <20250325184309.97170-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 25 Mar 2025 20:48:17 +0100
-X-Gm-Features: AQ5f1JpNyVdd47wH2I_NWPgt1x_uShOAv6Q_Kz6PcSYhTfdjyZuGqcfgDJh1oE8
-Message-ID: <CANiq72kWumOHt=VgV3mb2G4mOE3bCVUCUrKdjk4caFJPVCTBbA@mail.gmail.com>
-Subject: Re: [PATCH] rust: workaround `bindgen` issue with forward references
- to `enum` types
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xSy771ToJk+xYngw"
+Content-Disposition: inline
+In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
+
+
+--xSy771ToJk+xYngw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 25, 2025 at 7:43=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Instead, let's have a section at the top of our `bindings_helper.h` that
-> `#include`s the headers with the affected types -- hopefully there are
-> not many cases and there is a single ordering that covers all cases.
+Hi!
 
-By the way, I was curious and from a quick look at generated bindings
-lines matching `type.*i32` for a x86_64 build I have, I see only other
-three cases:
+> This is the start of the stable review cycle for the 6.1.132 release.
+> There are 198 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  - `key_serial_t` is not an `enum`, i.e. it is correct.
+We see failures on arm64:
 
-  - `fs_value_type` and `drm_mode_status` are both `enum`s, and they
-indeed suffer from this issue. However, we do not use them and I don't
-see any patches posted for them either.
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
+734533150
 
-Those are good news.
+for example:
 
-However, there are also bad news: if for instance we actually needed
-either of those two latter ones, then we cannot just include the
-header that defines them, because that header happens to include
-others that in turn use forward references to that `enum` the root one
-defines.
+arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
+(phandle_references): /pcie@f8000000: Reference to non-existent node
+or label "vcca_0v9"
 
-So in some cases, if we start to use them before we have a fix, would
-require C header changes to avoid the forward references. Thus, for
-those, I think it may be simpler to instead use a cast and mark them
-with a comment so that we know we should clean them up.
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
-Cheers,
-Miguel
+--xSy771ToJk+xYngw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ+ML4AAKCRAw5/Bqldv6
+8p1lAJ9V2783203ZILWiVhPl3zpsOj+l6wCeM6euQ30+Yw9LZ6PcMuJbyyhdtjg=
+=gU2w
+-----END PGP SIGNATURE-----
+
+--xSy771ToJk+xYngw--
