@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B828825D8F6;
-	Tue, 25 Mar 2025 12:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381D426E15E;
+	Tue, 25 Mar 2025 12:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906329; cv=none; b=lzelNLAeWbQ5pUkga3NpqsPsl71y0tumXggTOIUDM8s/FXy/uXPTWY3mhPQ52StNg6H7hDRDt3eOkbO+5a89V1y1j+/qeznx/pJpv2WAdGGttT2wkOEcwL87TJ9iYRIIh4+4aUBDOPL6t513DvXc35Qb1OudaT5pvoNurwHUs4Y=
+	t=1742906331; cv=none; b=GKTKh641/JVQl4ZpFG1qaK1TKsC0TXzGGj66nnDoh6aRvSjh/1jHZKXb2j1VEmWHFMUe4BHZTp31UljKbB4CPBNmwHxiVQdEh6NefA/6L7oBJ4rLri2dLN690z1P/KgRL+9swmD5C88vZ9Q1vwl44kcufKYZu9PIORNBFIhATU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906329; c=relaxed/simple;
-	bh=tRN3yHJ/A1t+4Um0CfwWgvCIF5NNuTj3Emju3pZ4F4g=;
+	s=arc-20240116; t=1742906331; c=relaxed/simple;
+	bh=vrHaK+Cr5Rnu3Hg6LBYViEgkTwn1hkoXDwtv4YOQDVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c0m/lBSESJARnivJdFt/dDuCXqX65EsENGdE4spshHNsf6AOfmSmTudwYZ3u6lDkMluQpnGbehWarBlfTL1rmMSY+5+RsywFxMvC9bjrhTVKthiuotlUepVc/yImX3QCIZePgENJb2QSLgVy2F2Vg8t2LGTFATSJ5EOp8Duax90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0yFoSWE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UP5jrn44LKh4IMyhF8nwMsGScaE7uSRnmPrQ3ptCUgarCf4qZzx3d5t2v7m3tV9XI6j+DXm4lM9REqD+V4G8XYnUgzwkVn4WMr+oCHEqTahfH3lwlUSCVbwBjUOaf3T/Ohibce77OQVGZFSDMjtVjUQi4RLNWtR3icp6kn8ZOpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbnJoGjT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0yFoSWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F341EC4CEED;
-	Tue, 25 Mar 2025 12:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbnJoGjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA620C4CEE4;
+	Tue, 25 Mar 2025 12:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906329;
-	bh=tRN3yHJ/A1t+4Um0CfwWgvCIF5NNuTj3Emju3pZ4F4g=;
+	s=korg; t=1742906331;
+	bh=vrHaK+Cr5Rnu3Hg6LBYViEgkTwn1hkoXDwtv4YOQDVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0yFoSWEIdV6/xwEZw4e09lNaNZii8m8fwpmF4oDufZuyBzUG81Nu6Dp5IAFkkCse
-	 ziyrfEa2v8+liMDcennpRiH/84nb3rENhNemjN+aVnabWYmNwijD+riQ3S4PomfLZw
-	 pliloy+YB5DP3tzzA3S3RE1OJSCdSgrX3uOuPpuQ=
+	b=HbnJoGjT80fgnpMu9P4PcYJOfRMgDBlIpD2WB4+XTRxnM/cLTWn2ChAWg9EG6Ckyk
+	 wUu7Nrow3/JkEcjZnX8fdBJibCRJYIatIpquOPaAAioxYbz0xD1LyrQyJJqIdHCSeS
+	 lVp96RV/LdwHxxmT6q76EwllAztdrHfk3yFQ1hlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	intel-xe@lists.freedesktop.org,
-	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.12 059/116] drm/xe: Fix exporting xe buffers multiple times
-Date: Tue, 25 Mar 2025 08:22:26 -0400
-Message-ID: <20250325122150.718996453@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 6.12 060/116] drm/v3d: Dont run jobs that have errors flagged in its fence
+Date: Tue, 25 Mar 2025 08:22:27 -0400
+Message-ID: <20250325122150.744164311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -60,65 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 50af7cab7520e46680cf4633bba6801443b75856 upstream.
+commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
 
-The `struct ttm_resource->placement` contains TTM_PL_FLAG_* flags, but
-it was incorrectly tested for XE_PL_* flags.
-This caused xe_dma_buf_pin() to always fail when invoked for
-the second time. Fix this by checking the `mem_type` field instead.
+The V3D driver still relies on `drm_sched_increase_karma()` and
+`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
+The function `drm_sched_increase_karma()` marks the job as guilty, while
+`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
+that guilty job.
 
-Fixes: 7764222d54b7 ("drm/xe: Disallow pinning dma-bufs in VRAM")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: intel-xe@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250218100353.2137964-1-jacek.lawrynowicz@linux.intel.com
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-(cherry picked from commit b96dabdba9b95f71ded50a1c094ee244408b2a8e)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Because of this, we must check whether the job’s DMA fence has been
+flagged with an error before executing the job. Otherwise, the same guilty
+job may be resubmitted indefinitely, causing repeated GPU resets.
+
+This patch adds a check for an error on the job's fence to prevent running
+a guilty job that was previously flagged when the GPU timed out.
+
+Note that the CPU and CACHE_CLEAN queues do not require this check, as
+their jobs are executed synchronously once the DRM scheduler starts them.
+
+Cc: stable@vger.kernel.org
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_bo.h      |    2 --
- drivers/gpu/drm/xe/xe_dma_buf.c |    2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_bo.h
-+++ b/drivers/gpu/drm/xe/xe_bo.h
-@@ -314,7 +314,6 @@ static inline unsigned int xe_sg_segment
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -319,11 +319,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
+ 	struct drm_device *dev = &v3d->drm;
+ 	struct dma_fence *fence;
  
- #define i915_gem_object_flush_if_display(obj)		((void)(obj))
++	if (unlikely(job->base.base.s_fence->finished.error))
++		return NULL;
++
++	v3d->tfu_job = job;
++
+ 	fence = v3d_fence_create(v3d, V3D_TFU);
+ 	if (IS_ERR(fence))
+ 		return NULL;
  
--#if IS_ENABLED(CONFIG_DRM_XE_KUNIT_TEST)
- /**
-  * xe_bo_is_mem_type - Whether the bo currently resides in the given
-  * TTM memory type
-@@ -329,4 +328,3 @@ static inline bool xe_bo_is_mem_type(str
- 	return bo->ttm.resource->mem_type == mem_type;
- }
- #endif
--#endif
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -58,7 +58,7 @@ static int xe_dma_buf_pin(struct dma_buf
- 	 * 1) Avoid pinning in a placement not accessible to some importers.
- 	 * 2) Pinning in VRAM requires PIN accounting which is a to-do.
- 	 */
--	if (xe_bo_is_pinned(bo) && bo->ttm.resource->placement != XE_PL_TT) {
-+	if (xe_bo_is_pinned(bo) && !xe_bo_is_mem_type(bo, XE_PL_TT)) {
- 		drm_dbg(&xe->drm, "Can't migrate pinned bo for dma-buf pin.\n");
- 		return -EINVAL;
- 	}
+-	v3d->tfu_job = job;
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+ 	job->base.irq_fence = dma_fence_get(fence);
+@@ -361,6 +365,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
+ 	struct dma_fence *fence;
+ 	int i, csd_cfg0_reg;
+ 
++	if (unlikely(job->base.base.s_fence->finished.error))
++		return NULL;
++
+ 	v3d->csd_job = job;
+ 
+ 	v3d_invalidate_caches(v3d);
 
 
