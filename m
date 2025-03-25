@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C726463D;
-	Tue, 25 Mar 2025 12:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8F7264A84;
+	Tue, 25 Mar 2025 12:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905503; cv=none; b=axJ6hWuprGM+MM3Io689bKHsxSUheoAKKb5CChmQQt5kwuerVi+GhD91o+xxBIZbjnYqqFD+IbIMCpKT7QaSml/T8njgQO320Ml+ydHy70LJwoEajT1cGR49Sbkxr22zXc0krc5CGAsu5IDHcug8mZve1M3Q4uiTLoRhhck5r1s=
+	t=1742905505; cv=none; b=ctL19Cj6J10R6ZPn839T1v/hwwBuTQsvD2yH7SwJIs1Y6FE8WbrJaT9NcPHqGz9TZs+Wx8dNqE4hw6eYYBVxPByXQRVCbG8Ck9CyspDRv9gLweoe5EuWQ16K99/sE8wwsjGWhG31FOVrFTWmHMtz6j9UzvVEYpqgTkjZzClZ32w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905503; c=relaxed/simple;
-	bh=Bj+NiideMlh4Kf4Qg6uML1MMcMkcxkMqSxjf72oXc74=;
+	s=arc-20240116; t=1742905505; c=relaxed/simple;
+	bh=dvtPUnsf3ihV9wyzy+fRu6Nn+9wNGptPYroKXgikRPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7BqxMY0S7VHplwNuIJL/LFCh7/P6wkwqnrEiXOWd12nCEAzGbFryQjEKKXI1qugAeCTez+9xbZxSmV7LDPozYjrtwPALnDhauu85hdbkE+2tjzNNng/0BqiSS9in8peuLmvUJOpm8ghM/Kll+YoXLY8EGXwvYCBR47we1gGW54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toSQ+fpG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UlvIbaiNc1DV/Sy5NL2wvwqnOGOczcE6BJHXW0mJBZPXdgWOjhztpzQJohOfwHWVXUUUJmzWz+VOI/FOYxUSIOn47gtoJPtmFXUNHRXKchffGaUWvta2kjDJO1h834vYLV3BaDmOiLouLN6ZSEDFksTBqUlOUtFjSc+Pm6wrcS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ej+5wft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toSQ+fpG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56558C4CEE9;
-	Tue, 25 Mar 2025 12:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ej+5wft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229E9C4CEEE;
+	Tue, 25 Mar 2025 12:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905503;
-	bh=Bj+NiideMlh4Kf4Qg6uML1MMcMkcxkMqSxjf72oXc74=;
+	s=korg; t=1742905505;
+	bh=dvtPUnsf3ihV9wyzy+fRu6Nn+9wNGptPYroKXgikRPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=toSQ+fpGu0OI42nD3iMZc7Z72qOnEYgdyjkkakOP7+KyHFKDzNlwoVf4HyVILZyEP
-	 CIfE+PUw40vu8kkeMULdCBNBh7WCOkqg0YyUiTGMWh7qoJM02UGvQ3JAHn/1hxjpCf
-	 KBl+MjsI8wCUQOyZVwwMEd4G/Vs2Hp6muSgbi2ho=
+	b=0Ej+5wftqWXdFH3InTGEzzzPB9HB/xSrhqvsk44Y6J6nxxKJbDgh76GzSoZk4H3OD
+	 jAgLwIvMJLMb8AtJcdWYZ2Kf4gauasgft+YeMvxTLPKJP/DeZLRtDJD3Rp3q2xgmIZ
+	 kWJj+qsQFe+XhCPDTAP7tQev+zE6lGlM7P9noxEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 003/198] hrtimer: Use and report correct timerslack values for realtime tasks
-Date: Tue, 25 Mar 2025 08:19:25 -0400
-Message-ID: <20250325122156.728999071@linuxfoundation.org>
+	syzbot+478c1bf0e6bf4a8f3a04@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Miguel Garcia Roman <miguelgarciaroman8@gmail.com>
+Subject: [PATCH 6.1 004/198] fs/ntfs3: Fix shift-out-of-bounds in ntfs_fill_super
+Date: Tue, 25 Mar 2025 08:19:26 -0400
+Message-ID: <20250325122156.754147964@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -50,167 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Moessbauer <felix.moessbauer@siemens.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit ed4fb6d7ef68111bb539283561953e5c6e9a6e38 upstream.
+commit 91a4b1ee78cb100b19b70f077c247f211110348f upstream.
 
-The timerslack_ns setting is used to specify how much the hardware
-timers should be delayed, to potentially dispatch multiple timers in a
-single interrupt. This is a performance optimization. Timers of
-realtime tasks (having a realtime scheduling policy) should not be
-delayed.
-
-This logic was inconsitently applied to the hrtimers, leading to delays
-of realtime tasks which used timed waits for events (e.g. condition
-variables). Due to the downstream override of the slack for rt tasks,
-the procfs reported incorrect (non-zero) timerslack_ns values.
-
-This is changed by setting the timer_slack_ns task attribute to 0 for
-all tasks with a rt policy. By that, downstream users do not need to
-specially handle rt tasks (w.r.t. the slack), and the procfs entry
-shows the correct value of "0". Setting non-zero slack values (either
-via procfs or PR_SET_TIMERSLACK) on tasks with a rt policy is ignored,
-as stated in "man 2 PR_SET_TIMERSLACK":
-
-  Timer slack is not applied to threads that are scheduled under a
-  real-time scheduling policy (see sched_setscheduler(2)).
-
-The special handling of timerslack on rt tasks in downstream users
-is removed as well.
-
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240814121032.368444-2-felix.moessbauer@siemens.com
+Reported-by: syzbot+478c1bf0e6bf4a8f3a04@syzkaller.appspotmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Miguel Garcia Roman <miguelgarciaroman8@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/base.c        |    9 +++++----
- fs/select.c           |   11 ++++-------
- kernel/sched/core.c   |    8 ++++++++
- kernel/sys.c          |    2 ++
- kernel/time/hrtimer.c |   18 +++---------------
- 5 files changed, 22 insertions(+), 26 deletions(-)
+ fs/ntfs3/ntfs_fs.h |    2 +
+ fs/ntfs3/super.c   |   68 +++++++++++++++++++++++++++++++++++------------------
+ 2 files changed, 48 insertions(+), 22 deletions(-)
 
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -2633,10 +2633,11 @@ static ssize_t timerslack_ns_write(struc
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -42,9 +42,11 @@ enum utf16_endian;
+ #define MINUS_ONE_T			((size_t)(-1))
+ /* Biggest MFT / smallest cluster */
+ #define MAXIMUM_BYTES_PER_MFT		4096
++#define MAXIMUM_SHIFT_BYTES_PER_MFT	12
+ #define NTFS_BLOCKS_PER_MFT_RECORD	(MAXIMUM_BYTES_PER_MFT / 512)
+ 
+ #define MAXIMUM_BYTES_PER_INDEX		4096
++#define MAXIMUM_SHIFT_BYTES_PER_INDEX	12
+ #define NTFS_BLOCKS_PER_INODE		(MAXIMUM_BYTES_PER_INDEX / 512)
+ 
+ /* NTFS specific error code when fixup failed. */
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -680,7 +680,7 @@ static u32 true_sectors_per_clst(const s
+  * ntfs_init_from_boot - Init internal info from on-disk boot sector.
+  */
+ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+-			       u64 dev_size)
++		  u64 dev_size)
+ {
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	int err;
+@@ -705,12 +705,12 @@ static int ntfs_init_from_boot(struct su
+ 
+ 	/* 0x55AA is not mandaroty. Thanks Maxim Suhanov*/
+ 	/*if (0x55 != boot->boot_magic[0] || 0xAA != boot->boot_magic[1])
+-	 *	goto out;
++	 *  goto out;
+ 	 */
+ 
+ 	boot_sector_size = (u32)boot->bytes_per_sector[1] << 8;
+ 	if (boot->bytes_per_sector[0] || boot_sector_size < SECTOR_SIZE ||
+-	    !is_power_of_2(boot_sector_size)) {
++		!is_power_of_2(boot_sector_size)) {
+ 		goto out;
  	}
  
- 	task_lock(p);
--	if (slack_ns == 0)
--		p->timer_slack_ns = p->default_timer_slack_ns;
--	else
--		p->timer_slack_ns = slack_ns;
-+	if (task_is_realtime(p))
-+		slack_ns = 0;
-+	else if (slack_ns == 0)
-+		slack_ns = p->default_timer_slack_ns;
-+	p->timer_slack_ns = slack_ns;
- 	task_unlock(p);
+@@ -733,15 +733,49 @@ static int ntfs_init_from_boot(struct su
  
- out:
---- a/fs/select.c
-+++ b/fs/select.c
-@@ -77,19 +77,16 @@ u64 select_estimate_accuracy(struct time
- {
- 	u64 ret;
- 	struct timespec64 now;
-+	u64 slack = current->timer_slack_ns;
- 
--	/*
--	 * Realtime tasks get a slack of 0 for obvious reasons.
--	 */
--
--	if (rt_task(current))
-+	if (slack == 0)
- 		return 0;
- 
- 	ktime_get_ts64(&now);
- 	now = timespec64_sub(*tv, now);
- 	ret = __estimate_accuracy(&now);
--	if (ret < current->timer_slack_ns)
--		return current->timer_slack_ns;
-+	if (ret < slack)
-+		return slack;
- 	return ret;
- }
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7380,6 +7380,14 @@ static void __setscheduler_params(struct
- 	else if (fair_policy(policy))
- 		p->static_prio = NICE_TO_PRIO(attr->sched_nice);
- 
-+	/* rt-policy tasks do not have a timerslack */
-+	if (task_is_realtime(p)) {
-+		p->timer_slack_ns = 0;
-+	} else if (p->timer_slack_ns == 0) {
-+		/* when switching back to non-rt policy, restore timerslack */
-+		p->timer_slack_ns = p->default_timer_slack_ns;
+ 	/* Check MFT record size. */
+ 	if ((boot->record_size < 0 &&
+-	     SECTOR_SIZE > (2U << (-boot->record_size))) ||
+-	    (boot->record_size >= 0 && !is_power_of_2(boot->record_size))) {
++		 SECTOR_SIZE > (2U << (-boot->record_size))) ||
++		(boot->record_size >= 0 && !is_power_of_2(boot->record_size))) {
++		goto out;
 +	}
 +
- 	/*
- 	 * __sched_setscheduler() ensures attr->sched_priority == 0 when
- 	 * !rt_policy. Always setting this ensures that things like
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -2477,6 +2477,8 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
- 			error = current->timer_slack_ns;
- 		break;
- 	case PR_SET_TIMERSLACK:
-+		if (task_is_realtime(current))
-+			break;
- 		if (arg2 <= 0)
- 			current->timer_slack_ns =
- 					current->default_timer_slack_ns;
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2090,14 +2090,9 @@ long hrtimer_nanosleep(ktime_t rqtp, con
- 	struct restart_block *restart;
- 	struct hrtimer_sleeper t;
- 	int ret = 0;
--	u64 slack;
--
--	slack = current->timer_slack_ns;
--	if (dl_task(current) || rt_task(current))
--		slack = 0;
- 
- 	hrtimer_init_sleeper_on_stack(&t, clockid, mode);
--	hrtimer_set_expires_range_ns(&t.timer, rqtp, slack);
-+	hrtimer_set_expires_range_ns(&t.timer, rqtp, current->timer_slack_ns);
- 	ret = do_nanosleep(&t, mode);
- 	if (ret != -ERESTART_RESTARTBLOCK)
++	/* Calculate cluster size */
++	sbi->cluster_size = boot_sector_size * sct_per_clst;
++	sbi->cluster_bits = blksize_bits(sbi->cluster_size);
++
++	if (boot->record_size >= 0) {
++		record_size = (u32)boot->record_size << sbi->cluster_bits;
++	} else if (-boot->record_size <= MAXIMUM_SHIFT_BYTES_PER_MFT) {
++		record_size = 1u << (-boot->record_size);
++	} else {
++		ntfs_err(sb, "%s: invalid record size %d.", "NTFS",
++			 boot->record_size);
++		goto out;
++	}
++
++	sbi->record_size = record_size;
++	sbi->record_bits = blksize_bits(record_size);
++	sbi->attr_size_tr = (5 * record_size >> 4); // ~320 bytes
++
++	if (record_size > MAXIMUM_BYTES_PER_MFT) {
++		ntfs_err(sb, "Unsupported bytes per MFT record %u.",
++			 record_size);
++		goto out;
++	}
++
++	if (boot->index_size >= 0) {
++		sbi->index_size = (u32)boot->index_size << sbi->cluster_bits;
++	} else if (-boot->index_size <= MAXIMUM_SHIFT_BYTES_PER_INDEX) {
++		sbi->index_size = 1u << (-boot->index_size);
++	} else {
++		ntfs_err(sb, "%s: invalid index size %d.", "NTFS",
++			 boot->index_size);
  		goto out;
-@@ -2278,7 +2273,7 @@ void __init hrtimers_init(void)
- /**
-  * schedule_hrtimeout_range_clock - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-+ * @delta:	slack in expires timeout (ktime_t)
-  * @mode:	timer mode
-  * @clock_id:	timer clock to be used
-  */
-@@ -2305,13 +2300,6 @@ schedule_hrtimeout_range_clock(ktime_t *
- 		return -EINTR;
  	}
  
--	/*
--	 * Override any slack passed by the user if under
--	 * rt contraints.
--	 */
--	if (rt_task(current))
--		delta = 0;
+ 	/* Check index record size. */
+ 	if ((boot->index_size < 0 &&
+-	     SECTOR_SIZE > (2U << (-boot->index_size))) ||
+-	    (boot->index_size >= 0 && !is_power_of_2(boot->index_size))) {
++		 SECTOR_SIZE > (2U << (-boot->index_size))) ||
++		(boot->index_size >= 0 && !is_power_of_2(boot->index_size))) {
+ 		goto out;
+ 	}
+ 
+@@ -762,9 +796,6 @@ static int ntfs_init_from_boot(struct su
+ 		dev_size += sector_size - 1;
+ 	}
+ 
+-	sbi->cluster_size = boot_sector_size * sct_per_clst;
+-	sbi->cluster_bits = blksize_bits(sbi->cluster_size);
 -
- 	hrtimer_init_sleeper_on_stack(&t, clock_id, mode);
- 	hrtimer_set_expires_range_ns(&t.timer, *expires, delta);
- 	hrtimer_sleeper_start_expires(&t, mode);
-@@ -2331,7 +2319,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
- /**
-  * schedule_hrtimeout_range - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-+ * @delta:	slack in expires timeout (ktime_t)
-  * @mode:	timer mode
-  *
-  * Make the current task sleep until the given expiry time has
+ 	sbi->mft.lbo = mlcn << sbi->cluster_bits;
+ 	sbi->mft.lbo2 = mlcn2 << sbi->cluster_bits;
+ 
+@@ -785,9 +816,9 @@ static int ntfs_init_from_boot(struct su
+ 	sbi->cluster_mask = sbi->cluster_size - 1;
+ 	sbi->cluster_mask_inv = ~(u64)sbi->cluster_mask;
+ 	sbi->record_size = record_size = boot->record_size < 0
+-						 ? 1 << (-boot->record_size)
+-						 : (u32)boot->record_size
+-							   << sbi->cluster_bits;
++		? 1 << (-boot->record_size)
++		: (u32)boot->record_size
++		  << sbi->cluster_bits;
+ 
+ 	if (record_size > MAXIMUM_BYTES_PER_MFT || record_size < SECTOR_SIZE)
+ 		goto out;
+@@ -801,8 +832,8 @@ static int ntfs_init_from_boot(struct su
+ 		ALIGN(sizeof(enum ATTR_TYPE), 8);
+ 
+ 	sbi->index_size = boot->index_size < 0
+-				  ? 1u << (-boot->index_size)
+-				  : (u32)boot->index_size << sbi->cluster_bits;
++		? 1u << (-boot->index_size)
++		: (u32)boot->index_size << sbi->cluster_bits;
+ 
+ 	sbi->volume.ser_num = le64_to_cpu(boot->serial_num);
+ 
+@@ -871,13 +902,6 @@ static int ntfs_init_from_boot(struct su
+ 	sb->s_maxbytes = 0xFFFFFFFFull << sbi->cluster_bits;
+ #endif
+ 
+-	/*
+-	 * Compute the MFT zone at two steps.
+-	 * It would be nice if we are able to allocate 1/8 of
+-	 * total clusters for MFT but not more then 512 MB.
+-	 */
+-	sbi->zone_max = min_t(CLST, 0x20000000 >> sbi->cluster_bits, clusters >> 3);
+-
+ 	err = 0;
+ 
+ out:
 
 
