@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3A31DBB13;
-	Tue, 25 Mar 2025 12:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF6425A63D;
+	Tue, 25 Mar 2025 12:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905900; cv=none; b=BXOxcXb8wzmh+ZT0TyfH5u0cYmKg45pH+fNWHrt7WLp2tFNuTtP2ffHFwex8YZAce1e7tGasLCorQK6sGWcTAsP/nVvlJlkpjgdHMR8e8xdpO0GDWde3GFc2Q8v7lU6ZeDFe+0zMq0dd6WqdkaP1ZfDvWdxYTbmHIeWwtwc+R6M=
+	t=1742905901; cv=none; b=PAhGB4OMDbpwxENDrmXYd/QrhC2D4beJyeMTpCr2q/tbKRhbuFtikugUoAzvyAsMqluajmDQEq5nf/UFhsA8jeZRG8pvWSW4hTv+n85Ld1IMz8svh0mL6TS30IeXTSZOz0HchpCo41bg36JQL85vBPTdfxnHbLT7gqt4Hblt304=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905900; c=relaxed/simple;
-	bh=/9Cv38kXIz06+8LLFRjUz9Vogg7H215cNutLO4luRHQ=;
+	s=arc-20240116; t=1742905901; c=relaxed/simple;
+	bh=bqax7SUXDmL0LkHTfV5Tg34wyVYg41YsDsSlGdafIhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fo3yTdhVGxINC4J7kbfqgd7oquT907ibyZA5Ng68IRL0OiZJgIEQeiQkvqFh8D6kgDvmpM05ViASC+R8tcN7yP+DXWUb+h6uFmW/qULedoWlyPjfM1Nosa7LJ4DFyfCXhSujsFd0ejUHLn4ZAy45WEeh8v+rQIIALqmhWQm/UmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hWeVrWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7hGJpKcQKD5pybdqvrCMCLxYZRIEMkE4Qdg1FdV50CHTcgC1jtTYUF+9U/U914HO9NS7U9zIepDRDkQJRQ62oGWB2324nw6rPCAoAAqhquEC+umamUQTYFu0s+M8Ws29GGm0ZVnLxUfVXqU02khz8BwFkwqXrvmf4FCFjTkUEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2STmhyRl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hWeVrWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6C0C4CEE9;
-	Tue, 25 Mar 2025 12:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2STmhyRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8151FC4CEE4;
+	Tue, 25 Mar 2025 12:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905900;
-	bh=/9Cv38kXIz06+8LLFRjUz9Vogg7H215cNutLO4luRHQ=;
+	s=korg; t=1742905901;
+	bh=bqax7SUXDmL0LkHTfV5Tg34wyVYg41YsDsSlGdafIhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hWeVrWMvwk6SGD/s5s8fKORt3ji9F+RF9uBVARbT9fASWaqHjIeJjOnNd9M/zlwH
-	 mQUQA1sOGb2FLrByKVZxc8JZtAXINPIWcRBEi6R2qt07sRSbsIW+SYvkvEoV0H6vRh
-	 5A7ArYn5ZHX+zxYC476itRvOX6umlF/ZPdnTpzzg=
+	b=2STmhyRlNwt1i6obLggX6P7vbkiNUUI2J+QzeGGW8wnFZzWa2NC1hbwzp4UhtaD7E
+	 ubsthgUl14hJ7HjFmRrbC61878OwoVMI8cd+02V1F+nhS7VVhZ9NChAbAXnVOqI93h
+	 7PRoyD36rPAW7AIUP1Asw0pVUntqNxvCIMXABaas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 008/119] soc: imx8m: Unregister cpufreq and soc dev in cleanup path
-Date: Tue, 25 Mar 2025 08:21:06 -0400
-Message-ID: <20250325122149.273751034@linuxfoundation.org>
+Subject: [PATCH 6.13 009/119] Revert "arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu"
+Date: Tue, 25 Mar 2025 08:21:07 -0400
+Message-ID: <20250325122149.300351600@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -52,76 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit cf7139aac463880cbd5c5e999c118fbe91631411 ]
+[ Upstream commit f00db31d235946853fb430de8c6aa1295efc8353 ]
 
-Unregister the cpufreq device and soc device when resource unwinding,
-otherwise there will be warning when do removing test:
-sysfs: cannot create duplicate filename '/devices/platform/imx-cpufreq-dt'
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.13.0-rc1-next-20241204
-Hardware name: NXP i.MX8MPlus EVK board (DT)
+There are reports that the pagetable walker cache coherency is not a
+given across the spectrum of SDM845/850 devices, leading to lock-ups
+and resets. It works fine on some devices (like the Dragonboard 845c,
+but not so much on the Lenovo Yoga C630).
 
-Fixes: 9cc832d37799 ("soc: imx8m: Probe the SoC driver as platform driver")
-Cc: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+This unfortunately looks like a fluke in firmware development, where
+likely somewhere in the vast hypervisor stack, a change to accommodate
+for this was only introduced after the initial software release (which
+often serves as a baseline for products).
+
+Revert the change to avoid additional guesswork around crashes.
+
+This reverts commit 6b31a9744b8726c69bb0af290f8475a368a4b805.
+
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/linux-arm-msm/20250215-yoga-dma-coherent-v1-1-2419ee184a81@linaro.org/
+Fixes: 6b31a9744b87 ("arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250225-topic-845_smmu_not_coherent-v1-1-98ca9d17471c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 8ac7658e3d525..3ed8161d7d28b 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -192,9 +192,20 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
- 	devm_kasprintf((dev), GFP_KERNEL, "%d.%d", ((soc_rev) >> 4) & 0xf, (soc_rev) & 0xf) : \
- 	"unknown"
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index cb9fae39334c8..5eb076a109f47 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -5159,7 +5159,6 @@ apps_smmu: iommu@15000000 {
+ 				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>;
+-			dma-coherent;
+ 		};
  
-+static void imx8m_unregister_soc(void *data)
-+{
-+	soc_device_unregister(data);
-+}
-+
-+static void imx8m_unregister_cpufreq(void *data)
-+{
-+	platform_device_unregister(data);
-+}
-+
- static int imx8m_soc_probe(struct platform_device *pdev)
- {
- 	struct soc_device_attribute *soc_dev_attr;
-+	struct platform_device *cpufreq_dev;
- 	const struct imx8_soc_data *data;
- 	struct device *dev = &pdev->dev;
- 	const struct of_device_id *id;
-@@ -239,11 +250,22 @@ static int imx8m_soc_probe(struct platform_device *pdev)
- 	if (IS_ERR(soc_dev))
- 		return PTR_ERR(soc_dev);
- 
-+	ret = devm_add_action(dev, imx8m_unregister_soc, soc_dev);
-+	if (ret)
-+		return ret;
-+
- 	pr_info("SoC: %s revision %s\n", soc_dev_attr->soc_id,
- 		soc_dev_attr->revision);
- 
--	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT))
--		platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
-+	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT)) {
-+		cpufreq_dev = platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
-+		if (IS_ERR(cpufreq_dev))
-+			return dev_err_probe(dev, PTR_ERR(cpufreq_dev),
-+					     "Failed to register imx-cpufreq-dev device\n");
-+		ret = devm_add_action(dev, imx8m_unregister_cpufreq, cpufreq_dev);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	return 0;
- }
+ 		anoc_1_tbu: tbu@150c5000 {
 -- 
 2.39.5
 
