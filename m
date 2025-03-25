@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B74F28F939;
-	Tue, 25 Mar 2025 12:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00151265CA1;
+	Tue, 25 Mar 2025 12:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905578; cv=none; b=S/pbaPnVFcQZuIofqkvaCKvLBuFFr50N4ifG1GapxIDMKsqO9fq9oGKDigJxPeY1Kn2a+YDJpb9YAkA7E6zZLjijvA1pm8FIbyL09HvSm1Wcgj1NUgF981u/OvU0g0bc0QkXE5z95Lj1fCCRrf67RwmxVQmMkURpqGDL10kRL8k=
+	t=1742905580; cv=none; b=GbxSuD0iD7qiYWtpU++2Ssq+a7WwUpILuuB9cX7WF0FjvtocqMeksNFddujPkZ66APIa1179lQSLOc+a5CusQrhw77NPKE5lxlTmNUUn97qtgx8oI5xpD7txf8LV4aPiZF42IRcFp093fKUsv91OViqBf/eddCs4utJQJjQAxCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905578; c=relaxed/simple;
-	bh=JYAFiaS/EYHzD/a7bgFP8GrD66A3FepF33gRvf+de30=;
+	s=arc-20240116; t=1742905580; c=relaxed/simple;
+	bh=XUeoSaC4ebgms/CYfMkI9g1r3iw+8/Kysa80R22eVfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMs483Mr+4Veb2L4jzAP2Q1CGs0gNbqOWLtDn9N+H4GwHIa4rgKvh12CeNccWpztYiDI1WyuD1OaZEVrdHasX1Aaz08WqlLRgNzlmkBlSaN/78mu8Wx2opQbCBOncCXeYYlpFVwawZlhM+fDJfKi02hwcrNmDmGlNSFaEGfyJC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoaEgMkQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrPBZybRJyyE64Ftu02vC9x+VPfF/TaUJ600p96e7z8/Uc60VR+9McwTR0sMaNvJEuSQYmeKW5j/wDtgZxKzqm9Gh/BKTyKF1KIClnwnwdmKzn1LdzEvDJB5NfFUacNvZH4XAFPGodwoHTDanCnpSM1k9YoHCYagJ3HwdGrHUxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg6LXBXU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoaEgMkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E93C4CEE9;
-	Tue, 25 Mar 2025 12:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg6LXBXU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78EBC4CEE4;
+	Tue, 25 Mar 2025 12:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905578;
-	bh=JYAFiaS/EYHzD/a7bgFP8GrD66A3FepF33gRvf+de30=;
+	s=korg; t=1742905579;
+	bh=XUeoSaC4ebgms/CYfMkI9g1r3iw+8/Kysa80R22eVfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoaEgMkQ8I+gGRLqjGJHCd4EPjdpdT+I7R7RsSEWbUTfXrVmNCCY8p93hqeY7Y1m4
-	 h5ioGk7Rnb5onR8XTPFOdF4/AB6OdgSVytAtE3lWU8XqAsIKts4PyP/fdx/7NXWUsJ
-	 3webSIN6M2xx6uBFSbsEcwdZ0vEaklLaWbAAHsbU=
+	b=sg6LXBXU6hBj1eUwc5S0wnqcLQU9bJhpfnbYy8y2snN7mQWznoGgZPrm3Vz5d1pet
+	 FBsx/zv33eTmEc3yLINqEJjrySGeF6Cj00XlXLDxBuB0hptYaDPeFZXqedoRj9IaLJ
+	 ReEh306+Cm7PoKSQD8x37mQanGmL5wvWyXBGTLSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/198] Xen/swiotlb: mark xen_swiotlb_fixup() __init
-Date: Tue, 25 Mar 2025 08:20:13 -0400
-Message-ID: <20250325122157.975417185@linuxfoundation.org>
+Subject: [PATCH 6.1 052/198] ALSA: hda/realtek: Limit mic boost on Positivo ARN50
+Date: Tue, 25 Mar 2025 08:20:14 -0400
+Message-ID: <20250325122158.001137295@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit 75ad02318af2e4ae669e26a79f001bd5e1f97472 ]
+[ Upstream commit 76b0a22d4cf7dc9091129560fdc04e73eb9db4cb ]
 
-It's sole user (pci_xen_swiotlb_init()) is __init, too.
+The internal mic boost on the Positivo ARN50 is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-Message-ID: <e1198286-99ec-41c1-b5ad-e04e285836c9@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Link: https://patch.msgid.link/20250201143930.25089-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/swiotlb-xen.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
-index 0893c1012de62..fe52c8cbf1364 100644
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -112,7 +112,7 @@ static int is_xen_swiotlb_buffer(struct device *dev, dma_addr_t dma_addr)
- }
- 
- #ifdef CONFIG_X86
--int xen_swiotlb_fixup(void *buf, unsigned long nslabs)
-+int __init xen_swiotlb_fixup(void *buf, unsigned long nslabs)
- {
- 	int rc;
- 	unsigned int order = get_order(IO_TLB_SEGSIZE << IO_TLB_SHIFT);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index e5e222e74d783..102af43f74423 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10333,6 +10333,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
 -- 
 2.39.5
 
