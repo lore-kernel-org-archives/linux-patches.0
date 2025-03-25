@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910232580F6;
-	Tue, 25 Mar 2025 12:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C4B2580F6;
+	Tue, 25 Mar 2025 12:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906130; cv=none; b=cnivAIJ9AdKjZGqp8ndAMHs2TrYOX3yYQ8u853UV8/5FrQnzwMVwPXxM/M7/FDhps89ZfXSCzegh0P/d2V/i9i+GLYqWqS8O4oVyqEZg6Q1UmL/f7cHuWLEkwVRVvPE8DKc+8dPboNmfOrsFfF7NuEAccOi7WvOmaz8GVzizIg0=
+	t=1742906132; cv=none; b=DqIBUCB/z72RrLt870DFUKTLc93QwnZOiR4nzmV+xJulPEaD8olIIRTdpCUrAp4EUErGEqnRTlg7aZEDvj/Buz78cgAaeFv446Qb8BYqQrsBuhgw4zNmZ+kVJIHKqoUJF3JaVSLAOx38ziEWFHPjQ2tYvo5sXh6XxBZhTFaTX78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906130; c=relaxed/simple;
-	bh=+8GBBTj2HCRA2Uw+tlnj5WZN55CZuFC7YIlVYBVqY+U=;
+	s=arc-20240116; t=1742906132; c=relaxed/simple;
+	bh=gIGPzaoYwvciBw5IFIFZJnshe2QXnqtDGCutBd8I1OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvBTkhp6mxbb7B3BCn90JPQMZYIHCon20CnlYUb5HQ6cp8HV/KTr+/qgHKrgwoRPJI5agJt2+K6nV2BYwJ+3YljlG7TFaFiRIkItZtvFvdDFJpvfOosSs2zsIFrQnbW6KmDmy/lBCMhdssUaVydAupdpOlMQok1r+GmuU0SL1TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1faraWTQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JnzFjIhjxr1A8fZTcaJOu7ihvTe99O9WbR05qJmFbTpPCau1xX+cfGZHmm6nXO6Rzb6eRlgpNF1kLnWr+iT1f3QDOIrZw9OFvmMtJDggmCx2NFWOAJzmv7ZC8L7WhddCHU+6W+HHW0uv7JooPz0jBb0I2tDR8uc/78yiFCq3Sns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdd+0A4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1faraWTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97F4C4CEE9;
-	Tue, 25 Mar 2025 12:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdd+0A4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA563C4CEE9;
+	Tue, 25 Mar 2025 12:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906130;
-	bh=+8GBBTj2HCRA2Uw+tlnj5WZN55CZuFC7YIlVYBVqY+U=;
+	s=korg; t=1742906131;
+	bh=gIGPzaoYwvciBw5IFIFZJnshe2QXnqtDGCutBd8I1OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1faraWTQLF225Pryjh58E5hvaPW1y/dauX0BfAxvF3FGWDAmP1axNjQ0Rf12air2u
-	 u/2F4muhxU3b+LGRkEayvhYG9FdwjTZrrY/6oBm45oA0wJxtdw+bhMbkbpgO+GC7SO
-	 wQmuI+dUpZPxbX6PAzYg+ll+KN21nhJsqQH2QsWU=
+	b=zdd+0A4NU6QYLCdpa0rMywSGD6YnOtd1OngkL+W6+7iWW8YHNXJ+Ix/WUH1O5RKiB
+	 1v6gbeQclUAhaVKKWXmYIAZC1xLrYdZ6H4QiLVVfvOAPqpoXwR9JyKItm8YnnhMoyB
+	 gR1AtW4X/nhLk97tb/GMDnAI91NKqQctJYaEwv9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 03/77] xfrm: fix tunnel mode TX datapath in packet offload mode
-Date: Tue, 25 Mar 2025 08:21:58 -0400
-Message-ID: <20250325122144.377172048@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.6 30/77] can: rcar_canfd: Fix page entries in the AFL list
+Date: Tue, 25 Mar 2025 08:22:25 -0400
+Message-ID: <20250325122145.140973824@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -52,91 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 5eddd76ec2fd1988f0a3450fde9730b10dd22992 ]
+commit 1dba0a37644ed3022558165bbb5cb9bda540eaf7 upstream.
 
-Packets that match the output xfrm policy are delivered to the netstack.
-In IPsec packet mode for tunnel mode, the HW is responsible for building
-the hard header and outer IP header. In such a situation, the inner
-header may refer to a network that is not directly reachable by the host,
-resulting in a failed neighbor resolution. The packet is then dropped.
-xfrm policy defines the netdevice to use for xmit so we can send packets
-directly to it.
+There are a total of 96 AFL pages and each page has 16 entries with
+registers CFDGAFLIDr, CFDGAFLMr, CFDGAFLP0r, CFDGAFLP1r holding
+the rule entries (r = 0..15).
 
-Makes direct xmit exclusive to tunnel mode, since some rules may apply
-in transport mode.
+Currently, RCANFD_GAFL* macros use a start variable to find AFL entries,
+which is incorrect as the testing on RZ/G3E shows ch1 and ch4
+gets a start value of 0 and the register contents are overwritten.
 
-Fixes: f8a70afafc17 ("xfrm: add TX datapath support for IPsec packet offload mode")
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by using rule_entry corresponding to the channel
+to find the page entries in the AFL list.
+
+Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250307170330.173425-3-biju.das.jz@bp.renesas.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_output.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/net/can/rcar/rcar_canfd.c |   28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
 
-diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
-index e5722c95b8bb3..9160a5e09041d 100644
---- a/net/xfrm/xfrm_output.c
-+++ b/net/xfrm/xfrm_output.c
-@@ -610,6 +610,40 @@ int xfrm_output_resume(struct sock *sk, struct sk_buff *skb, int err)
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -793,22 +793,14 @@ static void rcar_canfd_configure_control
  }
- EXPORT_SYMBOL_GPL(xfrm_output_resume);
  
-+static int xfrm_dev_direct_output(struct sock *sk, struct xfrm_state *x,
-+				  struct sk_buff *skb)
-+{
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net *net = xs_net(x);
-+	int err;
-+
-+	dst = skb_dst_pop(skb);
-+	if (!dst) {
-+		XFRM_INC_STATS(net, LINUX_MIB_XFRMOUTERROR);
-+		kfree_skb(skb);
-+		return -EHOSTUNREACH;
-+	}
-+	skb_dst_set(skb, dst);
-+	nf_reset_ct(skb);
-+
-+	err = skb_dst(skb)->ops->local_out(net, sk, skb);
-+	if (unlikely(err != 1)) {
-+		kfree_skb(skb);
-+		return err;
-+	}
-+
-+	/* In transport mode, network destination is
-+	 * directly reachable, while in tunnel mode,
-+	 * inner packet network may not be. In packet
-+	 * offload type, HW is responsible for hard
-+	 * header packet mangling so directly xmit skb
-+	 * to netdevice.
-+	 */
-+	skb->dev = x->xso.dev;
-+	__skb_push(skb, skb->dev->hard_header_len);
-+	return dev_queue_xmit(skb);
-+}
-+
- static int xfrm_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
+ static void rcar_canfd_configure_afl_rules(struct rcar_canfd_global *gpriv,
+-					   u32 ch)
++					   u32 ch, u32 rule_entry)
  {
- 	return xfrm_output_resume(sk, skb, 1);
-@@ -729,6 +763,13 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
- 			return -EHOSTUNREACH;
- 		}
+-	u32 cfg;
+-	int offset, start, page, num_rules = RCANFD_CHANNEL_NUMRULES;
++	int offset, page, num_rules = RCANFD_CHANNEL_NUMRULES;
++	u32 rule_entry_index = rule_entry % 16;
+ 	u32 ridx = ch + RCANFD_RFFIFO_IDX;
  
-+		/* Exclusive direct xmit for tunnel mode, as
-+		 * some filtering or matching rules may apply
-+		 * in transport mode.
-+		 */
-+		if (x->props.mode == XFRM_MODE_TUNNEL)
-+			return xfrm_dev_direct_output(sk, x, skb);
-+
- 		return xfrm_output_resume(sk, skb, 0);
+-	if (ch == 0) {
+-		start = 0; /* Channel 0 always starts from 0th rule */
+-	} else {
+-		/* Get number of Channel 0 rules and adjust */
+-		cfg = rcar_canfd_read(gpriv->base, RCANFD_GAFLCFG(ch));
+-		start = RCANFD_GAFLCFG_GETRNC(gpriv, 0, cfg);
+-	}
+-
+ 	/* Enable write access to entry */
+-	page = RCANFD_GAFL_PAGENUM(start);
++	page = RCANFD_GAFL_PAGENUM(rule_entry);
+ 	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLECTR,
+ 			   (RCANFD_GAFLECTR_AFLPN(gpriv, page) |
+ 			    RCANFD_GAFLECTR_AFLDAE));
+@@ -824,13 +816,13 @@ static void rcar_canfd_configure_afl_rul
+ 		offset = RCANFD_C_GAFL_OFFSET;
+ 
+ 	/* Accept all IDs */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, rule_entry_index), 0);
+ 	/* IDE or RTR is not considered for matching */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, rule_entry_index), 0);
+ 	/* Any data length accepted */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, rule_entry_index), 0);
+ 	/* Place the msg in corresponding Rx FIFO entry */
+-	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, start),
++	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, rule_entry_index),
+ 			   RCANFD_GAFLP1_GAFLFDP(ridx));
+ 
+ 	/* Disable write access to page */
+@@ -1857,6 +1849,7 @@ static int rcar_canfd_probe(struct platf
+ 	unsigned long channels_mask = 0;
+ 	int err, ch_irq, g_irq;
+ 	int g_err_irq, g_recc_irq;
++	u32 rule_entry = 0;
+ 	bool fdmode = true;			/* CAN FD only mode - default */
+ 	char name[9] = "channelX";
+ 	int i;
+@@ -2033,7 +2026,8 @@ static int rcar_canfd_probe(struct platf
+ 		rcar_canfd_configure_tx(gpriv, ch);
+ 
+ 		/* Configure receive rules */
+-		rcar_canfd_configure_afl_rules(gpriv, ch);
++		rcar_canfd_configure_afl_rules(gpriv, ch, rule_entry);
++		rule_entry += RCANFD_CHANNEL_NUMRULES;
  	}
  
--- 
-2.39.5
-
+ 	/* Configure common interrupts */
 
 
