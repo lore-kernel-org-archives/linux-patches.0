@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F442571AC;
-	Tue, 25 Mar 2025 12:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB85325C704;
+	Tue, 25 Mar 2025 12:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906228; cv=none; b=n9sf01wKQCkTOsD6OSdv+3Xhs34Bu9TYevpA/7FwGiHViNWl/r2gmw8+u7YWBQwoTElqzwo/qTJnn0uQ3G9rOlhHqVt5zVKu8B5FX/9JHWJX/vYtiwGee7yTBJfoLzmDNQ32msLfq2BF+u1h4HT1qcDCSeSiMsY1LO0Quk8HhcY=
+	t=1742906231; cv=none; b=mW4SF5a36tC8pc60xMtx5W7zvLMfzVD/MBqP5cZSVdbOZ6xMU8jzaA6FsVa4Oba2Tp3kEJZJxjSWgT6sKWFmvGhAK9mwBGBGAHU+WiJGb7Ef/0W7PoKzAaJMJ1ctTQ3sSLOhP/G84WDzKiuL+F6aiR2Znc919PjFZ/7WeGXJrGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906228; c=relaxed/simple;
-	bh=tde1+79mArFYMlN0jkb6Al7nQBXPJhdz83krGpbDxDc=;
+	s=arc-20240116; t=1742906231; c=relaxed/simple;
+	bh=d48tWPJTALppQeNJL28pzIsDCKSlip4k9if+zuWw6JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6RpO2srXq+08TiQ+TBKGJQdRMfCbzazN3ynrz5yvK0hW8yA5us8nRAcyrMthZWkpYuWWD6zY2ikFPt9pAC5VcymBmBSjiIucRGscry+s1DtvM7x/KEemTIINEBz6xEg4dl6J/+2LCM2pHikAe+8m8CrnOht5gGTXJmDBNIyUh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdoa6bl8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfBxQ9qPNaMF/5+xSiMVmLSwCApMKyq0BmZwaktZ0xKISAJys4za0X2/Qnt6p3Ry5DJiAyXY0GSMkQaAwJ6oR1ObB8FFKgFnC9bKJbkt4g5lEUdIU2n9HwR9CLGRiaT8fwvY/8VFgOkuizaTXUTGEqyRdNUO+GZZymXAlZ76F/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MD4YT2Yy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdoa6bl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D97C4CEEE;
-	Tue, 25 Mar 2025 12:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MD4YT2Yy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4E4C4CEE4;
+	Tue, 25 Mar 2025 12:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906228;
-	bh=tde1+79mArFYMlN0jkb6Al7nQBXPJhdz83krGpbDxDc=;
+	s=korg; t=1742906230;
+	bh=d48tWPJTALppQeNJL28pzIsDCKSlip4k9if+zuWw6JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdoa6bl8dIU4SXAoKrYGvWeBU7BaeWoZFCUhPQmtyO5aGEMBAlx/16xLskVQayGiA
-	 hQPQ+8L1H3RZJarzx8CHuIwwS9khzcQ6riG+YCWvQ8sVBGgJfskRgN8KJXeEGXD3kf
-	 FXgL3fbbYnH4BLpgPYtpWgBxnOugJfrFwMtsDX9o=
+	b=MD4YT2YyHUwsdYdNrtnfNKMu4c0OmNx0QY/NTkrjmZktxRtxOqoRGYARNd5VI5dbF
+	 rwq/XEjdgnl6gCjeCQKjXsI4e71wI4IoW0Y87sovqZFPXmrlruiDhWf4ClHTWpoDzS
+	 OV3yxT0MhavfbvCrOB0B65bPpCn9SbZuEweBtS20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.6 73/77] btrfs: make sure that WRITTEN is set on all metadata blocks
-Date: Tue, 25 Mar 2025 08:23:08 -0400
-Message-ID: <20250325122146.335803761@linuxfoundation.org>
+Subject: [PATCH 6.6 74/77] bnxt_en: Fix receive ring space parameters when XDP is active
+Date: Tue, 25 Mar 2025 08:23:09 -0400
+Message-ID: <20250325122146.370811636@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -54,150 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Shravya KN <shravya.k-n@broadcom.com>
 
-commit e03418abde871314e1a3a550f4c8afb7b89cb273 upstream.
+commit 3051a77a09dfe3022aa012071346937fdf059033 upstream.
 
-We previously would call btrfs_check_leaf() if we had the check
-integrity code enabled, which meant that we could only run the extended
-leaf checks if we had WRITTEN set on the header flags.
+The MTU setting at the time an XDP multi-buffer is attached
+determines whether the aggregation ring will be used and the
+rx_skb_func handler.  This is done in bnxt_set_rx_skb_mode().
 
-This leaves a gap in our checking, because we could end up with
-corruption on disk where WRITTEN isn't set on the leaf, and then the
-extended leaf checks don't get run which we rely on to validate all of
-the item pointers to make sure we don't access memory outside of the
-extent buffer.
+If the MTU is later changed, the aggregation ring setting may need
+to be changed and it may become out-of-sync with the settings
+initially done in bnxt_set_rx_skb_mode().  This may result in
+random memory corruption and crashes as the HW may DMA data larger
+than the allocated buffer size, such as:
 
-However, since 732fab95abe2 ("btrfs: check-integrity: remove
-CONFIG_BTRFS_FS_CHECK_INTEGRITY option") we no longer call
-btrfs_check_leaf() from btrfs_mark_buffer_dirty(), which means we only
-ever call it on blocks that are being written out, and thus have WRITTEN
-set, or that are being read in, which should have WRITTEN set.
+BUG: kernel NULL pointer dereference, address: 00000000000003c0
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 17 PID: 0 Comm: swapper/17 Kdump: loaded Tainted: G S         OE      6.1.0-226bf9805506 #1
+Hardware name: Wiwynn Delta Lake PVT BZA.02601.0150/Delta Lake-Class1, BIOS F0E_3A12 08/26/2021
+RIP: 0010:bnxt_rx_pkt+0xe97/0x1ae0 [bnxt_en]
+Code: 8b 95 70 ff ff ff 4c 8b 9d 48 ff ff ff 66 41 89 87 b4 00 00 00 e9 0b f7 ff ff 0f b7 43 0a 49 8b 95 a8 04 00 00 25 ff 0f 00 00 <0f> b7 14 42 48 c1 e2 06 49 03 95 a0 04 00 00 0f b6 42 33f
+RSP: 0018:ffffa19f40cc0d18 EFLAGS: 00010202
+RAX: 00000000000001e0 RBX: ffff8e2c805c6100 RCX: 00000000000007ff
+RDX: 0000000000000000 RSI: ffff8e2c271ab990 RDI: ffff8e2c84f12380
+RBP: ffffa19f40cc0e48 R08: 000000000001000d R09: 974ea2fcddfa4cbf
+R10: 0000000000000000 R11: ffffa19f40cc0ff8 R12: ffff8e2c94b58980
+R13: ffff8e2c952d6600 R14: 0000000000000016 R15: ffff8e2c271ab990
+FS:  0000000000000000(0000) GS:ffff8e3b3f840000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000003c0 CR3: 0000000e8580a004 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ __bnxt_poll_work+0x1c2/0x3e0 [bnxt_en]
 
-Add checks to make sure we have WRITTEN set appropriately, and then make
-sure __btrfs_check_leaf() always does the item checking.  This will
-protect us from file systems that have been corrupted and no longer have
-WRITTEN set on some of the blocks.
+To address the issue, we now call bnxt_set_rx_skb_mode() within
+bnxt_change_mtu() to properly set the AGG rings configuration and
+update rx_skb_func based on the new MTU value.
+Additionally, BNXT_FLAG_NO_AGG_RINGS is cleared at the beginning of
+bnxt_set_rx_skb_mode() to make sure it gets set or cleared based on
+the current MTU.
 
-This was hit on a crafted image tweaking the WRITTEN bit and reported by
-KASAN as out-of-bound access in the eb accessors. The example is a dir
-item at the end of an eb.
-
-  [2.042] BTRFS warning (device loop1): bad eb member start: ptr 0x3fff start 30572544 member offset 16410 size 2
-  [2.040] general protection fault, probably for non-canonical address 0xe0009d1000000003: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  [2.537] KASAN: maybe wild-memory-access in range [0x0005088000000018-0x000508800000001f]
-  [2.729] CPU: 0 PID: 2587 Comm: mount Not tainted 6.8.2 #1
-  [2.729] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  [2.621] RIP: 0010:btrfs_get_16+0x34b/0x6d0
-  [2.621] RSP: 0018:ffff88810871fab8 EFLAGS: 00000206
-  [2.621] RAX: 0000a11000000003 RBX: ffff888104ff8720 RCX: ffff88811b2288c0
-  [2.621] RDX: dffffc0000000000 RSI: ffffffff81dd8aca RDI: ffff88810871f748
-  [2.621] RBP: 000000000000401a R08: 0000000000000001 R09: ffffed10210e3ee9
-  [2.621] R10: ffff88810871f74f R11: 205d323430333737 R12: 000000000000001a
-  [2.621] R13: 000508800000001a R14: 1ffff110210e3f5d R15: ffffffff850011e8
-  [2.621] FS:  00007f56ea275840(0000) GS:ffff88811b200000(0000) knlGS:0000000000000000
-  [2.621] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [2.621] CR2: 00007febd13b75c0 CR3: 000000010bb50000 CR4: 00000000000006f0
-  [2.621] Call Trace:
-  [2.621]  <TASK>
-  [2.621]  ? show_regs+0x74/0x80
-  [2.621]  ? die_addr+0x46/0xc0
-  [2.621]  ? exc_general_protection+0x161/0x2a0
-  [2.621]  ? asm_exc_general_protection+0x26/0x30
-  [2.621]  ? btrfs_get_16+0x33a/0x6d0
-  [2.621]  ? btrfs_get_16+0x34b/0x6d0
-  [2.621]  ? btrfs_get_16+0x33a/0x6d0
-  [2.621]  ? __pfx_btrfs_get_16+0x10/0x10
-  [2.621]  ? __pfx_mutex_unlock+0x10/0x10
-  [2.621]  btrfs_match_dir_item_name+0x101/0x1a0
-  [2.621]  btrfs_lookup_dir_item+0x1f3/0x280
-  [2.621]  ? __pfx_btrfs_lookup_dir_item+0x10/0x10
-  [2.621]  btrfs_get_tree+0xd25/0x1910
-
-Reported-by: lei lu <llfamsec@gmail.com>
-CC: stable@vger.kernel.org # 6.7+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ copy more details from report ]
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 08450ea98ae9 ("bnxt_en: Fix max_mtu setting for multi-buf XDP")
+Co-developed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |   30 +++++++++++++++---------------
- fs/btrfs/tree-checker.h |    1 +
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1889,6 +1889,11 @@ enum btrfs_tree_block_status __btrfs_che
- 		return BTRFS_TREE_BLOCK_INVALID_LEVEL;
- 	}
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -3987,7 +3987,7 @@ int bnxt_set_rx_skb_mode(struct bnxt *bp
+ 	struct net_device *dev = bp->dev;
  
-+	if (unlikely(!btrfs_header_flag(leaf, BTRFS_HEADER_FLAG_WRITTEN))) {
-+		generic_err(leaf, 0, "invalid flag for leaf, WRITTEN not set");
-+		return BTRFS_TREE_BLOCK_WRITTEN_NOT_SET;
-+	}
+ 	if (page_mode) {
+-		bp->flags &= ~BNXT_FLAG_AGG_RINGS;
++		bp->flags &= ~(BNXT_FLAG_AGG_RINGS | BNXT_FLAG_NO_AGG_RINGS);
+ 		bp->flags |= BNXT_FLAG_RX_PAGE_MODE;
+ 
+ 		if (bp->xdp_prog->aux->xdp_has_frags)
+@@ -12796,6 +12796,14 @@ static int bnxt_change_mtu(struct net_de
+ 		bnxt_close_nic(bp, true, false);
+ 
+ 	dev->mtu = new_mtu;
 +
- 	/*
- 	 * Extent buffers from a relocation tree have a owner field that
- 	 * corresponds to the subvolume tree they are based on. So just from an
-@@ -1950,6 +1955,7 @@ enum btrfs_tree_block_status __btrfs_che
- 	for (slot = 0; slot < nritems; slot++) {
- 		u32 item_end_expected;
- 		u64 item_data_end;
-+		enum btrfs_tree_block_status ret;
- 
- 		btrfs_item_key_to_cpu(leaf, &key, slot);
- 
-@@ -2005,21 +2011,10 @@ enum btrfs_tree_block_status __btrfs_che
- 			return BTRFS_TREE_BLOCK_INVALID_OFFSETS;
- 		}
- 
--		/*
--		 * We only want to do this if WRITTEN is set, otherwise the leaf
--		 * may be in some intermediate state and won't appear valid.
--		 */
--		if (btrfs_header_flag(leaf, BTRFS_HEADER_FLAG_WRITTEN)) {
--			enum btrfs_tree_block_status ret;
--
--			/*
--			 * Check if the item size and content meet other
--			 * criteria
--			 */
--			ret = check_leaf_item(leaf, &key, slot, &prev_key);
--			if (unlikely(ret != BTRFS_TREE_BLOCK_CLEAN))
--				return ret;
--		}
-+		/* Check if the item size and content meet other criteria. */
-+		ret = check_leaf_item(leaf, &key, slot, &prev_key);
-+		if (unlikely(ret != BTRFS_TREE_BLOCK_CLEAN))
-+			return ret;
- 
- 		prev_key.objectid = key.objectid;
- 		prev_key.type = key.type;
-@@ -2049,6 +2044,11 @@ enum btrfs_tree_block_status __btrfs_che
- 	int level = btrfs_header_level(node);
- 	u64 bytenr;
- 
-+	if (unlikely(!btrfs_header_flag(node, BTRFS_HEADER_FLAG_WRITTEN))) {
-+		generic_err(node, 0, "invalid flag for node, WRITTEN not set");
-+		return BTRFS_TREE_BLOCK_WRITTEN_NOT_SET;
-+	}
++	/* MTU change may change the AGG ring settings if an XDP multi-buffer
++	 * program is attached.  We need to set the AGG rings settings and
++	 * rx_skb_func accordingly.
++	 */
++	if (READ_ONCE(bp->xdp_prog))
++		bnxt_set_rx_skb_mode(bp, true);
 +
- 	if (unlikely(level <= 0 || level >= BTRFS_MAX_LEVEL)) {
- 		generic_err(node, 0,
- 			"invalid level for node, have %d expect [1, %d]",
---- a/fs/btrfs/tree-checker.h
-+++ b/fs/btrfs/tree-checker.h
-@@ -51,6 +51,7 @@ enum btrfs_tree_block_status {
- 	BTRFS_TREE_BLOCK_INVALID_BLOCKPTR,
- 	BTRFS_TREE_BLOCK_INVALID_ITEM,
- 	BTRFS_TREE_BLOCK_INVALID_OWNER,
-+	BTRFS_TREE_BLOCK_WRITTEN_NOT_SET,
- };
+ 	bnxt_set_ring_params(bp);
  
- /*
+ 	if (netif_running(dev))
 
 
