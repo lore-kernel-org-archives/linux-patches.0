@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5A1267F45;
-	Tue, 25 Mar 2025 12:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BF5267B9F;
+	Tue, 25 Mar 2025 12:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905854; cv=none; b=Aq2XRpWtWtGHP9DUrYJLhOS5kLdpaVJ5F2QXQNHEaFG2mcOebMwjS+1Zd7gP+pDMVW565G5JDyUYT27TIVW3MxzJgSPeittmCF2OD8QKmMEwkNB6u78Y1VWbwu4wbSMxbmhWEWVvfklPk9t/TyBqz/9kNVjBW+8MO8ZE9p5J0Cg=
+	t=1742905856; cv=none; b=ddbtx+9MJn2q2moohVVw56P88ZhXFNpFIdu5hYRbAQXP6IUqKCcbb03FBgsgUdIb2woqWOkgnrzWtRMuc1ymvU9RA8hbEFy5LSQKnb1BSQLLtJiVUuiF4TsanhD8BKGDwq5nGbCLdmNW8fP3xU+RGGeKY77tBLWSQBqtaLKTz30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905854; c=relaxed/simple;
-	bh=emY2oEZnhLulebAJnX3iPjLYucJMB6klRmlNfPGvCnQ=;
+	s=arc-20240116; t=1742905856; c=relaxed/simple;
+	bh=TWHJs0Rgtgi/gjhepEJSMveLJDGM7aytLh+EYC+hBNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IE1qeNh2n8voFcoHWGnzGICfVcJBe+4zUx+7r3ni+0pJFDv6vPmxLt6VS8HpjUT4xlkrCiueSd8nXA8jenOd6/fAkDysodClDjVSABGO5Lf7fjWhISlIs/RwkfLZ/4mTEBi2EFuOp+BCem0itQfgxS7GYtIOgdqVJUAcbRm6Bkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdhAdy1K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plIWcNM5gLLDYirM+L3VWHoFrM7ov7wv6FltvUj8x8Fpwwman6gXChwJo0atuaGfOB7mYELZlGOU2KUDqyaiG8Qam2ISbnfYNsXUtDU0+3lhNqCmETNJt/7eTA3egvKiZyDwOgC+/LQxQVgf1PzNH83+hx1g8VahJ28P8slB474=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZVWCkuw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdhAdy1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9294C4CEE4;
-	Tue, 25 Mar 2025 12:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZVWCkuw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F66C4CEE4;
+	Tue, 25 Mar 2025 12:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905854;
-	bh=emY2oEZnhLulebAJnX3iPjLYucJMB6klRmlNfPGvCnQ=;
+	s=korg; t=1742905856;
+	bh=TWHJs0Rgtgi/gjhepEJSMveLJDGM7aytLh+EYC+hBNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdhAdy1K39VzU28p/Oybnops7kh7/wKVvYLvyPbNcyNc54+xuHBpcOux1IeDibXvX
-	 P0V3Dae9Epx8hpvoJquMmJK5bEJG3glZdNu4smAWjubmrV/FnkGITJICqoHU2Evb8w
-	 nnGIx/h4qJUKU2up2WGR+XxF+bf2rPtxawBOj08g=
+	b=SZVWCkuwUqynREwBj2IfmAag9RXrViAnQJV1eT7d1iOCXmbuCugdutYIp6Q4Qf53X
+	 IZCyKkOyEjRWQO99v3b8B/kOShFupHIYqi9HtA9HJUYyRHIovqSJTePoQe1ghIOP9g
+	 +wwSF/pNS4fxbbx+y4rFx8/cIrEGPO7GQFBa+kAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.1 172/198] drm/v3d: Dont run jobs that have errors flagged in its fence
-Date: Tue, 25 Mar 2025 08:22:14 -0400
-Message-ID: <20250325122201.159473533@linuxfoundation.org>
+	Christian Eggers <ceggers@arri.de>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 173/198] regulator: check that dummy regulator has been probed before using it
+Date: Tue, 25 Mar 2025 08:22:15 -0400
+Message-ID: <20250325122201.183300195@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -44,72 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Christian Eggers <ceggers@arri.de>
 
-commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
+commit 2c7a50bec4958f1d1c84d19cde518d0e96a676fd upstream.
 
-The V3D driver still relies on `drm_sched_increase_karma()` and
-`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
-The function `drm_sched_increase_karma()` marks the job as guilty, while
-`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
-that guilty job.
-
-Because of this, we must check whether the job’s DMA fence has been
-flagged with an error before executing the job. Otherwise, the same guilty
-job may be resubmitted indefinitely, causing repeated GPU resets.
-
-This patch adds a check for an error on the job's fence to prevent running
-a guilty job that was previously flagged when the GPU timed out.
-
-Note that the CPU and CACHE_CLEAN queues do not require this check, as
-their jobs are executed synchronously once the DRM scheduler starts them.
+Due to asynchronous driver probing there is a chance that the dummy
+regulator hasn't already been probed when first accessing it.
 
 Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Link: https://patch.msgid.link/20250313103051.32430-3-ceggers@arri.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -179,11 +179,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
- 	struct drm_device *dev = &v3d->drm;
- 	struct dma_fence *fence;
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -2091,6 +2091,10 @@ static int regulator_resolve_supply(stru
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
-+	v3d->tfu_job = job;
-+
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
- 		return NULL;
+ 		if (have_full_constraints()) {
+ 			r = dummy_regulator_rdev;
++			if (!r) {
++				ret = -EPROBE_DEFER;
++				goto out;
++			}
+ 			get_device(&r->dev);
+ 		} else {
+ 			dev_err(dev, "Failed to resolve %s-supply for %s\n",
+@@ -2108,6 +2112,10 @@ static int regulator_resolve_supply(stru
+ 			goto out;
+ 		}
+ 		r = dummy_regulator_rdev;
++		if (!r) {
++			ret = -EPROBE_DEFER;
++			goto out;
++		}
+ 		get_device(&r->dev);
+ 	}
  
--	v3d->tfu_job = job;
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
-@@ -217,6 +221,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 	struct dma_fence *fence;
- 	int i;
+@@ -2216,8 +2224,10 @@ struct regulator *_regulator_get(struct
+ 			 * enabled, even if it isn't hooked up, and just
+ 			 * provide a dummy.
+ 			 */
+-			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
+ 			rdev = dummy_regulator_rdev;
++			if (!rdev)
++				return ERR_PTR(-EPROBE_DEFER);
++			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
+ 			get_device(&rdev->dev);
+ 			break;
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
- 	v3d->csd_job = job;
- 
- 	v3d_invalidate_caches(v3d);
 
 
