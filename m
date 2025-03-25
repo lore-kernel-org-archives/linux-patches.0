@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C4B2580F6;
-	Tue, 25 Mar 2025 12:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73DE25BACB;
+	Tue, 25 Mar 2025 12:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906132; cv=none; b=DqIBUCB/z72RrLt870DFUKTLc93QwnZOiR4nzmV+xJulPEaD8olIIRTdpCUrAp4EUErGEqnRTlg7aZEDvj/Buz78cgAaeFv446Qb8BYqQrsBuhgw4zNmZ+kVJIHKqoUJF3JaVSLAOx38ziEWFHPjQ2tYvo5sXh6XxBZhTFaTX78=
+	t=1742906133; cv=none; b=BYwyZd6ySe1HoViSThl9gM6lKFe8rCUVq7NOWB3qUx7WLVhye4p0ER/08+RxChnhmRzAqE3Q0JKCJEa+qLy9n4K0G9lCRaCOtKRz5bLAFNPrkSfL75rp6WrOOYWLg7VX3X53pmtp4poDRNhkt/sjQ4GZH4TXt8b5bZfxVWCNK8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906132; c=relaxed/simple;
-	bh=gIGPzaoYwvciBw5IFIFZJnshe2QXnqtDGCutBd8I1OI=;
+	s=arc-20240116; t=1742906133; c=relaxed/simple;
+	bh=wFmCcyG5bvfqVlyzieFeSlvUA3qe74VsrrOpTG5R2+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnzFjIhjxr1A8fZTcaJOu7ihvTe99O9WbR05qJmFbTpPCau1xX+cfGZHmm6nXO6Rzb6eRlgpNF1kLnWr+iT1f3QDOIrZw9OFvmMtJDggmCx2NFWOAJzmv7ZC8L7WhddCHU+6W+HHW0uv7JooPz0jBb0I2tDR8uc/78yiFCq3Sns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdd+0A4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoC0IbdWTK0JNE0LW1MGqOQq9Wt5C/ApAxOr53/Tm+eMnLZ8IvtOB6RwrgOv8Cvsj9MHtiShXkUaV5DJRzmQ+5iqR/7iDv97U6ymMFM/Ful4xW8GIqmmPpp/aJrLcGNtGKmjtu0s11FcnWFTFPAxQSfYj8ModxpYaSvzRqbkC4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrNUZvyo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdd+0A4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA563C4CEE9;
-	Tue, 25 Mar 2025 12:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrNUZvyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F30AC4CEE9;
+	Tue, 25 Mar 2025 12:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906131;
-	bh=gIGPzaoYwvciBw5IFIFZJnshe2QXnqtDGCutBd8I1OI=;
+	s=korg; t=1742906133;
+	bh=wFmCcyG5bvfqVlyzieFeSlvUA3qe74VsrrOpTG5R2+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdd+0A4NU6QYLCdpa0rMywSGD6YnOtd1OngkL+W6+7iWW8YHNXJ+Ix/WUH1O5RKiB
-	 1v6gbeQclUAhaVKKWXmYIAZC1xLrYdZ6H4QiLVVfvOAPqpoXwR9JyKItm8YnnhMoyB
-	 gR1AtW4X/nhLk97tb/GMDnAI91NKqQctJYaEwv9M=
+	b=VrNUZvyopg4+0+fLe+C/nZquIpxkAzp0CP0Jvul+fr8Z8tC7naVwpvzpRhaD58wPH
+	 ui1fw8eisaodtYVGG1LbDU3lRmdJ3JuJqCYGdHX8qHI9LFEdSYzsr9bJxpYLop4xcM
+	 gg/ckRzlvjxXim29PIBvmI5JGYcoJKmEHJj5+oGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot+d7d8c418e8317899e88c@syzkaller.appspotmail.com,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 30/77] can: rcar_canfd: Fix page entries in the AFL list
-Date: Tue, 25 Mar 2025 08:22:25 -0400
-Message-ID: <20250325122145.140973824@linuxfoundation.org>
+Subject: [PATCH 6.6 31/77] can: ucan: fix out of bound read in strscpy() source
+Date: Tue, 25 Mar 2025 08:22:26 -0400
+Message-ID: <20250325122145.168858849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,96 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-commit 1dba0a37644ed3022558165bbb5cb9bda540eaf7 upstream.
+commit 1d22a122ffb116c3cf78053e812b8b21f8852ee9 upstream.
 
-There are a total of 96 AFL pages and each page has 16 entries with
-registers CFDGAFLIDr, CFDGAFLMr, CFDGAFLP0r, CFDGAFLP1r holding
-the rule entries (r = 0..15).
+Commit 7fdaf8966aae ("can: ucan: use strscpy() to instead of strncpy()")
+unintentionally introduced a one byte out of bound read on strscpy()'s
+source argument (which is kind of ironic knowing that strscpy() is meant
+to be a more secure alternative :)).
 
-Currently, RCANFD_GAFL* macros use a start variable to find AFL entries,
-which is incorrect as the testing on RZ/G3E shows ch1 and ch4
-gets a start value of 0 and the register contents are overwritten.
+Let's consider below buffers:
 
-Fix this issue by using rule_entry corresponding to the channel
-to find the page entries in the AFL list.
+  dest[len + 1]; /* will be NUL terminated */
+  src[len]; /* may not be NUL terminated */
 
-Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+When doing:
+
+  strncpy(dest, src, len);
+  dest[len] = '\0';
+
+strncpy() will read up to len bytes from src.
+
+On the other hand:
+
+  strscpy(dest, src, len + 1);
+
+will read up to len + 1 bytes from src, that is to say, an out of bound
+read of one byte will occur on src if it is not NUL terminated. Note
+that the src[len] byte is never copied, but strscpy() still needs to
+read it to check whether a truncation occurred or not.
+
+This exact pattern happened in ucan.
+
+The root cause is that the source is not NUL terminated. Instead of
+doing a copy in a local buffer, directly NUL terminate it as soon as
+usb_control_msg() returns. With this, the local firmware_str[] variable
+can be removed.
+
+On top of this do a couple refactors:
+
+  - ucan_ctl_payload->raw is only used for the firmware string, so
+    rename it to ucan_ctl_payload->fw_str and change its type from u8 to
+    char.
+
+  - ucan_device_request_in() is only used to retrieve the firmware
+    string, so rename it to ucan_get_fw_str() and refactor it to make it
+    directly handle all the string termination logic.
+
+Reported-by: syzbot+d7d8c418e8317899e88c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-can/67b323a4.050a0220.173698.002b.GAE@google.com/
+Fixes: 7fdaf8966aae ("can: ucan: use strscpy() to instead of strncpy()")
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250218143515.627682-2-mailhol.vincent@wanadoo.fr
 Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250307170330.173425-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |   28 +++++++++++-----------------
- 1 file changed, 11 insertions(+), 17 deletions(-)
+ drivers/net/can/usb/ucan.c |   43 ++++++++++++++++++-------------------------
+ 1 file changed, 18 insertions(+), 25 deletions(-)
 
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -793,22 +793,14 @@ static void rcar_canfd_configure_control
+--- a/drivers/net/can/usb/ucan.c
++++ b/drivers/net/can/usb/ucan.c
+@@ -186,7 +186,7 @@ union ucan_ctl_payload {
+ 	 */
+ 	struct ucan_ctl_cmd_get_protocol_version cmd_get_protocol_version;
+ 
+-	u8 raw[128];
++	u8 fw_str[128];
+ } __packed;
+ 
+ enum {
+@@ -424,18 +424,20 @@ static int ucan_ctrl_command_out(struct
+ 			       UCAN_USB_CTL_PIPE_TIMEOUT);
  }
  
- static void rcar_canfd_configure_afl_rules(struct rcar_canfd_global *gpriv,
--					   u32 ch)
-+					   u32 ch, u32 rule_entry)
+-static int ucan_device_request_in(struct ucan_priv *up,
+-				  u8 cmd, u16 subcmd, u16 datalen)
++static void ucan_get_fw_str(struct ucan_priv *up, char *fw_str, size_t size)
  {
--	u32 cfg;
--	int offset, start, page, num_rules = RCANFD_CHANNEL_NUMRULES;
-+	int offset, page, num_rules = RCANFD_CHANNEL_NUMRULES;
-+	u32 rule_entry_index = rule_entry % 16;
- 	u32 ridx = ch + RCANFD_RFFIFO_IDX;
+-	return usb_control_msg(up->udev,
+-			       usb_rcvctrlpipe(up->udev, 0),
+-			       cmd,
+-			       USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+-			       subcmd,
+-			       0,
+-			       up->ctl_msg_buffer,
+-			       datalen,
+-			       UCAN_USB_CTL_PIPE_TIMEOUT);
++	int ret;
++
++	ret = usb_control_msg(up->udev, usb_rcvctrlpipe(up->udev, 0),
++			      UCAN_DEVICE_GET_FW_STRING,
++			      USB_DIR_IN | USB_TYPE_VENDOR |
++			      USB_RECIP_DEVICE,
++			      0, 0, fw_str, size - 1,
++			      UCAN_USB_CTL_PIPE_TIMEOUT);
++	if (ret > 0)
++		fw_str[ret] = '\0';
++	else
++		strscpy(fw_str, "unknown", size);
+ }
  
--	if (ch == 0) {
--		start = 0; /* Channel 0 always starts from 0th rule */
+ /* Parse the device information structure reported by the device and
+@@ -1314,7 +1316,6 @@ static int ucan_probe(struct usb_interfa
+ 	u8 in_ep_addr;
+ 	u8 out_ep_addr;
+ 	union ucan_ctl_payload *ctl_msg_buffer;
+-	char firmware_str[sizeof(union ucan_ctl_payload) + 1];
+ 
+ 	udev = interface_to_usbdev(intf);
+ 
+@@ -1527,17 +1528,6 @@ static int ucan_probe(struct usb_interfa
+ 	 */
+ 	ucan_parse_device_info(up, &ctl_msg_buffer->cmd_get_device_info);
+ 
+-	/* just print some device information - if available */
+-	ret = ucan_device_request_in(up, UCAN_DEVICE_GET_FW_STRING, 0,
+-				     sizeof(union ucan_ctl_payload));
+-	if (ret > 0) {
+-		/* copy string while ensuring zero termination */
+-		strscpy(firmware_str, up->ctl_msg_buffer->raw,
+-			sizeof(union ucan_ctl_payload) + 1);
 -	} else {
--		/* Get number of Channel 0 rules and adjust */
--		cfg = rcar_canfd_read(gpriv->base, RCANFD_GAFLCFG(ch));
--		start = RCANFD_GAFLCFG_GETRNC(gpriv, 0, cfg);
+-		strcpy(firmware_str, "unknown");
 -	}
 -
- 	/* Enable write access to entry */
--	page = RCANFD_GAFL_PAGENUM(start);
-+	page = RCANFD_GAFL_PAGENUM(rule_entry);
- 	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLECTR,
- 			   (RCANFD_GAFLECTR_AFLPN(gpriv, page) |
- 			    RCANFD_GAFLECTR_AFLDAE));
-@@ -824,13 +816,13 @@ static void rcar_canfd_configure_afl_rul
- 		offset = RCANFD_C_GAFL_OFFSET;
+ 	/* device is compatible, reset it */
+ 	ret = ucan_ctrl_command_out(up, UCAN_COMMAND_RESET, 0, 0);
+ 	if (ret < 0)
+@@ -1555,7 +1545,10 @@ static int ucan_probe(struct usb_interfa
  
- 	/* Accept all IDs */
--	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, start), 0);
-+	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, rule_entry_index), 0);
- 	/* IDE or RTR is not considered for matching */
--	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, start), 0);
-+	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, rule_entry_index), 0);
- 	/* Any data length accepted */
--	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, start), 0);
-+	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, rule_entry_index), 0);
- 	/* Place the msg in corresponding Rx FIFO entry */
--	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, start),
-+	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, rule_entry_index),
- 			   RCANFD_GAFLP1_GAFLFDP(ridx));
+ 	/* initialisation complete, log device info */
+ 	netdev_info(up->netdev, "registered device\n");
+-	netdev_info(up->netdev, "firmware string: %s\n", firmware_str);
++	ucan_get_fw_str(up, up->ctl_msg_buffer->fw_str,
++			sizeof(up->ctl_msg_buffer->fw_str));
++	netdev_info(up->netdev, "firmware string: %s\n",
++		    up->ctl_msg_buffer->fw_str);
  
- 	/* Disable write access to page */
-@@ -1857,6 +1849,7 @@ static int rcar_canfd_probe(struct platf
- 	unsigned long channels_mask = 0;
- 	int err, ch_irq, g_irq;
- 	int g_err_irq, g_recc_irq;
-+	u32 rule_entry = 0;
- 	bool fdmode = true;			/* CAN FD only mode - default */
- 	char name[9] = "channelX";
- 	int i;
-@@ -2033,7 +2026,8 @@ static int rcar_canfd_probe(struct platf
- 		rcar_canfd_configure_tx(gpriv, ch);
- 
- 		/* Configure receive rules */
--		rcar_canfd_configure_afl_rules(gpriv, ch);
-+		rcar_canfd_configure_afl_rules(gpriv, ch, rule_entry);
-+		rule_entry += RCANFD_CHANNEL_NUMRULES;
- 	}
- 
- 	/* Configure common interrupts */
+ 	/* success */
+ 	return 0;
 
 
