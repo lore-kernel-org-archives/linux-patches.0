@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0540326A1D5;
-	Tue, 25 Mar 2025 12:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D7C25C6E4;
+	Tue, 25 Mar 2025 12:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906174; cv=none; b=rkV442skWm4LAZ3HuwzdWfGFMgjB6SCwooVJexOdm4VwtVaVxQO+sZ2iCJFpCMRxxhSm/46JO7FlBku4R5JIdQeR5s3eylQB7sfRpQS9faEh0jjQ8d4T+Pcr6lVULSEZLWe+0kbhlMQl6BlmkDk1uIzIvYMNq7DsaHkhJub5ekU=
+	t=1742906175; cv=none; b=OytxHsxOU60FvLNPLSLrztLgawOTAWW2ulTOhKoGtPzQZeoCupQa11cjzVdEjWrIOsBx1gaxyAnTmJbQue2B3EgMeaSm6G0a0exB4JjSN4eIyiBxlGgn4LboOKdcZ6OS7YnHkEQ7cySgP+Jz5rioikSTvlw6W/sxawmu03dkEJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906174; c=relaxed/simple;
-	bh=Iq3LkE2Ype7fiKVOsAViBJ6O48AT2CNerAReKJDTitc=;
+	s=arc-20240116; t=1742906175; c=relaxed/simple;
+	bh=3wP7bpwxOpd+kOpZbAGX4NB2/WLmHq5/ITuTW7mVprw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYvPFC9m1qb1Hh/a0InB9cxb7F27cAmQqjzTZbgTnk1X8TwJ9F7pm6V3QTHxC9YpUXiRfTVfW1U+O5C7MBHgmimaFm0T6zDkyKSs5xRhtq683VVqdlPaNUJw0o/NyihJITHUcoLrE2nF2awvVZCNQvmHLv1ao2j5qwmJOVW3DTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mguuyjFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AXPrdghXH0tlmChPd9KFJEKr+yzTLDkubaadKAmLsZq3yLMOEibAbCKuD8/41Lplt/5MtuLKzuQuJdvbvyvyfoIwJWgQ9d8CV7aQOMUWTq0JgSIemaIyG1ti1+bRVrRjBIV6hxOIOtAtcdbSlj9TzAwfdr+DHd5B7IOBfMcAEmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+BHxEfh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mguuyjFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FBEC4CEE4;
-	Tue, 25 Mar 2025 12:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+BHxEfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A672C4CEE4;
+	Tue, 25 Mar 2025 12:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906173;
-	bh=Iq3LkE2Ype7fiKVOsAViBJ6O48AT2CNerAReKJDTitc=;
+	s=korg; t=1742906175;
+	bh=3wP7bpwxOpd+kOpZbAGX4NB2/WLmHq5/ITuTW7mVprw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mguuyjFkOIEUlMhUH6uPbZ6LUIU+qBrKA0FUu/sOwFQ1MGY8PDPFmNju2rZbpy3TR
-	 tifrz2/GZLxT/1Kp1kJ4Tl6ZTABKQPrc6tuwCRpPSM1EUZkzkTaGBw6WXo73ptDMrR
-	 2YyXYZgbryBox4aN6Z6rLd8gIMoUYTjyU79PmLuk=
+	b=j+BHxEfhHrRSrvhIBe3x0XRAc471dU1zRjX1J950bZhP6b+VmERrcRG1JxQmH/0yO
+	 fsu+fbUnNga7lkxO5H+Zc1TYBskT0D36zPki93bY/q+W2VAAv8Kihn1iGjTsjjLslO
+	 u9CgGtqHonGFuIsY5wg3P0XOw21yhWaRuFKBu7tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Saranya R <quic_sarar@quicinc.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 54/77] soc: qcom: pdr: Fix the potential deadlock
-Date: Tue, 25 Mar 2025 08:22:49 -0400
-Message-ID: <20250325122145.765439890@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 55/77] drm/radeon: fix uninitialized size issue in radeon_vce_cs_parse()
+Date: Tue, 25 Mar 2025 08:22:50 -0400
+Message-ID: <20250325122145.789690454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -53,90 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saranya R <quic_sarar@quicinc.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 2eeb03ad9f42dfece63051be2400af487ddb96d2 upstream.
+commit dd8689b52a24807c2d5ce0a17cb26dc87f75235c upstream.
 
-When some client process A call pdr_add_lookup() to add the look up for
-the service and does schedule locator work, later a process B got a new
-server packet indicating locator is up and call pdr_locator_new_server()
-which eventually sets pdr->locator_init_complete to true which process A
-sees and takes list lock and queries domain list but it will timeout due
-to deadlock as the response will queued to the same qmi->wq and it is
-ordered workqueue and process B is not able to complete new server
-request work due to deadlock on list lock.
+On the off chance that command stream passed from userspace via
+ioctl() call to radeon_vce_cs_parse() is weirdly crafted and
+first command to execute is to encode (case 0x03000001), the function
+in question will attempt to call radeon_vce_cs_reloc() with size
+argument that has not been properly initialized. Specifically, 'size'
+will point to 'tmp' variable before the latter had a chance to be
+assigned any value.
 
-Fix it by removing the unnecessary list iteration as the list iteration
-is already being done inside locator work, so avoid it here and just
-call schedule_work() here.
+Play it safe and init 'tmp' with 0, thus ensuring that
+radeon_vce_cs_reloc() will catch an early error in cases like these.
 
-       Process A                        Process B
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-                                     process_scheduled_works()
-pdr_add_lookup()                      qmi_data_ready_work()
- process_scheduled_works()             pdr_locator_new_server()
-                                         pdr->locator_init_complete=true;
-   pdr_locator_work()
-    mutex_lock(&pdr->list_lock);
-
-     pdr_locate_service()                  mutex_lock(&pdr->list_lock);
-
-      pdr_get_domain_list()
-       pr_err("PDR: %s get domain list
-               txn wait failed: %d\n",
-               req->service_name,
-               ret);
-
-Timeout error log due to deadlock:
-
-"
- PDR: tms/servreg get domain list txn wait failed: -110
- PDR: service lookup for msm/adsp/sensor_pd:tms/servreg failed: -110
-"
-
-Thanks to Bjorn and Johan for letting me know that this commit also fixes
-an audio regression when using the in-kernel pd-mapper as that makes it
-easier to hit this race. [1]
-
-Link: https://lore.kernel.org/lkml/Zqet8iInnDhnxkT9@hovoldconsulting.com/ # [1]
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-CC: stable@vger.kernel.org
-Reviewed-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Saranya R <quic_sarar@quicinc.com>
-Co-developed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2fc5703abda2 ("drm/radeon: check VCE relocation buffer range v3")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2d52de55f9ee7aaee0e09ac443f77855989c6b68)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/pdr_interface.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/gpu/drm/radeon/radeon_vce.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -74,7 +74,6 @@ static int pdr_locator_new_server(struct
+--- a/drivers/gpu/drm/radeon/radeon_vce.c
++++ b/drivers/gpu/drm/radeon/radeon_vce.c
+@@ -557,7 +557,7 @@ int radeon_vce_cs_parse(struct radeon_cs
  {
- 	struct pdr_handle *pdr = container_of(qmi, struct pdr_handle,
- 					      locator_hdl);
--	struct pdr_service *pds;
+ 	int session_idx = -1;
+ 	bool destroyed = false, created = false, allocated = false;
+-	uint32_t tmp, handle = 0;
++	uint32_t tmp = 0, handle = 0;
+ 	uint32_t *size = &tmp;
+ 	int i, r = 0;
  
- 	mutex_lock(&pdr->lock);
- 	/* Create a local client port for QMI communication */
-@@ -86,12 +85,7 @@ static int pdr_locator_new_server(struct
- 	mutex_unlock(&pdr->lock);
- 
- 	/* Service pending lookup requests */
--	mutex_lock(&pdr->list_lock);
--	list_for_each_entry(pds, &pdr->lookups, node) {
--		if (pds->need_locator_lookup)
--			schedule_work(&pdr->locator_work);
--	}
--	mutex_unlock(&pdr->list_lock);
-+	schedule_work(&pdr->locator_work);
- 
- 	return 0;
- }
 
 
