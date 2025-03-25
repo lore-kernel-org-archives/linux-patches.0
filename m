@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E001DD9D3;
-	Tue, 25 Mar 2025 12:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9F725522E;
+	Tue, 25 Mar 2025 12:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905991; cv=none; b=BvNI9sID/CXy00krmN6ffICxdBzrbR7sjCJWRjAH5AcCPXic6sd737wSk6EJVJKsi4IRWU0TEUHrs8AVIt5R9C0JCAi/M+t3MBn7mnToIfdEhV4K1wql68WnqbwMUd8b0Atx3fZtg3rihE1ciF78BVQ5sLeeTyK3DLBPuFRwjO4=
+	t=1742905993; cv=none; b=rNaOvjrir75OWWZqbG8bJE0eXC6iIF26AXhBSPAq54g7opP9FvqeRmtW/d9s/b2eQPUpBu4yWjxesUFYatm+9mFcDkdMnzWFpk8lMc9wn2630F+ND5l05g6KdGHQtT70MbE1OW9o0BmxkTHawDbyF9UTxdYj6AIlEQ0F6oFd6UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905991; c=relaxed/simple;
-	bh=am6AZBp0ol5QNe0RzcichH4xt5YzDfiKmrjSLdAClRQ=;
+	s=arc-20240116; t=1742905993; c=relaxed/simple;
+	bh=YhBt0Ktrk6qRwT95rTa5TnX6Bs8W+zPSD2GKqdb0BiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTW/qaAY9EU8CndfMv3VZgkdIVZBpbxmybHF/2brT0sz8xANoKbkq8igDWqQg5duHZd0F4ndhSiCnB1OjO3741rThxlgBAiAqjVV6YN9OjSdb7Fx1JT1Ms93VJBEby5aaz0w0u8FVWX9/QrVMPq/unHo4bNlm1JZ11GMlbm1sPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poTvQsa7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T7l10KmrInrXyFa8SdufSjYxXyc7sHOc1zcNNFif3k4MNI4QOTr874qltCG1/CCLu38Vo/otFJvxWjuPcd6PKMn+Dm1HD3VnhcSdjkpntT0tVU7Lc76oZARRKBOCM/FDJgLUqnJk1DBGxf0926ibyt4ndSa86w5SDK7eZcyoy5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXcB7W4o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poTvQsa7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491B6C4CEE4;
-	Tue, 25 Mar 2025 12:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXcB7W4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389BFC4CEE4;
+	Tue, 25 Mar 2025 12:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905991;
-	bh=am6AZBp0ol5QNe0RzcichH4xt5YzDfiKmrjSLdAClRQ=;
+	s=korg; t=1742905993;
+	bh=YhBt0Ktrk6qRwT95rTa5TnX6Bs8W+zPSD2GKqdb0BiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poTvQsa70e3GnyJQnRH0/SHsXBCrqfXm0XLBnFOSAEznCrqrDu/zU/9q8EURUClg3
-	 JMAW491bUbl0jxO5y1gNITPUcBXB9yJzQHKYopX2EW+ga5GGIfQpTfP8Uy98BDDyyX
-	 jS2TJ9VVYVtE1lt4bN61TFpyJFfV53nB8DwLy7iY=
+	b=jXcB7W4oNf56OdaDSCf1VoyM6HMHGRpWXr7xmdKu3qKMP9KH7qW8TKGjZZkfFuEYV
+	 7rAV0Bh3GlW14mhdLCZUj/YYOf2U2pScl0dSnpA0fX8ZfZX2ABgsqwcnaaVc3u6w5x
+	 TD/9/jYDXmlrtUNQaB0C8paJYThyDEUYia+DNEeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincenzo Palazzo <vincenzopalazzodev@gmail.com>,
-	Peter Geis <pgwipeout@gmail.com>,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Chris Vogel <chris@z9.de>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.13 075/119] arm64: dts: rockchip: Add missing PCIe supplies to RockPro64 board dtsi
-Date: Tue, 25 Mar 2025 08:22:13 -0400
-Message-ID: <20250325122150.972612865@linuxfoundation.org>
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.13 076/119] mmc: sdhci-brcmstb: add cqhci suspend/resume to PM ops
+Date: Tue, 25 Mar 2025 08:22:14 -0400
+Message-ID: <20250325122150.997359607@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -55,85 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-commit ffcef3df680c437ca33ff434be18ec24d72907c2 upstream.
+commit 723ef0e20dbb2aa1b5406d2bb75374fc48187daa upstream.
 
-Add missing "vpcie0v9-supply" and "vpcie1v8-supply" properties to the "pcie0"
-node in the Pine64 RockPro64 board dtsi file.  This eliminates the following
-warnings from the kernel log:
+cqhci timeouts observed on brcmstb platforms during suspend:
+  ...
+  [  164.832853] mmc0: cqhci: timeout for tag 18
+  ...
 
-  rockchip-pcie f8000000.pcie: supply vpcie1v8 not found, using dummy regulator
-  rockchip-pcie f8000000.pcie: supply vpcie0v9 not found, using dummy regulator
+Adding cqhci_suspend()/resume() calls to disable cqe
+in sdhci_brcmstb_suspend()/resume() respectively to fix
+CQE timeouts seen on PM suspend.
 
-These additions improve the accuracy of hardware description of the RockPro64
-and, in theory, they should result in no functional changes to the way board
-works after the changes, because the "vcca_0v9" and "vcca_1v8" regulators are
-always enabled. [1][2]  However, extended reliability testing, performed by
-Chris, [3] has proven that the age-old issues with some PCI Express cards,
-when used with a Pine64 RockPro64, are also resolved.
-
-Those issues were already mentioned in the commit 43853e843aa6 (arm64: dts:
-rockchip: Remove unsupported node from the Pinebook Pro dts, 2024-04-01),
-together with a brief description of the out-of-tree enumeration delay patch
-that reportedly resolves those issues.  In a nutshell, booting a RockPro64
-with some PCI Express cards attached to it caused a kernel oops. [4]
-
-Symptomatically enough, to the commit author's best knowledge, only the Pine64
-RockPro64, out of all RK3399-based boards and devices supported upstream, has
-been reported to suffer from those PCI Express issues, and only the RockPro64
-had some of the PCI Express supplies missing in its DT.  Thus, perhaps some
-weird timing issues exist that caused the "vcca_1v8" always-on regulator,
-which is part of the RK808 PMIC, to actually not be enabled before the PCI
-Express is initialized and enumerated on the RockPro64, causing oopses with
-some PCIe cards, and the aforementioned enumeration delay patch [4] probably
-acted as just a workaround for the underlying timing issue.
-
-Admittedly, the Pine64 RockPro64 is a bit specific board by having a standard
-PCI Express slot, allowing use of various standard cards, but pretty much
-standard PCI Express cards have been attached to other RK3399 boards as well,
-and the commit author is unaware ot such issues reported for them.
-
-It's quite hard to be sure that the PCI Express issues are fully resolved by
-these additions to the DT, without some really extensive and time-consuming
-testing.  However, these additions to the DT can result in good things and
-improvements anyway, making them perfectly safe from the standpoint of being
-unable to do any harm or cause some unforeseen regressions.
-
-These changes apply to the both supported hardware revisions of the Pine64
-RockPro64, i.e. to the production-run revisions 2.0 and 2.1. [1][2]
-
-[1] https://files.pine64.org/doc/rockpro64/rockpro64_v21-SCH.pdf
-[2] https://files.pine64.org/doc/rockpro64/rockpro64_v20-SCH.pdf
-[3] https://z9.de/hedgedoc/s/nF4d5G7rg#reboot-tests-for-PCIe-improvements
-[4] https://lore.kernel.org/lkml/20230509153912.515218-1-vincenzopalazzodev@gmail.com/T/#u
-
-Fixes: bba821f5479e ("arm64: dts: rockchip: add PCIe nodes on rk3399-rockpro64")
+Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
 Cc: stable@vger.kernel.org
-Cc: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
-Cc: Peter Geis <pgwipeout@gmail.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>
-Reported-by: Diederik de Haas <didi.debian@cknow.org>
-Tested-by: Chris Vogel <chris@z9.de>
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/b39cfd7490d8194f053bf3971f13a43472d1769e.1740941097.git.dsimic@manjaro.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20250311165946.28190-1-kamal.dasu@broadcom.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/sdhci-brcmstb.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi
-@@ -673,6 +673,8 @@
- 	num-lanes = <4>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie_perst>;
-+	vpcie0v9-supply = <&vcca_0v9>;
-+	vpcie1v8-supply = <&vcca_1v8>;
- 	vpcie12v-supply = <&vcc12v_dcin>;
- 	vpcie3v3-supply = <&vcc3v3_pcie>;
- 	status = "okay";
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -503,8 +503,15 @@ static int sdhci_brcmstb_suspend(struct
+ 	struct sdhci_host *host = dev_get_drvdata(dev);
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
++	int ret;
+ 
+ 	clk_disable_unprepare(priv->base_clk);
++	if (host->mmc->caps2 & MMC_CAP2_CQE) {
++		ret = cqhci_suspend(host->mmc);
++		if (ret)
++			return ret;
++	}
++
+ 	return sdhci_pltfm_suspend(dev);
+ }
+ 
+@@ -529,6 +536,9 @@ static int sdhci_brcmstb_resume(struct d
+ 			ret = clk_set_rate(priv->base_clk, priv->base_freq_hz);
+ 	}
+ 
++	if (host->mmc->caps2 & MMC_CAP2_CQE)
++		ret = cqhci_resume(host->mmc);
++
+ 	return ret;
+ }
+ #endif
 
 
