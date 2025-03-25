@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860B825745C;
-	Tue, 25 Mar 2025 12:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA49290085;
+	Tue, 25 Mar 2025 12:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905591; cv=none; b=mUOFVKz/oeC1wWJ3Q4uO0VfzsZj3QK8yB9sVEVckiUoY7SdPi7OoT8IGioMDYbzV2kJC4iDLHm/7HuL6jUrMVW5sSbbrpI32ecI1ctU+D8y23CXM9u0dzWKFHnvijNsksp9CMsQtSt0LDqKsWdmL1o/6318XI12J2iqRPG0nxCY=
+	t=1742905593; cv=none; b=LU+YvdVXVd5Fb7IKSbD2QU6aE1JCorUbwa6UuUGlgvSCs/gjj9/LKSbDFPX6WK71+L/T/sx9ZvFO8TIlKOQ/tSq9XigGhpoO8UIq9XBgggyXA4J9Q10f7Va2SY2L8mMYkvvyuhuWe/01ibGWEQmcVcHtXddSQg2aVWYRJWbEbVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905591; c=relaxed/simple;
-	bh=dHFqGZB/o+zvBVM1Np0QC6tdfZwG1YyL1xBe94SUimw=;
+	s=arc-20240116; t=1742905593; c=relaxed/simple;
+	bh=Z/amHm39IzUSTEN7K9MlBCeNRUkWbtziOPwnNhlw02g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G0VFtcE3qZzIBnmhpIehWcsI1m5PXJbWK8CsECPGnKHTR8tnlugtuUUem0OrjUdNnPJATFNMA5waoqZgnmWf5zVpB6kWIJ86k6RUy8rKx8513txE9w7/Kl5H2ku7A2WnTO6/biflbC10M/cCAkcRe27dqjbLRKeCLEwYwRGiaUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQzwY3qz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bU5zcN+JtlsbOh1aTiabUhjbafLaxcKdxfafG6YLg5qj+01ldf5eLMPJ5CmNNGT8KpW8Q7xt9RhFMIgQkIM6oqxkRd7BuaN25Lvz8pQ5l7FXSL58m0QYB2yKyTfDTBsqAg0XJWXp8HNXgYXqczvb0g3E61/04HWrz5mM1H0AuAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9uQJYEQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQzwY3qz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0ADC4CEF1;
-	Tue, 25 Mar 2025 12:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9uQJYEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978B8C4CEF1;
+	Tue, 25 Mar 2025 12:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905591;
-	bh=dHFqGZB/o+zvBVM1Np0QC6tdfZwG1YyL1xBe94SUimw=;
+	s=korg; t=1742905592;
+	bh=Z/amHm39IzUSTEN7K9MlBCeNRUkWbtziOPwnNhlw02g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQzwY3qz4TS6TICigPiWMF8TwDoe7H4cyWADN6zecZ/I//8X2d8SMQNanA7YFHSLS
-	 o6YV4fh+3VGmrAFbGhGXrOktD9Decqu+oQuyvFXAF+SLMvaupYrZNaZOwM9uFDc8ac
-	 iZ4IbroeBhrnIy0wIyb5IW0AE74Rk8SRexEj/yFk=
+	b=p9uQJYEQRJbYdYhcc/w6OPFDagYhpUdDcbnh7LAlMHJQ45wjoHmKfO18gy3mLMm6N
+	 6MS6x7Lm4re+U6x6X7bXXfzbPabkLrBODQYgjNkjfXrAKK1ZmlTqk6d4jMQsEV/MY/
+	 S8aT/Ft1YI/mi7+qM9lj4JOTU3Q3sQTIKP3dTsSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <brahmajit.xyz@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Christopher Lentocha <christopherericlentocha@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/198] vboxsf: fix building with GCC 15
-Date: Tue, 25 Mar 2025 08:20:02 -0400
-Message-ID: <20250325122157.693448563@linuxfoundation.org>
+Subject: [PATCH 6.1 058/198] nvme-pci: quirk Acer FA100 for non-uniqueue identifiers
+Date: Tue, 25 Mar 2025 08:20:20 -0400
+Message-ID: <20250325122158.157405334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -46,53 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <brahmajit.xyz@gmail.com>
+From: Christopher Lentocha <christopherericlentocha@gmail.com>
 
-[ Upstream commit 4e7487245abcbc5a1a1aea54e4d3b33c53804bda ]
+[ Upstream commit fcd875445866a5219cf2be3101e276b21fc843f3 ]
 
-Building with GCC 15 results in build error
-fs/vboxsf/super.c:24:54: error: initializer-string for array of ‘unsigned char’ is too long [-Werror=unterminated-string-initialization]
-   24 | static const unsigned char VBSF_MOUNT_SIGNATURE[4] = "\000\377\376\375";
-      |                                                      ^~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+In order for two Acer FA100 SSDs to work in one PC (in the case of
+myself, a Lenovo Legion T5 28IMB05), and not show one drive and not
+the other, and sometimes mix up what drive shows up (randomly), these
+two lines of code need to be added, and then both of the SSDs will
+show up and not conflict when booting off of one of them. If you boot
+up your computer with both SSDs installed without this patch, you may
+also randomly get into a kernel panic (if the initrd is not set up) or
+stuck in the initrd "/init" process, it is set up, however, if you do
+apply this patch, there should not be problems with booting or seeing
+both contents of the drive. Tested with the btrfs filesystem with a
+RAID configuration of having the root drive '/' combined to make two
+256GB Acer FA100 SSDs become 512GB in total storage.
 
-Due to GCC having enabled -Werror=unterminated-string-initialization[0]
-by default. Separately initializing each array element of
-VBSF_MOUNT_SIGNATURE to ensure NUL termination, thus satisfying GCC 15
-and fixing the build error.
+Kernel Logs with patch applied (`dmesg -t | grep -i nvm`):
 
-[0]: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wno-unterminated-string-initialization
+```
+...
+nvme 0000:04:00.0: platform quirk: setting simple suspend
+nvme nvme0: pci function 0000:04:00.0
+nvme 0000:05:00.0: platform quirk: setting simple suspend
+nvme nvme1: pci function 0000:05:00.0
+nvme nvme1: missing or invalid SUBNQN field.
+nvme nvme1: allocated 64 MiB host memory buffer.
+nvme nvme0: missing or invalid SUBNQN field.
+nvme nvme0: allocated 64 MiB host memory buffer.
+nvme nvme1: 8/0/0 default/read/poll queues
+nvme nvme1: Ignoring bogus Namespace Identifiers
+nvme nvme0: 8/0/0 default/read/poll queues
+nvme nvme0: Ignoring bogus Namespace Identifiers
+nvme0n1: p1 p2
+...
+```
 
-Signed-off-by: Brahmajit Das <brahmajit.xyz@gmail.com>
-Link: https://lore.kernel.org/r/20250121162648.1408743-1-brahmajit.xyz@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Kernel Logs with patch not applied (`dmesg -t | grep -i nvm`):
+
+```
+...
+nvme 0000:04:00.0: platform quirk: setting simple suspend
+nvme nvme0: pci function 0000:04:00.0
+nvme 0000:05:00.0: platform quirk: setting simple suspend
+nvme nvme1: pci function 0000:05:00.0
+nvme nvme0: missing or invalid SUBNQN field.
+nvme nvme1: missing or invalid SUBNQN field.
+nvme nvme0: allocated 64 MiB host memory buffer.
+nvme nvme1: allocated 64 MiB host memory buffer.
+nvme nvme0: 8/0/0 default/read/poll queues
+nvme nvme1: 8/0/0 default/read/poll queues
+nvme nvme1: globally duplicate IDs for nsid 1
+nvme nvme1: VID:DID 1dbe:5216 model:Acer SSD FA100 256GB firmware:1.Z.J.2X
+nvme0n1: p1 p2
+...
+```
+
+Signed-off-by: Christopher Lentocha <christopherericlentocha@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/vboxsf/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/vboxsf/super.c b/fs/vboxsf/super.c
-index 74952e58cca06..48f33d4994dc8 100644
---- a/fs/vboxsf/super.c
-+++ b/fs/vboxsf/super.c
-@@ -21,7 +21,8 @@
- 
- #define VBOXSF_SUPER_MAGIC 0x786f4256 /* 'VBox' little endian */
- 
--static const unsigned char VBSF_MOUNT_SIGNATURE[4] = "\000\377\376\375";
-+static const unsigned char VBSF_MOUNT_SIGNATURE[4] = { '\000', '\377', '\376',
-+						       '\375' };
- 
- static int follow_symlinks;
- module_param(follow_symlinks, int, 0444);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index f939b6dc295e6..afcb9668dad98 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3577,6 +3577,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1cc1, 0x5350),   /* ADATA XPG GAMMIX S50 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1dbe, 0x5216),   /* Acer/INNOGRIT FA100/5216 NVMe SSD */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1dbe, 0x5236),   /* ADATA XPG GAMMIX S70 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1e49, 0x0021),   /* ZHITAI TiPro5000 NVMe SSD */
 -- 
 2.39.5
 
