@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13495267700;
-	Tue, 25 Mar 2025 12:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE733FF1;
+	Tue, 25 Mar 2025 12:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905804; cv=none; b=K64OCzGTOfiBsQFTLYu0j+M0cmazJ7Levjmcz/Mr5nlR8IOFxeSMBprSKdzPjE05UmIif7AGk1sPfcKWwb5VT/KtHKKsYWSRHc0uVP78ZLfebaV4S4nPIDnavBEplLifyPJ38mZuWWLS2GpFmDRwWNTPNivxsZ9RzE55ULRg7LE=
+	t=1742905806; cv=none; b=P13mEhCodVuvfJM1+MW6lsAZp6a+ZYy5qO4jvTQpqphCqZXUUuFEaCFjC0CfLjzEGFkhkWf2PML6OUPEfF1iILJh1Xdtez+O7zhIb6huBpJtuI17TnkH7b2/TWHVVPQRYNSqcZF7e41dq/UruqnQWD4D5sK1DtOQWdIgoTnN2LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905804; c=relaxed/simple;
-	bh=6LuDw8RrRA+22cRNRs30JjGt7T04/fUkpPR5yNNCSag=;
+	s=arc-20240116; t=1742905806; c=relaxed/simple;
+	bh=rSVJ/jDUxWHxRY7vzSb2QjI3rNNLgvGgsjzKS5vfDAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZB4SXDhCl0aBJu+ssiEW3p4uWsQFTA0K42aTyt7unfhn2BrS8s9zYueH/yVR5kYAv9lS4Pv8mTZUQI6suU2ODpc5IXF+Dvw7y1aaZ2xfJzpNZa4KEpd4JjRXdJii2Unl17IdHFFen3f38bPOpzQY5ubJx1J23UfkiDxksyoaqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xc5z8FSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/peQKWArFOlJgIvwIQW5DgXZT9NbK0ATTJOCIKI0APeTsPDMextqClP1MWjMJox628nkpQ/Jx/ahUKwt3ja0WZ5igg06zoFn4Kyz17hLzzuRo9tiKilEaDbeAxtFHOQe3v4JnkvbDVpFuEJhFeq+eyqQYjLT0JfK8zYIaivX/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlO/zX+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xc5z8FSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81DDC4CEE4;
-	Tue, 25 Mar 2025 12:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlO/zX+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FECBC4CEEF;
+	Tue, 25 Mar 2025 12:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905803;
-	bh=6LuDw8RrRA+22cRNRs30JjGt7T04/fUkpPR5yNNCSag=;
+	s=korg; t=1742905805;
+	bh=rSVJ/jDUxWHxRY7vzSb2QjI3rNNLgvGgsjzKS5vfDAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xc5z8FSZFJA8OxjcFI7hrjyn479jZBgkerUQZ0FJZM7dDaTTAvJbe3UeJYqwUKAMB
-	 MnjlgKKvXLqAIvtQgD8YzLdSt/oOj9tVkfPSJwYfdLM3++EKJrxLaOINAcb3NwQfPO
-	 4ckFwevuWHcSCH/H/1/eN6w+Gp/cluk6TJUEJV0s=
+	b=KlO/zX+uTaRHlHqusEBSAqIWNoaSnuwiPUoWQ+CXccpx+LwY5WtTQOvfbfVzvGJaX
+	 Ej59tz0InOSYNu4Ppu3vWooiMYeOwcYY6RMq9hTHV+kCVshFJq9bi4BXNPiYUPJ7kq
+	 fim60+i8WSNThE89TkSu87Odkqw1dkTh0gHKenws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/198] smb: client: Fix match_session bug preventing session reuse
-Date: Tue, 25 Mar 2025 08:21:44 -0400
-Message-ID: <20250325122200.382209903@linuxfoundation.org>
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 143/198] HID: apple: disable Fn key handling on the Omoton KB066
+Date: Tue, 25 Mar 2025 08:21:45 -0400
+Message-ID: <20250325122200.411267739@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,72 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit 605b249ea96770ac4fac4b8510a99e0f8442be5e ]
+commit 221cea1003d8a412e5ec64a58df7ab19b654f490 upstream.
 
-Fix a bug in match_session() that can causes the session to not be
-reused in some cases.
+Remove the fixup to make the Omoton KB066's F6 key F6 when not holding
+Fn. That was really just a hack to allow typing F6 in fnmode>0, and it
+didn't fix any of the other F keys that were likewise untypable in
+fnmode>0. Instead, because the Omoton's Fn key is entirely internal to
+the keyboard, completely disable Fn key translation when an Omoton is
+detected, which will prevent the hid-apple driver from interfering with
+the keyboard's built-in Fn key handling. All of the F keys, including
+F6, are then typable when Fn is held.
 
-Reproduction steps:
+The Omoton KB066 and the Apple A1255 both have HID product code
+05ac:022c. The self-reported name of every original A1255 when they left
+the factory was "Apple Wireless Keyboard". By default, Mac OS changes
+the name to "<username>'s keyboard" when pairing with the keyboard, but
+Mac OS allows the user to set the internal name of Apple keyboards to
+anything they like. The Omoton KB066's name, on the other hand, is not
+configurable: It is always "Bluetooth Keyboard". Because that name is so
+generic that a user might conceivably use the same name for a real Apple
+keyboard, detect Omoton keyboards based on both having that exact name
+and having HID product code 022c.
 
-mount.cifs //server/share /mnt/a -o credentials=creds
-mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
-cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
-
-mount.cifs //server/share /mnt/b -o credentials=creds,sec=ntlmssp
-mount.cifs //server/share /mnt/a -o credentials=creds
-cat /proc/fs/cifs/DebugData | grep SessionId | wc -l
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 819083cb6eed ("HID: apple: fix up the F6 key on the Omoton KB066 keyboard")
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Reviewed-by: Aditya Garg <gargaditya08@live.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/hid/hid-apple.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index db30c4b8a2211..01ce81f77e891 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1881,9 +1881,8 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- /* this function must be called with ses_lock and chan_lock held */
- static int match_session(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -339,6 +339,12 @@ static bool apple_is_non_apple_keyboard(
+ 	return false;
+ }
+ 
++static bool apple_is_omoton_kb066(struct hid_device *hdev)
++{
++	return hdev->product == USB_DEVICE_ID_APPLE_ALU_WIRELESS_ANSI &&
++		strcmp(hdev->name, "Bluetooth Keyboard") == 0;
++}
++
+ static inline void apple_setup_key_translation(struct input_dev *input,
+ 		const struct apple_key_translation *table)
  {
--	if (ctx->sectype != Unspecified &&
--	    ctx->sectype != ses->sectype)
--		return 0;
-+	struct TCP_Server_Info *server = ses->server;
-+	enum securityEnum ctx_sec, ses_sec;
+@@ -497,9 +503,6 @@ static int hidinput_apple_event(struct h
+ 		}
+ 	}
  
- 	/*
- 	 * If an existing session is limited to less channels than
-@@ -1892,11 +1891,20 @@ static int match_session(struct cifs_ses *ses, struct smb3_fs_context *ctx)
- 	if (ses->chan_max < ctx->max_channels)
- 		return 0;
+-	if (usage->hid == 0xc0301) /* Omoton KB066 quirk */
+-		code = KEY_F6;
+-
+ 	if (usage->code != code) {
+ 		input_event_with_scancode(input, usage->type, code, usage->hid, value);
  
--	switch (ses->sectype) {
-+	ctx_sec = server->ops->select_sectype(server, ctx->sectype);
-+	ses_sec = server->ops->select_sectype(server, ses->sectype);
-+
-+	if (ctx_sec != ses_sec)
-+		return 0;
-+
-+	switch (ctx_sec) {
-+	case IAKerb:
- 	case Kerberos:
- 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
- 			return 0;
- 		break;
-+	case NTLMv2:
-+	case RawNTLMSSP:
- 	default:
- 		/* NULL username means anonymous session */
- 		if (ses->user_name == NULL) {
--- 
-2.39.5
-
+@@ -679,7 +682,7 @@ static int apple_input_configured(struct
+ {
+ 	struct apple_sc *asc = hid_get_drvdata(hdev);
+ 
+-	if ((asc->quirks & APPLE_HAS_FN) && !asc->fn_found) {
++	if (((asc->quirks & APPLE_HAS_FN) && !asc->fn_found) || apple_is_omoton_kb066(hdev)) {
+ 		hid_info(hdev, "Fn key not found (Apple Wireless Keyboard clone?), disabling Fn key handling\n");
+ 		asc->quirks &= ~APPLE_HAS_FN;
+ 	}
 
 
