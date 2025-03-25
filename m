@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381D426E15E;
-	Tue, 25 Mar 2025 12:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA5F25D91C;
+	Tue, 25 Mar 2025 12:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906331; cv=none; b=GKTKh641/JVQl4ZpFG1qaK1TKsC0TXzGGj66nnDoh6aRvSjh/1jHZKXb2j1VEmWHFMUe4BHZTp31UljKbB4CPBNmwHxiVQdEh6NefA/6L7oBJ4rLri2dLN690z1P/KgRL+9swmD5C88vZ9Q1vwl44kcufKYZu9PIORNBFIhATU0=
+	t=1742906333; cv=none; b=d9flcyCuRX1PMibHvHLxNgr/kxpc3OiEAqe25iqQn4v8qnRNqpSGNIze8b682fEOw05OHYiYYlH7aTOuiaN6XQTZEhCaIEiGxaan69aE80TpfTFbDGeSevXKeBHRJ5IcTfua5tYJRZib8sn+TC0qYNIedwXPX3l30/YWNza9f9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906331; c=relaxed/simple;
-	bh=vrHaK+Cr5Rnu3Hg6LBYViEgkTwn1hkoXDwtv4YOQDVc=;
+	s=arc-20240116; t=1742906333; c=relaxed/simple;
+	bh=umdlJZoNZRZO+NGUKKz6ubV86vC9uSs3VUnogpWAqtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UP5jrn44LKh4IMyhF8nwMsGScaE7uSRnmPrQ3ptCUgarCf4qZzx3d5t2v7m3tV9XI6j+DXm4lM9REqD+V4G8XYnUgzwkVn4WMr+oCHEqTahfH3lwlUSCVbwBjUOaf3T/Ohibce77OQVGZFSDMjtVjUQi4RLNWtR3icp6kn8ZOpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbnJoGjT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pPe8CZLrfsBH7PoXhrSQOu1cV/Nx3SvJJphHrkZ/7Gi73x2DVuF8UilzHMK6AIQ0oiQ1znkFOCHZTFZLUqtmbIHPOz9z4FJH8SEfw7QHCCHVpuEv9ozNigoolhQbSBqZlchxbQwy7EFqIXzAJuEzgnbjcdoTMvRODLC0R3fFJKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTsiYzBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbnJoGjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA620C4CEE4;
-	Tue, 25 Mar 2025 12:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTsiYzBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA35C4CEE4;
+	Tue, 25 Mar 2025 12:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906331;
-	bh=vrHaK+Cr5Rnu3Hg6LBYViEgkTwn1hkoXDwtv4YOQDVc=;
+	s=korg; t=1742906332;
+	bh=umdlJZoNZRZO+NGUKKz6ubV86vC9uSs3VUnogpWAqtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbnJoGjT80fgnpMu9P4PcYJOfRMgDBlIpD2WB4+XTRxnM/cLTWn2ChAWg9EG6Ckyk
-	 wUu7Nrow3/JkEcjZnX8fdBJibCRJYIatIpquOPaAAioxYbz0xD1LyrQyJJqIdHCSeS
-	 lVp96RV/LdwHxxmT6q76EwllAztdrHfk3yFQ1hlg=
+	b=tTsiYzBUjw0gsznsKE7KnIdK9RLFGGYGWEl8mweJaCZsK3eIAD3fE92lupOvdoQXL
+	 s2576Qhzgd5mQbThmStA2K2VBCH7Uimn3GFwYx0y5Q1XyuXtwubQq+KJ4l+rStweLj
+	 KGo+6WsT5PXEEi/lp34DO+5L2/fuvOnefYZyqQwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.12 060/116] drm/v3d: Dont run jobs that have errors flagged in its fence
-Date: Tue, 25 Mar 2025 08:22:27 -0400
-Message-ID: <20250325122150.744164311@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 034/116] tracing: tprobe-events: Fix to clean up tprobe correctly when module unload
+Date: Tue, 25 Mar 2025 08:22:01 -0400
+Message-ID: <20250325122150.084780669@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -44,72 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
+[ Upstream commit 0a8bb688aa824863716fc570d818b8659a79309d ]
 
-The V3D driver still relies on `drm_sched_increase_karma()` and
-`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
-The function `drm_sched_increase_karma()` marks the job as guilty, while
-`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
-that guilty job.
+When unloading module, the tprobe events are not correctly cleaned
+up. Thus it becomes `fprobe-event` and never be enabled again even
+if loading the same module again.
 
-Because of this, we must check whether the job’s DMA fence has been
-flagged with an error before executing the job. Otherwise, the same guilty
-job may be resubmitted indefinitely, causing repeated GPU resets.
+For example;
 
-This patch adds a check for an error on the job's fence to prevent running
-a guilty job that was previously flagged when the GPU timed out.
+ # cd /sys/kernel/tracing
+ # modprobe trace_events_sample
+ # echo 't:my_tprobe foo_bar' >> dynamic_events
+ # cat dynamic_events
+t:tracepoints/my_tprobe foo_bar
+ # rmmod trace_events_sample
+ # cat dynamic_events
+f:tracepoints/my_tprobe foo_bar
 
-Note that the CPU and CACHE_CLEAN queues do not require this check, as
-their jobs are executed synchronously once the DRM scheduler starts them.
+As you can see, the second time my_tprobe starts with 'f' instead
+of 't'.
 
-Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This unregisters the fprobe and tracepoint callback when module is
+unloaded but marks the fprobe-event is tprobe-event.
+
+Link: https://lore.kernel.org/all/174158724946.189309.15826571379395619524.stgit@mhiramat.tok.corp.google.com/
+
+Fixes: 57a7e6de9e30 ("tracing/fprobe: Support raw tracepoints on future loaded modules")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/trace_fprobe.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -319,11 +319,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
- 	struct drm_device *dev = &v3d->drm;
- 	struct dma_fence *fence;
- 
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
-+	v3d->tfu_job = job;
-+
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
- 		return NULL;
- 
--	v3d->tfu_job = job;
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
-@@ -361,6 +365,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 	struct dma_fence *fence;
- 	int i, csd_cfg0_reg;
- 
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
- 	v3d->csd_job = job;
- 
- 	v3d_invalidate_caches(v3d);
+diff --git a/kernel/trace/trace_fprobe.c b/kernel/trace/trace_fprobe.c
+index 99048c3303822..092c31907c71a 100644
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -977,10 +977,13 @@ static int __tracepoint_probe_module_cb(struct notifier_block *self,
+ 					reenable_trace_fprobe(tf);
+ 			}
+ 		} else if (val == MODULE_STATE_GOING && tp_mod->mod == tf->mod) {
+-			tracepoint_probe_unregister(tf->tpoint,
++			unregister_fprobe(&tf->fp);
++			if (trace_fprobe_is_tracepoint(tf)) {
++				tracepoint_probe_unregister(tf->tpoint,
+ 					tf->tpoint->probestub, NULL);
+-			tf->tpoint = NULL;
+-			tf->mod = NULL;
++				tf->tpoint = TRACEPOINT_STUB;
++				tf->mod = NULL;
++			}
+ 		}
+ 	}
+ 	mutex_unlock(&event_mutex);
+-- 
+2.39.5
+
 
 
