@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CBE264F97;
-	Tue, 25 Mar 2025 12:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C26D257AC7;
+	Tue, 25 Mar 2025 12:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905532; cv=none; b=j/g3uKxkVVZB4PCSsksDAHuagw+olWLmjOxBaboxfN1l7HI7A+ZW5SN7/Ry758xrEJTJbCgGzUSoEbQK7Kfiq4siB2POCAGhI64LIDI0shy6k0ob7qNoI6lGiQfTNrA5mtc6qnJkLX0lSLQJqE5aOlaH0adtmgRxYcqTEQ5nric=
+	t=1742905534; cv=none; b=NlCMQVtf5w3oILSd+NPYbsn9tAHCTEGNJTvGnGyqJiTuT7/WHSU+sbXwldPXE18tvgNkBISWn52fZ8ObDcasrF9d0n1UQlo6+muEpjaLF4WXPYHTuTaTP6Fj9yO4SDpRrMUa3XU3sTqJH4Sn8ZSTyZFnje9mXTKZPrWw16GCfSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905532; c=relaxed/simple;
-	bh=BZmy/0TZsfbLeWJc/4mrOpu/MlfBB4jt2zkcPkOIre8=;
+	s=arc-20240116; t=1742905534; c=relaxed/simple;
+	bh=zUPigEdejwLhzN73JHQNntlRUecSI1KZvPk48N55m3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+p/vimOd65Kqt3InktpKXFlLmzDDVulhQVLb3ngRPCyI5mjpS33Rmxb0ZH5xn5IQEPQ89YYjzyn8FDhLE8xPYTEsXZwHlM9v4tRIm8xEgtrHmYAakcNbcTRUJ7bMmvfRiC4MJdYAgpA8MJxSwYyTP+7f90XtbvT5N2cukW6cg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIzU/BLX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1rZxGmWHxaBqyoX6M5SiFc9xgiY1rSr0lYjkaOgr+9i/xmAgXmbjPHapBJDye1eIJjuRtpgZ71BCdGMGtX2BKCOxJTRtmJakdiq7R3SVwyh9LTxOQSGadwICIWZna5neC2yg9xvz+7Aa6WI35L4ULRDKnKkFGZXIDfy0gi1MdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwum0LDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIzU/BLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE590C4CEE9;
-	Tue, 25 Mar 2025 12:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwum0LDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27DCC4CEE9;
+	Tue, 25 Mar 2025 12:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905532;
-	bh=BZmy/0TZsfbLeWJc/4mrOpu/MlfBB4jt2zkcPkOIre8=;
+	s=korg; t=1742905533;
+	bh=zUPigEdejwLhzN73JHQNntlRUecSI1KZvPk48N55m3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIzU/BLXrnleQEZ5qpE7aBXgUWVW7Yv3ofrmPidxkaw/2fEqwwhKKebRzauUZ/i/0
-	 CxY9RbryTF5xvgGvPVEEceGre/htsBsXQ1sRkvq3s1vjK08l9mWl7gNsmQRtHmypSc
-	 6fvawAouxwSNKhKmJe3yt3CYTgjMZUrfMkPPJcf0=
+	b=kwum0LDZk2tkmW4PRYvdjD8mg7Y6fPRqBromplyaiTZc0EyVP0E/itiq7Vf0tXMJ3
+	 ddZ0VvrDST3bEaDLclaSANcedQEhtjfxis0A2EZdzSNAB/NKsLGbN6aXmxN4vjrmbx
+	 83c2KBChJx4WdYTveg1ACunWqh/lp1P94l2vF+Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingi Cho <mincho@theori.io>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexey Kashavkin <akashavkin@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/198] net_sched: Prevent creation of classes with TC_H_ROOT
-Date: Tue, 25 Mar 2025 08:19:47 -0400
-Message-ID: <20250325122157.300215706@linuxfoundation.org>
+Subject: [PATCH 6.1 026/198] netfilter: nft_exthdr: fix offset with ipv4_find_option()
+Date: Tue, 25 Mar 2025 08:19:48 -0400
+Message-ID: <20250325122157.326614735@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,48 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Alexey Kashavkin <akashavkin@gmail.com>
 
-[ Upstream commit 0c3057a5a04d07120b3d0ec9c79568fceb9c921e ]
+[ Upstream commit 6edd78af9506bb182518da7f6feebd75655d9a0e ]
 
-The function qdisc_tree_reduce_backlog() uses TC_H_ROOT as a termination
-condition when traversing up the qdisc tree to update parent backlog
-counters. However, if a class is created with classid TC_H_ROOT, the
-traversal terminates prematurely at this class instead of reaching the
-actual root qdisc, causing parent statistics to be incorrectly maintained.
-In case of DRR, this could lead to a crash as reported by Mingi Cho.
+There is an incorrect calculation in the offset variable which causes
+the nft_skb_copy_to_reg() function to always return -EFAULT. Adding the
+start variable is redundant. In the __ip_options_compile() function the
+correct offset is specified when finding the function. There is no need
+to add the size of the iphdr structure to the offset.
 
-Prevent the creation of any Qdisc class with classid TC_H_ROOT
-(0xFFFFFFFF) across all qdisc types, as suggested by Jamal.
-
-Reported-by: Mingi Cho <mincho@theori.io>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 066a3b5b2346 ("[NET_SCHED] sch_api: fix qdisc_tree_decrease_qlen() loop")
-Link: https://patch.msgid.link/20250306232355.93864-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
+Signed-off-by: Alexey Kashavkin <akashavkin@gmail.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/nft_exthdr.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index cb379849c51a4..c395e7a98232d 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -2200,6 +2200,12 @@ static int tc_ctl_tclass(struct sk_buff *skb, struct nlmsghdr *n,
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index de588f7b69c45..60d18bd60d821 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -86,7 +86,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
+ 	unsigned char optbuf[sizeof(struct ip_options) + 40];
+ 	struct ip_options *opt = (struct ip_options *)optbuf;
+ 	struct iphdr *iph, _iph;
+-	unsigned int start;
+ 	bool found = false;
+ 	__be32 info;
+ 	int optlen;
+@@ -94,7 +93,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
+ 	iph = skb_header_pointer(skb, 0, sizeof(_iph), &_iph);
+ 	if (!iph)
+ 		return -EBADMSG;
+-	start = sizeof(struct iphdr);
  
-+	/* Prevent creation of traffic classes with classid TC_H_ROOT */
-+	if (clid == TC_H_ROOT) {
-+		NL_SET_ERR_MSG(extack, "Cannot create traffic class with classid TC_H_ROOT");
-+		return -EINVAL;
-+	}
-+
- 	new_cl = cl;
- 	err = -EOPNOTSUPP;
- 	if (cops->change)
+ 	optlen = iph->ihl * 4 - (int)sizeof(struct iphdr);
+ 	if (optlen <= 0)
+@@ -104,7 +102,7 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
+ 	/* Copy the options since __ip_options_compile() modifies
+ 	 * the options.
+ 	 */
+-	if (skb_copy_bits(skb, start, opt->__data, optlen))
++	if (skb_copy_bits(skb, sizeof(struct iphdr), opt->__data, optlen))
+ 		return -EBADMSG;
+ 	opt->optlen = optlen;
+ 
+@@ -119,18 +117,18 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
+ 		found = target == IPOPT_SSRR ? opt->is_strictroute :
+ 					       !opt->is_strictroute;
+ 		if (found)
+-			*offset = opt->srr + start;
++			*offset = opt->srr;
+ 		break;
+ 	case IPOPT_RR:
+ 		if (!opt->rr)
+ 			break;
+-		*offset = opt->rr + start;
++		*offset = opt->rr;
+ 		found = true;
+ 		break;
+ 	case IPOPT_RA:
+ 		if (!opt->router_alert)
+ 			break;
+-		*offset = opt->router_alert + start;
++		*offset = opt->router_alert;
+ 		found = true;
+ 		break;
+ 	default:
 -- 
 2.39.5
 
