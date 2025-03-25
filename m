@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A831D25A2B7;
-	Tue, 25 Mar 2025 12:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1F925A2B7;
+	Tue, 25 Mar 2025 12:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905615; cv=none; b=Emz1OukAyJprvXnWw6inevyUXjbkOE7ZVLZ/BZAgnYgN+8GZ5R3T3bZZyJsX/6vOGTnE/qZKm5eGXPTP2R3GhC7r/BfBgyO8O8dwS3Xf9jqZv7GODj1NS9JK25KG+N2RBusW5o5Dd/BuR6wkl4xlJPEcmbiPx9Esa8pHdUL6scw=
+	t=1742905616; cv=none; b=Swa56ZVBEKJQIsiQyhI50qqlNoiBPzQwIBVQVtMbEfx6mAiXTZw1oTzBnzt8hAPSS15xsSEztIibBJhwVNJ1AYWwmh0yraczB0ndRkEKBrHjCuks5I111rETtt1GuV6eO14BfV9PP7Yi2AZtg0wYz4mgQVW0EI4gDa2jl0wsfE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905615; c=relaxed/simple;
-	bh=2dHeBR38d2qUhafVcLfAiprXlU62wgcpTUdViy8tFlk=;
+	s=arc-20240116; t=1742905616; c=relaxed/simple;
+	bh=OBwoZUAfsAzTo3jX2S1O3c4HNUEptGHwxOnp0zw8EYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYyYqOEOcdH3hoerGdaCmtjW3IQe680nqjwHGHL3En2md3GILIzCfpIYKkwG1CRBOyOCDVhCBBMdTGyDHlgG9Nq3CZtN0ZLRvhg3XFEyKcILV98HTYw2VVbD8tLgf7CUTeLuEpJicpL8Fvu8UDHOB7qKIwxhIjadC6QnnW4Dh1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWdQhgP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFHBYaMVDaJ2KEwaCnGx6KbgNphC03VAvejAC7CMS3lgF3UY12Ibu7VYlQ4xtlCmBVNufHkgDp1Y92Z8IGi4fyTPn1UOZoAcNbyDPmVVt67SmXgEdji1o5h66rqBZQNQuCOTfsBXkb9AAY54pDKn0QfgoRrkIBOFHi8yYSIy0nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s38a7fUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWdQhgP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F366EC4CEE4;
-	Tue, 25 Mar 2025 12:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s38a7fUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D792AC4CEE4;
+	Tue, 25 Mar 2025 12:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905614;
-	bh=2dHeBR38d2qUhafVcLfAiprXlU62wgcpTUdViy8tFlk=;
+	s=korg; t=1742905616;
+	bh=OBwoZUAfsAzTo3jX2S1O3c4HNUEptGHwxOnp0zw8EYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWdQhgP0GhDH/eA4OVjpRQWbTLtyKJVKXn0DFqFkmZkyJM7fGVNKIV1CpXzEBA4mc
-	 mGANyUft/x4mrIRM8CFZW659jZh9e/i2eAeYALrFpYANwGlxWehzh7U4KSazQnsrDU
-	 XRyPBHBSDywYMC2TZFuzERtgnU3WCfC2t37ZGiHs=
+	b=s38a7fUvkUWPSmj7EK2F/1JHLeyUaECCaAtlHP2U4FBkr/oiQ0dI+WIn9j4GmuSoT
+	 +xPikLJ168MDPHm2Lpnlza+nDfxBeh3dqRLa7MSzKjF8LWE27U1dHk5hvEx1/MZWqE
+	 mP2zotVn0oyZ4fAf0xxr0qtFLHlNfvtNJPMD8Ylw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ingo Molnar <mingo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/198] x86/irq: Define trace events conditionally
-Date: Tue, 25 Mar 2025 08:20:30 -0400
-Message-ID: <20250325122158.428839561@linuxfoundation.org>
+Subject: [PATCH 6.1 069/198] mptcp: safety check before fallback
+Date: Tue, 25 Mar 2025 08:20:31 -0400
+Message-ID: <20250325122158.453189591@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,46 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 9de7695925d5d2d2085681ba935857246eb2817d ]
+[ Upstream commit db75a16813aabae3b78c06b1b99f5e314c1f55d3 ]
 
-When both of X86_LOCAL_APIC and X86_THERMAL_VECTOR are disabled,
-the irq tracing produces a W=1 build warning for the tracing
-definitions:
+Recently, some fallback have been initiated, while the connection was
+not supposed to fallback.
 
-  In file included from include/trace/trace_events.h:27,
-                 from include/trace/define_trace.h:113,
-                 from arch/x86/include/asm/trace/irq_vectors.h:383,
-                 from arch/x86/kernel/irq.c:29:
-  include/trace/stages/init.h:2:23: error: 'str__irq_vectors__trace_system_name' defined but not used [-Werror=unused-const-variable=]
+Add a safety check with a warning to detect when an wrong attempt to
+fallback is being done. This should help detecting any future issues
+quicker.
 
-Make the tracepoints conditional on the same symbosl that guard
-their usage.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250225213236.3141752-1-arnd@kernel.org
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250224-net-mptcp-misc-fixes-v1-3-f550f636b435@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/irq.c | 2 ++
+ net/mptcp/protocol.h | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
-index 766ffe3ba3137..439fdb3f5fdf1 100644
---- a/arch/x86/kernel/irq.c
-+++ b/arch/x86/kernel/irq.c
-@@ -23,8 +23,10 @@
- #include <asm/traps.h>
- #include <asm/thermal.h>
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 77e727d81cc24..25c1cda5c1bcf 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -981,6 +981,8 @@ static inline void __mptcp_do_fallback(struct mptcp_sock *msk)
+ 		pr_debug("TCP fallback already done (msk=%p)\n", msk);
+ 		return;
+ 	}
++	if (WARN_ON_ONCE(!READ_ONCE(msk->allow_infinite_fallback)))
++		return;
+ 	set_bit(MPTCP_FALLBACK_DONE, &msk->flags);
+ }
  
-+#if defined(CONFIG_X86_LOCAL_APIC) || defined(CONFIG_X86_THERMAL_VECTOR)
- #define CREATE_TRACE_POINTS
- #include <asm/trace/irq_vectors.h>
-+#endif
- 
- DEFINE_PER_CPU_SHARED_ALIGNED(irq_cpustat_t, irq_stat);
- EXPORT_PER_CPU_SYMBOL(irq_stat);
 -- 
 2.39.5
 
