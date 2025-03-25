@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D6625DB11;
-	Tue, 25 Mar 2025 12:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9008225DB11;
+	Tue, 25 Mar 2025 12:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906374; cv=none; b=dLvpXcXFPEmC8QV3c+5BwcEldzyvr8Y+Fpc1tTt3R8NnAzD2PBBkCEmgV7chzaFQH1elRCjcJ+06/yv+JGwl83UmQJXXi+Toah4voCAamwXhzM+4pwgd52npdp0Gs6HT8OwW9xsejLCluk0sxwgp7O4dem2wlWVUmksYnxr/XaY=
+	t=1742906376; cv=none; b=LpO6bvRMkDJj/JtRVJAy0IB6SCICTvxtCxIVJmWSeM8vRlNahBsElEBffLcf2Np3zP7d0FTY96E8Kh9/BrQreYVStItRZwhJNNQz5Wqw4cliwezYFYhVh65VmVSRoYHHgz/o4mWP+2+p+YL5GiB5MO3UkNx7yikOm+luEqaJx0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906374; c=relaxed/simple;
-	bh=t5y1I97bDnxoCChYnDYnhstp3Ae61jooXUFedxDWPB0=;
+	s=arc-20240116; t=1742906376; c=relaxed/simple;
+	bh=dN4cHZgQGkT7qf/1VxEeLXaLWJHpmOQDmJ6zJQq/or0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHdIfHFN+khC6Tc0ikPl8MidcNBd3yJNJB3sogBTZywMdDIdJMpbmClUQvB2f/3ikHoV6BZMvGTr6CIalLX7hAn+UDxgcfZbdat78jaCQj6rHfe6MlgE7fdv/quPNIAYuH8Tlm6pa/4E2pDy+8lfF0Hrtyu5ni8Yo+ApRxEIRbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGmKRPtg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPgs5tMuRFKnHwt6kMbdowXghgwIJaTBtRUPbD/Mb7rDN1lJVS8tJqgN3py8g1W+93hq2A+a3zWbc63RE5SQ3XvK1WIcf4bdRXEAkKsoe+niRorChUeaRB5aEjcTEXlie9r3TlMXrbgX/9T1pfWjBU6H+NRNZuh0zFaqxZcOXlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqhOpzh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGmKRPtg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E50CC4CEE4;
-	Tue, 25 Mar 2025 12:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqhOpzh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40630C4CEE4;
+	Tue, 25 Mar 2025 12:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906374;
-	bh=t5y1I97bDnxoCChYnDYnhstp3Ae61jooXUFedxDWPB0=;
+	s=korg; t=1742906376;
+	bh=dN4cHZgQGkT7qf/1VxEeLXaLWJHpmOQDmJ6zJQq/or0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGmKRPtgVb86yeNrj4vrBI8xxBs2F4GWebnqQut5ekjVI/DHoB9jXYjqYPVHPt7L4
-	 gTVidQAu+nzVH8sc0rZRlEvXHyRkusn4WSG9eT0ACfEW8cTaMSOdTaHLJPpMAfio03
-	 crSHnXJuKUjXILQ2mP0/32vfJPRfGQOfpag3QiPs=
+	b=LqhOpzh9TWjvMti6GpU/31+eXcDQRnVhhG8nPrUSXsNI7+Ms8WUcEvOmVXrVfVGRt
+	 OEuYPG4EhIaYFMMbkn6muaegqrW4R037aCSxACPgpxmeaZha3qkqNC39qE/RGvmm7R
+	 qGR4kXXwgK1p/hHsVsgk54sL3EAqhyLixpudAzCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Schneider <ben@bens.haus>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.12 083/116] efi/libstub: Avoid physical address 0x0 when doing random allocation
-Date: Tue, 25 Mar 2025 08:22:50 -0400
-Message-ID: <20250325122151.334383533@linuxfoundation.org>
+	syzbot+6105ffc1ded71d194d6d@syzkaller.appspotmail.com,
+	David Howells <dhowells@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 084/116] keys: Fix UAF in key_put()
+Date: Tue, 25 Mar 2025 08:22:51 -0400
+Message-ID: <20250325122151.359494355@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -51,45 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-commit cb16dfed0093217a68c0faa9394fa5823927e04c upstream.
+commit 75845c6c1a64483e9985302793dbf0dfa5f71e32 upstream.
 
-Ben reports spurious EFI zboot failures on a system where physical RAM
-starts at 0x0. When doing random memory allocation from the EFI stub on
-such a platform, a random seed of 0x0 (which means no entropy source is
-available) will result in the allocation to be placed at address 0x0 if
-sufficient space is available.
+Once a key's reference count has been reduced to 0, the garbage collector
+thread may destroy it at any time and so key_put() is not allowed to touch
+the key after that point.  The most key_put() is normally allowed to do is
+to touch key_gc_work as that's a static global variable.
 
-When this allocation is subsequently passed on to the decompression
-code, the 0x0 address is mistaken for NULL and the code complains and
-gives up.
+However, in an effort to speed up the reclamation of quota, this is now
+done in key_put() once the key's usage is reduced to 0 - but now the code
+is looking at the key after the deadline, which is forbidden.
 
-So avoid address 0x0 when doing random allocation, and set the minimum
-address to the minimum alignment.
+Fix this by using a flag to indicate that a key can be gc'd now rather than
+looking at the key's refcount in the garbage collector.
 
-Cc: <stable@vger.kernel.org>
-Reported-by: Ben Schneider <ben@bens.haus>
-Tested-by: Ben Schneider <ben@bens.haus>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 9578e327b2b4 ("keys: update key quotas in key_put()")
+Reported-by: syzbot+6105ffc1ded71d194d6d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/673b6aec.050a0220.87769.004a.GAE@google.com/
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: syzbot+6105ffc1ded71d194d6d@syzkaller.appspotmail.com
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/randomalloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/key.h |    1 +
+ security/keys/gc.c  |    4 +++-
+ security/keys/key.c |    2 ++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -75,6 +75,10 @@ efi_status_t efi_random_alloc(unsigned l
- 	if (align < EFI_ALLOC_ALIGN)
- 		align = EFI_ALLOC_ALIGN;
+--- a/include/linux/key.h
++++ b/include/linux/key.h
+@@ -236,6 +236,7 @@ struct key {
+ #define KEY_FLAG_ROOT_CAN_INVAL	7	/* set if key can be invalidated by root without permission */
+ #define KEY_FLAG_KEEP		8	/* set if key should not be removed */
+ #define KEY_FLAG_UID_KEYRING	9	/* set if key is a user or user session keyring */
++#define KEY_FLAG_FINAL_PUT	10	/* set if final put has happened on key */
  
-+	/* Avoid address 0x0, as it can be mistaken for NULL */
-+	if (alloc_min == 0)
-+		alloc_min = align;
-+
- 	size = round_up(size, EFI_ALLOC_ALIGN);
+ 	/* the key type and key description string
+ 	 * - the desc is used to match a key against search criteria
+--- a/security/keys/gc.c
++++ b/security/keys/gc.c
+@@ -218,8 +218,10 @@ continue_scanning:
+ 		key = rb_entry(cursor, struct key, serial_node);
+ 		cursor = rb_next(cursor);
  
- 	/* count the suitable slots in each memory map entry */
+-		if (refcount_read(&key->usage) == 0)
++		if (test_bit(KEY_FLAG_FINAL_PUT, &key->flags)) {
++			smp_mb(); /* Clobber key->user after FINAL_PUT seen. */
+ 			goto found_unreferenced_key;
++		}
+ 
+ 		if (unlikely(gc_state & KEY_GC_REAPING_DEAD_1)) {
+ 			if (key->type == key_gc_dead_keytype) {
+--- a/security/keys/key.c
++++ b/security/keys/key.c
+@@ -658,6 +658,8 @@ void key_put(struct key *key)
+ 				key->user->qnbytes -= key->quotalen;
+ 				spin_unlock_irqrestore(&key->user->lock, flags);
+ 			}
++			smp_mb(); /* key->user before FINAL_PUT set. */
++			set_bit(KEY_FLAG_FINAL_PUT, &key->flags);
+ 			schedule_work(&key_gc_work);
+ 		}
+ 	}
 
 
