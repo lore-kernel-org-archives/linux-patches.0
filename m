@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864E526FA45;
-	Tue, 25 Mar 2025 12:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514F226FA48;
+	Tue, 25 Mar 2025 12:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906389; cv=none; b=TfI0gB3C6dV9XDXcgZTawjoMJXeHljGJGMxNyLSMF2V7zLwvD3QxC43XoQo6yIAre9efTCIyd/CXZnYy3kgU7sJzrjtHGrB/nubL2aETw0VicWekc0XL7F9+X0RXPWrqq0gEx86hxsc+vgU+ariNd7XeCkcb6GLbtrGuSdDtqiw=
+	t=1742906391; cv=none; b=Mf6Q5dwzKw8adozB4P/a0P/JprLcve0CMy5xUUclpi3K5hbk2z90JondJfcIjxf17KhqmmFqsutvg2Ke3RPw+3qTXNIiBBawXmTrXoITUdX1KKkTV+g3rbmX8l50bimk2WYGZscEYBZ+TYTB4jm845z/JBEa81fKZTRChSCYSR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906389; c=relaxed/simple;
-	bh=nMKjN8mt05kli6QUZFV0DwfefupBhbpMxIxr4yPXh3E=;
+	s=arc-20240116; t=1742906391; c=relaxed/simple;
+	bh=9ikQk7QulwB2y9M8FsQbmc11/hFMNu9aoJrJh9XvZg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOQCTVFeCJOiOB57n2XLw/a38ka7eRTGic2TeanDI+S1cZyYQWm+yH7wIcIIoZfnmH5QlNv1oi9C9Obbahb+FDhM53DZj+1JnRXVpma0a3DcCNuo3ELM1ZP2qqq1ARPLUOIKFktrmcZ9o+4vcBnqlwyH4s6F4h+VjxF+1pq8ifQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XC89wDpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qT0zErqm/hkjTK8kRnm5lvJxOCgIRnSGEAjJ56Rz5talltLHfz/0HDiPWz2BOqK94Lv971OtWxogISGlsbbRRb5ITWs8iHNZL/JvN63cL7X0IghuwVZcav14dMcjleC3TMJR/o58PJYSB4oRjT6MB+aDwhqYQpys/g092/Z3+e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzqmInjD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XC89wDpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3936AC4CEE4;
-	Tue, 25 Mar 2025 12:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzqmInjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034B6C4CEE9;
+	Tue, 25 Mar 2025 12:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906389;
-	bh=nMKjN8mt05kli6QUZFV0DwfefupBhbpMxIxr4yPXh3E=;
+	s=korg; t=1742906391;
+	bh=9ikQk7QulwB2y9M8FsQbmc11/hFMNu9aoJrJh9XvZg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XC89wDpLmq0HN1Ee3ltqeQ7zEg6pw/JMKjUWYrqDkByY2MhH7+gQCpYcdrshsXvB3
-	 BAEfS7yNf3D1eEBax4WB4VLX8/PNyqIh18LZsoFNNQEe1s4u55nn1ScxqqblQ38ZZg
-	 /EYI7IHu+kiiln8RLRcitjv2gUZmE1nhpDpLeYNA=
+	b=tzqmInjD8Ocm9x0DspzG1YjaFxL6rB/DnsmvxIL+wTrckxZhLnXykaqRWQxPMdfn+
+	 UnsMEbUNTzBS1OZt0wBCYIuJn+b7g4o/0T8dfdY1AC//JV1+KPswV7q27kuqqQNyUf
+	 gnMONOp+FOikIpRp++EtdvvzDyoZ67MLcdSL5kYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Yilin Chen <Yilin.Chen@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 091/116] drm/amdgpu/gfx12: correct cleanup of me field with gfx_v12_0_me_fini()
-Date: Tue, 25 Mar 2025 08:22:58 -0400
-Message-ID: <20250325122151.538551387@linuxfoundation.org>
+Subject: [PATCH 6.12 092/116] drm/amd/display: Fix message for support_edp0_on_dp1
+Date: Tue, 25 Mar 2025 08:22:59 -0400
+Message-ID: <20250325122151.562659075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -50,35 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Yilin Chen <Yilin.Chen@amd.com>
 
-commit 86730b5261d4d8dae3f5b97709d40d694ecf1ddf upstream.
+commit 35f0f9f421390f66cb062f4d79f4924af5f55b04 upstream.
 
-In gfx_v12_0_cp_gfx_load_me_microcode_rs64(), gfx_v12_0_pfp_fini() is
-incorrectly used to free 'me' field of 'gfx', since gfx_v12_0_pfp_fini()
-can only release 'pfp' field of 'gfx'. The release function of 'me' field
-should be gfx_v12_0_me_fini().
+[WHY]
+The info message was wrong when support_edp0_on_dp1 is enabled
 
-Fixes: 52cb80c12e8a ("drm/amdgpu: Add gfx v12_0 ip block support (v6)")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+[HOW]
+Use correct info message for support_edp0_on_dp1
+
+Fixes: f6d17270d18a ("drm/amd/display: add a quirk to enable eDP0 on DP1")
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Yilin Chen <Yilin.Chen@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ebdc52607a46cda08972888178c6aa9cd6965141)
-Cc: stable@vger.kernel.org # 6.12.x
+(cherry picked from commit 79538e6365c99d7b1c3e560d1ea8d11ef8313465)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    2 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -2395,7 +2395,7 @@ static int gfx_v12_0_cp_gfx_load_me_micr
- 				      (void **)&adev->gfx.me.me_fw_data_ptr);
- 	if (r) {
- 		dev_err(adev->dev, "(%d) failed to create me data bo\n", r);
--		gfx_v12_0_pfp_fini(adev);
-+		gfx_v12_0_me_fini(adev);
- 		return r;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1720,7 +1720,7 @@ static void retrieve_dmi_info(struct amd
  	}
+ 	if (quirk_entries.support_edp0_on_dp1) {
+ 		init_data->flags.support_edp0_on_dp1 = true;
+-		drm_info(dev, "aux_hpd_discon_quirk attached\n");
++		drm_info(dev, "support_edp0_on_dp1 attached\n");
+ 	}
+ }
  
 
 
