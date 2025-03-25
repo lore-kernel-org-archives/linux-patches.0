@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75B52571AC;
-	Tue, 25 Mar 2025 12:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF56E2571AC;
+	Tue, 25 Mar 2025 12:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906102; cv=none; b=GYHVXtt/q0tQ+fIuMAFUg7kFKeJPN9ddhF985FJMSnsBy+JmmtzUN8mGXXwEkVLnUaODuanIMBr2tul1hmOdRTkGAdLTNpppP8xLTUIhAsCzONXz05qcG2Q085pQBoUGmV/eAHPFZLB8CheEylImkSKggcUjBuZ2omBtrHmq3R0=
+	t=1742906103; cv=none; b=ItdAkUQLdL4EpPL57yvtUQ3SmOuwLRKYVNTDbMtemu1plTBnb9gXgMzzegbvr5O1cYKhtjfagUBmb8M/5b4X/NZ1jKv8KGDrAd3w/o32dnrY+Cs/OOWI3v/+wIyojAQ8UdM3tMa2/Yw9Oaj+rNU9Sf0NQm8ZV5vTAUYvHd40O5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906102; c=relaxed/simple;
-	bh=FhVwOX8TSfFTAZEU+tXTZWxIFULehn1hjx+FVLrBfpk=;
+	s=arc-20240116; t=1742906103; c=relaxed/simple;
+	bh=Z2un9KLc5Ete6KMzEL1hv/ku1nAnyjlUCaBeApRx/B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kBSIiGoGOBpsK+/QmdyAGDCHxABpBhlBHVIsQo7rxDZ1hk3IyWRtNiXh3KQOIDhYfZUrn87S3L0NlPkC9E+iTLg/czReqYY36tSvh8NkxC4g57nVed3ZhXwO1ZWu9YdfMniemqc/72bKfw6Z1+zOejzxgqVcgwHDWn1WOrJOdHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhdgGNhT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6eX1V2Eo8y0smCIZk6KfpWeH0rpO57QyI9mKrWikoEZkFgUD8aZt3bvOAZEKhSOrZLQxl64JlwSgdhz+b+T6Nl84pxUdlM7Md3MXcGDliWwpn31QVYvB0OlVMiElMFPKyxa1Nfmj7DHceEcc++yHiwiw3wr9MOSD9kmSIQIkLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzCtouzX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhdgGNhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B55C4CEE9;
-	Tue, 25 Mar 2025 12:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzCtouzX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FCCC4CEE4;
+	Tue, 25 Mar 2025 12:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906101;
-	bh=FhVwOX8TSfFTAZEU+tXTZWxIFULehn1hjx+FVLrBfpk=;
+	s=korg; t=1742906103;
+	bh=Z2un9KLc5Ete6KMzEL1hv/ku1nAnyjlUCaBeApRx/B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhdgGNhTQ9D+lhD235i9i1/sn3lJnwdFTBpja6Mixwm7SesxqbTr2+0z1vLU6kQzw
-	 BkJvXMbX7hpKo1r7Gg4LgtoZHdy2V5vS3/j7XYw6RoplFD+DwWSHP80qN+JWYe8HPe
-	 cvizFatk5vhZ3zK7wRYwiAvLkR8G1OoRIM2qmW6A=
+	b=VzCtouzXb/1w3BJ1nhOlmSzEI8owHd0m5B/s7A3L7OeyTM2/olk+pMNE3j1CBG9Ef
+	 gyxiKuTDfAQTHFJPRw7MTSdFwIGcVgplLc+3V6NcGd8/EoA/C8HoiwYQ57NHTceZ6K
+	 5ALax42iBIeUzhQicr53kXcvn6hjgRaKdk226crw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/77] RDMA/hns: Fix unmatched condition in error path of alloc_user_qp_db()
-Date: Tue, 25 Mar 2025 08:22:11 -0400
-Message-ID: <20250325122144.766763582@linuxfoundation.org>
+Subject: [PATCH 6.6 17/77] RDMA/hns: Fix a missing rollback in error path of hns_roce_create_qp_common()
+Date: Tue, 25 Mar 2025 08:22:12 -0400
+Message-ID: <20250325122144.796646380@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -53,60 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit b9f59a24ba35a7d955a9f8e148dd9f85b7b40a01 ]
+[ Upstream commit 444907dd45cbe62fd69398805b6e2c626fab5b3a ]
 
-Currently the condition of unmapping sdb in error path is not exactly
-the same as the condition of mapping in alloc_user_qp_db(). This may
-cause a problem of unmapping an unmapped db in some case, such as
-when the QP is XRC TGT. Unified the two conditions.
+When ib_copy_to_udata() fails in hns_roce_create_qp_common(),
+hns_roce_qp_remove() should be called in the error path to
+clean up resources in hns_roce_qp_store().
 
-Fixes: 90ae0b57e4a5 ("RDMA/hns: Combine enable flags of qp")
+Fixes: 0f00571f9433 ("RDMA/hns: Use new SQ doorbell register for HIP09")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250311084857.3803665-4-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20250311084857.3803665-6-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index 97d79c8d5cd06..0b054b708d515 100644
+index 0b054b708d515..0cad6fc7bf32c 100644
 --- a/drivers/infiniband/hw/hns/hns_roce_qp.c
 +++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -860,12 +860,14 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 			    struct hns_roce_ib_create_qp *ucmd,
- 			    struct hns_roce_ib_create_qp_resp *resp)
- {
-+	bool has_sdb = user_qp_has_sdb(hr_dev, init_attr, udata, resp, ucmd);
- 	struct hns_roce_ucontext *uctx = rdma_udata_to_drv_context(udata,
- 		struct hns_roce_ucontext, ibucontext);
-+	bool has_rdb = user_qp_has_rdb(hr_dev, init_attr, udata, resp);
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	int ret;
- 
--	if (user_qp_has_sdb(hr_dev, init_attr, udata, resp, ucmd)) {
-+	if (has_sdb) {
- 		ret = hns_roce_db_map_user(uctx, ucmd->sdb_addr, &hr_qp->sdb);
+@@ -1149,7 +1149,7 @@ static int hns_roce_create_qp_common(struct hns_roce_dev *hr_dev,
+ 				       min(udata->outlen, sizeof(resp)));
  		if (ret) {
- 			ibdev_err(ibdev,
-@@ -876,7 +878,7 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 		hr_qp->en_flags |= HNS_ROCE_QP_CAP_SQ_RECORD_DB;
+ 			ibdev_err(ibdev, "copy qp resp failed!\n");
+-			goto err_store;
++			goto err_flow_ctrl;
+ 		}
  	}
  
--	if (user_qp_has_rdb(hr_dev, init_attr, udata, resp)) {
-+	if (has_rdb) {
- 		ret = hns_roce_db_map_user(uctx, ucmd->db_addr, &hr_qp->rdb);
- 		if (ret) {
- 			ibdev_err(ibdev,
-@@ -890,7 +892,7 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 	return 0;
- 
- err_sdb:
--	if (hr_qp->en_flags & HNS_ROCE_QP_CAP_SQ_RECORD_DB)
-+	if (has_sdb)
- 		hns_roce_db_unmap_user(uctx, &hr_qp->sdb);
- err_out:
- 	return ret;
 -- 
 2.39.5
 
