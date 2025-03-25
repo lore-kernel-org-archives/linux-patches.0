@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044AD2594B7;
-	Tue, 25 Mar 2025 12:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C726463D;
+	Tue, 25 Mar 2025 12:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905502; cv=none; b=r2xHxH6OPqfe1PcTkUWKSxrRkiXI6ZkJZaKnik2ZhG7ABYU02UNt2BmkKGrWevxm4QrKpUPMx5IWWu8u7Uu0HOmPpohWxiHIhsu9LFubBrbQhHu1PsX9yit/Jnx3NJmGhbd4toDWcHkQKIlZW4E4Emut9WEaz9tpFosMen6Np3w=
+	t=1742905503; cv=none; b=axJ6hWuprGM+MM3Io689bKHsxSUheoAKKb5CChmQQt5kwuerVi+GhD91o+xxBIZbjnYqqFD+IbIMCpKT7QaSml/T8njgQO320Ml+ydHy70LJwoEajT1cGR49Sbkxr22zXc0krc5CGAsu5IDHcug8mZve1M3Q4uiTLoRhhck5r1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905502; c=relaxed/simple;
-	bh=swJPjodcyIDMfsjk7f+YEg1eX0Toln5dcjYJohnw7O8=;
+	s=arc-20240116; t=1742905503; c=relaxed/simple;
+	bh=Bj+NiideMlh4Kf4Qg6uML1MMcMkcxkMqSxjf72oXc74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwm4qrB+JKkKR+gnoKdBqVIipPC31AZZ/U++fInCxCKNU77/IqjtSaFY3spC1X0TIDavMrHB4ZhMhjtZf2ufzcRxkHP6+Yc5cOzgWX7+M57p1oK5QVts8sNhFB2H357dl5eMgJXMG+mLc5XFXHWearp7qeuRLWLNEdL/B3rBPk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijMb11DF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7BqxMY0S7VHplwNuIJL/LFCh7/P6wkwqnrEiXOWd12nCEAzGbFryQjEKKXI1qugAeCTez+9xbZxSmV7LDPozYjrtwPALnDhauu85hdbkE+2tjzNNng/0BqiSS9in8peuLmvUJOpm8ghM/Kll+YoXLY8EGXwvYCBR47we1gGW54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toSQ+fpG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijMb11DF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D6AC4CEEF;
-	Tue, 25 Mar 2025 12:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toSQ+fpG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56558C4CEE9;
+	Tue, 25 Mar 2025 12:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905501;
-	bh=swJPjodcyIDMfsjk7f+YEg1eX0Toln5dcjYJohnw7O8=;
+	s=korg; t=1742905503;
+	bh=Bj+NiideMlh4Kf4Qg6uML1MMcMkcxkMqSxjf72oXc74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijMb11DFPT/qUuR+AI6NDSorTLdD1HqrOsZh05OJmr0nlO0TpRRu5JUyWwLN9Nzfy
-	 mfjyYUHKZtO4NrkARB8zNzSKrzi8r4UYBkDksj0E78D4vfUvGZpsEuf6O030S8SA4J
-	 MgrnKM4DmFqXBAuWbZ79S5AcIDmnq8drE+uX3zhU=
+	b=toSQ+fpGu0OI42nD3iMZc7Z72qOnEYgdyjkkakOP7+KyHFKDzNlwoVf4HyVILZyEP
+	 CIfE+PUw40vu8kkeMULdCBNBh7WCOkqg0YyUiTGMWh7qoJM02UGvQ3JAHn/1hxjpCf
+	 KBl+MjsI8wCUQOyZVwwMEd4G/Vs2Hp6muSgbi2ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris von Recklinghausen <crecklin@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Phil Auld <pauld@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
-Subject: [PATCH 6.1 002/198] sched/isolation: Prevent boot crash when the boot CPU is nohz_full
-Date: Tue, 25 Mar 2025 08:19:24 -0400
-Message-ID: <20250325122156.702442458@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 003/198] hrtimer: Use and report correct timerslack values for realtime tasks
+Date: Tue, 25 Mar 2025 08:19:25 -0400
+Message-ID: <20250325122156.728999071@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -55,67 +50,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-Documentation/timers/no_hz.rst states that the "nohz_full=" mask must not
-include the boot CPU, which is no longer true after:
+commit ed4fb6d7ef68111bb539283561953e5c6e9a6e38 upstream.
 
-  08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full").
+The timerslack_ns setting is used to specify how much the hardware
+timers should be delayed, to potentially dispatch multiple timers in a
+single interrupt. This is a performance optimization. Timers of
+realtime tasks (having a realtime scheduling policy) should not be
+delayed.
 
-However after:
+This logic was inconsitently applied to the hrtimers, leading to delays
+of realtime tasks which used timed waits for events (e.g. condition
+variables). Due to the downstream override of the slack for rt tasks,
+the procfs reported incorrect (non-zero) timerslack_ns values.
 
-  aae17ebb53cd ("workqueue: Avoid using isolated cpus' timers on queue_delayed_work")
+This is changed by setting the timer_slack_ns task attribute to 0 for
+all tasks with a rt policy. By that, downstream users do not need to
+specially handle rt tasks (w.r.t. the slack), and the procfs entry
+shows the correct value of "0". Setting non-zero slack values (either
+via procfs or PR_SET_TIMERSLACK) on tasks with a rt policy is ignored,
+as stated in "man 2 PR_SET_TIMERSLACK":
 
-the kernel will crash at boot time in this case; housekeeping_any_cpu()
-returns an invalid CPU number until smp_init() brings the first
-housekeeping CPU up.
+  Timer slack is not applied to threads that are scheduled under a
+  real-time scheduling policy (see sched_setscheduler(2)).
 
-Change housekeeping_any_cpu() to check the result of cpumask_any_and() and
-return smp_processor_id() in this case.
+The special handling of timerslack on rt tasks in downstream users
+is removed as well.
 
-This is just the simple and backportable workaround which fixes the
-symptom, but smp_processor_id() at boot time should be safe at least for
-type == HK_TYPE_TIMER, this more or less matches the tick_do_timer_boot_cpu
-logic.
-
-There is no worry about cpu_down(); tick_nohz_cpu_down() will not allow to
-offline tick_do_timer_cpu (the 1st online housekeeping CPU).
-
-[ Apply only documentation changes as commit which causes boot
-  crash when boot CPU is nohz_full is not backported to stable
-  kernels - Krishanth ]
-
-Reported-by: Chris von Recklinghausen <crecklin@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20240411143905.GA19288@redhat.com
-Closes: https://lore.kernel.org/all/20240402105847.GA24832@redhat.com/
-Signed-off-by: Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
-[ strip out upstream commit and Fixes: so tools don't get confused that
-  this commit actually does anything real - gregkh]
+Link: https://lore.kernel.org/all/20240814121032.368444-2-felix.moessbauer@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/timers/no_hz.rst |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/proc/base.c        |    9 +++++----
+ fs/select.c           |   11 ++++-------
+ kernel/sched/core.c   |    8 ++++++++
+ kernel/sys.c          |    2 ++
+ kernel/time/hrtimer.c |   18 +++---------------
+ 5 files changed, 22 insertions(+), 26 deletions(-)
 
---- a/Documentation/timers/no_hz.rst
-+++ b/Documentation/timers/no_hz.rst
-@@ -129,11 +129,8 @@ adaptive-tick CPUs:  At least one non-ad
- online to handle timekeeping tasks in order to ensure that system
- calls like gettimeofday() returns accurate values on adaptive-tick CPUs.
- (This is not an issue for CONFIG_NO_HZ_IDLE=y because there are no running
--user processes to observe slight drifts in clock rate.)  Therefore, the
--boot CPU is prohibited from entering adaptive-ticks mode.  Specifying a
--"nohz_full=" mask that includes the boot CPU will result in a boot-time
--error message, and the boot CPU will be removed from the mask.  Note that
--this means that your system must have at least two CPUs in order for
-+user processes to observe slight drifts in clock rate.) Note that this
-+means that your system must have at least two CPUs in order for
- CONFIG_NO_HZ_FULL=y to do anything for you.
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -2633,10 +2633,11 @@ static ssize_t timerslack_ns_write(struc
+ 	}
  
- Finally, adaptive-ticks CPUs must have their RCU callbacks offloaded.
+ 	task_lock(p);
+-	if (slack_ns == 0)
+-		p->timer_slack_ns = p->default_timer_slack_ns;
+-	else
+-		p->timer_slack_ns = slack_ns;
++	if (task_is_realtime(p))
++		slack_ns = 0;
++	else if (slack_ns == 0)
++		slack_ns = p->default_timer_slack_ns;
++	p->timer_slack_ns = slack_ns;
+ 	task_unlock(p);
+ 
+ out:
+--- a/fs/select.c
++++ b/fs/select.c
+@@ -77,19 +77,16 @@ u64 select_estimate_accuracy(struct time
+ {
+ 	u64 ret;
+ 	struct timespec64 now;
++	u64 slack = current->timer_slack_ns;
+ 
+-	/*
+-	 * Realtime tasks get a slack of 0 for obvious reasons.
+-	 */
+-
+-	if (rt_task(current))
++	if (slack == 0)
+ 		return 0;
+ 
+ 	ktime_get_ts64(&now);
+ 	now = timespec64_sub(*tv, now);
+ 	ret = __estimate_accuracy(&now);
+-	if (ret < current->timer_slack_ns)
+-		return current->timer_slack_ns;
++	if (ret < slack)
++		return slack;
+ 	return ret;
+ }
+ 
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7380,6 +7380,14 @@ static void __setscheduler_params(struct
+ 	else if (fair_policy(policy))
+ 		p->static_prio = NICE_TO_PRIO(attr->sched_nice);
+ 
++	/* rt-policy tasks do not have a timerslack */
++	if (task_is_realtime(p)) {
++		p->timer_slack_ns = 0;
++	} else if (p->timer_slack_ns == 0) {
++		/* when switching back to non-rt policy, restore timerslack */
++		p->timer_slack_ns = p->default_timer_slack_ns;
++	}
++
+ 	/*
+ 	 * __sched_setscheduler() ensures attr->sched_priority == 0 when
+ 	 * !rt_policy. Always setting this ensures that things like
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -2477,6 +2477,8 @@ SYSCALL_DEFINE5(prctl, int, option, unsi
+ 			error = current->timer_slack_ns;
+ 		break;
+ 	case PR_SET_TIMERSLACK:
++		if (task_is_realtime(current))
++			break;
+ 		if (arg2 <= 0)
+ 			current->timer_slack_ns =
+ 					current->default_timer_slack_ns;
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -2090,14 +2090,9 @@ long hrtimer_nanosleep(ktime_t rqtp, con
+ 	struct restart_block *restart;
+ 	struct hrtimer_sleeper t;
+ 	int ret = 0;
+-	u64 slack;
+-
+-	slack = current->timer_slack_ns;
+-	if (dl_task(current) || rt_task(current))
+-		slack = 0;
+ 
+ 	hrtimer_init_sleeper_on_stack(&t, clockid, mode);
+-	hrtimer_set_expires_range_ns(&t.timer, rqtp, slack);
++	hrtimer_set_expires_range_ns(&t.timer, rqtp, current->timer_slack_ns);
+ 	ret = do_nanosleep(&t, mode);
+ 	if (ret != -ERESTART_RESTARTBLOCK)
+ 		goto out;
+@@ -2278,7 +2273,7 @@ void __init hrtimers_init(void)
+ /**
+  * schedule_hrtimeout_range_clock - sleep until timeout
+  * @expires:	timeout value (ktime_t)
+- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
++ * @delta:	slack in expires timeout (ktime_t)
+  * @mode:	timer mode
+  * @clock_id:	timer clock to be used
+  */
+@@ -2305,13 +2300,6 @@ schedule_hrtimeout_range_clock(ktime_t *
+ 		return -EINTR;
+ 	}
+ 
+-	/*
+-	 * Override any slack passed by the user if under
+-	 * rt contraints.
+-	 */
+-	if (rt_task(current))
+-		delta = 0;
+-
+ 	hrtimer_init_sleeper_on_stack(&t, clock_id, mode);
+ 	hrtimer_set_expires_range_ns(&t.timer, *expires, delta);
+ 	hrtimer_sleeper_start_expires(&t, mode);
+@@ -2331,7 +2319,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
+ /**
+  * schedule_hrtimeout_range - sleep until timeout
+  * @expires:	timeout value (ktime_t)
+- * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
++ * @delta:	slack in expires timeout (ktime_t)
+  * @mode:	timer mode
+  *
+  * Make the current task sleep until the given expiry time has
 
 
