@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C70269AF1;
-	Tue, 25 Mar 2025 12:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E4D2561A2;
+	Tue, 25 Mar 2025 12:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906080; cv=none; b=WaZQnHVBlZD/QLgJ8T7+JOUuukedYuK6Vc4iXKYUEsUyeAHBV7J8HBcOmtBrOF7rZiHSBaI4KV69FxqdcND8WF9h61WaybjObZj9Im6MIMUYF8IlOCzhqoVhbOTddpb4Pue/FBhNF5CWVEsuS1vuhSOSP92wI2KXPZU7F6a6TU4=
+	t=1742906081; cv=none; b=YUaQPu0wxN7dJvQFDKvA02NctDItteb75siZaQ7qHoQ5JR1wdZhe17Anb36lid4Jh9b7YzNy1usdcLKGmE8WbXEXGdrkUUe647so0rvvI5qkx3hU0TzWboUZjJzSyzWBy4EP8bswUuyC5pRAcA1XG8gJvA/mdS5X/niuaBdHsj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906080; c=relaxed/simple;
-	bh=eyds6wM7M6uzmEB3D/lGJdA3lnfmbZH9CI7rCO93Rpk=;
+	s=arc-20240116; t=1742906081; c=relaxed/simple;
+	bh=9JzOy+m3Rsg0OrOFUyg8CKWd/FjzRwSIBO97LTr4U7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwuIpnONMkyo0exCMbalYHKXIAmXUs3IhpHJi6ord+o8YB4VLZRMRK9UBSEekWtdguVq/ZsoBmIVoPU+DfDO8bvydARoGIS3YWkCeziq7jj+zrnnY69w4vbNgUmm/nTAGBFaksgHy1Djob5JgT/hC20AaWiD5mQV5NE20i5qDCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkKfF0Uo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtLBOi7HF8lgIn/hsKMeIeB5F8ANgaS4CEo3+DcjZEr9ZKTTmmDV0UJx/M/PVVTKKzgNKyll8ovCnvQ7blI1IK84C5ih4UjxWdY5Q415B288ITkamrMGzPnSV3/fH1F7/MnghJIaBJFn4wck/A66MEckYZpICVzl+yPsLTMPdW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZYWZY3N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkKfF0Uo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4F6C4CEE4;
-	Tue, 25 Mar 2025 12:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZYWZY3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3241FC4CEE4;
+	Tue, 25 Mar 2025 12:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906079;
-	bh=eyds6wM7M6uzmEB3D/lGJdA3lnfmbZH9CI7rCO93Rpk=;
+	s=korg; t=1742906081;
+	bh=9JzOy+m3Rsg0OrOFUyg8CKWd/FjzRwSIBO97LTr4U7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkKfF0UoehMx5+tSkCQ21ErhhqJcm6RufWRqNrC0rkbrsRfb7/atKoAzyfbe4Cdz7
-	 V0vqU1o821qGZpZN3AecFpqO7RA++Of0PASAqTM5TnpacucJwRydE0mY/cCl2COELa
-	 fBYH2CXEjw+JyncdHjj34b7Q2qvRYGhJzhTrDEcE=
+	b=PZYWZY3NYeQjAGScAbUqJEQJgrLOFnP9qWcS/Tc5YzFODHiMe+jnpoUHGF12WjWwj
+	 2QvPFhehsrhpScAIg3q4LD6+SuW65Y167c1Wp43PsCzkXOX3wBU2KrP5nrOKaYbnWI
+	 buBJu9rjs2rn5rOWtsS8Wtl0uoKq6no9prfSJ8l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.13 093/119] pmdomain: amlogic: fix T7 ISP secpower
-Date: Tue, 25 Mar 2025 08:22:31 -0400
-Message-ID: <20250325122151.437472884@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.13 094/119] drm/radeon: fix uninitialized size issue in radeon_vce_cs_parse()
+Date: Tue, 25 Mar 2025 08:22:32 -0400
+Message-ID: <20250325122151.461372282@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -51,34 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit ef17b519088ee0c167cf507820609732ec8bad1a upstream.
+commit dd8689b52a24807c2d5ce0a17cb26dc87f75235c upstream.
 
-ISP and MIPI_ISP, these two have a parent-child relationship,
-ISP depends on MIPI_ISP.
+On the off chance that command stream passed from userspace via
+ioctl() call to radeon_vce_cs_parse() is weirdly crafted and
+first command to execute is to encode (case 0x03000001), the function
+in question will attempt to call radeon_vce_cs_reloc() with size
+argument that has not been properly initialized. Specifically, 'size'
+will point to 'tmp' variable before the latter had a chance to be
+assigned any value.
 
-Fixes: ca75e4b214c6 ("pmdomain: amlogic: Add support for T7 power domains controller")
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Play it safe and init 'tmp' with 0, thus ensuring that
+radeon_vce_cs_reloc() will catch an early error in cases like these.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 2fc5703abda2 ("drm/radeon: check VCE relocation buffer range v3")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2d52de55f9ee7aaee0e09ac443f77855989c6b68)
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250303-fix-t7-pwrc-v1-1-b563612bcd86@amlogic.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/amlogic/meson-secure-pwrc.c |    2 +-
+ drivers/gpu/drm/radeon/radeon_vce.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/amlogic/meson-secure-pwrc.c
-+++ b/drivers/pmdomain/amlogic/meson-secure-pwrc.c
-@@ -221,7 +221,7 @@ static const struct meson_secure_pwrc_do
- 	SEC_PD(T7_VI_CLK2,	0),
- 	/* ETH is for ethernet online wakeup, and should be always on */
- 	SEC_PD(T7_ETH,		GENPD_FLAG_ALWAYS_ON),
--	SEC_PD(T7_ISP,		0),
-+	TOP_PD(T7_ISP,		0, PWRC_T7_MIPI_ISP_ID),
- 	SEC_PD(T7_MIPI_ISP,	0),
- 	TOP_PD(T7_GDC,		0, PWRC_T7_NIC3_ID),
- 	TOP_PD(T7_DEWARP,	0, PWRC_T7_NIC3_ID),
+--- a/drivers/gpu/drm/radeon/radeon_vce.c
++++ b/drivers/gpu/drm/radeon/radeon_vce.c
+@@ -557,7 +557,7 @@ int radeon_vce_cs_parse(struct radeon_cs
+ {
+ 	int session_idx = -1;
+ 	bool destroyed = false, created = false, allocated = false;
+-	uint32_t tmp, handle = 0;
++	uint32_t tmp = 0, handle = 0;
+ 	uint32_t *size = &tmp;
+ 	int i, r = 0;
+ 
 
 
