@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69E82571DB;
-	Tue, 25 Mar 2025 12:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A112571DB;
+	Tue, 25 Mar 2025 12:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905925; cv=none; b=dOfK5w5K9yXYsSYL4vE4mflTSjKfuNDGmiI9FDsLGp1sciQ0yJRLfP5L70I0S6Oa3oSwsfJiLpKw91a3PwwGYcBW4CF9rDAyCY0/A/gtdhiggPHyYxIPUjYIyrRyUhjOnVgJAKry4p+LC1LgQ6T+iZqEFM46qlHy8ARoxrgJ4Is=
+	t=1742905927; cv=none; b=OTCCJadV27lMcEF85vaD1dCyBXBBSoDseE7yCjQ4c4f4eETo4B1W8DE72YrMx5qiSCoWW6mQ59xXq4smeRIULII0ty6GVhxSi8r9Zgeo0ufiwONU204/OTYMFW4fUSftKIYE9ObseEPCqcERx9qkdrfpfF4XoJ/c3jpGePqyBEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905925; c=relaxed/simple;
-	bh=8iovvrGktmPR/ZGQUiyynB/T5ggQtzd69SvGbu3uIUU=;
+	s=arc-20240116; t=1742905927; c=relaxed/simple;
+	bh=Va+cPc8bnl9g5QQMBi2sxn7+lc9zbsPnhgq0tBRJIR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkMmsLUX2d7xQBqrJucjh2nZuuStll+zXSUnU6k0Dtx8Fu5f2Fw0q+r/wO3YK+VE+8qheE9o7g4+pX274CyvT0onr1bOlzGqb/m9TE+WR0AmMi/pbs+JG18svexXhjRvnEbzKgAEVNhcUhiQqQpm6vWfcbRhcZYLA/DC9RxY0X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHAReDK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RbCXvXEOTFwBZm1t6P76oIOWEafIi0lqqVBJlkVe+Ll5WDq6c+I4xlHnGTm4SMPWvaaXyTkNuC7kxLZzWp0X85GAZdhRzrl4pWdhAd2JeFbRhpSK+DXTzCsvutJabVGiQPCeHiyu8dksm8PpUH2xUtYO0XRRMzLjdo0bTRfU77o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDpML6PL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHAReDK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5281FC4CEE4;
-	Tue, 25 Mar 2025 12:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDpML6PL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3479CC4CEE4;
+	Tue, 25 Mar 2025 12:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905925;
-	bh=8iovvrGktmPR/ZGQUiyynB/T5ggQtzd69SvGbu3uIUU=;
+	s=korg; t=1742905927;
+	bh=Va+cPc8bnl9g5QQMBi2sxn7+lc9zbsPnhgq0tBRJIR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHAReDK7tmGxxtJw505XvMktnwlKTkX8Ya05jNsj1RamnR7sHSFNW1D/j8CKGmLZM
-	 w4sPMfFXC8iOM+6Hu23hY4ftcDkoMim0LNvB/FaFykOweRTEu44MJcTIpBF5Jwu6RU
-	 QGhv/jmLSzsmU7/wTKaWlnsSG8OGHsN0jmgIso5o=
+	b=NDpML6PLnYqN5wqlHoQcd/qccOn3C0kQdqqr8A2ywCzcDFPhGEVKWGzCOBqweQj/2
+	 TFkY25JJFBQv4bSkROkwMW8nF6qvWqaGblIjbEecNpD2IMVkdr9ekCkfltOQQvyOy1
+	 2fZWrvH+CA0EZg1KYdU0MZ4WAoRRo5NRme+7Op6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 022/119] RDMA/bnxt_re: Avoid clearing VLAN_ID mask in modify qp path
-Date: Tue, 25 Mar 2025 08:21:20 -0400
-Message-ID: <20250325122149.637155525@linuxfoundation.org>
+Subject: [PATCH 6.13 040/119] ipv6: Set errno after ip_fib_metrics_init() in ip6_route_info_create().
+Date: Tue, 25 Mar 2025 08:21:38 -0400
+Message-ID: <20250325122150.082162817@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -52,40 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 81c0db302a674f8004ed805393d17fd76f552e83 ]
+[ Upstream commit 9a81fc3480bf5dbe2bf80e278c440770f6ba2692 ]
 
-Driver is always clearing the mask that sets the VLAN ID/Service Level
-in the adapter. Recent change for supporting multiple traffic class
-exposed this issue.
+While creating a new IPv6, we could get a weird -ENOMEM when
+RTA_NH_ID is set and either of the conditions below is true:
 
-Allow setting SL and VLAN_ID while QP is moved from INIT to RTR state.
+  1) CONFIG_IPV6_SUBTREES is enabled and rtm_src_len is specified
+  2) nexthop_get() fails
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Fixes: c64b16a37b6d ("RDMA/bnxt_re: Support different traffic class")
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1741670196-2919-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+e.g.)
+
+  # strace ip -6 route add fe80::dead:beef:dead:beef nhid 1 from ::
+  recvmsg(3, {msg_iov=[{iov_base=[...[
+    {error=-ENOMEM, msg=[... [...]]},
+    [{nla_len=49, nla_type=NLMSGERR_ATTR_MSG}, "Nexthops can not be used with so"...]
+  ]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 148
+
+Let's set err explicitly after ip_fib_metrics_init() in
+ip6_route_info_create().
+
+Fixes: f88d8ea67fbd ("ipv6: Plumb support for nexthop object in a fib6_info")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250312013854.61125-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/ipv6/route.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 5336f74297f81..457eecb99f969 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1217,8 +1217,6 @@ static void __modify_flags_from_init_state(struct bnxt_qplib_qp *qp)
- 			qp->path_mtu =
- 				CMDQ_MODIFY_QP_PATH_MTU_MTU_2048;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 1864048e7fd5d..6233aa8481743 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3803,10 +3803,12 @@ static struct fib6_info *ip6_route_info_create(struct fib6_config *cfg,
+ 	if (nh) {
+ 		if (rt->fib6_src.plen) {
+ 			NL_SET_ERR_MSG(extack, "Nexthops can not be used with source routing");
++			err = -EINVAL;
+ 			goto out_free;
  		}
--		qp->modify_flags &=
--			~CMDQ_MODIFY_QP_MODIFY_MASK_VLAN_ID;
- 		/* Bono FW require the max_dest_rd_atomic to be >= 1 */
- 		if (qp->max_dest_rd_atomic < 1)
- 			qp->max_dest_rd_atomic = 1;
+ 		if (!nexthop_get(nh)) {
+ 			NL_SET_ERR_MSG(extack, "Nexthop has been deleted");
++			err = -ENOENT;
+ 			goto out_free;
+ 		}
+ 		rt->nh = nh;
 -- 
 2.39.5
 
