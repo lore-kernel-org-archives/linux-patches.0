@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C54263F5F;
-	Tue, 25 Mar 2025 12:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC97E26563D;
+	Tue, 25 Mar 2025 12:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905582; cv=none; b=MN6xp3g/agB0bGOjvSxswVDg7i9dq2dlHqMPnXnpCtukaTXQxTDZvh0oIcugox2lRAIwr1xp7lKvfCuhDbvX65DKkrOkIVKsY3oZhp59O5pA/lx6XzRD5UFMFnfp8r+HANcs/irkTVZ9n7i7vOQ9DQkWCb98VvNedtMhN4fkL8k=
+	t=1742905584; cv=none; b=Kn4QiouHc92VuO08lioYfh+fuk9AqnPmIBCAUySKQcV2GchpPjV2oWsvzg1k+kT0aG1GjvpzKR+MzQp4VJYDhyugWpgLGHO3qmrZ818cs/98K0Cqx/yBbq0u1sSrAqW/0TOP1I8kL0EKFEd15Rcf/vYKYAsGCFjLXB5ZekJdtQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905582; c=relaxed/simple;
-	bh=YtHlrQOmMF4j9LgAMc+iR9FAraaq8E3hiH3mAhev6zo=;
+	s=arc-20240116; t=1742905584; c=relaxed/simple;
+	bh=cSZz9TbEs7TsWVgsezcTD9MXJMibHU0abNMmETrczlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fz3OFlbubEVZpMBhSCAgg47yOqKyNPYQdWDcjW6J72rkh6cBbYg20LeH44tKxSXyyPeZh2h297Izh0rV7YZymeO7Xyhqq6JGNawN6ED7eWfrV0blrfIsMlX2jmQZzjkTXk78qofcfeBAmr+1wDvzewEmpkF5hdtz3Gfdh6TpvxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBUls83e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JdBqx7i1ni6D63JDiOy026aFHrzeXBMXqqPPrF5b8J2Uop38cNYqQfvRTLEcV0yuTu+LGHUDGy3EVzb/etk2ZBBrVCbxEUzRhO5t9y8kQ6IGVeQiErsgq7xIX/glkHECwrVtanolM5rdaEWqTYBrQFFUfVwMGllxjyqj7a2UYvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e63NNfTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBUls83e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D80AC4CEE4;
-	Tue, 25 Mar 2025 12:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e63NNfTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A22C4CEE4;
+	Tue, 25 Mar 2025 12:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905581;
-	bh=YtHlrQOmMF4j9LgAMc+iR9FAraaq8E3hiH3mAhev6zo=;
+	s=korg; t=1742905583;
+	bh=cSZz9TbEs7TsWVgsezcTD9MXJMibHU0abNMmETrczlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBUls83eo8buTu0m/pDcRWswS5YvJ8UQ0uWzaSB0YJl6Sdj8WmmWtTTz/89n504ha
-	 R6QllHRqYRbOjl5Go54u9ZMI8J6WOtmLvjj9dXzEgfo9mEoMEAfS4Xuh4enDEN4BlJ
-	 edyI6MOlYB2cC4ngKTUSf4A+k9aI3YOysMUfOxSs=
+	b=e63NNfTQ96fQQzJeNny/NCaHp2hb1ih7aYki1V+zjxLzqJUBRq0+9sM+f2F8HpKyk
+	 1y24hhp3fvGEsXMsgW65ufwy1pGgHOjs3g2BD3jwT8duH+5y7m5AFgnBsU1xa5202g
+	 BNgdrRD6GKABLJn6yKvpqTLvUVK7W5c039U8sKSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/198] ASoC: rsnd: dont indicate warning on rsnd_kctrl_accept_runtime()
-Date: Tue, 25 Mar 2025 08:20:15 -0400
-Message-ID: <20250325122158.025148021@linuxfoundation.org>
+Subject: [PATCH 6.1 054/198] ASoC: rsnd: adjust convert rate limitation
+Date: Tue, 25 Mar 2025 08:20:16 -0400
+Message-ID: <20250325122158.051256697@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,121 +54,212 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit c3fc002b206c6c83d1e3702b979733002ba6fb2c ]
+[ Upstream commit 89f9cf185885d4358aa92b48e51d0f09b71775aa ]
 
-rsnd_kctrl_accept_runtime() (1) is used for runtime convert rate
-(= Synchronous SRC Mode). Now, rsnd driver has 2 kctrls for it
+Current rsnd driver supports Synchronous SRC Mode, but HW allow to update
+rate only within 1% from current rate. Adjust to it.
 
-(A):	"SRC Out Rate Switch"
-(B):	"SRC Out Rate"		// it calls (1)
+Becially, this feature is used to fine-tune subtle difference that occur
+during sampling rate conversion in SRC. So, it should be called within 1%
+margin of rate difference.
 
-(A): can be called anytime
-(B): can be called only runtime, and will indicate warning if it was used
-   at non-runtime.
+If there was difference over 1%, it will apply with 1% increments by using
+loop without indicating error message.
 
-To use runtime convert rate (= Synchronous SRC Mode), user might uses
-command in below order.
-
-(X):	> amixer set "SRC Out Rate" on
-	> aplay xxx.wav &
-(Y):	> amixer set "SRC Out Rate" 48010 // convert rate to 48010Hz
-
-(Y): calls B
-(X): calls both A and B.
-
-In this case, when user calls (X), it calls both (A) and (B), but it is not
-yet start running. So, (B) will indicate warning.
-
-This warning was added by commit b5c088689847 ("ASoC: rsnd: add warning
-message to rsnd_kctrl_accept_runtime()"), but the message sounds like the
-operation was not correct. Let's update warning message.
-
-The message is very SRC specific, implement it in src.c
-
+Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/8734gt2qed.wl-kuninori.morimoto.gx@renesas.com
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/871pwd2qe8.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rcar/core.c | 14 --------------
- sound/soc/sh/rcar/rsnd.h |  1 -
- sound/soc/sh/rcar/src.c  | 18 +++++++++++++++++-
- 3 files changed, 17 insertions(+), 16 deletions(-)
+ sound/soc/sh/rcar/src.c | 98 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 76 insertions(+), 22 deletions(-)
 
-diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
-index 7e380d71b0f88..0964b4e3fbdfb 100644
---- a/sound/soc/sh/rcar/core.c
-+++ b/sound/soc/sh/rcar/core.c
-@@ -1694,20 +1694,6 @@ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io)
- 	return 1;
- }
- 
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io)
--{
--	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
--	struct rsnd_priv *priv = rsnd_io_to_priv(io);
--	struct device *dev = rsnd_priv_to_dev(priv);
--
--	if (!runtime) {
--		dev_warn(dev, "Can't update kctrl when idle\n");
--		return 0;
--	}
--
--	return 1;
--}
--
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg)
- {
- 	cfg->cfg.val = cfg->val;
-diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
-index f8ef6836ef84e..690f4932357c1 100644
---- a/sound/soc/sh/rcar/rsnd.h
-+++ b/sound/soc/sh/rcar/rsnd.h
-@@ -742,7 +742,6 @@ struct rsnd_kctrl_cfg_s {
- #define rsnd_kctrl_vals(x)	((x).val)	/* = (x).cfg.val[0] */
- 
- int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io);
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_s(struct rsnd_kctrl_cfg_s *cfg);
- int rsnd_kctrl_new(struct rsnd_mod *mod,
 diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
-index f832165e46bc0..9893839666d7b 100644
+index 9893839666d7b..e985681363e25 100644
 --- a/sound/soc/sh/rcar/src.c
 +++ b/sound/soc/sh/rcar/src.c
-@@ -530,6 +530,22 @@ static irqreturn_t rsnd_src_interrupt(int irq, void *data)
- 	return IRQ_HANDLED;
- }
+@@ -34,6 +34,7 @@ struct rsnd_src {
+ 	struct rsnd_mod *dma;
+ 	struct rsnd_kctrl_cfg_s sen;  /* sync convert enable */
+ 	struct rsnd_kctrl_cfg_s sync; /* sync convert */
++	u32 current_sync_rate;
+ 	int irq;
+ };
  
-+static int rsnd_src_kctrl_accept_runtime(struct rsnd_dai_stream *io)
-+{
+@@ -99,7 +100,7 @@ static u32 rsnd_src_convert_rate(struct rsnd_dai_stream *io,
+ 	if (!rsnd_src_sync_is_enabled(mod))
+ 		return rsnd_io_converted_rate(io);
+ 
+-	convert_rate = src->sync.val;
++	convert_rate = src->current_sync_rate;
+ 
+ 	if (!convert_rate)
+ 		convert_rate = rsnd_io_converted_rate(io);
+@@ -200,13 +201,73 @@ static const u32 chan222222[] = {
+ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
+ 				      struct rsnd_mod *mod)
+ {
 +	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
+ 	struct rsnd_priv *priv = rsnd_mod_to_priv(mod);
+-	struct device *dev = rsnd_priv_to_dev(priv);
++	struct rsnd_src *src = rsnd_mod_to_src(mod);
++	u32 fin, fout, new_rate;
++	int inc, cnt, rate;
++	u64 base, val;
 +
-+	if (!runtime) {
-+		struct rsnd_priv *priv = rsnd_io_to_priv(io);
-+		struct device *dev = rsnd_priv_to_dev(priv);
++	if (!runtime)
++		return;
 +
-+		dev_warn(dev, "\"SRC Out Rate\" can use during running\n");
++	if (!rsnd_src_sync_is_enabled(mod))
++		return;
 +
-+		return 0;
++	fin	= rsnd_src_get_in_rate(priv, io);
++	fout	= rsnd_src_get_out_rate(priv, io);
++
++	new_rate = src->sync.val;
++
++	if (!new_rate)
++		new_rate = fout;
++
++	/* Do nothing if no diff */
++	if (new_rate == src->current_sync_rate)
++		return;
++
++	/*
++	 * SRCm_IFSVR::INTIFS can change within 1%
++	 * see
++	 *	SRCm_IFSVR::INTIFS Note
++	 */
++	inc = fout / 100;
++	cnt = abs(new_rate - fout) / inc;
++	if (fout > new_rate)
++		inc *= -1;
++
++	/*
++	 * After start running SRC, we can update only SRC_IFSVR
++	 * for Synchronous Mode
++	 */
++	base = (u64)0x0400000 * fin;
++	rate  = fout;
++	for (int i = 0; i < cnt; i++) {
++		val   = base;
++		rate += inc;
++		do_div(val, rate);
++
++		rsnd_mod_write(mod, SRC_IFSVR, val);
 +	}
++	val   = base;
++	do_div(val, new_rate);
 +
-+	return 1;
++	rsnd_mod_write(mod, SRC_IFSVR, val);
++
++	/* update current_sync_rate */
++	src->current_sync_rate = new_rate;
 +}
 +
- static int rsnd_src_probe_(struct rsnd_mod *mod,
- 			   struct rsnd_dai_stream *io,
- 			   struct rsnd_priv *priv)
-@@ -593,7 +609,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
- 			       rsnd_io_is_play(io) ?
- 			       "SRC Out Rate" :
- 			       "SRC In Rate",
--			       rsnd_kctrl_accept_runtime,
-+			       rsnd_src_kctrl_accept_runtime,
- 			       rsnd_src_set_convert_rate,
- 			       &src->sync, 192000);
++static void rsnd_src_init_convert_rate(struct rsnd_dai_stream *io,
++				       struct rsnd_mod *mod)
++{
+ 	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
++	struct rsnd_priv *priv = rsnd_mod_to_priv(mod);
++	struct device *dev = rsnd_priv_to_dev(priv);
+ 	int is_play = rsnd_io_is_play(io);
+ 	int use_src = 0;
+ 	u32 fin, fout;
+-	u32 ifscr, fsrate, adinr;
++	u32 ifscr, adinr;
+ 	u32 cr, route;
+ 	u32 i_busif, o_busif, tmp;
+ 	const u32 *bsdsr_table;
+@@ -244,26 +305,15 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
+ 	adinr = rsnd_get_adinr_bit(mod, io) | chan;
  
+ 	/*
+-	 * SRC_IFSCR / SRC_IFSVR
+-	 */
+-	ifscr = 0;
+-	fsrate = 0;
+-	if (use_src) {
+-		u64 n;
+-
+-		ifscr = 1;
+-		n = (u64)0x0400000 * fin;
+-		do_div(n, fout);
+-		fsrate = n;
+-	}
+-
+-	/*
++	 * SRC_IFSCR
+ 	 * SRC_SRCCR / SRC_ROUTE_MODE0
+ 	 */
++	ifscr	= 0;
+ 	cr	= 0x00011110;
+ 	route	= 0x0;
+ 	if (use_src) {
+ 		route	= 0x1;
++		ifscr	= 0x1;
+ 
+ 		if (rsnd_src_sync_is_enabled(mod)) {
+ 			cr |= 0x1;
+@@ -334,7 +384,6 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
+ 	rsnd_mod_write(mod, SRC_SRCIR, 1);	/* initialize */
+ 	rsnd_mod_write(mod, SRC_ADINR, adinr);
+ 	rsnd_mod_write(mod, SRC_IFSCR, ifscr);
+-	rsnd_mod_write(mod, SRC_IFSVR, fsrate);
+ 	rsnd_mod_write(mod, SRC_SRCCR, cr);
+ 	rsnd_mod_write(mod, SRC_BSDSR, bsdsr_table[idx]);
+ 	rsnd_mod_write(mod, SRC_BSISR, bsisr_table[idx]);
+@@ -347,6 +396,9 @@ static void rsnd_src_set_convert_rate(struct rsnd_dai_stream *io,
+ 
+ 	rsnd_adg_set_src_timesel_gen2(mod, io, fin, fout);
+ 
++	/* update SRC_IFSVR */
++	rsnd_src_set_convert_rate(io, mod);
++
+ 	return;
+ 
+ convert_rate_err:
+@@ -466,7 +518,8 @@ static int rsnd_src_init(struct rsnd_mod *mod,
+ 	int ret;
+ 
+ 	/* reset sync convert_rate */
+-	src->sync.val = 0;
++	src->sync.val		=
++	src->current_sync_rate	= 0;
+ 
+ 	ret = rsnd_mod_power_on(mod);
+ 	if (ret < 0)
+@@ -474,7 +527,7 @@ static int rsnd_src_init(struct rsnd_mod *mod,
+ 
+ 	rsnd_src_activation(mod);
+ 
+-	rsnd_src_set_convert_rate(io, mod);
++	rsnd_src_init_convert_rate(io, mod);
+ 
+ 	rsnd_src_status_clear(mod);
+ 
+@@ -492,7 +545,8 @@ static int rsnd_src_quit(struct rsnd_mod *mod,
+ 	rsnd_mod_power_off(mod);
+ 
+ 	/* reset sync convert_rate */
+-	src->sync.val = 0;
++	src->sync.val		=
++	src->current_sync_rate	= 0;
+ 
+ 	return 0;
+ }
+@@ -600,7 +654,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
+ 			       "SRC Out Rate Switch" :
+ 			       "SRC In Rate Switch",
+ 			       rsnd_kctrl_accept_anytime,
+-			       rsnd_src_set_convert_rate,
++			       rsnd_src_init_convert_rate,
+ 			       &src->sen, 1);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.39.5
 
