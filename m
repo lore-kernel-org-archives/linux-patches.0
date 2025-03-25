@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477292517B3;
-	Tue, 25 Mar 2025 12:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C952580E1;
+	Tue, 25 Mar 2025 12:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905565; cv=none; b=fli0aCNDIlRDU/s7DterppwC7opKKlik2XU8jnk0qwDUQLYWmMwEht2intd+Si6wXC14R5ErUx9D5uWtpS7U14jCMQrbkZnkmZ+KMgd6C1aTzHs9m4rNzfq3SdB4cKiSPPusn7LGqNRRDGryTGkMR8S4aAx1LtBx7JWS1N883Wc=
+	t=1742905567; cv=none; b=aiO8PEUQUPjpQWiN2WI+wxsksMzn7t4sDHsXJa4X7u9krp5FxRbMu2XBHNILrtXcBYna4qtz0GzqB8+NsVekN4FG++UxUBxIUd4cIv0YrXUrF5S0OeAa9Hrej2rcBXp75lu6jIWtgt6yUiKL7Di3VIRkIf4hFEPnUx+fhrB52wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905565; c=relaxed/simple;
-	bh=5BYYARF36uFr0uaZyNKhV+g+7n/Odh24GO9B9fZcGBY=;
+	s=arc-20240116; t=1742905567; c=relaxed/simple;
+	bh=HHK4ycfJb53L+KdBgz+moksYiLdpLGEinX7bfQyZN5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYHwvMp30KRZ/b/OAnnQoD2/OPZdvHZ2x6Y7lXqBXlqGZYGyCgRtvikYOZTZgdnj58ci6p5cgGFUft5DH5kfQOXlyp87LUjzovjaa/J22SoYE4cIgS0lL0u0C46wYGK9XrrC36BcBiUGuIzZQq+xteG2A/anBomvkzsAwhYiz3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UElnwpy4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyQrvFYqej7jaOTwxdPpjnwd4HR+dTEpBFq5ElHNB4IYvoE1/iJARlHBJEnD/FBzwZWmhneqV+t6o2ohUOmQ1URkO5/bXss6C+ablbnmhM5Ytmq5VZMLiBZqlUnAKjdCNB5BW63Y0fDPMG5Nt0b1w/zIrg3xsYbC5FWo4bvaS1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plWCYTNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UElnwpy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E28C4CEE4;
-	Tue, 25 Mar 2025 12:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plWCYTNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3736C4CEE4;
+	Tue, 25 Mar 2025 12:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905565;
-	bh=5BYYARF36uFr0uaZyNKhV+g+7n/Odh24GO9B9fZcGBY=;
+	s=korg; t=1742905567;
+	bh=HHK4ycfJb53L+KdBgz+moksYiLdpLGEinX7bfQyZN5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UElnwpy4frblVucPNWtYq3fnaxJbeoujZX+YgIAyOUUcAxIyx79D/VocATKL0DPhD
-	 d7qLpMXlfR1chFULXvTHSR0RGSfRGksbcgeRU5RNGqOZzE1ZhGCK8yMnCzuohvJKcp
-	 vglpvj8uz1sNNjAY4RaNEHeWEEq4G7obLJ96il4o=
+	b=plWCYTNP7PcnL3xbJ7qzc3sXTmHq3tUsOwtRptlWxCVPlknPAS91uqZ80qYfE+Z+p
+	 7QFQVyNc/yapE8kifDo/tuB2Q4IcThmZonhpnDX14Kf45i8utDxPNBkh8/9paI7Asi
+	 N/+tK2Nj4ksU7X6hG5Td4NIULD1AI2aREmhkrZjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Joseph Huang <Joseph.Huang@garmin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/198] Revert "Bluetooth: hci_core: Fix sleeping function called from invalid context"
-Date: Tue, 25 Mar 2025 08:19:35 -0400
-Message-ID: <20250325122156.989169460@linuxfoundation.org>
+Subject: [PATCH 6.1 014/198] net: dsa: mv88e6xxx: Verify after ATU Load ops
+Date: Tue, 25 Mar 2025 08:19:36 -0400
+Message-ID: <20250325122157.015679737@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -50,386 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Joseph Huang <Joseph.Huang@garmin.com>
 
-[ Upstream commit ab6ab707a4d060a51c45fc13e3b2228d5f7c0b87 ]
+[ Upstream commit dc5340c3133a3ebe54853fd299116149e528cfaa ]
 
-This reverts commit 4d94f05558271654670d18c26c912da0c1c15549 which has
-problems (see [1]) and is no longer needed since 581dd2dc168f
-("Bluetooth: hci_event: Fix using rcu_read_(un)lock while iterating")
-has reworked the code where the original bug has been found.
+ATU Load operations could fail silently if there's not enough space
+on the device to hold the new entry. When this happens, the symptom
+depends on the unknown flood settings. If unknown multicast flood is
+disabled, the multicast packets are dropped when the ATU table is
+full. If unknown multicast flood is enabled, the multicast packets
+will be flooded to all ports. Either way, IGMP snooping is broken
+when the ATU Load operation fails silently.
 
-[1] Link: https://lore.kernel.org/linux-bluetooth/877c55ci1r.wl-tiwai@suse.de/T/#t
-Fixes: 4d94f0555827 ("Bluetooth: hci_core: Fix sleeping function called from invalid context")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Do a Read-After-Write verification after each fdb/mdb add operation
+to make sure that the operation was really successful, and return
+-ENOSPC otherwise.
+
+Fixes: defb05b9b9b4 ("net: dsa: mv88e6xxx: Add support for fdb_add, fdb_del, and fdb_getnext")
+Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250306172306.3859214-1-Joseph.Huang@garmin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 108 +++++++++++--------------------
- net/bluetooth/hci_core.c         |  10 ++-
- net/bluetooth/iso.c              |   6 --
- net/bluetooth/l2cap_core.c       |  12 ++--
- net/bluetooth/rfcomm/core.c      |   6 --
- net/bluetooth/sco.c              |  12 ++--
- 6 files changed, 57 insertions(+), 97 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 59 ++++++++++++++++++++++++++------
+ 1 file changed, 48 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index b37e95554271b..d26b57e87f7f4 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -815,6 +815,7 @@ struct hci_conn_params {
- extern struct list_head hci_dev_list;
- extern struct list_head hci_cb_list;
- extern rwlock_t hci_dev_list_lock;
-+extern struct mutex hci_cb_list_lock;
- 
- #define hci_dev_set_flag(hdev, nr)             set_bit((nr), (hdev)->dev_flags)
- #define hci_dev_clear_flag(hdev, nr)           clear_bit((nr), (hdev)->dev_flags)
-@@ -1768,47 +1769,24 @@ struct hci_cb {
- 
- 	char *name;
- 
--	bool (*match)		(struct hci_conn *conn);
- 	void (*connect_cfm)	(struct hci_conn *conn, __u8 status);
- 	void (*disconn_cfm)	(struct hci_conn *conn, __u8 status);
- 	void (*security_cfm)	(struct hci_conn *conn, __u8 status,
--				 __u8 encrypt);
-+								__u8 encrypt);
- 	void (*key_change_cfm)	(struct hci_conn *conn, __u8 status);
- 	void (*role_switch_cfm)	(struct hci_conn *conn, __u8 status, __u8 role);
- };
- 
--static inline void hci_cb_lookup(struct hci_conn *conn, struct list_head *list)
--{
--	struct hci_cb *cb, *cpy;
--
--	rcu_read_lock();
--	list_for_each_entry_rcu(cb, &hci_cb_list, list) {
--		if (cb->match && cb->match(conn)) {
--			cpy = kmalloc(sizeof(*cpy), GFP_ATOMIC);
--			if (!cpy)
--				break;
--
--			*cpy = *cb;
--			INIT_LIST_HEAD(&cpy->list);
--			list_add_rcu(&cpy->list, list);
--		}
--	}
--	rcu_read_unlock();
--}
--
- static inline void hci_connect_cfm(struct hci_conn *conn, __u8 status)
- {
--	struct list_head list;
--	struct hci_cb *cb, *tmp;
--
--	INIT_LIST_HEAD(&list);
--	hci_cb_lookup(conn, &list);
-+	struct hci_cb *cb;
- 
--	list_for_each_entry_safe(cb, tmp, &list, list) {
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
- 		if (cb->connect_cfm)
- 			cb->connect_cfm(conn, status);
--		kfree(cb);
- 	}
-+	mutex_unlock(&hci_cb_list_lock);
- 
- 	if (conn->connect_cfm_cb)
- 		conn->connect_cfm_cb(conn, status);
-@@ -1816,43 +1794,22 @@ static inline void hci_connect_cfm(struct hci_conn *conn, __u8 status)
- 
- static inline void hci_disconn_cfm(struct hci_conn *conn, __u8 reason)
- {
--	struct list_head list;
--	struct hci_cb *cb, *tmp;
--
--	INIT_LIST_HEAD(&list);
--	hci_cb_lookup(conn, &list);
-+	struct hci_cb *cb;
- 
--	list_for_each_entry_safe(cb, tmp, &list, list) {
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
- 		if (cb->disconn_cfm)
- 			cb->disconn_cfm(conn, reason);
--		kfree(cb);
- 	}
-+	mutex_unlock(&hci_cb_list_lock);
- 
- 	if (conn->disconn_cfm_cb)
- 		conn->disconn_cfm_cb(conn, reason);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index d94b46316a117..af0565c3a364c 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2107,13 +2107,11 @@ mv88e6xxx_port_vlan_prepare(struct dsa_switch *ds, int port,
+ 	return err;
  }
  
--static inline void hci_security_cfm(struct hci_conn *conn, __u8 status,
--				    __u8 encrypt)
--{
--	struct list_head list;
--	struct hci_cb *cb, *tmp;
--
--	INIT_LIST_HEAD(&list);
--	hci_cb_lookup(conn, &list);
--
--	list_for_each_entry_safe(cb, tmp, &list, list) {
--		if (cb->security_cfm)
--			cb->security_cfm(conn, status, encrypt);
--		kfree(cb);
--	}
--
--	if (conn->security_cfm_cb)
--		conn->security_cfm_cb(conn, status);
--}
--
- static inline void hci_auth_cfm(struct hci_conn *conn, __u8 status)
+-static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+-					const unsigned char *addr, u16 vid,
+-					u8 state)
++static int mv88e6xxx_port_db_get(struct mv88e6xxx_chip *chip,
++				 const unsigned char *addr, u16 vid,
++				 u16 *fid, struct mv88e6xxx_atu_entry *entry)
  {
-+	struct hci_cb *cb;
- 	__u8 encrypt;
+-	struct mv88e6xxx_atu_entry entry;
+ 	struct mv88e6xxx_vtu_entry vlan;
+-	u16 fid;
+ 	int err;
  
- 	if (test_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags))
-@@ -1860,11 +1817,20 @@ static inline void hci_auth_cfm(struct hci_conn *conn, __u8 status)
+ 	/* Ports have two private address databases: one for when the port is
+@@ -2124,7 +2122,7 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+ 	 * VLAN ID into the port's database used for VLAN-unaware bridging.
+ 	 */
+ 	if (vid == 0) {
+-		fid = MV88E6XXX_FID_BRIDGED;
++		*fid = MV88E6XXX_FID_BRIDGED;
+ 	} else {
+ 		err = mv88e6xxx_vtu_get(chip, vid, &vlan);
+ 		if (err)
+@@ -2134,14 +2132,39 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
+ 		if (!vlan.valid)
+ 			return -EOPNOTSUPP;
  
- 	encrypt = test_bit(HCI_CONN_ENCRYPT, &conn->flags) ? 0x01 : 0x00;
- 
--	hci_security_cfm(conn, status, encrypt);
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
-+		if (cb->security_cfm)
-+			cb->security_cfm(conn, status, encrypt);
-+	}
-+	mutex_unlock(&hci_cb_list_lock);
-+
-+	if (conn->security_cfm_cb)
-+		conn->security_cfm_cb(conn, status);
- }
- 
- static inline void hci_encrypt_cfm(struct hci_conn *conn, __u8 status)
- {
-+	struct hci_cb *cb;
- 	__u8 encrypt;
- 
- 	if (conn->state == BT_CONFIG) {
-@@ -1891,38 +1857,40 @@ static inline void hci_encrypt_cfm(struct hci_conn *conn, __u8 status)
- 			conn->sec_level = conn->pending_sec_level;
+-		fid = vlan.fid;
++		*fid = vlan.fid;
  	}
  
--	hci_security_cfm(conn, status, encrypt);
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
-+		if (cb->security_cfm)
-+			cb->security_cfm(conn, status, encrypt);
-+	}
-+	mutex_unlock(&hci_cb_list_lock);
+-	entry.state = 0;
+-	ether_addr_copy(entry.mac, addr);
+-	eth_addr_dec(entry.mac);
++	entry->state = 0;
++	ether_addr_copy(entry->mac, addr);
++	eth_addr_dec(entry->mac);
 +
-+	if (conn->security_cfm_cb)
-+		conn->security_cfm_cb(conn, status);
- }
- 
- static inline void hci_key_change_cfm(struct hci_conn *conn, __u8 status)
- {
--	struct list_head list;
--	struct hci_cb *cb, *tmp;
--
--	INIT_LIST_HEAD(&list);
--	hci_cb_lookup(conn, &list);
-+	struct hci_cb *cb;
- 
--	list_for_each_entry_safe(cb, tmp, &list, list) {
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
- 		if (cb->key_change_cfm)
- 			cb->key_change_cfm(conn, status);
--		kfree(cb);
- 	}
-+	mutex_unlock(&hci_cb_list_lock);
- }
- 
- static inline void hci_role_switch_cfm(struct hci_conn *conn, __u8 status,
- 								__u8 role)
- {
--	struct list_head list;
--	struct hci_cb *cb, *tmp;
--
--	INIT_LIST_HEAD(&list);
--	hci_cb_lookup(conn, &list);
-+	struct hci_cb *cb;
- 
--	list_for_each_entry_safe(cb, tmp, &list, list) {
-+	mutex_lock(&hci_cb_list_lock);
-+	list_for_each_entry(cb, &hci_cb_list, list) {
- 		if (cb->role_switch_cfm)
- 			cb->role_switch_cfm(conn, status, role);
--		kfree(cb);
- 	}
-+	mutex_unlock(&hci_cb_list_lock);
- }
- 
- static inline bool hci_bdaddr_is_rpa(bdaddr_t *bdaddr, u8 addr_type)
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 496dac042b9cf..3cd7c212375fc 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -58,6 +58,7 @@ DEFINE_RWLOCK(hci_dev_list_lock);
- 
- /* HCI callback list */
- LIST_HEAD(hci_cb_list);
-+DEFINE_MUTEX(hci_cb_list_lock);
- 
- /* HCI ID Numbering */
- static DEFINE_IDA(hci_index_ida);
-@@ -2977,7 +2978,9 @@ int hci_register_cb(struct hci_cb *cb)
- {
- 	BT_DBG("%p name %s", cb, cb->name);
- 
--	list_add_tail_rcu(&cb->list, &hci_cb_list);
-+	mutex_lock(&hci_cb_list_lock);
-+	list_add_tail(&cb->list, &hci_cb_list);
-+	mutex_unlock(&hci_cb_list_lock);
- 
- 	return 0;
- }
-@@ -2987,8 +2990,9 @@ int hci_unregister_cb(struct hci_cb *cb)
- {
- 	BT_DBG("%p name %s", cb, cb->name);
- 
--	list_del_rcu(&cb->list);
--	synchronize_rcu();
-+	mutex_lock(&hci_cb_list_lock);
-+	list_del(&cb->list);
-+	mutex_unlock(&hci_cb_list_lock);
- 
- 	return 0;
- }
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index f62df9097f5ee..437cbeaa96193 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1579,11 +1579,6 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	return lm;
- }
- 
--static bool iso_match(struct hci_conn *hcon)
--{
--	return hcon->type == ISO_LINK || hcon->type == LE_LINK;
--}
--
- static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
- {
- 	if (hcon->type != ISO_LINK) {
-@@ -1753,7 +1748,6 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 
- static struct hci_cb iso_cb = {
- 	.name		= "ISO",
--	.match		= iso_match,
- 	.connect_cfm	= iso_connect_cfm,
- 	.disconn_cfm	= iso_disconn_cfm,
- };
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 36d6122f2e12d..21a79ef7092d7 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -8278,11 +8278,6 @@ static struct l2cap_chan *l2cap_global_fixed_chan(struct l2cap_chan *c,
- 	return NULL;
- }
- 
--static bool l2cap_match(struct hci_conn *hcon)
--{
--	return hcon->type == ACL_LINK || hcon->type == LE_LINK;
--}
--
- static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- {
- 	struct hci_dev *hdev = hcon->hdev;
-@@ -8290,6 +8285,9 @@ static void l2cap_connect_cfm(struct hci_conn *hcon, u8 status)
- 	struct l2cap_chan *pchan;
- 	u8 dst_type;
- 
-+	if (hcon->type != ACL_LINK && hcon->type != LE_LINK)
-+		return;
++	return mv88e6xxx_g1_atu_getnext(chip, *fid, entry);
++}
 +
- 	BT_DBG("hcon %p bdaddr %pMR status %d", hcon, &hcon->dst, status);
++static bool mv88e6xxx_port_db_find(struct mv88e6xxx_chip *chip,
++				   const unsigned char *addr, u16 vid)
++{
++	struct mv88e6xxx_atu_entry entry;
++	u16 fid;
++	int err;
  
- 	if (status) {
-@@ -8354,6 +8352,9 @@ int l2cap_disconn_ind(struct hci_conn *hcon)
- 
- static void l2cap_disconn_cfm(struct hci_conn *hcon, u8 reason)
- {
-+	if (hcon->type != ACL_LINK && hcon->type != LE_LINK)
-+		return;
+-	err = mv88e6xxx_g1_atu_getnext(chip, fid, &entry);
++	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
++	if (err)
++		return false;
 +
- 	BT_DBG("hcon %p reason %d", hcon, reason);
- 
- 	l2cap_conn_del(hcon, bt_to_errno(reason));
-@@ -8641,7 +8642,6 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 
- static struct hci_cb l2cap_cb = {
- 	.name		= "L2CAP",
--	.match		= l2cap_match,
- 	.connect_cfm	= l2cap_connect_cfm,
- 	.disconn_cfm	= l2cap_disconn_cfm,
- 	.security_cfm	= l2cap_security_cfm,
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 1686fa60e2782..4f54c7df3a94f 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -2130,11 +2130,6 @@ static int rfcomm_run(void *unused)
- 	return 0;
- }
- 
--static bool rfcomm_match(struct hci_conn *hcon)
--{
--	return hcon->type == ACL_LINK;
--}
--
- static void rfcomm_security_cfm(struct hci_conn *conn, u8 status, u8 encrypt)
- {
- 	struct rfcomm_session *s;
-@@ -2181,7 +2176,6 @@ static void rfcomm_security_cfm(struct hci_conn *conn, u8 status, u8 encrypt)
- 
- static struct hci_cb rfcomm_cb = {
- 	.name		= "RFCOMM",
--	.match		= rfcomm_match,
- 	.security_cfm	= rfcomm_security_cfm
- };
- 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 127479bf475b9..fe8728041ad08 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -1367,13 +1367,11 @@ int sco_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	return lm;
- }
- 
--static bool sco_match(struct hci_conn *hcon)
--{
--	return hcon->type == SCO_LINK || hcon->type == ESCO_LINK;
--}
--
- static void sco_connect_cfm(struct hci_conn *hcon, __u8 status)
- {
-+	if (hcon->type != SCO_LINK && hcon->type != ESCO_LINK)
-+		return;
++	return entry.state && ether_addr_equal(entry.mac, addr);
++}
 +
- 	BT_DBG("hcon %p bdaddr %pMR status %u", hcon, &hcon->dst, status);
- 
- 	if (!status) {
-@@ -1388,6 +1386,9 @@ static void sco_connect_cfm(struct hci_conn *hcon, __u8 status)
- 
- static void sco_disconn_cfm(struct hci_conn *hcon, __u8 reason)
- {
-+	if (hcon->type != SCO_LINK && hcon->type != ESCO_LINK)
-+		return;
++static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
++					const unsigned char *addr, u16 vid,
++					u8 state)
++{
++	struct mv88e6xxx_atu_entry entry;
++	u16 fid;
++	int err;
 +
- 	BT_DBG("hcon %p reason %d", hcon, reason);
++	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
+ 	if (err)
+ 		return err;
  
- 	sco_conn_del(hcon, bt_to_errno(reason));
-@@ -1413,7 +1414,6 @@ void sco_recv_scodata(struct hci_conn *hcon, struct sk_buff *skb)
+@@ -2739,6 +2762,13 @@ static int mv88e6xxx_port_fdb_add(struct dsa_switch *ds, int port,
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = mv88e6xxx_port_db_load_purge(chip, port, addr, vid,
+ 					   MV88E6XXX_G1_ATU_DATA_STATE_UC_STATIC);
++	if (err)
++		goto out;
++
++	if (!mv88e6xxx_port_db_find(chip, addr, vid))
++		err = -ENOSPC;
++
++out:
+ 	mv88e6xxx_reg_unlock(chip);
  
- static struct hci_cb sco_cb = {
- 	.name		= "SCO",
--	.match		= sco_match,
- 	.connect_cfm	= sco_connect_cfm,
- 	.disconn_cfm	= sco_disconn_cfm,
- };
+ 	return err;
+@@ -6502,6 +6532,13 @@ static int mv88e6xxx_port_mdb_add(struct dsa_switch *ds, int port,
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = mv88e6xxx_port_db_load_purge(chip, port, mdb->addr, mdb->vid,
+ 					   MV88E6XXX_G1_ATU_DATA_STATE_MC_STATIC);
++	if (err)
++		goto out;
++
++	if (!mv88e6xxx_port_db_find(chip, mdb->addr, mdb->vid))
++		err = -ENOSPC;
++
++out:
+ 	mv88e6xxx_reg_unlock(chip);
+ 
+ 	return err;
 -- 
 2.39.5
 
