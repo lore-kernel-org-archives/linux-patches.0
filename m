@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1E5268685;
-	Tue, 25 Mar 2025 12:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7008626868F;
+	Tue, 25 Mar 2025 12:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905881; cv=none; b=srCD4MSL+NoeBRyrASuO3/FRFHwjiiN9E3UWeM8F6tn1bcOUtMJYI2eQ9Miu5w+PWKObnvu7BHT7V52+9Oo36q8xMTMyiouqxQcIXWDnvxX6PJ1wFt8apOleM8JGyFjz0Malq2wfbm2Sc5G9roNDtvlPJrzxTI6TncqjZefN+WI=
+	t=1742905883; cv=none; b=PFqr52U89LlDEjaWOBjArcombY+WVOAmD8FkxqMLVY77Pb7i+KXcQNhbvPBnFdkT1lOxPVwMSSEwLV/spsNxDC+sF0pQDz7ftG/MaWSSOQDQpg7IFfPm5prsaIdPOmAwNl6luuHroG911htXjSH4YNsKz7tgKE8Ag6rnwCtmo+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905881; c=relaxed/simple;
-	bh=CWAZnQ/VWujiuOUdHmAzebzysgDQyANP3wkpa7/b5UA=;
+	s=arc-20240116; t=1742905883; c=relaxed/simple;
+	bh=T/V55C074dibtQyHKKoMPQJshgxliBufofwdgsDY0KQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1Kot7XsuWNwv3wqYHfevsZMfP/AiFKTZO15n4AWl/YmFcgiOOrTzlP3MjEMbMdciYxbMHcKmYQJ8EkAyB8DGs/HnlexKopGhcR1ZJCb470VUJmQDOMqlYvveHoEh+Wo5SqkzHfv/ijZK1tGxkvA1Rs0NjrQSFDngZ47BnUlewM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT3cK617; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VejCl+DFW+7I0u632jK4I9jTMBN61DKN24ihiR/7YXggcdtNSoUiajaunw5+uctwVfMAGZM1cz1vh75fHBI8c8yjOuxUMt18UScxXQn3HB6Klg6bC0zYUABQlOyt/gbiBzdO7VTfRPECbdaspQPoRt1Us+MjMFHI48pHVO+3vzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVtXGGPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT3cK617"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C47C4CEE4;
-	Tue, 25 Mar 2025 12:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVtXGGPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24876C4CEE4;
+	Tue, 25 Mar 2025 12:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905881;
-	bh=CWAZnQ/VWujiuOUdHmAzebzysgDQyANP3wkpa7/b5UA=;
+	s=korg; t=1742905883;
+	bh=T/V55C074dibtQyHKKoMPQJshgxliBufofwdgsDY0KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT3cK617Kr3+vLqCLWpySkLsnz3BfdrXNW7GdmR5Gv8seia8JgDkptaeTIMrEAzEG
-	 XGpxfysuYaCVO53gQVYXws0KY7F2AlqWOwXYXZ1KMDgCbxN/LAxW9rE4yd/lhEBH9v
-	 XCN+wXloVUjyK1fIa48ZjD7HNnUd7g4Kr9x6AdlI=
+	b=XVtXGGPyVvjDHyqwP8x73IvOsKqA7+z43pB0XcYGeJNSHLlRRNPCzwLnpa949Nr6z
+	 qOjhW0gEz8b77g4RiwcfWB3lh6ETJVS7/2KUl+OYgAvADOEAcW50Vfmu9ZV9jksR8o
+	 vqBkU7POY+0ySX7NFDpXuZBqFgxrg9dX7NdQIqa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 016/119] RDMA/mlx5: Handle errors returned from mlx5r_ib_rate()
-Date: Tue, 25 Mar 2025 08:21:14 -0400
-Message-ID: <20250325122149.478676715@linuxfoundation.org>
+Subject: [PATCH 6.13 017/119] ARM: OMAP1: select CONFIG_GENERIC_IRQ_CHIP
+Date: Tue, 25 Mar 2025 08:21:15 -0400
+Message-ID: <20250325122149.504504185@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -52,84 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 556f93b90c1872ad85e216e613c0b33803e621cb ]
+[ Upstream commit 98f3ab18a0a55aa1ff2cd6b74bd0c02c8f76f17e ]
 
-In function create_ib_ah() the following line attempts
-to left shift the return value of mlx5r_ib_rate() by 4
-and store it in the stat_rate_sl member of av:
+When GENERIC_IRQ_CHIP is disabled, OMAP1 kernels fail to link:
 
-However the code overlooks the fact that mlx5r_ib_rate()
-may return -EINVAL if the rate passed to it is less than
-IB_RATE_2_5_GBPS or greater than IB_RATE_800_GBPS.
+arm-linux-gnueabi-ld: arch/arm/mach-omap1/irq.o: in function `omap1_init_irq':
+irq.c:(.init.text+0x1e8): undefined reference to `irq_alloc_generic_chip'
+arm-linux-gnueabi-ld: irq.c:(.init.text+0x228): undefined reference to `irq_setup_generic_chip'
+arm-linux-gnueabi-ld: irq.c:(.init.text+0x2a8): undefined reference to `irq_gc_set_wake'
+arm-linux-gnueabi-ld: irq.c:(.init.text+0x2b0): undefined reference to `irq_gc_mask_set_bit'
+arm-linux-gnueabi-ld: irq.c:(.init.text+0x2b4): undefined reference to `irq_gc_mask_clr_bit'
 
-Because of this, the code may invoke undefined behaviour when
-shifting a signed negative value when doing "-EINVAL << 4".
+This has apparently been the case for many years, but I never caught it
+in randconfig builds until now, as there are dozens of other drivers
+that also 'select GENERIC_IRQ_CHIP' and statistically there is almost
+always one of them enabled.
 
-To fix this check for errors before assigning stat_rate_sl and
-propagate any error value to the callers.
-
-Fixes: c534ffda781f ("RDMA/mlx5: Fix AH static rate parsing")
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Link: https://patch.msgid.link/20250304140246.205919-1-qasdev00@gmail.com
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 55b447744389 ("ARM: OMAP1: Switch to use generic irqchip in preparation for sparse IRQ")
+Link: https://lore.kernel.org/r/20250205121151.289535-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/ah.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/arm/mach-omap1/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/ah.c b/drivers/infiniband/hw/mlx5/ah.c
-index 99036afb3aef0..531a57f9ee7e8 100644
---- a/drivers/infiniband/hw/mlx5/ah.c
-+++ b/drivers/infiniband/hw/mlx5/ah.c
-@@ -50,11 +50,12 @@ static __be16 mlx5_ah_get_udp_sport(const struct mlx5_ib_dev *dev,
- 	return sport;
- }
- 
--static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
-+static int create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
- 			 struct rdma_ah_init_attr *init_attr)
- {
- 	struct rdma_ah_attr *ah_attr = init_attr->ah_attr;
- 	enum ib_gid_type gid_type;
-+	int rate_val;
- 
- 	if (rdma_ah_get_ah_flags(ah_attr) & IB_AH_GRH) {
- 		const struct ib_global_route *grh = rdma_ah_read_grh(ah_attr);
-@@ -67,8 +68,10 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
- 		ah->av.tclass = grh->traffic_class;
- 	}
- 
--	ah->av.stat_rate_sl =
--		(mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr)) << 4);
-+	rate_val = mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr));
-+	if (rate_val < 0)
-+		return rate_val;
-+	ah->av.stat_rate_sl = rate_val << 4;
- 
- 	if (ah_attr->type == RDMA_AH_ATTR_TYPE_ROCE) {
- 		if (init_attr->xmit_slave)
-@@ -89,6 +92,8 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
- 		ah->av.fl_mlid = rdma_ah_get_path_bits(ah_attr) & 0x7f;
- 		ah->av.stat_rate_sl |= (rdma_ah_get_sl(ah_attr) & 0xf);
- 	}
-+
-+	return 0;
- }
- 
- int mlx5_ib_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
-@@ -121,8 +126,7 @@ int mlx5_ib_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
- 			return err;
- 	}
- 
--	create_ib_ah(dev, ah, init_attr);
--	return 0;
-+	return create_ib_ah(dev, ah, init_attr);
- }
- 
- int mlx5_ib_query_ah(struct ib_ah *ibah, struct rdma_ah_attr *ah_attr)
+diff --git a/arch/arm/mach-omap1/Kconfig b/arch/arm/mach-omap1/Kconfig
+index a643b71e30a35..08ec6bd84ada5 100644
+--- a/arch/arm/mach-omap1/Kconfig
++++ b/arch/arm/mach-omap1/Kconfig
+@@ -8,6 +8,7 @@ menuconfig ARCH_OMAP1
+ 	select ARCH_OMAP
+ 	select CLKSRC_MMIO
+ 	select FORCE_PCI if PCCARD
++	select GENERIC_IRQ_CHIP
+ 	select GPIOLIB
+ 	help
+ 	  Support for older TI OMAP1 (omap7xx, omap15xx or omap16xx)
 -- 
 2.39.5
 
