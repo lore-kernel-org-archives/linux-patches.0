@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B1A259CAD;
-	Tue, 25 Mar 2025 12:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AA3259CAD;
+	Tue, 25 Mar 2025 12:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905798; cv=none; b=EfX5I7kWJgVNoRHp7p0UxJZloJqIYraT117qRsv45zncBg5aOOtff3doWoWKhKs53tcu/wfq23TxmDrmEfsbamkSwTI7+SLvV4+TZqskqCf/t4DbqlfS7lpTGNh7mdmWkw/Bn8wDjJPRWV6ovsDfp8wspZVSq+MIJ+7ZtJjTafw=
+	t=1742905800; cv=none; b=uwf4IHUf5cU8RW/m+mrPR5mMLdfDOoftyR+efDUmqflxQ2s7DN6vJXpL+vWid9ISKsXEH1HQslnU1mvFMgmQukjhSlZUezYmBEMMh+5TB7Lk528Z5vJjrkClos+o22HsLweq/Catv3K6w7gK0xL9bw9z9CXq9ohGNnJsry9IW44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905798; c=relaxed/simple;
-	bh=itNMSGOaJUpbdYPFMLME9zflVxw4JL4fY9L2hqk65to=;
+	s=arc-20240116; t=1742905800; c=relaxed/simple;
+	bh=77SsWQj4J0NJ37DppBeK4UBMYXYLx+ZOgfyeXQzdTL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovqtR44PnEg/bhUhhKN+qAqpxCKPEqZehI2nJp+9icvsDAXZz9kAUZPb8EZpcjvLO7qCCitSGeXh6kxWy7L8l68a7YwdMcnAFu6kgPr5sLZz+H/m5yUl6HJwIcM8dmYAykMxt9ta29D4oQo622OeaRGT8Hrg3mp4Zdhq8jiMQgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wE9eiBK1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVs2wpur0XwaHfGTmm4dlgqTE9Xmau6S17KAdpGAfFALshmCWVqpLnxQmUpsidWRxhdkw2yRBrr5OjYuCITCNkyOT2fZ34QjMBN29Aryt4hGu0gIGtmtMS4Sn/q9ltkIUf2bl2r5gDbm48ibeEDobhnx/VgEHNxU4IK9bBl+UcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF0vUyhk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wE9eiBK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFC0C4CEED;
-	Tue, 25 Mar 2025 12:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF0vUyhk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8D8C4CEE4;
+	Tue, 25 Mar 2025 12:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905798;
-	bh=itNMSGOaJUpbdYPFMLME9zflVxw4JL4fY9L2hqk65to=;
+	s=korg; t=1742905800;
+	bh=77SsWQj4J0NJ37DppBeK4UBMYXYLx+ZOgfyeXQzdTL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wE9eiBK1zi7EnGJyYUUAjLS49f6hdStW7tocqohpUaa2WKzrPnX6YINQojx4gBphM
-	 nd0yf0xs5z+iW268jWfQTr2aazpXsoEuJxNI4EW0y/iO2+vGa1+J4GL+WZjtIC7Ya/
-	 FLa8M9+2Zunq2hm3YOcR/9+ub1cJgwckBets+BsE=
+	b=oF0vUyhkAZZsNNfc4usmTSy+PPVZ5UnTp5QpENntI4B3h7wMTafQ+Oh54CVEnxGMB
+	 cumoLTDv3nNdU9Jek+AXQUOi12W7z7u5eTq3+VUWxxLXSSBG/ICeFS/QEiM/3akdy9
+	 iyxz64CJKRQchYz/cf9jZxTK27IufxOMa2MZGrs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Nishanth Menon <nm@ti.com>,
-	Aniket Limaye <a-limaye@ti.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 168/198] i2c: omap: fix IRQ storms
-Date: Tue, 25 Mar 2025 08:22:10 -0400
-Message-ID: <20250325122201.054136061@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 140/198] arm64: mm: Populate vmemmap at the page level if not section aligned
+Date: Tue, 25 Mar 2025 08:21:42 -0400
+Message-ID: <20250325122200.326136956@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,112 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 
-commit 285df995f90e3d61d97f327d34b9659d92313314 upstream.
+[ Upstream commit d4234d131b0a3f9e65973f1cdc71bb3560f5d14b ]
 
-On the GTA04A5 writing a reset command to the gyroscope causes IRQ
-storms because NACK IRQs are enabled and therefore triggered but not
-acked.
+On the arm64 platform with 4K base page config, SECTION_SIZE_BITS is set
+to 27, making one section 128M. The related page struct which vmemmap
+points to is 2M then.
+Commit c1cc1552616d ("arm64: MMU initialisation") optimizes the
+vmemmap to populate at the PMD section level which was suitable
+initially since hot plug granule is always one section(128M). However,
+commit ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+introduced a 2M(SUBSECTION_SIZE) hot plug granule, which disrupted the
+existing arm64 assumptions.
 
-Sending a reset command to the gyroscope by
-i2cset 1 0x69 0x14 0xb6
-with an additional debug print in the ISR (not the thread) itself
-causes
+The first problem is that if start or end is not aligned to a section
+boundary, such as when a subsection is hot added, populating the entire
+section is wasteful.
 
-[ 363.353515] i2c i2c-1: ioctl, cmd=0x720, arg=0xbe801b00
-[ 363.359039] omap_i2c 48072000.i2c: addr: 0x0069, len: 2, flags: 0x0, stop: 1
-[ 363.366180] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x1110)
-[ 363.371673] omap_i2c 48072000.i2c: IRQ (ISR = 0x0010)
-[ 363.376892] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-[ 363.382263] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-[ 363.387664] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-repeating till infinity
-[...]
-(0x2 = NACK, 0x100 = Bus free, which is not enabled)
-Apparently no other IRQ bit gets set, so this stalls.
+The next problem is if we hotplug something that spans part of 128 MiB
+section (subsections, let's call it memblock1), and then hotplug something
+that spans another part of a 128 MiB section(subsections, let's call it
+memblock2), and subsequently unplug memblock1, vmemmap_free() will clear
+the entire PMD entry which also supports memblock2 even though memblock2
+is still active.
 
-Do not ignore enabled interrupts and make sure they are acked.
-If the NACK IRQ is not needed, it should simply not enabled, but
-according to the above log, caring about it is necessary unless
-the Bus free IRQ is enabled and handled. The assumption that is
-will always come with a ARDY IRQ, which was the idea behind
-ignoring it, proves wrong.
-It is true for simple reads from an unused address.
+Assuming hotplug/unplug sizes are guaranteed to be symmetric. Do the
+fix similar to x86-64: populate to pages levels if start/end is not aligned
+with section boundary.
 
-To still avoid the i2cdetect trouble which is the reason for
-commit c770657bd261 ("i2c: omap: Fix standard mode false ACK readings"),
-avoid doing much about NACK in omap_i2c_xfer_data() which is used
-by both IRQ mode and polling mode, so also the false detection fix
-is extended to polling usage and IRQ storms are avoided.
-
-By changing this, the hardirq handler is not needed anymore to filter
-stuff.
-
-The mentioned gyro reset now just causes a -ETIMEDOUT instead of
-hanging the system.
-
-Fixes: c770657bd261 ("i2c: omap: Fix standard mode false ACK readings").
-CC: stable@kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Tested-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Aniket Limaye <a-limaye@ti.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250228140420.379498-1-andreas@kemnade.info
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org # v5.4+
+Fixes: ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20250304072700.3405036-1-quic_zhenhuah@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-omap.c |   26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ arch/arm64/mm/mmu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -1049,23 +1049,6 @@ static int omap_i2c_transmit_data(struct
- 	return 0;
- }
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 6a4f118fb25f4..f095b99bb2144 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1209,8 +1209,11 @@ int __meminit vmemmap_populate(unsigned long start, unsigned long end, int node,
+ 	pmd_t *pmdp;
  
--static irqreturn_t
--omap_i2c_isr(int irq, void *dev_id)
--{
--	struct omap_i2c_dev *omap = dev_id;
--	irqreturn_t ret = IRQ_HANDLED;
--	u16 mask;
--	u16 stat;
--
--	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
--	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
--
--	if (stat & mask)
--		ret = IRQ_WAKE_THREAD;
--
--	return ret;
--}
--
- static int omap_i2c_xfer_data(struct omap_i2c_dev *omap)
- {
- 	u16 bits;
-@@ -1096,8 +1079,13 @@ static int omap_i2c_xfer_data(struct oma
- 		}
+ 	WARN_ON((start < VMEMMAP_START) || (end > VMEMMAP_END));
++	/* [start, end] should be within one section */
++	WARN_ON_ONCE(end - start > PAGES_PER_SECTION * sizeof(struct page));
  
- 		if (stat & OMAP_I2C_STAT_NACK) {
--			err |= OMAP_I2C_STAT_NACK;
-+			omap->cmd_err |= OMAP_I2C_STAT_NACK;
- 			omap_i2c_ack_stat(omap, OMAP_I2C_STAT_NACK);
-+
-+			if (!(stat & ~OMAP_I2C_STAT_NACK)) {
-+				err = -EAGAIN;
-+				break;
-+			}
- 		}
+-	if (!ARM64_KERNEL_USES_PMD_MAPS)
++	if (!ARM64_KERNEL_USES_PMD_MAPS ||
++	    (end - start < PAGES_PER_SECTION * sizeof(struct page)))
+ 		return vmemmap_populate_basepages(start, end, node, altmap);
  
- 		if (stat & OMAP_I2C_STAT_AL) {
-@@ -1475,7 +1463,7 @@ omap_i2c_probe(struct platform_device *p
- 				IRQF_NO_SUSPEND, pdev->name, omap);
- 	else
- 		r = devm_request_threaded_irq(&pdev->dev, omap->irq,
--				omap_i2c_isr, omap_i2c_isr_thread,
-+				NULL, omap_i2c_isr_thread,
- 				IRQF_NO_SUSPEND | IRQF_ONESHOT,
- 				pdev->name, omap);
- 
+ 	do {
+-- 
+2.39.5
+
 
 
