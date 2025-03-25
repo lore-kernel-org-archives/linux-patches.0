@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DA629C354;
-	Tue, 25 Mar 2025 12:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B79226AABE;
+	Tue, 25 Mar 2025 12:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906195; cv=none; b=lTsU/FLvK+D/mmhqQs4zuqZiF/fd4qgIm1No/P78nzTHW7wqjyYl/7LFwf65VCKYOuaeT7zEEIlSfSqTTzWcLeK+/YxdAPKEsDLpLipwMGm1I/soDr6NrCwTFc3570BSngy+f1/LmAuao+ZFFAj1qAi952/bBTMXeSKvJQqCiuk=
+	t=1742906197; cv=none; b=Dsjiy24bQnXbKyDhs3T7gOUXJ0LSDivTcivmx7lGRZXiMGqbls7WquBMTNVUwBnwAlz8qR/06TGa60eLratCDrSjpUHJxs7LcOFgTy/piZ3WmQEqI7rh+l8uMjHKGB/Bk5hfyQYc8IBAJYA28r39KVwZGS5HZF0RJCTQVNWuQi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906195; c=relaxed/simple;
-	bh=K4VqFj7PK9nrpOzN2O3fU2rG3fAyj9Nzu3XEoU/9XZI=;
+	s=arc-20240116; t=1742906197; c=relaxed/simple;
+	bh=BdSdIj8w9TKsZ2mB5SPAk87anPGrzhi/zDN5SEXMg94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTpXapW4Co4Mnuziajetoz+gyciUmWRNpkczujbUeornMDyJTrXbFyKYg3s6hcwo2SQFQafuu8eld8HnbzqNYezOJfjZpomSyaCpsed6vIVwheDTlaJWsZZcpJND9uyKL8raWIWHfTwMT70xqIELuD5GGzuzXpaI4Xq44z+387Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BICAHKIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WIX6Z09/MjC/NgB5XFSTHLYQJK1d2eeglo9pusCiYFk560jOTJa+LzaO18wtWy1RxltJAI34d/YEQEpQjDGwXi9W1hb+r+ZrdmJsfysEXOj51SkEEbDasE5uGnNbAzVtYUnT9LJ2/bFU4hlOHgdwB+XfO4S4/3EHY40sQICKRG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaSSaXfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BICAHKIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB01C4CEE4;
-	Tue, 25 Mar 2025 12:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaSSaXfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD71C4CEED;
+	Tue, 25 Mar 2025 12:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906195;
-	bh=K4VqFj7PK9nrpOzN2O3fU2rG3fAyj9Nzu3XEoU/9XZI=;
+	s=korg; t=1742906197;
+	bh=BdSdIj8w9TKsZ2mB5SPAk87anPGrzhi/zDN5SEXMg94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BICAHKILuXEu/JvbPdF8QJUekt5ghtIqSB29yvBqd6Un6u5ncwULKOkwanWfay2qa
-	 0foL1ZM7sUm5ZQRjvpEbAd8w78y6nvsqelXg3qZHm/CKwrzdY5TGmDgrPui4VZIBAr
-	 UtjznMTFWkyh/lDjtWceVaY6+vYh0M8Ag+ilLD5I=
+	b=yaSSaXfqZNZEIE2uX5UjbbIvkwNlKWJ1rE7PZcf+tBQkaBtVFbbQOmbTQp7eM2bRF
+	 GHbkdu9evXvefI892UEWBlXMZn0245bLZUcIsavWWLFRfTWNWVm9kj+026DQ+55HMl
+	 zARJqDvMGXHCHZEoDQTAIp6qBggsrpRFARa8/cIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 37/77] regulator: check that dummy regulator has been probed before using it
-Date: Tue, 25 Mar 2025 08:22:32 -0400
-Message-ID: <20250325122145.324670626@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Subject: [PATCH 6.6 38/77] accel/qaic: Fix integer overflow in qaic_validate_req()
+Date: Tue, 25 Mar 2025 08:22:33 -0400
+Message-ID: <20250325122145.348357978@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -50,57 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 2c7a50bec4958f1d1c84d19cde518d0e96a676fd upstream.
+commit 67d15c7aa0864dfd82325c7e7e7d8548b5224c7b upstream.
 
-Due to asynchronous driver probing there is a chance that the dummy
-regulator hasn't already been probed when first accessing it.
+These are u64 variables that come from the user via
+qaic_attach_slice_bo_ioctl().  Use check_add_overflow() to ensure that
+the math doesn't have an integer wrapping bug.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Link: https://patch.msgid.link/20250313103051.32430-3-ceggers@arri.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/176388fa-40fe-4cb4-9aeb-2c91c22130bd@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/core.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -2084,6 +2084,10 @@ static int regulator_resolve_supply(stru
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -550,6 +550,7 @@ static bool invalid_sem(struct qaic_sem
+ static int qaic_validate_req(struct qaic_device *qdev, struct qaic_attach_slice_entry *slice_ent,
+ 			     u32 count, u64 total_size)
+ {
++	u64 total;
+ 	int i;
  
- 		if (have_full_constraints()) {
- 			r = dummy_regulator_rdev;
-+			if (!r) {
-+				ret = -EPROBE_DEFER;
-+				goto out;
-+			}
- 			get_device(&r->dev);
- 		} else {
- 			dev_err(dev, "Failed to resolve %s-supply for %s\n",
-@@ -2101,6 +2105,10 @@ static int regulator_resolve_supply(stru
- 			goto out;
- 		}
- 		r = dummy_regulator_rdev;
-+		if (!r) {
-+			ret = -EPROBE_DEFER;
-+			goto out;
-+		}
- 		get_device(&r->dev);
+ 	for (i = 0; i < count; i++) {
+@@ -559,7 +560,8 @@ static int qaic_validate_req(struct qaic
+ 		      invalid_sem(&slice_ent[i].sem2) || invalid_sem(&slice_ent[i].sem3))
+ 			return -EINVAL;
+ 
+-		if (slice_ent[i].offset + slice_ent[i].size > total_size)
++		if (check_add_overflow(slice_ent[i].offset, slice_ent[i].size, &total) ||
++		    total > total_size)
+ 			return -EINVAL;
  	}
- 
-@@ -2209,8 +2217,10 @@ struct regulator *_regulator_get(struct
- 			 * enabled, even if it isn't hooked up, and just
- 			 * provide a dummy.
- 			 */
--			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
- 			rdev = dummy_regulator_rdev;
-+			if (!rdev)
-+				return ERR_PTR(-EPROBE_DEFER);
-+			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
- 			get_device(&rdev->dev);
- 			break;
  
 
 
