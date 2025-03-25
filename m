@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C952580E1;
-	Tue, 25 Mar 2025 12:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278752580E1;
+	Tue, 25 Mar 2025 12:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905567; cv=none; b=aiO8PEUQUPjpQWiN2WI+wxsksMzn7t4sDHsXJa4X7u9krp5FxRbMu2XBHNILrtXcBYna4qtz0GzqB8+NsVekN4FG++UxUBxIUd4cIv0YrXUrF5S0OeAa9Hrej2rcBXp75lu6jIWtgt6yUiKL7Di3VIRkIf4hFEPnUx+fhrB52wQ=
+	t=1742905569; cv=none; b=dHwhJGB78IA4EqPlBoMpA47I/UBDB905lN2M/zl0fvkEjczgWq0U+vtAzniEKNOQk3reDdxzEngKyk3LM8szF2ZnzFfPhRpVnCE+KeR+Vth4ph4ureGyCEe8Y6+meaOAuigv03jZ9jN/CoqWRef9pmG6Pnw2WK35JtKQvWRqRck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905567; c=relaxed/simple;
-	bh=HHK4ycfJb53L+KdBgz+moksYiLdpLGEinX7bfQyZN5I=;
+	s=arc-20240116; t=1742905569; c=relaxed/simple;
+	bh=JDzj/A63IK0uqx0qbLPhMhGV3etm4l4QF6n4RyiFnhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TyQrvFYqej7jaOTwxdPpjnwd4HR+dTEpBFq5ElHNB4IYvoE1/iJARlHBJEnD/FBzwZWmhneqV+t6o2ohUOmQ1URkO5/bXss6C+ablbnmhM5Ytmq5VZMLiBZqlUnAKjdCNB5BW63Y0fDPMG5Nt0b1w/zIrg3xsYbC5FWo4bvaS1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plWCYTNP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNTCMAQi7VHuitFOmngIV4sWhKC4gOfdaHTDuk612TJXuWUq5yhnMLjVMJGgMWmB4BNQZD6g9DEwxdQ8S6aVsm9zZCM3E9SvN79J1asmywkkwNXBKAwtTvxxgZKDfB7YSLkpsxE554AzRvdV5zei8MWOLuYM5/GCHZH5PyP12ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7zWNMV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plWCYTNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3736C4CEE4;
-	Tue, 25 Mar 2025 12:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7zWNMV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB7DC4CEE4;
+	Tue, 25 Mar 2025 12:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905567;
-	bh=HHK4ycfJb53L+KdBgz+moksYiLdpLGEinX7bfQyZN5I=;
+	s=korg; t=1742905569;
+	bh=JDzj/A63IK0uqx0qbLPhMhGV3etm4l4QF6n4RyiFnhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plWCYTNP7PcnL3xbJ7qzc3sXTmHq3tUsOwtRptlWxCVPlknPAS91uqZ80qYfE+Z+p
-	 7QFQVyNc/yapE8kifDo/tuB2Q4IcThmZonhpnDX14Kf45i8utDxPNBkh8/9paI7Asi
-	 N/+tK2Nj4ksU7X6hG5Td4NIULD1AI2aREmhkrZjs=
+	b=o7zWNMV2nuYMz2GCdQPiPW2VS9hF9PsZcYn38blYs2Jpx3XxCLsaS5Brmkmy97XeD
+	 /vYV3Q5nf5RxnsLpoUNOyZQ/iW/MhJiIVc54GXseXq6DJuCQMn8ZeZx6YU/0lmWw9X
+	 hxVAj5A5JOTlBo+q2L9tvTPOZ4dBEu0/nT5hxcUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Huang <Joseph.Huang@garmin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/198] net: dsa: mv88e6xxx: Verify after ATU Load ops
-Date: Tue, 25 Mar 2025 08:19:36 -0400
-Message-ID: <20250325122157.015679737@linuxfoundation.org>
+Subject: [PATCH 6.1 005/198] fbdev: hyperv_fb: iounmap() the correct memory when removing a device
+Date: Tue, 25 Mar 2025 08:19:27 -0400
+Message-ID: <20250325122156.780619979@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,135 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Huang <Joseph.Huang@garmin.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit dc5340c3133a3ebe54853fd299116149e528cfaa ]
+[ Upstream commit 7241c886a71797cc51efc6fadec7076fcf6435c2 ]
 
-ATU Load operations could fail silently if there's not enough space
-on the device to hold the new entry. When this happens, the symptom
-depends on the unknown flood settings. If unknown multicast flood is
-disabled, the multicast packets are dropped when the ATU table is
-full. If unknown multicast flood is enabled, the multicast packets
-will be flooded to all ports. Either way, IGMP snooping is broken
-when the ATU Load operation fails silently.
+When a Hyper-V framebuffer device is removed, or the driver is unbound
+from a device, any allocated and/or mapped memory must be released. In
+particular, MMIO address space that was mapped to the framebuffer must
+be unmapped. Current code unmaps the wrong address, resulting in an
+error like:
 
-Do a Read-After-Write verification after each fdb/mdb add operation
-to make sure that the operation was really successful, and return
--ENOSPC otherwise.
+[ 4093.980597] iounmap: bad address 00000000c936c05c
 
-Fixes: defb05b9b9b4 ("net: dsa: mv88e6xxx: Add support for fdb_add, fdb_del, and fdb_getnext")
-Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250306172306.3859214-1-Joseph.Huang@garmin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+followed by a stack dump.
+
+Commit d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for
+Hyper-V frame buffer driver") changed the kind of address stored in
+info->screen_base, and the iounmap() call in hvfb_putmem() was not
+updated accordingly.
+
+Fix this by updating hvfb_putmem() to unmap the correct address.
+
+Fixes: d21987d709e8 ("video: hyperv: hyperv_fb: Support deferred IO for Hyper-V frame buffer driver")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250209235252.2987-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250209235252.2987-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 59 ++++++++++++++++++++++++++------
- 1 file changed, 48 insertions(+), 11 deletions(-)
+ drivers/video/fbdev/hyperv_fb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index d94b46316a117..af0565c3a364c 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2107,13 +2107,11 @@ mv88e6xxx_port_vlan_prepare(struct dsa_switch *ds, int port,
- 	return err;
- }
+diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
+index d3d643cf7506c..41c496ff55cc4 100644
+--- a/drivers/video/fbdev/hyperv_fb.c
++++ b/drivers/video/fbdev/hyperv_fb.c
+@@ -1106,7 +1106,7 @@ static void hvfb_putmem(struct hv_device *hdev, struct fb_info *info)
  
--static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
--					const unsigned char *addr, u16 vid,
--					u8 state)
-+static int mv88e6xxx_port_db_get(struct mv88e6xxx_chip *chip,
-+				 const unsigned char *addr, u16 vid,
-+				 u16 *fid, struct mv88e6xxx_atu_entry *entry)
- {
--	struct mv88e6xxx_atu_entry entry;
- 	struct mv88e6xxx_vtu_entry vlan;
--	u16 fid;
- 	int err;
- 
- 	/* Ports have two private address databases: one for when the port is
-@@ -2124,7 +2122,7 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
- 	 * VLAN ID into the port's database used for VLAN-unaware bridging.
- 	 */
- 	if (vid == 0) {
--		fid = MV88E6XXX_FID_BRIDGED;
-+		*fid = MV88E6XXX_FID_BRIDGED;
+ 	if (par->need_docopy) {
+ 		vfree(par->dio_vp);
+-		iounmap(info->screen_base);
++		iounmap(par->mmio_vp);
+ 		vmbus_free_mmio(par->mem->start, screen_fb_size);
  	} else {
- 		err = mv88e6xxx_vtu_get(chip, vid, &vlan);
- 		if (err)
-@@ -2134,14 +2132,39 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
- 		if (!vlan.valid)
- 			return -EOPNOTSUPP;
- 
--		fid = vlan.fid;
-+		*fid = vlan.fid;
- 	}
- 
--	entry.state = 0;
--	ether_addr_copy(entry.mac, addr);
--	eth_addr_dec(entry.mac);
-+	entry->state = 0;
-+	ether_addr_copy(entry->mac, addr);
-+	eth_addr_dec(entry->mac);
-+
-+	return mv88e6xxx_g1_atu_getnext(chip, *fid, entry);
-+}
-+
-+static bool mv88e6xxx_port_db_find(struct mv88e6xxx_chip *chip,
-+				   const unsigned char *addr, u16 vid)
-+{
-+	struct mv88e6xxx_atu_entry entry;
-+	u16 fid;
-+	int err;
- 
--	err = mv88e6xxx_g1_atu_getnext(chip, fid, &entry);
-+	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
-+	if (err)
-+		return false;
-+
-+	return entry.state && ether_addr_equal(entry.mac, addr);
-+}
-+
-+static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
-+					const unsigned char *addr, u16 vid,
-+					u8 state)
-+{
-+	struct mv88e6xxx_atu_entry entry;
-+	u16 fid;
-+	int err;
-+
-+	err = mv88e6xxx_port_db_get(chip, addr, vid, &fid, &entry);
- 	if (err)
- 		return err;
- 
-@@ -2739,6 +2762,13 @@ static int mv88e6xxx_port_fdb_add(struct dsa_switch *ds, int port,
- 	mv88e6xxx_reg_lock(chip);
- 	err = mv88e6xxx_port_db_load_purge(chip, port, addr, vid,
- 					   MV88E6XXX_G1_ATU_DATA_STATE_UC_STATIC);
-+	if (err)
-+		goto out;
-+
-+	if (!mv88e6xxx_port_db_find(chip, addr, vid))
-+		err = -ENOSPC;
-+
-+out:
- 	mv88e6xxx_reg_unlock(chip);
- 
- 	return err;
-@@ -6502,6 +6532,13 @@ static int mv88e6xxx_port_mdb_add(struct dsa_switch *ds, int port,
- 	mv88e6xxx_reg_lock(chip);
- 	err = mv88e6xxx_port_db_load_purge(chip, port, mdb->addr, mdb->vid,
- 					   MV88E6XXX_G1_ATU_DATA_STATE_MC_STATIC);
-+	if (err)
-+		goto out;
-+
-+	if (!mv88e6xxx_port_db_find(chip, mdb->addr, mdb->vid))
-+		err = -ENOSPC;
-+
-+out:
- 	mv88e6xxx_reg_unlock(chip);
- 
- 	return err;
+ 		hvfb_release_phymem(hdev, info->fix.smem_start,
 -- 
 2.39.5
 
