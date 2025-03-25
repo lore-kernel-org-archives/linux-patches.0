@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AAF259CAD;
-	Tue, 25 Mar 2025 12:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5832673B8;
+	Tue, 25 Mar 2025 12:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905758; cv=none; b=PZ+ZmqbZzNraEFvOqBHgj6g1VLlEylhodspfjfQD+FUHKB3bxiw1eAHL16e8s8TqlrhxakOut79AK4pc+FBtq+V35RPUixCMoBmQH7K0mTUnuea5ESzJqo/AxuFRtYU3Z9fWMukYqHexwnPnxCdC7jqJNFFngtie0SIKLLdEq8s=
+	t=1742905760; cv=none; b=ICmhwj9OVHYRXCfdMb86UGBgqxIwkRwGyMh3IqPnY0dTh+Y+8CYwUnrQsRaTTvjFoxVZff6avsFDtZkU7LLW3DuxPDF9zCMme/F0hMjptC7q62OR9nsFOc9wVC/K17Nku3tW5/8yxSDfhQlHUFrzHfu0WZAId9OevqMLY06ivLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905758; c=relaxed/simple;
-	bh=pf8ZTjRk7nmcjCZ2L9nY6TGkg6T7GJNyIgOiJRu5ZpQ=;
+	s=arc-20240116; t=1742905760; c=relaxed/simple;
+	bh=MYg+8cQBprQm26urVtrcnv0y7yBUhs8XwfbgvZV2Z04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/7jIMoOIFPWAzWxAeMuSyBZg/DkhdAuJ5PvquKmrlJLbGMMpzmrvZ4oLfB+gQvAOvFCQ3s8mN4Z/idvRpKslaQw7hjTFD3G2osGXccDRhsXbaGeYT64NzTN8d0PR7YzgOYpgM8/tzByrqqg6cp2TloulnL+Bi0u+/jTASYqvnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRqjXajL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+Ub8mjdjezQZc/dFS6FsQ+YXBWhpwdmRZdrV3xrFL596rFR2lMgqihHVGrIlHPdFIMjT2dIpJ8w3tzcKNsNxX5cMgvqZh26pOtZTbhbfF7PtMrnKXfm7V0LhZ9m0psUL5iTrxprrWipvXV7QGiguIvNF6Nb0OsnAH3ci45YQQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSIWSFvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRqjXajL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF5EC4CEED;
-	Tue, 25 Mar 2025 12:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSIWSFvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA52C4CEE4;
+	Tue, 25 Mar 2025 12:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905758;
-	bh=pf8ZTjRk7nmcjCZ2L9nY6TGkg6T7GJNyIgOiJRu5ZpQ=;
+	s=korg; t=1742905760;
+	bh=MYg+8cQBprQm26urVtrcnv0y7yBUhs8XwfbgvZV2Z04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRqjXajLOPJQXjdqQJKZ5v8bq1R6WerRggng4WKa20oEiAtwwzypX7qGO0qxHyDNu
-	 dW9mbvJ8U+6ZtCNnc6wQOz/bffvSqvFgPUAQudg/TjWqpYb87v7ThCfE1wNJdZypmh
-	 o5wpw8jv06JIQFOIWtUp47GcdO9IaPAnYue2wckg=
+	b=gSIWSFvvaxpBCrLK5U6DO+/aDf5AP19QPJWqeknFW1rPvHPCaN5O1NWeKcEBx13mM
+	 TZjqvSFtUE+99H7/fu0Ms5N35C/zFE0QHvPD81pkF/QEAOsvIXTuaqZKgkJez5frfF
+	 xINNUd9IIhn0o6V6v5mQcmbJyLrb173WLknLCAO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Marek Vasut <marex@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/198] xfrm_output: Force software GSO only in tunnel mode
-Date: Tue, 25 Mar 2025 08:21:50 -0400
-Message-ID: <20250325122200.540291421@linuxfoundation.org>
+Subject: [PATCH 6.1 149/198] soc: imx8m: Remove global soc_uid
+Date: Tue, 25 Mar 2025 08:21:51 -0400
+Message-ID: <20250325122200.566836202@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,75 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 0aae2867aa6067f73d066bc98385e23c8454a1d7 ]
+[ Upstream commit 9c1c02fe8d7f33c18547b79c41f3fa41ef7bae8f ]
 
-The cited commit fixed a software GSO bug with VXLAN + IPSec in tunnel
-mode. Unfortunately, it is slightly broader than necessary, as it also
-severely affects performance for Geneve + IPSec transport mode over a
-device capable of both HW GSO and IPSec crypto offload. In this case,
-xfrm_output unnecessarily triggers software GSO instead of letting the
-HW do it. In simple iperf3 tests over Geneve + IPSec transport mode over
-a back-2-back pair of NICs with MTU 1500, the performance was observed
-to be up to 6x worse when doing software GSO compared to leaving it to
-the hardware.
+The static global soc_uid is only ever used as kasprintf() parameter in
+imx8m_soc_probe(). Pass pointer to local u64 variable to .soc_revision()
+callback instead and let the .soc_revision() callback fill in the content.
+Remove the unnecessary static global variable.
 
-This commit makes xfrm_output only trigger software GSO in crypto
-offload cases for already encapsulated packets in tunnel mode, as not
-doing so would then cause the inner tunnel skb->inner_networking_header
-to be overwritten and break software GSO for that packet later if the
-device turns out to not be capable of HW GSO.
-
-Taking a closer look at the conditions for the original bug, to better
-understand the reasons for this change:
-- vxlan_build_skb -> iptunnel_handle_offloads sets inner_protocol and
-  inner network header.
-- then, udp_tunnel_xmit_skb -> ip_tunnel_xmit adds outer transport and
-  network headers.
-- later in the xmit path, xfrm_output -> xfrm_outer_mode_output ->
-  xfrm4_prepare_output -> xfrm4_tunnel_encap_add overwrites the inner
-  network header with the one set in ip_tunnel_xmit before adding the
-  second outer header.
-- __dev_queue_xmit -> validate_xmit_skb checks whether GSO segmentation
-  needs to happen based on dev features. In the original bug, the hw
-  couldn't segment the packets, so skb_gso_segment was invoked.
-- deep in the .gso_segment callback machinery, __skb_udp_tunnel_segment
-  tries to use the wrong inner network header, expecting the one set in
-  iptunnel_handle_offloads but getting the one set by xfrm instead.
-- a bit later, ipv6_gso_segment accesses the wrong memory based on that
-  wrong inner network header.
-
-With the new change, the original bug (or similar ones) cannot happen
-again, as xfrm will now trigger software GSO before applying a tunnel.
-This concern doesn't exist in packet offload mode, when the HW adds
-encapsulation headers. For the non-offloaded packets (crypto in SW),
-software GSO is still done unconditionally in the else branch.
-
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Fixes: a204aef9fd77 ("xfrm: call xfrm_output_gso when inner_protocol is set in xfrm_output")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: cf7139aac463 ("soc: imx8m: Unregister cpufreq and soc dev in cleanup path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/imx/soc-imx8m.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
-index 07a7ee43b8ae2..c59c548d8fc10 100644
---- a/net/xfrm/xfrm_output.c
-+++ b/net/xfrm/xfrm_output.c
-@@ -738,7 +738,7 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
- 		skb->encapsulation = 1;
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index a160854a19178..9587641e0c4f9 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -30,11 +30,9 @@
  
- 		if (skb_is_gso(skb)) {
--			if (skb->inner_protocol)
-+			if (skb->inner_protocol && x->props.mode == XFRM_MODE_TUNNEL)
- 				return xfrm_output_gso(net, sk, skb);
+ struct imx8_soc_data {
+ 	char *name;
+-	int (*soc_revision)(u32 *socrev);
++	int (*soc_revision)(u32 *socrev, u64 *socuid);
+ };
  
- 			skb_shinfo(skb)->gso_type |= SKB_GSO_ESP;
+-static u64 soc_uid;
+-
+ #ifdef CONFIG_HAVE_ARM_SMCCC
+ static u32 imx8mq_soc_revision_from_atf(void)
+ {
+@@ -51,7 +49,7 @@ static u32 imx8mq_soc_revision_from_atf(void)
+ static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
+ #endif
+ 
+-static int imx8mq_soc_revision(u32 *socrev)
++static int imx8mq_soc_revision(u32 *socrev, u64 *socuid)
+ {
+ 	struct device_node *np;
+ 	void __iomem *ocotp_base;
+@@ -89,9 +87,9 @@ static int imx8mq_soc_revision(u32 *socrev)
+ 			rev = REV_B1;
+ 	}
+ 
+-	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
+-	soc_uid <<= 32;
+-	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
++	*socuid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
++	*socuid <<= 32;
++	*socuid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
+ 
+ 	*socrev = rev;
+ 
+@@ -109,7 +107,7 @@ static int imx8mq_soc_revision(u32 *socrev)
+ 	return ret;
+ }
+ 
+-static int imx8mm_soc_uid(void)
++static int imx8mm_soc_uid(u64 *socuid)
+ {
+ 	void __iomem *ocotp_base;
+ 	struct device_node *np;
+@@ -136,9 +134,9 @@ static int imx8mm_soc_uid(void)
+ 
+ 	clk_prepare_enable(clk);
+ 
+-	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
+-	soc_uid <<= 32;
+-	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
++	*socuid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
++	*socuid <<= 32;
++	*socuid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
+ 
+ 	clk_disable_unprepare(clk);
+ 	clk_put(clk);
+@@ -151,7 +149,7 @@ static int imx8mm_soc_uid(void)
+ 	return ret;
+ }
+ 
+-static int imx8mm_soc_revision(u32 *socrev)
++static int imx8mm_soc_revision(u32 *socrev, u64 *socuid)
+ {
+ 	struct device_node *np;
+ 	void __iomem *anatop_base;
+@@ -172,7 +170,7 @@ static int imx8mm_soc_revision(u32 *socrev)
+ 	iounmap(anatop_base);
+ 	of_node_put(np);
+ 
+-	return imx8mm_soc_uid();
++	return imx8mm_soc_uid(socuid);
+ 
+ err_iomap:
+ 	of_node_put(np);
+@@ -215,10 +213,11 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
+ static int imx8m_soc_probe(struct platform_device *pdev)
+ {
+ 	struct soc_device_attribute *soc_dev_attr;
+-	struct soc_device *soc_dev;
++	const struct imx8_soc_data *data;
+ 	const struct of_device_id *id;
++	struct soc_device *soc_dev;
+ 	u32 soc_rev = 0;
+-	const struct imx8_soc_data *data;
++	u64 soc_uid = 0;
+ 	int ret;
+ 
+ 	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
+@@ -241,7 +240,7 @@ static int imx8m_soc_probe(struct platform_device *pdev)
+ 	if (data) {
+ 		soc_dev_attr->soc_id = data->name;
+ 		if (data->soc_revision) {
+-			ret = data->soc_revision(&soc_rev);
++			ret = data->soc_revision(&soc_rev, &soc_uid);
+ 			if (ret)
+ 				goto free_soc;
+ 		}
 -- 
 2.39.5
 
