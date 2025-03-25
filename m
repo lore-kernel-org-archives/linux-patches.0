@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EC526A1C5;
-	Tue, 25 Mar 2025 12:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE5E25C6E4;
+	Tue, 25 Mar 2025 12:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906177; cv=none; b=WagNvP6MiM2vx1s3iPGJ7z4jgfm7GTS0/5YEaKUEbRk5g0K4nhkC/htXoVkv86+G7Ph7Af82DH+3fzKkBJW9fVie/iIw+rn01ITEvZR97Uphy1Qim5JDhN0eqWagolu4EACEO3Jo2ntlVZFjzVlysHKSUMTr1f8Efg1EhvUgWQg=
+	t=1742906179; cv=none; b=exI8kv0VLb7+getvf47XCE8y08UpQRqac6bIic74hniq8/9XkYUpwibJB3TJgKNcoVzhKr5v4ZhZ1UMIR+kugnGqhBP3UXHdIhPSRD/fqQYsI62S5tzMtiw4yLIVrg852z0P8swH/yjuHRXq2FvMydOlkRTeR0xETyEV2XwjN9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906177; c=relaxed/simple;
-	bh=aFPt36b88bu/IS2oPE/0m/mpGF4Ik3SGQMiA60dE9rE=;
+	s=arc-20240116; t=1742906179; c=relaxed/simple;
+	bh=lNIV/Liptbz/9yOYHjB0L/qUtLeAqpl8zZp65Wxj/Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8faI/d9DcLUZYQjznKQ4QgOQTmeY/lBpmh8pHAP2OZIZmndsxClFMwkCip9YQaLMoLlLXjlPfuvz8LwWdDPi+qSNLSHknEzCVXPozUKKdB8VI8bhTp22GtSg/EKb1r30luFjtuxSGXdWGNWi/pOz8qtpCDS2UkF2WRclcwQbF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6fXubfj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EZAzXhecYHBLG/hjLLaZ2uRzKHWaH1sPBC70SDlqyXpSg3IYszizVqPNDZkt85RTfAiKHI68z1a2pji0zCoHhHwOa7+2zgSuX+UuF7qbp4OGTQhP6U5zvu3R93VNPmX95gbOHJmV/l93HjDeJiIBJFVMY4NnjIcUpj9/hwt3fy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kb0Kap+m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6fXubfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3873EC4CEE4;
-	Tue, 25 Mar 2025 12:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kb0Kap+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137ECC4CEE4;
+	Tue, 25 Mar 2025 12:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906177;
-	bh=aFPt36b88bu/IS2oPE/0m/mpGF4Ik3SGQMiA60dE9rE=;
+	s=korg; t=1742906179;
+	bh=lNIV/Liptbz/9yOYHjB0L/qUtLeAqpl8zZp65Wxj/Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6fXubfjzI0o0w9aFA/fXxlWNCR9He8JHF4+7al9v78ScZJUGiNMB8iACmaCT/PzC
-	 iWOw52zJEoOCYIDz/Ckr90OSvly5vnJVv1SJ3iWewgtVZ1L09xgjEQcEdr7NE0FUZ+
-	 R630t8WzVAzRhTk4aottstLhoSAKQdrBq7VoEfek=
+	b=Kb0Kap+mQ1tYP9jsFlP8AYGXc08Dt6lCg+qjVRRYBZvuuSGIXrH3Sk4tB5L5Ie1xo
+	 xRLkWxNw+FEyv51gH9a/Jrfb/ag43tIUFXSpZlLpJ70fdhmLdKNA2aWtbXtjG7+CJQ
+	 DE0PxRY6w+sce2aZLPKl+yzGJvFy9CFFEAw/4BUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	qianyi liu <liuqianyi125@gmail.com>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.6 56/77] drm/sched: Fix fence reference count leak
-Date: Tue, 25 Mar 2025 08:22:51 -0400
-Message-ID: <20250325122145.817427302@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>
+Subject: [PATCH 6.6 57/77] drm/amdgpu: Fix MPEG2, MPEG4 and VC1 video caps max size
+Date: Tue, 25 Mar 2025 08:22:52 -0400
+Message-ID: <20250325122145.843018231@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -50,47 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: qianyi liu <liuqianyi125@gmail.com>
+From: David Rosca <david.rosca@amd.com>
 
-commit a952f1ab696873be124e31ce5ef964d36bce817f upstream.
+commit f0105e173103c9d30a2bb959f7399437d536c848 upstream.
 
-The last_scheduled fence leaks when an entity is being killed and adding
-the cleanup callback fails.
+1920x1088 is the maximum supported resolution.
 
-Decrement the reference count of prev when dma_fence_add_callback()
-fails, ensuring proper balance.
-
-Cc: stable@vger.kernel.org	# v6.2+
-[phasta: add git tag info for stable kernel]
-Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
-Signed-off-by: qianyi liu <liuqianyi125@gmail.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250311060251.4041101-1-liuqianyi125@gmail.com
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1a0807feb97082bff2b1342dbbe55a2a9a8bdb88)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nv.c    |   18 +++++++++---------
+ drivers/gpu/drm/amd/amdgpu/soc15.c |   18 +++++++++---------
+ drivers/gpu/drm/amd/amdgpu/vi.c    |   36 ++++++++++++++++++------------------
+ 3 files changed, 36 insertions(+), 36 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -237,9 +237,16 @@ static void drm_sched_entity_kill(struct
- 		struct drm_sched_fence *s_fence = job->s_fence;
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -79,10 +79,10 @@ static const struct amdgpu_video_codecs
  
- 		dma_fence_get(&s_fence->finished);
--		if (!prev || dma_fence_add_callback(prev, &job->finish_cb,
--					   drm_sched_entity_kill_jobs_cb))
-+		if (!prev ||
-+		    dma_fence_add_callback(prev, &job->finish_cb,
-+					   drm_sched_entity_kill_jobs_cb)) {
-+			/*
-+			 * Adding callback above failed.
-+			 * dma_fence_put() checks for NULL.
-+			 */
-+			dma_fence_put(prev);
- 			drm_sched_entity_kill_jobs_cb(NULL, &job->finish_cb);
-+		}
+ /* Navi1x */
+ static const struct amdgpu_video_codec_info nv_video_codecs_decode_array[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
+@@ -105,10 +105,10 @@ static const struct amdgpu_video_codecs
+ };
  
- 		prev = &s_fence->finished;
- 	}
+ static const struct amdgpu_video_codec_info sc_video_codecs_decode_array_vcn0[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
+@@ -116,10 +116,10 @@ static const struct amdgpu_video_codec_i
+ };
+ 
+ static const struct amdgpu_video_codec_info sc_video_codecs_decode_array_vcn1[] = {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -103,10 +103,10 @@ static const struct amdgpu_video_codecs
+ /* Vega */
+ static const struct amdgpu_video_codec_info vega_video_codecs_decode_array[] =
+ {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ };
+@@ -120,10 +120,10 @@ static const struct amdgpu_video_codecs
+ /* Raven */
+ static const struct amdgpu_video_codec_info rv_video_codecs_decode_array[] =
+ {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 4096, 4096, 0)},
+@@ -138,10 +138,10 @@ static const struct amdgpu_video_codecs
+ /* Renoir, Arcturus */
+ static const struct amdgpu_video_codec_info rn_video_codecs_decode_array[] =
+ {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4096, 5)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 1920, 1088, 3)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 1920, 1088, 5)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -167,16 +167,16 @@ static const struct amdgpu_video_codec_i
+ {
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 3,
+ 	},
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 5,
+ 	},
+ 	{
+@@ -188,9 +188,9 @@ static const struct amdgpu_video_codec_i
+ 	},
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 4,
+ 	},
+ };
+@@ -206,16 +206,16 @@ static const struct amdgpu_video_codec_i
+ {
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 3,
+ 	},
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 5,
+ 	},
+ 	{
+@@ -227,9 +227,9 @@ static const struct amdgpu_video_codec_i
+ 	},
+ 	{
+ 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
++		.max_width = 1920,
++		.max_height = 1088,
++		.max_pixels_per_frame = 1920 * 1088,
+ 		.max_level = 4,
+ 	},
+ 	{
 
 
