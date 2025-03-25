@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B45264A9C;
-	Tue, 25 Mar 2025 12:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62022264A9C;
+	Tue, 25 Mar 2025 12:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905513; cv=none; b=BjS3KOQYV/l+yOaDe0X3OxaEB/Lqro5KaeuJAsU7oG3ZQzRtQjU6gF6SFkpCK0zVeIWnWOLa6ZHwfNiAWwftzAJgRqhugVg5/bbA8A+sHtBIJLw2yo+QnLULyi8xtRPOaEzhn+C1GnIxvZNjYArVWMuDpItBPhE9EZ6uSDLldyo=
+	t=1742905515; cv=none; b=KOXWbqrQAmwT0QeU1f6SF/aVmNE154VUZ+R59EUmJn2Iu0P/D25iT4M+1OGcGeADl0AVPcuf6uMVfpLFKy35tYku9+s6YSge2tJvuwTfgf34oJl7c1A8p/xHMC8jQpXKU26EJvyCT1f2F4tQcNKUmQLb06sBPq91bl5qWqzT/a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905513; c=relaxed/simple;
-	bh=7r6f0zmwuGPUF11VdyImpaRb9wUlZdRFOfay4lZseU8=;
+	s=arc-20240116; t=1742905515; c=relaxed/simple;
+	bh=qjg00AjKopgYsjYis2pM1T75WrufeKXRhRNWD2htHzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOANdmLDZ+TX1sFYq7lI9j/pPTkYbZQD+36xMh2ACsyZeHm0yGzwAuGt2kqOau1Ue9e7mfS3s+cbQmNGUk5BNI6TJbS4yJUTRH7MTkhupM4x5EQEw6oxhesSWzzjZ1pwRfZWeUWYhJjumj6EBkYX3NhDZGhaDaJrsQt5iSdTl6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTT6SFBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8AYjS9yd0rYTW/6jwDK3Edg19AUSgIe01uUhorHv50p8knDqpsp2sYQqeDW63wDLdW1/bFTVMJk3Fc4mRA0l7Afs1EX0VH0ROBpXtUOSW+Gpc3z6h2grJ7MwSPCZc3sluD/lsNhK6qjzmjaTCRiK27CQ67yVrgDobEGGTioYVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czRDl6dI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTT6SFBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F82C4CEED;
-	Tue, 25 Mar 2025 12:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czRDl6dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C3AC4CEE4;
+	Tue, 25 Mar 2025 12:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905513;
-	bh=7r6f0zmwuGPUF11VdyImpaRb9wUlZdRFOfay4lZseU8=;
+	s=korg; t=1742905515;
+	bh=qjg00AjKopgYsjYis2pM1T75WrufeKXRhRNWD2htHzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTT6SFBoBpooYH7jpm/6KnSDa64+yGOhRT6oi8A9GWVwPBnI5uS8T6DWQCRLkSxdI
-	 j4XfPqTZFkwWeO3mnkGjQq5phXXJ/53Osf5DiZUaXhPAJc0YVTVHksLqfuZr5rlf6/
-	 buJSiT5F36pPc21aCTn7+jCqoFjTZzIe8FQfJgC8=
+	b=czRDl6dI9ge9C2Fs2agHe8RmA5OjVT09/BbP+dtZXm+eFXPWzf+ChHs9x/XScMe4X
+	 FMNdaj9IERl9QdtkTo8SDyNrAsTuvPq+8iTJI9O+/si5SfjVGkUZ3CImRnvLMPyl9G
+	 427+SiMIbCd0B19UqUIAaiLjBf+unlzkzNZHc2rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/198] netpoll: hold rcu read lock in __netpoll_send_skb()
-Date: Tue, 25 Mar 2025 08:19:38 -0400
-Message-ID: <20250325122157.067442229@linuxfoundation.org>
+Subject: [PATCH 6.1 017/198] drm/hyperv: Fix address space leak when Hyper-V DRM device is removed
+Date: Tue, 25 Mar 2025 08:19:39 -0400
+Message-ID: <20250325122157.092602103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,74 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 505ead7ab77f289f12d8a68ac83da068e4d4408b ]
+[ Upstream commit aed709355fd05ef747e1af24a1d5d78cd7feb81e ]
 
-The function __netpoll_send_skb() is being invoked without holding the
-RCU read lock. This oversight triggers a warning message when
-CONFIG_PROVE_RCU_LIST is enabled:
+When a Hyper-V DRM device is probed, the driver allocates MMIO space for
+the vram, and maps it cacheable. If the device removed, or in the error
+path for device probing, the MMIO space is released but no unmap is done.
+Consequently the kernel address space for the mapping is leaked.
 
-	net/core/netpoll.c:330 suspicious rcu_dereference_check() usage!
+Fix this by adding iounmap() calls in the device removal path, and in the
+error path during device probing.
 
-	 netpoll_send_skb
-	 netpoll_send_udp
-	 write_ext_msg
-	 console_flush_all
-	 console_unlock
-	 vprintk_emit
-
-To prevent npinfo from disappearing unexpectedly, ensure that
-__netpoll_send_skb() is protected with the RCU read lock.
-
-Fixes: 2899656b494dcd1 ("netpoll: take rcu_read_lock_bh() in netpoll_send_skb_on_dev()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250306-netpoll_rcu_v2-v2-1-bc4f5c51742a@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f1f63cbb705d ("drm/hyperv: Fix an error handling path in hyperv_vmbus_probe()")
+Fixes: a0ab5abced55 ("drm/hyperv : Removing the restruction of VRAM allocation with PCI bar size")
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250210193441.2414-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250210193441.2414-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 681eeb2b73992..657abbb7d0d7e 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -326,6 +326,7 @@ static int netpoll_owner_active(struct net_device *dev)
- static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- {
- 	netdev_tx_t status = NETDEV_TX_BUSY;
-+	netdev_tx_t ret = NET_XMIT_DROP;
- 	struct net_device *dev;
- 	unsigned long tries;
- 	/* It is up to the caller to keep npinfo alive. */
-@@ -334,11 +335,12 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- 	lockdep_assert_irqs_disabled();
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+index 68050409dd26c..499c7c8916df2 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+@@ -157,6 +157,7 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
+ 	return 0;
  
- 	dev = np->dev;
-+	rcu_read_lock();
- 	npinfo = rcu_dereference_bh(dev->npinfo);
+ err_free_mmio:
++	iounmap(hv->vram);
+ 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
+ err_vmbus_close:
+ 	vmbus_close(hdev->channel);
+@@ -175,6 +176,7 @@ static int hyperv_vmbus_remove(struct hv_device *hdev)
+ 	vmbus_close(hdev->channel);
+ 	hv_set_drvdata(hdev, NULL);
  
- 	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
- 		dev_kfree_skb_irq(skb);
--		return NET_XMIT_DROP;
-+		goto out;
- 	}
++	iounmap(hv->vram);
+ 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
  
- 	/* don't get messages out of order, and no recursion */
-@@ -377,7 +379,10 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- 		skb_queue_tail(&npinfo->txq, skb);
- 		schedule_delayed_work(&npinfo->tx_work,0);
- 	}
--	return NETDEV_TX_OK;
-+	ret = NETDEV_TX_OK;
-+out:
-+	rcu_read_unlock();
-+	return ret;
- }
- 
- netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 	return 0;
 -- 
 2.39.5
 
