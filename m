@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C26D257AC7;
-	Tue, 25 Mar 2025 12:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F36264F93;
+	Tue, 25 Mar 2025 12:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905534; cv=none; b=NlCMQVtf5w3oILSd+NPYbsn9tAHCTEGNJTvGnGyqJiTuT7/WHSU+sbXwldPXE18tvgNkBISWn52fZ8ObDcasrF9d0n1UQlo6+muEpjaLF4WXPYHTuTaTP6Fj9yO4SDpRrMUa3XU3sTqJH4Sn8ZSTyZFnje9mXTKZPrWw16GCfSA=
+	t=1742905535; cv=none; b=ZXpBzgNlUMPiQPqvRLB2Wj0ZXlNKCOQZt4jsp2IGkUo0N+MsItvAxSP/JveYBHN58FpyklxcykP26tSH5bsCG2FYfFFn2O40P0fMfEXsyKGqBFbQloCgFzJjefpvZ26h/wCygcpepUcKiUOJA3Dq9iu4IrAq0Y71EUTLpy0CU14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905534; c=relaxed/simple;
-	bh=zUPigEdejwLhzN73JHQNntlRUecSI1KZvPk48N55m3c=;
+	s=arc-20240116; t=1742905535; c=relaxed/simple;
+	bh=aIJi+kzSFhE6MuodhFhw+WhmMhzPTQs7eb6Eq7Pgc2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1rZxGmWHxaBqyoX6M5SiFc9xgiY1rSr0lYjkaOgr+9i/xmAgXmbjPHapBJDye1eIJjuRtpgZ71BCdGMGtX2BKCOxJTRtmJakdiq7R3SVwyh9LTxOQSGadwICIWZna5neC2yg9xvz+7Aa6WI35L4ULRDKnKkFGZXIDfy0gi1MdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwum0LDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9Fey9euNiInHIi9bMaqEt2BqKICf6KwUeuXcjQ7TIobDGq5MWhKvKm6Us0EdPamU7BcYHPpgiG2Onmj+/BQDUgQAyu124idmcANOvYaBQl9cUVQXbuFpWr6BiY6eRhxceKVXZ6dfLoztvgcyfM0CuE0VJ8zxiB8enOfkGwEMrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkbx0rnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwum0LDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27DCC4CEE9;
-	Tue, 25 Mar 2025 12:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkbx0rnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77343C4CEE9;
+	Tue, 25 Mar 2025 12:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905533;
-	bh=zUPigEdejwLhzN73JHQNntlRUecSI1KZvPk48N55m3c=;
+	s=korg; t=1742905535;
+	bh=aIJi+kzSFhE6MuodhFhw+WhmMhzPTQs7eb6Eq7Pgc2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwum0LDZk2tkmW4PRYvdjD8mg7Y6fPRqBromplyaiTZc0EyVP0E/itiq7Vf0tXMJ3
-	 ddZ0VvrDST3bEaDLclaSANcedQEhtjfxis0A2EZdzSNAB/NKsLGbN6aXmxN4vjrmbx
-	 83c2KBChJx4WdYTveg1ACunWqh/lp1P94l2vF+Yg=
+	b=fkbx0rnTvfNIKxHzkQ0ejgMgttuBgm7WowgEWPRCeO+3TcebHtmZ1yxonU2SqpfR4
+	 ksZr3hlXy7TGdG/GNn6HAWHwVhzKJNIYqM+el5uD2m7SJFsWvtKU7AEO67yUn38sK+
+	 NLsV0idZ91ftT9ntbu/SlerH8gG8MAj9dPmHz/Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kashavkin <akashavkin@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/198] netfilter: nft_exthdr: fix offset with ipv4_find_option()
-Date: Tue, 25 Mar 2025 08:19:48 -0400
-Message-ID: <20250325122157.326614735@linuxfoundation.org>
+Subject: [PATCH 6.1 027/198] gre: Fix IPv6 link-local address generation.
+Date: Tue, 25 Mar 2025 08:19:49 -0400
+Message-ID: <20250325122157.354059537@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,76 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kashavkin <akashavkin@gmail.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 6edd78af9506bb182518da7f6feebd75655d9a0e ]
+[ Upstream commit 183185a18ff96751db52a46ccf93fff3a1f42815 ]
 
-There is an incorrect calculation in the offset variable which causes
-the nft_skb_copy_to_reg() function to always return -EFAULT. Adding the
-start variable is redundant. In the __ip_options_compile() function the
-correct offset is specified when finding the function. There is no need
-to add the size of the iphdr structure to the offset.
+Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
+devices in most cases and fall back to using add_v4_addrs() only in
+case the GRE configuration is incompatible with addrconf_addr_gen().
 
-Fixes: dbb5281a1f84 ("netfilter: nf_tables: add support for matching IPv4 options")
-Signed-off-by: Alexey Kashavkin <akashavkin@gmail.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+GRE used to use addrconf_addr_gen() until commit e5dd729460ca
+("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL
+address") restricted this use to gretap and ip6gretap devices, and
+created add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
+
+The original problem came when commit 9af28511be10 ("addrconf: refuse
+isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
+addr parameter was 0. The commit says that this would create an invalid
+address, however, I couldn't find any RFC saying that the generated
+interface identifier would be wrong. Anyway, since gre over IPv4
+devices pass their local tunnel address to __ipv6_isatap_ifid(), that
+commit broke their IPv6 link-local address generation when the local
+address was unspecified.
+
+Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
+interfaces when computing v6LL address") tried to fix that case by
+defining add_v4_addrs() and calling it to generate the IPv6 link-local
+address instead of using addrconf_addr_gen() (apart for gretap and
+ip6gretap devices, which would still use the regular
+addrconf_addr_gen(), since they have a MAC address).
+
+That broke several use cases because add_v4_addrs() isn't properly
+integrated into the rest of IPv6 Neighbor Discovery code. Several of
+these shortcomings have been fixed over time, but add_v4_addrs()
+remains broken on several aspects. In particular, it doesn't send any
+Router Sollicitations, so the SLAAC process doesn't start until the
+interface receives a Router Advertisement. Also, add_v4_addrs() mostly
+ignores the address generation mode of the interface
+(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
+IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
+
+Fix the situation by using add_v4_addrs() only in the specific scenario
+where the normal method would fail. That is, for interfaces that have
+all of the following characteristics:
+
+  * run over IPv4,
+  * transport IP packets directly, not Ethernet (that is, not gretap
+    interfaces),
+  * tunnel endpoint is INADDR_ANY (that is, 0),
+  * device address generation mode is EUI64.
+
+In all other cases, revert back to the regular addrconf_addr_gen().
+
+Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
+since ip6gre devices now always use addrconf_addr_gen() instead.
+
+Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/559c32ce5c9976b269e6337ac9abb6a96abe5096.1741375285.git.gnault@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/ipv6/addrconf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index de588f7b69c45..60d18bd60d821 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -86,7 +86,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	unsigned char optbuf[sizeof(struct ip_options) + 40];
- 	struct ip_options *opt = (struct ip_options *)optbuf;
- 	struct iphdr *iph, _iph;
--	unsigned int start;
- 	bool found = false;
- 	__be32 info;
- 	int optlen;
-@@ -94,7 +93,6 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	iph = skb_header_pointer(skb, 0, sizeof(_iph), &_iph);
- 	if (!iph)
- 		return -EBADMSG;
--	start = sizeof(struct iphdr);
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index f52527c86e71c..69fb4d7c9c98e 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3162,16 +3162,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
+ 	struct in6_addr addr;
+ 	struct net_device *dev;
+ 	struct net *net = dev_net(idev->dev);
+-	int scope, plen, offset = 0;
++	int scope, plen;
+ 	u32 pflags = 0;
  
- 	optlen = iph->ihl * 4 - (int)sizeof(struct iphdr);
- 	if (optlen <= 0)
-@@ -104,7 +102,7 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 	/* Copy the options since __ip_options_compile() modifies
- 	 * the options.
- 	 */
--	if (skb_copy_bits(skb, start, opt->__data, optlen))
-+	if (skb_copy_bits(skb, sizeof(struct iphdr), opt->__data, optlen))
- 		return -EBADMSG;
- 	opt->optlen = optlen;
+ 	ASSERT_RTNL();
  
-@@ -119,18 +117,18 @@ static int ipv4_find_option(struct net *net, struct sk_buff *skb,
- 		found = target == IPOPT_SSRR ? opt->is_strictroute :
- 					       !opt->is_strictroute;
- 		if (found)
--			*offset = opt->srr + start;
-+			*offset = opt->srr;
- 		break;
- 	case IPOPT_RR:
- 		if (!opt->rr)
- 			break;
--		*offset = opt->rr + start;
-+		*offset = opt->rr;
- 		found = true;
- 		break;
- 	case IPOPT_RA:
- 		if (!opt->router_alert)
- 			break;
--		*offset = opt->router_alert + start;
-+		*offset = opt->router_alert;
- 		found = true;
- 		break;
- 	default:
+ 	memset(&addr, 0, sizeof(struct in6_addr));
+-	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
+-	if (idev->dev->addr_len == sizeof(struct in6_addr))
+-		offset = sizeof(struct in6_addr) - 4;
+-	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
++	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
+ 
+ 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
+ 		scope = IPV6_ADDR_COMPATv4;
+@@ -3481,7 +3478,13 @@ static void addrconf_gre_config(struct net_device *dev)
+ 		return;
+ 	}
+ 
+-	if (dev->type == ARPHRD_ETHER) {
++	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
++	 * unless we have an IPv4 GRE device not bound to an IP address and
++	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
++	 * case). Such devices fall back to add_v4_addrs() instead.
++	 */
++	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
++	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
+ 		addrconf_addr_gen(idev, true);
+ 		return;
+ 	}
 -- 
 2.39.5
 
