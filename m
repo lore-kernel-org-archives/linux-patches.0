@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0832B25745C;
-	Tue, 25 Mar 2025 12:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E161290BB4;
+	Tue, 25 Mar 2025 12:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905601; cv=none; b=CQKbshK5OJJO7eAuYO+ms7K6/jt5AvQmPRmoZsk0FvJxYTfPM74ehnkgDSJRz2cowi82prTFmEswgzk1rg3SUBftDkLkqg98Vzof294vtxCrp8DK7nUkiAllfSSK63O3/lzLkTsoSDFSzRQ7lX21UpBR4CFowWpneiQJ6xO2PIw=
+	t=1742905604; cv=none; b=McPR+/cnbmcEBiWdu4a6Xb6yd8g4q7RCwGTPnqF338qONv1OCr5tsBz+pIFKyjtRXHRLxX2T9cn3PbXsvi5fjT8JhNkJ/6LbespSwyDYb/p/i+kBiegRdThdYxBxdDq1/hsMfxsMGPsyYU4yqy+0ZRtB+J6EMQbYyR5VjKWLQDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905601; c=relaxed/simple;
-	bh=wE0KJxUwC3zwHTCFP3z0N3OEFrnefdIDdaNeBXE79Jc=;
+	s=arc-20240116; t=1742905604; c=relaxed/simple;
+	bh=FCrjv6qTU6QgliBHuC7IHxNz8HjTi6Ma6bwqerhfVQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFfHjbUVonc8qVOgUyPphcabOEtsrs+ApMd8a3sr7T+q6SC9G2/b+7WgnNg6vFUrWRVJqpdIJSvBNxH09OplR09lrgNUe3HjBIK1/5lOrao6w60CAIT1o2JiOBEQ4uyAfkZEWHkjQnwrA4STMjX9nOGE0/8LBHKAM4TlhktMRr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIZ9usro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZZZ7yBe8Tmcha62iQft+YOCOHTpJKvxBxltJNkl6Uufjy8Ml0agJ5T80pHipOmhrk3tKtlVWBKpkwTjxg12ObcSDfwAaGfDjq9mp30qad8hbOr1Bx9qxSrZTYgaGFFu9J8zYG7liD5x37XZE6RxBAdzlfFw7/EZhbL8cDbwiIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKP5Crd/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIZ9usro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5BFC4CEF0;
-	Tue, 25 Mar 2025 12:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKP5Crd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95BEC4CEEF;
+	Tue, 25 Mar 2025 12:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905600;
-	bh=wE0KJxUwC3zwHTCFP3z0N3OEFrnefdIDdaNeBXE79Jc=;
+	s=korg; t=1742905603;
+	bh=FCrjv6qTU6QgliBHuC7IHxNz8HjTi6Ma6bwqerhfVQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIZ9usroru24SdTNvj8i/09553VwoEyPzazHUS+YHxqjjDa6VRkV28Ji8OCjYg/Fi
-	 s2/ZVthVgPAxSyw4tPEwNSBIR8pflLgkt/LiCkNSP+Yw5CDAVvrCoK/rIJetSvhk3l
-	 G7uu5fakzsNjWWS2OD1+LGW/7l34DCB7o8CieT7c=
+	b=MKP5Crd/Mzhal+FII/VJjJGcScShx0j959yvja+/8RBsEUJEFiwxpmOXpf9bo3Cav
+	 gvQakzUd25/NKPqoFo3XQDuagJLyPqI2lAeZ3wBZdPONzrF/NNrW8VuLRwIC9lx+70
+	 6whqevc98nWA8DuBLmj0RUzqp/zlPA4jUrvC0tIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
+	Hector Martin <marcan@marcan.st>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/198] nvme: only allow entering LIVE from CONNECTING state
-Date: Tue, 25 Mar 2025 08:20:24 -0400
-Message-ID: <20250325122158.269593477@linuxfoundation.org>
+Subject: [PATCH 6.1 063/198] ASoC: tas2770: Fix volume scale
+Date: Tue, 25 Mar 2025 08:20:25 -0400
+Message-ID: <20250325122158.298164514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit d2fe192348f93fe3a0cb1e33e4aba58e646397f4 ]
+[ Upstream commit 579cd64b9df8a60284ec3422be919c362de40e41 ]
 
-The fabric transports and also the PCI transport are not entering the
-LIVE state from NEW or RESETTING. This makes the state machine more
-restrictive and allows to catch not supported state transitions, e.g.
-directly switching from RESETTING to LIVE.
+The scale starts at -100dB, not -128dB.
 
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-tas2770-v1-1-cf50ff1d59a3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/codecs/tas2770.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index ba76cd3b5f852..6a636fe6506b4 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -501,8 +501,6 @@ bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
- 	switch (new_state) {
- 	case NVME_CTRL_LIVE:
- 		switch (old_state) {
--		case NVME_CTRL_NEW:
--		case NVME_CTRL_RESETTING:
- 		case NVME_CTRL_CONNECTING:
- 			changed = true;
- 			fallthrough;
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 8557759acb1f2..e284a3a854591 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -508,7 +508,7 @@ static int tas2770_codec_probe(struct snd_soc_component *component)
+ }
+ 
+ static DECLARE_TLV_DB_SCALE(tas2770_digital_tlv, 1100, 50, 0);
+-static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -12750, 50, 0);
++static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -10050, 50, 0);
+ 
+ static const struct snd_kcontrol_new tas2770_snd_controls[] = {
+ 	SOC_SINGLE_TLV("Speaker Playback Volume", TAS2770_PLAY_CFG_REG2,
 -- 
 2.39.5
 
