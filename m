@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF38525C717;
-	Tue, 25 Mar 2025 12:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A93A25D545;
+	Tue, 25 Mar 2025 12:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906306; cv=none; b=r7SXWIN2JEbkYeWtM8zDO9xNgqREwUPN5x+BwI8RzJ/EXOeJjoGZvgLG5c9MX+yd0CfusrgUrR4kjI9NRbHMJJR9/Ms2GZN+rq1/Jk+iG4ic5kRDVSHMDJScdzX7HxwzQVpW/ISB3J7lzWvHgwCh+/3QlLUr3xk0D2iMZli0uwc=
+	t=1742906308; cv=none; b=G5SqWQW8vST9Qs3Gpd1JzKi1mmDTBTUfBVAcGLwhUeukY3mFBGgaGK8Zkd3IzIjRHNDRDoJI1SSGORrxALEWMbW2CRDG30R4F9kz2ZzlQ5ScfiAIJPvAIgzMLwnFZSXbop2G+l+2CvZ0JPSNY5B3QBYXRNUtRQ9c7WF/BAsu5Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906306; c=relaxed/simple;
-	bh=qF8nnOmDKv+eJz4k//BNqlGElgCO9OKEuTsnp3XM85g=;
+	s=arc-20240116; t=1742906308; c=relaxed/simple;
+	bh=QA+1OpxEtHvuP/5hx/LzxZ7V8iB/fNJ/8Z0KUcpXMfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASpAgU+jK0/W/wE4K3VdGz6Mq9Oq4SNi9Qaw7TAhHvJ0PftFo+sE6FSVT9gES/RGWaF9MLXYMaxtPtUpmTuiT8Zs7nKyZOfIvXWIv9naKB/boNFUQrilC+y/rHTzuNDLxM+TuQCv85a3LZGvTPCxs4wmkG9AxTPAFDg9J8G21GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9z/Fm/t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrYM6wUQervkLJluRsN9fuHC0FdUnzkbLx1NP/6Oj0K7HoCJaeNqIq2J4KFmllVuhkmbpc1bkv6twbQK3nxdaPeYDMq9VwqPO/ETFNyNKEsmdHm6yZcQ915Yff9TgiCQaR8Gc4yMMCYvAkcS0q9hfIWs8VOO2/RYkAg8I6EZx08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9EyTsHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9z/Fm/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710D8C4CEE4;
-	Tue, 25 Mar 2025 12:38:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9EyTsHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B404C4CEE4;
+	Tue, 25 Mar 2025 12:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906306;
-	bh=qF8nnOmDKv+eJz4k//BNqlGElgCO9OKEuTsnp3XM85g=;
+	s=korg; t=1742906308;
+	bh=QA+1OpxEtHvuP/5hx/LzxZ7V8iB/fNJ/8Z0KUcpXMfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9z/Fm/tEsVyozRpSfKMOSyqaonkTZbZuqWXhO6uF+yJivodAwH8DrDBaH4ZxEYCv
-	 wIX+oQmJO+svX5dvNKxzNnyLN72copt2wpJEANLbtJhzuLOSJfYD6FSe45Bh3+bbNd
-	 PmernBPy87MGuFqUTJ0P3FoJyvkDVYPKvwTWqu5k=
+	b=Q9EyTsHau5+wpVEn2sPAIg9VmlOC4hmDVIPbqI/WFBqEcRs/SGvyNAuuchSE0u8oT
+	 lHYf31VlDze5C90M/mldsbN7NUzsGHYdI7iOmcbgAQAAxBhpPQyS9tmc3ZFraxAk1G
+	 wr1WDtFQ6PTvmzfxQi4eOZLvqAkuzcwa+fyzOJJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/116] libfs: Fix duplicate directory entry in offset_dir_lookup
-Date: Tue, 25 Mar 2025 08:22:15 -0400
-Message-ID: <20250325122150.434751788@linuxfoundation.org>
+Subject: [PATCH 6.12 049/116] net/neighbor: add missing policy for NDTPA_QUEUE_LENBYTES
+Date: Tue, 25 Mar 2025 08:22:16 -0400
+Message-ID: <20250325122150.459618063@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,66 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit f70681e9e6066ab7b102e6b46a336a8ed67812ae ]
+[ Upstream commit 90a7138619a0c55e2aefaad27b12ffc2ddbeed78 ]
 
-There is an issue in the kernel:
+Previous commit 8b5c171bb3dc ("neigh: new unresolved queue limits")
+introduces new netlink attribute NDTPA_QUEUE_LENBYTES to represent
+approximative value for deprecated QUEUE_LEN. However, it forgot to add
+the associated nla_policy in nl_ntbl_parm_policy array. Fix it with one
+simple NLA_U32 type policy.
 
-In tmpfs, when using the "ls" command to list the contents
-of a directory with a large number of files, glibc performs
-the getdents call in multiple rounds. If a concurrent unlink
-occurs between these getdents calls, it may lead to duplicate
-directory entries in the ls output. One possible reproduction
-scenario is as follows:
-
-Create 1026 files and execute ls and rm concurrently:
-
-for i in {1..1026}; do
-    echo "This is file $i" > /tmp/dir/file$i
-done
-
-ls /tmp/dir				rm /tmp/dir/file4
-	->getdents(file1026-file5)
-						->unlink(file4)
-
-	->getdents(file5,file3,file2,file1)
-
-It is expected that the second getdents call to return file3
-through file1, but instead it returns an extra file5.
-
-The root cause of this problem is in the offset_dir_lookup
-function. It uses mas_find to determine the starting position
-for the current getdents call. Since mas_find locates the first
-position that is greater than or equal to mas->index, when file4
-is deleted, it ends up returning file5.
-
-It can be fixed by replacing mas_find with mas_find_rev, which
-finds the first position that is less than or equal to mas->index.
-
-Fixes: b9b588f22a0c ("libfs: Use d_children list to iterate simple_offset directories")
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Link: https://lore.kernel.org/r/20250320034417.555810-1-sunyongjian@huaweicloud.com
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 8b5c171bb3dc ("neigh: new unresolved queue limits")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Link: https://patch.msgid.link/20250315165113.37600-1-linma@zju.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/neighbour.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index b0f262223b535..3cb49463a8496 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -492,7 +492,7 @@ offset_dir_lookup(struct dentry *parent, loff_t offset)
- 		found = find_positive_dentry(parent, NULL, false);
- 	else {
- 		rcu_read_lock();
--		child = mas_find(&mas, DIR_OFFSET_MAX);
-+		child = mas_find_rev(&mas, DIR_OFFSET_MIN);
- 		found = find_positive_dentry(parent, child, false);
- 		rcu_read_unlock();
- 	}
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index c7f7ea61b524a..8082cc6be4fc1 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -2301,6 +2301,7 @@ static const struct nla_policy nl_neightbl_policy[NDTA_MAX+1] = {
+ static const struct nla_policy nl_ntbl_parm_policy[NDTPA_MAX+1] = {
+ 	[NDTPA_IFINDEX]			= { .type = NLA_U32 },
+ 	[NDTPA_QUEUE_LEN]		= { .type = NLA_U32 },
++	[NDTPA_QUEUE_LENBYTES]		= { .type = NLA_U32 },
+ 	[NDTPA_PROXY_QLEN]		= { .type = NLA_U32 },
+ 	[NDTPA_APP_PROBES]		= { .type = NLA_U32 },
+ 	[NDTPA_UCAST_PROBES]		= { .type = NLA_U32 },
 -- 
 2.39.5
 
