@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FB825BAB2;
-	Tue, 25 Mar 2025 12:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500FF2561A2;
+	Tue, 25 Mar 2025 12:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906068; cv=none; b=KnIvR2hQMBWd/5p6v9rRthkiOJPzoVJFyqIkYARljrwfTuZNSr4sHmyKOzgOnS0hEzpRNdYzeg+ntgW0SiJJ0i9uP8vbd8GEKJlHM16GdT6ezHdt5u3PYhV0SIcr10AQV1q7rm6p0Hm1vDGfNrjqrrnM+htUNGqpxKE7Kp1iVIM=
+	t=1742906070; cv=none; b=VdvGVDhdIpcyWRkxt7f7nIkfIBMYzB20fAyOQxYFgE/hY0IcNtRUKBG1Hg3SnzrsEdQzzUD9Ay1JHdp1rO0WI6csa/i/1hQGkgny0cflFKofSEV2uA7rfJddsp+axz1Rf1abEu0/FpHGMGzBz94VFmiXopis1l3dlkruRQMw+es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906068; c=relaxed/simple;
-	bh=Am4bmo10xe/Sk3g0EIXR9DUrAYnt1PaphFm2S0YLDxU=;
+	s=arc-20240116; t=1742906070; c=relaxed/simple;
+	bh=cEYJu6Hc79SzcTAz7yEqMH9XnBBsPdzGcbFRDUIPI/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSD1A/XACQafPojHMqMYbIH4FycA5DNjUv7TE/R+QrvE4AzzClBmW/2XahLkINv2+rVgBorou954wi5avvb7Uz3OfkN/1w5KcyDi6WNGEccTzpHtrj274ZSOy7E4e8gVZxmONyXt647Cs85BeeJnIGrWawMncoIyABiPYouY8UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+zD7Yxz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnQCvF55IKbL0e0IH49QtHZuqAaWqZ3jEFlUsDI6lfWYchE8C4Pe9ta1BIkJkdxDPIcg8Km+Ixqf5pMvcanlUTo7Px9QSMDawzICGroOpCugfZ/vv6agShWcFUopBAr9e+ZbuFzJTF+QMSusJ6qjOoXuvtCvD/eVLILD1uGRyhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFIAHge6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+zD7Yxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F8AC4CEE4;
-	Tue, 25 Mar 2025 12:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFIAHge6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E982BC4CEE4;
+	Tue, 25 Mar 2025 12:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906068;
-	bh=Am4bmo10xe/Sk3g0EIXR9DUrAYnt1PaphFm2S0YLDxU=;
+	s=korg; t=1742906070;
+	bh=cEYJu6Hc79SzcTAz7yEqMH9XnBBsPdzGcbFRDUIPI/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+zD7Yxz0rRHS/n97O+xWk7q8+WXfOX2AFJScdlcRaPCYVesxFyWu9axqJEgFgLjZ
-	 x+EYF9d8ZsvCxgD/mAgwaOHAARBv7nGOCbSr0k2PVyx+O+QIQJezAYONhIeA1q6PRb
-	 QqAV2tJwm28JB0GvudIMWgd0x57ji6IHriY+ilns=
+	b=dFIAHge6E4ITMdE3s190pKcj0nbm8qqsAv/mLgQNM/e/ur47FOPXqybmNixX3MmwS
+	 ldSAVYozhu3hKI+4EpiarzNUaxsEaLY6nNf6lz31AeM29UM9qV/UppsySa6ttOndO/
+	 HVDmx4SiHkg85TzWnpxsyYwnvctPecJAYkoLikzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Fuad Tabba <tabba@google.com>,
 	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.13 116/119] KVM: arm64: Mark some header functions as inline
-Date: Tue, 25 Mar 2025 08:22:54 -0400
-Message-ID: <20250325122152.020081987@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.13 117/119] KVM: arm64: Eagerly switch ZCR_EL{1,2}
+Date: Tue, 25 Mar 2025 08:22:55 -0400
+Message-ID: <20250325122152.045350443@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -57,117 +57,313 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit f9dd00de1e53a47763dfad601635d18542c3836d ]
+[ Upstream commit 59419f10045bc955d2229819c7cf7a8b0b9c5b59 ]
 
-The shared hyp switch header has a number of static functions which
-might not be used by all files that include the header, and when unused
-they will provoke compiler warnings, e.g.
+In non-protected KVM modes, while the guest FPSIMD/SVE/SME state is live on the
+CPU, the host's active SVE VL may differ from the guest's maximum SVE VL:
 
-| In file included from arch/arm64/kvm/hyp/nvhe/hyp-main.c:8:
-| ./arch/arm64/kvm/hyp/include/hyp/switch.h:703:13: warning: 'kvm_hyp_handle_dabt_low' defined but not used [-Wunused-function]
-|   703 | static bool kvm_hyp_handle_dabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
-|       |             ^~~~~~~~~~~~~~~~~~~~~~~
-| ./arch/arm64/kvm/hyp/include/hyp/switch.h:682:13: warning: 'kvm_hyp_handle_cp15_32' defined but not used [-Wunused-function]
-|   682 | static bool kvm_hyp_handle_cp15_32(struct kvm_vcpu *vcpu, u64 *exit_code)
-|       |             ^~~~~~~~~~~~~~~~~~~~~~
-| ./arch/arm64/kvm/hyp/include/hyp/switch.h:662:13: warning: 'kvm_hyp_handle_sysreg' defined but not used [-Wunused-function]
-|   662 | static bool kvm_hyp_handle_sysreg(struct kvm_vcpu *vcpu, u64 *exit_code)
-|       |             ^~~~~~~~~~~~~~~~~~~~~
-| ./arch/arm64/kvm/hyp/include/hyp/switch.h:458:13: warning: 'kvm_hyp_handle_fpsimd' defined but not used [-Wunused-function]
-|   458 | static bool kvm_hyp_handle_fpsimd(struct kvm_vcpu *vcpu, u64 *exit_code)
-|       |             ^~~~~~~~~~~~~~~~~~~~~
-| ./arch/arm64/kvm/hyp/include/hyp/switch.h:329:13: warning: 'kvm_hyp_handle_mops' defined but not used [-Wunused-function]
-|   329 | static bool kvm_hyp_handle_mops(struct kvm_vcpu *vcpu, u64 *exit_code)
-|       |             ^~~~~~~~~~~~~~~~~~~
+* For VHE hosts, when a VM uses NV, ZCR_EL2 contains a value constrained
+  by the guest hypervisor, which may be less than or equal to that
+  guest's maximum VL.
 
-Mark these functions as 'inline' to suppress this warning. This
-shouldn't result in any functional change.
+  Note: in this case the value of ZCR_EL1 is immaterial due to E2H.
 
-At the same time, avoid the use of __alias() in the header and alias
-kvm_hyp_handle_iabt_low() and kvm_hyp_handle_watchpt_low() to
-kvm_hyp_handle_memory_fault() using CPP, matching the style in the rest
-of the kernel. For consistency, kvm_hyp_handle_memory_fault() is also
-marked as 'inline'.
+* For nVHE/hVHE hosts, ZCR_EL1 contains a value written by the guest,
+  which may be less than or greater than the guest's maximum VL.
 
+  Note: in this case hyp code traps host SVE usage and lazily restores
+  ZCR_EL2 to the host's maximum VL, which may be greater than the
+  guest's maximum VL.
+
+This can be the case between exiting a guest and kvm_arch_vcpu_put_fp().
+If a softirq is taken during this period and the softirq handler tries
+to use kernel-mode NEON, then the kernel will fail to save the guest's
+FPSIMD/SVE state, and will pend a SIGKILL for the current thread.
+
+This happens because kvm_arch_vcpu_ctxsync_fp() binds the guest's live
+FPSIMD/SVE state with the guest's maximum SVE VL, and
+fpsimd_save_user_state() verifies that the live SVE VL is as expected
+before attempting to save the register state:
+
+| if (WARN_ON(sve_get_vl() != vl)) {
+|         force_signal_inject(SIGKILL, SI_KERNEL, 0, 0);
+|         return;
+| }
+
+Fix this and make this a bit easier to reason about by always eagerly
+switching ZCR_EL{1,2} at hyp during guest<->host transitions. With this
+happening, there's no need to trap host SVE usage, and the nVHE/nVHE
+__deactivate_cptr_traps() logic can be simplified to enable host access
+to all present FPSIMD/SVE/SME features.
+
+In protected nVHE/hVHE modes, the host's state is always saved/restored
+by hyp, and the guest's state is saved prior to exit to the host, so
+from the host's PoV the guest never has live FPSIMD/SVE/SME state, and
+the host's ZCR_EL1 is never clobbered by hyp.
+
+Fixes: 8c8010d69c132273 ("KVM: arm64: Save/restore SVE state for nVHE")
+Fixes: 2e3cf82063a00ea0 ("KVM: arm64: nv: Ensure correct VL is loaded before saving SVE state")
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Reviewed-by: Mark Brown <broonie@kernel.org>
 Tested-by: Mark Brown <broonie@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
 Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Fuad Tabba <tabba@google.com>
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Will Deacon <will@kernel.org>
 Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20250210195226.1215254-8-mark.rutland@arm.com
+Link: https://lore.kernel.org/r/20250210195226.1215254-9-mark.rutland@arm.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ arch/arm64/kvm/fpsimd.c                 |   30 ----------------
+ arch/arm64/kvm/hyp/entry.S              |    5 ++
+ arch/arm64/kvm/hyp/include/hyp/switch.h |   59 ++++++++++++++++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c      |    9 +---
+ arch/arm64/kvm/hyp/nvhe/switch.c        |   33 +++++++++++++++--
+ arch/arm64/kvm/hyp/vhe/switch.c         |    4 ++
+ 6 files changed, 100 insertions(+), 40 deletions(-)
 
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -136,36 +136,6 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcp
+ 	local_irq_save(flags);
+ 
+ 	if (guest_owns_fp_regs()) {
+-		if (vcpu_has_sve(vcpu)) {
+-			u64 zcr = read_sysreg_el1(SYS_ZCR);
+-
+-			/*
+-			 * If the vCPU is in the hyp context then ZCR_EL1 is
+-			 * loaded with its vEL2 counterpart.
+-			 */
+-			__vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu)) = zcr;
+-
+-			/*
+-			 * Restore the VL that was saved when bound to the CPU,
+-			 * which is the maximum VL for the guest. Because the
+-			 * layout of the data when saving the sve state depends
+-			 * on the VL, we need to use a consistent (i.e., the
+-			 * maximum) VL.
+-			 * Note that this means that at guest exit ZCR_EL1 is
+-			 * not necessarily the same as on guest entry.
+-			 *
+-			 * ZCR_EL2 holds the guest hypervisor's VL when running
+-			 * a nested guest, which could be smaller than the
+-			 * max for the vCPU. Similar to above, we first need to
+-			 * switch to a VL consistent with the layout of the
+-			 * vCPU's SVE state. KVM support for NV implies VHE, so
+-			 * using the ZCR_EL1 alias is safe.
+-			 */
+-			if (!has_vhe() || (vcpu_has_nv(vcpu) && !is_hyp_ctxt(vcpu)))
+-				sve_cond_update_zcr_vq(vcpu_sve_max_vq(vcpu) - 1,
+-						       SYS_ZCR_EL1);
+-		}
+-
+ 		/*
+ 		 * Flush (save and invalidate) the fpsimd/sve state so that if
+ 		 * the host tries to use fpsimd/sve, it's not using stale data
+--- a/arch/arm64/kvm/hyp/entry.S
++++ b/arch/arm64/kvm/hyp/entry.S
+@@ -44,6 +44,11 @@ alternative_if ARM64_HAS_RAS_EXTN
+ alternative_else_nop_endif
+ 	mrs	x1, isr_el1
+ 	cbz	x1,  1f
++
++	// Ensure that __guest_enter() always provides a context
++	// synchronization event so that callers don't need ISBs for anything
++	// that would usually be synchonized by the ERET.
++	isb
+ 	mov	x0, #ARM_EXCEPTION_IRQ
+ 	ret
+ 
 --- a/arch/arm64/kvm/hyp/include/hyp/switch.h
 +++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -326,7 +326,7 @@ static inline bool __populate_fault_info
- 	return __get_fault_info(vcpu->arch.fault.esr_el2, &vcpu->arch.fault);
+@@ -375,6 +375,65 @@ static inline void __hyp_sve_save_host(v
+ 			 true);
  }
  
--static bool kvm_hyp_handle_mops(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_mops(struct kvm_vcpu *vcpu, u64 *exit_code)
++static inline void fpsimd_lazy_switch_to_guest(struct kvm_vcpu *vcpu)
++{
++	u64 zcr_el1, zcr_el2;
++
++	if (!guest_owns_fp_regs())
++		return;
++
++	if (vcpu_has_sve(vcpu)) {
++		/* A guest hypervisor may restrict the effective max VL. */
++		if (vcpu_has_nv(vcpu) && !is_hyp_ctxt(vcpu))
++			zcr_el2 = __vcpu_sys_reg(vcpu, ZCR_EL2);
++		else
++			zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++
++		write_sysreg_el2(zcr_el2, SYS_ZCR);
++
++		zcr_el1 = __vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu));
++		write_sysreg_el1(zcr_el1, SYS_ZCR);
++	}
++}
++
++static inline void fpsimd_lazy_switch_to_host(struct kvm_vcpu *vcpu)
++{
++	u64 zcr_el1, zcr_el2;
++
++	if (!guest_owns_fp_regs())
++		return;
++
++	/*
++	 * When the guest owns the FP regs, we know that guest+hyp traps for
++	 * any FPSIMD/SVE/SME features exposed to the guest have been disabled
++	 * by either fpsimd_lazy_switch_to_guest() or kvm_hyp_handle_fpsimd()
++	 * prior to __guest_entry(). As __guest_entry() guarantees a context
++	 * synchronization event, we don't need an ISB here to avoid taking
++	 * traps for anything that was exposed to the guest.
++	 */
++	if (vcpu_has_sve(vcpu)) {
++		zcr_el1 = read_sysreg_el1(SYS_ZCR);
++		__vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu)) = zcr_el1;
++
++		/*
++		 * The guest's state is always saved using the guest's max VL.
++		 * Ensure that the host has the guest's max VL active such that
++		 * the host can save the guest's state lazily, but don't
++		 * artificially restrict the host to the guest's max VL.
++		 */
++		if (has_vhe()) {
++			zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++			write_sysreg_el2(zcr_el2, SYS_ZCR);
++		} else {
++			zcr_el2 = sve_vq_from_vl(kvm_host_sve_max_vl) - 1;
++			write_sysreg_el2(zcr_el2, SYS_ZCR);
++
++			zcr_el1 = vcpu_sve_max_vq(vcpu) - 1;
++			write_sysreg_el1(zcr_el1, SYS_ZCR);
++		}
++	}
++}
++
+ static void kvm_hyp_save_fpsimd_host(struct kvm_vcpu *vcpu)
  {
- 	*vcpu_pc(vcpu) = read_sysreg_el2(SYS_ELR);
- 	arm64_mops_reset_regs(vcpu_gp_regs(vcpu), vcpu->arch.fault.esr_el2);
-@@ -404,7 +404,7 @@ static void kvm_hyp_save_fpsimd_host(str
-  * If FP/SIMD is not implemented, handle the trap and inject an undefined
-  * instruction exception to the guest. Similarly for trapped SVE accesses.
+ 	/*
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -5,6 +5,7 @@
   */
--static bool kvm_hyp_handle_fpsimd(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_fpsimd(struct kvm_vcpu *vcpu, u64 *exit_code)
+ 
+ #include <hyp/adjust_pc.h>
++#include <hyp/switch.h>
+ 
+ #include <asm/pgtable-types.h>
+ #include <asm/kvm_asm.h>
+@@ -179,7 +180,9 @@ static void handle___kvm_vcpu_run(struct
+ 		pkvm_put_hyp_vcpu(hyp_vcpu);
+ 	} else {
+ 		/* The host is fully trusted, run its vCPU directly. */
++		fpsimd_lazy_switch_to_guest(host_vcpu);
+ 		ret = __kvm_vcpu_run(host_vcpu);
++		fpsimd_lazy_switch_to_host(host_vcpu);
+ 	}
+ 
+ out:
+@@ -480,12 +483,6 @@ void handle_trap(struct kvm_cpu_context
+ 	case ESR_ELx_EC_SMC64:
+ 		handle_host_smc(host_ctxt);
+ 		break;
+-	case ESR_ELx_EC_SVE:
+-		cpacr_clear_set(0, CPACR_ELx_ZEN);
+-		isb();
+-		sve_cond_update_zcr_vq(sve_vq_from_vl(kvm_host_sve_max_vl) - 1,
+-				       SYS_ZCR_EL2);
+-		break;
+ 	case ESR_ELx_EC_IABT_LOW:
+ 	case ESR_ELx_EC_DABT_LOW:
+ 		handle_host_mem_abort(host_ctxt);
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -40,6 +40,9 @@ static void __activate_cptr_traps(struct
  {
- 	bool sve_guest;
- 	u8 esr_ec;
-@@ -595,7 +595,7 @@ static bool handle_ampere1_tcr(struct kv
- 	return true;
+ 	u64 val = CPTR_EL2_TAM;	/* Same bit irrespective of E2H */
+ 
++	if (!guest_owns_fp_regs())
++		__activate_traps_fpsimd32(vcpu);
++
+ 	if (has_hvhe()) {
+ 		val |= CPACR_ELx_TTA;
+ 
+@@ -48,6 +51,8 @@ static void __activate_cptr_traps(struct
+ 			if (vcpu_has_sve(vcpu))
+ 				val |= CPACR_ELx_ZEN;
+ 		}
++
++		write_sysreg(val, cpacr_el1);
+ 	} else {
+ 		val |= CPTR_EL2_TTA | CPTR_NVHE_EL2_RES1;
+ 
+@@ -62,12 +67,32 @@ static void __activate_cptr_traps(struct
+ 
+ 		if (!guest_owns_fp_regs())
+ 			val |= CPTR_EL2_TFP;
++
++		write_sysreg(val, cptr_el2);
+ 	}
++}
+ 
+-	if (!guest_owns_fp_regs())
+-		__activate_traps_fpsimd32(vcpu);
++static void __deactivate_cptr_traps(struct kvm_vcpu *vcpu)
++{
++	if (has_hvhe()) {
++		u64 val = CPACR_ELx_FPEN;
++
++		if (cpus_have_final_cap(ARM64_SVE))
++			val |= CPACR_ELx_ZEN;
++		if (cpus_have_final_cap(ARM64_SME))
++			val |= CPACR_ELx_SMEN;
++
++		write_sysreg(val, cpacr_el1);
++	} else {
++		u64 val = CPTR_NVHE_EL2_RES1;
++
++		if (!cpus_have_final_cap(ARM64_SVE))
++			val |= CPTR_EL2_TZ;
++		if (!cpus_have_final_cap(ARM64_SME))
++			val |= CPTR_EL2_TSM;
+ 
+-	kvm_write_cptr_el2(val);
++		write_sysreg(val, cptr_el2);
++	}
  }
  
--static bool kvm_hyp_handle_sysreg(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_sysreg(struct kvm_vcpu *vcpu, u64 *exit_code)
- {
- 	if (cpus_have_final_cap(ARM64_WORKAROUND_CAVIUM_TX2_219_TVM) &&
- 	    handle_tx2_tvm(vcpu))
-@@ -615,7 +615,7 @@ static bool kvm_hyp_handle_sysreg(struct
- 	return false;
+ static void __activate_traps(struct kvm_vcpu *vcpu)
+@@ -120,7 +145,7 @@ static void __deactivate_traps(struct kv
+ 
+ 	write_sysreg(this_cpu_ptr(&kvm_init_params)->hcr_el2, hcr_el2);
+ 
+-	kvm_reset_cptr_el2(vcpu);
++	__deactivate_cptr_traps(vcpu);
+ 	write_sysreg(__kvm_hyp_host_vector, vbar_el2);
  }
  
--static bool kvm_hyp_handle_cp15_32(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_cp15_32(struct kvm_vcpu *vcpu, u64 *exit_code)
- {
- 	if (static_branch_unlikely(&vgic_v3_cpuif_trap) &&
- 	    __vgic_v3_perform_cpuif_access(vcpu) == 1)
-@@ -624,19 +624,18 @@ static bool kvm_hyp_handle_cp15_32(struc
- 	return false;
- }
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -462,6 +462,8 @@ static int __kvm_vcpu_run_vhe(struct kvm
  
--static bool kvm_hyp_handle_memory_fault(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_memory_fault(struct kvm_vcpu *vcpu,
-+					       u64 *exit_code)
- {
- 	if (!__populate_fault_info(vcpu))
- 		return true;
+ 	sysreg_save_host_state_vhe(host_ctxt);
  
- 	return false;
- }
--static bool kvm_hyp_handle_iabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
--	__alias(kvm_hyp_handle_memory_fault);
--static bool kvm_hyp_handle_watchpt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
--	__alias(kvm_hyp_handle_memory_fault);
-+#define kvm_hyp_handle_iabt_low		kvm_hyp_handle_memory_fault
-+#define kvm_hyp_handle_watchpt_low	kvm_hyp_handle_memory_fault
++	fpsimd_lazy_switch_to_guest(vcpu);
++
+ 	/*
+ 	 * Note that ARM erratum 1165522 requires us to configure both stage 1
+ 	 * and stage 2 translation for the guest context before we clear
+@@ -486,6 +488,8 @@ static int __kvm_vcpu_run_vhe(struct kvm
  
--static bool kvm_hyp_handle_dabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
-+static inline bool kvm_hyp_handle_dabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
- {
- 	if (kvm_hyp_handle_memory_fault(vcpu, exit_code))
- 		return true;
+ 	__deactivate_traps(vcpu);
+ 
++	fpsimd_lazy_switch_to_host(vcpu);
++
+ 	sysreg_restore_host_state_vhe(host_ctxt);
+ 
+ 	if (guest_owns_fp_regs())
 
 
