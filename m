@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38EB2586E0;
-	Tue, 25 Mar 2025 12:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7794B25D525;
+	Tue, 25 Mar 2025 12:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906278; cv=none; b=HLE45lkdqsMbV131BT+y9x0rn/btRFYNgntjlWeuv2m+xHfh6v+60vUxg+34ut2a4MTcEbJWPdn5JhsY4UgGKgqoSyGv1QhIAThJ+fVapk1yh1zOX+hupFKAtdzrjrt2XJ9aBz8DJbQW0RVuQq8fprJEQL10ZvsC5y1s5xLJih8=
+	t=1742906281; cv=none; b=nKu69dSP9WGOYm0UKbnijkF934LSh0BRKssQmWT70lPxU2+Zc5SkwAPk8X1j4+UArmoo0t8GAlVVVcAWHWWnLOzwq0ipLhMRn1eV1aaY23XzSApIsUQqZFeI+s/kQdxhJrye90VhLlUefe4dEJAUJyBvRMk/REp63uT09eXqDN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906278; c=relaxed/simple;
-	bh=w+8OCPbMnFOT1I43CsXAVE03TbeC5hY0dXr0n9Pd/K0=;
+	s=arc-20240116; t=1742906281; c=relaxed/simple;
+	bh=6uinkWHt4sm/zA19prInGs69U9k150SWaEauuRvnN8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RsAod1mKHbMM5XZqAQNiXoQcq9AXkr3THMi8r+NAXbOeT7+KNjwMv4mHd//QyhENTv3Sc5c3LGJozHuAh6couqqCGSMBsHejB+te9wOnTYswv9yru4fgKj4zCvYsPxgy7ApxQu32bxfZ2mT/E8cxSGV+8b8RSwkhiZ0cqqHSDVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WI5zea3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGsYYE8FN38iS5IsXS+AGHuAOWKibjldoBHixNmwU2/QKbcSJp9js/s5iXYF2kKIBA4ZVAtFQ4szQBmpyrtoSCwF/X5MYjWeuwDrc1TLMyrTpTWu8bVq3LYz2UivpKYpugOkB3MdV90IiEro9vUhgAydsODZyKWq55LYA/JertE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/P/11AL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI5zea3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65684C4CEE4;
-	Tue, 25 Mar 2025 12:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/P/11AL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5677C4CEE4;
+	Tue, 25 Mar 2025 12:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906278;
-	bh=w+8OCPbMnFOT1I43CsXAVE03TbeC5hY0dXr0n9Pd/K0=;
+	s=korg; t=1742906280;
+	bh=6uinkWHt4sm/zA19prInGs69U9k150SWaEauuRvnN8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WI5zea3ZjCZqBDGetiltyf6LxTWMOeymTQK1fCwXFes2tpQkwTsKwCEEu62ujoCk1
-	 MUlFNVuqhPObxAfHRoOqDguf1Xb4HA68geGYAbyeU4m5pfXpiVcFjcoj3EOSXdD2GB
-	 H8roHWVfhXrYNAhp5Ymk2eR7E/7Mq/5tqmzAGjFM=
+	b=W/P/11ALA8sHflMidk2l9WnAklNFyRxRocxIzknP1J8Qx+pr/v6Yxj+bto2oAa9DX
+	 TGdWO6vTxvgnBDkH1VoKN1P1TnMCVYXrUylUOSNbUrkTWN5qJF7bKRVinxW5H15Rsw
+	 j9ZF2xxGc1NTDDbP42db86GdcUYus8y471caasn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Quentin Schulz <quentin.schulz@cherry.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/116] arm64: dts: rockchip: remove supports-cqe from rk3588 jaguar
-Date: Tue, 25 Mar 2025 08:21:31 -0400
-Message-ID: <20250325122149.321041230@linuxfoundation.org>
+Subject: [PATCH 6.12 005/116] arm64: dts: rockchip: remove supports-cqe from rk3588 tiger
+Date: Tue, 25 Mar 2025 08:21:32 -0400
+Message-ID: <20250325122149.346368927@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko.stuebner@cherry.de>
 
-[ Upstream commit 304b0a60d38dc24bfbfc9adc7d254d1cf8f98317 ]
+[ Upstream commit 3e0711f89e5e7b0c7b2ab4843dc92dcbbdbba777 ]
 
 The sdhci controller supports cqe it seems and necessary code also is in
 place - in theory.
@@ -65,23 +65,23 @@ on the rk3588 and we are seeing reliability issues under load.
 This can be caused by either a controller-, hw- or driver-issue and
 definitly needs more investigation to work properly it seems.
 
-So disable cqe support on Jaguar for now.
+So disable cqe support on Tiger for now.
 
-Fixes: d1b8b36a2cc5 ("arm64: dts: rockchip: add Theobroma Jaguar SBC")
+Fixes: 6173ef24b35b ("arm64: dts: rockchip: add RK3588-Q7 (Tiger) SoM")
 Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Link: https://lore.kernel.org/r/20250219093303.2320517-1-heiko@sntech.de
+Link: https://lore.kernel.org/r/20250219093303.2320517-2-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts | 1 -
+ arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-index 31d2f8994f851..e61c5731fb99f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-@@ -455,7 +455,6 @@ &sdhci {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi
+index 615094bb8ba38..a82fe75bda55c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi
+@@ -367,7 +367,6 @@ &sdhci {
  	non-removable;
  	pinctrl-names = "default";
  	pinctrl-0 = <&emmc_bus8 &emmc_cmd &emmc_clk &emmc_data_strobe>;
