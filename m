@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA5F25D91C;
-	Tue, 25 Mar 2025 12:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2A425D91C;
+	Tue, 25 Mar 2025 12:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906333; cv=none; b=d9flcyCuRX1PMibHvHLxNgr/kxpc3OiEAqe25iqQn4v8qnRNqpSGNIze8b682fEOw05OHYiYYlH7aTOuiaN6XQTZEhCaIEiGxaan69aE80TpfTFbDGeSevXKeBHRJ5IcTfua5tYJRZib8sn+TC0qYNIedwXPX3l30/YWNza9f9s=
+	t=1742906335; cv=none; b=jXOvYzh3WNdh+7lYZhnyQQ/diDYFCB1lJGod6xUgnZ1s+yKSLwNp0cL2tR2A92pHJXTOKPmLLpOit8aUyqx5FEzbveMbbLS/88dQuvHD5mVHaowKgaXIzxDlicAu9uPWP4VEE9wgJAT6998hBAFRm/5y9z/kywYQOqFzIvCdDuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906333; c=relaxed/simple;
-	bh=umdlJZoNZRZO+NGUKKz6ubV86vC9uSs3VUnogpWAqtw=;
+	s=arc-20240116; t=1742906335; c=relaxed/simple;
+	bh=aoJqRYXzjpVpCMq8RVpoVimP7dvcV29MT0VVFxDXAHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPe8CZLrfsBH7PoXhrSQOu1cV/Nx3SvJJphHrkZ/7Gi73x2DVuF8UilzHMK6AIQ0oiQ1znkFOCHZTFZLUqtmbIHPOz9z4FJH8SEfw7QHCCHVpuEv9ozNigoolhQbSBqZlchxbQwy7EFqIXzAJuEzgnbjcdoTMvRODLC0R3fFJKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTsiYzBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTGnthHGPS/3FQ9T4UYPBynRMKdqGlXqAFjKlX1KTMYVy01TDt3SpHKcQ1oNPWyZOYAuc8UBTdVLePExCj2MT7cznkiirUMxql8XwQUaDcm0h6gZaotrrmgCpMBmvp4Z7podVxfhvJFXIdC0JyPrEhw1hw+4rp45ETqMAuiud/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDltou9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTsiYzBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA35C4CEE4;
-	Tue, 25 Mar 2025 12:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDltou9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9802CC4CEE4;
+	Tue, 25 Mar 2025 12:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906332;
-	bh=umdlJZoNZRZO+NGUKKz6ubV86vC9uSs3VUnogpWAqtw=;
+	s=korg; t=1742906334;
+	bh=aoJqRYXzjpVpCMq8RVpoVimP7dvcV29MT0VVFxDXAHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTsiYzBUjw0gsznsKE7KnIdK9RLFGGYGWEl8mweJaCZsK3eIAD3fE92lupOvdoQXL
-	 s2576Qhzgd5mQbThmStA2K2VBCH7Uimn3GFwYx0y5Q1XyuXtwubQq+KJ4l+rStweLj
-	 KGo+6WsT5PXEEi/lp34DO+5L2/fuvOnefYZyqQwQ=
+	b=iDltou9PozOmEXHF2ypZUxGKpxLrnpBGAdfbaqj3ufFVxQszCnuJomOY7iFJMVg01
+	 TvxMoFshaDF9DO0AaKyIMPYxN54FlxSRzB7he4JrYzMoNJ8oMYnlMD+3pKxkZbHqIR
+	 4i0d9xmz3RryW5tbZhCLxqyT0110jKwywM4je64o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/116] tracing: tprobe-events: Fix to clean up tprobe correctly when module unload
-Date: Tue, 25 Mar 2025 08:22:01 -0400
-Message-ID: <20250325122150.084780669@linuxfoundation.org>
+	David Wei <dw@davidwei.uk>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 061/116] io_uring/net: dont clear REQ_F_NEED_CLEANUP unconditionally
+Date: Tue, 25 Mar 2025 08:22:28 -0400
+Message-ID: <20250325122150.769281825@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -50,63 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 0a8bb688aa824863716fc570d818b8659a79309d ]
+commit cc34d8330e036b6bffa88db9ea537bae6b03948f upstream.
 
-When unloading module, the tprobe events are not correctly cleaned
-up. Thus it becomes `fprobe-event` and never be enabled again even
-if loading the same module again.
+io_req_msg_cleanup() relies on the fact that io_netmsg_recycle() will
+always fully recycle, but that may not be the case if the msg cache
+was already full. To ensure that normal cleanup always gets run,
+let io_netmsg_recycle() deal with clearing the relevant cleanup flags,
+as it knows exactly when that should be done.
 
-For example;
-
- # cd /sys/kernel/tracing
- # modprobe trace_events_sample
- # echo 't:my_tprobe foo_bar' >> dynamic_events
- # cat dynamic_events
-t:tracepoints/my_tprobe foo_bar
- # rmmod trace_events_sample
- # cat dynamic_events
-f:tracepoints/my_tprobe foo_bar
-
-As you can see, the second time my_tprobe starts with 'f' instead
-of 't'.
-
-This unregisters the fprobe and tracepoint callback when module is
-unloaded but marks the fprobe-event is tprobe-event.
-
-Link: https://lore.kernel.org/all/174158724946.189309.15826571379395619524.stgit@mhiramat.tok.corp.google.com/
-
-Fixes: 57a7e6de9e30 ("tracing/fprobe: Support raw tracepoints on future loaded modules")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: David Wei <dw@davidwei.uk>
+Fixes: 75191341785e ("io_uring/net: add iovec recycling")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_fprobe.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ io_uring/net.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_fprobe.c b/kernel/trace/trace_fprobe.c
-index 99048c3303822..092c31907c71a 100644
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -977,10 +977,13 @@ static int __tracepoint_probe_module_cb(struct notifier_block *self,
- 					reenable_trace_fprobe(tf);
- 			}
- 		} else if (val == MODULE_STATE_GOING && tp_mod->mod == tf->mod) {
--			tracepoint_probe_unregister(tf->tpoint,
-+			unregister_fprobe(&tf->fp);
-+			if (trace_fprobe_is_tracepoint(tf)) {
-+				tracepoint_probe_unregister(tf->tpoint,
- 					tf->tpoint->probestub, NULL);
--			tf->tpoint = NULL;
--			tf->mod = NULL;
-+				tf->tpoint = TRACEPOINT_STUB;
-+				tf->mod = NULL;
-+			}
- 		}
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -152,7 +152,7 @@ static void io_netmsg_recycle(struct io_
+ 		if (iov)
+ 			kasan_mempool_poison_object(iov);
+ 		req->async_data = NULL;
+-		req->flags &= ~REQ_F_ASYNC_DATA;
++		req->flags &= ~(REQ_F_ASYNC_DATA|REQ_F_NEED_CLEANUP);
  	}
- 	mutex_unlock(&event_mutex);
--- 
-2.39.5
-
+ }
+ 
+@@ -447,7 +447,6 @@ int io_sendmsg_prep(struct io_kiocb *req
+ static void io_req_msg_cleanup(struct io_kiocb *req,
+ 			       unsigned int issue_flags)
+ {
+-	req->flags &= ~REQ_F_NEED_CLEANUP;
+ 	io_netmsg_recycle(req, issue_flags);
+ }
+ 
 
 
