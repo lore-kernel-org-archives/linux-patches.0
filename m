@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD972580F6;
-	Tue, 25 Mar 2025 12:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782B62580F6;
+	Tue, 25 Mar 2025 12:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906124; cv=none; b=q12Ncs28yuvv2DgqbDMeTN3n6YOrM8HbWfB5VX9uVW/dT4e79RVyp7MgxUVRqmYZIGcH83Lan988sPbUlP2EDyXTedfDQxW9pUyjBRXeEGQHtRTnEbB0AtJRalsZFJWwfozCOu7+s6oTrrpVFeLC5YjT2Yw0MoEGW5nAyxM4P7o=
+	t=1742906126; cv=none; b=RkThifliXzQ5sTrC6RHD1CmKRTPM+LD7aZKBG9O5ku7GH8Rb8tTpqaWAyOAh3fOKqt9JkfbeWQeUWo8E7xHS/wP33HJYmbjNIDHcFWG7nSWLeozux7lRJWuD4lgIf6gW/wcsiyRfcYUZ03yXwmjzXbmTA3lvBqWDqm+ySVeijcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906124; c=relaxed/simple;
-	bh=mCkBDzY0QKmH9fJUo3rfBLCaWDb63BFUqXW056a0Ufw=;
+	s=arc-20240116; t=1742906126; c=relaxed/simple;
+	bh=KzOJOF1Nz9lB0gU59DAOjny+L5kN5Qe2OprHnBMpquo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+KDH1+Y5vk27iPN6Is+2bcsnDfOFBAHnBW43zGXYmNq7zIPi38w/FAoZUz9dS7OxfH6iC4vpwcc+guNHBYW2NLdxZzzIP64u63w2cY1+ghCipbbin5ilnQjl+MJHb8qJz0KU7k2cESrU5dEpmUSWrPpv27MgaXwbDv+okhPvp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0D+CcpeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l1PS1b2HCIpMZLY0ae9U7R8jJtQUVTMGuKQtvn7BMvP95pt/sfDvrEJP/98hNGauDnGB1H2BZKCwWAIq0e9lmIl92W5IOHs14Ob8MpR2QpkU7zInZTgKIQo/3uc+0JcoZlFdIUGK5GKF5x7n38ehNoijLIANWFIUiwyYuLNlG5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws2dLz+b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0D+CcpeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A48C4CEE4;
-	Tue, 25 Mar 2025 12:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws2dLz+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5AFC4CEE4;
+	Tue, 25 Mar 2025 12:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906124;
-	bh=mCkBDzY0QKmH9fJUo3rfBLCaWDb63BFUqXW056a0Ufw=;
+	s=korg; t=1742906126;
+	bh=KzOJOF1Nz9lB0gU59DAOjny+L5kN5Qe2OprHnBMpquo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0D+CcpeEXnNH75WbWnBXoTJsgcs1wdQA6om7LA3JofVFEXU9oYMD2fBT8inpggvYv
-	 zjAjLMtUR6MtyDHZmh2qnsMyhfCRvNw9slZI6mXp9HV1p5uJ6DhvqkJJxrM52I3T2l
-	 ZBF1pc8ENglsDi1kTri1AWvwOAvhJg/78PtLhlM8=
+	b=ws2dLz+bIpkvvokGla5BGVsvwtA5yDfAUHRHJDCR0FNEeRDxdhTzYIIuvM1FKNlmx
+	 3PaYLk+l1eQ8IJM26wr4i7H8dIva5WXvQAG1KU1v5OaXAT7NEdBkLwTRzh7JF3nKpL
+	 i7UswAcvTj5lwOUBIMNmMt7pcTo/O9KqHZGbUT6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
+	Guillaume Nault <gnault@redhat.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 27/77] net/neighbor: add missing policy for NDTPA_QUEUE_LENBYTES
-Date: Tue, 25 Mar 2025 08:22:22 -0400
-Message-ID: <20250325122145.062822001@linuxfoundation.org>
+Subject: [PATCH 6.6 28/77] Revert "gre: Fix IPv6 link-local address generation."
+Date: Tue, 25 Mar 2025 08:22:23 -0400
+Message-ID: <20250325122145.090221659@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,37 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 90a7138619a0c55e2aefaad27b12ffc2ddbeed78 ]
+[ Upstream commit fc486c2d060f67d672ddad81724f7c8a4d329570 ]
 
-Previous commit 8b5c171bb3dc ("neigh: new unresolved queue limits")
-introduces new netlink attribute NDTPA_QUEUE_LENBYTES to represent
-approximative value for deprecated QUEUE_LEN. However, it forgot to add
-the associated nla_policy in nl_ntbl_parm_policy array. Fix it with one
-simple NLA_U32 type policy.
+This reverts commit 183185a18ff96751db52a46ccf93fff3a1f42815.
 
-Fixes: 8b5c171bb3dc ("neigh: new unresolved queue limits")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Link: https://patch.msgid.link/20250315165113.37600-1-linma@zju.edu.cn
+This patch broke net/forwarding/ip6gre_custom_multipath_hash.sh in some
+circumstances (https://lore.kernel.org/netdev/Z9RIyKZDNoka53EO@mini-arch/).
+Let's revert it while the problem is being investigated.
+
+Fixes: 183185a18ff9 ("gre: Fix IPv6 link-local address generation.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/8b1ce738eb15dd841aab9ef888640cab4f6ccfea.1742418408.git.gnault@redhat.com
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/addrconf.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index e44feb39d459a..1e2e60ffe7662 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -2293,6 +2293,7 @@ static const struct nla_policy nl_neightbl_policy[NDTA_MAX+1] = {
- static const struct nla_policy nl_ntbl_parm_policy[NDTPA_MAX+1] = {
- 	[NDTPA_IFINDEX]			= { .type = NLA_U32 },
- 	[NDTPA_QUEUE_LEN]		= { .type = NLA_U32 },
-+	[NDTPA_QUEUE_LENBYTES]		= { .type = NLA_U32 },
- 	[NDTPA_PROXY_QLEN]		= { .type = NLA_U32 },
- 	[NDTPA_APP_PROBES]		= { .type = NLA_U32 },
- 	[NDTPA_UCAST_PROBES]		= { .type = NLA_U32 },
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index db07d3bbaf379..8360939acf85a 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3189,13 +3189,16 @@ static void add_v4_addrs(struct inet6_dev *idev)
+ 	struct in6_addr addr;
+ 	struct net_device *dev;
+ 	struct net *net = dev_net(idev->dev);
+-	int scope, plen;
++	int scope, plen, offset = 0;
+ 	u32 pflags = 0;
+ 
+ 	ASSERT_RTNL();
+ 
+ 	memset(&addr, 0, sizeof(struct in6_addr));
+-	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
++	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
++	if (idev->dev->addr_len == sizeof(struct in6_addr))
++		offset = sizeof(struct in6_addr) - 4;
++	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
+ 
+ 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
+ 		scope = IPV6_ADDR_COMPATv4;
+@@ -3505,13 +3508,7 @@ static void addrconf_gre_config(struct net_device *dev)
+ 		return;
+ 	}
+ 
+-	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
+-	 * unless we have an IPv4 GRE device not bound to an IP address and
+-	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
+-	 * case). Such devices fall back to add_v4_addrs() instead.
+-	 */
+-	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
+-	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
++	if (dev->type == ARPHRD_ETHER) {
+ 		addrconf_addr_gen(idev, true);
+ 		return;
+ 	}
 -- 
 2.39.5
 
