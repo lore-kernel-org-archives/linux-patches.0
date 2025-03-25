@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4470625743E;
-	Tue, 25 Mar 2025 12:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ADA25743E;
+	Tue, 25 Mar 2025 12:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905521; cv=none; b=q7a8eM5x3VwiKZixjelHdmKBgoH8gXs1P1rAhwaAGwBRC4ue6fUA6yIKj2yEoejNEqlDadylWJEgoZZhPXvY0RAHX1lyytx+rHfS9nkm60U0hySTWGgaS7yIEVQLrna2maK/nTNLNrTnmI1p27acwy3jyy2JHcJja8r66qJ1QsM=
+	t=1742905522; cv=none; b=CVlJtHsAzs33tb9nRVvWj6zxpbSbbJYge82bl1QhdIDphovrDvYCYdzWIndGTwiMfc/KKsfyqMoem5XPEqxooxKVfKcPdy93AWUbAo7jhd5QEnCjQMwHVisJMyZ/fpuqsoKQvab7759B+kElyoCgHFTHKZ/8DOsrFiUJ0JWHBN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905521; c=relaxed/simple;
-	bh=sR87t/qK5DwuFZIw5tA2Dd5YzxweuDM3xQ03wUqtcjs=;
+	s=arc-20240116; t=1742905522; c=relaxed/simple;
+	bh=q34DP8ZYHxUHMcREBlbb/o2AR9XXh4Egb1vsQeAgSig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q56AJfdUj7cE5q0STcwEgWmM3kOZwYsxdf5X16gKJdzaFE32V6QhAONPqKMMbrDepH2x+a+ct4vn0X9H6fS1UDDvQdvyJLPIKwj24RHAJjF5BNxa644RGvlIqFp8EAf6ButrLbS9cDMKUg+tkPZz3iKVjg3DSjudJcJ5jZIiNUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2bboS6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtMVlSlarkZB/aNH8uZ+/Fr7Wu+Ktcto4f5H5EJor13F2bZFmOzhVytSmu6WQiaZFGhU65MhrwAdadgAg0iZ59UbtmXAOd5dlOu0SsYxbPtPiFC+tm/lERAOKW/kuz/O0KFc0iW46eujoCbcdE8tPk4p77HAaef0jufvyH/d+n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHyxzBu+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2bboS6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE1EC4CEE4;
-	Tue, 25 Mar 2025 12:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHyxzBu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDC2C4CEE9;
+	Tue, 25 Mar 2025 12:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905520;
-	bh=sR87t/qK5DwuFZIw5tA2Dd5YzxweuDM3xQ03wUqtcjs=;
+	s=korg; t=1742905522;
+	bh=q34DP8ZYHxUHMcREBlbb/o2AR9XXh4Egb1vsQeAgSig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2bboS6PjLTPRKS9pPZ2SZF6nIKL1IN2NDJaqtNdOAbqhZtvPGqK40a0ZrL64cDyg
-	 rslZ/Hh9i43jyePqaZVmsmK3q1TrGhdXPSwEG1OaXtim/S8nxgfbAa0FmxeAtEZadZ
-	 BeiBNZccuYSOrEqYXBTyple+FkufudnpbGuY/SAA=
+	b=iHyxzBu+iSwRRxTaKA7jNJsYo85/lQtn7vysWERnuEgpLVpt+hr40IGwGwQF0yumX
+	 80+sR+5KrmcE1uunAk+W11GU+xU/AtzVLhg/TCm68csGT3vrkyS/JSNn4BqAUKYcit
+	 MrM4X7nYzajc5tXYY5sO7vQxkv36D4di5XYTWIqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/198] eth: bnxt: do not update checksum in bnxt_xdp_build_skb()
-Date: Tue, 25 Mar 2025 08:19:42 -0400
-Message-ID: <20250325122157.171636224@linuxfoundation.org>
+Subject: [PATCH 6.1 021/198] net: switchdev: Convert blocking notification chain to a raw one
+Date: Tue, 25 Mar 2025 08:19:43 -0400
+Message-ID: <20250325122157.197684878@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,135 +54,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit c03e7d05aa0e2f7e9a9ce5ad8a12471a53f941dc ]
+[ Upstream commit 62531a1effa87bdab12d5104015af72e60d926ff ]
 
-The bnxt_rx_pkt() updates ip_summed value at the end if checksum offload
-is enabled.
-When the XDP-MB program is attached and it returns XDP_PASS, the
-bnxt_xdp_build_skb() is called to update skb_shared_info.
-The main purpose of bnxt_xdp_build_skb() is to update skb_shared_info,
-but it updates ip_summed value too if checksum offload is enabled.
-This is actually duplicate work.
+A blocking notification chain uses a read-write semaphore to protect the
+integrity of the chain. The semaphore is acquired for writing when
+adding / removing notifiers to / from the chain and acquired for reading
+when traversing the chain and informing notifiers about an event.
 
-When the bnxt_rx_pkt() updates ip_summed value, it checks if ip_summed
-is CHECKSUM_NONE or not.
-It means that ip_summed should be CHECKSUM_NONE at this moment.
-But ip_summed may already be updated to CHECKSUM_UNNECESSARY in the
-XDP-MB-PASS path.
-So the by skb_checksum_none_assert() WARNS about it.
+In case of the blocking switchdev notification chain, recursive
+notifications are possible which leads to the semaphore being acquired
+twice for reading and to lockdep warnings being generated [1].
 
-This is duplicate work and updating ip_summed in the
-bnxt_xdp_build_skb() is not needed.
+Specifically, this can happen when the bridge driver processes a
+SWITCHDEV_BRPORT_UNOFFLOADED event which causes it to emit notifications
+about deferred events when calling switchdev_deferred_process().
 
-Splat looks like:
-WARNING: CPU: 3 PID: 5782 at ./include/linux/skbuff.h:5155 bnxt_rx_pkt+0x479b/0x7610 [bnxt_en]
-Modules linked in: bnxt_re bnxt_en rdma_ucm rdma_cm iw_cm ib_cm ib_uverbs veth xt_nat xt_tcpudp xt_conntrack nft_chain_nat xt_MASQUERADE nf_]
-CPU: 3 UID: 0 PID: 5782 Comm: socat Tainted: G        W          6.14.0-rc4+ #27
-Tainted: [W]=WARN
-Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
-RIP: 0010:bnxt_rx_pkt+0x479b/0x7610 [bnxt_en]
-Code: 54 24 0c 4c 89 f1 4c 89 ff c1 ea 1f ff d3 0f 1f 00 49 89 c6 48 85 c0 0f 84 4c e5 ff ff 48 89 c7 e8 ca 3d a0 c8 e9 8f f4 ff ff <0f> 0b f
-RSP: 0018:ffff88881ba09928 EFLAGS: 00010202
-RAX: 0000000000000000 RBX: 00000000c7590303 RCX: 0000000000000000
-RDX: 1ffff1104e7d1610 RSI: 0000000000000001 RDI: ffff8881c91300b8
-RBP: ffff88881ba09b28 R08: ffff888273e8b0d0 R09: ffff888273e8b070
-R10: ffff888273e8b010 R11: ffff888278b0f000 R12: ffff888273e8b080
-R13: ffff8881c9130e00 R14: ffff8881505d3800 R15: ffff888273e8b000
-FS:  00007f5a2e7be080(0000) GS:ffff88881ba00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fff2e708ff8 CR3: 000000013e3b0000 CR4: 00000000007506f0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- ? __warn+0xcd/0x2f0
- ? bnxt_rx_pkt+0x479b/0x7610
- ? report_bug+0x326/0x3c0
- ? handle_bug+0x53/0xa0
- ? exc_invalid_op+0x14/0x50
- ? asm_exc_invalid_op+0x16/0x20
- ? bnxt_rx_pkt+0x479b/0x7610
- ? bnxt_rx_pkt+0x3e41/0x7610
- ? __pfx_bnxt_rx_pkt+0x10/0x10
- ? napi_complete_done+0x2cf/0x7d0
- __bnxt_poll_work+0x4e8/0x1220
- ? __pfx___bnxt_poll_work+0x10/0x10
- ? __pfx_mark_lock.part.0+0x10/0x10
- bnxt_poll_p5+0x36a/0xfa0
- ? __pfx_bnxt_poll_p5+0x10/0x10
- __napi_poll.constprop.0+0xa0/0x440
- net_rx_action+0x899/0xd00
+Fix this by converting the notification chain to a raw notification
+chain in a similar fashion to the netdev notification chain. Protect
+the chain using the RTNL mutex by acquiring it when modifying the chain.
+Events are always informed under the RTNL mutex, but add an assertion in
+call_switchdev_blocking_notifiers() to make sure this is not violated in
+the future.
+
+Maintain the "blocking" prefix as events are always emitted from process
+context and listeners are allowed to block.
+
+[1]:
+WARNING: possible recursive locking detected
+6.14.0-rc4-custom-g079270089484 #1 Not tainted
+--------------------------------------------
+ip/52731 is trying to acquire lock:
+ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
+
+but task is already holding lock:
+ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
+
+other info that might help us debug this:
+Possible unsafe locking scenario:
+CPU0
+----
+lock((switchdev_blocking_notif_chain).rwsem);
+lock((switchdev_blocking_notif_chain).rwsem);
+
+*** DEADLOCK ***
+May be due to missing lock nesting notation
+3 locks held by ip/52731:
+ #0: ffffffff84f795b0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x727/0x1dc0
+ #1: ffffffff8731f628 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x790/0x1dc0
+ #2: ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
+
+stack backtrace:
+...
+? __pfx_down_read+0x10/0x10
+? __pfx_mark_lock+0x10/0x10
+? __pfx_switchdev_port_attr_set_deferred+0x10/0x10
+blocking_notifier_call_chain+0x58/0xa0
+switchdev_port_attr_notify.constprop.0+0xb3/0x1b0
+? __pfx_switchdev_port_attr_notify.constprop.0+0x10/0x10
+? mark_held_locks+0x94/0xe0
+? switchdev_deferred_process+0x11a/0x340
+switchdev_port_attr_set_deferred+0x27/0xd0
+switchdev_deferred_process+0x164/0x340
+br_switchdev_port_unoffload+0xc8/0x100 [bridge]
+br_switchdev_blocking_event+0x29f/0x580 [bridge]
+notifier_call_chain+0xa2/0x440
+blocking_notifier_call_chain+0x6e/0xa0
+switchdev_bridge_port_unoffload+0xde/0x1a0
 ...
 
-Following ping.py patch adds xdp-mb-pass case. so ping.py is going
-to be able to reproduce this issue.
-
-Fixes: 1dc4c557bfed ("bnxt: adding bnxt_xdp_build_skb to build skb from multibuffer xdp_buff")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Link: https://patch.msgid.link/20250309134219.91670-5-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f7a70d650b0b6 ("net: bridge: switchdev: Ensure deferred event delivery on unoffload")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Tested-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20250305121509.631207-1-amcohen@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  3 ++-
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 11 ++---------
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h |  3 +--
- 3 files changed, 5 insertions(+), 12 deletions(-)
+ net/switchdev/switchdev.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 7d9677d0f7304..393a983f6d695 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1994,7 +1994,8 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			if (!skb)
- 				goto oom_next_rx;
- 		} else {
--			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs, rxr->page_pool, &xdp, rxcmp1);
-+			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs,
-+						 rxr->page_pool, &xdp);
- 			if (!skb) {
- 				/* we should be able to free the old skb here */
- 				bnxt_xdp_buff_frags_free(rxr, &xdp);
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index aa56db138d6b5..d9a7b85343a49 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -462,20 +462,13 @@ int bnxt_xdp(struct net_device *dev, struct netdev_bpf *xdp)
+diff --git a/net/switchdev/switchdev.c b/net/switchdev/switchdev.c
+index 2e14d4c37e2dc..9aec24490e8fd 100644
+--- a/net/switchdev/switchdev.c
++++ b/net/switchdev/switchdev.c
+@@ -381,7 +381,7 @@ bool switchdev_port_obj_act_is_deferred(struct net_device *dev,
+ EXPORT_SYMBOL_GPL(switchdev_port_obj_act_is_deferred);
  
- struct sk_buff *
- bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
--		   struct page_pool *pool, struct xdp_buff *xdp,
--		   struct rx_cmp_ext *rxcmp1)
-+		   struct page_pool *pool, struct xdp_buff *xdp)
+ static ATOMIC_NOTIFIER_HEAD(switchdev_notif_chain);
+-static BLOCKING_NOTIFIER_HEAD(switchdev_blocking_notif_chain);
++static RAW_NOTIFIER_HEAD(switchdev_blocking_notif_chain);
+ 
+ /**
+  *	register_switchdev_notifier - Register notifier
+@@ -427,17 +427,27 @@ EXPORT_SYMBOL_GPL(call_switchdev_notifiers);
+ 
+ int register_switchdev_blocking_notifier(struct notifier_block *nb)
  {
- 	struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
- 
- 	if (!skb)
- 		return NULL;
--	skb_checksum_none_assert(skb);
--	if (RX_CMP_L4_CS_OK(rxcmp1)) {
--		if (bp->dev->features & NETIF_F_RXCSUM) {
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--			skb->csum_level = RX_CMP_ENCAP(rxcmp1);
--		}
--	}
+-	struct blocking_notifier_head *chain = &switchdev_blocking_notif_chain;
++	struct raw_notifier_head *chain = &switchdev_blocking_notif_chain;
++	int err;
 +
- 	xdp_update_skb_shared_info(skb, num_frags,
- 				   sinfo->xdp_frags_size,
- 				   BNXT_RX_PAGE_SIZE * sinfo->nr_frags,
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-index ea430d6961df3..ae8159c5f56c4 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-@@ -33,6 +33,5 @@ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
- 			      struct xdp_buff *xdp);
- struct sk_buff *bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb,
- 				   u8 num_frags, struct page_pool *pool,
--				   struct xdp_buff *xdp,
--				   struct rx_cmp_ext *rxcmp1);
-+				   struct xdp_buff *xdp);
- #endif
++	rtnl_lock();
++	err = raw_notifier_chain_register(chain, nb);
++	rtnl_unlock();
+ 
+-	return blocking_notifier_chain_register(chain, nb);
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(register_switchdev_blocking_notifier);
+ 
+ int unregister_switchdev_blocking_notifier(struct notifier_block *nb)
+ {
+-	struct blocking_notifier_head *chain = &switchdev_blocking_notif_chain;
++	struct raw_notifier_head *chain = &switchdev_blocking_notif_chain;
++	int err;
+ 
+-	return blocking_notifier_chain_unregister(chain, nb);
++	rtnl_lock();
++	err = raw_notifier_chain_unregister(chain, nb);
++	rtnl_unlock();
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(unregister_switchdev_blocking_notifier);
+ 
+@@ -445,10 +455,11 @@ int call_switchdev_blocking_notifiers(unsigned long val, struct net_device *dev,
+ 				      struct switchdev_notifier_info *info,
+ 				      struct netlink_ext_ack *extack)
+ {
++	ASSERT_RTNL();
+ 	info->dev = dev;
+ 	info->extack = extack;
+-	return blocking_notifier_call_chain(&switchdev_blocking_notif_chain,
+-					    val, info);
++	return raw_notifier_call_chain(&switchdev_blocking_notif_chain,
++				       val, info);
+ }
+ EXPORT_SYMBOL_GPL(call_switchdev_blocking_notifiers);
+ 
 -- 
 2.39.5
 
