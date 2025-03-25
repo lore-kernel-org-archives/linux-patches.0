@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765B825A359;
-	Tue, 25 Mar 2025 12:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B2B259CAD;
+	Tue, 25 Mar 2025 12:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905791; cv=none; b=Zk/w64w8OHDKGod16O0E+W5hKhJeLew5ETsF6A9JaHk+11p4dmxgBMayDUa30jBUU0Sb9rZ+GbA67XQAlWkRpwmVrHuuR+N7s/1zhM+T7R8zFTl8t0NlMFkVbj8hSLvQMpajxaEIexpjhjRyDM9XHOA1dl2Ks3lWRGbT/u30fZA=
+	t=1742905793; cv=none; b=sEym8oI0ssPCCqcs4WxgF03JQJdYpZxwW5HDd06WXmqWnRql/4o76hMQfh5mV+/pwYxaNdF6CtnIeC6D1Y04e+7ssdhmA+dvsTGh7NnpUssVGpsY5Mkd/U5SE/mTBZy7JA35kkmIYn3MeuBnd5vizM9f24bzpQgYJkVE6EzSUuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905791; c=relaxed/simple;
-	bh=ME0HLR52QwBTuzWk+SCXbyfPgKJQQLfYF35aJLPO/E4=;
+	s=arc-20240116; t=1742905793; c=relaxed/simple;
+	bh=QZNq/jdj2a3u2hjgQ1uUcMuFwlfQ439lTSSmbmgPERk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUn/qoELHx+qWZHz7OQRbEMdynrgd2O73jrsdJ03ASwD5tjKA0EjG7/jsnj4uge1uW1NxnIzgKWnMPTUWLrBk78aHUWKtHZ8GtnRlKTC1+VLNLZpl/flYrNXDoaC8smgmpNVjI623WPoq5+0ifabBiw9zHbv7ZUqkSFEA773TGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTrIkWjV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JxWBsC3bWZqk08OoGDWVsM8EpwgJmvxnpCHGhgZAcQ6NSadVUh1tT2jtCGcjaGsd6BFnao0JAgkGBlGBaIZ6AB6H8lcZzDJ+2E0MVk1jEa0OK4Po0rMdwCW9ABU3JV6lKm/Ay849VDRBL9koKLX1+csuhyGD1j15qGwgEWisK/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmzGytoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTrIkWjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA42C4CEE4;
-	Tue, 25 Mar 2025 12:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmzGytoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078DDC4CEE4;
+	Tue, 25 Mar 2025 12:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905791;
-	bh=ME0HLR52QwBTuzWk+SCXbyfPgKJQQLfYF35aJLPO/E4=;
+	s=korg; t=1742905793;
+	bh=QZNq/jdj2a3u2hjgQ1uUcMuFwlfQ439lTSSmbmgPERk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTrIkWjVLGuinivNyn1sMrbKb0VCCltuLX4UuwRaQZG0jH3AiyzB5HiokQUI/ePsh
-	 XZxJiuY7Srx/Ojsq2YhC+IeUwvE+42pLxnPVL/Ou2RZ5zM+7jdpuQKYL9mlZt9l7Ns
-	 BbF/VNPqTGmU1yQkf8+bFQONBRYYC5aAclJOShrU=
+	b=EmzGytoyVWxLPbPH0Ahswcoib+UhWUAJc41w3YfAuBU+WDWs2jaAl9GFh9d5asmf4
+	 oG4URsZmRTNYEzug45i61I4O865QAwQIVyeNFMCdhTYAKDbnFJtOKR74VWHB24DAQz
+	 pGu28foOiK7RYMzUCuETcBeRDIKo1ntWhn3hACmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/198] net: lwtunnel: fix recursion loops
-Date: Tue, 25 Mar 2025 08:22:07 -0400
-Message-ID: <20250325122200.979071367@linuxfoundation.org>
+Subject: [PATCH 6.1 139/198] i2c: sis630: Fix an error handling path in sis630_probe()
+Date: Tue, 25 Mar 2025 08:21:41 -0400
+Message-ID: <20250325122200.300980359@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,174 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 986ffb3a57c5650fb8bf6d59a8f0f07046abfeb6 ]
+[ Upstream commit 2b22459792fcb4def9f0936d64575ac11a95a58d ]
 
-This patch acts as a parachute, catch all solution, by detecting
-recursion loops in lwtunnel users and taking care of them (e.g., a loop
-between routes, a loop within the same route, etc). In general, such
-loops are the consequence of pathological configurations. Each lwtunnel
-user is still free to catch such loops early and do whatever they want
-with them. It will be the case in a separate patch for, e.g., seg6 and
-seg6_local, in order to provide drop reasons and update statistics.
-Another example of a lwtunnel user taking care of loops is ioam6, which
-has valid use cases that include loops (e.g., inline mode), and which is
-addressed by the next patch in this series. Overall, this patch acts as
-a last resort to catch loops and drop packets, since we don't want to
-leak something unintentionally because of a pathological configuration
-in lwtunnels.
+If i2c_add_adapter() fails, the request_region() call in sis630_setup()
+must be undone by a corresponding release_region() call, as done in the
+remove function.
 
-The solution in this patch reuses dev_xmit_recursion(),
-dev_xmit_recursion_inc(), and dev_xmit_recursion_dec(), which seems fine
-considering the context.
-
-Closes: https://lore.kernel.org/netdev/2bc9e2079e864a9290561894d2a602d6@akamai.com/
-Closes: https://lore.kernel.org/netdev/Z7NKYMY7fJT5cYWu@shredder/
-Fixes: ffce41962ef6 ("lwtunnel: support dst output redirect function")
-Fixes: 2536862311d2 ("lwt: Add support to redirect dst.input")
-Fixes: 14972cbd34ff ("net: lwtunnel: Handle fragmentation")
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Link: https://patch.msgid.link/20250314120048.12569-2-justin.iurman@uliege.be
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/3d607601f2c38e896b10207963c6ab499ca5c307.1741033587.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwtunnel.c | 65 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 53 insertions(+), 12 deletions(-)
+ drivers/i2c/busses/i2c-sis630.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
-index 711cd3b4347a7..4417a18b3e951 100644
---- a/net/core/lwtunnel.c
-+++ b/net/core/lwtunnel.c
-@@ -23,6 +23,8 @@
- #include <net/ip6_fib.h>
- #include <net/rtnh.h>
+diff --git a/drivers/i2c/busses/i2c-sis630.c b/drivers/i2c/busses/i2c-sis630.c
+index 87d56250d78a3..c42ecadac4f22 100644
+--- a/drivers/i2c/busses/i2c-sis630.c
++++ b/drivers/i2c/busses/i2c-sis630.c
+@@ -509,6 +509,8 @@ MODULE_DEVICE_TABLE(pci, sis630_ids);
  
-+#include "dev.h"
-+
- DEFINE_STATIC_KEY_FALSE(nf_hooks_lwtunnel_enabled);
- EXPORT_SYMBOL_GPL(nf_hooks_lwtunnel_enabled);
- 
-@@ -325,13 +327,23 @@ EXPORT_SYMBOL_GPL(lwtunnel_cmp_encap);
- 
- int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
  {
--	struct dst_entry *dst = skb_dst(skb);
- 	const struct lwtunnel_encap_ops *ops;
- 	struct lwtunnel_state *lwtstate;
--	int ret = -EINVAL;
-+	struct dst_entry *dst;
 +	int ret;
 +
-+	if (dev_xmit_recursion()) {
-+		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
-+				     __func__);
-+		ret = -ENETDOWN;
-+		goto drop;
-+	}
+ 	if (sis630_setup(dev)) {
+ 		dev_err(&dev->dev,
+ 			"SIS630 compatible bus not detected, "
+@@ -522,7 +524,15 @@ static int sis630_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	snprintf(sis630_adapter.name, sizeof(sis630_adapter.name),
+ 		 "SMBus SIS630 adapter at %04x", smbus_base + SMB_STS);
  
--	if (!dst)
-+	dst = skb_dst(skb);
-+	if (!dst) {
-+		ret = -EINVAL;
- 		goto drop;
-+	}
- 	lwtstate = dst->lwtstate;
- 
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
-@@ -341,8 +353,11 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
- 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
--	if (likely(ops && ops->output))
-+	if (likely(ops && ops->output)) {
-+		dev_xmit_recursion_inc();
- 		ret = ops->output(net, sk, skb);
-+		dev_xmit_recursion_dec();
-+	}
- 	rcu_read_unlock();
- 
- 	if (ret == -EOPNOTSUPP)
-@@ -359,13 +374,23 @@ EXPORT_SYMBOL_GPL(lwtunnel_output);
- 
- int lwtunnel_xmit(struct sk_buff *skb)
- {
--	struct dst_entry *dst = skb_dst(skb);
- 	const struct lwtunnel_encap_ops *ops;
- 	struct lwtunnel_state *lwtstate;
--	int ret = -EINVAL;
-+	struct dst_entry *dst;
-+	int ret;
+-	return i2c_add_adapter(&sis630_adapter);
++	ret = i2c_add_adapter(&sis630_adapter);
++	if (ret)
++		goto release_region;
 +
-+	if (dev_xmit_recursion()) {
-+		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
-+				     __func__);
-+		ret = -ENETDOWN;
-+		goto drop;
-+	}
- 
--	if (!dst)
-+	dst = skb_dst(skb);
-+	if (!dst) {
-+		ret = -EINVAL;
- 		goto drop;
-+	}
- 
- 	lwtstate = dst->lwtstate;
- 
-@@ -376,8 +401,11 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
- 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
--	if (likely(ops && ops->xmit))
-+	if (likely(ops && ops->xmit)) {
-+		dev_xmit_recursion_inc();
- 		ret = ops->xmit(skb);
-+		dev_xmit_recursion_dec();
-+	}
- 	rcu_read_unlock();
- 
- 	if (ret == -EOPNOTSUPP)
-@@ -394,13 +422,23 @@ EXPORT_SYMBOL_GPL(lwtunnel_xmit);
- 
- int lwtunnel_input(struct sk_buff *skb)
- {
--	struct dst_entry *dst = skb_dst(skb);
- 	const struct lwtunnel_encap_ops *ops;
- 	struct lwtunnel_state *lwtstate;
--	int ret = -EINVAL;
-+	struct dst_entry *dst;
-+	int ret;
- 
--	if (!dst)
-+	if (dev_xmit_recursion()) {
-+		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
-+				     __func__);
-+		ret = -ENETDOWN;
- 		goto drop;
-+	}
++	return 0;
 +
-+	dst = skb_dst(skb);
-+	if (!dst) {
-+		ret = -EINVAL;
-+		goto drop;
-+	}
- 	lwtstate = dst->lwtstate;
++release_region:
++	release_region(smbus_base + SMB_STS, SIS630_SMB_IOREGION);
++	return ret;
+ }
  
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
-@@ -410,8 +448,11 @@ int lwtunnel_input(struct sk_buff *skb)
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
- 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
--	if (likely(ops && ops->input))
-+	if (likely(ops && ops->input)) {
-+		dev_xmit_recursion_inc();
- 		ret = ops->input(skb);
-+		dev_xmit_recursion_dec();
-+	}
- 	rcu_read_unlock();
- 
- 	if (ret == -EOPNOTSUPP)
+ static void sis630_remove(struct pci_dev *dev)
 -- 
 2.39.5
 
