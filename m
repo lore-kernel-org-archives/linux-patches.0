@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4606E26AA8D;
-	Tue, 25 Mar 2025 12:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987A725C6E4;
+	Tue, 25 Mar 2025 12:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906187; cv=none; b=hZ/VCxcdUcT+9mFLKAMiAaikMFAqNRxfiexSnca5Fhw+bJ1sI8v2nJYPBoSDL0gecR2xJK18INkNWqoYBBie/Cl5gpdvGYwWIx5bLle9XjPQqUVJCAb58H/6hFS46h0hjIejl6m2rupFcOcrbnPWvVmxufetEtzbIuM4zjF0ymo=
+	t=1742906188; cv=none; b=tfHc3tl6opjtSmmcoNqJgGEfBcTXmus+w7LZ/cggylZEVSyCAyWQj16lhGV/+HJealbiVtv7qBo2VPu+6/qfLVJydi92Qlpvent7Fh6wKc17PvcXYgrHWIvzSLDtkVs2zJM5Om60zCiC/fJkn73TfRIsfotwRxR+ej9kybsRxc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906187; c=relaxed/simple;
-	bh=mi1FKd2YDw4LOR2sKTTb6Dy32tBo0exmy/igh327Pok=;
+	s=arc-20240116; t=1742906188; c=relaxed/simple;
+	bh=48kVKPuqRcX+uCl7v/f3SUNXQkZUqRphhN89ZhgQ6Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/pThiGMUiXOVymhPdUyNBwlAKVl3me8tZgbLDKxhPNm4/omlChY/Ga48IgzWmyVNa/yc6mAQ8N2AHjUg+O2GUe9lCrDA8/F0MgduRfGgnmIgwlO7x8ahT78xuEgOT4XXi+zyZg8ZpAKBYej4eWKEQPWgjZ8opMfGffIQPKj7Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI0TFYPZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpGMrlMRl9dz+JxjqDxJqzc4dPJlEHs+JH4rKFT7/QEEiwhRgiQQ1QsumeYuwX+BYha9yl+U1S33B6RdPk0ZGdrjfOIvedlaBLmpWjjhtClYBhlOu2iw28zFOo9fmrGrpT+IMyEZb8ucsGhmxcVnx2jw2Y+/y6NENxe6WLTWagI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwmFbx4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI0TFYPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EA2C4CEE4;
-	Tue, 25 Mar 2025 12:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwmFbx4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4950DC4CEE4;
+	Tue, 25 Mar 2025 12:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906186;
-	bh=mi1FKd2YDw4LOR2sKTTb6Dy32tBo0exmy/igh327Pok=;
+	s=korg; t=1742906188;
+	bh=48kVKPuqRcX+uCl7v/f3SUNXQkZUqRphhN89ZhgQ6Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI0TFYPZPJAXaLDspJzOQ36o0s8gJ21MRK8RQfjs3/cPK1oS3rvMwbRw8cJf1Wqmv
-	 9t6silD0ix2yV/8WBPXx8zS8yswXZJgHv6pOoqDZPppM9ApBNCUP1qpIjHrv8cyx5t
-	 SsTsz9HK9u2LrvVZthqpA12x6BuDVug5GMEKkNJo=
+	b=fwmFbx4jPV4j8pGMBcKFsV9dDSFIUmWrSmmTNLXl2RCYVlpPjSU6Xmp9ZxOzn45kG
+	 8LeEyOvF7dhQLcMbRqdZxR/3x2gifqyNKTVbmnjhb4kWATsSp1cD9KwnWUNNUQmXlW
+	 kNGr/FQ8wlZb6h4/THeKFg1PhFUvQ6aqlpi47opM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Leite Ladessa <igor-ladessa@hotmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 61/77] ksmbd: fix incorrect validation for num_aces field of smb_acl
-Date: Tue, 25 Mar 2025 08:22:56 -0400
-Message-ID: <20250325122145.945578503@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Arthur Mongodin <amongodin@randorisec.fr>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>
+Subject: [PATCH 6.6 62/77] mptcp: Fix data stream corruption in the address announcement
+Date: Tue, 25 Mar 2025 08:22:57 -0400
+Message-ID: <20250325122145.976427527@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,47 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Arthur Mongodin <amongodin@randorisec.fr>
 
-commit 1b8b67f3c5e5169535e26efedd3e422172e2db64 upstream.
+commit 2c1f97a52cb827a5f2768e67a9dddffae1ed47ab upstream.
 
-parse_dcal() validate num_aces to allocate posix_ace_state_array.
+Because of the size restriction in the TCP options space, the MPTCP
+ADD_ADDR option is exclusive and cannot be sent with other MPTCP ones.
+For this reason, in the linked mptcp_out_options structure, group of
+fields linked to different options are part of the same union.
 
-if (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
+There is a case where the mptcp_pm_add_addr_signal() function can modify
+opts->addr, but not ended up sending an ADD_ADDR. Later on, back in
+mptcp_established_options, other options will be sent, but with
+unexpected data written in other fields due to the union, e.g. in
+opts->ext_copy. This could lead to a data stream corruption in the next
+packet.
 
-It is an incorrect validation that we can create an array of size ULONG_MAX.
-smb_acl has ->size field to calculate actual number of aces in request buffer
-size. Use this to check invalid num_aces.
+Using an intermediate variable, prevents from corrupting previously
+established DSS option. The assignment of the ADD_ADDR option
+parameters is now done once we are sure this ADD_ADDR option can be set
+in the packet, e.g. after having dropped other suboptions.
 
-Reported-by: Igor Leite Ladessa <igor-ladessa@hotmail.com>
-Tested-by: Igor Leite Ladessa <igor-ladessa@hotmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1bff1e43a30e ("mptcp: optimize out option generation")
+Cc: stable@vger.kernel.org
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Arthur Mongodin <amongodin@randorisec.fr>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+[ Matt: the commit message has been updated: long lines splits and some
+  clarifications. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250314-net-mptcp-fix-data-stream-corr-sockopt-v1-1-122dbb249db3@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mptcp/options.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -398,7 +398,9 @@ static void parse_dacl(struct mnt_idmap
- 	if (num_aces <= 0)
- 		return;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -651,6 +651,7 @@ static bool mptcp_established_options_ad
+ 	struct mptcp_sock *msk = mptcp_sk(subflow->conn);
+ 	bool drop_other_suboptions = false;
+ 	unsigned int opt_size = *size;
++	struct mptcp_addr_info addr;
+ 	bool echo;
+ 	int len;
  
--	if (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
-+	if (num_aces > (le16_to_cpu(pdacl->size) - sizeof(struct smb_acl)) /
-+			(offsetof(struct smb_ace, sid) +
-+			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
- 		return;
+@@ -659,7 +660,7 @@ static bool mptcp_established_options_ad
+ 	 */
+ 	if (!mptcp_pm_should_add_signal(msk) ||
+ 	    (opts->suboptions & (OPTION_MPTCP_MPJ_ACK | OPTION_MPTCP_MPC_ACK)) ||
+-	    !mptcp_pm_add_addr_signal(msk, skb, opt_size, remaining, &opts->addr,
++	    !mptcp_pm_add_addr_signal(msk, skb, opt_size, remaining, &addr,
+ 		    &echo, &drop_other_suboptions))
+ 		return false;
  
- 	ret = init_acl_state(&acl_state, num_aces);
-@@ -432,6 +434,7 @@ static void parse_dacl(struct mnt_idmap
- 			offsetof(struct smb_sid, sub_auth);
+@@ -672,7 +673,7 @@ static bool mptcp_established_options_ad
+ 	else if (opts->suboptions & OPTION_MPTCP_DSS)
+ 		return false;
  
- 		if (end_of_acl - acl_base < acl_size ||
-+		    ppace[i]->sid.num_subauth == 0 ||
- 		    ppace[i]->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
- 		    (end_of_acl - acl_base <
- 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
+-	len = mptcp_add_addr_len(opts->addr.family, echo, !!opts->addr.port);
++	len = mptcp_add_addr_len(addr.family, echo, !!addr.port);
+ 	if (remaining < len)
+ 		return false;
+ 
+@@ -689,6 +690,7 @@ static bool mptcp_established_options_ad
+ 		opts->ahmac = 0;
+ 		*size -= opt_size;
+ 	}
++	opts->addr = addr;
+ 	opts->suboptions |= OPTION_MPTCP_ADD_ADDR;
+ 	if (!echo) {
+ 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_ADDADDRTX);
 
 
