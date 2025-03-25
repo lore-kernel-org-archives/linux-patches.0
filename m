@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D4725B673;
-	Tue, 25 Mar 2025 12:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D433B25B674;
+	Tue, 25 Mar 2025 12:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905968; cv=none; b=JAT5cIaGOSDeuYCmOi9e51SDH6Sm9a+wv6bPZ7mhueEgJNsDxlLPQC+nU2ooZofJ6B2zUXMW+vSL4BdvkauFwLB1f4d9Lm6w+PD5euKDe3Y/c67B3VEedTq4oOzKbfm8igLL7eueEOiPuUNh6/AHd70SDWBA+Y1UuG9D42XXu70=
+	t=1742905969; cv=none; b=fpAo+SxTu879oz2dIUCwLW7KFKxFJtFzVcbx4Kpm7GfcNUMguG4W90Bkp4WwnLRMPtpuL0/VE3Rberoym3LGkKJikahk+aVVd+Xm/YJlDKNGnCJnpgHFO8Ve86YvCw0cDH0QfQ2hthWsc6Lqoip0E293yRI0yCAsSFOryrk+jlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905968; c=relaxed/simple;
-	bh=dsJNuxyLla/juUz8IwkRkSd9aCasxOcZZSsTjdu/Ie8=;
+	s=arc-20240116; t=1742905969; c=relaxed/simple;
+	bh=4r+1xruOXSRY0YXNK9XUjc5E0VNeBbFzb4SJN2dWpvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/DDgujnFAYTpnDTBI9F3PGxhdYbuO8oMBYf59QJHjR+t63APzHr7qjahJOQOjnPY7AmFZFNluNOum3ysXsIvrBBT0TmdtpUJLLDmDbqjrWsAkyDJ9jmwPq/g4nO0gmQ9jyRzCZbZ9ynHVZpMCRELcJZ9oVf/m1ErLAfHSiyfU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWPwc3Nb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8pSZjmf1pTPwmV5YNXKJR5hQerMPY/mwTl4MDuyRicST/Uz6fBSO0hTNya9McBXWWgrxKErW/KdL2QcPmrn6v3+HSdRrFcNXPCfzkpYSd01kLJXcwj88wSkMIAcyZH9ngwO6pbj4kRqRW85t5AMgJyDfT65uJ7RmsCiEfPgVPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUz3xsh0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWPwc3Nb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C320CC4CEE4;
-	Tue, 25 Mar 2025 12:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUz3xsh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876F8C4CEE4;
+	Tue, 25 Mar 2025 12:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905968;
-	bh=dsJNuxyLla/juUz8IwkRkSd9aCasxOcZZSsTjdu/Ie8=;
+	s=korg; t=1742905969;
+	bh=4r+1xruOXSRY0YXNK9XUjc5E0VNeBbFzb4SJN2dWpvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWPwc3NbAps6qEKPUEvt4fRkZnKT5E+8xlXk0chsh/HGl1BKGoa1GDdsbYfJ430Cg
-	 25ulOIoBNrLzpchcR7EzSLxlXUUgcJSmpBJfvbyxxt2hCldGPWimNyN8yJNyHJVu2U
-	 KUPkBjPpfUB/M7dyV87a1Lk1qNnDT/ZbljjuRCIs=
+	b=FUz3xsh0y+n9k+QSR50mvuLTWRIJ5y17HdZ1mtxS/3QyWv7/bcVSrBQxnCuFCiyh/
+	 n/uqJsJfwjkIlRcixwKW0yPykid8aQsIlcY9bTLvSwsL3lXmrqNTzmi6MwT9QVQUgK
+	 46KIUsyxv02KHmX8+hTMt+cjCUUHzZ+aHveZODTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 063/119] io_uring/net: dont clear REQ_F_NEED_CLEANUP unconditionally
-Date: Tue, 25 Mar 2025 08:22:01 -0400
-Message-ID: <20250325122150.667626965@linuxfoundation.org>
+	E Shattow <e@freeshell.de>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.13 064/119] riscv: dts: starfive: Fix a typo in StarFive JH7110 pin function definitions
+Date: Tue, 25 Mar 2025 08:22:02 -0400
+Message-ID: <20250325122150.692496846@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -50,43 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: E Shattow <e@freeshell.de>
 
-commit cc34d8330e036b6bffa88db9ea537bae6b03948f upstream.
+commit 1b133129ad6b28186214259af3bd5fc651a85509 upstream.
 
-io_req_msg_cleanup() relies on the fact that io_netmsg_recycle() will
-always fully recycle, but that may not be the case if the msg cache
-was already full. To ensure that normal cleanup always gets run,
-let io_netmsg_recycle() deal with clearing the relevant cleanup flags,
-as it knows exactly when that should be done.
+Fix a typo in StarFive JH7110 pin function definitions for GPOUT_SYS_SDIO1_DATA4
 
-Cc: stable@vger.kernel.org
-Reported-by: David Wei <dw@davidwei.uk>
-Fixes: 75191341785e ("io_uring/net: add iovec recycling")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: e22f09e598d12 ("riscv: dts: starfive: Add StarFive JH7110 pin function definitions")
+Signed-off-by: E Shattow <e@freeshell.de>
+Acked-by: Hal Feng <hal.feng@starfivetech.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/boot/dts/starfive/jh7110-pinfunc.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -151,7 +151,7 @@ static void io_netmsg_recycle(struct io_
- 		if (iov)
- 			kasan_mempool_poison_object(iov);
- 		req->async_data = NULL;
--		req->flags &= ~REQ_F_ASYNC_DATA;
-+		req->flags &= ~(REQ_F_ASYNC_DATA|REQ_F_NEED_CLEANUP);
- 	}
- }
- 
-@@ -453,7 +453,6 @@ int io_sendmsg_prep(struct io_kiocb *req
- static void io_req_msg_cleanup(struct io_kiocb *req,
- 			       unsigned int issue_flags)
- {
--	req->flags &= ~REQ_F_NEED_CLEANUP;
- 	io_netmsg_recycle(req, issue_flags);
- }
- 
+--- a/arch/riscv/boot/dts/starfive/jh7110-pinfunc.h
++++ b/arch/riscv/boot/dts/starfive/jh7110-pinfunc.h
+@@ -89,7 +89,7 @@
+ #define GPOUT_SYS_SDIO1_DATA1			59
+ #define GPOUT_SYS_SDIO1_DATA2			60
+ #define GPOUT_SYS_SDIO1_DATA3			61
+-#define GPOUT_SYS_SDIO1_DATA4			63
++#define GPOUT_SYS_SDIO1_DATA4			62
+ #define GPOUT_SYS_SDIO1_DATA5			63
+ #define GPOUT_SYS_SDIO1_DATA6			64
+ #define GPOUT_SYS_SDIO1_DATA7			65
 
 
