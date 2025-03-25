@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1969826B2AA;
-	Tue, 25 Mar 2025 12:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC64626B2AA;
+	Tue, 25 Mar 2025 12:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906255; cv=none; b=puixtN+0kOWoPstJQnF4y6MJ05pWMJaF/WtM5qZWlDj0WALh3wXuLiGBPswXIc7m0G9DjXJD/Yufb+Lp4BFbO19JbWlhI6A2Uos+BkE5DHoSPpvwdcREhqSPshzC9GHrlh6/um8bbNegJC6B8JrJdDF01clCehovLGb1S+ZvKjo=
+	t=1742906256; cv=none; b=aFrdac6KHyPUTAq6T0gLn7QTO7K6d3wE1Wu9WGUhRkK4xFrO0Hxx1zlCCUcURXR1qvZ7B/FxBLRPNMor+a4wPW+aysZdDmA4yQNBgkuUaaz1DrQHy7JL2eQsRaQEcv2h+/elLFtQaCzabT/qS/mbgS5uEZbv90umoflJtocUyzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906255; c=relaxed/simple;
-	bh=IQS8ZLTTO0IIg8A3g551wGFAJnACQEvUoPfbHy2YPCg=;
+	s=arc-20240116; t=1742906256; c=relaxed/simple;
+	bh=dGmMt2Z17UOsjS5SzzW6G9nvk23Yec1WlZ+nszF7C7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bnCOUPMLIij26VesK116Sx56gMyBSaEN54ZwCf//QKCxznief/Qe5pwpjKDwRBONFNn+z7ZHJer3FPWIbHkrrU/1GaavC9i5U/eYfF57JOS82OLRbWjBANSLnAv/0xgE9INmfJ7QCQOdw5lPKSPeqRI0NEGdJykRA32U/4fMTyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5c44YcY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chKRo4WzgRNG0II3XxKrU1bwi/oWnk4fZFjBvw4dKwtLsuodocmGhusfqIHzWVku8gxw4g086RAh4q0Isq0R3wiV0Jq+W61LeX06kV5uRAfVfevXf4LvakVYl/DMvMRKyB9DrleZ2WCY6ypsKxplXGM/lf7ezcuO57BM80zrp78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2RMrvMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5c44YcY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDD3C4CEE4;
-	Tue, 25 Mar 2025 12:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2RMrvMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEEEC4CEE4;
+	Tue, 25 Mar 2025 12:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906254;
-	bh=IQS8ZLTTO0IIg8A3g551wGFAJnACQEvUoPfbHy2YPCg=;
+	s=korg; t=1742906256;
+	bh=dGmMt2Z17UOsjS5SzzW6G9nvk23Yec1WlZ+nszF7C7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5c44YcYYCNt3mNV+0IT4rcOUR9+otu7p05OwLHMJnqaPw1hKBff1QHt93Ol4lA8H
-	 7jxkj+2w82QRGxB/1YmwtodiHKHRW60gOFrATerHVTlpH6i/1RpHj1CoOkDRP0BkWn
-	 3YPYF8uEAm7IDSBNuvZ07bF5y3KCiK8/XbK0fFfQ=
+	b=U2RMrvMpALp1jXEIbpSyqCbFgkDI+3KLf4ev1jHfpU+b2oGKyC43TDEaECUI7wkJQ
+	 LuUCb7r6Bfm1WsL8MulLJU8RKsyJXoZ6RiVoq2sE6xWNM+DS6FbYOiRCtWhno4P7kz
+	 th/CuERFeQ6wjFjJJYpZ+JrcQpnACms2ctNVUIIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Tom Brautaset <tbrautaset@gmail.com>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/116] firmware: imx-scu: fix OF node leak in .probe()
-Date: Tue, 25 Mar 2025 08:21:29 -0400
-Message-ID: <20250325122149.270652665@linuxfoundation.org>
+Subject: [PATCH 6.12 020/116] ARM: dts: BCM5301X: Fix switch port labels of ASUS RT-AC5300
+Date: Tue, 25 Mar 2025 08:21:47 -0400
+Message-ID: <20250325122149.736526367@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -51,34 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Chester A. Unal <chester.a.unal@arinc9.com>
 
-[ Upstream commit fbf10b86f6057cf79300720da4ea4b77e6708b0d ]
+[ Upstream commit 56e12d0c8d395b6e48f128858d4f725c1ded6c95 ]
 
-imx_scu_probe() calls of_parse_phandle_with_args(), but does not
-release the OF node reference obtained by it. Add a of_node_put() call
-after done with the node.
+After using the device for a while, Tom reports that he initially described
+the switch port labels incorrectly. Correct them.
 
-Fixes: f25a066d1a07 ("firmware: imx-scu: Support one TX and one RX")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reported-by: Tom Brautaset <tbrautaset@gmail.com>
+Fixes: 961dedc6b4e4 ("ARM: dts: BCM5301X: Add DT for ASUS RT-AC5300")
+Signed-off-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20250303-for-broadcom-fix-rt-ac5300-switch-ports-v1-1-e058856ef4d3@arinc9.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/broadcom/bcm47094-asus-rt-ac5300.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
-index 1dd4362ef9a3f..8c28e25ddc8a6 100644
---- a/drivers/firmware/imx/imx-scu.c
-+++ b/drivers/firmware/imx/imx-scu.c
-@@ -280,6 +280,7 @@ static int imx_scu_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-asus-rt-ac5300.dts b/arch/arm/boot/dts/broadcom/bcm47094-asus-rt-ac5300.dts
+index 6c666dc7ad23e..01ec8c03686a6 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-asus-rt-ac5300.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-asus-rt-ac5300.dts
+@@ -126,11 +126,11 @@ &srab {
  
- 	sc_ipc->fast_ipc = of_device_is_compatible(args.np, "fsl,imx8-mu-scu");
-+	of_node_put(args.np);
+ 	ports {
+ 		port@0 {
+-			label = "lan4";
++			label = "wan";
+ 		};
  
- 	num_channel = sc_ipc->fast_ipc ? 2 : SCU_MU_CHAN_NUM;
- 	for (i = 0; i < num_channel; i++) {
+ 		port@1 {
+-			label = "lan3";
++			label = "lan1";
+ 		};
+ 
+ 		port@2 {
+@@ -138,11 +138,11 @@ port@2 {
+ 		};
+ 
+ 		port@3 {
+-			label = "lan1";
++			label = "lan3";
+ 		};
+ 
+ 		port@4 {
+-			label = "wan";
++			label = "lan4";
+ 		};
+ 	};
+ };
 -- 
 2.39.5
 
