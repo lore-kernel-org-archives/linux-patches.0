@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5947D25A642;
-	Tue, 25 Mar 2025 12:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1E5268685;
+	Tue, 25 Mar 2025 12:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905880; cv=none; b=UfeYCm+Z+M17EsVISnGIJ4HxTotxrn7Dfvi5Ff3e4tCQ7f+wCkUd3ZaPxNFfk9GHJKK7GkECrF5yukiq6EtolrZwUn2RrQK0Rb/OMCin+udG5GYCopEJq+qt3CRUlJYEecuuNcj/QVe5am79OGw885rtQY0oyP+d1nADHGTQ5Uo=
+	t=1742905881; cv=none; b=srCD4MSL+NoeBRyrASuO3/FRFHwjiiN9E3UWeM8F6tn1bcOUtMJYI2eQ9Miu5w+PWKObnvu7BHT7V52+9Oo36q8xMTMyiouqxQcIXWDnvxX6PJ1wFt8apOleM8JGyFjz0Malq2wfbm2Sc5G9roNDtvlPJrzxTI6TncqjZefN+WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905880; c=relaxed/simple;
-	bh=5exMf5yJtQcDG3yxlGc9yn+F4aY7o72ZPccaBQnnZN8=;
+	s=arc-20240116; t=1742905881; c=relaxed/simple;
+	bh=CWAZnQ/VWujiuOUdHmAzebzysgDQyANP3wkpa7/b5UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYIRry/gmVv32eJgfb0cFe0onhXH8WYlOgnMRlPmmQUQ5lweGPVaLteaIXgwFX53D2ZNEK7DoskKYv2wIUj/rHurOKWmBBwIFrz5l+S4WPa3HRPjgdgWWZKoeiDYyoi9kMjMioQE9Bl4fis1tLM8F1eJ0SqtTqFG4jTI3UW3gC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9yAQZCt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1Kot7XsuWNwv3wqYHfevsZMfP/AiFKTZO15n4AWl/YmFcgiOOrTzlP3MjEMbMdciYxbMHcKmYQJ8EkAyB8DGs/HnlexKopGhcR1ZJCb470VUJmQDOMqlYvveHoEh+Wo5SqkzHfv/ijZK1tGxkvA1Rs0NjrQSFDngZ47BnUlewM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT3cK617; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9yAQZCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A312CC4CEE4;
-	Tue, 25 Mar 2025 12:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT3cK617"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C47C4CEE4;
+	Tue, 25 Mar 2025 12:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905879;
-	bh=5exMf5yJtQcDG3yxlGc9yn+F4aY7o72ZPccaBQnnZN8=;
+	s=korg; t=1742905881;
+	bh=CWAZnQ/VWujiuOUdHmAzebzysgDQyANP3wkpa7/b5UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9yAQZCtgHBgjcTXbbulUpDMgHhg2zJOaFowbGEnDZtoCzZ+KX7I8zbz26iQZltS5
-	 drrVlSacnE4Xv3FATKbP7mr7rzsM7vTVr2Ejn6zXe5/faufYJtFI2qst4HwpNyb9CL
-	 OK4Fcu4Ty+A8lq1dhnp2gXMQUdJGGBRu4pLWjv64=
+	b=OT3cK617Kr3+vLqCLWpySkLsnz3BfdrXNW7GdmR5Gv8seia8JgDkptaeTIMrEAzEG
+	 XGpxfysuYaCVO53gQVYXws0KY7F2AlqWOwXYXZ1KMDgCbxN/LAxW9rE4yd/lhEBH9v
+	 XCN+wXloVUjyK1fIa48ZjD7HNnUd7g4Kr9x6AdlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 015/119] RDMA/bnxt_re: Add missing paranthesis in map_qp_id_to_tbl_indx
-Date: Tue, 25 Mar 2025 08:21:13 -0400
-Message-ID: <20250325122149.454291929@linuxfoundation.org>
+Subject: [PATCH 6.13 016/119] RDMA/mlx5: Handle errors returned from mlx5r_ib_rate()
+Date: Tue, 25 Mar 2025 08:21:14 -0400
+Message-ID: <20250325122149.478676715@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -53,40 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit 67ee8d496511ad8e1cb88f72944847e7b3e4e47c ]
+[ Upstream commit 556f93b90c1872ad85e216e613c0b33803e621cb ]
 
-The modulo operation returns wrong result without the
-paranthesis and that resulted in wrong QP table indexing.
+In function create_ib_ah() the following line attempts
+to left shift the return value of mlx5r_ib_rate() by 4
+and store it in the stat_rate_sl member of av:
 
-Fixes: 84cf229f4001 ("RDMA/bnxt_re: Fix the qp table indexing")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1741021178-2569-3-git-send-email-selvin.xavier@broadcom.com
+However the code overlooks the fact that mlx5r_ib_rate()
+may return -EINVAL if the rate passed to it is less than
+IB_RATE_2_5_GBPS or greater than IB_RATE_800_GBPS.
+
+Because of this, the code may invoke undefined behaviour when
+shifting a signed negative value when doing "-EINVAL << 4".
+
+To fix this check for errors before assigning stat_rate_sl and
+propagate any error value to the callers.
+
+Fixes: c534ffda781f ("RDMA/mlx5: Fix AH static rate parsing")
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Link: https://patch.msgid.link/20250304140246.205919-1-qasdev00@gmail.com
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/ah.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 88814cb3aa741..5e649371e1b67 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -285,9 +285,10 @@ int bnxt_qplib_deinit_rcfw(struct bnxt_qplib_rcfw *rcfw);
- int bnxt_qplib_init_rcfw(struct bnxt_qplib_rcfw *rcfw,
- 			 struct bnxt_qplib_ctx *ctx, int is_virtfn);
- void bnxt_qplib_mark_qp_error(void *qp_handle);
-+
- static inline u32 map_qp_id_to_tbl_indx(u32 qid, struct bnxt_qplib_rcfw *rcfw)
- {
- 	/* Last index of the qp_tbl is for QP1 ie. qp_tbl_size - 1*/
--	return (qid == 1) ? rcfw->qp_tbl_size - 1 : qid % rcfw->qp_tbl_size - 2;
-+	return (qid == 1) ? rcfw->qp_tbl_size - 1 : (qid % (rcfw->qp_tbl_size - 2));
+diff --git a/drivers/infiniband/hw/mlx5/ah.c b/drivers/infiniband/hw/mlx5/ah.c
+index 99036afb3aef0..531a57f9ee7e8 100644
+--- a/drivers/infiniband/hw/mlx5/ah.c
++++ b/drivers/infiniband/hw/mlx5/ah.c
+@@ -50,11 +50,12 @@ static __be16 mlx5_ah_get_udp_sport(const struct mlx5_ib_dev *dev,
+ 	return sport;
  }
- #endif /* __BNXT_QPLIB_RCFW_H__ */
+ 
+-static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
++static int create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
+ 			 struct rdma_ah_init_attr *init_attr)
+ {
+ 	struct rdma_ah_attr *ah_attr = init_attr->ah_attr;
+ 	enum ib_gid_type gid_type;
++	int rate_val;
+ 
+ 	if (rdma_ah_get_ah_flags(ah_attr) & IB_AH_GRH) {
+ 		const struct ib_global_route *grh = rdma_ah_read_grh(ah_attr);
+@@ -67,8 +68,10 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
+ 		ah->av.tclass = grh->traffic_class;
+ 	}
+ 
+-	ah->av.stat_rate_sl =
+-		(mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr)) << 4);
++	rate_val = mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr));
++	if (rate_val < 0)
++		return rate_val;
++	ah->av.stat_rate_sl = rate_val << 4;
+ 
+ 	if (ah_attr->type == RDMA_AH_ATTR_TYPE_ROCE) {
+ 		if (init_attr->xmit_slave)
+@@ -89,6 +92,8 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
+ 		ah->av.fl_mlid = rdma_ah_get_path_bits(ah_attr) & 0x7f;
+ 		ah->av.stat_rate_sl |= (rdma_ah_get_sl(ah_attr) & 0xf);
+ 	}
++
++	return 0;
+ }
+ 
+ int mlx5_ib_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+@@ -121,8 +126,7 @@ int mlx5_ib_create_ah(struct ib_ah *ibah, struct rdma_ah_init_attr *init_attr,
+ 			return err;
+ 	}
+ 
+-	create_ib_ah(dev, ah, init_attr);
+-	return 0;
++	return create_ib_ah(dev, ah, init_attr);
+ }
+ 
+ int mlx5_ib_query_ah(struct ib_ah *ibah, struct rdma_ah_attr *ah_attr)
 -- 
 2.39.5
 
