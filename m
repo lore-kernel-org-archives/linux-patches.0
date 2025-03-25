@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F913266595;
-	Tue, 25 Mar 2025 12:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC7B259CAD;
+	Tue, 25 Mar 2025 12:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905751; cv=none; b=MJSF6QP6weu9rpmNLTfBTL/H/uG3YC+COVSRqZcMrA1Gb0gLjuBj0bgCbVCpKW2LabknazSWvoP+mtEmxhzzbticAVxgU31wwgRPCnLb6GOFBHzMl1CJCNjn5a7mUddcZQfizS+yo36RsCHqGb8qQopXGwMw8NPgLnj5YBuwpWo=
+	t=1742905753; cv=none; b=HKi2XkerogxzS2qVAyXUbjMpXVioRR4U223AUbzQk/GgfEDYreXR7fgr53XmwjaEnXFFVIduMmNrnEMMh3uQpD69cpR2hTD0YgRXCmnNMooRPJ0A5ErPETyXEn0U2k0j89RYAkJb/In+5Pm+hvTA0f9XPMeaDYYvgzVXS2uXPOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905751; c=relaxed/simple;
-	bh=s1prWTeFJZKHLrj3GH4Ad1HdY2hjqMHELNYUQM/b81g=;
+	s=arc-20240116; t=1742905753; c=relaxed/simple;
+	bh=+AObWkI/t9gOBI+NKTBpCKCRDOs3ccIJiWAH/yAcWek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eh6xNka0nWDJqBoh+zAMzuDVTw1EKVWwGL2tr9rNi+ibM1EBsMXqUJmkR3vPEnz2tNLsITzbVoG5Lq8E7FlVZQdumtkKCjTpLJfAXew1fJAqaaHHv8SlcFRoM4+T9iwXyxvhItEUoY2XphVbqGIKkuc1xReMrlzMQseZ7Ptxurg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCyovLf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdXkj3Xks6ttT7RrpxIIhllNpAXSocCnZJrPRYxAZPMuLTyiA0fqQ6q3krtYdzDTrhVNm7MMrb3it0sU5vHxub1dBhZMfZJA6LTJX/E0oa8LAtOaETWiW082K9t5TuvSv1cs64umP3RfN7SID1rtvx+ryH18D/u5QN3mxu50ojA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZyDVpkM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCyovLf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA14C4CEE4;
-	Tue, 25 Mar 2025 12:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZyDVpkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2FEC4CEE4;
+	Tue, 25 Mar 2025 12:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905751;
-	bh=s1prWTeFJZKHLrj3GH4Ad1HdY2hjqMHELNYUQM/b81g=;
+	s=korg; t=1742905753;
+	bh=+AObWkI/t9gOBI+NKTBpCKCRDOs3ccIJiWAH/yAcWek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCyovLf1PaZvG6HR2BO6m0mEwURtLR9dbHMtXaaVei4HkyZtycKbwKtSEXsgC6wRr
-	 LstvvErhKHawyDstt8mH7vl2xCVm3nyT8gQ21qSoXa9W+dlbOjhfuKS9IA/Laa/baj
-	 oTdWwnBYDpI++02PcfpTiuaxGop8R0VjnrW2P+Mg=
+	b=yZyDVpkMT0UCbh/1ql625hfpB2RirN3lEPTUQ44QJEEBXy4sfGnNI1GH8VAWrNsP6
+	 DHPRUUBvVNZV7BBOF/KDsnkGyzemvxziWEc2nv2H4BV7ugETCdYTJkqXb2huwpOgAp
+	 tN203fuXj3ZB0eLFEEb8PgfX9bSaKCgUsuweOP2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 103/198] xfs: remove conditional building of rt geometry validator functions
-Date: Tue, 25 Mar 2025 08:21:05 -0400
-Message-ID: <20250325122159.357476765@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 137/198] i2c: ali1535: Fix an error handling path in ali1535_probe()
+Date: Tue, 25 Mar 2025 08:21:39 -0400
+Message-ID: <20250325122200.246332124@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,167 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 881f78f472556ed05588172d5b5676b48dc48240 ]
+[ Upstream commit 9b5463f349d019a261f1e80803447efca3126151 ]
 
-[ 6.1: used 6.6 backport to minimize conflicts ]
+If i2c_add_adapter() fails, the request_region() call in ali1535_setup()
+must be undone by a corresponding release_region() call, as done in the
+remove function.
 
-[backport: resolve merge conflicts due to refactoring rtbitmap/summary
-macros and accessors]
-
-I mistakenly turned off CONFIG_XFS_RT in the Kconfig file for arm64
-variant of the djwong-wtf git branch.  Unfortunately, it took me a good
-hour to figure out that RT wasn't built because this is what got printed
-to dmesg:
-
-XFS (sda2): realtime geometry sanity check failed
-XFS (sda2): Metadata corruption detected at xfs_sb_read_verify+0x170/0x190 [xfs], xfs_sb block 0x0
-
-Whereas I would have expected:
-
-XFS (sda2): Not built with CONFIG_XFS_RT
-XFS (sda2): RT mount failed
-
-The root cause of these problems is the conditional compilation of the
-new functions xfs_validate_rtextents and xfs_compute_rextslog that I
-introduced in the two commits listed below.  The !RT versions of these
-functions return false and 0, respectively, which causes primary
-superblock validation to fail, which explains the first message.
-
-Move the two functions to other parts of libxfs that are not
-conditionally defined by CONFIG_XFS_RT and remove the broken stubs so
-that validation works again.
-
-Fixes: e14293803f4e ("xfs: don't allow overly small or large realtime volumes")
-Fixes: a6a38f309afc ("xfs: make rextslog computation consistent with mkfs")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/0daf63d7a2ce74c02e2664ba805bbfadab7d25e5.1741031571.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_rtbitmap.c |   14 --------------
- fs/xfs/libxfs/xfs_rtbitmap.h |   16 ----------------
- fs/xfs/libxfs/xfs_sb.c       |   14 ++++++++++++++
- fs/xfs/libxfs/xfs_sb.h       |    2 ++
- fs/xfs/libxfs/xfs_types.h    |   12 ++++++++++++
- fs/xfs/scrub/rtbitmap.c      |    1 +
- 6 files changed, 29 insertions(+), 30 deletions(-)
+ drivers/i2c/busses/i2c-ali1535.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_rtbitmap.c
-+++ b/fs/xfs/libxfs/xfs_rtbitmap.c
-@@ -1131,17 +1131,3 @@ xfs_rtalloc_extent_is_free(
- 	return 0;
+diff --git a/drivers/i2c/busses/i2c-ali1535.c b/drivers/i2c/busses/i2c-ali1535.c
+index ee83c4581bce0..cd2c8afebe798 100644
+--- a/drivers/i2c/busses/i2c-ali1535.c
++++ b/drivers/i2c/busses/i2c-ali1535.c
+@@ -490,6 +490,8 @@ MODULE_DEVICE_TABLE(pci, ali1535_ids);
+ 
+ static int ali1535_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ {
++	int ret;
++
+ 	if (ali1535_setup(dev)) {
+ 		dev_warn(&dev->dev,
+ 			"ALI1535 not detected, module not inserted.\n");
+@@ -501,7 +503,15 @@ static int ali1535_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 
+ 	snprintf(ali1535_adapter.name, sizeof(ali1535_adapter.name),
+ 		"SMBus ALI1535 adapter at %04x", ali1535_offset);
+-	return i2c_add_adapter(&ali1535_adapter);
++	ret = i2c_add_adapter(&ali1535_adapter);
++	if (ret)
++		goto release_region;
++
++	return 0;
++
++release_region:
++	release_region(ali1535_smba, ALI1535_SMB_IOSIZE);
++	return ret;
  }
  
--/*
-- * Compute the maximum level number of the realtime summary file, as defined by
-- * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
-- * use of rt volumes with more than 2^32 extents.
-- */
--uint8_t
--xfs_compute_rextslog(
--	xfs_rtbxlen_t		rtextents)
--{
--	if (!rtextents)
--		return 0;
--	return xfs_highbit64(rtextents);
--}
--
---- a/fs/xfs/libxfs/xfs_rtbitmap.h
-+++ b/fs/xfs/libxfs/xfs_rtbitmap.h
-@@ -71,20 +71,6 @@ xfs_rtfree_extent(
- int xfs_rtfree_blocks(struct xfs_trans *tp, xfs_fsblock_t rtbno,
- 		xfs_filblks_t rtlen);
- 
--uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
--
--/* Do we support an rt volume having this number of rtextents? */
--static inline bool
--xfs_validate_rtextents(
--	xfs_rtbxlen_t		rtextents)
--{
--	/* No runt rt volumes */
--	if (rtextents == 0)
--		return false;
--
--	return true;
--}
--
- #else /* CONFIG_XFS_RT */
- # define xfs_rtfree_extent(t,b,l)			(-ENOSYS)
- # define xfs_rtfree_blocks(t,rb,rl)			(-ENOSYS)
-@@ -92,8 +78,6 @@ xfs_validate_rtextents(
- # define xfs_rtalloc_query_all(m,t,f,p)			(-ENOSYS)
- # define xfs_rtbuf_get(m,t,b,i,p)			(-ENOSYS)
- # define xfs_rtalloc_extent_is_free(m,t,s,l,i)		(-ENOSYS)
--# define xfs_compute_rextslog(rtx)			(0)
--# define xfs_validate_rtextents(rtx)			(false)
- #endif /* CONFIG_XFS_RT */
- 
- #endif /* __XFS_RTBITMAP_H__ */
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -1367,3 +1367,17 @@ xfs_validate_stripe_geometry(
- 	}
- 	return true;
- }
-+
-+/*
-+ * Compute the maximum level number of the realtime summary file, as defined by
-+ * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
-+ * use of rt volumes with more than 2^32 extents.
-+ */
-+uint8_t
-+xfs_compute_rextslog(
-+	xfs_rtbxlen_t		rtextents)
-+{
-+	if (!rtextents)
-+		return 0;
-+	return xfs_highbit64(rtextents);
-+}
---- a/fs/xfs/libxfs/xfs_sb.h
-+++ b/fs/xfs/libxfs/xfs_sb.h
-@@ -38,4 +38,6 @@ extern int	xfs_sb_get_secondary(struct x
- extern bool	xfs_validate_stripe_geometry(struct xfs_mount *mp,
- 		__s64 sunit, __s64 swidth, int sectorsize, bool silent);
- 
-+uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
-+
- #endif	/* __XFS_SB_H__ */
---- a/fs/xfs/libxfs/xfs_types.h
-+++ b/fs/xfs/libxfs/xfs_types.h
-@@ -228,4 +228,16 @@ bool xfs_verify_fileoff(struct xfs_mount
- bool xfs_verify_fileext(struct xfs_mount *mp, xfs_fileoff_t off,
- 		xfs_fileoff_t len);
- 
-+/* Do we support an rt volume having this number of rtextents? */
-+static inline bool
-+xfs_validate_rtextents(
-+	xfs_rtbxlen_t		rtextents)
-+{
-+	/* No runt rt volumes */
-+	if (rtextents == 0)
-+		return false;
-+
-+	return true;
-+}
-+
- #endif	/* __XFS_TYPES_H__ */
---- a/fs/xfs/scrub/rtbitmap.c
-+++ b/fs/xfs/scrub/rtbitmap.c
-@@ -14,6 +14,7 @@
- #include "xfs_rtbitmap.h"
- #include "xfs_inode.h"
- #include "xfs_bmap.h"
-+#include "xfs_sb.h"
- #include "scrub/scrub.h"
- #include "scrub/common.h"
- 
+ static void ali1535_remove(struct pci_dev *dev)
+-- 
+2.39.5
+
 
 
