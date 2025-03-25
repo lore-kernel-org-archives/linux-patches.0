@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A16E2571AC;
-	Tue, 25 Mar 2025 12:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFC8269CE6;
+	Tue, 25 Mar 2025 12:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906111; cv=none; b=vGvBFK2KNL6vt721pVh/781OQKpy7WX0YOBu3GIShi1+yVd5upTuKg4OY8kG/m5uFsDTNyIW34oe7+sf/fXZljMkBvXZBPolMyT+7HmRGk/dRsPchYr8S2E04u8+odHSjxmwvU0e6GUoy/f0IDXzoVG6Y/sNEuc6j80hYwtR5ns=
+	t=1742906113; cv=none; b=OD6Wvv/wsHLXNgPAniv+dbRP6IWe/8AIG3xHACwuDu2zdwKHcTRmBvuvBBasPhfzCvvXWvdISiIo2DXFaTH1omSmIgvSXkgXfXBSPEaH6UC4u9T7QeWgglgD7HbQBKv0aqC8eabRgctjdBIuQ1CrFSA6tadk+iWvyiQiQByPR4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906111; c=relaxed/simple;
-	bh=LUwOHKfeWwqf6/KM3prOzwICR3yjr/lVlnbh6Bl+2Pg=;
+	s=arc-20240116; t=1742906113; c=relaxed/simple;
+	bh=Q1K1ICsNb9Tz+QAXLxOwIs+rQbrGBfoaKXuBaUEaGeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iX+2TqUcxge8gD3NQsa3dqTyilADwLd7EYV16VIBzkyZi3ZbBh2wkkgzvTqXk7MHPri9tbCQ14Sc7W1R+Xc5JWfcTBSnwW5CmETSE+tj708ymLiLSPYF3cdWrg6SI1uHV5nweIGFgk364A+fcavpJPZ9xCXiaCAB+UK584K+o4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXQmKHNO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lbVPrGOCGZiLAVwIs3e496xA/ulo+CP4iAHcili8xmei1saC8cEmA0GP25tI38FKo3i8ZqH6O/Ch7ezpUOOVu2MCWaWC++qQUA2btrJEBzyCA6th9Cbqb+bB4IQGgdDYjNTH05MSevmyuZxloGUMWhE+hWsZjHeagSfS8SgS2Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCpVFtne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXQmKHNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB3AC4CEE4;
-	Tue, 25 Mar 2025 12:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCpVFtne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C476CC4CEE4;
+	Tue, 25 Mar 2025 12:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906111;
-	bh=LUwOHKfeWwqf6/KM3prOzwICR3yjr/lVlnbh6Bl+2Pg=;
+	s=korg; t=1742906113;
+	bh=Q1K1ICsNb9Tz+QAXLxOwIs+rQbrGBfoaKXuBaUEaGeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXQmKHNOscP9qHEC6xksHVqkToh+GIZZzbNHPn/VaiI5BtSL65mkWdy9fSVBwTlJ6
-	 90FyqpEYpiPnmHMtV4AJY5S84r6rhXJc9tXFftDUHVQXEYU5DaXjO+FunW4fCACTiu
-	 rs2desMwjoVJnAeT2Z5iUMNkBEAs8qrpwYe+Ed8g=
+	b=oCpVFtneW0iSFE2po11vVpib4qV+mWyC3RL7EYKJL0Rj7TpeJKvZQwU6TrWcu/m6E
+	 iSt6vtB9d2cb7SIzKGSU+ZWMKGOy1DW0SCn/YrtokaSVFd+7iKKSMMuaPhkHfXUhgG
+	 0W6VRY0LTuPz7zTSmnhsEObAEAjOYQtiD3kcAoO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Troy Hanson <quic_thanson@quicinc.com>,
+	Youssef Samir <quic_yabdulra@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/77] Bluetooth: hci_event: Fix connection regression between LE and non-LE adapters
-Date: Tue, 25 Mar 2025 08:22:15 -0400
-Message-ID: <20250325122144.880058522@linuxfoundation.org>
+Subject: [PATCH 6.6 21/77] accel/qaic: Fix possible data corruption in BOs > 2G
+Date: Tue, 25 Mar 2025 08:22:16 -0400
+Message-ID: <20250325122144.908431530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,36 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-[ Upstream commit f6685a96c8c8a07e260e39bac86d4163cfb38a4d ]
+[ Upstream commit 84a833d90635e4b846333e2df0ae72f9cbecac39 ]
 
-Due to a typo during defining HCI errors it is not possible to connect
-LE-capable device with BR/EDR only adapter. The connection is terminated
-by the LE adapter because the invalid LL params error code is treated
-as unsupported remote feature.
+When slicing a BO, we need to iterate through the BO's sgt to find the
+right pieces to construct the slice. Some of the data types chosen for
+this process are incorrectly too small, and can overflow. This can
+result in the incorrect slice construction, which can lead to data
+corruption in workload execution.
 
-Fixes: 79c0868ad65a ("Bluetooth: hci_event: Use HCI error defines instead of magic values")
-Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The device can only handle 32-bit sized transfers, and the scatterlist
+struct only supports 32-bit buffer sizes, so our upper limit for an
+individual transfer is an unsigned int. Using an int is incorrect due to
+the reservation of the sign bit. Upgrade the length of a scatterlist
+entry and the offsets into a scatterlist entry to unsigned int for a
+correct representation.
+
+While each transfer may be limited to 32-bits, the overall BO may exceed
+that size. For counting the total length of the BO, we need a type that
+can represent the largest allocation possible on the system. That is the
+definition of size_t, so use it.
+
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
+Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250306171959.853466-1-jeff.hugo@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 77a3040a3f29d..e4a97b2d09984 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -668,7 +668,7 @@ enum {
- #define HCI_ERROR_REMOTE_POWER_OFF	0x15
- #define HCI_ERROR_LOCAL_HOST_TERM	0x16
- #define HCI_ERROR_PAIRING_NOT_ALLOWED	0x18
--#define HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE	0x1e
-+#define HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE	0x1a
- #define HCI_ERROR_INVALID_LL_PARAMS	0x1e
- #define HCI_ERROR_UNSPECIFIED		0x1f
- #define HCI_ERROR_ADVERTISING_TIMEOUT	0x3c
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index d2f8c70a77a5b..e8e6eb85f5f13 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -165,9 +165,10 @@ static void free_slice(struct kref *kref)
+ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_table **sgt_out,
+ 					struct sg_table *sgt_in, u64 size, u64 offset)
+ {
+-	int total_len, len, nents, offf = 0, offl = 0;
+ 	struct scatterlist *sg, *sgn, *sgf, *sgl;
++	unsigned int len, nents, offf, offl;
+ 	struct sg_table *sgt;
++	size_t total_len;
+ 	int ret, j;
+ 
+ 	/* find out number of relevant nents needed for this mem */
+@@ -175,6 +176,8 @@ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_tabl
+ 	sgf = NULL;
+ 	sgl = NULL;
+ 	nents = 0;
++	offf = 0;
++	offl = 0;
+ 
+ 	size = size ? size : PAGE_SIZE;
+ 	for_each_sgtable_dma_sg(sgt_in, sg, j) {
 -- 
 2.39.5
 
