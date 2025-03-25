@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FAB2580DE;
-	Tue, 25 Mar 2025 12:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C40D2571AB;
+	Tue, 25 Mar 2025 12:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906015; cv=none; b=PJ14p0tYuUD2CHgmesvOm864mQtNtht18PvUoVpoLW6tZXBeunhzSlVo+iU5EdWOLj1yLzbJNvtMbw7vFa+BNzxsxZMaiVBYULL6fDs/D5footqOxrpTuA45eQ+qniViH9lg82UhWk9bbGKQOr1BJDfiG1bFDx6CYAAPiX9bQ9A=
+	t=1742906017; cv=none; b=sPgkV3ewyQGmEHHzz2SK1/Bo+B2+5HVltCICSNN4Ynthviy/XSarCwfZ0EXI5v2VnvCHk9BqWTepXA/XBt7BUftDmT8sRwRioT+JUQEnnJ7bYSxQkwUVrIsCtlpledAcx8CJqFzk4puJhs77DUGlKmvHeexSQWKRu4NVamps7fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906015; c=relaxed/simple;
-	bh=1njYjMLRNtqKhoJ9YZPXDIzJsN5MN4pRtY8FzdyU0a0=;
+	s=arc-20240116; t=1742906017; c=relaxed/simple;
+	bh=c1+0BDk/oZ4dy7RItT3G5Z5S8UD4NG9ZFMRB0z96O64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5aCRZZVZsz6S5YgdMvGYion3V/2WhDf4JwsQkjdgyxgHxHMRkkjZ15VSUzDKXZXVYcCPbj3ib8ZtBwetmwnsgJ97EZs2w7G4hk5XTFOtGBFFCVO5bHelguIy+mME0I0tR6m1cu288Y9g3qspDh0/576aBbc/YaOBpYh74r0jJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqgySEX0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXRMIr2YUfFJd399I5ZdXO5xFdgAVdAUgNMtnWfHZph/k9gvjWHm7Xfd0hSEm2phm3SRJ9CmFVIlDZelrsWtpod29wDdLLeFRN2OqxmmEviXbhh5qGraIAKxABLQIupx0sJbC77fqr2qyjXN3LmNE2KbEmCfLRBRzPRY3EZWLkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3CS0TN1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqgySEX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF28CC4CEE4;
-	Tue, 25 Mar 2025 12:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3CS0TN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADACBC4CEE4;
+	Tue, 25 Mar 2025 12:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906015;
-	bh=1njYjMLRNtqKhoJ9YZPXDIzJsN5MN4pRtY8FzdyU0a0=;
+	s=korg; t=1742906016;
+	bh=c1+0BDk/oZ4dy7RItT3G5Z5S8UD4NG9ZFMRB0z96O64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GqgySEX0Z/BtAufy3kQTpopYa9UDvR7DeZOn5eo2X4kLHPvdBtmtpOaoQw26KiHJ5
-	 B1zwcLwVbiJishqXhtJ8MCPp67c8VZO9bdCuayv5E8I9R9i8WKLJNeIIllA7NHxZ8t
-	 OI8QZw6pQNNF053swWVriFcfFIFV20a3CX0hSi0c=
+	b=i3CS0TN12wjTqL+BFcY2/NEX4nxgY6S0S/1z8M+LPxLVrOL4ZUEZAlLLFg3v6BqTH
+	 xQy8V784uIGSgjhj1zgwIul8pEpzhI6k7531uDRcGX4LADppOC6WwM3p9p3WhgTzjy
+	 jkAA5fu2YQwp4py4tVaNSbkD9Jb3D5PeVmTmcKKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Frank Li <frank.li@nxp.com>,
 	Haibo Chen <haibo.chen@nxp.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.13 059/119] can: flexcan: only change CAN state when link up in system PM
-Date: Tue, 25 Mar 2025 08:21:57 -0400
-Message-ID: <20250325122150.562413004@linuxfoundation.org>
+Subject: [PATCH 6.13 060/119] can: flexcan: disable transceiver during system PM
+Date: Tue, 25 Mar 2025 08:21:58 -0400
+Message-ID: <20250325122150.587117726@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -52,68 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Haibo Chen <haibo.chen@nxp.com>
 
-commit fd99d6ed20234b83d65b9c5417794343577cf3e5 upstream.
+commit 5a19143124be42900b3fbc9ada3c919632eb45eb upstream.
 
-After a suspend/resume cycle on a down interface, it will come up as
-ERROR-ACTIVE.
-
-$ ip -details -s -s a s dev flexcan0
-3: flexcan0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN group default qlen 10
-    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 1000
-
-$ sudo systemctl suspend
-
-$ ip -details -s -s a s dev flexcan0
-3: flexcan0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN group default qlen 10
-    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 1000
-
-And only set CAN state to CAN_STATE_ERROR_ACTIVE when resume process
-has no issue, otherwise keep in CAN_STATE_SLEEPING as suspend did.
+During system PM, if no wakeup requirement, disable transceiver to
+save power.
 
 Fixes: 4de349e786a3 ("can: flexcan: fix resume function")
 Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <frank.li@nxp.com>
 Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20250314110145.899179-1-haibo.chen@nxp.com
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/all/20250314-married-polar-elephant-b15594-mkl@pengutronix.de
+Link: https://patch.msgid.link/20250314110145.899179-2-haibo.chen@nxp.com
 [mkl: add newlines]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/flexcan/flexcan-core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/can/flexcan/flexcan-core.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/can/flexcan/flexcan-core.c
 +++ b/drivers/net/can/flexcan/flexcan-core.c
-@@ -2266,8 +2266,9 @@ static int __maybe_unused flexcan_suspen
- 		}
- 		netif_stop_queue(dev);
- 		netif_device_detach(dev);
+@@ -2260,6 +2260,10 @@ static int __maybe_unused flexcan_suspen
+ 
+ 			flexcan_chip_interrupts_disable(dev);
+ 
++			err = flexcan_transceiver_disable(priv);
++			if (err)
++				return err;
 +
-+		priv->can.state = CAN_STATE_SLEEPING;
- 	}
--	priv->can.state = CAN_STATE_SLEEPING;
+ 			err = pinctrl_pm_select_sleep_state(device);
+ 			if (err)
+ 				return err;
+@@ -2292,10 +2296,16 @@ static int __maybe_unused flexcan_resume
+ 			if (err)
+ 				return err;
  
- 	return 0;
- }
-@@ -2278,7 +2279,6 @@ static int __maybe_unused flexcan_resume
- 	struct flexcan_priv *priv = netdev_priv(dev);
- 	int err;
+-			err = flexcan_chip_start(dev);
++			err = flexcan_transceiver_enable(priv);
+ 			if (err)
+ 				return err;
  
--	priv->can.state = CAN_STATE_ERROR_ACTIVE;
- 	if (netif_running(dev)) {
- 		netif_device_attach(dev);
- 		netif_start_queue(dev);
-@@ -2298,6 +2298,8 @@ static int __maybe_unused flexcan_resume
- 
++			err = flexcan_chip_start(dev);
++			if (err) {
++				flexcan_transceiver_disable(priv);
++				return err;
++			}
++
  			flexcan_chip_interrupts_enable(dev);
  		}
-+
-+		priv->can.state = CAN_STATE_ERROR_ACTIVE;
- 	}
  
- 	return 0;
 
 
