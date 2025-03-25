@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC8B25A2C0;
-	Tue, 25 Mar 2025 12:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D75259CAD;
+	Tue, 25 Mar 2025 12:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905787; cv=none; b=O6kYYwQ3jgPaY+MYFE6gtvnSH1n0KYAq1AAEoeG1NdzfXEvCcJL/Gm5g3aWkdqUUqWuSduUJgNlGCApRiUd6K88l84xBsbqj9R8I9ZQzUZQKaOATiRyfzdQ75XRHqQSE1xx5R1d+F50Q5gxpAkHRt7KO9NR7hS+z+YAjVCkKc/8=
+	t=1742905789; cv=none; b=EK02KgUab346jLzHrI18awfZvioRZcJ+PHrZGu/U15yu7yoMc6zMAU0fEIaaePmyRsuylC+3xWwJqXFrnP4JYIT1ERxy8nIwSWJjMGHb/LlyP8dtNYrqF/SCpJYzkQNH6cbLS0dBBYgQIMhwrP6bgRz+kl7o1boIeuHoL9l+D+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905787; c=relaxed/simple;
-	bh=PXknEKuyUXcLay/DZsg1ZW4QRYJE+tjQR3TQ2MwP+LQ=;
+	s=arc-20240116; t=1742905789; c=relaxed/simple;
+	bh=cdUZhuh3o/M4EFP256WNDJUDyKOOMkmdjQYMJB45bW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8cdVHbwhYoSCo6eCZpVqqJ8yeSTOuwwo6ml9BMnLkSyXPBGb5M5dqbR63AwTt9oLSHTuY+XOdS/3mJqIF95h4tQ+2kWhXLwoZ09y+iiAgOcynhohMZRGnHWvfLMWE2NGoG1FhBZdlmKVo92I+DinXAwT+BoutwkarNaQP79AQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tP88GOoW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lUO1HV4wsnKYFoG1orQqNtR5JjsZsX2pnIr2B+0AOz2uhmFmsoc3mREnXwROZp8aRK4jiqtIpmiIWZNStTayP5a19Eu5MfUld+AEWKnK4v8ViPMmAhFlpx7k0ceNAesME8BLZqYajRIMsrn5g/rR/xXGwXA1u2Aw+dsS/8Ww/Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3OX6F4d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tP88GOoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CEAC4CEE4;
-	Tue, 25 Mar 2025 12:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3OX6F4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592F6C4CEE4;
+	Tue, 25 Mar 2025 12:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905787;
-	bh=PXknEKuyUXcLay/DZsg1ZW4QRYJE+tjQR3TQ2MwP+LQ=;
+	s=korg; t=1742905789;
+	bh=cdUZhuh3o/M4EFP256WNDJUDyKOOMkmdjQYMJB45bW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tP88GOoWlRGDx4eJmYyr58YEPOQwlSJOhw1VIYpuz9n6r4kFsJ/8nlLU01FgNpsdi
-	 FtIDDEuYKhpsuIGYrjEu1/BkYi415OyVvXnolIINFPDQAq7UDkPmbWeWsAV8INd0VZ
-	 45gshAcuTlHkNQFFdMBSD/h0VswUjJjqEhteoEKg=
+	b=O3OX6F4di8H0+5AiBQs1p6yiDfOBkYo9p7WyWLARVQBxvWuyOLxRRTOHZdPZYOxkJ
+	 r4wyESe8n89dRDoIDsqXDrJP8KkD2+WEjg4n18uEcIUKRbOImCRiWBVq2HZrrl5jmo
+	 1qYoDBa9ry0pX2FGSixmf1ySpo8si+V/tt7HIgbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	David Ahern <dsahern@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/198] ipv6: Set errno after ip_fib_metrics_init() in ip6_route_info_create().
-Date: Tue, 25 Mar 2025 08:22:05 -0400
-Message-ID: <20250325122200.930171343@linuxfoundation.org>
+Subject: [PATCH 6.1 164/198] net: atm: fix use after free in lec_send()
+Date: Tue, 25 Mar 2025 08:22:06 -0400
+Message-ID: <20250325122200.955017871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 9a81fc3480bf5dbe2bf80e278c440770f6ba2692 ]
+[ Upstream commit f3009d0d6ab78053117f8857b921a8237f4d17b3 ]
 
-While creating a new IPv6, we could get a weird -ENOMEM when
-RTA_NH_ID is set and either of the conditions below is true:
+The ->send() operation frees skb so save the length before calling
+->send() to avoid a use after free.
 
-  1) CONFIG_IPV6_SUBTREES is enabled and rtm_src_len is specified
-  2) nexthop_get() fails
-
-e.g.)
-
-  # strace ip -6 route add fe80::dead:beef:dead:beef nhid 1 from ::
-  recvmsg(3, {msg_iov=[{iov_base=[...[
-    {error=-ENOMEM, msg=[... [...]]},
-    [{nla_len=49, nla_type=NLMSGERR_ATTR_MSG}, "Nexthops can not be used with so"...]
-  ]], iov_len=32768}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 148
-
-Let's set err explicitly after ip_fib_metrics_init() in
-ip6_route_info_create().
-
-Fixes: f88d8ea67fbd ("ipv6: Plumb support for nexthop object in a fib6_info")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250312013854.61125-1-kuniyu@amazon.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/c751531d-4af4-42fe-affe-6104b34b791d@stanley.mountain
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/atm/lec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index c72b4117fc757..5cf6e824c0dff 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3798,10 +3798,12 @@ static struct fib6_info *ip6_route_info_create(struct fib6_config *cfg,
- 	if (nh) {
- 		if (rt->fib6_src.plen) {
- 			NL_SET_ERR_MSG(extack, "Nexthops can not be used with source routing");
-+			err = -EINVAL;
- 			goto out_free;
- 		}
- 		if (!nexthop_get(nh)) {
- 			NL_SET_ERR_MSG(extack, "Nexthop has been deleted");
-+			err = -ENOENT;
- 			goto out_free;
- 		}
- 		rt->nh = nh;
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index 6257bf12e5a00..ac3cfc1ae5102 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -181,6 +181,7 @@ static void
+ lec_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb->dev;
++	unsigned int len = skb->len;
+ 
+ 	ATM_SKB(skb)->vcc = vcc;
+ 	atm_account_tx(vcc, skb);
+@@ -191,7 +192,7 @@ lec_send(struct atm_vcc *vcc, struct sk_buff *skb)
+ 	}
+ 
+ 	dev->stats.tx_packets++;
+-	dev->stats.tx_bytes += skb->len;
++	dev->stats.tx_bytes += len;
+ }
+ 
+ static void lec_tx_timeout(struct net_device *dev, unsigned int txqueue)
 -- 
 2.39.5
 
