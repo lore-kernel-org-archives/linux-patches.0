@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958233DF;
-	Tue, 25 Mar 2025 12:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0787620311;
+	Tue, 25 Mar 2025 12:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905819; cv=none; b=BqsgcSqqEv+lz0soiBVEYZOFq0+eqPSxibTii9yl6qqa1t+ybPpt1F7+LYMl7clIleYLXpG1cDrVYmRMHlEoDuRaq0q8si6RugjhASdUVMkT/F4NQDy7iOVp+OfMJlebiw2iiFL3S5L7TNvZrxgWIabqzl9XKrGJ+YAoq8fwhCk=
+	t=1742905821; cv=none; b=t0pZF7RXP1Kcuq+cSTrmnwwXpxv6o9kzs4P5xKF77/TsjmOFQ9hLcQM09urHB5gpOxnR2+yCZYR6/B2kRV4Xt1YeOkmVxIVeGT62wCHudJ3NaLPeuefOo/zJghMuHQ7O8079QDF1ckm2uYqxROX2KV/d3yzjykQ9tx+MZNyUKU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905819; c=relaxed/simple;
-	bh=akUwQ5q4vYJmLRygt3JfEh/D3HNNWERDkUUYRPrxY/o=;
+	s=arc-20240116; t=1742905821; c=relaxed/simple;
+	bh=hPNeIPzr7fCN3a0K2e+HUeH+LaJNlRIwYg3dDhdIH6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xn2Rm1PoeIuu+XzV4lz3ptz9ULD4dUrzAJMvV+3uC/ZIM3VIbvqqytL+c5NYTdzCuxVrmGA52Tlxg3yub+mgXPop/Nr1IPptm67OqVj2kAyrq64pR+wC4MUTN4D41i1S8ACiB8y2VUMh8psudih+eCSE/tK5iDgHDFCFIafE70Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrxvzvSf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqXyAwlaVeMl+M8ebmEf+hwZ6ig5O+jUmFihS+tyrqO7PvsYlY2vb7xQV2/VvNfhKpYVY5g8hJ5K9W8CchLpMaSOFkOLsAjHT60KP3RvU3pKkbW39m07Y8+QBgR+MwN3wZLVA06kO2MRPacudBjXyKZrPYkRx9Gx+hFUmpmJK8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDoMIA1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrxvzvSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76025C4CEE4;
-	Tue, 25 Mar 2025 12:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDoMIA1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D25C4CEE4;
+	Tue, 25 Mar 2025 12:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905818;
-	bh=akUwQ5q4vYJmLRygt3JfEh/D3HNNWERDkUUYRPrxY/o=;
+	s=korg; t=1742905820;
+	bh=hPNeIPzr7fCN3a0K2e+HUeH+LaJNlRIwYg3dDhdIH6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrxvzvSfTDZdFLJowHvDeg3Lj1x8t+0lwM+Bual+WkYKoYm5olys0scmZVaFkor5e
-	 459QNroQrWXgwLVZNUsBa6mjJ1DmKyX7/5zb3yFR3U42OvHZVgwYANn+DZJZZOQrCI
-	 hI6UEHH9Sfvte/LJSmwmGJh6hkMjux1gRu4xVLL0=
+	b=UDoMIA1VnWgMhS0+KvveFFvvdq1PWmhoaJbQH5VZtR4syz2NqXmXdQN0DpfdL8O4b
+	 Vnd2nGv4hNrVh0krgcnwUDA/I8qL3X2FdQ0RNNvGCQXMbiNOaImecjCwErSJBCD/yc
+	 c+Xha7hbjRvh/R+oDCgLFc3guIe3X5CYkVbs6UQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Schneider <ben@bens.haus>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 181/198] efi/libstub: Avoid physical address 0x0 when doing random allocation
-Date: Tue, 25 Mar 2025 08:22:23 -0400
-Message-ID: <20250325122201.396787634@linuxfoundation.org>
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 182/198] xsk: fix an integer overflow in xp_create_and_assign_umem()
+Date: Tue, 25 Mar 2025 08:22:24 -0400
+Message-ID: <20250325122201.421006949@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-commit cb16dfed0093217a68c0faa9394fa5823927e04c upstream.
+commit 559847f56769037e5b2e0474d3dbff985b98083d upstream.
 
-Ben reports spurious EFI zboot failures on a system where physical RAM
-starts at 0x0. When doing random memory allocation from the EFI stub on
-such a platform, a random seed of 0x0 (which means no entropy source is
-available) will result in the allocation to be placed at address 0x0 if
-sufficient space is available.
+Since the i and pool->chunk_size variables are of type 'u32',
+their product can wrap around and then be cast to 'u64'.
+This can lead to two different XDP buffers pointing to the same
+memory area.
 
-When this allocation is subsequently passed on to the decompression
-code, the 0x0 address is mistaken for NULL and the code complains and
-gives up.
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-So avoid address 0x0 when doing random allocation, and set the minimum
-address to the minimum alignment.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: Ben Schneider <ben@bens.haus>
-Tested-by: Ben Schneider <ben@bens.haus>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 94033cd8e73b ("xsk: Optimize for aligned case")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Link: https://patch.msgid.link/20250313085007.3116044-1-Ilia.Gavrilov@infotecs.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/randomalloc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/xdp/xsk_buff_pool.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/libstub/randomalloc.c
-+++ b/drivers/firmware/efi/libstub/randomalloc.c
-@@ -75,6 +75,10 @@ efi_status_t efi_random_alloc(unsigned l
- 	if (align < EFI_ALLOC_ALIGN)
- 		align = EFI_ALLOC_ALIGN;
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -102,7 +102,7 @@ struct xsk_buff_pool *xp_create_and_assi
+ 		if (pool->unaligned)
+ 			pool->free_heads[i] = xskb;
+ 		else
+-			xp_init_xskb_addr(xskb, pool, i * pool->chunk_size);
++			xp_init_xskb_addr(xskb, pool, (u64)i * pool->chunk_size);
+ 	}
  
-+	/* Avoid address 0x0, as it can be mistaken for NULL */
-+	if (alloc_min == 0)
-+		alloc_min = align;
-+
- 	size = round_up(size, EFI_ALLOC_ALIGN);
- 
- 	/* count the suitable slots in each memory map entry */
+ 	return pool;
 
 
