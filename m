@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3949225DAEB;
-	Tue, 25 Mar 2025 12:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A30625DAEB;
+	Tue, 25 Mar 2025 12:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906369; cv=none; b=KT9S9VkFUiFBTdSd+hUy5kl5ielO1642Icc6cpn7f/Atbs9c9LHBeQ8LONtjL/MvP8ynWXPnFngTamkru8asHdWgWSkwedr114z2WFvdUlGicMqHqPFHv8CprjFWqjebnd/g/5GrGv9DucWrEfivHMcgOhkm6Sb5aGQu0MNAW6M=
+	t=1742906371; cv=none; b=P5DpWCr5Wn7bEplZ920zWdfXInYLqOMwbsMRSVBfc50EOcas4U5bHTmGiRTW6ec9+HaqywX04r/5Kn7negMur05MEOr1BpShbZHUVOmY0nMKDJtsjNFwKyUWx0YhjdbqyuOkJbCKZ/R1sE0Yxe/OTAzjSkg9A5Ho1KCz9sWHbAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906369; c=relaxed/simple;
-	bh=mbpA3wedsUBePsK5f+xeJjTZPuvs8ZiEvBIDgOEwmzE=;
+	s=arc-20240116; t=1742906371; c=relaxed/simple;
+	bh=gh0/wxQXDVW2qqQv35hZTJi0tlGJt2gR/1sQ2uDCuyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCom+e63Djmw7WagKXAQL4j9oAGB75XmCW6R5y9asBMf7nbDSHaCy/t2sYFNldMeudd/idiH0nQoVcJAQUy6BtMoIhRwCev4lVdqqDXLjsgW/tKT41SqTkG2RWO5Lw8ZmO2wbgDbAo5kpM1XPfX7ErjblhQnbfUz2H2Se1VnMT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jj5LpClV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TohzoYppyA6rMWteijECGLIgUfIelnXiTmxdwy+8/R5pv0lyv1SC0O7mhAvpe+fSX7fq9EPr5/OuOvIvbp+ufn88xcLufXzpEBnc7uuZVImzyIzNcYT56dVK/inqRLesGDavtm3rgZHfAOiEGOI+75dXa/rqs+GUc/D72hHy3zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5jIqMzP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jj5LpClV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1242C4CEE4;
-	Tue, 25 Mar 2025 12:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5jIqMzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF516C4CEE4;
+	Tue, 25 Mar 2025 12:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906369;
-	bh=mbpA3wedsUBePsK5f+xeJjTZPuvs8ZiEvBIDgOEwmzE=;
+	s=korg; t=1742906370;
+	bh=gh0/wxQXDVW2qqQv35hZTJi0tlGJt2gR/1sQ2uDCuyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jj5LpClVWqDvqK5czKhF/vmuQhKLrqE2PEhc+K0PK5bhEV+ddYtylLUu8L/okXZwJ
-	 vewaAtt/Jc3kMSeL39iDBlzMwWzdF7DVwHPnzhlhExiohaF7gSO7v+5xjBsSfT7Qzo
-	 S0KXODPGtdMAKKm0/SicDlMs4qM1IDLbFSdgNbSg=
+	b=U5jIqMzPu5aI0x4AJ/cxxIEtVGXEgch5Gm3oOx2vNHpvPIIzlQz1/Ui6rxK5qv10H
+	 SSdi502DlGSB8FypCSfwnSMlIvyFTQf8yezxxdkNqznxoFXIz2ycdFzXq0Kf3zHUqB
+	 8n7fARIGoVQnXbOydrnVRqZ1OdZp3f+T7CtITcg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: [PATCH 6.12 081/116] ARM: shmobile: smp: Enforce shmobile_smp_* alignment
-Date: Tue, 25 Mar 2025 08:22:48 -0400
-Message-ID: <20250325122151.281440164@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.12 082/116] firmware: qcom: uefisecapp: fix efivars registration race
+Date: Tue, 25 Mar 2025 08:22:49 -0400
+Message-ID: <20250325122151.306371972@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -50,42 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 379c590113ce46f605439d4887996c60ab8820cc upstream.
+commit da8d493a80993972c427002684d0742560f3be4a upstream.
 
-When the addresses of the shmobile_smp_mpidr, shmobile_smp_fn, and
-shmobile_smp_arg variables are not multiples of 4 bytes, secondary CPU
-bring-up fails:
+Since the conversion to using the TZ allocator, the efivars service is
+registered before the memory pool has been allocated, something which
+can lead to a NULL-pointer dereference in case of a racing EFI variable
+access.
 
-    smp: Bringing up secondary CPUs ...
-    CPU1: failed to come online
-    CPU2: failed to come online
-    CPU3: failed to come online
-    smp: Brought up 1 node, 1 CPU
+Make sure that all resources have been set up before registering the
+efivars.
 
-Fix this by adding the missing alignment directive.
-
-Fixes: 4e960f52fce16a3b ("ARM: shmobile: Move shmobile_smp_{mpidr, fn, arg}[] from .text to .bss")
-Closes: https://lore.kernel.org/r/CAMuHMdU=QR-JLgEHKWpsr6SbaZRc-Hz9r91JfpP8c3n2G-OjqA@mail.gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/c499234d559a0d95ad9472883e46077311051cd8.1741612208.git.geert+renesas@glider.be
-Cc: stable@vger.kernel.org
+Fixes: 6612103ec35a ("firmware: qcom: qseecom: convert to using the TZ allocator")
+Cc: stable@vger.kernel.org	# 6.11
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20250120151000.13870-1-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-shmobile/headsmp.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/qcom/qcom_qseecom_uefisecapp.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/arch/arm/mach-shmobile/headsmp.S
-+++ b/arch/arm/mach-shmobile/headsmp.S
-@@ -136,6 +136,7 @@ ENDPROC(shmobile_smp_sleep)
- 	.long	shmobile_smp_arg - 1b
+--- a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
++++ b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+@@ -814,15 +814,6 @@ static int qcom_uefisecapp_probe(struct
  
- 	.bss
-+	.align	2
- 	.globl	shmobile_smp_mpidr
- shmobile_smp_mpidr:
- 	.space	NR_CPUS * 4
+ 	qcuefi->client = container_of(aux_dev, struct qseecom_client, aux_dev);
+ 
+-	auxiliary_set_drvdata(aux_dev, qcuefi);
+-	status = qcuefi_set_reference(qcuefi);
+-	if (status)
+-		return status;
+-
+-	status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
+-	if (status)
+-		qcuefi_set_reference(NULL);
+-
+ 	memset(&pool_config, 0, sizeof(pool_config));
+ 	pool_config.initial_size = SZ_4K;
+ 	pool_config.policy = QCOM_TZMEM_POLICY_MULTIPLIER;
+@@ -833,6 +824,15 @@ static int qcom_uefisecapp_probe(struct
+ 	if (IS_ERR(qcuefi->mempool))
+ 		return PTR_ERR(qcuefi->mempool);
+ 
++	auxiliary_set_drvdata(aux_dev, qcuefi);
++	status = qcuefi_set_reference(qcuefi);
++	if (status)
++		return status;
++
++	status = efivars_register(&qcuefi->efivars, &qcom_efivar_ops);
++	if (status)
++		qcuefi_set_reference(NULL);
++
+ 	return status;
+ }
+ 
 
 
