@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC4A25D525;
-	Tue, 25 Mar 2025 12:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E896426F455;
+	Tue, 25 Mar 2025 12:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906365; cv=none; b=qmPsObeDh8V+ftAb627Z5yBMMB8iGkALT5Q+WpdqaQ54orBiEGi8pyWz9uanSQEPhrZhHORibDtbrfCtHhoUBSa+WEhSBWntQGPFszHviWZNM5DmG3kyUgGyX4Rs9QgigaI3VYK+wkW6z5I4lWpRjrAs1VyAOxT1PKVNzYVtdnU=
+	t=1742906368; cv=none; b=UJ7im7f4+dFuNI7Y+MZHkwBEA4GFpta2JLVkPev27ohOSkmS5muNjoSvs7IHGQKSSPfrLBqxl+fJdIC0qBDObhIe6guk+3I3o5/ftDhjfBIEWNXy+aBcYnc5PN8Z7Wwp546YBmz/NuzLQsOWPcjKaZklBSOakm9/m5ffdecqT8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906365; c=relaxed/simple;
-	bh=Nmr/wWMsFqfEfKXU9OrY5uhbIXY51NcGKFARWzCq9QI=;
+	s=arc-20240116; t=1742906368; c=relaxed/simple;
+	bh=xXoObsU5IiMyGt2kJki6C9oLkeqAO9zJp4FvfGlKKPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViFI9w9wtegbP/D2OYeXKupA1BeuSVeDizxZEJrKLxoGDhC8ekMU0HdSRBaj/s/6I+5N2jMFNEzdAbvUT9NHXX5fGT5U1sUD22pAW771Yp5XZtIzaE7JgyR23AUe0TQhvXpENK+vcbMa7PmQ8eUpjK6AQpsI9Ta+bfP4eVCx0ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjvPiwnv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/RqPVAys+2USaeyANYehKTThvWVgcqBYdcSV3sIee1IAe3EhIqKSNXSmdi9/u1t4mt5F/opEb69jxUjjTotdSUHbE6ZgA0j2EPrw1N2tdKMn5cwEPeLe5WwSs+7KLi7ZaM1BhnevdEbpLcSJYW/jFnfKhC72AYCmJBfnOp3sjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkJw3OvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjvPiwnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63151C4CEE4;
-	Tue, 25 Mar 2025 12:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkJw3OvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29884C4CEE4;
+	Tue, 25 Mar 2025 12:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906365;
-	bh=Nmr/wWMsFqfEfKXU9OrY5uhbIXY51NcGKFARWzCq9QI=;
+	s=korg; t=1742906367;
+	bh=xXoObsU5IiMyGt2kJki6C9oLkeqAO9zJp4FvfGlKKPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjvPiwnvL7W2qqeaIy1ekKy4PSD54Nl0Oq8j+g6drfBLUUQ0R2ZD8bfvB3Zv5xGy9
-	 w3iZGjvjfCgr3MmO00Y1/E1u9mNy3oOfG4g19Rw32EY9W1Pca5FWXtlffatec1Q/Pu
-	 l7p8XPIMokMBTfBzSc0KyXuVJ+T94ewayuJn46fg=
+	b=KkJw3OvUOm+cc6RtU5ziCRkm4STNWuihvsqVUSbHM48GUtXzk/yE87KTqRKSTAUmM
+	 7NOkW2mTJYluUYVsspaEppjJh8Svk5/H3K5DrJ73H4MwKmtFTgZX+ax/xxWka2DovW
+	 tSmQQPbBdkD7W15wbfQyx32bnLsxrsCl697L3hlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 079/116] memcg: drain obj stock on cpu hotplug teardown
-Date: Tue, 25 Mar 2025 08:22:46 -0400
-Message-ID: <20250325122151.229353306@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.12 080/116] ARM: dts: imx6qdl-apalis: Fix poweroff on Apalis iMX6
+Date: Tue, 25 Mar 2025 08:22:47 -0400
+Message-ID: <20250325122151.256494461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -54,50 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb upstream.
+commit 83964a29379cb08929a39172780a4c2992bc7c93 upstream.
 
-Currently on cpu hotplug teardown, only memcg stock is drained but we
-need to drain the obj stock as well otherwise we will miss the stats
-accumulated on the target cpu as well as the nr_bytes cached. The stats
-include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
-addition we are leaking reference to struct obj_cgroup object.
+The current solution for powering off the Apalis iMX6 is not functioning
+as intended. To resolve this, it is necessary to power off the
+vgen2_reg, which will also set the POWER_ENABLE_MOCI signal to a low
+state. This ensures the carrier board is properly informed to initiate
+its power-off sequence.
 
-Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
-Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
+The new solution uses the regulator-poweroff driver, which will power
+off the regulator during a system shutdown.
+
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4eb56e26f92e ("ARM: dts: imx6q-apalis: Command pmic to standby for poweroff")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1882,9 +1882,18 @@ void drain_all_stock(struct mem_cgroup *
- static int memcg_hotplug_cpu_dead(unsigned int cpu)
- {
- 	struct memcg_stock_pcp *stock;
-+	struct obj_cgroup *old;
-+	unsigned long flags;
+--- a/arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi
+@@ -108,6 +108,11 @@
+ 		};
+ 	};
  
- 	stock = &per_cpu(memcg_stock, cpu);
++	poweroff {
++		compatible = "regulator-poweroff";
++		cpu-supply = <&vgen2_reg>;
++	};
 +
-+	/* drain_obj_stock requires stock_lock */
-+	local_lock_irqsave(&memcg_stock.stock_lock, flags);
-+	old = drain_obj_stock(stock);
-+	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
-+
- 	drain_stock(stock);
-+	obj_cgroup_put(old);
+ 	reg_module_3v3: regulator-module-3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-always-on;
+@@ -236,10 +241,6 @@
+ 	status = "disabled";
+ };
  
- 	return 0;
- }
+-&clks {
+-	fsl,pmic-stby-poweroff;
+-};
+-
+ /* Apalis SPI1 */
+ &ecspi1 {
+ 	cs-gpios = <&gpio5 25 GPIO_ACTIVE_LOW>;
+@@ -527,7 +528,6 @@
+ 
+ 	pmic: pmic@8 {
+ 		compatible = "fsl,pfuze100";
+-		fsl,pmic-stby-poweroff;
+ 		reg = <0x08>;
+ 
+ 		regulators {
 
 
