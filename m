@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C036426A0BF;
-	Tue, 25 Mar 2025 12:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A631A26A0E5;
+	Tue, 25 Mar 2025 12:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906151; cv=none; b=u6EPIU9pHCpUa3vZUrwqCa6oa5nDanGsO6LyBUBo8KpCiNTNb48+OnZhnLSiciECgC/LPbzW9qla15GsUtXzmuSG+GgsZL15HsqqVz8a5kLDzs4G8i3QjZ5gdMmjF0QtyJGVB8r3ezUyXThAqjRjIner6ZTPne2KgMBtIyhNXqc=
+	t=1742906153; cv=none; b=GJlM9O8AepxVtvNKLS9M0pSwzKFhs7XG4TJBKhRZPuRs4pjMOYS/a0VOyb082LtpF1apz1d/iX8IPxCdChwv2x0f6yeJYyC40CjD1mqewwPT5GY7bdgm8DHylhAIYqTu1xW5V0wgmy3zr7VA9ztBAfxEmuDx1+RAIW5SsGTetEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906151; c=relaxed/simple;
-	bh=Or6D7Dk+G1fpS13+ryBfAnhHtXo5hSmk6m+v23ouIZA=;
+	s=arc-20240116; t=1742906153; c=relaxed/simple;
+	bh=aQf89Phc5HSdsN3nOQKGDAqRGhcX+vms8EK/XwCQSsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I67rJ1Tcq8zidcRmLCgsK5QdZLmyL2CiOZ0Tw8ipxwGjTxYeDc3gFaBWTfGbJQx/ibyPnLSi0Sz4gCPFzDdiCPKKgleqywuP2s18nvvOW1VJW3oQVJZ2pXai/JKA7sbxU/FITKzz36jBzG+kKpFI3L6+s34F4YE0rVeDTn/WLNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3+hpvz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVHCBihjsJ0pJNmIkjo1S3It6lPDKsWeobX29jLCL6h0lc/CShINOAFfH1W+3XUg+keqGSPVmcOl1l8YI+R1wQ18ewcyj2ZIT9c2Jp/hVtYA0UszdJ2NdkIHblLay5Y4UJpD1A0tdklH0ylMITR0x/P53cf+PqxiJROcpW3egI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H03ZmbwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3+hpvz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1B2C4AF09;
-	Tue, 25 Mar 2025 12:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H03ZmbwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53817C4CEE4;
+	Tue, 25 Mar 2025 12:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906151;
-	bh=Or6D7Dk+G1fpS13+ryBfAnhHtXo5hSmk6m+v23ouIZA=;
+	s=korg; t=1742906153;
+	bh=aQf89Phc5HSdsN3nOQKGDAqRGhcX+vms8EK/XwCQSsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3+hpvz+rigb9lyVCEEQ2b6GH9Grc5trHwaMyGrj45hZfch/M7EEpgv7U/wxSqIcU
-	 RTMXkDwQ2jWHjkoamx/LBNBirFTVvsyCjCu213h/kBaA9dK6tZMmnAZ6mcjUdP5RqV
-	 uINrN9lpqfapgvpLZMqRpQ3vsGs4XMIVTEaAZI50=
+	b=H03ZmbwVNDDm8WU3aCSJfw815BgbIYYRxOVFvBZVHa2w7fyNMaXoh7FXzS8Qgctfb
+	 RAz0k41tLppWkoW/Pb/CpfluKrjkS92uwvMXCW9kQ4Yx8yPsXOAaV20QiDjoeqzIN2
+	 lp3sFuN6TBL6h+cZkuM81o+cqBQUTzLz4olyZi0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Gu Bowen <gubowen5@huawei.com>,
+	Aubin Constans <aubin.constans@microchip.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 43/77] mmc: sdhci-brcmstb: add cqhci suspend/resume to PM ops
-Date: Tue, 25 Mar 2025 08:22:38 -0400
-Message-ID: <20250325122145.479841155@linuxfoundation.org>
+Subject: [PATCH 6.6 44/77] mmc: atmel-mci: Add missing clk_disable_unprepare()
+Date: Tue, 25 Mar 2025 08:22:39 -0400
+Message-ID: <20250325122145.505787388@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,57 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Gu Bowen <gubowen5@huawei.com>
 
-commit 723ef0e20dbb2aa1b5406d2bb75374fc48187daa upstream.
+commit e51a349d2dcf1df8422dabb90b2f691dc7df6f92 upstream.
 
-cqhci timeouts observed on brcmstb platforms during suspend:
-  ...
-  [  164.832853] mmc0: cqhci: timeout for tag 18
-  ...
+The error path when atmci_configure_dma() set dma fails in atmci driver
+does not correctly disable the clock.
+Add the missing clk_disable_unprepare() to the error path for pair with
+clk_prepare_enable().
 
-Adding cqhci_suspend()/resume() calls to disable cqe
-in sdhci_brcmstb_suspend()/resume() respectively to fix
-CQE timeouts seen on PM suspend.
-
-Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
+Fixes: 467e081d23e6 ("mmc: atmel-mci: use probe deferring if dma controller is not ready yet")
+Signed-off-by: Gu Bowen <gubowen5@huawei.com>
+Acked-by: Aubin Constans <aubin.constans@microchip.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250311165946.28190-1-kamal.dasu@broadcom.com
+Link: https://lore.kernel.org/r/20250225022856.3452240-1-gubowen5@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-brcmstb.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/atmel-mci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -384,8 +384,15 @@ static int sdhci_brcmstb_suspend(struct
- 	struct sdhci_host *host = dev_get_drvdata(dev);
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
-+	int ret;
- 
- 	clk_disable_unprepare(priv->base_clk);
-+	if (host->mmc->caps2 & MMC_CAP2_CQE) {
-+		ret = cqhci_suspend(host->mmc);
-+		if (ret)
-+			return ret;
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2536,8 +2536,10 @@ static int atmci_probe(struct platform_d
+ 	/* Get MCI capabilities and set operations according to it */
+ 	atmci_get_cap(host);
+ 	ret = atmci_configure_dma(host);
+-	if (ret == -EPROBE_DEFER)
++	if (ret == -EPROBE_DEFER) {
++		clk_disable_unprepare(host->mck);
+ 		goto err_dma_probe_defer;
 +	}
-+
- 	return sdhci_pltfm_suspend(dev);
- }
- 
-@@ -410,6 +417,9 @@ static int sdhci_brcmstb_resume(struct d
- 			ret = clk_set_rate(priv->base_clk, priv->base_freq_hz);
- 	}
- 
-+	if (host->mmc->caps2 & MMC_CAP2_CQE)
-+		ret = cqhci_resume(host->mmc);
-+
- 	return ret;
- }
- #endif
+ 	if (ret == 0) {
+ 		host->prepare_data = &atmci_prepare_data_dma;
+ 		host->submit_data = &atmci_submit_data_dma;
 
 
