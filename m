@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCBD26AA8C;
-	Tue, 25 Mar 2025 12:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FB926AA9B;
+	Tue, 25 Mar 2025 12:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906190; cv=none; b=ePW1WAv8hZFEshZOnRnzrlNpaafa+1SRDR1jS310EtfXghXoNOQ1rMegM0FEP4iJYnqTswSSMg0MfmrzArYtUVcN7WkEFQlUTlWQwTAzhHHKA4c6gRFf8bt9M3x2UWJ7IBernoIjkrSfZAp2gv7L0jARni4eabGWSQfptKi0c/w=
+	t=1742906192; cv=none; b=Y38UIKmprHnS9BN/hHGVrnH9Wu0Fyi1n14XzZ8oMr4GK4guPh6dKSaXuQBv7eZDVZ+EbkOJi91gnTTqp4neZL3OmzsmGE5vylxDn7+MHNmqQIbUlFnXtSX0GBbTs2GfYpDSbUIGFYWyFSTBaxkpodnzHsuLOmiQ3zCB6JB4jwuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906190; c=relaxed/simple;
-	bh=xOJouAcBtkIOdsWUAmhr3NrWaQBTonN+++K+sNTZd9w=;
+	s=arc-20240116; t=1742906192; c=relaxed/simple;
+	bh=6oa26oMB+pWcraJc6oBgd5mW5EUkfg1IDGwBFWgIpPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cfgqtjGzjEzf/BngK185zojp0IxQ2hRWbYWL84zejcc74ENdJPze5DB7LGUEArpkFrWp6EAx+b8oroGyOkF8Lbuea7R+pTi7glbP4RiOoq8QERUYNfEX+6gxy4nyYw8V5a8CbUvOGKafOhGTOt7xWJi8lKmgP2KvRV5w2KTGXRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tam6wi1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EI75qbfq3KEk0HTIwLGbkh6yP+JIGMzZjgSY4cAR1T5b/WekeFmtyQVRDQAxR6j86+fqO4bnqYObyHHTNDVLKYP1ejsiO1LIo48wPZL+HXXHUHsmykBqBZxjz5+mvERM1kcsNCZUXn+LWif9LJ6YSuwQBXl5r+e+AxwTD4TbLjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8o3Eazk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tam6wi1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA0FC4CEE4;
-	Tue, 25 Mar 2025 12:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8o3Eazk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2A1C4CEE4;
+	Tue, 25 Mar 2025 12:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906190;
-	bh=xOJouAcBtkIOdsWUAmhr3NrWaQBTonN+++K+sNTZd9w=;
+	s=korg; t=1742906192;
+	bh=6oa26oMB+pWcraJc6oBgd5mW5EUkfg1IDGwBFWgIpPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tam6wi1Vg/8PpAVdfAwIanIPtqLSSC0PYYX74HcXLPGtRsCJ9hZVIb+nqHRedKRur
-	 kOXSJ63XhTWTTzsqsz2LpVPho2nSfnQO468FVqgXUqVTDm7TKQb5zPkHUE8XovOfe/
-	 RLTENDMuMI53Wq9W5nDeTuzBvgwhsVBQCywq5p+k=
+	b=U8o3EazkMXaCWiUmi/DQZwAK+kDvvpzT1492qWRU0IPeO27R4xir6xlDZIUKupSVz
+	 XDWBo1Y3frFqldyozF2RerIXuDJI7oaNJnpUk1uiCdYqLFDACS/Qn4jwTEKHZx/9Bb
+	 v31VRjNsRrVCEZSDooSLYJK//XyDYytwSun5L2nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
+	James Clark <james.clark@linaro.org>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 36/77] regulator: dummy: force synchronous probing
-Date: Tue, 25 Mar 2025 08:22:31 -0400
-Message-ID: <20250325122145.297603209@linuxfoundation.org>
+Subject: [PATCH 6.6 63/77] KVM: arm64: Calculate cptr_el2 traps on activating traps
+Date: Tue, 25 Mar 2025 08:22:58 -0400
+Message-ID: <20250325122146.007520667@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -50,55 +52,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Fuad Tabba <tabba@google.com>
 
-commit 8619909b38eeebd3e60910158d7d68441fc954e9 upstream.
+[ Upstream commit 2fd5b4b0e7b440602455b79977bfa64dea101e6c ]
 
-Sometimes I get a NULL pointer dereference at boot time in kobject_get()
-with the following call stack:
+Similar to VHE, calculate the value of cptr_el2 from scratch on
+activate traps. This removes the need to store cptr_el2 in every
+vcpu structure. Moreover, some traps, such as whether the guest
+owns the fp registers, need to be set on every vcpu run.
 
-anatop_regulator_probe()
- devm_regulator_register()
-  regulator_register()
-   regulator_resolve_supply()
-    kobject_get()
-
-By placing some extra BUG_ON() statements I could verify that this is
-raised because probing of the 'dummy' regulator driver is not completed
-('dummy_regulator_rdev' is still NULL).
-
-In the JTAG debugger I can see that dummy_regulator_probe() and
-anatop_regulator_probe() can be run by different kernel threads
-(kworker/u4:*).  I haven't further investigated whether this can be
-changed or if there are other possibilities to force synchronization
-between these two probe routines.  On the other hand I don't expect much
-boot time penalty by probing the 'dummy' regulator synchronously.
-
-Cc: stable@vger.kernel.org
-Fixes: 259b93b21a9f ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for drivers that existed in 4.14")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Link: https://patch.msgid.link/20250311091803.31026-1-ceggers@arri.de
+Reported-by: James Clark <james.clark@linaro.org>
+Fixes: 5294afdbf45a ("KVM: arm64: Exclude FP ownership from kvm_vcpu_arch")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Link: https://lore.kernel.org/r/20241216105057.579031-13-tabba@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/dummy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_host.h  |    1 
+ arch/arm64/kvm/arm.c               |    1 
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c |    2 -
+ arch/arm64/kvm/hyp/nvhe/pkvm.c     |   27 -------------------
+ arch/arm64/kvm/hyp/nvhe/switch.c   |   52 ++++++++++++++++++++++---------------
+ 5 files changed, 32 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/regulator/dummy.c b/drivers/regulator/dummy.c
-index 5b9b9e4e762d..9f59889129ab 100644
---- a/drivers/regulator/dummy.c
-+++ b/drivers/regulator/dummy.c
-@@ -60,7 +60,7 @@ static struct platform_driver dummy_regulator_driver = {
- 	.probe		= dummy_regulator_probe,
- 	.driver		= {
- 		.name		= "reg-dummy",
--		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
-+		.probe_type	= PROBE_FORCE_SYNCHRONOUS,
- 	},
- };
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -486,7 +486,6 @@ struct kvm_vcpu_arch {
+ 	/* Values of trap registers for the guest. */
+ 	u64 hcr_el2;
+ 	u64 mdcr_el2;
+-	u64 cptr_el2;
  
--- 
-2.49.0
-
+ 	/* Values of trap registers for the host before guest entry. */
+ 	u64 mdcr_el2_host;
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1309,7 +1309,6 @@ static int kvm_arch_vcpu_ioctl_vcpu_init
+ 	}
+ 
+ 	vcpu_reset_hcr(vcpu);
+-	vcpu->arch.cptr_el2 = kvm_get_reset_cptr_el2(vcpu);
+ 
+ 	/*
+ 	 * Handle the "start in power-off" case.
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -36,7 +36,6 @@ static void flush_hyp_vcpu(struct pkvm_h
+ 
+ 	hyp_vcpu->vcpu.arch.hcr_el2	= host_vcpu->arch.hcr_el2;
+ 	hyp_vcpu->vcpu.arch.mdcr_el2	= host_vcpu->arch.mdcr_el2;
+-	hyp_vcpu->vcpu.arch.cptr_el2	= host_vcpu->arch.cptr_el2;
+ 
+ 	hyp_vcpu->vcpu.arch.iflags	= host_vcpu->arch.iflags;
+ 	hyp_vcpu->vcpu.arch.fp_state	= host_vcpu->arch.fp_state;
+@@ -59,7 +58,6 @@ static void sync_hyp_vcpu(struct pkvm_hy
+ 	host_vcpu->arch.ctxt		= hyp_vcpu->vcpu.arch.ctxt;
+ 
+ 	host_vcpu->arch.hcr_el2		= hyp_vcpu->vcpu.arch.hcr_el2;
+-	host_vcpu->arch.cptr_el2	= hyp_vcpu->vcpu.arch.cptr_el2;
+ 
+ 	host_vcpu->arch.fault		= hyp_vcpu->vcpu.arch.fault;
+ 
+--- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
++++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+@@ -26,8 +26,6 @@ static void pvm_init_traps_aa64pfr0(stru
+ 	const u64 feature_ids = pvm_read_id_reg(vcpu, SYS_ID_AA64PFR0_EL1);
+ 	u64 hcr_set = HCR_RW;
+ 	u64 hcr_clear = 0;
+-	u64 cptr_set = 0;
+-	u64 cptr_clear = 0;
+ 
+ 	/* Protected KVM does not support AArch32 guests. */
+ 	BUILD_BUG_ON(FIELD_GET(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_EL0),
+@@ -57,21 +55,10 @@ static void pvm_init_traps_aa64pfr0(stru
+ 	/* Trap AMU */
+ 	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_AMU), feature_ids)) {
+ 		hcr_clear |= HCR_AMVOFFEN;
+-		cptr_set |= CPTR_EL2_TAM;
+-	}
+-
+-	/* Trap SVE */
+-	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_SVE), feature_ids)) {
+-		if (has_hvhe())
+-			cptr_clear |= CPACR_EL1_ZEN_EL0EN | CPACR_EL1_ZEN_EL1EN;
+-		else
+-			cptr_set |= CPTR_EL2_TZ;
+ 	}
+ 
+ 	vcpu->arch.hcr_el2 |= hcr_set;
+ 	vcpu->arch.hcr_el2 &= ~hcr_clear;
+-	vcpu->arch.cptr_el2 |= cptr_set;
+-	vcpu->arch.cptr_el2 &= ~cptr_clear;
+ }
+ 
+ /*
+@@ -101,7 +88,6 @@ static void pvm_init_traps_aa64dfr0(stru
+ 	const u64 feature_ids = pvm_read_id_reg(vcpu, SYS_ID_AA64DFR0_EL1);
+ 	u64 mdcr_set = 0;
+ 	u64 mdcr_clear = 0;
+-	u64 cptr_set = 0;
+ 
+ 	/* Trap/constrain PMU */
+ 	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64DFR0_EL1_PMUVer), feature_ids)) {
+@@ -128,17 +114,8 @@ static void pvm_init_traps_aa64dfr0(stru
+ 	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64DFR0_EL1_TraceFilt), feature_ids))
+ 		mdcr_set |= MDCR_EL2_TTRF;
+ 
+-	/* Trap Trace */
+-	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64DFR0_EL1_TraceVer), feature_ids)) {
+-		if (has_hvhe())
+-			cptr_set |= CPACR_EL1_TTA;
+-		else
+-			cptr_set |= CPTR_EL2_TTA;
+-	}
+-
+ 	vcpu->arch.mdcr_el2 |= mdcr_set;
+ 	vcpu->arch.mdcr_el2 &= ~mdcr_clear;
+-	vcpu->arch.cptr_el2 |= cptr_set;
+ }
+ 
+ /*
+@@ -189,10 +166,6 @@ static void pvm_init_trap_regs(struct kv
+ 	/* Clear res0 and set res1 bits to trap potential new features. */
+ 	vcpu->arch.hcr_el2 &= ~(HCR_RES0);
+ 	vcpu->arch.mdcr_el2 &= ~(MDCR_EL2_RES0);
+-	if (!has_hvhe()) {
+-		vcpu->arch.cptr_el2 |= CPTR_NVHE_EL2_RES1;
+-		vcpu->arch.cptr_el2 &= ~(CPTR_NVHE_EL2_RES0);
+-	}
+ }
+ 
+ /*
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -36,34 +36,46 @@ DEFINE_PER_CPU(unsigned long, kvm_hyp_ve
+ 
+ extern void kvm_nvhe_prepare_backtrace(unsigned long fp, unsigned long pc);
+ 
+-static void __activate_traps(struct kvm_vcpu *vcpu)
++static void __activate_cptr_traps(struct kvm_vcpu *vcpu)
+ {
+-	u64 val;
++	u64 val = CPTR_EL2_TAM;	/* Same bit irrespective of E2H */
+ 
+-	___activate_traps(vcpu);
+-	__activate_traps_common(vcpu);
++	if (has_hvhe()) {
++		val |= CPACR_ELx_TTA;
+ 
+-	val = vcpu->arch.cptr_el2;
+-	val |= CPTR_EL2_TAM;	/* Same bit irrespective of E2H */
+-	val |= has_hvhe() ? CPACR_EL1_TTA : CPTR_EL2_TTA;
+-	if (cpus_have_final_cap(ARM64_SME)) {
+-		if (has_hvhe())
+-			val &= ~(CPACR_EL1_SMEN_EL1EN | CPACR_EL1_SMEN_EL0EN);
+-		else
+-			val |= CPTR_EL2_TSM;
+-	}
++		if (guest_owns_fp_regs(vcpu)) {
++			val |= CPACR_ELx_FPEN;
++			if (vcpu_has_sve(vcpu))
++				val |= CPACR_ELx_ZEN;
++		}
++	} else {
++		val |= CPTR_EL2_TTA | CPTR_NVHE_EL2_RES1;
++
++		/*
++		 * Always trap SME since it's not supported in KVM.
++		 * TSM is RES1 if SME isn't implemented.
++		 */
++		val |= CPTR_EL2_TSM;
+ 
+-	if (!guest_owns_fp_regs(vcpu)) {
+-		if (has_hvhe())
+-			val &= ~(CPACR_EL1_FPEN_EL0EN | CPACR_EL1_FPEN_EL1EN |
+-				 CPACR_EL1_ZEN_EL0EN | CPACR_EL1_ZEN_EL1EN);
+-		else
+-			val |= CPTR_EL2_TFP | CPTR_EL2_TZ;
++		if (!vcpu_has_sve(vcpu) || !guest_owns_fp_regs(vcpu))
++			val |= CPTR_EL2_TZ;
+ 
+-		__activate_traps_fpsimd32(vcpu);
++		if (!guest_owns_fp_regs(vcpu))
++			val |= CPTR_EL2_TFP;
+ 	}
+ 
++	if (!guest_owns_fp_regs(vcpu))
++		__activate_traps_fpsimd32(vcpu);
++
+ 	kvm_write_cptr_el2(val);
++}
++
++static void __activate_traps(struct kvm_vcpu *vcpu)
++{
++	___activate_traps(vcpu);
++	__activate_traps_common(vcpu);
++	__activate_cptr_traps(vcpu);
++
+ 	write_sysreg(__this_cpu_read(kvm_hyp_vector), vbar_el2);
+ 
+ 	if (cpus_have_final_cap(ARM64_WORKAROUND_SPECULATIVE_AT)) {
 
 
