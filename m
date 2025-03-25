@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D071257AFC;
-	Tue, 25 Mar 2025 12:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A3125A627;
+	Tue, 25 Mar 2025 12:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905841; cv=none; b=PjIUMfdMzyyEUsk0TR7qeZaC0N77lhRzY5cW5fmrvOJTw/7zZ0tVdSqXvvDbb9reD+oPyjJqz0TrdRhUTDXarlJCfdyXKun6a3beNYD2g2+VNzsdFmrP6saO49vM+84sPCZ8d9Nr07bSPnLW3fyDLjCsgLsK0/0aAViqCmx3D9M=
+	t=1742905843; cv=none; b=KWHSPg03fUifB/wglUYWeIYUS+M/+l6vZgR67znEeAGkC++uCtKyvtH7wEjj9XslA80T3r31+37AOgvlFfJMY9av3R82KYZWqbpWSvFhbswkZ+3aG+n0oaAMrdkU0BswPwohvs8kOL0yaY40skT3HCwMbcc5d4xtphOHyFGxhvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905841; c=relaxed/simple;
-	bh=I1YAwbTvJKussG3oObpbFkFsq7jYPXHUWtQSC8RC+M0=;
+	s=arc-20240116; t=1742905843; c=relaxed/simple;
+	bh=mf/chrfCRU62DCI+Tu1TIyHXGPfLG4kTFq0Qy6mV0+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvWyl7o5GjY4KUtbyII1O4X5G7cAb6/5fcpTAgP0GT3Ggorn7i3EWuxJmktx2SAhF2mDDHcN4zDuSGIE4Q/awVuep8BVF5kigy/gZmXDVQrKGmIMsB+QUilN2/4DLI+xqxe+CPnWi598FMzZqgrA/vAcoDX7ouTxp3qu9GxGc3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDb8VXWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6iMU46N2caEyEAHk3S6QUxkpSfxYajCSPT1bUD3W9n58HABCC+ybg1nuGaqkvk6HliVsAAXbbWNM1W5g+6t5Gj6RyorJemPALWqRj4+HN0CfssM+T4va2mMEo3Ck/a0mgw5cPhHtkfccMqCK6WU1ESHnbCVNXMNlsUk1DgFor0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fefJFuxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDb8VXWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A57C4CEE4;
-	Tue, 25 Mar 2025 12:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fefJFuxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C58C4CEED;
+	Tue, 25 Mar 2025 12:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905840;
-	bh=I1YAwbTvJKussG3oObpbFkFsq7jYPXHUWtQSC8RC+M0=;
+	s=korg; t=1742905842;
+	bh=mf/chrfCRU62DCI+Tu1TIyHXGPfLG4kTFq0Qy6mV0+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDb8VXWyaRYwBdj/5niz1myhsPw5KhVjQhCKp7m7LLjEJUxOOnwZDfaYyJxdIE65m
-	 nk/fhLYqPZRHa6RAK4zJ9pA3Vj34ukGxra9sARTCQh4na7FkrbM0TPTL9dylOXevZA
-	 itwW9Hio+NeP8Nxm16CIHHkCFk7fD0exJRCy9F2U=
+	b=fefJFuxJiTRyWi+cGQeocz6RFfXQbJ1wHexZvZGdmMtViBQOQmQgjy9RBTyw2WK90
+	 JUaLHLPz1uy3wl7NzyAwzo02TMYDLUMKJHPOUJLTFTVTRWDIQMDNv52g1d+rEm1Wxg
+	 YZOi4HeWO1hqRXPMyKOAh4RD95QBXOqd6kb/BKJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 192/198] media: mediatek: vcodec: Fix VP8 stateless decoder smatch warning
-Date: Tue, 25 Mar 2025 08:22:34 -0400
-Message-ID: <20250325122201.687601813@linuxfoundation.org>
+	Justin Klaassen <justin@tidylabs.net>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.1 193/198] arm64: dts: rockchip: fix u2phy1_host status for NanoPi R4S
+Date: Tue, 25 Mar 2025 08:22:35 -0400
+Message-ID: <20250325122201.714925520@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Justin Klaassen <justin@tidylabs.net>
 
-commit b113bc7c0e83b32f4dd2d291a2b6c4803e0a2c44 upstream.
+commit 38f4aa34a5f737ea8588dac320d884cc2e762c03 upstream.
 
-Fix a smatch static checker warning on vdec_vp8_req_if.c.
-Which leads to a kernel crash when fb is NULL.
+The u2phy1_host should always have the same status as usb_host1_ehci
+and usb_host1_ohci, otherwise the EHCI and OHCI drivers may be
+initialized for a disabled usb port.
 
-Fixes: 7a7ae26fd458 ("media: mediatek: vcodec: support stateless VP8 decoding")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Per the NanoPi R4S schematic, the phy-supply for u2phy1_host is set to
+the vdd_5v regulator.
+
+Fixes: db792e9adbf8 ("rockchip: rk3399: Add support for FriendlyARM NanoPi R4S")
+Cc: stable@vger.kernel.org
+Signed-off-by: Justin Klaassen <justin@tidylabs.net>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250225170420.3898-1-justin@tidylabs.net
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/vdec/vdec_vp8_req_if.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp8_req_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp8_req_if.c
-@@ -336,14 +336,18 @@ static int vdec_vp8_slice_decode(void *h
- 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
+--- a/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts
+@@ -117,7 +117,7 @@
+ };
  
- 	fb = inst->ctx->dev->vdec_pdata->get_cap_buffer(inst->ctx);
--	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
-+	if (!fb) {
-+		mtk_vcodec_err(inst, "fb buffer is NULL");
-+		return -ENOMEM;
-+	}
+ &u2phy1_host {
+-	status = "disabled";
++	phy-supply = <&vdd_5v>;
+ };
  
--	y_fb_dma = fb ? (u64)fb->base_y.dma_addr : 0;
-+	dst_buf_info = container_of(fb, struct mtk_video_dec_buf, frame_buffer);
-+	y_fb_dma = fb->base_y.dma_addr;
- 	if (inst->ctx->q_data[MTK_Q_DATA_DST].fmt->num_planes == 1)
- 		c_fb_dma = y_fb_dma +
- 			inst->ctx->picinfo.buf_w * inst->ctx->picinfo.buf_h;
- 	else
--		c_fb_dma = fb ? (u64)fb->base_c.dma_addr : 0;
-+		c_fb_dma = fb->base_c.dma_addr;
- 
- 	inst->vsi->dec.bs_dma = (u64)bs->dma_addr;
- 	inst->vsi->dec.bs_sz = bs->size;
+ &uart0 {
 
 
