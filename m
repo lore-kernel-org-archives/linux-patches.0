@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6771B1E5B91;
-	Tue, 25 Mar 2025 12:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B561E5B91;
+	Tue, 25 Mar 2025 12:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906139; cv=none; b=ZnrmZJOCM/P5KpsDkdxEyQm8iUrUwf3M+Y5ii5/y61DG0i630Xa3Qetyha3Uygg/fs232K71hm///fivhynOwhEBLUHeWYeb/e5U+weyrA9DNZUoJTX1EfyD1NNwMfP+P2PNkKK7Y1nhwyCP8hhPGCCHnPEnbVUp0qNVx4DovUU=
+	t=1742906140; cv=none; b=naNrWDD5aAmeJMN2KgiotdnZ5KMlPsIaVyl1G6M7MsUyOPCnzpZxHI+cqYBTPH6Pt62Y1AvxkZ9IEUWtKLGkOZUd5N3xPJjLF5yAVJ5eoVeZnUi2//4DSFLcsxAm8mxrq+IWaZDRobaze9tZemC2M62qL7qE2ymaG4wtAKEMrtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906139; c=relaxed/simple;
-	bh=DGZw2t61Oiv9JO+rUg8qsia1sEtzNCbUH8wa3zUKD+g=;
+	s=arc-20240116; t=1742906140; c=relaxed/simple;
+	bh=Oo/FHOAnsLRcH1vcMtpnzWnfA+CTg6HBfEmYgvsMj2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGl625/tEn7ca533duh/bkbdSh2Q7R0cmrScs5eI2eGdcSl9gUGDhpT7cVqh6fwtT84VloJugp28h7jvHgKx5TqAWR8tcojJEyq96p1K8fPN8lrakmKNovaTQ86VyrpHML2pDOFOpZU8lrR+I46Wh3Dp4Uo4i6cKyRidd7cowis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5RjYdYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P62paKNJiS/qa89sph9fntGxWEpfyj8KW5V9FBhGjEjFHQ5ZYdjFbqzxEn4vaL8yfosEjmxu13+ytpv8YqY35pEPitoDGi3Y7nxpsS4UNqIKthsaiTWRgWn0BMzbPBB+a9lAAiaxzeH8re6JUI6u+5HFEEvv84k+mSi35h+cY1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zu+Zk/mt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5RjYdYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD385C4CEE4;
-	Tue, 25 Mar 2025 12:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zu+Zk/mt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FBEC4CEE4;
+	Tue, 25 Mar 2025 12:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906139;
-	bh=DGZw2t61Oiv9JO+rUg8qsia1sEtzNCbUH8wa3zUKD+g=;
+	s=korg; t=1742906140;
+	bh=Oo/FHOAnsLRcH1vcMtpnzWnfA+CTg6HBfEmYgvsMj2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5RjYdYV+eWmbvuJ/wU7vn+XipBNpFMAI5AjjykzX0FxtZy7oJaFx7BoJkSdYInlL
-	 yZOP/gxoRvpl/9KM0dyuW5zfPRrQ+QaAHOHQigK7u8S8oJb7Ug93JgfQGk2qpS1lGG
-	 Ujtq2//W3WCTAqFqILic+IC3OectnvTUBdj8DhyU=
+	b=zu+Zk/mtYLfwRzry/slO4G4s9R94602Vomeh0Y+waNlcvvLM7MIv2OUgO7cJAZWtX
+	 8J7rwlUw/7Gos+FRwHOE+b/8ly439Z1EBIfxLhwo80ZFV720KQXtYwEv8Cl+fbMk65
+	 Y/Ons6ktS2QUveaupQK7hwf+dKPJFxbg0R/TPU+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 05/77] soc: imx8m: Remove global soc_uid
-Date: Tue, 25 Mar 2025 08:22:00 -0400
-Message-ID: <20250325122144.442697759@linuxfoundation.org>
+Subject: [PATCH 6.6 06/77] soc: imx8m: Use devm_* to simplify probe failure handling
+Date: Tue, 25 Mar 2025 08:22:01 -0400
+Message-ID: <20250325122144.470718888@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -53,123 +53,231 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 9c1c02fe8d7f33c18547b79c41f3fa41ef7bae8f ]
+[ Upstream commit 22b03a4e957e462b380a982759ccf0f6554735d3 ]
 
-The static global soc_uid is only ever used as kasprintf() parameter in
-imx8m_soc_probe(). Pass pointer to local u64 variable to .soc_revision()
-callback instead and let the .soc_revision() callback fill in the content.
-Remove the unnecessary static global variable.
+Use device managed functions to simplify handling of failures during
+probe. Remove fail paths which are no longer necessary.
 
 Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Stable-dep-of: cf7139aac463 ("soc: imx8m: Unregister cpufreq and soc dev in cleanup path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ drivers/soc/imx/soc-imx8m.c | 92 ++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 63 deletions(-)
 
 diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 1ff8c7d847a9e..8ccd41e219044 100644
+index 8ccd41e219044..e66c73cc02871 100644
 --- a/drivers/soc/imx/soc-imx8m.c
 +++ b/drivers/soc/imx/soc-imx8m.c
-@@ -30,11 +30,9 @@
+@@ -51,22 +51,20 @@ static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
  
- struct imx8_soc_data {
- 	char *name;
--	int (*soc_revision)(u32 *socrev);
-+	int (*soc_revision)(u32 *socrev, u64 *socuid);
- };
- 
--static u64 soc_uid;
--
- #ifdef CONFIG_HAVE_ARM_SMCCC
- static u32 imx8mq_soc_revision_from_atf(void)
+ static int imx8mq_soc_revision(u32 *socrev, u64 *socuid)
  {
-@@ -51,7 +49,7 @@ static u32 imx8mq_soc_revision_from_atf(void)
- static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
- #endif
- 
--static int imx8mq_soc_revision(u32 *socrev)
-+static int imx8mq_soc_revision(u32 *socrev, u64 *socuid)
- {
- 	struct device_node *np;
+-	struct device_node *np;
++	struct device_node *np __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
  	void __iomem *ocotp_base;
-@@ -89,9 +87,9 @@ static int imx8mq_soc_revision(u32 *socrev)
- 			rev = REV_B1;
- 	}
+ 	u32 magic;
+ 	u32 rev;
+ 	struct clk *clk;
+ 	int ret;
  
--	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
--	soc_uid <<= 32;
--	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
-+	*socuid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
-+	*socuid <<= 32;
-+	*socuid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
+-	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
+ 	if (!np)
+ 		return -EINVAL;
  
- 	*socrev = rev;
+ 	ocotp_base = of_iomap(np, 0);
+-	if (!ocotp_base) {
+-		ret = -EINVAL;
+-		goto err_iomap;
+-	}
++	if (!ocotp_base)
++		return -EINVAL;
  
-@@ -109,7 +107,7 @@ static int imx8mq_soc_revision(u32 *socrev)
- 	return ret;
- }
- 
--static int imx8mm_soc_uid(void)
-+static int imx8mm_soc_uid(u64 *socuid)
- {
- 	void __iomem *ocotp_base;
- 	struct device_node *np;
-@@ -136,9 +134,9 @@ static int imx8mm_soc_uid(void)
- 
- 	clk_prepare_enable(clk);
- 
--	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
--	soc_uid <<= 32;
--	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
-+	*socuid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH + offset);
-+	*socuid <<= 32;
-+	*socuid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW + offset);
- 
+ 	clk = of_clk_get_by_name(np, NULL);
+ 	if (IS_ERR(clk)) {
+@@ -96,35 +94,30 @@ static int imx8mq_soc_revision(u32 *socrev, u64 *socuid)
  	clk_disable_unprepare(clk);
  	clk_put(clk);
-@@ -151,7 +149,7 @@ static int imx8mm_soc_uid(void)
+ 	iounmap(ocotp_base);
+-	of_node_put(np);
+ 
+ 	return 0;
+ 
+ err_clk:
+ 	iounmap(ocotp_base);
+-err_iomap:
+-	of_node_put(np);
  	return ret;
  }
  
--static int imx8mm_soc_revision(u32 *socrev)
-+static int imx8mm_soc_revision(u32 *socrev, u64 *socuid)
+ static int imx8mm_soc_uid(u64 *socuid)
  {
- 	struct device_node *np;
++	struct device_node *np __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "fsl,imx8mm-ocotp");
+ 	void __iomem *ocotp_base;
+-	struct device_node *np;
+ 	struct clk *clk;
+ 	int ret = 0;
+ 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
+ 		     IMX8MP_OCOTP_UID_OFFSET : 0;
+ 
+-	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-ocotp");
+ 	if (!np)
+ 		return -EINVAL;
+ 
+ 	ocotp_base = of_iomap(np, 0);
+-	if (!ocotp_base) {
+-		ret = -EINVAL;
+-		goto err_iomap;
+-	}
++	if (!ocotp_base)
++		return -EINVAL;
+ 
+ 	clk = of_clk_get_by_name(np, NULL);
+ 	if (IS_ERR(clk)) {
+@@ -143,38 +136,27 @@ static int imx8mm_soc_uid(u64 *socuid)
+ 
+ err_clk:
+ 	iounmap(ocotp_base);
+-err_iomap:
+-	of_node_put(np);
+-
+ 	return ret;
+ }
+ 
+ static int imx8mm_soc_revision(u32 *socrev, u64 *socuid)
+ {
+-	struct device_node *np;
++	struct device_node *np __free(device_node) =
++		of_find_compatible_node(NULL, NULL, "fsl,imx8mm-anatop");
  	void __iomem *anatop_base;
-@@ -172,7 +170,7 @@ static int imx8mm_soc_revision(u32 *socrev)
+-	int ret;
+ 
+-	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-anatop");
+ 	if (!np)
+ 		return -EINVAL;
+ 
+ 	anatop_base = of_iomap(np, 0);
+-	if (!anatop_base) {
+-		ret = -EINVAL;
+-		goto err_iomap;
+-	}
++	if (!anatop_base)
++		return -EINVAL;
+ 
+ 	*socrev = readl_relaxed(anatop_base + ANADIG_DIGPROG_IMX8MM);
+ 
  	iounmap(anatop_base);
- 	of_node_put(np);
+-	of_node_put(np);
  
--	return imx8mm_soc_uid();
-+	return imx8mm_soc_uid(socuid);
+ 	return imx8mm_soc_uid(socuid);
+-
+-err_iomap:
+-	of_node_put(np);
+-	return ret;
+ }
  
- err_iomap:
- 	of_node_put(np);
-@@ -215,10 +213,11 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
+ static const struct imx8_soc_data imx8mq_soc_data = {
+@@ -205,22 +187,23 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
+ 	{ }
+ };
+ 
+-#define imx8_revision(soc_rev) \
+-	soc_rev ? \
+-	kasprintf(GFP_KERNEL, "%d.%d", (soc_rev >> 4) & 0xf,  soc_rev & 0xf) : \
++#define imx8_revision(dev, soc_rev) \
++	(soc_rev) ? \
++	devm_kasprintf((dev), GFP_KERNEL, "%d.%d", ((soc_rev) >> 4) & 0xf, (soc_rev) & 0xf) : \
+ 	"unknown"
+ 
  static int imx8m_soc_probe(struct platform_device *pdev)
  {
  	struct soc_device_attribute *soc_dev_attr;
--	struct soc_device *soc_dev;
-+	const struct imx8_soc_data *data;
+ 	const struct imx8_soc_data *data;
++	struct device *dev = &pdev->dev;
  	const struct of_device_id *id;
-+	struct soc_device *soc_dev;
+ 	struct soc_device *soc_dev;
  	u32 soc_rev = 0;
--	const struct imx8_soc_data *data;
-+	u64 soc_uid = 0;
+ 	u64 soc_uid = 0;
  	int ret;
  
- 	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
-@@ -241,7 +240,7 @@ static int imx8m_soc_probe(struct platform_device *pdev)
+-	soc_dev_attr = kzalloc(sizeof(*soc_dev_attr), GFP_KERNEL);
++	soc_dev_attr = devm_kzalloc(dev, sizeof(*soc_dev_attr), GFP_KERNEL);
+ 	if (!soc_dev_attr)
+ 		return -ENOMEM;
+ 
+@@ -228,13 +211,11 @@ static int imx8m_soc_probe(struct platform_device *pdev)
+ 
+ 	ret = of_property_read_string(of_root, "model", &soc_dev_attr->machine);
+ 	if (ret)
+-		goto free_soc;
++		return ret;
+ 
+ 	id = of_match_node(imx8_soc_match, of_root);
+-	if (!id) {
+-		ret = -ENODEV;
+-		goto free_soc;
+-	}
++	if (!id)
++		return -ENODEV;
+ 
+ 	data = id->data;
  	if (data) {
- 		soc_dev_attr->soc_id = data->name;
+@@ -242,27 +223,21 @@ static int imx8m_soc_probe(struct platform_device *pdev)
  		if (data->soc_revision) {
--			ret = data->soc_revision(&soc_rev);
-+			ret = data->soc_revision(&soc_rev, &soc_uid);
+ 			ret = data->soc_revision(&soc_rev, &soc_uid);
  			if (ret)
- 				goto free_soc;
+-				goto free_soc;
++				return ret;
  		}
+ 	}
+ 
+-	soc_dev_attr->revision = imx8_revision(soc_rev);
+-	if (!soc_dev_attr->revision) {
+-		ret = -ENOMEM;
+-		goto free_soc;
+-	}
++	soc_dev_attr->revision = imx8_revision(dev, soc_rev);
++	if (!soc_dev_attr->revision)
++		return -ENOMEM;
+ 
+-	soc_dev_attr->serial_number = kasprintf(GFP_KERNEL, "%016llX", soc_uid);
+-	if (!soc_dev_attr->serial_number) {
+-		ret = -ENOMEM;
+-		goto free_rev;
+-	}
++	soc_dev_attr->serial_number = devm_kasprintf(dev, GFP_KERNEL, "%016llX", soc_uid);
++	if (!soc_dev_attr->serial_number)
++		return -ENOMEM;
+ 
+ 	soc_dev = soc_device_register(soc_dev_attr);
+-	if (IS_ERR(soc_dev)) {
+-		ret = PTR_ERR(soc_dev);
+-		goto free_serial_number;
+-	}
++	if (IS_ERR(soc_dev))
++		return PTR_ERR(soc_dev);
+ 
+ 	pr_info("SoC: %s revision %s\n", soc_dev_attr->soc_id,
+ 		soc_dev_attr->revision);
+@@ -271,15 +246,6 @@ static int imx8m_soc_probe(struct platform_device *pdev)
+ 		platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
+ 
+ 	return 0;
+-
+-free_serial_number:
+-	kfree(soc_dev_attr->serial_number);
+-free_rev:
+-	if (strcmp(soc_dev_attr->revision, "unknown"))
+-		kfree(soc_dev_attr->revision);
+-free_soc:
+-	kfree(soc_dev_attr);
+-	return ret;
+ }
+ 
+ static struct platform_driver imx8m_soc_driver = {
 -- 
 2.39.5
 
