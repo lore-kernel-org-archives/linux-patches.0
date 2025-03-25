@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AED281529;
-	Tue, 25 Mar 2025 12:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A808D264F94;
+	Tue, 25 Mar 2025 12:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905528; cv=none; b=WSqrrh/CF/B61t7Bryg7nHytWr3Ki3EJTfoa/Xvwk9UHRqMvWKNIdi/l3Z1t0J8YRJd2eSnabm+g1n4AfnRWgfPSMl7r2gxYOU4cSVzvXXBVcptq67o/eYwIQUP1T7reGY0waDm7xv4vlNyayHPLWucz0BJ6jHefGL8pC6FoigM=
+	t=1742905530; cv=none; b=pLJTXksjSmx6LeMZwdiyDcINB4QJT7eTC99bOC1uADKqrtxuq8UucJvkSmXmTdCE6DILwIeZB3U9P8jJEENn5PLXJVIhcaRJ2ugbfwzx1qI+ldJdVb04vBD8/+kVb27DyTeUNVoQY0Uj5tNy6NdQI6zO3X15RPhO85u1tObo60Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905528; c=relaxed/simple;
-	bh=QlP5A69xt2vaCERDK+/nAmEneXH1b9c0/rdkDR0AYQQ=;
+	s=arc-20240116; t=1742905530; c=relaxed/simple;
+	bh=Q47xbCZeo2paoEnjm0S47VBOuelJ6NQuMnoi+YSqakE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHvaxiW13L4QCCGEhCurEkMOFnXpEyHdEKw4osLDxaL1tLYF88Pg30gtX6FPYR6x2SqLi4H9haPdAyVOpLyb+bMwuJJ2GhRiB96w5Sz3uFfjBw/unwM852nKnA+rcFW0Sfd9OtINWLFMMvV9Tx4sKLmiDvsQSoJHdPJ3T638iUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gdmama6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=de1koeURannB9jblF7+/3kiByWu8UdkNIaK+nsXtAL7SnGMr9QSaIO3kVKDn+Sj3L0Jx66o8vccgFVBYlnMdUNS5tUG3l8APPpVgBphcZ3hQahAUTaHpHPqUSF/ubONN/RSrzsS4zxqL0bRPIdVd3YxM47nzGW7vdN9Xx8CyBH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G57O7GWP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gdmama6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EAAC4AF09;
-	Tue, 25 Mar 2025 12:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G57O7GWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E50C4CEED;
+	Tue, 25 Mar 2025 12:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905528;
-	bh=QlP5A69xt2vaCERDK+/nAmEneXH1b9c0/rdkDR0AYQQ=;
+	s=korg; t=1742905530;
+	bh=Q47xbCZeo2paoEnjm0S47VBOuelJ6NQuMnoi+YSqakE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gdmama6hcViql5qmBDewLXdbQzdwj1ZZTUuTbcARhAUoT9PBZxDz844zS7KwOZoia
-	 DIDurpWCs3dDSVQdmv7sUZb+V8QElzwImviB5w+jxBgULfCsQCVWV142ILQblOL9iS
-	 YH2Cz5QOxcExDy7PB7UZrl2rSZsVtqZzUMy+XqHE=
+	b=G57O7GWP76vkY7Q8jz5t7ZnHxUMcib7Ni7iYao8iOP8c7I90cTtIELGBxRzOEcB/2
+	 PCmHt1wbxd5ORfFUMbJGhgMiod/m3UgQkaBBQ4/xXho2VheXLhJtVyjfdD/2Ow/IPH
+	 v/Cjp1G/aersDiYXRzoE+FfpjCl/Sl34MXIHv8ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Julian Anastasov <ja@ssi.bg>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/198] ipvs: prevent integer overflow in do_ip_vs_get_ctl()
-Date: Tue, 25 Mar 2025 08:19:46 -0400
-Message-ID: <20250325122157.274173654@linuxfoundation.org>
+Subject: [PATCH 6.1 007/198] netfilter: nft_ct: Use __refcount_inc() for per-CPU nft_ct_pcpu_template.
+Date: Tue, 25 Mar 2025 08:19:29 -0400
+Message-ID: <20250325122156.832173771@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,66 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 80b78c39eb86e6b55f56363b709eb817527da5aa ]
+[ Upstream commit 5cfe5612ca9590db69b9be29dc83041dbf001108 ]
 
-The get->num_services variable is an unsigned int which is controlled by
-the user.  The struct_size() function ensures that the size calculation
-does not overflow an unsigned long, however, we are saving the result to
-an int so the calculation can overflow.
+nft_ct_pcpu_template is a per-CPU variable and relies on disabled BH for its
+locking. The refcounter is read and if its value is set to one then the
+refcounter is incremented and variable is used - otherwise it is already
+in use and left untouched.
 
-Both "len" and "get->num_services" come from the user.  This check is
-just a sanity check to help the user and ensure they are using the API
-correctly.  An integer overflow here is not a big deal.  This has no
-security impact.
+Without per-CPU locking in local_bh_disable() on PREEMPT_RT the
+read-then-increment operation is not atomic and therefore racy.
 
-Save the result from struct_size() type size_t to fix this integer
-overflow bug.
+This can be avoided by using unconditionally __refcount_inc() which will
+increment counter and return the old value as an atomic operation.
+In case the returned counter is not one, the variable is in use and we
+need to decrement counter. Otherwise we can use it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Use __refcount_inc() instead of read and a conditional increment.
+
+Fixes: edee4f1e9245 ("netfilter: nft_ct: add zone id set support")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/nft_ct.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 18e37b32a5d61..6cc50f05c46c1 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -2854,12 +2854,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_SERVICES:
- 	{
- 		struct ip_vs_get_services *get;
--		int size;
-+		size_t size;
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index 6157f8b4a3cea..3641043ca8cc5 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -240,6 +240,7 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
+ 	enum ip_conntrack_info ctinfo;
+ 	u16 value = nft_reg_load16(&regs->data[priv->sreg]);
+ 	struct nf_conn *ct;
++	int oldcnt;
  
- 		get = (struct ip_vs_get_services *)arg;
- 		size = struct_size(get, entrytable, get->num_services);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
-@@ -2895,12 +2895,12 @@ do_ip_vs_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
- 	case IP_VS_SO_GET_DESTS:
- 	{
- 		struct ip_vs_get_dests *get;
--		int size;
-+		size_t size;
+ 	ct = nf_ct_get(skb, &ctinfo);
+ 	if (ct) /* already tracked */
+@@ -260,10 +261,11 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
  
- 		get = (struct ip_vs_get_dests *)arg;
- 		size = struct_size(get, entrytable, get->num_dests);
- 		if (*len != size) {
--			pr_err("length: %u != %u\n", *len, size);
-+			pr_err("length: %u != %zu\n", *len, size);
- 			ret = -EINVAL;
- 			goto out;
- 		}
+ 	ct = this_cpu_read(nft_ct_pcpu_template);
+ 
+-	if (likely(refcount_read(&ct->ct_general.use) == 1)) {
+-		refcount_inc(&ct->ct_general.use);
++	__refcount_inc(&ct->ct_general.use, &oldcnt);
++	if (likely(oldcnt == 1)) {
+ 		nf_ct_zone_add(ct, &zone);
+ 	} else {
++		refcount_dec(&ct->ct_general.use);
+ 		/* previous skb got queued to userspace, allocate temporary
+ 		 * one until percpu template can be reused.
+ 		 */
 -- 
 2.39.5
 
