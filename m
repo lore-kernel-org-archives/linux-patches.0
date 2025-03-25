@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FA4267703;
-	Tue, 25 Mar 2025 12:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936262561C8;
+	Tue, 25 Mar 2025 12:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905809; cv=none; b=ojxeraeyhkLDrFv7J5w7Dsh/fgFeb/Ge/s1RSqcHIqETlnbw3kfq/ESiSUrj3ul7MoCyAf6kBMcycEeOqBzV1M3wviPJvkGUewxgMW7UIRMUpMa86YsRUQXolDrthw/FdnikiZTaIzLA/9lu+l2Ib6JYnaMxcxFj2xyj7UaNJNQ=
+	t=1742905811; cv=none; b=KJDOmLTC6k5H1j+cjx+gH/oXwgDsXa6bPHED0JbCscwml0+RURirBZZeJGkrZYKmb3nBmKH4eghfjKjMTa5U0VPIBAF/lBsBni3N9E2+THVUb4SARmLlvQXqua+iOyD8tQ+bJSpwL2YS9avnLfqodqFysfmG5nxJ5sSMz34iG+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905809; c=relaxed/simple;
-	bh=mlCX3o1UccWhTnRZjgVJtTYHYyTKZRViN5Kqs/wV/8Q=;
+	s=arc-20240116; t=1742905811; c=relaxed/simple;
+	bh=/q3Y45F6LdYG18NHlbMbxRnD0sk/mhhn0sQR7Bu9++E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSpBn7G43T/DMqQgdkjDzm5siErhu2QF+CjR1xiELTbLAfQyPSLGo4HCsmWQ562PzNSZ1EgR9spSYDrGkxjFv3wUCqcNJGao0LXW/QX+byU0pRqv/L4ASHBKS1NlCJNEmL2u+xYOR66tHpMbOxqlbsUsIxTmthHwY+n/Y9g9vFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuqIx8Pn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PATzK0KWDbrijMSlDzhSlATbo9lrCccB3pjbLZ2Ht1Xn9+B6q2pvQ7w8SBhB/uNpl0qK3FgCbOXjfyHNqx91lHaibx13J/vZRqFxo76RKdxAzk2gflMtBI1thbD7onz9364ArWyUjmiOfNyCijTc4vyAdKxHwuSX0op8LFlntMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFkcANXy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuqIx8Pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760F6C4CEE4;
-	Tue, 25 Mar 2025 12:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFkcANXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42690C4CEE4;
+	Tue, 25 Mar 2025 12:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905809;
-	bh=mlCX3o1UccWhTnRZjgVJtTYHYyTKZRViN5Kqs/wV/8Q=;
+	s=korg; t=1742905811;
+	bh=/q3Y45F6LdYG18NHlbMbxRnD0sk/mhhn0sQR7Bu9++E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuqIx8PnHYT5j+OyDAeE4H/cN0N5p42pxb8wYTAll5ZWPfxWpjlxkpRIlmYPY/I0K
-	 hjWya5/XSgIweRDMatTSthYpYZJ5Vp/81e/pFbPd9XsV36knpz2V914O6ElHr263S9
-	 /ugr/n60yuo8wOVG0mVj5JF9/4/Evye0LacmHj5U=
+	b=mFkcANXy1OK81mmu/ccuOo6CUvvJYA7UiWJuIQ1l/W31uPk0H6fAiHdEAAsMgct2b
+	 LLCY5l84IoeL0QGp55v5G+Mo7z1x9r24b5ERR27ZU5AsSEbGYr+H0ZglquWkBY9trl
+	 F888IXyFcRWSLby5J8dd6v0Wq791cqaQOmAuF4eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Murad Masimov <m.masimov@mt-integration.ru>,
 	Steve French <stfrench@microsoft.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 145/198] smb: client: fix potential UAF in cifs_dump_full_key()
-Date: Tue, 25 Mar 2025 08:21:47 -0400
-Message-ID: <20250325122200.462937228@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 136/198] cifs: Fix integer overflow while processing closetimeo mount option
+Date: Tue, 25 Mar 2025 08:21:38 -0400
+Message-ID: <20250325122200.219871029@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,47 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit 58acd1f497162e7d282077f816faa519487be045 upstream.
+[ Upstream commit d5a30fddfe2f2e540f6c43b59cf701809995faef ]
 
-Skip sessions that are being teared down (status == SES_EXITING) to
-avoid UAF.
+User-provided mount parameter closetimeo of type u32 is intended to have
+an upper limit, but before it is validated, the value is converted from
+seconds to jiffies which can lead to an integer overflow.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 5efdd9122eff ("smb3: allow deferred close timeout to be configurable")
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/ioctl.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/client/fs_context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/ioctl.c
-+++ b/fs/smb/client/ioctl.c
-@@ -246,7 +246,9 @@ static int cifs_dump_full_key(struct cif
- 		spin_lock(&cifs_tcp_ses_lock);
- 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
- 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
--				if (ses_it->Suid == out.session_id) {
-+				spin_lock(&ses_it->ses_lock);
-+				if (ses_it->ses_status != SES_EXITING &&
-+				    ses_it->Suid == out.session_id) {
- 					ses = ses_it;
- 					/*
- 					 * since we are using the session outside the crit
-@@ -254,9 +256,11 @@ static int cifs_dump_full_key(struct cif
- 					 * so increment its refcount
- 					 */
- 					ses->ses_count++;
-+					spin_unlock(&ses_it->ses_lock);
- 					found = true;
- 					goto search_end;
- 				}
-+				spin_unlock(&ses_it->ses_lock);
- 			}
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 76842fbd2bb83..de2366d05767f 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1104,11 +1104,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		ctx->acdirmax = ctx->acregmax = HZ * result.uint_32;
+ 		break;
+ 	case Opt_closetimeo:
+-		ctx->closetimeo = HZ * result.uint_32;
+-		if (ctx->closetimeo > SMB3_MAX_DCLOSETIMEO) {
++		if (result.uint_32 > SMB3_MAX_DCLOSETIMEO / HZ) {
+ 			cifs_errorf(fc, "closetimeo too large\n");
+ 			goto cifs_parse_mount_err;
  		}
- search_end:
++		ctx->closetimeo = HZ * result.uint_32;
+ 		break;
+ 	case Opt_echo_interval:
+ 		ctx->echo_interval = result.uint_32;
+-- 
+2.39.5
+
 
 
