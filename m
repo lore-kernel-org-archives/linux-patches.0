@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5410E26656F;
-	Tue, 25 Mar 2025 12:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF7C265CBF;
+	Tue, 25 Mar 2025 12:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905636; cv=none; b=UqznmQdUHO+tz7CXagRgtDusy77KxlhLr9FNq6EVoEyRCUwKrMbye0Lkmd7oM/2VrpWnbUdngKUsDHU8guekf9Il1lHT5Vax6GI6nisDvP2V/YuRCOM5ZCIkZLMgMUlRVttv35krh+fHMBiJ7CPYnlHDeVGl3M7cwzZMr/Ejl1g=
+	t=1742905638; cv=none; b=S/v5zDXKN0YAjChjYxIxaNU6PWGqULh8tqhWoZIi1VWLqJTOSfyTqQF4Lt4EMcmHBD3ajorvUXtU/VZtG77dPOCy13ODmdmkeIBQUIo4q1DGjYhS/SpWQVAxSJETCBVFNgoqIZF7pMVBPPU8tU2CpVk8pMpda4QXTGxBm54/vOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905636; c=relaxed/simple;
-	bh=m29PFHZDg3DQzkygNXFqSB8jiNoNyvZxMWls/hG3BFs=;
+	s=arc-20240116; t=1742905638; c=relaxed/simple;
+	bh=VOmTGRRfQstQIetMLhdESPsgf1B2SBB9xGBS3Pu072I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fp++ZhDYH+y07COTcED7g//kZfpPyoxLXoRsbmPLvFVaSqnY/BeRPOLemTFNZeFK/p59cGKvtDCq5yC8VPTRI0+1zm1CvW5CT7yGJfVe2q2a7u3mERQp4/L/bgLTkeAOtY4warR8l7qOSkRRLaq5EMSbQaNIZKGNUz39o0iffQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIIhXIYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSMn9Vv3dsh/jNGvuq9+9iVH5ONfZuiaYO/D6Emoq7LYla1Z0HEM/AN1XHvfz86jukUYHOkFG9UktMjLUtiemItEr3yxzU5pBzKX3yv5Qg/sprSlg10Uq25Z++Mlpl+1L/O9Z01/h6SoV854fwCZ16CPXxvmPz8RMo+qV0NhAHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rc+Mp6wP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIIhXIYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C1BC4CEE4;
-	Tue, 25 Mar 2025 12:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rc+Mp6wP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C6EC4CEE4;
+	Tue, 25 Mar 2025 12:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905636;
-	bh=m29PFHZDg3DQzkygNXFqSB8jiNoNyvZxMWls/hG3BFs=;
+	s=korg; t=1742905638;
+	bh=VOmTGRRfQstQIetMLhdESPsgf1B2SBB9xGBS3Pu072I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIIhXIYSknJpccHZxhs26+ufrtYVwcrNFJr91UDg5ss5fmbjvv4TtXXb/lF5zN5sB
-	 jVGtdnSEqaOOkJni3fUM6vxadX61KOwawF9ohZG/olXI1WlAMIlSlI08n5IrZfrQkK
-	 V2Ka1oOkWuTTSenWA6+oiYx/vw27SwWvYKz0oabw=
+	b=rc+Mp6wPjAaGI5MvbKFd0q9C8cC2VtUShpBYwf+2h68KD+CcrDzqmPIjgAb+m/eQd
+	 YEUaDha4nHT2ofGvTZxrKbAwnHOWjexJuvs1G+55jamhqf98jRiBVmxhvLu0z1p6qJ
+	 /zcR5AbayVdCdnKOTYIFCFoXtFAVFdSeRa6gD1L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 082/198] xfs: pass per-ag references to xfs_free_extent
-Date: Tue, 25 Mar 2025 08:20:44 -0400
-Message-ID: <20250325122158.794143491@linuxfoundation.org>
+Subject: [PATCH 6.1 083/198] xfs: validate block number being freed before adding to xefi
+Date: Tue, 25 Mar 2025 08:20:45 -0400
+Message-ID: <20250325122158.820669257@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,199 +53,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit b2ccab3199aa7cea9154d80ea2585312c5f6eba0 ]
+[ Upstream commit 7dfee17b13e5024c5c0ab1911859ded4182de3e5 ]
 
-Pass a reference to the per-AG structure to xfs_free_extent.  Most
-callers already have one, so we can eliminate unnecessary lookups.  The
-one exception to this is the EFI code, which the next patch will fix.
+Bad things happen in defered extent freeing operations if it is
+passed a bad block number in the xefi. This can come from a bogus
+agno/agbno pair from deferred agfl freeing, or just a bad fsbno
+being passed to __xfs_free_extent_later(). Either way, it's very
+difficult to diagnose where a null perag oops in EFI creation
+is coming from when the operation that queued the xefi has already
+been completed and there's no longer any trace of it around....
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ag.c             |    6 ++----
- fs/xfs/libxfs/xfs_alloc.c          |   15 +++++----------
- fs/xfs/libxfs/xfs_alloc.h          |    8 +++++---
- fs/xfs/libxfs/xfs_ialloc_btree.c   |    7 +++++--
- fs/xfs/libxfs/xfs_refcount_btree.c |    5 +++--
- fs/xfs/scrub/repair.c              |    3 ++-
- fs/xfs/xfs_extfree_item.c          |    8 ++++++--
- 7 files changed, 28 insertions(+), 24 deletions(-)
+ fs/xfs/libxfs/xfs_ag.c         |    5 ++++-
+ fs/xfs/libxfs/xfs_alloc.c      |   16 +++++++++++++---
+ fs/xfs/libxfs/xfs_alloc.h      |    6 +++---
+ fs/xfs/libxfs/xfs_bmap.c       |   10 ++++++++--
+ fs/xfs/libxfs/xfs_bmap_btree.c |    7 +++++--
+ fs/xfs/libxfs/xfs_ialloc.c     |   24 ++++++++++++++++--------
+ fs/xfs/libxfs/xfs_refcount.c   |   13 ++++++++++---
+ fs/xfs/xfs_reflink.c           |    4 +++-
+ 8 files changed, 62 insertions(+), 23 deletions(-)
 
 --- a/fs/xfs/libxfs/xfs_ag.c
 +++ b/fs/xfs/libxfs/xfs_ag.c
-@@ -981,10 +981,8 @@ xfs_ag_extend_space(
- 	if (error)
- 		return error;
+@@ -906,7 +906,10 @@ xfs_ag_shrink_space(
+ 		if (err2 != -ENOSPC)
+ 			goto resv_err;
  
--	error = xfs_free_extent(tp, XFS_AGB_TO_FSB(pag->pag_mount, pag->pag_agno,
--					be32_to_cpu(agf->agf_length) - len),
--				len, &XFS_RMAP_OINFO_SKIP_UPDATE,
--				XFS_AG_RESV_NONE);
-+	error = xfs_free_extent(tp, pag, be32_to_cpu(agf->agf_length) - len,
-+			len, &XFS_RMAP_OINFO_SKIP_UPDATE, XFS_AG_RESV_NONE);
- 	if (error)
- 		return error;
+-		__xfs_free_extent_later(*tpp, args.fsbno, delta, NULL, true);
++		err2 = __xfs_free_extent_later(*tpp, args.fsbno, delta, NULL,
++				true);
++		if (err2)
++			goto resv_err;
  
+ 		/*
+ 		 * Roll the transaction before trying to re-init the per-ag
 --- a/fs/xfs/libxfs/xfs_alloc.c
 +++ b/fs/xfs/libxfs/xfs_alloc.c
-@@ -3447,7 +3447,8 @@ xfs_free_extent_fix_freelist(
- int
- __xfs_free_extent(
+@@ -2485,7 +2485,7 @@ xfs_agfl_reset(
+  * the real allocation can proceed. Deferring the free disconnects freeing up
+  * the AGFL slot from freeing the block.
+  */
+-STATIC void
++static int
+ xfs_defer_agfl_block(
  	struct xfs_trans		*tp,
--	xfs_fsblock_t			bno,
-+	struct xfs_perag		*pag,
-+	xfs_agblock_t			agbno,
- 	xfs_extlen_t			len,
- 	const struct xfs_owner_info	*oinfo,
- 	enum xfs_ag_resv_type		type,
-@@ -3455,12 +3456,9 @@ __xfs_free_extent(
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_buf			*agbp;
--	xfs_agnumber_t			agno = XFS_FSB_TO_AGNO(mp, bno);
--	xfs_agblock_t			agbno = XFS_FSB_TO_AGBNO(mp, bno);
- 	struct xfs_agf			*agf;
- 	int				error;
- 	unsigned int			busy_flags = 0;
--	struct xfs_perag		*pag;
+ 	xfs_agnumber_t			agno,
+@@ -2504,16 +2504,20 @@ xfs_defer_agfl_block(
+ 	xefi->xefi_blockcount = 1;
+ 	xefi->xefi_owner = oinfo->oi_owner;
  
- 	ASSERT(len != 0);
- 	ASSERT(type != XFS_AG_RESV_AGFL);
-@@ -3469,10 +3467,9 @@ __xfs_free_extent(
- 			XFS_ERRTAG_FREE_EXTENT))
- 		return -EIO;
++	if (XFS_IS_CORRUPT(mp, !xfs_verify_fsbno(mp, xefi->xefi_startblock)))
++		return -EFSCORRUPTED;
++
+ 	trace_xfs_agfl_free_defer(mp, agno, 0, agbno, 1);
  
--	pag = xfs_perag_get(mp, agno);
- 	error = xfs_free_extent_fix_freelist(tp, pag, &agbp);
- 	if (error)
--		goto err;
-+		return error;
- 	agf = agbp->b_addr;
+ 	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_AGFL_FREE, &xefi->xefi_list);
++	return 0;
+ }
  
- 	if (XFS_IS_CORRUPT(mp, agbno >= mp->m_sb.sb_agblocks)) {
-@@ -3486,20 +3483,18 @@ __xfs_free_extent(
- 		goto err_release;
+ /*
+  * Add the extent to the list of extents to be free at transaction end.
+  * The list is maintained sorted (by block number).
+  */
+-void
++int
+ __xfs_free_extent_later(
+ 	struct xfs_trans		*tp,
+ 	xfs_fsblock_t			bno,
+@@ -2540,6 +2544,9 @@ __xfs_free_extent_later(
+ #endif
+ 	ASSERT(xfs_extfree_item_cache != NULL);
+ 
++	if (XFS_IS_CORRUPT(mp, !xfs_verify_fsbext(mp, bno, len)))
++		return -EFSCORRUPTED;
++
+ 	xefi = kmem_cache_zalloc(xfs_extfree_item_cache,
+ 			       GFP_KERNEL | __GFP_NOFAIL);
+ 	xefi->xefi_startblock = bno;
+@@ -2561,6 +2568,7 @@ __xfs_free_extent_later(
+ 			XFS_FSB_TO_AGNO(tp->t_mountp, bno), 0,
+ 			XFS_FSB_TO_AGBNO(tp->t_mountp, bno), len);
+ 	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_FREE, &xefi->xefi_list);
++	return 0;
+ }
+ 
+ #ifdef DEBUG
+@@ -2720,7 +2728,9 @@ xfs_alloc_fix_freelist(
+ 			goto out_agbp_relse;
+ 
+ 		/* defer agfl frees */
+-		xfs_defer_agfl_block(tp, args->agno, bno, &targs.oinfo);
++		error = xfs_defer_agfl_block(tp, args->agno, bno, &targs.oinfo);
++		if (error)
++			goto out_agbp_relse;
  	}
  
--	error = xfs_free_ag_extent(tp, agbp, agno, agbno, len, oinfo, type);
-+	error = xfs_free_ag_extent(tp, agbp, pag->pag_agno, agbno, len, oinfo,
-+			type);
- 	if (error)
- 		goto err_release;
- 
- 	if (skip_discard)
- 		busy_flags |= XFS_EXTENT_BUSY_SKIP_DISCARD;
- 	xfs_extent_busy_insert(tp, pag, agbno, len, busy_flags);
--	xfs_perag_put(pag);
- 	return 0;
- 
- err_release:
- 	xfs_trans_brelse(tp, agbp);
--err:
--	xfs_perag_put(pag);
- 	return error;
- }
- 
+ 	targs.tp = tp;
 --- a/fs/xfs/libxfs/xfs_alloc.h
 +++ b/fs/xfs/libxfs/xfs_alloc.h
-@@ -130,7 +130,8 @@ xfs_alloc_vextent(
- int				/* error */
- __xfs_free_extent(
- 	struct xfs_trans	*tp,	/* transaction pointer */
--	xfs_fsblock_t		bno,	/* starting block number of extent */
-+	struct xfs_perag	*pag,
-+	xfs_agblock_t		agbno,
- 	xfs_extlen_t		len,	/* length of extent */
- 	const struct xfs_owner_info	*oinfo,	/* extent owner */
- 	enum xfs_ag_resv_type	type,	/* block reservation type */
-@@ -139,12 +140,13 @@ __xfs_free_extent(
- static inline int
- xfs_free_extent(
- 	struct xfs_trans	*tp,
--	xfs_fsblock_t		bno,
-+	struct xfs_perag	*pag,
-+	xfs_agblock_t		agbno,
- 	xfs_extlen_t		len,
- 	const struct xfs_owner_info	*oinfo,
- 	enum xfs_ag_resv_type	type)
- {
--	return __xfs_free_extent(tp, bno, len, oinfo, type, false);
-+	return __xfs_free_extent(tp, pag, agbno, len, oinfo, type, false);
+@@ -213,7 +213,7 @@ xfs_buf_to_agfl_bno(
+ 	return bp->b_addr;
  }
  
- int				/* error */
---- a/fs/xfs/libxfs/xfs_ialloc_btree.c
-+++ b/fs/xfs/libxfs/xfs_ialloc_btree.c
-@@ -156,9 +156,12 @@ __xfs_inobt_free_block(
- 	struct xfs_buf		*bp,
- 	enum xfs_ag_resv_type	resv)
+-void __xfs_free_extent_later(struct xfs_trans *tp, xfs_fsblock_t bno,
++int __xfs_free_extent_later(struct xfs_trans *tp, xfs_fsblock_t bno,
+ 		xfs_filblks_t len, const struct xfs_owner_info *oinfo,
+ 		bool skip_discard);
+ 
+@@ -233,14 +233,14 @@ struct xfs_extent_free_item {
+ #define XFS_EFI_ATTR_FORK	(1U << 1) /* freeing attr fork block */
+ #define XFS_EFI_BMBT_BLOCK	(1U << 2) /* freeing bmap btree block */
+ 
+-static inline void
++static inline int
+ xfs_free_extent_later(
+ 	struct xfs_trans		*tp,
+ 	xfs_fsblock_t			bno,
+ 	xfs_filblks_t			len,
+ 	const struct xfs_owner_info	*oinfo)
  {
-+	xfs_fsblock_t		fsbno;
-+
- 	xfs_inobt_mod_blockcount(cur, -1);
--	return xfs_free_extent(cur->bc_tp,
--			XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp)), 1,
-+	fsbno = XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp));
-+	return xfs_free_extent(cur->bc_tp, cur->bc_ag.pag,
-+			XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno), 1,
- 			&XFS_RMAP_OINFO_INOBT, resv);
+-	__xfs_free_extent_later(tp, bno, len, oinfo, false);
++	return __xfs_free_extent_later(tp, bno, len, oinfo, false);
  }
  
---- a/fs/xfs/libxfs/xfs_refcount_btree.c
-+++ b/fs/xfs/libxfs/xfs_refcount_btree.c
-@@ -112,8 +112,9 @@ xfs_refcountbt_free_block(
- 			XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno), 1);
- 	be32_add_cpu(&agf->agf_refcount_blocks, -1);
- 	xfs_alloc_log_agf(cur->bc_tp, agbp, XFS_AGF_REFCOUNT_BLOCKS);
--	error = xfs_free_extent(cur->bc_tp, fsbno, 1, &XFS_RMAP_OINFO_REFC,
--			XFS_AG_RESV_METADATA);
-+	error = xfs_free_extent(cur->bc_tp, cur->bc_ag.pag,
-+			XFS_FSB_TO_AGBNO(cur->bc_mp, fsbno), 1,
-+			&XFS_RMAP_OINFO_REFC, XFS_AG_RESV_METADATA);
- 	if (error)
+ 
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -572,8 +572,12 @@ xfs_bmap_btree_to_extents(
+ 	cblock = XFS_BUF_TO_BLOCK(cbp);
+ 	if ((error = xfs_btree_check_block(cur, cblock, 0, cbp)))
  		return error;
- 
---- a/fs/xfs/scrub/repair.c
-+++ b/fs/xfs/scrub/repair.c
-@@ -582,7 +582,8 @@ xrep_reap_block(
- 	else if (resv == XFS_AG_RESV_AGFL)
- 		error = xrep_put_freelist(sc, agbno);
- 	else
--		error = xfs_free_extent(sc->tp, fsbno, 1, oinfo, resv);
-+		error = xfs_free_extent(sc->tp, sc->sa.pag, agbno, 1, oinfo,
-+				resv);
- 	if (agf_bp != sc->sa.agf_bp)
- 		xfs_trans_brelse(sc->tp, agf_bp);
- 	if (error)
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -350,6 +350,7 @@ xfs_trans_free_extent(
- 	struct xfs_owner_info		oinfo = { };
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_extent		*extp;
-+	struct xfs_perag		*pag;
- 	uint				next_extent;
- 	xfs_agnumber_t			agno = XFS_FSB_TO_AGNO(mp,
- 							xefi->xefi_startblock);
-@@ -366,9 +367,12 @@ xfs_trans_free_extent(
- 	trace_xfs_bmap_free_deferred(tp->t_mountp, agno, 0, agbno,
- 			xefi->xefi_blockcount);
- 
--	error = __xfs_free_extent(tp, xefi->xefi_startblock,
--			xefi->xefi_blockcount, &oinfo, XFS_AG_RESV_NONE,
-+	pag = xfs_perag_get(mp, agno);
-+	error = __xfs_free_extent(tp, pag, agbno, xefi->xefi_blockcount,
-+			&oinfo, XFS_AG_RESV_NONE,
- 			xefi->xefi_flags & XFS_EFI_SKIP_DISCARD);
-+	xfs_perag_put(pag);
 +
- 	/*
- 	 * Mark the transaction dirty, even on error. This ensures the
- 	 * transaction is aborted, which:
+ 	xfs_rmap_ino_bmbt_owner(&oinfo, ip->i_ino, whichfork);
+-	xfs_free_extent_later(cur->bc_tp, cbno, 1, &oinfo);
++	error = xfs_free_extent_later(cur->bc_tp, cbno, 1, &oinfo);
++	if (error)
++		return error;
++
+ 	ip->i_nblocks--;
+ 	xfs_trans_mod_dquot_byino(tp, ip, XFS_TRANS_DQ_BCOUNT, -1L);
+ 	xfs_trans_binval(tp, cbp);
+@@ -5202,10 +5206,12 @@ xfs_bmap_del_extent_real(
+ 		if (xfs_is_reflink_inode(ip) && whichfork == XFS_DATA_FORK) {
+ 			xfs_refcount_decrease_extent(tp, del);
+ 		} else {
+-			__xfs_free_extent_later(tp, del->br_startblock,
++			error = __xfs_free_extent_later(tp, del->br_startblock,
+ 					del->br_blockcount, NULL,
+ 					(bflags & XFS_BMAPI_NODISCARD) ||
+ 					del->br_state == XFS_EXT_UNWRITTEN);
++			if (error)
++				goto done;
+ 		}
+ 	}
+ 
+--- a/fs/xfs/libxfs/xfs_bmap_btree.c
++++ b/fs/xfs/libxfs/xfs_bmap_btree.c
+@@ -285,11 +285,14 @@ xfs_bmbt_free_block(
+ 	struct xfs_trans	*tp = cur->bc_tp;
+ 	xfs_fsblock_t		fsbno = XFS_DADDR_TO_FSB(mp, xfs_buf_daddr(bp));
+ 	struct xfs_owner_info	oinfo;
++	int			error;
+ 
+ 	xfs_rmap_ino_bmbt_owner(&oinfo, ip->i_ino, cur->bc_ino.whichfork);
+-	xfs_free_extent_later(cur->bc_tp, fsbno, 1, &oinfo);
+-	ip->i_nblocks--;
++	error = xfs_free_extent_later(cur->bc_tp, fsbno, 1, &oinfo);
++	if (error)
++		return error;
+ 
++	ip->i_nblocks--;
+ 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+ 	xfs_trans_mod_dquot_byino(tp, ip, XFS_TRANS_DQ_BCOUNT, -1L);
+ 	return 0;
+--- a/fs/xfs/libxfs/xfs_ialloc.c
++++ b/fs/xfs/libxfs/xfs_ialloc.c
+@@ -1827,7 +1827,7 @@ xfs_dialloc(
+  * might be sparse and only free the regions that are allocated as part of the
+  * chunk.
+  */
+-STATIC void
++static int
+ xfs_difree_inode_chunk(
+ 	struct xfs_trans		*tp,
+ 	xfs_agnumber_t			agno,
+@@ -1844,10 +1844,10 @@ xfs_difree_inode_chunk(
+ 
+ 	if (!xfs_inobt_issparse(rec->ir_holemask)) {
+ 		/* not sparse, calculate extent info directly */
+-		xfs_free_extent_later(tp, XFS_AGB_TO_FSB(mp, agno, sagbno),
+-				  M_IGEO(mp)->ialloc_blks,
+-				  &XFS_RMAP_OINFO_INODES);
+-		return;
++		return xfs_free_extent_later(tp,
++				XFS_AGB_TO_FSB(mp, agno, sagbno),
++				M_IGEO(mp)->ialloc_blks,
++				&XFS_RMAP_OINFO_INODES);
+ 	}
+ 
+ 	/* holemask is only 16-bits (fits in an unsigned long) */
+@@ -1864,6 +1864,8 @@ xfs_difree_inode_chunk(
+ 						XFS_INOBT_HOLEMASK_BITS);
+ 	nextbit = startidx + 1;
+ 	while (startidx < XFS_INOBT_HOLEMASK_BITS) {
++		int error;
++
+ 		nextbit = find_next_zero_bit(holemask, XFS_INOBT_HOLEMASK_BITS,
+ 					     nextbit);
+ 		/*
+@@ -1889,8 +1891,11 @@ xfs_difree_inode_chunk(
+ 
+ 		ASSERT(agbno % mp->m_sb.sb_spino_align == 0);
+ 		ASSERT(contigblk % mp->m_sb.sb_spino_align == 0);
+-		xfs_free_extent_later(tp, XFS_AGB_TO_FSB(mp, agno, agbno),
+-				  contigblk, &XFS_RMAP_OINFO_INODES);
++		error = xfs_free_extent_later(tp,
++				XFS_AGB_TO_FSB(mp, agno, agbno),
++				contigblk, &XFS_RMAP_OINFO_INODES);
++		if (error)
++			return error;
+ 
+ 		/* reset range to current bit and carry on... */
+ 		startidx = endidx = nextbit;
+@@ -1898,6 +1903,7 @@ xfs_difree_inode_chunk(
+ next:
+ 		nextbit++;
+ 	}
++	return 0;
+ }
+ 
+ STATIC int
+@@ -1998,7 +2004,9 @@ xfs_difree_inobt(
+ 			goto error0;
+ 		}
+ 
+-		xfs_difree_inode_chunk(tp, pag->pag_agno, &rec);
++		error = xfs_difree_inode_chunk(tp, pag->pag_agno, &rec);
++		if (error)
++			goto error0;
+ 	} else {
+ 		xic->deleted = false;
+ 
+--- a/fs/xfs/libxfs/xfs_refcount.c
++++ b/fs/xfs/libxfs/xfs_refcount.c
+@@ -1129,8 +1129,10 @@ xfs_refcount_adjust_extents(
+ 				fsbno = XFS_AGB_TO_FSB(cur->bc_mp,
+ 						cur->bc_ag.pag->pag_agno,
+ 						tmp.rc_startblock);
+-				xfs_free_extent_later(cur->bc_tp, fsbno,
++				error = xfs_free_extent_later(cur->bc_tp, fsbno,
+ 						  tmp.rc_blockcount, NULL);
++				if (error)
++					goto out_error;
+ 			}
+ 
+ 			(*agbno) += tmp.rc_blockcount;
+@@ -1188,8 +1190,10 @@ xfs_refcount_adjust_extents(
+ 			fsbno = XFS_AGB_TO_FSB(cur->bc_mp,
+ 					cur->bc_ag.pag->pag_agno,
+ 					ext.rc_startblock);
+-			xfs_free_extent_later(cur->bc_tp, fsbno,
++			error = xfs_free_extent_later(cur->bc_tp, fsbno,
+ 					ext.rc_blockcount, NULL);
++			if (error)
++				goto out_error;
+ 		}
+ 
+ skip:
+@@ -1958,7 +1962,10 @@ xfs_refcount_recover_cow_leftovers(
+ 				rr->rr_rrec.rc_blockcount);
+ 
+ 		/* Free the block. */
+-		xfs_free_extent_later(tp, fsb, rr->rr_rrec.rc_blockcount, NULL);
++		error = xfs_free_extent_later(tp, fsb,
++				rr->rr_rrec.rc_blockcount, NULL);
++		if (error)
++			goto out_trans;
+ 
+ 		error = xfs_trans_commit(tp);
+ 		if (error)
+--- a/fs/xfs/xfs_reflink.c
++++ b/fs/xfs/xfs_reflink.c
+@@ -618,8 +618,10 @@ xfs_reflink_cancel_cow_blocks(
+ 			xfs_refcount_free_cow_extent(*tpp, del.br_startblock,
+ 					del.br_blockcount);
+ 
+-			xfs_free_extent_later(*tpp, del.br_startblock,
++			error = xfs_free_extent_later(*tpp, del.br_startblock,
+ 					  del.br_blockcount, NULL);
++			if (error)
++				break;
+ 
+ 			/* Roll the transaction */
+ 			error = xfs_defer_finish(tpp);
 
 
