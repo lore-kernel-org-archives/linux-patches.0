@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A8E55B;
-	Tue, 25 Mar 2025 12:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C155FE55B;
+	Tue, 25 Mar 2025 12:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905911; cv=none; b=lapCnslHDp2eC5KGiHkCo07qsQiVGCQEDnd5AS0EFTwnC66GbyvVts8pIPwSmXC4D/bskksLymrIOJ8PrW14hPY5OCl+W/q2FF6UGDrSdtS8sdQ/M4GQJPvO5ND6LKBbzgZcsm2ZVPu+I5M6pdK5jlZO8OtZTRGbGmScJaVLc8A=
+	t=1742905912; cv=none; b=Udhp2hzDxLgpKCP9yIJeiHFPo04sWK9ehE+q2kh9aDtyPcTSWPuRaCMouiAXB9nx5yjDLB48pRhRXPJ5O/+yiFsufW9QMS1wY78LpRAbx3zvVNdQ+E/JRt0SG+hUSVgvrPE1lNzT22r0CIhcrcYe/NHjFh4miyqvXHkmIOJmdM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905911; c=relaxed/simple;
-	bh=sDQjGI/FQbDeliczrsHg2jfwVKEciWjka/Op3pkSH/w=;
+	s=arc-20240116; t=1742905912; c=relaxed/simple;
+	bh=kNN7Tbx4i9qLgQ5G2RSxBs1xy+vcXGHxZrskrja22Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDwVMl73+uLGIDXNdgPPV1h75Y01GBLXHFV5kER8flxAgE5RC802ND5jrdY9ze13uDpRcHufSonM1PPG3FsThY8Bmd6a28cGauLErvJ1PqMzn6eV6R66EAcnaoa/tDx92QGTgWHgr/0senz9mM9ekIAyECWYvUUAQCPiXHgRHmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z14QVR5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KK5kB9L6J5aevh7IqDFuR2Y5Lo7h1FcHXVeSggFAl0YCXKPqppi+mLPGWr2NxNDPlrMXgu5juk1HgTtLeNR8zfUgLgIjeEGfeVzz3tz0418NC5AorvB/UzIivfxiSbPpzvIHWPuGBkOVlvlkOpCi2LO/ZSJ6L3/tx92CUcrkVC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck0+dUgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z14QVR5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39F9C4CEE9;
-	Tue, 25 Mar 2025 12:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck0+dUgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D4DC4CEE9;
+	Tue, 25 Mar 2025 12:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905910;
-	bh=sDQjGI/FQbDeliczrsHg2jfwVKEciWjka/Op3pkSH/w=;
+	s=korg; t=1742905912;
+	bh=kNN7Tbx4i9qLgQ5G2RSxBs1xy+vcXGHxZrskrja22Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z14QVR5PCq6F4GDVSMnKgG3+bd0hJxjxdda34ub+eWngSOuSUnTpimsVGDFRRcdR9
-	 dcMnZYscVft55YWwt4GBm/HC7C+7Nc0AVr6yrIu2nCv5158lN/q1pelTQIAe3vaj2r
-	 e9XDntgRI5xEvT/xgnGvjZrTfNkabladjgA40Wb8=
+	b=ck0+dUgibQvIlfZNzoc0WYZyYQeDUYku9zgyOQHN3poWp6sSnLt9pP3WA/Za+bIVM
+	 1X+q8poelpaLZXfmTabiSU4ckvvLsnvGjkO9OG4sUVgUe6n1d/5NXDnIKnbWFgzS/g
+	 aZPh/lHOUGTD5iKN8RLDKdBs7K93hKGXnbvkU6zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Troy Hanson <quic_thanson@quicinc.com>,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Huisong Li <lihuisong@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 032/119] accel/qaic: Fix possible data corruption in BOs > 2G
-Date: Tue, 25 Mar 2025 08:21:30 -0400
-Message-ID: <20250325122149.885053172@linuxfoundation.org>
+Subject: [PATCH 6.13 033/119] soc: hisilicon: kunpeng_hccs: Fix incorrect string assembly
+Date: Tue, 25 Mar 2025 08:21:31 -0400
+Message-ID: <20250325122149.910572116@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -54,65 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit 84a833d90635e4b846333e2df0ae72f9cbecac39 ]
+[ Upstream commit 262666c04be6afa8f15b6c318596b54c37499cda ]
 
-When slicing a BO, we need to iterate through the BO's sgt to find the
-right pieces to construct the slice. Some of the data types chosen for
-this process are incorrectly too small, and can overflow. This can
-result in the incorrect slice construction, which can lead to data
-corruption in workload execution.
+String assembly should use sysfs_emit_at() instead of sysfs_emit().
 
-The device can only handle 32-bit sized transfers, and the scatterlist
-struct only supports 32-bit buffer sizes, so our upper limit for an
-individual transfer is an unsigned int. Using an int is incorrect due to
-the reservation of the sign bit. Upgrade the length of a scatterlist
-entry and the offsets into a scatterlist entry to unsigned int for a
-correct representation.
-
-While each transfer may be limited to 32-bits, the overall BO may exceed
-that size. For counting the total length of the BO, we need a type that
-can represent the largest allocation possible on the system. That is the
-definition of size_t, so use it.
-
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250306171959.853466-1-jeff.hugo@oss.qualcomm.com
+Fixes: 23fe8112a231 ("soc: hisilicon: kunpeng_hccs: Add used HCCS types sysfs")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Link: https://lore.kernel.org/r/20250314100143.3377268-1-lihuisong@huawei.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_data.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/soc/hisilicon/kunpeng_hccs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index c20eb63750f51..ffcdf5738d099 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -172,9 +172,10 @@ static void free_slice(struct kref *kref)
- static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_table **sgt_out,
- 					struct sg_table *sgt_in, u64 size, u64 offset)
- {
--	int total_len, len, nents, offf = 0, offl = 0;
- 	struct scatterlist *sg, *sgn, *sgf, *sgl;
-+	unsigned int len, nents, offf, offl;
- 	struct sg_table *sgt;
-+	size_t total_len;
- 	int ret, j;
+diff --git a/drivers/soc/hisilicon/kunpeng_hccs.c b/drivers/soc/hisilicon/kunpeng_hccs.c
+index 8aa8dec14911c..444a8f59b7da7 100644
+--- a/drivers/soc/hisilicon/kunpeng_hccs.c
++++ b/drivers/soc/hisilicon/kunpeng_hccs.c
+@@ -1539,8 +1539,8 @@ static ssize_t used_types_show(struct kobject *kobj,
+ 	u16 i;
  
- 	/* find out number of relevant nents needed for this mem */
-@@ -182,6 +183,8 @@ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_tabl
- 	sgf = NULL;
- 	sgl = NULL;
- 	nents = 0;
-+	offf = 0;
-+	offl = 0;
+ 	for (i = 0; i < hdev->used_type_num - 1; i++)
+-		len += sysfs_emit(&buf[len], "%s ", hdev->type_name_maps[i].name);
+-	len += sysfs_emit(&buf[len], "%s\n", hdev->type_name_maps[i].name);
++		len += sysfs_emit_at(buf, len, "%s ", hdev->type_name_maps[i].name);
++	len += sysfs_emit_at(buf, len, "%s\n", hdev->type_name_maps[i].name);
  
- 	size = size ? size : PAGE_SIZE;
- 	for_each_sgtable_dma_sg(sgt_in, sg, j) {
+ 	return len;
+ }
 -- 
 2.39.5
 
