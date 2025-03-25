@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E99425A2D1;
-	Tue, 25 Mar 2025 12:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2431D25745F;
+	Tue, 25 Mar 2025 12:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905664; cv=none; b=MobN6Ynu0L1f/E6RKcKGkvtNzC4d0VyabKzCnmPLogVqibhFTzL0DnEi59m1xcWIlqx9XNRsaIakC091Fh740xQEAJHMB7CEwoXOPAFD39eUM2xjs1a+5jBlqPAj0hFNi/bPo2ZLeE21oR+I+M560fvEVNEvvR+o7Nz7tfqu/P0=
+	t=1742905666; cv=none; b=dljwlPKQ5O6cOGMLxloJPK/ACnTQTEfJ5/f7APJiqC93HOtkNjhBVIE7nUBhmWvJe6alFjY93NLTkOCMixi0Ja6P7G0QX+mKOpVyAndGNQQ+5kxNmz22pGs3X4szMdpFsAYeShc6n1m+YWb2D+E/oOA1ZfT0wwDd505U8NpgYQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905664; c=relaxed/simple;
-	bh=KYnsXodt9usZdim59saO5loE+aWZrrKpUr3euojtPAI=;
+	s=arc-20240116; t=1742905666; c=relaxed/simple;
+	bh=UpC+DDCA9lLOXDgcSUuP07iaSzfFioWPp6IJjrKC6As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBY27gFDoZVEfiYwm2lvjJ8egxv1L3fSEfECQBBsjyJOEDowaP3kQZHCEmfmvawNAs/WhE+P60Mp6a2s8bTSg7KI33u5ekEOIgCW4rG2HaV3vQTAAHwTu75k3FYh+TkeqSSIWx6sc99LAHi2Ow4O8FJ5JSP18X5GwrvYGpFs5UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLeFUWtP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crU3nrqfEooqYCenKkdO12QhU+PVUrQEapsyygVMVcJMUF4/biuGvD2D9X2VbKxEqFMxqV4pxPrc54VP2fWCTd2CwRJ3w8dFMJrBuwn4OwFF3EhgcRFS5sDIzy4RYqUQpzCrFpGrWubDC5oO+9psda3N3pO7LOcIrdf3FBwnISM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPCRimKx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLeFUWtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61BEC4CEE4;
-	Tue, 25 Mar 2025 12:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPCRimKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BACC4CEE4;
+	Tue, 25 Mar 2025 12:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905664;
-	bh=KYnsXodt9usZdim59saO5loE+aWZrrKpUr3euojtPAI=;
+	s=korg; t=1742905666;
+	bh=UpC+DDCA9lLOXDgcSUuP07iaSzfFioWPp6IJjrKC6As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLeFUWtPIAudqYO/OqMDcWc5vWgHeYUTBCSQkiiGLc+hKDhZOaedmbvsa8PhekWpz
-	 Cv8BgVyXO8VvJouOkpewGsCxAOlAl1TN7hB3pduICbQFLLkAXSOHqLYsPwTOjUkEmv
-	 gczZeb3g/9+/bq8HiGcWeqXDLpnzwBONqhjwq02c=
+	b=PPCRimKxu0HBWrWor9VGY5Itiu0hBb7Ov8SaPyBOY1xeVEpYnu0G/7bpKpCmAKc+Q
+	 oZCMQAJR/xYPXDCN8D235r0MHV6P/aeEvNBGEK2iFe3rKFZXQVPLBSc/9kSLP4Thxc
+	 Sn2b2+tVJb9Sfvsy5cCK8WhoWp8+PZZ5zgAsnkCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 096/198] xfs: force all buffers to be written during btree bulk load
-Date: Tue, 25 Mar 2025 08:20:58 -0400
-Message-ID: <20250325122159.168388498@linuxfoundation.org>
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
+	Alexander Potapenko <glider@google.com>
+Subject: [PATCH 6.1 097/198] xfs: initialise di_crc in xfs_log_dinode
+Date: Tue, 25 Mar 2025 08:20:59 -0400
+Message-ID: <20250325122159.195453752@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,217 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 13ae04d8d45227c2ba51e188daf9fc13d08a1b12 ]
+[ Upstream commit 0573676fdde7ce3829ee6a42a8e5a56355234712 ]
 
-While stress-testing online repair of btrees, I noticed periodic
-assertion failures from the buffer cache about buffers with incorrect
-DELWRI_Q state.  Looking further, I observed this race between the AIL
-trying to write out a btree block and repair zapping a btree block after
-the fact:
+Alexander Potapenko report that KMSAN was issuing these warnings:
 
-AIL:    Repair0:
+kmalloc-ed xlog buffer of size 512 : ffff88802fc26200
+kmalloc-ed xlog buffer of size 368 : ffff88802fc24a00
+kmalloc-ed xlog buffer of size 648 : ffff88802b631000
+kmalloc-ed xlog buffer of size 648 : ffff88802b632800
+kmalloc-ed xlog buffer of size 648 : ffff88802b631c00
+xlog_write_iovec: copying 12 bytes from ffff888017ddbbd8 to ffff88802c300400
+xlog_write_iovec: copying 28 bytes from ffff888017ddbbe4 to ffff88802c30040c
+xlog_write_iovec: copying 68 bytes from ffff88802fc26274 to ffff88802c300428
+xlog_write_iovec: copying 188 bytes from ffff88802fc262bc to ffff88802c30046c
+=====================================================
+BUG: KMSAN: uninit-value in xlog_write_iovec fs/xfs/xfs_log.c:2227
+BUG: KMSAN: uninit-value in xlog_write_full fs/xfs/xfs_log.c:2263
+BUG: KMSAN: uninit-value in xlog_write+0x1fac/0x2600 fs/xfs/xfs_log.c:2532
+ xlog_write_iovec fs/xfs/xfs_log.c:2227
+ xlog_write_full fs/xfs/xfs_log.c:2263
+ xlog_write+0x1fac/0x2600 fs/xfs/xfs_log.c:2532
+ xlog_cil_write_chain fs/xfs/xfs_log_cil.c:918
+ xlog_cil_push_work+0x30f2/0x44e0 fs/xfs/xfs_log_cil.c:1263
+ process_one_work kernel/workqueue.c:2630
+ process_scheduled_works+0x1188/0x1e30 kernel/workqueue.c:2703
+ worker_thread+0xee5/0x14f0 kernel/workqueue.c:2784
+ kthread+0x391/0x500 kernel/kthread.c:388
+ ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
 
-pin buffer X
-delwri_queue:
-set DELWRI_Q
-add to delwri list
+Uninit was created at:
+ slab_post_alloc_hook+0x101/0xac0 mm/slab.h:768
+ slab_alloc_node mm/slub.c:3482
+ __kmem_cache_alloc_node+0x612/0xae0 mm/slub.c:3521
+ __do_kmalloc_node mm/slab_common.c:1006
+ __kmalloc+0x11a/0x410 mm/slab_common.c:1020
+ kmalloc ./include/linux/slab.h:604
+ xlog_kvmalloc fs/xfs/xfs_log_priv.h:704
+ xlog_cil_alloc_shadow_bufs fs/xfs/xfs_log_cil.c:343
+ xlog_cil_commit+0x487/0x4dc0 fs/xfs/xfs_log_cil.c:1574
+ __xfs_trans_commit+0x8df/0x1930 fs/xfs/xfs_trans.c:1017
+ xfs_trans_commit+0x30/0x40 fs/xfs/xfs_trans.c:1061
+ xfs_create+0x15af/0x2150 fs/xfs/xfs_inode.c:1076
+ xfs_generic_create+0x4cd/0x1550 fs/xfs/xfs_iops.c:199
+ xfs_vn_create+0x4a/0x60 fs/xfs/xfs_iops.c:275
+ lookup_open fs/namei.c:3477
+ open_last_lookups fs/namei.c:3546
+ path_openat+0x29ac/0x6180 fs/namei.c:3776
+ do_filp_open+0x24d/0x680 fs/namei.c:3809
+ do_sys_openat2+0x1bc/0x330 fs/open.c:1440
+ do_sys_open fs/open.c:1455
+ __do_sys_openat fs/open.c:1471
+ __se_sys_openat fs/open.c:1466
+ __x64_sys_openat+0x253/0x330 fs/open.c:1466
+ do_syscall_x64 arch/x86/entry/common.c:51
+ do_syscall_64+0x4f/0x140 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b arch/x86/entry/entry_64.S:120
 
-        stale buf X:
-        clear DELWRI_Q
-        does not clear b_list
-        free space X
-        commit
+Bytes 112-115 of 188 are uninitialized
+Memory access of size 188 starts at ffff88802fc262bc
 
-delwri_submit   # oops
+This is caused by the struct xfs_log_dinode not having the di_crc
+field initialised. Log recovery never uses this field (it is only
+present these days for on-disk format compatibility reasons) and so
+it's value is never checked so nothing in XFS has caught this.
 
-Worse yet, I discovered that running the same repair over and over in a
-tight loop can result in a second race that cause data integrity
-problems with the repair:
+Further, none of the uninitialised memory access warning tools have
+caught this (despite catching other uninit memory accesses in the
+struct xfs_log_dinode back in 2017!) until recently. Alexander
+annotated the XFS code to get the dump of the actual bytes that were
+detected as uninitialised, and from that report it took me about 30s
+to realise what the issue was.
 
-AIL:    Repair0:        Repair1:
+The issue was introduced back in 2016 and every inode that is logged
+fails to initialise this field. This is no actual bad behaviour
+caused by this issue - I find it hard to even classify it as a
+bug...
 
-pin buffer X
-delwri_queue:
-set DELWRI_Q
-add to delwri list
-
-        stale buf X:
-        clear DELWRI_Q
-        does not clear b_list
-        free space X
-        commit
-
-                        find free space X
-                        get buffer
-                        rewrite buffer
-                        delwri_queue:
-                        set DELWRI_Q
-                        already on a list, do not add
-                        commit
-
-                        BAD: committed tree root before all blocks written
-
-delwri_submit   # too late now
-
-I traced this to my own misunderstanding of how the delwri lists work,
-particularly with regards to the AIL's buffer list.  If a buffer is
-logged and committed, the buffer can end up on that AIL buffer list.  If
-btree repairs are run twice in rapid succession, it's possible that the
-first repair will invalidate the buffer and free it before the next time
-the AIL wakes up.  Marking the buffer stale clears DELWRI_Q from the
-buffer state without removing the buffer from its delwri list.  The
-buffer doesn't know which list it's on, so it cannot know which lock to
-take to protect the list for a removal.
-
-If the second repair allocates the same block, it will then recycle the
-buffer to start writing the new btree block.  Meanwhile, if the AIL
-wakes up and walks the buffer list, it will ignore the buffer because it
-can't lock it, and go back to sleep.
-
-When the second repair calls delwri_queue to put the buffer on the
-list of buffers to write before committing the new btree, it will set
-DELWRI_Q again, but since the buffer hasn't been removed from the AIL's
-buffer list, it won't add it to the bulkload buffer's list.
-
-This is incorrect, because the bulkload caller relies on delwri_submit
-to ensure that all the buffers have been sent to disk /before/
-committing the new btree root pointer.  This ordering requirement is
-required for data consistency.
-
-Worse, the AIL won't clear DELWRI_Q from the buffer when it does finally
-drop it, so the next thread to walk through the btree will trip over a
-debug assertion on that flag.
-
-To fix this, create a new function that waits for the buffer to be
-removed from any other delwri lists before adding the buffer to the
-caller's delwri list.  By waiting for the buffer to clear both the
-delwri list and any potential delwri wait list, we can be sure that
-repair will initiate writes of all buffers and report all write errors
-back to userspace instead of committing the new structure.
-
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reported-and-tested-by: Alexander Potapenko <glider@google.com>
+Fixes: f8d55aa0523a ("xfs: introduce inode log format object")
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_btree_staging.c |    4 ---
- fs/xfs/xfs_buf.c                  |   44 ++++++++++++++++++++++++++++++++++----
- fs/xfs/xfs_buf.h                  |    1 
- 3 files changed, 42 insertions(+), 7 deletions(-)
+ fs/xfs/xfs_inode_item.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_btree_staging.c
-+++ b/fs/xfs/libxfs/xfs_btree_staging.c
-@@ -342,9 +342,7 @@ xfs_btree_bload_drop_buf(
- 	if (*bpp == NULL)
- 		return;
- 
--	if (!xfs_buf_delwri_queue(*bpp, buffers_list))
--		ASSERT(0);
--
-+	xfs_buf_delwri_queue_here(*bpp, buffers_list);
- 	xfs_buf_relse(*bpp);
- 	*bpp = NULL;
- }
---- a/fs/xfs/xfs_buf.c
-+++ b/fs/xfs/xfs_buf.c
-@@ -2040,6 +2040,14 @@ error_free:
- 	return NULL;
- }
- 
-+static inline void
-+xfs_buf_list_del(
-+	struct xfs_buf		*bp)
-+{
-+	list_del_init(&bp->b_list);
-+	wake_up_var(&bp->b_list);
-+}
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -556,6 +556,9 @@ xfs_inode_to_log_dinode(
+ 		memset(to->di_pad2, 0, sizeof(to->di_pad2));
+ 		uuid_copy(&to->di_uuid, &ip->i_mount->m_sb.sb_meta_uuid);
+ 		to->di_v3_pad = 0;
 +
- /*
-  * Cancel a delayed write list.
-  *
-@@ -2057,7 +2065,7 @@ xfs_buf_delwri_cancel(
- 
- 		xfs_buf_lock(bp);
- 		bp->b_flags &= ~_XBF_DELWRI_Q;
--		list_del_init(&bp->b_list);
-+		xfs_buf_list_del(bp);
- 		xfs_buf_relse(bp);
- 	}
- }
-@@ -2111,6 +2119,34 @@ xfs_buf_delwri_queue(
- }
- 
- /*
-+ * Queue a buffer to this delwri list as part of a data integrity operation.
-+ * If the buffer is on any other delwri list, we'll wait for that to clear
-+ * so that the caller can submit the buffer for IO and wait for the result.
-+ * Callers must ensure the buffer is not already on the list.
-+ */
-+void
-+xfs_buf_delwri_queue_here(
-+	struct xfs_buf		*bp,
-+	struct list_head	*buffer_list)
-+{
-+	/*
-+	 * We need this buffer to end up on the /caller's/ delwri list, not any
-+	 * old list.  This can happen if the buffer is marked stale (which
-+	 * clears DELWRI_Q) after the AIL queues the buffer to its list but
-+	 * before the AIL has a chance to submit the list.
-+	 */
-+	while (!list_empty(&bp->b_list)) {
-+		xfs_buf_unlock(bp);
-+		wait_var_event(&bp->b_list, list_empty(&bp->b_list));
-+		xfs_buf_lock(bp);
-+	}
-+
-+	ASSERT(!(bp->b_flags & _XBF_DELWRI_Q));
-+
-+	xfs_buf_delwri_queue(bp, buffer_list);
-+}
-+
-+/*
-  * Compare function is more complex than it needs to be because
-  * the return value is only 32 bits and we are doing comparisons
-  * on 64 bit values
-@@ -2172,7 +2208,7 @@ xfs_buf_delwri_submit_buffers(
- 		 * reference and remove it from the list here.
- 		 */
- 		if (!(bp->b_flags & _XBF_DELWRI_Q)) {
--			list_del_init(&bp->b_list);
-+			xfs_buf_list_del(bp);
- 			xfs_buf_relse(bp);
- 			continue;
- 		}
-@@ -2192,7 +2228,7 @@ xfs_buf_delwri_submit_buffers(
- 			list_move_tail(&bp->b_list, wait_list);
- 		} else {
- 			bp->b_flags |= XBF_ASYNC;
--			list_del_init(&bp->b_list);
-+			xfs_buf_list_del(bp);
- 		}
- 		__xfs_buf_submit(bp, false);
- 	}
-@@ -2246,7 +2282,7 @@ xfs_buf_delwri_submit(
- 	while (!list_empty(&wait_list)) {
- 		bp = list_first_entry(&wait_list, struct xfs_buf, b_list);
- 
--		list_del_init(&bp->b_list);
-+		xfs_buf_list_del(bp);
- 
- 		/*
- 		 * Wait on the locked buffer, check for errors and unlock and
---- a/fs/xfs/xfs_buf.h
-+++ b/fs/xfs/xfs_buf.h
-@@ -305,6 +305,7 @@ extern void xfs_buf_stale(struct xfs_buf
- /* Delayed Write Buffer Routines */
- extern void xfs_buf_delwri_cancel(struct list_head *);
- extern bool xfs_buf_delwri_queue(struct xfs_buf *, struct list_head *);
-+void xfs_buf_delwri_queue_here(struct xfs_buf *bp, struct list_head *bl);
- extern int xfs_buf_delwri_submit(struct list_head *);
- extern int xfs_buf_delwri_submit_nowait(struct list_head *);
- extern int xfs_buf_delwri_pushbuf(struct xfs_buf *, struct list_head *);
++		/* dummy value for initialisation */
++		to->di_crc = 0;
+ 	} else {
+ 		to->di_version = 2;
+ 		to->di_flushiter = ip->i_flushiter;
 
 
