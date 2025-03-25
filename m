@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22094E55B;
-	Tue, 25 Mar 2025 12:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09727E55B;
+	Tue, 25 Mar 2025 12:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905918; cv=none; b=U3zwXfueL5l0samWB58ww0/X6LZXIJ7WG1TP9uwxx+qYCv/3TFfxAtNTlQfyPy2OhQUKvCjFpTiLMhbjh8AJ7N922OEvO/ibjs0mC31HMoQ2oYQzKoe+HoP6HrrRVyAElWg3nZWML662guJowEgrfggOh1fpaZJYoz+/SL0eB1E=
+	t=1742905920; cv=none; b=Kqg6LfFZMRtXjl3ysxe097vOed3A3HHSlvem+cD1kTWAhKwmbPGEzWY5AZfmXZco+uFVaoXhPrS9YliahDm6bg4oJ7Ma4onmp4mDNwbMk91GF6umAWc5F+AOJjteslqxPzvJhq2bN3yUe76cQnspJZuaFypI77ztuUDVCpmi0RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905918; c=relaxed/simple;
-	bh=4Yoad1X9FChufHyyVM0NoP2IQllLx76NYLtJ3Hhbqy8=;
+	s=arc-20240116; t=1742905920; c=relaxed/simple;
+	bh=uytcQRjcf3uh0pqunoXYIuIljBxL2Xpbm1rBgGCvIto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXrcXhjUVqJaLNk29QlIKeqAxY0d4/OcleSq60J2MMoULuVQdgWl+R3ofLE8YR4XrpeeVcxm7b6hGTM4kokAzfHARNU9YfqC4WDnj20yFWFMtsPNZCgNJI3GZgi4jIiLCUkYL5sV62/bgltKop0Gw4C6JKQG98ayZq0oaXgodNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifAXwNaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojP4aEGlT+GBk718oQT46xDizu+l7P6EzukYkL2tXvitVEgv+liyVk+tPgpcb0pVCgFeArC5KV+eEgPWo4HZrbRDzG93C8VqCgP3dSfwa9XeRZF3vvEUZe3UKEcSREHihlgpwYKp7bqYo+pcsvWbyaRc+Hz0k6WENAJunjCbGpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjpXiENR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifAXwNaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F50C4CEE9;
-	Tue, 25 Mar 2025 12:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjpXiENR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD9BC4CEE4;
+	Tue, 25 Mar 2025 12:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905918;
-	bh=4Yoad1X9FChufHyyVM0NoP2IQllLx76NYLtJ3Hhbqy8=;
+	s=korg; t=1742905919;
+	bh=uytcQRjcf3uh0pqunoXYIuIljBxL2Xpbm1rBgGCvIto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifAXwNaKnUKVV5zJKDR9kkTq244Jj4+PUXHRMJN11G6+S7JsnROEUCPPCUZKXfIh1
-	 7VucLd6rjBHd0F96h7Wr48j01I1wWDNE+tEwvSDYFhoGrn6OGXI3FjIDjiSbPYwn03
-	 XAtVGBvouU2fZFgimJSmVVN1x/woNEc2Wq/URuuI=
+	b=KjpXiENR/pcnGJ4fDJCZeMzDzMq/2HcvnXcBDVIBlwwNTpn4aaTbkEToH4CtrVplp
+	 uoWMuMxWxW1jcsHoRKrkGg3R/KQv1ctV5IzKg33abUVjJ7hy81fk5rCkAyOip1/O4p
+	 KexIp+yIzEbpUrSsJ91tWArg3yb53q7XMkGBPNmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Eric <eric.4.debian@grabatoulnz.fr>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 036/119] ata: libata-core: Add ATA_QUIRK_NO_LPM_ON_ATI for certain Samsung SSDs
-Date: Tue, 25 Mar 2025 08:21:34 -0400
-Message-ID: <20250325122149.984960958@linuxfoundation.org>
+Subject: [PATCH 6.13 037/119] net: ethernet: ti: am65-cpsw: Fix NAPI registration sequence
+Date: Tue, 25 Mar 2025 08:21:35 -0400
+Message-ID: <20250325122150.008089495@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -53,113 +54,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit f2aac4c73c9945cce156fd58a9a2f31f2c8a90c7 ]
+[ Upstream commit 5f079290e5913a0060e059500b7d440990ac1066 ]
 
-Before commit 7627a0edef54 ("ata: ahci: Drop low power policy board type")
-the ATI AHCI controllers specified board type 'board_ahci' rather than
-board type 'board_ahci'. This means that LPM was historically not enabled
-for the ATI AHCI controllers.
+Registering the interrupts for TX or RX DMA Channels prior to registering
+their respective NAPI callbacks can result in a NULL pointer dereference.
+This is seen in practice as a random occurrence since it depends on the
+randomness associated with the generation of traffic by Linux and the
+reception of traffic from the wire.
 
-By looking at commit 7a8526a5cd51 ("libata: Add ATA_HORKAGE_NO_NCQ_ON_ATI
-for Samsung 860 and 870 SSD."), it is clear that, for some unknown reason,
-that Samsung SSDs do not play nice with ATI AHCI controllers. (When using
-other AHCI controllers, NCQ can be enabled on these Samsung SSDs without
-issues.)
-
-In a similar way, from user reports, it is clear the ATI AHCI controllers
-can enable LPM on e.g. Maxtor HDDs perfectly fine, but when enabling LPM
-on certain Samsung SSDs, things break. (E.g. the SSDs will not get detected
-by the ATI AHCI controller even after a COMRESET.)
-
-Yet, when using LPM on these Samsung SSDs with other AHCI controllers, e.g.
-Intel AHCI controllers, these Samsung drives appear to work perfectly fine.
-
-Considering that the combination of ATI + Samsung, for some unknown reason,
-does not seem to work well, disable LPM when detecting an ATI AHCI
-controller with a problematic Samsung SSD.
-
-Apply this new ATA_QUIRK_NO_LPM_ON_ATI quirk for all Samsung SSDs that have
-already been reported to not play nice with ATI (ATA_QUIRK_NO_NCQ_ON_ATI).
-
-Fixes: 7627a0edef54 ("ata: ahci: Drop low power policy board type")
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Reported-by: Eric <eric.4.debian@grabatoulnz.fr>
-Closes: https://lore.kernel.org/linux-ide/Z8SBZMBjvVXA7OAK@eldamar.lan/
-Tested-by: Eric <eric.4.debian@grabatoulnz.fr>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250317170348.1748671-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 681eb2beb3ef ("net: ethernet: ti: am65-cpsw: ensure proper channel cleanup in error path")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Co-developed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://patch.msgid.link/20250311154259.102865-1-s-vadapalli@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 14 +++++++++++---
- include/linux/libata.h    |  2 ++
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 32 +++++++++++++-----------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index c085dd81ebe7f..d956735e2a764 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2845,6 +2845,10 @@ int ata_dev_configure(struct ata_device *dev)
- 	    (id[ATA_ID_SATA_CAPABILITY] & 0xe) == 0x2)
- 		dev->quirks |= ATA_QUIRK_NOLPM;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index f4ddacff08469..b4d3deb809521 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2270,14 +2270,18 @@ static void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
+ static int am65_cpsw_nuss_ndev_add_tx_napi(struct am65_cpsw_common *common)
+ {
+ 	struct device *dev = common->dev;
++	struct am65_cpsw_tx_chn *tx_chn;
+ 	int i, ret = 0;
  
-+	if (dev->quirks & ATA_QUIRK_NO_LPM_ON_ATI &&
-+	    ata_dev_check_adapter(dev, PCI_VENDOR_ID_ATI))
-+		dev->quirks |= ATA_QUIRK_NOLPM;
+ 	for (i = 0; i < common->tx_ch_num; i++) {
+-		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
++		tx_chn = &common->tx_chns[i];
+ 
+ 		hrtimer_init(&tx_chn->tx_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_PINNED);
+ 		tx_chn->tx_hrtimer.function = &am65_cpsw_nuss_tx_timer_callback;
+ 
++		netif_napi_add_tx(common->dma_ndev, &tx_chn->napi_tx,
++				  am65_cpsw_nuss_tx_poll);
 +
- 	if (ap->flags & ATA_FLAG_NO_LPM)
- 		dev->quirks |= ATA_QUIRK_NOLPM;
+ 		ret = devm_request_irq(dev, tx_chn->irq,
+ 				       am65_cpsw_nuss_tx_irq,
+ 				       IRQF_TRIGGER_HIGH,
+@@ -2287,19 +2291,16 @@ static int am65_cpsw_nuss_ndev_add_tx_napi(struct am65_cpsw_common *common)
+ 				tx_chn->id, tx_chn->irq, ret);
+ 			goto err;
+ 		}
+-
+-		netif_napi_add_tx(common->dma_ndev, &tx_chn->napi_tx,
+-				  am65_cpsw_nuss_tx_poll);
+ 	}
  
-@@ -3897,6 +3901,7 @@ static const char * const ata_quirk_names[] = {
- 	[__ATA_QUIRK_MAX_SEC_1024]	= "maxsec1024",
- 	[__ATA_QUIRK_MAX_TRIM_128M]	= "maxtrim128m",
- 	[__ATA_QUIRK_NO_NCQ_ON_ATI]	= "noncqonati",
-+	[__ATA_QUIRK_NO_LPM_ON_ATI]	= "nolpmonati",
- 	[__ATA_QUIRK_NO_ID_DEV_LOG]	= "noiddevlog",
- 	[__ATA_QUIRK_NO_LOG_DIR]	= "nologdir",
- 	[__ATA_QUIRK_NO_FUA]		= "nofua",
-@@ -4142,13 +4147,16 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 						ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "Samsung SSD 860*",		NULL,	ATA_QUIRK_NO_NCQ_TRIM |
- 						ATA_QUIRK_ZERO_AFTER_TRIM |
--						ATA_QUIRK_NO_NCQ_ON_ATI },
-+						ATA_QUIRK_NO_NCQ_ON_ATI |
-+						ATA_QUIRK_NO_LPM_ON_ATI },
- 	{ "Samsung SSD 870*",		NULL,	ATA_QUIRK_NO_NCQ_TRIM |
- 						ATA_QUIRK_ZERO_AFTER_TRIM |
--						ATA_QUIRK_NO_NCQ_ON_ATI },
-+						ATA_QUIRK_NO_NCQ_ON_ATI |
-+						ATA_QUIRK_NO_LPM_ON_ATI },
- 	{ "SAMSUNG*MZ7LH*",		NULL,	ATA_QUIRK_NO_NCQ_TRIM |
- 						ATA_QUIRK_ZERO_AFTER_TRIM |
--						ATA_QUIRK_NO_NCQ_ON_ATI, },
-+						ATA_QUIRK_NO_NCQ_ON_ATI |
-+						ATA_QUIRK_NO_LPM_ON_ATI },
- 	{ "FCCT*M500*",			NULL,	ATA_QUIRK_NO_NCQ_TRIM |
- 						ATA_QUIRK_ZERO_AFTER_TRIM },
+ 	return 0;
  
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index c1a85d46eba6d..4f62c43059c21 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -88,6 +88,7 @@ enum ata_quirks {
- 	__ATA_QUIRK_MAX_SEC_1024,	/* Limit max sects to 1024 */
- 	__ATA_QUIRK_MAX_TRIM_128M,	/* Limit max trim size to 128M */
- 	__ATA_QUIRK_NO_NCQ_ON_ATI,	/* Disable NCQ on ATI chipset */
-+	__ATA_QUIRK_NO_LPM_ON_ATI,	/* Disable LPM on ATI chipset */
- 	__ATA_QUIRK_NO_ID_DEV_LOG,	/* Identify device log missing */
- 	__ATA_QUIRK_NO_LOG_DIR,		/* Do not read log directory */
- 	__ATA_QUIRK_NO_FUA,		/* Do not use FUA */
-@@ -432,6 +433,7 @@ enum {
- 	ATA_QUIRK_MAX_SEC_1024		= (1U << __ATA_QUIRK_MAX_SEC_1024),
- 	ATA_QUIRK_MAX_TRIM_128M		= (1U << __ATA_QUIRK_MAX_TRIM_128M),
- 	ATA_QUIRK_NO_NCQ_ON_ATI		= (1U << __ATA_QUIRK_NO_NCQ_ON_ATI),
-+	ATA_QUIRK_NO_LPM_ON_ATI		= (1U << __ATA_QUIRK_NO_LPM_ON_ATI),
- 	ATA_QUIRK_NO_ID_DEV_LOG		= (1U << __ATA_QUIRK_NO_ID_DEV_LOG),
- 	ATA_QUIRK_NO_LOG_DIR		= (1U << __ATA_QUIRK_NO_LOG_DIR),
- 	ATA_QUIRK_NO_FUA		= (1U << __ATA_QUIRK_NO_FUA),
+ err:
+-	for (--i ; i >= 0 ; i--) {
+-		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
+-
+-		netif_napi_del(&tx_chn->napi_tx);
++	netif_napi_del(&tx_chn->napi_tx);
++	for (--i; i >= 0; i--) {
++		tx_chn = &common->tx_chns[i];
+ 		devm_free_irq(dev, tx_chn->irq, tx_chn);
++		netif_napi_del(&tx_chn->napi_tx);
+ 	}
+ 
+ 	return ret;
+@@ -2533,6 +2534,9 @@ static int am65_cpsw_nuss_init_rx_chns(struct am65_cpsw_common *common)
+ 			     HRTIMER_MODE_REL_PINNED);
+ 		flow->rx_hrtimer.function = &am65_cpsw_nuss_rx_timer_callback;
+ 
++		netif_napi_add(common->dma_ndev, &flow->napi_rx,
++			       am65_cpsw_nuss_rx_poll);
++
+ 		ret = devm_request_irq(dev, flow->irq,
+ 				       am65_cpsw_nuss_rx_irq,
+ 				       IRQF_TRIGGER_HIGH,
+@@ -2541,11 +2545,8 @@ static int am65_cpsw_nuss_init_rx_chns(struct am65_cpsw_common *common)
+ 			dev_err(dev, "failure requesting rx %d irq %u, %d\n",
+ 				i, flow->irq, ret);
+ 			flow->irq = -EINVAL;
+-			goto err_flow;
++			goto err_request_irq;
+ 		}
+-
+-		netif_napi_add(common->dma_ndev, &flow->napi_rx,
+-			       am65_cpsw_nuss_rx_poll);
+ 	}
+ 
+ 	/* setup classifier to route priorities to flows */
+@@ -2553,11 +2554,14 @@ static int am65_cpsw_nuss_init_rx_chns(struct am65_cpsw_common *common)
+ 
+ 	return 0;
+ 
++err_request_irq:
++	netif_napi_del(&flow->napi_rx);
++
+ err_flow:
+-	for (--i; i >= 0 ; i--) {
++	for (--i; i >= 0; i--) {
+ 		flow = &rx_chn->flows[i];
+-		netif_napi_del(&flow->napi_rx);
+ 		devm_free_irq(dev, flow->irq, flow);
++		netif_napi_del(&flow->napi_rx);
+ 	}
+ 
+ err:
 -- 
 2.39.5
 
