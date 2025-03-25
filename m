@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BABE2690EA;
-	Tue, 25 Mar 2025 12:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46E72690EA;
+	Tue, 25 Mar 2025 12:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905999; cv=none; b=Mu+medjoza6JccWCGqV+n5oXxeIKHznzkucnUzNcJbK1uc/W7VW46Xut/ZrXytNj3z8kkoqvmUPYEv4sgXoc+PXCqWwOg3wq3eT+E/1iac1mw/jsoKNWjdBeUuJRJsFGivqkEivLs/Il49G95grhDyKjs2+JkEMEHw3Ava0G3Gs=
+	t=1742906001; cv=none; b=IhxspMop/6Ny649vhTkoK29Rse5KpBw6ozfNbgE5VJ2zBiZMP7eShd6Bdeqtmo5tpbr8g05NicO0Xs7pg8eVdeTFpN0yBUH/FIQVuG/GsCez/8uhVdw5FT2+ibo9iB46Su9ohyVV+5Kn4PtJWsjqBnmDeqeKwr7emidENBQodls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905999; c=relaxed/simple;
-	bh=257TV07Qwq28CO8scFNldPOl/DYcqvTnwWtAMKwqyfA=;
+	s=arc-20240116; t=1742906001; c=relaxed/simple;
+	bh=J7FxK/aLzbgoU3oQGjxYNEOnnfh5KFiLUafR1IZfoqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KWZModT6u/e+/fzkcHoqDYfH+l/SRDKHOnNExa+VfaBmiOtcrUIQ76Gg8rbrN42mxDBMc94qITxf7eJW3VnP97stT+jhamtkbjIPRfiRbm2P16TIhUhnl6a9VrDrrje4w6Sr1iHJK5nWqBl5K2VNE0OBJ/AK7ivrnZXkxaZfnW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfYzhjAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OOqPzMGapwyLorRy9cUUSuCZlxGpyg+2vl0jrqn4uriO84gX8Z91Qtiu2+PY/F0zYQ+tqE98i8f44vwKJGitGpCkfRmLhj/bqsqCgeBngdEpEKlqTyi3ABwS1qPemj9W2ZakFaiQa+1RmrPh6XG95RYPFs2kH72NNlYdJ5etHoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rShIhZyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfYzhjAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9030C4CEE4;
-	Tue, 25 Mar 2025 12:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rShIhZyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C70C4CEE4;
+	Tue, 25 Mar 2025 12:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905998;
-	bh=257TV07Qwq28CO8scFNldPOl/DYcqvTnwWtAMKwqyfA=;
+	s=korg; t=1742906000;
+	bh=J7FxK/aLzbgoU3oQGjxYNEOnnfh5KFiLUafR1IZfoqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GfYzhjASqV/LbRCxwVIc4ffkrON/q3Djlt1jVcR7u898uXpdTs/WPOhzf9VePSHdX
-	 n3BowllO0O+pPc+oglZI3idaNf5l7Lz2WSZcx7Zf8Ja2va/1rrej1INlK6DhE8QtSX
-	 /NRDbg1v7gHvxwNfPwbIMsmm/bPB+T/DqAlSDy3U=
+	b=rShIhZyCwTda+Cv4ajBiiUfYGpGQUEhQdUBANYQecB/JwzN+rwZ3R9cKHuaKoGQEA
+	 EfCtDVdDnCPNo4csXq3uytXQepTgjUqn1cmTWLKW2foWbXdXu80V9AKk1/lkfQWFZZ
+	 tuU9wH/vFiC4Muuie0WdemgMdZ2vCkg1b0l1MK8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Raphael S. Carvalho" <raphaelsc@scylladb.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Hugh Dickins <hughd@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 079/119] mm: fix error handling in __filemap_get_folio() with FGP_NOWAIT
-Date: Tue, 25 Mar 2025 08:22:17 -0400
-Message-ID: <20250325122151.075899565@linuxfoundation.org>
+Subject: [PATCH 6.13 080/119] mm/migrate: fix shmem xarray update during migration
+Date: Tue, 25 Mar 2025 08:22:18 -0400
+Message-ID: <20250325122151.101476077@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -48,95 +54,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael S. Carvalho <raphaelsc@scylladb.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 182db972c9568dc530b2f586a2f82dfd039d9f2a upstream.
+commit 60cf233b585cdf1f3c5e52d1225606b86acd08b0 upstream.
 
-original report:
-https://lore.kernel.org/all/CAKhLTr1UL3ePTpYjXOx2AJfNk8Ku2EdcEfu+CH1sf3Asr=B-Dw@mail.gmail.com/T/
+A shmem folio can be either in page cache or in swap cache, but not at the
+same time.  Namely, once it is in swap cache, folio->mapping should be
+NULL, and the folio is no longer in a shmem mapping.
 
-When doing buffered writes with FGP_NOWAIT, under memory pressure, the
-system returned ENOMEM despite there being plenty of available memory, to
-be reclaimed from page cache.  The user space used io_uring interface,
-which in turn submits I/O with FGP_NOWAIT (the fast path).
+In __folio_migrate_mapping(), to determine the number of xarray entries to
+update, folio_test_swapbacked() is used, but that conflates shmem in page
+cache case and shmem in swap cache case.  It leads to xarray multi-index
+entry corruption, since it turns a sibling entry to a normal entry during
+xas_store() (see [1] for a userspace reproduction).  Fix it by only using
+folio_test_swapcache() to determine whether xarray is storing swap cache
+entries or not to choose the right number of xarray entries to update.
 
-retsnoop pointed to iomap_get_folio:
+[1] https://lore.kernel.org/linux-mm/Z8idPCkaJW1IChjT@casper.infradead.org/
 
-00:34:16.180612 -> 00:34:16.180651 TID/PID 253786/253721
-(reactor-1/combined_tests):
+Note:
+In __split_huge_page(), folio_test_anon() && folio_test_swapcache() is
+used to get swap_cache address space, but that ignores the shmem folio in
+swap cache case.  It could lead to NULL pointer dereferencing when a
+in-swap-cache shmem folio is split at __xa_store(), since
+!folio_test_anon() is true and folio->mapping is NULL.  But fortunately,
+its caller split_huge_page_to_list_to_order() bails out early with EBUSY
+when folio->mapping is NULL.  So no need to take care of it here.
 
-                    entry_SYSCALL_64_after_hwframe+0x76
-                    do_syscall_64+0x82
-                    __do_sys_io_uring_enter+0x265
-                    io_submit_sqes+0x209
-                    io_issue_sqe+0x5b
-                    io_write+0xdd
-                    xfs_file_buffered_write+0x84
-                    iomap_file_buffered_write+0x1a6
-    32us [-ENOMEM]  iomap_write_begin+0x408
-iter=&{.inode=0xffff8c67aa031138,.len=4096,.flags=33,.iomap={.addr=0xffffffffffffffff,.length=4096,.type=1,.flags=3,.bdev=0x…
-pos=0 len=4096 foliop=0xffffb32c296b7b80
-!    4us [-ENOMEM]  iomap_get_folio
-iter=&{.inode=0xffff8c67aa031138,.len=4096,.flags=33,.iomap={.addr=0xffffffffffffffff,.length=4096,.type=1,.flags=3,.bdev=0x…
-pos=0 len=4096
-
-This is likely a regression caused by 66dabbb65d67 ("mm: return an ERR_PTR
-from __filemap_get_folio"), which moved error handling from
-io_map_get_folio() to __filemap_get_folio(), but broke FGP_NOWAIT
-handling, so ENOMEM is being escaped to user space.  Had it correctly
-returned -EAGAIN with NOWAIT, either io_uring or user space itself would
-be able to retry the request.
-
-It's not enough to patch io_uring since the iomap interface is the one
-responsible for it, and pwritev2(RWF_NOWAIT) and AIO interfaces must
-return the proper error too.
-
-The patch was tested with scylladb test suite (its original reproducer),
-and the tests all pass now when memory is pressured.
-
-Link: https://lkml.kernel.org/r/20250224143700.23035-1-raphaelsc@scylladb.com
-Fixes: 66dabbb65d67 ("mm: return an ERR_PTR from __filemap_get_folio")
-Signed-off-by: Raphael S. Carvalho <raphaelsc@scylladb.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Cc: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Link: https://lkml.kernel.org/r/20250305200403.2822855-1-ziy@nvidia.com
+Fixes: fc346d0a70a1 ("mm: migrate high-order folios in swap cache correctly")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Liu Shixin <liushixin2@huawei.com>
+Closes: https://lore.kernel.org/all/28546fb4-5210-bf75-16d6-43e1f8646080@huawei.com/
+Suggested-by: Hugh Dickins <hughd@google.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Charan Teja Kalla <quic_charante@quicinc.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Lance Yang <ioworker0@gmail.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mm/migrate.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1956,8 +1956,19 @@ no_page:
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -526,15 +526,13 @@ static int __folio_migrate_mapping(struc
+ 	if (folio_test_anon(folio) && folio_test_large(folio))
+ 		mod_mthp_stat(folio_order(folio), MTHP_STAT_NR_ANON, 1);
+ 	folio_ref_add(newfolio, nr); /* add cache reference */
+-	if (folio_test_swapbacked(folio)) {
++	if (folio_test_swapbacked(folio))
+ 		__folio_set_swapbacked(newfolio);
+-		if (folio_test_swapcache(folio)) {
+-			folio_set_swapcache(newfolio);
+-			newfolio->private = folio_get_private(folio);
+-		}
++	if (folio_test_swapcache(folio)) {
++		folio_set_swapcache(newfolio);
++		newfolio->private = folio_get_private(folio);
+ 		entries = nr;
+ 	} else {
+-		VM_BUG_ON_FOLIO(folio_test_swapcache(folio), folio);
+ 		entries = 1;
+ 	}
  
- 		if (err == -EEXIST)
- 			goto repeat;
--		if (err)
-+		if (err) {
-+			/*
-+			 * When NOWAIT I/O fails to allocate folios this could
-+			 * be due to a nonblocking memory allocation and not
-+			 * because the system actually is out of memory.
-+			 * Return -EAGAIN so that there caller retries in a
-+			 * blocking fashion instead of propagating -ENOMEM
-+			 * to the application.
-+			 */
-+			if ((fgp_flags & FGP_NOWAIT) && err == -ENOMEM)
-+				err = -EAGAIN;
- 			return ERR_PTR(err);
-+		}
- 		/*
- 		 * filemap_add_folio locks the page, and for mmap
- 		 * we expect an unlocked page.
 
 
