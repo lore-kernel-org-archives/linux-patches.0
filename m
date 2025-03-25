@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6895125745F;
-	Tue, 25 Mar 2025 12:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C420264A85;
+	Tue, 25 Mar 2025 12:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905684; cv=none; b=aPUw8v6TgSeH0GeRPllk7LmrmiPhj5CoDyzeNXUXjtlQ7tSRGswhnHhtQIxRhMl+50D/iS7oj6EqcBsXF2iO98UCaGsBlpaNDx7LqqkNhDUsY7wOxN7yUIiz5CXgLNChRo/H3qqStD6aqeoSqBydmBlY6FbIsohVm3mxibwc4U4=
+	t=1742905686; cv=none; b=meaAiTtOeopEMhfr2m7YT1Ur9U7thPPPwPmPzrYJRrsEl8lY7CxVPt45qkqxygKQEc00liBvYLSNFBtGAVad4xeg8DO4bk1MkToraxqQHj8BRZ3GA8w0x2yRnV0/ObbRfWy1vNsp4jdO6Kh4elH9gXrO6jdUybG5oBXfAXhbozQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905684; c=relaxed/simple;
-	bh=iJmD/jg+QmK6CecdCfuoakJlDVHekYDvLSzfSSyFLZ8=;
+	s=arc-20240116; t=1742905686; c=relaxed/simple;
+	bh=SKTxH2HaDS6kgmNrRbZnEEj/cg+0OvgXMEoP3sBX47U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwpaTXtAbevZtWN9+0kr2eQg2lb9kflpgugR6TbC/Z6KhJUYIrDUeGBlikmPp+aZjxME3yRc7qn4ag2nR6eAETaJlPkXT2CBxwOTF6WPQwQkw9lrW1oP/0y4x4gEvMD7SQY8BCh2uYVnuM8OqCufLiGF9J7U9zEp73GC/OfZyZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XV68m3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RbzUqFcx4HjY2laDX8TCds62wTZKJ2UfDaKQo5R2Jlg+SC5CYvegzQaL9m586rkO7asGfxfgkMKYLWOeqz1KtgzPr9wvDV2pZFj3VJGtAf+6VVSa1L1WTokVM7o1/Fl/EVlSMNukiMiMu2Cek7Nw9hVpr9p2zdCLEuB535RmqTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiS9FLLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XV68m3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C345C4CEE4;
-	Tue, 25 Mar 2025 12:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiS9FLLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEB5C4CEE4;
+	Tue, 25 Mar 2025 12:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905684;
-	bh=iJmD/jg+QmK6CecdCfuoakJlDVHekYDvLSzfSSyFLZ8=;
+	s=korg; t=1742905686;
+	bh=SKTxH2HaDS6kgmNrRbZnEEj/cg+0OvgXMEoP3sBX47U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XV68m3iNyb5yo8eREx/VpSlDZWdcohgXB6XVGXfJybfhKc4NCQCJAlYGLIs1w86e
-	 aJL3zp8ODqYdPt+lQCZ5aUZRCjSDLxtKOka7h1diEeBQw+1m5jGQPVqleoBYtA16KS
-	 V319Zr9SQx7He40jZrG/cdD7MC0NCkmtZXQFCjEo=
+	b=tiS9FLLwhMp4OmPdAgKxkrWadfVOD0yvh6dqm6XhrqZZLzK4VUVOgGyNcwaZoBhfT
+	 y55VQI/qaeCOedjwEhmtxDpQRT+piLKnE8iR5wftbUy6hFOb4mHGWcFdCLG46cxLHr
+	 iowT+hz6SQMa1MKPpwcLfS3qXzjRZ0s3JTzrCfRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 077/198] io_uring: fix corner case forgetting to vunmap
-Date: Tue, 25 Mar 2025 08:20:39 -0400
-Message-ID: <20250325122158.657362595@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>
+Subject: [PATCH 6.1 078/198] xfs: pass refcount intent directly through the log intent code
+Date: Tue, 25 Mar 2025 08:20:40 -0400
+Message-ID: <20250325122158.685041576@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -50,49 +50,403 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-Commit 43eef70e7e2ac74e7767731dd806720c7fb5e010 upstream.
+[ Upstream commit 0b11553ec54a6d88907e60d0595dbcef98539747 ]
 
-io_pages_unmap() is a bit tricky in trying to figure whether the pages
-were previously vmap'ed or not. In particular If there is juts one page
-it belives there is no need to vunmap. Paired io_pages_map(), however,
-could've failed io_mem_alloc_compound() and attempted to
-io_mem_alloc_single(), which does vmap, and that leads to unpaired vmap.
+Pass the incore refcount intent through the CUI logging code instead of
+repeatedly boxing and unboxing parameters.
 
-The solution is to fail if io_mem_alloc_compound() can't allocate a
-single page. That's the easiest way to deal with it, and those two
-functions are getting removed soon, so no need to overcomplicate it.
-
-Cc: stable@vger.kernel.org
-Fixes: 3ab1db3c6039e ("io_uring: get rid of remap_pfn_range() for mapping rings/sqes")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/477e75a3907a2fe83249e49c0a92cd480b2c60e0.1732569842.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_refcount.c |   96 +++++++++++++++++++------------------------
+ fs/xfs/libxfs/xfs_refcount.h |    4 -
+ fs/xfs/xfs_refcount_item.c   |   62 +++++++++++----------------
+ fs/xfs/xfs_trace.h           |   15 +-----
+ 4 files changed, 74 insertions(+), 103 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2611,6 +2611,8 @@ static void *io_pages_map(struct page **
- 	ret = io_mem_alloc_compound(pages, nr_pages, size, gfp);
- 	if (!IS_ERR(ret))
- 		goto done;
-+	if (nr_pages == 1)
-+		goto fail;
+--- a/fs/xfs/libxfs/xfs_refcount.c
++++ b/fs/xfs/libxfs/xfs_refcount.c
+@@ -1213,37 +1213,33 @@ out_error:
+ STATIC int
+ xfs_refcount_adjust(
+ 	struct xfs_btree_cur	*cur,
+-	xfs_agblock_t		agbno,
+-	xfs_extlen_t		aglen,
+-	xfs_agblock_t		*new_agbno,
+-	xfs_extlen_t		*new_aglen,
++	xfs_agblock_t		*agbno,
++	xfs_extlen_t		*aglen,
+ 	enum xfs_refc_adjust_op	adj)
+ {
+ 	bool			shape_changed;
+ 	int			shape_changes = 0;
+ 	int			error;
  
- 	ret = io_mem_alloc_single(pages, nr_pages, size, gfp);
- 	if (!IS_ERR(ret)) {
-@@ -2619,7 +2621,7 @@ done:
- 		*npages = nr_pages;
- 		return ret;
+-	*new_agbno = agbno;
+-	*new_aglen = aglen;
+ 	if (adj == XFS_REFCOUNT_ADJUST_INCREASE)
+-		trace_xfs_refcount_increase(cur->bc_mp, cur->bc_ag.pag->pag_agno,
+-				agbno, aglen);
++		trace_xfs_refcount_increase(cur->bc_mp,
++				cur->bc_ag.pag->pag_agno, *agbno, *aglen);
+ 	else
+-		trace_xfs_refcount_decrease(cur->bc_mp, cur->bc_ag.pag->pag_agno,
+-				agbno, aglen);
++		trace_xfs_refcount_decrease(cur->bc_mp,
++				cur->bc_ag.pag->pag_agno, *agbno, *aglen);
+ 
+ 	/*
+ 	 * Ensure that no rcextents cross the boundary of the adjustment range.
+ 	 */
+ 	error = xfs_refcount_split_extent(cur, XFS_REFC_DOMAIN_SHARED,
+-			agbno, &shape_changed);
++			*agbno, &shape_changed);
+ 	if (error)
+ 		goto out_error;
+ 	if (shape_changed)
+ 		shape_changes++;
+ 
+ 	error = xfs_refcount_split_extent(cur, XFS_REFC_DOMAIN_SHARED,
+-			agbno + aglen, &shape_changed);
++			*agbno + *aglen, &shape_changed);
+ 	if (error)
+ 		goto out_error;
+ 	if (shape_changed)
+@@ -1253,7 +1249,7 @@ xfs_refcount_adjust(
+ 	 * Try to merge with the left or right extents of the range.
+ 	 */
+ 	error = xfs_refcount_merge_extents(cur, XFS_REFC_DOMAIN_SHARED,
+-			new_agbno, new_aglen, adj, &shape_changed);
++			agbno, aglen, adj, &shape_changed);
+ 	if (error)
+ 		goto out_error;
+ 	if (shape_changed)
+@@ -1262,7 +1258,7 @@ xfs_refcount_adjust(
+ 		cur->bc_ag.refc.shape_changes++;
+ 
+ 	/* Now that we've taken care of the ends, adjust the middle extents */
+-	error = xfs_refcount_adjust_extents(cur, new_agbno, new_aglen, adj);
++	error = xfs_refcount_adjust_extents(cur, agbno, aglen, adj);
+ 	if (error)
+ 		goto out_error;
+ 
+@@ -1298,21 +1294,20 @@ xfs_refcount_finish_one_cleanup(
+ static inline int
+ xfs_refcount_continue_op(
+ 	struct xfs_btree_cur		*cur,
+-	xfs_fsblock_t			startblock,
+-	xfs_agblock_t			new_agbno,
+-	xfs_extlen_t			new_len,
+-	xfs_fsblock_t			*new_fsbno)
++	struct xfs_refcount_intent	*ri,
++	xfs_agblock_t			new_agbno)
+ {
+ 	struct xfs_mount		*mp = cur->bc_mp;
+ 	struct xfs_perag		*pag = cur->bc_ag.pag;
+ 
+-	if (XFS_IS_CORRUPT(mp, !xfs_verify_agbext(pag, new_agbno, new_len)))
++	if (XFS_IS_CORRUPT(mp, !xfs_verify_agbext(pag, new_agbno,
++					ri->ri_blockcount)))
+ 		return -EFSCORRUPTED;
+ 
+-	*new_fsbno = XFS_AGB_TO_FSB(mp, pag->pag_agno, new_agbno);
++	ri->ri_startblock = XFS_AGB_TO_FSB(mp, pag->pag_agno, new_agbno);
+ 
+-	ASSERT(xfs_verify_fsbext(mp, *new_fsbno, new_len));
+-	ASSERT(pag->pag_agno == XFS_FSB_TO_AGNO(mp, *new_fsbno));
++	ASSERT(xfs_verify_fsbext(mp, ri->ri_startblock, ri->ri_blockcount));
++	ASSERT(pag->pag_agno == XFS_FSB_TO_AGNO(mp, ri->ri_startblock));
+ 
+ 	return 0;
+ }
+@@ -1327,11 +1322,7 @@ xfs_refcount_continue_op(
+ int
+ xfs_refcount_finish_one(
+ 	struct xfs_trans		*tp,
+-	enum xfs_refcount_intent_type	type,
+-	xfs_fsblock_t			startblock,
+-	xfs_extlen_t			blockcount,
+-	xfs_fsblock_t			*new_fsb,
+-	xfs_extlen_t			*new_len,
++	struct xfs_refcount_intent	*ri,
+ 	struct xfs_btree_cur		**pcur)
+ {
+ 	struct xfs_mount		*mp = tp->t_mountp;
+@@ -1339,17 +1330,16 @@ xfs_refcount_finish_one(
+ 	struct xfs_buf			*agbp = NULL;
+ 	int				error = 0;
+ 	xfs_agblock_t			bno;
+-	xfs_agblock_t			new_agbno;
+ 	unsigned long			nr_ops = 0;
+ 	int				shape_changes = 0;
+ 	struct xfs_perag		*pag;
+ 
+-	pag = xfs_perag_get(mp, XFS_FSB_TO_AGNO(mp, startblock));
+-	bno = XFS_FSB_TO_AGBNO(mp, startblock);
++	pag = xfs_perag_get(mp, XFS_FSB_TO_AGNO(mp, ri->ri_startblock));
++	bno = XFS_FSB_TO_AGBNO(mp, ri->ri_startblock);
+ 
+-	trace_xfs_refcount_deferred(mp, XFS_FSB_TO_AGNO(mp, startblock),
+-			type, XFS_FSB_TO_AGBNO(mp, startblock),
+-			blockcount);
++	trace_xfs_refcount_deferred(mp, XFS_FSB_TO_AGNO(mp, ri->ri_startblock),
++			ri->ri_type, XFS_FSB_TO_AGBNO(mp, ri->ri_startblock),
++			ri->ri_blockcount);
+ 
+ 	if (XFS_TEST_ERROR(false, mp, XFS_ERRTAG_REFCOUNT_FINISH_ONE)) {
+ 		error = -EIO;
+@@ -1380,42 +1370,42 @@ xfs_refcount_finish_one(
  	}
--
-+fail:
- 	kvfree(pages);
- 	*out_pages = NULL;
- 	*npages = 0;
+ 	*pcur = rcur;
+ 
+-	switch (type) {
++	switch (ri->ri_type) {
+ 	case XFS_REFCOUNT_INCREASE:
+-		error = xfs_refcount_adjust(rcur, bno, blockcount, &new_agbno,
+-				new_len, XFS_REFCOUNT_ADJUST_INCREASE);
++		error = xfs_refcount_adjust(rcur, &bno, &ri->ri_blockcount,
++				XFS_REFCOUNT_ADJUST_INCREASE);
+ 		if (error)
+ 			goto out_drop;
+-		if (*new_len > 0)
+-			error = xfs_refcount_continue_op(rcur, startblock,
+-					new_agbno, *new_len, new_fsb);
++		if (ri->ri_blockcount > 0)
++			error = xfs_refcount_continue_op(rcur, ri, bno);
+ 		break;
+ 	case XFS_REFCOUNT_DECREASE:
+-		error = xfs_refcount_adjust(rcur, bno, blockcount, &new_agbno,
+-				new_len, XFS_REFCOUNT_ADJUST_DECREASE);
++		error = xfs_refcount_adjust(rcur, &bno, &ri->ri_blockcount,
++				XFS_REFCOUNT_ADJUST_DECREASE);
+ 		if (error)
+ 			goto out_drop;
+-		if (*new_len > 0)
+-			error = xfs_refcount_continue_op(rcur, startblock,
+-					new_agbno, *new_len, new_fsb);
++		if (ri->ri_blockcount > 0)
++			error = xfs_refcount_continue_op(rcur, ri, bno);
+ 		break;
+ 	case XFS_REFCOUNT_ALLOC_COW:
+-		*new_fsb = startblock + blockcount;
+-		*new_len = 0;
+-		error = __xfs_refcount_cow_alloc(rcur, bno, blockcount);
++		error = __xfs_refcount_cow_alloc(rcur, bno, ri->ri_blockcount);
++		if (error)
++			goto out_drop;
++		ri->ri_blockcount = 0;
+ 		break;
+ 	case XFS_REFCOUNT_FREE_COW:
+-		*new_fsb = startblock + blockcount;
+-		*new_len = 0;
+-		error = __xfs_refcount_cow_free(rcur, bno, blockcount);
++		error = __xfs_refcount_cow_free(rcur, bno, ri->ri_blockcount);
++		if (error)
++			goto out_drop;
++		ri->ri_blockcount = 0;
+ 		break;
+ 	default:
+ 		ASSERT(0);
+ 		error = -EFSCORRUPTED;
+ 	}
+-	if (!error && *new_len > 0)
+-		trace_xfs_refcount_finish_one_leftover(mp, pag->pag_agno, type,
+-				bno, blockcount, new_agbno, *new_len);
++	if (!error && ri->ri_blockcount > 0)
++		trace_xfs_refcount_finish_one_leftover(mp, pag->pag_agno,
++				ri->ri_type, bno, ri->ri_blockcount);
+ out_drop:
+ 	xfs_perag_put(pag);
+ 	return error;
+--- a/fs/xfs/libxfs/xfs_refcount.h
++++ b/fs/xfs/libxfs/xfs_refcount.h
+@@ -75,9 +75,7 @@ void xfs_refcount_decrease_extent(struct
+ extern void xfs_refcount_finish_one_cleanup(struct xfs_trans *tp,
+ 		struct xfs_btree_cur *rcur, int error);
+ extern int xfs_refcount_finish_one(struct xfs_trans *tp,
+-		enum xfs_refcount_intent_type type, xfs_fsblock_t startblock,
+-		xfs_extlen_t blockcount, xfs_fsblock_t *new_fsb,
+-		xfs_extlen_t *new_len, struct xfs_btree_cur **pcur);
++		struct xfs_refcount_intent *ri, struct xfs_btree_cur **pcur);
+ 
+ extern int xfs_refcount_find_shared(struct xfs_btree_cur *cur,
+ 		xfs_agblock_t agbno, xfs_extlen_t aglen, xfs_agblock_t *fbno,
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -252,17 +252,12 @@ static int
+ xfs_trans_log_finish_refcount_update(
+ 	struct xfs_trans		*tp,
+ 	struct xfs_cud_log_item		*cudp,
+-	enum xfs_refcount_intent_type	type,
+-	xfs_fsblock_t			startblock,
+-	xfs_extlen_t			blockcount,
+-	xfs_fsblock_t			*new_fsb,
+-	xfs_extlen_t			*new_len,
++	struct xfs_refcount_intent	*ri,
+ 	struct xfs_btree_cur		**pcur)
+ {
+ 	int				error;
+ 
+-	error = xfs_refcount_finish_one(tp, type, startblock,
+-			blockcount, new_fsb, new_len, pcur);
++	error = xfs_refcount_finish_one(tp, ri, pcur);
+ 
+ 	/*
+ 	 * Mark the transaction dirty, even on error. This ensures the
+@@ -378,25 +373,20 @@ xfs_refcount_update_finish_item(
+ 	struct list_head		*item,
+ 	struct xfs_btree_cur		**state)
+ {
+-	struct xfs_refcount_intent	*refc;
+-	xfs_fsblock_t			new_fsb;
+-	xfs_extlen_t			new_aglen;
++	struct xfs_refcount_intent	*ri;
+ 	int				error;
+ 
+-	refc = container_of(item, struct xfs_refcount_intent, ri_list);
+-	error = xfs_trans_log_finish_refcount_update(tp, CUD_ITEM(done),
+-			refc->ri_type, refc->ri_startblock, refc->ri_blockcount,
+-			&new_fsb, &new_aglen, state);
++	ri = container_of(item, struct xfs_refcount_intent, ri_list);
++	error = xfs_trans_log_finish_refcount_update(tp, CUD_ITEM(done), ri,
++			state);
+ 
+ 	/* Did we run out of reservation?  Requeue what we didn't finish. */
+-	if (!error && new_aglen > 0) {
+-		ASSERT(refc->ri_type == XFS_REFCOUNT_INCREASE ||
+-		       refc->ri_type == XFS_REFCOUNT_DECREASE);
+-		refc->ri_startblock = new_fsb;
+-		refc->ri_blockcount = new_aglen;
++	if (!error && ri->ri_blockcount > 0) {
++		ASSERT(ri->ri_type == XFS_REFCOUNT_INCREASE ||
++		       ri->ri_type == XFS_REFCOUNT_DECREASE);
+ 		return -EAGAIN;
+ 	}
+-	kmem_cache_free(xfs_refcount_intent_cache, refc);
++	kmem_cache_free(xfs_refcount_intent_cache, ri);
+ 	return error;
+ }
+ 
+@@ -463,18 +453,13 @@ xfs_cui_item_recover(
+ 	struct xfs_log_item		*lip,
+ 	struct list_head		*capture_list)
+ {
+-	struct xfs_bmbt_irec		irec;
+ 	struct xfs_cui_log_item		*cuip = CUI_ITEM(lip);
+-	struct xfs_phys_extent		*refc;
+ 	struct xfs_cud_log_item		*cudp;
+ 	struct xfs_trans		*tp;
+ 	struct xfs_btree_cur		*rcur = NULL;
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+-	xfs_fsblock_t			new_fsb;
+-	xfs_extlen_t			new_len;
+ 	unsigned int			refc_type;
+ 	bool				requeue_only = false;
+-	enum xfs_refcount_intent_type	type;
+ 	int				i;
+ 	int				error = 0;
+ 
+@@ -513,6 +498,9 @@ xfs_cui_item_recover(
+ 	cudp = xfs_trans_get_cud(tp, cuip);
+ 
+ 	for (i = 0; i < cuip->cui_format.cui_nextents; i++) {
++		struct xfs_refcount_intent	fake = { };
++		struct xfs_phys_extent		*refc;
++
+ 		refc = &cuip->cui_format.cui_extents[i];
+ 		refc_type = refc->pe_flags & XFS_REFCOUNT_EXTENT_TYPE_MASK;
+ 		switch (refc_type) {
+@@ -520,7 +508,7 @@ xfs_cui_item_recover(
+ 		case XFS_REFCOUNT_DECREASE:
+ 		case XFS_REFCOUNT_ALLOC_COW:
+ 		case XFS_REFCOUNT_FREE_COW:
+-			type = refc_type;
++			fake.ri_type = refc_type;
+ 			break;
+ 		default:
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+@@ -529,13 +517,12 @@ xfs_cui_item_recover(
+ 			error = -EFSCORRUPTED;
+ 			goto abort_error;
+ 		}
+-		if (requeue_only) {
+-			new_fsb = refc->pe_startblock;
+-			new_len = refc->pe_len;
+-		} else
++
++		fake.ri_startblock = refc->pe_startblock;
++		fake.ri_blockcount = refc->pe_len;
++		if (!requeue_only)
+ 			error = xfs_trans_log_finish_refcount_update(tp, cudp,
+-				type, refc->pe_startblock, refc->pe_len,
+-				&new_fsb, &new_len, &rcur);
++					&fake, &rcur);
+ 		if (error == -EFSCORRUPTED)
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 					&cuip->cui_format,
+@@ -544,10 +531,13 @@ xfs_cui_item_recover(
+ 			goto abort_error;
+ 
+ 		/* Requeue what we didn't finish. */
+-		if (new_len > 0) {
+-			irec.br_startblock = new_fsb;
+-			irec.br_blockcount = new_len;
+-			switch (type) {
++		if (fake.ri_blockcount > 0) {
++			struct xfs_bmbt_irec	irec = {
++				.br_startblock	= fake.ri_startblock,
++				.br_blockcount	= fake.ri_blockcount,
++			};
++
++			switch (fake.ri_type) {
+ 			case XFS_REFCOUNT_INCREASE:
+ 				xfs_refcount_increase_extent(tp, &irec);
+ 				break;
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -3208,17 +3208,14 @@ DEFINE_REFCOUNT_DEFERRED_EVENT(xfs_refco
+ 
+ TRACE_EVENT(xfs_refcount_finish_one_leftover,
+ 	TP_PROTO(struct xfs_mount *mp, xfs_agnumber_t agno,
+-		 int type, xfs_agblock_t agbno, xfs_extlen_t len,
+-		 xfs_agblock_t new_agbno, xfs_extlen_t new_len),
+-	TP_ARGS(mp, agno, type, agbno, len, new_agbno, new_len),
++		 int type, xfs_agblock_t agbno, xfs_extlen_t len),
++	TP_ARGS(mp, agno, type, agbno, len),
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+ 		__field(xfs_agnumber_t, agno)
+ 		__field(int, type)
+ 		__field(xfs_agblock_t, agbno)
+ 		__field(xfs_extlen_t, len)
+-		__field(xfs_agblock_t, new_agbno)
+-		__field(xfs_extlen_t, new_len)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->dev = mp->m_super->s_dev;
+@@ -3226,17 +3223,13 @@ TRACE_EVENT(xfs_refcount_finish_one_left
+ 		__entry->type = type;
+ 		__entry->agbno = agbno;
+ 		__entry->len = len;
+-		__entry->new_agbno = new_agbno;
+-		__entry->new_len = new_len;
+ 	),
+-	TP_printk("dev %d:%d type %d agno 0x%x agbno 0x%x fsbcount 0x%x new_agbno 0x%x new_fsbcount 0x%x",
++	TP_printk("dev %d:%d type %d agno 0x%x agbno 0x%x fsbcount 0x%x",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->type,
+ 		  __entry->agno,
+ 		  __entry->agbno,
+-		  __entry->len,
+-		  __entry->new_agbno,
+-		  __entry->new_len)
++		  __entry->len)
+ );
+ 
+ /* simple inode-based error/%ip tracepoint class */
 
 
