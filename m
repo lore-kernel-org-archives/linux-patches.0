@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E161290BB4;
-	Tue, 25 Mar 2025 12:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C58266563;
+	Tue, 25 Mar 2025 12:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905604; cv=none; b=McPR+/cnbmcEBiWdu4a6Xb6yd8g4q7RCwGTPnqF338qONv1OCr5tsBz+pIFKyjtRXHRLxX2T9cn3PbXsvi5fjT8JhNkJ/6LbespSwyDYb/p/i+kBiegRdThdYxBxdDq1/hsMfxsMGPsyYU4yqy+0ZRtB+J6EMQbYyR5VjKWLQDk=
+	t=1742905605; cv=none; b=pFNSTtzSVJ7LDaNVitjxN8C5JjzZ8OO7MEPmzCyIc8nxLVmF3AmULdAmtm7UjsvDinO9vTvN956kRAoCc+K8wbfQvtnrtjkH/vbw76n928DHJVnEDnA1HU+lC4MqBCBkC4mV6ptQPBGf86wOD8c7FV+HTm7B753arJVXqIKfLY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905604; c=relaxed/simple;
-	bh=FCrjv6qTU6QgliBHuC7IHxNz8HjTi6Ma6bwqerhfVQ8=;
+	s=arc-20240116; t=1742905605; c=relaxed/simple;
+	bh=Nrk9PoltTu2f/7Yaehrdx+0CauhLWrr0DsMyCZqUlsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZZZ7yBe8Tmcha62iQft+YOCOHTpJKvxBxltJNkl6Uufjy8Ml0agJ5T80pHipOmhrk3tKtlVWBKpkwTjxg12ObcSDfwAaGfDjq9mp30qad8hbOr1Bx9qxSrZTYgaGFFu9J8zYG7liD5x37XZE6RxBAdzlfFw7/EZhbL8cDbwiIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKP5Crd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lLyxwwsuXV1fEVoakR+zx4FQf/761ctZsmYSP5SzNAmrwr1K3o4fo4R12lzn8gF5ov6X3iRamCqfYFFj5UfYHkiw0wZDFWZFEkXjUDWe+YBc1SM3oBrsph8S9pVFrlDRQUc8KDXOVL6hXMsFTguTGMXEQjHxRdDIZewy3k9kY+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3JYk8x8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKP5Crd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95BEC4CEEF;
-	Tue, 25 Mar 2025 12:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3JYk8x8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E47C4CEE4;
+	Tue, 25 Mar 2025 12:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905603;
-	bh=FCrjv6qTU6QgliBHuC7IHxNz8HjTi6Ma6bwqerhfVQ8=;
+	s=korg; t=1742905605;
+	bh=Nrk9PoltTu2f/7Yaehrdx+0CauhLWrr0DsMyCZqUlsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKP5Crd/Mzhal+FII/VJjJGcScShx0j959yvja+/8RBsEUJEFiwxpmOXpf9bo3Cav
-	 gvQakzUd25/NKPqoFo3XQDuagJLyPqI2lAeZ3wBZdPONzrF/NNrW8VuLRwIC9lx+70
-	 6whqevc98nWA8DuBLmj0RUzqp/zlPA4jUrvC0tIc=
+	b=Z3JYk8x84609NfX3ougKA0BEf/lDnqDWXO1C8L2iYQawmQD5A4iArydOwT2nugkux
+	 f1TR28dwsBwp21oLhL3WEENg4j9cV67AQvT0Dl2pf5Aa7MSaQGeiM3sZ8SUePIr845
+	 qHiugldSW3418Q3UwTmojGY0aFaaDOeWttNwUgqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Neal Gompa <neal@gompa.dev>,
 	Hector Martin <marcan@marcan.st>,
+	James Calligeros <jcalligeros99@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/198] ASoC: tas2770: Fix volume scale
-Date: Tue, 25 Mar 2025 08:20:25 -0400
-Message-ID: <20250325122158.298164514@linuxfoundation.org>
+Subject: [PATCH 6.1 064/198] ASoC: tas2764: Fix power control mask
+Date: Tue, 25 Mar 2025 08:20:26 -0400
+Message-ID: <20250325122158.326163813@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,32 +55,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 579cd64b9df8a60284ec3422be919c362de40e41 ]
+[ Upstream commit a3f172359e22b2c11b750d23560481a55bf86af1 ]
 
-The scale starts at -100dB, not -128dB.
-
+Reviewed-by: Neal Gompa <neal@gompa.dev>
 Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2770-v1-1-cf50ff1d59a3@kernel.org
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250218-apple-codec-changes-v2-1-932760fd7e07@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2770.c | 2 +-
+ sound/soc/codecs/tas2764.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 8557759acb1f2..e284a3a854591 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -508,7 +508,7 @@ static int tas2770_codec_probe(struct snd_soc_component *component)
- }
+diff --git a/sound/soc/codecs/tas2764.h b/sound/soc/codecs/tas2764.h
+index 168af772a898f..d13ecae9c9c2f 100644
+--- a/sound/soc/codecs/tas2764.h
++++ b/sound/soc/codecs/tas2764.h
+@@ -25,7 +25,7 @@
  
- static DECLARE_TLV_DB_SCALE(tas2770_digital_tlv, 1100, 50, 0);
--static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -12750, 50, 0);
-+static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -10050, 50, 0);
- 
- static const struct snd_kcontrol_new tas2770_snd_controls[] = {
- 	SOC_SINGLE_TLV("Speaker Playback Volume", TAS2770_PLAY_CFG_REG2,
+ /* Power Control */
+ #define TAS2764_PWR_CTRL		TAS2764_REG(0X0, 0x02)
+-#define TAS2764_PWR_CTRL_MASK		GENMASK(1, 0)
++#define TAS2764_PWR_CTRL_MASK		GENMASK(2, 0)
+ #define TAS2764_PWR_CTRL_ACTIVE		0x0
+ #define TAS2764_PWR_CTRL_MUTE		BIT(0)
+ #define TAS2764_PWR_CTRL_SHUTDOWN	BIT(1)
 -- 
 2.39.5
 
