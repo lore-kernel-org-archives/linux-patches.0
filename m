@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC3125BAAA;
-	Tue, 25 Mar 2025 12:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C295A2561A2;
+	Tue, 25 Mar 2025 12:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906076; cv=none; b=F0bH8Rarj0TqGc066Fx5h6ueTsnePVWckIiwScFJUT+oAssG8JwPHIC7mHGgww+zZlMioCkF02zzzJrktJfaMZ1MC4/7+FXd5A52VfJlxPYxewj7U4qJCeiYnn5WW8RyUmrT1B/MzD/JHSj8ymu0avZihf0UsFyF7MmSYnIioB4=
+	t=1742906077; cv=none; b=Lma5cS6DfnzLCCOb85pRnzjwCS+T83EC7lOloeeuC+p4O4EdjsPSRXyvmOSFS5ls/2tHnS/JxN37Vq5uqBqmGxRVpwEWxg2zqlqdvr41jnpPXbuFup/s25Ebb7vMUPlauH3XM7CosXFWHJZrpoCWlk5F6qsPq4ELFh2rIt8Pt+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906076; c=relaxed/simple;
-	bh=lo3qOCPVnM08nK5szSzen9UaWrQ5O/Ja2UwNIRSAfew=;
+	s=arc-20240116; t=1742906077; c=relaxed/simple;
+	bh=qIueGOdeBF+sUXfr1tLnQIvIbpolc5IN/AaqMBdtyyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ywf7vjYXQA/GRDQH9OB35/PVo/8MJCo6RfplAl4F+u8kTKjmbk2rEYKxEHDDZHm2QvlrbFxe0HkDztX7aTHwRQWIefa+cgLoJrVrvhXk8sX+zrNcto+PSpQIIrM5qxHJKgGYlata1w91wb7MO/yDS2TeHbPAiUzy95/jf68lsoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fe3yqY1a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnyYb/qxFQnRAT2frzJuhJU8N6eo0KVKzsqurnY8vXRZO7OZjZYdsZAXrgKK77Jlsvn6LzzXF0FplvI8ZaWdH6z+2C2TZtQY889E7y897riLr2KN70fcUtpJJTaX341wWKEFiMVtZup+az4lcPPcKA2M5dawqx6vfR4NsGBKqT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2W5W8cs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fe3yqY1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6318C4CEE9;
-	Tue, 25 Mar 2025 12:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2W5W8cs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7591EC4CEE4;
+	Tue, 25 Mar 2025 12:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906075;
-	bh=lo3qOCPVnM08nK5szSzen9UaWrQ5O/Ja2UwNIRSAfew=;
+	s=korg; t=1742906077;
+	bh=qIueGOdeBF+sUXfr1tLnQIvIbpolc5IN/AaqMBdtyyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fe3yqY1aNWa7g/OMSKtxZYL4Go9ja7RPuQ5/CnuroZu2H0/uveISm1y9mNpNLVYG9
-	 bgV6+8hHXb7ee+77uHgIABS4HeTlg96ZoRmMIrcmtkWWEI9o3IjJcX7fL5vzsFrHSy
-	 gdsk/EFSHYaZQn1WheSkDoQGSWBgnBKYzzMWgf4c=
+	b=c2W5W8csB9twwm1xPnRgYYTWAkSgKsWjujhC2pIRhXeeAoerJBnPF+lBiTvlqNOZu
+	 RM8RlS/FUlxEp8g5aTrxLSIAuqKa+wkgxFmgQmbH+VUn75hNfcUbb+zK8DUhY9QDo/
+	 2Y7Qt2jXGI+lIl+b3AmU+7F0OmNpao5OV5pueuPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.13 091/119] batman-adv: Ignore own maximum aggregation size during RX
-Date: Tue, 25 Mar 2025 08:22:29 -0400
-Message-ID: <20250325122151.384808627@linuxfoundation.org>
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Saranya R <quic_sarar@quicinc.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.13 092/119] soc: qcom: pdr: Fix the potential deadlock
+Date: Tue, 25 Mar 2025 08:22:30 -0400
+Message-ID: <20250325122151.410705557@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -50,56 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Saranya R <quic_sarar@quicinc.com>
 
-commit 548b0c5de7619ef53bbde5590700693f2f6d2a56 upstream.
+commit 2eeb03ad9f42dfece63051be2400af487ddb96d2 upstream.
 
-An OGMv1 and OGMv2 packet receive processing were not only limited by the
-number of bytes in the received packet but also by the nodes maximum
-aggregation packet size limit. But this limit is relevant for TX and not
-for RX. It must not be enforced by batadv_(i)v_ogm_aggr_packet to avoid
-loss of information in case of a different limit for sender and receiver.
+When some client process A call pdr_add_lookup() to add the look up for
+the service and does schedule locator work, later a process B got a new
+server packet indicating locator is up and call pdr_locator_new_server()
+which eventually sets pdr->locator_init_complete to true which process A
+sees and takes list lock and queries domain list but it will timeout due
+to deadlock as the response will queued to the same qmi->wq and it is
+ordered workqueue and process B is not able to complete new server
+request work due to deadlock on list lock.
 
-This has a minor side effect for B.A.T.M.A.N. IV because the
-batadv_iv_ogm_aggr_packet is also used for the preprocessing for the TX.
-But since the aggregation code itself will not allow more than
-BATADV_MAX_AGGREGATION_BYTES bytes, this check was never triggering (in
-this context) prior of removing it.
+Fix it by removing the unnecessary list iteration as the list iteration
+is already being done inside locator work, so avoid it here and just
+call schedule_work() here.
 
-Cc: stable@vger.kernel.org
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Fixes: 9323158ef9f4 ("batman-adv: OGMv2 - implement originators logic")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+       Process A                        Process B
+
+                                     process_scheduled_works()
+pdr_add_lookup()                      qmi_data_ready_work()
+ process_scheduled_works()             pdr_locator_new_server()
+                                         pdr->locator_init_complete=true;
+   pdr_locator_work()
+    mutex_lock(&pdr->list_lock);
+
+     pdr_locate_service()                  mutex_lock(&pdr->list_lock);
+
+      pdr_get_domain_list()
+       pr_err("PDR: %s get domain list
+               txn wait failed: %d\n",
+               req->service_name,
+               ret);
+
+Timeout error log due to deadlock:
+
+"
+ PDR: tms/servreg get domain list txn wait failed: -110
+ PDR: service lookup for msm/adsp/sensor_pd:tms/servreg failed: -110
+"
+
+Thanks to Bjorn and Johan for letting me know that this commit also fixes
+an audio regression when using the in-kernel pd-mapper as that makes it
+easier to hit this race. [1]
+
+Link: https://lore.kernel.org/lkml/Zqet8iInnDhnxkT9@hovoldconsulting.com/ # [1]
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+CC: stable@vger.kernel.org
+Reviewed-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Saranya R <quic_sarar@quicinc.com>
+Co-developed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_iv_ogm.c |    3 +--
- net/batman-adv/bat_v_ogm.c  |    3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/soc/qcom/pdr_interface.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -325,8 +325,7 @@ batadv_iv_ogm_aggr_packet(int buff_pos,
- 	/* check if there is enough space for the optional TVLV */
- 	next_buff_pos += ntohs(ogm_packet->tvlv_len);
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -75,7 +75,6 @@ static int pdr_locator_new_server(struct
+ {
+ 	struct pdr_handle *pdr = container_of(qmi, struct pdr_handle,
+ 					      locator_hdl);
+-	struct pdr_service *pds;
  
--	return (next_buff_pos <= packet_len) &&
--	       (next_buff_pos <= BATADV_MAX_AGGREGATION_BYTES);
-+	return next_buff_pos <= packet_len;
+ 	mutex_lock(&pdr->lock);
+ 	/* Create a local client port for QMI communication */
+@@ -87,12 +86,7 @@ static int pdr_locator_new_server(struct
+ 	mutex_unlock(&pdr->lock);
+ 
+ 	/* Service pending lookup requests */
+-	mutex_lock(&pdr->list_lock);
+-	list_for_each_entry(pds, &pdr->lookups, node) {
+-		if (pds->need_locator_lookup)
+-			schedule_work(&pdr->locator_work);
+-	}
+-	mutex_unlock(&pdr->list_lock);
++	schedule_work(&pdr->locator_work);
+ 
+ 	return 0;
  }
- 
- /* send a batman ogm to a given interface */
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -839,8 +839,7 @@ batadv_v_ogm_aggr_packet(int buff_pos, i
- 	/* check if there is enough space for the optional TVLV */
- 	next_buff_pos += ntohs(ogm2_packet->tvlv_len);
- 
--	return (next_buff_pos <= packet_len) &&
--	       (next_buff_pos <= BATADV_MAX_AGGREGATION_BYTES);
-+	return next_buff_pos <= packet_len;
- }
- 
- /**
 
 
