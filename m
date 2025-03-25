@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0F62571AB;
-	Tue, 25 Mar 2025 12:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04362586CD;
+	Tue, 25 Mar 2025 12:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906039; cv=none; b=t52A9hWOjdKp3ldTYlbmAe7JYhAZ2Z9zlSUqV0+7HqUpB4GNu1KKVXuf2aUCTfganf7S9mdidKny0kPg2UZXOtRiQ9iNeqt2Y1pTB9A2SI6nk1/G2HAGrs+t4hkp2pw12CFSwfGC63ELM6boEf6wUWwTy8gPKJtGQGUlnH+t9nk=
+	t=1742906040; cv=none; b=uyyD/5l9IGVxfaYSU7Qlcc13Ov3EfQRA4FXFRlcWG7VYaePeN9eED0FeVrtcBf6HaOVbbiOGf3h9cEl1YO5woodK/yj0GEGDo2H7yBqonGTm8AlSuHPaYDiEQZmELHQvqiEMIP0S2zGhIBqvgqQP/QIWOFtrsIwPxjebyPQR4/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906039; c=relaxed/simple;
-	bh=dkGBsBvPDJSXwf6L1Fc4xfkNklbPVwRX89bTt2SLUUg=;
+	s=arc-20240116; t=1742906040; c=relaxed/simple;
+	bh=Vn6NF3sTawKNfYdCTHXhv7NtusTFf2lIb4drePCi+OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VR/9S1e3svUe2PDxD54BbXsS8qWsY67C6N3HU/MSQcYTSjfw4d/8eKJ2cT/wfa3L6KlXqPUM0Nj/Qv55Ij2PEiuk9cHqPFplPRuyY9ULKgx6FGGraxFrZP70WmDC1pMHeJDDVfOr8KsapoOZ9UVvRRRcKY5dj9XWUFzi3nJGUyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRfhokVJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxfoxrWp8B1WJW2cufmEhlexqpHD+K5u4k4b9JOprELX6PtwcC5EztFZ60L3T+r9cp+OqW+jfyNHq5lMu+mJp9k65o18tz2d2NjQ3lap2+ikK13ylQiXlpwWfJVwUOLUcpKAwWyHl/Ry1n7VIjABFwOhhl/Te7IA3G72Oj8xadg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzjV/vg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRfhokVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C4FC4CEE4;
-	Tue, 25 Mar 2025 12:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzjV/vg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85924C4CEE4;
+	Tue, 25 Mar 2025 12:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906039;
-	bh=dkGBsBvPDJSXwf6L1Fc4xfkNklbPVwRX89bTt2SLUUg=;
+	s=korg; t=1742906040;
+	bh=Vn6NF3sTawKNfYdCTHXhv7NtusTFf2lIb4drePCi+OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRfhokVJ3KvgA84kCroCFsQFDWKGdhZ8Rd34r4nXerw7/cO6p9a9nZRZmAHlRdh+H
-	 rHbYo+6bInua4SdhT/TpRUaRFSLCKQWSpWyfxqSe83sh2Zk49w99ODvGi9qmONHZRN
-	 O7V67biNo0dzQhE917uwTVLuzTIT+0cXb57aGwqQ=
+	b=zzjV/vg9gJy/OR4aqZsaw5JftmH52tXXOHWFgTq9fO7yhLlS4KHlgPwUY1dN9L1zH
+	 ZrnOwU5yQOo2GKzmkOpuiARZs6omy6CciR+xIMyKXGbihNEBlxp7QaQ3QMVKl+ixc1
+	 5aWko+eDn2REKnQZwj1R7mP/4c/c5hbWqjVM+IpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.13 102/119] drm/amdgpu/pm: wire up hwmon fan speed for smu 14.0.2
-Date: Tue, 25 Mar 2025 08:22:40 -0400
-Message-ID: <20250325122151.664068757@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>
+Subject: [PATCH 6.13 103/119] drm/amdgpu: Remove JPEG from vega and carrizo video caps
+Date: Tue, 25 Mar 2025 08:22:41 -0400
+Message-ID: <20250325122151.688234723@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -50,72 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: David Rosca <david.rosca@amd.com>
 
-commit 5ca0040ecfe8ba0dee9df1f559e8d7587f12bf89 upstream.
+commit 7fc0765208502e53297ce72c49ca43729f9d6ff3 upstream.
 
-Add callbacks for fan speed fetching.
+JPEG is only supported for VCN1+.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4034
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 90df6db62fa78a8ab0b705ec38db99c7973b95d6)
-Cc: stable@vger.kernel.org # 6.12.x
+(cherry picked from commit 0a6e7b06bdbead2e43d56a2274b7e0c9c86d536e)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   35 +++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/soc15.c |    1 -
+ drivers/gpu/drm/amd/amdgpu/vi.c    |    7 -------
+ 2 files changed, 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -1616,6 +1616,39 @@ out:
- 	adev->unique_id = ((uint64_t)upper32 << 32) | lower32;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -108,7 +108,6 @@ static const struct amdgpu_video_codec_i
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4096, 4)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
+ };
  
-+static int smu_v14_0_2_get_fan_speed_pwm(struct smu_context *smu,
-+					 uint32_t *speed)
-+{
-+	int ret;
-+
-+	if (!speed)
-+		return -EINVAL;
-+
-+	ret = smu_v14_0_2_get_smu_metrics_data(smu,
-+					       METRICS_CURR_FANPWM,
-+					       speed);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
-+		return ret;
-+	}
-+
-+	/* Convert the PMFW output which is in percent to pwm(255) based */
-+	*speed = min(*speed * 255 / 100, (uint32_t)255);
-+
-+	return 0;
-+}
-+
-+static int smu_v14_0_2_get_fan_speed_rpm(struct smu_context *smu,
-+					 uint32_t *speed)
-+{
-+	if (!speed)
-+		return -EINVAL;
-+
-+	return smu_v14_0_2_get_smu_metrics_data(smu,
-+						METRICS_CURR_FANSPEED,
-+						speed);
-+}
-+
- static int smu_v14_0_2_get_power_limit(struct smu_context *smu,
- 				       uint32_t *current_power_limit,
- 				       uint32_t *default_power_limit,
-@@ -2781,6 +2814,8 @@ static const struct pptable_funcs smu_v1
- 	.set_performance_level = smu_v14_0_set_performance_level,
- 	.gfx_off_control = smu_v14_0_gfx_off_control,
- 	.get_unique_id = smu_v14_0_2_get_unique_id,
-+	.get_fan_speed_pwm = smu_v14_0_2_get_fan_speed_pwm,
-+	.get_fan_speed_rpm = smu_v14_0_2_get_fan_speed_rpm,
- 	.get_power_limit = smu_v14_0_2_get_power_limit,
- 	.set_power_limit = smu_v14_0_2_set_power_limit,
- 	.get_power_profile_mode = smu_v14_0_2_get_power_profile_mode,
+ static const struct amdgpu_video_codecs vega_video_codecs_decode =
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -239,13 +239,6 @@ static const struct amdgpu_video_codec_i
+ 		.max_pixels_per_frame = 4096 * 4096,
+ 		.max_level = 186,
+ 	},
+-	{
+-		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG,
+-		.max_width = 4096,
+-		.max_height = 4096,
+-		.max_pixels_per_frame = 4096 * 4096,
+-		.max_level = 0,
+-	},
+ };
+ 
+ static const struct amdgpu_video_codecs cz_video_codecs_decode =
 
 
