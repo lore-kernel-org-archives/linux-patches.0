@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ADD25A651;
-	Tue, 25 Mar 2025 12:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307942686BD;
+	Tue, 25 Mar 2025 12:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905907; cv=none; b=iCort+sqWjc//H1aVYFvqbmq028J/MEi2wx05NAxr/njvMjAXssxluX9Zxhhlejurucuw9kaJBuVZA2PSoIwXxI/LUVKBuW0CfwGVHgw/fLc380vuPlXtDA1gjEiahEC+YC6svTH3md8/ZgtYJgZJY4BLDxEkj5YOfwO797XWrg=
+	t=1742905909; cv=none; b=byxVHEuUHP1il+cbj1mzKPk6UvKr8yDgytcxZQznLc+iWGWqrBFGcCDh2GK4h3OG4RXqmpwvYwRPHN+9kqBExyDrsnaLSoUSnoPAK3iDFcv/N4ZsDgN7068zFXNiHAbuQlJvYd4JC5XUypxx4dWT++utune2TSm/haXd3TjnSqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905907; c=relaxed/simple;
-	bh=vFeHJAuTvHZDQEtkrqLJVHXOKyfUyuNpdSwnTEaUe90=;
+	s=arc-20240116; t=1742905909; c=relaxed/simple;
+	bh=KT+lPZZJBw31moasN4QmXBx/3a8z3F4it1yLSAXbP1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EckO5Ylo3uPturFGgdKz2C+3qbdo11NIOIAoOXgBAQvv6yOzS6Xwzn+ouJq0d7ioo05276dDSP08x4obwaYGIY7DNjjNHqFL36vF1ALczf5noy01xsLB54MOdaedOq1VMGyEfmL9iiDk/iVfCW+wu7wwxSZle/rAuizmEp+mrbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjunqzdW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKsehoGI+K4NUeeHvWxSnqkmINvLv5T1WsCSwZBBIL7gb+LVOl874J0DMGPk8wXesamaqvkc8tTyHtJa58bgULPPpzTb1FjfsIhnzdPxr/YrP5o1JWT2ucXMBGXKCzWbG+pNtF/OSqMDL7ZdAW861Bq57s2mGIBjt7WKeJOCGSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOlvOcZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjunqzdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7AFC4CEE4;
-	Tue, 25 Mar 2025 12:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOlvOcZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7254C4CEE4;
+	Tue, 25 Mar 2025 12:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905907;
-	bh=vFeHJAuTvHZDQEtkrqLJVHXOKyfUyuNpdSwnTEaUe90=;
+	s=korg; t=1742905909;
+	bh=KT+lPZZJBw31moasN4QmXBx/3a8z3F4it1yLSAXbP1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CjunqzdWjsB+4sf/T+gpxBQ0vQdmsAN7QdIoFWWzCfoHUReNjlR0GNrrBrJZISs9C
-	 OKS9FBXPZS5jKuRkQx4HlH00O8Q1TYO3JOgYpoi/W/vHRV1dtlqWveFGfoggFp4Dg7
-	 cMQS4l2ouGVh+bfYfq+Wtzvj/wCCZYyVbR7ldFL4=
+	b=GOlvOcZnizUXljA7n88yH6oLxImMnOnpDpFzjpn7PJx5aHMDhdYjTSrlv+B4NUiYx
+	 SNYHLliq6UbaVQF1aZUNWkeixp8fNT5fuRTpJTg2zcvrveYgOivEvqlISz4Tl81/lC
+	 RG1qCxcMBuTFtVEroUV1r7A/to6ss4UI7vxTtugo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 030/119] Bluetooth: Fix error code in chan_alloc_skb_cb()
-Date: Tue, 25 Mar 2025 08:21:28 -0400
-Message-ID: <20250325122149.834616958@linuxfoundation.org>
+Subject: [PATCH 6.13 031/119] Bluetooth: hci_event: Fix connection regression between LE and non-LE adapters
+Date: Tue, 25 Mar 2025 08:21:29 -0400
+Message-ID: <20250325122149.859500354@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -51,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
 
-[ Upstream commit 72d061ee630d0dbb45c2920d8d19b3861c413e54 ]
+[ Upstream commit f6685a96c8c8a07e260e39bac86d4163cfb38a4d ]
 
-The chan_alloc_skb_cb() function is supposed to return error pointers on
-error.  Returning NULL will lead to a NULL dereference.
+Due to a typo during defining HCI errors it is not possible to connect
+LE-capable device with BR/EDR only adapter. The connection is terminated
+by the LE adapter because the invalid LL params error code is treated
+as unsupported remote feature.
 
-Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 79c0868ad65a ("Bluetooth: hci_event: Use HCI error defines instead of magic values")
+Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 50cfec8ccac4f..3c29778171c58 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -825,11 +825,16 @@ static struct sk_buff *chan_alloc_skb_cb(struct l2cap_chan *chan,
- 					 unsigned long hdr_len,
- 					 unsigned long len, int nb)
- {
-+	struct sk_buff *skb;
-+
- 	/* Note that we must allocate using GFP_ATOMIC here as
- 	 * this function is called originally from netdev hard xmit
- 	 * function in atomic context.
- 	 */
--	return bt_skb_alloc(hdr_len + len, GFP_ATOMIC);
-+	skb = bt_skb_alloc(hdr_len + len, GFP_ATOMIC);
-+	if (!skb)
-+		return ERR_PTR(-ENOMEM);
-+	return skb;
- }
- 
- static void chan_suspend_cb(struct l2cap_chan *chan)
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 6203bd8663b74..f2f69eb4295e1 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -684,7 +684,7 @@ enum {
+ #define HCI_ERROR_REMOTE_POWER_OFF	0x15
+ #define HCI_ERROR_LOCAL_HOST_TERM	0x16
+ #define HCI_ERROR_PAIRING_NOT_ALLOWED	0x18
+-#define HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE	0x1e
++#define HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE	0x1a
+ #define HCI_ERROR_INVALID_LL_PARAMS	0x1e
+ #define HCI_ERROR_UNSPECIFIED		0x1f
+ #define HCI_ERROR_ADVERTISING_TIMEOUT	0x3c
 -- 
 2.39.5
 
