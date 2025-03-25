@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D7C25C6E4;
-	Tue, 25 Mar 2025 12:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EC526A1C5;
+	Tue, 25 Mar 2025 12:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906175; cv=none; b=OytxHsxOU60FvLNPLSLrztLgawOTAWW2ulTOhKoGtPzQZeoCupQa11cjzVdEjWrIOsBx1gaxyAnTmJbQue2B3EgMeaSm6G0a0exB4JjSN4eIyiBxlGgn4LboOKdcZ6OS7YnHkEQ7cySgP+Jz5rioikSTvlw6W/sxawmu03dkEJM=
+	t=1742906177; cv=none; b=WagNvP6MiM2vx1s3iPGJ7z4jgfm7GTS0/5YEaKUEbRk5g0K4nhkC/htXoVkv86+G7Ph7Af82DH+3fzKkBJW9fVie/iIw+rn01ITEvZR97Uphy1Qim5JDhN0eqWagolu4EACEO3Jo2ntlVZFjzVlysHKSUMTr1f8Efg1EhvUgWQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906175; c=relaxed/simple;
-	bh=3wP7bpwxOpd+kOpZbAGX4NB2/WLmHq5/ITuTW7mVprw=;
+	s=arc-20240116; t=1742906177; c=relaxed/simple;
+	bh=aFPt36b88bu/IS2oPE/0m/mpGF4Ik3SGQMiA60dE9rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXPrdghXH0tlmChPd9KFJEKr+yzTLDkubaadKAmLsZq3yLMOEibAbCKuD8/41Lplt/5MtuLKzuQuJdvbvyvyfoIwJWgQ9d8CV7aQOMUWTq0JgSIemaIyG1ti1+bRVrRjBIV6hxOIOtAtcdbSlj9TzAwfdr+DHd5B7IOBfMcAEmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+BHxEfh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8faI/d9DcLUZYQjznKQ4QgOQTmeY/lBpmh8pHAP2OZIZmndsxClFMwkCip9YQaLMoLlLXjlPfuvz8LwWdDPi+qSNLSHknEzCVXPozUKKdB8VI8bhTp22GtSg/EKb1r30luFjtuxSGXdWGNWi/pOz8qtpCDS2UkF2WRclcwQbF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6fXubfj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+BHxEfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A672C4CEE4;
-	Tue, 25 Mar 2025 12:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6fXubfj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3873EC4CEE4;
+	Tue, 25 Mar 2025 12:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906175;
-	bh=3wP7bpwxOpd+kOpZbAGX4NB2/WLmHq5/ITuTW7mVprw=;
+	s=korg; t=1742906177;
+	bh=aFPt36b88bu/IS2oPE/0m/mpGF4Ik3SGQMiA60dE9rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+BHxEfhHrRSrvhIBe3x0XRAc471dU1zRjX1J950bZhP6b+VmERrcRG1JxQmH/0yO
-	 fsu+fbUnNga7lkxO5H+Zc1TYBskT0D36zPki93bY/q+W2VAAv8Kihn1iGjTsjjLslO
-	 u9CgGtqHonGFuIsY5wg3P0XOw21yhWaRuFKBu7tM=
+	b=W6fXubfjzI0o0w9aFA/fXxlWNCR9He8JHF4+7al9v78ScZJUGiNMB8iACmaCT/PzC
+	 iWOw52zJEoOCYIDz/Ckr90OSvly5vnJVv1SJ3iWewgtVZ1L09xgjEQcEdr7NE0FUZ+
+	 R630t8WzVAzRhTk4aottstLhoSAKQdrBq7VoEfek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 55/77] drm/radeon: fix uninitialized size issue in radeon_vce_cs_parse()
-Date: Tue, 25 Mar 2025 08:22:50 -0400
-Message-ID: <20250325122145.789690454@linuxfoundation.org>
+	qianyi liu <liuqianyi125@gmail.com>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.6 56/77] drm/sched: Fix fence reference count leak
+Date: Tue, 25 Mar 2025 08:22:51 -0400
+Message-ID: <20250325122145.817427302@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -50,44 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: qianyi liu <liuqianyi125@gmail.com>
 
-commit dd8689b52a24807c2d5ce0a17cb26dc87f75235c upstream.
+commit a952f1ab696873be124e31ce5ef964d36bce817f upstream.
 
-On the off chance that command stream passed from userspace via
-ioctl() call to radeon_vce_cs_parse() is weirdly crafted and
-first command to execute is to encode (case 0x03000001), the function
-in question will attempt to call radeon_vce_cs_reloc() with size
-argument that has not been properly initialized. Specifically, 'size'
-will point to 'tmp' variable before the latter had a chance to be
-assigned any value.
+The last_scheduled fence leaks when an entity is being killed and adding
+the cleanup callback fails.
 
-Play it safe and init 'tmp' with 0, thus ensuring that
-radeon_vce_cs_reloc() will catch an early error in cases like these.
+Decrement the reference count of prev when dma_fence_add_callback()
+fails, ensuring proper balance.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 2fc5703abda2 ("drm/radeon: check VCE relocation buffer range v3")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2d52de55f9ee7aaee0e09ac443f77855989c6b68)
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org	# v6.2+
+[phasta: add git tag info for stable kernel]
+Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
+Signed-off-by: qianyi liu <liuqianyi125@gmail.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250311060251.4041101-1-liuqianyi125@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_vce.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_vce.c
-+++ b/drivers/gpu/drm/radeon/radeon_vce.c
-@@ -557,7 +557,7 @@ int radeon_vce_cs_parse(struct radeon_cs
- {
- 	int session_idx = -1;
- 	bool destroyed = false, created = false, allocated = false;
--	uint32_t tmp, handle = 0;
-+	uint32_t tmp = 0, handle = 0;
- 	uint32_t *size = &tmp;
- 	int i, r = 0;
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -237,9 +237,16 @@ static void drm_sched_entity_kill(struct
+ 		struct drm_sched_fence *s_fence = job->s_fence;
  
+ 		dma_fence_get(&s_fence->finished);
+-		if (!prev || dma_fence_add_callback(prev, &job->finish_cb,
+-					   drm_sched_entity_kill_jobs_cb))
++		if (!prev ||
++		    dma_fence_add_callback(prev, &job->finish_cb,
++					   drm_sched_entity_kill_jobs_cb)) {
++			/*
++			 * Adding callback above failed.
++			 * dma_fence_put() checks for NULL.
++			 */
++			dma_fence_put(prev);
+ 			drm_sched_entity_kill_jobs_cb(NULL, &job->finish_cb);
++		}
+ 
+ 		prev = &s_fence->finished;
+ 	}
 
 
