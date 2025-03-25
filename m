@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F2B25BAD9;
-	Tue, 25 Mar 2025 12:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CE22580F7;
+	Tue, 25 Mar 2025 12:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906165; cv=none; b=PjedS55c+3XQJizKpa+zs1pf/dqpTsceJadjiMzb6Abg6+quyaYOIOs8DV+I7mV9qWdxmhK/u/UhKx4wh8isG0ZBkmw3ZYMvyhlgo4LEdNFVpOHhLJpttxt6v+vBF6fOAtpHfjiMOEjRrh09oTe7Od379i5xFX3VeHJpN2gw2/w=
+	t=1742906166; cv=none; b=UOQ+DJajQuFYvPwbTf8arlVE6JaP/1phqm5TzSztOu0dSOIZhdkt1yR3kokoW/6zNmc63lArJ2/lb5eC1DVA37CR1WFU4nur8CM/S70nVGk2uvAk4mbWoYGzVFgEdOKluQxpYRkQPfqnScjj/EOSYxW+YydxDkzkEzbWwzmecA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906165; c=relaxed/simple;
-	bh=HmWfJcEd6s4X4v8pBPDY7xYKxP/Xpw4QVlY+HDtUD2w=;
+	s=arc-20240116; t=1742906166; c=relaxed/simple;
+	bh=DB0/tbY9t2YQ81OYEPJje8svNPAetLFs/epY4Ph+ypQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbTG9PknfCki1bgZMqO0Dp1owtZDigJy8TDhv0SShOPhwtOryXcYsvIR9+K6rtRNlvZNMS8+UxnaXVj4Bp/8zF2UVl2DWvK13ZlMYLQpV/Qf11a8XhWOGPvpNOy4tWUkkg5sjPSQcy9JpNCZglJ1gfQkxoeMW6X79FIAvb9gTAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQDq1V1b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YaV8ZRVJPgjTJ7cIDKZ9WcrJ6PQlh2mUU08giW700iVlN2fk8tU+lLbMtdi3Io22+Pj+/3f1Q9lLeuliazJ9ggqb/IbP85Z2O7Ipsof6tZXcxk5kn7Ezs5VJopFmbgyaKMPIVkOByzS9B/mjuS6xhSRYNk0CZLwH2oxV1898Wy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVTHKEYB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQDq1V1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98579C4CEE4;
-	Tue, 25 Mar 2025 12:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVTHKEYB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E16C4CEE4;
+	Tue, 25 Mar 2025 12:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906164;
-	bh=HmWfJcEd6s4X4v8pBPDY7xYKxP/Xpw4QVlY+HDtUD2w=;
+	s=korg; t=1742906166;
+	bh=DB0/tbY9t2YQ81OYEPJje8svNPAetLFs/epY4Ph+ypQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQDq1V1bAbMxJMbwtlsbIu1zlNPNz1qDgwXJND2deGa0Q4856+QWUW9oqSN4X1ch9
-	 RxXUx8GirJ1zFQKfs0eBeGA4y3ime/7RHg5s9ONoT9y73V3jwPWCF5kDZ5KFcG7MCs
-	 nz/lxgNbI/GuiFLLZ3CXJIMGS43axKeBTfenF/xo=
+	b=iVTHKEYBCB6gca/9rhjRTQMh9+9lH16TudGpGUtcPid93eolkfQBG0TzLtordMAeC
+	 2Pvtz2jQsFdJAYVTL85EHaxg7lTSLMTKvBWvd2PgKxdCNp5r8yIK3RApdtgpcs6oRQ
+	 bJGxLTW3x0TeSIcbz3Wu9AqNS+bqwhXFcbLUjEaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: [PATCH 6.6 50/77] ARM: shmobile: smp: Enforce shmobile_smp_* alignment
-Date: Tue, 25 Mar 2025 08:22:45 -0400
-Message-ID: <20250325122145.661007489@linuxfoundation.org>
+	Ben Schneider <ben@bens.haus>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 51/77] efi/libstub: Avoid physical address 0x0 when doing random allocation
+Date: Tue, 25 Mar 2025 08:22:46 -0400
+Message-ID: <20250325122145.686462514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -50,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 379c590113ce46f605439d4887996c60ab8820cc upstream.
+commit cb16dfed0093217a68c0faa9394fa5823927e04c upstream.
 
-When the addresses of the shmobile_smp_mpidr, shmobile_smp_fn, and
-shmobile_smp_arg variables are not multiples of 4 bytes, secondary CPU
-bring-up fails:
+Ben reports spurious EFI zboot failures on a system where physical RAM
+starts at 0x0. When doing random memory allocation from the EFI stub on
+such a platform, a random seed of 0x0 (which means no entropy source is
+available) will result in the allocation to be placed at address 0x0 if
+sufficient space is available.
 
-    smp: Bringing up secondary CPUs ...
-    CPU1: failed to come online
-    CPU2: failed to come online
-    CPU3: failed to come online
-    smp: Brought up 1 node, 1 CPU
+When this allocation is subsequently passed on to the decompression
+code, the 0x0 address is mistaken for NULL and the code complains and
+gives up.
 
-Fix this by adding the missing alignment directive.
+So avoid address 0x0 when doing random allocation, and set the minimum
+address to the minimum alignment.
 
-Fixes: 4e960f52fce16a3b ("ARM: shmobile: Move shmobile_smp_{mpidr, fn, arg}[] from .text to .bss")
-Closes: https://lore.kernel.org/r/CAMuHMdU=QR-JLgEHKWpsr6SbaZRc-Hz9r91JfpP8c3n2G-OjqA@mail.gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/c499234d559a0d95ad9472883e46077311051cd8.1741612208.git.geert+renesas@glider.be
-Cc: stable@vger.kernel.org
+Cc: <stable@vger.kernel.org>
+Reported-by: Ben Schneider <ben@bens.haus>
+Tested-by: Ben Schneider <ben@bens.haus>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-shmobile/headsmp.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/libstub/randomalloc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm/mach-shmobile/headsmp.S
-+++ b/arch/arm/mach-shmobile/headsmp.S
-@@ -136,6 +136,7 @@ ENDPROC(shmobile_smp_sleep)
- 	.long	shmobile_smp_arg - 1b
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -75,6 +75,10 @@ efi_status_t efi_random_alloc(unsigned l
+ 	if (align < EFI_ALLOC_ALIGN)
+ 		align = EFI_ALLOC_ALIGN;
  
- 	.bss
-+	.align	2
- 	.globl	shmobile_smp_mpidr
- shmobile_smp_mpidr:
- 	.space	NR_CPUS * 4
++	/* Avoid address 0x0, as it can be mistaken for NULL */
++	if (alloc_min == 0)
++		alloc_min = align;
++
+ 	size = round_up(size, EFI_ALLOC_ALIGN);
+ 
+ 	/* count the suitable slots in each memory map entry */
 
 
