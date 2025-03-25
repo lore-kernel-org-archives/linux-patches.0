@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F79729AAFC;
-	Tue, 25 Mar 2025 12:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8F726656F;
+	Tue, 25 Mar 2025 12:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905633; cv=none; b=G6JwRhFp4Cx3s0egRnUIQsa1h6AeXYA5GCyWq0IO8P+x49AdE6vNv9W8eHxQT4Y1a5TYFAqVb/3qkvWKGkOs4zDSRTrvbmGZ5XnUBO6+1SDdG8R7Aouf7wxEzFZ4dtNQYjHKi3SJ2S3ARxu7twrNHzuDq0/Rpq4pdzjzVHHrL6Q=
+	t=1742905634; cv=none; b=mFHThmiOCWs56URnXwbQf0AnXoeYc6+dEC0VuzM2UltmI0K9eQU63TPec3/JmAjHm7pbDsb/eRhyO56PNTrgjmQrGFAUMlqhIpIKp9ixXnEa8RTPa2lXiEXGjMP74gWnm28bBD1O7uidU3LesrMrpSIggSGjyaOhOecI8ROJ9t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905633; c=relaxed/simple;
-	bh=lVVPTK3Xa/Wv4PUIbzmAg0HoSGnzORQGZunFuTI84sE=;
+	s=arc-20240116; t=1742905634; c=relaxed/simple;
+	bh=Z7pjzGwBZDwfaCE4UlNO+64QaCr3AFdTIjzb4dEddrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5gK3sAz1RlzTIoICef/tm7xZNt3Mm0eDLP+iX2iz132YtTNid4RH9HcMpsofvIt7dH8gpYhkKcMruH9c2MLPBb0rEYekRta7J/RL2h2HfWexyeqH8jICVhilrrM60d7zIrIzZP644lMbpP22y6vFkXbrSRvkCiQH31PtTkxV58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhPaoluP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JHw0aVYRTDfcYVK+mRiWV+efjox2cvNUBR8tRNDBBnts/6WObcy7AmQmyxu335JaU7VGWggQRfs/ZPsdOV2dMlTQE6azfI4X9oa/INrD1hhebCnnonu/0GbsFjOwnvzdwSjoJZ9vzGEaP9SG+laJaVk8DUKQacNLQS87D1XfJDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRuxr4yi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhPaoluP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCCEC4CEED;
-	Tue, 25 Mar 2025 12:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRuxr4yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBC6C4CEE4;
+	Tue, 25 Mar 2025 12:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905632;
-	bh=lVVPTK3Xa/Wv4PUIbzmAg0HoSGnzORQGZunFuTI84sE=;
+	s=korg; t=1742905634;
+	bh=Z7pjzGwBZDwfaCE4UlNO+64QaCr3AFdTIjzb4dEddrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhPaoluPthoSocdKGyxnpJwvR1kElIaVJlTTpMUS5hidtGNXzN0zkLPElHwLyP2V7
-	 nT/naocXAoiBLk50v33EL6f5x2ENSecMmkFj+7QPC2X2sOijTKPVQzosidpjEQbImd
-	 s26rmxavYco0YjeV/IonT830PPwd49YEiu6B75vM=
+	b=iRuxr4yi9ik/vfZEcuImtHANUK+GgQ3Anvz88NAWr8+wSO9GSiMW/4nv7WCfO5VsN
+	 3orr/pqEnn8j/GUE0fgAWBQtX5UaSjRztveXTGMGH0mXqakXqFvH088GMck0TJpUEr
+	 LTK9U9hOE7qXGhRheLzrn9yfS6IjmbBdBQ+tHU0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 080/198] xfs: fix confusing xfs_extent_item variable names
-Date: Tue, 25 Mar 2025 08:20:42 -0400
-Message-ID: <20250325122158.740201737@linuxfoundation.org>
+Subject: [PATCH 6.1 081/198] xfs: pass the xfs_bmbt_irec directly through the log intent code
+Date: Tue, 25 Mar 2025 08:20:43 -0400
+Message-ID: <20250325122158.767076334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,264 +52,237 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 578c714b215d474c52949e65a914dae67924f0fe ]
+[ Upstream commit ddccb81b26ec021ae1f3366aa996cc4c68dd75ce ]
 
-Change the name of all pointers to xfs_extent_item structures to "xefi"
-to make the name consistent and because the current selections ("new"
-and "free") mean other things in C.
+Instead of repeatedly boxing and unboxing the incore extent mapping
+structure as it passes through the BUI code, pass the pointer directly
+through.
 
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_alloc.c |   32 ++++++++++-----------
- fs/xfs/xfs_extfree_item.c |   70 +++++++++++++++++++++++-----------------------
- 2 files changed, 51 insertions(+), 51 deletions(-)
+ fs/xfs/libxfs/xfs_bmap.c |   32 ++++++++----------
+ fs/xfs/libxfs/xfs_bmap.h |    5 --
+ fs/xfs/xfs_bmap_item.c   |   81 +++++++++++++++++------------------------------
+ 3 files changed, 46 insertions(+), 72 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_alloc.c
-+++ b/fs/xfs/libxfs/xfs_alloc.c
-@@ -2493,20 +2493,20 @@ xfs_defer_agfl_block(
- 	struct xfs_owner_info		*oinfo)
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
--	struct xfs_extent_free_item	*new;		/* new element */
-+	struct xfs_extent_free_item	*xefi;
- 
- 	ASSERT(xfs_extfree_item_cache != NULL);
- 	ASSERT(oinfo != NULL);
- 
--	new = kmem_cache_zalloc(xfs_extfree_item_cache,
-+	xefi = kmem_cache_zalloc(xfs_extfree_item_cache,
- 			       GFP_KERNEL | __GFP_NOFAIL);
--	new->xefi_startblock = XFS_AGB_TO_FSB(mp, agno, agbno);
--	new->xefi_blockcount = 1;
--	new->xefi_owner = oinfo->oi_owner;
-+	xefi->xefi_startblock = XFS_AGB_TO_FSB(mp, agno, agbno);
-+	xefi->xefi_blockcount = 1;
-+	xefi->xefi_owner = oinfo->oi_owner;
- 
- 	trace_xfs_agfl_free_defer(mp, agno, 0, agbno, 1);
- 
--	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_AGFL_FREE, &new->xefi_list);
-+	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_AGFL_FREE, &xefi->xefi_list);
- }
- 
- /*
-@@ -2521,7 +2521,7 @@ __xfs_free_extent_later(
- 	const struct xfs_owner_info	*oinfo,
- 	bool				skip_discard)
- {
--	struct xfs_extent_free_item	*new;		/* new element */
-+	struct xfs_extent_free_item	*xefi;
- #ifdef DEBUG
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	xfs_agnumber_t			agno;
-@@ -2540,27 +2540,27 @@ __xfs_free_extent_later(
- #endif
- 	ASSERT(xfs_extfree_item_cache != NULL);
- 
--	new = kmem_cache_zalloc(xfs_extfree_item_cache,
-+	xefi = kmem_cache_zalloc(xfs_extfree_item_cache,
- 			       GFP_KERNEL | __GFP_NOFAIL);
--	new->xefi_startblock = bno;
--	new->xefi_blockcount = (xfs_extlen_t)len;
-+	xefi->xefi_startblock = bno;
-+	xefi->xefi_blockcount = (xfs_extlen_t)len;
- 	if (skip_discard)
--		new->xefi_flags |= XFS_EFI_SKIP_DISCARD;
-+		xefi->xefi_flags |= XFS_EFI_SKIP_DISCARD;
- 	if (oinfo) {
- 		ASSERT(oinfo->oi_offset == 0);
- 
- 		if (oinfo->oi_flags & XFS_OWNER_INFO_ATTR_FORK)
--			new->xefi_flags |= XFS_EFI_ATTR_FORK;
-+			xefi->xefi_flags |= XFS_EFI_ATTR_FORK;
- 		if (oinfo->oi_flags & XFS_OWNER_INFO_BMBT_BLOCK)
--			new->xefi_flags |= XFS_EFI_BMBT_BLOCK;
--		new->xefi_owner = oinfo->oi_owner;
-+			xefi->xefi_flags |= XFS_EFI_BMBT_BLOCK;
-+		xefi->xefi_owner = oinfo->oi_owner;
- 	} else {
--		new->xefi_owner = XFS_RMAP_OWN_NULL;
-+		xefi->xefi_owner = XFS_RMAP_OWN_NULL;
- 	}
- 	trace_xfs_bmap_free_defer(tp->t_mountp,
- 			XFS_FSB_TO_AGNO(tp->t_mountp, bno), 0,
- 			XFS_FSB_TO_AGBNO(tp->t_mountp, bno), len);
--	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_FREE, &new->xefi_list);
-+	xfs_defer_add(tp, XFS_DEFER_OPS_TYPE_FREE, &xefi->xefi_list);
- }
- 
- #ifdef DEBUG
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -345,30 +345,30 @@ static int
- xfs_trans_free_extent(
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -6119,39 +6119,37 @@ xfs_bmap_unmap_extent(
+ int
+ xfs_bmap_finish_one(
  	struct xfs_trans		*tp,
- 	struct xfs_efd_log_item		*efdp,
--	struct xfs_extent_free_item	*free)
-+	struct xfs_extent_free_item	*xefi)
+-	struct xfs_inode		*ip,
+-	enum xfs_bmap_intent_type	type,
+-	int				whichfork,
+-	xfs_fileoff_t			startoff,
+-	xfs_fsblock_t			startblock,
+-	xfs_filblks_t			*blockcount,
+-	xfs_exntst_t			state)
++	struct xfs_bmap_intent		*bi)
  {
- 	struct xfs_owner_info		oinfo = { };
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_extent		*extp;
- 	uint				next_extent;
- 	xfs_agnumber_t			agno = XFS_FSB_TO_AGNO(mp,
--							free->xefi_startblock);
-+							xefi->xefi_startblock);
- 	xfs_agblock_t			agbno = XFS_FSB_TO_AGBNO(mp,
--							free->xefi_startblock);
-+							xefi->xefi_startblock);
++	struct xfs_bmbt_irec		*bmap = &bi->bi_bmap;
+ 	int				error = 0;
+ 
+ 	ASSERT(tp->t_firstblock == NULLFSBLOCK);
+ 
+ 	trace_xfs_bmap_deferred(tp->t_mountp,
+-			XFS_FSB_TO_AGNO(tp->t_mountp, startblock), type,
+-			XFS_FSB_TO_AGBNO(tp->t_mountp, startblock),
+-			ip->i_ino, whichfork, startoff, *blockcount, state);
++			XFS_FSB_TO_AGNO(tp->t_mountp, bmap->br_startblock),
++			bi->bi_type,
++			XFS_FSB_TO_AGBNO(tp->t_mountp, bmap->br_startblock),
++			bi->bi_owner->i_ino, bi->bi_whichfork,
++			bmap->br_startoff, bmap->br_blockcount,
++			bmap->br_state);
+ 
+-	if (WARN_ON_ONCE(whichfork != XFS_DATA_FORK))
++	if (WARN_ON_ONCE(bi->bi_whichfork != XFS_DATA_FORK))
+ 		return -EFSCORRUPTED;
+ 
+ 	if (XFS_TEST_ERROR(false, tp->t_mountp,
+ 			XFS_ERRTAG_BMAP_FINISH_ONE))
+ 		return -EIO;
+ 
+-	switch (type) {
++	switch (bi->bi_type) {
+ 	case XFS_BMAP_MAP:
+-		error = xfs_bmapi_remap(tp, ip, startoff, *blockcount,
+-				startblock, 0);
+-		*blockcount = 0;
++		error = xfs_bmapi_remap(tp, bi->bi_owner, bmap->br_startoff,
++				bmap->br_blockcount, bmap->br_startblock, 0);
++		bmap->br_blockcount = 0;
+ 		break;
+ 	case XFS_BMAP_UNMAP:
+-		error = __xfs_bunmapi(tp, ip, startoff, blockcount,
+-				XFS_BMAPI_REMAP, 1);
++		error = __xfs_bunmapi(tp, bi->bi_owner, bmap->br_startoff,
++				&bmap->br_blockcount, XFS_BMAPI_REMAP, 1);
+ 		break;
+ 	default:
+ 		ASSERT(0);
+--- a/fs/xfs/libxfs/xfs_bmap.h
++++ b/fs/xfs/libxfs/xfs_bmap.h
+@@ -236,10 +236,7 @@ struct xfs_bmap_intent {
+ 	struct xfs_bmbt_irec			bi_bmap;
+ };
+ 
+-int	xfs_bmap_finish_one(struct xfs_trans *tp, struct xfs_inode *ip,
+-		enum xfs_bmap_intent_type type, int whichfork,
+-		xfs_fileoff_t startoff, xfs_fsblock_t startblock,
+-		xfs_filblks_t *blockcount, xfs_exntst_t state);
++int	xfs_bmap_finish_one(struct xfs_trans *tp, struct xfs_bmap_intent *bi);
+ void	xfs_bmap_map_extent(struct xfs_trans *tp, struct xfs_inode *ip,
+ 		struct xfs_bmbt_irec *imap);
+ void	xfs_bmap_unmap_extent(struct xfs_trans *tp, struct xfs_inode *ip,
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -246,18 +246,11 @@ static int
+ xfs_trans_log_finish_bmap_update(
+ 	struct xfs_trans		*tp,
+ 	struct xfs_bud_log_item		*budp,
+-	enum xfs_bmap_intent_type	type,
+-	struct xfs_inode		*ip,
+-	int				whichfork,
+-	xfs_fileoff_t			startoff,
+-	xfs_fsblock_t			startblock,
+-	xfs_filblks_t			*blockcount,
+-	xfs_exntst_t			state)
++	struct xfs_bmap_intent		*bi)
+ {
  	int				error;
  
--	oinfo.oi_owner = free->xefi_owner;
--	if (free->xefi_flags & XFS_EFI_ATTR_FORK)
-+	oinfo.oi_owner = xefi->xefi_owner;
-+	if (xefi->xefi_flags & XFS_EFI_ATTR_FORK)
- 		oinfo.oi_flags |= XFS_OWNER_INFO_ATTR_FORK;
--	if (free->xefi_flags & XFS_EFI_BMBT_BLOCK)
-+	if (xefi->xefi_flags & XFS_EFI_BMBT_BLOCK)
- 		oinfo.oi_flags |= XFS_OWNER_INFO_BMBT_BLOCK;
+-	error = xfs_bmap_finish_one(tp, ip, type, whichfork, startoff,
+-			startblock, blockcount, state);
++	error = xfs_bmap_finish_one(tp, bi);
  
- 	trace_xfs_bmap_free_deferred(tp->t_mountp, agno, 0, agbno,
--			free->xefi_blockcount);
-+			xefi->xefi_blockcount);
- 
--	error = __xfs_free_extent(tp, free->xefi_startblock,
--			free->xefi_blockcount, &oinfo, XFS_AG_RESV_NONE,
--			free->xefi_flags & XFS_EFI_SKIP_DISCARD);
-+	error = __xfs_free_extent(tp, xefi->xefi_startblock,
-+			xefi->xefi_blockcount, &oinfo, XFS_AG_RESV_NONE,
-+			xefi->xefi_flags & XFS_EFI_SKIP_DISCARD);
  	/*
  	 * Mark the transaction dirty, even on error. This ensures the
- 	 * transaction is aborted, which:
-@@ -382,8 +382,8 @@ xfs_trans_free_extent(
- 	next_extent = efdp->efd_next_extent;
- 	ASSERT(next_extent < efdp->efd_format.efd_nextents);
- 	extp = &(efdp->efd_format.efd_extents[next_extent]);
--	extp->ext_start = free->xefi_startblock;
--	extp->ext_len = free->xefi_blockcount;
-+	extp->ext_start = xefi->xefi_startblock;
-+	extp->ext_len = xefi->xefi_blockcount;
- 	efdp->efd_next_extent++;
- 
- 	return error;
-@@ -411,7 +411,7 @@ STATIC void
- xfs_extent_free_log_item(
- 	struct xfs_trans		*tp,
- 	struct xfs_efi_log_item		*efip,
--	struct xfs_extent_free_item	*free)
-+	struct xfs_extent_free_item	*xefi)
- {
- 	uint				next_extent;
- 	struct xfs_extent		*extp;
-@@ -427,8 +427,8 @@ xfs_extent_free_log_item(
- 	next_extent = atomic_inc_return(&efip->efi_next_extent) - 1;
- 	ASSERT(next_extent < efip->efi_format.efi_nextents);
- 	extp = &efip->efi_format.efi_extents[next_extent];
--	extp->ext_start = free->xefi_startblock;
--	extp->ext_len = free->xefi_blockcount;
-+	extp->ext_start = xefi->xefi_startblock;
-+	extp->ext_len = xefi->xefi_blockcount;
- }
- 
- static struct xfs_log_item *
-@@ -440,15 +440,15 @@ xfs_extent_free_create_intent(
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_efi_log_item		*efip = xfs_efi_init(mp, count);
--	struct xfs_extent_free_item	*free;
-+	struct xfs_extent_free_item	*xefi;
- 
- 	ASSERT(count > 0);
- 
- 	xfs_trans_add_item(tp, &efip->efi_item);
- 	if (sort)
- 		list_sort(mp, items, xfs_extent_free_diff_items);
--	list_for_each_entry(free, items, xefi_list)
--		xfs_extent_free_log_item(tp, efip, free);
-+	list_for_each_entry(xefi, items, xefi_list)
-+		xfs_extent_free_log_item(tp, efip, xefi);
- 	return &efip->efi_item;
- }
- 
-@@ -470,13 +470,13 @@ xfs_extent_free_finish_item(
+@@ -378,25 +371,17 @@ xfs_bmap_update_finish_item(
  	struct list_head		*item,
  	struct xfs_btree_cur		**state)
  {
--	struct xfs_extent_free_item	*free;
-+	struct xfs_extent_free_item	*xefi;
+-	struct xfs_bmap_intent		*bmap;
+-	xfs_filblks_t			count;
++	struct xfs_bmap_intent		*bi;
  	int				error;
  
--	free = container_of(item, struct xfs_extent_free_item, xefi_list);
-+	xefi = container_of(item, struct xfs_extent_free_item, xefi_list);
- 
--	error = xfs_trans_free_extent(tp, EFD_ITEM(done), free);
--	kmem_cache_free(xfs_extfree_item_cache, free);
-+	error = xfs_trans_free_extent(tp, EFD_ITEM(done), xefi);
-+	kmem_cache_free(xfs_extfree_item_cache, xefi);
+-	bmap = container_of(item, struct xfs_bmap_intent, bi_list);
+-	count = bmap->bi_bmap.br_blockcount;
+-	error = xfs_trans_log_finish_bmap_update(tp, BUD_ITEM(done),
+-			bmap->bi_type,
+-			bmap->bi_owner, bmap->bi_whichfork,
+-			bmap->bi_bmap.br_startoff,
+-			bmap->bi_bmap.br_startblock,
+-			&count,
+-			bmap->bi_bmap.br_state);
+-	if (!error && count > 0) {
+-		ASSERT(bmap->bi_type == XFS_BMAP_UNMAP);
+-		bmap->bi_bmap.br_blockcount = count;
++	bi = container_of(item, struct xfs_bmap_intent, bi_list);
++
++	error = xfs_trans_log_finish_bmap_update(tp, BUD_ITEM(done), bi);
++	if (!error && bi->bi_bmap.br_blockcount > 0) {
++		ASSERT(bi->bi_type == XFS_BMAP_UNMAP);
+ 		return -EAGAIN;
+ 	}
+-	kmem_cache_free(xfs_bmap_intent_cache, bmap);
++	kmem_cache_free(xfs_bmap_intent_cache, bi);
  	return error;
  }
  
-@@ -493,10 +493,10 @@ STATIC void
- xfs_extent_free_cancel_item(
- 	struct list_head		*item)
+@@ -471,17 +456,13 @@ xfs_bui_item_recover(
+ 	struct xfs_log_item		*lip,
+ 	struct list_head		*capture_list)
  {
--	struct xfs_extent_free_item	*free;
-+	struct xfs_extent_free_item	*xefi;
+-	struct xfs_bmbt_irec		irec;
++	struct xfs_bmap_intent		fake = { };
+ 	struct xfs_bui_log_item		*buip = BUI_ITEM(lip);
+ 	struct xfs_trans		*tp;
+ 	struct xfs_inode		*ip = NULL;
+ 	struct xfs_mount		*mp = lip->li_log->l_mp;
+-	struct xfs_map_extent		*bmap;
++	struct xfs_map_extent		*map;
+ 	struct xfs_bud_log_item		*budp;
+-	xfs_filblks_t			count;
+-	xfs_exntst_t			state;
+-	unsigned int			bui_type;
+-	int				whichfork;
+ 	int				iext_delta;
+ 	int				error = 0;
  
--	free = container_of(item, struct xfs_extent_free_item, xefi_list);
--	kmem_cache_free(xfs_extfree_item_cache, free);
-+	xefi = container_of(item, struct xfs_extent_free_item, xefi_list);
-+	kmem_cache_free(xfs_extfree_item_cache, xefi);
- }
+@@ -491,14 +472,12 @@ xfs_bui_item_recover(
+ 		return -EFSCORRUPTED;
+ 	}
  
- const struct xfs_defer_op_type xfs_extent_free_defer_type = {
-@@ -522,7 +522,7 @@ xfs_agfl_free_finish_item(
- 	struct xfs_owner_info		oinfo = { };
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_efd_log_item		*efdp = EFD_ITEM(done);
--	struct xfs_extent_free_item	*free;
-+	struct xfs_extent_free_item	*xefi;
- 	struct xfs_extent		*extp;
- 	struct xfs_buf			*agbp;
- 	int				error;
-@@ -531,13 +531,13 @@ xfs_agfl_free_finish_item(
- 	uint				next_extent;
- 	struct xfs_perag		*pag;
+-	bmap = &buip->bui_format.bui_extents[0];
+-	state = (bmap->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
+-			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
+-	whichfork = (bmap->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
++	map = &buip->bui_format.bui_extents[0];
++	fake.bi_whichfork = (map->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
+ 			XFS_ATTR_FORK : XFS_DATA_FORK;
+-	bui_type = bmap->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
++	fake.bi_type = map->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
  
--	free = container_of(item, struct xfs_extent_free_item, xefi_list);
--	ASSERT(free->xefi_blockcount == 1);
--	agno = XFS_FSB_TO_AGNO(mp, free->xefi_startblock);
--	agbno = XFS_FSB_TO_AGBNO(mp, free->xefi_startblock);
--	oinfo.oi_owner = free->xefi_owner;
-+	xefi = container_of(item, struct xfs_extent_free_item, xefi_list);
-+	ASSERT(xefi->xefi_blockcount == 1);
-+	agno = XFS_FSB_TO_AGNO(mp, xefi->xefi_startblock);
-+	agbno = XFS_FSB_TO_AGBNO(mp, xefi->xefi_startblock);
-+	oinfo.oi_owner = xefi->xefi_owner;
+-	error = xlog_recover_iget(mp, bmap->me_owner, &ip);
++	error = xlog_recover_iget(mp, map->me_owner, &ip);
+ 	if (error)
+ 		return error;
  
--	trace_xfs_agfl_free_deferred(mp, agno, 0, agbno, free->xefi_blockcount);
-+	trace_xfs_agfl_free_deferred(mp, agno, 0, agbno, xefi->xefi_blockcount);
+@@ -512,34 +491,34 @@ xfs_bui_item_recover(
+ 	xfs_ilock(ip, XFS_ILOCK_EXCL);
+ 	xfs_trans_ijoin(tp, ip, 0);
  
- 	pag = xfs_perag_get(mp, agno);
- 	error = xfs_alloc_read_agf(pag, tp, 0, &agbp);
-@@ -558,11 +558,11 @@ xfs_agfl_free_finish_item(
- 	next_extent = efdp->efd_next_extent;
- 	ASSERT(next_extent < efdp->efd_format.efd_nextents);
- 	extp = &(efdp->efd_format.efd_extents[next_extent]);
--	extp->ext_start = free->xefi_startblock;
--	extp->ext_len = free->xefi_blockcount;
-+	extp->ext_start = xefi->xefi_startblock;
-+	extp->ext_len = xefi->xefi_blockcount;
- 	efdp->efd_next_extent++;
+-	if (bui_type == XFS_BMAP_MAP)
++	if (fake.bi_type == XFS_BMAP_MAP)
+ 		iext_delta = XFS_IEXT_ADD_NOSPLIT_CNT;
+ 	else
+ 		iext_delta = XFS_IEXT_PUNCH_HOLE_CNT;
  
--	kmem_cache_free(xfs_extfree_item_cache, free);
-+	kmem_cache_free(xfs_extfree_item_cache, xefi);
- 	return error;
- }
+-	error = xfs_iext_count_may_overflow(ip, whichfork, iext_delta);
++	error = xfs_iext_count_may_overflow(ip, fake.bi_whichfork, iext_delta);
+ 	if (error == -EFBIG)
+ 		error = xfs_iext_count_upgrade(tp, ip, iext_delta);
+ 	if (error)
+ 		goto err_cancel;
  
+-	count = bmap->me_len;
+-	error = xfs_trans_log_finish_bmap_update(tp, budp, bui_type, ip,
+-			whichfork, bmap->me_startoff, bmap->me_startblock,
+-			&count, state);
++	fake.bi_owner = ip;
++	fake.bi_bmap.br_startblock = map->me_startblock;
++	fake.bi_bmap.br_startoff = map->me_startoff;
++	fake.bi_bmap.br_blockcount = map->me_len;
++	fake.bi_bmap.br_state = (map->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
++			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
++
++	error = xfs_trans_log_finish_bmap_update(tp, budp, &fake);
+ 	if (error == -EFSCORRUPTED)
+-		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, bmap,
+-				sizeof(*bmap));
++		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp, map,
++				sizeof(*map));
+ 	if (error)
+ 		goto err_cancel;
+ 
+-	if (count > 0) {
+-		ASSERT(bui_type == XFS_BMAP_UNMAP);
+-		irec.br_startblock = bmap->me_startblock;
+-		irec.br_blockcount = count;
+-		irec.br_startoff = bmap->me_startoff;
+-		irec.br_state = state;
+-		xfs_bmap_unmap_extent(tp, ip, &irec);
++	if (fake.bi_bmap.br_blockcount > 0) {
++		ASSERT(fake.bi_type == XFS_BMAP_UNMAP);
++		xfs_bmap_unmap_extent(tp, ip, &fake.bi_bmap);
+ 	}
+ 
+ 	/*
 
 
