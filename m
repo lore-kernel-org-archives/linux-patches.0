@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEF726A1C5;
-	Tue, 25 Mar 2025 12:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2816425C6E4;
+	Tue, 25 Mar 2025 12:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906181; cv=none; b=Ew0cAsagDbGdcah/CO21cts9oq0sknLxeh4CrJfVncpPi7Uuzho7RmRFT5Rv1r1+CnMtsDL3giIzrs7FsAX95MQR2RQTe9VKzvCg92twfLQjdCjg1P4fmn6blhRdZ3bUrgyuC8ZZCBUiyUl47ZgajJ4jFVE3gWHMjJe85KL1D7s=
+	t=1742906183; cv=none; b=W++wA8LkSCSVt0g9fWO+psmSOGfzok+Z+onxvkSPN+Oa9R1oyqIkNQ+tqMkIje8w19V3rcWtqdfnjhN2toAYw31vEbb/Z0DcQYG/ixSw9qAs+OCZww9puO9otFtyMkxwZm2vSmsHNQR680NJd3uPG0s/Q6Hm5QhsR4bJg1Sc6go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906181; c=relaxed/simple;
-	bh=yvRKKpVDWh4OvAS3C3cjppcKKOyv8lFOr+44bi2DotU=;
+	s=arc-20240116; t=1742906183; c=relaxed/simple;
+	bh=af0Vebt+4hqUQTCeOndgnAFyWs/9KC4BYam/YSnHS9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZI1me/JkWOsQ6Ukt+ZX1049Af6GbEafFWSPeq7hXFUC2dEI6wJmPA6HPwnpihGUQ7ubkRiSAfTSjoHa8bUa2Qh5pbOXbIl3vEE6Dq/C6FWJjqGMM7EHJgUeZL3qvRSNQqz2bhP3/7M6NzEmEO4UFmK/SwSOUDg2S7Ap20j2qPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7wkB52n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brs2j7zctQj+9aupTdObFMDLHKe1as3b1PVyMbdotrGZACG83KZrG3YkkDOj5RVquE4gRpL1ImNtfdBJ69fWNlY9rRfebSPBBziuu26tmMKb+HwlOU7gxFpOfGW2UFHdTTkOzWmMAQWSm0MvKEH2rP3ZmbUHMf0at4G03bOENpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeTmtcZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7wkB52n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29ADC4CEE4;
-	Tue, 25 Mar 2025 12:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeTmtcZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B7AC4CEE4;
+	Tue, 25 Mar 2025 12:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906181;
-	bh=yvRKKpVDWh4OvAS3C3cjppcKKOyv8lFOr+44bi2DotU=;
+	s=korg; t=1742906183;
+	bh=af0Vebt+4hqUQTCeOndgnAFyWs/9KC4BYam/YSnHS9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7wkB52nHgMrr5wPoEEtqOYmy2FCkiByVh9EiJS/bGNsOPrm2+jqn4o+2J+LGv6SE
-	 tKhHXDDTzuNr3d+w2Qv2Zh4BkZOE7ZOp1bh/ASOHbL/fqjZShawzV1VL9HxfiXiacr
-	 FzoN1cCoB5S7+I8BvceR9fNCgBOMZvUnhz0PLmII=
+	b=IeTmtcZIINUirp7H8/8At7y49G+9hhbsF1ZHEw2B9ZMhA+1I2EYyqd5dBsCN/p1jq
+	 JX/V5lKYPsLSk3iF/Y66SczIpGKic5EPSdG/gAlE9reQ5esplkTq4Jb5q1lp29j+ZB
+	 UYaJm20utQQfmRfo90U9bvpG11bVNyIzVLDfz164=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>
-Subject: [PATCH 6.6 58/77] drm/amdgpu: Fix JPEG video caps max size for navi1x and raven
-Date: Tue, 25 Mar 2025 08:22:53 -0400
-Message-ID: <20250325122145.868163968@linuxfoundation.org>
+	Robin Chen <robin.chen@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Martin Tsai <martin.tsai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 59/77] drm/amd/display: should support dmub hw lock on Replay
+Date: Tue, 25 Mar 2025 08:22:54 -0400
+Message-ID: <20250325122145.893513385@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -51,45 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Martin Tsai <martin.tsai@amd.com>
 
-commit ec33964d9d88488fa954a03d476a8b811efc6e85 upstream.
+commit bfeefe6ea5f18cabb8fda55364079573804623f9 upstream.
 
-8192x8192 is the maximum supported resolution.
+[Why]
+Without acquiring DMCUB hw lock, a race condition is caused with
+Panel Replay feature, which will trigger a hang. Indicate that a
+lock is necessary to prevent this when replay feature is enabled.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+[How]
+To allow dmub hw lock on Replay.
+
+Reviewed-by: Robin Chen <robin.chen@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Martin Tsai <martin.tsai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6e0d2fde3ae8fdb5b47e10389f23ed2cb4daec5d)
-Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nv.c    |    2 +-
- drivers/gpu/drm/amd/amdgpu/soc15.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dmub_hw_lock_mgr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/nv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nv.c
-@@ -84,7 +84,7 @@ static const struct amdgpu_video_codec_i
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
--	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 8192, 8192, 0)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
- };
- 
---- a/drivers/gpu/drm/amd/amdgpu/soc15.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
-@@ -125,7 +125,7 @@ static const struct amdgpu_video_codec_i
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4096, 52)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 1920, 1088, 4)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
--	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-+	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 8192, 8192, 0)},
- 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 4096, 4096, 0)},
- };
- 
+--- a/drivers/gpu/drm/amd/display/dc/dce/dmub_hw_lock_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_hw_lock_mgr.c
+@@ -65,5 +65,9 @@ bool should_use_dmub_lock(struct dc_link
+ {
+ 	if (link->psr_settings.psr_version == DC_PSR_VERSION_SU_1)
+ 		return true;
++
++	if (link->replay_settings.replay_feature_enabled)
++		return true;
++
+ 	return false;
+ }
 
 
