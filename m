@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E0D25522E;
-	Tue, 25 Mar 2025 12:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436391DD9D3;
+	Tue, 25 Mar 2025 12:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905995; cv=none; b=cr5bXFKWEvJPbjWYtp4eHeR6b0B6F3sTmVU61kn98IYml7uqKS+URSxmsdooow+hdFoImlXOSArVxZhp8xCO5GaU74+YpxlpUKo0GwTmjVytRPnzMW+7wfJq6DhQqFDPM5KkWvbeh8+vC4JSBm9PWo7YrGXQJ6hMkN5niMmePo4=
+	t=1742905997; cv=none; b=NBKBULnQUnvjGnf1D4R/sbMXHqhtyFMYWu+FOZyjHk7CcoK369OVH1GIaVk+miuxS4/TZEIpecNUyzQ4CzrYPcZcUPWkH8Za65bRW20I5ZcXFMkGvCGhycYMyxC6nnqFUumC5D8O6Huw0pt+J9Miv41KKqCQL3puWW3z5GqRSkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905995; c=relaxed/simple;
-	bh=ae7qyvO39Bo1EsWu9VvuJBTrQTfxxU0ggITXaMdgh8c=;
+	s=arc-20240116; t=1742905997; c=relaxed/simple;
+	bh=bZAeLUJcFxejPtybDaWcuoagkkxTE55jr7YvUlFKxXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srh+Sm6tIWdK8e3OFyR+viZJSU+rZ4shKtoXdwbTlGwNFlxKtpwkpWyXaykuN2CZLLEO1V9BndecncNAdEzXZazBdy2We10yWsHQFt5DrP81zBbsDtLAP7pbz2gkzZKb9axM4lzQ5CEKNgWrucKTxJ2NT//odZGPeiNtPsr2iYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER8r+q/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0eji+vkuoFIYlboL7sQytRatOH6zk3TvsMNJHlSauke0quTtikQ2JI4tFlMWWMNdmX7yYOjbrwuM14SlEUR8Gp9XNvBz2TQbWzi1cfOVPK7Bf3+bwqt16MPXpRB63zhuvLnzQJu+ubF3C1MTUts2Tyok+e3W4UU8ChT0to/bv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfJAgU3n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER8r+q/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2C2C4CEE4;
-	Tue, 25 Mar 2025 12:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfJAgU3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E703AC4CEE4;
+	Tue, 25 Mar 2025 12:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905995;
-	bh=ae7qyvO39Bo1EsWu9VvuJBTrQTfxxU0ggITXaMdgh8c=;
+	s=korg; t=1742905997;
+	bh=bZAeLUJcFxejPtybDaWcuoagkkxTE55jr7YvUlFKxXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ER8r+q/PZ+j93JSN58pJ+smiJuup3cnGaLNQGhGphdeYmYfh4F54i1ulbryDRmgsd
-	 P7UuYtkIulem3pyQNsRI2HMwOLBuGW7FsMMX/FUKRd8bhcuzi/CK/Tu+/gUgd+asbw
-	 Ah4f47Uvq28639jBw7nIrRCxWCB3jRym7zbkZp+c=
+	b=lfJAgU3nNXNJtomIu2HS3hh8vfM3Pq28E6CpSPcaoKKpDFVsQJvvIQhDieSHTu+iE
+	 6x1aVKT8xDSJej8riPb+vIo+xJ9JjWSrJ7q226hfchpnDpH4egiBtquKFuvePOmM1u
+	 OfAdSrSJoTenb3uxi6PE2h8qk0piAiVPlsu/jLC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gu Bowen <gubowen5@huawei.com>,
-	Aubin Constans <aubin.constans@microchip.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.13 077/119] mmc: atmel-mci: Add missing clk_disable_unprepare()
-Date: Tue, 25 Mar 2025 08:22:15 -0400
-Message-ID: <20250325122151.025372191@linuxfoundation.org>
+	Rafael Aquini <raquini@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 078/119] selftests/mm: run_vmtests.sh: fix half_ufd_size_MB calculation
+Date: Tue, 25 Mar 2025 08:22:16 -0400
+Message-ID: <20250325122151.051037358@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -51,39 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gu Bowen <gubowen5@huawei.com>
+From: Rafael Aquini <raquini@redhat.com>
 
-commit e51a349d2dcf1df8422dabb90b2f691dc7df6f92 upstream.
+commit 67a2f86846f244d81601cf2e1552c4656b8556d6 upstream.
 
-The error path when atmci_configure_dma() set dma fails in atmci driver
-does not correctly disable the clock.
-Add the missing clk_disable_unprepare() to the error path for pair with
-clk_prepare_enable().
+We noticed that uffd-stress test was always failing to run when invoked
+for the hugetlb profiles on x86_64 systems with a processor count of 64 or
+bigger:
 
-Fixes: 467e081d23e6 ("mmc: atmel-mci: use probe deferring if dma controller is not ready yet")
-Signed-off-by: Gu Bowen <gubowen5@huawei.com>
-Acked-by: Aubin Constans <aubin.constans@microchip.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250225022856.3452240-1-gubowen5@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  ...
+  # ------------------------------------
+  # running ./uffd-stress hugetlb 128 32
+  # ------------------------------------
+  # ERROR: invalid MiB (errno=9, @uffd-stress.c:459)
+  ...
+  # [FAIL]
+  not ok 3 uffd-stress hugetlb 128 32 # exit=1
+  ...
+
+The problem boils down to how run_vmtests.sh (mis)calculates the size of
+the region it feeds to uffd-stress.  The latter expects to see an amount
+of MiB while the former is just giving out the number of free hugepages
+halved down.  This measurement discrepancy ends up violating uffd-stress'
+assertion on number of hugetlb pages allocated per CPU, causing it to bail
+out with the error above.
+
+This commit fixes that issue by adjusting run_vmtests.sh's
+half_ufd_size_MB calculation so it properly renders the region size in
+MiB, as expected, while maintaining all of its original constraints in
+place.
+
+Link: https://lkml.kernel.org/r/20250218192251.53243-1-aquini@redhat.com
+Fixes: 2e47a445d7b3 ("selftests/mm: run_vmtests.sh: fix hugetlb mem size calculation")
+Signed-off-by: Rafael Aquini <raquini@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    4 +++-
+ tools/testing/selftests/mm/run_vmtests.sh |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2499,8 +2499,10 @@ static int atmci_probe(struct platform_d
- 	/* Get MCI capabilities and set operations according to it */
- 	atmci_get_cap(host);
- 	ret = atmci_configure_dma(host);
--	if (ret == -EPROBE_DEFER)
-+	if (ret == -EPROBE_DEFER) {
-+		clk_disable_unprepare(host->mck);
- 		goto err_dma_probe_defer;
-+	}
- 	if (ret == 0) {
- 		host->prepare_data = &atmci_prepare_data_dma;
- 		host->submit_data = &atmci_submit_data_dma;
+--- a/tools/testing/selftests/mm/run_vmtests.sh
++++ b/tools/testing/selftests/mm/run_vmtests.sh
+@@ -302,7 +302,9 @@ uffd_stress_bin=./uffd-stress
+ CATEGORY="userfaultfd" run_test ${uffd_stress_bin} anon 20 16
+ # Hugetlb tests require source and destination huge pages. Pass in half
+ # the size of the free pages we have, which is used for *each*.
+-half_ufd_size_MB=$((freepgs / 2))
++# uffd-stress expects a region expressed in MiB, so we adjust
++# half_ufd_size_MB accordingly.
++half_ufd_size_MB=$(((freepgs * hpgsize_KB) / 1024 / 2))
+ CATEGORY="userfaultfd" run_test ${uffd_stress_bin} hugetlb "$half_ufd_size_MB" 32
+ CATEGORY="userfaultfd" run_test ${uffd_stress_bin} hugetlb-private "$half_ufd_size_MB" 32
+ CATEGORY="userfaultfd" run_test ${uffd_stress_bin} shmem 20 16
 
 
