@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBA1267F66;
-	Tue, 25 Mar 2025 12:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE2267F66;
+	Tue, 25 Mar 2025 12:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905869; cv=none; b=T1bOOg0e8of6d7xaHnKjIi5dKnuchTRelfqaXdCGdBQ5EgM1tM4Ke1vM7nmh6pvQmoDBJSNzTu80EOVLLt+weGpvcldxpON/xs4SaMeUBTXOhbnKQbrSYxOoNzIltow3wTJ1DZK7qoaUttGae5MwSDh6uZMdmsfYUemsNU+vajY=
+	t=1742905870; cv=none; b=bkWckY6PqGXRKmif22V/aDzd+P4R92Z9vef/Ewaiso3WcAX2QvibreQXs94aYIN8ykewqg93u7KN2uHd5qCJ9hKmxBxZGAYMNJkDtyzPvyOSYMXLNqnNrAvasV1WbKrcqynk+fc1yWkdbKg5tES9kp2JftSvymY9HwAnLUx9DbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905869; c=relaxed/simple;
-	bh=C5PmZTvBIgtM/k0hacKkiCNvN0rXjMBNCD96NisFAUc=;
+	s=arc-20240116; t=1742905870; c=relaxed/simple;
+	bh=2RHI+QpSnITbezb3hbgKMZ7WiokvN5ScZ32tJV90Y9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbkP1vuJhSYupAJVn4StYlzpa5DEy5frUtitnzEw0A8BmBTSCH+Rk0zOwhaJtpxFmsqZxldUngQpPk5CSascIHAxv/gZYoya6tVtqvMuH9kZVqlSr4F7pV1deNZKSpMZwIa6R+l2DrxoPvKYNePHyPkFVjmaptKgW4mT7NegnfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3VZjxgB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEa6oVxlM09H+UBEf3Qud+xCTZzPMRvQJoihTnV+adISzFuiSAG39CZuTCza2/MPUpT/8DzZb/3Zny5VP0luyC04ei09N36ohGpBSgEU7xs6LtDZ5aJlBZ/9A6D/7vgKTZxoVroPZHVSkWLNnhPK/2NLjrlfvEsbCDtlu3HOhg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhZGkmOV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3VZjxgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745C7C4CEE4;
-	Tue, 25 Mar 2025 12:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhZGkmOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61225C4CEE4;
+	Tue, 25 Mar 2025 12:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905868;
-	bh=C5PmZTvBIgtM/k0hacKkiCNvN0rXjMBNCD96NisFAUc=;
+	s=korg; t=1742905870;
+	bh=2RHI+QpSnITbezb3hbgKMZ7WiokvN5ScZ32tJV90Y9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3VZjxgBaevdk4bpyRPVIIiHKjcqgX5v/903x/XKqAeKUnRc8Ej511cWAae+YE+el
-	 5A9BsNYh9JBJHNAwBaKF6aBWRYOPN3P/JdC/XTGBAKt3nj7OTxnImRr4Zbwzou3Qoj
-	 Yx2O7Ll2APYhw+IPEKvqQbz8jrFlBzJ4Ar3IhTPw=
+	b=NhZGkmOV/4Wb0SosmKfaYhzEmABJRxhKzIf+x31zz/nbSY1mDTFUxD78BBAsO0rLp
+	 VAZ+kaYh0lc8IZOmBPCpL+VzPt0vw0wrrm+vsbobsja3Q2ewT0mwd0BH9JIKWueoVy
+	 bImNgO1QxdwO1T46Y9kmZa/VFhlQ6dmY86lgYdyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 001/119] firmware: qcom: scm: Fix error code in probe()
-Date: Tue, 25 Mar 2025 08:20:59 -0400
-Message-ID: <20250325122149.099579711@linuxfoundation.org>
+Subject: [PATCH 6.13 010/119] ARM: dts: bcm2711: Fix xHCI power-domain
+Date: Tue, 25 Mar 2025 08:21:08 -0400
+Message-ID: <20250325122149.326268808@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -52,38 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 7f048b202333b967782a98aa21bb3354dc379bbf ]
+[ Upstream commit f44fa354a0715577ca32b085f6f60bcf32c748dd ]
 
-Set the error code if devm_qcom_tzmem_pool_new() fails.  Don't return
-success.
+During s2idle tests on the Raspberry CM4 the VPU firmware always crashes
+on xHCI power-domain resume:
 
-Fixes: 1e76b546e6fc ("firmware: qcom: scm: Cleanup global '__scm' on probe failures")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/a0845467-4f83-4070-ab1e-ff7e6764609f@stanley.mountain
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+root@raspberrypi:/sys/power# echo freeze > state
+[   70.724347] xhci_suspend finished
+[   70.727730] xhci_plat_suspend finished
+[   70.755624] bcm2835-power bcm2835-power: Power grafx off
+[   70.761127]  USB: Set power to 0
+
+[   74.653040]  USB: Failed to set power to 1 (-110)
+
+This seems to be caused because of the mixed usage of
+raspberrypi-power and bcm2835-power at the same time. So avoid
+the usage of the VPU firmware power-domain driver, which
+prevents the VPU crash.
+
+Fixes: 522c35e08b53 ("ARM: dts: bcm2711: Add BCM2711 xHCI support")
+Link: https://github.com/raspberrypi/linux/issues/6537
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250201112729.31509-1-wahrenst@gmx.net
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi | 5 -----
+ arch/arm/boot/dts/broadcom/bcm2711.dtsi     | 1 +
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 959bc156f35f9..44e6885cdae86 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2082,8 +2082,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
+diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi b/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
+index 6bf4241fe3b73..c78ed064d1667 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
+@@ -1,7 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include "bcm2835-rpi.dtsi"
  
- 	__scm->mempool = devm_qcom_tzmem_pool_new(__scm->dev, &pool_config);
- 	if (IS_ERR(__scm->mempool)) {
--		dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
--			      "Failed to create the SCM memory pool\n");
-+		ret = dev_err_probe(__scm->dev, PTR_ERR(__scm->mempool),
-+				    "Failed to create the SCM memory pool\n");
- 		goto err;
- 	}
+-#include <dt-bindings/power/raspberrypi-power.h>
+ #include <dt-bindings/reset/raspberrypi,firmware-reset.h>
  
+ / {
+@@ -101,7 +100,3 @@ &v3d {
+ &vchiq {
+ 	interrupts = <GIC_SPI 34 IRQ_TYPE_LEVEL_HIGH>;
+ };
+-
+-&xhci {
+-	power-domains = <&power RPI_POWER_DOMAIN_USB>;
+-};
+diff --git a/arch/arm/boot/dts/broadcom/bcm2711.dtsi b/arch/arm/boot/dts/broadcom/bcm2711.dtsi
+index e4e42af21ef3a..5eaec6c6a1df3 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2711.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm2711.dtsi
+@@ -610,6 +610,7 @@ xhci: usb@7e9c0000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			interrupts = <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&pm BCM2835_POWER_DOMAIN_USB>;
+ 			/* DWC2 and this IP block share the same USB PHY,
+ 			 * enabling both at the same time results in lockups.
+ 			 * So keep this node disabled and let the bootloader
 -- 
 2.39.5
 
