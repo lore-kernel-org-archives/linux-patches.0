@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7D51D959B;
-	Tue, 25 Mar 2025 12:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0125C266EE7;
+	Tue, 25 Mar 2025 12:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905697; cv=none; b=WtfqjmZypN6q/4ttqLarkHdITX99nkB94MwNMRlesmH7iPn19383u0YOIRMKCEZY3fG4KLnGYQgI1hLZ6/J8jsNGk4mBR6SXxvf3pHD2QW586NN3FRQ7dv0rMR5yalv8uEdcPdT4GM4A1M1/7GJlIkkzf5qb9tdoXM88Sp2PNl4=
+	t=1742905699; cv=none; b=f9p/vTh+ymW08+7tAd1UQrn0jlcBX+q44Ix9fV9a7H5ufY95PIt+JCQtugRJtZ+dW4mwHXGE5HB2zXE2fGaah2GdlHuzyZwhBXjD3znhLfdTVd2qi6DhZrR4I/V2tkP6NLxM5X/BEeNvN8fcS8P0HCMDlC0j0cE+Mrf8Z+1GF/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905697; c=relaxed/simple;
-	bh=qnNPsqzp8jrJPyDaGK4x4nYFYdp253Q1O3/9BN2lrLw=;
+	s=arc-20240116; t=1742905699; c=relaxed/simple;
+	bh=l0N2e4HZuAacpJv03erl0sfOZx3P6ppXRPvHvWNEvwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVL/Y2aUS4kxs6lzpoE5LGHaKVSeTNjgwQoaPLYk2tCnx/RG0IQT3Ob1jxcNXiqV985NMe1CpIJLEm8n78igaCOMCJlSagEQ4VswKtsWahxbLrs8mZuZ0D28hOGFB25KUoKaeHnr1fond/Lz76s4nEdOrfPUMDLQ3DHnPdppWAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP5o26cQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RL5PzsCJQ7R2lP/S+5DcyutzKzjOKoFV+1UnH+YZdQFz2oLwJFXMfveO5bCvZS4GfGjvPv/0xocyZapzSLVDAnca08PykPkGwLiLjieZokcuyTHRaGd4GsLqAingq4T+BdAmYbpjfi5NMGF7JV7R1u1omZYd35CdnYihEVaFjRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0C5a32wj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP5o26cQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4AB8C4CEE9;
-	Tue, 25 Mar 2025 12:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0C5a32wj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F9DC4CEE9;
+	Tue, 25 Mar 2025 12:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905696;
-	bh=qnNPsqzp8jrJPyDaGK4x4nYFYdp253Q1O3/9BN2lrLw=;
+	s=korg; t=1742905698;
+	bh=l0N2e4HZuAacpJv03erl0sfOZx3P6ppXRPvHvWNEvwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UP5o26cQ/ccGc11eR+hn2QiDq40DZu9jUjwdgIODoMCCm7r6ozroJbdIU14AmvB6h
-	 c/M/Ea0aewzt1IH4VCQUFrxkr6vMCM2PK9yCy36nldbUvQ4l5r+xTOLakZJFf20EI0
-	 D7XCooIBVVUqmdIjeITzXSgnOb3amSBPIYneK/Bo=
+	b=0C5a32wj7FmIvBxqdFH09CN3GBcDqid99quT+FvCnYH24H52B/p4g6o0bhq8GGbo4
+	 NWOkqAqnJ8aCoF9TxeYu95ZeAQWiNztR2YVbIjTkV5sMiy25zhxoa6QwwWp26MCd4B
+	 XNI9OFWayXW98i9DiH9UAaMmS3KrgLC+TqucwGuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 115/198] drm/amd/display: Restore correct backlight brightness after a GPU reset
-Date: Tue, 25 Mar 2025 08:21:17 -0400
-Message-ID: <20250325122159.672957216@linuxfoundation.org>
+Subject: [PATCH 6.1 116/198] drm/amd/display: Assign normalized_pix_clk when color depth = 14
+Date: Tue, 25 Mar 2025 08:21:18 -0400
+Message-ID: <20250325122159.698265937@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,56 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 5760388d9681ac743038b846b9082b9023969551 upstream.
+commit 79e31396fdd7037c503e6add15af7cb00633ea92 upstream.
 
-[Why]
-GPU reset will attempt to restore cached state, but brightness doesn't
-get restored. It will come back at 100% brightness, but userspace thinks
-it's the previous value.
+[WHY & HOW]
+A warning message "WARNING: CPU: 4 PID: 459 at ... /dc_resource.c:3397
+calculate_phy_pix_clks+0xef/0x100 [amdgpu]" occurs because the
+display_color_depth == COLOR_DEPTH_141414 is not handled. This is
+observed in Radeon RX 6600 XT.
 
-[How]
-When running resume sequence if GPU is in reset restore brightness
-to previous value.
+It is fixed by assigning pix_clk * (14 * 3) / 24 - same as the rests.
 
-Acked-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Also fixes the indentation in get_norm_pix_clk.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5e19e2b57b6bb640d68dfc7991e1e182922cf867)
+(cherry picked from commit 274a87eb389f58eddcbc5659ab0b180b37e92775)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -230,6 +230,10 @@ static int amdgpu_dm_atomic_check(struct
- static void handle_hpd_irq_helper(struct amdgpu_dm_connector *aconnector);
- static void handle_hpd_rx_irq(void *param);
- 
-+static void amdgpu_dm_backlight_set_level(struct amdgpu_display_manager *dm,
-+					 int bl_idx,
-+					 u32 user_brightness);
-+
- static bool
- is_timing_unchanged_for_freesync(struct drm_crtc_state *old_crtc_state,
- 				 struct drm_crtc_state *new_crtc_state);
-@@ -2885,6 +2889,12 @@ static int dm_resume(void *handle)
- 
- 		mutex_unlock(&dm->dc_lock);
- 
-+		/* set the backlight after a reset */
-+		for (i = 0; i < dm->num_of_edps; i++) {
-+			if (dm->backlight_dev[i])
-+				amdgpu_dm_backlight_set_level(dm, i, dm->brightness[i]);
-+		}
-+
- 		return 0;
- 	}
- 	/* Recreate dc_state - DC invalidates it when setting power state to S3. */
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -2328,10 +2328,13 @@ static int get_norm_pix_clk(const struct
+ 			break;
+ 		case COLOR_DEPTH_121212:
+ 			normalized_pix_clk = (pix_clk * 36) / 24;
+-		break;
++			break;
++		case COLOR_DEPTH_141414:
++			normalized_pix_clk = (pix_clk * 42) / 24;
++			break;
+ 		case COLOR_DEPTH_161616:
+ 			normalized_pix_clk = (pix_clk * 48) / 24;
+-		break;
++			break;
+ 		default:
+ 			ASSERT(0);
+ 		break;
 
 
