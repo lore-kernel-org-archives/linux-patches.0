@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8166618BC3B;
-	Tue, 25 Mar 2025 12:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B42D25C717;
+	Tue, 25 Mar 2025 12:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906312; cv=none; b=Gw/7ZKUKoY5hjHtYgI7S3dOnY0imgjiWf3BZsngouvyIlvucI4r+9MnhX6RVatAcy3D44WwvnIKVZkBKrGeuQ7Ld2Aas/nOYtNqNNSz4hknrllDPpjnwvPsPDIsQMad8iJgrptt5Lro84j3SD+waY3vv1paa52Pf1aTat+hL5f8=
+	t=1742906314; cv=none; b=iGuxJoxpHcpYCQXleDVCQJSh8siVGivlut150esMh3cP5dpRIerEkXC7g+bRggd/LPh+7iEw/JYTcY1HBfMyn8Yy2My0wS5H/TOIk92D378dmCJvUZYw+N/T0XX7g1gk1ln8g8VMbLbA+IXQ+/VAeKG0KHYLkHo75RcBcW+OBkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906312; c=relaxed/simple;
-	bh=oySMQauBO1+9cllcw3/zeUjsYHCB9QewBOfA4MNYN7g=;
+	s=arc-20240116; t=1742906314; c=relaxed/simple;
+	bh=S3t4Hr/ZWWQezniPLldv4O8HgdmKMxvzLUp+MUsNtcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yy1hxN0vAlH019JgXqbF+agv+i1GTSpByPgHRW2EV2GlWb1mAvrVEpEC28JtKJ7I0AMNuu2aEcrKVW/sq2TN39SH2mkJVbAWJQ4p7++t2vrhL3vPwQjtaN4kp91vEOY/NSRgcyEwP6C+JsjajVJUrcfxOWaeRrN6OOadCP++Qts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbHogtbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRbVOwOiyOyo4hbexxLdzQiS7+YMeYDp/kvAmE4FvN51XGKaE4zJTX7aX5QTGOvPr3Oc09c3HTYwltcqwLQXigGq86jr7uDd5uxpvCWJSmTIZFEeVrknnHbM8s90mBMprBeD5d3YW8/J7wuDSncLDmnjvb1jm+R/Owqrn2nXwTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXSEOk6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbHogtbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E29BC4CEE4;
-	Tue, 25 Mar 2025 12:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXSEOk6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103C9C4CEE4;
+	Tue, 25 Mar 2025 12:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906312;
-	bh=oySMQauBO1+9cllcw3/zeUjsYHCB9QewBOfA4MNYN7g=;
+	s=korg; t=1742906314;
+	bh=S3t4Hr/ZWWQezniPLldv4O8HgdmKMxvzLUp+MUsNtcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbHogtbJhgV8G1P0ilc6C0NwZXHES7FyUSGXro9knbXw4U2lzlCPFMAKc1eIYishb
-	 +YTJRckv0zDXNAeC2VhSZ97UVMM/JlaHiYnsFvAfpTn1nsAC6CZdf2XTLCdA1c+0Qc
-	 X37Ww5rTi59stWd/uBNM+FtJK1BBMdPwsg+Bnvq0=
+	b=cXSEOk6J7u0FfXDfq4VaES5JPgdZGQZUwqq5l/L2Z4y4FoI1UeCintP5S0wo0Gcvm
+	 syjs7669Iu+kaQ8j0NYyPNQaUBgPcKvsCvoJ+zXkEN4/RwV4UtS20uP0FJsMAwHuoE
+	 41Cf6FxzelIbAVZjBc5K6xJhIx1zN9oFUbdaZNx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/116] ARM: davinci: da850: fix selecting ARCH_DAVINCI_DA8XX
-Date: Tue, 25 Mar 2025 08:22:00 -0400
-Message-ID: <20250325122150.058274309@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 051/116] tracing: tprobe-events: Fix leakage of module refcount
+Date: Tue, 25 Mar 2025 08:22:18 -0400
+Message-ID: <20250325122150.511958085@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,38 +49,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 45d5fe1c53baaed1fb3043f45d1e15ebb4bbe86a ]
+commit ac91052f0ae5be9e46211ba92cc31c0e3b0a933a upstream.
 
-Chips in the DA850 family need to have ARCH_DAVINCI_DA8XX to be selected
-in order to enable some peripheral drivers.
+When enabling the tracepoint at loading module, the target module
+refcount is incremented by find_tracepoint_in_module(). But it is
+unnecessary because the module is not unloaded while processing
+module loading callbacks.
+Moreover, the refcount is not decremented in that function.
+To be clear the module refcount handling, move the try_module_get()
+callsite to trace_fprobe_create_internal(), where it is actually
+required.
 
-This was accidentally removed in a previous commit.
+Link: https://lore.kernel.org/all/174182761071.83274.18334217580449925882.stgit@devnote2/
 
-Fixes: dec85a95167a ("ARM: davinci: clean up platform support")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 57a7e6de9e30 ("tracing/fprobe: Support raw tracepoints on future loaded modules")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-davinci/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_fprobe.c |   21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/mach-davinci/Kconfig b/arch/arm/mach-davinci/Kconfig
-index 2a8a9fe46586d..3fa15f3422409 100644
---- a/arch/arm/mach-davinci/Kconfig
-+++ b/arch/arm/mach-davinci/Kconfig
-@@ -27,6 +27,7 @@ config ARCH_DAVINCI_DA830
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -889,13 +889,8 @@ static void __find_tracepoint_module_cb(
  
- config ARCH_DAVINCI_DA850
- 	bool "DA850/OMAP-L138/AM18x based system"
-+	select ARCH_DAVINCI_DA8XX
- 	select DAVINCI_CP_INTC
+ 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
+ 		data->tpoint = tp;
+-		if (!data->mod) {
++		if (!data->mod)
+ 			data->mod = mod;
+-			if (!try_module_get(data->mod)) {
+-				data->tpoint = NULL;
+-				data->mod = NULL;
+-			}
+-		}
+ 	}
+ }
  
- config ARCH_DAVINCI_DA8XX
--- 
-2.39.5
-
+@@ -907,13 +902,7 @@ static void __find_tracepoint_cb(struct
+ 		data->tpoint = tp;
+ }
+ 
+-/*
+- * Find a tracepoint from kernel and module. If the tracepoint is in a module,
+- * this increments the module refcount to prevent unloading until the
+- * trace_fprobe is registered to the list. After registering the trace_fprobe
+- * on the trace_fprobe list, the module refcount is decremented because
+- * tracepoint_probe_module_cb will handle it.
+- */
++/* Find a tracepoint from kernel and module. */
+ static struct tracepoint *find_tracepoint(const char *tp_name,
+ 					  struct module **tp_mod)
+ {
+@@ -942,6 +931,7 @@ static void reenable_trace_fprobe(struct
+ 	}
+ }
+ 
++/* Find a tracepoint from specified module. */
+ static struct tracepoint *find_tracepoint_in_module(struct module *mod,
+ 						    const char *tp_name)
+ {
+@@ -1177,6 +1167,11 @@ static int __trace_fprobe_create(int arg
+ 	if (is_tracepoint) {
+ 		ctx.flags |= TPARG_FL_TPOINT;
+ 		tpoint = find_tracepoint(symbol, &tp_mod);
++		/* lock module until register this tprobe. */
++		if (tp_mod && !try_module_get(tp_mod)) {
++			tpoint = NULL;
++			tp_mod = NULL;
++		}
+ 		if (tpoint) {
+ 			ctx.funcname = kallsyms_lookup(
+ 				(unsigned long)tpoint->probestub,
 
 
