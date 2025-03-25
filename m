@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2431D25745F;
-	Tue, 25 Mar 2025 12:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC0F25745F;
+	Tue, 25 Mar 2025 12:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905666; cv=none; b=dljwlPKQ5O6cOGMLxloJPK/ACnTQTEfJ5/f7APJiqC93HOtkNjhBVIE7nUBhmWvJe6alFjY93NLTkOCMixi0Ja6P7G0QX+mKOpVyAndGNQQ+5kxNmz22pGs3X4szMdpFsAYeShc6n1m+YWb2D+E/oOA1ZfT0wwDd505U8NpgYQw=
+	t=1742905668; cv=none; b=Ru0tq9sLhliuUoijqqJ57TcKNhFWClNBCGyX0xve48PE1ABPetqPQdaJhBLcjBNJ8LNfvqd0UaSF1kk1PKsCH2/rIgCp8bE2knKJ2PUVgXNudYpWkP7HSrjxPCKsNA6k9/WIrl9yqV4hXCDTx6X6AA18O27bwPqj+Kbg+CYTLxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905666; c=relaxed/simple;
-	bh=UpC+DDCA9lLOXDgcSUuP07iaSzfFioWPp6IJjrKC6As=;
+	s=arc-20240116; t=1742905668; c=relaxed/simple;
+	bh=JE6nTQIKA2MI8mJOQS2Oka+UWqJK4d+KB5xPj/fopYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crU3nrqfEooqYCenKkdO12QhU+PVUrQEapsyygVMVcJMUF4/biuGvD2D9X2VbKxEqFMxqV4pxPrc54VP2fWCTd2CwRJ3w8dFMJrBuwn4OwFF3EhgcRFS5sDIzy4RYqUQpzCrFpGrWubDC5oO+9psda3N3pO7LOcIrdf3FBwnISM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPCRimKx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUbkOH1HhHSUnGjqOoS9MsIFY/V5Pvy2kBjqiCrVY14XuwkOIIBQQXGvDY7MkTrMndUdFOxlYhdCx5OVqXSueAwua+4pzSatqmjDDa5kTWKq3dWoo7DKjz5thsjJ+GLMthDz2JdiiqoUGkwzeqemxezP9+zqlVZbNCgUL6YN/90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejCXCle/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPCRimKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BACC4CEE4;
-	Tue, 25 Mar 2025 12:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejCXCle/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08EFC4CEE4;
+	Tue, 25 Mar 2025 12:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905666;
-	bh=UpC+DDCA9lLOXDgcSUuP07iaSzfFioWPp6IJjrKC6As=;
+	s=korg; t=1742905667;
+	bh=JE6nTQIKA2MI8mJOQS2Oka+UWqJK4d+KB5xPj/fopYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPCRimKxu0HBWrWor9VGY5Itiu0hBb7Ov8SaPyBOY1xeVEpYnu0G/7bpKpCmAKc+Q
-	 oZCMQAJR/xYPXDCN8D235r0MHV6P/aeEvNBGEK2iFe3rKFZXQVPLBSc/9kSLP4Thxc
-	 Sn2b2+tVJb9Sfvsy5cCK8WhoWp8+PZZ5zgAsnkCM=
+	b=ejCXCle/zqHUuMT7DX381+sHzOaqk6qckJd3RkGFNgVcEJvRtkf2u4c0gVwdpYIU/
+	 ENKilUDQmg4RuaQ1GTzDDDmbYkb2kngoPevjLMH77QijjxIzX78pJw0s3xD9Rb0fK1
+	 vAGzTIlW9r9PWsrg2QaSU4xq2QhY6J6JNSm3594E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
+	Long Li <leo.lilong@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Alexander Potapenko <glider@google.com>
-Subject: [PATCH 6.1 097/198] xfs: initialise di_crc in xfs_log_dinode
-Date: Tue, 25 Mar 2025 08:20:59 -0400
-Message-ID: <20250325122159.195453752@linuxfoundation.org>
+	Catherine Hoang <catherine.hoang@oracle.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>
+Subject: [PATCH 6.1 098/198] xfs: add lock protection when remove perag from radix tree
+Date: Tue, 25 Mar 2025 08:21:00 -0400
+Message-ID: <20250325122159.222411906@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -53,108 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 0573676fdde7ce3829ee6a42a8e5a56355234712 ]
+[ Upstream commit 07afd3173d0c6d24a47441839a835955ec6cf0d4 ]
 
-Alexander Potapenko report that KMSAN was issuing these warnings:
+[ 6.1: resolved conflict in xfs_ag.c ]
 
-kmalloc-ed xlog buffer of size 512 : ffff88802fc26200
-kmalloc-ed xlog buffer of size 368 : ffff88802fc24a00
-kmalloc-ed xlog buffer of size 648 : ffff88802b631000
-kmalloc-ed xlog buffer of size 648 : ffff88802b632800
-kmalloc-ed xlog buffer of size 648 : ffff88802b631c00
-xlog_write_iovec: copying 12 bytes from ffff888017ddbbd8 to ffff88802c300400
-xlog_write_iovec: copying 28 bytes from ffff888017ddbbe4 to ffff88802c30040c
-xlog_write_iovec: copying 68 bytes from ffff88802fc26274 to ffff88802c300428
-xlog_write_iovec: copying 188 bytes from ffff88802fc262bc to ffff88802c30046c
-=====================================================
-BUG: KMSAN: uninit-value in xlog_write_iovec fs/xfs/xfs_log.c:2227
-BUG: KMSAN: uninit-value in xlog_write_full fs/xfs/xfs_log.c:2263
-BUG: KMSAN: uninit-value in xlog_write+0x1fac/0x2600 fs/xfs/xfs_log.c:2532
- xlog_write_iovec fs/xfs/xfs_log.c:2227
- xlog_write_full fs/xfs/xfs_log.c:2263
- xlog_write+0x1fac/0x2600 fs/xfs/xfs_log.c:2532
- xlog_cil_write_chain fs/xfs/xfs_log_cil.c:918
- xlog_cil_push_work+0x30f2/0x44e0 fs/xfs/xfs_log_cil.c:1263
- process_one_work kernel/workqueue.c:2630
- process_scheduled_works+0x1188/0x1e30 kernel/workqueue.c:2703
- worker_thread+0xee5/0x14f0 kernel/workqueue.c:2784
- kthread+0x391/0x500 kernel/kthread.c:388
- ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+Take mp->m_perag_lock for deletions from the perag radix tree in
+xfs_initialize_perag to prevent racing with tagging operations.
+Lookups are fine - they are RCU protected so already deal with the
+tree changing shape underneath the lookup - but tagging operations
+require the tree to be stable while the tags are propagated back up
+to the root.
 
-Uninit was created at:
- slab_post_alloc_hook+0x101/0xac0 mm/slab.h:768
- slab_alloc_node mm/slub.c:3482
- __kmem_cache_alloc_node+0x612/0xae0 mm/slub.c:3521
- __do_kmalloc_node mm/slab_common.c:1006
- __kmalloc+0x11a/0x410 mm/slab_common.c:1020
- kmalloc ./include/linux/slab.h:604
- xlog_kvmalloc fs/xfs/xfs_log_priv.h:704
- xlog_cil_alloc_shadow_bufs fs/xfs/xfs_log_cil.c:343
- xlog_cil_commit+0x487/0x4dc0 fs/xfs/xfs_log_cil.c:1574
- __xfs_trans_commit+0x8df/0x1930 fs/xfs/xfs_trans.c:1017
- xfs_trans_commit+0x30/0x40 fs/xfs/xfs_trans.c:1061
- xfs_create+0x15af/0x2150 fs/xfs/xfs_inode.c:1076
- xfs_generic_create+0x4cd/0x1550 fs/xfs/xfs_iops.c:199
- xfs_vn_create+0x4a/0x60 fs/xfs/xfs_iops.c:275
- lookup_open fs/namei.c:3477
- open_last_lookups fs/namei.c:3546
- path_openat+0x29ac/0x6180 fs/namei.c:3776
- do_filp_open+0x24d/0x680 fs/namei.c:3809
- do_sys_openat2+0x1bc/0x330 fs/open.c:1440
- do_sys_open fs/open.c:1455
- __do_sys_openat fs/open.c:1471
- __se_sys_openat fs/open.c:1466
- __x64_sys_openat+0x253/0x330 fs/open.c:1466
- do_syscall_x64 arch/x86/entry/common.c:51
- do_syscall_64+0x4f/0x140 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b arch/x86/entry/entry_64.S:120
+Right now there's nothing stopping radix tree tagging from operating
+while a growfs operation is progress and adding/removing new entries
+into the radix tree.
 
-Bytes 112-115 of 188 are uninitialized
-Memory access of size 188 starts at ffff88802fc262bc
+Hence we can have traversals that require a stable tree occurring at
+the same time we are removing unused entries from the radix tree which
+causes the shape of the tree to change.
 
-This is caused by the struct xfs_log_dinode not having the di_crc
-field initialised. Log recovery never uses this field (it is only
-present these days for on-disk format compatibility reasons) and so
-it's value is never checked so nothing in XFS has caught this.
+Likely this hasn't caused a problem in the past because we are only
+doing append addition and removal so the active AG part of the tree
+is not changing shape, but that doesn't mean it is safe. Just making
+the radix tree modifications serialise against each other is obviously
+correct.
 
-Further, none of the uninitialised memory access warning tools have
-caught this (despite catching other uninit memory accesses in the
-struct xfs_log_dinode back in 2017!) until recently. Alexander
-annotated the XFS code to get the dump of the actual bytes that were
-detected as uninitialised, and from that report it took me about 30s
-to realise what the issue was.
-
-The issue was introduced back in 2016 and every inode that is logged
-fails to initialise this field. This is no actual bad behaviour
-caused by this issue - I find it hard to even classify it as a
-bug...
-
-Reported-and-tested-by: Alexander Potapenko <glider@google.com>
-Fixes: f8d55aa0523a ("xfs: introduce inode log format object")
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode_item.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/xfs/libxfs/xfs_ag.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -556,6 +556,9 @@ xfs_inode_to_log_dinode(
- 		memset(to->di_pad2, 0, sizeof(to->di_pad2));
- 		uuid_copy(&to->di_uuid, &ip->i_mount->m_sb.sb_meta_uuid);
- 		to->di_v3_pad = 0;
-+
-+		/* dummy value for initialisation */
-+		to->di_crc = 0;
- 	} else {
- 		to->di_version = 2;
- 		to->di_flushiter = ip->i_flushiter;
+--- a/fs/xfs/libxfs/xfs_ag.c
++++ b/fs/xfs/libxfs/xfs_ag.c
+@@ -345,13 +345,17 @@ xfs_initialize_perag(
+ 	return 0;
+ 
+ out_remove_pag:
++	spin_lock(&mp->m_perag_lock);
+ 	radix_tree_delete(&mp->m_perag_tree, index);
++	spin_unlock(&mp->m_perag_lock);
+ out_free_pag:
+ 	kmem_free(pag);
+ out_unwind_new_pags:
+ 	/* unwind any prior newly initialized pags */
+ 	for (index = first_initialised; index < agcount; index++) {
++		spin_lock(&mp->m_perag_lock);
+ 		pag = radix_tree_delete(&mp->m_perag_tree, index);
++		spin_unlock(&mp->m_perag_lock);
+ 		if (!pag)
+ 			break;
+ 		xfs_buf_hash_destroy(pag);
 
 
