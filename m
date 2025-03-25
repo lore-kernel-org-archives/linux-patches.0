@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41F7E55B;
-	Tue, 25 Mar 2025 12:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47EC268C4F;
+	Tue, 25 Mar 2025 12:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905921; cv=none; b=Jy4qxdyYsHh10YvlDVo74Ka6fikYA4lWATGulEjXxxQv5l3RxfadJpP9/z4doIHu0iUDY75jkGShHYw+zwNOK5kEZ1go9EgehYLmkYnTzOM1CIW0av9xFJmCE+hKjBlsRtfK2wfnWH2nenq0cQaKJmdBKoa17Pu5SZKzjyL4J7I=
+	t=1742905923; cv=none; b=oiyeKQc2aXmBZ5cpjY4FzokKAS3UlsY/x7HGuWK7fWqiEfZxHQp8hxXaj+vgMB8DREzYxHLH8WRLGaYl6rwA34Pocqrjo4kNhxt7nKWB3yikBZ/2Sw8obkJhPx8AOXvf6Wb/xMLkC61LWCyUFPHPkCRh+jjcJUV2lmvDrKveI5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905921; c=relaxed/simple;
-	bh=VIJ8mnOVkB+AZ+CBftavfYr7liKq7PyddXWQSTBfabo=;
+	s=arc-20240116; t=1742905923; c=relaxed/simple;
+	bh=7fdvlT6qfxTwjMC1U/aOuQWEhHhBmaCf+9OrvDtrr18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLI9VYzEbHXIySsrTcSJoezMtdkghO9Ek0xNvSJDD0cRfLxk3l+X7k/0GBwF+1OPXnN9RxJfH/YIVK0BwIBo9cNj9U3Fg6+QzYvXRfizP+q/KpVuwR/6ffJL47NV4GZ7K8spuoN8wPKRDoyiQbTweXHYxQhB4MrPEjJ86peZPUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvCPkkco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JS0zBkB0G1iNyrIDq1mLpnR2cj8xijPYYzg6inQKRULQD7b5ZW6NvU2wrr30mt2uFixCa5GIgjrLZUdt9LoGZnmfYV6o/eMUUD4xdz0FYbEWtDI0471GCuDbAr9VzedTUWX9xGIreZRjli76fQm1ljShla/tW2wpmE3Ym/pCicw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AayQgr6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvCPkkco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829EAC4CEE4;
-	Tue, 25 Mar 2025 12:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AayQgr6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EE8C4CEE4;
+	Tue, 25 Mar 2025 12:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905921;
-	bh=VIJ8mnOVkB+AZ+CBftavfYr7liKq7PyddXWQSTBfabo=;
+	s=korg; t=1742905923;
+	bh=7fdvlT6qfxTwjMC1U/aOuQWEhHhBmaCf+9OrvDtrr18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvCPkkcos+Lpql4aaYAdsvYvH6uxrYO2/SxR82buJDUxfFiaTQs9Oa3U+RmRriMfn
-	 d9JvRdoAjnHd/i7YN2UNzJmrS76r6K6CvMNCuoQbsyO7apCUiExu3cHSwEeWIxUFgU
-	 eERYcaS5bdaM2es4cy6VJ2Tbgpygtuu62vDXo7OE=
+	b=AayQgr6+7/ZGbpEhbxr6TUIVpKTie4qCgLARxHr+kkAaPKOJ/8PlFn9uzTkRcXKD5
+	 ctluiEhkMNNnwvCj33/8vL4DVgrPQNd2EiKuSecHXl+sgz8swKBE3O1U4F6xL3aRau
+	 Zz9ciW4kK03UYEL1O8Gf27TvVL73jAsEMPssuMag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 038/119] net: ipv6: fix TCP GSO segmentation with NAT
-Date: Tue, 25 Mar 2025 08:21:36 -0400
-Message-ID: <20250325122150.034289532@linuxfoundation.org>
+Subject: [PATCH 6.13 039/119] ipv6: Fix memleak of nhc_pcpu_rth_output in fib_check_nh_v6_gw().
+Date: Tue, 25 Mar 2025 08:21:37 -0400
+Message-ID: <20250325122150.058591141@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -51,67 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit daa624d3c2ddffdcbad140a9625a4064371db44f ]
+[ Upstream commit 9740890ee20e01f99ff1dde84c63dcf089fabb98 ]
 
-When updating the source/destination address, the TCP/UDP checksum needs to
-be updated as well.
+fib_check_nh_v6_gw() expects that fib6_nh_init() cleans up everything
+when it fails.
 
-Fixes: bee88cd5bd83 ("net: add support for segmenting TCP fraglist GSO packets")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20250311212530.91519-1-nbd@nbd.name
+Commit 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
+moved fib_nh_common_init() before alloc_percpu_gfp() within fib6_nh_init()
+but forgot to add cleanup for fib6_nh->nh_common.nhc_pcpu_rth_output in
+case it fails to allocate fib6_nh->rt6i_pcpu, resulting in memleak.
+
+Let's call fib_nh_common_release() and clear nhc_pcpu_rth_output in the
+error path.
+
+Note that we can remove the fib6_nh_release() call in nh_create_ipv6()
+later in net-next.git.
+
+Fixes: 7dd73168e273 ("ipv6: Always allocate pcpu memory in a fib6_nh")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250312010333.56001-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcpv6_offload.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ net/ipv6/route.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/tcpv6_offload.c b/net/ipv6/tcpv6_offload.c
-index a45bf17cb2a17..ae2da28f9dfb1 100644
---- a/net/ipv6/tcpv6_offload.c
-+++ b/net/ipv6/tcpv6_offload.c
-@@ -94,14 +94,23 @@ INDIRECT_CALLABLE_SCOPE int tcp6_gro_complete(struct sk_buff *skb, int thoff)
- }
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 997e2e4f441d2..1864048e7fd5d 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3644,7 +3644,8 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 		in6_dev_put(idev);
  
- static void __tcpv6_gso_segment_csum(struct sk_buff *seg,
-+				     struct in6_addr *oldip,
-+				     const struct in6_addr *newip,
- 				     __be16 *oldport, __be16 newport)
- {
--	struct tcphdr *th;
-+	struct tcphdr *th = tcp_hdr(seg);
-+
-+	if (!ipv6_addr_equal(oldip, newip)) {
-+		inet_proto_csum_replace16(&th->check, seg,
-+					  oldip->s6_addr32,
-+					  newip->s6_addr32,
-+					  true);
-+		*oldip = *newip;
-+	}
- 
- 	if (*oldport == newport)
- 		return;
- 
--	th = tcp_hdr(seg);
- 	inet_proto_csum_replace2(&th->check, seg, *oldport, newport, false);
- 	*oldport = newport;
- }
-@@ -129,10 +138,10 @@ static struct sk_buff *__tcpv6_gso_segment_list_csum(struct sk_buff *segs)
- 		th2 = tcp_hdr(seg);
- 		iph2 = ipv6_hdr(seg);
- 
--		iph2->saddr = iph->saddr;
--		iph2->daddr = iph->daddr;
--		__tcpv6_gso_segment_csum(seg, &th2->source, th->source);
--		__tcpv6_gso_segment_csum(seg, &th2->dest, th->dest);
-+		__tcpv6_gso_segment_csum(seg, &iph2->saddr, &iph->saddr,
-+					 &th2->source, th->source);
-+		__tcpv6_gso_segment_csum(seg, &iph2->daddr, &iph->daddr,
-+					 &th2->dest, th->dest);
+ 	if (err) {
+-		lwtstate_put(fib6_nh->fib_nh_lws);
++		fib_nh_common_release(&fib6_nh->nh_common);
++		fib6_nh->nh_common.nhc_pcpu_rth_output = NULL;
+ 		fib6_nh->fib_nh_lws = NULL;
+ 		netdev_put(dev, dev_tracker);
  	}
- 
- 	return segs;
 -- 
 2.39.5
 
