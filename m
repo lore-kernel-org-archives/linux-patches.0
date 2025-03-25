@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D31125B66A;
-	Tue, 25 Mar 2025 12:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B0E2690EA;
+	Tue, 25 Mar 2025 12:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906002; cv=none; b=hOgdlPP5iaRC8O80oCI9/XqPUG6W/pvAhXV6l2b8MXJV0tGU4/ZvXdfjAcNbnyNJPSYGAWUjml43mfXxhJMEUuoTFvNPz4UP8YCOO1pYf01dtTGqqZfJsn/htGDrtEJHU6rNfUmEp8WXHKod+mwUomfRvAPKs8WSQBoSpWfjN/s=
+	t=1742906004; cv=none; b=Vwomu4dqRzOnVy8sfd7XRAuRmZM2tNKN1kyXZbAMk/UwmoF6E/myW5kcM82H9AP+EBC0dA6IfIE52bYyYCo69quExMH7oITg6cOIP8o4ab2rLlJtQnVCKYDYUKLXdU9eCLD8ghS6iSzH5Za43aprSLZhrlynZ/Bia2Ya5ksm3BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906002; c=relaxed/simple;
-	bh=+LPhEJvP5FRLC+fd8yiyURRzfZSWZDwB5nRGM4Ho04w=;
+	s=arc-20240116; t=1742906004; c=relaxed/simple;
+	bh=4HOst9jgk64iAqD53GK/7VkMe1eAtSiCeos/ZQfAhu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBF+KDRy3Kled8Ikxrt9m/YHVdIK0VejqqlAYTIsB9rG7L3GCvA4v0IIKc0KMKecrTIiwlj2yWTHLdvklXausQUR95jPfPeCisEjb3NCsfyjCLBdKxpI7aC9Z0uY3DYDqYnj5I6w1YCkL9yKM+FFJKcf0wpAS3h7waRjayZEIA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twQyJGyg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUvDmurIvIIVwA4Qum8lwt45NR7pla8Qd7Uk3YM1bzcGr/dEzP9kyhhlOzBr2L79oQ/YgrEedt8evlL7EqFTyOfaoltEKxBih0waKVpdIST8V4Fc2xZ3ue00BPo+uQb8QzYBIR72WN2HQz6uKqxFUNkSDI3foKN/4DglJ7na7MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5aGJ+aN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twQyJGyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ABCC4CEE4;
-	Tue, 25 Mar 2025 12:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5aGJ+aN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2E7C4CEE4;
+	Tue, 25 Mar 2025 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906002;
-	bh=+LPhEJvP5FRLC+fd8yiyURRzfZSWZDwB5nRGM4Ho04w=;
+	s=korg; t=1742906004;
+	bh=4HOst9jgk64iAqD53GK/7VkMe1eAtSiCeos/ZQfAhu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twQyJGygK6OldL4/HywZ5CJqkMFKYTMTXc9M5M8sMmBV07NJ5BsrgHgc90yD6s5ld
-	 8cE4AbVGDNd8429wyUWN4Au2JwXIv471ZyucK20otW7nRjmFtVnOndKS3ul/i9xY+/
-	 /Y1yY9/FkBns5sPvFhIcmNzzh5f4Bul5XS8pqhig=
+	b=W5aGJ+aNDXwFbAOg2U0cZNShGNAMsI/826zzrMl9pKLw7egx7OWQPuVW63tKm1zaO
+	 9xLdosNSyGL8khP3lWEToHrdasXt4igu6jqA/IHP9dasb94nurMWQniP37HkNKAiev
+	 Mn//tdJpAld2/SK1qIb44e3FjTT2oQar9aJchE5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Farrah Chen <farrah.chen@intel.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Hugh Dickins <hughd@google.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	David Hildenbrand <david@redhat.com>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Thomas Lendacky <thomas.lendacky@amd.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Kirill A. Shuemov" <kirill.shutemov@linux.intel.com>,
+	Luis Chamberalin <mcgrof@kernel.org>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 081/119] mm/page_alloc: fix memory accept before watermarks gets initialized
-Date: Tue, 25 Mar 2025 08:22:19 -0400
-Message-ID: <20250325122151.127017834@linuxfoundation.org>
+Subject: [PATCH 6.13 082/119] mm/huge_memory: drop beyond-EOF folios with the right number of refs
+Date: Tue, 25 Mar 2025 08:22:20 -0400
+Message-ID: <20250325122151.156014947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -59,68 +63,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 800f1059c99e2b39899bdc67a7593a7bea6375d8 upstream.
+commit 14efb4793519d73fb2902bb0ece319b886e4b4b9 upstream.
 
-Watermarks are initialized during the postcore initcall.  Until then, all
-watermarks are set to zero.  This causes cond_accept_memory() to
-incorrectly skip memory acceptance because a watermark of 0 is always met.
+When an after-split folio is large and needs to be dropped due to EOF,
+folio_put_refs(folio, folio_nr_pages(folio)) should be used to drop all
+page cache refs.  Otherwise, the folio will not be freed, causing memory
+leak.
 
-This can lead to a premature OOM on boot.
+This leak would happen on a filesystem with blocksize > page_size and a
+truncate is performed, where the blocksize makes folios split to >0 order
+ones, causing truncated folios not being freed.
 
-To ensure progress, accept one MAX_ORDER page if the watermark is zero.
-
-Link: https://lkml.kernel.org/r/20250310082855.2587122-1-kirill.shutemov@linux.intel.com
-Fixes: dcdfdd40fa82 ("mm: Add support for unaccepted memory")
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reported-by: Farrah Chen <farrah.chen@intel.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: Ashish Kalra <ashish.kalra@amd.com>
+Link: https://lkml.kernel.org/r/20250310155727.472846-1-ziy@nvidia.com
+Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Hugh Dickins <hughd@google.com>
+Closes: https://lore.kernel.org/all/fcbadb7f-dd3e-21df-f9a7-2853b53183c4@google.com/
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: David Hildenbrand <david@redhat.com>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: "Mike Rapoport (IBM)" <rppt@kernel.org>
-Cc: Thomas Lendacky <thomas.lendacky@amd.com>
-Cc: <stable@vger.kernel.org>	[6.5+]
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Kirill A. Shuemov <kirill.shutemov@linux.intel.com>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6961,7 +6961,7 @@ static inline bool has_unaccepted_memory
- 
- static bool cond_accept_memory(struct zone *zone, unsigned int order)
- {
--	long to_accept;
-+	long to_accept, wmark;
- 	bool ret = false;
- 
- 	if (!has_unaccepted_memory())
-@@ -6970,8 +6970,18 @@ static bool cond_accept_memory(struct zo
- 	if (list_empty(&zone->unaccepted_pages))
- 		return false;
- 
-+	wmark = promo_wmark_pages(zone);
-+
-+	/*
-+	 * Watermarks have not been initialized yet.
-+	 *
-+	 * Accepting one MAX_ORDER page to ensure progress.
-+	 */
-+	if (!wmark)
-+		return try_to_accept_memory_one(zone);
-+
- 	/* How much to accept to get to promo watermark? */
--	to_accept = promo_wmark_pages(zone) -
-+	to_accept = wmark -
- 		    (zone_page_state(zone, NR_FREE_PAGES) -
- 		    __zone_watermark_unusable_free(zone, order, 0) -
- 		    zone_page_state(zone, NR_UNACCEPTED));
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3298,7 +3298,7 @@ static void __split_huge_page(struct pag
+ 				folio_account_cleaned(tail,
+ 					inode_to_wb(folio->mapping->host));
+ 			__filemap_remove_folio(tail, NULL);
+-			folio_put(tail);
++			folio_put_refs(tail, folio_nr_pages(tail));
+ 		} else if (!folio_test_anon(folio)) {
+ 			__xa_store(&folio->mapping->i_pages, tail->index,
+ 					tail, 0);
 
 
