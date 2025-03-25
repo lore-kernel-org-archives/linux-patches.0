@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0EA269D16;
-	Tue, 25 Mar 2025 12:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910232580F6;
+	Tue, 25 Mar 2025 12:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906128; cv=none; b=ltuFlxtzz9NQ17veoT4wIU/aD4KjK9wst/JFlGkcT1acCBTXUOdLQFe8s1u6/Pst12ORkGyRBTVa2HtAoOXzY8FvQhnYSp2WPDndxMmgdKhwPNIH3Q0qpS2PCk3bOm2nDNWOfScPZ4sZj12tiD4kXHhnSLKw3ZyL67+PFOjcMuM=
+	t=1742906130; cv=none; b=cnivAIJ9AdKjZGqp8ndAMHs2TrYOX3yYQ8u853UV8/5FrQnzwMVwPXxM/M7/FDhps89ZfXSCzegh0P/d2V/i9i+GLYqWqS8O4oVyqEZg6Q1UmL/f7cHuWLEkwVRVvPE8DKc+8dPboNmfOrsFfF7NuEAccOi7WvOmaz8GVzizIg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906128; c=relaxed/simple;
-	bh=HNmryvZ7zri8DY/aGlx1lQDlF9vifnmrA3SCeAibOsQ=;
+	s=arc-20240116; t=1742906130; c=relaxed/simple;
+	bh=+8GBBTj2HCRA2Uw+tlnj5WZN55CZuFC7YIlVYBVqY+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cq8ElQ7/XGubLOtR5WrGFYCBbX8Zj8+W0GoF2bRSZbbMKiHxuOPdIbLX0t04Qn5g1/NWeBSHoBuxp+/q3ixIyZ1FKorCEHIcz/Ml5rKrWO1K7B3oH3lpSAaWy6Gg07MSNfbrAZTLfN+Jw2kyNIdFLfmvBqmOuxTshkoY0A5vWaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsqqSj1y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvBTkhp6mxbb7B3BCn90JPQMZYIHCon20CnlYUb5HQ6cp8HV/KTr+/qgHKrgwoRPJI5agJt2+K6nV2BYwJ+3YljlG7TFaFiRIkItZtvFvdDFJpvfOosSs2zsIFrQnbW6KmDmy/lBCMhdssUaVydAupdpOlMQok1r+GmuU0SL1TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1faraWTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsqqSj1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C9CC4CEE9;
-	Tue, 25 Mar 2025 12:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1faraWTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97F4C4CEE9;
+	Tue, 25 Mar 2025 12:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906128;
-	bh=HNmryvZ7zri8DY/aGlx1lQDlF9vifnmrA3SCeAibOsQ=;
+	s=korg; t=1742906130;
+	bh=+8GBBTj2HCRA2Uw+tlnj5WZN55CZuFC7YIlVYBVqY+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OsqqSj1yO9MR0QGkh3qvUaNsdOBOvaEApRl6r6wW0tEcxBmXUMwL/qADUr/qwVtzc
-	 xwAtLsYLzOV2ZC7hRSutPonH1I09SL9xZF7+ELG4T/EYXRvoNvzoQhSGH4UG8rQi9q
-	 YZHtH4ULbrFDvywtPRL9jj7qRsbVJTxEz56/r41w=
+	b=1faraWTQLF225Pryjh58E5hvaPW1y/dauX0BfAxvF3FGWDAmP1axNjQ0Rf12air2u
+	 u/2F4muhxU3b+LGRkEayvhYG9FdwjTZrrY/6oBm45oA0wJxtdw+bhMbkbpgO+GC7SO
+	 wQmuI+dUpZPxbX6PAzYg+ll+KN21nhJsqQH2QsWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Nishanth Menon <nm@ti.com>,
-	Aniket Limaye <a-limaye@ti.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 29/77] i2c: omap: fix IRQ storms
-Date: Tue, 25 Mar 2025 08:22:24 -0400
-Message-ID: <20250325122145.115115556@linuxfoundation.org>
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 03/77] xfrm: fix tunnel mode TX datapath in packet offload mode
+Date: Tue, 25 Mar 2025 08:21:58 -0400
+Message-ID: <20250325122144.377172048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -53,112 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-commit 285df995f90e3d61d97f327d34b9659d92313314 upstream.
+[ Upstream commit 5eddd76ec2fd1988f0a3450fde9730b10dd22992 ]
 
-On the GTA04A5 writing a reset command to the gyroscope causes IRQ
-storms because NACK IRQs are enabled and therefore triggered but not
-acked.
+Packets that match the output xfrm policy are delivered to the netstack.
+In IPsec packet mode for tunnel mode, the HW is responsible for building
+the hard header and outer IP header. In such a situation, the inner
+header may refer to a network that is not directly reachable by the host,
+resulting in a failed neighbor resolution. The packet is then dropped.
+xfrm policy defines the netdevice to use for xmit so we can send packets
+directly to it.
 
-Sending a reset command to the gyroscope by
-i2cset 1 0x69 0x14 0xb6
-with an additional debug print in the ISR (not the thread) itself
-causes
+Makes direct xmit exclusive to tunnel mode, since some rules may apply
+in transport mode.
 
-[ 363.353515] i2c i2c-1: ioctl, cmd=0x720, arg=0xbe801b00
-[ 363.359039] omap_i2c 48072000.i2c: addr: 0x0069, len: 2, flags: 0x0, stop: 1
-[ 363.366180] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x1110)
-[ 363.371673] omap_i2c 48072000.i2c: IRQ (ISR = 0x0010)
-[ 363.376892] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-[ 363.382263] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-[ 363.387664] omap_i2c 48072000.i2c: IRQ LL (ISR = 0x0102)
-repeating till infinity
-[...]
-(0x2 = NACK, 0x100 = Bus free, which is not enabled)
-Apparently no other IRQ bit gets set, so this stalls.
-
-Do not ignore enabled interrupts and make sure they are acked.
-If the NACK IRQ is not needed, it should simply not enabled, but
-according to the above log, caring about it is necessary unless
-the Bus free IRQ is enabled and handled. The assumption that is
-will always come with a ARDY IRQ, which was the idea behind
-ignoring it, proves wrong.
-It is true for simple reads from an unused address.
-
-To still avoid the i2cdetect trouble which is the reason for
-commit c770657bd261 ("i2c: omap: Fix standard mode false ACK readings"),
-avoid doing much about NACK in omap_i2c_xfer_data() which is used
-by both IRQ mode and polling mode, so also the false detection fix
-is extended to polling usage and IRQ storms are avoided.
-
-By changing this, the hardirq handler is not needed anymore to filter
-stuff.
-
-The mentioned gyro reset now just causes a -ETIMEDOUT instead of
-hanging the system.
-
-Fixes: c770657bd261 ("i2c: omap: Fix standard mode false ACK readings").
-CC: stable@kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Tested-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Aniket Limaye <a-limaye@ti.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250228140420.379498-1-andreas@kemnade.info
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f8a70afafc17 ("xfrm: add TX datapath support for IPsec packet offload mode")
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-omap.c |   26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ net/xfrm/xfrm_output.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -1049,23 +1049,6 @@ static int omap_i2c_transmit_data(struct
- 	return 0;
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index e5722c95b8bb3..9160a5e09041d 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -610,6 +610,40 @@ int xfrm_output_resume(struct sock *sk, struct sk_buff *skb, int err)
  }
+ EXPORT_SYMBOL_GPL(xfrm_output_resume);
  
--static irqreturn_t
--omap_i2c_isr(int irq, void *dev_id)
--{
--	struct omap_i2c_dev *omap = dev_id;
--	irqreturn_t ret = IRQ_HANDLED;
--	u16 mask;
--	u16 stat;
--
--	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
--	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
--
--	if (stat & mask)
--		ret = IRQ_WAKE_THREAD;
--
--	return ret;
--}
--
- static int omap_i2c_xfer_data(struct omap_i2c_dev *omap)
- {
- 	u16 bits;
-@@ -1096,8 +1079,13 @@ static int omap_i2c_xfer_data(struct oma
- 		}
- 
- 		if (stat & OMAP_I2C_STAT_NACK) {
--			err |= OMAP_I2C_STAT_NACK;
-+			omap->cmd_err |= OMAP_I2C_STAT_NACK;
- 			omap_i2c_ack_stat(omap, OMAP_I2C_STAT_NACK);
++static int xfrm_dev_direct_output(struct sock *sk, struct xfrm_state *x,
++				  struct sk_buff *skb)
++{
++	struct dst_entry *dst = skb_dst(skb);
++	struct net *net = xs_net(x);
++	int err;
 +
-+			if (!(stat & ~OMAP_I2C_STAT_NACK)) {
-+				err = -EAGAIN;
-+				break;
-+			}
++	dst = skb_dst_pop(skb);
++	if (!dst) {
++		XFRM_INC_STATS(net, LINUX_MIB_XFRMOUTERROR);
++		kfree_skb(skb);
++		return -EHOSTUNREACH;
++	}
++	skb_dst_set(skb, dst);
++	nf_reset_ct(skb);
++
++	err = skb_dst(skb)->ops->local_out(net, sk, skb);
++	if (unlikely(err != 1)) {
++		kfree_skb(skb);
++		return err;
++	}
++
++	/* In transport mode, network destination is
++	 * directly reachable, while in tunnel mode,
++	 * inner packet network may not be. In packet
++	 * offload type, HW is responsible for hard
++	 * header packet mangling so directly xmit skb
++	 * to netdevice.
++	 */
++	skb->dev = x->xso.dev;
++	__skb_push(skb, skb->dev->hard_header_len);
++	return dev_queue_xmit(skb);
++}
++
+ static int xfrm_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	return xfrm_output_resume(sk, skb, 1);
+@@ -729,6 +763,13 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
+ 			return -EHOSTUNREACH;
  		}
  
- 		if (stat & OMAP_I2C_STAT_AL) {
-@@ -1475,7 +1463,7 @@ omap_i2c_probe(struct platform_device *p
- 				IRQF_NO_SUSPEND, pdev->name, omap);
- 	else
- 		r = devm_request_threaded_irq(&pdev->dev, omap->irq,
--				omap_i2c_isr, omap_i2c_isr_thread,
-+				NULL, omap_i2c_isr_thread,
- 				IRQF_NO_SUSPEND | IRQF_ONESHOT,
- 				pdev->name, omap);
++		/* Exclusive direct xmit for tunnel mode, as
++		 * some filtering or matching rules may apply
++		 * in transport mode.
++		 */
++		if (x->props.mode == XFRM_MODE_TUNNEL)
++			return xfrm_dev_direct_output(sk, x, skb);
++
+ 		return xfrm_output_resume(sk, skb, 0);
+ 	}
  
+-- 
+2.39.5
+
 
 
