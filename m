@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2229E26B956;
-	Tue, 25 Mar 2025 12:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE926B954;
+	Tue, 25 Mar 2025 12:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906292; cv=none; b=g4b/GyRdVh8tSFpW7uyvIdeqvCqDibjctYfSupqIv3plLm0mO3pzx3wBfsLrvMuYYnMk/gOtJ0/nYOvEKJ45Vvb6p7gdfM6hVENUqBcmxf/m6M19EUrchqklkwS0h10LjXboe0AWfd7lLV7mWMhZiOjw4wTpAPhRx4er1UIt7Pg=
+	t=1742906294; cv=none; b=UJ3ZT7CR3wDTkzULRiKyNXZumPBQoBfBzS/7W71prwtRX4GHPvHf3KQnTVpDc62Klh/k6kGD8BaasQCF8cv2hWKiQbsHqJLOie3mgQJMgmOHJ5BzvrzY29jBHWJXXl8pQL4uUTUSMg6STVhiK1hu8AnPm6nXuyWfL9rSd9uwwpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906292; c=relaxed/simple;
-	bh=VQ4Kdy5qKaPKnxXcm5GwthaGs8mWiOZ+87K/584/9Cs=;
+	s=arc-20240116; t=1742906294; c=relaxed/simple;
+	bh=pHRe5d9q0fCz0F3gBOrozDMST1gEdpFAdJ+3kb+iq3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCrme4qW2YHeloBWlNpj62ZugjO0x+O0IRzwSI9bsrGMSTvw5Nsm0+JuwbUETul8Nh5x+4wQ6Z+CVoU2rdGGAqID2vJEpCoSOmbZOlwjAWrpB/eAwnsH9514QYR+KM/h1Y1SyJMDRCj29GhO6zXgifJcq5jBX+lNRlyUnrumElk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Onv9jN+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1+UCBQQARnnJ5/q70CdY/qhy9e0DpGbLHnv2NQjyCIjrTU2/J0+cZznbE0I6zwrnqVXDg0+yt9McRLeyv85pNd9Tben5TRuOi7C42bM1yBiZYc4lAywd2QXda3lt7sn8qAAizRDowba02DxHKmHxHqhHtK6sUZuE2MeZlkWwPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0rfVEjo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Onv9jN+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CB8C4CEE4;
-	Tue, 25 Mar 2025 12:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0rfVEjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90912C4CEE4;
+	Tue, 25 Mar 2025 12:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906292;
-	bh=VQ4Kdy5qKaPKnxXcm5GwthaGs8mWiOZ+87K/584/9Cs=;
+	s=korg; t=1742906293;
+	bh=pHRe5d9q0fCz0F3gBOrozDMST1gEdpFAdJ+3kb+iq3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Onv9jN+4zG7aqWtxWaqWAtbclxf01kqA5cbXtrnXhE0ctr1S5yf+T8K/ayz+tHkrL
-	 9UcY0cxrv3bxNsybPsUdwj6NW6U5anrW26xaaZWYOZTrh/lekO4oo1e6XCh9NKIWbN
-	 mYPrzdFt8NpofMyckay3dgIZef6/ZKcCkGHzU8iE=
+	b=u0rfVEjoR2B8ozLE3bs4+KKvQhHnk2nCZIoB0pYI3mGII/flsEDKyU+q8H6wVuVg+
+	 nuneJldzC4NCSyYBWHgQHcQCvFBOs37uA7oVthD0vVGnnT/jevhS44DoErKAT0xnYa
+	 tTy5NsGgnW6Xph3478HJjFNriKFD4EbhSdf1lyvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Troy Hanson <quic_thanson@quicinc.com>,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/116] accel/qaic: Fix possible data corruption in BOs > 2G
-Date: Tue, 25 Mar 2025 08:21:59 -0400
-Message-ID: <20250325122150.033758259@linuxfoundation.org>
+Subject: [PATCH 6.12 041/116] dpll: fix xa_alloc_cyclic() error handling
+Date: Tue, 25 Mar 2025 08:22:08 -0400
+Message-ID: <20250325122150.256169914@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -54,65 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit 84a833d90635e4b846333e2df0ae72f9cbecac39 ]
+[ Upstream commit 3614bf90130d60f191a5fe218d04f6251c678e13 ]
 
-When slicing a BO, we need to iterate through the BO's sgt to find the
-right pieces to construct the slice. Some of the data types chosen for
-this process are incorrectly too small, and can overflow. This can
-result in the incorrect slice construction, which can lead to data
-corruption in workload execution.
+In case of returning 1 from xa_alloc_cyclic() (wrapping) ERR_PTR(1) will
+be returned, which will cause IS_ERR() to be false. Which can lead to
+dereference not allocated pointer (pin).
 
-The device can only handle 32-bit sized transfers, and the scatterlist
-struct only supports 32-bit buffer sizes, so our upper limit for an
-individual transfer is an unsigned int. Using an int is incorrect due to
-the reservation of the sign bit. Upgrade the length of a scatterlist
-entry and the offsets into a scatterlist entry to unsigned int for a
-correct representation.
+Fix it by checking if err is lower than zero.
 
-While each transfer may be limited to 32-bits, the overall BO may exceed
-that size. For counting the total length of the BO, we need a type that
-can represent the largest allocation possible on the system. That is the
-definition of size_t, so use it.
+This wasn't found in real usecase, only noticed. Credit to Pierre.
 
-Fixes: ff13be830333 ("accel/qaic: Add datapath")
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Reviewed-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250306171959.853466-1-jeff.hugo@oss.qualcomm.com
+Fixes: 97f265ef7f5b ("dpll: allocate pin ids in cycle")
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_data.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dpll/dpll_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index c20eb63750f51..ffcdf5738d099 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -172,9 +172,10 @@ static void free_slice(struct kref *kref)
- static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_table **sgt_out,
- 					struct sg_table *sgt_in, u64 size, u64 offset)
- {
--	int total_len, len, nents, offf = 0, offl = 0;
- 	struct scatterlist *sg, *sgn, *sgf, *sgl;
-+	unsigned int len, nents, offf, offl;
- 	struct sg_table *sgt;
-+	size_t total_len;
- 	int ret, j;
- 
- 	/* find out number of relevant nents needed for this mem */
-@@ -182,6 +183,8 @@ static int clone_range_of_sgt_for_slice(struct qaic_device *qdev, struct sg_tabl
- 	sgf = NULL;
- 	sgl = NULL;
- 	nents = 0;
-+	offf = 0;
-+	offl = 0;
- 
- 	size = size ? size : PAGE_SIZE;
- 	for_each_sgtable_dma_sg(sgt_in, sg, j) {
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 32019dc33cca7..1877201d1aa9f 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -505,7 +505,7 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
+ 	xa_init_flags(&pin->parent_refs, XA_FLAGS_ALLOC);
+ 	ret = xa_alloc_cyclic(&dpll_pin_xa, &pin->id, pin, xa_limit_32b,
+ 			      &dpll_pin_xa_id, GFP_KERNEL);
+-	if (ret)
++	if (ret < 0)
+ 		goto err_xa_alloc;
+ 	return pin;
+ err_xa_alloc:
 -- 
 2.39.5
 
