@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A44C267393;
-	Tue, 25 Mar 2025 12:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C916267392;
+	Tue, 25 Mar 2025 12:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905747; cv=none; b=iCpMGDqGMqJsecMuwckLYi4KqTNDgcIvaL+2MoVpkZs3TrdtIGb4L3St1zRNsRAFSbRLgU0C2SanIp15IfNYb9ywsPHLx3x+jbjksgxTRtWXJmwBwgWBj+n4IgHd3DvrfEScXcOCvNSE7lcO2OSbG9Qy9iHWixog2CD2RnQIk7s=
+	t=1742905749; cv=none; b=Y/xmv2pQqXTO1j/GkQLKQhhYI19Pw3yTO2x4PWxKgiz6muDDbql7Fgu0FdEuRnT6lLpy1aoLzDhrgAXItFyCC8aWuCqOvxPaISC0myx3+CLuAr+ItwHtzV0wvH4zTObmdlubh+LSrN7RxkvoMofxaeIBBmbgTeDxcIurOO78Eys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905747; c=relaxed/simple;
-	bh=FpMVxYoI2Lz8V3EGDDKJUkN2+vJqswum4QXu3w1pwg0=;
+	s=arc-20240116; t=1742905749; c=relaxed/simple;
+	bh=HFOntlfb4cKWP5g6W6Gei/iUWSa3QY4Og9QkoE/v7gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAZMlIl2gDiIXxBCFEA2JhYuxm9Z9dkQU3RUj7+BEDIOu2OoZB5C+O2aay0XbffbcAfXa7KdF7s8kH9AVso/WadoUMtWVbs1Cv/kwpXbVrMr4/3F/F37B0e86NvgCKnBhpsS0/avOHfH15Dmew/Lu119mih5pooeUrJsds1g0xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z07G6t9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmE2FNiq7+snosnIlcA8i9cYZkuzQYZfgh6ZINerILRWNkw81o3lz00KcolxHazLQCW7drR02WwYkP7xLfNPqWHCWcpBewUVr6UYZOAv8c1FDf+G2OLsMv6rO06Cj8ga3XUrfxYmqoZ8nIuVVQM6FZT7TPZXIsTlDbtl+DWfWHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlvAMpsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z07G6t9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BD9C4CEE4;
-	Tue, 25 Mar 2025 12:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlvAMpsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A06C4CEE4;
+	Tue, 25 Mar 2025 12:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905747;
-	bh=FpMVxYoI2Lz8V3EGDDKJUkN2+vJqswum4QXu3w1pwg0=;
+	s=korg; t=1742905749;
+	bh=HFOntlfb4cKWP5g6W6Gei/iUWSa3QY4Og9QkoE/v7gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z07G6t9Ie/sw5Flxk++uJEVOFdfHgm7BH6//gku/MUWkVjwBOiyFsV2rJbQu1b7ab
-	 UnGJQhxZBCgR78VQZvLaW5SFIwe9QBTXrFEyqu9HMJ34Dg+F+7MGFbTPuswNyQ9fr6
-	 oI2m3SYtRxbhE7gA8lPZup7GwPjL/4aDt/DHuW2Q=
+	b=RlvAMpshFB7xN+egV+isHEyLkEPvDmbCArccw3d3p36AUB2pfg58MlKaaVcW7cfSK
+	 jSTq2pZbnaqnqnKSvaEt//dWjYrzmhwYmo81TEXvikiDTHDN61AuyJ5tnXwsZKg+tz
+	 zaL5T308sUM5qPDZdc97LjK8KrNn8IHk+0yO9OEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 111/198] USB: serial: option: match on interface class for Telit FN990B
-Date: Tue, 25 Mar 2025 08:21:13 -0400
-Message-ID: <20250325122159.565773855@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 112/198] x86/microcode/AMD: Fix out-of-bounds on systems with CPU-less NUMA nodes
+Date: Tue, 25 Mar 2025 08:21:14 -0400
+Message-ID: <20250325122159.591824042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,63 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Florent Revest <revest@chromium.org>
 
-commit 9a665fe3d967fe46edb4fd2497c7a5cc2dac2f55 upstream.
+commit e3e89178a9f4a80092578af3ff3c8478f9187d59 upstream.
 
-The device id entries for Telit FN990B ended up matching only on the
-interface protocol. While this works, the protocol is qualified by the
-interface class (and subclass) which should have been included.
+Currently, load_microcode_amd() iterates over all NUMA nodes, retrieves their
+CPU masks and unconditionally accesses per-CPU data for the first CPU of each
+mask.
 
-Switch to matching using USB_DEVICE_AND_INTERFACE_INFO() while keeping
-the entries sorted also by protocol for consistency.
+According to Documentation/admin-guide/mm/numaperf.rst:
 
-Link: https://lore.kernel.org/20250227110655.3647028-2-fabio.porcedda@gmail.com/
-Cc: Fabio Porcedda <fabio.porcedda@gmail.com>
-Cc: Daniele Palmas <dnlplm@gmail.com>
+  "Some memory may share the same node as a CPU, and others are provided as
+  memory only nodes."
+
+Therefore, some node CPU masks may be empty and wouldn't have a "first CPU".
+
+On a machine with far memory (and therefore CPU-less NUMA nodes):
+- cpumask_of_node(nid) is 0
+- cpumask_first(0) is CONFIG_NR_CPUS
+- cpu_data(CONFIG_NR_CPUS) accesses the cpu_info per-CPU array at an
+  index that is 1 out of bounds
+
+This does not have any security implications since flashing microcode is
+a privileged operation but I believe this has reliability implications by
+potentially corrupting memory while flashing a microcode update.
+
+When booting with CONFIG_UBSAN_BOUNDS=y on an AMD machine that flashes
+a microcode update. I get the following splat:
+
+  UBSAN: array-index-out-of-bounds in arch/x86/kernel/cpu/microcode/amd.c:X:Y
+  index 512 is out of range for type 'unsigned long[512]'
+  [...]
+  Call Trace:
+   dump_stack
+   __ubsan_handle_out_of_bounds
+   load_microcode_amd
+   request_microcode_amd
+   reload_store
+   kernfs_fop_write_iter
+   vfs_write
+   ksys_write
+   do_syscall_64
+   entry_SYSCALL_64_after_hwframe
+
+Change the loop to go over only NUMA nodes which have CPUs before determining
+whether the first CPU on the respective node needs microcode update.
+
+  [ bp: Massage commit message, fix typo. ]
+
+Fixes: 7ff6edf4fef3 ("x86/microcode/AMD: Fix mixed steppings support")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250310144243.861978-1-revest@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1410,22 +1410,22 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(0) | NCTRL(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10c8, 0xff),	/* Telit FE910C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d0, 0x60) },	/* Telit FN990B (rmnet) */
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d0, 0x40) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d0, 0x30),
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x30),	/* Telit FN990B (rmnet) */
- 	  .driver_info = NCTRL(5) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d1, 0x60) },	/* Telit FN990B (MBIM) */
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d1, 0x40) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d1, 0x30),
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
- 	  .driver_info = NCTRL(6) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d2, 0x60) },	/* Telit FN990B (RNDIS) */
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d2, 0x40) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d2, 0x30),
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d2, 0xff, 0xff, 0x30),	/* Telit FN990B (RNDIS) */
- 	  .driver_info = NCTRL(6) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d3, 0x60) },	/* Telit FN990B (ECM) */
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d3, 0x40) },
--	{ USB_DEVICE_INTERFACE_PROTOCOL(TELIT_VENDOR_ID, 0x10d3, 0x30),
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d2, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d2, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d3, 0xff, 0xff, 0x30),	/* Telit FN990B (ECM) */
- 	  .driver_info = NCTRL(6) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d3, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d3, 0xff, 0xff, 0x60) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -867,7 +867,7 @@ static enum ucode_state load_microcode_a
+ 		return ret;
+ 	}
+ 
+-	for_each_node(nid) {
++	for_each_node_with_cpus(nid) {
+ 		cpu = cpumask_first(cpumask_of_node(nid));
+ 		c = &cpu_data(cpu);
+ 
 
 
