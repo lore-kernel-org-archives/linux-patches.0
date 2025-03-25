@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E896426F455;
-	Tue, 25 Mar 2025 12:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3949225DAEB;
+	Tue, 25 Mar 2025 12:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906368; cv=none; b=UJ7im7f4+dFuNI7Y+MZHkwBEA4GFpta2JLVkPev27ohOSkmS5muNjoSvs7IHGQKSSPfrLBqxl+fJdIC0qBDObhIe6guk+3I3o5/ftDhjfBIEWNXy+aBcYnc5PN8Z7Wwp546YBmz/NuzLQsOWPcjKaZklBSOakm9/m5ffdecqT8c=
+	t=1742906369; cv=none; b=KT9S9VkFUiFBTdSd+hUy5kl5ielO1642Icc6cpn7f/Atbs9c9LHBeQ8LONtjL/MvP8ynWXPnFngTamkru8asHdWgWSkwedr114z2WFvdUlGicMqHqPFHv8CprjFWqjebnd/g/5GrGv9DucWrEfivHMcgOhkm6Sb5aGQu0MNAW6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906368; c=relaxed/simple;
-	bh=xXoObsU5IiMyGt2kJki6C9oLkeqAO9zJp4FvfGlKKPE=;
+	s=arc-20240116; t=1742906369; c=relaxed/simple;
+	bh=mbpA3wedsUBePsK5f+xeJjTZPuvs8ZiEvBIDgOEwmzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/RqPVAys+2USaeyANYehKTThvWVgcqBYdcSV3sIee1IAe3EhIqKSNXSmdi9/u1t4mt5F/opEb69jxUjjTotdSUHbE6ZgA0j2EPrw1N2tdKMn5cwEPeLe5WwSs+7KLi7ZaM1BhnevdEbpLcSJYW/jFnfKhC72AYCmJBfnOp3sjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkJw3OvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCom+e63Djmw7WagKXAQL4j9oAGB75XmCW6R5y9asBMf7nbDSHaCy/t2sYFNldMeudd/idiH0nQoVcJAQUy6BtMoIhRwCev4lVdqqDXLjsgW/tKT41SqTkG2RWO5Lw8ZmO2wbgDbAo5kpM1XPfX7ErjblhQnbfUz2H2Se1VnMT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jj5LpClV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkJw3OvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29884C4CEE4;
-	Tue, 25 Mar 2025 12:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jj5LpClV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1242C4CEE4;
+	Tue, 25 Mar 2025 12:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906367;
-	bh=xXoObsU5IiMyGt2kJki6C9oLkeqAO9zJp4FvfGlKKPE=;
+	s=korg; t=1742906369;
+	bh=mbpA3wedsUBePsK5f+xeJjTZPuvs8ZiEvBIDgOEwmzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkJw3OvUOm+cc6RtU5ziCRkm4STNWuihvsqVUSbHM48GUtXzk/yE87KTqRKSTAUmM
-	 7NOkW2mTJYluUYVsspaEppjJh8Svk5/H3K5DrJ73H4MwKmtFTgZX+ax/xxWka2DovW
-	 tSmQQPbBdkD7W15wbfQyx32bnLsxrsCl697L3hlk=
+	b=jj5LpClVWqDvqK5czKhF/vmuQhKLrqE2PEhc+K0PK5bhEV+ddYtylLUu8L/okXZwJ
+	 vewaAtt/Jc3kMSeL39iDBlzMwWzdF7DVwHPnzhlhExiohaF7gSO7v+5xjBsSfT7Qzo
+	 S0KXODPGtdMAKKm0/SicDlMs4qM1IDLbFSdgNbSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.12 080/116] ARM: dts: imx6qdl-apalis: Fix poweroff on Apalis iMX6
-Date: Tue, 25 Mar 2025 08:22:47 -0400
-Message-ID: <20250325122151.256494461@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH 6.12 081/116] ARM: shmobile: smp: Enforce shmobile_smp_* alignment
+Date: Tue, 25 Mar 2025 08:22:48 -0400
+Message-ID: <20250325122151.281440164@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -50,60 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 83964a29379cb08929a39172780a4c2992bc7c93 upstream.
+commit 379c590113ce46f605439d4887996c60ab8820cc upstream.
 
-The current solution for powering off the Apalis iMX6 is not functioning
-as intended. To resolve this, it is necessary to power off the
-vgen2_reg, which will also set the POWER_ENABLE_MOCI signal to a low
-state. This ensures the carrier board is properly informed to initiate
-its power-off sequence.
+When the addresses of the shmobile_smp_mpidr, shmobile_smp_fn, and
+shmobile_smp_arg variables are not multiples of 4 bytes, secondary CPU
+bring-up fails:
 
-The new solution uses the regulator-poweroff driver, which will power
-off the regulator during a system shutdown.
+    smp: Bringing up secondary CPUs ...
+    CPU1: failed to come online
+    CPU2: failed to come online
+    CPU3: failed to come online
+    smp: Brought up 1 node, 1 CPU
 
-Cc: <stable@vger.kernel.org>
-Fixes: 4eb56e26f92e ("ARM: dts: imx6q-apalis: Command pmic to standby for poweroff")
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fix this by adding the missing alignment directive.
+
+Fixes: 4e960f52fce16a3b ("ARM: shmobile: Move shmobile_smp_{mpidr, fn, arg}[] from .text to .bss")
+Closes: https://lore.kernel.org/r/CAMuHMdU=QR-JLgEHKWpsr6SbaZRc-Hz9r91JfpP8c3n2G-OjqA@mail.gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Link: https://lore.kernel.org/c499234d559a0d95ad9472883e46077311051cd8.1741612208.git.geert+renesas@glider.be
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm/mach-shmobile/headsmp.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-apalis.dtsi
-@@ -108,6 +108,11 @@
- 		};
- 	};
+--- a/arch/arm/mach-shmobile/headsmp.S
++++ b/arch/arm/mach-shmobile/headsmp.S
+@@ -136,6 +136,7 @@ ENDPROC(shmobile_smp_sleep)
+ 	.long	shmobile_smp_arg - 1b
  
-+	poweroff {
-+		compatible = "regulator-poweroff";
-+		cpu-supply = <&vgen2_reg>;
-+	};
-+
- 	reg_module_3v3: regulator-module-3v3 {
- 		compatible = "regulator-fixed";
- 		regulator-always-on;
-@@ -236,10 +241,6 @@
- 	status = "disabled";
- };
- 
--&clks {
--	fsl,pmic-stby-poweroff;
--};
--
- /* Apalis SPI1 */
- &ecspi1 {
- 	cs-gpios = <&gpio5 25 GPIO_ACTIVE_LOW>;
-@@ -527,7 +528,6 @@
- 
- 	pmic: pmic@8 {
- 		compatible = "fsl,pfuze100";
--		fsl,pmic-stby-poweroff;
- 		reg = <0x08>;
- 
- 		regulators {
+ 	.bss
++	.align	2
+ 	.globl	shmobile_smp_mpidr
+ shmobile_smp_mpidr:
+ 	.space	NR_CPUS * 4
 
 
