@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D513F26770A;
-	Tue, 25 Mar 2025 12:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FA4267703;
+	Tue, 25 Mar 2025 12:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905808; cv=none; b=j822aF1CBsQXe15/knx61blzqcdvMWd/0FIFfN52mp1O00cHoFN4E2NEEMp7afmg+pjE4keR/8YHmjIQLBJmD7NCrzXIJaAnLRH0M7yDYGkwjo2ibeA+OF3qQ3FQOzpaXUB/Y/ev9LBOJGOc6RsmBMYr+BLpMTHznQzyzhyytuo=
+	t=1742905809; cv=none; b=ojxeraeyhkLDrFv7J5w7Dsh/fgFeb/Ge/s1RSqcHIqETlnbw3kfq/ESiSUrj3ul7MoCyAf6kBMcycEeOqBzV1M3wviPJvkGUewxgMW7UIRMUpMa86YsRUQXolDrthw/FdnikiZTaIzLA/9lu+l2Ib6JYnaMxcxFj2xyj7UaNJNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905808; c=relaxed/simple;
-	bh=1ClDAEhZBpv5k0XdZXnyKLovgg9R3FWQmvBsSRKNObU=;
+	s=arc-20240116; t=1742905809; c=relaxed/simple;
+	bh=mlCX3o1UccWhTnRZjgVJtTYHYyTKZRViN5Kqs/wV/8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxG8TVbXvHMusa4UdzYACOOMDf2YoAc7DF1iEt4uVgOo/JQQYK9kHB/Ir9rUZQMTNu2kSt9Ula62ErSiFs5DyV7AYexoL4YLGPH/FjS2XVk0kP2dV1IM47oW3Vr34KP7VsXPa0MuYWX+JuwXc4Dl8hD9QDyw+lhWzKMjur4XWpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvAderSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uSpBn7G43T/DMqQgdkjDzm5siErhu2QF+CjR1xiELTbLAfQyPSLGo4HCsmWQ562PzNSZ1EgR9spSYDrGkxjFv3wUCqcNJGao0LXW/QX+byU0pRqv/L4ASHBKS1NlCJNEmL2u+xYOR66tHpMbOxqlbsUsIxTmthHwY+n/Y9g9vFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuqIx8Pn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvAderSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE0FC4CEED;
-	Tue, 25 Mar 2025 12:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuqIx8Pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760F6C4CEE4;
+	Tue, 25 Mar 2025 12:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905807;
-	bh=1ClDAEhZBpv5k0XdZXnyKLovgg9R3FWQmvBsSRKNObU=;
+	s=korg; t=1742905809;
+	bh=mlCX3o1UccWhTnRZjgVJtTYHYyTKZRViN5Kqs/wV/8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvAderSq2TU8s52eOGt/zbE4gyg0bN5rX72RU9JyV6Cv4OQyvPVNhEIMtozcrHLb1
-	 bYtjNge+bq52oTF2YJzQLkC7oOzhPur972pp4VDHisZ+zxQuBlmZxHmDdh5XzX3EoP
-	 Aw39XjxNC6CV4zRi884fMsxA9fI7JT92fp/3rN3U=
+	b=cuqIx8PnHYT5j+OyDAeE4H/cN0N5p42pxb8wYTAll5ZWPfxWpjlxkpRIlmYPY/I0K
+	 hjWya5/XSgIweRDMatTSthYpYZJ5Vp/81e/pFbPd9XsV36knpz2V914O6ElHr263S9
+	 /ugr/n60yuo8wOVG0mVj5JF9/4/Evye0LacmHj5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 144/198] nvme-tcp: Fix a C2HTermReq error message
-Date: Tue, 25 Mar 2025 08:21:46 -0400
-Message-ID: <20250325122200.437134243@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.1 145/198] smb: client: fix potential UAF in cifs_dump_full_key()
+Date: Tue, 25 Mar 2025 08:21:47 -0400
+Message-ID: <20250325122200.462937228@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,33 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit afb41b08c44e5386f2f52fa859010ac4afd2b66f upstream.
+commit 58acd1f497162e7d282077f816faa519487be045 upstream.
 
-In H2CTermReq, a FES with value 0x05 means "R2T Limit Exceeded"; but
-in C2HTermReq the same value has a different meaning (Data Transfer Limit
-Exceeded).
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Fixes: 84e009042d0f ("nvme-tcp: add basic support for the C2HTermReq PDU")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/ioctl.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -706,7 +706,7 @@ static void nvme_tcp_handle_c2h_term(str
- 		[NVME_TCP_FES_PDU_SEQ_ERR] = "PDU Sequence Error",
- 		[NVME_TCP_FES_HDR_DIGEST_ERR] = "Header Digest Error",
- 		[NVME_TCP_FES_DATA_OUT_OF_RANGE] = "Data Transfer Out Of Range",
--		[NVME_TCP_FES_R2T_LIMIT_EXCEEDED] = "R2T Limit Exceeded",
-+		[NVME_TCP_FES_DATA_LIMIT_EXCEEDED] = "Data Transfer Limit Exceeded",
- 		[NVME_TCP_FES_UNSUPPORTED_PARAM] = "Unsupported Parameter",
- 	};
- 
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -246,7 +246,9 @@ static int cifs_dump_full_key(struct cif
+ 		spin_lock(&cifs_tcp_ses_lock);
+ 		list_for_each_entry(server_it, &cifs_tcp_ses_list, tcp_ses_list) {
+ 			list_for_each_entry(ses_it, &server_it->smb_ses_list, smb_ses_list) {
+-				if (ses_it->Suid == out.session_id) {
++				spin_lock(&ses_it->ses_lock);
++				if (ses_it->ses_status != SES_EXITING &&
++				    ses_it->Suid == out.session_id) {
+ 					ses = ses_it;
+ 					/*
+ 					 * since we are using the session outside the crit
+@@ -254,9 +256,11 @@ static int cifs_dump_full_key(struct cif
+ 					 * so increment its refcount
+ 					 */
+ 					ses->ses_count++;
++					spin_unlock(&ses_it->ses_lock);
+ 					found = true;
+ 					goto search_end;
+ 				}
++				spin_unlock(&ses_it->ses_lock);
+ 			}
+ 		}
+ search_end:
 
 
