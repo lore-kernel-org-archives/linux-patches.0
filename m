@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9936525A2B5;
-	Tue, 25 Mar 2025 12:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E997290BD0;
+	Tue, 25 Mar 2025 12:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905610; cv=none; b=J4E6m8ERt3/i47mC64UQpD3GmKqd6HGYxeXdpUyw13wW62kwswJNzodUb9M4/B5EkXKXuUguAeRQ+NO8buy16h+vATUUTveTjKzzg+7s7fz9KBaaoqP0weZjpBHlJmmL4oHN8kI2OPOodbFcVPZX7tH1i7zYAAH65OQjqRFstqI=
+	t=1742905612; cv=none; b=m13HE5w4pmXCLfdV78ruLr+8nIn5pS8zvZR0eWJBAOlDOVe4oX2DDWNlBYA7DyHqE8yH4NoqsxJp/9TgHedxl/I1qVGYLEJM51D8tMTAN5M8C0rrz6kiFtKP2EzcZrCYmyC+ESJrFOP/Ej6D0iKVNfc/wNwJF2S7/1+2Cru7Jgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905610; c=relaxed/simple;
-	bh=83DPTHa8zaMv3SWeK5377HnOLEqUks8piNu8Owyj2CA=;
+	s=arc-20240116; t=1742905612; c=relaxed/simple;
+	bh=ZGIyY0xd27AZhqlowsTh7khnhdPx0Mr9bH9wDkMLuao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4NfGPj8a+a78+5WLTobhqBnpR/mCTyQSsGbsKChTlbxmcJ8otAWCi52hGnd6kTUZ32e8FzPqXss/M8RKrb787WVn+RVR/xh+lfQwv/ytpZIUsC0MK1nmcsX83D+cdDlzK1N4dKzEyQsGCsWy4KCbpSlCumybriOurHXpjm7cb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbYHc2LB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOpOfSKGq2ERIF63UrjhsV2DxqgyK4G6/XHd6JLGjWBYv45dGDSiABnpAjdJQgoJVeMDKDOEWKWtjsAcXwtzq1C30w0DIzsNVUweb9bykoMV8nZBVLN6ibPKC9yBY8nR5r9ggZgPTUk1vBzxvnaAISskzcZRc++Im7w91fzJn7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYu3nJJ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbYHc2LB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E262C4CEE4;
-	Tue, 25 Mar 2025 12:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYu3nJJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D49C4CEEE;
+	Tue, 25 Mar 2025 12:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905610;
-	bh=83DPTHa8zaMv3SWeK5377HnOLEqUks8piNu8Owyj2CA=;
+	s=korg; t=1742905612;
+	bh=ZGIyY0xd27AZhqlowsTh7khnhdPx0Mr9bH9wDkMLuao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbYHc2LBmX7kJ1P9Oynk/qN2olCLi9gVyeMen1Jwb4ZX+g4RuJQXWduQuCGJIi/nT
-	 hBGQbJ2ZjZdGb0iDGL20++xC/lpw065/dL3JOcMbQzWxtgLwSciB7XwbuXZAT1mDvl
-	 nnAk7pQptJwjwEOQwylfErlaZ7zeQaY85gy9kZNM=
+	b=nYu3nJJ7VPE+efOzbTGHExQluEnlP/WDet0+ODXWLrXaq1jp4hNqh/7tziQ/4Oz9M
+	 DuPc4K3XbEZ4ZHG9Hw7SnXIzHLnRM+1kbQF84uI+4nc1BYs+TnA51CcxTjwLJz0i7B
+	 ObUgHi9tgjAHbGm+Bj0CvJYmhhGKYBnQqHos99tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/198] perf/x86/intel: Use better start period for frequency mode
-Date: Tue, 25 Mar 2025 08:20:29 -0400
-Message-ID: <20250325122158.403203308@linuxfoundation.org>
+Subject: [PATCH 6.1 041/198] HID: intel-ish-hid: fix the length of MNG_SYNC_FW_CLOCK in doorbell
+Date: Tue, 25 Mar 2025 08:20:03 -0400
+Message-ID: <20250325122157.717847004@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,148 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit a26b24b2e21f6222635a95426b9ef9eec63d69b1 ]
+[ Upstream commit 4b54ae69197b9f416baa0fceadff7e89075f8454 ]
 
-Freqency mode is the current default mode of Linux perf. A period of 1 is
-used as a starting period. The period is auto-adjusted on each tick or an
-overflow, to meet the frequency target.
+The timestamps in the Firmware log and HID sensor samples are incorrect.
+They show 1970-01-01 because the current IPC driver only uses the first
+8 bytes of bootup time when synchronizing time with the firmware. The
+firmware converts the bootup time to UTC time, which results in the
+display of 1970-01-01.
 
-The start period of 1 is too low and may trigger some issues:
+In write_ipc_from_queue(), when sending the MNG_SYNC_FW_CLOCK message,
+the clock is updated according to the definition of ipc_time_update_msg.
+However, in _ish_sync_fw_clock(), the message length is specified as the
+size of uint64_t when building the doorbell. As a result, the firmware
+only receives the first 8 bytes of struct ipc_time_update_msg.
+This patch corrects the length in the doorbell to ensure the entire
+ipc_time_update_msg is sent, fixing the timestamp issue.
 
-- Many HWs do not support period 1 well.
-  https://lore.kernel.org/lkml/875xs2oh69.ffs@tglx/
-
-- For an event that occurs frequently, period 1 is too far away from the
-  real period. Lots of samples are generated at the beginning.
-  The distribution of samples may not be even.
-
-- A low starting period for frequently occurring events also challenges
-  virtualization, which has a longer path to handle a PMI.
-
-The limit_period value only checks the minimum acceptable value for HW.
-It cannot be used to set the start period, because some events may
-need a very low period. The limit_period cannot be set too high. It
-doesn't help with the events that occur frequently.
-
-It's hard to find a universal starting period for all events. The idea
-implemented by this patch is to only give an estimate for the popular
-HW and HW cache events. For the rest of the events, start from the lowest
-possible recommended value.
-
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250117151913.3043942-3-kan.liang@linux.intel.com
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 85 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+ drivers/hid/intel-ish-hid/ipc/ipc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 117f86283183f..b9dde37694120 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3852,6 +3852,85 @@ static inline bool intel_pmu_has_cap(struct perf_event *event, int idx)
- 	return test_bit(idx, (unsigned long *)&intel_cap->capabilities);
+diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
+index dd5fc60874ba1..b1a41c90c5741 100644
+--- a/drivers/hid/intel-ish-hid/ipc/ipc.c
++++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
+@@ -577,14 +577,14 @@ static void fw_reset_work_fn(struct work_struct *unused)
+ static void _ish_sync_fw_clock(struct ishtp_device *dev)
+ {
+ 	static unsigned long	prev_sync;
+-	uint64_t	usec;
++	struct ipc_time_update_msg time = {};
+ 
+ 	if (prev_sync && time_before(jiffies, prev_sync + 20 * HZ))
+ 		return;
+ 
+ 	prev_sync = jiffies;
+-	usec = ktime_to_us(ktime_get_boottime());
+-	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &usec, sizeof(uint64_t));
++	/* The fields of time would be updated while sending message */
++	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &time, sizeof(time));
  }
  
-+static u64 intel_pmu_freq_start_period(struct perf_event *event)
-+{
-+	int type = event->attr.type;
-+	u64 config, factor;
-+	s64 start;
-+
-+	/*
-+	 * The 127 is the lowest possible recommended SAV (sample after value)
-+	 * for a 4000 freq (default freq), according to the event list JSON file.
-+	 * Also, assume the workload is idle 50% time.
-+	 */
-+	factor = 64 * 4000;
-+	if (type != PERF_TYPE_HARDWARE && type != PERF_TYPE_HW_CACHE)
-+		goto end;
-+
-+	/*
-+	 * The estimation of the start period in the freq mode is
-+	 * based on the below assumption.
-+	 *
-+	 * For a cycles or an instructions event, 1GHZ of the
-+	 * underlying platform, 1 IPC. The workload is idle 50% time.
-+	 * The start period = 1,000,000,000 * 1 / freq / 2.
-+	 *		    = 500,000,000 / freq
-+	 *
-+	 * Usually, the branch-related events occur less than the
-+	 * instructions event. According to the Intel event list JSON
-+	 * file, the SAV (sample after value) of a branch-related event
-+	 * is usually 1/4 of an instruction event.
-+	 * The start period of branch-related events = 125,000,000 / freq.
-+	 *
-+	 * The cache-related events occurs even less. The SAV is usually
-+	 * 1/20 of an instruction event.
-+	 * The start period of cache-related events = 25,000,000 / freq.
-+	 */
-+	config = event->attr.config & PERF_HW_EVENT_MASK;
-+	if (type == PERF_TYPE_HARDWARE) {
-+		switch (config) {
-+		case PERF_COUNT_HW_CPU_CYCLES:
-+		case PERF_COUNT_HW_INSTRUCTIONS:
-+		case PERF_COUNT_HW_BUS_CYCLES:
-+		case PERF_COUNT_HW_STALLED_CYCLES_FRONTEND:
-+		case PERF_COUNT_HW_STALLED_CYCLES_BACKEND:
-+		case PERF_COUNT_HW_REF_CPU_CYCLES:
-+			factor = 500000000;
-+			break;
-+		case PERF_COUNT_HW_BRANCH_INSTRUCTIONS:
-+		case PERF_COUNT_HW_BRANCH_MISSES:
-+			factor = 125000000;
-+			break;
-+		case PERF_COUNT_HW_CACHE_REFERENCES:
-+		case PERF_COUNT_HW_CACHE_MISSES:
-+			factor = 25000000;
-+			break;
-+		default:
-+			goto end;
-+		}
-+	}
-+
-+	if (type == PERF_TYPE_HW_CACHE)
-+		factor = 25000000;
-+end:
-+	/*
-+	 * Usually, a prime or a number with less factors (close to prime)
-+	 * is chosen as an SAV, which makes it less likely that the sampling
-+	 * period synchronizes with some periodic event in the workload.
-+	 * Minus 1 to make it at least avoiding values near power of twos
-+	 * for the default freq.
-+	 */
-+	start = DIV_ROUND_UP_ULL(factor, event->attr.sample_freq) - 1;
-+
-+	if (start > x86_pmu.max_period)
-+		start = x86_pmu.max_period;
-+
-+	if (x86_pmu.limit_period)
-+		x86_pmu.limit_period(event, &start);
-+
-+	return start;
-+}
-+
- static int intel_pmu_hw_config(struct perf_event *event)
- {
- 	int ret = x86_pmu_hw_config(event);
-@@ -3863,6 +3942,12 @@ static int intel_pmu_hw_config(struct perf_event *event)
- 	if (ret)
- 		return ret;
- 
-+	if (event->attr.freq && event->attr.sample_freq) {
-+		event->hw.sample_period = intel_pmu_freq_start_period(event);
-+		event->hw.last_period = event->hw.sample_period;
-+		local64_set(&event->hw.period_left, event->hw.sample_period);
-+	}
-+
- 	if (event->attr.precise_ip) {
- 		if ((event->attr.config & INTEL_ARCH_EVENT_MASK) == INTEL_FIXED_VLBR_EVENT)
- 			return -EINVAL;
+ /**
 -- 
 2.39.5
 
