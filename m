@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514F226FA48;
-	Tue, 25 Mar 2025 12:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC7526F47B;
+	Tue, 25 Mar 2025 12:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906391; cv=none; b=Mf6Q5dwzKw8adozB4P/a0P/JprLcve0CMy5xUUclpi3K5hbk2z90JondJfcIjxf17KhqmmFqsutvg2Ke3RPw+3qTXNIiBBawXmTrXoITUdX1KKkTV+g3rbmX8l50bimk2WYGZscEYBZ+TYTB4jm845z/JBEa81fKZTRChSCYSR4=
+	t=1742906393; cv=none; b=QYGUsKevQRRODvz3dR3kS/2ssZdiPsFpLBy8bb0W6huWwGn7EajTO/05ozUftYPvkeId9AdgTcIRBs2Rog8anWN2VyzhOTRIcqTMZrYTimDIT7CCiz+PjBr9cd64zgPqKMPs8TGmfcoTrTm9+nzRBnYLu3Vk8IidDKucQO5yBdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906391; c=relaxed/simple;
-	bh=9ikQk7QulwB2y9M8FsQbmc11/hFMNu9aoJrJh9XvZg8=;
+	s=arc-20240116; t=1742906393; c=relaxed/simple;
+	bh=KdRcj19A2BlXwqXwAodBcueXtHqEybJL7KeycZ/v9SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qT0zErqm/hkjTK8kRnm5lvJxOCgIRnSGEAjJ56Rz5talltLHfz/0HDiPWz2BOqK94Lv971OtWxogISGlsbbRRb5ITWs8iHNZL/JvN63cL7X0IghuwVZcav14dMcjleC3TMJR/o58PJYSB4oRjT6MB+aDwhqYQpys/g092/Z3+e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzqmInjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkNKwhUDDCygQYdrpOs94KrPQbSkUU8uqSnlGytOsEZXmdPfommnZql7s2VqkvpUFoguGOPr+WQziIONancr2Kn0mDpbGc/aA1p+o57hk+Mb9P0bDvM+guuuWE8QsbZ3HWOKnyXIUgn9EJjCy/dHdkaAveqIbDkXEtauMegLTBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxzoAwVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzqmInjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034B6C4CEE9;
-	Tue, 25 Mar 2025 12:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxzoAwVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49A1C4CEE4;
+	Tue, 25 Mar 2025 12:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906391;
-	bh=9ikQk7QulwB2y9M8FsQbmc11/hFMNu9aoJrJh9XvZg8=;
+	s=korg; t=1742906393;
+	bh=KdRcj19A2BlXwqXwAodBcueXtHqEybJL7KeycZ/v9SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzqmInjD8Ocm9x0DspzG1YjaFxL6rB/DnsmvxIL+wTrckxZhLnXykaqRWQxPMdfn+
-	 UnsMEbUNTzBS1OZt0wBCYIuJn+b7g4o/0T8dfdY1AC//JV1+KPswV7q27kuqqQNyUf
-	 gnMONOp+FOikIpRp++EtdvvzDyoZ67MLcdSL5kYg=
+	b=sxzoAwVxf0u27YSD0qBTobZAMQvdFXBIGAiAWX5M9iuXaE6wth7oN7ti7vlC1nT6D
+	 dBPdwj0eEHjEC/UDiqlfT9SJiG5kEB64xtJD1XQG4QX7+sE7yP0UDQxsz1TSoUNOxn
+	 qPCj+iGdLTjbrWY1WDVrV/hGBn3RXoAu+XVWlA/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Yilin Chen <Yilin.Chen@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 092/116] drm/amd/display: Fix message for support_edp0_on_dp1
-Date: Tue, 25 Mar 2025 08:22:59 -0400
-Message-ID: <20250325122151.562659075@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Subject: [PATCH 6.12 066/116] accel/qaic: Fix integer overflow in qaic_validate_req()
+Date: Tue, 25 Mar 2025 08:22:33 -0400
+Message-ID: <20250325122150.898692900@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -53,39 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Chen <Yilin.Chen@amd.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 35f0f9f421390f66cb062f4d79f4924af5f55b04 upstream.
+commit 67d15c7aa0864dfd82325c7e7e7d8548b5224c7b upstream.
 
-[WHY]
-The info message was wrong when support_edp0_on_dp1 is enabled
+These are u64 variables that come from the user via
+qaic_attach_slice_bo_ioctl().  Use check_add_overflow() to ensure that
+the math doesn't have an integer wrapping bug.
 
-[HOW]
-Use correct info message for support_edp0_on_dp1
-
-Fixes: f6d17270d18a ("drm/amd/display: add a quirk to enable eDP0 on DP1")
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Yilin Chen <Yilin.Chen@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 79538e6365c99d7b1c3e560d1ea8d11ef8313465)
 Cc: stable@vger.kernel.org
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/176388fa-40fe-4cb4-9aeb-2c91c22130bd@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_data.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1720,7 +1720,7 @@ static void retrieve_dmi_info(struct amd
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -557,6 +557,7 @@ static bool invalid_sem(struct qaic_sem
+ static int qaic_validate_req(struct qaic_device *qdev, struct qaic_attach_slice_entry *slice_ent,
+ 			     u32 count, u64 total_size)
+ {
++	u64 total;
+ 	int i;
+ 
+ 	for (i = 0; i < count; i++) {
+@@ -566,7 +567,8 @@ static int qaic_validate_req(struct qaic
+ 		      invalid_sem(&slice_ent[i].sem2) || invalid_sem(&slice_ent[i].sem3))
+ 			return -EINVAL;
+ 
+-		if (slice_ent[i].offset + slice_ent[i].size > total_size)
++		if (check_add_overflow(slice_ent[i].offset, slice_ent[i].size, &total) ||
++		    total > total_size)
+ 			return -EINVAL;
  	}
- 	if (quirk_entries.support_edp0_on_dp1) {
- 		init_data->flags.support_edp0_on_dp1 = true;
--		drm_info(dev, "aux_hpd_discon_quirk attached\n");
-+		drm_info(dev, "support_edp0_on_dp1 attached\n");
- 	}
- }
  
 
 
