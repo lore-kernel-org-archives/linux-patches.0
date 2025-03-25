@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51C726FA40;
-	Tue, 25 Mar 2025 12:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864E526FA45;
+	Tue, 25 Mar 2025 12:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906387; cv=none; b=GCod6SWljlZoSoImY2/4/T/dUwHP05/sCC/I8HtF+g2dWyXy8z04S2tc6TS36nDM6z4ZhcbEcCKfLyK2TYmlmOaA37qA/F64zvF/1iupegSGv1NJVfURZcYpOLo/XGeBrPW/vdWjk69ZDs46rzzUCe2Dr/qhV6vmfhIqo9J/yZE=
+	t=1742906389; cv=none; b=TfI0gB3C6dV9XDXcgZTawjoMJXeHljGJGMxNyLSMF2V7zLwvD3QxC43XoQo6yIAre9efTCIyd/CXZnYy3kgU7sJzrjtHGrB/nubL2aETw0VicWekc0XL7F9+X0RXPWrqq0gEx86hxsc+vgU+ariNd7XeCkcb6GLbtrGuSdDtqiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906387; c=relaxed/simple;
-	bh=3or3sOsK7q+0BQYFeb1Az3bUc23d6u3k9SbCDWcTpTs=;
+	s=arc-20240116; t=1742906389; c=relaxed/simple;
+	bh=nMKjN8mt05kli6QUZFV0DwfefupBhbpMxIxr4yPXh3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewTG8Ge6XrBEJqypx33ANqFGEBNHdZL8y/dmxtf/+L4XkzsenRK6vABekkwDP72AaR5zUJVHok3pO0YnEvFwfM+dDKoTf+R2mlKkhO2GIBmtDepOV35tS4P3QLqx/5lv2brbQ23E1AfVcf7mRMxQxVjzoZvGu26Xrgu67b5PmFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scOa1tWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOQCTVFeCJOiOB57n2XLw/a38ka7eRTGic2TeanDI+S1cZyYQWm+yH7wIcIIoZfnmH5QlNv1oi9C9Obbahb+FDhM53DZj+1JnRXVpma0a3DcCNuo3ELM1ZP2qqq1ARPLUOIKFktrmcZ9o+4vcBnqlwyH4s6F4h+VjxF+1pq8ifQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XC89wDpL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scOa1tWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7616DC4CEE4;
-	Tue, 25 Mar 2025 12:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XC89wDpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3936AC4CEE4;
+	Tue, 25 Mar 2025 12:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906387;
-	bh=3or3sOsK7q+0BQYFeb1Az3bUc23d6u3k9SbCDWcTpTs=;
+	s=korg; t=1742906389;
+	bh=nMKjN8mt05kli6QUZFV0DwfefupBhbpMxIxr4yPXh3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scOa1tWWpSY2W9WO15SOeqRQmsbiagh46VWjWFI33zpMI8OVRTfuzB/BHTnnX3Fg4
-	 p5u04EfH1xmInUmMLdTwnb41dlgjT6joGlOhnSNF4sQIYcApjXqp8NDL1cIpzNlb+h
-	 V5kZI/obyUAzZYa1VWrkALws79H803YdegS43+g0=
+	b=XC89wDpLmq0HN1Ee3ltqeQ7zEg6pw/JMKjUWYrqDkByY2MhH7+gQCpYcdrshsXvB3
+	 BAEfS7yNf3D1eEBax4WB4VLX8/PNyqIh18LZsoFNNQEe1s4u55nn1ScxqqblQ38ZZg
+	 /EYI7IHu+kiiln8RLRcitjv2gUZmE1nhpDpLeYNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	qianyi liu <liuqianyi125@gmail.com>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.12 090/116] drm/sched: Fix fence reference count leak
-Date: Tue, 25 Mar 2025 08:22:57 -0400
-Message-ID: <20250325122151.511972112@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 091/116] drm/amdgpu/gfx12: correct cleanup of me field with gfx_v12_0_me_fini()
+Date: Tue, 25 Mar 2025 08:22:58 -0400
+Message-ID: <20250325122151.538551387@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -50,47 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: qianyi liu <liuqianyi125@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit a952f1ab696873be124e31ce5ef964d36bce817f upstream.
+commit 86730b5261d4d8dae3f5b97709d40d694ecf1ddf upstream.
 
-The last_scheduled fence leaks when an entity is being killed and adding
-the cleanup callback fails.
+In gfx_v12_0_cp_gfx_load_me_microcode_rs64(), gfx_v12_0_pfp_fini() is
+incorrectly used to free 'me' field of 'gfx', since gfx_v12_0_pfp_fini()
+can only release 'pfp' field of 'gfx'. The release function of 'me' field
+should be gfx_v12_0_me_fini().
 
-Decrement the reference count of prev when dma_fence_add_callback()
-fails, ensuring proper balance.
-
-Cc: stable@vger.kernel.org	# v6.2+
-[phasta: add git tag info for stable kernel]
-Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
-Signed-off-by: qianyi liu <liuqianyi125@gmail.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250311060251.4041101-1-liuqianyi125@gmail.com
+Fixes: 52cb80c12e8a ("drm/amdgpu: Add gfx v12_0 ip block support (v6)")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ebdc52607a46cda08972888178c6aa9cd6965141)
+Cc: stable@vger.kernel.org # 6.12.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -259,9 +259,16 @@ static void drm_sched_entity_kill(struct
- 		struct drm_sched_fence *s_fence = job->s_fence;
- 
- 		dma_fence_get(&s_fence->finished);
--		if (!prev || dma_fence_add_callback(prev, &job->finish_cb,
--					   drm_sched_entity_kill_jobs_cb))
-+		if (!prev ||
-+		    dma_fence_add_callback(prev, &job->finish_cb,
-+					   drm_sched_entity_kill_jobs_cb)) {
-+			/*
-+			 * Adding callback above failed.
-+			 * dma_fence_put() checks for NULL.
-+			 */
-+			dma_fence_put(prev);
- 			drm_sched_entity_kill_jobs_cb(NULL, &job->finish_cb);
-+		}
- 
- 		prev = &s_fence->finished;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -2395,7 +2395,7 @@ static int gfx_v12_0_cp_gfx_load_me_micr
+ 				      (void **)&adev->gfx.me.me_fw_data_ptr);
+ 	if (r) {
+ 		dev_err(adev->dev, "(%d) failed to create me data bo\n", r);
+-		gfx_v12_0_pfp_fini(adev);
++		gfx_v12_0_me_fini(adev);
+ 		return r;
  	}
+ 
 
 
