@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EB1266595;
-	Tue, 25 Mar 2025 12:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD49259CAD;
+	Tue, 25 Mar 2025 12:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905764; cv=none; b=OjpNs765n7VZ/2fHYmnsIQUZNM0ZPvOmujqnwegjzjIfoxMvNEhoHB6D1UYbPGIBYc+SiWRuKUCcdBkCEsbmNpesDNrNzaI5MdrNXjMWpOO55DwJxUPL0P3LasfiRx5D5m2UbOJV4imxCa2UZJZey2Z739DQavnx9FMH2oZs+RY=
+	t=1742905765; cv=none; b=MDiVakT6QLvjS3RwvvF6ZNy9lJCGpXvoCmaddNgpBEFSZDEN7ZmSTVPSx0fftBEzWbvbVjtqIvxK+8f0oY4yZvbsV0FBfauh3ggZ7WfdU2Qh3CdAxjtam+fi9YcQVAaqBcOpSRQ33LU4CyIPQfrgVyeetPJ7t7reKGOkVWI9pR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905764; c=relaxed/simple;
-	bh=aNuWIbL/TXkLQEF7qri74ECM09SiCOYewU+qKtnJAew=;
+	s=arc-20240116; t=1742905765; c=relaxed/simple;
+	bh=lmM1StIT6z2vuFUYCmT7jqeCcNGi0ygsPQ4lThimjRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MirzKn1NWnWPg81k5yqZqFY03JF0NC7eCE/dg1ujtzMFRArqoYQXhQO8+itGNc0aY0N/N65ND4iUTGlh/HyzTsxwyWPQUwGlvrSdxDSVMb693/aj9d4abehLrop0XPvhnE6Ipic6cz/AcGpldpCQx9L8fP1FcgKm32T1PSmCeeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBQAX5hT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnRyUIVKB8RhVviF0HUfkoyh4EoDYrT9Lsk0MPG83bwoFgNs+pCqHxe5CLK/Yr/KdrwWLfLsIFSdJiXHP+smH8bEhC04hYRgjldhUt8D1R6Py57tQ0JSsPv64BvZbpZMjWHdQroZGGedUq0gdAQ0zaCLfkBI2im9xGCwn65ygCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLwgwzEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBQAX5hT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BC4C4CEE4;
-	Tue, 25 Mar 2025 12:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLwgwzEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDEFC4CEE4;
+	Tue, 25 Mar 2025 12:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905763;
-	bh=aNuWIbL/TXkLQEF7qri74ECM09SiCOYewU+qKtnJAew=;
+	s=korg; t=1742905765;
+	bh=lmM1StIT6z2vuFUYCmT7jqeCcNGi0ygsPQ4lThimjRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBQAX5hTPzU4BFkKpBfoEgcR97A0SXPT/GvhTiEYUSCz9AgP6m6F+Bq1dtC9BKbr2
-	 EkaRpyOgSz1YwUuoYATO0LnPw4+oer8DaX8BvrjT9k53Q3RDj8bbWAmqBaf9l0Ce45
-	 A2SuI+8UHuHck6aK3iefi9plftmxZ+Jm1RmKvd/M=
+	b=yLwgwzEgodYla2l8yYzwZyf6bio4+jHNgbE0aqjISlTYwOjoWFP0H/2SerfUv5yIF
+	 G+mr+yKGVymmJLYCTIberfdM+YSj+0Jt96U186NNCegd0c1jymxcZHdRgcDz60XKfT
+	 UssY2mWd2sTz8uzGWoYKm1A3xHppbiNbD4gBbSEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Phil Elwell <phil@raspberrypi.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/198] soc: imx8m: Unregister cpufreq and soc dev in cleanup path
-Date: Tue, 25 Mar 2025 08:21:53 -0400
-Message-ID: <20250325122200.618311147@linuxfoundation.org>
+Subject: [PATCH 6.1 152/198] ARM: dts: bcm2711: PL011 UARTs are actually r1p5
+Date: Tue, 25 Mar 2025 08:21:54 -0400
+Message-ID: <20250325122200.643513139@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,76 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Phil Elwell <phil@raspberrypi.com>
 
-[ Upstream commit cf7139aac463880cbd5c5e999c118fbe91631411 ]
+[ Upstream commit 0de09025f161f67c07978c4742e221243d070d41 ]
 
-Unregister the cpufreq device and soc device when resource unwinding,
-otherwise there will be warning when do removing test:
-sysfs: cannot create duplicate filename '/devices/platform/imx-cpufreq-dt'
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.13.0-rc1-next-20241204
-Hardware name: NXP i.MX8MPlus EVK board (DT)
+The ARM PL011 UART instances in BCM2711 are r1p5 spec, which means they
+have 32-entry FIFOs. The correct periphid value for this is 0x00341011.
+Thanks to N Buchwitz for pointing this out.
 
-Fixes: 9cc832d37799 ("soc: imx8m: Probe the SoC driver as platform driver")
-Cc: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250223125614.3592-2-wahrenst@gmx.net
+Fixes: 7dbe8c62ceeb ("ARM: dts: Add minimal Raspberry Pi 4 support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/bcm2711.dtsi | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index bd62ccb935a1a..006cad061a32b 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -192,9 +192,20 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
- 	devm_kasprintf((dev), GFP_KERNEL, "%d.%d", ((soc_rev) >> 4) & 0xf, (soc_rev) & 0xf) : \
- 	"unknown"
+diff --git a/arch/arm/boot/dts/bcm2711.dtsi b/arch/arm/boot/dts/bcm2711.dtsi
+index 941c4d16791b4..d94e70d36dcad 100644
+--- a/arch/arm/boot/dts/bcm2711.dtsi
++++ b/arch/arm/boot/dts/bcm2711.dtsi
+@@ -134,7 +134,7 @@ uart2: serial@7e201400 {
+ 			clocks = <&clocks BCM2835_CLOCK_UART>,
+ 				 <&clocks BCM2835_CLOCK_VPU>;
+ 			clock-names = "uartclk", "apb_pclk";
+-			arm,primecell-periphid = <0x00241011>;
++			arm,primecell-periphid = <0x00341011>;
+ 			status = "disabled";
+ 		};
  
-+static void imx8m_unregister_soc(void *data)
-+{
-+	soc_device_unregister(data);
-+}
-+
-+static void imx8m_unregister_cpufreq(void *data)
-+{
-+	platform_device_unregister(data);
-+}
-+
- static int imx8m_soc_probe(struct platform_device *pdev)
- {
- 	struct soc_device_attribute *soc_dev_attr;
-+	struct platform_device *cpufreq_dev;
- 	const struct imx8_soc_data *data;
- 	struct device *dev = &pdev->dev;
- 	const struct of_device_id *id;
-@@ -239,11 +250,22 @@ static int imx8m_soc_probe(struct platform_device *pdev)
- 	if (IS_ERR(soc_dev))
- 		return PTR_ERR(soc_dev);
+@@ -145,7 +145,7 @@ uart3: serial@7e201600 {
+ 			clocks = <&clocks BCM2835_CLOCK_UART>,
+ 				 <&clocks BCM2835_CLOCK_VPU>;
+ 			clock-names = "uartclk", "apb_pclk";
+-			arm,primecell-periphid = <0x00241011>;
++			arm,primecell-periphid = <0x00341011>;
+ 			status = "disabled";
+ 		};
  
-+	ret = devm_add_action(dev, imx8m_unregister_soc, soc_dev);
-+	if (ret)
-+		return ret;
-+
- 	pr_info("SoC: %s revision %s\n", soc_dev_attr->soc_id,
- 		soc_dev_attr->revision);
+@@ -156,7 +156,7 @@ uart4: serial@7e201800 {
+ 			clocks = <&clocks BCM2835_CLOCK_UART>,
+ 				 <&clocks BCM2835_CLOCK_VPU>;
+ 			clock-names = "uartclk", "apb_pclk";
+-			arm,primecell-periphid = <0x00241011>;
++			arm,primecell-periphid = <0x00341011>;
+ 			status = "disabled";
+ 		};
  
--	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT))
--		platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
-+	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT)) {
-+		cpufreq_dev = platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
-+		if (IS_ERR(cpufreq_dev))
-+			return dev_err_probe(dev, PTR_ERR(cpufreq_dev),
-+					     "Failed to register imx-cpufreq-dev device\n");
-+		ret = devm_add_action(dev, imx8m_unregister_cpufreq, cpufreq_dev);
-+		if (ret)
-+			return ret;
-+	}
+@@ -167,7 +167,7 @@ uart5: serial@7e201a00 {
+ 			clocks = <&clocks BCM2835_CLOCK_UART>,
+ 				 <&clocks BCM2835_CLOCK_VPU>;
+ 			clock-names = "uartclk", "apb_pclk";
+-			arm,primecell-periphid = <0x00241011>;
++			arm,primecell-periphid = <0x00341011>;
+ 			status = "disabled";
+ 		};
  
- 	return 0;
- }
+@@ -1154,6 +1154,7 @@ &txp {
+ };
+ 
+ &uart0 {
++	arm,primecell-periphid = <0x00341011>;
+ 	interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
+ };
+ 
 -- 
 2.39.5
 
