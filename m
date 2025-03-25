@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACF725A2C0;
-	Tue, 25 Mar 2025 12:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CFB25A2C0;
+	Tue, 25 Mar 2025 12:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905625; cv=none; b=Vj500FNawtrbcEY7d2QOXz0DVXaFWbjSFL0P1v8LyGXF7fIgVvwMy4dmoGt1DaaRZXTlkbZQAvmoQuWgV2eyNCGFs+rGekNS1NbRisgJAQRFoz5aNjMbkezvnAABK4iETAEIQgm/riFQ6kbMhkg8yfScvbB50kvFL5v6cVQjbMU=
+	t=1742905627; cv=none; b=cuN4Qn7gpnlqu5MKiK7UdNcNtuc+CZ7nOIHtI6ufuausvFonSRidCHokj46gjTuy02pD0BWiqf2vwuCbJOZBfWAAggQkcnZc6d/pWgbLJL2/L1qoX1Sh/R1oKdMH3G69NUGZh5Un07Dg3EtMpfTdij97nT59NPkQNEIPKbvwzJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905625; c=relaxed/simple;
-	bh=UXSdBcKyN88grZrvEi7fevU+Fjgkp4WVo8wTcf6c9pw=;
+	s=arc-20240116; t=1742905627; c=relaxed/simple;
+	bh=2pVnc9MyCOLx7Own0exTV/0pqPS2ONUNH5pMgq1Pc04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jq/Evk4mgWf+MaaXAwQEXj4IXf4eliJObWEZXYOyDRL68Y9MwamiQYrdToFjc2f4IvNVQFANb9arLRxaQ2J1f7UMWeekgakCW7YQMI6YRvPdla2rJAgmV0Rscs8jARtMCpzLEVx2epQcM+IquS86dndW50ktfD2Xi09lcudJ7dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqrwS3ku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n4g0+d8peeL7C6Wugqeg5nqamNnDsOXohyYLnEXfL+hfxLd2bim7DPrPhKe7ZOET1JdXWbZh8MWdTaMmEGS66VzhtmPOj/E/vKNbbEkuqXDJu0ZjpLE4kazVL382dVYieUhm/7htkcaefxCjWo66NuK1oSC16N3PQ6JdYpzifgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEhK2erp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqrwS3ku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1988C4CEE9;
-	Tue, 25 Mar 2025 12:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEhK2erp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAAEC4CEE9;
+	Tue, 25 Mar 2025 12:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905625;
-	bh=UXSdBcKyN88grZrvEi7fevU+Fjgkp4WVo8wTcf6c9pw=;
+	s=korg; t=1742905626;
+	bh=2pVnc9MyCOLx7Own0exTV/0pqPS2ONUNH5pMgq1Pc04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqrwS3kuFiBHR7ekl+wN1kpeyZ5fWnyl2Z4S7eVFGdkStXLlmefdatNMLAltGvDEY
-	 oGm9966IdBTysRzCr/gyzTk/EKM88UN1oKp7SiZF1H99bGeVqdKcAeivs5HkjeegOS
-	 eCHrKfTpo1MvtrcjiQFgFQBOpeZUIfrOYAvIVoWs=
+	b=AEhK2erpKsOetGmYPBxFKzbf/yCCk24avCtfHhKxa9qv3zc3vKk5y+foY99yGmBqp
+	 kvdxI9QHLpowHU81gN5BmUVbyTG6mvI8wTWFZEr3lio8SZLAkZ669r8Yerr96U5WZw
+	 byrM6sj6LAQuNYP5JICiktKa45lfn/Tf88Y5MQFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sybil Isabel Dorsett <sybdorsett@proton.me>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/198] sched: Clarify wake_up_q()s write to task->wake_q.next
-Date: Tue, 25 Mar 2025 08:20:08 -0400
-Message-ID: <20250325122157.843620662@linuxfoundation.org>
+Subject: [PATCH 6.1 047/198] platform/x86: thinkpad_acpi: Fix invalid fan speed on ThinkPad X120e
+Date: Tue, 25 Mar 2025 08:20:09 -0400
+Message-ID: <20250325122157.868275101@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -45,45 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Sybil Isabel Dorsett <sybdorsett@proton.me>
 
-[ Upstream commit bcc6244e13b4d4903511a1ea84368abf925031c0 ]
+[ Upstream commit 1046cac109225eda0973b898e053aeb3d6c10e1d ]
 
-Clarify that wake_up_q() does an atomic write to task->wake_q.next, after
-which a concurrent __wake_q_add() can immediately overwrite
-task->wake_q.next again.
+On ThinkPad X120e, fan speed is reported in ticks per revolution
+rather than RPM.
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250129-sched-wakeup-prettier-v1-1-2f51f5f663fa@google.com
+Recalculate the fan speed value reported for ThinkPad X120e
+to RPM based on a 22.5 kHz clock.
+
+Based on the information on
+https://www.thinkwiki.org/wiki/How_to_control_fan_speed,
+the same problem is highly likely to be relevant to at least Edge11,
+but Edge11 is not addressed in this patch.
+
+Signed-off-by: Sybil Isabel Dorsett <sybdorsett@proton.me>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20250203163255.5525-1-sybdorsett@proton.me
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9be8a509b5f3f..9b01fdceb6220 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -997,9 +997,10 @@ void wake_up_q(struct wake_q_head *head)
- 		struct task_struct *task;
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index a57e236be0504..a8b6f38d344fd 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -8161,6 +8161,7 @@ static struct ibm_struct volume_driver_data = {
  
- 		task = container_of(node, struct task_struct, wake_q);
--		/* Task can safely be re-inserted now: */
- 		node = node->next;
--		task->wake_q.next = NULL;
-+		/* pairs with cmpxchg_relaxed() in __wake_q_add() */
-+		WRITE_ONCE(task->wake_q.next, NULL);
-+		/* Task can safely be re-inserted now. */
+ #define FAN_NS_CTRL_STATUS	BIT(2)		/* Bit which determines control is enabled or not */
+ #define FAN_NS_CTRL		BIT(4)		/* Bit which determines control is by host or EC */
++#define FAN_CLOCK_TPM		(22500*60)	/* Ticks per minute for a 22.5 kHz clock */
  
- 		/*
- 		 * wake_up_process() executes a full barrier, which pairs with
+ enum {					/* Fan control constants */
+ 	fan_status_offset = 0x2f,	/* EC register 0x2f */
+@@ -8214,6 +8215,7 @@ static int fan_watchdog_maxinterval;
+ 
+ static bool fan_with_ns_addr;
+ static bool ecfw_with_fan_dec_rpm;
++static bool fan_speed_in_tpr;
+ 
+ static struct mutex fan_mutex;
+ 
+@@ -8396,8 +8398,11 @@ static int fan_get_speed(unsigned int *speed)
+ 			     !acpi_ec_read(fan_rpm_offset + 1, &hi)))
+ 			return -EIO;
+ 
+-		if (likely(speed))
++		if (likely(speed)) {
+ 			*speed = (hi << 8) | lo;
++			if (fan_speed_in_tpr && *speed != 0)
++				*speed = FAN_CLOCK_TPM / *speed;
++		}
+ 		break;
+ 	case TPACPI_FAN_RD_TPEC_NS:
+ 		if (!acpi_ec_read(fan_rpm_status_ns, &lo))
+@@ -8430,8 +8435,11 @@ static int fan2_get_speed(unsigned int *speed)
+ 		if (rc)
+ 			return -EIO;
+ 
+-		if (likely(speed))
++		if (likely(speed)) {
+ 			*speed = (hi << 8) | lo;
++			if (fan_speed_in_tpr && *speed != 0)
++				*speed = FAN_CLOCK_TPM / *speed;
++		}
+ 		break;
+ 
+ 	case TPACPI_FAN_RD_TPEC_NS:
+@@ -8959,6 +8967,7 @@ static const struct attribute_group fan_driver_attr_group = {
+ #define TPACPI_FAN_NOFAN	0x0008		/* no fan available */
+ #define TPACPI_FAN_NS		0x0010		/* For EC with non-Standard register addresses */
+ #define TPACPI_FAN_DECRPM	0x0020		/* For ECFW's with RPM in register as decimal */
++#define TPACPI_FAN_TPR		0x0040		/* Fan speed is in Ticks Per Revolution */
+ 
+ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
+ 	TPACPI_QEC_IBM('1', 'Y', TPACPI_FAN_Q1),
+@@ -8981,6 +8990,7 @@ static const struct tpacpi_quirk fan_quirk_table[] __initconst = {
+ 	TPACPI_Q_LNV3('N', '2', 'U', TPACPI_FAN_NS),	/* X13 Yoga Gen 2*/
+ 	TPACPI_Q_LNV3('N', '1', 'O', TPACPI_FAN_NOFAN),	/* X1 Tablet (2nd gen) */
+ 	TPACPI_Q_LNV3('R', '0', 'Q', TPACPI_FAN_DECRPM),/* L480 */
++	TPACPI_Q_LNV('8', 'F', TPACPI_FAN_TPR),		/* ThinkPad x120e */
+ };
+ 
+ static int __init fan_init(struct ibm_init_struct *iibm)
+@@ -9044,6 +9054,8 @@ static int __init fan_init(struct ibm_init_struct *iibm)
+ 
+ 			if (quirks & TPACPI_FAN_Q1)
+ 				fan_quirk1_setup();
++			if (quirks & TPACPI_FAN_TPR)
++				fan_speed_in_tpr = true;
+ 			/* Try and probe the 2nd fan */
+ 			tp_features.second_fan = 1; /* needed for get_speed to work */
+ 			res = fan2_get_speed(&speed);
 -- 
 2.39.5
 
