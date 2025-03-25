@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00BC25BAD4;
-	Tue, 25 Mar 2025 12:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C036426A0BF;
+	Tue, 25 Mar 2025 12:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906149; cv=none; b=Y1eTtBWBhaf7bFQt97sxTzO3jkDt9ETjEl4RI1i8s71IMbg9a70YqGZ8azuMrprp7l8DalbWloIhIxc1LMnc2Qvr0sCHkT8cSWn7ahU364EItWnBb2cxIKFAAc1BD1DMhNBjupN01zAw1oXRb9e0v/RLSiJMgiZ38cUeQ45fXLQ=
+	t=1742906151; cv=none; b=u6EPIU9pHCpUa3vZUrwqCa6oa5nDanGsO6LyBUBo8KpCiNTNb48+OnZhnLSiciECgC/LPbzW9qla15GsUtXzmuSG+GgsZL15HsqqVz8a5kLDzs4G8i3QjZ5gdMmjF0QtyJGVB8r3ezUyXThAqjRjIner6ZTPne2KgMBtIyhNXqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906149; c=relaxed/simple;
-	bh=Ma9ai4OVxKfJ8PrCAVvKFry0n8SBl4ngIC6GRiKbitM=;
+	s=arc-20240116; t=1742906151; c=relaxed/simple;
+	bh=Or6D7Dk+G1fpS13+ryBfAnhHtXo5hSmk6m+v23ouIZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UagokoStX2VmLeeMDm/dkbvlGqxD7OkbC5rKUSyBjGu0KEseXN+O3ns10tK+eYAjLMUJzqlLKPcuCrJXcjNX/J/xVJMzgW4GVQjsI75zbPOEsOlpntF0IeDB7pcp7ILRxB3TIrSNss+/B48Pbshp0JB3p9PVgp8dkQNjcA7+94I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNQ1fEMk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I67rJ1Tcq8zidcRmLCgsK5QdZLmyL2CiOZ0Tw8ipxwGjTxYeDc3gFaBWTfGbJQx/ibyPnLSi0Sz4gCPFzDdiCPKKgleqywuP2s18nvvOW1VJW3oQVJZ2pXai/JKA7sbxU/FITKzz36jBzG+kKpFI3L6+s34F4YE0rVeDTn/WLNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3+hpvz+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNQ1fEMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739F4C4CEE4;
-	Tue, 25 Mar 2025 12:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3+hpvz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1B2C4AF09;
+	Tue, 25 Mar 2025 12:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906149;
-	bh=Ma9ai4OVxKfJ8PrCAVvKFry0n8SBl4ngIC6GRiKbitM=;
+	s=korg; t=1742906151;
+	bh=Or6D7Dk+G1fpS13+ryBfAnhHtXo5hSmk6m+v23ouIZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNQ1fEMkwYeOJ+q8TNX2kNCEMl+vhTeZVYn4xruhSu1OimYbllK9SxCQHlzYoSK93
-	 uXnlYUn5m6L62T9/GwZLJVaDje4OmmAKbr1nbHJsI24TlF+qdeZS2QzC5yi0Ivs4AA
-	 MGLZEAS5KnGwGbIxPnUMH0w65OgWAGqQJ8BvsguM=
+	b=f3+hpvz+rigb9lyVCEEQ2b6GH9Grc5trHwaMyGrj45hZfch/M7EEpgv7U/wxSqIcU
+	 RTMXkDwQ2jWHjkoamx/LBNBirFTVvsyCjCu213h/kBaA9dK6tZMmnAZ6mcjUdP5RqV
+	 uINrN9lpqfapgvpLZMqRpQ3vsGs4XMIVTEaAZI50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.6 34/77] drm/v3d: Dont run jobs that have errors flagged in its fence
-Date: Tue, 25 Mar 2025 08:22:29 -0400
-Message-ID: <20250325122145.246647083@linuxfoundation.org>
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 43/77] mmc: sdhci-brcmstb: add cqhci suspend/resume to PM ops
+Date: Tue, 25 Mar 2025 08:22:38 -0400
+Message-ID: <20250325122145.479841155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -44,72 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
+commit 723ef0e20dbb2aa1b5406d2bb75374fc48187daa upstream.
 
-The V3D driver still relies on `drm_sched_increase_karma()` and
-`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
-The function `drm_sched_increase_karma()` marks the job as guilty, while
-`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
-that guilty job.
+cqhci timeouts observed on brcmstb platforms during suspend:
+  ...
+  [  164.832853] mmc0: cqhci: timeout for tag 18
+  ...
 
-Because of this, we must check whether the job’s DMA fence has been
-flagged with an error before executing the job. Otherwise, the same guilty
-job may be resubmitted indefinitely, causing repeated GPU resets.
+Adding cqhci_suspend()/resume() calls to disable cqe
+in sdhci_brcmstb_suspend()/resume() respectively to fix
+CQE timeouts seen on PM suspend.
 
-This patch adds a check for an error on the job's fence to prevent running
-a guilty job that was previously flagged when the GPU timed out.
-
-Note that the CPU and CACHE_CLEAN queues do not require this check, as
-their jobs are executed synchronously once the DRM scheduler starts them.
-
+Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
 Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20250311165946.28190-1-kamal.dasu@broadcom.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-brcmstb.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -179,11 +179,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
- 	struct drm_device *dev = &v3d->drm;
- 	struct dma_fence *fence;
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -384,8 +384,15 @@ static int sdhci_brcmstb_suspend(struct
+ 	struct sdhci_host *host = dev_get_drvdata(dev);
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
++	int ret;
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
+ 	clk_disable_unprepare(priv->base_clk);
++	if (host->mmc->caps2 & MMC_CAP2_CQE) {
++		ret = cqhci_suspend(host->mmc);
++		if (ret)
++			return ret;
++	}
 +
-+	v3d->tfu_job = job;
+ 	return sdhci_pltfm_suspend(dev);
+ }
+ 
+@@ -410,6 +417,9 @@ static int sdhci_brcmstb_resume(struct d
+ 			ret = clk_set_rate(priv->base_clk, priv->base_freq_hz);
+ 	}
+ 
++	if (host->mmc->caps2 & MMC_CAP2_CQE)
++		ret = cqhci_resume(host->mmc);
 +
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
- 		return NULL;
- 
--	v3d->tfu_job = job;
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
-@@ -217,6 +221,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 	struct dma_fence *fence;
- 	int i;
- 
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
- 	v3d->csd_job = job;
- 
- 	v3d_invalidate_caches(v3d);
+ 	return ret;
+ }
+ #endif
 
 
