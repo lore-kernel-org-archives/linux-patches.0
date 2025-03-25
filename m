@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E997290BD0;
-	Tue, 25 Mar 2025 12:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A831D25A2B7;
+	Tue, 25 Mar 2025 12:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905612; cv=none; b=m13HE5w4pmXCLfdV78ruLr+8nIn5pS8zvZR0eWJBAOlDOVe4oX2DDWNlBYA7DyHqE8yH4NoqsxJp/9TgHedxl/I1qVGYLEJM51D8tMTAN5M8C0rrz6kiFtKP2EzcZrCYmyC+ESJrFOP/Ej6D0iKVNfc/wNwJF2S7/1+2Cru7Jgg=
+	t=1742905615; cv=none; b=Emz1OukAyJprvXnWw6inevyUXjbkOE7ZVLZ/BZAgnYgN+8GZ5R3T3bZZyJsX/6vOGTnE/qZKm5eGXPTP2R3GhC7r/BfBgyO8O8dwS3Xf9jqZv7GODj1NS9JK25KG+N2RBusW5o5Dd/BuR6wkl4xlJPEcmbiPx9Esa8pHdUL6scw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905612; c=relaxed/simple;
-	bh=ZGIyY0xd27AZhqlowsTh7khnhdPx0Mr9bH9wDkMLuao=;
+	s=arc-20240116; t=1742905615; c=relaxed/simple;
+	bh=2dHeBR38d2qUhafVcLfAiprXlU62wgcpTUdViy8tFlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOpOfSKGq2ERIF63UrjhsV2DxqgyK4G6/XHd6JLGjWBYv45dGDSiABnpAjdJQgoJVeMDKDOEWKWtjsAcXwtzq1C30w0DIzsNVUweb9bykoMV8nZBVLN6ibPKC9yBY8nR5r9ggZgPTUk1vBzxvnaAISskzcZRc++Im7w91fzJn7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYu3nJJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HYyYqOEOcdH3hoerGdaCmtjW3IQe680nqjwHGHL3En2md3GILIzCfpIYKkwG1CRBOyOCDVhCBBMdTGyDHlgG9Nq3CZtN0ZLRvhg3XFEyKcILV98HTYw2VVbD8tLgf7CUTeLuEpJicpL8Fvu8UDHOB7qKIwxhIjadC6QnnW4Dh1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWdQhgP0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYu3nJJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D49C4CEEE;
-	Tue, 25 Mar 2025 12:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWdQhgP0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F366EC4CEE4;
+	Tue, 25 Mar 2025 12:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905612;
-	bh=ZGIyY0xd27AZhqlowsTh7khnhdPx0Mr9bH9wDkMLuao=;
+	s=korg; t=1742905614;
+	bh=2dHeBR38d2qUhafVcLfAiprXlU62wgcpTUdViy8tFlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nYu3nJJ7VPE+efOzbTGHExQluEnlP/WDet0+ODXWLrXaq1jp4hNqh/7tziQ/4Oz9M
-	 DuPc4K3XbEZ4ZHG9Hw7SnXIzHLnRM+1kbQF84uI+4nc1BYs+TnA51CcxTjwLJz0i7B
-	 ObUgHi9tgjAHbGm+Bj0CvJYmhhGKYBnQqHos99tA=
+	b=hWdQhgP0GhDH/eA4OVjpRQWbTLtyKJVKXn0DFqFkmZkyJM7fGVNKIV1CpXzEBA4mc
+	 mGANyUft/x4mrIRM8CFZW659jZh9e/i2eAeYALrFpYANwGlxWehzh7U4KSazQnsrDU
+	 XRyPBHBSDywYMC2TZFuzERtgnU3WCfC2t37ZGiHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/198] HID: intel-ish-hid: fix the length of MNG_SYNC_FW_CLOCK in doorbell
-Date: Tue, 25 Mar 2025 08:20:03 -0400
-Message-ID: <20250325122157.717847004@linuxfoundation.org>
+Subject: [PATCH 6.1 068/198] x86/irq: Define trace events conditionally
+Date: Tue, 25 Mar 2025 08:20:30 -0400
+Message-ID: <20250325122158.428839561@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,54 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4b54ae69197b9f416baa0fceadff7e89075f8454 ]
+[ Upstream commit 9de7695925d5d2d2085681ba935857246eb2817d ]
 
-The timestamps in the Firmware log and HID sensor samples are incorrect.
-They show 1970-01-01 because the current IPC driver only uses the first
-8 bytes of bootup time when synchronizing time with the firmware. The
-firmware converts the bootup time to UTC time, which results in the
-display of 1970-01-01.
+When both of X86_LOCAL_APIC and X86_THERMAL_VECTOR are disabled,
+the irq tracing produces a W=1 build warning for the tracing
+definitions:
 
-In write_ipc_from_queue(), when sending the MNG_SYNC_FW_CLOCK message,
-the clock is updated according to the definition of ipc_time_update_msg.
-However, in _ish_sync_fw_clock(), the message length is specified as the
-size of uint64_t when building the doorbell. As a result, the firmware
-only receives the first 8 bytes of struct ipc_time_update_msg.
-This patch corrects the length in the doorbell to ensure the entire
-ipc_time_update_msg is sent, fixing the timestamp issue.
+  In file included from include/trace/trace_events.h:27,
+                 from include/trace/define_trace.h:113,
+                 from arch/x86/include/asm/trace/irq_vectors.h:383,
+                 from arch/x86/kernel/irq.c:29:
+  include/trace/stages/init.h:2:23: error: 'str__irq_vectors__trace_system_name' defined but not used [-Werror=unused-const-variable=]
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Make the tracepoints conditional on the same symbosl that guard
+their usage.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250225213236.3141752-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/ipc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/irq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
-index dd5fc60874ba1..b1a41c90c5741 100644
---- a/drivers/hid/intel-ish-hid/ipc/ipc.c
-+++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
-@@ -577,14 +577,14 @@ static void fw_reset_work_fn(struct work_struct *unused)
- static void _ish_sync_fw_clock(struct ishtp_device *dev)
- {
- 	static unsigned long	prev_sync;
--	uint64_t	usec;
-+	struct ipc_time_update_msg time = {};
+diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+index 766ffe3ba3137..439fdb3f5fdf1 100644
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -23,8 +23,10 @@
+ #include <asm/traps.h>
+ #include <asm/thermal.h>
  
- 	if (prev_sync && time_before(jiffies, prev_sync + 20 * HZ))
- 		return;
++#if defined(CONFIG_X86_LOCAL_APIC) || defined(CONFIG_X86_THERMAL_VECTOR)
+ #define CREATE_TRACE_POINTS
+ #include <asm/trace/irq_vectors.h>
++#endif
  
- 	prev_sync = jiffies;
--	usec = ktime_to_us(ktime_get_boottime());
--	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &usec, sizeof(uint64_t));
-+	/* The fields of time would be updated while sending message */
-+	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &time, sizeof(time));
- }
- 
- /**
+ DEFINE_PER_CPU_SHARED_ALIGNED(irq_cpustat_t, irq_stat);
+ EXPORT_PER_CPU_SYMBOL(irq_stat);
 -- 
 2.39.5
 
