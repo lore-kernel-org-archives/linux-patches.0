@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C6525E812;
-	Tue, 25 Mar 2025 12:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF1118BC3B;
+	Tue, 25 Mar 2025 12:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906448; cv=none; b=KscCJkYue1xcn1Ea0N1yNv05R5HxmwVzuXGE2YMuWp+LK2V7HcFWKZhs+007yiR/03PyjzQQMCrefSve3MS022cJ8VQkmQ//98lsody9AhHMau6NR8FvDgjEpoZVyZwC9WDcMzlygs2Hwc5JSL0+19tRZVxEYRVjs+yYt/mKg04=
+	t=1742906450; cv=none; b=UZ+tLfoYV48ADSSSgKde+//aQi2TUOxNBcjXP9jAHVsk5oH1jBxOiGDiDiKLubtDTwDZzSmq5QVFzZIosYQSwdIsUQe25VCSMsYNEVoB55Mo+b1nATUUO33e/jdF4RGBsk90P1xlzVTtUo80Wy/YAESCyuIBsHzdHduKCfwvxA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906448; c=relaxed/simple;
-	bh=ehCzbG2HmZDSMjoQW3MhgqT4hwnB0Lpr7LQqmxsXyLM=;
+	s=arc-20240116; t=1742906450; c=relaxed/simple;
+	bh=cxdIJ01PSNVEqdBnsDDB/yQ+I0Qu06j5FL546vNDmvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4UqU5nlVjSiorsb4WEUZiNZocwgC+RVW0C0Kke466HUxk966Tf5/fVnen4zWBMDoT8G4AmVMWBiF3p+O5kBLX6LWu3jw1VFzI7ADvk4701bzefR7vyjlTUJ5YdcnLmT8B1k2eiAKJOYoLIIibv6zNEcSs8RZzSGnDhfWgAliHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbnMhNBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HkWCVa1xls6Yvnqm5Q004i45zyHNQbA0qEeJGe89ScLpnppqfbxlhcsrhKGgmpzinwCqLh9hZs5aRKJ31+tBoeA/3pX6D3fFm2k3yw26x/Lm1SCnrep+OyYshd/Y607zS15rtXdcIwKMNdm2P0CvWN0pieyFPT6DlwJjCbSyuJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEjMTbkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbnMhNBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E85C4CEE9;
-	Tue, 25 Mar 2025 12:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEjMTbkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0632C4CEE4;
+	Tue, 25 Mar 2025 12:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906448;
-	bh=ehCzbG2HmZDSMjoQW3MhgqT4hwnB0Lpr7LQqmxsXyLM=;
+	s=korg; t=1742906450;
+	bh=cxdIJ01PSNVEqdBnsDDB/yQ+I0Qu06j5FL546vNDmvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbnMhNBoe5e9c6K3ncDSqBtooNr5uXOOMOfe2nPr3yJI3G4TbNPATvz9vBcmBaEA7
-	 MdCbGAKTiEX8pBRLThVV7fLIfeWguKcLBTeqZYTT5UTDvMjo77RRwfQ3jncZ2c289I
-	 ToQ76Ii6KXNKGlNOtsT3jImmJAuZMYoU0dcIQSeI=
+	b=PEjMTbkGB22XLJeOT1D5J2XijQo0PoadeUO8fy18tpsR6ChFVzAXhArIesu56JEzo
+	 PC0ewVQj1aqhORiwHA3s54POEMXQ2cdl4Cr72f7NSCxhyPpoRcYenwNFZ6MN50dRKM
+	 Jc99EpEmddjwS5NmNBxW2UJ0NDh+7SIxFpxjHXig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eauger@redhat.com>,
-	Wilco Dijkstra <wilco.dijkstra@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	Fuad Tabba <tabba@google.com>,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH 6.12 105/116] KVM: arm64: Unconditionally save+flush host FPSIMD/SVE/SME state
-Date: Tue, 25 Mar 2025 08:23:12 -0400
-Message-ID: <20250325122151.892491053@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 096/116] drm/amdgpu/pm: Handle SCLK offset correctly in overdrive for smu 14.0.2
+Date: Tue, 25 Mar 2025 08:23:03 -0400
+Message-ID: <20250325122151.663335858@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -55,166 +45,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit fbc7e61195e23f744814e78524b73b59faa54ab4 ]
+commit d9d4cb224e4140f51847642aa5a4a5c3eb998af0 upstream.
 
-There are several problems with the way hyp code lazily saves the host's
-FPSIMD/SVE state, including:
+Currently, it seems like the code was carried over from RDNA3 because
+it assumes two possible values to set. RDNA4, instead of having:
+0: min SCLK
+1: max SCLK
+only has
+0: SCLK offset
 
-* Host SVE being discarded unexpectedly due to inconsistent
-  configuration of TIF_SVE and CPACR_ELx.ZEN. This has been seen to
-  result in QEMU crashes where SVE is used by memmove(), as reported by
-  Eric Auger:
+This change makes it so it only reports current offset value instead of
+showing possible min/max values and their indices. Moreover, it now only
+accepts the offset as a value, without the indice index.
 
-  https://issues.redhat.com/browse/RHEL-68997
+Additionally, the lower bound was printed as %u by mistake.
 
-* Host SVE state is discarded *after* modification by ptrace, which was an
-  unintentional ptrace ABI change introduced with lazy discarding of SVE state.
+Old:
+OD_SCLK_OFFSET:
+0: -500Mhz
+1: 1000Mhz
+OD_MCLK:
+0: 97Mhz
+1: 1259MHz
+OD_VDDGFX_OFFSET:
+0mV
+OD_RANGE:
+SCLK_OFFSET:    -500Mhz       1000Mhz
+MCLK:      97Mhz       1500Mhz
+VDDGFX_OFFSET:    -200mv          0mv
 
-* The host FPMR value can be discarded when running a non-protected VM,
-  where FPMR support is not exposed to a VM, and that VM uses
-  FPSIMD/SVE. In these cases the hyp code does not save the host's FPMR
-  before unbinding the host's FPSIMD/SVE/SME state, leaving a stale
-  value in memory.
+New:
+OD_SCLK_OFFSET:
+0Mhz
+OD_MCLK:
+0: 97Mhz
+1: 1259MHz
+OD_VDDGFX_OFFSET:
+0mV
+OD_RANGE:
+SCLK_OFFSET:    -500Mhz       1000Mhz
+MCLK:      97Mhz       1500Mhz
+VDDGFX_OFFSET:    -200mv          0mv
 
-Avoid these by eagerly saving and "flushing" the host's FPSIMD/SVE/SME
-state when loading a vCPU such that KVM does not need to save any of the
-host's FPSIMD/SVE/SME state. For clarity, fpsimd_kvm_prepare() is
-removed and the necessary call to fpsimd_save_and_flush_cpu_state() is
-placed in kvm_arch_vcpu_load_fp(). As 'fpsimd_state' and 'fpmr_ptr'
-should not be used, they are set to NULL; all uses of these will be
-removed in subsequent patches.
+Setting this offset:
+Old: "s 1 <offset>"
+New: "s <offset>"
 
-Historical problems go back at least as far as v5.17, e.g. erroneous
-assumptions about TIF_SVE being clear in commit:
-
-  8383741ab2e773a9 ("KVM: arm64: Get rid of host SVE tracking/saving")
-
-... and so this eager save+flush probably needs to be backported to ALL
-stable trees.
-
-Fixes: 93ae6b01bafee8fa ("KVM: arm64: Discard any SVE state when entering KVM guests")
-Fixes: 8c845e2731041f0f ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
-Fixes: ef3be86021c3bdf3 ("KVM: arm64: Add save/restore support for FPMR")
-Reported-by: Eric Auger <eauger@redhat.com>
-Reported-by: Wilco Dijkstra <wilco.dijkstra@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Tested-by: Mark Brown <broonie@kernel.org>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Acked-by: Will Deacon <will@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Florian Weimer <fweimer@redhat.com>
-Cc: Fuad Tabba <tabba@google.com>
-Cc: Jeremy Linton <jeremy.linton@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20250210195226.1215254-2-mark.rutland@arm.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ Mark: Handle vcpu/host flag conflict ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4036
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1cfeb60e6e8837b1de5eb4e17df7cf31f4442144)
+Cc: stable@vger.kernel.org # 6.12.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |   25 -------------------------
- arch/arm64/kvm/fpsimd.c    |   35 ++++++++++-------------------------
- 2 files changed, 10 insertions(+), 50 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   59 +++++--------------
+ 1 file changed, 18 insertions(+), 41 deletions(-)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1695,31 +1695,6 @@ void fpsimd_signal_preserve_current_stat
- }
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -1206,16 +1206,9 @@ static int smu_v14_0_2_print_clk_levels(
+ 							 PP_OD_FEATURE_GFXCLK_BIT))
+ 			break;
  
- /*
-- * Called by KVM when entering the guest.
-- */
--void fpsimd_kvm_prepare(void)
--{
--	if (!system_supports_sve())
--		return;
+-		PPTable_t *pptable = smu->smu_table.driver_pptable;
+-		const OverDriveLimits_t * const overdrive_upperlimits =
+-					&pptable->SkuTable.OverDriveLimitsBasicMax;
+-		const OverDriveLimits_t * const overdrive_lowerlimits =
+-					&pptable->SkuTable.OverDriveLimitsBasicMin;
 -
--	/*
--	 * KVM does not save host SVE state since we can only enter
--	 * the guest from a syscall so the ABI means that only the
--	 * non-saved SVE state needs to be saved.  If we have left
--	 * SVE enabled for performance reasons then update the task
--	 * state to be FPSIMD only.
--	 */
--	get_cpu_fpsimd_context();
--
--	if (test_and_clear_thread_flag(TIF_SVE)) {
--		sve_to_fpsimd(current);
--		current->thread.fp_type = FP_STATE_FPSIMD;
--	}
--
--	put_cpu_fpsimd_context();
--}
--
--/*
-  * Associate current's FPSIMD context with this cpu
-  * The caller must have ownership of the cpu FPSIMD context before calling
-  * this function.
---- a/arch/arm64/kvm/fpsimd.c
-+++ b/arch/arm64/kvm/fpsimd.c
-@@ -54,16 +54,18 @@ void kvm_arch_vcpu_load_fp(struct kvm_vc
- 	if (!system_supports_fpsimd())
- 		return;
+ 		size += sysfs_emit_at(buf, size, "OD_SCLK_OFFSET:\n");
+-		size += sysfs_emit_at(buf, size, "0: %dMhz\n1: %uMhz\n",
+-					overdrive_lowerlimits->GfxclkFoffset,
+-					overdrive_upperlimits->GfxclkFoffset);
++		size += sysfs_emit_at(buf, size, "%dMhz\n",
++					od_table->OverDriveTable.GfxclkFoffset);
+ 		break;
  
--	fpsimd_kvm_prepare();
--
- 	/*
--	 * We will check TIF_FOREIGN_FPSTATE just before entering the
--	 * guest in kvm_arch_vcpu_ctxflush_fp() and override this to
--	 * FP_STATE_FREE if the flag set.
-+	 * Ensure that any host FPSIMD/SVE/SME state is saved and unbound such
-+	 * that the host kernel is responsible for restoring this state upon
-+	 * return to userspace, and the hyp code doesn't need to save anything.
-+	 *
-+	 * When the host may use SME, fpsimd_save_and_flush_cpu_state() ensures
-+	 * that PSTATE.{SM,ZA} == {0,0}.
- 	 */
--	*host_data_ptr(fp_owner) = FP_STATE_HOST_OWNED;
--	*host_data_ptr(fpsimd_state) = kern_hyp_va(&current->thread.uw.fpsimd_state);
--	*host_data_ptr(fpmr_ptr) = kern_hyp_va(&current->thread.uw.fpmr);
-+	fpsimd_save_and_flush_cpu_state();
-+	*host_data_ptr(fp_owner) = FP_STATE_FREE;
-+	*host_data_ptr(fpsimd_state) = NULL;
-+	*host_data_ptr(fpmr_ptr) = NULL;
+ 	case SMU_OD_MCLK:
+@@ -1350,12 +1343,8 @@ static int smu_v14_0_2_print_clk_levels(
  
- 	vcpu_clear_flag(vcpu, HOST_SVE_ENABLED);
- 	if (read_sysreg(cpacr_el1) & CPACR_EL1_ZEN_EL0EN)
-@@ -73,23 +75,6 @@ void kvm_arch_vcpu_load_fp(struct kvm_vc
- 		vcpu_clear_flag(vcpu, HOST_SME_ENABLED);
- 		if (read_sysreg(cpacr_el1) & CPACR_EL1_SMEN_EL0EN)
- 			vcpu_set_flag(vcpu, HOST_SME_ENABLED);
--
--		/*
--		 * If PSTATE.SM is enabled then save any pending FP
--		 * state and disable PSTATE.SM. If we leave PSTATE.SM
--		 * enabled and the guest does not enable SME via
--		 * CPACR_EL1.SMEN then operations that should be valid
--		 * may generate SME traps from EL1 to EL1 which we
--		 * can't intercept and which would confuse the guest.
--		 *
--		 * Do the same for PSTATE.ZA in the case where there
--		 * is state in the registers which has not already
--		 * been saved, this is very unlikely to happen.
--		 */
--		if (read_sysreg_s(SYS_SVCR) & (SVCR_SM_MASK | SVCR_ZA_MASK)) {
--			*host_data_ptr(fp_owner) = FP_STATE_FREE;
--			fpsimd_save_and_flush_cpu_state();
--		}
- 	}
+ 		if (smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_GFXCLK_BIT)) {
+ 			smu_v14_0_2_get_od_setting_limits(smu,
+-							  PP_OD_FEATURE_GFXCLK_FMIN,
+-							  &min_value,
+-							  NULL);
+-			smu_v14_0_2_get_od_setting_limits(smu,
+ 							  PP_OD_FEATURE_GFXCLK_FMAX,
+-							  NULL,
++							  &min_value,
+ 							  &max_value);
+ 			size += sysfs_emit_at(buf, size, "SCLK_OFFSET: %7dMhz %10uMhz\n",
+ 					      min_value, max_value);
+@@ -2429,36 +2418,24 @@ static int smu_v14_0_2_od_edit_dpm_table
+ 			return -ENOTSUPP;
+ 		}
  
- 	/*
+-		for (i = 0; i < size; i += 2) {
+-			if (i + 2 > size) {
+-				dev_info(adev->dev, "invalid number of input parameters %d\n", size);
+-				return -EINVAL;
+-			}
++		if (size != 1) {
++			dev_info(adev->dev, "invalid number of input parameters %d\n", size);
++			return -EINVAL;
++		}
+ 
+-			switch (input[i]) {
+-			case 1:
+-				smu_v14_0_2_get_od_setting_limits(smu,
+-								  PP_OD_FEATURE_GFXCLK_FMAX,
+-								  &minimum,
+-								  &maximum);
+-				if (input[i + 1] < minimum ||
+-				    input[i + 1] > maximum) {
+-					dev_info(adev->dev, "GfxclkFmax (%ld) must be within [%u, %u]!\n",
+-						input[i + 1], minimum, maximum);
+-					return -EINVAL;
+-				}
+-
+-				od_table->OverDriveTable.GfxclkFoffset = input[i + 1];
+-				od_table->OverDriveTable.FeatureCtrlMask |= 1U << PP_OD_FEATURE_GFXCLK_BIT;
+-				break;
+-
+-			default:
+-				dev_info(adev->dev, "Invalid SCLK_VDDC_TABLE index: %ld\n", input[i]);
+-				dev_info(adev->dev, "Supported indices: [0:min,1:max]\n");
+-				return -EINVAL;
+-			}
++		smu_v14_0_2_get_od_setting_limits(smu,
++						  PP_OD_FEATURE_GFXCLK_FMAX,
++						  &minimum,
++						  &maximum);
++		if (input[0] < minimum ||
++		    input[0] > maximum) {
++			dev_info(adev->dev, "GfxclkFoffset must be within [%d, %u]!\n",
++				 minimum, maximum);
++			return -EINVAL;
+ 		}
+ 
++		od_table->OverDriveTable.GfxclkFoffset = input[0];
++		od_table->OverDriveTable.FeatureCtrlMask |= 1U << PP_OD_FEATURE_GFXCLK_BIT;
+ 		break;
+ 
+ 	case PP_OD_EDIT_MCLK_VDDC_TABLE:
 
 
