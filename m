@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC922853FA;
-	Tue, 25 Mar 2025 12:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26E92580E1;
+	Tue, 25 Mar 2025 12:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905559; cv=none; b=R3hL0EHUAyRlrPf0QR8ysVMoIUmykPb91zrToFSyV+sqt3IUkWoknSzo9dmAUiWPRWQqob9MBVVdB6PFhT5lviUrWUnMDjKVLCV3i4EPeJZr1ub0nAW4RUhYu/PwpulOI8lmDCcyS+fYiJknEaNfg3pik4LJ5yVldsibvHAqoe0=
+	t=1742905561; cv=none; b=ryV/78gQ8r/AlbXMWQTCR3L5Oxv7E+vTFgYh5imrQQKY5cjLDHVus6x37jJc+zQfNzcjkYQyisVQLkOwWh8S5FPJVRLNidIe1V5PEc+2SAgmWBwUdo59Hm4BXZnfTugkVIwfvu4M3QGNqRNDcx7LqvXc/VD+qqMltrivA0oDGFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905559; c=relaxed/simple;
-	bh=9sMX2Kxx8JB/B/DWyxrGRHOfzkpydnx+yrCEH+iBMc0=;
+	s=arc-20240116; t=1742905561; c=relaxed/simple;
+	bh=3SITf3WbWLixWPOS7UOdV/m+v0rFwTa79Ndflc5+1HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRv6BaIiNDNHqXbTju7GPUy3Z5VOxKYiHL9u3PYbN4oxHOELzFCnPmugbcg2XEbVC/kTNm6joxk35fUlkHzD/Le37Q2IVkZ+d+Ghs1aX8h//P+8T1PVsbHmC2C92E3IQ0d8FHz53xZj7kQlz0iRP/0cu5UsuTkO8kLHO0RqO5KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAzd71R3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gEEFCct/Md3hp1KEojgtZHBUVG/YZ52h6Oe3rJo4r7rZCCLtfi7yXrJ4GKycOL+7T4Z9Z2QaPp8nQU1pjW3awKqwkF6XhgoZJmLpCFmEw0NzvmfzZSz4kN0nTV48+g/dqsPWpj3rvfUKd7Rlx8/JMR19wk5B7wVyHA4hEZbErG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8O/CW8s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAzd71R3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C39C4CEED;
-	Tue, 25 Mar 2025 12:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8O/CW8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EF3C4CEE4;
+	Tue, 25 Mar 2025 12:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905559;
-	bh=9sMX2Kxx8JB/B/DWyxrGRHOfzkpydnx+yrCEH+iBMc0=;
+	s=korg; t=1742905561;
+	bh=3SITf3WbWLixWPOS7UOdV/m+v0rFwTa79Ndflc5+1HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAzd71R3QDUKvh7Y6vWnm8lf3NzAHbWWAKbGHwP2U/gG5PYZvkecuOvDaAhvAXSCC
-	 rm6rW82xLEnllk+NSQIOe81YcR953JA4sQA1ZnoPnTlQvCQFVK7Xx2pKz8y7TBJ0rt
-	 ncWw+Wrm+JSyYGM7OG6qp+R+t2KSoFY5hn5CyXpk=
+	b=U8O/CW8s7jtfe9vCoJx9SKjrShMEdati6VktWGEWBP2qO7iiQjmDIk0vahfmQjTBO
+	 gXMsHZh4y+VjJHEOHbaX0onyauuel+mRT3N6N1RT1LanFgywlRbOMrZAlkAHmGj0uV
+	 hm43rKM7ti+MCA7nKkHeUJPu9S91fiwmK8Ay/MWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yang <juny24602@gmail.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/198] sched: address a potential NULL pointer dereference in the GRED scheduler.
-Date: Tue, 25 Mar 2025 08:19:32 -0400
-Message-ID: <20250325122156.911799489@linuxfoundation.org>
+Subject: [PATCH 6.1 011/198] wifi: cfg80211: cancel wiphy_work before freeing wiphy
+Date: Tue, 25 Mar 2025 08:19:33 -0400
+Message-ID: <20250325122156.936969972@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -52,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <juny24602@gmail.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 115ef44a98220fddfab37a39a19370497cd718b9 ]
+[ Upstream commit 72d520476a2fab6f3489e8388ab524985d6c4b90 ]
 
-If kzalloc in gred_init returns a NULL pointer, the code follows the
-error handling path, invoking gred_destroy. This, in turn, calls
-gred_offload, where memset could receive a NULL pointer as input,
-potentially leading to a kernel crash.
+A wiphy_work can be queued from the moment the wiphy is allocated and
+initialized (i.e. wiphy_new_nm). When a wiphy_work is queued, the
+rdev::wiphy_work is getting queued.
 
-When table->opt is NULL in gred_init(), gred_change_table_def()
-is not called yet, so it is not necessary to call ->ndo_setup_tc()
-in gred_offload().
+If wiphy_free is called before the rdev::wiphy_work had a chance to run,
+the wiphy memory will be freed, and then when it eventally gets to run
+it'll use invalid memory.
 
-Signed-off-by: Jun Yang <juny24602@gmail.com>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Fixes: f25c0515c521 ("net: sched: gred: dynamically allocate tc_gred_qopt_offload")
-Link: https://patch.msgid.link/20250305154410.3505642-1-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by canceling the work before freeing the wiphy.
+
+Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20250306123626.efd1d19f6e07.I48229f96f4067ef73f5b87302335e2fd750136c9@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_gred.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/wireless/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index 872d127c9db42..fa7a1b69c0f35 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -913,7 +913,8 @@ static void gred_destroy(struct Qdisc *sch)
- 	for (i = 0; i < table->DPs; i++)
- 		gred_destroy_vq(table->tab[i]);
- 
--	gred_offload(sch, TC_GRED_DESTROY);
-+	if (table->opt)
-+		gred_offload(sch, TC_GRED_DESTROY);
- 	kfree(table->opt);
- }
- 
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 2bed30621fa6e..74904f88edfab 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1146,6 +1146,13 @@ void cfg80211_dev_free(struct cfg80211_registered_device *rdev)
+ {
+ 	struct cfg80211_internal_bss *scan, *tmp;
+ 	struct cfg80211_beacon_registration *reg, *treg;
++	unsigned long flags;
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	WARN_ON(!list_empty(&rdev->wiphy_work_list));
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++	cancel_work_sync(&rdev->wiphy_work);
++
+ 	rfkill_destroy(rdev->wiphy.rfkill);
+ 	list_for_each_entry_safe(reg, treg, &rdev->beacon_registrations, list) {
+ 		list_del(&reg->list);
 -- 
 2.39.5
 
