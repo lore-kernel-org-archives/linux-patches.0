@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E722571AB;
-	Tue, 25 Mar 2025 12:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B702571AE;
+	Tue, 25 Mar 2025 12:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906021; cv=none; b=JVW5EvrgWwzW6P6ptJDFhxCt4gzgt9tDqomw74oPxUy2gP31BoyZwZmVlUf8rqVdx8ICoyzf1W2ze6wvX5uFr/dVhakNuXMWfbz2mV4UKl6qM8e91pn1NDAwgXGy/51N/syz/FBk4rGk/TZtb9BkWCxObgkp6oDNtCyy3yMbfUI=
+	t=1742906022; cv=none; b=tVg+fEtfmEosBvNSDxOT2qE1ouzRhxcDMdvsJuqmwd4Qf4RHhQjV9lOYUzm4q9YB/woTehhxtpRMX0wPOPTBXk4xBWE38rnik+LIZtggzcQDGoMkHGp6zPOR47Pbc/W+scPLAZ9k2uWMQzs4luz+DNbrexCOqp8IUtKHtYW7inQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906021; c=relaxed/simple;
-	bh=ABwA49d9My1xGM1AFFxx1ttQDB8r5bn3RXxVVP97HzU=;
+	s=arc-20240116; t=1742906022; c=relaxed/simple;
+	bh=0gBmFSO1jYwDbKGh2he7uCd0cb51yWs+kUtYggTTS7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WmFNWPDfwellQF6CtrBMIS3RteH6mGMO8cwxKg1eJGURtMa7xqwGXPPvm8qG8mMZhAdbfLJDgdmfHiXhFGeU+6eIHw/3X4PwDSoa1imJePqg0mKsYqCRgPYkymWJ71kk2/9xbOnYoSnt1NUTuokO8AXNTsw4KjTPha952+p7vtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2kdx4mX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nt3ekaU1GOsErBRjljSC8nYaF/ofHpD0Nzv0L4g300MchNctadAV2+TExDYGKRVbyvOpnWmxp8dVrIdu3PIkYEBkO+pUQkfyJdbgj38hhOS0czc0qhZY+DNMt8ujW/cpu0sB+WhWirgTykDY/2A25WxGheyvQKps/+zb1lPsjBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljcT9KWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2kdx4mX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E8CC4CEE4;
-	Tue, 25 Mar 2025 12:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljcT9KWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30497C4CEE4;
+	Tue, 25 Mar 2025 12:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906020;
-	bh=ABwA49d9My1xGM1AFFxx1ttQDB8r5bn3RXxVVP97HzU=;
+	s=korg; t=1742906022;
+	bh=0gBmFSO1jYwDbKGh2he7uCd0cb51yWs+kUtYggTTS7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2kdx4mXlJKIiy+/Q89WHOO5+PAvFuNko2CCJO4dwZ4Hd/C20zc0e1rh5fR+DZCwG
-	 PE+hhXqcNyZmSWdcupsGYxfzbagQwsRBPS4Y7NcDkmvtxQN22k1A6EPdFsaRboIic5
-	 mJLMvfbGmh524Ewyx4qEUX1PYW4NJU0oEZgTi6Hw=
+	b=ljcT9KWKpdeWdUxRK3+BTZc1E5u2i8Q0A5sWsPk7wMGc6kpkV1z7TFIjI6BSoH95F
+	 CwY4GvGnx/w5nswzRYgo6jRa+kqL8f42dtF8+0pbIvcmZA+vF9rXcimXF6idQd5lkk
+	 akQ45YtBupRe1Oqu1vmxHzELWGUqlEBOQ6qIcMTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.13 062/119] drm/v3d: Dont run jobs that have errors flagged in its fence
-Date: Tue, 25 Mar 2025 08:22:00 -0400
-Message-ID: <20250325122150.642136303@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.13 053/119] tracing: tprobe-events: Fix leakage of module refcount
+Date: Tue, 25 Mar 2025 08:21:51 -0400
+Message-ID: <20250325122150.408471091@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -44,72 +43,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
+commit ac91052f0ae5be9e46211ba92cc31c0e3b0a933a upstream.
 
-The V3D driver still relies on `drm_sched_increase_karma()` and
-`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
-The function `drm_sched_increase_karma()` marks the job as guilty, while
-`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
-that guilty job.
+When enabling the tracepoint at loading module, the target module
+refcount is incremented by find_tracepoint_in_module(). But it is
+unnecessary because the module is not unloaded while processing
+module loading callbacks.
+Moreover, the refcount is not decremented in that function.
+To be clear the module refcount handling, move the try_module_get()
+callsite to trace_fprobe_create_internal(), where it is actually
+required.
 
-Because of this, we must check whether the job’s DMA fence has been
-flagged with an error before executing the job. Otherwise, the same guilty
-job may be resubmitted indefinitely, causing repeated GPU resets.
+Link: https://lore.kernel.org/all/174182761071.83274.18334217580449925882.stgit@devnote2/
 
-This patch adds a check for an error on the job's fence to prevent running
-a guilty job that was previously flagged when the GPU timed out.
-
-Note that the CPU and CACHE_CLEAN queues do not require this check, as
-their jobs are executed synchronously once the DRM scheduler starts them.
-
+Fixes: 57a7e6de9e30 ("tracing/fprobe: Support raw tracepoints on future loaded modules")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/trace_fprobe.c |   21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -319,11 +319,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
- 	struct drm_device *dev = &v3d->drm;
- 	struct dma_fence *fence;
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -889,13 +889,8 @@ static void __find_tracepoint_module_cb(
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
-+	v3d->tfu_job = job;
-+
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
- 		return NULL;
+ 	if (!data->tpoint && !strcmp(data->tp_name, tp->name)) {
+ 		data->tpoint = tp;
+-		if (!data->mod) {
++		if (!data->mod)
+ 			data->mod = mod;
+-			if (!try_module_get(data->mod)) {
+-				data->tpoint = NULL;
+-				data->mod = NULL;
+-			}
+-		}
+ 	}
+ }
  
--	v3d->tfu_job = job;
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
-@@ -361,6 +365,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 	struct dma_fence *fence;
- 	int i, csd_cfg0_reg;
+@@ -907,13 +902,7 @@ static void __find_tracepoint_cb(struct
+ 		data->tpoint = tp;
+ }
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
- 	v3d->csd_job = job;
+-/*
+- * Find a tracepoint from kernel and module. If the tracepoint is in a module,
+- * this increments the module refcount to prevent unloading until the
+- * trace_fprobe is registered to the list. After registering the trace_fprobe
+- * on the trace_fprobe list, the module refcount is decremented because
+- * tracepoint_probe_module_cb will handle it.
+- */
++/* Find a tracepoint from kernel and module. */
+ static struct tracepoint *find_tracepoint(const char *tp_name,
+ 					  struct module **tp_mod)
+ {
+@@ -942,6 +931,7 @@ static void reenable_trace_fprobe(struct
+ 	}
+ }
  
- 	v3d_invalidate_caches(v3d);
++/* Find a tracepoint from specified module. */
+ static struct tracepoint *find_tracepoint_in_module(struct module *mod,
+ 						    const char *tp_name)
+ {
+@@ -1177,6 +1167,11 @@ static int __trace_fprobe_create(int arg
+ 	if (is_tracepoint) {
+ 		ctx.flags |= TPARG_FL_TPOINT;
+ 		tpoint = find_tracepoint(symbol, &tp_mod);
++		/* lock module until register this tprobe. */
++		if (tp_mod && !try_module_get(tp_mod)) {
++			tpoint = NULL;
++			tp_mod = NULL;
++		}
+ 		if (tpoint) {
+ 			ctx.funcname = kallsyms_lookup(
+ 				(unsigned long)tpoint->probestub,
 
 
