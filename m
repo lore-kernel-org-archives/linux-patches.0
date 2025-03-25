@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466DD25C6F8;
-	Tue, 25 Mar 2025 12:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2D629CB49;
+	Tue, 25 Mar 2025 12:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906201; cv=none; b=LwqYrblBynyBn2jasSiRzkOpKjf4o/hw+Vm2gJ3R4xfD7AzVntC9fe9ME2kKcSsC52FYYafI+h88LhOJKhuvc5OyJm/iJiCwnKg8Ju8d5sIsJn+0ZcdTVjqQgMinst9uekFkHqvr59QR6Y60V22XmB2PIbdo9iUoSev/ZZCin44=
+	t=1742906204; cv=none; b=MAIqFVlQwnVKYcsfhQe7iyY1xJaZoVLsHIUpBmathrR7W1Wq2bch0axMMdHsYoImDLKf43At7mzZp1PF+ZQxVZ1lmG2Hpj3QrFVg4hXOzZaQOHgaQyv3UYb/RBCYk7t1L+cXSdvlIkXrzHgr0yKLch82A3WNgDJD4rOlLT/aiEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906201; c=relaxed/simple;
-	bh=kE43gokTSO6OTTi8qaffz7BJepijtOb9E6B8ysX451M=;
+	s=arc-20240116; t=1742906204; c=relaxed/simple;
+	bh=gjtAJYjmO79nW3Wv5ZKd09XJnrhH75nOYzABsYNIQ/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWMfNtAlTtcPUy72ItL49SJj05y8kM1UGfETeF+p4T1fmqOhL3aSAgj2MxYbA5FSx8h19MMFGwXyqkpTfgpTejQsU14p0VP3aQXvmMf2lxW+CPHnjCuJX30IF9kjrGLEKZNxhtboU8UnaTB4uWr1zIJR8W6K7WFaTczW6Z0vwZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKjvEX49; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mY0bxofs+l7g9/9y9tJV8z9SjcUYhC9NZ5LNgz7djoCeuMq+y68FQEAAgdExQxNfEtPdF8uAK6Fx/jq3zCq+JG4vX2VPL+1GNjE2ciF4P+/xgN7Y44drQ84vBZbZZa3CwM80euE8PBfmcJDVXPq0Uo/4kut26SBkuoDPMwNW3xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JF/dV8OQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKjvEX49"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E571CC4CEED;
-	Tue, 25 Mar 2025 12:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JF/dV8OQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EDBC4CEE4;
+	Tue, 25 Mar 2025 12:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906201;
-	bh=kE43gokTSO6OTTi8qaffz7BJepijtOb9E6B8ysX451M=;
+	s=korg; t=1742906202;
+	bh=gjtAJYjmO79nW3Wv5ZKd09XJnrhH75nOYzABsYNIQ/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKjvEX49aLxCI2xCQ64jLQaIJZ9yqc48oMFH2S5Ygdq1Ujy+Tkeo8MCDykoxUUKc0
-	 xT9HsSvSxQh+DMiIdshDymFKHSG3Y+616OEjRfMZkG40WgUjWZ7ijDB7VY96y6aJnk
-	 Sp3Ssi8TGnrOAOOzvdBWmhgDVH+v/hVnpSwiCp8U=
+	b=JF/dV8OQwtKhwOp/coxvXM1gqmFwXrOqWfYHIGPvr0jkWFg7vHYaCvnVuxvLOm/RB
+	 dEVpnhQB10j9wOgAcoEVyp5863ma6YvGvGFmRgoDBSI5bQPAP3ZtjoaUCyZnvENimo
+	 LV0KwrAzJYtOwjlflaSsnH/UAQjw4m6qEH4bcweQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.6 40/77] arm64: dts: freescale: imx8mm-verdin-dahlia: add Microphone Jack to sound card
-Date: Tue, 25 Mar 2025 08:22:35 -0400
-Message-ID: <20250325122145.399945113@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.6 41/77] arm64: dts: rockchip: fix pinmux of UART0 for PX30 Ringneck on Haikou
+Date: Tue, 25 Mar 2025 08:22:36 -0400
+Message-ID: <20250325122145.426427077@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122144.259256924@linuxfoundation.org>
 References: <20250325122144.259256924@linuxfoundation.org>
@@ -45,50 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-commit 2c1092823eb03f8508d6769e2f38eef7e1fe62a0 upstream.
+commit 2db7d29c7b1629ced3cbab3de242511eb3c22066 upstream.
 
-The simple-audio-card's microphone widget currently connects to the
-headphone jack. Routing the microphone input to the microphone jack
-allows for independent operation of the microphone and headphones.
+UART0 pinmux by default configures GPIO0_B5 in its UART RTS function for
+UART0. However, by default on Haikou, it is used as GPIO as UART RTS for
+UART5.
 
-This resolves the following boot-time kernel log message, which
-indicated a conflict when the microphone and headphone functions were
-not separated:
-  debugfs: File 'Headphone Jack' in directory 'dapm' already present!
+Therefore, let's update UART0 pinmux to not configure the pin in that
+mode, a later commit will make UART5 request the GPIO pinmux.
 
-Fixes: 6a57f224f734 ("arm64: dts: freescale: add initial support for verdin imx8m mini")
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: c484cf93f61b ("arm64: dts: rockchip: add PX30-µQ7 (Ringneck) SoM with Haikou baseboard")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://lore.kernel.org/r/20250225-ringneck-dtbos-v3-1-853a9a6dd597@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi
-@@ -16,10 +16,10 @@
- 			"Headphone Jack", "HPOUTR",
- 			"IN2L", "Line In Jack",
- 			"IN2R", "Line In Jack",
--			"Headphone Jack", "MICBIAS",
--			"IN1L", "Headphone Jack";
-+			"Microphone Jack", "MICBIAS",
-+			"IN1L", "Microphone Jack";
- 		simple-audio-card,widgets =
--			"Microphone", "Headphone Jack",
-+			"Microphone", "Microphone Jack",
- 			"Headphone", "Headphone Jack",
- 			"Line", "Line In Jack";
+--- a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
+@@ -221,6 +221,8 @@
+ };
+ 
+ &uart0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart0_xfer>;
+ 	status = "okay";
+ };
  
 
 
