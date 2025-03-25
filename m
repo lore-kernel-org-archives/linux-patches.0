@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D617926B2B8;
-	Tue, 25 Mar 2025 12:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C7E26B2DD;
+	Tue, 25 Mar 2025 12:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906282; cv=none; b=l5TROLuByo7O77qdU+eYvFcNRxTAPPsyFglvRCxTKFRxyf8rk/xxRdriqg6fcau5uADV64ArHvlhhzB6/iEuak2yy08Uho85QtdPTyZgqXsXssctv/Rwaw97W6pKbPzlzgGESQ138rYZ8auGg0laMnZJzJW++blNCyrvgheDZYU=
+	t=1742906284; cv=none; b=W7NxccJHbxxQj/eJFpYF1hHBAxmUbRwEpUScIKf3FJBzntqSlIcKSOkUrPknNn6YbMsePcpzuprTZ25+DVzE//TVUHuefiIdaF3w31ECFWxdv0MzH/XGO0vF0YcRDxi5sbrdg1Ag0JKWBiMAKwjgDRBaX8dcw2mqjAGGrKA14Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906282; c=relaxed/simple;
-	bh=v3ehHMb8XhLDxt8bCukdHv6g3GLaqZnjfnRCLyaEZFo=;
+	s=arc-20240116; t=1742906284; c=relaxed/simple;
+	bh=XU/iR8Ql7OtWDQa/Xs4Iph4N/3vKxrDpMmb/LtSngJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p50Wk7XrZsI3uAYSSRvnqe/hKlfaWAVxQfD3IFjGcXqvihRaBs8E6a/HWi1dwSfF6II8V9/jsAIO8HhXdHSfP+v6qMMHXL8sH1fmzYDwWl5iIY3hAF8sfrCGWslYIoKgCawg+r5I0niqoLYwfX3GrY8ouOuTLy6RVR31JqvYdoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqmLeR9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmg0bqqbssG4bdHphcdxO5Daa5nmnvGOIFkwnPosnvvMxpkcT2oYvTGKBHqpXmVwcmizgEI2w4zAC0D4hy1ob+JdFHDw3MEIBW6ncuajtBFN7kZz4t7sUdB13U4t21jolcU9Qc8ZAdPqbFu06ZOwF4Tit/FMAMP2q2Fq/8oAVwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTm46/GV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqmLeR9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897E1C4CEE4;
-	Tue, 25 Mar 2025 12:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTm46/GV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC2DC4CEE4;
+	Tue, 25 Mar 2025 12:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906282;
-	bh=v3ehHMb8XhLDxt8bCukdHv6g3GLaqZnjfnRCLyaEZFo=;
+	s=korg; t=1742906284;
+	bh=XU/iR8Ql7OtWDQa/Xs4Iph4N/3vKxrDpMmb/LtSngJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqmLeR9VxRNVKPwImEcXHM6wWgO6crZFnhYaRj7uHjQNNAbT/F5HDRSpcIh0++XM4
-	 rlHIn2ysU+QU0HWezQV3HHzJZ7onSHNth2KuW2cx59Y9acl1q11WzraVLTAtUp2own
-	 vCtq9b8mcBrQZQsR+0CzT1MAtv7f7wKBY1i/jRZA=
+	b=qTm46/GVP9rqlF9z/o3LIvfY++HejoKKixtcS3IOHAbSU9qI+GWhlBK0KI+y7vXJC
+	 3e4vNueOjcJ63ESS+wkaet8YNHLziNx7wiwCyFPqyA9G2xNVL0vRs+IrhdE9X3uYF5
+	 D61Tip9Yl/J0kNTShJMmILbtaRS7QGVNqV6QHq30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Cassen <acassen@corp.free.fr>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/116] xfrm: fix tunnel mode TX datapath in packet offload mode
-Date: Tue, 25 Mar 2025 08:21:33 -0400
-Message-ID: <20250325122149.373341236@linuxfoundation.org>
+Subject: [PATCH 6.12 007/116] xfrm_output: Force software GSO only in tunnel mode
+Date: Tue, 25 Mar 2025 08:21:34 -0400
+Message-ID: <20250325122149.400811557@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,89 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 5eddd76ec2fd1988f0a3450fde9730b10dd22992 ]
+[ Upstream commit 0aae2867aa6067f73d066bc98385e23c8454a1d7 ]
 
-Packets that match the output xfrm policy are delivered to the netstack.
-In IPsec packet mode for tunnel mode, the HW is responsible for building
-the hard header and outer IP header. In such a situation, the inner
-header may refer to a network that is not directly reachable by the host,
-resulting in a failed neighbor resolution. The packet is then dropped.
-xfrm policy defines the netdevice to use for xmit so we can send packets
-directly to it.
+The cited commit fixed a software GSO bug with VXLAN + IPSec in tunnel
+mode. Unfortunately, it is slightly broader than necessary, as it also
+severely affects performance for Geneve + IPSec transport mode over a
+device capable of both HW GSO and IPSec crypto offload. In this case,
+xfrm_output unnecessarily triggers software GSO instead of letting the
+HW do it. In simple iperf3 tests over Geneve + IPSec transport mode over
+a back-2-back pair of NICs with MTU 1500, the performance was observed
+to be up to 6x worse when doing software GSO compared to leaving it to
+the hardware.
 
-Makes direct xmit exclusive to tunnel mode, since some rules may apply
-in transport mode.
+This commit makes xfrm_output only trigger software GSO in crypto
+offload cases for already encapsulated packets in tunnel mode, as not
+doing so would then cause the inner tunnel skb->inner_networking_header
+to be overwritten and break software GSO for that packet later if the
+device turns out to not be capable of HW GSO.
 
-Fixes: f8a70afafc17 ("xfrm: add TX datapath support for IPsec packet offload mode")
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Taking a closer look at the conditions for the original bug, to better
+understand the reasons for this change:
+- vxlan_build_skb -> iptunnel_handle_offloads sets inner_protocol and
+  inner network header.
+- then, udp_tunnel_xmit_skb -> ip_tunnel_xmit adds outer transport and
+  network headers.
+- later in the xmit path, xfrm_output -> xfrm_outer_mode_output ->
+  xfrm4_prepare_output -> xfrm4_tunnel_encap_add overwrites the inner
+  network header with the one set in ip_tunnel_xmit before adding the
+  second outer header.
+- __dev_queue_xmit -> validate_xmit_skb checks whether GSO segmentation
+  needs to happen based on dev features. In the original bug, the hw
+  couldn't segment the packets, so skb_gso_segment was invoked.
+- deep in the .gso_segment callback machinery, __skb_udp_tunnel_segment
+  tries to use the wrong inner network header, expecting the one set in
+  iptunnel_handle_offloads but getting the one set by xfrm instead.
+- a bit later, ipv6_gso_segment accesses the wrong memory based on that
+  wrong inner network header.
+
+With the new change, the original bug (or similar ones) cannot happen
+again, as xfrm will now trigger software GSO before applying a tunnel.
+This concern doesn't exist in packet offload mode, when the HW adds
+encapsulation headers. For the non-offloaded packets (crypto in SW),
+software GSO is still done unconditionally in the else branch.
+
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: a204aef9fd77 ("xfrm: call xfrm_output_gso when inner_protocol is set in xfrm_output")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_output.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ net/xfrm/xfrm_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
-index e5722c95b8bb3..9160a5e09041d 100644
+index 9160a5e09041d..a30538a980cc7 100644
 --- a/net/xfrm/xfrm_output.c
 +++ b/net/xfrm/xfrm_output.c
-@@ -610,6 +610,40 @@ int xfrm_output_resume(struct sock *sk, struct sk_buff *skb, int err)
- }
- EXPORT_SYMBOL_GPL(xfrm_output_resume);
+@@ -793,7 +793,7 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
+ 		skb->encapsulation = 1;
  
-+static int xfrm_dev_direct_output(struct sock *sk, struct xfrm_state *x,
-+				  struct sk_buff *skb)
-+{
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net *net = xs_net(x);
-+	int err;
-+
-+	dst = skb_dst_pop(skb);
-+	if (!dst) {
-+		XFRM_INC_STATS(net, LINUX_MIB_XFRMOUTERROR);
-+		kfree_skb(skb);
-+		return -EHOSTUNREACH;
-+	}
-+	skb_dst_set(skb, dst);
-+	nf_reset_ct(skb);
-+
-+	err = skb_dst(skb)->ops->local_out(net, sk, skb);
-+	if (unlikely(err != 1)) {
-+		kfree_skb(skb);
-+		return err;
-+	}
-+
-+	/* In transport mode, network destination is
-+	 * directly reachable, while in tunnel mode,
-+	 * inner packet network may not be. In packet
-+	 * offload type, HW is responsible for hard
-+	 * header packet mangling so directly xmit skb
-+	 * to netdevice.
-+	 */
-+	skb->dev = x->xso.dev;
-+	__skb_push(skb, skb->dev->hard_header_len);
-+	return dev_queue_xmit(skb);
-+}
-+
- static int xfrm_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
- 	return xfrm_output_resume(sk, skb, 1);
-@@ -729,6 +763,13 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
- 			return -EHOSTUNREACH;
- 		}
+ 		if (skb_is_gso(skb)) {
+-			if (skb->inner_protocol)
++			if (skb->inner_protocol && x->props.mode == XFRM_MODE_TUNNEL)
+ 				return xfrm_output_gso(net, sk, skb);
  
-+		/* Exclusive direct xmit for tunnel mode, as
-+		 * some filtering or matching rules may apply
-+		 * in transport mode.
-+		 */
-+		if (x->props.mode == XFRM_MODE_TUNNEL)
-+			return xfrm_dev_direct_output(sk, x, skb);
-+
- 		return xfrm_output_resume(sk, skb, 0);
- 	}
- 
+ 			skb_shinfo(skb)->gso_type |= SKB_GSO_ESP;
 -- 
 2.39.5
 
