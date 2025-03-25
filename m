@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C697A280CE9;
-	Tue, 25 Mar 2025 12:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B45264A9C;
+	Tue, 25 Mar 2025 12:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905511; cv=none; b=YU5gA1uHvuvR1Q8B0GXHtlPGN6JtDSpQOPW11huTxFIb9fBQm97zzXvOes6s7u9S3reb7U/st6lcqKX/gtBuC/+jjAYIROEUJEj6QOMK+63kBPpma7M1t/OQQgNfVQV0zkJ/iI9+syw4iJMNORUcGqE2WekeEuS87FnpTIijLJ8=
+	t=1742905513; cv=none; b=BjS3KOQYV/l+yOaDe0X3OxaEB/Lqro5KaeuJAsU7oG3ZQzRtQjU6gF6SFkpCK0zVeIWnWOLa6ZHwfNiAWwftzAJgRqhugVg5/bbA8A+sHtBIJLw2yo+QnLULyi8xtRPOaEzhn+C1GnIxvZNjYArVWMuDpItBPhE9EZ6uSDLldyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905511; c=relaxed/simple;
-	bh=1EVWgSRWouHt8D4f+DXlcP5PVKAl70ylpqNsHMk4gWI=;
+	s=arc-20240116; t=1742905513; c=relaxed/simple;
+	bh=7r6f0zmwuGPUF11VdyImpaRb9wUlZdRFOfay4lZseU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YCgyExWj9x3eze2SuLTqSO55m38H1UR4st2oNECfWyAFY9NpymMMRaVsGmKUPIvlFoiJorX/4ZLxVcAdNp6R74WVkdLQMiY3lsh6KifSW2nlRJ/YdeqfRyIgO+nvszv3Vfaev6uA3OWLSNCkRIyakcIikE5zRwHTR6ORxMautrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSmh3/Zp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZOANdmLDZ+TX1sFYq7lI9j/pPTkYbZQD+36xMh2ACsyZeHm0yGzwAuGt2kqOau1Ue9e7mfS3s+cbQmNGUk5BNI6TJbS4yJUTRH7MTkhupM4x5EQEw6oxhesSWzzjZ1pwRfZWeUWYhJjumj6EBkYX3NhDZGhaDaJrsQt5iSdTl6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTT6SFBo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSmh3/Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD7CC4CEE4;
-	Tue, 25 Mar 2025 12:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTT6SFBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F82C4CEED;
+	Tue, 25 Mar 2025 12:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905511;
-	bh=1EVWgSRWouHt8D4f+DXlcP5PVKAl70ylpqNsHMk4gWI=;
+	s=korg; t=1742905513;
+	bh=7r6f0zmwuGPUF11VdyImpaRb9wUlZdRFOfay4lZseU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSmh3/ZpCvX9PVU5cMIDO7UIVxA4Il8D4s37rtttO/A7XqwPDk3VVVybYl+c49RKm
-	 7pMdCXVwyhCtrg89bKomwgxRVWv7ZKsxRzfOfoTQO5u3NWbjxzMoobC5xbDaa4ivMO
-	 QjbCe8uiT70CrPhdCRC1IF1UqQyeqGxCKShpIpTM=
+	b=bTT6SFBoBpooYH7jpm/6KnSDa64+yGOhRT6oi8A9GWVwPBnI5uS8T6DWQCRLkSxdI
+	 j4XfPqTZFkwWeO3mnkGjQq5phXXJ/53Osf5DiZUaXhPAJc0YVTVHksLqfuZr5rlf6/
+	 buJSiT5F36pPc21aCTn7+jCqoFjTZzIe8FQfJgC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/198] net: mctp i2c: Copy headers if cloned
-Date: Tue, 25 Mar 2025 08:19:37 -0400
-Message-ID: <20250325122157.041543756@linuxfoundation.org>
+Subject: [PATCH 6.1 016/198] netpoll: hold rcu read lock in __netpoll_send_skb()
+Date: Tue, 25 Mar 2025 08:19:38 -0400
+Message-ID: <20250325122157.067442229@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,45 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit df8ce77ba8b7c012a3edd1ca7368b46831341466 ]
+[ Upstream commit 505ead7ab77f289f12d8a68ac83da068e4d4408b ]
 
-Use skb_cow_head() prior to modifying the TX SKB. This is necessary
-when the SKB has been cloned, to avoid modifying other shared clones.
+The function __netpoll_send_skb() is being invoked without holding the
+RCU read lock. This oversight triggers a warning message when
+CONFIG_PROVE_RCU_LIST is enabled:
 
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
-Link: https://patch.msgid.link/20250306-matt-mctp-i2c-cow-v1-1-293827212681@codeconstruct.com.au
+	net/core/netpoll.c:330 suspicious rcu_dereference_check() usage!
+
+	 netpoll_send_skb
+	 netpoll_send_udp
+	 write_ext_msg
+	 console_flush_all
+	 console_unlock
+	 vprintk_emit
+
+To prevent npinfo from disappearing unexpectedly, ensure that
+__netpoll_send_skb() is protected with the RCU read lock.
+
+Fixes: 2899656b494dcd1 ("netpoll: take rcu_read_lock_bh() in netpoll_send_skb_on_dev()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250306-netpoll_rcu_v2-v2-1-bc4f5c51742a@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/netpoll.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 7635a8b3c35cd..17619d011689f 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -543,6 +543,7 @@ static int mctp_i2c_header_create(struct sk_buff *skb, struct net_device *dev,
- 	struct mctp_i2c_hdr *hdr;
- 	struct mctp_hdr *mhdr;
- 	u8 lldst, llsrc;
-+	int rc;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 681eeb2b73992..657abbb7d0d7e 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -326,6 +326,7 @@ static int netpoll_owner_active(struct net_device *dev)
+ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ {
+ 	netdev_tx_t status = NETDEV_TX_BUSY;
++	netdev_tx_t ret = NET_XMIT_DROP;
+ 	struct net_device *dev;
+ 	unsigned long tries;
+ 	/* It is up to the caller to keep npinfo alive. */
+@@ -334,11 +335,12 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 	lockdep_assert_irqs_disabled();
  
- 	if (len > MCTP_I2C_MAXMTU)
- 		return -EMSGSIZE;
-@@ -553,6 +554,10 @@ static int mctp_i2c_header_create(struct sk_buff *skb, struct net_device *dev,
- 	lldst = *((u8 *)daddr);
- 	llsrc = *((u8 *)saddr);
+ 	dev = np->dev;
++	rcu_read_lock();
+ 	npinfo = rcu_dereference_bh(dev->npinfo);
  
-+	rc = skb_cow_head(skb, sizeof(struct mctp_i2c_hdr));
-+	if (rc)
-+		return rc;
-+
- 	skb_push(skb, sizeof(struct mctp_i2c_hdr));
- 	skb_reset_mac_header(skb);
- 	hdr = (void *)skb_mac_header(skb);
+ 	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
+ 		dev_kfree_skb_irq(skb);
+-		return NET_XMIT_DROP;
++		goto out;
+ 	}
+ 
+ 	/* don't get messages out of order, and no recursion */
+@@ -377,7 +379,10 @@ static netdev_tx_t __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+ 		skb_queue_tail(&npinfo->txq, skb);
+ 		schedule_delayed_work(&npinfo->tx_work,0);
+ 	}
+-	return NETDEV_TX_OK;
++	ret = NETDEV_TX_OK;
++out:
++	rcu_read_unlock();
++	return ret;
+ }
+ 
+ netdev_tx_t netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
 -- 
 2.39.5
 
