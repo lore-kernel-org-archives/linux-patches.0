@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18BB2580DE;
-	Tue, 25 Mar 2025 12:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9063268FC2;
+	Tue, 25 Mar 2025 12:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906009; cv=none; b=eV+skoJNnbDg0RDS738azKbrvIlJoC8x/QdoxO4lxP195qZovA7xRUrGGBVPgW9eZT/AIn51aHPmeS+Tn+2FU15+drC8YqRtG0SUWrnd3VjQmFu4SPYSMaKgJPrECjHfGa72BoZ8xpivPxFzAhmhmisf47GTWlfBbEJMV6foFFM=
+	t=1742906011; cv=none; b=hKlSkEPJOR7ysnjNf2fTmMgoxcnO7H9UX9ORL0i0HceUwJVxj0jf+EJ9AZBpap6+K+wxMOG7YLV/MTkEqVnR/TQYfOUVmIcaaTsM32ks1NKq7R6DArcB/oIfEAPvDoM5QxcHFcwc77gL/FOWdQtphY3OVllktVW32NOw+6D7Syw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906009; c=relaxed/simple;
-	bh=PTFiKX4j1r4pQ3LojLA4syYKH8JiZxE1mkSxQp1cQ24=;
+	s=arc-20240116; t=1742906011; c=relaxed/simple;
+	bh=2T53OrqvlntKrqIohF7Lo6/vguq9MhPdN+HE8fl8MjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfPyhfYviH7XSqynk2NgJD1Igdy3wMpFpcIP/YhUpybukBelGfKagjrBugS3l9tI513qoHSWtGEarsMPG1r+o0ibUR6wE6P/eFA7d7pZ9c9Qr795EH80wFOYJtiWd+d6ku47++Hefbtn+6KdwmzlIFgW3rbufwCybNyljSehzSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNvPK4j4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0aH+ONKVtglbiAKrkn36WYSaHManFizzbh+CUPDJ5FU/BpW44kzW08pn+x79sZFY6PAO9rM1x1eeiqw4grdbZEPlUYco9c0G8fZFDSHjma3KZ2gKCilY7lQxRTZiIim/KYDYimslu6EoSk6YAuJI13tqkutxxIfCTctcJQkM2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z33Ri+Ji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNvPK4j4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FE9C4CEE4;
-	Tue, 25 Mar 2025 12:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z33Ri+Ji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535FFC4CEE4;
+	Tue, 25 Mar 2025 12:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906009;
-	bh=PTFiKX4j1r4pQ3LojLA4syYKH8JiZxE1mkSxQp1cQ24=;
+	s=korg; t=1742906011;
+	bh=2T53OrqvlntKrqIohF7Lo6/vguq9MhPdN+HE8fl8MjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNvPK4j4IGsCxSoT8cxTUyis1Xtprr39LISm++H1JxC9k/ZuJP2/tWILhFIvVQG6G
-	 kjPwg5JnMg7+Z6oXykQvluekPibbKqPFtLiJmgzVqCODVldZzggRLjWdcehUEodUxF
-	 3L90+Q1vHQTbAvoRMWoOhnrAS2aDmzgZPyQx1uwk=
+	b=Z33Ri+JiqIDATFZoqVr4fRUCLN/Y8kUy5GAob2eKvO9hpQCN0SSN2XCV+gDiXRFD+
+	 sBIvxFZ2EE8vva/G1fBxNOHqAwsj6yJEyCeEBvj4nftLLVwQPutOhxMuaxpvVPmLy7
+	 k2CMOQKotjnfox5Kbtv3hD0vtWjs4p+zlz5RwwZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 084/119] memcg: drain obj stock on cpu hotplug teardown
-Date: Tue, 25 Mar 2025 08:22:22 -0400
-Message-ID: <20250325122151.205652640@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.13 057/119] can: rcar_canfd: Fix page entries in the AFL list
+Date: Tue, 25 Mar 2025 08:21:55 -0400
+Message-ID: <20250325122150.510563048@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -54,50 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb upstream.
+commit 1dba0a37644ed3022558165bbb5cb9bda540eaf7 upstream.
 
-Currently on cpu hotplug teardown, only memcg stock is drained but we
-need to drain the obj stock as well otherwise we will miss the stats
-accumulated on the target cpu as well as the nr_bytes cached. The stats
-include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
-addition we are leaking reference to struct obj_cgroup object.
+There are a total of 96 AFL pages and each page has 16 entries with
+registers CFDGAFLIDr, CFDGAFLMr, CFDGAFLP0r, CFDGAFLP1r holding
+the rule entries (r = 0..15).
 
-Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
-Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Currently, RCANFD_GAFL* macros use a start variable to find AFL entries,
+which is incorrect as the testing on RZ/G3E shows ch1 and ch4
+gets a start value of 0 and the register contents are overwritten.
+
+Fix this issue by using rule_entry corresponding to the channel
+to find the page entries in the AFL list.
+
+Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250307170330.173425-3-biju.das.jz@bp.renesas.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/can/rcar/rcar_canfd.c |   28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1909,9 +1909,18 @@ void drain_all_stock(struct mem_cgroup *
- static int memcg_hotplug_cpu_dead(unsigned int cpu)
- {
- 	struct memcg_stock_pcp *stock;
-+	struct obj_cgroup *old;
-+	unsigned long flags;
- 
- 	stock = &per_cpu(memcg_stock, cpu);
-+
-+	/* drain_obj_stock requires stock_lock */
-+	local_lock_irqsave(&memcg_stock.stock_lock, flags);
-+	old = drain_obj_stock(stock);
-+	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
-+
- 	drain_stock(stock);
-+	obj_cgroup_put(old);
- 
- 	return 0;
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -787,22 +787,14 @@ static void rcar_canfd_configure_control
  }
+ 
+ static void rcar_canfd_configure_afl_rules(struct rcar_canfd_global *gpriv,
+-					   u32 ch)
++					   u32 ch, u32 rule_entry)
+ {
+-	u32 cfg;
+-	int offset, start, page, num_rules = RCANFD_CHANNEL_NUMRULES;
++	int offset, page, num_rules = RCANFD_CHANNEL_NUMRULES;
++	u32 rule_entry_index = rule_entry % 16;
+ 	u32 ridx = ch + RCANFD_RFFIFO_IDX;
+ 
+-	if (ch == 0) {
+-		start = 0; /* Channel 0 always starts from 0th rule */
+-	} else {
+-		/* Get number of Channel 0 rules and adjust */
+-		cfg = rcar_canfd_read(gpriv->base, RCANFD_GAFLCFG(ch));
+-		start = RCANFD_GAFLCFG_GETRNC(gpriv, 0, cfg);
+-	}
+-
+ 	/* Enable write access to entry */
+-	page = RCANFD_GAFL_PAGENUM(start);
++	page = RCANFD_GAFL_PAGENUM(rule_entry);
+ 	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLECTR,
+ 			   (RCANFD_GAFLECTR_AFLPN(gpriv, page) |
+ 			    RCANFD_GAFLECTR_AFLDAE));
+@@ -818,13 +810,13 @@ static void rcar_canfd_configure_afl_rul
+ 		offset = RCANFD_C_GAFL_OFFSET;
+ 
+ 	/* Accept all IDs */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLID(offset, rule_entry_index), 0);
+ 	/* IDE or RTR is not considered for matching */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLM(offset, rule_entry_index), 0);
+ 	/* Any data length accepted */
+-	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, start), 0);
++	rcar_canfd_write(gpriv->base, RCANFD_GAFLP0(offset, rule_entry_index), 0);
+ 	/* Place the msg in corresponding Rx FIFO entry */
+-	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, start),
++	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLP1(offset, rule_entry_index),
+ 			   RCANFD_GAFLP1_GAFLFDP(ridx));
+ 
+ 	/* Disable write access to page */
+@@ -1851,6 +1843,7 @@ static int rcar_canfd_probe(struct platf
+ 	unsigned long channels_mask = 0;
+ 	int err, ch_irq, g_irq;
+ 	int g_err_irq, g_recc_irq;
++	u32 rule_entry = 0;
+ 	bool fdmode = true;			/* CAN FD only mode - default */
+ 	char name[9] = "channelX";
+ 	int i;
+@@ -2023,7 +2016,8 @@ static int rcar_canfd_probe(struct platf
+ 		rcar_canfd_configure_tx(gpriv, ch);
+ 
+ 		/* Configure receive rules */
+-		rcar_canfd_configure_afl_rules(gpriv, ch);
++		rcar_canfd_configure_afl_rules(gpriv, ch, rule_entry);
++		rule_entry += RCANFD_CHANNEL_NUMRULES;
+ 	}
+ 
+ 	/* Configure common interrupts */
 
 
