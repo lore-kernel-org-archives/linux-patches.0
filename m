@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BE0293454;
-	Tue, 25 Mar 2025 12:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9936525A2B5;
+	Tue, 25 Mar 2025 12:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905609; cv=none; b=dsquI1pwu+qLXX0H9LLOXWCkVD5GHm8CU9NvEpdu76NhqQG0fLz/NLiRH71THFVGGFes4sbBLG0KIVAfZnzPosDUt7w/toOjscM0Ky2IGAYcoS/3Zmme0DVOlvEmhGCXe+Pmm6HXM9KsNw8nwyfLRpRKHH3rJxbG2hk36SNW2a0=
+	t=1742905610; cv=none; b=J4E6m8ERt3/i47mC64UQpD3GmKqd6HGYxeXdpUyw13wW62kwswJNzodUb9M4/B5EkXKXuUguAeRQ+NO8buy16h+vATUUTveTjKzzg+7s7fz9KBaaoqP0weZjpBHlJmmL4oHN8kI2OPOodbFcVPZX7tH1i7zYAAH65OQjqRFstqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905609; c=relaxed/simple;
-	bh=XpUNGpEkYMv6ZMXw9GdV1a0hbRJfe3l36rnveXpHIXg=;
+	s=arc-20240116; t=1742905610; c=relaxed/simple;
+	bh=83DPTHa8zaMv3SWeK5377HnOLEqUks8piNu8Owyj2CA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOOIXL+66Vcdr5YOXsPULai0mOgOKfNsnst+aGYvzawQEXqKUZ/67TkALyIMv1Q82If9ILyomTsEsUsKTGxZwKaeb8vk4rouS1ME+q+Dx8SrDUM7T6jdGYqe6KyL/nSG+ftqeeXgykwwHxhgXr3tOGXbQ5brBPqACg0uc3CI5yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbtMt+o9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4NfGPj8a+a78+5WLTobhqBnpR/mCTyQSsGbsKChTlbxmcJ8otAWCi52hGnd6kTUZ32e8FzPqXss/M8RKrb787WVn+RVR/xh+lfQwv/ytpZIUsC0MK1nmcsX83D+cdDlzK1N4dKzEyQsGCsWy4KCbpSlCumybriOurHXpjm7cb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbYHc2LB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbtMt+o9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAC0C4CEE4;
-	Tue, 25 Mar 2025 12:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbYHc2LB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E262C4CEE4;
+	Tue, 25 Mar 2025 12:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905608;
-	bh=XpUNGpEkYMv6ZMXw9GdV1a0hbRJfe3l36rnveXpHIXg=;
+	s=korg; t=1742905610;
+	bh=83DPTHa8zaMv3SWeK5377HnOLEqUks8piNu8Owyj2CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbtMt+o91cUHFjXNZQbiVdkQqvdxYK91T3hDIuP/Zwt5kRbCPElsBuFOEUfCZQLlM
-	 gV+D4ucP06UA5HmFMFSHZO7phWZaySzC/iF1oL3n/bvv5J2YII+2DLjnLK/molSQwg
-	 AvkRrQymEOGfkLUkSZKXqFgJqYynwQ6LDi/zmcfw=
+	b=jbYHc2LBmX7kJ1P9Oynk/qN2olCLi9gVyeMen1Jwb4ZX+g4RuJQXWduQuCGJIi/nT
+	 hBGQbJ2ZjZdGb0iDGL20++xC/lpw065/dL3JOcMbQzWxtgLwSciB7XwbuXZAT1mDvl
+	 nnAk7pQptJwjwEOQwylfErlaZ7zeQaY85gy9kZNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laura Promberger <laura.promberger@cern.ch>,
-	Sam Lewis <samclewis@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Bernd Schubert <bschubert@ddn.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/198] fuse: dont truncate cached, mutated symlink
-Date: Tue, 25 Mar 2025 08:20:28 -0400
-Message-ID: <20250325122158.377636524@linuxfoundation.org>
+Subject: [PATCH 6.1 067/198] perf/x86/intel: Use better start period for frequency mode
+Date: Tue, 25 Mar 2025 08:20:29 -0400
+Message-ID: <20250325122158.403203308@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,117 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit b4c173dfbb6c78568578ff18f9e8822d7bd0e31b ]
+[ Upstream commit a26b24b2e21f6222635a95426b9ef9eec63d69b1 ]
 
-Fuse allows the value of a symlink to change and this property is exploited
-by some filesystems (e.g. CVMFS).
+Freqency mode is the current default mode of Linux perf. A period of 1 is
+used as a starting period. The period is auto-adjusted on each tick or an
+overflow, to meet the frequency target.
 
-It has been observed, that sometimes after changing the symlink contents,
-the value is truncated to the old size.
+The start period of 1 is too low and may trigger some issues:
 
-This is caused by fuse_getattr() racing with fuse_reverse_inval_inode().
-fuse_reverse_inval_inode() updates the fuse_inode's attr_version, which
-results in fuse_change_attributes() exiting before updating the cached
-attributes
+- Many HWs do not support period 1 well.
+  https://lore.kernel.org/lkml/875xs2oh69.ffs@tglx/
 
-This is okay, as the cached attributes remain invalid and the next call to
-fuse_change_attributes() will likely update the inode with the correct
-values.
+- For an event that occurs frequently, period 1 is too far away from the
+  real period. Lots of samples are generated at the beginning.
+  The distribution of samples may not be even.
 
-The reason this causes problems is that cached symlinks will be
-returned through page_get_link(), which truncates the symlink to
-inode->i_size.  This is correct for filesystems that don't mutate
-symlinks, but in this case it causes bad behavior.
+- A low starting period for frequently occurring events also challenges
+  virtualization, which has a longer path to handle a PMI.
 
-The solution is to just remove this truncation.  This can cause a
-regression in a filesystem that relies on supplying a symlink larger than
-the file size, but this is unlikely.  If that happens we'd need to make
-this behavior conditional.
+The limit_period value only checks the minimum acceptable value for HW.
+It cannot be used to set the start period, because some events may
+need a very low period. The limit_period cannot be set too high. It
+doesn't help with the events that occur frequently.
 
-Reported-by: Laura Promberger <laura.promberger@cern.ch>
-Tested-by: Sam Lewis <samclewis@google.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://lore.kernel.org/r/20250220100258.793363-1-mszeredi@redhat.com
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+It's hard to find a universal starting period for all events. The idea
+implemented by this patch is to only give an estimate for the popular
+HW and HW cache events. For the rest of the events, start from the lowest
+possible recommended value.
+
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250117151913.3043942-3-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c      |  2 +-
- fs/namei.c         | 24 +++++++++++++++++++-----
- include/linux/fs.h |  2 ++
- 3 files changed, 22 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/core.c | 85 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index aa2be4c1ea8f2..de31cb8eb7201 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -1445,7 +1445,7 @@ static const char *fuse_get_link(struct dentry *dentry, struct inode *inode,
- 		goto out_err;
- 
- 	if (fc->cache_symlinks)
--		return page_get_link(dentry, inode, callback);
-+		return page_get_link_raw(dentry, inode, callback);
- 
- 	err = -ECHILD;
- 	if (!dentry)
-diff --git a/fs/namei.c b/fs/namei.c
-index 166d71c82d7ac..6ce07cde1c277 100644
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -5156,10 +5156,9 @@ const char *vfs_get_link(struct dentry *dentry, struct delayed_call *done)
- EXPORT_SYMBOL(vfs_get_link);
- 
- /* get the link contents into pagecache */
--const char *page_get_link(struct dentry *dentry, struct inode *inode,
--			  struct delayed_call *callback)
-+static char *__page_get_link(struct dentry *dentry, struct inode *inode,
-+			     struct delayed_call *callback)
- {
--	char *kaddr;
- 	struct page *page;
- 	struct address_space *mapping = inode->i_mapping;
- 
-@@ -5178,8 +5177,23 @@ const char *page_get_link(struct dentry *dentry, struct inode *inode,
- 	}
- 	set_delayed_call(callback, page_put_link, page);
- 	BUG_ON(mapping_gfp_mask(mapping) & __GFP_HIGHMEM);
--	kaddr = page_address(page);
--	nd_terminate_link(kaddr, inode->i_size, PAGE_SIZE - 1);
-+	return page_address(page);
-+}
-+
-+const char *page_get_link_raw(struct dentry *dentry, struct inode *inode,
-+			      struct delayed_call *callback)
-+{
-+	return __page_get_link(dentry, inode, callback);
-+}
-+EXPORT_SYMBOL_GPL(page_get_link_raw);
-+
-+const char *page_get_link(struct dentry *dentry, struct inode *inode,
-+					struct delayed_call *callback)
-+{
-+	char *kaddr = __page_get_link(dentry, inode, callback);
-+
-+	if (!IS_ERR(kaddr))
-+		nd_terminate_link(kaddr, inode->i_size, PAGE_SIZE - 1);
- 	return kaddr;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 117f86283183f..b9dde37694120 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3852,6 +3852,85 @@ static inline bool intel_pmu_has_cap(struct perf_event *event, int idx)
+ 	return test_bit(idx, (unsigned long *)&intel_cap->capabilities);
  }
  
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0d32634c5cf0d..08fba309ddc78 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3385,6 +3385,8 @@ extern const struct file_operations generic_ro_fops;
++static u64 intel_pmu_freq_start_period(struct perf_event *event)
++{
++	int type = event->attr.type;
++	u64 config, factor;
++	s64 start;
++
++	/*
++	 * The 127 is the lowest possible recommended SAV (sample after value)
++	 * for a 4000 freq (default freq), according to the event list JSON file.
++	 * Also, assume the workload is idle 50% time.
++	 */
++	factor = 64 * 4000;
++	if (type != PERF_TYPE_HARDWARE && type != PERF_TYPE_HW_CACHE)
++		goto end;
++
++	/*
++	 * The estimation of the start period in the freq mode is
++	 * based on the below assumption.
++	 *
++	 * For a cycles or an instructions event, 1GHZ of the
++	 * underlying platform, 1 IPC. The workload is idle 50% time.
++	 * The start period = 1,000,000,000 * 1 / freq / 2.
++	 *		    = 500,000,000 / freq
++	 *
++	 * Usually, the branch-related events occur less than the
++	 * instructions event. According to the Intel event list JSON
++	 * file, the SAV (sample after value) of a branch-related event
++	 * is usually 1/4 of an instruction event.
++	 * The start period of branch-related events = 125,000,000 / freq.
++	 *
++	 * The cache-related events occurs even less. The SAV is usually
++	 * 1/20 of an instruction event.
++	 * The start period of cache-related events = 25,000,000 / freq.
++	 */
++	config = event->attr.config & PERF_HW_EVENT_MASK;
++	if (type == PERF_TYPE_HARDWARE) {
++		switch (config) {
++		case PERF_COUNT_HW_CPU_CYCLES:
++		case PERF_COUNT_HW_INSTRUCTIONS:
++		case PERF_COUNT_HW_BUS_CYCLES:
++		case PERF_COUNT_HW_STALLED_CYCLES_FRONTEND:
++		case PERF_COUNT_HW_STALLED_CYCLES_BACKEND:
++		case PERF_COUNT_HW_REF_CPU_CYCLES:
++			factor = 500000000;
++			break;
++		case PERF_COUNT_HW_BRANCH_INSTRUCTIONS:
++		case PERF_COUNT_HW_BRANCH_MISSES:
++			factor = 125000000;
++			break;
++		case PERF_COUNT_HW_CACHE_REFERENCES:
++		case PERF_COUNT_HW_CACHE_MISSES:
++			factor = 25000000;
++			break;
++		default:
++			goto end;
++		}
++	}
++
++	if (type == PERF_TYPE_HW_CACHE)
++		factor = 25000000;
++end:
++	/*
++	 * Usually, a prime or a number with less factors (close to prime)
++	 * is chosen as an SAV, which makes it less likely that the sampling
++	 * period synchronizes with some periodic event in the workload.
++	 * Minus 1 to make it at least avoiding values near power of twos
++	 * for the default freq.
++	 */
++	start = DIV_ROUND_UP_ULL(factor, event->attr.sample_freq) - 1;
++
++	if (start > x86_pmu.max_period)
++		start = x86_pmu.max_period;
++
++	if (x86_pmu.limit_period)
++		x86_pmu.limit_period(event, &start);
++
++	return start;
++}
++
+ static int intel_pmu_hw_config(struct perf_event *event)
+ {
+ 	int ret = x86_pmu_hw_config(event);
+@@ -3863,6 +3942,12 @@ static int intel_pmu_hw_config(struct perf_event *event)
+ 	if (ret)
+ 		return ret;
  
- extern int readlink_copy(char __user *, int, const char *);
- extern int page_readlink(struct dentry *, char __user *, int);
-+extern const char *page_get_link_raw(struct dentry *, struct inode *,
-+				     struct delayed_call *);
- extern const char *page_get_link(struct dentry *, struct inode *,
- 				 struct delayed_call *);
- extern void page_put_link(void *);
++	if (event->attr.freq && event->attr.sample_freq) {
++		event->hw.sample_period = intel_pmu_freq_start_period(event);
++		event->hw.last_period = event->hw.sample_period;
++		local64_set(&event->hw.period_left, event->hw.sample_period);
++	}
++
+ 	if (event->attr.precise_ip) {
+ 		if ((event->attr.config & INTEL_ARCH_EVENT_MASK) == INTEL_FIXED_VLBR_EVENT)
+ 			return -EINVAL;
 -- 
 2.39.5
 
