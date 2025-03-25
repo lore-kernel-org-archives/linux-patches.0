@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ADA25743E;
-	Tue, 25 Mar 2025 12:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961CA25743E;
+	Tue, 25 Mar 2025 12:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905522; cv=none; b=CVlJtHsAzs33tb9nRVvWj6zxpbSbbJYge82bl1QhdIDphovrDvYCYdzWIndGTwiMfc/KKsfyqMoem5XPEqxooxKVfKcPdy93AWUbAo7jhd5QEnCjQMwHVisJMyZ/fpuqsoKQvab7759B+kElyoCgHFTHKZ/8DOsrFiUJ0JWHBN0=
+	t=1742905524; cv=none; b=QadyR1YIkTQgLlmQ8IduZpC/aWjwBg7JQi2+Ot3Yl9aRyxg5SyLdoYns8xJ5Y04hTBFgMi0p1QNV8TS/EcjGCpUV2UNXS2JjCDxAsTc81ZfXqMC8kspnZzZkkL4QpHbDvnY8qik1OtO6P2L3/YquEVkT33JupF+Bqn6Y+uZWC7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905522; c=relaxed/simple;
-	bh=q34DP8ZYHxUHMcREBlbb/o2AR9XXh4Egb1vsQeAgSig=;
+	s=arc-20240116; t=1742905524; c=relaxed/simple;
+	bh=anOllR9jmBUTP+EwitZ8uUBO+Tpez/68GyyDtcvYPjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtMVlSlarkZB/aNH8uZ+/Fr7Wu+Ktcto4f5H5EJor13F2bZFmOzhVytSmu6WQiaZFGhU65MhrwAdadgAg0iZ59UbtmXAOd5dlOu0SsYxbPtPiFC+tm/lERAOKW/kuz/O0KFc0iW46eujoCbcdE8tPk4p77HAaef0jufvyH/d+n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHyxzBu+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klGKBVGw28xEM8l+VCS4Adp92nWvHl9hs0LSWLGfMuiofnfWqocKd1Yo1Wuu17jDHJl2qzATVEJS2lY7O/C5xbLYlf7vZwk2+qrpLvc3Xx0rylz0SCyrMRGUYc4ks41o63ef3TnXzv9jr8n5I5xuFB3nGGCYIkfCA+PrizQjjmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcH78Uau; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHyxzBu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDC2C4CEE9;
-	Tue, 25 Mar 2025 12:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcH78Uau"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F8BC4CEE4;
+	Tue, 25 Mar 2025 12:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905522;
-	bh=q34DP8ZYHxUHMcREBlbb/o2AR9XXh4Egb1vsQeAgSig=;
+	s=korg; t=1742905524;
+	bh=anOllR9jmBUTP+EwitZ8uUBO+Tpez/68GyyDtcvYPjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHyxzBu+iSwRRxTaKA7jNJsYo85/lQtn7vysWERnuEgpLVpt+hr40IGwGwQF0yumX
-	 80+sR+5KrmcE1uunAk+W11GU+xU/AtzVLhg/TCm68csGT3vrkyS/JSNn4BqAUKYcit
-	 MrM4X7nYzajc5tXYY5sO7vQxkv36D4di5XYTWIqM=
+	b=GcH78UauzLGIENqcrTw+p2ol4eSGJ4HGewRBPXP4sC4wCevrcs9qyPloGtjMTA/J8
+	 KkYq5IEAWlW+YVjMCk6lVpmUBltmaNvnpBBO+Ej7CNW/8d7d3qS4vAinUbv3732agF
+	 71DjTJI2/hn6FfEegaZmpDT1h1ocXA55+0BQChHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/198] net: switchdev: Convert blocking notification chain to a raw one
-Date: Tue, 25 Mar 2025 08:19:43 -0400
-Message-ID: <20250325122157.197684878@linuxfoundation.org>
+Subject: [PATCH 6.1 022/198] bonding: fix incorrect MAC address setting to receive NS messages
+Date: Tue, 25 Mar 2025 08:19:44 -0400
+Message-ID: <20250325122157.223241012@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,148 +54,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 62531a1effa87bdab12d5104015af72e60d926ff ]
+[ Upstream commit 0c5e145a350de3b38cd5ae77a401b12c46fb7c1d ]
 
-A blocking notification chain uses a read-write semaphore to protect the
-integrity of the chain. The semaphore is acquired for writing when
-adding / removing notifiers to / from the chain and acquired for reading
-when traversing the chain and informing notifiers about an event.
+When validation on the backup slave is enabled, we need to validate the
+Neighbor Solicitation (NS) messages received on the backup slave. To
+receive these messages, the correct destination MAC address must be added
+to the slave. However, the target in bonding is a unicast address, which
+we cannot use directly. Instead, we should first convert it to a
+Solicited-Node Multicast Address and then derive the corresponding MAC
+address.
 
-In case of the blocking switchdev notification chain, recursive
-notifications are possible which leads to the semaphore being acquired
-twice for reading and to lockdep warnings being generated [1].
+Fix the incorrect MAC address setting on both slave_set_ns_maddr() and
+slave_set_ns_maddrs(). Since the two function names are similar. Add
+some description for the functions. Also only use one mac_addr variable
+in slave_set_ns_maddr() to save some code and logic.
 
-Specifically, this can happen when the bridge driver processes a
-SWITCHDEV_BRPORT_UNOFFLOADED event which causes it to emit notifications
-about deferred events when calling switchdev_deferred_process().
-
-Fix this by converting the notification chain to a raw notification
-chain in a similar fashion to the netdev notification chain. Protect
-the chain using the RTNL mutex by acquiring it when modifying the chain.
-Events are always informed under the RTNL mutex, but add an assertion in
-call_switchdev_blocking_notifiers() to make sure this is not violated in
-the future.
-
-Maintain the "blocking" prefix as events are always emitted from process
-context and listeners are allowed to block.
-
-[1]:
-WARNING: possible recursive locking detected
-6.14.0-rc4-custom-g079270089484 #1 Not tainted
---------------------------------------------
-ip/52731 is trying to acquire lock:
-ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
-
-but task is already holding lock:
-ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
-
-other info that might help us debug this:
-Possible unsafe locking scenario:
-CPU0
-----
-lock((switchdev_blocking_notif_chain).rwsem);
-lock((switchdev_blocking_notif_chain).rwsem);
-
-*** DEADLOCK ***
-May be due to missing lock nesting notation
-3 locks held by ip/52731:
- #0: ffffffff84f795b0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x727/0x1dc0
- #1: ffffffff8731f628 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x790/0x1dc0
- #2: ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0
-
-stack backtrace:
-...
-? __pfx_down_read+0x10/0x10
-? __pfx_mark_lock+0x10/0x10
-? __pfx_switchdev_port_attr_set_deferred+0x10/0x10
-blocking_notifier_call_chain+0x58/0xa0
-switchdev_port_attr_notify.constprop.0+0xb3/0x1b0
-? __pfx_switchdev_port_attr_notify.constprop.0+0x10/0x10
-? mark_held_locks+0x94/0xe0
-? switchdev_deferred_process+0x11a/0x340
-switchdev_port_attr_set_deferred+0x27/0xd0
-switchdev_deferred_process+0x164/0x340
-br_switchdev_port_unoffload+0xc8/0x100 [bridge]
-br_switchdev_blocking_event+0x29f/0x580 [bridge]
-notifier_call_chain+0xa2/0x440
-blocking_notifier_call_chain+0x6e/0xa0
-switchdev_bridge_port_unoffload+0xde/0x1a0
-...
-
-Fixes: f7a70d650b0b6 ("net: bridge: switchdev: Ensure deferred event delivery on unoffload")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 8eb36164d1a6 ("bonding: add ns target multicast address to slave device")
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Tested-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20250305121509.631207-1-amcohen@nvidia.com
+Link: https://patch.msgid.link/20250306023923.38777-2-liuhangbin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/switchdev/switchdev.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/net/bonding/bond_options.c | 55 +++++++++++++++++++++++++-----
+ 1 file changed, 47 insertions(+), 8 deletions(-)
 
-diff --git a/net/switchdev/switchdev.c b/net/switchdev/switchdev.c
-index 2e14d4c37e2dc..9aec24490e8fd 100644
---- a/net/switchdev/switchdev.c
-+++ b/net/switchdev/switchdev.c
-@@ -381,7 +381,7 @@ bool switchdev_port_obj_act_is_deferred(struct net_device *dev,
- EXPORT_SYMBOL_GPL(switchdev_port_obj_act_is_deferred);
- 
- static ATOMIC_NOTIFIER_HEAD(switchdev_notif_chain);
--static BLOCKING_NOTIFIER_HEAD(switchdev_blocking_notif_chain);
-+static RAW_NOTIFIER_HEAD(switchdev_blocking_notif_chain);
- 
- /**
-  *	register_switchdev_notifier - Register notifier
-@@ -427,17 +427,27 @@ EXPORT_SYMBOL_GPL(call_switchdev_notifiers);
- 
- int register_switchdev_blocking_notifier(struct notifier_block *nb)
- {
--	struct blocking_notifier_head *chain = &switchdev_blocking_notif_chain;
-+	struct raw_notifier_head *chain = &switchdev_blocking_notif_chain;
-+	int err;
-+
-+	rtnl_lock();
-+	err = raw_notifier_chain_register(chain, nb);
-+	rtnl_unlock();
- 
--	return blocking_notifier_chain_register(chain, nb);
-+	return err;
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index c8536dc7d860d..21ca95cdef42e 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -1238,10 +1238,28 @@ static bool slave_can_set_ns_maddr(const struct bonding *bond, struct slave *sla
+ 	       slave->dev->flags & IFF_MULTICAST;
  }
- EXPORT_SYMBOL_GPL(register_switchdev_blocking_notifier);
  
- int unregister_switchdev_blocking_notifier(struct notifier_block *nb)
++/**
++ * slave_set_ns_maddrs - add/del all NS mac addresses for slave
++ * @bond: bond device
++ * @slave: slave device
++ * @add: add or remove all the NS mac addresses
++ *
++ * This function tries to add or delete all the NS mac addresses on the slave
++ *
++ * Note, the IPv6 NS target address is the unicast address in Neighbor
++ * Solicitation (NS) message. The dest address of NS message should be
++ * solicited-node multicast address of the target. The dest mac of NS message
++ * is converted from the solicited-node multicast address.
++ *
++ * This function is called when
++ *   * arp_validate changes
++ *   * enslaving, releasing new slaves
++ */
+ static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool add)
  {
--	struct blocking_notifier_head *chain = &switchdev_blocking_notif_chain;
-+	struct raw_notifier_head *chain = &switchdev_blocking_notif_chain;
-+	int err;
+ 	struct in6_addr *targets = bond->params.ns_targets;
+ 	char slot_maddr[MAX_ADDR_LEN];
++	struct in6_addr mcaddr;
+ 	int i;
  
--	return blocking_notifier_chain_unregister(chain, nb);
-+	rtnl_lock();
-+	err = raw_notifier_chain_unregister(chain, nb);
-+	rtnl_unlock();
-+
-+	return err;
+ 	if (!slave_can_set_ns_maddr(bond, slave))
+@@ -1251,7 +1269,8 @@ static void slave_set_ns_maddrs(struct bonding *bond, struct slave *slave, bool
+ 		if (ipv6_addr_any(&targets[i]))
+ 			break;
+ 
+-		if (!ndisc_mc_map(&targets[i], slot_maddr, slave->dev, 0)) {
++		addrconf_addr_solict_mult(&targets[i], &mcaddr);
++		if (!ndisc_mc_map(&mcaddr, slot_maddr, slave->dev, 0)) {
+ 			if (add)
+ 				dev_mc_add(slave->dev, slot_maddr);
+ 			else
+@@ -1274,23 +1293,43 @@ void bond_slave_ns_maddrs_del(struct bonding *bond, struct slave *slave)
+ 	slave_set_ns_maddrs(bond, slave, false);
  }
- EXPORT_SYMBOL_GPL(unregister_switchdev_blocking_notifier);
  
-@@ -445,10 +455,11 @@ int call_switchdev_blocking_notifiers(unsigned long val, struct net_device *dev,
- 				      struct switchdev_notifier_info *info,
- 				      struct netlink_ext_ack *extack)
++/**
++ * slave_set_ns_maddr - set new NS mac address for slave
++ * @bond: bond device
++ * @slave: slave device
++ * @target: the new IPv6 target
++ * @slot: the old IPv6 target in the slot
++ *
++ * This function tries to replace the old mac address to new one on the slave.
++ *
++ * Note, the target/slot IPv6 address is the unicast address in Neighbor
++ * Solicitation (NS) message. The dest address of NS message should be
++ * solicited-node multicast address of the target. The dest mac of NS message
++ * is converted from the solicited-node multicast address.
++ *
++ * This function is called when
++ *   * An IPv6 NS target is added or removed.
++ */
+ static void slave_set_ns_maddr(struct bonding *bond, struct slave *slave,
+ 			       struct in6_addr *target, struct in6_addr *slot)
  {
-+	ASSERT_RTNL();
- 	info->dev = dev;
- 	info->extack = extack;
--	return blocking_notifier_call_chain(&switchdev_blocking_notif_chain,
--					    val, info);
-+	return raw_notifier_call_chain(&switchdev_blocking_notif_chain,
-+				       val, info);
- }
- EXPORT_SYMBOL_GPL(call_switchdev_blocking_notifiers);
+-	char target_maddr[MAX_ADDR_LEN], slot_maddr[MAX_ADDR_LEN];
++	char mac_addr[MAX_ADDR_LEN];
++	struct in6_addr mcast_addr;
  
+ 	if (!bond->params.arp_validate || !slave_can_set_ns_maddr(bond, slave))
+ 		return;
+ 
+-	/* remove the previous maddr from slave */
++	/* remove the previous mac addr from slave */
++	addrconf_addr_solict_mult(slot, &mcast_addr);
+ 	if (!ipv6_addr_any(slot) &&
+-	    !ndisc_mc_map(slot, slot_maddr, slave->dev, 0))
+-		dev_mc_del(slave->dev, slot_maddr);
++	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
++		dev_mc_del(slave->dev, mac_addr);
+ 
+-	/* add new maddr on slave if target is set */
++	/* add new mac addr on slave if target is set */
++	addrconf_addr_solict_mult(target, &mcast_addr);
+ 	if (!ipv6_addr_any(target) &&
+-	    !ndisc_mc_map(target, target_maddr, slave->dev, 0))
+-		dev_mc_add(slave->dev, target_maddr);
++	    !ndisc_mc_map(&mcast_addr, mac_addr, slave->dev, 0))
++		dev_mc_add(slave->dev, mac_addr);
+ }
+ 
+ static void _bond_options_ns_ip6_target_set(struct bonding *bond, int slot,
 -- 
 2.39.5
 
