@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62022264A9C;
-	Tue, 25 Mar 2025 12:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24424281343;
+	Tue, 25 Mar 2025 12:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905515; cv=none; b=KOXWbqrQAmwT0QeU1f6SF/aVmNE154VUZ+R59EUmJn2Iu0P/D25iT4M+1OGcGeADl0AVPcuf6uMVfpLFKy35tYku9+s6YSge2tJvuwTfgf34oJl7c1A8p/xHMC8jQpXKU26EJvyCT1f2F4tQcNKUmQLb06sBPq91bl5qWqzT/a0=
+	t=1742905517; cv=none; b=Aq9gJantie5qPDYM8JN5JSkPTyj82ZcJTJPkwqwOyeQL1uYdod3NhpdUwoiXbOtdhuXHQTCuska3NOq4Fh0Wj0+IpN4ylwdvzaqX06viQ9pjVv5pYgc9Lu5OoK0F/P7lM01P7PYQnab5sW74wPkKcNbLL7iZSbuJjRnE2JGrGUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905515; c=relaxed/simple;
-	bh=qjg00AjKopgYsjYis2pM1T75WrufeKXRhRNWD2htHzs=;
+	s=arc-20240116; t=1742905517; c=relaxed/simple;
+	bh=A7xboqGXZT48vD00SuwEPTNnlf5P6JcQbpkCdfJ+jho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8AYjS9yd0rYTW/6jwDK3Edg19AUSgIe01uUhorHv50p8knDqpsp2sYQqeDW63wDLdW1/bFTVMJk3Fc4mRA0l7Afs1EX0VH0ROBpXtUOSW+Gpc3z6h2grJ7MwSPCZc3sluD/lsNhK6qjzmjaTCRiK27CQ67yVrgDobEGGTioYVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czRDl6dI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRLdojN5YNj4lT7cjNgAnx0fZt4CaEzrF7DCbrq4hrK8HY36PDbNSX1qBIV+DrnZNDouTZPWpGa6WZjQ7SmtS63pPCR0/yDLfwTHEDJQCoaZBbh3H/gowagOVeXHi8KRB9ZTwUCakMuCHZ2hZfeEqsgDkTHwhslI1UWJSdNTXJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNgzU4Cu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czRDl6dI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C3AC4CEE4;
-	Tue, 25 Mar 2025 12:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNgzU4Cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B7CC4CEED;
+	Tue, 25 Mar 2025 12:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905515;
-	bh=qjg00AjKopgYsjYis2pM1T75WrufeKXRhRNWD2htHzs=;
+	s=korg; t=1742905517;
+	bh=A7xboqGXZT48vD00SuwEPTNnlf5P6JcQbpkCdfJ+jho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czRDl6dI9ge9C2Fs2agHe8RmA5OjVT09/BbP+dtZXm+eFXPWzf+ChHs9x/XScMe4X
-	 FMNdaj9IERl9QdtkTo8SDyNrAsTuvPq+8iTJI9O+/si5SfjVGkUZ3CImRnvLMPyl9G
-	 427+SiMIbCd0B19UqUIAaiLjBf+unlzkzNZHc2rY=
+	b=yNgzU4CuINsJ6eJNchxp7nhTQ2yLb+dohsS/uEa+Z7H1+evpIa7MR1O6D4+ImpBB0
+	 Yl5s0klz+7NsbnU3xxDgEuObbkLoMecrpBO6Doej4hkE63AaQciWMm5K2mmU7jvs26
+	 D+VJKyxhA7LXJwZJQO0FQYMDtpAzTYUJcu7NgAIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Saurabh Sengar <ssengar@linux.microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/198] drm/hyperv: Fix address space leak when Hyper-V DRM device is removed
-Date: Tue, 25 Mar 2025 08:19:39 -0400
-Message-ID: <20250325122157.092602103@linuxfoundation.org>
+Subject: [PATCH 6.1 018/198] Drivers: hv: vmbus: Dont release fb_mmio resource in vmbus_free_mmio()
+Date: Tue, 25 Mar 2025 08:19:40 -0400
+Message-ID: <20250325122157.118159038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -54,49 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit aed709355fd05ef747e1af24a1d5d78cd7feb81e ]
+[ Upstream commit 73fe9073c0cc28056cb9de0c8a516dac070f1d1f ]
 
-When a Hyper-V DRM device is probed, the driver allocates MMIO space for
-the vram, and maps it cacheable. If the device removed, or in the error
-path for device probing, the MMIO space is released but no unmap is done.
-Consequently the kernel address space for the mapping is leaked.
+The VMBus driver manages the MMIO space it owns via the hyperv_mmio
+resource tree. Because the synthetic video framebuffer portion of the
+MMIO space is initially setup by the Hyper-V host for each guest, the
+VMBus driver does an early reserve of that portion of MMIO space in the
+hyperv_mmio resource tree. It saves a pointer to that resource in
+fb_mmio. When a VMBus driver requests MMIO space and passes "true"
+for the "fb_overlap_ok" argument, the reserved framebuffer space is
+used if possible. In that case it's not necessary to do another request
+against the "shadow" hyperv_mmio resource tree because that resource
+was already requested in the early reserve steps.
 
-Fix this by adding iounmap() calls in the device removal path, and in the
-error path during device probing.
+However, the vmbus_free_mmio() function currently does no special
+handling for the fb_mmio resource. When a framebuffer device is
+removed, or the driver is unbound, the current code for
+vmbus_free_mmio() releases the reserved resource, leaving fb_mmio
+pointing to memory that has been freed. If the same or another
+driver is subsequently bound to the device, vmbus_allocate_mmio()
+checks against fb_mmio, and potentially gets garbage. Furthermore
+a second unbind operation produces this "nonexistent resource" error
+because of the unbalanced behavior between vmbus_allocate_mmio() and
+vmbus_free_mmio():
 
-Fixes: f1f63cbb705d ("drm/hyperv: Fix an error handling path in hyperv_vmbus_probe()")
-Fixes: a0ab5abced55 ("drm/hyperv : Removing the restruction of VRAM allocation with PCI bar size")
+[   55.499643] resource: Trying to free nonexistent
+			resource <0x00000000f0000000-0x00000000f07fffff>
+
+Fix this by adding logic to vmbus_free_mmio() to recognize when
+MMIO space in the fb_mmio reserved area would be released, and don't
+release it. This filtering ensures the fb_mmio resource always exists,
+and makes vmbus_free_mmio() more parallel with vmbus_allocate_mmio().
+
+Fixes: be000f93e5d7 ("drivers:hv: Track allocations of children of hv_vmbus in private resource tree")
 Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
 Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250210193441.2414-1-mhklinux@outlook.com
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250310035208.275764-1-mhklinux@outlook.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250210193441.2414-1-mhklinux@outlook.com>
+Message-ID: <20250310035208.275764-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hv/vmbus_drv.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-index 68050409dd26c..499c7c8916df2 100644
---- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-@@ -157,6 +157,7 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
- 	return 0;
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index a2191bc5c1535..dfbfdbf9cbd72 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2409,12 +2409,25 @@ void vmbus_free_mmio(resource_size_t start, resource_size_t size)
+ 	struct resource *iter;
  
- err_free_mmio:
-+	iounmap(hv->vram);
- 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
- err_vmbus_close:
- 	vmbus_close(hdev->channel);
-@@ -175,6 +176,7 @@ static int hyperv_vmbus_remove(struct hv_device *hdev)
- 	vmbus_close(hdev->channel);
- 	hv_set_drvdata(hdev, NULL);
+ 	mutex_lock(&hyperv_mmio_lock);
++
++	/*
++	 * If all bytes of the MMIO range to be released are within the
++	 * special case fb_mmio shadow region, skip releasing the shadow
++	 * region since no corresponding __request_region() was done
++	 * in vmbus_allocate_mmio().
++	 */
++	if (fb_mmio && start >= fb_mmio->start &&
++	    (start + size - 1 <= fb_mmio->end))
++		goto skip_shadow_release;
++
+ 	for (iter = hyperv_mmio; iter; iter = iter->sibling) {
+ 		if ((iter->start >= start + size) || (iter->end <= start))
+ 			continue;
  
-+	iounmap(hv->vram);
- 	vmbus_free_mmio(hv->mem->start, hv->fb_size);
+ 		__release_region(iter, start, size);
+ 	}
++
++skip_shadow_release:
+ 	release_mem_region(start, size);
+ 	mutex_unlock(&hyperv_mmio_lock);
  
- 	return 0;
 -- 
 2.39.5
 
