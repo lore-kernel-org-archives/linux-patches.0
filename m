@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302852586CD;
-	Tue, 25 Mar 2025 12:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0390A25D521;
+	Tue, 25 Mar 2025 12:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906242; cv=none; b=ulmnWZgnE1FQm+fB7LpBuK478wXomu2ItKAKb8N2Zsd6JWZoQgHQfhqZiyfpXZnMKutXNnH12PGI0yQTcyLj4eEYHhDiEbUR1fiuzFK6Nxi9gCc11W5Sn9kJmE5EcoebA/ec5EOKmcJORl6P5WnW8MfBXS9hapIehZN6HqPXuXw=
+	t=1742906244; cv=none; b=OCObs/IaRCKf4lmAuLPr02EGcLXeWmVmFFHikhMuTnEaGFMU77K3mQL8uDrlvns+WCvQvkCB5Z8ZLqw2NWSihkVeiHgJ2t9Dvf8DPKMO4ZLnldaLcPhzUJD6+6Nogkvi/Ytnv3uRibZnlEr4kZ0hUSxGx/Uf1dSF7UwoEQmf7d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906242; c=relaxed/simple;
-	bh=gRyTswpi64yG+09e+yrQJKAJjRjEve3+zwjvTAIQCqQ=;
+	s=arc-20240116; t=1742906244; c=relaxed/simple;
+	bh=bpQNZWNwKU0trb7YCpk5ctAthT93RxEcb8DNHjcfXxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbC3DEW22+U0oZGpIlE5fInJyixJH6+pZcc9Q52Www5bVoemzzfy3ipQtTqiIJVVVHESIokR3iAhnP0iNTbwr2ffMMTmAI/OXV/uv2yHnnzaoSSCnQjkl4evnML3WVP2BxBjQwscMOqeXUa0WeW2x/Dfd+dkYFXzz+j8TvIBs3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHRcXHq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZH3mHhehayehINj+mL5gs7hEbANlSy6PejGANDibLSZqGnGKS7+nvPo4y1uz5lwFfFwJl+zlmGH8i06rRGqWIpgWB79H/HGhiAKzX7ROY1zBnROswHmHv/oFkQB7DKoaK0eHhfIGjos8W8B7oLXBhan8wiXXecqcZmEHO3VD8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvUTOVTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHRcXHq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70521C4CEE4;
-	Tue, 25 Mar 2025 12:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvUTOVTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4654AC4CEE4;
+	Tue, 25 Mar 2025 12:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906241;
-	bh=gRyTswpi64yG+09e+yrQJKAJjRjEve3+zwjvTAIQCqQ=;
+	s=korg; t=1742906243;
+	bh=bpQNZWNwKU0trb7YCpk5ctAthT93RxEcb8DNHjcfXxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHRcXHq0HOYU68oRwu98YKDU2as2tnTL59yDa4AQWgM8vR8SnRmrV/Icag5ADv79w
-	 TTIKFtEjqPK5ln//4dNClApsX0rhrpeZhvKEYuCk6cZsCovfNjyR/reD29dBfMPkgD
-	 3yt+wnKKt3HBit6k7ue4riwY9oR1H+0fOpx7oqKU=
+	b=AvUTOVTxyWUU0DTAhkuDN1nZC9i6bdK0m8oH0LDLbe8WUNTCoi+v8yyue8qS4Wnre
+	 UpgUPspek7H5Q6HT1OfyIxiQaNmPGO04PgAnJqVCp9EO3P7VUvO/kgkBm7yKb6tOQr
+	 PZXwQkoOaSRSqnxC/KfUqQlVwfbRXZUgkRJx//Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Elwell <phil@raspberrypi.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Yao Zi <ziyao@disroot.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/116] arm64: dts: bcm2712: PL011 UARTs are actually r1p5
-Date: Tue, 25 Mar 2025 08:21:40 -0400
-Message-ID: <20250325122149.559813786@linuxfoundation.org>
+Subject: [PATCH 6.12 014/116] arm64: dts: rockchip: Remove undocumented sdmmc property from lubancat-1
+Date: Tue, 25 Mar 2025 08:21:41 -0400
+Message-ID: <20250325122149.584246580@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Elwell <phil@raspberrypi.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 768953614c1c13fdf771be5742f1be573eea8fa4 ]
+[ Upstream commit 43c854c65e47d2f3763345683b06257b4d12e4e3 ]
 
-The ARM PL011 UART instances in BCM2712 are r1p5 spec, which means they
-have 32-entry FIFOs. The correct periphid value for this is 0x00341011.
-Thanks to N Buchwitz for pointing this out.
+Property "supports-sd" isn't documented anywhere and is unnecessary for
+mainline driver to function. It seems a property used by downstream
+kernel was brought into mainline.
 
-Signed-off-by: Phil Elwell <phil@raspberrypi.com>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250223125614.3592-3-wahrenst@gmx.net
-Fixes: faa3381267d0 ("arm64: dts: broadcom: Add minimal support for Raspberry Pi 5")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+This should be reported by dtbs_check, but mmc-controller-common.yaml
+defaults additionalProperties to true thus allows it. Remove the
+property to clean the devicetree up and avoid possible confusion.
+
+Fixes: 8d94da58de53 ("arm64: dts: rockchip: Add EmbedFire LubanCat 1")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Link: https://lore.kernel.org/r/20250228163117.47318-2-ziyao@disroot.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-index 26a29e5e5078d..447bfa060918c 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-@@ -232,7 +232,7 @@ uart10: serial@7d001000 {
- 			interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk_uart>, <&clk_vpu>;
- 			clock-names = "uartclk", "apb_pclk";
--			arm,primecell-periphid = <0x00241011>;
-+			arm,primecell-periphid = <0x00341011>;
- 			status = "disabled";
- 		};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
+index 9a2f59a351dee..48ccdd6b47118 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
+@@ -512,7 +512,6 @@ &sdhci {
  
+ &sdmmc0 {
+ 	max-frequency = <150000000>;
+-	supports-sd;
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+ 	cap-sd-highspeed;
 -- 
 2.39.5
 
