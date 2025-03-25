@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0243268697;
-	Tue, 25 Mar 2025 12:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5818268697;
+	Tue, 25 Mar 2025 12:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905888; cv=none; b=tjwHFvMAA9pOpr6DfdCs9iYTsH+4XADJKiKRokQ1LS6wH1OxGnGT+HBSGdFPnk67ErxwlHAMnh8k+jE195A3w8qhWPkDW1yhis3yj9ASf/z9m4XWnGicAzlj2G6VAwlVwTeZsJzjrBIbFuDsTlyAPdtPLXzale2X/QMLA8BvzRw=
+	t=1742905890; cv=none; b=IRzpaM1X/cD/WjHBCUIDTpQOdP8yoAMOOghKHGKTdjFye+E+rcAZZzMyvEOShWz47ZEyHPMJNvI0pkHD5nEX8xq1lka2rTvNL6ckjH8G+bQiFAtHmxQAkzsbQaa58Mf4KfmWZmf2EdgRvdiDDo0kIMUSjIrNhDITswrjLUZcOyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905888; c=relaxed/simple;
-	bh=YLQG7YsQ4SqZY9zN0VOjhohw8csLi1U5eL5L0d4yL8c=;
+	s=arc-20240116; t=1742905890; c=relaxed/simple;
+	bh=i14da/B3Rzezu733W+Yxor+1mLmC8P9G+Oo46gFX3IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnE9BqkhJRl92iEKm6j5EBLu4Q4SSDkM6a0clNah1/fuHGVdNdHFeLFPh+5sun8Yixvvt0I5T2KpEe+46m4C5qx0nlJx8IdmBKKL5pGzYdFiQTdIojbDnu5kdG9Aq7lxT2FVZqljOvrVXHcD6fCL7NFytV6xTZmZXxYjxGH/fMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc+imzCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIxYW63ly8+Qq+mkORE/gEm2IJrVVPqh/RbiRmvngoSXRYzsbtinQWl7MVITayAYJ9+LwFHEpv49RfuMHQaRu4XNDheotcIlvetDo/nO6RYpCOVZXLB2q5FPlTeUP3iyCRLuCW+AX03FA90WemiQYJEHJN8NQfUINP5dk3qK4+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CA0i0Itp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc+imzCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75970C4CEE4;
-	Tue, 25 Mar 2025 12:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CA0i0Itp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9AC4CEED;
+	Tue, 25 Mar 2025 12:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905888;
-	bh=YLQG7YsQ4SqZY9zN0VOjhohw8csLi1U5eL5L0d4yL8c=;
+	s=korg; t=1742905890;
+	bh=i14da/B3Rzezu733W+Yxor+1mLmC8P9G+Oo46gFX3IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tc+imzCVPG0T9Ossgt2IMVq2YM+lbr9Ewt3Gxih/C1UtWt6fPWfrMu3R69xpBLhpN
-	 BnmGgQQqKgXaKGUIIjUkKwK2iyYvg97vzSq7eOwNEQa9Wn0wA43OFBhxHmx+GAlYZJ
-	 mX7EwsrBx8/KOM0Y060Lx4ngDGhCFgCAhiH6c4r4=
+	b=CA0i0ItpyFKRU6KU8yTUuVa8aFBIxKXc2p17MJOBYJ5RJgsf5D+WruNNHRFCUo7Gv
+	 CcIdK6F4TNihPe5IMbXfyZTqDZif8vkwaVs0pUHUUtwcGG3tWKGZeXYmj1uzpQRoji
+	 7SpnG2mlrqT5OC1r/JNPnGzK0/V9U3RPlxHPsAI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 002/119] firmware: imx-scu: fix OF node leak in .probe()
-Date: Tue, 25 Mar 2025 08:21:00 -0400
-Message-ID: <20250325122149.124285706@linuxfoundation.org>
+Subject: [PATCH 6.13 003/119] arm64: dts: freescale: tqma8mpql: Fix vqmmc-supply
+Date: Tue, 25 Mar 2025 08:21:01 -0400
+Message-ID: <20250325122149.151912760@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -51,34 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit fbf10b86f6057cf79300720da4ea4b77e6708b0d ]
+[ Upstream commit 38f59e0e8bd2b3e1319716e4aeaeb9a6223b006d ]
 
-imx_scu_probe() calls of_parse_phandle_with_args(), but does not
-release the OF node reference obtained by it. Add a of_node_put() call
-after done with the node.
+eMMC is supplied by BUCK5 rail. Use the actual regulator instead of
+a virtual fixed regulator.
 
-Fixes: f25a066d1a07 ("firmware: imx-scu: Support one TX and one RX")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Fixes: 418d1d840e421 ("arm64: dts: freescale: add initial device tree for TQMa8MPQL with i.MX8MP")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/freescale/imx8mp-tqma8mpql.dtsi     | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
-index 1dd4362ef9a3f..8c28e25ddc8a6 100644
---- a/drivers/firmware/imx/imx-scu.c
-+++ b/drivers/firmware/imx/imx-scu.c
-@@ -280,6 +280,7 @@ static int imx_scu_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql.dtsi
+index 336785a9fba89..3ddc5aaa7c5f0 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql.dtsi
+@@ -1,7 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+ /*
+- * Copyright 2021-2022 TQ-Systems GmbH
+- * Author: Alexander Stein <alexander.stein@tq-group.com>
++ * Copyright 2021-2025 TQ-Systems GmbH <linux@ew.tq-group.com>,
++ * D-82229 Seefeld, Germany.
++ * Author: Alexander Stein
+  */
  
- 	sc_ipc->fast_ipc = of_device_is_compatible(args.np, "fsl,imx8-mu-scu");
-+	of_node_put(args.np);
+ #include "imx8mp.dtsi"
+@@ -23,15 +24,6 @@ reg_vcc3v3: regulator-vcc3v3 {
+ 		regulator-max-microvolt = <3300000>;
+ 		regulator-always-on;
+ 	};
+-
+-	/* e-MMC IO, needed for HS modes */
+-	reg_vcc1v8: regulator-vcc1v8 {
+-		compatible = "regulator-fixed";
+-		regulator-name = "VCC1V8";
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <1800000>;
+-		regulator-always-on;
+-	};
+ };
  
- 	num_channel = sc_ipc->fast_ipc ? 2 : SCU_MU_CHAN_NUM;
- 	for (i = 0; i < num_channel; i++) {
+ &A53_0 {
+@@ -197,7 +189,7 @@ &usdhc3 {
+ 	no-sd;
+ 	no-sdio;
+ 	vmmc-supply = <&reg_vcc3v3>;
+-	vqmmc-supply = <&reg_vcc1v8>;
++	vqmmc-supply = <&buck5_reg>;
+ 	status = "okay";
+ };
+ 
 -- 
 2.39.5
 
