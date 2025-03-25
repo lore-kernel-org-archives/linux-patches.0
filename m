@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6379026B2CC;
-	Tue, 25 Mar 2025 12:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD02026B2CD;
+	Tue, 25 Mar 2025 12:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906262; cv=none; b=sE6W/50mkonvyb8P40E7lRn4uoUaFTWcn+p4sHjd3FgK6TNYF5d2NAa+9enx7JOGDjLh3CLLUxOHgSwVKZZYF5C7wppx5kmbeiK1pRqNxLLJvf3LptrD6dk+3r+IltWHtpLzodwdDtBruuKeVFZFu1qRHsQHVy+Q4RFe22g8n7U=
+	t=1742906263; cv=none; b=EHZMXEuIRPox0m5M5JLp/OuOwkBz0HxfVlexAFqWWLOerm0pD58KoodZRzw4VJAwGHpbTomZb3J2jxjOQ4gdMHY15JIAL9PCCaWpZhrK4IJaDO1Q5zATKmqqVnDRrqUN0ld/9l6badA5c1lclXZbspSpyMFv9UCKWAypf+R4Qf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906262; c=relaxed/simple;
-	bh=ZAF5z880Us0cWvze1dsVcuhZCW4FfjbntzmOBQ1cEZs=;
+	s=arc-20240116; t=1742906263; c=relaxed/simple;
+	bh=jlGqDTHdKKcBCuGUK0ooug7wnjS+M+ivNUctIfqhh60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5zHxMHjtqoLSyU3ZXHN/oNDYYmf7h7hYZ8Ztumh+om3rDOZ/u4Dpt77FaOzre+ZVI0YKcdQFjhP7JN9db1lmmCeGNCaIeRQaCv2/tA5r6tRlMIA3gxTzmkYrvr/aiRnE00mhKCuCwE7AU9FkCVHWfchJG5UHwdxRl85YQGZvMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWu+ALY3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=myHJLILJxkRNJID0kMUy/ry1j6bUCX54nBwT8nvr6DgZxroIjuZQiVHxZLjKTIEiB66aaWmJBnqeM4kzwvjc4tlLSPjQzQd+nz0qTtsllEl3qcIvxoklrVdyZTyaweKm2Cjf6gpHUxP3yT9oDOhOCl+5eaN+ANVMC9tN33lPtag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OindlkBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWu+ALY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65C9C4CEE4;
-	Tue, 25 Mar 2025 12:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OindlkBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820AAC4CEE4;
+	Tue, 25 Mar 2025 12:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906261;
-	bh=ZAF5z880Us0cWvze1dsVcuhZCW4FfjbntzmOBQ1cEZs=;
+	s=korg; t=1742906263;
+	bh=jlGqDTHdKKcBCuGUK0ooug7wnjS+M+ivNUctIfqhh60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWu+ALY36gnLSf3oiMgbROQZ9u2AukYA2tqD8OWpRz+bGXpjFKOCqhAy6FK/QAXLA
-	 x+E7GNpJKzkNwp26w6H/0eqaYoMbfctBbLZxA87y9mQt+RMkW5eMD0gVsMU244434i
-	 2YZBFlzl9g3aTZBcT4vVYjckMLkLS6jTNcS3xhP8=
+	b=OindlkBgb9MQfMED31NLEIMDnv8tZWk5AX/LqWzILjKsTjipTN2Ig0zmOxGahTRN9
+	 KLFUvw+9P4y5FQ655/MrDgg2VenT7kjmJf8g6gCg6GnXNzCu17ZzVvUYbUF/sGZWOV
+	 oxB8IW7QRzFM6JXBNPI+S7JorDLr8QM9+fCU57+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/116] RDMA/bnxt_re: Avoid clearing VLAN_ID mask in modify qp path
-Date: Tue, 25 Mar 2025 08:21:50 -0400
-Message-ID: <20250325122149.809306042@linuxfoundation.org>
+Subject: [PATCH 6.12 024/116] RDMA/hns: Fix soft lockup during bt pages loop
+Date: Tue, 25 Mar 2025 08:21:51 -0400
+Message-ID: <20250325122149.834862647@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -52,40 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 81c0db302a674f8004ed805393d17fd76f552e83 ]
+[ Upstream commit 25655580136de59ec89f09089dd28008ea440fc9 ]
 
-Driver is always clearing the mask that sets the VLAN ID/Service Level
-in the adapter. Recent change for supporting multiple traffic class
-exposed this issue.
+Driver runs a for-loop when allocating bt pages and mapping them with
+buffer pages. When a large buffer (e.g. MR over 100GB) is being allocated,
+it may require a considerable loop count. This will lead to soft lockup:
 
-Allow setting SL and VLAN_ID while QP is moved from INIT to RTR state.
+        watchdog: BUG: soft lockup - CPU#27 stuck for 22s!
+        ...
+        Call trace:
+         hem_list_alloc_mid_bt+0x124/0x394 [hns_roce_hw_v2]
+         hns_roce_hem_list_request+0xf8/0x160 [hns_roce_hw_v2]
+         hns_roce_mtr_create+0x2e4/0x360 [hns_roce_hw_v2]
+         alloc_mr_pbl+0xd4/0x17c [hns_roce_hw_v2]
+         hns_roce_reg_user_mr+0xf8/0x190 [hns_roce_hw_v2]
+         ib_uverbs_reg_mr+0x118/0x290
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Fixes: c64b16a37b6d ("RDMA/bnxt_re: Support different traffic class")
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1741670196-2919-1-git-send-email-selvin.xavier@broadcom.com
+        watchdog: BUG: soft lockup - CPU#35 stuck for 23s!
+        ...
+        Call trace:
+         hns_roce_hem_list_find_mtt+0x7c/0xb0 [hns_roce_hw_v2]
+         mtr_map_bufs+0xc4/0x204 [hns_roce_hw_v2]
+         hns_roce_mtr_create+0x31c/0x3c4 [hns_roce_hw_v2]
+         alloc_mr_pbl+0xb0/0x160 [hns_roce_hw_v2]
+         hns_roce_reg_user_mr+0x108/0x1c0 [hns_roce_hw_v2]
+         ib_uverbs_reg_mr+0x120/0x2bc
+
+Add a cond_resched() to fix soft lockup during these loops. In order not
+to affect the allocation performance of normal-size buffer, set the loop
+count of a 100GB MR as the threshold to call cond_resched().
+
+Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250311084857.3803665-3-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 613b5fc70e13e..7436ce5515797 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1216,8 +1216,6 @@ static void __modify_flags_from_init_state(struct bnxt_qplib_qp *qp)
- 			qp->path_mtu =
- 				CMDQ_MODIFY_QP_PATH_MTU_MTU_2048;
- 		}
--		qp->modify_flags &=
--			~CMDQ_MODIFY_QP_MODIFY_MASK_VLAN_ID;
- 		/* Bono FW require the max_dest_rd_atomic to be >= 1 */
- 		if (qp->max_dest_rd_atomic < 1)
- 			qp->max_dest_rd_atomic = 1;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 605562122ecce..ca0798224e565 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -1361,6 +1361,11 @@ static int hem_list_alloc_root_bt(struct hns_roce_dev *hr_dev,
+ 	return ret;
+ }
+ 
++/* This is the bottom bt pages number of a 100G MR on 4K OS, assuming
++ * the bt page size is not expanded by cal_best_bt_pg_sz()
++ */
++#define RESCHED_LOOP_CNT_THRESHOLD_ON_4K 12800
++
+ /* construct the base address table and link them by address hop config */
+ int hns_roce_hem_list_request(struct hns_roce_dev *hr_dev,
+ 			      struct hns_roce_hem_list *hem_list,
+@@ -1369,6 +1374,7 @@ int hns_roce_hem_list_request(struct hns_roce_dev *hr_dev,
+ {
+ 	const struct hns_roce_buf_region *r;
+ 	int ofs, end;
++	int loop;
+ 	int unit;
+ 	int ret;
+ 	int i;
+@@ -1386,7 +1392,10 @@ int hns_roce_hem_list_request(struct hns_roce_dev *hr_dev,
+ 			continue;
+ 
+ 		end = r->offset + r->count;
+-		for (ofs = r->offset; ofs < end; ofs += unit) {
++		for (ofs = r->offset, loop = 1; ofs < end; ofs += unit, loop++) {
++			if (!(loop % RESCHED_LOOP_CNT_THRESHOLD_ON_4K))
++				cond_resched();
++
+ 			ret = hem_list_alloc_mid_bt(hr_dev, r, unit, ofs,
+ 						    hem_list->mid_bt[i],
+ 						    &hem_list->btm_bt);
+@@ -1443,9 +1452,14 @@ void *hns_roce_hem_list_find_mtt(struct hns_roce_dev *hr_dev,
+ 	struct list_head *head = &hem_list->btm_bt;
+ 	struct hns_roce_hem_item *hem, *temp_hem;
+ 	void *cpu_base = NULL;
++	int loop = 1;
+ 	int nr = 0;
+ 
+ 	list_for_each_entry_safe(hem, temp_hem, head, sibling) {
++		if (!(loop % RESCHED_LOOP_CNT_THRESHOLD_ON_4K))
++			cond_resched();
++		loop++;
++
+ 		if (hem_list_page_is_in_range(hem, offset)) {
+ 			nr = offset - hem->start;
+ 			cpu_base = hem->addr + nr * BA_BYTE_LEN;
 -- 
 2.39.5
 
