@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C295A2561A2;
-	Tue, 25 Mar 2025 12:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C70269AF1;
+	Tue, 25 Mar 2025 12:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906077; cv=none; b=Lma5cS6DfnzLCCOb85pRnzjwCS+T83EC7lOloeeuC+p4O4EdjsPSRXyvmOSFS5ls/2tHnS/JxN37Vq5uqBqmGxRVpwEWxg2zqlqdvr41jnpPXbuFup/s25Ebb7vMUPlauH3XM7CosXFWHJZrpoCWlk5F6qsPq4ELFh2rIt8Pt+M=
+	t=1742906080; cv=none; b=WaZQnHVBlZD/QLgJ8T7+JOUuukedYuK6Vc4iXKYUEsUyeAHBV7J8HBcOmtBrOF7rZiHSBaI4KV69FxqdcND8WF9h61WaybjObZj9Im6MIMUYF8IlOCzhqoVhbOTddpb4Pue/FBhNF5CWVEsuS1vuhSOSP92wI2KXPZU7F6a6TU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906077; c=relaxed/simple;
-	bh=qIueGOdeBF+sUXfr1tLnQIvIbpolc5IN/AaqMBdtyyI=;
+	s=arc-20240116; t=1742906080; c=relaxed/simple;
+	bh=eyds6wM7M6uzmEB3D/lGJdA3lnfmbZH9CI7rCO93Rpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnyYb/qxFQnRAT2frzJuhJU8N6eo0KVKzsqurnY8vXRZO7OZjZYdsZAXrgKK77Jlsvn6LzzXF0FplvI8ZaWdH6z+2C2TZtQY889E7y897riLr2KN70fcUtpJJTaX341wWKEFiMVtZup+az4lcPPcKA2M5dawqx6vfR4NsGBKqT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2W5W8cs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwuIpnONMkyo0exCMbalYHKXIAmXUs3IhpHJi6ord+o8YB4VLZRMRK9UBSEekWtdguVq/ZsoBmIVoPU+DfDO8bvydARoGIS3YWkCeziq7jj+zrnnY69w4vbNgUmm/nTAGBFaksgHy1Djob5JgT/hC20AaWiD5mQV5NE20i5qDCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkKfF0Uo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2W5W8cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7591EC4CEE4;
-	Tue, 25 Mar 2025 12:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkKfF0Uo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4F6C4CEE4;
+	Tue, 25 Mar 2025 12:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906077;
-	bh=qIueGOdeBF+sUXfr1tLnQIvIbpolc5IN/AaqMBdtyyI=;
+	s=korg; t=1742906079;
+	bh=eyds6wM7M6uzmEB3D/lGJdA3lnfmbZH9CI7rCO93Rpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c2W5W8csB9twwm1xPnRgYYTWAkSgKsWjujhC2pIRhXeeAoerJBnPF+lBiTvlqNOZu
-	 RM8RlS/FUlxEp8g5aTrxLSIAuqKa+wkgxFmgQmbH+VUn75hNfcUbb+zK8DUhY9QDo/
-	 2Y7Qt2jXGI+lIl+b3AmU+7F0OmNpao5OV5pueuPQ=
+	b=bkKfF0UoehMx5+tSkCQ21ErhhqJcm6RufWRqNrC0rkbrsRfb7/atKoAzyfbe4Cdz7
+	 V0vqU1o821qGZpZN3AecFpqO7RA++Of0PASAqTM5TnpacucJwRydE0mY/cCl2COELa
+	 fBYH2CXEjw+JyncdHjj34b7Q2qvRYGhJzhTrDEcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Saranya R <quic_sarar@quicinc.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.13 092/119] soc: qcom: pdr: Fix the potential deadlock
-Date: Tue, 25 Mar 2025 08:22:30 -0400
-Message-ID: <20250325122151.410705557@linuxfoundation.org>
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.13 093/119] pmdomain: amlogic: fix T7 ISP secpower
+Date: Tue, 25 Mar 2025 08:22:31 -0400
+Message-ID: <20250325122151.437472884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -53,90 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saranya R <quic_sarar@quicinc.com>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-commit 2eeb03ad9f42dfece63051be2400af487ddb96d2 upstream.
+commit ef17b519088ee0c167cf507820609732ec8bad1a upstream.
 
-When some client process A call pdr_add_lookup() to add the look up for
-the service and does schedule locator work, later a process B got a new
-server packet indicating locator is up and call pdr_locator_new_server()
-which eventually sets pdr->locator_init_complete to true which process A
-sees and takes list lock and queries domain list but it will timeout due
-to deadlock as the response will queued to the same qmi->wq and it is
-ordered workqueue and process B is not able to complete new server
-request work due to deadlock on list lock.
+ISP and MIPI_ISP, these two have a parent-child relationship,
+ISP depends on MIPI_ISP.
 
-Fix it by removing the unnecessary list iteration as the list iteration
-is already being done inside locator work, so avoid it here and just
-call schedule_work() here.
-
-       Process A                        Process B
-
-                                     process_scheduled_works()
-pdr_add_lookup()                      qmi_data_ready_work()
- process_scheduled_works()             pdr_locator_new_server()
-                                         pdr->locator_init_complete=true;
-   pdr_locator_work()
-    mutex_lock(&pdr->list_lock);
-
-     pdr_locate_service()                  mutex_lock(&pdr->list_lock);
-
-      pdr_get_domain_list()
-       pr_err("PDR: %s get domain list
-               txn wait failed: %d\n",
-               req->service_name,
-               ret);
-
-Timeout error log due to deadlock:
-
-"
- PDR: tms/servreg get domain list txn wait failed: -110
- PDR: service lookup for msm/adsp/sensor_pd:tms/servreg failed: -110
-"
-
-Thanks to Bjorn and Johan for letting me know that this commit also fixes
-an audio regression when using the in-kernel pd-mapper as that makes it
-easier to hit this race. [1]
-
-Link: https://lore.kernel.org/lkml/Zqet8iInnDhnxkT9@hovoldconsulting.com/ # [1]
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-CC: stable@vger.kernel.org
-Reviewed-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Saranya R <quic_sarar@quicinc.com>
-Co-developed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250212163720.1577876-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ca75e4b214c6 ("pmdomain: amlogic: Add support for T7 power domains controller")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250303-fix-t7-pwrc-v1-1-b563612bcd86@amlogic.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/pdr_interface.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/pmdomain/amlogic/meson-secure-pwrc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -75,7 +75,6 @@ static int pdr_locator_new_server(struct
- {
- 	struct pdr_handle *pdr = container_of(qmi, struct pdr_handle,
- 					      locator_hdl);
--	struct pdr_service *pds;
- 
- 	mutex_lock(&pdr->lock);
- 	/* Create a local client port for QMI communication */
-@@ -87,12 +86,7 @@ static int pdr_locator_new_server(struct
- 	mutex_unlock(&pdr->lock);
- 
- 	/* Service pending lookup requests */
--	mutex_lock(&pdr->list_lock);
--	list_for_each_entry(pds, &pdr->lookups, node) {
--		if (pds->need_locator_lookup)
--			schedule_work(&pdr->locator_work);
--	}
--	mutex_unlock(&pdr->list_lock);
-+	schedule_work(&pdr->locator_work);
- 
- 	return 0;
- }
+--- a/drivers/pmdomain/amlogic/meson-secure-pwrc.c
++++ b/drivers/pmdomain/amlogic/meson-secure-pwrc.c
+@@ -221,7 +221,7 @@ static const struct meson_secure_pwrc_do
+ 	SEC_PD(T7_VI_CLK2,	0),
+ 	/* ETH is for ethernet online wakeup, and should be always on */
+ 	SEC_PD(T7_ETH,		GENPD_FLAG_ALWAYS_ON),
+-	SEC_PD(T7_ISP,		0),
++	TOP_PD(T7_ISP,		0, PWRC_T7_MIPI_ISP_ID),
+ 	SEC_PD(T7_MIPI_ISP,	0),
+ 	TOP_PD(T7_GDC,		0, PWRC_T7_NIC3_ID),
+ 	TOP_PD(T7_DEWARP,	0, PWRC_T7_NIC3_ID),
 
 
