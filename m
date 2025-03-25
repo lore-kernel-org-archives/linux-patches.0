@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCB12566F6;
-	Tue, 25 Mar 2025 12:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE5C264FA2;
+	Tue, 25 Mar 2025 12:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905549; cv=none; b=dRyYR5DbNfSOewpB1O3P1V+VJkfCQbwYnC725zkl47WcvLIFZa8ifFI3pQ8qOeOLh4F2DYbkqxA7l76eOwIURjDTg79oRr4G4FeQFjyrih4DBfMX77DNVFwMuqDjx2apBwdY+u2mKjhj2rZ0hnQRfVArsF9Imp9KMXNOoWl6HA4=
+	t=1742905551; cv=none; b=soWjGxMD2R9+8dakf9k7NSGlyVcAb0bXma6L3lLXsogNxuBBNA9K2PqnPjx/uV725tMegPSt/a7BDEODu9DNP09/KeP7k3Qq6ODSv+UbR70fCEWBsxT/RRpwQv9+iFPyiTboEUTGIKJ9ODQWYgVe+9qDtTkuAJ82QBwsVN6jxBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905549; c=relaxed/simple;
-	bh=ABHkyN4/4sYiB3bYcWFyHfrW749ETodvgwQI1nNd3KE=;
+	s=arc-20240116; t=1742905551; c=relaxed/simple;
+	bh=nGwcwrnWCPtSvBgSjFP3Tm1cl46AT3soL5tiWQ870GA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpq7JLcGrpzsfj8UCOp7ilFNM/9+rksWOG/KI9Z/8HLv1diQ4QoDHugjUxH0s/UDnoBHL4m0wyNBAu9O6ys+Ze1Wi0CA73QHhRfky7az5EoD+dS96WTC5heeRMU6QkD/erjer9xcwNLB3/AQbPzOA4FGYmwMwwTT/wFvpl/JKeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZYM+0lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1hvsaUMvrSnPeCh2Q358gEXns73NLu0SS+xknXdd7khs7qh3z3jBPPjSevp2nEMaEs2aCPAH085kXjlU2EIh9qXs1jvI0h9P/JVh25kAmihB6bwrMR0RFDgRn0ofNomwhNI7n9liCHLYeXj0I4tgSFLOFK2Kd79XAz6nTMZO7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4TOzs97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZYM+0lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8871EC4CEE9;
-	Tue, 25 Mar 2025 12:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4TOzs97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545F4C4CEE9;
+	Tue, 25 Mar 2025 12:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905548;
-	bh=ABHkyN4/4sYiB3bYcWFyHfrW749ETodvgwQI1nNd3KE=;
+	s=korg; t=1742905550;
+	bh=nGwcwrnWCPtSvBgSjFP3Tm1cl46AT3soL5tiWQ870GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZYM+0lv0clE2f+M3HnvM6gBqZBEqPAtTo5BlUpFtrs5guxcxeSyaMpya1wGlMjY3
-	 4+RIkgW9PpmIRF5p7CopMrHhcGVy7tbl6bDugemaKDQHnvSU+7Nub93IOobSbsywV7
-	 aN1Z2Y/C5ZqhZ5KNxSWKlEanWc8e044ERGH56qhA=
+	b=F4TOzs978qXknqwIpPJa4o5wIbshhfCaJZU9pNeG3j9fb6JcErDY6k2JK4C97irDY
+	 H5roySsIU8OIAfUg9EBLRNOd3uIaycuW3CvP657C9dgPYpJ0fsCJG9GdQs/pTO6ZJ1
+	 FvY7h5BxgwIziWfEkTXzdKzM4wtOfIDPLyV2Q4+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengen Du <chengen.du@canonical.com>,
-	Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/198] iscsi_ibft: Fix UBSAN shift-out-of-bounds warning in ibft_attr_show_nic()
-Date: Tue, 25 Mar 2025 08:19:56 -0400
-Message-ID: <20250325122157.533988289@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 008/198] ice: fix memory leak in aRFS after reset
+Date: Tue, 25 Mar 2025 08:19:30 -0400
+Message-ID: <20250325122156.859977044@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -51,39 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 07e0d99a2f701123ad3104c0f1a1e66bce74d6e5 ]
+[ Upstream commit 23d97f18901ef5e4e264e3b1777fe65c760186b5 ]
 
-When performing an iSCSI boot using IPv6, iscsistart still reads the
-/sys/firmware/ibft/ethernetX/subnet-mask entry. Since the IPv6 prefix
-length is 64, this causes the shift exponent to become negative,
-triggering a UBSAN warning. As the concept of a subnet mask does not
-apply to IPv6, the value is set to ~0 to suppress the warning message.
+Fix aRFS (accelerated Receive Flow Steering) structures memory leak by
+adding a checker to verify if aRFS memory is already allocated while
+configuring VSI. aRFS objects are allocated in two cases:
+- as part of VSI initialization (at probe), and
+- as part of reset handling
 
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Signed-off-by: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
+However, VSI reconfiguration executed during reset involves memory
+allocation one more time, without prior releasing already allocated
+resources. This led to the memory leak with the following signature:
+
+[root@os-delivery ~]# cat /sys/kernel/debug/kmemleak
+unreferenced object 0xff3c1ca7252e6000 (size 8192):
+  comm "kworker/0:0", pid 8, jiffies 4296833052
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    [<ffffffff991ec485>] __kmalloc_cache_noprof+0x275/0x340
+    [<ffffffffc0a6e06a>] ice_init_arfs+0x3a/0xe0 [ice]
+    [<ffffffffc09f1027>] ice_vsi_cfg_def+0x607/0x850 [ice]
+    [<ffffffffc09f244b>] ice_vsi_setup+0x5b/0x130 [ice]
+    [<ffffffffc09c2131>] ice_init+0x1c1/0x460 [ice]
+    [<ffffffffc09c64af>] ice_probe+0x2af/0x520 [ice]
+    [<ffffffff994fbcd3>] local_pci_probe+0x43/0xa0
+    [<ffffffff98f07103>] work_for_cpu_fn+0x13/0x20
+    [<ffffffff98f0b6d9>] process_one_work+0x179/0x390
+    [<ffffffff98f0c1e9>] worker_thread+0x239/0x340
+    [<ffffffff98f14abc>] kthread+0xcc/0x100
+    [<ffffffff98e45a6d>] ret_from_fork+0x2d/0x50
+    [<ffffffff98e083ba>] ret_from_fork_asm+0x1a/0x30
+    ...
+
+Fixes: 28bf26724fdb ("ice: Implement aRFS")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/iscsi_ibft.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_arfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/iscsi_ibft.c b/drivers/firmware/iscsi_ibft.c
-index 6e9788324fea5..371f24569b3b2 100644
---- a/drivers/firmware/iscsi_ibft.c
-+++ b/drivers/firmware/iscsi_ibft.c
-@@ -310,7 +310,10 @@ static ssize_t ibft_attr_show_nic(void *data, int type, char *buf)
- 		str += sprintf_ipaddr(str, nic->ip_addr);
- 		break;
- 	case ISCSI_BOOT_ETH_SUBNET_MASK:
--		val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
-+		if (nic->subnet_mask_prefix > 32)
-+			val = cpu_to_be32(~0);
-+		else
-+			val = cpu_to_be32(~((1 << (32-nic->subnet_mask_prefix))-1));
- 		str += sprintf(str, "%pI4", &val);
- 		break;
- 	case ISCSI_BOOT_ETH_PREFIX_LEN:
+diff --git a/drivers/net/ethernet/intel/ice/ice_arfs.c b/drivers/net/ethernet/intel/ice/ice_arfs.c
+index fba178e076009..79074f041e39b 100644
+--- a/drivers/net/ethernet/intel/ice/ice_arfs.c
++++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
+@@ -510,7 +510,7 @@ void ice_init_arfs(struct ice_vsi *vsi)
+ 	struct hlist_head *arfs_fltr_list;
+ 	unsigned int i;
+ 
+-	if (!vsi || vsi->type != ICE_VSI_PF)
++	if (!vsi || vsi->type != ICE_VSI_PF || ice_is_arfs_active(vsi))
+ 		return;
+ 
+ 	arfs_fltr_list = kcalloc(ICE_MAX_ARFS_LIST, sizeof(*arfs_fltr_list),
 -- 
 2.39.5
 
