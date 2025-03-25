@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6734826B2B3;
-	Tue, 25 Mar 2025 12:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4203225B69D;
+	Tue, 25 Mar 2025 12:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906271; cv=none; b=oI3hcN/sliEB06j+kjbbR3RY7e/pRMZAWRehMGgb+mMFHDHf35kokFhsbUlwWgJe9zWNYoeft73nFpqwD36TzB3jiB9QoynZm+TCieVgjeADzqKGYUIHqw6pwh0VhWELu7TkV2Rc6HzVbMxmz+wTCAWRaQEFljNBYTwzTdGamhk=
+	t=1742906273; cv=none; b=GrVkArb0T73tCKNv1waMabHeyMV5KkWBn9XxsQGxi2po487HFQAOEF/FFSfmrjXVPL17FGL8WA908bxoI5rmEn24H19SVcYYY94dgqJltTppUg6gd3aX8rr53y5nnuuR3svxJxSUtS/F3FXmPa5iWVf3kv4P5NqW+9EceM9Z8Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906271; c=relaxed/simple;
-	bh=wyOFq07p58OSkWx9wXO55j/fM74n9ai2rtENavVwyUI=;
+	s=arc-20240116; t=1742906273; c=relaxed/simple;
+	bh=FeNPbcgvfLwXS/uxqolQTIAWVTHM+DkymjRHcwszzSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UP3eGUZRpIwuLx5S+K1kE/XyBcKTBGXN+lIAeuOigFEUsHbsCfUEe+4pzqvOq3O7VBjunTv0gps78Tora/mkMQrsCNXQOX3Ae0mPvh6dcwkF18ZzMPVYe3p/0jpbDqkDG/FRodNrWjk2NkZ1yhu5NfGHnl6EFgqXLbQVNr3xocg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0Eny3Wr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCWmxs8ghLbc6Qo5YTJ463V2IbES/E14IOnJ0L1k1sxybdbRgIcjC9gm4laJ0VBxL02cgLy4GMzm0ZIk85XFn1/pTv2BTSIAUvU6thfYCnWYEylXQRFsa8lOvnoqL5qHiEy4mUqM1LN6PWZqTT6gSZYsF6QQR6RE6KFufSHZnJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmjPIAjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0Eny3Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1577AC4CEE4;
-	Tue, 25 Mar 2025 12:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmjPIAjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB516C4CEE4;
+	Tue, 25 Mar 2025 12:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906271;
-	bh=wyOFq07p58OSkWx9wXO55j/fM74n9ai2rtENavVwyUI=;
+	s=korg; t=1742906273;
+	bh=FeNPbcgvfLwXS/uxqolQTIAWVTHM+DkymjRHcwszzSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0Eny3WrzSQZxfz/OJx7MJUjA1I2FHOrLQkF3DJAoyEYR0+ZrrGtVnanJa13jYtaK
-	 1zsd6QDuHh3QunMXDLkYIB57E8vHZUIs4FTfFaeacPDWoNoMwxe1JY7SM3/VOGv0jz
-	 /THYdqSywd4mM9Bikv95oLXEMH+skyRUosjDLVQI=
+	b=dmjPIAjMiS97rS/9FkZ8w7G10KTgLl6lIgaRRMcKnizsmvIvtdUEkSipWdnM2uJ+j
+	 1v+NC1fzpur1N2KpCJr4d1PczbcpClGQD7AVhuNLheECFDK1S/yvwE638tofSqFiaT
+	 FiN5wpwaUYhP2sGZFPCUlHVRFmOLl0ww+QNoNGkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/116] RDMA/hns: Fix missing xa_destroy()
-Date: Tue, 25 Mar 2025 08:21:55 -0400
-Message-ID: <20250325122149.934085252@linuxfoundation.org>
+Subject: [PATCH 6.12 029/116] RDMA/hns: Fix wrong value of max_sge_rd
+Date: Tue, 25 Mar 2025 08:21:56 -0400
+Message-ID: <20250325122149.959503889@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -53,62 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit eda0a2fdbc24c35cd8d61d9c9111cafd5f89b2dc ]
+[ Upstream commit 6b5e41a8b51fce520bb09bd651a29ef495e990de ]
 
-Add xa_destroy() for xarray in driver.
+There is no difference between the sge of READ and non-READ
+operations in hns RoCE. Set max_sge_rd to the same value as
+max_send_sge.
 
-Fixes: 5c1f167af112 ("RDMA/hns: Init SRQ table for hip08")
-Fixes: 27e19f451089 ("RDMA/hns: Convert cq_table to XArray")
-Fixes: 736b5a70db98 ("RDMA/hns: Convert qp_table_tree to XArray")
+Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250311084857.3803665-7-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20250311084857.3803665-8-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_alloc.c | 4 +++-
- drivers/infiniband/hw/hns/hns_roce_cq.c    | 1 +
- drivers/infiniband/hw/hns/hns_roce_qp.c    | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_alloc.c b/drivers/infiniband/hw/hns/hns_roce_alloc.c
-index 950c133d4220e..6ee911f6885b5 100644
---- a/drivers/infiniband/hw/hns/hns_roce_alloc.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_alloc.c
-@@ -175,8 +175,10 @@ void hns_roce_cleanup_bitmap(struct hns_roce_dev *hr_dev)
- 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_XRC)
- 		ida_destroy(&hr_dev->xrcd_ida.ida);
- 
--	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_SRQ)
-+	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_SRQ) {
- 		ida_destroy(&hr_dev->srq_table.srq_ida.ida);
-+		xa_destroy(&hr_dev->srq_table.xa);
-+	}
- 	hns_roce_cleanup_qp_table(hr_dev);
- 	hns_roce_cleanup_cq_table(hr_dev);
- 	ida_destroy(&hr_dev->mr_table.mtpt_ida.ida);
-diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
-index 4106423a1b399..3a5c93c9fb3e6 100644
---- a/drivers/infiniband/hw/hns/hns_roce_cq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
-@@ -537,5 +537,6 @@ void hns_roce_cleanup_cq_table(struct hns_roce_dev *hr_dev)
- 
- 	for (i = 0; i < HNS_ROCE_CQ_BANK_NUM; i++)
- 		ida_destroy(&hr_dev->cq_table.bank[i].ida);
-+	xa_destroy(&hr_dev->cq_table.array);
- 	mutex_destroy(&hr_dev->cq_table.bank_mutex);
- }
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index 52b671156246b..8901c142c1b65 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -1603,6 +1603,7 @@ void hns_roce_cleanup_qp_table(struct hns_roce_dev *hr_dev)
- 	for (i = 0; i < HNS_ROCE_QP_BANK_NUM; i++)
- 		ida_destroy(&hr_dev->qp_table.bank[i].ida);
- 	xa_destroy(&hr_dev->qp_table.dip_xa);
-+	xa_destroy(&hr_dev->qp_table_xa);
- 	mutex_destroy(&hr_dev->qp_table.bank_mutex);
- 	mutex_destroy(&hr_dev->qp_table.scc_mutex);
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index ae24c81c9812d..cf89a8db4f64c 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -183,7 +183,7 @@ static int hns_roce_query_device(struct ib_device *ib_dev,
+ 				  IB_DEVICE_RC_RNR_NAK_GEN;
+ 	props->max_send_sge = hr_dev->caps.max_sq_sg;
+ 	props->max_recv_sge = hr_dev->caps.max_rq_sg;
+-	props->max_sge_rd = 1;
++	props->max_sge_rd = hr_dev->caps.max_sq_sg;
+ 	props->max_cq = hr_dev->caps.num_cqs;
+ 	props->max_cqe = hr_dev->caps.max_cqes;
+ 	props->max_mr = hr_dev->caps.num_mtpts;
 -- 
 2.39.5
 
