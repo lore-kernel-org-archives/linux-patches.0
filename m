@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70B526F440;
-	Tue, 25 Mar 2025 12:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC4A25D525;
+	Tue, 25 Mar 2025 12:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906364; cv=none; b=eoTpnuxagzmP98zWnf+oLufQo5+e3vNumIZw2UIn10h+0oB/S9SFYB8pz+AoqYiUWlFJyQI6jY8bqqGFNm5GOkf8j5ftYbCWt0ER5gphRwfZNEurn9izM5pnBTDQ1IVpXtRYcrz5zcj9K9iP9oUulk2UIu7TKaSwPHZ+myxLnoE=
+	t=1742906365; cv=none; b=qmPsObeDh8V+ftAb627Z5yBMMB8iGkALT5Q+WpdqaQ54orBiEGi8pyWz9uanSQEPhrZhHORibDtbrfCtHhoUBSa+WEhSBWntQGPFszHviWZNM5DmG3kyUgGyX4Rs9QgigaI3VYK+wkW6z5I4lWpRjrAs1VyAOxT1PKVNzYVtdnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906364; c=relaxed/simple;
-	bh=l2rU2F5BiJd5p+B95DhtbO/pxnM9pjz9uBHBBtXAav4=;
+	s=arc-20240116; t=1742906365; c=relaxed/simple;
+	bh=Nmr/wWMsFqfEfKXU9OrY5uhbIXY51NcGKFARWzCq9QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6f3/rIBPGt0lj5vZqlOZ2fPME1sUjy0fMOKZiLd2DETKp2T+M5x0BZURSymnSqy8mZFeLJDUeHOivfCkotfEYAp/13/mB+iB+1oR/Kl3hhIks2xd3AuO1tlZWMTzPZpxXkjgQV3rkywRYDoKdHWhdwIyVJWv4MwjCfsvWQUpss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK/2ChRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViFI9w9wtegbP/D2OYeXKupA1BeuSVeDizxZEJrKLxoGDhC8ekMU0HdSRBaj/s/6I+5N2jMFNEzdAbvUT9NHXX5fGT5U1sUD22pAW771Yp5XZtIzaE7JgyR23AUe0TQhvXpENK+vcbMa7PmQ8eUpjK6AQpsI9Ta+bfP4eVCx0ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjvPiwnv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK/2ChRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A43BC4CEE9;
-	Tue, 25 Mar 2025 12:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjvPiwnv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63151C4CEE4;
+	Tue, 25 Mar 2025 12:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906363;
-	bh=l2rU2F5BiJd5p+B95DhtbO/pxnM9pjz9uBHBBtXAav4=;
+	s=korg; t=1742906365;
+	bh=Nmr/wWMsFqfEfKXU9OrY5uhbIXY51NcGKFARWzCq9QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UK/2ChRPst8bNkknsTQEZvGpU9ASoYnliMXQ2Py4wxgInussDoSY39TFoQ51B4mRX
-	 mYtRBBBT//IbEUWj2oKT0CRBevuWDtHuM38fTn+RplceaigA1FJx3c2IzPGLEJNgTW
-	 PmSGHHv6RmyT2CLOWWVYiBNzT4mfaRjXm/3+6DqM=
+	b=yjvPiwnvL7W2qqeaIy1ekKy4PSD54Nl0Oq8j+g6drfBLUUQ0R2ZD8bfvB3Zv5xGy9
+	 w3iZGjvjfCgr3MmO00Y1/E1u9mNy3oOfG4g19Rw32EY9W1Pca5FWXtlffatec1Q/Pu
+	 l7p8XPIMokMBTfBzSc0KyXuVJ+T94ewayuJn46fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 078/116] proc: fix UAF in proc_get_inode()
-Date: Tue, 25 Mar 2025 08:22:45 -0400
-Message-ID: <20250325122151.203912278@linuxfoundation.org>
+Subject: [PATCH 6.12 079/116] memcg: drain obj stock on cpu hotplug teardown
+Date: Tue, 25 Mar 2025 08:22:46 -0400
+Message-ID: <20250325122151.229353306@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -53,177 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 654b33ada4ab5e926cd9c570196fefa7bec7c1df upstream.
+commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb upstream.
 
-Fix race between rmmod and /proc/XXX's inode instantiation.
+Currently on cpu hotplug teardown, only memcg stock is drained but we
+need to drain the obj stock as well otherwise we will miss the stats
+accumulated on the target cpu as well as the nr_bytes cached. The stats
+include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
+addition we are leaking reference to struct obj_cgroup object.
 
-The bug is that pde->proc_ops don't belong to /proc, it belongs to a
-module, therefore dereferencing it after /proc entry has been registered
-is a bug unless use_pde/unuse_pde() pair has been used.
-
-use_pde/unuse_pde can be avoided (2 atomic ops!) because pde->proc_ops
-never changes so information necessary for inode instantiation can be
-saved _before_ proc_register() in PDE itself and used later, avoiding
-pde->proc_ops->...  dereference.
-
-      rmmod                         lookup
-sys_delete_module
-                         proc_lookup_de
-			   pde_get(de);
-			   proc_get_inode(dir->i_sb, de);
-  mod->exit()
-    proc_remove
-      remove_proc_subtree
-       proc_entry_rundown(de);
-  free_module(mod);
-
-                               if (S_ISREG(inode->i_mode))
-	                         if (de->proc_ops->proc_read_iter)
-                           --> As module is already freed, will trigger UAF
-
-BUG: unable to handle page fault for address: fffffbfff80a702b
-PGD 817fc4067 P4D 817fc4067 PUD 817fc0067 PMD 102ef4067 PTE 0
-Oops: Oops: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 26 UID: 0 PID: 2667 Comm: ls Tainted: G
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-RIP: 0010:proc_get_inode+0x302/0x6e0
-RSP: 0018:ffff88811c837998 EFLAGS: 00010a06
-RAX: dffffc0000000000 RBX: ffffffffc0538140 RCX: 0000000000000007
-RDX: 1ffffffff80a702b RSI: 0000000000000001 RDI: ffffffffc0538158
-RBP: ffff8881299a6000 R08: 0000000067bbe1e5 R09: 1ffff11023906f20
-R10: ffffffffb560ca07 R11: ffffffffb2b43a58 R12: ffff888105bb78f0
-R13: ffff888100518048 R14: ffff8881299a6004 R15: 0000000000000001
-FS:  00007f95b9686840(0000) GS:ffff8883af100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: fffffbfff80a702b CR3: 0000000117dd2000 CR4: 00000000000006f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- proc_lookup_de+0x11f/0x2e0
- __lookup_slow+0x188/0x350
- walk_component+0x2ab/0x4f0
- path_lookupat+0x120/0x660
- filename_lookup+0x1ce/0x560
- vfs_statx+0xac/0x150
- __do_sys_newstat+0x96/0x110
- do_syscall_64+0x5f/0x170
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-[adobriyan@gmail.com: don't do 2 atomic ops on the common path]
-Link: https://lkml.kernel.org/r/3d25ded0-1739-447e-812b-e34da7990dcf@p183
-Fixes: 778f3dd5a13c ("Fix procfs compat_ioctl regression")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: David S. Miller <davem@davemloft.net>
+Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
+Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c       |   10 +++++++++-
- fs/proc/inode.c         |    6 +++---
- fs/proc/internal.h      |   14 ++++++++++++++
- include/linux/proc_fs.h |    7 +++++--
- 4 files changed, 31 insertions(+), 6 deletions(-)
+ mm/memcontrol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -557,10 +557,16 @@ struct proc_dir_entry *proc_create_reg(c
- 	return p;
- }
- 
--static inline void pde_set_flags(struct proc_dir_entry *pde)
-+static void pde_set_flags(struct proc_dir_entry *pde)
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1882,9 +1882,18 @@ void drain_all_stock(struct mem_cgroup *
+ static int memcg_hotplug_cpu_dead(unsigned int cpu)
  {
- 	if (pde->proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
- 		pde->flags |= PROC_ENTRY_PERMANENT;
-+	if (pde->proc_ops->proc_read_iter)
-+		pde->flags |= PROC_ENTRY_proc_read_iter;
-+#ifdef CONFIG_COMPAT
-+	if (pde->proc_ops->proc_compat_ioctl)
-+		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
-+#endif
- }
+ 	struct memcg_stock_pcp *stock;
++	struct obj_cgroup *old;
++	unsigned long flags;
  
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
-@@ -624,6 +630,7 @@ struct proc_dir_entry *proc_create_seq_p
- 	p->proc_ops = &proc_seq_ops;
- 	p->seq_ops = ops;
- 	p->state_size = state_size;
-+	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_seq_private);
-@@ -654,6 +661,7 @@ struct proc_dir_entry *proc_create_singl
- 		return NULL;
- 	p->proc_ops = &proc_single_ops;
- 	p->single_show = show;
-+	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_single_data);
---- a/fs/proc/inode.c
-+++ b/fs/proc/inode.c
-@@ -656,13 +656,13 @@ struct inode *proc_get_inode(struct supe
- 
- 	if (S_ISREG(inode->i_mode)) {
- 		inode->i_op = de->proc_iops;
--		if (de->proc_ops->proc_read_iter)
-+		if (pde_has_proc_read_iter(de))
- 			inode->i_fop = &proc_iter_file_ops;
- 		else
- 			inode->i_fop = &proc_reg_file_ops;
- #ifdef CONFIG_COMPAT
--		if (de->proc_ops->proc_compat_ioctl) {
--			if (de->proc_ops->proc_read_iter)
-+		if (pde_has_proc_compat_ioctl(de)) {
-+			if (pde_has_proc_read_iter(de))
- 				inode->i_fop = &proc_iter_file_ops_compat;
- 			else
- 				inode->i_fop = &proc_reg_file_ops_compat;
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -85,6 +85,20 @@ static inline void pde_make_permanent(st
- 	pde->flags |= PROC_ENTRY_PERMANENT;
- }
- 
-+static inline bool pde_has_proc_read_iter(const struct proc_dir_entry *pde)
-+{
-+	return pde->flags & PROC_ENTRY_proc_read_iter;
-+}
+ 	stock = &per_cpu(memcg_stock, cpu);
 +
-+static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
-+{
-+#ifdef CONFIG_COMPAT
-+	return pde->flags & PROC_ENTRY_proc_compat_ioctl;
-+#else
-+	return false;
-+#endif
-+}
++	/* drain_obj_stock requires stock_lock */
++	local_lock_irqsave(&memcg_stock.stock_lock, flags);
++	old = drain_obj_stock(stock);
++	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
 +
- extern struct kmem_cache *proc_dir_entry_cache;
- void pde_free(struct proc_dir_entry *pde);
+ 	drain_stock(stock);
++	obj_cgroup_put(old);
  
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -20,10 +20,13 @@ enum {
- 	 * If in doubt, ignore this flag.
- 	 */
- #ifdef MODULE
--	PROC_ENTRY_PERMANENT = 0U,
-+	PROC_ENTRY_PERMANENT		= 0U,
- #else
--	PROC_ENTRY_PERMANENT = 1U << 0,
-+	PROC_ENTRY_PERMANENT		= 1U << 0,
- #endif
-+
-+	PROC_ENTRY_proc_read_iter	= 1U << 1,
-+	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
- };
- 
- struct proc_ops {
+ 	return 0;
+ }
 
 
