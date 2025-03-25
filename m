@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BF5267B9F;
-	Tue, 25 Mar 2025 12:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CBC29B222;
+	Tue, 25 Mar 2025 12:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905856; cv=none; b=ddbtx+9MJn2q2moohVVw56P88ZhXFNpFIdu5hYRbAQXP6IUqKCcbb03FBgsgUdIb2woqWOkgnrzWtRMuc1ymvU9RA8hbEFy5LSQKnb1BSQLLtJiVUuiF4TsanhD8BKGDwq5nGbCLdmNW8fP3xU+RGGeKY77tBLWSQBqtaLKTz30=
+	t=1742905858; cv=none; b=Np9xNhxCl8ysArmAD5qQ2WU4SiKcOLR9oJb1r9lQMROYHMrpzLGiZsuFR7DnJw8V45SwXJqZGF+BnST4bdzZ7ygcECk5Gt8t7oYQtmS6PbFOK8Z6uRFhWamDW1BormN7OgpgeEegJ/XLBJtg9dLTjr7mfNHvsJQFrDOfOpyIxx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905856; c=relaxed/simple;
-	bh=TWHJs0Rgtgi/gjhepEJSMveLJDGM7aytLh+EYC+hBNI=;
+	s=arc-20240116; t=1742905858; c=relaxed/simple;
+	bh=dJdJi1qP8zhOQ21wxXukquza8J1lEq+Om9tx6SbXV+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plIWcNM5gLLDYirM+L3VWHoFrM7ov7wv6FltvUj8x8Fpwwman6gXChwJo0atuaGfOB7mYELZlGOU2KUDqyaiG8Qam2ISbnfYNsXUtDU0+3lhNqCmETNJt/7eTA3egvKiZyDwOgC+/LQxQVgf1PzNH83+hx1g8VahJ28P8slB474=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZVWCkuw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uq106N2x8W9S0ML0TMCZ+MAORAsNc/XqxjwSjX96TFKOUVWejP5bsLKCfEONCeGlMUXPtksNX1Rv4gRV6x09bT6vo2+uDdsRDLjIHbafqioJ/xxpjCB97Uq3yvH7JmDFYyXojsECmj7Mp73xThzNikyg6PJs2yqUCzIaTO5s86g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quD73EF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZVWCkuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F66C4CEE4;
-	Tue, 25 Mar 2025 12:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quD73EF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F49AC4CEED;
+	Tue, 25 Mar 2025 12:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905856;
-	bh=TWHJs0Rgtgi/gjhepEJSMveLJDGM7aytLh+EYC+hBNI=;
+	s=korg; t=1742905857;
+	bh=dJdJi1qP8zhOQ21wxXukquza8J1lEq+Om9tx6SbXV+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZVWCkuwUqynREwBj2IfmAag9RXrViAnQJV1eT7d1iOCXmbuCugdutYIp6Q4Qf53X
-	 IZCyKkOyEjRWQO99v3b8B/kOShFupHIYqi9HtA9HJUYyRHIovqSJTePoQe1ghIOP9g
-	 +wwSF/pNS4fxbbx+y4rFx8/cIrEGPO7GQFBa+kAA=
+	b=quD73EF5cL83tFEd0nvVolDzz/wkcV/AK92kA0w5GiH021hx8DBO6wKKlNauNxmob
+	 fsTFxNcGTWdbMhfIgqzvXGWZl4ti3AQQATgj3di2BlXye0uWEhpKYszHql9vWp5lFS
+	 oQMtawawqQQ0qy9kseIvyZ3Zi2gHMeQV7gIzGfsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 173/198] regulator: check that dummy regulator has been probed before using it
-Date: Tue, 25 Mar 2025 08:22:15 -0400
-Message-ID: <20250325122201.183300195@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.1 174/198] arm64: dts: freescale: imx8mm-verdin-dahlia: add Microphone Jack to sound card
+Date: Tue, 25 Mar 2025 08:22:16 -0400
+Message-ID: <20250325122201.210988673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -50,57 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit 2c7a50bec4958f1d1c84d19cde518d0e96a676fd upstream.
+commit 2c1092823eb03f8508d6769e2f38eef7e1fe62a0 upstream.
 
-Due to asynchronous driver probing there is a chance that the dummy
-regulator hasn't already been probed when first accessing it.
+The simple-audio-card's microphone widget currently connects to the
+headphone jack. Routing the microphone input to the microphone jack
+allows for independent operation of the microphone and headphones.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Link: https://patch.msgid.link/20250313103051.32430-3-ceggers@arri.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This resolves the following boot-time kernel log message, which
+indicated a conflict when the microphone and headphone functions were
+not separated:
+  debugfs: File 'Headphone Jack' in directory 'dapm' already present!
+
+Fixes: 6a57f224f734 ("arm64: dts: freescale: add initial support for verdin imx8m mini")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/core.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -2091,6 +2091,10 @@ static int regulator_resolve_supply(stru
- 
- 		if (have_full_constraints()) {
- 			r = dummy_regulator_rdev;
-+			if (!r) {
-+				ret = -EPROBE_DEFER;
-+				goto out;
-+			}
- 			get_device(&r->dev);
- 		} else {
- 			dev_err(dev, "Failed to resolve %s-supply for %s\n",
-@@ -2108,6 +2112,10 @@ static int regulator_resolve_supply(stru
- 			goto out;
- 		}
- 		r = dummy_regulator_rdev;
-+		if (!r) {
-+			ret = -EPROBE_DEFER;
-+			goto out;
-+		}
- 		get_device(&r->dev);
- 	}
- 
-@@ -2216,8 +2224,10 @@ struct regulator *_regulator_get(struct
- 			 * enabled, even if it isn't hooked up, and just
- 			 * provide a dummy.
- 			 */
--			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
- 			rdev = dummy_regulator_rdev;
-+			if (!rdev)
-+				return ERR_PTR(-EPROBE_DEFER);
-+			dev_warn(dev, "supply %s not found, using dummy regulator\n", id);
- 			get_device(&rdev->dev);
- 			break;
+--- a/arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin-dahlia.dtsi
+@@ -16,10 +16,10 @@
+ 			"Headphone Jack", "HPOUTR",
+ 			"IN2L", "Line In Jack",
+ 			"IN2R", "Line In Jack",
+-			"Headphone Jack", "MICBIAS",
+-			"IN1L", "Headphone Jack";
++			"Microphone Jack", "MICBIAS",
++			"IN1L", "Microphone Jack";
+ 		simple-audio-card,widgets =
+-			"Microphone", "Headphone Jack",
++			"Microphone", "Microphone Jack",
+ 			"Headphone", "Headphone Jack",
+ 			"Line", "Line In Jack";
  
 
 
