@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A10268698;
-	Tue, 25 Mar 2025 12:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3A31DBB13;
+	Tue, 25 Mar 2025 12:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905898; cv=none; b=ULiowoUVm75t5W7B41MGcurrq3qpMPNLHTcVeer7UZqi3NFvZsi3NEGUsVrpiFTn3PKKkTOG6/8baSlUf7GTZ0O1kftO/UKtX/cIN7S/aaV2i6WpqQ733RircPGjY8jmbcFP1w5ASog3aH9ercnr9/QlsGSPZHXMQo6AJHEGL94=
+	t=1742905900; cv=none; b=BXOxcXb8wzmh+ZT0TyfH5u0cYmKg45pH+fNWHrt7WLp2tFNuTtP2ffHFwex8YZAce1e7tGasLCorQK6sGWcTAsP/nVvlJlkpjgdHMR8e8xdpO0GDWde3GFc2Q8v7lU6ZeDFe+0zMq0dd6WqdkaP1ZfDvWdxYTbmHIeWwtwc+R6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905898; c=relaxed/simple;
-	bh=ygRgEea2J/kyF+wldbSVjAjPh+ipQtjFuFF9pe40jx0=;
+	s=arc-20240116; t=1742905900; c=relaxed/simple;
+	bh=/9Cv38kXIz06+8LLFRjUz9Vogg7H215cNutLO4luRHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CR/f45ddT5hxkOD2wdcf4MAse7sTD61zh9t9/N1aAoNe/izXpFvCQ4vJ0yd+WltrdOXw9/eCcsS5Xcs4hzvMkg1vJrnerjECZRY/6nWrsO+Bl0eLgS6LMQ5Jode7NmBs0kRJ3WIPv+47PWu2bxwTbZSKVcKWYhduz7yFui2yrHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uh4SNmZb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fo3yTdhVGxINC4J7kbfqgd7oquT907ibyZA5Ng68IRL0OiZJgIEQeiQkvqFh8D6kgDvmpM05ViASC+R8tcN7yP+DXWUb+h6uFmW/qULedoWlyPjfM1Nosa7LJ4DFyfCXhSujsFd0ejUHLn4ZAy45WEeh8v+rQIIALqmhWQm/UmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hWeVrWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uh4SNmZb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F230AC4CEE4;
-	Tue, 25 Mar 2025 12:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hWeVrWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6C0C4CEE9;
+	Tue, 25 Mar 2025 12:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905898;
-	bh=ygRgEea2J/kyF+wldbSVjAjPh+ipQtjFuFF9pe40jx0=;
+	s=korg; t=1742905900;
+	bh=/9Cv38kXIz06+8LLFRjUz9Vogg7H215cNutLO4luRHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uh4SNmZbasW2LVn2V6g3LSHGjnoi7oN3UHR3WIea3nf/QatysLz4bRAyW03TneEOw
-	 1Svn2XVR/yKtiQ/7t04y7f7rYQQcnvVUK4OrhrlOdvf+bmFzeUwvP7AlqKDeDv8yKX
-	 LRvXdfDNyzb+pl0ZjxQ7EtvIPtL86EVBjkg62QxM=
+	b=1hWeVrWMvwk6SGD/s5s8fKORt3ji9F+RF9uBVARbT9fASWaqHjIeJjOnNd9M/zlwH
+	 mQUQA1sOGb2FLrByKVZxc8JZtAXINPIWcRBEi6R2qt07sRSbsIW+SYvkvEoV0H6vRh
+	 5A7ArYn5ZHX+zxYC476itRvOX6umlF/ZPdnTpzzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 007/119] xfrm_output: Force software GSO only in tunnel mode
-Date: Tue, 25 Mar 2025 08:21:05 -0400
-Message-ID: <20250325122149.247640515@linuxfoundation.org>
+Subject: [PATCH 6.13 008/119] soc: imx8m: Unregister cpufreq and soc dev in cleanup path
+Date: Tue, 25 Mar 2025 08:21:06 -0400
+Message-ID: <20250325122149.273751034@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
 References: <20250325122149.058346343@linuxfoundation.org>
@@ -54,75 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 0aae2867aa6067f73d066bc98385e23c8454a1d7 ]
+[ Upstream commit cf7139aac463880cbd5c5e999c118fbe91631411 ]
 
-The cited commit fixed a software GSO bug with VXLAN + IPSec in tunnel
-mode. Unfortunately, it is slightly broader than necessary, as it also
-severely affects performance for Geneve + IPSec transport mode over a
-device capable of both HW GSO and IPSec crypto offload. In this case,
-xfrm_output unnecessarily triggers software GSO instead of letting the
-HW do it. In simple iperf3 tests over Geneve + IPSec transport mode over
-a back-2-back pair of NICs with MTU 1500, the performance was observed
-to be up to 6x worse when doing software GSO compared to leaving it to
-the hardware.
+Unregister the cpufreq device and soc device when resource unwinding,
+otherwise there will be warning when do removing test:
+sysfs: cannot create duplicate filename '/devices/platform/imx-cpufreq-dt'
+CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.13.0-rc1-next-20241204
+Hardware name: NXP i.MX8MPlus EVK board (DT)
 
-This commit makes xfrm_output only trigger software GSO in crypto
-offload cases for already encapsulated packets in tunnel mode, as not
-doing so would then cause the inner tunnel skb->inner_networking_header
-to be overwritten and break software GSO for that packet later if the
-device turns out to not be capable of HW GSO.
-
-Taking a closer look at the conditions for the original bug, to better
-understand the reasons for this change:
-- vxlan_build_skb -> iptunnel_handle_offloads sets inner_protocol and
-  inner network header.
-- then, udp_tunnel_xmit_skb -> ip_tunnel_xmit adds outer transport and
-  network headers.
-- later in the xmit path, xfrm_output -> xfrm_outer_mode_output ->
-  xfrm4_prepare_output -> xfrm4_tunnel_encap_add overwrites the inner
-  network header with the one set in ip_tunnel_xmit before adding the
-  second outer header.
-- __dev_queue_xmit -> validate_xmit_skb checks whether GSO segmentation
-  needs to happen based on dev features. In the original bug, the hw
-  couldn't segment the packets, so skb_gso_segment was invoked.
-- deep in the .gso_segment callback machinery, __skb_udp_tunnel_segment
-  tries to use the wrong inner network header, expecting the one set in
-  iptunnel_handle_offloads but getting the one set by xfrm instead.
-- a bit later, ipv6_gso_segment accesses the wrong memory based on that
-  wrong inner network header.
-
-With the new change, the original bug (or similar ones) cannot happen
-again, as xfrm will now trigger software GSO before applying a tunnel.
-This concern doesn't exist in packet offload mode, when the HW adds
-encapsulation headers. For the non-offloaded packets (crypto in SW),
-software GSO is still done unconditionally in the else branch.
-
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Fixes: a204aef9fd77 ("xfrm: call xfrm_output_gso when inner_protocol is set in xfrm_output")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 9cc832d37799 ("soc: imx8m: Probe the SoC driver as platform driver")
+Cc: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/imx/soc-imx8m.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
-index 9160a5e09041d..a30538a980cc7 100644
---- a/net/xfrm/xfrm_output.c
-+++ b/net/xfrm/xfrm_output.c
-@@ -793,7 +793,7 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
- 		skb->encapsulation = 1;
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index 8ac7658e3d525..3ed8161d7d28b 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -192,9 +192,20 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
+ 	devm_kasprintf((dev), GFP_KERNEL, "%d.%d", ((soc_rev) >> 4) & 0xf, (soc_rev) & 0xf) : \
+ 	"unknown"
  
- 		if (skb_is_gso(skb)) {
--			if (skb->inner_protocol)
-+			if (skb->inner_protocol && x->props.mode == XFRM_MODE_TUNNEL)
- 				return xfrm_output_gso(net, sk, skb);
++static void imx8m_unregister_soc(void *data)
++{
++	soc_device_unregister(data);
++}
++
++static void imx8m_unregister_cpufreq(void *data)
++{
++	platform_device_unregister(data);
++}
++
+ static int imx8m_soc_probe(struct platform_device *pdev)
+ {
+ 	struct soc_device_attribute *soc_dev_attr;
++	struct platform_device *cpufreq_dev;
+ 	const struct imx8_soc_data *data;
+ 	struct device *dev = &pdev->dev;
+ 	const struct of_device_id *id;
+@@ -239,11 +250,22 @@ static int imx8m_soc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(soc_dev))
+ 		return PTR_ERR(soc_dev);
  
- 			skb_shinfo(skb)->gso_type |= SKB_GSO_ESP;
++	ret = devm_add_action(dev, imx8m_unregister_soc, soc_dev);
++	if (ret)
++		return ret;
++
+ 	pr_info("SoC: %s revision %s\n", soc_dev_attr->soc_id,
+ 		soc_dev_attr->revision);
+ 
+-	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT))
+-		platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
++	if (IS_ENABLED(CONFIG_ARM_IMX_CPUFREQ_DT)) {
++		cpufreq_dev = platform_device_register_simple("imx-cpufreq-dt", -1, NULL, 0);
++		if (IS_ERR(cpufreq_dev))
++			return dev_err_probe(dev, PTR_ERR(cpufreq_dev),
++					     "Failed to register imx-cpufreq-dev device\n");
++		ret = devm_add_action(dev, imx8m_unregister_cpufreq, cpufreq_dev);
++		if (ret)
++			return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
