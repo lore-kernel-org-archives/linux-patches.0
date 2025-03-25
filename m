@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C916267392;
-	Tue, 25 Mar 2025 12:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F913266595;
+	Tue, 25 Mar 2025 12:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905749; cv=none; b=Y/xmv2pQqXTO1j/GkQLKQhhYI19Pw3yTO2x4PWxKgiz6muDDbql7Fgu0FdEuRnT6lLpy1aoLzDhrgAXItFyCC8aWuCqOvxPaISC0myx3+CLuAr+ItwHtzV0wvH4zTObmdlubh+LSrN7RxkvoMofxaeIBBmbgTeDxcIurOO78Eys=
+	t=1742905751; cv=none; b=MJSF6QP6weu9rpmNLTfBTL/H/uG3YC+COVSRqZcMrA1Gb0gLjuBj0bgCbVCpKW2LabknazSWvoP+mtEmxhzzbticAVxgU31wwgRPCnLb6GOFBHzMl1CJCNjn5a7mUddcZQfizS+yo36RsCHqGb8qQopXGwMw8NPgLnj5YBuwpWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905749; c=relaxed/simple;
-	bh=HFOntlfb4cKWP5g6W6Gei/iUWSa3QY4Og9QkoE/v7gI=;
+	s=arc-20240116; t=1742905751; c=relaxed/simple;
+	bh=s1prWTeFJZKHLrj3GH4Ad1HdY2hjqMHELNYUQM/b81g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmE2FNiq7+snosnIlcA8i9cYZkuzQYZfgh6ZINerILRWNkw81o3lz00KcolxHazLQCW7drR02WwYkP7xLfNPqWHCWcpBewUVr6UYZOAv8c1FDf+G2OLsMv6rO06Cj8ga3XUrfxYmqoZ8nIuVVQM6FZT7TPZXIsTlDbtl+DWfWHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlvAMpsh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eh6xNka0nWDJqBoh+zAMzuDVTw1EKVWwGL2tr9rNi+ibM1EBsMXqUJmkR3vPEnz2tNLsITzbVoG5Lq8E7FlVZQdumtkKCjTpLJfAXew1fJAqaaHHv8SlcFRoM4+T9iwXyxvhItEUoY2XphVbqGIKkuc1xReMrlzMQseZ7Ptxurg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCyovLf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlvAMpsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A06C4CEE4;
-	Tue, 25 Mar 2025 12:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCyovLf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA14C4CEE4;
+	Tue, 25 Mar 2025 12:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742905749;
-	bh=HFOntlfb4cKWP5g6W6Gei/iUWSa3QY4Og9QkoE/v7gI=;
+	s=korg; t=1742905751;
+	bh=s1prWTeFJZKHLrj3GH4Ad1HdY2hjqMHELNYUQM/b81g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RlvAMpshFB7xN+egV+isHEyLkEPvDmbCArccw3d3p36AUB2pfg58MlKaaVcW7cfSK
-	 jSTq2pZbnaqnqnKSvaEt//dWjYrzmhwYmo81TEXvikiDTHDN61AuyJ5tnXwsZKg+tz
-	 zaL5T308sUM5qPDZdc97LjK8KrNn8IHk+0yO9OEE=
+	b=nCyovLf1PaZvG6HR2BO6m0mEwURtLR9dbHMtXaaVei4HkyZtycKbwKtSEXsgC6wRr
+	 LstvvErhKHawyDstt8mH7vl2xCVm3nyT8gQ21qSoXa9W+dlbOjhfuKS9IA/Laa/baj
+	 oTdWwnBYDpI++02PcfpTiuaxGop8R0VjnrW2P+Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 112/198] x86/microcode/AMD: Fix out-of-bounds on systems with CPU-less NUMA nodes
-Date: Tue, 25 Mar 2025 08:21:14 -0400
-Message-ID: <20250325122159.591824042@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>
+Subject: [PATCH 6.1 103/198] xfs: remove conditional building of rt geometry validator functions
+Date: Tue, 25 Mar 2025 08:21:05 -0400
+Message-ID: <20250325122159.357476765@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122156.633329074@linuxfoundation.org>
 References: <20250325122156.633329074@linuxfoundation.org>
@@ -50,74 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-commit e3e89178a9f4a80092578af3ff3c8478f9187d59 upstream.
+[ Upstream commit 881f78f472556ed05588172d5b5676b48dc48240 ]
 
-Currently, load_microcode_amd() iterates over all NUMA nodes, retrieves their
-CPU masks and unconditionally accesses per-CPU data for the first CPU of each
-mask.
+[ 6.1: used 6.6 backport to minimize conflicts ]
 
-According to Documentation/admin-guide/mm/numaperf.rst:
+[backport: resolve merge conflicts due to refactoring rtbitmap/summary
+macros and accessors]
 
-  "Some memory may share the same node as a CPU, and others are provided as
-  memory only nodes."
+I mistakenly turned off CONFIG_XFS_RT in the Kconfig file for arm64
+variant of the djwong-wtf git branch.  Unfortunately, it took me a good
+hour to figure out that RT wasn't built because this is what got printed
+to dmesg:
 
-Therefore, some node CPU masks may be empty and wouldn't have a "first CPU".
+XFS (sda2): realtime geometry sanity check failed
+XFS (sda2): Metadata corruption detected at xfs_sb_read_verify+0x170/0x190 [xfs], xfs_sb block 0x0
 
-On a machine with far memory (and therefore CPU-less NUMA nodes):
-- cpumask_of_node(nid) is 0
-- cpumask_first(0) is CONFIG_NR_CPUS
-- cpu_data(CONFIG_NR_CPUS) accesses the cpu_info per-CPU array at an
-  index that is 1 out of bounds
+Whereas I would have expected:
 
-This does not have any security implications since flashing microcode is
-a privileged operation but I believe this has reliability implications by
-potentially corrupting memory while flashing a microcode update.
+XFS (sda2): Not built with CONFIG_XFS_RT
+XFS (sda2): RT mount failed
 
-When booting with CONFIG_UBSAN_BOUNDS=y on an AMD machine that flashes
-a microcode update. I get the following splat:
+The root cause of these problems is the conditional compilation of the
+new functions xfs_validate_rtextents and xfs_compute_rextslog that I
+introduced in the two commits listed below.  The !RT versions of these
+functions return false and 0, respectively, which causes primary
+superblock validation to fail, which explains the first message.
 
-  UBSAN: array-index-out-of-bounds in arch/x86/kernel/cpu/microcode/amd.c:X:Y
-  index 512 is out of range for type 'unsigned long[512]'
-  [...]
-  Call Trace:
-   dump_stack
-   __ubsan_handle_out_of_bounds
-   load_microcode_amd
-   request_microcode_amd
-   reload_store
-   kernfs_fop_write_iter
-   vfs_write
-   ksys_write
-   do_syscall_64
-   entry_SYSCALL_64_after_hwframe
+Move the two functions to other parts of libxfs that are not
+conditionally defined by CONFIG_XFS_RT and remove the broken stubs so
+that validation works again.
 
-Change the loop to go over only NUMA nodes which have CPUs before determining
-whether the first CPU on the respective node needs microcode update.
-
-  [ bp: Massage commit message, fix typo. ]
-
-Fixes: 7ff6edf4fef3 ("x86/microcode/AMD: Fix mixed steppings support")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250310144243.861978-1-revest@chromium.org
+Fixes: e14293803f4e ("xfs: don't allow overly small or large realtime volumes")
+Fixes: a6a38f309afc ("xfs: make rextslog computation consistent with mkfs")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_rtbitmap.c |   14 --------------
+ fs/xfs/libxfs/xfs_rtbitmap.h |   16 ----------------
+ fs/xfs/libxfs/xfs_sb.c       |   14 ++++++++++++++
+ fs/xfs/libxfs/xfs_sb.h       |    2 ++
+ fs/xfs/libxfs/xfs_types.h    |   12 ++++++++++++
+ fs/xfs/scrub/rtbitmap.c      |    1 +
+ 6 files changed, 29 insertions(+), 30 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -867,7 +867,7 @@ static enum ucode_state load_microcode_a
- 		return ret;
- 	}
+--- a/fs/xfs/libxfs/xfs_rtbitmap.c
++++ b/fs/xfs/libxfs/xfs_rtbitmap.c
+@@ -1131,17 +1131,3 @@ xfs_rtalloc_extent_is_free(
+ 	return 0;
+ }
  
--	for_each_node(nid) {
-+	for_each_node_with_cpus(nid) {
- 		cpu = cpumask_first(cpumask_of_node(nid));
- 		c = &cpu_data(cpu);
+-/*
+- * Compute the maximum level number of the realtime summary file, as defined by
+- * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
+- * use of rt volumes with more than 2^32 extents.
+- */
+-uint8_t
+-xfs_compute_rextslog(
+-	xfs_rtbxlen_t		rtextents)
+-{
+-	if (!rtextents)
+-		return 0;
+-	return xfs_highbit64(rtextents);
+-}
+-
+--- a/fs/xfs/libxfs/xfs_rtbitmap.h
++++ b/fs/xfs/libxfs/xfs_rtbitmap.h
+@@ -71,20 +71,6 @@ xfs_rtfree_extent(
+ int xfs_rtfree_blocks(struct xfs_trans *tp, xfs_fsblock_t rtbno,
+ 		xfs_filblks_t rtlen);
+ 
+-uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
+-
+-/* Do we support an rt volume having this number of rtextents? */
+-static inline bool
+-xfs_validate_rtextents(
+-	xfs_rtbxlen_t		rtextents)
+-{
+-	/* No runt rt volumes */
+-	if (rtextents == 0)
+-		return false;
+-
+-	return true;
+-}
+-
+ #else /* CONFIG_XFS_RT */
+ # define xfs_rtfree_extent(t,b,l)			(-ENOSYS)
+ # define xfs_rtfree_blocks(t,rb,rl)			(-ENOSYS)
+@@ -92,8 +78,6 @@ xfs_validate_rtextents(
+ # define xfs_rtalloc_query_all(m,t,f,p)			(-ENOSYS)
+ # define xfs_rtbuf_get(m,t,b,i,p)			(-ENOSYS)
+ # define xfs_rtalloc_extent_is_free(m,t,s,l,i)		(-ENOSYS)
+-# define xfs_compute_rextslog(rtx)			(0)
+-# define xfs_validate_rtextents(rtx)			(false)
+ #endif /* CONFIG_XFS_RT */
+ 
+ #endif /* __XFS_RTBITMAP_H__ */
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -1367,3 +1367,17 @@ xfs_validate_stripe_geometry(
+ 	}
+ 	return true;
+ }
++
++/*
++ * Compute the maximum level number of the realtime summary file, as defined by
++ * mkfs.  The historic use of highbit32 on a 64-bit quantity prohibited correct
++ * use of rt volumes with more than 2^32 extents.
++ */
++uint8_t
++xfs_compute_rextslog(
++	xfs_rtbxlen_t		rtextents)
++{
++	if (!rtextents)
++		return 0;
++	return xfs_highbit64(rtextents);
++}
+--- a/fs/xfs/libxfs/xfs_sb.h
++++ b/fs/xfs/libxfs/xfs_sb.h
+@@ -38,4 +38,6 @@ extern int	xfs_sb_get_secondary(struct x
+ extern bool	xfs_validate_stripe_geometry(struct xfs_mount *mp,
+ 		__s64 sunit, __s64 swidth, int sectorsize, bool silent);
+ 
++uint8_t xfs_compute_rextslog(xfs_rtbxlen_t rtextents);
++
+ #endif	/* __XFS_SB_H__ */
+--- a/fs/xfs/libxfs/xfs_types.h
++++ b/fs/xfs/libxfs/xfs_types.h
+@@ -228,4 +228,16 @@ bool xfs_verify_fileoff(struct xfs_mount
+ bool xfs_verify_fileext(struct xfs_mount *mp, xfs_fileoff_t off,
+ 		xfs_fileoff_t len);
+ 
++/* Do we support an rt volume having this number of rtextents? */
++static inline bool
++xfs_validate_rtextents(
++	xfs_rtbxlen_t		rtextents)
++{
++	/* No runt rt volumes */
++	if (rtextents == 0)
++		return false;
++
++	return true;
++}
++
+ #endif	/* __XFS_TYPES_H__ */
+--- a/fs/xfs/scrub/rtbitmap.c
++++ b/fs/xfs/scrub/rtbitmap.c
+@@ -14,6 +14,7 @@
+ #include "xfs_rtbitmap.h"
+ #include "xfs_inode.h"
+ #include "xfs_bmap.h"
++#include "xfs_sb.h"
+ #include "scrub/scrub.h"
+ #include "scrub/common.h"
  
 
 
