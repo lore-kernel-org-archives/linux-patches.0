@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0825E802;
-	Tue, 25 Mar 2025 12:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF69D25C6E0;
+	Tue, 25 Mar 2025 12:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906428; cv=none; b=MO0r4dgicnvhpvE6JaZIrspFnnAV6Cn3Tf+yNJYNENs8X7qbCNRI15ecUq9+ORWLQ24NvHtEM8/6DyHqWqvf8R2p31DrJ1/Q2oJP9K631RvXia03mEaZRVgtQu6zpZcO0M4iN4fmMWgpKiOqWbeXcv18LdQGPStu6/PJHEp5D/U=
+	t=1742906430; cv=none; b=afBc09S9/ZpgLjS0ipxcgsGYt6NvxalAqW8tLcQ29tMqd+V/LQNyD9xKcI0i3lYPPlZaiMGcs4IoMSjjfwyTDKT1HtNOO4J76D5g+NojAiFxzv46jgVmBcFhGr9etH8KyiUIogKsu/yr9veqcCgWqwhw1qLPxvvFiNXcjb91Yzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906428; c=relaxed/simple;
-	bh=eXXqMcKadtz2hKc7YZ0hspRu8vba7LqDFJ8shqIqiBk=;
+	s=arc-20240116; t=1742906430; c=relaxed/simple;
+	bh=eGJKxyNuojzrlzR1iVPwlGX6IS6mg4R313BXpYB77UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HjSnKILsXCCVvWjtBpY6b75fLiAo1EVxlKU2iQpDOA/x3oac0dMO0YS6SQvKVBFYc66gD0/6K88qai6RDPYyF+gP+wmeG5+PY6VwjLwQyCHDd+HDGqOhjqsqtOPBgAiJqo52hkWpxvqoehSWdf8sLRq6zt3DVzUMJrh06/EAX6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSlLDKNc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCvvH1KoCsPm5lugXc5kPhGWxUVe40mZ2wwbp8t4odJzKf/gvPqvmh978E2DYDFvc2BOeCFQuh4Tzs/qXwdkx/V03owPOIBTmou482ri+iIUshANVq0YVBLoeRNGH8XWAF8RIgxc9iLgpkzrO2s34j7kvUxDEKpBdgV82359tbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3BaS7UW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSlLDKNc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4430C4CEE4;
-	Tue, 25 Mar 2025 12:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3BaS7UW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93437C4CEE4;
+	Tue, 25 Mar 2025 12:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742906428;
-	bh=eXXqMcKadtz2hKc7YZ0hspRu8vba7LqDFJ8shqIqiBk=;
+	s=korg; t=1742906429;
+	bh=eGJKxyNuojzrlzR1iVPwlGX6IS6mg4R313BXpYB77UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSlLDKNcruxJw1BwB71V8KPTOnoy6H3l60D2JaTBZvuWkqchIZ4lT6ebI9fI+JSPS
-	 3bZ0rExGvfiV2/pkwpEo/S89pn5fQKHh6O4jQv3+57faBVmcGook49Pt8T+7A7c9GA
-	 wxx0d5yDkignRb6s/06IveKOeWDqW7k4F+fBLPCk=
+	b=W3BaS7UW4S/AnpWnZ4hNS7M4253r6ZyyldSJLxRkjqXBTlDz18a4iXaN+y0mULil7
+	 3Q/Mn2npaPDhMvsbL+/qb0LvLrU/W1AAES46PS6dmPttw65ktXOkScqMsG3Phe1xct
+	 /pvUaAT4Bqoikvhnk9yQmD+RoJDxSS3jri4URpkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eder Zulian <ezulian@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.12 113/116] libsubcmd: Silence compiler warning
-Date: Tue, 25 Mar 2025 08:23:20 -0400
-Message-ID: <20250325122152.095888538@linuxfoundation.org>
+	Justin Klaassen <justin@tidylabs.net>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 114/116] arm64: dts: rockchip: fix u2phy1_host status for NanoPi R4S
+Date: Tue, 25 Mar 2025 08:23:21 -0400
+Message-ID: <20250325122152.120574856@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250325122149.207086105@linuxfoundation.org>
 References: <20250325122149.207086105@linuxfoundation.org>
@@ -48,60 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eder Zulian <ezulian@redhat.com>
+From: Justin Klaassen <justin@tidylabs.net>
 
-commit 7a4ffec9fd54ea27395e24dff726dbf58e2fe06b upstream.
+commit 38f4aa34a5f737ea8588dac320d884cc2e762c03 upstream.
 
-Initialize the pointer 'o' in options__order to NULL to prevent a
-compiler warning/error which is observed when compiling with the '-Og'
-option, but is not emitted by the compiler with the current default
-compilation options.
+The u2phy1_host should always have the same status as usb_host1_ehci
+and usb_host1_ohci, otherwise the EHCI and OHCI drivers may be
+initialized for a disabled usb port.
 
-For example, when compiling libsubcmd with
+Per the NanoPi R4S schematic, the phy-supply for u2phy1_host is set to
+the vdd_5v regulator.
 
- $ make "EXTRA_CFLAGS=-Og" -C tools/lib/subcmd/ clean all
-
-Clang version 17.0.6 and GCC 13.3.1 fail to compile parse-options.c due
-to following error:
-
-  parse-options.c: In function ‘options__order’:
-  parse-options.c:832:9: error: ‘o’ may be used uninitialized [-Werror=maybe-uninitialized]
-    832 |         memcpy(&ordered[nr_opts], o, sizeof(*o));
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  parse-options.c:810:30: note: ‘o’ was declared here
-    810 |         const struct option *o, *p = opts;
-        |                              ^
-  cc1: all warnings being treated as errors
-
-Signed-off-by: Eder Zulian <ezulian@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20241022172329.3871958-4-ezulian@redhat.com
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: db792e9adbf8 ("rockchip: rk3399: Add support for FriendlyARM NanoPi R4S")
+Cc: stable@vger.kernel.org
+Signed-off-by: Justin Klaassen <justin@tidylabs.net>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250225170420.3898-1-justin@tidylabs.net
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/subcmd/parse-options.c |    2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/lib/subcmd/parse-options.c
-+++ b/tools/lib/subcmd/parse-options.c
-@@ -807,7 +807,7 @@ static int option__cmp(const void *va, c
- static struct option *options__order(const struct option *opts)
- {
- 	int nr_opts = 0, nr_group = 0, nr_parent = 0, len;
--	const struct option *o, *p = opts;
-+	const struct option *o = NULL, *p = opts;
- 	struct option *opt, *ordered = NULL, *group;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-nanopi-r4s.dts
+@@ -117,7 +117,7 @@
+ };
  
- 	/* flatten the options that have parents */
+ &u2phy1_host {
+-	status = "disabled";
++	phy-supply = <&vdd_5v>;
+ };
+ 
+ &uart0 {
 
 
