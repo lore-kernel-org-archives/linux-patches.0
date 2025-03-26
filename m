@@ -1,71 +1,71 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920B31FBC8A
-	for <patches@lists.linux.dev>; Wed, 26 Mar 2025 20:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B0425EFAC
+	for <patches@lists.linux.dev>; Wed, 26 Mar 2025 21:10:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743021970; cv=none; b=YiG17o2DStJ/J8ZYua1v/lYvZE+c6e3QUaPAEkUlm2wqmP2quOH77b4nhQ/ie298k8ZHtaGcXsxqj9+eIsX/DRbGbq6XEx7EbGzx3daF0f1JpG4DopqBbJIJPSiaAX2Pb9ZIcISlFfCi8W6qq9qi9qZN+fcITzWzCJOMumRzppw=
+	t=1743023454; cv=none; b=Z71d744TyTmJ8UPS5i3+d7G0XxVZfQUNAQRjaNoT4cE9EtquB0VJU1d/FON0m9X52MVVFZXvf5CIl9Y4oNwtjTXLXDupYQ+Q6+kYq9aREyqFmsFCmIVeaHBUwXMoVrD+WtLqKu0rPCcZhxsJ8lt5VKlnLp07TPsD/HUhITHiAc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743021970; c=relaxed/simple;
-	bh=0fffkpb2/dTnrDBMgXFpfQbnuIh9s/gxDQH3AhTGbzs=;
+	s=arc-20240116; t=1743023454; c=relaxed/simple;
+	bh=KtFDJQf3LCeM6WKs6szT70ZPm1vK4ET1jMCs1JH8pQs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZ7ck9PUjMijquHZnFLyuFZR5w6CTe13TmtrWVq0hDPXkGuO/T+/tI9Z12n7IJ/OtN74N3/TRjLXecf8mDXrWafPUG9yPHCVeMnzQGBrnTx8kYwOqtb9pOUqCMNSj4G63G3zuvqZPwbPtivy/dvxXj879P6Cbewt7NXJFGUK4LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fromorbit.com; spf=pass smtp.mailfrom=fromorbit.com; dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b=Z700/nD+; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=oeMdAGECuA4jXXhbqyQG9LI0o1TvzqlmtAaHSlQZeEI7AxjzY7jS9bkwaMTR/gOxp3HKiW6S3r5a9hmBEgyDkTewT21Wh2yUPpHBGgyfWNKQe4Em40fOKugBcvlppbUcXgLLz71qKZgl6NVeCvW7yRbT2Yje9NYz8gzC2chwbUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fromorbit.com; spf=pass smtp.mailfrom=fromorbit.com; dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b=nptmnjTC; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fromorbit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fromorbit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b="Z700/nD+"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-224341bbc1dso6353715ad.3
-        for <patches@lists.linux.dev>; Wed, 26 Mar 2025 13:46:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b="nptmnjTC"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3014cb646ecso321244a91.1
+        for <patches@lists.linux.dev>; Wed, 26 Mar 2025 14:10:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fromorbit-com.20230601.gappssmtp.com; s=20230601; t=1743021968; x=1743626768; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l0DxjNG0t0sEawU75w2W9OviEBnYSuXggXRVCOAy4Bs=;
-        b=Z700/nD+K5X4V2s5HZPsvKDiGlTa5ZvKzycTFSTGY++Fy8ZVZNfs864vCddWxxLa/b
-         n952WxKu5o+YVwrSX1BG3GuJkaYJfS9jcN58jbHD+E4afIoWQqbav43v/Wq8+eTTJrCl
-         M5f7FbKhYGyd0P40JVnhNQpC8KPduwgRdVWD8i2TUfkQo2HinA/SLIH5oQylkba+zYkH
-         AQaVyHlZKWYLCzDF/nCNgV2Rcwnh2GGtUyhkc7SKGtYVCu778EbHViApSwl7N8xuvrNu
-         rrF2mM70Va3X8hZE0bGy2jIZehjd2kdDbJvsCjbOQ2hGVl53FLg3LxNWt4rUerAoTQGd
-         EVwQ==
+        d=fromorbit-com.20230601.gappssmtp.com; s=20230601; t=1743023451; x=1743628251; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8r5zblQElbPQO87GHLZRnHgdEdr+1fSpbnjgQJ9+CIo=;
+        b=nptmnjTCvolae3sU3kVlJXEQf9t7GfzI+59rGh00FO5N7J8vUe+/a0RrkFG/WNxAv5
+         1Xn1k0j8c3vOGx/fg4TkjUerkVNWpsih6j9u5WybCx8j/Eq2rpfTGerB74xhGx/4+uyz
+         33iyER4TBQ1e6GedCsH2Yf7c5M4rlhsTCpC8ODCU4XaQ01TtAWl6qf2NQU4er1oRjHaZ
+         QnlBbn7/ddVtSBdh0hLwjWjdvozH+qoi2IuvWtDS5jDyoWFqVJ/vldBP3lSLAZX7jHof
+         VoDhObanTpdY1qZg5O/XOz5OOao0ETjBk6VHME3yNzpr0iWolWnoQiD6JsgCm+ennx+N
+         eQeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743021968; x=1743626768;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l0DxjNG0t0sEawU75w2W9OviEBnYSuXggXRVCOAy4Bs=;
-        b=JcEwnyigr6izaCfULNgXEcuOyXuiVkfPyjYWApwEoS0VgXtf7eb5mbo4b7wgzla759
-         Q+2IW1YjTiE3Dd3+IocgeTF//A5/jKqg6Lh7lvRJFYw6aCq7u295DhZ+3uUH4hyEzNSG
-         ItXUOgjohKFAi2dpMKfxpIHj+WarcGebiPLyzs/wmgHx40erCNxrMHLK1Ha5SXWJilGG
-         R46BsEnMuodR1CSkVuybJgyh+vnR4/VMdwy4VH/ruUF/4bix6a1fWM0/DE1vhVzyVkXJ
-         ebPBBXrNCj1BCf8Iy1lsG1wG1NHb5trKeNvysbHX7GgWl22hZ6dKhyzjoVlP6+dc31EN
-         tsuw==
-X-Forwarded-Encrypted: i=1; AJvYcCX34kYr4fhjZ0REmar1RXp3l0JuNwfGxSfiuUqRo45FW60ugRyKeMfS5MHY765jnZ1uATZvgTDh@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw5d+wMl9ryCoE//Fmoi4od01IokM5e8LnvZ9a0Lwm7N2WH8K2l
-	bHgPbq9+JnVUwgteMsU3tg6zgkiIK32iDBI8tLxCdDPxVpBnhKfDucX/+SnDu6E=
-X-Gm-Gg: ASbGnctr2zXqfvBHNfKAKQpqZTzrW/Ww/AldeHKGjmd0MCFaWmb7NfwOw60wRi2sUy/
-	x/3bUmstyd0UnvBiHGBodcca5obT2BfR+A7KHe3KXSIHqk1ho1JAWy8lt/4eFrj9FqI8G/oPvjT
-	nLdEeu7LzzIQEdkomPv3m2QH4kD8lN49HUHOTZAYVNOLakEcr+g2MludeldgJE9IMQ9VfhDEULv
-	l0AxyaTDnnvQ6K4ykLlyCsw25nUtXlmZiDDXq8zEexpw1zvFhl7vNCyMpGC6yA3r8ZJ7JPp7DhQ
-	lLRbv1xuv8fIsJBgeXDlIt8ma1HHk/T1R46Ya2lOJUFKsKCuNN4ZeXHzVjrjtTjs9CZtl4Npra9
-	px+SaxHxUx7LMTV/yhQ==
-X-Google-Smtp-Source: AGHT+IHYC9faJMfvw3S3nDn2V7wFInikoEkVJnJUgRfyAHRL+/TjLMdCvBBuENH2adHdN+PgG4A1eA==
-X-Received: by 2002:a17:90b:2c84:b0:2ff:6e72:b8e2 with SMTP id 98e67ed59e1d1-303a8e76448mr1592314a91.31.1743021967688;
-        Wed, 26 Mar 2025 13:46:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743023451; x=1743628251;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8r5zblQElbPQO87GHLZRnHgdEdr+1fSpbnjgQJ9+CIo=;
+        b=B2qqTb6eAC/GZDROPC50mU6JsnctSBzz7dGaL6rA19zJ2qSdgKf2Zwd4f+gqpvz0kH
+         E46Ks1h8zQNGTbO9oKgRNUrV4LzDQydz9ALgvVsaESqElJL9iBAP0Cr4SfqaAqRqBX0k
+         AT/SZsCYvjC8sYBqykDerU3IPZ7f1ewHr1Uc/6AjhRkuZyPFsA8uiEPduu5qbZKhrQaU
+         qO20PqMkYANjAVADUt8UTe/hbs1RVTWjOaHB+/yVfguo1iEqcYuKZjKhOe1tRL3qbjYH
+         j9IehALbnmaHJTS3wS7s6oTCR9lieeDJTRkPuoiVx6IzA5UtF4psQT8O0Rwbo+nBxSnn
+         QdUw==
+X-Gm-Message-State: AOJu0YzJbB/x+m3m6vuGoWwhjETj+nz8MyebguBQnG9fcOYXK/T857MB
+	fKPePJ6Ut5us+Do71nvnsyVDTlDmqhtqOzO5lyUwNQnzwR+UPR4sqhOKCHv5k7vAkQeQ8yFcJOo
+	S
+X-Gm-Gg: ASbGncuJH/wCWLPl+4T+bxOqpQscGaR4SWiEC/E4SW2kRjMefGLm4vi3Zrq1EazORWQ
+	pcq3u989NPp4UaZfajn0y4qZp6HqqqIa+p5sxMhdNJzhLdiL60CCPCJ2b9C5blun4MgpMEj64A4
+	aD2d7WYEHfH1+BlPaIe0wnAhDgJZluyPZ8N2VuwTd5qxx5nATUanE0bFUAuELAsmS0nzrGxQBAm
+	vvLZOkvS9TaBiYf5BNL+hJW//stlLUBYIftOqXcIWgbsH3TMWYBbNaT1xiFIb+O2SuFSjpC/MD4
+	W02oycFg1xcnG+a10YuiavfEgmHcKK6MHM204Np3TULKS9907arD7IxLS1jvWqRdDR/llTYyIzl
+	VdZ2+eK4=
+X-Google-Smtp-Source: AGHT+IH74ag5XeN4ls7BanUgMSLHcrsUvl+HEw2fiukQfAGjZxR0vReelBylQGQRPmjYWqz5PrQAvw==
+X-Received: by 2002:a17:90a:d2cb:b0:2ff:7b28:a51a with SMTP id 98e67ed59e1d1-303a815a72cmr2059828a91.17.1743023450937;
+        Wed, 26 Mar 2025 14:10:50 -0700 (PDT)
 Received: from dread.disaster.area (pa49-181-60-96.pa.nsw.optusnet.com.au. [49.181.60.96])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3039e60f81fsm752510a91.48.2025.03.26.13.46.07
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811b2ae1sm114999645ad.114.2025.03.26.14.10.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Mar 2025 13:46:07 -0700 (PDT)
+        Wed, 26 Mar 2025 14:10:50 -0700 (PDT)
 Received: from dave by dread.disaster.area with local (Exim 4.98)
 	(envelope-from <david@fromorbit.com>)
-	id 1txXdT-00000000gYk-3LF2;
-	Thu, 27 Mar 2025 07:46:03 +1100
-Date: Thu, 27 Mar 2025 07:46:03 +1100
+	id 1txY1P-00000000h3J-1N9l;
+	Thu, 27 Mar 2025 08:10:47 +1100
+Date: Thu, 27 Mar 2025 08:10:47 +1100
 From: Dave Chinner <david@fromorbit.com>
 To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: lsf-pc@lists.linux-foundation.org, patches@lists.linux.dev,
-	fstests@vger.kernel.org, linux-mm@kvack.org,
+Cc: patches@lists.linux.dev, fstests@vger.kernel.org, linux-mm@kvack.org,
 	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
 	oliver.sang@intel.com, hannes@cmpxchg.org, willy@infradead.org,
 	jack@suse.cz, apopple@nvidia.com, brauner@kernel.org, hare@suse.de,
@@ -73,80 +73,232 @@ Cc: lsf-pc@lists.linux-foundation.org, patches@lists.linux.dev,
 	p.raghav@samsung.com, da.gomez@samsung.com, dave@stgolabs.net,
 	riel@surriel.com, krisman@suse.de, boris@bur.io,
 	jackmanb@google.com, gost.dev@samsung.com
-Subject: Re: [LSF/MM/BPF Topic] synthetic mm testing like page migration
-Message-ID: <Z-Rni3UhAF4RB7AY@dread.disaster.area>
-References: <Z-ROpGYBo37-q9Hb@bombadil.infradead.org>
+Subject: Re: [PATCH] generic/764: fsstress + migrate_pages() test
+Message-ID: <Z-RtV6OO_IhggLvT@dread.disaster.area>
+References: <20250326185101.2237319-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z-ROpGYBo37-q9Hb@bombadil.infradead.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250326185101.2237319-1-mcgrof@kernel.org>
 
-On Wed, Mar 26, 2025 at 11:59:48AM -0700, Luis Chamberlain wrote:
-> I'd like to propose this as a a BoF for MM.
+On Wed, Mar 26, 2025 at 11:50:55AM -0700, Luis Chamberlain wrote:
+> 0-day reported a page migration kernel warning with folios which happen
+> to be buffer-heads [0]. I'm having a terribly hard time reproducing the bug
+> and so I wrote this test to force page migration filesystems.
 > 
-> We can find issues if we test them, but some bugs are hard to reproduce,
-> specially some mm bugs. How far are we willing to add knobs to help with
-> synthetic tests which which may not apply to numa for instance? An
-> example is the recent patch I just posted to force testing page
-> migration [0]. We can only run that test if we have a numa system, and a
-> lot of testing today runs on guests without numa. Would we be willing
-> to add a fake numa node to help with synthetic tests like page
-> migration?
+> It turns out we have have no tests for page migration on fstests or ltp,
+> and its no surprise, other than compaction covered by generic/750 there
+> is no easy way to trigger page migration right now unless you have a
+> numa system.
+> 
+> We should evaluate if we want to help stress test page migration
+> artificially by later implementing a way to do page migration on simple
+> systems to an artificial target.
+> 
+> So far, this doesn't trigger any kernel splats, not even warnings for me.
+> 
+> Reported-by: kernel test robot <oliver.sang@intel.com>
+> Link: https://lore.kernel.org/r/202503101536.27099c77-lkp@intel.com # [0]
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  common/config         |  2 +
+>  common/rc             |  8 ++++
+>  tests/generic/764     | 94 +++++++++++++++++++++++++++++++++++++++++++
+>  tests/generic/764.out |  2 +
+>  4 files changed, 106 insertions(+)
+>  create mode 100755 tests/generic/764
+>  create mode 100644 tests/generic/764.out
+> 
+> diff --git a/common/config b/common/config
+> index 2afbda141746..93b50f113b44 100644
+> --- a/common/config
+> +++ b/common/config
+> @@ -239,6 +239,8 @@ export BTRFS_MAP_LOGICAL_PROG=$(type -P btrfs-map-logical)
+>  export PARTED_PROG="$(type -P parted)"
+>  export XFS_PROPERTY_PROG="$(type -P xfs_property)"
+>  export FSCRYPTCTL_PROG="$(type -P fscryptctl)"
+> +export NUMACTL_PROG="$(type -P numactl)"
+> +export MIGRATEPAGES_PROG="$(type -P migratepages)"
+>  
+>  # udev wait functions.
+>  #
+> diff --git a/common/rc b/common/rc
+> index e51686389a78..ed9613a9bf28 100644
+> --- a/common/rc
+> +++ b/common/rc
+> @@ -281,6 +281,14 @@ _require_vm_compaction()
+>  	fi
+>  }
+>  
+> +_require_numa_nodes()
+> +{
+> +	readarray -t QUEUE < <($NUMACTL_PROG --show | awk '/^membind:/ {for (i=2; i<=NF; i++) print $i}')
 
-Boot your test VMs with fake-numa=4, and now you have a 4 node
-system being tested even though it's not a real, physical numa
-machine.  I've been doing this for the best part of 15 years now
-with a couple of my larger test VMs explicitly to test NUMA
-interactions.
+sed makes this easier: remove the membind token, then remove all the
+lines that have ":"s left in them. This leaves behind the membind
+node string.
 
-I also have a large 64p VM with explicit qemu NUMA configuration
-that mirrors the underlying hardware NUMA layout. This allows NUMA
-aware perf testing from inside that VM that responds the same as a
-real physical machine would.
+$ numactl --show | sed -e 's/membind://' -e '/:/d'
+ 0 1 2 3
+$
 
-$ $ lscpu
-....
-CPU(s):                   64
-  On-line CPU(s) list:    0-63
-    Thread(s) per core:   1
-    Core(s) per socket:   16
-    Socket(s):            4
-.....
-NUMA:                     
-  NUMA node(s):           4
-  NUMA node0 CPU(s):      0-15
-  NUMA node1 CPU(s):      16-31
-  NUMA node2 CPU(s):      32-47
-  NUMA node3 CPU(s):      48-63
+Also should have:
 
-This is also the VM I'm doing most of my performance testing and
-check-parallel development on, so I see the NUMA scalability issues
-that occur when trying to make use of the underlying hardware NUMA
-capability...
+	_require_command "$NUMACTL_PROG" "numactl"
 
-> Then what else could we add to help stress test page migration and
-> compaction further? We already have generic/750 and that has found some
-> snazzy issues so far. But what else can we do to help random guests
-> all over running fstests start covering complex mm tests better?
+built into it, rather than requiring the test to declare it first.
 
-Use check-parallel on buffered loop devices - it'll generate a heap
-of page cache pressure from all the IO, and run a heap more
-tests at the same time as the compaction is running from g/740. This
-often overlaps with g/650 which does background CPU hotplug, and it
-definitely overlaps with other tests running drop_caches, mount,
-unmount, etc, too.
+> +	if (( ${#QUEUE[@]} < 2 )); then
+> +		_notrun "You need a system with at least two numa nodes to run this test"
+> +	fi
+> +}
 
-One of the eventual goals of check-parallel is to have all these
-things environmental variables like memory load, compaction, cpu
-hotplug, etc to be changing in the background whilst the tests
-running so that we can exercise all the filesystem functionality
-under changing MM and environmental conditions without having to
-code that into individual tests....
+
+
+> +
+>  # Requires CONFIG_DEBUGFS and truncation knobs
+>  _require_split_huge_pages_knob()
+>  {
+> diff --git a/tests/generic/764 b/tests/generic/764
+> new file mode 100755
+> index 000000000000..91d9fb7e08da
+> --- /dev/null
+> +++ b/tests/generic/764
+> @@ -0,0 +1,94 @@
+> +#! /bin/bash
+> +# SPDX-License-Identifier: GPL-2.0
+> +# Copyright (c) 2024 Luis Chamberlain.  All Rights Reserved.
+> +#
+> +# FS QA Test 764
+> +#
+> +# fsstress + migrate_pages() test
+> +#
+> +. ./common/preamble
+> +_begin_fstest auto rw long_rw stress soak smoketest
+> +
+> +_cleanup()
+> +{
+> +	cd /
+> +	rm -f $runfile
+> +	rm -f $tmp.*
+> +	kill -9 $run_migration_pid > /dev/null 2>&1
+> +	kill -9 $stress_pid > /dev/null 2>&1
+> +
+> +	wait > /dev/null 2>&1
+> +}
+
+If you implement this using the fsstress wrappers like I mention
+below, and get rid of running the main migration loop in background,
+this cleanup function can go away completely.
+
+> +
+> +_require_scratch
+> +_require_command "$NUMACTL_PROG" "numactl"
+> +_require_command "$MIGRATEPAGES_PROG" "migratepages"
+> +_require_numa_nodes
+> +
+> +readarray -t QUEUE < <($NUMACTL_PROG --show | awk '/^membind:/ {for (i=2; i<=NF; i++) print $i}')
+> +if (( ${#QUEUE[@]} < 2 )); then
+> +	echo "Not enough NUMA nodes to pick two different ones."
+> +	exit 1
+> +fi
+
+You've implemented this twice.
+
+> +echo "Silence is golden"
+> +
+> +_scratch_mkfs > $seqres.full 2>&1
+> +_scratch_mount >> $seqres.full 2>&1
+> +
+> +nr_cpus=$((LOAD_FACTOR * 4))
+> +nr_ops=$((25000 * nr_cpus * TIME_FACTOR))
+
+Don't scale ops with nr_cpus - you've already scaled processes
+with nr_cpus.
+
+> +fsstress_args=(-w -d $SCRATCH_MNT -n $nr_ops -p $nr_cpus)
+> +test -n "$SOAK_DURATION" && fsstress_args+=(--duration="$SOAK_DURATION")
+> +
+> +runfile="$tmp.migratepages"
+> +pidfile="$tmp.stress.pid"
+> +
+> +run_stress_fs()
+> +{
+> +	$FSSTRESS_PROG $FSSTRESS_AVOID "${fsstress_args[@]}" &
+> +	stress_pid=$!
+> +	echo $stress_pid > $pidfile
+> +	wait $stress_pid
+> +	rm -f $runfile
+> +	rm -f $pidfile
+> +}
+
+Don't reimplement _run_fsstress(), call it instead.
+
+> +
+> +run_stress_fs &
+
+Actually, you want _run_fsstress_bg() here, and then
+_kill_fsstress() when you want it to die.
+
+> +touch $runfile
+> +stress_pid=$(cat $pidfile)
+
+Don't need either of these.
+
+> +
+> +while [ -e $runfile ]; do
+
+while [ -n "_FSSTRESS_PID" ]; do
+
+
+> +	readarray -t QUEUE < <(numactl --show | awk '/^membind:/ {for (i=2; i<=NF; i++) print $i}')
+
+Third time this is implemented.
+
+> +	# Proper Fisher–Yates shuffle
+> +	for ((i=${#QUEUE[@]} - 1; i > 0; i--)); do
+> +		j=$((RANDOM % (i + 1)))
+> +		var=${QUEUE[i]}
+> +		QUEUE[i]=${QUEUE[j]}
+> +		QUEUE[j]=$var
+> +	done
+> +
+> +	RANDOM_NODE_1=${QUEUE[0]}
+> +	RANDOM_NODE_2=${QUEUE[1]}
+
+If all you are doing is picking two random nodes, then you could
+just use RANDOM for the array index and drop the whole shuffle
+thing, yes?
+
+> +	if [[ -f $pidfile ]]; then
+
+no need for this if we gate the loop on _FSSTRESS_PID
+
+> +		echo "migrating parent fsstress process:" >> $seqres.full
+> +		echo -en "\t$MIGRATEPAGES_PROG $pid $RANDOM_NODE_1 $RANDOM_NODE_2 ..." >> $seqres.full
+> +		$MIGRATEPAGES_PROG $stress_pid $RANDOM_NODE_1 $RANDOM_NODE_2
+> +		echo " $?" >> $seqres.full
+> +		echo "migrating child fsstress processes ..." >> $seqres.full
+> +		for pid in $(ps --ppid "$stress_pid" -o pid=); do
+> +			echo -en "\tmigratepages $pid $RANDOM_NODE_1 $RANDOM_NODE_2 ..." >> $seqres.full
+> +			$MIGRATEPAGES_PROG $pid $RANDOM_NODE_1 $RANDOM_NODE_2
+> +			echo " $?" >> $seqres.full
+> +		done
+> +	fi
+> +	sleep 2
+> +done &
+> +run_migration_pid=$!
+
+why is this put in the background, only to then wait on it to
+complete? The loop will stop when fsstress finishes, yes?
+Which means this doesn't need to be run in the background at all,
+and then cleanup doesn't need to handle killing this, either.
 
 -Dave.
 -- 
