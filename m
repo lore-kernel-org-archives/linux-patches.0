@@ -1,137 +1,114 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB2E7404E
-	for <patches@lists.linux.dev>; Wed, 26 Mar 2025 03:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96811DC19D
+	for <patches@lists.linux.dev>; Wed, 26 Mar 2025 11:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742961384; cv=none; b=HjOObeE56AfIfnHYqhwov2195kaUjVmNEIsvk5yijOUs9qAYhruu+eny5EeVKGtj2c7lC1IsH7wOSXXDXMQKYTnMw5KpBGJaCRmGduxf4VvKa8hA2T9wYxo1vtaIF3X4qx42hv/oL09I4+x4saysyI1EqciVvnfVFY9RaST2ws8=
+	t=1742988921; cv=none; b=PvA93agsmXDOdgTmSir91CIiqyG3dVeUDFlDZUOWMpoYSXKVXIBPOzPq8qfZ1m2JUddBpueQ8dseMcpBwJqiVWiAJzohPnJM6poC+Cr9weYLEmWsskYHgr4R2Sp2T4AMlgw/S1ML+RZFvd1dgHAgWTsQiHSL1HgyFDbY0VhsRos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742961384; c=relaxed/simple;
-	bh=+O2A9chS/1wTC85HFYpesN54/BZmDe/Tqj0qtjyvUZ4=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=XWbm3/dPKVuk6Jub6q+5+q5DmNw2Fw+/yKiTWb1SU7o/tMIqpTwYx6YmZFNenQd4S0pD0fWqpu7Y1mXCt1XD/fQmm3qx4a6FqiOZ+Ui4YyNi1tr1pcJda6jFNsFA6T9NrGpGYegCByiVeNy+G+XmJbHZCEhRzAJjyBrivTwNw8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=OAiNj59+; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1742988921; c=relaxed/simple;
+	bh=Co6ldSq2KPXZ4G8ckS5gr4x660q4tzm9e+9W6fGV5dM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YRbGYvXxtC6QR3Pb6o8Ag4ArXUuXe4DY8xGYa7wVLajrA7tt7HZY9FGbXOOzGmTSV455QtSS8mDaUGTHJ3laEq0iOX6QDMQUvPGFhoAwMA5NnX2Q620kkIHkACEo2kbRH3Wtwoy5jPifi+owv78rkN9tFwWxEMUX1J2LEUQrins=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=mVEHmoaG; arc=none smtp.client-ip=35.89.44.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="OAiNj59+"
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="mVEHmoaG"
+Received: from eig-obgw-5006a.ext.cloudfilter.net ([10.0.29.179])
+	by cmsmtp with ESMTPS
+	id x8ZLtfPzWWuHKxP2NtyzE5; Wed, 26 Mar 2025 11:35:11 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id xP2Mtke8HGFuBxP2MtB1vw; Wed, 26 Mar 2025 11:35:11 +0000
+X-Authority-Analysis: v=2.4 cv=I69jRsgg c=1 sm=1 tr=0 ts=67e3e66f
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=qYArT0GPYVF3d3sY_YMA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=1Z2lRGIqASy3kC8DPqPOXy/EJfprWW4mk6E0VHwrdxE=; b=mVEHmoaGGKJWReUbZI73aE7cgh
+	9Jt6mk4K6Kvfraub6WVYv0bL+3/qc0AnnyyYTECSWHXpPyRC4C3vsCLUFrcS53jTPWH2G+PAaITUP
+	MF4syAoU3celGyzFz6DWTCN/n3uUe+8D69js5lSDhJT1YBjsWrvfPkvLD6zvlJ+DT7+cHW4E0+3uy
+	9hW+6R1ZsBV6ZGV9auDUf5z3EeSahONr/5XCowv2RZznVaN9F1RZjYrFKvglRSnzrqXs6pBmuPIXP
+	TARqsuX9S6zQhXj0zmA4MwUFddpCnwhqeJasntzLTn74pjAmvAkw2cn6BUHqmfrlDJO0SYI/lR+gJ
+	CnysZSTg==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:59954 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1txP2K-00000000FHa-24z8;
+	Wed, 26 Mar 2025 05:35:08 -0600
+Message-ID: <44107919-ef6f-4602-866c-db496370fe56@w6rz.net>
+Date: Wed, 26 Mar 2025 04:35:05 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1742961379;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LKgr9Fda0YEeh31KEQLQz04mnWC+XCuaxrZ++kXP29s=;
-	b=OAiNj59+EQHdC7NaNnt5ec9YbC1cBKrGf+TatdLJckaV8yS31QzFpZdf5/YqdMZZViYl4s
-	70jwtbSF1DGLsfTQWGqmv05vyU6yv75iWGB4ceY1DGsouNuqOj56k7fHK1oFHVTNLe2DxY
-	A1MJWm3TUliV7en8MmQwruaytxX9QknwK0JbiDTU2nFVgRt6t7kQGv9Q1xQltZj6vRf9qj
-	LfltuUnlHIAO6syJ7iWURpHgQQvqtTYS6w1RSM+5zA8tomb6Wgrr6+Tancy1cPMaBMjyHX
-	CPSPB+Ob7mg2JCo6QU7Px7uH8JZFVeJR7GI21RhwIV9QhMKzG50YFMu2oSR5zA==
-Date: Wed, 26 Mar 2025 04:56:18 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.13 000/119] 6.13.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Heiko Stuebner <heiko@sntech.de>, Vegard Nossum <vegard.nossum@oracle.com>,
- Darren Kenny <darren.kenny@oracle.com>, Diederik de Haas
- <didi.debian@cknow.org>
-Subject: Re: [PATCH 6.6 00/77] 6.6.85-rc1 review
-In-Reply-To: <751cf2c6-c692-4595-98e9-fa3ae4dfd10a@oracle.com>
-References: <20250325122144.259256924@linuxfoundation.org>
- <CA+G9fYvWau1nC8wmpWkxG8gWPaRMP9pbkh2eNsAZoUMeRPgzqA@mail.gmail.com>
- <a823454af9915fe3acfcb66fd84dc826@manjaro.org>
- <751cf2c6-c692-4595-98e9-fa3ae4dfd10a@oracle.com>
-Message-ID: <0001e7e020145983055d154488f5c460@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250325122149.058346343@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250325122149.058346343@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1txP2K-00000000FHa-24z8
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:59954
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfI8x3sEnZFh4o8YPtIU7cjcEb69N1uxtuL00J7DIPZ7D+qRDtJee4jqmiUvPjBkPtH0e6Wkz2xXHUbuKT72kFOKcCG720415pP6Jx4lE2g7x/W0qEwil
+ zk+AJl0qTYlAzpjsMy6c4OwJzmqIr8YD7Ki2GWO2CFN3+1JqNbDqV7aX6lg2h8ztT7SQM0GO6wgKLg==
 
-Hello Harshit and Greg,
+On 3/25/25 05:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.13.9 release.
+> There are 119 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 27 Mar 2025 12:21:27 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On 2025-03-26 03:33, Harshit Mogalapalli wrote:
-> On 25/03/25 21:37, Dragan Simic wrote:
->> On 2025-03-25 16:07, Naresh Kamboju wrote:
-> ...
->>> Build regression: arm64 dtb rockchip non-existent node or label 
->>> "vcca_0v9"
->>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->>> 
->>> ## Build log
->>> arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
->>> (phandle_references):
->>> /pcie@f8000000: Reference to non-existent node or label "vcca_0v9"
->>> 
->>>   also defined at arch/arm64/boot/dts/rockchip/rk3399- 
->>> rockpro64.dtsi:659.8-669.3
-> ...
->> 
->> This is caused by another patch from the original series failing
->> to apply due to some bulk regulator renaming.  I'll send backported
->> version of that patch soon, which should make everything fine.
-> 
-> On ARM configs, we do see the same issue that Naresh reported.
-> 
-> arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
-> (phandle_references): /pcie@f8000000: Reference to non-existent node
-> or label "vcca_0v9"
->  also defined at 
-> arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi:659.8-669.3
-> ERROR: Input tree has errors, aborting (use -f to force output)
-> make[3]: *** [scripts/Makefile.lib:423:
-> arch/arm64/boot/dts/rockchip/rk3399-rockpro64-v2.dtb] Error 2
-> make[3]: *** Waiting for unfinished jobs....
-> arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
-> (phandle_references): /pcie@f8000000: Reference to non-existent node
-> or label "vcca_0v9"
->  also defined at 
-> arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi:659.8-669.3
-> ERROR: Input tree has errors, aborting (use -f to force output)
-> make[3]: *** [scripts/Makefile.lib:423:
-> arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtb] Error 2
-> make[2]: *** [scripts/Makefile.build:480: arch/arm64/boot/dts/rockchip] 
-> Error 2
-> make[2]: *** Waiting for unfinished jobs....
-> 
-> Caused by commit: 1e4bd0ec5a47 ("arm64: dts: rockchip: Add missing
-> PCIe supplies to RockPro64 board dtsi") -- PATCH 42/77 of this series.
-> 
-> We see same problem with 6.12.21-rc1 as well.
-> 
-> Notes:
-> -----
-> I think Dragan was referring to upstream commit: bd1c959f37f3 ("arm64:
-> dts: rockchip: Add avdd HDMI supplies to RockPro64 board dtsi") which
-> will fix this problem but fails to apply due to regulator renaming in
-> commit: 5c96e6330197 ("arm64: dts: rockchip: adapt regulator nodenames
-> to preferred form") which is not in stable kernels(6.6.y and 6.12.y)
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Exactly, the direct dependency is the commit bd1c959f37f3 ("arm64:
-dts: rockchip: Add avdd HDMI supplies to RockPro64 board dtsi"),
-for which I haven't sent the backported version yet.
+Tested-by: Ron Economos <re@w6rz.net>
 
-As Diederik pointed it out already in a separate message [*] from
-a couple of days ago, it might be the best to include the commit
-5c96e6330197 ("arm64: dts: rockchip: adapt regulator nodenames to
-preferred form") into stable kernels as well.
-
-Obviously, including the commit 5c96e6330197 pretty much goes
-against the rules of stable kernels, but it would save a lot of
-time and effort in the future.
-
-[*] https://lore.kernel.org/stable/D8ONE4WEF7A2.1OE1YY8J34MM3@cknow.org/
