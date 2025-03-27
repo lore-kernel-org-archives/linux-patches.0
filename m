@@ -1,209 +1,252 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF102F9FE
-	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 17:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30441B423E
+	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 17:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743095106; cv=none; b=TwjJlnW0XfIpmjcNZqw/dwZlyayBwqccQiFNgiaCdxkcfgfYKu4L3lHWZvp2MwFs3wtzBMlI9pppzDJK3uS6OLbTPfqLruxqhEIW96SHRrZM8Ooo7NcOYUxktYOES0hKlfvzlRrRBGonbLD8Ii6pXUss/Iee5sHE2utiqcqcjSw=
+	t=1743096608; cv=none; b=iFGiubI8qfqnACmP9dGuMWRa74Ly7L6hV4FbLHMVUU1WXw6RPM3QXjZvSLsJvTorU6cOiXF5hZPz6bsQxuHsLq8vKKFAl1Hku/Sk1nq0n4s6u8hvSAa7bkJDfaHlchdRNgCS+j4j4fDSeBz9jS8vTjwG7te7yzUgs6wfmBLE8vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743095106; c=relaxed/simple;
-	bh=UCukrpff5csPN5PME//Bu0ltX0l7g8zKWFio8g/DdbY=;
+	s=arc-20240116; t=1743096608; c=relaxed/simple;
+	bh=K66Q38Lz90Nt3j6FO+oeTnlxzaJOsNINcLtmcpY+h10=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LTX9/1VfD6phQoHhQx+yM4No9svbpYq3iZDKD26BHRSTZrSRU3dhB44ldAQNGyyGD9rTsEtyDlNaWeEA41JVFPjfV4TK4TJ7YEMjFo7t3050LULM+IFi7gznJ6dPgwiyfk9R81Znk1sqMAjlTYZfGFpafXLrNGIIxXKvDz0k3PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HnwOFX3e; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=b8n9EBCveZNrsBGdLJS8lcCiqyQ5fxdcfUR8i9skFM4+0VO0VMDXNMjhFA5AZdtTNXf/ezKGM91UAZviL/cyIc9+yLidN7MtFs7VBmqFXd0FuCagU2xYyVk6c89MqwRBWxNZnBMDpNCVHcp//wr6+HjJv9Rdg0H9Sxz1vVtS59E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OhZMrGgm; arc=none smtp.client-ip=209.85.221.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HnwOFX3e"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e643f235a34so989761276.1
-        for <patches@lists.linux.dev>; Thu, 27 Mar 2025 10:05:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OhZMrGgm"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5240317b3e0so494480e0c.0
+        for <patches@lists.linux.dev>; Thu, 27 Mar 2025 10:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743095104; x=1743699904; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gIMP4nmwgubN4Pys5aTU2WlwnqqvwCpJ2MLL4ep//RA=;
-        b=HnwOFX3enH7Ishm/AFYGfdVGs9pZE3CafJhqB3AapGQiuNgRwAcyp73fr3UkC10Nme
-         4FkidhhLB5iJ2+kzpR1ocf2vnP0P6Bv3rmOV0EILNV1aGmDpBH9ZOr4/UEkXeQ1LF/F4
-         LMy57+0xvix9Yy1rsn5BFgqVElMpGAZB81Pug0j0Yxo0iTEsbAPFMpC3PlEaDegup2/K
-         MrACjJG5NY6y01YZLut9evUKT38EHFuMbVK+zgPfG3zC9Mvy7WIcnHrCiaazJOW5jT12
-         xoNliqCdHeVa4TS6tcAkWpGL3ZrzlW+Fg8rQlUmoFP9cVYxPZKTFRgTU3t3NJYk7CrTp
-         mvJQ==
+        d=linaro.org; s=google; t=1743096605; x=1743701405; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WDN1VKUJwLebN0ryWgo3KULQHNLf140Ja4ddZir7PXQ=;
+        b=OhZMrGgmixTSOmO4KD57TH/BGWhyhS3AsTd89rOoyC2aH2MJNAoWea8I4wFLsm4fWq
+         hZbNlNA8jiYajWqI+DOC0R1fchq1Kb7Y5X2Lfz8eEHgBxDrP3D+Rw0CML//L/hqBn1jg
+         6jdRlUQzgGkBewhisa2U0yMcgpeM1PnjC7kH/y7BW10fcrgIf7Tzp+IjLwP+ow0R6Jle
+         h8bfyKhbH9j//RtSvgbHFTETCVCwglav4PTHgURgY4SKfSvU5EPe5sIprpNHZgVv1eCo
+         68YdG9deOgvr752tgCpZFT/70s4EX672FqbVqQ2QpTYCYHsRpEbXX7cJq1TIaraf1nL0
+         9VYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743095104; x=1743699904;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gIMP4nmwgubN4Pys5aTU2WlwnqqvwCpJ2MLL4ep//RA=;
-        b=diAP2ULOu3wUpBDjkbteOO9JChZIEBjGFwTiiCqc3hZBcKVhlVq/RYc9DE8akzwRls
-         OjGVWIRl+aRFtZG6/EYTeEhoHzkdU/1+2tHfJLwvn0oznWx9jsjfxpzFd8pBVdSYiUBo
-         gvsorvsLbzufNTQBtNYLSv+nzRcNQanFnuFtnNcOtNFy8FclveuTFP3AZId+sJPqUp6D
-         zfDje9rLw4BnBJzkbDliSMUW9etpsBk0fIFeopvq7jBFXXg6TziHI7t9iYeqbN8qh8w4
-         e9Na+Gq5nFqk11Ls+LCAlRxZ98kg7dq+0h4AjVfCFRtL9f/M/XkVNVL7IvpqnBIww4of
-         OyTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVymolWfwy/AcR1q7KZJYLALOcQoMS1ViNUOhqi0rxLT1oIz6AV2vP7sLypFYlijNYiWVfyjr/2@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxj6ABvh9bK9isn3OihonlbBb7Eyv7PBSo3uxwzXwxiZklrsMsk
-	X7jK/ZVF3ucf8lkXiObFBBNVboMTKtYJXZFkFYxf4RSKlEr6qFTn4bTsnoSwMvLuPj/d6L6960S
-	PlPrdDnxfPMjxeWJSCR904OuiRLI=
-X-Gm-Gg: ASbGncu+jAlLVH5l7eGq7yBsq1vaub+UmekRQPWS8+pr+DfSgl41/gYrGhx2UgIxUuA
-	nEtjQFS5qbcP4ioFKrrtb45gS5mk1emoHVt0Vpg++ma6VrfXo+HzsFvojsOaFjMfDnyTDeyGQg7
-	QPzFt6wPYdwj0F0QI+5DtAs2/vOyPfwMVg4LHnbxRpFqVVxHI7zt/aDoI=
-X-Google-Smtp-Source: AGHT+IE0V4W9RPbFnppqS3nJN9J9jxtEhxV4mELuux5c5aERSjVw4aOfjObJ5DON3dZ9u7fr2lGONyc2RPHgBUOPdqI=
-X-Received: by 2002:a05:6902:478b:b0:e58:aa00:ffd5 with SMTP id
- 3f1490d57ef6-e69435eb3d5mr5861203276.4.1743095103548; Thu, 27 Mar 2025
- 10:05:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743096605; x=1743701405;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WDN1VKUJwLebN0ryWgo3KULQHNLf140Ja4ddZir7PXQ=;
+        b=haqDJ2JRZKfLTdYjFDmRONg8qtuwE6laON7ovP+3Is6B6FIMeNTgw3GRM7TvmBisSb
+         kRoRyfDeRCbfNuZMBnbfgOFFadjtzT1tMwgppv1q6letVetRDiEFAifnAyVxgh9f/9Sa
+         NzSZZWsXfJ82aFmY//PJsu57gDmGyrpqVUfATP5R3IeFdbHhpANUFaro/erCONym3U/e
+         pagk6CZIIdhdm1K6z4f7sd74w8iHyYEByaDgIqqwy3oIPoQX+N92k4KOmfR7BIVZBLR6
+         q4P9aI5UVRfRgx+xFPpkkPPGpWzwhKEQmo+Ps2SB0ilIXpvbaW4LsUIDh/odw9E9DpBP
+         xDmA==
+X-Forwarded-Encrypted: i=1; AJvYcCVZ5fpFqph28WIxv0OlkjPFSOqa45fb0VbgFI8Y62Mx5nm9nhSr5FeKA4DPiTMov47QiUt17o1d@lists.linux.dev
+X-Gm-Message-State: AOJu0YxNLkvn7J2DozATk5r3jmo6AnAJ2P0vttPy5JkNYWNvEelemA0G
+	XHXR7cSc37p9lhp2NeXwm1nLJRjB5r1PXVGeXTsS2snmKXOHUmMaO9rD8ETTRzfkBTrs+SlaCxx
+	A2OuCiGi6TVneLSSR568tjGxFY9FlxcdA+hBPuA==
+X-Gm-Gg: ASbGncuNCkrDHuMd2P8bSlwjjk/Vop9pF79aiEO6sKFltSypjN9c8XjtgXs42CgFsz+
+	r/lVrtbCDPjPb7ERK+/qORkBp1h4FNTUkSMS+1OoB5FElcqjrInYHcz5I+5P0BsG5NGwq3On5Mh
+	bioiM0HiVCNstFXdWPue04yCHcg8mlD++0/qrxpmJRjx8hSK//CMgn5ROcxo47Se409bIuMw==
+X-Google-Smtp-Source: AGHT+IEztlgWSCIn71l6XVgidilEQsC+WgA0rVBDr66THcB1Yab03MEJKS8U8SF8aZ91Fp8ddjC6/zH3JJFfZRywj4k=
+X-Received: by 2002:a05:6122:887:b0:520:652b:ce18 with SMTP id
+ 71dfb90a1353d-5260071ccf2mr3310045e0c.0.1743096605264; Thu, 27 Mar 2025
+ 10:30:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250326154349.272647840@linuxfoundation.org> <CA+G9fYsRQub2qq0ePDs6aBAc+0qHRGwH_WPsTfhcwkviD1eH1w@mail.gmail.com>
-In-Reply-To: <CA+G9fYsRQub2qq0ePDs6aBAc+0qHRGwH_WPsTfhcwkviD1eH1w@mail.gmail.com>
-From: Leah Rumancik <leah.rumancik@gmail.com>
-Date: Thu, 27 Mar 2025 10:04:52 -0700
-X-Gm-Features: AQ5f1JoUWc8i3RgAxN3mjRbk-tD1j9a8iUSQkbDB7BjyLErxq3tg2jL0zFBfxIE
-Message-ID: <CACzhbgQ=TU-C=MvU=fNRwZuFKBRgnrXzQZw15HVci_vT5w8O7Q@mail.gmail.com>
+References: <20250326154349.272647840@linuxfoundation.org>
+In-Reply-To: <20250326154349.272647840@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 27 Mar 2025 22:59:52 +0530
+X-Gm-Features: AQ5f1JqUE3wEB4mA5ovU8cCdeyrT-Beu7WuvHFYj9Q6LMIcb26hTI9Y51kQelGw
+Message-ID: <CA+G9fYtHXcRhFd9BH3sDYBNBT2XcP42amy5QqpLhNKesLUb8WA@mail.gmail.com>
 Subject: Re: [PATCH 6.1 000/197] 6.1.132-rc2 review
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	Dave Chinner <dchinner@redhat.com>, Christoph Hellwig <hch@lst.de>, 
-	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Shakeel Butt <shakeelb@google.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, Johannes Weiner <hannes@cmpxchg.org>, Michal Hocko <mhocko@kernel.org>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Cgroups <cgroups@vger.kernel.org>, 
+	linux-mm <linux-mm@kvack.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-This is fixed by
+On Wed, 26 Mar 2025 at 21:15, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.132 release.
+> There are 197 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 28 Mar 2025 15:43:27 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.132-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-https://lore.kernel.org/all/20250321010112.3386403-1-leah.rumancik@gmail.co=
-m/T/
+In Addition to previous build regressions,
 
-but I'm waiting on an ACK. Let me do some nagging :)
+Regressions on arm and arm64 devices cpu hotplug tests failed and
+kernel oops triggered
+with gcc-13 and clang-20 the stable-rc 6.1.132-rc2.
 
-- leah
+First seen on the 6.1.132-rc1
+Good: v6.1.131
+Bad: Linux 6.1.132-rc1 and Linux 6.1.132-rc2
+
+* Juno-r2, rockpi-4, dragonboard 845c, e850-96,
+  - selftests: cpu-hotplug: cpu-on-off-test.sh
+  - ltp-controllers: cpuset_hotplug_test.sh
+  - selftests: rseq: basic_percpu_ops_test
+
+Regression Analysis:
+- New regression? yes
+- Reproducibility? Yes
+
+Test regression: arm64 arm cpuhotplug kernel NULL pointer dereference
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Test log
+command: cpuset_hotplug_test.sh
+[ 1912.782804] /usr/local/bin/kirk[465]: starting test cpuset_hotplug
+(cpuset_hotplug_test.sh)
+cpuset_hotplug 1 TINFO: CPUs are numbered continuously starting at 0 (0-5)
+cpuset_hotplug 1 TINFO: Nodes are numbered continuously starting at 0 (0)
+[ 1917.567011] psci: CPU1 killed (polled 0 ms)
+cpuset_hotplug 1 TPASS: Cpuset vs CPU hotplug test succeeded.
+[ 1918.804896] Detected VIPT I-cache on CPU1
+[ 1918.805388] cacheinfo: Unable to detect cache hierarchy for CPU 1
+[ 1918.805957] GICv3: CPU1: found redistributor 1 region 0:0x00000000fef20000
+[ 1918.806683] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
+[ 1919.086059] psci: CPU1 killed (polled 0 ms)
+[ 1919.120969] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+[ 1919.121807] Mem abort info:
+[ 1919.122086]   ESR = 0x0000000096000004
+[ 1919.122451]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 1919.122956]   SET = 0, FnV = 0
+[ 1919.123262]   EA = 0, S1PTW = 0
+[ 1919.123574]   FSC = 0x04: level 0 translation fault
+[ 1919.124038] Data abort info:
+[ 1919.124380]   ISV = 0, ISS = 0x00000004
+[ 1919.124754]   CM = 0, WnR = 0
+[ 1919.125051] user pgtable: 4k pages, 48-bit VAs, pgdp=000000000a2b8000
+[ 1919.125655] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+[ 1919.126341] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[ 1919.126912] Modules linked in: snd_soc_hdmi_codec dw_hdmi_cec
+dw_hdmi_i2s_audio brcmfmac rockchipdrm hantro_vpu hci_uart brcmutil
+dw_mipi_dsi analogix_dp btqca v4l2_h264 btbcm v4l2_vp9 dw_hdmi
+panfrost v4l2_mem2mem cfg80211 cec bluetooth snd_soc_audio_graph_card
+videobuf2_v4l2 drm_display_helper gpu_sched snd_soc_simple_card
+videobuf2_dma_contig crct10dif_ce snd_soc_spdif_tx
+snd_soc_rockchip_i2s snd_soc_simple_card_utils videobuf2_memops
+phy_rockchip_pcie rockchip_saradc rtc_rk808 drm_shmem_helper
+drm_dma_helper videobuf2_common rfkill industrialio_triggered_buffer
+drm_kms_helper pcie_rockchip_host rockchip_thermal coresight_cpu_debug
+kfifo_buf fuse drm ip_tables x_tables
+[ 1919.132505] CPU: 0 PID: 67249 Comm: kworker/0:0 Not tainted 6.1.132-rc2 #1
+[ 1919.133132] Hardware name: Radxa ROCK Pi 4B (DT)
+[ 1919.133555] Workqueue: events work_for_cpu_fn
+[ 1919.133983] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 1919.134617] pc : memcg_hotplug_cpu_dead
+(include/linux/percpu-refcount.h:174
+include/linux/percpu-refcount.h:332
+include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
+mm/memcontrol.c:2382)
+[ 1919.135076] lr : memcg_hotplug_cpu_dead
+(include/linux/percpu-refcount.h:174
+include/linux/percpu-refcount.h:332
+include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
+mm/memcontrol.c:2382)
+[ 1919.135528] sp : ffff80000e78bc60
+[ 1919.135835] x29: ffff80000e78bc60 x28: 0000000000000000 x27: ffff80000a1c81f8
+[ 1919.136501] x26: 0000000000000028 x25: ffff0000f7534778 x24: ffff80000a1aeb08
+[ 1919.137166] x23: 0000000000000000 x22: ffff80000a16e240 x21: 0000000000000000
+[ 1919.137830] x20: ffff8000ed3d5000 x19: 0000000000000000 x18: 00000000a2704302
+[ 1919.138495] x17: 0000000000000000 x16: 0000000000000312 x15: 0000040000000000
+[ 1919.139159] x14: 0000000000000000 x13: ffff80000e788000 x12: ffff80000e78c000
+[ 1919.139823] x11: 0bb2d4910b917800 x10: 0000000000000000 x9 : 0000000000000001
+[ 1919.140487] x8 : ffff000013406300 x7 : 00000072b5503510 x6 : 0000000000300000
+[ 1919.141151] x5 : 00000000801c0011 x4 : 0000000000000000 x3 : ffff80000e78bca0
+[ 1919.141815] x2 : ffff80000e78bbf8 x1 : ffff8000080a11e4 x0 : ffff0000f7543240
+[ 1919.142480] Call trace:
+[ 1919.142709] memcg_hotplug_cpu_dead
+(include/linux/percpu-refcount.h:174
+include/linux/percpu-refcount.h:332
+include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
+mm/memcontrol.c:2382)
+[ 1919.143133] cpuhp_invoke_callback (kernel/cpu.c:193)
+[ 1919.143554] _cpu_down (kernel/cpu.c:0 kernel/cpu.c:724
+kernel/cpu.c:1157 kernel/cpu.c:1218)
+[ 1919.143882] __cpu_down_maps_locked (kernel/cpu.c:1249)
+[ 1919.144291] work_for_cpu_fn (kernel/workqueue.c:5184)
+[ 1919.144647] process_one_work (kernel/workqueue.c:2297)
+[ 1919.145028] worker_thread (include/linux/list.h:292
+kernel/workqueue.c:2352 kernel/workqueue.c:2444)
+[ 1919.145386] kthread (kernel/kthread.c:378)
+[ 1919.145687] ret_from_fork (arch/arm64/kernel/entry.S:865)
+[ 1919.146041] Code: d51b4235 8b160280 97ffec72 97f73691 (f9400269)
+All code
+========
+
+Code starting with the faulting instruction
+===========================================
+[ 1919.146592] ---[ end trace 0000000000000000 ]---
 
 
+## Test log 2
+kselftest: Running tests in rseq
+TAP version 13
+1..9
+timeout set to 0
+selftests: rseq: basic_test
+testing current cpu
+basic_test: basic_test.c:30: void test_cpu_pointer(void): Assertion
+`sched_getcpu() == i' failed.
+Aborted
+not ok 1 selftests: rseq: basic_test # exit=134
+timeout set to 0
+selftests: rseq: basic_percpu_ops_test
+Segmentation fault
+not ok 2 selftests: rseq: basic_percpu_ops_test # exit=139
 
-On Thu, Mar 27, 2025 at 5:50=E2=80=AFAM Naresh Kamboju
-<naresh.kamboju@linaro.org> wrote:
->
-> On Wed, 26 Mar 2025 at 21:15, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.1.132 release.
-> > There are 197 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 28 Mar 2025 15:43:27 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patc=
-h-6.1.132-rc2.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
-le-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> Regressions on arm, arm64, mips, powerpc builds failed with gcc-13 and
-> clang the stable-rc 6.1.132-rc1 and 6.1.132-rc2.
->
-> First seen on the 6.1.132-rc1
->  Good: v6.1.131
->  Bad: Linux 6.1.132-rc1 and Linux 6.1.132-rc2
->
-> * arm, build
->   - clang-20-davinci_all_defconfig
->   - clang-nightly-davinci_all_defconfig
->   - gcc-13-davinci_all_defconfig
->   - gcc-8-davinci_all_defconfig
->
-> * arm64, build
->   - gcc-12-lkftconfig-graviton4
->   - gcc-12-lkftconfig-graviton4-kselftest-frag
->   - gcc-12-lkftconfig-graviton4-no-kselftest-frag
->
-> * mips, build
->   - gcc-12-malta_defconfig
->   - gcc-8-malta_defconfig
->
-> * powerpc, build
->   - clang-20-defconfig
->   - clang-20-ppc64e_defconfig
->   - clang-nightly-defconfig
->   - clang-nightly-ppc64e_defconfig
->   - gcc-13-defconfig
->   - gcc-13-ppc64e_defconfig
->   - gcc-13-ppc6xx_defconfig
->   - gcc-8-defconfig
->   - gcc-8-ppc64e_defconfig
->   - gcc-8-ppc6xx_defconfig
->
-> Regression Analysis:
->  - New regression? yes
->  - Reproducibility? Yes
->
-> Build regression: arm arm64 mips powerpc xfs_alloc.c 'mp' undeclared
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> ## Build log
-> fs/xfs/libxfs/xfs_alloc.c: In function '__xfs_free_extent_later':
-> fs/xfs/libxfs/xfs_alloc.c:2551:51: error: 'mp' undeclared (first use
-> in this function); did you mean 'tp'?
->  2551 |         if (XFS_IS_CORRUPT(mp, !xfs_verify_fsbext(mp, bno, len)))
->       |                                                   ^~
->
->
-> ## Source
-> * Kernel version: 6.1.132-rc2
-> * Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-=
-stable-rc.git
-> * Git sha: f5ad54ef021f6fb63ac97b3dec5efa9cc1a2eb51
-> * Git describe: v6.1.131-198-gf5ad54ef021f
-> * Project details:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1=
-.131-198-gf5ad54ef021f/
->
-> ## Build
-> * Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1=
-.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc-1=
-2-lkftconfig-graviton4-kselftest-frag/log
-> * Build history:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1=
-.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc-12-lkftconfig-=
-graviton4-kselftest-frag/history/
-> * Build details:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1=
-.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc-12-lkftconfig-=
-graviton4-kselftest-frag/
-> * Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2urS=
-wNctsyhQzf1j7dvt6nHemP5/
-> * Kernel config:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwNctsyhQzf1j7d=
-vt6nHemP5/config
->
-> ## Steps to reproduce
->  - tuxmake --runtime podman --target-arch arm64 --toolchain gcc-12 \
->     --kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2urS=
-wNctsyhQzf1j7dvt6nHemP5/config
-> debugkernel dtbs dtbs-legacy headers kernel kselftest modules
->  - tuxmake --runtime podman --target-arch arm --toolchain clang-20
-> --kconfig davinci_all_defconfig LLVM=3D1 LLVM_IAS=3D1
->
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+The bisection pointing to,
+ memcg: drain obj stock on cpu hotplug teardown
+  upsteam commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb upstream.
+
+## Source
+* Kernel version: 6.1.132-rc2
+* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* Git sha: f5ad54ef021f6fb63ac97b3dec5efa9cc1a2eb51
+* Git describe: v6.1.131-198-gf5ad54ef021f
+* Project details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/Test/v6.1.131-198-gf5ad54ef021f/
+
+## Test
+* Test log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp/log
+* Test history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp-01e5a0f146f52056a08c01ad73b44c893f7748e5cd1533e30c989289a90e821b/history/
+* Test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp/
+* Test link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwSZQOGBhePbuN1hwUGDHIT8/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwSZQOGBhePbuN1hwUGDHIT8/config
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
