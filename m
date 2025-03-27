@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EF91CDA2D;
-	Thu, 27 Mar 2025 21:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42AF8462;
+	Thu, 27 Mar 2025 21:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743111354; cv=none; b=hykfsMVrBZvnpa3EMsFNjEj1KROZ8mfOkeStrf1Mw8z5lZNp8vBxXMAYkxQmycx9W4VY35Lth5x9f1/SpOwmLN/FkZyY30vqtKVzkyaE4A9YrAYOinVUjL3SoYsfJUQV8oUH/7TX4QTWegu4f8b2fuMFEcVETBdoUfP57+XcCG0=
+	t=1743112006; cv=none; b=ow7SO+T/Kk7cWB87dtzNQtY7XcNf7Hc0V/pxL5Fj5/TRTNnG6FYMmTWxMwrqTMQxHAJbbL+zwcEftedbkqI1/czCh+2O/EOy2YiV0LTUOyAt6LqrfBzLcCdyXINTKBr5J4kgxCIie3vWqWsAV+NTJkxojlfMZx+gx3aSz/nci3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743111354; c=relaxed/simple;
-	bh=LTF6cEblwWCHk6Ff4Ck1T08RDaFdQ1h4B3Knna6bGGM=;
+	s=arc-20240116; t=1743112006; c=relaxed/simple;
+	bh=044NMnypJBKDHzV54PkNfkWM1PAfOVt5sNmhyUdaFz8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BHFUxlxHJcQGyyLSyZtLglo2Q86McsRsH2IdRaXzxh5RwX4rqaB6Rs8WwSUSeLQD3scu8dduN/eveBvOOF+7YGSa3gnJtFl0mVsPG0pRlI6ENuYf5RmWshOoMo7kPuEyABwpzWbrTgJsdmCDwDLgTLzc0sYKYPMOtjV9kts4XHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HXCzw67Y; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JaNkzehRHK+8F1f4WcLOb4rM2SHWrEUa/WeggmBc5f4nvouESylVw0FZaXHGBhjBK0RMoYyC+spuibiRqFOxK2QxFNzq6jwbyoxytyEg2XM6sjnoIOuSG+ciS1FJw//6+ev0xypFpm5mNyGzCbkdE/oWoBrQkx3vAoeVD2K4/FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PbrjDgJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HXCzw67Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A47C4CEDD;
-	Thu, 27 Mar 2025 21:35:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PbrjDgJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4EFC4CEDD;
+	Thu, 27 Mar 2025 21:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743111352;
-	bh=LTF6cEblwWCHk6Ff4Ck1T08RDaFdQ1h4B3Knna6bGGM=;
+	s=k20201202; t=1743112006;
+	bh=044NMnypJBKDHzV54PkNfkWM1PAfOVt5sNmhyUdaFz8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HXCzw67YHPTYIT5MbmZFL4Rm6dK5qHQ4Zcl3HbJ4XmLeMAr44O5KkWKCMTePwnvgN
-	 HbKyfwxydV34Fv9NSdRreZhetLuG/psuYz/p2HrVVGmp+5M4sfORVC2+qv7hfa3vyE
-	 AJWyROHrpOBnEtwEsaPrGQ0ouwsRL5TpeXjky1CJz71QeDpQrzBjCLc1D4zXpBl9zC
-	 RcOtuD4MSQjFkGYfm/F5izaEWBUNgEkipZ1PJqVamFIAlpEf8oNB6hyDX1dcDwlS+n
-	 ZWOsic93gSKazwsepLOCdsLE/zYbLNDBM6i7SVBRCtwXnV+V2x1b6qsO/p7L1/o06P
-	 +4VKCeoMjuKwA==
-Date: Thu, 27 Mar 2025 14:35:50 -0700
+	b=PbrjDgJ4+NfAozJ7lqUyl/lBGtxzqX4FdqXvsbkLlWVlzKiNBfvv149fKViJAbrER
+	 5CtC9il1MqDLyz8I+p1kXiPFoz/CM9Nhcz/IX3D4UQSkykxPycZSr9Pi7jpc660yUL
+	 V6UyTrNzKm1mzyTeNkpZsi+y7JCsoe1BvdEWYlTU5niHpJ1/r4mogyHZJZvWD+VuUV
+	 xO8+ZystdjlkOMfDt9ox3odkNMIpmJ+5CdmMH7QpGTbv0AJ4aho7RMV+6L/Cl+c2WA
+	 TZV0g/0RPt5SvtM/IdTaZxRlNVhyJSy48fNnsreUpmVUtNBrTvwejGc7HOZfnXi5jU
+	 zhyBn2nGlwvyg==
+Date: Thu, 27 Mar 2025 14:46:44 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: Dave Chinner <david@fromorbit.com>
-Cc: Jan Kara <jack@suse.cz>, patches@lists.linux.dev,
+Cc: lsf-pc@lists.linux-foundation.org, patches@lists.linux.dev,
 	fstests@vger.kernel.org, linux-mm@kvack.org,
 	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
 	oliver.sang@intel.com, hannes@cmpxchg.org, willy@infradead.org,
-	apopple@nvidia.com, brauner@kernel.org, hare@suse.de,
+	jack@suse.cz, apopple@nvidia.com, brauner@kernel.org, hare@suse.de,
 	oe-lkp@lists.linux.dev, lkp@intel.com, john.g.garry@oracle.com,
 	p.raghav@samsung.com, da.gomez@samsung.com, dave@stgolabs.net,
 	riel@surriel.com, krisman@suse.de, boris@bur.io,
 	jackmanb@google.com, gost.dev@samsung.com
-Subject: Re: [PATCH] generic/764: fsstress + migrate_pages() test
-Message-ID: <Z-XEtgT4quWcnG_T@bombadil.infradead.org>
-References: <20250326185101.2237319-1-mcgrof@kernel.org>
- <pociwdgfqbzw4mjass6u6wcnvmqlh3ddqzoeoiwiyqs64pl6yu@5ad7ne7rgwe2>
- <Z-WzlUN6fSciApiC@dread.disaster.area>
+Subject: Re: [LSF/MM/BPF Topic] synthetic mm testing like page migration
+Message-ID: <Z-XHRAgL0u2qO7LH@bombadil.infradead.org>
+References: <Z-ROpGYBo37-q9Hb@bombadil.infradead.org>
+ <Z-Rni3UhAF4RB7AY@dread.disaster.area>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,77 +50,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z-WzlUN6fSciApiC@dread.disaster.area>
+In-Reply-To: <Z-Rni3UhAF4RB7AY@dread.disaster.area>
 
-On Fri, Mar 28, 2025 at 07:22:45AM +1100, Dave Chinner wrote:
-> On Thu, Mar 27, 2025 at 12:53:30PM +0100, Jan Kara wrote:
-> > On Wed 26-03-25 11:50:55, Luis Chamberlain wrote:
-> > > 0-day reported a page migration kernel warning with folios which happen
-> > > to be buffer-heads [0]. I'm having a terribly hard time reproducing the bug
-> > > and so I wrote this test to force page migration filesystems.
-> > > 
-> > > It turns out we have have no tests for page migration on fstests or ltp,
-> > > and its no surprise, other than compaction covered by generic/750 there
-> > > is no easy way to trigger page migration right now unless you have a
-> > > numa system.
-> > > 
-> > > We should evaluate if we want to help stress test page migration
-> > > artificially by later implementing a way to do page migration on simple
-> > > systems to an artificial target.
-> > > 
-> > > So far, this doesn't trigger any kernel splats, not even warnings for me.
-> > > 
-> > > Reported-by: kernel test robot <oliver.sang@intel.com>
-> > > Link: https://lore.kernel.org/r/202503101536.27099c77-lkp@intel.com # [0]
-> > > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+On Thu, Mar 27, 2025 at 07:46:03AM +1100, Dave Chinner wrote:
+> On Wed, Mar 26, 2025 at 11:59:48AM -0700, Luis Chamberlain wrote:
+> > I'd like to propose this as a a BoF for MM.
 > > 
-> > So when I was testing page migration in the past MM guys advised me to use
-> > THP compaction as a way to trigger page migration. You can manually
-> > trigger compaction by:
-> > 
-> > echo 1 >/proc/sys/vm/compact_memory
+> > We can find issues if we test them, but some bugs are hard to reproduce,
+> > specially some mm bugs. How far are we willing to add knobs to help with
+> > synthetic tests which which may not apply to numa for instance? An
+> > example is the recent patch I just posted to force testing page
+> > migration [0]. We can only run that test if we have a numa system, and a
+> > lot of testing today runs on guests without numa. Would we be willing
+> > to add a fake numa node to help with synthetic tests like page
+> > migration?
 > 
-> Right, that's what generic/750 does. IT runs fsstress and every 5
-> seconds runs memory compaction in the background.
-> 
-> > So you first mess with the page cache a bit to fragment memory and then
-> > call the above to try to compact it back...
-> 
-> Which is effectively what g/750 tries to exercise.
+> Boot your test VMs with fake-numa=4, and now you have a 4 node
+> system being tested even though it's not a real, physical numa
+> machine.  I've been doing this for the best part of 15 years now
+> with a couple of my larger test VMs explicitly to test NUMA
+> interactions.
 
-Indeed. And I've tried g/750 for over 24 hours trying to reproduce
-the issue reported by Oliver and I was not able to, so this augments the
-coverage.
+Suuuuweet! Given your long term use of it, we'll just make it a default
+for all kdevops libvirt testing now!
 
-The original report by Oliver was about ltp syscalls-04/close_range01
-triggering the spin lock on the buffer_migrate_folio_norefs() path which
-triggers a lock followed by a sleep context. But the report indicates
-the test ran with btrfs and btrfs does not use buffer_migrate_folio_norefs().
-Although clearly the splat and diagnosis by Matthew that the spinlock seems
-to need fixing, reproducing this issue would be good. But this has been hard.
+> One of the eventual goals of check-parallel is to have all these
+> things environmental variables like memory load, compaction, cpu
+> hotplug, etc to be changing in the background whilst the tests
+> running so that we can exercise all the filesystem functionality
+> under changing MM and environmental conditions without having to
+> code that into individual tests....
 
-In fact there are only a few users of buffer_migrate_folio_norefs() left
-and ext4 is one of them, as well as the block layer.
-
-I wrote this test to see if this might help with another path, the other
-aspect of migration on numa nodes with ext4. But sadly I can't reproduce
-the issue yet.
-
-I'm next trying fio against a block device directory and then looping
-with migratepages on the pid, essentially bouncing the memory from fio
-from one node to another in a loop. And.. nothing yet.. even if I then
-try to loop enabling compaction.
-
-Syszbot recently provided another reproducer in C  [0] but that hasn't let me
-reproduce the issue yet either.
-
-> When it's run by check-parallel, compaction ends up doing a lot
-> more work over a much wider range of tests...
-
-Yeah I would hope the issue is reproducible with check-parallel, I
-haven't been able to run it yet but as soon as I do I am going to
-be supper happy due the huge benefits this will bring to testing.
-
-[0] https://lkml.kernel.org/r/67e57c41.050a0220.2f068f.0033.GAE@google.com
+Indeed, I have high hopes for check-parallel.
 
   Luis
