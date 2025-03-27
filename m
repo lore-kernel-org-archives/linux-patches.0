@@ -1,252 +1,131 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30441B423E
-	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 17:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7B71C8627
+	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 20:22:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743096608; cv=none; b=iFGiubI8qfqnACmP9dGuMWRa74Ly7L6hV4FbLHMVUU1WXw6RPM3QXjZvSLsJvTorU6cOiXF5hZPz6bsQxuHsLq8vKKFAl1Hku/Sk1nq0n4s6u8hvSAa7bkJDfaHlchdRNgCS+j4j4fDSeBz9jS8vTjwG7te7yzUgs6wfmBLE8vU=
+	t=1743106971; cv=none; b=QJUw4ZgmsTvl3Ve7EewlKx0bWW0klFNErUInlvZDlWmgNIHw7noMsE/g40tlpvis8chtWRYQn0Pfpb+JR/8M1s/4wkuRLvFOeLmCfEF3WNVpVMC+5u4HTOSqYdBjqH3fTeK2V6A78JMZkV35JT8nO486uv6Yoii6nuPoDrYKKwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743096608; c=relaxed/simple;
-	bh=K66Q38Lz90Nt3j6FO+oeTnlxzaJOsNINcLtmcpY+h10=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b8n9EBCveZNrsBGdLJS8lcCiqyQ5fxdcfUR8i9skFM4+0VO0VMDXNMjhFA5AZdtTNXf/ezKGM91UAZviL/cyIc9+yLidN7MtFs7VBmqFXd0FuCagU2xYyVk6c89MqwRBWxNZnBMDpNCVHcp//wr6+HjJv9Rdg0H9Sxz1vVtS59E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OhZMrGgm; arc=none smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1743106971; c=relaxed/simple;
+	bh=hWsoNvNHVfFmyq/J/uqEJxexZfkLwaAkkAF8jkhLaLc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W67SuTvkupryqavQTfMZvRbFlAZUhn0o2vXLtNSH3IACefpQf7QV2/rmzr/vSkaEidON8/B2pI7rSNFcm+B2KtkKhzFxSFrr62TPfqxz4hjbm68OUinBtrsDF9uh+1GHtToF72WG0hhVbr1iuwrqlsmyISQM4zCbvRwfNjOfX+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fromorbit.com; spf=pass smtp.mailfrom=fromorbit.com; dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b=TeMUUGf2; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fromorbit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fromorbit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OhZMrGgm"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5240317b3e0so494480e0c.0
-        for <patches@lists.linux.dev>; Thu, 27 Mar 2025 10:30:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fromorbit-com.20230601.gappssmtp.com header.i=@fromorbit-com.20230601.gappssmtp.com header.b="TeMUUGf2"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ff69365e1dso1900076a91.3
+        for <patches@lists.linux.dev>; Thu, 27 Mar 2025 13:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1743096605; x=1743701405; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WDN1VKUJwLebN0ryWgo3KULQHNLf140Ja4ddZir7PXQ=;
-        b=OhZMrGgmixTSOmO4KD57TH/BGWhyhS3AsTd89rOoyC2aH2MJNAoWea8I4wFLsm4fWq
-         hZbNlNA8jiYajWqI+DOC0R1fchq1Kb7Y5X2Lfz8eEHgBxDrP3D+Rw0CML//L/hqBn1jg
-         6jdRlUQzgGkBewhisa2U0yMcgpeM1PnjC7kH/y7BW10fcrgIf7Tzp+IjLwP+ow0R6Jle
-         h8bfyKhbH9j//RtSvgbHFTETCVCwglav4PTHgURgY4SKfSvU5EPe5sIprpNHZgVv1eCo
-         68YdG9deOgvr752tgCpZFT/70s4EX672FqbVqQ2QpTYCYHsRpEbXX7cJq1TIaraf1nL0
-         9VYg==
+        d=fromorbit-com.20230601.gappssmtp.com; s=20230601; t=1743106969; x=1743711769; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=f36YSwLPJ313+jNbvLdd5CTUY7LI4BTt4o8yr4k9tM4=;
+        b=TeMUUGf2Xp/ao2J8RdwuQu/rlO+J9sYv00/yxw369Vym/CF8rir48loH2+ZguWZIyQ
+         fuFt9a8+aJRPjtfviSLhtbeAZNk3NSHzY0Dld7CgYIA3LrbgAqQbUFz8bWebdyF5GGBO
+         VuKFTp2w0mhOxMhEgAd6jfEIt7eOKyH3MoXKfZgkYFlIM+KGIs8uTaDnfrRdYfyse3yn
+         HC8T4Qi1iO/d+IOgUL4bWjveQ3U3BgKbXZMtS+lkNxcRVT5P25kY45n3DKMgkzvJir09
+         FMkFkgYcZLyPeoUbccrySKTpxQGECR+/EmiLQmw8ujNPyer1hfoWUPVJQMOHrrA/k+ev
+         +j6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743096605; x=1743701405;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WDN1VKUJwLebN0ryWgo3KULQHNLf140Ja4ddZir7PXQ=;
-        b=haqDJ2JRZKfLTdYjFDmRONg8qtuwE6laON7ovP+3Is6B6FIMeNTgw3GRM7TvmBisSb
-         kRoRyfDeRCbfNuZMBnbfgOFFadjtzT1tMwgppv1q6letVetRDiEFAifnAyVxgh9f/9Sa
-         NzSZZWsXfJ82aFmY//PJsu57gDmGyrpqVUfATP5R3IeFdbHhpANUFaro/erCONym3U/e
-         pagk6CZIIdhdm1K6z4f7sd74w8iHyYEByaDgIqqwy3oIPoQX+N92k4KOmfR7BIVZBLR6
-         q4P9aI5UVRfRgx+xFPpkkPPGpWzwhKEQmo+Ps2SB0ilIXpvbaW4LsUIDh/odw9E9DpBP
-         xDmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZ5fpFqph28WIxv0OlkjPFSOqa45fb0VbgFI8Y62Mx5nm9nhSr5FeKA4DPiTMov47QiUt17o1d@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNLkvn7J2DozATk5r3jmo6AnAJ2P0vttPy5JkNYWNvEelemA0G
-	XHXR7cSc37p9lhp2NeXwm1nLJRjB5r1PXVGeXTsS2snmKXOHUmMaO9rD8ETTRzfkBTrs+SlaCxx
-	A2OuCiGi6TVneLSSR568tjGxFY9FlxcdA+hBPuA==
-X-Gm-Gg: ASbGncuNCkrDHuMd2P8bSlwjjk/Vop9pF79aiEO6sKFltSypjN9c8XjtgXs42CgFsz+
-	r/lVrtbCDPjPb7ERK+/qORkBp1h4FNTUkSMS+1OoB5FElcqjrInYHcz5I+5P0BsG5NGwq3On5Mh
-	bioiM0HiVCNstFXdWPue04yCHcg8mlD++0/qrxpmJRjx8hSK//CMgn5ROcxo47Se409bIuMw==
-X-Google-Smtp-Source: AGHT+IEztlgWSCIn71l6XVgidilEQsC+WgA0rVBDr66THcB1Yab03MEJKS8U8SF8aZ91Fp8ddjC6/zH3JJFfZRywj4k=
-X-Received: by 2002:a05:6122:887:b0:520:652b:ce18 with SMTP id
- 71dfb90a1353d-5260071ccf2mr3310045e0c.0.1743096605264; Thu, 27 Mar 2025
- 10:30:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743106969; x=1743711769;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f36YSwLPJ313+jNbvLdd5CTUY7LI4BTt4o8yr4k9tM4=;
+        b=YajMZe7ycTvlXXlzsi5nsU3IIxtDkWQRjn4UqnliCAHop3s8FVygg+3wdfH2tkxwoA
+         wkF+EgRlaRyjgaidx9fVQz738Y0hJ3KpiNvSOOUiIOIfImdj5gfZLdiiibY/AUuYOEMI
+         sxxhuYLdznZ6JXquZx4Pb+BqOHY/DeJdr8/EUtpG2bDp04TOGtQ9Nrfp1POas3bIR8UD
+         SMZnPVFup+qzgTDaQVv6CjWWhh1Y6Y8lAizy22A9tnTZxf6e8YX8yytjGOTI/Hl1Dmfq
+         DH7oD4E/hmVh983MWuOYbiaXgrL7im5N5EpIEtaDRLc9G7AuyWVjqJ2Y/VXrZRIwIWK3
+         1JzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUlGQhmCT5ZYG7kZRfznY5nyoJJlJxnaL6KW5qR/Ve7ihr/Kw5gX8DmheWcSGDr2MOvdKZC2HUQ@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyirlj0FHkHPa2s+vwVbR6pUx1p2JYAIgjypTSNIL34CdzehpvW
+	Qkr8LNEg3y2HsNX8tXfbzU5kHsqkQeUt5mfwaXA32+HIdOHzzN3gx+3bcwrjuEU=
+X-Gm-Gg: ASbGncsLw2huPnZlxR1IP2al/0nD7DrUATlwixSR9I5mQjBlegmqmVhQeCpgYRaCdLb
+	1WqB20hsIugcmPNCbVINZHs+0xSvIgCwjZ1kAEzC5ZdJfTKyNuZnq3JVk+Fjv7lUwoHMD+gzli5
+	lALG39tLv4kEPBlMbyZkuu7JI/y314HNXCdkG4V9SgcD7ia7va7YM0oEiLecX8w9uZYfVLJtnc1
+	fZJnSmAAQKmuFbEXufgeA/ZVpdw0G8JWZ6KXjNCeNg3Sj+nMpTgcleUEi6HhGialFBpDPzwrhhg
+	xd9Dlao8ffraPxqUgg6n8X/VoeZ9HTEwY8Afw63lu7nasDW2HBnwvNscmkW93ONwNlawjH5nU5I
+	Pc6vou+mCIS9jkURA5w==
+X-Google-Smtp-Source: AGHT+IE04slap1s8okAKEtulK560I8Pk5y4yI9BiST5ZRxIXZ4EDqBdpcK7KvdffOC2kSZ2m8M/JJw==
+X-Received: by 2002:a17:90a:c2cd:b0:301:1bce:c252 with SMTP id 98e67ed59e1d1-303a8d81d2bmr7055953a91.27.1743106969072;
+        Thu, 27 Mar 2025 13:22:49 -0700 (PDT)
+Received: from dread.disaster.area (pa49-181-60-96.pa.nsw.optusnet.com.au. [49.181.60.96])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3039dff0529sm2964573a91.16.2025.03.27.13.22.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Mar 2025 13:22:48 -0700 (PDT)
+Received: from dave by dread.disaster.area with local (Exim 4.98)
+	(envelope-from <david@fromorbit.com>)
+	id 1txtkT-000000016eh-2SQ3;
+	Fri, 28 Mar 2025 07:22:45 +1100
+Date: Fri, 28 Mar 2025 07:22:45 +1100
+From: Dave Chinner <david@fromorbit.com>
+To: Jan Kara <jack@suse.cz>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, patches@lists.linux.dev,
+	fstests@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+	oliver.sang@intel.com, hannes@cmpxchg.org, willy@infradead.org,
+	apopple@nvidia.com, brauner@kernel.org, hare@suse.de,
+	oe-lkp@lists.linux.dev, lkp@intel.com, john.g.garry@oracle.com,
+	p.raghav@samsung.com, da.gomez@samsung.com, dave@stgolabs.net,
+	riel@surriel.com, krisman@suse.de, boris@bur.io,
+	jackmanb@google.com, gost.dev@samsung.com
+Subject: Re: [PATCH] generic/764: fsstress + migrate_pages() test
+Message-ID: <Z-WzlUN6fSciApiC@dread.disaster.area>
+References: <20250326185101.2237319-1-mcgrof@kernel.org>
+ <pociwdgfqbzw4mjass6u6wcnvmqlh3ddqzoeoiwiyqs64pl6yu@5ad7ne7rgwe2>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250326154349.272647840@linuxfoundation.org>
-In-Reply-To: <20250326154349.272647840@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 27 Mar 2025 22:59:52 +0530
-X-Gm-Features: AQ5f1JqUE3wEB4mA5ovU8cCdeyrT-Beu7WuvHFYj9Q6LMIcb26hTI9Y51kQelGw
-Message-ID: <CA+G9fYtHXcRhFd9BH3sDYBNBT2XcP42amy5QqpLhNKesLUb8WA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/197] 6.1.132-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Shakeel Butt <shakeelb@google.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Johannes Weiner <hannes@cmpxchg.org>, Michal Hocko <mhocko@kernel.org>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Cgroups <cgroups@vger.kernel.org>, 
-	linux-mm <linux-mm@kvack.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pociwdgfqbzw4mjass6u6wcnvmqlh3ddqzoeoiwiyqs64pl6yu@5ad7ne7rgwe2>
 
-On Wed, 26 Mar 2025 at 21:15, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.132 release.
-> There are 197 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 28 Mar 2025 15:43:27 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.132-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Thu, Mar 27, 2025 at 12:53:30PM +0100, Jan Kara wrote:
+> On Wed 26-03-25 11:50:55, Luis Chamberlain wrote:
+> > 0-day reported a page migration kernel warning with folios which happen
+> > to be buffer-heads [0]. I'm having a terribly hard time reproducing the bug
+> > and so I wrote this test to force page migration filesystems.
+> > 
+> > It turns out we have have no tests for page migration on fstests or ltp,
+> > and its no surprise, other than compaction covered by generic/750 there
+> > is no easy way to trigger page migration right now unless you have a
+> > numa system.
+> > 
+> > We should evaluate if we want to help stress test page migration
+> > artificially by later implementing a way to do page migration on simple
+> > systems to an artificial target.
+> > 
+> > So far, this doesn't trigger any kernel splats, not even warnings for me.
+> > 
+> > Reported-by: kernel test robot <oliver.sang@intel.com>
+> > Link: https://lore.kernel.org/r/202503101536.27099c77-lkp@intel.com # [0]
+> > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> 
+> So when I was testing page migration in the past MM guys advised me to use
+> THP compaction as a way to trigger page migration. You can manually
+> trigger compaction by:
+> 
+> echo 1 >/proc/sys/vm/compact_memory
 
-In Addition to previous build regressions,
+Right, that's what generic/750 does. IT runs fsstress and every 5
+seconds runs memory compaction in the background.
 
-Regressions on arm and arm64 devices cpu hotplug tests failed and
-kernel oops triggered
-with gcc-13 and clang-20 the stable-rc 6.1.132-rc2.
+> So you first mess with the page cache a bit to fragment memory and then
+> call the above to try to compact it back...
 
-First seen on the 6.1.132-rc1
-Good: v6.1.131
-Bad: Linux 6.1.132-rc1 and Linux 6.1.132-rc2
+Which is effectively what g/750 tries to exercise.
 
-* Juno-r2, rockpi-4, dragonboard 845c, e850-96,
-  - selftests: cpu-hotplug: cpu-on-off-test.sh
-  - ltp-controllers: cpuset_hotplug_test.sh
-  - selftests: rseq: basic_percpu_ops_test
+When it's run by check-parallel, compaction ends up doing a lot
+more work over a much wider range of tests...
 
-Regression Analysis:
-- New regression? yes
-- Reproducibility? Yes
-
-Test regression: arm64 arm cpuhotplug kernel NULL pointer dereference
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Test log
-command: cpuset_hotplug_test.sh
-[ 1912.782804] /usr/local/bin/kirk[465]: starting test cpuset_hotplug
-(cpuset_hotplug_test.sh)
-cpuset_hotplug 1 TINFO: CPUs are numbered continuously starting at 0 (0-5)
-cpuset_hotplug 1 TINFO: Nodes are numbered continuously starting at 0 (0)
-[ 1917.567011] psci: CPU1 killed (polled 0 ms)
-cpuset_hotplug 1 TPASS: Cpuset vs CPU hotplug test succeeded.
-[ 1918.804896] Detected VIPT I-cache on CPU1
-[ 1918.805388] cacheinfo: Unable to detect cache hierarchy for CPU 1
-[ 1918.805957] GICv3: CPU1: found redistributor 1 region 0:0x00000000fef20000
-[ 1918.806683] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
-[ 1919.086059] psci: CPU1 killed (polled 0 ms)
-[ 1919.120969] Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000000
-[ 1919.121807] Mem abort info:
-[ 1919.122086]   ESR = 0x0000000096000004
-[ 1919.122451]   EC = 0x25: DABT (current EL), IL = 32 bits
-[ 1919.122956]   SET = 0, FnV = 0
-[ 1919.123262]   EA = 0, S1PTW = 0
-[ 1919.123574]   FSC = 0x04: level 0 translation fault
-[ 1919.124038] Data abort info:
-[ 1919.124380]   ISV = 0, ISS = 0x00000004
-[ 1919.124754]   CM = 0, WnR = 0
-[ 1919.125051] user pgtable: 4k pages, 48-bit VAs, pgdp=000000000a2b8000
-[ 1919.125655] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-[ 1919.126341] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[ 1919.126912] Modules linked in: snd_soc_hdmi_codec dw_hdmi_cec
-dw_hdmi_i2s_audio brcmfmac rockchipdrm hantro_vpu hci_uart brcmutil
-dw_mipi_dsi analogix_dp btqca v4l2_h264 btbcm v4l2_vp9 dw_hdmi
-panfrost v4l2_mem2mem cfg80211 cec bluetooth snd_soc_audio_graph_card
-videobuf2_v4l2 drm_display_helper gpu_sched snd_soc_simple_card
-videobuf2_dma_contig crct10dif_ce snd_soc_spdif_tx
-snd_soc_rockchip_i2s snd_soc_simple_card_utils videobuf2_memops
-phy_rockchip_pcie rockchip_saradc rtc_rk808 drm_shmem_helper
-drm_dma_helper videobuf2_common rfkill industrialio_triggered_buffer
-drm_kms_helper pcie_rockchip_host rockchip_thermal coresight_cpu_debug
-kfifo_buf fuse drm ip_tables x_tables
-[ 1919.132505] CPU: 0 PID: 67249 Comm: kworker/0:0 Not tainted 6.1.132-rc2 #1
-[ 1919.133132] Hardware name: Radxa ROCK Pi 4B (DT)
-[ 1919.133555] Workqueue: events work_for_cpu_fn
-[ 1919.133983] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 1919.134617] pc : memcg_hotplug_cpu_dead
-(include/linux/percpu-refcount.h:174
-include/linux/percpu-refcount.h:332
-include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
-mm/memcontrol.c:2382)
-[ 1919.135076] lr : memcg_hotplug_cpu_dead
-(include/linux/percpu-refcount.h:174
-include/linux/percpu-refcount.h:332
-include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
-mm/memcontrol.c:2382)
-[ 1919.135528] sp : ffff80000e78bc60
-[ 1919.135835] x29: ffff80000e78bc60 x28: 0000000000000000 x27: ffff80000a1c81f8
-[ 1919.136501] x26: 0000000000000028 x25: ffff0000f7534778 x24: ffff80000a1aeb08
-[ 1919.137166] x23: 0000000000000000 x22: ffff80000a16e240 x21: 0000000000000000
-[ 1919.137830] x20: ffff8000ed3d5000 x19: 0000000000000000 x18: 00000000a2704302
-[ 1919.138495] x17: 0000000000000000 x16: 0000000000000312 x15: 0000040000000000
-[ 1919.139159] x14: 0000000000000000 x13: ffff80000e788000 x12: ffff80000e78c000
-[ 1919.139823] x11: 0bb2d4910b917800 x10: 0000000000000000 x9 : 0000000000000001
-[ 1919.140487] x8 : ffff000013406300 x7 : 00000072b5503510 x6 : 0000000000300000
-[ 1919.141151] x5 : 00000000801c0011 x4 : 0000000000000000 x3 : ffff80000e78bca0
-[ 1919.141815] x2 : ffff80000e78bbf8 x1 : ffff8000080a11e4 x0 : ffff0000f7543240
-[ 1919.142480] Call trace:
-[ 1919.142709] memcg_hotplug_cpu_dead
-(include/linux/percpu-refcount.h:174
-include/linux/percpu-refcount.h:332
-include/linux/percpu-refcount.h:351 include/linux/memcontrol.h:795
-mm/memcontrol.c:2382)
-[ 1919.143133] cpuhp_invoke_callback (kernel/cpu.c:193)
-[ 1919.143554] _cpu_down (kernel/cpu.c:0 kernel/cpu.c:724
-kernel/cpu.c:1157 kernel/cpu.c:1218)
-[ 1919.143882] __cpu_down_maps_locked (kernel/cpu.c:1249)
-[ 1919.144291] work_for_cpu_fn (kernel/workqueue.c:5184)
-[ 1919.144647] process_one_work (kernel/workqueue.c:2297)
-[ 1919.145028] worker_thread (include/linux/list.h:292
-kernel/workqueue.c:2352 kernel/workqueue.c:2444)
-[ 1919.145386] kthread (kernel/kthread.c:378)
-[ 1919.145687] ret_from_fork (arch/arm64/kernel/entry.S:865)
-[ 1919.146041] Code: d51b4235 8b160280 97ffec72 97f73691 (f9400269)
-All code
-========
-
-Code starting with the faulting instruction
-===========================================
-[ 1919.146592] ---[ end trace 0000000000000000 ]---
-
-
-## Test log 2
-kselftest: Running tests in rseq
-TAP version 13
-1..9
-timeout set to 0
-selftests: rseq: basic_test
-testing current cpu
-basic_test: basic_test.c:30: void test_cpu_pointer(void): Assertion
-`sched_getcpu() == i' failed.
-Aborted
-not ok 1 selftests: rseq: basic_test # exit=134
-timeout set to 0
-selftests: rseq: basic_percpu_ops_test
-Segmentation fault
-not ok 2 selftests: rseq: basic_percpu_ops_test # exit=139
-
-The bisection pointing to,
- memcg: drain obj stock on cpu hotplug teardown
-  upsteam commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb upstream.
-
-## Source
-* Kernel version: 6.1.132-rc2
-* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* Git sha: f5ad54ef021f6fb63ac97b3dec5efa9cc1a2eb51
-* Git describe: v6.1.131-198-gf5ad54ef021f
-* Project details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/Test/v6.1.131-198-gf5ad54ef021f/
-
-## Test
-* Test log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp/log
-* Test history:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp-01e5a0f146f52056a08c01ad73b44c893f7748e5cd1533e30c989289a90e821b/history/
-* Test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27793089/suite/log-parser-test/test/internal-error-oops-oops-preempt-smp/
-* Test link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwSZQOGBhePbuN1hwUGDHIT8/
-* Kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwSZQOGBhePbuN1hwUGDHIT8/config
-
-
---
-Linaro LKFT
-https://lkft.linaro.org
+-Dave.
+-- 
+Dave Chinner
+david@fromorbit.com
