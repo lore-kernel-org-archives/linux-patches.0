@@ -1,146 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E05813B2A4;
-	Thu, 27 Mar 2025 21:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EF91CDA2D;
+	Thu, 27 Mar 2025 21:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743110002; cv=none; b=KWpluXLgQZDoFYyCmcqKFXgumQyyoY02Wwd/d8oFYWiQEcKeqrl9D0mPhrgEgHLnLhHstIwlRPVUFvcAqP3+wu3R1No0UMPZZPG8JDN7roDq8ExNsAxrK/VlWuLd5SKHYrCoB5FDZeUjK4cZ/rLfHFfGojet37n1kRvitfZGC7w=
+	t=1743111354; cv=none; b=hykfsMVrBZvnpa3EMsFNjEj1KROZ8mfOkeStrf1Mw8z5lZNp8vBxXMAYkxQmycx9W4VY35Lth5x9f1/SpOwmLN/FkZyY30vqtKVzkyaE4A9YrAYOinVUjL3SoYsfJUQV8oUH/7TX4QTWegu4f8b2fuMFEcVETBdoUfP57+XcCG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743110002; c=relaxed/simple;
-	bh=+DUyoXuhqT4PPfZDRewna3BdpkfBTCdpkJDTLMXYvTE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VTeUqvxNQA3ScBCctr3v8bbXG8ENOBvpAswqEAmzGjBmQ4B26WNDyBBd/JtYPSZqvmwZf6uPvGRU0yGVfOgKlEYa9gZ+hBFgDmlusDbosPShfJB7rv4STIdKnk4E8ao+PQAV04x/tKBQrD7cXatNqg3DyYLoa+OPrwncb2zzarQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Up+O3Ti7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743111354; c=relaxed/simple;
+	bh=LTF6cEblwWCHk6Ff4Ck1T08RDaFdQ1h4B3Knna6bGGM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BHFUxlxHJcQGyyLSyZtLglo2Q86McsRsH2IdRaXzxh5RwX4rqaB6Rs8WwSUSeLQD3scu8dduN/eveBvOOF+7YGSa3gnJtFl0mVsPG0pRlI6ENuYf5RmWshOoMo7kPuEyABwpzWbrTgJsdmCDwDLgTLzc0sYKYPMOtjV9kts4XHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HXCzw67Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Up+O3Ti7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0736C4CEDD;
-	Thu, 27 Mar 2025 21:13:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HXCzw67Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A47C4CEDD;
+	Thu, 27 Mar 2025 21:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743110001;
-	bh=+DUyoXuhqT4PPfZDRewna3BdpkfBTCdpkJDTLMXYvTE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Up+O3Ti70jPCseslsJ6azTnhp8su5BQPYHE362OtwGCVUQR1IbM/utgCgr7eLPRpG
-	 779Dh3ixB9lug1xTpNuhCBfAfmBR29ec80CeFcO0LJAZ29TfSEr/v23+kGjXg2p9Cb
-	 3CSYrcxFLAC/8PbLI30qIrKsOHwzPrO/hbvM6WVsSZh6bnMnDk0Dl9s8ITGAVRrn3R
-	 7WYzteS6tahJKflO8Z/SUzeT61w1RdiLJ6v1+Oo1PSnSM9EpKQTmcSYuYefcs5rKTN
-	 wRqGsNMasZUDLnseBmYBSzugt8uZLvuzj1bpEa+e6BgoHbLQ1dYjewSOZq0seDrnp2
-	 m8e+dVojdsLaQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: clarify the language unstable features in use
-Date: Thu, 27 Mar 2025 22:13:02 +0100
-Message-ID: <20250327211302.286313-1-ojeda@kernel.org>
+	s=k20201202; t=1743111352;
+	bh=LTF6cEblwWCHk6Ff4Ck1T08RDaFdQ1h4B3Knna6bGGM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HXCzw67YHPTYIT5MbmZFL4Rm6dK5qHQ4Zcl3HbJ4XmLeMAr44O5KkWKCMTePwnvgN
+	 HbKyfwxydV34Fv9NSdRreZhetLuG/psuYz/p2HrVVGmp+5M4sfORVC2+qv7hfa3vyE
+	 AJWyROHrpOBnEtwEsaPrGQ0ouwsRL5TpeXjky1CJz71QeDpQrzBjCLc1D4zXpBl9zC
+	 RcOtuD4MSQjFkGYfm/F5izaEWBUNgEkipZ1PJqVamFIAlpEf8oNB6hyDX1dcDwlS+n
+	 ZWOsic93gSKazwsepLOCdsLE/zYbLNDBM6i7SVBRCtwXnV+V2x1b6qsO/p7L1/o06P
+	 +4VKCeoMjuKwA==
+Date: Thu, 27 Mar 2025 14:35:50 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Dave Chinner <david@fromorbit.com>
+Cc: Jan Kara <jack@suse.cz>, patches@lists.linux.dev,
+	fstests@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+	oliver.sang@intel.com, hannes@cmpxchg.org, willy@infradead.org,
+	apopple@nvidia.com, brauner@kernel.org, hare@suse.de,
+	oe-lkp@lists.linux.dev, lkp@intel.com, john.g.garry@oracle.com,
+	p.raghav@samsung.com, da.gomez@samsung.com, dave@stgolabs.net,
+	riel@surriel.com, krisman@suse.de, boris@bur.io,
+	jackmanb@google.com, gost.dev@samsung.com
+Subject: Re: [PATCH] generic/764: fsstress + migrate_pages() test
+Message-ID: <Z-XEtgT4quWcnG_T@bombadil.infradead.org>
+References: <20250326185101.2237319-1-mcgrof@kernel.org>
+ <pociwdgfqbzw4mjass6u6wcnvmqlh3ddqzoeoiwiyqs64pl6yu@5ad7ne7rgwe2>
+ <Z-WzlUN6fSciApiC@dread.disaster.area>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z-WzlUN6fSciApiC@dread.disaster.area>
 
-We track the details of which Rust features we use at our usual "live
-list" [1] (and its sub-lists), but in light of a discussion in the LWN
-article [2], it would help to clarify it in the source code.
+On Fri, Mar 28, 2025 at 07:22:45AM +1100, Dave Chinner wrote:
+> On Thu, Mar 27, 2025 at 12:53:30PM +0100, Jan Kara wrote:
+> > On Wed 26-03-25 11:50:55, Luis Chamberlain wrote:
+> > > 0-day reported a page migration kernel warning with folios which happen
+> > > to be buffer-heads [0]. I'm having a terribly hard time reproducing the bug
+> > > and so I wrote this test to force page migration filesystems.
+> > > 
+> > > It turns out we have have no tests for page migration on fstests or ltp,
+> > > and its no surprise, other than compaction covered by generic/750 there
+> > > is no easy way to trigger page migration right now unless you have a
+> > > numa system.
+> > > 
+> > > We should evaluate if we want to help stress test page migration
+> > > artificially by later implementing a way to do page migration on simple
+> > > systems to an artificial target.
+> > > 
+> > > So far, this doesn't trigger any kernel splats, not even warnings for me.
+> > > 
+> > > Reported-by: kernel test robot <oliver.sang@intel.com>
+> > > Link: https://lore.kernel.org/r/202503101536.27099c77-lkp@intel.com # [0]
+> > > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> > 
+> > So when I was testing page migration in the past MM guys advised me to use
+> > THP compaction as a way to trigger page migration. You can manually
+> > trigger compaction by:
+> > 
+> > echo 1 >/proc/sys/vm/compact_memory
+> 
+> Right, that's what generic/750 does. IT runs fsstress and every 5
+> seconds runs memory compaction in the background.
+> 
+> > So you first mess with the page cache a bit to fragment memory and then
+> > call the above to try to compact it back...
+> 
+> Which is effectively what g/750 tries to exercise.
 
-In particular, we are very close to rely only on stable Rust language-wise
--- essentially only two language features remain (including the `kernel`
-crate).
+Indeed. And I've tried g/750 for over 24 hours trying to reproduce
+the issue reported by Oliver and I was not able to, so this augments the
+coverage.
 
-Thus add some details in both the feature list of the `kernel` crate as
-well as the list of allowed features.
+The original report by Oliver was about ltp syscalls-04/close_range01
+triggering the spin lock on the buffer_migrate_folio_norefs() path which
+triggers a lock followed by a sleep context. But the report indicates
+the test ran with btrfs and btrfs does not use buffer_migrate_folio_norefs().
+Although clearly the splat and diagnosis by Matthew that the spinlock seems
+to need fixing, reproducing this issue would be good. But this has been hard.
 
-This does not over every single feature, and there are quite a few
-non-language features that we use too. To have the full picture, please
-refer to [1].
+In fact there are only a few users of buffer_migrate_folio_norefs() left
+and ext4 is one of them, as well as the block layer.
 
-Link: https://github.com/Rust-for-Linux/linux/issues/2 [1]
-Link: https://lwn.net/Articles/1015409/ [2]
-Suggested-by: Andreas Hindborg <a.hindborg@kernel.org>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/lib.rs     | 27 ++++++++++++++++++++-------
- scripts/Makefile.build |  8 ++++++++
- 2 files changed, 28 insertions(+), 7 deletions(-)
+I wrote this test to see if this might help with another path, the other
+aspect of migration on numa nodes with ext4. But sadly I can't reproduce
+the issue yet.
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index ba0f3b0297b2..660a3ab6f9d4 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -12,21 +12,34 @@
- //! do so first instead of bypassing this crate.
- 
- #![no_std]
--#![feature(arbitrary_self_types)]
--#![cfg_attr(CONFIG_RUSTC_HAS_COERCE_POINTEE, feature(derive_coerce_pointee))]
--#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(coerce_unsized))]
--#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(dispatch_from_dyn))]
--#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(unsize))]
-+
-+// Please see https://github.com/Rust-for-Linux/linux/issues/2 for details on
-+// the unstable features in use.
-+
-+// Stable since Rust 1.79.0.
- #![feature(inline_const)]
-+
-+// Stable since Rust 1.81.0.
- #![feature(lint_reasons)]
--// Stable in Rust 1.82
-+
-+// Stable since Rust 1.82.0.
- #![feature(raw_ref_op)]
--// Stable in Rust 1.83
-+
-+// Stable since Rust 1.83.0.
- #![feature(const_maybe_uninit_as_mut_ptr)]
- #![feature(const_mut_refs)]
- #![feature(const_ptr_write)]
- #![feature(const_refs_to_cell)]
- 
-+// Expected to become stable.
-+#![feature(arbitrary_self_types)]
-+
-+// `feature(derive_coerce_pointee)` is the one expected to become stable.
-+#![cfg_attr(CONFIG_RUSTC_HAS_COERCE_POINTEE, feature(derive_coerce_pointee))]
-+#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(coerce_unsized))]
-+#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(dispatch_from_dyn))]
-+#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(unsize))]
-+
- // Ensure conditional compilation based on the kernel configuration works;
- // otherwise we may silently break things like initcall handling.
- #[cfg(not(CONFIG_RUST))]
-diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index 56be83024851..41a640990cfa 100644
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -226,6 +226,14 @@ $(obj)/%.lst: $(obj)/%.c FORCE
- # Compile Rust sources (.rs)
- # ---------------------------------------------------------------------------
- 
-+# The features in this list are the ones allowed for non-`rust/` code.
-+#
-+#   - Stable since Rust 1.81.0: `feature(lint_reasons)`.
-+#   - Stable since Rust 1.82.0: `feature(asm_const)`, `feature(raw_ref_op)`.
-+#   - Stable since Rust 1.87.0: `feature(asm_goto)`.
-+#
-+# Please see https://github.com/Rust-for-Linux/linux/issues/2 for details on
-+# the unstable features in use.
- rust_allowed_features := asm_const,asm_goto,arbitrary_self_types,lint_reasons,raw_ref_op
- 
- # `--out-dir` is required to avoid temporaries being created by `rustc` in the
+I'm next trying fio against a block device directory and then looping
+with migratepages on the pid, essentially bouncing the memory from fio
+from one node to another in a loop. And.. nothing yet.. even if I then
+try to loop enabling compaction.
 
-base-commit: e6ea10d5dbe082c54add289b44f08c9fcfe658af
--- 
-2.49.0
+Syszbot recently provided another reproducer in C  [0] but that hasn't let me
+reproduce the issue yet either.
 
+> When it's run by check-parallel, compaction ends up doing a lot
+> more work over a much wider range of tests...
+
+Yeah I would hope the issue is reproducible with check-parallel, I
+haven't been able to run it yet but as soon as I do I am going to
+be supper happy due the huge benefits this will bring to testing.
+
+[0] https://lkml.kernel.org/r/67e57c41.050a0220.2f068f.0033.GAE@google.com
+
+  Luis
