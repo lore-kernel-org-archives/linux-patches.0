@@ -1,157 +1,128 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996AB1C8627
-	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 07:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB33286A9
+	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 09:11:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743059546; cv=none; b=Ge7WWKVAlQs5LG14z39gby6faF0ID2kufglbX0d7rAQ3hAGNcOAXPrCCJP8/y2LcCvp/Ku7xHIhwKk9eI5eNLMwywt1T/qiLVlp8i837F89Wu3YvN4bEMeZfDp/I0ED4TrePPxJSAh5XKVAT/c5PClmSlDgTuJ8bw4v0Ub4RjbI=
+	t=1743066664; cv=none; b=JQgQQjm5NT4rgC9v1uUj8Wu3LK0A5PRHc1GBUD/HkK2OAFKRiBVvDFNPd4ljwHDZcrbNcWB6Qb7n5z5j1xCrt9Md9FElF4Tg8N4TcCL2xVAWWeApg62T2tYDJl8DBhkl+y2oRaJmQwM6UIKgPJBBWgdyuiq7dQodB/iuYdmSBMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743059546; c=relaxed/simple;
-	bh=xLDxqFPTSPn0/knZPERzvm0+bXSKlxaYfylULmtrafg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=RjfHE96IPnshf6hhb+ZtAAsM5Ma7vJsXTe8HXoYiXGkTZ99EDigqS5ckNt36xFDJLJ3/GWADVJMa1/RDt3D4PSDqN3SUjNxwYNpkDWqsMmjwlXy051It+bqoPGcVqb0RiU2qmnuDCDZzZnV1LeV9dc9xN1SnOVvpjYlwpIQgoZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=h8AErXRy; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="h8AErXRy"
+	s=arc-20240116; t=1743066664; c=relaxed/simple;
+	bh=y7axKAJliHD2zTOIYFEFVrRu7lE1cQmDkIumIcuNBvc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IHCauJ+2tpLTQ9/YYW3NjyfbMZ0nCer3RdSd5L+WOp/Z1Cd0kN/KAvSTBtSYNeZ/QvUZa/q18dwkY7pN6RTtjCsAepq4neYt2zm0wuMyaO7Ze/gPotrgnwT7GMZSpvZDsa6lOtXyiHMCd3NL1EiUhwLnqSOeY02KabwdKfoqjrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5wYMm005249;
+	Thu, 27 Mar 2025 02:10:32 -0700
+Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hvqkde3b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Thu, 27 Mar 2025 02:10:31 -0700 (PDT)
+Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Thu, 27 Mar 2025 02:10:31 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Thu, 27 Mar 2025 02:10:26 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
+        <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
+        <martin.petersen@oracle.com>, <bvanassche@acm.org>,
+        <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <manivannan.sadhasivam@linaro.org>, <beanhuo@micron.com>
+Subject: [PATCH 6.6.y] scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
+Date: Thu, 27 Mar 2025 17:10:26 +0800
+Message-ID: <20250327091026.1239657-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1743059536;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lH20vJ48RSA10XECX0SWG627PAsPjNVOUl91E9dSA10=;
-	b=h8AErXRy2tf++eIitSzH4Z7avDyXJ3XY5svwpL8omEiu/+RugNoAOmQgoAcvtxJuq2K3lF
-	OBL7yNp5z2S8UrU2xL3P/dwwPZ+z2tjk/FL5wYznfPEuLNF7EXHBeoNJV8+tdlqKW8Bysu
-	A/h8o7mVuanCMIOBx4cAJCCNpxAybAPPM/CJ3gE0Dw31mk75lBGlhtbg7J9tMANBPyuwHI
-	HmMVM/OIxMoeQoOc0MfCW/ho1u82D1qIw8Uw03DHGmPjBsRLHLDDquUAjboVscVmAKjsgv
-	eW/Y0hHCT9n8ETLIsGgsnV9HG4X25LpUQs7NAaHZTFDN+v7rAdLXnkg2C6k71w==
-Date: Thu, 27 Mar 2025 08:12:14 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, Naresh Kamboju
- <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Heiko Stuebner <heiko@sntech.de>, Vegard Nossum <vegard.nossum@oracle.com>,
- Darren Kenny <darren.kenny@oracle.com>, Diederik de Haas
- <didi.debian@cknow.org>
-Subject: Re: [PATCH 6.6 00/77] 6.6.85-rc1 review
-In-Reply-To: <2025032656-closure-exile-38fe@gregkh>
-References: <20250325122144.259256924@linuxfoundation.org>
- <CA+G9fYvWau1nC8wmpWkxG8gWPaRMP9pbkh2eNsAZoUMeRPgzqA@mail.gmail.com>
- <a823454af9915fe3acfcb66fd84dc826@manjaro.org>
- <751cf2c6-c692-4595-98e9-fa3ae4dfd10a@oracle.com>
- <0001e7e020145983055d154488f5c460@manjaro.org>
- <2025032656-closure-exile-38fe@gregkh>
-Message-ID: <6a8a77a00a11ae9c22b1a2fe50cbbb34@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Authority-Analysis: v=2.4 cv=XNkwSRhE c=1 sm=1 tr=0 ts=67e51607 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=PY6Zn8H8AAAA:8 a=N54-gffFAAAA:8 a=yPCof4ZbAAAA:8 a=t7CeM3EgAAAA:8
+ a=5s8WT1kodU2SEgI5n5gA:9 a=cvBusfyB2V15izCimMoJ:22 a=ySS05r0LPNlNiX1MMvNp:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
+X-Proofpoint-ORIG-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ mlxscore=0 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
+ mlxlogscore=999 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2503270061
 
-Hello Greg,
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On 2025-03-26 16:38, Greg Kroah-Hartman wrote:
-> On Wed, Mar 26, 2025 at 04:56:18AM +0100, Dragan Simic wrote:
->> On 2025-03-26 03:33, Harshit Mogalapalli wrote:
->> > On 25/03/25 21:37, Dragan Simic wrote:
->> > > On 2025-03-25 16:07, Naresh Kamboju wrote:
->> > ...
->> > > > Build regression: arm64 dtb rockchip non-existent node or label
->> > > > "vcca_0v9"
->> > > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->> > > >
->> > > > ## Build log
->> > > > arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
->> > > > (phandle_references):
->> > > > /pcie@f8000000: Reference to non-existent node or label "vcca_0v9"
->> > > >
->> > > >   also defined at arch/arm64/boot/dts/rockchip/rk3399-
->> > > > rockpro64.dtsi:659.8-669.3
->> > ...
->> > >
->> > > This is caused by another patch from the original series failing
->> > > to apply due to some bulk regulator renaming.  I'll send backported
->> > > version of that patch soon, which should make everything fine.
->> >
->> > On ARM configs, we do see the same issue that Naresh reported.
->> >
->> > arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
->> > (phandle_references): /pcie@f8000000: Reference to non-existent node
->> > or label "vcca_0v9"
->> >  also defined at
->> > arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi:659.8-669.3
->> > ERROR: Input tree has errors, aborting (use -f to force output)
->> > make[3]: *** [scripts/Makefile.lib:423:
->> > arch/arm64/boot/dts/rockchip/rk3399-rockpro64-v2.dtb] Error 2
->> > make[3]: *** Waiting for unfinished jobs....
->> > arch/arm64/boot/dts/rockchip/rk3399.dtsi:221.23-266.4: ERROR
->> > (phandle_references): /pcie@f8000000: Reference to non-existent node
->> > or label "vcca_0v9"
->> >  also defined at
->> > arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtsi:659.8-669.3
->> > ERROR: Input tree has errors, aborting (use -f to force output)
->> > make[3]: *** [scripts/Makefile.lib:423:
->> > arch/arm64/boot/dts/rockchip/rk3399-rockpro64.dtb] Error 2
->> > make[2]: *** [scripts/Makefile.build:480: arch/arm64/boot/dts/rockchip]
->> > Error 2
->> > make[2]: *** Waiting for unfinished jobs....
->> >
->> > Caused by commit: 1e4bd0ec5a47 ("arm64: dts: rockchip: Add missing
->> > PCIe supplies to RockPro64 board dtsi") -- PATCH 42/77 of this series.
->> >
->> > We see same problem with 6.12.21-rc1 as well.
->> >
->> > Notes:
->> > -----
->> > I think Dragan was referring to upstream commit: bd1c959f37f3 ("arm64:
->> > dts: rockchip: Add avdd HDMI supplies to RockPro64 board dtsi") which
->> > will fix this problem but fails to apply due to regulator renaming in
->> > commit: 5c96e6330197 ("arm64: dts: rockchip: adapt regulator nodenames
->> > to preferred form") which is not in stable kernels(6.6.y and 6.12.y)
->> 
->> Exactly, the direct dependency is the commit bd1c959f37f3 ("arm64:
->> dts: rockchip: Add avdd HDMI supplies to RockPro64 board dtsi"),
->> for which I haven't sent the backported version yet.
->> 
->> As Diederik pointed it out already in a separate message [*] from
->> a couple of days ago, it might be the best to include the commit
->> 5c96e6330197 ("arm64: dts: rockchip: adapt regulator nodenames to
->> preferred form") into stable kernels as well.
->> 
->> Obviously, including the commit 5c96e6330197 pretty much goes
->> against the rules of stable kernels, but it would save a lot of
->> time and effort in the future.
->> 
->> [*] 
->> https://lore.kernel.org/stable/D8ONE4WEF7A2.1OE1YY8J34MM3@cknow.org/
-> 
-> As that's a big change, and no one seems to be sending it to me for
-> inclusion, I'll just go drop the patch that broke the builds for now 
-> and
-> wait for someone to send working ones later.
+commit 64506b3d23a337e98a74b18dcb10c8619365f2bd upstream.
 
-Makes sense to me, thanks.  I'll send you the three patches (i.e., the
-bulk regulator renaming patch, and the two RockPro64 patches) that need
-to be included in the stable kernels, in the next couple of days.  
-Having
-the bulk regulator renaming patch included in the stable kernels should
-save us a lot of time and effort in the future.
+Otherwise, it will result in a NULL pointer dereference as below:
 
-I would've sent you those patches earlier, but I'm currently in a really
-tight spot when it comes to time.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+Call trace:
+ mutex_lock+0xc/0x54
+ platform_device_msi_free_irqs_all+0x14/0x20
+ ufs_qcom_remove+0x34/0x48 [ufs_qcom]
+ platform_remove+0x28/0x44
+ device_remove+0x4c/0x80
+ device_release_driver_internal+0xd8/0x178
+ driver_detach+0x50/0x9c
+ bus_remove_driver+0x6c/0xbc
+ driver_unregister+0x30/0x60
+ platform_driver_unregister+0x14/0x20
+ ufs_qcom_pltform_exit+0x18/0xb94 [ufs_qcom]
+ __arm64_sys_delete_module+0x180/0x260
+ invoke_syscall+0x44/0x100
+ el0_svc_common.constprop.0+0xc0/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x34/0xdc
+ el0t_64_sync_handler+0xc0/0xc4
+ el0t_64_sync+0x190/0x194
+
+Cc: stable@vger.kernel.org # 6.3
+Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor specific ops")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-2-45ad8b62f02e@linaro.org
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ drivers/ufs/host/ufs-qcom.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index c5a6b133d364..51ed40529f9a 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1918,10 +1918,12 @@ static int ufs_qcom_probe(struct platform_device *pdev)
+ static int ufs_qcom_remove(struct platform_device *pdev)
+ {
+ 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 
+ 	pm_runtime_get_sync(&(pdev)->dev);
+ 	ufshcd_remove(hba);
+-	platform_msi_domain_free_irqs(hba->dev);
++	if (host->esi_enabled)
++		platform_msi_domain_free_irqs(hba->dev);
+ 	return 0;
+ }
+ 
+-- 
+2.25.1
+
