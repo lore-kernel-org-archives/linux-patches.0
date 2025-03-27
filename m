@@ -1,182 +1,221 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7A61581EE
-	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 22:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD5E54782
+	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 23:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743113614; cv=none; b=elc5tRKFV0fRWURTlzLzZOCKmFroBoZHkOBIpLqabrca1SdyQJFDNziDW2NXbD0AZ/jQ66/Z1PwkGmYHvQO/NS8nnCZMqrJ+k5y+wpE1U67flL7twqXR515+242KPeJQoBY0FajQTLreBaXelEOj7MXjQX6KkBFxG8D31wx7R20=
+	t=1743117573; cv=none; b=k+NDjRD5qJwbCTDGePbvOfqFw31L7j3QtXjpbuoIXKlkZrqPB2peem+Y/fvZevzABCB15+nDr7uPfRlt6aL+G+dEfZUb74jYk0Wh4aXKkW7SB6BUT4fVTI/E+hSFPEX8srDYNI+YmV+4LikJF2Ar7UqKNX4+9Dsb3dlDcKfdudc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743113614; c=relaxed/simple;
-	bh=TYGJ8FnfsKT1SKjoZWBosa8mBZ3KjzthRNE8P8nvecE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bIAah5K23301+d+d087IX0jf8Aiv8RZT41PyVh8I8os6E13zRcGTZ2TB4WwqZDp1AQEgn0ppAKnoxy1Fur2rDLDkdUCUBkAVveYVtHzlTNUM53J5Ocr57mL+jrTNyAveKDyo8GxCx09l6o4uG5zofcjgDDlRQx1cWpTnltb9hu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=RfneHWSi; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1743117573; c=relaxed/simple;
+	bh=JtHkof5Kn1s3OvzmD5FvCZbT7RpY4G+M3J77IZkSWJk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KeLGk8aZ8EFbJWvu4yjZeYLpFH2RVxaAKEvEhgEA6Tap/k/MHsKDPDr8kDgWv4z0R+iGoDxJ2f6vOW9/y0fK6Di49Ekm/oeKY2lrbKUtddmFqBDbstdQ4U5605oS0bBxGog6Wmee3lvGBJSn28wg483X/U7dx3hTBcufXejhEHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoFRMafB; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="RfneHWSi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=rq2gsk3pfvay7fg5nyq3ghjsg4.protonmail; t=1743113609; x=1743372809;
-	bh=Vrk6CcpdVcblD8Yoi4uM8XudDIG9EgjbDWgg5W2/PO0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=RfneHWSiAyNxultd7Fssx0bbLRtJdVbBqsZJz5oD6qD2GsbQ4/36TWrpLy7lg+DmF
-	 vnlER0HAcssPgET0HTb9yNDxki7tEztPSH0C8H67N0XPwy+gZ5WPbq2qCtQ1eENQPU
-	 kOnGYplP6tb3H4rtk29pwmRMCS+7s+FUcGx5PhMAr0lDOuWfLKDneKOrlEvWAFlLOD
-	 ZKXQkFuKl2U1Wg5B2xRsUOnmUFtHUGK38R/UbIZATR7RBxqKrAlbLOCJHbYXGQN5dv
-	 GPE9uqewuMZymcnHSm0Xzu1EsICI8eYZMERYJRwmRIsRkK/LbcTptqGpefovzTB26o
-	 BEe/cCRP+vMxA==
-Date: Thu, 27 Mar 2025 22:13:22 +0000
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: clarify the language unstable features in use
-Message-ID: <D8RE79BLHK7K.1ZM2N5RBYGUY8@proton.me>
-In-Reply-To: <20250327211302.286313-1-ojeda@kernel.org>
-References: <20250327211302.286313-1-ojeda@kernel.org>
-Feedback-ID: 71780778:user:proton
-X-Pm-Message-ID: 57039260adb80c49be970e0c87108b8ac94d43c1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoFRMafB"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e3978c00a5aso1356640276.1
+        for <patches@lists.linux.dev>; Thu, 27 Mar 2025 16:19:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743117569; x=1743722369; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aMnF9vs8JB47IN/cDkEjD5+fBKENuY4T9JJxCznicyY=;
+        b=EoFRMafBHpqasMEQcP5dITQWrmfo/jmITJ08zrQtKG6Ayki6Z28HzZFg7rcNhjj4LV
+         AqUFZQXT1et/0N0B+TFJwhhiplSIMk3WnnOy1QqXF2X1obJyYw5E2Xp4tOjd5G1s2Q3z
+         2dq7C0vDNh6IMcvGl2Ug/LyKr6jN7wQ5dbhhKsPya3Plrosd/9Lw5R5aN9A7dpoWo/n2
+         q2dLGrkukk8t/HOorbtQfkb2bmIi4RHkut9uUDjR3TwLAdDtruiyAXN/VdWEG6tZPAYg
+         LDrEdvX2ZfriTU9VnJBaLG/lZ7ojSRmp9LC0BSA1f2uK9FsIZ7/BwZyeZXjU+ofH7VOc
+         Kq5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743117569; x=1743722369;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aMnF9vs8JB47IN/cDkEjD5+fBKENuY4T9JJxCznicyY=;
+        b=M9A0EodhP4pIMV3wDET3HYalMcXErH4J/71zRl5ofoWXLM4qqWbfOL16MPjTL5HjnI
+         eZ6gg8wXzD34Lpd2kQ+6iVRqGiMts0YNsi4gXsg9mMIEN2cn9WQ5WXvCoJENdeaKMmOq
+         o/dkdJgSXtIh/pPeiPc1c18iLXG5lNirScPL3pA+2+3db0850I31pF8Dbby8WXNGy1BR
+         LvcD8Rv9/o3Mmx9oUYdXg8LjGEi3q3lmUNCdANrH/Mvbm3ZeLMl3370BtnbSTiutQDP8
+         4j/9t6v2TEkHbXGaXltDl3xAZ7SEwLWQxxC8vkieWuNn6vgq/0/QQzrsOvDwpZY5v9dw
+         b3lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWOZTSThohvFFdz1L82OqXzllR7PI9Q5f1rC01yuR22GP0/gak00yjujM7r1y5SwEYEYnZNkNyh@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywjm0Kqaz8oFnLxKF2gGQnrLw98McYXUvLJznv9hPqGlGXx5/LE
+	P+u5thxpcTI2fh6jppUZBitYTE+TPrcB8B56zVsjcP6eHXebFT8FntgnSq1Bm0at3k3Y6RCDdr6
+	1CYm9Tqe4qx0e1HtZ198pwjSJuMM=
+X-Gm-Gg: ASbGncvldK83hlp2JdI9Urcv/CIngQrsSwL9SRlAy/RtGY7JnwsB28cwf087VjiHi0I
+	nNcEp+yaTPpv/SmXN2RXkPU7i8dMBalzRf6kCc970NTB2TyDCv4iztlGuCAD52BF+sgIDTcGGPI
+	T8ByDAWjbJYdMTwM1KazVQe7NW7G0D8SgwaYv0tskLAZ7qdPm403Bv1uc=
+X-Google-Smtp-Source: AGHT+IFFzruC25MmRQ8O0m11e88aqMai4IgHeja7o6hpsDHutAEbLnqb6CJ+2QXVsTRPqdu8ITPVSGFdMHLnDsZUS7Q=
+X-Received: by 2002:a05:6902:4a03:b0:e6b:769f:556b with SMTP id
+ 3f1490d57ef6-e6b769f5aa6mr107233276.35.1743117568538; Thu, 27 Mar 2025
+ 16:19:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250326154349.272647840@linuxfoundation.org> <CA+G9fYsRQub2qq0ePDs6aBAc+0qHRGwH_WPsTfhcwkviD1eH1w@mail.gmail.com>
+ <CACzhbgQ=TU-C=MvU=fNRwZuFKBRgnrXzQZw15HVci_vT5w8O7Q@mail.gmail.com>
+In-Reply-To: <CACzhbgQ=TU-C=MvU=fNRwZuFKBRgnrXzQZw15HVci_vT5w8O7Q@mail.gmail.com>
+From: Leah Rumancik <leah.rumancik@gmail.com>
+Date: Thu, 27 Mar 2025 16:19:16 -0700
+X-Gm-Features: AQ5f1Jp8lXbaNFjXv08hBRv1tfhk1348_npPOImkZqUQgUwZQdNGnYymj_B4y2o
+Message-ID: <CACzhbgTQCuig6eqOJFshthQfT5-7cVkemY9VtO_vu4d+aTcU=Q@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/197] 6.1.132-rc2 review
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	linux-xfs@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	Dave Chinner <dchinner@redhat.com>, Christoph Hellwig <hch@lst.de>, 
+	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu Mar 27, 2025 at 10:13 PM CET, Miguel Ojeda wrote:
-> We track the details of which Rust features we use at our usual "live
-> list" [1] (and its sub-lists), but in light of a discussion in the LWN
-> article [2], it would help to clarify it in the source code.
+sent to stable:
+https://lore.kernel.org/stable/20250327215925.3423507-1-leah.rumancik@gmail=
+.com/
+
+
+On Thu, Mar 27, 2025 at 10:04=E2=80=AFAM Leah Rumancik <leah.rumancik@gmail=
+.com> wrote:
 >
-> In particular, we are very close to rely only on stable Rust language-wis=
+> This is fixed by
+>
+> https://lore.kernel.org/all/20250321010112.3386403-1-leah.rumancik@gmail.=
+com/T/
+>
+> but I'm waiting on an ACK. Let me do some nagging :)
+>
+> - leah
+>
+>
+>
+> On Thu, Mar 27, 2025 at 5:50=E2=80=AFAM Naresh Kamboju
+> <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Wed, 26 Mar 2025 at 21:15, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.1.132 release.
+> > > There are 197 patches in this series, all will be posted as a respons=
 e
-> -- essentially only two language features remain (including the `kernel`
-> crate).
->
-> Thus add some details in both the feature list of the `kernel` crate as
-> well as the list of allowed features.
->
-> This does not over every single feature, and there are quite a few
-> non-language features that we use too. To have the full picture, please
-> refer to [1].
->
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [1]
-> Link: https://lwn.net/Articles/1015409/ [2]
-> Suggested-by: Andreas Hindborg <a.hindborg@kernel.org>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-
-LGTM, so:
-
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-
-And left two suggestions below.
-
-> ---
->  rust/kernel/lib.rs     | 27 ++++++++++++++++++++-------
->  scripts/Makefile.build |  8 ++++++++
->  2 files changed, 28 insertions(+), 7 deletions(-)
->
-> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-> index ba0f3b0297b2..660a3ab6f9d4 100644
-> --- a/rust/kernel/lib.rs
-> +++ b/rust/kernel/lib.rs
-> @@ -12,21 +12,34 @@
->  //! do so first instead of bypassing this crate.
-> =20
->  #![no_std]
-> -#![feature(arbitrary_self_types)]
-> -#![cfg_attr(CONFIG_RUSTC_HAS_COERCE_POINTEE, feature(derive_coerce_point=
-ee))]
-> -#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(coerce_unsized=
-))]
-> -#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(dispatch_from_=
-dyn))]
-> -#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(unsize))]
-> +
-> +// Please see https://github.com/Rust-for-Linux/linux/issues/2 for detai=
-ls on
-> +// the unstable features in use.
-> +
-> +// Stable since Rust 1.79.0.
->  #![feature(inline_const)]
-> +
-> +// Stable since Rust 1.81.0.
->  #![feature(lint_reasons)]
-> -// Stable in Rust 1.82
-> +
-> +// Stable since Rust 1.82.0.
->  #![feature(raw_ref_op)]
-> -// Stable in Rust 1.83
-> +
-> +// Stable since Rust 1.83.0.
->  #![feature(const_maybe_uninit_as_mut_ptr)]
->  #![feature(const_mut_refs)]
->  #![feature(const_ptr_write)]
->  #![feature(const_refs_to_cell)]
-> =20
-> +// Expected to become stable.
-> +#![feature(arbitrary_self_types)]
-> +
-> +// `feature(derive_coerce_pointee)` is the one expected to become stable=
-.
-> +#![cfg_attr(CONFIG_RUSTC_HAS_COERCE_POINTEE, feature(derive_coerce_point=
-ee))]
-> +#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(coerce_unsized=
-))]
-> +#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(dispatch_from_=
-dyn))]
-> +#![cfg_attr(not(CONFIG_RUSTC_HAS_COERCE_POINTEE), feature(unsize))]
-
-Does it make sense to add another comment in front of these three along
-the lines of:
-
-    // Before Rust 1.82.0 `feature(derive_coerce_pointee)` doesn't exist, s=
-o enable the predecessor
-    // features.
-
-> +
->  // Ensure conditional compilation based on the kernel configuration work=
-s;
->  // otherwise we may silently break things like initcall handling.
->  #[cfg(not(CONFIG_RUST))]
-> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-> index 56be83024851..41a640990cfa 100644
-> --- a/scripts/Makefile.build
-> +++ b/scripts/Makefile.build
-> @@ -226,6 +226,14 @@ $(obj)/%.lst: $(obj)/%.c FORCE
->  # Compile Rust sources (.rs)
->  # ----------------------------------------------------------------------=
------
-> =20
-> +# The features in this list are the ones allowed for non-`rust/` code.
-> +#
-> +#   - Stable since Rust 1.81.0: `feature(lint_reasons)`.
-> +#   - Stable since Rust 1.82.0: `feature(asm_const)`, `feature(raw_ref_o=
-p)`.
-> +#   - Stable since Rust 1.87.0: `feature(asm_goto)`.
-
-Probably a good idea to add:
-
-    #   - Expected to become stable: `arbitrary_self_types`.
-
----
-Cheers,
-Benno
-
-> +#
-> +# Please see https://github.com/Rust-for-Linux/linux/issues/2 for detail=
-s on
-> +# the unstable features in use.
->  rust_allowed_features :=3D asm_const,asm_goto,arbitrary_self_types,lint_=
-reasons,raw_ref_op
-> =20
->  # `--out-dir` is required to avoid temporaries being created by `rustc` =
-in the
->
-> base-commit: e6ea10d5dbe082c54add289b44f08c9fcfe658af
-
-
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> > >
+> > > Responses should be made by Fri, 28 Mar 2025 15:43:27 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/pa=
+tch-6.1.132-rc2.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-st=
+able-rc.git linux-6.1.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> >
+> > Regressions on arm, arm64, mips, powerpc builds failed with gcc-13 and
+> > clang the stable-rc 6.1.132-rc1 and 6.1.132-rc2.
+> >
+> > First seen on the 6.1.132-rc1
+> >  Good: v6.1.131
+> >  Bad: Linux 6.1.132-rc1 and Linux 6.1.132-rc2
+> >
+> > * arm, build
+> >   - clang-20-davinci_all_defconfig
+> >   - clang-nightly-davinci_all_defconfig
+> >   - gcc-13-davinci_all_defconfig
+> >   - gcc-8-davinci_all_defconfig
+> >
+> > * arm64, build
+> >   - gcc-12-lkftconfig-graviton4
+> >   - gcc-12-lkftconfig-graviton4-kselftest-frag
+> >   - gcc-12-lkftconfig-graviton4-no-kselftest-frag
+> >
+> > * mips, build
+> >   - gcc-12-malta_defconfig
+> >   - gcc-8-malta_defconfig
+> >
+> > * powerpc, build
+> >   - clang-20-defconfig
+> >   - clang-20-ppc64e_defconfig
+> >   - clang-nightly-defconfig
+> >   - clang-nightly-ppc64e_defconfig
+> >   - gcc-13-defconfig
+> >   - gcc-13-ppc64e_defconfig
+> >   - gcc-13-ppc6xx_defconfig
+> >   - gcc-8-defconfig
+> >   - gcc-8-ppc64e_defconfig
+> >   - gcc-8-ppc6xx_defconfig
+> >
+> > Regression Analysis:
+> >  - New regression? yes
+> >  - Reproducibility? Yes
+> >
+> > Build regression: arm arm64 mips powerpc xfs_alloc.c 'mp' undeclared
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> >
+> > ## Build log
+> > fs/xfs/libxfs/xfs_alloc.c: In function '__xfs_free_extent_later':
+> > fs/xfs/libxfs/xfs_alloc.c:2551:51: error: 'mp' undeclared (first use
+> > in this function); did you mean 'tp'?
+> >  2551 |         if (XFS_IS_CORRUPT(mp, !xfs_verify_fsbext(mp, bno, len)=
+))
+> >       |                                                   ^~
+> >
+> >
+> > ## Source
+> > * Kernel version: 6.1.132-rc2
+> > * Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linu=
+x-stable-rc.git
+> > * Git sha: f5ad54ef021f6fb63ac97b3dec5efa9cc1a2eb51
+> > * Git describe: v6.1.131-198-gf5ad54ef021f
+> > * Project details:
+> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
+.1.131-198-gf5ad54ef021f/
+> >
+> > ## Build
+> > * Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6=
+.1.y/build/v6.1.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc=
+-12-lkftconfig-graviton4-kselftest-frag/log
+> > * Build history:
+> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
+.1.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc-12-lkftconfi=
+g-graviton4-kselftest-frag/history/
+> > * Build details:
+> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6=
+.1.131-198-gf5ad54ef021f/testrun/27785617/suite/build/test/gcc-12-lkftconfi=
+g-graviton4-kselftest-frag/
+> > * Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2u=
+rSwNctsyhQzf1j7dvt6nHemP5/
+> > * Kernel config:
+> > https://storage.tuxsuite.com/public/linaro/lkft/builds/2urSwNctsyhQzf1j=
+7dvt6nHemP5/config
+> >
+> > ## Steps to reproduce
+> >  - tuxmake --runtime podman --target-arch arm64 --toolchain gcc-12 \
+> >     --kconfig https://storage.tuxsuite.com/public/linaro/lkft/builds/2u=
+rSwNctsyhQzf1j7dvt6nHemP5/config
+> > debugkernel dtbs dtbs-legacy headers kernel kselftest modules
+> >  - tuxmake --runtime podman --target-arch arm --toolchain clang-20
+> > --kconfig davinci_all_defconfig LLVM=3D1 LLVM_IAS=3D1
+> >
+> >
+> > --
+> > Linaro LKFT
+> > https://lkft.linaro.org
