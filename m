@@ -1,128 +1,82 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB33286A9
-	for <patches@lists.linux.dev>; Thu, 27 Mar 2025 09:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDD2213E89;
+	Thu, 27 Mar 2025 11:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743066664; cv=none; b=JQgQQjm5NT4rgC9v1uUj8Wu3LK0A5PRHc1GBUD/HkK2OAFKRiBVvDFNPd4ljwHDZcrbNcWB6Qb7n5z5j1xCrt9Md9FElF4Tg8N4TcCL2xVAWWeApg62T2tYDJl8DBhkl+y2oRaJmQwM6UIKgPJBBWgdyuiq7dQodB/iuYdmSBMI=
+	t=1743075771; cv=none; b=mCCkx5jCjM8+6drjnPbKIT41iryIEGWq6SpJBz1wJP1ZLx7D7vz4nikI+eUz0LVi1n+ElP60elBkkbWvTJ7CuIjwRod3kWah9PO3NQh1apXhPShsckSc3mlH/LBspdUn4QGfRx1zqAV1Ps7SqRB5COH32Xal9siorsqzzKyNmR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743066664; c=relaxed/simple;
-	bh=y7axKAJliHD2zTOIYFEFVrRu7lE1cQmDkIumIcuNBvc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IHCauJ+2tpLTQ9/YYW3NjyfbMZ0nCer3RdSd5L+WOp/Z1Cd0kN/KAvSTBtSYNeZ/QvUZa/q18dwkY7pN6RTtjCsAepq4neYt2zm0wuMyaO7Ze/gPotrgnwT7GMZSpvZDsa6lOtXyiHMCd3NL1EiUhwLnqSOeY02KabwdKfoqjrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52R5wYMm005249;
-	Thu, 27 Mar 2025 02:10:32 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45hvqkde3b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 27 Mar 2025 02:10:31 -0700 (PDT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Thu, 27 Mar 2025 02:10:31 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Thu, 27 Mar 2025 02:10:26 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <bvanassche@acm.org>,
-        <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <manivannan.sadhasivam@linaro.org>, <beanhuo@micron.com>
-Subject: [PATCH 6.6.y] scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
-Date: Thu, 27 Mar 2025 17:10:26 +0800
-Message-ID: <20250327091026.1239657-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1743075771; c=relaxed/simple;
+	bh=RakhnoMPABa71lhIIUj0KdaIOqRz0wWIi87CD/jZimE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uWijWTswfxJvS6Lg3Kdc/FehHo3Xqc3d93n/Uqx8ge0yJeaI+6DC63fFEDHBgNPCPH6pj7U8KoGEhXFwlC2db4yogSr7MiaEJPp4J7shnP1zpbzdbVYs3bx9y4tugKabxVOafd55qDCUn+rDDaLkvwjVzy6pOqNY4P3D2QzHYus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8Edver1; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8Edver1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA75DC4CEDD;
+	Thu, 27 Mar 2025 11:42:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743075771;
+	bh=RakhnoMPABa71lhIIUj0KdaIOqRz0wWIi87CD/jZimE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q8Edver1J53rwV8Gnsazt/HAq4QHVQNNuTfr5oBKS2Lsm71dTIAlhmYvGNCJT/Zq2
+	 6TR3hCSlLAgzglh4fUm1UNTxRQfcMgPYWMVGb5aKbHTmgqTrkm7OBT2Q1eZyP938wn
+	 Js47VJMhjhBGvgxP5JjTCWRIj6DGhRq/UvA/vJ5F0rnfIZ1dzcHJP144JPzMn5qEtm
+	 KwomvJqyR1NewoBr8rNtUdxjrcIzbYTWZSMjeN/RAmBtKDHkJ8dJ2jnGaHd5nqzkak
+	 dshX7GwGuddxug4YtAN/j9bLAaJYBZvHMdCfX96hDcxjSriw7xdP8eKWbVfFzjyKhi
+	 NG749msum9RjA==
+Date: Thu, 27 Mar 2025 11:42:45 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.12 000/115] 6.12.21-rc2 review
+Message-ID: <18c620b1-b04f-473c-a331-748ecc433ccb@sirena.org.uk>
+References: <20250326154546.724728617@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=XNkwSRhE c=1 sm=1 tr=0 ts=67e51607 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=Vs1iUdzkB0EA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=PY6Zn8H8AAAA:8 a=N54-gffFAAAA:8 a=yPCof4ZbAAAA:8 a=t7CeM3EgAAAA:8
- a=5s8WT1kodU2SEgI5n5gA:9 a=cvBusfyB2V15izCimMoJ:22 a=ySS05r0LPNlNiX1MMvNp:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
-X-Proofpoint-ORIG-GUID: Gqh5IStRisjoFhxzw3k-prtDyJR8ytRv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-26_09,2025-03-26_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- mlxscore=0 impostorscore=0 adultscore=0 spamscore=0 phishscore=0
- mlxlogscore=999 malwarescore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2503270061
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FCPf0F7oU+UyRez1"
+Content-Disposition: inline
+In-Reply-To: <20250326154546.724728617@linuxfoundation.org>
+X-Cookie: Multics is security spelled sideways.
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 64506b3d23a337e98a74b18dcb10c8619365f2bd upstream.
+--FCPf0F7oU+UyRez1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Otherwise, it will result in a NULL pointer dereference as below:
+On Wed, Mar 26, 2025 at 11:46:02AM -0400, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.21 release.
+> There are 115 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-Call trace:
- mutex_lock+0xc/0x54
- platform_device_msi_free_irqs_all+0x14/0x20
- ufs_qcom_remove+0x34/0x48 [ufs_qcom]
- platform_remove+0x28/0x44
- device_remove+0x4c/0x80
- device_release_driver_internal+0xd8/0x178
- driver_detach+0x50/0x9c
- bus_remove_driver+0x6c/0xbc
- driver_unregister+0x30/0x60
- platform_driver_unregister+0x14/0x20
- ufs_qcom_pltform_exit+0x18/0xb94 [ufs_qcom]
- __arm64_sys_delete_module+0x180/0x260
- invoke_syscall+0x44/0x100
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x34/0xdc
- el0t_64_sync_handler+0xc0/0xc4
- el0t_64_sync+0x190/0x194
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Cc: stable@vger.kernel.org # 6.3
-Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor specific ops")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-2-45ad8b62f02e@linaro.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- drivers/ufs/host/ufs-qcom.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+--FCPf0F7oU+UyRez1
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c5a6b133d364..51ed40529f9a 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1918,10 +1918,12 @@ static int ufs_qcom_probe(struct platform_device *pdev)
- static int ufs_qcom_remove(struct platform_device *pdev)
- {
- 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 
- 	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_remove(hba);
--	platform_msi_domain_free_irqs(hba->dev);
-+	if (host->esi_enabled)
-+		platform_msi_domain_free_irqs(hba->dev);
- 	return 0;
- }
- 
--- 
-2.25.1
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmflObQACgkQJNaLcl1U
+h9A0JQf+LZmfizWcsUTIoz3GihyUn/pi5rMcyZ/k7PaWvBVxZcmhxwerjWuXBNK2
+xi5N1/O69v6dDZP9IV1Vw6Zi+hkBSZXQPTWqbA3QQNVuhZOjZqILRMqYiiSTX6iz
+0qfvl021HE1VMbMQtQZeajhUj6Fp0ItvLfp5gwZt+Vn2IbTkW0cOvlzfoLLIOL/e
+IbtICMF2GaLUixwsFkoNx9gybW+DCaDpEYEU7GmM2ODCbEopQP/TDUKAcBWruCnn
+fkdN9AiMJ4LjQosPID1lEl4Yw6t3LBkaspQc7/poFY2sMGIJ/J54XVbdlWG7JJ+S
+diUw1byWItYo0JN1HRgLMnQBb/UHaQ==
+=/kxc
+-----END PGP SIGNATURE-----
+
+--FCPf0F7oU+UyRez1--
