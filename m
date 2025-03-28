@@ -1,16 +1,16 @@
 Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EB31E1E11;
-	Fri, 28 Mar 2025 21:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8371E1E11;
+	Fri, 28 Mar 2025 21:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743198615; cv=none; b=KkrVPsFrMYf211WcJTCWXkYP1kC8Ui6Sn+ZjX9el8Bz20ePwYzk28yoRH+45MzjLodmahK4PkNQadbGRmhVLSwlF/6ZpmSV6h/5N9OxpJW4Vdv3cMUqk8w33KfyiGSxF3QTXRjoAz7nZP5856M1NmQIp7HiPUaua+7eDTPE2tkA=
+	t=1743198726; cv=none; b=TeFgNj/XH9d2U6gnYDz3ibHeta52epBkiYaNnSWu7l1jL34gn3XK9Oi5G1cPjf2MrrESBjpD8pLkTwfq3lTnM5xq90GyLeb8Dz2qY2Hx1Nkodz0nHREjleIeJz9I9i5rGV4qFw8OPM79XGqzmey7xAuSudaJ9+KzXTpr7OUDr1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743198615; c=relaxed/simple;
-	bh=ESVNHVps9FLYqo4hKCVsvyQ4nTzDDoyJ8JilqV9YoGY=;
+	s=arc-20240116; t=1743198726; c=relaxed/simple;
+	bh=u/bNVK7pDHk3erQmVbaN0DW8LfqFUaLoQqjFM3kCwfI=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=nQsrchecAprN4ujcrCSedZlvontHkBlMnF4JfO86KUCHfqC4cUee+LdM+z9FSABJLip5PtuV7tTUD389Ur3/ltyaKDPXvv93Ggv8HYPR7bXslQzskckxE89Y/1y6nz1Qze8zw6xpN2gr+5f+cdITpHESLIhPW7P4Dh2AknMQJFY=
+	 Content-Type:MIME-Version; b=YyudzDH4CSVqrNSN318GJj0qyi2WqxiGgsujkkSVw8WTKuvTkSZRCbeXw9Gzp+nbm3ntBhWBo2ADPLLq7m27DNskAo5CrQ399D5qP8iTitxiEf9bql6MryAQKDg5lUOpQaUgD8bYNFLaF+w4TZ5nlyV2XTXywWzcj0NwsdawvW8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
@@ -18,25 +18,25 @@ Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
 	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1tyHad-0006sb-3C;
-	Fri, 28 Mar 2025 21:50:10 +0000
+	id 1tyHcR-0006t4-1J;
+	Fri, 28 Mar 2025 21:52:02 +0000
 Received: from ben by deadeye with local (Exim 4.98.1)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1tyHab-00000000AAB-3MVQ;
-	Fri, 28 Mar 2025 22:50:09 +0100
-Message-ID: <5d14c4f54dc785eb3fc8aa1207ad492d52b6de57.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 462/462] net: ipv6: fix dst refleaks in rpl, seg6
+	id 1tyHcP-00000000AFP-1cEZ;
+	Fri, 28 Mar 2025 22:52:01 +0100
+Message-ID: <f104048adbff7eb54c913e488c516be45e404419.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.15 620/620] net: ipv6: fix dst refleaks in rpl, seg6
  and ioam6 lwtunnels
 From: Ben Hutchings <ben@decadent.org.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, Justin Iurman <justin.iurman@uliege.be>, Simon
  Horman <horms@kernel.org>, Jakub Kicinski <kuba@kernel.org>
-Date: Fri, 28 Mar 2025 22:50:05 +0100
-In-Reply-To: <20250311145816.586107514@linuxfoundation.org>
-References: <20250311145758.343076290@linuxfoundation.org>
-	 <20250311145816.586107514@linuxfoundation.org>
+Date: Fri, 28 Mar 2025 22:52:01 +0100
+In-Reply-To: <20250310170610.006675223@linuxfoundation.org>
+References: <20250310170545.553361750@linuxfoundation.org>
+	 <20250310170610.006675223@linuxfoundation.org>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Df151gGSlTta+Fzmaozu"
+	protocol="application/pgp-signature"; boundary="=-rad6cctMQMogCoCIl8lb"
 User-Agent: Evolution 3.56.0-1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -49,12 +49,12 @@ X-SA-Exim-Mail-From: ben@decadent.org.uk
 X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---=-Df151gGSlTta+Fzmaozu
+--=-rad6cctMQMogCoCIl8lb
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2025-03-11 at 16:02 +0100, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+On Mon, 2025-03-10 at 18:07 +0100, Greg Kroah-Hartman wrote:
+> 5.15-stable review patch.  If anyone has any objections, please let me kn=
 ow.
 >=20
 > ------------------
@@ -62,26 +62,22 @@ ow.
 > From: Jakub Kicinski <kuba@kernel.org>
 >=20
 > commit c71a192976ded2f2f416d03c4f595cdd4478b825 upstream.
->=20
+
+This backport to 5.15 seems to be correct.  But why is this fix missing
+from the later 6.1 and 6.6 branches?
+
+Ben.
+
 > dst_cache_get() gives us a reference, we need to release it.
 >=20
 > Discovered by the ioam6.sh test, kmemleak was recently fixed
 > to catch per-cpu memory leaks.
 >=20
 > Fixes: 985ec6f5e623 ("net: ipv6: rpl_iptunnel: mitigate 2-realloc issue")
-
-The 5.10 branch does not include backports of:
-
 > Fixes: 40475b63761a ("net: ipv6: seg6_iptunnel: mitigate 2-realloc issue"=
 )
 > Fixes: dce525185bc9 ("net: ipv6: ioam6_iptunnel: mitigate 2-realloc issue=
 ")
-
-so the changes this makes to seg6_iptunnel.c are incorrect and appear to
-introduce a UAF.
-
-Ben.
-
 > Reviewed-by: Justin Iurman <justin.iurman@uliege.be>
 > Reviewed-by: Simon Horman <horms@kernel.org>
 > Link: https://patch.msgid.link/20250130031519.2716843-1-kuba@kernel.org
@@ -89,8 +85,8 @@ Ben.
 > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
 >  net/ipv6/rpl_iptunnel.c  |    6 ++++--
->  net/ipv6/seg6_iptunnel.c |    2 +-
->  2 files changed, 5 insertions(+), 3 deletions(-)
+>  net/ipv6/seg6_iptunnel.c |    6 ++++--
+>  2 files changed, 8 insertions(+), 4 deletions(-)
 >=20
 > --- a/net/ipv6/rpl_iptunnel.c
 > +++ b/net/ipv6/rpl_iptunnel.c
@@ -124,7 +120,19 @@ Ben.
 > =20
 > --- a/net/ipv6/seg6_iptunnel.c
 > +++ b/net/ipv6/seg6_iptunnel.c
-> @@ -380,7 +380,6 @@ static int seg6_output(struct net *net,
+> @@ -490,8 +490,10 @@ static int seg6_input_core(struct net *n
+>  	local_bh_enable();
+> =20
+>  	err =3D seg6_do_srh(skb, dst);
+> -	if (unlikely(err))
+> +	if (unlikely(err)) {
+> +		dst_release(dst);
+>  		goto drop;
+> +	}
+> =20
+>  	skb_dst_drop(skb);
+> =20
+> @@ -582,7 +584,6 @@ static int seg6_output_core(struct net *
 >  		dst =3D ip6_route_output(net, NULL, &fl6);
 >  		if (dst->error) {
 >  			err =3D dst->error;
@@ -132,7 +140,7 @@ Ben.
 >  			goto drop;
 >  		}
 > =20
-> @@ -398,6 +397,7 @@ static int seg6_output(struct net *net,
+> @@ -604,6 +605,7 @@ static int seg6_output_core(struct net *
 > =20
 >  	return dst_output(net, sk, skb);
 >  drop:
@@ -147,25 +155,25 @@ Ben.
 Ben Hutchings
 If at first you don't succeed, you're doing about average.
 
---=-Df151gGSlTta+Fzmaozu
+--=-rad6cctMQMogCoCIl8lb
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmfnGY0ACgkQ57/I7JWG
-EQl9Rg//frAGD3PCwT7DmDSeyU3Yfzl7xrI1bhBVXVz+C5KJR/Xey53TMFdx8dXd
-cIm+FKx9B1LhuoMqdq1KT4g8uSnr7nJHHGglR7Fy8w+drDkwy8m9IWvkmakAfmHj
-iHYKo+Tb/h+m7cQfn/0VSPiF1Q7HEWQwfoGJ18+Al6qbiZGi9+BkBGWIiiByVbQ0
-/RdiIbc0sFX8qybt3d64wSVYH/UPPuJOJjFu92L49tF78bZ4gw2h3JVaB+XJrWxW
-NfeNH0t+XxylIQauhM2X153T/eVBY1OWBmXlG1hb14hvEm4CqbjKciEr9A4ol3CB
-+Ybu0hS0SmlWhns/yTx5CvBiEmowf0k+xTXjaug7aDxFS26aMJdNnkp6dCsu/fqb
-mTmazjOZlEFCVLp07Ju73N2LZ7p8ke2Vl2I4jaxdLtwoHhSJ5bR5mY98X3sXsx/E
-7dBsi3qVGD5qberki9WbbJTETdO4yFQ2VEpORsFrkV7wZamfcVPWrrMEWgFJeWpb
-a1Z8+ksZAAGVWHP9A2sxTfTmWAgFkemf7GoKvSfzifZFXMqNAWoYtyWn1Vx1BWeS
-V6UngLH04Bs+mW0UEFQL7HQyQRlB9OG6mRgawoM6sxFxRH46d3xOdqww+RKVJ8iH
-ocyLO0Y92f3uUbs2Q1pZM2Zzx57kwMby+RE7sudu5/haM13BzeU=
-=d+yv
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmfnGgEACgkQ57/I7JWG
+EQlBRhAA1SIHQeMBR3V/aOlttcbmfbdeP3Muor4sDnEpEUDrRPsXTNJgRgHwLpS/
+cCvkexbBD7Vwxl+TCJrRc2mBUCa3/+FYOSBWeKgjMe2HbKWtOGpmqfMCnMc7sjE5
+6zSaIzPo875+TBGRF/0jcYNv0mYE2WPSrzVtJLMddHrs/Q5r6jD4TW0fhcgOoPs5
+AhL0zn+bqI4qTAgtXLKzwVATuzZYKg+MLyunUoVyR1ar7l/qNj3Fajg8rGIuCIuL
+vvyEI2Rry8wetWWpgY7JDRVclfyOwV7jsfxqYN2pQM+PfEmQ4beB3SlUXzBs84TX
+IAjFWg7MB4JSafF6o+C8hALh0KQz9BR5TDxvv4wrz4CBYr9FZBX9YmfEwdN77Lxm
+/5i/U7+w6cZ21IykUwLL9bxQV7R5pidrur9m2jJ3f7/3tmX6UTfAa5rB9emYhdk2
+xZcA8+FbOKsCU2c+50zYI72SduksM4uvvp9c90GrWnOtHJfNxs3wPsBOX3B9DcUy
+Bcf26j65z6bsqWvCIOBc/RjyEUAAkivwiQ3s6cAmPe0ShVOF8k6RQZTv5hnAY4pJ
+1Ivm7KNbHz0UWyzsU0Ax+oCmBK/hU8ijtwseXW1ePGaowY5PPH9LPKNrYzagHNVm
+DTNp7Pnwo88VMfuAKiYTvewb/+Fdzd1JjQeuoJfUvhBniLpSRZc=
+=7GPj
 -----END PGP SIGNATURE-----
 
---=-Df151gGSlTta+Fzmaozu--
+--=-rad6cctMQMogCoCIl8lb--
