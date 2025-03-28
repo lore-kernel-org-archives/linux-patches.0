@@ -1,64 +1,41 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9171E130F
-	for <patches@lists.linux.dev>; Fri, 28 Mar 2025 18:55:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903C984E1C
+	for <patches@lists.linux.dev>; Fri, 28 Mar 2025 20:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743188144; cv=none; b=Tu36cUTA6IjNfrndaXOqKdw1XSxL9QwPSceLrUE43s3Oyyd9GV51q6bNpD/dI5/66O5zoE4sxc7tRO6HL332cC6LF2rI5u4+L1ax8kJXD6oK5swGBJ81vrxPwMTTt2IFGKQM9eR26BgiXW2KiKxplwOwVcgcgfOcDA9BzFavIng=
+	t=1743192874; cv=none; b=BuMBHITXg+OcpYbGWRTijCVj/B8ynW+c1st/Pr8nvq3T85u06ZPgObtRhZz/m0qj8fS0aHHiFLZIxuNCG1zS7zr/a2RJuSILZmjY1Folb3fH8/RtQmqj7UMxWuNEMKz9lw3Se6zT5oEWS2fK6zrTXgQQL2otbho3soh6oKPdOF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743188144; c=relaxed/simple;
-	bh=xK40CKXqoutN+Ul2oX1Csofy6qi0LZ+rD5/qYppxCe8=;
+	s=arc-20240116; t=1743192874; c=relaxed/simple;
+	bh=YPtdzJO5oUoFKA0xxSLhX0XNUIPxQzTlPvmDG2M4iVw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PPK294kzmMkwOD4/V8f2Atnl7WJ/Rg9pzLE3g94AZ9xB2T/dxEY0m93yfsdrqZ2Upk9qbwlDcprZequ23VhQ4y3gJ5+G4LQKGY1KThvgimeJArTEHO4slTwK7uwEkWqR2s7iTOwWMpFcK/iSngOio2HVJ+igT+Ju6htr7A6wVqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iCOX4ACb; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=dYXXXyUiQYGnycMwpOiTgSp+8NP3Z4Bai+QJZpeSBV9BXJVP68qGfRNXZUMkY+c/hO61CDw28aetFXIrjNdP2tV77UelcAfmz+qd28rsFWy8bXPeGnkY6W5C/EVABJ4IQfo2AcRdlIyDzn9T2HWwSjToUgpgqcQdRt61H6lvNg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=AQRvdriq; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iCOX4ACb"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-727388e8f6cso1594909a34.0
-        for <patches@lists.linux.dev>; Fri, 28 Mar 2025 11:55:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743188142; x=1743792942; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VYN9OZs/WadRSCbRfAworAJi/YfdgYnh3ZtveZTpJi4=;
-        b=iCOX4ACbtZ6En4VWg35RXy3zP1O5mwE2Ds33aulGcspWbFxQcSMpn9OISnsrSDgZI3
-         fXby473OycXnAGXMgwQ6KBYBMCdCuxFYosZdnu9PcYxflzLOcmM5nTi1GIZXBNpBVBov
-         pQkC3mmuVQtnzqSpicx6Yue1TKjSdyr1tnSygRhTNn7NeqR8xC4FugkHM/r23BluxOlO
-         U7bI5R5KzBCkoq//zdKBZsv9miaCylv8jyqBBKwdZ7aJxOuoF9YycQd6vKwxU/f01DCv
-         +qTRvruFnuwDI2WFS6IIuzn4M8wPu3O4hePmih4c8dnrJuj5dUyG9njeGbYcFepprMee
-         /bBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743188142; x=1743792942;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VYN9OZs/WadRSCbRfAworAJi/YfdgYnh3ZtveZTpJi4=;
-        b=BfefbcwWqbTPgNfutNnGfOnykhJBOQigHzfn+FIsM0dVOWKRFy2VivnzdksYfOATgv
-         I9baUrbeYG5loOMlJaoVxXseG+pQQA4pmqEgOTHnNElKhPUy+7KLvboWXTsU/+USZhXL
-         YlviVm8qHkF+kYG8RVDoSqFcNT18s8y/byZzP81vS/MTZ6Jis1eESY9zSy0fF0lBfv6X
-         8LpkuaibsPnBn4PXrOF6o9WKQPX7MvVkMF1yvfRWmpSAvtjGF/u4osiJeQm1ahLb74Id
-         NPdgk7i7By7Yx5Dn7alFDPhIICMNQYq57qup8nYgkMSLfrCQuWVEKaRJQTW4RrjrG6XF
-         ruIw==
-X-Gm-Message-State: AOJu0Yx07uhCoDXrSt0G6qyILiHibAw5A6PLhl5LXgnqpgg+ZjQu2qKK
-	8yDcTR3082HLkw14HSFDP/YDB4EJviLyXYdYhd7i08jmPLaT2wTY
-X-Gm-Gg: ASbGncuStgFIpPkSJc6YHLauWcz7XcqnJSD2AHRLSHZ91nRaQLbZkR7Ko0gfGHOi4//
-	4fG/4YIy+Th1z68GoIMbdm4MAMq/Kf5QXTz725a5vQQMwqtxfAA8fM49jUt0dTLlzunuGeeiFyh
-	ozP9EAfTOegh6/i0W/rS9xmO4aq9B19hPsX26egQh3QBelURRpZ9IaRb0y9fQMJdXYdOPb29Ezu
-	DubeZIqgZt8GgTMVQ36EBd3hEPmiCVsLcHXOgsFWVCt0WX2+CzhTQ5szvzXNNxkt/DBp8TA29km
-	q4AFY6fEuZRRY5VJx1klsnFgI7ovWS8kjSPDQx9DN2mM8EY+6i1rsrvXPu2sYw5nAGQpW6QH
-X-Google-Smtp-Source: AGHT+IFOwYy+F90YrKnwGg9/FiWrItI1J6HIr59HKtgHNE/idYZiWqYCONNFPbwbxvM1t1mNCuvDuA==
-X-Received: by 2002:a05:6830:4195:b0:72b:7e3c:7284 with SMTP id 46e09a7af769-72c6381740cmr334173a34.18.1743188141825;
-        Fri, 28 Mar 2025 11:55:41 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72c580cc609sm459862a34.29.2025.03.28.11.55.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Mar 2025 11:55:41 -0700 (PDT)
-Message-ID: <6001a417-6439-4e4d-8abb-2c90309f35e0@gmail.com>
-Date: Fri, 28 Mar 2025 11:55:38 -0700
+	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="AQRvdriq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1743192866; x=1743797666; i=frank.scheiner@web.de;
+	bh=nqWIo8/jSCRWunTJuSYGCdTz7gW8eNWtG2ieH1TGqXk=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=AQRvdriqUuF7KIdO9Ku6Eqp0Vl6law6VvqUZ1sTeCEbPLTtHltx1KgmI+jL/Y8mj
+	 4QgiWr5hJ7fXJEP7yp/WYREVz5w8Iyy90A3+TSywsyFhZe+JRmTRNuP3ckJrrtWR2
+	 vEkvxdyy1Iv5+ZCnqUDCd1Ag0hc3pGXkbDq9btm2GHHmpJLz9FoFUbWmorA1IFaFf
+	 4/Pwm9SDyChmXDvoQ52yonGPF2KdR+umC/HhA3Vj9GUq72IxkICl55vkEoXyVdD0Z
+	 FxyFdhpzunz2ht2WomWAuytJ98+cNQB9cDVlASM2rwH0Ds6HzvRCSfwVny4qB7yDZ
+	 d8U83lGCMs4z5SYwaw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.30] ([79.200.211.72]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MPKB5-1tlyyi3Wvd-00PPSl; Fri, 28
+ Mar 2025 21:14:25 +0100
+Message-ID: <0ab0c4f4-c758-4366-a414-c8da5119c1ab@web.de>
+Date: Fri, 28 Mar 2025 21:14:23 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,76 +43,76 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/75] 6.6.85-rc3 review
+Subject: Re: [PATCH 6.1 000/197] 6.1.132-rc3 review
+Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250328145011.672606157@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250328145011.672606157@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ linux-ia64@vger.kernel.org
+References: <20250328074420.301061796@linuxfoundation.org>
+From: Frank Scheiner <frank.scheiner@web.de>
+In-Reply-To: <20250328074420.301061796@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:0C/7j4laSJiQHPFO1ub85Z6BCJyRBDuTFkXvVB+dSQ1pEncWXJi
+ zZShf3xrW4bMxqQdvzLpE3g7SFK8VvJJ9KM/9l1lvjre64o4yc65inpOyUvCnLj0t85AmjV
+ kl/0ZKjueQdZt+a7cGQa/C5mLCaUDEmk5wEmwcwqU+NaZo+W/8rguxJwn3JvP+STal0EnUc
+ YgShNV7PsMHyHsOFPTDDg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:MCNclTEh+/E=;7QvyE0r7d0JI8HkQDGvTPH11JY1
+ 5kvlAQFtR7B1jc9qGY22g75foXnnCeqCIKvf6h4Dv1hehDEIQd3Wn0yY9jAUwUeCsF5PqW/K/
+ wh7HaWGSn747CWx3YpCjkfaW6ITcNzOxKL9EjDMleuZ2XJhUQqNXpSLjNhC0hIMJR9f1Y+EMk
+ OFLt61GYwilEQNBWeqXHQwsT25QWy6NiYEkd7UBP9DqeaCQNkwY7NaS5L7CEE88W2sae7/was
+ PKdkkCb7D0HbMoq7NZbfHczqhk8XAblYaavHhdM/838+1dpSyGkjTFCLlbtEn/KM3yj92qF09
+ qw9n6mVFEMWSFtXp9esHXYip5mJN3GYxWBeEyC0X1J0g9Epa3Ik/sGKLVfOd8PMISCaZQJh90
+ aaV2t5M5HYMWafRASBZ+EQrZHwcIVUe0mnNs71rFYX56bEVEYPamH24E6YEVsohmoWU6wzxSH
+ NcB8rkUoMtrhlo/3bZVTWePL66b/tElaMz1qHQGx+xFH2AO2T4p/SYbxLzVcbZp+BMLUnRsKH
+ JExfP4WIBdvHDAR/47X+2dzIfNfOzsMik40RolpreU53wYRVvp0ICLnzPdE2crtK7l3wUqRzr
+ a2Eb7alf3aBEIK2wz4dStWGw55tQvVuzi88mB3TnqfrmXACjdK0hTLPM+0InAMaJn9U7n3bKE
+ ZZC3QRV1KPPuUqyOB69WdNl5Fx+l1pf9D9YX9slH2+AVUqSMkhFOjIZrxonTowajQeg5TuFFp
+ rQIz3//W+SU5fFv5WobnybVb355HTSiAH2VuUWN4WoUdAbDbWamEZ3CbKpPCoVh+nyWsvwFbq
+ AfBQujiH0kCchyMXvjOtL34P7cnPK3V3S+xPh8OClVKx3XK1xpAB2B+ePu1PzLEcimlqMfiM+
+ Nn/SYQpLyuTnzcC1mHlAppvI2xHbfEfMFPbvlJzUv5dio1lxYyNlrnStMbebfTZOYxsBDExRk
+ eKtjbdLt4e2CpMj6eAvY7tbwFyyK04k1VmXYSzFHxtJY58ljxkPTkUIn36hLd6VJPsz4wNqys
+ 2wE7aewVGOsz8HofhkEKStA8P4qddZft7gpRKF8SzrnQtzHdo5KRNXHsailwEqVGidqs6MT9M
+ 7jukE5ARiuKODkhlLbBmOTqz6n2R1ZVXp/ayqjWti1e0iNpqvlOcN5nD8p4QoTm6WccXoQmom
+ UsC1T8wGhRX/gqZRPF4pnsCGPfOqp06I7IJNKHpRg9FaowuCie3pHBlZPaDaxup1jE14DZeIr
+ Q8V24U31/v49a9jwZ6SvzSI2dWwLgXyYxaI5Yenk98TvomTKmVdbmxh3ZbYXE0txnE6kR8yyr
+ ukoh8eHpPM/gTSnEG5ou518WHh+4fYs5waviTugjNR1Sq9QRvqjrZCi0hBYlUcG1/Oog+8aEx
+ FzUYQO/vEny/bEXJb8gvLfHgR6OhIW4eddgvc6f2BSdgRwrunSfWTueSpl5GyS58rzCf50VPq
+ SYXyyBCAkz7OUI3vkQsM3iu1D7Sy4tgqWhHGlAMJ78y1c5KGm
 
-On 3/28/25 07:50, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.85 release.
-> There are 75 patches in this series, all will be posted as a response
+On 28.03.25 08:47, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.132 release.
+> There are 197 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sun, 30 Mar 2025 14:49:59 +0000.
+>
+> Responses should be made by Sun, 30 Mar 2025 07:43:56 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.85-rc3.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.13=
+2-rc3.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi=
+t linux-6.1.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Cross-builds for ia64/hp-sim and runs fine in Ski ([1]).
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+[1]: https://github.com/linux-ia64/linux-stable-rc/actions/runs/1412943352=
+0#summary-39586577131
+
+Tested-by: Frank Scheiner <frank.scheiner@web.de>
+
+Cheers,
+Frank
