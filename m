@@ -1,112 +1,213 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B837CBA2E
-	for <patches@lists.linux.dev>; Tue,  1 Apr 2025 00:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469551B414F
+	for <patches@lists.linux.dev>; Tue,  1 Apr 2025 02:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743466932; cv=none; b=cbXUvNiLSq8Hu2R7nBPBpkyfsu7gL3AEZFJKJnBgSM4gEwmUnd0qt86ltTU/5eQTurLYWuxe5ZbxPsMKpZ4es0NQNYrmxUO/jD6my1JoswlmcETpT94Cu4y688UdgLqV2LeHoOUPTo/MMjWgZgwML9Keo8b7lX+pJWYZMnmafp8=
+	t=1743474605; cv=none; b=FQ9qtr1l6Fi9DVK50LZ9ANHlwuCusFYVHn2rM++/bteVR9f2vTe1Zz1xqTYf4GHmMmMwjVw17H6vjK2k1RQ35BkWjtDZQasVIIMX/VOn1WXAiGklficV7N6zSGJCzMeUe7okOwb2B9PoGGdkNNCVYDoIM4RskJkEUo55YN746MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743466932; c=relaxed/simple;
-	bh=wpWKU59KHo+Aek3Z7jbJqO9yr5KqJsTqb01/uswJIqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qcNb0BatoxvIi7ZIxKIndZxO88od6YsJH+bqRaJSDVQiUll+CghBUMLXvJN7OY7YsIFPvj8hlVnbKhPzzFdaXVZAcQTym3INL9XK56dl8ToY8J3joe/PqYEp0nunRHO+oiIV029BX2zWcQnzYOwEYM0dl/IGsIGyHQvxk34Ka8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FtDcGREa; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1743474605; c=relaxed/simple;
+	bh=29VXDcWnd6GwWwhNVGcFA8Q/jEaR9/JRzP81bru6kEg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tgxXKyvj+csfLK9wVd4FMI1E5V19yvX1Hp5KiHFFglMNoICJtdt5BsxDofu75xyTB9GWeNLpDsLOg6A4xVGlmyo3KiSG7S3up44iMqh5wG/0H4HX15wfRmgJCL6QrgMy+GVjgUNX7NCdTws/IYoPdqCU0g0LkJn/zEWThwqkBN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EhQWwENU; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FtDcGREa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1743466931; x=1775002931;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wpWKU59KHo+Aek3Z7jbJqO9yr5KqJsTqb01/uswJIqA=;
-  b=FtDcGREayWPa7Ya2MHd37YTow2Gp6R/n1Mi9/+XYCInZyO3bRtmvgmU2
-   BLl4MK/Qs7r6+MCcHH5UqYnlJamkrkQ4/oou/pXV79PAm/SkqMiRLhbHi
-   WdO9J6knjW2vPzqws8fGEZjgdUc2MgnFr8YbTUTCBqgjAhXgjOBZPNNyU
-   T4Z5aOpWALnJsVarHmprhz9+QoOqu2RxeKIBPyixKD7+0UZzXcITkO0U0
-   8s0xYqIbtpI6pj4WwEKaX9Jfp7Kz69G8XTRK9WDSPd9Wz8vYYZ0UuJOkB
-   89dH/Sye+hi+mv8XQUwa3fdX+ekBp4PFGfOallNt4QkN72eOzP3zKhm6P
-   w==;
-X-CSE-ConnectionGUID: e1iRnJ47Tx+4yv3pJW4vzw==
-X-CSE-MsgGUID: az5mivwTQRKJ0ytZ4A9ewg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11390"; a="44657633"
-X-IronPort-AV: E=Sophos;i="6.14,291,1736841600"; 
-   d="scan'208";a="44657633"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2025 17:22:10 -0700
-X-CSE-ConnectionGUID: yhbU/9+0T1y8XkTFAI6l8w==
-X-CSE-MsgGUID: f/NGGToTSwaylWmPsd4V7w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,291,1736841600"; 
-   d="scan'208";a="126127270"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2025 17:22:10 -0700
-Date: Mon, 31 Mar 2025 17:22:08 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghuay@nvidia.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 10/16] x86/resctrl: Allocate per-package structures
- for known events
-Message-ID: <Z-sxsHMF6xvR19wq@agluck-desk3>
-References: <20250321231609.57418-1-tony.luck@intel.com>
- <20250321231609.57418-11-tony.luck@intel.com>
- <cbd8198d-467b-456e-b329-baf6ac5cff82@intel.com>
- <Z-sV98FdOH4PNQQo@agluck-desk3>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EhQWwENU"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ff6cf448b8so11037877a91.3
+        for <patches@lists.linux.dev>; Mon, 31 Mar 2025 19:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743474603; x=1744079403; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JOUHkYETfeYPlrfgUGhvuwroRGucs+Rm6+GwIDzHnL8=;
+        b=EhQWwENUGggOoo1IWYGrjjU7iSEB+C/fGglDPGs2naMfSnJoyPvTbwS7hXnSIDzBOW
+         5krVt484TrvShIpsDVDKBdXqy8cXW2zgv3CwzJq235c7qjJLp3CtanREeic5XJquVTwE
+         8nniRANN7sosE4jFomZXUSincIZQlVMcbwqeXQ8Ki1gtsBQBvSgtUfE1fh9w77H92qB1
+         CEc83qqEs2oDSzUXBk1f/CvViGyOfmA3MmNrEQBBpbMCA5OFZ1OmOQw5xUAW9gR8Us4P
+         kgDEdQkNs7t7Tlhhjt6r7X7S0uZCACi2Iam0I83/j39wbwggk0R1Ie268zvufNmjXz+N
+         ee3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743474603; x=1744079403;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JOUHkYETfeYPlrfgUGhvuwroRGucs+Rm6+GwIDzHnL8=;
+        b=f1migNsLQ20x4bHh/39h/H4pZ6pD9QtGYpJaaeSA0YZWlB2VYup1FQPdQ3Fo7cfUwy
+         Cbw8hycWAc6zAsPFEslnO3i61Bd8lm8KkSIQgdyH1nG/i4c1m/3IdKDj9CgJaekd6gUS
+         xqWgjMp2WY4Z105iIc/36BFtzg+M0o7kXJKpU5DEwaYczXxBw9Rd0vWYlDx0823Cm6aU
+         Id51lQjs44OXEAga0IyUaoavBqi8+/8xrKWH+E3Dv8KIBJusxCmKuNK3c7oYKIHYlsAA
+         hBWbXuoM60y7OE5n2TBKMuzv6RVn5WHWUQLXTUPVMu9SGD+fVbcZL7Vyd8HnKFg8e3WO
+         BZYw==
+X-Gm-Message-State: AOJu0YxnJIZfzLcaLYWua0L9pqXPDXMuEYnN1kulQKzKaqcLWqNvZi5G
+	SJMb8cH0WY0W9daY9lQyItK+zyNyN4TkP3WB9PvLuslRqhBMyZZbmXrthPbF
+X-Gm-Gg: ASbGncuYiA/c7BkOhYzBljQ/T2fv4kJ7omyoMnWn/MBHT7b+mFefJPF3nhKKwf6F9/4
+	SiX4ThpsqjKbHroZIhDnkLv93j2ge/rtrUh4b3inx0F/WOe7gl3zXDHw1P7R+LzOB125l0Gfena
+	x+SVULguo0VxK3r2Z0ovJvDGPDeGtl74V6wtjO6B1az19hRoD7S4VDvdzPE7VY4qnb6JCwwiFjW
+	A8hzVNCda0f2MNs3+LUe8WdghRtVAGsv5hju9pHTpVtaatYoFhXyihmMKWlMd5UDjtb3CAxO06A
+	7T6rCG/yh0RRWhuJKtpsdU5BnLNWYPGeb08B909tPLB+ui8kUpsPKLR+SJP4SNo0
+X-Google-Smtp-Source: AGHT+IEB0G2OAa0GElWwPece4cn1mGoI/Q9XaFxX+v953Ea03pxcHznVory5eAjLwxHMOkYTehrrXA==
+X-Received: by 2002:a17:90b:33cb:b0:2ee:d024:e4fc with SMTP id 98e67ed59e1d1-3053215c6ccmr19674215a91.33.1743474602963;
+        Mon, 31 Mar 2025 19:30:02 -0700 (PDT)
+Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-305170e1b9esm8032843a91.36.2025.03.31.19.30.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 19:30:02 -0700 (PDT)
+From: Swarna Prabhu <sw.prabhu6@gmail.com>
+X-Google-Original-From: Swarna Prabhu <s.prabhu@samsung.com>
+To: patches@lists.linux.dev,
+	fstests@vger.kernel.org,
+	linux-mm@kvack.org
+Cc: linux-btrfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	xiang@kernel.org,
+	david@redhat.com,
+	huang.ying.caritas@gmail.com,
+	willy@infradead.org,
+	jack@suse.cz,
+	mcgrof@kernel.org,
+	p.raghav@samsung.com,
+	da.gomez@samsung.com,
+	dave@stgolabs.net,
+	gost.dev@samsung.com,
+	Swarna Prabhu <s.prabhu@samsung.com>
+Subject: [PATCH] generic/750 : add missing _fixed_by_git_commit line to the test
+Date: Tue,  1 Apr 2025 02:29:21 +0000
+Message-ID: <20250401022921.983259-1-s.prabhu@samsung.com>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z-sV98FdOH4PNQQo@agluck-desk3>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 31, 2025 at 03:23:53PM -0700, Luck, Tony wrote:
-> On Mon, Mar 31, 2025 at 09:21:49AM -0700, Reinette Chatre wrote:
-> > include/linux/cleanup.h has this to say about mixing goto and free helpers:
-> > "convert all resources that need a "goto" cleanup to scope-based cleanup, or convert
-> > none of them"
-> 
-> Seems an awkward restriction for this case. "pkg" is a pointer to
-> a dynamic array, and each of the elements of the array might have
-> been initialized by another allocation. "pkg" is under control of
-> the __free() cleanup function.
-> 
-> Maybe I could define a custom cleanup (syntax of multi-statement
-> action to be figured out):
-> 
-> DEFINE_FREE(pkg_free, struct pkg_info *,
-> 	if (_T)
-> 		for (int i = 0; i < num_pkgs; i++)
-> 			kfree(_T[i].regions);
-> 	kfree(_T)
-> )
-> 
-> 	struct pkg_info *pkg __free(pkg_free) = NULL;
+Testing generic/750 with older kernels indicated that more work has to
+be done, since we were able to reproduce a hang with v6.10-rc7 with 2.5
+hours soak duration. We tried to reproduce the same issue on v6.12 and could
+no longer reproduce the original hang. This motivated us to identify the commit
+2e6506e1c4ee ("mm/migrate: fix deadlock in migrate_pages_batch() on large folios")
+that fixes the originally reported deadlock hang annotated as pending work
+to evaluate on generic/750. Hence if you are using kernel older than v6.11-rc4
+this commit is needed.
 
-Tried this out and it works (without any odd syntax for the multi-line
-action (though I did miss that num_pkgs was a local variable, thankfully
-simply initialized from topology_max_packages().
+Below is the kernel trace collected on v6.10-rc7 without the above
+commit and CONFGI_PROVE_LOCKING enabled:
 
+[ 8942.920967]  ret_from_fork_asm+0x1a/0x30
+[ 8942.921450]  </TASK>
+[ 8942.921711] INFO: task 750:2532 blocked for more than 241 seconds.                                                                                         [ 8942.922413]       Not tainted 6.10.0-rc7 #9
+[ 8942.922894] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.                                                                      [ 8942.923770] task:750             state:D stack:0     pid:2532  tgid:2532  ppid:2349   flags:0x00004002                                                     [ 8942.924820] Call Trace:
+[ 8942.925109]  <TASK>
+[ 8942.925362]  __schedule+0x465/0xe10
+[ 8942.925756]  schedule+0x39/0x140
+[ 8942.926114]  io_schedule+0x42/0x70
+[ 8942.926493]  folio_wait_bit_common+0x10e/0x330
+[ 8942.926986]  ? __pfx_wake_page_function+0x10/0x10
+[ 8942.927506]  migrate_pages_batch+0x765/0xeb0
+[ 8942.927986]  ? __pfx_compaction_alloc+0x10/0x10
+[ 8942.928488]  ? __pfx_compaction_free+0x10/0x10
+[ 8942.928983]  migrate_pages+0xbfd/0xf50
+[ 8942.929377]  ? __pfx_compaction_alloc+0x10/0x10
+[ 8942.929838]  ? __pfx_compaction_free+0x10/0x10
+[ 8942.930553]  compact_zone+0xa4d/0x11d0
+[ 8942.930936]  ? rcu_is_watching+0xd/0x40
+[ 8942.931332]  compact_node+0xa9/0x120
+[ 8942.931704]  sysctl_compaction_handler+0x71/0xd0
+[ 8942.932177]  proc_sys_call_handler+0x1b8/0x2d0
+[ 8942.932641]  vfs_write+0x281/0x530
+[ 8942.932993]  ksys_write+0x67/0xf0
+[ 8942.933381]  do_syscall_64+0x69/0x140
+[ 8942.933822]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[ 8942.934415] RIP: 0033:0x7f8a460215c7
+[ 8942.934843] RSP: 002b:00007fff75cf7bb0 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+[ 8942.935720] RAX: ffffffffffffffda RBX: 00007f8a45f8f740 RCX: 00007f8a460215c7
+[ 8942.936550] RDX: 0000000000000002 RSI: 000055e89e3a7790 RDI: 0000000000000001
+[ 8942.937405] RBP: 000055e89e3a7790 R08: 0000000000000000 R09: 0000000000000000                                                                              [ 8942.938236] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000002
+[ 8942.939068] R13: 00007f8a4617a5c0 R14: 00007f8a46177e80 R15: 0000000000000000
+[ 8942.939902]  </TASK>
+[ 8942.940169] Future hung task reports are suppressed, see sysctl kernel.hung_task_warnings
+[ 8942.941150] INFO: lockdep is turned off.
 
-DEFINE_FREE(free_pkg_info, struct pkg_info *,				\
-	if (_T)								\
-		for (int i = 0; i < topology_max_packages(); i++)	\
-			kfree(_T[i].regions);				\
-	kfree(_T))
+With the commit cherry picked to v6.10-rc7 , the test passes
+successfully without any hang/deadlock, however
+with CONFIG_PROVE_LOCKING enabled we do see the below trace for the
+passing case:
 
-...
+ BUG: MAX_LOCKDEP_CHAIN_HLOCKS too low!
+ turning off the locking correctness validator.
+ CPU: 1 PID: 2959 Comm: kworker/u34:5 Not tainted 6.10.0-rc7+ #12
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 2024.11-5 01/28/2025
+ Workqueue: btrfs-endio-write btrfs_work_helper [btrfs]
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x68/0x90
+  __lock_acquire.cold+0x186/0x1b1
+  lock_acquire+0xd6/0x2e0
+  ? btrfs_get_alloc_profile+0x27/0x90 [btrfs]
+  seqcount_lockdep_reader_access+0x70/0x90 [btrfs]
+  ? btrfs_get_alloc_profile+0x27/0x90 [btrfs]
+  btrfs_get_alloc_profile+0x27/0x90 [btrfs]
+  btrfs_reserve_extent+0xa9/0x290 [btrfs]
+  btrfs_alloc_tree_block+0xa5/0x520 [btrfs]
+  ? lockdep_unlock+0x5e/0xd0
+  ? __lock_acquire+0xc6f/0x1fa0
+  btrfs_force_cow_block+0x111/0x5f0 [btrfs]
+  btrfs_cow_block+0xcc/0x2d0 [btrfs]
+  btrfs_search_slot+0x502/0xd00 [btrfs]
+  ? stack_depot_save_flags+0x24/0x8a0
+  btrfs_lookup_file_extent+0x48/0x70 [btrfs]
+  btrfs_drop_extents+0x108/0xce0 [btrfs]
+  ? _raw_spin_unlock_irqrestore+0x35/0x60
+  ? __create_object+0x5e/0x90
+  ? rcu_is_watching+0xd/0x40
+  ? kmem_cache_alloc_noprof+0x280/0x320
+  insert_reserved_file_extent+0xea/0x3a0 [btrfs]
+  ? btrfs_init_block_rsv+0x51/0x60 [btrfs]
+  btrfs_finish_one_ordered+0x3ea/0x840 [btrfs]
+  btrfs_work_helper+0x103/0x4b0 [btrfs]
+  ? lock_release+0x177/0x2e0
+  process_one_work+0x21a/0x590
+  ? lock_is_held_type+0xd5/0x130
+  worker_thread+0x1bf/0x3c0
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xdd/0x110
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x2d/0x50
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ Started fstests-check.scope - [systemd-run] /usr/bin/bash -c "exit 77".
+ fstests-check.scope: Deactivated successfully.
 
-	struct pkg_info *pkg __free(free_pkg_info) = NULL;
+Signed-off-by: Swarna Prabhu <s.prabhu@samsung.com>
+---
+ tests/generic/750 | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/tests/generic/750 b/tests/generic/750
+index a0828b50..abce6a59 100755
+--- a/tests/generic/750
++++ b/tests/generic/750
+@@ -26,11 +26,13 @@ _cleanup()
+ _require_scratch
+ _require_vm_compaction
+ 
+-# We still deadlock with this test on v6.10-rc2, we need more work.
+-# but the below makes things better.
+ _fixed_by_git_commit kernel d99e3140a4d3 \
+ 	"mm: turn folio_test_hugetlb into a PageType"
+ 
++#merged on v6.11-rc4
++_fixed_by_git_commit kernel 2e6506e1c4ee \
++    "mm/migrate: fix deadlock in migrate_pages_batch() on large folios"
++
+ echo "Silence is golden"
+ 
+ _scratch_mkfs > $seqres.full 2>&1
+-- 
+2.47.2
 
--Tony
