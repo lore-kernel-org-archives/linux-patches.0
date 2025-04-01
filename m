@@ -1,116 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C30720E328;
-	Tue,  1 Apr 2025 22:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C7121B905
+	for <patches@lists.linux.dev>; Tue,  1 Apr 2025 23:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743545603; cv=none; b=Q5TKxFb1jf89QVhvPGZvmS2GzGpdT+GoRK26fpOg2aeh7pM4mPm2RyqP4og6J/1dD9teH9inRVu1PuDxUr1ECx6BRj6KEGXN/4WGM/rHjHxxcQBM2jAma2O34EVcRi0N/fIFZWMdepO3Cff3Znlyc9nkr78awyUALc3wIHdlcGc=
+	t=1743551597; cv=none; b=qAZt9dG0F9vzzwYNe+bs1I8XHFeI7D8mE9a+KISnj1eZlbskCIMkk/hLGL/yjx2k+Qg/Y7Lz5NI7n6GEx7gx0h1B9DiVbhvcJn8BEMtCLzwB3XI2KyWGKKe0TmBcTkMT+maiP3i4sR18u0x5Q7uM5JchnRRxGI3GXxF5wdlp92w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743545603; c=relaxed/simple;
-	bh=9jE1gZkrGazs+uylql/bYZ95xk/tZkYQUTL0zvL0V8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kiwtpayXwSo2TT7eSMBYlVyjp5qOq0ejR0SGEMMmPagPWiXYqkvzlPsGQ21mZk53o07txVmZ+0108btU9U2s5iqz3h7yTm9NHmDWdyo6HLZlt9puC9qQ1fu0nmE5RmwerLnWOxx0tzXwW2/3kbUVXKA8/eeWifqUvnmtvxBLz4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=leUZHVK+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743551597; c=relaxed/simple;
+	bh=lMqJA5YO4EpuXajO/VUaIW9ecys+h1Mr7kvLiUfEwcI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KVuZhEQJlKEScIp+XRLFep2k5GCwhtduHmdPIN2LsI9iZbSfd7abymdrVEIcOgrLIq/YLQzmyt1Vkaeegvs1ZIYLHjZ1AQ7cqCccSmKE+s2cwlD96wOBJPkGJMx2RkoVcuFPCsqKtjlPCeZzuJlFpWGhuVtdTv3AdKTzPpnGMFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=gVoh8Mom; arc=none smtp.client-ip=109.224.244.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="leUZHVK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2E9C4CEE4;
-	Tue,  1 Apr 2025 22:13:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743545602;
-	bh=9jE1gZkrGazs+uylql/bYZ95xk/tZkYQUTL0zvL0V8k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=leUZHVK+hdku+0WKtRUNHQauwPY226oQTp+WyKbZvVkA/4a/3Wfsj/NreuHBwvI8J
-	 PSU2Sppp+EOGv53YrcFcXxuiT6+8FibF8m/Npl9R88Xs7i0WmWdQNGz/tRFH+bI3Y5
-	 zx+gKAna4VXuA7HtJRxQAN5QaYnl6cfd5pd5RLg5KL08hHqfRnl4rQvA3kbCzM3oXm
-	 99nEAopoRIY6+iHzd4Jw5ftEolEPyDmDLUGLsZ5BTuFwFvyq/UwAxbiU+qgYcubf3D
-	 7H1Q9hidAE8Z9tS5UzBE6BovyJWieaGWw7TOVoKwxgQ37PAPP4K6YzKzc8pRaIt3bu
-	 w0edxU4KiIbuA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
-Date: Wed,  2 Apr 2025 00:12:05 +0200
-Message-ID: <20250401221205.52381-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="gVoh8Mom"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1743551588; x=1743810788;
+	bh=h0L6GsC79ouPc4RnXP7HsbTQ5eC7lCgOZCF9zKBs/N4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=gVoh8MomFoEwFWNT3aW3yg0vBbg+CuX0QZGsJnFgOJ6Mcj7VQm8tjEDDy7ahvcojs
+	 5wywmsXVJ8CeoE7IcXWjRauqrb4ew8Rny2rBcU9P/2Hr6lgtHBtlZHD/enqT/ykdBB
+	 Hz/Fy06Z/mLR/b+5OstaQZT8f2OuJ5NPF1S3d4mlVyT5iX1sGqtesHrC9RLYov089g
+	 XzrXAPliIFMjXCp475INC1sJa0yQemjThpyvWl8klT3i6ZzHz8hesyrpT8jFJEZYpn
+	 LIRs7XisAUMfunHTt17Mc8G2qExKUe1vfSKLLybsZYBrRj7OmzAf0vPHxqmj5dk7Rp
+	 m89kxvDQcvMTA==
+Date: Tue, 01 Apr 2025 23:53:05 +0000
+To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
+Message-ID: <D8VPGBN60E61.1Z48FQW6TL3A@proton.me>
+In-Reply-To: <20250401221205.52381-1-ojeda@kernel.org>
+References: <20250401221205.52381-1-ojeda@kernel.org>
+Feedback-ID: 71780778:user:proton
+X-Pm-Message-ID: 46df26921875262ddb18c57a7d2b1ba67cd0b710
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Starting with the upcoming Rust 1.86.0, Clippy's `needless_continue` lint
-complains about the last statement of a loop [1], including cases like:
+On Wed Apr 2, 2025 at 12:12 AM CEST, Miguel Ojeda wrote:
+> Starting with the upcoming Rust 1.86.0, Clippy's `needless_continue` lint
+> complains about the last statement of a loop [1], including cases like:
+>
+>     while ... {
+>         match ... {
+>             ... if ... =3D> {
+>                 ...
+>                 return ...;
+>             }
+>             _ =3D> continue,
+>         }
+>     }
+>
+> as well as nested `match`es in a loop.
+>
+> Thus clean them up.
+>
+> Link: https://github.com/rust-lang/rust-clippy/pull/13891 [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> To be honest, I am not sure we want this.
+>
+> The lint can find cases that should be simplified, and it has been a nice=
+ lint
+> so far, but somehow I feel that using `continue` shows the intent better =
+when
+> it is alone in an arm like that, and I am not sure we want to force peopl=
+e to
+> try to find other ways to write the code either, in cases when that appli=
+es.
+>
+> If others feel this reads worse, then I would be happy to disable the lin=
+t and
+> open an issue upstream to keep the cases that are more clear cut.
 
-    while ... {
-        match ... {
-            ... if ... => {
-                ...
-                return ...;
-            }
-            _ => continue,
-        }
-    }
+I'm not too sure about this change, if the loop is longer than one
+screen, it makes a lot of sense to have a `continue` instead of `()`,
+since one might not see that there is nothing after the `match`.
 
-as well as nested `match`es in a loop.
+I also think that an explicit `continue` is nicer from a expressability
+standpoint. So I think we should keep them.
 
-Thus clean them up.
-
-Link: https://github.com/rust-lang/rust-clippy/pull/13891 [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
-To be honest, I am not sure we want this.
+Cheers,
+Benno
 
-The lint can find cases that should be simplified, and it has been a nice lint
-so far, but somehow I feel that using `continue` shows the intent better when
-it is alone in an arm like that, and I am not sure we want to force people to
-try to find other ways to write the code either, in cases when that applies.
+>  rust/macros/helpers.rs | 2 +-
+>  rust/macros/kunit.rs   | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-If others feel this reads worse, then I would be happy to disable the lint and
-open an issue upstream to keep the cases that are more clear cut.
-
- rust/macros/helpers.rs | 2 +-
- rust/macros/kunit.rs   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/rust/macros/helpers.rs b/rust/macros/helpers.rs
-index a3ee27e29a6f..bfa3aa7441d2 100644
---- a/rust/macros/helpers.rs
-+++ b/rust/macros/helpers.rs
-@@ -81,7 +81,7 @@ pub(crate) fn function_name(input: TokenStream) -> Option<Ident> {
-                 }
-                 return None;
-             }
--            _ => continue,
-+            _ => (),
-         }
-     }
-     None
-diff --git a/rust/macros/kunit.rs b/rust/macros/kunit.rs
-index 4f553ecf40c0..63f79e5ac290 100644
---- a/rust/macros/kunit.rs
-+++ b/rust/macros/kunit.rs
-@@ -54,7 +54,7 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
-                     };
-                     tests.push(test_name);
-                 }
--                _ => continue,
-+                _ => (),
-             },
-             _ => (),
-         }
-
-base-commit: 08733088b566b58283f0f12fb73f5db6a9a9de30
---
-2.49.0
