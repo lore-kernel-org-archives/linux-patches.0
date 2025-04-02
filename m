@@ -1,60 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982481E8837;
-	Wed,  2 Apr 2025 09:18:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D49235360
+	for <patches@lists.linux.dev>; Wed,  2 Apr 2025 10:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743585499; cv=none; b=vF4Y8fZM82yLeNcNNQRNtmVcgUMM/d7C/tpOhTS1m1jFTWDrOX3WKKSF24TpK1oCIfLWXrCuG4A71UchFeaU6wLPOR3QIyGOllqJKrKEG69D6AKOqMchXkoloRCaXl7QocsPNEf2wqWsRQksoGbqavjMXiAa2Z3OqA83Bg9Ik+A=
+	t=1743591353; cv=none; b=l+Jb6HUOBO5C7Y4JWxkkc6I2aYMpwfF+QriX7BWwZ9QHxXTDFyHO4LNhLo5ub9AeDd8EiTkxnEeXXwgkteirO1LH1njXDxmLM6YMiiH75/I6hV1ZvdAVX1bozKOhEKSpvTkT3u84126G2Cci7UN4QbcOG0URaIWdSAv3ZGd6ToA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743585499; c=relaxed/simple;
-	bh=D1VZOI93g+UMw9rkKet/q9DRT20qfJr+OLiR+LLC+OM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oCOPoFJuEzjzK7OPc3R4HIPXi4iEFPDMLz2Q2jP/bg1AbooJYLbtKjRVcSvNhe8gt02WSWg0G/E+Eg3wT0smbIyFFrkeVEOIC8NDLrlssp2dcPYofdJ8VstVGHWLzQ4VxSTDHdJ/jRqgIFHesRy3RHI9Nrl3n2lMfoVWc9AsDEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iT2kyKPZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743591353; c=relaxed/simple;
+	bh=2unff7AX7/CiMx6nxGFXK762WquO5nYtTjoo3PeLRBc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hCZe2Sbp+7asfsYslBYI8N0OZfvLN5t4zNbOVBjXVR7ZwFqIEq17NpFRwv9fAw6BvRo+Dze58MsukVrBRjQt7kyKd4bpyc0vKjeAI59nlPbBLcoCOdxGbHDhL4eJL1eiUbXf3/OiaCXPZRKJ++yOHsfhPLprAWT1CrMf/IyyZMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IgWumCiB; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iT2kyKPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0F0C4CEDD;
-	Wed,  2 Apr 2025 09:18:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743585499;
-	bh=D1VZOI93g+UMw9rkKet/q9DRT20qfJr+OLiR+LLC+OM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iT2kyKPZO0UbWb7bufpiAlv54j2t0pLoLZU6Y4IFLjIfIw3LrEP6NADL0CvZ527Jg
-	 qqKcUOvnGK1nffjKDkCcRghRmwOxa9rQe0JCOQ2s7U9zbsMGCBhFTnRuwR9wXGTY1b
-	 KvDiXw3AyxZTqGBP2qSpHNQ7GhnvjjLjDq/lVjCUFRUw/5odqB50HYc0FtduKTeqhV
-	 tlopI/HsnbvstzhRTMmyyIfeIeGAYV5DenutBRJuNswMKoEwV+EfIRtkJ/ELPt8FpI
-	 RO85YoQqojqeIAHTWHhXh0sRfV8aFEHsWBlaSl69mJjczFJSQy0ASzQFk+eEAT2SAG
-	 i7uJgTY+aXCdA==
-Date: Wed, 2 Apr 2025 11:18:13 +0200
-From: Danilo Krummrich <dakr@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue`
- cases
-Message-ID: <Z-0A1a3nvqFiEVtE@pollux>
-References: <20250401221205.52381-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgWumCiB"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-301001bc6a8so1584317a91.1
+        for <patches@lists.linux.dev>; Wed, 02 Apr 2025 03:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743591351; x=1744196151; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2unff7AX7/CiMx6nxGFXK762WquO5nYtTjoo3PeLRBc=;
+        b=IgWumCiB21ZZxBAvZNkyMPFBops7M1kQi6h98rkk7KExY0Uxv+8X66vi3ht5Ubwl4S
+         /O7RHv6/CUZERvC8vzCFYK7h6FyI5L+piHSMjM5kiisZUUfnVN7pcSta9ZID2OoXV/ck
+         apP/hMXQ4/ga3CxqKice09SDlcabAoUYe2YGyvZDTaR+t1rBxrVAZrR3X5b458zOae+K
+         7KwXrUNRTua4/eNLAvt65MOZ6AMBr3TPs1IYgnKnZBywagTsr0YVImsrXuJ2I8fm+hnX
+         PioftECFtgKEOlxJ4veDBUiCHdcvqlQ3IF17bdy62xCAeDCQVNvxJw256InhuE7cJ7g1
+         HCqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743591351; x=1744196151;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2unff7AX7/CiMx6nxGFXK762WquO5nYtTjoo3PeLRBc=;
+        b=XKVFlcNXeZtVUAsNI0y6WOkAFpAGKhA7MFRVD8ktjRCnCJN9p3Qqkb2yXqlbfCYDMc
+         Ud4AbKSWS+Iw/YgL6u7PeTet9CGkpwzsP99HLmgF0sNY7xLZ/5AkWrfnXBqVcoH9/fyT
+         sYQ2R4H0Ys7ha6WPPvTnSFSLMa6F9m+9iv9mGwod0B0vZb/GB0al3QD8KT9fKW9zKWfG
+         U/85WuDyoa1i5ZI7FrifH3W7ZUE5hN09WmZyVIVggU9SUkFlYhl/KNZkZVE0M5vlfMvm
+         bMcEHHO987Ptx4zhJCLwlmCEI3FNV4BTNBWjnN401eT8ac0pHYSGFyBH/qmg9KHGrBj7
+         Ikkw==
+X-Forwarded-Encrypted: i=1; AJvYcCUuPUCKx6MW5byPMOLYlzIUol3z0U6IQGx1t0Gn39MM+XiPTE6XkZk2HrNADEbNzN0YhTMxVGjg@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz0rblp+Hs2dUqedgaPZQowv/TN4vpu0iUDEbFpSTIIc4ySkaG4
+	vL+iuCHZKZQXWPRQ2vGKoh7P1A2rtTH3A0RUC9nndj/FOTW+9LJ0yKufMen7tiRYIe/7ciw5s7U
+	HvuxPuCza3gD9I+dI8+eDdc9AmdI=
+X-Gm-Gg: ASbGnctpXwRtlmTbxVjCPAyVrJ5E8xbRIaX+nBgykC5Jv00oIDFz/69C5hAEEWVIxXf
+	3rcPh6DCcASl8tnvoIz5P4xI/uO6RIv32HCEA47bLqnBFdWnSJeQb6kW83aMradV++M/PTv2hUN
+	l3vB7e/nP7VK7gM+6MNb5NyV50aw==
+X-Google-Smtp-Source: AGHT+IEwypRozS9Ypyq+iyNi09n48TXL23+OZQhgw2E6xUF5HInNRbFsqSw9JYkC6uJkSMnlkIhGlvYz6HLFTDTXJRY=
+X-Received: by 2002:a17:90b:4d06:b0:2fe:b972:a2c3 with SMTP id
+ 98e67ed59e1d1-30562d0e8f2mr3139137a91.0.1743591351337; Wed, 02 Apr 2025
+ 03:55:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401221205.52381-1-ojeda@kernel.org>
+References: <20250401221205.52381-1-ojeda@kernel.org> <Z-0A1a3nvqFiEVtE@pollux>
+In-Reply-To: <Z-0A1a3nvqFiEVtE@pollux>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 2 Apr 2025 12:55:39 +0200
+X-Gm-Features: AQ5f1JpRmankZqFUTpg6TFluVCP-dnEX0-s47bPx1R_EGfUv0T_zApVdT3BHjDk
+Message-ID: <CANiq72mmJTYQ+9goEaq6desJCNHNeYKrQN_DJEe67ZVM_7Wggg@mail.gmail.com>
+Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 02, 2025 at 12:12:05AM +0200, Miguel Ojeda wrote:
-> Starting with the upcoming Rust 1.86.0, Clippy's `needless_continue` lint
-> complains about the last statement of a loop [1], including cases like:
+On Wed, Apr 2, 2025 at 11:18=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> =
+wrote:
+>
+> Not related to the patch itself: Don't we need to disable new lints anywa=
+ys?
+> Otherwise we'd get warning when compiling older kernel with newer compile=
+rs /
+> linters, no?
 
-Not related to the patch itself: Don't we need to disable new lints anyways?
-Otherwise we'd get warning when compiling older kernel with newer compilers /
-linters, no?
+So far we are cleaning them up as they arrive (and backporting) and
+deciding if we want to keep them or not etc. My plan is to eventually
+have an explicit set of the ones we really, really want to keep clean,
+since at some point it will be too much to clean (if the rate of
+changes on Clippy is steady), and leave the rest to something like
+`W=3D`.
+
+In any case, `CLIPPY=3D1` is opt-in and the future can always give us
+issues: even when we set an explicit list, sometimes lints have added
+new cases (like in this patch), so we will need cleanups from time to
+time either way.
+
+Relatedly, we discussed at FOSDEM having Clippy be potentially
+unconditionally used, but that would require changes on their side
+first.
+
+Cheers,
+Miguel
