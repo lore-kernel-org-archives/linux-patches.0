@@ -1,111 +1,107 @@
-Received: from premium138-2.web-hosting.com (premium138-2.web-hosting.com [162.0.232.132])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F5F175D48
-	for <patches@lists.linux.dev>; Wed,  2 Apr 2025 19:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.0.232.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086631F0E27
+	for <patches@lists.linux.dev>; Wed,  2 Apr 2025 20:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743620568; cv=none; b=UAAD2PJM3Ki8+EQ41Y7gGoU2Zpf06Gr67n2/XnTsY7BMzMI1pVbmqRG1MDVVEqRwcs6G0eq5e5TOffB9pn5vdr/yanykX9hh2+oDJ0Sdg53wDckS6ZR11if8BPWreP+HCEtDLEOZBNmgn//mzIN5vUyL/Bito5GcpLhJ8oKifSU=
+	t=1743625781; cv=none; b=ccxcj02W7lSwy78xVEGijF/b3oRpe8L+JMSRvu08jedT6ybV8teyfF6+zeU5vJZ2kVyJxIeg48iwhQ/YoNsXlKqVEY1NgrwrJXpkxfr0FWQxrPaTTVqP7mYwzyB688RA7o7uzdolNoKkC/Dql8iigbcyga7x58pOOczCrw4sfrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743620568; c=relaxed/simple;
-	bh=7EW2TpRFjuRAJvSnEM323mzbOWe41YqBgmYm+/DWDks=;
-	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=i+gTLGNOjS74R6UZmxQO9MQVU/MakKt2v/aEzwbrU/Spo+yotvuccYz639NpUBUtrpUye74mmSGNACbghLbkRcPn8+XdQ1997dIqr2qKOcxFa23DHDxmeOAQV/sC1PYqWy6V7fKcQcUVUq1GSoKt39oAg6ELMllEJ1W2KwHub6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hvllctechnology.com; spf=pass smtp.mailfrom=hvllctechnology.com; dkim=pass (2048-bit key) header.d=hvllctechnology.com header.i=@hvllctechnology.com header.b=Qf/EMwoe; arc=none smtp.client-ip=162.0.232.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hvllctechnology.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hvllctechnology.com
+	s=arc-20240116; t=1743625781; c=relaxed/simple;
+	bh=G2MDdEdO8z0KC+Zdy7504GbR+idMVp6LcuRq7ECu370=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pKwJUg8FauB519DVB7sPIkxONHLBtFhaAvITgxqzrjrrdZPIBEVMjPUjAmP88oJlDOQFDUif3jitHKfZY4y4PulJT2Wno5ps+Z4+e89SMFP/zRRzyjlDr9R04s8NmbJBpOMS7jifei/k3XC/kS26EPQh1UreEZ6BDU6tMHbacf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BGjn/U7o; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hvllctechnology.com header.i=@hvllctechnology.com header.b="Qf/EMwoe"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=hvllctechnology.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-	Message-ID:Subject:To:From:Date:MIME-Version:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=CBMHs3ZvI8oSv4CggA3Auwsx0vm4W+wYTh90TWUtFBw=; b=Qf/EMwoeGyP4F05bupmBAXYLJ0
-	K6G6rm9J5f0Yv4G2oY+GAkSULi5f8eyB+43iCa5Y3iA8IN0GZfapEmWKTfH4RbcDXM4R6FOkxWCWG
-	cSDmot0GKWuEJbkXLlwuc16AxeK06xFiW9bBPOI7ZndLtI59RvTh5WZYtQ7P0gYD2LV+pS6t75rtQ
-	S1BxF3zMfYdK7ZZuPfswQhxyh6U+xSGUqFMfrqpNxweE/Fo7YqWTIBl+f3fSk9ZRWS3vrZ/m78wTP
-	cbM3I+pjdafAVwVPIA2r32Vhq1HldiMNTRs1k5deRGvgbQeia0UcyGgzNQNBd7pAIi6rMfS1VNqqO
-	pQYZSBHA==;
-Received: from [::1] (port=36616 helo=premium138.web-hosting.com)
-	by premium138.web-hosting.com with esmtpa (Exim 4.98.1)
-	(envelope-from <highervisibility-solution@hvllctechnology.com>)
-	id 1u03LC-0000000BC1C-1lwh;
-	Wed, 02 Apr 2025 15:01:34 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BGjn/U7o"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2ff5544af03so36943a91.1
+        for <patches@lists.linux.dev>; Wed, 02 Apr 2025 13:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743625779; x=1744230579; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G2MDdEdO8z0KC+Zdy7504GbR+idMVp6LcuRq7ECu370=;
+        b=BGjn/U7oQfdbduyNJ/lJOlUuxwuaR09xXobFHSdzLRWAPrVBJEKC7keddksDEbZYHj
+         wpjxHKI2uiq6+mYiExYv4fBq0Jfcafqc50uO7XZYvJaEC5eZ9zt606Pr6m05szUIfJjp
+         FufbW5jMRzbUyT+8zwQ9sgt3ThatDaIxqhhfGeBYKvDxK3n9WksY0dwOKfSePBlsIMf1
+         g1CaWNxj5yryDu4tbYxR1onFmenZWOJ84SXDTgD9Oj+HxBqrOOTpouiCba9ZCXbbFX+I
+         roYPUl1X45jeDwglPv86PUoZPdUuRg8YJGfPrlRWPs838SuiA92hnzRkjDx8WEzTX66Q
+         y9iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743625779; x=1744230579;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G2MDdEdO8z0KC+Zdy7504GbR+idMVp6LcuRq7ECu370=;
+        b=kRJf297qRPUtz29wLVQsndT7EZYRwQ+g5ebVYWoHIbnCg7ZFuMBt2wuSy9/PF8ian1
+         JINyCisFRndI61+7XhGLHRKF5F2gc2qaTo5y62XNV7e2lTHqkQaZIRM4JSEc4jrZkz58
+         h3x012bg1oLDJO+/mSOaV3TINW9w4t68T49UIjJKq9nC2FTCfG5+XowTR++nTSeOfspV
+         TNSHmq2hUnURcVQEKsCSA2hIhbovLJmfiRg1vhBCZxB+wlhHDJkTDFn7yCO1MCmNJaYq
+         byWEQ5819ngKXxFa4O4KcEw/l/g9lgZlUJ62j6ZoTDIzeUhfurct4+6iqum321Uk3Vaj
+         As5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCURLuDepgYEAh3KRNtBMMvdeulCCkkwDC36Ng+1OalLuvsXSl8czy7NReTAxkfxtM9yO3KGjYym@lists.linux.dev
+X-Gm-Message-State: AOJu0YzIkpZ1gZMJtAYCa7VvalrLiKN8ri6VOw/1fUJ/g7iju+tIk+yX
+	l11Fh++8I5soSMZMbrKAAP597NrxSM3QiAwf5al7DJoPyaAC0XZQG9JPu4yVTzvVYqIWRTQQnt1
+	1+3DC4LOMHehfvxH4PhvPdLM3AIU=
+X-Gm-Gg: ASbGncsCekLSzT2ey5O24SOrL2UAJHDubjzuIBL1y4/W76NISFjCMdxb9psgVz/QO/U
+	JYFAuNHw8wT/kPtORHTVVNy54mZbmI21yqLjanccAOmcBofQ43vnZklmiTGtZ+I0mjpHEw0NHhg
+	CI+O5X6yCAjvT4V7meOBVlUEQ=
+X-Google-Smtp-Source: AGHT+IFCmvkmz5a2ce/qEErTy+ix3lRxJsnJ8qatRbe6xQkTV1eTtqypTjSAmk71nyPy+VkbGf6oJPtgS+lqMyJ4Z/w=
+X-Received: by 2002:a17:90a:e7cc:b0:2fe:8fa0:e7a1 with SMTP id
+ 98e67ed59e1d1-30562ddfce2mr4049565a91.2.1743625779225; Wed, 02 Apr 2025
+ 13:29:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 02 Apr 2025 15:01:22 -0400
-From: highervisibility-solution@hvllctechnology.com
-To: undisclosed-recipients:;
-Subject: =?UTF-8?Q?Affordable_Website_Design_Starting_at_=24399_=E2=80=93?=
- =?UTF-8?Q?_Powered_by_AI_=26_Advanced_Features?=
-User-Agent: Roundcube Webmail/1.6.9
-Message-ID: <d294a321ad9afa6ca60a77f6fee5aec9@hvllctechnology.com>
-X-Sender: highervisibility-solution@hvllctechnology.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - premium138.web-hosting.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - hvllctechnology.com
-X-Get-Message-Sender-Via: premium138.web-hosting.com: authenticated_id: highervisibility-solution@hvllctechnology.com
-X-Authenticated-Sender: premium138.web-hosting.com: highervisibility-solution@hvllctechnology.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-From-Rewrite: unmodified, already matched
+References: <20250401221205.52381-1-ojeda@kernel.org> <D8VPGBN60E61.1Z48FQW6TL3A@proton.me>
+ <CANiq72mdvnHvWbVNQbiXSRxd1xrF+A=v0RdJO74xeY3HyhRmcg@mail.gmail.com>
+ <CAJ-ks9nAAcoJoFF+qNPbhsM32kOh9u+LGYUwFN_n9qqudB6YhA@mail.gmail.com>
+ <CANiq72k36Tvwbzkg6nRdxB8VNRHLf8QzLeCXZq7sEPewccsWNw@mail.gmail.com> <CAJ-ks9nfEg=sdn_-q+xOc+k9mU0pdMuumwRb76LXzE3RcOtg6w@mail.gmail.com>
+In-Reply-To: <CAJ-ks9nfEg=sdn_-q+xOc+k9mU0pdMuumwRb76LXzE3RcOtg6w@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 2 Apr 2025 22:29:26 +0200
+X-Gm-Features: AQ5f1Jr5D2JPo_bfn1lEtiLKIRtSrkGZ03A37KRZeYcdWqFq9fOb3M7KrVF5WBA
+Message-ID: <CANiq72mERwbmXYq-pi=WUAZ_VYGcBVS7tzH4P5zSUVCMcL4-CQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Apr 2, 2025 at 6:41=E2=80=AFPM Tamir Duberstein <tamird@gmail.com> =
+wrote:
+>
+> The counterfactual is hard to prove - you don't know what true
+> positives the lint would catch. In my opinion disabling lints is
+> risking throwing the baby out with the bathwater.
 
-Hi Sir,
-I hope you're doing well!
+It is true that it is not easy to know what we will exactly lose right
+now (apart from what it claims in the docs and its examples), but one
+can easily test enabling it in a couple cycles and we would have some
+data from kernel code.
 
-At HVLLC Online, we specialize in building modern, professional websites 
-tailored to your business needs. Our websites are designed with the 
-latest Artificial Intelligence tools and features, ensuring your site 
-stands out.
-For a one-time payment starting at just $399, you’ll receive a custom 
-website with:
+To be clear, disabling now does not mean forever -- we can reevaluate
+with that data and possible improvements to the lint that happened
+meanwhile (sometimes they get improved or split due to feedback).
 
-Key Features:
-•	Premium Theme and Paid Plugins for enhanced functionality
-•	CRM Integration to generate leads and nurture clients
-•	Multiple Pages for showcasing your products/services
-•	Unlimited revisions to ensure your website is exactly as you want
-•	SEO-Optimized content for maximum visibility
-•	Dynamic media, including HD videos and interactive elements
-•	Call-to-Action buttons for easy customer engagement (calls, emails, 
-texts)
-•	Contact Us Form to collect client details for your records
-•	Integrated Map section to help clients easily find your location
-•	Free maintenance and upgrades for ongoing support
-•	Tutorial Guide so you can make simple updates on your own
+By the way, the lint is in "pedantic" in Clippy and disabled by
+default -- so we are "only" disabling w.r.t. what we do nowadays.
 
-Once we start building your site, we’ll initially host it on a 
-subdomain. Once you finalize your preferred domain name, we'll easily 
-transfer the site files to your domain. This process is seamless and 
-quick.
-________________________________________
-Check out some of our past work:
-•	The Perna Team
-•	5 Starr Enterprise
-•	Elegran
-•	HL Residential
-•	Barnes New York
-________________________________________
-If you have any questions or would like to discuss your website project 
-further, feel free to reach out to me directly. I look forward to 
-helping you build a website that will impress your clients and drive 
-results!
+In any case, my main concern is cost: we already require a lot from
+Rust kernel developers, typically more than in C, and while one goal
+of the project is trying to see how far we can go on being strict
+about things like lints, I worry we may overdo it at times.
 
-Best regards,
-Adrian Abraham
-HVLLC Online
-Website: www.hvllc.online
-Phone: 727-241-5685 | 304-362-5982
-
+Cheers,
+Miguel
