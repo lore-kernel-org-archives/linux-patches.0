@@ -1,155 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from premium138-2.web-hosting.com (premium138-2.web-hosting.com [162.0.232.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B605F1C6FF4;
-	Wed,  2 Apr 2025 18:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F5F175D48
+	for <patches@lists.linux.dev>; Wed,  2 Apr 2025 19:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.0.232.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743619594; cv=none; b=JUR3VEkhOfbxjD1T20/l9/Emf90KIORgDkz5qYTrog8i847kMFX0/TewXs0WbViWoDaHqHM5n5GqOGfsxknl1e7j+L0ldCNVZbXaOijv8O6+IjV63ecDsY+nvSVJqKgESFNOtgFdpvsvmiTeD3RkgWGoXuPLIg7PJ3VxuQTma7M=
+	t=1743620568; cv=none; b=UAAD2PJM3Ki8+EQ41Y7gGoU2Zpf06Gr67n2/XnTsY7BMzMI1pVbmqRG1MDVVEqRwcs6G0eq5e5TOffB9pn5vdr/yanykX9hh2+oDJ0Sdg53wDckS6ZR11if8BPWreP+HCEtDLEOZBNmgn//mzIN5vUyL/Bito5GcpLhJ8oKifSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743619594; c=relaxed/simple;
-	bh=NNPty5+Jk65JZUZnsiMLdlKG62MVsZ4Q1CPSxTdXSVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BBf/p0zOvOV0xmZWyHMjD3+2qbcjNQzfeg8H8haOc/21CJZQDE0PvpLbNu6MX5VNMfiPQnfniACjiO6Jj+4fibL/kJ4sOCMDKGdovMBu+Vm8/M8mpqTFeUZySel9LZb6m8dbmkh3pe/j3mqmG1E/Ae3ipOtA0zMVwrdaytw4N3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRaUuztW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743620568; c=relaxed/simple;
+	bh=7EW2TpRFjuRAJvSnEM323mzbOWe41YqBgmYm+/DWDks=;
+	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=i+gTLGNOjS74R6UZmxQO9MQVU/MakKt2v/aEzwbrU/Spo+yotvuccYz639NpUBUtrpUye74mmSGNACbghLbkRcPn8+XdQ1997dIqr2qKOcxFa23DHDxmeOAQV/sC1PYqWy6V7fKcQcUVUq1GSoKt39oAg6ELMllEJ1W2KwHub6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hvllctechnology.com; spf=pass smtp.mailfrom=hvllctechnology.com; dkim=pass (2048-bit key) header.d=hvllctechnology.com header.i=@hvllctechnology.com header.b=Qf/EMwoe; arc=none smtp.client-ip=162.0.232.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hvllctechnology.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hvllctechnology.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRaUuztW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA941C4CEDD;
-	Wed,  2 Apr 2025 18:46:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743619594;
-	bh=NNPty5+Jk65JZUZnsiMLdlKG62MVsZ4Q1CPSxTdXSVQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HRaUuztWyrdPRc7bajAwH4tX/vtfwV6F+3BQsT2pLqVZDZUchZfUthg1Ftv8fH+j6
-	 enThnkTPnt+DWtegk1EaWz5V1llQHVwd2yfZNvyhrhRC3Pnzw+8agSGyoqJb4QsOo+
-	 jC/1WY91NHGWHkQTzcA8/iV9JAskd8+vJr7dy9wVyRO/SIRwBKbKpaPVMBHPAg9bJ2
-	 bmch0zMqSkhrSPECsOzsemboDnNAh17ZONMk7GTskADvLSBMYwGs8mz7gbtXU8Jr/m
-	 +gO/SW239OjQ/rnr5cUgn3PZap73LIUDOXtIwMrBTmJZ/j637ljG+ED0B0FQl6K6AO
-	 Zx0+BflnqglpA==
-Date: Wed, 2 Apr 2025 11:46:32 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Swarna Prabhu <sw.prabhu6@gmail.com>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org, linux-mm@kvack.org,
-	linux-btrfs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org, xiang@kernel.org, david@redhat.com,
-	huang.ying.caritas@gmail.com, willy@infradead.org, jack@suse.cz,
-	p.raghav@samsung.com, da.gomez@samsung.com, dave@stgolabs.net,
-	gost.dev@samsung.com, Swarna Prabhu <s.prabhu@samsung.com>
-Subject: Re: [PATCH v2] generic/750 : add missing _fixed_by_git_commit line
- to the test
-Message-ID: <Z-2GCKT5_U-ZjU94@bombadil.infradead.org>
-References: <20250402183034.2334125-1-s.prabhu@samsung.com>
+	dkim=pass (2048-bit key) header.d=hvllctechnology.com header.i=@hvllctechnology.com header.b="Qf/EMwoe"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=hvllctechnology.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+	Message-ID:Subject:To:From:Date:MIME-Version:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=CBMHs3ZvI8oSv4CggA3Auwsx0vm4W+wYTh90TWUtFBw=; b=Qf/EMwoeGyP4F05bupmBAXYLJ0
+	K6G6rm9J5f0Yv4G2oY+GAkSULi5f8eyB+43iCa5Y3iA8IN0GZfapEmWKTfH4RbcDXM4R6FOkxWCWG
+	cSDmot0GKWuEJbkXLlwuc16AxeK06xFiW9bBPOI7ZndLtI59RvTh5WZYtQ7P0gYD2LV+pS6t75rtQ
+	S1BxF3zMfYdK7ZZuPfswQhxyh6U+xSGUqFMfrqpNxweE/Fo7YqWTIBl+f3fSk9ZRWS3vrZ/m78wTP
+	cbM3I+pjdafAVwVPIA2r32Vhq1HldiMNTRs1k5deRGvgbQeia0UcyGgzNQNBd7pAIi6rMfS1VNqqO
+	pQYZSBHA==;
+Received: from [::1] (port=36616 helo=premium138.web-hosting.com)
+	by premium138.web-hosting.com with esmtpa (Exim 4.98.1)
+	(envelope-from <highervisibility-solution@hvllctechnology.com>)
+	id 1u03LC-0000000BC1C-1lwh;
+	Wed, 02 Apr 2025 15:01:34 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250402183034.2334125-1-s.prabhu@samsung.com>
+Date: Wed, 02 Apr 2025 15:01:22 -0400
+From: highervisibility-solution@hvllctechnology.com
+To: undisclosed-recipients:;
+Subject: =?UTF-8?Q?Affordable_Website_Design_Starting_at_=24399_=E2=80=93?=
+ =?UTF-8?Q?_Powered_by_AI_=26_Advanced_Features?=
+User-Agent: Roundcube Webmail/1.6.9
+Message-ID: <d294a321ad9afa6ca60a77f6fee5aec9@hvllctechnology.com>
+X-Sender: highervisibility-solution@hvllctechnology.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - premium138.web-hosting.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - hvllctechnology.com
+X-Get-Message-Sender-Via: premium138.web-hosting.com: authenticated_id: highervisibility-solution@hvllctechnology.com
+X-Authenticated-Sender: premium138.web-hosting.com: highervisibility-solution@hvllctechnology.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: unmodified, already matched
 
-On Wed, Apr 02, 2025 at 06:30:34PM +0000, Swarna Prabhu wrote:
-> Testing generic/750 with older kernels indicated that more work has to
-> be done, since we were able to reproduce a hang with v6.10-rc7 with 2.5
-> hours soak duration. We tried to reproduce the same issue on v6.12 and could
-> no longer reproduce the original hang. This motivated us to identify the commit
-> 2e6506e1c4ee ("mm/migrate: fix deadlock in migrate_pages_batch() on large folios")
-> that fixes the originally reported deadlock hang annotated as pending work
-> to evaluate on generic/750. Hence if you are using kernel older than v6.11-rc4
-> this commit is needed.
-> 
-> Below is the kernel trace collected on v6.10-rc7 without the above
-> commit and CONFGI_PROVE_LOCKING enabled:
-> 
-> [ 8942.920967]  ret_from_fork_asm+0x1a/0x30
-> [ 8942.921450]  </TASK>
-> [ 8942.921711] INFO: task 750:2532 blocked for more than 241 seconds.                                                                                         [ 8942.922413]       Not tainted 6.10.0-rc7 #9
-> [ 8942.922894] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.                                                                      [ 8942.923770] task:750             state:D stack:0     pid:2532  tgid:2532  ppid:2349   flags:0x00004002                                                     [ 8942.924820] Call Trace:
-> [ 8942.925109]  <TASK>
-> [ 8942.925362]  __schedule+0x465/0xe10
-> [ 8942.925756]  schedule+0x39/0x140
-> [ 8942.926114]  io_schedule+0x42/0x70
-> [ 8942.926493]  folio_wait_bit_common+0x10e/0x330
-> [ 8942.926986]  ? __pfx_wake_page_function+0x10/0x10
-> [ 8942.927506]  migrate_pages_batch+0x765/0xeb0
-> [ 8942.927986]  ? __pfx_compaction_alloc+0x10/0x10
-> [ 8942.928488]  ? __pfx_compaction_free+0x10/0x10
-> [ 8942.928983]  migrate_pages+0xbfd/0xf50
-> [ 8942.929377]  ? __pfx_compaction_alloc+0x10/0x10
-> [ 8942.929838]  ? __pfx_compaction_free+0x10/0x10
-> [ 8942.930553]  compact_zone+0xa4d/0x11d0
-> [ 8942.930936]  ? rcu_is_watching+0xd/0x40
-> [ 8942.931332]  compact_node+0xa9/0x120
-> [ 8942.931704]  sysctl_compaction_handler+0x71/0xd0
-> [ 8942.932177]  proc_sys_call_handler+0x1b8/0x2d0
-> [ 8942.932641]  vfs_write+0x281/0x530
-> [ 8942.932993]  ksys_write+0x67/0xf0
-> [ 8942.933381]  do_syscall_64+0x69/0x140
-> [ 8942.933822]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-> [ 8942.934415] RIP: 0033:0x7f8a460215c7
-> [ 8942.934843] RSP: 002b:00007fff75cf7bb0 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-> [ 8942.935720] RAX: ffffffffffffffda RBX: 00007f8a45f8f740 RCX: 00007f8a460215c7
-> [ 8942.936550] RDX: 0000000000000002 RSI: 000055e89e3a7790 RDI: 0000000000000001
-> [ 8942.937405] RBP: 000055e89e3a7790 R08: 0000000000000000 R09: 0000000000000000                                                                              [ 8942.938236] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000002
-> [ 8942.939068] R13: 00007f8a4617a5c0 R14: 00007f8a46177e80 R15: 0000000000000000
-> [ 8942.939902]  </TASK>
-> [ 8942.940169] Future hung task reports are suppressed, see sysctl kernel.hung_task_warnings
-> [ 8942.941150] INFO: lockdep is turned off.
-> 
-> With the commit cherry picked to v6.10-rc7 , the test passes
-> successfully without any hang/deadlock, however
-> with CONFIG_PROVE_LOCKING enabled we do see the below trace for the
-> passing case:
-> 
->  BUG: MAX_LOCKDEP_CHAIN_HLOCKS too low!
->  turning off the locking correctness validator.
->  CPU: 1 PID: 2959 Comm: kworker/u34:5 Not tainted 6.10.0-rc7+ #12
->  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 2024.11-5 01/28/2025
->  Workqueue: btrfs-endio-write btrfs_work_helper [btrfs]
->  Call Trace:
->   <TASK>
->   dump_stack_lvl+0x68/0x90
->   __lock_acquire.cold+0x186/0x1b1
->   lock_acquire+0xd6/0x2e0
->   ? btrfs_get_alloc_profile+0x27/0x90 [btrfs]
->   seqcount_lockdep_reader_access+0x70/0x90 [btrfs]
->   ? btrfs_get_alloc_profile+0x27/0x90 [btrfs]
->   btrfs_get_alloc_profile+0x27/0x90 [btrfs]
->   btrfs_reserve_extent+0xa9/0x290 [btrfs]
->   btrfs_alloc_tree_block+0xa5/0x520 [btrfs]
->   ? lockdep_unlock+0x5e/0xd0
->   ? __lock_acquire+0xc6f/0x1fa0
->   btrfs_force_cow_block+0x111/0x5f0 [btrfs]
->   btrfs_cow_block+0xcc/0x2d0 [btrfs]
->   btrfs_search_slot+0x502/0xd00 [btrfs]
->   ? stack_depot_save_flags+0x24/0x8a0
->   btrfs_lookup_file_extent+0x48/0x70 [btrfs]
->   btrfs_drop_extents+0x108/0xce0 [btrfs]
->   ? _raw_spin_unlock_irqrestore+0x35/0x60
->   ? __create_object+0x5e/0x90
->   ? rcu_is_watching+0xd/0x40
->   ? kmem_cache_alloc_noprof+0x280/0x320
->   insert_reserved_file_extent+0xea/0x3a0 [btrfs]
->   ? btrfs_init_block_rsv+0x51/0x60 [btrfs]
->   btrfs_finish_one_ordered+0x3ea/0x840 [btrfs]
->   btrfs_work_helper+0x103/0x4b0 [btrfs]
->   ? lock_release+0x177/0x2e0
->   process_one_work+0x21a/0x590
->   ? lock_is_held_type+0xd5/0x130
->   worker_thread+0x1bf/0x3c0
->   ? __pfx_worker_thread+0x10/0x10
->   kthread+0xdd/0x110
->   ? __pfx_kthread+0x10/0x10
->   ret_from_fork+0x2d/0x50
->   ? __pfx_kthread+0x10/0x10
->   ret_from_fork_asm+0x1a/0x30
->   </TASK>
->  Started fstests-check.scope - [systemd-run] /usr/bin/bash -c "exit 77".
->  fstests-check.scope: Deactivated successfully.
-> 
-> Signed-off-by: Swarna Prabhu <s.prabhu@samsung.com>
 
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Hi Sir,
+I hope you're doing well!
 
-  Luis
+At HVLLC Online, we specialize in building modern, professional websites 
+tailored to your business needs. Our websites are designed with the 
+latest Artificial Intelligence tools and features, ensuring your site 
+stands out.
+For a one-time payment starting at just $399, you’ll receive a custom 
+website with:
+
+Key Features:
+•	Premium Theme and Paid Plugins for enhanced functionality
+•	CRM Integration to generate leads and nurture clients
+•	Multiple Pages for showcasing your products/services
+•	Unlimited revisions to ensure your website is exactly as you want
+•	SEO-Optimized content for maximum visibility
+•	Dynamic media, including HD videos and interactive elements
+•	Call-to-Action buttons for easy customer engagement (calls, emails, 
+texts)
+•	Contact Us Form to collect client details for your records
+•	Integrated Map section to help clients easily find your location
+•	Free maintenance and upgrades for ongoing support
+•	Tutorial Guide so you can make simple updates on your own
+
+Once we start building your site, we’ll initially host it on a 
+subdomain. Once you finalize your preferred domain name, we'll easily 
+transfer the site files to your domain. This process is seamless and 
+quick.
+________________________________________
+Check out some of our past work:
+•	The Perna Team
+•	5 Starr Enterprise
+•	Elegran
+•	HL Residential
+•	Barnes New York
+________________________________________
+If you have any questions or would like to discuss your website project 
+further, feel free to reach out to me directly. I look forward to 
+helping you build a website that will impress your clients and drive 
+results!
+
+Best regards,
+Adrian Abraham
+HVLLC Online
+Website: www.hvllc.online
+Phone: 727-241-5685 | 304-362-5982
+
