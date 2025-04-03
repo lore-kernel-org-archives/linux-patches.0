@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33775250C1F;
-	Thu,  3 Apr 2025 15:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E44D250BE5;
+	Thu,  3 Apr 2025 15:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693878; cv=none; b=MVFmziS1/4rpXXI5tonaiTx8THvipylRoW/d9vC5eL0k5LbxTCYXS36IKkKGDa7GIG+FO/BZ5Qs2Jq/v0xsr7xQriNijmGaF4nFI8URCCAMX1BfewoeFI9b01nreBkmuABEEqnBPg1TUsfGAKPnONZIK7XetDECYwiFGvBscmsY=
+	t=1743693880; cv=none; b=p44GwMMEqte58Yk/tgf8g27OQHBguKp2yGD8ddFaqVGJHDlai0DXxm8shIRBTL2Q7+lqb4KcqShcAOsKyAiOxX/EkldbTimXgWZKq2vnoo6QFCwXMGv1q4fSBBNb0ulqc4qnyHqF0DiTx4ysvlvz5CqWU41yVDyzFWZfwIQd7fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693878; c=relaxed/simple;
-	bh=ep0idLE7v0+2Y6ipm+jxfW2Zs9baywQ3RJAMg6FXVxk=;
+	s=arc-20240116; t=1743693880; c=relaxed/simple;
+	bh=c14/04c+cxcXLzk8ROZlLCs9YTD/6ZDGSwl73dKb9Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqNYiRo5F0k/hVb9bEYLQ76CbKJLu6ambKJWr+cJ7ukFT6brhBwjRRw+Kpk26nBTtQyy+fRs40KZEB1+uLJjOTaSp+K2LitAke7e46oaVVCklPbeMyzPvXgLZtlD6F0uoBZ6HN8emgyBGHf99attPDxkTrWh6d75KniAT9YEhlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEi2jWjb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYTAoP+YP6xdeE5RNBwVbvbW9rqq1wMzE1rcaHW+JXJMmRdYuvEyFB0ZJ4qf8o26guh61NWTqUjs+XAp7EXIm3c+ye5IkrJ/wdKg9Jw5OCD899Le9mqssWZP5YQdgiuOlNj+oZ+qgDi5CKkfh5T9MztdhuL1QHURQkiCnQCtPEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CA+uhDxh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEi2jWjb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CDEC4CEE3;
-	Thu,  3 Apr 2025 15:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CA+uhDxh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05790C4CEE3;
+	Thu,  3 Apr 2025 15:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693877;
-	bh=ep0idLE7v0+2Y6ipm+jxfW2Zs9baywQ3RJAMg6FXVxk=;
+	s=korg; t=1743693880;
+	bh=c14/04c+cxcXLzk8ROZlLCs9YTD/6ZDGSwl73dKb9Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OEi2jWjbhaA8USs0flRxQ2a/v3ehOnGgJAPK6ukq+Qj058pn+GIosuim+nCrzuZmf
-	 SgmQTCEvseNtoBMR0T/vZsaT2enMdNNlaKaTmQgdpDAnxKgN8uYiXqbxwrCjrW1+rc
-	 8gVG2x5yr4d1fdiWyTi80bXPTgnjJuR4NAbGd3A4=
+	b=CA+uhDxhA8R+3kKoF4xJ7nC89S6Oh+CpYxEFcE5mklXzP1Jc0UP+HS74q1bdUq3v0
+	 pfmz2ZLOXFVLshE+Vlt/J8Lb/1RvI3zoBFUbZCsKaGndoZrMpLuGCNdm1BHkFlxXYY
+	 f1hLJZg0kwSsszAq2dTcVgHLhcd0jGXprVu0WkrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.12 17/22] usb: xhci: Apply the link chain quirk on NEC isoc endpoints
-Date: Thu,  3 Apr 2025 16:20:27 +0100
-Message-ID: <20250403151622.535877208@linuxfoundation.org>
+	Luo Qiu <luoqiu@kylinsec.com.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 18/22] memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove
+Date: Thu,  3 Apr 2025 16:20:28 +0100
+Message-ID: <20250403151622.565037389@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.055059925@linuxfoundation.org>
 References: <20250403151622.055059925@linuxfoundation.org>
@@ -50,110 +50,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Luo Qiu <luoqiu@kylinsec.com.cn>
 
-commit bb0ba4cb1065e87f9cc75db1fa454e56d0894d01 upstream.
+commit 4676741a3464b300b486e70585c3c9b692be1632 upstream.
 
-Two clearly different specimens of NEC uPD720200 (one with start/stop
-bug, one without) were seen to cause IOMMU faults after some Missed
-Service Errors. Faulting address is immediately after a transfer ring
-segment and patched dynamic debug messages revealed that the MSE was
-received when waiting for a TD near the end of that segment:
+This fixes the following crash:
 
-[ 1.041954] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ffa08fe0
-[ 1.042120] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09000 flags=0x0000]
-[ 1.042146] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09040 flags=0x0000]
+==================================================================
+BUG: KASAN: slab-use-after-free in rtsx_usb_ms_poll_card+0x159/0x200 [rtsx_usb_ms]
+Read of size 8 at addr ffff888136335380 by task kworker/6:0/140241
 
-It gets even funnier if the next page is a ring segment accessible to
-the HC. Below, it reports MSE in segment at ff1e8000, plows through a
-zero-filled page at ff1e9000 and starts reporting events for TRBs in
-page at ff1ea000 every microframe, instead of jumping to seg ff1e6000.
+CPU: 6 UID: 0 PID: 140241 Comm: kworker/6:0 Kdump: loaded Tainted: G            E      6.14.0-rc6+ #1
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: LENOVO 30FNA1V7CW/1057, BIOS S0EKT54A 07/01/2024
+Workqueue: events rtsx_usb_ms_poll_card [rtsx_usb_ms]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x51/0x70
+ print_address_description.constprop.0+0x27/0x320
+ ? rtsx_usb_ms_poll_card+0x159/0x200 [rtsx_usb_ms]
+ print_report+0x3e/0x70
+ kasan_report+0xab/0xe0
+ ? rtsx_usb_ms_poll_card+0x159/0x200 [rtsx_usb_ms]
+ rtsx_usb_ms_poll_card+0x159/0x200 [rtsx_usb_ms]
+ ? __pfx_rtsx_usb_ms_poll_card+0x10/0x10 [rtsx_usb_ms]
+ ? __pfx___schedule+0x10/0x10
+ ? kick_pool+0x3b/0x270
+ process_one_work+0x357/0x660
+ worker_thread+0x390/0x4c0
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x190/0x1d0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2d/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-[ 7.041671] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.041999] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.042011] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042028] xhci_hcd: All TDs skipped for slot 1 ep 2. Clear skip flag.
-[ 7.042134] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042138] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042144] xhci_hcd: Looking for event-dma 00000000ff1ea040 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.042259] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042262] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042266] xhci_hcd: Looking for event-dma 00000000ff1ea050 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
+Allocated by task 161446:
+ kasan_save_stack+0x20/0x40
+ kasan_save_track+0x10/0x30
+ __kasan_kmalloc+0x7b/0x90
+ __kmalloc_noprof+0x1a7/0x470
+ memstick_alloc_host+0x1f/0xe0 [memstick]
+ rtsx_usb_ms_drv_probe+0x47/0x320 [rtsx_usb_ms]
+ platform_probe+0x60/0xe0
+ call_driver_probe+0x35/0x120
+ really_probe+0x123/0x410
+ __driver_probe_device+0xc7/0x1e0
+ driver_probe_device+0x49/0xf0
+ __device_attach_driver+0xc6/0x160
+ bus_for_each_drv+0xe4/0x160
+ __device_attach+0x13a/0x2b0
+ bus_probe_device+0xbd/0xd0
+ device_add+0x4a5/0x760
+ platform_device_add+0x189/0x370
+ mfd_add_device+0x587/0x5e0
+ mfd_add_devices+0xb1/0x130
+ rtsx_usb_probe+0x28e/0x2e0 [rtsx_usb]
+ usb_probe_interface+0x15c/0x460
+ call_driver_probe+0x35/0x120
+ really_probe+0x123/0x410
+ __driver_probe_device+0xc7/0x1e0
+ driver_probe_device+0x49/0xf0
+ __device_attach_driver+0xc6/0x160
+ bus_for_each_drv+0xe4/0x160
+ __device_attach+0x13a/0x2b0
+ rebind_marked_interfaces.isra.0+0xcc/0x110
+ usb_reset_device+0x352/0x410
+ usbdev_do_ioctl+0xe5c/0x1860
+ usbdev_ioctl+0xa/0x20
+ __x64_sys_ioctl+0xc5/0xf0
+ do_syscall_64+0x59/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-At some point completion events change from Isoch Buffer Overrun to
-Short Packet and the HC finally finds cycle bit mismatch in ff1ec000.
+Freed by task 161506:
+ kasan_save_stack+0x20/0x40
+ kasan_save_track+0x10/0x30
+ kasan_save_free_info+0x36/0x60
+ __kasan_slab_free+0x34/0x50
+ kfree+0x1fd/0x3b0
+ device_release+0x56/0xf0
+ kobject_cleanup+0x73/0x1c0
+ rtsx_usb_ms_drv_remove+0x13d/0x220 [rtsx_usb_ms]
+ platform_remove+0x2f/0x50
+ device_release_driver_internal+0x24b/0x2e0
+ bus_remove_device+0x124/0x1d0
+ device_del+0x239/0x530
+ platform_device_del.part.0+0x19/0xe0
+ platform_device_unregister+0x1c/0x40
+ mfd_remove_devices_fn+0x167/0x170
+ device_for_each_child_reverse+0xc9/0x130
+ mfd_remove_devices+0x6e/0xa0
+ rtsx_usb_disconnect+0x2e/0xd0 [rtsx_usb]
+ usb_unbind_interface+0xf3/0x3f0
+ device_release_driver_internal+0x24b/0x2e0
+ proc_disconnect_claim+0x13d/0x220
+ usbdev_do_ioctl+0xb5e/0x1860
+ usbdev_ioctl+0xa/0x20
+ __x64_sys_ioctl+0xc5/0xf0
+ do_syscall_64+0x59/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-[ 7.098130] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098132] xhci_hcd: Looking for event-dma 00000000ff1ecc50 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098254] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098256] xhci_hcd: Looking for event-dma 00000000ff1ecc60 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098379] xhci_hcd: Overrun event on slot 1 ep 2
+Last potentially related work creation:
+ kasan_save_stack+0x20/0x40
+ kasan_record_aux_stack+0x85/0x90
+ insert_work+0x29/0x100
+ __queue_work+0x34a/0x540
+ call_timer_fn+0x2a/0x160
+ expire_timers+0x5f/0x1f0
+ __run_timer_base.part.0+0x1b6/0x1e0
+ run_timer_softirq+0x8b/0xe0
+ handle_softirqs+0xf9/0x360
+ __irq_exit_rcu+0x114/0x130
+ sysvec_apic_timer_interrupt+0x72/0x90
+ asm_sysvec_apic_timer_interrupt+0x16/0x20
 
-It's possible that data from the isochronous device were written to
-random buffers of pending TDs on other endpoints (either IN or OUT),
-other devices or even other HCs in the same IOMMU domain.
+Second to last potentially related work creation:
+ kasan_save_stack+0x20/0x40
+ kasan_record_aux_stack+0x85/0x90
+ insert_work+0x29/0x100
+ __queue_work+0x34a/0x540
+ call_timer_fn+0x2a/0x160
+ expire_timers+0x5f/0x1f0
+ __run_timer_base.part.0+0x1b6/0x1e0
+ run_timer_softirq+0x8b/0xe0
+ handle_softirqs+0xf9/0x360
+ __irq_exit_rcu+0x114/0x130
+ sysvec_apic_timer_interrupt+0x72/0x90
+ asm_sysvec_apic_timer_interrupt+0x16/0x20
 
-Lastly, an error from a different USB device on another HC. Was it
-caused by the above? I don't know, but it may have been. The disk
-was working without any other issues and generated PCIe traffic to
-starve the NEC of upstream BW and trigger those MSEs. The two HCs
-shared one x1 slot by means of a commercial "PCIe splitter" board.
+The buggy address belongs to the object at ffff888136335000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 896 bytes inside of
+ freed 2048-byte region [ffff888136335000, ffff888136335800)
 
-[ 7.162604] usb 10-2: reset SuperSpeed USB device number 3 using xhci_hcd
-[ 7.178990] sd 9:0:0:0: [sdb] tag#0 UNKNOWN(0x2003) Result: hostbyte=0x07 driverbyte=DRIVER_OK cmd_age=0s
-[ 7.179001] sd 9:0:0:0: [sdb] tag#0 CDB: opcode=0x28 28 00 04 02 ae 00 00 02 00 00
-[ 7.179004] I/O error, dev sdb, sector 67284480 op 0x0:(READ) flags 0x80700 phys_seg 5 prio class 0
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x136330
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x17ffffc0000040(head|node=0|zone=2|lastcpupid=0x1fffff)
+page_type: f5(slab)
+raw: 0017ffffc0000040 ffff888100042f00 ffffea000417a000 dead000000000002
+raw: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
+head: 0017ffffc0000040 ffff888100042f00 ffffea000417a000 dead000000000002
+head: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
+head: 0017ffffc0000003 ffffea0004d8cc01 ffffffffffffffff 0000000000000000
+head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
 
-Fortunately, it appears that this ridiculous bug is avoided by setting
-the chain bit of Link TRBs on isochronous rings. Other ancient HCs are
-known which also expect the bit to be set and they ignore Link TRBs if
-it's not. Reportedly, 0.95 spec guaranteed that the bit is set.
+Memory state around the buggy address:
+ ffff888136335280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888136335300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888136335380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                   ^
+ ffff888136335400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888136335480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
 
-The bandwidth-starved NEC HC running a 32KB/uframe UVC endpoint reports
-tens of MSEs per second and runs into the bug within seconds. Chaining
-Link TRBs allows the same workload to run for many minutes, many times.
-
-No negative side effects seen in UVC recording and UAC playback with a
-few devices at full speed, high speed and SuperSpeed.
-
-The problem doesn't reproduce on the newer Renesas uPD720201/uPD720202
-and on old Etron EJ168 and VIA VL805 (but the VL805 has other bug).
-
-[shorten line length of log snippets in commit messge -Mathias]
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Fixes: 6827ca573c03 ("memstick: rtsx_usb_ms: Support runtime power management")
+Signed-off-by: Luo Qiu <luoqiu@kylinsec.com.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250306144954.3507700-14-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/4B7BC3E6E291E6F2+20250317101438.25650-1-luoqiu@kylinsec.com.cn
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/memstick/host/rtsx_usb_ms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1748,11 +1748,20 @@ static inline void xhci_write_64(struct
- }
+--- a/drivers/memstick/host/rtsx_usb_ms.c
++++ b/drivers/memstick/host/rtsx_usb_ms.c
+@@ -813,6 +813,7 @@ static void rtsx_usb_ms_drv_remove(struc
  
+ 	host->eject = true;
+ 	cancel_work_sync(&host->handle_req);
++	cancel_delayed_work_sync(&host->poll_card);
  
--/* Link TRB chain should always be set on 0.95 hosts, and AMD 0.96 ISOC rings */
-+/*
-+ * Reportedly, some chapters of v0.95 spec said that Link TRB always has its chain bit set.
-+ * Other chapters and later specs say that it should only be set if the link is inside a TD
-+ * which continues from the end of one segment to the next segment.
-+ *
-+ * Some 0.95 hardware was found to misbehave if any link TRB doesn't have the chain bit set.
-+ *
-+ * 0.96 hardware from AMD and NEC was found to ignore unchained isochronous link TRBs when
-+ * "resynchronizing the pipe" after a Missed Service Error.
-+ */
- static inline bool xhci_link_chain_quirk(struct xhci_hcd *xhci, enum xhci_ring_type type)
- {
- 	return (xhci->quirks & XHCI_LINK_TRB_QUIRK) ||
--	       (type == TYPE_ISOC && (xhci->quirks & XHCI_AMD_0x96_HOST));
-+	       (type == TYPE_ISOC && (xhci->quirks & (XHCI_AMD_0x96_HOST | XHCI_NEC_HOST)));
- }
- 
- /* xHCI debugging */
+ 	mutex_lock(&host->host_mutex);
+ 	if (host->req) {
 
 
