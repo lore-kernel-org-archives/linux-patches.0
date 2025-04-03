@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E55324EF7A;
-	Thu,  3 Apr 2025 15:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16EB2505C1;
+	Thu,  3 Apr 2025 15:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693987; cv=none; b=fpAmT7H9LbehmwmiSiua1TV/dplZP/iBX/Ka1908LW/HHhdcabNqiuQRDKcvwfqBr/cDVZLwvYkcrah/X1B5aTJrWAJcTxKqJquFUBfLV/QH3kDKPFi4t83UC/ht7wgkziUR9bJBCZ8RshY9O1ZbB03Lz63gLmxDEr1m2O1pBaQ=
+	t=1743693990; cv=none; b=bKMtkbhsfTJ1+ioTKRTpGrQnAJsMf8nxo8PeS2ymHT3VMwopPdsK16oT35NcqTKimhXBExQuySTAXwBSG/KwPk1ARJaOaGssae7JHRtMx959qXP5oNB9nZjokrrwSHGXpWZWRsuKpUOjIEuroLHE2NxusmYX2GebAQA1hUA0sqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693987; c=relaxed/simple;
-	bh=+AKySAybjKTKnULvz+kRnN1F4+I4w5VQFvxJnG0bnmo=;
+	s=arc-20240116; t=1743693990; c=relaxed/simple;
+	bh=r+3axtWO3E66sB26o5uxpSHDqR2J59CveZjN1PEs0SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7bkeWwiUG+7GrPXb2DPPpUydOGhe1AhAUvLYAgz04KiS9kwQYKkOmZOkJIm+TkEoYsg4L/ypN6hVrEyoxV9/gRgCif1VeefeL6VqweyHHQtRs388JnN3NSC1G3EZkgl/ae6Mxw0bZmic+SwthB4PqxeB4hupWRUMUc+DpXFDCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niW15FU9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNLpRZXUZ/fJjvxtQy1tlcL/qj4uHyzeafhyiKSjWadc/e6rHkY5pXi1AN4XF+DqxnvteHBxFCX4b5MfPOKt9NrFNeVEh/FuHWFDog+wJQIKp8G7GIMZQwmId1iXNe6BziEYy/oR+IflP9kGIbQ7J7AZlD3+yTBbVXkA8ZCCVlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6j+xVHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niW15FU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BACC4CEE3;
-	Thu,  3 Apr 2025 15:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6j+xVHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB5AC4CEE3;
+	Thu,  3 Apr 2025 15:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693987;
-	bh=+AKySAybjKTKnULvz+kRnN1F4+I4w5VQFvxJnG0bnmo=;
+	s=korg; t=1743693989;
+	bh=r+3axtWO3E66sB26o5uxpSHDqR2J59CveZjN1PEs0SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niW15FU9dB0zDqH5BxsUZ5Nn0zRnOs32FPjBTFIzbSKIUpZW21IFzVZhyMUPpzV6F
-	 A+1UKv9qVPXNguiO2QG6cV6eQrMTCiLi2dWqsE8UQE5HGyvc80ezgmNJysr1IykQLf
-	 c2nx1nANiYLxnuEsHcT/c5rT/+YyEH9Lx0x5iVO8=
+	b=n6j+xVHF43uwLgKKEHS6yER8etU0SVe4v1e451IPddiPX0DwZfL4LmiPwOB+Bz1dC
+	 jIakZe1c+aLNCNQU+ColfA//6afOl+7o01uRxl+QSKwRI/YrGezAUjwNpU56t2Z/Vh
+	 qr7h5IvAP1m45qNziPOgYr/AavB/qK+gZByIpf9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruv Deshpande <dhrv.d@proton.me>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 15/26] ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
-Date: Thu,  3 Apr 2025 16:20:36 +0100
-Message-ID: <20250403151622.856571192@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.6 16/26] counter: stm32-lptimer-cnt: fix error handling when enabling
+Date: Thu,  3 Apr 2025 16:20:37 +0100
+Message-ID: <20250403151622.890436415@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.415201055@linuxfoundation.org>
 References: <20250403151622.415201055@linuxfoundation.org>
@@ -50,33 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhruv Deshpande <dhrv.d@proton.me>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 35ef1c79d2e09e9e5a66e28a66fe0df4368b0f3d upstream.
+commit 8744dcd4fc7800de2eb9369410470bb2930d4c14 upstream.
 
-The mute LED on this HP laptop uses ALC236 and requires a quirk to function.
-This patch enables the existing quirk for the device.
+In case the stm32_lptim_set_enable_state() fails to update CMP and ARR,
+a timeout error is raised, by regmap_read_poll_timeout. It may happen,
+when the lptimer runs on a slow clock, and the clock is gated only
+few times during the polling.
 
-Tested on my laptop and the LED behaviour works as intended.
+Badly, when this happen, STM32_LPTIM_ENABLE in CR register has been set.
+So the 'enable' state in sysfs wrongly lies on the counter being
+correctly enabled, due to CR is read as one in stm32_lptim_is_enabled().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Dhruv Deshpande <dhrv.d@proton.me>
-Link: https://patch.msgid.link/20250317085621.45056-1-dhrv.d@proton.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+To fix both issues:
+- enable the clock before writing CMP, ARR and polling ISR bits. It will
+avoid the possible timeout error.
+- clear the ENABLE bit in CR and disable the clock in the error path.
+
+Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20250224170657.3368236-1-fabrice.gasnier@foss.st.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/counter/stm32-lptimer-cnt.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10023,6 +10023,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8811, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x8812, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x881d, "HP 250 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
-+	SND_PCI_QUIRK(0x103c, 0x881e, "HP Laptop 15s-du3xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8846, "HP EliteBook 850 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8847, "HP EliteBook x360 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x884b, "HP EliteBook 840 Aero G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+--- a/drivers/counter/stm32-lptimer-cnt.c
++++ b/drivers/counter/stm32-lptimer-cnt.c
+@@ -58,37 +58,43 @@ static int stm32_lptim_set_enable_state(
+ 		return 0;
+ 	}
+ 
++	ret = clk_enable(priv->clk);
++	if (ret)
++		goto disable_cnt;
++
+ 	/* LP timer must be enabled before writing CMP & ARR */
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ARR, priv->ceiling);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_CMP, 0);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+ 				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ICR,
+ 			   STM32_LPTIM_CMPOKCF_ARROKCF);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+-	ret = clk_enable(priv->clk);
+-	if (ret) {
+-		regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
+-		return ret;
+-	}
+ 	priv->enabled = true;
+ 
+ 	/* Start LP timer in continuous mode */
+ 	return regmap_update_bits(priv->regmap, STM32_LPTIM_CR,
+ 				  STM32_LPTIM_CNTSTRT, STM32_LPTIM_CNTSTRT);
++
++disable_clk:
++	clk_disable(priv->clk);
++disable_cnt:
++	regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
++
++	return ret;
+ }
+ 
+ static int stm32_lptim_setup(struct stm32_lptim_cnt *priv, int enable)
 
 
