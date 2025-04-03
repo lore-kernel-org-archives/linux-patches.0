@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484A02505DE;
-	Thu,  3 Apr 2025 15:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CD024DFE8;
+	Thu,  3 Apr 2025 15:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693834; cv=none; b=vAc+jHC3adNmD7P41P00VYSELilH78dtYDtPWnaBnKblzcbdLdZznZtdSa+vy386BA8Z882/x1nSM79EyHOcXxs6xYdWSmREXtKNPUqg7yLaBYVj4PEd7XyZCsn7Cv2NnvwpCf5E7kSgP2++WT5K48vRx3m7xnNTcRvR5/FRQrc=
+	t=1743693837; cv=none; b=TiOJdpthrsIJDDEhjE5cUdu2pd4OZphpB8LcL43WTmTM/XpteeYG43CEEAkyBglvOROfRUt04Ehq79Y8QHo21vnO7N0drVB40vl/SyGkE3dbsitYdbmRYG9ZWnmZGGE7kyyrPksZZHNPTQ19iWNfaJk8Puzrssob3Ma+3wYMI2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693834; c=relaxed/simple;
-	bh=s9z0lQg4qpsojRWOF/J4v6hXRxlYqZb7R56CnrwXQ+w=;
+	s=arc-20240116; t=1743693837; c=relaxed/simple;
+	bh=JSgC1vWwNoATHuYemnQaXipqO3Tq9GOKfKflIxuLuHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBnv7j8cDtEBvZAtkLQjXy1vebq7J1uRac3ImQLnLOw7hBOqqPRrWBwhWk2wcbBJNWH1/rKsiy5M8697FT5q4tdv9j+U85jB98QRBiCnC5QMgJAuX1F6m+si95+1gFRr1K3nZVwpJOCKD8CYXDWYm0NBUVyRlamAA1NG1YLg6+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0H+J1IEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJHmkwVdia5aYt0DvvG9l2MWjGXJzKFH+f6SSmNpJeR7/Dm2PxpWIr6eDbGibAK92OFqF6FxgzKabt2kpzYBDmQuhRq9tWGyjRRXzVX3//ZP7FPZDMszuKndGdEZSEKL73KwfA6JOh8qhIl8nBj/97UtgN2JyYo3TQCnarz4qPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwJUeOLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0H+J1IEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4524C4CEE5;
-	Thu,  3 Apr 2025 15:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwJUeOLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459DCC4CEE3;
+	Thu,  3 Apr 2025 15:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693834;
-	bh=s9z0lQg4qpsojRWOF/J4v6hXRxlYqZb7R56CnrwXQ+w=;
+	s=korg; t=1743693836;
+	bh=JSgC1vWwNoATHuYemnQaXipqO3Tq9GOKfKflIxuLuHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0H+J1IEiZJvBk3662rXwqifhxI0ZU1jXCILIhdOintMV0XFFJXUix7+pUCFLiTzYM
-	 k8/32o+fMWq0BCM4KHZxkimxtoM2OJ5xHbObKalJLJNIE/iXh3y+fVsntDu+K8BrDN
-	 8TEPfQ+jFr24bqC8Rn4aQMcG2caSFaMseZzlGJxA=
+	b=AwJUeOLKFl8bSsrU86ZVr0yoI05dIG8ylaEh9h94QexPOXXLiiGIchIXweNDtgIfx
+	 LnU54yARLBZw8BNqKJwgFUwege4TBKzwz8Xu847EGMEk4WQdyXGvogvtpl28sjahal
+	 R0iL9rTxr9bEQcl2E8TmkCJhhCI9B/B3UzpEaPhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruv Deshpande <dhrv.d@proton.me>,
+	Andres Traumann <andres.traumann.01@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.14 06/21] ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
-Date: Thu,  3 Apr 2025 16:20:10 +0100
-Message-ID: <20250403151621.315455721@linuxfoundation.org>
+Subject: [PATCH 6.14 07/21] ALSA: hda/realtek: Bass speaker fixup for ASUS UM5606KA
+Date: Thu,  3 Apr 2025 16:20:11 +0100
+Message-ID: <20250403151621.348600275@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
 References: <20250403151621.130541515@linuxfoundation.org>
@@ -50,18 +50,23 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhruv Deshpande <dhrv.d@proton.me>
+From: Andres Traumann <andres.traumann.01@gmail.com>
 
-commit 35ef1c79d2e09e9e5a66e28a66fe0df4368b0f3d upstream.
+commit be8cd366beb80c709adbc7688ee72750f5aee3ff upstream.
 
-The mute LED on this HP laptop uses ALC236 and requires a quirk to function.
-This patch enables the existing quirk for the device.
+This patch applies the ALC294 bass speaker fixup (ALC294_FIXUP_BASS_SPEAKER_15),
+previously introduced in commit a7df7f909cec ("ALSA: hda: improve bass
+speaker support for ASUS Zenbook UM5606WA"), to the ASUS Zenbook UM5606KA.
+This hardware configuration matches ASUS Zenbook UM5606WA, where DAC NID
+0x06 was removed from the bass speaker (NID 0x15), routing both speaker
+pins to DAC NID 0x03.
 
-Tested on my laptop and the LED behaviour works as intended.
+This resolves the bass speaker routing issue, ensuring correct audio
+output on ASUS UM5606KA.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Dhruv Deshpande <dhrv.d@proton.me>
-Link: https://patch.msgid.link/20250317085621.45056-1-dhrv.d@proton.me
+Signed-off-by: Andres Traumann <andres.traumann.01@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250325102535.8172-1-andres.traumann.01@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -70,13 +75,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10519,6 +10519,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8811, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x8812, "HP Spectre x360 15-eb1xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x881d, "HP 250 G8 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
-+	SND_PCI_QUIRK(0x103c, 0x881e, "HP Laptop 15s-du3xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8846, "HP EliteBook 850 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8847, "HP EliteBook x360 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x884b, "HP EliteBook 840 Aero G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+@@ -10784,6 +10784,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x1d4e, "ASUS TM420", ALC256_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x1da2, "ASUS UP6502ZA/ZD", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1df3, "ASUS UM5606WA", ALC294_FIXUP_BASS_SPEAKER_15),
++	SND_PCI_QUIRK(0x1043, 0x1264, "ASUS UM5606KA", ALC294_FIXUP_BASS_SPEAKER_15),
+ 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
+ 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
 
 
