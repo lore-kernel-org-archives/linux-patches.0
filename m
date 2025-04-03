@@ -1,122 +1,198 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F216224CEE5;
-	Thu,  3 Apr 2025 15:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6498924E4B2;
+	Thu,  3 Apr 2025 15:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743694034; cv=none; b=lzHlWYpxqWYEDNqoQe7v/r+H12eQ0FsY3njaS16fws+GP1DJKnMUOzUphe2x8ElzICvjaXKPe0MuqgZYBLiEbjLaOPtNOxqUlGpuNQkS68OvuIMDFhmtd85Wf665zQoAkzC3M37CvYtHFU6AJQ/cpGB2tqmrVU6eZkywjOAeQTI=
+	t=1743694036; cv=none; b=XZq/RZfCUZWAh1o/YCrhpGEqCZqTq0F6DITrEfOvUTuLPnZsWfkFEl77MvDBgU/BVXFsXX0QgZHasr5AgL6nB8wVGLeUqFvY33CHNxW/u0N7qLlLjb8YAim0AuqWk1z6O9iZ/iDXNHCvr/hdD6x7dTogCUVGqUR5anZC6ZJ1Tjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743694034; c=relaxed/simple;
-	bh=aPr8c50VZeUZdkJnVrQIPWbHy0y1zrd9XJekLgJSc6Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIy9iPMFEnorT7r9knlDu+rYoLNpnfL6xHZaVeKOGVtJwMS2/agFwbPW10p+PhLdCwxDqrwo28blQUdmObsEezYPBUpvp7H1nd0NUFL3QKgKToqw6W5z01IGnYn00Dg8XCyR4MoHXmiaqxnRMl95iMj+g7m0T5aEssznte/DvCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTIhGQHV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743694036; c=relaxed/simple;
+	bh=ddWj3Z13XW8uzI3RDW2AgxXUlibDcIvQOoriVbRvwhg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MrYcdYeQABkwjorT521P9Dgbzxc2wlNPcqE7XaPcYR5BnUN+ovCbPhuOFW4y8Zsv1n3q051kRJ6EX98HSc0yHLVDgg+5+HcNJbD1U6EWVrlNN2HNDQQ5wulEivmfu3QcrftxyoZT8+PuJVxg/7up83VyvrgyqBNCRQIj4aePeKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5KZNVVR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTIhGQHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F0DC4CEE3;
-	Thu,  3 Apr 2025 15:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5KZNVVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA23EC4CEE5;
+	Thu,  3 Apr 2025 15:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743694033;
-	bh=aPr8c50VZeUZdkJnVrQIPWbHy0y1zrd9XJekLgJSc6Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTIhGQHVx5k/ktfvaFDprdzlYlQDQ7DjjIKqn4M3xOYTdhzXqNZlvyRlLX66iWHUe
-	 BDJmmvmnurpehNnssVR2fwnksLFxzvbJhGJPWahn9MElORtidwcEx4kG01s2SXlkWV
-	 S2FUD8xXagTEPxQ7SxPgF5S5n1jmkejy3U4iXRaA=
+	s=korg; t=1743694036;
+	bh=ddWj3Z13XW8uzI3RDW2AgxXUlibDcIvQOoriVbRvwhg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=y5KZNVVRybc5Y/mlrSMuLsLkN6Q5BqtxDbqToeoqB263DDxbqONdsnahMJCin3x2z
+	 w65RE92CAn5pYnNT31ccGNrISWJhzm6/T6hs+svw9Z+osGoBgHxoBOujhzu5xDVZAN
+	 KBO+hmWNHBDpQR87iDSf/loxHZzO+Wu9SfZiaTFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	dri-devel@lists.freedesktop.org,
-	Imre Deak <imre.deak@intel.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.6 09/26] drm/dp_mst: Add a helper to queue a topology probe
-Date: Thu,  3 Apr 2025 16:20:30 +0100
-Message-ID: <20250403151622.684402831@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org
+Subject: [PATCH 6.6 00/26] 6.6.86-rc1 review
+Date: Thu,  3 Apr 2025 16:20:21 +0100
+Message-ID: <20250403151622.415201055@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250403151622.415201055@linuxfoundation.org>
-References: <20250403151622.415201055@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.86-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.6.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.6.86-rc1
+X-KernelTest-Deadline: 2025-04-05T15:16+00:00
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.6.86 release.
+There are 26 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
+Anything received after that time might be too late.
 
-From: Imre Deak <imre.deak@intel.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.86-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+and the diffstat can be found below.
 
-commit dbaeef363ea54f4c18112874b77503c72ba60fec upstream.
+thanks,
 
-A follow up i915 patch will need to reprobe the MST topology after the
-initial probing, add a helper for this.
+greg k-h
 
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240722165503.2084999-3-imre.deak@intel.com
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/gpu/drm/display/drm_dp_mst_topology.c |   27 ++++++++++++++++++++++++++
- include/drm/display/drm_dp_mst_helper.h       |    2 +
- 2 files changed, 29 insertions(+)
+-------------
+Pseudo-Shortlog of commits:
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -3686,6 +3686,33 @@ drm_dp_mst_topology_mgr_invalidate_mstb(
- }
- 
- /**
-+ * drm_dp_mst_topology_queue_probe - Queue a topology probe
-+ * @mgr: manager to probe
-+ *
-+ * Queue a work to probe the MST topology. Driver's should call this only to
-+ * sync the topology's HW->SW state after the MST link's parameters have
-+ * changed in a way the state could've become out-of-sync. This is the case
-+ * for instance when the link rate between the source and first downstream
-+ * branch device has switched between UHBR and non-UHBR rates. Except of those
-+ * cases - for instance when a sink gets plugged/unplugged to a port - the SW
-+ * state will get updated automatically via MST UP message notifications.
-+ */
-+void drm_dp_mst_topology_queue_probe(struct drm_dp_mst_topology_mgr *mgr)
-+{
-+	mutex_lock(&mgr->lock);
-+
-+	if (drm_WARN_ON(mgr->dev, !mgr->mst_state || !mgr->mst_primary))
-+		goto out_unlock;
-+
-+	drm_dp_mst_topology_mgr_invalidate_mstb(mgr->mst_primary);
-+	drm_dp_mst_queue_probe_work(mgr);
-+
-+out_unlock:
-+	mutex_unlock(&mgr->lock);
-+}
-+EXPORT_SYMBOL(drm_dp_mst_topology_queue_probe);
-+
-+/**
-  * drm_dp_mst_topology_mgr_suspend() - suspend the MST manager
-  * @mgr: manager to suspend
-  *
---- a/include/drm/display/drm_dp_mst_helper.h
-+++ b/include/drm/display/drm_dp_mst_helper.h
-@@ -859,6 +859,8 @@ int drm_dp_check_act_status(struct drm_d
- void drm_dp_mst_dump_topology(struct seq_file *m,
- 			      struct drm_dp_mst_topology_mgr *mgr);
- 
-+void drm_dp_mst_topology_queue_probe(struct drm_dp_mst_topology_mgr *mgr);
-+
- void drm_dp_mst_topology_mgr_suspend(struct drm_dp_mst_topology_mgr *mgr);
- int __must_check
- drm_dp_mst_topology_mgr_resume(struct drm_dp_mst_topology_mgr *mgr,
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.6.86-rc1
+
+Abhishek Tamboli <abhishektamboli9@gmail.com>
+    usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
+
+John Keeping <jkeeping@inmusicbrands.com>
+    serial: 8250_dma: terminate correct DMA in tx_dma_flush()
+
+Luo Qiu <luoqiu@kylinsec.com.cn>
+    memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove
+
+Dominique Martinet <dominique.martinet@atmark-techno.com>
+    net: usb: usbnet: restore usb%d name exception for local mac addresses
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    net: usb: qmi_wwan: add Telit Cinterion FE990B composition
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    net: usb: qmi_wwan: add Telit Cinterion FN990B composition
+
+Sherry Sun <sherry.sun@nxp.com>
+    tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
+
+Cameron Williams <cang1@live.co.uk>
+    tty: serial: 8250: Add Brainboxes XC devices
+
+Cameron Williams <cang1@live.co.uk>
+    tty: serial: 8250: Add some more device IDs
+
+William Breathitt Gray <wbg@kernel.org>
+    counter: microchip-tcb-capture: Fix undefined counter channel state on probe
+
+Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+    counter: stm32-lptimer-cnt: fix error handling when enabling
+
+Dhruv Deshpande <dhrv.d@proton.me>
+    ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
+
+Maxim Mikityanskiy <maxtram95@gmail.com>
+    netfilter: socket: Lookup orig tuple for IPv6 SNAT
+
+Manivannan Sadhasivam <mani@kernel.org>
+    scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
+
+Changhuang Liang <changhuang.liang@starfivetech.com>
+    reset: starfive: jh71x0: Fix accessing the empty member on JH7110 SoC
+
+Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+    mm/page_alloc: fix memory accept before watermarks gets initialized
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Don't write DP_MSTM_CTRL after LT
+
+Imre Deak <imre.deak@intel.com>
+    drm/dp_mst: Add a helper to queue a topology probe
+
+Imre Deak <imre.deak@intel.com>
+    drm/dp_mst: Factor out function to queue a topology probe work
+
+Alex Hung <alex.hung@amd.com>
+    drm/amd/display: Check denominator crb_pipes before used
+
+Yanjun Yang <yangyj.ee@gmail.com>
+    ARM: Remove address checking for MMUless devices
+
+Kees Cook <keescook@chromium.org>
+    ARM: 9351/1: fault: Add "cut here" line for prefetch aborts
+
+Kees Cook <keescook@chromium.org>
+    ARM: 9350/1: fault: Implement copy_from_kernel_nofault_allowed()
+
+Minjoong Kim <pwn9uin@gmail.com>
+    atm: Fix NULL pointer dereference
+
+Terry Junge <linuxhid@cosmicgizmosystems.com>
+    HID: hid-plantronics: Add mic mute mapping and generalize quirks
+
+Terry Junge <linuxhid@cosmicgizmosystems.com>
+    ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/arm/mm/fault.c                                |   8 ++
+ drivers/counter/microchip-tcb-capture.c            |  19 +++
+ drivers/counter/stm32-lptimer-cnt.c                |  24 ++--
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  16 +--
+ .../drm/amd/display/dc/dcn315/dcn315_resource.c    |   2 +-
+ drivers/gpu/drm/display/drm_dp_mst_topology.c      |  36 +++++-
+ drivers/hid/hid-plantronics.c                      | 144 ++++++++++-----------
+ drivers/memstick/host/rtsx_usb_ms.c                |   1 +
+ drivers/net/usb/qmi_wwan.c                         |   2 +
+ drivers/net/usb/usbnet.c                           |  21 ++-
+ drivers/reset/starfive/reset-starfive-jh71x0.c     |   3 +
+ drivers/tty/serial/8250/8250_dma.c                 |   2 +-
+ drivers/tty/serial/8250/8250_pci.c                 |  46 +++++++
+ drivers/tty/serial/fsl_lpuart.c                    |  17 +++
+ drivers/ufs/host/ufs-qcom.c                        |   4 +-
+ drivers/usb/gadget/function/uvc_v4l2.c             |  12 +-
+ include/drm/display/drm_dp_mst_helper.h            |   2 +
+ mm/page_alloc.c                                    |  14 +-
+ net/atm/mpc.c                                      |   2 +
+ net/ipv6/netfilter/nf_socket_ipv6.c                |  23 ++++
+ sound/pci/hda/patch_realtek.c                      |   1 +
+ sound/usb/mixer_quirks.c                           |  51 ++++++++
+ 23 files changed, 340 insertions(+), 114 deletions(-)
 
 
