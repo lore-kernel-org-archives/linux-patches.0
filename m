@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEAC250C09;
-	Thu,  3 Apr 2025 15:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE32512EB;
+	Thu,  3 Apr 2025 15:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693776; cv=none; b=cXy/sKMcLHtl3tZwbr3yPQt4dX+HdD0JlCw9Epo+Y9z8BSO3tL4LvZnER9T9rWTDiU1wipyCUobWQDZTBWLRbmEbiIpDP2huYs9exu23jgY22nXNxIq/soTYzjCHs72wVE9KTsfwG3fYcEc0gqLdqXFk/FvwhchSgbaDmURL3R0=
+	t=1743693777; cv=none; b=H3M/a5ljeHjSmT+XFDi68va7ue5IVC2tO7889zO9n/E+2X+3VL6KSkJPC0II1ZxmG7weS8sHEexkxn++rVC1832pr+Y9IALKU4qfrHgcj80Rw7egV5SJemorE4aZjBWIX2xxzaoc9EoKerYbYh/6ehTjqq25dUhtW96RuVA+VI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693776; c=relaxed/simple;
-	bh=HqzhFAgOmxuVIW7KuqSlvkzi/kFxYvVUYxwF74zN3SY=;
+	s=arc-20240116; t=1743693777; c=relaxed/simple;
+	bh=cYmscPfGjl4WNWzynbyM7ygS8pIhhYBnuNAhbzvDLr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjHfA5F87sKNAlK3vhPUkpcQEKUrqm76jvW+bVI9cyZ30pVQDgoT4j7Bhr/BnYqdTD0c9phr9/ZZIiy5e7flwLsr0ynV5d85mkKCJ15L17zZw5oAk+oqIhPF8B9GK9hKYGuvfle8Ab+rNgAvCSaV/dh+hbz6GNiBMQUte9poHVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skXitZ8X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GDFXy8FT49dg9PEixHAch9uBrRxgTxyR5A9bKlmPGA3/kiuSlF6osA2BR4FVXukpqY2HiVuy8Qh7M3AIIX5DwGoUQ8ZvwNPz/4ITyBPtP7l1t4bQjPhSKzcv/Y6EWdbM71s0ChYOGXKWoXd2OFH1mR9IZFRSGnhO7beXhApa9Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFy0zXDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skXitZ8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AD0C4CEE3;
-	Thu,  3 Apr 2025 15:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFy0zXDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A487BC4CEE7;
+	Thu,  3 Apr 2025 15:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693774;
-	bh=HqzhFAgOmxuVIW7KuqSlvkzi/kFxYvVUYxwF74zN3SY=;
+	s=korg; t=1743693777;
+	bh=cYmscPfGjl4WNWzynbyM7ygS8pIhhYBnuNAhbzvDLr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skXitZ8XG165TWChM/f1wut4kGsoU3/RlJhHKcgszozvLmMiWOXpWLd3QRzLMNuts
-	 RCu4DZE3Cd8NzxIOYlPBi4MP0W5x/vbexOxxQJ+QtkxU5iNJ7WVBnMgO1Udk7OUmPA
-	 DqQE6Igyq9tF+uH68XCueMyBCvnJjY0HGN/itKDQ=
+	b=TFy0zXDxlLZDXZ1i5AVdFGTtpFsL0lT4v0FV0cO85gIbm47AmxEhlAYt7b8w/glVS
+	 oUlDytphRxQgP+rPjgOwIdAf6+WfqoMCW+OuKCGzVbrJrALzAqaRkWaFE3ZI+CBRVj
+	 lxLP/+6xFPdzRfyOGKHNDy529TCVGIfQLNp2WhCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 20/22] usb: typec: ucsi: Fix NULL pointer access
-Date: Thu,  3 Apr 2025 16:20:15 +0100
-Message-ID: <20250403151621.508122640@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Bin Lan <bin.lan.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.1 21/22] media: i2c: et8ek8: Dont strip remove function when driver is builtin
+Date: Thu,  3 Apr 2025 16:20:16 +0100
+Message-ID: <20250403151621.533638623@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151620.960551909@linuxfoundation.org>
 References: <20250403151620.960551909@linuxfoundation.org>
@@ -45,69 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit b13abcb7ddd8d38de769486db5bd917537b32ab1 upstream.
+commit 545b215736c5c4b354e182d99c578a472ac9bfce upstream.
 
-Resources should be released only after all threads that utilize them
-have been destroyed.
-This commit ensures that resources are not released prematurely by waiting
-for the associated workqueue to complete before deallocating them.
+Using __exit for the remove function results in the remove callback
+being discarded with CONFIG_VIDEO_ET8EK8=y. When such a device gets
+unbound (e.g. using sysfs or hotplug), the driver is just removed
+without the cleanup being performed. This results in resource leaks. Fix
+it by compiling in the remove callback unconditionally.
 
-Cc: stable <stable@kernel.org>
-Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250305111739.1489003-2-akuchynski@chromium.org
+This also fixes a W=1 modpost warning:
+
+	WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x10 (section: .data) -> et8ek8_remove (section: .exit.text)
+
+Fixes: c5254e72b8ed ("[media] media: Driver for Toshiba et8ek8 5MP sensor")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/media/i2c/et8ek8/et8ek8_driver.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1313,11 +1313,11 @@ static int ucsi_init(struct ucsi *ucsi)
+--- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
++++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+@@ -1460,7 +1460,7 @@ err_mutex:
+ 	return ret;
+ }
  
- err_unregister:
- 	for (con = connector; con->port; con++) {
-+		if (con->wq)
-+			destroy_workqueue(con->wq);
- 		ucsi_unregister_partner(con);
- 		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
- 		ucsi_unregister_port_psy(con);
--		if (con->wq)
--			destroy_workqueue(con->wq);
- 		typec_unregister_port(con->port);
- 		con->port = NULL;
- 	}
-@@ -1479,10 +1479,6 @@ void ucsi_unregister(struct ucsi *ucsi)
- 
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		cancel_work_sync(&ucsi->connector[i].work);
--		ucsi_unregister_partner(&ucsi->connector[i]);
--		ucsi_unregister_altmodes(&ucsi->connector[i],
--					 UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(&ucsi->connector[i]);
- 
- 		if (ucsi->connector[i].wq) {
- 			struct ucsi_work *uwork;
-@@ -1497,6 +1493,11 @@ void ucsi_unregister(struct ucsi *ucsi)
- 			mutex_unlock(&ucsi->connector[i].lock);
- 			destroy_workqueue(ucsi->connector[i].wq);
- 		}
-+
-+		ucsi_unregister_partner(&ucsi->connector[i]);
-+		ucsi_unregister_altmodes(&ucsi->connector[i],
-+					 UCSI_RECIPIENT_CON);
-+		ucsi_unregister_port_psy(&ucsi->connector[i]);
- 		typec_unregister_port(ucsi->connector[i].port);
- 	}
+-static void __exit et8ek8_remove(struct i2c_client *client)
++static void et8ek8_remove(struct i2c_client *client)
+ {
+ 	struct v4l2_subdev *subdev = i2c_get_clientdata(client);
+ 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
+@@ -1502,7 +1502,7 @@ static struct i2c_driver et8ek8_i2c_driv
+ 		.of_match_table	= et8ek8_of_table,
+ 	},
+ 	.probe_new	= et8ek8_probe,
+-	.remove		= __exit_p(et8ek8_remove),
++	.remove		= et8ek8_remove,
+ 	.id_table	= et8ek8_id_table,
+ };
  
 
 
