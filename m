@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A17824E4B2;
-	Thu,  3 Apr 2025 15:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2CA24EF7A;
+	Thu,  3 Apr 2025 15:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743694004; cv=none; b=TRBLn6wLUAKvNZgVWT2Inwtcz+UAfskzB1w82Yo/uBcYNQCyOs8P3nnBYXw47rHrZpFl+kT/MKgNxQ9s1N1/UKmRrlWIhz8A+mHG1VUb1A/OXbAi9TDdpsWOnLnx7dbwRyvq7KtR30HMBOJu+WlAR2weNVbRuwlEL5xfTdkFWuY=
+	t=1743694007; cv=none; b=NlA0pLHfw2B3u3c/BRlGSiBo/5BcP9hE7SLS1H8LcN23XD0MHvsH3I+RJnDLFzI9FD/FFe/Zbk9dNG/jM8/s/TzZFtqSY6R7zhEoQlKy+uS7BY1ENTfsWm2tMRUcuyqSQvFVgJdyZk9OYYasDWMSJGlhcZ5ku+C3SajvD64CYOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743694004; c=relaxed/simple;
-	bh=K6Ho554O6+V5xjUtM7TO4z846teWYYdKYs6nkvG4qkg=;
+	s=arc-20240116; t=1743694007; c=relaxed/simple;
+	bh=lffsaKNLViMZuhrAC2/2BDzqdA3cRsu68R+HUaoC1Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=If/ZDdMcKjcitv1DhKLJVYAzKZ25u/2FyF/5pshoUMISYOFgLeidR5vqAXM6vtqRKNLLmjTVqiAtje1yjV74WMsvl5MHVpPDJWSLYwTpBLLXOkMbZvvFRo6Ej2S7J1RMTySbEmgGIYL+t/S3x3c2wR+rv9TDNRodGsWXsp0YG6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVsgiOng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbl8GYczCfjOrKX6ZAf9sfI/41keJlIjLEfh830GlcGYwt+aNsHn1eyR/qBlZhISdir317EEzTQN004FOcVFxPRXgyjB/ghlRq9P62cg1r93QW3/iO1UlYjpjZ4kUjJS2IuI1n63inPkdwNajpxwDC0BIjnefsmAlZR+Jjy4cIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lctp7uAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVsgiOng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C8CC4CEE3;
-	Thu,  3 Apr 2025 15:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lctp7uAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97474C4CEE3;
+	Thu,  3 Apr 2025 15:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743694004;
-	bh=K6Ho554O6+V5xjUtM7TO4z846teWYYdKYs6nkvG4qkg=;
+	s=korg; t=1743694006;
+	bh=lffsaKNLViMZuhrAC2/2BDzqdA3cRsu68R+HUaoC1Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVsgiOngWDij5cvsFTcsQS8BYHPlWXOVAX2T7GnwqvVZFlx4g0oD1Q+sXciv4Cs54
-	 yc3sZFp3nMAPE7qeLb+0eJ5ZZXFYRZwkW59Tz9NHIuDVbu9lbV8W9CqKzKMj3aR7YS
-	 uOu885yLY+z1jR7CXKxkPOSvvaLC7wWpNlLP/NQI=
+	b=lctp7uAErTkTg7+vcPVRlaeb7b3ZLp0XgrSJbD3w+3pycxVvchS06a/69bUn/YElu
+	 CNJNw2O4J3bdCojfz1P5IywzSsX9WnZjYQt8H8QLEPJ9chWPQx2cRNE3PGpIJugOd0
+	 9eL5LATa3TwxtuqdohD43rxY4NQVetZKnXFZ8apY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fabio Porcedda <fabio.porcedda@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 21/26] net: usb: qmi_wwan: add Telit Cinterion FN990B composition
-Date: Thu,  3 Apr 2025 16:20:42 +0100
-Message-ID: <20250403151623.031523732@linuxfoundation.org>
+Subject: [PATCH 6.6 22/26] net: usb: qmi_wwan: add Telit Cinterion FE990B composition
+Date: Thu,  3 Apr 2025 16:20:43 +0100
+Message-ID: <20250403151623.058970027@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.415201055@linuxfoundation.org>
 References: <20250403151622.415201055@linuxfoundation.org>
@@ -52,18 +52,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 9dba9a45f8ca64a7df32aada14c20a3153af1ac8 upstream.
+commit e8cdd91926aac2c53a23925c538ad4c44be4201f upstream.
 
-Add the following Telit Cinterion FN990B composition:
-
-0x10d0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+Add the following Telit Cinterion FE990B composition:
+0x10b0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
         tty (diag) + DPL + QDSS (Qualcomm Debug SubSystem) + adb
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+
+usb-devices:
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
 D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10d0 Rev=05.15
+P:  Vendor=1bc7 ProdID=10b0 Rev=05.15
 S:  Manufacturer=Telit Cinterion
-S:  Product=FN990
-S:  SerialNumber=43b38f19
+S:  Product=FE990
+S:  SerialNumber=28c2595e
 C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
 I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
 E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
@@ -92,13 +93,13 @@ I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
 E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
 E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
 E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Link: https://patch.msgid.link/20250205171649.618162-3-fabio.porcedda@gmail.com
+Link: https://patch.msgid.link/20250227112441.3653819-2-fabio.porcedda@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -107,13 +108,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/net/usb/qmi_wwan.c
 +++ b/drivers/net/usb/qmi_wwan.c
-@@ -1376,6 +1376,7 @@ static const struct usb_device_id produc
+@@ -1373,6 +1373,7 @@ static const struct usb_device_id produc
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10b0, 0)}, /* Telit FE990B */
  	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
  	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
  	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10d0, 0)}, /* Telit FN990B */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
 
 
