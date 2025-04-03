@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F3C250C09;
-	Thu,  3 Apr 2025 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBBD250C0D;
+	Thu,  3 Apr 2025 15:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693890; cv=none; b=fR/RtwNEFYboLonqI+owO5opmPQUtNGUZSd4cIIJAS40CPFxlmNiwhFVHQzrgk3E76ttzEpX+ILPtNYPGtuMQQCVlXxq62+udzWOR8EKay7pc/0/b7l57mt2IVhYojfSR0IKoM9ttcaPbgINYfG/SZt89x7RdecxYbs+n3ui+O8=
+	t=1743693893; cv=none; b=bwjnCtDwg9hV9wshjnuicNM3bvLh+x5n63qGK1qsuk54Cxw9m617Ivq1PiZ2EzcDRGxv0Cn163F5WlpfYUjgO90AIyWwldM41wIrtvh2zGfaaUUgcpd4SPTIHhr5osQej281PO/Zc4/KwXNaKhkN1XH3mw5CVi35Zkp7Nvpo0mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693890; c=relaxed/simple;
-	bh=7JcZYiEK+0oYqdy2Thoq0SQGD2xBL9Gxd4C6M2YC7xg=;
+	s=arc-20240116; t=1743693893; c=relaxed/simple;
+	bh=fbX0CDd9uqFOBvFZ2DT9QH6z63fI0psyfNtQnD90VPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmVsHV91fN1aTTqgXUMdyCLhd9lDKbJ4AVuM3nRxbsQrbj3Zi5GHpJvjirngox0AM0xruk6vLsTVFGfnL5dTKyR8MRA+fsg0i5WhV7wYx4QqiKWPDgiDbvMm6J/ZbfL2+871v62iyYCYnMIfNUIvNXfx91+ToORoKUcIHqvxUks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdGdlwf7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVvgclD9OFcTPw4Q8y1epuY3bcbl8xYlnXPZOc3MS4amXnlvBkvle8QHFHFh1PBl40uOTZyL/0EM3LcEcdk+dIVhwIwHqlafL3p9AEOFzy/h16OS66z5WX7zExu9EjUL8b28AxQD4bGEjTgQUkgw1zLKW92z7qPVoCStaNOWJXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+kJ8Wae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdGdlwf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44EFC4CEE3;
-	Thu,  3 Apr 2025 15:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+kJ8Wae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25572C4CEE5;
+	Thu,  3 Apr 2025 15:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693890;
-	bh=7JcZYiEK+0oYqdy2Thoq0SQGD2xBL9Gxd4C6M2YC7xg=;
+	s=korg; t=1743693892;
+	bh=fbX0CDd9uqFOBvFZ2DT9QH6z63fI0psyfNtQnD90VPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdGdlwf7Ct7WYfG2ZDWYAuMnE45KdLhaulA8znpIBAnNxWl+Ys3lEMtQwMn8zPnCr
-	 XflScUffp54uDWnpSQjy5aLjoBYJO5UI0XmH16WNGy46AKSdKZzC9JN00bWNlBosR1
-	 urX253ivZJggYuDCDIF6y0mpQNYh4TKaY/8CGcaw=
+	b=g+kJ8WaefRpRi7bEtAOJmps7Y+WnwRCQvVg1AUZS1bVgioqwkw5R9oSlM+WRI2Q1H
+	 YyE4qmUpMbFjnh+pVtapWL3bL6xFNKZ1mg6C4Xw4T5Q1ukduuF5mIPKaOdsCuOE38c
+	 zdg/x/Dx/JgCUYRp3CcMac1jRrf13jKFfEsRCnmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jur van der Burg <jur@avtware.com>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 04/22] nfsd: fix legacy client tracking initialization
-Date: Thu,  3 Apr 2025 16:20:14 +0100
-Message-ID: <20250403151622.170971525@linuxfoundation.org>
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.12 05/22] drm/amd/display: Dont write DP_MSTM_CTRL after LT
+Date: Thu,  3 Apr 2025 16:20:15 +0100
+Message-ID: <20250403151622.197488472@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.055059925@linuxfoundation.org>
 References: <20250403151622.055059925@linuxfoundation.org>
@@ -53,37 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit de71d4e211eddb670b285a0ea477a299601ce1ca upstream.
+commit bc068194f548ef1f230d96c4398046bf59165992 upstream.
 
-Get rid of the nfsd4_legacy_tracking_ops->init() call in
-check_for_legacy_methods().  That will be handled in the caller
-(nfsd4_client_tracking_init()).  Otherwise, we'll wind up calling
-nfsd4_legacy_tracking_ops->init() twice, and the second time we'll
-trigger the BUG_ON() in nfsd4_init_recdir().
+[Why]
+Observe after suspend/resme, we can't light up mst monitors under specific
+mst hub. The reason is that driver still writes DPCD DP_MSTM_CTRL after LT.
+It's forbidden even we write the same value for that dpcd register.
 
-Fixes: 74fd48739d04 ("nfsd: new Kconfig option for legacy client tracking")
-Reported-by: Jur van der Burg <jur@avtware.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219580
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[How]
+We already resume the mst branch device dpcd settings during
+resume_mst_branch_status(). Leverage drm_dp_mst_topology_queue_probe() to
+only probe the topology, not calling drm_dp_mst_topology_mgr_resume() which
+will set DP_MSTM_CTRL as well.
+
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -2052,7 +2052,6 @@ static inline int check_for_legacy_metho
- 		path_put(&path);
- 		if (status)
- 			return -ENOTDIR;
--		status = nn->client_tracking_ops->init(net);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3231,8 +3231,7 @@ static int dm_resume(void *handle)
+ 	struct dm_atomic_state *dm_state = to_dm_atomic_state(dm->atomic_obj.state);
+ 	enum dc_connection_type new_connection_type = dc_connection_none;
+ 	struct dc_state *dc_state;
+-	int i, r, j, ret;
+-	bool need_hotplug = false;
++	int i, r, j;
+ 	struct dc_commit_streams_params commit_params = {};
+ 
+ 	if (dm->dc->caps.ips_support) {
+@@ -3427,23 +3426,16 @@ static int dm_resume(void *handle)
+ 		    aconnector->mst_root)
+ 			continue;
+ 
+-		ret = drm_dp_mst_topology_mgr_resume(&aconnector->mst_mgr, true);
+-
+-		if (ret < 0) {
+-			dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
+-					aconnector->dc_link);
+-			need_hotplug = true;
+-		}
++		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
  	}
- 	return status;
+ 	drm_connector_list_iter_end(&iter);
+ 
+-	if (need_hotplug)
+-		drm_kms_helper_hotplug_event(ddev);
+-
+ 	amdgpu_dm_irq_resume_late(adev);
+ 
+ 	amdgpu_dm_smu_write_watermarks_table(adev);
+ 
++	drm_kms_helper_hotplug_event(ddev);
++
+ 	return 0;
  }
+ 
 
 
