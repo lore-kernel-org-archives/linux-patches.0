@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5652512C0;
-	Thu,  3 Apr 2025 15:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53076250C0B;
+	Thu,  3 Apr 2025 15:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693883; cv=none; b=Gix+omR8IMAN/OgT56gu61OHY/335pvvgfgg3U/sUp17tpWLc5tH0vRuD3kz+FQUcAvW1CruQNSS+eAVP3p593OUEb6/SgXMkQlFID7QJnuXgwBo8im1VrQULm/f8VSOpzBVAp5s6zr0Xo5AiM3Bx6RWAV6JJ3r+j7BBdQ9lGYY=
+	t=1743693885; cv=none; b=NKPBevOHpZPrEWoHwQwmBdUfE1KrbMxFjkp7fBTNCa1dDUYnFHoTf7dzCbX93eDfMl84h5dKLxdFMSOH/UJC9gdg3RkBfpvtOL4gb3nHXzs9fQ4m4lO3g5D3Fze+tjPreePjBHFHMyMJqtbIvQXq4/Fq6u6d6ptep/qWUGQuRv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693883; c=relaxed/simple;
-	bh=NQy+VxBA/vqF+nw6hFUPe3jEqkdJ1zuzrAM4vl+Cl34=;
+	s=arc-20240116; t=1743693885; c=relaxed/simple;
+	bh=y0/onQU+ct0eOpJt0/zDmQe5XiGluOyIRgKLjJI8pwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CqQJ48UcKarjyBHpJlBTHHqTwWEH7ILQaXmDRM7uz/a5/LG4IaOLDGHap+78Yz+NbLiKjBjkHuxSPArhgl1yuoJAir/VNDxaHgOIe3aB1s0j5BzfIP9mW2gAtcMCXnA393GgYSkG6j5/5LuK0iZOJButQD7Dmm1K1CM1GHIU6uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8GnudIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaUx6GcOUfzCJPbSDOoImK2WxFgJ1ULBHIl1AvPriiK+7YPFpF28agF50F9QwigICJOCUQt09aw6LqOJ+1Jua7H8YvbulJe2cH9xd3MjPf9lEsCN/Us7tfyExyZQYWzQpcrwTD4Uy54MsWEX1zULZXr5n9bh8jJignSKaUYqwlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv7scoGL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8GnudIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E9BC4CEE3;
-	Thu,  3 Apr 2025 15:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv7scoGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9CEC4CEE3;
+	Thu,  3 Apr 2025 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693882;
-	bh=NQy+VxBA/vqF+nw6hFUPe3jEqkdJ1zuzrAM4vl+Cl34=;
+	s=korg; t=1743693885;
+	bh=y0/onQU+ct0eOpJt0/zDmQe5XiGluOyIRgKLjJI8pwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8GnudIcDi/oZmI9aElhkgmvDLMVSWvvFXj4hH4pzpzHj0BLoVXLRzbXckOM7LrvH
-	 nmsUZ7K7n6vJPcOwjbHQeNdkkKEAM+f9kvTt++BjhKRAfvhRc+CQPRtprXdQzcX+z1
-	 r7w59UpjUhmQHZ41J6Mn3K94WondJPjvOWT6RPLs=
+	b=Zv7scoGLCqc/udhjKzHJ4/PZIyBYq4td70+Cp2I6pfe+riBIBTgf0oJeSxwroS+0D
+	 fKnRK0gy17hv2llSjcwm5lLVro1WA3v2ZsvusYMfwE9dA3zKix2RUXEVgxWYBQerSt
+	 hG/Tju9jPAH7867OHaA355FkpQl+UGLsl8Y8MuSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.12 19/22] perf tools: Fix up some comments and code to properly use the event_source bus
-Date: Thu,  3 Apr 2025 16:20:29 +0100
-Message-ID: <20250403151622.593424273@linuxfoundation.org>
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 02/22] HID: hid-plantronics: Add mic mute mapping and generalize quirks
+Date: Thu,  3 Apr 2025 16:20:12 +0100
+Message-ID: <20250403151622.119128040@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.055059925@linuxfoundation.org>
 References: <20250403151622.055059925@linuxfoundation.org>
@@ -51,127 +50,281 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Terry Junge <linuxhid@cosmicgizmosystems.com>
 
-commit 0cced76a0276610e86e8b187c09f0e9ef85b9299 upstream.
+commit 9821709af892be9fbf4ee9a50b2f3e0604295ce0 upstream.
 
-In sysfs, the perf events are all located in
-/sys/bus/event_source/devices/ but some places ended up hard-coding the
-location to be at the root of /sys/devices/ which could be very risky as
-you do not exactly know what type of device you are accessing in sysfs
-at that location.
+Add mapping for headset mute key events.
 
-So fix this all up by properly pointing everything at the bus device
-list instead of the root of the sysfs devices/ tree.
+Remove PLT_QUIRK_DOUBLE_VOLUME_KEYS quirk and made it generic.
+The quirk logic did not keep track of the actual previous key
+so any key event occurring in less than or equal to 5ms was ignored.
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/2025021955-implant-excavator-179d@gregkh
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Remove PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS quirk.
+It had the same logic issue as the double key quirk and was actually
+masking the as designed behavior of most of the headsets.
+It's occurrence should be minimized with the ALSA control naming
+quirk that is part of the patch set.
+
+Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/Documentation/intel-hybrid.txt |   12 ++++++------
- tools/perf/Documentation/perf-list.txt    |    2 +-
- tools/perf/arch/x86/util/iostat.c         |    2 +-
- tools/perf/builtin-stat.c                 |    2 +-
- tools/perf/util/mem-events.c              |    2 +-
- tools/perf/util/pmu.c                     |    4 ++--
- 6 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/hid/hid-plantronics.c |  148 +++++++++++++++++++-----------------------
+ 1 file changed, 69 insertions(+), 79 deletions(-)
 
---- a/tools/perf/Documentation/intel-hybrid.txt
-+++ b/tools/perf/Documentation/intel-hybrid.txt
-@@ -8,15 +8,15 @@ Part of events are available on core cpu
- on atom cpu and even part of events are available on both.
+--- a/drivers/hid/hid-plantronics.c
++++ b/drivers/hid/hid-plantronics.c
+@@ -6,9 +6,6 @@
+  *  Copyright (c) 2015-2018 Terry Junge <terry.junge@plantronics.com>
+  */
  
- Kernel exports two new cpu pmus via sysfs:
--/sys/devices/cpu_core
--/sys/devices/cpu_atom
-+/sys/bus/event_source/devices/cpu_core
-+/sys/bus/event_source/devices/cpu_atom
+-/*
+- */
+-
+ #include "hid-ids.h"
  
- The 'cpus' files are created under the directories. For example,
+ #include <linux/hid.h>
+@@ -23,30 +20,28 @@
  
--cat /sys/devices/cpu_core/cpus
-+cat /sys/bus/event_source/devices/cpu_core/cpus
- 0-15
+ #define PLT_VOL_UP		0x00b1
+ #define PLT_VOL_DOWN		0x00b2
++#define PLT_MIC_MUTE		0x00b5
  
--cat /sys/devices/cpu_atom/cpus
-+cat /sys/bus/event_source/devices/cpu_atom/cpus
- 16-23
+ #define PLT1_VOL_UP		(PLT_HID_1_0_PAGE | PLT_VOL_UP)
+ #define PLT1_VOL_DOWN		(PLT_HID_1_0_PAGE | PLT_VOL_DOWN)
++#define PLT1_MIC_MUTE		(PLT_HID_1_0_PAGE | PLT_MIC_MUTE)
+ #define PLT2_VOL_UP		(PLT_HID_2_0_PAGE | PLT_VOL_UP)
+ #define PLT2_VOL_DOWN		(PLT_HID_2_0_PAGE | PLT_VOL_DOWN)
++#define PLT2_MIC_MUTE		(PLT_HID_2_0_PAGE | PLT_MIC_MUTE)
++#define HID_TELEPHONY_MUTE	(HID_UP_TELEPHONY | 0x2f)
++#define HID_CONSUMER_MUTE	(HID_UP_CONSUMER | 0xe2)
  
- It indicates cpu0-cpu15 are core cpus and cpu16-cpu23 are atom cpus.
-@@ -60,8 +60,8 @@ can't carry pmu information. So now this
- type. The PMU type ID is stored at attr.config[63:32].
+ #define PLT_DA60		0xda60
+ #define PLT_BT300_MIN		0x0413
+ #define PLT_BT300_MAX		0x0418
  
- PMU type ID is retrieved from sysfs.
--/sys/devices/cpu_atom/type
--/sys/devices/cpu_core/type
-+/sys/bus/event_source/devices/cpu_atom/type
-+/sys/bus/event_source/devices/cpu_core/type
+-
+-#define PLT_ALLOW_CONSUMER (field->application == HID_CP_CONSUMERCONTROL && \
+-			    (usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER)
+-
+-#define PLT_QUIRK_DOUBLE_VOLUME_KEYS BIT(0)
+-#define PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS BIT(1)
+-
+ #define PLT_DOUBLE_KEY_TIMEOUT 5 /* ms */
+-#define PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT 220 /* ms */
  
- The new attr.config layout for PERF_TYPE_HARDWARE:
+ struct plt_drv_data {
+ 	unsigned long device_type;
+-	unsigned long last_volume_key_ts;
+-	u32 quirks;
++	unsigned long last_key_ts;
++	unsigned long double_key_to;
++	__u16 last_key;
+ };
  
---- a/tools/perf/Documentation/perf-list.txt
-+++ b/tools/perf/Documentation/perf-list.txt
-@@ -188,7 +188,7 @@ in the CPU vendor specific documentation
+ static int plantronics_input_mapping(struct hid_device *hdev,
+@@ -58,34 +53,43 @@ static int plantronics_input_mapping(str
+ 	unsigned short mapped_key;
+ 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
+ 	unsigned long plt_type = drv_data->device_type;
++	int allow_mute = usage->hid == HID_TELEPHONY_MUTE;
++	int allow_consumer = field->application == HID_CP_CONSUMERCONTROL &&
++			(usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER &&
++			usage->hid != HID_CONSUMER_MUTE;
  
- The available PMUs and their raw parameters can be listed with
+ 	/* special case for PTT products */
+ 	if (field->application == HID_GD_JOYSTICK)
+ 		goto defaulted;
  
--  ls /sys/devices/*/format
-+  ls /sys/bus/event_source/devices/*/format
+-	/* handle volume up/down mapping */
+ 	/* non-standard types or multi-HID interfaces - plt_type is PID */
+ 	if (!(plt_type & HID_USAGE_PAGE)) {
+ 		switch (plt_type) {
+ 		case PLT_DA60:
+-			if (PLT_ALLOW_CONSUMER)
++			if (allow_consumer)
+ 				goto defaulted;
+-			goto ignored;
++			if (usage->hid == HID_CONSUMER_MUTE) {
++				mapped_key = KEY_MICMUTE;
++				goto mapped;
++			}
++			break;
+ 		default:
+-			if (PLT_ALLOW_CONSUMER)
++			if (allow_consumer || allow_mute)
+ 				goto defaulted;
+ 		}
++		goto ignored;
+ 	}
+-	/* handle standard types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
+-	/* 'basic telephony compliant' - allow default consumer page map */
+-	else if ((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
+-		 (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) {
+-		if (PLT_ALLOW_CONSUMER)
+-			goto defaulted;
+-	}
+-	/* not 'basic telephony' - apply legacy mapping */
+-	/* only map if the field is in the device's primary vendor page */
+-	else if (!((field->application ^ plt_type) & HID_USAGE_PAGE)) {
++
++	/* handle standard consumer control mapping */
++	/* and standard telephony mic mute mapping */
++	if (allow_consumer || allow_mute)
++		goto defaulted;
++
++	/* handle vendor unique types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
++	/* if not 'basic telephony compliant' - map vendor unique controls */
++	if (!((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
++	      (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) &&
++	      !((field->application ^ plt_type) & HID_USAGE_PAGE))
+ 		switch (usage->hid) {
+ 		case PLT1_VOL_UP:
+ 		case PLT2_VOL_UP:
+@@ -95,8 +99,11 @@ static int plantronics_input_mapping(str
+ 		case PLT2_VOL_DOWN:
+ 			mapped_key = KEY_VOLUMEDOWN;
+ 			goto mapped;
++		case PLT1_MIC_MUTE:
++		case PLT2_MIC_MUTE:
++			mapped_key = KEY_MICMUTE;
++			goto mapped;
+ 		}
+-	}
  
- For example the raw event "LSD.UOPS" core pmu event above could
- be specified as
---- a/tools/perf/arch/x86/util/iostat.c
-+++ b/tools/perf/arch/x86/util/iostat.c
-@@ -32,7 +32,7 @@
- #define MAX_PATH 1024
- #endif
+ /*
+  * Future mapping of call control or other usages,
+@@ -105,6 +112,8 @@ static int plantronics_input_mapping(str
+  */
  
--#define UNCORE_IIO_PMU_PATH	"devices/uncore_iio_%d"
-+#define UNCORE_IIO_PMU_PATH	"bus/event_source/devices/uncore_iio_%d"
- #define SYSFS_UNCORE_PMU_PATH	"%s/"UNCORE_IIO_PMU_PATH
- #define PLATFORM_MAPPING_PATH	UNCORE_IIO_PMU_PATH"/die%d"
+ ignored:
++	hid_dbg(hdev, "usage: %08x (appl: %08x) - ignored\n",
++		usage->hid, field->application);
+ 	return -1;
  
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -96,7 +96,7 @@
- #include <internal/threadmap.h>
+ defaulted:
+@@ -123,38 +132,26 @@ static int plantronics_event(struct hid_
+ 			     struct hid_usage *usage, __s32 value)
+ {
+ 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
++	unsigned long prev_tsto, cur_ts;
++	__u16 prev_key, cur_key;
  
- #define DEFAULT_SEPARATOR	" "
--#define FREEZE_ON_SMI_PATH	"devices/cpu/freeze_on_smi"
-+#define FREEZE_ON_SMI_PATH	"bus/event_source/devices/cpu/freeze_on_smi"
+-	if (drv_data->quirks & PLT_QUIRK_DOUBLE_VOLUME_KEYS) {
+-		unsigned long prev_ts, cur_ts;
+-
+-		/* Usages are filtered in plantronics_usages. */
+-
+-		if (!value) /* Handle key presses only. */
+-			return 0;
+-
+-		prev_ts = drv_data->last_volume_key_ts;
+-		cur_ts = jiffies;
+-		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_DOUBLE_KEY_TIMEOUT)
+-			return 1; /* Ignore the repeated key. */
+-
+-		drv_data->last_volume_key_ts = cur_ts;
+-	}
+-	if (drv_data->quirks & PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS) {
+-		unsigned long prev_ts, cur_ts;
+-
+-		/* Usages are filtered in plantronics_usages. */
+-
+-		if (!value) /* Handle key presses only. */
+-			return 0;
++	/* Usages are filtered in plantronics_usages. */
  
- static void print_counters(struct timespec *ts, int argc, const char **argv);
- 
---- a/tools/perf/util/mem-events.c
-+++ b/tools/perf/util/mem-events.c
-@@ -189,7 +189,7 @@ static bool perf_pmu__mem_events_support
- 	if (!e->event_name)
- 		return true;
- 
--	scnprintf(path, PATH_MAX, "%s/devices/%s/events/%s", mnt, pmu->name, e->event_name);
-+	scnprintf(path, PATH_MAX, "%s/bus/event_source/devices/%s/events/%s", mnt, pmu->name, e->event_name);
- 
- 	return !stat(path, &st);
+-		prev_ts = drv_data->last_volume_key_ts;
+-		cur_ts = jiffies;
+-		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT)
+-			return 1; /* Ignore the followed opposite volume key. */
+-
+-		drv_data->last_volume_key_ts = cur_ts;
++	/* HZ too low for ms resolution - double key detection disabled */
++	/* or it is a key release - handle key presses only. */
++	if (!drv_data->double_key_to || !value)
++		return 0;
++
++	prev_tsto = drv_data->last_key_ts + drv_data->double_key_to;
++	cur_ts = drv_data->last_key_ts = jiffies;
++	prev_key = drv_data->last_key;
++	cur_key = drv_data->last_key = usage->code;
++
++	/* If the same key occurs in <= double_key_to -- ignore it */
++	if (prev_key == cur_key && time_before_eq(cur_ts, prev_tsto)) {
++		hid_dbg(hdev, "double key %d ignored\n", cur_key);
++		return 1; /* Ignore the repeated key. */
+ 	}
+-
+ 	return 0;
  }
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -33,12 +33,12 @@
- #define UNIT_MAX_LEN	31 /* max length for event unit name */
  
- enum event_source {
--	/* An event loaded from /sys/devices/<pmu>/events. */
-+	/* An event loaded from /sys/bus/event_source/devices/<pmu>/events. */
- 	EVENT_SRC_SYSFS,
- 	/* An event loaded from a CPUID matched json file. */
- 	EVENT_SRC_CPU_JSON,
- 	/*
--	 * An event loaded from a /sys/devices/<pmu>/identifier matched json
-+	 * An event loaded from a /sys/bus/event_source/devices/<pmu>/identifier matched json
- 	 * file.
- 	 */
- 	EVENT_SRC_SYS_JSON,
+@@ -196,12 +193,16 @@ static int plantronics_probe(struct hid_
+ 	ret = hid_parse(hdev);
+ 	if (ret) {
+ 		hid_err(hdev, "parse failed\n");
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	drv_data->device_type = plantronics_device_type(hdev);
+-	drv_data->quirks = id->driver_data;
+-	drv_data->last_volume_key_ts = jiffies - msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
++	drv_data->double_key_to = msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
++	drv_data->last_key_ts = jiffies - drv_data->double_key_to;
++
++	/* if HZ does not allow ms resolution - disable double key detection */
++	if (drv_data->double_key_to < PLT_DOUBLE_KEY_TIMEOUT)
++		drv_data->double_key_to = 0;
+ 
+ 	hid_set_drvdata(hdev, drv_data);
+ 
+@@ -210,29 +211,10 @@ static int plantronics_probe(struct hid_
+ 	if (ret)
+ 		hid_err(hdev, "hw start failed\n");
+ 
+-err:
+ 	return ret;
+ }
+ 
+ static const struct hid_device_id plantronics_devices[] = {
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES),
+-		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES),
+-		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
+ 	{ }
+ };
+@@ -241,6 +223,14 @@ MODULE_DEVICE_TABLE(hid, plantronics_dev
+ static const struct hid_usage_id plantronics_usages[] = {
+ 	{ HID_CP_VOLUMEUP, EV_KEY, HID_ANY_ID },
+ 	{ HID_CP_VOLUMEDOWN, EV_KEY, HID_ANY_ID },
++	{ HID_TELEPHONY_MUTE, EV_KEY, HID_ANY_ID },
++	{ HID_CONSUMER_MUTE, EV_KEY, HID_ANY_ID },
++	{ PLT2_VOL_UP, EV_KEY, HID_ANY_ID },
++	{ PLT2_VOL_DOWN, EV_KEY, HID_ANY_ID },
++	{ PLT2_MIC_MUTE, EV_KEY, HID_ANY_ID },
++	{ PLT1_VOL_UP, EV_KEY, HID_ANY_ID },
++	{ PLT1_VOL_DOWN, EV_KEY, HID_ANY_ID },
++	{ PLT1_MIC_MUTE, EV_KEY, HID_ANY_ID },
+ 	{ HID_TERMINATOR, HID_TERMINATOR, HID_TERMINATOR }
+ };
+ 
 
 
