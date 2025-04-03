@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE32512EB;
-	Thu,  3 Apr 2025 15:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63187250C0C;
+	Thu,  3 Apr 2025 15:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693777; cv=none; b=H3M/a5ljeHjSmT+XFDi68va7ue5IVC2tO7889zO9n/E+2X+3VL6KSkJPC0II1ZxmG7weS8sHEexkxn++rVC1832pr+Y9IALKU4qfrHgcj80Rw7egV5SJemorE4aZjBWIX2xxzaoc9EoKerYbYh/6ehTjqq25dUhtW96RuVA+VI4=
+	t=1743693781; cv=none; b=Im+LbKMrGgYjBxFesomrJJk2u3kTOma/D6xRGipCAUSvjkOApJxKDfb5L4XowVnAkZ4U8S0KuU2oeroT70bjldT+L4cYD9hWkZznfIWkc57C+vxcjCHKP+GGWhIjTqZDwJOdqJlEnmotrQfyxpx9ESCo7jYkxuNqvLyc8B5FYE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693777; c=relaxed/simple;
-	bh=cYmscPfGjl4WNWzynbyM7ygS8pIhhYBnuNAhbzvDLr8=;
+	s=arc-20240116; t=1743693781; c=relaxed/simple;
+	bh=P0ZE6g/oe83yw1lv+asdx+ndZPrp3IUYc0FY387OT0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GDFXy8FT49dg9PEixHAch9uBrRxgTxyR5A9bKlmPGA3/kiuSlF6osA2BR4FVXukpqY2HiVuy8Qh7M3AIIX5DwGoUQ8ZvwNPz/4ITyBPtP7l1t4bQjPhSKzcv/Y6EWdbM71s0ChYOGXKWoXd2OFH1mR9IZFRSGnhO7beXhApa9Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFy0zXDx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fW3p9VMT8ec4sgg4NnveUfZ53jnvdJ6xvTV8YqskpR4tqiMJoB9jvd/T5qjciT5O0unUpS2xVBCdlPB8gyV/PRkSjNUP2uIZHBuw+8NalC4kQVcmSOuGkuyYfZJXLY/C81ml7DnPagE4y0+b29eIybFtiNsmsay1eC5Usbpy51M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuOSbZcA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFy0zXDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A487BC4CEE7;
-	Thu,  3 Apr 2025 15:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuOSbZcA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9166AC4CEE3;
+	Thu,  3 Apr 2025 15:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693777;
-	bh=cYmscPfGjl4WNWzynbyM7ygS8pIhhYBnuNAhbzvDLr8=;
+	s=korg; t=1743693779;
+	bh=P0ZE6g/oe83yw1lv+asdx+ndZPrp3IUYc0FY387OT0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFy0zXDxlLZDXZ1i5AVdFGTtpFsL0lT4v0FV0cO85gIbm47AmxEhlAYt7b8w/glVS
-	 oUlDytphRxQgP+rPjgOwIdAf6+WfqoMCW+OuKCGzVbrJrALzAqaRkWaFE3ZI+CBRVj
-	 lxLP/+6xFPdzRfyOGKHNDy529TCVGIfQLNp2WhCg=
+	b=nuOSbZcASNSt4MUKFRDU9gt5Wbw5jl++dMG2yxr09eeOLfpy/fXRtF5VEdw82eQB2
+	 FafwhHOOg//hFZPuAKVxHPGreSSks96SLLmxJ44RRNFr/KsbJSBlr5ZBIVoUDq82CH
+	 SmStcCA1qX26LbZvOIt1q81oB/GJXkYf4Dd77mDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 21/22] media: i2c: et8ek8: Dont strip remove function when driver is builtin
-Date: Thu,  3 Apr 2025 16:20:16 +0100
-Message-ID: <20250403151621.533638623@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.1 22/22] ARM: dts: imx6qdl-apalis: Fix poweroff on Apalis iMX6
+Date: Thu,  3 Apr 2025 16:20:17 +0100
+Message-ID: <20250403151621.559365552@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151620.960551909@linuxfoundation.org>
 References: <20250403151620.960551909@linuxfoundation.org>
@@ -47,57 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit 545b215736c5c4b354e182d99c578a472ac9bfce upstream.
+commit 83964a29379cb08929a39172780a4c2992bc7c93 upstream.
 
-Using __exit for the remove function results in the remove callback
-being discarded with CONFIG_VIDEO_ET8EK8=y. When such a device gets
-unbound (e.g. using sysfs or hotplug), the driver is just removed
-without the cleanup being performed. This results in resource leaks. Fix
-it by compiling in the remove callback unconditionally.
+The current solution for powering off the Apalis iMX6 is not functioning
+as intended. To resolve this, it is necessary to power off the
+vgen2_reg, which will also set the POWER_ENABLE_MOCI signal to a low
+state. This ensures the carrier board is properly informed to initiate
+its power-off sequence.
 
-This also fixes a W=1 modpost warning:
+The new solution uses the regulator-poweroff driver, which will power
+off the regulator during a system shutdown.
 
-	WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x10 (section: .data) -> et8ek8_remove (section: .exit.text)
-
-Fixes: c5254e72b8ed ("[media] media: Driver for Toshiba et8ek8 5MP sensor")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: <stable@vger.kernel.org>
+Fixes: 4eb56e26f92e ("ARM: dts: imx6q-apalis: Command pmic to standby for poweroff")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
- drivers/media/i2c/et8ek8/et8ek8_driver.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/imx6qdl-apalis.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
-+++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
-@@ -1460,7 +1460,7 @@ err_mutex:
- 	return ret;
- }
+--- a/arch/arm/boot/dts/imx6qdl-apalis.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-apalis.dtsi
+@@ -101,6 +101,11 @@
+ 		};
+ 	};
  
--static void __exit et8ek8_remove(struct i2c_client *client)
-+static void et8ek8_remove(struct i2c_client *client)
- {
- 	struct v4l2_subdev *subdev = i2c_get_clientdata(client);
- 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
-@@ -1502,7 +1502,7 @@ static struct i2c_driver et8ek8_i2c_driv
- 		.of_match_table	= et8ek8_of_table,
- 	},
- 	.probe_new	= et8ek8_probe,
--	.remove		= __exit_p(et8ek8_remove),
-+	.remove		= et8ek8_remove,
- 	.id_table	= et8ek8_id_table,
++	poweroff {
++		compatible = "regulator-poweroff";
++		cpu-supply = <&vgen2_reg>;
++	};
++
+ 	reg_module_3v3: regulator-module-3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-always-on;
+@@ -220,10 +225,6 @@
+ 	status = "disabled";
  };
  
+-&clks {
+-	fsl,pmic-stby-poweroff;
+-};
+-
+ /* Apalis SPI1 */
+ &ecspi1 {
+ 	cs-gpios = <&gpio5 25 GPIO_ACTIVE_LOW>;
+@@ -511,7 +512,6 @@
+ 
+ 	pmic: pmic@8 {
+ 		compatible = "fsl,pfuze100";
+-		fsl,pmic-stby-poweroff;
+ 		reg = <0x08>;
+ 
+ 		regulators {
 
 
