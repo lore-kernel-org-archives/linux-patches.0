@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E3D188A3A;
-	Thu,  3 Apr 2025 15:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9262B24DFE8;
+	Thu,  3 Apr 2025 15:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693743; cv=none; b=VKpihaSyW842CSpq6FFou6wWKfjKt0jyib+T91Rk7sySq26yTIc4JF8v+sYd8w7FLk5VblXfl4nrFWkdWHwX6k2H8g/gcVVc4MkZlrk0qHlBmd460gBa4aqdJAAOkmv0VrZWEsso21zxk9Sxave90BkLHN227Nq8G2egAzdj3e4=
+	t=1743693745; cv=none; b=bkYjhKDQrgIVGyuYu6SfNN0XMlOjVCPxZLttMuSnfb78xq4HAh4jcLEYxujUYIHSCXZVcXSKjmW/bOxEHiOTtT4awaZpVGrCcewIPKwohHdplmg1l2BF641h1dMbA+pnNf/vXRxHP41v072H0ZubznPh94lRqgAI9LQXe7L4q+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693743; c=relaxed/simple;
-	bh=PVgfpzZ3b0EmG8yKqsqWopuV9bSDMxFME/XNRiXFtlI=;
+	s=arc-20240116; t=1743693745; c=relaxed/simple;
+	bh=viKlgsVH+VoHWRWMI4f4aYvWQaGpMnz+45OPVzSDmbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UV7y/4CZpWx8inAc9R47HyEqyRrakj7Dn9QyZB6Fjy/O7wCDoAHi7aKvrRhG0R0dtlONJ/CJJu0BGuB2TnYy34iYtSF9PV83ZFBksqwQNAOGhk2MqmtM1CmpXvIAexqwYwOnih4jHLgJZi3sBrEr5hC1TBeGcxOB6GAsrV6aAAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDbgMlxq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0mLWXMHZBwI1RXJFjDyNf0R4an5xF8+ydyv/1uMul3ZoiZPQVwGvkzjivxUgp4n/Gj3cDJuSoelb/iBiVBalabI6r17GD1VPuquqhd7VxkKKp74E4QX+ploRkcwGx0qsogPVWrEpBkCNtsw7S8YMn5EJbsXfrnc07xvMFg8aR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqZqJCT+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDbgMlxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0C7C4CEE8;
-	Thu,  3 Apr 2025 15:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqZqJCT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5122C4CEE3;
+	Thu,  3 Apr 2025 15:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693742;
-	bh=PVgfpzZ3b0EmG8yKqsqWopuV9bSDMxFME/XNRiXFtlI=;
+	s=korg; t=1743693745;
+	bh=viKlgsVH+VoHWRWMI4f4aYvWQaGpMnz+45OPVzSDmbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDbgMlxqbSpitFCvbYtJh0v7laI5DNuGZKEjkCrY1yuTaF+H1B+CJ3q+2+RH4/UWd
-	 VQTNtO7noioJhGN1lhCExBTKj3nzZHnnd8TercpFZSfzfq/GY6CLs0Ebe0EcNldaNN
-	 M66HTNKm+yI8i9tuuC9GO3r/cWsDMBZ4GwdwqoZ0=
+	b=YqZqJCT+WmHMAAeIsXBSjoWsqWIqNDTMLQByDQRVfSxRlfkK7zfXzEx9Qi41PXlsN
+	 zHQWGiRVn93CfJjjP9QB5rZyzbj4GtwJVcExuioBBfc7tSxSDiZQohiaCv7kvDNHVS
+	 Hno72FIFJ81mPZ9f3nCjGVya1Hu+CvErhprFXKIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 01/22] ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
-Date: Thu,  3 Apr 2025 16:19:56 +0100
-Message-ID: <20250403151620.998950963@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.1 10/22] counter: stm32-lptimer-cnt: fix error handling when enabling
+Date: Thu,  3 Apr 2025 16:20:05 +0100
+Message-ID: <20250403151621.228442191@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151620.960551909@linuxfoundation.org>
 References: <20250403151620.960551909@linuxfoundation.org>
@@ -51,100 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Junge <linuxhid@cosmicgizmosystems.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit 486f6205c233da1baa309bde5f634eb1f8319a33 upstream.
+commit 8744dcd4fc7800de2eb9369410470bb2930d4c14 upstream.
 
-Many Poly/Plantronics headset families name the feature, input,
-and/or output units in a such a way to produce control names
-that are not recognized by user space. As such, the volume and
-mute events do not get routed to the headset's audio controls.
+In case the stm32_lptim_set_enable_state() fails to update CMP and ARR,
+a timeout error is raised, by regmap_read_poll_timeout. It may happen,
+when the lptimer runs on a slow clock, and the clock is gated only
+few times during the polling.
 
-As an example from a product family:
+Badly, when this happen, STM32_LPTIM_ENABLE in CR register has been set.
+So the 'enable' state in sysfs wrongly lies on the counter being
+correctly enabled, due to CR is read as one in stm32_lptim_is_enabled().
 
-The microphone mute control is named
-Headset Microphone Capture Switch
-and the headset volume control is named
-Headset Earphone Playback Volume
+To fix both issues:
+- enable the clock before writing CMP, ARR and polling ISR bits. It will
+avoid the possible timeout error.
+- clear the ENABLE bit in CR and disable the clock in the error path.
 
-The quirk fixes these to become
-Headset Capture Switch
-Headset Playback Volume
-
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20250224170657.3368236-1-fabrice.gasnier@foss.st.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ drivers/counter/stm32-lptimer-cnt.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -3575,6 +3575,52 @@ static void snd_dragonfly_quirk_db_scale
+--- a/drivers/counter/stm32-lptimer-cnt.c
++++ b/drivers/counter/stm32-lptimer-cnt.c
+@@ -58,37 +58,43 @@ static int stm32_lptim_set_enable_state(
+ 		return 0;
  	}
+ 
++	ret = clk_enable(priv->clk);
++	if (ret)
++		goto disable_cnt;
++
+ 	/* LP timer must be enabled before writing CMP & ARR */
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ARR, priv->ceiling);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_CMP, 0);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+ 				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ICR,
+ 			   STM32_LPTIM_CMPOKCF_ARROKCF);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+-	ret = clk_enable(priv->clk);
+-	if (ret) {
+-		regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
+-		return ret;
+-	}
+ 	priv->enabled = true;
+ 
+ 	/* Start LP timer in continuous mode */
+ 	return regmap_update_bits(priv->regmap, STM32_LPTIM_CR,
+ 				  STM32_LPTIM_CNTSTRT, STM32_LPTIM_CNTSTRT);
++
++disable_clk:
++	clk_disable(priv->clk);
++disable_cnt:
++	regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
++
++	return ret;
  }
  
-+/*
-+ * Some Plantronics headsets have control names that don't meet ALSA naming
-+ * standards. This function fixes nonstandard source names. By the time
-+ * this function is called the control name should look like one of these:
-+ * "source names Playback Volume"
-+ * "source names Playback Switch"
-+ * "source names Capture Volume"
-+ * "source names Capture Switch"
-+ * If any of the trigger words are found in the name then the name will
-+ * be changed to:
-+ * "Headset Playback Volume"
-+ * "Headset Playback Switch"
-+ * "Headset Capture Volume"
-+ * "Headset Capture Switch"
-+ * depending on the current suffix.
-+ */
-+static void snd_fix_plt_name(struct snd_usb_audio *chip,
-+			     struct snd_ctl_elem_id *id)
-+{
-+	/* no variant of "Sidetone" should be added to this list */
-+	static const char * const trigger[] = {
-+		"Earphone", "Microphone", "Receive", "Transmit"
-+	};
-+	static const char * const suffix[] = {
-+		" Playback Volume", " Playback Switch",
-+		" Capture Volume", " Capture Switch"
-+	};
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(trigger); i++)
-+		if (strstr(id->name, trigger[i]))
-+			goto triggered;
-+	usb_audio_dbg(chip, "no change in %s\n", id->name);
-+	return;
-+
-+triggered:
-+	for (i = 0; i < ARRAY_SIZE(suffix); i++)
-+		if (strstr(id->name, suffix[i])) {
-+			usb_audio_dbg(chip, "fixing kctl name %s\n", id->name);
-+			snprintf(id->name, sizeof(id->name), "Headset%s",
-+				 suffix[i]);
-+			return;
-+		}
-+	usb_audio_dbg(chip, "something wrong in kctl name %s\n", id->name);
-+}
-+
- void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
- 				  struct usb_mixer_elem_info *cval, int unitid,
- 				  struct snd_kcontrol *kctl)
-@@ -3592,5 +3638,10 @@ void snd_usb_mixer_fu_apply_quirk(struct
- 			cval->min_mute = 1;
- 		break;
- 	}
-+
-+	/* ALSA-ify some Plantronics headset control names */
-+	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
-+	    (cval->control == UAC_FU_MUTE || cval->control == UAC_FU_VOLUME))
-+		snd_fix_plt_name(mixer->chip, &kctl->id);
- }
- 
+ static int stm32_lptim_setup(struct stm32_lptim_cnt *priv, int enable)
 
 
