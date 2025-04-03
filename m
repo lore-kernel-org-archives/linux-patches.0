@@ -1,198 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6498924E4B2;
-	Thu,  3 Apr 2025 15:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439A41514F6;
+	Thu,  3 Apr 2025 16:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743694036; cv=none; b=XZq/RZfCUZWAh1o/YCrhpGEqCZqTq0F6DITrEfOvUTuLPnZsWfkFEl77MvDBgU/BVXFsXX0QgZHasr5AgL6nB8wVGLeUqFvY33CHNxW/u0N7qLlLjb8YAim0AuqWk1z6O9iZ/iDXNHCvr/hdD6x7dTogCUVGqUR5anZC6ZJ1Tjs=
+	t=1743698300; cv=none; b=rzhDiDJM297zuqoX2zsF4C1qPQxAOBpNNm7/luJrjjVY4ytNgKSXO+Rl0rXONpG7sjodvYQug4P/+GWOozNbb79+JgE6ahrtHq3/OIUhD2ISo5nOZakxZtj5rrLNORC6MfPoAfWRy3jG28oDn43CK61qqb9sB5aEdvDYks0YkZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743694036; c=relaxed/simple;
-	bh=ddWj3Z13XW8uzI3RDW2AgxXUlibDcIvQOoriVbRvwhg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MrYcdYeQABkwjorT521P9Dgbzxc2wlNPcqE7XaPcYR5BnUN+ovCbPhuOFW4y8Zsv1n3q051kRJ6EX98HSc0yHLVDgg+5+HcNJbD1U6EWVrlNN2HNDQQ5wulEivmfu3QcrftxyoZT8+PuJVxg/7up83VyvrgyqBNCRQIj4aePeKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5KZNVVR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743698300; c=relaxed/simple;
+	bh=KtUfjAG1/WEauaqQuciEUvXMo2dub6bMxhzIcaq1sR0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Hs/y6pGsackX6Jr4WY/0XDKVJU45l5DCK6NKGJTd0oyaoqn4FqPCoS1UJlEBeIll+olWEythBE/xsiJzIDx9YkY8pfKmAPMJkr10shyGmSd+RkusIYpgEzXx09UlzTiRQCtY56pfnVwqgq5/dv3z8p8h1mB4FV1kf60EGLZL/N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dyb1tNEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5KZNVVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA23EC4CEE5;
-	Thu,  3 Apr 2025 15:27:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743694036;
-	bh=ddWj3Z13XW8uzI3RDW2AgxXUlibDcIvQOoriVbRvwhg=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dyb1tNEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF80C4CEE3;
+	Thu,  3 Apr 2025 16:38:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743698299;
+	bh=KtUfjAG1/WEauaqQuciEUvXMo2dub6bMxhzIcaq1sR0=;
 	h=From:To:Cc:Subject:Date:From;
-	b=y5KZNVVRybc5Y/mlrSMuLsLkN6Q5BqtxDbqToeoqB263DDxbqONdsnahMJCin3x2z
-	 w65RE92CAn5pYnNT31ccGNrISWJhzm6/T6hs+svw9Z+osGoBgHxoBOujhzu5xDVZAN
-	 KBO+hmWNHBDpQR87iDSf/loxHZzO+Wu9SfZiaTFg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
+	b=Dyb1tNEAiREoivi+HcddE7uM+5xkKAqaXKimQ8xAMYqnHxWd5mV/1NJhyLOBETnW4
+	 M8qOqq+DxgjSF8Tnkv7VJiiMVObDS86dPsFyLv2HvIgNAo3U4p7HBqXf8QLHxL6Gox
+	 neTTAZKOcayi+k9lQ47oSrcB4vNuK7VOIbqlfQ4EouNoEsmnSzAqFGDO8rigCcgFKv
+	 kZ2a10HJSGlT/yrsMooCvfeKoobktNtq1YKPx0aXf5GcPfoQl5cR4wKU8ssKGsMnuZ
+	 9VGUAVnqX6HpurACGpsGxjP6c22IC0j4AJ8f2AoG2GVLJH72bKkr/vToG250BSGWs5
+	 /7yy43JcQYYqw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Tamir Duberstein <tamird@gmail.com>,
+	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.6 00/26] 6.6.86-rc1 review
-Date: Thu,  3 Apr 2025 16:20:21 +0100
-Message-ID: <20250403151622.415201055@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
+	patches@lists.linux.dev
+Subject: [PATCH] rust: disable `clippy::needless_continue`
+Date: Thu,  3 Apr 2025 18:38:05 +0200
+Message-ID: <20250403163805.67770-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.86-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.86-rc1
-X-KernelTest-Deadline: 2025-04-05T15:16+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.86 release.
-There are 26 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+Starting with Rust 1.86.0, Clippy's `needless_continue` lint complains
+about the last statement of a loop [1], including cases like:
 
-Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
-Anything received after that time might be too late.
+    while ... {
+        match ... {
+            ... if ... => {
+                ...
+                return ...;
+            }
+            _ => continue,
+        }
+    }
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.86-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
+as well as nested `match`es in a loop.
 
-thanks,
+One solution is changing `continue` for `()` [2], but arguably using
+`continue` shows the intent better when it is alone in an arm like that.
 
-greg k-h
+Moreover, I am not sure we want to force people to try to find other
+ways to write the code either, in cases when that applies.
 
--------------
-Pseudo-Shortlog of commits:
+In addition, the help text does not really apply in the new cases the
+lint has introduced, e.g. here one cannot simply "drop" the expression:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.86-rc1
+    warning: this `continue` expression is redundant
+      --> rust/macros/helpers.rs:85:18
+       |
+    85 |             _ => continue,
+       |                  ^^^^^^^^
+       |
+       = help: consider dropping the `continue` expression
+       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_continue
+       = note: requested on the command line with `-W clippy::needless-continue`
 
-Abhishek Tamboli <abhishektamboli9@gmail.com>
-    usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
+The examples in the documentation do not show a case like this, either,
+so the second "help" line does not help.
 
-John Keeping <jkeeping@inmusicbrands.com>
-    serial: 8250_dma: terminate correct DMA in tx_dma_flush()
+In addition, locally disabling the lint is not possible with `expect`,
+since the behavior differs across versions. Using `allow` would be
+possible, but, even then, an extra line just for this is a bit too much,
+especially if there are other ways to satisfy the lint.
 
-Luo Qiu <luoqiu@kylinsec.com.cn>
-    memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove
+Finally, the lint is still in the "pedantic" category and disabled by
+default by Clippy.
 
-Dominique Martinet <dominique.martinet@atmark-techno.com>
-    net: usb: usbnet: restore usb%d name exception for local mac addresses
+Thus disable the lint, at least for the time being.
 
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    net: usb: qmi_wwan: add Telit Cinterion FE990B composition
+Feedback was submitted to upstream Clippy, in case this can be improved
+or perhaps the lint split into several [3].
 
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    net: usb: qmi_wwan: add Telit Cinterion FN990B composition
+Link: https://github.com/rust-lang/rust-clippy/pull/13891 [1]
+Link: https://lore.kernel.org/rust-for-linux/20250401221205.52381-1-ojeda@kernel.org/ [2]
+Link: https://github.com/rust-lang/rust-clippy/issues/14536 [3]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-Sherry Sun <sherry.sun@nxp.com>
-    tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
+diff --git a/Makefile b/Makefile
+index d138b17b8840..2c33d25c505c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -480,7 +480,6 @@ export rust_common_flags := --edition=2021 \
+ 			    -Wclippy::ignored_unit_patterns \
+ 			    -Wclippy::mut_mut \
+ 			    -Wclippy::needless_bitwise_bool \
+-			    -Wclippy::needless_continue \
+ 			    -Aclippy::needless_lifetimes \
+ 			    -Wclippy::no_mangle_with_rust_abi \
+ 			    -Wclippy::undocumented_unsafe_blocks \
 
-Cameron Williams <cang1@live.co.uk>
-    tty: serial: 8250: Add Brainboxes XC devices
-
-Cameron Williams <cang1@live.co.uk>
-    tty: serial: 8250: Add some more device IDs
-
-William Breathitt Gray <wbg@kernel.org>
-    counter: microchip-tcb-capture: Fix undefined counter channel state on probe
-
-Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-    counter: stm32-lptimer-cnt: fix error handling when enabling
-
-Dhruv Deshpande <dhrv.d@proton.me>
-    ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
-
-Maxim Mikityanskiy <maxtram95@gmail.com>
-    netfilter: socket: Lookup orig tuple for IPv6 SNAT
-
-Manivannan Sadhasivam <mani@kernel.org>
-    scsi: ufs: qcom: Only free platform MSIs when ESI is enabled
-
-Changhuang Liang <changhuang.liang@starfivetech.com>
-    reset: starfive: jh71x0: Fix accessing the empty member on JH7110 SoC
-
-Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-    mm/page_alloc: fix memory accept before watermarks gets initialized
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Don't write DP_MSTM_CTRL after LT
-
-Imre Deak <imre.deak@intel.com>
-    drm/dp_mst: Add a helper to queue a topology probe
-
-Imre Deak <imre.deak@intel.com>
-    drm/dp_mst: Factor out function to queue a topology probe work
-
-Alex Hung <alex.hung@amd.com>
-    drm/amd/display: Check denominator crb_pipes before used
-
-Yanjun Yang <yangyj.ee@gmail.com>
-    ARM: Remove address checking for MMUless devices
-
-Kees Cook <keescook@chromium.org>
-    ARM: 9351/1: fault: Add "cut here" line for prefetch aborts
-
-Kees Cook <keescook@chromium.org>
-    ARM: 9350/1: fault: Implement copy_from_kernel_nofault_allowed()
-
-Minjoong Kim <pwn9uin@gmail.com>
-    atm: Fix NULL pointer dereference
-
-Terry Junge <linuxhid@cosmicgizmosystems.com>
-    HID: hid-plantronics: Add mic mute mapping and generalize quirks
-
-Terry Junge <linuxhid@cosmicgizmosystems.com>
-    ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/arm/mm/fault.c                                |   8 ++
- drivers/counter/microchip-tcb-capture.c            |  19 +++
- drivers/counter/stm32-lptimer-cnt.c                |  24 ++--
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  16 +--
- .../drm/amd/display/dc/dcn315/dcn315_resource.c    |   2 +-
- drivers/gpu/drm/display/drm_dp_mst_topology.c      |  36 +++++-
- drivers/hid/hid-plantronics.c                      | 144 ++++++++++-----------
- drivers/memstick/host/rtsx_usb_ms.c                |   1 +
- drivers/net/usb/qmi_wwan.c                         |   2 +
- drivers/net/usb/usbnet.c                           |  21 ++-
- drivers/reset/starfive/reset-starfive-jh71x0.c     |   3 +
- drivers/tty/serial/8250/8250_dma.c                 |   2 +-
- drivers/tty/serial/8250/8250_pci.c                 |  46 +++++++
- drivers/tty/serial/fsl_lpuart.c                    |  17 +++
- drivers/ufs/host/ufs-qcom.c                        |   4 +-
- drivers/usb/gadget/function/uvc_v4l2.c             |  12 +-
- include/drm/display/drm_dp_mst_helper.h            |   2 +
- mm/page_alloc.c                                    |  14 +-
- net/atm/mpc.c                                      |   2 +
- net/ipv6/netfilter/nf_socket_ipv6.c                |  23 ++++
- sound/pci/hda/patch_realtek.c                      |   1 +
- sound/usb/mixer_quirks.c                           |  51 ++++++++
- 23 files changed, 340 insertions(+), 114 deletions(-)
-
+base-commit: a2cc6ff5ec8f91bc463fd3b0c26b61166a07eb11
+-- 
+2.49.0
 
