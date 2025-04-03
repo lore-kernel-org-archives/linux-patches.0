@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6980D2505DD;
-	Thu,  3 Apr 2025 15:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AE1250BE7;
+	Thu,  3 Apr 2025 15:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693953; cv=none; b=LRKo1/X/eHfGhkauONrtWQpZKMq99F8WjmfleMUGdLXYV0c9dZhbjm8t6TCtWyYINPIEQbthgLAorICMIEefZhzYuPGlImLWFt5LX+wzIvudzgLHN8o+XR+fqnyaxeY5Ff5V+d1Zdu+Ys3kpRAQAp+wDYg7vyBVILwr+usnB1Ro=
+	t=1743693955; cv=none; b=DA2S1ZY85RnFiyTCYBipmxoxG/4/TRSaeUUqRQrH2BWCrDrr/6LrhQJLeSdt2mAQgx5bLYTYo7LJfRnEXuZCeuqVAJDnWBsujvlyXcwImH5DK6MaEjnFUPsipMw8xc4QRtYhHhsKAor+mYmq22rGvsQ//26mYuVqaW0P1vrNw3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693953; c=relaxed/simple;
-	bh=TVIgmQLZgu1IVIhY4vQIn/SpUUbh51uJFWiDfs9lnW4=;
+	s=arc-20240116; t=1743693955; c=relaxed/simple;
+	bh=xcbDClS51o8GOhdcW+Fvtx8/rrFnlarZE3w71Fy9yM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zz9X66XEtRTTnPAVhKt+xlffDjeowpuV30WS8/HqRmFVf6IIOfPWG9tKtRs3K8aZdGDXoZER4NMg2/yKfZ/cVDYuvRJeFTqP9S6xliUH5gHLC0gElq5Ji5AERKQWEk0TyD7E052sIB1SOGQePw8+Jqv3RDL5Sp+qTRM18auLN/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rm3Xc4P4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtHW+dj+wwaGN5xuQZ1ateTGd8cjUnAnliKxC8UN6V+eAINMFdsNheZSzOQNvcxzkv8coBm5n0hrUPvYLpabVWOSWuF3XXeZUYM3B0fPVts2jC8mfSo/rSj3Fh5rtlqXJCTXVsBK2t6rUy6RX57GTtQrFKY8KRSi7ONLy1eUIxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i54xOL3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rm3Xc4P4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008D7C4CEE7;
-	Thu,  3 Apr 2025 15:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i54xOL3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AC4C4CEE3;
+	Thu,  3 Apr 2025 15:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693953;
-	bh=TVIgmQLZgu1IVIhY4vQIn/SpUUbh51uJFWiDfs9lnW4=;
+	s=korg; t=1743693955;
+	bh=xcbDClS51o8GOhdcW+Fvtx8/rrFnlarZE3w71Fy9yM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rm3Xc4P4lr4bkgO6/EgflOAgCKhKFtFqOBgdfeRXf33TktycNv3XKT96HNwDfPeP1
-	 qQ7p/XJt0V8pS4XpL1hgsB/ccqsyqjxz25USQNaEVKSwL2gwEqZSUjbryenj7Nog+W
-	 YU+UEVh7jyur12eEj6eUMGq89LvjU8Xyo310t8sc=
+	b=i54xOL3HuoFoDyBDSPmwPUIOM5egY68vwbLCOhaPn3bqrwpng01KjW9MluYlj7jKC
+	 ahZdaZR8b7wHCylC0EEc+K68eLChD166yH5vS3fMr/G+bn5ja5BQsKNiTt0AvqlZk4
+	 QmDKl1X8+2BStpghBC5en+kgvEXhrQL1lSEPcdPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minjoong Kim <pwn9uin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.13 03/23] atm: Fix NULL pointer dereference
-Date: Thu,  3 Apr 2025 16:20:20 +0100
-Message-ID: <20250403151622.376480539@linuxfoundation.org>
+	Jur van der Burg <jur@avtware.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.13 04/23] nfsd: fix legacy client tracking initialization
+Date: Thu,  3 Apr 2025 16:20:21 +0100
+Message-ID: <20250403151622.403482042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.273788569@linuxfoundation.org>
 References: <20250403151622.273788569@linuxfoundation.org>
@@ -51,125 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minjoong Kim <pwn9uin@gmail.com>
+From: Scott Mayhew <smayhew@redhat.com>
 
-commit bf2986fcf82a449441f9ee4335df19be19e83970 upstream.
+commit de71d4e211eddb670b285a0ea477a299601ce1ca upstream.
 
-When MPOA_cache_impos_rcvd() receives the msg, it can trigger
-Null Pointer Dereference Vulnerability if both entry and
-holding_time are NULL. Because there is only for the situation
-where entry is NULL and holding_time exists, it can be passed
-when both entry and holding_time are NULL. If these are NULL,
-the entry will be passd to eg_cache_put() as parameter and
-it is referenced by entry->use code in it.
+Get rid of the nfsd4_legacy_tracking_ops->init() call in
+check_for_legacy_methods().  That will be handled in the caller
+(nfsd4_client_tracking_init()).  Otherwise, we'll wind up calling
+nfsd4_legacy_tracking_ops->init() twice, and the second time we'll
+trigger the BUG_ON() in nfsd4_init_recdir().
 
-kasan log:
-
-[    3.316691] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006:I
-[    3.317568] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[    3.318188] CPU: 3 UID: 0 PID: 79 Comm: ex Not tainted 6.14.0-rc2 #102
-[    3.318601] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-[    3.319298] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
-[    3.319677] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
-[    3.321220] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
-[    3.321596] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
-[    3.322112] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
-[    3.322643] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
-[    3.323181] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
-[    3.323707] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
-[    3.324185] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
-[    3.325042] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    3.325545] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
-[    3.326430] Call Trace:
-[    3.326725]  <TASK>
-[    3.326927]  ? die_addr+0x3c/0xa0
-[    3.327330]  ? exc_general_protection+0x161/0x2a0
-[    3.327662]  ? asm_exc_general_protection+0x26/0x30
-[    3.328214]  ? vprintk_emit+0x15e/0x420
-[    3.328543]  ? eg_cache_remove_entry+0xa5/0x470
-[    3.328910]  ? eg_cache_remove_entry+0x9a/0x470
-[    3.329294]  ? __pfx_eg_cache_remove_entry+0x10/0x10
-[    3.329664]  ? console_unlock+0x107/0x1d0
-[    3.329946]  ? __pfx_console_unlock+0x10/0x10
-[    3.330283]  ? do_syscall_64+0xa6/0x1a0
-[    3.330584]  ? entry_SYSCALL_64_after_hwframe+0x47/0x7f
-[    3.331090]  ? __pfx_prb_read_valid+0x10/0x10
-[    3.331395]  ? down_trylock+0x52/0x80
-[    3.331703]  ? vprintk_emit+0x15e/0x420
-[    3.331986]  ? __pfx_vprintk_emit+0x10/0x10
-[    3.332279]  ? down_trylock+0x52/0x80
-[    3.332527]  ? _printk+0xbf/0x100
-[    3.332762]  ? __pfx__printk+0x10/0x10
-[    3.333007]  ? _raw_write_lock_irq+0x81/0xe0
-[    3.333284]  ? __pfx__raw_write_lock_irq+0x10/0x10
-[    3.333614]  msg_from_mpoad+0x1185/0x2750
-[    3.333893]  ? __build_skb_around+0x27b/0x3a0
-[    3.334183]  ? __pfx_msg_from_mpoad+0x10/0x10
-[    3.334501]  ? __alloc_skb+0x1c0/0x310
-[    3.334809]  ? __pfx___alloc_skb+0x10/0x10
-[    3.335283]  ? _raw_spin_lock+0xe0/0xe0
-[    3.335632]  ? finish_wait+0x8d/0x1e0
-[    3.335975]  vcc_sendmsg+0x684/0xba0
-[    3.336250]  ? __pfx_vcc_sendmsg+0x10/0x10
-[    3.336587]  ? __pfx_autoremove_wake_function+0x10/0x10
-[    3.337056]  ? fdget+0x176/0x3e0
-[    3.337348]  __sys_sendto+0x4a2/0x510
-[    3.337663]  ? __pfx___sys_sendto+0x10/0x10
-[    3.337969]  ? ioctl_has_perm.constprop.0.isra.0+0x284/0x400
-[    3.338364]  ? sock_ioctl+0x1bb/0x5a0
-[    3.338653]  ? __rseq_handle_notify_resume+0x825/0xd20
-[    3.339017]  ? __pfx_sock_ioctl+0x10/0x10
-[    3.339316]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
-[    3.339727]  ? selinux_file_ioctl+0xa4/0x260
-[    3.340166]  __x64_sys_sendto+0xe0/0x1c0
-[    3.340526]  ? syscall_exit_to_user_mode+0x123/0x140
-[    3.340898]  do_syscall_64+0xa6/0x1a0
-[    3.341170]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[    3.341533] RIP: 0033:0x44a380
-[    3.341757] Code: 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c00
-[    3.343078] RSP: 002b:00007ffc1d404098 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[    3.343631] RAX: ffffffffffffffda RBX: 00007ffc1d404458 RCX: 000000000044a380
-[    3.344306] RDX: 000000000000019c RSI: 00007ffc1d4040b0 RDI: 0000000000000003
-[    3.344833] RBP: 00007ffc1d404260 R08: 0000000000000000 R09: 0000000000000000
-[    3.345381] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-[    3.346015] R13: 00007ffc1d404448 R14: 00000000004c17d0 R15: 0000000000000001
-[    3.346503]  </TASK>
-[    3.346679] Modules linked in:
-[    3.346956] ---[ end trace 0000000000000000 ]---
-[    3.347315] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
-[    3.347737] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
-[    3.349157] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
-[    3.349517] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
-[    3.350103] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
-[    3.350610] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
-[    3.351246] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
-[    3.351785] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
-[    3.352404] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
-[    3.353099] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    3.353544] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
-[    3.354072] note: ex[79] exited with irqs disabled
-[    3.354458] note: ex[79] exited with preempt_count 1
-
-Signed-off-by: Minjoong Kim <pwn9uin@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250322105200.14981-1-pwn9uin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 74fd48739d04 ("nfsd: new Kconfig option for legacy client tracking")
+Reported-by: Jur van der Burg <jur@avtware.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219580
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/mpc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4recover.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/atm/mpc.c
-+++ b/net/atm/mpc.c
-@@ -1314,6 +1314,8 @@ static void MPOA_cache_impos_rcvd(struct
- 	holding_time = msg->content.eg_info.holding_time;
- 	dprintk("(%s) entry = %p, holding_time = %u\n",
- 		mpc->dev->name, entry, holding_time);
-+	if (entry == NULL && !holding_time)
-+		return;
- 	if (entry == NULL && holding_time) {
- 		entry = mpc->eg_ops->add_entry(msg, mpc);
- 		mpc->eg_ops->put(entry);
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -2052,7 +2052,6 @@ static inline int check_for_legacy_metho
+ 		path_put(&path);
+ 		if (status)
+ 			return -ENOTDIR;
+-		status = nn->client_tracking_ops->init(net);
+ 	}
+ 	return status;
+ }
 
 
