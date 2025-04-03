@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE4A24C080;
-	Thu,  3 Apr 2025 15:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B153F24E000;
+	Thu,  3 Apr 2025 15:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693924; cv=none; b=HOMYmPLOFQG3bD8c5jgExhcY7dI1XpfKTbn3KSUtbfCNlXra8P2oVVt6Rgz+1bSSoY7aDRpQeYwIG6YKiLEuwdK5acIjhoA4VbKEiHq92TqGen7o/fRODfCsUfQbw7xzRMslNJQvTlP2RKiXM8rVwkMJYB2WZ8Lgw3+Zf3v9ofU=
+	t=1743693926; cv=none; b=GlIMRmNf2Aogmd/JO/fCk/gmue80HwgjZDH507t+TAvG2Znu78JBp9j5Vz5xT5Il2JZvsmg6kqlDg4guMS3i32KdDIJvP0VdOhppqoctcP8hkC8erWiq3D5y98TsVgLWNu99NTTEqAEcMLkl2eTQyrQ+7PlCSxVINYGhTtoYfPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693924; c=relaxed/simple;
-	bh=uBjQgKlH50tOsrxR54PW1lQVI23OLHyjZ8J7gFsDVGk=;
+	s=arc-20240116; t=1743693926; c=relaxed/simple;
+	bh=ZhKDoyNblYNwz+1EU1vnaF/eQhHGTHf2oRig+lvcXDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BhDNmNaZOp7hLq+uPJxLMO+yfsFPaDGgHqr3iG6XounnMHPGG6UygJzWuop1DS0gTSgC7d4WvemdYiTwi8CjKKRce4w/afdumm1KuWEKEqZFmJydj7wzR4kg4LVbwQx1YQyice1yxEngugXEbhJbWBi+G25ZNE17Feu3J6UEphQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eopB/ODI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjLAH8xujqBTYJAG+H3DF3ektHQi1n4HiP1DCP4m9ZBrRzIXbirI35DHaSbAtaBNzxfojnSzTQzHPYH3kqWMr6NTyMKcnL+2Y89X83z8cUrj71llFTnVviX88ShJbS+A+APxJ67HM/rnEHiwQLTjwrwaQfM1/svi3gluZzlECls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCKq9bVv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eopB/ODI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13BBC4CEE3;
-	Thu,  3 Apr 2025 15:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCKq9bVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47732C4CEE3;
+	Thu,  3 Apr 2025 15:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693924;
-	bh=uBjQgKlH50tOsrxR54PW1lQVI23OLHyjZ8J7gFsDVGk=;
+	s=korg; t=1743693926;
+	bh=ZhKDoyNblYNwz+1EU1vnaF/eQhHGTHf2oRig+lvcXDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eopB/ODI82n+dPVyHxkh5pOxB0X7tgV4T8c+4K3YvKQ+xZm130J+8dBaW6xu+3zJv
-	 TQHaAbftqRm9t5A9d/3M6iJjDdwN2CJw8JfLzUZylfrVQl1aMVHI4wlvIDMiowZSV8
-	 146Bx9JS3M7uWAfQ47ieh+Uo2k4G4uHzN+LV8/o8=
+	b=tCKq9bVvzFF946jMbLh9kuVUDk1+ULT1eXCoq06IiG4dR0iPA45JBNg3oYcsEmzSp
+	 nhnYTXQBks+hiRYtBX/dqvbTV0h4/vHJjWfq0kmcsgjD9azq9IgXT574JoJswzEJrK
+	 qOBROjeEU1JWUOk+cuYmTNMDxPRKckUGTqFgw6ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.13 13/23] tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
-Date: Thu,  3 Apr 2025 16:20:30 +0100
-Message-ID: <20250403151622.656287194@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.13 14/23] net: usb: qmi_wwan: add Telit Cinterion FN990B composition
+Date: Thu,  3 Apr 2025 16:20:31 +0100
+Message-ID: <20250403151622.685613816@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.273788569@linuxfoundation.org>
 References: <20250403151622.273788569@linuxfoundation.org>
@@ -51,57 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit f5cb528d6441eb860250a2f085773aac4f44085e upstream.
+commit 9dba9a45f8ca64a7df32aada14c20a3153af1ac8 upstream.
 
-According to the LPUART reference manual, TXRTSE and TXRTSPOL of MODIR
-register only can be changed when the transmitter is disabled.
-So disable the transmitter before changing RS485 related registers and
-re-enable it after the change is done.
+Add the following Telit Cinterion FN990B composition:
 
-Fixes: 67b01837861c ("tty: serial: lpuart: Add RS485 support for 32-bit uart flavour")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250312022503.1342990-1-sherry.sun@nxp.com
+0x10d0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+        tty (diag) + DPL + QDSS (Qualcomm Debug SubSystem) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10d0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN990
+S:  SerialNumber=43b38f19
+C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Link: https://patch.msgid.link/20250205171649.618162-3-fabio.porcedda@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1484,6 +1484,19 @@ static int lpuart32_config_rs485(struct
- 
- 	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
- 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
-+	u32 ctrl;
-+
-+	/* TXRTSE and TXRTSPOL only can be changed when transmitter is disabled. */
-+	ctrl = lpuart32_read(&sport->port, UARTCTRL);
-+	if (ctrl & UARTCTRL_TE) {
-+		/* wait for the transmit engine to complete */
-+		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+		lpuart32_write(&sport->port, ctrl & ~UARTCTRL_TE, UARTCTRL);
-+
-+		while (lpuart32_read(&sport->port, UARTCTRL) & UARTCTRL_TE)
-+			cpu_relax();
-+	}
-+
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
- 
- 	if (rs485->flags & SER_RS485_ENABLED) {
-@@ -1503,6 +1516,10 @@ static int lpuart32_config_rs485(struct
- 	}
- 
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
-+
-+	if (ctrl & UARTCTRL_TE)
-+		lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+
- 	return 0;
- }
- 
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1368,6 +1368,7 @@ static const struct usb_device_id produc
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10d0, 0)}, /* Telit FN990B */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
 
 
