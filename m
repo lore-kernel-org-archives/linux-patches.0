@@ -1,115 +1,137 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2CE1F09B8
-	for <patches@lists.linux.dev>; Wed,  2 Apr 2025 21:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F873194A59;
+	Thu,  3 Apr 2025 06:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743628179; cv=none; b=LN5mu+K/7nZ/8hR341nCyZHrID6Yv+TabYUJaWrIVk3KZ5w579oYqtdRq/Dp+Mc3vVNl/ta4fVztl7IJVv54vUIa89OtussvKuhL6WgsW1EUBmVPxfVOce42eOo68ML6alKuLj3zU6b8BQy6xqynmKiEZhv460cTdDAgP5jS2Zw=
+	t=1743662985; cv=none; b=XMRoksfGDlDic6P3RWctv6vroHfe8UArRGh7gvpd5U0TbH9YS6S33dk58s2KujIxBwguiEhzKFwnmyULThbGYM0NrcRcu6IVPkz7CNWM2tHoS+6L/Q73nHKoGxdXDh2mXzT+KPF6Iw5mEdiAXhWtvijVM/Uv+Irn5I0OU5qIT48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743628179; c=relaxed/simple;
-	bh=pDdg2pUujsuHDByxjg2MMuLuk8ydhxrM9P7TiksmsU4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ep4SuLNoIn4a2vbhhNfCTA/FJbdCc5DP12UMw3xkojR1jQG9D7fom6dfaCqZNvuJfk2PlQBgRFoSYaFKKqg8QhPfckHwCfkRjHI7WRs3zqnzEvgUm8LYOK/pcU/w8qg6Z+Qmy6ISYDJ3gBDVS2zOTkwjybQGhiz59bQqEGisMTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jaiOAr0S; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jaiOAr0S"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-30db2c2c609so2017241fa.3
-        for <patches@lists.linux.dev>; Wed, 02 Apr 2025 14:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743628176; x=1744232976; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pDdg2pUujsuHDByxjg2MMuLuk8ydhxrM9P7TiksmsU4=;
-        b=jaiOAr0S/SxbUmkLBMqr/OjEdywWtg+g1aXJ1ia6tj8u9AJs27maECmWoxHMk1siiA
-         VBU77BI/Aw2mqB+SFJUbNxAH/MCmfwrq/7r66h3qMVQreCY+6u3SM/okgOyDvICY2gQQ
-         3rqhab5O9nh6sKpHibTyBhMGjRR7gqTlSN6lp0v83Br509hlIp1nEXfGPMFNQInZLoAl
-         Q82/w9ZasVQpcybSGjRzVGf9jtIpR4OlLBqjc1K1wp9YKAw0EKlayVpp/WwtBF/pgSTi
-         8Izq9f+yFGZFrqK1oW+qet1UR9zFhh6derFlWSQNZwfLMyQs2VciPm6nruGzqyCnYC9O
-         /z7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743628176; x=1744232976;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pDdg2pUujsuHDByxjg2MMuLuk8ydhxrM9P7TiksmsU4=;
-        b=uGJEN/lSRz5usUwgVH/uhTzIOLbecz5AdNNwm1zeJS+FlCxrEYz1mG3ZBFpPUcHXTP
-         9EDNcVk4bzGX5XEL7B/fMUEPYQCPKnniOYD9VqZVJ0FhB6uAKG0l4tGt0+FylSaxbBsi
-         GMdjTCyk7PWkknNZBjwzr0CE2fRAhIjWrtp3+MeKK4fABt3NtprnB4hyYEHI1uqF24VB
-         uTfyUY6KT63GecsrLyRlA4WUHsKxjpqMdgBl2dynxIVbLZTsUhi4Yb8304PX2vY31124
-         iBjdBJoUW+lH98HU0HKBh4yaV90nl3x61bzL+Tk3QXzOu3/iUEKgrBrJbBY+sV+aRpbl
-         Mxew==
-X-Forwarded-Encrypted: i=1; AJvYcCV9c8Z+VOSzP1lazkZOIRBvpys2oHnavI5iGwYK9JJVWaae0JkYKqRAXrx4rErN7w4QmNsWpMlV@lists.linux.dev
-X-Gm-Message-State: AOJu0YzP4cahlGsNWwmBC4QRsjW4PgqWPnUmir0K7OonvHYJmeJPljSf
-	w2idriVsItjNEwqMtXVCHsmJSzyekomeUVBStX9IzrUjJNGSLFwHWs7781NMnbgii6bQhJjflQ2
-	eg1ifWki5ZHcc//LrSKLD926m3VE=
-X-Gm-Gg: ASbGncsqtKYCOEfuv+8ip99Gnf7hp01EBe24myp9SxM0VT7oWLo8bqcsfAgRL4Y6s2K
-	O4z5WReQ/a5wZ720tXMWxgeTvr+a8rxv1ZevMUhPcRXwIPFVpF7Xp2V501LadwXg6mragaJiPw4
-	nJxNXbFgYca+AUZGKyoKfmONXnPoWPv9vxHMQGSb6+2A==
-X-Google-Smtp-Source: AGHT+IElNaah8ZmJP3TMXN4F2GDMv6Ww8Z37dhvkzK+TjpR8HD1UlkHAgeiXaBGrv90H564RXc8F3aY70RS/85mde+I=
-X-Received: by 2002:a05:651c:554:b0:30b:f274:d1e2 with SMTP id
- 38308e7fff4ca-30eeccf60e9mr31325291fa.1.1743628175418; Wed, 02 Apr 2025
- 14:09:35 -0700 (PDT)
+	s=arc-20240116; t=1743662985; c=relaxed/simple;
+	bh=vgDK6hP6Qs5vLrru7PJGnb/Mqd8iT5lCj+6AGozYMU8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YLkh6wO+1TgMzdN/OZS3naoqrjgR1Lfi49ssJksp5ns8LkUhwLUkXq33hdEiyC6YY+oO7nLteUhp5Fxw+f8xhEoChV4unr1GzarA3Cjlpjs5Qb7pyzNXqW96wYoAgw+RJ6nHPG5IG1S3WfJi8x8WcF11Qs2/eEGMkxfRkOyT3Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5334o2rd010959;
+	Thu, 3 Apr 2025 06:49:39 GMT
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45sg0q8b10-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Thu, 03 Apr 2025 06:49:39 +0000 (GMT)
+Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Wed, 2 Apr 2025 23:49:38 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Wed, 2 Apr 2025 23:49:35 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
+        <laurent.pinchart@ideasonboard.com>, <dan.scally@ideasonboard.com>,
+        <linux-usb@vger.kernel.org>, <abhishektamboli9@gmail.com>
+Subject: [PATCH 6.6.y] usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
+Date: Thu, 3 Apr 2025 14:49:35 +0800
+Message-ID: <20250403064935.51299-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250401221205.52381-1-ojeda@kernel.org> <D8VPGBN60E61.1Z48FQW6TL3A@proton.me>
- <CANiq72mdvnHvWbVNQbiXSRxd1xrF+A=v0RdJO74xeY3HyhRmcg@mail.gmail.com>
- <CAJ-ks9nAAcoJoFF+qNPbhsM32kOh9u+LGYUwFN_n9qqudB6YhA@mail.gmail.com>
- <CANiq72k36Tvwbzkg6nRdxB8VNRHLf8QzLeCXZq7sEPewccsWNw@mail.gmail.com>
- <CAJ-ks9nfEg=sdn_-q+xOc+k9mU0pdMuumwRb76LXzE3RcOtg6w@mail.gmail.com> <CANiq72mERwbmXYq-pi=WUAZ_VYGcBVS7tzH4P5zSUVCMcL4-CQ@mail.gmail.com>
-In-Reply-To: <CANiq72mERwbmXYq-pi=WUAZ_VYGcBVS7tzH4P5zSUVCMcL4-CQ@mail.gmail.com>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 2 Apr 2025 17:08:58 -0400
-X-Gm-Features: AQ5f1JqXiOgjgjbHiCZGQl5CAfHUvDvozUzbxrFGGJDQOEgolwWGp0Hhm3b85BE
-Message-ID: <CAJ-ks9kJiCGAkzW9M6q-62kcyvwBea5Zt2EoeeY0T3aN7jK+ng@mail.gmail.com>
-Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-GUID: Rwu53oHxXM2sWj_BOR1z2ne_zHhppLce
+X-Proofpoint-ORIG-GUID: Rwu53oHxXM2sWj_BOR1z2ne_zHhppLce
+X-Authority-Analysis: v=2.4 cv=G+4cE8k5 c=1 sm=1 tr=0 ts=67ee2f83 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=ag1SF4gXAAAA:8 a=t7CeM3EgAAAA:8 a=REYqGfaRdox0a-FwMx0A:9
+ a=Yupwre4RP9_Eg_Bd0iYG:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-03_02,2025-04-02_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ spamscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 clxscore=1011 mlxscore=0 adultscore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504030033
 
-On Wed, Apr 2, 2025 at 4:29=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Wed, Apr 2, 2025 at 6:41=E2=80=AFPM Tamir Duberstein <tamird@gmail.com=
-> wrote:
-> >
-> > The counterfactual is hard to prove - you don't know what true
-> > positives the lint would catch. In my opinion disabling lints is
-> > risking throwing the baby out with the bathwater.
->
-> It is true that it is not easy to know what we will exactly lose right
-> now (apart from what it claims in the docs and its examples), but one
-> can easily test enabling it in a couple cycles and we would have some
-> data from kernel code.
->
-> To be clear, disabling now does not mean forever -- we can reevaluate
-> with that data and possible improvements to the lint that happened
-> meanwhile (sometimes they get improved or split due to feedback).
+From: Abhishek Tamboli <abhishektamboli9@gmail.com>
 
-My experience in industrial settings is that this happens very rarely.
+[ Upstream commit a7bb96b18864225a694e3887ac2733159489e4b0 ]
 
-> By the way, the lint is in "pedantic" in Clippy and disabled by
-> default -- so we are "only" disabling w.r.t. what we do nowadays.
+Fix potential dereferencing of ERR_PTR() in find_format_by_pix()
+and uvc_v4l2_enum_format().
 
-> In any case, my main concern is cost: we already require a lot from
-> Rust kernel developers, typically more than in C, and while one goal
-> of the project is trying to see how far we can go on being strict
-> about things like lints, I worry we may overdo it at times.
+Fix the following smatch errors:
 
-=F0=9F=91=8D
+drivers/usb/gadget/function/uvc_v4l2.c:124 find_format_by_pix()
+error: 'fmtdesc' dereferencing possible ERR_PTR()
 
-I don't have any new information to inject into this debate. It's a
-judgement call.
+drivers/usb/gadget/function/uvc_v4l2.c:392 uvc_v4l2_enum_format()
+error: 'fmtdesc' dereferencing possible ERR_PTR()
+
+Also, fix similar issue in uvc_v4l2_try_format() for potential
+dereferencing of ERR_PTR().
+
+Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
+Link: https://lore.kernel.org/r/20240815102202.594812-1-abhishektamboli9@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ drivers/usb/gadget/function/uvc_v4l2.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/gadget/function/uvc_v4l2.c b/drivers/usb/gadget/function/uvc_v4l2.c
+index 3f0a9795c0d4..0195625bef53 100644
+--- a/drivers/usb/gadget/function/uvc_v4l2.c
++++ b/drivers/usb/gadget/function/uvc_v4l2.c
+@@ -121,6 +121,9 @@ static struct uvcg_format *find_format_by_pix(struct uvc_device *uvc,
+ 	list_for_each_entry(format, &uvc->header->formats, entry) {
+ 		const struct uvc_format_desc *fmtdesc = to_uvc_format(format->fmt);
+ 
++		if (IS_ERR(fmtdesc))
++			continue;
++
+ 		if (fmtdesc->fcc == pixelformat) {
+ 			uformat = format->fmt;
+ 			break;
+@@ -240,6 +243,7 @@ uvc_v4l2_try_format(struct file *file, void *fh, struct v4l2_format *fmt)
+ 	struct uvc_video *video = &uvc->video;
+ 	struct uvcg_format *uformat;
+ 	struct uvcg_frame *uframe;
++	const struct uvc_format_desc *fmtdesc;
+ 	u8 *fcc;
+ 
+ 	if (fmt->type != video->queue.queue.type)
+@@ -265,7 +269,10 @@ uvc_v4l2_try_format(struct file *file, void *fh, struct v4l2_format *fmt)
+ 	fmt->fmt.pix.field = V4L2_FIELD_NONE;
+ 	fmt->fmt.pix.bytesperline = uvc_v4l2_get_bytesperline(uformat, uframe);
+ 	fmt->fmt.pix.sizeimage = uvc_get_frame_size(uformat, uframe);
+-	fmt->fmt.pix.pixelformat = to_uvc_format(uformat)->fcc;
++	fmtdesc = to_uvc_format(uformat);
++	if (IS_ERR(fmtdesc))
++		return PTR_ERR(fmtdesc);
++	fmt->fmt.pix.pixelformat = fmtdesc->fcc;
+ 	fmt->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
+ 	fmt->fmt.pix.priv = 0;
+ 
+@@ -375,6 +382,9 @@ uvc_v4l2_enum_format(struct file *file, void *fh, struct v4l2_fmtdesc *f)
+ 		return -EINVAL;
+ 
+ 	fmtdesc = to_uvc_format(uformat);
++	if (IS_ERR(fmtdesc))
++		return PTR_ERR(fmtdesc);
++
+ 	f->pixelformat = fmtdesc->fcc;
+ 
+ 	return 0;
+-- 
+2.34.1
+
