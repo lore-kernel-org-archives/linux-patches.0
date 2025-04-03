@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBBD250C0D;
-	Thu,  3 Apr 2025 15:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639CA250C02;
+	Thu,  3 Apr 2025 15:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693893; cv=none; b=bwjnCtDwg9hV9wshjnuicNM3bvLh+x5n63qGK1qsuk54Cxw9m617Ivq1PiZ2EzcDRGxv0Cn163F5WlpfYUjgO90AIyWwldM41wIrtvh2zGfaaUUgcpd4SPTIHhr5osQej281PO/Zc4/KwXNaKhkN1XH3mw5CVi35Zkp7Nvpo0mQ=
+	t=1743693895; cv=none; b=WQsYmxWea2U48+mSz6DkNatWo9oiqlRuiOySF3Gnspn8hE+TqwMWRhKRUje9XHaUi7RAzKrQy+zlbBGZhn4VPFkGjG0MuG+vBPJz8Iw0QOClcAnTcfKPFaI0Ns/Uzx+VKRIowHnSsaj65kMt4ZipsRY1nWzblRmMQERcpugX3iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693893; c=relaxed/simple;
-	bh=fbX0CDd9uqFOBvFZ2DT9QH6z63fI0psyfNtQnD90VPQ=;
+	s=arc-20240116; t=1743693895; c=relaxed/simple;
+	bh=yl8hg6v8kPxZ4c3OcXR15+iW//979YfYDElzGz4y9SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVvgclD9OFcTPw4Q8y1epuY3bcbl8xYlnXPZOc3MS4amXnlvBkvle8QHFHFh1PBl40uOTZyL/0EM3LcEcdk+dIVhwIwHqlafL3p9AEOFzy/h16OS66z5WX7zExu9EjUL8b28AxQD4bGEjTgQUkgw1zLKW92z7qPVoCStaNOWJXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+kJ8Wae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5p4ykAQnlSJqUR5zQZ8guPEKn/JniOpQVBBULYPzNI+ldkfKA7K9CoeLDkJKL3bcgDqTZo/K/HeM5zNnRYCVCWRgV+/JDL7/2vqoBhX3G4kkEoTwGobJB5B0a7n1GtzmXMrsWDtLdmT1FOktOiJJZd0x3CoB+UhsS+1ahXrRAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4p53hSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+kJ8Wae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25572C4CEE5;
-	Thu,  3 Apr 2025 15:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4p53hSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CE1C4CEE3;
+	Thu,  3 Apr 2025 15:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693892;
-	bh=fbX0CDd9uqFOBvFZ2DT9QH6z63fI0psyfNtQnD90VPQ=;
+	s=korg; t=1743693894;
+	bh=yl8hg6v8kPxZ4c3OcXR15+iW//979YfYDElzGz4y9SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+kJ8WaefRpRi7bEtAOJmps7Y+WnwRCQvVg1AUZS1bVgioqwkw5R9oSlM+WRI2Q1H
-	 YyE4qmUpMbFjnh+pVtapWL3bL6xFNKZ1mg6C4Xw4T5Q1ukduuF5mIPKaOdsCuOE38c
-	 zdg/x/Dx/JgCUYRp3CcMac1jRrf13jKFfEsRCnmo=
+	b=a4p53hStFUHtM1rifbvO3xnRJrSzsr4R5xyfHwOFglTGq5V2PAq9WhhXbFuyLnnYl
+	 c7cxGRpYrlRKg6/osBmsfQO4e6PIzjHmxAD1ixmF0SGzeNt5roie9HfdEsLYV2Xf4u
+	 lbIYhcCEYdze6RZo8FF8BJjMBkf0KcUFfBaBU8uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.12 05/22] drm/amd/display: Dont write DP_MSTM_CTRL after LT
-Date: Thu,  3 Apr 2025 16:20:15 +0100
-Message-ID: <20250403151622.197488472@linuxfoundation.org>
+	Maxim Mikityanskiy <maxim@isovalent.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 06/22] netfilter: socket: Lookup orig tuple for IPv6 SNAT
+Date: Thu,  3 Apr 2025 16:20:16 +0100
+Message-ID: <20250403151622.225282507@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.055059925@linuxfoundation.org>
 References: <20250403151622.055059925@linuxfoundation.org>
@@ -54,70 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-commit bc068194f548ef1f230d96c4398046bf59165992 upstream.
+commit 932b32ffd7604fb00b5c57e239a3cc4d901ccf6e upstream.
 
-[Why]
-Observe after suspend/resme, we can't light up mst monitors under specific
-mst hub. The reason is that driver still writes DPCD DP_MSTM_CTRL after LT.
-It's forbidden even we write the same value for that dpcd register.
+nf_sk_lookup_slow_v4 does the conntrack lookup for IPv4 packets to
+restore the original 5-tuple in case of SNAT, to be able to find the
+right socket (if any). Then socket_match() can correctly check whether
+the socket was transparent.
 
-[How]
-We already resume the mst branch device dpcd settings during
-resume_mst_branch_status(). Leverage drm_dp_mst_topology_queue_probe() to
-only probe the topology, not calling drm_dp_mst_topology_mgr_resume() which
-will set DP_MSTM_CTRL as well.
+However, the IPv6 counterpart (nf_sk_lookup_slow_v6) lacks this
+conntrack lookup, making xt_socket fail to match on the socket when the
+packet was SNATed. Add the same logic to nf_sk_lookup_slow_v6.
 
-Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+IPv6 SNAT is used in Kubernetes clusters for pod-to-world packets, as
+pods' addresses are in the fd00::/8 ULA subnet and need to be replaced
+with the node's external address. Cilium leverages Envoy to enforce L7
+policies, and Envoy uses transparent sockets. Cilium inserts an iptables
+prerouting rule that matches on `-m socket --transparent` and redirects
+the packets to localhost, but it fails to match SNATed IPv6 packets due
+to that missing conntrack lookup.
+
+Closes: https://github.com/cilium/cilium/issues/37932
+Fixes: eb31628e37a0 ("netfilter: nf_tables: Add support for IPv6 NAT")
+Signed-off-by: Maxim Mikityanskiy <maxim@isovalent.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ net/ipv6/netfilter/nf_socket_ipv6.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3231,8 +3231,7 @@ static int dm_resume(void *handle)
- 	struct dm_atomic_state *dm_state = to_dm_atomic_state(dm->atomic_obj.state);
- 	enum dc_connection_type new_connection_type = dc_connection_none;
- 	struct dc_state *dc_state;
--	int i, r, j, ret;
--	bool need_hotplug = false;
-+	int i, r, j;
- 	struct dc_commit_streams_params commit_params = {};
+--- a/net/ipv6/netfilter/nf_socket_ipv6.c
++++ b/net/ipv6/netfilter/nf_socket_ipv6.c
+@@ -103,6 +103,10 @@ struct sock *nf_sk_lookup_slow_v6(struct
+ 	struct sk_buff *data_skb = NULL;
+ 	int doff = 0;
+ 	int thoff = 0, tproto;
++#if IS_ENABLED(CONFIG_NF_CONNTRACK)
++	enum ip_conntrack_info ctinfo;
++	struct nf_conn const *ct;
++#endif
  
- 	if (dm->dc->caps.ips_support) {
-@@ -3427,23 +3426,16 @@ static int dm_resume(void *handle)
- 		    aconnector->mst_root)
- 			continue;
- 
--		ret = drm_dp_mst_topology_mgr_resume(&aconnector->mst_mgr, true);
--
--		if (ret < 0) {
--			dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
--					aconnector->dc_link);
--			need_hotplug = true;
--		}
-+		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
+ 	tproto = ipv6_find_hdr(skb, &thoff, -1, NULL, NULL);
+ 	if (tproto < 0) {
+@@ -136,6 +140,25 @@ struct sock *nf_sk_lookup_slow_v6(struct
+ 		return NULL;
  	}
- 	drm_connector_list_iter_end(&iter);
  
--	if (need_hotplug)
--		drm_kms_helper_hotplug_event(ddev);
--
- 	amdgpu_dm_irq_resume_late(adev);
- 
- 	amdgpu_dm_smu_write_watermarks_table(adev);
- 
-+	drm_kms_helper_hotplug_event(ddev);
++#if IS_ENABLED(CONFIG_NF_CONNTRACK)
++	/* Do the lookup with the original socket address in
++	 * case this is a reply packet of an established
++	 * SNAT-ted connection.
++	 */
++	ct = nf_ct_get(skb, &ctinfo);
++	if (ct &&
++	    ((tproto != IPPROTO_ICMPV6 &&
++	      ctinfo == IP_CT_ESTABLISHED_REPLY) ||
++	     (tproto == IPPROTO_ICMPV6 &&
++	      ctinfo == IP_CT_RELATED_REPLY)) &&
++	    (ct->status & IPS_SRC_NAT_DONE)) {
++		daddr = &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.src.u3.in6;
++		dport = (tproto == IPPROTO_TCP) ?
++			ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.src.u.tcp.port :
++			ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple.src.u.udp.port;
++	}
++#endif
 +
- 	return 0;
+ 	return nf_socket_get_sock_v6(net, data_skb, doff, tproto, saddr, daddr,
+ 				     sport, dport, indev);
  }
- 
 
 
