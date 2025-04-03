@@ -1,128 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439A41514F6;
-	Thu,  3 Apr 2025 16:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5C419ABD4
+	for <patches@lists.linux.dev>; Thu,  3 Apr 2025 17:01:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743698300; cv=none; b=rzhDiDJM297zuqoX2zsF4C1qPQxAOBpNNm7/luJrjjVY4ytNgKSXO+Rl0rXONpG7sjodvYQug4P/+GWOozNbb79+JgE6ahrtHq3/OIUhD2ISo5nOZakxZtj5rrLNORC6MfPoAfWRy3jG28oDn43CK61qqb9sB5aEdvDYks0YkZM=
+	t=1743699671; cv=none; b=G0bCOmlayHWVv9x2uGmx0GRDL3qxCYx/VyxFc/tUuDJVUuPMgDIiiQ+GEZbKBbPx2LRD77I+N3QOjWWK9A+O9W3fI1PA/aindAQXGoCoMwnQiyPppoMtK+CHoycpE33ZUelOLts0pPizksz/gq5VXQ2DsK4uEIxbO3IsPis0xlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743698300; c=relaxed/simple;
-	bh=KtUfjAG1/WEauaqQuciEUvXMo2dub6bMxhzIcaq1sR0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Hs/y6pGsackX6Jr4WY/0XDKVJU45l5DCK6NKGJTd0oyaoqn4FqPCoS1UJlEBeIll+olWEythBE/xsiJzIDx9YkY8pfKmAPMJkr10shyGmSd+RkusIYpgEzXx09UlzTiRQCtY56pfnVwqgq5/dv3z8p8h1mB4FV1kf60EGLZL/N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dyb1tNEA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743699671; c=relaxed/simple;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O9RDqOr56VIdg2kxeezqvwH758VgbBqdFNkTO8SdIm5/3m0hq/imFN7lYIvvfk+ja5dCq4PtrCuxntC7ai1dtg9G/w0DdsNXcoRr3zfEWrSSkbU2uBtUKgz/HWOeEj7pbSztaCHKgP9kTKYeG+IVDafdxHDnZRI0JMdiISe94EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=Zms8i2fm; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dyb1tNEA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF80C4CEE3;
-	Thu,  3 Apr 2025 16:38:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1743698299;
-	bh=KtUfjAG1/WEauaqQuciEUvXMo2dub6bMxhzIcaq1sR0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Dyb1tNEAiREoivi+HcddE7uM+5xkKAqaXKimQ8xAMYqnHxWd5mV/1NJhyLOBETnW4
-	 M8qOqq+DxgjSF8Tnkv7VJiiMVObDS86dPsFyLv2HvIgNAo3U4p7HBqXf8QLHxL6Gox
-	 neTTAZKOcayi+k9lQ47oSrcB4vNuK7VOIbqlfQ4EouNoEsmnSzAqFGDO8rigCcgFKv
-	 kZ2a10HJSGlT/yrsMooCvfeKoobktNtq1YKPx0aXf5GcPfoQl5cR4wKU8ssKGsMnuZ
-	 9VGUAVnqX6HpurACGpsGxjP6c22IC0j4AJ8f2AoG2GVLJH72bKkr/vToG250BSGWs5
-	 /7yy43JcQYYqw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Tamir Duberstein <tamird@gmail.com>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: disable `clippy::needless_continue`
-Date: Thu,  3 Apr 2025 18:38:05 +0200
-Message-ID: <20250403163805.67770-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="Zms8i2fm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1743699630; x=1744304430; i=rwarsow@gmx.de;
+	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Zms8i2fmEVHkNLvOVC772dTfq4BPp1GxXFZMDDzOPcpca7FDOEoKMR4PbKX5uSts
+	 a25CQrp1mrhEjmyTNu3T57OROnd916mp83UbQfiCs+41qzvOIG29Q//xW3JTdOWzk
+	 ZCPzhIYZkTypcKsrzC/fnfwCVMBIVh+4qQdRKqUg5hliA8lPF4FLSJPHpjC6/9n1L
+	 xT/lG6KtPTzHrJGMcFySOUlUEPxMetciwvovixi0Ag4bkh0N7esPFazbE883hDF1F
+	 w5mrssR8H5/NXR4kGIs5IL++1mrAaPAeyGXPmPyJqZodKB0SS2nDaBiir4wqSP6b6
+	 YdL1qfSqFcN6TtvW4g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.33.101]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhlV-1tqAe10XAt-003MNp; Thu, 03
+ Apr 2025 19:00:30 +0200
+Message-ID: <a97032cb-a7ab-414c-90e5-6873c93b20a4@gmx.de>
+Date: Thu, 3 Apr 2025 19:00:28 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.14 00/21] 6.14.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250403151621.130541515@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:Ork7G4DgS4w4ErC+0ebWd9FpEJ4Mmay2DPjVYMfJ1Hk6RzLrriU
+ kFg07LBbIMaYKm0lzskbYGYO0woOCLPutmHSfditdNZ5GgwQAfE/O5DrqDwOkQpinUfaxtR
+ kwlNAOkCVxJ9by6b2/DVw7sIgbXBdZ8Qf+KxQpS/lEv1C3f4YTejyjiffQHIPw4MP+jaJZ9
+ Z1Ha+FtjgFKsH3e3to7wQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:RyaGdigqWao=;rS2JsGpWwfC1mXnhqpc5Ff+d5Kf
+ /aFlpbhBVUekSUamhab+Dv58n1cg/1NVtA5Gq6UhW6UL5MpxwuG6OQqipe2vVnVKOB+vpzDsz
+ qzVfgpedgnOLcpefC9LBPCN7Qs+zbR0461t6RUKo/y/8KVAF8ei76GSGYAWQL4kkibRC2wpTC
+ 9AbsyuqOUHP7SrRODL67LX+nt9umhegoWoG0jzZ5GKv2RgN2HZBlVo2orObWThcO6nblXjSPw
+ xXKUozHWi14sa0bngBA2ZVp2VUcxu2+5OvPRM3PaztSBbW6VZ/GdC6074iM29AiFxkUwMoLsJ
+ MXia/yox0bKkoGmGHhtwCiDkEbNCz/NKk71HuP847a7FATUTyNuQdEO6ON7DiaiSWlX0+e8KX
+ QlT0lnKEjB3Wf137v+TC36qz5PN6W8ihGbAR8vlhRTpgcUMCv5JtKd6Yfxq6Itb9CMm4Tmwyc
+ ODfyVcJHIJ1C10B9Pajm0Cv7URFc8fQ1QlYwNRkOlZ0KPboYMrpmIAuavwHfFhYdSz2RVT0BR
+ GTXzvUJ/ngYdjDiB40nnvTGybnMFdQLEsa7lrd7pfR/RL/1Sl4A9dYP33pTHcdlJOEFCjL13L
+ GW/W2V/c7+kF6otlqZPd0qfhokRxp+Hb1Frjv7jow5xltUj2sL6PEUDSLI/znQNY2Mg2dTps6
+ MSpHYV3iLFpG15y12mGOmzamTGhBj6UcEVaNlFTPFOFUX3x2+JL7HoUqrnxsozewBkdqRUq+X
+ SgP2ZZunWQ/KDVlPN4Ry2mb+cIrY+b+qstEzE6V0TtWMJcHkSFVDLPg2/egk23lEpoMeH8y1X
+ 1yOL2DkUZVn9hkpsDQq6j8Lm30TAouYFZ5R/rBEvwAyNrAx17vC8pRZBrgypmdtjhOW/cKarB
+ UzTcRbwbrKCf2KUz1wgYlQJB1vJ37J5znG6+vfLL+hTYj7WYmr6gjF0z/uOj3XxEcLIpQ/YcT
+ HzQB7UWJkeLiaCOjshX9T3xHCMdjJ4UBcJqoYXT4JHNnuNLA8iw0ckN+Y9v2BYwWbsSGmTrQ+
+ yYDxp7xVnyir2h5HA1CzHQ9LiTBdXm1JA+uoVKakBEd1DQO6w6w5CnJsovxRYQKgEVwiTh0hr
+ b2kH5qBesYcDxKlaEvMuiVUAEKNw/JhgVes4Mhh+3JRzzbgDZ7A/Ykf83U8bEUdbh9j8f8rci
+ bNaSrvyp20FfLrhgGjsMtg1uHXZlfDfak/SV0OM/0uMwtikGbEpjyfc4Ur7vLkWE0Bt+06JKm
+ +OV+JrKEpzlwKBgjJPvegRHxsFEad2eJK4LFXtbndR8aSXtp09cd4TAwMM32D4H6PbIzi7nQk
+ +1CvL1GSpMuLrlzh+Zj1HFcXOu6a9wDOUM/Ftj2sdZX4dXGjor3WKCW6z7pk/3MWjqmHoR/68
+ SubqHcqEUCRCZxrd80P/aOHBskC2YUZHwjuvA48KRqHc6+M1D7W1ey88J8rQDPx2+VgGPKKPp
+ nM6yKMbt19p/ThKd1miGuPPv+wHU=
 
-Starting with Rust 1.86.0, Clippy's `needless_continue` lint complains
-about the last statement of a loop [1], including cases like:
+Hi Greg
 
-    while ... {
-        match ... {
-            ... if ... => {
-                ...
-                return ...;
-            }
-            _ => continue,
-        }
-    }
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-as well as nested `match`es in a loop.
+Thanks
 
-One solution is changing `continue` for `()` [2], but arguably using
-`continue` shows the intent better when it is alone in an arm like that.
-
-Moreover, I am not sure we want to force people to try to find other
-ways to write the code either, in cases when that applies.
-
-In addition, the help text does not really apply in the new cases the
-lint has introduced, e.g. here one cannot simply "drop" the expression:
-
-    warning: this `continue` expression is redundant
-      --> rust/macros/helpers.rs:85:18
-       |
-    85 |             _ => continue,
-       |                  ^^^^^^^^
-       |
-       = help: consider dropping the `continue` expression
-       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_continue
-       = note: requested on the command line with `-W clippy::needless-continue`
-
-The examples in the documentation do not show a case like this, either,
-so the second "help" line does not help.
-
-In addition, locally disabling the lint is not possible with `expect`,
-since the behavior differs across versions. Using `allow` would be
-possible, but, even then, an extra line just for this is a bit too much,
-especially if there are other ways to satisfy the lint.
-
-Finally, the lint is still in the "pedantic" category and disabled by
-default by Clippy.
-
-Thus disable the lint, at least for the time being.
-
-Feedback was submitted to upstream Clippy, in case this can be improved
-or perhaps the lint split into several [3].
-
-Link: https://github.com/rust-lang/rust-clippy/pull/13891 [1]
-Link: https://lore.kernel.org/rust-for-linux/20250401221205.52381-1-ojeda@kernel.org/ [2]
-Link: https://github.com/rust-lang/rust-clippy/issues/14536 [3]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- Makefile | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index d138b17b8840..2c33d25c505c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -480,7 +480,6 @@ export rust_common_flags := --edition=2021 \
- 			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
- 			    -Wclippy::needless_bitwise_bool \
--			    -Wclippy::needless_continue \
- 			    -Aclippy::needless_lifetimes \
- 			    -Wclippy::no_mangle_with_rust_abi \
- 			    -Wclippy::undocumented_unsafe_blocks \
-
-base-commit: a2cc6ff5ec8f91bc463fd3b0c26b61166a07eb11
--- 
-2.49.0
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
 
