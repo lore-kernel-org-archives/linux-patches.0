@@ -1,41 +1,41 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F873194A59;
-	Thu,  3 Apr 2025 06:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DB01A317E;
+	Thu,  3 Apr 2025 06:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743662985; cv=none; b=XMRoksfGDlDic6P3RWctv6vroHfe8UArRGh7gvpd5U0TbH9YS6S33dk58s2KujIxBwguiEhzKFwnmyULThbGYM0NrcRcu6IVPkz7CNWM2tHoS+6L/Q73nHKoGxdXDh2mXzT+KPF6Iw5mEdiAXhWtvijVM/Uv+Irn5I0OU5qIT48=
+	t=1743663003; cv=none; b=NvBOrfHe4rZNIkVeeoCKWJ2nKXsOb5GNh4v9mx6W5B7kob73nmvcHycuSVfhTjANfWz13gnoH+ZwGAMXYnLN9Uz/saDF4q4Vg6+warFSaRPl7jo8iRl7K9sIh+h4bwwJQz6n4d356qJJDFVdUoFvCS/hJKgLUpxTDX04C14wdzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743662985; c=relaxed/simple;
-	bh=vgDK6hP6Qs5vLrru7PJGnb/Mqd8iT5lCj+6AGozYMU8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YLkh6wO+1TgMzdN/OZS3naoqrjgR1Lfi49ssJksp5ns8LkUhwLUkXq33hdEiyC6YY+oO7nLteUhp5Fxw+f8xhEoChV4unr1GzarA3Cjlpjs5Qb7pyzNXqW96wYoAgw+RJ6nHPG5IG1S3WfJi8x8WcF11Qs2/eEGMkxfRkOyT3Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
+	s=arc-20240116; t=1743663003; c=relaxed/simple;
+	bh=51AyStNrNztTeEQnw76esYXCUc6hXZdkbZ+IyVSnUWU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=s3Byn9i/PFArQbuoKl94jVL6/onM6wwvn+KiVYjQtgu7psNcMWWFp4sHuTlKByH91H4dTSwDm1DWRXHP1SkKGcliSIbTbAG5yWEC6TeNzXJe9My0JRdESe8EheGUoelNZJolvL7SYlOZmRFWnXIwZnmbgqnSVptelSJhvovf3xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5334o2rd010959;
-	Thu, 3 Apr 2025 06:49:39 GMT
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5334aGiQ007487;
+	Wed, 2 Apr 2025 23:49:51 -0700
 Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45sg0q8b10-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45sg1u8bap-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 03 Apr 2025 06:49:39 +0000 (GMT)
+	Wed, 02 Apr 2025 23:49:51 -0700 (PDT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Wed, 2 Apr 2025 23:49:38 -0700
+ 15.1.2507.43; Wed, 2 Apr 2025 23:49:51 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Wed, 2 Apr 2025 23:49:35 -0700
+ 15.1.2507.43 via Frontend Transport; Wed, 2 Apr 2025 23:49:48 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
         <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
         <laurent.pinchart@ideasonboard.com>, <dan.scally@ideasonboard.com>,
         <linux-usb@vger.kernel.org>, <abhishektamboli9@gmail.com>
-Subject: [PATCH 6.6.y] usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
-Date: Thu, 3 Apr 2025 14:49:35 +0800
-Message-ID: <20250403064935.51299-1-jianqi.ren.cn@windriver.com>
+Subject: [PATCH 6.1.y] usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
+Date: Thu, 3 Apr 2025 14:49:47 +0800
+Message-ID: <20250403064947.51317-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,18 +45,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-GUID: Rwu53oHxXM2sWj_BOR1z2ne_zHhppLce
-X-Proofpoint-ORIG-GUID: Rwu53oHxXM2sWj_BOR1z2ne_zHhppLce
-X-Authority-Analysis: v=2.4 cv=G+4cE8k5 c=1 sm=1 tr=0 ts=67ee2f83 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=ag1SF4gXAAAA:8 a=t7CeM3EgAAAA:8 a=REYqGfaRdox0a-FwMx0A:9
+X-Proofpoint-ORIG-GUID: 1JhZngRbH0zePc2-NqpBWPa2zO1bb18Y
+X-Authority-Analysis: v=2.4 cv=Aqnu3P9P c=1 sm=1 tr=0 ts=67ee2f8f cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=ag1SF4gXAAAA:8 a=t7CeM3EgAAAA:8 a=REYqGfaRdox0a-FwMx0A:9
  a=Yupwre4RP9_Eg_Bd0iYG:22 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: 1JhZngRbH0zePc2-NqpBWPa2zO1bb18Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-03_02,2025-04-02_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- spamscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 clxscore=1011 mlxscore=0 adultscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
  definitions=main-2504030033
 
 From: Abhishek Tamboli <abhishektamboli9@gmail.com>
@@ -89,12 +89,12 @@ Verified the build test
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/gadget/function/uvc_v4l2.c b/drivers/usb/gadget/function/uvc_v4l2.c
-index 3f0a9795c0d4..0195625bef53 100644
+index a189b08bba80..5aeeaff7b283 100644
 --- a/drivers/usb/gadget/function/uvc_v4l2.c
 +++ b/drivers/usb/gadget/function/uvc_v4l2.c
 @@ -121,6 +121,9 @@ static struct uvcg_format *find_format_by_pix(struct uvc_device *uvc,
  	list_for_each_entry(format, &uvc->header->formats, entry) {
- 		const struct uvc_format_desc *fmtdesc = to_uvc_format(format->fmt);
+ 		struct uvc_format_desc *fmtdesc = to_uvc_format(format->fmt);
  
 +		if (IS_ERR(fmtdesc))
 +			continue;
@@ -122,8 +122,8 @@ index 3f0a9795c0d4..0195625bef53 100644
  	fmt->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
  	fmt->fmt.pix.priv = 0;
  
-@@ -375,6 +382,9 @@ uvc_v4l2_enum_format(struct file *file, void *fh, struct v4l2_fmtdesc *f)
- 		return -EINVAL;
+@@ -378,6 +385,9 @@ uvc_v4l2_enum_format(struct file *file, void *fh, struct v4l2_fmtdesc *f)
+ 		f->flags |= V4L2_FMT_FLAG_COMPRESSED;
  
  	fmtdesc = to_uvc_format(uformat);
 +	if (IS_ERR(fmtdesc))
@@ -131,7 +131,7 @@ index 3f0a9795c0d4..0195625bef53 100644
 +
  	f->pixelformat = fmtdesc->fcc;
  
- 	return 0;
+ 	strscpy(f->description, fmtdesc->name, sizeof(f->description));
 -- 
 2.34.1
 
