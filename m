@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CD024DFE8;
-	Thu,  3 Apr 2025 15:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF942512DE;
+	Thu,  3 Apr 2025 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693837; cv=none; b=TiOJdpthrsIJDDEhjE5cUdu2pd4OZphpB8LcL43WTmTM/XpteeYG43CEEAkyBglvOROfRUt04Ehq79Y8QHo21vnO7N0drVB40vl/SyGkE3dbsitYdbmRYG9ZWnmZGGE7kyyrPksZZHNPTQ19iWNfaJk8Puzrssob3Ma+3wYMI2U=
+	t=1743693839; cv=none; b=Xl5oYrt0sxIZ/fYYhzH597iVtFjSSTBoKNQP+MI+rBMf6auqx3yWN30QUU8dTpn12MZWdd4oyxhhce6eYzPrwSctnaqSAutyEPbHUfD9mEVkqB4axDCQHNojtZ48c9uK64zGo2oRFgAwIwgJjVdTRM+bhdONvyJY7G4j0WffLHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693837; c=relaxed/simple;
-	bh=JSgC1vWwNoATHuYemnQaXipqO3Tq9GOKfKflIxuLuHo=;
+	s=arc-20240116; t=1743693839; c=relaxed/simple;
+	bh=fS4dbSudEvTWbyGUtjMYKQW3Cu2jKCcGXjzDhtRyeg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJHmkwVdia5aYt0DvvG9l2MWjGXJzKFH+f6SSmNpJeR7/Dm2PxpWIr6eDbGibAK92OFqF6FxgzKabt2kpzYBDmQuhRq9tWGyjRRXzVX3//ZP7FPZDMszuKndGdEZSEKL73KwfA6JOh8qhIl8nBj/97UtgN2JyYo3TQCnarz4qPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwJUeOLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fim1Uwi8W3quJMu8TLOX9PFCvDJ/nWNWkKUzsz+2I5JXZ/kqwFRakNmI84aTwEC2IKMhGbiKMm8+1YngwevKLXlxdO4Ea8G44mZAkJt7Et8ZUAMNs+EsJJNmkUnRncXWkoNFA088pS6FiL8I2evGfMK2QQtdiBC4BVADnz3WvQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hwg14mVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwJUeOLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459DCC4CEE3;
-	Thu,  3 Apr 2025 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hwg14mVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA305C4CEE5;
+	Thu,  3 Apr 2025 15:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693836;
-	bh=JSgC1vWwNoATHuYemnQaXipqO3Tq9GOKfKflIxuLuHo=;
+	s=korg; t=1743693839;
+	bh=fS4dbSudEvTWbyGUtjMYKQW3Cu2jKCcGXjzDhtRyeg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwJUeOLKFl8bSsrU86ZVr0yoI05dIG8ylaEh9h94QexPOXXLiiGIchIXweNDtgIfx
-	 LnU54yARLBZw8BNqKJwgFUwege4TBKzwz8Xu847EGMEk4WQdyXGvogvtpl28sjahal
-	 R0iL9rTxr9bEQcl2E8TmkCJhhCI9B/B3UzpEaPhA=
+	b=Hwg14mVl9W3RuyJl62rgtsnQYn6qv6AalDbsQGfhcRAvKOgrP/UoO45rxYFBmU4oJ
+	 Fk4e18F91fWX+U1++P7tD5RND+p7g3DE9Fl2tg35m7jBcrmgvCj8oPt7ooCCju2C+F
+	 ++CHDCRd8GdfkAW/ADUif67wkkYu7VfG/Gwgh9Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andres Traumann <andres.traumann.01@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.14 07/21] ALSA: hda/realtek: Bass speaker fixup for ASUS UM5606KA
-Date: Thu,  3 Apr 2025 16:20:11 +0100
-Message-ID: <20250403151621.348600275@linuxfoundation.org>
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.14 08/21] counter: stm32-lptimer-cnt: fix error handling when enabling
+Date: Thu,  3 Apr 2025 16:20:12 +0100
+Message-ID: <20250403151621.376612940@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
 References: <20250403151621.130541515@linuxfoundation.org>
@@ -50,38 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andres Traumann <andres.traumann.01@gmail.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-commit be8cd366beb80c709adbc7688ee72750f5aee3ff upstream.
+commit 8744dcd4fc7800de2eb9369410470bb2930d4c14 upstream.
 
-This patch applies the ALC294 bass speaker fixup (ALC294_FIXUP_BASS_SPEAKER_15),
-previously introduced in commit a7df7f909cec ("ALSA: hda: improve bass
-speaker support for ASUS Zenbook UM5606WA"), to the ASUS Zenbook UM5606KA.
-This hardware configuration matches ASUS Zenbook UM5606WA, where DAC NID
-0x06 was removed from the bass speaker (NID 0x15), routing both speaker
-pins to DAC NID 0x03.
+In case the stm32_lptim_set_enable_state() fails to update CMP and ARR,
+a timeout error is raised, by regmap_read_poll_timeout. It may happen,
+when the lptimer runs on a slow clock, and the clock is gated only
+few times during the polling.
 
-This resolves the bass speaker routing issue, ensuring correct audio
-output on ASUS UM5606KA.
+Badly, when this happen, STM32_LPTIM_ENABLE in CR register has been set.
+So the 'enable' state in sysfs wrongly lies on the counter being
+correctly enabled, due to CR is read as one in stm32_lptim_is_enabled().
 
-Signed-off-by: Andres Traumann <andres.traumann.01@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250325102535.8172-1-andres.traumann.01@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+To fix both issues:
+- enable the clock before writing CMP, ARR and polling ISR bits. It will
+avoid the possible timeout error.
+- clear the ENABLE bit in CR and disable the clock in the error path.
+
+Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20250224170657.3368236-1-fabrice.gasnier@foss.st.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/counter/stm32-lptimer-cnt.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10784,6 +10784,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x1d4e, "ASUS TM420", ALC256_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x1da2, "ASUS UP6502ZA/ZD", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1df3, "ASUS UM5606WA", ALC294_FIXUP_BASS_SPEAKER_15),
-+	SND_PCI_QUIRK(0x1043, 0x1264, "ASUS UM5606KA", ALC294_FIXUP_BASS_SPEAKER_15),
- 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
+--- a/drivers/counter/stm32-lptimer-cnt.c
++++ b/drivers/counter/stm32-lptimer-cnt.c
+@@ -58,37 +58,43 @@ static int stm32_lptim_set_enable_state(
+ 		return 0;
+ 	}
+ 
++	ret = clk_enable(priv->clk);
++	if (ret)
++		goto disable_cnt;
++
+ 	/* LP timer must be enabled before writing CMP & ARR */
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ARR, priv->ceiling);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_CMP, 0);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+ 				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	ret = regmap_write(priv->regmap, STM32_LPTIM_ICR,
+ 			   STM32_LPTIM_CMPOKCF_ARROKCF);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+-	ret = clk_enable(priv->clk);
+-	if (ret) {
+-		regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
+-		return ret;
+-	}
+ 	priv->enabled = true;
+ 
+ 	/* Start LP timer in continuous mode */
+ 	return regmap_update_bits(priv->regmap, STM32_LPTIM_CR,
+ 				  STM32_LPTIM_CNTSTRT, STM32_LPTIM_CNTSTRT);
++
++disable_clk:
++	clk_disable(priv->clk);
++disable_cnt:
++	regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
++
++	return ret;
+ }
+ 
+ static int stm32_lptim_setup(struct stm32_lptim_cnt *priv, int enable)
 
 
