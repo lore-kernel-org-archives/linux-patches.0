@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B156F188A3A;
-	Thu,  3 Apr 2025 15:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B359188A3A;
+	Thu,  3 Apr 2025 15:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743694016; cv=none; b=ttz4SW2gyu5Cu+dyc4O/To85PECTXR2IVdRrmJzIvDwLyA5J51mzhkLn5Cu13iuGkTcyVG6K/p8yD4gnwuoPRfNeWIkzG1nJwWj1woprAzYTUdmo5qEzAEfNIMkM/yIoxWSPQMrLWz2lymBjuCA6PEoDOHyg5g3CT3PBQU8pn7U=
+	t=1743694019; cv=none; b=WKxsCDtZKblmGCWGY03uSNdik6bSguEnuSjfYiJvvrqGQ3piNeFbXcNbIgJMQ3eoLZ0t9iWnm855Bto7+1iwTFLxuUYsfJ544SJn5Ia2u+Ia8DAND5RDMHCB8LGHg5SM2mHxPs6muDT72SUlOmkL3Z8+BaRxYB6sV/jCF5fUcqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743694016; c=relaxed/simple;
-	bh=ZplhR95TTUrFjd1kkzVPuYGGzIdy6KV2Ey7eNXr0ev0=;
+	s=arc-20240116; t=1743694019; c=relaxed/simple;
+	bh=iUGPirNMHQw2Vr3KQcBa6Frd94IHukARMwVfbaNlnEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpiWsq4YdAn0J236ObdU6mh/t9pECSPRilBWsWPOBGYOWtE8iGb+krQNn9+2cPcedZTlcAPfReIhlT3bEIAq0T2s/De4VWFBTxrVD0YZ1mclZ9j4gomlYOylqzoy33khaUEmNynHkhEqw/ilC4qENKpwATeG9I/1gu9XWauGLs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeW1j71F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MykhHU/Iy4P9xcs0yv/lKxpu1yk1dnI2NqR5fTpECo2ECa2Bp8uSZvdIiKsWz6I4qvX2oIxUiaIdA5+ZFHrc3yM871x/BIBk9Gk+aV3PDoJepSgYzSJdJmKhqAaRCFsaN4tsVCIisfM9Lm4KKbP0AupeNCyav8j2tE+XuTG8MP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jASyzLno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeW1j71F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E3BC4CEE3;
-	Thu,  3 Apr 2025 15:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jASyzLno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1053C4CEE3;
+	Thu,  3 Apr 2025 15:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743694016;
-	bh=ZplhR95TTUrFjd1kkzVPuYGGzIdy6KV2Ey7eNXr0ev0=;
+	s=korg; t=1743694019;
+	bh=iUGPirNMHQw2Vr3KQcBa6Frd94IHukARMwVfbaNlnEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeW1j71Fw+Iy8b14QsriHbVoUf5vpi/3BKESXIMVMBcAWznC8hBsel87PordUhTOD
-	 fPuUhxeV0kmnW7v1TiL2M8g7bmlXeZ6ZAGMqJ/Z7CxvSsIOU2ORtWlVoX2oetTFtiH
-	 2dMdK1NywK1VDw/MA5GDxV26vT2e15Jkq12k1byg=
+	b=jASyzLnoWvAKCwf/HQi01ND5fOxijpUThhNgqo/D33VdiahbQ6yYzJfyFbGshMhdJ
+	 fXsF4pNCmOl+uYFUSHJ2qUpNUnVQU2mZoEENO3NrGYRm2cEjLrMXUWomkZ8MeM1rVm
+	 NC7BOcaHdTWk1dj5p2w4WVGSdZ9TnNJdqrhf/0IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Tamboli <abhishektamboli9@gmail.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.6 26/26] usb: gadget: uvc: Fix ERR_PTR dereference in uvc_v4l2.c
-Date: Thu,  3 Apr 2025 16:20:47 +0100
-Message-ID: <20250403151623.171251386@linuxfoundation.org>
+	Minjoong Kim <pwn9uin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 03/26] atm: Fix NULL pointer dereference
+Date: Thu,  3 Apr 2025 16:20:24 +0100
+Message-ID: <20250403151622.514160051@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151622.415201055@linuxfoundation.org>
 References: <20250403151622.415201055@linuxfoundation.org>
@@ -51,74 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Tamboli <abhishektamboli9@gmail.com>
+From: Minjoong Kim <pwn9uin@gmail.com>
 
-commit a7bb96b18864225a694e3887ac2733159489e4b0 upstream.
+commit bf2986fcf82a449441f9ee4335df19be19e83970 upstream.
 
-Fix potential dereferencing of ERR_PTR() in find_format_by_pix()
-and uvc_v4l2_enum_format().
+When MPOA_cache_impos_rcvd() receives the msg, it can trigger
+Null Pointer Dereference Vulnerability if both entry and
+holding_time are NULL. Because there is only for the situation
+where entry is NULL and holding_time exists, it can be passed
+when both entry and holding_time are NULL. If these are NULL,
+the entry will be passd to eg_cache_put() as parameter and
+it is referenced by entry->use code in it.
 
-Fix the following smatch errors:
+kasan log:
 
-drivers/usb/gadget/function/uvc_v4l2.c:124 find_format_by_pix()
-error: 'fmtdesc' dereferencing possible ERR_PTR()
+[    3.316691] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006:I
+[    3.317568] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+[    3.318188] CPU: 3 UID: 0 PID: 79 Comm: ex Not tainted 6.14.0-rc2 #102
+[    3.318601] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[    3.319298] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.319677] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.321220] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.321596] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.322112] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.322643] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.323181] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.323707] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.324185] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.325042] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.325545] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.326430] Call Trace:
+[    3.326725]  <TASK>
+[    3.326927]  ? die_addr+0x3c/0xa0
+[    3.327330]  ? exc_general_protection+0x161/0x2a0
+[    3.327662]  ? asm_exc_general_protection+0x26/0x30
+[    3.328214]  ? vprintk_emit+0x15e/0x420
+[    3.328543]  ? eg_cache_remove_entry+0xa5/0x470
+[    3.328910]  ? eg_cache_remove_entry+0x9a/0x470
+[    3.329294]  ? __pfx_eg_cache_remove_entry+0x10/0x10
+[    3.329664]  ? console_unlock+0x107/0x1d0
+[    3.329946]  ? __pfx_console_unlock+0x10/0x10
+[    3.330283]  ? do_syscall_64+0xa6/0x1a0
+[    3.330584]  ? entry_SYSCALL_64_after_hwframe+0x47/0x7f
+[    3.331090]  ? __pfx_prb_read_valid+0x10/0x10
+[    3.331395]  ? down_trylock+0x52/0x80
+[    3.331703]  ? vprintk_emit+0x15e/0x420
+[    3.331986]  ? __pfx_vprintk_emit+0x10/0x10
+[    3.332279]  ? down_trylock+0x52/0x80
+[    3.332527]  ? _printk+0xbf/0x100
+[    3.332762]  ? __pfx__printk+0x10/0x10
+[    3.333007]  ? _raw_write_lock_irq+0x81/0xe0
+[    3.333284]  ? __pfx__raw_write_lock_irq+0x10/0x10
+[    3.333614]  msg_from_mpoad+0x1185/0x2750
+[    3.333893]  ? __build_skb_around+0x27b/0x3a0
+[    3.334183]  ? __pfx_msg_from_mpoad+0x10/0x10
+[    3.334501]  ? __alloc_skb+0x1c0/0x310
+[    3.334809]  ? __pfx___alloc_skb+0x10/0x10
+[    3.335283]  ? _raw_spin_lock+0xe0/0xe0
+[    3.335632]  ? finish_wait+0x8d/0x1e0
+[    3.335975]  vcc_sendmsg+0x684/0xba0
+[    3.336250]  ? __pfx_vcc_sendmsg+0x10/0x10
+[    3.336587]  ? __pfx_autoremove_wake_function+0x10/0x10
+[    3.337056]  ? fdget+0x176/0x3e0
+[    3.337348]  __sys_sendto+0x4a2/0x510
+[    3.337663]  ? __pfx___sys_sendto+0x10/0x10
+[    3.337969]  ? ioctl_has_perm.constprop.0.isra.0+0x284/0x400
+[    3.338364]  ? sock_ioctl+0x1bb/0x5a0
+[    3.338653]  ? __rseq_handle_notify_resume+0x825/0xd20
+[    3.339017]  ? __pfx_sock_ioctl+0x10/0x10
+[    3.339316]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
+[    3.339727]  ? selinux_file_ioctl+0xa4/0x260
+[    3.340166]  __x64_sys_sendto+0xe0/0x1c0
+[    3.340526]  ? syscall_exit_to_user_mode+0x123/0x140
+[    3.340898]  do_syscall_64+0xa6/0x1a0
+[    3.341170]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    3.341533] RIP: 0033:0x44a380
+[    3.341757] Code: 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c00
+[    3.343078] RSP: 002b:00007ffc1d404098 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[    3.343631] RAX: ffffffffffffffda RBX: 00007ffc1d404458 RCX: 000000000044a380
+[    3.344306] RDX: 000000000000019c RSI: 00007ffc1d4040b0 RDI: 0000000000000003
+[    3.344833] RBP: 00007ffc1d404260 R08: 0000000000000000 R09: 0000000000000000
+[    3.345381] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    3.346015] R13: 00007ffc1d404448 R14: 00000000004c17d0 R15: 0000000000000001
+[    3.346503]  </TASK>
+[    3.346679] Modules linked in:
+[    3.346956] ---[ end trace 0000000000000000 ]---
+[    3.347315] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.347737] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.349157] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.349517] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.350103] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.350610] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.351246] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.351785] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.352404] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.353099] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.353544] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.354072] note: ex[79] exited with irqs disabled
+[    3.354458] note: ex[79] exited with preempt_count 1
 
-drivers/usb/gadget/function/uvc_v4l2.c:392 uvc_v4l2_enum_format()
-error: 'fmtdesc' dereferencing possible ERR_PTR()
-
-Also, fix similar issue in uvc_v4l2_try_format() for potential
-dereferencing of ERR_PTR().
-
-Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
-Link: https://lore.kernel.org/r/20240815102202.594812-1-abhishektamboli9@gmail.com
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Minjoong Kim <pwn9uin@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250322105200.14981-1-pwn9uin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_v4l2.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/atm/mpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/function/uvc_v4l2.c
-+++ b/drivers/usb/gadget/function/uvc_v4l2.c
-@@ -121,6 +121,9 @@ static struct uvcg_format *find_format_b
- 	list_for_each_entry(format, &uvc->header->formats, entry) {
- 		const struct uvc_format_desc *fmtdesc = to_uvc_format(format->fmt);
- 
-+		if (IS_ERR(fmtdesc))
-+			continue;
-+
- 		if (fmtdesc->fcc == pixelformat) {
- 			uformat = format->fmt;
- 			break;
-@@ -240,6 +243,7 @@ uvc_v4l2_try_format(struct file *file, v
- 	struct uvc_video *video = &uvc->video;
- 	struct uvcg_format *uformat;
- 	struct uvcg_frame *uframe;
-+	const struct uvc_format_desc *fmtdesc;
- 	u8 *fcc;
- 
- 	if (fmt->type != video->queue.queue.type)
-@@ -265,7 +269,10 @@ uvc_v4l2_try_format(struct file *file, v
- 	fmt->fmt.pix.field = V4L2_FIELD_NONE;
- 	fmt->fmt.pix.bytesperline = uvc_v4l2_get_bytesperline(uformat, uframe);
- 	fmt->fmt.pix.sizeimage = uvc_get_frame_size(uformat, uframe);
--	fmt->fmt.pix.pixelformat = to_uvc_format(uformat)->fcc;
-+	fmtdesc = to_uvc_format(uformat);
-+	if (IS_ERR(fmtdesc))
-+		return PTR_ERR(fmtdesc);
-+	fmt->fmt.pix.pixelformat = fmtdesc->fcc;
- 	fmt->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
- 	fmt->fmt.pix.priv = 0;
- 
-@@ -375,6 +382,9 @@ uvc_v4l2_enum_format(struct file *file,
- 		return -EINVAL;
- 
- 	fmtdesc = to_uvc_format(uformat);
-+	if (IS_ERR(fmtdesc))
-+		return PTR_ERR(fmtdesc);
-+
- 	f->pixelformat = fmtdesc->fcc;
- 
- 	return 0;
+--- a/net/atm/mpc.c
++++ b/net/atm/mpc.c
+@@ -1314,6 +1314,8 @@ static void MPOA_cache_impos_rcvd(struct
+ 	holding_time = msg->content.eg_info.holding_time;
+ 	dprintk("(%s) entry = %p, holding_time = %u\n",
+ 		mpc->dev->name, entry, holding_time);
++	if (entry == NULL && !holding_time)
++		return;
+ 	if (entry == NULL && holding_time) {
+ 		entry = mpc->eg_ops->add_entry(msg, mpc);
+ 		mpc->eg_ops->put(entry);
 
 
