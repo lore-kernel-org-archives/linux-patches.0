@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21775250BF8;
-	Thu,  3 Apr 2025 15:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C34250BF8;
+	Thu,  3 Apr 2025 15:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693822; cv=none; b=k/gVRJNLTZ8nKjlELCPD1Hf3cSMW9tZZAmgn4f0AnM6j0J5Rx5ZMBtGPZ12auXAqRSE8KUL3vFDncA6gszIx0YpFBaGjWORX4yjJs3h2HCE+2pHVO/rh9iNh7A2VaRnTLOy/EpMgRryOJ/ZdIRr9tmw72nqcH8Fatx2CS705jm4=
+	t=1743693824; cv=none; b=Rc04u23ogS1LgN6K4kyWnwxiJZs/feD4QkcG0dry0U7h1Ijgp4ggBJ8X0m4IIFNyBj0XQ8SntjPHEuVhQ7/EGMq2BVBXF8bFy2DNmizy+Ff1jpM+KHviiG8wFuc+SQWn1jOaaUggC6lcDMTG2HUleTU+yoAAFwJJ+2kmxN/H+mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693822; c=relaxed/simple;
-	bh=PsMudJr/UM1TuRecVaVQbRQDihvOXemJNK4n8BGgR4o=;
+	s=arc-20240116; t=1743693824; c=relaxed/simple;
+	bh=eTmvB2mGmPnFJ6LFvS4fOD2BQtiZi0USO5XKNXFBcwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuli/c/LIveat8FhTlmKqNZD+836h0Esi7xNxCZV1U22GqX068gP/Pese2BJvXn2IYvUp647xn+Iw442l+DPi15S58mgqEQeea5+E2hCNQwyIsqA5IQD5Uq5mwKj7s/RTWLL6TN8BYDdqksnKDOso0Y+GVqOQEgnd0azWo7T+dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zk+oUe1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JICKuVPjLXa+fPPcqHyF8zOvKpYT/81PS4Rmxy5NmGKq761AE3p/pNgFzab7ntRxREvS9L1CdizTF7hoVkDx0CAFau4ZCZKjyNxy3osnF9nSZbA493/KntivowJJttx54MqohOhS/C2J6S5HG2yjc6Oxamsl5N+XhdtOz4bWbOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVYdtRZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zk+oUe1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40EFC4CEE3;
-	Thu,  3 Apr 2025 15:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVYdtRZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC2CC4CEE3;
+	Thu,  3 Apr 2025 15:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693822;
-	bh=PsMudJr/UM1TuRecVaVQbRQDihvOXemJNK4n8BGgR4o=;
+	s=korg; t=1743693824;
+	bh=eTmvB2mGmPnFJ6LFvS4fOD2BQtiZi0USO5XKNXFBcwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zk+oUe1TzLPWXww/7lfxc8ny0zpWrrmQOzTaN8gURbAB4XVZAf5t5t+3AjQPJBouQ
-	 1NkwDRvgdkAw3FkhGSTpeJfKhX8ZINhXpMhPrcnXYU8ofAULxD+eIQ2impAlbpmWO8
-	 VcnR9oL52Vnkc2hlc09mBOJlvQ6z+76sgHktKoOM=
+	b=oVYdtRZz8b+wnhyUoowMOkUbjeSiDKelrq2i15jZYXGJJVhYNkvfOrD4OSRfesB/g
+	 mx8aw70MRRDU5lE9kcqADiuvcYWh9oeOnoUskytYeswvT4dfb5v3U+PTuxj5eQ19/w
+	 T2fwe2UY1DqGyikI/LOSwOR8CJotBRK+qfwGo7WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.14 17/21] usb: xhci: Apply the link chain quirk on NEC isoc endpoints
-Date: Thu,  3 Apr 2025 16:20:21 +0100
-Message-ID: <20250403151621.622762932@linuxfoundation.org>
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.14 02/21] HID: hid-plantronics: Add mic mute mapping and generalize quirks
+Date: Thu,  3 Apr 2025 16:20:06 +0100
+Message-ID: <20250403151621.201382139@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
 References: <20250403151621.130541515@linuxfoundation.org>
@@ -50,110 +50,281 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Terry Junge <linuxhid@cosmicgizmosystems.com>
 
-commit bb0ba4cb1065e87f9cc75db1fa454e56d0894d01 upstream.
+commit 9821709af892be9fbf4ee9a50b2f3e0604295ce0 upstream.
 
-Two clearly different specimens of NEC uPD720200 (one with start/stop
-bug, one without) were seen to cause IOMMU faults after some Missed
-Service Errors. Faulting address is immediately after a transfer ring
-segment and patched dynamic debug messages revealed that the MSE was
-received when waiting for a TD near the end of that segment:
+Add mapping for headset mute key events.
 
-[ 1.041954] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ffa08fe0
-[ 1.042120] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09000 flags=0x0000]
-[ 1.042146] xhci_hcd: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0005 address=0xffa09040 flags=0x0000]
+Remove PLT_QUIRK_DOUBLE_VOLUME_KEYS quirk and made it generic.
+The quirk logic did not keep track of the actual previous key
+so any key event occurring in less than or equal to 5ms was ignored.
 
-It gets even funnier if the next page is a ring segment accessible to
-the HC. Below, it reports MSE in segment at ff1e8000, plows through a
-zero-filled page at ff1e9000 and starts reporting events for TRBs in
-page at ff1ea000 every microframe, instead of jumping to seg ff1e6000.
+Remove PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS quirk.
+It had the same logic issue as the double key quirk and was actually
+masking the as designed behavior of most of the headsets.
+It's occurrence should be minimized with the ALSA control naming
+quirk that is part of the patch set.
 
-[ 7.041671] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.041999] xhci_hcd: Miss service interval error for slot 1 ep 2 expected TD DMA ff1e8fe0
-[ 7.042011] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042028] xhci_hcd: All TDs skipped for slot 1 ep 2. Clear skip flag.
-[ 7.042134] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042138] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042144] xhci_hcd: Looking for event-dma 00000000ff1ea040 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.042259] xhci_hcd: WARN: buffer overrun event for slot 1 ep 2 on endpoint
-[ 7.042262] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 31
-[ 7.042266] xhci_hcd: Looking for event-dma 00000000ff1ea050 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-
-At some point completion events change from Isoch Buffer Overrun to
-Short Packet and the HC finally finds cycle bit mismatch in ff1ec000.
-
-[ 7.098130] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098132] xhci_hcd: Looking for event-dma 00000000ff1ecc50 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098254] xhci_hcd: ERROR Transfer event TRB DMA ptr not part of current TD ep_index 2 comp_code 13
-[ 7.098256] xhci_hcd: Looking for event-dma 00000000ff1ecc60 trb-start 00000000ff1e6820 trb-end 00000000ff1e6820
-[ 7.098379] xhci_hcd: Overrun event on slot 1 ep 2
-
-It's possible that data from the isochronous device were written to
-random buffers of pending TDs on other endpoints (either IN or OUT),
-other devices or even other HCs in the same IOMMU domain.
-
-Lastly, an error from a different USB device on another HC. Was it
-caused by the above? I don't know, but it may have been. The disk
-was working without any other issues and generated PCIe traffic to
-starve the NEC of upstream BW and trigger those MSEs. The two HCs
-shared one x1 slot by means of a commercial "PCIe splitter" board.
-
-[ 7.162604] usb 10-2: reset SuperSpeed USB device number 3 using xhci_hcd
-[ 7.178990] sd 9:0:0:0: [sdb] tag#0 UNKNOWN(0x2003) Result: hostbyte=0x07 driverbyte=DRIVER_OK cmd_age=0s
-[ 7.179001] sd 9:0:0:0: [sdb] tag#0 CDB: opcode=0x28 28 00 04 02 ae 00 00 02 00 00
-[ 7.179004] I/O error, dev sdb, sector 67284480 op 0x0:(READ) flags 0x80700 phys_seg 5 prio class 0
-
-Fortunately, it appears that this ridiculous bug is avoided by setting
-the chain bit of Link TRBs on isochronous rings. Other ancient HCs are
-known which also expect the bit to be set and they ignore Link TRBs if
-it's not. Reportedly, 0.95 spec guaranteed that the bit is set.
-
-The bandwidth-starved NEC HC running a 32KB/uframe UVC endpoint reports
-tens of MSEs per second and runs into the bug within seconds. Chaining
-Link TRBs allows the same workload to run for many minutes, many times.
-
-No negative side effects seen in UVC recording and UAC playback with a
-few devices at full speed, high speed and SuperSpeed.
-
-The problem doesn't reproduce on the newer Renesas uPD720201/uPD720202
-and on old Etron EJ168 and VIA VL805 (but the VL805 has other bug).
-
-[shorten line length of log snippets in commit messge -Mathias]
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250306144954.3507700-14-mathias.nyman@linux.intel.com
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/hid/hid-plantronics.c |  148 +++++++++++++++++++-----------------------
+ 1 file changed, 69 insertions(+), 79 deletions(-)
 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1759,11 +1759,20 @@ static inline void xhci_write_64(struct
- }
+--- a/drivers/hid/hid-plantronics.c
++++ b/drivers/hid/hid-plantronics.c
+@@ -6,9 +6,6 @@
+  *  Copyright (c) 2015-2018 Terry Junge <terry.junge@plantronics.com>
+  */
  
+-/*
+- */
+-
+ #include "hid-ids.h"
  
--/* Link TRB chain should always be set on 0.95 hosts, and AMD 0.96 ISOC rings */
-+/*
-+ * Reportedly, some chapters of v0.95 spec said that Link TRB always has its chain bit set.
-+ * Other chapters and later specs say that it should only be set if the link is inside a TD
-+ * which continues from the end of one segment to the next segment.
-+ *
-+ * Some 0.95 hardware was found to misbehave if any link TRB doesn't have the chain bit set.
-+ *
-+ * 0.96 hardware from AMD and NEC was found to ignore unchained isochronous link TRBs when
-+ * "resynchronizing the pipe" after a Missed Service Error.
-+ */
- static inline bool xhci_link_chain_quirk(struct xhci_hcd *xhci, enum xhci_ring_type type)
+ #include <linux/hid.h>
+@@ -23,30 +20,28 @@
+ 
+ #define PLT_VOL_UP		0x00b1
+ #define PLT_VOL_DOWN		0x00b2
++#define PLT_MIC_MUTE		0x00b5
+ 
+ #define PLT1_VOL_UP		(PLT_HID_1_0_PAGE | PLT_VOL_UP)
+ #define PLT1_VOL_DOWN		(PLT_HID_1_0_PAGE | PLT_VOL_DOWN)
++#define PLT1_MIC_MUTE		(PLT_HID_1_0_PAGE | PLT_MIC_MUTE)
+ #define PLT2_VOL_UP		(PLT_HID_2_0_PAGE | PLT_VOL_UP)
+ #define PLT2_VOL_DOWN		(PLT_HID_2_0_PAGE | PLT_VOL_DOWN)
++#define PLT2_MIC_MUTE		(PLT_HID_2_0_PAGE | PLT_MIC_MUTE)
++#define HID_TELEPHONY_MUTE	(HID_UP_TELEPHONY | 0x2f)
++#define HID_CONSUMER_MUTE	(HID_UP_CONSUMER | 0xe2)
+ 
+ #define PLT_DA60		0xda60
+ #define PLT_BT300_MIN		0x0413
+ #define PLT_BT300_MAX		0x0418
+ 
+-
+-#define PLT_ALLOW_CONSUMER (field->application == HID_CP_CONSUMERCONTROL && \
+-			    (usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER)
+-
+-#define PLT_QUIRK_DOUBLE_VOLUME_KEYS BIT(0)
+-#define PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS BIT(1)
+-
+ #define PLT_DOUBLE_KEY_TIMEOUT 5 /* ms */
+-#define PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT 220 /* ms */
+ 
+ struct plt_drv_data {
+ 	unsigned long device_type;
+-	unsigned long last_volume_key_ts;
+-	u32 quirks;
++	unsigned long last_key_ts;
++	unsigned long double_key_to;
++	__u16 last_key;
+ };
+ 
+ static int plantronics_input_mapping(struct hid_device *hdev,
+@@ -58,34 +53,43 @@ static int plantronics_input_mapping(str
+ 	unsigned short mapped_key;
+ 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
+ 	unsigned long plt_type = drv_data->device_type;
++	int allow_mute = usage->hid == HID_TELEPHONY_MUTE;
++	int allow_consumer = field->application == HID_CP_CONSUMERCONTROL &&
++			(usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER &&
++			usage->hid != HID_CONSUMER_MUTE;
+ 
+ 	/* special case for PTT products */
+ 	if (field->application == HID_GD_JOYSTICK)
+ 		goto defaulted;
+ 
+-	/* handle volume up/down mapping */
+ 	/* non-standard types or multi-HID interfaces - plt_type is PID */
+ 	if (!(plt_type & HID_USAGE_PAGE)) {
+ 		switch (plt_type) {
+ 		case PLT_DA60:
+-			if (PLT_ALLOW_CONSUMER)
++			if (allow_consumer)
+ 				goto defaulted;
+-			goto ignored;
++			if (usage->hid == HID_CONSUMER_MUTE) {
++				mapped_key = KEY_MICMUTE;
++				goto mapped;
++			}
++			break;
+ 		default:
+-			if (PLT_ALLOW_CONSUMER)
++			if (allow_consumer || allow_mute)
+ 				goto defaulted;
+ 		}
++		goto ignored;
+ 	}
+-	/* handle standard types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
+-	/* 'basic telephony compliant' - allow default consumer page map */
+-	else if ((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
+-		 (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) {
+-		if (PLT_ALLOW_CONSUMER)
+-			goto defaulted;
+-	}
+-	/* not 'basic telephony' - apply legacy mapping */
+-	/* only map if the field is in the device's primary vendor page */
+-	else if (!((field->application ^ plt_type) & HID_USAGE_PAGE)) {
++
++	/* handle standard consumer control mapping */
++	/* and standard telephony mic mute mapping */
++	if (allow_consumer || allow_mute)
++		goto defaulted;
++
++	/* handle vendor unique types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
++	/* if not 'basic telephony compliant' - map vendor unique controls */
++	if (!((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
++	      (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) &&
++	      !((field->application ^ plt_type) & HID_USAGE_PAGE))
+ 		switch (usage->hid) {
+ 		case PLT1_VOL_UP:
+ 		case PLT2_VOL_UP:
+@@ -95,8 +99,11 @@ static int plantronics_input_mapping(str
+ 		case PLT2_VOL_DOWN:
+ 			mapped_key = KEY_VOLUMEDOWN;
+ 			goto mapped;
++		case PLT1_MIC_MUTE:
++		case PLT2_MIC_MUTE:
++			mapped_key = KEY_MICMUTE;
++			goto mapped;
+ 		}
+-	}
+ 
+ /*
+  * Future mapping of call control or other usages,
+@@ -105,6 +112,8 @@ static int plantronics_input_mapping(str
+  */
+ 
+ ignored:
++	hid_dbg(hdev, "usage: %08x (appl: %08x) - ignored\n",
++		usage->hid, field->application);
+ 	return -1;
+ 
+ defaulted:
+@@ -123,38 +132,26 @@ static int plantronics_event(struct hid_
+ 			     struct hid_usage *usage, __s32 value)
  {
- 	return (xhci->quirks & XHCI_LINK_TRB_QUIRK) ||
--	       (type == TYPE_ISOC && (xhci->quirks & XHCI_AMD_0x96_HOST));
-+	       (type == TYPE_ISOC && (xhci->quirks & (XHCI_AMD_0x96_HOST | XHCI_NEC_HOST)));
+ 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
++	unsigned long prev_tsto, cur_ts;
++	__u16 prev_key, cur_key;
+ 
+-	if (drv_data->quirks & PLT_QUIRK_DOUBLE_VOLUME_KEYS) {
+-		unsigned long prev_ts, cur_ts;
+-
+-		/* Usages are filtered in plantronics_usages. */
+-
+-		if (!value) /* Handle key presses only. */
+-			return 0;
+-
+-		prev_ts = drv_data->last_volume_key_ts;
+-		cur_ts = jiffies;
+-		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_DOUBLE_KEY_TIMEOUT)
+-			return 1; /* Ignore the repeated key. */
+-
+-		drv_data->last_volume_key_ts = cur_ts;
+-	}
+-	if (drv_data->quirks & PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS) {
+-		unsigned long prev_ts, cur_ts;
+-
+-		/* Usages are filtered in plantronics_usages. */
+-
+-		if (!value) /* Handle key presses only. */
+-			return 0;
++	/* Usages are filtered in plantronics_usages. */
+ 
+-		prev_ts = drv_data->last_volume_key_ts;
+-		cur_ts = jiffies;
+-		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT)
+-			return 1; /* Ignore the followed opposite volume key. */
+-
+-		drv_data->last_volume_key_ts = cur_ts;
++	/* HZ too low for ms resolution - double key detection disabled */
++	/* or it is a key release - handle key presses only. */
++	if (!drv_data->double_key_to || !value)
++		return 0;
++
++	prev_tsto = drv_data->last_key_ts + drv_data->double_key_to;
++	cur_ts = drv_data->last_key_ts = jiffies;
++	prev_key = drv_data->last_key;
++	cur_key = drv_data->last_key = usage->code;
++
++	/* If the same key occurs in <= double_key_to -- ignore it */
++	if (prev_key == cur_key && time_before_eq(cur_ts, prev_tsto)) {
++		hid_dbg(hdev, "double key %d ignored\n", cur_key);
++		return 1; /* Ignore the repeated key. */
+ 	}
+-
+ 	return 0;
  }
  
- /* xHCI debugging */
+@@ -196,12 +193,16 @@ static int plantronics_probe(struct hid_
+ 	ret = hid_parse(hdev);
+ 	if (ret) {
+ 		hid_err(hdev, "parse failed\n");
+-		goto err;
++		return ret;
+ 	}
+ 
+ 	drv_data->device_type = plantronics_device_type(hdev);
+-	drv_data->quirks = id->driver_data;
+-	drv_data->last_volume_key_ts = jiffies - msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
++	drv_data->double_key_to = msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
++	drv_data->last_key_ts = jiffies - drv_data->double_key_to;
++
++	/* if HZ does not allow ms resolution - disable double key detection */
++	if (drv_data->double_key_to < PLT_DOUBLE_KEY_TIMEOUT)
++		drv_data->double_key_to = 0;
+ 
+ 	hid_set_drvdata(hdev, drv_data);
+ 
+@@ -210,29 +211,10 @@ static int plantronics_probe(struct hid_
+ 	if (ret)
+ 		hid_err(hdev, "hw start failed\n");
+ 
+-err:
+ 	return ret;
+ }
+ 
+ static const struct hid_device_id plantronics_devices[] = {
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
+-		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES),
+-		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+-					 USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES),
+-		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
+ 	{ }
+ };
+@@ -241,6 +223,14 @@ MODULE_DEVICE_TABLE(hid, plantronics_dev
+ static const struct hid_usage_id plantronics_usages[] = {
+ 	{ HID_CP_VOLUMEUP, EV_KEY, HID_ANY_ID },
+ 	{ HID_CP_VOLUMEDOWN, EV_KEY, HID_ANY_ID },
++	{ HID_TELEPHONY_MUTE, EV_KEY, HID_ANY_ID },
++	{ HID_CONSUMER_MUTE, EV_KEY, HID_ANY_ID },
++	{ PLT2_VOL_UP, EV_KEY, HID_ANY_ID },
++	{ PLT2_VOL_DOWN, EV_KEY, HID_ANY_ID },
++	{ PLT2_MIC_MUTE, EV_KEY, HID_ANY_ID },
++	{ PLT1_VOL_UP, EV_KEY, HID_ANY_ID },
++	{ PLT1_VOL_DOWN, EV_KEY, HID_ANY_ID },
++	{ PLT1_MIC_MUTE, EV_KEY, HID_ANY_ID },
+ 	{ HID_TERMINATOR, HID_TERMINATOR, HID_TERMINATOR }
+ };
+ 
 
 
