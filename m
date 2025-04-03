@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF942512DE;
-	Thu,  3 Apr 2025 15:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170F6251788;
+	Thu,  3 Apr 2025 15:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693839; cv=none; b=Xl5oYrt0sxIZ/fYYhzH597iVtFjSSTBoKNQP+MI+rBMf6auqx3yWN30QUU8dTpn12MZWdd4oyxhhce6eYzPrwSctnaqSAutyEPbHUfD9mEVkqB4axDCQHNojtZ48c9uK64zGo2oRFgAwIwgJjVdTRM+bhdONvyJY7G4j0WffLHw=
+	t=1743693842; cv=none; b=LOPYSKbZt+pazxsP7OS0dQyJm1s2mEbhv5xWUZq/K3/Sxb9UV4oFhjLJkicFXboLu00H3vGO9kJh3XRSlD3o54lub5B5hkPnJKYhNbNmdaCtZuRk7Rlmmhf5VizGeLke+QDUv3z4SEUdloKj5yX0pZRSDlAxeg2vL35PWflfLjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693839; c=relaxed/simple;
-	bh=fS4dbSudEvTWbyGUtjMYKQW3Cu2jKCcGXjzDhtRyeg4=;
+	s=arc-20240116; t=1743693842; c=relaxed/simple;
+	bh=r1dA5lSIgOOWL8yLre+/l4mp5MCVkqe7K+DsAjdyKm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fim1Uwi8W3quJMu8TLOX9PFCvDJ/nWNWkKUzsz+2I5JXZ/kqwFRakNmI84aTwEC2IKMhGbiKMm8+1YngwevKLXlxdO4Ea8G44mZAkJt7Et8ZUAMNs+EsJJNmkUnRncXWkoNFA088pS6FiL8I2evGfMK2QQtdiBC4BVADnz3WvQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hwg14mVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jQ99Qpx11DxUzM4OoM3m+6DH7HIuFWXq6ezm/Vt6XfYLZ4qZ+TcU4KPrroAfwxS8csTNf4SmrfBVhM4JCQEWIurcTjB4JYJVnCkvTYv62i3G+KMlSZ2Yb8ulfmKxih15jmLgZwXKSOdwBavsw7o6hNIzO/DOaynnTL3GZI3g96Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+U2B3TT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hwg14mVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA305C4CEE5;
-	Thu,  3 Apr 2025 15:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+U2B3TT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44917C4CEE3;
+	Thu,  3 Apr 2025 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693839;
-	bh=fS4dbSudEvTWbyGUtjMYKQW3Cu2jKCcGXjzDhtRyeg4=;
+	s=korg; t=1743693841;
+	bh=r1dA5lSIgOOWL8yLre+/l4mp5MCVkqe7K+DsAjdyKm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hwg14mVl9W3RuyJl62rgtsnQYn6qv6AalDbsQGfhcRAvKOgrP/UoO45rxYFBmU4oJ
-	 Fk4e18F91fWX+U1++P7tD5RND+p7g3DE9Fl2tg35m7jBcrmgvCj8oPt7ooCCju2C+F
-	 ++CHDCRd8GdfkAW/ADUif67wkkYu7VfG/Gwgh9Fs=
+	b=L+U2B3TTRh1W2YnWUeHle/qNTuYBxG3S84EBYGcRdPVu60LmB5UOL1jiGMTGnUuVh
+	 TF9UbxsZ1RdaotS6i8GObw+5jtq7Coni1aaL/wkXTUEU9JuTi68RY6vbND5ZY5qGeU
+	 Ez+f/EjF4yVSAkUt4cUK2zu+LFa7tP02CcxKyLsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
 	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.14 08/21] counter: stm32-lptimer-cnt: fix error handling when enabling
-Date: Thu,  3 Apr 2025 16:20:12 +0100
-Message-ID: <20250403151621.376612940@linuxfoundation.org>
+Subject: [PATCH 6.14 09/21] counter: microchip-tcb-capture: Fix undefined counter channel state on probe
+Date: Thu,  3 Apr 2025 16:20:13 +0100
+Message-ID: <20250403151621.405343357@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
 References: <20250403151621.130541515@linuxfoundation.org>
@@ -44,93 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: William Breathitt Gray <wbg@kernel.org>
 
-commit 8744dcd4fc7800de2eb9369410470bb2930d4c14 upstream.
+commit c0c9c73434666dc99ee156b25e7e722150bee001 upstream.
 
-In case the stm32_lptim_set_enable_state() fails to update CMP and ARR,
-a timeout error is raised, by regmap_read_poll_timeout. It may happen,
-when the lptimer runs on a slow clock, and the clock is gated only
-few times during the polling.
+Hardware initialize of the timer counter channel does not occur on probe
+thus leaving the Count in an undefined state until the first
+function_write() callback is executed. Fix this by performing the proper
+hardware initialization during probe.
 
-Badly, when this happen, STM32_LPTIM_ENABLE in CR register has been set.
-So the 'enable' state in sysfs wrongly lies on the counter being
-correctly enabled, due to CR is read as one in stm32_lptim_is_enabled().
-
-To fix both issues:
-- enable the clock before writing CMP, ARR and polling ISR bits. It will
-avoid the possible timeout error.
-- clear the ENABLE bit in CR and disable the clock in the error path.
-
-Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20250224170657.3368236-1-fabrice.gasnier@foss.st.com
+Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+Reported-by: Csókás Bence <csokas.bence@prolan.hu>
+Closes: https://lore.kernel.org/all/bfa70e78-3cc3-4295-820b-3925c26135cb@prolan.hu/
+Link: https://lore.kernel.org/r/20250305-preset-capture-mode-microchip-tcb-capture-v1-1-632c95c6421e@kernel.org
 Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/counter/microchip-tcb-capture.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -58,37 +58,43 @@ static int stm32_lptim_set_enable_state(
- 		return 0;
+--- a/drivers/counter/microchip-tcb-capture.c
++++ b/drivers/counter/microchip-tcb-capture.c
+@@ -368,6 +368,25 @@ static int mchp_tc_probe(struct platform
+ 			channel);
  	}
  
-+	ret = clk_enable(priv->clk);
++	/* Disable Quadrature Decoder and position measure */
++	ret = regmap_update_bits(regmap, ATMEL_TC_BMR, ATMEL_TC_QDEN | ATMEL_TC_POSEN, 0);
 +	if (ret)
-+		goto disable_cnt;
++		return ret;
 +
- 	/* LP timer must be enabled before writing CMP & ARR */
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_ARR, priv->ceiling);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_CMP, 0);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
- 				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = regmap_write(priv->regmap, STM32_LPTIM_ICR,
- 			   STM32_LPTIM_CMPOKCF_ARROKCF);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
--	ret = clk_enable(priv->clk);
--	if (ret) {
--		regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
--		return ret;
--	}
- 	priv->enabled = true;
- 
- 	/* Start LP timer in continuous mode */
- 	return regmap_update_bits(priv->regmap, STM32_LPTIM_CR,
- 				  STM32_LPTIM_CNTSTRT, STM32_LPTIM_CNTSTRT);
++	/* Setup the period capture mode */
++	ret = regmap_update_bits(regmap, ATMEL_TC_REG(priv->channel[0], CMR),
++				 ATMEL_TC_WAVE | ATMEL_TC_ABETRG | ATMEL_TC_CMR_MASK |
++				 ATMEL_TC_TCCLKS,
++				 ATMEL_TC_CMR_MASK);
++	if (ret)
++		return ret;
 +
-+disable_clk:
-+	clk_disable(priv->clk);
-+disable_cnt:
-+	regmap_write(priv->regmap, STM32_LPTIM_CR, 0);
++	/* Enable clock and trigger counter */
++	ret = regmap_write(regmap, ATMEL_TC_REG(priv->channel[0], CCR),
++			   ATMEL_TC_CLKEN | ATMEL_TC_SWTRG);
++	if (ret)
++		return ret;
 +
-+	return ret;
- }
- 
- static int stm32_lptim_setup(struct stm32_lptim_cnt *priv, int enable)
+ 	priv->tc_cfg = tcb_config;
+ 	priv->regmap = regmap;
+ 	counter->name = dev_name(&pdev->dev);
 
 
