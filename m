@@ -1,101 +1,107 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9B72512E3
-	for <patches@lists.linux.dev>; Thu,  3 Apr 2025 17:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C94D224B1C
+	for <patches@lists.linux.dev>; Thu,  3 Apr 2025 19:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743701773; cv=none; b=jO1qfVGn5PgHwBYk2e7m6GjwTyMOziT2KeRktWvFrtBeUBlb681kC4GuYMxpMTuDTJzz5zQUtvXZv0MZcHDT3ufF0jKG794ALbBMxHWQGRcL+btHtcbYG9x3RCMmrY6kg6HKE/RhiIqm0JbmxEBbamymf0GrWBzOrNyqFTOzLQI=
+	t=1743709992; cv=none; b=IyNhZx1/bUxPXzl4972J5ARlasH6m4nafUKoyNgnU74tAlKE/gxeZsAOEExuI6nHsRVj66RlqaG19HV6J5dMSWcO72vW1LfS1ikPUgUe/48Hg05lDviQ0zoGnpcn1nW7yfC6zlM/Kec5eS/OPCd3ZUt5nPSbemzdK7enI9OKq3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743701773; c=relaxed/simple;
-	bh=wUGCmmOo2C1eoS77TbjLuyHor/JBQbJ1BdThFBZP1TE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qC+SNwfu9S7m96/ve5RqnnoOcbFAw7c+ujiAi4oOZOsURd7fWfL7KJOjpmkRcs5TUrty9bAtleUVnHEIBbuSJmlcC7scEWqF6nwxq5hMshD9/NJDHdKneHZDZZa/BNhmVhej9uBPQ0d2nGyczVkExLv7la8Lco8eclmu2/MKTJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SybtAra8; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743709992; c=relaxed/simple;
+	bh=EqrX3cvjeRiYPY6y27M2pPrYu3nuvoLp/+5WruydRCY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lyTZRhWNfHpKxS7q9W2f5psBIKBU7uDIdXwk0xCm/wgh+A6kitXlYSlADgBC3ZaTibN6ZgUZLA7zpA8Bs97vgy1rKY7i90ab49aH4Sn/NO28spxgnX9TXHo95rAHs9Bt6k+0tj0xIVBmXt56R1HCuVJBilMsGUcikZSfRIMCdKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=hIniMH01; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SybtAra8"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-301001bc6a8so153748a91.1
-        for <patches@lists.linux.dev>; Thu, 03 Apr 2025 10:36:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="hIniMH01"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso9141015e9.2
+        for <patches@lists.linux.dev>; Thu, 03 Apr 2025 12:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743701771; x=1744306571; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wUGCmmOo2C1eoS77TbjLuyHor/JBQbJ1BdThFBZP1TE=;
-        b=SybtAra84R3utB6meEynjYSyLCtDSxoERAypXXbnh75hRKDCNYHtq5KJPH+tqWEsKv
-         1dS30Zlh+cM7j3kd072FHkPoVBO7G3MifdU7ufyVPBgBIqndCgnJ1WVqBX+km7veC833
-         uL6UDf9Vp7CsXBd6cL1dUzBA4f22WWQn4ear2fcaL2H4fnn6TcVrhiPCxHyG2qfIGlMW
-         tcZ0H0pCt3UZo15H1EMj84PvnbVcTKuOISbwxh7CbADQ5D8paRs2IIuetE9eAhh/Trrf
-         9ri80IOf4n++W7gAjb6ikUBqSPjbCB/lTE5HlqzhQodpc57t6i6MEnRp4UisnQLpCsRJ
-         A8vw==
+        d=googlemail.com; s=20230601; t=1743709988; x=1744314788; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6du6KAtTyYabq94pzb2wgfnhQXGYymn0VC+kdziS+Bk=;
+        b=hIniMH01s/GV/IzDVNynCponVXBYM316GO4Au90GlmrYoFAwgsnrapfoVl15LyiIT9
+         cJ6PuergJH6MMm+LHew2Lg9+mQkwsPkYmUFN34ydGZHDHAWsJAnCNoXwcsnO9RAnkyll
+         2Y2z/5FuFjYR2tojPjVCtVpJFh7F9CBAQGei03N49mp/HQ/YdnG9UJ8IRwJ/1sS0nEqG
+         rQ3tr1gDQBgMJ0U+T+WWuzfThqzLww4ESvEmtNngyoVrIctXlNPWCckfRyGBUuVXciWp
+         pxq6u1nnmlxTv9faTDfN+5JA5gBYubzLxDckhWlV9l8PT8x+oFsyPg7bUDin5P8QlTH/
+         587A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743701771; x=1744306571;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wUGCmmOo2C1eoS77TbjLuyHor/JBQbJ1BdThFBZP1TE=;
-        b=BkKVV9awHl9Bc3hNLgPKz8O1/Xk/vMZPPckjK2JZTDTBKYf0cBj48R0QpDSXnateZB
-         p6UwUu+exUpseXsKbOJXkG0D+KTS3cIgeYPrmh30JOO/1zjJ2PhnjFD4c1MDkwVg7Lzf
-         lsH5o4X7nJD+CMJD/5jFSd0sUOE2VB16k8gmEtedu+wi4o/DRRVCTstc9Bqgz/hOKiuK
-         4pEuBJGh3aWVnjVZdSwgSmYmykzxoBbO9hByVTdbpKClCUdWkM7EqkrK7WdQbuXSVsEH
-         UZViGiv1Dh2IYPxNesBeXyDCuBwi+ioN1aOKfVcMAFFA7y/LvhIZtJ99yX5sNE64k2tz
-         Dznw==
-X-Forwarded-Encrypted: i=1; AJvYcCUk4irYNi2hWU0vTJ2Mcc34cCHnox4AIwoplxyKg1UHKUxANZmpYGuGxKE6rafon0vBeflPPzRY@lists.linux.dev
-X-Gm-Message-State: AOJu0YxOsJG6fsS26sgPY0wrT1dbRv9HKFNaMQsqTkK0gLSVy4Ifuue8
-	UflO/fk7BcVCdNKAR57Kjc3WEozh3Oaoop97mM8QyJte2fxI2sT3XpEfmHJ2RKeJYufuupFwDrh
-	UHxpuWb3SgG98GcpadOpyZU20Suk=
-X-Gm-Gg: ASbGncvSzQGRbJuAWFrqPTO1LAjDdAmpuzou8jcdpL9+x23PywdKPJgGxCULltOXFkL
-	HLgCIH1f0RSHms4XO4Oz/UMa1PC4XwjR49sotMDLNd4nKp0h9BtGhyITZag2qvwZsrI5Lu4roZU
-	28snSk/WV8cAuwrMaqQr8i8I9O7w==
-X-Google-Smtp-Source: AGHT+IG7VQfKhUI3ewajC5k1DnE4SbEI7NRFqrdHZB62bG69IvTMR0HCLjZM0+G09K4O2LAyweHi9oVeWXxsvbbGPII=
-X-Received: by 2002:a17:90b:3890:b0:2ff:5540:bb48 with SMTP id
- 98e67ed59e1d1-306a48bf3f7mr213677a91.8.1743701771512; Thu, 03 Apr 2025
- 10:36:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743709988; x=1744314788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6du6KAtTyYabq94pzb2wgfnhQXGYymn0VC+kdziS+Bk=;
+        b=nZchm9pQYU3t1UC6VWBtiZ7Jro0q91kJpTaPHmWoJf4SVo73EBXB+CEv42KjEuHRNp
+         6nY9MBi7OO7WlT1TH8wRJrsCkMPAxxJseIIzPQtv9pabpF3eXFl99t5UZts4+zrQcCYr
+         3WmV5inE51LipS6e7prcJHOoLA2h/5Itrgy1uROnd+RKeB7KmKVQP20o036q9YuNTrdp
+         sle7OpQTYZlMvpGJDvw+Uye954ZtJZl2Z3peL/R5ZhVxPbBvS3WTmP0A6F6PAenVccPl
+         H8ECHc24ljaMIMdro92WqNErBjDS2alc6mfxxGNwhS67Kk7l7g3VvexVk1kPi+oLvdu+
+         QpDA==
+X-Gm-Message-State: AOJu0Yy5htkLX0gSIUdmjlDpQEqdgZ5lbDDtrlYxWcAdFwsqe6/Lwbr2
+	vgeJWLpyXVa6dBBP1Y228vqkpLSP9+VtGu1U58DlV+LCBQfrcqQ=
+X-Gm-Gg: ASbGnct6ch4nEUAdw80MzByqaWiv7hfsD7PD6tj0BJ4JQnFuLkvVY3vavEa1Y3lwgu5
+	kcTiRfSen4JCPHTS7dwltv/3gGk++O0htQB8/pIdq1BGamJUNND6Rz86xqMnvTT50EHKgD9V6DM
+	bdWIwd8+p1ir5n35zFtyk1oswQ/oKw/dr+LoH6zMpCCpiLhPW+nt70cPoKVU2bn3cGuQtf2M1zJ
+	jNVRf110DJy5NevMbABUsz32fNviYxDlnv9Dz6XVsyn5/hTxxp3RTPbhG0DBtAt9g3Y3tHhJIFB
+	au4jRI5dQ6G4WBpeUNK1vp6lGGt/NAS6/JVpk/EjzG/rW60ek8hSKyfsGQMU4RUpBKbwnkZdy+X
+	OK40BDuw33CzuTWm6F31rwiU=
+X-Google-Smtp-Source: AGHT+IGtsE86kbuUK/yEkO0/b3rX2k2QXtMhucX+uUUKI+GteGJnqYOo/i38OP3DqvE8R3eNi180+g==
+X-Received: by 2002:a05:600c:4ecc:b0:43d:2313:7b49 with SMTP id 5b1f17b1804b1-43ecf85f4d2mr3032015e9.12.1743709988208;
+        Thu, 03 Apr 2025 12:53:08 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac393.dip0.t-ipconnect.de. [91.42.195.147])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec169abd7sm30040945e9.18.2025.04.03.12.53.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Apr 2025 12:53:06 -0700 (PDT)
+Message-ID: <22486e30-3b38-4361-a3eb-899103ceaff3@googlemail.com>
+Date: Thu, 3 Apr 2025 21:53:04 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250401221205.52381-1-ojeda@kernel.org> <D8VPGBN60E61.1Z48FQW6TL3A@proton.me>
- <CANiq72mdvnHvWbVNQbiXSRxd1xrF+A=v0RdJO74xeY3HyhRmcg@mail.gmail.com>
- <CAJ-ks9nAAcoJoFF+qNPbhsM32kOh9u+LGYUwFN_n9qqudB6YhA@mail.gmail.com>
- <CANiq72k36Tvwbzkg6nRdxB8VNRHLf8QzLeCXZq7sEPewccsWNw@mail.gmail.com>
- <CAJ-ks9nfEg=sdn_-q+xOc+k9mU0pdMuumwRb76LXzE3RcOtg6w@mail.gmail.com>
- <CANiq72mERwbmXYq-pi=WUAZ_VYGcBVS7tzH4P5zSUVCMcL4-CQ@mail.gmail.com> <CAJ-ks9kJiCGAkzW9M6q-62kcyvwBea5Zt2EoeeY0T3aN7jK+ng@mail.gmail.com>
-In-Reply-To: <CAJ-ks9kJiCGAkzW9M6q-62kcyvwBea5Zt2EoeeY0T3aN7jK+ng@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 3 Apr 2025 19:35:59 +0200
-X-Gm-Features: ATxdqUHj2RySMUlzfIJcf0gmHpZ8mus-BT_w4kJiHspLhXKJ1gM7QUWT0uqBcBI
-Message-ID: <CANiq72=Mo71rrVSnPzg00EfiY+PCf9KCA-EXmaoNUCb2-adAyQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: clean Rust 1.86.0 new `clippy::needless_continue` cases
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.14 00/21] 6.14.1-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250403151621.130541515@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Apr 2, 2025 at 11:09=E2=80=AFPM Tamir Duberstein <tamird@gmail.com>=
- wrote:
->
-> My experience in industrial settings is that this happens very rarely.
+Am 03.04.2025 um 17:20 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.14.1 release.
+> There are 21 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-We enable lints from time to time -- this would be no different.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-> =F0=9F=91=8D
->
-> I don't have any new information to inject into this debate. It's a
-> judgement call.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Thanks for the feedback, it was useful.
 
-I submitted a new patch to disable it and sent the feedback upstream.
+Beste Grüße,
+Peter Schneider
 
-Cheers,
-Miguel
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
