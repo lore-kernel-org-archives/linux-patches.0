@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B82251793;
-	Thu,  3 Apr 2025 15:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6468E2512FA;
+	Thu,  3 Apr 2025 15:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693805; cv=none; b=BhjmmAgXlv0MXUiOXI0bauWx+szXhSMLw0eSnSbslvjVFnEqmZvZfx9dOzrr4O05+vF9V8KKgJdgQUjMVRn9agTF1ZdofThCKhIcCNlHHmx5jkUZp0vriX/hw0XvcXFHjCpG+c44yESklEtmYZliYxO2X054RyDJSEaU0qQxAcY=
+	t=1743693807; cv=none; b=izZqsq7w5RSFw+acNENsdBzUpc/iGWyOkKN3Q+vvHZyWwj3M50TTz1bdKt4upkoDHvaGYoUyP5h9MgOYPMJ4xDBXgQ0vdLOT4xCs8jsggIoFPsfr6B5HQPp7tYtkfFqbGvURpAXp2+DUg3tsSULB/cyq/Vyx5/390hOnEnB8Js8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693805; c=relaxed/simple;
-	bh=pVbEn94qM0ocDWiaZS8wkV1i3PaoEd/WmxAMM+RaGXQ=;
+	s=arc-20240116; t=1743693807; c=relaxed/simple;
+	bh=iqqofYLwV6SnD2NaqXJjYAC5KDbnzjJYvTfsLOOacAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzpm1OZ3pwZ6QEY3MSwkl2tPTc/ap0L5S5/PCihpre8KwLd0w0xkL/Tu3PE8CwIxttbTtYxHkeMlKYkTCsoUaNvcHQi81yEhCo2bPsVm+PMTVG6T37ZQlnlYEAjl3RHZdQ8BcRsMYznzXMagw2gCbjlH7b28NZXxDzHSjweW7Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxK0lyc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFAyUejQ2I2oGJP8gF2jQsUnGP3TLasJntqwgSo2qapv5b9iJ3Tke5eGLjy7WUhg3Mfz9dYbuPphDoMWZVQdpNyivShthdMHA9KsmBkr8VaFSYp4UyMx0xnjJ4U/Q8xkYYUeFWMSh/A8dk2xMO/vnknUUp02/O8V9euhS3Wez3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1ELfjDS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxK0lyc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA2EC4CEE3;
-	Thu,  3 Apr 2025 15:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1ELfjDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7B4C4CEE3;
+	Thu,  3 Apr 2025 15:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743693804;
-	bh=pVbEn94qM0ocDWiaZS8wkV1i3PaoEd/WmxAMM+RaGXQ=;
+	s=korg; t=1743693807;
+	bh=iqqofYLwV6SnD2NaqXJjYAC5KDbnzjJYvTfsLOOacAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxK0lyc7+s356IzKpVjIW9TbhnraohK7P/7kOhYCR/QetmZXwVk/EKhYYUDWKIxf6
-	 gRh4cqi48in/EyoL7ESL4JDF2Al2WdRPh4FJZ1vV5Z0Jb4ucbrfRofkY7Yf7VVDL0R
-	 9QEQt5reMj9ifcGvWv4uri7w+f5/F2zPHIBk5buI=
+	b=l1ELfjDSyXULGl4EvDgL/rOYQPU9ZuTQufcXah3LBpp+ODidB3UDM50Dm9dZSfGz2
+	 oQgzfsRQMPFKuCMSCPT6UF4bUY8UKlC8+M7BYT0N1JPvPi222NKp1PBhf58vt/wByx
+	 F9AtnXh8WX0GK5IeVq5X31hWuzyf94jTshDxlwWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Cameron Williams <cang1@live.co.uk>
-Subject: [PATCH 6.14 10/21] tty: serial: 8250: Add some more device IDs
-Date: Thu,  3 Apr 2025 16:20:14 +0100
-Message-ID: <20250403151621.435870194@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.14 11/21] tty: serial: 8250: Add Brainboxes XC devices
+Date: Thu,  3 Apr 2025 16:20:15 +0100
+Message-ID: <20250403151621.464073906@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
 References: <20250403151621.130541515@linuxfoundation.org>
@@ -52,49 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Cameron Williams <cang1@live.co.uk>
 
-commit be6a23650908e2f827f2e7839a3fbae41ccb5b63 upstream.
+commit 5c7e2896481a177bbda41d7850f05a9f5a8aee2b upstream.
 
-These card IDs got missed the first time around.
+These ExpressCard devices use the OxPCIE chip and can be used with
+this driver.
 
-Cc: stable <stable@kernel.org>
 Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Link: https://lore.kernel.org/r/DB7PR02MB380295BCC879CCF91315AC38C4C12@DB7PR02MB3802.eurprd02.prod.outlook.com
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/DB7PR02MB3802907A9360F27F6CD67AAFC4D62@DB7PR02MB3802.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 --- a/drivers/tty/serial/8250/8250_pci.c
 +++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -5253,6 +5253,14 @@ static const struct pci_device_id serial
+@@ -2728,6 +2728,22 @@ static struct pci_serial_quirk pci_seria
+ 		.setup		= pci_oxsemi_tornado_setup,
+ 	},
+ 	{
++		.vendor		= PCI_VENDOR_ID_INTASHIELD,
++		.device		= 0x4026,
++		.subvendor	= PCI_ANY_ID,
++		.subdevice	= PCI_ANY_ID,
++		.init		= pci_oxsemi_tornado_init,
++		.setup		= pci_oxsemi_tornado_setup,
++	},
++	{
++		.vendor		= PCI_VENDOR_ID_INTASHIELD,
++		.device		= 0x4021,
++		.subvendor	= PCI_ANY_ID,
++		.subdevice	= PCI_ANY_ID,
++		.init		= pci_oxsemi_tornado_init,
++		.setup		= pci_oxsemi_tornado_setup,
++	},
++	{
+ 		.vendor         = PCI_VENDOR_ID_INTEL,
+ 		.device         = 0x8811,
+ 		.subvendor	= PCI_ANY_ID,
+@@ -5615,6 +5631,20 @@ static const struct pci_device_id serial
  		PCI_ANY_ID, PCI_ANY_ID,
  		0, 0,
- 		pbn_b2_2_115200 },
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x0BA2,
+ 		pbn_oxsemi_1_15625000 },
++	/*
++	 * Brainboxes XC-235
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x4026,
 +		PCI_ANY_ID, PCI_ANY_ID,
 +		0, 0,
-+		pbn_b2_2_115200 },
-+	{       PCI_VENDOR_ID_INTASHIELD, 0x0BA3,
++		pbn_oxsemi_1_15625000 },
++	/*
++	 * Brainboxes XC-475
++	 */
++	{	PCI_VENDOR_ID_INTASHIELD, 0x4021,
 +		PCI_ANY_ID, PCI_ANY_ID,
 +		0, 0,
-+		pbn_b2_2_115200 },
++		pbn_oxsemi_1_15625000 },
+ 
  	/*
- 	 * Brainboxes UC-235/246
- 	 */
-@@ -5373,6 +5381,14 @@ static const struct pci_device_id serial
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0,
- 		pbn_b2_4_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C42,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
-+	{	PCI_VENDOR_ID_INTASHIELD, 0x0C43,
-+		PCI_ANY_ID, PCI_ANY_ID,
-+		0, 0,
-+		pbn_b2_4_115200 },
- 	/*
- 	 * Brainboxes UC-420
- 	 */
+ 	 * Perle PCI-RAS cards
 
 
