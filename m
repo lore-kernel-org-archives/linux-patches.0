@@ -1,214 +1,133 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4688F40
-	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 10:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBABE1DACB8
+	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 11:33:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743761914; cv=none; b=EU7k816Szq3t/5zVgy/2XqqLDjcAGtHhklB+6ndZovPa8VL0KiHjU46HFhvrCn8tvwQDQjUZME9GqGxYNNeQYEqKmgym431grfyunZJRIHXuoc0Es60FB0sW9Vpvf7jjiAIvARv15MiP+ptxFtVuipdyCwyG1LA2SzXAuZEJpY0=
+	t=1743766384; cv=none; b=dRxbpHy/w5VRMExSH+DyBlHupHw2sL2LQhTYLBa8COTe5NrLmHVi5JTgoMe9DeZtQx99z/idYkg9+qtyQVVrxxyOdHUoDT2a/PLztYePShqBMSv0gJdFfKB1ewI/dcX7E4RvLCnirnxX+DS7mDO6MVMqxKCSNCGUqoIr6j5wraU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743761914; c=relaxed/simple;
-	bh=80splu1n8pOU1KBBOO6Kic2gl/SyiEiRofLtsBPJG04=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F0WLA7pevYIrcgj0J4VysPDmV4Bl8DJexjCQiFEXnqTEnV7JN1eu2BJo17NY4s3JpbeWPeeH0aSaeJWRDVI0ILXN7K0n9PQ0bDgMaOSK+qNrA2RHEr0tSH8P0Yf8DQEl/VpWGf2r37y7MIYMOMGOsNzYmzc7yY9/NNwl8pVEi38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cE718JA6; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743766384; c=relaxed/simple;
+	bh=RXAzAyUymUEGdjhF70f2rxVJquHJ+jHFiR1TdWzgpM4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B8rClOrPLW5R5VN77LitPy6Sgv8vZ+7kShbR2iYnnvPKAQ8l58s/fmOxvYYhPxUbdcHZxt+xV5F4+U6H09fxu1miCt6yFMesp9LL+vqOdXZILuf5JUWA4TqMC5dxLirn0wJ9JRVjxgmLkObZyP3fA3IkAvK4t7jzclQsJq6tNFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=UO62+kEA; arc=none smtp.client-ip=212.227.126.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cE718JA6"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-af519c159a8so1671556a12.3
-        for <patches@lists.linux.dev>; Fri, 04 Apr 2025 03:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743761911; x=1744366711; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kk2+ssM+Oku3Smc5VL3MHZ4lXHAgsUA/66b+AhTOPFU=;
-        b=cE718JA6QXILASwMIpJtnnGnMj+EGHZeIOcN9BLmYkb48dDV2TxPfd3o1gyZb3pSmo
-         eu2KDmdrVMMz5MSfp+x8WMgd1+sbGM2TY8t41NbmOAO1MmalTkQ8qcFiUh68gLP8vzTq
-         yvcsHi8Hh1CwNYQEfEXnKVHyvHLDymcLWw+DEm7jhrgyqMXu9p1WvQ9mOXh6Yh/NDBO5
-         KZtJQX9oQHPVP1oNJTAdB5fWtQCt38gh6Q4mqw6Gis8DfMSozm9Nm4kLLvcBrc+hcO0U
-         B6RNUlm8u0I6Y+LWaYkxpDleK+q+8C8XnRqFzK8m8pFa5lqXMkX5ZZj3zHsxpW7HrqsR
-         yv2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743761911; x=1744366711;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kk2+ssM+Oku3Smc5VL3MHZ4lXHAgsUA/66b+AhTOPFU=;
-        b=UTecVpt2GqgltGIUkrv/YNbuiTJuHHMJgSBESxtu4F1jSHTeUeCEnd50OIObouAy5Q
-         eKAPZSq9zVeYE24utPiaiWLRlVW3l4Q+ncgOrXSolwERq3KozG50QGW5ewE5i7iVkJi3
-         8y9kk7+z/emcrfXhmTRHdmNOAHNiVIynjG5VWVLBAw4B3Q5eHglqshdR4z/78zj3YUr8
-         6sDLcCpUagQ+yTeKBfOsv+UOkRIPFxJJY/tVfJHmC3sQHY7JM2Jj0IaO+a/mOJMf/xGn
-         LKJOrzDrVea4yUrOJZSrkIiRU9VimFIFoma8VEXgMhlFmWOxzIbebSErfIwmSXjgljmV
-         prFA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7N0hZhe3ulfI1YxiuYGiHAPMspxE04yg7t/0QGQcTRves9JbRblF5a0qV1HRF9itONorps9lR@lists.linux.dev
-X-Gm-Message-State: AOJu0YykhLmiUaf3E6Z3D5U7167ivB7Az00oWZ1npZS4wvNbEgke/UR2
-	x0V3Hxy90aO/2LmQUgM8gYuBHjNHsWZtwmAcZp6F/hD/bM7yhKtd7nePvxmLExdndyTjl7s3OXj
-	qVh6YXck6wDWdDDjI+0FEAw+Nd+Y=
-X-Gm-Gg: ASbGncu/CxBdd5x7tghg7foA7rin7qnhoQFUigvUBR7tx/uoJym27Mj7QtELnvg2+lr
-	cAjZBNN1sUXoYu5xDwTxj4X0uHSIlss25xS/v0fWm7K2jxeYijsOa5i9xdJQKvMJCkePtbDV51l
-	cXGuj4nXNB77QsjrURjmbMeRZZoR4UnoIndjMzL+sZ
-X-Google-Smtp-Source: AGHT+IF5qLApiWtmfEDZpNEBNfwwjniKGCedGrVsIBSll8ZYZ6bWrMHRGsz5hNK6ku+PeSNjXvg1TdI1HKVtH14YtJA=
-X-Received: by 2002:a17:90b:254c:b0:2ee:aed6:9ec2 with SMTP id
- 98e67ed59e1d1-306a6159281mr3617039a91.14.1743761910715; Fri, 04 Apr 2025
- 03:18:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="UO62+kEA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1743766379; x=1744371179; i=christian@heusel.eu;
+	bh=1Xvnr5xTHj5ffS6/z//aYoy8Zas4UgwcMAg/MTUZApk=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=UO62+kEAOgrnnVHbOWW5QCuVe6o1YZi3C/uFXpSecdRskVTG0OMjhMk4GByOKgtN
+	 XW+FNm6E5XAZm3SbEakEDYVlDV9od65/mE4wRjaAmSAWbvA/mhXYKvx0kbzo47yxL
+	 LGk3+l07tt6+jDIm1ss566hWMUZwuAvM7ur5eFsbCTUYNcHuhPWBOjLk1uYak1mzO
+	 oo5DngC9qU/dtoCFqXdXTwA0j9jocBIW9bWljp7RfMVZKmjgvDIsbyZn/oPGFk/jX
+	 OWe2PK6tObnTrnVfwyKVBizAqwnu22ErVvdI+9+pCK+IUUQlDdVMWzHbE1OC1deUj
+	 nqRfD1QORC9h5ZSePA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([94.31.113.55]) by mrelayeu.kundenserver.de
+ (mreue009 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1Mnac9-1tH6V30reX-00edDE; Fri, 04 Apr 2025 12:38:56 +0200
+Date: Fri, 4 Apr 2025 12:38:54 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.14 00/21] 6.14.1-rc1 review
+Message-ID: <c06931c3-c691-4acb-b3a9-9b2df8ef30bc@heusel.eu>
+References: <20250403151621.130541515@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250403151621.130541515@linuxfoundation.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="v5wn7utr7ycxg3wj"
+Content-Disposition: inline
 In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Fri, 4 Apr 2025 12:18:18 +0200
-X-Gm-Features: ATxdqUGBb48kNnIvxkBjFnEnOVymJCkadN_wHW90QF4tTA66dTROAv5n4CAYZjs
-Message-ID: <CADo9pHjHSDjbGHrx1bY0JAxPRNWW63772wGt0e4wQ_kDq50JhA@mail.gmail.com>
+X-Provags-ID: V03:K1:WLuhlQHS+PDXdBftMV8hO3bixlIHDBAynRCPn70q+P18m1hbFkk
+ m2QrMhxTRsbtnHGKw64LCCDYLJlPEYLy+1SweYKrH5JgasoW37G0aG/szo/0rrQHivh5aMV
+ GfYt78IsCAg9Rgl/o8FmoXxFVW7PnMk76z8YAvcmUr3HUUwtgqla1KG/NbuDPEYTBZY0d8i
+ VJeItaZ467vuSsOGkkLPw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YWmoUAX5HvU=;pwnXKxBtyCrbOd/49iZc1AP0Uta
+ UxSeo8rBE1T1g0bEuBnBEbI85mX4/Dcc6f/UXLfWCT++fX26jHNpaSkRnwsEe/U59p8TB28Gd
+ RGn8kIVTab11Y7YA+BkbveY6W9SL82BduavriKYm1mwjCE1w/AyGIGlRpBSw5JtRrs3MyuwYF
+ WVEnU35pcYOQnV6DMt3b6nwOYD2LCLulMPBU8QaB1KB8Fem69dBvio9JjVxaqVexE1dicyCpP
+ XX0RgNVhcLurPT6aIAbR4x7bGRwaZMH4H3NJPbBQne2D9N10tOVhHLNFGUgyw4sgDwwtO3jEk
+ ZobsIFlUrLsDy9EX3D4ikjSxFQ3u318v4wkvLudoIQqOQQVODJtV3PHNpPC81HZw7QX8Z5XLL
+ kNb1m7p+Un33CLiB7woaTqQP47v2wNYhzzq5oNlGwQgVO2C3CHhtHghrz31OWBBl+3YYwkSh7
+ 0r+302a8afziPuNbCvHQseT5/oh706rLRynIv0h+XxclXg2McfSglm+6O4IiIcpCv2UTb0sGx
+ 8pQ2cm52rBw0oct6U8puCYbaS8PaJMuUML305u3UG03+84vA7/e/4PvCxly7sHLLj86A8It+1
+ fmC4Qe+dE508rbbol11f6QIGL7FODcTEI1E7aQkgWdeN/ejsHyv+PMg9ElqCecTjHQUpUgD/1
+ GsqUhAun5qryF9aApVCl1V53ZpBcVSnZVz4E+7OSSeRPi/NQKNwjfUVD7XTW8LK+BPF0axx17
+ 1tL+GWoK0VoT7B4/a7D4jqJN1mL3jRVVEWNmQQczb4Q0wbU0Rm7DMGDUmNSQ3QV6EIYopazwe
+ xXTFvXcYjTdgA2NWyRywU1wi8UpkmAClHbSR+dq0M3UsppLqoW020IUymwyfHIRUbb7iTf7T3
+ tRz1tzwiHIAwcbTpRDzHn4ubO+YOKVmYHpZ7abJoOEKoZbxAo1lkI4tIO/4E9nEgP14UfJaKM
+ Ah7WTjPbgtB+14Hx3g3R763+z2gGa/b1CmFD3g2LjsD9HTxyvDoopu6h7o/AwoW6mZuQxZKaq
+ l8rRuLDEy5q0g9+SJp4810jp/Ay0ECelz4hf1ZEgVXbwdDv19dTtMexDFKa9XblF9ZpyJ4kkV
+ QgQgCYRVgKpcRi1RJ461/sedJtRsV1E1UsT5PAExmBznhXM+2zA2zsRhjHyXkoK2GCYYvyit2
+ R3yi3TtmPwO/bCsb7WRwU2xdC6ohnJ1w000/HW6FGYYG37QshJJ8knZFcxix/jYVCh88n0nnC
+ UPp541FTyi+mcwt9YvtntBV7frPzHhogcksJzO033eihE0zOIQV+tPBJbg6rvKrmN8/ZlLLcV
+ XBdVz/piFlSrxi/nTwoGp5InivlfQAEsgvyH54rUpbY+ci9MwIdGXbsudveKzo6Kj3jGYmh+C
+ wNPbT8tzLLbab0XWiXAwpFflm8ohK903VsksSef0CS9bOse3sCANYlDnEo
+
+
+--v5wn7utr7ycxg3wj
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 Subject: Re: [PATCH 6.14 00/21] 6.14.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
 
-Tested-by: Luna Jernberg <droidbittin@gmail.com>
-
-AMD Ryzen 5 5600 6-Core Processor:
-https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
-https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
-https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
-motherboard :)
-
-running Arch Linux with the testing repos enabled:
-https://archlinux.org/ https://archboot.com/
-https://wiki.archlinux.org/title/Arch_Testing_Team
-
-(still building on my Dell Latitude laptop)
-
-Den tors 3 apr. 2025 kl 17:25 skrev Greg Kroah-Hartman
-<gregkh@linuxfoundation.org>:
->
+On 25/04/03 04:20PM, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.14.1 release.
 > There are 21 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+>=20
 > Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.1-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 6.14.1-rc1
->
-> John Keeping <jkeeping@inmusicbrands.com>
->     serial: 8250_dma: terminate correct DMA in tx_dma_flush()
->
-> Cheick Traore <cheick.traore@foss.st.com>
->     serial: stm32: do not deassert RS485 RTS GPIO prematurely
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     perf tools: Fix up some comments and code to properly use the event_source bus
->
-> Luo Qiu <luoqiu@kylinsec.com.cn>
->     memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove
->
-> Michal Pecio <michal.pecio@gmail.com>
->     usb: xhci: Apply the link chain quirk on NEC isoc endpoints
->
-> Michal Pecio <michal.pecio@gmail.com>
->     usb: xhci: Don't skip on Stopped - Length Invalid
->
-> Dominique Martinet <dominique.martinet@atmark-techno.com>
->     net: usb: usbnet: restore usb%d name exception for local mac addresses
->
-> Fabio Porcedda <fabio.porcedda@gmail.com>
->     net: usb: qmi_wwan: add Telit Cinterion FE990B composition
->
-> Fabio Porcedda <fabio.porcedda@gmail.com>
->     net: usb: qmi_wwan: add Telit Cinterion FN990B composition
->
-> Sherry Sun <sherry.sun@nxp.com>
->     tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
->
-> Cameron Williams <cang1@live.co.uk>
->     tty: serial: 8250: Add Brainboxes XC devices
->
-> Cameron Williams <cang1@live.co.uk>
->     tty: serial: 8250: Add some more device IDs
->
-> William Breathitt Gray <wbg@kernel.org>
->     counter: microchip-tcb-capture: Fix undefined counter channel state on probe
->
-> Fabrice Gasnier <fabrice.gasnier@foss.st.com>
->     counter: stm32-lptimer-cnt: fix error handling when enabling
->
-> Andres Traumann <andres.traumann.01@gmail.com>
->     ALSA: hda/realtek: Bass speaker fixup for ASUS UM5606KA
->
-> Dhruv Deshpande <dhrv.d@proton.me>
->     ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
->
-> Maxim Mikityanskiy <maxtram95@gmail.com>
->     netfilter: socket: Lookup orig tuple for IPv6 SNAT
->
-> Abel Wu <wuyun.abel@bytedance.com>
->     cgroup/rstat: Fix forceidle time in cpu.stat
->
-> Minjoong Kim <pwn9uin@gmail.com>
->     atm: Fix NULL pointer dereference
->
-> Terry Junge <linuxhid@cosmicgizmosystems.com>
->     HID: hid-plantronics: Add mic mute mapping and generalize quirks
->
-> Terry Junge <linuxhid@cosmicgizmosystems.com>
->     ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
->
->
-> -------------
->
-> Diffstat:
->
->  Makefile                                  |   4 +-
->  drivers/counter/microchip-tcb-capture.c   |  19 ++++
->  drivers/counter/stm32-lptimer-cnt.c       |  24 +++--
->  drivers/hid/hid-plantronics.c             | 144 ++++++++++++++----------------
->  drivers/memstick/host/rtsx_usb_ms.c       |   1 +
->  drivers/net/usb/qmi_wwan.c                |   2 +
->  drivers/net/usb/usbnet.c                  |  21 +++--
->  drivers/tty/serial/8250/8250_dma.c        |   2 +-
->  drivers/tty/serial/8250/8250_pci.c        |  46 ++++++++++
->  drivers/tty/serial/fsl_lpuart.c           |  17 ++++
->  drivers/tty/serial/stm32-usart.c          |   4 +-
->  drivers/usb/host/xhci-ring.c              |   4 +
->  drivers/usb/host/xhci.h                   |  13 ++-
->  kernel/cgroup/rstat.c                     |  29 +++---
->  net/atm/mpc.c                             |   2 +
->  net/ipv6/netfilter/nf_socket_ipv6.c       |  23 +++++
->  sound/pci/hda/patch_realtek.c             |   2 +
->  sound/usb/mixer_quirks.c                  |  51 +++++++++++
->  tools/perf/Documentation/intel-hybrid.txt |  12 +--
->  tools/perf/Documentation/perf-list.txt    |   2 +-
->  tools/perf/arch/x86/util/iostat.c         |   2 +-
->  tools/perf/builtin-stat.c                 |   2 +-
->  tools/perf/util/mem-events.c              |   2 +-
->  tools/perf/util/pmu.c                     |   4 +-
->  24 files changed, 304 insertions(+), 128 deletions(-)
->
->
->
+
+Tested-by: Christian Heusel <christian@heusel.eu>
+
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and on the
+Steam Deck (LCD variant) aswell as a Framework Desktop.
+
+While testing I have found a regression that was already present in v6.14 t=
+hat I will report separately.
+
+Cheers,
+Chris
+
+--v5wn7utr7ycxg3wj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmfvtr4ACgkQwEfU8yi1
+JYXKow//U0IOkLZJ2LbkAACQbWxGZCfcjMvN+GOh5EU64ecvFc0UxOnqVnC/xyHu
+up2JxT0kPJZ15zm4vgKWUlS383dUBuDlqEyvN6oEqZBuiiNivEyaEk06QgRlfAc4
+G7L3pDD71+MPa+FIsoja0wPeh/MX2f5ftvtsqvRET7ZijHY7wF+oZQ7RBTkW8yfb
+f0KufR/ml8ai6RLULP3BAwn8y6odAXbgdSzWy5S8tGEqCjdENdfG0/cL/xvXU69a
+qqBBaDMk1BVYW6Dt4NXWqoE1Dr1uJcjAA+9ItPMq4R/EglnWEB83mKru9EqXJJuE
+YgbMdRYKeRZ58IJy3+ww6yAVRMjNW6DyJ8atKpj7NLjWoF0FWFFbKh1Z4SF2zxWm
+FhkQZdVXKr/iTIjFrZiF+xCJjSce1GnERIrFkUvRHQdEo1O9v35ewjq1GAi25dle
+HijPdlpk9ZRxJM/UuBWSC/wR7MkObRfx6nZA250Nark5hO3nq4xpBPXezSL/WoFi
+1AispsVSj5JU61I7tO9sDV/iiV7tVG8RAzJ6o62t88NiynJmy0IcK1Xz8pkqWWyZ
+zzLL5rueRcRA5l7kPY45wmx+oJQIJGgPqrV62c9RYcKTOjVEpMUE2yk+UCu4tQ7G
+KXftXts0LNGcM/uGAuXJ/hD0wq0Tqe66od4Ghp/TCNSZ9DfAMLA=
+=DfJe
+-----END PGP SIGNATURE-----
+
+--v5wn7utr7ycxg3wj--
