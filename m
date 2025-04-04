@@ -1,253 +1,141 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E472145B0B
-	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 15:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743780983; cv=pass; b=d/AZRS/B/0sqALll1mkV9i+fheu84bnRcrHtFnGkNXudbzJxxj3tlQGfyVB2dRwLeuFeEgt5ekFMGJUg6Ox0qSdlMFlMew9mfSvoBFmNoQH1ka7QXwkxGR8NPJ6Per3jbNY0LpXYjxizK6TY3lmby3pskBuPQYfD5U/QDHk0xHA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743780983; c=relaxed/simple;
-	bh=NqvfcBagJhe5ko5fbpfCx11iCagq9LD6OAB0tol0xIo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rSTRY4XPoC07P+Ri89dpqGxuYEDy7tq5dlKt1kkL+dIqGiJlYoshzq17yYo/lnbwA6zZtHpSi3ZTxkLh897u6cC8JAveLNiKQX3gU+U0M11H/OA9zn2GKM9KhZx7k6rcz1crIfFVg3ogvy3HrlmemXg8NMmmlbOBSmYmlIa4wFI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=HHlkcMOu; arc=pass smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389A320A5E1
+	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 16:47:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743785255; cv=none; b=nSbn48YxLsExq5zurZgjcz88zM7C06ekWkKmo2K4vzjXluTaBsjPRwg6Vuub3NVkHBKn7xRZdlAkJ7eMY87HtvIxzjwKhAPN43yvYx2nmNYtixyP5DGrrHyVn+6oESp7iQYgAp9tPeSYodexqTzF3ZV7e0U6jza2nXTSEQj6jyk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743785255; c=relaxed/simple;
+	bh=9Iz38orDDWGWK2AIO290K6VwdNwDkNahYRb4oLv4U2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U/oyBqxY6k8jeVDb/d/MgnRadpYVUZgSvdlSouxU0CJbZUfB4TpR//Yr4Cjv8j4+ZwQywoww+3Hpco5vcO5yr+I1dlf0xNkK90ZvO5eEoBJs10xJCg5ohv8Lac58iQMj9TBxDibesmUI+X4Jv0g4FpI1hTrHsHz7evcIF3f0DJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFm1Acvm; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="HHlkcMOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDD9C4CEDD
-	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 15:36:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="HHlkcMOu"
-Resent-From: Luis Chamberlain <mcgrof@kernel.org>
-Resent-Date: Fri, 4 Apr 2025 08:36:21 -0700
-Resent-Message-ID: <Z-_8dYLtWoXsBBTR@bombadil.infradead.org>
-Resent-To: patches@lists.linux.dev
-Envelope-to: mcgrof@infradead.org
-Delivery-date: Fri, 04 Apr 2025 08:33:28 +0000
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
-	by bombadil.infradead.org with esmtps (Exim 4.98.1 #2 (Red Hat Linux))
-	id 1u0cUS-0000000BA4a-1z4O
-	for mcgrof@infradead.org;
-	Fri, 04 Apr 2025 08:33:28 +0000
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 9ED7260010;
-	Fri,  4 Apr 2025 08:33:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 9FC3BC4CEDD; Fri,  4 Apr 2025 08:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DC6C1C4CEEA
-	for <mcgrof@kernel.org>; Fri,  4 Apr 2025 08:33:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DC6C1C4CEEA
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id BCF8C43C86;
-	Fri,  4 Apr 2025 08:26:06 +0000 (UTC)
-Received: from pdx1-sub0-mail-a238.dreamhost.com (100-102-53-226.trex-nlb.outbound.svc.cluster.local [100.102.53.226])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 508CA43E94;
-	Fri,  4 Apr 2025 08:26:06 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1743755166; a=rsa-sha256;
-	cv=none;
-	b=nOFamv/ArwMUqglE5vHlglC8jh7NQMhb1b+rkmJ62Fj4xrxCrYFyvdgB217Eb0V1FCs4XE
-	L+o/L94BLZhzqDbANZWB5rJKuDlQR6c7O7VQEQw3zxXlzr6WnJZ9Vfffz2z2Gr8965CIHi
-	L9v2I0ml4HcxD7LQc5+xJdE6zGCI+lT8lfXVI2tXhprSRUeoPK9JN4Uhha6EX0lnUOjiwB
-	gW5iSbL9vbEYDo4A3xi/JFEbBJiwwmc9gfMk70UnX9kvKhLAX4C3kWRopAC6O9MHQHxCHH
-	V6sskW2mFNUeQAxlXWe72tC1cqI2jDK/V82gYNQoJhO63VLyuTMJJ2DwDnyZAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1743755166;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=cBWr+DfrKzdGsjV9LW+lVAL88V7NJzsjp/HuPYvZ1oU=;
-	b=tOZAFsbHA8AaM+f9TK/4HRQES7Zo/0r02jjUBEsLL6/ipFm3GwF4MO8mIJsUBoZ8wuOQn2
-	9mzUbslhOLr8V2M+4ojW+ikWMsnmHkef9b/8dLQs63u3gexMEkLQd92rz45M36HZ4lx6nq
-	FwlyEY6m1s0AR1aG5OHu9Jj+9S0z22fa6Y+wk6Nju+UcThNmF88OKn/vtPUDLz60sAw39z
-	vzVySfY5W1k5sI0ZJMWGE4dueUMhivWcq1EX5dxgxaNRj0uE9YV1NvNjx+9uDFLv/fFBhu
-	mwp9k4mjL8JO7XSoVN80/CXJedlIYWy3ysDuFAL3Z9LGFc6H1z/B6sMyfCYIyQ==
-ARC-Authentication-Results: i=1;
-	rspamd-77c6b75dd6-jdfhc;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Inform-Attack: 56f5aa857ef27e77_1743755166562_4062817515
-X-MC-Loop-Signature: 1743755166562:4167042683
-X-MC-Ingress-Time: 1743755166562
-Received: from pdx1-sub0-mail-a238.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.102.53.226 (trex/7.0.3);
-	Fri, 04 Apr 2025 08:26:06 +0000
-Received: from localhost.localdomain (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a238.dreamhost.com (Postfix) with ESMTPSA id 4ZTWs96qgTz9B;
-	Fri,  4 Apr 2025 01:26:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1743755166;
-	bh=cBWr+DfrKzdGsjV9LW+lVAL88V7NJzsjp/HuPYvZ1oU=;
-	h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
-	b=HHlkcMOuhYFMdVs2WTE7K3C/8O0ShP+5misSt6xh6XkG5ZXe6+8HaItub9RbUTLsR
-	 aUXoHETGaM2KFtTO3WwWHyCfk3NP5jP5c8R7VVh6DWYK3sWER/GaNA8bAPqsamhjF0
-	 YGl+7IJBpJMpsf5e647/pd7V6EJXglG7+38drjLIrPRHCdxUNGaarbw98Xvyo6eeGW
-	 TA+/AUfIhimmVlJbc017hwewFunrRnDsQTIpXrJ9NOxzo1AyEdVUZp6PbQaxT0einD
-	 T8qqCGh2Kkq60egixfpoPET7eZLC25hdfZXI8IiC3ItRvl4NLuEFA6U7lHJtYhJ8hM
-	 sX5fUq7ub7hmA==
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: mcgrof@kernel.org
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Subject: [PATCH 3/3] fs/buffer: introduce __find_get_block_nonatomic()
-Date: Fri,  4 Apr 2025 01:25:20 -0700
-Message-Id: <20250404082520.723838-4-dave@stgolabs.net>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250404082520.723838-1-dave@stgolabs.net>
-References: <20250404082520.723838-1-dave@stgolabs.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFm1Acvm"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-72bbc03d436so1443430a34.3
+        for <patches@lists.linux.dev>; Fri, 04 Apr 2025 09:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743785253; x=1744390053; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4qHFlUEgPfk8I50kLbzLY6Bfpxn+xaMagBJlQnZG6l0=;
+        b=TFm1AcvmmasIN3kJ/HK1TGG/kaFRZeYSjs8XObeAp9KV3+N1hOSV99ai57uEENmrSH
+         IZIu3klLgnyHTnI4lpvOxwza1Sz4hn4tj0Wqa5+n7gRVI6J3T/GtQSpUuq+mLscCAwp9
+         XwoIwDXNh2/TqdYJq+iQv5Qn0O/Byv88QSTg/KcD1AoShw0oZcoctrFpx14o51cWMW7I
+         1+sEK/03Lns8dMPywN8Z/Rz3LVQYP4oKrxgfSm5ZSyvYEyFSqeAjcmPs5xaUJqKko9nc
+         zOFm/FWilVLcn5LG7plDqQPMK9xkDffXDZ1UezSqtafe6yg9zv4mWRis8+mKiFfeDs37
+         mrxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743785253; x=1744390053;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4qHFlUEgPfk8I50kLbzLY6Bfpxn+xaMagBJlQnZG6l0=;
+        b=ZYDbUBUQSXZrw4bGOxl2oho0IiVjAnnJlk71nc6ELnXVn4qZQBq1tvYD6Hio5AiKEM
+         U3BYohiX5vT6CwX8zfURGu39r048S8QtlA/eKERGgzMk5SxgPzoF/K2QxrqCdr6cqzxV
+         AJWiRWwELz8rVF0wgrpHVGbZntJsXcPXjG7u+4s3Ml/6mI1axqSUPvCqjw8padqtYKEQ
+         +48K4T5oM5xtvpHkRTg4ofRKiPAF4pXtJZ5P2N6a7Nbwwj0gsCByGFOnLpgaFuwvKTwi
+         iWEEN7ePysVp8D1xNDFADvd/4acWLt2WVpPBdAoFn0bvg5tQgirFcnmaewA2r1UbNP4S
+         Z93g==
+X-Gm-Message-State: AOJu0YyarzWpQ6dFH2RFZTehcNnupBEOgmLFEJIZYaH8Q0ATy9nHBybH
+	lY4FW7v5r8VboH6BSrCfQ8514tohugC3ff+yPPFFas5eh+3rwdkk
+X-Gm-Gg: ASbGncu1FPdivgKKItosVvDKw9CoXdWHCDC5IMWLDKtpWkBUTprzVxruM0T+dhle2pG
+	JzXd6g0EncjAWpUDm4iu84mOuyDmi4eoMRPFNm8k32hmJ5TPQBcCmXtoOe9AVNLuwYLD91TY3ZK
+	eP10NWmEWeEQQjdnHZwpM3WunKO2fL22wcn+Nb2XB29KVoAltyCol7LkcvVb3/bqtkMdFGMPGiT
+	13Lp++oLcIVAWrmwbmPegzu7a/IxQPnktQD/7GycPjZAO5UgjKxGkMu7bbkSeyQycsjFnqXvqoP
+	FJj2PwQ2YiLurmrb/Fg9ylR945SaM7dlGDgIJbvywxrcGiV/c1cXxs3nIs6MNX3qEc1nFsbn
+X-Google-Smtp-Source: AGHT+IFCDH1WQvthzsuCflHZaq+IszPEDGqFQeCGyzAal9s00Vvb1OROP01ro5EUqCKz7yjuxRvDLw==
+X-Received: by 2002:a05:6830:d84:b0:72a:48d4:290b with SMTP id 46e09a7af769-72e3686ffb6mr2691302a34.26.1743785253004;
+        Fri, 04 Apr 2025 09:47:33 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72e3043cc8esm726012a34.0.2025.04.04.09.47.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Apr 2025 09:47:32 -0700 (PDT)
+Message-ID: <2725cea1-4bb2-4adf-a43a-8edffb5a3fb8@gmail.com>
+Date: Fri, 4 Apr 2025 09:47:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.13 00/23] 6.13.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250403151622.273788569@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250403151622.273788569@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Callers that do not require atomic context for pagecache
-lookups can use this flavor to avoid the unnencesary
-contention on the blockdev mapping i_private_lock as well
-as waiting on noref migration.
+On 4/3/25 08:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.13.10 release.
+> There are 23 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Sprinkle some conversions. This could be separated into
-different patches I suppose.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
----
- fs/buffer.c                 | 25 +++++++++++++++++++++----
- fs/jbd2/revoke.c            |  8 +++++---
- fs/ocfs2/journal.c          |  2 +-
- include/linux/buffer_head.h |  2 ++
- 4 files changed, 29 insertions(+), 8 deletions(-)
-
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 0e81cf315d81..24d1a5476084 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -668,7 +668,8 @@ EXPORT_SYMBOL(generic_buffers_fsync);
- void write_boundary_block(struct block_device *bdev,
- 			sector_t bblock, unsigned blocksize)
- {
--	struct buffer_head *bh = __find_get_block(bdev, bblock + 1, blocksize);
-+	struct buffer_head *bh = __find_get_block_nonatomic(bdev, bblock + 1,
-+							    blocksize);
- 	if (bh) {
- 		if (buffer_dirty(bh))
- 			write_dirty_buffer(bh, 0);
-@@ -1135,8 +1136,10 @@ __getblk_slow(struct block_device *bdev, sector_t block,
- 
- 	for (;;) {
- 		struct buffer_head *bh;
--
--		bh = __find_get_block(bdev, block, size);
-+		if (gfpflags_allow_blocking(gfp))
-+			bh = __find_get_block_nonatomic(bdev, block, size);
-+		else
-+			bh = __find_get_block(bdev, block, size);
- 		if (bh)
- 			return bh;
- 
-@@ -1424,6 +1427,15 @@ __find_get_block(struct block_device *bdev, sector_t block, unsigned size)
- }
- EXPORT_SYMBOL(__find_get_block);
- 
-+/* same as __find_get_block() but can sleep */
-+struct buffer_head *
-+__find_get_block_nonatomic(struct block_device *bdev, sector_t block,
-+			   unsigned size)
-+{
-+	return __find_get_block_common(bdev, block, size, false);
-+}
-+EXPORT_SYMBOL(__find_get_block_nonatomic);
-+
- /**
-  * bdev_getblk - Get a buffer_head in a block device's buffer cache.
-  * @bdev: The block device.
-@@ -1441,7 +1453,12 @@ EXPORT_SYMBOL(__find_get_block);
- struct buffer_head *bdev_getblk(struct block_device *bdev, sector_t block,
- 		unsigned size, gfp_t gfp)
- {
--	struct buffer_head *bh = __find_get_block(bdev, block, size);
-+	struct buffer_head *bh;
-+
-+	if (gfpflags_allow_blocking(gfp))
-+		bh = __find_get_block_nonatomic(bdev, block, size);
-+	else
-+		bh = __find_get_block(bdev, block, size);
- 
- 	might_alloc(gfp);
- 	if (bh)
-diff --git a/fs/jbd2/revoke.c b/fs/jbd2/revoke.c
-index 0cf0fddbee81..11d2128612a7 100644
---- a/fs/jbd2/revoke.c
-+++ b/fs/jbd2/revoke.c
-@@ -345,7 +345,8 @@ int jbd2_journal_revoke(handle_t *handle, unsigned long long blocknr,
- 	bh = bh_in;
- 
- 	if (!bh) {
--		bh = __find_get_block(bdev, blocknr, journal->j_blocksize);
-+		bh = __find_get_block_nonatomic(bdev, blocknr,
-+						journal->j_blocksize);
- 		if (bh)
- 			BUFFER_TRACE(bh, "found on hash");
- 	}
-@@ -464,7 +465,8 @@ void jbd2_journal_cancel_revoke(handle_t *handle, struct journal_head *jh)
- 	 * state machine will get very upset later on. */
- 	if (need_cancel) {
- 		struct buffer_head *bh2;
--		bh2 = __find_get_block(bh->b_bdev, bh->b_blocknr, bh->b_size);
-+		bh2 = __find_get_block_nonatomic(bh->b_bdev, bh->b_blocknr,
-+						 bh->b_size);
- 		if (bh2) {
- 			if (bh2 != bh)
- 				clear_buffer_revoked(bh2);
-@@ -492,7 +494,7 @@ void jbd2_clear_buffer_revoked_flags(journal_t *journal)
- 			struct jbd2_revoke_record_s *record;
- 			struct buffer_head *bh;
- 			record = (struct jbd2_revoke_record_s *)list_entry;
--			bh = __find_get_block(journal->j_fs_dev,
-+			bh = __find_get_block_nonatomic(journal->j_fs_dev,
- 					      record->blocknr,
- 					      journal->j_blocksize);
- 			if (bh) {
-diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
-index f1b4b3e611cb..c7a9729dc9d0 100644
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -1249,7 +1249,7 @@ static int ocfs2_force_read_journal(struct inode *inode)
- 		}
- 
- 		for (i = 0; i < p_blocks; i++, p_blkno++) {
--			bh = __find_get_block(osb->sb->s_bdev, p_blkno,
-+			bh = __find_get_block_nonatomic(osb->sb->s_bdev, p_blkno,
- 					osb->sb->s_blocksize);
- 			/* block not cached. */
- 			if (!bh)
-diff --git a/include/linux/buffer_head.h b/include/linux/buffer_head.h
-index e87eb1b5eaa2..d51912fc59b2 100644
---- a/include/linux/buffer_head.h
-+++ b/include/linux/buffer_head.h
-@@ -223,6 +223,8 @@ void __wait_on_buffer(struct buffer_head *);
- wait_queue_head_t *bh_waitq_head(struct buffer_head *bh);
- struct buffer_head *__find_get_block(struct block_device *bdev, sector_t block,
- 			unsigned size);
-+struct buffer_head *__find_get_block_nonatomic(struct block_device *bdev,
-+					       sector_t block, unsigned size);
- struct buffer_head *bdev_getblk(struct block_device *bdev, sector_t block,
- 		unsigned size, gfp_t gfp);
- void __brelse(struct buffer_head *);
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.39.5
-
+Florian
