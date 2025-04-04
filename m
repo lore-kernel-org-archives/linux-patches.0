@@ -1,70 +1,69 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243CF1E51FB
-	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 13:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2FB1EF09A
+	for <patches@lists.linux.dev>; Fri,  4 Apr 2025 13:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743772838; cv=none; b=L/0p61OeoIheAOgLAE07MUs6x5qNmGnCGQWFf7QRRPm8BYyCMx7lmJWJyZdRiwvkzxwQNRPqsOVtVap38o2eYe5m4NH83TffqwSag5pSsDfxiK2gMpB5MNfoBYCso9194P4TW93oMwtg+eSRnVPZReVLMcWCKwXi9gJRIlJazcc=
+	t=1743773311; cv=none; b=kpUXqYAn8SmldG/aaWTiuCCtyiApjtnrH7HZP3UwswvkHYBts18/sFMtsAVKn3tahZehRZldQFmo/GkN+BR47HiXvO3W+p4fJNf/uuNBgwd9zwLGu/meu24TlzHPEPoN7ZoxjS9Lz7QQBwYR2cZRY/+mBlFrgnukk9oaacEslvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743772838; c=relaxed/simple;
-	bh=hJW5FZE9wzMGEzmWLYyjuRGd9tpoV26paptZV5/csOY=;
+	s=arc-20240116; t=1743773311; c=relaxed/simple;
+	bh=8am3I0YCErYUO2PgNgYpMqXVi36aEv+QHl9QuGEDE0g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VCu3OI4Qx6xXiTFdTd72Oe97XiSkVKohjcGGVGRADQZkGsDP7CbfFvx0biDDTtTzbogdqmJ9vfGSi2ivHbnRAHT11qioprWSz4cE1yOihbMxy3icPygqCLWOWi12Cpg+llohmSfvnkkGZfhUOZqlOub3LgBodiA69I5bJiJTDWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=NCTInY50; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	 To:Cc:Content-Type; b=fYU9xxP4GFbH3j1/bPZK5YEVrCu4N6cZ7xUn7SE3yLwXhCYKQHbmmhno3wmPNDEy3HlDYcWJYA1pSQdAAWhFtW31+hRY9uRW0m204O+nSKvHuaFzBdBoEccawIkKKWLE7ULdxOLbsxgK83RNYCd61kRCDP5uSHb+jYXvnPQVyac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nbIhFUJo; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="NCTInY50"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-30362ee1312so2022137a91.0
-        for <patches@lists.linux.dev>; Fri, 04 Apr 2025 06:20:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbIhFUJo"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-301493f461eso1496947a91.3
+        for <patches@lists.linux.dev>; Fri, 04 Apr 2025 06:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1743772836; x=1744377636; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/Kiqs1g4/i+eKRX3/NK1xn8WGoGucOOXfAlNORNd6cI=;
-        b=NCTInY50lVAmPEqR+mwXo7rX7l93dtmqqGqQodogqcUeHz8BP/20JweCgiocGZ2HGL
-         8TW9Ib9egJJOfrJptuekYcQ0dWnEY/kPy9uxAUg5RomufQWbjv2O9EMzz/B3QgGpuyAL
-         FEm4d/WvmZqfRhtSS1txIBDs4AVZCr3hHtpaPSaGXjgbdk3jcsQUgDIb6ABoCQgRrzAC
-         Bmd34S9sEqtWcuFii5my4xPw1a6SwnmlO+WafIxAzmkJXNAcxR/pjzlR8dk63P6Xa2ik
-         yFzls02TFuKp63UsZaVURPiNJ8BH4HLx4KHhVRpFHrXp1TiNFTOoELBFZhVPWKKCLBcH
-         TAOQ==
+        d=gmail.com; s=20230601; t=1743773308; x=1744378108; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=L1EvrIpOY5/BQY+g5/bXbxzle3Uu4BHi9J4gn0QSKck=;
+        b=nbIhFUJoRBnIc5F8S+uDzk8CbCS/Q3shzMwsfsroIGh2J6jVogMIB0jX650xI9l8l4
+         QfglVCPyz6EUVtz7mWQAAjipsepuQ5E/m8n1Ftut5XwcwB5c3I3mh2zXxirESoX7eAK4
+         BHhHeSw7sSJXU2b+Gt4rCbO0j69SVfwKa0CyE0KlxxvCu7HToS3SzqdL7rToU/+y5Gkw
+         VFEykGpJNxGMVPruLLcSjhufR/BdXwaFPLq1N9YnYo5C8QfI3NFpkKHxDKgUCst6xkll
+         M0DCJRYEkqDOMLzTED5jPzf3+pMZPw9ams+1ab1hBN4BZK6vER2Ex/GzS6J9uu5dEwbM
+         0ulw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743772836; x=1744377636;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/Kiqs1g4/i+eKRX3/NK1xn8WGoGucOOXfAlNORNd6cI=;
-        b=sDFyzXenOneXDdwBCHw+0W9z1gX9EGfcBaFaprdrpS3OCZS/Af5EwWqn5/2hLF21Uv
-         C+/hcCOMdfq1Nv3ZVoteTqupIbFKCNyMV28cjxwy54AZh32RC79mPWNSIamDU5XRM9SZ
-         aMYh4fQ24KqWpY1HXVdSFTBjx7M57JS3UhPZH5nC+Pm43pnxiByWNOQciSFIOCqoVfn1
-         U0M+xMmvYNqnP91HDxLah4xZ2WwS5h77eXBEeNVbxkw/xLzFYvjzCHvqiC8oJUKpPSaj
-         Ai6J+Dre/wDgamlkYjOApAMr6Zbo7RkGOD0oVfVOc5AhOr8AqNQbSnTbTanbhOJpkJVB
-         Gr2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWDAaNiLddIS6NPz29b0thkrBxks+ahCYC8kc84TpUg2tJMm1piSetL66NIajEVE31+tTs1yvpg@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBY8OsJ8Qn2xxpBTIaOtN3fpWrTSmrjSZoRb8ZapbxieP9zu/Q
-	49m+sMOVTuUwvdMy4Lozl1+vJQCGgWDRwB7ONrCvPgeoO+jAoqUu3GFel/TQVC0UJ4aTLWllK9R
-	ORYqL21xxGZWalmUTt2sNXT8LBmGstCm1l/weYg==
-X-Gm-Gg: ASbGncun08obk7FtMlvg8ku3QZaKl7IA9T1aIg4UBRqen0LOsWQLVthEfk4ynDme4IQ
-	uxeB3nmcwo91fC32iFcc1UvULLaak1mSDXSwEzI4DEc46DpZN0BGQpFB8nNNJcYyjAO/PMyclP/
-	3z9gDgMnzYrrT/QHdc/GMpkYYcFw==
-X-Google-Smtp-Source: AGHT+IFulkjD6tJbY4C9BZj/bnJRutZmb96NKhGLWA8BRDLemCTGRD/MaqJKIKr0q132IsKbryprJauKtWGVOBdc1Lo=
-X-Received: by 2002:a17:90b:514b:b0:2fe:b907:562f with SMTP id
- 98e67ed59e1d1-306a488a241mr5725486a91.14.1743772836383; Fri, 04 Apr 2025
- 06:20:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743773308; x=1744378108;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L1EvrIpOY5/BQY+g5/bXbxzle3Uu4BHi9J4gn0QSKck=;
+        b=dwwNQ2QPW0urF0JepYsY2/MV53a49xi8xtBCDSoYAQ3l72Ari9H68+Q8icUJtkeH1q
+         VwkUyLiZpj9NmlYvGp/NlTHY5w7SWZ7MaXeB9r2guTWUY1KYcJv7Lb9+x7oboWjNOBCc
+         JR7AP/lZTqU7ifwkx52GTWma+7u2aDl0KDrohMwYiBPuuFNbrC0n7Xydy/5++UJS09xa
+         /7JLjgEBcgi5C/1R96hlnuONePD5D71jksvDgZQb98rWbI9AiruBUrWK7NeckDT8Kpfg
+         98O9n2z1Peftuvw5abJ26zPxc+97u/edVEPtmlE45nfNEBOfxTIRk7Z9+oCVuTEwF3u6
+         L8zg==
+X-Forwarded-Encrypted: i=1; AJvYcCXNnKyolQva27ff39+ZpLw7mxayPQPzV+OSYu0DMMbHiBn2sAOtL873x+Bzv7NC+SwU59XTDmOB@lists.linux.dev
+X-Gm-Message-State: AOJu0YyN4n2vwhhXODw0WlQvj9r2h+s0g4bWpUkGnjYC7p9KTVOOI4wW
+	ZhmBZClGtqx7CW5t54P/veJmbVzlWn/2nUsbF7zI25BmsFKIZASirqSQiy9L6R5kWoSk1VsQDEs
+	UCRO/HAYRGmWdkUhY2Fci1ZZ4WpI=
+X-Gm-Gg: ASbGncs9q8z0vTiX+hbeM5nsA/ni/uS/O6Kh6iaUbcT4R4dJLkCNWLtHkVT6wTUM215
+	EJMcH4UFJUH0421nup9KW/53zwIzVGAtYBiVIWagemHWzlPYBrJqQLYXTY8HG0K2TBev1g/Tkuw
+	F8u9OmRR6nh1lBEQqKEOmJXDEq+XL1XkNPi+sOqH2U
+X-Google-Smtp-Source: AGHT+IEH3oSAaHUxdWxzytgERI3jEbHxHJwBXGrj94vlYzIgv60oEEOga0t/vF9UsR7u5ZJVVEVDpQRL1UPkN/SYW60=
+X-Received: by 2002:a17:90a:d883:b0:2fe:a0ac:5fcc with SMTP id
+ 98e67ed59e1d1-306a6245becmr3055286a91.34.1743773308463; Fri, 04 Apr 2025
+ 06:28:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250403151621.130541515@linuxfoundation.org>
-In-Reply-To: <20250403151621.130541515@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Fri, 4 Apr 2025 22:20:19 +0900
-X-Gm-Features: AQ5f1JrOLjXtchCUzPwJ2RZcncY7USR5UWmg9tb-6yrsTcTvmjvQ9nHhIM79vXk
-Message-ID: <CAKL4bV6hBshXXw5ZCMV7XMOehheoEmwJ8XcDceXDwuUq15H1EA@mail.gmail.com>
+References: <20250403151621.130541515@linuxfoundation.org> <CADo9pHjHSDjbGHrx1bY0JAxPRNWW63772wGt0e4wQ_kDq50JhA@mail.gmail.com>
+In-Reply-To: <CADo9pHjHSDjbGHrx1bY0JAxPRNWW63772wGt0e4wQ_kDq50JhA@mail.gmail.com>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Fri, 4 Apr 2025 15:28:15 +0200
+X-Gm-Features: ATxdqUGgEPhFd7pK9_-fqa9Wl-BBCEXuGiINgFnjtn_Peku-eWbJr_Dz5WTiQlg
+Message-ID: <CADo9pHhFbPMfURmsAdxaUX0R9pp0aaPxD3KW3PEh2B5iT_YATg@mail.gmail.com>
 Subject: Re: [PATCH 6.14 00/21] 6.14.1-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
@@ -75,48 +74,147 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
 	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
+Works good on my laptop too with the same OS
 
-On Fri, Apr 4, 2025 at 12:29=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+Dell Latitude 7390 Intel(R) Core(TM) i5-8350U (8) @ 3.60 GHz
+
+Den fre 4 apr. 2025 kl 12:18 skrev Luna Jernberg <droidbittin@gmail.com>:
 >
-> This is the start of the stable review cycle for the 6.14.1 release.
-> There are 21 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> Tested-by: Luna Jernberg <droidbittin@gmail.com>
 >
-> Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
-> Anything received after that time might be too late.
+> AMD Ryzen 5 5600 6-Core Processor:
+> https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
+> https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
+> https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
+> motherboard :)
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.14.1-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.14.y
-> and the diffstat can be found below.
+> running Arch Linux with the testing repos enabled:
+> https://archlinux.org/ https://archboot.com/
+> https://wiki.archlinux.org/title/Arch_Testing_Team
 >
-> thanks,
+> (still building on my Dell Latitude laptop)
 >
-> greg k-h
->
-
-6.14.1-rc1 tested.
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.14.1-rc1rv-g8dba5209f1d8
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20250207, GNU ld (GNU
-Binutils) 2.44) #1 SMP PREEMPT_DYNAMIC Fri Apr  4 21:24:59 JST 2025
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+> Den tors 3 apr. 2025 kl 17:25 skrev Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org>:
+> >
+> > This is the start of the stable review cycle for the 6.14.1 release.
+> > There are 21 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.1-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> >
+> > -------------
+> > Pseudo-Shortlog of commits:
+> >
+> > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >     Linux 6.14.1-rc1
+> >
+> > John Keeping <jkeeping@inmusicbrands.com>
+> >     serial: 8250_dma: terminate correct DMA in tx_dma_flush()
+> >
+> > Cheick Traore <cheick.traore@foss.st.com>
+> >     serial: stm32: do not deassert RS485 RTS GPIO prematurely
+> >
+> > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >     perf tools: Fix up some comments and code to properly use the event_source bus
+> >
+> > Luo Qiu <luoqiu@kylinsec.com.cn>
+> >     memstick: rtsx_usb_ms: Fix slab-use-after-free in rtsx_usb_ms_drv_remove
+> >
+> > Michal Pecio <michal.pecio@gmail.com>
+> >     usb: xhci: Apply the link chain quirk on NEC isoc endpoints
+> >
+> > Michal Pecio <michal.pecio@gmail.com>
+> >     usb: xhci: Don't skip on Stopped - Length Invalid
+> >
+> > Dominique Martinet <dominique.martinet@atmark-techno.com>
+> >     net: usb: usbnet: restore usb%d name exception for local mac addresses
+> >
+> > Fabio Porcedda <fabio.porcedda@gmail.com>
+> >     net: usb: qmi_wwan: add Telit Cinterion FE990B composition
+> >
+> > Fabio Porcedda <fabio.porcedda@gmail.com>
+> >     net: usb: qmi_wwan: add Telit Cinterion FN990B composition
+> >
+> > Sherry Sun <sherry.sun@nxp.com>
+> >     tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
+> >
+> > Cameron Williams <cang1@live.co.uk>
+> >     tty: serial: 8250: Add Brainboxes XC devices
+> >
+> > Cameron Williams <cang1@live.co.uk>
+> >     tty: serial: 8250: Add some more device IDs
+> >
+> > William Breathitt Gray <wbg@kernel.org>
+> >     counter: microchip-tcb-capture: Fix undefined counter channel state on probe
+> >
+> > Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+> >     counter: stm32-lptimer-cnt: fix error handling when enabling
+> >
+> > Andres Traumann <andres.traumann.01@gmail.com>
+> >     ALSA: hda/realtek: Bass speaker fixup for ASUS UM5606KA
+> >
+> > Dhruv Deshpande <dhrv.d@proton.me>
+> >     ALSA: hda/realtek: Support mute LED on HP Laptop 15s-du3xxx
+> >
+> > Maxim Mikityanskiy <maxtram95@gmail.com>
+> >     netfilter: socket: Lookup orig tuple for IPv6 SNAT
+> >
+> > Abel Wu <wuyun.abel@bytedance.com>
+> >     cgroup/rstat: Fix forceidle time in cpu.stat
+> >
+> > Minjoong Kim <pwn9uin@gmail.com>
+> >     atm: Fix NULL pointer dereference
+> >
+> > Terry Junge <linuxhid@cosmicgizmosystems.com>
+> >     HID: hid-plantronics: Add mic mute mapping and generalize quirks
+> >
+> > Terry Junge <linuxhid@cosmicgizmosystems.com>
+> >     ALSA: usb-audio: Add quirk for Plantronics headsets to fix control names
+> >
+> >
+> > -------------
+> >
+> > Diffstat:
+> >
+> >  Makefile                                  |   4 +-
+> >  drivers/counter/microchip-tcb-capture.c   |  19 ++++
+> >  drivers/counter/stm32-lptimer-cnt.c       |  24 +++--
+> >  drivers/hid/hid-plantronics.c             | 144 ++++++++++++++----------------
+> >  drivers/memstick/host/rtsx_usb_ms.c       |   1 +
+> >  drivers/net/usb/qmi_wwan.c                |   2 +
+> >  drivers/net/usb/usbnet.c                  |  21 +++--
+> >  drivers/tty/serial/8250/8250_dma.c        |   2 +-
+> >  drivers/tty/serial/8250/8250_pci.c        |  46 ++++++++++
+> >  drivers/tty/serial/fsl_lpuart.c           |  17 ++++
+> >  drivers/tty/serial/stm32-usart.c          |   4 +-
+> >  drivers/usb/host/xhci-ring.c              |   4 +
+> >  drivers/usb/host/xhci.h                   |  13 ++-
+> >  kernel/cgroup/rstat.c                     |  29 +++---
+> >  net/atm/mpc.c                             |   2 +
+> >  net/ipv6/netfilter/nf_socket_ipv6.c       |  23 +++++
+> >  sound/pci/hda/patch_realtek.c             |   2 +
+> >  sound/usb/mixer_quirks.c                  |  51 +++++++++++
+> >  tools/perf/Documentation/intel-hybrid.txt |  12 +--
+> >  tools/perf/Documentation/perf-list.txt    |   2 +-
+> >  tools/perf/arch/x86/util/iostat.c         |   2 +-
+> >  tools/perf/builtin-stat.c                 |   2 +-
+> >  tools/perf/util/mem-events.c              |   2 +-
+> >  tools/perf/util/pmu.c                     |   4 +-
+> >  24 files changed, 304 insertions(+), 128 deletions(-)
+> >
+> >
+> >
