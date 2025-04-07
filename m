@@ -1,143 +1,124 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53FF22687C
-	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 08:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26911226CF8
+	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 12:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744016254; cv=none; b=nUb2TfG7FXl8zqt+oM9t6yESIbA9Mpr8Dm7F5InpxarxEiQNncYk2sjg8bstJGsdXJvzSoOBWfO/wDXdoRrO5w6InpjvgJyYW1Iu6U88kd7z/HscrpZ8LKZ9aCD99OsOnT0+3P76SqSMimFWmmkfMu4p7a3mHiDOk/hxlPYjeQg=
+	t=1744027753; cv=none; b=urpuyX9Mr/h1QbKJSAVQQ6Uhr91kYXnOKkE4Z3vOxxFyhHSZHpLG8Ic2YHmvqC0/ikvuJPjMtTc112iXAr9QLUaLoiUZ4dFQ7HXUBbpxu/2avPUa5vyRcn81umaUtz0sZ7bHh/cPWJKQKY7epKCTl6HPdvu0V3IOoxPJaeU+1Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744016254; c=relaxed/simple;
-	bh=IdcyUBwERIiAph3pi0kYkd0EFJEvKaHy/Yuzopv2i6M=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jABgY16aNMU9Qc1vXh05X1W1nklSK8rFzJs8CjlqKIhbBCn1Y8Q60eb05ABK4jh1PfmTTajUmUtPRgYOBBC9+8K+8DZquLKYbEloaOYLd/Hrw40qge5FrxyrVTXsI1w0oRK/1i061SB8LrNWYr1oq5w/aV0zjpTeY2xx/yn8Pp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5373In7e007025;
-	Mon, 7 Apr 2025 08:57:21 GMT
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45tsr1j43s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 07 Apr 2025 08:57:20 +0000 (GMT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 7 Apr 2025 01:57:19 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 7 Apr 2025 01:57:16 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <jhs@mojatatu.com>, <xiyou.wangcong@gmail.com>, <jiri@resnulli.us>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <netdev@vger.kernel.org>,
-        <michal.swiatkowski@linux.intel.com>
-Subject: [PATCH 6.1.y] net/sched: act_mirred: don't override retval if we already lost the skb
-Date: Mon, 7 Apr 2025 16:57:15 +0800
-Message-ID: <20250407085715.2139993-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1744027753; c=relaxed/simple;
+	bh=sBCQHBDcAUpG17ddyItmIuUCIWSKR3D3zFJjSYLtoVo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kQyrvv0p/pArBw649w6MankpkfQ0SwEWY5U5fziBteozEOE8w4lpmace/kKDYTFkpPZfNgAh/UYqLAk5+uHIJLl+Ip62MGbVX4M+/ORMohX2EfTl1eq0JAifD9PZjffme+zTxrtdBF9YZ2Q443d8vG6Wn3tUgjA0t3JTBoMUOwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C2RVR8Sr; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C2RVR8Sr"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54af20849bbso1600242e87.0
+        for <patches@lists.linux.dev>; Mon, 07 Apr 2025 05:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1744027749; x=1744632549; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=m/LHFPsYBw0bwDf6dVcpDSJnHybANIimgmPtryFgNPA=;
+        b=C2RVR8SrbNQ+fE0PozX/DoFhUwLBuyMH/ErECJz+JJ/llnu2TF702c9+LFor0yfTzB
+         NtkHh2HkegccaT4r1uigII3y4Pp+ATZQAabaxHAoLtBWoOtJijF6QIOHWEc2cfKeWZDP
+         fwdX+jdU0OB6RbP2OqA6kX9mV1DNc7w52os/0c41wGkWnWAmrB/Z2Bgy3MUUjFsebxR7
+         XGHU83i10hwrHS65DfcSsorDf9Clp39m4wV8nZgWngZUE6GtlrhPRZ4d0xhP05SSM5b5
+         tqX76/ce2wVx4Hmy4OpxLEGO7iD7e7cKbAmJinHgoSM8cp2JajemevtY6TSs/wZjige3
+         jpkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744027749; x=1744632549;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m/LHFPsYBw0bwDf6dVcpDSJnHybANIimgmPtryFgNPA=;
+        b=Q1/HFX0HTELyza/6VgMUYY9mWCN0J5LVVN6gi9ppcr89px9dfxy3/cSZ4fKfbMOZMU
+         FQevqXUOO9VdKMSdYvYIzLKWsEkRr2h2aEV4yiqKqpLD1sKbUPKYA+7IFx96sRe2acZp
+         /gHsA0PiDFf8B/3pYv3G41zlg54PwiQQ6kTbKmvQf1RG5zqsZfm4+/VruOmb8nYCWrRX
+         IBHqaXMNDmYFrujzLXTs4Rn3R1l9RywgYZfqs1DpQbR2dovLUAn+Fv8D85d6++g05K+x
+         sLX7vOLwbAcVTVSrqYzusv2GjIcmK9TWxGy8RyPIcIdCZTQ+r/qFnwQOFe2SnbxmgQOo
+         8itw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7MyfNtFAIp3Q2nX/popOSRjHZbWqnkSG4n6RHZ1hauG8zRu8h4NNMw8KrRBjNHyo4A+62+H4m@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw45qowQ5WW78F+0yi0e+9algGYZlalmgLIXg0wAs+1jiWcj4/4
+	TgKZ0lrxohWTvN23YhQpeN+9/TQAOkuotzvWIuydoJIiQBVZxjyQfpFN93z8v37Xb70OgZ6mtBn
+	BMhORKUdiDAKEbGZ1pLl2ZxEnExmAuep1WgsIl5YrFipZ02vZGV1HNQ==
+X-Gm-Gg: ASbGnctbQpaxNnI1it3uNAEmvGkbwxlIT8OF5gq4BT2ykBblEJarSgT9VAR6cE9DgUv
+	nCf3SIvPJOie3tCT7xZwLiSZ/F5iGP2Vqzd5vRne5PexLxrQr62LefQSxgtlwZyC67On9iQ+rZn
+	n59mV8f94ca9lVZtInNaFwgjWyZl/uuGRCIaJm6XOuKA==
+X-Google-Smtp-Source: AGHT+IE7avfocEmD5lqNIyS63JcSTkkwf3BvTJpAGhR9l+oQoFSuLjrFiN2oMnoA2mOmJOAmlfiARgKB+FZMo6LuuCU=
+X-Received: by 2002:a2e:bc1b:0:b0:308:f580:729e with SMTP id
+ 38308e7fff4ca-30f0a180dd0mr35506541fa.27.1744027749231; Mon, 07 Apr 2025
+ 05:09:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=Td6WtQQh c=1 sm=1 tr=0 ts=67f39370 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8 a=A7XncKjpAAAA:8 a=J1Y8HTJGAAAA:8 a=t7CeM3EgAAAA:8
- a=z6SZLS2PjRZJ6NiNSX0A:9 a=R9rPLQDAdC6-Ub70kJmZ:22 a=y1Q9-5lHfBjTkpIzbSAN:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: r4KI00hYE4PdK--cfHtkBMxxe-4CpzXT
-X-Proofpoint-GUID: r4KI00hYE4PdK--cfHtkBMxxe-4CpzXT
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_02,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- mlxlogscore=999 clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504070064
+References: <cover.1740504232.git.nicolinc@nvidia.com> <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
+In-Reply-To: <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Mon, 7 Apr 2025 20:08:57 +0800
+X-Gm-Features: ATxdqUE-WE2mGG2qPqESoLiVUp7LnTlD7II4G1YhfYdYp1Eq06d5HdYvjf8h2-k
+Message-ID: <CABQgh9Fuh2HdBH7pyAteawZBpa55ZzfR9dv2K4RF=Ps4yhREbw@mail.gmail.com>
+Subject: Re: [PATCH v8 12/14] iommu/arm-smmu-v3: Introduce struct arm_smmu_vmaster
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org, 
+	joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com, 
+	dwmw2@infradead.org, baolu.lu@linux.intel.com, linux-kernel@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org, 
+	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org, 
+	mshavit@google.com, shameerali.kolothum.thodi@huawei.com, smostafa@google.com, 
+	ddutile@redhat.com, yi.l.liu@intel.com, praan@google.com, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jakub Kicinski <kuba@kernel.org>
+Hi, Nico
 
-[ Upstream commit 166c2c8a6a4dc2e4ceba9e10cfe81c3e469e3210 ]
+On Wed, 26 Feb 2025 at 01:35, Nicolin Chen <nicolinc@nvidia.com> wrote:
+>
+> Use it to store all vSMMU-related data. The vsid (Virtual Stream ID) will
+> be the first use case. Since the vsid reader will be the eventq handler
+> that already holds a streams_mutex, reuse that to fenche the vmaster too.
+>
+> Also add a pair of arm_smmu_attach_prepare/commit_vmaster helpers to set
+> or unset the master->vmaster point. Put these helpers inside the existing
+> arm_smmu_attach_prepare/commit().
+>
+> For identity/blocked ops that don't call arm_smmu_attach_prepare/commit(),
+> add a simpler arm_smmu_master_clear_vmaster helper to unset the vmaster.
+>
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> Reviewed-by: Pranjal Shrivastavat <praan@google.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
 
-If we're redirecting the skb, and haven't called tcf_mirred_forward(),
-yet, we need to tell the core to drop the skb by setting the retcode
-to SHOT. If we have called tcf_mirred_forward(), however, the skb
-is out of our hands and returning SHOT will lead to UaF.
+>
+> +int arm_smmu_attach_prepare_vmaster(struct arm_smmu_attach_state *state,
+> +                                   struct arm_smmu_nested_domain *nested_domain)
+> +{
+> +       struct arm_smmu_vmaster *vmaster;
+> +       unsigned long vsid;
+> +       int ret;
+> +
+> +       iommu_group_mutex_assert(state->master->dev);
+> +
+> +       /* Skip invalid vSTE */
+> +       if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
+> +               return 0;
 
-Move the retval override to the error path which actually need it.
+Why this is removed in v9 and 6.15-rc1?
 
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Fixes: e5cf1baf92cb ("act_mirred: use TC_ACT_REINSERT when possible")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- net/sched/act_mirred.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+I tested 6.15-rc1 the qemu failed to boot with qemu branch:
+for_iommufd_veventq-v8
+"failed to attach the bypass pagetable"
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 36395e5db3b4..df64acc8acde 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -259,13 +259,13 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	dev = rcu_dereference_bh(m->tcfm_dev);
- 	if (unlikely(!dev)) {
- 		pr_notice_once("tc mirred: target device is gone\n");
--		goto out;
-+		goto err_cant_do;
- 	}
- 
- 	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
--		goto out;
-+		goto err_cant_do;
- 	}
- 
- 	/* we could easily avoid the clone only if called by ingress and clsact;
-@@ -279,7 +279,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	if (!use_reinsert) {
- 		skb2 = skb_clone(skb, GFP_ATOMIC);
- 		if (!skb2)
--			goto out;
-+			goto err_cant_do;
- 	}
- 
- 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
-@@ -321,12 +321,16 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 	}
- 
- 	err = tcf_mirred_forward(want_ingress, skb2);
--	if (err) {
--out:
-+	if (err)
- 		tcf_action_inc_overlimit_qstats(&m->common);
--		if (tcf_mirred_is_act_redirect(m_eaction))
--			retval = TC_ACT_SHOT;
--	}
-+	__this_cpu_dec(mirred_nest_level);
-+
-+	return retval;
-+
-+err_cant_do:
-+	if (is_redirect)
-+		retval = TC_ACT_SHOT;
-+	tcf_action_inc_overlimit_qstats(&m->common);
- 	__this_cpu_dec(mirred_nest_level);
- 
- 	return retval;
--- 
-2.34.1
+After adding this "skip check" back, the qemu works again.
 
+Do we need to add this back?
+
+Thanks
