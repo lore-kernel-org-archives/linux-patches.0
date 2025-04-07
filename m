@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B57522FDF3
-	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 23:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93512343C1
+	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 23:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744069259; cv=none; b=molYVmopxWrJpQyJKiesu/O/SRr4UZiGofdSOIl/DVZ8DIjhNmtlTpXcxaRVnBZ4fNh3ZXeBrF1HT0n7xQCowLrWuoAHpE8Sk5CEss5ihJoCoCQwAOVs5UqW3BAZcIkTy7QD4mNUi7HuG+B/QR4M85L0lOmlAElMBY099j3arC4=
+	t=1744069260; cv=none; b=q3L1IAy8+vfHWiAYtkBjMSBW2iVFgm+NQxLoxvk/xi2x8CNNtc3D9kl4TNp/l2caWEFZyFUhXISXp3vwU9VWXFOWxWXtwWRoqv/O3p1kPVN1lCkAKS6QUoWEVF1AxDLhtsYfh2rIcuAS3deQtLZCEWWZjR2uAer+UOL9uV/5xqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744069259; c=relaxed/simple;
-	bh=8bSyQDBrTZBN7cp28ibrq0ETKIdFfTZjXF1wTd0d0Qg=;
+	s=arc-20240116; t=1744069260; c=relaxed/simple;
+	bh=1icKE0bniMiuJhJCyj7+IYsrPql8p3uvDM3vCIF6VoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRyTtb2Jt2sVqzQPbfUIY/FhUddNlNP5PcxGkkkEaCwaG0Poo0MyA4MfQQjeAZk+HQcCK3GAm59ACWAbsrKVGNWCGqAflo9g1ttvodugHSyF1RifxuWLN5GqhljCFU5bXhKW9krcRSwJBeMaaxPFsvMDx5PPTQRXfTCjuTQkuPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TLJFwuhQ; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=TuGwf7LkZ+WjAooVsC4NBvbbFtMoXGNqbnIXFMKQpZAoD6tTipRT0jXhdQV5P0TM2MEy2BOCVZ/5z6RibkFfDNnjxIzLIJt09p4h2i54coYCZwlstrbBQx7qofptYcXE5BqXqeoaMS9QYDs8Mb0dDeTgDXvmqvkzbu86OPUDQ/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ctf1190H; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TLJFwuhQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ctf1190H"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744069257; x=1775605257;
+  t=1744069259; x=1775605259;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8bSyQDBrTZBN7cp28ibrq0ETKIdFfTZjXF1wTd0d0Qg=;
-  b=TLJFwuhQxyJJOS/laMTsJNao5UyCt6r9EIeSYPxupE4PSX6a/gKyzjSL
-   bmY3cbVRi8wHEq+swW5zWcl2eRw1G5GCaRJWQYPOYFOo8xKVXvG0m0hdC
-   NKSShl1BpYx2hZOhA8/bqb74rf4prKYNe+a6/WyhztpMzv/prrgDG+G+m
-   46r9hBWmABdrlPujOBk9lXxdkIeKHcYtBWakuWEDgnxC33nZh2uspzyU8
-   KhorYwmZxUsgREoK6PskCCP96fMw01/WqOlyAZRUnGPZy+Ctgk4b/0Kox
-   urn0/4DwpL+dJhyBfEQWFsSslAe9q4034mAP4x9j+ujCYn/Mf75wIJ78j
+  bh=1icKE0bniMiuJhJCyj7+IYsrPql8p3uvDM3vCIF6VoQ=;
+  b=ctf1190HaPVKDCFquP6qR91G//7+OwPQAibXWmU9SglpcI2rvUVpvRD1
+   s+jIstMCr5R/h7aCjLrXfkKydTwAZitn5bEaFhUZvwligRiMyXFk3zIGp
+   gzkNh56bH13H/J7g55gzx7zyWE+t7bksy3H/e3z3WA+BMymJoFKSiwiBM
+   xvjQmbi9CwBts+S01QVgjpV7RsUVcpeQ49uX44oi5liH5pmWAVlyDekeT
+   /oVdFKPsuOM733L1ZXdE3MyZ9HucaKOgVcuhERsZvX//nEdqjI3lobq7P
+   5PX3FC3b29tk1NH7uEHDvhmPwXJfaPwOqGbYpiu0pUalOfs4VxxcJXgtG
    w==;
-X-CSE-ConnectionGUID: sPrZyZFKRcyOZtopBAwyCg==
-X-CSE-MsgGUID: xqCCki41TMO8VRdSCdXe3Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="48193188"
+X-CSE-ConnectionGUID: D0DcPOdxTf2S/22xhbQiqQ==
+X-CSE-MsgGUID: HNk1jj91TNGgh3yFqhD69w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="48193195"
 X-IronPort-AV: E=Sophos;i="6.15,196,1739865600"; 
-   d="scan'208";a="48193188"
+   d="scan'208";a="48193195"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:49 -0700
-X-CSE-ConnectionGUID: B8QZ5sIKQmKaPwtbpfRQIQ==
-X-CSE-MsgGUID: xJG7wdgvQO2gR/NL0VS+mQ==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:50 -0700
+X-CSE-ConnectionGUID: 6w+55wZxQ6u9aSJ2wQfPRQ==
+X-CSE-MsgGUID: arwLGiF2RuOu/F4pxhPYiQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,196,1739865600"; 
-   d="scan'208";a="165315476"
+   d="scan'208";a="165315479"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:49 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -56,9 +56,9 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 10/26] fs/resctrl: Improve handling for events that can be read from any CPU
-Date: Mon,  7 Apr 2025 16:40:12 -0700
-Message-ID: <20250407234032.241215-11-tony.luck@intel.com>
+Subject: [PATCH v3 11/26] fs/resctrl: Add support for additional monitor event display formats
+Date: Mon,  7 Apr 2025 16:40:13 -0700
+Message-ID: <20250407234032.241215-12-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250407234032.241215-1-tony.luck@intel.com>
 References: <20250407234032.241215-1-tony.luck@intel.com>
@@ -70,170 +70,152 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a flag to each instance of struct mon_event to indicate that there
-is no need for cross-processor interrupts to read this event from a CPU
-in a specific rdt_mon_domain.
+Add a type field to both the mon_evt and mon_data structures.
 
-The flag is copied to struct mon_data for ease of access when a user
-reads an event file invoking rdtgroup_mondata_show().
+Legacy monitor events are still all displayed as an unsigned decimal
+64-bit integer.
 
-Copied again into struct rmid_read in mon_event_read() for use by
-sanity checks in  __mon_event_count().
+Add an additional format of fixed-point with 18 binary places displayed
+as a floating point value with six decimal places.
 
-When the flag is set allow choice from cpu_online_mask. This makes the
-smp_call*() functions default to the current CPU.
-
-Suggested-by: James Morse <james.morse@arm.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- fs/resctrl/internal.h    |  8 +++++++-
- fs/resctrl/ctrlmondata.c | 10 +++++++---
- fs/resctrl/monitor.c     |  4 ++--
- fs/resctrl/rdtgroup.c    |  1 +
- 4 files changed, 17 insertions(+), 6 deletions(-)
+ include/linux/resctrl_types.h |  8 ++++++++
+ fs/resctrl/internal.h         |  4 ++++
+ fs/resctrl/ctrlmondata.c      | 23 ++++++++++++++++++++++-
+ fs/resctrl/monitor.c          |  3 +++
+ fs/resctrl/rdtgroup.c         |  1 +
+ 5 files changed, 38 insertions(+), 1 deletion(-)
 
+diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
+index 898068a99ef7..fbd4b55c41aa 100644
+--- a/include/linux/resctrl_types.h
++++ b/include/linux/resctrl_types.h
+@@ -58,6 +58,14 @@ enum resctrl_event_id {
+ #define QOS_NUM_MBM_EVENTS	(QOS_L3_MBM_LOCAL_EVENT_ID - QOS_L3_MBM_TOTAL_EVENT_ID + 1)
+ #define MBM_EVENT_IDX(evt)	((evt) - QOS_L3_MBM_TOTAL_EVENT_ID)
+ 
++/*
++ * Event value display types
++ */
++enum resctrl_event_type {
++	EVT_TYPE_U64,
++	EVT_TYPE_U46_18,
++};
++
+ static inline bool resctrl_is_mbm_event(int e)
+ {
+ 	return (e >= QOS_L3_MBM_TOTAL_EVENT_ID &&
 diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 08dbf89939ac..74a77794364d 100644
+index 74a77794364d..4a840e683e96 100644
 --- a/fs/resctrl/internal.h
 +++ b/fs/resctrl/internal.h
-@@ -72,6 +72,7 @@ static inline struct rdt_fs_context *rdt_fc2context(struct fs_context *fc)
+@@ -71,6 +71,7 @@ static inline struct rdt_fs_context *rdt_fc2context(struct fs_context *fc)
+  * struct mon_evt - Entry in the event list of a resource
   * @evtid:		event id
   * @name:		name of the event
++ * @type:		format for display to user
   * @configurable:	true if the event is configurable
-+ * @any_cpu:		true if this event can be read from any CPU
+  * @any_cpu:		true if this event can be read from any CPU
   * @list:		entry in &rdt_resource->evt_list
-  */
- struct mon_evt {
 @@ -79,6 +80,7 @@ struct mon_evt {
+ 	enum resctrl_event_id	evtid;
  	enum resctrl_res_level	rid;
  	char			*name;
++	enum resctrl_event_type	type;
  	bool			configurable;
-+	bool			any_cpu;
+ 	bool			any_cpu;
  	struct list_head	list;
- };
- 
-@@ -93,6 +95,7 @@ struct mon_evt {
-  *                   the event file belongs. When @sum is one this
-  *                   is the id of the L3 cache that all domains to be
-  *                   summed share.
-+ * @any_cpu:         true if this event can be read from any CPU
-  *
-  * Stored in the kernfs kn->priv field, readers and writers must hold
-  * rdtgroup_mutex.
-@@ -103,6 +106,7 @@ struct mon_data {
+@@ -89,6 +91,7 @@ struct mon_evt {
+  * @list:            List of all allocated structures.
+  * @rid:             Resource id associated with the event file.
+  * @evtid:           Event id associated with the event file.
++ * @type:            Format for display to user
+  * @sum:             Set when event must be summed across multiple
+  *                   domains.
+  * @domid:           When @sum is zero this is the domain to which
+@@ -104,6 +107,7 @@ struct mon_data {
+ 	struct list_head list;
+ 	unsigned int rid;
  	enum resctrl_event_id evtid;
++	enum resctrl_event_type type;
  	unsigned int sum;
  	unsigned int domid;
-+	bool any_cpu;
- };
- 
- /**
-@@ -115,6 +119,7 @@ struct mon_data {
-  *	   domains in @r sharing L3 @ci.id
-  * @evtid: Which monitor event to read.
-  * @first: Initialize MBM counter when true.
-+ * @any_cpu: When true read can be executed on any CPU.
-  * @ci:    Cacheinfo for L3. Only set when @d is NULL. Used when summing domains.
-  * @err:   Error encountered when reading counter.
-  * @val:   Returned value of event counter. If @rgrp is a parent resource group,
-@@ -129,6 +134,7 @@ struct rmid_read {
- 	struct rdt_mon_domain	*d;
- 	enum resctrl_event_id	evtid;
- 	bool			first;
-+	bool			any_cpu;
- 	struct cacheinfo	*ci;
- 	int			err;
- 	u64			val;
-@@ -358,7 +364,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg);
- 
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
--		    cpumask_t *cpumask, int evtid, int first);
-+		    const cpumask_t *cpumask, int evtid, int first);
- 
- int resctrl_mon_resource_init(void);
- 
+ 	bool any_cpu;
 diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index 0c245af0ff42..cd77960657f0 100644
+index cd77960657f0..5ea8113c96ac 100644
 --- a/fs/resctrl/ctrlmondata.c
 +++ b/fs/resctrl/ctrlmondata.c
-@@ -525,7 +525,7 @@ struct rdt_domain_hdr *resctrl_find_domain(struct list_head *h, int id,
+@@ -562,6 +562,27 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
+ 	resctrl_arch_mon_ctx_free(r, evtid, rr->arch_mon_ctx);
+ }
  
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
--		    cpumask_t *cpumask, int evtid, int first)
-+		    const cpumask_t *cpumask, int evtid, int first)
++#define NUM_FRAC_BITS	18
++#define FRAC_MASK	GENMASK(NUM_FRAC_BITS - 1, 0)
++
++static void show_value(struct seq_file *m, enum resctrl_event_type type, u64 val)
++{
++	u64 frac;
++
++	switch (type) {
++	case EVT_TYPE_U64:
++		seq_printf(m, "%llu\n", val);
++		break;
++	case EVT_TYPE_U46_18:
++		frac = val & FRAC_MASK;
++		frac = frac * 1000000;
++		frac += 1ul << (NUM_FRAC_BITS - 1);
++		frac >>= NUM_FRAC_BITS;
++		seq_printf(m, "%llu.%06llu\n", val >> NUM_FRAC_BITS, frac);
++		break;
++	}
++}
++
+ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
  {
- 	int cpu;
+ 	struct kernfs_open_file *of = m->private;
+@@ -633,7 +654,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+ 	else if (rr.err == -EINVAL)
+ 		seq_puts(m, "Unavailable\n");
+ 	else
+-		seq_printf(m, "%llu\n", rr.val);
++		show_value(m, md->type, rr.val);
  
-@@ -571,6 +571,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 	u32 resid, evtid, domid;
- 	struct rdtgroup *rdtgrp;
- 	struct rdt_resource *r;
-+	const cpumask_t *mask;
- 	struct mon_data *md;
- 	int ret = 0;
- 
-@@ -589,6 +590,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 	resid = md->rid;
- 	domid = md->domid;
- 	evtid = md->evtid;
-+	rr.any_cpu = md->any_cpu;
- 	r = resctrl_arch_get_resource(resid);
- 
- 	if (md->sum) {
-@@ -601,8 +603,9 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 		list_for_each_entry(d, &r->mon_domains, hdr.list) {
- 			if (d->ci->id == domid) {
- 				rr.ci = d->ci;
-+				mask = md->any_cpu ? cpu_online_mask : &d->ci->shared_cpu_map;
- 				mon_event_read(&rr, r, NULL, rdtgrp,
--					       &d->ci->shared_cpu_map, evtid, false);
-+					       mask, evtid, false);
- 				goto checkresult;
- 			}
- 		}
-@@ -619,7 +622,8 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 			goto out;
- 		}
- 		d = container_of(hdr, struct rdt_mon_domain, hdr);
--		mon_event_read(&rr, r, d, rdtgrp, &d->hdr.cpu_mask, evtid, false);
-+		mask = md->any_cpu ? cpu_online_mask : &d->hdr.cpu_mask;
-+		mon_event_read(&rr, r, d, rdtgrp, mask, evtid, false);
- 	}
- 
- checkresult:
+ out:
+ 	rdtgroup_kn_unlock(of->kn);
 diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 472754d082cb..1cf0b085e07a 100644
+index 1cf0b085e07a..1efad57d1d85 100644
 --- a/fs/resctrl/monitor.c
 +++ b/fs/resctrl/monitor.c
-@@ -375,7 +375,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+@@ -847,16 +847,19 @@ static struct mon_evt all_events[QOS_NUM_EVENTS] = {
+ 		.name	= "llc_occupancy",
+ 		.evtid	= QOS_L3_OCCUP_EVENT_ID,
+ 		.rid	= RDT_RESOURCE_L3,
++		.type	= EVT_TYPE_U64,
+ 	},
+ 	[QOS_L3_MBM_TOTAL_EVENT_ID] = {
+ 		.name	= "mbm_total_bytes",
+ 		.evtid	= QOS_L3_MBM_TOTAL_EVENT_ID,
+ 		.rid	= RDT_RESOURCE_L3,
++		.type	= EVT_TYPE_U64,
+ 	},
+ 	[QOS_L3_MBM_LOCAL_EVENT_ID] = {
+ 		.name	= "mbm_local_bytes",
+ 		.evtid	= QOS_L3_MBM_LOCAL_EVENT_ID,
+ 		.rid	= RDT_RESOURCE_L3,
++		.type	= EVT_TYPE_U64,
+ 	},
+ };
  
- 	if (rr->d) {
- 		/* Reading a single domain, must be on a CPU in that domain. */
--		if (!cpumask_test_cpu(cpu, &rr->d->hdr.cpu_mask))
-+		if (!rr->any_cpu && !cpumask_test_cpu(cpu, &rr->d->hdr.cpu_mask))
- 			return -EINVAL;
- 		rr->err = resctrl_arch_rmid_read(rr->r, rr->d, closid, rmid,
- 						 rr->evtid, &tval, rr->arch_mon_ctx);
-@@ -388,7 +388,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
- 	}
- 
- 	/* Summing domains that share a cache, must be on a CPU for that cache. */
--	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
-+	if (!rr->any_cpu && !cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
- 		return -EINVAL;
- 
- 	/*
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 5011e404798a..97c2ba8af930 100644
+index 97c2ba8af930..bd41f7a0f416 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2926,6 +2926,7 @@ static struct mon_data *mon_get_kn_priv(int rid, int domid, struct mon_evt *mevt
- 	priv->domid = domid;
+@@ -2927,6 +2927,7 @@ static struct mon_data *mon_get_kn_priv(int rid, int domid, struct mon_evt *mevt
  	priv->sum = do_sum;
  	priv->evtid = mevt->evtid;
-+	priv->any_cpu = mevt->any_cpu;
+ 	priv->any_cpu = mevt->any_cpu;
++	priv->type = mevt->type;
  	list_add_tail(&priv->list, &kn_priv_list);
  
  	return priv;
