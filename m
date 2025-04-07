@@ -1,120 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680B4182BC;
-	Sat,  5 Apr 2025 10:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DEF16D32A;
+	Mon,  7 Apr 2025 01:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743848742; cv=none; b=sg56/QEMH1kxEwgNYoZJBzF3JCD1kepd+l/JxEZ2/FNIM4UDmBb8gnxXx6u+4n7Nm6vtuqhmazrSHHqCfaaLp/YQdYrUDYEccKr6CurEpfLGRHnwsR4SoTdYQXozl6y1EPeCvUlgX8jaLpvOJ2l4P9HQUW9HpZnQ+gzugjTt2xY=
+	t=1743988027; cv=none; b=oi4tZu+aunfDtp42jibMuhgRezyFZIjfAEJ1L+md++IChDwqcCPgbEjVgj88KHbFIF8VNZ8ohjSwKmmL8+Ozw6FHhneg51e7RxK4JUaRPGN2OWYQfRXfLP7egD8ASccceenm9Xb7sqf2/D8OURZk3Zf0bZWwWUxWLu6hZ6Vhiog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743848742; c=relaxed/simple;
-	bh=vE5HlGqFMPRiEApGfruZPXTVG1TFF/lORB022UJd2+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mSjobpu6ulbzo/y/7cOFTX6RdMR9QHPexfEl0xls9HKe3lnbwJm/b9MXk2gyDpFpvvGXIK55isoGSXrVVx0tp71iYgcMcGq5jHnd9J5ssBAsqJPW3tjy8J2Z+ffbSFadGtBd0g+/3r+1rXKP3XLdtMQgcSxHVkuELFAmL9kQSfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9x15F/T; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9x15F/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F18C4CEE4;
-	Sat,  5 Apr 2025 10:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743848741;
-	bh=vE5HlGqFMPRiEApGfruZPXTVG1TFF/lORB022UJd2+o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=D9x15F/TYNWiEI75UcJrX8YPtugDm+WaUhtn6Lb0l0B9RjaeEzQa8gSaTqN9JOLPw
-	 N9U9Q8OLIV5X9gX4sY7uzAYJCqW7r+muYhi1Vs9VdHxlnWEKXEKpsOxYSR1R1Uc55V
-	 S2IdIaNAnTVyE8Ef2zAU0NCEK5fGUZ4aKB2jYZoI=
-Date: Sat, 5 Apr 2025 11:24:13 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	clang-built-linux <llvm@lists.linux.dev>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 6.13 00/23] 6.13.10-rc1 review
-Message-ID: <2025040527-harmonics-bath-946e@gregkh>
-References: <20250403151622.273788569@linuxfoundation.org>
- <CA+G9fYvPdt8CETb7cDmraiZPpG3YX83en8SKO4ac+-83TQY_pQ@mail.gmail.com>
+	s=arc-20240116; t=1743988027; c=relaxed/simple;
+	bh=pGdgTRjfk996uk8Wd77oBZTpcCKanajBmfdWac0X86c=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AFELFZcyiZzeYiKOg6sIfoSnyRRpALX45YFkw9wi418287Xff+TG4EUpmrtUuWBrIGVvUnm32NUClU176EsnzBM/0eYUMaaDQjqGBYoJ9K85OJeVPnYMXvB/w7YxzJ5BA38RozslxAJkItzyoQA/A/VuYGBE9Oq6FC9ULJsmZTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5370x9jO018565;
+	Sun, 6 Apr 2025 18:06:46 -0700
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45u41m1a6n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Sun, 06 Apr 2025 18:06:46 -0700 (PDT)
+Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Sun, 6 Apr 2025 18:06:45 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Sun, 6 Apr 2025 18:06:43 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <stable@vger.kernel.org>
+CC: <ivan.orlov0322@gmail.com>, <davidgow@google.com>, <kees@kernel.org>,
+        <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>
+Subject: [PATCH 6.6.y] kunit/overflow: Fix UB in overflow_allocation_test
+Date: Mon, 7 Apr 2025 09:06:42 +0800
+Message-ID: <20250407010642.207838-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYvPdt8CETb7cDmraiZPpG3YX83en8SKO4ac+-83TQY_pQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-GUID: gGNN_LOOtuIb8hlAEnv9ToUbchFjwCqf
+X-Proofpoint-ORIG-GUID: gGNN_LOOtuIb8hlAEnv9ToUbchFjwCqf
+X-Authority-Analysis: v=2.4 cv=QOZoRhLL c=1 sm=1 tr=0 ts=67f32526 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=1XWaLZrsAAAA:8 a=t7CeM3EgAAAA:8 a=sRwAWNXhmHWHE5Be58cA:9
+ a=FdTzh2GWekK77mhwV6Dw:22
+X-Sensitive_Customer_Information: Yes
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-06_08,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1011 lowpriorityscore=0 spamscore=0 mlxscore=0
+ malwarescore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
+ definitions=main-2504070007
 
-On Sat, Apr 05, 2025 at 11:50:59AM +0530, Naresh Kamboju wrote:
-> On Thu, 3 Apr 2025 at 20:56, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.13.10 release.
-> > There are 23 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Sat, 05 Apr 2025 15:16:11 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.10-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> 
-> Regressions on arm, arm64 and x86_64.
-> 
-> 1)
-> The selftests rseq failed across the boards and virtual environments.
-> These test failures were also noticed on Linux mainline and next.
-> 
-> We will bisect these lists of regressions and get back to you.
+From: Ivan Orlov <ivan.orlov0322@gmail.com>
 
-Thanks, this I'll care about, but:
+[ Upstream commit 92e9bac18124682c4b99ede9ee3bcdd68f121e92 ]
 
-> * kselftest-rseq
->   - rseq_basic_percpu_ops_mm_cid_test
->   - rseq_basic_percpu_ops_test
->   - rseq_basic_test
->   - rseq_param_test
->   - rseq_param_test_benchmark
->   - rseq_param_test_compare_twice
->   - rseq_param_test_mm_cid
->   - rseq_param_test_mm_cid_benchmark
->   - rseq_param_test_mm_cid_compare_twice
-> 
-> 2)
->  The clang-nightly build issues reported on mainline and next.
-> 
-> * S390, powerpc, build
->   - clang-nightly-defconfig
->   - clang-nightly-lkftconfig-hardening
->   - clang-nightly-lkftconfig-lto-full
->   - clang-nightly-lkftconfig-lto-thing
-> 
->  clang-nightly: ERROR: modpost: "wcslen" [fs/smb/client/cifs.ko] undefined!
->   - https://lore.kernel.org/all/CA+G9fYuQHeGicnEx1d=XBC0p1LCsndi5q0p86V7pCZ02d8Fv_w@mail.gmail.com/
-> 
-> 3)
->  The clang-nightly boot regressions with no console output have been
->  reported on mainline and next.
+The 'device_name' array doesn't exist out of the
+'overflow_allocation_test' function scope. However, it is being used as
+a driver name when calling 'kunit_driver_create' from
+'kunit_device_register'. It produces the kernel panic with KASAN
+enabled.
 
-These 2 I don't, as that's a mainline issue first.
+Since this variable is used in one place only, remove it and pass the
+device name into kunit_device_register directly as an ascii string.
 
-thanks,
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Link: https://lore.kernel.org/r/20240815000431.401869-1-ivan.orlov0322@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ lib/overflow_kunit.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-greg k-h
+diff --git a/lib/overflow_kunit.c b/lib/overflow_kunit.c
+index 34db0b3aa502..9493a1b28b9e 100644
+--- a/lib/overflow_kunit.c
++++ b/lib/overflow_kunit.c
+@@ -608,7 +608,6 @@ DEFINE_TEST_ALLOC(devm_kzalloc,  devm_kfree, 1, 1, 0);
+ 
+ static void overflow_allocation_test(struct kunit *test)
+ {
+-	const char device_name[] = "overflow-test";
+ 	struct device *dev;
+ 	int count = 0;
+ 
+@@ -618,7 +617,7 @@ static void overflow_allocation_test(struct kunit *test)
+ } while (0)
+ 
+ 	/* Create dummy device for devm_kmalloc()-family tests. */
+-	dev = root_device_register(device_name);
++	dev = root_device_register("overflow-test");
+ 	KUNIT_ASSERT_FALSE_MSG(test, IS_ERR(dev),
+ 			       "Cannot register test device\n");
+ 
+-- 
+2.34.1
+
