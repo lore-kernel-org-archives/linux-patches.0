@@ -1,124 +1,184 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26911226CF8
-	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 12:09:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744027753; cv=none; b=urpuyX9Mr/h1QbKJSAVQQ6Uhr91kYXnOKkE4Z3vOxxFyhHSZHpLG8Ic2YHmvqC0/ikvuJPjMtTc112iXAr9QLUaLoiUZ4dFQ7HXUBbpxu/2avPUa5vyRcn81umaUtz0sZ7bHh/cPWJKQKY7epKCTl6HPdvu0V3IOoxPJaeU+1Lo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744027753; c=relaxed/simple;
-	bh=sBCQHBDcAUpG17ddyItmIuUCIWSKR3D3zFJjSYLtoVo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kQyrvv0p/pArBw649w6MankpkfQ0SwEWY5U5fziBteozEOE8w4lpmace/kKDYTFkpPZfNgAh/UYqLAk5+uHIJLl+Ip62MGbVX4M+/ORMohX2EfTl1eq0JAifD9PZjffme+zTxrtdBF9YZ2Q443d8vG6Wn3tUgjA0t3JTBoMUOwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C2RVR8Sr; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2931519D8A2
+	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 15:34:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744040041; cv=pass; b=ift+Se4P70gZFMRmwy3JJKGaCxx3N5WH+TVeXofP4U9700QwTFYeCTEZVuBO6bNUPqS+lygWPu8y9sL9joHutkxHtjanThXiDUXbxea23MupGNJ9TFstuMSLeKxNdPidFdUWkBmT9WuQBZMRG80K7XtgT+kKMSdrb+Po2TtE8Qg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744040041; c=relaxed/simple;
+	bh=NnMq6nw/cKkA4GzdBQe19k/LXumuqivNM5KG4SRiMnQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NKnlB2I2K+blUxNWd/zms08po4FcBY66YJJptDYq0sqEf4v3y2wkLd/hob6ShjSVlo3NhGNKmNKvPyLM42dd5Sl+RLqt+VyWmblq+bWaXkMCuuATtNZT4pD8MdjU6ZMGQMMxc8NuzaIlGaFFlGGk6znJdpbUGhGZCyCqHazxh1c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=Lm2VzNFz; arc=pass smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C2RVR8Sr"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-54af20849bbso1600242e87.0
-        for <patches@lists.linux.dev>; Mon, 07 Apr 2025 05:09:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744027749; x=1744632549; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m/LHFPsYBw0bwDf6dVcpDSJnHybANIimgmPtryFgNPA=;
-        b=C2RVR8SrbNQ+fE0PozX/DoFhUwLBuyMH/ErECJz+JJ/llnu2TF702c9+LFor0yfTzB
-         NtkHh2HkegccaT4r1uigII3y4Pp+ATZQAabaxHAoLtBWoOtJijF6QIOHWEc2cfKeWZDP
-         fwdX+jdU0OB6RbP2OqA6kX9mV1DNc7w52os/0c41wGkWnWAmrB/Z2Bgy3MUUjFsebxR7
-         XGHU83i10hwrHS65DfcSsorDf9Clp39m4wV8nZgWngZUE6GtlrhPRZ4d0xhP05SSM5b5
-         tqX76/ce2wVx4Hmy4OpxLEGO7iD7e7cKbAmJinHgoSM8cp2JajemevtY6TSs/wZjige3
-         jpkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744027749; x=1744632549;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m/LHFPsYBw0bwDf6dVcpDSJnHybANIimgmPtryFgNPA=;
-        b=Q1/HFX0HTELyza/6VgMUYY9mWCN0J5LVVN6gi9ppcr89px9dfxy3/cSZ4fKfbMOZMU
-         FQevqXUOO9VdKMSdYvYIzLKWsEkRr2h2aEV4yiqKqpLD1sKbUPKYA+7IFx96sRe2acZp
-         /gHsA0PiDFf8B/3pYv3G41zlg54PwiQQ6kTbKmvQf1RG5zqsZfm4+/VruOmb8nYCWrRX
-         IBHqaXMNDmYFrujzLXTs4Rn3R1l9RywgYZfqs1DpQbR2dovLUAn+Fv8D85d6++g05K+x
-         sLX7vOLwbAcVTVSrqYzusv2GjIcmK9TWxGy8RyPIcIdCZTQ+r/qFnwQOFe2SnbxmgQOo
-         8itw==
-X-Forwarded-Encrypted: i=1; AJvYcCU7MyfNtFAIp3Q2nX/popOSRjHZbWqnkSG4n6RHZ1hauG8zRu8h4NNMw8KrRBjNHyo4A+62+H4m@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw45qowQ5WW78F+0yi0e+9algGYZlalmgLIXg0wAs+1jiWcj4/4
-	TgKZ0lrxohWTvN23YhQpeN+9/TQAOkuotzvWIuydoJIiQBVZxjyQfpFN93z8v37Xb70OgZ6mtBn
-	BMhORKUdiDAKEbGZ1pLl2ZxEnExmAuep1WgsIl5YrFipZ02vZGV1HNQ==
-X-Gm-Gg: ASbGnctbQpaxNnI1it3uNAEmvGkbwxlIT8OF5gq4BT2ykBblEJarSgT9VAR6cE9DgUv
-	nCf3SIvPJOie3tCT7xZwLiSZ/F5iGP2Vqzd5vRne5PexLxrQr62LefQSxgtlwZyC67On9iQ+rZn
-	n59mV8f94ca9lVZtInNaFwgjWyZl/uuGRCIaJm6XOuKA==
-X-Google-Smtp-Source: AGHT+IE7avfocEmD5lqNIyS63JcSTkkwf3BvTJpAGhR9l+oQoFSuLjrFiN2oMnoA2mOmJOAmlfiARgKB+FZMo6LuuCU=
-X-Received: by 2002:a2e:bc1b:0:b0:308:f580:729e with SMTP id
- 38308e7fff4ca-30f0a180dd0mr35506541fa.27.1744027749231; Mon, 07 Apr 2025
- 05:09:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="Lm2VzNFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BB7C4CEDD
+	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 15:34:00 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="Lm2VzNFz"
+Resent-From: Luis Chamberlain <mcgrof@kernel.org>
+Resent-Date: Mon, 7 Apr 2025 08:33:59 -0700
+Resent-Message-ID: <Z_PwZ9CiizyxR_n_@bombadil.infradead.org>
+Resent-To: patches <patches@lists.linux.dev>
+Envelope-to: mcgrof@infradead.org
+Delivery-date: Mon, 07 Apr 2025 10:28:13 +0000
+Received: from sea.source.kernel.org ([172.234.252.31])
+	by bombadil.infradead.org with esmtps (Exim 4.98.1 #2 (Red Hat Linux))
+	id 1u1ji7-0000000HNV5-3hvH
+	for mcgrof@infradead.org;
+	Mon, 07 Apr 2025 10:28:13 +0000
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id A4F1B49E80;
+	Mon,  7 Apr 2025 10:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 43AB0C4CEE7; Mon,  7 Apr 2025 10:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C2F3CC4CEDD
+	for <mcgrof@kernel.org>; Mon,  7 Apr 2025 10:28:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C2F3CC4CEDD
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id B507582BF2;
+	Mon,  7 Apr 2025 05:55:42 +0000 (UTC)
+Received: from pdx1-sub0-mail-a256.dreamhost.com (100-97-44-91.trex-nlb.outbound.svc.cluster.local [100.97.44.91])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 47782829DA;
+	Mon,  7 Apr 2025 05:55:42 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744005342; a=rsa-sha256;
+	cv=none;
+	b=D1I0N7Mh6ORqezb3xRckogm9wDvSu2AO6zdepxKTcKTg+6zmpwhTW1zQf9Bf/OuzkyuFBr
+	kpB/EFGCJU+Xg0GZgA+/duMZjRpLfto/rNLPxBj7rk14CgYXzJ8+FeAijRck4xZSEtP7ks
+	tsuLKjmchoX+AX7+I38X5thnsapM33Cgv9L6UiXZEKG7gadGgBnQNaN6fyPnSHdWx8vAkO
+	955XruxRUFwTBYNzcgVU3n2IUrBqD4gS4XgOgdpgqbIH/IUahihx/WMwzOS+XqY18VXqgh
+	FgcaYLr39R+Z75DUw4zY+02yX22yd3KKVB7jMoo/x2oaBmVCVqleD9PuPxaYUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1744005342;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=2lwJeFwk3g/DZv0WTM1lF/x5y8BnYBSyXNjoJGz5pAc=;
+	b=gfH7snTbzM1nDc39nR1FCqtTzT6lm+tG2PCIzLiV2JfEW6/bN4YWUij53pWoVVhWhI1B/f
+	NtSQ+x7xz2pzo0ES7y6NS58gFkJz7yNSVwbi/Fl5NAKbUdao4doCAy0dqHchX2kyxASDzW
+	O8MO8KSZYksL7oWSnzwxU8jdvYXMYtmH1QU+9po6QoKZ7eZR7WPxesG9nKzBFCKRwIGseO
+	tEOKloOjulY9tSk+j5nGOKEavo4ZSb3weeNzFcOG53x4sPckml19frH1UYT2Y2G+HapYE6
+	aL4CzrgbMvbIvNSMyZsxF3VCiXTN76Wcx8F00kKG680LmNdRUWDf6J9ZB9/odQ==
+ARC-Authentication-Results: i=1;
+	rspamd-6c88b8f79f-spgr6;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Bad
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Illustrious-Trouble: 1bc161b22720aa21_1744005342519_845135743
+X-MC-Loop-Signature: 1744005342519:3360865361
+X-MC-Ingress-Time: 1744005342518
+Received: from pdx1-sub0-mail-a256.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.97.44.91 (trex/7.0.3);
+	Mon, 07 Apr 2025 05:55:42 +0000
+Received: from localhost.localdomain (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a256.dreamhost.com (Postfix) with ESMTPSA id 4ZWJNF3Z2KzMN;
+	Sun,  6 Apr 2025 22:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1744005342;
+	bh=2lwJeFwk3g/DZv0WTM1lF/x5y8BnYBSyXNjoJGz5pAc=;
+	h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+	b=Lm2VzNFzWMSlPNzJToT1xatZZmCIZqBpzihYPOrI8GZD0FRflqICujjHilQZOQPtE
+	 3C1xaQh4cXNnQdTuopKG1tAZfN2bqpDjSB4ZFZeaajf/0rmiveMBzKOS/YOjDf4gmn
+	 M39eHUrCq5aI5CQc+Fg8U+Jb0MKENsJW6gOaeORKUM5aaJti95qwNY6DvMUbdr3+UM
+	 bjgjW0EVbiImsv04s06hRkiYUbSacxOJgUd8in/i5G5Rh9BRML+Sj3rY7FoR9TH8jO
+	 HOwNCeU1FlC4A7qDPpKIXGflifwmrGx/ZdLLs8oLCuXdYg4AlMLiAPouRM+D7dRhr6
+	 KR9LKdSMHQvbw==
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: mcgrof@kernel.org
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 0/6] fs/buffer: split pagecache lookups into atomic or blocking
+Date: Sun,  6 Apr 2025 22:54:49 -0700
+Message-Id: <20250407055455.785065-1-dave@stgolabs.net>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1740504232.git.nicolinc@nvidia.com> <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
-In-Reply-To: <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Mon, 7 Apr 2025 20:08:57 +0800
-X-Gm-Features: ATxdqUE-WE2mGG2qPqESoLiVUp7LnTlD7II4G1YhfYdYp1Eq06d5HdYvjf8h2-k
-Message-ID: <CABQgh9Fuh2HdBH7pyAteawZBpa55ZzfR9dv2K4RF=Ps4yhREbw@mail.gmail.com>
-Subject: Re: [PATCH v8 12/14] iommu/arm-smmu-v3: Introduce struct arm_smmu_vmaster
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org, 
-	joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com, 
-	dwmw2@infradead.org, baolu.lu@linux.intel.com, linux-kernel@vger.kernel.org, 
-	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org, 
-	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org, 
-	mshavit@google.com, shameerali.kolothum.thodi@huawei.com, smostafa@google.com, 
-	ddutile@redhat.com, yi.l.liu@intel.com, praan@google.com, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
+X-CRM114-CacheID: sfid-20250407_032812_079928_460219A0 
+X-CRM114-Status: UNSURE (   5.78  )
+X-CRM114-Notice: Please train this message.
+X-Spam-Score: -2.0 (--)
+X-Spam-Report: Spam detection software, running on the system "bombadil.infradead.org",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ the administrator of that system for details.
+ 
+ Content preview:  Latest version. Davidlohr Bueso (6): fs/buffer: try to use
+    folio lock for pagecache lookups fs/buffer: introduce __find_get_block_nonatomic()
+    fs/ocfs2: use sleeping version of __find_get_block() fs/jbd2: use sleeping
+    [...] 
+ 
+ Content analysis details:   (-2.0 points, 5.0 required)
+ 
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+  0.0 SPF_HELO_NONE          SPF: HELO does not publish an SPF Record
+ -0.0 SPF_PASS               SPF: sender matches SPF record
+ -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
+  0.0 ARC_SIGNED             Message has a ARC signature
+  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily valid
+  0.0 ARC_VALID              Message has a valid ARC signature
+ -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from author's
+                             domain
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
+  0.0 HEADER_FROM_DIFFERENT_DOMAINS From and EnvelopeFrom 2nd level mail
+                             domains are different
+  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE: The
+                             query to Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                         [172.234.252.31 listed in sa-trusted.bondedsender.org]
+  0.0 RCVD_IN_VALIDITY_SAFE_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
+                              Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                             [172.234.252.31 listed in sa-accredit.habeas.com]
+  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
+                              Validity was blocked.  See
+                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
+                              for more information.
+                            [172.234.252.31 listed in bl.score.senderscore.com]
 
-Hi, Nico
+Latest version.
 
-On Wed, 26 Feb 2025 at 01:35, Nicolin Chen <nicolinc@nvidia.com> wrote:
->
-> Use it to store all vSMMU-related data. The vsid (Virtual Stream ID) will
-> be the first use case. Since the vsid reader will be the eventq handler
-> that already holds a streams_mutex, reuse that to fenche the vmaster too.
->
-> Also add a pair of arm_smmu_attach_prepare/commit_vmaster helpers to set
-> or unset the master->vmaster point. Put these helpers inside the existing
-> arm_smmu_attach_prepare/commit().
->
-> For identity/blocked ops that don't call arm_smmu_attach_prepare/commit(),
-> add a simpler arm_smmu_master_clear_vmaster helper to unset the vmaster.
->
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Pranjal Shrivastavat <praan@google.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
+Davidlohr Bueso (6):
+  fs/buffer: try to use folio lock for pagecache lookups
+  fs/buffer: introduce __find_get_block_nonatomic()
+  fs/ocfs2: use sleeping version of __find_get_block()
+  fs/jbd2: use sleeping version of __find_get_block()
+  fs/ext4: use sleeping version of __find_get_block()
+  mm/migrate: fix sleep in atomic for large folios and bh
 
->
-> +int arm_smmu_attach_prepare_vmaster(struct arm_smmu_attach_state *state,
-> +                                   struct arm_smmu_nested_domain *nested_domain)
-> +{
-> +       struct arm_smmu_vmaster *vmaster;
-> +       unsigned long vsid;
-> +       int ret;
-> +
-> +       iommu_group_mutex_assert(state->master->dev);
-> +
-> +       /* Skip invalid vSTE */
-> +       if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> +               return 0;
+ fs/buffer.c                 | 76 +++++++++++++++++++++++++++----------
+ fs/ext4/ialloc.c            |  3 +-
+ fs/ext4/inode.c             |  2 +
+ fs/ext4/mballoc.c           |  3 +-
+ fs/jbd2/revoke.c            | 15 +++++---
+ fs/ocfs2/journal.c          |  2 +-
+ include/linux/buffer_head.h |  9 +++++
+ mm/migrate.c                |  6 ++-
+ 8 files changed, 86 insertions(+), 30 deletions(-)
 
-Why this is removed in v9 and 6.15-rc1?
+-- 
+2.39.5
 
-I tested 6.15-rc1 the qemu failed to boot with qemu branch:
-for_iommufd_veventq-v8
-"failed to attach the bypass pagetable"
-
-After adding this "skip check" back, the qemu works again.
-
-Do we need to add this back?
-
-Thanks
