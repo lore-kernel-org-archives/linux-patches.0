@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3491B253F34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3D3254845
 	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 23:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744069270; cv=none; b=WRU2tsllnf8OM1EpBC8pP+CQgJHOiPc8KUd+QNpvErOpEEMF/mHH+EcIBtSzUFGNQX8ARz2VdnUFztGzi1WekMh1ZViienx42KHuRPCjuD+q4SFJm51fhs5KDAGI8WHHIkk/sLCGN8AAbld4qvbQq3fU0DTWMZXQhSkMmGZqs4k=
+	t=1744069273; cv=none; b=Gs1BBqSHqNegsB4ZL7KTuC2VsQe7etiws5B8jXMGcv1fiKnjQIW1uX8gXkFYWFxVsVYCa8/FdBJ2orVw4yR2CAS4JNYYq1WsdQonWMfPrXKUaaq7x2Gt4jP/JOlY9ILoHhkUbjXo9QjMZp8MSOyYBH3nnvlB5ehnndJdTv0YWEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744069270; c=relaxed/simple;
-	bh=0vh9HuxcyMxqpMiFdEcg2+0e4DmDqzuVo7gAd3iUy4g=;
+	s=arc-20240116; t=1744069273; c=relaxed/simple;
+	bh=yr5nHpaopd1NZz+g077gSUSbgIi4RWyZKVBYkSkwieQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVtYNgiQlu6lK2/29gBxHZ9gTQ1IjRSiKCzgJ+KMnBZGJbG7L7ECXvquB/8Fpd08HzhnFsRd6/2xbyYBj0FccXqZIClbjaJx0rtGD9hy8uHJ7K6Kp3vKYOZSwNZ8b5Zd9su9XpxG/kJjfpio6p5bNXa4jkegaON7I71JKef/vvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=M0jejNVq; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=Dcm+GRnU6utq7IQ8+MpxLCb1c5S/gi8MmuIj2Ry/t+O51pUNusNW6Brm4eBJw9hBzuQ/ydjF6UxPitlUinDAUg3u1VGYAkLHDXnlWyGWcNN4nuLYFyRZ5HWXbqSXaCxK/5y3GCpXunYNrTiR0tg5PJo6OzksZJ+oqVRfhNTkHtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hZsM/JRZ; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="M0jejNVq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hZsM/JRZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744069268; x=1775605268;
+  t=1744069269; x=1775605269;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=0vh9HuxcyMxqpMiFdEcg2+0e4DmDqzuVo7gAd3iUy4g=;
-  b=M0jejNVqD6t1A2VZ/nNQ80H4/UkANsLGxOIRYhcLu/meEm9wKxSWCup2
-   31lyF3wfE16mUnSO63Vl5cdNUPTPSIPNPaVf88ReKQLraS+fNHP/xZh+h
-   30YDwepvafYal4LPU//CLxkfXe5KvMu11Q26B/IYuGmaMzU5dXy0pKmwK
-   xQdUsaIDuruzX13ImxftnNj8LLSRdHGgPA1HXF/hX2AfGbPk/qIM0g0dv
-   RLX8sRKb3PvJ3XvtQZValcXRmjxxd6GELmd/rgq0zUlAKAoPOAL9jXRq2
-   iaq1D4AcJSavgXxkuIo/bpl2CtwUxdBrmHwsV/OpeEYI5OI+XB0T0J7DC
-   w==;
-X-CSE-ConnectionGUID: XfaQjj9STrWPq7gQ7dz98A==
-X-CSE-MsgGUID: uTv7lFg5T/K2C9XswpuNbw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="48193299"
+  bh=yr5nHpaopd1NZz+g077gSUSbgIi4RWyZKVBYkSkwieQ=;
+  b=hZsM/JRZRge1LbFT1CjSgcUOwVj13lsDWtEGrwrgmFEc9EcM8DAn2lh5
+   G54c1Ti87Lmevg9U+ufL4Z3B0JJ61RTZFVHWljMuEUhYZwKyWHSY2Qxhu
+   5EN/ueAhP4BOZDL+wMl1zUuxFY7HDqeNCRIGCNwJG3fBYjfeoIROozrRU
+   s/M7lFxjLnhLkZUHpayFUwmHD4pTvGTS/b845Y5kjnJNab1j2Kud6fJvm
+   /kGEjL3IlDkFcukrWn4/WcdhoArhjJSghQPrs6JgtQsZhqCGPaRwe7nmQ
+   aTJfAlB7bTuqlvdjys0lfwlrouz6Nwa9KHBW4m4oJ9UZji1jRu2OdzfYo
+   A==;
+X-CSE-ConnectionGUID: w9qwCMpGT+y86pKpQBezSg==
+X-CSE-MsgGUID: aDejkW/3RwmUc7yyB3V5HQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="48193307"
 X-IronPort-AV: E=Sophos;i="6.15,196,1739865600"; 
-   d="scan'208";a="48193299"
+   d="scan'208";a="48193307"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:58 -0700
-X-CSE-ConnectionGUID: iih2M1wyTkGHvcCDv8Uc3w==
-X-CSE-MsgGUID: PIWC+5UDRSWEI0fW8Se0eQ==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:59 -0700
+X-CSE-ConnectionGUID: g6//5lGvSuqmbgGvUV8Onw==
+X-CSE-MsgGUID: pFmv8TNbTkaH0x04cfURpA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,196,1739865600"; 
-   d="scan'208";a="165315532"
+   d="scan'208";a="165315535"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:57 -0700
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2025 16:40:58 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -56,9 +56,9 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 25/26] fs-x86/resctrl: Add detailed descriptions for Clearwater Forest events
-Date: Mon,  7 Apr 2025 16:40:27 -0700
-Message-ID: <20250407234032.241215-26-tony.luck@intel.com>
+Subject: [PATCH v3 26/26] x86/resctrl: Update Documentation for package events
+Date: Mon,  7 Apr 2025 16:40:28 -0700
+Message-ID: <20250407234032.241215-27-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250407234032.241215-1-tony.luck@intel.com>
 References: <20250407234032.241215-1-tony.luck@intel.com>
@@ -70,95 +70,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There are two event groups one for energy reporting and another
-for "perf" events.
+Each "mon_data" directory is now divided between L3 events and package
+events.
 
-See the XML description files in https://github.com/intel/Intel-PMT
-in the xml/CWF/OOBMSM/{RMID-ENERGY,RMID-PERF}/ for the detailed
-descriptions that were used to derive these descriptions.
+The "info/PERF_PKG_MON" directory contains parameters for perf events.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 57 +++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+ Documentation/filesystems/resctrl.rst | 38 ++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 529f6d49e3a3..e1097767009e 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -42,6 +42,8 @@ struct pmt_event {
- 	enum resctrl_event_type	type;
- };
+diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
+index 6768fc1fad16..b89a188b0321 100644
+--- a/Documentation/filesystems/resctrl.rst
++++ b/Documentation/filesystems/resctrl.rst
+@@ -167,7 +167,7 @@ with respect to allocation:
+ 			bandwidth percentages are directly applied to
+ 			the threads running on the core
  
-+#define EVT(id, offset, _type) { .evtid = id, .evt_offset = offset, .type = _type }
-+
- /**
-  * struct telem_entry - Summarized form from XML telemetry description
-  * @name:			Name for this group of events
-@@ -82,8 +84,63 @@ static struct evtinfo {
+-If RDT monitoring is available there will be an "L3_MON" directory
++If RDT L3 monitoring is available there will be an "L3_MON" directory
+ with the following files:
  
- #define EVT_OFFSET(evtid)	(evtinfo[evtid].pmt_event->evt_offset)
+ "num_rmids":
+@@ -261,6 +261,17 @@ with the following files:
+ 		bytes) at which a previously used LLC_occupancy
+ 		counter can be considered for re-use.
  
-+/*
-+ * https://github.com/intel/Intel-PMT
-+ * xml/CWF/OOBMSM/RMID-ENERGY *.xml
-+ */
-+#define NUM_RMIDS_0x26696143	576
-+#define GUID_0x26696143		0x26696143
-+#define NUM_EVENTS_0x26696143	2
-+#define EVT_BYTES_0x26696143	(NUM_RMIDS_0x26696143 * NUM_EVENTS_0x26696143 * sizeof(u64))
++If RDT PERF monitoring is available there will be an "L3_PERF_PKG" directory
++with the following files:
 +
-+static struct telem_entry energy_0x26696143 = {
-+	.name				= "energy",
-+	.guid				= GUID_0x26696143,
-+	.size				= EVT_BYTES_0x26696143 + sizeof(u64) * 3,
-+	.num_rmids			= NUM_RMIDS_0x26696143,
-+	.overflow_counter_off		= EVT_BYTES_0x26696143 + sizeof(u64) * 0,
-+	.last_overflow_tstamp_off	= EVT_BYTES_0x26696143 + sizeof(u64) * 1,
-+	.last_update_tstamp_off		= EVT_BYTES_0x26696143 + sizeof(u64) * 2,
-+	.num_events			= NUM_EVENTS_0x26696143,
-+	.evts				= {
-+		EVT(PMT_EVENT_ENERGY, 0x0, EVT_TYPE_U46_18),
-+		EVT(PMT_EVENT_ACTIVITY, 0x8, EVT_TYPE_U46_18),
-+	}
-+};
++"num_rmids":
++		The guaranteed number of hardware countes supporting RMIDs.
++		If more "CTRL_MON" + "MON" groups than this number are created,
++		the system may report that counters are "unavailable" when read.
 +
-+/*
-+ * https://github.com/intel/Intel-PMT
-+ * xml/CWF/OOBMSM/RMID-PERF *.xml
-+ */
-+#define NUM_RMIDS_0x26557651	576
-+#define GUID_0x26557651		0x26557651
-+#define NUM_EVENTS_0x26557651	7
-+#define EVT_BYTES_0x26557651	(NUM_RMIDS_0x26557651 * NUM_EVENTS_0x26557651 * sizeof(u64))
++"mon_features":
++		Lists the perf monitoring events that are enabled on this system.
 +
-+static struct telem_entry perf_0x26557651 = {
-+	.name				= "perf",
-+	.guid				= GUID_0x26557651,
-+	.size				= EVT_BYTES_0x26557651 + sizeof(u64) * 3,
-+	.num_rmids			= NUM_RMIDS_0x26557651,
-+	.overflow_counter_off		= EVT_BYTES_0x26557651 + sizeof(u64) * 0,
-+	.last_overflow_tstamp_off	= EVT_BYTES_0x26557651 + sizeof(u64) * 1,
-+	.last_update_tstamp_off		= EVT_BYTES_0x26557651 + sizeof(u64) * 2,
-+	.num_events			= NUM_EVENTS_0x26557651,
-+	.evts				= {
-+		EVT(PMT_EVENT_STALLS_LLC_HIT, 0x0, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_C1_RES, 0x8, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_UNHALTED_CORE_CYCLES, 0x10, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_STALLS_LLC_MISS, 0x18, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_AUTO_C6_RES, 0x20, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_UNHALTED_REF_CYCLES, 0x28, EVT_TYPE_U64),
-+		EVT(PMT_EVENT_UOPS_RETIRED, 0x30, EVT_TYPE_U64),
-+	}
-+};
-+
- /* All known telemetry event groups */
- static struct telem_entry *telem_entry[] = {
-+	&energy_0x26696143,
-+	&perf_0x26557651,
- 	NULL
- };
+ Finally, in the top level of the "info" directory there is a file
+ named "last_cmd_status". This is reset with every "command" issued
+ via the file system (making new directories or writing to any of the
+@@ -366,15 +377,22 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
+-	directories have one file per event (e.g. "llc_occupancy",
+-	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+-	files provide a read out of the current value of the event for
+-	all tasks in the group. In CTRL_MON groups these files provide
+-	the sum for all tasks in the CTRL_MON group and all tasks in
+-	MON groups. Please see example section for more details on usage.
++	This contains a set of directories, one for each instance
++	of an L3 cache, or of a processor package. The L3 cache
++	directories are named "mon_L3_00", "mon_L3_01" etc. The
++	package directories "mon_PERF_PKG_00", "mon_PERF_PKG_01" etc.
++
++	Within each directory there is one file per event. In
++	the L3 directories: "llc_occupancy", "mbm_total_bytes",
++	and "mbm_local_bytes".	In the PERF_PKG directories: "core_energy",
++	"activity", etc.
++
++	In a MON group these files provide a read out of the current
++	value of the event for all tasks in the group. In CTRL_MON groups
++	these files provide the sum for all tasks in the CTRL_MON group
++	and all tasks in MON groups. Please see example section for more
++	details on usage.
++
+ 	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
+ 	directories for each node (located within the "mon_L3_XX" directory
+ 	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
 -- 
 2.48.1
 
