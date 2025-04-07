@@ -1,288 +1,199 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2071.outbound.protection.outlook.com [40.107.236.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D348C19D8A2
-	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 15:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC91313B2A4;
+	Mon,  7 Apr 2025 17:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.71
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744040068; cv=pass; b=SETlzSLqe3M+DKWVLF7d+ev5Du6BRSCvMTfaIt3WIUvEmR2Yk1YGK6FmCoFO8wxrONUkBbwZLcD3BCm+cahE8wtN7lrmZZwronQqZT4It3ZahTmP8CbTGHWUzP1a5u75giaLcse2G5sFnlXJr7CmUQlMutVt4WUYO3WwaQXNLiM=
+	t=1744046230; cv=fail; b=IamajeVJqv4LHXNoD+FdHVy04p6E2vqPLBgmN35daZsCw/sBgfBfVNTS5da8fltlIx4ojhvmGUJTTU2TKqQ5hScpEKvGNXKKLfP6JWXRm7SnQsKSZg4kSDrEFIArdTISfcs2XxlyTNrXovTmYjbYlTVM4Jke8a+snF6LWlDLzpE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744040068; c=relaxed/simple;
-	bh=yd8pA9wvv8vCEh+1oHbfz/F+HTCocTEZMG8lCZQZd1I=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Af5+UmehgZzMa1JYjzk2VaPEKUu1fQojHjPh4+tui435PtZtUu2Pr6m1tMp9Ii16ck1lPvhwnSOxViZ9dPLfRauBS1uFNac7o55AjlajuIjdjAX+0IJqlsdoOfrDgfmBSNbY4T4iRlRFw/pedmG8/emyD6My6yO3iC/L1PgVC40=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=aPbN3gxH; arc=pass smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744046230; c=relaxed/simple;
+	bh=dyCebed0Pmv+GqI7EX/QsGmCgEVPSDrKWJfdeA5jgLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=b53VUQUsUgWEp431p8+jS3oQnDAaYAVcinINqchFjB0jvEPprPaLQ4JKSLag/p6jS5BY/VoIafpOr23gzz95ndxoz7hqOaj86v6z3xThXggZZTC/eflqSHxt6zD/FViL0KZjuS/YzGnlZH6l7QsUnrRl6eyypk0jTD7FT/wteNY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PgK3RTli; arc=fail smtp.client-ip=40.107.236.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="aPbN3gxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAACC4CEDD
-	for <patches@lists.linux.dev>; Mon,  7 Apr 2025 15:34:28 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="aPbN3gxH"
-Resent-From: Luis Chamberlain <mcgrof@kernel.org>
-Resent-Date: Mon, 7 Apr 2025 08:34:27 -0700
-Resent-Message-ID: <Z_Pwg89nk-PD5Xk8@bombadil.infradead.org>
-Resent-To: patches <patches@lists.linux.dev>
-Envelope-to: mcgrof@infradead.org
-Delivery-date: Mon, 07 Apr 2025 05:55:55 +0000
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by bombadil.infradead.org with esmtps (Exim 4.98.1 #2 (Red Hat Linux))
-	id 1u1fSc-0000000GVOi-0XNG
-	for mcgrof@infradead.org;
-	Mon, 07 Apr 2025 05:55:55 +0000
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id D604A5C5864;
-	Mon,  7 Apr 2025 05:53:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id A9854C4CEDD; Mon,  7 Apr 2025 05:55:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id ADCF9C4CEEB
-	for <mcgrof@kernel.org>; Mon,  7 Apr 2025 05:55:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org ADCF9C4CEEB
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id D46FC8A3922;
-	Mon,  7 Apr 2025 05:55:44 +0000 (UTC)
-Received: from pdx1-sub0-mail-a256.dreamhost.com (trex-5.trex.outbound.svc.cluster.local [100.107.20.214])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 890C78A3284;
-	Mon,  7 Apr 2025 05:55:44 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744005344; a=rsa-sha256;
-	cv=none;
-	b=hNOne33IjaP2GJwoIdduWM9BJGsle1fNTvOfVav4VoJBBkw2LVn+4bLsLID+pCTKfpEuVx
-	38/SgawF13njzcVVuw9h8Xm9iDy6jR59yukXsAAcSfSiesEqhsC6QPLjutVZYL1hKzGVlW
-	WP66gvTABYJlWCBncA4HRoNeQ7qmtYEyeBIzSUukV+t0sWlonRZ1iWCL/hbpPI2HhEqGFb
-	xvIwuBiy2RWfefgWBwQj0fA/Els34AIMgG2wJ7V6LuVgsMkSCYFVE/qJ9YQVAY5zy/N3kU
-	BcNjNpEG3b5+MbHrHm+540lqAs7mxu7XUizdUpUqmE5IQG22D5hqLb+UyGnv/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1744005344;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=+osRztGM+64dw0HgKZ/KeIzIzsFSZuNqtIvDO3KsoUw=;
-	b=WRprAvtt8X4cVCHEhdJS0uFNPQyD2PiDQg+6t0u93icC1v1AdA2ivDG6sDgdNckVVTLTlk
-	FrEOtlh9Uk6GqHNqQzvAX2ricf+/yOSunjJf5jGdcjB2MvC6K+i5xFhcTTmn9iF+JwJFlm
-	cc9DrFb4F9WljGaUzz+YMgNyevew6Fmv+v9Im7rT3yvQcKVoFmxp0JuqHqjuVBx2ljRbZ1
-	xzGpMhTCR9sRSh6/N0qNFYP9GgwUwZVnp2bWUgVqAg7GUglqyA6Atk0L2TGvmwY8tMG2W6
-	tje9xjI2VAT2mEDpfO2czdGCZtJnGT5PL9lPHK1DtwYgN4jY69Ye+FbkWH14Ug==
-ARC-Authentication-Results: i=1;
-	rspamd-7dd6dcd7db-2wrq9;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Illustrious-Abiding: 6f59548a2fe4ffd3_1744005344775_4259637749
-X-MC-Loop-Signature: 1744005344775:3875656840
-X-MC-Ingress-Time: 1744005344775
-Received: from pdx1-sub0-mail-a256.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.107.20.214 (trex/7.0.3);
-	Mon, 07 Apr 2025 05:55:44 +0000
-Received: from localhost.localdomain (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a256.dreamhost.com (Postfix) with ESMTPSA id 4ZWJNJ1VvxzdH;
-	Sun,  6 Apr 2025 22:55:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1744005344;
-	bh=+osRztGM+64dw0HgKZ/KeIzIzsFSZuNqtIvDO3KsoUw=;
-	h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
-	b=aPbN3gxH/vDPb3qr+bSjjTCs+ESa6ogbt1CK9JXRuLpZ+wWuYXkaWn9RJiAH1i9X5
-	 uGxDNygnfWjDQr9rZMyomzpbg0ufataj2z2Z4AhU8SmesvNyjDFqwkznovaY3g7Wzg
-	 1pb9RAdeI1bdRHGfPhLk+J8HdYpG6AfnTbwJoSZrcmWTh1fJ6hYzIPxGyxmxmFOijC
-	 UCpCNl01FVhB5xPswwKNrDRhTOn6NKEPPoAORr7IF8UPbaXYv4P3/fdA5tOOsNeFSG
-	 Ktsl+Z6Rszv8sv8Ai7XhgYK9LwVgBnNu9xc0ZPMGwFY3t1l/jiBLsV2LyUOrN60VeV
-	 8D5LRkgqMKLWg==
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: mcgrof@kernel.org
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Subject: [PATCH 6/6] mm/migrate: fix sleep in atomic for large folios and bh
-Date: Sun,  6 Apr 2025 22:54:55 -0700
-Message-Id: <20250407055455.785065-7-dave@stgolabs.net>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250407055455.785065-1-dave@stgolabs.net>
-References: <20250407055455.785065-1-dave@stgolabs.net>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PgK3RTli"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uSR40rG4MoLItQfyiCFs2UKnx40GZ8XycSLNIOrKS/LVMy1uGpHB0idxZcS2cV12UPPgRtnLVP4xKoGxEnqzQRsjKz9l5tJ1ouvI9jbjTX0HvyWmxGn6HvCM0XE2ctJPEk2D+QWbmvLuhI0kGUQ67Jr6whov2d4wWMX3VjVFp2Dxv93oxuPQu08qw45TBMEGAF0oH13QnrsapEef2CI8JT/76PdQ3KupcB6JOW9rM+3iFpx6RyJnc95VKuNWC/1z3qmg2xtPkSWtpFzVoC5i+7WWU7eWtiXj8vE4CZ40Fru/nnst3kdXo/Gt0CpF91I963p1Of4Yf4p2faYu2yvqiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rH5TUe0STTpsuxxrdPluVVlVFt6OBkU8CDO/YYJS1wE=;
+ b=qAnH6uwSHfatH+woxfUa19KLWMh3MtFH/to5S3bIcBQ5BlkSY3SLOM5ERq4Bv1kzuO5Mr6pN89/rJgkfNlTREbyoCT5pL2J42wr44HqGvSu765sJVfR1MPQzO9bJqoXEbPFmQUR2HWFvKpQeLgj3jt79h+Qn1M5lcgupr74YrZU/oHlrQBIs7bkBs7kZiSMzNKT7yFFTnryj+ParhQ273lndKKhUulffH+JM6Oo4YL8myeqi9H3z1KqnF5PLy0cjxNFUgS1UJYBafdVj1WuvmdZZmZATUXO6kBwb44mH42/AP/A7/eaLMX1lLU30sk86dnuwct10uaCa2pOKI17Iog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rH5TUe0STTpsuxxrdPluVVlVFt6OBkU8CDO/YYJS1wE=;
+ b=PgK3RTliPeSKgNSUBXfH4aCMmg+FTZSfbkwVr0YI2NSK22dlGXYiW8C8xtWd5VGKcqctwlghZINcFPYt55uGwI8Ku/7Eky89VlPDh1GwCYu8UysYQLUWeDQxuAKKqda+6QC25DawXeZZqulWvPOdDWwlk+J/D0dchxDCkwgJH7KM7TNEGnH8mH3YtrETsFbdh/ltw3Lt8uvJAXyTwGB+adxdIgmIMdcnWZeoFIZZ5flxS2yaFaZno9MUkff1ILjULyW4x8Txx7/mTjk7MsbjiULiYAwzSuHnKaj/4OXvwMhatiuulF+2uCECnLUzHlE2KPpAIZycHgYakoLGt3OEWA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by IA1PR12MB8191.namprd12.prod.outlook.com (2603:10b6:208:3f3::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.34; Mon, 7 Apr
+ 2025 17:17:03 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8606.028; Mon, 7 Apr 2025
+ 17:17:03 +0000
+Date: Mon, 7 Apr 2025 14:17:02 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Zhangfei Gao <zhangfei.gao@linaro.org>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, kevin.tian@intel.com,
+	corbet@lwn.net, will@kernel.org, joro@8bytes.org,
+	suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com,
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+	praan@google.com, patches@lists.linux.dev
+Subject: Re: [PATCH v8 12/14] iommu/arm-smmu-v3: Introduce struct
+ arm_smmu_vmaster
+Message-ID: <20250407171702.GK1557073@nvidia.com>
+References: <cover.1740504232.git.nicolinc@nvidia.com>
+ <f205a4e2f5971cd4b1033d7cac41683e10ebabfb.1740504232.git.nicolinc@nvidia.com>
+ <CABQgh9Fuh2HdBH7pyAteawZBpa55ZzfR9dv2K4RF=Ps4yhREbw@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABQgh9Fuh2HdBH7pyAteawZBpa55ZzfR9dv2K4RF=Ps4yhREbw@mail.gmail.com>
+X-ClientProxiedBy: BL1PR13CA0259.namprd13.prod.outlook.com
+ (2603:10b6:208:2ba::24) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-646709E3 
-X-CRM114-CacheID: sfid-20250406_225554_252340_E6ECAD9D 
-X-CRM114-Status: GOOD (  17.18  )
-X-Spam-Score: -7.1 (-------)
-X-Spam-Report: Spam detection software, running on the system "bombadil.infradead.org",
- has NOT identified this incoming email as spam.  The original
- message has been attached to this so you can view it or label
- similar future email.  If you have any questions, see
- the administrator of that system for details.
- 
- Content preview:  The large folio + buffer head noref migration scenarios are
-    being naughty and blocking while holding a spinlock. As a consequence of
-   the pagecache lookup path taking the folio lock this serializes against migration
-    paths, so they can wait for each other. For the i_private_lock fallback case,
-    a new BH_Migrate fla [...] 
- 
- Content analysis details:   (-7.1 points, 5.0 required)
- 
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -5.0 RCVD_IN_DNSWL_HI       RBL: Sender listed at https://www.dnswl.org/, high
-                             trust
-                             [139.178.84.217 listed in list.dnswl.org]
-  0.0 SPF_HELO_NONE          SPF: HELO does not publish an SPF Record
- -0.0 SPF_PASS               SPF: sender matches SPF record
-  0.0 ARC_SIGNED             Message has a ARC signature
-  0.1 DKIM_SIGNED            Message has a DKIM or DK signature, not necessarily valid
- -0.1 DKIM_VALID_AU          Message has a valid DKIM or DK signature from author's
-                             domain
- -0.1 DKIM_VALID             Message has at least one valid DKIM or DK signature
- -0.1 ARC_VALID              Message has a valid ARC signature
- -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-                             [score: 0.0000]
-  0.0 HEADER_FROM_DIFFERENT_DOMAINS From and EnvelopeFrom 2nd level mail
-                             domains are different
-  0.0 RCVD_IN_VALIDITY_SAFE_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
-                              Validity was blocked.  See
-                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
-                              for more information.
-                             [139.178.84.217 listed in sa-accredit.habeas.com]
-  0.0 RCVD_IN_VALIDITY_CERTIFIED_BLOCKED RBL: ADMINISTRATOR NOTICE: The
-                             query to Validity was blocked.  See
-                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
-                              for more information.
-                         [139.178.84.217 listed in sa-trusted.bondedsender.org]
-  0.0 RCVD_IN_VALIDITY_RPBL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
-                              Validity was blocked.  See
-                             https://knowledge.validity.com/hc/en-us/articles/20961730681243
-                              for more information.
-                            [139.178.84.217 listed in bl.score.senderscore.com]
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA1PR12MB8191:EE_
+X-MS-Office365-Filtering-Correlation-Id: 49912ecd-3e2e-4c0d-55a0-08dd75f803af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?PmCyhMPw5B5+3+PHu0gQ7SqFoUILccjcZEeIFACc/T8ObXprnF4uOn82x4Lf?=
+ =?us-ascii?Q?+tU+l0OJK3WnsBvUdPBxviiep6qaPKHulefzk7vCgd4fB5JQlX9hgsNiW8xv?=
+ =?us-ascii?Q?Lbe0UUvmhm9zQSllJdaeOEeaa3cGqJ4kbwCfF/VSwAGvIYeH1wdk3jwdGn8q?=
+ =?us-ascii?Q?P+xleEoU+jwD1ZlRkdATvDtdPuptcE8dH6VJ9IiRNhUz/GarmaXZWMK6YQmL?=
+ =?us-ascii?Q?GebfLeobzacqItK7x+HW4I2yPEVd8l5XI53d/qRow6AjZWB+586qEuj69nTx?=
+ =?us-ascii?Q?8nkPdb8bEQiVDxpIGJdxMEVLTaXYeaZ3gkX7RI/0wun/fwHZJMCyMWFY6E4c?=
+ =?us-ascii?Q?1NCUND0+GeB14xN4ESlTHu/bqky1TEQsYyZS0p32qMW7HqDt25+Bbs44aRl9?=
+ =?us-ascii?Q?qxUDTg9LkJKHVXskW5D9HWPaaxUAvKYPfdStdaesaDNKygYxcJr4zuANd1Fq?=
+ =?us-ascii?Q?GbB4qUbOnlvP04RfM2+l4DxgzzsrzHnkFqQYszwBIvw4Z5Izu2i96HCFjeyD?=
+ =?us-ascii?Q?Zc4Q/FFKNvVWvetpBYK0iVuGbsZg1b9YrSmDqmHCm21MQjKnPFsj9FmBFrN3?=
+ =?us-ascii?Q?XQ/zUXNyUkyCND680uvCwZ55AzkKjeOjbTsIAloY1r4Wzpi8LRecAlu7YgCK?=
+ =?us-ascii?Q?FcNT/r7fxQVe2voG//yP24XqmpUpSIdPBlciWdDKKC/zJRDN5H1ECBcAOdqT?=
+ =?us-ascii?Q?hbfBRiMaWrzrANLdQ70+5kTwGB/6RvIXJzf7PTCeZ5VfjdswFcmNXPExpbBO?=
+ =?us-ascii?Q?2kFM+jdPWy7C0SuA/63UQa9kMmWWiwuYU/20hcwMPjUbYokVbyy2YAzNjEd3?=
+ =?us-ascii?Q?uOuWMb436v4pbi7SR5oDApMPgbMvm3xilUjRnEI7Ph58toQK1kVW8IumY8Lk?=
+ =?us-ascii?Q?Xbdmwd61Fv0CzR/eJtvmpuH2Y+9b1txLpZP7ECPwjJWvlyhuvx+an7ObmJF8?=
+ =?us-ascii?Q?3LT5Nkg0pG70deGXnkEnR4mInruH8Kyd5DzrcjPiSBdOBCjYts/3e+YYSk24?=
+ =?us-ascii?Q?/occbpY+lnkzRMAqR7F3+3HhYyaHP5/DbXxLVQj9Fr7SYYy20LT/xpqV9noO?=
+ =?us-ascii?Q?CjZw5j5UP1GxyDNNb7APsmhqfgV3xPs06oupt8nlR4YC9r97z0ZPjBsXIdu9?=
+ =?us-ascii?Q?9MGsc5R4XKP7gas7SCHQgDNj71c9Kar+QqmVZXHtOtIYIeHiclDrB0YnfftZ?=
+ =?us-ascii?Q?gpISeLD/ZCrLLi2vHzYvGwHa/XvlzEdKafIS5d3yowK/x8vHEq/3rakYy2KI?=
+ =?us-ascii?Q?NhvCYnmDJhjyvgRLv4f69Y+DmI4SqTjwNV4GB/hviLF1f0Ruy0sjQVmkyGSH?=
+ =?us-ascii?Q?hror61Wa7j+726S1EfT09urYBev94oRrIZG32Q06FkmjN6yd7+vSPczL0MhT?=
+ =?us-ascii?Q?Xrk/ssKXwoONePa8sgRsy7Mju19n?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?BjJzOSly2kEksav+RRp00Qba1YDFTmyu//XGxgvTvHpV995ETu36B7ltyPt/?=
+ =?us-ascii?Q?zNdF0Jd6XUCJK4mUNJ2jq+3R52Jjp5esBP8GfIxvl6fMZpojHMm729867Q0O?=
+ =?us-ascii?Q?jP8c0Vonx1eMDnmn6kz+rMkBwOuFuDhJR3+0Ppu4VYIpVLk0j4bChLCwwuky?=
+ =?us-ascii?Q?V6oe7h0iYdTDDg8pNn+yA4ADIojUQK2YuiAtBV+f31Ai32pW9rWj/hosbqgl?=
+ =?us-ascii?Q?32QtfRxlzqCLOZz3ftSId/vA4Q8F28E2CZaKFJqrWQjY7U+nilot9bv0L1S5?=
+ =?us-ascii?Q?DKaOSwgZSw7l2WjaYf7KqWfAm0REVAq9V6eZglppmiSKSlyGpZRRxdqwL9lH?=
+ =?us-ascii?Q?eaVW6InmF7Y4zm7+1dX6mqGiKnzOV2jmDTemFfHqFN+W8quJ5L0/BK9NLoDI?=
+ =?us-ascii?Q?0csN4azXGEWDJEMuprMKdL2WO/3yqDDdhemd54Um27J8hFxfm2Z5kJ/VaE5F?=
+ =?us-ascii?Q?0zoITAAYEkd7ecgOrXJK7gB726S7zCFBp53tFPOQ2MqUTkmJVqtJLEbgjAFN?=
+ =?us-ascii?Q?t2gDxw8vp+/mdz7+RmsTP8iMwh19WA+/RexE5Jigqy107H4PdhqKqNbgt02n?=
+ =?us-ascii?Q?qSOUHJ8rJL1ICVPydzkAhOep5/CB8Vo78oyvNh+5VVLmOWd1MNFXFUjP+U5l?=
+ =?us-ascii?Q?Dh94bcFi9JS6Go69pnXCyyM8LhgxSM5cVM/lIyniq+bhmpVwwOAQpziNkcI7?=
+ =?us-ascii?Q?dZqwZpcrEN82agDN1OJBZMEiCisR40QIV/8H0EAOIGcA00c1QuLY+q5HugxJ?=
+ =?us-ascii?Q?ltY/ieadLQ7OcuQrPLVB8McuxYFijTCJ5ga1MgYdnrA8xnHskcQTpSBmj1Tv?=
+ =?us-ascii?Q?0/VOM6tj4MKRGnMCrQyvp3GCqeQir/+fQgwXEYc3aNhH7FcDBHHHRZzUtEOM?=
+ =?us-ascii?Q?cGWh7C8vs6Qa+liprek55aLzQY7nGYSawc0Rpe74IliSX5u0UVuxGkcfWFFK?=
+ =?us-ascii?Q?q5YB13U12u/I0hYJdkZJ0/2ERfAkUkSrv6ofDv3EnQ0BafoHSK6Nq+Ia56Xr?=
+ =?us-ascii?Q?e8JQj5/h+zz1SUdzWXHSzVTigzkAo0hnIW/x68Atj7iQpxWQRPGqY/WDs8E5?=
+ =?us-ascii?Q?aznhGswn5AmT4c25xu5Na+T8yc/uuvrw4ahgMyXoHiVY9v5++C/iInP9Qabb?=
+ =?us-ascii?Q?o5gWfq91U9Ng3Por1zp6i6mzFJ7H/Lv2ykyplTFQlX+QAr30A5UpsiLNDRxB?=
+ =?us-ascii?Q?L+PtL1iNC4sZ+SiESWaoepgEfDWPpHd/pWaFvAke452ETF7T+AlRnCvWGP48?=
+ =?us-ascii?Q?fwBE6fecjXumwO/wQMD72DoaNfurhc3AGKxVpdR57E/iiqYf4sO/KQMi64zA?=
+ =?us-ascii?Q?0W7p7DfOQJfkWsBmM+DjP6dt5+Sgvw5aLR6FduKvfknosrK2KLci6VXmyMqL?=
+ =?us-ascii?Q?uU2NtJCTPRTCq5gPqyB6ud3y+XzuBU7i4UtIEgA1C4lA1CYgP1oBmBxY2+N7?=
+ =?us-ascii?Q?BLqMe37BQmbtwdsxmYuLKEQV0tatChbvRuTJsqK0UMY0W+VSmYFXeD+7ipRA?=
+ =?us-ascii?Q?Y1vZPqCkPtYSlBn5+jumSt9WzARlK9OXA4hQoaRke/d6yuiLNENgaufykzT+?=
+ =?us-ascii?Q?hCn3RyRwg3lX80clkmfeo36g6r/iiCArIf+f+XML?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 49912ecd-3e2e-4c0d-55a0-08dd75f803af
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Apr 2025 17:17:03.2604
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rQXlwRQolQOGmXrCwTjtCZed8PhPgIyZu2YeiGOTSXyY2o1wLDW/kEihPDQhiRwM
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8191
 
-The large folio + buffer head noref migration scenarios are
-being naughty and blocking while holding a spinlock.
+On Mon, Apr 07, 2025 at 08:08:57PM +0800, Zhangfei Gao wrote:
+> Hi, Nico
+> 
+> On Wed, 26 Feb 2025 at 01:35, Nicolin Chen <nicolinc@nvidia.com> wrote:
+> >
+> > Use it to store all vSMMU-related data. The vsid (Virtual Stream ID) will
+> > be the first use case. Since the vsid reader will be the eventq handler
+> > that already holds a streams_mutex, reuse that to fenche the vmaster too.
+> >
+> > Also add a pair of arm_smmu_attach_prepare/commit_vmaster helpers to set
+> > or unset the master->vmaster point. Put these helpers inside the existing
+> > arm_smmu_attach_prepare/commit().
+> >
+> > For identity/blocked ops that don't call arm_smmu_attach_prepare/commit(),
+> > add a simpler arm_smmu_master_clear_vmaster helper to unset the vmaster.
+> >
+> > Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> > Reviewed-by: Pranjal Shrivastavat <praan@google.com>
+> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> > ---
+> 
+> >
+> > +int arm_smmu_attach_prepare_vmaster(struct arm_smmu_attach_state *state,
+> > +                                   struct arm_smmu_nested_domain *nested_domain)
+> > +{
+> > +       struct arm_smmu_vmaster *vmaster;
+> > +       unsigned long vsid;
+> > +       int ret;
+> > +
+> > +       iommu_group_mutex_assert(state->master->dev);
+> > +
+> > +       /* Skip invalid vSTE */
+> > +       if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
+> > +               return 0;
+> 
+> Why this is removed in v9 and 6.15-rc1?
+> 
+> I tested 6.15-rc1 the qemu failed to boot with qemu branch:
+> for_iommufd_veventq-v8
+> "failed to attach the bypass pagetable"
+> 
+> After adding this "skip check" back, the qemu works again.
+> 
+> Do we need to add this back?
 
-As a consequence of the pagecache lookup path taking the
-folio lock this serializes against migration paths, so
-they can wait for each other. For the i_private_lock
-fallback case, a new BH_Migrate flag is introduced which
-enables the lookup to bail.
+Shouldn't need too.. Do you know what failed to cause the failed to
+attach? There is nothing in this function that should cause that.
 
-This allows the critical region of the i_private_lock on
-the migration path to be reduced to the way it was before
-ebdf4de5642fb6 ("mm: migrate: fix reference  check race
-between __find_get_block() and migration").
-
-The scope is always noref migration.
-
-Co-developed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
----
- fs/buffer.c                 | 12 +++++++++++-
- fs/ext4/ialloc.c            |  3 ++-
- include/linux/buffer_head.h |  1 +
- mm/migrate.c                |  6 ++++--
- 4 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 07ec57ec100e..3e1df7779bc2 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -211,6 +211,15 @@ __find_get_block_slow(struct block_device *bdev, sector_t block, bool atomic)
- 	head = folio_buffers(folio);
- 	if (!head)
- 		goto out_unlock;
-+	/*
-+	 * Upon a noref migration, the folio lock serializes here;
-+	 * otherwise bail.
-+	 */
-+	if (test_bit_acquire(BH_Migrate, &head->b_state)) {
-+		WARN_ON_ONCE(folio_locked);
-+		goto out_unlock;
-+	}
-+
- 	bh = head;
- 	do {
- 		if (!buffer_mapped(bh))
-@@ -1393,7 +1402,8 @@ lookup_bh_lru(struct block_device *bdev, sector_t block, unsigned size)
- /*
-  * Perform a pagecache lookup for the matching buffer.  If it's there, refresh
-  * it in the LRU and mark it as accessed.  If it is not present then return
-- * NULL
-+ * NULL. Atomic context callers may also return NULL if the buffer is being
-+ * migrated; similarly the page is not marked accessed either.
-  */
- static struct buffer_head *
- find_get_block_common(struct block_device *bdev, sector_t block,
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index 38bc8d74f4cc..e7ecc7c8a729 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -691,7 +691,8 @@ static int recently_deleted(struct super_block *sb, ext4_group_t group, int ino)
- 	if (!bh || !buffer_uptodate(bh))
- 		/*
- 		 * If the block is not in the buffer cache, then it
--		 * must have been written out.
-+		 * must have been written out, or, most unlikely, is
-+		 * being migrated - false failure should be OK here.
- 		 */
- 		goto out;
- 
-diff --git a/include/linux/buffer_head.h b/include/linux/buffer_head.h
-index 8db10ca288fc..5559b906b1de 100644
---- a/include/linux/buffer_head.h
-+++ b/include/linux/buffer_head.h
-@@ -34,6 +34,7 @@ enum bh_state_bits {
- 	BH_Meta,	/* Buffer contains metadata */
- 	BH_Prio,	/* Buffer should be submitted with REQ_PRIO */
- 	BH_Defer_Completion, /* Defer AIO completion to workqueue */
-+	BH_Migrate,     /* Buffer is being migrated (norefs) */
- 
- 	BH_PrivateStart,/* not a state bit, but the first bit available
- 			 * for private allocation by other entities
-diff --git a/mm/migrate.c b/mm/migrate.c
-index f3ee6d8d5e2e..7a3552adda5d 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -848,6 +848,8 @@ static int __buffer_migrate_folio(struct address_space *mapping,
- 		bool busy;
- 		bool invalidated = false;
- 
-+		VM_WARN_ON_ONCE(test_and_set_bit_lock(BH_Migrate,
-+						      &head->b_state));
- recheck_buffers:
- 		busy = false;
- 		spin_lock(&mapping->i_private_lock);
-@@ -859,12 +861,12 @@ static int __buffer_migrate_folio(struct address_space *mapping,
- 			}
- 			bh = bh->b_this_page;
- 		} while (bh != head);
-+		spin_unlock(&mapping->i_private_lock);
- 		if (busy) {
- 			if (invalidated) {
- 				rc = -EAGAIN;
- 				goto unlock_buffers;
- 			}
--			spin_unlock(&mapping->i_private_lock);
- 			invalidate_bh_lrus();
- 			invalidated = true;
- 			goto recheck_buffers;
-@@ -883,7 +885,7 @@ static int __buffer_migrate_folio(struct address_space *mapping,
- 
- unlock_buffers:
- 	if (check_refs)
--		spin_unlock(&mapping->i_private_lock);
-+		clear_bit_unlock(BH_Migrate, &head->b_state);
- 	bh = head;
- 	do {
- 		unlock_buffer(bh);
--- 
-2.39.5
-
+Jason
