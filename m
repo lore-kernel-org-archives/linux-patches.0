@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1917B267731;
-	Tue,  8 Apr 2025 12:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB331267731;
+	Tue,  8 Apr 2025 12:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115073; cv=none; b=HjE4J1iDiAcLJi2A+FCbJ/IA1MWcth6cxU+JMsbb+kC5N2+Zdh2TaDL2wRpipqH1eGkffmyZAgqW06qPueJp4/gbxAtniheiiIR6PVclPAwi59Ll5QJg0htVjXWjTSCZeH0Z8nXuo97oXdDsFXK3pgSCcvA09M2lV9BRjMriME4=
+	t=1744115075; cv=none; b=hnhEiIWDGY1opub3VpCqUmK3gDZv9ztHZrGA8P08yOUjnrHLJHLRj/+6uv+1OJ1WK7raM9fgr/jz1Ek9tfrn/s4SMpsctbOknitpl2QH6xtjN7wCBsjhKAz6oNBDwbzYlMYl9T5TIF44s9KXxHfIgyaN4buvYN+sNyWARDHOcIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115073; c=relaxed/simple;
-	bh=col8mfYPAfUmurZMgO1s3rICv1TBTPzLG6OQAJcjGvQ=;
+	s=arc-20240116; t=1744115075; c=relaxed/simple;
+	bh=cvGnORBftZLwpvAu3SGEYc+mIVUGdduWXVYVj3BUbwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/zwrf6kbvi4d65cER+QzWjlUrY9/FR57W2GQgIEZ7oH/X123YcnJg2kU/LGx8XPUQHkdofc1IQCFAeK/2JUZZCa2fUM5wCzkZqllhftwpvpD9un46ZKyjF6cQDp2RZrfm2quHDIRmUWi7VsvboNUDwzq7aFeFnJ3Q35fztaToM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=et28LI/W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDXv9urCpUZMPj2GAvx05ybrgxiyacShJ+Nhzwag4DNEPdIL0v/GFe0D8Dy/qvj7Sdvb1MMOfLSK2xbcdsKCos3WSm9x+oa30ijiInGsVruvIt7duxT5kWfqBemMJj5pkmyzXj4FN62Fwz96XWe1Creeg4M2KOEbV8tX2TGkdtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYiBbSoj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="et28LI/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C243C4CEE7;
-	Tue,  8 Apr 2025 12:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYiBbSoj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAE1C4CEE5;
+	Tue,  8 Apr 2025 12:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115073;
-	bh=col8mfYPAfUmurZMgO1s3rICv1TBTPzLG6OQAJcjGvQ=;
+	s=korg; t=1744115075;
+	bh=cvGnORBftZLwpvAu3SGEYc+mIVUGdduWXVYVj3BUbwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=et28LI/WJyXV5DT4zpFCZioA0wSFqfixlT/Ts//IazCNVOmd2LcJuJn8hhJznRM2z
-	 qcKLVOqTbsCpj+M1oaiudtnOWnH5oIaZILnmJoI3muXYOg2F0wiHADUX3LTMkcURxQ
-	 bmCZt1EC9KbLxKCmgxA6cEJaBCx4sTCXZ3rLEYDY=
+	b=WYiBbSojiwudppWpXx7XtE07qQDI/5oGJXbGdfabPyxJ0o58CnWKeYKVZ939qRqZ1
+	 uw61RrmPYom4YjcPt8DWR+OsPkBwxfT2JdTTEUi5zGR7CV496y0+DFe/81AmPp59Ig
+	 K1QfVsKvR6lGN6KcgkRJJgprXcBzp9is6qhQCQFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 299/499] nfs: Add missing release on error in nfs_lock_and_join_requests()
-Date: Tue,  8 Apr 2025 12:48:31 +0200
-Message-ID: <20250408104858.673219733@linuxfoundation.org>
+Subject: [PATCH 6.13 300/499] wifi: mac80211: Cleanup sta TXQs on flush
+Date: Tue,  8 Apr 2025 12:48:32 +0200
+Message-ID: <20250408104858.698454136@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-[ Upstream commit 8e5419d6542fdf2dca9a0acdef2b8255f0e4ba69 ]
+[ Upstream commit 5b999006e35ea9c11116ddff7e375b256421d0af ]
 
-Call nfs_release_request() on this error path before returning.
+Drop the sta TXQs on flush when the drivers is not supporting
+flush.
 
-Fixes: c3f2235782c3 ("nfs: fold nfs_folio_find_and_lock_request into nfs_lock_and_join_requests")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/3aaaa3d5-1c8a-41e4-98c7-717801ddd171@stanley.mountain
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+ieee80211_set_disassoc() tries to clean up everything for the sta.
+But it ignored queued frames in the sta TX queues when the driver
+isn't supporting the flush driver ops.
+
+Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
+Link: https://patch.msgid.link/20250204123129.9162-1-Alexander@wetzel-home.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/write.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mac80211/util.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 50fa539611f5e..7d71af3265673 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -579,8 +579,10 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 5ee7fc81ff8cf..de84260247ef1 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -685,7 +685,7 @@ void __ieee80211_flush_queues(struct ieee80211_local *local,
+ 			      struct ieee80211_sub_if_data *sdata,
+ 			      unsigned int queues, bool drop)
+ {
+-	if (!local->ops->flush)
++	if (!local->ops->flush && !drop)
+ 		return;
  
- 	while (!nfs_lock_request(head)) {
- 		ret = nfs_wait_on_request(head);
--		if (ret < 0)
-+		if (ret < 0) {
-+			nfs_release_request(head);
- 			return ERR_PTR(ret);
-+		}
+ 	/*
+@@ -712,7 +712,8 @@ void __ieee80211_flush_queues(struct ieee80211_local *local,
+ 		}
  	}
  
- 	/* Ensure that nobody removed the request before we locked it */
+-	drv_flush(local, sdata, queues, drop);
++	if (local->ops->flush)
++		drv_flush(local, sdata, queues, drop);
+ 
+ 	ieee80211_wake_queues_by_reason(&local->hw, queues,
+ 					IEEE80211_QUEUE_STOP_REASON_FLUSH,
 -- 
 2.39.5
 
