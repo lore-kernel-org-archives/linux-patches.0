@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924EB26156E;
-	Tue,  8 Apr 2025 12:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98632676FA;
+	Tue,  8 Apr 2025 12:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114469; cv=none; b=mh+/hMmDKayT2KNmai/gRmQAYFGT0t9iyHUif4qTIQQ7MUqcX3IkrEqsurx4PrW+b5wRgilWfJr8oHmDnUUHjt/z6Zoo53Y0PoH/3zN/mqa4ami1U+EjcJkw1Ra9XGh5BFC+UX9/NktimtnEjSir+VQQCFApvWjINPFCEeIY9xU=
+	t=1744114471; cv=none; b=hqAS0hoFw47mOmNFnihJDnzS1X2ruelZstGV4bMkWKFery0lC4xrXMZ8pnPjdeGvAyNr2lX5TISJGMRy6o71OiwynOqCrh78bAf9LK11xlAte8p43RUzl5l7+cO3QhezqkBkzi/fyUUs/JaIjcaPkwbh1S6nt/JqKm7rs7zlarA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114469; c=relaxed/simple;
-	bh=CHauP/8kSt1FmWvnp/PqIqC8BvtiWSTmKLD/J6aBWE0=;
+	s=arc-20240116; t=1744114471; c=relaxed/simple;
+	bh=Ep7CylI2hlxJLMXRloO0qbdXeZhz0GX4LK70e3Vaqxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlWoMdB3V/MBf2Hp0CmjBlaFiuzVypOhEsVjbiPghKK09khhXjELGXP2mhMaIvPJF7wTsW+vXFpQg3VcbgY0vETkFx/U/SwTpd0on4+ZSy9IqeM2qM2LPmonjYoFe1yZP50n0jZixkJYQfNUG9fPs6nEYgLv4n13Pr0KtEYYAXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2N3514/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmBF6k0EPmJOlvY3hwoDhzcUnb/5VqJCPcgrT1zEoOmON/Snae92YIyNdnD0RW9e09tFk4jctDnEKvbbaXm6ywELMdHGf+3ZglCs4xQiS7nyiEDaf9NPOqtlS5gj/N6uKlkuezA3kHIrfh8FMDZrdxF239oWZI0LleXm0mopDt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uoc2kHmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2N3514/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D68C4CEE5;
-	Tue,  8 Apr 2025 12:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uoc2kHmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596C1C4CEE5;
+	Tue,  8 Apr 2025 12:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114469;
-	bh=CHauP/8kSt1FmWvnp/PqIqC8BvtiWSTmKLD/J6aBWE0=;
+	s=korg; t=1744114471;
+	bh=Ep7CylI2hlxJLMXRloO0qbdXeZhz0GX4LK70e3Vaqxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2N3514/z9Ws5OyiLxEdy4SGKw+6Hk5jxb7xHI7EV2MJammxUBGPnuv3Z60maqB9J
-	 zn3FV+VnM/7Rb8pc5GR62ba+iuRYMaHyy861JLY9bOvoZjN/f0/HOz5Y/qpu5wZ1h3
-	 H+fGqlWa7JGmkYJ9Ila2jyemUD68BcFVLBjEqNXw=
+	b=Uoc2kHmObu3wOE64gogTG596kV8f5mgZiOwDV9EpuBcHU6jUxD2pOUL7+rrR+GfVw
+	 ew6C+tyOjbrRPgo7MF7aKorsJq9d+uNsxdbjltglktyVUguS6go0i0ZMP6wh0q4CLj
+	 Eae7G/hZh51CrsuM2ayfAWoupb0qH0Y1/XLx8vLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 117/499] dummycon: fix default rows/cols
-Date: Tue,  8 Apr 2025 12:45:29 +0200
-Message-ID: <20250408104854.119572882@linuxfoundation.org>
+Subject: [PATCH 6.13 118/499] mdacon: rework dependency list
+Date: Tue,  8 Apr 2025 12:45:30 +0200
+Message-ID: <20250408104854.143784055@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -55,56 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit beefaba1978c04ea2950d34236f58fe6cf6a7f58 ]
+[ Upstream commit 5bbcc7645f4b244ffb5ac6563fbe9d3d42194447 ]
 
-dummycon fails to build on ARM/footbridge when the VGA console is
-disabled, since I got the dependencies slightly wrong in a previous
-patch:
+mdacon has roughly the same dependencies as vgacon but expresses them
+as a negative list instead of a positive list, with the only practical
+difference being PowerPC/CHRP, which uses vga16fb instead of vgacon.
 
-drivers/video/console/dummycon.c: In function 'dummycon_init':
-drivers/video/console/dummycon.c:27:25: error: 'CONFIG_DUMMY_CONSOLE_COLUMNS' undeclared (first use in this function); did you mean 'CONFIG_DUMMY_CONSOLE'?
-   27 | #define DUMMY_COLUMNS   CONFIG_DUMMY_CONSOLE_COLUMNS
-drivers/video/console/dummycon.c:28:25: error: 'CONFIG_DUMMY_CONSOLE_ROWS' undeclared (first use in this function); did you mean 'CONFIG_DUMMY_CONSOLE'?
-   28 | #define DUMMY_ROWS      CONFIG_DUMMY_CONSOLE_ROWS
+The CONFIG_MDA_CONSOLE description advises to only turn it on when vgacon
+is also used because MDA/Hercules-only systems should be using vgacon
+instead, so just change the list to enforce that directly for simplicity.
 
-This only showed up after many thousand randconfig builds on Arm, and
-doesn't matter in practice, but should still be fixed. Address it by
-using the default row/columns on footbridge after all in that corner
-case.
+The probing was broken from 2002 to 2008, this improves on the fix
+that was added then: If vgacon is a loadable module, then mdacon
+cannot be built-in now, and the list of systems that support vgacon
+is carried over.
 
-Fixes: 4293b0925149 ("dummycon: limit Arm console size hack to footbridge")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202409151512.LML1slol-lkp@intel.com/
+Fixes: 0b9cf3aa6b1e ("mdacon messing up default vc's - set default to vc13-16 again")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/console/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/console/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/video/console/Kconfig b/drivers/video/console/Kconfig
-index bc31db6ef7d26..c4a8f74df2493 100644
+index c4a8f74df2493..3e9f2bda67027 100644
 --- a/drivers/video/console/Kconfig
 +++ b/drivers/video/console/Kconfig
-@@ -52,7 +52,7 @@ config DUMMY_CONSOLE
+@@ -24,7 +24,7 @@ config VGA_CONSOLE
+ 	  Say Y.
  
- config DUMMY_CONSOLE_COLUMNS
- 	int "Initial number of console screen columns"
--	depends on DUMMY_CONSOLE && !ARCH_FOOTBRIDGE
-+	depends on DUMMY_CONSOLE && !(ARCH_FOOTBRIDGE && VGA_CONSOLE)
- 	default 160 if PARISC
- 	default 80
+ config MDA_CONSOLE
+-	depends on !M68K && !PARISC && ISA
++	depends on VGA_CONSOLE && ISA
+ 	tristate "MDA text console (dual-headed)"
  	help
-@@ -62,7 +62,7 @@ config DUMMY_CONSOLE_COLUMNS
- 
- config DUMMY_CONSOLE_ROWS
- 	int "Initial number of console screen rows"
--	depends on DUMMY_CONSOLE && !ARCH_FOOTBRIDGE
-+	depends on DUMMY_CONSOLE && !(ARCH_FOOTBRIDGE && VGA_CONSOLE)
- 	default 64 if PARISC
- 	default 30 if ARM
- 	default 25
+ 	  Say Y here if you have an old MDA or monochrome Hercules graphics
 -- 
 2.39.5
 
