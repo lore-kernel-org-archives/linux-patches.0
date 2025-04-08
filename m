@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51A4269CE6;
-	Tue,  8 Apr 2025 12:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7836269B12;
+	Tue,  8 Apr 2025 12:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113758; cv=none; b=Dv1wON6OU0KxtCULkOOoj0N/jURgXLX278csOzIG9qhDOEiiigmZq1dShmCb8BeEwB4He5mQzkteeFtNjO9qu8VtPSpc0Fs6SmikAjcATF9O+rTXIJWdTsHztuC1ifSxjViYkl6NAY1MvofTuOLhlRajSKc62dwCujkJg3owniw=
+	t=1744113761; cv=none; b=F1E0TM6GxnxEjapMOTiXJQXDauUCHeMv3lWEdh26+PER/DV4qgKc0ZKuXrQW+yYV+SyqPNIGn5KeV5r+MRcLkxsyONk7TRfDnASTftMHq/IThNNo/ViVjbfASkUb8yPejS90Mn0rnylLY7DQu9w3y4KfyLPV+/bRXSpfVBXatj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113758; c=relaxed/simple;
-	bh=QJfrwfsp/cQlzMKWXPz0b0MRe7vQb2I2WMVz1xCF9ds=;
+	s=arc-20240116; t=1744113761; c=relaxed/simple;
+	bh=Yxby4OngIaRfNtiDO+r7WJlGLM+IXp2MygFTb4oS2HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INS5jPlJJqI6DtGinKw7IcwtB7EYxb8kwxdxbnG5totp15Ce/m6cfjYkM6Vzd9gKfZLYJT+NU/P2gSYZond/qmt5GCwDCoXxAkoNe9WBs+h0hEFW7lE9RWSEec/QF6/SDscytAwa0OtMZKOEVGy3CmVe3Nt49DMAJc9mfDlHypU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lnlc5+BC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bu3aNbMjTZVmqabmKQIfFQauwpj8K3HcTieR8/gFmxm2jqjoXf8ptyAru2NOwC12azAjmI0hgBG9drLDkM3w6tRhi+F34UuNxXBbs9WtkCJHkd5XnftXDK+Ilp1E4uemkatj6CyZuxp7jUQPBJLJLsdfAXkA5R3tbV8rG1QHXfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvWfxv8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lnlc5+BC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36205C4CEE5;
-	Tue,  8 Apr 2025 12:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvWfxv8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3433C4CEE5;
+	Tue,  8 Apr 2025 12:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113758;
-	bh=QJfrwfsp/cQlzMKWXPz0b0MRe7vQb2I2WMVz1xCF9ds=;
+	s=korg; t=1744113761;
+	bh=Yxby4OngIaRfNtiDO+r7WJlGLM+IXp2MygFTb4oS2HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lnlc5+BCg+m3R7NJvKBVfxNdWtVocEzxfjkPS5Qz4rcCUmTrqSI+o7/Q5GYQlTcy3
-	 DjgZEIJ4lQQ9IyswhkjokCdCD7khM7izT4UqNAWlhPmMrjjFNe75yS+kEiNPaynRYg
-	 jZN85BENXQCGTdmjViVhKiocatv1xmSzSW1dzW/o=
+	b=BvWfxv8jxJ59nD8syk67SqH7Vg0U9/rdN+xHbxFhe/f5K0Bd/3ysEkRIufcV5+zsp
+	 4R/ZNzxnTw9XqjiwNhpRl56gKfkC0KYKGNYmpoE8/GT7FVg1yEwIl+WhJBHHNw5fOY
+	 t2DJpHA0EHqjAbgwVBzbLP44yZ2D27GSztNckJ1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 010/154] netpoll: remove dev argument from netpoll_send_skb_on_dev()
-Date: Tue,  8 Apr 2025 12:49:11 +0200
-Message-ID: <20250408104815.618149071@linuxfoundation.org>
+Subject: [PATCH 5.4 011/154] netpoll: move netpoll_send_skb() out of line
+Date: Tue,  8 Apr 2025 12:49:12 +0200
+Message-ID: <20250408104815.649819770@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -53,76 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 307f660d056b5eb8f5bb2328fac3915ab75b5007 ]
+[ Upstream commit fb1eee476b0d3be3e58dac1a3a96f726c6278bed ]
 
-netpoll_send_skb_on_dev() can get the device pointer directly from np->dev
-
-Rename it to __netpoll_send_skb()
-
-Following patch will move netpoll_send_skb() out-of-line.
+There is no need to inline this helper, as we intend to add more
+code in this function.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 505ead7ab77f ("netpoll: hold rcu read lock in __netpoll_send_skb()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netpoll.h |  5 ++---
- net/core/netpoll.c      | 10 ++++++----
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ include/linux/netpoll.h |  9 +--------
+ net/core/netpoll.c      | 13 +++++++++++--
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index 3ff0303672842..f5202a59c0274 100644
+index f5202a59c0274..2db513437d2c0 100644
 --- a/include/linux/netpoll.h
 +++ b/include/linux/netpoll.h
-@@ -63,13 +63,12 @@ int netpoll_setup(struct netpoll *np);
+@@ -63,14 +63,7 @@ int netpoll_setup(struct netpoll *np);
  void __netpoll_cleanup(struct netpoll *np);
  void __netpoll_free(struct netpoll *np);
  void netpoll_cleanup(struct netpoll *np);
--void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
--			     struct net_device *dev);
-+void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb);
- static inline void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
- {
- 	unsigned long flags;
- 	local_irq_save(flags);
--	netpoll_send_skb_on_dev(np, skb, np->dev);
-+	__netpoll_send_skb(np, skb);
- 	local_irq_restore(flags);
- }
+-void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb);
+-static inline void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+-{
+-	unsigned long flags;
+-	local_irq_save(flags);
+-	__netpoll_send_skb(np, skb);
+-	local_irq_restore(flags);
+-}
++void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb);
  
+ #ifdef CONFIG_NETPOLL
+ static inline void *netpoll_poll_lock(struct napi_struct *napi)
 diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 35a3277ee3567..69f80b531a1c3 100644
+index 69f80b531a1c3..5eefbb2e145a4 100644
 --- a/net/core/netpoll.c
 +++ b/net/core/netpoll.c
-@@ -323,17 +323,19 @@ static int netpoll_owner_active(struct net_device *dev)
+@@ -323,7 +323,7 @@ static int netpoll_owner_active(struct net_device *dev)
  }
  
  /* call with IRQ disabled */
--void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
--			     struct net_device *dev)
-+void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
+-void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
++static void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
  {
  	netdev_tx_t status = NETDEV_TX_BUSY;
-+	struct net_device *dev;
- 	unsigned long tries;
- 	/* It is up to the caller to keep npinfo alive. */
- 	struct netpoll_info *npinfo;
- 
- 	lockdep_assert_irqs_disabled();
- 
--	npinfo = rcu_dereference_bh(np->dev->npinfo);
-+	dev = np->dev;
-+	npinfo = rcu_dereference_bh(dev->npinfo);
-+
- 	if (!npinfo || !netif_running(dev) || !netif_device_present(dev)) {
- 		dev_kfree_skb_irq(skb);
- 		return;
-@@ -376,7 +378,7 @@ void netpoll_send_skb_on_dev(struct netpoll *np, struct sk_buff *skb,
+ 	struct net_device *dev;
+@@ -378,7 +378,16 @@ void __netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
  		schedule_delayed_work(&npinfo->tx_work,0);
  	}
  }
--EXPORT_SYMBOL(netpoll_send_skb_on_dev);
-+EXPORT_SYMBOL(__netpoll_send_skb);
+-EXPORT_SYMBOL(__netpoll_send_skb);
++
++void netpoll_send_skb(struct netpoll *np, struct sk_buff *skb)
++{
++	unsigned long flags;
++
++	local_irq_save(flags);
++	__netpoll_send_skb(np, skb);
++	local_irq_restore(flags);
++}
++EXPORT_SYMBOL(netpoll_send_skb);
  
  void netpoll_send_udp(struct netpoll *np, const char *msg, int len)
  {
