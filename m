@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696B266EEA;
-	Tue,  8 Apr 2025 11:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E812266583;
+	Tue,  8 Apr 2025 11:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112556; cv=none; b=QuoMJnfhC2AG87Jrb6AJW2HnqRwORgWws4w9e0RT+CIHJTNgC+lTsMEyeanFoAjoMCL+vp/lMOTGCN0TeiO3ltqqcH7NfNGfRgR56dSlsoxMoPJXpFXuWIjkRVDih5c5ceaSg8Z0GoVbmNhMB2SQqy4yXIYoeZ78wTwqD9YNEvA=
+	t=1744112559; cv=none; b=hHD/a3quWlNIlgyin+yVwV/uQ04TUp+IpxmfKmWJ6VMRwjhgfqh2eOGd0WPpPlxW8Qj8jHnyrnNrObPXcXioJiOZVxavNK+gpKbubs04OAF4F6j5+ZgwHtgjpCCMBinYG+K3/ZWHc+/YR2hGuKTLMEgpgAtFb58QPQRgYmGYtuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112556; c=relaxed/simple;
-	bh=8heN6C2v4cBMOi2zGBZAqaz9+cxBmn7d1WhUpRXhKf0=;
+	s=arc-20240116; t=1744112559; c=relaxed/simple;
+	bh=EFORVDTgIRS6X4MxGTr02Z5q861l8v7wYa3ukdnw8Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1KjhO1d0y8Y0+9EydB7Y7cHMpAOu73bjdq9RHv/zPa53casKAuraHzBgGqhWB9lSaQqbfubJvfJrQJgjiZ+NzDKD8NqvzcskfSdI1isgqGOCH7z8850h7VTf9vuwOzWAAlwGMvSZgpelyRh+FZ+lzCLB0jHkPnAGBkaModpouQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Azoq1NWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KwXZmJsbwAlgcbmFGRDsmH93NHape+nK6cXAXEWaLKlG1bAFCzKxLPp/1XAvzGK0RhyPTc0RR5hetT/K02enqE9+g7A0/GY88xs/Q8csNAmcGazZwXGglESm30JJSKOrcPJyy8q/xiPmoiVYLzc+uG1YgqrMbR6xKmCt5rFn/Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUAFtJ/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Azoq1NWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E57C4CEE5;
-	Tue,  8 Apr 2025 11:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUAFtJ/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB994C4CEE5;
+	Tue,  8 Apr 2025 11:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112556;
-	bh=8heN6C2v4cBMOi2zGBZAqaz9+cxBmn7d1WhUpRXhKf0=;
+	s=korg; t=1744112559;
+	bh=EFORVDTgIRS6X4MxGTr02Z5q861l8v7wYa3ukdnw8Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Azoq1NWMdKWK8/Q6NH6hhqF+VgqUwbAgMYYODXkrGzjVHvpZ9bvqfD8sWH3UkSzXk
-	 p0N+6Or6AfoOYNEedCOigoJYQ7/irKZsGOkjZ04XmMUisVWsBNdkp5ZtobsHKLxt0F
-	 0AiTf0WRM3DKaNWq/kP3M9rj+CGsbZfuXRsvmmBI=
+	b=YUAFtJ/pMjgOGIM5dFBb7KYrSVra4UgzcMpV5MPAlR8x1k8nzuN5GPLaf96nRICkH
+	 usGm+FlfzCdh6VqBPQIl7OCdiqwac8ahufuxnx8Tuzqh62QcnWW7JAH7qYrVqE3HbA
+	 61lIY6iC51ZR+aWgL1ss64zI4pdATzOBP63a7zsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 111/279] HID: hid-plantronics: Add mic mute mapping and generalize quirks
-Date: Tue,  8 Apr 2025 12:48:14 +0200
-Message-ID: <20250408104829.342436652@linuxfoundation.org>
+	Minjoong Kim <pwn9uin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 112/279] atm: Fix NULL pointer dereference
+Date: Tue,  8 Apr 2025 12:48:15 +0200
+Message-ID: <20250408104829.370360917@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,281 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Junge <linuxhid@cosmicgizmosystems.com>
+From: Minjoong Kim <pwn9uin@gmail.com>
 
-commit 9821709af892be9fbf4ee9a50b2f3e0604295ce0 upstream.
+commit bf2986fcf82a449441f9ee4335df19be19e83970 upstream.
 
-Add mapping for headset mute key events.
+When MPOA_cache_impos_rcvd() receives the msg, it can trigger
+Null Pointer Dereference Vulnerability if both entry and
+holding_time are NULL. Because there is only for the situation
+where entry is NULL and holding_time exists, it can be passed
+when both entry and holding_time are NULL. If these are NULL,
+the entry will be passd to eg_cache_put() as parameter and
+it is referenced by entry->use code in it.
 
-Remove PLT_QUIRK_DOUBLE_VOLUME_KEYS quirk and made it generic.
-The quirk logic did not keep track of the actual previous key
-so any key event occurring in less than or equal to 5ms was ignored.
+kasan log:
 
-Remove PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS quirk.
-It had the same logic issue as the double key quirk and was actually
-masking the as designed behavior of most of the headsets.
-It's occurrence should be minimized with the ALSA control naming
-quirk that is part of the patch set.
+[    3.316691] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006:I
+[    3.317568] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+[    3.318188] CPU: 3 UID: 0 PID: 79 Comm: ex Not tainted 6.14.0-rc2 #102
+[    3.318601] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[    3.319298] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.319677] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.321220] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.321596] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.322112] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.322643] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.323181] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.323707] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.324185] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.325042] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.325545] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.326430] Call Trace:
+[    3.326725]  <TASK>
+[    3.326927]  ? die_addr+0x3c/0xa0
+[    3.327330]  ? exc_general_protection+0x161/0x2a0
+[    3.327662]  ? asm_exc_general_protection+0x26/0x30
+[    3.328214]  ? vprintk_emit+0x15e/0x420
+[    3.328543]  ? eg_cache_remove_entry+0xa5/0x470
+[    3.328910]  ? eg_cache_remove_entry+0x9a/0x470
+[    3.329294]  ? __pfx_eg_cache_remove_entry+0x10/0x10
+[    3.329664]  ? console_unlock+0x107/0x1d0
+[    3.329946]  ? __pfx_console_unlock+0x10/0x10
+[    3.330283]  ? do_syscall_64+0xa6/0x1a0
+[    3.330584]  ? entry_SYSCALL_64_after_hwframe+0x47/0x7f
+[    3.331090]  ? __pfx_prb_read_valid+0x10/0x10
+[    3.331395]  ? down_trylock+0x52/0x80
+[    3.331703]  ? vprintk_emit+0x15e/0x420
+[    3.331986]  ? __pfx_vprintk_emit+0x10/0x10
+[    3.332279]  ? down_trylock+0x52/0x80
+[    3.332527]  ? _printk+0xbf/0x100
+[    3.332762]  ? __pfx__printk+0x10/0x10
+[    3.333007]  ? _raw_write_lock_irq+0x81/0xe0
+[    3.333284]  ? __pfx__raw_write_lock_irq+0x10/0x10
+[    3.333614]  msg_from_mpoad+0x1185/0x2750
+[    3.333893]  ? __build_skb_around+0x27b/0x3a0
+[    3.334183]  ? __pfx_msg_from_mpoad+0x10/0x10
+[    3.334501]  ? __alloc_skb+0x1c0/0x310
+[    3.334809]  ? __pfx___alloc_skb+0x10/0x10
+[    3.335283]  ? _raw_spin_lock+0xe0/0xe0
+[    3.335632]  ? finish_wait+0x8d/0x1e0
+[    3.335975]  vcc_sendmsg+0x684/0xba0
+[    3.336250]  ? __pfx_vcc_sendmsg+0x10/0x10
+[    3.336587]  ? __pfx_autoremove_wake_function+0x10/0x10
+[    3.337056]  ? fdget+0x176/0x3e0
+[    3.337348]  __sys_sendto+0x4a2/0x510
+[    3.337663]  ? __pfx___sys_sendto+0x10/0x10
+[    3.337969]  ? ioctl_has_perm.constprop.0.isra.0+0x284/0x400
+[    3.338364]  ? sock_ioctl+0x1bb/0x5a0
+[    3.338653]  ? __rseq_handle_notify_resume+0x825/0xd20
+[    3.339017]  ? __pfx_sock_ioctl+0x10/0x10
+[    3.339316]  ? __pfx___rseq_handle_notify_resume+0x10/0x10
+[    3.339727]  ? selinux_file_ioctl+0xa4/0x260
+[    3.340166]  __x64_sys_sendto+0xe0/0x1c0
+[    3.340526]  ? syscall_exit_to_user_mode+0x123/0x140
+[    3.340898]  do_syscall_64+0xa6/0x1a0
+[    3.341170]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[    3.341533] RIP: 0033:0x44a380
+[    3.341757] Code: 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c00
+[    3.343078] RSP: 002b:00007ffc1d404098 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+[    3.343631] RAX: ffffffffffffffda RBX: 00007ffc1d404458 RCX: 000000000044a380
+[    3.344306] RDX: 000000000000019c RSI: 00007ffc1d4040b0 RDI: 0000000000000003
+[    3.344833] RBP: 00007ffc1d404260 R08: 0000000000000000 R09: 0000000000000000
+[    3.345381] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+[    3.346015] R13: 00007ffc1d404448 R14: 00000000004c17d0 R15: 0000000000000001
+[    3.346503]  </TASK>
+[    3.346679] Modules linked in:
+[    3.346956] ---[ end trace 0000000000000000 ]---
+[    3.347315] RIP: 0010:eg_cache_remove_entry+0xa5/0x470
+[    3.347737] Code: c1 f7 6e fd 48 c7 c7 00 7e 38 b2 e8 95 64 54 fd 48 c7 c7 40 7e 38 b2 48 89 ee e80
+[    3.349157] RSP: 0018:ffff88800583f8a8 EFLAGS: 00010006
+[    3.349517] RAX: 0000000000000006 RBX: ffff888005989000 RCX: ffffffffaecc2d8e
+[    3.350103] RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000030
+[    3.350610] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6558b88
+[    3.351246] R10: 0000000000000003 R11: 203a207972746e65 R12: 1ffff11000b07f15
+[    3.351785] R13: dffffc0000000000 R14: ffff888005989000 R15: ffff888005989068
+[    3.352404] FS:  000000001b6313c0(0000) GS:ffff88806d380000(0000) knlGS:0000000000000000
+[    3.353099] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    3.353544] CR2: 00000000004b4b40 CR3: 000000000248e000 CR4: 00000000000006f0
+[    3.354072] note: ex[79] exited with irqs disabled
+[    3.354458] note: ex[79] exited with preempt_count 1
 
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Minjoong Kim <pwn9uin@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250322105200.14981-1-pwn9uin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-plantronics.c |  148 +++++++++++++++++++-----------------------
- 1 file changed, 69 insertions(+), 79 deletions(-)
+ net/atm/mpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hid/hid-plantronics.c
-+++ b/drivers/hid/hid-plantronics.c
-@@ -6,9 +6,6 @@
-  *  Copyright (c) 2015-2018 Terry Junge <terry.junge@plantronics.com>
-  */
- 
--/*
-- */
--
- #include "hid-ids.h"
- 
- #include <linux/hid.h>
-@@ -23,30 +20,28 @@
- 
- #define PLT_VOL_UP		0x00b1
- #define PLT_VOL_DOWN		0x00b2
-+#define PLT_MIC_MUTE		0x00b5
- 
- #define PLT1_VOL_UP		(PLT_HID_1_0_PAGE | PLT_VOL_UP)
- #define PLT1_VOL_DOWN		(PLT_HID_1_0_PAGE | PLT_VOL_DOWN)
-+#define PLT1_MIC_MUTE		(PLT_HID_1_0_PAGE | PLT_MIC_MUTE)
- #define PLT2_VOL_UP		(PLT_HID_2_0_PAGE | PLT_VOL_UP)
- #define PLT2_VOL_DOWN		(PLT_HID_2_0_PAGE | PLT_VOL_DOWN)
-+#define PLT2_MIC_MUTE		(PLT_HID_2_0_PAGE | PLT_MIC_MUTE)
-+#define HID_TELEPHONY_MUTE	(HID_UP_TELEPHONY | 0x2f)
-+#define HID_CONSUMER_MUTE	(HID_UP_CONSUMER | 0xe2)
- 
- #define PLT_DA60		0xda60
- #define PLT_BT300_MIN		0x0413
- #define PLT_BT300_MAX		0x0418
- 
--
--#define PLT_ALLOW_CONSUMER (field->application == HID_CP_CONSUMERCONTROL && \
--			    (usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER)
--
--#define PLT_QUIRK_DOUBLE_VOLUME_KEYS BIT(0)
--#define PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS BIT(1)
--
- #define PLT_DOUBLE_KEY_TIMEOUT 5 /* ms */
--#define PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT 220 /* ms */
- 
- struct plt_drv_data {
- 	unsigned long device_type;
--	unsigned long last_volume_key_ts;
--	u32 quirks;
-+	unsigned long last_key_ts;
-+	unsigned long double_key_to;
-+	__u16 last_key;
- };
- 
- static int plantronics_input_mapping(struct hid_device *hdev,
-@@ -58,34 +53,43 @@ static int plantronics_input_mapping(str
- 	unsigned short mapped_key;
- 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
- 	unsigned long plt_type = drv_data->device_type;
-+	int allow_mute = usage->hid == HID_TELEPHONY_MUTE;
-+	int allow_consumer = field->application == HID_CP_CONSUMERCONTROL &&
-+			(usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER &&
-+			usage->hid != HID_CONSUMER_MUTE;
- 
- 	/* special case for PTT products */
- 	if (field->application == HID_GD_JOYSTICK)
- 		goto defaulted;
- 
--	/* handle volume up/down mapping */
- 	/* non-standard types or multi-HID interfaces - plt_type is PID */
- 	if (!(plt_type & HID_USAGE_PAGE)) {
- 		switch (plt_type) {
- 		case PLT_DA60:
--			if (PLT_ALLOW_CONSUMER)
-+			if (allow_consumer)
- 				goto defaulted;
--			goto ignored;
-+			if (usage->hid == HID_CONSUMER_MUTE) {
-+				mapped_key = KEY_MICMUTE;
-+				goto mapped;
-+			}
-+			break;
- 		default:
--			if (PLT_ALLOW_CONSUMER)
-+			if (allow_consumer || allow_mute)
- 				goto defaulted;
- 		}
-+		goto ignored;
- 	}
--	/* handle standard types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
--	/* 'basic telephony compliant' - allow default consumer page map */
--	else if ((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
--		 (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) {
--		if (PLT_ALLOW_CONSUMER)
--			goto defaulted;
--	}
--	/* not 'basic telephony' - apply legacy mapping */
--	/* only map if the field is in the device's primary vendor page */
--	else if (!((field->application ^ plt_type) & HID_USAGE_PAGE)) {
-+
-+	/* handle standard consumer control mapping */
-+	/* and standard telephony mic mute mapping */
-+	if (allow_consumer || allow_mute)
-+		goto defaulted;
-+
-+	/* handle vendor unique types - plt_type is 0xffa0uuuu or 0xffa2uuuu */
-+	/* if not 'basic telephony compliant' - map vendor unique controls */
-+	if (!((plt_type & HID_USAGE) >= PLT_BASIC_TELEPHONY &&
-+	      (plt_type & HID_USAGE) != PLT_BASIC_EXCEPTION) &&
-+	      !((field->application ^ plt_type) & HID_USAGE_PAGE))
- 		switch (usage->hid) {
- 		case PLT1_VOL_UP:
- 		case PLT2_VOL_UP:
-@@ -95,8 +99,11 @@ static int plantronics_input_mapping(str
- 		case PLT2_VOL_DOWN:
- 			mapped_key = KEY_VOLUMEDOWN;
- 			goto mapped;
-+		case PLT1_MIC_MUTE:
-+		case PLT2_MIC_MUTE:
-+			mapped_key = KEY_MICMUTE;
-+			goto mapped;
- 		}
--	}
- 
- /*
-  * Future mapping of call control or other usages,
-@@ -105,6 +112,8 @@ static int plantronics_input_mapping(str
-  */
- 
- ignored:
-+	hid_dbg(hdev, "usage: %08x (appl: %08x) - ignored\n",
-+		usage->hid, field->application);
- 	return -1;
- 
- defaulted:
-@@ -123,38 +132,26 @@ static int plantronics_event(struct hid_
- 			     struct hid_usage *usage, __s32 value)
- {
- 	struct plt_drv_data *drv_data = hid_get_drvdata(hdev);
-+	unsigned long prev_tsto, cur_ts;
-+	__u16 prev_key, cur_key;
- 
--	if (drv_data->quirks & PLT_QUIRK_DOUBLE_VOLUME_KEYS) {
--		unsigned long prev_ts, cur_ts;
--
--		/* Usages are filtered in plantronics_usages. */
--
--		if (!value) /* Handle key presses only. */
--			return 0;
--
--		prev_ts = drv_data->last_volume_key_ts;
--		cur_ts = jiffies;
--		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_DOUBLE_KEY_TIMEOUT)
--			return 1; /* Ignore the repeated key. */
--
--		drv_data->last_volume_key_ts = cur_ts;
--	}
--	if (drv_data->quirks & PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS) {
--		unsigned long prev_ts, cur_ts;
--
--		/* Usages are filtered in plantronics_usages. */
--
--		if (!value) /* Handle key presses only. */
--			return 0;
-+	/* Usages are filtered in plantronics_usages. */
- 
--		prev_ts = drv_data->last_volume_key_ts;
--		cur_ts = jiffies;
--		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT)
--			return 1; /* Ignore the followed opposite volume key. */
--
--		drv_data->last_volume_key_ts = cur_ts;
-+	/* HZ too low for ms resolution - double key detection disabled */
-+	/* or it is a key release - handle key presses only. */
-+	if (!drv_data->double_key_to || !value)
-+		return 0;
-+
-+	prev_tsto = drv_data->last_key_ts + drv_data->double_key_to;
-+	cur_ts = drv_data->last_key_ts = jiffies;
-+	prev_key = drv_data->last_key;
-+	cur_key = drv_data->last_key = usage->code;
-+
-+	/* If the same key occurs in <= double_key_to -- ignore it */
-+	if (prev_key == cur_key && time_before_eq(cur_ts, prev_tsto)) {
-+		hid_dbg(hdev, "double key %d ignored\n", cur_key);
-+		return 1; /* Ignore the repeated key. */
- 	}
--
- 	return 0;
- }
- 
-@@ -196,12 +193,16 @@ static int plantronics_probe(struct hid_
- 	ret = hid_parse(hdev);
- 	if (ret) {
- 		hid_err(hdev, "parse failed\n");
--		goto err;
-+		return ret;
- 	}
- 
- 	drv_data->device_type = plantronics_device_type(hdev);
--	drv_data->quirks = id->driver_data;
--	drv_data->last_volume_key_ts = jiffies - msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
-+	drv_data->double_key_to = msecs_to_jiffies(PLT_DOUBLE_KEY_TIMEOUT);
-+	drv_data->last_key_ts = jiffies - drv_data->double_key_to;
-+
-+	/* if HZ does not allow ms resolution - disable double key detection */
-+	if (drv_data->double_key_to < PLT_DOUBLE_KEY_TIMEOUT)
-+		drv_data->double_key_to = 0;
- 
- 	hid_set_drvdata(hdev, drv_data);
- 
-@@ -210,29 +211,10 @@ static int plantronics_probe(struct hid_
- 	if (ret)
- 		hid_err(hdev, "hw start failed\n");
- 
--err:
- 	return ret;
- }
- 
- static const struct hid_device_id plantronics_devices[] = {
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES),
--		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES),
--		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES),
--		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
--		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES),
--		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
--					 USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES),
--		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
- 	{ }
- };
-@@ -241,6 +223,14 @@ MODULE_DEVICE_TABLE(hid, plantronics_dev
- static const struct hid_usage_id plantronics_usages[] = {
- 	{ HID_CP_VOLUMEUP, EV_KEY, HID_ANY_ID },
- 	{ HID_CP_VOLUMEDOWN, EV_KEY, HID_ANY_ID },
-+	{ HID_TELEPHONY_MUTE, EV_KEY, HID_ANY_ID },
-+	{ HID_CONSUMER_MUTE, EV_KEY, HID_ANY_ID },
-+	{ PLT2_VOL_UP, EV_KEY, HID_ANY_ID },
-+	{ PLT2_VOL_DOWN, EV_KEY, HID_ANY_ID },
-+	{ PLT2_MIC_MUTE, EV_KEY, HID_ANY_ID },
-+	{ PLT1_VOL_UP, EV_KEY, HID_ANY_ID },
-+	{ PLT1_VOL_DOWN, EV_KEY, HID_ANY_ID },
-+	{ PLT1_MIC_MUTE, EV_KEY, HID_ANY_ID },
- 	{ HID_TERMINATOR, HID_TERMINATOR, HID_TERMINATOR }
- };
- 
+--- a/net/atm/mpc.c
++++ b/net/atm/mpc.c
+@@ -1314,6 +1314,8 @@ static void MPOA_cache_impos_rcvd(struct
+ 	holding_time = msg->content.eg_info.holding_time;
+ 	dprintk("(%s) entry = %p, holding_time = %u\n",
+ 		mpc->dev->name, entry, holding_time);
++	if (entry == NULL && !holding_time)
++		return;
+ 	if (entry == NULL && holding_time) {
+ 		entry = mpc->eg_ops->add_entry(msg, mpc);
+ 		mpc->eg_ops->put(entry);
 
 
