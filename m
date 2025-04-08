@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265342063FD;
-	Tue,  8 Apr 2025 12:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3E5207E14;
+	Tue,  8 Apr 2025 12:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114779; cv=none; b=Ur9VlJGKHsOH0CBhCganVMzwOWS0IDiaKDt9NyQtC1QMuIbGf5dmdZl/sm9czGno4rPlxBAPpCP2Gt+xUi0bmCwH78Qh/h3Vu15StbQj9TcWfiCN0gGSnI+fGzZdr2zfnKCkZzl9ae7AyYpYmlu+VTc/skRWuL4g0blqV1yfUbE=
+	t=1744114783; cv=none; b=VXbn90foy+6vtpjhfeeX01mblxzbnL66W6Pj6oRlLwXhbTpAgD6UjXYkDPGpBAyZeynxLAgDETaYuCv59dzladPj4VXpqBcs2si0sei72+9hTyf/+M0ixEY0w7b55tDiyFAky4Y19sKdkFrIrRUV816AS0jzMFEkgnw+zIYwhZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114779; c=relaxed/simple;
-	bh=b9IAy1mvN4F8ZweLwOEEaNCGR703DeKDyIm3ChfGgdw=;
+	s=arc-20240116; t=1744114783; c=relaxed/simple;
+	bh=DKhNqFyMtzlnx0QF8DqZPCInqaHYFMSCTAhDKCjw3zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rHWcDkQ59S1+0z85YcfX3q6bgGdjXYW85loKMWI72raUWjOFjYZurRxfjFZJS2j+spvp5hMICh1Fzdys7tF4EklxyL+cGDdKuDKLynxfg1FKmQ9ZV2qO/WE7o9xA5moWfM6E7LPElV636sGNNqq/ERreXnTvpBOnSvT6TGeamwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnnL3J7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fIt6w2SOmV6vRLW0BAO23021DWSU2XzgqWH9SzDH3LXj5PmRNMNyo8PQyMRJL6YAT5Ddf9a7uAXSjperjwx+naMGkk/9+FdEh8G+TP4ugHkr0oru3XURY3Ln4PmWhu38IUBTdtShDNxGZ3q1kKzcwryxN9bplrn+5tPWm6dqieQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWsa0zRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnnL3J7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499B3C4CEE5;
-	Tue,  8 Apr 2025 12:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWsa0zRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED171C4CEE7;
+	Tue,  8 Apr 2025 12:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114778;
-	bh=b9IAy1mvN4F8ZweLwOEEaNCGR703DeKDyIm3ChfGgdw=;
+	s=korg; t=1744114783;
+	bh=DKhNqFyMtzlnx0QF8DqZPCInqaHYFMSCTAhDKCjw3zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnnL3J7X+FEX/QxvPuyyXv4AO4ZrjLTljERucUtLK3VYafm0Gv0nRulmq0+aKsD8E
-	 3yLOjuwTaH5zFqqrIXM0mQjY2ndUrJuNFpuVb9PdmNNfwZDCqTENEc+PGXKEhO3CUq
-	 k/d6YU2sIadmmHauggCfp/7XJtABPBK/a9prnYs0=
+	b=xWsa0zRp9PYDrnmyyFDVv9xtoU+NoXlu/cxNK1UcJ1el5wPH4jI5yTAiMhyWWqSPO
+	 pkcYCCaC/WGzeEyueUigX7bYlUTz6Cy01wrFLR0liXnAJCm/X5MDBER8wPind+rfLN
+	 NPjEuocO82MOFJv2wYzuQbNmAfh95Y7utSKxyZfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 232/499] iio: adc: ad7124: Fix comparison of channel configs
-Date: Tue,  8 Apr 2025 12:47:24 +0200
-Message-ID: <20250408104856.999485118@linuxfoundation.org>
+Subject: [PATCH 6.13 233/499] iio: adc: ad7173: Fix comparison of channel configs
+Date: Tue,  8 Apr 2025 12:47:25 +0200
+Message-ID: <20250408104857.024471357@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 05a5d874f7327b75e9bc4359618017e047cc129c ]
+[ Upstream commit 7b6033ed5a9e1a369a9cf58018388ae4c5f17e41 ]
 
 Checking the binary representation of two structs (of the same type)
 for equality doesn't have the same semantic as comparing all members for
@@ -70,61 +70,56 @@ the comparison by member is the one that is needed.
 
 Convert the comparison accordingly to compare the members one after
 another. Also add a static_assert guard to (somewhat) ensure that when
-struct ad7124_channel_config::config_props is expanded, the comparison
+struct ad7173_channel_config::config_props is expanded, the comparison
 is adapted, too.
 
 This issue is somewhat theoretic, but using memcmp() on a struct is a
 bad pattern that is worth fixing.
 
-Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Fixes: 76a1e6a42802 ("iio: adc: ad7173: add AD7173 driver")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250303114659.1672695-13-u.kleine-koenig@baylibre.com
+Link: https://patch.msgid.link/20250303114659.1672695-14-u.kleine-koenig@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 35 +++++++++++++++++++++++++++++++----
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7173.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 3d678c420cbf0..96022c74d4d1e 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -147,7 +147,11 @@ struct ad7124_chip_info {
- struct ad7124_channel_config {
+diff --git a/drivers/iio/adc/ad7173.c b/drivers/iio/adc/ad7173.c
+index 8b03c1e5567e5..050e965358cb3 100644
+--- a/drivers/iio/adc/ad7173.c
++++ b/drivers/iio/adc/ad7173.c
+@@ -183,7 +183,11 @@ struct ad7173_channel_config {
+ 	u8 cfg_slot;
  	bool live;
- 	unsigned int cfg_slot;
+ 
 -	/* Following fields are used to compare equality. */
 +	/*
-+	 * Following fields are used to compare for equality. If you
++	 * Following fields are used to compare equality. If you
 +	 * make adaptations in it, you most likely also have to adapt
-+	 * ad7124_find_similar_live_cfg(), too.
++	 * ad7173_find_live_config(), too.
 +	 */
  	struct_group(config_props,
- 		enum ad7124_ref_sel refsel;
  		bool bipolar;
-@@ -334,15 +338,38 @@ static struct ad7124_channel_config *ad7124_find_similar_live_cfg(struct ad7124_
- 								  struct ad7124_channel_config *cfg)
+ 		bool input_buf;
+@@ -602,15 +606,28 @@ static struct ad7173_channel_config *
+ ad7173_find_live_config(struct ad7173_state *st, struct ad7173_channel_config *cfg)
  {
- 	struct ad7124_channel_config *cfg_aux;
+ 	struct ad7173_channel_config *cfg_aux;
 -	ptrdiff_t cmp_size;
  	int i;
  
--	cmp_size = sizeof_field(struct ad7124_channel_config, config_props);
+-	cmp_size = sizeof_field(struct ad7173_channel_config, config_props);
 +	/*
 +	 * This is just to make sure that the comparison is adapted after
-+	 * struct ad7124_channel_config was changed.
++	 * struct ad7173_channel_config was changed.
 +	 */
-+	static_assert(sizeof_field(struct ad7124_channel_config, config_props) ==
++	static_assert(sizeof_field(struct ad7173_channel_config, config_props) ==
 +		      sizeof(struct {
-+				     enum ad7124_ref_sel refsel;
 +				     bool bipolar;
-+				     bool buf_positive;
-+				     bool buf_negative;
-+				     unsigned int vref_mv;
-+				     unsigned int pga_bits;
-+				     unsigned int odr;
-+				     unsigned int odr_sel_bits;
-+				     unsigned int filter_type;
++				     bool input_buf;
++				     u8 odr;
++				     u8 ref_sel;
 +			     }));
 +
  	for (i = 0; i < st->num_channels; i++) {
@@ -132,18 +127,13 @@ index 3d678c420cbf0..96022c74d4d1e 100644
  
  		if (cfg_aux->live &&
 -		    !memcmp(&cfg->config_props, &cfg_aux->config_props, cmp_size))
-+		    cfg->refsel == cfg_aux->refsel &&
 +		    cfg->bipolar == cfg_aux->bipolar &&
-+		    cfg->buf_positive == cfg_aux->buf_positive &&
-+		    cfg->buf_negative == cfg_aux->buf_negative &&
-+		    cfg->vref_mv == cfg_aux->vref_mv &&
-+		    cfg->pga_bits == cfg_aux->pga_bits &&
++		    cfg->input_buf == cfg_aux->input_buf &&
 +		    cfg->odr == cfg_aux->odr &&
-+		    cfg->odr_sel_bits == cfg_aux->odr_sel_bits &&
-+		    cfg->filter_type == cfg_aux->filter_type)
++		    cfg->ref_sel == cfg_aux->ref_sel)
  			return cfg_aux;
  	}
- 
+ 	return NULL;
 -- 
 2.39.5
 
