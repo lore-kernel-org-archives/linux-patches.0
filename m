@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421C7276048;
-	Tue,  8 Apr 2025 12:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F7926B0A2;
+	Tue,  8 Apr 2025 12:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115973; cv=none; b=Nu4Ewk5IbYfDtlE5DOUy8Q7IpxuqIUT01X8eVlbXNbjpnkFvF25tkiQHuzQ2UYCUnqcwGxNVx66X7J4LdjHeyEY2oEbGIieakGVbh70Z9i2i4dtbUHSuOCxXphXlnpRP4zr1ybXYvYmwM1EuZwFL12N3LtO5D2H2rQ2qZAAbhxM=
+	t=1744115975; cv=none; b=Sf1wLHMp2AofCLKumI+uc51mPs1/razt1aVy+MqGGBUaZ3iuwLfW/Aa7PoBEBONUvA+SYYQQA6xkl9bS/7D6TFR5t3Jb76EEthl5cxKzD5bbrerk1ggjLuaR/CjPh/pzAgFLQ2s/Tp0KoaYGoPdYbcLDSlEk1cd4Fjqji6tbZDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115973; c=relaxed/simple;
-	bh=RA+okFfYB2KxxGNWUTh+Y7BrBsIVwC5ZqQMTUN+jluU=;
+	s=arc-20240116; t=1744115975; c=relaxed/simple;
+	bh=8Rk5aRcGwz0DN88KK5hz+nDtM17Q+pnYqW7R4rG1zJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCr6oE2Ur7iePjeaX6CzSwVDt5VjR/dzZLFBHZVBgjW/cTwqJDv7mmoOl5UrmrYXtHbaNOPWJpcL02gNq8ujAvkDsLpowLJu1laEHC7rub0aP08fJiOWa40ZdaN9pzOx4gnJ4G33XIdHI+qi0HjQZfllx/kV/2eCdrXTzE5lykU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjLYKRm3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OK0zQUaKfqXqzVAwMUrK8BS7lqdo1dMkdvwCowz+UpA08RkMx2c2Hketv9tdjuO4AIFUCd0BDYMd9hbexEf85PqFLhoYuZNnUIFTNu+Fe17gd9O3jQUdoy+EQ0QItppjXZVmnNiplukeGBMWIVSCn0vY8kpURfraKC5lyBVoed8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTaPTibY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjLYKRm3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69FFC4CEE5;
-	Tue,  8 Apr 2025 12:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTaPTibY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E21C4CEEB;
+	Tue,  8 Apr 2025 12:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115973;
-	bh=RA+okFfYB2KxxGNWUTh+Y7BrBsIVwC5ZqQMTUN+jluU=;
+	s=korg; t=1744115975;
+	bh=8Rk5aRcGwz0DN88KK5hz+nDtM17Q+pnYqW7R4rG1zJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjLYKRm3THlMgddVCkFkVTDoCf/3jstrOrT7294/OX4/w9gHZFHjCCnywDbD6yHLX
-	 lL5b8CfUm+UitfBl3OxQBq/7lKnl47njhHWIslfsBx0LP/nsjqVuwsOc8ZMQKCmKZc
-	 keBitnRrNY3hQOgQWmGKIkbQM9GSfjMKg3d4+ubo=
+	b=RTaPTibYvjvBrReQFJpfGWBeG62G5gJR7osGg+oeaAQe3zWOXGhDxDDcmM134dKyq
+	 dDHEil5uw4fkhlu8FICpQFt8eyNDmMSQtfO82iRQ4vSZahBPq8U+rJQlwQQ8JwJkoh
+	 zdUB2vQNKkXospmqHCb4P0XnBcZK5tLQoYQl43EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Vincent Li <vincent.mc.li@gmail.com>,
+	Hengqi Chen <hengqi.chen@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 174/204] LoongArch: Increase ARCH_DMA_MINALIGN up to 16
-Date: Tue,  8 Apr 2025 12:51:44 +0200
-Message-ID: <20250408104825.422040058@linuxfoundation.org>
+Subject: [PATCH 6.1 175/204] LoongArch: BPF: Fix off-by-one error in build_prologue()
+Date: Tue,  8 Apr 2025 12:51:45 +0200
+Message-ID: <20250408104825.453878411@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -50,35 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit 4103cfe9dcb88010ae4911d3ff417457d1b6a720 upstream.
+commit 7e2586991e36663c9bc48c828b83eab180ad30a9 upstream.
 
-ARCH_DMA_MINALIGN is 1 by default, but some LoongArch-specific devices
-(such as APBDMA) require 16 bytes alignment. When the data buffer length
-is too small, the hardware may make an error writing cacheline. Thus, it
-is dangerous to allocate a small memory buffer for DMA. It's always safe
-to define ARCH_DMA_MINALIGN as L1_CACHE_BYTES but unnecessary (kmalloc()
-need small memory objects). Therefore, just increase it to 16.
+Vincent reported that running BPF progs with tailcalls on LoongArch
+causes kernel hard lockup. Debugging the issues shows that the JITed
+image missing a jirl instruction at the end of the epilogue.
+
+There are two passes in JIT compiling, the first pass set the flags and
+the second pass generates JIT code based on those flags. With BPF progs
+mixing bpf2bpf and tailcalls, build_prologue() generates N insns in the
+first pass and then generates N+1 insns in the second pass. This makes
+epilogue_offset off by one and we will jump to some unexpected insn and
+cause lockup. Fix this by inserting a nop insn.
 
 Cc: stable@vger.kernel.org
-Tested-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Fixes: bb035ef0cc91 ("LoongArch: BPF: Support mixing bpf2bpf and tailcalls")
+Reported-by: Vincent Li <vincent.mc.li@gmail.com>
+Tested-by: Vincent Li <vincent.mc.li@gmail.com>
+Closes: https://lore.kernel.org/loongarch/CAK3+h2w6WESdBN3UCr3WKHByD7D6Q_Ve1EDAjotVrnx6Or_c8g@mail.gmail.com/
+Closes: https://lore.kernel.org/bpf/CAK3+h2woEjG_N=-XzqEGaAeCmgu2eTCUc7p6bP4u8Q+DFHm-7g@mail.gmail.com/
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/cache.h |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/net/bpf_jit.c |    2 ++
+ arch/loongarch/net/bpf_jit.h |    5 +++++
+ 2 files changed, 7 insertions(+)
 
---- a/arch/loongarch/include/asm/cache.h
-+++ b/arch/loongarch/include/asm/cache.h
-@@ -8,6 +8,8 @@
- #define L1_CACHE_SHIFT		CONFIG_L1_CACHE_SHIFT
- #define L1_CACHE_BYTES		(1 << L1_CACHE_SHIFT)
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -142,6 +142,8 @@ static void build_prologue(struct jit_ct
+ 	 */
+ 	if (seen_tail_call(ctx) && seen_call(ctx))
+ 		move_reg(ctx, TCC_SAVED, REG_TCC);
++	else
++		emit_insn(ctx, nop);
  
-+#define ARCH_DMA_MINALIGN	(16)
+ 	ctx->stack_size = stack_adjust;
+ }
+--- a/arch/loongarch/net/bpf_jit.h
++++ b/arch/loongarch/net/bpf_jit.h
+@@ -25,6 +25,11 @@ struct jit_data {
+ 	struct jit_ctx ctx;
+ };
+ 
++static inline void emit_nop(union loongarch_instruction *insn)
++{
++	insn->word = INSN_NOP;
++}
 +
- #define __read_mostly __section(".data..read_mostly")
- 
- #endif /* _ASM_CACHE_H */
+ #define emit_insn(ctx, func, ...)						\
+ do {										\
+ 	if (ctx->image != NULL) {						\
 
 
