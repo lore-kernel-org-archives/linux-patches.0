@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B433619AD5C;
-	Tue,  8 Apr 2025 11:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674BF19AD5C;
+	Tue,  8 Apr 2025 11:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112152; cv=none; b=IfooUEM8LYVVHK/hWdobWkIqVqbC+lZEfF3bhvmEHTJQAe6j8lOB7iKZvhtEo0M1mKNxHWZdGeTAR6vxDsieKSuKnyF4UPcdW5yax4wC5of5yKaw7aKNCT9gNVD+rtjByPKMndXwduNT3DCt7+R6qMAuf4yixvFk4bTjuECAvSU=
+	t=1744112155; cv=none; b=ZunAQ+/4e3p4PFNNsH8tZtou2PhTkpiXpigSnW5vakFJ+DcxzWJJC6ds+0E/ww00l4+aPOKBH1W1bngoRfA8X0VGTsc072TJLKTmFbtFdQHOM0UrXMIxcBs2Fl3LlqrFIY2Dj/hmWalV+nzCSgG/D1QLiwPJ+GFZE3s0DQWglu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112152; c=relaxed/simple;
-	bh=WriH3lL8sg1YOzq7BRBYC8gvEoHyCCij5a/3f0KYm4M=;
+	s=arc-20240116; t=1744112155; c=relaxed/simple;
+	bh=jAzLeX0I3LT6SFCgr2ccHA+W91UjI2X39zu3QrJvgC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2F1NmatWq5Jfwz0qoDWUECqH/rUjK1JQzkoKeQUSugK5vylj6/yGYiQIvJiWhlkc/4LsBnEOmynhFXCD2JdXa6TEXWhH81XpCLc20cGPSJJG5z6jKvdOtdGTif0dO0VU6B3eVUj/gr7O8hDY6cnNxV2/Mv19fXb0iBlEKTR0nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xghAujXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZuwT2fM8cypULZWnJSQgf40K+sttudeyhEVg1hxXbOvC1b8/UjJS8CLB6teHTmzgIURB88xhGbQ0qlfGU4m2jBAtImBdkoSAr+e4lP0vX+7h+Z/UNfrvKyv3u/FGrbo+da4esQI3SA8COXjTxOOOG0Q+b+43aM3vlnAMtqpV9rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Weo+ebNU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xghAujXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4293AC4CEE5;
-	Tue,  8 Apr 2025 11:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Weo+ebNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB6CC4CEE5;
+	Tue,  8 Apr 2025 11:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112152;
-	bh=WriH3lL8sg1YOzq7BRBYC8gvEoHyCCij5a/3f0KYm4M=;
+	s=korg; t=1744112155;
+	bh=jAzLeX0I3LT6SFCgr2ccHA+W91UjI2X39zu3QrJvgC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xghAujXQO92XUravqD6q0/MB7G29uLHk6r7A58QYs/Mr8cWgFDRBjmRMExNAuXsVz
-	 1S0oIKn61+BYf1AivKERoXkkdguqgWWcDnT2lrCrVGVVMihaCgA0ad+OY9M0YQZdsk
-	 R6iEq0R6xfNCoHRTYfoTqKJ3VF7YtN+alIpK3qnQ=
+	b=Weo+ebNUwBzi0nHx3ARPMIwWu6xo592rwqQm2RBnLzOTVpuqhLrq4V69meKfASq+o
+	 MMN3Zxh6RHFWjGuDhZahayhK10e4Mm35wfTCCXI8djKHv0yZldVcq4HxsKfXmq2L7y
+	 pkZY72Ahcm1kqSwb9yxKedoEAdsbFBH/IsG+6Iyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.14 678/731] perf/x86/intel: Apply static call for drain_pebs
-Date: Tue,  8 Apr 2025 12:49:35 +0200
-Message-ID: <20250408104930.038087568@linuxfoundation.org>
+	David Owens <daowens01@gmail.com>,
+	Romain Naour <romain.naour@smile.fr>,
+	Robert Nelson <robertcnelson@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Tony Lindgren <tony@atomide.com>
+Subject: [PATCH 6.14 696/731] mmc: sdhci-omap: Disable MMC_CAP_AGGRESSIVE_PM for eMMC/SD
+Date: Tue,  8 Apr 2025 12:49:53 +0200
+Message-ID: <20250408104930.456136261@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,60 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra (Intel) <peterz@infradead.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 314dfe10576912e1d786b13c5d4eee8c51b63caa upstream.
+commit 49d162635151d0dd04935070d7cf67137ab863aa upstream.
 
-The x86_pmu_drain_pebs static call was introduced in commit 7c9903c9bf71
-("x86/perf, static_call: Optimize x86_pmu methods"), but it's not really
-used to replace the old method.
+We have received reports about cards can become corrupt related to the
+aggressive PM support. Let's make a partial revert of the change that
+enabled the feature.
 
-Apply the static call for drain_pebs.
-
-Fixes: 7c9903c9bf71 ("x86/perf, static_call: Optimize x86_pmu methods")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reported-by: David Owens <daowens01@gmail.com>
+Reported-by: Romain Naour <romain.naour@smile.fr>
+Reported-by: Robert Nelson <robertcnelson@gmail.com>
+Tested-by: Robert Nelson <robertcnelson@gmail.com>
+Fixes: 3edf588e7fe0 ("mmc: sdhci-omap: Allow SDIO card power off and enable aggressive PM")
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250121152303.3128733-1-kan.liang@linux.intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20250312121712.1168007-1-ulf.hansson@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    2 +-
- arch/x86/events/intel/ds.c   |    2 +-
- arch/x86/events/perf_event.h |    1 +
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-omap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3070,7 +3070,7 @@ static int handle_pmi_common(struct pt_r
+--- a/drivers/mmc/host/sdhci-omap.c
++++ b/drivers/mmc/host/sdhci-omap.c
+@@ -1339,8 +1339,8 @@ static int sdhci_omap_probe(struct platf
+ 	/* R1B responses is required to properly manage HW busy detection. */
+ 	mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
  
- 		handled++;
- 		x86_pmu_handle_guest_pebs(regs, &data);
--		x86_pmu.drain_pebs(regs, &data);
-+		static_call(x86_pmu_drain_pebs)(regs, &data);
- 		status &= intel_ctrl | GLOBAL_STATUS_TRACE_TOPAPMI;
+-	/* Allow card power off and runtime PM for eMMC/SD card devices */
+-	mmc->caps |= MMC_CAP_POWER_OFF_CARD | MMC_CAP_AGGRESSIVE_PM;
++	/*  Enable SDIO card power off. */
++	mmc->caps |= MMC_CAP_POWER_OFF_CARD;
  
- 		/*
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -957,7 +957,7 @@ static inline void intel_pmu_drain_pebs_
- {
- 	struct perf_sample_data data;
- 
--	x86_pmu.drain_pebs(NULL, &data);
-+	static_call(x86_pmu_drain_pebs)(NULL, &data);
- }
- 
- /*
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1108,6 +1108,7 @@ extern struct x86_pmu x86_pmu __read_mos
- 
- DECLARE_STATIC_CALL(x86_pmu_set_period, *x86_pmu.set_period);
- DECLARE_STATIC_CALL(x86_pmu_update,     *x86_pmu.update);
-+DECLARE_STATIC_CALL(x86_pmu_drain_pebs,	*x86_pmu.drain_pebs);
- 
- static __always_inline struct x86_perf_task_context_opt *task_context_opt(void *ctx)
- {
+ 	ret = sdhci_setup_host(host);
+ 	if (ret)
 
 
