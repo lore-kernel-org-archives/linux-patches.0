@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FCD269B08;
-	Tue,  8 Apr 2025 11:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0898A267F5B;
+	Tue,  8 Apr 2025 11:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113284; cv=none; b=bphlXY9+wgqT00OtyFhYWHceNV6ueE3Dh+oU2aHhuaRfVPcaE4RbJcWKOuItmfCCNmZ9VRZ6ewu4E4Xg6VMJ7K5XEqaUsJCyCUBTblE6oXwddI9SYu51lLYDAycC8xoQpIOOLWZ0ly3Dnu0jh3UMjsiB6+1FGHLA+RGUJ7LAGe4=
+	t=1744113287; cv=none; b=O4tp9+1R/DkpaY8yxY9piKtONLglL41iyU/Dr03LuTww0dvdaS8CLC0rRXdAPr5DzxM7lNpPtBc4Rk8kUmApBhwjDKKvbtaNw0Mj9Q4dJUWBnd/aHOHTf5+tIZzR2jPs+6Xr1T1r8JEfPSlwwPJUeYInhu2SEx6L/E43SvtWkVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113284; c=relaxed/simple;
-	bh=SaMr5vFRYbrzORpLFF1lhAIlZjbP6P9hX6vxRP2PaZw=;
+	s=arc-20240116; t=1744113287; c=relaxed/simple;
+	bh=J31Jjq8imx1h7ch1/EujpzyRFQdxWJBzxfWTc14xfdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMrRK894TmcQZtqnkYCuZt51pa0yVttK/+1KgohajHtKrP3BbojcNVz57BZwoxunPDp5OGeOHJtstZN9ayuYP6MaGhnt/uM9xELZJy0k3yoj0BoFjZq0fdBw+517ECYijf4Uc8QXVx/H0Wn/XSY/5dqTCVFrAfpgZxvDRYuAwY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wbtn5/eY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ydr94kMR1gbU2L8et9SI7dHP83w5qM25R0x2wXq6+Yodkp9vk7SgPSuAzF/eT9j60gQTKJDlDydeTD7wHknMEjlPcBZjBMunmx4m6kNK/NtuGVUayWENONSJWtsDE2EH7Z2x9bgOkClDYPPGyBgWXZfQg+k1VGm/tL9TIP4iLlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQiPC93A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wbtn5/eY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE60C4CEE5;
-	Tue,  8 Apr 2025 11:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQiPC93A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A777C4CEE5;
+	Tue,  8 Apr 2025 11:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113284;
-	bh=SaMr5vFRYbrzORpLFF1lhAIlZjbP6P9hX6vxRP2PaZw=;
+	s=korg; t=1744113286;
+	bh=J31Jjq8imx1h7ch1/EujpzyRFQdxWJBzxfWTc14xfdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wbtn5/eYGfVvfW4kHn0tMXjXV56Pej4dimpUWxRxUo1l8hQ8+zRs/xIayTUAJ6q2s
-	 0LlgtnX4y56ME/hqoHpXxQW9neUEny368BuZofiNqwiCMbNzEOawyUTbytlzRZUjVY
-	 IC1fj5iDK794FdlvUrhxxVvd5FEUbNEcMjzpuDpI=
+	b=lQiPC93APyo9eNCUZhzvpLwIX+KC7TEzEEizR1H6j1/QlZPeckNnDKEpfMHXj7z8l
+	 QCYrwtRffx8V2GX+fqZwg0Z0sObgjc7AP+mbBXy7tti+PZupCCxU8fnRoZ3AzhF6LP
+	 lXiFOdTl7hhJ8htdXNTIzuXR8mK9lVneVvwHRGfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexis GUILLEMET <alexis.guillemet@dunasys.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/268] pinctrl: intel: Fix wrong bypass assignment in intel_pinctrl_probe_pwm()
-Date: Tue,  8 Apr 2025 12:48:32 +0200
-Message-ID: <20250408104831.219348212@linuxfoundation.org>
+Subject: [PATCH 6.6 102/268] clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
+Date: Tue,  8 Apr 2025 12:48:33 +0200
+Message-ID: <20250408104831.246372276@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -46,42 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit 0eee258cdf172763502f142d85e967f27a573be0 ]
+[ Upstream commit 000cbe3896c56bf5c625e286ff096533a6b27657 ]
 
-When instantiating PWM, the bypass should be set to false. The field
-is used for the selected Intel SoCs that do not have PWM feature enabled
-in their pin control IPs.
+This clock can't be enable with VENUS_CORE0 GDSC turned off. But that
+GDSC is under HW control so it can be turned off at any moment.
+Instead of checking the dependent clock we can just vote for it to
+enable later when GDSC gets turned on.
 
-Fixes: eb78d3604d6b ("pinctrl: intel: Enumerate PWM device when community has a capability")
-Reported-by: Alexis GUILLEMET <alexis.guillemet@dunasys.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Tested-by: Alexis GUILLEMET <alexis.guillemet@dunasys.com>
+Fixes: 5db3ae8b33de6 ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Link: https://lore.kernel.org/r/20250315-clock-fix-v1-1-2efdc4920dda@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/qcom/mmcc-sdm660.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index 3be04ab760d3f..9775f6be1c1e6 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1524,7 +1524,6 @@ static int intel_pinctrl_probe_pwm(struct intel_pinctrl *pctrl,
- 		.clk_rate = 19200000,
- 		.npwm = 1,
- 		.base_unit_bits = 22,
--		.bypass = true,
- 	};
- 	struct pwm_lpss_chip *pwm;
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index bc19a23e13f8a..4d187d6aba734 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2544,7 +2544,7 @@ static struct clk_branch video_core_clk = {
  
+ static struct clk_branch video_subcore0_clk = {
+ 	.halt_reg = 0x1048,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x1048,
+ 		.enable_mask = BIT(0),
 -- 
 2.39.5
 
