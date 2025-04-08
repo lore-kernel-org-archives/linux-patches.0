@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A0D224F6;
-	Tue,  8 Apr 2025 11:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB6264614;
+	Tue,  8 Apr 2025 11:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110652; cv=none; b=tzQRntrc7Y3gAZDPcuDecpp0bPfUpxhNcPK+/wv6IGllMn31tYzlCa9ACHc2tJsQJcD7SaQZk1EW141xztvm4ow5ADKyGZ+KrVNsddi04dVY6sOxLZXuUVD01bfy5/fPCz0WzIgOTm9YOVMc45zEkiFpvNqhdtLqKc8afkuuijs=
+	t=1744110655; cv=none; b=gei3mP8xJBZyC+7OKsNOEhvu9ZbkmwqT7qPmVQM+h1zEgnhEWLef3UD+MC0jz1aWOyNvT2qlFCmuLpdkL2Ty80KFgUQ0q68RT/DrZj/5SH/z1PBhEiQjaR/rq8VbUzzEnMisqwlyLWZCuoBBA7tVeD9/neqt4lsOyRDsrNz4xFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110652; c=relaxed/simple;
-	bh=7nmYopXUPj+azu868nkjha7U1b25aNr2O/WZFDgbIi8=;
+	s=arc-20240116; t=1744110655; c=relaxed/simple;
+	bh=4A11iAZDtffd5QPqzrMtSepz23dwVt3psFzxiJjFyLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=calXsSEawTvG8FudQ2n5fqyHBTehlzj8hrmuadBADPUsN+k0f9wlodkpnzURUx/BV+jUWY83/EMRMrPW/Tpm7Lr7eDw4jkk6eUfowIkMubaReqLLZYn4VIygo8DSjauxspgF5s2hBWafddwP4J0gESzs9wLxR4Sj6w6domD9MbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0etUkh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zzk1QforGifRwIDxLF5qRIg9kpwU96JlsEEVzqOzaDEpsmgKGnEPr9JT4gqYVl2XdRfieDsP8KAVE2Q8di0WFgFJ8DkIYCRacgCfFA0v7c8jRXjdBrZ6k54DeBq2gEWbTRCvVSbzMpt8jrYZeH/o6r+USvy23S/bxZAB0eo1IRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRUMB2CB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0etUkh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22681C4CEE5;
-	Tue,  8 Apr 2025 11:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRUMB2CB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF571C4CEE7;
+	Tue,  8 Apr 2025 11:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110652;
-	bh=7nmYopXUPj+azu868nkjha7U1b25aNr2O/WZFDgbIi8=;
+	s=korg; t=1744110655;
+	bh=4A11iAZDtffd5QPqzrMtSepz23dwVt3psFzxiJjFyLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0etUkh4SxKgcRWREGD7S0Nw56kDML1oIeRyYGrsml2tcWIgX7UfXo7KdFfraKiqa
-	 yE6pmDC862OjWLDXnv7vdBkCZG1fCEbw8eMpp/4IuVhU71RTNvhgHoFOFZrCKFZJa5
-	 3Lp7rBk8gaBh6xIzy7OsuBwVkfHsIH3uN/J48Dtw=
+	b=SRUMB2CB0DWr2RcGOMInc0NyXTnJqTs8XS8+akVNKHRME2+tBXr141320HpZ7b6HC
+	 1aGmSVL34mwDWpmysM7F0gFNZpA72b/KjLATDjTmmVPFK5I2ZepqMlZOlvvUEhThx0
+	 lqkMnzGeniz96Fg4vTAPAhAUcTE0g/w5VkJE+R5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 126/731] wifi: ath12k: Clear affinity hint before calling ath12k_pci_free_irq() in error path
-Date: Tue,  8 Apr 2025 12:40:23 +0200
-Message-ID: <20250408104917.209860885@linuxfoundation.org>
+Subject: [PATCH 6.14 144/731] soc: mediatek: mt8167-mmsys: Fix missing regval in all entries
+Date: Tue,  8 Apr 2025 12:40:41 +0200
+Message-ID: <20250408104917.624173832@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,52 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b43b1e2c52db77c872bd60d30cdcc72c47df70c7 ]
+[ Upstream commit 5424793452d134ec1a173bd748c757144f25b1e2 ]
 
-If a shared IRQ is used by the driver due to platform limitation, then the
-IRQ affinity hint is set right after the allocation of IRQ vectors in
-ath12k_pci_msi_alloc(). This does no harm unless one of the functions
-requesting the IRQ fails and attempt to free the IRQ.
+The mmsys routing table for this SoC was effectively missing
+initialization of the val variable of struct mtk_mmsys_routes:
+this means that `val` was incorrectly initialized to zero,
+hence the registers were wrongly initialized.
 
-This may end up with a warning from the IRQ core that is expecting the
-affinity hint to be cleared before freeing the IRQ:
+Add the required regval to all of the entries of the routing
+table for this SoC to fix display controller functionality.
 
-kernel/irq/manage.c:
-
-	/* make sure affinity_hint is cleaned up */
-	if (WARN_ON_ONCE(desc->affinity_hint))
-		desc->affinity_hint = NULL;
-
-So to fix this issue, clear the IRQ affinity hint before calling
-ath12k_pci_free_irq() in the error path. The affinity will be cleared once
-again further down the error path due to code organization, but that does
-no harm.
-
-Fixes: a3012f206d07 ("wifi: ath12k: set IRQ affinity to CPU0 in case of one MSI vector")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250225053447.16824-3-manivannan.sadhasivam@linaro.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 060f7875bd23 ("soc: mediatek: mmsys: Add support for MT8167 SoC")
+Link: https://lore.kernel.org/r/20250212100012.33001-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soc/mediatek/mt8167-mmsys.h | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 06cff3849ab8d..2851f6944b864 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1689,6 +1689,8 @@ static int ath12k_pci_probe(struct pci_dev *pdev,
- 	return 0;
+diff --git a/drivers/soc/mediatek/mt8167-mmsys.h b/drivers/soc/mediatek/mt8167-mmsys.h
+index f7a35b3656bb1..655ef962abe9f 100644
+--- a/drivers/soc/mediatek/mt8167-mmsys.h
++++ b/drivers/soc/mediatek/mt8167-mmsys.h
+@@ -17,18 +17,23 @@ static const struct mtk_mmsys_routes mt8167_mmsys_routing_table[] = {
+ 	{
+ 		DDP_COMPONENT_OVL0, DDP_COMPONENT_COLOR0,
+ 		MT8167_DISP_REG_CONFIG_DISP_OVL0_MOUT_EN, OVL0_MOUT_EN_COLOR0,
++		OVL0_MOUT_EN_COLOR0
+ 	}, {
+ 		DDP_COMPONENT_DITHER0, DDP_COMPONENT_RDMA0,
+-		MT8167_DISP_REG_CONFIG_DISP_DITHER_MOUT_EN, MT8167_DITHER_MOUT_EN_RDMA0
++		MT8167_DISP_REG_CONFIG_DISP_DITHER_MOUT_EN, MT8167_DITHER_MOUT_EN_RDMA0,
++		MT8167_DITHER_MOUT_EN_RDMA0
+ 	}, {
+ 		DDP_COMPONENT_OVL0, DDP_COMPONENT_COLOR0,
+-		MT8167_DISP_REG_CONFIG_DISP_COLOR0_SEL_IN, COLOR0_SEL_IN_OVL0
++		MT8167_DISP_REG_CONFIG_DISP_COLOR0_SEL_IN, COLOR0_SEL_IN_OVL0,
++		COLOR0_SEL_IN_OVL0
+ 	}, {
+ 		DDP_COMPONENT_RDMA0, DDP_COMPONENT_DSI0,
+-		MT8167_DISP_REG_CONFIG_DISP_DSI0_SEL_IN, MT8167_DSI0_SEL_IN_RDMA0
++		MT8167_DISP_REG_CONFIG_DISP_DSI0_SEL_IN, MT8167_DSI0_SEL_IN_RDMA0,
++		MT8167_DSI0_SEL_IN_RDMA0
+ 	}, {
+ 		DDP_COMPONENT_RDMA0, DDP_COMPONENT_DSI0,
+-		MT8167_DISP_REG_CONFIG_DISP_RDMA0_SOUT_SEL_IN, MT8167_RDMA0_SOUT_DSI0
++		MT8167_DISP_REG_CONFIG_DISP_RDMA0_SOUT_SEL_IN, MT8167_RDMA0_SOUT_DSI0,
++		MT8167_RDMA0_SOUT_DSI0
+ 	},
+ };
  
- err_free_irq:
-+	/* __free_irq() expects the caller to have cleared the affinity hint */
-+	ath12k_pci_set_irq_affinity_hint(ab_pci, NULL);
- 	ath12k_pci_free_irq(ab);
- 
- err_ce_free:
 -- 
 2.39.5
 
