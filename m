@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFA927E1CA;
-	Tue,  8 Apr 2025 12:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176E626B2CD;
+	Tue,  8 Apr 2025 12:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117168; cv=none; b=cX8qEiIa+4REeIl5188I+f29tJN/gJwxfjSqwUwNYnuUjJxXav4k1zbl67qEeorxOmtU0HehDiOaZJv1opaIKqMZ41vQ879k8af+N2dGwDLohhQCtR98WBNgrf/8460khhoZR4HgI2H4zYheHPVVgZv8s0XMEGNexXjr8tV5V54=
+	t=1744117171; cv=none; b=XiPZf22jTD8/X5do15MlNHzrO9klV2saSss6IFsctn1VlkWzC7iKufvBjDoGIUyM6XwNw8O9Y3jKLHz1O3i+1fAMYjCfj6uHwlmaQ6qhh3HmjGVy8mukvOmI5mOJ96+AijCq4E/ZDSolLcPEI4K6hkaBDmWaRb5aJKk82DScMPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117168; c=relaxed/simple;
-	bh=p4wtcDGc/FDxKh6MQLVsmb+16HkqGwCqueR1meKr9uc=;
+	s=arc-20240116; t=1744117171; c=relaxed/simple;
+	bh=JWPcw8Yw+yvOh4D4oc3F1W1oGEvudM+ABPPMmsdlTwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBQ5fFwKfG0qrvHkidt/9UL7WZVlrlx/dj2BGnRDmwBlZB62F4CERMr01To0UDe2dg5BvBA7XezqtT3LcZEIk+syANwzZOIp1gzo6LShkfyXH7K3cUcs2aw0CT905XvAuT/L+K9MfSg37exe9Upr8Hr4zleQsvJUsP776xE8kdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxvhBJ+l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnqtOQS3vl2CevWPOjY8wqjQ/KgA29PZd2upJIdSP7Gf2ejWPhA9v162pf5ePu7MEoLcoWtIwwP9XKPVXowkHLL/ShmujhYbQ6gzO8ilLzCjds6R/P8Wh1zvp5kMs0YTlFEbLaq1EN+Jkd0PnokANBu5tGKKfDwMq66NTRQlTnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdX8Tili; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxvhBJ+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F357CC4CEE7;
-	Tue,  8 Apr 2025 12:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdX8Tili"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE8FC4CEE5;
+	Tue,  8 Apr 2025 12:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117168;
-	bh=p4wtcDGc/FDxKh6MQLVsmb+16HkqGwCqueR1meKr9uc=;
+	s=korg; t=1744117171;
+	bh=JWPcw8Yw+yvOh4D4oc3F1W1oGEvudM+ABPPMmsdlTwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxvhBJ+luwrB2OQEqTIGVUq0xmtdyR76sdavMYJ8+rF2WQpCmWNWBefyXAxm9GQp6
-	 2LmJHy+COrpu0oWFdkXbfYzMPhTl14p92poANVFS97QdsX6bk3dxeCWHbtVtJ+2v/f
-	 A5BD7bDuPdmuDlyO7CP6eAZr3zgOBm3yUO+e6JO0=
+	b=OdX8Tilijm6Xi1iwGeaoE3OaxzFB3O2IpmP0ppxshNOr93EjFJyTJLIO4QxkZagWD
+	 X//+qkIftqw2MDc1Coo+VdtKqUJp0YkSkpzal9hiM1PZ0J2An9J0zoDWTFE8mvNKeU
+	 b6ubQMfM8K5yehfnAEC49Vv1rZEWn5SwjTZhQlUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <usbwifi2024@gmail.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Salah Coronya <salah.coronya@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 409/423] wifi: mt76: mt7921: fix kernel panic due to null pointer dereference
-Date: Tue,  8 Apr 2025 12:52:15 +0200
-Message-ID: <20250408104855.440792117@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>,
+	"Darrick J. Wong" <djwong@kernel.org>
+Subject: [PATCH 6.12 410/423] ext4: dont over-report free space or inodes in statvfs
+Date: Tue,  8 Apr 2025 12:52:16 +0200
+Message-ID: <20250408104855.465683840@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,76 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit adc3fd2a2277b7cc0b61692463771bf9bd298036 upstream.
+commit f87d3af7419307ae26e705a2b2db36140db367a2 upstream.
 
-Address a kernel panic caused by a null pointer dereference in the
-`mt792x_rx_get_wcid` function. The issue arises because the `deflink` structure
-is not properly initialized with the `sta` context. This patch ensures that the
-`deflink` structure is correctly linked to the `sta` context, preventing the
-null pointer dereference.
+This fixes an analogus bug that was fixed in xfs in commit
+4b8d867ca6e2 ("xfs: don't over-report free space or inodes in
+statvfs") where statfs can report misleading / incorrect information
+where project quota is enabled, and the free space is less than the
+remaining quota.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000400
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 0 UID: 0 PID: 470 Comm: mt76-usb-rx phy Not tainted 6.12.13-gentoo-dist #1
- Hardware name:  /AMD HUDSON-M1, BIOS 4.6.4 11/15/2011
- RIP: 0010:mt792x_rx_get_wcid+0x48/0x140 [mt792x_lib]
- RSP: 0018:ffffa147c055fd98 EFLAGS: 00010202
- RAX: 0000000000000000 RBX: ffff8e9ecb652000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff8e9ecb652000
- RBP: 0000000000000685 R08: ffff8e9ec6570000 R09: 0000000000000000
- R10: ffff8e9ecd2ca000 R11: ffff8e9f22a217c0 R12: 0000000038010119
- R13: 0000000080843801 R14: ffff8e9ec6570000 R15: ffff8e9ecb652000
- FS:  0000000000000000(0000) GS:ffff8e9f22a00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000400 CR3: 000000000d2ea000 CR4: 00000000000006f0
- Call Trace:
-  <TASK>
-  ? __die_body.cold+0x19/0x27
-  ? page_fault_oops+0x15a/0x2f0
-  ? search_module_extables+0x19/0x60
-  ? search_bpf_extables+0x5f/0x80
-  ? exc_page_fault+0x7e/0x180
-  ? asm_exc_page_fault+0x26/0x30
-  ? mt792x_rx_get_wcid+0x48/0x140 [mt792x_lib]
-  mt7921_queue_rx_skb+0x1c6/0xaa0 [mt7921_common]
-  mt76u_alloc_queues+0x784/0x810 [mt76_usb]
-  ? __pfx___mt76_worker_fn+0x10/0x10 [mt76]
-  __mt76_worker_fn+0x4f/0x80 [mt76]
-  kthread+0xd2/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x34/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- ---[ end trace 0000000000000000 ]---
+This commit will resolve a test failure in generic/762 which tests for
+this bug.
 
-Reported-by: Nick Morrow <usbwifi2024@gmail.com>
-Closes: https://github.com/morrownr/USB-WiFi/issues/577
-Cc: stable@vger.kernel.org
-Fixes: 90c10286b176 ("wifi: mt76: mt7925: Update mt792x_rx_get_wcid for per-link STA")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Tested-by: Salah Coronya <salah.coronya@gmail.com>
-Link: https://patch.msgid.link/20250218033343.1999648-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Cc: stable@kernel.org
+Fixes: 689c958cbe6b ("ext4: add project quota support")
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/super.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -805,6 +805,7 @@ int mt7921_mac_sta_add(struct mt76_dev *
- 	msta->deflink.wcid.phy_idx = mvif->bss_conf.mt76.band_idx;
- 	msta->deflink.wcid.tx_info |= MT_WCID_TX_INFO_SET;
- 	msta->deflink.last_txs = jiffies;
-+	msta->deflink.sta = msta;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6781,22 +6781,29 @@ static int ext4_statfs_project(struct su
+ 			     dquot->dq_dqb.dqb_bhardlimit);
+ 	limit >>= sb->s_blocksize_bits;
  
- 	ret = mt76_connac_pm_wake(&dev->mphy, &dev->pm);
- 	if (ret)
+-	if (limit && buf->f_blocks > limit) {
++	if (limit) {
++		uint64_t	remaining = 0;
++
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
+ 	}
+ 
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 			     dquot->dq_dqb.dqb_ihardlimit);
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t	remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
+ 	}
+ 
+ 	spin_unlock(&dquot->dq_dqb_lock);
 
 
