@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C7E2690F9;
-	Tue,  8 Apr 2025 11:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6294926983B;
+	Tue,  8 Apr 2025 11:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110073; cv=none; b=RDOZxoTbM713tuqcFL8oFUmZdPJD5RPPbwdgUoTMpQfscTfAl6nOSst3Y3TojkDGkeV3xxMDeOcPI+o2sB3YSJufap8z+Z/iV0MPQ41meTwzF1gKOWns1qBlakvhsaSGRKvKxE3fq9fjMcBT+zil97OMa+AbyOARyWThrfPC9T8=
+	t=1744110076; cv=none; b=JV3w8I77H2kjkNkWRdKvYGcZ5EcHgUGy8IzSc9ZiZn23jkZDWXUf5+SS9YN2GgLkDHN6+bXkx+/0FNk2D36OK3sHigvzdABGaj0pUiKgEBLLrCSbAlVnJjb2oKtLc2V+TYKE5eFn6sQQca0LUaxDVjPI39vOx4P+fSwKaRoDZeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110073; c=relaxed/simple;
-	bh=2o4AMGaGPIrqyTf3NHU0VUNBaAduYW9UwZ/cnj3Ldxs=;
+	s=arc-20240116; t=1744110076; c=relaxed/simple;
+	bh=8xmTAHSwpZW205cO/mDMyw4+mwWn60Dc5p5ikUdageU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gp13wfNfxxJUq8H3cjYFlWRD3UrQtBAyYMcr3SPwXkiIrrBx8N1RM3L45DxrkvDgDnu3mjQSP8qs1es2oY5+B5XuFqSzOt2vbWNXwygM83ixG8ETweLczULIRHtLD15HETgtrtXrGihhU61GTAAHGMB/DFUartnEpLCX7Q7d8y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+UZbUqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otnyLhafjiwNTv832gHJsZsgQe0ruCQHk1VnxDNAcOtoxJjWbPDordEtuHYZRN30uYC+RhfKtT5qFjdfo4WbiRzlWI5HoFEC367gkesLQw5Q1gcgfhG5yICstlVQCT3JgzaOEjqSNi7HnB35fysw97XVTt3Ft+0ek0ijylzP0cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3eXZkH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+UZbUqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22396C4CEE5;
-	Tue,  8 Apr 2025 11:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3eXZkH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BDEC4CEE5;
+	Tue,  8 Apr 2025 11:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110073;
-	bh=2o4AMGaGPIrqyTf3NHU0VUNBaAduYW9UwZ/cnj3Ldxs=;
+	s=korg; t=1744110076;
+	bh=8xmTAHSwpZW205cO/mDMyw4+mwWn60Dc5p5ikUdageU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+UZbUqplrpLJCuLwq2RZ33nDcXI4NilafcEcmHFb3c6gI6va70fJwFVvFP9QRdSL
-	 mPg+PDw9x9Zv8JeIPYHeihbXA4mSfoaBQQon95SQua9++T/hNDbanPjmEkVN9NYyUl
-	 oOil3yUh6M2Aeq/6CNv+215GtqEIGbwsWrzYYRbE=
+	b=I3eXZkH4+jouO20xhEOQ+RTJ516xP5ixNd3QUWyi0aHzSbnkSrZCTBf93cAaoTlYZ
+	 IG9lZ18X8SfmsUgMBWIJ8Tn22/mXnymwDa7l8P37hRK6Kops2iEsEpyzd1qbvsgi9M
+	 ip932f9Ew7eN9+N9zYaP91JZ+pWNI8QDLD6GIIOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/227] power: supply: max77693: Fix wrong conversion of charge input threshold value
-Date: Tue,  8 Apr 2025 12:48:55 +0200
-Message-ID: <20250408104825.025135482@linuxfoundation.org>
+Subject: [PATCH 5.10 158/227] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
+Date: Tue,  8 Apr 2025 12:48:56 +0200
+Message-ID: <20250408104825.055340245@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,43 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 30cc7b0d0e9341d419eb7da15fb5c22406dbe499 ]
+[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
 
-The charge input threshold voltage register on the MAX77693 PMIC accepts
-four values: 0x0 for 4.3v, 0x1 for 4.7v, 0x2 for 4.8v and 0x3 for 4.9v.
-Due to an oversight, the driver calculated the values for 4.7v and above
-starting from 0x0, rather than from 0x1 ([(4700000 - 4700000) / 100000]
-gives 0).
+When cur_qp isn't NULL, in order to avoid fetching the QP from
+the radix tree again we check if the next cqe QP is identical to
+the one we already have.
 
-Add 1 to the calculation to ensure that 4.7v is converted to a register
-value of 0x1 and that the other two voltages are converted correctly as
-well.
+The bug however is that we are checking if the QP is identical by
+checking the QP number inside the CQE against the QP number inside the
+mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
+FW so it should be matched against mlx5_core_qp which is our FW QP
+number.
 
-Fixes: 87c2d9067893 ("power: max77693: Add charger driver for Maxim 77693")
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250316-max77693-charger-input-threshold-fix-v1-1-2b037d0ac722@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Otherwise we could use the wrong QP when handling a CQE which could
+cause the kernel trace below.
+
+This issue is mainly noticeable over QPs 0 & 1, since for now they are
+the only QPs in our driver whereas the QP number inside mlx5_ib_qp
+doesn't match the QP number inside mlx5_core_qp.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP
+ CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+ Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
+ RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
+ RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
+ RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
+ R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
+ FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x60
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+  __ib_process_cq+0x5a/0x150 [ib_core]
+  ib_cq_poll_work+0x31/0x90 [ib_core]
+  process_one_work+0x169/0x320
+  worker_thread+0x288/0x3a0
+  ? work_busy+0xb0/0xb0
+  kthread+0xd7/0x1f0
+  ? kthreads_online_cpu+0x130/0x130
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork+0x2d/0x50
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max77693_charger.c | 2 +-
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/max77693_charger.c b/drivers/power/supply/max77693_charger.c
-index a2c5c9858639f..ef3482fa4023e 100644
---- a/drivers/power/supply/max77693_charger.c
-+++ b/drivers/power/supply/max77693_charger.c
-@@ -556,7 +556,7 @@ static int max77693_set_charge_input_threshold_volt(struct max77693_charger *chg
- 	case 4700000:
- 	case 4800000:
- 	case 4900000:
--		data = (uvolt - 4700000) / 100000;
-+		data = ((uvolt - 4700000) / 100000) + 1;
- 		break;
- 	default:
- 		dev_err(chg->dev, "Wrong value for charge input voltage regulation threshold\n");
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 74644b6ea0ff1..e6d3ac4e10dc0 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -481,7 +481,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
+ 	}
+ 
+ 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
+-	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
++	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
+ 		/* We do not have to take the QP table lock here,
+ 		 * because CQs will be locked while QPs are removed
+ 		 * from the table.
 -- 
 2.39.5
 
