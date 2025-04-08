@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A4C266573;
-	Tue,  8 Apr 2025 11:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847B0266573;
+	Tue,  8 Apr 2025 11:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110693; cv=none; b=cRh3WllPNuLkjbcYNwGAbq0olU66SkosNUL4Epb1ONjHYpayv1HBEpxOEbC9Pp7T8eVftpRL6DzEFtd2yEuBo97JIbeT4iEGQnnUKeo9EPAuaZZNhiXR5BQO/tzXf5GKLSp4zMm1TQdz8py7GN8pAjl2uTb4ZPkOT7gN3+1+JFA=
+	t=1744110695; cv=none; b=Mo1VN1fccDp3YEVsXF6Vz2MTmO9u7OlkTdSP2RwZFmdolNz+LOGJGIID7xI2LugMNCxeYC2pHBxnP7mf7RdxQ1mkUGYZ+p9rTdbT0w0ajwq2yONerYnNVndJosRUVFH/2JQoK4AjqeA19MNj5ROTiyU1RJj3Uz21WK6Hbb1eI6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110693; c=relaxed/simple;
-	bh=hbe3mrmj8uRru3lxosHuQ045868qYsuwxY0BVAD+FM0=;
+	s=arc-20240116; t=1744110695; c=relaxed/simple;
+	bh=/cgs2zfrl1XMx66RZYWQE0OqwIX5d7TtcKwaZpPoIHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfu36UPsUIJukOc/EJWRlFmeBKjBWAWIsk3MuOwS/QbW2yEulwuzQHRdTnxxhWyFgk23CUSR5w3I0fCwLpJYqufovS74BY5/8D+cOgkNHg2z4Pwnf2wJ5LTv8lo7i6cmdqoh2pcms2mj+ogc2xUNeC3AXIiGmybCoXY/CDRdjLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cX7Z0A8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MB65DnlfbkLNTzJYmaZ+kre1hhHHT5tFvsR3fKlS3hs6meItJeDqSE6s63h5akXi19s7gDwEhQWNU7aJbI2OBoyXZZe7N6Wowximy/gMLfHLFuP0c1eGbCHJ/m0LlVvWW/E88+WzOnoZGFd9rBNYDPGHgtU/Fmiy+1LFAoJXyaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOxjZPJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cX7Z0A8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1C9C4CEE5;
-	Tue,  8 Apr 2025 11:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOxjZPJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13440C4CEE5;
+	Tue,  8 Apr 2025 11:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110692;
-	bh=hbe3mrmj8uRru3lxosHuQ045868qYsuwxY0BVAD+FM0=;
+	s=korg; t=1744110695;
+	bh=/cgs2zfrl1XMx66RZYWQE0OqwIX5d7TtcKwaZpPoIHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cX7Z0A8vJSbAPayCtrDVYu3ImXTVziqaGXs6XeCpZC4mUMTiaxhQ8Xcbpl2K4j78w
-	 jGp1Gh3cPNrj8nnS7zPZ/FxiBzjysDZ1lioHAkS+eF3EqP54FYtfUB+0J8ekuNw0V0
-	 9enjZuyePY5wNyIHHB+DC8mHsHbsFEw7GFBmx9lg=
+	b=DOxjZPJ/kbnOe9kK4SG89N7V70RFbUgMUfW1/uixyi0gxCt6NYcdEnSOFhIuwIsmC
+	 a7/FdCpe0tvSoQvojQeC6eVYCvtB5mV9S4CiNhBA/Z9iq+g8d2CAc3klp9BhQxkPLw
+	 4W71zPxQJvIHVwckco6mdDzFH7mQC9IhTXEpPrls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 157/731] null_blk: generate null_blk configfs features string
-Date: Tue,  8 Apr 2025 12:40:54 +0200
-Message-ID: <20250408104917.927471463@linuxfoundation.org>
+Subject: [PATCH 6.14 158/731] null_blk: introduce badblocks_once parameter
+Date: Tue,  8 Apr 2025 12:40:55 +0200
+Message-ID: <20250408104917.950898953@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -57,148 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 2cadb8ef25a6157b5bd3e8fe0d3e23f32defec25 ]
+[ Upstream commit 800c24391676143695d284f70af297b28a809886 ]
 
-The null_blk configfs file 'features' provides a string that lists
-available null_blk features for userspace programs to reference.
-The string is defined as a long constant in the code, which tends to be
-forgotten for updates. It also causes checkpatch.pl to report
-"WARNING: quoted string split across lines".
+When IO errors happen on real storage devices, the IOs repeated to the
+same target range can success by virtue of recovery features by devices,
+such as reserved block assignment. To simulate such IO errors and
+recoveries, introduce the new parameter badblocks_once parameter. When
+this parameter is set to 1, the specified badblocks are cleared after
+the first IO error, so that the next IO to the blocks succeed.
 
-To avoid these drawbacks, generate the feature string on the fly. Refer
-to the ca_name field of each element in the nullb_device_attrs table and
-concatenate them in the given buffer. Also, sorted nullb_device_attrs
-table elements in alphabetical order.
-
-Of note is that the feature "index" was missing before this commit.
-This commit adds it to the generated string.
-
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20250226100613.1622564-2-shinichiro.kawasaki@wdc.com
+Link: https://lore.kernel.org/r/20250226100613.1622564-3-shinichiro.kawasaki@wdc.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: d301f164c3fb ("badblocks: use sector_t instead of int to avoid truncation of badblocks length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 86 ++++++++++++++++++++---------------
- 1 file changed, 49 insertions(+), 37 deletions(-)
+ drivers/block/null_blk/main.c     | 11 ++++++++---
+ drivers/block/null_blk/null_blk.h |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index fdc7a0b2af109..18520d0e38c61 100644
+index 18520d0e38c61..164c62f20f109 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -592,41 +592,41 @@ static ssize_t nullb_device_zone_offline_store(struct config_item *item,
- CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
+@@ -473,6 +473,7 @@ NULLB_DEVICE_ATTR(shared_tags, bool, NULL);
+ NULLB_DEVICE_ATTR(shared_tag_bitmap, bool, NULL);
+ NULLB_DEVICE_ATTR(fua, bool, NULL);
+ NULLB_DEVICE_ATTR(rotational, bool, NULL);
++NULLB_DEVICE_ATTR(badblocks_once, bool, NULL);
+ 
+ static ssize_t nullb_device_power_show(struct config_item *item, char *page)
+ {
+@@ -593,6 +594,7 @@ CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
  
  static struct configfs_attribute *nullb_device_attrs[] = {
--	&nullb_device_attr_size,
-+	&nullb_device_attr_badblocks,
-+	&nullb_device_attr_blocking,
-+	&nullb_device_attr_blocksize,
-+	&nullb_device_attr_cache_size,
- 	&nullb_device_attr_completion_nsec,
--	&nullb_device_attr_submit_queues,
--	&nullb_device_attr_poll_queues,
-+	&nullb_device_attr_discard,
-+	&nullb_device_attr_fua,
- 	&nullb_device_attr_home_node,
--	&nullb_device_attr_queue_mode,
--	&nullb_device_attr_blocksize,
--	&nullb_device_attr_max_sectors,
--	&nullb_device_attr_irqmode,
- 	&nullb_device_attr_hw_queue_depth,
- 	&nullb_device_attr_index,
--	&nullb_device_attr_blocking,
--	&nullb_device_attr_use_per_node_hctx,
--	&nullb_device_attr_power,
--	&nullb_device_attr_memory_backed,
--	&nullb_device_attr_discard,
-+	&nullb_device_attr_irqmode,
-+	&nullb_device_attr_max_sectors,
- 	&nullb_device_attr_mbps,
--	&nullb_device_attr_cache_size,
--	&nullb_device_attr_badblocks,
--	&nullb_device_attr_zoned,
--	&nullb_device_attr_zone_size,
-+	&nullb_device_attr_memory_backed,
-+	&nullb_device_attr_no_sched,
-+	&nullb_device_attr_poll_queues,
-+	&nullb_device_attr_power,
-+	&nullb_device_attr_queue_mode,
-+	&nullb_device_attr_rotational,
-+	&nullb_device_attr_shared_tag_bitmap,
-+	&nullb_device_attr_shared_tags,
-+	&nullb_device_attr_size,
-+	&nullb_device_attr_submit_queues,
-+	&nullb_device_attr_use_per_node_hctx,
-+	&nullb_device_attr_virt_boundary,
-+	&nullb_device_attr_zone_append_max_sectors,
- 	&nullb_device_attr_zone_capacity,
--	&nullb_device_attr_zone_nr_conv,
--	&nullb_device_attr_zone_max_open,
-+	&nullb_device_attr_zone_full,
- 	&nullb_device_attr_zone_max_active,
--	&nullb_device_attr_zone_append_max_sectors,
--	&nullb_device_attr_zone_readonly,
-+	&nullb_device_attr_zone_max_open,
-+	&nullb_device_attr_zone_nr_conv,
- 	&nullb_device_attr_zone_offline,
--	&nullb_device_attr_zone_full,
--	&nullb_device_attr_virt_boundary,
--	&nullb_device_attr_no_sched,
--	&nullb_device_attr_shared_tags,
--	&nullb_device_attr_shared_tag_bitmap,
--	&nullb_device_attr_fua,
--	&nullb_device_attr_rotational,
-+	&nullb_device_attr_zone_readonly,
-+	&nullb_device_attr_zone_size,
-+	&nullb_device_attr_zoned,
- 	NULL,
- };
+ 	&nullb_device_attr_badblocks,
++	&nullb_device_attr_badblocks_once,
+ 	&nullb_device_attr_blocking,
+ 	&nullb_device_attr_blocksize,
+ 	&nullb_device_attr_cache_size,
+@@ -1315,10 +1317,13 @@ static inline blk_status_t null_handle_badblocks(struct nullb_cmd *cmd,
+ 	sector_t first_bad;
+ 	int bad_sectors;
  
-@@ -704,16 +704,28 @@ nullb_group_drop_item(struct config_group *group, struct config_item *item)
+-	if (badblocks_check(bb, sector, nr_sectors, &first_bad, &bad_sectors))
+-		return BLK_STS_IOERR;
++	if (!badblocks_check(bb, sector, nr_sectors, &first_bad, &bad_sectors))
++		return BLK_STS_OK;
  
- static ssize_t memb_group_features_show(struct config_item *item, char *page)
- {
--	return snprintf(page, PAGE_SIZE,
--			"badblocks,blocking,blocksize,cache_size,fua,"
--			"completion_nsec,discard,home_node,hw_queue_depth,"
--			"irqmode,max_sectors,mbps,memory_backed,no_sched,"
--			"poll_queues,power,queue_mode,shared_tag_bitmap,"
--			"shared_tags,size,submit_queues,use_per_node_hctx,"
--			"virt_boundary,zoned,zone_capacity,zone_max_active,"
--			"zone_max_open,zone_nr_conv,zone_offline,zone_readonly,"
--			"zone_size,zone_append_max_sectors,zone_full,"
--			"rotational\n");
+-	return BLK_STS_OK;
++	if (cmd->nq->dev->badblocks_once)
++		badblocks_clear(bb, first_bad, bad_sectors);
 +
-+	struct configfs_attribute **entry;
-+	char delimiter = ',';
-+	size_t left = PAGE_SIZE;
-+	size_t written = 0;
-+	int ret;
-+
-+	for (entry = &nullb_device_attrs[0]; *entry && left > 0; entry++) {
-+		if (!*(entry + 1))
-+			delimiter = '\n';
-+		ret = snprintf(page + written, left, "%s%c", (*entry)->ca_name,
-+			       delimiter);
-+		if (ret >= left) {
-+			WARN_ONCE(1, "Too many null_blk features to print\n");
-+			memzero_explicit(page, PAGE_SIZE);
-+			return -ENOBUFS;
-+		}
-+		left -= ret;
-+		written += ret;
-+	}
-+
-+	return written;
++	return BLK_STS_IOERR;
  }
  
- CONFIGFS_ATTR_RO(memb_group_, features);
+ static inline blk_status_t null_handle_memory_backed(struct nullb_cmd *cmd,
+diff --git a/drivers/block/null_blk/null_blk.h b/drivers/block/null_blk/null_blk.h
+index 6f9fe61710870..3c4c07f0418b0 100644
+--- a/drivers/block/null_blk/null_blk.h
++++ b/drivers/block/null_blk/null_blk.h
+@@ -63,6 +63,7 @@ struct nullb_device {
+ 	unsigned long flags; /* device flags */
+ 	unsigned int curr_cache;
+ 	struct badblocks badblocks;
++	bool badblocks_once;
+ 
+ 	unsigned int nr_zones;
+ 	unsigned int nr_zones_imp_open;
 -- 
 2.39.5
 
