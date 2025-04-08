@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E0625F97B;
-	Tue,  8 Apr 2025 12:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367A619DF6A;
+	Tue,  8 Apr 2025 12:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116426; cv=none; b=hQMQVE7A31KVJgVMA1Lu5cC82AJ62RaSC1M1CYB0he+oTvEPAutq3XfTA0bnXPGbHEpm0rsWC8kov3gFTFlaXGQsqXWFNOF4G5JFyf4gg9O1TvTtB30HbeqQ4gmEYmw2xuQUlJUpSw4iHMYmn6UcjEzSjVim88/Qe0k3n2mcnpE=
+	t=1744116429; cv=none; b=HeVii9ku04b7Os/wSCk4yToC9ugOMxfTfF9pP6noEbhZTlgcCgkAucsCFh2dJETLf9hWmFtdvO/izLnOjAG6YH6xibmluGEb8ySCH/JhkO45GqRzoPvxPeJF7YwQSZ7LsZ5VGI6a6jo3T7hfHU5cvXYqj/TBnwPBrpSZs0pwUuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116426; c=relaxed/simple;
-	bh=tZRhRgV4/hjCzJYZrZ4zGuM5qrUm890rkos8Il7Ol3Q=;
+	s=arc-20240116; t=1744116429; c=relaxed/simple;
+	bh=swM/9pcyHHgH6r0IzI42yNzmoVrE4WW7BLnSN2yaqz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVa6tWbXqLe6CE0J9vdu2UswnK6cAWpC0M0JU0FUBlOw7cmR9/Buhss8D0oXhakTiRBHCSoRmNO8eMZ7JZ9W2yKM7bZRjWf9g7d3X8mDeSwa1WaGjfabVZ6vRMnb+L/qD/dZhQA6P/4YFdLqSFOHIZy7vQ8XF84/jk0KWF6wdys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFRcZE3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQk9JwKLSVYBUWt+1jFIzO//N0p8YsndoWkgr6oJ52GsA0r00OnCFy4cKae9I1uIhW+NaWSRts+/FbThoLYxKAeBlDdtnrP/I9K6uye5gDhZd1DP7An0O29hcTnKXX48Zx+9ItJVIv3ov2N91ASnU8nRET7E1cp4f5fD3RUx9Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXvYnYFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFRcZE3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241C6C4CEE5;
-	Tue,  8 Apr 2025 12:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXvYnYFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7A3C4CEE5;
+	Tue,  8 Apr 2025 12:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116426;
-	bh=tZRhRgV4/hjCzJYZrZ4zGuM5qrUm890rkos8Il7Ol3Q=;
+	s=korg; t=1744116429;
+	bh=swM/9pcyHHgH6r0IzI42yNzmoVrE4WW7BLnSN2yaqz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFRcZE3i/OdHL38bgZZEy8GgoKDRO6FhDiOnMK8cQufsLRScdwWTIg59W4Gf3ArUV
-	 m8TTfqWiZDtU2rcvjOk9i1uh5yvnV3LD/Nz37efGVl1+j6gr5Hro1uvkjFhuX8QhFN
-	 54fVK856fhWHuzQZOvMYfL3RQ09vj4QogmM9faxk=
+	b=nXvYnYFJ9wnzT+X6RRwhVpsK/AH8JggHEWSNlRtpQvl0oN9RIKKvs4RTpzoXFP6i8
+	 zb26DFnJG/jtRypUm+zO0bhq8OUvLqYAHAIqD1lxBpmD2qoHi3WTHxb4m0a2MoXZbN
+	 XL5bVoY6zZfnL9eLof6vjH6GMveGdP2l6xMi2Utk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bairavi Alagappan <bairavix.alagappan@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/423] crypto: iaa - Test the correct request flag
-Date: Tue,  8 Apr 2025 12:47:03 +0200
-Message-ID: <20250408104847.998055246@linuxfoundation.org>
+Subject: [PATCH 6.12 098/423] crypto: qat - set parity error mask for qat_420xx
+Date: Tue,  8 Apr 2025 12:47:04 +0200
+Message-ID: <20250408104848.020119921@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,41 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Bairavi Alagappan <bairavix.alagappan@intel.com>
 
-[ Upstream commit fc4bd01d9ff592f620c499686245c093440db0e8 ]
+[ Upstream commit f9555d18084985c80a91baa4fdb7d205b401a754 ]
 
-Test the correct flags for the MAY_SLEEP bit.
+The field parerr_wat_wcp_mask in the structure adf_dev_err_mask enables
+the detection and reporting of parity errors for the wireless cipher and
+wireless authentication accelerators.
 
-Fixes: 2ec6761df889 ("crypto: iaa - Add support for deflate-iaa compression algorithm")
+Set the parerr_wat_wcp_mask field, which was inadvertently omitted
+during the initial enablement of the qat_420xx driver, to ensure that
+parity errors are enabled for those accelerators.
+
+In addition, fix the string used to report such errors that was
+inadvertently set to "ath_cph" (authentication and cipher).
+
+Fixes: fcf60f4bcf54 ("crypto: qat - add support for 420xx devices")
+Signed-off-by: Bairavi Alagappan <bairavix.alagappan@intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/iaa/iaa_crypto_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c | 1 +
+ drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c     | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-index d2f07e34f3142..e1f60f0f507c9 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-@@ -1527,7 +1527,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
- 	iaa_wq = idxd_wq_get_private(wq);
+diff --git a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
+index 9faef33e54bd3..a17adc4beda2e 100644
+--- a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
++++ b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
+@@ -420,6 +420,7 @@ static void adf_gen4_set_err_mask(struct adf_dev_err_mask *dev_err_mask)
+ 	dev_err_mask->parerr_cpr_xlt_mask = ADF_420XX_PARITYERRORMASK_CPR_XLT_MASK;
+ 	dev_err_mask->parerr_dcpr_ucs_mask = ADF_420XX_PARITYERRORMASK_DCPR_UCS_MASK;
+ 	dev_err_mask->parerr_pke_mask = ADF_420XX_PARITYERRORMASK_PKE_MASK;
++	dev_err_mask->parerr_wat_wcp_mask = ADF_420XX_PARITYERRORMASK_WAT_WCP_MASK;
+ 	dev_err_mask->ssmfeatren_mask = ADF_420XX_SSMFEATREN_MASK;
+ }
  
- 	if (!req->dst) {
--		gfp_t flags = req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
-+		gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+index 2dd3772bf58a6..bf0ea09faa650 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+@@ -695,7 +695,7 @@ static bool adf_handle_slice_hang_error(struct adf_accel_dev *accel_dev,
+ 	if (err_mask->parerr_wat_wcp_mask)
+ 		adf_poll_slicehang_csr(accel_dev, csr,
+ 				       ADF_GEN4_SLICEHANGSTATUS_WAT_WCP,
+-				       "ath_cph");
++				       "wat_wcp");
  
- 		/* incompressible data will always be < 2 * slen */
- 		req->dlen = 2 * req->slen;
-@@ -1609,7 +1609,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
- 
- static int iaa_comp_adecompress_alloc_dest(struct acomp_req *req)
- {
--	gfp_t flags = req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
-+	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
- 		GFP_KERNEL : GFP_ATOMIC;
- 	struct crypto_tfm *tfm = req->base.tfm;
- 	dma_addr_t src_addr, dst_addr;
+ 	return false;
+ }
 -- 
 2.39.5
 
