@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDBD26B2BF;
-	Tue,  8 Apr 2025 12:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D1926B2CD;
+	Tue,  8 Apr 2025 12:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116235; cv=none; b=RT5uWNwF3dij3GTDOlpCjqaX0HnZiP0XmBUKlh3HZX/Au61HUOwXY/RSrhNgqZXmNBMTTemMzjvIDRKTs2VmFYonX6zMMsOrYPcF7n5fFp/J8luQyAgr+6uRxRuAjt6BZPwDjJoYPHu9Olwtwq0SYLsZro21oozVQrYKmi1rGAE=
+	t=1744116238; cv=none; b=hInybC7GuQLkoLYMATaepbeUA5IddZlgPrt68Vi4Plf+of1Cm+l+Pdy/9GMZEa5nkAiB+VlKQE1jwEZ7I+e4B+b7n1Iyp5pTkZ9iZCOqK+Iw2+/IBxAslFHG6yCUID5IFQ7a5iO8ZN2pcmwaIvHrSuuPh7CHXEqqRHFrzAelkRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116235; c=relaxed/simple;
-	bh=a+BnMcb+yv+AeL2WVtVYGpwUd1g/QORskkUgKZfIKkA=;
+	s=arc-20240116; t=1744116238; c=relaxed/simple;
+	bh=DA5JV307KvoUz3lVrwetEmTBkrn0kjrnH/60UUpiDog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJrB6jgI1GimMRv53aDAJTQFCmCFNLg3y8A4xiWyjLgBObdqx3/hVbO9E8Ad/THotLhwLkxCFXFHpD/Krg4OrtPT26ki69DaMXXo1EaGc5pEE5wKg8OwygZAB6XPF27KWbyxqwqDk6f4xtsVQgvXV1uFW4dpk94Exina1cVD/PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEcX4UZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QyRrEQwGjF7t5QIIqy+2UER1TxPT9N573jgSmajkLIeh47Da9/+mKy2btH9c2eTaO8COeANzI8Sahhfm/wAfY+6V5THtNcjpohkpPHxJ+QoB6xh3Fu31fEgxr99ftH8ClJws2xiacStR+CkZMLfxXCJDe8lLBvPyxuv4cm06q3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs6GGyEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEcX4UZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0DCC4CEE5;
-	Tue,  8 Apr 2025 12:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs6GGyEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E763CC4CEE5;
+	Tue,  8 Apr 2025 12:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116235;
-	bh=a+BnMcb+yv+AeL2WVtVYGpwUd1g/QORskkUgKZfIKkA=;
+	s=korg; t=1744116238;
+	bh=DA5JV307KvoUz3lVrwetEmTBkrn0kjrnH/60UUpiDog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEcX4UZoUt2Yexj7icw1NcebOrvvgQSb81W2aJ9h1IQ6Ff7VTs296/hlALLwDBUZy
-	 ZygNF9EaZ3swOVCD6Eur1OZq1Jbs/4OrkGWNXDmSiS0xJfM2LvU2kw6LYkDq/dpzHK
-	 uk7QiMMncgXf+JVAdFX90HV0zozzuH/Y5IjHeTbU=
+	b=Gs6GGyEtf4SqK6AYkNAjcMQzoReqNYhoECVKcGzE5/WolL0upkU5Z83Hpf0uJyt19
+	 DTkN82uvxD94Exa/DiW4VxtSEHNzIbqyIHTJmlpnlVTB1l6UxGwbRGzCWRL27qdRqR
+	 cL38LDSbsmDI4D1xFB1dNKJaCIj/r/FshrZhZr6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/423] drm/ssd130x: Set SPI .id_table to prevent an SPI core warning
-Date: Tue,  8 Apr 2025 12:46:14 +0200
-Message-ID: <20250408104846.868624594@linuxfoundation.org>
+Subject: [PATCH 6.12 066/423] drm/msm/dpu: dont use active in atomic_check()
+Date: Tue,  8 Apr 2025 12:46:32 +0200
+Message-ID: <20250408104847.285662098@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,93 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5d40d4fae6f2fb789f48207a9d4772bbee970b5c ]
+[ Upstream commit 25b4614843bcc56ba150f7c99905125a019e656c ]
 
-The only reason for the ssd130x-spi driver to have an spi_device_id table
-is that the SPI core always reports an "spi:" MODALIAS, even when the SPI
-device has been registered via a Device Tree Blob.
+The driver isn't supposed to consult crtc_state->active/active_check for
+resource allocation. Instead all resources should be allocated if
+crtc_state->enabled is set. Stop consulting active / active_changed in
+order to determine whether the hardware resources should be
+(re)allocated.
 
-Without spi_device_id table information in the module's metadata, module
-autoloading would not work because there won't be an alias that matches
-the MODALIAS reported by the SPI core.
-
-This spi_device_id table is not needed for device matching though, since
-the of_device_id table is always used in this case. For this reason, the
-struct spi_driver .id_table member is currently not set in the SPI driver.
-
-Because the spi_device_id table is always required for module autoloading,
-the SPI core checks during driver registration that both an of_device_id
-table and a spi_device_id table are present and that they contain the same
-entries for all the SPI devices.
-
-Not setting the .id_table member in the driver then confuses the core and
-leads to the following warning when the ssd130x-spi driver is registered:
-
-  [   41.091198] SPI driver ssd130x-spi has no spi_device_id for sinowealth,sh1106
-  [   41.098614] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1305
-  [   41.105862] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1306
-  [   41.113062] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1307
-  [   41.120247] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1309
-  [   41.127449] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1322
-  [   41.134627] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1325
-  [   41.141784] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1327
-  [   41.149021] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1331
-
-To prevent the warning, set the .id_table even though it's not necessary.
-
-Since the check is done even for built-in drivers, drop the condition to
-only define the ID table when the driver is built as a module. Finally,
-rename the variable to use the "_spi_id" convention used for ID tables.
-
-Fixes: 74373977d2ca ("drm/solomon: Add SSD130x OLED displays SPI support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241231114516.2063201-1-javierm@redhat.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: ccc862b957c6 ("drm/msm/dpu: Fix reservation failures in modeset")
+Reported-by: Simona Vetter <simona.vetter@ffwll.ch>
+Closes: https://lore.kernel.org/dri-devel/ZtW_S0j5AEr4g0QW@phenom.ffwll.local/
+Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/633393/
+Link: https://lore.kernel.org/r/20250123-drm-dirty-modeset-v2-1-bbfd3a6cd1a4@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/solomon/ssd130x-spi.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 4 ----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 +--
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/solomon/ssd130x-spi.c b/drivers/gpu/drm/solomon/ssd130x-spi.c
-index 84bfde31d1724..fd1b858dcb788 100644
---- a/drivers/gpu/drm/solomon/ssd130x-spi.c
-+++ b/drivers/gpu/drm/solomon/ssd130x-spi.c
-@@ -151,7 +151,6 @@ static const struct of_device_id ssd130x_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, ssd130x_of_match);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index db6c57900781d..ecd595215a6be 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1191,10 +1191,6 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
  
--#if IS_MODULE(CONFIG_DRM_SSD130X_SPI)
- /*
-  * The SPI core always reports a MODALIAS uevent of the form "spi:<dev>", even
-  * if the device was registered via OF. This means that the module will not be
-@@ -160,7 +159,7 @@ MODULE_DEVICE_TABLE(of, ssd130x_of_match);
-  * To workaround this issue, add a SPI device ID table. Even when this should
-  * not be needed for this driver to match the registered SPI devices.
-  */
--static const struct spi_device_id ssd130x_spi_table[] = {
-+static const struct spi_device_id ssd130x_spi_id[] = {
- 	/* ssd130x family */
- 	{ "sh1106",  SH1106_ID },
- 	{ "ssd1305", SSD1305_ID },
-@@ -175,14 +174,14 @@ static const struct spi_device_id ssd130x_spi_table[] = {
- 	{ "ssd1331", SSD1331_ID },
- 	{ /* sentinel */ }
- };
--MODULE_DEVICE_TABLE(spi, ssd130x_spi_table);
--#endif
-+MODULE_DEVICE_TABLE(spi, ssd130x_spi_id);
+ 	DRM_DEBUG_ATOMIC("%s: check\n", dpu_crtc->name);
  
- static struct spi_driver ssd130x_spi_driver = {
- 	.driver = {
- 		.name = DRIVER_NAME,
- 		.of_match_table = ssd130x_of_match,
- 	},
-+	.id_table = ssd130x_spi_id,
- 	.probe = ssd130x_spi_probe,
- 	.remove = ssd130x_spi_remove,
- 	.shutdown = ssd130x_spi_shutdown,
+-	/* force a full mode set if active state changed */
+-	if (crtc_state->active_changed)
+-		crtc_state->mode_changed = true;
+-
+ 	if (cstate->num_mixers) {
+ 		rc = _dpu_crtc_check_and_setup_lm_bounds(crtc, crtc_state);
+ 		if (rc)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 2cf8150adf81f..47b514c89ce66 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -718,12 +718,11 @@ static int dpu_encoder_virt_atomic_check(
+ 		crtc_state->mode_changed = true;
+ 	/*
+ 	 * Release and Allocate resources on every modeset
+-	 * Dont allocate when active is false.
+ 	 */
+ 	if (drm_atomic_crtc_needs_modeset(crtc_state)) {
+ 		dpu_rm_release(global_state, drm_enc);
+ 
+-		if (!crtc_state->active_changed || crtc_state->enable)
++		if (crtc_state->enable)
+ 			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+ 					drm_enc, crtc_state, topology);
+ 		if (!ret)
 -- 
 2.39.5
 
