@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AFA268C5D;
-	Tue,  8 Apr 2025 11:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34379268C5D;
+	Tue,  8 Apr 2025 11:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111738; cv=none; b=MWCbaYhfAvD+JDuJt9QUXX/kYWwiRRog2ZOxShNFt1NqOXmGb/NpXCPWVizZRx2jhO1C6/kavuHfwjR1t1xOVG+FJFEE0Af8PLiN3r18meM0qNVCBUNVBFSUXX1N/Mh/yFugSnCmwe7wZGGjIburkz5GrJwFXh8jFCrhqo1DerE=
+	t=1744111741; cv=none; b=ulqIWR0VJLcjABuU4Sp+JEUqryF6Zr7l7jJ8wEOD5F1/p4/DgHATIPbJfIPR/PlekHjSU3kJLnWrA+PFhZlzfZUF0rB5tiQtQNvVdx4FLrf3tTxR1EsApacPLbd7vdK8UO1fA7X5hxvScvAOnLa335hR5vIWH0hjYg8uO80OjVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111738; c=relaxed/simple;
-	bh=yE404GQq97ciw6VKnVhU2Efmd+SOitEjS1nm0JPQZRU=;
+	s=arc-20240116; t=1744111741; c=relaxed/simple;
+	bh=SvvV0POcN/aBW8iCiM/w7QFQrct58pSKYrWD5sEuu3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iczuiFCYY49q9K6ql+FE2giH0wlrWfHW/nanR41BMSzoUq23Q4ijZFMHKnm4Qr1+xnVLttWYcESYDrJj3gbOiN8Tv/pb2OGCNvEyfsp9n9OEEoD8M/+RVGdPpzWoTL0u782Qgx6hjEVTC/b1XrNuosTMn2vyyI0GsDAm5p0pA6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yu+4p3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGAOwkU05vRFWW5nA+srv06IPPYATC0cJMNpMLpI7MAtA/8RjZjBHUaWQrdusjj9NfYXH8hNx7NJm8M+kiANmeTWqUZYcPw3pxdxp5uXx/5xN7H1YAQNSOY3EjN3RLJbFK6+JE/mEYc16YOk7p3VZxr1gV20glXJieelDQltuxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seZ1vtJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yu+4p3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD817C4CEE7;
-	Tue,  8 Apr 2025 11:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seZ1vtJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C361C4CEE5;
+	Tue,  8 Apr 2025 11:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111738;
-	bh=yE404GQq97ciw6VKnVhU2Efmd+SOitEjS1nm0JPQZRU=;
+	s=korg; t=1744111740;
+	bh=SvvV0POcN/aBW8iCiM/w7QFQrct58pSKYrWD5sEuu3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yu+4p3ZtUC4CslLTH+qJo73JEDSWxXMdKl78Oor0BYqs82gaf5K9ZgDbXf+JfPPS
-	 hVOvUqAPnsYKE2tsJzrch2KQL/cHUym6sdml4iK7vSoRbSCUbM15ZhajuL9e7xWmj6
-	 J6JuLCcpj4NmzJdL5LxrQk+MJ++i7SCcxGyODUqs=
+	b=seZ1vtJ4owe1z9/YLkTTYBmbkQo1i/0xKrinJFxPSMOMSJm45uYjhZlCnZI+RkCS2
+	 /w25Hep2Y1g9kM30mXDzqSqajPo6TCX6d2zbY10HET7GmdqQfD69BTc1tDOidITQHe
+	 uY2ESXvQ2Yv6tNsXkQnG3lDfTqX7/TmKqSeQWQg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Likhitha Korrapati <likhitha@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Marcus Meissner <meissner@suse.de>,
+	Leo Yan <leo.yan@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 540/731] perf tools: Fix is_compat_mode build break in ppc64
-Date: Tue,  8 Apr 2025 12:47:17 +0200
-Message-ID: <20250408104926.837620002@linuxfoundation.org>
+Subject: [PATCH 6.14 541/731] perf tools: annotate asm_pure_loop.S
+Date: Tue,  8 Apr 2025 12:47:18 +0200
+Message-ID: <20250408104926.860268957@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,56 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Likhitha Korrapati <likhitha@linux.ibm.com>
+From: Marcus Meissner <meissner@suse.de>
 
-[ Upstream commit 7e442be7015af524d2b5fb84f0ff04a44501542b ]
+[ Upstream commit 9a352a90e88a041f4b26d359493e12a7f5ae1a6a ]
 
-Commit 54f9aa1092457 ("tools/perf/powerpc/util: Add support to
-handle compatible mode PVR for perf json events") introduced
-to select proper JSON events in case of compat mode using
-auxiliary vector. But this caused a compilation error in ppc64
-Big Endian.
+Annotate so it is built with non-executable stack.
 
-arch/powerpc/util/header.c: In function 'is_compat_mode':
-arch/powerpc/util/header.c:20:21: error: cast to pointer from
-integer of different size [-Werror=int-to-pointer-cast]
-   20 |         if (!strcmp((char *)platform, (char *)base_platform))
-      |                     ^
-arch/powerpc/util/header.c:20:39: error: cast to pointer from
-integer of different size [-Werror=int-to-pointer-cast]
-   20 |         if (!strcmp((char *)platform, (char *)base_platform))
-      |
-
-Commit saved the getauxval(AT_BASE_PLATFORM) and getauxval(AT_PLATFORM)
-return values in u64 which causes the compilation error.
-
-Patch fixes this issue by changing u64 to "unsigned long".
-
-Fixes: 54f9aa1092457 ("tools/perf/powerpc/util: Add support to handle compatible mode PVR for perf json events")
-Signed-off-by: Likhitha Korrapati <likhitha@linux.ibm.com>
-Reviewed-by: Athira Rajeev <atrajeev@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250321100726.699956-1-likhitha@linux.ibm.com
+Fixes: 8b97519711c3 ("perf test: Add asm pureloop test tool")
+Signed-off-by: Marcus Meissner <meissner@suse.de>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Link: https://lore.kernel.org/r/20250323085410.23751-1-meissner@suse.de
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/powerpc/util/header.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/coresight/asm_pure_loop/asm_pure_loop.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/arch/powerpc/util/header.c b/tools/perf/arch/powerpc/util/header.c
-index c7df534dbf8f8..0be74f048f964 100644
---- a/tools/perf/arch/powerpc/util/header.c
-+++ b/tools/perf/arch/powerpc/util/header.c
-@@ -14,8 +14,8 @@
- 
- static bool is_compat_mode(void)
- {
--	u64 base_platform = getauxval(AT_BASE_PLATFORM);
--	u64 platform = getauxval(AT_PLATFORM);
-+	unsigned long base_platform = getauxval(AT_BASE_PLATFORM);
-+	unsigned long platform = getauxval(AT_PLATFORM);
- 
- 	if (!strcmp((char *)platform, (char *)base_platform))
- 		return false;
+diff --git a/tools/perf/tests/shell/coresight/asm_pure_loop/asm_pure_loop.S b/tools/perf/tests/shell/coresight/asm_pure_loop/asm_pure_loop.S
+index 75cf084a927d3..5777600467723 100644
+--- a/tools/perf/tests/shell/coresight/asm_pure_loop/asm_pure_loop.S
++++ b/tools/perf/tests/shell/coresight/asm_pure_loop/asm_pure_loop.S
+@@ -26,3 +26,5 @@ skip:
+ 	mov	x0, #0
+ 	mov	x8, #93 // __NR_exit syscall
+ 	svc	#0
++
++.section .note.GNU-stack, "", @progbits
 -- 
 2.39.5
 
