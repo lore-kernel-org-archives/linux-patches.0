@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AC9267F65;
-	Tue,  8 Apr 2025 11:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AB32686B1;
+	Tue,  8 Apr 2025 11:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111652; cv=none; b=K4AnCADpDtE3BYL8Fxzvl3W1nBvn42dt0+mvFjOBXYH4PSHAmDozT8PWsgakg/+cFNHGFXT5j4FCEL6bEfpALdetLMWvmwzukCZ91U04IOEL30adak3cVjbVSbtzOSiZRAU9WKT9psGvppV4v38aU3ssbLZKiXg1Z7Kz2G53PWA=
+	t=1744111655; cv=none; b=hxI/kLdXkoXXEpnKtnbjzKj7sHsZJ73QH2jo4XmEkTOi/f8599BHGeRBQTIz2yV0w5AchHXXZqIHT4Bpqy7rQt4xWk4NeoEdoFbmpz4Xh6GGIZjM3Kl6LTrPbPMg5pLAICZyXmw4KyiUSAmG6mJBSM1ifqCFtWH58lLGC+LdGLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111652; c=relaxed/simple;
-	bh=O6K/vQLIyU7g0e0FWCrR6jYFew9AAvx95OGynDYTEnk=;
+	s=arc-20240116; t=1744111655; c=relaxed/simple;
+	bh=uxL9P2F0opw+WLn431UkGdao43H8s7uqenOo3mCmn1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QD7jl2oPoRs3hVSux9IT0IFwYPOE+H3onptKWkjVhYT76J4Z93bPN70xwMpZNVl5XRZceVvCHnbhH5M+vAxdMRnK8imxqWtlr8XZaXibGANpwRGDfknZHg+vvV0eethFJ3eF5tSl4ci33Ep8SBDbK8Sst//+Npe1PDlwrmbLnYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smxVv0D1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL92Fs2vBPkS1S+pz2rRKkfjjG632wSCd/8n25qaeuX2UkwH2nwAaKAZNMAePAU+jKcbdfgsrFY5MxLPFWPxQHz2k5qMHRqTNiq/qGQNEUsWkZwDjTFtAb13ivjC+SS9UBprE32g1K3UPWsRk+eZq9JagMSj++BNq0K97eD5EWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIhnBjkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smxVv0D1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B598EC4CEEE;
-	Tue,  8 Apr 2025 11:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIhnBjkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9563BC4CEEA;
+	Tue,  8 Apr 2025 11:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111652;
-	bh=O6K/vQLIyU7g0e0FWCrR6jYFew9AAvx95OGynDYTEnk=;
+	s=korg; t=1744111655;
+	bh=uxL9P2F0opw+WLn431UkGdao43H8s7uqenOo3mCmn1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smxVv0D1cHzjcnoEthej+3UORa/2fc22dAflG/ISIHWm25PVn84Tc3A3Defo3TOqK
-	 JEbIJEHJAA0Wo5xISGgTM2My81DN9g0yaQOTGiM96M3ClWpMwiWc1+ZrPmzEgXmgk+
-	 E1mvczMaqPFQ0SEn0EKAto333uDvvBTmRJQOGhhQ=
+	b=ZIhnBjkd+aTaWvQK8L+NRQh0pTbj2aI9U4bhKVsMRF4cB/Dx9wQz/XXQXtlSa04+s
+	 QUcSR9qEzSiYwhaWAdWXVbcx3go6gEDTfdyOXKDJ5jOHMbC0JC0rCoKm/BSlDUsCoM
+	 PX61jBKmkYGjG0C498LJv78IH3x5t1W9eL/u+LEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 469/731] perf build: Fix in-tree build due to symbolic link
-Date: Tue,  8 Apr 2025 12:46:06 +0200
-Message-ID: <20250408104925.187914198@linuxfoundation.org>
+Subject: [PATCH 6.14 470/731] ucsi_ccg: Dont show failed to get FW build information error
+Date: Tue,  8 Apr 2025 12:46:07 +0200
+Message-ID: <20250408104925.210562754@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,78 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 75100d848ef4b8ca39bb6dd3a21181e37dea27e2 ]
+[ Upstream commit c16006852732dc4fe37c14b81f9b4458df05b832 ]
 
-Building perf in-tree is broken after commit 890a1961c812 ("perf tools:
-Create source symlink in perf object dir") which added a 'source' symlink
-in the output dir pointing to the source dir.
+The error `failed to get FW build information` is added for what looks
+to be for misdetection of the device property firmware-name.
 
-With in-tree builds, the added 'SOURCE = ...' line is executed multiple
-times (I observed 2 during the build plus 2 during installation). This is a
-minor inefficiency, in theory not harmful because symlink creation is
-assumed to be idempotent. But it is not.
+If the property is missing (such as on non-nvidia HW) this error shows up.
+Move the error into the scope of the property parser for "firmware-name"
+to avoid showing errors on systems without the firmware-name property.
 
-Considering with in-tree builds:
-
-  srctree=/absolute/path/to/linux
-   OUTPUT=/absolute/path/to/linux/tools/perf
-
-here's what happens:
-
- 1. ln -sf $(srctree)/tools/perf $(OUTPUT)/source
-    -> creates /absolute/path/to/linux/tools/perf/source
-       link to /absolute/path/to/linux/tools/perf
-    => OK, that's what was intended
- 2. ln -sf $(srctree)/tools/perf $(OUTPUT)/source   # same command as 1
-    -> creates /absolute/path/to/linux/tools/perf/perf
-       link to /absolute/path/to/linux/tools/perf
-    => Not what was intended, not idempotent
- 3. Now the build _should_ create the 'perf' executable, but it fails
-
-The reason is the tricky 'ln' command line. At the first invocation 'ln'
-uses the 1st form:
-
-       ln [OPTION]... [-T] TARGET LINK_NAME
-
-and creates a link to TARGET *called LINK_NAME*.
-
-At the second invocation $(OUTPUT)/source exists, so 'ln' uses the 3rd
-form:
-
-       ln [OPTION]... TARGET... DIRECTORY
-
-and creates a link to TARGET *called TARGET* inside DIRECTORY.
-
-Fix by adding -n/--no-dereference to "treat LINK_NAME as a normal file
-if it is a symbolic link to a directory", as the manpage says.
-
-Closes: https://lore.kernel.org/all/20241125182506.38af9907@booty/
-Fixes: 890a1961c812 ("perf tools: Create source symlink in perf object dir")
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Tested-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20250124-perf-fix-intree-build-v1-1-485dd7a855e4@bootlin.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 5c9ae5a87573d ("usb: typec: ucsi: ccg: add firmware flashing support")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250221054137.1631765-2-superm1@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 05c083bb11220..eea8877c7cba3 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -158,7 +158,7 @@ ifneq ($(OUTPUT),)
- VPATH += $(OUTPUT)
- export VPATH
- # create symlink to the original source
--SOURCE := $(shell ln -sf $(srctree)/tools/perf $(OUTPUT)/source)
-+SOURCE := $(shell ln -sfn $(srctree)/tools/perf $(OUTPUT)/source)
- endif
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 4b1668733a4be..511dd1b224ae5 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -1433,11 +1433,10 @@ static int ucsi_ccg_probe(struct i2c_client *client)
+ 			uc->fw_build = CCG_FW_BUILD_NVIDIA_TEGRA;
+ 		else if (!strcmp(fw_name, "nvidia,gpu"))
+ 			uc->fw_build = CCG_FW_BUILD_NVIDIA;
++		if (!uc->fw_build)
++			dev_err(uc->dev, "failed to get FW build information\n");
+ 	}
  
- # Do not use make's built-in rules
+-	if (!uc->fw_build)
+-		dev_err(uc->dev, "failed to get FW build information\n");
+-
+ 	/* reset ccg device and initialize ucsi */
+ 	status = ucsi_ccg_init(uc);
+ 	if (status < 0) {
 -- 
 2.39.5
 
