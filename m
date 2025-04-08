@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06A2267F4F;
-	Tue,  8 Apr 2025 11:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404D1263C83;
+	Tue,  8 Apr 2025 11:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113508; cv=none; b=DU6pZ+UHbilPEa5qa315j6Pp7l5fAvc599nY9zfGIeYIQtgRFPsaRS5u8+syPgjcm6XKvNPUP/OhToITOW9v1f6G0tLfw4dOxD7DKAjNcPnhCjTPtOu4YbjxDK+s7EpaG1kZ1SmjEVqLKSbhAZIDDKneqDJFkciQ3fNg4NBmmPQ=
+	t=1744113511; cv=none; b=fZJOEQg3AIUKx0R6PZJTnpoViwcOT4GAAFFVQtOl3nJ0Gn0ESp/G1mpOiGk/kjf05o8OEXn0nU0kzAmcsHQQSOBSbhq45WHClJkmqR/qLsRyR4afUk5Tci1IRLPhsZ/31Tup84Se6AjG2TFA7yRic7fAd2cywX2Z6yt5JVqdbD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113508; c=relaxed/simple;
-	bh=3rABR4KOYZaOKYROdZkObOIcJfX9uuwhCj+Togf2y7Y=;
+	s=arc-20240116; t=1744113511; c=relaxed/simple;
+	bh=YjKeJR248Z5MNCpgzFDUVhP7sKpEgjFbU1MgUDtkNCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gswFiQ5JlQMSsV3azc3DJWUxrkSEz3fx3mCsBKXcCN1wC88Q4pkjC6Z6oGnjYsSVF2boC0j9O2cWiBoCiF25uZUMshEUBafs6dUocx3NWHK6D+LA4L9XEmsYHSHqUKAOQ1LldgmSr/Fvy3FWZgY/H5YtA24aS/8o+jMCUXmScPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpvtLxC/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tV1QorwdXP0g3+87dFW+mO5PW2fL4ablRaUrCloB3lTw59Fmd2hohgZ/ysjUzdNPAy58SspVI0FMQeXEEt9mVdgl6RVU446Rfblr8/+LtRlC5q4ZdUCF8drwNRs7pAF4Ff1vJbA1FxSzv0KSuhyl7IadclKBFdBZ8PZ/ZNna9wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDMVinbm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpvtLxC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8371C4CEE5;
-	Tue,  8 Apr 2025 11:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDMVinbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACE4C4CEE5;
+	Tue,  8 Apr 2025 11:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113508;
-	bh=3rABR4KOYZaOKYROdZkObOIcJfX9uuwhCj+Togf2y7Y=;
+	s=korg; t=1744113510;
+	bh=YjKeJR248Z5MNCpgzFDUVhP7sKpEgjFbU1MgUDtkNCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpvtLxC/XJ0jCabozzdcWHniaxYX9jrGJWFxfU0BRRe6l4rwIwcn3UVFs2WD2zyXB
-	 jVNiIrepcv5Fum5QB2pNKA2mfJ0eqEcJdCApHAx7vlMMBpz3KpxcV/i4xg035sBaUX
-	 Zmy6hcVYoT61mjqlD+/HDA/jEvmoFmLN/pO/n2iQ=
+	b=kDMVinbmt3Z61/Oub1Oz+FDaq+vtTGThyHOSvPqrcyrXs9ZQBByfBaIunjz4OWWq6
+	 WAZ1+8rgutizGZMSVrPHsGi9poD3BWiCbtRvyg0Iv3BVLFkzDa3cS7xct9bTSCQ0bS
+	 89nB9BOpUz4UtwJpAVnLOj95qbd2YbXQgHrwPAeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladis Dronov <vdronov@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kai Huang <kai.huang@intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Sean Christopherson <sean.j.christopherson@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/268] x86/sgx: Warn explicitly if X86_FEATURE_SGX_LC is not enabled
-Date: Tue,  8 Apr 2025 12:49:55 +0200
-Message-ID: <20250408104833.512716462@linuxfoundation.org>
+Subject: [PATCH 6.6 185/268] nvme-pci: fix stuck reset on concurrent DPC and HP
+Date: Tue,  8 Apr 2025 12:49:56 +0200
+Message-ID: <20250408104833.541049259@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -57,85 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladis Dronov <vdronov@redhat.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 65be5c95d08eedda570a6c888a12384c77fe7614 ]
+[ Upstream commit 3f674e7b670b7b7d9261935820e4eba3c059f835 ]
 
-The kernel requires X86_FEATURE_SGX_LC to be able to create SGX enclaves,
-not just X86_FEATURE_SGX.
+The PCIe error handling has the nvme driver quiesce the device, attempt
+to restart it, then wait for that restart to complete.
 
-There is quite a number of hardware which has X86_FEATURE_SGX but not
-X86_FEATURE_SGX_LC. A kernel running on such hardware does not create
-the /dev/sgx_enclave file and does so silently.
+A PCIe DPC event also toggles the PCIe link. If the slot doesn't have
+out-of-band presence detection, this will trigger a pciehp
+re-enumeration.
 
-Explicitly warn if X86_FEATURE_SGX_LC is not enabled to properly notify
-users that the kernel disabled the SGX driver.
+The error handling that calls nvme_error_resume is holding the device
+lock while this happens. This lock blocks pciehp's request to disconnect
+the driver from proceeding.
 
-The X86_FEATURE_SGX_LC, a.k.a. SGX Launch Control, is a CPU feature
-that enables LE (Launch Enclave) hash MSRs to be writable (with
-additional opt-in required in the 'feature control' MSR) when running
-enclaves, i.e. using a custom root key rather than the Intel proprietary
-key for enclave signing.
+Meanwhile the nvme's reset can't make forward progress because its
+device isn't there anymore with outstanding IO, and the timeout handler
+won't do anything to fix it because the device is undergoing error
+handling.
 
-I've hit this issue myself and have spent some time researching where
-my /dev/sgx_enclave file went on SGX-enabled hardware.
+End result: deadlocked.
 
-Related links:
+Fix this by having the timeout handler short cut the disabling for a
+disconnected PCIe device. The downside is that we're relying on an IO
+timeout to clean up this mess, which could be a minute by default.
 
-  https://github.com/intel/linux-sgx/issues/837
-  https://patchwork.kernel.org/project/platform-driver-x86/patch/20180827185507.17087-3-jarkko.sakkinen@linux.intel.com/
-
-[ mingo: Made the error message a bit more verbose, and added other cases
-         where the kernel fails to create the /dev/sgx_enclave device node. ]
-
-Signed-off-by: Vladis Dronov <vdronov@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Kai Huang <kai.huang@intel.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Sean Christopherson <sean.j.christopherson@intel.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250309172215.21777-2-vdronov@redhat.com
+Tested-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/driver.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/nvme/host/pci.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/driver.c b/arch/x86/kernel/cpu/sgx/driver.c
-index 262f5fb18d74d..c453953d5a33f 100644
---- a/arch/x86/kernel/cpu/sgx/driver.c
-+++ b/arch/x86/kernel/cpu/sgx/driver.c
-@@ -150,13 +150,15 @@ int __init sgx_drv_init(void)
- 	u64 xfrm_mask;
- 	int ret;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 5265be835a4ce..a763df0200ab4 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1282,8 +1282,19 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req)
+ 	struct nvme_dev *dev = nvmeq->dev;
+ 	struct request *abort_req;
+ 	struct nvme_command cmd = { };
++	struct pci_dev *pdev = to_pci_dev(dev->dev);
+ 	u32 csts = readl(dev->bar + NVME_REG_CSTS);
  
--	if (!cpu_feature_enabled(X86_FEATURE_SGX_LC))
-+	if (!cpu_feature_enabled(X86_FEATURE_SGX_LC)) {
-+		pr_info("SGX disabled: SGX launch control CPU feature is not available, /dev/sgx_enclave disabled.\n");
- 		return -ENODEV;
-+	}
++	/*
++	 * Shutdown the device immediately if we see it is disconnected. This
++	 * unblocks PCIe error handling if the nvme driver is waiting in
++	 * error_resume for a device that has been removed. We can't unbind the
++	 * driver while the driver's error callback is waiting to complete, so
++	 * we're relying on a timeout to break that deadlock if a removal
++	 * occurs while reset work is running.
++	 */
++	if (pci_dev_is_disconnected(pdev))
++		nvme_change_ctrl_state(&dev->ctrl, NVME_CTRL_DELETING);
+ 	if (nvme_state_terminal(&dev->ctrl))
+ 		goto disable;
  
- 	cpuid_count(SGX_CPUID, 0, &eax, &ebx, &ecx, &edx);
+@@ -1291,7 +1302,7 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req)
+ 	 * the recovery mechanism will surely fail.
+ 	 */
+ 	mb();
+-	if (pci_channel_offline(to_pci_dev(dev->dev)))
++	if (pci_channel_offline(pdev))
+ 		return BLK_EH_RESET_TIMER;
  
- 	if (!(eax & 1))  {
--		pr_err("SGX disabled: SGX1 instruction support not available.\n");
-+		pr_info("SGX disabled: SGX1 instruction support not available, /dev/sgx_enclave disabled.\n");
- 		return -ENODEV;
- 	}
- 
-@@ -173,8 +175,10 @@ int __init sgx_drv_init(void)
- 	}
- 
- 	ret = misc_register(&sgx_dev_enclave);
--	if (ret)
-+	if (ret) {
-+		pr_info("SGX disabled: Unable to register the /dev/sgx_enclave driver (%d).\n", ret);
- 		return ret;
-+	}
- 
- 	return 0;
- }
+ 	/*
 -- 
 2.39.5
 
