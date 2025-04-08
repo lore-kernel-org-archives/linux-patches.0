@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF5C269819;
-	Tue,  8 Apr 2025 12:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40FC26B957;
+	Tue,  8 Apr 2025 12:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114752; cv=none; b=WwYCmLNpl4RdaK2qGLaJ+gMGP64AqChplZU5PqvF+iakpmVIUkTemnM8rZzxOdq0aRFDZOq3JQeBgFoDUJ04KLHmg+uYvlvUnBYtDpue52F/xbl5F7UurzMtFyOmXI41z4/0uW4oWJwwprtK7xbJMKt7xTidBAgwyVI6xxLS+EU=
+	t=1744114754; cv=none; b=kzjMT/Qvp98h9lRaVDbuhPFkuAGiY/ZahRpcDNYiC95yth5t0MOTaFmtOCXILtKzHaTNITd7VLDaf1htVkJHO/1bdbp/mlBQe3XuotD21Qws2wPmF76nokXg4y7bkpFCJ04GqWFsNavs2N3LGAuGmaN6xSSNCSIDzfvDsuljjic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114752; c=relaxed/simple;
-	bh=uIVMioTSCw3PM0SMtoqo+MPRCtZGRw0747nkJY7FjTk=;
+	s=arc-20240116; t=1744114754; c=relaxed/simple;
+	bh=ag20USvnRthSAJlBon1sdTCNEBS9ovt8WjNKVMszi0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b1bF2N2iIPApOQ40ieZ4RU6QHvavpQ0tGqHdMoQ/b9z80l8Y7Yzt32P5XiDd/CtF7HiJRbOHvigYLmyeTw5zBuxw+NUlu8mF1Sj/oGq7p9NhXSi2tmuSeLLjYoWNJOrmI/zxo0qpsgT9WHqn91rDnIKa/S9yi+qsNRPj7o3XFsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=db8/Kqxx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BMcUjJB15rnUoaX1g69I8/w/GOZ6mI2rHdPqMCA3Ox8gdW/MdoEKHAjmLkv+OENmzTCtn12s8FS54Bb/ZZE2NhqVl2QoBdp8YghNfaHInOnVOBwebfBcRL0sEV8gdsH3EGZYodldfdpCVSSGwvw6zvgqk2HmAj49yeJHt2F2DS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5uPsk++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="db8/Kqxx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5500EC4CEE5;
-	Tue,  8 Apr 2025 12:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5uPsk++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276AFC4CEE5;
+	Tue,  8 Apr 2025 12:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114751;
-	bh=uIVMioTSCw3PM0SMtoqo+MPRCtZGRw0747nkJY7FjTk=;
+	s=korg; t=1744114754;
+	bh=ag20USvnRthSAJlBon1sdTCNEBS9ovt8WjNKVMszi0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=db8/KqxxWR0zgnQprnzpP2m7lUlBlvU4v7mbMiqAEUqvSZu7nSnVhUDdF+9in3lZi
-	 avGg/LgxISUjYD7zxbgPWJnqxgPtW0atGzJbPx2mHuBgwPeaI5rfhEeaQPRIMUj7i0
-	 CiujZlLgiZZ9rc+iXg7UmlbzZzw2twBqLuCp8ixQ=
+	b=s5uPsk++6XDZI0hYS/gY87AMiOQvAHSrvrL48Fe6kMt1lJlLBOnWj/AehnmIR2Fn8
+	 F5WtoXxC8M0SKkMWP+RiPe8kKqk+4QYbmGuzxiU8FXdlAkrSsKTfrE0QhooiM8khre
+	 1kVc159hxrIZFDmUWe67WWb24NHRHvomLTzcgTIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 223/499] iio: backend: make sure to NULL terminate stack buffer
-Date: Tue,  8 Apr 2025 12:47:15 +0200
-Message-ID: <20250408104856.772269092@linuxfoundation.org>
+Subject: [PATCH 6.13 224/499] perf arm-spe: Fix load-store operation checking
+Date: Tue,  8 Apr 2025 12:47:16 +0200
+Message-ID: <20250408104856.796959550@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,49 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 035b4989211dc1c8626e186d655ae8ca5141bb73 ]
+[ Upstream commit e1d47850bbf79a541c9b3bacdd562f5e0112274d ]
 
-Make sure to NULL terminate the buffer in
-iio_backend_debugfs_write_reg() before passing it to sscanf(). It is a
-stack variable so we should not assume it will 0 initialized.
+The ARM_SPE_OP_LD and ARM_SPE_OP_ST operations are secondary operation
+type, they are overlapping with other second level's operation types
+belonging to SVE and branch operations.  As a result, a non load-store
+operation can be parsed for data source and memory sample.
 
-Fixes: cdf01e0809a4 ("iio: backend: add debugFs interface")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250218-dev-iio-misc-v1-1-bf72b20a1eb8@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To fix the issue, this commit introduces a is_ldst_op() macro for
+checking LDST operation, and apply the checking when synthesize data
+source and memory samples.
+
+Fixes: a89dbc9b988f ("perf arm-spe: Set sample's data source field")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250304111240.3378214-7-leo.yan@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-backend.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/arm-spe.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/industrialio-backend.c b/drivers/iio/industrialio-backend.c
-index 3632812720352..aa2b8b38ab587 100644
---- a/drivers/iio/industrialio-backend.c
-+++ b/drivers/iio/industrialio-backend.c
-@@ -155,10 +155,12 @@ static ssize_t iio_backend_debugfs_write_reg(struct file *file,
- 	ssize_t rc;
- 	int ret;
+diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+index dbf13f47879c0..e1f7b01cd5221 100644
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -37,6 +37,8 @@
+ #include "../../arch/arm64/include/asm/cputype.h"
+ #define MAX_TIMESTAMP (~0ULL)
  
--	rc = simple_write_to_buffer(buf, sizeof(buf), ppos, userbuf, count);
-+	rc = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, userbuf, count);
- 	if (rc < 0)
- 		return rc;
- 
-+	buf[count] = '\0';
++#define is_ldst_op(op)		(!!((op) & ARM_SPE_OP_LDST))
 +
- 	ret = sscanf(buf, "%i %i", &back->cached_reg_addr, &val);
+ struct arm_spe {
+ 	struct auxtrace			auxtrace;
+ 	struct auxtrace_queues		queues;
+@@ -605,6 +607,10 @@ static u64 arm_spe__synth_data_source(struct arm_spe_queue *speq,
+ 	union perf_mem_data_src	data_src = { .mem_op = PERF_MEM_OP_NA };
+ 	bool is_common = arm_spe__is_common_ds_encoding(speq);
  
- 	switch (ret) {
++	/* Only synthesize data source for LDST operations */
++	if (!is_ldst_op(record->op))
++		return 0;
++
+ 	if (record->op & ARM_SPE_OP_LD)
+ 		data_src.mem_op = PERF_MEM_OP_LOAD;
+ 	else if (record->op & ARM_SPE_OP_ST)
+@@ -705,7 +711,7 @@ static int arm_spe_sample(struct arm_spe_queue *speq)
+ 	 * When data_src is zero it means the record is not a memory operation,
+ 	 * skip to synthesize memory sample for this case.
+ 	 */
+-	if (spe->sample_memory && data_src) {
++	if (spe->sample_memory && is_ldst_op(record->op)) {
+ 		err = arm_spe__synth_mem_sample(speq, spe->memory_id, data_src);
+ 		if (err)
+ 			return err;
 -- 
 2.39.5
 
