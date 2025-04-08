@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFF3268FD8;
-	Tue,  8 Apr 2025 11:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903FD2686B9;
+	Tue,  8 Apr 2025 11:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111591; cv=none; b=CgCppnvmrM/V4EilT23V2hzuVjt6E3qpCnz5BRSYYGr6UTi/PKK18mmpODutv0Rk1bv36o9ykON2pfI+djobKAoJC0mlrBWDLaP2lUhY38YtavEH/Vl9uR8dJ44HrC2Qb5XrXPhpWrHyCvHoqxI6QTyID8z68J7KVfriUw1sBXo=
+	t=1744111593; cv=none; b=VuvD6Zt906sI9cJ8X9B2de6cYhJnVqnUU5tKpxF1g083xe7wsl6wUCTGtjREWxtAxLftNMTaXJWsCZ+laEXOZa1x8EtBfx1EQhsgINTr+EmCa7vzBcv73qan5YFmhcckj4dtn6yEyMeLLgF0KwM5iP7fLsBDsgqpTpwhp5uDSak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111591; c=relaxed/simple;
-	bh=V0aJtgdz+YU33SPbnSAGHhCk2ykbPTVvCTN/GIvaBc0=;
+	s=arc-20240116; t=1744111593; c=relaxed/simple;
+	bh=cJXRXlp2WqI/ikKvGKTxFsIpPTxEH2OOsstnJ5oRg1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwCRdxaYNDt12ZPkFjHFYI6Elr3GQeO+v5M68WRMDo9YTEsMnzBjUZP+65e7Kl1vtT2uWukpqLD/5rMnarSwToLga08sRq8D34e+Cl1NCa175qdAbCM0jKHrd9wVWCv+S6SvmB4g8CIwoNnflYoVfY/9vf3dLGixpDSWQfoA+18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM6ZuBz4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fzraj7C/en/xKpzHhTpLNWjwoq3fSTr0VYC3HeQj6obIIystWztV1YW+g0sghSVbSZfo398x5jltaAEWELWrGCw8Zd/fBm0ShqF+JL4L3g9HpTsBBxvwVWcsrNNMHPxWakB11/VzeFkSxu3CEaW7QLWu40qj7etalnlDntPUw64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynUB38NA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM6ZuBz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7125FC4CEE5;
-	Tue,  8 Apr 2025 11:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynUB38NA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EACDC4CEE5;
+	Tue,  8 Apr 2025 11:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111590;
-	bh=V0aJtgdz+YU33SPbnSAGHhCk2ykbPTVvCTN/GIvaBc0=;
+	s=korg; t=1744111593;
+	bh=cJXRXlp2WqI/ikKvGKTxFsIpPTxEH2OOsstnJ5oRg1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iM6ZuBz4OJdf+Kv7+D2Pa/NvxMu/VsPR0t44Jzu3MpmEPJg7EDZFQgVk7zNpu/D7t
-	 7UtT0WicJ/kFc62U9KZ6hDEvX+WBCho61zu5h1w0OGi0pHFRJg0+PoN+C02FK3Hyup
-	 IRtHDYa9u/o2dT5RtC5wan+UY7xBC6QieDsiQAEo=
+	b=ynUB38NAWHWDZ0ca/29OB1dXQsxrjYc3teq7tN8mEkuqKvIzB0Dcl67zHXpZAQSY9
+	 OLdADDCzYsUlf/S0Eb8pphLodGIoQ5Cr2Y94D9qdc2xDyQ49p6t2zTG6twdfWlkdkg
+	 fGG1EeMC7NXzY88hWDaBAwkC8CvEdbL9Caz7uQLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 486/731] soundwire: take in count the bandwidth of a prepared stream
-Date: Tue,  8 Apr 2025 12:46:23 +0200
-Message-ID: <20250408104925.581203745@linuxfoundation.org>
+Subject: [PATCH 6.14 487/731] dmaengine: fsl-edma: cleanup chan after dma_async_device_unregister
+Date: Tue,  8 Apr 2025 12:46:24 +0200
+Message-ID: <20250408104925.604157119@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 08ae0d61c3d79bb5d52ae30ad4fc12442e966a23 ]
+[ Upstream commit c9c59da76ce9cb3f215b66eb3708cda1134a5206 ]
 
-When a stream's state is marked as prepared, it is ready for
-playback/capture. Therefore, we need to include the stream's bandwidth
-when we calculate the required bandwidth of a bus.
+There is kernel dump when do module test:
+sysfs: cannot create duplicate filename
+/devices/platform/soc@0/44000000.bus/44000000.dma-controller/dma/dma0chan0
+ __dma_async_device_channel_register+0x128/0x19c
+ dma_async_device_register+0x150/0x454
+ fsl_edma_probe+0x6cc/0x8a0
+ platform_probe+0x68/0xc8
 
-Fixes: 25befdf32aa40 ("soundwire: generic_bandwidth_allocation: count the bandwidth of active streams only")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://github.com/thesofproject/linux/issues/5334
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://lore.kernel.org/r/20250310073653.56476-1-yung-chuan.liao@linux.intel.com
+fsl_edma_cleanup_vchan will unlink vchan.chan.device_node, while
+dma_async_device_unregister  needs the link to do
+__dma_async_device_channel_unregister. So need move fsl_edma_cleanup_vchan
+after dma_async_device_unregister to make sure channel could be freed.
+
+So clean up chan after dma_async_device_unregister to address this.
+
+Fixes: 6f93b93b2a1b ("dmaengine: fsl-edma: kill the tasklets upon exit")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20250228071720.3780479-1-peng.fan@oss.nxp.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/generic_bandwidth_allocation.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/fsl-edma-main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/generic_bandwidth_allocation.c b/drivers/soundwire/generic_bandwidth_allocation.c
-index 59965f43c2fb0..f78a2a16581a7 100644
---- a/drivers/soundwire/generic_bandwidth_allocation.c
-+++ b/drivers/soundwire/generic_bandwidth_allocation.c
-@@ -194,10 +194,11 @@ static int sdw_compute_group_params(struct sdw_bus *bus,
- 				continue;
- 		} else {
- 			/*
--			 * Include runtimes with running (ENABLED state) and paused (DISABLED state)
--			 * streams
-+			 * Include runtimes with running (ENABLED/PREPARED state) and
-+			 * paused (DISABLED state) streams
- 			 */
- 			if (m_rt->stream->state != SDW_STREAM_ENABLED &&
-+			    m_rt->stream->state != SDW_STREAM_PREPARED &&
- 			    m_rt->stream->state != SDW_STREAM_DISABLED)
- 				continue;
- 		}
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index f989b6c9c0a98..133bdb48d1a5c 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -802,9 +802,9 @@ static void fsl_edma_remove(struct platform_device *pdev)
+ 	struct fsl_edma_engine *fsl_edma = platform_get_drvdata(pdev);
+ 
+ 	fsl_edma_irq_exit(pdev, fsl_edma);
+-	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+ 	of_dma_controller_free(np);
+ 	dma_async_device_unregister(&fsl_edma->dma_dev);
++	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+ 	fsl_disable_clocks(fsl_edma, fsl_edma->drvdata->dmamuxs);
+ }
+ 
 -- 
 2.39.5
 
