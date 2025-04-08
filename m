@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4238B26FA7D;
-	Tue,  8 Apr 2025 12:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21DC26FA68;
+	Tue,  8 Apr 2025 12:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116575; cv=none; b=A5cLHHKSqkQyuduPUhHvGeDeYPWPo/UQpvrjs20tb4zJUpLQxoN71wXIq33LwrkJbclKc4mMz4Dg66w6HWemOo2Ug8wfPkbCJA5Qx4M0CTraIyX7fsS7iQpf5Sh+L05+/Uoyyc7Vzphe/3sTcxMloQiQEcBj4Y77ACVb1i5wt9s=
+	t=1744116578; cv=none; b=TbKetDPWSRvvSWLgkOu/L6Qn3inETXtbFzT2G2wPggLE9QpEjzZIwuw5NHkEgwSgh3wqHk5BJtqxM7LgzSMZh2L6wt6X6GH34CKS45avoEpDORneY5XN57i8DyKZvdBWYDoirN4dGKKPFoQIuaBAuVjJIjy7uZIvwZnE+NUIGU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116575; c=relaxed/simple;
-	bh=SxVuVf55U2i8k6E85tB9HAaIekxyia3lw/LHuka1jPw=;
+	s=arc-20240116; t=1744116578; c=relaxed/simple;
+	bh=L0C+cKBNILmk7kxFiSniYdKVC6+GTO79CsruqStkpiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxKasg5mMoLVbHDZ9XitQO7svExntZ9pCtJkrgZruNXsNOLL4bsLu7nfogjQySEcnaucT8RHxxkq8HMy4RXwXI87pzR5cEUblTPrIQjFoDCiHNT2Et5CuH0iVLHZnXXXRndGNYAdhlUKKA8l/8vV3kvELnom6fouAedK4263SPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDsGw120; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fi4CGLBTUkhru6ZsOpdIbz51aW9uoGw6ECE7yJ0YYILeKEtmS18t+ffyoh/J1YyxHDVHghU0YJpMX4FRZv1K2Pb7XF4eEiyK85g7cXGzWgDWjgsliNFCPB5pB708QaEmFjAHAUvESJR8KX5CJc7MbWb0d+hvgpWIyPTH4brn5qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Fu++VQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDsGw120"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66C2C4CEE5;
-	Tue,  8 Apr 2025 12:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Fu++VQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BD0C4CEEE;
+	Tue,  8 Apr 2025 12:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116575;
-	bh=SxVuVf55U2i8k6E85tB9HAaIekxyia3lw/LHuka1jPw=;
+	s=korg; t=1744116577;
+	bh=L0C+cKBNILmk7kxFiSniYdKVC6+GTO79CsruqStkpiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UDsGw120cdWjosCH6+mZd61hQhDaIhPfqJeXckFyDajjYxajg9tKgQwkvQ9Yx35kt
-	 lOa5w+3wXt+e3iEU6Oz/2YpNUImAWsztWZy5CIojzo3NhRdJJwm+uVLD4H41lDMS8A
-	 EJgqJU0WBLTQXpmnj2+xcxyhCRARtbHIRfCtn7M4=
+	b=1Fu++VQLZWx7ibalf5g9rrI8DNjgmQ96uQvcWy01ptzf5Bf/e3oPQg5iBhkYfaKUq
+	 OVRaEu/M+LuXqcRLmGVfn0mo/346jHk6JFO3tafkR3tE+SyEgBDTWm+TE/DhuwWcdy
+	 v+NL2cMhCkAMTJ40v6It0fuVQ7heDBrwFYs9onR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Karan Sanghavi <karansanghvi98@gmail.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/423] iio: adc: ad7768-1: set MOSI idle state to prevent accidental reset
-Date: Tue,  8 Apr 2025 12:48:37 +0200
-Message-ID: <20250408104850.185874304@linuxfoundation.org>
+Subject: [PATCH 6.12 192/423] iio: light: Add check for array bounds in veml6075_read_int_time_ms
+Date: Tue,  8 Apr 2025 12:48:38 +0200
+Message-ID: <20250408104850.209298727@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,53 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Karan Sanghavi <karansanghvi98@gmail.com>
 
-[ Upstream commit 2416cec859299be04d021b4cf98eff814f345af7 ]
+[ Upstream commit ee735aa33db16c1fb5ebccbaf84ad38f5583f3cc ]
 
-Datasheet recommends Setting the MOSI idle state to high in order to
-prevent accidental reset of the device when SCLK is free running.
-This happens when the controller clocks out a 1 followed by 63 zeros
-while the CS is held low.
+The array contains only 5 elements, but the index calculated by
+veml6075_read_int_time_index can range from 0 to 7,
+which could lead to out-of-bounds access. The check prevents this issue.
 
-Check if SPI controller supports SPI_MOSI_IDLE_HIGH flag and set it.
+Coverity Issue
+CID 1574309: (#1 of 1): Out-of-bounds read (OVERRUN)
+overrun-local: Overrunning array veml6075_it_ms of 5 4-byte
+elements at element index 7 (byte offset 31) using
+index int_index (which evaluates to 7)
 
-Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://patch.msgid.link/c2a2b0f3d54829079763a5511359a1fa80516cfb.1741268122.git.Jonathan.Santos@analog.com
+This is hardening against potentially broken hardware. Good to have
+but not necessary to backport.
+
+Fixes: 3b82f43238ae ("iio: light: add VEML6075 UVA and UVB light sensor driver")
+Signed-off-by: Karan Sanghavi <karansanghvi98@gmail.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/Z7dnrEpKQdRZ2qFU@Emma
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7768-1.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/iio/light/veml6075.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 113703fb72454..6f8816483f1a0 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -574,6 +574,21 @@ static int ad7768_probe(struct spi_device *spi)
- 		return -ENOMEM;
+diff --git a/drivers/iio/light/veml6075.c b/drivers/iio/light/veml6075.c
+index 05d4c0e9015d6..859891e8f1152 100644
+--- a/drivers/iio/light/veml6075.c
++++ b/drivers/iio/light/veml6075.c
+@@ -195,13 +195,17 @@ static int veml6075_read_uv_direct(struct veml6075_data *data, int chan,
  
- 	st = iio_priv(indio_dev);
-+	/*
-+	 * Datasheet recommends SDI line to be kept high when data is not being
-+	 * clocked out of the controller and the spi clock is free running,
-+	 * to prevent accidental reset.
-+	 * Since many controllers do not support the SPI_MOSI_IDLE_HIGH flag
-+	 * yet, only request the MOSI idle state to enable if the controller
-+	 * supports it.
-+	 */
-+	if (spi->controller->mode_bits & SPI_MOSI_IDLE_HIGH) {
-+		spi->mode |= SPI_MOSI_IDLE_HIGH;
-+		ret = spi_setup(spi);
-+		if (ret < 0)
-+			return ret;
-+	}
+ static int veml6075_read_int_time_index(struct veml6075_data *data)
+ {
+-	int ret, conf;
++	int ret, conf, int_index;
+ 
+ 	ret = regmap_read(data->regmap, VEML6075_CMD_CONF, &conf);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return FIELD_GET(VEML6075_CONF_IT, conf);
++	int_index = FIELD_GET(VEML6075_CONF_IT, conf);
++	if (int_index >= ARRAY_SIZE(veml6075_it_ms))
++		return -EINVAL;
 +
- 	st->spi = spi;
++	return int_index;
+ }
  
- 	st->vref = devm_regulator_get(&spi->dev, "vref");
+ static int veml6075_read_int_time_ms(struct veml6075_data *data, int *val)
 -- 
 2.39.5
 
