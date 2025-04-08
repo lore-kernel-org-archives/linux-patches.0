@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF52236FC;
-	Tue,  8 Apr 2025 12:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58257268FDE;
+	Tue,  8 Apr 2025 12:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116164; cv=none; b=mz3b+WjTFHdzQZ10vtcVQj0wN5JRWaUY7qANOi+BBpiTW0NPTFD1l9eQFwYHT/8PUTpDInMiDx8xLi+/egSxWojTGb0W/BGD/KcN4ISQ3N5u6MTJmMHw0O+5Lyd/8kpKHPcGggWwoRyVXJrdrw2xKScPXd+E+ZygPWT9w5mCA0w=
+	t=1744116167; cv=none; b=N0Yyk6eG2sesugaWMFSMjfOx0oMMtcWOJiyRcfEwulhDA+OutFqf924IJBcDCG//8mD+5S/qu1/L3YRBBuVQu2zsyCDi+iKVh3kkC+he2VyJGc+gAmdqONIZzLgNQSupyucWFGlaLLfbRwr4BPj7mjCK7j1m1yk/psPTwZe8I40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116164; c=relaxed/simple;
-	bh=zUv/OUhsGlzXoUywdTqu3ekuMe6HgRZ6r6KIYhPUXZw=;
+	s=arc-20240116; t=1744116167; c=relaxed/simple;
+	bh=YsM8u8fHnYCYzzuk97SeqGR4YfYh8kKaSQkvTnaz9Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KC4jeQs3PqOZUqMUcfMRijv8Hsh6vXeCOU15qkxMjKHCS+Im+/HUkS4C8M5RqzM4niextlecMmL2Y1lEi5T1jLxnY54xcshbUmTYn5L7j2sr7QLSvd1jzsE8KGGZsVV2Li99xGzwlHGchAw5uF+0vok1en43kuqVX07NB49NXLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmgHZXE+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=legI0SYcov9nktKZmXyLcFWlztJF25CTfCPkx74IZKWfk0vlCfV16O1JRlU6ZoK5gfOSSTj/dMVSFjoi0tyYZRPENneTaBBgQvwqigrQi77CjPKdYo7QkoLkfwK3g4NgAe88bpG6JSpvYz/tniVwoSKnjKmDcq6MIIrgkBarOjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVQOfcsW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmgHZXE+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F25C4CEE5;
-	Tue,  8 Apr 2025 12:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVQOfcsW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9B6C4CEE5;
+	Tue,  8 Apr 2025 12:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116164;
-	bh=zUv/OUhsGlzXoUywdTqu3ekuMe6HgRZ6r6KIYhPUXZw=;
+	s=korg; t=1744116167;
+	bh=YsM8u8fHnYCYzzuk97SeqGR4YfYh8kKaSQkvTnaz9Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmgHZXE+xShKkK7dqvsaG8n8PRoydqXV6FDG7PyaP9ftz9MQkYuXq+nUEdy+7TGQ/
-	 zx5TzX2Hx3DB5vDuovMMKGsi/J8USJIONGTnOUJiyb6u3/SmFBW5R99IiNbn9+ItCe
-	 3WXNGZgyIsuhKf8t3MuPg8OFNq0Md8zSIKr+p7D4=
+	b=sVQOfcsWLr15HjK1mBdU3dgE2Nl7QKeWOh/OyHEZLrIzHDs3JOYqUVhTRREvtamCn
+	 vbUWXM/Blu+Q5UFVrIEUvvvxNixRdJ8WvDnuQSesm5gEz5xHqNVyW21Gj9f7SSald1
+	 cWEUbHhMgkNivzQLCL1cpOxWJpK/YEyHWgLw/qCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <maroi.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/423] platform/x86: dell-uart-backlight: Make dell_uart_bl_serdev_driver static
-Date: Tue,  8 Apr 2025 12:46:04 +0200
-Message-ID: <20250408104846.637667463@linuxfoundation.org>
+Subject: [PATCH 6.12 039/423] platform/x86: dell-ddv: Fix temperature calculation
+Date: Tue,  8 Apr 2025 12:46:05 +0200
+Message-ID: <20250408104846.660724501@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -53,41 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 4878e0b14c3e31a87ab147bd2dae443394cb5a2c ]
+[ Upstream commit 7a248294a3145bc65eb0d8980a0a8edbb1b92db4 ]
 
-Sparse reports:
+On the Dell Inspiron 3505 the battery temperature is always
+0.1 degrees larger than the temperature show inside the OEM
+application.
 
-dell-uart-backlight.c:328:29: warning: symbol
-'dell_uart_bl_serdev_driver' was not declared. Should it be static?
+Emulate this behaviour to avoid showing strange looking values
+like 29.1 degrees.
 
-Fix it by making the symbol static.
-
-Fixes: 484bae9e4d6ac ("platform/x86: Add new Dell UART backlight driver")
-Reviewed-by: Mario Limonciello <maroi.limonciello@amd.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20250304160639.4295-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 0331b1b0ba653 ("platform/x86: dell-ddv: Fix temperature scaling")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/r/20250305053009.378609-2-W_Armin@gmx.de
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-uart-backlight.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-wmi-ddv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-uart-backlight.c b/drivers/platform/x86/dell/dell-uart-backlight.c
-index c45bc332af7a0..e4868584cde2d 100644
---- a/drivers/platform/x86/dell/dell-uart-backlight.c
-+++ b/drivers/platform/x86/dell/dell-uart-backlight.c
-@@ -325,7 +325,7 @@ static int dell_uart_bl_serdev_probe(struct serdev_device *serdev)
- 	return PTR_ERR_OR_ZERO(dell_bl->bl);
+diff --git a/drivers/platform/x86/dell/dell-wmi-ddv.c b/drivers/platform/x86/dell/dell-wmi-ddv.c
+index e75cd6e1efe6a..ab5f7d3ab8249 100644
+--- a/drivers/platform/x86/dell/dell-wmi-ddv.c
++++ b/drivers/platform/x86/dell/dell-wmi-ddv.c
+@@ -665,8 +665,10 @@ static ssize_t temp_show(struct device *dev, struct device_attribute *attr, char
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	/* Use 2731 instead of 2731.5 to avoid unnecessary rounding */
+-	return sysfs_emit(buf, "%d\n", value - 2731);
++	/* Use 2732 instead of 2731.5 to avoid unnecessary rounding and to emulate
++	 * the behaviour of the OEM application which seems to round down the result.
++	 */
++	return sysfs_emit(buf, "%d\n", value - 2732);
  }
  
--struct serdev_device_driver dell_uart_bl_serdev_driver = {
-+static struct serdev_device_driver dell_uart_bl_serdev_driver = {
- 	.probe = dell_uart_bl_serdev_probe,
- 	.driver = {
- 		.name = KBUILD_MODNAME,
+ static ssize_t eppid_show(struct device *dev, struct device_attribute *attr, char *buf)
 -- 
 2.39.5
 
