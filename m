@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF047A94A;
-	Tue,  8 Apr 2025 11:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F6CA94A;
+	Tue,  8 Apr 2025 11:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112972; cv=none; b=lt2KzQoNvty/otlWADYqkddnMIclpyvFxwOc+ypO9Jvy1+JK6NvgB24ORTTTEg8Yca6SgTAk2mR1l51pYimXZlxN+hrIuUGqWZKBw77UxLncWHWgbasoMI4P5Kndw9mdy5lcCeb22weeVZ7+CqH68+4ZdGkaSfGfam9f8BleQ2Q=
+	t=1744112975; cv=none; b=hcK36rAgyEAQyF08e4tpai3/4nmKpNzGI8pFf3lChXIlwEzOockukBrv+/ApZYG0Mfa8gvOfEoL2rHgxhmpf06IScHmEcosoWyS/PGM78I/d5iwaxlfVpGQuBnK4erO8ILItNbKRuc5zEFdbeY49OQ2oE3/QODkCZdO5FiOFZSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112972; c=relaxed/simple;
-	bh=nODEXhSTvCxgVHbh6BbT/UhXh1AS3gAm+SAgt2Z11ZY=;
+	s=arc-20240116; t=1744112975; c=relaxed/simple;
+	bh=KbyvMHKz+OynsyGmxCcmo42yq92nKpCN/c7g+fkAZzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UEPNgDB3YvNry/hWh1fsuoVS+njxGbtK39qsd36H0lpX19n1U0wllYqjbb08maxfgJkxqKrDvCvdV/Z+aVOUNbKnlQjfWNCmgDOJVhXq0Oqg6NMBVSHcmr6+XLqQNgwbizECDiJZgs0WABV9+XPU1P4Y4mtT2Mq7NJLSF9q58+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/cR0BPJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5o69XlE+CfeTgMMzeyHh3tImiOmim7K/WYn6WzqodgFthP2tStcsFYcvtVtqlWuqEKiF0n5ak4eVsCKZOsomk5b+4OkI0kKy1EkZZO9snKAEEl+wNypqZG4LLauQ2Kmzo8PtqLuxlr/4Kjvcx19RFzfYUZoJ2c56LSdOab1Yzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCJgPhAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/cR0BPJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E2C4CEE5;
-	Tue,  8 Apr 2025 11:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCJgPhAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEB3C4CEE5;
+	Tue,  8 Apr 2025 11:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112972;
-	bh=nODEXhSTvCxgVHbh6BbT/UhXh1AS3gAm+SAgt2Z11ZY=;
+	s=korg; t=1744112974;
+	bh=KbyvMHKz+OynsyGmxCcmo42yq92nKpCN/c7g+fkAZzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/cR0BPJ9aKey/trKTyx2B0CX1FdYD4rWjkABselkLbt7zkZ+B0dRg8p9M/GyvH+E
-	 fVI4nYGqQ1c/DNQSpD5QIZzuwd9vo/9YQ4/2dw2XVhfHtDvZf2lev/mTY3quOvqsX+
-	 s/sKi8SnghbeQ7YG2US6pBO8Qkbx3iD9RNo9PjZg=
+	b=SCJgPhAVH/QBL4AWTm5mIWHXZZvH3G6SDGCRo08PqhtiBnal0s0wqnDSD9Jyg6q/d
+	 lhpYfUhOpppmjXyZyscHX48ZtMc3PxhZe7klNeFqvsP7e1H7I63erw9EsIrBqSF5wB
+	 2iWq2s1KVSPB17nz4SJ6DDRxAcHdFCCVVSBAwZxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karel Balej <balejk@matfyz.cz>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 267/279] mmc: sdhci-pxav3: set NEED_RSP_BUSY capability
-Date: Tue,  8 Apr 2025 12:50:50 +0200
-Message-ID: <20250408104833.601316840@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 250/279] arcnet: Add NULL check in com20020pci_probe()
+Date: Tue,  8 Apr 2025 12:50:33 +0200
+Message-ID: <20250408104833.133131892@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -46,51 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karel Balej <balejk@matfyz.cz>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit a41fcca4b342811b473bbaa4b44f1d34d87fcce6 upstream.
+[ Upstream commit fda8c491db2a90ff3e6fbbae58e495b4ddddeca3 ]
 
-Set the MMC_CAP_NEED_RSP_BUSY capability for the sdhci-pxav3 host to
-prevent conversion of R1B responses to R1. Without this, the eMMC card
-in the samsung,coreprimevelte smartphone using the Marvell PXA1908 SoC
-with this mmc host doesn't probe with the ETIMEDOUT error originating in
-__mmc_poll_for_busy.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+com20020pci_probe() does not check for this case, which results in a
+NULL pointer dereference.
 
-Note that the other issues reported for this phone and host, namely
-floods of "Tuning failed, falling back to fixed sampling clock" dmesg
-messages for the eMMC and unstable SDIO are not mitigated by this
-change.
+Add NULL check after devm_kasprintf() to prevent this issue and ensure
+no resources are left allocated.
 
-Link: https://lore.kernel.org/r/20200310153340.5593-1-ulf.hansson@linaro.org/
-Link: https://lore.kernel.org/r/D7204PWIGQGI.1FRFQPPIEE2P9@matfyz.cz/
-Link: https://lore.kernel.org/r/20250115-pxa1908-lkml-v14-0-847d24f3665a@skole.hr/
-Cc: stable@vger.kernel.org
-Signed-off-by: Karel Balej <balejk@matfyz.cz>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Duje Mihanović <duje.mihanovic@skole.hr>
-Link: https://lore.kernel.org/r/20250310140707.23459-1-balejk@matfyz.cz
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6b17a597fc2f ("arcnet: restoring support for multiple Sohard Arcnet cards")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250402135036.44697-1-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pxav3.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/arcnet/com20020-pci.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-pxav3.c
-+++ b/drivers/mmc/host/sdhci-pxav3.c
-@@ -401,6 +401,7 @@ static int sdhci_pxav3_probe(struct plat
- 	if (!IS_ERR(pxa->clk_core))
- 		clk_prepare_enable(pxa->clk_core);
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index 9d9e4200064f9..00a80f0adece4 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -250,18 +250,33 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 			card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-tx",
+ 							dev->dev_id, i);
++			if (!card->tx_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:green:tx:%d-%d",
+ 							dev->dev_id, i);
+-
++			if (!card->tx_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.dev = &dev->dev;
+ 			card->recon_led.brightness_set = led_recon_set;
+ 			card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-recon",
+ 							dev->dev_id, i);
++			if (!card->recon_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:red:recon:%d-%d",
+ 							dev->dev_id, i);
++			if (!card->recon_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.dev = &dev->dev;
  
-+	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
- 	/* enable 1/8V DDR capable */
- 	host->mmc->caps |= MMC_CAP_1_8V_DDR;
- 
+ 			ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
+-- 
+2.39.5
+
 
 
