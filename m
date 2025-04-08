@@ -1,61 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3090222257E;
-	Tue,  8 Apr 2025 11:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC8122257E;
+	Tue,  8 Apr 2025 11:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113338; cv=none; b=V7UZknuWaCwZt6B7YtoI4BwtLZReBRnt55p0ub8mcxZW59ZmLxB0ikn4Fb4P2+mNLKHi0Ui24W4WjKu2M9jUXl1Ab2+0pjMtzSj6degZLhRHqIvs9j7Af7Xpdjcy8GQyT+/kRvJxwdhEqTJKe51SshazItqP9W4YKbwGZDiLDc8=
+	t=1744113340; cv=none; b=MUf3rZDvsTyWayFiNLs9y05ONxG5AI2upTLwe1jyRY2gg2/ZYGZRyYnxDam26dbP/hDImCjieTDv8mNJ8eOHWUqH71F3C0sLxt+QJhT2j0CaakXEkILmv6c0FoUZmw1ZuEfS8rVXUf8c/NHvIUFnjxVtxmvmV574paNoUKVT+PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113338; c=relaxed/simple;
-	bh=JX8Oa+Gh8DePcooMQQLFElqoaIAlua/NsMjh6mIi6sY=;
+	s=arc-20240116; t=1744113340; c=relaxed/simple;
+	bh=yo+U5BfgU97FzXmLBu6jVhLnsy5o1d49ergQTLpiM1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sszr8ATKw5qfdReB9UeGle9a3/e/u+YH1lpHJkMrKy/nmdIbORYS1l5iE/btXA6jDGb8n0ORkW1ivF8Oo1Ois2rSkC/AokDlHJVOnlHWeU/fNpfE/MblZNI0DmmHc8uq7DBNlU3Mjvd0Ln/BhZA+R2mGZV+RRBJrKNTzEU2AbaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1Eq1Kdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQTtmsFB4npb6VuDSv2y6YslMumojhHgcu/QHLRPBFPQd5yMn5GtjXRnvRhDA2xJJ8NUMAsfhnU6e4b6mQk3EoKZV0i56PO03rfAA1ocCREELCuMbfXX1VhOx92298WIuiISl2XgsS+9jsywDilnI/3/MYqW0hAPKoQBU6wM+pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hop6Smi5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1Eq1Kdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31869C4CEE5;
-	Tue,  8 Apr 2025 11:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hop6Smi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E14FC4CEE5;
+	Tue,  8 Apr 2025 11:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113337;
-	bh=JX8Oa+Gh8DePcooMQQLFElqoaIAlua/NsMjh6mIi6sY=;
+	s=korg; t=1744113340;
+	bh=yo+U5BfgU97FzXmLBu6jVhLnsy5o1d49ergQTLpiM1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1Eq1KdtoFxMUCt7iXGnTFXqFDfAw+wnfP57/cou69wl+NwuCfm2yWara94yeMmqn
-	 DOIe3Oyk7pKnO3QocVY1luZbGvQHSf44DGIng5hl8am3W1kG3xqQqeFS7RCxqzp6+g
-	 3YH6T2ikHuQGhmtFYD1SmFsF2WX6s9ah3zBUMF9c=
+	b=hop6Smi5wI1txpjRz6zisKy7SCnsvJuAq8figH9CuxeAdN7acjmRLQ+Elea7PfVIX
+	 pMMcxm1H5CnFFM4na+12rHIiqpHZI+GGv4jfFn+3j+otYvjOd1CpIZGKgkHlOS3nkS
+	 WA9+bbiCZ8G8qV0o2BeEqvTKKVpEvXTd0YcudUZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Alex Shi <alexs@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Dave Airlie <airlied@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Karol Herbst <kherbst@redhat.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Lyude <lyude@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Xu <peterx@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	SeongJae Park <sj@kernel.org>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Barry Song <v-songbaohua@oppo.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Baoquan He <bhe@redhat.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/268] kernel/events/uprobes: handle device-exclusive entries correctly in __replace_page()
-Date: Tue,  8 Apr 2025 12:48:54 +0200
-Message-ID: <20250408104831.816635826@linuxfoundation.org>
+Subject: [PATCH 6.6 124/268] kexec: initialize ELF lowest address to ULONG_MAX
+Date: Tue,  8 Apr 2025 12:48:55 +0200
+Message-ID: <20250408104831.844390213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -74,96 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit 096cbb80ab3fd85a9035ec17a1312c2a7db8bc8c ]
+[ Upstream commit 9986fb5164c8b21f6439cfd45ba36d8cc80c9710 ]
 
-Ever since commit b756a3b5e7ea ("mm: device exclusive memory access") we
-can return with a device-exclusive entry from page_vma_mapped_walk().
+Patch series "powerpc/crash: use generic crashkernel reservation", v3.
 
-__replace_page() is not prepared for that, so teach it about these PFN
-swap PTEs.  Note that device-private entries are so far not applicable on
-that path, because GUP would never have returned such folios (conversion
-to device-private happens by page migration, not in-place conversion of
-the PTE).
+Commit 0ab97169aa05 ("crash_core: add generic function to do reservation")
+added a generic function to reserve crashkernel memory.  So let's use the
+same function on powerpc and remove the architecture-specific code that
+essentially does the same thing.
 
-There is a race between GUP and us locking the folio to look it up using
-page_vma_mapped_walk(), so this is likely a fix (unless something else
-could prevent that race, but it doesn't look like).  pte_pfn() on
-something that is not a present pte could give use garbage, and we'd
-wrongly mess up the mapcount because it was already adjusted by calling
-folio_remove_rmap_pte() when making the entry device-exclusive.
+The generic crashkernel reservation also provides a way to split the
+crashkernel reservation into high and low memory reservations, which can
+be enabled for powerpc in the future.
 
-Link: https://lkml.kernel.org/r/20250210193801.781278-9-david@redhat.com
-Fixes: b756a3b5e7ea ("mm: device exclusive memory access")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Tested-by: Alistair Popple <apopple@nvidia.com>
-Cc: Alex Shi <alexs@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Dave Airlie <airlied@gmail.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Karol Herbst <kherbst@redhat.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Lyude <lyude@redhat.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Yanteng Si <si.yanteng@linux.dev>
-Cc: Barry Song <v-songbaohua@oppo.com>
+Additionally move powerpc to use generic APIs to locate memory hole for
+kexec segments while loading kdump kernel.
+
+This patch (of 7):
+
+kexec_elf_load() loads an ELF executable and sets the address of the
+lowest PT_LOAD section to the address held by the lowest_load_addr
+function argument.
+
+To determine the lowest PT_LOAD address, a local variable lowest_addr
+(type unsigned long) is initialized to UINT_MAX.  After loading each
+PT_LOAD, its address is compared to lowest_addr.  If a loaded PT_LOAD
+address is lower, lowest_addr is updated.  However, setting lowest_addr to
+UINT_MAX won't work when the kernel image is loaded above 4G, as the
+returned lowest PT_LOAD address would be invalid.  This is resolved by
+initializing lowest_addr to ULONG_MAX instead.
+
+This issue was discovered while implementing crashkernel high/low
+reservation on the PowerPC architecture.
+
+Link: https://lkml.kernel.org/r/20250131113830.925179-1-sourabhjain@linux.ibm.com
+Link: https://lkml.kernel.org/r/20250131113830.925179-2-sourabhjain@linux.ibm.com
+Fixes: a0458284f062 ("powerpc: Add support code for kexec_file_load()")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Hari Bathini <hbathini@linux.ibm.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/kexec_elf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index f5dfc2f22d798..a554f43d3ceb9 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -159,6 +159,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 	DEFINE_FOLIO_VMA_WALK(pvmw, old_folio, vma, addr, 0);
- 	int err;
- 	struct mmu_notifier_range range;
-+	pte_t pte;
+diff --git a/kernel/kexec_elf.c b/kernel/kexec_elf.c
+index d3689632e8b90..3a5c25b2adc94 100644
+--- a/kernel/kexec_elf.c
++++ b/kernel/kexec_elf.c
+@@ -390,7 +390,7 @@ int kexec_elf_load(struct kimage *image, struct elfhdr *ehdr,
+ 			 struct kexec_buf *kbuf,
+ 			 unsigned long *lowest_load_addr)
+ {
+-	unsigned long lowest_addr = UINT_MAX;
++	unsigned long lowest_addr = ULONG_MAX;
+ 	int ret;
+ 	size_t i;
  
- 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, mm, addr,
- 				addr + PAGE_SIZE);
-@@ -178,6 +179,16 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 	if (!page_vma_mapped_walk(&pvmw))
- 		goto unlock;
- 	VM_BUG_ON_PAGE(addr != pvmw.address, old_page);
-+	pte = ptep_get(pvmw.pte);
-+
-+	/*
-+	 * Handle PFN swap PTES, such as device-exclusive ones, that actually
-+	 * map pages: simply trigger GUP again to fix it up.
-+	 */
-+	if (unlikely(!pte_present(pte))) {
-+		page_vma_mapped_walk_done(&pvmw);
-+		goto unlock;
-+	}
- 
- 	if (new_page) {
- 		folio_get(new_folio);
-@@ -192,7 +203,7 @@ static int __replace_page(struct vm_area_struct *vma, unsigned long addr,
- 		inc_mm_counter(mm, MM_ANONPAGES);
- 	}
- 
--	flush_cache_page(vma, addr, pte_pfn(ptep_get(pvmw.pte)));
-+	flush_cache_page(vma, addr, pte_pfn(pte));
- 	ptep_clear_flush(vma, addr, pvmw.pte);
- 	if (new_page)
- 		set_pte_at_notify(mm, addr, pvmw.pte,
 -- 
 2.39.5
 
