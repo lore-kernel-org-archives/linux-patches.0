@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070F26B2D6;
-	Tue,  8 Apr 2025 12:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6F726156E;
+	Tue,  8 Apr 2025 12:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115303; cv=none; b=CwUmbaa9QpRTFp15wdglK86L6j+5XIZ2ioA39eWwJJvrTlJvvOZuRUeXcq3ND2l/BZXeNv8OjyauljXVNjgbNz7YxBiem4oGOzNrhlXx4IFDYBAcByM3PgQsUrEmyYfz2v26KePePdgEuB8fAgMl4QHvJwKsG94h0JXYjEwnW3k=
+	t=1744115306; cv=none; b=kgLQdT0DiYC+NojbZAaw4e9vi73/0rg+BJXRFCW5IqqgkXh8AkMmkH5jiX3n+wlzByRpszk1h41U8zUPs9Cr64f38BCzcVovBMi/WMHu4PF9dDGEZgHq0QWeJXL63qyWAq76uvBslcQDkTkqc8gC4ozETDpKATq1JS/1BcjFBLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115303; c=relaxed/simple;
-	bh=rI4Q1dqJ4zJYQpEMPiPlE6mODvFf8PYf5AmiRu7BTeQ=;
+	s=arc-20240116; t=1744115306; c=relaxed/simple;
+	bh=IWEHiPa7NEbs/SFUBGU2/9acyA9CyQtTdfJXmXeB8Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDv9+TAGBOeZjED0iRds0bJd39joRQsvaVXbGQhilT/oPZFO9gNlNPTJMyYTGK+0aAw/T563Q1UYkSJKdLijNAhE3iVSIB0OQFj+Wt6u7ID/qotsqK/P3lbKLvFMYmAbY/Dkpc2k8W+jEaTFg0GG9ExhDaY9al2tckTPLBDOGRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0KYCHid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owcu9qBHkjanH7onCucZHk7cba+DNZ4HTVa5bZbsOPF3XuyF4cf03Kkoa3rcGw5epUcxSk+E8Y4zoG9vR4A2YV/2tXYG5IhfxHwlnTRDixNZ0nWoY0n5fYIllQtg3XjrvrlZNUYaMSvWu+o8Bo5Atdh0z4UkDKDJNraehZCM8Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSQh4dkM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0KYCHid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D35C4CEE5;
-	Tue,  8 Apr 2025 12:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSQh4dkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4B9C4CEE5;
+	Tue,  8 Apr 2025 12:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115303;
-	bh=rI4Q1dqJ4zJYQpEMPiPlE6mODvFf8PYf5AmiRu7BTeQ=;
+	s=korg; t=1744115305;
+	bh=IWEHiPa7NEbs/SFUBGU2/9acyA9CyQtTdfJXmXeB8Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0KYCHidDWIpRp2G9jJg82Jq7mvlw0r3LsN659LJpgnrZVnVwWlf73kodVRF8+FCI
-	 kBucEY1r14vBldz/9bxxCxI1scD9VtuOApDfgVimLy9x2HVgmj1WXldSt8M6hWP1KP
-	 VgN/5zqYaRqO3JTZ8nShlfHt/PmjfwwcTIri8R+0=
+	b=WSQh4dkMEw4S4B7PT6L+p8iD/gJ7rbIEx3miMSkBsxslCFvaiDmeC/CD6+uCfe2bj
+	 kcBuwDdXkfyqXqrEqY9Y99BZOzF6iLqiEqP4f4n/G4Kcts2zDvBvLj8HkwYlw5opPW
+	 bMHv4mMZVbxApcFV4mcbs6ZXJM+LFU5NDpnXPMS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+53ed3a6440173ddbf499@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 385/499] netfilter: nft_set_hash: GC reaps elements with conncount for dynamic sets only
-Date: Tue,  8 Apr 2025 12:49:57 +0200
-Message-ID: <20250408104900.832359987@linuxfoundation.org>
+Subject: [PATCH 6.13 386/499] netfilter: nf_tables: dont unregister hook when table is dormant
+Date: Tue,  8 Apr 2025 12:49:58 +0200
+Message-ID: <20250408104900.858506634@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,37 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9d74da1177c800eb3d51c13f9821b7b0683845a5 ]
+[ Upstream commit 688c15017d5cd5aac882400782e7213d40dc3556 ]
 
-conncount has its own GC handler which determines when to reap stale
-elements, this is convenient for dynamic sets. However, this also reaps
-non-dynamic sets with static configurations coming from control plane.
-Always run connlimit gc handler but honor feedback to reap element if
-this set is dynamic.
+When nf_tables_updchain encounters an error, hook registration needs to
+be rolled back.
 
-Fixes: 290180e2448c ("netfilter: nf_tables: add connlimit support")
+This should only be done if the hook has been registered, which won't
+happen when the table is flagged as dormant (inactive).
+
+Just move the assignment into the registration block.
+
+Reported-by: syzbot+53ed3a6440173ddbf499@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=53ed3a6440173ddbf499
+Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index 8bfac4185ac79..abb0c8ec63719 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -309,7 +309,8 @@ static bool nft_rhash_expr_needs_gc_run(const struct nft_set *set,
- 
- 	nft_setelem_expr_foreach(expr, elem_expr, size) {
- 		if (expr->ops->gc &&
--		    expr->ops->gc(read_pnet(&set->net), expr))
-+		    expr->ops->gc(read_pnet(&set->net), expr) &&
-+		    set->flags & NFT_SET_EVAL)
- 			return true;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 99f6b2530b96e..712adede565c8 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2835,11 +2835,11 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
+ 			err = nft_netdev_register_hooks(ctx->net, &hook.list);
+ 			if (err < 0)
+ 				goto err_hooks;
++
++			unregister = true;
+ 		}
  	}
  
+-	unregister = true;
+-
+ 	if (nla[NFTA_CHAIN_COUNTERS]) {
+ 		if (!nft_is_base_chain(chain)) {
+ 			err = -EOPNOTSUPP;
 -- 
 2.39.5
 
