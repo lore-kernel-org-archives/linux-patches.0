@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37E7269D03;
-	Tue,  8 Apr 2025 12:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C435A276043;
+	Tue,  8 Apr 2025 12:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116726; cv=none; b=jqJNh7H9F45cxjj3Dyp8cdkVRXc8VlpfGC3Kb6V31zT/uxGrFPKKwRoG4k1jSkf0dkLCKVLJ2Q5g9nAXGHNVJMxyVzA+89d6MNpCMKbEZTtoCM0FLX8fISkUlenLyz0/zmIm/dAGu9aEV1SiHyw1RlF16zEq4dV2BMNdDx7Kt18=
+	t=1744116728; cv=none; b=Nb4tsWzpSfhxnTvhu4wcpZfjvl1hQqdRkfiGByXBy+wPmSz8B7Ih4c+SiGD9AF3bJH4yZFG0Au0G03nmz5f1cxE2c/0i9FXHCnVk/surCa6iut55sK7Sbjf9M2Hl4YZZbk//jnG4aevjlZczArca3Jp041STWfZaXp+HGRf0PJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116726; c=relaxed/simple;
-	bh=Jz0fnuvDcRGHFDLuSi55+3d9gS+Mw1ousAjTxKrjMaM=;
+	s=arc-20240116; t=1744116728; c=relaxed/simple;
+	bh=sS8LVyopP+RIrcZKVoDWiD2dJX5+JEgzAJTSDLjllXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYT7m054fmgEgV5XLBuTe+BtndH/VtDSFVd9VPKK52SRwYrwScq7ZVR+UjXyus9bBDVeNxPyCV2GCKhSRroiLwbHjZL1PXt4dsKaCMStgIHnJsnO0Qnn/rzphX0wvDAO73L44JP7QjfILFHzci2pZk5CbSBL+ZGSbyraa5N8xAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDtx0oW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHjQfixTaTZsWt1L9sM33zV+6KcY3LRDuWoTROrN0ARMNUC8suiG3u/dvo95+aalQHd4GHbl055tKmVvz0LOanU/SR1S1DrP2sRB/4rPkB+wiGEepn6AwXtmTUHapr99wogeWF6G/cEiwAkR2nFrteCSl+vYApzvQL63+zTRwuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xZRGDdO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDtx0oW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8496BC4CEE5;
-	Tue,  8 Apr 2025 12:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xZRGDdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C91DC4CEE5;
+	Tue,  8 Apr 2025 12:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116725;
-	bh=Jz0fnuvDcRGHFDLuSi55+3d9gS+Mw1ousAjTxKrjMaM=;
+	s=korg; t=1744116728;
+	bh=sS8LVyopP+RIrcZKVoDWiD2dJX5+JEgzAJTSDLjllXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDtx0oW0Ir4Pb8JsT0GmDEH7kRrempFyS41QdZNlB2OLfItJprYaAeUQJfnjtoNu4
-	 QX5h7JFFFrKmDTPEt9ylOO+dtsxSSy4FRudvneSRdTl4SSxxGw4B/ptHBhpQazKnGJ
-	 I+mr/MHb6UNmW4yqvEnQDzG+GfbhQ7iPs0pOEKGU=
+	b=1xZRGDdO4WJYjuGm63NQaC8ICP2ZV/UxQH3/Q5YAFrbliOooUkdILHPRUivHh+ajc
+	 dwOsXYrmqaIzu9JAMMXtOZzMWdEsufeAH/n845NzZ0s1SeCYyGigeReMbEZbOpWOi9
+	 WfI9k0Q8O2q47Y7Hiim3BoKRc10+yB0qGWNUzac0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 219/423] staging: vchiq_arm: Fix possible NPR of keep-alive thread
-Date: Tue,  8 Apr 2025 12:49:05 +0200
-Message-ID: <20250408104850.829380038@linuxfoundation.org>
+Subject: [PATCH 6.12 246/423] octeontx2-af: Free NIX_AF_INT_VEC_GEN irq
+Date: Tue,  8 Apr 2025 12:49:32 +0200
+Message-ID: <20250408104851.462074216@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 3db89bc6d973e2bcaa852f6409c98c228f39a926 ]
+[ Upstream commit 323d6db6dc7decb06f2545efb9496259ddacd4f4 ]
 
-In case vchiq_platform_conn_state_changed() is never called or fails before
-driver removal, ka_thread won't be a valid pointer to a task_struct. So
-do the necessary checks before calling kthread_stop to avoid a crash.
+Due to the incorrect initial vector number in
+rvu_nix_unregister_interrupts(), NIX_AF_INT_VEC_GEN is not
+geeting free. Fix the vector number to include NIX_AF_INT_VEC_GEN
+irq.
 
-Fixes: 863a756aaf49 ("staging: vc04_services: vchiq_core: Stop kthreads on vchiq module unload")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250309125014.37166-3-wahrenst@gmx.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250327094054.2312-1-gakula@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index ecf6e9635a10b..97787002080a1 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -1786,7 +1786,8 @@ static void vchiq_remove(struct platform_device *pdev)
- 	kthread_stop(mgmt->state.slot_handler_thread);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
+index 7498ab429963d..06f778baaeef2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
+@@ -207,7 +207,7 @@ static void rvu_nix_unregister_interrupts(struct rvu *rvu)
+ 		rvu->irq_allocated[offs + NIX_AF_INT_VEC_RVU] = false;
+ 	}
  
- 	arm_state = vchiq_platform_get_arm_state(&mgmt->state);
--	kthread_stop(arm_state->ka_thread);
-+	if (!IS_ERR_OR_NULL(arm_state->ka_thread))
-+		kthread_stop(arm_state->ka_thread);
- }
- 
- static struct platform_driver vchiq_driver = {
+-	for (i = NIX_AF_INT_VEC_AF_ERR; i < NIX_AF_INT_VEC_CNT; i++)
++	for (i = NIX_AF_INT_VEC_GEN; i < NIX_AF_INT_VEC_CNT; i++)
+ 		if (rvu->irq_allocated[offs + i]) {
+ 			free_irq(pci_irq_vector(rvu->pdev, offs + i), rvu_dl);
+ 			rvu->irq_allocated[offs + i] = false;
 -- 
 2.39.5
 
