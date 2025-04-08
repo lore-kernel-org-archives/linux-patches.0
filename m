@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24C71FBCB2;
-	Tue,  8 Apr 2025 11:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851FE1FBCB2;
+	Tue,  8 Apr 2025 11:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110302; cv=none; b=mlVCRqRyUmgmsQpo8J7b4axDfmemjB0I4/nZGH3blyyircIHT3W+z+aLbAIOppoYx7ovzy5yWEA8fzNyzi8+qGwJ0rcbjnQR/tMVJRLA5HSxgbabFQX9NaUfHdNb057dLaW6mKCON6zp487dgbTHBKYYRh7LoQU+/Qs9tGnlKJQ=
+	t=1744110305; cv=none; b=pElFLvgTTi40p37LnzDvPr/MgsyVLT1edhp3kqVzYCRpc/xIAQjJtQlKQVJcAeDTrm6srkuBya5FM2OvyqcD+SVaKBAO/gfvu43f2KYDEHQyagHKHxajOBZczBsDpQNGx85HVcWJvJcq4geq8isH601UdY2feMpufwjJVYkqheQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110302; c=relaxed/simple;
-	bh=twDh1bBcRgM61ay+PkY6+0yAjEbnTMYOd9M+PhZ9uZ0=;
+	s=arc-20240116; t=1744110305; c=relaxed/simple;
+	bh=xOROn5HtkrK6hdawbmVVKpm1lvXHyDkp3jy6k2sDkj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EtIie0nwABa0zCl10nHdAMMXdX7gve20EgaBBH2j5mVHU1Jptj9cT4BjlvOgE2kL+9zuA9kfWbs6rlw4Zip0RCTiKqv2TM4CGO3acqjkT4I0godAzrU4HptzyECr2BQqmt/jYGbGompul1q80CLtyIEhdQCRb3ifvsNWxqzL+ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWygUd27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jEmX/BZAHsEhhtjHjh6opbeSCCKPDOhl/Xr9FQg/FOV06mGo7j+NCm7ks6cJoJELb6HqYOe3ICDrzjDEL45CiyTT6gYe+MDrPblAoOsPdujBmnLSZA5cH51kTOTSME+bejMui8QXM0fGcivFIH7DXgSRAzwXn3AV1F1TyWw3eIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFxCpCCr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWygUd27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6469CC4CEE5;
-	Tue,  8 Apr 2025 11:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFxCpCCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131EDC4CEE7;
+	Tue,  8 Apr 2025 11:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110302;
-	bh=twDh1bBcRgM61ay+PkY6+0yAjEbnTMYOd9M+PhZ9uZ0=;
+	s=korg; t=1744110305;
+	bh=xOROn5HtkrK6hdawbmVVKpm1lvXHyDkp3jy6k2sDkj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWygUd2778n1gAQXPC9g8KYGFmSS6blr1nS4oCHUYmwPz2u+LLPpr1JQUHrPilMNZ
-	 VXA4p2YBfI4gcmi2kRnr9eqmZanT4ZHEXXsXLped7uHE0qZUB3H5mUzdoD+N/rrF2+
-	 XI1oF0Za/g93Or2MxFW+D3woW/5rQ2Q8Wcyioows=
+	b=hFxCpCCrAa+bImUP4tpcc5LRmJFXfxDOOlnR+BwjS+VuYUNOdIBpfy51sHhkhSWG5
+	 bEvlCLHLVe+T9Ac2dCha3iEDDkIu5ku4CL8SjLhHjxFYt97Q4T/u7jG/nAxnKXXMbK
+	 GVrTUBmH5MsUDa1q5fBX+dqP3xlna4fYqG7hPwnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Stanislav Spassov <stanspas@amazon.de>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 015/731] x86/vdso: Fix latent bug in vclock_pages calculation
-Date: Tue,  8 Apr 2025 12:38:32 +0200
-Message-ID: <20250408104914.615856773@linuxfoundation.org>
+Subject: [PATCH 6.14 016/731] x86/fpu: Fix guest FPU state buffer allocation size
+Date: Tue,  8 Apr 2025 12:38:33 +0200
+Message-ID: <20250408104914.638611096@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,75 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Stanislav Spassov <stanspas@amazon.de>
 
-[ Upstream commit 3ef32d90cdaa0cfa6c4ffd18f8d646a658163e3d ]
+[ Upstream commit 1937e18cc3cf27e2b3ef70e8c161437051ab7608 ]
 
-The vclock pages are *after* the non-vclock pages. Currently there are both
-two vclock and two non-vclock pages so the existing logic works by
-accident.  As soon as the number of pages changes it will break however.
-This will be the case with the introduction of the generic vDSO data
-storage.
+Ongoing work on an optimization to batch-preallocate vCPU state buffers
+for KVM revealed a mismatch between the allocation sizes used in
+fpu_alloc_guest_fpstate() and fpstate_realloc(). While the former
+allocates a buffer sized to fit the default set of XSAVE features
+in UABI form (as per fpu_user_cfg), the latter uses its ksize argument
+derived (for the requested set of features) in the same way as the sizes
+found in fpu_kernel_cfg, i.e. using the compacted in-kernel
+representation.
 
-Use a macro to keep the calculation understandable and in sync between
-the linker script and mapping code.
+The correct size to use for guest FPU state should indeed be the
+kernel one as seen in fpstate_realloc(). The original issue likely
+went unnoticed through a combination of UABI size typically being
+larger than or equal to kernel size, and/or both amounting to the
+same number of allocated 4K pages.
 
-Fixes: e93d2521b27f ("x86/vdso: Split virtual clock pages into dedicated mapping")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250204-vdso-store-rng-v3-1-13a4669dfc8c@linutronix.de
+Fixes: 69f6ed1d14c6 ("x86/fpu: Provide infrastructure for KVM FPU cleanup")
+Signed-off-by: Stanislav Spassov <stanspas@amazon.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250218141045.85201-1-stanspas@amazon.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/vdso/vdso-layout.lds.S | 2 +-
- arch/x86/entry/vdso/vma.c             | 2 +-
- arch/x86/include/asm/vdso/vsyscall.h  | 1 +
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kernel/fpu/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/vdso/vdso-layout.lds.S b/arch/x86/entry/vdso/vdso-layout.lds.S
-index 872947c1004c3..918606ff92a98 100644
---- a/arch/x86/entry/vdso/vdso-layout.lds.S
-+++ b/arch/x86/entry/vdso/vdso-layout.lds.S
-@@ -24,7 +24,7 @@ SECTIONS
+diff --git a/arch/x86/kernel/fpu/core.c b/arch/x86/kernel/fpu/core.c
+index 1209c7aebb211..36df548acc403 100644
+--- a/arch/x86/kernel/fpu/core.c
++++ b/arch/x86/kernel/fpu/core.c
+@@ -220,7 +220,7 @@ bool fpu_alloc_guest_fpstate(struct fpu_guest *gfpu)
+ 	struct fpstate *fpstate;
+ 	unsigned int size;
  
- 	timens_page  = vvar_start + PAGE_SIZE;
- 
--	vclock_pages = vvar_start + VDSO_NR_VCLOCK_PAGES * PAGE_SIZE;
-+	vclock_pages = VDSO_VCLOCK_PAGES_START(vvar_start);
- 	pvclock_page = vclock_pages + VDSO_PAGE_PVCLOCK_OFFSET * PAGE_SIZE;
- 	hvclock_page = vclock_pages + VDSO_PAGE_HVCLOCK_OFFSET * PAGE_SIZE;
- 
-diff --git a/arch/x86/entry/vdso/vma.c b/arch/x86/entry/vdso/vma.c
-index 39e6efc1a9cab..aa62949335ece 100644
---- a/arch/x86/entry/vdso/vma.c
-+++ b/arch/x86/entry/vdso/vma.c
-@@ -290,7 +290,7 @@ static int map_vdso(const struct vdso_image *image, unsigned long addr)
- 	}
- 
- 	vma = _install_special_mapping(mm,
--				       addr + (__VVAR_PAGES - VDSO_NR_VCLOCK_PAGES) * PAGE_SIZE,
-+				       VDSO_VCLOCK_PAGES_START(addr),
- 				       VDSO_NR_VCLOCK_PAGES * PAGE_SIZE,
- 				       VM_READ|VM_MAYREAD|VM_IO|VM_DONTDUMP|
- 				       VM_PFNMAP,
-diff --git a/arch/x86/include/asm/vdso/vsyscall.h b/arch/x86/include/asm/vdso/vsyscall.h
-index 37b4a70559a82..88b31d4cdfaf3 100644
---- a/arch/x86/include/asm/vdso/vsyscall.h
-+++ b/arch/x86/include/asm/vdso/vsyscall.h
-@@ -6,6 +6,7 @@
- #define __VVAR_PAGES	4
- 
- #define VDSO_NR_VCLOCK_PAGES	2
-+#define VDSO_VCLOCK_PAGES_START(_b)	((_b) + (__VVAR_PAGES - VDSO_NR_VCLOCK_PAGES) * PAGE_SIZE)
- #define VDSO_PAGE_PVCLOCK_OFFSET	0
- #define VDSO_PAGE_HVCLOCK_OFFSET	1
- 
+-	size = fpu_user_cfg.default_size + ALIGN(offsetof(struct fpstate, regs), 64);
++	size = fpu_kernel_cfg.default_size + ALIGN(offsetof(struct fpstate, regs), 64);
+ 	fpstate = vzalloc(size);
+ 	if (!fpstate)
+ 		return false;
 -- 
 2.39.5
 
