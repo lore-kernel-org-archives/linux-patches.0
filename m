@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0F32641CC;
-	Tue,  8 Apr 2025 11:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D5C22257E;
+	Tue,  8 Apr 2025 11:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113210; cv=none; b=H316P2ooTrTBwbnNC8f4haoGHgBL1Y0907UzRlGyyvSN13PGaUq/ZFXg8+MTVa+Exyd80X/njWqr0ZW/AE7hFsrMBCsZw/6y1mbs/UUcU8hB1/Y7ueGeJUZOEWweewUVwifLu75E6juYI2yonhgBPDBRs1xFxSC5jJdlmeE9FPc=
+	t=1744113212; cv=none; b=A07ulir6d7qmeQ1udUOssqrXDnhw4C2esh+Voy8mWeyKA9iVWom8VoftDgj5Rxz2Vd1St1FAQUjIOgNLWI64pubqXPnHFLmoS+/9fLKg/1UagM3t1mGJLG+3deY4xzhg/lgIwifmWf6UPzKrZYJo4ojcAY3WU8zYX8oGXN9KVfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113210; c=relaxed/simple;
-	bh=4n7BdKQY6t4HfQ7B3KtIa64X49JFeRoc8/ogycHfTto=;
+	s=arc-20240116; t=1744113212; c=relaxed/simple;
+	bh=sg5jmqKCWvPWeQ3tL1GxgKNfdvi9HZuaKDn6538NoHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWAzRTaP8uaxHmmoBqOzJpv/ppU98x0lfgr6/5zO6uhRsEu+J36eayQJiNVKIt/aUoyvpKTvvBDQRiqO8DFY0RYEHFDsCoecEynaajm3LSgjYqPefRek3vbGZtDSmHfngFEpGX3tUSkJybxRKI9mQuMwF+0WPiLqMXjRooysBbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEnyXy6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YKb5N1nEa+og3aN60nA6uyKp0QBKG9HWJtd6/jNAXVIdU7fwBBssyiT/8msjjy/jD/6egshJNoSmYBrpSuMwnaZBZMLw+0MFpPlkspqvtabkULO5yHFpFqdfkenwGSLj9dJEdZv84zu7svzaGEZmAZ2CREZHTA9sRwO/1iH79to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnXwjtfR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEnyXy6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F042C4CEE5;
-	Tue,  8 Apr 2025 11:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnXwjtfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1487BC4CEEA;
+	Tue,  8 Apr 2025 11:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113209;
-	bh=4n7BdKQY6t4HfQ7B3KtIa64X49JFeRoc8/ogycHfTto=;
+	s=korg; t=1744113212;
+	bh=sg5jmqKCWvPWeQ3tL1GxgKNfdvi9HZuaKDn6538NoHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iEnyXy6SG/JOTvkilEgeXJ+m6Y5g/Cowlxa32KhOGiCzXmd/NTe6FvknI/mTaq0uZ
-	 Bog0zs+HobqLvS0Rq0a0uuk2QmaMQDqgL3wGJn6wbbmWdf2pVi5sCh2DzdIrWaKUxo
-	 wXwlPuysRVlUq8kzHTLS1RydKIvwUtJCRQnHgZVs=
+	b=qnXwjtfRHqGGyfxkxfXOPDNcBIBgxoWKVm+HLGESvkIDpy0HOZNzaL8kemH0ZxSPn
+	 MLUZqW4+PjgTuuGFlZoSRDP74JQQxArpo9EC/vfhH55QQjORYFsHtth0gRwCYLv2XI
+	 8R6zPmNBsySDd9Tb/DgSjJQopJcTqQjKloqFLAyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/268] bpf: Use preempt_count() directly in bpf_send_signal_common()
-Date: Tue,  8 Apr 2025 12:48:06 +0200
-Message-ID: <20250408104830.521554401@linuxfoundation.org>
+Subject: [PATCH 6.6 076/268] lib: 842: Improve error handling in sw842_compress()
+Date: Tue,  8 Apr 2025 12:48:07 +0200
+Message-ID: <20250408104830.547779253@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
 
-[ Upstream commit b4a8b5bba712a711d8ca1f7d04646db63f9c88f5 ]
+[ Upstream commit af324dc0e2b558678aec42260cce38be16cc77ca ]
 
-bpf_send_signal_common() uses preemptible() to check whether or not the
-current context is preemptible. If it is preemptible, it will use
-irq_work to send the signal asynchronously instead of trying to hold a
-spin-lock, because spin-lock is sleepable under PREEMPT_RT.
+The static code analysis tool "Coverity Scan" pointed the following
+implementation details out for further development considerations:
+CID 1309755: Unused value
+In sw842_compress: A value assigned to a variable is never used. (CWE-563)
+returned_value: Assigning value from add_repeat_template(p, repeat_count)
+to ret here, but that stored value is overwritten before it can be used.
 
-However, preemptible() depends on CONFIG_PREEMPT_COUNT. When
-CONFIG_PREEMPT_COUNT is turned off (e.g., CONFIG_PREEMPT_VOLUNTARY=y),
-!preemptible() will be evaluated as 1 and bpf_send_signal_common() will
-use irq_work unconditionally.
+Conclusion:
+Add error handling for the return value from an add_repeat_template()
+call.
 
-Fix it by unfolding "!preemptible()" and using "preempt_count() != 0 ||
-irqs_disabled()" instead.
-
-Fixes: 87c544108b61 ("bpf: Send signals asynchronously if !preemptible")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20250220042259.1583319-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
+Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/842/842_compress.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 9d8f60e0cb554..545393601be8c 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -853,7 +853,7 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
- 	if (unlikely(is_global_init(current)))
- 		return -EPERM;
- 
--	if (!preemptible()) {
-+	if (preempt_count() != 0 || irqs_disabled()) {
- 		/* Do an early check on signal validity. Otherwise,
- 		 * the error is lost in deferred irq_work.
- 		 */
+diff --git a/lib/842/842_compress.c b/lib/842/842_compress.c
+index c02baa4168e16..055356508d97c 100644
+--- a/lib/842/842_compress.c
++++ b/lib/842/842_compress.c
+@@ -532,6 +532,8 @@ int sw842_compress(const u8 *in, unsigned int ilen,
+ 		}
+ 		if (repeat_count) {
+ 			ret = add_repeat_template(p, repeat_count);
++			if (ret)
++				return ret;
+ 			repeat_count = 0;
+ 			if (next == last) /* reached max repeat bits */
+ 				goto repeat;
 -- 
 2.39.5
 
