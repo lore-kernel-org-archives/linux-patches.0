@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E937226FA41;
-	Tue,  8 Apr 2025 12:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8F426F47A;
+	Tue,  8 Apr 2025 12:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117128; cv=none; b=RSt0j/Fv3WITXsckElSij1bGfNBjAgRwawISuWBAdIIUompnOQ1hlXTLdEgdMWBVUv3KEu/lkYXxJqMcAoLMubTE9YevP31K/xSdxtPwbBtAtRG/RV5qcBuhvsN0J8zGmTHtxOdB+gdCuasDdF+GqsFJD0xz89bOhVCQDClPgj0=
+	t=1744117130; cv=none; b=Rc+GOrEeqCQ3QRoXT2AG/Y5I514rNOwUxhCdAvqT1sN64rvy9rn6cxj/4fRTSGiAzXDjV5xC8Mf+0q+LgG6OsYxym2vAG/HN8QFKizFjWakdTTwO/KdaRPHmsK408jr16BKSpthFUT78obBBmrxMVJDSODeVp2Np3EsYfrN35rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117128; c=relaxed/simple;
-	bh=txtXaLH9Cm8XE4652u73zy5wVfCPcgEG+ogn4mgfcSs=;
+	s=arc-20240116; t=1744117130; c=relaxed/simple;
+	bh=Q4SFtYdLGQDVpEFXT1D/8dlijSc0SsT+cnYvD5IAf5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFCu0FQlocdcO9b+ahkSoTZgbQZPC9LDx+/EfDIm89IwjU5T5bVEuhbaEdZZCQY9AkIVPh3yexn6JFuUJbLA1TAa8ee3MVMMABzAVScZxNkX4QSlqttM00eONy+ZqmrUjghNspnCxu9rW5f+kuzngGjIFP5oXhef31xr85EH4UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfGWHDLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UNhJWbDzWwRrXNhCbAN77cm8R6teWdwaUAvAelhBg6YzUNPC+dhnaD90SPUOLckFkIPqRTX+bZ5x1pZzmcCS+PEXpXT5rFwAXSglZbZJlZtymDzYzsu7Unasfp+XMeR/UNPCFeAnoo1OH8i7IBFchWqeH2IhFTrBPCZrfJ7Y5uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v20H8PMm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfGWHDLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78041C4CEE5;
-	Tue,  8 Apr 2025 12:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v20H8PMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35593C4CEE5;
+	Tue,  8 Apr 2025 12:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117127;
-	bh=txtXaLH9Cm8XE4652u73zy5wVfCPcgEG+ogn4mgfcSs=;
+	s=korg; t=1744117130;
+	bh=Q4SFtYdLGQDVpEFXT1D/8dlijSc0SsT+cnYvD5IAf5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfGWHDLGO2xmuqamin1EwJr3DsYFShMEQT1FGf7NnZ7kSGZoqkOJpFsqVO7z1Idt5
-	 dRxFZxaiybE+b8fovVkrM4iMTQj1RIuA6zm/mE3FVwoR4rlmjMz/LuTwDKuF8H1vZ1
-	 IaPJcaIy7SBQDglFQofBw5O7qsu0KoEJV2W/Om1c=
+	b=v20H8PMmdRuEnp/NoHDmndCOaQNvKYwNGHbKBKm5EPq0Dg2a43CkEeKXDpz2TX7ax
+	 79X2chRYrI5EfH1DavL1jREoWdCUxY8pS04uha8lBEVSpQwEAhhxvKClChAEBBg8pG
+	 d30bvUFULvv6xCzW6HkAxbDCUf4T3nezLmjaFBcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.12 387/423] ARM: 9444/1: add KEEP() keyword to ARM_VECTORS
-Date: Tue,  8 Apr 2025 12:51:53 +0200
-Message-ID: <20250408104854.902730168@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 396/423] ksmbd: fix use-after-free in ksmbd_sessions_deregister()
+Date: Tue,  8 Apr 2025 12:52:02 +0200
+Message-ID: <20250408104855.123031333@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,48 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit c3d944a367c0d9e4e125c7006e52f352e75776dc upstream.
+commit 15a9605f8d69dc85005b1a00c31a050b8625e1aa upstream.
 
-Without this, the vectors are removed if LD_DEAD_CODE_DATA_ELIMINATION
-is enabled.  At startup, the CPU (silently) hangs in the undefined
-instruction exception as soon as the first timer interrupt arrives.
-
-On my setup, the system also boots fine without the 2nd and 3rd KEEP()
-statements, so I cannot tell whether these are actually required.
-
-[nathan: Use OVERLAY_KEEP() to avoid breaking old ld.lld versions]
+In multichannel mode, UAF issue can occur in session_deregister
+when the second channel sets up a session through the connection of
+the first channel. session that is freed through the global session
+table can be accessed again through ->sessions of connection.
 
 Cc: stable@vger.kernel.org
-Fixes: ed0f94102251 ("ARM: 9404/1: arm32: enable HAVE_LD_DEAD_CODE_DATA_ELIMINATION")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/vmlinux.lds.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/mgmt/user_session.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm/include/asm/vmlinux.lds.h
-+++ b/arch/arm/include/asm/vmlinux.lds.h
-@@ -125,13 +125,13 @@
- 	__vectors_lma = .;						\
- 	OVERLAY 0xffff0000 : NOCROSSREFS AT(__vectors_lma) {		\
- 		.vectors {						\
--			*(.vectors)					\
-+			OVERLAY_KEEP(*(.vectors))			\
- 		}							\
- 		.vectors.bhb.loop8 {					\
--			*(.vectors.bhb.loop8)				\
-+			OVERLAY_KEEP(*(.vectors.bhb.loop8))		\
- 		}							\
- 		.vectors.bhb.bpiall {					\
--			*(.vectors.bhb.bpiall)				\
-+			OVERLAY_KEEP(*(.vectors.bhb.bpiall))		\
- 		}							\
- 	}								\
- 	ARM_LMA(__vectors, .vectors);					\
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -230,6 +230,9 @@ void ksmbd_sessions_deregister(struct ks
+ 			if (!ksmbd_chann_del(conn, sess) &&
+ 			    xa_empty(&sess->ksmbd_chann_list)) {
+ 				hash_del(&sess->hlist);
++				down_write(&conn->session_lock);
++				xa_erase(&conn->sessions, sess->id);
++				up_write(&conn->session_lock);
+ 				ksmbd_session_destroy(sess);
+ 			}
+ 		}
 
 
