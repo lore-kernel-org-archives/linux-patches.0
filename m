@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024F3206F18;
-	Tue,  8 Apr 2025 12:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD78206F18;
+	Tue,  8 Apr 2025 12:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114996; cv=none; b=GUdvDkCJryUSnUgd+K98qEpi0cZr7EGNXZ7mx1EuY1hNSXqiSIbQFpRuYZENndfVXPO1F5rK4H3shYHTEuVT6hJSFNSyT5/1nYq81NKruXSbsM/0c7bUU0/84YO9u4U0dyZL6PGWJ0BoAvDxJj4exmC8BFWmudUu8NJ/H5n/v1I=
+	t=1744114998; cv=none; b=h2dUVQWYsul4uEKUmvTckIq8Ko+ViyyXQl8OlLOjKn9eyoDkASDRjU2+EJJFFph8vu7TkmxNQY6ugvHCXUXUsaa5ZMGYWa4jOed3bLyjGC3iGaKy7/h6CbmopsWVY3b7lqUSuwSZnLBo6bOTSatZaNlPNO8bS8aPcL9DtKPjP4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114996; c=relaxed/simple;
-	bh=Af7H/pWZNaWs9nIoEMF2wtRH2g7BQWd2abZir2rOlDU=;
+	s=arc-20240116; t=1744114998; c=relaxed/simple;
+	bh=6uXz+sbUBmMrDz29m7Q8vLQ6NVXekGoHxSbTb4snlb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GYsFm4sV2VASDy/RjyMtKiGpEXvxTEOdikpY84tyVpOv4D9FO0umPcSQf6tl69x6C3OEKNjcswuFBPbymOFGkYeDqQt5lVUa8XCxaQjUua8eVB4vbx9m+hQbK1MOcOygnHIXCLKolkNBuVVlx1oSBtiEaWKRDosfddhSminwoz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CevKV+4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYXPE86L4LC+xueIpPZRdA54C80xcwLuJEs48Oz1smHGpzMyX+A/q2ROFL84lUy2XrXjQifoC20aXN2km00JnqO9HuMQum/QBkfMM8zwQCxBMTfYkdKMuIuta6VxcP47FHkTWjXoHVBr/n17eEsGSg3DS1kSIUqMKHprNPoi5hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztu1JcSf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CevKV+4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A474C4CEE5;
-	Tue,  8 Apr 2025 12:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztu1JcSf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310E5C4CEE5;
+	Tue,  8 Apr 2025 12:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114995;
-	bh=Af7H/pWZNaWs9nIoEMF2wtRH2g7BQWd2abZir2rOlDU=;
+	s=korg; t=1744114998;
+	bh=6uXz+sbUBmMrDz29m7Q8vLQ6NVXekGoHxSbTb4snlb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CevKV+4KGpB+Fz8NzsAWrsk+EYCwoIhuBk6dEzcMRqeHLEcDkEUAw7a497DqzkeXl
-	 +ZYCMp+k7w9MbjE6aNbd5IoT+kpifdRDrFDl8+7Jw3CuxfT4lcQdVVEm6cXX3Vsex2
-	 f8lCBrAL3Dp+qxxBX52ViiCJDFv0kXUt8mWZzFto=
+	b=ztu1JcSfYNQxzKB5d1fBX8P2h4dJOviGSljr/JPhCB1LL1rwEKIs8p056I6viB6B6
+	 amknrrZQC3u20QRtwsRkJX1sA+SF9+r5LEhn8jzO5mA+snSDkCC7Kb4MqqI+vrkc/m
+	 1vKk0nCfUQIx3SyaOKs+IiCae5QjWeWnucMb6Ymc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Daniel=20B=C3=A1rta?= <daniel.barta@trustlab.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 312/499] ALSA: hda: Fix speakers on ASUS EXPERTBOOK P5405CSA 1.0
-Date: Tue,  8 Apr 2025 12:48:44 +0200
-Message-ID: <20250408104859.000014764@linuxfoundation.org>
+Subject: [PATCH 6.13 295/499] sched/smt: Always inline sched_smt_active()
+Date: Tue,  8 Apr 2025 12:48:27 +0200
+Message-ID: <20250408104858.571138616@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,44 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Bárta <daniel.barta@trustlab.cz>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit f479ecc5ef15ed8d774968c1a8726a49420f11a0 ]
+[ Upstream commit 09f37f2d7b21ff35b8b533f9ab8cfad2fe8f72f6 ]
 
-After some digging around I have found that this laptop has Cirrus's smart
-aplifiers connected to SPI bus (spi1-CSC3551:00-cs35l41-hda).
+sched_smt_active() can be called from noinstr code, so it should always
+be inlined.  The CONFIG_SCHED_SMT version already has __always_inline.
+Do the same for its !CONFIG_SCHED_SMT counterpart.
 
-To get them correctly detected and working I had to modify patch_realtek.c
-with ASUS EXPERTBOOK P5405CSA 1.0 SystemID (0x1043, 0x1f63) and add
-corresponding hda_quirk (ALC245_FIXUP_CS35L41_SPI_2).
+Fixes the following warning:
 
-Signed-off-by: Daniel Bárta <daniel.barta@trustlab.cz>
-Link: https://patch.msgid.link/20250227161256.18061-2-daniel.barta@trustlab.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  vmlinux.o: error: objtool: intel_idle_ibrs+0x13: call to sched_smt_active() leaves .noinstr.text section
+
+Fixes: 321a874a7ef8 ("sched/smt: Expose sched_smt_present static key")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/1d03907b0a247cf7fb5c1d518de378864f603060.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/r/202503311434.lyw2Tveh-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/sched/smt.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 575e76590a106..dc7e732a7691f 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10750,6 +10750,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1f12, "ASUS UM5302", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1f1f, "ASUS H7604JI/JV/J3D", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1f62, "ASUS UX7602ZM", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x1f63, "ASUS P5405CSA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1f92, "ASUS ROG Flow X16", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x1fb3, "ASUS ROG Flow Z13 GZ302EA", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
+diff --git a/include/linux/sched/smt.h b/include/linux/sched/smt.h
+index fb1e295e7e63e..166b19af956f8 100644
+--- a/include/linux/sched/smt.h
++++ b/include/linux/sched/smt.h
+@@ -12,7 +12,7 @@ static __always_inline bool sched_smt_active(void)
+ 	return static_branch_likely(&sched_smt_present);
+ }
+ #else
+-static inline bool sched_smt_active(void) { return false; }
++static __always_inline bool sched_smt_active(void) { return false; }
+ #endif
+ 
+ void arch_smt_update(void);
 -- 
 2.39.5
 
