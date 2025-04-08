@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B69269AE4;
-	Tue,  8 Apr 2025 11:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A34269B01;
+	Tue,  8 Apr 2025 11:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113265; cv=none; b=SFy5wF1QA91lhzrvUtSPMJx0OOyCXpghBF05eQuLXRr6VTZj8nYzGD3DGB5WtsRMLjpblb5suAHdcv17/r9uGEQr7DKiaJ6MnHpFZDy7b0grSRKzm+w2JhVeQVbcZcC8ctFS2xrRMt45mSmCL1wnGXUghYoWeXn+8bjgd4qpI2U=
+	t=1744113268; cv=none; b=UyP2LNASmXQbNWYwoXOf1PesW2/vW1i/y4KY5VmzJp84GLOUVfRXyL2yafptTculn52RceeDjzvs/Au0Jyp3MunIMfTpZt1VFKNLtvoFkevr43fKcyy+lDAh+d4RV4m9C+5YcOpBk+gOSzkcY86m4PvEsRMivttKwSioNDspQj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113265; c=relaxed/simple;
-	bh=4WWF+CUJhHLmrT/n0pio0DB6uy54GHmv0enJMwmNer8=;
+	s=arc-20240116; t=1744113268; c=relaxed/simple;
+	bh=Fyl+enbqZ4drIjgDaf5o9WkDLmvAdZFPtN2lGn8mu4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9nBhyf8F1xbJ9dFX/ExR+9u6EbodMiwKTrTb65SCsgodnUJwnz+STx4eZ9xwA8GC//tRLg/dazx6DzqhiAFyUQBtbc3khXdeQBBRJFc+c0Pr0Gvnzofgq98eS539Z/dpJfQZ7A+pmRQJGVRHcQ97YloLBwrzpBeIVcdNfMTsN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgvWPPVI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipstW/tjPChc5MkNS9mHx83yvr00c2v0vXGlWG50xuu8pfU5DO180RsDb2koyTCOJM+lhQwd3ve4ohTlvst99Htoi50qWfQ1T0MGcl/FTZcxz3+dn/FMQMr9hyZLSzfpadvH7kwR5ErnemFvwDS8I/lv45WZTd93r5YA9MuG8oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duCLh3iQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgvWPPVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337B3C4CEE5;
-	Tue,  8 Apr 2025 11:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duCLh3iQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E84C4CEE5;
+	Tue,  8 Apr 2025 11:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113265;
-	bh=4WWF+CUJhHLmrT/n0pio0DB6uy54GHmv0enJMwmNer8=;
+	s=korg; t=1744113268;
+	bh=Fyl+enbqZ4drIjgDaf5o9WkDLmvAdZFPtN2lGn8mu4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgvWPPVIFTi/k7YLufCCFh3pjI0DbS5CvLBFat6eZ8kUcjg1e3vtHxscpamBc1HiQ
-	 X1Y9Xha3eX9yRSiTbusMx6CCfvprLR9TM/i7Zg0IjucBrhcLeOFi63E9eSuUQr5B70
-	 EECdrrDbqjU+ZcRlG3UXi6XF44oBNvjcDDbiNLs4=
+	b=duCLh3iQhSmAS/9iEHT/Ixdq58TRqCT3yt8GPG0LWkZGu/tCyCAwLY+yYkfg6/BF7
+	 X7IWEopiK5IUdzZprzs4/biHpQnR9jKWJIoTKP5I05wIqPqgzU6ASPCzlpRVg5ucZJ
+	 rI7E0b/sD7Fxt2x5m6cC4Vz+AG5xZekLEHY9s2oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/268] libbpf: Fix hypothetical STT_SECTION extern NULL deref case
-Date: Tue,  8 Apr 2025 12:47:59 +0200
-Message-ID: <20250408104830.330568989@linuxfoundation.org>
+Subject: [PATCH 6.6 095/268] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
+Date: Tue,  8 Apr 2025 12:48:26 +0200
+Message-ID: <20250408104831.059608125@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,39 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit e0525cd72b5979d8089fe524a071ea93fd011dc9 ]
+[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
 
-Fix theoretical NULL dereference in linker when resolving *extern*
-STT_SECTION symbol against not-yet-existing ELF section. Not sure if
-it's possible in practice for valid ELF object files (this would require
-embedded assembly manipulations, at which point BTF will be missing),
-but fix the s/dst_sym/dst_sec/ typo guarding this condition anyways.
+When cur_qp isn't NULL, in order to avoid fetching the QP from
+the radix tree again we check if the next cqe QP is identical to
+the one we already have.
 
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Fixes: a46349227cd8 ("libbpf: Add linker extern resolution support for functions and global variables")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20250220002821.834400-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The bug however is that we are checking if the QP is identical by
+checking the QP number inside the CQE against the QP number inside the
+mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
+FW so it should be matched against mlx5_core_qp which is our FW QP
+number.
+
+Otherwise we could use the wrong QP when handling a CQE which could
+cause the kernel trace below.
+
+This issue is mainly noticeable over QPs 0 & 1, since for now they are
+the only QPs in our driver whereas the QP number inside mlx5_ib_qp
+doesn't match the QP number inside mlx5_core_qp.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP
+ CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+ Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
+ RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
+ RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
+ RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
+ R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
+ FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x60
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+  __ib_process_cq+0x5a/0x150 [ib_core]
+  ib_cq_poll_work+0x31/0x90 [ib_core]
+  process_one_work+0x169/0x320
+  worker_thread+0x288/0x3a0
+  ? work_busy+0xb0/0xb0
+  kthread+0xd7/0x1f0
+  ? kthreads_online_cpu+0x130/0x130
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork+0x2d/0x50
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 2 +-
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 736ebceea233f..a3a190d13db8a 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -1974,7 +1974,7 @@ static int linker_append_elf_sym(struct bpf_linker *linker, struct src_obj *obj,
- 
- 	obj->sym_map[src_sym_idx] = dst_sym_idx;
- 
--	if (sym_type == STT_SECTION && dst_sym) {
-+	if (sym_type == STT_SECTION && dst_sec) {
- 		dst_sec->sec_sym_idx = dst_sym_idx;
- 		dst_sym->st_value = 0;
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 9773d2a3d97fb..ee9acd58c5121 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -487,7 +487,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
  	}
+ 
+ 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
+-	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
++	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
+ 		/* We do not have to take the QP table lock here,
+ 		 * because CQs will be locked while QPs are removed
+ 		 * from the table.
 -- 
 2.39.5
 
