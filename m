@@ -1,54 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC73269839;
-	Tue,  8 Apr 2025 11:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8C4269AED;
+	Tue,  8 Apr 2025 11:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112090; cv=none; b=st9uNB+6p3RwCWsrUBXFHiVpt6cERhks/K0D9rt/tgcRp8qPP9UtXZp8IKzcbC1kslheA1AgBx0gKHWPZuYNuqDvsQ+Ns9aK0rho2/GFfa95WgGpzG7TxRalq4u1WZ+jJ8xCFh88fEy7AeQHY12TVHcWZXkWZy3Y216TcT26KtE=
+	t=1744112093; cv=none; b=cnQGKbrTRO8u5nqIqzN0ueA4gwgRrI2kxe1HYchAi+C0Zx6gOHojilOEtjD5+cxxdPMKfCiCLfKa5knIiFZO8cfWlo1em+RbZXHLjN9hg7RYo9KkhNH6dOM80lzF4z83JUXjdMusxRCX67HDfvOL1hRPS9qFBEOPb+72gibXgXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112090; c=relaxed/simple;
-	bh=m9V0uGRfawbcw3WbNcmSkdei4z0+VY1EtcMC9RKiZpk=;
+	s=arc-20240116; t=1744112093; c=relaxed/simple;
+	bh=0pVadiCazb5lx+GWpOiuiioBJXHc2/sZ6G7Hq/rlvb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgOrbXl5wE7Y0W7/8FxLY7nauKrxQtDMJ2lHLuRsl+xLXzDzbNFxTu9BP2oY+9P2hpnpFOuiYatN0BRjYLyYwOwARNI9uhqYWxe2JjSq3+TMTBNm2m0ZTYGjC5mbRfcaeJ3Z2MiZcM/7Sz1caBBUTkRPZLpPwWkuHVd9lCHzSgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cif/WTcm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hy07mluQwr/YLIi8gxMZhru/uiuwXboKStdTJF8tyzXGfu78BMZH0CkJd2UAQAMTjeAyR3H7gvQL2/2Ra2PQBQE27KSMzipb0aJKCCqoag0pDyCMkRPXCbknUOu9n6sEFStW0OkAPD5zhisfAlOfthlY7tYkXb/cawog5dmYcdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFyX+zkR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cif/WTcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23423C4CEE5;
-	Tue,  8 Apr 2025 11:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFyX+zkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A8FC4CEEA;
+	Tue,  8 Apr 2025 11:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112090;
-	bh=m9V0uGRfawbcw3WbNcmSkdei4z0+VY1EtcMC9RKiZpk=;
+	s=korg; t=1744112093;
+	bh=0pVadiCazb5lx+GWpOiuiioBJXHc2/sZ6G7Hq/rlvb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cif/WTcmG1GC9Pjkep2phpjRd5vJuBzP24L4zFNXkZ2r5D4hX7skY0m5wwMMXEUyz
-	 LdP3vRroRVDuAwZFGZEbr8VdJFYLfZFV7u4DguGUNhm0uGhSW79LERNU37k+sjEFdu
-	 C408TxZ09T7opDT3tBXx61B0W1mCdIt8DJ9zabEU=
+	b=fFyX+zkRWMZa4xDDtgxHMGhcsDScFJ3DTY2cfnrSGZzA1fsDVEYt5weM2f7qmlG0s
+	 GpdAxVz+X+DUmk4dr0XlLO/dqq64XWX3RfTaS1rExOeL/aJLBhSNlbXG5hsogYJk1D
+	 fdslGYAdR+Wv+60BZKQTJCy1DyKSE6u5cNzGbVcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Vishal Annapurve <vannapurve@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andi Kleen <ak@linux.intel.com>,
 	Tony Luck <tony.luck@intel.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Ryan Afranji <afranji@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 671/731] x86/mce: use is_copy_from_user() to determine copy-from-user context
-Date: Tue,  8 Apr 2025 12:49:28 +0200
-Message-ID: <20250408104929.873765877@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	stable@kernel.org
+Subject: [PATCH 6.14 672/731] x86/paravirt: Move halt paravirt calls under CONFIG_PARAVIRT
+Date: Tue,  8 Apr 2025 12:49:29 +0200
+Message-ID: <20250408104929.898141747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -67,213 +62,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 1a15bb8303b6b104e78028b6c68f76a0d4562134 upstream.
+commit 22cc5ca5de52bbfc36a7d4a55323f91fb4492264 upstream.
 
-Patch series "mm/hwpoison: Fix regressions in memory failure handling",
-v4.
+CONFIG_PARAVIRT_XXL is mainly defined/used by XEN PV guests. For
+other VM guest types, features supported under CONFIG_PARAVIRT
+are self sufficient. CONFIG_PARAVIRT mainly provides support for
+TLB flush operations and time related operations.
 
-## 1. What am I trying to do:
+For TDX guest as well, paravirt calls under CONFIG_PARVIRT meets
+most of its requirement except the need of HLT and SAFE_HLT
+paravirt calls, which is currently defined under
+CONFIG_PARAVIRT_XXL.
 
-This patchset resolves two critical regressions related to memory failure
-handling that have appeared in the upstream kernel since version 5.17, as
-compared to 5.10 LTS.
+Since enabling CONFIG_PARAVIRT_XXL is too bloated for TDX guest
+like platforms, move HLT and SAFE_HLT paravirt calls under
+CONFIG_PARAVIRT.
 
-    - copyin case: poison found in user page while kernel copying from user space
-    - instr case: poison found while instruction fetching in user space
+Moving HLT and SAFE_HLT paravirt calls are not fatal and should not
+break any functionality for current users of CONFIG_PARAVIRT.
 
-## 2. What is the expected outcome and why
-
-- For copyin case:
-
-Kernel can recover from poison found where kernel is doing get_user() or
-copy_from_user() if those places get an error return and the kernel return
--EFAULT to the process instead of crashing.  More specifily, MCE handler
-checks the fixup handler type to decide whether an in kernel #MC can be
-recovered.  When EX_TYPE_UACCESS is found, the PC jumps to recovery code
-specified in _ASM_EXTABLE_FAULT() and return a -EFAULT to user space.
-
-- For instr case:
-
-If a poison found while instruction fetching in user space, full recovery
-is possible.  User process takes #PF, Linux allocates a new page and fills
-by reading from storage.
-
-
-## 3. What actually happens and why
-
-- For copyin case: kernel panic since v5.17
-
-Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
-extable fixup type, EX_TYPE_EFAULT_REG, and later patches updated the
-extable fixup type for copy-from-user operations, changing it from
-EX_TYPE_UACCESS to EX_TYPE_EFAULT_REG.  It breaks previous EX_TYPE_UACCESS
-handling when posion found in get_user() or copy_from_user().
-
-- For instr case: user process is killed by a SIGBUS signal due to #CMCI
-  and #MCE race
-
-When an uncorrected memory error is consumed there is a race between the
-CMCI from the memory controller reporting an uncorrected error with a UCNA
-signature, and the core reporting and SRAR signature machine check when
-the data is about to be consumed.
-
-### Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
-
-Prior to Icelake memory controllers reported patrol scrub events that
-detected a previously unseen uncorrected error in memory by signaling a
-broadcast machine check with an SRAO (Software Recoverable Action
-Optional) signature in the machine check bank.  This was overkill because
-it's not an urgent problem that no core is on the verge of consuming that
-bad data.  It's also found that multi SRAO UCE may cause nested MCE
-interrupts and finally become an IERR.
-
-Hence, Intel downgrades the machine check bank signature of patrol scrub
-from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
-#CMCI.  Just to add to the confusion, Linux does take an action (in
-uc_decode_notifier()) to try to offline the page despite the UC*NA*
-signature name.
-
-### Background: why #CMCI and #MCE race when poison is consuming in
-    Intel platform [1]
-
-Having decided that CMCI/UCNA is the best action for patrol scrub errors,
-the memory controller uses it for reads too.  But the memory controller is
-executing asynchronously from the core, and can't tell the difference
-between a "real" read and a speculative read.  So it will do CMCI/UCNA if
-an error is found in any read.
-
-Thus:
-
-1) Core is clever and thinks address A is needed soon, issues a
-   speculative read.
-
-2) Core finds it is going to use address A soon after sending the read
-   request
-
-3) The CMCI from the memory controller is in a race with MCE from the
-   core that will soon try to retire the load from address A.
-
-Quite often (because speculation has got better) the CMCI from the memory
-controller is delivered before the core is committed to the instruction
-reading address A, so the interrupt is taken, and Linux offlines the page
-(marking it as poison).
-
-
-## Why user process is killed for instr case
-
-Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
-"not recovered"") tries to fix noise message "Memory error not recovered"
-and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
-that kill_accessing_process() return -EHWPOISON for instr case, as result,
-kill_me_maybe() send a SIGBUS to user process.
-
-# 4. The fix, in my opinion, should be:
-
-- For copyin case:
-
-The key point is whether the error context is in a read from user memory.
-We do not care about the ex-type if we know its a MOV reading from
-userspace.
-
-is_copy_from_user() return true when both of the following two checks are
-true:
-
-    - the current instruction is copy
-    - source address is user memory
-
-If copy_user is true, we set
-
-m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
-
-Then do_machine_check() will try fixup_exception() first.
-
-- For instr case: let kill_accessing_process() return 0 to prevent a SIGBUS.
-
-- For patch 3:
-
-The return value of memory_failure() is quite important while discussed
-instr case regression with Tony and Miaohe for patch 2, so add comment
-about the return value.
-
-
-This patch (of 3):
-
-Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
-extable fixup type, EX_TYPE_EFAULT_REG, and commit 4c132d1d844a
-("x86/futex: Remove .fixup usage") updated the extable fixup type for
-copy-from-user operations, changing it from EX_TYPE_UACCESS to
-EX_TYPE_EFAULT_REG.  The error context for copy-from-user operations no
-longer functions as an in-kernel recovery context.  Consequently, the
-error context for copy-from-user operations no longer functions as an
-in-kernel recovery context, resulting in kernel panics with the message:
-"Machine check: Data load in unrecoverable area of kernel."
-
-To address this, it is crucial to identify if an error context involves a
-read operation from user memory.  The function is_copy_from_user() can be
-utilized to determine:
-
-    - the current operation is copy
-    - when reading user memory
-
-When these conditions are met, is_copy_from_user() will return true,
-confirming that it is indeed a direct copy from user memory.  This check
-is essential for correctly handling the context of errors in these
-operations without relying on the extable fixup types that previously
-allowed for in-kernel recovery.
-
-So, use is_copy_from_user() to determine if a context is copy user directly.
-
-Link: https://lkml.kernel.org/r/20250312112852.82415-1-xueshuai@linux.alibaba.com
-Link: https://lkml.kernel.org/r/20250312112852.82415-2-xueshuai@linux.alibaba.com
-Fixes: 4c132d1d844a ("x86/futex: Remove .fixup usage")
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Tony Luck <tony.luck@intel.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: bfe6ed0c6727 ("x86/tdx: Add HLT support for TDX guests")
+Co-developed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Vishal Annapurve <vannapurve@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Andi Kleen <ak@linux.intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Ryan Afranji <afranji@google.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Josh Poimboeuf <jpoimboe@redhat.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20250228014416.3925664-2-vannapurve@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/severity.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/irqflags.h       |   40 ++++++++++++++++++----------------
+ arch/x86/include/asm/paravirt.h       |   20 ++++++++---------
+ arch/x86/include/asm/paravirt_types.h |    3 --
+ arch/x86/kernel/paravirt.c            |   14 ++++++-----
+ 4 files changed, 41 insertions(+), 36 deletions(-)
 
---- a/arch/x86/kernel/cpu/mce/severity.c
-+++ b/arch/x86/kernel/cpu/mce/severity.c
-@@ -300,13 +300,12 @@ static noinstr int error_context(struct
- 	copy_user  = is_copy_from_user(regs);
- 	instrumentation_end();
+--- a/arch/x86/include/asm/irqflags.h
++++ b/arch/x86/include/asm/irqflags.h
+@@ -76,6 +76,28 @@ static __always_inline void native_local
  
--	switch (fixup_type) {
--	case EX_TYPE_UACCESS:
--		if (!copy_user)
--			return IN_KERNEL;
--		m->kflags |= MCE_IN_KERNEL_COPYIN;
--		fallthrough;
-+	if (copy_user) {
-+		m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
-+		return IN_KERNEL_RECOV;
-+	}
+ #endif
  
-+	switch (fixup_type) {
- 	case EX_TYPE_FAULT_MCE_SAFE:
- 	case EX_TYPE_DEFAULT_MCE_SAFE:
- 		m->kflags |= MCE_IN_KERNEL_RECOV;
++#ifndef CONFIG_PARAVIRT
++#ifndef __ASSEMBLY__
++/*
++ * Used in the idle loop; sti takes one instruction cycle
++ * to complete:
++ */
++static __always_inline void arch_safe_halt(void)
++{
++	native_safe_halt();
++}
++
++/*
++ * Used when interrupts are already enabled or to
++ * shutdown the processor:
++ */
++static __always_inline void halt(void)
++{
++	native_halt();
++}
++#endif /* __ASSEMBLY__ */
++#endif /* CONFIG_PARAVIRT */
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ #include <asm/paravirt.h>
+ #else
+@@ -98,24 +120,6 @@ static __always_inline void arch_local_i
+ }
+ 
+ /*
+- * Used in the idle loop; sti takes one instruction cycle
+- * to complete:
+- */
+-static __always_inline void arch_safe_halt(void)
+-{
+-	native_safe_halt();
+-}
+-
+-/*
+- * Used when interrupts are already enabled or to
+- * shutdown the processor:
+- */
+-static __always_inline void halt(void)
+-{
+-	native_halt();
+-}
+-
+-/*
+  * For spinlocks, etc:
+  */
+ static __always_inline unsigned long arch_local_irq_save(void)
+--- a/arch/x86/include/asm/paravirt.h
++++ b/arch/x86/include/asm/paravirt.h
+@@ -107,6 +107,16 @@ static inline void notify_page_enc_statu
+ 	PVOP_VCALL3(mmu.notify_page_enc_status_changed, pfn, npages, enc);
+ }
+ 
++static __always_inline void arch_safe_halt(void)
++{
++	PVOP_VCALL0(irq.safe_halt);
++}
++
++static inline void halt(void)
++{
++	PVOP_VCALL0(irq.halt);
++}
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ static inline void load_sp0(unsigned long sp0)
+ {
+@@ -170,16 +180,6 @@ static inline void __write_cr4(unsigned
+ 	PVOP_VCALL1(cpu.write_cr4, x);
+ }
+ 
+-static __always_inline void arch_safe_halt(void)
+-{
+-	PVOP_VCALL0(irq.safe_halt);
+-}
+-
+-static inline void halt(void)
+-{
+-	PVOP_VCALL0(irq.halt);
+-}
+-
+ static inline u64 paravirt_read_msr(unsigned msr)
+ {
+ 	return PVOP_CALL1(u64, cpu.read_msr, msr);
+--- a/arch/x86/include/asm/paravirt_types.h
++++ b/arch/x86/include/asm/paravirt_types.h
+@@ -120,10 +120,9 @@ struct pv_irq_ops {
+ 	struct paravirt_callee_save save_fl;
+ 	struct paravirt_callee_save irq_disable;
+ 	struct paravirt_callee_save irq_enable;
+-
++#endif
+ 	void (*safe_halt)(void);
+ 	void (*halt)(void);
+-#endif
+ } __no_randomize_layout;
+ 
+ struct pv_mmu_ops {
+--- a/arch/x86/kernel/paravirt.c
++++ b/arch/x86/kernel/paravirt.c
+@@ -110,6 +110,11 @@ int paravirt_disable_iospace(void)
+ 	return request_resource(&ioport_resource, &reserve_ioports);
+ }
+ 
++static noinstr void pv_native_safe_halt(void)
++{
++	native_safe_halt();
++}
++
+ #ifdef CONFIG_PARAVIRT_XXL
+ static noinstr void pv_native_write_cr2(unsigned long val)
+ {
+@@ -125,11 +130,6 @@ static noinstr void pv_native_set_debugr
+ {
+ 	native_set_debugreg(regno, val);
+ }
+-
+-static noinstr void pv_native_safe_halt(void)
+-{
+-	native_safe_halt();
+-}
+ #endif
+ 
+ struct pv_info pv_info = {
+@@ -186,9 +186,11 @@ struct paravirt_patch_template pv_ops =
+ 	.irq.save_fl		= __PV_IS_CALLEE_SAVE(pv_native_save_fl),
+ 	.irq.irq_disable	= __PV_IS_CALLEE_SAVE(pv_native_irq_disable),
+ 	.irq.irq_enable		= __PV_IS_CALLEE_SAVE(pv_native_irq_enable),
++#endif /* CONFIG_PARAVIRT_XXL */
++
++	/* Irq HLT ops. */
+ 	.irq.safe_halt		= pv_native_safe_halt,
+ 	.irq.halt		= native_halt,
+-#endif /* CONFIG_PARAVIRT_XXL */
+ 
+ 	/* Mmu ops. */
+ 	.mmu.flush_tlb_user	= native_flush_tlb_local,
 
 
