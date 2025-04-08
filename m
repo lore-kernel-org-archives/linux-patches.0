@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8681D269826;
-	Tue,  8 Apr 2025 12:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E651FCFF3;
+	Tue,  8 Apr 2025 12:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115482; cv=none; b=bqy5CNt+qk48RCuFXD5h8UMttYGNblkUsqiVg8+5dFa+1ja2VcqEVX4+n2dldaaHHqPM4F/ShVwXga221p7gDF5U3poY6TnZ+F931pZti/BfBEX58+5kgh8yJMkSJiJEAjWiCxFjE78uK8pu4EAZBFiyQrdqg2gvLvVib7bCYuc=
+	t=1744115485; cv=none; b=E7pKXVoJM5LnmcP7iKvpromcsIFkBOrZJtSySU03HlMY16uexYqCB76SV3H79zvKo7nE5diQJwLlwh7LQBnEnAw5oYLOsUa58bEPlaobk9619qMr1sYirW87p+ps5s0ZcD8miTAkVB9FsIEGsipOsu1WrxNnPohEKmcRSzZgLRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115482; c=relaxed/simple;
-	bh=zVbck+xKMFwoUs1n3tTKkV1MuNv1Bv3wjVwfsO8drNE=;
+	s=arc-20240116; t=1744115485; c=relaxed/simple;
+	bh=Bja0JJF075JqHfxKo41rPGZpyNiiHYECMNO8BSUIKw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHyzN2Tqx47+pUj9pEOpLnwMTdvy4KwtRXtuRwznPC+yK+adTPPkD40lezgxYV87zrhOKneTXgyaV3XmXhfKaEU3rU81GouIwgZW5AY3Tbw96ntoWQ9eJJUXm3Me5+PQsJoeM+6+U/zlMFR2j8xONgmvCFp6Lh+kMQb9dXlGiqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErvPmZEC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HmU5Y2XegB4ayl9Wb4EQCymTtsVTLlZ9GugW1nHdi0szJnUAP5eNS3/4lonU0dMMOgose8sgBW/hj5q9D0MQ3ff24L7rEGmQ7jrwXaGTxI+1cOO32jZzilkDUsx/hyhva2dPvM/csthu0QY0se8C6LwCvFvKQZrhlXuOBAr8YTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTRJQUyj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErvPmZEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFD9C4CEE5;
-	Tue,  8 Apr 2025 12:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTRJQUyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C84C4CEE5;
+	Tue,  8 Apr 2025 12:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115482;
-	bh=zVbck+xKMFwoUs1n3tTKkV1MuNv1Bv3wjVwfsO8drNE=;
+	s=korg; t=1744115485;
+	bh=Bja0JJF075JqHfxKo41rPGZpyNiiHYECMNO8BSUIKw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErvPmZECVOtDherZSqAXlTgT9lO6hcI4qOaiEGJVkxHQkS2tl85p3YzVfCipuVvaD
-	 1oZHWMVkrOEPnv5dD3CXL3KdHqGhhRIJ/4OnXU9HXhpLl7TFnYDWCP96QvU1ED43lO
-	 SIQJsd6jVEhFqGiy67BORyqEJSH8vC7EQLLje7uc=
+	b=YTRJQUyjJhp0u5mausXr4Uvm0EJCQ9XtSDJfbG9yiyIQdDqnhFhOyV8Th4Gr4NDqs
+	 ZxpmgN/ZMPCh3hsuVnuUAkXa3gnvUVfYNvgkw3um5GCOZns+oUPOBDceSGrJawLyJp
+	 HgvJygQwbHPZuSkOQDz9PziiJWR4VXhGqOYlJIzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 491/499] media: streamzap: fix race between device disconnection and urb callback
-Date: Tue,  8 Apr 2025 12:51:43 +0200
-Message-ID: <20250408104903.604257427@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.13 465/499] KVM: SVM: Dont change target vCPU state on AP Creation VMGEXIT error
+Date: Tue,  8 Apr 2025 12:51:17 +0200
+Message-ID: <20250408104902.836686332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,48 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f656cfbc7a293a039d6a0c7100e1c846845148c1 upstream.
+commit d26638bfcdfc5c8c4e085dc3f5976a0443abab3c upstream.
 
-Syzkaller has reported a general protection fault at function
-ir_raw_event_store_with_filter(). This crash is caused by a NULL pointer
-dereference of dev->raw pointer, even though it is checked for NULL in
-the same function, which means there is a race condition. It occurs due
-to the incorrect order of actions in the streamzap_disconnect() function:
-rc_unregister_device() is called before usb_kill_urb(). The dev->raw
-pointer is freed and set to NULL in rc_unregister_device(), and only
-after that usb_kill_urb() waits for in-progress requests to finish.
+If KVM rejects an AP Creation event, leave the target vCPU state as-is.
+Nothing in the GHCB suggests the hypervisor is *allowed* to muck with vCPU
+state on failure, let alone required to do so.  Furthermore, kicking only
+in the !ON_INIT case leads to divergent behavior, and even the "kick" case
+is non-deterministic.
 
-If rc_unregister_device() is called while streamzap_callback() handler is
-not finished, this can lead to accessing freed resources. Thus
-rc_unregister_device() should be called after usb_kill_urb().
+E.g. if an ON_INIT request fails, the guest can successfully retry if the
+fixed AP Creation request is made prior to sending INIT.  And if a !ON_INIT
+fails, the guest can successfully retry if the fixed AP Creation request is
+handled before the target vCPU processes KVM's
+KVM_REQ_UPDATE_PROTECTED_GUEST_STATE.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 8e9e60640067 ("V4L/DVB: staging/lirc: port lirc_streamzap to ir-core")
+Fixes: e366f92ea99e ("KVM: SEV: Support SEV-SNP AP Creation NAE event")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+34008406ee9a31b13c73@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=34008406ee9a31b13c73
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Link: https://lore.kernel.org/r/20250227012541.3234589-5-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -385,8 +385,8 @@ static void streamzap_disconnect(struct
- 	if (!sz)
- 		return;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3945,16 +3945,12 @@ static int sev_snp_ap_creation(struct vc
  
--	rc_unregister_device(sz->rdev);
- 	usb_kill_urb(sz->urb_in);
-+	rc_unregister_device(sz->rdev);
- 	usb_free_urb(sz->urb_in);
- 	usb_free_coherent(usbdev, sz->buf_in_len, sz->buf_in, sz->dma_in);
+ 	/*
+ 	 * The target vCPU is valid, so the vCPU will be kicked unless the
+-	 * request is for CREATE_ON_INIT. For any errors at this stage, the
+-	 * kick will place the vCPU in an non-runnable state.
++	 * request is for CREATE_ON_INIT.
+ 	 */
+ 	kick = true;
  
+ 	mutex_lock(&target_svm->sev_es.snp_vmsa_mutex);
+ 
+-	target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
+-	target_svm->sev_es.snp_ap_waiting_for_reset = true;
+-
+ 	/* Interrupt injection mode shouldn't change for AP creation */
+ 	if (request < SVM_VMGEXIT_AP_DESTROY) {
+ 		u64 sev_features;
+@@ -4000,20 +3996,23 @@ static int sev_snp_ap_creation(struct vc
+ 		target_svm->sev_es.snp_vmsa_gpa = svm->vmcb->control.exit_info_2;
+ 		break;
+ 	case SVM_VMGEXIT_AP_DESTROY:
++		target_svm->sev_es.snp_vmsa_gpa = INVALID_PAGE;
+ 		break;
+ 	default:
+ 		vcpu_unimpl(vcpu, "vmgexit: invalid AP creation request [%#x] from guest\n",
+ 			    request);
+ 		ret = -EINVAL;
+-		break;
++		goto out;
+ 	}
+ 
+-out:
++	target_svm->sev_es.snp_ap_waiting_for_reset = true;
++
+ 	if (kick) {
+ 		kvm_make_request(KVM_REQ_UPDATE_PROTECTED_GUEST_STATE, target_vcpu);
+ 		kvm_vcpu_kick(target_vcpu);
+ 	}
+ 
++out:
+ 	mutex_unlock(&target_svm->sev_es.snp_vmsa_mutex);
+ 
+ 	return ret;
 
 
