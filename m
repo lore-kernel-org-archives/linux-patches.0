@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9DF22257E;
-	Tue,  8 Apr 2025 11:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A69A266EEA;
+	Tue,  8 Apr 2025 11:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112859; cv=none; b=TYqGLs69X/xxfdDA1R12VL07QAnohm1+KhNrKqZP2cqDQf6E8nHSkVVDA6Hs3OmC79f+ijZXtPda9dAvdpkg27YcqTeQptOohX3W2Vttjthl/Hor4qcxOcSmakZO60g2wT2Wv9EYXN2lpxqEjAUvrvEBnTZu5FjXzJrR8pySAiQ=
+	t=1744112862; cv=none; b=DfPYFSotqqxRCGvC+/esfvl8P/0Ipp692eYvHgz5cdSnldTOWT+QqFHO1S1Y0n4Hdu0qYzitfdgBjxrbr1kamoRiTSYJUZHoVSMid/d5pjftaQ55sAgmnQgLqQNEVo2rA4HWGEDsOrNMwgr2rgDCB0BPCFLBU0OjfDvGiuSkMSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112859; c=relaxed/simple;
-	bh=3qmoWWPSebXY+ED6+onjWeMlUJmRmcYqZ1TkwDtgyAg=;
+	s=arc-20240116; t=1744112862; c=relaxed/simple;
+	bh=pLYaLgqPDk75HlJSk2+4yf0CoLM50HHDyH7sGv9zwcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtWqI+/kU0u5XEOIGLt3zt6DhsS2UyIrpfH5RDGnt0gF1CP60b7tBZ0RDaMCDyyyVml+JB0BEbmgmHBncFeRWpjpoqtBOpLSkkUydvxl3AsKWEO3irSi1dDhJurXmRMrqiaKzeaja+eNBEdQEHd/jkuapXNU3MUwQgBqX6nYQMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrT+gUXe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lU/HS/2RebEO4fUfnw7FLPauY6wkYRvwtz0XYkVzc0dRNUijxcgvKiW4WH1j1EgpyH6nlXpbSFDQ+XN+B/SL7wNXT7WBhhxpbfGaDuYY1pdZ6J4aGn1gR6uJDl6cYlcdaX8CDo5RAxgBDUjzqqGqaO9cxedgCDd/t3PFeLwKeoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VyBwGF5V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrT+gUXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E54C4CEE5;
-	Tue,  8 Apr 2025 11:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyBwGF5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE1CC4CEE5;
+	Tue,  8 Apr 2025 11:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112859;
-	bh=3qmoWWPSebXY+ED6+onjWeMlUJmRmcYqZ1TkwDtgyAg=;
+	s=korg; t=1744112862;
+	bh=pLYaLgqPDk75HlJSk2+4yf0CoLM50HHDyH7sGv9zwcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MrT+gUXeqhNl/loyt9gCxkeTmQdkHSe5Ak3MP3L/igly6w4iNQgfYtmoM03wo6y57
-	 pUEFMvjIkDG3+/H0mx3fbHWOlER70aRX6amy0L/ugk9U4CqraZDXKKH5KBUgIRsfyr
-	 2BcI0Ej6sHxMaGD2PKqDl7Lkptoz/Y0LS+c8B6Ic=
+	b=VyBwGF5VhOp5wy8g8Q9nugNSBYnc6FU5BAaxmnlzXR8i+bRpHJKKLkqn0c65sXnQy
+	 pJA0UTP7RckY0KK7t63NZaqPZtOs8xbVe7bb0TSr87imPlu9rjuzJrsagt2kbjr8xf
+	 6shk6Z5xabg7ZN2/UuZ+VFr8FQhYP4HHfsf2jJrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Tatham <anakin@pobox.com>,
-	David Sterba <dsterba@suse.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 225/279] affs: generate OFS sequence numbers starting at 1
-Date: Tue,  8 Apr 2025 12:50:08 +0200
-Message-ID: <20250408104832.443670067@linuxfoundation.org>
+Subject: [PATCH 5.15 208/279] perf python: Dont keep a raw_data pointer to consumed ring buffer space
+Date: Tue,  8 Apr 2025 12:49:51 +0200
+Message-ID: <20250408104831.958152559@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -45,72 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Tatham <anakin@pobox.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e4cf8ec4de4e13f156c1d61977d282d90c221085 ]
+[ Upstream commit f3fed3ae34d606819d87a63d970cc3092a5be7ab ]
 
-If I write a file to an OFS floppy image, and try to read it back on
-an emulated Amiga running Workbench 1.3, the Amiga reports a disk
-error trying to read the file. (That is, it's unable to read it _at
-all_, even to copy it to the NIL: device. It isn't a matter of getting
-the wrong data and being unable to parse the file format.)
+When processing tracepoints the perf python binding was parsing the
+event before calling perf_mmap__consume(&md->core) in
+pyrf_evlist__read_on_cpu().
 
-This is because the 'sequence number' field in the OFS data block
-header is supposed to be based at 1, but affs writes it based at 0.
-All three locations changed by this patch were setting the sequence
-number to a variable 'bidx' which was previously obtained by dividing
-a file position by bsize, so bidx will naturally use 0 for the first
-block. Therefore all three should add 1 to that value before writing
-it into the sequence number field.
+But part of this event parsing was to set the perf_sample->raw_data
+pointer to the payload of the event, which then could be overwritten by
+other event before tracepoint fields were asked for via event.prev_comm
+in a python program, for instance.
 
-With this change, the Amiga successfully reads the file.
+This also happened with other fields, but strings were were problems
+were surfacing, as there is UTF-8 validation for the potentially garbled
+data.
 
-For data block reference: https://wiki.osdev.org/FFS_(Amiga)
+This ended up showing up as (with some added debugging messages):
 
-Signed-off-by: Simon Tatham <anakin@pobox.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  ( field 'prev_comm' ret=0x7f7c31f65110, raw_size=68 )  ( field 'prev_pid' ret=0x7f7c23b1bed0, raw_size=68 )  ( field 'prev_prio' ret=0x7f7c239c0030, raw_size=68 )  ( field 'prev_state' ret=0x7f7c239c0250, raw_size=68 ) time 14771421785867 prev_comm= prev_pid=1919907691 prev_prio=796026219 prev_state=0x303a32313175 ==>
+  ( XXX '��' len=16, raw_size=68)  ( field 'next_comm' ret=(nil), raw_size=68 ) Traceback (most recent call last):
+   File "/home/acme/git/perf-tools-next/tools/perf/python/tracepoint.py", line 51, in <module>
+     main()
+   File "/home/acme/git/perf-tools-next/tools/perf/python/tracepoint.py", line 46, in main
+     event.next_comm,
+     ^^^^^^^^^^^^^^^
+  AttributeError: 'perf.sample_event' object has no attribute 'next_comm'
+
+When event.next_comm was asked for, the PyUnicode_FromString() python
+API would fail and that tracepoint field wouldn't be available, stopping
+the tools/perf/python/tracepoint.py test tool.
+
+But, since we already do a copy of the whole event in pyrf_event__new,
+just use it and while at it remove what was done in in e8968e654191390a
+("perf python: Fix pyrf_evlist__read_on_cpu event consuming") because we
+don't really need to wait for parsing the sample before declaring the
+event as consumed.
+
+This copy is questionable as is now, as it limits the maximum event +
+sample_type and tracepoint payload to sizeof(union perf_event), this all
+has been "working" because 'struct perf_event_mmap2', the largest entry
+in 'union perf_event' is:
+
+  $ pahole -C perf_event ~/bin/perf | grep mmap2
+	struct perf_record_mmap2   mmap2;              /*     0  4168 */
+  $
+
+Fixes: bae57e3825a3dded ("perf python: Add support to resolve tracepoint fields")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250312203141.285263-6-acme@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/file.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/util/python.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/affs/file.c b/fs/affs/file.c
-index 25d480ea797bd..88d4e6263df96 100644
---- a/fs/affs/file.c
-+++ b/fs/affs/file.c
-@@ -598,7 +598,7 @@ affs_extent_file_ofs(struct inode *inode, u32 newsize)
- 		BUG_ON(tmp > bsize);
- 		AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 		AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
- 		affs_fix_checksum(sb, bh);
- 		bh->b_state &= ~(1UL << BH_New);
-@@ -748,7 +748,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		if (buffer_new(bh)) {
- 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(bsize);
- 			AFFS_DATA_HEAD(bh)->next = 0;
- 			bh->b_state &= ~(1UL << BH_New);
-@@ -782,7 +782,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		if (buffer_new(bh)) {
- 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
- 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
--			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
-+			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
- 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
- 			AFFS_DATA_HEAD(bh)->next = 0;
- 			bh->b_state &= ~(1UL << BH_New);
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index 368a5f2c244c8..42810b63125a9 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -1091,11 +1091,9 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
+ 
+ 		pevent->evsel = evsel;
+ 
+-		err = evsel__parse_sample(evsel, event, &pevent->sample);
+-
+-		/* Consume the even only after we parsed it out. */
+ 		perf_mmap__consume(&md->core);
+ 
++		err = evsel__parse_sample(evsel, &pevent->event, &pevent->sample);
+ 		if (err) {
+ 			Py_DECREF(pyevent);
+ 			return PyErr_Format(PyExc_OSError,
 -- 
 2.39.5
 
