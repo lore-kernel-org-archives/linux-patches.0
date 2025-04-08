@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10580269811;
-	Tue,  8 Apr 2025 12:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C198926B2B0;
+	Tue,  8 Apr 2025 12:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116185; cv=none; b=Q/Buo0ptA2iGklJwi1W0YR3ENdYC2T/g4g36kNxVaWiQPTZevRrHnX4L0VBDdrAfk/l+mSbGMmeFUCdagOysY0DKJK+DvtfMpTZocbSta5ZtQh0/NJpZi+HrRRALyU1Nq7Scr9ZQGIAutV7sMZcUtPb//uGHAhY7UWKke1QzZoI=
+	t=1744116187; cv=none; b=IKOX5T8q6r3PxcTG0NWL76apH3GW0mgQ+pIgnCzo/l9jnnXOW2c1t0lJ808fitQlZhPd0VwV0y7KAS7XKdxO5CNp+XuPHn6/mJQJYpmoKurz0QcqrHhejeXpV57ioXE59ENGg/WxII7CqzlEamJtKNf26F8Rkjo3pt1GzLjRjcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116185; c=relaxed/simple;
-	bh=8VFdns7BATAQrW6rNcFGvFkl8kOTZcpXrSWOnLia3nI=;
+	s=arc-20240116; t=1744116187; c=relaxed/simple;
+	bh=BVA6cM9rTRsZcDIWOpJCql2da4eXXcWqWPBiHyjsI5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaFGckMucclBUAv07s4aILu+xvICItDgfEv43kidVj16AXxaHP3UV5HwjmgZZYEdn9cbvRxPUHKhecJGZ7a5K2W9nhD2gBKFeM46a6WSmBGviJOgYzVINrEz2lnxQHUfolhLISb8HiIeRw9FtSbbIk8voVJx5PBAJVuXpm1LCYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCMJjz+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQttwE16KmtbiE8YjD2lzSC9EujWpoFbULfUAOKccCfTO/hRlo4yQWSwQicBKKS2l3aHLhq6G1dTZyAbYPopUeOSX3aJ/yozXqQ3+9MaGlnyxcHCOze9Cpo+O3jTzqEIyTWbVp4j6Dpe+IailDG91B/9M6A2mTPF1Tzul4zcBjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Md2IlDMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCMJjz+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A19C4CEE7;
-	Tue,  8 Apr 2025 12:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Md2IlDMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51400C4CEE5;
+	Tue,  8 Apr 2025 12:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116184;
-	bh=8VFdns7BATAQrW6rNcFGvFkl8kOTZcpXrSWOnLia3nI=;
+	s=korg; t=1744116187;
+	bh=BVA6cM9rTRsZcDIWOpJCql2da4eXXcWqWPBiHyjsI5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCMJjz+edDHpHAdMSVSLfHVQY0ne7drDkyucbVSwZWQSW2fhwPORxoYT5BsuuT573
-	 rgAEHNwSS47OJHFrXQjKBXqSZDKikEnF5zhtOGsWbns+km8FifsWu5+cI9xAptdW5M
-	 redIWlirZN+LhFutXg8gjeXRYmn1vQpivK3w7FeQ=
+	b=Md2IlDMMN0erwgq317jWK9AZfM8/NWHMZD/mjdvdhZ8jnN7OZM8ESLO49L4g2pwZ5
+	 Nen+TR+J5S/ObH+hixI9YEl+E9DUSusJlvnGW4lonn1PL/Khkse8hY7+vajs5OZHb/
+	 goryg3Fho5gWfny+CvG7XZKkep2buM9ze5+Ux5rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Oleg Gorobets <oleg.goro@gmail.com>
-Subject: [PATCH 6.12 044/423] ALSA: hda/realtek: Always honor no_shutup_pins
-Date: Tue,  8 Apr 2025 12:46:10 +0200
-Message-ID: <20250408104846.776040207@linuxfoundation.org>
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 045/423] ASoC: ti: j721e-evm: Fix clock configuration for ti,j7200-cpb-audio compatible
+Date: Tue,  8 Apr 2025 12:46:11 +0200
+Message-ID: <20250408104846.799612277@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,53 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 5a0c72c1da3cbc0cd4940a95d1be2830104c6edf ]
+[ Upstream commit 45ff65e30deb919604e68faed156ad96ce7474d9 ]
 
-The workaround for Dell machines to skip the pin-shutup for mic pins
-introduced alc_headset_mic_no_shutup() that is replaced from the
-generic snd_hda_shutup_pins() for certain codecs.  The problem is that
-the call is done unconditionally even if spec->no_shutup_pins is set.
-This seems causing problems on other platforms like Lenovo.
+For 'ti,j7200-cpb-audio' compatible, there is support for only one PLL for
+48k. For 11025, 22050, 44100 and 88200 sampling rates, due to absence of
+J721E_CLK_PARENT_44100, we get EINVAL while running any audio application.
+Add support for these rates by using the 48k parent clock and adjusting
+the clock for these rates later in j721e_configure_refclk.
 
-This patch corrects the behavior and the driver honors always
-spec->no_shutup_pins flag and skips alc_headset_mic_no_shutup() if
-it's set.
-
-Fixes: dad3197da7a3 ("ALSA: hda/realtek - Fixup headphone noise via runtime suspend")
-Reported-and-tested-by: Oleg Gorobets <oleg.goro@gmail.com>
-Link: https://patch.msgid.link/20250315143020.27184-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6748d0559059 ("ASoC: ti: Add custom machine driver for j721e EVM (CPB and IVI)")
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Link: https://patch.msgid.link/20250318113524.57100-1-j-choudhary@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/ti/j721e-evm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 8c7da13a804c0..20b3586e4cb6f 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -586,6 +586,9 @@ static void alc_shutup_pins(struct hda_codec *codec)
- {
- 	struct alc_spec *spec = codec->spec;
+diff --git a/sound/soc/ti/j721e-evm.c b/sound/soc/ti/j721e-evm.c
+index d9d1e021f5b2e..0f96cc45578d8 100644
+--- a/sound/soc/ti/j721e-evm.c
++++ b/sound/soc/ti/j721e-evm.c
+@@ -182,6 +182,8 @@ static int j721e_configure_refclk(struct j721e_priv *priv,
+ 		clk_id = J721E_CLK_PARENT_48000;
+ 	else if (!(rate % 11025) && priv->pll_rates[J721E_CLK_PARENT_44100])
+ 		clk_id = J721E_CLK_PARENT_44100;
++	else if (!(rate % 11025) && priv->pll_rates[J721E_CLK_PARENT_48000])
++		clk_id = J721E_CLK_PARENT_48000;
+ 	else
+ 		return ret;
  
-+	if (spec->no_shutup_pins)
-+		return;
-+
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
-@@ -601,8 +604,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 		alc_headset_mic_no_shutup(codec);
- 		break;
- 	default:
--		if (!spec->no_shutup_pins)
--			snd_hda_shutup_pins(codec);
-+		snd_hda_shutup_pins(codec);
- 		break;
- 	}
- }
 -- 
 2.39.5
 
