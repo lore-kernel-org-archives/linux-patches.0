@@ -1,92 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1D3241683;
-	Tue,  8 Apr 2025 16:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE3222AE59
+	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 16:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744128160; cv=none; b=apeXMXmgwTf8fxraBlSLrJpkSV0uIYqvLof7w2xLBDWDpFSylSh6WNdP9nNkPEQW/ywY2jIOeCa3MrfZ4Yy//fpHUhOAoQ6uXzO7HIHbvDNZzzMn5kphli6+w2yURecZ3xbxDfLfblZZWa8/iIFwu41wbuzTQoaRMIE/nXtq3NE=
+	t=1744128995; cv=none; b=Gw1SS8BRN1tX8ZuxxP17V9CuwGWoI02ASSWebajMxE0doHjVxyRwVP/y+UC9Ky5z8S5bhWtxIxSQvRBfzLHO4wN/4U/u8yARfBqWGk5qYW/9vHZ5n1dtI72F2BsLFKMgcJYnj/0koAXxVzy3KUhF3v9EvaYeJ4XN44Zk1eH+cjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744128160; c=relaxed/simple;
-	bh=8AvvO/FEXZQRLI5jm/p7Uw3Rs67bmujJ67Fm23tkLZY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S6pMleypR33br7nGwc0UbZEXnWYRlzU44ytyYeXVc559k3zucrYKZEV5CRP3rHt4IhebAMqqEWe1sLFo1CCOTSdYUbT2ynMD1Ow5MUin8CeU9qnsAYnkUNT8vrk90/G7Ie7IN7wqFCg5bclOoBe4fXI/MV1c9AiuHE2h4bzaJ5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l3Yl+hpv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744128995; c=relaxed/simple;
+	bh=orKI4QzESD9wMZ9qw0qgUjTGnwjhL4kJhX0jIVv3AW8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p9KDkcftvKywS3hnZDKRmR+3SHCGP+6bi/TqGMlr8xghTK4n09HB4OUKmUCJ3q9t2k8EZNMDcEwD4ZBIav2BI6OQtDEEbmV5q9ngjMmZu9xarT9gordexZTbvbx0/MT/d3mLv8n5EOX3lZTlHb3qkpRz4VuHtCfmho97wm6DuOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZvYB8I25; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l3Yl+hpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7431CC4CEE5;
-	Tue,  8 Apr 2025 16:02:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744128160;
-	bh=8AvvO/FEXZQRLI5jm/p7Uw3Rs67bmujJ67Fm23tkLZY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l3Yl+hpvKOcpUyZu4oeeHJTIk41+vPLbiVMc+CLyssBksbY+ctrMzJzoXIVBNFjzF
-	 45BiDzeW8mgfpxxPYPapTqedVTdaMkT9+HKnleGpHDVGUDMOhNHwFYRCC/kTh7fQAt
-	 5nGYWtbbw/ggsGRcYxkH+l+zu2CDLADfcn/7vUg/EPXwfJ6WKLUScNUJLzUwhBeW+/
-	 uHJltgsRY77gfOEGSj2NjRchPcFBglWHl+kp0A7e1xckC0Uq90HMdhDxDhN0zJdJgh
-	 0mduH4U21+apQdAF49CzD1w4XhYj3ACa7r7flHDqTz/kwtam4pYtQ1rbrOwtrZTNpM
-	 XNN1Ax9Ba6Enw==
-Date: Tue, 8 Apr 2025 09:02:35 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Al Cooper <alcooperx@gmail.com>, Kamal Dasu <kdasu.kdev@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 253/279] mmc: sdhci-brcmstb: Add ability to increase
- max clock rate for 72116b0
-Message-ID: <20250408160235.GA3698564@ax162>
-References: <20250408104826.319283234@linuxfoundation.org>
- <20250408104833.210619151@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZvYB8I25"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2ff67f44fcaso1071535a91.3
+        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 09:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744128994; x=1744733794; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=orKI4QzESD9wMZ9qw0qgUjTGnwjhL4kJhX0jIVv3AW8=;
+        b=ZvYB8I25r8SvarUMfzfwwZKEVHr8Do3HTind5mWqZWJc5ssTKHLG48U6q4YqOMEJN9
+         TSkxXIbWPBzLAfihbrXkIqOc7aKH0VW9utjUYNQYzxGgukPEEexeg+KCKUKihc5yMCFH
+         LTYeaSUWGmthNFEXOb4l24ZeGgRsf3rL8mGezQ/aka0v06FD1hhU0IuGu/VVEv/cPCfB
+         XeDGe0b25H2Kmvugj3Tgp3IMhZdT2eA0OA01ocM3+guph6ClFjaCZ3HLzwtk1rTDuoJh
+         KAy4I0ev8YtenZcrBtrwoYdGM6fZehInYFiptNwJPfgWQIhTTkR7HNrbiVEjSPeDsQlI
+         JKCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744128994; x=1744733794;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=orKI4QzESD9wMZ9qw0qgUjTGnwjhL4kJhX0jIVv3AW8=;
+        b=f8S63WBCrXCe9BSFjLg7Vlyy7HB7tF13WMtzkdIqJVqQtzcV/LWzWAo3SL3ZGL07u0
+         roVzzg+6fRVx34RqhvsTXalj4XmDa32lFrYCyJHYjU4/CJ+3B3Q4CuBQ9nKJg3gHj4pp
+         sEeyJDJVS1BhPCd2B3N11t79oEf+MeZYK7usqhC5+fGCbBZ6rRLf2NJorzJc5Kor1JSe
+         9dbBPZDTjTmf+CzZFRhMbBCtc2MRO4SsDDC8oKusQMHqOp9WoP/p/3EwWIuC3ZSEUMDH
+         0E6C3yuC95TA9l9eK5az+9GnTuIaf+w1virywTlWiBRZGVy1Jpwn3rgTrqENSWY9hY7o
+         niOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWVUdnnn7cnlOYTdRsfGNinMPkwF5aDK3SEZnsnrwr+12nF5feSK0iLhGiM2Db7T/+s3HuwNNsQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YxoHVN71xh5Ow0iD2tf0A3ac4PUltUT+4fi3RQOPzpOp+uJ88xd
+	jJH9OmEIU4BDvm3Cr9g7rav++Bl8Q810T2yreRy+wEYy9K5BvsLGfQqRkX7hOzPg/siu//MagOG
+	AKUxJhribmAOmUk3eAYZs1Nif3T4=
+X-Gm-Gg: ASbGnctEgXkzRg2bJf9byThT/8XF9JkDdlsivyeBtTtECVsKpN+tR3WnHZGiRVGSk+Q
+	dTrJNOg7oGHPwRWLiUB1hfmc2On3Qpj1gkauOgilngUJlq+fAKc4I53dlMfWAPjizZWP5B2q+dx
+	ph/kxXe5QbK2OM0T2O+FtXk3flbw==
+X-Google-Smtp-Source: AGHT+IG7GKgG8uZgOht0grHnJjUWE279jQAy3IeEDlgXFafHgHd+Rpu55uKmDwcd9TusFiye4aB0C1+lD4wymKWfH/A=
+X-Received: by 2002:a17:90b:1648:b0:2ff:7b41:c3cf with SMTP id
+ 98e67ed59e1d1-306a4975f51mr8705504a91.4.1744128993599; Tue, 08 Apr 2025
+ 09:16:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250408104833.210619151@linuxfoundation.org>
+References: <20250408104914.247897328@linuxfoundation.org> <c06b17f2-fc80-47a9-b108-8e53be3d4a76@leemhuis.info>
+ <2025040857-disdain-reprocess-0891@gregkh> <5924f2d5-1004-4f7c-ac20-3cc7752e5452@heusel.eu>
+In-Reply-To: <5924f2d5-1004-4f7c-ac20-3cc7752e5452@heusel.eu>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 8 Apr 2025 18:16:19 +0200
+X-Gm-Features: ATxdqUEySsXlfEC3HRl1p0nHWAUIvYJVAkFIwh7FAcER7rJJwEaHGvlhX1UeRgQ
+Message-ID: <CANiq72nYw+XkHfRZDvS0GceTunxZXqiec2GXeLbPXvPK9OiB8w@mail.gmail.com>
+Subject: Re: [PATCH 6.14 000/731] 6.14.2-rc1 review
+To: Christian Heusel <christian@heusel.eu>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Thorsten Leemhuis <linux@leemhuis.info>, 
+	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	Miguel Ojeda <ojeda@kernel.org>, Justin Forbes <jforbes@fedoraproject.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Greg,
+On Tue, Apr 8, 2025 at 4:53=E2=80=AFPM Christian Heusel <christian@heusel.e=
+u> wrote:
+>
+> Thanks for pointing this out, I was also missing the relevant
+> dependencies in my build system for the rust parts in the kernel to
+> actually be built .. IMO it could also hard-error when you specify
+> "CONFIG_HAVE_RUST=3Dy" and the tools are missing =F0=9F=A4=94
 
-On Tue, Apr 08, 2025 at 12:50:36PM +0200, Greg Kroah-Hartman wrote:
-> 5.15-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Kamal Dasu <kdasu.kdev@gmail.com>
-> 
-> [ Upstream commit 97904a59855c7ac7c613085bc6bdc550d48524ff ]
-> 
-> The 72116B0 has improved SDIO controllers that allow the max clock
-> rate to be increased from a max of 100MHz to a max of 150MHz. The
-> driver will need to get the clock and increase it's default rate
-> and override the caps register, that still indicates a max of 100MHz.
-> The new clock will be named "sdio_freq" in the DT node's "clock-names"
-> list. The driver will use a DT property, "clock-frequency", to
-> enable this functionality and will get the actual rate in MHz
-> from the property to allow various speeds to be requested.
-> 
-> Signed-off-by: Al Cooper <alcooperx@gmail.com>
-> Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
-> Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-> Link: https://lore.kernel.org/r/20220520183108.47358-3-kdasu.kdev@gmail.com
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Stable-dep-of: 723ef0e20dbb ("mmc: sdhci-brcmstb: add cqhci suspend/resume to PM ops")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+I assume you mean `CONFIG_RUST=3Dy`, i.e. to remove
+`CONFIG_RUST_IS_AVAILABLE` and simply request to build with Rust.
 
-This change needs a fix for a clang -Wsometimes-uninitialized warning,
-commit c3c0ed75ffbf ("mmc: sdhci-brcmstb: Initialize base_clk to NULL in
-sdhci_brcmstb_probe()"), as pointed out by KernelCI.
+And, yeah, it would be simpler and it would prevent the issue of
+Kconfig deciding to automatically disable it due to unmet
+dependencies. We were asked to do it this way back then, but perhaps
+the sentiment has changed now.
 
-https://lore.kernel.org/CACo-S-297JUFPCNaeSoA0WHSP=sC+QquSZaX=rQto=JZzi1PUA@mail.gmail.com/
-
-Not exactly your fault, I had a Fixes tag on the original patch but it
-seems like it got stripped during application :/
-
-https://lore.kernel.org/20220608152757.82529-1-nathan@kernel.org/
+What you can do meanwhile is e.g. explicitly check that `CONFIG_RUST`
+is `y` after the kernel configuration is saved.
 
 Cheers,
-Nathan
+Miguel
