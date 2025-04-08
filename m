@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6632676DF;
-	Tue,  8 Apr 2025 10:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE373264FB6;
+	Tue,  8 Apr 2025 10:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109682; cv=none; b=e48kW3NLTFx7wmOeiWCJIIk4Bx55zOIBlD3946bE2cXBnUURiTT+IM3xYHf4Rcws+tCEhabYo9rO1n2PzZh6HJGGCNTYXlMOpHBHOZ/7dux45DABFpJJYBoyXcatofahBJZKbpy9LTKGdHRO3PZlYPHukBDF3qsj0Mct9OiqWhM=
+	t=1744109687; cv=none; b=CfujbjJzSfpUSoHTRXLTke5X11dKZmSfTtZ9AkjJUmgnJkVDgtLWJvX8CSc6iMD1n1x+ukyIqoclj54tlgBIgKLhbjCME94BhrAX3nX6yIavwVWNTg9Y/cR3spQCvIg2x0T0tHJg2Gnq45qaCcbkeIJ30Ak6C6CUaeU+ptEvb+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109682; c=relaxed/simple;
-	bh=GDpZLy7cOU4nwl2gl0sAuLIV4B8ePV3fsyiz4V9nFOg=;
+	s=arc-20240116; t=1744109687; c=relaxed/simple;
+	bh=8bXbq9U+/aMaTsw9/U2S0pAz8q3Nr8yfaifKxaEGtjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S8XScPoQ/jbGdM4Y56IEE+aIAtvldbSPsNJEWythbDOjndQotXTYsBwf+yk7yQlzvXu0rLbq1NSYGDL/VgSUJBoEXQJDg3ggH+AgAgKAlblQ9CgkCnXekqFBZ9lBergjwdOz4jPFTI9hok4sTVekv9qvd6g8MBqaVMmZwNuIFFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJBdHJZM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlhOZxOi3gqcnXf8zhMQZvXGRhQlWLs/Q+z+k8BqD9w0DIAjcAVCsl6Rx/SE0jTg8kEf8qerNwzrYBJM3IPQJralHre6ugWb7QD3syuiwjPN4l5oDOouP5/w/X+ZB8p4J0IhAjF5EBrbIVYaL2/NCLmDb+JN4GMQ4g2vN5BzQfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2TfZXCr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJBdHJZM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18027C4CEE5;
-	Tue,  8 Apr 2025 10:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2TfZXCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E2FC4CEE5;
+	Tue,  8 Apr 2025 10:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109682;
-	bh=GDpZLy7cOU4nwl2gl0sAuLIV4B8ePV3fsyiz4V9nFOg=;
+	s=korg; t=1744109685;
+	bh=8bXbq9U+/aMaTsw9/U2S0pAz8q3Nr8yfaifKxaEGtjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJBdHJZMK2JdXlYi7Xxtq9g3X0WOm3qpmQJhwyaHOvaMoXHe/1ulQgx/F8fAIHQ95
-	 +SR41sLVGv2a7m5KJJL6WYPwrOJ6GkYkC9UUZmY5uPZzrQwbTNzSzEazzgs9L/J+7u
-	 SgIR0NL7GR4nsHHezTa0YONSCdRIuXjfleRlA7w4=
+	b=e2TfZXCree/If+uPZYZmVvEeRnpVzBCQoyLt7dP1B6Et07g7SN+Lmx9EuHFGmfryL
+	 C4MxeEm1GvdE5v9kstToZ0odaMUQMCgsCQhUuXWyHFGgetzTG4Se0JoKTR38kSoAQ/
+	 TuzUa3DDfDLiu0zu7PQJu3Nt8WnGz/jclKWyTyCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+83fed965338b573115f7@syzkaller.appspotmail.com,
+	Kohei Enju <enjuk@amazon.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/227] net/mlx5: handle errors in mlx5_chains_create_table()
-Date: Tue,  8 Apr 2025 12:46:33 +0200
-Message-ID: <20250408104820.854337766@linuxfoundation.org>
+Subject: [PATCH 5.10 016/227] netfilter: nf_conncount: Fully initialize struct nf_conncount_tuple in insert_tree()
+Date: Tue,  8 Apr 2025 12:46:34 +0200
+Message-ID: <20250408104820.885330600@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -46,48 +47,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit eab0396353be1c778eba1c0b5180176f04dd21ce ]
+[ Upstream commit d653bfeb07ebb3499c403404c21ac58a16531607 ]
 
-In mlx5_chains_create_table(), the return value of mlx5_get_fdb_sub_ns()
-and mlx5_get_flow_namespace() must be checked to prevent NULL pointer
-dereferences. If either function fails, the function should log error
-message with mlx5_core_warn() and return error pointer.
+Since commit b36e4523d4d5 ("netfilter: nf_conncount: fix garbage
+collection confirm race"), `cpu` and `jiffies32` were introduced to
+the struct nf_conncount_tuple.
 
-Fixes: 39ac237ce009 ("net/mlx5: E-Switch, Refactor chains and priorities")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250307021820.2646-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The commit made nf_conncount_add() initialize `conn->cpu` and
+`conn->jiffies32` when allocating the struct.
+In contrast, count_tree() was not changed to initialize them.
+
+By commit 34848d5c896e ("netfilter: nf_conncount: Split insert and
+traversal"), count_tree() was split and the relevant allocation
+code now resides in insert_tree().
+Initialize `conn->cpu` and `conn->jiffies32` in insert_tree().
+
+BUG: KMSAN: uninit-value in find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+BUG: KMSAN: uninit-value in __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ find_or_evict net/netfilter/nf_conncount.c:117 [inline]
+ __nf_conncount_add+0xd9c/0x2850 net/netfilter/nf_conncount.c:143
+ count_tree net/netfilter/nf_conncount.c:438 [inline]
+ nf_conncount_count+0x82f/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4121 [inline]
+ slab_alloc_node mm/slub.c:4164 [inline]
+ kmem_cache_alloc_noprof+0x915/0xe10 mm/slub.c:4171
+ insert_tree net/netfilter/nf_conncount.c:372 [inline]
+ count_tree net/netfilter/nf_conncount.c:450 [inline]
+ nf_conncount_count+0x1415/0x1e80 net/netfilter/nf_conncount.c:521
+ connlimit_mt+0x7f6/0xbd0 net/netfilter/xt_connlimit.c:72
+ __nft_match_eval net/netfilter/nft_compat.c:403 [inline]
+ nft_match_eval+0x1a5/0x300 net/netfilter/nft_compat.c:433
+ expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+ nft_do_chain+0x426/0x2290 net/netfilter/nf_tables_core.c:288
+ nft_do_chain_ipv4+0x1a5/0x230 net/netfilter/nft_chain_filter.c:23
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf4/0x400 net/netfilter/core.c:626
+ nf_hook_slow_list+0x24d/0x860 net/netfilter/core.c:663
+ NF_HOOK_LIST include/linux/netfilter.h:350 [inline]
+ ip_sublist_rcv+0x17b7/0x17f0 net/ipv4/ip_input.c:633
+ ip_list_rcv+0x9ef/0xa40 net/ipv4/ip_input.c:669
+ __netif_receive_skb_list_ptype net/core/dev.c:5936 [inline]
+ __netif_receive_skb_list_core+0x15c5/0x1670 net/core/dev.c:5983
+ __netif_receive_skb_list net/core/dev.c:6035 [inline]
+ netif_receive_skb_list_internal+0x1085/0x1700 net/core/dev.c:6126
+ netif_receive_skb_list+0x5a/0x460 net/core/dev.c:6178
+ xdp_recv_frames net/bpf/test_run.c:280 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2e86/0x3480 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0xf1d/0x1ae0 net/bpf/test_run.c:1316
+ bpf_prog_test_run+0x5e5/0xa30 kernel/bpf/syscall.c:4407
+ __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5813
+ __do_sys_bpf kernel/bpf/syscall.c:5902 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5900 [inline]
+ __ia32_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5900
+ ia32_sys_call+0x394d/0x4180 arch/x86/include/generated/asm/syscalls_32.h:358
+ do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/common.c:387
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/common.c:412
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:450
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+
+Reported-by: syzbot+83fed965338b573115f7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=83fed965338b573115f7
+Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nf_conncount.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-index 77c6287c90d55..0e255ff95a50d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
-@@ -267,6 +267,11 @@ mlx5_chains_create_table(struct mlx5_fs_chains *chains,
- 		ns = mlx5_get_flow_namespace(chains->dev, chains->ns);
- 	}
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 0ce12a33ffda4..a66a27fe7f458 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -366,6 +366,8 @@ insert_tree(struct net *net,
  
-+	if (!ns) {
-+		mlx5_core_warn(chains->dev, "Failed to get flow namespace\n");
-+		return ERR_PTR(-EOPNOTSUPP);
-+	}
-+
- 	ft_attr.autogroup.num_reserved_entries = 2;
- 	ft_attr.autogroup.max_num_groups = chains->group_num;
- 	ft = mlx5_create_auto_grouped_flow_table(ns, &ft_attr);
+ 	conn->tuple = *tuple;
+ 	conn->zone = *zone;
++	conn->cpu = raw_smp_processor_id();
++	conn->jiffies32 = (u32)jiffies;
+ 	memcpy(rbconn->key, key, sizeof(u32) * data->keylen);
+ 
+ 	nf_conncount_list_init(&rbconn->list);
 -- 
 2.39.5
 
