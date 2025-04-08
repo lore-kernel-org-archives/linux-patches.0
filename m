@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08964267B7F;
-	Tue,  8 Apr 2025 11:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43261266583;
+	Tue,  8 Apr 2025 11:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110513; cv=none; b=pUJzLd2ouknCT1t+akLlJSM4YMCRAfnpqsqkc4Xtzb1VllYyhKZSOIodc9bTwxktAMz28FKDH+5llvm7NkLLPnsPCMiVWkqawfGv+kYgpRqxqYRxwNps8CporaTb5PnMY1OjtX3zqHQ8dvYKG/ephIS82ij3XueU2TLTZ3jIKVA=
+	t=1744110514; cv=none; b=h6LLAR4WliXKcooyjOTGFO4Pyl40fC6PpyIjRxhKqCIT92MTn2D+2stxJU2pGQkXuDcaY+z0M42+FZ+7aQbuegIXLypcqwloCAMF0E9TKUwI7L4pqSIJZ7PYnWUeFyJDqNhTfdVxvwX7uzvEv/vo9LXVi4Gx793JTbBj1Hn3pnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110513; c=relaxed/simple;
-	bh=E5rsf7aELKGRXgwZZsWeFBeS6QkM9MxJmNQy5Z/98Yo=;
+	s=arc-20240116; t=1744110514; c=relaxed/simple;
+	bh=8SEWoPCVaDN0hDX4yQZygJoebApe2iqgjZ5Jpq+jjzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kcj7YvrECrSXl74+eM6bt3942tSv3vHXn3dL83xw7PlXcEXMsl096ukEC2M/c9b4w9HaIsAxz3fmojK/m1Ygqt9bsY+LrlYEoKpc9AYbI1RWRAWB5roNQEQHoIV4ys2kNl6a7nqrw3iPEdWMJBrbQ8yemYT/WbH4Hh5HBrSXMwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0sXNGWb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljMZqCS5unktr3prLbxG1nUzoNxm5A//0H9r6MOXjLQpZ+kREAv2uXDstyaMrpf+QOuPySUZMHVLuljl+u0j1m/pwh5guoB3+eNZmWKboIy75fJU9aswMPrOtlcw9fUldGYeRe2A75RliL56dn0IgLrhxkyXinWnlz+lWOfTwxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5R9hLk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0sXNGWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2955BC4CEEA;
-	Tue,  8 Apr 2025 11:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5R9hLk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C1FC4CEEC;
+	Tue,  8 Apr 2025 11:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110511;
-	bh=E5rsf7aELKGRXgwZZsWeFBeS6QkM9MxJmNQy5Z/98Yo=;
+	s=korg; t=1744110514;
+	bh=8SEWoPCVaDN0hDX4yQZygJoebApe2iqgjZ5Jpq+jjzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0sXNGWbyKp6YITG4RwbbWQEI1lTG7v1LpWVedpYyi2wDf4eGDfi/QIjq2NvTOLtK
-	 TqXvT6e9JtJDfKwJLOx5/Fi3wW1LaIzumIjghlanqxOHyiQoPoFpnvg2iYQp3jj9QD
-	 OvDj/xvFiK5EQKUKD8NU3pIjvBqgO3ZGlVVF1hTU=
+	b=I5R9hLk3FAwR2VKmHOa1PiLwNj1aGXc/coEh6S9zT/onXV3B5Ce8N4tXEUOtYHGAu
+	 0HKOgYzwqOhmZ3bzo4J5hD4E4DZBx1P4Z2Y+fJQ4oo4laStOBCTHCs2zV9NF4Tyy8n
+	 cKl5DrNcIFGYy3PGjmlN27QlGeZD/Un56ArdZLHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 092/731] scsi: mpt3sas: Reduce log level of ignore_delay_remove message to KERN_INFO
-Date: Tue,  8 Apr 2025 12:39:49 +0200
-Message-ID: <20250408104916.408280753@linuxfoundation.org>
+Subject: [PATCH 6.14 093/731] md: ensure resync is prioritized over recovery
+Date: Tue,  8 Apr 2025 12:39:50 +0200
+Message-ID: <20250408104916.431290302@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,64 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit fb27da6e06a0869d2e36255bb7e0b6102daf712f ]
+[ Upstream commit 4b10a3bc67c1232f76aa1e04778ca26d6c0ddf7f ]
 
-On several systems with Dell HBA controller Linux prints the warning below:
+If a new disk is added during resync, the resync process is interrupted,
+and recovery is triggered, causing the previous resync to be lost. In
+reality, disk addition should not terminate resync, fix it.
 
-    $ dmesg | grep -e "Linux version" -e "DMI: Dell"  -e "ignore_delay_remove"
-    [    0.000000] Linux version 6.12.11.mx64.479 (root@lucy.molgen.mpg.de) (gcc (GCC) 12.3.0, GNU ld (GNU Binutils) 2.41) #1 SMP PREEMPT_DYNAMIC Fri Jan 24 13:30:47 CET 2025
-    [    0.000000] DMI: Dell Inc. PowerEdge R7625/0M7YXP, BIOS 1.10.6 12/06/2024
-    [    9.386551] scsi 0:0:4:0: set ignore_delay_remove for handle(0x0012)
+Steps to reproduce the issue:
+  mdadm -CR /dev/md0 -l1 -n3 -x1 /dev/sd[abcd]
+  mdadm --fail /dev/md0 /dev/sdc
 
-A user does not know, what to do about it, and everything seems to work as
-expected. Therefore, remove the log level from warning to info.
-
-Device information:
-
-    $ dmesg | grep -e 0:4:0 -e '12)'
-    [    8.857606] mpt3sas_cm0: config page(0x00000000db0e4179) - dma(0xfd5f6000): size(512)
-    [    9.133856] scsi 0:0:0:0: SATA: handle(0x0017), sas_addr(0x3c0470e0d40cc20c), phy(12), device_name(0x5000039db8d2284b)
-    [    9.366341] mpt3sas_cm0: handle(0x12) sas_address(0x3c0570e0d40cc208) port_type(0x0)
-    [    9.378867] scsi 0:0:4:0: Enclosure         DP       BP_PSV           7.10 PQ: 0 ANSI: 7
-    [    9.386551] scsi 0:0:4:0: set ignore_delay_remove for handle(0x0012)
-    [    9.387465] scsi 0:0:4:0: SES: handle(0x0012), sas_addr(0x3c0570e0d40cc208), phy(17), device_name(0x3c0570e0d40cc208)
-    [    9.387465] scsi 0:0:4:0: enclosure logical id (0x3c0470e0d4092108), slot(8)
-    [    9.387465] scsi 0:0:4:0: enclosure level(0x0001), connector name( C0  )
-    [    9.390495] scsi 0:0:4:0: qdepth(1), tagged(0), scsi_level(8), cmd_que(0)
-    [    9.401700]  end_device-0:4: add: handle(0x0012), sas_addr(0x3c0570e0d40cc208)
-    [    9.471916] ses 0:0:4:0: Attached Enclosure device
-    [    9.480088] ses 0:0:4:0: Attached scsi generic sg4 type 13
-    $ lspci -nn -k -s 41:
-    41:00.0 Serial Attached SCSI controller [0107]: Broadcom / LSI Fusion-MPT 12GSAS/PCIe Secure SAS38xx [1000:00e6]
-    	DeviceName: SL3 NonRAID
-    	Subsystem: Dell HBA355i Front [1028:200c]
-    	Kernel driver in use: mpt3sas
-
-Fixes: 30158dc9bbc9 ("mpt3sas: Never block the Enclosure device")
-Cc: Tomas Henzl <thenzl@redhat.com>
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Link: https://lore.kernel.org/r/20250131171640.30721-1-pmenzel@molgen.mpg.de
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 24dd469d728d ("[PATCH] md: allow a manual resync with md")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20250213131530.3698600-1-linan666@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-index a456e5ec74d88..9c2d3178f3844 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -2703,7 +2703,7 @@ scsih_sdev_configure(struct scsi_device *sdev, struct queue_limits *lim)
- 		ssp_target = 1;
- 		if (sas_device->device_info &
- 				MPI2_SAS_DEVICE_INFO_SEP) {
--			sdev_printk(KERN_WARNING, sdev,
-+			sdev_printk(KERN_INFO, sdev,
- 			"set ignore_delay_remove for handle(0x%04x)\n",
- 			sas_device_priv_data->sas_target->handle);
- 			sas_device_priv_data->ignore_delay_remove = 1;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 30b3dbbce2d2d..827646b3eb594 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9460,6 +9460,13 @@ static bool md_choose_sync_action(struct mddev *mddev, int *spares)
+ 		return true;
+ 	}
+ 
++	/* Check if resync is in progress. */
++	if (mddev->recovery_cp < MaxSector) {
++		set_bit(MD_RECOVERY_SYNC, &mddev->recovery);
++		clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
++		return true;
++	}
++
+ 	/*
+ 	 * Remove any failed drives, then add spares if possible. Spares are
+ 	 * also removed and re-added, to allow the personality to fail the
+@@ -9476,13 +9483,6 @@ static bool md_choose_sync_action(struct mddev *mddev, int *spares)
+ 		return true;
+ 	}
+ 
+-	/* Check if recovery is in progress. */
+-	if (mddev->recovery_cp < MaxSector) {
+-		set_bit(MD_RECOVERY_SYNC, &mddev->recovery);
+-		clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
+-		return true;
+-	}
+-
+ 	/* Delay to choose resync/check/repair in md_do_sync(). */
+ 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery))
+ 		return true;
 -- 
 2.39.5
 
