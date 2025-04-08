@@ -1,263 +1,107 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509061DE894
-	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 19:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51DB23F277
+	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 19:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744140224; cv=none; b=IJ5vuPMcKsYgCxpCvNg02kasmOSGrIgSwjYqNFSIkgKoiinD5SWl08sd5YJ9jDcVLaTCNZN0FT6rI3Wy/2jtn5BgvMEXImAKhESMNEwQaFPYFe3R8xt/CI1MKf01+CniAGd++406HAqRngxBc8FtcY86N/DRfY8CF6SXVGH3hoA=
+	t=1744141401; cv=none; b=tuMGcJyHQPxmE8f0DdFKHqivMyqAfjP3aex6SxMhnhn6KITcPSq//qW1572fWeVOEx52a3GhImumMZBRQcd6HWAO4u/L7ygaH1qZNQ9YoMT+5mKVlOWj/3e4ZfMAb6CzRoLvk614Oa3zWO5fA2I+cpe/dBnhPdLS0THTJCjPbbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744140224; c=relaxed/simple;
-	bh=aZjnx4k43TZJP1DU6AtSucAMCAwDGEtYxx41zjdlcRY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dDRccBR24NfIWQGZDanm+emFKcyzZbNwR8cMVR57NBwKDYeZAHzCWpwLUlMVyyZzEQS9BrdV7wknsKP0YVVJUEEjTCrx7LXJgJoF9GFxg+SV7LDS4NpqrY6LAHi77Jj3QcPueMPoX/ihXkj50yWc3S45lMLwQEYUFowvqHILJ6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=e2T97pAv; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1744141401; c=relaxed/simple;
+	bh=yV15HTrE/vKKBCW27J0iRu2xsmctgldlTygl0Il5Tic=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y3uOX1t8redY9QmqUl1FotlIiDx+9jO0GSZQUu2XDgK84cGv3QrU7ttWSIaS9yoV2rlLTruhkzMUGfjBE4V2FsvoNHgk5Ub+a6ygl/eUb4TORQYpMO9b1OVWxozFnJj+Y9kzwEXYckt57Hyo9ODE/hFg95wKy5GHjlnRnLCyygU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=eB0K3+pB; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="e2T97pAv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1744140220;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K9OWGT0Rx0UMQmXQEzPjRVbJHTFL3Bqbn7wRQe/nSuc=;
-	b=e2T97pAvi0iqpwX4Bjg8GI3YXnKjDbJKboz8NQMCcLmzMqO7Qbkknivt29HgltvZ4rPOHF
-	TCz/hyTvOGNP4565JeomOYKlioHEO16FgZQR4S8r+3JxM/4O3gfZ9ZzRWLt8DzHubRCF+a
-	5edRbSXQcmDwKEO1Bnpd6RQ6VwiyPl4=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-kuMIXTQ4Oj2ytXmqx_O96w-1; Tue, 08 Apr 2025 15:23:38 -0400
-X-MC-Unique: kuMIXTQ4Oj2ytXmqx_O96w-1
-X-Mimecast-MFC-AGG-ID: kuMIXTQ4Oj2ytXmqx_O96w_1744140218
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-3f6abe5c0cbso152792b6e.0
-        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 12:23:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="eB0K3+pB"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3912d2c89ecso5267409f8f.2
+        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 12:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1744141395; x=1744746195; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hhaVg/u+b5SbQYX4VE9hUR0TbRx0qr+d12G30wYA5Vw=;
+        b=eB0K3+pB0EnO/tx5xsM//bla/HcJV/EgaSCn/d9DDIzG22H2xUHhlFlvOJlzA4rDwt
+         pbWO/RixFj5IUJBkEp/STXuzeHfPZlE1ZRVTLiyeG8rP3ghB8tPSAi7yMDd/8I9tY/XY
+         ZUtCs/X5SkPJ5227YCEzUUrFsnoLif6H/LuV7kc4y0Jt17eVgie7EO/oHxau4EXp0QTS
+         vB8b70D2c+/1XdWOoqSyHZy85cdYHztPW0W7+/+crEui8w5ZS4GXtRyUtD5TgXevr+zF
+         hT2KpCEcWAzd8n+oKjk4yuKBEitAAC+5BE8riXv6GyhS4X6eE/vu0ItC3PPszoqyTRzA
+         M0RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744140218; x=1744745018;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K9OWGT0Rx0UMQmXQEzPjRVbJHTFL3Bqbn7wRQe/nSuc=;
-        b=geNmhJxA4nEWTzXDMQm4Lrjnq1wvoR3uFAAmlopv8KLCe8+Xlb+DbMlFpeHQvhlZo+
-         f693gFe44zeR8bKzh/4KTk89xe+IAVlUAoYKAkXM5liKYCjD/9zwT3ew4tl2jDHCBNY6
-         7hRPsjlOSHeJTeA34rRKhL7rA6xUFRizg0bGQeSwuVEllwtEzBpu75ZcgAJ2WyopN4wI
-         6nYpsosvDlBje/3uRfOAHDR8ZL8hyHrgI76qpMpLHMuPvU3mGfp1Tdlm1uIROpax9HK8
-         5oaSAOYXSds8stC34cnv6H6WqgmygzRixGZ3wn7WCksUggO3/MkzgitgfaBhCNbO5izg
-         OIAw==
-X-Forwarded-Encrypted: i=1; AJvYcCWYkMq2Kl879sASHdDSSXEv/O802iOZ8ShA0hdX5yas5vXbYzvGrC4wMfu0OveZx0GSW9a2YEog@lists.linux.dev
-X-Gm-Message-State: AOJu0YzG7q0l0R+YDIfbp3cF/BZ93uRWwF7KSbReTX6cosm7d43MJocn
-	oqIM5SyE56AwvO/RoRSgfD9UU0V40zq276r37uxnRXFRKlgf8PkiPZ4eY6uodLMz0Zg8H5S2Rwm
-	TifB1EDDqMDGc/5zmrgiwYt43DRRSJez+SeK/pB7/feTm30KaxOeMyy4=
-X-Gm-Gg: ASbGncvEj8MFEgAJ83AUNSyg9ENicRBXv67D4Qnze+rEFQkg/JosOx27hrqQ2cZwSYR
-	JZdPZd2JVAzURygJIxv0ltNRD4YgiFCIofem6xrODZ7PvRfHcWmdBDXPXpJVNDA2Zswth5nyB1C
-	WCuS447638IkSWRLdk5FWJikgxzuoaQHmNVle+hE3vzoGm2KznkvFEqje/PbuQ8Jzw/k8a2kV16
-	DHL29gn8gtxm+FJRaMsQOShtRM6TtGCUlB4R5puLAZAVak1/I7JYJTvCaXNR0l4XJ2nWCxVFDEi
-	uw8bdF1eflPU/Z/riwI=
-X-Received: by 2002:a4a:e042:0:b0:600:24f9:21fc with SMTP id 006d021491bc7-6045ca7f1b4mr44219eaf.2.1744140217942;
-        Tue, 08 Apr 2025 12:23:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEV+MA4e1zCg14ovKPYZ7n17MAgow6OrOKLo569urIyPfVcFprCJ+gldjemcdqQgow5RJkg3w==
-X-Received: by 2002:a4a:e042:0:b0:600:24f9:21fc with SMTP id 006d021491bc7-6045ca7f1b4mr44214eaf.2.1744140217514;
-        Tue, 08 Apr 2025 12:23:37 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6044f951c8fsm542187eaf.30.2025.04.08.12.23.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 12:23:36 -0700 (PDT)
-Date: Tue, 8 Apr 2025 13:23:33 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, kvm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] vfio/type1: Remove Fine Grained Superpages detection
-Message-ID: <20250408132333.382ab143.alex.williamson@redhat.com>
-In-Reply-To: <0-v1-0eed68063e59+93d-vfio_fgsp_jgg@nvidia.com>
-References: <0-v1-0eed68063e59+93d-vfio_fgsp_jgg@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+        d=1e100.net; s=20230601; t=1744141395; x=1744746195;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hhaVg/u+b5SbQYX4VE9hUR0TbRx0qr+d12G30wYA5Vw=;
+        b=LOtwQQmwwseytc2/IwkyFf0eDzK1+dB8tiY/i4NI6Hh69DJyrB3KzpOu+PqX6OfyuS
+         ddpHRTRtcxGITvdd34U/bCDSVe66UdKMu/VdZZbHZoC5zisr5fPKzutHoskOmu8v7/dl
+         TgC3BVNpNNs7CcKq1npXaMteVX5BsOdfJXaYgMr841wTF1TZ1tv/ZN2QKDWq7tvysDl9
+         jlhm4pkKb5Id20ijV+Xu0polOqWkK04E1yfTUDffqBairaqrW49OFZeahe9p4POBlOJK
+         Oj/Jal2Jj/TaCs5IVXUvrK2349yRUmBjoMjFsDOKNa9aUe+V3uXpy7leN093R8ybRG7H
+         0VXg==
+X-Gm-Message-State: AOJu0Yzo+RcIiPTOyz+eiv1Yz8WuAxWvlGsB57tIDKg37958ZpGU0baK
+	Hd483MmYM/tzriVey4x1RhOHt4xV64iybQ05l8GMig9JDhVes2I=
+X-Gm-Gg: ASbGnct1aZfXF5GqXqxYqeCg0pOXjMOqTlK+s/xxzXGfMcx/NkwkPHO8spmufG8hN+S
+	iCAYecSEIXHzI1a3sSS2IlkLcokXN7Xr84LlfnqMOfFCjGwxSwu8qHBllEc+Cq/dA9NRi9PSMEi
+	O79Z8BG2oESTIvLKDTWPkbcFUmFAeaMleSUbNqzEfR5pnHMZIqsM0bqnv4s/kiPqdStQG+bXsyF
+	FvZiNYWXg9uqs3Mf78rOOqoC15gHehus+QnTMvZLl4kVW/Ob3PnVsXcLbwYOdm+oqxAiLQddJv4
+	cyBGEY/XUdcXXfhjgC9J8P7G+JL/oC5HtbAVtBLu0PhJeAquqYjiggk5Y65MwaNcqQgEhQzd8B/
+	1P6p5L+PSuWlTiJGJ5mkLiQ==
+X-Google-Smtp-Source: AGHT+IFC4RLdzeq9tc5tRagXQaUbTZ7xImbPKse7l+EXFdAMRZ4Lk6cqBp9PptCPSsId7erm159yIw==
+X-Received: by 2002:a05:6000:228a:b0:391:4bcb:828f with SMTP id ffacd0b85a97d-39d87aa7b53mr401576f8f.14.1744141394866;
+        Tue, 08 Apr 2025 12:43:14 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057de8.dip0.t-ipconnect.de. [91.5.125.232])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c301b6321sm15491218f8f.44.2025.04.08.12.43.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Apr 2025 12:43:14 -0700 (PDT)
+Message-ID: <1f2803ac-3e1f-4605-89e6-fa5b9504f470@googlemail.com>
+Date: Tue, 8 Apr 2025 21:43:13 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: DfIZUlklZnu-5bDgCEicVRupIyMovBgNPZJBDirBgLc_1744140218
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.13 000/500] 6.13.11-rc2 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250408154123.083425991@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250408154123.083425991@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue,  8 Apr 2025 14:39:52 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+Am 08.04.2025 um 17:54 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.13.11 release.
+> There are 500 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-> VFIO is looking to enable an optimization where it can rely on the
-> unmap operation not splitting and returning the size of a larger IOPTE.
-> 
-> However since commits:
->   d50651636fb ("iommu/io-pgtable-arm-v7s: Remove split on unmap behavior")
->   33729a5fc0ca ("iommu/io-pgtable-arm: Remove split on unmap behavior")
-> 
-> There are no iommu drivers that do split on unmap anymore. Instead all
-> iommu drivers are expected to unmap the whole contiguous page and return
-> its size.
-> 
-> Thus, there is no purpose in vfio_test_domain_fgsp() as it is only
-> checking if the iommu supports 2*PAGE_SIZE as a contiguous page or not.
-> 
-> Currently only AMD v1 supports such a page size so all this logic only
-> activates on AMD v1.
-> 
-> Remove vfio_test_domain_fgsp() and just rely on a direct 2*PAGE_SIZE check
-> instead so there is no behavior change.
-> 
-> Maybe it should always activate the iommu_iova_to_phys(), it shouldn't
-> have a performance downside since split is gone.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-We were never looking for splitting here, in fact an IOMMU driver that
-supports splitting would break the fgsp test.  Nor was the intent ever
-to look for 2*PAGE_SIZE support.  This was simply a test to see if we
-mapped two contiguous pages and tried to unmap only the first, does the
-IOMMU unmap only the first page (VT-d), or both pages (AMD v1).  If both
-pages are unmapped, then we expect the same behavior with runtime
-mappings, ie. the IOMMU will unmap larger chunks than we've asked for
-based on whether the original mapping was contiguous.  If only one page
-is unmapped, then we need to look for contiguous ranges ourselves.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-We also previously couldn't rely on pgsize_bitmap to indicate the
-physical page sizes supported by the IOMMU, ex. VT-d essentially
-reported PAGE_MASK util a886d5a7e67b ("iommu/vt-d: Report real pgsize
-bitmap to iommu core").
 
-I don't recall the optimization being overwhelming in the first place,
-so if it's relegated to AMD v1 maybe we should just remove it
-altogether rather than introducing this confusing notion that
-2*PAGE_SIZE has some particular importance.  Thanks,
+Beste Grüße,
+Peter Schneider
 
-Alex
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/vfio/vfio_iommu_type1.c | 71 +++++++++------------------------
->  1 file changed, 19 insertions(+), 52 deletions(-)
-> 
-> diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-> index 0ac56072af9f23..529561bbbef98a 100644
-> --- a/drivers/vfio/vfio_iommu_type1.c
-> +++ b/drivers/vfio/vfio_iommu_type1.c
-> @@ -80,7 +80,6 @@ struct vfio_domain {
->  	struct iommu_domain	*domain;
->  	struct list_head	next;
->  	struct list_head	group_list;
-> -	bool			fgsp : 1;	/* Fine-grained super pages */
->  	bool			enforce_cache_coherency : 1;
->  };
->  
-> @@ -1056,6 +1055,7 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
->  	LIST_HEAD(unmapped_region_list);
->  	struct iommu_iotlb_gather iotlb_gather;
->  	int unmapped_region_cnt = 0;
-> +	bool scan_for_contig;
->  	long unlocked = 0;
->  
->  	if (!dma->size)
-> @@ -1079,9 +1079,15 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
->  		cond_resched();
->  	}
->  
-> +	/*
-> +	 * For historical reasons this has only triggered on AMDv1 page tables,
-> +	 * though these days it should work everywhere.
-> +	 */
-> +	scan_for_contig = !(domain->domain->pgsize_bitmap & (2 * PAGE_SIZE));
->  	iommu_iotlb_gather_init(&iotlb_gather);
->  	while (iova < end) {
-> -		size_t unmapped, len;
-> +		size_t len = PAGE_SIZE;
-> +		size_t unmapped;
->  		phys_addr_t phys, next;
->  
->  		phys = iommu_iova_to_phys(domain->domain, iova);
-> @@ -1094,12 +1100,18 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
->  		 * To optimize for fewer iommu_unmap() calls, each of which
->  		 * may require hardware cache flushing, try to find the
->  		 * largest contiguous physical memory chunk to unmap.
-> +		 *
-> +		 * If the iova is part of a contiguous page > PAGE_SIZE then
-> +		 * unmap will unmap the whole contiguous page and return its
-> +		 * size.
->  		 */
-> -		for (len = PAGE_SIZE;
-> -		     !domain->fgsp && iova + len < end; len += PAGE_SIZE) {
-> -			next = iommu_iova_to_phys(domain->domain, iova + len);
-> -			if (next != phys + len)
-> -				break;
-> +		if (scan_for_contig) {
-> +			for (; iova + len < end; len += PAGE_SIZE) {
-> +				next = iommu_iova_to_phys(domain->domain,
-> +							  iova + len);
-> +				if (next != phys + len)
-> +					break;
-> +			}
->  		}
->  
->  		/*
-> @@ -1833,49 +1845,6 @@ static int vfio_iommu_replay(struct vfio_iommu *iommu,
->  	return ret;
->  }
->  
-> -/*
-> - * We change our unmap behavior slightly depending on whether the IOMMU
-> - * supports fine-grained superpages.  IOMMUs like AMD-Vi will use a superpage
-> - * for practically any contiguous power-of-two mapping we give it.  This means
-> - * we don't need to look for contiguous chunks ourselves to make unmapping
-> - * more efficient.  On IOMMUs with coarse-grained super pages, like Intel VT-d
-> - * with discrete 2M/1G/512G/1T superpages, identifying contiguous chunks
-> - * significantly boosts non-hugetlbfs mappings and doesn't seem to hurt when
-> - * hugetlbfs is in use.
-> - */
-> -static void vfio_test_domain_fgsp(struct vfio_domain *domain, struct list_head *regions)
-> -{
-> -	int ret, order = get_order(PAGE_SIZE * 2);
-> -	struct vfio_iova *region;
-> -	struct page *pages;
-> -	dma_addr_t start;
-> -
-> -	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, order);
-> -	if (!pages)
-> -		return;
-> -
-> -	list_for_each_entry(region, regions, list) {
-> -		start = ALIGN(region->start, PAGE_SIZE * 2);
-> -		if (start >= region->end || (region->end - start < PAGE_SIZE * 2))
-> -			continue;
-> -
-> -		ret = iommu_map(domain->domain, start, page_to_phys(pages), PAGE_SIZE * 2,
-> -				IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE,
-> -				GFP_KERNEL_ACCOUNT);
-> -		if (!ret) {
-> -			size_t unmapped = iommu_unmap(domain->domain, start, PAGE_SIZE);
-> -
-> -			if (unmapped == PAGE_SIZE)
-> -				iommu_unmap(domain->domain, start + PAGE_SIZE, PAGE_SIZE);
-> -			else
-> -				domain->fgsp = true;
-> -		}
-> -		break;
-> -	}
-> -
-> -	__free_pages(pages, order);
-> -}
-> -
->  static struct vfio_iommu_group *find_iommu_group(struct vfio_domain *domain,
->  						 struct iommu_group *iommu_group)
->  {
-> @@ -2314,8 +2283,6 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
->  		}
->  	}
->  
-> -	vfio_test_domain_fgsp(domain, &iova_copy);
-> -
->  	/* replay mappings on new domains */
->  	ret = vfio_iommu_replay(iommu, domain);
->  	if (ret)
-> 
-> base-commit: 5a7ff05a5717e2ac4f4f83bcdd9033f246e9946b
-
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
