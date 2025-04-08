@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2534019AD5C;
-	Tue,  8 Apr 2025 11:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C946A1DF27F;
+	Tue,  8 Apr 2025 11:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112302; cv=none; b=UJLrmjLOnXRjt2Nu7mCC2TIrWyrOI3OgW5p0B8OVBzOjlu09AHyRW8GppJ2B/ft65G6+y/VmeWykMftwy2KAPsORD3LGHOAsuAEzq6qSSgCC+jp0w4vVbIG9hltxFlq29Z/QlPmthswdfERe+lvZBTdpfElo8jWJrq9dumzE1To=
+	t=1744112304; cv=none; b=CvBrcGKc8PWlc4TLq+c26ZAmgRimHc1OGKdt2aUZ0gwVb/MOPLN1UoHVjSpBVNztB30svYyZzkdwU+rF4q1HtyEblQa7KP5GxO+BHRymAtCQcFPIsfPBykHeE432F0+ltpPrTYWGI2Vj9m5Gy2Xbni4fqGKvnSOxmhNuc06vR8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112302; c=relaxed/simple;
-	bh=3PWCYpEfOh4ZQhe5bB4qm0t6iWbzqACN6Aa3X5Kssfw=;
+	s=arc-20240116; t=1744112304; c=relaxed/simple;
+	bh=OV8giNIWzFHmIgJ+1a7BRQ0zcHlvbRGuOglWoV+dgmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYwjqJnQW9BpOOKK7RT5i3HoQYjnOo/kIT5M1njtiulG0UX91wlrRgq9jAzlEoejt+6KjrcM0/kummuvgfR5BhuMX5KmHctrmPPavKxYNgonnIDMBxxo+WzaS5TYDa1mND8Gi2qAG9WmUscf2a+zxHn4qIUobaAN4IK6pnl57rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvIxselg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhU7VZfD8qLLwJ693rNXExX0hs/PRr7UNeGuAyYprkML6UgwVJisomLv6k1JKnfgzmmzqtZvp8pxY7zHvY+/lTGdzIWJUmiz6emO+hWQOzCyFGWrpR0gyMBi2ZFW68X5v8TTBLRV48kBKZH2LqvbL/ViVAa1wXxOYAFRAbE4KPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmQVkWKh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvIxselg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85B6C4CEE5;
-	Tue,  8 Apr 2025 11:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmQVkWKh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A9AC4CEE5;
+	Tue,  8 Apr 2025 11:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112302;
-	bh=3PWCYpEfOh4ZQhe5bB4qm0t6iWbzqACN6Aa3X5Kssfw=;
+	s=korg; t=1744112304;
+	bh=OV8giNIWzFHmIgJ+1a7BRQ0zcHlvbRGuOglWoV+dgmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvIxselgX/jIEGEnCg9RjrBOGuZQZ+FUgPBuMBSSSI3Bz9zR2aysZW8U7tSqj3JYa
-	 nNNGnZpCdpidOlj5J1Q3Kc0+/EuK/OzxU2ewFWDRI5OzQvwohPlX7A5e6i4jgji/9f
-	 XPc2JFlsWPGkP4sEpzGj+fuwqqu3gGBBeDKvy1jI=
+	b=tmQVkWKh9UlRK4tgxhqVt4p71tp9PctHoKMZQYy/2z9pgN+KKfXErwMPviQUyN0pR
+	 tgiVCZE2FhitmeOA/nmG21R/B0e1zaAcoVnTCOhWjee53Z4epPgKVZSu+mpS9ZrjLZ
+	 jARaDBq8OInq9V/roOhINqBug+yc60KLR+uVKJ+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Christoph Lameter <cl@linux.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	Kees Cook <keescook@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/279] slab: Introduce kmalloc_size_roundup()
-Date: Tue,  8 Apr 2025 12:46:42 +0200
-Message-ID: <20250408104826.900462674@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Michael Kelley <mhkelley@outlook.com>
+Subject: [PATCH 5.15 002/279] clockevents/drivers/i8253: Fix stop sequence for timer 0
+Date: Tue,  8 Apr 2025 12:46:25 +0200
+Message-ID: <20250408104826.398696099@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -57,213 +53,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 05a940656e1eb2026d9ee31019d5b47e9545124d ]
+commit 531b2ca0a940ac9db03f246c8b77c4201de72b00 upstream.
 
-In the effort to help the compiler reason about buffer sizes, the
-__alloc_size attribute was added to allocators. This improves the scope
-of the compiler's ability to apply CONFIG_UBSAN_BOUNDS and (in the near
-future) CONFIG_FORTIFY_SOURCE. For most allocations, this works well,
-as the vast majority of callers are not expecting to use more memory
-than what they asked for.
+According to the data sheet, writing the MODE register should stop the
+counter (and thus the interrupts). This appears to work on real hardware,
+at least modern Intel and AMD systems. It should also work on Hyper-V.
 
-There is, however, one common exception to this: anticipatory resizing
-of kmalloc allocations. These cases all use ksize() to determine the
-actual bucket size of a given allocation (e.g. 128 when 126 was asked
-for). This comes in two styles in the kernel:
+However, on some buggy virtual machines the mode change doesn't have any
+effect until the counter is subsequently loaded (or perhaps when the IRQ
+next fires).
 
-1) An allocation has been determined to be too small, and needs to be
-   resized. Instead of the caller choosing its own next best size, it
-   wants to minimize the number of calls to krealloc(), so it just uses
-   ksize() plus some additional bytes, forcing the realloc into the next
-   bucket size, from which it can learn how large it is now. For example:
+So, set MODE 0 and then load the counter, to ensure that those buggy VMs
+do the right thing and the interrupts stop. And then write MODE 0 *again*
+to stop the counter on compliant implementations too.
 
-	data = krealloc(data, ksize(data) + 1, gfp);
-	data_len = ksize(data);
+Apparently, Hyper-V keeps firing the IRQ *repeatedly* even in mode zero
+when it should only happen once, but the second MODE write stops that too.
 
-2) The minimum size of an allocation is calculated, but since it may
-   grow in the future, just use all the space available in the chosen
-   bucket immediately, to avoid needing to reallocate later. A good
-   example of this is skbuff's allocators:
+Userspace test program (mostly written by tglx):
+=====
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <stdint.h>
+ #include <sys/io.h>
 
-	data = kmalloc_reserve(size, gfp_mask, node, &pfmemalloc);
-	...
-	/* kmalloc(size) might give us more room than requested.
-	 * Put skb_shared_info exactly at the end of allocated zone,
-	 * to allow max possible filling before reallocation.
-	 */
-	osize = ksize(data);
-        size = SKB_WITH_OVERHEAD(osize);
+static __always_inline void __out##bwl(type value, uint16_t port)	\
+{									\
+	asm volatile("out" #bwl " %" #bw "0, %w1"			\
+		     : : "a"(value), "Nd"(port));			\
+}									\
+									\
+static __always_inline type __in##bwl(uint16_t port)			\
+{									\
+	type value;							\
+	asm volatile("in" #bwl " %w1, %" #bw "0"			\
+		     : "=a"(value) : "Nd"(port));			\
+	return value;							\
+}
 
-In both cases, the "how much was actually allocated?" question is answered
-_after_ the allocation, where the compiler hinting is not in an easy place
-to make the association any more. This mismatch between the compiler's
-view of the buffer length and the code's intention about how much it is
-going to actually use has already caused problems[1]. It is possible to
-fix this by reordering the use of the "actual size" information.
+BUILDIO(b, b, uint8_t)
 
-We can serve the needs of users of ksize() and still have accurate buffer
-length hinting for the compiler by doing the bucket size calculation
-_before_ the allocation. Code can instead ask "how large an allocation
-would I get for a given size?".
+ #define inb __inb
+ #define outb __outb
 
-Introduce kmalloc_size_roundup(), to serve this function so we can start
-replacing the "anticipatory resizing" uses of ksize().
+ #define PIT_MODE	0x43
+ #define PIT_CH0	0x40
+ #define PIT_CH2	0x42
 
-[1] https://github.com/ClangBuiltLinux/linux/issues/1599
-    https://github.com/KSPP/linux/issues/183
+static int is8254;
 
-[ vbabka@suse.cz: add SLOB version ]
+static void dump_pit(void)
+{
+	if (is8254) {
+		// Latch and output counter and status
+		outb(0xC2, PIT_MODE);
+		printf("%02x %02x %02x\n", inb(PIT_CH0), inb(PIT_CH0), inb(PIT_CH0));
+	} else {
+		// Latch and output counter
+		outb(0x0, PIT_MODE);
+		printf("%02x %02x\n", inb(PIT_CH0), inb(PIT_CH0));
+	}
+}
 
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Stable-dep-of: a1e64addf3ff ("net: openvswitch: remove misbehaving actions length check")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+int main(int argc, char* argv[])
+{
+	int nr_counts = 2;
+
+	if (argc > 1)
+		nr_counts = atoi(argv[1]);
+
+	if (argc > 2)
+		is8254 = 1;
+
+	if (ioperm(0x40, 4, 1) != 0)
+		return 1;
+
+	dump_pit();
+
+	printf("Set oneshot\n");
+	outb(0x38, PIT_MODE);
+	outb(0x00, PIT_CH0);
+	outb(0x0F, PIT_CH0);
+
+	dump_pit();
+	usleep(1000);
+	dump_pit();
+
+	printf("Set periodic\n");
+	outb(0x34, PIT_MODE);
+	outb(0x00, PIT_CH0);
+	outb(0x0F, PIT_CH0);
+
+	dump_pit();
+	usleep(1000);
+	dump_pit();
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	printf("Set stop (%d counter writes)\n", nr_counts);
+	outb(0x30, PIT_MODE);
+	while (nr_counts--)
+		outb(0xFF, PIT_CH0);
+
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	printf("Set MODE 0\n");
+	outb(0x30, PIT_MODE);
+
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+	usleep(100000);
+	dump_pit();
+
+	return 0;
+}
+=====
+
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Co-developed-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Michael Kelley <mhkelley@outlook.com>
+Link: https://lore.kernel.org/all/20240802135555.564941-2-dwmw2@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/slab.h | 31 +++++++++++++++++++++++++++++++
- mm/slab.c            |  9 ++++++---
- mm/slab_common.c     | 20 ++++++++++++++++++++
- mm/slob.c            | 14 ++++++++++++++
- 4 files changed, 71 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/mshyperv.c |   11 -----------
+ drivers/clocksource/i8253.c    |   36 +++++++++++++++++++++++++-----------
+ include/linux/i8253.h          |    1 -
+ 3 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/include/linux/slab.h b/include/linux/slab.h
-index d9f14125d7a2b..3482c2ced139e 100644
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -185,7 +185,21 @@ void * __must_check krealloc(const void *objp, size_t new_size, gfp_t flags);
- void kfree(const void *objp);
- void kfree_sensitive(const void *objp);
- size_t __ksize(const void *objp);
-+
-+/**
-+ * ksize - Report actual allocation size of associated object
-+ *
-+ * @objp: Pointer returned from a prior kmalloc()-family allocation.
-+ *
-+ * This should not be used for writing beyond the originally requested
-+ * allocation size. Either use krealloc() or round up the allocation size
-+ * with kmalloc_size_roundup() prior to allocation. If this is used to
-+ * access beyond the originally requested allocation size, UBSAN_BOUNDS
-+ * and/or FORTIFY_SOURCE may trip, since they only know about the
-+ * originally allocated size via the __alloc_size attribute.
-+ */
- size_t ksize(const void *objp);
-+
- #ifdef CONFIG_PRINTK
- bool kmem_valid_obj(void *object);
- void kmem_dump_obj(void *object);
-@@ -733,6 +747,23 @@ static inline void *kzalloc_node(size_t size, gfp_t flags, int node)
- }
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -16,7 +16,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/kexec.h>
+-#include <linux/i8253.h>
+ #include <linux/random.h>
+ #include <asm/processor.h>
+ #include <asm/hypervisor.h>
+@@ -445,16 +444,6 @@ static void __init ms_hyperv_init_platfo
+ 	if (efi_enabled(EFI_BOOT))
+ 		x86_platform.get_nmi_reason = hv_get_nmi_reason;
  
- unsigned int kmem_cache_size(struct kmem_cache *s);
-+
-+/**
-+ * kmalloc_size_roundup - Report allocation bucket size for the given size
-+ *
-+ * @size: Number of bytes to round up from.
-+ *
-+ * This returns the number of bytes that would be available in a kmalloc()
-+ * allocation of @size bytes. For example, a 126 byte request would be
-+ * rounded up to the next sized kmalloc bucket, 128 bytes. (This is strictly
-+ * for the general-purpose kmalloc()-based allocations, and is not for the
-+ * pre-sized kmem_cache_alloc()-based allocations.)
-+ *
-+ * Use this to kmalloc() the full bucket size ahead of time instead of using
-+ * ksize() to query the size after an allocation.
-+ */
-+size_t kmalloc_size_roundup(size_t size);
-+
- void __init kmem_cache_init_late(void);
+-	/*
+-	 * Hyper-V VMs have a PIT emulation quirk such that zeroing the
+-	 * counter register during PIT shutdown restarts the PIT. So it
+-	 * continues to interrupt @18.2 HZ. Setting i8253_clear_counter
+-	 * to false tells pit_shutdown() not to zero the counter so that
+-	 * the PIT really is shutdown. Generation 2 VMs don't have a PIT,
+-	 * and setting this value has no effect.
+-	 */
+-	i8253_clear_counter_on_shutdown = false;
+-
+ #if IS_ENABLED(CONFIG_HYPERV)
+ 	/*
+ 	 * Setup the hook to get control post apic initialization.
+--- a/drivers/clocksource/i8253.c
++++ b/drivers/clocksource/i8253.c
+@@ -20,13 +20,6 @@
+ DEFINE_RAW_SPINLOCK(i8253_lock);
+ EXPORT_SYMBOL(i8253_lock);
  
- #if defined(CONFIG_SMP) && defined(CONFIG_SLAB)
-diff --git a/mm/slab.c b/mm/slab.c
-index f5b2246f832da..e53e50d6c29bc 100644
---- a/mm/slab.c
-+++ b/mm/slab.c
-@@ -4226,11 +4226,14 @@ void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
- #endif /* CONFIG_HARDENED_USERCOPY */
- 
- /**
-- * __ksize -- Uninstrumented ksize.
-+ * __ksize -- Report full size of underlying allocation
-  * @objp: pointer to the object
-  *
-- * Unlike ksize(), __ksize() is uninstrumented, and does not provide the same
-- * safety checks as ksize() with KASAN instrumentation enabled.
-+ * This should only be used internally to query the true size of allocations.
-+ * It is not meant to be a way to discover the usable size of an allocation
-+ * after the fact. Instead, use kmalloc_size_roundup(). Using memory beyond
-+ * the originally requested allocation size may trigger KASAN, UBSAN_BOUNDS,
-+ * and/or FORTIFY_SOURCE.
-  *
-  * Return: size of the actual memory used by @objp in bytes
-  */
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index f684b06649c3e..06958c613b0ac 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -758,6 +758,26 @@ struct kmem_cache *kmalloc_slab(size_t size, gfp_t flags)
- 	return kmalloc_caches[kmalloc_type(flags)][index];
- }
- 
-+size_t kmalloc_size_roundup(size_t size)
-+{
-+	struct kmem_cache *c;
-+
-+	/* Short-circuit the 0 size case. */
-+	if (unlikely(size == 0))
-+		return 0;
-+	/* Short-circuit saturated "too-large" case. */
-+	if (unlikely(size == SIZE_MAX))
-+		return SIZE_MAX;
-+	/* Above the smaller buckets, size is a multiple of page size. */
-+	if (size > KMALLOC_MAX_CACHE_SIZE)
-+		return PAGE_SIZE << get_order(size);
-+
-+	/* The flags don't matter since size_index is common to all. */
-+	c = kmalloc_slab(size, GFP_KERNEL);
-+	return c ? c->object_size : 0;
-+}
-+EXPORT_SYMBOL(kmalloc_size_roundup);
-+
- #ifdef CONFIG_ZONE_DMA
- #define KMALLOC_DMA_NAME(sz)	.name[KMALLOC_DMA] = "dma-kmalloc-" #sz,
- #else
-diff --git a/mm/slob.c b/mm/slob.c
-index f3fc15df971af..d4c80bf1930d1 100644
---- a/mm/slob.c
-+++ b/mm/slob.c
-@@ -567,6 +567,20 @@ void kfree(const void *block)
- }
- EXPORT_SYMBOL(kfree);
- 
-+size_t kmalloc_size_roundup(size_t size)
-+{
-+	/* Short-circuit the 0 size case. */
-+	if (unlikely(size == 0))
-+		return 0;
-+	/* Short-circuit saturated "too-large" case. */
-+	if (unlikely(size == SIZE_MAX))
-+		return SIZE_MAX;
-+
-+	return ALIGN(size, ARCH_KMALLOC_MINALIGN);
-+}
-+
-+EXPORT_SYMBOL(kmalloc_size_roundup);
-+
- /* can't use ksize for kmem_cache_alloc memory, only kmalloc */
- size_t __ksize(const void *block)
+-/*
+- * Handle PIT quirk in pit_shutdown() where zeroing the counter register
+- * restarts the PIT, negating the shutdown. On platforms with the quirk,
+- * platform specific code can set this to false.
+- */
+-bool i8253_clear_counter_on_shutdown __ro_after_init = true;
+-
+ #ifdef CONFIG_CLKSRC_I8253
+ /*
+  * Since the PIT overflows every tick, its not very useful
+@@ -112,12 +105,33 @@ void clockevent_i8253_disable(void)
  {
--- 
-2.39.5
-
+ 	raw_spin_lock(&i8253_lock);
+ 
++	/*
++	 * Writing the MODE register should stop the counter, according to
++	 * the datasheet. This appears to work on real hardware (well, on
++	 * modern Intel and AMD boxes; I didn't dig the Pegasos out of the
++	 * shed).
++	 *
++	 * However, some virtual implementations differ, and the MODE change
++	 * doesn't have any effect until either the counter is written (KVM
++	 * in-kernel PIT) or the next interrupt (QEMU). And in those cases,
++	 * it may not stop the *count*, only the interrupts. Although in
++	 * the virt case, that probably doesn't matter, as the value of the
++	 * counter will only be calculated on demand if the guest reads it;
++	 * it's the interrupts which cause steal time.
++	 *
++	 * Hyper-V apparently has a bug where even in mode 0, the IRQ keeps
++	 * firing repeatedly if the counter is running. But it *does* do the
++	 * right thing when the MODE register is written.
++	 *
++	 * So: write the MODE and then load the counter, which ensures that
++	 * the IRQ is stopped on those buggy virt implementations. And then
++	 * write the MODE again, which is the right way to stop it.
++	 */
+ 	outb_p(0x30, PIT_MODE);
++	outb_p(0, PIT_CH0);
++	outb_p(0, PIT_CH0);
+ 
+-	if (i8253_clear_counter_on_shutdown) {
+-		outb_p(0, PIT_CH0);
+-		outb_p(0, PIT_CH0);
+-	}
++	outb_p(0x30, PIT_MODE);
+ 
+ 	raw_spin_unlock(&i8253_lock);
+ }
+--- a/include/linux/i8253.h
++++ b/include/linux/i8253.h
+@@ -21,7 +21,6 @@
+ #define PIT_LATCH	((PIT_TICK_RATE + HZ/2) / HZ)
+ 
+ extern raw_spinlock_t i8253_lock;
+-extern bool i8253_clear_counter_on_shutdown;
+ extern struct clock_event_device i8253_clockevent;
+ extern void clockevent_i8253_init(bool oneshot);
+ extern void clockevent_i8253_disable(void);
 
 
