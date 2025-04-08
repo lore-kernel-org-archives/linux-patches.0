@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294282690EB;
-	Tue,  8 Apr 2025 12:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727ED26E158;
+	Tue,  8 Apr 2025 12:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115641; cv=none; b=brvfHIhJCTxxJf7ifE3bikFkIxs4N/k+qDtUHmuQjIM1XX/UlWG8G2zASCCALT4Ys/VVntXQ44M+hgXLJoaibp9VWIvuLTuGTXzyp3ALHrAHFfGidPujCRNaxGxlKWgOlb+Y2Nzizj3rYmv5SDR1uVFsDpGCWDIwG0y0p5Rauho=
+	t=1744115643; cv=none; b=ZjX6HcU5FgNcK5Ykfb104PQ9VMEf5ZxBzNF8Qmudj71HUPpB/WUMcpMqL48fQWkdPooi32S/DTYZlUySFhBiMV6sPkvYRr6Yw/tJ414gVl9w7Hdp5i4y+Z0WBnnGhNEDP7cU9G7/+5tPwlzHVwj6XN99kmQNLgCDrX/T4gAvWAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115641; c=relaxed/simple;
-	bh=z3eplziqngVVrPdufZ+1F1NVAQopHeGiGqip0R5mqa4=;
+	s=arc-20240116; t=1744115643; c=relaxed/simple;
+	bh=CUE2osu8L+nfcfptL7L8qKuFA2sCGu7iq7ZXPnEm9BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPp7sd/3qoWjArdIRa7dYEbLpWUe29crVUJBglcfafmaFsgs04ocZv1CFb+zs5F+9ag3pZGyyFkZQ2eOIRW0p+aHLN25SUwaU9ZdJ+IcuxuXBqvtyhEqJhgeiG0fDWdaOYD/3Zy1nxr5x5V4YEDNu5b1GU8n0eVeBo39G0PQaac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwy4tynm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gf/CXpIrVVAZXGASh4kz8UXpFrylku4237kzIOnc5jYGpqTP3MB+6tBVPJOkhRiMvnZBwVmi+el2aX9zrcRUwHZ7uEBnWg8Z+FH04eZt5ozeN6AvwqjmV5gZqTyttb+WBBGDTVUjrHN1QsBbFJ1D7TdZ2EAfiYA2QL0cmUwMykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFW7LiEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwy4tynm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2872CC4CEE5;
-	Tue,  8 Apr 2025 12:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFW7LiEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0112AC4CEE5;
+	Tue,  8 Apr 2025 12:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115640;
-	bh=z3eplziqngVVrPdufZ+1F1NVAQopHeGiGqip0R5mqa4=;
+	s=korg; t=1744115643;
+	bh=CUE2osu8L+nfcfptL7L8qKuFA2sCGu7iq7ZXPnEm9BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwy4tynmztli8WMw8w2cpRZNkBHTaEvQ4nF9mp8m6kvhDw1nxHh+OTx5ByJNgS0n8
-	 lnjqrxzdu5q800SyMdnWYX/Y6sGBHBE5y3gjaN1FviFgS0j823LOaNdG7wT8PIRHLD
-	 yL0UgWbMUAURbO/wR1IdWbV9nd8kZTKbfKamS/yA=
+	b=pFW7LiEWwV/rFUQETCGb2eNd51/BQXJGMPqBlS0D+rvEy1BDrK8VLKwhW5Dr3mlsz
+	 dyfo0zFSgK3DWFoF6gxF0HNzGMW14VCvTSZ3MV1PIgUkADAMKmH3H9jwDxciQD+zim
+	 2UFpudEBsHllv5gVvLOZ4o+OblhF7zwB5iyZ89Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Carol Soto <csoto@nvidia.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Chris Chiu <chris.chiu@canonical.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/204] PCI: Use downstream bridges for distributing resources
-Date: Tue,  8 Apr 2025 12:49:22 +0200
-Message-ID: <20250408104821.275198719@linuxfoundation.org>
+Subject: [PATCH 6.1 050/204] mdacon: rework dependency list
+Date: Tue,  8 Apr 2025 12:49:40 +0200
+Message-ID: <20250408104821.812425719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -56,94 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kaihengf@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1a596ad00ffe9b37fc60a93cbdd4daead3bf95f3 ]
+[ Upstream commit 5bbcc7645f4b244ffb5ac6563fbe9d3d42194447 ]
 
-7180c1d08639 ("PCI: Distribute available resources for root buses, too")
-breaks BAR assignment on some devices:
+mdacon has roughly the same dependencies as vgacon but expresses them
+as a negative list instead of a positive list, with the only practical
+difference being PowerPC/CHRP, which uses vga16fb instead of vgacon.
 
-  pci 0006:03:00.0: BAR 0 [mem 0x6300c0000000-0x6300c1ffffff 64bit pref]: assigned
-  pci 0006:03:00.1: BAR 0 [mem 0x6300c2000000-0x6300c3ffffff 64bit pref]: assigned
-  pci 0006:03:00.2: BAR 0 [mem size 0x00800000 64bit pref]: can't assign; no space
-  pci 0006:03:00.0: VF BAR 0 [mem size 0x02000000 64bit pref]: can't assign; no space
-  pci 0006:03:00.1: VF BAR 0 [mem size 0x02000000 64bit pref]: can't assign; no space
+The CONFIG_MDA_CONSOLE description advises to only turn it on when vgacon
+is also used because MDA/Hercules-only systems should be using vgacon
+instead, so just change the list to enforce that directly for simplicity.
 
-The apertures of domain 0006 before 7180c1d08639:
+The probing was broken from 2002 to 2008, this improves on the fix
+that was added then: If vgacon is a loadable module, then mdacon
+cannot be built-in now, and the list of systems that support vgacon
+is carried over.
 
-  6300c0000000-63ffffffffff : PCI Bus 0006:00
-    6300c0000000-6300c9ffffff : PCI Bus 0006:01
-      6300c0000000-6300c9ffffff : PCI Bus 0006:02        # 160MB
-        6300c0000000-6300c8ffffff : PCI Bus 0006:03      #   144MB
-          6300c0000000-6300c1ffffff : 0006:03:00.0       #     32MB
-          6300c2000000-6300c3ffffff : 0006:03:00.1       #     32MB
-          6300c4000000-6300c47fffff : 0006:03:00.2       #      8MB
-          6300c4800000-6300c67fffff : 0006:03:00.0       #     32MB
-          6300c6800000-6300c87fffff : 0006:03:00.1       #     32MB
-        6300c9000000-6300c9bfffff : PCI Bus 0006:04      #    12MB
-          6300c9000000-6300c9bfffff : PCI Bus 0006:05    #    12MB
-            6300c9000000-6300c91fffff : PCI Bus 0006:06  #      2MB
-            6300c9200000-6300c93fffff : PCI Bus 0006:07  #      2MB
-            6300c9400000-6300c95fffff : PCI Bus 0006:08  #      2MB
-            6300c9600000-6300c97fffff : PCI Bus 0006:09  #      2MB
-
-After 7180c1d08639:
-
-  6300c0000000-63ffffffffff : PCI Bus 0006:00
-    6300c0000000-6300c9ffffff : PCI Bus 0006:01
-      6300c0000000-6300c9ffffff : PCI Bus 0006:02        # 160MB
-        6300c0000000-6300c43fffff : PCI Bus 0006:03      #    68MB
-          6300c0000000-6300c1ffffff : 0006:03:00.0       #      32MB
-          6300c2000000-6300c3ffffff : 0006:03:00.1       #      32MB
-              --- no space ---      : 0006:03:00.2       #       8MB
-              --- no space ---      : 0006:03:00.0       #      32MB
-              --- no space ---      : 0006:03:00.1       #      32MB
-        6300c4400000-6300c4dfffff : PCI Bus 0006:04      #    10MB
-          6300c4400000-6300c4dfffff : PCI Bus 0006:05    #      10MB
-            6300c4400000-6300c45fffff : PCI Bus 0006:06  #        2MB
-            6300c4600000-6300c47fffff : PCI Bus 0006:07  #        2MB
-            6300c4800000-6300c49fffff : PCI Bus 0006:08  #        2MB
-            6300c4a00000-6300c4bfffff : PCI Bus 0006:09  #        2MB
-
-We can see that the window to 0006:03 gets shrunken too much and 0006:04
-eats away the window for 0006:03:00.2.
-
-The offending commit distributes the upstream bridge's resources multiple
-times to every downstream bridge, hence makes the aperture smaller than
-desired because calculation of io_per_b, mmio_per_b and mmio_pref_per_b
-becomes incorrect.
-
-Instead, distribute downstream bridges' own resources to resolve the issue.
-
-Link: https://lore.kernel.org/r/20241204022457.51322-1-kaihengf@nvidia.com
-Fixes: 7180c1d08639 ("PCI: Distribute available resources for root buses, too")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219540
-Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Carol Soto <csoto@nvidia.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Chris Chiu <chris.chiu@canonical.com>
+Fixes: 0b9cf3aa6b1e ("mdacon messing up default vc's - set default to vc13-16 again")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/video/console/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index b8cb990044fb2..8c1ad20a21ec5 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2027,8 +2027,7 @@ pci_root_bus_distribute_available_resources(struct pci_bus *bus,
- 		 * in case of root bus.
- 		 */
- 		if (bridge && pci_bridge_resources_not_assigned(dev))
--			pci_bridge_distribute_available_resources(bridge,
--								  add_list);
-+			pci_bridge_distribute_available_resources(dev, add_list);
- 		else
- 			pci_root_bus_distribute_available_resources(b, add_list);
- 	}
+diff --git a/drivers/video/console/Kconfig b/drivers/video/console/Kconfig
+index 22cea5082ac46..5c4df3aaab1ed 100644
+--- a/drivers/video/console/Kconfig
++++ b/drivers/video/console/Kconfig
+@@ -24,7 +24,7 @@ config VGA_CONSOLE
+ 	  Say Y.
+ 
+ config MDA_CONSOLE
+-	depends on !M68K && !PARISC && ISA
++	depends on VGA_CONSOLE && ISA
+ 	tristate "MDA text console (dual-headed)"
+ 	help
+ 	  Say Y here if you have an old MDA or monochrome Hercules graphics
 -- 
 2.39.5
 
