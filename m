@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EB62698BC;
-	Tue,  8 Apr 2025 11:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D227B267B99;
+	Tue,  8 Apr 2025 11:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110098; cv=none; b=A8HM5N3CdecXMg5Qt1nVS0d0IZDeBqtbK26TaZcFj2f/spIUqptmuhEQYOOiMNrDSpuU8iJ41mjs1f4QHgf8CmW1LjMIdYmMpHit1Gzy7g0NIQDSHcr0aal3/sERuuB67S0/sXDMsFRKxHHs9zwC16zIcllnwZqByyY8J87zDN8=
+	t=1744110100; cv=none; b=eJyDdYVyq8ji6v74GR10/ZWFJEkq8nCLRCplxQmc5K71ikoMDhGtAntPpN6DxQqlEjuSROzjpENza+y1qdoefy9CLfxp889GY7fI6j8MsD9igSJA+PALeTtToZXJGfQLRMs4ey0sUbQ1S/wFHGPemIaFqiXJhVWaknNrXAUiWQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110098; c=relaxed/simple;
-	bh=deG267a+zAg5REWBVCokdtQ4mv1qSkOSh4ICXreWYWo=;
+	s=arc-20240116; t=1744110100; c=relaxed/simple;
+	bh=lyfOL3/mW9VHwMzyRvrDJqFK7t7EjK4o1WEJzhZxlCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDlfy+Gq52phhYQNSUTNzBzPa+hfUAjKNCivb4I1rLHWaw2Czs0T764ySX/pftzhnbS/wt0FC8M8marX+RIyXWEcycpWOqUaay79x0CHPHqaTqD1lhW0b7MgV8fIZawb/xcBxPMDO9pI6lCFyXPu5+IuS1wu3TWjeVdlOBBDso8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOZ2dKhn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ta0IO1XdLaZGh/rXPQcYy5PIeMWDO2pfuJhSVMqtCu5WnvL2ofiecFBIWJOIHjlv//fdq4+ng8Bel7gzyCoV22xOKX8JiXV1e39T6yBqDpr4eFkKTN/u275Sw5QCy8cfvodyNWfeFGl1AnTlcZd2vOb6nuIQslPQ9EJpb5FYuXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiFEi8Mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOZ2dKhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF82C4CEE5;
-	Tue,  8 Apr 2025 11:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiFEi8Mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6250DC4CEE5;
+	Tue,  8 Apr 2025 11:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110098;
-	bh=deG267a+zAg5REWBVCokdtQ4mv1qSkOSh4ICXreWYWo=;
+	s=korg; t=1744110100;
+	bh=lyfOL3/mW9VHwMzyRvrDJqFK7t7EjK4o1WEJzhZxlCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOZ2dKhn5SklH4KpQG1LC2XCrlZleguUBAVdlOk2Fn8KbLIEjSlr03OkO03ehmL/5
-	 JS7l/WK/LJRV+p8RXWuSpu1So9J7FnbaDfKNxqOxEsCUorq4BAxklrRdQfLLOvqth7
-	 5R7i5mYVWDrx1mo2uApaToznktbfM50a1T2FQre4=
+	b=JiFEi8MojuxtyOZEg+6231b3d6unab/TTJsbQr+lPtybc/o7OUkSNhGDY95rDt4ox
+	 ITR0/ZS1P4M1gVyq+HHNL3iw5sf7UHK+liJBpIY7d/1wWkjgq3NzFPhrN3n0l2bOHO
+	 V2SaLfuG1GUxF0RPe3UTQ1EMZPYIXvHyUPKAdcR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Baoquan He <bhe@redhat.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 165/227] perf units: Fix insufficient array space
-Date: Tue,  8 Apr 2025 12:49:03 +0200
-Message-ID: <20250408104825.266703613@linuxfoundation.org>
+Subject: [PATCH 5.10 166/227] kexec: initialize ELF lowest address to ULONG_MAX
+Date: Tue,  8 Apr 2025 12:49:04 +0200
+Message-ID: <20250408104825.294505329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,44 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit cf67629f7f637fb988228abdb3aae46d0c1748fe ]
+[ Upstream commit 9986fb5164c8b21f6439cfd45ba36d8cc80c9710 ]
 
-No need to specify the array size, let the compiler figure that out.
+Patch series "powerpc/crash: use generic crashkernel reservation", v3.
 
-This addresses this compiler warning that was noticed while build
-testing on fedora rawhide:
+Commit 0ab97169aa05 ("crash_core: add generic function to do reservation")
+added a generic function to reserve crashkernel memory.  So let's use the
+same function on powerpc and remove the architecture-specific code that
+essentially does the same thing.
 
-  31    15.81 fedora:rawhide                : FAIL gcc version 15.0.1 20250225 (Red Hat 15.0.1-0) (GCC)
-    util/units.c: In function 'unit_number__scnprintf':
-    util/units.c:67:24: error: initializer-string for array of 'char' is too long [-Werror=unterminated-string-initialization]
-       67 |         char unit[4] = "BKMG";
-          |                        ^~~~~~
-    cc1: all warnings being treated as errors
+The generic crashkernel reservation also provides a way to split the
+crashkernel reservation into high and low memory reservations, which can
+be enabled for powerpc in the future.
 
-Fixes: 9808143ba2e54818 ("perf tools: Add unit_number__scnprintf function")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20250310194534.265487-3-acme@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Additionally move powerpc to use generic APIs to locate memory hole for
+kexec segments while loading kdump kernel.
+
+This patch (of 7):
+
+kexec_elf_load() loads an ELF executable and sets the address of the
+lowest PT_LOAD section to the address held by the lowest_load_addr
+function argument.
+
+To determine the lowest PT_LOAD address, a local variable lowest_addr
+(type unsigned long) is initialized to UINT_MAX.  After loading each
+PT_LOAD, its address is compared to lowest_addr.  If a loaded PT_LOAD
+address is lower, lowest_addr is updated.  However, setting lowest_addr to
+UINT_MAX won't work when the kernel image is loaded above 4G, as the
+returned lowest PT_LOAD address would be invalid.  This is resolved by
+initializing lowest_addr to ULONG_MAX instead.
+
+This issue was discovered while implementing crashkernel high/low
+reservation on the PowerPC architecture.
+
+Link: https://lkml.kernel.org/r/20250131113830.925179-1-sourabhjain@linux.ibm.com
+Link: https://lkml.kernel.org/r/20250131113830.925179-2-sourabhjain@linux.ibm.com
+Fixes: a0458284f062 ("powerpc: Add support code for kexec_file_load()")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Hari Bathini <hbathini@linux.ibm.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/units.c | 2 +-
+ kernel/kexec_elf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/units.c b/tools/perf/util/units.c
-index a46762aec4c9f..24c83b8b8c980 100644
---- a/tools/perf/util/units.c
-+++ b/tools/perf/util/units.c
-@@ -57,7 +57,7 @@ unsigned long convert_unit(unsigned long value, char *unit)
- 
- int unit_number__scnprintf(char *buf, size_t size, u64 n)
+diff --git a/kernel/kexec_elf.c b/kernel/kexec_elf.c
+index d3689632e8b90..3a5c25b2adc94 100644
+--- a/kernel/kexec_elf.c
++++ b/kernel/kexec_elf.c
+@@ -390,7 +390,7 @@ int kexec_elf_load(struct kimage *image, struct elfhdr *ehdr,
+ 			 struct kexec_buf *kbuf,
+ 			 unsigned long *lowest_load_addr)
  {
--	char unit[4] = "BKMG";
-+	char unit[] = "BKMG";
- 	int i = 0;
+-	unsigned long lowest_addr = UINT_MAX;
++	unsigned long lowest_addr = ULONG_MAX;
+ 	int ret;
+ 	size_t i;
  
- 	while (((n / 1024) > 1) && (i < 3)) {
 -- 
 2.39.5
 
