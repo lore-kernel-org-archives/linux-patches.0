@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51A626461E;
-	Tue,  8 Apr 2025 12:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E645B268C72;
+	Tue,  8 Apr 2025 12:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115832; cv=none; b=moypGCUb2u/bZcg32L3gZ1mYtnjQZWQMENEEE7Ofc50Fm76AeMz+A6DjOL9u5bYeA/rb1LGQv5YH5o05lZJoUF33jb7zCqSevgglCDAEBVJoCunCAW5C45b3wjFRLxNgoBmcwTfYZxDj8Ys4RvIM6SmlLI/t7b8559XePv7Q2w8=
+	t=1744115835; cv=none; b=ltIvZYupO19U5y2B2231eyzIS18CMcJbnqcJWYNxD601lo7EgI5yEY4AZNcohwGh2LAma1vGvCn8ZmGH+Gpe8VLBscYrSVPnu66urFk+thYPrO230c9ZgImuWWyuLPemy518YlLVp9z/p8tHwajfdl9AaQfJpbK2ItAVqSN7yHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115832; c=relaxed/simple;
-	bh=YrD3qbEMaUtGXYo7p0W0nYIcUS2szkeez08+leVlECw=;
+	s=arc-20240116; t=1744115835; c=relaxed/simple;
+	bh=gwhAvjJp6XU9iamaxYv/7TktliwpO0C8ohwimQ6fbTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWzlRO+PWg5jjTLKGB1EyiLeHKaVoTSFW2CDfLiM8CqBn8ZWgtqwnrnZqEakmQ9LiHAj9h7DusDP50b3kLkmfjx9RaecJd71AaTKHlXD8YE2EKq70+asud9o+XHH6li+X3AhnZhwyk2v+AM1SDeCSrkwYxy6dmVVwKGqVFw1csA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJ0w+3Bt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQKKlajbnFLJHkWx/T3yrW4BwzpxlfYcSUIyww35OUCs+Mwr+mJhmSLTjFF7mc73JpwaO4M7q6pggFuEN7VNi6wI1kH5wJrkc2i5Iv9gJalzE0mcbSZCVnp+ckkRAzbPmILmFqyhghMkNUGDLVmVXDwd6cLOGXHKrK6kCmlplAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxSddaEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJ0w+3Bt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C58C4CEE5;
-	Tue,  8 Apr 2025 12:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxSddaEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79ABEC4CEE5;
+	Tue,  8 Apr 2025 12:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115832;
-	bh=YrD3qbEMaUtGXYo7p0W0nYIcUS2szkeez08+leVlECw=;
+	s=korg; t=1744115834;
+	bh=gwhAvjJp6XU9iamaxYv/7TktliwpO0C8ohwimQ6fbTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJ0w+3BtcVrNYjUednJo+v3fp026firXRKUeHCIh94P7iMWJHSKAkfZVA25Zks8uG
-	 32q8Ylil9dxBsfL9V7/6nxXj69tiXVSA2dNNKX86g+gl1ewwzveITYjn/Cugea22aB
-	 1rYEZsBp7VydTgT7SeApkI7bvGmJNKdxJPWkHv28=
+	b=HxSddaEhPdiSBHkgjv8OLa/fHfF6yjP2A8aVGtqqyoQIVjPF5Et1vW64lLR2I+zI8
+	 HxpAamp5cWbXCw1JC/wZc2W6cGATXPTU0kJQGF9ew6mv9g6/vY17yQhdeQC3mpAGSl
+	 lvZUmGyfklQM3RCEY/heGSdPLazU+2sDkCpJ7pKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/204] pinctrl: renesas: rzv2m: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:50:11 +0200
-Message-ID: <20250408104822.735621549@linuxfoundation.org>
+Subject: [PATCH 6.1 072/204] clk: amlogic: g12b: fix cluster A parent data
+Date: Tue,  8 Apr 2025 12:50:02 +0200
+Message-ID: <20250408104822.472367891@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,40 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 5a550b00704d3a2cd9d766a9427b0f8166da37df ]
+[ Upstream commit 8995f8f108c3ac5ad52b12a6cfbbc7b3b32e9a58 ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+Several clocks used by both g12a and g12b use the g12a cpu A clock hw
+pointer as clock parent. This is incorrect on g12b since the parents of
+cluster A cpu clock are different. Also the hw clock provided as parent to
+these children is not even registered clock on g12b.
 
-Call into of_node_put() to rectify that.
+Fix the problem by reverting to the global namespace and let CCF pick
+the appropriate, as it is already done for other clocks, such as
+cpu_clk_trace_div.
 
-Fixes: 92a9b8252576 ("pinctrl: renesas: Add RZ/V2M pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-4-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 25e682a02d91 ("clk: meson: g12a: migrate to the new parent description method")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241213-amlogic-clk-g12a-cpua-parent-fix-v1-1-d8c0f41865fe@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/meson/g12a.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index 2858800288bb7..dc4299c03b990 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -943,6 +943,8 @@ static int rzv2m_gpio_register(struct rzv2m_pinctrl *pctrl)
- 		return ret;
- 	}
- 
-+	of_node_put(of_args.np);
-+
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins) {
- 		dev_err(pctrl->dev, "gpio-ranges does not match selected SOC\n");
+diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
+index 310accf94830b..a623596c1e490 100644
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -1136,8 +1136,18 @@ static struct clk_regmap g12a_cpu_clk_div16_en = {
+ 	.hw.init = &(struct clk_init_data) {
+ 		.name = "cpu_clk_div16_en",
+ 		.ops = &clk_regmap_gate_ro_ops,
+-		.parent_hws = (const struct clk_hw *[]) {
+-			&g12a_cpu_clk.hw
++		.parent_data = &(const struct clk_parent_data) {
++			/*
++			 * Note:
++			 * G12A and G12B have different cpu clocks (with
++			 * different struct clk_hw). We fallback to the global
++			 * naming string mechanism so this clock picks
++			 * up the appropriate one. Same goes for the other
++			 * clock using cpu cluster A clock output and present
++			 * on both G12 variant.
++			 */
++			.name = "cpu_clk",
++			.index = -1,
+ 		},
+ 		.num_parents = 1,
+ 		/*
+@@ -1202,7 +1212,10 @@ static struct clk_regmap g12a_cpu_clk_apb_div = {
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "cpu_clk_apb_div",
+ 		.ops = &clk_regmap_divider_ro_ops,
+-		.parent_hws = (const struct clk_hw *[]) { &g12a_cpu_clk.hw },
++		.parent_data = &(const struct clk_parent_data) {
++			.name = "cpu_clk",
++			.index = -1,
++		},
+ 		.num_parents = 1,
+ 	},
+ };
+@@ -1236,7 +1249,10 @@ static struct clk_regmap g12a_cpu_clk_atb_div = {
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "cpu_clk_atb_div",
+ 		.ops = &clk_regmap_divider_ro_ops,
+-		.parent_hws = (const struct clk_hw *[]) { &g12a_cpu_clk.hw },
++		.parent_data = &(const struct clk_parent_data) {
++			.name = "cpu_clk",
++			.index = -1,
++		},
+ 		.num_parents = 1,
+ 	},
+ };
+@@ -1270,7 +1286,10 @@ static struct clk_regmap g12a_cpu_clk_axi_div = {
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "cpu_clk_axi_div",
+ 		.ops = &clk_regmap_divider_ro_ops,
+-		.parent_hws = (const struct clk_hw *[]) { &g12a_cpu_clk.hw },
++		.parent_data = &(const struct clk_parent_data) {
++			.name = "cpu_clk",
++			.index = -1,
++		},
+ 		.num_parents = 1,
+ 	},
+ };
+@@ -1305,13 +1324,6 @@ static struct clk_regmap g12a_cpu_clk_trace_div = {
+ 		.name = "cpu_clk_trace_div",
+ 		.ops = &clk_regmap_divider_ro_ops,
+ 		.parent_data = &(const struct clk_parent_data) {
+-			/*
+-			 * Note:
+-			 * G12A and G12B have different cpu_clks (with
+-			 * different struct clk_hw). We fallback to the global
+-			 * naming string mechanism so cpu_clk_trace_div picks
+-			 * up the appropriate one.
+-			 */
+ 			.name = "cpu_clk",
+ 			.index = -1,
+ 		},
 -- 
 2.39.5
 
