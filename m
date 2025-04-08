@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1272676CF;
-	Tue,  8 Apr 2025 12:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97007267F5B;
+	Tue,  8 Apr 2025 12:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115243; cv=none; b=pbZbkTnbH2x7l0RtiVSX615c3YXE8lZljxOYfIZMcmHXsg4/9bHt/R2nzCMWLe3CWlIpZYy0QYo1W7T1Y3uJErpc/36JDnrJKuOoEUiAAWVbRRbzmWMzwa3cFu+VrTlDYVy4IXijYei5hpWs17OAJCkCViomJOwCSg/clH0GbKE=
+	t=1744115245; cv=none; b=F3arnlZTKUldVn9ZUdo6F3AsXX6x1b4DG9i5B9zDZhTU0yYNj/ZwDKEoPPvAO7/LTVpTwnFKFsoD8zez5sxWAUwR0fnozri/5+NlDUGDgRRWeEZezuNRN6ViP2DBYwtSgei93ZhNAshM8fS725jMp7byx6gUkOTTaig06ujTs4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115243; c=relaxed/simple;
-	bh=E9c+hfZPV/30a0qS05nmCCUFF5h9FimsVDKnmhxVt58=;
+	s=arc-20240116; t=1744115245; c=relaxed/simple;
+	bh=UwC5q7rhiCOW5Ce3+vOo6PZZrxCouDt1ShYuPs5scUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2mHHI7lVs7DxzEFccWbwBRnLEJVr8KvUAayEShHzS5vg0DqqLl3YR7UndQAH6aPl7ZrKAHmLWKZo+m3jquOfobXUxxk2mhnTjW0r5spZmviCzqeIQtgUW/0E+GZJb9mK5svw0MMNp3qyR0DeZFWgLurS7K9ZKZkZJuzJ3mPwh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVuBtqoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oq3JGJA6VcZPFNfqrnxfLA+cnfR35enE3IJStyxSDkpBUm3OpdVTqvtt7+dZkxDLZx4GYFxpO2jx7JnK8dJQcwDHtzo3l4c46rbEVcvJ3CwYNkLTt4xsdXsHt4Arq7l1pP7BvZereNQiWiDPb3KTXDrV56ipGZJyneKjVl0XryE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddgPrRWu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVuBtqoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC96C4CEEA;
-	Tue,  8 Apr 2025 12:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddgPrRWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289A6C4CEE5;
+	Tue,  8 Apr 2025 12:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115242;
-	bh=E9c+hfZPV/30a0qS05nmCCUFF5h9FimsVDKnmhxVt58=;
+	s=korg; t=1744115245;
+	bh=UwC5q7rhiCOW5Ce3+vOo6PZZrxCouDt1ShYuPs5scUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVuBtqoovu0PrA53kB6q9oDJn9w3h4r8pOV8vNdSsgiF10GiegHveyMFh8uThm0lw
-	 dnC06scFSwYo1nC+Gu2gwFp2GYMFMVK/XCTzfAyxVPi+F4bwkVgJ6T05XsgvCpHfGs
-	 WuOhQUSHPJm7T79Y7vNYdEyB/N0Pv8sLRuXN3zgM=
+	b=ddgPrRWuqAfUh/JxeIhKUexd2NHE+daijz2GG+8JeKx4Az73XvMICfku918NGSjfN
+	 mBwkvfuWku8lzgxxydRUljtHtNhLMuDruxSHzf76mL6N/62Tdj6xq6sPx9wFLklx0K
+	 OUsMqWm56GK9aKILclq3zhhJTEiHEov4I0e0epiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <stfomichev@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 402/499] ipv6: Start path selection from the first nexthop
-Date: Tue,  8 Apr 2025 12:50:14 +0200
-Message-ID: <20250408104901.250801243@linuxfoundation.org>
+Subject: [PATCH 6.13 403/499] ipv6: Do not consider link down nexthops in path selection
+Date: Tue,  8 Apr 2025 12:50:15 +0200
+Message-ID: <20250408104901.274855592@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,97 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 4d0ab3a6885e3e9040310a8d8f54503366083626 ]
+[ Upstream commit 8b8e0dd357165e0258d9f9cdab5366720ed2f619 ]
 
-Cited commit transitioned IPv6 path selection to use hash-threshold
-instead of modulo-N. With hash-threshold, each nexthop is assigned a
-region boundary in the multipath hash function's output space and a
-nexthop is chosen if the calculated hash is smaller than the nexthop's
-region boundary.
+Nexthops whose link is down are not supposed to be considered during
+path selection when the "ignore_routes_with_linkdown" sysctl is set.
+This is done by assigning them a negative region boundary.
 
-Hash-threshold does not work correctly if path selection does not start
-with the first nexthop. For example, if fib6_select_path() is always
-passed the last nexthop in the group, then it will always be chosen
-because its region boundary covers the entire hash function's output
-space.
+However, when comparing the computed hash (unsigned) with the region
+boundary (signed), the negative region boundary is treated as unsigned,
+resulting in incorrect nexthop selection.
 
-Fix this by starting the selection process from the first nexthop and do
-not consider nexthops for which rt6_score_route() provided a negative
-score.
+Fix by treating the computed hash as signed. Note that the computed hash
+is always in range of [0, 2^31 - 1].
 
 Fixes: 3d709f69a3e7 ("ipv6: Use hash-threshold instead of modulo-N")
-Reported-by: Stanislav Fomichev <stfomichev@gmail.com>
-Closes: https://lore.kernel.org/netdev/Z9RIyKZDNoka53EO@mini-arch/
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250402114224.293392-2-idosch@nvidia.com
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250402114224.293392-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 38 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 35 insertions(+), 3 deletions(-)
+ net/ipv6/route.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 6233aa8481743..2656356c980ca 100644
+index 2656356c980ca..1114480b3755c 100644
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -412,11 +412,35 @@ static bool rt6_check_expired(const struct rt6_info *rt)
- 	return false;
- }
- 
-+static struct fib6_info *
-+rt6_multipath_first_sibling_rcu(const struct fib6_info *rt)
-+{
-+	struct fib6_info *iter;
-+	struct fib6_node *fn;
-+
-+	fn = rcu_dereference(rt->fib6_node);
-+	if (!fn)
-+		goto out;
-+	iter = rcu_dereference(fn->leaf);
-+	if (!iter)
-+		goto out;
-+
-+	while (iter) {
-+		if (iter->fib6_metric == rt->fib6_metric &&
-+		    rt6_qualify_for_ecmp(iter))
-+			return iter;
-+		iter = rcu_dereference(iter->fib6_next);
-+	}
-+
-+out:
-+	return NULL;
-+}
-+
- void fib6_select_path(const struct net *net, struct fib6_result *res,
- 		      struct flowi6 *fl6, int oif, bool have_oif_match,
- 		      const struct sk_buff *skb, int strict)
+@@ -442,6 +442,7 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
  {
--	struct fib6_info *match = res->f6i;
-+	struct fib6_info *first, *match = res->f6i;
+ 	struct fib6_info *first, *match = res->f6i;
  	struct fib6_info *sibling;
++	int hash;
  
  	if (!match->nh && (!match->fib6_nsiblings || have_oif_match))
-@@ -440,10 +464,18 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 		return;
- 	}
- 
--	if (fl6->mp_hash <= atomic_read(&match->fib6_nh->fib_nh_upper_bound))
-+	first = rt6_multipath_first_sibling_rcu(match);
-+	if (!first)
+ 		goto out;
+@@ -468,7 +469,8 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
+ 	if (!first)
  		goto out;
  
--	list_for_each_entry_rcu(sibling, &match->fib6_siblings,
-+	if (fl6->mp_hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
-+	    rt6_score_route(first->fib6_nh, first->fib6_flags, oif,
-+			    strict) >= 0) {
-+		match = first;
-+		goto out;
-+	}
-+
-+	list_for_each_entry_rcu(sibling, &first->fib6_siblings,
- 				fib6_siblings) {
- 		const struct fib6_nh *nh = sibling->fib6_nh;
+-	if (fl6->mp_hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
++	hash = fl6->mp_hash;
++	if (hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
+ 	    rt6_score_route(first->fib6_nh, first->fib6_flags, oif,
+ 			    strict) >= 0) {
+ 		match = first;
+@@ -481,7 +483,7 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
  		int nh_upper_bound;
+ 
+ 		nh_upper_bound = atomic_read(&nh->fib_nh_upper_bound);
+-		if (fl6->mp_hash > nh_upper_bound)
++		if (hash > nh_upper_bound)
+ 			continue;
+ 		if (rt6_score_route(nh, sibling->fib6_flags, oif, strict) < 0)
+ 			break;
 -- 
 2.39.5
 
