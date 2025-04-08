@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ABE224F6;
-	Tue,  8 Apr 2025 11:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420B52135CD;
+	Tue,  8 Apr 2025 11:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110717; cv=none; b=GF8ho4tH1g5a75ad+2EfZaS8gBjOPuVzKXFdu+2jaWCVdP8yg17eISXB34M16/diTjc3W61LmbzFQKq0Z5aJop+FnLBTxGdKACkZaLWR1FQGXS1ysAJuz8q7cMusStDksur4/JkS2sRS1NfLKSdrXhS1YblHaXkEvWBU4R4aRpw=
+	t=1744110719; cv=none; b=ZW65tg26HIFCxtIVlSZUJFBNbFuvZNWtZon7EHNH1zdknhl1VXGEhhHivUdiwBSkNuZFd/pILy9YIaGy4m2wf8Fe6j8fMnwstqu5cdRTSGZMFjgjZKOPtadxxJjMhorJ+kKt/iW1f0MLPphODN/51NhuyOp8MUmMbMA+NecW4Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110717; c=relaxed/simple;
-	bh=doy0jDcbY8GXk0aCzNQ38JaXuuAqNAVAzN/IW3k6rrg=;
+	s=arc-20240116; t=1744110719; c=relaxed/simple;
+	bh=mzd5gZR9Aah8b9xAj3TBPI4wZ4LHCg7MncETzJ+Cat8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eN5MowXXL7XAf9rorDTMqtuhJ98AE49cDcZ6MtFFKCz5FAkdN6mKaUhhEjcujrk7kpuPGWFOlRsJSI9SQQheG/p9iWG99A5FZP9e1p0mJFc4sjQrzJs0zVUChmTTXLskuQg+199B0B5LYjeYEDepIlLaFl3o6DXKATaV7mTo1xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfKcga/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IfB+jFWivWBxILt0RDFaTG5jBbofP9aYkAgD4pgJyHrbi1izVNjhrzjTMd5rROY/5HZOEYwuuyhr11QOcM4ZVfYAuu6Kbzu8miSlor/2J+PdfnwJe4u/EO1QaqyQ9+XL0nVdddAGQWTkuMuHa9EhgtePdhLNBHJnoX8ikwjIyrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sh54D2Yi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfKcga/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D42C4CEE5;
-	Tue,  8 Apr 2025 11:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sh54D2Yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B98C4CEE5;
+	Tue,  8 Apr 2025 11:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110716;
-	bh=doy0jDcbY8GXk0aCzNQ38JaXuuAqNAVAzN/IW3k6rrg=;
+	s=korg; t=1744110719;
+	bh=mzd5gZR9Aah8b9xAj3TBPI4wZ4LHCg7MncETzJ+Cat8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfKcga/mhqfUhPag1cUzU/HsC4mgo9IysMQ9Co5iT4LaPvlUyJfBcPrfNNaG14jio
-	 WQ7a+INNKRm7dU7hY603Yu9Ev+D+4im1EyAvvwhCnrikR8QI9xoJTUg6O+xPQVMBdK
-	 8izyL53eV8/ugF0kBy4a7LSATt959N+2aBw0cVBE=
+	b=sh54D2YiqG4vfOQb8o1cfhViHFjJkmykjDO/3FD1SsUSkI++LfA9WF8U0b3fQ/ceA
+	 kTv3c5rIOe4TKT2+HpOrY1zMhnGGv4VG9mnlyVv6Bzj+DOUspkKoXDiDWaYrFNQ6Qq
+	 Ol8UhXxIk+uJmnApsiGV6Eguk2cbUW0U95lD2FnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Ethan Zhao <haifeng.zhao@linux.intel.com>,
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 165/731] iommu/amd: Fix header file
-Date: Tue,  8 Apr 2025 12:41:02 +0200
-Message-ID: <20250408104918.113616859@linuxfoundation.org>
+Subject: [PATCH 6.14 166/731] iommu/vt-d: Fix system hang on reboot -f
+Date: Tue,  8 Apr 2025 12:41:03 +0200
+Message-ID: <20250408104918.137294355@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,44 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Yunhui Cui <cuiyunhui@bytedance.com>
 
-[ Upstream commit ee4cf9260afe8e4be6b6d64f56fa7493d051d8de ]
+[ Upstream commit 9ce7603ad3cbae64003087de57834e8c5c856a20 ]
 
-Move function declaration inside AMD_IOMMU_H defination.
+We found that executing the command ./a.out &;reboot -f (where a.out is a
+program that only executes a while(1) infinite loop) can probabilistically
+cause the system to hang in the intel_iommu_shutdown() function, rendering
+it unresponsive. Through analysis, we identified that the factors
+contributing to this issue are as follows:
 
-Fixes: fd5dff9de4be ("iommu/amd: Modify set_dte_entry() to use 256-bit DTE helpers")
-Fixes: 457da5764668 ("iommu/amd: Lock DTE before updating the entry with WRITE_ONCE()")
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20250227162320.5805-6-vasant.hegde@amd.com
+1. The reboot -f command does not prompt the kernel to notify the
+application layer to perform cleanup actions, allowing the application to
+continue running.
+
+2. When the kernel reaches the intel_iommu_shutdown() function, only the
+BSP (Bootstrap Processor) CPU is operational in the system.
+
+3. During the execution of intel_iommu_shutdown(), the function down_write
+(&dmar_global_lock) causes the process to sleep and be scheduled out.
+
+4. At this point, though the processor's interrupt flag is not cleared,
+ allowing interrupts to be accepted. However, only legacy devices and NMI
+(Non-Maskable Interrupt) interrupts could come in, as other interrupts
+routing have already been disabled. If no legacy or NMI interrupts occur
+at this stage, the scheduler will not be able to run.
+
+5. If the application got scheduled at this time is executing a while(1)-
+type loop, it will be unable to be preempted, leading to an infinite loop
+and causing the system to become unresponsive.
+
+To resolve this issue, the intel_iommu_shutdown() function should not
+execute down_write(), which can potentially cause the process to be
+scheduled out. Furthermore, since only the BSP is running during the later
+stages of the reboot, there is no need for protection against parallel
+access to the DMAR (DMA Remapping) unit. Therefore, the following lines
+could be removed:
+
+down_write(&dmar_global_lock);
+up_write(&dmar_global_lock);
+
+After testing, the issue has been resolved.
+
+Fixes: 6c3a44ed3c55 ("iommu/vt-d: Turn off translations at shutdown")
+Co-developed-by: Ethan Zhao <haifeng.zhao@linux.intel.com>
+Signed-off-by: Ethan Zhao <haifeng.zhao@linux.intel.com>
+Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Link: https://lore.kernel.org/r/20250303062421.17929-1-cuiyunhui@bytedance.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/iommu/intel/iommu.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 68debf5ee2d75..e3bf27da1339e 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -176,12 +176,11 @@ void amd_iommu_apply_ivrs_quirks(void);
- #else
- static inline void amd_iommu_apply_ivrs_quirks(void) { }
- #endif
-+struct dev_table_entry *amd_iommu_get_ivhd_dte_flags(u16 segid, u16 devid);
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index bf1f0c8143483..25d31f8c129a6 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -2871,16 +2871,19 @@ void intel_iommu_shutdown(void)
+ 	if (no_iommu || dmar_disabled)
+ 		return;
  
- void amd_iommu_domain_set_pgtable(struct protection_domain *domain,
- 				  u64 *root, int mode);
- struct dev_table_entry *get_dev_table(struct amd_iommu *iommu);
+-	down_write(&dmar_global_lock);
++	/*
++	 * All other CPUs were brought down, hotplug interrupts were disabled,
++	 * no lock and RCU checking needed anymore
++	 */
++	list_for_each_entry(drhd, &dmar_drhd_units, list) {
++		iommu = drhd->iommu;
+ 
+-	/* Disable PMRs explicitly here. */
+-	for_each_iommu(iommu, drhd)
++		/* Disable PMRs explicitly here. */
+ 		iommu_disable_protect_mem_regions(iommu);
+ 
+-	/* Make sure the IOMMUs are switched off */
+-	intel_disable_iommus();
 -
--#endif
--
--struct dev_table_entry *amd_iommu_get_ivhd_dte_flags(u16 segid, u16 devid);
- struct iommu_dev_data *search_dev_data(struct amd_iommu *iommu, u16 devid);
-+
-+#endif /* AMD_IOMMU_H */
+-	up_write(&dmar_global_lock);
++		/* Make sure the IOMMUs are switched off */
++		iommu_disable_translation(iommu);
++	}
+ }
+ 
+ static struct intel_iommu *dev_to_intel_iommu(struct device *dev)
 -- 
 2.39.5
 
