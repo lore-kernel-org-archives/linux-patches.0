@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DFD2676C0;
-	Tue,  8 Apr 2025 11:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBC221ADAE;
+	Tue,  8 Apr 2025 11:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110753; cv=none; b=jtttf4g70nuAVfacwo8ego0wl0hjWlUQHiZDgdK5ffcRJuRswY0ubBUOwgcLA6BT31zI0dIZ63xccC5Q+ecijmfwc5p1ltVfY9ElZgFLQHHIujlYGZAdg1IdSmCioaqrVIfcvssN06IRqXNQa01Elw36bEK4ckb+3fkfBBsnFwg=
+	t=1744110756; cv=none; b=ffe3+phLXzw4Rp3/h93RBYSLp7yVXVZcVj9+G/AtXIwaKVYx2h30J/ijcQdOHDajB4nINv07TCCXuIFzhTJkkawLe8jrNKOtpTbsklH00zd/mMtA08MsBM0OmA3lQ611rUnIVmOAWIRtG43Y9xSbqN9qv8tqEi1FiMqH2mLzoRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110753; c=relaxed/simple;
-	bh=AQLrFiohK7uqvlv5h+LDK7K8me5SlqCOP6hqSNCSw5Y=;
+	s=arc-20240116; t=1744110756; c=relaxed/simple;
+	bh=slhh0NmjDf3cqY5Fq+w916SfZ4blrlxPS3dgX5tU0Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hWO7YU+i3rCcPU+fjXF62GqYIF9arIKRp6J1mkLUn4KI0HLnIaS+pMfCLoGXXzb9EtocIP0Z0q3PRbNxatLwC0XUceQhT2k2jQTr6IABeQQnh7q0jaQyOtb9cx7aEILa7hfchYyvCkfIcD3VXqVxqGxTKVO1i3RNHxdeu540lGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGCEfejK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnwP9v+xThwUlVxGOJ+seNH26ZdzLPVAx0GFaxVKLNuRmstkgWr3yrRyyIBxkRYHssnZvQTCmLvuh3mZcMnEH41ibdVXGau4q8JJzL0tLxgVGVxtMW5DS3kYE/uXXG/vRkGTVL8liN+R3zg4NfXdr2jPkQwpreg6VNmFUiRV2cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMy0cldH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGCEfejK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B468C4CEE5;
-	Tue,  8 Apr 2025 11:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMy0cldH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE10CC4CEEA;
+	Tue,  8 Apr 2025 11:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110753;
-	bh=AQLrFiohK7uqvlv5h+LDK7K8me5SlqCOP6hqSNCSw5Y=;
+	s=korg; t=1744110756;
+	bh=slhh0NmjDf3cqY5Fq+w916SfZ4blrlxPS3dgX5tU0Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGCEfejKdK/MfLf9I1RyDIVtEndKggjCrVwBC7yrgAaml7LW7KMrs/2AC1QuqE7Ll
-	 EYvW9f8kBb2DhxRPU7HLSEty3c/XZwqXOz6/oJvGCNXgghRV5RPiaaC7rERi7Vda/3
-	 iP8Eqz+nOm+tY6ohaR6kA12PluWqjl3r6gc1Dx94=
+	b=zMy0cldHDoj5nAYSSj3DIKxttOte/NVVAqjlGpzdkyfIzUny0huABYR2i1Eqkgy57
+	 nE3gWlCAG+0+UdHI92Urzmxai6Zx7sSc0voD0ThP0V1QCecTf8ZJSgBGh5gzwZSQuQ
+	 K9mxMBOrai+8HDeWCB6W16EJ3nz5H3Dp5mwa+LEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 182/731] ext4: show emergency_ro when EXT4_FLAGS_EMERGENCY_RO is set
-Date: Tue,  8 Apr 2025 12:41:19 +0200
-Message-ID: <20250408104918.512000537@linuxfoundation.org>
+Subject: [PATCH 6.14 183/731] arm64: dts: rockchip: Move rk356x scmi SHMEM to reserved memory
+Date: Tue,  8 Apr 2025 12:41:20 +0200
+Message-ID: <20250408104918.535110033@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,45 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 6b76715d5e41fc332b0b879e66fad6ef3db07a3f ]
+[ Upstream commit 8fbb9376f0c489dfdc7e20d16e90686b29dec8f2 ]
 
-After commit d3476f3dad4a ("ext4: don't set SB_RDONLY after filesystem
-errors") in v6.12-rc1, the 'errors=remount-ro' mode no longer sets
-SB_RDONLY on errors, which results in us seeing the filesystem is still
-in rw state after errors.
+0x0 to 0xf0000000 are SDRAM memory areas where 0x10f000 is located.
+So move the SHMEM memory of arm_scmi to the reserved memory node.
 
-Therefore, after setting EXT4_FLAGS_EMERGENCY_RO, display the emergency_ro
-option so that users can query whether the current file system has become
-emergency read-only due to errors through commands such as 'mount' or
-'cat /proc/fs/ext4/sdx/options'.
-
-Fixes: d3476f3dad4a ("ext4: don't set SB_RDONLY after filesystem errors")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250122114130.229709-7-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: a3adc0b9071d ("arm64: dts: rockchip: add core dtsi for RK3568 SoC")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20250308100001.572657-2-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk356x-base.dtsi | 25 +++++++++----------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 0ff0c3d0a3c08..0d1c3eefe438a 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -3035,6 +3035,9 @@ static int _ext4_show_options(struct seq_file *seq, struct super_block *sb,
- 	if (nodefs && !test_opt(sb, NO_PREFETCH_BLOCK_BITMAPS))
- 		SEQ_OPTS_PUTS("prefetch_block_bitmaps");
+diff --git a/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi b/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
+index e553906291140..8421d4b8c7719 100644
+--- a/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk356x-base.dtsi
+@@ -174,6 +174,18 @@
+ 		method = "smc";
+ 	};
  
-+	if (ext4_emergency_ro(sb))
-+		SEQ_OPTS_PUTS("emergency_ro");
++	reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
 +
- 	ext4_show_quota_options(seq, sb);
- 	return 0;
- }
++		scmi_shmem: shmem@10f000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0x0010f000 0x0 0x100>;
++			no-map;
++		};
++	};
++
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_HIGH>,
+@@ -199,19 +211,6 @@
+ 		#clock-cells = <0>;
+ 	};
+ 
+-	sram@10f000 {
+-		compatible = "mmio-sram";
+-		reg = <0x0 0x0010f000 0x0 0x100>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges = <0 0x0 0x0010f000 0x100>;
+-
+-		scmi_shmem: sram@0 {
+-			compatible = "arm,scmi-shmem";
+-			reg = <0x0 0x100>;
+-		};
+-	};
+-
+ 	sata1: sata@fc400000 {
+ 		compatible = "rockchip,rk3568-dwc-ahci", "snps,dwc-ahci";
+ 		reg = <0 0xfc400000 0 0x1000>;
 -- 
 2.39.5
 
