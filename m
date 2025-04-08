@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39391B87CF;
-	Tue,  8 Apr 2025 12:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6A21B87CF;
+	Tue,  8 Apr 2025 12:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114902; cv=none; b=CPzd1Vpz9EU7dyC1RigunOui58wt1yr6tGj928AWyVBoeVG4bpNQIydOqBXiLN2hZIEdD0jlNll2mnbAfwjLmiy1jC6ngDk1W1jFQGkZUCrqwW48Ik19a8YLv/47/o+q3YvVaY/99dFzNGDag9bizgqv+eVdSFne19HgH2HMonY=
+	t=1744114904; cv=none; b=oIzC4schJCxksaZRRo+cg0N4/+dHdNaMCFt2/rJ8Z9SrDvhcyp/iDFM7i9CzgfxRPO4EwpH5XsgPY4U95Olrowptk7RmrER+5FAeGWklAZNHxcfuQrN6iF1xWx44N2qFa4jAUgceyki6FY9J9judBjdSkPOnWOq35cmmdf/AvGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114902; c=relaxed/simple;
-	bh=Sql4/UO2k6+cdqvpTXKa4s+PiAgE5WWj33+a3bcc7ws=;
+	s=arc-20240116; t=1744114904; c=relaxed/simple;
+	bh=w2Za/xOOOWIf1LYGJ0SnpHbfC3khOsgDQUnpJzOoJMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLUk4PFxGZVdoj2XpCQ/84ArDFe0rWc008xOVC7YUm3iJn+FzoxPaeReQsVkQbyyKYENUP0TnyjUQXUsQ7wHlmd+kzKuIeaJ3pnU/45QkwwVzAaLucRxj7GHV3EJbrQHc/oMxK+cI7OGwFRK8dNNUn/JXN9JJUFlGXcxB4w7VeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNXLD4j2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qXX6Qg0uYyrgWFbV4BymSValaV/NuDXmfhvozf6HgrIGjQBNP0gECRCFO/icvVywuFv4UhHYcudu0A0CEooX/qd5BGUo6KApQLn0DOgCv5gbbLoXBxFdxxsMtalyywOjkZLpX2x+3xuMec1Uf2GU1jIBWHSb4FanbF+1Nn5Z6Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLEGL7lw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNXLD4j2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63ED2C4CEE5;
-	Tue,  8 Apr 2025 12:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLEGL7lw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C764C4CEE5;
+	Tue,  8 Apr 2025 12:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114901;
-	bh=Sql4/UO2k6+cdqvpTXKa4s+PiAgE5WWj33+a3bcc7ws=;
+	s=korg; t=1744114904;
+	bh=w2Za/xOOOWIf1LYGJ0SnpHbfC3khOsgDQUnpJzOoJMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kNXLD4j2Qw6Ws7pJtPbSbKd8Wm4+21vJmPGmv+DUajRHsBumc1ngzHR8qhzzBF8Sq
-	 XeBIldOJS/+6Q/JIrhxgPFXY039H+QOzhqZ5sesD5eXC+BKz6PP22PpqmCEdaju1rn
-	 /kgCt/iH5dyhpKW/h1lVidMsdvQeqPW80MkgMglc=
+	b=eLEGL7lwoBU6wUOPiVng0iB6jo4UWOR9ffdQ1+OrwDCCYBbDpMVU9UN2t8jf5ON7e
+	 cHfBCXVZQpT3DXBInndCprDV1oDm2Fg8178C7HmKjSoPaZKLwNpocEkNAfnox6zTKN
+	 RUN5jQwuUV5z3b1vjpAy6U+tc2ElZETartMxEvSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f7d147e6db52b1e09dba@syzkaller.appspotmail.com,
 	Yuezhang Mo <Yuezhang.Mo@sony.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 277/499] exfat: fix the infinite loop in exfat_find_last_cluster()
-Date: Tue,  8 Apr 2025 12:48:09 +0200
-Message-ID: <20250408104858.126396477@linuxfoundation.org>
+Subject: [PATCH 6.13 278/499] exfat: fix missing shutdown check
+Date: Tue,  8 Apr 2025 12:48:10 +0200
+Message-ID: <20250408104858.152249815@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,42 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit b0522303f67255926b946aa66885a0104d1b2980 ]
+[ Upstream commit 47e35366bc6fa3cf189a8305bce63992495f3efa ]
 
-In exfat_find_last_cluster(), the cluster chain is traversed until
-the EOF cluster. If the cluster chain includes a loop due to file
-system corruption, the EOF cluster cannot be traversed, resulting
-in an infinite loop.
+xfstests generic/730 test failed because after deleting the device
+that still had dirty data, the file could still be read without
+returning an error. The reason is the missing shutdown check in
+->read_iter.
 
-If the number of clusters indicated by the file size is inconsistent
-with the cluster chain length, exfat_find_last_cluster() will return
-an error, so if this inconsistency is found, the traversal can be
-aborted without traversing to the EOF cluster.
+I also noticed that shutdown checks were missing from ->write_iter,
+->splice_read, and ->mmap. This commit adds shutdown checks to all
+of them.
 
-Reported-by: syzbot+f7d147e6db52b1e09dba@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f7d147e6db52b1e09dba
-Tested-by: syzbot+f7d147e6db52b1e09dba@syzkaller.appspotmail.com
-Fixes: 31023864e67a ("exfat: add fat entry operations")
+Fixes: f761fcdd289d ("exfat: Implement sops->shutdown and ioctl")
 Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/fatent.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/exfat/file.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index 6f3651c6ca91e..8df5ad6ebb10c 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -265,7 +265,7 @@ int exfat_find_last_cluster(struct super_block *sb, struct exfat_chain *p_chain,
- 		clu = next;
- 		if (exfat_ent_get(sb, clu, &next))
- 			return -EIO;
--	} while (next != EXFAT_EOF_CLUSTER);
-+	} while (next != EXFAT_EOF_CLUSTER && count <= p_chain->size);
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 807349d8ea050..841a5b18e3dfd 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -582,6 +582,9 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	loff_t pos = iocb->ki_pos;
+ 	loff_t valid_size;
  
- 	if (p_chain->size != count) {
- 		exfat_fs_error(sb,
++	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
+ 	inode_lock(inode);
+ 
+ 	valid_size = ei->valid_size;
+@@ -635,6 +638,16 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	return ret;
+ }
+ 
++static ssize_t exfat_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
++	return generic_file_read_iter(iocb, iter);
++}
++
+ static vm_fault_t exfat_page_mkwrite(struct vm_fault *vmf)
+ {
+ 	int err;
+@@ -672,14 +685,26 @@ static const struct vm_operations_struct exfat_file_vm_ops = {
+ 
+ static int exfat_file_mmap(struct file *file, struct vm_area_struct *vma)
+ {
++	if (unlikely(exfat_forced_shutdown(file_inode(file)->i_sb)))
++		return -EIO;
++
+ 	file_accessed(file);
+ 	vma->vm_ops = &exfat_file_vm_ops;
+ 	return 0;
+ }
+ 
++static ssize_t exfat_splice_read(struct file *in, loff_t *ppos,
++		struct pipe_inode_info *pipe, size_t len, unsigned int flags)
++{
++	if (unlikely(exfat_forced_shutdown(file_inode(in)->i_sb)))
++		return -EIO;
++
++	return filemap_splice_read(in, ppos, pipe, len, flags);
++}
++
+ const struct file_operations exfat_file_operations = {
+ 	.llseek		= generic_file_llseek,
+-	.read_iter	= generic_file_read_iter,
++	.read_iter	= exfat_file_read_iter,
+ 	.write_iter	= exfat_file_write_iter,
+ 	.unlocked_ioctl = exfat_ioctl,
+ #ifdef CONFIG_COMPAT
+@@ -687,7 +712,7 @@ const struct file_operations exfat_file_operations = {
+ #endif
+ 	.mmap		= exfat_file_mmap,
+ 	.fsync		= exfat_file_fsync,
+-	.splice_read	= filemap_splice_read,
++	.splice_read	= exfat_splice_read,
+ 	.splice_write	= iter_file_splice_write,
+ };
+ 
 -- 
 2.39.5
 
