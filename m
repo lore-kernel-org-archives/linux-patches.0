@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF4826B956;
-	Tue,  8 Apr 2025 12:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3AF26B94D;
+	Tue,  8 Apr 2025 12:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116129; cv=none; b=WQErwOrhtSKQv8hcPn8at25jB5M8wHM6LoCGdE/Jn4DAyuopgUWytFce8ln7CPNGd3f1OWYM23g/MwiKbgrwy718N7XD03r9uU5YtwmaLA6d4tnS/ZvPlyo5MHcz6w0t6/Hth/WsUHFfHFxBR7qbo7qU2Y4o1CcBvc3Te4sVkr8=
+	t=1744116132; cv=none; b=tdDo7x7py5lr5VH4goT3fgnzEM8rqQNDEjOOZJozZOPY4jg1PtNgiAGfL4L3bPmpeQY3b/typm2kSMNqg9uUlO8hYwWC7Eq9Pg+Idixo4WNMDciL5zp9X5YG9SMuuX2wYTi8pSx9yZ20MkynNZEfkVoIN503WqxrMLRqY1SJitg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116129; c=relaxed/simple;
-	bh=sEuCoMXeFvNzGyKh4VBPlqPbkYYOEwlAuzR81WvlrYo=;
+	s=arc-20240116; t=1744116132; c=relaxed/simple;
+	bh=b+02XH1FHUzocuvhF8SeZdvFpfmaSr9AtqukqWNsqv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tr0LBGu2K8grnB/bXjfLE1cZSqJnDiq8kTBjkCP6F5z8QcjPzOa6RegkyEBFKmFumon2z0OpZIN3D5stLoV268/8P4ZbDqc/w9AOryKMQ5t01HDb+GRFMB0HTvX2YPpo999GFWly36fBGp3vSH/iexxar/mKRFUAUehROLwoqoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMBNfCyL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdOvFHNJEZluNQTRiB//RPFN8sMpMj49etrPTHKQa45N1Ysts1ssbJrrOEJMvIZEGN9q1bANNyIGSmyuAn6BfYXxGQiq6so6b3Zf9QqeUERZWlFmQ0JNWwzSWbc3iAxXczl1z0HpLcWyh68C4609tnr9CQbOMCdg8PMY/GEvMGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESpMfTt+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMBNfCyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41045C4CEE5;
-	Tue,  8 Apr 2025 12:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESpMfTt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4602C4CEE7;
+	Tue,  8 Apr 2025 12:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116129;
-	bh=sEuCoMXeFvNzGyKh4VBPlqPbkYYOEwlAuzR81WvlrYo=;
+	s=korg; t=1744116132;
+	bh=b+02XH1FHUzocuvhF8SeZdvFpfmaSr9AtqukqWNsqv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMBNfCyLzkX88dPf31kLtr2ougjA1aoQo3ERTmz+XroCatX7ySMxrzTCInHB6bevT
-	 4yp0hrElEJwZlK76IqrTx96ffvZ5sNIXS+MA9Ftgu8QimMaiDkJuwS5yUvCcGGpd3r
-	 2HLo2AkFujI6Me2kJN2atxsmmko4qsSC1nbQF6pU=
+	b=ESpMfTt+C/lFS9HJPPGRU28P3yhS92nQb1/XKo/yFsFhoe/p01eScrlBM0l8ETwU9
+	 1uqg7UBmsqPBetVNTqK++WYMWoYek8MkI9cJU5mlKTFDR+RNg60MCcnpGjC50WEeX4
+	 fJzruUtQuJi38+XUs13tsBrTloHgz2zByH4ddFYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/423] PM: sleep: Fix handling devices with direct_complete set on errors
-Date: Tue,  8 Apr 2025 12:45:52 +0200
-Message-ID: <20250408104846.357662861@linuxfoundation.org>
+Subject: [PATCH 6.12 027/423] lockdep: Dont disable interrupts on RT in disable_irq_nosync_lockdep.*()
+Date: Tue,  8 Apr 2025 12:45:53 +0200
+Message-ID: <20250408104846.382179344@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,89 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 03f1444016b71feffa1dfb8a51f15ba592f94b13 ]
+[ Upstream commit 87886b32d669abc11c7be95ef44099215e4f5788 ]
 
-When dpm_suspend() fails, some devices with power.direct_complete set
-may not have been handled by device_suspend() yet, so runtime PM has
-not been disabled for them yet even though power.direct_complete is set.
+disable_irq_nosync_lockdep() disables interrupts with lockdep enabled to
+avoid false positive reports by lockdep that a certain lock has not been
+acquired with disabled interrupts. The user of this macros expects that
+a lock can be acquried without disabling interrupts because the IRQ line
+triggering the interrupt is disabled.
 
-Since device_resume() expects that runtime PM has been disabled for all
-devices with power.direct_complete set, it will attempt to reenable
-runtime PM for the devices that have not been processed by device_suspend()
-which does not make sense.  Had those devices had runtime PM disabled
-before device_suspend() had run, device_resume() would have inadvertently
-enable runtime PM for them, but this is not expected to happen because
-it would require ->prepare() callbacks to return positive values for
-devices with runtime PM disabled, which would be invalid.
+This triggers a warning on PREEMPT_RT because after
+disable_irq_nosync_lockdep.*() the following spinlock_t now is acquired
+with disabled interrupts.
 
-In practice, this issue is most likely benign because pm_runtime_enable()
-will not allow the "disable depth" counter to underflow, but it causes a
-warning message to be printed for each affected device.
+On PREEMPT_RT there is no difference between spin_lock() and
+spin_lock_irq() so avoiding disabling interrupts in this case works for
+the two remaining callers as of today.
 
-To allow device_resume() to distinguish the "direct complete" devices
-that have been processed by device_suspend() from those which have not
-been handled by it, make device_suspend() set power.is_suspended for
-"direct complete" devices.
+Don't disable interrupts on PREEMPT_RT in disable_irq_nosync_lockdep.*().
 
-Next, move the power.is_suspended check in device_resume() before the
-power.direct_complete check in it to make it skip the "direct complete"
-devices that have not been handled by device_suspend().
-
-This change is based on a preliminary patch from Saravana Kannan.
-
-Fixes: aae4518b3124 ("PM / sleep: Mechanism to avoid resuming runtime-suspended devices unnecessarily")
-Link: https://lore.kernel.org/linux-pm/20241114220921.2529905-2-saravanak@google.com/
-Reported-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Link: https://patch.msgid.link/12627587.O9o76ZdvQC@rjwysocki.net
+Closes: https://lore.kernel.org/760e34f9-6034-40e0-82a5-ee9becd24438@roeck-us.net
+Fixes: e8106b941ceab ("[PATCH] lockdep: core, add enable/disable_irq_irqsave/irqrestore() APIs")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Suggested-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250212103619.2560503-2-bigeasy@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 8 ++++----
+ include/linux/interrupt.h | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index d4875c3712ede..1abe61f11525d 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -913,6 +913,9 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	if (dev->power.syscore)
- 		goto Complete;
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index 457151f9f263d..b378fbf885ce3 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -448,7 +448,7 @@ irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
+ static inline void disable_irq_nosync_lockdep(unsigned int irq)
+ {
+ 	disable_irq_nosync(irq);
+-#ifdef CONFIG_LOCKDEP
++#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
+ 	local_irq_disable();
+ #endif
+ }
+@@ -456,7 +456,7 @@ static inline void disable_irq_nosync_lockdep(unsigned int irq)
+ static inline void disable_irq_nosync_lockdep_irqsave(unsigned int irq, unsigned long *flags)
+ {
+ 	disable_irq_nosync(irq);
+-#ifdef CONFIG_LOCKDEP
++#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
+ 	local_irq_save(*flags);
+ #endif
+ }
+@@ -471,7 +471,7 @@ static inline void disable_irq_lockdep(unsigned int irq)
  
-+	if (!dev->power.is_suspended)
-+		goto Complete;
-+
- 	if (dev->power.direct_complete) {
- 		/* Match the pm_runtime_disable() in __device_suspend(). */
- 		pm_runtime_enable(dev);
-@@ -931,9 +934,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	 */
- 	dev->power.is_prepared = false;
+ static inline void enable_irq_lockdep(unsigned int irq)
+ {
+-#ifdef CONFIG_LOCKDEP
++#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
+ 	local_irq_enable();
+ #endif
+ 	enable_irq(irq);
+@@ -479,7 +479,7 @@ static inline void enable_irq_lockdep(unsigned int irq)
  
--	if (!dev->power.is_suspended)
--		goto Unlock;
--
- 	if (dev->pm_domain) {
- 		info = "power domain ";
- 		callback = pm_op(&dev->pm_domain->ops, state);
-@@ -973,7 +973,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	error = dpm_run_callback(callback, dev, state, info);
- 	dev->power.is_suspended = false;
- 
-- Unlock:
- 	device_unlock(dev);
- 	dpm_watchdog_clear(&wd);
- 
-@@ -1627,6 +1626,7 @@ static int device_suspend(struct device *dev, pm_message_t state, bool async)
- 			pm_runtime_disable(dev);
- 			if (pm_runtime_status_suspended(dev)) {
- 				pm_dev_dbg(dev, state, "direct-complete ");
-+				dev->power.is_suspended = true;
- 				goto Complete;
- 			}
- 
+ static inline void enable_irq_lockdep_irqrestore(unsigned int irq, unsigned long *flags)
+ {
+-#ifdef CONFIG_LOCKDEP
++#if defined(CONFIG_LOCKDEP) && !defined(CONFIG_PREEMPT_RT)
+ 	local_irq_restore(*flags);
+ #endif
+ 	enable_irq(irq);
 -- 
 2.39.5
 
