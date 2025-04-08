@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDA1269B0E;
-	Tue,  8 Apr 2025 12:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCF426B08E;
+	Tue,  8 Apr 2025 12:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113609; cv=none; b=D1YI4guj3vVwcIeq57RlqaGjIYL82Qis0/s9R3G67PNcspVpth6oPAkMB7hIQCuXrysXF3dW4VCsLBfGz+7rOO8LJm3PY519znlv+yFfMCiwBBpMxgZN6YU06D02XnXFVGS/3KSuL+zO3O7/V0tKWDnvQNc1kIX8GwKrVe0fNxo=
+	t=1744113612; cv=none; b=m9Sal7/RhzXxWb92ZdHrSnpiQbNaowobQ/jlWBGNYbc8CXjlODIzsGTb/BBnCoKBhyPfCSXWTPt3oJDRUoE1zr4K1uO3dfBNfjA7Aen4W6N/c6zKjpBGHiNPBEu2NHbsKIdygnx/YiSBRaJEyhmqEGlafQ5rOa0ubo6Opj6r7N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113609; c=relaxed/simple;
-	bh=hTLULycph9HDdsauMotpAjaTa1IzXWRNsS+AXHQGhU4=;
+	s=arc-20240116; t=1744113612; c=relaxed/simple;
+	bh=/EtZdqdFzOaX5Mpyo5GuALnvHIqbjSZrjNCHvVn4Jkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcb+lcRmnAy8j33VODXOxGzyUhfYc7v9o0DrcB3H+SHoLzps8hnHVzWCxnbgwre1Z0qYbTXSI6vVFVuYm3BM64C7Uiq2vol2/8tA6YaMVw29mHGHbWAyQD5hR+f57UM6/GPtlCx+jR0pvaF40LwOPX5k/SojsqhJJ18HRMfZl64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/ooySD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kooODhw7d+1FGIEWxm593TPa4hF/hz4W1vhW9HDG45FMB8ydkO8fuX1kfyOWoFRnAP1/lITNhlQ+sDoyTsXhf+CWnYdF6DtkHOSaVQpDboSs3RqPXO/dcI+j3PuoojnVVuV2uRslppUNT/h+bm9KuKVTzQhBGoWdVrfb96be89Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+BKKXR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/ooySD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD96C4CEEC;
-	Tue,  8 Apr 2025 12:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+BKKXR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B6FC4CEEB;
+	Tue,  8 Apr 2025 12:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113609;
-	bh=hTLULycph9HDdsauMotpAjaTa1IzXWRNsS+AXHQGhU4=;
+	s=korg; t=1744113612;
+	bh=/EtZdqdFzOaX5Mpyo5GuALnvHIqbjSZrjNCHvVn4Jkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/ooySD3XbRV5Q10ei+pYhBeriJ/ekqy3rQalrvTYgvP12SQ7Ft40Kgj2JS5d+KmP
-	 UANiXnPjyMrBl48hV4g2+j3YWn6mv4CmoPtUuI/IrC66Q+avlRX8FqJWfiBfZa0o1n
-	 LBbNYw4+Swe5f8nYUlVnmr/VU2vDESqDq1ZglVX0=
+	b=G+BKKXR0GpJPFC9SusoMewNmv+6YntJYBawMTikLb3qt9GCLbXoVteQMgOhqv+gOE
+	 f8Ti8X8ROb9KDWxgR1j/RdmeUFGleSYAkMNGYW2KVBeljEArV8GJAwblE0GeDq94fc
+	 ghaHrtjqZDNe2MbOK/L6V2PacNO2cGQTeUEIapvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/268] drm/amdgpu/gfx11: fix num_mec
-Date: Tue,  8 Apr 2025 12:50:33 +0200
-Message-ID: <20250408104834.572648399@linuxfoundation.org>
+Subject: [PATCH 6.6 223/268] perf/core: Fix child_total_time_enabled accounting bug at task exit
+Date: Tue,  8 Apr 2025 12:50:34 +0200
+Message-ID: <20250408104834.598569784@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,33 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 4161050d47e1b083a7e1b0b875c9907e1a6f1f1f ]
+[ Upstream commit a3c3c66670cee11eb13aa43905904bf29cb92d32 ]
 
-GC11 only has 1 mec.
+The perf events code fails to account for total_time_enabled of
+inactive events.
 
-Fixes: 3d879e81f0f9 ("drm/amdgpu: add init support for GFX11 (v2)")
-Reviewed-by: Sunil Khatri <sunil.khatri@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Here is a failure case for accounting total_time_enabled for
+CPU PMU events:
+
+  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 2s
+  ...
+
+  armv8_pmuv3_0/event=0x08/: 1138698008 2289429840 2174835740
+  armv8_pmuv3_1/event=0x08/: 1826791390 1950025700 847648440
+                             `          `          `
+                             `          `          > total_time_running with child
+                             `          > total_time_enabled with child
+                             > count with child
+
+  Performance counter stats for 'stress-ng --pthread=2 -t 2s':
+
+       1,138,698,008      armv8_pmuv3_0/event=0x08/                                               (94.99%)
+       1,826,791,390      armv8_pmuv3_1/event=0x08/                                               (43.47%)
+
+The two events above are opened on two different CPU PMUs, for example,
+each event is opened for a cluster in an Arm big.LITTLE system, they
+will never run on the same CPU.  In theory, the total enabled time should
+be same for both events, as two events are opened and closed together.
+
+As the result show, the two events' total enabled time including
+child event is different (2289429840 vs 1950025700).
+
+This is because child events are not accounted properly
+if a event is INACTIVE state when the task exits:
+
+  perf_event_exit_event()
+   `> perf_remove_from_context()
+     `> __perf_remove_from_context()
+       `> perf_child_detach()   -> Accumulate child_total_time_enabled
+         `> list_del_event()    -> Update child event's time
+
+The problem is the time accumulation happens prior to child event's
+time updating. Thus, it misses to account the last period's time when
+the event exits.
+
+The perf core layer follows the rule that timekeeping is tied to state
+change. To address the issue, make __perf_remove_from_context()
+handle the task exit case by passing 'DETACH_EXIT' to it and
+invoke perf_event_state() for state alongside with accounting the time.
+
+Then, perf_child_detach() populates the time into the parent's time metrics.
+
+After this patch, the bug is fixed:
+
+  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 10s
+  ...
+  armv8_pmuv3_0/event=0x08/: 15396770398 32157963940 21898169000
+  armv8_pmuv3_1/event=0x08/: 22428964974 32157963940 10259794940
+
+   Performance counter stats for 'stress-ng --pthread=2 -t 10s':
+
+      15,396,770,398      armv8_pmuv3_0/event=0x08/                                               (68.10%)
+      22,428,964,974      armv8_pmuv3_1/event=0x08/                                               (31.90%)
+
+[ mingo: Clarified the changelog. ]
+
+Fixes: ef54c1a476aef ("perf: Rework perf_event_exit_event()")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Leo Yan <leo.yan@arm.com>
+Link: https://lore.kernel.org/r/20250326082003.1630986-1-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 54ec9b32562c2..480d718d09cb6 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -1318,7 +1318,7 @@ static int gfx_v11_0_sw_init(void *handle)
- 		adev->gfx.me.num_me = 1;
- 		adev->gfx.me.num_pipe_per_me = 1;
- 		adev->gfx.me.num_queue_per_pipe = 1;
--		adev->gfx.mec.num_mec = 2;
-+		adev->gfx.mec.num_mec = 1;
- 		adev->gfx.mec.num_pipe_per_mec = 4;
- 		adev->gfx.mec.num_queue_per_pipe = 4;
- 		break;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index a524329149a71..b710976fb01b1 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2333,6 +2333,7 @@ group_sched_out(struct perf_event *group_event, struct perf_event_context *ctx)
+ #define DETACH_GROUP	0x01UL
+ #define DETACH_CHILD	0x02UL
+ #define DETACH_DEAD	0x04UL
++#define DETACH_EXIT	0x08UL
+ 
+ /*
+  * Cross CPU call to remove a performance event
+@@ -2347,6 +2348,7 @@ __perf_remove_from_context(struct perf_event *event,
+ 			   void *info)
+ {
+ 	struct perf_event_pmu_context *pmu_ctx = event->pmu_ctx;
++	enum perf_event_state state = PERF_EVENT_STATE_OFF;
+ 	unsigned long flags = (unsigned long)info;
+ 
+ 	if (ctx->is_active & EVENT_TIME) {
+@@ -2358,16 +2360,19 @@ __perf_remove_from_context(struct perf_event *event,
+ 	 * Ensure event_sched_out() switches to OFF, at the very least
+ 	 * this avoids raising perf_pending_task() at this time.
+ 	 */
+-	if (flags & DETACH_DEAD)
++	if (flags & DETACH_EXIT)
++		state = PERF_EVENT_STATE_EXIT;
++	if (flags & DETACH_DEAD) {
+ 		event->pending_disable = 1;
++		state = PERF_EVENT_STATE_DEAD;
++	}
+ 	event_sched_out(event, ctx);
++	perf_event_set_state(event, min(event->state, state));
+ 	if (flags & DETACH_GROUP)
+ 		perf_group_detach(event);
+ 	if (flags & DETACH_CHILD)
+ 		perf_child_detach(event);
+ 	list_del_event(event, ctx);
+-	if (flags & DETACH_DEAD)
+-		event->state = PERF_EVENT_STATE_DEAD;
+ 
+ 	if (!pmu_ctx->nr_events) {
+ 		pmu_ctx->rotate_necessary = 0;
+@@ -13140,12 +13145,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
+ 		mutex_lock(&parent_event->child_mutex);
+ 	}
+ 
+-	perf_remove_from_context(event, detach_flags);
+-
+-	raw_spin_lock_irq(&ctx->lock);
+-	if (event->state > PERF_EVENT_STATE_EXIT)
+-		perf_event_set_state(event, PERF_EVENT_STATE_EXIT);
+-	raw_spin_unlock_irq(&ctx->lock);
++	perf_remove_from_context(event, detach_flags | DETACH_EXIT);
+ 
+ 	/*
+ 	 * Child events can be freed.
 -- 
 2.39.5
 
