@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81222263F3B;
-	Tue,  8 Apr 2025 12:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2155A268FD0;
+	Tue,  8 Apr 2025 12:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114837; cv=none; b=R5HlQksegmeSD7D5quCGuAN60PUz2z6GJeG2SUF2wSh2Ej6FPMahk17XHtjZfbG3pVcmg5cihb0Q4cY/KDp9EGHjDs5LIx9zN4rId1B4IKf7/ZpKspuOwfnrjIhB99ZVQ88NJzUB82M0VIWBfxfS4I0FiaDpU2D+87OHQp1ejjU=
+	t=1744114840; cv=none; b=LUesoNIxslvJup0zXJXS8yX3Fl9lYgIBYeNtIRLFZRfnoOC7SDpEA8cSvksI/NAQor4wPa3alb2X62CzCxzMrdxosnMXttSk3fcmHM6lz4KWQJTEj0T0qBQZjRsTAp8QkmmQgUVbugtxqdTx8o6/46C5g7UMxfNsXoagLLtSkh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114837; c=relaxed/simple;
-	bh=0mUabeJ/7xY5tsswYyMXnMUw+L0ZOzi2zY2Toyr7wrE=;
+	s=arc-20240116; t=1744114840; c=relaxed/simple;
+	bh=nnaYLt4U2lN5XdLhQlH6kVogwMM18z3MlfYeMlxY3vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZT6l3oP0+8GrLzuYG5yJKsPzZQOOWdr5w8/Ta709qBs/XuYYe59mofTBAkdm0ZfGIBB48qR+pCO58nuBN6x4Tb53bxt9nlcKNWwQDl/LVxemb6h+EvOzBPTx/vKWRxLKDGp0IvF4PpIK3dzA3v+HgYeKZjItISCZrnoS4YZ3hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCqKiTQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWVXm1JOMGwZozUQbRPNwHVevpbsmPb5KYEoaYOjdCszjBr7cbLOHtd6u8bq895oTd5Ucq+fNHrTbeLOdGpwg1z6N/3v+Tkc1zC639puJ4PdaQHg0YrxPln5QYjUW2fc1yt69gW+XGpBA8Rht3ppgS43w2SfJYr/rDCMWNlNIIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rp7Qbadj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCqKiTQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48EFC4CEE5;
-	Tue,  8 Apr 2025 12:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rp7Qbadj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BAAC4CEE5;
+	Tue,  8 Apr 2025 12:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114837;
-	bh=0mUabeJ/7xY5tsswYyMXnMUw+L0ZOzi2zY2Toyr7wrE=;
+	s=korg; t=1744114840;
+	bh=nnaYLt4U2lN5XdLhQlH6kVogwMM18z3MlfYeMlxY3vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCqKiTQqwhYaidpU5yp/4DQaq+4utTXLXV3QCiYf/kFUvKjQe1y/PZ4yFbybvfdiK
-	 qWvodeNC6Rjillovt9xd67uqNxi4ivY3PCN5KxNKE/XtP64Cq/f23RyLw412qqV40W
-	 DTWxP+hp19rmX8a3CiSJ/fYG3f1PIfzSp0k98cTk=
+	b=rp7Qbadju5e7jytxDD6qaQ4pRJxCdGHfGREu0M2/15ZkTbCde2ZsAKmd72VpTHMH+
+	 puy+qoCR015QPBEqSL8cdCBS+f6XItOWEdnEVBoG9w3h4clg8MkvNh0MNXSMGrkq2r
+	 CwthfkVAFGRSuwI4QkSnldw7LsfxZYCc5UB5oySI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Ayush Singh <ayush@beagleboard.org>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 213/499] greybus: gb-beagleplay: Add error handling for gb_greybus_init
-Date: Tue,  8 Apr 2025 12:47:05 +0200
-Message-ID: <20250408104856.520051028@linuxfoundation.org>
+Subject: [PATCH 6.13 214/499] coresight: catu: Fix number of pages while using 64k pages
+Date: Tue,  8 Apr 2025 12:47:06 +0200
+Message-ID: <20250408104856.545767932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,40 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 
-[ Upstream commit be382372d55d65b5c7e5a523793ca5e403f8c595 ]
+[ Upstream commit 0e14e062f5ff98aa15264dfa87c5f5e924028561 ]
 
-Add error handling for the gb_greybus_init(bg) function call
-during the firmware reflash process to maintain consistency
-in error handling throughout the codebase. If initialization
-fails, log an error and return FW_UPLOAD_ERR_RW_ERROR.
+Trying to record a trace on kernel with 64k pages resulted in -ENOMEM.
+This happens due to a bug in calculating the number of table pages, which
+returns zero. Fix the issue by rounding up.
 
-Fixes: 0cf7befa3ea2 ("greybus: gb-beagleplay: Add firmware upload API")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Ayush Singh <ayush@beagleboard.org>
-Link: https://lore.kernel.org/r/20250120140547.1460-1-vulab@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+$ perf record --kcore -e cs_etm/@tmc_etr55,cycacc,branch_broadcast/k --per-thread taskset --cpu-list 1 dd if=/dev/zero of=/dev/null
+failed to mmap with 12 (Cannot allocate memory)
+
+Fixes: 8ed536b1e283 ("coresight: catu: Add support for scatter gather tables")
+Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250109215348.5483-1-ilkka@os.amperecomputing.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/greybus/gb-beagleplay.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-catu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/greybus/gb-beagleplay.c b/drivers/greybus/gb-beagleplay.c
-index 473ac3f2d3821..da31f1131afca 100644
---- a/drivers/greybus/gb-beagleplay.c
-+++ b/drivers/greybus/gb-beagleplay.c
-@@ -912,7 +912,9 @@ static enum fw_upload_err cc1352_prepare(struct fw_upload *fw_upload,
- 		cc1352_bootloader_reset(bg);
- 		WRITE_ONCE(bg->flashing_mode, false);
- 		msleep(200);
--		gb_greybus_init(bg);
-+		if (gb_greybus_init(bg) < 0)
-+			return dev_err_probe(&bg->sd->dev, FW_UPLOAD_ERR_RW_ERROR,
-+					     "Failed to initialize greybus");
- 		gb_beagleplay_start_svc(bg);
- 		return FW_UPLOAD_ERR_FW_INVALID;
- 	}
+diff --git a/drivers/hwtracing/coresight/coresight-catu.c b/drivers/hwtracing/coresight/coresight-catu.c
+index 275cc0d9f505f..3378bb77e6b41 100644
+--- a/drivers/hwtracing/coresight/coresight-catu.c
++++ b/drivers/hwtracing/coresight/coresight-catu.c
+@@ -269,7 +269,7 @@ catu_init_sg_table(struct device *catu_dev, int node,
+ 	 * Each table can address upto 1MB and we can have
+ 	 * CATU_PAGES_PER_SYSPAGE tables in a system page.
+ 	 */
+-	nr_tpages = DIV_ROUND_UP(size, SZ_1M) / CATU_PAGES_PER_SYSPAGE;
++	nr_tpages = DIV_ROUND_UP(size, CATU_PAGES_PER_SYSPAGE * SZ_1M);
+ 	catu_table = tmc_alloc_sg_table(catu_dev, node, nr_tpages,
+ 					size >> PAGE_SHIFT, pages);
+ 	if (IS_ERR(catu_table))
 -- 
 2.39.5
 
