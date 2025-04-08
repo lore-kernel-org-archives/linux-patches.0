@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD7F2690F9;
-	Tue,  8 Apr 2025 11:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E993D20CCD8;
+	Tue,  8 Apr 2025 11:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113449; cv=none; b=Keo8zhHtDctJBWK92lyGYGmKwp6jgTx4uScTXDInMW3hj3Wy78S6NXspCnDWT2AIxUAPQhGV1iVSjf7cyYn/Pg7tLrE5n9bOxR5EuL2xGmxz/MHo9+c1yEf12rkWEr2fDAUZTfoUnyp1WFwc2yUdTAgWsBjhnF2Bqee0K+c2F/A=
+	t=1744113452; cv=none; b=BMdB/OllKtwbj3VuUkIzjmAMxJerExwEA610+NYcwlx+SSN2CFIcndVqPiABq3L9W/x2egP2qOTLKD0FVB0TCWBABn7mIni5HyKxqTrKAYyYdO6tYoG0OFOGc4ah80Ka4Eh3zR5GFOHSZsa33yxh1oRiAJz4D9G6vJxX+dW8RHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113449; c=relaxed/simple;
-	bh=vZZ6kGFsVT8+PVB+Rl7xdkJwPK3Le28eBenXZVqurvQ=;
+	s=arc-20240116; t=1744113452; c=relaxed/simple;
+	bh=47/Pe+QopSXPyoTaqzQefiDVHLStEz837C6eSgcIzQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GI4SOuZzDizz7ovAGwpiNjuSZYxYgC+K5ARa3peSuDB7UfYcg0dL6itU5HbBt/ZPt3keyxMLAOmuWx4vvB2GMqV3XztRt0qykxtR/tQmPqcNfdtTxFKrcRUgfilZ62MY3HRZdTjLPS36TWXhQU1/aKXINaPdREbrOiJVEyzABq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEsxRHxz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vtq38fRmkAZLJoy4/LF+zN+fwGRIG6Y9Uw5UOVpsQn5Wj5dEMKoUsStYrzC3ApnHKkKOk9xPRNBZBxGt+5edf+w1ccVk8ompel42fR1FEodhBuoLTgH/daKjsso8klnbBv1eBaA9XMOR8nWWPRaKTl6PGTCksf4ir69fEgP+rvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgRzlrOp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEsxRHxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7820C4CEE5;
-	Tue,  8 Apr 2025 11:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgRzlrOp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC6FC4CEE5;
+	Tue,  8 Apr 2025 11:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113449;
-	bh=vZZ6kGFsVT8+PVB+Rl7xdkJwPK3Le28eBenXZVqurvQ=;
+	s=korg; t=1744113451;
+	bh=47/Pe+QopSXPyoTaqzQefiDVHLStEz837C6eSgcIzQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEsxRHxzicEVaT9FZldMsjG4Nf+q6XaWvrxSr/JYjS05Fm72ucMC4VU+CtghbA6iJ
-	 TGuQsGmno7IeUjpvvNyevft+4yvjFt3x590T7Q1E3Sj2HQomqCpAI10fHptezilh8b
-	 6EBN4/2K1dRBxBHdFpDrDQkBcN+tba4TUulkzb0k=
+	b=xgRzlrOphA3XPOKZ8XeNOq4mrxDmtjOqeT0k1B1IX/pWejkZ2uDlZEivyheDLpswg
+	 LDNM5Vz731oq+EWWyq7wN84R4Po09JEw6gsWE48esYCDC9gpU++Y9qhuHUD3q2QVi0
+	 p3QZCLW8WEI58TpukNs7aPEf3ht6WYXrc3gj1WtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Guanghui <zhang.guanghui@cestc.cn>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/268] nvme-tcp: fix possible UAF in nvme_tcp_poll
-Date: Tue,  8 Apr 2025 12:49:35 +0200
-Message-ID: <20250408104832.974964030@linuxfoundation.org>
+Subject: [PATCH 6.6 165/268] nvme-pci: clean up CMBMSC when registering CMB fails
+Date: Tue,  8 Apr 2025 12:49:36 +0200
+Message-ID: <20250408104833.001381061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -53,86 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit 8c1624b63a7d24142a2bbc3a5ee7e95f004ea36e ]
+[ Upstream commit 6a3572e10f740acd48e2713ef37e92186a3ce5e8 ]
 
-nvme_tcp_poll() may race with the send path error handler because
-it may complete the request while it is actively being polled for
-completion, resulting in a UAF panic [1]:
+CMB decoding should get disabled when the CMB block isn't successfully
+registered to P2P DMA subsystem.
 
-We should make sure to stop polling when we see an error when
-trying to read from the socket. Hence make sure to propagate the
-error so that the block layer breaks the polling cycle.
+Clean up the CMBMSC register in this error handling codepath to disable
+CMB decoding (and CMBLOC/CMBSZ registers).
 
-[1]:
---
-[35665.692310] nvme nvme2: failed to send request -13
-[35665.702265] nvme nvme2: unsupported pdu type (3)
-[35665.702272] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[35665.702542] nvme nvme2: queue 1 receive failed:  -22
-[35665.703209] #PF: supervisor write access in kernel mode
-[35665.703213] #PF: error_code(0x0002) - not-present page
-[35665.703214] PGD 8000003801cce067 P4D 8000003801cce067 PUD 37e6f79067 PMD 0
-[35665.703220] Oops: 0002 [#1] SMP PTI
-[35665.703658] nvme nvme2: starting error recovery
-[35665.705809] Hardware name: Inspur aaabbb/YZMB-00882-104, BIOS 4.1.26 09/22/2022
-[35665.705812] Workqueue: kblockd blk_mq_requeue_work
-[35665.709172] RIP: 0010:_raw_spin_lock+0xc/0x30
-[35665.715788] Call Trace:
-[35665.716201]  <TASK>
-[35665.716613]  ? show_trace_log_lvl+0x1c1/0x2d9
-[35665.717049]  ? show_trace_log_lvl+0x1c1/0x2d9
-[35665.717457]  ? blk_mq_request_bypass_insert+0x2c/0xb0
-[35665.717950]  ? __die_body.cold+0x8/0xd
-[35665.718361]  ? page_fault_oops+0xac/0x140
-[35665.718749]  ? blk_mq_start_request+0x30/0xf0
-[35665.719144]  ? nvme_tcp_queue_rq+0xc7/0x170 [nvme_tcp]
-[35665.719547]  ? exc_page_fault+0x62/0x130
-[35665.719938]  ? asm_exc_page_fault+0x22/0x30
-[35665.720333]  ? _raw_spin_lock+0xc/0x30
-[35665.720723]  blk_mq_request_bypass_insert+0x2c/0xb0
-[35665.721101]  blk_mq_requeue_work+0xa5/0x180
-[35665.721451]  process_one_work+0x1e8/0x390
-[35665.721809]  worker_thread+0x53/0x3d0
-[35665.722159]  ? process_one_work+0x390/0x390
-[35665.722501]  kthread+0x124/0x150
-[35665.722849]  ? set_kthread_struct+0x50/0x50
-[35665.723182]  ret_from_fork+0x1f/0x30
-
-Reported-by: Zhang Guanghui <zhang.guanghui@cestc.cn>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 2a8bd812b1a6f..84db7f4f861cb 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2467,6 +2467,7 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
- {
- 	struct nvme_tcp_queue *queue = hctx->driver_data;
- 	struct sock *sk = queue->sock->sk;
-+	int ret;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index a36ec6df6624b..3cc00d5a10065 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1871,6 +1871,7 @@ static void nvme_map_cmb(struct nvme_dev *dev)
+ 	if (pci_p2pdma_add_resource(pdev, bar, size, offset)) {
+ 		dev_warn(dev->ctrl.device,
+ 			 "failed to register the CMB\n");
++		hi_lo_writeq(0, dev->bar + NVME_REG_CMBMSC);
+ 		return;
+ 	}
  
- 	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
- 		return 0;
-@@ -2474,9 +2475,9 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
- 	set_bit(NVME_TCP_Q_POLLING, &queue->flags);
- 	if (sk_can_busy_loop(sk) && skb_queue_empty_lockless(&sk->sk_receive_queue))
- 		sk_busy_loop(sk, true);
--	nvme_tcp_try_recv(queue);
-+	ret = nvme_tcp_try_recv(queue);
- 	clear_bit(NVME_TCP_Q_POLLING, &queue->flags);
--	return queue->nr_cqe;
-+	return ret < 0 ? ret : queue->nr_cqe;
- }
- 
- static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
 -- 
 2.39.5
 
