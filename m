@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCA0268FE9;
-	Tue,  8 Apr 2025 11:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F672135CD;
+	Tue,  8 Apr 2025 11:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110453; cv=none; b=un7/IUrn7rNu3Wb9THGVBbc/Rqo6rMuYPxl6ABhVYHbwMB6EmxR8SYLokgLm0L8y2VwQFTrBK+wbo4gfs1v6jY1TRn59uneCp7aQ3rp4kBR2Zz65wPDBDGfoO/Ap7xYj+1spi9bGULIs6S6Gku548tDUSTZxqmDc6Nk35YAeq+k=
+	t=1744110456; cv=none; b=pmab+ntyIslKt+ltWNtD5vCuWvdJNmOXZ1kqqQ1qUf1NDrrxOOWb/Mhb3ojwOwIAg5bcIGwtJm96rpFa1H8oySjN2CC4/3sKW8Cwka2Ev/ppebGOnJl2hHBCf7uwjCxyPPmg4I+13/aVJoBNaEhEeYuqwUJc4CCKOpG6enhKzR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110453; c=relaxed/simple;
-	bh=2gdojJoLIvVpEVievL/JaGysV2bKMxP34qreK1OUbww=;
+	s=arc-20240116; t=1744110456; c=relaxed/simple;
+	bh=2z4IIA0dd3s1LhqIAzYeC5YsM6CQ5BkPuoMqRpzA/WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o25oSjfUdIK4Myogqw89U1IXYJqNQsGa4+NuPCSQvROIFgmNjRX4iOLODU/X+el39x2nAx+q25SjL1nzgTA2zuilVcgmZHodbFsxnxz5Y6NQSRey3+GxkwTAQjbQ0TBCGCgS2gzOxb4qndxiauwfQAdk0/ldxYqXevX1jxb0X94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmQsbkGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2GuGJ+rDb4pf0iGTCGZ5eJj69Ur1kPtxyBgaSAIxJ38W8HwKdELqvXOuMo5/it4jK7AQ3GMiOuvePqPg2VvrkqItP5n92QjjNqGy3iZJWD+gCU02NtC5jzpWpyg9w3jwUeS/D1NxTS3ZOS6KKxnClxS56b4p/PHOTf60l21Rro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnHy2+eU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmQsbkGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8796EC4CEE5;
-	Tue,  8 Apr 2025 11:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnHy2+eU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4092FC4CEE5;
+	Tue,  8 Apr 2025 11:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110452;
-	bh=2gdojJoLIvVpEVievL/JaGysV2bKMxP34qreK1OUbww=;
+	s=korg; t=1744110455;
+	bh=2z4IIA0dd3s1LhqIAzYeC5YsM6CQ5BkPuoMqRpzA/WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmQsbkGxnn0iFhEPj+2SU6YJ+0x4O6OdlugaPU1w6ukcW2YboFk07GeRr0UCf3VZr
-	 0fCW5ID1uOoqwIUkbws9KhZ2f3ibI+q+9NgkYVS7J5608yw8mg0suqJqozPUEMsQ+C
-	 c+TKaTOVTFm5TWBC8vV77HsB1gQnB2KuVVeeAbL8=
+	b=DnHy2+eUSFGBhA6gcMoiEAwEi+0B90BQkrGEiqRVyAogojkKErHT6+ghALl2AasGn
+	 XTOQfqvbWEg4i98z9Jn5ZbIQyh3WVRt4WByEYZXoFjbLO1W4zkFgHAWd4x2QqA0zjl
+	 K1gt+PqA2Fdgzak6+xrmhlmTo+UUJ9rxWh5+fyV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 042/731] PM: sleep: Fix handling devices with direct_complete set on errors
-Date: Tue,  8 Apr 2025 12:38:59 +0200
-Message-ID: <20250408104915.256522315@linuxfoundation.org>
+Subject: [PATCH 6.14 069/731] dt-bindings: vendor-prefixes: add GOcontroll
+Date: Tue,  8 Apr 2025 12:39:26 +0200
+Message-ID: <20250408104915.876890641@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,89 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-[ Upstream commit 03f1444016b71feffa1dfb8a51f15ba592f94b13 ]
+[ Upstream commit 5f0d2de417166698c8eba433b696037ce04730da ]
 
-When dpm_suspend() fails, some devices with power.direct_complete set
-may not have been handled by device_suspend() yet, so runtime PM has
-not been disabled for them yet even though power.direct_complete is set.
+GOcontroll produces embedded linux systems and IO modules to use in
+these systems, add its prefix.
 
-Since device_resume() expects that runtime PM has been disabled for all
-devices with power.direct_complete set, it will attempt to reenable
-runtime PM for the devices that have not been processed by device_suspend()
-which does not make sense.  Had those devices had runtime PM disabled
-before device_suspend() had run, device_resume() would have inadvertently
-enable runtime PM for them, but this is not expected to happen because
-it would require ->prepare() callbacks to return positive values for
-devices with runtime PM disabled, which would be invalid.
-
-In practice, this issue is most likely benign because pm_runtime_enable()
-will not allow the "disable depth" counter to underflow, but it causes a
-warning message to be printed for each affected device.
-
-To allow device_resume() to distinguish the "direct complete" devices
-that have been processed by device_suspend() from those which have not
-been handled by it, make device_suspend() set power.is_suspended for
-"direct complete" devices.
-
-Next, move the power.is_suspended check in device_resume() before the
-power.direct_complete check in it to make it skip the "direct complete"
-devices that have not been handled by device_suspend().
-
-This change is based on a preliminary patch from Saravana Kannan.
-
-Fixes: aae4518b3124 ("PM / sleep: Mechanism to avoid resuming runtime-suspended devices unnecessarily")
-Link: https://lore.kernel.org/linux-pm/20241114220921.2529905-2-saravanak@google.com/
-Reported-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Link: https://patch.msgid.link/12627587.O9o76ZdvQC@rjwysocki.net
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Link: https://patch.msgid.link/20250226-initial_display-v2-2-23fafa130817@gocontroll.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 5afafd4e13dff..23be2d1b04079 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -929,6 +929,9 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	if (dev->power.syscore)
- 		goto Complete;
- 
-+	if (!dev->power.is_suspended)
-+		goto Complete;
-+
- 	if (dev->power.direct_complete) {
- 		/* Match the pm_runtime_disable() in device_suspend(). */
- 		pm_runtime_enable(dev);
-@@ -947,9 +950,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	 */
- 	dev->power.is_prepared = false;
- 
--	if (!dev->power.is_suspended)
--		goto Unlock;
--
- 	if (dev->pm_domain) {
- 		info = "power domain ";
- 		callback = pm_op(&dev->pm_domain->ops, state);
-@@ -989,7 +989,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
- 	error = dpm_run_callback(callback, dev, state, info);
- 	dev->power.is_suspended = false;
- 
-- Unlock:
- 	device_unlock(dev);
- 	dpm_watchdog_clear(&wd);
- 
-@@ -1649,6 +1648,7 @@ static int device_suspend(struct device *dev, pm_message_t state, bool async)
- 			pm_runtime_disable(dev);
- 			if (pm_runtime_status_suspended(dev)) {
- 				pm_dev_dbg(dev, state, "direct-complete ");
-+				dev->power.is_suspended = true;
- 				goto Complete;
- 			}
- 
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 5079ca6ce1d1e..b5979832ddce6 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -593,6 +593,8 @@ patternProperties:
+     description: GlobalTop Technology, Inc.
+   "^gmt,.*":
+     description: Global Mixed-mode Technology, Inc.
++  "^gocontroll,.*":
++    description: GOcontroll Modular Embedded Electronics B.V.
+   "^goldelico,.*":
+     description: Golden Delicious Computers GmbH & Co. KG
+   "^goodix,.*":
 -- 
 2.39.5
 
