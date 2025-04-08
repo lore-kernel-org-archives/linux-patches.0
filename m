@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB507265CAF;
-	Tue,  8 Apr 2025 11:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF5A2676E0;
+	Tue,  8 Apr 2025 11:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110781; cv=none; b=pxn8O9szS/Pk35CKwxoxF4S/jlur2/S//dJoJdY87Hj7iAxTHH9/Y9JfGzkvsKODHlU1jlB6ajI0w/K64ddBZWeaIU0+yaPUsTilkMkt0UjO3PXgQEoQtNX0ypWI9CfgdQylI3T5055Sc0qSJ8wopuUp7IKwo2CfKbm47jhUzCo=
+	t=1744110783; cv=none; b=EftJrnvEThJUI99TGQSIkGn3w0HhAtyzag+PcLk4u5tImxg8UYZXipGKioPtyi4uszVj8TWCVAy6BVct8j/cyc2cDVrsQOfM7NIUuQIWyEa4McOepLrRh1BUAEnw+jGogZAdCkJ48uoPqjR2ZK03RgRc7TMQ9KepSuoiqS1dKHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110781; c=relaxed/simple;
-	bh=j4KxWrBWAlRi7dBxa7EW0doFiXC/x3NjQDF7ndIa9DQ=;
+	s=arc-20240116; t=1744110783; c=relaxed/simple;
+	bh=qLi7Q0lD9qDru+6fIfa7wvJcqMLDsGwewmF+nw1Hz+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1oL/w8lYUROo+0JX7FvC9j8nTN1/F1nKtUKgebaNAEFztb70FYpkt3Ax5C1Y2+c4bKptbJxXCn4dbt4kEs0mn8otVYrJ8QRgL/xQhmoEMEIsx62jIYOXL0mv0v/ZDdJTBEmrfZ3pV6FxRpidtimmcXYhIMmPS3aS22/BfPqL8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnKsb+yc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pEgcY4f0NuFvOWpAxEeY7y7ATIelO+mzSLXMHyT0yifhA18Jx/9+R/cknhbuVN+COIPWIlGXddjJtuuPdGNwK+uBodJgO8i8/W6qck8Z1uCX8cN67r+HBhoTKJ9yKeEEQEGDSHAVnZaKsJbBMIrAx+fGX74VI/LTVtl1eJBPuo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cY9k3KIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnKsb+yc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19530C4CEE7;
-	Tue,  8 Apr 2025 11:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cY9k3KIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1494C4CEE5;
+	Tue,  8 Apr 2025 11:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110780;
-	bh=j4KxWrBWAlRi7dBxa7EW0doFiXC/x3NjQDF7ndIa9DQ=;
+	s=korg; t=1744110783;
+	bh=qLi7Q0lD9qDru+6fIfa7wvJcqMLDsGwewmF+nw1Hz+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnKsb+ycydJBL/74Yio/zJLvW6DRDk2qZs3sFN+vhsOjfQJ3N/nd6RsRnZruaXt1p
-	 wleKdW9olHIBoLUwMXQ1fRymLG7gkdURkNZgiLQLXKze6iiB7GeUzv4jaqAdU3jqZj
-	 NVYVVsUaS2deEZVHmgcqFbucILYNdNaj+ySHQ13Y=
+	b=cY9k3KIlXPTCEoYfJV6HocxebGN/bD5eqKOx8tdqY/ncMoRcuE0QfuK8/OWxk0VPE
+	 c21OyKuHdZGVhhnpO8FYmGSpzcqNbec5KFzVSGe48iHK5KSJG6K7xCYSnb4SehnmMh
+	 Hk5/ZM7lQJbvVgTNT/Gr7gSRqD1/D6rwQzJLbu4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
+	syzbot+48a99e426f29859818c0@syzkaller.appspotmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 191/731] ext4: add missing brelse() for bh2 in ext4_dx_add_entry()
-Date: Tue,  8 Apr 2025 12:41:28 +0200
-Message-ID: <20250408104918.723509838@linuxfoundation.org>
+Subject: [PATCH 6.14 192/731] ext4: verify fast symlink length
+Date: Tue,  8 Apr 2025 12:41:29 +0200
+Message-ID: <20250408104918.747422713@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,75 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit eb640af64db6d4702a85ab001b9cc7f4c5dd6abb ]
+[ Upstream commit 5f920d5d60839f7cbbb1ed50eac68d8bc0a73a7c ]
 
-Add missing brelse() for bh2 in ext4_dx_add_entry().
+Verify fast symlink length stored in inode->i_size matches the string
+stored in the inode to avoid surprises from corrupted filesystems.
 
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250123162050.2114499-2-shikemeng@huaweicloud.com
+Reported-by: syzbot+48a99e426f29859818c0@syzkaller.appspotmail.com
+Tested-by: syzbot+48a99e426f29859818c0@syzkaller.appspotmail.com
+Fixes: bae80473f7b0 ("ext4: use inode_set_cached_link()")
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/20250206094454.20522-2-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/ext4/inode.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index 536d56d150726..8e49cb7118581 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2577,8 +2577,10 @@ static int ext4_dx_add_entry(handle_t *handle, struct ext4_filename *fname,
- 		BUFFER_TRACE(frame->bh, "get_write_access");
- 		err = ext4_journal_get_write_access(handle, sb, frame->bh,
- 						    EXT4_JTR_NONE);
--		if (err)
-+		if (err) {
-+			brelse(bh2);
- 			goto journal_error;
-+		}
- 		if (!add_level) {
- 			unsigned icount1 = icount/2, icount2 = icount - icount1;
- 			unsigned hash2 = dx_get_hash(entries + icount1);
-@@ -2589,8 +2591,10 @@ static int ext4_dx_add_entry(handle_t *handle, struct ext4_filename *fname,
- 			err = ext4_journal_get_write_access(handle, sb,
- 							    (frame - 1)->bh,
- 							    EXT4_JTR_NONE);
--			if (err)
-+			if (err) {
-+				brelse(bh2);
- 				goto journal_error;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 7c54ae5fcbd45..64e280fed9119 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5007,8 +5007,16 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 			inode->i_op = &ext4_encrypted_symlink_inode_operations;
+ 		} else if (ext4_inode_is_fast_symlink(inode)) {
+ 			inode->i_op = &ext4_fast_symlink_inode_operations;
+-			nd_terminate_link(ei->i_data, inode->i_size,
+-				sizeof(ei->i_data) - 1);
++			if (inode->i_size == 0 ||
++			    inode->i_size >= sizeof(ei->i_data) ||
++			    strnlen((char *)ei->i_data, inode->i_size + 1) !=
++								inode->i_size) {
++				ext4_error_inode(inode, function, line, 0,
++					"invalid fast symlink length %llu",
++					 (unsigned long long)inode->i_size);
++				ret = -EFSCORRUPTED;
++				goto bad_inode;
 +			}
- 
- 			memcpy((char *) entries2, (char *) (entries + icount1),
- 			       icount2 * sizeof(struct dx_entry));
-@@ -2609,8 +2613,10 @@ static int ext4_dx_add_entry(handle_t *handle, struct ext4_filename *fname,
- 			dxtrace(dx_show_index("node",
- 			       ((struct dx_node *) bh2->b_data)->entries));
- 			err = ext4_handle_dirty_dx_node(handle, dir, bh2);
--			if (err)
-+			if (err) {
-+				brelse(bh2);
- 				goto journal_error;
-+			}
- 			brelse (bh2);
- 			err = ext4_handle_dirty_dx_node(handle, dir,
- 						   (frame - 1)->bh);
-@@ -2635,8 +2641,10 @@ static int ext4_dx_add_entry(handle_t *handle, struct ext4_filename *fname,
- 				       "Creating %d level index...\n",
- 				       dxroot->info.indirect_levels));
- 			err = ext4_handle_dirty_dx_node(handle, dir, frame->bh);
--			if (err)
-+			if (err) {
-+				brelse(bh2);
- 				goto journal_error;
-+			}
- 			err = ext4_handle_dirty_dx_node(handle, dir, bh2);
- 			brelse(bh2);
- 			restart = 1;
+ 			inode_set_cached_link(inode, (char *)ei->i_data,
+ 					      inode->i_size);
+ 		} else {
 -- 
 2.39.5
 
