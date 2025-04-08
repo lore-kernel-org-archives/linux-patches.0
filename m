@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E102C22424C;
-	Tue,  8 Apr 2025 11:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077A9219301;
+	Tue,  8 Apr 2025 11:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112434; cv=none; b=DI9RvQLc9zTj9jP5flr1sBZ7z4AdkiPHOkhUat14tHVwqnY+h4tUkuddZoDVU16sO1DHhm+dOwe80BSM1O0MPLamThPN/GbStDFdt7ZuK5K1DRPRfV6r/QnENGVhG5f14qLv2STgULcWJDJkwANRBejoTuinCyXQFXltfGVd6rA=
+	t=1744112437; cv=none; b=uvUu2LSZuqjMuN0a/p9mZo3gp4wU0f6QSbOfyWl+zAcipZ8IoY+S056BUWw6tgYg/Qtc83/G2OgRuwTVfP3UiwGBy7Zq1pSr0gKmg1SBmgIoDFDYySrpHQlFK6IrkLgRVRIzeQmCnKkA+Y1fO0Ej2YSl/MOLloe5BMQqV5yEuYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112434; c=relaxed/simple;
-	bh=EEueIMvJnGT75uzv7AiJsm5k0rK/v9P/JRIkgdXaUAk=;
+	s=arc-20240116; t=1744112437; c=relaxed/simple;
+	bh=pGt2rYwrzbJ/z1+UH8lFCylk+rUo8i02vZcsgYQzj0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6Gnv1MxeZ74b+1brR6+ASPTxfvqmT9KRdeqMUY3ueD/3q1E0fhOaVdsQuH29nNJYRuE7J1YGUFknqKP76QxQU/n/z5VSpWk0cCBEGQ7ltEoYnoUs0uUVjjapaZGnvt7nlu6FdnZAT21NMWMCO40ESnb4d3rXEMZ3B0r6lxKocU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqiXIZ3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFBC7T6rJca3gqszt5aeVCezPn+VJfl2/BARhnCyO71a3l25VPeQSloBwZCfjjqIR6S0SbMX194uAM0tEZr8mOcEIjYpVqWGEGYm1d5F0aKaZUtk0bQv7rOQGUF3n0V6EcC5OfI7sdZcOqEK+jelVUKI9XErAeIUsjofsoy13wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Edp7Jcyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqiXIZ3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73624C4CEE5;
-	Tue,  8 Apr 2025 11:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Edp7Jcyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BE1C4CEE5;
+	Tue,  8 Apr 2025 11:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112433;
-	bh=EEueIMvJnGT75uzv7AiJsm5k0rK/v9P/JRIkgdXaUAk=;
+	s=korg; t=1744112436;
+	bh=pGt2rYwrzbJ/z1+UH8lFCylk+rUo8i02vZcsgYQzj0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GqiXIZ3THQs0XE9wImmv/n6LTv949gTNrdDFVZ+UtWqy+aRrGaJ5uYYxiIi3JRGdM
-	 nmHIyrd4tGYAClT2Qclj4lUmBJPMuOZBrhrLapkJl//txpjfmA9IesJF280Y0m0xxW
-	 MhipiF71ZZwvqoioE43cHxzOUZK9RGp11Yzfhtek=
+	b=Edp7JcyfsICfqWxBrR+UUNwoIJWvPerLuw8vH1QSMRIFzXQlbsIGtjvRZLiFY5mVv
+	 CI9hBwv10tn/NoJmi5M2qlseQJIVQITD4XR4Jl6g2TCGmx+aUaErIuqkYWZWHTmYZ/
+	 UiZi2wftimhpqWdTdIIyv51cB0pwdqnPqNzfE3BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Abramov <i.abramov@mt-integration.ru>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/279] drm/gma500: Add NULL check for pci_gfx_root in mid_get_vbt_data()
-Date: Tue,  8 Apr 2025 12:47:29 +0200
-Message-ID: <20250408104828.122979018@linuxfoundation.org>
+Subject: [PATCH 5.15 067/279] ASoC: codecs: wm0010: Fix error handling path in wm0010_spi_probe()
+Date: Tue,  8 Apr 2025 12:47:30 +0200
+Message-ID: <20250408104828.152329275@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,45 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Abramov <i.abramov@mt-integration.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 9af152dcf1a06f589f44a74da4ad67e365d4db9a ]
+[ Upstream commit ed92bc5264c4357d4fca292c769ea9967cd3d3b6 ]
 
-Since pci_get_domain_bus_and_slot() can return NULL, add NULL check for
-pci_gfx_root in the mid_get_vbt_data().
+Free some resources in the error handling path of the probe, as already
+done in the remove function.
 
-This change is similar to the checks implemented in mid_get_fuse_settings()
-and mid_get_pci_revID(), which were introduced by commit 0cecdd818cd7
-("gma500: Final enables for Oaktrail") as "additional minor
-bulletproofing".
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: f910b411053f ("gma500: Add the glue to the various BIOS and firmware interfaces")
-Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250306112046.17144-1-i.abramov@mt-integration.ru
+Fixes: e3523e01869d ("ASoC: wm0010: Add initial wm0010 DSP driver")
+Fixes: fd8b96574456 ("ASoC: wm0010: Clear IRQ as wake source and include missing header")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/5139ba1ab8c4c157ce04e56096a0f54a1683195c.1741549792.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gma500/mid_bios.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/codecs/wm0010.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/gma500/mid_bios.c b/drivers/gpu/drm/gma500/mid_bios.c
-index 68e787924ed04..1ba33f9518da2 100644
---- a/drivers/gpu/drm/gma500/mid_bios.c
-+++ b/drivers/gpu/drm/gma500/mid_bios.c
-@@ -280,6 +280,11 @@ static void mid_get_vbt_data(struct drm_psb_private *dev_priv)
- 					    0, PCI_DEVFN(2, 0));
- 	int ret = -1;
+diff --git a/sound/soc/codecs/wm0010.c b/sound/soc/codecs/wm0010.c
+index 28b4656c4e149..b2f87af1bfc87 100644
+--- a/sound/soc/codecs/wm0010.c
++++ b/sound/soc/codecs/wm0010.c
+@@ -952,7 +952,7 @@ static int wm0010_spi_probe(struct spi_device *spi)
+ 	if (ret) {
+ 		dev_err(wm0010->dev, "Failed to set IRQ %d as wake source: %d\n",
+ 			irq, ret);
+-		return ret;
++		goto free_irq;
+ 	}
  
-+	if (pci_gfx_root == NULL) {
-+		WARN_ON(1);
-+		return;
-+	}
+ 	if (spi->max_speed_hz)
+@@ -964,9 +964,18 @@ static int wm0010_spi_probe(struct spi_device *spi)
+ 				     &soc_component_dev_wm0010, wm0010_dai,
+ 				     ARRAY_SIZE(wm0010_dai));
+ 	if (ret < 0)
+-		return ret;
++		goto disable_irq_wake;
+ 
+ 	return 0;
 +
- 	/* Get the address of the platform config vbt */
- 	pci_read_config_dword(pci_gfx_root, 0xFC, &addr);
- 	pci_dev_put(pci_gfx_root);
++disable_irq_wake:
++	irq_set_irq_wake(wm0010->irq, 0);
++
++free_irq:
++	if (wm0010->irq)
++		free_irq(wm0010->irq, wm0010);
++
++	return ret;
+ }
+ 
+ static int wm0010_spi_remove(struct spi_device *spi)
 -- 
 2.39.5
 
