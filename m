@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370AE26B09D;
-	Tue,  8 Apr 2025 12:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AA4267B89;
+	Tue,  8 Apr 2025 12:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114047; cv=none; b=rKO1hajK42UxMyLkaGjpg0ZssXHpl6t8pbFONpA6gWzklZI8yYUE5DHNwTDUS7Q27EV1xlgFkDV7/8koUK59lpCJQBmtRyVxQ4Uum8DczXHEos1NgQ0o3a+LiDVVkDzc/LghuNCeiPCoqOjc5ZeK1RXqUCNaXdXd5kb2L32Z3rk=
+	t=1744114049; cv=none; b=C0eFIbmVNECah+Li6Uh0g0QCVcUPOpbfJOeWyDCSsPV72scAH4M5hklLft4XpzWKdblH8wDKy7C5fsgkUqdFUAXLQ8LH1tp79wILivxudqVu+PkFfDh7NESW4dFMUuyodEHRIzek+YWIG0Tk05ri5mHNUe5uh5kDnPwTjk+peBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114047; c=relaxed/simple;
-	bh=/FUxqN1YGmE1mN3UJ28mwBOGgaSPdOkIbbMvxtXDAac=;
+	s=arc-20240116; t=1744114049; c=relaxed/simple;
+	bh=n83DTev8TuKt8atIN7FBVUFAgLo4ACIevw1ZyvUyv0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJqjjRwAK68VauymuWGbHWKOz6KgcGNcJGvxCf8MpoXePnRU9U4ohP1hiPqSczAUcBHFH1ktqjzFFftrdUgU0ozKCOqmdUTg7cjY6GdL88zl90K8BVCltG2O5DKAZPUVF35ggacJSgvdhpCVm1qYioftR0TFR/9i8e6OZ0wpCCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAKs6muN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfCCkPUK5+Ael0thW7MJPVbYT4p/fEbGB2LzmAOqCiLVqRfh6gEyhUSDPda8VOeY/LinfJbTUfmmqVUC4jgNTm0r+K5/LOnF8x/8o1uhfY0MPKGZdy0pYVbuYbmn6tqca0g20DFGhWMreCKLA6tLjtSAYD6tgsuDmSFq5d9MLCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3X+/ev2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAKs6muN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B9C4CEE7;
-	Tue,  8 Apr 2025 12:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3X+/ev2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E151AC4CEE5;
+	Tue,  8 Apr 2025 12:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114046;
-	bh=/FUxqN1YGmE1mN3UJ28mwBOGgaSPdOkIbbMvxtXDAac=;
+	s=korg; t=1744114049;
+	bh=n83DTev8TuKt8atIN7FBVUFAgLo4ACIevw1ZyvUyv0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAKs6muNBSny+UqPsWNaZNf2xfpXKBkaI9yEQ0UgiLpgai/OFFJ8Ty/wwMgAn7zCk
-	 THIXztUYzYk3vOogI1MnIQR0K02ceK8U1P45FVei9KfhY3zRUIyXnq/bk7QbOznlAM
-	 uSSlqUAbPRKV1XBiETM/yelSLH14FzAh3hPCVeq4=
+	b=y3X+/ev2eqAAVyq1UI7mhU3FN/iAmYptU2ICA1SBU17jEPkF+qNaXxxDE42ld2Oce
+	 Ahvr1M2o8cOvbEpuMksSEItWIs0owvAlLO/2JTc11vB0tv6NSJpJyD6YAXBlESx+ZA
+	 1mUMN7/pA2o4dRzFCwoZypCXgCKxFv5rN6Xvxcoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Ahmed Naseef <naseefkm@gmail.com>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 076/154] net: usb: qmi_wwan: add Telit Cinterion FE990B composition
-Date: Tue,  8 Apr 2025 12:50:17 +0200
-Message-ID: <20250408104817.746583997@linuxfoundation.org>
+Subject: [PATCH 5.4 077/154] net: usb: usbnet: restore usb%d name exception for local mac addresses
+Date: Tue,  8 Apr 2025 12:50:18 +0200
+Message-ID: <20250408104817.778850790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -50,71 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-commit e8cdd91926aac2c53a23925c538ad4c44be4201f upstream.
+commit 2ea396448f26d0d7d66224cb56500a6789c7ed07 upstream.
 
-Add the following Telit Cinterion FE990B composition:
-0x10b0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
-        tty (diag) + DPL + QDSS (Qualcomm Debug SubSystem) + adb
+commit 8a7d12d674ac ("net: usb: usbnet: fix name regression") assumed
+that local addresses always came from the kernel, but some devices hand
+out local mac addresses so we ended up with point-to-point devices with
+a mac set by the driver, renaming to eth%d when they used to be named
+usb%d.
 
-usb-devices:
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10b0 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FE990
-S:  SerialNumber=28c2595e
-C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Userspace should not rely on device name, but for the sake of stability
+restore the local mac address check portion of the naming exception:
+point to point devices which either have no mac set by the driver or
+have a local mac handed out by the driver will keep the usb%d name.
 
+(some USB LTE modems are known to hand out a stable mac from the locally
+administered range; that mac appears to be random (different for
+mulitple devices) and can be reset with device-specific commands, so
+while such devices would benefit from getting a OUI reserved, we have
+to deal with these and might as well preserve the existing behavior
+to avoid breaking fragile openwrt configurations and such on upgrade.)
+
+Link: https://lkml.kernel.org/r/20241203130457.904325-1-asmadeus@codewreck.org
+Fixes: 8a7d12d674ac ("net: usb: usbnet: fix name regression")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Link: https://patch.msgid.link/20250227112441.3653819-2-fabio.porcedda@gmail.com
+Tested-by: Ahmed Naseef <naseefkm@gmail.com>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20250326-usbnet_rename-v2-1-57eb21fcff26@atmark-techno.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/usbnet.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1328,6 +1328,7 @@ static const struct usb_device_id produc
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10b0, 0)}, /* Telit FE990B */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -167,6 +167,17 @@ int usbnet_get_ethernet_addr(struct usbn
+ }
+ EXPORT_SYMBOL_GPL(usbnet_get_ethernet_addr);
+ 
++static bool usbnet_needs_usb_name_format(struct usbnet *dev, struct net_device *net)
++{
++	/* Point to point devices which don't have a real MAC address
++	 * (or report a fake local one) have historically used the usb%d
++	 * naming. Preserve this..
++	 */
++	return (dev->driver_info->flags & FLAG_POINTTOPOINT) != 0 &&
++		(is_zero_ether_addr(net->dev_addr) ||
++		 is_local_ether_addr(net->dev_addr));
++}
++
+ static void intr_complete (struct urb *urb)
+ {
+ 	struct usbnet	*dev = urb->context;
+@@ -1730,13 +1741,11 @@ usbnet_probe (struct usb_interface *udev
+ 		if (status < 0)
+ 			goto out1;
+ 
+-		// heuristic:  "usb%d" for links we know are two-host,
+-		// else "eth%d" when there's reasonable doubt.  userspace
+-		// can rename the link if it knows better.
++		/* heuristic: rename to "eth%d" if we are not sure this link
++		 * is two-host (these links keep "usb%d")
++		 */
+ 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
+-		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
+-		     /* somebody touched it*/
+-		     !is_zero_ether_addr(net->dev_addr)))
++		    !usbnet_needs_usb_name_format(dev, net))
+ 			strscpy(net->name, "eth%d", sizeof(net->name));
+ 		/* WLAN devices should always be named "wlan%d" */
+ 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
 
 
