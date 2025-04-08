@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6836266583;
-	Tue,  8 Apr 2025 11:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B46E265CAF;
+	Tue,  8 Apr 2025 11:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110956; cv=none; b=sgaR3jPZRbx78owmfTN8FR/vwTprzSiLhtWzHTcH6IJQD2MrVp4NcX2ZnbcPiTDEZIhsQmxfxD8lOm9ZOB1yq2ra9GrvgQ1vkeE9Gk3xSSaxJb5+AndtwlOrEq6uzMYUm013fExaFR6bLginKwTM2Fx5A5xkdh3X5WuY3ozQN1M=
+	t=1744110959; cv=none; b=c4kmeRcc4AHkhgvFxs9XWKWJxGfpilieoWGovmUvUGLebHicVXDAF+B/dfxswqKwL4DSkc2WHYCCrB197xTBE0qVd1akZdfMT92vH6lEOfy4lRocs2pJPiDe4HzEyXF1OETWqopoCjG13swT7xtCYyfaqLhQFCaJBNQ1K6afRoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110956; c=relaxed/simple;
-	bh=JIA8r7eU8tz65a57YeszW1jw8zPQ3kJ4QkSaETl0kps=;
+	s=arc-20240116; t=1744110959; c=relaxed/simple;
+	bh=XVeGE92bvD3HiAo5L/sr5Ms1XR4jNrIoEkXbZ4fSPIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urs+ciscQ/OVqB6dwxRTFyZZ4+VMPMRQdnzauLO0Koghf3u4bza6jUbEmuLYGzwIs0wM/TAPbxnPTAUgoXnXdmeCAGChyTJM9Dxpo5Xo3f8tCbN05KKhSx6zNBl25MxCiEsLn3CQ6lcA5VaNMtjQsnyrwK8YJh4mksAEAK25zUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoC/Bw9a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9DfNvEGv2ALXQUoCbipyYWxs8kbV6oSrayn91RP1RPsqe8abRHI1Gk8Rb5XSPl390Fbil8WaQyHobZUxtMruMGw9IneedWXrxZax4g56KT9NH1mpUHc9blseAopwbQrQbWnn8faDPXdPp5pwXzPGKMYjr6M7eVwwsViLSZX2xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQiK6OHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoC/Bw9a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1452C4CEE7;
-	Tue,  8 Apr 2025 11:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQiK6OHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4D3C4CEE5;
+	Tue,  8 Apr 2025 11:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110956;
-	bh=JIA8r7eU8tz65a57YeszW1jw8zPQ3kJ4QkSaETl0kps=;
+	s=korg; t=1744110959;
+	bh=XVeGE92bvD3HiAo5L/sr5Ms1XR4jNrIoEkXbZ4fSPIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JoC/Bw9asqnk8selTGSZHRvtNW6yG6nsIkMh+kF+jFcshfu2qQVEzLIhVyep5OLRn
-	 lx1HxANAdSsb0hNZ35Mb4JoEExaOIoaBCN82jTtjR4ErTb9pbnX1b5n0+y9FLPgGMW
-	 O8w8/IALNtVVtzbuKEltaQ+QSb8Xdnj337HCOlls=
+	b=QQiK6OHTArZs4PnIFV85U/9X3By+EkSeB1/KN/7Ui3i4lscy5QvMhBWguEdIh9NtY
+	 VgpKK55K6GNs3wOOXSQuWiTGwbVf6/ZwoOEU5ZLoZLdeWQCHS7UYVn/ghQEe29vRkp
+	 A0QodN0t7Im2wsovlWDY1wPWhRdxT0fr1ok0SoTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 216/731] btrfs: fix reclaimed bytes accounting after automatic block group reclaim
-Date: Tue,  8 Apr 2025 12:41:53 +0200
-Message-ID: <20250408104919.306467798@linuxfoundation.org>
+Subject: [PATCH 6.14 217/731] btrfs: fix block group refcount race in btrfs_create_pending_block_groups()
+Date: Tue,  8 Apr 2025 12:41:54 +0200
+Message-ID: <20250408104919.329444456@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,125 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 620768704326c9a71ea9c8324ffda8748d8d4f10 ]
+[ Upstream commit 2d8e5168d48a91e7a802d3003e72afb4304bebfa ]
 
-We are considering the used bytes counter of a block group as the amount
-to update the space info's reclaim bytes counter after relocating the
-block group, but this value alone is often not enough. This is because we
-may have a reserved extent (or more) and in that case its size is
-reflected in the reserved counter of the block group - the size of the
-extent is only transferred from the reserved counter to the used counter
-of the block group when the delayed ref for the extent is run - typically
-when committing the transaction (or when flushing delayed refs due to
-ENOSPC on space reservation). Such call chain for data extents is:
+Block group creation is done in two phases, which results in a slightly
+unintuitive property: a block group can be allocated/deallocated from
+after btrfs_make_block_group() adds it to the space_info with
+btrfs_add_bg_to_space_info(), but before creation is completely completed
+in btrfs_create_pending_block_groups(). As a result, it is possible for a
+block group to go unused and have 'btrfs_mark_bg_unused' called on it
+concurrently with 'btrfs_create_pending_block_groups'. This causes a
+number of issues, which were fixed with the block group flag
+'BLOCK_GROUP_FLAG_NEW'.
 
-   btrfs_run_delayed_refs_for_head()
-       run_one_delayed_ref()
-           run_delayed_data_ref()
-               alloc_reserved_file_extent()
-                   alloc_reserved_extent()
-                       btrfs_update_block_group()
-                          -> transfers the extent size from the reserved
-                             counter to the used counter
+However, this fix is not quite complete. Since it does not use the
+unused_bg_lock, it is possible for the following race to occur:
 
-For metadata extents:
+btrfs_create_pending_block_groups            btrfs_mark_bg_unused
+                                           if list_empty // false
+        list_del_init
+        clear_bit
+                                           else if (test_bit) // true
+                                                list_move_tail
 
-   btrfs_run_delayed_refs_for_head()
-       run_one_delayed_ref()
-           run_delayed_tree_ref()
-               alloc_reserved_tree_block()
-                   alloc_reserved_extent()
-                       btrfs_update_block_group()
-                           -> transfers the extent size from the reserved
-                              counter to the used counter
+And we get into the exact same broken ref count and invalid new_bgs
+state for transaction cleanup that BLOCK_GROUP_FLAG_NEW was designed to
+prevent.
 
-Since relocation flushes delalloc, waits for ordered extent completion
-and commits the current transaction before doing the actual relocation
-work, the correct amount of reclaimed space is therefore the sum of the
-"used" and "reserved" counters of the block group before we call
-btrfs_relocate_chunk() at btrfs_reclaim_bgs_work().
+The broken refcount aspect will result in a warning like:
 
-So fix this by taking the "reserved" counter into consideration.
+  [1272.943527] refcount_t: underflow; use-after-free.
+  [1272.943967] WARNING: CPU: 1 PID: 61 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
+  [1272.944731] Modules linked in: btrfs virtio_net xor zstd_compress raid6_pq null_blk [last unloaded: btrfs]
+  [1272.945550] CPU: 1 UID: 0 PID: 61 Comm: kworker/u32:1 Kdump: loaded Tainted: G        W          6.14.0-rc5+ #108
+  [1272.946368] Tainted: [W]=WARN
+  [1272.946585] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+  [1272.947273] Workqueue: btrfs_discard btrfs_discard_workfn [btrfs]
+  [1272.947788] RIP: 0010:refcount_warn_saturate+0xba/0x110
+  [1272.949532] RSP: 0018:ffffbf1200247df0 EFLAGS: 00010282
+  [1272.949901] RAX: 0000000000000000 RBX: ffffa14b00e3f800 RCX: 0000000000000000
+  [1272.950437] RDX: 0000000000000000 RSI: ffffbf1200247c78 RDI: 00000000ffffdfff
+  [1272.950986] RBP: ffffa14b00dc2860 R08: 00000000ffffdfff R09: ffffffff90526268
+  [1272.951512] R10: ffffffff904762c0 R11: 0000000063666572 R12: ffffa14b00dc28c0
+  [1272.952024] R13: 0000000000000000 R14: ffffa14b00dc2868 R15: 000001285dcd12c0
+  [1272.952850] FS:  0000000000000000(0000) GS:ffffa14d33c40000(0000) knlGS:0000000000000000
+  [1272.953458] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [1272.953931] CR2: 00007f838cbda000 CR3: 000000010104e000 CR4: 00000000000006f0
+  [1272.954474] Call Trace:
+  [1272.954655]  <TASK>
+  [1272.954812]  ? refcount_warn_saturate+0xba/0x110
+  [1272.955173]  ? __warn.cold+0x93/0xd7
+  [1272.955487]  ? refcount_warn_saturate+0xba/0x110
+  [1272.955816]  ? report_bug+0xe7/0x120
+  [1272.956103]  ? handle_bug+0x53/0x90
+  [1272.956424]  ? exc_invalid_op+0x13/0x60
+  [1272.956700]  ? asm_exc_invalid_op+0x16/0x20
+  [1272.957011]  ? refcount_warn_saturate+0xba/0x110
+  [1272.957399]  btrfs_discard_cancel_work.cold+0x26/0x2b [btrfs]
+  [1272.957853]  btrfs_put_block_group.cold+0x5d/0x8e [btrfs]
+  [1272.958289]  btrfs_discard_workfn+0x194/0x380 [btrfs]
+  [1272.958729]  process_one_work+0x130/0x290
+  [1272.959026]  worker_thread+0x2ea/0x420
+  [1272.959335]  ? __pfx_worker_thread+0x10/0x10
+  [1272.959644]  kthread+0xd7/0x1c0
+  [1272.959872]  ? __pfx_kthread+0x10/0x10
+  [1272.960172]  ret_from_fork+0x30/0x50
+  [1272.960474]  ? __pfx_kthread+0x10/0x10
+  [1272.960745]  ret_from_fork_asm+0x1a/0x30
+  [1272.961035]  </TASK>
+  [1272.961238] ---[ end trace 0000000000000000 ]---
 
-Fixes: 243192b67649 ("btrfs: report reclaim stats in sysfs")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+Though we have seen them in the async discard workfn as well. It is
+most likely to happen after a relocation finishes which cancels discard,
+tears down the block group, etc.
+
+Fix this fully by taking the lock around the list_del_init + clear_bit
+so that the two are done atomically.
+
+Fixes: 0657b20c5a76 ("btrfs: fix use-after-free of new block group that became unused")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ fs/btrfs/block-group.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index ed0b1a955d74a..3a89a6c3a7aa1 100644
+index 3a89a6c3a7aa1..b96b235943344 100644
 --- a/fs/btrfs/block-group.c
 +++ b/fs/btrfs/block-group.c
-@@ -1824,6 +1824,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 	while (!list_empty(&fs_info->reclaim_bgs)) {
- 		u64 zone_unusable;
- 		u64 used;
-+		u64 reserved;
- 		int ret = 0;
- 
- 		bg = list_first_entry(&fs_info->reclaim_bgs,
-@@ -1916,21 +1917,32 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 			goto next;
+@@ -2796,8 +2796,11 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
+ 		/* Already aborted the transaction if it failed. */
+ next:
+ 		btrfs_dec_delayed_refs_rsv_bg_inserts(fs_info);
++
++		spin_lock(&fs_info->unused_bgs_lock);
+ 		list_del_init(&block_group->bg_list);
+ 		clear_bit(BLOCK_GROUP_FLAG_NEW, &block_group->runtime_flags);
++		spin_unlock(&fs_info->unused_bgs_lock);
  
  		/*
--		 * Grab the used bytes counter while holding the block group's
--		 * spinlock to prevent races with tasks concurrently updating it
--		 * due to extent allocation and deallocation (running
--		 * btrfs_update_block_group()) - we have set the block group to
--		 * RO but that only prevents extent reservation, allocation
--		 * happens after reservation.
-+		 * The amount of bytes reclaimed corresponds to the sum of the
-+		 * "used" and "reserved" counters. We have set the block group
-+		 * to RO above, which prevents reservations from happening but
-+		 * we may have existing reservations for which allocation has
-+		 * not yet been done - btrfs_update_block_group() was not yet
-+		 * called, which is where we will transfer a reserved extent's
-+		 * size from the "reserved" counter to the "used" counter - this
-+		 * happens when running delayed references. When we relocate the
-+		 * chunk below, relocation first flushes dellaloc, waits for
-+		 * ordered extent completion (which is where we create delayed
-+		 * references for data extents) and commits the current
-+		 * transaction (which runs delayed references), and only after
-+		 * it does the actual work to move extents out of the block
-+		 * group. So the reported amount of reclaimed bytes is
-+		 * effectively the sum of the 'used' and 'reserved' counters.
- 		 */
- 		spin_lock(&bg->lock);
- 		used = bg->used;
-+		reserved = bg->reserved;
- 		spin_unlock(&bg->lock);
- 
- 		btrfs_info(fs_info,
--			"reclaiming chunk %llu with %llu%% used %llu%% unusable",
-+	"reclaiming chunk %llu with %llu%% used %llu%% reserved %llu%% unusable",
- 				bg->start,
- 				div64_u64(used * 100, bg->length),
-+				div64_u64(reserved * 100, bg->length),
- 				div64_u64(zone_unusable * 100, bg->length));
- 		trace_btrfs_reclaim_block_group(bg);
- 		ret = btrfs_relocate_chunk(fs_info, bg->start);
-@@ -1939,6 +1951,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 			btrfs_err(fs_info, "error relocating chunk %llu",
- 				  bg->start);
- 			used = 0;
-+			reserved = 0;
- 			spin_lock(&space_info->lock);
- 			space_info->reclaim_errors++;
- 			if (READ_ONCE(space_info->periodic_reclaim))
-@@ -1948,6 +1961,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 		spin_lock(&space_info->lock);
- 		space_info->reclaim_count++;
- 		space_info->reclaim_bytes += used;
-+		space_info->reclaim_bytes += reserved;
- 		spin_unlock(&space_info->lock);
- 
- next:
+ 		 * If the block group is still unused, add it to the list of
 -- 
 2.39.5
 
