@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE881AAA32;
-	Tue,  8 Apr 2025 12:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1464026B0BE;
+	Tue,  8 Apr 2025 12:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116108; cv=none; b=VAcfMZ/VyaZbwcOf/eJ5fBUarld46iL5pIhTwC2gHSlmwIUwex0uXlpFig4xuZe+A+3GZYjsWz7UOh4wBreAweeGuRNj3azD4dMX883Ms/dsanhoaICa/vQBjAk+kjqKXnJ5Zso9LgDyPB2sDeiuPS1RU6NZgcrlNLACNoClisg=
+	t=1744116111; cv=none; b=WEz0ev46WsZa/hcPazWhzSLU9hJ0oE7PA++6A8RBjG1z5Lh56gNk9aPCvLUJf7hVm1Q1yROGAKiY7GdiR7UGPG/3QmLEkOyqbMAuu2X6M94zUdo0L1swzC8t+u+G0/pT8fjQkh8c+Z7p6rz0FxNr+9mSzQ3li1LmDaXJwY3itoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116108; c=relaxed/simple;
-	bh=5h/KcGhEMl7tCIQQjI8W9w214Ryjxb6ZZn0eim4BPv4=;
+	s=arc-20240116; t=1744116111; c=relaxed/simple;
+	bh=bW14u8rPUDDkE4UC9ch5ZhCSjKuTwVXvMoZhvp/rsO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhxFCiIlTakIMPpyNr3oQbEMi7E5q6G7Shpu0z6LSu8AFP8tVaswfa9bWgdvVn2mHpwL5U9+Aknt79W5gcLybG1zK7ieAu/3PEcFhKY6REj6zJSX1+mQxle8S0JoQpRuUeahBOhVPiX9/S/72e6sdg2xOHZnBLCSOipSioMTpz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evxX9r0P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfkrvL9h5IyEbg5zTLRTWYgF9uxnX0NGedoAXbupvv89BKrqKY0mpyF5FIWWx6/kWAF2zXkm1M+4vrHfmIVzNradTjmpqqBYGYl/irMj+JRttOmKX4xC2AT3TTYfmBLG7RIhsPEVUroK1oR2O9bNy006AB7kMiag/DwW6L58KxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0sDAE1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evxX9r0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DFFC4CEE5;
-	Tue,  8 Apr 2025 12:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0sDAE1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BC1C4CEE5;
+	Tue,  8 Apr 2025 12:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116108;
-	bh=5h/KcGhEMl7tCIQQjI8W9w214Ryjxb6ZZn0eim4BPv4=;
+	s=korg; t=1744116110;
+	bh=bW14u8rPUDDkE4UC9ch5ZhCSjKuTwVXvMoZhvp/rsO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evxX9r0PTZiFfstHXusPTSl9vAQ5PY8PR2l4g4DeMj9Am/5p9ZY7qJ6fVWgVzfO4g
-	 YHYjjPmHouOXff2Ui3rbQdqib0Mf1OREEIqfwdMJYbozqT2M6NEHxz1WBNehDNZDGP
-	 xAV22/TNZ3mfHvZAgh9fylF1GnWK4tLLGnQcXOdE=
+	b=h0sDAE1zxldQ9LI0MgdbyOIVeF/sXo7+rdUPxo97gIr+4zmfwIoBrSGfPpIwV5Xyy
+	 yoRCmMDnAp7CjTFHG9z56x8S6p2sztiLQSZAG6BIN7yY9bvY5jCjEKfgZ2b2023+Np
+	 IISJyvt/9QVezLr3UoyjwS7COYPytVQkNSKfkva0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Tim Schumacher <tim.schumacher1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/423] watchdog/hardlockup/perf: Fix perf_event memory leak
-Date: Tue,  8 Apr 2025 12:45:45 +0200
-Message-ID: <20250408104846.188095296@linuxfoundation.org>
+Subject: [PATCH 6.12 020/423] selinux: Chain up tool resolving errors in install_policy.sh
+Date: Tue,  8 Apr 2025 12:45:46 +0200
+Message-ID: <20250408104846.211493641@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -53,286 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Tim Schumacher <tim.schumacher1@huawei.com>
 
-[ Upstream commit d6834d9c990333bfa433bc1816e2417f268eebbe ]
+[ Upstream commit 6ae0042f4d3f331e841495eb0a3d51598e593ec2 ]
 
-During stress-testing, we found a kmemleak report for perf_event:
+Subshell evaluations are not exempt from errexit, so if a command is
+not available, `which` will fail and exit the script as a whole.
+This causes the helpful error messages to not be printed if they are
+tacked on using a `$?` comparison.
 
-  unreferenced object 0xff110001410a33e0 (size 1328):
-    comm "kworker/4:11", pid 288, jiffies 4294916004
-    hex dump (first 32 bytes):
-      b8 be c2 3b 02 00 11 ff 22 01 00 00 00 00 ad de  ...;....".......
-      f0 33 0a 41 01 00 11 ff f0 33 0a 41 01 00 11 ff  .3.A.....3.A....
-    backtrace (crc 24eb7b3a):
-      [<00000000e211b653>] kmem_cache_alloc_node_noprof+0x269/0x2e0
-      [<000000009d0985fa>] perf_event_alloc+0x5f/0xcf0
-      [<00000000084ad4a2>] perf_event_create_kernel_counter+0x38/0x1b0
-      [<00000000fde96401>] hardlockup_detector_event_create+0x50/0xe0
-      [<0000000051183158>] watchdog_hardlockup_enable+0x17/0x70
-      [<00000000ac89727f>] softlockup_start_fn+0x15/0x40
-      ...
+Resolve the issue by using chains of logical operators, which are not
+subject to the effects of errexit.
 
-Our stress test includes CPU online and offline cycles, and updating the
-watchdog configuration.
-
-After reading the code, I found that there may be a race between cleaning up
-perf_event after updating watchdog and disabling event when the CPU goes offline:
-
-  CPU0                          CPU1                           CPU2
-  (update watchdog)                                            (hotplug offline CPU1)
-
-  ...                                                          _cpu_down(CPU1)
-  cpus_read_lock()                                             // waiting for cpu lock
-    softlockup_start_all
-      smp_call_on_cpu(CPU1)
-                                softlockup_start_fn
-                                ...
-                                  watchdog_hardlockup_enable(CPU1)
-                                    perf create E1
-                                    watchdog_ev[CPU1] = E1
-  cpus_read_unlock()
-                                                               cpus_write_lock()
-                                                               cpuhp_kick_ap_work(CPU1)
-                                cpuhp_thread_fun
-                                ...
-                                  watchdog_hardlockup_disable(CPU1)
-                                    watchdog_ev[CPU1] = NULL
-                                    dead_event[CPU1] = E1
-  __lockup_detector_cleanup
-    for each dead_events_mask
-      release each dead_event
-      /*
-       * CPU1 has not been added to
-       * dead_events_mask, then E1
-       * will not be released
-       */
-                                    CPU1 -> dead_events_mask
-    cpumask_clear(&dead_events_mask)
-    // dead_events_mask is cleared, E1 is leaked
-
-In this case, the leaked perf_event E1 matches the perf_event leak
-reported by kmemleak. Due to the low probability of problem recurrence
-(only reported once), I added some hack delays in the code:
-
-  static void __lockup_detector_reconfigure(void)
-  {
-    ...
-          watchdog_hardlockup_start();
-          cpus_read_unlock();
-  +       mdelay(100);
-          /*
-           * Must be called outside the cpus locked section to prevent
-           * recursive locking in the perf code.
-    ...
-  }
-
-  void watchdog_hardlockup_disable(unsigned int cpu)
-  {
-    ...
-                  perf_event_disable(event);
-                  this_cpu_write(watchdog_ev, NULL);
-                  this_cpu_write(dead_event, event);
-  +               mdelay(100);
-                  cpumask_set_cpu(smp_processor_id(), &dead_events_mask);
-                  atomic_dec(&watchdog_cpus);
-    ...
-  }
-
-  void hardlockup_detector_perf_cleanup(void)
-  {
-    ...
-                          perf_event_release_kernel(event);
-                  per_cpu(dead_event, cpu) = NULL;
-          }
-  +       mdelay(100);
-          cpumask_clear(&dead_events_mask);
-  }
-
-Then, simultaneously performing CPU on/off and switching watchdog, it is
-almost certain to reproduce this leak.
-
-The problem here is that releasing perf_event is not within the CPU
-hotplug read-write lock. Commit:
-
-  941154bd6937 ("watchdog/hardlockup/perf: Prevent CPU hotplug deadlock")
-
-introduced deferred release to solve the deadlock caused by calling
-get_online_cpus() when releasing perf_event. Later, commit:
-
-  efe951d3de91 ("perf/x86: Fix perf,x86,cpuhp deadlock")
-
-removed the get_online_cpus() call on the perf_event release path to solve
-another deadlock problem.
-
-Therefore, it is now possible to move the release of perf_event back
-into the CPU hotplug read-write lock, and release the event immediately
-after disabling it.
-
-Fixes: 941154bd6937 ("watchdog/hardlockup/perf: Prevent CPU hotplug deadlock")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241021193004.308303-1-lihuafei1@huawei.com
+Fixes: e37c1877ba5b1 ("scripts/selinux: modernize mdp")
+Signed-off-by: Tim Schumacher <tim.schumacher1@huawei.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nmi.h    |  4 ----
- kernel/cpu.c           |  5 -----
- kernel/watchdog.c      | 25 -------------------------
- kernel/watchdog_perf.c | 28 +---------------------------
- 4 files changed, 1 insertion(+), 61 deletions(-)
+ scripts/selinux/install_policy.sh | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/nmi.h b/include/linux/nmi.h
-index a8dfb38c9bb6f..e78fa535f61dd 100644
---- a/include/linux/nmi.h
-+++ b/include/linux/nmi.h
-@@ -17,7 +17,6 @@
- void lockup_detector_init(void);
- void lockup_detector_retry_init(void);
- void lockup_detector_soft_poweroff(void);
--void lockup_detector_cleanup(void);
+diff --git a/scripts/selinux/install_policy.sh b/scripts/selinux/install_policy.sh
+index 24086793b0d8d..db40237e60ce7 100755
+--- a/scripts/selinux/install_policy.sh
++++ b/scripts/selinux/install_policy.sh
+@@ -6,27 +6,24 @@ if [ `id -u` -ne 0 ]; then
+ 	exit 1
+ fi
  
- extern int watchdog_user_enabled;
- extern int watchdog_thresh;
-@@ -37,7 +36,6 @@ extern int sysctl_hardlockup_all_cpu_backtrace;
- static inline void lockup_detector_init(void) { }
- static inline void lockup_detector_retry_init(void) { }
- static inline void lockup_detector_soft_poweroff(void) { }
--static inline void lockup_detector_cleanup(void) { }
- #endif /* !CONFIG_LOCKUP_DETECTOR */
+-SF=`which setfiles`
+-if [ $? -eq 1 ]; then
++SF=`which setfiles` || {
+ 	echo "Could not find setfiles"
+ 	echo "Do you have policycoreutils installed?"
+ 	exit 1
+-fi
++}
  
- #ifdef CONFIG_SOFTLOCKUP_DETECTOR
-@@ -104,12 +102,10 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs);
- #if defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
- extern void hardlockup_detector_perf_stop(void);
- extern void hardlockup_detector_perf_restart(void);
--extern void hardlockup_detector_perf_cleanup(void);
- extern void hardlockup_config_perf_event(const char *str);
- #else
- static inline void hardlockup_detector_perf_stop(void) { }
- static inline void hardlockup_detector_perf_restart(void) { }
--static inline void hardlockup_detector_perf_cleanup(void) { }
- static inline void hardlockup_config_perf_event(const char *str) { }
- #endif
+-CP=`which checkpolicy`
+-if [ $? -eq 1 ]; then
++CP=`which checkpolicy` || {
+ 	echo "Could not find checkpolicy"
+ 	echo "Do you have checkpolicy installed?"
+ 	exit 1
+-fi
++}
+ VERS=`$CP -V | awk '{print $1}'`
  
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 9ee6c9145b1df..cf02a629f9902 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1452,11 +1452,6 @@ static int __ref _cpu_down(unsigned int cpu, int tasks_frozen,
+-ENABLED=`which selinuxenabled`
+-if [ $? -eq 1 ]; then
++ENABLED=`which selinuxenabled` || {
+ 	echo "Could not find selinuxenabled"
+ 	echo "Do you have libselinux-utils installed?"
+ 	exit 1
+-fi
++}
  
- out:
- 	cpus_write_unlock();
--	/*
--	 * Do post unplug cleanup. This is still protected against
--	 * concurrent CPU hotplug via cpu_add_remove_lock.
--	 */
--	lockup_detector_cleanup();
- 	arch_smt_update();
- 	return ret;
- }
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 262691ba62b7a..4dc72540c3b0f 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -347,8 +347,6 @@ static int __init watchdog_thresh_setup(char *str)
- }
- __setup("watchdog_thresh=", watchdog_thresh_setup);
- 
--static void __lockup_detector_cleanup(void);
--
- #ifdef CONFIG_SOFTLOCKUP_DETECTOR_INTR_STORM
- enum stats_per_group {
- 	STATS_SYSTEM,
-@@ -878,11 +876,6 @@ static void __lockup_detector_reconfigure(void)
- 
- 	watchdog_hardlockup_start();
- 	cpus_read_unlock();
--	/*
--	 * Must be called outside the cpus locked section to prevent
--	 * recursive locking in the perf code.
--	 */
--	__lockup_detector_cleanup();
- }
- 
- void lockup_detector_reconfigure(void)
-@@ -932,24 +925,6 @@ static inline void lockup_detector_setup(void)
- }
- #endif /* !CONFIG_SOFTLOCKUP_DETECTOR */
- 
--static void __lockup_detector_cleanup(void)
--{
--	lockdep_assert_held(&watchdog_mutex);
--	hardlockup_detector_perf_cleanup();
--}
--
--/**
-- * lockup_detector_cleanup - Cleanup after cpu hotplug or sysctl changes
-- *
-- * Caller must not hold the cpu hotplug rwsem.
-- */
--void lockup_detector_cleanup(void)
--{
--	mutex_lock(&watchdog_mutex);
--	__lockup_detector_cleanup();
--	mutex_unlock(&watchdog_mutex);
--}
--
- /**
-  * lockup_detector_soft_poweroff - Interface to stop lockup detector(s)
-  *
-diff --git a/kernel/watchdog_perf.c b/kernel/watchdog_perf.c
-index 59c1d86a73a24..2fdb96eaf4933 100644
---- a/kernel/watchdog_perf.c
-+++ b/kernel/watchdog_perf.c
-@@ -21,8 +21,6 @@
- #include <linux/perf_event.h>
- 
- static DEFINE_PER_CPU(struct perf_event *, watchdog_ev);
--static DEFINE_PER_CPU(struct perf_event *, dead_event);
--static struct cpumask dead_events_mask;
- 
- static atomic_t watchdog_cpus = ATOMIC_INIT(0);
- 
-@@ -181,36 +179,12 @@ void watchdog_hardlockup_disable(unsigned int cpu)
- 
- 	if (event) {
- 		perf_event_disable(event);
-+		perf_event_release_kernel(event);
- 		this_cpu_write(watchdog_ev, NULL);
--		this_cpu_write(dead_event, event);
--		cpumask_set_cpu(smp_processor_id(), &dead_events_mask);
- 		atomic_dec(&watchdog_cpus);
- 	}
- }
- 
--/**
-- * hardlockup_detector_perf_cleanup - Cleanup disabled events and destroy them
-- *
-- * Called from lockup_detector_cleanup(). Serialized by the caller.
-- */
--void hardlockup_detector_perf_cleanup(void)
--{
--	int cpu;
--
--	for_each_cpu(cpu, &dead_events_mask) {
--		struct perf_event *event = per_cpu(dead_event, cpu);
--
--		/*
--		 * Required because for_each_cpu() reports  unconditionally
--		 * CPU0 as set on UP kernels. Sigh.
--		 */
--		if (event)
--			perf_event_release_kernel(event);
--		per_cpu(dead_event, cpu) = NULL;
--	}
--	cpumask_clear(&dead_events_mask);
--}
--
- /**
-  * hardlockup_detector_perf_stop - Globally stop watchdog events
-  *
+ if selinuxenabled; then
+     echo "SELinux is already enabled"
 -- 
 2.39.5
 
