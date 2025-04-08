@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83592224AEB;
-	Tue,  8 Apr 2025 11:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379A216E30;
+	Tue,  8 Apr 2025 11:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112205; cv=none; b=IEd7kT/bCMNwCc9kjLYhRv/GGpoOXIAkryXYQ8incH6XF+All69d7JLHed/uuX/DTMKs7uuwPglGL2abE51V9NQexSev8z2ci7L7YqCOfrL7HGWicNkULQ1uO/6z+XnO+sQMaCkLpjue1/hasdYc7NSCPER5Is18PjXz/hOaRNU=
+	t=1744112208; cv=none; b=oW8BLF73bWkM/mJ6tNNyRyWxAnJi6LONlP/v8zdMIi/qwz8T4npMEnzk2gA4aJiDuqA0QBvH75RI36jzcvUh/kokNj3lORqChiwcrsNgc2ynnpx2OYeSYFuVs8Pt9rr8UDqeRHLH5bLxDgl25136BtMfWK1fYGaKmw4YDhMXuHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112205; c=relaxed/simple;
-	bh=oC7NEUluGyW7loqWonmEpHvcIYD3nbIl0Vwf91KLGgs=;
+	s=arc-20240116; t=1744112208; c=relaxed/simple;
+	bh=0WV5NxAKUkXdVjMpzSeBzGlJJ1l+ivv1BJ7rQSAOZ0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXV7dXk+7Dsbcd/IEg+W5U/xM2oi8GkresYisLJBRzlW/Jei4KHKkaXJVbi1y14fT8Q8vtyFxNFjwhevYT71SQMt3D9EVMOYImGOjIGf/6ue43IMZ825hb43FMp3juO0pksdqVhIJLy30j7KIA3LYyD8POmGv/IFPpcl3NldLtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD97/2un; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNcnJ3qtqvzNmLNVjy1A0tne+HcQmh9AwA7w4rEJeNBR2y1hTWHlRHWe87FS734TSnHylUWJkbCRYbn0Ufzh/5CUpkvQfjiYroHz93ONmZMBNNv3RFHQCzzs8QfCqzRfGPwpPSR4+UT/RSvGgC3D/0hcATlPu9rrMN/iJulYHGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9V/79j/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD97/2un"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C26C4CEE5;
-	Tue,  8 Apr 2025 11:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9V/79j/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96C4C4CEE5;
+	Tue,  8 Apr 2025 11:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112205;
-	bh=oC7NEUluGyW7loqWonmEpHvcIYD3nbIl0Vwf91KLGgs=;
+	s=korg; t=1744112208;
+	bh=0WV5NxAKUkXdVjMpzSeBzGlJJ1l+ivv1BJ7rQSAOZ0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qD97/2unLP4mr2nZqKr7hOgnKkOP5KEKzlOheoCvBDTZTWlpQECAhcPgRYL2Y/3mL
-	 VtatRP2EW1zvuaNhFOaLv9hqQLr1dQqHWxXqnAiVmyPWJ3P6tyPhBlbOue1G7PmZgO
-	 akZ4IAdksUr0jvFJkTFlJFzJc9lul9zaBC464vYI=
+	b=U9V/79j/9kGsZUHlF61FYx4v0Y4jrCvpI5myGTx7c2JrbS9PhnLdNiBZ0WJNxWR1E
+	 bEB7lnj5dzECHYsM3SS2jWjWMBuu8QaWE+dLbv6D/19S0/YRZzaXlEKZJkMAxuhgEe
+	 QZXIzzgVQ+vZAq9H2Wq2z1XgKjTDzDBAoqjyD2H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angelos Oikonomopoulos <angelos@igalia.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.14 713/731] arm64: Dont call NULL in do_compat_alignment_fixup()
-Date: Tue,  8 Apr 2025 12:50:10 +0200
-Message-ID: <20250408104930.858216640@linuxfoundation.org>
+	Nick Morrow <usbwifi2024@gmail.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Salah Coronya <salah.coronya@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.14 714/731] wifi: mt76: mt7921: fix kernel panic due to null pointer dereference
+Date: Tue,  8 Apr 2025 12:50:11 +0200
+Message-ID: <20250408104930.883289181@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,75 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angelos Oikonomopoulos <angelos@igalia.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-commit c28f31deeacda307acfee2f18c0ad904e5123aac upstream.
+commit adc3fd2a2277b7cc0b61692463771bf9bd298036 upstream.
 
-do_alignment_t32_to_handler() only fixes up alignment faults for
-specific instructions; it returns NULL otherwise (e.g. LDREX). When
-that's the case, signal to the caller that it needs to proceed with the
-regular alignment fault handling (i.e. SIGBUS). Without this patch, the
-kernel panics:
+Address a kernel panic caused by a null pointer dereference in the
+`mt792x_rx_get_wcid` function. The issue arises because the `deflink` structure
+is not properly initialized with the `sta` context. This patch ensures that the
+`deflink` structure is correctly linked to the `sta` context, preventing the
+null pointer dereference.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Mem abort info:
-    ESR = 0x0000000086000006
-    EC = 0x21: IABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x06: level 2 translation fault
-  user pgtable: 4k pages, 48-bit VAs, pgdp=00000800164aa000
-  [0000000000000000] pgd=0800081fdbd22003, p4d=0800081fdbd22003, pud=08000815d51c6003, pmd=0000000000000000
-  Internal error: Oops: 0000000086000006 [#1] SMP
-  Modules linked in: cfg80211 rfkill xt_nat xt_tcpudp xt_conntrack nft_chain_nat xt_MASQUERADE nf_nat nf_conntrack_netlink nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 xfrm_user xfrm_algo xt_addrtype nft_compat br_netfilter veth nvme_fa>
-   libcrc32c crc32c_generic raid0 multipath linear dm_mod dax raid1 md_mod xhci_pci nvme xhci_hcd nvme_core t10_pi usbcore igb crc64_rocksoft crc64 crc_t10dif crct10dif_generic crct10dif_ce crct10dif_common usb_common i2c_algo_bit i2c>
-  CPU: 2 PID: 3932954 Comm: WPEWebProcess Not tainted 6.1.0-31-arm64 #1  Debian 6.1.128-1
-  Hardware name: GIGABYTE MP32-AR1-00/MP32-AR1-00, BIOS F18v (SCP: 1.08.20211002) 12/01/2021
-  pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : 0x0
-  lr : do_compat_alignment_fixup+0xd8/0x3dc
-  sp : ffff80000f973dd0
-  x29: ffff80000f973dd0 x28: ffff081b42526180 x27: 0000000000000000
-  x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-  x23: 0000000000000004 x22: 0000000000000000 x21: 0000000000000001
-  x20: 00000000e8551f00 x19: ffff80000f973eb0 x18: 0000000000000000
-  x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  x11: 0000000000000000 x10: 0000000000000000 x9 : ffffaebc949bc488
-  x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : 0000000000400000 x4 : 0000fffffffffffe x3 : 0000000000000000
-  x2 : ffff80000f973eb0 x1 : 00000000e8551f00 x0 : 0000000000000001
-  Call trace:
-   0x0
-   do_alignment_fault+0x40/0x50
-   do_mem_abort+0x4c/0xa0
-   el0_da+0x48/0xf0
-   el0t_32_sync_handler+0x110/0x140
-   el0t_32_sync+0x190/0x194
-  Code: bad PC value
-  ---[ end trace 0000000000000000 ]---
+ BUG: kernel NULL pointer dereference, address: 0000000000000400
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+ CPU: 0 UID: 0 PID: 470 Comm: mt76-usb-rx phy Not tainted 6.12.13-gentoo-dist #1
+ Hardware name:  /AMD HUDSON-M1, BIOS 4.6.4 11/15/2011
+ RIP: 0010:mt792x_rx_get_wcid+0x48/0x140 [mt792x_lib]
+ RSP: 0018:ffffa147c055fd98 EFLAGS: 00010202
+ RAX: 0000000000000000 RBX: ffff8e9ecb652000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff8e9ecb652000
+ RBP: 0000000000000685 R08: ffff8e9ec6570000 R09: 0000000000000000
+ R10: ffff8e9ecd2ca000 R11: ffff8e9f22a217c0 R12: 0000000038010119
+ R13: 0000000080843801 R14: ffff8e9ec6570000 R15: ffff8e9ecb652000
+ FS:  0000000000000000(0000) GS:ffff8e9f22a00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000400 CR3: 000000000d2ea000 CR4: 00000000000006f0
+ Call Trace:
+  <TASK>
+  ? __die_body.cold+0x19/0x27
+  ? page_fault_oops+0x15a/0x2f0
+  ? search_module_extables+0x19/0x60
+  ? search_bpf_extables+0x5f/0x80
+  ? exc_page_fault+0x7e/0x180
+  ? asm_exc_page_fault+0x26/0x30
+  ? mt792x_rx_get_wcid+0x48/0x140 [mt792x_lib]
+  mt7921_queue_rx_skb+0x1c6/0xaa0 [mt7921_common]
+  mt76u_alloc_queues+0x784/0x810 [mt76_usb]
+  ? __pfx___mt76_worker_fn+0x10/0x10 [mt76]
+  __mt76_worker_fn+0x4f/0x80 [mt76]
+  kthread+0xd2/0x100
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x34/0x50
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Angelos Oikonomopoulos <angelos@igalia.com>
-Fixes: 3fc24ef32d3b ("arm64: compat: Implement misalignment fixups for multiword loads")
-Cc: <stable@vger.kernel.org> # 6.1.x
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250401085150.148313-1-angelos@igalia.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Nick Morrow <usbwifi2024@gmail.com>
+Closes: https://github.com/morrownr/USB-WiFi/issues/577
+Cc: stable@vger.kernel.org
+Fixes: 90c10286b176 ("wifi: mt76: mt7925: Update mt792x_rx_get_wcid for per-link STA")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Tested-by: Salah Coronya <salah.coronya@gmail.com>
+Link: https://patch.msgid.link/20250218033343.1999648-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/compat_alignment.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/compat_alignment.c
-+++ b/arch/arm64/kernel/compat_alignment.c
-@@ -368,6 +368,8 @@ int do_compat_alignment_fixup(unsigned l
- 		return 1;
- 	}
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -811,6 +811,7 @@ int mt7921_mac_sta_add(struct mt76_dev *
+ 	msta->deflink.wcid.phy_idx = mvif->bss_conf.mt76.band_idx;
+ 	msta->deflink.wcid.tx_info |= MT_WCID_TX_INFO_SET;
+ 	msta->deflink.last_txs = jiffies;
++	msta->deflink.sta = msta;
  
-+	if (!handler)
-+		return 1;
- 	type = handler(addr, instr, regs);
- 
- 	if (type == TYPE_ERROR || type == TYPE_FAULT)
+ 	ret = mt76_connac_pm_wake(&dev->mphy, &dev->pm);
+ 	if (ret)
 
 
