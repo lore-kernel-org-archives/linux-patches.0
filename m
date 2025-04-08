@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A212288CB;
-	Tue,  8 Apr 2025 11:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8A62288CB;
+	Tue,  8 Apr 2025 11:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111818; cv=none; b=JlI78Mek1WZrajiNXMlXh/afIYg0g8QEer4k5XDHalE7XK0E5317pmJXBdLSWRIeaep6tyjOiMwetpGQIZf7qLkIHV35/SCEk0FyXocZf69JLSVIBs2cVmrj9CU0TSCkkjvSHHmwhA0zgeQA+b+AELS5/qLRFxHRMTR8zwK2MwM=
+	t=1744111821; cv=none; b=k+S4ux2aKieeNHCgKXnPuivfoQ9kzzxXnF7IhE60aeOxIzGEI6omYvCdwOueOh3QhHM1ZPLE/u+3ISJC5x2j1k2KW26MQjDrys98NoIoqqdBdBuIkowgMPzHqLUsVC21TxU4v3NTsXHG/KinRvNpiG+ldfT8O2k6cXwWFntrNi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111818; c=relaxed/simple;
-	bh=eOssochFnRDAAS6a2lisg66NhYKkVa+QDctpauke+18=;
+	s=arc-20240116; t=1744111821; c=relaxed/simple;
+	bh=tckK6qF/pEy/4Zz9Zo/XLhzAueQDxUSCRUdXWOHQIbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcpbgx+eFiDtTb2aFk8s6vjVRR7RPn2EhS3CwuCCoeGs+lNx4rjgFC3mEy5I/psSfcgbpKU9XauVXz0SFg/hHiHn7cKMOvzdolp0viMeL/rXJeFWw3J8o5OVLF1SHyreIkkFZzmg/pkE8MJDhJuI3HCnjHfM8F3pTVGorpzogn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAmwpuez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=InQciCBs50dhIV90Fpi7YtP+Ed608/Ou4F0CZVxzehAtxebXeLCkZtt8cup8EH9imdV+Yi9oc0e82mOe5gZMFFfrvcuiRrCZcz5pz1J9prgHZErFZLs7XlN5aldlyvC3aa454Fb3Mv6cqvYaV0jVByCa99JsrR0VnPQrmxwzHxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3B4DRXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAmwpuez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1BCC4CEE5;
-	Tue,  8 Apr 2025 11:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3B4DRXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5971EC4CEE5;
+	Tue,  8 Apr 2025 11:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111818;
-	bh=eOssochFnRDAAS6a2lisg66NhYKkVa+QDctpauke+18=;
+	s=korg; t=1744111820;
+	bh=tckK6qF/pEy/4Zz9Zo/XLhzAueQDxUSCRUdXWOHQIbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAmwpuez6pIGnCOV/gaD4cPsGYtLQZ7fZj5PP28N2vfeKITAMm7T8eHB68MPsH7qv
-	 2rl0DYZYIt+iaewGI2Y1p/jsJSLfsK2Cjc5bEkiLZTunRtdFjHqVDqNFtkfS1UpNCl
-	 lfUgWOo8gLqnSjwJp5WCvEcSa4Zx9THVzdOSR5r4=
+	b=v3B4DRXIPH6+tvVeKfFeFhYwCRKgm0OES+mmcs+mBotlw0bUeYcxoBz2srSJzVH9K
+	 Mkscv7Ao7I7wVajNBE2cVRNHajOA2uIx2aTK3rp5wYi2suw2nLup+eVM9WZ8q2loHv
+	 OJEtbv5Ok26Ug0GEgPhTBVBtaisTw1jFiDg5VjJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 571/731] sched/smt: Always inline sched_smt_active()
-Date: Tue,  8 Apr 2025 12:47:48 +0200
-Message-ID: <20250408104927.555428099@linuxfoundation.org>
+Subject: [PATCH 6.14 572/731] context_tracking: Always inline ct_{nmi,irq}_{enter,exit}()
+Date: Tue,  8 Apr 2025 12:47:49 +0200
+Message-ID: <20250408104927.578428732@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,41 +57,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 09f37f2d7b21ff35b8b533f9ab8cfad2fe8f72f6 ]
+[ Upstream commit 9ac50f7311dc8b39e355582f14c1e82da47a8196 ]
 
-sched_smt_active() can be called from noinstr code, so it should always
-be inlined.  The CONFIG_SCHED_SMT version already has __always_inline.
-Do the same for its !CONFIG_SCHED_SMT counterpart.
+Thanks to CONFIG_DEBUG_SECTION_MISMATCH, empty functions can be
+generated out of line.  These can be called from noinstr code, so make
+sure they're always inlined.
 
-Fixes the following warning:
+Fixes the following warnings:
 
-  vmlinux.o: error: objtool: intel_idle_ibrs+0x13: call to sched_smt_active() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: irqentry_nmi_enter+0xa2: call to ct_nmi_enter() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: irqentry_nmi_exit+0x16: call to ct_nmi_exit() leaves .noinstr.text section
+  vmlinux.o: warning: objtool: irqentry_exit+0x78: call to ct_irq_exit() leaves .noinstr.text section
 
-Fixes: 321a874a7ef8 ("sched/smt: Expose sched_smt_present static key")
-Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 6f0e6c1598b1 ("context_tracking: Take IRQ eqs entrypoints over RCU")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Paul E. McKenney <paulmck@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/1d03907b0a247cf7fb5c1d518de378864f603060.1743481539.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/r/202503311434.lyw2Tveh-lkp@intel.com/
+Link: https://lore.kernel.org/r/8509bce3f536bcd4ae7af3a2cf6930d48c5e631a.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/d1eca076-fdde-484a-b33e-70e0d167c36d@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/smt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/context_tracking_irq.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/sched/smt.h b/include/linux/sched/smt.h
-index fb1e295e7e63e..166b19af956f8 100644
---- a/include/linux/sched/smt.h
-+++ b/include/linux/sched/smt.h
-@@ -12,7 +12,7 @@ static __always_inline bool sched_smt_active(void)
- 	return static_branch_likely(&sched_smt_present);
- }
+diff --git a/include/linux/context_tracking_irq.h b/include/linux/context_tracking_irq.h
+index c50b5670c4a52..197916ee91a4b 100644
+--- a/include/linux/context_tracking_irq.h
++++ b/include/linux/context_tracking_irq.h
+@@ -10,12 +10,12 @@ void ct_irq_exit_irqson(void);
+ void ct_nmi_enter(void);
+ void ct_nmi_exit(void);
  #else
--static inline bool sched_smt_active(void) { return false; }
-+static __always_inline bool sched_smt_active(void) { return false; }
+-static inline void ct_irq_enter(void) { }
+-static inline void ct_irq_exit(void) { }
++static __always_inline void ct_irq_enter(void) { }
++static __always_inline void ct_irq_exit(void) { }
+ static inline void ct_irq_enter_irqson(void) { }
+ static inline void ct_irq_exit_irqson(void) { }
+-static inline void ct_nmi_enter(void) { }
+-static inline void ct_nmi_exit(void) { }
++static __always_inline void ct_nmi_enter(void) { }
++static __always_inline void ct_nmi_exit(void) { }
  #endif
  
- void arch_smt_update(void);
+ #endif
 -- 
 2.39.5
 
