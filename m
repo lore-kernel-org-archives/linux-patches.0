@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEDF268FF1;
-	Tue,  8 Apr 2025 11:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C3E20CCD8;
+	Tue,  8 Apr 2025 11:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113417; cv=none; b=hrS8620+DbWCNEtvvQI+8gDx13HtOJ+JIqXi/HNdxrWREPoFENXiRlp6mEdMrPMjWa2CIPXvqLA8wP0hm3R+x4HJ4S9ru3FPbULlq4IqYThqLtcUYeV5BEQepPikKGbxbWk4FSzIIn52zRCDFFwHvvjlhTvf/VY5pDpweHeS6v4=
+	t=1744113420; cv=none; b=ucJq0xwHL+9g/XJlUEdiIFNR3lYJnrO2XDtf0cjH1BCwRxxOSzMCIBa1H+R8XOL6r+zsHNTQozsm8aPrYhH4Rbdi/gqoGYpWH4WLBiZDsp33z8ekeLMaMFlrpI30w/W0FEBfHBG8LVJ10D4dvc3CyyLFGqq3OfaXqq57C63/vEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113417; c=relaxed/simple;
-	bh=dG3mLK6r/aPABl8+ArgVBmV7zLlkblInUXcqRutkk/k=;
+	s=arc-20240116; t=1744113420; c=relaxed/simple;
+	bh=H6qiwYvKq4GsYSLil7iisyLEWa6YaioZL2hnwLeB6fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYArJmIYR8lEFVjzisqCjVoPz6+mIb/DQ4d73a5mSAne3DmqSpgpOVonOjhBt1GNogZd4MqukOi1TRNkJySzOVe627bT3LHOicN86np8iHFKqqCtDIj9D1hQBh9mB8yvjkHqff8SB82HWaLB8wG1SAso5fKiTnKt8LtZDCnO8LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKh9zY6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHX1JEbWP5d3nr74ULCmYGZtnWG93GFKEYftj9x3vKLOoXZiZbwYiSENBGLbXy0VKexKSIEv6GNClmmYEwzGp7O+6iwl2ys3LJkVUgo08ytV+5TKab41d9LEq2O+laz/owvwJjXUwcB4DZT7GeGyNdqwxr8yQZq7jkFtvwyEv20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvbX0wvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKh9zY6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A830AC4CEE5;
-	Tue,  8 Apr 2025 11:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvbX0wvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7CCC4CEE5;
+	Tue,  8 Apr 2025 11:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113417;
-	bh=dG3mLK6r/aPABl8+ArgVBmV7zLlkblInUXcqRutkk/k=;
+	s=korg; t=1744113419;
+	bh=H6qiwYvKq4GsYSLil7iisyLEWa6YaioZL2hnwLeB6fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKh9zY6jeslU/iOkp00+2mpSzeuadkY5UEj1HdoT3N6UXAH27DQQVryE5laZwQHNn
-	 fFllIRBszls5ucl1SnGS+z2GwfWcRCAgAsBMc4hphHZDNIlpsLNGOAswCTL7TUz9pM
-	 TroBdL3dkb2+RLf4NJt7zwGkRWIsBpiSQESXFQqc=
+	b=CvbX0wvUIZTcQFiEWve6BpKguZrvFaliibzKbB4p58eZDZzxJr4ASKlDC21g1c4ak
+	 j6uC4r4PEy7WlGEIqNCSB2vU4CVUe/KRwiRgvZf6p6ugQIh6yraONVaxaVwEgXbdWV
+	 SaurkVluDrTNPNQ6cV+HZiOb5DuLxm4tmV55qgLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 112/268] iio: accel: msa311: Fix failure to release runtime pm if direct mode claim fails.
-Date: Tue,  8 Apr 2025 12:48:43 +0200
-Message-ID: <20250408104831.521586595@linuxfoundation.org>
+Subject: [PATCH 6.6 113/268] perf arm-spe: Fix load-store operation checking
+Date: Tue,  8 Apr 2025 12:48:44 +0200
+Message-ID: <20250408104831.546892932@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,97 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 60a0cf2ebab92011055ab7db6553c0fc3c546938 ]
+[ Upstream commit e1d47850bbf79a541c9b3bacdd562f5e0112274d ]
 
-Reorder the claiming of direct mode and runtime pm calls to simplify
-handling a little.  For correct error handling, after the reorder
-iio_device_release_direct_mode() must be claimed in an error occurs
-in pm_runtime_resume_and_get()
+The ARM_SPE_OP_LD and ARM_SPE_OP_ST operations are secondary operation
+type, they are overlapping with other second level's operation types
+belonging to SVE and branch operations.  As a result, a non load-store
+operation can be parsed for data source and memory sample.
 
-Fixes: 1ca2cfbc0c33 ("iio: add MEMSensing MSA311 3-axis accelerometer driver")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250217140135.896574-7-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To fix the issue, this commit introduces a is_ldst_op() macro for
+checking LDST operation, and apply the checking when synthesize data
+source and memory samples.
+
+Fixes: a89dbc9b988f ("perf arm-spe: Set sample's data source field")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250304111240.3378214-7-leo.yan@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/msa311.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ tools/perf/util/arm-spe.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/msa311.c b/drivers/iio/accel/msa311.c
-index 6ddcc3c2f8409..5927df633e1f9 100644
---- a/drivers/iio/accel/msa311.c
-+++ b/drivers/iio/accel/msa311.c
-@@ -593,23 +593,25 @@ static int msa311_read_raw_data(struct iio_dev *indio_dev,
- 	__le16 axis;
- 	int err;
+diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
+index afbd5869f6bff..9848310cee5f3 100644
+--- a/tools/perf/util/arm-spe.c
++++ b/tools/perf/util/arm-spe.c
+@@ -37,6 +37,8 @@
+ #include "../../arch/arm64/include/asm/cputype.h"
+ #define MAX_TIMESTAMP (~0ULL)
  
--	err = pm_runtime_resume_and_get(dev);
-+	err = iio_device_claim_direct_mode(indio_dev);
- 	if (err)
- 		return err;
- 
--	err = iio_device_claim_direct_mode(indio_dev);
--	if (err)
-+	err = pm_runtime_resume_and_get(dev);
-+	if (err) {
-+		iio_device_release_direct_mode(indio_dev);
- 		return err;
-+	}
- 
- 	mutex_lock(&msa311->lock);
- 	err = msa311_get_axis(msa311, chan, &axis);
- 	mutex_unlock(&msa311->lock);
- 
--	iio_device_release_direct_mode(indio_dev);
--
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
-+	iio_device_release_direct_mode(indio_dev);
++#define is_ldst_op(op)		(!!((op) & ARM_SPE_OP_LDST))
 +
- 	if (err) {
- 		dev_err(dev, "can't get axis %s (%pe)\n",
- 			chan->datasheet_name, ERR_PTR(err));
-@@ -755,10 +757,6 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
- 	unsigned int odr;
- 	int err;
+ struct arm_spe {
+ 	struct auxtrace			auxtrace;
+ 	struct auxtrace_queues		queues;
+@@ -520,6 +522,10 @@ static u64 arm_spe__synth_data_source(const struct arm_spe_record *record, u64 m
+ 	union perf_mem_data_src	data_src = { .mem_op = PERF_MEM_OP_NA };
+ 	bool is_neoverse = is_midr_in_range_list(midr, neoverse_spe);
  
--	err = pm_runtime_resume_and_get(dev);
--	if (err)
--		return err;
--
- 	/*
- 	 * Sampling frequency changing is prohibited when buffer mode is
- 	 * enabled, because sometimes MSA311 chip returns outliers during
-@@ -768,6 +766,12 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
- 	if (err)
- 		return err;
- 
-+	err = pm_runtime_resume_and_get(dev);
-+	if (err) {
-+		iio_device_release_direct_mode(indio_dev);
-+		return err;
-+	}
++	/* Only synthesize data source for LDST operations */
++	if (!is_ldst_op(record->op))
++		return 0;
 +
- 	err = -EINVAL;
- 	for (odr = 0; odr < ARRAY_SIZE(msa311_odr_table); odr++)
- 		if (val == msa311_odr_table[odr].integral &&
-@@ -778,11 +782,11 @@ static int msa311_write_samp_freq(struct iio_dev *indio_dev, int val, int val2)
- 			break;
- 		}
- 
--	iio_device_release_direct_mode(indio_dev);
--
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
- 
-+	iio_device_release_direct_mode(indio_dev);
-+
- 	if (err)
- 		dev_err(dev, "can't update frequency (%pe)\n", ERR_PTR(err));
- 
+ 	if (record->op & ARM_SPE_OP_LD)
+ 		data_src.mem_op = PERF_MEM_OP_LOAD;
+ 	else if (record->op & ARM_SPE_OP_ST)
+@@ -619,7 +625,7 @@ static int arm_spe_sample(struct arm_spe_queue *speq)
+ 	 * When data_src is zero it means the record is not a memory operation,
+ 	 * skip to synthesize memory sample for this case.
+ 	 */
+-	if (spe->sample_memory && data_src) {
++	if (spe->sample_memory && is_ldst_op(record->op)) {
+ 		err = arm_spe__synth_mem_sample(speq, spe->memory_id, data_src);
+ 		if (err)
+ 			return err;
 -- 
 2.39.5
 
