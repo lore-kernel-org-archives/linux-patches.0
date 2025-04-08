@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5364C2641CC;
-	Tue,  8 Apr 2025 11:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E665FA94A;
+	Tue,  8 Apr 2025 11:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112889; cv=none; b=UZFjewAW2ASCEX6PVD2fC6C+NEi1JBGEHavO2ue2bUWlj5GxQVl44ujXZn6p+Q/0WTsvGC50ctkN64nsk+YRsEvNa/r8j5vqT0Ql6/HI4MGY1ASr6kpIbD7vpi03mKrcHz6E/9vptxLWj+NKjI5zKJOB0lFR+xuAkFqYG92U7ow=
+	t=1744112892; cv=none; b=eMt9Ho9ugaMVjnhaM1Gi5SHpCRCquuYaJTU732pIH9FzQKnmwv/WHrx0+63HL29k59zEnUPxDk4pFQskpVxOW0eH1mWN5BtIazQLti26PlH2l+4QrkvrnLMLyg6qZixjnyu8wzd+H21PZAiyvy9C7XJ0j046IWanfFsUf8XgGsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112889; c=relaxed/simple;
-	bh=+ke/sdlulmwT2eljjKvKfathajamL2aDsH7OVTZ8zTM=;
+	s=arc-20240116; t=1744112892; c=relaxed/simple;
+	bh=GZ6Oz9lvVNaSo/y87dNr1wxiwc+ZNrC5uTnElfEsuCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnGasiOIxR46vwcfLiOdg6WT/eAlX0uL/PoTJWmwZWIQrpzFoi6arjPofvO2HQFeDsxuWW947XfWnMFLUSwR3c0qt4RQ/9VgtuEf7oX52rJpqkx4vo6GGIZkb6OjVXsuC8RxqaJ3KYBqfD9rm4O7DarAtr3A2qMQ8TG1qJ8LFKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLRsnHvF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/I0AaFBBi6hltupCEAdXheSr2cZNZ2VXEZoQIFaGj59BoL83t8zQFtuscQUD3aZUJLM4HOe5xQWKpnrCaUvonwN0u0t3WVuKt+hJLtLxlwSA0wndzuMtcyPgnQeBAEwrun5WXOJBoCBfv7+6ZsGkaNHx974+6wzGdlBG9KzVs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHr54/gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLRsnHvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B8CC4CEE5;
-	Tue,  8 Apr 2025 11:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHr54/gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787BBC4CEE5;
+	Tue,  8 Apr 2025 11:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112889;
-	bh=+ke/sdlulmwT2eljjKvKfathajamL2aDsH7OVTZ8zTM=;
+	s=korg; t=1744112891;
+	bh=GZ6Oz9lvVNaSo/y87dNr1wxiwc+ZNrC5uTnElfEsuCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLRsnHvFIvGrfpPFyDFvZAgKmAL/+IVKRASow/EcZlctcwMFmKK4P2MbSUUieW2Vl
-	 EIO4vJxxtyoWpvguJnwttvzDkfp0w56LgxyhgsOC9DjkUd6b3sLec9CoVhMXt5nSwQ
-	 EksRjyLxNW53WYrCVWrxCx1YEpMgnKYwZQFfaPQA=
+	b=VHr54/gcjjVO/gynQJvlWvdDHiN2JfZg787P5vRq0EXpEovBmfOL+w8+9Z85Ak40O
+	 AuIX936IHBEnb0YPGKJXGek0Av8ArT3ZBFOJK/Gd52MCUhmrGD/KUpJUqobCOvNikt
+	 Pr5B/olNitumZeLzVlKPjk4FsUWXtWhxPOISK/sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 235/279] spufs: fix a leak on spufs_new_file() failure
-Date: Tue,  8 Apr 2025 12:50:18 +0200
-Message-ID: <20250408104832.722426068@linuxfoundation.org>
+Subject: [PATCH 5.15 209/279] perf python: Check if there is space to copy all the event
+Date: Tue,  8 Apr 2025 12:49:52 +0200
+Message-ID: <20250408104831.984971831@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,38 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit d1ca8698ca1332625d83ea0d753747be66f9906d ]
+[ Upstream commit 89aaeaf84231157288035b366cb6300c1c6cac64 ]
 
-It's called from spufs_fill_dir(), and caller of that will do
-spufs_rmdir() in case of failure.  That does remove everything
-we'd managed to create, but... the problem dentry is still
-negative.  IOW, it needs to be explicitly dropped.
+The pyrf_event__new() method copies the event obtained from the perf
+ring buffer to a structure that will then be turned into a python object
+for further consumption, so it copies perf_event.header.size bytes to
+its 'event' member:
 
-Fixes: 3f51dd91c807 "[PATCH] spufs: fix spufs_fill_dir error path"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+  $ pahole -C pyrf_event /tmp/build/perf-tools-next/python/perf.cpython-312-x86_64-linux-gnu.so
+  struct pyrf_event {
+  	PyObject                   ob_base;              /*     0    16 */
+  	struct evsel *             evsel;                /*    16     8 */
+  	struct perf_sample         sample;               /*    24   312 */
+
+  	/* XXX last struct has 7 bytes of padding, 2 holes */
+
+  	/* --- cacheline 5 boundary (320 bytes) was 16 bytes ago --- */
+  	union perf_event           event;                /*   336  4168 */
+
+  	/* size: 4504, cachelines: 71, members: 4 */
+  	/* member types with holes: 1, total: 2 */
+  	/* paddings: 1, sum paddings: 7 */
+  	/* last cacheline: 24 bytes */
+  };
+
+  $
+
+It was doing so without checking if the event just obtained has more
+than that space, fix it.
+
+This isn't a proper, final solution, as we need to support larger
+events, but for the time being we at least bounds check and document it.
+
+Fixes: 877108e42b1b9ba6 ("perf tools: Initial python binding")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250312203141.285263-7-acme@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/cell/spufs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/python.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
-index ed37a93bf858a..1095be5186ebf 100644
---- a/arch/powerpc/platforms/cell/spufs/inode.c
-+++ b/arch/powerpc/platforms/cell/spufs/inode.c
-@@ -190,8 +190,10 @@ static int spufs_fill_dir(struct dentry *dir,
- 			return -ENOMEM;
- 		ret = spufs_new_file(dir->d_sb, dentry, files->ops,
- 					files->mode & mode, files->size, ctx);
--		if (ret)
-+		if (ret) {
-+			dput(dentry);
- 			return ret;
-+		}
- 		files++;
- 	}
- 	return 0;
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index 42810b63125a9..b9fd7edfbb3cc 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -585,6 +585,11 @@ static PyObject *pyrf_event__new(union perf_event *event)
+ 	      event->header.type == PERF_RECORD_SWITCH_CPU_WIDE))
+ 		return NULL;
+ 
++	// FIXME this better be dynamic or we need to parse everything
++	// before calling perf_mmap__consume(), including tracepoint fields.
++	if (sizeof(pevent->event) < event->header.size)
++		return NULL;
++
+ 	ptype = pyrf_event__type[event->header.type];
+ 	pevent = PyObject_New(struct pyrf_event, ptype);
+ 	if (pevent != NULL)
 -- 
 2.39.5
 
