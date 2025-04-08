@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941AD26A1AB;
-	Tue,  8 Apr 2025 12:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E23A26A0FF;
+	Tue,  8 Apr 2025 12:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113879; cv=none; b=cIk7wY3IBwFN4NjlXsfoNk10BNdma1lWqZbnrV6KAPMp4Iv9qXi2hqDwiddkMvpD+Zp75FspOyH/kCZnxm29RKpJSLyDKg9mpupUl2ENZPNLiuILQOzTbTrxBTEt8a2/SOiay22WoPeFpwhVir55Elr2jAwkDJzCUL2guktAKME=
+	t=1744113882; cv=none; b=qv1Dqqfp/Ah8UvORT+LfsvH08cdxakRrvdtLp5WL6iWDdag0lpljFt9RQMmi+l+fkGQjE+Z7sxsMwxxnFOcIV7LzahOCL+r2Xsmq/XM0Wq473gf0sugiSpQRXZ1nm/inBJdAKL0ds0vQUMmRqtUMndv+8VcieV6Hw578PouanE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113879; c=relaxed/simple;
-	bh=aND2NqkBZo4/TN7oa5lAFcZPy0/nk6xQb9GFfnTaxPA=;
+	s=arc-20240116; t=1744113882; c=relaxed/simple;
+	bh=Lr2Ybn2E8byvIOHvATVonyI59TIoY+ab0aMCbwuvJ8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCKBbdlcIPaGJPpbv0tru/KFuJdMmuwr/+KneF6qU0RxR9S+R1JAg7jqg9l7uit/eXAm+Vw5X+lvfukhPzUSkIBJ38I/r1WFBfq2z6EhxzShkyX8VG/PEzduabhX/Z1FUWvxuN4DO8OqFC7I4SaWF9wnV+dNLHMDewwROoF5BfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woE3h+/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OWXacChkwHkoPZeSpOyLfNDSveNSmd/+jbkNCoeNkBB12EUzjX/P9146DZ1/RjKMGO0GudRwgi+Hw3ZGRSLSRbnZ+BlazcOsUJQEemWpzVgDTrswga/xkeuE7jmid/VLaopSQgaSfrrFKDj74htPSEIncAS4bu2XHq2C4nISACo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcA64aa4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woE3h+/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F70EC4CEE5;
-	Tue,  8 Apr 2025 12:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcA64aa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46E1C4CEE5;
+	Tue,  8 Apr 2025 12:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113879;
-	bh=aND2NqkBZo4/TN7oa5lAFcZPy0/nk6xQb9GFfnTaxPA=;
+	s=korg; t=1744113882;
+	bh=Lr2Ybn2E8byvIOHvATVonyI59TIoY+ab0aMCbwuvJ8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woE3h+/+8c39nbhiY77yDB32fnxulGRRJ7MH2uoTgaHV8e5v6Pn1HAR1G0kBcCKvN
-	 6n3sYE8BvGPzlWBkJFIrvhv5/tvnWjX8O+yIo+7Y77zldP1x63KfoSjNLU59rYGUze
-	 Ms7IjwPXm1kEGkAcTWQ/jhXBZF4EfdOBw9ODE2XQ=
+	b=xcA64aa4k99uw/KF4CHIgcuJLJdwaywECVZK1CirbEnE0f4jk7ZSx4HV2ciRAzcs6
+	 DxTLAGhjpN6VOkct19GhBd8CRR8QEXGbf0nPS0mwVj/sZqRhlxYT/C1qe7zo89XUKd
+	 uMkyGCyjRhS6Sp25mgF30jfQjshc4zqiLSxyNW8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 054/154] RDMA/hns: Fix wrong value of max_sge_rd
-Date: Tue,  8 Apr 2025 12:49:55 +0200
-Message-ID: <20250408104817.017074854@linuxfoundation.org>
+Subject: [PATCH 5.4 055/154] Bluetooth: Fix error code in chan_alloc_skb_cb()
+Date: Tue,  8 Apr 2025 12:49:56 +0200
+Message-ID: <20250408104817.049362776@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,36 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6b5e41a8b51fce520bb09bd651a29ef495e990de ]
+[ Upstream commit 72d061ee630d0dbb45c2920d8d19b3861c413e54 ]
 
-There is no difference between the sge of READ and non-READ
-operations in hns RoCE. Set max_sge_rd to the same value as
-max_send_sge.
+The chan_alloc_skb_cb() function is supposed to return error pointers on
+error.  Returning NULL will lead to a NULL dereference.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250311084857.3803665-8-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/6lowpan.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 70991649dc693..4c5179e45dadc 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -198,7 +198,7 @@ static int hns_roce_query_device(struct ib_device *ib_dev,
- 				  IB_DEVICE_RC_RNR_NAK_GEN;
- 	props->max_send_sge = hr_dev->caps.max_sq_sg;
- 	props->max_recv_sge = hr_dev->caps.max_rq_sg;
--	props->max_sge_rd = 1;
-+	props->max_sge_rd = hr_dev->caps.max_sq_sg;
- 	props->max_cq = hr_dev->caps.num_cqs;
- 	props->max_cqe = hr_dev->caps.max_cqes;
- 	props->max_mr = hr_dev->caps.num_mtpts;
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index bccad8c048dad..12052b7664414 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -847,11 +847,16 @@ static struct sk_buff *chan_alloc_skb_cb(struct l2cap_chan *chan,
+ 					 unsigned long hdr_len,
+ 					 unsigned long len, int nb)
+ {
++	struct sk_buff *skb;
++
+ 	/* Note that we must allocate using GFP_ATOMIC here as
+ 	 * this function is called originally from netdev hard xmit
+ 	 * function in atomic context.
+ 	 */
+-	return bt_skb_alloc(hdr_len + len, GFP_ATOMIC);
++	skb = bt_skb_alloc(hdr_len + len, GFP_ATOMIC);
++	if (!skb)
++		return ERR_PTR(-ENOMEM);
++	return skb;
+ }
+ 
+ static void chan_suspend_cb(struct l2cap_chan *chan)
 -- 
 2.39.5
 
