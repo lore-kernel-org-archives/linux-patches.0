@@ -1,47 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DC02686B9;
-	Tue,  8 Apr 2025 12:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F93F2676CF;
+	Tue,  8 Apr 2025 12:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114237; cv=none; b=WDMfIrhCy9r2n9pLvW1u066jvLdfXj0I4toak/NyCTsIHUYh3U8YpMhuLC22KvxemH4CeP2O64UuGV8t7+o1vseRA8jS/sPxxTE5X0TKNDwm7TgKdkeBqzctMsaH8yphTaGcNFO32pPQLpuTWosebOqjlKMnFQMNfZDfQb1vOp8=
+	t=1744114240; cv=none; b=GjNJ+nW69lxDVhg92o6JGavo+7wb71dbGEXBtAQkVpKfTynNuAtP9RDsNnTw64EJGdf8OqYsIw89N7+J9L7FqcB/JEKSo9jWEEwH5i6p5wJfpaMFr0p+lp7q+yJxP6yG9D3hIMPc8+cL3wv5nJ4URWFS/sONBXHj4Y8ACDQljAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114237; c=relaxed/simple;
-	bh=HJqqzlJ+JLi1fHCxsrZfthrgpUngEPpvqD4LAJVK1no=;
+	s=arc-20240116; t=1744114240; c=relaxed/simple;
+	bh=B+MFZA0AVAKSjY1s0LfoF6OaFxmoUZTO1VXDggwfG6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVOP4/C732CGAp2P231pR77K0uIthVN4AAbcPqi+R15rkAiA507SzW7xJ1RD8N/V0yYWavTR6SkNGU8bX41uai/3iOCbpbDc//z81GLGBf/ZxIl3QQcFddCjbUDs3077W5uOuuGQn79jJVvIZMRFYMy1CTugvzS/3/JR9Ld8uV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIo/5I33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qktJUo27mA6aFdMoeQ9EmLDBmL5EDq4ddTxypHBsPtTA8o9uqh602PKnhcUafCmY6nj9PHVoYjcgkM7WPt85Z2q6WqsZY+boc7AORuJ2dNpMJaq4g4FLwXQsTnUZH1I94gx8XnjSRX6x6GA7zK8IQn/TIyTjW22Xt9S4IYu6Lp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOC5O5if; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIo/5I33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B0EC4CEE5;
-	Tue,  8 Apr 2025 12:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOC5O5if"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29236C4CEE5;
+	Tue,  8 Apr 2025 12:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114237;
-	bh=HJqqzlJ+JLi1fHCxsrZfthrgpUngEPpvqD4LAJVK1no=;
+	s=korg; t=1744114239;
+	bh=B+MFZA0AVAKSjY1s0LfoF6OaFxmoUZTO1VXDggwfG6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIo/5I33VtIJq3d04IFn/jbW70yYGo4b4SREDGXK4kZho0KwBZ8EY/d95HiDTGOV/
-	 q21W7XTjfIL0tHS5rFyPcBiAH5hAjE+qmNijiqM1jXZf4vcORH6osGxxZ3jiiAYafx
-	 R9MoAKkjIVB5UaCDXHwPiwcTH18VTQKYV5iQIizk=
+	b=iOC5O5ifLsCkkiGppb3jcUarityq8N6uuHmDs3pydTuC6SMf3lj2aQfIKp/n5Yax6
+	 MPKq7BTKJ4jbi6/RAKOVZ0VBQaSIWWRojPPdNdjKDRzqN0EAIJG01UMXaSo4sF5PwN
+	 o9BmAz1DNojPUoaTO8vEq6YhKyYCS+NSfdV2osFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 031/499] arm64: realm: Use aliased addresses for device DMA to shared buffers
-Date: Tue,  8 Apr 2025 12:44:03 +0200
-Message-ID: <20250408104852.020634676@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	David Hildenbrand <david@redhat.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Peter Newman <peternewman@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Carl Worth <carl@os.amperecomputing.com>,
+	Amit Singh Tomar <amitsinght@marvell.com>,
+	Shanker Donthineni <sdonthineni@nvidia.com>
+Subject: [PATCH 6.13 032/499] x86/resctrl: Fix allocation of cleanest CLOSID on platforms with no monitors
+Date: Tue,  8 Apr 2025 12:44:04 +0200
+Message-ID: <20250408104852.044398454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -60,64 +61,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: James Morse <james.morse@arm.com>
 
-[ Upstream commit 7d953a06241624ee2efb172d037a4168978f4147 ]
+[ Upstream commit a121798ae669351ec0697c94f71c3a692b2a755b ]
 
-When a device performs DMA to a shared buffer using physical addresses,
-(without Stage1 translation), the device must use the "{I}PA address" with the
-top bit set in Realm. This is to make sure that a trusted device will be able
-to write to shared buffers as well as the protected buffers. Thus, a Realm must
-always program the full address including the "protection" bit, like AMD SME
-encryption bits.
+Commit
 
-Enable this by providing arm64 specific dma_addr_{encrypted, canonical}
-helpers for Realms. Please note that the VMM needs to similarly make sure that
-the SMMU Stage2 in the Non-secure world is setup accordingly to map IPA at the
-unprotected alias.
+  6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
 
-Cc: Will Deacon <will@kernel.org>
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Fixes: 42be24a4178f ("arm64: Enable memory encrypt for Realms")
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250227144150.1667735-4-suzuki.poulose@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+added logic that causes resctrl to search for the CLOSID with the fewest dirty
+cache lines when creating a new control group, if requested by the arch code.
+This depends on the values read from the llc_occupancy counters. The logic is
+applicable to architectures where the CLOSID effectively forms part of the
+monitoring identifier and so do not allow complete freedom to choose an unused
+monitoring identifier for a given CLOSID.
+
+This support missed that some platforms may not have these counters.  This
+causes a NULL pointer dereference when creating a new control group as the
+array was not allocated by dom_data_init().
+
+As this feature isn't necessary on platforms that don't have cache occupancy
+monitors, add this to the check that occurs when a new control group is
+allocated.
+
+Fixes: 6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Carl Worth <carl@os.amperecomputing.com> # arm64
+Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Tested-by: Peter Newman <peternewman@google.com>
+Tested-by: Amit Singh Tomar <amitsinght@marvell.com> # arm64
+Tested-by: Shanker Donthineni <sdonthineni@nvidia.com> # arm64
+Tested-by: Babu Moger <babu.moger@amd.com>
+Link: https://lore.kernel.org/r/20250311183715.16445-2-james.morse@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/mem_encrypt.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/mem_encrypt.h b/arch/arm64/include/asm/mem_encrypt.h
-index f8f78f622dd2c..a2a1eeb36d4b5 100644
---- a/arch/arm64/include/asm/mem_encrypt.h
-+++ b/arch/arm64/include/asm/mem_encrypt.h
-@@ -21,4 +21,15 @@ static inline bool force_dma_unencrypted(struct device *dev)
- 	return is_realm_world();
- }
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index d906a1cd84917..9c1b26f2eb795 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -148,7 +148,8 @@ static int closid_alloc(void)
  
-+/*
-+ * For Arm CCA guests, canonical addresses are "encrypted", so no changes
-+ * required for dma_addr_encrypted().
-+ * The unencrypted DMA buffers must be accessed via the unprotected IPA,
-+ * "top IPA bit" set.
-+ */
-+#define dma_addr_unencrypted(x)		((x) | PROT_NS_SHARED)
-+
-+/* Clear the "top" IPA bit while converting back */
-+#define dma_addr_canonical(x)		((x) & ~PROT_NS_SHARED)
-+
- #endif	/* __ASM_MEM_ENCRYPT_H */
+ 	lockdep_assert_held(&rdtgroup_mutex);
+ 
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID) &&
++	    is_llc_occupancy_enabled()) {
+ 		cleanest_closid = resctrl_find_cleanest_closid();
+ 		if (cleanest_closid < 0)
+ 			return cleanest_closid;
 -- 
 2.39.5
 
