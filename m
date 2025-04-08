@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1ADE268684;
-	Tue,  8 Apr 2025 12:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92832698AE;
+	Tue,  8 Apr 2025 12:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116407; cv=none; b=ku09+8JaaRfZyUPcJGHaJtcgXLeyGbF+9LoLtvxjXDTEWcBd8qQr3fgEpc7y+C8wR/0ewqvbDXAYUTAgNoIkLQQ0gCV1bjSOKvg+1FzUMl6212W2T4SGN1PY0i5ENQLsKuaE+OVq70UeR3VAX1Q8S3Z75pZHUryBK8rHk2p8QIk=
+	t=1744116410; cv=none; b=k53tUcuy7yzmWjX4RnWiSZOA/jMabcGIkfyIfgIJO785bs0gFNxrvcTmDlTiPz7EMfU9S4L79j5DNQok5fEq91wF/cRh+BNy8i3CugvtQziguUgD4WyBjhGXO2D+Ob9/26aHydQlIMpXLzaL2LH0qC3CaHKFnWPG+Gr3mWMLE4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116407; c=relaxed/simple;
-	bh=TnHLQZCbrUho6gNuaa+d2oMR6VL9l4EtXovnfGeWthI=;
+	s=arc-20240116; t=1744116410; c=relaxed/simple;
+	bh=/fOxvtsmGx5riNvoEY0LrhTLA+0eajNGzxqSeK3S8Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVx6OzSTMqU/sok4Kh6iInSE9NZfvElRYqlyw0POz7elW9AefMGS/arKgqGkNjW2MdL61LO1uHcbRrj/h2mSXs/GjOW+JTkEHNhEZGJAeF9DHyC15BlODAJF3bmzbDwXX8vhmHT60FENHRn4SuHn7lkDi70azTK02V1hSc1egeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwJLTQ6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AzbBfiZI1dEbaOP6Q7A6jHp49yn6r3s/+A0Z13KHQe7FLxrnC/e0bZI63VjxI0S6u+6SywFenRg4VRD3v/sMruWMFzI0stwvLsJTU5wrWdOHdX+rs4hkB+0RI4yY1ooARftTN5+tgJ+F4+VyPz2LVr80A7tpuJIJHR+JKvlUm8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXfjJi4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwJLTQ6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B22CC4CEE5;
-	Tue,  8 Apr 2025 12:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXfjJi4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42E4C4CEE5;
+	Tue,  8 Apr 2025 12:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116407;
-	bh=TnHLQZCbrUho6gNuaa+d2oMR6VL9l4EtXovnfGeWthI=;
+	s=korg; t=1744116410;
+	bh=/fOxvtsmGx5riNvoEY0LrhTLA+0eajNGzxqSeK3S8Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwJLTQ6qZbnFPmjD28s9oCo1bzS3cWSwtuJHoEfVC1n8gKKjJHKcsDsnOlI/H98mI
-	 SlHbd+VhA1a3uqvxEhg9H68Icg3chHkyEIDLZ8kwFs2BdLFN6nbyshMm3E/9TK+OQS
-	 0Tj8o2eVoxCQwUUH9tXLPu5ZXpdispLB4BMqh+S8=
+	b=lXfjJi4DRS/Ivqby/R2YWDlm4TII9WM5joC/dx/tC87OS4HR+Ot2TInUInYyh2i1s
+	 05CevhlqduwSqb7looU3zuW3Cy64fRKCnu+obY2gISiGJSM3X7R8TF7h6sB+0YatAr
+	 FobMPYNT04vb2NuK8r31+tJx1B9h4vwihjRuRcUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/423] pinctrl: renesas: rzg2l: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:47:34 +0200
-Message-ID: <20250408104848.708039506@linuxfoundation.org>
+Subject: [PATCH 6.12 093/423] fbdev: au1100fb: Move a variable assignment behind a null pointer check
+Date: Tue,  8 Apr 2025 12:46:59 +0200
+Message-ID: <20250408104847.907321515@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -46,46 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit a5779e625e2b377f16a6675c432aaf299ce5028c ]
+[ Upstream commit 2df2c0caaecfd869b49e14f2b8df822397c5dd7f ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+The address of a data structure member was determined before
+a corresponding null pointer check in the implementation of
+the function “au1100fb_setmode”.
 
-Call into of_node_put() to rectify that.
+This issue was detected by using the Coccinelle software.
 
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-3-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 3b495f2bb749 ("Au1100 FB driver uplift for 2.6.")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/au1100fb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 47e6552c3751d..d90685cfe2e1a 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -2583,6 +2583,8 @@ static int rzg2l_gpio_register(struct rzg2l_pinctrl *pctrl)
- 	if (ret)
- 		return dev_err_probe(pctrl->dev, ret, "Unable to parse gpio-ranges\n");
+diff --git a/drivers/video/fbdev/au1100fb.c b/drivers/video/fbdev/au1100fb.c
+index 840f221607635..6251a6b07b3a1 100644
+--- a/drivers/video/fbdev/au1100fb.c
++++ b/drivers/video/fbdev/au1100fb.c
+@@ -137,13 +137,15 @@ static int au1100fb_fb_blank(int blank_mode, struct fb_info *fbi)
+ 	 */
+ int au1100fb_setmode(struct au1100fb_device *fbdev)
+ {
+-	struct fb_info *info = &fbdev->info;
++	struct fb_info *info;
+ 	u32 words;
+ 	int index;
  
-+	of_node_put(of_args.np);
+ 	if (!fbdev)
+ 		return -EINVAL;
+ 
++	info = &fbdev->info;
 +
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins)
- 		return dev_err_probe(pctrl->dev, -EINVAL,
+ 	/* Update var-dependent FB info */
+ 	if (panel_is_active(fbdev->panel) || panel_is_color(fbdev->panel)) {
+ 		if (info->var.bits_per_pixel <= 8) {
 -- 
 2.39.5
 
