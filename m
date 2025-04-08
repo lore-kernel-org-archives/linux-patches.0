@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4556327781F;
-	Tue,  8 Apr 2025 12:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE4A26B943;
+	Tue,  8 Apr 2025 12:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116870; cv=none; b=qUqlDTo+NzIgAvtrFcxwL9kqz9m231f18hZSKDNQBbKRp1Y8x++nP4guqXlBNRUcmLMzb5BIXg8OO1IrGk6m6R7/rnt0t+oUSMKkcRGTfhxmGZlIYyvVFdj3rtufvAGA+T32GOUrOUxvn772VK9C6vxAePwlyoYttbxlp+8zP3Y=
+	t=1744116873; cv=none; b=LSumdQ7xklIZiT4MK+DWCNa++RwOY0eunRXPo5ZYDBsYItEn2NXqeuKv+SGQgzKdo6vCjPuY6DuqxoBDOPkaA43bQDaRra9biVWd9b+Vtie6YThGzKP/6tZao+NfYY2M7N0X9PWcLXPt5tj2WpRR+T/R1neDPL+ulvOOgG42Ld0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116870; c=relaxed/simple;
-	bh=gWqKD8MOgjmwMy0IzsARSE1MbJ5chrOZctWUBvZ4ssQ=;
+	s=arc-20240116; t=1744116873; c=relaxed/simple;
+	bh=lohm0wbZQrcWm27XEgTvUne73eCscqaDcTyU/kbgKGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4l5fydZU5XyNa+038lY2BRYeya/kOWYfD6kQH6yQPE76jzHXPWJFTyOPKSMVmpbuXuQxK9qkKH1y04EuuGdoomkr41gGhl2IxG4DycX3YRc04/Np4rvSC01LzacUGMv72MolR+BkhBYK0xl2Eh8/pCsOj+anomIKXhnrC8GpiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc2G/ALW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYkVUlRVYJaCqvXXmJZYlUmTxXZi+9o1jKUBKQ1E/P+MxK4V7lXOH91pswuezvxNxJBMWnNLR0fTStXTOM/ww1L3pMmhlwkdq7VXecHOEdyozNrAW1d44vzSSYBuaTJy5XWNWIrW8/xWrZegXC//IklJWCro0MFydE48TrMzMBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/LiTyJo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc2G/ALW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBE3C4CEE5;
-	Tue,  8 Apr 2025 12:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/LiTyJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3824C4CEE7;
+	Tue,  8 Apr 2025 12:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116870;
-	bh=gWqKD8MOgjmwMy0IzsARSE1MbJ5chrOZctWUBvZ4ssQ=;
+	s=korg; t=1744116873;
+	bh=lohm0wbZQrcWm27XEgTvUne73eCscqaDcTyU/kbgKGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc2G/ALWM2E3+Y+1ZVyaeUwHEXtx+XQTm5zz1mzEFb0w/fhhZefyPvc790X1DcD3U
-	 6+sdtrLKipaovzVv+J6Xy66aDg6oHSgKzJpjdg7dkDXSqGPP4Isi55LOAYewfmWl8f
-	 hs85VhyFC+Rg9tw/YbeBAWyDi2YjvhFFts/7SYT8=
+	b=e/LiTyJolgLkGBgTPSFD/AKW+2M+0IpYh41A09bWdETa/b1sjKTfe+2ucyU3BVhqh
+	 GV4Udd0M9PcYUYzxxOAC8KNgndF0hI8HWjV/og0DMLnlamd7qOL456EaKd1Uvuvm3N
+	 2rfqslrYBaLKG46+Ts17b3rfDRlqrWeaSjpyObFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Simon Tatham <anakin@pobox.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 298/423] memory: omap-gpmc: drop no compatible check
-Date: Tue,  8 Apr 2025 12:50:24 +0200
-Message-ID: <20250408104852.731121355@linuxfoundation.org>
+Subject: [PATCH 6.12 263/423] affs: dont write overlarge OFS data block size fields
+Date: Tue,  8 Apr 2025 12:49:49 +0200
+Message-ID: <20250408104851.873418221@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -53,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit edcccc6892f65eff5fd3027a13976131dc7fd733 ]
+[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
 
-We are no longer depending on legacy device trees so
-drop the no compatible check for NAND and OneNAND
-nodes.
+If a data sector on an OFS floppy contains a value > 0x1e8 (the
+largest amount of data that fits in the sector after its header), then
+an Amiga reading the file can return corrupt data, by taking the
+overlarge size at its word and reading past the end of the buffer it
+read the disk sector into!
 
-Suggested-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://lore.kernel.org/r/20250114-omap-gpmc-drop-no-compatible-check-v1-1-262c8d549732@kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
+the new size field for a data block was computed by adding the amount
+of data currently being written (into the block) to the existing value
+of the size field. This is correct if you're extending the file at the
+end, but if you seek backwards in the file and overwrite _existing_
+data, it can lead to the size field being larger than the maximum
+legal value.
+
+This commit changes the calculation so that it sets the size field to
+the max of its previous size and the position within the block that we
+just wrote up to.
+
+Signed-off-by: Simon Tatham <anakin@pobox.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/omap-gpmc.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ fs/affs/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/memory/omap-gpmc.c b/drivers/memory/omap-gpmc.c
-index c8a0d82f9c27d..719225c09a4d6 100644
---- a/drivers/memory/omap-gpmc.c
-+++ b/drivers/memory/omap-gpmc.c
-@@ -2245,26 +2245,6 @@ static int gpmc_probe_generic_child(struct platform_device *pdev,
- 		goto err;
- 	}
- 
--	if (of_node_name_eq(child, "nand")) {
--		/* Warn about older DT blobs with no compatible property */
--		if (!of_property_read_bool(child, "compatible")) {
--			dev_warn(&pdev->dev,
--				 "Incompatible NAND node: missing compatible");
--			ret = -EINVAL;
--			goto err;
--		}
--	}
--
--	if (of_node_name_eq(child, "onenand")) {
--		/* Warn about older DT blobs with no compatible property */
--		if (!of_property_read_bool(child, "compatible")) {
--			dev_warn(&pdev->dev,
--				 "Incompatible OneNAND node: missing compatible");
--			ret = -EINVAL;
--			goto err;
--		}
--	}
--
- 	if (of_match_node(omap_nand_ids, child)) {
- 		/* NAND specific setup */
- 		val = 8;
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index 226308f8627e7..7a71018e3f675 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -724,7 +724,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		tmp = min(bsize - boff, to - from);
+ 		BUG_ON(boff + tmp > bsize || tmp > bsize);
+ 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
+-		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
++		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
++			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
+ 		affs_fix_checksum(sb, bh);
+ 		mark_buffer_dirty_inode(bh, inode);
+ 		written += tmp;
 -- 
 2.39.5
 
