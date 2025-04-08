@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DA125FA04;
-	Tue,  8 Apr 2025 11:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A4F265630;
+	Tue,  8 Apr 2025 11:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110868; cv=none; b=DginPEiNR+kIaR4SDeMsFNgAPgYQANg6yZPMbn9x4pnbblJwDisNEFAYoRSdsGuWIWPW5MTiuEN889n/HlL5Q6nEQTZ+Mb6cBWBrzJTUUBhAzlGpqolOv35lvG/YSv8W/jFN9e1uZb+hTb0QNpfHriMzMDGrMJYAUf89ia6W/iU=
+	t=1744110871; cv=none; b=eL/9b5NvNYcO/tp4gL+3wqJplZkuxkUHSU4UTsNKNBi/XX9VXpcILKhTBRj6HGt1UAWckmRykxPL4uwZ2kCo5f5DxM8uMUAvrKwkDkaXTbx5dmyLPGZwVLL0y/MYjcLt2RYznOVeQ6J5fbmD1bNqwtORnFUHpLJWxnPW1MxT1ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110868; c=relaxed/simple;
-	bh=xwCy25e1b7gDf0nrQWW+1AnxU+FAClrpvHXz3EU9KI8=;
+	s=arc-20240116; t=1744110871; c=relaxed/simple;
+	bh=ZGy5D5ZpmE5/CpNtZcuTPLO0O3wYWHoHigkjZvoUOPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=by5THo9udzT3aA3TmX3Xe2W7NgRulGInlIFF6qlP/31YP/oCImBCBVaqvZeRilhbaPSrKSVzEoLrK2YRjg9ilJLiSQwy6gRM1/C2x6svd+bLU0jp4FLLd1k8FxLI3z7eowi5AtcTjlDVM71TI3kIsDw/PBMdmoNWb5AJLqzOMnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPC/KDds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvnAlUf4LSDmnFg+MfGq6urhKmm1vI60yo7ZMChk5Pa5N9Fif2eM3+/HxNsdMFtRfl965naTUv2w/qpgk6JafuML/A4KK2rgBzcHV/43qV8lww3e3NlskSD+EXrm2qTTYX1P7BuUDAOLgqN3N2dsYOyGDvxCzk35xQ9Kk6iOg+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jE6bh6Oy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPC/KDds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FB1C4CEE5;
-	Tue,  8 Apr 2025 11:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jE6bh6Oy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0E2C4CEE5;
+	Tue,  8 Apr 2025 11:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110868;
-	bh=xwCy25e1b7gDf0nrQWW+1AnxU+FAClrpvHXz3EU9KI8=;
+	s=korg; t=1744110871;
+	bh=ZGy5D5ZpmE5/CpNtZcuTPLO0O3wYWHoHigkjZvoUOPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPC/KDds/iei+XtQ14ntAxF3iR+FBYhrbGp+uM8BS17bzLaYCeVyP9hSbbzUZIwSe
-	 Uev9TWr8eKkc7hKx75MLoOEsulACwqurhfJfwZz0x+lCRf3lkbetkmwvDAi7DDMABI
-	 sCgAt4vhAN0nL5CQVcsjW6tgn3AzeIOeuoU1EBkk=
+	b=jE6bh6OyCVZDwB4Db/ITWeB4KQo3T9mQnJGMZyrZqz5bNY3n0So81X3Pn3V+oCXNF
+	 MtM82ySx5dyJUsU1qGGKpaBdxZR/BUkmMzh1paR+rK3QKor1YxSqXwvn0647XFJtKh
+	 P9eMJesIWi92g4DcH+zvjcocuJLSpMh5JgXmFi00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 225/731] nvmet: pci-epf: Always configure BAR0 as 64-bit
-Date: Tue,  8 Apr 2025 12:42:02 +0200
-Message-ID: <20250408104919.513924693@linuxfoundation.org>
+Subject: [PATCH 6.14 226/731] jbd2: add a missing data flush during file and fs synchronization
+Date: Tue,  8 Apr 2025 12:42:03 +0200
+Message-ID: <20250408104919.537658364@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,59 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 1cf0184c0ac4f1e936bb3b089894bbeb0a9eb2bc ]
+[ Upstream commit aac45075f6d79a63ac8dff93b3e1d7053a6ba628 ]
 
-NVMe PCIe Transport Specification 1.1, section 2.1.10, claims that the
-BAR0 type is Implementation Specific.
+When the filesystem performs file or filesystem synchronization (e.g.,
+ext4_sync_file()), it queries the journal to determine whether to flush
+the file device through jbd2_trans_will_send_data_barrier(). If the
+target transaction has not started committing, it assumes that the
+journal will submit the flush command, allowing the filesystem to bypass
+a redundant flush command. However, this assumption is not always valid.
+If the journal is not located on the filesystem device, the journal
+commit thread will not submit the flush command unless the variable
+->t_need_data_flush is set to 1. Consequently, the flush may be missed,
+and data may be lost following a power failure or system crash, even if
+the synchronization appears to succeed.
 
-However, in NVMe 1.1, the type is required to be 64-bit.
+Unfortunately, we cannot determine with certainty whether the target
+transaction will flush to the filesystem device before it commits.
+However, if it has not started committing, it must be the running
+transaction. Therefore, fix it by always set its t_need_data_flush to 1,
+ensuring that the committing thread will flush the filesystem device.
 
-Thus, to make our PCI EPF work on as many host systems as possible,
-always configure the BAR0 type to be 64-bit.
-
-In the rare case that the underlying PCI EPC does not support configuring
-BAR0 as 64-bit, the call to pci_epc_set_bar() will fail, and we will
-return a failure back to the user.
-
-This should not be a problem, as most PCI EPCs support configuring a BAR
-as 64-bit (and those EPCs with .only_64bit set to true in epc_features
-only support configuring the BAR as 64-bit).
-
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: bbd2be369107 ("jbd2: Add function jbd2_trans_will_send_data_barrier()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241206111327.4171337-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pci-epf.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/jbd2/journal.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
-index b1e31483f1574..99563648c318f 100644
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -2129,8 +2129,15 @@ static int nvmet_pci_epf_configure_bar(struct nvmet_pci_epf *nvme_epf)
- 		return -ENODEV;
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index 49a9e99cbc03d..a10e086a0165b 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -603,7 +603,7 @@ int jbd2_journal_start_commit(journal_t *journal, tid_t *ptid)
+ int jbd2_trans_will_send_data_barrier(journal_t *journal, tid_t tid)
+ {
+ 	int ret = 0;
+-	transaction_t *commit_trans;
++	transaction_t *commit_trans, *running_trans;
+ 
+ 	if (!(journal->j_flags & JBD2_BARRIER))
+ 		return 0;
+@@ -613,6 +613,16 @@ int jbd2_trans_will_send_data_barrier(journal_t *journal, tid_t tid)
+ 		goto out;
+ 	commit_trans = journal->j_committing_transaction;
+ 	if (!commit_trans || commit_trans->t_tid != tid) {
++		running_trans = journal->j_running_transaction;
++		/*
++		 * The query transaction hasn't started committing,
++		 * it must still be running.
++		 */
++		if (WARN_ON_ONCE(!running_trans ||
++				 running_trans->t_tid != tid))
++			goto out;
++
++		running_trans->t_need_data_flush = 1;
+ 		ret = 1;
+ 		goto out;
  	}
- 
--	if (epc_features->bar[BAR_0].only_64bit)
--		epf->bar[BAR_0].flags |= PCI_BASE_ADDRESS_MEM_TYPE_64;
-+	/*
-+	 * While NVMe PCIe Transport Specification 1.1, section 2.1.10, claims
-+	 * that the BAR0 type is Implementation Specific, in NVMe 1.1, the type
-+	 * is required to be 64-bit. Thus, for interoperability, always set the
-+	 * type to 64-bit. In the rare case that the PCI EPC does not support
-+	 * configuring BAR0 as 64-bit, the call to pci_epc_set_bar() will fail,
-+	 * and we will return failure back to the user.
-+	 */
-+	epf->bar[BAR_0].flags |= PCI_BASE_ADDRESS_MEM_TYPE_64;
- 
- 	/*
- 	 * Calculate the size of the register bar: NVMe registers first with
 -- 
 2.39.5
 
