@@ -1,146 +1,142 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3908D4A04;
-	Tue,  8 Apr 2025 03:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D609264F87
+	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 09:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744082719; cv=none; b=RTlNKNXSvJGPbj8T1G+jG2MgWprA68r3a2A/0fRnTV/qpBzknwS1VpAh5E+WEtorHFhfVj7dGNa03VfH+zr8OXvLLoiptb6LdnhAd0pjOpIPUlv2pbBpdXh4WxOBHl+NY2Jybcnjy5b56+Dnjm2Fl2wJ3txj91Z9Jd3Ktp5QHWQ=
+	t=1744104881; cv=none; b=CO5x6lpbofZIIjekcF/dzgvEgMp/rkVyhuXbpnxFJoD1RKduBZ/PJSdw8E1h+LJTROxKrs9dG6lXSBLrIxzguv08YvPMbgnPFgY361cobgAhCEF+BKsIyE0bHgVzNdjY2SqEwK+7Zs7XZnBBJR2tMGgZHLoC1PxY4mO/mWOMjAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744082719; c=relaxed/simple;
-	bh=De9S0jKXQHWL4ddOS+2LDXVwVwuUSfQ6GnrVTLPs2yU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=T/lf1Cz3NnkRH1nsec9U9P8SXv0a21g5VPoF9sIb747flv4o+x9GvyVpwpZOUPqcKDP+CHULo/+r2xdfaTtsGFBijHiizjod+yOcGRyLmqfudmwloQVfvmVJseweXW9pnYkHB+SBeKNTPI387sIbZkKJkeyPriM9noJrFux5Xcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5383GKqd014976;
-	Mon, 7 Apr 2025 20:25:02 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 45tyt4b0k1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 07 Apr 2025 20:25:01 -0700 (PDT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 7 Apr 2025 20:25:01 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 7 Apr 2025 20:24:57 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <jianqi.ren.cn@windriver.com>,
-        <harry.wentland@amd.com>, <sunpeng.li@amd.com>,
-        <Rodrigo.Siqueira@amd.com>, <alexander.deucher@amd.com>,
-        <christian.koenig@amd.com>, <Xinhui.Pan@amd.com>, <airlied@gmail.com>,
-        <daniel@ffwll.ch>, <amd-gfx@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <chiahsuan.chung@amd.com>,
-        <alex.hung@amd.com>, <daniel.wheeler@amd.com>, <hersenxs.wu@amd.com>
-Subject: [PATCH 5.10.y] drm/amd/display: Skip inactive planes within ModeSupportAndSystemConfiguration
-Date: Tue, 8 Apr 2025 11:24:56 +0800
-Message-ID: <20250408032456.3437393-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1744104881; c=relaxed/simple;
+	bh=Mw9BipaX03ecmtlnzgP3qZmLo1pRUnsgk//oLUm+1HQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iajI3Q3Bae4/2bdappcILWCYXYDCMiDSOfQ6pTE37fGpXbTdHSm90G7uEjHhtw2bh9bWYn5OWokMEL/aXPUABLE1xkfssgsCxzYkr6pXpz6yRemP/fpeGlW2iIL0qh2wboJGuoexJ5TAjjks/DneJfPj1AnfyBdgazDBOteqgwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=BBQMny3Z; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="BBQMny3Z"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cf05f0c3eso34079065e9.0
+        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 02:34:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1744104877; x=1744709677; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AtwwP4HqDMoVhJV9AOJlIF1w0v00JywAQfC5Yv29UZk=;
+        b=BBQMny3Z0iCA0+ttoIaSk7ekgJ2gXtRoBDr6u2oPxgFytXMqHDWpo4piGCo8YSt2Ql
+         xOm64hs3pgZDJu6xVusckzy/u6f7vLDyjcApXVMP/auLJc42Tp8++PDwJdbrDUqX1p8v
+         g8s90yiau5LsNvT9imnlkhBDhMxsnoKRHhV8/+no7BG0M8dsF5AXqJBUxajaZhZeJ0UZ
+         fvnMom2Z+cTTI6HyivnaCrvz4KR01mPtguKWgJwJlnaHFfqpthykIw01T8niaWECQA3w
+         7tHJjALlq/GnqYP+vAd+oyVUElNry6bci5BpqhkL9YqQW+jUjhdzmj4boZ53baJ7cQpI
+         m3Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744104877; x=1744709677;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AtwwP4HqDMoVhJV9AOJlIF1w0v00JywAQfC5Yv29UZk=;
+        b=CrSVeSZD/L4OnWXCui5cZJC6qCF3LTJZNgH7rnlEi+le3ZIqS/SUxQJ5UiovHykWKh
+         5DyZBlngrinN9Tn57uT0tLrettjr5K9GvIZXV6TI8/wreuowG3SLPau4FrYKSmeZNUNL
+         qMus60N8Wt4UqFXJ3oiBHpgkPAZfkPPXiKB9U7z0SQ51z60MVw0dZV1qTt3xRhasSyDW
+         71MpI8RbPJAa3AFavebepGS9e7SzqdFPasuoRjmvKCkdDWPhDnPSPpL5YxOZIZ+8VPBU
+         wJahE6KrVms/cGtBa0DN4mDY7yvke6VXPtZHOPkuJPmibhf3XQVaMNDQKDw9Sn3SLMTV
+         yedg==
+X-Forwarded-Encrypted: i=1; AJvYcCUCVH1Aqio6TticVXReCLSTdci5uhnI2AmhkEbLSy51UoraoA1+tpQKX9rZT8CVifRlUj91qYuy@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw0RTCY9UuAolrEM5oAnP70MwtDjV89wzI61FDIavipjSSNJLtw
+	uSAAWaeu6/l8pmP9omcLSc08RDKUUlYq2BgjsG0Ik90G/uCX9t/RLUK7w41G3Uk=
+X-Gm-Gg: ASbGnct+pRzH0ArMAKmZUEHfchlMEyS0xBR+rxfafPkT8xvPbTPAfa6u3x0c3ZNC2DM
+	F4BSFjNkVss937Bf0uRjvUoNPBU6K4thZ72fQhTqnvIhQGKBz/Y90ughvPN8z9wJZNRfagUkgI3
+	bzVELH5eLytkUNu47ZSrYBO0C0QTux6MacIn+rsV49h0IUTv45lV+O/jnoKfvAhv6rwZ9pXSgd6
+	EKq6YOvkT/jsKpRjBoHipjrIWRMG21E1S2j/lC2h3SOuIaac5Of8c1iwuB3liG+gxUm1UAEavje
+	yD/sS7hUOScr46yw1piqn8YWdh3J8bG87ttIf9tjjidUWnB+osX97zw=
+X-Google-Smtp-Source: AGHT+IEjRZm4TK0RyiZ3PAjlRVU6L5oyxaErbz97TRvApb6+B+nBpIqS5LQTTXTNW8eDHsr7ZSAprw==
+X-Received: by 2002:a05:600c:3b13:b0:43c:f050:fed3 with SMTP id 5b1f17b1804b1-43ed0bde8a8mr144207385e9.11.1744104876909;
+        Tue, 08 Apr 2025 02:34:36 -0700 (PDT)
+Received: from localhost (109-81-82-69.rct.o2.cz. [109.81.82.69])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-43ec364d07csm154393655e9.28.2025.04.08.02.34.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Apr 2025 02:34:36 -0700 (PDT)
+Date: Tue, 8 Apr 2025 11:34:35 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Brendan Jackman <jackmanb@google.com>
+Subject: Re: [RFC PATCH 2/2] MAINTAINERS: add MM subsection for the page
+ allocator
+Message-ID: <Z_Ttq-uBXdqlewEa@tiehlicka>
+References: <20250407200508.121357-3-vbabka@suse.cz>
+ <20250407200508.121357-4-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: 5-F-MLBWDWSd1-w6nLaD6MTbksbZORpR
-X-Authority-Analysis: v=2.4 cv=RMSzH5i+ c=1 sm=1 tr=0 ts=67f4970d cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=XR8D0OoHHMoA:10 a=zd2uoN0lAAAA:8 a=t7CeM3EgAAAA:8 a=jWJrOWpaenu_S2W2EP4A:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: 5-F-MLBWDWSd1-w6nLaD6MTbksbZORpR
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_01,2025-04-07_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 priorityscore=1501 adultscore=0 clxscore=1015
- bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.21.0-2502280000
- definitions=main-2504080022
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250407200508.121357-4-vbabka@suse.cz>
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+On Mon 07-04-25 22:05:10, Vlastimil Babka wrote:
+> Add a subsection for the page allocator, including compaction as it's
+> crucial for high-order allocations and works together with the
+> anti-fragmentation features. Volunteer myself as a reviewer.
+> 
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Zi Yan <ziy@nvidia.com>
+> Cc: Johannes Weiner <hannes@cmpxchg.org>
+> Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+> Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+> Cc: Mel Gorman <mgorman@techsingularity.net>
+> Cc: Suren Baghdasaryan <surenb@google.com>
+> Cc: Brendan Jackman <jackmanb@google.com>
+> Cc: Michal Hocko <mhocko@kernel.org>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit a54f7e866cc73a4cb71b8b24bb568ba35c8969df ]
+Acked-by: Michal Hocko <mhocko@suse.com>
 
-[Why]
-Coverity reports Memory - illegal accesses.
+Feel free to add
+R: Michal Hocko <mhocko@suse.com>
+Thanks
 
-[How]
-Skip inactive planes.
+> ---
+> Extra reviewers would be welcome, including/not limited the people I
+> Cc'd based on my recollection and get_maintainers --git
+> Also if I missed any related file please lmk. Thanks.
+> 
+>  MAINTAINERS | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4fe7cf5fc4ea..610636f622b1 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -15511,6 +15511,16 @@ F:	mm/numa.c
+>  F:	mm/numa_emulation.c
+>  F:	mm/numa_memblks.c
+>  
+> +MEMORY MANAGEMENT - PAGE ALLOCATOR
+> +M:	Andrew Morton <akpm@linux-foundation.org>
+> +R:	Vlastimil Babka <vbabka@suse.cz>
+> +L:	linux-mm@kvack.org
+> +S:	Maintained
+> +F:	mm/compaction.c
+> +F:	mm/page_alloc.c
+> +F:	include/linux/gfp.h
+> +F:	include/linux/compaction.h
+> +
+>  MEMORY MANAGEMENT - SECRETMEM
+>  M:	Andrew Morton <akpm@linux-foundation.org>
+>  M:	Mike Rapoport <rppt@kernel.org>
+> -- 
+> 2.49.0
 
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[get_pipe_idx() was introduced as a helper by
-dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321") in v6.0.
-This patch backports it to make code clearer. And minor conflict is
-resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- .../drm/amd/display/dc/dml/display_mode_vba.c | 27 ++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
-index b32093136089..7dfcb1e0a6ff 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.c
-@@ -825,11 +825,30 @@ static unsigned int CursorBppEnumToBits(enum cursor_bpp ebpp)
- 	}
- }
- 
-+static unsigned int get_pipe_idx(struct display_mode_lib *mode_lib, unsigned int plane_idx)
-+{
-+	int pipe_idx = -1;
-+	int i;
-+
-+	ASSERT(plane_idx < DC__NUM_DPP__MAX);
-+
-+	for (i = 0; i < DC__NUM_DPP__MAX ; i++) {
-+		if (plane_idx == mode_lib->vba.pipe_plane[i]) {
-+			pipe_idx = i;
-+			break;
-+		}
-+	}
-+	ASSERT(pipe_idx >= 0);
-+
-+	return pipe_idx;
-+}
-+
- void ModeSupportAndSystemConfiguration(struct display_mode_lib *mode_lib)
- {
- 	soc_bounding_box_st *soc = &mode_lib->vba.soc;
- 	unsigned int k;
- 	unsigned int total_pipes = 0;
-+	unsigned int pipe_idx = 0;
- 
- 	mode_lib->vba.VoltageLevel = mode_lib->vba.cache_pipes[0].clks_cfg.voltage;
- 	mode_lib->vba.ReturnBW = mode_lib->vba.ReturnBWPerState[mode_lib->vba.VoltageLevel][mode_lib->vba.maxMpcComb];
-@@ -849,8 +868,14 @@ void ModeSupportAndSystemConfiguration(struct display_mode_lib *mode_lib)
- 		mode_lib->vba.DISPCLK = soc->clock_limits[mode_lib->vba.VoltageLevel].dispclk_mhz;
- 
- 	// Total Available Pipes Support Check
--	for (k = 0; k < mode_lib->vba.NumberOfActivePlanes; ++k)
-+	for (k = 0; k < mode_lib->vba.NumberOfActivePlanes; ++k) {
-+		pipe_idx = get_pipe_idx(mode_lib, k);
-+		if (pipe_idx == -1) {
-+			ASSERT(0);
-+			continue; // skip inactive planes
-+		}
- 		total_pipes += mode_lib->vba.DPPPerPlane[k];
-+	}
- 	ASSERT(total_pipes <= DC__NUM_DPP__MAX);
- }
- 
 -- 
-2.34.1
-
+Michal Hocko
+SUSE Labs
