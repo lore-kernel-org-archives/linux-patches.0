@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC3F227EBD;
-	Tue,  8 Apr 2025 11:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FA8263C90;
+	Tue,  8 Apr 2025 11:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111829; cv=none; b=TAIDu57fSTK/eubPbFeV54zSdRjSvlyYN62tY31HNs7FWgLsPmoESJvWCf/4jurVb3d2sXA2oviAQowUmd5SIPY05yDCEJbR950tR5XvVbBo8OejVzW3JgLgp8UCG8eDj194bGhmTj48wbmrXpmOdjZErD16KgjULx7MupQKq1Q=
+	t=1744111831; cv=none; b=UXbFUxBYoQDA2kvoaKLun+uTV9hJU9hcAB0UnkoUDMyzvmqdaQ0laWoy6AeTOWHYWN8UkYyMgzRfQ7FMk/xz0boWrvORsA87E1vD99XJa5yqQ+cAo4ftNtMBxq7EcXXjWje03UXKSrgpZD/dAZTXRRZlpq0uDk6N7ssWrkskWvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111829; c=relaxed/simple;
-	bh=qqdN7CnX/QJkPwBdSu4BUeOUwlitKoCWd2SHGOuMu1M=;
+	s=arc-20240116; t=1744111831; c=relaxed/simple;
+	bh=pUaFfS5kGNLcISyTbT72MQvSbGm2xhYJSs8ripTlkIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHF2W2WBfss7qhBF2Zbvz1rvDjrrUw6uzyJ/ZKP4EkQxbrSRxzFS5NxlvbmtKHlUlCW4isRcoUgaFG7turxbNPLP3BtEa8Qx+OGSQBBruXRRUlIgc0Ghq6q89D2/zhlqG3oGFV7z61wyVl0caCK3Rq5kM4uQJgszph9Oiz2hCSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XO3gZzVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VD7TjWAVkfcFoxva5XGf8GVTjpj5xbXz/ePA0n8cruCkkJBeA7/kYK9CEJVhtjAmiYWJGWUGsU4VzNsuQ37HJSxX3ga2WQeSW6MSoKVKiUpjgw+O2r2KiOz02UjtIJUqH5iSCHjoPscMaAOXdwhsg/kFaOSayuPJhc3xEzV0EiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWVZIMyJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XO3gZzVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB16C4CEE5;
-	Tue,  8 Apr 2025 11:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWVZIMyJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CABCC4CEE5;
+	Tue,  8 Apr 2025 11:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111828;
-	bh=qqdN7CnX/QJkPwBdSu4BUeOUwlitKoCWd2SHGOuMu1M=;
+	s=korg; t=1744111831;
+	bh=pUaFfS5kGNLcISyTbT72MQvSbGm2xhYJSs8ripTlkIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XO3gZzVUiULvmwwX6Jfd9XecYQUcNU1ruFr4mT4FjeGOamn6q2XOCk9qbKKLeya3Z
-	 UXoyscWW9NVoyUu4YC4iweQJfNaFnpbb8CT79iz+DGshFdMF7EE9cQTJpWNIBhYUfK
-	 W5hvj8AFtirC28+692AU3nOPfXbm2red0ZeJUINY=
+	b=gWVZIMyJBH1SFnKYQiXTtKiu7PsfKo0UesEPNb7r5kK1OpELOWdMG+CVjyD/XwcMH
+	 1JCfWc9PioQrKBmJxXWv8vRXNc0x0/GxoTSj8UVhC8qVtyTzyBcHg3c+7J25YUDz9s
+	 rlyU2t3o6URspsPZx6BXEox0g4yhP8dvfabs6Zuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 575/731] nfs: Add missing release on error in nfs_lock_and_join_requests()
-Date: Tue,  8 Apr 2025 12:47:52 +0200
-Message-ID: <20250408104927.649193230@linuxfoundation.org>
+Subject: [PATCH 6.14 576/731] rtc: renesas-rtca3: Disable interrupts only if the RTC is enabled
+Date: Tue,  8 Apr 2025 12:47:53 +0200
+Message-ID: <20250408104927.673177278@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,37 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 8e5419d6542fdf2dca9a0acdef2b8255f0e4ba69 ]
+[ Upstream commit 27b2fcbd6b98204b0dce62e9aa9540ca0a2b70f1 ]
 
-Call nfs_release_request() on this error path before returning.
+If the RTC is not enabled and the code attempts to disable the interrupt,
+the readb_poll_timeout_atomic() function in the
+rtca3_alarm_irq_set_helper() may timeout, leading to probe failures.
+This issue is reproducible on some devices because the initial values of
+the PIE and AIE bits in the RCR1 register are undefined.
 
-Fixes: c3f2235782c3 ("nfs: fold nfs_folio_find_and_lock_request into nfs_lock_and_join_requests")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/3aaaa3d5-1c8a-41e4-98c7-717801ddd171@stanley.mountain
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+To prevent probe failures in this scenario, disable RTC interrupts only
+when the RTC is actually enabled.
+
+Fixes: d4488377609e ("rtc: renesas-rtca3: Add driver for RTCA-3 available on Renesas RZ/G3S SoC")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250205095519.2031742-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/write.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-renesas-rtca3.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index aa3d8bea3ec06..23df8b214474f 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -579,8 +579,10 @@ static struct nfs_page *nfs_lock_and_join_requests(struct folio *folio)
+diff --git a/drivers/rtc/rtc-renesas-rtca3.c b/drivers/rtc/rtc-renesas-rtca3.c
+index a056291d38876..ab816bdf0d776 100644
+--- a/drivers/rtc/rtc-renesas-rtca3.c
++++ b/drivers/rtc/rtc-renesas-rtca3.c
+@@ -586,17 +586,14 @@ static int rtca3_initial_setup(struct clk *clk, struct rtca3_priv *priv)
+ 	 */
+ 	usleep_range(sleep_us, sleep_us + 10);
  
- 	while (!nfs_lock_request(head)) {
- 		ret = nfs_wait_on_request(head);
--		if (ret < 0)
-+		if (ret < 0) {
-+			nfs_release_request(head);
- 			return ERR_PTR(ret);
-+		}
- 	}
+-	/* Disable all interrupts. */
+-	mask = RTCA3_RCR1_AIE | RTCA3_RCR1_CIE | RTCA3_RCR1_PIE;
+-	ret = rtca3_alarm_irq_set_helper(priv, mask, 0);
+-	if (ret)
+-		return ret;
+-
+ 	mask = RTCA3_RCR2_START | RTCA3_RCR2_HR24;
+ 	val = readb(priv->base + RTCA3_RCR2);
+-	/* Nothing to do if already started in 24 hours and calendar count mode. */
+-	if ((val & mask) == mask)
+-		return 0;
++	/* Only disable the interrupts if already started in 24 hours and calendar count mode. */
++	if ((val & mask) == mask) {
++		/* Disable all interrupts. */
++		mask = RTCA3_RCR1_AIE | RTCA3_RCR1_CIE | RTCA3_RCR1_PIE;
++		return rtca3_alarm_irq_set_helper(priv, mask, 0);
++	}
  
- 	/* Ensure that nobody removed the request before we locked it */
+ 	/* Reconfigure the RTC in 24 hours and calendar count mode. */
+ 	mask = RTCA3_RCR2_START | RTCA3_RCR2_CNTMD;
 -- 
 2.39.5
 
