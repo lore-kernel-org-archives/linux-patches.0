@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19280206F18;
-	Tue,  8 Apr 2025 12:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7714A26B084;
+	Tue,  8 Apr 2025 12:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114937; cv=none; b=Qqlb2MwmLYGDcgchGvAtMY52OD+/Il2bOLshCGfUFsdgOnpYGT95ag37KLZi3a0jcf1s7AfWxapghytRjwAy9T5sQWxNCqO8FvqMMFMxxyQbd9x1XzL+OzY4I7E7z/xsbVmtkxcSmSp32mJF0aXxijG4rv6zg+dym0Sj+Vujqvo=
+	t=1744114940; cv=none; b=kqDPm2fMTFauiJJ6Cm9wx1jK8MSeMhLCWE9jHm48wOGcekXPk4wRQDEZulLE/bxbfFNfu1fkk7Sg8Sxl+p+NtCiARUaVs5QHLPzrcbNn6ecrtapfkI56K3S1lulu1qEef41X/p5ShHhWOxM2zjqGsMctd6RLuoUk6zTKUpjFh+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114937; c=relaxed/simple;
-	bh=K9inVwYrVV9IF533pB4r85Q270iX2LjwzaUXgrrZ5OI=;
+	s=arc-20240116; t=1744114940; c=relaxed/simple;
+	bh=a3P/JFW/ICBu2cGi9u4kSW1uBXOJ4r61LOaT2ZaIelM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBRrQJc1vu+CrVcHhnhMKYSAeSrQFvPtrOoL0jwVCPWWPLilEqCrM7ppPkZF3509OPcdXE96QIJU/2HHshH8TaQAt8CRQxAz8IluyFkjZ3prrpzDUbgYEMo0nHSgjQFY3OZVR46Cj5c4S9NiXAYKaiz8L3CtjyLMqKDzhrGG0xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDfjA4M/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J+XjPMtHFbANXSI8Dt4NR1YAk51t8aVNR0S2arKUR3IniIqgdrddDX4P4zzPQDFoTUo+Ri81NjdoAiIfb1G1r1axyqsrQEEwtx/ur/kk7b5h2iV9lfmE+PAsNAR7D+a7GpgG8FBcyG/KxA+2ZviHMh0G9ccqpX6VvwbpMg2ZBpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C//yzXmh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDfjA4M/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1674C4CEE5;
-	Tue,  8 Apr 2025 12:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C//yzXmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E82C4CEE7;
+	Tue,  8 Apr 2025 12:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114937;
-	bh=K9inVwYrVV9IF533pB4r85Q270iX2LjwzaUXgrrZ5OI=;
+	s=korg; t=1744114940;
+	bh=a3P/JFW/ICBu2cGi9u4kSW1uBXOJ4r61LOaT2ZaIelM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDfjA4M/naDV5BnSGIRgPOJP1koCSOitZjv7MVDdU/6RKujDQUsnhZxkHuTZHxt2f
-	 xqM/IuX4xzTuQAQJWV1KlI4pLDcWD+3pA976zQYM+wF9BeHxaYYyHPGu1nzjPAavgr
-	 dyC9714N65hOPDuyxKKdhZEU74OPfh7g9cnsesGU=
+	b=C//yzXmhEgPaqpe9EQb8wjeNBZyhfJgxt2Jf8lrdzhH0UQsJvC6nZcQBGQ76XFXGU
+	 ohwylHEQr+HYLBMvTYpEwmsOIpbdjn9kHguQx7CTJhb7r1fbr4CRsgEsLe1Iyrwm8t
+	 9e6+DNm/1qQfJAZDRK5Wypl677WoV0ei6ZWvvHBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Winston Wen <wentao@uniontech.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Giovanni Gherdovich <ggherdovich@suse.cz>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 289/499] LoongArch: Rework the arch_kgdb_breakpoint() implementation
-Date: Tue,  8 Apr 2025 12:48:21 +0200
-Message-ID: <20250408104858.424055380@linuxfoundation.org>
+Subject: [PATCH 6.13 290/499] ACPI: processor: idle: Return an error if both P_LVL{2,3} idle states are invalid
+Date: Tue,  8 Apr 2025 12:48:22 +0200
+Message-ID: <20250408104858.448424066@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,72 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Giovanni Gherdovich <ggherdovich@suse.cz>
 
-[ Upstream commit 29c92a41c6d2879c1f62220fe4758dce191bb38f ]
+[ Upstream commit 9e9b893404d43894d69a18dd2fc8fcf1c36abb7e ]
 
-The arch_kgdb_breakpoint() function defines the kgdb_breakinst symbol
-using inline assembly.
+Prior to commit 496121c02127 ("ACPI: processor: idle: Allow probing on
+platforms with one ACPI C-state"), the acpi_idle driver wouldn't load on
+systems without a valid C-State at least as deep as C2.
 
-1. There's a potential issue where the compiler might inline
-arch_kgdb_breakpoint(), which would then define the kgdb_breakinst
-symbol multiple times, leading to a linker error.
+The behavior was desirable for guests on hypervisors such as VMWare
+ESXi, which by default don't have the _CST ACPI method, and set the C2
+and C3 latencies to 101 and 1001 microseconds respectively via the FADT,
+to signify they're unsupported.
 
-To prevent this, declare arch_kgdb_breakpoint() as noinline.
+Since the above change though, these virtualized deployments end up
+loading acpi_idle, and thus entering the default C1 C-State set by
+acpi_processor_get_power_info_default(); this is undesirable for a
+system that's communicating to the OS it doesn't want C-States (missing
+_CST, and invalid C2/C3 in FADT).
 
-Fix follow error with LLVM-19 *only* when LTO_CLANG_FULL:
-    LD      vmlinux.o
-  ld.lld-19: error: ld-temp.o <inline asm>:3:1: symbol 'kgdb_breakinst' is already defined
-  kgdb_breakinst: break 2
-  ^
+Make acpi_processor_get_power_info_fadt() return -ENODEV in that case,
+so that acpi_processor_get_cstate_info() exits early and doesn't set
+pr->flags.power = 1.
 
-2. Remove "nop" in the inline assembly because it's meaningless for
-LoongArch here.
-
-3. Add "STACK_FRAME_NON_STANDARD" for arch_kgdb_breakpoint() to avoid
-the objtool warning.
-
-Fixes: e14dd076964e ("LoongArch: Add basic KGDB & KDB support")
-Tested-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Co-developed-by: Winston Wen <wentao@uniontech.com>
-Signed-off-by: Winston Wen <wentao@uniontech.com>
-Co-developed-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 496121c02127 ("ACPI: processor: idle: Allow probing on platforms with one ACPI C-state")
+Signed-off-by: Giovanni Gherdovich <ggherdovich@suse.cz>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://patch.msgid.link/20250328143040.9348-1-ggherdovich@suse.cz
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/kgdb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/acpi/processor_idle.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/kernel/kgdb.c b/arch/loongarch/kernel/kgdb.c
-index 445c452d72a79..7be5b4c0c9002 100644
---- a/arch/loongarch/kernel/kgdb.c
-+++ b/arch/loongarch/kernel/kgdb.c
-@@ -8,6 +8,7 @@
- #include <linux/hw_breakpoint.h>
- #include <linux/kdebug.h>
- #include <linux/kgdb.h>
-+#include <linux/objtool.h>
- #include <linux/processor.h>
- #include <linux/ptrace.h>
- #include <linux/sched.h>
-@@ -224,13 +225,13 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- 	regs->csr_era = pc;
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index 698897b29de24..2df1296ff44d5 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -268,6 +268,10 @@ static int acpi_processor_get_power_info_fadt(struct acpi_processor *pr)
+ 			 ACPI_CX_DESC_LEN, "ACPI P_LVL3 IOPORT 0x%x",
+ 			 pr->power.states[ACPI_STATE_C3].address);
+ 
++	if (!pr->power.states[ACPI_STATE_C2].address &&
++	    !pr->power.states[ACPI_STATE_C3].address)
++		return -ENODEV;
++
+ 	return 0;
  }
  
--void arch_kgdb_breakpoint(void)
-+noinline void arch_kgdb_breakpoint(void)
- {
- 	__asm__ __volatile__ (			\
- 		".globl kgdb_breakinst\n\t"	\
--		"nop\n"				\
- 		"kgdb_breakinst:\tbreak 2\n\t"); /* BRK_KDB = 2 */
- }
-+STACK_FRAME_NON_STANDARD(arch_kgdb_breakpoint);
- 
- /*
-  * Calls linux_debug_hook before the kernel dies. If KGDB is enabled,
 -- 
 2.39.5
 
