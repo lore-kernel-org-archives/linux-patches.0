@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE48268FDE;
-	Tue,  8 Apr 2025 12:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3222206F18;
+	Tue,  8 Apr 2025 12:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114719; cv=none; b=t/NqC78ixK5bb8fOr9UemU/IxT3rMh+Tzk6Q627lPpyi1IddnLv7oaVf6wvNKLeeooDmBKK7phSo7YAfzxi33yt780pIn0U8q9XD94zi4c2CszXAAjlVWlLoe+qWJd5i+ZsK3ka/XVsgnrM9GYTXUWrJg0pqYpidar1uaBcG2ok=
+	t=1744114722; cv=none; b=BR+WejcTceT2wCn7fMFm140RV1RVYYkCKyuBfGFt1/eYLEmMjm6Q9y8G/es2bJOIhOh8vjxjtbc9f5mXIOcRhA0mJz3yo8iA5rhOYIvSLz/6THsMRUhOnIW16VJfNZ70743JB5BNkDNjCH2dHfM6+ywRpv0UGH5Ldnlr26jcXBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114719; c=relaxed/simple;
-	bh=URWJhpdbCl4FWa74wW0SIMDVpRuJ/ikpXdGN44G3Kg4=;
+	s=arc-20240116; t=1744114722; c=relaxed/simple;
+	bh=DLhIMbW7J2r+BJE1zAdezXPzmXi2sgKuodt36dVNt7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCPbrZU/vVi4eZquAWK2K0giUQEiY4IrPMALxxD5uv5iro32g48fBbJsVNN8hrPOxm3Wzfppy3/++X+fYLlq1Q/uEyUBSdY2tzNy+hQBR43rceSQ15i07ewG9K3t+cK37uSNSBOk2YKSEjQgNA1s6MSgtJmBvu+xxeuxv69K10w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GBa7jYp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JY9YfXOF0evN/kaQm9YNtTrZfpFcyaEJCTKkTppr35kxALG01lMxT3Yl7eu4XyWr4FtiiHLxR3Gf2zS1DnLlftq0RKJvGxb8vuDqlZHh9nVKHGoapRMnq+88JDHvOnx8dhEZad6Tlxm9hat+K6pv1UCQaZJerNwfZPevzIySnpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXvupzvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GBa7jYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF1FC4CEE5;
-	Tue,  8 Apr 2025 12:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXvupzvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB51C4CEE5;
+	Tue,  8 Apr 2025 12:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114719;
-	bh=URWJhpdbCl4FWa74wW0SIMDVpRuJ/ikpXdGN44G3Kg4=;
+	s=korg; t=1744114722;
+	bh=DLhIMbW7J2r+BJE1zAdezXPzmXi2sgKuodt36dVNt7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GBa7jYp3kGwYSQVJIz3JQ9/t4SNdsNPQI7HFLOz8tJ5la1jPScbjZYLwWt6dqain
-	 ZvkZ+Wf4nOdZz+oHCMWQEPeaU1V9fOUkX4YVsAtPvkvlVAAlfrfWHz9notd/jJ55XD
-	 JVjEFxjPlqXmGxIzx5pzokbMf5r1BO3irBD8Qt3s=
+	b=VXvupzvvg5VljQKEyyyyYqEI88ltN2KWqlFfrzk7bpYCXu+e2xw1FjfdHVlWSdMFL
+	 zPYSKus8L/pKXs4ndrZ/Y9v//uGMKFTPJA32+3/x0ePdjcES1XVFsXTORcayFX1tvk
+	 jVj2IpenfUV0pu72gslsize+jZRpdE3AOeCtswL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 171/499] clk: amlogic: gxbb: drop non existing 32k clock parent
-Date: Tue,  8 Apr 2025 12:46:23 +0200
-Message-ID: <20250408104855.440801965@linuxfoundation.org>
+Subject: [PATCH 6.13 172/499] selftests/bpf: Select NUMA_NO_NODE to create map
+Date: Tue,  8 Apr 2025 12:46:24 +0200
+Message-ID: <20250408104855.465365075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,60 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit 7915d7d5407c026fa9343befb4d3343f7a345f97 ]
+[ Upstream commit 4107a1aeb20ed4cdad6a0d49de92ea0f933c71b7 ]
 
-The 32k clock reference a parent 'cts_slow_oscin' with a fixme note saying
-that this clock should be provided by AO controller.
+On powerpc, a CPU does not necessarily originate from NUMA node 0.
+This contrasts with architectures like x86, where CPU 0 is not
+hot-pluggable, making NUMA node 0 a consistently valid node.
+This discrepancy can lead to failures when creating a map on NUMA
+node 0, which is initialized by default, if no CPUs are allocated
+from NUMA node 0.
 
-The HW probably has this clock but it does not exist at the moment in
-any controller implementation. Furthermore, referencing clock by the global
-name should be avoided whenever possible.
+This patch fixes the issue by setting NUMA_NO_NODE (-1) for map
+creation for this selftest.
 
-There is no reason to keep this hack around, at least for now.
-
-Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-2-baca56ecf2db@baylibre.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 96eabe7a40aa ("bpf: Allow selecting numa node during map creation")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/cf1f61468b47425ecf3728689bc9636ddd1d910e.1738302337.git.skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index df9250de51dc8..3abb44a2532b9 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -1266,14 +1266,13 @@ static struct clk_regmap gxbb_cts_i958 = {
- 	},
- };
+diff --git a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
+index cc184e4420f6e..67557cda22083 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
++++ b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
+@@ -6,6 +6,10 @@
+ #include <test_progs.h>
+ #include "bloom_filter_map.skel.h"
  
-+/*
-+ * This table skips a clock named 'cts_slow_oscin' in the documentation
-+ * This clock does not exist yet in this controller or the AO one
-+ */
-+static u32 gxbb_32k_clk_parents_val_table[] = { 0, 2, 3 };
- static const struct clk_parent_data gxbb_32k_clk_parent_data[] = {
- 	{ .fw_name = "xtal", },
--	/*
--	 * FIXME: This clock is provided by the ao clock controller but the
--	 * clock is not yet part of the binding of this controller, so string
--	 * name must be use to set this parent.
--	 */
--	{ .name = "cts_slow_oscin", .index = -1 },
- 	{ .hw = &gxbb_fclk_div3.hw },
- 	{ .hw = &gxbb_fclk_div5.hw },
- };
-@@ -1283,6 +1282,7 @@ static struct clk_regmap gxbb_32k_clk_sel = {
- 		.offset = HHI_32K_CLK_CNTL,
- 		.mask = 0x3,
- 		.shift = 16,
-+		.table = gxbb_32k_clk_parents_val_table,
- 		},
- 	.hw.init = &(struct clk_init_data){
- 		.name = "32k_clk_sel",
++#ifndef NUMA_NO_NODE
++#define NUMA_NO_NODE	(-1)
++#endif
++
+ static void test_fail_cases(void)
+ {
+ 	LIBBPF_OPTS(bpf_map_create_opts, opts);
+@@ -69,6 +73,7 @@ static void test_success_cases(void)
+ 
+ 	/* Create a map */
+ 	opts.map_flags = BPF_F_ZERO_SEED | BPF_F_NUMA_NODE;
++	opts.numa_node = NUMA_NO_NODE;
+ 	fd = bpf_map_create(BPF_MAP_TYPE_BLOOM_FILTER, NULL, 0, sizeof(value), 100, &opts);
+ 	if (!ASSERT_GE(fd, 0, "bpf_map_create bloom filter success case"))
+ 		return;
 -- 
 2.39.5
 
