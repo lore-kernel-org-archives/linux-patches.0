@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45DD26773A;
-	Tue,  8 Apr 2025 12:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064CB26773A;
+	Tue,  8 Apr 2025 12:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113943; cv=none; b=nQ6/VZKaHkpViO2jAupf9zVpKt5YLn7yLPr7lLwxn6snMH8RQDDE8BMKF4Hw0axB/WOM/KzR+ZVQhDGdEf8ToipBGWz9op6Q+9J9A+QkZHzXALOxSkjzOGO8WseYdm1NqP7pyIWczUQLKbLEZLY8gjrz/59vJMSRraixGzOjgUU=
+	t=1744113946; cv=none; b=bG52kok1rXa5+cb10gh9wekGY2eqNgionjYmq2zo8eowJUXRY8q17D5NWkrnw01azI3EtfG4zzzUErvLXHUel6MPsKQPmgcb4VrcayYWDxD7hkBQFFldh0HiO/jygwVremoVuMMmlPtWMDtLA5+iDezOzQVfC101yhlluYfptes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113943; c=relaxed/simple;
-	bh=Ycxe/qxOJdE1B3EalQjl4UO9bPPNWS7fACmnwj1QmW8=;
+	s=arc-20240116; t=1744113946; c=relaxed/simple;
+	bh=MxGPAQIT00sRKkkkt8ZQquf+0CwJ62Fkj1l/xelua/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CdOPOJxb+ng3GoZPNdZexBsYYU5aEFKZAxh/tiPvRWukVny8WIEs1HtORdgUYVBtF4feoTb6lXuS6KzlVxYg6vPIWdmQx6tGvTufppfMGT3+PPRyjG7/l3pLlNkgk4w0u/Nke/Hyes3Cy8OYjNZ/MjrarRFlS7Ryqkfz4PyYnuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byF0zgi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1NBSaSGz70AQjP4gLsN4+XzitdPSy8Z/MiJncWFveiMlTZQEz5dNzkpcLnamk9iX8q7x4LlBh2uy1t9WBHHax0mC8X1Gh7/axlFCn6g6zoBPrjqIQjWCCW13KKJG80AnpCa7IHIzfFkoIVsgY1zRLzy77na7tROzGYkHpU2bXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voLBa3XX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byF0zgi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741E4C4CEE5;
-	Tue,  8 Apr 2025 12:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voLBa3XX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AE2C4CEE5;
+	Tue,  8 Apr 2025 12:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113942;
-	bh=Ycxe/qxOJdE1B3EalQjl4UO9bPPNWS7fACmnwj1QmW8=;
+	s=korg; t=1744113945;
+	bh=MxGPAQIT00sRKkkkt8ZQquf+0CwJ62Fkj1l/xelua/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byF0zgi+lBFyXNkyHUipsQhQpwbzxiYx/YvUiZ9DVoXvbastWPNF14w86LmW09DSo
-	 0J+24m3x8JJTWMrs7bimb56IkcvnjxVXi1aSra+V1HNsu0b7fuQ/Jon7c+6pm1sMIK
-	 XNaf6tsIz9Ho3+wkck+fLFYJiRdU6tqJcnzLxEKM=
+	b=voLBa3XXODT0tetuH3fWS1xkB+ATEeTOGMYtwQXwwN8AqHqKmk+wY5RI9XCUyFXI4
+	 fqPiiuIhgfbdVTcQcct/CyZaGsreFNT8FN4QyIXCnoHfddQLQa6tY6O3cjzQXtbEps
+	 0qkkLVW/PrQrsY5TsutTAKDanww4JqqYV8aDYNT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.4 079/154] serial: 8250_dma: terminate correct DMA in tx_dma_flush()
-Date: Tue,  8 Apr 2025 12:50:20 +0200
-Message-ID: <20250408104817.843546318@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 080/154] x86/mm/pat: cpa-test: fix length for CPA_ARRAY test
+Date: Tue,  8 Apr 2025 12:50:21 +0200
+Message-ID: <20250408104817.875373890@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -46,41 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit a26503092c75abba70a0be2aa01145ecf90c2a22 upstream.
+[ Upstream commit 33ea120582a638b2f2e380a50686c2b1d7cce795 ]
 
-When flushing transmit side DMA, it is the transmit channel that should
-be terminated, not the receive channel.
+The CPA_ARRAY test always uses len[1] as numpages argument to
+change_page_attr_set() although the addresses array is different each
+iteration of the test loop.
 
-Fixes: 9e512eaaf8f40 ("serial: 8250: Fix fifo underflow on flush")
-Cc: stable <stable@kernel.org>
-Reported-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20250224121831.1429323-1-jkeeping@inmusicbrands.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Replace len[1] with len[i] to have numpages matching the addresses array.
+
+Fixes: ecc729f1f471 ("x86/mm/cpa: Add ARRAY and PAGES_ARRAY selftests")
+Signed-off-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250126074733.1384926-2-rppt@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |    2 +-
+ arch/x86/mm/pageattr-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -139,7 +139,7 @@ void serial8250_tx_dma_flush(struct uart
- 	 */
- 	dma->tx_size = 0;
+diff --git a/arch/x86/mm/pageattr-test.c b/arch/x86/mm/pageattr-test.c
+index facce271e8b93..0d24ab91cce34 100644
+--- a/arch/x86/mm/pageattr-test.c
++++ b/arch/x86/mm/pageattr-test.c
+@@ -184,7 +184,7 @@ static int pageattr_test(void)
+ 			break;
  
--	dmaengine_terminate_async(dma->rxchan);
-+	dmaengine_terminate_async(dma->txchan);
- }
+ 		case 1:
+-			err = change_page_attr_set(addrs, len[1], PAGE_CPA_TEST, 1);
++			err = change_page_attr_set(addrs, len[i], PAGE_CPA_TEST, 1);
+ 			break;
  
- int serial8250_rx_dma(struct uart_8250_port *p)
+ 		case 2:
+-- 
+2.39.5
+
 
 
