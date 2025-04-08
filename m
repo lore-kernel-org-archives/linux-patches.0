@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F247268691;
-	Tue,  8 Apr 2025 11:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFD6268691;
+	Tue,  8 Apr 2025 11:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110220; cv=none; b=VOjvbobjbmelSXExLZ7M2LxP1ckQjZtGRWeMC7JQNiRje6eABgusj1SmqJiN1Iz0NBXBsrnkwMFa32GUl0ON0d7I5DmAnGdmpOf/hLIYwDZX8jQwZmzBkSXHaqpZvmBYCZsGVvXJln8VGQ4Q69HsToSBy2CzsCg0MmFy5DY5Tvs=
+	t=1744110223; cv=none; b=JwWE2pU+P7TRqcaEIUBq9ZYRUzhTsdfYH9TMesulE413fRamHDBcHj5k0TiCWcowcphVtK1I8HzX9Kn+SEOtqOnpSA6MhIED8lPkkvG8Gfn7w1j7v5u+bPD82CYccxz3lg3GwjZ62OGdPgbY3C/Bh29j61e7xcbZ9wGDkq6HHKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110220; c=relaxed/simple;
-	bh=z8z7U5XA1oMMxItFP5rRtsecm5JlD+QZBj+zveDaZhA=;
+	s=arc-20240116; t=1744110223; c=relaxed/simple;
+	bh=v4w6duPkLl0byoCi/rVfX3o9uGV4rGwxextmcTQdRfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwEAT0xttv21FZozaAqDMru02/+lrB+R38fjzBY/udJIRMT11IOdxNUNc41KVTTTa7t2d2DkoWaw3lcjcOR5+dFELzXuOZC6bGTfLkgoyXYSrAbgGEX3UcO03tdu+icIODTIiYPAbAJu8raIQAP7Zfc+x3pWRH03dKDA1IKTsaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbogvlqE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fhs6rHHS/BUp7geZUZsX3CD1j2sL5/m5sSiclYG2csJUR5KDwUvIBYtDi/S6KHO7CCQMJLHIUshF8yExWYGTddic6ID4YVOxP3DJ+xihZllilb3QbX3sX7XRh1xOUt51+fRGa4bu0xlpRftNCSE9X+Kd3Hv+Y1jQ3cQadJ/LIfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5RZM90P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbogvlqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECA1C4CEE7;
-	Tue,  8 Apr 2025 11:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5RZM90P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472BC4CEE7;
+	Tue,  8 Apr 2025 11:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110220;
-	bh=z8z7U5XA1oMMxItFP5rRtsecm5JlD+QZBj+zveDaZhA=;
+	s=korg; t=1744110223;
+	bh=v4w6duPkLl0byoCi/rVfX3o9uGV4rGwxextmcTQdRfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbogvlqEJ5xj7mZdcurDYH2T2oZsf4MqssbsIuk/7kY1NlrX5NvfAVirEEGz90k/R
-	 5mWQOnkcr3+vR//ZU7V40eevROWdAwKOiX7At9mAzWIb3vRebBHCKikCdXgzMXEz+n
-	 8gOvsIIU2qby5XV5Drm8QK/fZDFmffqcGG/rOVi4=
+	b=F5RZM90PzhF9htaGe/8Wj+bWKNBhBMpjxEWwB2ON0MybZmw8bMlPqYezlcYW6In/o
+	 v+pIyjlq1p3GRI8CfYQvpRhCWtL+2RZsUiE+9vrE9oPhHuLMJkBZ9sLaqzPU50IJF7
+	 ssyXlTmZ5WJqQUNuunZFgorXbjTWXP2TDUjrJzr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Kees Cook <kees@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 172/227] perf python: Check if there is space to copy all the event
-Date: Tue,  8 Apr 2025 12:49:10 +0200
-Message-ID: <20250408104825.475569218@linuxfoundation.org>
+Subject: [PATCH 5.10 173/227] fs/procfs: fix the comment above proc_pid_wchan()
+Date: Tue,  8 Apr 2025 12:49:11 +0200
+Message-ID: <20250408104825.504162613@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,66 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 89aaeaf84231157288035b366cb6300c1c6cac64 ]
+[ Upstream commit 6287fbad1cd91f0c25cdc3a580499060828a8f30 ]
 
-The pyrf_event__new() method copies the event obtained from the perf
-ring buffer to a structure that will then be turned into a python object
-for further consumption, so it copies perf_event.header.size bytes to
-its 'event' member:
+proc_pid_wchan() used to report kernel addresses to user space but that is
+no longer the case today.  Bring the comment above proc_pid_wchan() in
+sync with the implementation.
 
-  $ pahole -C pyrf_event /tmp/build/perf-tools-next/python/perf.cpython-312-x86_64-linux-gnu.so
-  struct pyrf_event {
-  	PyObject                   ob_base;              /*     0    16 */
-  	struct evsel *             evsel;                /*    16     8 */
-  	struct perf_sample         sample;               /*    24   312 */
-
-  	/* XXX last struct has 7 bytes of padding, 2 holes */
-
-  	/* --- cacheline 5 boundary (320 bytes) was 16 bytes ago --- */
-  	union perf_event           event;                /*   336  4168 */
-
-  	/* size: 4504, cachelines: 71, members: 4 */
-  	/* member types with holes: 1, total: 2 */
-  	/* paddings: 1, sum paddings: 7 */
-  	/* last cacheline: 24 bytes */
-  };
-
-  $
-
-It was doing so without checking if the event just obtained has more
-than that space, fix it.
-
-This isn't a proper, final solution, as we need to support larger
-events, but for the time being we at least bounds check and document it.
-
-Fixes: 877108e42b1b9ba6 ("perf tools: Initial python binding")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250312203141.285263-7-acme@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250319210222.1518771-1-bvanassche@acm.org
+Fixes: b2f73922d119 ("fs/proc, core/debug: Don't expose absolute kernel addresses via wchan")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/proc/base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index b65cca0656396..240f9a0a7297b 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -558,6 +558,11 @@ static PyObject *pyrf_event__new(union perf_event *event)
- 	      event->header.type == PERF_RECORD_SWITCH_CPU_WIDE))
- 		return NULL;
- 
-+	// FIXME this better be dynamic or we need to parse everything
-+	// before calling perf_mmap__consume(), including tracepoint fields.
-+	if (sizeof(pevent->event) < event->header.size)
-+		return NULL;
-+
- 	ptype = pyrf_event__type[event->header.type];
- 	pevent = PyObject_New(struct pyrf_event, ptype);
- 	if (pevent != NULL)
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index b955ba5db72cb..b09cc9e6d5914 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -415,7 +415,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
+ #ifdef CONFIG_KALLSYMS
+ /*
+  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
+- * Returns the resolved symbol.  If that fails, simply return the address.
++ * Returns the resolved symbol to user space.
+  */
+ static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
+ 			  struct pid *pid, struct task_struct *task)
 -- 
 2.39.5
 
