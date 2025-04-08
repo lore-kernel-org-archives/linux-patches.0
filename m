@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FDA207E14;
-	Tue,  8 Apr 2025 11:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561D021ADAE;
+	Tue,  8 Apr 2025 11:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111477; cv=none; b=hthvYjOrdQYFAMU4YgYo07reyCJzcNEdxRM6zT1BXxwdpEiAJGz/XWfQ8gUOdw0nR/W8iKVxF+BIS1JiuS3R7fhDl0x9JA7+yI62Hsb4cZlwDXgUS6YF97gewVNU0ovPpuOux71h5In69E5Vs3eV2W5AYDJauFoGjV6Z8xMxywk=
+	t=1744111480; cv=none; b=BHj1Xf5E/SBgGNQ33yL+1wmTkeFwXWvdhyOoVz9k8M9AbMTeFXhqXBK+EGlKWIHGQQt8gC4pjGfHHz3y/1qaMRGCYgxddb/LFNMCIbAh76DXpWFjYcu3EGnx4SPBcAbCdwHw36kjxCoFIokvXoZQCV9Zl/byIz/i2rkSOiWPEVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111477; c=relaxed/simple;
-	bh=8E1UUoEW7MIR1Kl8eQbfbgn8TiBkqD0ScUyS/sg4Bkc=;
+	s=arc-20240116; t=1744111480; c=relaxed/simple;
+	bh=QmQUy6JGHQyCa1c1EW7Gd/Vwj+nwJFJvH+0U0EKbBVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8KcXWE2Ii929zLISR5+Sgc4ZJx7uD8ZULVyX7JMZtJ5TTEMjvC+R8BHhg/f3SsbY1KWJNek76en01C01HPs+qy9yFdSKEzB4jD9dfyc6Fs3BpHHDc6IIvtfJYpBblBpll3rU61zJHLQcOfg959/Oiq6WOXO+dOKY0tVU8+W0t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjZI72GX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HkQHjuW+Oyr9qCLxgw8R5GY0P1Zit5f6MS/nHAkJrPZL09z8BU5N3j3ajgx1WQmx5oKO70vDwPY+OMdCLh0ZEL9tH8h+d4+VOyyUpX8ekRxeJ+izQhLCKXSbJcj2Tj7vzYdDuLUlSgR7gZDmceO9XhjkIfsfo4nW0sT39T1YaJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2B3yJpow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjZI72GX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46113C4CEE7;
-	Tue,  8 Apr 2025 11:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2B3yJpow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3C1C4CEE5;
+	Tue,  8 Apr 2025 11:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111477;
-	bh=8E1UUoEW7MIR1Kl8eQbfbgn8TiBkqD0ScUyS/sg4Bkc=;
+	s=korg; t=1744111480;
+	bh=QmQUy6JGHQyCa1c1EW7Gd/Vwj+nwJFJvH+0U0EKbBVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjZI72GXEPwx6aGvILM0jP1Mb/clb1ybeVR7HFItELsVlqsocQ8Ho8Aeet3OPCODV
-	 z7iQTMHw/vPb55CCfFsSfojVW9fVj0rx+oosG2+8GYxnGVSH5UmItVTwXX6Owiyi1f
-	 wRBwd3dm8LcwsAl0Q5Dv9D1CeWlLGHwzXV85ZOfo=
+	b=2B3yJpowMZ4tE4tqCoCefcUS6U5uFRyLb6XD8qQ2HFFPLrhKtYyeDYJCiSeTVyPkh
+	 MA/6Syh/kPyMRDIRGxWywodCD16NnbJCa5aHV4vHri0Vi28pvb1/Y9y8gPEYQif4Lw
+	 HB5boqr6I7KpPmeW04xJPwrcGZOZ41D6Tk5fHd1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 445/731] fs/ntfs3: Fix proc_info_root leak when init ntfs failed
-Date: Tue,  8 Apr 2025 12:45:42 +0200
-Message-ID: <20250408104924.623656511@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Kun Hu <huk23@m.fudan.edu.cn>
+Subject: [PATCH 6.14 446/731] fs/ntfs3: Update inode->i_mapping->a_ops on compression state
+Date: Tue,  8 Apr 2025 12:45:43 +0200
+Message-ID: <20250408104924.646697049@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,59 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 1d1a7e2525491f56901f5f63370a0775768044b8 ]
+[ Upstream commit b432163ebd15a0fb74051949cb61456d6c55ccbd ]
 
-There's a issue as follows:
-  proc_dir_entry 'fs/ntfs3' already registered
-  WARNING: CPU: 3 PID: 9788 at fs/proc/generic.c:375 proc_register+0x418/0x590
-  Modules linked in: ntfs3(E+)
-  Call Trace:
-   <TASK>
-   _proc_mkdir+0x165/0x200
-   init_ntfs_fs+0x36/0xf90 [ntfs3]
-   do_one_initcall+0x115/0x6c0
-   do_init_module+0x253/0x760
-   load_module+0x55f2/0x6c80
-   init_module_from_file+0xd2/0x130
-   __x64_sys_finit_module+0xbf/0x130
-   do_syscall_64+0x72/0x1c0
+Update inode->i_mapping->a_ops when the compression state changes to
+ensure correct address space operations.
+Clear ATTR_FLAG_SPARSED/FILE_ATTRIBUTE_SPARSE_FILE when enabling
+compression to prevent flag conflicts.
 
-Above issue happens as missing destroy 'proc_info_root' when error
-happens after create 'proc_info_root' in init_ntfs_fs().
-So destroy 'proc_info_root' in error path in init_ntfs_fs().
+v2:
+Additionally, ensure that all dirty pages are flushed and concurrent access
+to the page cache is blocked.
 
-Fixes: 7832e123490a ("fs/ntfs3: Add support /proc/fs/ntfs3/<dev>/volinfo and /proc/fs/ntfs3/<dev>/label")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: 6b39bfaeec44 ("fs/ntfs3: Add support for the compression attribute")
+Reported-by: Kun Hu <huk23@m.fudan.edu.cn>, Jiaji Qin <jjtan24@m.fudan.edu.cn>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ntfs3/attrib.c  |  3 ++-
+ fs/ntfs3/file.c    | 22 ++++++++++++++++++++--
+ fs/ntfs3/frecord.c |  6 ++++--
+ 3 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 66047cf0e6e81..920a1ab47b631 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1885,7 +1885,7 @@ static int __init init_ntfs_fs(void)
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index af94e3737470d..e946f75eb5406 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -2664,8 +2664,9 @@ int attr_set_compress(struct ntfs_inode *ni, bool compr)
+ 		attr->nres.run_off = cpu_to_le16(run_off);
+ 	}
  
- 	err = ntfs3_init_bitmap();
- 	if (err)
--		return err;
-+		goto out2;
+-	/* Update data attribute flags. */
++	/* Update attribute flags. */
+ 	if (compr) {
++		attr->flags &= ~ATTR_FLAG_SPARSED;
+ 		attr->flags |= ATTR_FLAG_COMPRESSED;
+ 		attr->nres.c_unit = NTFS_LZNT_CUNIT;
+ 	} else {
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 3f96a11804c90..e9f701f884e72 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -101,8 +101,26 @@ int ntfs_fileattr_set(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	/* Allowed to change compression for empty files and for directories only. */
+ 	if (!is_dedup(ni) && !is_encrypted(ni) &&
+ 	    (S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode))) {
+-		/* Change compress state. */
+-		int err = ni_set_compress(inode, flags & FS_COMPR_FL);
++		int err = 0;
++		struct address_space *mapping = inode->i_mapping;
++
++		/* write out all data and wait. */
++		filemap_invalidate_lock(mapping);
++		err = filemap_write_and_wait(mapping);
++
++		if (err >= 0) {
++			/* Change compress state. */
++			bool compr = flags & FS_COMPR_FL;
++			err = ni_set_compress(inode, compr);
++
++			/* For files change a_ops too. */
++			if (!err)
++				mapping->a_ops = compr ? &ntfs_aops_cmpr :
++							 &ntfs_aops;
++		}
++
++		filemap_invalidate_unlock(mapping);
++
+ 		if (err)
+ 			return err;
+ 	}
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 5df6a0b5add90..81271196c5571 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -3434,10 +3434,12 @@ int ni_set_compress(struct inode *inode, bool compr)
+ 	}
  
- 	ntfs_inode_cachep = kmem_cache_create(
- 		"ntfs_inode_cache", sizeof(struct ntfs_inode), 0,
-@@ -1905,6 +1905,8 @@ static int __init init_ntfs_fs(void)
- 	kmem_cache_destroy(ntfs_inode_cachep);
- out1:
- 	ntfs3_exit_bitmap();
-+out2:
-+	ntfs_remove_proc_root();
- 	return err;
- }
+ 	ni->std_fa = std->fa;
+-	if (compr)
++	if (compr) {
++		std->fa &= ~FILE_ATTRIBUTE_SPARSE_FILE;
+ 		std->fa |= FILE_ATTRIBUTE_COMPRESSED;
+-	else
++	} else {
+ 		std->fa &= ~FILE_ATTRIBUTE_COMPRESSED;
++	}
  
+ 	if (ni->std_fa != std->fa) {
+ 		ni->std_fa = std->fa;
 -- 
 2.39.5
 
