@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E4C26B2A8;
-	Tue,  8 Apr 2025 12:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932C326B2B5;
+	Tue,  8 Apr 2025 12:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115116; cv=none; b=KbxTkan5X/6grpjXeihKOANbptr+DRkU5V+qdtVj99zhnCWDHyMQRnOkjY6cfWLu/0MQOE9zwgSZhiY61e9msg8oOJ57bZbi6fVYjP5AlnDc8fKdnBhwauSgM8FygjfQZXWKj3jF/pipfBPiT6txbibgYfksWVenNQbUgniouNo=
+	t=1744115118; cv=none; b=vC9eQRqcAXpEvY6zMY1yoWXJPI5jFUQ0SH0p69LlREDyv0dmaYMD7TX/RjEFSbqHEKvrXkPJW5HF3pDxazpu4Hloy/J8fQ7ASwYmDBD0BmEFSs5qWhJPULFmDgzTbfqLzU54DRLKz2Ez4xVOFcDX1mwX7MD7ZhgKMsRE5g6QJnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115116; c=relaxed/simple;
-	bh=ydFZOIgJT8cGiOQy6XxZ/T+ILh1T5TBTOGLUfYMt2vw=;
+	s=arc-20240116; t=1744115118; c=relaxed/simple;
+	bh=Nl+uBCnhE/AVymn+Amq+GJFVtbruHblMuhPsX0K7XbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPmbcBOPsb0fMNUAoSaRXz7/MdDaOM9N4nzLhZ4bA/H6PdCIZ5LbIB/0kC6t92Ny+EhtjqTOnqLYHFmVswS9Q588H+40RXR2EZcqT7lFfT2IeD0BJLFuiIvbB1X3WD9NONeUvOQ8mDDTmz134IFmaUrQxpoJauTHbB0vxZA2h78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un/6zpvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mzuVtKCosO6viswcQMQ5Raon4iPKn1cLnxxZwSzk8pPKjH9+kzbN9uPliJv5Qt1g+bwuMd9qsss0C4/8PsPd5x7uWebaF8EOgGWg1MkunhBtl7KRREi30h/si55nJQkFPVljIjnwG98EgFncO3FMmYRcvGSlzPDnaos+srItcwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt7M9+GM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un/6zpvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7622DC4CEE5;
-	Tue,  8 Apr 2025 12:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt7M9+GM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26552C4CEE5;
+	Tue,  8 Apr 2025 12:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115115;
-	bh=ydFZOIgJT8cGiOQy6XxZ/T+ILh1T5TBTOGLUfYMt2vw=;
+	s=korg; t=1744115118;
+	bh=Nl+uBCnhE/AVymn+Amq+GJFVtbruHblMuhPsX0K7XbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un/6zpvYImoLBfqMcqQIJNw29OWHrGOC9rf23oqkQ/JCz7SCGkg2p8nKLHf4Egl+m
-	 fx5zs8VCZeFxjrNzCC38W0xl+z/EI3mz5CgBuRQJto6ir2x5WHQqNfMYsL6J5XtYCL
-	 PWzwq39KLSGLHI8rOMaAL41umWP/orvCpOm0vRrM=
+	b=Vt7M9+GMvmbHFJwHkzWgcsFf+aRTOXUwTc/t3TM/J8/DeBJg56dFtlksktz/G7Z2E
+	 DSWoJ+TY2TXeSH4XsetCrieZ3DY5ajgqFPkWnNcQ4B7yL8pGgvybK0buNiIHFKWzBA
+	 FOuv4RRj7pi3HQqs/NqpsBRBkOxqNKJfFNmQsMik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 338/499] x86/hyperv: Fix output argument to hypercall that changes page visibility
-Date: Tue,  8 Apr 2025 12:49:10 +0200
-Message-ID: <20250408104859.653311848@linuxfoundation.org>
+Subject: [PATCH 6.13 356/499] spufs: fix a leak in spufs_create_context()
+Date: Tue,  8 Apr 2025 12:49:28 +0200
+Message-ID: <20250408104900.112026996@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,50 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 09beefefb57bbc3a06d98f319d85db4d719d7bcb ]
+[ Upstream commit 0f5cce3fc55b08ee4da3372baccf4bcd36a98396 ]
 
-The hypercall in hv_mark_gpa_visibility() is invoked with an input
-argument and an output argument. The output argument ostensibly returns
-the number of pages that were processed. But in fact, the hypercall does
-not provide any output, so the output argument is spurious.
+Leak fixes back in 2008 missed one case - if we are trying to set affinity
+and spufs_mkdir() fails, we need to drop the reference to neighbor.
 
-The spurious argument is harmless because Hyper-V ignores it, but in the
-interest of correctness and to avoid the potential for future problems,
-remove it.
-
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250226200612.2062-2-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250226200612.2062-2-mhklinux@outlook.com>
+Fixes: 58119068cb27 "[POWERPC] spufs: Fix memory leak on SPU affinity"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/hyperv/ivm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/platforms/cell/spufs/inode.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/hyperv/ivm.c b/arch/x86/hyperv/ivm.c
-index 60fc3ed728304..aa8befc4d9013 100644
---- a/arch/x86/hyperv/ivm.c
-+++ b/arch/x86/hyperv/ivm.c
-@@ -465,7 +465,6 @@ static int hv_mark_gpa_visibility(u16 count, const u64 pfn[],
- 			   enum hv_mem_host_visibility visibility)
- {
- 	struct hv_gpa_range_for_visibility *input;
--	u16 pages_processed;
- 	u64 hv_status;
- 	unsigned long flags;
+diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
+index c566e7997f2c1..9f9e4b8716278 100644
+--- a/arch/powerpc/platforms/cell/spufs/inode.c
++++ b/arch/powerpc/platforms/cell/spufs/inode.c
+@@ -460,8 +460,11 @@ spufs_create_context(struct inode *inode, struct dentry *dentry,
+ 	}
  
-@@ -494,7 +493,7 @@ static int hv_mark_gpa_visibility(u16 count, const u64 pfn[],
- 	memcpy((void *)input->gpa_page_list, pfn, count * sizeof(*pfn));
- 	hv_status = hv_do_rep_hypercall(
- 			HVCALL_MODIFY_SPARSE_GPA_PAGE_HOST_VISIBILITY, count,
--			0, input, &pages_processed);
-+			0, input, NULL);
- 	local_irq_restore(flags);
+ 	ret = spufs_mkdir(inode, dentry, flags, mode & 0777);
+-	if (ret)
++	if (ret) {
++		if (neighbor)
++			put_spu_context(neighbor);
+ 		goto out_aff_unlock;
++	}
  
- 	if (hv_result_success(hv_status))
+ 	if (affinity) {
+ 		spufs_set_affinity(flags, SPUFS_I(d_inode(dentry))->i_ctx,
 -- 
 2.39.5
 
