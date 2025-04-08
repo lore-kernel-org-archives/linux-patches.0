@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B857A216E30;
-	Tue,  8 Apr 2025 11:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D69219301;
+	Tue,  8 Apr 2025 11:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112045; cv=none; b=UjwFxekWK5ec+b7beQMxVUxH7DLPULV5NC3lsIT25t5vMl8IMSz+hP+sM6ffhmLs9Tzw1WicrQ7mneDeEQtgARtR6KnyZFlAJk6WCTVyvkSNGO2PmWsM7d50M/q0iOlrKl7vSluNXbBPgST0Vgpy7t1lkdwq8kQrDc5sVIvkkZ8=
+	t=1744112048; cv=none; b=o73YaZcd9ncXzBAQaD1ar+/cCeUGpy2CxXcf5al8WtIac26m+TVIPbifSblv0rNsxxAs3wlvpQXWmms9B9AUf29DlMEwD8j7q6ICSGmefaBx9Nl7qSacp43fIdERtecv8DGW6+/iWXn1J//5Ax5szczt4RAqwfx4DAHIy7q6/Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112045; c=relaxed/simple;
-	bh=6lZTa3CuUh5Ydnji2ZdoFqK00Bn/OMabkI16aEZOCQY=;
+	s=arc-20240116; t=1744112048; c=relaxed/simple;
+	bh=fgyGv9A1qKxqgDnNNIQL92P+Bnak4GZtCFaLAamWjCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JM55MmS4m71tyyCT0aBtX2vSmFsJYQJCZpIzmT7ElwXxWtAungyVHshZY6AGfdPrbcdM7rS7yX+IxNn6cxzGzVs6xYvRd9BQtpXPI+hmHWSuu+ZOIvHTgDFmC9nJXbzkX5LXeGy9RLOnq3gmUyMvcdTgx0rA+TYStAAc8BvVais=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUYaq0YG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pq6pCuIJisHm9pb8goTedFszH0PqPnqaEHahY8dzNvfWXmLfrO2vkTBr3asJIVYaT8YknEXY+PErLehoTfH63PBJ8hYdNWGsFalP7iy7J/9QZzhcESz+1UtZAOMlFKtyepJyjf7hTCGPqgwmwznjz6XpQq7dhFWKNHaZjx2l7+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azG0bXdw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUYaq0YG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477EAC4CEE5;
-	Tue,  8 Apr 2025 11:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azG0bXdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011A9C4CEE5;
+	Tue,  8 Apr 2025 11:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112045;
-	bh=6lZTa3CuUh5Ydnji2ZdoFqK00Bn/OMabkI16aEZOCQY=;
+	s=korg; t=1744112048;
+	bh=fgyGv9A1qKxqgDnNNIQL92P+Bnak4GZtCFaLAamWjCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUYaq0YGGKnhjxHqq2eotkOaltf27DLf0QqVZ6LPicqjtyjr9z7GaPidCZfdTBH3b
-	 fGC+rcj3K+vivkG+bSWuZdZ1ldft6XX6gyspjze6GwPUQpSGYw7D8v1CGZHogO5u02
-	 WDsApg2o+KI49u7/5jBxw46I9QVfnIuW6YeHBRhg=
+	b=azG0bXdw7QLp99QXHEIV/zT5emR+yel43OAqBvTO5UVHxvuTEHaOkiqcysyzwHOSp
+	 XWwwxJgnHNYWfsR+1LbRLkelTBVidcuajSjgdmzAndZg9A283O+FIu5XProQ+FW1Tk
+	 tq8rJ2v41G3pRiPS6WAVojxr5Y3ztXG6Vy79tyf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dave Penkler <dpenkler@gmail.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 655/731] staging: gpib: Fix Oops after disconnect in agilent usb
-Date: Tue,  8 Apr 2025 12:49:12 +0200
-Message-ID: <20250408104929.502165494@linuxfoundation.org>
+Subject: [PATCH 6.14 656/731] tty: serial: fsl_lpuart: Use u32 and u8 for register variables
+Date: Tue,  8 Apr 2025 12:49:13 +0200
+Message-ID: <20250408104929.525816711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,237 +50,405 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 8491e73a5223acb0a4b4d78c3f8b96aa9c5e774d ]
+[ Upstream commit b6a8f6ab2c53e5ea3c7f2a3978db378a89bb7595 ]
 
-If the agilent usb dongle is disconnected subsequent calls to the
-driver cause a NULL dereference Oops as the bus_interface
-is set to NULL on disconnect.
+Use u32 and u8 rather than unsigned long or unsigned char for register
+variables for clarity and consistency.
 
-This problem was introduced by setting usb_dev from the bus_interface
-for dev_xxx messages.
-
-Previously bus_interface was checked for NULL only in the functions
-directly calling usb_fill_bulk_urb or usb_control_msg.
-
-Check for valid bus_interface on all interface entry points
-and return -ENODEV if it is NULL.
-
-Fixes: fbae7090f30c ("staging: gpib: Update messaging and usb_device refs in agilent_usb")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250222204515.5104-1-dpenkler@gmail.com
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20250312023904.1343351-2-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e98ab45ec518 ("tty: serial: lpuart: only disable CTS instead of overwriting the whole UARTMODIR register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpib/agilent_82357a/agilent_82357a.c      | 65 ++++++++++++++++---
- 1 file changed, 55 insertions(+), 10 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 93 ++++++++++++++++-----------------
+ 1 file changed, 46 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-index 7ebebe00dc489..e0d36f0dff25e 100644
---- a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-+++ b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
-@@ -427,7 +427,7 @@ static int agilent_82357a_read(gpib_board_t *board, uint8_t *buffer, size_t leng
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 79623b2482a04..1be0bf3b2f50f 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -441,7 +441,7 @@ static unsigned int lpuart_get_baud_clk_rate(struct lpuart_port *sport)
+ 
+ static void lpuart_stop_tx(struct uart_port *port)
  {
- 	int retval;
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	u8 *out_data, *in_data;
- 	int out_data_length, in_data_length;
- 	int bytes_written, bytes_read;
-@@ -438,6 +438,10 @@ static int agilent_82357a_read(gpib_board_t *board, uint8_t *buffer, size_t leng
+-	unsigned char temp;
++	u8 temp;
  
- 	*nbytes = 0;
- 	*end = 0;
-+
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	out_data_length = 0x9;
- 	out_data = kmalloc(out_data_length, GFP_KERNEL);
- 	if (!out_data)
-@@ -534,7 +538,7 @@ static ssize_t agilent_82357a_generic_write(gpib_board_t *board, uint8_t *buffer
+ 	temp = readb(port->membase + UARTCR2);
+ 	temp &= ~(UARTCR2_TIE | UARTCR2_TCIE);
+@@ -450,7 +450,7 @@ static void lpuart_stop_tx(struct uart_port *port)
+ 
+ static void lpuart32_stop_tx(struct uart_port *port)
  {
- 	int retval;
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	u8 *out_data = NULL;
- 	u8 *status_data = NULL;
- 	int out_data_length;
-@@ -545,6 +549,10 @@ static ssize_t agilent_82357a_generic_write(gpib_board_t *board, uint8_t *buffer
- 	struct agilent_82357a_register_pairlet read_reg;
+-	unsigned long temp;
++	u32 temp;
  
- 	*bytes_written = 0;
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	out_data_length = length + 0x8;
- 	out_data = kmalloc(out_data_length, GFP_KERNEL);
- 	if (!out_data)
-@@ -697,9 +705,13 @@ int agilent_82357a_take_control_internal(gpib_board_t *board, int synchronous)
+ 	temp = lpuart32_read(port, UARTCTRL);
+ 	temp &= ~(UARTCTRL_TIE | UARTCTRL_TCIE);
+@@ -459,7 +459,7 @@ static void lpuart32_stop_tx(struct uart_port *port)
  
- static int agilent_82357a_take_control(gpib_board_t *board, int synchronous)
+ static void lpuart_stop_rx(struct uart_port *port)
  {
-+	struct agilent_82357a_priv *a_priv = board->private_data;
- 	const int timeout = 10;
- 	int i;
+-	unsigned char temp;
++	u8 temp;
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+
- /* It looks like the 9914 does not handle tcs properly.
-  *  See comment above tms9914_take_control_workaround() in
-  *  drivers/gpib/tms9914/tms9914_aux.c
-@@ -723,10 +735,14 @@ static int agilent_82357a_take_control(gpib_board_t *board, int synchronous)
- static int agilent_82357a_go_to_standby(gpib_board_t *board)
+ 	temp = readb(port->membase + UARTCR2);
+ 	writeb(temp & ~UARTCR2_RE, port->membase + UARTCR2);
+@@ -467,7 +467,7 @@ static void lpuart_stop_rx(struct uart_port *port)
+ 
+ static void lpuart32_stop_rx(struct uart_port *port)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet write;
- 	int retval;
+-	unsigned long temp;
++	u32 temp;
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	write.address = AUXCR;
- 	write.value = AUX_GTS;
- 	retval = agilent_82357a_write_registers(a_priv, &write, 1);
-@@ -739,11 +755,15 @@ static int agilent_82357a_go_to_standby(gpib_board_t *board)
- static void agilent_82357a_request_system_control(gpib_board_t *board, int request_control)
+ 	temp = lpuart32_read(port, UARTCTRL);
+ 	lpuart32_write(port, temp & ~UARTCTRL_RE, UARTCTRL);
+@@ -642,7 +642,7 @@ static int lpuart_poll_init(struct uart_port *port)
+ 	struct lpuart_port *sport = container_of(port,
+ 					struct lpuart_port, port);
+ 	unsigned long flags;
+-	unsigned char temp;
++	u8 temp;
+ 
+ 	sport->port.fifosize = 0;
+ 
+@@ -752,7 +752,7 @@ static inline void lpuart_transmit_buffer(struct lpuart_port *sport)
+ static inline void lpuart32_transmit_buffer(struct lpuart_port *sport)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet writes[2];
- 	int retval;
- 	int i = 0;
+ 	struct tty_port *tport = &sport->port.state->port;
+-	unsigned long txcnt;
++	u32 txcnt;
+ 	unsigned char c;
  
-+	if (!a_priv->bus_interface)
-+		return; // -ENODEV;
-+
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	/* 82357B needs bit to be set in 9914 AUXCR register */
- 	writes[i].address = AUXCR;
- 	if (request_control) {
-@@ -767,10 +787,14 @@ static void agilent_82357a_request_system_control(gpib_board_t *board, int reque
- static void agilent_82357a_interface_clear(gpib_board_t *board, int assert)
+ 	if (sport->port.x_char) {
+@@ -789,7 +789,7 @@ static void lpuart_start_tx(struct uart_port *port)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet write;
- 	int retval;
+ 	struct lpuart_port *sport = container_of(port,
+ 			struct lpuart_port, port);
+-	unsigned char temp;
++	u8 temp;
  
-+	if (!a_priv->bus_interface)
-+		return; // -ENODEV;
-+
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	write.address = AUXCR;
- 	write.value = AUX_SIC;
- 	if (assert) {
-@@ -785,10 +809,14 @@ static void agilent_82357a_interface_clear(gpib_board_t *board, int assert)
- static void agilent_82357a_remote_enable(gpib_board_t *board, int enable)
+ 	temp = readb(port->membase + UARTCR2);
+ 	writeb(temp | UARTCR2_TIE, port->membase + UARTCR2);
+@@ -806,7 +806,7 @@ static void lpuart_start_tx(struct uart_port *port)
+ static void lpuart32_start_tx(struct uart_port *port)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet write;
- 	int retval;
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+-	unsigned long temp;
++	u32 temp;
  
-+	if (!a_priv->bus_interface)
-+		return; //-ENODEV;
-+
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	write.address = AUXCR;
- 	write.value = AUX_SRE;
- 	if (enable)
-@@ -804,6 +832,8 @@ static int agilent_82357a_enable_eos(gpib_board_t *board, uint8_t eos_byte, int
+ 	if (sport->lpuart_dma_tx_use) {
+ 		if (!lpuart_stopped_or_empty(port))
+@@ -839,8 +839,8 @@ static unsigned int lpuart_tx_empty(struct uart_port *port)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
+ 	struct lpuart_port *sport = container_of(port,
+ 			struct lpuart_port, port);
+-	unsigned char sr1 = readb(port->membase + UARTSR1);
+-	unsigned char sfifo = readb(port->membase + UARTSFIFO);
++	u8 sr1 = readb(port->membase + UARTSR1);
++	u8 sfifo = readb(port->membase + UARTSFIFO);
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
- 	if (compare_8_bits == 0)
- 		return -EOPNOTSUPP;
- 
-@@ -822,10 +852,13 @@ static void agilent_82357a_disable_eos(gpib_board_t *board)
- static unsigned int agilent_82357a_update_status(gpib_board_t *board, unsigned int clear_mask)
+ 	if (sport->dma_tx_in_progress)
+ 		return 0;
+@@ -855,9 +855,9 @@ static unsigned int lpuart32_tx_empty(struct uart_port *port)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet address_status, bus_status;
- 	int retval;
+ 	struct lpuart_port *sport = container_of(port,
+ 			struct lpuart_port, port);
+-	unsigned long stat = lpuart32_read(port, UARTSTAT);
+-	unsigned long sfifo = lpuart32_read(port, UARTFIFO);
+-	unsigned long ctrl = lpuart32_read(port, UARTCTRL);
++	u32 stat = lpuart32_read(port, UARTSTAT);
++	u32 sfifo = lpuart32_read(port, UARTFIFO);
++	u32 ctrl = lpuart32_read(port, UARTCTRL);
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	board->status &= ~clear_mask;
- 	if (a_priv->is_cic)
- 		set_bit(CIC_NUM, &board->status);
-@@ -885,6 +918,9 @@ static int agilent_82357a_primary_address(gpib_board_t *board, unsigned int addr
- 	struct agilent_82357a_register_pairlet write;
- 	int retval;
- 
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	// put primary address in address0
- 	write.address = ADR;
- 	write.value = address & ADDRESS_MASK;
-@@ -906,11 +942,14 @@ static int agilent_82357a_secondary_address(gpib_board_t *board, unsigned int ad
- static int agilent_82357a_parallel_poll(gpib_board_t *board, uint8_t *result)
+ 	if (sport->dma_tx_in_progress)
+ 		return 0;
+@@ -884,7 +884,7 @@ static void lpuart_rxint(struct lpuart_port *sport)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet writes[2];
- 	struct agilent_82357a_register_pairlet read;
- 	int retval;
+ 	unsigned int flg, ignored = 0, overrun = 0;
+ 	struct tty_port *port = &sport->port.state->port;
+-	unsigned char rx, sr;
++	u8 rx, sr;
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	// execute parallel poll
- 	writes[0].address = AUXCR;
- 	writes[0].value = AUX_CS | AUX_RPP;
-@@ -975,11 +1014,14 @@ static void agilent_82357a_return_to_local(gpib_board_t *board)
- static int agilent_82357a_line_status(const gpib_board_t *board)
+ 	uart_port_lock(&sport->port);
+ 
+@@ -961,7 +961,7 @@ static void lpuart32_rxint(struct lpuart_port *sport)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet bus_status;
- 	int retval;
- 	int status = ValidALL;
+ 	unsigned int flg, ignored = 0;
+ 	struct tty_port *port = &sport->port.state->port;
+-	unsigned long rx, sr;
++	u32 rx, sr;
+ 	bool is_break;
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	bus_status.address = BSR;
- 	retval = agilent_82357a_read_registers(a_priv, &bus_status, 1, 0);
- 	if (retval) {
-@@ -1025,10 +1067,13 @@ static unsigned short nanosec_to_fast_talker_bits(unsigned int *nanosec)
- static unsigned int agilent_82357a_t1_delay(gpib_board_t *board, unsigned int nanosec)
+ 	uart_port_lock(&sport->port);
+@@ -1039,7 +1039,7 @@ static void lpuart32_rxint(struct lpuart_port *sport)
+ static irqreturn_t lpuart_int(int irq, void *dev_id)
  {
- 	struct agilent_82357a_priv *a_priv = board->private_data;
--	struct usb_device *usb_dev = interface_to_usbdev(a_priv->bus_interface);
-+	struct usb_device *usb_dev;
- 	struct agilent_82357a_register_pairlet write;
- 	int retval;
+ 	struct lpuart_port *sport = dev_id;
+-	unsigned char sts;
++	u8 sts;
  
-+	if (!a_priv->bus_interface)
-+		return -ENODEV;
-+	usb_dev = interface_to_usbdev(a_priv->bus_interface);
- 	write.address = FAST_TALKER_T1;
- 	write.value = nanosec_to_fast_talker_bits(&nanosec);
- 	retval = agilent_82357a_write_registers(a_priv, &write, 1);
+ 	sts = readb(sport->port.membase + UARTSR1);
+ 
+@@ -1113,7 +1113,7 @@ static void lpuart_copy_rx_to_tty(struct lpuart_port *sport)
+ 	int count, copied;
+ 
+ 	if (lpuart_is_32(sport)) {
+-		unsigned long sr = lpuart32_read(&sport->port, UARTSTAT);
++		u32 sr = lpuart32_read(&sport->port, UARTSTAT);
+ 
+ 		if (sr & (UARTSTAT_PE | UARTSTAT_FE)) {
+ 			/* Clear the error flags */
+@@ -1125,10 +1125,10 @@ static void lpuart_copy_rx_to_tty(struct lpuart_port *sport)
+ 				sport->port.icount.frame++;
+ 		}
+ 	} else {
+-		unsigned char sr = readb(sport->port.membase + UARTSR1);
++		u8 sr = readb(sport->port.membase + UARTSR1);
+ 
+ 		if (sr & (UARTSR1_PE | UARTSR1_FE)) {
+-			unsigned char cr2;
++			u8 cr2;
+ 
+ 			/* Disable receiver during this operation... */
+ 			cr2 = readb(sport->port.membase + UARTCR2);
+@@ -1279,7 +1279,7 @@ static void lpuart32_dma_idleint(struct lpuart_port *sport)
+ static irqreturn_t lpuart32_int(int irq, void *dev_id)
+ {
+ 	struct lpuart_port *sport = dev_id;
+-	unsigned long sts, rxcount;
++	u32 sts, rxcount;
+ 
+ 	sts = lpuart32_read(&sport->port, UARTSTAT);
+ 	rxcount = lpuart32_read(&sport->port, UARTWATER);
+@@ -1411,12 +1411,12 @@ static inline int lpuart_start_rx_dma(struct lpuart_port *sport)
+ 	dma_async_issue_pending(chan);
+ 
+ 	if (lpuart_is_32(sport)) {
+-		unsigned long temp = lpuart32_read(&sport->port, UARTBAUD);
++		u32 temp = lpuart32_read(&sport->port, UARTBAUD);
+ 
+ 		lpuart32_write(&sport->port, temp | UARTBAUD_RDMAE, UARTBAUD);
+ 
+ 		if (sport->dma_idle_int) {
+-			unsigned long ctrl = lpuart32_read(&sport->port, UARTCTRL);
++			u32 ctrl = lpuart32_read(&sport->port, UARTCTRL);
+ 
+ 			lpuart32_write(&sport->port, ctrl | UARTCTRL_ILIE, UARTCTRL);
+ 		}
+@@ -1482,7 +1482,7 @@ static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termio
+ 	struct lpuart_port *sport = container_of(port,
+ 			struct lpuart_port, port);
+ 
+-	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
++	u32 modem = lpuart32_read(&sport->port, UARTMODIR)
+ 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
+ 	u32 ctrl;
+ 
+@@ -1577,7 +1577,7 @@ static void lpuart32_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ 
+ static void lpuart_break_ctl(struct uart_port *port, int break_state)
+ {
+-	unsigned char temp;
++	u8 temp;
+ 
+ 	temp = readb(port->membase + UARTCR2) & ~UARTCR2_SBK;
+ 
+@@ -1589,7 +1589,7 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
+ 
+ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
+ {
+-	unsigned long temp;
++	u32 temp;
+ 
+ 	temp = lpuart32_read(port, UARTCTRL);
+ 
+@@ -1623,8 +1623,7 @@ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
+ 
+ static void lpuart_setup_watermark(struct lpuart_port *sport)
+ {
+-	unsigned char val, cr2;
+-	unsigned char cr2_saved;
++	u8 val, cr2, cr2_saved;
+ 
+ 	cr2 = readb(sport->port.membase + UARTCR2);
+ 	cr2_saved = cr2;
+@@ -1657,7 +1656,7 @@ static void lpuart_setup_watermark(struct lpuart_port *sport)
+ 
+ static void lpuart_setup_watermark_enable(struct lpuart_port *sport)
+ {
+-	unsigned char cr2;
++	u8 cr2;
+ 
+ 	lpuart_setup_watermark(sport);
+ 
+@@ -1668,8 +1667,7 @@ static void lpuart_setup_watermark_enable(struct lpuart_port *sport)
+ 
+ static void lpuart32_setup_watermark(struct lpuart_port *sport)
+ {
+-	unsigned long val, ctrl;
+-	unsigned long ctrl_saved;
++	u32 val, ctrl, ctrl_saved;
+ 
+ 	ctrl = lpuart32_read(&sport->port, UARTCTRL);
+ 	ctrl_saved = ctrl;
+@@ -1778,7 +1776,7 @@ static void lpuart_tx_dma_startup(struct lpuart_port *sport)
+ static void lpuart_rx_dma_startup(struct lpuart_port *sport)
+ {
+ 	int ret;
+-	unsigned char cr3;
++	u8 cr3;
+ 
+ 	if (uart_console(&sport->port))
+ 		goto err;
+@@ -1828,7 +1826,7 @@ static void lpuart_hw_setup(struct lpuart_port *sport)
+ static int lpuart_startup(struct uart_port *port)
+ {
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+-	unsigned char temp;
++	u8 temp;
+ 
+ 	/* determine FIFO size and enable FIFO mode */
+ 	temp = readb(sport->port.membase + UARTPFIFO);
+@@ -1848,7 +1846,7 @@ static int lpuart_startup(struct uart_port *port)
+ 
+ static void lpuart32_hw_disable(struct lpuart_port *sport)
+ {
+-	unsigned long temp;
++	u32 temp;
+ 
+ 	temp = lpuart32_read(&sport->port, UARTCTRL);
+ 	temp &= ~(UARTCTRL_RIE | UARTCTRL_ILIE | UARTCTRL_RE |
+@@ -1858,7 +1856,7 @@ static void lpuart32_hw_disable(struct lpuart_port *sport)
+ 
+ static void lpuart32_configure(struct lpuart_port *sport)
+ {
+-	unsigned long temp;
++	u32 temp;
+ 
+ 	temp = lpuart32_read(&sport->port, UARTCTRL);
+ 	if (!sport->lpuart_dma_rx_use)
+@@ -1888,7 +1886,7 @@ static void lpuart32_hw_setup(struct lpuart_port *sport)
+ static int lpuart32_startup(struct uart_port *port)
+ {
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+-	unsigned long temp;
++	u32 temp;
+ 
+ 	/* determine FIFO size */
+ 	temp = lpuart32_read(&sport->port, UARTFIFO);
+@@ -1942,7 +1940,7 @@ static void lpuart_dma_shutdown(struct lpuart_port *sport)
+ static void lpuart_shutdown(struct uart_port *port)
+ {
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+-	unsigned char temp;
++	u8 temp;
+ 	unsigned long flags;
+ 
+ 	uart_port_lock_irqsave(port, &flags);
+@@ -1962,7 +1960,7 @@ static void lpuart32_shutdown(struct uart_port *port)
+ {
+ 	struct lpuart_port *sport =
+ 		container_of(port, struct lpuart_port, port);
+-	unsigned long temp;
++	u32 temp;
+ 	unsigned long flags;
+ 
+ 	uart_port_lock_irqsave(port, &flags);
+@@ -1998,7 +1996,7 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
+ {
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+ 	unsigned long flags;
+-	unsigned char cr1, old_cr1, old_cr2, cr3, cr4, bdh, modem;
++	u8 cr1, old_cr1, old_cr2, cr3, cr4, bdh, modem;
+ 	unsigned int  baud;
+ 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
+ 	unsigned int sbr, brfa;
+@@ -2236,7 +2234,7 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
+ {
+ 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
+ 	unsigned long flags;
+-	unsigned long ctrl, old_ctrl, bd, modem;
++	u32 ctrl, old_ctrl, bd, modem;
+ 	unsigned int  baud;
+ 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
+ 
+@@ -2503,7 +2501,7 @@ static void
+ lpuart_console_write(struct console *co, const char *s, unsigned int count)
+ {
+ 	struct lpuart_port *sport = lpuart_ports[co->index];
+-	unsigned char  old_cr2, cr2;
++	u8  old_cr2, cr2;
+ 	unsigned long flags;
+ 	int locked = 1;
+ 
+@@ -2533,7 +2531,7 @@ static void
+ lpuart32_console_write(struct console *co, const char *s, unsigned int count)
+ {
+ 	struct lpuart_port *sport = lpuart_ports[co->index];
+-	unsigned long  old_cr, cr;
++	u32 old_cr, cr;
+ 	unsigned long flags;
+ 	int locked = 1;
+ 
+@@ -2567,7 +2565,7 @@ static void __init
+ lpuart_console_get_options(struct lpuart_port *sport, int *baud,
+ 			   int *parity, int *bits)
+ {
+-	unsigned char cr, bdh, bdl, brfa;
++	u8 cr, bdh, bdl, brfa;
+ 	unsigned int sbr, uartclk, baud_raw;
+ 
+ 	cr = readb(sport->port.membase + UARTCR2);
+@@ -2616,7 +2614,7 @@ static void __init
+ lpuart32_console_get_options(struct lpuart_port *sport, int *baud,
+ 			   int *parity, int *bits)
+ {
+-	unsigned long cr, bd;
++	u32 cr, bd;
+ 	unsigned int sbr, uartclk, baud_raw;
+ 
+ 	cr = lpuart32_read(&sport->port, UARTCTRL);
+@@ -2822,7 +2820,7 @@ static int lpuart_global_reset(struct lpuart_port *sport)
+ {
+ 	struct uart_port *port = &sport->port;
+ 	void __iomem *global_addr;
+-	unsigned long ctrl, bd;
++	u32 ctrl, bd;
+ 	unsigned int val = 0;
+ 	int ret;
+ 
+@@ -3028,7 +3026,7 @@ static int lpuart_runtime_resume(struct device *dev)
+ 
+ static void serial_lpuart_enable_wakeup(struct lpuart_port *sport, bool on)
+ {
+-	unsigned int val, baud;
++	u32 val, baud;
+ 
+ 	if (lpuart_is_32(sport)) {
+ 		val = lpuart32_read(&sport->port, UARTCTRL);
+@@ -3093,7 +3091,7 @@ static int lpuart_suspend_noirq(struct device *dev)
+ static int lpuart_resume_noirq(struct device *dev)
+ {
+ 	struct lpuart_port *sport = dev_get_drvdata(dev);
+-	unsigned int val;
++	u32 val;
+ 
+ 	pinctrl_pm_select_default_state(dev);
+ 
+@@ -3113,7 +3111,8 @@ static int lpuart_resume_noirq(struct device *dev)
+ static int lpuart_suspend(struct device *dev)
+ {
+ 	struct lpuart_port *sport = dev_get_drvdata(dev);
+-	unsigned long temp, flags;
++	u32 temp;
++	unsigned long flags;
+ 
+ 	uart_suspend_port(&lpuart_reg, &sport->port);
+ 
 -- 
 2.39.5
 
