@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E123226981C;
-	Tue,  8 Apr 2025 12:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8064A269AE3;
+	Tue,  8 Apr 2025 12:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113642; cv=none; b=ZSf4+Toacqfq9ecjSqEMx2XWqj7LykdpHyCWtr37aNlxN8ggopOgZXMnHurz5GHreqZvHOM7WW6sGFXmiVLjrBfUM1OKOcA4kICBRpYLrzgPr6PR6w9QH92V57ucGz73SIE/vqJh6CtScD73GFiKWjA99vzI3mfFFeTOfpCjFqs=
+	t=1744113644; cv=none; b=RZ1EdjN3LQ9PUfrqkiZMuYX5q/bQmizfbYmeY/UaG3w3stsd0ucTJYPtSs3lIXi/OJAoz0aQlrdxX9mcs0lvWTOfLMTwGGD8balsCNuj2MPi+JlW7IDyxqE6C3DkmDgd9UmqnxcbrC5xSZ8tns6FVjyfvXhWuEeukaJNpTO7RlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113642; c=relaxed/simple;
-	bh=vlkOnUG9sajosmLA4vPkl5Aqq8hSuHLz78YZAleIXOE=;
+	s=arc-20240116; t=1744113644; c=relaxed/simple;
+	bh=foR/lLRUlcw7KXYTnMHcLPPiVvFlJqKUvlPLPfzYzQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4BpquXTHs7eJCEdDLUFQh7AeXyC1NIsTLUw6KBlDCQazVeE1k3Ahi6i3odc1FYVBPtabHpDJiofsX2Z50bN2dj2+KDWTt4aBVa7z22ls7eHT4EXZd8gRiac6dUOgl2GLtk3kectn5vXYrRg7hatWkgbiK2WxaSKiaRIuO7/D8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItfuW2kn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+SIFpTHLFQPvVRqoE2WamrAR8fC5qGUh9OoxmckGi60qAFhpHTnYHNczLGWomqM3zB2fgi4GpRxzw40CcfLSdKkJ/q0cpChCoV7/tCMF9uLQK0rVVOMwJZphbBEPrXAef5H+lLn8kUn/HqNW1Cvq1XtFZLquMRWwO7L3EoIxbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvsN07Wm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItfuW2kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A41C4CEE5;
-	Tue,  8 Apr 2025 12:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvsN07Wm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10809C4CEE5;
+	Tue,  8 Apr 2025 12:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113641;
-	bh=vlkOnUG9sajosmLA4vPkl5Aqq8hSuHLz78YZAleIXOE=;
+	s=korg; t=1744113644;
+	bh=foR/lLRUlcw7KXYTnMHcLPPiVvFlJqKUvlPLPfzYzQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItfuW2kn/qrKq35RmEku4xmcwmFMrtgrh8UbolmAIUshu/X3CElKbuJdyvmenQCyO
-	 Qt9eVwCGVjfi/yZTQbDbcaK7HK/wzS3SgaC5OASWXCiaEOYy6vmOewahXHmD3k0jTf
-	 3HhcudBZ3dV2rAfEchTIJZb5s18knCI59S62afRg=
+	b=gvsN07Wmb+NyKodaufrU8HYH5RiJ0bqrViDxGJVV3ZGB0I9SoSnDa9Z7yPyRh0axT
+	 Zo2iWGi4Vs0aoRGyym+kd0i97V+VXuw5F+HfTcP4KcLlbz4P6I49m2YibUSk0BMmvU
+	 bQdYxhJsBbHqV86QrgDzQyw/RFpFpXUZ5fUYNu40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 233/268] LoongArch: BPF: Dont override subprogs return value
-Date: Tue,  8 Apr 2025 12:50:44 +0200
-Message-ID: <20250408104834.872684630@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 197/268] firmware: cs_dsp: Ensure cs_dsp_load[_coeff]() returns 0 on success
+Date: Tue,  8 Apr 2025 12:50:08 +0200
+Message-ID: <20250408104833.868315901@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -50,43 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 60f3caff1492e5b8616b9578c4bedb5c0a88ed14 upstream.
+[ Upstream commit 2593f7e0dc93a898a84220b3fb180d86f1ca8c60 ]
 
-The verifier test `calls: div by 0 in subprog` triggers a panic at the
-ld.bu instruction. The ld.bu insn is trying to load byte from memory
-address returned by the subprog. The subprog actually set the correct
-address at the a5 register (dedicated register for BPF return values).
-But at commit 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
-we also sign extended a5 to the a0 register (return value in LoongArch).
-For function call insn, we later propagate the a0 register back to a5
-register. This is right for native calls but wrong for bpf2bpf calls
-which expect zero-extended return value in a5 register. So only move a0
-to a5 for native calls (i.e. non-BPF_PSEUDO_CALL).
+Set ret = 0 on successful completion of the processing loop in
+cs_dsp_load() and cs_dsp_load_coeff() to ensure that the function
+returns 0 on success.
 
-Cc: stable@vger.kernel.org
-Fixes: 73c359d1d356 ("LoongArch: BPF: Sign-extend return values")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+All normal firmware files will have at least one data block, and
+processing this block will set ret == 0, from the result of either
+regmap_raw_write() or cs_dsp_parse_coeff().
+
+The kunit tests create a dummy firmware file that contains only the
+header, without any data blocks. This gives cs_dsp a file to "load"
+that will not cause any side-effects. As there aren't any data blocks,
+the processing loop will not set ret == 0.
+
+Originally there was a line after the processing loop:
+
+    ret = regmap_async_complete(regmap);
+
+which would set ret == 0 before the function returned.
+
+Commit fe08b7d5085a ("firmware: cs_dsp: Remove async regmap writes")
+changed the regmap write to a normal sync write, so the call to
+regmap_async_complete() wasn't necessary and was removed. It was
+overlooked that the ret here wasn't only to check the result of
+regmap_async_complete(), it also set the final return value of the
+function.
+
+Fixes: fe08b7d5085a ("firmware: cs_dsp: Remove async regmap writes")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250323170529.197205-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/firmware/cirrus/cs_dsp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -844,7 +844,10 @@ static int build_insn(const struct bpf_i
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index 4ce5681be18f0..c015d2b4c5cf9 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -1584,6 +1584,7 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
  
- 		move_addr(ctx, t1, func_addr);
- 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, t1, 0);
--		move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
-+
-+		if (insn->src_reg != BPF_PSEUDO_CALL)
-+			move_reg(ctx, regmap[BPF_REG_0], LOONGARCH_GPR_A0);
-+
- 		break;
+ 	cs_dsp_debugfs_save_wmfwname(dsp, file);
  
- 	/* tail call */
++	ret = 0;
+ out_fw:
+ 	cs_dsp_buf_free(&buf_list);
+ 	kfree(text);
+@@ -2299,6 +2300,7 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
+ 
+ 	cs_dsp_debugfs_save_binname(dsp, file);
+ 
++	ret = 0;
+ out_fw:
+ 	cs_dsp_buf_free(&buf_list);
+ 	kfree(text);
+-- 
+2.39.5
+
 
 
