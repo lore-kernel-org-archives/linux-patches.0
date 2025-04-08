@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3B267B77;
-	Tue,  8 Apr 2025 11:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD984267B77;
+	Tue,  8 Apr 2025 11:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110129; cv=none; b=JxWeKKgC2AI+RNs2fBYoAwozX/tevPCichFJAl/KqBM4vPfMPFf2wP6XN7ZhROgC+UNa6FM1rtm7pUr/mMuOaqumJXKSwUdFH8CJmIcQVlxpNV63xFdmBBhQ2nz1LBqT/Obe/H2yqt0dkKxIGKBfDQEb8lv/TM0JkA+A84hVX+4=
+	t=1744110132; cv=none; b=sSeOksvLPqXuwmvZZqdZ1BGgCdb+UYtkjg8cVtop3mvPd6Tk9g9b+H+0FOXqht2cLD2vRQBB+GATbVA9z81mR9Q34E84v36dIPuYez5P+84BYC30m6Ux/XmTBOBvO1zakYnxR8s2eqEz9JA5N6p2eZZC4p/gjl0BnVBW1iFiXJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110129; c=relaxed/simple;
-	bh=THGL5TH1+0l0u+zn7OBkVawpB7KIOyZ3HS4SL065FP0=;
+	s=arc-20240116; t=1744110132; c=relaxed/simple;
+	bh=Y16/lKc86QMI4bPqPPAWW00mTurxfotOTr1VabKynxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g46KecmU4FeP5SgdAbERIyebyCZRgTPlbFvTA+WYTrV8ynRXOVk01l6aFDVaKZwOpx96M3b29VsWns5Gz3DGVCFkILMWUbokoqPgCRXJxn9LzM9uiDvszYTmxWK4VJuw59O++uX4FHJoMznoCN07pXll2WyeEOcCnHTXVznFFMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCDqZI0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxrIz+Ui2Dna8Sx0/31WTwEhs3xjOnCrwlcjTxWSrCaTYsDq3SWOxEd8vBdPrksZgj7j6CjTmjl20B0/aPApbypewoDIXNFZrJ2HuQCAw/vwjGwgM9SMdMEqHoCMvwx9TLEyjgyMwtYYFmbj4Ek0MMk3+Pg+7KbpFvYBrp+JgDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qT2RU41N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCDqZI0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B725FC4CEEA;
-	Tue,  8 Apr 2025 11:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qT2RU41N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B537C4CEE5;
+	Tue,  8 Apr 2025 11:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110129;
-	bh=THGL5TH1+0l0u+zn7OBkVawpB7KIOyZ3HS4SL065FP0=;
+	s=korg; t=1744110131;
+	bh=Y16/lKc86QMI4bPqPPAWW00mTurxfotOTr1VabKynxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCDqZI0UFIFL4jJrcCoax3kqEHR1kMHzC2kXaDbz9c5X7LL+2Hrgyc0vn5B2doGBb
-	 YBywWXwZqRT+z2HNI1IZ4kWgYEvHtV1zY4Zt/YodfGMw/ASmQrA5OHS5REaz7Nv9an
-	 7R3qNixwXfHXu+Kd3XvYemN7B/yBvYQguIJWtYNM=
+	b=qT2RU41NaYL0neSujSzxGATUkKXA4Vbay682MMbWJOrxCufpcfmFHnXN0D+HlFLeY
+	 EIefEcjkDHEKiXoiV13/VnWi5+ncuSGMOJf8prLtVf+cG/6MbTyzXDWOPIemYLhBRr
+	 u2Bq6sHDyTPSYW/MbkBzDvEiUU7v2PIu6OCr8txc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/227] octeontx2-af: Fix mbox INTR handler when num VFs > 64
-Date: Tue,  8 Apr 2025 12:49:17 +0200
-Message-ID: <20250408104825.684154129@linuxfoundation.org>
+Subject: [PATCH 5.10 180/227] sched/smt: Always inline sched_smt_active()
+Date: Tue,  8 Apr 2025 12:49:18 +0200
+Message-ID: <20250408104825.712703922@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,37 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 0fdba88a211508984eb5df62008c29688692b134 ]
+[ Upstream commit 09f37f2d7b21ff35b8b533f9ab8cfad2fe8f72f6 ]
 
-When number of RVU VFs > 64, the vfs value passed to "rvu_queue_work"
-function is incorrect. Due to which mbox workqueue entries for
-VFs 0 to 63 never gets added to workqueue.
+sched_smt_active() can be called from noinstr code, so it should always
+be inlined.  The CONFIG_SCHED_SMT version already has __always_inline.
+Do the same for its !CONFIG_SCHED_SMT counterpart.
 
-Fixes: 9bdc47a6e328 ("octeontx2-af: Mbox communication support btw AF and it's VFs")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250327091441.1284-1-gakula@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes the following warning:
+
+  vmlinux.o: error: objtool: intel_idle_ibrs+0x13: call to sched_smt_active() leaves .noinstr.text section
+
+Fixes: 321a874a7ef8 ("sched/smt: Expose sched_smt_present static key")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/1d03907b0a247cf7fb5c1d518de378864f603060.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/r/202503311434.lyw2Tveh-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c | 2 +-
+ include/linux/sched/smt.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 78309821ce298..f8e86f2535635 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -2056,7 +2056,7 @@ static irqreturn_t rvu_mbox_intr_handler(int irq, void *rvu_irq)
- 		rvupf_write64(rvu, RVU_PF_VFPF_MBOX_INTX(1), intr);
+diff --git a/include/linux/sched/smt.h b/include/linux/sched/smt.h
+index 59d3736c454cf..737b50f40137b 100644
+--- a/include/linux/sched/smt.h
++++ b/include/linux/sched/smt.h
+@@ -12,7 +12,7 @@ static __always_inline bool sched_smt_active(void)
+ 	return static_branch_likely(&sched_smt_present);
+ }
+ #else
+-static inline bool sched_smt_active(void) { return false; }
++static __always_inline bool sched_smt_active(void) { return false; }
+ #endif
  
- 		rvu_queue_work(&rvu->afvf_wq_info, 64, vfs, intr);
--		vfs -= 64;
-+		vfs = 64;
- 	}
- 
- 	intr = rvupf_read64(rvu, RVU_PF_VFPF_MBOX_INTX(0));
+ void arch_smt_update(void);
 -- 
 2.39.5
 
