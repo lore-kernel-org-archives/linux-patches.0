@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E23F26B960;
-	Tue,  8 Apr 2025 12:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF4826B956;
+	Tue,  8 Apr 2025 12:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116127; cv=none; b=iFzEYC6CxAVYpf0ScnfOD7xuYGzQONb946KBvr/XMKw+BuJB07rvYWcHyog/nzmE3ahYEGsAbW1UYnHms8IqRByjFBggz9xFonpiASUZ/RnrDIdAQ76aSrj6KfoamWrwFxyCqA5YyF8+p49L2FG0RBbDMr8qi5/UEKzdBMhQdMI=
+	t=1744116129; cv=none; b=WQErwOrhtSKQv8hcPn8at25jB5M8wHM6LoCGdE/Jn4DAyuopgUWytFce8ln7CPNGd3f1OWYM23g/MwiKbgrwy718N7XD03r9uU5YtwmaLA6d4tnS/ZvPlyo5MHcz6w0t6/Hth/WsUHFfHFxBR7qbo7qU2Y4o1CcBvc3Te4sVkr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116127; c=relaxed/simple;
-	bh=miZ9XC3WESZtOQtvFNpK/H4TWghfYeqK63bvpHDy3oc=;
+	s=arc-20240116; t=1744116129; c=relaxed/simple;
+	bh=sEuCoMXeFvNzGyKh4VBPlqPbkYYOEwlAuzR81WvlrYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pHwrxOlQ/ng+eNsvkiK2TpAioGDbP/bBZFb1lrlG8TAQMS5iuAq1vchG5gUdIJNX7QOPQh6q1+P6fe/F+eYov/SNUVftWlQgQi5jlBZNwqc+aKaTo/+ZdEFXpMC6/JqhoSEfDK7MochniFUJzPG/VhzIpt8fmMocEQF1GA355EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMLC9/RF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tr0LBGu2K8grnB/bXjfLE1cZSqJnDiq8kTBjkCP6F5z8QcjPzOa6RegkyEBFKmFumon2z0OpZIN3D5stLoV268/8P4ZbDqc/w9AOryKMQ5t01HDb+GRFMB0HTvX2YPpo999GFWly36fBGp3vSH/iexxar/mKRFUAUehROLwoqoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMBNfCyL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMLC9/RF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EA5C4CEE5;
-	Tue,  8 Apr 2025 12:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMBNfCyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41045C4CEE5;
+	Tue,  8 Apr 2025 12:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116126;
-	bh=miZ9XC3WESZtOQtvFNpK/H4TWghfYeqK63bvpHDy3oc=;
+	s=korg; t=1744116129;
+	bh=sEuCoMXeFvNzGyKh4VBPlqPbkYYOEwlAuzR81WvlrYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nMLC9/RFOrWVsrwtEwx9Mk5+cbmVytGw2ulMw8pbU4HWbalmLEL0PwxDyFNo+SZ8D
-	 FYag7//3oJIxcjgpCF41RCdkpoqG4vPrMSxV5+FFK057G8Zrk711wo5p/lrcl9bH0T
-	 cMuqa4XmNs4NeO0ZD7xWffd7uGra/7MPDT2aD64o=
+	b=CMBNfCyLzkX88dPf31kLtr2ougjA1aoQo3ERTmz+XroCatX7ySMxrzTCInHB6bevT
+	 4yp0hrElEJwZlK76IqrTx96ffvZ5sNIXS+MA9Ftgu8QimMaiDkJuwS5yUvCcGGpd3r
+	 2HLo2AkFujI6Me2kJN2atxsmmko4qsSC1nbQF6pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Saravana Kannan <saravanak@google.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/423] thermal: int340x: Add NULL check for adev
-Date: Tue,  8 Apr 2025 12:45:51 +0200
-Message-ID: <20250408104846.333902800@linuxfoundation.org>
+Subject: [PATCH 6.12 026/423] PM: sleep: Fix handling devices with direct_complete set on errors
+Date: Tue,  8 Apr 2025 12:45:52 +0200
+Message-ID: <20250408104846.357662861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -46,51 +45,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2542a3f70e563a9e70e7ded314286535a3321bdb ]
+[ Upstream commit 03f1444016b71feffa1dfb8a51f15ba592f94b13 ]
 
-Not all devices have an ACPI companion fwnode, so adev might be NULL.
-This is similar to the commit cd2fd6eab480
-("platform/x86: int3472: Check for adev == NULL").
+When dpm_suspend() fails, some devices with power.direct_complete set
+may not have been handled by device_suspend() yet, so runtime PM has
+not been disabled for them yet even though power.direct_complete is set.
 
-Add a check for adev not being set and return -ENODEV in that case to
-avoid a possible NULL pointer deref in int3402_thermal_probe().
+Since device_resume() expects that runtime PM has been disabled for all
+devices with power.direct_complete set, it will attempt to reenable
+runtime PM for the devices that have not been processed by device_suspend()
+which does not make sense.  Had those devices had runtime PM disabled
+before device_suspend() had run, device_resume() would have inadvertently
+enable runtime PM for them, but this is not expected to happen because
+it would require ->prepare() callbacks to return positive values for
+devices with runtime PM disabled, which would be invalid.
 
-Note, under the same directory, int3400_thermal_probe() has such a
-check.
+In practice, this issue is most likely benign because pm_runtime_enable()
+will not allow the "disable depth" counter to underflow, but it causes a
+warning message to be printed for each affected device.
 
-Fixes: 77e337c6e23e ("Thermal: introduce INT3402 thermal driver")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250313043611.1212116-1-chenyuan0y@gmail.com
-[ rjw: Subject edit, added Fixes: ]
+To allow device_resume() to distinguish the "direct complete" devices
+that have been processed by device_suspend() from those which have not
+been handled by it, make device_suspend() set power.is_suspended for
+"direct complete" devices.
+
+Next, move the power.is_suspended check in device_resume() before the
+power.direct_complete check in it to make it skip the "direct complete"
+devices that have not been handled by device_suspend().
+
+This change is based on a preliminary patch from Saravana Kannan.
+
+Fixes: aae4518b3124 ("PM / sleep: Mechanism to avoid resuming runtime-suspended devices unnecessarily")
+Link: https://lore.kernel.org/linux-pm/20241114220921.2529905-2-saravanak@google.com/
+Reported-by: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Link: https://patch.msgid.link/12627587.O9o76ZdvQC@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3402_thermal.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/base/power/main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3402_thermal.c b/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
-index ab8bfb5a3946b..40ab6b2d4fb05 100644
---- a/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
-@@ -45,6 +45,9 @@ static int int3402_thermal_probe(struct platform_device *pdev)
- 	struct int3402_thermal_data *d;
- 	int ret;
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index d4875c3712ede..1abe61f11525d 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -913,6 +913,9 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
+ 	if (dev->power.syscore)
+ 		goto Complete;
  
-+	if (!adev)
-+		return -ENODEV;
++	if (!dev->power.is_suspended)
++		goto Complete;
 +
- 	if (!acpi_has_method(adev->handle, "_TMP"))
- 		return -ENODEV;
+ 	if (dev->power.direct_complete) {
+ 		/* Match the pm_runtime_disable() in __device_suspend(). */
+ 		pm_runtime_enable(dev);
+@@ -931,9 +934,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
+ 	 */
+ 	dev->power.is_prepared = false;
+ 
+-	if (!dev->power.is_suspended)
+-		goto Unlock;
+-
+ 	if (dev->pm_domain) {
+ 		info = "power domain ";
+ 		callback = pm_op(&dev->pm_domain->ops, state);
+@@ -973,7 +973,6 @@ static void device_resume(struct device *dev, pm_message_t state, bool async)
+ 	error = dpm_run_callback(callback, dev, state, info);
+ 	dev->power.is_suspended = false;
+ 
+- Unlock:
+ 	device_unlock(dev);
+ 	dpm_watchdog_clear(&wd);
+ 
+@@ -1627,6 +1626,7 @@ static int device_suspend(struct device *dev, pm_message_t state, bool async)
+ 			pm_runtime_disable(dev);
+ 			if (pm_runtime_status_suspended(dev)) {
+ 				pm_dev_dbg(dev, state, "direct-complete ");
++				dev->power.is_suspended = true;
+ 				goto Complete;
+ 			}
  
 -- 
 2.39.5
