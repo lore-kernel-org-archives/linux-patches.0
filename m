@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A75E26981A;
-	Tue,  8 Apr 2025 12:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F3F264627;
+	Tue,  8 Apr 2025 12:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113935; cv=none; b=ZfW1ykX0WjOBOuDEqHe149m+G+hAhRxiOMxVbTri7HX0Kb92MAip4e/dhFi/VK4UHM92CYd0UGY5yVKeoSCo2FIcgZfiPQcJkdkiYFWjyWcL0/5fIYKsqH3Dz5PuO1v/l1NHttW4pWGcgUQ6kmpj2GgqDLWwEdJGVGt9SpTl8i0=
+	t=1744113937; cv=none; b=buUU8fbSvq5upOX+uJlCKd5FyyF4kVKIF149ZrWeiRJfhSo8XStTOQ0GPDIykQ6ibYl/FQsS/R1aBBSHhndnpL4Sw3krHvDVyWDqCidEBVCeJ5yGtiPJM6IVHUZfShm/fQY2dSPJrUELHUK7fCCGmpRLQT0tWirFVlHaVizLk0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113935; c=relaxed/simple;
-	bh=CNTgS/93Rv7MpNitHWTkj0/Pa7fC8liVf1flgHEDjMs=;
+	s=arc-20240116; t=1744113937; c=relaxed/simple;
+	bh=ySCqwnznISe2IutyBngFhcxFXg3KoGZE6AOnIww5khU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cg72yBtKprarShAacy2YgLD/aStZV+o4EocsRfxpVMABuScDbynQFoJsIWI6v/kTu6H7Zoe6NMGeS0IfdBL3eLQbwEZLJJszoM+7fItqWHIrjfsmaQV/rbi47ebWHFCCDQq2i/EJ9g9pM0eUqK4bV6OqvDt2drv24heLBPAW09M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9d7rOwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgwXfXucY4hhB+D5pQB5skuWuTtGWg4be6Qd9Aw7Tg+CndbxE5xO79WKmnSn8B0Njx0i2Su7v902qG5FZDVaF1H9AamhfTiTyZTpMqBKQX8RiRx2J6rewPcLqb6yBwx+NsVGppzq6bl4ObrzOo/1F/FyY6hOUHCppoCe6/JVmvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKGAXtDT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9d7rOwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F8C4CEE5;
-	Tue,  8 Apr 2025 12:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKGAXtDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21089C4CEE5;
+	Tue,  8 Apr 2025 12:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113934;
-	bh=CNTgS/93Rv7MpNitHWTkj0/Pa7fC8liVf1flgHEDjMs=;
+	s=korg; t=1744113937;
+	bh=ySCqwnznISe2IutyBngFhcxFXg3KoGZE6AOnIww5khU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q9d7rOwtk/1JCg9wA+6Fgrz5FfdveDIB/Sn3orWcWqzDwyp9bE+ClyxRyR/ySz4fT
-	 rQGlfb/Ilb9Qz9tNcFpfyrpZuOOv5S4VbNUQPOQfKCg7b/1MRUppuNlDAk4XOwOlPd
-	 oYMdbkcZkQBd7XkIMhlmOGjk8OTefg9BoASde/jI=
+	b=MKGAXtDTDXrrPdl5X13mEeGZ4MSUJCn5phtvD4Bo25uygbwc0eKyhFX+GNzHEUo7U
+	 dnp/kXiNwGKezCOso+PLEHz+axNidOHtbnVBWB+/sOJoYGNJ0hraqU2kwH6z/RZ63t
+	 zwNcVU63sjDKBAa3e4J48/gwg4V5SjIs2QjzBZ3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gannon Kolding <gannon.kolding@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/154] ACPI: resource: IRQ override for Eluktronics MECH-17
-Date: Tue,  8 Apr 2025 12:49:27 +0200
-Message-ID: <20250408104816.104963660@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Wang Kefeng <wangkefeng.wang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.4 069/154] ARM: 9350/1: fault: Implement copy_from_kernel_nofault_allowed()
+Date: Tue,  8 Apr 2025 12:50:10 +0200
+Message-ID: <20250408104817.512995785@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,43 +56,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gannon Kolding <gannon.kolding@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 607ab6f85f4194b644ea95ac5fe660ef575db3b4 ]
+commit 169f9102f9198b04afffa6164372a4ba4070f412 upstream.
 
-The Eluktronics MECH-17 (GM7RG7N) needs IRQ overriding for the
-keyboard to work.
+Under PAN emulation when dumping backtraces from things like the
+LKDTM EXEC_USERSPACE test[1], a double fault (which would hang a CPU)
+would happen because of dump_instr() attempting to read a userspace
+address. Make sure copy_from_kernel_nofault() does not attempt this
+any more.
 
-Adding a DMI_MATCH entry for this laptop model makes the internal
-keyboard function normally.
+Closes: https://lava.sirena.org.uk/scheduler/job/497571
+Link: https://lore.kernel.org/all/202401181125.D48DCB4C@keescook/ [1]
 
-Signed-off-by: Gannon Kolding <gannon.kolding@gmail.com>
-Link: https://patch.msgid.link/20250127093902.328361-1-gannon.kolding@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Tested-by: Mark Brown <broonie@kernel.org>
+Cc: Wang Kefeng <wangkefeng.wang@huawei.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Ben Hutchings <ben@decadent.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/mm/fault.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 2750518a5d5e1..11264bb4061e7 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -482,6 +482,12 @@ static const struct dmi_system_id asus_laptop[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "RP-15"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
-+			DMI_MATCH(DMI_BOARD_NAME, "MECH-17"),
-+		},
-+	},
- 	{
- 		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
- 		.matches = {
--- 
-2.39.5
-
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -25,6 +25,13 @@
+ 
+ #include "fault.h"
+ 
++bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
++{
++	unsigned long addr = (unsigned long)unsafe_src;
++
++	return addr >= TASK_SIZE && ULONG_MAX - addr >= size;
++}
++
+ #ifdef CONFIG_MMU
+ 
+ /*
 
 
