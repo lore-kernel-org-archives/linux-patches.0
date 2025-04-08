@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FA4265630;
-	Tue,  8 Apr 2025 11:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006D1207E14;
+	Tue,  8 Apr 2025 11:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111232; cv=none; b=BdEfIs579uY8BEakrspLCAl1EWSCI8r74UMHtvgdXooV5dQAbHQ7IOvZGeLTZPLdVx4qMsw72hxMTgzK7inHBbyZrB/V+VLgyulS4m+LpbqYJxsvXEMhWRJrmW9LvILMB7+tM7crBcHC7fHANMYPAXQ710jvXwXEJf5bsVZphMY=
+	t=1744111235; cv=none; b=TM/UoivuNGX52sG7fKK4QaKSvWxNCnRYU6inIZ5ADfLOeAN9Tu/qJPzfHua9rouqoKuNprMiPlWa4un5tUCxoFDGjEMmQVSbTF6SrzulHPFlFQAvvWk+QhDgxSEyq0V/7D677JiMmGuXhzPSGUq7LNuYfugVj5URwDg1xwWdL0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111232; c=relaxed/simple;
-	bh=q8IA4eqfZ6FG8Qi28bOfhkg21qRXmu4HhEs7PxkulAs=;
+	s=arc-20240116; t=1744111235; c=relaxed/simple;
+	bh=1FOIL3PO8UzH//Lml0ej4bMRmJ+quQrq3k82aQLVDUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcJU6B17F5AfabKAFD8H9Berb49dqtjjEu5yn5UTG0KsKER4L2U5mBxCy2l7AY9NXlCZ8D3M8UiTti58mfMTZt+TzLdjzgAFhDZgao9NYh8Gp9w/Mfbhmemhw8ZiNcsYlaFzbamha8xXONCNtXSWFVD4V8NdFEjG2oz+WR+W/Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4zmHIci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ldzl+Krlf5vdDy39BwEBqMH1xKcC9v8SirZrP5T/2ugicwF+fbcX5ab+GQ3v44yRoe20WtJpC3EKq9oqKqxRcyVyru/heEsJqsGRyY4GBcJpX8MzEv784umB8y+wWlSIfDLIifgLT3cwjbr2s4+IfJaYCfoWz7vLnSYhRt2ljco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKwihWhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4zmHIci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4911C4CEE5;
-	Tue,  8 Apr 2025 11:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKwihWhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856E5C4CEE5;
+	Tue,  8 Apr 2025 11:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111232;
-	bh=q8IA4eqfZ6FG8Qi28bOfhkg21qRXmu4HhEs7PxkulAs=;
+	s=korg; t=1744111234;
+	bh=1FOIL3PO8UzH//Lml0ej4bMRmJ+quQrq3k82aQLVDUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4zmHIcipaDfCwwihg7dz4lFn+jHh6+AxBUtGqqNnIU9DGZoHJyD2KCzhVRfgD3cI
-	 NplEqxaC6gbYz40LoR+OC+3lhYa0+V685UW2+BUnzsMg/qEqxzsfPlD77WZSpOJRwL
-	 FXG4EAlOBi8SRpKR5U/ileVGUWpIJ9uV2hhhZxCE=
+	b=hKwihWhzkHqbdegDmdcqGi7pf1IH5592RL6Dv829/lbONBazr+uBbXkh1Hcj7A03M
+	 TnJprOIkKnA6aYhKJlcbuH9kPjCk00UVapd5RTSQRH8oCnFmIrk7vNG6OA5rxaWEti
+	 Y43MjWX1OMN9X3LP0zZcw29ZxVpzG7WxgMhB46ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 357/731] crypto: tegra - Fix HASH intermediate result handling
-Date: Tue,  8 Apr 2025 12:44:14 +0200
-Message-ID: <20250408104922.576473794@linuxfoundation.org>
+Subject: [PATCH 6.14 358/731] crypto: bpf - Add MODULE_DESCRIPTION for skcipher
+Date: Tue,  8 Apr 2025 12:44:15 +0200
+Message-ID: <20250408104922.600601530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,301 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ff4b7df0b511b6121f3386607f02c16fb5d41192 ]
+[ Upstream commit f307c87ea06c64b87fcd3221a682cd713cde51e9 ]
 
-The intermediate hash values generated during an update task were
-handled incorrectly in the driver. The values have a defined format for
-each algorithm. Copying and pasting from the HASH_RESULT register
-balantly would not work for all the supported algorithms. This incorrect
-handling causes failures when there is a context switch between multiple
-operations.
+All modules should have a description, building with extra warnings
+enabled prints this outfor the for bpf_crypto_skcipher module:
 
-To handle the expected format correctly, add a separate buffer for
-storing the intermediate results for each request. Remove the previous
-copy/paste functions which read/wrote to the registers directly. Instead
-configure the hardware to get the intermediate result copied to the
-buffer and use host1x path to restore the intermediate hash results.
+WARNING: modpost: missing MODULE_DESCRIPTION() in crypto/bpf_crypto_skcipher.o
 
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Add a description line.
+
+Fixes: fda4f71282b2 ("bpf: crypto: add skcipher to bpf crypto")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-hash.c | 149 +++++++++++++++++----------
- drivers/crypto/tegra/tegra-se.h      |   1 +
- 2 files changed, 98 insertions(+), 52 deletions(-)
+ crypto/bpf_crypto_skcipher.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index 07e4c7320ec8d..8bed13552ab9e 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -34,6 +34,7 @@ struct tegra_sha_reqctx {
- 	struct tegra_se_datbuf datbuf;
- 	struct tegra_se_datbuf residue;
- 	struct tegra_se_datbuf digest;
-+	struct tegra_se_datbuf intr_res;
- 	unsigned int alg;
- 	unsigned int config;
- 	unsigned int total_len;
-@@ -211,9 +212,62 @@ static int tegra_sha_fallback_export(struct ahash_request *req, void *out)
- 	return crypto_ahash_export(&rctx->fallback_req, out);
- }
- 
--static int tegra_sha_prep_cmd(struct tegra_se *se, u32 *cpuvaddr,
-+static int tegra_se_insert_hash_result(struct tegra_sha_ctx *ctx, u32 *cpuvaddr,
-+				       struct tegra_sha_reqctx *rctx)
-+{
-+	__be32 *res_be = (__be32 *)rctx->intr_res.buf;
-+	u32 *res = (u32 *)rctx->intr_res.buf;
-+	int i = 0, j;
-+
-+	cpuvaddr[i++] = 0;
-+	cpuvaddr[i++] = host1x_opcode_setpayload(HASH_RESULT_REG_COUNT);
-+	cpuvaddr[i++] = se_host1x_opcode_incr_w(SE_SHA_HASH_RESULT);
-+
-+	for (j = 0; j < HASH_RESULT_REG_COUNT; j++) {
-+		int idx = j;
-+
-+		/*
-+		 * The initial, intermediate and final hash value of SHA-384, SHA-512
-+		 * in SHA_HASH_RESULT registers follow the below layout of bytes.
-+		 *
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_0 | B4...B7    |
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_1 | B0...B3    |
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_2 | B12...B15  |
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_3 | B8...B11   |
-+		 * +---------------+------------+
-+		 * |            ......          |
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_14| B60...B63  |
-+		 * +---------------+------------+
-+		 * | HASH_RESULT_15| B56...B59  |
-+		 * +---------------+------------+
-+		 *
-+		 */
-+		if (ctx->alg == SE_ALG_SHA384 || ctx->alg == SE_ALG_SHA512)
-+			idx = (j % 2) ? j - 1 : j + 1;
-+
-+		/* For SHA-1, SHA-224, SHA-256, SHA-384, SHA-512 the initial
-+		 * intermediate and final hash value when stored in
-+		 * SHA_HASH_RESULT registers, the byte order is NOT in
-+		 * little-endian.
-+		 */
-+		if (ctx->alg <= SE_ALG_SHA512)
-+			cpuvaddr[i++] = be32_to_cpu(res_be[idx]);
-+		else
-+			cpuvaddr[i++] = res[idx];
-+	}
-+
-+	return i;
-+}
-+
-+static int tegra_sha_prep_cmd(struct tegra_sha_ctx *ctx, u32 *cpuvaddr,
- 			      struct tegra_sha_reqctx *rctx)
- {
-+	struct tegra_se *se = ctx->se;
- 	u64 msg_len, msg_left;
- 	int i = 0;
- 
-@@ -241,7 +295,7 @@ static int tegra_sha_prep_cmd(struct tegra_se *se, u32 *cpuvaddr,
- 	cpuvaddr[i++] = upper_32_bits(msg_left);
- 	cpuvaddr[i++] = 0;
- 	cpuvaddr[i++] = 0;
--	cpuvaddr[i++] = host1x_opcode_setpayload(6);
-+	cpuvaddr[i++] = host1x_opcode_setpayload(2);
- 	cpuvaddr[i++] = se_host1x_opcode_incr_w(SE_SHA_CFG);
- 	cpuvaddr[i++] = rctx->config;
- 
-@@ -249,15 +303,29 @@ static int tegra_sha_prep_cmd(struct tegra_se *se, u32 *cpuvaddr,
- 		cpuvaddr[i++] = SE_SHA_TASK_HASH_INIT;
- 		rctx->task &= ~SHA_FIRST;
- 	} else {
--		cpuvaddr[i++] = 0;
-+		/*
-+		 * If it isn't the first task, program the HASH_RESULT register
-+		 * with the intermediate result from the previous task
-+		 */
-+		i += tegra_se_insert_hash_result(ctx, cpuvaddr + i, rctx);
- 	}
- 
-+	cpuvaddr[i++] = host1x_opcode_setpayload(4);
-+	cpuvaddr[i++] = se_host1x_opcode_incr_w(SE_SHA_IN_ADDR);
- 	cpuvaddr[i++] = rctx->datbuf.addr;
- 	cpuvaddr[i++] = (u32)(SE_ADDR_HI_MSB(upper_32_bits(rctx->datbuf.addr)) |
- 				SE_ADDR_HI_SZ(rctx->datbuf.size));
--	cpuvaddr[i++] = rctx->digest.addr;
--	cpuvaddr[i++] = (u32)(SE_ADDR_HI_MSB(upper_32_bits(rctx->digest.addr)) |
--				SE_ADDR_HI_SZ(rctx->digest.size));
-+
-+	if (rctx->task & SHA_UPDATE) {
-+		cpuvaddr[i++] = rctx->intr_res.addr;
-+		cpuvaddr[i++] = (u32)(SE_ADDR_HI_MSB(upper_32_bits(rctx->intr_res.addr)) |
-+					SE_ADDR_HI_SZ(rctx->intr_res.size));
-+	} else {
-+		cpuvaddr[i++] = rctx->digest.addr;
-+		cpuvaddr[i++] = (u32)(SE_ADDR_HI_MSB(upper_32_bits(rctx->digest.addr)) |
-+					SE_ADDR_HI_SZ(rctx->digest.size));
-+	}
-+
- 	if (rctx->key_id) {
- 		cpuvaddr[i++] = host1x_opcode_setpayload(1);
- 		cpuvaddr[i++] = se_host1x_opcode_nonincr_w(SE_SHA_CRYPTO_CFG);
-@@ -266,36 +334,18 @@ static int tegra_sha_prep_cmd(struct tegra_se *se, u32 *cpuvaddr,
- 
- 	cpuvaddr[i++] = host1x_opcode_setpayload(1);
- 	cpuvaddr[i++] = se_host1x_opcode_nonincr_w(SE_SHA_OPERATION);
--	cpuvaddr[i++] = SE_SHA_OP_WRSTALL |
--			SE_SHA_OP_START |
-+	cpuvaddr[i++] = SE_SHA_OP_WRSTALL | SE_SHA_OP_START |
- 			SE_SHA_OP_LASTBUF;
- 	cpuvaddr[i++] = se_host1x_opcode_nonincr(host1x_uclass_incr_syncpt_r(), 1);
- 	cpuvaddr[i++] = host1x_uclass_incr_syncpt_cond_f(1) |
- 			host1x_uclass_incr_syncpt_indx_f(se->syncpt_id);
- 
--	dev_dbg(se->dev, "msg len %llu msg left %llu cfg %#x",
--		msg_len, msg_left, rctx->config);
-+	dev_dbg(se->dev, "msg len %llu msg left %llu sz %lu cfg %#x",
-+		msg_len, msg_left, rctx->datbuf.size, rctx->config);
- 
- 	return i;
- }
- 
--static void tegra_sha_copy_hash_result(struct tegra_se *se, struct tegra_sha_reqctx *rctx)
--{
--	int i;
--
--	for (i = 0; i < HASH_RESULT_REG_COUNT; i++)
--		rctx->result[i] = readl(se->base + se->hw->regs->result + (i * 4));
--}
--
--static void tegra_sha_paste_hash_result(struct tegra_se *se, struct tegra_sha_reqctx *rctx)
--{
--	int i;
--
--	for (i = 0; i < HASH_RESULT_REG_COUNT; i++)
--		writel(rctx->result[i],
--		       se->base + se->hw->regs->result + (i * 4));
--}
--
- static int tegra_sha_do_init(struct ahash_request *req)
- {
- 	struct tegra_sha_reqctx *rctx = ahash_request_ctx(req);
-@@ -325,8 +375,17 @@ static int tegra_sha_do_init(struct ahash_request *req)
- 	if (!rctx->residue.buf)
- 		goto resbuf_fail;
- 
-+	rctx->intr_res.size = HASH_RESULT_REG_COUNT * 4;
-+	rctx->intr_res.buf = dma_alloc_coherent(se->dev, rctx->intr_res.size,
-+						&rctx->intr_res.addr, GFP_KERNEL);
-+	if (!rctx->intr_res.buf)
-+		goto intr_res_fail;
-+
- 	return 0;
- 
-+intr_res_fail:
-+	dma_free_coherent(se->dev, rctx->residue.size, rctx->residue.buf,
-+			  rctx->residue.addr);
- resbuf_fail:
- 	dma_free_coherent(se->dev, rctx->digest.size, rctx->digest.buf,
- 			  rctx->digest.addr);
-@@ -356,7 +415,6 @@ static int tegra_sha_do_update(struct ahash_request *req)
- 
- 	rctx->src_sg = req->src;
- 	rctx->datbuf.size = (req->nbytes + rctx->residue.size) - nresidue;
--	rctx->total_len += rctx->datbuf.size;
- 
- 	/*
- 	 * If nbytes are less than a block size, copy it residue and
-@@ -365,12 +423,12 @@ static int tegra_sha_do_update(struct ahash_request *req)
- 	if (nblks < 1) {
- 		scatterwalk_map_and_copy(rctx->residue.buf + rctx->residue.size,
- 					 rctx->src_sg, 0, req->nbytes, 0);
--
- 		rctx->residue.size += req->nbytes;
-+
- 		return 0;
- 	}
- 
--	rctx->datbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->datbuf.size,
-+	rctx->datbuf.buf = dma_alloc_coherent(se->dev, rctx->datbuf.size,
- 					      &rctx->datbuf.addr, GFP_KERNEL);
- 	if (!rctx->datbuf.buf)
- 		return -ENOMEM;
-@@ -387,31 +445,15 @@ static int tegra_sha_do_update(struct ahash_request *req)
- 
- 	/* Update residue value with the residue after current block */
- 	rctx->residue.size = nresidue;
-+	rctx->total_len += rctx->datbuf.size;
- 
- 	rctx->config = tegra_sha_get_config(rctx->alg) |
--			SE_SHA_DST_HASH_REG;
--
--	/*
--	 * If this is not the first 'update' call, paste the previous copied
--	 * intermediate results to the registers so that it gets picked up.
--	 * This is to support the import/export functionality.
--	 */
--	if (!(rctx->task & SHA_FIRST))
--		tegra_sha_paste_hash_result(se, rctx);
--
--	size = tegra_sha_prep_cmd(se, cpuvaddr, rctx);
-+			SE_SHA_DST_MEMORY;
- 
-+	size = tegra_sha_prep_cmd(ctx, cpuvaddr, rctx);
- 	ret = tegra_se_host1x_submit(se, se->cmdbuf, size);
- 
--	/*
--	 * If this is not the final update, copy the intermediate results
--	 * from the registers so that it can be used in the next 'update'
--	 * call. This is to support the import/export functionality.
--	 */
--	if (!(rctx->task & SHA_FINAL))
--		tegra_sha_copy_hash_result(se, rctx);
--
--	dma_free_coherent(ctx->se->dev, rctx->datbuf.size,
-+	dma_free_coherent(se->dev, rctx->datbuf.size,
- 			  rctx->datbuf.buf, rctx->datbuf.addr);
- 
- 	return ret;
-@@ -443,8 +485,7 @@ static int tegra_sha_do_final(struct ahash_request *req)
- 	rctx->config = tegra_sha_get_config(rctx->alg) |
- 		       SE_SHA_DST_MEMORY;
- 
--	size = tegra_sha_prep_cmd(se, cpuvaddr, rctx);
--
-+	size = tegra_sha_prep_cmd(ctx, cpuvaddr, rctx);
- 	ret = tegra_se_host1x_submit(se, se->cmdbuf, size);
- 	if (ret)
- 		goto out;
-@@ -461,6 +502,10 @@ static int tegra_sha_do_final(struct ahash_request *req)
- 			  rctx->residue.buf, rctx->residue.addr);
- 	dma_free_coherent(se->dev, rctx->digest.size, rctx->digest.buf,
- 			  rctx->digest.addr);
-+
-+	dma_free_coherent(se->dev, rctx->intr_res.size, rctx->intr_res.buf,
-+			  rctx->intr_res.addr);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/crypto/tegra/tegra-se.h b/drivers/crypto/tegra/tegra-se.h
-index e1ec37bfb80a8..0f5bcf27358bd 100644
---- a/drivers/crypto/tegra/tegra-se.h
-+++ b/drivers/crypto/tegra/tegra-se.h
-@@ -24,6 +24,7 @@
- #define SE_STREAM_ID					0x90
- 
- #define SE_SHA_CFG					0x4004
-+#define SE_SHA_IN_ADDR					0x400c
- #define SE_SHA_KEY_ADDR					0x4094
- #define SE_SHA_KEY_DATA					0x4098
- #define SE_SHA_KEYMANIFEST				0x409c
+diff --git a/crypto/bpf_crypto_skcipher.c b/crypto/bpf_crypto_skcipher.c
+index b5e657415770a..a88798d3e8c87 100644
+--- a/crypto/bpf_crypto_skcipher.c
++++ b/crypto/bpf_crypto_skcipher.c
+@@ -80,3 +80,4 @@ static void __exit bpf_crypto_skcipher_exit(void)
+ module_init(bpf_crypto_skcipher_init);
+ module_exit(bpf_crypto_skcipher_exit);
+ MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Symmetric key cipher support for BPF");
 -- 
 2.39.5
 
