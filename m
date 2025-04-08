@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B0C26FA5B;
-	Tue,  8 Apr 2025 12:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346E526FA6F;
+	Tue,  8 Apr 2025 12:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116564; cv=none; b=dseSCSfG2M7Sx5gWUEdSUULE/rkZUPiQTuz+mz81KtXFlWddRmqz41BPngDLzrAtlj3QbjBNpE3khPQc0iXJ1nIoYTS1rzMjF6pBaW5sZeHy+iHSYCGZ2+JsUm2YLBWsJ5ZzIB4fbSUV052hP/nmeJ7NhZqXU/e1850mmomB3N4=
+	t=1744116567; cv=none; b=OO4KEyhpcXu9h4+JT2hJD8IdmMsP0iwA9zsBrm+3iLELuoVPRBPRz122HhHmeqrGgGzXFVoLzb1emdVHo+ItOU3sTHFanMOYIqCJhbY1xhsKthup4eb/f4IyHJtI24Tg0PwGcZ2Mjw5WVKlcvJT9DSynWV5EQ0r8KJ0X6vpKvb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116564; c=relaxed/simple;
-	bh=wsGxUlMSQheIIxy+PrTq4casmkHmGrR4JGD6IhQHcqQ=;
+	s=arc-20240116; t=1744116567; c=relaxed/simple;
+	bh=Ptyl4+ISPh845D6FkzHdyfQUrYcq75nRCtR1OIFJl9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtU1OJy+/cPYaMYk9hWQHXmrP88tSybNmgYYOWMDZwC5FB7kE8cJpiw8bZiyTr3dgXJtrqv3i19x0osmRo3ZxQ2LIHL1fFzMBg59spBYjVq0k1PAWFRC3EC8bd23I0d8L5rI21NOn0dI0+Q4wTUD6WjZ2c0lo+zWe5A9UaIWreU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6GyyS5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YEbNoyKElhL3ityLPmCY55B4P5IXajThQt5ovb7eHgddlAO+jeaezrJhxDr3UYqxPrT3ZRzv5I08ZvQRE7ao7XkXJYaA3rKO0pDCun/pVBPZpv6LiggbYF8IiW43rMweRROazKMIkFHE3ScukrBXTbgx4uCcScIr7X3N1aJo0C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xz47DSJl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6GyyS5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21508C4CEE7;
-	Tue,  8 Apr 2025 12:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xz47DSJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC934C4CEEB;
+	Tue,  8 Apr 2025 12:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116564;
-	bh=wsGxUlMSQheIIxy+PrTq4casmkHmGrR4JGD6IhQHcqQ=;
+	s=korg; t=1744116567;
+	bh=Ptyl4+ISPh845D6FkzHdyfQUrYcq75nRCtR1OIFJl9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6GyyS5tOvXdP2Hh2Afky6cWD9sIe2rfsdvA5Q5MfGZ3wJRs61uNS/2HyVrPdTzKo
-	 wVWEZSvskRKyU09pSdZwztCvi8/L9uMWKSkgqqoj/m0VOjQzEqozL/p+soWVnPelKb
-	 YjqOkVZhoJmoQdpwQV1UxKy5KbUjItNu52ZfHWJU=
+	b=Xz47DSJltZ2jo9oY+9L0QfP2foEO1KhGSfI+pqtIJdU62C9ul/3TI6+kvV5BVSlrd
+	 /4PrpnQ/SviENYZj0/K60ASyFVzVJxOpCuElfP6hTu5lgFLG7U4ff4t7zMDJM4qV24
+	 G1hbGuiqzB6piKDS/0j3t7DgTJBvDjhw3HXNJz60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 187/423] dmaengine: fsl-edma: free irq correctly in remove path
-Date: Tue,  8 Apr 2025 12:48:33 +0200
-Message-ID: <20250408104850.096697299@linuxfoundation.org>
+Subject: [PATCH 6.12 188/423] iio: adc: ad4130: Fix comparison of channel setups
+Date: Tue,  8 Apr 2025 12:48:34 +0200
+Message-ID: <20250408104850.119050443@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -46,81 +45,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit fa70c4c3c580c239a0f9e83a14770ab026e8d820 ]
+[ Upstream commit 280acb19824663d55a3f4d09087c76fabe86fa3c ]
 
-Add fsl_edma->txirq/errirq check to avoid below warning because no
-errirq at i.MX9 platform. Otherwise there will be kernel dump:
-WARNING: CPU: 0 PID: 11 at kernel/irq/devres.c:144 devm_free_irq+0x74/0x80
-Modules linked in:
-CPU: 0 UID: 0 PID: 11 Comm: kworker/u8:0 Not tainted 6.12.0-rc7#18
-Hardware name: NXP i.MX93 11X11 EVK board (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : devm_free_irq+0x74/0x80
-lr : devm_free_irq+0x48/0x80
-Call trace:
- devm_free_irq+0x74/0x80 (P)
- devm_free_irq+0x48/0x80 (L)
- fsl_edma_remove+0xc4/0xc8
- platform_remove+0x28/0x44
- device_remove+0x4c/0x80
+Checking the binary representation of two structs (of the same type)
+for equality doesn't have the same semantic as comparing all members for
+equality. The former might find a difference where the latter doesn't in
+the presence of padding or when ambiguous types like float or bool are
+involved. (Floats typically have different representations for single
+values, like -0.0 vs +0.0, or 0.5 * 2² vs 0.25 * 2³. The type bool has
+at least 8 bits and the raw values 1 and 2 (probably) both evaluate to
+true, but memcmp finds a difference.)
 
-Fixes: 44eb827264de ("dmaengine: fsl-edma: request per-channel IRQ only when channel is allocated")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20250228071720.3780479-2-peng.fan@oss.nxp.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+When searching for a channel that already has the configuration we need,
+the comparison by member is the one that is needed.
+
+Convert the comparison accordingly to compare the members one after
+another. Also add a static_assert guard to (somewhat) ensure that when
+struct ad4130_setup_info is expanded, the comparison is adapted, too.
+
+This issue is somewhat theoretic, but using memcmp() on a struct is a
+bad pattern that is worth fixing.
+
+Fixes: 62094060cf3a ("iio: adc: ad4130: add AD4130 driver")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20250303114659.1672695-12-u.kleine-koenig@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-edma-main.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ad4130.c | 41 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-index db5f06b8575db..27645606f900b 100644
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -303,6 +303,7 @@ fsl_edma2_irq_init(struct platform_device *pdev,
+diff --git a/drivers/iio/adc/ad4130.c b/drivers/iio/adc/ad4130.c
+index de32cc9d18c5e..712f95f53c9ec 100644
+--- a/drivers/iio/adc/ad4130.c
++++ b/drivers/iio/adc/ad4130.c
+@@ -223,6 +223,10 @@ enum ad4130_pin_function {
+ 	AD4130_PIN_FN_VBIAS = BIT(3),
+ };
  
- 		/* The last IRQ is for eDMA err */
- 		if (i == count - 1) {
-+			fsl_edma->errirq = irq;
- 			ret = devm_request_irq(&pdev->dev, irq,
- 						fsl_edma_err_handler,
- 						0, "eDMA2-ERR", fsl_edma);
-@@ -322,10 +323,13 @@ static void fsl_edma_irq_exit(
- 		struct platform_device *pdev, struct fsl_edma_engine *fsl_edma)
- {
- 	if (fsl_edma->txirq == fsl_edma->errirq) {
--		devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
-+		if (fsl_edma->txirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
- 	} else {
--		devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
--		devm_free_irq(&pdev->dev, fsl_edma->errirq, fsl_edma);
-+		if (fsl_edma->txirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->txirq, fsl_edma);
-+		if (fsl_edma->errirq >= 0)
-+			devm_free_irq(&pdev->dev, fsl_edma->errirq, fsl_edma);
- 	}
++/*
++ * If you make adaptations in this struct, you most likely also have to adapt
++ * ad4130_setup_info_eq(), too.
++ */
+ struct ad4130_setup_info {
+ 	unsigned int			iout0_val;
+ 	unsigned int			iout1_val;
+@@ -591,6 +595,40 @@ static irqreturn_t ad4130_irq_handler(int irq, void *private)
+ 	return IRQ_HANDLED;
  }
  
-@@ -513,6 +517,8 @@ static int fsl_edma_probe(struct platform_device *pdev)
- 	if (!fsl_edma)
- 		return -ENOMEM;
++static bool ad4130_setup_info_eq(struct ad4130_setup_info *a,
++				 struct ad4130_setup_info *b)
++{
++	/*
++	 * This is just to make sure that the comparison is adapted after
++	 * struct ad4130_setup_info was changed.
++	 */
++	static_assert(sizeof(*a) ==
++		      sizeof(struct {
++				     unsigned int iout0_val;
++				     unsigned int iout1_val;
++				     unsigned int burnout;
++				     unsigned int pga;
++				     unsigned int fs;
++				     u32 ref_sel;
++				     enum ad4130_filter_mode filter_mode;
++				     bool ref_bufp;
++				     bool ref_bufm;
++			     }));
++
++	if (a->iout0_val != b->iout0_val ||
++	    a->iout1_val != b->iout1_val ||
++	    a->burnout != b->burnout ||
++	    a->pga != b->pga ||
++	    a->fs != b->fs ||
++	    a->ref_sel != b->ref_sel ||
++	    a->filter_mode != b->filter_mode ||
++	    a->ref_bufp != b->ref_bufp ||
++	    a->ref_bufm != b->ref_bufm)
++		return false;
++
++	return true;
++}
++
+ static int ad4130_find_slot(struct ad4130_state *st,
+ 			    struct ad4130_setup_info *target_setup_info,
+ 			    unsigned int *slot, bool *overwrite)
+@@ -604,8 +642,7 @@ static int ad4130_find_slot(struct ad4130_state *st,
+ 		struct ad4130_slot_info *slot_info = &st->slots_info[i];
  
-+	fsl_edma->errirq = -EINVAL;
-+	fsl_edma->txirq = -EINVAL;
- 	fsl_edma->drvdata = drvdata;
- 	fsl_edma->n_chans = chans;
- 	mutex_init(&fsl_edma->fsl_edma_mutex);
+ 		/* Immediately accept a matching setup info. */
+-		if (!memcmp(target_setup_info, &slot_info->setup,
+-			    sizeof(*target_setup_info))) {
++		if (ad4130_setup_info_eq(target_setup_info, &slot_info->setup)) {
+ 			*slot = i;
+ 			return 0;
+ 		}
 -- 
 2.39.5
 
