@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F88E267B9C;
-	Tue,  8 Apr 2025 12:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B729D269AED;
+	Tue,  8 Apr 2025 12:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114320; cv=none; b=q+5JlszJh1T1T1y/A0GcyNOEBuYx3H6cNTcrYy24cht9KJfg6kyB7ohYxUJVMNC09G4XiwUCGeCLhxUrJtHODUBmD2XcRTJxr6gr8N6K9Kj8s0YoRtGRbg6U0vkcZcxPIGGlP4WIuKDTOHWycwmnOdbUR6hRCMZqHYRIxMaNDOE=
+	t=1744114322; cv=none; b=gtzkpoWf0x/iRR7f4EUljlvOrGFx0BpMcesCOZDyLwpjt6sobGxRiPLZgAv4p3uJu2Na4UeDEZeK9/qkmV/LhdqZgG+iTnzZZEXUtQNE1cZuteZU5kUh2b1uc5gBwgw76oCfc8pFSz6xxcSFTTRzapjo40yugNY/lJqKPa6cFcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114320; c=relaxed/simple;
-	bh=zKRoEw+DrsspV0Y4M3akEzsEFa6C6SzvkESaC0WNguA=;
+	s=arc-20240116; t=1744114322; c=relaxed/simple;
+	bh=r3L1vSI5UCCNxi0MwYEqNFYZKQ/C3BlvZq0PTgfBiBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOe9Yt8XiaFZD7BK51VEiPA832DDmjcpzBy4FzmD6LflgoJyXtUtsJUavt19KO0Xcno1lEENSG45xkwJjyMgFuit8KVfapiZgUNuW1AuAKROvJqUWAHAlvYb7rEX97R88NDeqjWjIc2yUxxRI+8rtXEAbl4bnnKGoUOxbLEHBgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQBuXmga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZG4RMuMVxPKvU/x7lPuajMZ+zfXhwS2h5bnuv8h13N+rJYOUNXwcv8reploPF45+AakOsY316Qw8hl4YKMJaYIGPTOOt8SZU5AyYfiq+NZXxqvajIMUygwt4KntW7N0KSeFwUNb0UP7acNjEc4g4r9GyyqLuhVnrNCtEPVsF13s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKpLlG5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQBuXmga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CA5C4CEE5;
-	Tue,  8 Apr 2025 12:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKpLlG5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F21C4CEE5;
+	Tue,  8 Apr 2025 12:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114319;
-	bh=zKRoEw+DrsspV0Y4M3akEzsEFa6C6SzvkESaC0WNguA=;
+	s=korg; t=1744114322;
+	bh=r3L1vSI5UCCNxi0MwYEqNFYZKQ/C3BlvZq0PTgfBiBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQBuXmga9vb7J45AdQsxXeBPWPqgxP2HWJ/ofBqvLf0cywdLBYTI/6B2VX2jr3ZuH
-	 U7avA6AhOpSySX9GyS4vMcJ9MHlLEsFG6O20C4QTXEoNUzOfVXDBFyv06M36S7uTqZ
-	 OPGLBFactXZxj91GAG/lO89xl0KfFMj0KgYhGx1E=
+	b=UKpLlG5crVn9My2POHfzXwPLseLQkzX9XsYZYs1sdBC9tdH1UV3UlALbviZPBf48q
+	 qhPjKN0qkaL29ep/b8D8R46p3rSwhCJ/jnM1t9rITOEPNPGgLzRzZQIEqzwW7wdVwv
+	 ZQFRr/SAVOv+0tiRFOXCXBNsBlq4g+4SPEtuIALM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Imre Deak <imre.deak@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Harry Wentland <hwentlan@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 063/499] drm/ssd130x: ensure ssd132x pitch is correct
-Date: Tue,  8 Apr 2025 12:44:35 +0200
-Message-ID: <20250408104852.804686752@linuxfoundation.org>
+Subject: [PATCH 6.13 064/499] drm/dp_mst: Fix drm RAD print
+Date: Tue,  8 Apr 2025 12:44:36 +0200
+Message-ID: <20250408104852.828456881@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,52 +48,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 229adcffdb54b13332d2afd2dc5d203418d50908 ]
+[ Upstream commit 6bbce873a9c97cb12f5455c497be279ac58e707f ]
 
-The bounding rectangle is adjusted to ensure it aligns to
-SSD132X_SEGMENT_WIDTH, which may adjust the pitch.  Calculate the pitch
-after aligning the left and right edge.
+[Why]
+The RAD of sideband message printed today is incorrect.
+For RAD stored within MST branch
+- If MST branch LCT is 1, it's RAD array is untouched and remained as 0.
+- If MST branch LCT is larger than 1, use nibble to store the up facing
+  port number in cascaded sequence as illustrated below:
 
-Fixes: fdd591e00a9c ("drm/ssd130x: Add support for the SSD132x OLED controller family")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250115110139.1672488-3-jkeeping@inmusicbrands.com
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+  u8 RAD[0] = (LCT_2_UFP << 4) | LCT_3_UFP
+     RAD[1] = (LCT_4_UFP << 4) | LCT_5_UFP
+     ...
+
+In drm_dp_mst_rad_to_str(), it wrongly to use BIT_MASK(4) to fetch the port
+number of one nibble.
+
+[How]
+Adjust the code by:
+- RAD array items are valuable only for LCT >= 1.
+- Use 0xF as the mask to replace BIT_MASK(4)
+
+V2:
+- Document how RAD is constructed (Imre)
+
+V3:
+- Adjust the comment for rad[] so kdoc formats it properly (Lyude)
+
+Fixes: 2f015ec6eab6 ("drm/dp_mst: Add sideband down request tracing + selftests")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Harry Wentland <hwentlan@amd.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250113091100.3314533-2-Wayne.Lin@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/solomon/ssd130x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c | 8 ++++----
+ include/drm/display/drm_dp_mst_helper.h       | 7 +++++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
-index 4ceccad91ba0b..8cbfd8af3f15a 100644
---- a/drivers/gpu/drm/solomon/ssd130x.c
-+++ b/drivers/gpu/drm/solomon/ssd130x.c
-@@ -1038,7 +1038,7 @@ static int ssd132x_fb_blit_rect(struct drm_framebuffer *fb,
- 				struct drm_format_conv_state *fmtcnv_state)
+diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+index acbcfc291f728..b3e26da7bde53 100644
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -179,13 +179,13 @@ static int
+ drm_dp_mst_rad_to_str(const u8 rad[8], u8 lct, char *out, size_t len)
  {
- 	struct ssd130x_device *ssd130x = drm_to_ssd130x(fb->dev);
--	unsigned int dst_pitch = drm_rect_width(rect);
-+	unsigned int dst_pitch;
- 	struct iosys_map dst;
- 	int ret = 0;
+ 	int i;
+-	u8 unpacked_rad[16];
++	u8 unpacked_rad[16] = {};
  
-@@ -1047,6 +1047,8 @@ static int ssd132x_fb_blit_rect(struct drm_framebuffer *fb,
- 	rect->x2 = min_t(unsigned int, round_up(rect->x2, SSD132X_SEGMENT_WIDTH),
- 			 ssd130x->width);
+-	for (i = 0; i < lct; i++) {
++	for (i = 1; i < lct; i++) {
+ 		if (i % 2)
+-			unpacked_rad[i] = rad[i / 2] >> 4;
++			unpacked_rad[i] = rad[(i - 1) / 2] >> 4;
+ 		else
+-			unpacked_rad[i] = rad[i / 2] & BIT_MASK(4);
++			unpacked_rad[i] = rad[(i - 1) / 2] & 0xF;
+ 	}
  
-+	dst_pitch = drm_rect_width(rect);
-+
- 	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
- 	if (ret)
- 		return ret;
+ 	/* TODO: Eventually add something to printk so we can format the rad
+diff --git a/include/drm/display/drm_dp_mst_helper.h b/include/drm/display/drm_dp_mst_helper.h
+index a80ba457a858f..6398a6b50bd1b 100644
+--- a/include/drm/display/drm_dp_mst_helper.h
++++ b/include/drm/display/drm_dp_mst_helper.h
+@@ -222,6 +222,13 @@ struct drm_dp_mst_branch {
+ 	 */
+ 	struct list_head destroy_next;
+ 
++	/**
++	 * @rad: Relative Address of the MST branch.
++	 * For &drm_dp_mst_topology_mgr.mst_primary, it's rad[8] are all 0,
++	 * unset and unused. For MST branches connected after mst_primary,
++	 * in each element of rad[] the nibbles are ordered by the most
++	 * signifcant 4 bits first and the least significant 4 bits second.
++	 */
+ 	u8 rad[8];
+ 	u8 lct;
+ 	int num_ports;
 -- 
 2.39.5
 
