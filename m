@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B7726A08E;
-	Tue,  8 Apr 2025 11:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8741526A08C;
+	Tue,  8 Apr 2025 11:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111633; cv=none; b=JKqAJS/29Bu5jmW0uKZfS9hX7TcbJG00wqAEYMFJsh8thwOk9DBqyiQenA/eVEu8nfIeOKVK93fSOdwPFrRr5hYjFGkGm00E3WE3lORILvJ7b7Qn2zB8sDzBwNsTm1axD8N8UfKltonWHnNzFeH4VjnNFDBzQNpoAkLmhpuakPg=
+	t=1744111636; cv=none; b=bvp0FFvXui+de5ApNy+4/ZScSmAIzTS2ab4ox4k84B2USQh+SQu6aumgSeruJwGOfJ29lHBMdRPpqZZhUZA863744CG+SpU7PV1T+K6sQ6vvVdalF78RK3txQ3OsI7Ph4ia3YSWgnwPa95nuLQNm0JndI3Hf36W7MxxKjgxONzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111633; c=relaxed/simple;
-	bh=Y7oKBZhdnxETHEWT4vFSkZ5PpiFG6hXuuwA+4d8abgE=;
+	s=arc-20240116; t=1744111636; c=relaxed/simple;
+	bh=ZI1bFKJgb097/oWWVoDH79dR+ajaw+vELUTPsPqPxzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+4UhEtcYAZ48/Ambfiz0wDBImDX76+g+SCrA82dS5MWQE9yhkrdmxet80sOeUVG51x/mDNeDk+DqeJU3HXunbEAQOcNcj6WoAkYSZv37CaFoXyknM7IY+7+2WvYu0QRGY9cm8n5FbTkNu0u4eZGKFW2MJL5MFqSom3J3dwjVDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOY99Qxv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0kSfIUp3uW6qSEKV62tjHZ9rBEyvJEXTV1iAxlTUCVbMatIzzG3uE++n+McbrDyK8I0mA4pyrblkhiKhX/yN6ahzmDGw3jKbfKOI6SpI7nfSYB1wpfsKzD0uK2kh6YeQRTdH5h9FPuJEaofABYWa1EH8OCu1HuJve5ahAdUjqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmhYJ6Nb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOY99Qxv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05560C4CEE5;
-	Tue,  8 Apr 2025 11:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmhYJ6Nb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BBEC4CEE5;
+	Tue,  8 Apr 2025 11:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111633;
-	bh=Y7oKBZhdnxETHEWT4vFSkZ5PpiFG6hXuuwA+4d8abgE=;
+	s=korg; t=1744111636;
+	bh=ZI1bFKJgb097/oWWVoDH79dR+ajaw+vELUTPsPqPxzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOY99QxvKVemY/Iv90Drar3AH9rldZ8u3ZziusCatY9dHViqvk02rNzXQjFnnC3TV
-	 vSgQJifhE6w877cfTB0mpisOM49Ril+q64PAzDZdiudHRdsEcp0mjGfACgvJEikMth
-	 yIfhh84IhyWbsNis7qrcPrMHCC0HYs1CSj08ZpI0=
+	b=UmhYJ6Nbi4fgCyxSBvBDtaPkX7CaVM3wOlMWvdpEDrODZiqYV6fWtmTeArhFdG38C
+	 FnFoL8MORtMvi6qa65usr+JnXJi+AYqkfXybw2oxnBjkXaZwVlL8FzzKjzq1VtN56V
+	 xvZdC0CSuZn1uu49gv0xrsacoSzq6/C8AC+XWryQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Qiao Zhao <qzhao@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 501/731] perf units: Fix insufficient array space
-Date: Tue,  8 Apr 2025 12:46:38 +0200
-Message-ID: <20250408104925.927304400@linuxfoundation.org>
+Subject: [PATCH 6.14 502/731] perf test stat_all_pmu.sh: Correctly check perf stat result
+Date: Tue,  8 Apr 2025 12:46:39 +0200
+Message-ID: <20250408104925.950076315@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,44 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Veronika Molnarova <vmolnaro@redhat.com>
 
-[ Upstream commit cf67629f7f637fb988228abdb3aae46d0c1748fe ]
+[ Upstream commit 02ba09c8ab9406f30c5c63b7cfd4b300c3c2c32c ]
 
-No need to specify the array size, let the compiler figure that out.
+Test case "stat_all_pmu.sh" is not correctly checking 'perf stat' output
+due to a poor design. Firstly, having the 'set -e' option with a trap
+catching the sigexit causes the shell to exit immediately if 'perf stat' ends
+with any non-zero value, which is then caught by the trap reporting an
+unexpected signal. This causes events that should be parsed by the if-else
+statement to be caught by the trap handler and are reported as errors:
 
-This addresses this compiler warning that was noticed while build
-testing on fedora rawhide:
+    $ perf test -vv "perf all pmu"
+    Testing i915/actual-frequency/
+    Unexpected signal in main
+    Error:
+    Access to performance monitoring and observability operations is limited.
 
-  31    15.81 fedora:rawhide                : FAIL gcc version 15.0.1 20250225 (Red Hat 15.0.1-0) (GCC)
-    util/units.c: In function 'unit_number__scnprintf':
-    util/units.c:67:24: error: initializer-string for array of 'char' is too long [-Werror=unterminated-string-initialization]
-       67 |         char unit[4] = "BKMG";
-          |                        ^~~~~~
-    cc1: all warnings being treated as errors
+Secondly, the if-else branches are not exclusive as the checking if the
+event is present in the output log covers also the "<not supported>"
+events, which should be accepted, and also the "Bad name events", which
+should be rejected.
 
-Fixes: 9808143ba2e54818 ("perf tools: Add unit_number__scnprintf function")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20250310194534.265487-3-acme@kernel.org
+Remove the "set -e" option from the test case, correctly parse the
+"perf stat" output log and check its return value. Add the missing
+outputs for the 'perf stat' result and also add logs messages to
+report the branch that parsed the event for more info.
+
+Fixes: 7e73ea40295620e7 ("perf test: Ignore security failures in all PMU test")
+Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
+Tested-by: Qiao Zhao <qzhao@redhat.com>
+Link: https://lore.kernel.org/r/20241122231233.79509-1-vmolnaro@redhat.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/units.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/tests/shell/stat_all_pmu.sh | 48 ++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/tools/perf/util/units.c b/tools/perf/util/units.c
-index 32c39cfe209b3..4c6a86e1cb54b 100644
---- a/tools/perf/util/units.c
-+++ b/tools/perf/util/units.c
-@@ -64,7 +64,7 @@ unsigned long convert_unit(unsigned long value, char *unit)
+diff --git a/tools/perf/tests/shell/stat_all_pmu.sh b/tools/perf/tests/shell/stat_all_pmu.sh
+index 8b148b300be11..9c466c0efa857 100755
+--- a/tools/perf/tests/shell/stat_all_pmu.sh
++++ b/tools/perf/tests/shell/stat_all_pmu.sh
+@@ -2,7 +2,6 @@
+ # perf all PMU test (exclusive)
+ # SPDX-License-Identifier: GPL-2.0
  
- int unit_number__scnprintf(char *buf, size_t size, u64 n)
- {
--	char unit[4] = "BKMG";
-+	char unit[] = "BKMG";
- 	int i = 0;
+-set -e
+ err=0
+ result=""
  
- 	while (((n / 1024) > 1) && (i < 3)) {
+@@ -16,34 +15,55 @@ trap trap_cleanup EXIT TERM INT
+ # Test all PMU events; however exclude parameterized ones (name contains '?')
+ for p in $(perf list --raw-dump pmu | sed 's/[[:graph:]]\+?[[:graph:]]\+[[:space:]]//g')
+ do
+-  echo "Testing $p"
+-  result=$(perf stat -e "$p" true 2>&1)
+-  if echo "$result" | grep -q "$p"
++  echo -n "Testing $p -- "
++  output=$(perf stat -e "$p" true 2>&1)
++  stat_result=$?
++  if echo "$output" | grep -q "$p"
+   then
+     # Event seen in output.
+-    continue
+-  fi
+-  if echo "$result" | grep -q "<not supported>"
+-  then
+-    # Event not supported, so ignore.
+-    continue
++    if [ $stat_result -eq 0 ] && ! echo "$output" | grep -q "<not supported>"
++    then
++      # Event supported.
++      echo "supported"
++      continue
++    elif echo "$output" | grep -q "<not supported>"
++    then
++      # Event not supported, so ignore.
++      echo "not supported"
++      continue
++    elif echo "$output" | grep -q "No permission to enable"
++    then
++      # No permissions, so ignore.
++      echo "no permission to enable"
++      continue
++    elif echo "$output" | grep -q "Bad event name"
++    then
++      # Non-existent event.
++      echo "Error: Bad event name"
++      echo "$output"
++      err=1
++      continue
++    fi
+   fi
+-  if echo "$result" | grep -q "Access to performance monitoring and observability operations is limited."
++
++  if echo "$output" | grep -q "Access to performance monitoring and observability operations is limited."
+   then
+     # Access is limited, so ignore.
++    echo "access limited"
+     continue
+   fi
+ 
+   # We failed to see the event and it is supported. Possibly the workload was
+   # too small so retry with something longer.
+-  result=$(perf stat -e "$p" perf bench internals synthesize 2>&1)
+-  if echo "$result" | grep -q "$p"
++  output=$(perf stat -e "$p" perf bench internals synthesize 2>&1)
++  if echo "$output" | grep -q "$p"
+   then
+     # Event seen in output.
++    echo "supported"
+     continue
+   fi
+   echo "Error: event '$p' not printed in:"
+-  echo "$result"
++  echo "$output"
+   err=1
+ done
+ 
 -- 
 2.39.5
 
