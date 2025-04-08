@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F7826B0B8;
-	Tue,  8 Apr 2025 12:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5E826A0E0;
+	Tue,  8 Apr 2025 12:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114706; cv=none; b=f4FdcY4PZCqILqwH5Ah/v028vzcieFxaYlxHU13XEFAaixDuzT2MrIUAEtGKRJq2Y9UmXAH7nLzZnBU+ltk9DdObxWM0fbmslQsn8oesXjb1iHIJPUv6wGdyTDYJi/05KvEosOchA1z4yUMx3AGWEn4NzUNkiBtT9nMoYvldOn0=
+	t=1744114709; cv=none; b=Qwe5GVgD+TtGJqz1Nqu/8wsN5HustqxrvYsKjcPzgQdzHeFH4HupoWZYtb+WXvLzbpW2anM3Xi14E61iZq+HtkEPgFnEKeQ7wegSSBlX8TLPJBzvCLUH36L5IlwATuMdMBgO2DnPoCMH3zXgv5sOi+oPmzDu2x6egxyBMA7Ww38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114706; c=relaxed/simple;
-	bh=ywcvsD2+0WooL+9bP7Rok2JMuASB+8HmyE2nIXahR1Q=;
+	s=arc-20240116; t=1744114709; c=relaxed/simple;
+	bh=kToPqLyL8Pym2IajDhDK7eE8Tz7VZBQiFzGVRGf1A3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5D2MsGY2SxjuLHKY0dlYT9jKrRv4BSpi94wgzXvULbXo3AN1REJe4eF42Cez8W9rMWigpCV+cy5ox+YZqJmr7zkhmS0uGCAuHronb5UskkX0mKIagtpTL4tA9xvD4Ye9YrVkek9IG/Jq1lK9iaWtccxY+BodtcDmqxMM7g6Lz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iwwAg9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEfHmgxoQcZr6ocQQrvlF7eSlIUH7ETnD7xe02YdgY7l4xzlcu5HOxnnQYTywNnOceqFxfiaN1UHdtwo4gWxDD7Dfnkb5DZvs49QX34E8EF6VTGWxMd0mvY/RQ4ihVPrjVVF09llpqMi3YR9QAYOXUpQy7rwWT6Qo3mlE++qnn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP/RRvCd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iwwAg9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A223C4CEE5;
-	Tue,  8 Apr 2025 12:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP/RRvCd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487FFC4CEE5;
+	Tue,  8 Apr 2025 12:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114706;
-	bh=ywcvsD2+0WooL+9bP7Rok2JMuASB+8HmyE2nIXahR1Q=;
+	s=korg; t=1744114708;
+	bh=kToPqLyL8Pym2IajDhDK7eE8Tz7VZBQiFzGVRGf1A3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iwwAg9KTuA4+j8VxKxNiWRiFaadGaFpN/eyo5SGhNmVK+hlV4xgdh7XojFCnAoBw
-	 D9hWlip2wDsSNPQEwMf8F8+gf5Hb1BTLrAulbXcjgLhKFZDpVXlQq3nnD9wkaskWSe
-	 PTQ1p7XRUY1vQjpubaktS8TFNLmXgmodNKHace1I=
+	b=dP/RRvCd89S1AuSWOlY+wcMKV5nP1uluegSjv3AVKsPREndxNo6c71GjD1urJVTWE
+	 6ion0pp29urF7kg+fFw2TfpPiRGsiAW+bM8FDG1MJ8xHr2sbMTCoA962RfZ7bwotAH
+	 UoHKLE1x2LDQsh58ykFXA4mRh/QKdB/OAIM3lQjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 204/499] perf stat: Dont merge counters purely on name
-Date: Tue,  8 Apr 2025 12:46:56 +0200
-Message-ID: <20250408104856.287411376@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Kun Hu <huk23@m.fudan.edu.cn>
+Subject: [PATCH 6.13 205/499] fs/ntfs3: Update inode->i_mapping->a_ops on compression state
+Date: Tue,  8 Apr 2025 12:46:57 +0200
+Message-ID: <20250408104856.315228411@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,68 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 2d9961c690d299893735783a2077e866f2d46a56 ]
+[ Upstream commit b432163ebd15a0fb74051949cb61456d6c55ccbd ]
 
-Counter merging was added in commit 942c5593393d ("perf stat: Add
-perf_stat_merge_counters()"), however, it merges events with the same
-name on different PMUs regardless of whether the different PMUs are
-actually of the same type (ie they differ only in the suffix on the
-PMU). For hwmon events there may be a temp1 event on every PMU, but
-the PMU names are all unique and don't differ just by a suffix. The
-merging is over eager and will merge all the hwmon counters together
-meaning an aggregated and very large temp1 value is shown. The same
-would be true for say cache events and memory controller events where
-the PMUs differ but the event names are the same.
+Update inode->i_mapping->a_ops when the compression state changes to
+ensure correct address space operations.
+Clear ATTR_FLAG_SPARSED/FILE_ATTRIBUTE_SPARSE_FILE when enabling
+compression to prevent flag conflicts.
 
-Fix the problem by correctly saying two PMUs alias when they differ
-only by suffix.
+v2:
+Additionally, ensure that all dirty pages are flushed and concurrent access
+to the page cache is blocked.
 
-Note, there is an overlap with evsel's merged_stat with aggregation
-and the evsel's metric_leader where aggregation happens for metrics.
-
-Fixes: 942c5593393d ("perf stat: Add perf_stat_merge_counters()")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20250201074320.746259-5-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 6b39bfaeec44 ("fs/ntfs3: Add support for the compression attribute")
+Reported-by: Kun Hu <huk23@m.fudan.edu.cn>, Jiaji Qin <jjtan24@m.fudan.edu.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/ntfs3/attrib.c  |  3 ++-
+ fs/ntfs3/file.c    | 22 ++++++++++++++++++++--
+ fs/ntfs3/frecord.c |  6 ++++--
+ 3 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/stat.c b/tools/perf/util/stat.c
-index 7c2ccdcc3fdba..1f7abd8754c75 100644
---- a/tools/perf/util/stat.c
-+++ b/tools/perf/util/stat.c
-@@ -535,7 +535,10 @@ static int evsel__merge_aggr_counters(struct evsel *evsel, struct evsel *alias)
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index af94e3737470d..e946f75eb5406 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -2664,8 +2664,9 @@ int attr_set_compress(struct ntfs_inode *ni, bool compr)
+ 		attr->nres.run_off = cpu_to_le16(run_off);
+ 	}
  
- 	return 0;
- }
--/* events should have the same name, scale, unit, cgroup but on different PMUs */
-+/*
-+ * Events should have the same name, scale, unit, cgroup but on different core
-+ * PMUs or on different but matching uncore PMUs.
-+ */
- static bool evsel__is_alias(struct evsel *evsel_a, struct evsel *evsel_b)
- {
- 	if (strcmp(evsel__name(evsel_a), evsel__name(evsel_b)))
-@@ -553,7 +556,13 @@ static bool evsel__is_alias(struct evsel *evsel_a, struct evsel *evsel_b)
- 	if (evsel__is_clock(evsel_a) != evsel__is_clock(evsel_b))
- 		return false;
- 
--	return evsel_a->pmu != evsel_b->pmu;
-+	if (evsel_a->pmu == evsel_b->pmu || evsel_a->pmu == NULL || evsel_b->pmu == NULL)
-+		return false;
+-	/* Update data attribute flags. */
++	/* Update attribute flags. */
+ 	if (compr) {
++		attr->flags &= ~ATTR_FLAG_SPARSED;
+ 		attr->flags |= ATTR_FLAG_COMPRESSED;
+ 		attr->nres.c_unit = NTFS_LZNT_CUNIT;
+ 	} else {
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 3f96a11804c90..e9f701f884e72 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -101,8 +101,26 @@ int ntfs_fileattr_set(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	/* Allowed to change compression for empty files and for directories only. */
+ 	if (!is_dedup(ni) && !is_encrypted(ni) &&
+ 	    (S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode))) {
+-		/* Change compress state. */
+-		int err = ni_set_compress(inode, flags & FS_COMPR_FL);
++		int err = 0;
++		struct address_space *mapping = inode->i_mapping;
 +
-+	if (evsel_a->pmu->is_core)
-+		return evsel_b->pmu->is_core;
++		/* write out all data and wait. */
++		filemap_invalidate_lock(mapping);
++		err = filemap_write_and_wait(mapping);
 +
-+	return perf_pmu__name_no_suffix_match(evsel_a->pmu, evsel_b->pmu->name);
- }
++		if (err >= 0) {
++			/* Change compress state. */
++			bool compr = flags & FS_COMPR_FL;
++			err = ni_set_compress(inode, compr);
++
++			/* For files change a_ops too. */
++			if (!err)
++				mapping->a_ops = compr ? &ntfs_aops_cmpr :
++							 &ntfs_aops;
++		}
++
++		filemap_invalidate_unlock(mapping);
++
+ 		if (err)
+ 			return err;
+ 	}
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index f66186dbeda9d..b95d85432493c 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -3433,10 +3433,12 @@ int ni_set_compress(struct inode *inode, bool compr)
+ 	}
  
- static void evsel__merge_aliases(struct evsel *evsel)
+ 	ni->std_fa = std->fa;
+-	if (compr)
++	if (compr) {
++		std->fa &= ~FILE_ATTRIBUTE_SPARSE_FILE;
+ 		std->fa |= FILE_ATTRIBUTE_COMPRESSED;
+-	else
++	} else {
+ 		std->fa &= ~FILE_ATTRIBUTE_COMPRESSED;
++	}
+ 
+ 	if (ni->std_fa != std->fa) {
+ 		ni->std_fa = std->fa;
 -- 
 2.39.5
 
