@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1077A26156E;
-	Tue,  8 Apr 2025 12:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F0E269823;
+	Tue,  8 Apr 2025 12:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114475; cv=none; b=nkZDV6ZFW4KUrruNXL7c8i+1d0w5R1L0QN2xla4Vl3ztldYQf6Oz4ajp7Gyi4ggFjjxiJthudsTx0qu8VC9r7HhRuU6L+QjqanDUgHYHHFuWgI1avxnn9YCpWcxjCTsTfFOh3OE3brXitzMpEfPDvRD0uPJ80DeiuPUimdGKqmY=
+	t=1744114477; cv=none; b=bdN1jBjzTOLgphsBKIS3Yv3LxE7RUFo/pwo+0sRpMq1WMv5xbCvq7BhgCeDfU6dojUe+tQnS/1XDyPKJg4H4dvnY7qjpRquDUtTZqHttzwqM1Smjxdpy0cbNgLGZClA6+c1lHAXyGxUyWCwCT4STvUAxauuxuRQDOpnKWpkoVyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114475; c=relaxed/simple;
-	bh=WhYTx6R7l5saFgikFLPgcKDN/trRcrrVvLJcIBvE6QE=;
+	s=arc-20240116; t=1744114477; c=relaxed/simple;
+	bh=J/rNwqziBRuuF1mTDxmTtkU8l7QEMJ/eai4mDg5bavM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+TI6fk261yvYOPls4FKMxHVKqGfiRGGRSN8atS56NfqaTL+/q2vemqEz8lRnbYiFkEvvYOyTV8CpTpyQrXOgOfLsMj+N/5q/acSAfG8j5H0PudtQ1A68HXvf9Ip1Gj9RvdL59wkxTR6qqj5AppD+ilMolEGRTFSl7gbQY2aHLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUPRstcA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGNPzklB23pxMoGcG+YlfKEcugcXrQgOve1LA+uLoYqPugJ90siDah6p2VOH/q9Yg8Tq4KNAHgticO3qOJaOZNIaQNiTVYd4a8KpaEfr0TlQMcxq//29T+BqtF9SmwsemooiXuyCUl/ykFzmE4Pnuzj0CgVnGk/LyOaGUoGhWhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFANIPaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUPRstcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020D4C4CEE5;
-	Tue,  8 Apr 2025 12:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFANIPaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC24AC4CEEA;
+	Tue,  8 Apr 2025 12:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114474;
-	bh=WhYTx6R7l5saFgikFLPgcKDN/trRcrrVvLJcIBvE6QE=;
+	s=korg; t=1744114477;
+	bh=J/rNwqziBRuuF1mTDxmTtkU8l7QEMJ/eai4mDg5bavM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUPRstcAwmKROZ+pxdFRxCVxIc7gqs7zUssfCyPqXrSHCr8f6YDOS2q+FJK1y14Qv
-	 Bks/lyUbdJPfL3USg5v7Chl/eikTAEwm3UKAe6R2z2k4oDmVi5tZnsKw9rafCch+64
-	 9PBlDdanwOvRbr3Ofs3W8qCgj8iCNqPgNUArnOZc=
+	b=GFANIPaUpYY1YFaIhjw5o15HT3FGIuF/nQEPb/EmjIO7/+vFDFULMUbYan4BpWrkX
+	 UBNJ4QDBzZpdKVfFQRJ8sPIuV7aqvaCpNtZWAWF1XZISxRnWdzPfxSuentGiUwnkEX
+	 BMfAb0DrsBvf8T82smHpm6jt5/hsERNBIuzgEOZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Helge Deller <deller@gmx.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 119/499] fbdev: sm501fb: Add some geometry checks.
-Date: Tue,  8 Apr 2025 12:45:31 +0200
-Message-ID: <20250408104854.168280951@linuxfoundation.org>
+Subject: [PATCH 6.13 120/499] crypto: iaa - Test the correct request flag
+Date: Tue,  8 Apr 2025 12:45:32 +0200
+Message-ID: <20250408104854.193479978@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,42 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit aee50bd88ea5fde1ff4cc021385598f81a65830c ]
+[ Upstream commit fc4bd01d9ff592f620c499686245c093440db0e8 ]
 
-Added checks for xoffset, yoffset settings.
-Incorrect settings of these parameters can lead to errors
-in sm501fb_pan_ functions.
+Test the correct flags for the MAY_SLEEP bit.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 5fc404e47bdf ("[PATCH] fb: SM501 framebuffer driver")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 2ec6761df889 ("crypto: iaa - Add support for deflate-iaa compression algorithm")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm501fb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
-index 86ecbb2d86db8..2eb27ebf822e8 100644
---- a/drivers/video/fbdev/sm501fb.c
-+++ b/drivers/video/fbdev/sm501fb.c
-@@ -326,6 +326,13 @@ static int sm501fb_check_var(struct fb_var_screeninfo *var,
- 	if (var->xres_virtual > 4096 || var->yres_virtual > 2048)
- 		return -EINVAL;
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index c3776b0de51d7..990ea46955bbf 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -1537,7 +1537,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 	iaa_wq = idxd_wq_get_private(wq);
  
-+	/* geometry sanity checks */
-+	if (var->xres + var->xoffset > var->xres_virtual)
-+		return -EINVAL;
-+
-+	if (var->yres + var->yoffset > var->yres_virtual)
-+		return -EINVAL;
-+
- 	/* can cope with 8,16 or 32bpp */
+ 	if (!req->dst) {
+-		gfp_t flags = req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
++		gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
  
- 	if (var->bits_per_pixel <= 8)
+ 		/* incompressible data will always be < 2 * slen */
+ 		req->dlen = 2 * req->slen;
+@@ -1619,7 +1619,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 
+ static int iaa_comp_adecompress_alloc_dest(struct acomp_req *req)
+ {
+-	gfp_t flags = req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
++	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
+ 		GFP_KERNEL : GFP_ATOMIC;
+ 	struct crypto_tfm *tfm = req->base.tfm;
+ 	dma_addr_t src_addr, dst_addr;
 -- 
 2.39.5
 
