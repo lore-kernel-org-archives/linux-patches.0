@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40E26E15A;
-	Tue,  8 Apr 2025 12:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10580269811;
+	Tue,  8 Apr 2025 12:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116182; cv=none; b=eru6NQZRdElndXNystU4bj5DiFtA8tgx73v6VxSSa/DqCeyN49TzkWvos+Ovb1j0kyWJLIXgilBHhn8DLXoKMX/9DVKQBBfzwYWJw9NuPbSREvrD14X2L9NjdQkfq/xmsuJAsB4jr+zCs2D73I1OrwsSlJzViPiKrNvOR9KrVuc=
+	t=1744116185; cv=none; b=Q/Buo0ptA2iGklJwi1W0YR3ENdYC2T/g4g36kNxVaWiQPTZevRrHnX4L0VBDdrAfk/l+mSbGMmeFUCdagOysY0DKJK+DvtfMpTZocbSta5ZtQh0/NJpZi+HrRRALyU1Nq7Scr9ZQGIAutV7sMZcUtPb//uGHAhY7UWKke1QzZoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116182; c=relaxed/simple;
-	bh=GOBgzOv45ptNLDLgbKf1eWjGneoBRM/6PgvuF1BvunM=;
+	s=arc-20240116; t=1744116185; c=relaxed/simple;
+	bh=8VFdns7BATAQrW6rNcFGvFkl8kOTZcpXrSWOnLia3nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUpU7WumyLLZoqRseciqEgl4xiQzTXtslArOL9DJwZy2r9X3CUG/3P3jFELc/r4t/AVYbrmgljUBtPG/UniY69CaJEH0QOhpAQKnja0dEzXFCPNdztyceZ1afyU9No0CrWiZxmJBAbP+eTbgDAupQeW5E5W0kCjBJena5s20Rkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCe1r5dX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NaFGckMucclBUAv07s4aILu+xvICItDgfEv43kidVj16AXxaHP3UV5HwjmgZZYEdn9cbvRxPUHKhecJGZ7a5K2W9nhD2gBKFeM46a6WSmBGviJOgYzVINrEz2lnxQHUfolhLISb8HiIeRw9FtSbbIk8voVJx5PBAJVuXpm1LCYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCMJjz+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCe1r5dX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A4CC4CEE5;
-	Tue,  8 Apr 2025 12:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCMJjz+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A19C4CEE7;
+	Tue,  8 Apr 2025 12:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116182;
-	bh=GOBgzOv45ptNLDLgbKf1eWjGneoBRM/6PgvuF1BvunM=;
+	s=korg; t=1744116184;
+	bh=8VFdns7BATAQrW6rNcFGvFkl8kOTZcpXrSWOnLia3nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCe1r5dXXxd6YUrfdIA9Hlkl04gk4GH0dLsSGt7XJ6u4jKuqzS9mgPWsdMPPDbfRW
-	 otMU6Tgs8fenipKwSRNQ9dpY89efnNVDABIihJTSwTFMn2brQ6HrZ9BS1EU9lXOZ76
-	 dOOxf5HaAhggTzRnQ7gTNU9FTedXSpVqKf6fohnc=
+	b=zCMJjz+edDHpHAdMSVSLfHVQY0ne7drDkyucbVSwZWQSW2fhwPORxoYT5BsuuT573
+	 rgAEHNwSS47OJHFrXQjKBXqSZDKikEnF5zhtOGsWbns+km8FifsWu5+cI9xAptdW5M
+	 redIWlirZN+LhFutXg8gjeXRYmn1vQpivK3w7FeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/423] dt-bindings: vendor-prefixes: add GOcontroll
-Date: Tue,  8 Apr 2025 12:46:09 +0200
-Message-ID: <20250408104846.752910895@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Oleg Gorobets <oleg.goro@gmail.com>
+Subject: [PATCH 6.12 044/423] ALSA: hda/realtek: Always honor no_shutup_pins
+Date: Tue,  8 Apr 2025 12:46:10 +0200
+Message-ID: <20250408104846.776040207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,35 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5f0d2de417166698c8eba433b696037ce04730da ]
+[ Upstream commit 5a0c72c1da3cbc0cd4940a95d1be2830104c6edf ]
 
-GOcontroll produces embedded linux systems and IO modules to use in
-these systems, add its prefix.
+The workaround for Dell machines to skip the pin-shutup for mic pins
+introduced alc_headset_mic_no_shutup() that is replaced from the
+generic snd_hda_shutup_pins() for certain codecs.  The problem is that
+the call is done unconditionally even if spec->no_shutup_pins is set.
+This seems causing problems on other platforms like Lenovo.
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Link: https://patch.msgid.link/20250226-initial_display-v2-2-23fafa130817@gocontroll.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch corrects the behavior and the driver honors always
+spec->no_shutup_pins flag and skips alc_headset_mic_no_shutup() if
+it's set.
+
+Fixes: dad3197da7a3 ("ALSA: hda/realtek - Fixup headphone noise via runtime suspend")
+Reported-and-tested-by: Oleg Gorobets <oleg.goro@gmail.com>
+Link: https://patch.msgid.link/20250315143020.27184-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index fbfce9b4ae6b8..71a1a399e1e1f 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -581,6 +581,8 @@ patternProperties:
-     description: GlobalTop Technology, Inc.
-   "^gmt,.*":
-     description: Global Mixed-mode Technology, Inc.
-+  "^gocontroll,.*":
-+    description: GOcontroll Modular Embedded Electronics B.V.
-   "^goldelico,.*":
-     description: Golden Delicious Computers GmbH & Co. KG
-   "^goodix,.*":
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 8c7da13a804c0..20b3586e4cb6f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -586,6 +586,9 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ {
+ 	struct alc_spec *spec = codec->spec;
+ 
++	if (spec->no_shutup_pins)
++		return;
++
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+@@ -601,8 +604,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 		alc_headset_mic_no_shutup(codec);
+ 		break;
+ 	default:
+-		if (!spec->no_shutup_pins)
+-			snd_hda_shutup_pins(codec);
++		snd_hda_shutup_pins(codec);
+ 		break;
+ 	}
+ }
 -- 
 2.39.5
 
