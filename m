@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E59267B6B;
-	Tue,  8 Apr 2025 10:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A681E267F5F;
+	Tue,  8 Apr 2025 10:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109673; cv=none; b=HcgxmkP5GzczXSWv3o1OUj4bBZ4pVapu5KGaJR689dd/ZISoS/qNJUFzGp3wSaW9kPVph+o1Gkyg0j4LE+PLljnOUJPxqbASgDVZmhiD1BH7Sz9dOQCK220HlAi7T2Moy2xuqhu8CcdfoNuB7qI5TaLZ+yOkcpKxUVytCk2vsnA=
+	t=1744109675; cv=none; b=UkMdkVoqhmMB1ljMBvPu7f2e9vV1dh1BJU0W7Gi8Gp/xoeSzqwF9HyENb6oQKz51dPdwXp9f+IiLgBzqlJBWHqMeviKYDp8mpm6dWzjozPLDluIzaDmdde4d0/w19bwEcMcRi0cLpfz89Q50HEZjC1MvD11hTk3c3IQNPyd3hJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109673; c=relaxed/simple;
-	bh=omBvyt1M6RENj1wL4KS38cnHEqUNbHSOyDvX6WJGbBA=;
+	s=arc-20240116; t=1744109675; c=relaxed/simple;
+	bh=PcZPyL9FXf60qILZUZht0d0BU56nyr0s7zRoRIopcLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9IfYLjvC+rx1ybvq/X3mUW5gTQ6G2b4DeAY6yzrBjN9fqHJomePRRWlQwRvJizGmxw6mW/rpgJNj6xAYLb1arccuYn85O0Vq5IS27S0ctZlI/S1rc7vWUR9U9niR0JL/Pi4Bwcsb6RhJajsWlzC/6s/HE4gdYJo+9U8YJU68IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y42osU9i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gk7dRZ+8aLSCOcmQiZ5n2QNX0RjRA1BjarBL/boJBkbiiWikLrnHozb0kb7+6NES3dZL/bAOVt1aJ6x/1a3RurXhhHZg4MBYfmEY4sFmMc1bHsJ31GEeIH9Dx/XAJbS16oEMq3Gmbh5TwBCBHG3yYBrw7kQnidIdPAECdmfE8Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUwODF24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y42osU9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05846C4CEE5;
-	Tue,  8 Apr 2025 10:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUwODF24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2086C4CEE5;
+	Tue,  8 Apr 2025 10:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109671;
-	bh=omBvyt1M6RENj1wL4KS38cnHEqUNbHSOyDvX6WJGbBA=;
+	s=korg; t=1744109674;
+	bh=PcZPyL9FXf60qILZUZht0d0BU56nyr0s7zRoRIopcLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y42osU9ig7Q0hL9zB/DLVBEQYKA2yb3navVpcmlCCBXIGfQHBAG/6N6nmraGMWGb8
-	 VP7XliWXJIXxf73CRCd9g3Pzt1NkHD8KelcPJ+B/sufgA8+ZtRoWaXnppur2d5hxTe
-	 bV4Or3YdaPDgVOz7eUH0WcNDZlNi+efjOI7AHTfw=
+	b=fUwODF24rxLCDWk1oA8Dwn3IAel7omRCk1N6qKy6/pu23JdEQsI5g7LXiwRZlG6pP
+	 2x87fQRZxRhlkx0ylUmv7qsiPz5uN7HbEtyWn5btjMkHhsAqxnAub5Lgs2169RyL8w
+	 FSSh8NcpDG6V3fXCCRD0vzyEFpkRUAjdZSLOvNwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/227] netfilter: nft_ct: Use __refcount_inc() for per-CPU nft_ct_pcpu_template.
-Date: Tue,  8 Apr 2025 12:46:29 +0200
-Message-ID: <20250408104820.729129270@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 5.10 012/227] ice: fix memory leak in aRFS after reset
+Date: Tue,  8 Apr 2025 12:46:30 +0200
+Message-ID: <20250408104820.760724910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,60 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 5cfe5612ca9590db69b9be29dc83041dbf001108 ]
+[ Upstream commit 23d97f18901ef5e4e264e3b1777fe65c760186b5 ]
 
-nft_ct_pcpu_template is a per-CPU variable and relies on disabled BH for its
-locking. The refcounter is read and if its value is set to one then the
-refcounter is incremented and variable is used - otherwise it is already
-in use and left untouched.
+Fix aRFS (accelerated Receive Flow Steering) structures memory leak by
+adding a checker to verify if aRFS memory is already allocated while
+configuring VSI. aRFS objects are allocated in two cases:
+- as part of VSI initialization (at probe), and
+- as part of reset handling
 
-Without per-CPU locking in local_bh_disable() on PREEMPT_RT the
-read-then-increment operation is not atomic and therefore racy.
+However, VSI reconfiguration executed during reset involves memory
+allocation one more time, without prior releasing already allocated
+resources. This led to the memory leak with the following signature:
 
-This can be avoided by using unconditionally __refcount_inc() which will
-increment counter and return the old value as an atomic operation.
-In case the returned counter is not one, the variable is in use and we
-need to decrement counter. Otherwise we can use it.
+[root@os-delivery ~]# cat /sys/kernel/debug/kmemleak
+unreferenced object 0xff3c1ca7252e6000 (size 8192):
+  comm "kworker/0:0", pid 8, jiffies 4296833052
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 0):
+    [<ffffffff991ec485>] __kmalloc_cache_noprof+0x275/0x340
+    [<ffffffffc0a6e06a>] ice_init_arfs+0x3a/0xe0 [ice]
+    [<ffffffffc09f1027>] ice_vsi_cfg_def+0x607/0x850 [ice]
+    [<ffffffffc09f244b>] ice_vsi_setup+0x5b/0x130 [ice]
+    [<ffffffffc09c2131>] ice_init+0x1c1/0x460 [ice]
+    [<ffffffffc09c64af>] ice_probe+0x2af/0x520 [ice]
+    [<ffffffff994fbcd3>] local_pci_probe+0x43/0xa0
+    [<ffffffff98f07103>] work_for_cpu_fn+0x13/0x20
+    [<ffffffff98f0b6d9>] process_one_work+0x179/0x390
+    [<ffffffff98f0c1e9>] worker_thread+0x239/0x340
+    [<ffffffff98f14abc>] kthread+0xcc/0x100
+    [<ffffffff98e45a6d>] ret_from_fork+0x2d/0x50
+    [<ffffffff98e083ba>] ret_from_fork_asm+0x1a/0x30
+    ...
 
-Use __refcount_inc() instead of read and a conditional increment.
-
-Fixes: edee4f1e9245 ("netfilter: nft_ct: add zone id set support")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 28bf26724fdb ("ice: Implement aRFS")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_arfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 4b75c7113de4d..f95f1dbc48dea 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -239,6 +239,7 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
- 	enum ip_conntrack_info ctinfo;
- 	u16 value = nft_reg_load16(&regs->data[priv->sreg]);
- 	struct nf_conn *ct;
-+	int oldcnt;
+diff --git a/drivers/net/ethernet/intel/ice/ice_arfs.c b/drivers/net/ethernet/intel/ice/ice_arfs.c
+index 6560acd76c949..632f16ffee401 100644
+--- a/drivers/net/ethernet/intel/ice/ice_arfs.c
++++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
+@@ -510,7 +510,7 @@ void ice_init_arfs(struct ice_vsi *vsi)
+ 	struct hlist_head *arfs_fltr_list;
+ 	unsigned int i;
  
- 	ct = nf_ct_get(skb, &ctinfo);
- 	if (ct) /* already tracked */
-@@ -259,10 +260,11 @@ static void nft_ct_set_zone_eval(const struct nft_expr *expr,
+-	if (!vsi || vsi->type != ICE_VSI_PF)
++	if (!vsi || vsi->type != ICE_VSI_PF || ice_is_arfs_active(vsi))
+ 		return;
  
- 	ct = this_cpu_read(nft_ct_pcpu_template);
- 
--	if (likely(refcount_read(&ct->ct_general.use) == 1)) {
--		refcount_inc(&ct->ct_general.use);
-+	__refcount_inc(&ct->ct_general.use, &oldcnt);
-+	if (likely(oldcnt == 1)) {
- 		nf_ct_zone_add(ct, &zone);
- 	} else {
-+		refcount_dec(&ct->ct_general.use);
- 		/* previous skb got queued to userspace, allocate temporary
- 		 * one until percpu template can be reused.
- 		 */
+ 	arfs_fltr_list = kzalloc(sizeof(*arfs_fltr_list) * ICE_MAX_ARFS_LIST,
 -- 
 2.39.5
 
