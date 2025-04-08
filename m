@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08614224234;
-	Tue,  8 Apr 2025 11:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DF825FA29;
+	Tue,  8 Apr 2025 11:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110180; cv=none; b=lkxHunef5GJlBHV34HFVzC2417Vgx5S2YtUnXPUGKbz0BZg/zXYin+JXnJAp5UATVBGJXeIM6uYmxKGm270zZlDzeWGL6840K4+eXFI1sRDtzM/EYm7Dou3eCXhBafadSicrBx1nVPqHE7Eeoc6R//j5EmRpZaAQsPzfwJ7GX+Q=
+	t=1744110182; cv=none; b=pWHdyeaLu5FTR+E2qyjCuIDMEm74pTcsnKzJkouXkEZ/awuL86MEaJR+JfqXLunS/uQ9+SNBJ5d8JQRnTh+/Ypkvv0AuTffqksFYStUtrv4+mZz/qvTHpDa41iHHtgp3reGf7ZqXZm/EyUfV17sm98XfspU1ciKg+tc6KslSfMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110180; c=relaxed/simple;
-	bh=U6aqT2MSTR8/aDNAzIgKE/rzsPV6Nq5mGiB9aCE+LDQ=;
+	s=arc-20240116; t=1744110182; c=relaxed/simple;
+	bh=Y3PQlPC0QcMxDSz9ppmQLvEfa96Wm+U7rOVHwmCy7eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtFL2XfodRNAWoOQrLZD3FcvjiaUJBBd3NRz5z9TJeOoIN32tjm1IDMAWbc0sv0jT6YL1s+tUlwldOhAOMfds9rCJ+OGNQGlrb1ZWNrXJI0A4RMydHwV2hVJnK9b0B5rBq/cI4BsoOZrsH2N3n35pTsK9AoSj9gRYWIqSQo3oPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxh9gsG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hjwFkGYCStj1+xd4PX00jCziYscnLMFyoWi4LD52M1toRKqQB1HCsxw8ElErdL0C9/MI3xX6QeazKBVyLmy4p3afZj/K+myrbtE9JXLXr3O86u0mk+DLcbIfCaRYiUP/AMNWcd24OCVy5HLyx32ZsZcWUhd+hUFa/sMjUNIJq6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5BRcTyg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxh9gsG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E42C4CEE5;
-	Tue,  8 Apr 2025 11:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5BRcTyg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AEEC4CEE5;
+	Tue,  8 Apr 2025 11:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110179;
-	bh=U6aqT2MSTR8/aDNAzIgKE/rzsPV6Nq5mGiB9aCE+LDQ=;
+	s=korg; t=1744110182;
+	bh=Y3PQlPC0QcMxDSz9ppmQLvEfa96Wm+U7rOVHwmCy7eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxh9gsG3TywAB4o73JjWtKdtinzAZefXyXo6zzQ/4NJQM4ctC078oeeEeaZMh8YIy
-	 NNU6wtlWUSVoCRDFHox0rpDT3AjpcDVrH2YUwjBZDb9GLusdcag9MDU00RVpAo6uEU
-	 j41nASdkMP8EsTCTFbsVGGHyxDhM+C0BcRrLO14w=
+	b=j5BRcTyg2UyUTJ+uBBHjmJEpATEZymmLcPaWqnSLV6mpcowPPjOCgWWm2R4wRiQKO
+	 3BEcxZkk0wbcJdZFVt/PRSHD8m/tyrkswYb83k3mtz5iSOT1ff6E4LX0N6dkqenpsD
+	 Q8W02csdYYfPlhOg3+6TWmtqsz4pvZtneUq4KjuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Debin Zhu <mowenroot@163.com>,
+	Bitao Ouyang <1985755126@qq.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 170/227] perf python: Decrement the refcount of just created event on failure
-Date: Tue,  8 Apr 2025 12:49:08 +0200
-Message-ID: <20250408104825.415439265@linuxfoundation.org>
+Subject: [PATCH 5.10 197/227] netlabel: Fix NULL pointer exception caused by CALIPSO on IPv4 sockets
+Date: Tue,  8 Apr 2025 12:49:35 +0200
+Message-ID: <20250408104826.209839561@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,50 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Debin Zhu <mowenroot@163.com>
 
-[ Upstream commit 3de5a2bf5b4847f7a59a184568f969f8fe05d57f ]
+[ Upstream commit 078aabd567de3d63d37d7673f714e309d369e6e2 ]
 
-To avoid a leak if we have the python object but then something happens
-and we need to return the operation, decrement the offset of the newly
-created object.
+When calling netlbl_conn_setattr(), addr->sa_family is used
+to determine the function behavior. If sk is an IPv4 socket,
+but the connect function is called with an IPv6 address,
+the function calipso_sock_setattr() is triggered.
+Inside this function, the following code is executed:
 
-Fixes: 377f698db12150a1 ("perf python: Add struct evsel into struct pyrf_event")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250312203141.285263-5-acme@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+sk_fullsock(__sk) ? inet_sk(__sk)->pinet6 : NULL;
+
+Since sk is an IPv4 socket, pinet6 is NULL, leading to a
+null pointer dereference.
+
+This patch fixes the issue by checking if inet6_sk(sk)
+returns a NULL pointer before accessing pinet6.
+
+Signed-off-by: Debin Zhu <mowenroot@163.com>
+Signed-off-by: Bitao Ouyang <1985755126@qq.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
+Link: https://patch.msgid.link/20250401124018.4763-1-mowenroot@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/calipso.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 51679d8d40b1b..ab3a444b4b868 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -1057,6 +1057,7 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
- 
- 		evsel = perf_evlist__event2evsel(evlist, event);
- 		if (!evsel) {
-+			Py_DECREF(pyevent);
- 			Py_INCREF(Py_None);
- 			return Py_None;
- 		}
-@@ -1068,9 +1069,12 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
- 		/* Consume the even only after we parsed it out. */
- 		perf_mmap__consume(&md->core);
- 
--		if (err)
-+		if (err) {
-+			Py_DECREF(pyevent);
- 			return PyErr_Format(PyExc_OSError,
- 					    "perf: can't parse sample, err=%d", err);
-+		}
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 0ea66e9db2495..e17e756bb1ad9 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1075,8 +1075,13 @@ static int calipso_sock_getattr(struct sock *sk,
+ 	struct ipv6_opt_hdr *hop;
+ 	int opt_len, len, ret_val = -ENOMSG, offset;
+ 	unsigned char *opt;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
 +
- 		return pyevent;
- 	}
- end:
++	if (!pinfo)
++		return -EAFNOSUPPORT;
+ 
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
+ 
+@@ -1128,8 +1133,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ {
+ 	int ret_val;
+ 	struct ipv6_opt_hdr *old, *new;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return -EAFNOSUPPORT;
+ 
++	txopts = txopt_get(pinfo);
+ 	old = NULL;
+ 	if (txopts)
+ 		old = txopts->hopopt;
+@@ -1156,8 +1166,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ static void calipso_sock_delattr(struct sock *sk)
+ {
+ 	struct ipv6_opt_hdr *new_hop;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return;
+ 
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
+ 
 -- 
 2.39.5
 
