@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70174224F6;
-	Tue,  8 Apr 2025 11:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD63264A76;
+	Tue,  8 Apr 2025 11:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111135; cv=none; b=drY/0zPcQIOqIa4ec3wLLoA7sUcJhWj4qF957Uqc10eQLOu8Ile/Hpn+k4Jkv9m8jtVPQYHPAZ4stgfEF1KcWR/XSL8Hfv/7t6mUUQJ3VZnq1gKzOeXvTTT7WxgAzrnExa7cngtw7kHkmGXHejI0V9+OYGFeUVVL2V0lZ6I1tIk=
+	t=1744111138; cv=none; b=XLqzgIqYaGZaj40VZEzQXFN79GPEGnAheB532Wi7u99Ul0OkX6g7GE0AwjCdckUIm1pMiJWY75vQ2FuoBWyTS2ObK2Mwl1PuSxU2nXTrnfelx6fwdLGiwnadRBKdzzWbO4r+aPMl2l2MbsOn99OyDntU+3zKo8qRj1ntkNNq6L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111135; c=relaxed/simple;
-	bh=mBK7ftn9spvpX1jXgG1l770MSf1YvTdX2SV8x4b/K1M=;
+	s=arc-20240116; t=1744111138; c=relaxed/simple;
+	bh=1MHrx65dVcpGZu52KNEAd/4B8voyAtmbCkh6jByvC0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDnzjDIORMyAKOvEKKcJXxtOiiVRAaVTKAgCilLMbjg3ywjgbfc5FlYZUdDiCfAdk6FOIuhTbMCdDi/GnqwzoeEn3i673isMPdybfaLlJBN7CReY1rTil1ixyzewtVv/QlzVB733YRkBzHzfXEdkwNxMB9FyDSsWFafjfrzIicA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGIsEXqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8y1WnXlrvJr9MSwmuWDdCKSn39nJ5bgtpC4Z2Yzz4w98QEqdVKHOUaN9unDpHBl5KzcOYi6RpptdArvMoiJKENUxGtw+4jzYQyz1lkf94OVYJjmbKey46tAO8yUbglY+FLq5JsABwLbEZVHFL4orAmoIZRA3Ur5DzML6u/Pb44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7gm8n9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGIsEXqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AE0C4CEE5;
-	Tue,  8 Apr 2025 11:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7gm8n9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2D2C4CEE5;
+	Tue,  8 Apr 2025 11:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111135;
-	bh=mBK7ftn9spvpX1jXgG1l770MSf1YvTdX2SV8x4b/K1M=;
+	s=korg; t=1744111138;
+	bh=1MHrx65dVcpGZu52KNEAd/4B8voyAtmbCkh6jByvC0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGIsEXqtc03VtQr+bP7m9GWqSx0xyRmt3yIG8PWZor2ELVjCjWc/ckUHYhFoEoP9F
-	 s3gXGTVhRA3YsXT4/GALEfUecBx3s3xUhH60RenM7U/zYylj5bQ0ytDDDt1PIj8Qv7
-	 aDBAI8lKMzIDiqy6mQs3Im5H3BdT6fD12B4jNfRI=
+	b=y7gm8n9v6uBUuRH6JLadvGPtZNCtngW5xVGnxg94UXk4odUqoXuOSXW657nPiPxh7
+	 s8MXDAY9WD3879ULbS6h6CM5ztHNtzIs5RFd2UlylDMNNk4wnqn6pyMoWjrVGuCe/v
+	 bI2tyrT3XVDAmCIrmMhdv/jxZz2yCq56zc3WFQBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 321/731] drm/panthor: Clean up FW version information display
-Date: Tue,  8 Apr 2025 12:43:38 +0200
-Message-ID: <20250408104921.742368037@linuxfoundation.org>
+Subject: [PATCH 6.14 322/731] drm/amd/display: fix type mismatch in CalculateDynamicMetadataParameters()
+Date: Tue,  8 Apr 2025 12:43:39 +0200
+Message-ID: <20250408104921.765449861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,65 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
 
-[ Upstream commit 3b87886bfb038de2c62e627079472ba612e89410 ]
+[ Upstream commit c3c584c18c90a024a54716229809ba36424f9660 ]
 
-Assigning a string to an array which is too small to include the NUL
-byte at the end causes a warning on some compilers. But this function
-also has some other oddities like the 'header' array which is only ever
-used within sizeof().
+There is a type mismatch between what CalculateDynamicMetadataParameters()
+takes and what is passed to it. Currently this function accepts several
+args as signed long but it's called with unsigned integers and integer. On
+some systems where long is 32 bits and one of these unsigned int params is
+greater than INT_MAX it may cause passing input params as negative values.
 
-Tidy up the function by removing the 'header' array, allow the NUL byte
-to be present in git_sha_header, and calculate the length directly from
-git_sha_header.
+Fix this by changing these argument types from long to unsigned int and to
+int respectively. Also this will align the function's definition with
+similar functions in other dcn* drivers.
 
-Reported-by: Will Deacon <will@kernel.org>
-Closes: https://lore.kernel.org/all/20250213154237.GA11897@willie-the-truck/
-Fixes: 9d443deb0441 ("drm/panthor: Display FW version information")
-Signed-off-by: Steven Price <steven.price@arm.com>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213161248.1642392-1-steven.price@arm.com
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 6725a88f88a7 ("drm/amd/display: Add DCN3 DML")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@mt-integration.ru>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ .../amd/display/dc/dml/dcn30/display_mode_vba_30.c   | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_fw.c b/drivers/gpu/drm/panthor/panthor_fw.c
-index 68eb4fb4d3a8a..a024b475b6887 100644
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -637,8 +637,8 @@ static int panthor_fw_read_build_info(struct panthor_device *ptdev,
- 				      u32 ehdr)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+index cee1b351e1058..f1fe49401bc0a 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c
+@@ -281,10 +281,10 @@ static void CalculateDynamicMetadataParameters(
+ 		double DISPCLK,
+ 		double DCFClkDeepSleep,
+ 		double PixelClock,
+-		long HTotal,
+-		long VBlank,
+-		long DynamicMetadataTransmittedBytes,
+-		long DynamicMetadataLinesBeforeActiveRequired,
++		unsigned int HTotal,
++		unsigned int VBlank,
++		unsigned int DynamicMetadataTransmittedBytes,
++		int DynamicMetadataLinesBeforeActiveRequired,
+ 		int InterlaceEnable,
+ 		bool ProgressiveToInterlaceUnitInOPP,
+ 		double *Tsetup,
+@@ -3265,8 +3265,8 @@ static double CalculateWriteBackDelay(
+ 
+ 
+ static void CalculateDynamicMetadataParameters(int MaxInterDCNTileRepeaters, double DPPCLK, double DISPCLK,
+-		double DCFClkDeepSleep, double PixelClock, long HTotal, long VBlank, long DynamicMetadataTransmittedBytes,
+-		long DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
++		double DCFClkDeepSleep, double PixelClock, unsigned int HTotal, unsigned int VBlank, unsigned int DynamicMetadataTransmittedBytes,
++		int DynamicMetadataLinesBeforeActiveRequired, int InterlaceEnable, bool ProgressiveToInterlaceUnitInOPP,
+ 		double *Tsetup, double *Tdmbf, double *Tdmec, double *Tdmsks)
  {
- 	struct panthor_fw_build_info_hdr hdr;
--	char header[9];
--	const char git_sha_header[sizeof(header)] = "git_sha: ";
-+	static const char git_sha_header[] = "git_sha: ";
-+	const int header_len = sizeof(git_sha_header) - 1;
- 	int ret;
- 
- 	ret = panthor_fw_binary_iter_read(ptdev, iter, &hdr, sizeof(hdr));
-@@ -652,8 +652,7 @@ static int panthor_fw_read_build_info(struct panthor_device *ptdev,
- 		return 0;
- 	}
- 
--	if (memcmp(git_sha_header, fw->data + hdr.meta_start,
--		   sizeof(git_sha_header))) {
-+	if (memcmp(git_sha_header, fw->data + hdr.meta_start, header_len)) {
- 		/* Not the expected header, this isn't metadata we understand */
- 		return 0;
- 	}
-@@ -666,7 +665,7 @@ static int panthor_fw_read_build_info(struct panthor_device *ptdev,
- 	}
- 
- 	drm_info(&ptdev->base, "Firmware git sha: %s\n",
--		 fw->data + hdr.meta_start + sizeof(git_sha_header));
-+		 fw->data + hdr.meta_start + header_len);
- 
- 	return 0;
- }
+ 	double TotalRepeaterDelayTime = 0;
 -- 
 2.39.5
 
