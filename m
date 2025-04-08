@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A52A26A096;
-	Tue,  8 Apr 2025 10:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84E42698A0;
+	Tue,  8 Apr 2025 10:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109832; cv=none; b=JIYu1aL7anPuvIgdxVDUKnC8nRqF8L+88/ja5L/bypVHzJh1NjsWNnjBC0VPERALkpd6RVNTXX6sOWTTsHzvvj1FD357u505wwjnpBtnuJGiLaBb8UySb9nspbzwSmngZmZXNTu4Lhie9d3/M4dAyqQTGClY3xzv9zjBgSqCIrY=
+	t=1744109835; cv=none; b=H5WeojWY/gXFEnrsYBpROTgu1vg8yoEsgA8eNW2cDvqlaJHRnLMvL3JXSKGfvFfyH4Fu/YYpr4DZfr3CvCktSckGWmF/AmS4K/Co/1RF0JpMAWyXKgwg7TCltu2qVz20EBIWQv8TgkCp0VTql/ZMoDpibbRAIXGxnkzulP1LCqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109832; c=relaxed/simple;
-	bh=OtqXvHP6N+FOPkTOusiTwpNmCQs5uEylAy6DIQt4Iuw=;
+	s=arc-20240116; t=1744109835; c=relaxed/simple;
+	bh=ucU16qtlImsc3qRSgC3Q/5SEQmL5oprVmGuDae8M3nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hl8ItwNK+G9WwFv5EzxTxwXSjGjDotjaF4nSYmz5huWHU1g8d0pD7C5INX53Vxw7HaTg1K5NRGlBXFf6NqYtto8sTm8egZdtBPFREqw3u5mGrq/r3nnnM7NJM9aAzrpXNkY9m+jdA5YUFqeYFJ71OtdUAscAcME2iXAtd8IWdqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuJxFM51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQ7lKNQe+GcaddSPVgVomo2j4iW5NrcGk653YVt7S9SlQUHIEUxJvuIEHr7FfA2tH1+2l+WStvVOnEnkFuyEXz3pJprBsMZ9ujRLHUKAHduNosqj/62JZBqPaovI2K5Nef6iDQMtVA007Ninare2k+wtb7yoOINEr4fsWDE2zNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVv/QJlt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuJxFM51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05B7C4CEE5;
-	Tue,  8 Apr 2025 10:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVv/QJlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70333C4CEEA;
+	Tue,  8 Apr 2025 10:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109832;
-	bh=OtqXvHP6N+FOPkTOusiTwpNmCQs5uEylAy6DIQt4Iuw=;
+	s=korg; t=1744109834;
+	bh=ucU16qtlImsc3qRSgC3Q/5SEQmL5oprVmGuDae8M3nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuJxFM51CRAOntj9C33EnqBwOFARRpZHICPaO8s7PWdfHk8YvLFH7KhuqnXKaFR4z
-	 pPLLCB+7wlC2W8elk4pRNKq+s3gjtbueaRbSm5nTlM743kVknV2YCmx7P+wHFFWur4
-	 HY0afkI740eu1+ahdNxZqnIOZ60Zsn+7mcWUofYw=
+	b=FVv/QJlt+NaswMp/xstPL0Kyo9eea3mBTb1w7LY9yX2On6S8z3VY+81PNsGKaejhe
+	 Q9d3CT6LAtDAtV/Zrj/pYVuAUHofO5V/NXPXfkYJ1P6s6g7PJXLW7QuPQzHDiW6NS9
+	 CgPKOmTHnJH71YbtW9rYxRyikEygz80P5UkQvwXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Elwell <phil@raspberrypi.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/227] ARM: dts: bcm2711: PL011 UARTs are actually r1p5
-Date: Tue,  8 Apr 2025 12:47:27 +0200
-Message-ID: <20250408104822.471491093@linuxfoundation.org>
+Subject: [PATCH 5.10 043/227] x86/irq: Define trace events conditionally
+Date: Tue,  8 Apr 2025 12:47:01 +0200
+Message-ID: <20250408104821.695786883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,72 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Elwell <phil@raspberrypi.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0de09025f161f67c07978c4742e221243d070d41 ]
+[ Upstream commit 9de7695925d5d2d2085681ba935857246eb2817d ]
 
-The ARM PL011 UART instances in BCM2711 are r1p5 spec, which means they
-have 32-entry FIFOs. The correct periphid value for this is 0x00341011.
-Thanks to N Buchwitz for pointing this out.
+When both of X86_LOCAL_APIC and X86_THERMAL_VECTOR are disabled,
+the irq tracing produces a W=1 build warning for the tracing
+definitions:
 
-Signed-off-by: Phil Elwell <phil@raspberrypi.com>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250223125614.3592-2-wahrenst@gmx.net
-Fixes: 7dbe8c62ceeb ("ARM: dts: Add minimal Raspberry Pi 4 support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+  In file included from include/trace/trace_events.h:27,
+                 from include/trace/define_trace.h:113,
+                 from arch/x86/include/asm/trace/irq_vectors.h:383,
+                 from arch/x86/kernel/irq.c:29:
+  include/trace/stages/init.h:2:23: error: 'str__irq_vectors__trace_system_name' defined but not used [-Werror=unused-const-variable=]
+
+Make the tracepoints conditional on the same symbosl that guard
+their usage.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250225213236.3141752-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm2711.dtsi | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/kernel/irq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/bcm2711.dtsi b/arch/arm/boot/dts/bcm2711.dtsi
-index b50229c3102fa..0f559f2653920 100644
---- a/arch/arm/boot/dts/bcm2711.dtsi
-+++ b/arch/arm/boot/dts/bcm2711.dtsi
-@@ -133,7 +133,7 @@ uart2: serial@7e201400 {
- 			clocks = <&clocks BCM2835_CLOCK_UART>,
- 				 <&clocks BCM2835_CLOCK_VPU>;
- 			clock-names = "uartclk", "apb_pclk";
--			arm,primecell-periphid = <0x00241011>;
-+			arm,primecell-periphid = <0x00341011>;
- 			status = "disabled";
- 		};
+diff --git a/arch/x86/kernel/irq.c b/arch/x86/kernel/irq.c
+index ce904c89c6c70..3e01b80864031 100644
+--- a/arch/x86/kernel/irq.c
++++ b/arch/x86/kernel/irq.c
+@@ -22,8 +22,10 @@
+ #include <asm/desc.h>
+ #include <asm/traps.h>
  
-@@ -144,7 +144,7 @@ uart3: serial@7e201600 {
- 			clocks = <&clocks BCM2835_CLOCK_UART>,
- 				 <&clocks BCM2835_CLOCK_VPU>;
- 			clock-names = "uartclk", "apb_pclk";
--			arm,primecell-periphid = <0x00241011>;
-+			arm,primecell-periphid = <0x00341011>;
- 			status = "disabled";
- 		};
++#if defined(CONFIG_X86_LOCAL_APIC) || defined(CONFIG_X86_THERMAL_VECTOR)
+ #define CREATE_TRACE_POINTS
+ #include <asm/trace/irq_vectors.h>
++#endif
  
-@@ -155,7 +155,7 @@ uart4: serial@7e201800 {
- 			clocks = <&clocks BCM2835_CLOCK_UART>,
- 				 <&clocks BCM2835_CLOCK_VPU>;
- 			clock-names = "uartclk", "apb_pclk";
--			arm,primecell-periphid = <0x00241011>;
-+			arm,primecell-periphid = <0x00341011>;
- 			status = "disabled";
- 		};
- 
-@@ -166,7 +166,7 @@ uart5: serial@7e201a00 {
- 			clocks = <&clocks BCM2835_CLOCK_UART>,
- 				 <&clocks BCM2835_CLOCK_VPU>;
- 			clock-names = "uartclk", "apb_pclk";
--			arm,primecell-periphid = <0x00241011>;
-+			arm,primecell-periphid = <0x00341011>;
- 			status = "disabled";
- 		};
- 
-@@ -1115,6 +1115,7 @@ &txp {
- };
- 
- &uart0 {
-+	arm,primecell-periphid = <0x00341011>;
- 	interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
- };
- 
+ DEFINE_PER_CPU_SHARED_ALIGNED(irq_cpustat_t, irq_stat);
+ EXPORT_PER_CPU_SYMBOL(irq_stat);
 -- 
 2.39.5
 
