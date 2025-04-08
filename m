@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9022236FC;
-	Tue,  8 Apr 2025 12:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC61126E15F;
+	Tue,  8 Apr 2025 12:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116174; cv=none; b=ppcjZ2Hx+29+7UvLWytC5WY24BmSPKcAwdyNd9cKA2YumGwLlJVSMcmxJqVrtv5e6sFgSFzPoZAdaZsa32uD22ab8eWZ+9pYSVLG45iMdqM2kdgcvSLZOxZGIjpiAipE5Lw1VJh1PacNd92UpHqHHt9mcNkLFZ/IOOduGwDh1j8=
+	t=1744116177; cv=none; b=V1QumqJAjOkmp41si7eij+hHxbNopEJ6JSn7BPGfaY5EJaTRZVZIUjUUa+P4YDL8/X6a47eO3W+zHyRwc6vJWejL0U4dKnZox1aPhOJGnzaswLL8zqXTzJQx5d8VrXTfXa51LXN455BmlvVLui7fLwYLUax68E7HwD2xWzCO1ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116174; c=relaxed/simple;
-	bh=xO7UrZu+ULa78evZpHu/MFRPccfMHavfBHDIyPdr+1c=;
+	s=arc-20240116; t=1744116177; c=relaxed/simple;
+	bh=8/K527tOIoM8hXTJYpWkA9BUB2TYxwwfAU1fvIUyWNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRKIaw63dw4ENkgPfYArdh6RMrBM5oFgimMZzchdx5AOqJz5IKr9OflCrKhE4lSXLwh4Vl/X7ChLb6j8Y8t1uXzLsINdTVnHYydLPc6Lc49ubR3J6oLx0wBvF2p0t8HCNTaJFnq/ZpOamYcTKPiLH+IMzn5vvfXkUrrdbt+WehA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwQCvKmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TaQe+aTBEfiaaYrFdieyXB7uSv6ZGrc6OFzNmmN4OmbcFqQxy8m8kvrIdDWxqV+5Wzyd8cFF0wq8BzELLsM6PxAdmRzjHOGZmRJ0ORKaXBONi8oIB0aSgqJj+J8pxiXafZc/H7i04a+8+IeCQzI7drSCrzys6h2Eq2LWef1eMw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpCZnrUc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwQCvKmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C92C4CEE5;
-	Tue,  8 Apr 2025 12:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpCZnrUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C903C4CEE5;
+	Tue,  8 Apr 2025 12:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116174;
-	bh=xO7UrZu+ULa78evZpHu/MFRPccfMHavfBHDIyPdr+1c=;
+	s=korg; t=1744116176;
+	bh=8/K527tOIoM8hXTJYpWkA9BUB2TYxwwfAU1fvIUyWNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwQCvKmJNaroavTDPSn/SklHtSyp6KgUOWRicDYmitMFI8QOubj9/euIBfu2d6D4S
-	 ZIalVUabn40dge8Jq0mFozq5BV4OWaxkgqBnmkzXILFWUwjeqj4YcV/hijclf53Vvw
-	 dPkO6/xJr3dKeKaYWkHq75t3DVw6EdVw8OdlgHAU=
+	b=EpCZnrUcB5tFRwZ1xavO/JZKW5Z99LuPd/ncYV6LQykolkqX3kE3ZW1cJCWYOK9Xp
+	 BYJrC3lFIVoUuPfjkve3q+DtMQyvepSO/YNda2uIJr2sJn+NbzOjc9DiLExs376Gtp
+	 e8w9PaevnPgGF7N2ObHPu8egJNVnDsGFNQ+zX73I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/423] ASoC: amd: acp: Fix for enabling DMIC on acp platforms via _DSD entry
-Date: Tue,  8 Apr 2025 12:46:07 +0200
-Message-ID: <20250408104846.707251789@linuxfoundation.org>
+Subject: [PATCH 6.12 042/423] HID: remove superfluous (and wrong) Makefile entry for CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
+Date: Tue,  8 Apr 2025 12:46:08 +0200
+Message-ID: <20250408104846.729669332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,58 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit 02e1cf7a352a3ba5f768849f2b4fcaaaa19f89e3 ]
+[ Upstream commit fe0fb58325e519008e2606a5aa2cff7ad23e212d ]
 
-Add condition check to register ACP PDM sound card by reading
-_WOV acpi entry.
+The line
 
-Fixes: 09068d624c49 ("ASoC: amd: acp: fix for acp platform device creation failure")
+	obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)   += intel-ish-hid/
 
-Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
-Link: https://patch.msgid.link/20250310183201.11979-15-venkataprasad.potturu@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+in top-level HID Makefile is both superfluous (as CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
+depends on CONFIG_INTEL_ISH_HID, which contains intel-ish-hid/ already) and wrong (as it's
+missing the CONFIG_ prefix).
+
+Just remove it.
+
+Fixes: 91b228107da3e ("HID: intel-ish-hid: ISH firmware loader client driver")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-legacy-common.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/hid/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/acp-legacy-common.c b/sound/soc/amd/acp/acp-legacy-common.c
-index be01b178172e8..e4af2640feeb1 100644
---- a/sound/soc/amd/acp/acp-legacy-common.c
-+++ b/sound/soc/amd/acp/acp-legacy-common.c
-@@ -13,6 +13,7 @@
-  */
+diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
+index 496dab54c73a8..f2900ee2ef858 100644
+--- a/drivers/hid/Makefile
++++ b/drivers/hid/Makefile
+@@ -165,7 +165,6 @@ obj-$(CONFIG_USB_KBD)		+= usbhid/
+ obj-$(CONFIG_I2C_HID_CORE)	+= i2c-hid/
  
- #include "amd.h"
-+#include <linux/acpi.h>
- #include <linux/pci.h>
- #include <linux/export.h>
+ obj-$(CONFIG_INTEL_ISH_HID)	+= intel-ish-hid/
+-obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)	+= intel-ish-hid/
  
-@@ -445,7 +446,9 @@ void check_acp_config(struct pci_dev *pci, struct acp_chip_info *chip)
- {
- 	struct acpi_device *pdm_dev;
- 	const union acpi_object *obj;
--	u32 pdm_addr;
-+	acpi_handle handle;
-+	acpi_integer dmic_status;
-+	u32 pdm_addr, ret;
+ obj-$(CONFIG_AMD_SFH_HID)       += amd-sfh-hid/
  
- 	switch (chip->acp_rev) {
- 	case ACP3X_DEV:
-@@ -477,6 +480,11 @@ void check_acp_config(struct pci_dev *pci, struct acp_chip_info *chip)
- 						   obj->integer.value == pdm_addr)
- 				chip->is_pdm_dev = true;
- 		}
-+
-+		handle = ACPI_HANDLE(&pci->dev);
-+		ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
-+		if (!ACPI_FAILURE(ret))
-+			chip->is_pdm_dev = dmic_status;
- 	}
- }
- EXPORT_SYMBOL_NS_GPL(check_acp_config, SND_SOC_ACP_COMMON);
 -- 
 2.39.5
 
