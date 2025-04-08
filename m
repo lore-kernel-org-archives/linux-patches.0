@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD65126989E;
-	Tue,  8 Apr 2025 12:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6007B20330;
+	Tue,  8 Apr 2025 12:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115533; cv=none; b=QHPKZTLO1KzlBnSXfiTKLifj+qIDXR6i8iG/ijZuuilhwxJkbcDJiUDnxwUJ7bB+d2yyf3e4/Bjd1Gpk1iAPNxFQdcp4ErZsa6EvIbeXMoz8A3Z72Vwu/7W1QiMlAoekoVX39U2Zuv+Jp0KOkUZD30mC3E28AXJa4dVOJYy3Vho=
+	t=1744115536; cv=none; b=llo3PwI/jSh9gxr6HhsRgsx7lvjJa7NT2xwH3NFfNbK8rBZzZqR+QxKpcFVL7Bmz+QB/B7gcNEAxmYmSQkTK7WMppAI7d9UgTa1WugKMkFnv2eYZsyzI7QColcDjn0tIAb8c5zVNwWsaO9we3gtPju/Ol78qz+1tIm3rdanhN4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115533; c=relaxed/simple;
-	bh=jYEFZo32rm8uQe7sObVFKDehXAVS2+eV4/ht7D/eutc=;
+	s=arc-20240116; t=1744115536; c=relaxed/simple;
+	bh=nA5Ra0ryhmC1iKIWNInvb4ARH1aVwoskg6m/jQJv+iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svnhFmzgXttmrsc5VkVnZ3A17tw64pf+hkQmZAercgpiuMOwo5MIHvaCpflWV1bKJCJa+0G1F/XOsTaRkQgZJsGh5wFzco5OBcWEk+SFV0dG0/+C1zSX7P5KCar81fAGhrIhCITcCJCozLsJHMfb6CwtlpmIPg3jdB1u3BVPcOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCrDo225; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9OJrGA0CeY0Ov7ipPL5rIlyAnF1pi4DSp4M9Rc0HVHI0rSJLwNh+8g1mASvCZx7zt4Ybu5Lz9mQugJhxSg0FiuxhD8MPlzQenIutElXqbLer9BFVIEAJTwF/rhuZtFbEP9QzEx2C6YXU5Rje+AZ9qzC8kVMe5+caWf/ZE8gBdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ji/nn9WJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCrDo225"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F989C4CEE5;
-	Tue,  8 Apr 2025 12:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ji/nn9WJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C77C4CEE5;
+	Tue,  8 Apr 2025 12:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115533;
-	bh=jYEFZo32rm8uQe7sObVFKDehXAVS2+eV4/ht7D/eutc=;
+	s=korg; t=1744115536;
+	bh=nA5Ra0ryhmC1iKIWNInvb4ARH1aVwoskg6m/jQJv+iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCrDo22509mF/0fGYYrLJivvJPK+TsvE6fab+CCEZSIkUNE/GC9ZDJ38AuV2PI5gg
-	 Yv5tQz/vS0ZUYbFHvS47La3hGxPImBqZbfQ93bCHcGkguxILrCB95YIPPapDZk5oC2
-	 EuQs0C/G8l5NjoQ7eLLpSIPwtL6eP24u6NJPzzwA=
+	b=Ji/nn9WJrhg5U+GHmT2hrCH8IujJ9tZw+vccv4vBTGlTvCwcmtoPxJQZoOxmLavA3
+	 l4pmtPbsIxpgFFasVDmP91lIjsTKVeg0JorDdidSNoeb/1Qc1RkV9FuxPorrZwv0J+
+	 9j4WEz+u6BPXqMkMBZULrOaROYh08tn0GkLZ0z+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Tim Schumacher <tim.schumacher1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/204] PM: sleep: Adjust check before setting power.must_resume
-Date: Tue,  8 Apr 2025 12:49:01 +0200
-Message-ID: <20250408104820.638276066@linuxfoundation.org>
+Subject: [PATCH 6.1 012/204] selinux: Chain up tool resolving errors in install_policy.sh
+Date: Tue,  8 Apr 2025 12:49:02 +0200
+Message-ID: <20250408104820.668601143@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,84 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Tim Schumacher <tim.schumacher1@huawei.com>
 
-[ Upstream commit eeb87d17aceab7803a5a5bcb6cf2817b745157cf ]
+[ Upstream commit 6ae0042f4d3f331e841495eb0a3d51598e593ec2 ]
 
-The check before setting power.must_resume in device_suspend_noirq()
-does not take power.child_count into account, but it should do that, so
-use pm_runtime_need_not_resume() in it for this purpose and adjust the
-comment next to it accordingly.
+Subshell evaluations are not exempt from errexit, so if a command is
+not available, `which` will fail and exit the script as a whole.
+This causes the helpful error messages to not be printed if they are
+tacked on using a `$?` comparison.
 
-Fixes: 107d47b2b95e ("PM: sleep: core: Simplify the SMART_SUSPEND flag handling")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://patch.msgid.link/3353728.44csPzL39Z@rjwysocki.net
+Resolve the issue by using chains of logical operators, which are not
+subject to the effects of errexit.
+
+Fixes: e37c1877ba5b1 ("scripts/selinux: modernize mdp")
+Signed-off-by: Tim Schumacher <tim.schumacher1@huawei.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c    | 13 ++++++-------
- drivers/base/power/runtime.c |  2 +-
- include/linux/pm_runtime.h   |  2 ++
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ scripts/selinux/install_policy.sh | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 9c5a5f4dba5a6..49728cb628c19 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -1236,14 +1236,13 @@ static int __device_suspend_noirq(struct device *dev, pm_message_t state, bool a
- 	dev->power.is_noirq_suspended = true;
+diff --git a/scripts/selinux/install_policy.sh b/scripts/selinux/install_policy.sh
+index 24086793b0d8d..db40237e60ce7 100755
+--- a/scripts/selinux/install_policy.sh
++++ b/scripts/selinux/install_policy.sh
+@@ -6,27 +6,24 @@ if [ `id -u` -ne 0 ]; then
+ 	exit 1
+ fi
  
- 	/*
--	 * Skipping the resume of devices that were in use right before the
--	 * system suspend (as indicated by their PM-runtime usage counters)
--	 * would be suboptimal.  Also resume them if doing that is not allowed
--	 * to be skipped.
-+	 * Devices must be resumed unless they are explicitly allowed to be left
-+	 * in suspend, but even in that case skipping the resume of devices that
-+	 * were in use right before the system suspend (as indicated by their
-+	 * runtime PM usage counters and child counters) would be suboptimal.
- 	 */
--	if (atomic_read(&dev->power.usage_count) > 1 ||
--	    !(dev_pm_test_driver_flags(dev, DPM_FLAG_MAY_SKIP_RESUME) &&
--	      dev->power.may_skip_resume))
-+	if (!(dev_pm_test_driver_flags(dev, DPM_FLAG_MAY_SKIP_RESUME) &&
-+	      dev->power.may_skip_resume) || !pm_runtime_need_not_resume(dev))
- 		dev->power.must_resume = true;
+-SF=`which setfiles`
+-if [ $? -eq 1 ]; then
++SF=`which setfiles` || {
+ 	echo "Could not find setfiles"
+ 	echo "Do you have policycoreutils installed?"
+ 	exit 1
+-fi
++}
  
- 	if (dev->power.must_resume)
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 14088b5adb556..bb68cba4d85a9 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1840,7 +1840,7 @@ void pm_runtime_drop_link(struct device_link *link)
- 	pm_request_idle(link->supplier);
- }
+-CP=`which checkpolicy`
+-if [ $? -eq 1 ]; then
++CP=`which checkpolicy` || {
+ 	echo "Could not find checkpolicy"
+ 	echo "Do you have checkpolicy installed?"
+ 	exit 1
+-fi
++}
+ VERS=`$CP -V | awk '{print $1}'`
  
--static bool pm_runtime_need_not_resume(struct device *dev)
-+bool pm_runtime_need_not_resume(struct device *dev)
- {
- 	return atomic_read(&dev->power.usage_count) <= 1 &&
- 		(atomic_read(&dev->power.child_count) == 0 ||
-diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
-index 9a8151a2bdea6..b79a1a20d0d9c 100644
---- a/include/linux/pm_runtime.h
-+++ b/include/linux/pm_runtime.h
-@@ -66,6 +66,7 @@ static inline bool queue_pm_work(struct work_struct *work)
+-ENABLED=`which selinuxenabled`
+-if [ $? -eq 1 ]; then
++ENABLED=`which selinuxenabled` || {
+ 	echo "Could not find selinuxenabled"
+ 	echo "Do you have libselinux-utils installed?"
+ 	exit 1
+-fi
++}
  
- extern int pm_generic_runtime_suspend(struct device *dev);
- extern int pm_generic_runtime_resume(struct device *dev);
-+extern bool pm_runtime_need_not_resume(struct device *dev);
- extern int pm_runtime_force_suspend(struct device *dev);
- extern int pm_runtime_force_resume(struct device *dev);
- 
-@@ -254,6 +255,7 @@ static inline bool queue_pm_work(struct work_struct *work) { return false; }
- 
- static inline int pm_generic_runtime_suspend(struct device *dev) { return 0; }
- static inline int pm_generic_runtime_resume(struct device *dev) { return 0; }
-+static inline bool pm_runtime_need_not_resume(struct device *dev) {return true; }
- static inline int pm_runtime_force_suspend(struct device *dev) { return 0; }
- static inline int pm_runtime_force_resume(struct device *dev) { return 0; }
- 
+ if selinuxenabled; then
+     echo "SELinux is already enabled"
 -- 
 2.39.5
 
