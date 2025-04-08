@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C41265626;
-	Tue,  8 Apr 2025 11:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10143AC1C;
+	Tue,  8 Apr 2025 11:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113556; cv=none; b=KPEXKYiPq9jbQtDtO5nBUJ3YsVdE/SaccAA9ewuk0Db5Vd6/3HRu0sEmx6gezmC6kekS+Zh0+kxTmTp/toAy1ayor95EBEWSbh5vTqSAYDUcTw5yoSP4+cd5CQqJaSWNwzIJRYZ8CdGl6grNvj1yROYlOrdQL4vDoguc4BuEfP8=
+	t=1744113559; cv=none; b=bAJARp3lPVDY04cm/M1IcUgP2F2RVgJWqW2YCX2jnzu2TF8ctL4RrCtCuU9atztCeJVNAFVlCiBMNeH3nfGDAvHDZ/bRZjg3OjDw3zrFXwy0iHLClw+0xv7XfUVQECzROBYkn1JjukCCZpYOVnUXzB4nNVHjxyZmz/aTRIWoeV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113556; c=relaxed/simple;
-	bh=nMhwyCU0G5cimVctgpyy83IAxZfZ57FaVFJ++vNLY1U=;
+	s=arc-20240116; t=1744113559; c=relaxed/simple;
+	bh=CZ4WLpQoPJsp2RC4uVzGwH4ZSUiP2VWF6KCcRTnONA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TF4Ctoo1MBcilcphMXqA7GCiftnSarzoJUo/i689kag8nVFpPhflGZ3oDbWT4qK734IMD2NTKbfftLdagYyeDKXNBatCRSpIRtEeGK7IncmkQnPzlVQNOn2horlgEdAMPkwb4yMfzUZnYYeXjtEOv4DfHrjGA6w/XS5lTz8o/D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V95DVnB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gc+YEMgBIL1sgL8mlx3t7GvUhXSu/KO6s3tm1jduH32uM6NKeu1PQpPDf/bfaJvRs8YUUpk4Ql/4cRc/iPzwDYoyLOsjczvguzixRghCTPaJq1vljQ2fJ4RidJyxiMRUECG3AJjCakL7gHi88RlCPJ7VN++2CH2arhyFQa1YSu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXodYlDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V95DVnB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDB5C4CEE5;
-	Tue,  8 Apr 2025 11:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXodYlDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E34C4CEE5;
+	Tue,  8 Apr 2025 11:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113556;
-	bh=nMhwyCU0G5cimVctgpyy83IAxZfZ57FaVFJ++vNLY1U=;
+	s=korg; t=1744113558;
+	bh=CZ4WLpQoPJsp2RC4uVzGwH4ZSUiP2VWF6KCcRTnONA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V95DVnB/Wh9jPumfHkGDuOJYGfWdPnZw2vchq2oiSW7i5quUfCxHnO9MXm4vR6GpI
-	 XxGzqto+dRF/6g2+vgC8lQ7aRg8q9akRO5sf35G/QXjtHgrfXjJ56ga9KICmfFNiVG
-	 rm3cGMULZ3V3h+v/9fh1JlZtXRID8oQTDkfx27XY=
+	b=MXodYlDt1VgjJxth5/z7eJBQm1nou/FsG8ZB2eho3n6C8P6heP5vBDe8CtKkHWE9Y
+	 FhwtPi7ShXbxnZTn5E7uCS/AO32un9lfu2lE4a4Nd3eDcDW88lilmeHxhhB40Rh9Ee
+	 N7yPqNMF56CnEhOCHizfsrnmSlGijflyHxoxwHX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/268] e1000e: change k1 configuration on MTP and later platforms
-Date: Tue,  8 Apr 2025 12:50:15 +0200
-Message-ID: <20250408104834.068852635@linuxfoundation.org>
+Subject: [PATCH 6.6 205/268] netfilter: nft_set_hash: GC reaps elements with conncount for dynamic sets only
+Date: Tue,  8 Apr 2025 12:50:16 +0200
+Message-ID: <20250408104834.097449696@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,176 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit efaaf344bc2917cbfa5997633bc18a05d3aed27f ]
+[ Upstream commit 9d74da1177c800eb3d51c13f9821b7b0683845a5 ]
 
-Starting from Meteor Lake, the Kumeran interface between the integrated
-MAC and the I219 PHY works at a different frequency. This causes sporadic
-MDI errors when accessing the PHY, and in rare circumstances could lead
-to packet corruption.
+conncount has its own GC handler which determines when to reap stale
+elements, this is convenient for dynamic sets. However, this also reaps
+non-dynamic sets with static configurations coming from control plane.
+Always run connlimit gc handler but honor feedback to reap element if
+this set is dynamic.
 
-To overcome this, introduce minor changes to the Kumeran idle
-state (K1) parameters during device initialization. Hardware reset
-reverts this configuration, therefore it needs to be applied in a few
-places.
-
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 290180e2448c ("netfilter: nf_tables: add connlimit support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/defines.h |  3 +
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 80 +++++++++++++++++++--
- drivers/net/ethernet/intel/e1000e/ich8lan.h |  4 ++
- 3 files changed, 82 insertions(+), 5 deletions(-)
+ net/netfilter/nft_set_hash.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
-index 63c3c79380a1b..0a35d36c2c857 100644
---- a/drivers/net/ethernet/intel/e1000e/defines.h
-+++ b/drivers/net/ethernet/intel/e1000e/defines.h
-@@ -808,4 +808,7 @@
- /* SerDes Control */
- #define E1000_GEN_POLL_TIMEOUT          640
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 0370f69dce86d..2f1012bde1f34 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -308,7 +308,8 @@ static bool nft_rhash_expr_needs_gc_run(const struct nft_set *set,
  
-+#define E1000_FEXTNVM12_PHYPD_CTRL_MASK	0x00C00000
-+#define E1000_FEXTNVM12_PHYPD_CTRL_P1	0x00800000
-+
- #endif /* _E1000_DEFINES_H_ */
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index 2f9655cf5dd9e..364378133526a 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -285,6 +285,45 @@ static void e1000_toggle_lanphypc_pch_lpt(struct e1000_hw *hw)
- 	}
- }
- 
-+/**
-+ * e1000_reconfigure_k1_exit_timeout - reconfigure K1 exit timeout to
-+ * align to MTP and later platform requirements.
-+ * @hw: pointer to the HW structure
-+ *
-+ * Context: PHY semaphore must be held by caller.
-+ * Return: 0 on success, negative on failure
-+ */
-+static s32 e1000_reconfigure_k1_exit_timeout(struct e1000_hw *hw)
-+{
-+	u16 phy_timeout;
-+	u32 fextnvm12;
-+	s32 ret_val;
-+
-+	if (hw->mac.type < e1000_pch_mtp)
-+		return 0;
-+
-+	/* Change Kumeran K1 power down state from P0s to P1 */
-+	fextnvm12 = er32(FEXTNVM12);
-+	fextnvm12 &= ~E1000_FEXTNVM12_PHYPD_CTRL_MASK;
-+	fextnvm12 |= E1000_FEXTNVM12_PHYPD_CTRL_P1;
-+	ew32(FEXTNVM12, fextnvm12);
-+
-+	/* Wait for the interface the settle */
-+	usleep_range(1000, 1100);
-+
-+	/* Change K1 exit timeout */
-+	ret_val = e1e_rphy_locked(hw, I217_PHY_TIMEOUTS_REG,
-+				  &phy_timeout);
-+	if (ret_val)
-+		return ret_val;
-+
-+	phy_timeout &= ~I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK;
-+	phy_timeout |= 0xF00;
-+
-+	return e1e_wphy_locked(hw, I217_PHY_TIMEOUTS_REG,
-+				  phy_timeout);
-+}
-+
- /**
-  *  e1000_init_phy_workarounds_pchlan - PHY initialization workarounds
-  *  @hw: pointer to the HW structure
-@@ -327,15 +366,22 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
- 	 * LANPHYPC Value bit to force the interconnect to PCIe mode.
- 	 */
- 	switch (hw->mac.type) {
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+	case e1000_pch_nvp:
-+		/* At this point the PHY might be inaccessible so don't
-+		 * propagate the failure
-+		 */
-+		if (e1000_reconfigure_k1_exit_timeout(hw))
-+			e_dbg("Failed to reconfigure K1 exit timeout\n");
-+
-+		fallthrough;
- 	case e1000_pch_lpt:
- 	case e1000_pch_spt:
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
--	case e1000_pch_nvp:
- 		if (e1000_phy_is_accessible_pchlan(hw))
- 			break;
- 
-@@ -419,8 +465,20 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
- 		 *  the PHY is in.
- 		 */
- 		ret_val = hw->phy.ops.check_reset_block(hw);
--		if (ret_val)
-+		if (ret_val) {
- 			e_err("ME blocked access to PHY after reset\n");
-+			goto out;
-+		}
-+
-+		if (hw->mac.type >= e1000_pch_mtp) {
-+			ret_val = hw->phy.ops.acquire(hw);
-+			if (ret_val) {
-+				e_err("Failed to reconfigure K1 exit timeout\n");
-+				goto out;
-+			}
-+			ret_val = e1000_reconfigure_k1_exit_timeout(hw);
-+			hw->phy.ops.release(hw);
-+		}
+ 	nft_setelem_expr_foreach(expr, elem_expr, size) {
+ 		if (expr->ops->gc &&
+-		    expr->ops->gc(read_pnet(&set->net), expr))
++		    expr->ops->gc(read_pnet(&set->net), expr) &&
++		    set->flags & NFT_SET_EVAL)
+ 			return true;
  	}
  
- out:
-@@ -4888,6 +4946,18 @@ static s32 e1000_init_hw_ich8lan(struct e1000_hw *hw)
- 	u16 i;
- 
- 	e1000_initialize_hw_bits_ich8lan(hw);
-+	if (hw->mac.type >= e1000_pch_mtp) {
-+		ret_val = hw->phy.ops.acquire(hw);
-+		if (ret_val)
-+			return ret_val;
-+
-+		ret_val = e1000_reconfigure_k1_exit_timeout(hw);
-+		hw->phy.ops.release(hw);
-+		if (ret_val) {
-+			e_dbg("Error failed to reconfigure K1 exit timeout\n");
-+			return ret_val;
-+		}
-+	}
- 
- 	/* Initialize identification LED */
- 	ret_val = mac->ops.id_led_init(hw);
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.h b/drivers/net/ethernet/intel/e1000e/ich8lan.h
-index 2504b11c3169f..5feb589a9b5ff 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.h
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.h
-@@ -219,6 +219,10 @@
- #define I217_PLL_CLOCK_GATE_REG	PHY_REG(772, 28)
- #define I217_PLL_CLOCK_GATE_MASK	0x07FF
- 
-+/* PHY Timeouts */
-+#define I217_PHY_TIMEOUTS_REG                   PHY_REG(770, 21)
-+#define I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK       0x0FC0
-+
- #define SW_FLAG_TIMEOUT		1000	/* SW Semaphore flag timeout in ms */
- 
- /* Inband Control */
 -- 
 2.39.5
 
