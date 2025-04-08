@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0380326988E;
-	Tue,  8 Apr 2025 10:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6748126A1A3;
+	Tue,  8 Apr 2025 11:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109999; cv=none; b=nAkvBNlFOvuw7sagTAAn7t2ypbPdiB7xpPZJHCqXSXrXD0ydb8pG61SAfgFJmyvHI8I6xad0gjzE2aQba7Q/WI2hPa1e1uDVjGVCzvewJRZXYhgbQJpEt2vyKfnliheErirX8s0pxAvQTqOSAyH2l0QrF7YN8S4OZpupBshQC5Y=
+	t=1744110002; cv=none; b=Sd+A7XOdWjeZjZY20+9ucsBtySRgjNGQcID+UiM5ljE5aPbGUWUshrqV/QCci1YQwnyz9d6dS41rmpLvEhffrz8zjcBHpT/mTjx2dpNVfSasM/LnuJXcEw2IMIoJoCIzo+IQWsNSyJF0bYnrsYzTVW7HHDwzzSo7bUrCcVyyTRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109999; c=relaxed/simple;
-	bh=xxd+qKH9v+/2EZuPe2xRnHgwpVfcyvIDrrsTUGfzd68=;
+	s=arc-20240116; t=1744110002; c=relaxed/simple;
+	bh=Gqk+Mm6Y7YXcZF0Vh0PIqmfzQqnQMRjFCDkCJBUIdW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ck0bmDMQERw+cBo39+I0Jw3ZUXxhgFULxgouxRi0FoRBYVIyjGXDQBkSuF+ovw5gTKL1c//GTjpRw8jmjL4dY41EfXH9JrUw7hRFyHgjKtT/bipgjpjDMBuyNepY13GCWTHR07Wqf9BceftJoYosERIwprQHgsN8wlPCBQLwbbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JX0CpHq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWPdzaqr20VgYuR5jE2qIh7lAYi+zmCE5L5w1WXQNe8D/6IzhUB0I4Nctwq1i/k+TaxH8RqIdwH6QhZTTsXwKuUZiCR98P9nRT3n8Bc+NTYH1JNuj+ZovOJ9uUsAa+58vNJR/D/HKlYFolenFU7DTWWT4jENJsZtY6Uqt5895g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiWnvbDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX0CpHq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882B5C4CEE5;
-	Tue,  8 Apr 2025 10:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiWnvbDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428C6C4CEEC;
+	Tue,  8 Apr 2025 11:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109998;
-	bh=xxd+qKH9v+/2EZuPe2xRnHgwpVfcyvIDrrsTUGfzd68=;
+	s=korg; t=1744110001;
+	bh=Gqk+Mm6Y7YXcZF0Vh0PIqmfzQqnQMRjFCDkCJBUIdW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX0CpHq5G1NRzCeodRD/PyCgHccZB+C+SexEv2SZPbstmSIfe6bKKwSoUHzybQ/bJ
-	 QC/STW9DKCy7Uw9O5dSyhOwWQ7MU0zJ73IQgyeiaPXFEWgw4KprFuIdeEj48P19LRv
-	 y1Y1iq53sVTnWz7+yeAgmCLwOn+z3P6+7F+OBsTY=
+	b=fiWnvbDbn2kPkhVuUe99NkDDynv3Sj5Zgs498i2Dr01H0r8YtCGD54F2J+rezBYbB
+	 zS+4pNKvTdls3R9kP1b+/lDvsebMZ+Ti5oQN/73xUYwaJOkTc5udAOP7mGJz4sCNow
+	 EoBrVxnQMJPRAjNSNTENdxRY4NoyRKeLg9Jrmi/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 5.10 082/227] drm/v3d: Dont run jobs that have errors flagged in its fence
-Date: Tue,  8 Apr 2025 12:47:40 +0200
-Message-ID: <20250408104822.848993055@linuxfoundation.org>
+	Tao Chen <chen.dylane@linux.dev>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 125/227] perf/ring_buffer: Allow the EPOLLRDNORM flag for poll
+Date: Tue,  8 Apr 2025 12:48:23 +0200
+Message-ID: <20250408104824.082279898@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -44,72 +49,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Tao Chen <chen.dylane@linux.dev>
 
-commit 80cbee810e4e13cdbd3ae9654e9ecddf17f3e828 upstream.
+[ Upstream commit c96fff391c095c11dc87dab35be72dee7d217cde ]
 
-The V3D driver still relies on `drm_sched_increase_karma()` and
-`drm_sched_resubmit_jobs()` for resubmissions when a timeout occurs.
-The function `drm_sched_increase_karma()` marks the job as guilty, while
-`drm_sched_resubmit_jobs()` sets an error (-ECANCELED) in the DMA fence of
-that guilty job.
+The poll man page says POLLRDNORM is equivalent to POLLIN. For poll(),
+it seems that if user sets pollfd with POLLRDNORM in userspace, perf_poll
+will not return until timeout even if perf_output_wakeup called,
+whereas POLLIN returns.
 
-Because of this, we must check whether the job’s DMA fence has been
-flagged with an error before executing the job. Otherwise, the same guilty
-job may be resubmitted indefinitely, causing repeated GPU resets.
-
-This patch adds a check for an error on the job's fence to prevent running
-a guilty job that was previously flagged when the GPU timed out.
-
-Note that the CPU and CACHE_CLEAN queues do not require this check, as
-their jobs are executed synchronously once the DRM scheduler starts them.
-
-Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Fixes: 1584f16ca96e ("drm/v3d: Add support for submitting jobs to the TFU.")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250313-v3d-gpu-reset-fixes-v4-1-c1e780d8e096@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 76369139ceb9 ("perf: Split up buffer handling from core code")
+Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250314030036.2543180-1-chen.dylane@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/events/ring_buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -188,11 +188,15 @@ v3d_tfu_job_run(struct drm_sched_job *sc
- 	struct drm_device *dev = &v3d->drm;
- 	struct dma_fence *fence;
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index ffca72b8c4c6d..74802ec5ab148 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -19,7 +19,7 @@
  
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
-+	v3d->tfu_job = job;
-+
- 	fence = v3d_fence_create(v3d, V3D_TFU);
- 	if (IS_ERR(fence))
- 		return NULL;
+ static void perf_output_wakeup(struct perf_output_handle *handle)
+ {
+-	atomic_set(&handle->rb->poll, EPOLLIN);
++	atomic_set(&handle->rb->poll, EPOLLIN | EPOLLRDNORM);
  
--	v3d->tfu_job = job;
- 	if (job->base.irq_fence)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
-@@ -226,6 +230,9 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 	struct dma_fence *fence;
- 	int i;
- 
-+	if (unlikely(job->base.base.s_fence->finished.error))
-+		return NULL;
-+
- 	v3d->csd_job = job;
- 
- 	v3d_invalidate_caches(v3d);
+ 	handle->event->pending_wakeup = 1;
+ 	irq_work_queue(&handle->event->pending);
+-- 
+2.39.5
+
 
 
