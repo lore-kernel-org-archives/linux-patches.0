@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C98266EEA;
-	Tue,  8 Apr 2025 12:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8835A264FB6;
+	Tue,  8 Apr 2025 12:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114097; cv=none; b=UmxxRebSJPo0b+q22F5C7X8dLTEhipibvyTi70LlC2wIVZDd6Njpvidj6Mzh2nl44aKPP/+Wxgaj4BzuXdaLHX/fich0BTp56YpEz2ftp1Pvn4fNoE6qdWxm2h8ZFobTODjT+/vjVpE+SzUwWAbaWBWL11jMWBJdAlJpp5Nk3sI=
+	t=1744114100; cv=none; b=jya+geE5qmZ/h1I8YpAqF56d/hss0TSOlqOyqi6+A+26bNbSLfv+k1WEeDXU3hKhDzMfNHHm850VRdV8szp8+uQRV7i/Kucugh/vKj7syj1BRlZoGLvC7DD89mN6zf8aeTW3VfeiebVkE8eP7DcBkMjhMg2uoGsubm6oetCZvKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114097; c=relaxed/simple;
-	bh=BxMfCWwegHSWaLcQK2iaGWUbV1xB2ggVkpzz0eVbW+Q=;
+	s=arc-20240116; t=1744114100; c=relaxed/simple;
+	bh=DeVkP3jWyYXApd71Vz/WKPFaqNgP6kDAzScTlaIujIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JR7AYOkT+vskfEGU9ZG96ZPP7S64VJcxrXaGTYp1Q5da348HOd0EueqWqT7KCgqJriZ5ycvPuPjgmNsLJUhndolOO+wI22/GNHmPTy38edZjekccm44GpC9no/3UPTP3BW9/OtvT2of7X9GUehG9TKnQZ1XAqPjH11oVjWMpaCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpgaZAw7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iz+zwyTTGgrXvisG8QxMl3nEtWqFyBM2tLZviyiLxvLE6Ya9VYyoatlgqmFj855L2pqgrm0tk+HrddxzWHX8M5wAYu8VJIQ3Ut4YY416YEqus5mdHrRbGmY0J0zxbuoh6XGUax9tiQWLv9J+L2ym8e++9zX8vuyyjH1yUFdKO8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmaxbYSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpgaZAw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EABC4CEE5;
-	Tue,  8 Apr 2025 12:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmaxbYSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18ACC4CEE5;
+	Tue,  8 Apr 2025 12:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114097;
-	bh=BxMfCWwegHSWaLcQK2iaGWUbV1xB2ggVkpzz0eVbW+Q=;
+	s=korg; t=1744114100;
+	bh=DeVkP3jWyYXApd71Vz/WKPFaqNgP6kDAzScTlaIujIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpgaZAw7olcF1X3q7QNYgI9emRQBJ8ZuKDj2u/ef+vUL5EOmWbmqP762Elmi12p20
-	 Ji1Ss8NLJBFGNpJK2lUXwy+dJb5ziCf7uCnsmiQedrHIasJJ9uL8p0pfsa+Ee3tTEn
-	 yG+PxvDMWLbIGNF4Yotf4+fK/6ipuPSgvGTfGfis=
+	b=GmaxbYSga32p0un9ssbtf59E1jPLjHYSEYYyCF/RlstYLj+PO+pe41KwsU36V6Ccg
+	 jgDk8AnVKORYNLBCS+BqpJ0vKqx5asTCmOdXkJc5MeRlhof7LGvqWLleHhEfTV5pJR
+	 0WwZHzCMThmK4kXGRdOWOoP+G9cwwd/0coXcN0ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tasos Sahanidis <tasos@tasossah.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/154] hwmon: (nct6775-core) Fix out of bounds access for NCT679{8,9}
-Date: Tue,  8 Apr 2025 12:51:16 +0200
-Message-ID: <20250408104819.640415577@linuxfoundation.org>
+Subject: [PATCH 5.4 136/154] spufs: fix a leak on spufs_new_file() failure
+Date: Tue,  8 Apr 2025 12:51:17 +0200
+Message-ID: <20250408104819.671964800@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tasos Sahanidis <tasos@tasossah.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 815f80ad20b63830949a77c816e35395d5d55144 ]
+[ Upstream commit d1ca8698ca1332625d83ea0d753747be66f9906d ]
 
-pwm_num is set to 7 for these chips, but NCT6776_REG_PWM_MODE and
-NCT6776_PWM_MODE_MASK only contain 6 values.
+It's called from spufs_fill_dir(), and caller of that will do
+spufs_rmdir() in case of failure.  That does remove everything
+we'd managed to create, but... the problem dentry is still
+negative.  IOW, it needs to be explicitly dropped.
 
-Fix this by adding another 0 to the end of each array.
-
-Signed-off-by: Tasos Sahanidis <tasos@tasossah.com>
-Link: https://lore.kernel.org/r/20250312030832.106475-1-tasos@tasossah.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 3f51dd91c807 "[PATCH] spufs: fix spufs_fill_dir error path"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/cell/spufs/inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/nct6775.c b/drivers/hwmon/nct6775.c
-index da6bbfca15fee..a6b7919ab63fe 100644
---- a/drivers/hwmon/nct6775.c
-+++ b/drivers/hwmon/nct6775.c
-@@ -420,8 +420,8 @@ static const s8 NCT6776_BEEP_BITS[] = {
- static const u16 NCT6776_REG_TOLERANCE_H[] = {
- 	0x10c, 0x20c, 0x30c, 0x80c, 0x90c, 0xa0c, 0xb0c };
- 
--static const u8 NCT6776_REG_PWM_MODE[] = { 0x04, 0, 0, 0, 0, 0 };
--static const u8 NCT6776_PWM_MODE_MASK[] = { 0x01, 0, 0, 0, 0, 0 };
-+static const u8 NCT6776_REG_PWM_MODE[] = { 0x04, 0, 0, 0, 0, 0, 0 };
-+static const u8 NCT6776_PWM_MODE_MASK[] = { 0x01, 0, 0, 0, 0, 0, 0 };
- 
- static const u16 NCT6776_REG_FAN_MIN[] = {
- 	0x63a, 0x63c, 0x63e, 0x640, 0x642, 0x64a, 0x64c };
+diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
+index 99e688498a9cb..1183e264ff421 100644
+--- a/arch/powerpc/platforms/cell/spufs/inode.c
++++ b/arch/powerpc/platforms/cell/spufs/inode.c
+@@ -189,8 +189,10 @@ static int spufs_fill_dir(struct dentry *dir,
+ 			return -ENOMEM;
+ 		ret = spufs_new_file(dir->d_sb, dentry, files->ops,
+ 					files->mode & mode, files->size, ctx);
+-		if (ret)
++		if (ret) {
++			dput(dentry);
+ 			return ret;
++		}
+ 		files++;
+ 	}
+ 	return 0;
 -- 
 2.39.5
 
