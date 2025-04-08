@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0742267B89;
-	Tue,  8 Apr 2025 11:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D3D266EEA;
+	Tue,  8 Apr 2025 11:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112761; cv=none; b=IhmRKc1MEq/WqasxzjCWWowjPs7Vi9r3YBifadUIAYEO2VIcru9tPjp2IUKKceWsgefrziqs8DoBG433c4PVMz3k+Cq2bQ55/vxS8noMbYPsI1QpjGtqOVEhpOvlRiq5BrHQ0T82S+KaktYaQ2rhSRgrKjcy7Ob049LSKeP7Zkw=
+	t=1744112764; cv=none; b=RWu42BwuWlwlKwRWo04pUaIb3EX/e6esP4E3IV+w3HYXBh99ZkdM8a0111HztS6Js95UqkS9EhDyYMMAVVKuYl/UF2mCNMfkvcQ7f/hLGocGYIYZhGM8rCsSQHdnyrpQ75e3Uh6tA7EdBhUCwz3s+27hFXOgHDNk2SildbRmnbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112761; c=relaxed/simple;
-	bh=9eW+PseYrrAIOsphhNocPD6IGQxtDBwRDMuRlPaOAhA=;
+	s=arc-20240116; t=1744112764; c=relaxed/simple;
+	bh=4po1vhgvDtyhJGH7VWw19LkicjV4LivNvu5TTCl1DWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpT/DZXbsCHxWR0LyIIuhR+FcdalxQxV0RWyUoynn2wm/Qv7L66U0RQP3jM+mTU0ViE85CAo/kmxm3aPTSbx+fzhzda32pOI4jFSaOUXqsXTbLak2Z+egIlJj/fCqm+PRIpJPwbXEFXjAopLaV7DJR8KFdDwApoRFqp4NuwsN50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IG3iIOcn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJAfSIum1x7kAWOJqXnW9g1IXBIEXsRnVIPpfWPL+5+Yc6qtiMbPB9bzl52m7veBfaMdrC6WUDoZ81KfWW2rIkmSpXW4UHgCYQt9BkVJUIMBwJ2AmkoVGpxVr3WR3q5ivBH8pmJFkKK2hM2PhgdzkxOyZ+TgR8CeKyGWWZzfa9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhEbobM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IG3iIOcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ACDC4CEE5;
-	Tue,  8 Apr 2025 11:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhEbobM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E260CC4CEE7;
+	Tue,  8 Apr 2025 11:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112761;
-	bh=9eW+PseYrrAIOsphhNocPD6IGQxtDBwRDMuRlPaOAhA=;
+	s=korg; t=1744112764;
+	bh=4po1vhgvDtyhJGH7VWw19LkicjV4LivNvu5TTCl1DWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IG3iIOcn8hOfg8uiq6Hv6tMopMuYyewN0goH5DaZaYuO208OIlHUBu16II8VAfL49
-	 3FGIJudfm7GkUBvrQkRyKn1zX9w22qrzIMpwaA0ghaqRFq+3YHxIojxkM6APZ+mHa+
-	 MMkW1XaOE/hDikepz0bXPA8LapYrhHaOkc8N9KNs=
+	b=MhEbobM8pZhH3eewBL+LHwiCo3JZtTU+Xia0DBzrpEmpi5AqhTPsQ1rkVcn5ShaDc
+	 oXwVZ3ssdJ9FkzxxOr2Uex8ajce7RI6J4AzKOzcj6hvVOH6BtioYPSza+/Ul15ifHb
+	 WXDGpsLuUlXvqrNjcHv6iQnW20J/UIg7PDK/1fg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 188/279] crypto: nx - Fix uninitialised hv_nxc on error
-Date: Tue,  8 Apr 2025 12:49:31 +0200
-Message-ID: <20250408104831.414194753@linuxfoundation.org>
+Subject: [PATCH 5.15 189/279] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
+Date: Tue,  8 Apr 2025 12:49:32 +0200
+Message-ID: <20250408104831.443395451@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -50,93 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 9b00eb923f3e60ca76cbc8b31123716f3a87ac6a ]
+[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
 
-The compiler correctly warns that hv_nxc may be used uninitialised
-as that will occur when NX-GZIP is unavailable.
+When cur_qp isn't NULL, in order to avoid fetching the QP from
+the radix tree again we check if the next cqe QP is identical to
+the one we already have.
 
-Fix it by rearranging the code and delay setting caps_feat until
-the final query succeeds.
+The bug however is that we are checking if the QP is identical by
+checking the QP number inside the CQE against the QP number inside the
+mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
+FW so it should be matched against mlx5_core_qp which is our FW QP
+number.
 
-Fixes: b4ba22114c78 ("crypto/nx: Get NX capabilities for GZIP coprocessor type")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Otherwise we could use the wrong QP when handling a CQE which could
+cause the kernel trace below.
+
+This issue is mainly noticeable over QPs 0 & 1, since for now they are
+the only QPs in our driver whereas the QP number inside mlx5_ib_qp
+doesn't match the QP number inside mlx5_core_qp.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP
+ CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+ Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
+ RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
+ RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
+ RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
+ R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
+ FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x60
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+  __ib_process_cq+0x5a/0x150 [ib_core]
+  ib_cq_poll_work+0x31/0x90 [ib_core]
+  process_one_work+0x169/0x320
+  worker_thread+0x288/0x3a0
+  ? work_busy+0xb0/0xb0
+  kthread+0xd7/0x1f0
+  ? kthreads_online_cpu+0x130/0x130
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork+0x2d/0x50
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/nx/nx-common-pseries.c | 37 ++++++++++++---------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/nx/nx-common-pseries.c b/drivers/crypto/nx/nx-common-pseries.c
-index 4e304f6081e47..f24d58b6eb1e5 100644
---- a/drivers/crypto/nx/nx-common-pseries.c
-+++ b/drivers/crypto/nx/nx-common-pseries.c
-@@ -1142,6 +1142,7 @@ static void __init nxcop_get_capabilities(void)
- {
- 	struct hv_vas_all_caps *hv_caps;
- 	struct hv_nx_cop_caps *hv_nxc;
-+	u64 feat;
- 	int rc;
- 
- 	hv_caps = kmalloc(sizeof(*hv_caps), GFP_KERNEL);
-@@ -1152,27 +1153,26 @@ static void __init nxcop_get_capabilities(void)
- 	 */
- 	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES, 0,
- 					  (u64)virt_to_phys(hv_caps));
-+	if (!rc)
-+		feat = be64_to_cpu(hv_caps->feat_type);
-+	kfree(hv_caps);
- 	if (rc)
--		goto out;
-+		return;
-+	if (!(feat & VAS_NX_GZIP_FEAT_BIT))
-+		return;
- 
--	caps_feat = be64_to_cpu(hv_caps->feat_type);
- 	/*
- 	 * NX-GZIP feature available
- 	 */
--	if (caps_feat & VAS_NX_GZIP_FEAT_BIT) {
--		hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
--		if (!hv_nxc)
--			goto out;
--		/*
--		 * Get capabilities for NX-GZIP feature
--		 */
--		rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
--						  VAS_NX_GZIP_FEAT,
--						  (u64)virt_to_phys(hv_nxc));
--	} else {
--		pr_err("NX-GZIP feature is not available\n");
--		rc = -EINVAL;
--	}
-+	hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
-+	if (!hv_nxc)
-+		return;
-+	/*
-+	 * Get capabilities for NX-GZIP feature
-+	 */
-+	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
-+					  VAS_NX_GZIP_FEAT,
-+					  (u64)virt_to_phys(hv_nxc));
- 
- 	if (!rc) {
- 		nx_cop_caps.descriptor = be64_to_cpu(hv_nxc->descriptor);
-@@ -1182,13 +1182,10 @@ static void __init nxcop_get_capabilities(void)
- 				be64_to_cpu(hv_nxc->min_compress_len);
- 		nx_cop_caps.min_decompress_len =
- 				be64_to_cpu(hv_nxc->min_decompress_len);
--	} else {
--		caps_feat = 0;
-+		caps_feat = feat;
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index a190fb5815913..f3becb506125e 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -481,7 +481,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
  	}
  
- 	kfree(hv_nxc);
--out:
--	kfree(hv_caps);
- }
- 
- static const struct vio_device_id nx842_vio_driver_ids[] = {
+ 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
+-	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
++	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
+ 		/* We do not have to take the QP table lock here,
+ 		 * because CQs will be locked while QPs are removed
+ 		 * from the table.
 -- 
 2.39.5
 
