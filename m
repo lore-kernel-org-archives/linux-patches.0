@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC12266583;
-	Tue,  8 Apr 2025 11:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D44F267B7F;
+	Tue,  8 Apr 2025 11:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111266; cv=none; b=S9w9PqVV2PS0GdD78d0YBqps1uramK2+AWof+JfUd1wiA+KtqNfFet4Wh4tpJ39WP5eVGjokt74MO2wuZxlN9RrUzv7Kyh82Gk2BmiMMOox6iAM4qjhW5cqkGy4FAbZbhdC1YPUwpeVWkbSBZy1+Sc43nCu3xvX/J6YIuVeDclA=
+	t=1744111269; cv=none; b=X4GpVaqqOfhtQcic0MZw2Ql3fTWJyIzVJvP9X9pR+Jb4tUhJqc/kG8lnQQAHpjmh2N2B9wbGuk7rmAM340YE7Ad7a9pEVbB9O+scTdAJzYcMHKII98T5BMLftEr3pUoRTCIygb1TCMzKK7WMM79K3ClYZg89mIehbdSpVGNA6iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111266; c=relaxed/simple;
-	bh=zzrwjQb9fril+1GqNpCyGI4leZpUb4z9/Bjb3e24KaQ=;
+	s=arc-20240116; t=1744111269; c=relaxed/simple;
+	bh=YrJiwNGKO+EkZNOS8FLzzf4kt0OFINc/pfr82G/fNx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRvBHHqvRIzXt7OjBFXVGqWBCU105f6n5XKnzEwDFjnun6UeuKnzyyI3bJBI8r1CnKBi2955lWGZE52NfGGGRnL4Jxm8S1NxA96Y6kxMn2nGfU95qp5Q5zoJC36HTryVbTGPhCcw24nafqBlx3IYyaMCCnWOcDPpDcDv0bszQ8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDIncQnH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAnHBIl6BmSDuyaXnsuC/8uFk5z68Hz8jsOE7XnH+JkRN5+mNVaLTdonMjyhWDucJ52SOxUwcTv+nVM9IS1igVSzSuJNSTcy+GNOKPo446n//8suwehZczfcqMtt4gr7oB6lzhR8M5+2oaDZyJqJysFBj6QmnKy8DAD/n2ReEHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCinji5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDIncQnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07240C4CEE5;
-	Tue,  8 Apr 2025 11:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCinji5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53E4C4CEE5;
+	Tue,  8 Apr 2025 11:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111266;
-	bh=zzrwjQb9fril+1GqNpCyGI4leZpUb4z9/Bjb3e24KaQ=;
+	s=korg; t=1744111269;
+	bh=YrJiwNGKO+EkZNOS8FLzzf4kt0OFINc/pfr82G/fNx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDIncQnHysMeYJOaqjqJLJbIObB2y9g7pdcUJC4ckY2czqgR4XAwyeqlN5VI4+Ug5
-	 Bov2TjumwxGvd9CSDUs/0EbRJi5DA1eXHdMoCrJ0Swz8GMSd3fQxi//quNpHN9g1VS
-	 c7HncYcMQiibTrLcWtq6+bkHiyC09JkjBiLlPvp8=
+	b=bCinji5u5XeaY7HQfFf8Rc8UTjgN+lxua7i8WWOR9yvGcCjjHdx4H6op5B2wqgpfy
+	 aNi5kzLgAEo51MhtZlnz9eCrjdz9c/NOowxdlg4M0Em1ZSIWBkG71XBHcQ08wPff2X
+	 +vXoRL0WUpilI9NPqwEhwU7JVTmG06WVxGdcfyug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 368/731] libbpf: Fix hypothetical STT_SECTION extern NULL deref case
-Date: Tue,  8 Apr 2025 12:44:25 +0200
-Message-ID: <20250408104922.836266069@linuxfoundation.org>
+Subject: [PATCH 6.14 369/731] drivers: clk: qcom: ipq5424: fix the freq table of sdcc1_apps clock
+Date: Tue,  8 Apr 2025 12:44:26 +0200
+Message-ID: <20250408104922.861044641@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,39 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 
-[ Upstream commit e0525cd72b5979d8089fe524a071ea93fd011dc9 ]
+[ Upstream commit e9ed0ac3ccba65c17ed0d59c77a340a75abc317b ]
 
-Fix theoretical NULL dereference in linker when resolving *extern*
-STT_SECTION symbol against not-yet-existing ELF section. Not sure if
-it's possible in practice for valid ELF object files (this would require
-embedded assembly manipulations, at which point BTF will be missing),
-but fix the s/dst_sym/dst_sec/ typo guarding this condition anyways.
+The divider values in the sdcc1_apps frequency table were incorrectly
+updated, assuming the frequency of gpll2_out_main to be 1152MHz.
+However, the frequency of the gpll2_out_main clock is actually 576MHz
+(gpll2/2).
 
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Fixes: a46349227cd8 ("libbpf: Add linker extern resolution support for functions and global variables")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20250220002821.834400-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Due to these incorrect divider values, the sdcc1_apps clock is running
+at half of the expected frequency.
+
+Fixing the frequency table of sdcc1_apps allows the sdcc1_apps clock to
+run according to the frequency plan.
+
+Fixes: 21b5d5a4a311 ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5424 SoC")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Reviewed-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250306112900.3319330-1-quic_mmanikan@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-ipq5424.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index b52f71c59616f..800e0ef09c378 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -2163,7 +2163,7 @@ static int linker_append_elf_sym(struct bpf_linker *linker, struct src_obj *obj,
- 
- 	obj->sym_map[src_sym_idx] = dst_sym_idx;
- 
--	if (sym_type == STT_SECTION && dst_sym) {
-+	if (sym_type == STT_SECTION && dst_sec) {
- 		dst_sec->sec_sym_idx = dst_sym_idx;
- 		dst_sym->st_value = 0;
- 	}
+diff --git a/drivers/clk/qcom/gcc-ipq5424.c b/drivers/clk/qcom/gcc-ipq5424.c
+index d5b218b76e291..107424395ef17 100644
+--- a/drivers/clk/qcom/gcc-ipq5424.c
++++ b/drivers/clk/qcom/gcc-ipq5424.c
+@@ -634,11 +634,11 @@ static struct clk_rcg2 gcc_qupv3_uart1_clk_src = {
+ static const struct freq_tbl ftbl_gcc_sdcc1_apps_clk_src[] = {
+ 	F(144000, P_XO, 16, 12, 125),
+ 	F(400000, P_XO, 12, 1, 5),
+-	F(24000000, P_XO, 1, 0, 0),
+-	F(48000000, P_GPLL2_OUT_MAIN, 12, 1, 2),
+-	F(96000000, P_GPLL2_OUT_MAIN, 6, 1, 2),
++	F(24000000, P_GPLL2_OUT_MAIN, 12, 1, 2),
++	F(48000000, P_GPLL2_OUT_MAIN, 12, 0, 0),
++	F(96000000, P_GPLL2_OUT_MAIN, 6, 0, 0),
+ 	F(177777778, P_GPLL0_OUT_MAIN, 4.5, 0, 0),
+-	F(192000000, P_GPLL2_OUT_MAIN, 6, 0, 0),
++	F(192000000, P_GPLL2_OUT_MAIN, 3, 0, 0),
+ 	F(200000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
+ 	{ }
+ };
 -- 
 2.39.5
 
