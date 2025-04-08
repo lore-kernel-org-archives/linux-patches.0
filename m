@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2743A268688;
-	Tue,  8 Apr 2025 11:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF01B267B7F;
+	Tue,  8 Apr 2025 11:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110041; cv=none; b=TL9c6KJ6bzz4uD7Nt5FEwEM1CNqJJFSkfIT0Vd7YPFQl3UqV2T2U5exINFr6g44I49dvnxTanGEVFtIKe/7ghgK8CCdWSR2ueYeZ2jOknzt12HOAvoO6tmHazRmsgx7Eo3rX5/iilY9NZq9VBy0LoAup9Jin9fnIzo5QeOQCXnI=
+	t=1744110043; cv=none; b=VhqNnsvzurm5QYx+Z2ujl3JJitIdUMqHnDQJBsm9twsW4uyQSgaZDvyAdt9t9OsM3Um5Q9e+L4YPhdGM4Jd59oU++NifRTJWJN0QSiqfQf6Gq+Y1ajydz4GRYS0lMSIlwR9+8BrCNHGbOwIVgazZcLnwkVExRcqj3UWDwZt4XPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110041; c=relaxed/simple;
-	bh=S9/iQ36sJG/0r3epafB1ISRKLiEywe5vtSzoqfSvDvQ=;
+	s=arc-20240116; t=1744110043; c=relaxed/simple;
+	bh=NJ5pCYUfpoSPXUCUDo5NscjOI6nse0qDRQp/+QF5kF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHHBuOoKXwRHArcDXp+5FV93AOSU41twmcvT9ztLhVawLcr1Wx8pqgxa8kWqUyKLkdgQsvy2Z9QYNj+4Em095553OnSio4zde13gI4zUjIbmkf1xJEyh4L5lM4DVyKTUFSLAHgAPVZtbGNjpWNFqmQaWCiOm1WnAL8NUvFjLz24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH2jPabi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gN4LgK+w1BSYv9ZlbJ/Zeiv+3a4NDhr7uUhtqQE5tnyCyz6+iG1KXRya7zGzK7FDpZP67hZIiiRibdXIPQxr+/ynmcp5+C9Tm0OqnntkjqDbf+wMGvpCNqNSIARem3HymjaGAFFeSXDUM0Wq3hdaItS4txDv7xTFqXGoX3fysCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKTJ4r9c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH2jPabi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB31AC4CEE5;
-	Tue,  8 Apr 2025 11:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKTJ4r9c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACACC4CEF1;
+	Tue,  8 Apr 2025 11:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110041;
-	bh=S9/iQ36sJG/0r3epafB1ISRKLiEywe5vtSzoqfSvDvQ=;
+	s=korg; t=1744110043;
+	bh=NJ5pCYUfpoSPXUCUDo5NscjOI6nse0qDRQp/+QF5kF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH2jPabih96MANtxZmo2gWzOa4AFNgmwAstd6xr7gFpPL6/z8xZqdhTY4/xMEahGE
-	 YdBSG5ExX2TYuvZUTB5NyfTJK+voWbRMijGVt/Nn9AaPd9gfcF/mDQwT9gqS5S4Wha
-	 sYBEGQGQMpjqr6XYyhCQx9ZUdlt+4zN/YoEz1UIk=
+	b=VKTJ4r9cV9jSiQyIp/OmXJMH3ok3odom6jHYIev3ADLNTAtyp4Kzbr2ZsZRscyNf/
+	 gXwvU55os9xwajWOGhiIGXOiQLbE87SNwWWxulO1kGStroTz/bhVwGBT4ix3dqF6jV
+	 SdZTFK/1TRNqLoNDbjLOSuEKMWz1VqGJt2LzdmiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will McVicker <willmcvicker@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/227] clk: samsung: Fix UBSAN panic in samsung_clk_init()
-Date: Tue,  8 Apr 2025 12:48:44 +0200
-Message-ID: <20250408104824.691299856@linuxfoundation.org>
+Subject: [PATCH 5.10 147/227] bpf: Use preempt_count() directly in bpf_send_signal_common()
+Date: Tue,  8 Apr 2025 12:48:45 +0200
+Message-ID: <20250408104824.725197514@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will McVicker <willmcvicker@google.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit d19d7345a7bcdb083b65568a11b11adffe0687af ]
+[ Upstream commit b4a8b5bba712a711d8ca1f7d04646db63f9c88f5 ]
 
-With UBSAN_ARRAY_BOUNDS=y, I'm hitting the below panic due to
-dereferencing `ctx->clk_data.hws` before setting
-`ctx->clk_data.num = nr_clks`. Move that up to fix the crash.
+bpf_send_signal_common() uses preemptible() to check whether or not the
+current context is preemptible. If it is preemptible, it will use
+irq_work to send the signal asynchronously instead of trying to hold a
+spin-lock, because spin-lock is sleepable under PREEMPT_RT.
 
-  UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
-  <snip>
-  Call trace:
-   samsung_clk_init+0x110/0x124 (P)
-   samsung_clk_init+0x48/0x124 (L)
-   samsung_cmu_register_one+0x3c/0xa0
-   exynos_arm64_register_cmu+0x54/0x64
-   __gs101_cmu_top_of_clk_init_declare+0x28/0x60
-   ...
+However, preemptible() depends on CONFIG_PREEMPT_COUNT. When
+CONFIG_PREEMPT_COUNT is turned off (e.g., CONFIG_PREEMPT_VOLUNTARY=y),
+!preemptible() will be evaluated as 1 and bpf_send_signal_common() will
+use irq_work unconditionally.
 
-Fixes: e620a1e061c4 ("drivers/clk: convert VL struct to struct_size")
-Signed-off-by: Will McVicker <willmcvicker@google.com>
-Link: https://lore.kernel.org/r/20250212183253.509771-1-willmcvicker@google.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fix it by unfolding "!preemptible()" and using "preempt_count() != 0 ||
+irqs_disabled()" instead.
+
+Fixes: 87c544108b61 ("bpf: Send signals asynchronously if !preemptible")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250220042259.1583319-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk.c | 2 +-
+ kernel/trace/bpf_trace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/samsung/clk.c b/drivers/clk/samsung/clk.c
-index 1949ae7851b2e..0468ce5506aef 100644
---- a/drivers/clk/samsung/clk.c
-+++ b/drivers/clk/samsung/clk.c
-@@ -64,11 +64,11 @@ struct samsung_clk_provider *__init samsung_clk_init(struct device_node *np,
- 	if (!ctx)
- 		panic("could not allocate clock provider context.\n");
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 1656a7d9bb697..6957381b139ce 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1081,7 +1081,7 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+ 	if (unlikely(is_global_init(current)))
+ 		return -EPERM;
  
-+	ctx->clk_data.num = nr_clks;
- 	for (i = 0; i < nr_clks; ++i)
- 		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
- 
- 	ctx->reg_base = base;
--	ctx->clk_data.num = nr_clks;
- 	spin_lock_init(&ctx->lock);
- 
- 	return ctx;
+-	if (!preemptible()) {
++	if (preempt_count() != 0 || irqs_disabled()) {
+ 		/* Do an early check on signal validity. Otherwise,
+ 		 * the error is lost in deferred irq_work.
+ 		 */
 -- 
 2.39.5
 
