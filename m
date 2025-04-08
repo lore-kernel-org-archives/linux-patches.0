@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17CB224239;
-	Tue,  8 Apr 2025 11:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807AA224239;
+	Tue,  8 Apr 2025 11:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111812; cv=none; b=ep220B4U6g1c50vbBMXUw/Kad2SrRnPJovjDGBZz5Flp+H2hBwLvd5/44DBpjXze2VOJNl3uSF/vb7d/haehc1yKb4BVhGcNdt1fEwtSXqOqHUWxmsTBY1y7GlY8kXRarNl4YLQiEK3N/rw17Ly5uJfPu25HJFUANz+x1xNMrcA=
+	t=1744111815; cv=none; b=YS44NQJDBNCq9CB3o8qyWTkc8AxQyytRg8n/AR9WgitCXmqwNbC+k3YIekfzp6vQgocUM4C1r4b5HarZHoBJzqc+5wQxsZLRITIpe+S0zJGwBAInSK2FvLAruIG0FL8dN4DQYFCMBGVPnOY9FAUKvL4XF3QAjkTflyZ4t3pICCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111812; c=relaxed/simple;
-	bh=xyvui6/+LFIz9mRKw133xeHG8SCovq8Tu0JQ5RabA5M=;
+	s=arc-20240116; t=1744111815; c=relaxed/simple;
+	bh=5jtySsG7qmAk9i97RO2zMvpRVfkMUonimiPFd9jwK/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOJTp+a9tl5mnj1qK4QgsaBQDgb3neRS00ApWRHPwKF13a2htnJY0CyXdewIm4FYnVjougRb2ztZUYNYSaQkmpGDlygERRMPspLvcEAxjoEJ5wUAVepLzAo/2LgANR2QNeKii8j3sSUIR0qGCdW01uhYbftUnLtJ9wQtY9t5wl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZwWHkFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MptTohszaihKKlxC+yBRXLYiYarpJ1r6ndi+nafqLO0asri+wTzdCrkdBwehqIfhKE3OWDdytdAsTFUq9xFVImsxnClBNt7pgHGb44hZG9SmjS9cQP5zKfig6ges/T4mY9E4WgbAwxZA4t9m1LFJSFg12Rwt9b8rWVZPArxvr08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AigI8bYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZwWHkFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4221EC4CEE5;
-	Tue,  8 Apr 2025 11:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AigI8bYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6E7C4CEE5;
+	Tue,  8 Apr 2025 11:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111812;
-	bh=xyvui6/+LFIz9mRKw133xeHG8SCovq8Tu0JQ5RabA5M=;
+	s=korg; t=1744111815;
+	bh=5jtySsG7qmAk9i97RO2zMvpRVfkMUonimiPFd9jwK/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZwWHkFSl6xjNa2huz8/YSbNbD9CfmUrovUlISAANybc8310MnhVATGf/S3D6JZIm
-	 Hjjr83AZQveb9CFbPxgdOpq9hb1MT6n/EyJDi3Rr4nOjLpOsp5VcKSUI9BxPoo25IY
-	 vEBAoaV3fzFC9neS34yk/3K7c3gqdgJofidjz/0M=
+	b=AigI8bYdaC8uNf5eNIV1dYJ731aVn0c1qs5/qQ7gTcWRyvGVwU2uZ329DttK1D0OU
+	 +rpuDHaqPXFbXPETLlCdAQvqSLdQ3OPM4cCz5uchx1Ynkb907cjobMNc7HYSfwfLsw
+	 0Z31m2KUonStiRJeXfYiB8a0ZdX4fXTIkba2FeS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 569/731] octeontx2-af: Free NIX_AF_INT_VEC_GEN irq
-Date: Tue,  8 Apr 2025 12:47:46 +0200
-Message-ID: <20250408104927.508506726@linuxfoundation.org>
+Subject: [PATCH 6.14 570/731] objtool: Fix verbose disassembly if CROSS_COMPILE isnt set
+Date: Tue,  8 Apr 2025 12:47:47 +0200
+Message-ID: <20250408104927.531714145@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,38 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 323d6db6dc7decb06f2545efb9496259ddacd4f4 ]
+[ Upstream commit e77956e4e5c11218e60a1fe8cdbccd02476f2e56 ]
 
-Due to the incorrect initial vector number in
-rvu_nix_unregister_interrupts(), NIX_AF_INT_VEC_GEN is not
-geeting free. Fix the vector number to include NIX_AF_INT_VEC_GEN
-irq.
+In verbose mode, when printing the disassembly of affected functions, if
+CROSS_COMPILE isn't set, the objdump command string gets prefixed with
+"(null)".
 
-Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250327094054.2312-1-gakula@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Somehow this worked before.  Maybe some versions of glibc return an
+empty string instead of NULL.  Fix it regardless.
+
+[ jpoimboe: Rewrite commit log. ]
+
+Fixes: ca653464dd097 ("objtool: Add verbose option for disassembling affected functions")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250215142321.14081-1-david.laight.linux@gmail.com
+Link: https://lore.kernel.org/r/b931a4786bc0127aa4c94e8b35ed617dcbd3d3da.1743481539.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index dab4deca893f5..27c3a2daaaa95 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -207,7 +207,7 @@ static void rvu_nix_unregister_interrupts(struct rvu *rvu)
- 		rvu->irq_allocated[offs + NIX_AF_INT_VEC_RVU] = false;
- 	}
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index aa071017c325c..159fb130e2827 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -4489,6 +4489,8 @@ static int disas_funcs(const char *funcs)
+ 	char *cmd;
  
--	for (i = NIX_AF_INT_VEC_AF_ERR; i < NIX_AF_INT_VEC_CNT; i++)
-+	for (i = NIX_AF_INT_VEC_GEN; i < NIX_AF_INT_VEC_CNT; i++)
- 		if (rvu->irq_allocated[offs + i]) {
- 			free_irq(pci_irq_vector(rvu->pdev, offs + i), rvu_dl);
- 			rvu->irq_allocated[offs + i] = false;
+ 	cross_compile = getenv("CROSS_COMPILE");
++	if (!cross_compile)
++		cross_compile = "";
+ 
+ 	objdump_str = "%sobjdump -wdr %s | gawk -M -v _funcs='%s' '"
+ 			"BEGIN { split(_funcs, funcs); }"
 -- 
 2.39.5
 
