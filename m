@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC97227BB6;
-	Tue,  8 Apr 2025 11:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994DF269833;
+	Tue,  8 Apr 2025 11:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112016; cv=none; b=snRycPWsuVQslKTunwbVdWSUezL04R1AHovH7/G4wPRlh2aJpMMaeJm6K666SYPRWTHmPzA+A5KFHKY0rbtHqRIaMV4TTVe4Gya4fPkyOwRyNaKXWH2qJFbMJ4/Glby//RdZMp8qpeY3/mgT6FId35CDip7K2tOSvRA+k/WI1ns=
+	t=1744112018; cv=none; b=IGhGnyi+FGyO3k4nAZjnT6v79Am7fHfbzjoZR8yYXnb+rMhcHJXlscPfsQmyPlqJbWnR0K6lxS+2JbpEW7YItv8dvxcLqA4loeWdnuZSqFsZ5pfDpV0MUMyZfAOrcbcsJMYnk1ucjFK1tVsE6wSB77baPLLaFPKhkZTEvN4ermY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112016; c=relaxed/simple;
-	bh=r6+CIXGW7jcICQWkyiP8aKSMvgpWiXWnOvuvBqvcQfo=;
+	s=arc-20240116; t=1744112018; c=relaxed/simple;
+	bh=6xwyiRaKdG33ACMs7BJlhMKGAAK+uyVPlor3Jdom710=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6w6uv4Jf7P8QQsQak7VVNmmHpKVcUS4ptAQb4oAMllxmRGLAxNV/y6LiWuuGrvKykAJ6533ltPZ24rfn2GSVe/S6FUA+Eoi/p+DH4vIZ4o4PDBafpJnDIqE7bqDv+2R/tFrt2pC97VjcDHu9ssrNmUFK2odEQitrtTPxWSUeU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0MpapQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvhY1s726IGn0+JgZK0MCrD/cI85Ms6d9VzAjHRXldDnqsxdRGfozvjwrvo1CPuGnG7F5aV0XskGL8uJKmYO5Sm89JI9BXYrPbrRr7g2+gnTWArug9BteUH+OU2bZ+Nkby8MOXCATOYS5ilxHPpF3aaBl0jsGLqCGH6l59j43Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfa79Qpz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0MpapQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D413C4CEE5;
-	Tue,  8 Apr 2025 11:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfa79Qpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0E0C4CEE5;
+	Tue,  8 Apr 2025 11:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112015;
-	bh=r6+CIXGW7jcICQWkyiP8aKSMvgpWiXWnOvuvBqvcQfo=;
+	s=korg; t=1744112018;
+	bh=6xwyiRaKdG33ACMs7BJlhMKGAAK+uyVPlor3Jdom710=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0MpapQoVPOpmBxvs07sG28P3XZpplZrpJtZygfO2iOd3j4RlF5GeBERhUwOOkhXd
-	 Px9zQduO3SuJ7JrP/DIWT/CvZY1IDSqWubVPW8ZuYu9DgtQKtCqzlf0NW6m2P6hoiv
-	 eHiuxCM9KSMeycIxKv3xct55rTS6S0D7pQGggUtc=
+	b=sfa79QpzkNnmSBUDCHnF/h563qX7xpF3T4QCkzV65tchj1px1uwsKvNH00aEOsfDd
+	 fxj4lO84qGa5bm0Z1sNouPbnvhtIGUEwbcK2DeDeDrlKuXkdk8gzeQr9dAvVbObq3+
+	 CVYlmYnYZEkaUX78gEYTOt2XWWYk/35J9NIYm8vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Gagniuc <alexandru.gagniuc@hp.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 645/731] kbuild: deb-pkg: dont set KBUILD_BUILD_VERSION unconditionally
-Date: Tue,  8 Apr 2025 12:49:02 +0200
-Message-ID: <20250408104929.268918819@linuxfoundation.org>
+Subject: [PATCH 6.14 646/731] drm/xe: Fix unmet direct dependencies warning
+Date: Tue,  8 Apr 2025 12:49:03 +0200
+Message-ID: <20250408104929.290969308@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,62 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 62604063621fb075c7966286bdddcb057d883fa8 ]
+[ Upstream commit 5e66cf6edddb5f6237e3afb07475ace57ecb56bc ]
 
-In ThinPro, we use the convention <upstream_ver>+hp<patchlevel> for
-the kernel package. This does not have a dash in the name or version.
-This is built by editing ".version" before a build, and setting
-EXTRAVERSION="+hp" and KDEB_PKGVERSION make variables:
+WARNING: unmet direct dependencies detected for FB_IOMEM_HELPERS
+  Depends on [n]: HAS_IOMEM [=y] && FB_CORE [=n]
+  Selected by [m]:
+  - DRM_XE_DISPLAY [=y] && HAS_IOMEM [=y] && DRM [=m] && DRM_XE [=m] && DRM_XE [=m]=m [=m] && HAS_IOPORT [=y]
 
-    echo 68 > .version
-    make -j<n> EXTRAVERSION="+hp" bindeb-pkg KDEB_PKGVERSION=6.12.2+hp69
+DRM_XE_DISPLAY requires FB_IOMEM_HELPERS, but the dependency FB_CORE is
+missing, selecting FB_IOMEM_HELPERS if DRM_FBDEV_EMULATION is set as
+other drm drivers.
 
-    .deb name: linux-image-6.12.2+hp_6.12.2+hp69_amd64.deb
-
-Since commit 7d4f07d5cb71 ("kbuild: deb-pkg: squash
-scripts/package/deb-build-option to debian/rules"), this no longer
-works. The deb build logic changed, even though, the commit message
-implies that the logic should be unmodified.
-
-Before, KBUILD_BUILD_VERSION was not set if the KDEB_PKGVERSION did
-not contain a dash. After the change KBUILD_BUILD_VERSION is always
-set to KDEB_PKGVERSION. Since this determines UTS_VERSION, the uname
-output to look off:
-
-    (now)      uname -a: version 6.12.2+hp ... #6.12.2+hp69
-    (expected) uname -a: version 6.12.2+hp ... #69
-
-Update the debian/rules logic to restore the original behavior.
-
-Fixes: 7d4f07d5cb71 ("kbuild: deb-pkg: squash scripts/package/deb-build-option to debian/rules")
-Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250323114103.1960511-1-yuehaibing@huawei.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 689582882802cd64986c1eb584c9f5184d67f0cf)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/debian/rules | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/package/debian/rules b/scripts/package/debian/rules
-index ca07243bd5cdf..2b3f9a0bd6c40 100755
---- a/scripts/package/debian/rules
-+++ b/scripts/package/debian/rules
-@@ -21,9 +21,11 @@ ifeq ($(origin KBUILD_VERBOSE),undefined)
-     endif
- endif
- 
--revision = $(lastword $(subst -, ,$(shell dpkg-parsechangelog -S Version)))
-+revision = $(shell dpkg-parsechangelog -S Version | sed -n 's/.*-//p')
- CROSS_COMPILE ?= $(filter-out $(DEB_BUILD_GNU_TYPE)-, $(DEB_HOST_GNU_TYPE)-)
--make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) KBUILD_BUILD_VERSION=$(revision) $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
-+make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) \
-+    $(addprefix KBUILD_BUILD_VERSION=,$(revision)) \
-+    $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
- 
- binary-targets := $(addprefix binary-, image image-dbg headers libc-dev)
- 
+diff --git a/drivers/gpu/drm/xe/Kconfig b/drivers/gpu/drm/xe/Kconfig
+index b51a2bde73e29..dcf6583a4c522 100644
+--- a/drivers/gpu/drm/xe/Kconfig
++++ b/drivers/gpu/drm/xe/Kconfig
+@@ -52,7 +52,7 @@ config DRM_XE
+ config DRM_XE_DISPLAY
+ 	bool "Enable display support"
+ 	depends on DRM_XE && DRM_XE=m && HAS_IOPORT
+-	select FB_IOMEM_HELPERS
++	select FB_IOMEM_HELPERS if DRM_FBDEV_EMULATION
+ 	select I2C
+ 	select I2C_ALGOBIT
+ 	default y
 -- 
 2.39.5
 
