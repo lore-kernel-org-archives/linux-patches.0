@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BA8374C4;
-	Tue,  8 Apr 2025 11:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FF4374C4;
+	Tue,  8 Apr 2025 11:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110820; cv=none; b=lisva6GfP6Lp+ANZFEcl2deP1KWU3od5QbhcVwjFF8H1o3mcSffSWcIVAoTTBpeXg2ADaeXxYZ9l7B8R1a1euVNKebHJ6c7dDSUH8zJ3s5cxrIKYQLmPr2o22UoGUEiG+PLyDzrMYFHOZwidrw2PcMX3AnseHIeXMuTubLezVr0=
+	t=1744110823; cv=none; b=peU0WQulNuW8j2D30i9u18eY2e2U3toXTqyjRpuVAWHzkbf5VvWoONErpAzu3aBciWT+tufD4XnaoogUVehWe48X5ddWgpiceYSp7FtbTaQOEpyq/zRQInPVipTWy1UrG5Z+VXQQ0MUT/1tqPEuBgOclFr4zMRwvBMwJinWfxlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110820; c=relaxed/simple;
-	bh=Pn3gXPOBjRPWs+XCxjWauX5kg037zZJTiBqvgclFLv0=;
+	s=arc-20240116; t=1744110823; c=relaxed/simple;
+	bh=AHQQKmaLJ3k7XatBvxQcKPls0oypNnwqcXltGImB2rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyAI+gtVZBlSkHgpJxMJu8zj3ifnGV3Dvu3Lw9PDmiqPf+xBzvWOpHJnJaAwVuVyEnq1R4JU8QBKZF6d1a4QH6fwDbJ5Ev75pniIa8S28wGty6JOg7zp7JaXiCZ9s9LXGH6Pve164vep8MczaquW4QuUPss9wVw/wKRbOc0QI6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7H8zOy6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+up+zVDxt2b7sTQKnG7Xzz5LeOJz4uE6UBv6pUQt0GvMjDrdlHmn9+83a2BdyYcYlPlImOYD3PrTPD+djZQkgz946hzSPsdvnFTEGf+x942GJDIeuFnNfsRfsirFNhxmOvo4O2cMiM13t7vYruom+KZscWqjKK6yCmChBKBggY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSuxjmYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7H8zOy6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEE2C4CEE5;
-	Tue,  8 Apr 2025 11:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSuxjmYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94632C4CEE5;
+	Tue,  8 Apr 2025 11:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110820;
-	bh=Pn3gXPOBjRPWs+XCxjWauX5kg037zZJTiBqvgclFLv0=;
+	s=korg; t=1744110822;
+	bh=AHQQKmaLJ3k7XatBvxQcKPls0oypNnwqcXltGImB2rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7H8zOy6BcdAnYIKu6fENq8UHR44qXp96JAXyXdgSXNnOiN0XN927+f+/HLE3v68H
-	 JlV25cYH+T5nXTr8M+Mr/sxcmNLrSqLyGFgqtO7eieIZYSDW9eitdh7WAMYwVD3r6X
-	 kOE85fKqJ5+NURGJbw0k9seuoF3lcf9LXU9bOkVo=
+	b=dSuxjmYpDRoS1E/3zM1FZStjrSAHtDAght7SmBbduOkckHvWEPommcmAAmLA+ssD+
+	 5cIkYD7enbXjM8cifSn+15LOtkAnwQIZNOHLe/a40ZgkKneM32Lg5tT7NiRudBtJ49
+	 RhvUIX9dlcRqDkNFZlRYOr+pN8ku67nFB8LCbpbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 205/731] wifi: mwifiex: Fix RF calibration data download from file
-Date: Tue,  8 Apr 2025 12:41:42 +0200
-Message-ID: <20250408104919.048610445@linuxfoundation.org>
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>
+Subject: [PATCH 6.14 206/731] ice: health.c: fix compilation on gcc 7.5
+Date: Tue,  8 Apr 2025 12:41:43 +0200
+Message-ID: <20250408104919.071505520@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,116 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Chen <jeff.chen_1@nxp.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 9868c4ce9481043d6c11f7421fe2b9637aa0feee ]
+[ Upstream commit fa8eda19015ca9ae625f46d4ecb13df651bb54cc ]
 
-This patch resolves an issue where RF calibration data from a
-file could not be downloaded to the firmware. The feature to
-download calibration data from a file was broken by the commit:
-d39fbc88956e.
+GCC 7 is not as good as GCC 8+ in telling what is a compile-time
+const, and thus could be used for static storage.
+Fortunately keeping strings as const arrays is enough to make old
+gcc happy.
 
-The issue arose because the function `mwifiex_cmd_cfg_data()`
-was modified in a way that prevented proper handling of
-file-based calibration data. While this patch restores the ability
-to download RF calibration data from a file, it may inadvertently
-break the feature to download calibration data from the device
-tree. This is because the function `mwifiex_dnld_dt_cfgdata()`,
-which also relies on `mwifiex_cmd_cfg_data()`, is still used for
-device tree-based calibration data downloads.
+Excerpt from the report:
+My GCC is: gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0.
 
-Fixes: d39fbc88956e ("mwifiex: remove cfg_data construction")
-Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20250318050739.2239376-3-jeff.chen_1@nxp.com
-[add newline for shorter lines]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  CC [M]  drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.o
+drivers/net/ethernet/intel/ice/devlink/health.c:35:3: error: initializer element is not constant
+   ice_common_port_solutions, {ice_port_number_label}},
+   ^~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/intel/ice/devlink/health.c:35:3: note: (near initialization for 'ice_health_status_lookup[0].solution')
+drivers/net/ethernet/intel/ice/devlink/health.c:35:31: error: initializer element is not constant
+   ice_common_port_solutions, {ice_port_number_label}},
+                               ^~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/intel/ice/devlink/health.c:35:31: note: (near initialization for 'ice_health_status_lookup[0].data_label[0]')
+drivers/net/ethernet/intel/ice/devlink/health.c:37:46: error: initializer element is not constant
+   "Change or replace the module or cable.", {ice_port_number_label}},
+                                              ^~~~~~~~~~~~~~~~~~~~~
+drivers/net/ethernet/intel/ice/devlink/health.c:37:46: note: (near initialization for 'ice_health_status_lookup[1].data_label[0]')
+drivers/net/ethernet/intel/ice/devlink/health.c:39:3: error: initializer element is not constant
+   ice_common_port_solutions, {ice_port_number_label}},
+   ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 85d6164ec56d ("ice: add fw and port health reporters")
+Reported-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Closes: https://lore.kernel.org/netdev/CY8PR11MB7134BF7A46D71E50D25FA7A989F72@CY8PR11MB7134.namprd11.prod.outlook.com
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/fw.h      | 14 ++++++++++++++
- drivers/net/wireless/marvell/mwifiex/sta_cmd.c | 12 ++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/devlink/health.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 4a96281792cc1..91458f3bd14a5 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -454,6 +454,11 @@ enum mwifiex_channel_flags {
- #define HostCmd_RET_BIT                       0x8000
- #define HostCmd_ACT_GEN_GET                   0x0000
- #define HostCmd_ACT_GEN_SET                   0x0001
-+#define HOST_CMD_ACT_GEN_SET                  0x0001
-+/* Add this non-CamelCase-style macro to comply with checkpatch requirements.
-+ *  This macro will eventually replace all existing CamelCase-style macros in
-+ *  the future for consistency.
-+ */
- #define HostCmd_ACT_GEN_REMOVE                0x0004
- #define HostCmd_ACT_BITWISE_SET               0x0002
- #define HostCmd_ACT_BITWISE_CLR               0x0003
-@@ -2352,6 +2357,14 @@ struct host_cmd_ds_add_station {
- 	u8 tlv[];
- } __packed;
+diff --git a/drivers/net/ethernet/intel/ice/devlink/health.c b/drivers/net/ethernet/intel/ice/devlink/health.c
+index ea40f79412590..19c3d37aa768b 100644
+--- a/drivers/net/ethernet/intel/ice/devlink/health.c
++++ b/drivers/net/ethernet/intel/ice/devlink/health.c
+@@ -25,10 +25,10 @@ struct ice_health_status {
+  * The below lookup requires to be sorted by code.
+  */
  
-+#define MWIFIEX_CFG_TYPE_CAL 0x2
-+
-+struct host_cmd_ds_802_11_cfg_data {
-+	__le16 action;
-+	__le16 type;
-+	__le16 data_len;
-+} __packed;
-+
- struct host_cmd_ds_command {
- 	__le16 command;
- 	__le16 size;
-@@ -2431,6 +2444,7 @@ struct host_cmd_ds_command {
- 		struct host_cmd_ds_pkt_aggr_ctrl pkt_aggr_ctrl;
- 		struct host_cmd_ds_sta_configure sta_cfg;
- 		struct host_cmd_ds_add_station sta_info;
-+		struct host_cmd_ds_802_11_cfg_data cfg_data;
- 	} params;
- } __packed;
+-static const char *const ice_common_port_solutions =
++static const char ice_common_port_solutions[] =
+ 	"Check your cable connection. Change or replace the module or cable. Manually set speed and duplex.";
+-static const char *const ice_port_number_label = "Port Number";
+-static const char *const ice_update_nvm_solution = "Update to the latest NVM image.";
++static const char ice_port_number_label[] = "Port Number";
++static const char ice_update_nvm_solution[] = "Update to the latest NVM image.";
  
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-index c0e6ce1a82fed..c4689f5a1acc8 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_cmd.c
-@@ -1507,6 +1507,7 @@ static int mwifiex_cmd_cfg_data(struct mwifiex_private *priv,
- 	u32 len;
- 	u8 *data = (u8 *)cmd + S_DS_GEN;
- 	int ret;
-+	struct host_cmd_ds_802_11_cfg_data *pcfg_data;
- 
- 	if (prop) {
- 		len = prop->length;
-@@ -1514,12 +1515,20 @@ static int mwifiex_cmd_cfg_data(struct mwifiex_private *priv,
- 						data, len);
- 		if (ret)
- 			return ret;
-+
-+		cmd->size = cpu_to_le16(S_DS_GEN + len);
- 		mwifiex_dbg(adapter, INFO,
- 			    "download cfg_data from device tree: %s\n",
- 			    prop->name);
- 	} else if (adapter->cal_data->data && adapter->cal_data->size > 0) {
- 		len = mwifiex_parse_cal_cfg((u8 *)adapter->cal_data->data,
--					    adapter->cal_data->size, data);
-+					    adapter->cal_data->size,
-+					    data + sizeof(*pcfg_data));
-+		pcfg_data = &cmd->params.cfg_data;
-+		pcfg_data->action = cpu_to_le16(HOST_CMD_ACT_GEN_SET);
-+		pcfg_data->type = cpu_to_le16(MWIFIEX_CFG_TYPE_CAL);
-+		pcfg_data->data_len = cpu_to_le16(len);
-+		cmd->size = cpu_to_le16(S_DS_GEN + sizeof(*pcfg_data) + len);
- 		mwifiex_dbg(adapter, INFO,
- 			    "download cfg_data from config file\n");
- 	} else {
-@@ -1527,7 +1536,6 @@ static int mwifiex_cmd_cfg_data(struct mwifiex_private *priv,
- 	}
- 
- 	cmd->command = cpu_to_le16(HostCmd_CMD_CFG_DATA);
--	cmd->size = cpu_to_le16(S_DS_GEN + len);
- 
- 	return 0;
- }
+ static const struct ice_health_status ice_health_status_lookup[] = {
+ 	{ICE_AQC_HEALTH_STATUS_ERR_UNKNOWN_MOD_STRICT, "An unsupported module was detected.",
 -- 
 2.39.5
 
