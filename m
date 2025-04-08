@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C9267F5B;
-	Tue,  8 Apr 2025 12:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A39267F5B;
+	Tue,  8 Apr 2025 12:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114695; cv=none; b=SANa5Vf5osvtwvD+sIRqMCt3h5iKnXcQoFVcLVrjo3tbbJ7feti2DwDxHJO38fABTR6bFc+xVHDRv/ddhJrCWAXqzOuAhiudniU+gs7a6gckxR68lnixDa9W2Jb1loeKaDVREXz+c9DLMruyXU/LftKo/beUfnLkhGxq9AMVmXw=
+	t=1744114698; cv=none; b=XyYGtzscu0QPhvNd2Ou3QQzx/vjMX8hkYPMBIQkdE+vmaSXd/4xc6QNz1hyVxrO596C7rupyIq3H5THJ53zPQewQRfd3f6uaqzpeyfE0nfijCLcKS0aDEcFhwkM/fnLVSHprJ8KNXTBTgxzxOxaDYctNCCCpCVBGEocKXw9k0xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114695; c=relaxed/simple;
-	bh=ucQTgKOIFCoJRN8wfKCbnTxhTUpPkBjeeCsY85QRoL8=;
+	s=arc-20240116; t=1744114698; c=relaxed/simple;
+	bh=buZIeWh+GGECXZOVLxGjC/J99Q2gTHfLdzA8/oEW82Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndM0/rrmbp1um63WyH9ql/3mcYJUx8/zbHaxYIfPsG3dTMHpJ0Mh9Q/BZpHpqa6vc5No/FkBg3bwr6CA4MHQhdXEjt7ffAkWlRmNevMj7Idl2DUXwN7i5BpXhZWeCCiqmFElmLY1KachcL2Q80tBZC+iE+nu4Jk2JVJPQT1iESQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY8+H06s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QByJhornA0PbNqZW0HgJCJXMBaP3abDzHZxOdL2UkW7wj0PI58bL8u3ltZEHIi0TmHIJGNsOCiGy+725shX2boAf6VeCXm0Iz5yQvyVKv5x0t+sSbbg375GYI4FfHGbqs/Tm2dAuiXjkf1uuFDlR9U06rm6LlQGziS0mm0qe6PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nPXWi14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY8+H06s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE959C4CEE5;
-	Tue,  8 Apr 2025 12:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nPXWi14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7718C4CEE5;
+	Tue,  8 Apr 2025 12:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114695;
-	bh=ucQTgKOIFCoJRN8wfKCbnTxhTUpPkBjeeCsY85QRoL8=;
+	s=korg; t=1744114698;
+	bh=buZIeWh+GGECXZOVLxGjC/J99Q2gTHfLdzA8/oEW82Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JY8+H06saYeRYaZju+3vU2M78utoIJjibzOXnKc3ow+770qSuQaEfop2LwfBR5VZW
-	 E70xQVds8q4OoNyl8CIs9/8lwpSuS6v1oM3ci7yJU4GJCvrYEZrU0Ijp2FhE8gjp7H
-	 1U014uYDZeJnSJ24T0DsKuqdu+4m9IXnVEHEHP9o=
+	b=1nPXWi14RyFdEiX6srGm1O9wBPC3CEaxzj2GXv5HkPIDgGZ4IAEPkVwu5UXwh7pSZ
+	 OJcuHo4ZdGZqD7gaT1pWcdWOvtrmiyuGnfnS0zHy7AtbnAZbBsw911ypMQEaNlsYtf
+	 Mku8S+O4uF4haNwQxGbYwfdXWGZBaZtiJ0Y1I1mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Christoph Winklhofer <cj.winklhofer@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 200/499] w1: fix NULL pointer dereference in probe
-Date: Tue,  8 Apr 2025 12:46:52 +0200
-Message-ID: <20250408104856.184501903@linuxfoundation.org>
+Subject: [PATCH 6.13 201/499] staging: gpib: Fix pr_err format warning
+Date: Tue,  8 Apr 2025 12:46:53 +0200
+Message-ID: <20250408104856.211511681@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,52 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 0dd6770a72f138dabea9eae87f3da6ffa68f0d06 ]
+[ Upstream commit 03ec050c437bb4e7c5d215bbeedaa93932f13b35 ]
 
-The w1_uart_probe() function calls w1_uart_serdev_open() (which includes
-devm_serdev_device_open()) before setting the client ops via
-serdev_device_set_client_ops(). This ordering can trigger a NULL pointer
-dereference in the serdev controller's receive_buf handler, as it assumes
-serdev->ops is valid when SERPORT_ACTIVE is set.
+This patch fixes the following compile warning:
 
-This is similar to the issue fixed in commit 5e700b384ec1
-("platform/chrome: cros_ec_uart: properly fix race condition") where
-devm_serdev_device_open() was called before fully initializing the
-device.
+drivers/staging/gpib/hp_82341/hp_82341.c: In function 'hp_82341_attach':
+./include/linux/kern_levels.h:5:25: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'u32' {aka 'unsigned int'} [-Wformat=]
 
-Fix the race by ensuring client ops are set before enabling the port via
-w1_uart_serdev_open().
+It was introduced in
 
-Fixes: a3c08804364e ("w1: add UART w1 bus driver")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Acked-by: Christoph Winklhofer <cj.winklhofer@gmail.com>
-Link: https://lore.kernel.org/r/20250111181803.2283611-1-chenyuan0y@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+commit baf8855c9160 ("staging: gpib: fix address space mixup")
+
+but was not detected as the build of the driver depended on BROKEN.
+
+Fixes: baf8855c9160 ("staging: gpib: fix address space mixup")
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250124105900.27592-2-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/masters/w1-uart.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/gpib/hp_82341/hp_82341.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/w1/masters/w1-uart.c b/drivers/w1/masters/w1-uart.c
-index a31782e56ba75..c87eea3478067 100644
---- a/drivers/w1/masters/w1-uart.c
-+++ b/drivers/w1/masters/w1-uart.c
-@@ -372,11 +372,11 @@ static int w1_uart_probe(struct serdev_device *serdev)
- 	init_completion(&w1dev->rx_byte_received);
- 	mutex_init(&w1dev->rx_mutex);
- 
-+	serdev_device_set_drvdata(serdev, w1dev);
-+	serdev_device_set_client_ops(serdev, &w1_uart_serdev_ops);
- 	ret = w1_uart_serdev_open(w1dev);
- 	if (ret < 0)
- 		return ret;
--	serdev_device_set_drvdata(serdev, w1dev);
--	serdev_device_set_client_ops(serdev, &w1_uart_serdev_ops);
- 
- 	return w1_add_master_device(&w1dev->bus);
- }
+diff --git a/drivers/staging/gpib/hp_82341/hp_82341.c b/drivers/staging/gpib/hp_82341/hp_82341.c
+index 71d481e88bd96..6ec010965652e 100644
+--- a/drivers/staging/gpib/hp_82341/hp_82341.c
++++ b/drivers/staging/gpib/hp_82341/hp_82341.c
+@@ -718,7 +718,7 @@ int hp_82341_attach(gpib_board_t *board, const gpib_board_config_t *config)
+ 	for (i = 0; i < hp_82341_num_io_regions; ++i) {
+ 		start_addr = iobase + i * hp_priv->io_region_offset;
+ 		if (!request_region(start_addr, hp_82341_region_iosize, "hp_82341")) {
+-			pr_err("hp_82341: failed to allocate io ports 0x%lx-0x%lx\n",
++			pr_err("hp_82341: failed to allocate io ports 0x%x-0x%x\n",
+ 			       start_addr,
+ 			       start_addr + hp_82341_region_iosize - 1);
+ 			return -EIO;
 -- 
 2.39.5
 
