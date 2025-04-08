@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BBB20897E;
-	Tue,  8 Apr 2025 11:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402D0264A76;
+	Tue,  8 Apr 2025 11:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110950; cv=none; b=DCf/p74XQg/GU2MpkZLEPQB2QZ1Wr8Gf4igzdqeNINNvpNvRubh+3vV848LtYZEKm92M0MAEA1R0DB9H8k9kfwiS1NGrRbr7osZEMErtxAa5czP5r+FrIWmfsAS4Cf61Pbw5gYGtSG+UCcLq4uu28jvqQsXlyMWBwR4rH4VZLzY=
+	t=1744110954; cv=none; b=k4BSJ0PROav8f4+UkRd12qE55xVu9ruoY7y3TO3lDc73Dsgt9VYJVpjL8xNCeQpqXl7JPGyqkginK4G+g5lOBf6iLyat2XOEJmHIFXBKAsDecIyzehm61AglvVJSIvqgXz3HIhRiXVUVs6fC3UwnQzB2ESvVBzyj/X7RUt3Nd9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110950; c=relaxed/simple;
-	bh=1Ga/1XcHc6A5h/ZyD3wHLc9nVvvtzFLnfHLkcHxY5nE=;
+	s=arc-20240116; t=1744110954; c=relaxed/simple;
+	bh=RosEk+Kd4p0IHoJD9goBpz1cZQNWjwIzHyhaNJFeLPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDsZkQYK7qEEznnyW5mdDjnUZSCFQPiIVIl8JjTzNsBgBFMlqLm6jrhZiC4JgaOFyYRcFak7CqIIDGe8EhAinKtAn9FmUXGNSF0Ju4U1iez0ihr7MIxo3OSX68wfit0k9HSkDiZdsuaJuilasXpFzFLLHO1O03bGr05MUHccDQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kddhce6G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sumJtOWQAPF/fef7qbt8qZdDNB3vP0ONcTd+kTY2y2+sfUwWJogiIELyMmwwTf4fA5NE9A1+Oy/JyPgd5g8FGwxM3E5Nr4xiRLXygOUbaS+IJ/m5L2fBz/pVOyH/m9oLQT5vphLYckMFaY8sB+ctnbPO25ALJIBxGiNMh3evDm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q1IrlVO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kddhce6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF80C4CEE5;
-	Tue,  8 Apr 2025 11:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q1IrlVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0B5C4CEE5;
+	Tue,  8 Apr 2025 11:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110950;
-	bh=1Ga/1XcHc6A5h/ZyD3wHLc9nVvvtzFLnfHLkcHxY5nE=;
+	s=korg; t=1744110953;
+	bh=RosEk+Kd4p0IHoJD9goBpz1cZQNWjwIzHyhaNJFeLPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kddhce6G3trWcZOIJ3IwNNUIoEYEqTAemhtTaaCYgDFsSY/OmkNDVgUC3RVx2hxTK
-	 YyVJ7fZ8yNN4ZAs2LLSdka7fMAzlaTRJLnDgYNOyEbjVdz4N6m8hzpgy6x0BoXf6XY
-	 fK6jJX77tfCYtYFHL1gZCNKlMcHgoWkuXmVE8//4=
+	b=1q1IrlVOGIPACunWiKJvdaK8f99anBrh4h+BJL0U74Ol50fpzezyf8Qg6Dw6UDaGJ
+	 iRl9v3oP6rjeLAqyX+Y5c3hR9YCLf3zLnNjo/Dqw8zdwDRXycW2x0Xc5svDaDBprLG
+	 iunzJu6b/N0zh6LRNBulnmeGLgma/EFcdh+pDHfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 214/731] idpf: check error for register_netdev() on init
-Date: Tue,  8 Apr 2025 12:41:51 +0200
-Message-ID: <20250408104919.260773256@linuxfoundation.org>
+Subject: [PATCH 6.14 215/731] btrfs: get used bytes while holding lock at btrfs_reclaim_bgs_work()
+Date: Tue,  8 Apr 2025 12:41:52 +0200
+Message-ID: <20250408104919.283966387@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,100 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 680811c67906191b237bbafe7dabbbad64649b39 ]
+[ Upstream commit ba5d06440cae63edc4f49465baf78f1f43e55c77 ]
 
-Current init logic ignores the error code from register_netdev(),
-which will cause WARN_ON() on attempt to unregister it, if there was one,
-and there is no info for the user that the creation of the netdev failed.
+At btrfs_reclaim_bgs_work(), we are grabbing twice the used bytes counter
+of the block group while not holding the block group's spinlock. This can
+result in races, reported by KCSAN and similar tools, since a concurrent
+task can be updating that counter while at btrfs_update_block_group().
 
-WARNING: CPU: 89 PID: 6902 at net/core/dev.c:11512 unregister_netdevice_many_notify+0x211/0x1a10
-...
-[ 3707.563641]  unregister_netdev+0x1c/0x30
-[ 3707.563656]  idpf_vport_dealloc+0x5cf/0xce0 [idpf]
-[ 3707.563684]  idpf_deinit_task+0xef/0x160 [idpf]
-[ 3707.563712]  idpf_vc_core_deinit+0x84/0x320 [idpf]
-[ 3707.563739]  idpf_remove+0xbf/0x780 [idpf]
-[ 3707.563769]  pci_device_remove+0xab/0x1e0
-[ 3707.563786]  device_release_driver_internal+0x371/0x530
-[ 3707.563803]  driver_detach+0xbf/0x180
-[ 3707.563816]  bus_remove_driver+0x11b/0x2a0
-[ 3707.563829]  pci_unregister_driver+0x2a/0x250
+So avoid these races by grabbing the counter in a critical section
+delimited by the block group's spinlock after setting the block group to
+RO mode. This also avoids using two different values of the counter in
+case it changes in between each read. This silences KCSAN and is required
+for the next patch in the series too.
 
-Introduce an error check and log the vport number and error code.
-On removal make sure to check VPORT_REG_NETDEV flag prior to calling
-unregister and free on the netdev.
-
-Add local variables for idx, vport_config and netdev for readability.
-
-Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
-Suggested-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 243192b67649 ("btrfs: report reclaim stats in sysfs")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 31 +++++++++++++++-------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ fs/btrfs/block-group.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index a3d6b8f198a86..a055a47449f12 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -927,15 +927,19 @@ static int idpf_stop(struct net_device *netdev)
- static void idpf_decfg_netdev(struct idpf_vport *vport)
- {
- 	struct idpf_adapter *adapter = vport->adapter;
-+	u16 idx = vport->idx;
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index c0a8f7d92acc5..ed0b1a955d74a 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1823,7 +1823,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
+ 	list_sort(NULL, &fs_info->reclaim_bgs, reclaim_bgs_cmp);
+ 	while (!list_empty(&fs_info->reclaim_bgs)) {
+ 		u64 zone_unusable;
+-		u64 reclaimed;
++		u64 used;
+ 		int ret = 0;
  
- 	kfree(vport->rx_ptype_lkup);
- 	vport->rx_ptype_lkup = NULL;
+ 		bg = list_first_entry(&fs_info->reclaim_bgs,
+@@ -1915,19 +1915,30 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
+ 		if (ret < 0)
+ 			goto next;
  
--	unregister_netdev(vport->netdev);
--	free_netdev(vport->netdev);
-+	if (test_and_clear_bit(IDPF_VPORT_REG_NETDEV,
-+			       adapter->vport_config[idx]->flags)) {
-+		unregister_netdev(vport->netdev);
-+		free_netdev(vport->netdev);
-+	}
- 	vport->netdev = NULL;
- 
--	adapter->netdevs[vport->idx] = NULL;
-+	adapter->netdevs[idx] = NULL;
- }
- 
- /**
-@@ -1536,13 +1540,22 @@ void idpf_init_task(struct work_struct *work)
- 	}
- 
- 	for (index = 0; index < adapter->max_vports; index++) {
--		if (adapter->netdevs[index] &&
--		    !test_bit(IDPF_VPORT_REG_NETDEV,
--			      adapter->vport_config[index]->flags)) {
--			register_netdev(adapter->netdevs[index]);
--			set_bit(IDPF_VPORT_REG_NETDEV,
--				adapter->vport_config[index]->flags);
-+		struct net_device *netdev = adapter->netdevs[index];
-+		struct idpf_vport_config *vport_config;
++		/*
++		 * Grab the used bytes counter while holding the block group's
++		 * spinlock to prevent races with tasks concurrently updating it
++		 * due to extent allocation and deallocation (running
++		 * btrfs_update_block_group()) - we have set the block group to
++		 * RO but that only prevents extent reservation, allocation
++		 * happens after reservation.
++		 */
++		spin_lock(&bg->lock);
++		used = bg->used;
++		spin_unlock(&bg->lock);
 +
-+		vport_config = adapter->vport_config[index];
-+
-+		if (!netdev ||
-+		    test_bit(IDPF_VPORT_REG_NETDEV, vport_config->flags))
-+			continue;
-+
-+		err = register_netdev(netdev);
-+		if (err) {
-+			dev_err(&pdev->dev, "failed to register netdev for vport %d: %pe\n",
-+				index, ERR_PTR(err));
-+			continue;
+ 		btrfs_info(fs_info,
+ 			"reclaiming chunk %llu with %llu%% used %llu%% unusable",
+ 				bg->start,
+-				div64_u64(bg->used * 100, bg->length),
++				div64_u64(used * 100, bg->length),
+ 				div64_u64(zone_unusable * 100, bg->length));
+ 		trace_btrfs_reclaim_block_group(bg);
+-		reclaimed = bg->used;
+ 		ret = btrfs_relocate_chunk(fs_info, bg->start);
+ 		if (ret) {
+ 			btrfs_dec_block_group_ro(bg);
+ 			btrfs_err(fs_info, "error relocating chunk %llu",
+ 				  bg->start);
+-			reclaimed = 0;
++			used = 0;
+ 			spin_lock(&space_info->lock);
+ 			space_info->reclaim_errors++;
+ 			if (READ_ONCE(space_info->periodic_reclaim))
+@@ -1936,7 +1947,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
  		}
-+		set_bit(IDPF_VPORT_REG_NETDEV, vport_config->flags);
- 	}
+ 		spin_lock(&space_info->lock);
+ 		space_info->reclaim_count++;
+-		space_info->reclaim_bytes += reclaimed;
++		space_info->reclaim_bytes += used;
+ 		spin_unlock(&space_info->lock);
  
- 	/* As all the required vports are created, clear the reset flag
+ next:
 -- 
 2.39.5
 
