@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC52D2690D6;
-	Tue,  8 Apr 2025 11:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B02266583;
+	Tue,  8 Apr 2025 11:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111991; cv=none; b=l0iA9B1a+0gClMZ1nH6YyjYd/WT8aV5KlnllMd4/meyv1+HOEcjVY4pmf0rPzmwOlV815WwS9VwiqEZIPbIGciQ2Eb57YGw3RK1TkM7+7l1unNJUgRmuKEr0cjjuJ9wnK85APd8UjLtShoO0EirQ+yET4CNlXh8ZeqwaosBmnnw=
+	t=1744111994; cv=none; b=NJgzv1TsCFV+WhNDdscg5Psy5GmVAUNE5OBhJ2SBj5QYCpauerYIZbEFMOhOCoU7kIN8AYjB3YCs272UrpgozkEYkyuN4yPHE5iUi+SBO4AG79SDjTo5XhaMTSvOFpwG+NxflkIbMEPRP9irydR1S5opZZcvzmYoaXyAm9ebOlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111991; c=relaxed/simple;
-	bh=Ko/TdnU+5EUaSJc5GVK+c22ZYAj4c03dFjPO2v3WUeA=;
+	s=arc-20240116; t=1744111994; c=relaxed/simple;
+	bh=0zCU8MDJYeqi6iNkWF6TI/EpIBszjXx6VpBrJXRLgNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oS5XsFwOwD0zduIe6FiS4NmKjZeMPQylrQh9kIUkwf82iFB5oud7FPgl2yxFmVom5WfxKoZFsHsNv+rRY/XeQ/v08y6aQ2lfIiiJyForckvZGTc5F3AZH8OrPvKTY3zUpd7UGvP5Qdsx/lLYOVmLc1JPGvLLBYJxCrB6sZYF1jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpppRPKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xbv5ijypvSv6ULncJ6iMkCgRtggMuAH00/UoubNInMQV2cn2FCYzXPWiQmaQO4T1qxDN4+YhkYTKyuhc8t/zvS11Bx9z28m70CWz6wfSdMhTh3xUq8QnzYvZER62ITbkN7e9Lk7PwRIlNycz0yMuT6Lu1/L3Qyrl126yVj6vozE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNwhCTSm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpppRPKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E61FC4CEE5;
-	Tue,  8 Apr 2025 11:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNwhCTSm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB07DC4CEE5;
+	Tue,  8 Apr 2025 11:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111991;
-	bh=Ko/TdnU+5EUaSJc5GVK+c22ZYAj4c03dFjPO2v3WUeA=;
+	s=korg; t=1744111994;
+	bh=0zCU8MDJYeqi6iNkWF6TI/EpIBszjXx6VpBrJXRLgNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpppRPKD5Mz6KRmtJax2pz+DeSuBhxW65Ds5M3PfapVyIZpR7rSmbrTH5XgyyCEry
-	 kNhMij+qKKPxzm55DzX+NjRSZgth2rUmmaO6goSZV4/GBprdWWduF6kmYp92dP0qtq
-	 Pf5O1eYrM7CNLl/OavaaOG/XbT5/rnq+eXSIkd34=
+	b=rNwhCTSmpolWA+WQTw7/pG4zZHHRct6IeBLZ3nDkRyfi2ClEyvoRFejoOvp6H0/+i
+	 DE+H9qdDPD0bfBuQcANa9Bu2qv68hwx6+PazM4r9Xe49s6jG7Z91h2W4B3vrgqcX0J
+	 yDijJwmPlXdkmshwD+AY2JmHFPw/Sf282DNVPKdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ondrej Lichtner <olichtne@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Herton R. Krzesinski" <herton@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 633/731] netfilter: nft_tunnel: fix geneve_opt type confusion addition
-Date: Tue,  8 Apr 2025 12:48:50 +0200
-Message-ID: <20250408104928.995754117@linuxfoundation.org>
+Subject: [PATCH 6.14 597/731] x86/uaccess: Improve performance by aligning writes to 8 bytes in copy_user_generic(), on non-FSRM/ERMS CPUs
+Date: Tue,  8 Apr 2025 12:48:14 +0200
+Message-ID: <20250408104928.160669954@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,86 +53,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Herton R. Krzesinski <herton@redhat.com>
 
-[ Upstream commit 1b755d8eb1ace3870789d48fbd94f386ad6e30be ]
+[ Upstream commit b5322b6ec06a6c58650f52abcd2492000396363b ]
 
-When handling multiple NFTA_TUNNEL_KEY_OPTS_GENEVE attributes, the
-parsing logic should place every geneve_opt structure one by one
-compactly. Hence, when deciding the next geneve_opt position, the
-pointer addition should be in units of char *.
+History of the performance regression:
+======================================
 
-However, the current implementation erroneously does type conversion
-before the addition, which will lead to heap out-of-bounds write.
+Since the following series of user copy updates were merged upstream
+~2 years ago via:
 
-[    6.989857] ==================================================================
-[    6.990293] BUG: KASAN: slab-out-of-bounds in nft_tunnel_obj_init+0x977/0xa70
-[    6.990725] Write of size 124 at addr ffff888005f18974 by task poc/178
-[    6.991162]
-[    6.991259] CPU: 0 PID: 178 Comm: poc-oob-write Not tainted 6.1.132 #1
-[    6.991655] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-[    6.992281] Call Trace:
-[    6.992423]  <TASK>
-[    6.992586]  dump_stack_lvl+0x44/0x5c
-[    6.992801]  print_report+0x184/0x4be
-[    6.993790]  kasan_report+0xc5/0x100
-[    6.994252]  kasan_check_range+0xf3/0x1a0
-[    6.994486]  memcpy+0x38/0x60
-[    6.994692]  nft_tunnel_obj_init+0x977/0xa70
-[    6.995677]  nft_obj_init+0x10c/0x1b0
-[    6.995891]  nf_tables_newobj+0x585/0x950
-[    6.996922]  nfnetlink_rcv_batch+0xdf9/0x1020
-[    6.998997]  nfnetlink_rcv+0x1df/0x220
-[    6.999537]  netlink_unicast+0x395/0x530
-[    7.000771]  netlink_sendmsg+0x3d0/0x6d0
-[    7.001462]  __sock_sendmsg+0x99/0xa0
-[    7.001707]  ____sys_sendmsg+0x409/0x450
-[    7.002391]  ___sys_sendmsg+0xfd/0x170
-[    7.003145]  __sys_sendmsg+0xea/0x170
-[    7.004359]  do_syscall_64+0x5e/0x90
-[    7.005817]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[    7.006127] RIP: 0033:0x7ec756d4e407
-[    7.006339] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
-[    7.007364] RSP: 002b:00007ffed5d46760 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
-[    7.007827] RAX: ffffffffffffffda RBX: 00007ec756cc4740 RCX: 00007ec756d4e407
-[    7.008223] RDX: 0000000000000000 RSI: 00007ffed5d467f0 RDI: 0000000000000003
-[    7.008620] RBP: 00007ffed5d468a0 R08: 0000000000000000 R09: 0000000000000000
-[    7.009039] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-[    7.009429] R13: 00007ffed5d478b0 R14: 00007ec756ee5000 R15: 00005cbd4e655cb8
+  a5624566431d ("Merge branch 'x86-rep-insns': x86 user copy clarifications")
 
-Fix this bug with correct pointer addition and conversion in parse
-and dump code.
+.. copy_user_generic() on x86_64 stopped doing alignment of the
+writes to the destination to a 8 byte boundary for the non FSRM case.
 
-Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Previously, this was done through the ALIGN_DESTINATION macro that
+was used in the now removed copy_user_generic_unrolled function.
+
+Turns out this change causes some loss of performance/throughput on
+some use cases and specific CPU/platforms without FSRM and ERMS.
+
+Lately I got two reports of performance/throughput issues after a
+RHEL 9 kernel pulled the same upstream series with updates to user
+copy functions. Both reports consisted of running specific
+networking/TCP related testing using iperf3.
+
+Partial upstream fix
+====================
+
+The first report was related to a Linux Bridge testing using VMs on a
+specific machine with an AMD CPU (EPYC 7402), and after a brief
+investigation it turned out that the later change via:
+
+  ca96b162bfd2 ("x86: bring back rep movsq for user access on CPUs without ERMS")
+
+... helped/fixed the performance issue.
+
+However, after the later commit/fix was applied, then I got another
+regression reported in a multistream TCP test on a 100Gbit mlx5 nic, also
+running on an AMD based platform (AMD EPYC 7302 CPU), again that was using
+iperf3 to run the test. That regression was after applying the later
+fix/commit, but only this didn't help in telling the whole history.
+
+Testing performed to pinpoint residual regression
+=================================================
+
+So I narrowed down the second regression use case, but running it
+without traffic through a NIC, on localhost, in trying to narrow down
+CPU usage and not being limited by other factor like network bandwidth.
+I used another system also with an AMD CPU (AMD EPYC 7742). Basically,
+I run iperf3 in server and client mode in the same system, for example:
+
+ - Start the server binding it to CPU core/thread 19:
+   $ taskset -c 19 iperf3 -D -s -B 127.0.0.1 -p 12000
+
+ - Start the client always binding/running on CPU core/thread 17, using
+   perf to get statistics:
+   $ perf stat -o stat.txt taskset -c 17 iperf3 -c 127.0.0.1 -b 0/1000 -V \
+       -n 50G --repeating-payload -l 16384 -p 12000 --cport 12001 2>&1 \
+       > stat-19.txt
+
+For the client, always running/pinned to CPU 17. But for the iperf3 in
+server mode, I did test runs using CPUs 19, 21, 23 or not pinned to any
+specific CPU. So it basically consisted with four runs of the same
+commands, just changing the CPU which the server is pinned, or without
+pinning by removing the taskset call before the server command. The CPUs
+were chosen based on NUMA node they were on, this is the relevant output
+of lscpu on the system:
+
+  $ lscpu
+  ...
+    Model name:             AMD EPYC 7742 64-Core Processor
+  ...
+  Caches (sum of all):
+    L1d:                    2 MiB (64 instances)
+    L1i:                    2 MiB (64 instances)
+    L2:                     32 MiB (64 instances)
+    L3:                     256 MiB (16 instances)
+  NUMA:
+    NUMA node(s):           4
+    NUMA node0 CPU(s):      0,1,8,9,16,17,24,25,32,33,40,41,48,49,56,57,64,65,72,73,80,81,88,89,96,97,104,105,112,113,120,121
+    NUMA node1 CPU(s):      2,3,10,11,18,19,26,27,34,35,42,43,50,51,58,59,66,67,74,75,82,83,90,91,98,99,106,107,114,115,122,123
+    NUMA node2 CPU(s):      4,5,12,13,20,21,28,29,36,37,44,45,52,53,60,61,68,69,76,77,84,85,92,93,100,101,108,109,116,117,124,125
+    NUMA node3 CPU(s):      6,7,14,15,22,23,30,31,38,39,46,47,54,55,62,63,70,71,78,79,86,87,94,95,102,103,110,111,118,119,126,127
+  ...
+
+So for the server run, when picking a CPU, I chose CPUs to be not on the same
+node. The reason is with that I was able to get/measure relevant
+performance differences when changing the alignment of the writes to the
+destination in copy_user_generic.
+
+Testing shows up to +81% performance improvement under iperf3
+=============================================================
+
+Here's a summary of the iperf3 runs:
+
+  # Vanilla upstream alignment:
+
+		     CPU      RATE          SYS          TIME     sender-receiver
+	Server bind   19: 13.0Gbits/sec 28.371851000 33.233499566 86.9%-70.8%
+	Server bind   21: 12.9Gbits/sec 28.283381000 33.586486621 85.8%-69.9%
+	Server bind   23: 11.1Gbits/sec 33.660190000 39.012243176 87.7%-64.5%
+	Server bind none: 18.9Gbits/sec 19.215339000 22.875117865 86.0%-80.5%
+
+  # With the attached patch (aligning writes in non ERMS/FSRM case):
+
+		     CPU      RATE          SYS          TIME     sender-receiver
+	Server bind   19: 20.8Gbits/sec 14.897284000 20.811101382 75.7%-89.0%
+	Server bind   21: 20.4Gbits/sec 15.205055000 21.263165909 75.4%-89.7%
+	Server bind   23: 20.2Gbits/sec 15.433801000 21.456175000 75.5%-89.8%
+	Server bind none: 26.1Gbits/sec 12.534022000 16.632447315 79.8%-89.6%
+
+So I consistently got better results when aligning the write. The
+results above were run on 6.14.0-rc6/rc7 based kernels. The sys is sys
+time and then the total time to run/transfer 50G of data. The last
+field is the CPU usage of sender/receiver iperf3 process. It's also
+worth to note that each pair of iperf3 runs may get slightly different
+results on each run, but I always got consistent higher results with
+the write alignment for this specific test of running the processes
+on CPUs in different NUMA nodes.
+
+Linus Torvalds helped/provided this version of the patch. Initially I
+proposed a version which aligned writes for all cases in
+rep_movs_alternative, however it used two extra registers and thus
+Linus provided an enhanced version that only aligns the write on the
+large_movsq case, which is sufficient since the problem happens only
+on those AMD CPUs like ones mentioned above without ERMS/FSRM, and
+also doesn't require using extra registers. Also, I validated that
+aligning only on large_movsq case is really enough for getting the
+performance back.
+
+I also tested this patch on an old Intel based non-ERMS/FRMS system
+(with Xeon E5-2667 - Sandy Bridge based) and didn't get any problems:
+no performance enhancement but also no regression either, using the
+same iperf3 based benchmark. Also newer Intel processors after
+Sandy Bridge usually have ERMS and should not be affected by this change.
+
+[ mingo: Updated the changelog. ]
+
+Fixes: ca96b162bfd2 ("x86: bring back rep movsq for user access on CPUs without ERMS")
+Fixes: 034ff37d3407 ("x86: rewrite '__copy_user_nocache' function")
+Reported-by: Ondrej Lichtner <olichtne@redhat.com>
+Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Herton R. Krzesinski <herton@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250320142213.2623518-1-herton@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_tunnel.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/lib/copy_user_64.S | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
-index 681301b46aa40..2e40f575aed9f 100644
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -341,7 +341,7 @@ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GEN
- static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
- 				      struct nft_tunnel_opts *opts)
- {
--	struct geneve_opt *opt = (struct geneve_opt *)opts->u.data + opts->len;
-+	struct geneve_opt *opt = (struct geneve_opt *)(opts->u.data + opts->len);
- 	struct nlattr *tb[NFTA_TUNNEL_KEY_GENEVE_MAX + 1];
- 	int err, data_len;
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index fc9fb5d061744..b8f74d80f35c6 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -74,6 +74,24 @@ SYM_FUNC_START(rep_movs_alternative)
+ 	_ASM_EXTABLE_UA( 0b, 1b)
  
-@@ -625,7 +625,7 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 		if (!inner)
- 			goto failure;
- 		while (opts->len > offset) {
--			opt = (struct geneve_opt *)opts->u.data + offset;
-+			opt = (struct geneve_opt *)(opts->u.data + offset);
- 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
- 					 opt->opt_class) ||
- 			    nla_put_u8(skb, NFTA_TUNNEL_KEY_GENEVE_TYPE,
+ .Llarge_movsq:
++	/* Do the first possibly unaligned word */
++0:	movq (%rsi),%rax
++1:	movq %rax,(%rdi)
++
++	_ASM_EXTABLE_UA( 0b, .Lcopy_user_tail)
++	_ASM_EXTABLE_UA( 1b, .Lcopy_user_tail)
++
++	/* What would be the offset to the aligned destination? */
++	leaq 8(%rdi),%rax
++	andq $-8,%rax
++	subq %rdi,%rax
++
++	/* .. and update pointers and count to match */
++	addq %rax,%rdi
++	addq %rax,%rsi
++	subq %rax,%rcx
++
++	/* make %rcx contain the number of words, %rax the remainder */
+ 	movq %rcx,%rax
+ 	shrq $3,%rcx
+ 	andl $7,%eax
 -- 
 2.39.5
 
