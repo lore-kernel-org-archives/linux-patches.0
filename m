@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778C1269839;
-	Tue,  8 Apr 2025 11:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD86267F67;
+	Tue,  8 Apr 2025 11:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113580; cv=none; b=GUfOhXsvGD0DAyqZJvpk0O5G6MSdby8eIN7oyroItGqYZDKQwA/UsS5Le/6f22CS1fNpFY5cnbTWKdVfKbT0RZ+ct2Lob/RzEwmTINAXoo8T+rIq+jVaAZRkCTLC5WAuWyAgsAbIN3LuA2we/7716DjzOcRWscmHsmNOWzgIBm8=
+	t=1744113583; cv=none; b=SIsaqvRYsdyGWCTnJflBh8EOJEAjORt97y+nHp4XzKLGlIuM8vkHttQWFeNQ9OE/9mVL5/oF0tRwZuFUGBwo8KRGrrkjd25CoxOjG/h8m90/Ld85TWycD5YAqvyholOYVi21c5MgelPFtkg32pfZJG1Uqr26W3U3HugW+l6Pj2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113580; c=relaxed/simple;
-	bh=qXh3JprL7h8PJtYwZfWOeUorLTUT0X4Ayreajg5Mbls=;
+	s=arc-20240116; t=1744113583; c=relaxed/simple;
+	bh=H5XtKZkpaeuzDGsoiF/37pGDpodIg7UJOF/tnw042fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ep3b6/TnwZIWJyLixVm+4oo/rre4dhGDlWG4EoPD46LynVe12Bfxd37nQGSK4RnnuswGV746sxG/tN90fbpHjxFJKPOYu0axg2LlmwbCKPLYW2rGU+F7dLvhmV2QcA3gSG93NL0pn/Csh5HzJygLkn77181At2LMMqm7j1dUzO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHiyBHC/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ey9PDLozzTZh9N8HXj9bxWYJ9kdA+c04luhweZXQeodOJt+1gneNoC/JMhosZGXKv4/sSn17QM4c8WiVCAZJ/jJYRPaInssOdH0CJPmP/X8B5HWSNkKP/c85wmWz5U2mxLHbH84lCz1UpWzUOa5oUDrs+mmLIyxY92EC79b0fCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2Jyh8jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHiyBHC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081A5C4CEE5;
-	Tue,  8 Apr 2025 11:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2Jyh8jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0663C4CEE5;
+	Tue,  8 Apr 2025 11:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113580;
-	bh=qXh3JprL7h8PJtYwZfWOeUorLTUT0X4Ayreajg5Mbls=;
+	s=korg; t=1744113583;
+	bh=H5XtKZkpaeuzDGsoiF/37pGDpodIg7UJOF/tnw042fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHiyBHC/K2zOG8Niz7YIPwpEiIj6k9ryClNxB+U4qCJ931t1+8d9GN7qqdYl5p37Q
-	 ZEnuNM1bxWV7cDw969hL7bDBh4DlDD5BEBZ3X85ZHvNwAbGAa0JBlqhNA0dtgvSBkE
-	 /oW509dlN2Gmzx5SRQTogdY5pmTDbTVEUn5kNqTc=
+	b=u2Jyh8jdkLp3vz00Cv6UGxaeo1P1GVqYc39lr9NdgLXvTaYkcXxstyAo7SjXcNdeg
+	 JDBtg77CXwrqPe1LKSa+05i9zmv2EqQjuDDt0SBJshQEg1FSw10y7zl8VYAbzbjoK7
+	 ZwR1yJUvzrVxsSCopxlMQC6Xug2XOV5K3UbgwsGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/268] tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().
-Date: Tue,  8 Apr 2025 12:50:23 +0200
-Message-ID: <20250408104834.299760083@linuxfoundation.org>
+Subject: [PATCH 6.6 213/268] net: decrease cached dst counters in dst_release
+Date: Tue,  8 Apr 2025 12:50:24 +0200
+Message-ID: <20250408104834.326650047@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -53,81 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 8930424777e43257f5bf6f0f0f53defd0d30415c ]
+[ Upstream commit 3a0a3ff6593d670af2451ec363ccb7b18aec0c0a ]
 
-Because skb_tunnel_check_pmtu() doesn't handle PACKET_HOST packets,
-commit 30a92c9e3d6b ("openvswitch: Set the skbuff pkt_type for proper
-pmtud support.") forced skb->pkt_type to PACKET_OUTGOING for
-openvswitch packets that are sent using the OVS_ACTION_ATTR_OUTPUT
-action. This allowed such packets to invoke the
-iptunnel_pmtud_check_icmp() or iptunnel_pmtud_check_icmpv6() helpers
-and thus trigger PMTU update on the input device.
+Upstream fix ac888d58869b ("net: do not delay dst_entries_add() in
+dst_release()") moved decrementing the dst count from dst_destroy to
+dst_release to avoid accessing already freed data in case of netns
+dismantle. However in case CONFIG_DST_CACHE is enabled and OvS+tunnels
+are used, this fix is incomplete as the same issue will be seen for
+cached dsts:
 
-However, this also broke other parts of PMTU discovery. Since these
-packets don't have the PACKET_HOST type anymore, they won't trigger the
-sending of ICMP Fragmentation Needed or Packet Too Big messages to
-remote hosts when oversized (see the skb_in->pkt_type condition in
-__icmp_send() for example).
+  Unable to handle kernel paging request at virtual address ffff5aabf6b5c000
+  Call trace:
+   percpu_counter_add_batch+0x3c/0x160 (P)
+   dst_release+0xec/0x108
+   dst_cache_destroy+0x68/0xd8
+   dst_destroy+0x13c/0x168
+   dst_destroy_rcu+0x1c/0xb0
+   rcu_do_batch+0x18c/0x7d0
+   rcu_core+0x174/0x378
+   rcu_core_si+0x18/0x30
 
-These two skb->pkt_type checks are therefore incompatible as one
-requires skb->pkt_type to be PACKET_HOST, while the other requires it
-to be anything but PACKET_HOST.
+Fix this by invalidating the cache, and thus decrementing cached dst
+counters, in dst_release too.
 
-It makes sense to not trigger ICMP messages for non-PACKET_HOST packets
-as these messages should be generated only for incoming l2-unicast
-packets. However there doesn't seem to be any reason for
-skb_tunnel_check_pmtu() to ignore PACKET_HOST packets.
-
-Allow both cases to work by allowing skb_tunnel_check_pmtu() to work on
-PACKET_HOST packets and not overriding skb->pkt_type in openvswitch
-anymore.
-
-Fixes: 30a92c9e3d6b ("openvswitch: Set the skbuff pkt_type for proper pmtud support.")
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Tested-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/eac941652b86fddf8909df9b3bf0d97bc9444793.1743208264.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d71785ffc7e7 ("net: add dst_cache to ovs vxlan lwtunnel")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20250326173634.31096-1-atenart@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 2 +-
- net/openvswitch/actions.c | 6 ------
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ net/core/dst.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 80ccd6661aa32..fda08e2c72899 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -415,7 +415,7 @@ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
- 
- 	skb_dst_update_pmtu_no_confirm(skb, mtu);
- 
--	if (!reply || skb->pkt_type == PACKET_HOST)
-+	if (!reply)
- 		return 0;
- 
- 	if (skb->protocol == htons(ETH_P_IP))
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index 9445ca97163b4..6c5afb4ad67bb 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -931,12 +931,6 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
- 				pskb_trim(skb, ovs_mac_header_len(key));
- 		}
- 
--		/* Need to set the pkt_type to involve the routing layer.  The
--		 * packet movement through the OVS datapath doesn't generally
--		 * use routing, but this is needed for tunnel cases.
--		 */
--		skb->pkt_type = PACKET_OUTGOING;
--
- 		if (likely(!mru ||
- 		           (skb->len <= mru + vport->dev->hard_header_len))) {
- 			ovs_vport_send(vport, skb, ovs_key_mac_proto(key));
+diff --git a/net/core/dst.c b/net/core/dst.c
+index 137b8d1c72203..aad197e761cb4 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -167,6 +167,14 @@ static void dst_count_dec(struct dst_entry *dst)
+ void dst_release(struct dst_entry *dst)
+ {
+ 	if (dst && rcuref_put(&dst->__rcuref)) {
++#ifdef CONFIG_DST_CACHE
++		if (dst->flags & DST_METADATA) {
++			struct metadata_dst *md_dst = (struct metadata_dst *)dst;
++
++			if (md_dst->type == METADATA_IP_TUNNEL)
++				dst_cache_reset_now(&md_dst->u.tun_info.dst_cache);
++		}
++#endif
+ 		dst_count_dec(dst);
+ 		call_rcu_hurry(&dst->rcu_head, dst_destroy_rcu);
+ 	}
 -- 
 2.39.5
 
