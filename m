@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FD2269AFB;
-	Tue,  8 Apr 2025 12:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAAE26A0A5;
+	Tue,  8 Apr 2025 12:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114084; cv=none; b=l2kA/zGPVHvtjjxtbV9VkjsKkrAw14BlfPKWX/1wC6UECfPByNNVrxjWImZw+1YvVZDxrhyNz9Ip4RpnUPXtGF8Hesu83T0SwxpJxjQlqvdH7K9O/k1ljN0bTV6nwBOUPBsRdajBk8hwnOJv/7hOuf//dU0sF+XgTmkWuOXbYiQ=
+	t=1744114087; cv=none; b=ReBYl0leD9ay9+ES4EFh5OLNk2KHG0tRWfQYmPLDfZYSSXQ47OLuMpNSEITMWUwWiUTzgLqUCNJtSRY2S6sGafL7x2rpJX/P5Qti09w+TOfeOKDEqqkzE/DYXIk2K4vBPOxVQH/I/+vWUHTdpa8QE6so2hCzUZPiHYKFsiCH4yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114084; c=relaxed/simple;
-	bh=9fhnO/tC1tZ3EWFmI/BSlTnpkbS/gTzWKKufwjrZOfY=;
+	s=arc-20240116; t=1744114087; c=relaxed/simple;
+	bh=ZLMAew5PuoU9PKBzTgzHQnnnotRHV1eDpReQE7ObaOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWQL0+3Z/+vEUpwYpU20mL7aw9cwQ1YvNPhxxg9exEtT2pRA/AJBPgHZhs2F30kLFTFIB2S6Ek7q9gjGp6Km6/53wyc6vzGjd5EZMG7rcHMuD/W46N7VH9wY7f2/PfYlCeecpB9nvCa68tWmECA0tU3YKjVb+fnodnUZ5NYZhrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCJiaFWZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjYQ7CxeCDDEPHPvmCmPDCdyj5yF/ZHiEo4iciPHy+fZqgdJM9g0dgan4opnVBH/8hB0DVrg+cse8NvmV/Bpzwbi8/FhVwBjrZvYlESK1flxvNtkscLfvRcbT51tTriN8wohobGntI7mkdUTL1qF/Ffd3rh7vWiwQnGyedQ6KQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIF5cqit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCJiaFWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D90C4CEE5;
-	Tue,  8 Apr 2025 12:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIF5cqit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9CDC4CEE5;
+	Tue,  8 Apr 2025 12:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114084;
-	bh=9fhnO/tC1tZ3EWFmI/BSlTnpkbS/gTzWKKufwjrZOfY=;
+	s=korg; t=1744114086;
+	bh=ZLMAew5PuoU9PKBzTgzHQnnnotRHV1eDpReQE7ObaOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCJiaFWZyXLmRqY9o+b84RpEXDfNqKtqnmA0vYdTEx3PuVo5kcB/g/1Jvw6L3ukto
-	 drMz5ULoEfyXXzQCCfDHDHJzLl3L+FiaCuJQxcbhBTcXj0k+aUUzvXBlC8M9dr3Kvc
-	 ZW1tlogJMcbZXLheD/k0bnYULfRHQdf48GGjoLVc=
+	b=CIF5cqitW7cGLMNJvVOec+VMm7yDxOmZRTj4s3U0zuszdJFmX8P496mbMNAN2EI6b
+	 paeWZplpHyHGhgIfFdePR+Z23LASC5RhuD0co155/e84cPe54YdieJWNi9L2pAvD/Q
+	 9c3MJB3JmR7YV7edpOUwNCN9Wz2aupAMQsyuIuR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Lee Jones <lee@kernel.org>,
+	Simon Tatham <anakin@pobox.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 113/154] mfd: sm501: Switch to BIT() to mitigate integer overflows
-Date: Tue,  8 Apr 2025 12:50:54 +0200
-Message-ID: <20250408104818.953763829@linuxfoundation.org>
+Subject: [PATCH 5.4 131/154] affs: dont write overlarge OFS data block size fields
+Date: Tue,  8 Apr 2025 12:51:12 +0200
+Message-ID: <20250408104819.508960288@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,61 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
+[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
 
-If offset end up being high enough, right hand expression in functions
-like sm501_gpio_set() shifted left for that number of bits, may
-not fit in int type.
+If a data sector on an OFS floppy contains a value > 0x1e8 (the
+largest amount of data that fits in the sector after its header), then
+an Amiga reading the file can return corrupt data, by taking the
+overlarge size at its word and reading past the end of the buffer it
+read the disk sector into!
 
-Just in case, fix that by using BIT() both as an option safe from
-overflow issues and to make this step look similar to other gpio
-drivers.
+The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
+the new size field for a data block was computed by adding the amount
+of data currently being written (into the block) to the existing value
+of the size field. This is correct if you're extending the file at the
+end, but if you seek backwards in the file and overwrite _existing_
+data, it can lead to the size field being larger than the maximum
+legal value.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+This commit changes the calculation so that it sets the size field to
+the max of its previous size and the position within the block that we
+just wrote up to.
 
-Fixes: f61be273d369 ("sm501: add gpiolib support")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Simon Tatham <anakin@pobox.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/sm501.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/affs/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
-index aab8d8910319d..96616f8267530 100644
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
-@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
- 	void __iomem *regs = smchip->regbase;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	unsigned long save;
- 	unsigned long ddr;
- 
-@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index 6dae4ca09be5f..199b92f6a9941 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -724,7 +724,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		tmp = min(bsize - boff, to - from);
+ 		BUG_ON(boff + tmp > bsize || tmp > bsize);
+ 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
+-		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
++		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
++			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
+ 		affs_fix_checksum(sb, bh);
+ 		mark_buffer_dirty_inode(bh, inode);
+ 		written += tmp;
 -- 
 2.39.5
 
