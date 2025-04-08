@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFEB268FE9;
-	Tue,  8 Apr 2025 11:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEFD268C72;
+	Tue,  8 Apr 2025 11:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110209; cv=none; b=dKqY9ONgsHVW2jRKwaA8BS1ImyJWZCXy/3muKGbdG1SyU6fF5Grrb6EnVKUDo8NEdoqxX/rrXZnkH/CTvSKlHYHBjuJYSYcPkhasSr05MoyWsNDSWeLGb3YkVnlvh9TYfV4QbNKQfs115kGj1uSd7VvPKQu3+Of48gVjQd4R0JY=
+	t=1744110212; cv=none; b=QgcPW9gdQaDVdsaTXHbBGYQxjBCUz9KbnFkd/dpGUQZnAzirj3pFHspv7xs7hGAXcRUSafdLR2sapSZsmNyLva7NAfgea5rxh37auNcjOxdv5nl6fddTPoj7ETcvMZi5aDW+0DKadq4tsgOc/sYm9K/VYaF0J6A/UOx4QQG/kGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110209; c=relaxed/simple;
-	bh=IEcrCwiEnuqF9lmGPrAsgGggz9plRC5QgTJmN/nf7Ac=;
+	s=arc-20240116; t=1744110212; c=relaxed/simple;
+	bh=eEfLdzG+5LDA3GvoCmQcnL8GEBuFJ2lYa+UrKFwOBrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=plcsnx86IzRjCZ850YBqnoAjGYgueSRujHW2bdcYBfXhFmbCxMgfZaR80AzfVQkufBucpC4aL6+obj95gfi5eT+kIOknxRTYOWjIuy96Jer0kHdDutqbw/ktpWNwWeTk/9Co8yY+9F8BwRaKM+H95baWqCKavi+evr8hJ8/bTgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5XmFHLO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=blkrABEvvl6YQSMF6zrtWf56FhtEHh7vZBUj964jeXuwR7GPimd4k4M5WDwvKK8ZV3SLPMiqgeQCpMCkYfjuNPEIcGAeBJuNlnQ3MpXCAcyLGjHyPYXifocK4PG58CZAQKBAhfH7u3Fzab4TYUCraB7Y3iew5YqBCor94S8qNAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovsSBkPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5XmFHLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598C1C4CEE5;
-	Tue,  8 Apr 2025 11:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovsSBkPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEDCC4CEE5;
+	Tue,  8 Apr 2025 11:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110209;
-	bh=IEcrCwiEnuqF9lmGPrAsgGggz9plRC5QgTJmN/nf7Ac=;
+	s=korg; t=1744110212;
+	bh=eEfLdzG+5LDA3GvoCmQcnL8GEBuFJ2lYa+UrKFwOBrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5XmFHLOArmUBhH17xEuakKY2VE+HFyQkjhlsRkgcXOkUWAnrfIYWVE0Kbg1J3qQ6
-	 R9nigEm0DtR0+EhNnqcRfEeZDQP3yU1Ys2R1RAbV9yb6CUGSN03Q58CGmNnwVHS6dH
-	 T8rkPXYUN+OdIH/RZNsdrwrPhu0yWMzj6O0sRMR4=
+	b=ovsSBkPHutdx4pyyHp8JVyEiT0YXjPGbZNWEjJcKHiEkj9ZXcnvmcouioY8G2HAox
+	 G2E5ZQpBogLmcEqKda3Z/Azg/FvI1/vCkgm9EUvbDaOU3WA1g4IlwyKOWg77nSPuIy
+	 ZlMEdRwzTfscUqrlxERn/YLufQwDHiX38MaDzcOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/227] perf python: Dont keep a raw_data pointer to consumed ring buffer space
-Date: Tue,  8 Apr 2025 12:49:09 +0200
-Message-ID: <20250408104825.446033545@linuxfoundation.org>
+Subject: [PATCH 5.10 207/227] tty: serial: fsl_lpuart: use UARTMODIR register bits for lpuart32 platform
+Date: Tue,  8 Apr 2025 12:49:45 +0200
+Message-ID: <20250408104826.523472417@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,80 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit f3fed3ae34d606819d87a63d970cc3092a5be7ab ]
+[ Upstream commit d57d56e4dddfb5c92cd81abf8922055bf0fb85a4 ]
 
-When processing tracepoints the perf python binding was parsing the
-event before calling perf_mmap__consume(&md->core) in
-pyrf_evlist__read_on_cpu().
+For lpuart32 platforms, UARTMODIR register is used instead of UARTMODEM.
+So here should configure the corresponding UARTMODIR register bits to
+avoid confusion.
 
-But part of this event parsing was to set the perf_sample->raw_data
-pointer to the payload of the event, which then could be overwritten by
-other event before tracepoint fields were asked for via event.prev_comm
-in a python program, for instance.
-
-This also happened with other fields, but strings were were problems
-were surfacing, as there is UTF-8 validation for the potentially garbled
-data.
-
-This ended up showing up as (with some added debugging messages):
-
-  ( field 'prev_comm' ret=0x7f7c31f65110, raw_size=68 )  ( field 'prev_pid' ret=0x7f7c23b1bed0, raw_size=68 )  ( field 'prev_prio' ret=0x7f7c239c0030, raw_size=68 )  ( field 'prev_state' ret=0x7f7c239c0250, raw_size=68 ) time 14771421785867 prev_comm= prev_pid=1919907691 prev_prio=796026219 prev_state=0x303a32313175 ==>
-  ( XXX '��' len=16, raw_size=68)  ( field 'next_comm' ret=(nil), raw_size=68 ) Traceback (most recent call last):
-   File "/home/acme/git/perf-tools-next/tools/perf/python/tracepoint.py", line 51, in <module>
-     main()
-   File "/home/acme/git/perf-tools-next/tools/perf/python/tracepoint.py", line 46, in main
-     event.next_comm,
-     ^^^^^^^^^^^^^^^
-  AttributeError: 'perf.sample_event' object has no attribute 'next_comm'
-
-When event.next_comm was asked for, the PyUnicode_FromString() python
-API would fail and that tracepoint field wouldn't be available, stopping
-the tools/perf/python/tracepoint.py test tool.
-
-But, since we already do a copy of the whole event in pyrf_event__new,
-just use it and while at it remove what was done in in e8968e654191390a
-("perf python: Fix pyrf_evlist__read_on_cpu event consuming") because we
-don't really need to wait for parsing the sample before declaring the
-event as consumed.
-
-This copy is questionable as is now, as it limits the maximum event +
-sample_type and tracepoint payload to sizeof(union perf_event), this all
-has been "working" because 'struct perf_event_mmap2', the largest entry
-in 'union perf_event' is:
-
-  $ pahole -C perf_event ~/bin/perf | grep mmap2
-	struct perf_record_mmap2   mmap2;              /*     0  4168 */
-  $
-
-Fixes: bae57e3825a3dded ("perf python: Add support to resolve tracepoint fields")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250312203141.285263-6-acme@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230414022111.20896-1-sherry.sun@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f5cb528d6441 ("tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index ab3a444b4b868..b65cca0656396 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -1064,11 +1064,9 @@ static PyObject *pyrf_evlist__read_on_cpu(struct pyrf_evlist *pevlist,
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index b16ad6db1ef8e..5135cdc0b6644 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1351,7 +1351,7 @@ static int lpuart32_config_rs485(struct uart_port *port,
+ 			struct lpuart_port, port);
  
- 		pevent->evsel = evsel;
+ 	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
+-				& ~(UARTMODEM_TXRTSPOL | UARTMODEM_TXRTSE);
++				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
+ 	lpuart32_write(&sport->port, modem, UARTMODIR);
  
--		err = evsel__parse_sample(evsel, event, &pevent->sample);
--
--		/* Consume the even only after we parsed it out. */
- 		perf_mmap__consume(&md->core);
+ 	/* clear unsupported configurations */
+@@ -1361,7 +1361,7 @@ static int lpuart32_config_rs485(struct uart_port *port,
  
-+		err = evsel__parse_sample(evsel, &pevent->event, &pevent->sample);
- 		if (err) {
- 			Py_DECREF(pyevent);
- 			return PyErr_Format(PyExc_OSError,
+ 	if (rs485->flags & SER_RS485_ENABLED) {
+ 		/* Enable auto RS-485 RTS mode */
+-		modem |= UARTMODEM_TXRTSE;
++		modem |= UARTMODIR_TXRTSE;
+ 
+ 		/*
+ 		 * RTS needs to be logic HIGH either during transfer _or_ after
+@@ -1383,9 +1383,9 @@ static int lpuart32_config_rs485(struct uart_port *port,
+ 		 * Note: UART is assumed to be active high.
+ 		 */
+ 		if (rs485->flags & SER_RS485_RTS_ON_SEND)
+-			modem |= UARTMODEM_TXRTSPOL;
++			modem |= UARTMODIR_TXRTSPOL;
+ 		else if (rs485->flags & SER_RS485_RTS_AFTER_SEND)
+-			modem &= ~UARTMODEM_TXRTSPOL;
++			modem &= ~UARTMODIR_TXRTSPOL;
+ 	}
+ 
+ 	/* Store the new configuration */
 -- 
 2.39.5
 
