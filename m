@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA0127935E;
-	Tue,  8 Apr 2025 12:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FBF267B89;
+	Tue,  8 Apr 2025 12:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116937; cv=none; b=kqipPYkJSiLpSMQXkTHbMLL9WnKWHMQyXuDJh+4nVAWL87b+6ObQIZX5plDKIfCYVEtovjNruQ9z1kYaecys1xsnU/lsAMJ2TnmOAi5aap5C9fWkzJ0vhbTn3gOztHwtqnjicwXcDx7pe2DxZ7/BwXuoBxJjuJR4vjxGPclhMwo=
+	t=1744116940; cv=none; b=Jf2ItRwzW/XV7xnI0qa6NOWT/YflFWk7x90TXG8vWtArkURstuuUa8eh+Czwnvi8eJgmuJ6v0zwsQItX/G66ODb/AFYUVPyxWdLi6/o8OG5pVWbEYW3dMlD1iGu6ASyxlbdXIviJS9eHap2ovQ6xbAdtg7PVN1eVw57w/95Cf8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116937; c=relaxed/simple;
-	bh=bbLK9z6iK9Syw1SOaLbSxPUcSWU3D/9plf9ru/OIT28=;
+	s=arc-20240116; t=1744116940; c=relaxed/simple;
+	bh=o9z97x+XULHNT1y/K6mhyVl4lldipWMmX6WUnSgu4uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6mlNJH+kUnCNOv3rdSHEtj5+pZHownrJnYylVOy9Tv0XRP3qJbRgb08FMRZ7sc6EKXN/YXuP9SRnNuMNo26Bz7Gx+dKHJEJcEcav84HpZFFcm621HJv58cjJevgO1lbF2Sa7Al1hs3Z30VUI15u2vwlE3YY3yuJoVmfQjyhetc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjJm38zF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XXcBDdBvDtYXWnCYXC88cRRmnI1wcyD1dS/EqomfAOVX++uJdlJfV/vWYsXXikLFyH7AxUKNt2qnensop0mIEgHFCI/MaGUoI5uA84te6euawybF1aJx2cDuxbsdy6GoJ2iDYheXa0pytuzGjzeT9ZmcBsih0cSEaScH3XYCMG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1EBUE73; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjJm38zF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9FFC4CEE7;
-	Tue,  8 Apr 2025 12:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1EBUE73"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5D1C4CEE5;
+	Tue,  8 Apr 2025 12:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116937;
-	bh=bbLK9z6iK9Syw1SOaLbSxPUcSWU3D/9plf9ru/OIT28=;
+	s=korg; t=1744116940;
+	bh=o9z97x+XULHNT1y/K6mhyVl4lldipWMmX6WUnSgu4uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjJm38zFdPizW7jcPVgoDPXXfF6juQC4ZCvJ26l4n9+OiPurqc//AxfzNsCKQaM8L
-	 xie6q210MK22bnQn6uZ9e4/ANKm+fc5RbL/F/YU4WV3kesCXeaowz2cWO16VCmeCp+
-	 hCFOHcpmbqU3xTp/3He7QY+YwU6IH/tTvQ3dBX6U=
+	b=F1EBUE73rmroxQ/H7UIxs1niB3BINusGK1gizkxeQDawPn9Psym2kO5KrZYkWgaKc
+	 +B7HMwCHztRlQX3UH62e2P0g4HZqyqM4Y8sVWDdBm8fCFQvEh2Jq1EdrbgHpZfXxX6
+	 eQVwpdjRVfL5jEvc/B6ufAFBWCs0u684oX3T8zIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
+	Yuying Ma <yuma@redhat.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/423] e1000e: change k1 configuration on MTP and later platforms
-Date: Tue,  8 Apr 2025 12:50:50 +0200
-Message-ID: <20250408104853.363792270@linuxfoundation.org>
+Subject: [PATCH 6.12 325/423] idpf: fix adapter NULL pointer dereference on reboot
+Date: Tue,  8 Apr 2025 12:50:51 +0200
+Message-ID: <20250408104853.386149992@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,176 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit efaaf344bc2917cbfa5997633bc18a05d3aed27f ]
+[ Upstream commit 4c9106f4906a85f6b13542d862e423bcdc118cc3 ]
 
-Starting from Meteor Lake, the Kumeran interface between the integrated
-MAC and the I219 PHY works at a different frequency. This causes sporadic
-MDI errors when accessing the PHY, and in rare circumstances could lead
-to packet corruption.
+With SRIOV enabled, idpf ends up calling into idpf_remove() twice.
+First via idpf_shutdown() and then again when idpf_remove() calls into
+sriov_disable(), because the VF devices use the idpf driver, hence the
+same remove routine. When that happens, it is possible for the adapter
+to be NULL from the first call to idpf_remove(), leading to a NULL
+pointer dereference.
 
-To overcome this, introduce minor changes to the Kumeran idle
-state (K1) parameters during device initialization. Hardware reset
-reverts this configuration, therefore it needs to be applied in a few
-places.
+echo 1 > /sys/class/net/<netif>/device/sriov_numvfs
+reboot
 
-Fixes: cc23f4f0b6b9 ("e1000e: Add support for Meteor Lake")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+BUG: kernel NULL pointer dereference, address: 0000000000000020
+...
+RIP: 0010:idpf_remove+0x22/0x1f0 [idpf]
+...
+? idpf_remove+0x22/0x1f0 [idpf]
+? idpf_remove+0x1e4/0x1f0 [idpf]
+pci_device_remove+0x3f/0xb0
+device_release_driver_internal+0x19f/0x200
+pci_stop_bus_device+0x6d/0x90
+pci_stop_and_remove_bus_device+0x12/0x20
+pci_iov_remove_virtfn+0xbe/0x120
+sriov_disable+0x34/0xe0
+idpf_sriov_configure+0x58/0x140 [idpf]
+idpf_remove+0x1b9/0x1f0 [idpf]
+idpf_shutdown+0x12/0x30 [idpf]
+pci_device_shutdown+0x35/0x60
+device_shutdown+0x156/0x200
+...
+
+Replace the direct idpf_remove() call in idpf_shutdown() with
+idpf_vc_core_deinit() and idpf_deinit_dflt_mbx(), which perform
+the bulk of the cleanup, such as stopping the init task, freeing IRQs,
+destroying the vports and freeing the mailbox. This avoids the calls to
+sriov_disable() in addition to a small netdev cleanup, and destroying
+workqueues, which don't seem to be required on shutdown.
+
+Reported-by: Yuying Ma <yuma@redhat.com>
+Fixes: e850efed5e15 ("idpf: add module register and probe functionality")
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/defines.h |  3 +
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 80 +++++++++++++++++++--
- drivers/net/ethernet/intel/e1000e/ich8lan.h |  4 ++
- 3 files changed, 82 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
-index 5e2cfa73f8891..8294a7c4f122c 100644
---- a/drivers/net/ethernet/intel/e1000e/defines.h
-+++ b/drivers/net/ethernet/intel/e1000e/defines.h
-@@ -803,4 +803,7 @@
- /* SerDes Control */
- #define E1000_GEN_POLL_TIMEOUT          640
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
+index dfd56fc5ff655..7557bb6694c09 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_main.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
+@@ -87,7 +87,11 @@ static void idpf_remove(struct pci_dev *pdev)
+  */
+ static void idpf_shutdown(struct pci_dev *pdev)
+ {
+-	idpf_remove(pdev);
++	struct idpf_adapter *adapter = pci_get_drvdata(pdev);
++
++	cancel_delayed_work_sync(&adapter->vc_event_task);
++	idpf_vc_core_deinit(adapter);
++	idpf_deinit_dflt_mbx(adapter);
  
-+#define E1000_FEXTNVM12_PHYPD_CTRL_MASK	0x00C00000
-+#define E1000_FEXTNVM12_PHYPD_CTRL_P1	0x00800000
-+
- #endif /* _E1000_DEFINES_H_ */
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index 2f9655cf5dd9e..364378133526a 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -285,6 +285,45 @@ static void e1000_toggle_lanphypc_pch_lpt(struct e1000_hw *hw)
- 	}
- }
- 
-+/**
-+ * e1000_reconfigure_k1_exit_timeout - reconfigure K1 exit timeout to
-+ * align to MTP and later platform requirements.
-+ * @hw: pointer to the HW structure
-+ *
-+ * Context: PHY semaphore must be held by caller.
-+ * Return: 0 on success, negative on failure
-+ */
-+static s32 e1000_reconfigure_k1_exit_timeout(struct e1000_hw *hw)
-+{
-+	u16 phy_timeout;
-+	u32 fextnvm12;
-+	s32 ret_val;
-+
-+	if (hw->mac.type < e1000_pch_mtp)
-+		return 0;
-+
-+	/* Change Kumeran K1 power down state from P0s to P1 */
-+	fextnvm12 = er32(FEXTNVM12);
-+	fextnvm12 &= ~E1000_FEXTNVM12_PHYPD_CTRL_MASK;
-+	fextnvm12 |= E1000_FEXTNVM12_PHYPD_CTRL_P1;
-+	ew32(FEXTNVM12, fextnvm12);
-+
-+	/* Wait for the interface the settle */
-+	usleep_range(1000, 1100);
-+
-+	/* Change K1 exit timeout */
-+	ret_val = e1e_rphy_locked(hw, I217_PHY_TIMEOUTS_REG,
-+				  &phy_timeout);
-+	if (ret_val)
-+		return ret_val;
-+
-+	phy_timeout &= ~I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK;
-+	phy_timeout |= 0xF00;
-+
-+	return e1e_wphy_locked(hw, I217_PHY_TIMEOUTS_REG,
-+				  phy_timeout);
-+}
-+
- /**
-  *  e1000_init_phy_workarounds_pchlan - PHY initialization workarounds
-  *  @hw: pointer to the HW structure
-@@ -327,15 +366,22 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
- 	 * LANPHYPC Value bit to force the interconnect to PCIe mode.
- 	 */
- 	switch (hw->mac.type) {
-+	case e1000_pch_mtp:
-+	case e1000_pch_lnp:
-+	case e1000_pch_ptp:
-+	case e1000_pch_nvp:
-+		/* At this point the PHY might be inaccessible so don't
-+		 * propagate the failure
-+		 */
-+		if (e1000_reconfigure_k1_exit_timeout(hw))
-+			e_dbg("Failed to reconfigure K1 exit timeout\n");
-+
-+		fallthrough;
- 	case e1000_pch_lpt:
- 	case e1000_pch_spt:
- 	case e1000_pch_cnp:
- 	case e1000_pch_tgp:
- 	case e1000_pch_adp:
--	case e1000_pch_mtp:
--	case e1000_pch_lnp:
--	case e1000_pch_ptp:
--	case e1000_pch_nvp:
- 		if (e1000_phy_is_accessible_pchlan(hw))
- 			break;
- 
-@@ -419,8 +465,20 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
- 		 *  the PHY is in.
- 		 */
- 		ret_val = hw->phy.ops.check_reset_block(hw);
--		if (ret_val)
-+		if (ret_val) {
- 			e_err("ME blocked access to PHY after reset\n");
-+			goto out;
-+		}
-+
-+		if (hw->mac.type >= e1000_pch_mtp) {
-+			ret_val = hw->phy.ops.acquire(hw);
-+			if (ret_val) {
-+				e_err("Failed to reconfigure K1 exit timeout\n");
-+				goto out;
-+			}
-+			ret_val = e1000_reconfigure_k1_exit_timeout(hw);
-+			hw->phy.ops.release(hw);
-+		}
- 	}
- 
- out:
-@@ -4888,6 +4946,18 @@ static s32 e1000_init_hw_ich8lan(struct e1000_hw *hw)
- 	u16 i;
- 
- 	e1000_initialize_hw_bits_ich8lan(hw);
-+	if (hw->mac.type >= e1000_pch_mtp) {
-+		ret_val = hw->phy.ops.acquire(hw);
-+		if (ret_val)
-+			return ret_val;
-+
-+		ret_val = e1000_reconfigure_k1_exit_timeout(hw);
-+		hw->phy.ops.release(hw);
-+		if (ret_val) {
-+			e_dbg("Error failed to reconfigure K1 exit timeout\n");
-+			return ret_val;
-+		}
-+	}
- 
- 	/* Initialize identification LED */
- 	ret_val = mac->ops.id_led_init(hw);
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.h b/drivers/net/ethernet/intel/e1000e/ich8lan.h
-index 2504b11c3169f..5feb589a9b5ff 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.h
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.h
-@@ -219,6 +219,10 @@
- #define I217_PLL_CLOCK_GATE_REG	PHY_REG(772, 28)
- #define I217_PLL_CLOCK_GATE_MASK	0x07FF
- 
-+/* PHY Timeouts */
-+#define I217_PHY_TIMEOUTS_REG                   PHY_REG(770, 21)
-+#define I217_PHY_TIMEOUTS_K1_EXIT_TO_MASK       0x0FC0
-+
- #define SW_FLAG_TIMEOUT		1000	/* SW Semaphore flag timeout in ms */
- 
- /* Inband Control */
+ 	if (system_state == SYSTEM_POWER_OFF)
+ 		pci_set_power_state(pdev, PCI_D3hot);
 -- 
 2.39.5
 
