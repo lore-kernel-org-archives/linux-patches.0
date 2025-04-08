@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D47265626;
-	Tue,  8 Apr 2025 11:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A235F2690D7;
+	Tue,  8 Apr 2025 11:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113427; cv=none; b=OyAhBjcKvrNYB1ptklGq5oCISTYkklCQ8rqkhGMH2NrZS1wqTaEnE1flnXytz1jy1uTrcR8/Tmibap6BNnjUBPijEJQ0E+hvVfNJwfjuYJALmTn+048RB3CPD1tb5jd2xTTSzoxva6xHz2b4NGmiVYL3JwcXP+pVQ6PrM+I74r8=
+	t=1744113430; cv=none; b=DjJLVDX5DlACgrBfUsGNZTra7td8UHv2XdIcH03UfzZVVTT7gi/ppgtGYyqcBQkii+mtOMWB3tLCetZdujG8vs21sAjQqTY5k+dRJKcq49FIICrWjHtZjfDOm+zhymcd7mEm2IkfTydekEkvrYqrLNHNwoXEIIUt/er0K5uRe7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113427; c=relaxed/simple;
-	bh=gTUvwDnh1cuHL399lXxXA1pyZ/hypT77PQml0mi9ik4=;
+	s=arc-20240116; t=1744113430; c=relaxed/simple;
+	bh=Z8XHTJJKCJiquucQGqgLhHtIpS/pzMk3hn8mwkOFBGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmalWB7VUOb6tBKzuyVQAI6xuRTWrbm9UCztLi57qUki21FtnnKS6po1f5pDLRo6P+7CzT3gqcdBq/G4FVSj0skWtKI1nqAelQD9ewSEJG1pt93mGFCP98zaXa+ICWpRphQAIvZXAKj2noqgj1rnGJlSfLPEfSGwojUGRmeSapQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+qPSYpJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhDkIhsVg6fi19IxeZvrLJsP6ShPwWi58yPHZq9wVKjC1a7JOV95XWlE/jvIcpQM6s/FTuOGzTyxmWRHgyj0lIFlvTpom+60dNwXmHhE7Ccz8Czc4nKynF2k6MEA4wGGe0iELuSuUrxwwka+MbeM+2h8Hr0PVt2i2Ub3JkN3z1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFThCE0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+qPSYpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62ED1C4CEE5;
-	Tue,  8 Apr 2025 11:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFThCE0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CADC4CEE5;
+	Tue,  8 Apr 2025 11:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113427;
-	bh=gTUvwDnh1cuHL399lXxXA1pyZ/hypT77PQml0mi9ik4=;
+	s=korg; t=1744113430;
+	bh=Z8XHTJJKCJiquucQGqgLhHtIpS/pzMk3hn8mwkOFBGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+qPSYpJasBMo7EU1gMHbOFYkfrFUZfjgfSNaH64dC+g7QwgnUjmbiNjpCXXaUxp5
-	 DR0B1u6aArEJ9REtftDpRgWTkKEGn/crSzi4/xynKGuVDnkN0vCfhQxyvJQUApm6tz
-	 WSPP6PjDKKAFzm0vZ0Ga+Q4MEOhfDvahj92rVnEw=
+	b=kFThCE0SqSMi88oQ4A5K41Aa+fCqrKwq59PmHL8DUcup0fLotnNCCrGpDH1U54F3N
+	 aZtGUcXCuqZ4XQe28gwu1sMlmQl/3K6CShhljCBHa4wu+MaCLxvO9zRQHhC4YfpRI7
+	 90AuKyasQulRzbGVe8+Bplg1WdISPgAndqgehbd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Haoran Zhang <wh1sper@zju.edu.cn>,
+	Mike Christie <michael.christie@oracle.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/268] fs/ntfs3: Fix a couple integer overflows on 32bit systems
-Date: Tue,  8 Apr 2025 12:48:47 +0200
-Message-ID: <20250408104831.625890071@linuxfoundation.org>
+Subject: [PATCH 6.6 107/268] vhost-scsi: Fix handling of multiple calls to vhost_scsi_set_endpoint
+Date: Tue,  8 Apr 2025 12:48:38 +0200
+Message-ID: <20250408104831.383076865@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,43 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 5ad414f4df2294b28836b5b7b69787659d6aa708 ]
+[ Upstream commit 5dd639a1646ef5fe8f4bf270fad47c5c3755b9b6 ]
 
-On 32bit systems the "off + sizeof(struct NTFS_DE)" addition can
-have an integer wrapping issue.  Fix it by using size_add().
+If vhost_scsi_set_endpoint is called multiple times without a
+vhost_scsi_clear_endpoint between them, we can hit multiple bugs
+found by Haoran Zhang:
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+1. Use-after-free when no tpgs are found:
+
+This fixes a use after free that occurs when vhost_scsi_set_endpoint is
+called more than once and calls after the first call do not find any
+tpgs to add to the vs_tpg. When vhost_scsi_set_endpoint first finds
+tpgs to add to the vs_tpg array match=true, so we will do:
+
+vhost_vq_set_backend(vq, vs_tpg);
+...
+
+kfree(vs->vs_tpg);
+vs->vs_tpg = vs_tpg;
+
+If vhost_scsi_set_endpoint is called again and no tpgs are found
+match=false so we skip the vhost_vq_set_backend call leaving the
+pointer to the vs_tpg we then free via:
+
+kfree(vs->vs_tpg);
+vs->vs_tpg = vs_tpg;
+
+If a scsi request is then sent we do:
+
+vhost_scsi_handle_vq -> vhost_scsi_get_req -> vhost_vq_get_backend
+
+which sees the vs_tpg we just did a kfree on.
+
+2. Tpg dir removal hang:
+
+This patch fixes an issue where we cannot remove a LIO/target layer
+tpg (and structs above it like the target) dir due to the refcount
+dropping to -1.
+
+The problem is that if vhost_scsi_set_endpoint detects a tpg is already
+in the vs->vs_tpg array or if the tpg has been removed so
+target_depend_item fails, the undepend goto handler will do
+target_undepend_item on all tpgs in the vs_tpg array dropping their
+refcount to 0. At this time vs_tpg contains both the tpgs we have added
+in the current vhost_scsi_set_endpoint call as well as tpgs we added in
+previous calls which are also in vs->vs_tpg.
+
+Later, when vhost_scsi_clear_endpoint runs it will do
+target_undepend_item on all the tpgs in the vs->vs_tpg which will drop
+their refcount to -1. Userspace will then not be able to remove the tpg
+and will hang when it tries to do rmdir on the tpg dir.
+
+3. Tpg leak:
+
+This fixes a bug where we can leak tpgs and cause them to be
+un-removable because the target name is overwritten when
+vhost_scsi_set_endpoint is called multiple times but with different
+target names.
+
+The bug occurs if a user has called VHOST_SCSI_SET_ENDPOINT and setup
+a vhost-scsi device to target/tpg mapping, then calls
+VHOST_SCSI_SET_ENDPOINT again with a new target name that has tpgs we
+haven't seen before (target1 has tpg1 but target2 has tpg2). When this
+happens we don't teardown the old target tpg mapping and just overwrite
+the target name and the vs->vs_tpg array. Later when we do
+vhost_scsi_clear_endpoint, we are passed in either target1 or target2's
+name and we will only match that target's tpgs when we loop over the
+vs->vs_tpg. We will then return from the function without doing
+target_undepend_item on the tpgs.
+
+Because of all these bugs, it looks like being able to call
+vhost_scsi_set_endpoint multiple times was never supported. The major
+user, QEMU, already has checks to prevent this use case. So to fix the
+issues, this patch prevents vhost_scsi_set_endpoint from being called
+if it's already successfully added tpgs. To add, remove or change the
+tpg config or target name, you must do a vhost_scsi_clear_endpoint
+first.
+
+Fixes: 25b98b64e284 ("vhost scsi: alloc cmds per vq instead of session")
+Fixes: 4f7f46d32c98 ("tcm_vhost: Use vq->private_data to indicate if the endpoint is setup")
+Reported-by: Haoran Zhang <wh1sper@zju.edu.cn>
+Closes: https://lore.kernel.org/virtualization/e418a5ee-45ca-4d18-9b5d-6f8b6b1add8e@oracle.com/T/#me6c0041ce376677419b9b2563494172a01487ecb
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-Id: <20250129210922.121533-1-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/scsi.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 9089c58a005ce..28aae6ea1e615 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -618,7 +618,7 @@ static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- 	u32 off = le32_to_cpu(hdr->de_off);
- 
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    off + sizeof(struct NTFS_DE) > end) {
-+	    size_add(off, sizeof(struct NTFS_DE)) > end) {
- 		/* incorrect index buffer. */
- 		return false;
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 99813232c25e9..8d8a22504d71f 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1688,14 +1688,19 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		}
  	}
-@@ -736,7 +736,7 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
- 	if (end > total)
- 		return NULL;
  
--	if (off + sizeof(struct NTFS_DE) > end)
-+	if (size_add(off, sizeof(struct NTFS_DE)) > end)
- 		return NULL;
++	if (vs->vs_tpg) {
++		pr_err("vhost-scsi endpoint already set for %s.\n",
++		       vs->vs_vhost_wwpn);
++		ret = -EEXIST;
++		goto out;
++	}
++
+ 	len = sizeof(vs_tpg[0]) * VHOST_SCSI_MAX_TARGET;
+ 	vs_tpg = kzalloc(len, GFP_KERNEL);
+ 	if (!vs_tpg) {
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+-	if (vs->vs_tpg)
+-		memcpy(vs_tpg, vs->vs_tpg, len);
  
- 	e = Add2Ptr(hdr, off);
+ 	mutex_lock(&vhost_scsi_mutex);
+ 	list_for_each_entry(tpg, &vhost_scsi_list, tv_tpg_list) {
+@@ -1711,12 +1716,6 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		tv_tport = tpg->tport;
+ 
+ 		if (!strcmp(tv_tport->tport_name, t->vhost_wwpn)) {
+-			if (vs->vs_tpg && vs->vs_tpg[tpg->tport_tpgt]) {
+-				mutex_unlock(&tpg->tv_tpg_mutex);
+-				mutex_unlock(&vhost_scsi_mutex);
+-				ret = -EEXIST;
+-				goto undepend;
+-			}
+ 			/*
+ 			 * In order to ensure individual vhost-scsi configfs
+ 			 * groups cannot be removed while in use by vhost ioctl,
+@@ -1763,15 +1762,15 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		}
+ 		ret = 0;
+ 	} else {
+-		ret = -EEXIST;
++		ret = -ENODEV;
++		goto free_tpg;
+ 	}
+ 
+ 	/*
+-	 * Act as synchronize_rcu to make sure access to
+-	 * old vs->vs_tpg is finished.
++	 * Act as synchronize_rcu to make sure requests after this point
++	 * see a fully setup device.
+ 	 */
+ 	vhost_scsi_flush(vs);
+-	kfree(vs->vs_tpg);
+ 	vs->vs_tpg = vs_tpg;
+ 	goto out;
+ 
+@@ -1791,6 +1790,7 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 			target_undepend_item(&tpg->se_tpg.tpg_group.cg_item);
+ 		}
+ 	}
++free_tpg:
+ 	kfree(vs_tpg);
+ out:
+ 	mutex_unlock(&vs->dev.mutex);
+@@ -1893,6 +1893,7 @@ vhost_scsi_clear_endpoint(struct vhost_scsi *vs,
+ 	vhost_scsi_flush(vs);
+ 	kfree(vs->vs_tpg);
+ 	vs->vs_tpg = NULL;
++	memset(vs->vs_vhost_wwpn, 0, sizeof(vs->vs_vhost_wwpn));
+ 	WARN_ON(vs->vs_events_nr);
+ 	mutex_unlock(&vs->dev.mutex);
+ 	return 0;
 -- 
 2.39.5
 
