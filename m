@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07448207E14;
-	Tue,  8 Apr 2025 11:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1720207E14;
+	Tue,  8 Apr 2025 11:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111246; cv=none; b=Oit9OLjHHyjrSNcoQFEMOlf30QrnuK6A+FVid2ltJxxlgl+mMFKuw8T+TkgMTbGkZqJCgWNoenWoIpMUg9+5U+atXbadYRaPsfJ3PKzM37iLbotV+l3zjgsCzquUQ4vwqlP+9mw3WuZ0Lv9NBHth0Dp07xObxQGw19LYfu0ceow=
+	t=1744111248; cv=none; b=bpC2goIvEFoctPGlFZYzKRAmrptlJFmX3mP4gPDlnw3tcVPKllJSrKDv3OG1ETB88ifSmi+mO1R9z/ZWz8yiAcXLLM+kKs6N18WW3PeH1PxaNFgvzRyOOBBL8jGvYw/J++i3N4jureRJjHvFxbAAyf9q2R+wuQu0clzSOc9hWtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111246; c=relaxed/simple;
-	bh=oIf2J5HvdLkX5DuEB6mQt1YqZnWm/vMrgyM3FUPFl2U=;
+	s=arc-20240116; t=1744111248; c=relaxed/simple;
+	bh=srnT5B/RJ9ucV3d9bfdP/aKwh1JS8ScryJZ65AwqtQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjJ/ewRxxYmNkQVfOfEqUFaoeU801/oHB5KsSfr/8dXlq9j4qv8miPldkDZF/g1xYAj7GF6iMtppCQ63oUSAZGahVagaro3h2iOO4dkPqhFgmOXoaZOgYaJhgJV0FGGGmPWGiEEijdefZw2yJ2vvnYqkNfOoZRD30/lsDvouyno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdMyF1ta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QP+bUbCiFpFsIlQj2GN2WSEWi+TjiHVf9xU+M68bKutFQT+zwQAGPQ6FDOqc7vI7vZjKMXvH8tyjIJyuS4S873P7VaFcRLGf7YfEn0EqYel+Gf8+nCcu6x4AmJG1skbHRCcsJ96rABtORJCICLWz6g7h5b64jepm7f5DpmsE2+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gioWSqQp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdMyF1ta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BF1C4CEE5;
-	Tue,  8 Apr 2025 11:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gioWSqQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32946C4CEE5;
+	Tue,  8 Apr 2025 11:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111245;
-	bh=oIf2J5HvdLkX5DuEB6mQt1YqZnWm/vMrgyM3FUPFl2U=;
+	s=korg; t=1744111248;
+	bh=srnT5B/RJ9ucV3d9bfdP/aKwh1JS8ScryJZ65AwqtQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdMyF1ta4x3V8QdSIZcWwSLiT+MqgFsmFJUBn8oT5O7Ehfwp9165Ar3B59SfwdXhY
-	 8++2IzEONvaBeNZCIyYYKvn/Esx+J76OQ2QPVBvxXGSiZipRQ83DuGXYEYr/brif59
-	 SI4l2O87UtzZaAKBbU+AMhwXbn/FTtrpNT2EKOkI=
+	b=gioWSqQpRBcohrp/wgLDWjV22iHtdHCdj40+I3NXxjnBPY4uYhgG3F3Qct3BzO5JX
+	 U9ShTQlD7GZc3I1cCM4xNcilVIErH3IYFJZbnIAmMPgnqZ3eklYtrfNlfHNqe+zmEn
+	 5mjm0yA2svaTpvwmYDDBng4sVLJH+b8Qyyyo72cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 362/731] crypto: hisilicon/sec2 - fix for sec spec check
-Date: Tue,  8 Apr 2025 12:44:19 +0200
-Message-ID: <20250408104922.694848441@linuxfoundation.org>
+Subject: [PATCH 6.14 363/731] RDMA/mlx5: Fix page_size variable overflow
+Date: Tue,  8 Apr 2025 12:44:20 +0200
+Message-ID: <20250408104922.718160334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,275 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit f4f353cb7ae9bb43e34943edb693532a39118eca ]
+[ Upstream commit f0c2427412b43cdf1b7b0944749ea17ddb97d5a5 ]
 
-During encryption and decryption, user requests
-must be checked first, if the specifications that
-are not supported by the hardware are used, the
-software computing is used for processing.
+Change all variables storing mlx5_umem_mkc_find_best_pgsz() result to
+unsigned long to support values larger than 31 and avoid overflow.
 
-Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+For example: If we try to register 4GB of memory that is contiguous in
+physical memory, the driver will optimize the page_size and try to use
+an mkey with 4GB entity size. The 'unsigned int' page_size variable will
+overflow to '0' and we'll hit the WARN_ON() in alloc_cacheable_mr().
+
+WARNING: CPU: 2 PID: 1203 at drivers/infiniband/hw/mlx5/mr.c:1124 alloc_cacheable_mr+0x22/0x580 [mlx5_ib]
+Modules linked in: mlx5_ib mlx5_core bonding ip6_gre ip6_tunnel tunnel6 ip_gre gre rdma_rxe rdma_ucm ib_uverbs ib_ipoib ib_umad rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm fuse ib_core [last unloaded: mlx5_core]
+CPU: 2 UID: 70878 PID: 1203 Comm: rdma_resource_l Tainted: G        W          6.14.0-rc4-dirty #43
+Tainted: [W]=WARN
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:alloc_cacheable_mr+0x22/0x580 [mlx5_ib]
+Code: 90 90 90 90 90 90 90 90 0f 1f 44 00 00 55 48 89 e5 41 57 41 56 41 55 41 54 41 52 53 48 83 ec 30 f6 46 28 04 4c 8b 77 08 75 21 <0f> 0b 49 c7 c2 ea ff ff ff 48 8d 65 d0 4c 89 d0 5b 41 5a 41 5c 41
+RSP: 0018:ffffc900006ffac8 EFLAGS: 00010246
+RAX: 0000000004c0d0d0 RBX: ffff888217a22000 RCX: 0000000000100001
+RDX: 00007fb7ac480000 RSI: ffff8882037b1240 RDI: ffff8882046f0600
+RBP: ffffc900006ffb28 R08: 0000000000000001 R09: 0000000000000000
+R10: 00000000000007e0 R11: ffffea0008011d40 R12: ffff8882037b1240
+R13: ffff8882046f0600 R14: ffff888217a22000 R15: ffffc900006ffe00
+FS:  00007fb7ed013340(0000) GS:ffff88885fd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb7ed1d8000 CR3: 00000001fd8f6006 CR4: 0000000000772eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __warn+0x81/0x130
+ ? alloc_cacheable_mr+0x22/0x580 [mlx5_ib]
+ ? report_bug+0xfc/0x1e0
+ ? handle_bug+0x55/0x90
+ ? exc_invalid_op+0x17/0x70
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? alloc_cacheable_mr+0x22/0x580 [mlx5_ib]
+ create_real_mr+0x54/0x150 [mlx5_ib]
+ ib_uverbs_reg_mr+0x17f/0x2a0 [ib_uverbs]
+ ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0xca/0x140 [ib_uverbs]
+ ib_uverbs_run_method+0x6d0/0x780 [ib_uverbs]
+ ? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
+ ib_uverbs_cmd_verbs+0x19b/0x360 [ib_uverbs]
+ ? walk_system_ram_range+0x79/0xd0
+ ? ___pte_offset_map+0x1b/0x110
+ ? __pte_offset_map_lock+0x80/0x100
+ ib_uverbs_ioctl+0xac/0x110 [ib_uverbs]
+ __x64_sys_ioctl+0x94/0xb0
+ do_syscall_64+0x50/0x110
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fb7ecf0737b
+Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 7d 2a 0f 00 f7 d8 64 89 01 48
+RSP: 002b:00007ffdbe03ecc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007ffdbe03edb8 RCX: 00007fb7ecf0737b
+RDX: 00007ffdbe03eda0 RSI: 00000000c0181b01 RDI: 0000000000000003
+RBP: 00007ffdbe03ed80 R08: 00007fb7ecc84010 R09: 00007ffdbe03eed4
+R10: 0000000000000009 R11: 0000000000000246 R12: 00007ffdbe03eed4
+R13: 000000000000000c R14: 000000000000000c R15: 00007fb7ecc84150
+ </TASK>
+
+Fixes: cef7dde8836a ("net/mlx5: Expand mkey page size to support 6 bits")
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/2479a4a3f6fd9bd032e1b6d396274a89c4c5e22f.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec.h        |   1 -
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 101 ++++++++-------------
- 2 files changed, 39 insertions(+), 63 deletions(-)
+ drivers/infiniband/hw/mlx5/mr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec.h b/drivers/crypto/hisilicon/sec2/sec.h
-index 4b99702308228..703920b49c7c0 100644
---- a/drivers/crypto/hisilicon/sec2/sec.h
-+++ b/drivers/crypto/hisilicon/sec2/sec.h
-@@ -37,7 +37,6 @@ struct sec_aead_req {
- 	u8 *a_ivin;
- 	dma_addr_t a_ivin_dma;
- 	struct aead_request *aead_req;
--	bool fallback;
- };
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 753faa9ad06a8..eeb94d1ae60d9 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -56,7 +56,7 @@ static void
+ create_mkey_callback(int status, struct mlx5_async_work *context);
+ static struct mlx5_ib_mr *reg_create(struct ib_pd *pd, struct ib_umem *umem,
+ 				     u64 iova, int access_flags,
+-				     unsigned int page_size, bool populate,
++				     unsigned long page_size, bool populate,
+ 				     int access_mode);
+ static int __mlx5_ib_dereg_mr(struct ib_mr *ibmr);
  
- /* SEC request of Crypto */
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 50223e3c4bccf..82827d637492a 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -690,14 +690,10 @@ static int sec_skcipher_fbtfm_init(struct crypto_skcipher *tfm)
+@@ -1115,7 +1115,7 @@ static struct mlx5_ib_mr *alloc_cacheable_mr(struct ib_pd *pd,
+ 	struct mlx5r_cache_rb_key rb_key = {};
+ 	struct mlx5_cache_ent *ent;
+ 	struct mlx5_ib_mr *mr;
+-	unsigned int page_size;
++	unsigned long page_size;
  
- 	c_ctx->fallback = false;
- 
--	/* Currently, only XTS mode need fallback tfm when using 192bit key */
--	if (likely(strncmp(alg, "xts", SEC_XTS_NAME_SZ)))
--		return 0;
--
- 	c_ctx->fbtfm = crypto_alloc_sync_skcipher(alg, 0,
- 						  CRYPTO_ALG_NEED_FALLBACK);
- 	if (IS_ERR(c_ctx->fbtfm)) {
--		pr_err("failed to alloc xts mode fallback tfm!\n");
-+		pr_err("failed to alloc fallback tfm for %s!\n", alg);
- 		return PTR_ERR(c_ctx->fbtfm);
- 	}
- 
-@@ -857,7 +853,7 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 	}
- 
- 	memcpy(c_ctx->c_key, key, keylen);
--	if (c_ctx->fallback && c_ctx->fbtfm) {
-+	if (c_ctx->fbtfm) {
- 		ret = crypto_sync_skcipher_setkey(c_ctx->fbtfm, key, keylen);
- 		if (ret) {
- 			dev_err(dev, "failed to set fallback skcipher key!\n");
-@@ -1159,8 +1155,10 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 	}
- 
- 	ret = crypto_authenc_extractkeys(&keys, key, keylen);
--	if (ret)
-+	if (ret) {
-+		dev_err(dev, "sec extract aead keys err!\n");
- 		goto bad_key;
-+	}
- 
- 	ret = sec_aead_aes_set_key(c_ctx, &keys);
- 	if (ret) {
-@@ -1174,12 +1172,6 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 		goto bad_key;
- 	}
- 
--	if (ctx->a_ctx.a_key_len & WORD_MASK) {
--		ret = -EINVAL;
--		dev_err(dev, "AUTH key length error!\n");
--		goto bad_key;
--	}
--
- 	ret = sec_aead_fallback_setkey(a_ctx, tfm, key, keylen);
- 	if (ret) {
- 		dev_err(dev, "set sec fallback key err!\n");
-@@ -1999,8 +1991,7 @@ static int sec_aead_sha512_ctx_init(struct crypto_aead *tfm)
- 	return sec_aead_ctx_init(tfm, "sha512");
- }
- 
--static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
--	struct sec_req *sreq)
-+static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 	if (umem->is_dmabuf)
+ 		page_size = mlx5_umem_dmabuf_default_pgsz(umem, iova);
+@@ -1219,7 +1219,7 @@ reg_create_crossing_vhca_mr(struct ib_pd *pd, u64 iova, u64 length, int access_f
+  */
+ static struct mlx5_ib_mr *reg_create(struct ib_pd *pd, struct ib_umem *umem,
+ 				     u64 iova, int access_flags,
+-				     unsigned int page_size, bool populate,
++				     unsigned long page_size, bool populate,
+ 				     int access_mode)
  {
- 	u32 cryptlen = sreq->c_req.sk_req->cryptlen;
- 	struct device *dev = ctx->dev;
-@@ -2022,10 +2013,6 @@ static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
- 		}
- 		break;
- 	case SEC_CMODE_CTR:
--		if (unlikely(ctx->sec->qm.ver < QM_HW_V3)) {
--			dev_err(dev, "skcipher HW version error!\n");
--			ret = -EINVAL;
--		}
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -2034,17 +2021,21 @@ static int sec_skcipher_cryptlen_check(struct sec_ctx *ctx,
- 	return ret;
- }
+ 	struct mlx5_ib_dev *dev = to_mdev(pd->device);
+@@ -1425,7 +1425,7 @@ static struct ib_mr *create_real_mr(struct ib_pd *pd, struct ib_umem *umem,
+ 		mr = alloc_cacheable_mr(pd, umem, iova, access_flags,
+ 					MLX5_MKC_ACCESS_MODE_MTT);
+ 	} else {
+-		unsigned int page_size =
++		unsigned long page_size =
+ 			mlx5_umem_mkc_find_best_pgsz(dev, umem, iova);
  
--static int sec_skcipher_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
-+static int sec_skcipher_param_check(struct sec_ctx *ctx,
-+				    struct sec_req *sreq, bool *need_fallback)
- {
- 	struct skcipher_request *sk_req = sreq->c_req.sk_req;
- 	struct device *dev = ctx->dev;
- 	u8 c_alg = ctx->c_ctx.c_alg;
- 
--	if (unlikely(!sk_req->src || !sk_req->dst ||
--		     sk_req->cryptlen > MAX_INPUT_DATA_LEN)) {
-+	if (unlikely(!sk_req->src || !sk_req->dst)) {
- 		dev_err(dev, "skcipher input param error!\n");
- 		return -EINVAL;
- 	}
-+
-+	if (sk_req->cryptlen > MAX_INPUT_DATA_LEN)
-+		*need_fallback = true;
-+
- 	sreq->c_req.c_len = sk_req->cryptlen;
- 
- 	if (ctx->pbuf_supported && sk_req->cryptlen <= SEC_PBUF_SZ)
-@@ -2102,6 +2093,7 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(sk_req);
- 	struct sec_req *req = skcipher_request_ctx(sk_req);
- 	struct sec_ctx *ctx = crypto_skcipher_ctx(tfm);
-+	bool need_fallback = false;
- 	int ret;
- 
- 	if (!sk_req->cryptlen) {
-@@ -2115,11 +2107,11 @@ static int sec_skcipher_crypto(struct skcipher_request *sk_req, bool encrypt)
- 	req->c_req.encrypt = encrypt;
- 	req->ctx = ctx;
- 
--	ret = sec_skcipher_param_check(ctx, req);
-+	ret = sec_skcipher_param_check(ctx, req, &need_fallback);
- 	if (unlikely(ret))
- 		return -EINVAL;
- 
--	if (unlikely(ctx->c_ctx.fallback))
-+	if (unlikely(ctx->c_ctx.fallback || need_fallback))
- 		return sec_skcipher_soft_crypto(ctx, sk_req, encrypt);
- 
- 	return ctx->req_op->process(ctx, req);
-@@ -2227,52 +2219,35 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
- 	size_t sz = crypto_aead_authsize(tfm);
- 	u8 c_mode = ctx->c_ctx.c_mode;
--	struct device *dev = ctx->dev;
- 	int ret;
- 
--	/* Hardware does not handle cases where authsize is not 4 bytes aligned */
--	if (c_mode == SEC_CMODE_CBC && (sz & WORD_MASK)) {
--		sreq->aead_req.fallback = true;
-+	if (unlikely(ctx->sec->qm.ver == QM_HW_V2 && !sreq->c_req.c_len))
- 		return -EINVAL;
--	}
- 
- 	if (unlikely(req->cryptlen + req->assoclen > MAX_INPUT_DATA_LEN ||
--	    req->assoclen > SEC_MAX_AAD_LEN)) {
--		dev_err(dev, "aead input spec error!\n");
-+		     req->assoclen > SEC_MAX_AAD_LEN))
- 		return -EINVAL;
--	}
- 
- 	if (c_mode == SEC_CMODE_CCM) {
--		if (unlikely(req->assoclen > SEC_MAX_CCM_AAD_LEN)) {
--			dev_err_ratelimited(dev, "CCM input aad parameter is too long!\n");
-+		if (unlikely(req->assoclen > SEC_MAX_CCM_AAD_LEN))
- 			return -EINVAL;
--		}
--		ret = aead_iv_demension_check(req);
--		if (ret) {
--			dev_err(dev, "aead input iv param error!\n");
--			return ret;
--		}
--	}
- 
--	if (sreq->c_req.encrypt)
--		sreq->c_req.c_len = req->cryptlen;
--	else
--		sreq->c_req.c_len = req->cryptlen - sz;
--	if (c_mode == SEC_CMODE_CBC) {
--		if (unlikely(sreq->c_req.c_len & (AES_BLOCK_SIZE - 1))) {
--			dev_err(dev, "aead crypto length error!\n");
-+		ret = aead_iv_demension_check(req);
-+		if (unlikely(ret))
-+			return -EINVAL;
-+	} else if (c_mode == SEC_CMODE_CBC) {
-+		if (unlikely(sz & WORD_MASK))
-+			return -EINVAL;
-+		if (unlikely(ctx->a_ctx.a_key_len & WORD_MASK))
- 			return -EINVAL;
--		}
- 	}
- 
- 	return 0;
- }
- 
--static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
-+static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq, bool *need_fallback)
- {
- 	struct aead_request *req = sreq->aead_req.aead_req;
--	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
--	size_t authsize = crypto_aead_authsize(tfm);
- 	struct device *dev = ctx->dev;
- 	u8 c_alg = ctx->c_ctx.c_alg;
- 
-@@ -2281,12 +2256,10 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 		return -EINVAL;
- 	}
- 
--	if (ctx->sec->qm.ver == QM_HW_V2) {
--		if (unlikely(!req->cryptlen || (!sreq->c_req.encrypt &&
--			     req->cryptlen <= authsize))) {
--			sreq->aead_req.fallback = true;
--			return -EINVAL;
--		}
-+	if (unlikely(ctx->c_ctx.c_mode == SEC_CMODE_CBC &&
-+		     sreq->c_req.c_len & (AES_BLOCK_SIZE - 1))) {
-+		dev_err(dev, "aead cbc mode input data length error!\n");
-+		return -EINVAL;
- 	}
- 
- 	/* Support AES or SM4 */
-@@ -2295,8 +2268,10 @@ static int sec_aead_param_check(struct sec_ctx *ctx, struct sec_req *sreq)
- 		return -EINVAL;
- 	}
- 
--	if (unlikely(sec_aead_spec_check(ctx, sreq)))
-+	if (unlikely(sec_aead_spec_check(ctx, sreq))) {
-+		*need_fallback = true;
- 		return -EINVAL;
-+	}
- 
- 	if (ctx->pbuf_supported && (req->cryptlen + req->assoclen) <=
- 		SEC_PBUF_SZ)
-@@ -2340,17 +2315,19 @@ static int sec_aead_crypto(struct aead_request *a_req, bool encrypt)
- 	struct crypto_aead *tfm = crypto_aead_reqtfm(a_req);
- 	struct sec_req *req = aead_request_ctx(a_req);
- 	struct sec_ctx *ctx = crypto_aead_ctx(tfm);
-+	size_t sz = crypto_aead_authsize(tfm);
-+	bool need_fallback = false;
- 	int ret;
- 
- 	req->flag = a_req->base.flags;
- 	req->aead_req.aead_req = a_req;
- 	req->c_req.encrypt = encrypt;
- 	req->ctx = ctx;
--	req->aead_req.fallback = false;
-+	req->c_req.c_len = a_req->cryptlen - (req->c_req.encrypt ? 0 : sz);
- 
--	ret = sec_aead_param_check(ctx, req);
-+	ret = sec_aead_param_check(ctx, req, &need_fallback);
- 	if (unlikely(ret)) {
--		if (req->aead_req.fallback)
-+		if (need_fallback)
- 			return sec_aead_soft_crypto(ctx, a_req, encrypt);
- 		return -EINVAL;
- 	}
+ 		mutex_lock(&dev->slow_path_mutex);
 -- 
 2.39.5
 
