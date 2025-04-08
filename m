@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065D1269820;
-	Tue,  8 Apr 2025 12:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B48826E165;
+	Tue,  8 Apr 2025 12:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114600; cv=none; b=iQAmh3V+ezA4dl05bwnanaw1clsbhJy3BMMfJNcUktdJqgeA7KBJli53IrFAL6HncVQMIRX0CWDYGslSdsctjyAhrgSdqivJ8ksCY9l1pHvVzAA33lDp9wph/JS1Ktdl1N5/5WRiIODeVJ996Zn8kvw/Hi8gDiRAgpgEkii7qEo=
+	t=1744114602; cv=none; b=uIs7sCtzYcenxiwaxfcXD+OD4LgUeEIgC3ANaBCMIeMHSFRXvwhR63LCO/sHYkiOPSayFvm33VXMVaLHlxN33x4VUSsxZQrpaEMCLc+LP9BFOzDNJ1cLYp3BJNwwjOTC0FKnSDMxT/s9e38mGru13EwPDNDMqcVS4KLxTX2wjjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114600; c=relaxed/simple;
-	bh=QGTYLowFX/YFrO4EsvXExkVmpeOxPxgpx7W5xqnGDx8=;
+	s=arc-20240116; t=1744114602; c=relaxed/simple;
+	bh=EdZaXzrkYfICibq12hNhHXrXVBo7EvrazShpAOCfCYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHvMFcd2ud8BqYi9xnQts3yk9uVAjQbSk1gA2hyZJvaQQK0SmDtxbCjBFKuAzeJtn3rA82Seobx5A4UHsPtI8jyAI9RAqS1GnVoip0Ev2UJBi4y0FQ3zrXTwT3OgRxWYSTFoF4IKy3wLqbYl6Op36CYhuDUtwC1sgDL9kvY2OrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjjsfTdx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iVgYvwkBoDLwQw3lpv0782V2JLemCXdwelIZzzaE1qpRcrFGCWwtSaRmNIb+XzPt3JSKlesqWAxlu2XFN/kNda+ESX49KccO8Y6Zx4YaS8yCuqLVT3uAGITvJy4qqlP3mCDrkaIC6htrbhtG/nw+SMaYiYdAZeMsuz+DDS04KhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTa2qLnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjjsfTdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2602AC4CEE7;
-	Tue,  8 Apr 2025 12:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTa2qLnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6983C4CEEB;
+	Tue,  8 Apr 2025 12:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114599;
-	bh=QGTYLowFX/YFrO4EsvXExkVmpeOxPxgpx7W5xqnGDx8=;
+	s=korg; t=1744114602;
+	bh=EdZaXzrkYfICibq12hNhHXrXVBo7EvrazShpAOCfCYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjjsfTdx0E5CLng8zinKSsg5fVfpcit2gVk7MPh4ie+xVz0FQmJ40jsHuXrbS2R/e
-	 QRRxB0Dv11QyT20zCQ+Cl1jG6GQIiijrurnTFH4EN84qoV0irFO0F0r5j1WJjS0rQm
-	 rka9in/4XfRSErVIGgiEzjiHV5ilSygkVHINqHFY=
+	b=WTa2qLnL6098OJjjP8gdZGc4lSarb7mn0e4Be6Igy/XIUsU8iU0hEOLPbuzzGoM1V
+	 uqKoouE9PcnN0AFgFkoQrE/QX4knSk8hIn9msg9fKCFjzrN5P1cWPjQoPWCNy8kM5F
+	 X0sk3nFEjm7EQsG0VuU0IzTD875Xw5cVwCJoriZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 164/499] RDMA/erdma: Prevent use-after-free in erdma_accept_newconn()
-Date: Tue,  8 Apr 2025 12:46:16 +0200
-Message-ID: <20250408104855.269955352@linuxfoundation.org>
+Subject: [PATCH 6.13 165/499] remoteproc: qcom_q6v5_mss: Handle platforms with one power domain
+Date: Tue,  8 Apr 2025 12:46:17 +0200
+Message-ID: <20250408104855.295077656@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,40 +47,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Luca Weiss <luca@lucaweiss.eu>
 
-[ Upstream commit 83437689249e6a17b25e27712fbee292e42e7855 ]
+[ Upstream commit 4641840341f37dc8231e0840ec1514b4061b4322 ]
 
-After the erdma_cep_put(new_cep) being called, new_cep will be freed,
-and the following dereference will cause a UAF problem. Fix this issue.
+For example MSM8974 has mx voltage rail exposed as regulator and only cx
+voltage rail is exposed as power domain. This power domain (cx) is
+attached internally in power domain and cannot be attached in this driver.
 
-Fixes: 920d93eac8b9 ("RDMA/erdma: Add connection management (CM) support")
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 8750cf392394 ("remoteproc: qcom_q6v5_mss: Allow replacing regulators with power domains")
+Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+Link: https://lore.kernel.org/r/20250217-msm8226-modem-v5-4-2bc74b80e0ae@lucaweiss.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_cm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_mss.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
-index 771059a8eb7d7..e349e8d2fb50a 100644
---- a/drivers/infiniband/hw/erdma/erdma_cm.c
-+++ b/drivers/infiniband/hw/erdma/erdma_cm.c
-@@ -705,7 +705,6 @@ static void erdma_accept_newconn(struct erdma_cep *cep)
- 		erdma_cancel_mpatimer(new_cep);
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index e78bd986dc3f2..2c80d7fe39f8e 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -1831,6 +1831,13 @@ static int q6v5_pds_attach(struct device *dev, struct device **devs,
+ 	while (pd_names[num_pds])
+ 		num_pds++;
  
- 		erdma_cep_put(new_cep);
--		new_cep->sock = NULL;
- 	}
++	/* Handle single power domain */
++	if (num_pds == 1 && dev->pm_domain) {
++		devs[0] = dev;
++		pm_runtime_enable(dev);
++		return 1;
++	}
++
+ 	for (i = 0; i < num_pds; i++) {
+ 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
+ 		if (IS_ERR_OR_NULL(devs[i])) {
+@@ -1851,8 +1858,15 @@ static int q6v5_pds_attach(struct device *dev, struct device **devs,
+ static void q6v5_pds_detach(struct q6v5 *qproc, struct device **pds,
+ 			    size_t pd_count)
+ {
++	struct device *dev = qproc->dev;
+ 	int i;
  
- 	if (new_s) {
++	/* Handle single power domain */
++	if (pd_count == 1 && dev->pm_domain) {
++		pm_runtime_disable(dev);
++		return;
++	}
++
+ 	for (i = 0; i < pd_count; i++)
+ 		dev_pm_domain_detach(pds[i], false);
+ }
+@@ -2449,13 +2463,13 @@ static const struct rproc_hexagon_res msm8974_mss = {
+ 			.supply = "pll",
+ 			.uA = 100000,
+ 		},
+-		{}
+-	},
+-	.fallback_proxy_supply = (struct qcom_mss_reg_res[]) {
+ 		{
+ 			.supply = "mx",
+ 			.uV = 1050000,
+ 		},
++		{}
++	},
++	.fallback_proxy_supply = (struct qcom_mss_reg_res[]) {
+ 		{
+ 			.supply = "cx",
+ 			.uA = 100000,
+@@ -2481,7 +2495,6 @@ static const struct rproc_hexagon_res msm8974_mss = {
+ 		NULL
+ 	},
+ 	.proxy_pd_names = (char*[]){
+-		"mx",
+ 		"cx",
+ 		NULL
+ 	},
 -- 
 2.39.5
 
