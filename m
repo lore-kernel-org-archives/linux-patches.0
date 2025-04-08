@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12115267B89;
-	Tue,  8 Apr 2025 12:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B295C26A1AA;
+	Tue,  8 Apr 2025 12:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115081; cv=none; b=Gf17mchJ+/n/W8kZNFz3T/+TDURAgrV2Ldtf9QnPBXLJ/mciySLV+PuZQkotq+iImPdoAoTTP83wbuWyWhI/126cYFpxnBDz2fIDp0b84zs32bKgA/N+BscmXTPEthU/9++7HCfDqVUIuWqRmPQLdB7ldz2x412cx+0Y3CKSDSg=
+	t=1744115083; cv=none; b=tikB+oILCxPKqsv8RL1pSU9qjXVB4R7MNlShqdyAnXZEFtnl8XLDQzVQz9GYYR2jdaDy37ogDx2u5VVYS4PfitPjbYdNYAK1fkim79ruYn2tU1U7jamRjxCssaHdTJ1FFEOYtwIdMInEnwQt7n9UalvCxG83V4dGCy9d8W7Fhak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115081; c=relaxed/simple;
-	bh=a3RQQJQ9k9CC1Obzy20nouWU8UXrCNIWMmFAQAS7sJU=;
+	s=arc-20240116; t=1744115083; c=relaxed/simple;
+	bh=GP9gNI426Eb1XTjwJP2D65ujzGD3X1Drym1W6DbtqzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IADQJJnDlFBkbR/zvx/elgTXh35QJA/O1G1X4O295jJGGUY6/Gpak7VXn8QOCEWhvvzYHQdC1UI4S141MpskFdeCXJfZ4uZUnbGSXeQlNZKR19BaF5pthIUOjyb6wvIloI9g2EbJSOQYcDz/MLVJ94XKFEAlx3eH2GyRs7GyHi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fC0K4IRx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiFOUWXRGR+sWlpSfpDMLQ0WP35MWOfFrrt2eg98v4UaF/VeCUvKbGP/JajYklXhmG+ghq6xDE37cTFpDEeL+5gZICxczvc3i6ipFQ8+qOKmCESiGJQ08Hke1bc0rIBQZSjm49Gcg2xqiKiAYq7/TaM3v971DsfJ8K/hoUreTDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiKXakOa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fC0K4IRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C42C4CEE5;
-	Tue,  8 Apr 2025 12:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiKXakOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429D6C4CEE5;
+	Tue,  8 Apr 2025 12:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115080;
-	bh=a3RQQJQ9k9CC1Obzy20nouWU8UXrCNIWMmFAQAS7sJU=;
+	s=korg; t=1744115083;
+	bh=GP9gNI426Eb1XTjwJP2D65ujzGD3X1Drym1W6DbtqzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fC0K4IRxNjkr02Vp95Iqg6ZUA5xKtq74MSZC91CLpxXHDWNjXNdNTiGphrxJXrEaK
-	 +tFLQJfBhEZo874OGZ5Qk+ffulq2j+fCX8MfJb4UU9C7LR7hIFOkORqDI/1HJESRmP
-	 VT/r/UwaHyMcbqakofPTakRrATzIFYQLIJm6vczc=
+	b=SiKXakOa0/QHi30LIF9+PASwTTYxYmeGPpNsJZlCR1x2Ppqgx1YTe6FxwWEdNp6l9
+	 fmSwfSdRnZ1wctSfilTrHeOXoWNo5pj+ayw6lRxsGLoSUHv2lshSkZXJgokS5zwCmj
+	 pCBQWscbMpUIHjIcnueICpELMgo7JxDqm/H+vPyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 302/499] wifi: iwlwifi: fw: allocate chained SG tables for dump
-Date: Tue,  8 Apr 2025 12:48:34 +0200
-Message-ID: <20250408104858.748806615@linuxfoundation.org>
+Subject: [PATCH 6.13 293/499] octeontx2-af: Free NIX_AF_INT_VEC_GEN irq
+Date: Tue,  8 Apr 2025 12:48:25 +0200
+Message-ID: <20250408104858.521882024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,138 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 7774e3920029398ad49dc848b23840593f14d515 ]
+[ Upstream commit 323d6db6dc7decb06f2545efb9496259ddacd4f4 ]
 
-The firmware dumps can be pretty big, and since we use single
-pages for each SG table entry, even the table itself may end
-up being an order-5 allocation. Build chained tables so that
-we need not allocate a higher-order table here.
+Due to the incorrect initial vector number in
+rvu_nix_unregister_interrupts(), NIX_AF_INT_VEC_GEN is not
+geeting free. Fix the vector number to include NIX_AF_INT_VEC_GEN
+irq.
 
-This could be improved and cleaned up, e.g. by using the SG
-pool code or simply kvmalloc(), but all of that would require
-also updating the devcoredump first since that frees it all,
-so we need to be more careful. SG pool might also run against
-the CONFIG_ARCH_NO_SG_CHAIN limitation, which is irrelevant
-here.
-
-Also use _devcd_free_sgtable() for the error paths now, much
-simpler especially since it's in two places now.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.697c7a465ac9.Iea982df46b5c075bfb77ade36f187d99a70c63db@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250327094054.2312-1-gakula@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 86 ++++++++++++++-------
- 1 file changed, 58 insertions(+), 28 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index fb2ea38e89aca..6594216f873c4 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -558,41 +558,71 @@ static void iwl_dump_prph(struct iwl_fw_runtime *fwrt,
- }
- 
- /*
-- * alloc_sgtable - allocates scallerlist table in the given size,
-- * fills it with pages and returns it
-+ * alloc_sgtable - allocates (chained) scatterlist in the given size,
-+ *	fills it with pages and returns it
-  * @size: the size (in bytes) of the table
--*/
--static struct scatterlist *alloc_sgtable(int size)
-+ */
-+static struct scatterlist *alloc_sgtable(ssize_t size)
- {
--	int alloc_size, nents, i;
--	struct page *new_page;
--	struct scatterlist *iter;
--	struct scatterlist *table;
-+	struct scatterlist *result = NULL, *prev;
-+	int nents, i, n_prev;
- 
- 	nents = DIV_ROUND_UP(size, PAGE_SIZE);
--	table = kcalloc(nents, sizeof(*table), GFP_KERNEL);
--	if (!table)
--		return NULL;
--	sg_init_table(table, nents);
--	iter = table;
--	for_each_sg(table, iter, sg_nents(table), i) {
--		new_page = alloc_page(GFP_KERNEL);
--		if (!new_page) {
--			/* release all previous allocated pages in the table */
--			iter = table;
--			for_each_sg(table, iter, sg_nents(table), i) {
--				new_page = sg_page(iter);
--				if (new_page)
--					__free_page(new_page);
--			}
--			kfree(table);
-+
-+#define N_ENTRIES_PER_PAGE (PAGE_SIZE / sizeof(*result))
-+	/*
-+	 * We need an additional entry for table chaining,
-+	 * this ensures the loop can finish i.e. we can
-+	 * fit at least two entries per page (obviously,
-+	 * many more really fit.)
-+	 */
-+	BUILD_BUG_ON(N_ENTRIES_PER_PAGE < 2);
-+
-+	while (nents > 0) {
-+		struct scatterlist *new, *iter;
-+		int n_fill, n_alloc;
-+
-+		if (nents <= N_ENTRIES_PER_PAGE) {
-+			/* last needed table */
-+			n_fill = nents;
-+			n_alloc = nents;
-+			nents = 0;
-+		} else {
-+			/* fill a page with entries */
-+			n_alloc = N_ENTRIES_PER_PAGE;
-+			/* reserve one for chaining */
-+			n_fill = n_alloc - 1;
-+			nents -= n_fill;
-+		}
-+
-+		new = kcalloc(n_alloc, sizeof(*new), GFP_KERNEL);
-+		if (!new) {
-+			if (result)
-+				_devcd_free_sgtable(result);
- 			return NULL;
- 		}
--		alloc_size = min_t(int, size, PAGE_SIZE);
--		size -= PAGE_SIZE;
--		sg_set_page(iter, new_page, alloc_size, 0);
-+		sg_init_table(new, n_alloc);
-+
-+		if (!result)
-+			result = new;
-+		else
-+			sg_chain(prev, n_prev, new);
-+		prev = new;
-+		n_prev = n_alloc;
-+
-+		for_each_sg(new, iter, n_fill, i) {
-+			struct page *new_page = alloc_page(GFP_KERNEL);
-+
-+			if (!new_page) {
-+				_devcd_free_sgtable(result);
-+				return NULL;
-+			}
-+
-+			sg_set_page(iter, new_page, PAGE_SIZE, 0);
-+		}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
+index dab4deca893f5..27c3a2daaaa95 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
+@@ -207,7 +207,7 @@ static void rvu_nix_unregister_interrupts(struct rvu *rvu)
+ 		rvu->irq_allocated[offs + NIX_AF_INT_VEC_RVU] = false;
  	}
--	return table;
-+
-+	return result;
- }
  
- static void iwl_fw_get_prph_len(struct iwl_fw_runtime *fwrt,
+-	for (i = NIX_AF_INT_VEC_AF_ERR; i < NIX_AF_INT_VEC_CNT; i++)
++	for (i = NIX_AF_INT_VEC_GEN; i < NIX_AF_INT_VEC_CNT; i++)
+ 		if (rvu->irq_allocated[offs + i]) {
+ 			free_irq(pci_irq_vector(rvu->pdev, offs + i), rvu_dl);
+ 			rvu->irq_allocated[offs + i] = false;
 -- 
 2.39.5
 
