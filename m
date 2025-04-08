@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F1A264FA0;
-	Tue,  8 Apr 2025 11:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E562673B7;
+	Tue,  8 Apr 2025 11:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110549; cv=none; b=V2hVi+0lfj/fESrjiyJlgfY7Nlb9W1AM8V033y2xRDndaiYcPGIWvULsiROoSLFm5X9C6GCmo0DyubWiivF3Eq6i/Qi2kwywXQ7KSOhxSNmABcA8y+vZ5pZKjT9ubiwY6FQbASHQsSmIsI10Od4kTXSLbhWRSrkcVHJixjwnqGA=
+	t=1744110551; cv=none; b=qFrtuxOIbE1TsZ4t04JIhvw6LpIfkg/aB40nnv5jOUeEcCAatkMF/LUo8trTNf6sifWwEIu/FG+N0XxsOPCMw/ARVcB0N3o4aZU0lDXv8KXdZyTWvnvY3vWY5gZaGEyBtB8ImJ1ZqPpeASJgoC34k3cJ+xtN6viN7f3JrlMYJvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110549; c=relaxed/simple;
-	bh=Xl+HE41PBjLOPROjyYGgaustBo/0+nbOSRQFbZsuRC4=;
+	s=arc-20240116; t=1744110551; c=relaxed/simple;
+	bh=4cFjnh/qd6s37BITAKYOTVOQg0yjjZ50GRbYkhPGvmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZBergttxKJUUy8FKluz1e1J9W/lhn4MlEC1SqYzrjd01E3mRxz3u4GKjMInO5qFyQZ9mE+G4A4/zMAxtZImrsLYOpxJZidD5JqV5G7cCFIYGKHYjS1IaTqnnuFuJllblonxlWHIhpLK5YKqjhFv5ZZ7Ka41CCGEQkARJmWiRr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqcsrNIj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPij6bYblAPK8YpYg7W4MLhSobvmJt5t9YW435ULBCoJhXnGebfSI91BSjG7YM1bgTVgDcbbYNoRmRz71OsHTvbpJTKXS1xbUNiHj5m/BuHVBqK1wnOkGWdSZisWwPChxfjCs0VlizN9DVjwwcyvBIh98NiL1Pwt9cAJrdnqhGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kr7O0KiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqcsrNIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D30C4CEE5;
-	Tue,  8 Apr 2025 11:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kr7O0KiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56666C4CEE5;
+	Tue,  8 Apr 2025 11:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110549;
-	bh=Xl+HE41PBjLOPROjyYGgaustBo/0+nbOSRQFbZsuRC4=;
+	s=korg; t=1744110551;
+	bh=4cFjnh/qd6s37BITAKYOTVOQg0yjjZ50GRbYkhPGvmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqcsrNIjk9xr+KiK7YXO7a8TTFMTe/6FNVMbd7XvDH2hRNUgeQ6+rjCiroYPuY9fN
-	 W4Wkm8RsRb+ctpj7gT1aPQJRErlqqRAMhq0Pog43boKvk5k+4fw9uXA7IxOjfUPdMY
-	 yeMHvyr4uAUyYNHimwP7OQSjSNiQJ3ZTtqRgJi2A=
+	b=Kr7O0KiYowiAvoM5n1jh4e+EDDum65tc2JSEY9ZtUqZAI976Flfmaeq+wHs3vdDaw
+	 2TjZj7o1JK2e7uJFiXZb9JOk1ZFEON3BUVgw3upMwtypS1Ui4GESGOHqlYnzUuYOPf
+	 KUe/De5OD0IqqtphwBDSgTQKtswUa1Gbr/PYaug4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Robin van der Gracht <robin@protonic.nl>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 105/731] scsi: mpt3sas: Fix a locking bug in an error path
-Date: Tue,  8 Apr 2025 12:40:02 +0200
-Message-ID: <20250408104916.717006178@linuxfoundation.org>
+Subject: [PATCH 6.14 106/731] can: rockchip_canfd: rkcanfd_chip_fifo_setup(): remove duplicated setup of RX FIFO
+Date: Tue,  8 Apr 2025 12:40:03 +0200
+Message-ID: <20250408104916.741362612@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,92 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Robin van der Gracht <robin@protonic.nl>
 
-[ Upstream commit 38afcf0660f5c408ba6c2f0ba3a9729e0102fe2e ]
+[ Upstream commit d9e1cc087a55286fe028e0f078159b30d7da90bd ]
 
-Call mutex_unlock(&ioc->hostdiag_unlock_mutex) once from error paths
-instead of twice.
+The rockchip_canfd driver doesn't make use of the TXE FIFO.
 
-This patch fixes the following Clang -Wthread-safety errors:
+Although the comment states that the TXE FIFO is setup, it's actually
+a setup of the RX FIFO. The regular setup of the RX FIFO follows.
 
-drivers/scsi/mpt3sas/mpt3sas_base.c:8085:2: error: mutex 'ioc->hostdiag_unlock_mutex' is not held on every path through here [-Werror,-Wthread-safety-analysis]
- 8085 |         pci_cfg_access_unlock(ioc->pdev);
-      |         ^
-drivers/scsi/mpt3sas/mpt3sas_base.c:8019:2: note: mutex acquired here
- 8019 |         mutex_lock(&ioc->hostdiag_unlock_mutex);
-      |         ^
-./include/linux/mutex.h:171:26: note: expanded from macro 'mutex_lock'
-  171 | #define mutex_lock(lock) mutex_lock_nested(lock, 0)
-      |                          ^
-drivers/scsi/mpt3sas/mpt3sas_base.c:8085:2: error: mutex 'ioc->hostdiag_unlock_mutex' is not held on every path through here [-Werror,-Wthread-safety-analysis]
- 8085 |         pci_cfg_access_unlock(ioc->pdev);
-      |         ^
-drivers/scsi/mpt3sas/mpt3sas_base.c:8019:2: note: mutex acquired here
- 8019 |         mutex_lock(&ioc->hostdiag_unlock_mutex);
-      |         ^
-./include/linux/mutex.h:171:26: note: expanded from macro 'mutex_lock'
-  171 | #define mutex_lock(lock) mutex_lock_nested(lock, 0)
-      |                          ^
-drivers/scsi/mpt3sas/mpt3sas_base.c:8087:2: error: releasing mutex 'ioc->hostdiag_unlock_mutex' that was not held [-Werror,-Wthread-safety-analysis]
- 8087 |         mutex_unlock(&ioc->hostdiag_unlock_mutex);
-      |         ^
+Remove the duplicated setup of the RX FIFO.
 
-Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Fixes: c0767560b012 ("scsi: mpt3sas: Reload SBR without rebooting HBA")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250210203936.2946494-3-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
+Signed-off-by: Robin van der Gracht <robin@protonic.nl>
+Link: https://patch.msgid.link/20250219-rk3568-canfd-v1-1-453869358c72@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/can/rockchip/rockchip_canfd-core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index dc43cfa83088b..212e3b86bb817 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -8018,7 +8018,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
+diff --git a/drivers/net/can/rockchip/rockchip_canfd-core.c b/drivers/net/can/rockchip/rockchip_canfd-core.c
+index d9a937ba126c3..46201c126703c 100644
+--- a/drivers/net/can/rockchip/rockchip_canfd-core.c
++++ b/drivers/net/can/rockchip/rockchip_canfd-core.c
+@@ -236,11 +236,6 @@ static void rkcanfd_chip_fifo_setup(struct rkcanfd_priv *priv)
+ {
+ 	u32 reg;
  
- 	mutex_lock(&ioc->hostdiag_unlock_mutex);
- 	if (mpt3sas_base_unlock_and_get_host_diagnostic(ioc, &host_diagnostic))
--		goto out;
-+		goto unlock;
- 
- 	hcb_size = ioc->base_readl(&ioc->chip->HCBSize);
- 	drsprintk(ioc, ioc_info(ioc, "diag reset: issued\n"));
-@@ -8038,7 +8038,7 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
- 			ioc_info(ioc,
- 			    "Invalid host diagnostic register value\n");
- 			_base_dump_reg_set(ioc);
--			goto out;
-+			goto unlock;
- 		}
- 		if (!(host_diagnostic & MPI2_DIAG_RESET_ADAPTER))
- 			break;
-@@ -8074,17 +8074,19 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
- 		ioc_err(ioc, "%s: failed going to ready state (ioc_state=0x%x)\n",
- 			__func__, ioc_state);
- 		_base_dump_reg_set(ioc);
--		goto out;
-+		goto fail;
- 	}
- 
- 	pci_cfg_access_unlock(ioc->pdev);
- 	ioc_info(ioc, "diag reset: SUCCESS\n");
- 	return 0;
- 
-- out:
-+unlock:
-+	mutex_unlock(&ioc->hostdiag_unlock_mutex);
-+
-+fail:
- 	pci_cfg_access_unlock(ioc->pdev);
- 	ioc_err(ioc, "diag reset: FAILED\n");
--	mutex_unlock(&ioc->hostdiag_unlock_mutex);
- 	return -EFAULT;
- }
- 
+-	/* TXE FIFO */
+-	reg = rkcanfd_read(priv, RKCANFD_REG_RX_FIFO_CTRL);
+-	reg |= RKCANFD_REG_RX_FIFO_CTRL_RX_FIFO_ENABLE;
+-	rkcanfd_write(priv, RKCANFD_REG_RX_FIFO_CTRL, reg);
+-
+ 	/* RX FIFO */
+ 	reg = rkcanfd_read(priv, RKCANFD_REG_RX_FIFO_CTRL);
+ 	reg |= RKCANFD_REG_RX_FIFO_CTRL_RX_FIFO_ENABLE;
 -- 
 2.39.5
 
