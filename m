@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFD6268691;
-	Tue,  8 Apr 2025 11:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B62268691;
+	Tue,  8 Apr 2025 11:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110223; cv=none; b=JwWE2pU+P7TRqcaEIUBq9ZYRUzhTsdfYH9TMesulE413fRamHDBcHj5k0TiCWcowcphVtK1I8HzX9Kn+SEOtqOnpSA6MhIED8lPkkvG8Gfn7w1j7v5u+bPD82CYccxz3lg3GwjZ62OGdPgbY3C/Bh29j61e7xcbZ9wGDkq6HHKE=
+	t=1744110227; cv=none; b=k1UWhtW1gKv3O6Q4sZ5yy4aZEcrn35WFqV/flwnq7tjIc678g3mSP7CIn+bYHFmPAm+DYdt8HAXrb7iwAraTChjYHhoLzqtcEtQfrtaGJtsmcOeQmYF9XNOoQ8+ZvNPtXrxK0SWx5eNKQ4Gv9YndqtY4A09HLwY53A7WrvQj4rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110223; c=relaxed/simple;
-	bh=v4w6duPkLl0byoCi/rVfX3o9uGV4rGwxextmcTQdRfs=;
+	s=arc-20240116; t=1744110227; c=relaxed/simple;
+	bh=ufChVWYQ2nothh9FDw7HBoM8xaVTymRDszDalUJlNY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fhs6rHHS/BUp7geZUZsX3CD1j2sL5/m5sSiclYG2csJUR5KDwUvIBYtDi/S6KHO7CCQMJLHIUshF8yExWYGTddic6ID4YVOxP3DJ+xihZllilb3QbX3sX7XRh1xOUt51+fRGa4bu0xlpRftNCSE9X+Kd3Hv+Y1jQ3cQadJ/LIfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5RZM90P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbsLPWF6pzShumAXHO/TPjR0YogZA80nu3b0Mtcg45o8O5zbjkbcmI7cSEYkgHxJBB7VQrixoS5Wsr393nJCrAsFH40LjHEpe8Z43m+O3pOjUcTHwH2zLmrwF2cwDAri7ZPtOkbV14um4jf8kfGjxkoZHFszrNsYG1tQgrlcsOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuWagN4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5RZM90P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472BC4CEE7;
-	Tue,  8 Apr 2025 11:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuWagN4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8202FC4CEE7;
+	Tue,  8 Apr 2025 11:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110223;
-	bh=v4w6duPkLl0byoCi/rVfX3o9uGV4rGwxextmcTQdRfs=;
+	s=korg; t=1744110226;
+	bh=ufChVWYQ2nothh9FDw7HBoM8xaVTymRDszDalUJlNY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5RZM90PzhF9htaGe/8Wj+bWKNBhBMpjxEWwB2ON0MybZmw8bMlPqYezlcYW6In/o
-	 v+pIyjlq1p3GRI8CfYQvpRhCWtL+2RZsUiE+9vrE9oPhHuLMJkBZ9sLaqzPU50IJF7
-	 ssyXlTmZ5WJqQUNuunZFgorXbjTWXP2TDUjrJzr0=
+	b=ZuWagN4HhS6ypqfAXv7Nde7PTuH6EST0xWNzagRhVzdN58E/U7qn4LaDR0iiJXyzj
+	 quWynhMspiE3QpjE9gUhvxIfCROBGW/8ZCXoPJAfZwEH8qJQyTCeq3te5to5RODXnz
+	 juFlM7mOgFbxrmFu3HGKuXI2uhYqdsboqIwd+Qks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Kees Cook <kees@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/227] fs/procfs: fix the comment above proc_pid_wchan()
-Date: Tue,  8 Apr 2025 12:49:11 +0200
-Message-ID: <20250408104825.504162613@linuxfoundation.org>
+Subject: [PATCH 5.10 174/227] objtool, media: dib8000: Prevent divide-by-zero in dib8000_set_dds()
+Date: Tue,  8 Apr 2025 12:49:12 +0200
+Message-ID: <20250408104825.534417238@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -54,39 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 6287fbad1cd91f0c25cdc3a580499060828a8f30 ]
+[ Upstream commit e63d465f59011dede0a0f1d21718b59a64c3ff5c ]
 
-proc_pid_wchan() used to report kernel addresses to user space but that is
-no longer the case today.  Bring the comment above proc_pid_wchan() in
-sync with the implementation.
+If dib8000_set_dds()'s call to dib8000_read32() returns zero, the result
+is a divide-by-zero.  Prevent that from happening.
 
-Link: https://lkml.kernel.org/r/20250319210222.1518771-1-bvanassche@acm.org
-Fixes: b2f73922d119 ("fs/proc, core/debug: Don't expose absolute kernel addresses via wchan")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes the following warning with an UBSAN kernel:
+
+  drivers/media/dvb-frontends/dib8000.o: warning: objtool: dib8000_tune() falls through to next function dib8096p_cfg_DibRx()
+
+Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/bd1d504d930ae3f073b1e071bcf62cae7708773c.1742852847.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/r/202503210602.fvH5DO1i-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib8000.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index b955ba5db72cb..b09cc9e6d5914 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -415,7 +415,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
- #ifdef CONFIG_KALLSYMS
- /*
-  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
-- * Returns the resolved symbol.  If that fails, simply return the address.
-+ * Returns the resolved symbol to user space.
-  */
- static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
- 			  struct pid *pid, struct task_struct *task)
+diff --git a/drivers/media/dvb-frontends/dib8000.c b/drivers/media/dvb-frontends/dib8000.c
+index 02cb48223dc67..a28cbbd9e475c 100644
+--- a/drivers/media/dvb-frontends/dib8000.c
++++ b/drivers/media/dvb-frontends/dib8000.c
+@@ -2701,8 +2701,11 @@ static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
+ 	u8 ratio;
+ 
+ 	if (state->revision == 0x8090) {
++		u32 internal = dib8000_read32(state, 23) / 1000;
++
+ 		ratio = 4;
+-		unit_khz_dds_val = (1<<26) / (dib8000_read32(state, 23) / 1000);
++
++		unit_khz_dds_val = (1<<26) / (internal ?: 1);
+ 		if (offset_khz < 0)
+ 			dds = (1 << 26) - (abs_offset_khz * unit_khz_dds_val);
+ 		else
 -- 
 2.39.5
 
