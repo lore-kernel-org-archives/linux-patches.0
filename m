@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973C92641CC;
-	Tue,  8 Apr 2025 11:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4802BA94A;
+	Tue,  8 Apr 2025 11:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112819; cv=none; b=k9mUsF7OIRXbbpPCQbQApZaeswi+6x2cQoYtyCXTHVIUSdLO37ZI9a0wHGHN0d51D0EIK0nLiaCw9SDkvHv39zerGDP9bkNihyu5nVLmK8F51qox2NmlTCTnWZKv4Xl8GP2dN30YyiLAcvIJPrtoossLtTXntynQYROtHVUgtEM=
+	t=1744112822; cv=none; b=Y7waNiLAUSpXi/cBt0DUWz4PGzGKVWMYzo6MVwZ63ll49Kd2ezr4h0tP7SjH3+wP6QRE5tBh6+up60n00kl/+fnAfL2loHg2BOcwONXs7FUs0GiTl6exH5P5KdjLXgv+XPO11/jHMdZNTF/f+1cPcjJWsTzuGQIMWRelw69pJfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112819; c=relaxed/simple;
-	bh=BsX0iQBanqjAUTfvniuP1BcjviwFS8/PzDhPycvM78I=;
+	s=arc-20240116; t=1744112822; c=relaxed/simple;
+	bh=8Byvm07nEitBAArI5ZGR+kvK5yYhx3VAqJLC+yhbwnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYuhZ8kXFZ3gnLCZl2jp+G2JZZB9raPQ2xrLqkkYL9f3mLPZHFVnik5w049zZA83bhvRd+JsknQ8itGZ5ap2HjUEckKlzNHvu9Lb/nZ0AsR5ziCQXKdYfDC/9LHaYgfTM8NRVA9mPWymC5A20HsGvxl/7td0JIvS4aDEoaS6FZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5DYVa1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owOlpLpFkzdqB05bhkgRt/T85sFkYK4JcxN6VRxkR60Bn1Vbb9eLcRv4nrONnTThOhHxnslTjdoJvoFyKgXA6aJpTHyslRnjImltdk/TylTuOIEYidoe/r5jmkvue4ReR59IeTtK2CA3G9GKYz8bLe/BBKvAX9ZBSJ3MBhkdExI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEkMf7K5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5DYVa1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E25C4CEE5;
-	Tue,  8 Apr 2025 11:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEkMf7K5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD084C4CEE5;
+	Tue,  8 Apr 2025 11:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112819;
-	bh=BsX0iQBanqjAUTfvniuP1BcjviwFS8/PzDhPycvM78I=;
+	s=korg; t=1744112822;
+	bh=8Byvm07nEitBAArI5ZGR+kvK5yYhx3VAqJLC+yhbwnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5DYVa1X0WVMomrwhKXVxNt+LDFMCJ9QpE+YZf2c/b6M1q3w2GUzLv15dsEl/AowQ
-	 3l5Gav/xFSvC4jYuBhgiaGXlgcLfMXqiat8FG2mBu5Gey+0t6p7JgotMmdNSuZrlGI
-	 nRjM1NkfpBOIMbR9jSn2h4eQJc0+M/sK0fVaX4JQ=
+	b=hEkMf7K58CMaNjbhAye6kT17Z1/alxFUbrTQ9yAAz6bZ+rSEC3/galMDfbKy/MpUD
+	 uMUfs+2bst/ighK04mBJ38CAiCG95wQpkQQzjLGdfmbPATzk6aywp7hYyPB2m3qoJY
+	 5jSTe+izvi3uc11bXR+8o5tZyWHd/8Rn7gY5dGTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 169/279] of: property: Increase NR_FWNODE_REFERENCE_ARGS
-Date: Tue,  8 Apr 2025 12:49:12 +0200
-Message-ID: <20250408104830.892563200@linuxfoundation.org>
+Subject: [PATCH 5.15 170/279] remoteproc: qcom_q6v5_pas: Make single-PD handling more robust
+Date: Tue,  8 Apr 2025 12:49:13 +0200
+Message-ID: <20250408104830.917444914@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,50 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Luca Weiss <luca@lucaweiss.eu>
 
-[ Upstream commit eb50844d728f11e87491f7c7af15a4a737f1159d ]
+[ Upstream commit e917b73234b02aa4966325e7380d2559bf127ba9 ]
 
-Currently, the following two macros have different values:
+Only go into the if condition for single-PD handling when there's
+actually just one power domain specified there. Otherwise it'll be an
+issue in the dts and we should fail in the regular code path.
 
-// The maximal argument count for firmware node reference
- #define NR_FWNODE_REFERENCE_ARGS	8
-// The maximal argument count for DT node reference
- #define MAX_PHANDLE_ARGS 16
+This also mirrors the latest changes in the qcom_q6v5_mss driver.
 
-It may cause firmware node reference's argument count out of range if
-directly assign DT node reference's argument count to firmware's.
-
-drivers/of/property.c:of_fwnode_get_reference_args() is doing the direct
-assignment, so may cause firmware's argument count @args->nargs got out
-of range, namely, in [9, 16].
-
-Fix by increasing NR_FWNODE_REFERENCE_ARGS to 16 to meet DT requirement.
-Will align both macros later to avoid such inconsistency.
-
-Fixes: 3e3119d3088f ("device property: Introduce fwnode_property_get_reference_args")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250225-fix_arg_count-v4-1-13cdc519eb31@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Fixes: 17ee2fb4e856 ("remoteproc: qcom: pas: Vote for active/proxy power domains")
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250128-pas-singlepd-v1-2-85d9ae4b0093@lucaweiss.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fwnode.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/fwnode.h b/include/linux/fwnode.h
-index 2d68606fb725d..f0833bafe6bd4 100644
---- a/include/linux/fwnode.h
-+++ b/include/linux/fwnode.h
-@@ -67,7 +67,7 @@ struct fwnode_endpoint {
- #define SWNODE_GRAPH_PORT_NAME_FMT		"port@%u"
- #define SWNODE_GRAPH_ENDPOINT_NAME_FMT		"endpoint@%u"
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index fbcbc00f2e645..776319ab1baf9 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -330,16 +330,16 @@ static int adsp_pds_attach(struct device *dev, struct device **devs,
+ 	if (!pd_names)
+ 		return 0;
  
--#define NR_FWNODE_REFERENCE_ARGS	8
-+#define NR_FWNODE_REFERENCE_ARGS	16
++	while (pd_names[num_pds])
++		num_pds++;
++
+ 	/* Handle single power domain */
+-	if (dev->pm_domain) {
++	if (num_pds == 1 && dev->pm_domain) {
+ 		devs[0] = dev;
+ 		pm_runtime_enable(dev);
+ 		return 1;
+ 	}
  
- /**
-  * struct fwnode_reference_args - Fwnode reference with additional arguments
+-	while (pd_names[num_pds])
+-		num_pds++;
+-
+ 	for (i = 0; i < num_pds; i++) {
+ 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
+ 		if (IS_ERR_OR_NULL(devs[i])) {
+@@ -364,7 +364,7 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
+ 	int i;
+ 
+ 	/* Handle single power domain */
+-	if (dev->pm_domain && pd_count) {
++	if (pd_count == 1 && dev->pm_domain) {
+ 		pm_runtime_disable(dev);
+ 		return;
+ 	}
 -- 
 2.39.5
 
