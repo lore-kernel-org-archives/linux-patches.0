@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D17C17A311;
-	Tue,  8 Apr 2025 12:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D968226983B;
+	Tue,  8 Apr 2025 12:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116308; cv=none; b=NTWYnIMOAlTsNbMaZPR12DbcwlaI9WMeMBIWhdf8DZ0OqCfGWY1BvZPZ4SYKrPuUOFL8F4DvessEXUhmyAo7KfBS9t7Qk3xYK0d6P4iZt1Zfq2ttxV9XZMTDH14aXHBjhiVgnIDu9SKK0Q1hKgIh0YOKBU2lCtscp2XUkmisv+g=
+	t=1744116310; cv=none; b=R76DK7jvwjs/mysMbVfh2Du1ZZXGL4YaA9PvkKCk7T82QGmLj8yX8yh3nTAzbMXmn9f6Dze2O50Vu4wJ4oMYEhL5kNGEE+6hsyadDgLagorAyBbSq/9Sd3Ri4X7y3LgNDZofYBO23m0Q5Kl+ZqkHJ14yia8CEnKXWAA7xl5yRa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116308; c=relaxed/simple;
-	bh=LseAnPphlQtWa6MoJYi64x+f/1U9q8DOEF4ZgG+y6Z0=;
+	s=arc-20240116; t=1744116310; c=relaxed/simple;
+	bh=EF68BGLcdJtGmI3Q+pVBZUdzFaM+UKahO6ZirxJg2iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPlZ+6mraVsASRPQdASJx4GUHMmyQI4Un7C2Hw/ebwmaOsCc/RJ8OG6oiLvcUL87IcFVp1O8MU5p7SDrKecpA3+eCuuhXbEzY4L2gSX9dVz5GamGqyZQfky1q0E25MM3ITlNJcW96gvMxKURBOVGa/i0izPrUvB4TITNmSEgCVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVC52gD1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXwHrtOcUJll0IOtbW3htTo6e1C1m9CGUs981aK3uJhE7faikkM6JygoUlCd4jja0/N96uB0zH1h9chIygY0LgT43BCDHv4G00STRLSRV+Pd0WhYNh5wtDanHpSdMSzGlGtOBhgJ37LWE2aEE1vYjejFvKaS3WhKy21ywY+y8y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKDwEJyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVC52gD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09D7C4CEE5;
-	Tue,  8 Apr 2025 12:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKDwEJyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF7BC4CEE5;
+	Tue,  8 Apr 2025 12:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116308;
-	bh=LseAnPphlQtWa6MoJYi64x+f/1U9q8DOEF4ZgG+y6Z0=;
+	s=korg; t=1744116310;
+	bh=EF68BGLcdJtGmI3Q+pVBZUdzFaM+UKahO6ZirxJg2iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVC52gD1WlB3Sn6nQdV8eKKuuo/JvzBIR6W3OnQERJwkqAEmYR3QJ61oQiU6YFWUu
-	 Ru4RxEKcZzO+pI6pBzFh85sHH6y6AAsAyGC1TMKkZdIhLMNxkjQ/2TzMl5phVXbiFY
-	 NAO2i6dA7+DRNfy7kyqS6NCa0CWmPPIOaoRVlpsw=
+	b=dKDwEJyN8Sg0c/8JyRl2NeiTuNOQenCS0eBaDIWUhw6XMoG3BX4X4TGGn9upQDYsV
+	 WfMY62Tsa+01VWZ2PPtXCnZbJuHdMdA0hO840NlIRloNm1GHNq7ULv+64jc4FpYilC
+	 i/FSE7rg0YFwGh1ok+jxTNVMus5+AXL4edaT77NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hermes Wu <Hermes.wu@ite.com.tw>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/423] drm/bridge: it6505: fix HDCP V match check is not performed correctly
-Date: Tue,  8 Apr 2025 12:46:18 +0200
-Message-ID: <20250408104846.959788548@linuxfoundation.org>
+Subject: [PATCH 6.12 053/423] drm: xlnx: zynqmp: Fix max dma segment size
+Date: Tue,  8 Apr 2025 12:46:19 +0200
+Message-ID: <20250408104846.984319467@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,49 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hermes Wu <Hermes.wu@ite.com.tw>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit a5072fc77fb9e38fa9fd883642c83c3720049159 ]
+[ Upstream commit 28b529a98525123acd37372a04d21e87ec2edcf7 ]
 
-Fix a typo where V compare incorrectly compares av[] with av[] itself,
-which can result in HDCP failure.
+Fix "mapping sg segment longer than device claims to support" warning by
+setting the max segment size.
 
-The loop of V compare is expected to iterate for 5 times
-which compare V array form av[0][] to av[4][].
-It should check loop counter reach the last statement "i == 5"
-before return true
-
-Fixes: 0989c02c7a5c ("drm/bridge: it6505: fix HDCP CTS compare V matching")
-Signed-off-by: Hermes Wu <Hermes.wu@ite.com.tw>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250121-fix-hdcp-v-comp-v4-1-185f45c728dc@ite.com.tw
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Tested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250115-xilinx-formats-v2-10-160327ca652a@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index faee8e2e82a05..967aa24b7c537 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -2042,12 +2042,13 @@ static bool it6505_hdcp_part2_ksvlist_check(struct it6505 *it6505)
- 			continue;
- 		}
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index f5781939de9c3..a25b22238e3d2 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -231,6 +231,8 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
--		for (i = 0; i < 5; i++) {
-+		for (i = 0; i < 5; i++)
- 			if (bv[i][3] != av[i][0] || bv[i][2] != av[i][1] ||
--			    av[i][1] != av[i][2] || bv[i][0] != av[i][3])
-+			    bv[i][1] != av[i][2] || bv[i][0] != av[i][3])
- 				break;
++	dma_set_max_seg_size(&pdev->dev, DMA_BIT_MASK(32));
++
+ 	/* Try the reserved memory. Proceed if there's none. */
+ 	of_reserved_mem_device_init(&pdev->dev);
  
--			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d, %d", retry, i);
-+		if (i == 5) {
-+			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d", retry);
- 			return true;
- 		}
- 	}
 -- 
 2.39.5
 
