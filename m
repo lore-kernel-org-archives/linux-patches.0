@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFDC26AA85;
-	Tue,  8 Apr 2025 12:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCF5269AE4;
+	Tue,  8 Apr 2025 12:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114552; cv=none; b=fy46VE59OCo5YqmY4hYb/c1UAV2yftWD/9A3St4Q66F1ghSMouWYNy/xhKj1P80kA6P6bg4JDZeKLEODcTbkzs2UFgBaK4enlFn7wGfAEFp3dgPuEmjh5y0q62+IPwxh/TN/cRY1LGTnbBfenlIIew2gVxqboplKLBx9eflxacs=
+	t=1744114555; cv=none; b=t61luWYLkKx/H+RhAMaFxinxC/kR70CjOfHajpcX+KPHtvqsM0WtdEpENCQT+xKUlrxrnjVLlzRoC2fHvhoDxKiW6D8LEqArGdROTO7EgVsz2SfOOM09tO/bNqbR3dCcFs2E5AJ8mVIc+Hu9hvRNjleEWMvkPaxELiFkKg2nbQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114552; c=relaxed/simple;
-	bh=gZNXwxa8tg/jcBmoRYvJFfTGtCIap7uwljG6vKCWPC8=;
+	s=arc-20240116; t=1744114555; c=relaxed/simple;
+	bh=y8k6Zf5UNw9wSJlG2462UKk6NDSsn27GMisr/IJ+bjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZPnnpN1fcEdLbF+9tiUZv789Mgnq+gTyDk3Fsp3vHhtdzcQTB0SQDd5bupoeU4M8oBAT+vpSdMO86rzt851WRTSGsRvpwdVOLZtWFNscrGQqPF7DPB0AgWMAxDVxU9HkzcXReGkUNtg1/C4GjK9WmccHmW3u2BOXwV6f7q1Fco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWlVBLYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJeZDEGYM0ekoakPDjg6WPHL9xSPC5RQWiFwQ4FD64T5ikl29LCJP3kMc9329dYYp5QNVyJZMemi3hbMZ08Lc+R+X645PEyanv4hj9/x42RmSEX7FY6/CL50KKLpU1rCGTPbGEPMO8eL0v8VMnvcaa3rMBu57FSf4upY/R6lQUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vttTAULk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWlVBLYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0B2C4CEE5;
-	Tue,  8 Apr 2025 12:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vttTAULk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C48AC4CEE5;
+	Tue,  8 Apr 2025 12:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114551;
-	bh=gZNXwxa8tg/jcBmoRYvJFfTGtCIap7uwljG6vKCWPC8=;
+	s=korg; t=1744114554;
+	bh=y8k6Zf5UNw9wSJlG2462UKk6NDSsn27GMisr/IJ+bjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWlVBLYqgs8vGKKmdNQfho50EVuP7xbjsLxH2kNi1S3bvm55/7nbQBrCZMpfhDU8h
-	 o69XsXVSmkEuiQjOS3x1X4SGOSxO74KGJCe5rb2RyY+eFt6g1T34pCzy0UvM06ZQS3
-	 6/fuK7Uo81x9EfXUyTmMhLfsx/1JuXbAo+7hX0gU=
+	b=vttTAULk0L8YgnbHF+qieEF1mms1ok/fTWUWvJAanbJuy6b5F7D/OSXLU03DwOkd1
+	 UX64TnBqmhX0mTEyp4qRQn0sC9LMwzjnoQZ19YGAO1+cJo6qGIGIRY9zmRlM72Yx/2
+	 9OnPKwQLR5DutWbxY3HjY5J3cU1OKv9ui/8n0KnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Bakker <kees@ijzerbout.nl>,
-	Long Li <longli@microsoft.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 149/499] RDMA/mana_ib: Ensure variable err is initialized
-Date: Tue,  8 Apr 2025 12:46:01 +0200
-Message-ID: <20250408104854.902935622@linuxfoundation.org>
+Subject: [PATCH 6.13 150/499] crypto: tegra - Set IV to NULL explicitly for AES ECB
+Date: Tue,  8 Apr 2025 12:46:02 +0200
+Message-ID: <20250408104854.926546323@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Bakker <kees@ijzerbout.nl>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit be35a3127d60964b338da95c7bfaaf4a01b330d4 ]
+[ Upstream commit bde558220866e74f19450e16d9a2472b488dfedf ]
 
-In the function mana_ib_gd_create_dma_region if there are no dma blocks
-to process the variable `err` remains uninitialized.
+It may happen that the variable req->iv may have stale values or
+zero sized buffer by default and may end up getting used during
+encryption/decryption. This inturn may corrupt the results or break the
+operation. Set the req->iv variable to NULL explicitly for algorithms
+like AES-ECB where IV is not used.
 
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Signed-off-by: Kees Bakker <kees@ijzerbout.nl>
-Link: https://patch.msgid.link/20250221195833.7516C16290A@bout3.ijzerbout.nl
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mana/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/tegra/tegra-se-aes.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
-index 457cea6d99095..f6bf289041bfe 100644
---- a/drivers/infiniband/hw/mana/main.c
-+++ b/drivers/infiniband/hw/mana/main.c
-@@ -358,7 +358,7 @@ static int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem
- 	unsigned int tail = 0;
- 	u64 *page_addr_list;
- 	void *request_buf;
--	int err;
-+	int err = 0;
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index cdcf05e235cad..be0a0b51f5a59 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -443,6 +443,9 @@ static int tegra_aes_crypt(struct skcipher_request *req, bool encrypt)
+ 	if (!req->cryptlen)
+ 		return 0;
  
- 	gc = mdev_to_gc(dev);
- 	hwc = gc->hwc.driver_data;
++	if (ctx->alg == SE_ALG_ECB)
++		req->iv = NULL;
++
+ 	rctx->encrypt = encrypt;
+ 	rctx->config = tegra234_aes_cfg(ctx->alg, encrypt);
+ 	rctx->crypto_config = tegra234_aes_crypto_cfg(ctx->alg, encrypt);
 -- 
 2.39.5
 
