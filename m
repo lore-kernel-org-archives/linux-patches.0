@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F64A94A;
-	Tue,  8 Apr 2025 12:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F4CA94A;
+	Tue,  8 Apr 2025 12:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114004; cv=none; b=jv1UMhltsM+qgVLu10LfgS4xpcQh1l5Bf0CZbF3a3Fv7V2ZQnrPdUvMqN1jEn5EgoWml9/Ko/o/fCFaXwmpax2RezXJEShMeiMAN198O3Ay8fZR6qg0HtacIk3GtTcoTp3C9BA9H8JTN/8yULWjm59fFi+4nvR87tkLiOuWSfqE=
+	t=1744114007; cv=none; b=V2A0atmsxxbV89t8u51T7o0B9cOmd6TyTo9NJX6iPg5iHKPspBz4zBh11u1D1bBkX7a3v/gVRj1Qr8baZnyxjUMvymJ2rK9JJB5L0U6KOtZRW9RX5OohappeIqv2BP5P1Fq1lkRo9RAMQQUpoHQK7zHZ2Q52HQbIDZybvPCoWCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114004; c=relaxed/simple;
-	bh=ZQDul53xiOQQjlEfA6uMstHv811WeGIgpiiYOP0Tdy0=;
+	s=arc-20240116; t=1744114007; c=relaxed/simple;
+	bh=FoWxCH7f05QcfmqNCZ7WLczYGqX5EowUPH74MWiYRJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kzJMop+pdlE7RPV0Wxw7yVfd9r5y8Rl24it165NYRAwZoZs6QvKNW7Z2gP2VD8Xj/nEpyohip3+yGtVA9PoLz+av9P17vngcShCY29DGHn7Q0Kjz1omJZBAhCMujGyTW3Tf954MKHQW6u/0CMvzc6VpGHGYrHNHPH6QsZhR34CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K98vYPYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqL0B6khTslfBkdQ0l+EzOZoxhqCUn0gk/mx+M8/VNIw5vle2So8Dp5tX+ZBjAI03PJOyx0bkYoeZFiYFEVTHYwNu5eeIzP835+bkPXIfR9sqEjlxLLrXPfbwBfPi0069jPQDzj9ybzJceRtfO+bKFMVf3bud9L3bELTOe/qKBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nme5Uvrs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K98vYPYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2162EC4CEE5;
-	Tue,  8 Apr 2025 12:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nme5Uvrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DB3C4CEE5;
+	Tue,  8 Apr 2025 12:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114004;
-	bh=ZQDul53xiOQQjlEfA6uMstHv811WeGIgpiiYOP0Tdy0=;
+	s=korg; t=1744114007;
+	bh=FoWxCH7f05QcfmqNCZ7WLczYGqX5EowUPH74MWiYRJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K98vYPYFaFLmJ0gSwmYwSixEJUuAn2VF9vbLGSROKvPAg9u14U6V6DN9SataDEFYG
-	 h5poAkuZIskZGVtvTOArbvXGrHXnBRsb0/tpP6o0QjvaI3o2LCzGFrmPRZex5i2iVb
-	 mEgJNONfpa93dYKMNl/QR8/ug0QjpklVGVG7ozZc=
+	b=Nme5Uvrs9TmdsLL/LvfsZxAKDIB777He4f6jWXo5Av1SJNW6Cx50drpJabJtMyuQY
+	 DlUu8/lfixlxnTvofRH5VXzMz737Rd86a7aY6Lkd3r4pi3g5OC5G9SocRsNL7RkM0x
+	 kce4RX9tscy6oVKA/qGwptS3EztaKJnxpRU6EFkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Helge Deller <deller@gmx.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/154] fbdev: sm501fb: Add some geometry checks.
-Date: Tue,  8 Apr 2025 12:50:41 +0200
-Message-ID: <20250408104818.532700368@linuxfoundation.org>
+Subject: [PATCH 5.4 101/154] clk: amlogic: gxbb: drop incorrect flag on 32k clock
+Date: Tue,  8 Apr 2025 12:50:42 +0200
+Message-ID: <20250408104818.567389343@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,42 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit aee50bd88ea5fde1ff4cc021385598f81a65830c ]
+[ Upstream commit f38f7fe4830c5cb4eac138249225f119e7939965 ]
 
-Added checks for xoffset, yoffset settings.
-Incorrect settings of these parameters can lead to errors
-in sm501fb_pan_ functions.
+gxbb_32k_clk_div sets CLK_DIVIDER_ROUND_CLOSEST in the init_data flag which
+is incorrect. This is field is not where the divider flags belong.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Thankfully, CLK_DIVIDER_ROUND_CLOSEST maps to bit 4 which is an unused
+clock flag, so there is no unintended consequence to this error.
 
-Fixes: 5fc404e47bdf ("[PATCH] fb: SM501 framebuffer driver")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Effectively, the clock has been used without CLK_DIVIDER_ROUND_CLOSEST
+so far, so just drop it.
+
+Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-1-baca56ecf2db@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sm501fb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/meson/gxbb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
-index 3dd1b1d76e983..a7acf0acd3e92 100644
---- a/drivers/video/fbdev/sm501fb.c
-+++ b/drivers/video/fbdev/sm501fb.c
-@@ -326,6 +326,13 @@ static int sm501fb_check_var(struct fb_var_screeninfo *var,
- 	if (var->xres_virtual > 4096 || var->yres_virtual > 2048)
- 		return -EINVAL;
+diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
+index e8e36ec70b27f..f37b763f7c48b 100644
+--- a/drivers/clk/meson/gxbb.c
++++ b/drivers/clk/meson/gxbb.c
+@@ -1305,7 +1305,7 @@ static struct clk_regmap gxbb_32k_clk_div = {
+ 			&gxbb_32k_clk_sel.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT | CLK_DIVIDER_ROUND_CLOSEST,
++		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
  
-+	/* geometry sanity checks */
-+	if (var->xres + var->xoffset > var->xres_virtual)
-+		return -EINVAL;
-+
-+	if (var->yres + var->yoffset > var->yres_virtual)
-+		return -EINVAL;
-+
- 	/* can cope with 8,16 or 32bpp */
- 
- 	if (var->bits_per_pixel <= 8)
 -- 
 2.39.5
 
