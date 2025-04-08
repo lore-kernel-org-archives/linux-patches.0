@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B10127BF90;
-	Tue,  8 Apr 2025 12:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4822A27BF8B;
+	Tue,  8 Apr 2025 12:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116945; cv=none; b=FAhvzxkhx81qERq33gxf9xs+0vgAIrCjhO/xIzGYdoIvET3Pl8XFYBZgBaLVoSdZp/g+RVzHZLF/KE57lrKSGNxCsBwlLZDP7ti6nAYMLNBmO3515w8y3fhfuX5Ol8zj3bu/0daRspr8wSEMm40G4C0B/zpmF2x1GFz2kOCJkBI=
+	t=1744116948; cv=none; b=mATnfP8luM4U6G5crUcUOrP0vsI1t7YpyjYTeX5gOizNaNn/uxYoUlvEWduJuX+rxsSWD9GUiOU30mYFIwjkoRQzJDjqFmH08y7CKervTICsO2xCKR5Gikdk6C+uIPI1i1QQ12ZwZGsIEP/rfaGFrLsdcsU/Wd30vxa6Gx39Oes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116945; c=relaxed/simple;
-	bh=6NRIF0bqW2Xwly1+JkbDb/l0MXSAqqwt9omBJ1IJGRI=;
+	s=arc-20240116; t=1744116948; c=relaxed/simple;
+	bh=9PKPeQothz6xNHEc8nDyUaCxpJW79Cb7I5+AczsHONk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIaZ3E6X6LAjpb89YjM15vWejyPcpnj9uGAZjrM+fCiAnFd/wVN6kwJ8mKrpEBPGQ5Frv04Y7bPrJKm7NVXrSueFsgMS9HJk6q7smUeSBO0WzRwsdO1DrUwFOXU7yyO0LDe/n+Vxz2uaErEIwXtoS9YwR0ju1Ayl0EJw7eWNcZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glJdQzYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQmlp9FRNwsqR0Hxe53NFCmvcMiW3xbX3KnZFI+lmwFs96TZgs/mo3lhKiBfGoOBdBt1gCCvLNuLcmebTx48RYTjoU8quV/wHOCUYsfQK/1TwsMXlarjJNgngtZMkGI+Z6Cljr5Ly92FPuzG5WGtR3JXARAXbEowVf+c/SJoKRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG5PeUYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glJdQzYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0F6C4CEEB;
-	Tue,  8 Apr 2025 12:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG5PeUYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30C2C4CEE5;
+	Tue,  8 Apr 2025 12:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116945;
-	bh=6NRIF0bqW2Xwly1+JkbDb/l0MXSAqqwt9omBJ1IJGRI=;
+	s=korg; t=1744116948;
+	bh=9PKPeQothz6xNHEc8nDyUaCxpJW79Cb7I5+AczsHONk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glJdQzYSiEWOEf9JEmyzbY2JHma0mBUw/wxohYgC3FSKK/TOb61Q5pbZos0oV2S5Y
-	 0SQBDYfst77cAxgKeR0j3xNP95qXoOQSuV8xB2pgnPUZCqlXM3TEyOaISj1gHajH5n
-	 J/ILaq4jG7LXdoUNn/JZ4oenIKO4eJOl7AJN9ZBI=
+	b=bG5PeUYG4X35KIibsIEL5oqWnrCPkW0kDbC2Mz3tCP/GotRmEznTGpYpW/gZqAih2
+	 zBV04Wcn8AQ5kYAkbq90nOARn3N1J7d+F/pt+jXOAq0fyduWTglpMYAOXl4aVm0IAY
+	 xZSlTDd46OOoglvjVUfgto4fBbnmGgCsZC2HoPYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+53ed3a6440173ddbf499@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Debin Zhu <mowenroot@163.com>,
+	Bitao Ouyang <1985755126@qq.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 327/423] netfilter: nf_tables: dont unregister hook when table is dormant
-Date: Tue,  8 Apr 2025 12:50:53 +0200
-Message-ID: <20250408104853.437804532@linuxfoundation.org>
+Subject: [PATCH 6.12 328/423] netlabel: Fix NULL pointer exception caused by CALIPSO on IPv4 sockets
+Date: Tue,  8 Apr 2025 12:50:54 +0200
+Message-ID: <20250408104853.462043386@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,46 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Debin Zhu <mowenroot@163.com>
 
-[ Upstream commit 688c15017d5cd5aac882400782e7213d40dc3556 ]
+[ Upstream commit 078aabd567de3d63d37d7673f714e309d369e6e2 ]
 
-When nf_tables_updchain encounters an error, hook registration needs to
-be rolled back.
+When calling netlbl_conn_setattr(), addr->sa_family is used
+to determine the function behavior. If sk is an IPv4 socket,
+but the connect function is called with an IPv6 address,
+the function calipso_sock_setattr() is triggered.
+Inside this function, the following code is executed:
 
-This should only be done if the hook has been registered, which won't
-happen when the table is flagged as dormant (inactive).
+sk_fullsock(__sk) ? inet_sk(__sk)->pinet6 : NULL;
 
-Just move the assignment into the registration block.
+Since sk is an IPv4 socket, pinet6 is NULL, leading to a
+null pointer dereference.
 
-Reported-by: syzbot+53ed3a6440173ddbf499@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=53ed3a6440173ddbf499
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This patch fixes the issue by checking if inet6_sk(sk)
+returns a NULL pointer before accessing pinet6.
+
+Signed-off-by: Debin Zhu <mowenroot@163.com>
+Signed-off-by: Bitao Ouyang <1985755126@qq.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Fixes: ceba1832b1b2 ("calipso: Set the calipso socket label to match the secattr.")
+Link: https://patch.msgid.link/20250401124018.4763-1-mowenroot@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/calipso.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index eb3a6f96b094d..bdee187bc5dd4 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2732,11 +2732,11 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 			err = nft_netdev_register_hooks(ctx->net, &hook.list);
- 			if (err < 0)
- 				goto err_hooks;
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index dbcea9fee6262..62618a058b8fa 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1072,8 +1072,13 @@ static int calipso_sock_getattr(struct sock *sk,
+ 	struct ipv6_opt_hdr *hop;
+ 	int opt_len, len, ret_val = -ENOMSG, offset;
+ 	unsigned char *opt;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
 +
-+			unregister = true;
- 		}
- 	}
++	if (!pinfo)
++		return -EAFNOSUPPORT;
  
--	unregister = true;
--
- 	if (nla[NFTA_CHAIN_COUNTERS]) {
- 		if (!nft_is_base_chain(chain)) {
- 			err = -EOPNOTSUPP;
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
+ 
+@@ -1125,8 +1130,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ {
+ 	int ret_val;
+ 	struct ipv6_opt_hdr *old, *new;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return -EAFNOSUPPORT;
+ 
++	txopts = txopt_get(pinfo);
+ 	old = NULL;
+ 	if (txopts)
+ 		old = txopts->hopopt;
+@@ -1153,8 +1163,13 @@ static int calipso_sock_setattr(struct sock *sk,
+ static void calipso_sock_delattr(struct sock *sk)
+ {
+ 	struct ipv6_opt_hdr *new_hop;
+-	struct ipv6_txoptions *txopts = txopt_get(inet6_sk(sk));
++	struct ipv6_pinfo *pinfo = inet6_sk(sk);
++	struct ipv6_txoptions *txopts;
++
++	if (!pinfo)
++		return;
+ 
++	txopts = txopt_get(pinfo);
+ 	if (!txopts || !txopts->hopopt)
+ 		goto done;
+ 
 -- 
 2.39.5
 
