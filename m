@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06FA26B94D;
-	Tue,  8 Apr 2025 12:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5CD26B951;
+	Tue,  8 Apr 2025 12:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115602; cv=none; b=ANRQYEk+fXigd499VeWMy/aogfN5Buj17Iz0k+naQtmBO+Xy46YfTJ0Qz6EOrtPXU+sn9/69T+2f94hKbT/6a91froKKn+SRmv1SaAiCbssJiOB693drSMo2hTalUqjD0BjfGM+TkuCu8GyoKGdq0sKo2P7V95vFhROVdoTgyG0=
+	t=1744115605; cv=none; b=pDUCoafNa5oM7kLxKAk6Wm41K9ktLad9quEY0dWUBURn4pP2jvfXbg+6gfjtbjYDF3PvQ85XZvr8rc3+JXRGlLF2iS2/FZViFXsPybXpeipJ2+51cle3KeV1k5//zsU0Vy0FDLBTEYYJe2YpN9WDPndwzPU7uFl62VGYSE0Efgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115602; c=relaxed/simple;
-	bh=6+r0v09x5qCaxhf4dS7uavIVvTBlCutBqx/wPmb4DYM=;
+	s=arc-20240116; t=1744115605; c=relaxed/simple;
+	bh=VHgQRDrlXIth+94pBFy+w9JEOli3T9s6bNj0PasSjeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKX7J+71+E2v9x+YxBUujFxO10fYijyLawePsflVE8uzUcWuOLNC0cUm0ezNUunm4sfZBSKtN6lZg8SZz+N+jRmJ4g8y2w6LDaMBf9e0Y7twg39ygRvh/ZOd2ORaoQ37UVYTTcsF/RCLcHjGE8b7Y/YkqULwYX+jVmE2k1F0T04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Sa2oCuZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rroHVnmIw9Bf4qfmBmDWTUFlaXlQIpLqyLG8guZdGntuRf4Gusrl90cHaR83pfUcQhFSp1gdr+u/FTWxaawIv2G+1U5QEaNoCg30q+0PFsyqT3/z0V/pzDj5dFcIlMsj0/AfWBluYeQRhXYS83b6t8ABEpNth7JbPaeLOPfeOcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAeZi7wZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Sa2oCuZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFE2C4CEE5;
-	Tue,  8 Apr 2025 12:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAeZi7wZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E277BC4CEE5;
+	Tue,  8 Apr 2025 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115602;
-	bh=6+r0v09x5qCaxhf4dS7uavIVvTBlCutBqx/wPmb4DYM=;
+	s=korg; t=1744115605;
+	bh=VHgQRDrlXIth+94pBFy+w9JEOli3T9s6bNj0PasSjeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Sa2oCuZkyF3AEWNHrkHR0sB9eRtLMZupe3i9nYB7DePNmAiALQrK0Ox1h6pPxnrw
-	 ZiwncUTb+Dos4YL6HtsAapyVUhIPFBrxlCHTC9nfLWCKfDM3v0iAdebu4NKMO7EcKh
-	 WHSNYqofBWB5J1PJkLLVBToK3Mv8SeVUxC6d/dbI=
+	b=CAeZi7wZ17d7OvQ3PH8XQDlf31jNAL/pNryixZeyqrlzTzenU3yDa2CeKC2Lgz4RR
+	 lg0rZQ/XkVsLSLJZcAE8QRI0bTx5zxn7DHjKEeXdnZZ90A5WztFfbaDNvZDq3BUeHH
+	 T2BdxXngR5Fpeay1OVHqlUKaN06hq9t786eyvAXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Kevin Loughlin <kevinloughlin@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/204] x86/platform: Only allow CONFIG_EISA for 32-bit
-Date: Tue,  8 Apr 2025 12:48:58 +0200
-Message-ID: <20250408104820.540809154@linuxfoundation.org>
+Subject: [PATCH 6.1 009/204] x86/sev: Add missing RIP_REL_REF() invocations during sme_enable()
+Date: Tue,  8 Apr 2025 12:48:59 +0200
+Message-ID: <20250408104820.573237518@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,41 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kevin Loughlin <kevinloughlin@google.com>
 
-[ Upstream commit 976ba8da2f3c2f1e997f4f620da83ae65c0e3728 ]
+[ Upstream commit 72dafb567760320f2de7447cd6e979bf9d4e5d17 ]
 
-The CONFIG_EISA menu was cleaned up in 2018, but this inadvertently
-brought the option back on 64-bit machines: ISA remains guarded by
-a CONFIG_X86_32 check, but EISA no longer depends on ISA.
+The following commit:
 
-The last Intel machines ith EISA support used a 82375EB PCI/EISA bridge
-from 1993 that could be paired with the 440FX chipset on early Pentium-II
-CPUs, long before the first x86-64 products.
+  1c811d403afd ("x86/sev: Fix position dependent variable references in startup code")
 
-Fixes: 6630a8e50105 ("eisa: consolidate EISA Kconfig entry in drivers/eisa")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+introduced RIP_REL_REF() to force RIP-relative accesses to global variables,
+as needed to prevent crashes during early SEV/SME startup code.
+
+For completeness, RIP_REL_REF() should be used with additional variables during
+sme_enable():
+
+  https://lore.kernel.org/all/CAMj1kXHnA0fJu6zh634=fbJswp59kSRAbhW+ubDGj1+NYwZJ-Q@mail.gmail.com/
+
+Access these vars with RIP_REL_REF() to prevent problem reoccurence.
+
+Fixes: 1c811d403afd ("x86/sev: Fix position dependent variable references in startup code")
+Signed-off-by: Kevin Loughlin <kevinloughlin@google.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250226213714.4040853-11-arnd@kernel.org
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/r/20241122202322.977678-1-kevinloughlin@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/mm/mem_encrypt_identity.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index ca8dd7e5585f0..48ab6e8f2d1d4 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -208,7 +208,7 @@ config X86
- 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI	if X86_64
- 	select HAVE_EBPF_JIT
- 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
--	select HAVE_EISA
-+	select HAVE_EISA			if X86_32
- 	select HAVE_EXIT_THREAD
- 	select HAVE_FAST_GUP
- 	select HAVE_FENTRY			if X86_64 || DYNAMIC_FTRACE
+diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
+index f176098848749..839d8a4a1cd08 100644
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -588,7 +588,7 @@ void __head sme_enable(struct boot_params *bp)
+ 
+ out:
+ 	RIP_REL_REF(sme_me_mask) = me_mask;
+-	physical_mask &= ~me_mask;
+-	cc_vendor = CC_VENDOR_AMD;
++	RIP_REL_REF(physical_mask) &= ~me_mask;
++	RIP_REL_REF(cc_vendor) = CC_VENDOR_AMD;
+ 	cc_set_mask(me_mask);
+ }
 -- 
 2.39.5
 
