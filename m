@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3343626AA9A;
-	Tue,  8 Apr 2025 12:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D337227817B;
+	Tue,  8 Apr 2025 12:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116064; cv=none; b=iGRtDxiXhIZ1R8IYdU3shnFIv8uJGQPpnfBIZiZsOmh6yGSvkU+eQpyd9CjohP219sPOQjGDOwFH3+h4YmKf29ZlZUtFlR6FIU3PU/lVOoQBIf+bpj4Ka5TlLjdDFnkPf/MxZXbpT/mQGv5GP33a4xTxzA4eeynG7PHE6PVdVzM=
+	t=1744116066; cv=none; b=bV8AczsTBugE0x0AhCZ5hBTNGHi15hGIWopq8LqI5rt2BFhnQXIEkOVctkIfIuELR9L+3koByET5twwUtDK0tHDhqhthzrpRaQ1PMjrXixrFJMw8RJKEa5qi5bvpS4ox9tevFB6vatF5Ps47EortUGF5Ppsu4CXS4RP5lv8zoUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116064; c=relaxed/simple;
-	bh=+inD9wnTbfhs/SFjtjcdhIxr9+JvjPxgWnNNJ2XcZ0k=;
+	s=arc-20240116; t=1744116066; c=relaxed/simple;
+	bh=z576jqx/NLtQ4ZgdmkmbqpSLZGJY0RZO8HQPdiwtJP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGW0EGQmxKTsV/oWCNJHY8HsncTKX7I5R9+Ste/WIJYOt/lMz6/6WeFcb47rMJyM/1hvgNXX6jsBgH3dTZlZYYxKivkZTS5WkAHN4axB10nmDQNs9WbGwcxLL/e6vOHtcLhk/UfOFgbSGgn5Snfye47m/wHscFM04O3Nel7q07A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2rqkxjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+cQGpXBeYil5cb/pGn66rwl78Vv28YrWnpmeLlihOR+aVTT4phWHmiDFBZri9n2jpSWW+i3tVU7EN5YHa0QPHfHkCvSNthLG85oFMt2k3whcbRG3jyBcz7kmUfTxUqgAnKCTVf4HkNGdxQtRfbbP9KRGEazUZXS67SdM2XTy0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z35NRJTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2rqkxjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7773C4CEE5;
-	Tue,  8 Apr 2025 12:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z35NRJTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632CCC4CEE5;
+	Tue,  8 Apr 2025 12:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116064;
-	bh=+inD9wnTbfhs/SFjtjcdhIxr9+JvjPxgWnNNJ2XcZ0k=;
+	s=korg; t=1744116066;
+	bh=z576jqx/NLtQ4ZgdmkmbqpSLZGJY0RZO8HQPdiwtJP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2rqkxjPFdDzSOtF3Ta/ZxEU3Y9uKrejGjTDOZZzjn4It9GHsqo8mFK+ml6hWleEP
-	 pq5Op8BNvNSuuwxYyHQTIu27WqbU4z6v0w+CdEGHFtZuf1BhILc8IQoNosltq6NPH7
-	 82naOgIVecDDCU0tWswzEhEo3H1NJrRzXO/DD+NY=
+	b=z35NRJToV2Yu4eekdGB+oh66EbzMwY1BceI9jeyI9wK4g+OkWPTMj/7bv660N7UAm
+	 GRKQ9jE22vTRCRGaA4pzIfYEz00TrQKSBmq6Fp4y7nioIS428nw5nsOXsRRz3WqISI
+	 MvMnkGxUGFw2FeyM+IvW83vSsLzJoXKwi9KWrdjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com,
-	Nishanth Devarajan <ndev2021@gmail.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 157/204] net_sched: skbprio: Remove overly strict queue assertions
-Date: Tue,  8 Apr 2025 12:51:27 +0200
-Message-ID: <20250408104824.920047161@linuxfoundation.org>
+	syzbot <syzbot+9120834fc227768625ba@syzkaller.appspotmail.com>,
+	Roman Smirnov <r.smirnov@omp.ru>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>
+Subject: [PATCH 6.1 201/204] jfs: add index corruption check to DT_GETPAGE()
+Date: Tue,  8 Apr 2025 12:52:11 +0200
+Message-ID: <20250408104826.219556412@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -54,60 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit ce8fe975fd99b49c29c42e50f2441ba53112b2e8 ]
+commit a8dfb2168906944ea61acfc87846b816eeab882d upstream.
 
-In the current implementation, skbprio enqueue/dequeue contains an assertion
-that fails under certain conditions when SKBPRIO is used as a child qdisc under
-TBF with specific parameters. The failure occurs because TBF sometimes peeks at
-packets in the child qdisc without actually dequeuing them when tokens are
-unavailable.
+If the file system is corrupted, the header.stblindex variable
+may become greater than 127. Because of this, an array access out
+of bounds may occur:
 
-This peek operation creates a discrepancy between the parent and child qdisc
-queue length counters. When TBF later receives a high-priority packet,
-SKBPRIO's queue length may show a different value than what's reflected in its
-internal priority queue tracking, triggering the assertion.
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dtree.c:3096:10
+index 237 is out of range for type 'struct dtslot[128]'
+CPU: 0 UID: 0 PID: 5822 Comm: syz-executor740 Not tainted 6.13.0-rc4-syzkaller-00110-g4099a71718b0 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_out_of_bounds+0x121/0x150 lib/ubsan.c:429
+ dtReadFirst+0x622/0xc50 fs/jfs/jfs_dtree.c:3096
+ dtReadNext fs/jfs/jfs_dtree.c:3147 [inline]
+ jfs_readdir+0x9aa/0x3c50 fs/jfs/jfs_dtree.c:2862
+ wrap_directory_iterator+0x91/0xd0 fs/readdir.c:65
+ iterate_dir+0x571/0x800 fs/readdir.c:108
+ __do_sys_getdents64 fs/readdir.c:403 [inline]
+ __se_sys_getdents64+0x1e2/0x4b0 fs/readdir.c:389
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+---[ end trace ]---
 
-The fix removes this overly strict assertions in SKBPRIO, they are not
-necessary at all.
+Add a stblindex check for corruption.
 
-Reported-by: syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a3422a19b05ea96bee18
-Fixes: aea5f654e6b7 ("net/sched: add skbprio scheduler")
-Cc: Nishanth Devarajan <ndev2021@gmail.com>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250329222536.696204-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot <syzbot+9120834fc227768625ba@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=9120834fc227768625ba
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_skbprio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/jfs/jfs_dtree.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_skbprio.c b/net/sched/sch_skbprio.c
-index 5df2dacb7b1ab..05aa363a7fee9 100644
---- a/net/sched/sch_skbprio.c
-+++ b/net/sched/sch_skbprio.c
-@@ -121,8 +121,6 @@ static int skbprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	/* Check to update highest and lowest priorities. */
- 	if (skb_queue_empty(lp_qdisc)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			/* The incoming packet is the only packet in queue. */
--			BUG_ON(sch->q.qlen != 1);
- 			q->lowest_prio = prio;
- 			q->highest_prio = prio;
- 		} else {
-@@ -154,7 +152,6 @@ static struct sk_buff *skbprio_dequeue(struct Qdisc *sch)
- 	/* Update highest priority field. */
- 	if (skb_queue_empty(hpq)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			BUG_ON(sch->q.qlen);
- 			q->highest_prio = 0;
- 			q->lowest_prio = SKBPRIO_MAX_PRIORITY - 1;
- 		} else {
--- 
-2.39.5
-
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -117,7 +117,8 @@ do {									\
+ 	if (!(RC)) {							\
+ 		if (((P)->header.nextindex >				\
+ 		     (((BN) == 0) ? DTROOTMAXSLOT : (P)->header.maxslot)) || \
+-		    ((BN) && ((P)->header.maxslot > DTPAGEMAXSLOT))) {	\
++		    ((BN) && (((P)->header.maxslot > DTPAGEMAXSLOT) ||	\
++		    ((P)->header.stblindex >= DTPAGEMAXSLOT)))) {	\
+ 			BT_PUTPAGE(MP);					\
+ 			jfs_error((IP)->i_sb,				\
+ 				  "DT_GETPAGE: dtree page corrupt\n");	\
 
 
