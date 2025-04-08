@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC61126E15F;
-	Tue,  8 Apr 2025 12:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FE5269882;
+	Tue,  8 Apr 2025 12:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116177; cv=none; b=V1QumqJAjOkmp41si7eij+hHxbNopEJ6JSn7BPGfaY5EJaTRZVZIUjUUa+P4YDL8/X6a47eO3W+zHyRwc6vJWejL0U4dKnZox1aPhOJGnzaswLL8zqXTzJQx5d8VrXTfXa51LXN455BmlvVLui7fLwYLUax68E7HwD2xWzCO1ww=
+	t=1744116179; cv=none; b=BNi9nWd7/ydoipEj/2lN08zT642nW5FmsHoSsYIXTBVQ1CogE9PNy2rrtiuscBg3dnregKknbS3HIyGCTcM5oQ1j4rhr+KL9y0tyoNscMkSkBV73x3HsdfrDUmC5jAkq7Y4+uF7sPNXosr856CluDO7mAcRF/uh+P6Vm8JPp+Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116177; c=relaxed/simple;
-	bh=8/K527tOIoM8hXTJYpWkA9BUB2TYxwwfAU1fvIUyWNQ=;
+	s=arc-20240116; t=1744116179; c=relaxed/simple;
+	bh=i/UHO8LsKhhUqshojVi+0XPb38g2CT55h3p0UpAuFN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaQe+aTBEfiaaYrFdieyXB7uSv6ZGrc6OFzNmmN4OmbcFqQxy8m8kvrIdDWxqV+5Wzyd8cFF0wq8BzELLsM6PxAdmRzjHOGZmRJ0ORKaXBONi8oIB0aSgqJj+J8pxiXafZc/H7i04a+8+IeCQzI7drSCrzys6h2Eq2LWef1eMw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpCZnrUc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTlC/6xi0aAwgMEk3iKMxw18gjyJWE2TOKyieqe+I8FCFJF3nwulDgHyl/LRafrBoo/kUmrQOMhqELMBxbeL6FePSOgRvRwNgEypEkKkkYGrpLvIz09bFRK/oiXWsLc6EK474kTljNI/dX92zsqmVrdlxgHGI8LHNMCJKGCatfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDYCehKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpCZnrUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C903C4CEE5;
-	Tue,  8 Apr 2025 12:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDYCehKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9C7C4CEE5;
+	Tue,  8 Apr 2025 12:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116176;
-	bh=8/K527tOIoM8hXTJYpWkA9BUB2TYxwwfAU1fvIUyWNQ=;
+	s=korg; t=1744116179;
+	bh=i/UHO8LsKhhUqshojVi+0XPb38g2CT55h3p0UpAuFN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpCZnrUcB5tFRwZ1xavO/JZKW5Z99LuPd/ncYV6LQykolkqX3kE3ZW1cJCWYOK9Xp
-	 BYJrC3lFIVoUuPfjkve3q+DtMQyvepSO/YNda2uIJr2sJn+NbzOjc9DiLExs376Gtp
-	 e8w9PaevnPgGF7N2ObHPu8egJNVnDsGFNQ+zX73I=
+	b=uDYCehKs6QN+b0sX9BNXwd3pB7IsQYl41Gael8xttxvC4be00aJx9mlNp4K9EDJal
+	 uBqkpihepeNoF0Vp5iKnt5D7oXp/e/bLPaxm9xz81WHZHwY/aPwdp9E8vz6nPfRScm
+	 srVHMIfqU9U2kZsyhcZcN+L3DdAMRcdNRC1T76Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/423] HID: remove superfluous (and wrong) Makefile entry for CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-Date: Tue,  8 Apr 2025 12:46:08 +0200
-Message-ID: <20250408104846.729669332@linuxfoundation.org>
+Subject: [PATCH 6.12 007/423] sched/eevdf: Force propagating min_slice of cfs_rq when {en,de}queue tasks
+Date: Tue,  8 Apr 2025 12:45:33 +0200
+Message-ID: <20250408104845.878619541@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,41 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Tianchen Ding <dtcccc@linux.alibaba.com>
 
-[ Upstream commit fe0fb58325e519008e2606a5aa2cff7ad23e212d ]
+[ Upstream commit 563bc2161b94571ea425bbe2cf69fd38e24cdedf ]
 
-The line
+When a task is enqueued and its parent cgroup se is already on_rq, this
+parent cgroup se will not be enqueued again, and hence the root->min_slice
+leaves unchanged. The same issue happens when a task is dequeued and its
+parent cgroup se has other runnable entities, and the parent cgroup se
+will not be dequeued.
 
-	obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)   += intel-ish-hid/
+Force propagating min_slice when se doesn't need to be enqueued or
+dequeued. Ensure the se hierarchy always get the latest min_slice.
 
-in top-level HID Makefile is both superfluous (as CONFIG_INTEL_ISH_FIRMWARE_DOWNLOADER
-depends on CONFIG_INTEL_ISH_HID, which contains intel-ish-hid/ already) and wrong (as it's
-missing the CONFIG_ prefix).
-
-Just remove it.
-
-Fixes: 91b228107da3e ("HID: intel-ish-hid: ISH firmware loader client driver")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
+Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20250211063659.7180-1-dtcccc@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/sched/fair.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
-index 496dab54c73a8..f2900ee2ef858 100644
---- a/drivers/hid/Makefile
-+++ b/drivers/hid/Makefile
-@@ -165,7 +165,6 @@ obj-$(CONFIG_USB_KBD)		+= usbhid/
- obj-$(CONFIG_I2C_HID_CORE)	+= i2c-hid/
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 49e340f9fa71b..ceb023629d48d 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7103,6 +7103,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+ 		update_cfs_group(se);
  
- obj-$(CONFIG_INTEL_ISH_HID)	+= intel-ish-hid/
--obj-$(INTEL_ISH_FIRMWARE_DOWNLOADER)	+= intel-ish-hid/
+ 		se->slice = slice;
++		if (se != cfs_rq->curr)
++			min_vruntime_cb_propagate(&se->run_node, NULL);
+ 		slice = cfs_rq_min_slice(cfs_rq);
  
- obj-$(CONFIG_AMD_SFH_HID)       += amd-sfh-hid/
+ 		cfs_rq->h_nr_running++;
+@@ -7232,6 +7234,8 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 		update_cfs_group(se);
  
+ 		se->slice = slice;
++		if (se != cfs_rq->curr)
++			min_vruntime_cb_propagate(&se->run_node, NULL);
+ 		slice = cfs_rq_min_slice(cfs_rq);
+ 
+ 		cfs_rq->h_nr_running -= h_nr_running;
 -- 
 2.39.5
 
