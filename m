@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E1126B0A7;
-	Tue,  8 Apr 2025 11:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFC0268C65;
+	Tue,  8 Apr 2025 11:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111762; cv=none; b=ptHjaFYSAsHGm6qPJDgdyd55wy7WtDG06g284dtALPzE41+y8TPB8cqorlePvHUgFQzmy28u0wwlU1aOJNisbPvXktcUnXL50p1MAuf13o2EkwodoXYP6eIg3gD3dgVZxmnk+2JMRbCRNV1xCr47vjn7C36s1fC8TwCuCWyu/4I=
+	t=1744111764; cv=none; b=k4A/mp486AIptlVL82Dtx8/7bT5xF8VVU2xEc0AGgu7b0qjJ0/r9sQTVS+Yt5v06hhw+fiNyIpeiUC0GA4a/opxgEZUUpPI11jfHG+iB6VjuuzEqbiWFZGBGW+Ba1NwWYuapm1xRGQPQ2JaIj4xCNDRbX56yqrGXTMrAwojH/zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111762; c=relaxed/simple;
-	bh=H3CA9wYjvwNBslnOEC0ne7WgV7bVJNlZMEms/n8ptqw=;
+	s=arc-20240116; t=1744111764; c=relaxed/simple;
+	bh=87iV5ymvT40tGSqam+Jc3oqE7iXFnNUT/WeWZ5cq65I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A603ZjmB4G1CqmfmeRrH9fnto8fJbSd/iXg946ymYL33si5Mtb3kmIklKVJ+FM2j+K2YQXS3ny/UsQaeJkMKzU4ilJ40DDJ1/1ak8f2SELhcnoNroDz3yO2rzR0caH7KMEwbLanxdm8vVHw9s/e5yFYIdPwExSC28OpRXjBQrGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNqWEX4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m0GCsI5kqLv0gg5UEfRKQRlkhB12cW+Lw6MMcFyo+t/8wioGxrRF38daNNFKqyZum0h8XkxZDIuJSgS9Qtv8TpkFlXT3Zlnp62DGexkp2nZoIe8au5OzOqH52+/rPiE1/vComCAFmS/U03S3qVh34D6oPLGmhxPMa8fdOhquebk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx74MhMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNqWEX4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C8FC4CEE5;
-	Tue,  8 Apr 2025 11:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx74MhMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52328C4CEE5;
+	Tue,  8 Apr 2025 11:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111762;
-	bh=H3CA9wYjvwNBslnOEC0ne7WgV7bVJNlZMEms/n8ptqw=;
+	s=korg; t=1744111764;
+	bh=87iV5ymvT40tGSqam+Jc3oqE7iXFnNUT/WeWZ5cq65I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNqWEX4q8bvBK5+FVCG2paOx0lV/qHHRkH5/dm3r2MqcPBdVcob9i37HghZFHGWaj
-	 kpN9n3mfqyRuxwrLuhm6Fzeq5U9pFBYzRsgB115363tTzCyI9lwBNIF5ODJQA03a0P
-	 vYJRcWmyPUjDmcKdc5Ss6/WWGgfc7IUZGH72WH/4=
+	b=yx74MhMdanM3NmxUjDFVfTkXi8baCRkimlC+uteiMzFsY57eBiKALyi+IKHKSi8y2
+	 7rH5WJdOhPj13dDLUssLrUGF8pVVAHTB4HoH0FZRghSurvTXAQOPNiBARZz158FaDJ
+	 eDQM+/9d9ZN6xP0oVy7bN/xzOFfonV1dU4VLQV10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tang Yizhou <yizhou.tang@shopee.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jan Kara <jack@suse.cz>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 548/731] objtool, spi: amd: Fix out-of-bounds stack access in amd_set_spi_freq()
-Date: Tue,  8 Apr 2025 12:47:25 +0200
-Message-ID: <20250408104927.023504130@linuxfoundation.org>
+Subject: [PATCH 6.14 512/731] writeback: let trace_balance_dirty_pages() take struct dtc as parameter
+Date: Tue,  8 Apr 2025 12:46:49 +0200
+Message-ID: <20250408104926.184904964@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,48 +58,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Tang Yizhou <yizhou.tang@shopee.com>
 
-[ Upstream commit 76e51db43fe4aaaebcc5ddda67b0807f7c9bdecc ]
+[ Upstream commit f1ab2831e2a4312046bca79256b2efc41d373eaf ]
 
-If speed_hz < AMD_SPI_MIN_HZ, amd_set_spi_freq() iterates over the
-entire amd_spi_freq array without breaking out early, causing 'i' to go
-beyond the array bounds.
+Patch series "Fix calculations in trace_balance_dirty_pages() for cgwb", v2.
 
-Fix that by stopping the loop when it gets to the last entry, so the low
-speed_hz value gets clamped up to AMD_SPI_MIN_HZ.
+In my experiment, I found that the output of trace_balance_dirty_pages()
+in the cgroup writeback scenario was strange because
+trace_balance_dirty_pages() always uses global_wb_domain.dirty_limit for
+related calculations instead of the dirty_limit of the corresponding
+memcg's wb_domain.
 
-Fixes the following warning with an UBSAN kernel:
+The basic idea of the fix is to store the hard dirty limit value computed
+in wb_position_ratio() into struct dirty_throttle_control and use it for
+calculations in trace_balance_dirty_pages().
 
-  drivers/spi/spi-amd.o: error: objtool: amd_set_spi_freq() falls through to next function amd_spi_set_opcode()
+This patch (of 3):
 
-Fixes: 3fe26121dc3a ("spi: amd: Configure device speed")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Mark Brown <broonie@kernel.org>
-Cc: Raju Rangoju <Raju.Rangoju@amd.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/78fef0f2434f35be9095bcc9ffa23dd8cab667b9.1742852847.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/r/202503161828.RUk9EhWx-lkp@intel.com/
+Currently, trace_balance_dirty_pages() already has 12 parameters.  In the
+patch #3, I initially attempted to introduce an additional parameter.
+However, in include/linux/trace_events.h, bpf_trace_run12() only supports
+up to 12 parameters and bpf_trace_run13() does not exist.
+
+To reduce the number of parameters in trace_balance_dirty_pages(), we can
+make it accept a pointer to struct dirty_throttle_control as a parameter.
+To achieve this, we need to move the definition of struct
+dirty_throttle_control from mm/page-writeback.c to
+include/linux/writeback.h.
+
+Link: https://lkml.kernel.org/r/20250304110318.159567-1-yizhou.tang@shopee.com
+Link: https://lkml.kernel.org/r/20250304110318.159567-2-yizhou.tang@shopee.com
+Signed-off-by: Tang Yizhou <yizhou.tang@shopee.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Tang Yizhou <yizhou.tang@shopee.com>
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6cc4c3aa714b ("writeback: fix calculations in trace_balance_dirty_pages() for cgwb")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/writeback.h        | 23 +++++++++++++++++++++
+ include/trace/events/writeback.h | 16 ++++++---------
+ mm/page-writeback.c              | 35 ++------------------------------
+ 3 files changed, 31 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
-index c85997478b819..17fc0b17e756d 100644
---- a/drivers/spi/spi-amd.c
-+++ b/drivers/spi/spi-amd.c
-@@ -302,7 +302,7 @@ static void amd_set_spi_freq(struct amd_spi *amd_spi, u32 speed_hz)
- {
- 	unsigned int i, spd7_val, alt_spd;
+diff --git a/include/linux/writeback.h b/include/linux/writeback.h
+index d11b903c2edb8..32095928365ce 100644
+--- a/include/linux/writeback.h
++++ b/include/linux/writeback.h
+@@ -313,6 +313,29 @@ static inline void cgroup_writeback_umount(struct super_block *sb)
+ /*
+  * mm/page-writeback.c
+  */
++/* consolidated parameters for balance_dirty_pages() and its subroutines */
++struct dirty_throttle_control {
++#ifdef CONFIG_CGROUP_WRITEBACK
++	struct wb_domain	*dom;
++	struct dirty_throttle_control *gdtc;	/* only set in memcg dtc's */
++#endif
++	struct bdi_writeback	*wb;
++	struct fprop_local_percpu *wb_completions;
++
++	unsigned long		avail;		/* dirtyable */
++	unsigned long		dirty;		/* file_dirty + write + nfs */
++	unsigned long		thresh;		/* dirty threshold */
++	unsigned long		bg_thresh;	/* dirty background threshold */
++
++	unsigned long		wb_dirty;	/* per-wb counterparts */
++	unsigned long		wb_thresh;
++	unsigned long		wb_bg_thresh;
++
++	unsigned long		pos_ratio;
++	bool			freerun;
++	bool			dirty_exceeded;
++};
++
+ void laptop_io_completion(struct backing_dev_info *info);
+ void laptop_sync_completion(void);
+ void laptop_mode_timer_fn(struct timer_list *t);
+diff --git a/include/trace/events/writeback.h b/include/trace/events/writeback.h
+index a261e86e61fac..3213b90237944 100644
+--- a/include/trace/events/writeback.h
++++ b/include/trace/events/writeback.h
+@@ -629,11 +629,7 @@ TRACE_EVENT(bdi_dirty_ratelimit,
+ TRACE_EVENT(balance_dirty_pages,
  
--	for (i = 0; i < ARRAY_SIZE(amd_spi_freq); i++)
-+	for (i = 0; i < ARRAY_SIZE(amd_spi_freq)-1; i++)
- 		if (speed_hz >= amd_spi_freq[i].speed_hz)
- 			break;
+ 	TP_PROTO(struct bdi_writeback *wb,
+-		 unsigned long thresh,
+-		 unsigned long bg_thresh,
+-		 unsigned long dirty,
+-		 unsigned long bdi_thresh,
+-		 unsigned long bdi_dirty,
++		 struct dirty_throttle_control *dtc,
+ 		 unsigned long dirty_ratelimit,
+ 		 unsigned long task_ratelimit,
+ 		 unsigned long dirtied,
+@@ -641,7 +637,7 @@ TRACE_EVENT(balance_dirty_pages,
+ 		 long pause,
+ 		 unsigned long start_time),
  
+-	TP_ARGS(wb, thresh, bg_thresh, dirty, bdi_thresh, bdi_dirty,
++	TP_ARGS(wb, dtc,
+ 		dirty_ratelimit, task_ratelimit,
+ 		dirtied, period, pause, start_time),
+ 
+@@ -664,16 +660,16 @@ TRACE_EVENT(balance_dirty_pages,
+ 	),
+ 
+ 	TP_fast_assign(
+-		unsigned long freerun = (thresh + bg_thresh) / 2;
++		unsigned long freerun = (dtc->thresh + dtc->bg_thresh) / 2;
+ 		strscpy_pad(__entry->bdi, bdi_dev_name(wb->bdi), 32);
+ 
+ 		__entry->limit		= global_wb_domain.dirty_limit;
+ 		__entry->setpoint	= (global_wb_domain.dirty_limit +
+ 						freerun) / 2;
+-		__entry->dirty		= dirty;
++		__entry->dirty		= dtc->dirty;
+ 		__entry->bdi_setpoint	= __entry->setpoint *
+-						bdi_thresh / (thresh + 1);
+-		__entry->bdi_dirty	= bdi_dirty;
++						dtc->wb_thresh / (dtc->thresh + 1);
++		__entry->bdi_dirty	= dtc->wb_dirty;
+ 		__entry->dirty_ratelimit = KBps(dirty_ratelimit);
+ 		__entry->task_ratelimit	= KBps(task_ratelimit);
+ 		__entry->dirtied	= dirtied;
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index eb55ece39c565..e980b2aec3529 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -120,29 +120,6 @@ EXPORT_SYMBOL(laptop_mode);
+ 
+ struct wb_domain global_wb_domain;
+ 
+-/* consolidated parameters for balance_dirty_pages() and its subroutines */
+-struct dirty_throttle_control {
+-#ifdef CONFIG_CGROUP_WRITEBACK
+-	struct wb_domain	*dom;
+-	struct dirty_throttle_control *gdtc;	/* only set in memcg dtc's */
+-#endif
+-	struct bdi_writeback	*wb;
+-	struct fprop_local_percpu *wb_completions;
+-
+-	unsigned long		avail;		/* dirtyable */
+-	unsigned long		dirty;		/* file_dirty + write + nfs */
+-	unsigned long		thresh;		/* dirty threshold */
+-	unsigned long		bg_thresh;	/* dirty background threshold */
+-
+-	unsigned long		wb_dirty;	/* per-wb counterparts */
+-	unsigned long		wb_thresh;
+-	unsigned long		wb_bg_thresh;
+-
+-	unsigned long		pos_ratio;
+-	bool			freerun;
+-	bool			dirty_exceeded;
+-};
+-
+ /*
+  * Length of period for aging writeout fractions of bdis. This is an
+  * arbitrarily chosen number. The longer the period, the slower fractions will
+@@ -1962,11 +1939,7 @@ static int balance_dirty_pages(struct bdi_writeback *wb,
+ 		 */
+ 		if (pause < min_pause) {
+ 			trace_balance_dirty_pages(wb,
+-						  sdtc->thresh,
+-						  sdtc->bg_thresh,
+-						  sdtc->dirty,
+-						  sdtc->wb_thresh,
+-						  sdtc->wb_dirty,
++						  sdtc,
+ 						  dirty_ratelimit,
+ 						  task_ratelimit,
+ 						  pages_dirtied,
+@@ -1991,11 +1964,7 @@ static int balance_dirty_pages(struct bdi_writeback *wb,
+ 
+ pause:
+ 		trace_balance_dirty_pages(wb,
+-					  sdtc->thresh,
+-					  sdtc->bg_thresh,
+-					  sdtc->dirty,
+-					  sdtc->wb_thresh,
+-					  sdtc->wb_dirty,
++					  sdtc,
+ 					  dirty_ratelimit,
+ 					  task_ratelimit,
+ 					  pages_dirtied,
 -- 
 2.39.5
 
