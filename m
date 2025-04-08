@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3D226A0F2;
-	Tue,  8 Apr 2025 11:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04802266EEA;
+	Tue,  8 Apr 2025 11:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113378; cv=none; b=HxrIeRl1/GfeEKbLUuVrqh0vKSOc1oIoQrufqHiE+z0Z4391TglG+7CekSFZDfYt0U5n9pNrKEBrd/lm1UQRmxKCgghCCBK6/24SrkLJYv7B/DozYcPop2w6Gfs8dvR77YwMFsW7GI+cWCzTWxW3OQIAtMA1pMlo6oGytEx3sO4=
+	t=1744113381; cv=none; b=hLkiqSMsQQgVukMt6tLC8GgAXj3fbrxkSunYh5tkd8rEys1sm3+1cGVDRdRinkH0ykgZJUK1gUBogdvB9XoH6p/V/nqfpvHfCXPGkQ/hla6cbtryKecyouw7ah9pgPzDuEt/NBkQzfqcYUlfKOrMJUDqrHs6zqg/GL5VjATGjMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113378; c=relaxed/simple;
-	bh=kuvy55qNrQm3BCaVm/pm/koG0JxrRZVZV0WHEzrqmAY=;
+	s=arc-20240116; t=1744113381; c=relaxed/simple;
+	bh=yhTzE4eaP1MplLHivECrcIyAXcQiJAulBCavnLQkVyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAbkSNrnhPE2TdapTQRxoPZs3Ml4j2nZ8qaSz62klbdgCBxxROPYZ0EK5QjPb0I0ykj/rTUwGV54Qq0YeF3fepy78ayLc5rbQrkYmE8HdRip2lEsdnr+99SNjonUrrOofBEIFEohvrObSsLhmuiOKbPMhAceOVA5yES8EyRRrQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzVSjJXk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WtO2U6h/WxG++PsYvP+HaHG14edQd/rKd43L5+hdqYZH9Wi5+Ih7wgsF41BHBlZ7w7X0BLimugAtJGctSmAfWRr1vOZrdNZw5YsSKypPr2EnBEyOFcNGps3wDdsSpZlMgpQY9BovzgA5+CrsHD8JRbWWkjBUYlXu+/E1FqX2j3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwPJtwz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzVSjJXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D584C4CEE5;
-	Tue,  8 Apr 2025 11:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwPJtwz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DC6C4CEE5;
+	Tue,  8 Apr 2025 11:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113377;
-	bh=kuvy55qNrQm3BCaVm/pm/koG0JxrRZVZV0WHEzrqmAY=;
+	s=korg; t=1744113380;
+	bh=yhTzE4eaP1MplLHivECrcIyAXcQiJAulBCavnLQkVyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzVSjJXkEXtNOKS1EDrpJZ2Wxfh2RPoWN74VU904ehRSgBdECAUEn9IxkbTuGchXS
-	 wJAVeWja7ujwPslNUqJ3gX8uz2lPBRr6Nz0combP2X1BPwhHfxdlf7A3aYUAnwxgyz
-	 +kFdRGKSEz370v6hrha9kEKMIVfXy3MTa3Cqh8zc=
+	b=SwPJtwz3zwZBXMibRTPGcMOGG/tz3I7F/y2nW227Uu1WmqCKjXWFGt8tKKhFmjpmB
+	 3CGpDH80dBGpjN0EWdFVCU7UeGBW7SbXk3DAoRHkH69OxT2MOMJEH7234lVyGwUWeq
+	 4hwCrdDz0CjIr/OM6RwQtnMjKlEmWAvB9sOJJlZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 110/268] ucsi_ccg: Dont show failed to get FW build information error
-Date: Tue,  8 Apr 2025 12:48:41 +0200
-Message-ID: <20250408104831.467961646@linuxfoundation.org>
+Subject: [PATCH 6.6 137/268] staging: rtl8723bs: select CONFIG_CRYPTO_LIB_AES
+Date: Tue,  8 Apr 2025 12:49:08 +0200
+Message-ID: <20250408104832.215783019@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -45,51 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit c16006852732dc4fe37c14b81f9b4458df05b832 ]
+[ Upstream commit b2a9a6a26b7e954297e51822e396572026480bad ]
 
-The error `failed to get FW build information` is added for what looks
-to be for misdetection of the device property firmware-name.
+This fixes the following issue:
+ERROR: modpost: "aes_expandkey" [drivers/staging/rtl8723bs/r8723bs.ko]
+undefined!
+ERROR: modpost: "aes_encrypt" [drivers/staging/rtl8723bs/r8723bs.ko]
+undefined!
 
-If the property is missing (such as on non-nvidia HW) this error shows up.
-Move the error into the scope of the property parser for "firmware-name"
-to avoid showing errors on systems without the firmware-name property.
-
-Fixes: 5c9ae5a87573d ("usb: typec: ucsi: ccg: add firmware flashing support")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250221054137.1631765-2-superm1@kernel.org
+Fixes: 7d40753d8820 ("staging: rtl8723bs: use in-kernel aes encryption in OMAC1 routines")
+Fixes: 3d3a170f6d80 ("staging: rtl8723bs: use in-kernel aes encryption")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/tencent_0BDDF3A721708D16A2E7C3DAFF0FEC79A105@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-index cf3c8e552defe..7c7f388aac96b 100644
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1366,11 +1366,10 @@ static int ucsi_ccg_probe(struct i2c_client *client)
- 			uc->fw_build = CCG_FW_BUILD_NVIDIA_TEGRA;
- 		else if (!strcmp(fw_name, "nvidia,gpu"))
- 			uc->fw_build = CCG_FW_BUILD_NVIDIA;
-+		if (!uc->fw_build)
-+			dev_err(uc->dev, "failed to get FW build information\n");
- 	}
- 
--	if (!uc->fw_build)
--		dev_err(uc->dev, "failed to get FW build information\n");
--
- 	/* reset ccg device and initialize ucsi */
- 	status = ucsi_ccg_init(uc);
- 	if (status < 0) {
+diff --git a/drivers/staging/rtl8723bs/Kconfig b/drivers/staging/rtl8723bs/Kconfig
+index f23e29b679fb5..14afcbbd61045 100644
+--- a/drivers/staging/rtl8723bs/Kconfig
++++ b/drivers/staging/rtl8723bs/Kconfig
+@@ -5,6 +5,7 @@ config RTL8723BS
+ 	depends on m
+ 	select CFG80211_WEXT
+ 	select CRYPTO
++	select CRYPTO_LIB_AES
+ 	select CRYPTO_LIB_ARC4
+ 	help
+ 	This option enables support for RTL8723BS SDIO drivers, such as
 -- 
 2.39.5
 
