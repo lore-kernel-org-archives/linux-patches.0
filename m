@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279B026B2D4;
-	Tue,  8 Apr 2025 12:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C956B26F462;
+	Tue,  8 Apr 2025 12:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116225; cv=none; b=T64xUYfjNiVT2MJ9SfdhULaS+fqFcVk1S6Stctuk9Vn/JsVAck+VccDBeKMlfpSF/2RjLD+0aDvwSHHD8YAoTAcq5MvxrBUpqV4g/1XcmqdLvxezz7K+JX3kiBN4zx4Z8MqmMrQhWfhHLkFynT/nL+codPV7US8w1GQjbaVTIHg=
+	t=1744116227; cv=none; b=Y0Hqom1awswIb9OglJOp7KM4S/grd1+WOGYQZC0Am2gqVpJ+hk6p0UhBMJM4xw+jYcqAchSB+/zGJBIr6a3o/5p/tSLFinCSvPvRg6EM3wb3ENinPJwus3pbpPXSxud+C1jS0Da1CmnNKDWE1Lzx/kdkQaZXoTtKHSvqAVvcW0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116225; c=relaxed/simple;
-	bh=MkOpQNck/IEloXow7QBtWJtjYXJ10LZqWUlJFwvPzKE=;
+	s=arc-20240116; t=1744116227; c=relaxed/simple;
+	bh=l5KX72QXOT/ntM7MyHUw658x+uxj5tntgG6ERabWafU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uKbK+dqanSMpN82WC8UOjAYuPKw1JYL7iDUwkXJMI6g9f1lfPeWJAmtCNkeyw6yR/lZQdJqanhCJtWmWryOtKAXx/8fK5FQy2wQER1EgMp25eEvpBVHyGUYgJmH9i4hphNn0kyM44T/UeKZVQiHIGNYYAuYKAFIxDSD6HI++EzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovntLc63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0vrX/OXgf+2jQl5zem+7iv1emS0J2joTsMJFbNPyAfRRxEpcaZ1/qdU26uwoPknzfiCLStxg4WwuZ8bl4jRY0+0M4TbtIvn+bIyExCuiVZyHKd9gREUHpJbQheKL7xqG23P66TNbt27+HsrDjBa/43sAG99Tx29U+LlJbEHc78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhaAgpb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovntLc63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9062C4CEE5;
-	Tue,  8 Apr 2025 12:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhaAgpb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584DBC4CEE5;
+	Tue,  8 Apr 2025 12:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116225;
-	bh=MkOpQNck/IEloXow7QBtWJtjYXJ10LZqWUlJFwvPzKE=;
+	s=korg; t=1744116227;
+	bh=l5KX72QXOT/ntM7MyHUw658x+uxj5tntgG6ERabWafU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovntLc63XT++7E+g9VfXFE3u4hsHh682gV+F4cyV2djwOFQgyv+LRXQBbdFPeed5n
-	 wbZFPYmByrgaY/YsL1GPONek7gnWPK0DRwnRXdLC5qePtfcn8BtZGDt9NUagXYLS7v
-	 I2tTNL98JnIQAz0pzl8z0PyS9dK7toVDf5RjzzCw=
+	b=mhaAgpb4ht4nDredd75E7H5/SFEPxA9niJAQUJjhupKNp33mlt5b2HEO+FEuxHXn8
+	 JiZTjQL1/Y1PGggD6FDk3wauiw0TUSKeWA2PjIvO+x//1pEYJDHfQLO+DclrBt+xJe
+	 m4+FqWLWY/cyoPYRUhR+2Rd6hZk61MC5zEJiOp7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Stodden <dns@arista.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/423] PCI/ASPM: Fix link state exit during switch upstream function removal
-Date: Tue,  8 Apr 2025 12:46:28 +0200
-Message-ID: <20250408104847.192424362@linuxfoundation.org>
+Subject: [PATCH 6.12 063/423] drm/panel: ilitek-ili9882t: fix GPIO name in error message
+Date: Tue,  8 Apr 2025 12:46:29 +0200
+Message-ID: <20250408104847.216364749@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -46,86 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Stodden <daniel.stodden@gmail.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit cbf937dcadfd571a434f8074d057b32cd14fbea5 ]
+[ Upstream commit 4ce2c7e201c265df1c62a9190a98a98803208b8f ]
 
-Before 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to
-avoid use-after-free"), we would free the ASPM link only after the last
-function on the bus pertaining to the given link was removed.
+This driver uses the enable-gpios property and it is confusing that the
+error message refers to reset-gpios.  Use the correct name when the
+enable GPIO is not found.
 
-That was too late. If function 0 is removed before sibling function,
-link->downstream would point to free'd memory after.
-
-After above change, we freed the ASPM parent link state upon any function
-removal on the bus pertaining to a given link.
-
-That is too early. If the link is to a PCIe switch with MFD on the upstream
-port, then removing functions other than 0 first would free a link which
-still remains parent_link to the remaining downstream ports.
-
-The resulting GPFs are especially frequent during hot-unplug, because
-pciehp removes devices on the link bus in reverse order.
-
-On that switch, function 0 is the virtual P2P bridge to the internal bus.
-Free exactly when function 0 is removed -- before the parent link is
-obsolete, but after all subordinate links are gone.
-
-Link: https://lore.kernel.org/r/e12898835f25234561c9d7de4435590d957b85d9.1734924854.git.dns@arista.com
-Fixes: 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free")
-Signed-off-by: Daniel Stodden <dns@arista.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: e2450d32e5fb5 ("drm/panel: ili9882t: Break out as separate driver")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250217120428.3779197-1-jkeeping@inmusicbrands.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index cee2365e54b8b..62650a2f00ccc 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1242,16 +1242,16 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 	parent_link = link->parent;
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+index 266a087fe14c1..3c24a63b6be8c 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+@@ -607,7 +607,7 @@ static int ili9882t_add(struct ili9882t *ili)
  
- 	/*
--	 * link->downstream is a pointer to the pci_dev of function 0.  If
--	 * we remove that function, the pci_dev is about to be deallocated,
--	 * so we can't use link->downstream again.  Free the link state to
--	 * avoid this.
-+	 * Free the parent link state, no later than function 0 (i.e.
-+	 * link->downstream) being removed.
- 	 *
--	 * If we're removing a non-0 function, it's possible we could
--	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
--	 * programming the same ASPM Control value for all functions of
--	 * multi-function devices, so disable ASPM for all of them.
-+	 * Do not free the link state any earlier. If function 0 is a
-+	 * switch upstream port, this link state is parent_link to all
-+	 * subordinate ones.
- 	 */
-+	if (pdev != link->downstream)
-+		goto out;
-+
- 	pcie_config_aspm_link(link, 0);
- 	list_del(&link->sibling);
- 	free_link_state(link);
-@@ -1262,6 +1262,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 		pcie_config_aspm_path(parent_link);
+ 	ili->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+ 	if (IS_ERR(ili->enable_gpio)) {
+-		dev_err(dev, "cannot get reset-gpios %ld\n",
++		dev_err(dev, "cannot get enable-gpios %ld\n",
+ 			PTR_ERR(ili->enable_gpio));
+ 		return PTR_ERR(ili->enable_gpio);
  	}
- 
-+ out:
- 	mutex_unlock(&aspm_lock);
- 	up_read(&pci_bus_sem);
- }
 -- 
 2.39.5
 
