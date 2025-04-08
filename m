@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F76227EBD;
-	Tue,  8 Apr 2025 11:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B5263C6D;
+	Tue,  8 Apr 2025 11:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112629; cv=none; b=bSB1dy4UkWl+YYZ9lPWGEC6E+WvH0M3p3NJxDlxvimgwv7RIVQX+p+wJ5cylMpgBMg/S6itx4hCZ07VXfn8LKVuA4vogmT/PSWNzzkXZIlorClbvnqJ1wEl8kOpSdebJsPaN3cgrm8x7jCITJDzSNS5l753wpKNwKFplGxy4pZE=
+	t=1744112632; cv=none; b=iiFHgSrIpJtTVzy2u9A0xm5WF4KvGcnMWhmQ6VcrXVRMTS5VFvVEgOp5xc16YXIakqT/L4J9881UCgg86C52rOOXZ2ctF7DufoV9e5Ftd0zLaes0JhMzYNH4O01nZWFg3LjesIIKpyhpzbfrC2Wfw7CvT6iQmLJl7rqlXAK/mdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112629; c=relaxed/simple;
-	bh=oAapQRJn69kBZy28YlKjXDTy0nRzr8f0YsLHiYmp7vA=;
+	s=arc-20240116; t=1744112632; c=relaxed/simple;
+	bh=M3KDe40m0SngWMwhBK2xlujGPUJZn5PVEK0H3VbAt0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A50Y4eU64+CUtpD1nkz0CYVE9YiEp6q0TlBFIbYrDb2r+AvNK3jFTl6zLAaSX9MVAmvQsXOOvrIklWaNhGhD9ETDgwwA79/VhoMBt3qFUW9r8V5Br7rB/m9sVjEnJ50pJiUM9Mq3fCbBIyAqq7BZsVbBi93QmvxAYvAxxbVIkdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQ6uK3nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mIscxdSRgCGfihJGSaDCoucX6NPkU6AkEZCXnjYAOZm8R9lHp1TNLqaFdCGhheIQgKWi9XUzO4SADKenO8rc8IWf881BDkaKLCZTkG5vwfESmMimadlvigFa5QZXMwxZVQFyWoJajbmoMjnkmUmndTtAeseQENnCzobpZkNScSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WW/zbrJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQ6uK3nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B2CC4CEE5;
-	Tue,  8 Apr 2025 11:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WW/zbrJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D4DC4CEE5;
+	Tue,  8 Apr 2025 11:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112629;
-	bh=oAapQRJn69kBZy28YlKjXDTy0nRzr8f0YsLHiYmp7vA=;
+	s=korg; t=1744112631;
+	bh=M3KDe40m0SngWMwhBK2xlujGPUJZn5PVEK0H3VbAt0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQ6uK3nxhcRA+h/xHg1DMZdKxm36RpAKcdkcRy+J3y03blw28AhI7DnjHyyiPueof
-	 3BLf69RKgQzDfC4lPuCmXYONCBkrs1ElCJlDnaKHfCTqPN0PgGcMKVJ8rf4xFR3Lu7
-	 o2TjMMRvXCVDsCXGL4/DJovId5mwClfKBe+Ly3J0=
+	b=WW/zbrJFovCph+HCpPiLI5qNfCnWQEWGrRtv6rXh0Ovh3R84Y0CjJ6DOYRXULHEE2
+	 abRqeU3N59r4xf/reN9sXz4/CZ/XYu99xNKDA2d52eUr4a+eWFSRsU/lfjoUSCJUVz
+	 7nyWLYOoNF77+17Gk9Fb6e7/NzB9eiBhIeuGkByM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/279] PM: sleep: Fix handling devices with direct_complete set on errors
-Date: Tue,  8 Apr 2025 12:48:43 +0200
-Message-ID: <20250408104830.118385800@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 123/279] net: usb: qmi_wwan: add Telit Cinterion FE990B composition
+Date: Tue,  8 Apr 2025 12:48:26 +0200
+Message-ID: <20250408104829.666666374@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,91 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-[ Upstream commit 03f1444016b71feffa1dfb8a51f15ba592f94b13 ]
+commit e8cdd91926aac2c53a23925c538ad4c44be4201f upstream.
 
-When dpm_suspend() fails, some devices with power.direct_complete set
-may not have been handled by device_suspend() yet, so runtime PM has
-not been disabled for them yet even though power.direct_complete is set.
+Add the following Telit Cinterion FE990B composition:
+0x10b0: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+        tty (diag) + DPL + QDSS (Qualcomm Debug SubSystem) + adb
 
-Since device_resume() expects that runtime PM has been disabled for all
-devices with power.direct_complete set, it will attempt to reenable
-runtime PM for the devices that have not been processed by device_suspend()
-which does not make sense.  Had those devices had runtime PM disabled
-before device_suspend() had run, device_resume() would have inadvertently
-enable runtime PM for them, but this is not expected to happen because
-it would require ->prepare() callbacks to return positive values for
-devices with runtime PM disabled, which would be invalid.
+usb-devices:
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10b0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=28c2595e
+C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-In practice, this issue is most likely benign because pm_runtime_enable()
-will not allow the "disable depth" counter to underflow, but it causes a
-warning message to be printed for each affected device.
-
-To allow device_resume() to distinguish the "direct complete" devices
-that have been processed by device_suspend() from those which have not
-been handled by it, make device_suspend() set power.is_suspended for
-"direct complete" devices.
-
-Next, move the power.is_suspended check in device_resume() before the
-power.direct_complete check in it to make it skip the "direct complete"
-devices that have not been handled by device_suspend().
-
-This change is based on a preliminary patch from Saravana Kannan.
-
-Fixes: aae4518b3124 ("PM / sleep: Mechanism to avoid resuming runtime-suspended devices unnecessarily")
-Link: https://lore.kernel.org/linux-pm/20241114220921.2529905-2-saravanak@google.com/
-Reported-by: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Link: https://patch.msgid.link/12627587.O9o76ZdvQC@rjwysocki.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Link: https://patch.msgid.link/20250227112441.3653819-2-fabio.porcedda@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 8586651320901..d77ab224b861a 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -897,6 +897,9 @@ static void __device_resume(struct device *dev, pm_message_t state, bool async)
- 	if (dev->power.syscore)
- 		goto Complete;
- 
-+	if (!dev->power.is_suspended)
-+		goto Complete;
-+
- 	if (dev->power.direct_complete) {
- 		/* Match the pm_runtime_disable() in __device_suspend(). */
- 		pm_runtime_enable(dev);
-@@ -915,9 +918,6 @@ static void __device_resume(struct device *dev, pm_message_t state, bool async)
- 	 */
- 	dev->power.is_prepared = false;
- 
--	if (!dev->power.is_suspended)
--		goto Unlock;
--
- 	if (dev->pm_domain) {
- 		info = "power domain ";
- 		callback = pm_op(&dev->pm_domain->ops, state);
-@@ -957,7 +957,6 @@ static void __device_resume(struct device *dev, pm_message_t state, bool async)
- 	error = dpm_run_callback(callback, dev, state, info);
- 	dev->power.is_suspended = false;
- 
-- Unlock:
- 	device_unlock(dev);
- 	dpm_watchdog_clear(&wd);
- 
-@@ -1642,6 +1641,7 @@ static int __device_suspend(struct device *dev, pm_message_t state, bool async)
- 			pm_runtime_disable(dev);
- 			if (pm_runtime_status_suspended(dev)) {
- 				pm_dev_dbg(dev, state, "direct-complete ");
-+				dev->power.is_suspended = true;
- 				goto Complete;
- 			}
- 
--- 
-2.39.5
-
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1367,6 +1367,7 @@ static const struct usb_device_id produc
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10b0, 0)}, /* Telit FE990B */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
 
 
