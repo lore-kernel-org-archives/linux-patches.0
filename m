@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F1822257E;
-	Tue,  8 Apr 2025 11:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A7E3AC1C;
+	Tue,  8 Apr 2025 11:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113316; cv=none; b=ga2DkKgMYccOml9wACi6ZH43qkzzpxOHjSqhXwZ6mW6qEIE5sW79PmWB/FREIVSwn4bxVAP6EFqMvJDTHE+S9b/oabqXvEMTuDgNqgpoo7PVCsX1Hkw2De7l2aTvZ7nFJY2b4ULwQH7Uu6uOITLyqsWXIWjh+kIXBxuXf2RnK8U=
+	t=1744113319; cv=none; b=uwqzuvH7n4HN5UVb9UD2hvRSpZGybRbPwJ6g3orpaE96JRkSel4FR8i234iG5F2Vcea32VL9dsQqD0RJvYqNRVQx0dDzr2jMTxE8f/hfA+Kj7CzrdVdtglTsxiwfjhHWmrOxLYkesMkwYBtdWjoJEzGvQMO2SnViS0UyybIyikk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113316; c=relaxed/simple;
-	bh=E3VJmEvAjil85PZbGBWWOBgjA300zXgQKqpyYLrgi5s=;
+	s=arc-20240116; t=1744113319; c=relaxed/simple;
+	bh=EmOC5w+AGF8fxHCsOEaM0Zx44panuE8L+jIxc0FuvLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALCdZWUwpXPKGl4X+VG7AO81OHompfr8HkJK4SynqIvlq69Hpsqs7AjdCzLQXbjBQoxiIXkREgcQ6DazA2ww6XPQX135sHSFrDaNiv3LE+lsL4XuZA3Ol+uiPQrEq5Bu5AdvdERKYfTo3KHZPtcE3TGDPD3+lVJfGL3jqBy1U9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhrnho97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b3Fk4PCtZ/H8YNWEHchdM0MegARF7b8QlhKqqpXup/E4LeCWkSDtDpom4A/9Wzsfgqi/v2R+JrN4UkfkcHFdLNQ/yyH4GzjCl972F5R6g/hoO2/yOnrvBJaCtR8C/Un/HKWD5cnlCyk/I+jU3qIoqT9Nd1NqNji2rCbIuw0tQCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID0utY9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhrnho97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BB4C4CEE5;
-	Tue,  8 Apr 2025 11:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID0utY9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BCCC4CEE5;
+	Tue,  8 Apr 2025 11:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113316;
-	bh=E3VJmEvAjil85PZbGBWWOBgjA300zXgQKqpyYLrgi5s=;
+	s=korg; t=1744113319;
+	bh=EmOC5w+AGF8fxHCsOEaM0Zx44panuE8L+jIxc0FuvLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhrnho97oqR5Mirqt3BIFq8bwPOkqttpSQJNlfeb/stspuZaGfv3MX/BN4ifFS8jz
-	 nEMVVHo4CTi6pZCRrt2zTlYolbIK6yfphnUgnCT62NPQUrGgUZo+fSzhmplPu2HPui
-	 me9XxYnwhiZBKtMTaKQkziFFM9Ppy427fWCzGKU0=
+	b=ID0utY9tljtWatlzFbhdkdy1EOp73PUeqPZvWnyMhc9sUV1Tvg5CuH9HxAYEEwE03
+	 2WsKqPKvBFi+2f5BKPsBvHdMyU1wLVwPVdqpDiZgVE2C5o4ZmPwAR4u1vHAdEwvX8F
+	 jrDh7hOJfNZaUomnG0tGBEXNVuGcDGIOUby6yfeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/268] remoteproc: core: Clear table_sz when rproc_shutdown
-Date: Tue,  8 Apr 2025 12:47:56 +0200
-Message-ID: <20250408104830.253391417@linuxfoundation.org>
+Subject: [PATCH 6.6 108/268] coresight-etm4x: add isb() before reading the TRCSTATR
+Date: Tue,  8 Apr 2025 12:48:39 +0200
+Message-ID: <20250408104831.414237863@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,84 +51,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Yuanfang Zhang <quic_yuanfang@quicinc.com>
 
-[ Upstream commit efdde3d73ab25cef4ff2d06783b0aad8b093c0e4 ]
+[ Upstream commit 4ff6039ffb79a4a8a44b63810a8a2f2b43264856 ]
 
-There is case as below could trigger kernel dump:
-Use U-Boot to start remote processor(rproc) with resource table
-published to a fixed address by rproc. After Kernel boots up,
-stop the rproc, load a new firmware which doesn't have resource table
-,and start rproc.
+As recommended by section 4.3.7 ("Synchronization when using system
+instructions to progrom the trace unit") of ARM IHI 0064H.b, the
+self-hosted trace analyzer must perform a Context synchronization
+event between writing to the TRCPRGCTLR and reading the TRCSTATR.
+Additionally, add an ISB between the each read of TRCSTATR on
+coresight_timeout() when using system instructions to program the
+trace unit.
 
-When starting rproc with a firmware not have resource table,
-`memcpy(loaded_table, rproc->cached_table, rproc->table_sz)` will
-trigger dump, because rproc->cache_table is set to NULL during the last
-stop operation, but rproc->table_sz is still valid.
-
-This issue is found on i.MX8MP and i.MX9.
-
-Dump as below:
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Mem abort info:
-  ESR = 0x0000000096000004
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x04: level 0 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=000000010af63000
-[0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 2 UID: 0 PID: 1060 Comm: sh Not tainted 6.14.0-rc7-next-20250317-dirty #38
-Hardware name: NXP i.MX8MPlus EVK board (DT)
-pstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __pi_memcpy_generic+0x110/0x22c
-lr : rproc_start+0x88/0x1e0
-Call trace:
- __pi_memcpy_generic+0x110/0x22c (P)
- rproc_boot+0x198/0x57c
- state_store+0x40/0x104
- dev_attr_store+0x18/0x2c
- sysfs_kf_write+0x7c/0x94
- kernfs_fop_write_iter+0x120/0x1cc
- vfs_write+0x240/0x378
- ksys_write+0x70/0x108
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x10c
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x30/0xcc
- el0t_64_sync_handler+0x10c/0x138
- el0t_64_sync+0x198/0x19c
-
-Clear rproc->table_sz to address the issue.
-
-Fixes: 9dc9507f1880 ("remoteproc: Properly deal with the resource table when detaching")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20250319100106.3622619-1-peng.fan@oss.nxp.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1ab3bb9df5e3 ("coresight: etm4x: Add necessary synchronization for sysreg access")
+Signed-off-by: Yuanfang Zhang <quic_yuanfang@quicinc.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250116-etm_sync-v4-1-39f2b05e9514@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwtracing/coresight/coresight-core.c  | 20 ++++++--
+ .../coresight/coresight-etm4x-core.c          | 48 +++++++++++++++++--
+ include/linux/coresight.h                     |  4 ++
+ 3 files changed, 62 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index e230af51a99b9..0c363ca566ffd 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -2024,6 +2024,7 @@ int rproc_shutdown(struct rproc *rproc)
- 	kfree(rproc->cached_table);
- 	rproc->cached_table = NULL;
- 	rproc->table_ptr = NULL;
-+	rproc->table_sz = 0;
- out:
- 	mutex_unlock(&rproc->lock);
- 	return ret;
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index 4b80026db1ab6..783e259c37612 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -1465,18 +1465,20 @@ static void coresight_remove_conns(struct coresight_device *csdev)
+ }
+ 
+ /**
+- * coresight_timeout - loop until a bit has changed to a specific register
+- *			state.
++ * coresight_timeout_action - loop until a bit has changed to a specific register
++ *                  state, with a callback after every trial.
+  * @csa: coresight device access for the device
+  * @offset: Offset of the register from the base of the device.
+  * @position: the position of the bit of interest.
+  * @value: the value the bit should have.
++ * @cb: Call back after each trial.
+  *
+  * Return: 0 as soon as the bit has taken the desired state or -EAGAIN if
+  * TIMEOUT_US has elapsed, which ever happens first.
+  */
+-int coresight_timeout(struct csdev_access *csa, u32 offset,
+-		      int position, int value)
++int coresight_timeout_action(struct csdev_access *csa, u32 offset,
++		      int position, int value,
++			  coresight_timeout_cb_t cb)
+ {
+ 	int i;
+ 	u32 val;
+@@ -1492,7 +1494,8 @@ int coresight_timeout(struct csdev_access *csa, u32 offset,
+ 			if (!(val & BIT(position)))
+ 				return 0;
+ 		}
+-
++		if (cb)
++			cb(csa, offset, position, value);
+ 		/*
+ 		 * Delay is arbitrary - the specification doesn't say how long
+ 		 * we are expected to wait.  Extra check required to make sure
+@@ -1504,6 +1507,13 @@ int coresight_timeout(struct csdev_access *csa, u32 offset,
+ 
+ 	return -EAGAIN;
+ }
++EXPORT_SYMBOL_GPL(coresight_timeout_action);
++
++int coresight_timeout(struct csdev_access *csa, u32 offset,
++		      int position, int value)
++{
++	return coresight_timeout_action(csa, offset, position, value, NULL);
++}
+ EXPORT_SYMBOL_GPL(coresight_timeout);
+ 
+ u32 coresight_relaxed_read32(struct coresight_device *csdev, u32 offset)
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 840e4cccf8c4b..05d9f87e35333 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -399,6 +399,29 @@ static void etm4_check_arch_features(struct etmv4_drvdata *drvdata,
+ }
+ #endif /* CONFIG_ETM4X_IMPDEF_FEATURE */
+ 
++static void etm4x_sys_ins_barrier(struct csdev_access *csa, u32 offset, int pos, int val)
++{
++	if (!csa->io_mem)
++		isb();
++}
++
++/*
++ * etm4x_wait_status: Poll for TRCSTATR.<pos> == <val>. While using system
++ * instruction to access the trace unit, each access must be separated by a
++ * synchronization barrier. See ARM IHI0064H.b section "4.3.7 Synchronization of
++ * register updates", for system instructions section, in "Notes":
++ *
++ *   "In particular, whenever disabling or enabling the trace unit, a poll of
++ *    TRCSTATR needs explicit synchronization between each read of TRCSTATR"
++ */
++static int etm4x_wait_status(struct csdev_access *csa, int pos, int val)
++{
++	if (!csa->io_mem)
++		return coresight_timeout_action(csa, TRCSTATR, pos, val,
++						etm4x_sys_ins_barrier);
++	return coresight_timeout(csa, TRCSTATR, pos, val);
++}
++
+ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ {
+ 	int i, rc;
+@@ -430,7 +453,7 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ 		isb();
+ 
+ 	/* wait for TRCSTATR.IDLE to go up */
+-	if (coresight_timeout(csa, TRCSTATR, TRCSTATR_IDLE_BIT, 1))
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 1))
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 	if (drvdata->nr_pe)
+@@ -523,7 +546,7 @@ static int etm4_enable_hw(struct etmv4_drvdata *drvdata)
+ 		isb();
+ 
+ 	/* wait for TRCSTATR.IDLE to go back down to '0' */
+-	if (coresight_timeout(csa, TRCSTATR, TRCSTATR_IDLE_BIT, 0))
++	if (etm4x_wait_status(csa, TRCSTATR_IDLE_BIT, 0))
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 
+@@ -903,10 +926,25 @@ static void etm4_disable_hw(void *info)
+ 	tsb_csync();
+ 	etm4x_relaxed_write32(csa, control, TRCPRGCTLR);
+ 
++	/*
++	 * As recommended by section 4.3.7 ("Synchronization when using system
++	 * instructions to progrom the trace unit") of ARM IHI 0064H.b, the
++	 * self-hosted trace analyzer must perform a Context synchronization
++	 * event between writing to the TRCPRGCTLR and reading the TRCSTATR.
++	 */
++	if (!csa->io_mem)
++		isb();
++
+ 	/* wait for TRCSTATR.PMSTABLE to go to '1' */
+-	if (coresight_timeout(csa, TRCSTATR, TRCSTATR_PMSTABLE_BIT, 1))
++	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1))
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for PM stable Trace Status\n");
++	/*
++	 * As recommended by section 4.3.7 (Synchronization of register updates)
++	 * of ARM IHI 0064H.b.
++	 */
++	isb();
++
+ 	/* read the status of the single shot comparators */
+ 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
+ 		config->ss_status[i] =
+@@ -1672,7 +1710,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 	etm4_os_lock(drvdata);
+ 
+ 	/* wait for TRCSTATR.PMSTABLE to go up */
+-	if (coresight_timeout(csa, TRCSTATR, TRCSTATR_PMSTABLE_BIT, 1)) {
++	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1)) {
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for PM Stable Status\n");
+ 		etm4_os_unlock(drvdata);
+@@ -1763,7 +1801,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 		state->trcpdcr = etm4x_read32(csa, TRCPDCR);
+ 
+ 	/* wait for TRCSTATR.IDLE to go up */
+-	if (coresight_timeout(csa, TRCSTATR, TRCSTATR_IDLE_BIT, 1)) {
++	if (etm4x_wait_status(csa, TRCSTATR_PMSTABLE_BIT, 1)) {
+ 		dev_err(etm_dev,
+ 			"timeout while waiting for Idle Trace Status\n");
+ 		etm4_os_unlock(drvdata);
+diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+index a269fffaf991c..dccfadde84f41 100644
+--- a/include/linux/coresight.h
++++ b/include/linux/coresight.h
+@@ -575,6 +575,10 @@ extern int coresight_enable(struct coresight_device *csdev);
+ extern void coresight_disable(struct coresight_device *csdev);
+ extern int coresight_timeout(struct csdev_access *csa, u32 offset,
+ 			     int position, int value);
++typedef void (*coresight_timeout_cb_t) (struct csdev_access *, u32, int, int);
++extern int coresight_timeout_action(struct csdev_access *csa, u32 offset,
++					int position, int value,
++					coresight_timeout_cb_t cb);
+ 
+ extern int coresight_claim_device(struct coresight_device *csdev);
+ extern int coresight_claim_device_unlocked(struct coresight_device *csdev);
 -- 
 2.39.5
 
