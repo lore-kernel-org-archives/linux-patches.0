@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15668263C78;
-	Tue,  8 Apr 2025 11:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70A4268FD5;
+	Tue,  8 Apr 2025 11:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111941; cv=none; b=UTRe3ULNmocUnUyL3v4vRE+j6uzUdUHQVi59F5w1cDfA3gB2YKy4f/sSXpypvjDdugEWYzGrMC9sMPOtMyB5u2yryGZsspQLPOdmh5SA0HWqMUxPjUkXrtB38L2WrVUzYohum/Cfjn4bbhF164jCk5b4zyPkuUFfgrZKZWbgKG4=
+	t=1744111943; cv=none; b=TdJNOnC4f8Eek/8STt94KfyFDAHKFBWOH3eNg/C10zWKnlLsTj+UlYcFvcxbK+FxABjiFm6vhpohlJTCTpXHrvY2vVU3YFZj+uIYF9aBeVgVuyahSCPT7HKH4fA82lmTPhm3l4z/LjZC49a5RTWSXW9D1OpvhLB2QElbU6RZGdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111941; c=relaxed/simple;
-	bh=XNTUzK/n3suvwTI2yZE18LYd4Rk9K4j4Zsklff404sI=;
+	s=arc-20240116; t=1744111943; c=relaxed/simple;
+	bh=2rGuU3KcU8J1ipqojYrcl6wbECeDwXGgyPgAs/9eL/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7E2Exa2iqpzYWouoNUDffwQ84vBW1nZ0yaxLTaJvMRsMnXcIupna5JOlRDoqorHCs+6o5ysih8JoK2DE8+8okTQyLJ8TSo7DEX7pZUZoXPiPMLrXDWQnHHENxaJv4YbRXODmefwJWLGZQAh6s2wdthKEym5rB0vIFyo5o7bEYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAeu5Tme; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XSwXm2J3JU61E0xWzj71/ASTgWDFJbmN2C6n8TmtRUDvK6uXSK2ygjdvKsM+17FguIWyZopth+NqylMI6f5BdzJYDP2tPv690FaGxw6rWjU76A6fGzTN7PL/ietWmCD/sRAvZnyLZ2F8xdZJsJLZvPMdrv6IFrtnTC1IJw7Adu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLHiGIo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAeu5Tme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF3AC4CEE5;
-	Tue,  8 Apr 2025 11:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLHiGIo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C964FC4CEE5;
+	Tue,  8 Apr 2025 11:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111940;
-	bh=XNTUzK/n3suvwTI2yZE18LYd4Rk9K4j4Zsklff404sI=;
+	s=korg; t=1744111943;
+	bh=2rGuU3KcU8J1ipqojYrcl6wbECeDwXGgyPgAs/9eL/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAeu5TmeFXG/FEto5YxtH1DBdqCkxSMN9FmGt0HUJ5ZR0E7/VRf+Yocy4kyPV+ctO
-	 Rt777pxfW0SEwz2rE/s5sk8byi0yaKBtZbeNFpzvZ0UxIjO+yqLoVGXRtNX2Kmbjig
-	 2iyHkiCA8alaDYpSgaKCbf/cVC0HbL9dDLVFiRhY=
+	b=MLHiGIo1vHpvnIHD0Mw7ZJ61p5af6Ha5zlDIZTiwac41zMYGarqjppoCVnuSgKx9a
+	 ++4U0Rq58IHKIIjji5rBhzf4n6ObVLnmxUgOo/OXfjuXWkNUNGPkIGZIC9mJyDffhO
+	 8XiduGHS8EXH9x76NteDJbGSQp0bqG8cpLV6jM3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Piotr Kwapulinski <piotr.kwapulinski@intel.com>,
+	Yuying Ma <yuma@redhat.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Bharath R <bharath.r@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 616/731] ixgbe: fix media type detection for E610 device
-Date: Tue,  8 Apr 2025 12:48:33 +0200
-Message-ID: <20250408104928.599651428@linuxfoundation.org>
+Subject: [PATCH 6.14 617/731] idpf: fix adapter NULL pointer dereference on reboot
+Date: Tue,  8 Apr 2025 12:48:34 +0200
+Message-ID: <20250408104928.622160723@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,56 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 40206599beec98cfeb01913ee417f015e3f6190c ]
+[ Upstream commit 4c9106f4906a85f6b13542d862e423bcdc118cc3 ]
 
-The commit 23c0e5a16bcc ("ixgbe: Add link management support for E610
-device") introduced incorrect media type detection for E610 device. It
-reproduces when advertised speed is modified after driver reload. Clear
-the previous outdated PHY type high value.
+With SRIOV enabled, idpf ends up calling into idpf_remove() twice.
+First via idpf_shutdown() and then again when idpf_remove() calls into
+sriov_disable(), because the VF devices use the idpf driver, hence the
+same remove routine. When that happens, it is possible for the adapter
+to be NULL from the first call to idpf_remove(), leading to a NULL
+pointer dereference.
 
-Reproduction steps:
-modprobe ixgbe
-ethtool -s eth0 advertise 0x1000000000000
-modprobe -r ixgbe
-modprobe ixgbe
-ethtool -s eth0 advertise 0x1000000000000
-Result before the fix:
-netlink error: link settings update failed
-netlink error: Invalid argument
-Result after the fix:
-No output error
+echo 1 > /sys/class/net/<netif>/device/sriov_numvfs
+reboot
 
-Fixes: 23c0e5a16bcc ("ixgbe: Add link management support for E610 device")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
+BUG: kernel NULL pointer dereference, address: 0000000000000020
+...
+RIP: 0010:idpf_remove+0x22/0x1f0 [idpf]
+...
+? idpf_remove+0x22/0x1f0 [idpf]
+? idpf_remove+0x1e4/0x1f0 [idpf]
+pci_device_remove+0x3f/0xb0
+device_release_driver_internal+0x19f/0x200
+pci_stop_bus_device+0x6d/0x90
+pci_stop_and_remove_bus_device+0x12/0x20
+pci_iov_remove_virtfn+0xbe/0x120
+sriov_disable+0x34/0xe0
+idpf_sriov_configure+0x58/0x140 [idpf]
+idpf_remove+0x1b9/0x1f0 [idpf]
+idpf_shutdown+0x12/0x30 [idpf]
+pci_device_shutdown+0x35/0x60
+device_shutdown+0x156/0x200
+...
+
+Replace the direct idpf_remove() call in idpf_shutdown() with
+idpf_vc_core_deinit() and idpf_deinit_dflt_mbx(), which perform
+the bulk of the cleanup, such as stopping the init task, freeing IRQs,
+destroying the vports and freeing the mailbox. This avoids the calls to
+sriov_disable() in addition to a small netdev cleanup, and destroying
+workqueues, which don't seem to be required on shutdown.
+
+Reported-by: Yuying Ma <yuma@redhat.com>
+Fixes: e850efed5e15 ("idpf: add module register and probe functionality")
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Bharath R <bharath.r@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/idpf/idpf_main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-index cb07ecd8937d3..00935747c8c55 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-@@ -1453,9 +1453,11 @@ enum ixgbe_media_type ixgbe_get_media_type_e610(struct ixgbe_hw *hw)
- 			hw->link.link_info.phy_type_low = 0;
- 		} else {
- 			highest_bit = fls64(le64_to_cpu(pcaps.phy_type_low));
--			if (highest_bit)
-+			if (highest_bit) {
- 				hw->link.link_info.phy_type_low =
- 					BIT_ULL(highest_bit - 1);
-+				hw->link.link_info.phy_type_high = 0;
-+			}
- 		}
- 	}
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
+index b6c515d14cbf0..bec4a02c53733 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_main.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
+@@ -87,7 +87,11 @@ static void idpf_remove(struct pci_dev *pdev)
+  */
+ static void idpf_shutdown(struct pci_dev *pdev)
+ {
+-	idpf_remove(pdev);
++	struct idpf_adapter *adapter = pci_get_drvdata(pdev);
++
++	cancel_delayed_work_sync(&adapter->vc_event_task);
++	idpf_vc_core_deinit(adapter);
++	idpf_deinit_dflt_mbx(adapter);
  
+ 	if (system_state == SYSTEM_POWER_OFF)
+ 		pci_set_power_state(pdev, PCI_D3hot);
 -- 
 2.39.5
 
