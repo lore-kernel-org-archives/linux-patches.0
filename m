@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B9C269820;
-	Tue,  8 Apr 2025 10:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC131DDA0C;
+	Tue,  8 Apr 2025 10:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109757; cv=none; b=eGdPim8k0kG4ArKLt5q3KVR9YH2wHZ4de3IzKSpQzE20RCQwLY+q2XIl5n4XBaNrRNwcaPV15rP779/TymZo5cNiViJq0BvSFCJdu0rRowiYG/HYz1GL3Z1tnWhnjJ9+nMoFohsxec7cjbTz/HLdQNLMTIwyZ/s1HvSSjLPRtZ4=
+	t=1744109760; cv=none; b=GgyfJlQ2q44uGGV2Rkc5sF3g89Y+LTWbg684kbza2jY/fluLT8xeXHBhhS+af4LX00g5P9aO4r1l2WLpWtN0LaXguSXExZ9JK4TKcKM3ct1rVNNK/IMDohUja35zQx7akYWH232V0WkEh+oKqAChPtB1Pd3bn5oa43slgnkUaDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109757; c=relaxed/simple;
-	bh=+EY/ntD6XkQ8vIGFk0c4sq2muF7N/c2Asvghr/RgxKg=;
+	s=arc-20240116; t=1744109760; c=relaxed/simple;
+	bh=i6Y1/iwxyURZHdMIOiP4NvciPJAAIuDhMHvZUeLMQXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1ZMAmqzFE8TXBprzQhGcYoaHhF8PRNTJ8iOAQFN1K54C4F+dcCGDqLzFKFB93aGAVsjz+fjk+Vit/IN0wjRzKwcg7wq5+IxQAe01fCEwEqW5m4PYqgY7oJXefjcol8CifdWen45iFgiQ+Eh8n9nfoUexk/tL9CB98UleQWAvYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Omipk2U3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QUFkBeGo4ZQnM3a+4kyT3yyqAIYvH7kvbXtM09sX+3wbBVF32Cqm+Ws/uIjua+t1Nd+M4bLQsUvvOj8PgSVmfhJs3IxjyjvLZz0Kd3HZHgrgEAM4HxTa8z4iVWMZhCCpX1MUuTXcU7G6nWBCVcNGvIPx6YaUBfupHpU5TFAJJ1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRHF08P+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Omipk2U3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA19AC4CEE5;
-	Tue,  8 Apr 2025 10:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRHF08P+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA11C4CEEA;
+	Tue,  8 Apr 2025 10:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109757;
-	bh=+EY/ntD6XkQ8vIGFk0c4sq2muF7N/c2Asvghr/RgxKg=;
+	s=korg; t=1744109759;
+	bh=i6Y1/iwxyURZHdMIOiP4NvciPJAAIuDhMHvZUeLMQXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Omipk2U30IFKkE7oB9J6aOaVqKLwUPLG0atoHfr7F06RS1OXApG+8J6JSy1H7aawI
-	 l5k6nNAzx0a1qUKe0J9SaY0wg2GFeIUJycnOJYc4cW2VeuzONL3RMlvI0ypwJeWFej
-	 Py9U4t3kIsPy/p7JL/ImaCzlXgpDCSFQ3L/Grcr8=
+	b=vRHF08P+03IMmvv481Q1bgw/hZE1nM3ZqGhz6xHuFwKLLZUwGMfAPwT5Q5Dsb6lo+
+	 FESjh569nyztpmTK8pDQ88lzU+4iObdR1PyFSpydPz+fMJokJAfN1jHBdCa+4AZkW3
+	 x2cFpVpvQIxuPHM10HbGDFzIBy9NQxIoaWZuZDtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Wang Yufen <wangyufen@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
+	Dongjie Zou <zoudongjie@huawei.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Abdelkareem Abdelsaamad <kareemem@amazon.com>
-Subject: [PATCH 5.10 004/227] ipv6: Fix signed integer overflow in __ip6_append_data
-Date: Tue,  8 Apr 2025 12:46:22 +0200
-Message-ID: <20250408104820.497901174@linuxfoundation.org>
+Subject: [PATCH 5.10 005/227] KVM: x86: Reject Hyper-Vs SEND_IPI hypercalls if local APIC isnt in-kernel
+Date: Tue,  8 Apr 2025 12:46:23 +0200
+Message-ID: <20250408104820.530848257@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,111 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f93431c86b631bbca5614c66f966bf3ddb3c2803 upstream.
+commit a8de7f100bb5989d9c3627d3a223ee1c863f3b69 upstream.
 
-Resurrect ubsan overflow checks and ubsan report this warning,
-fix it by change the variable [length] type to size_t.
+Advertise support for Hyper-V's SEND_IPI and SEND_IPI_EX hypercalls if and
+only if the local API is emulated/virtualized by KVM, and explicitly reject
+said hypercalls if the local APIC is emulated in userspace, i.e. don't rely
+on userspace to opt-in to KVM_CAP_HYPERV_ENFORCE_CPUID.
 
-UBSAN: signed-integer-overflow in net/ipv6/ip6_output.c:1489:19
-2147479552 + 8567 cannot be represented in type 'int'
-CPU: 0 PID: 253 Comm: err Not tainted 5.16.0+ #1
-Hardware name: linux,dummy-virt (DT)
-Call trace:
-  dump_backtrace+0x214/0x230
-  show_stack+0x30/0x78
-  dump_stack_lvl+0xf8/0x118
-  dump_stack+0x18/0x30
-  ubsan_epilogue+0x18/0x60
-  handle_overflow+0xd0/0xf0
-  __ubsan_handle_add_overflow+0x34/0x44
-  __ip6_append_data.isra.48+0x1598/0x1688
-  ip6_append_data+0x128/0x260
-  udpv6_sendmsg+0x680/0xdd0
-  inet6_sendmsg+0x54/0x90
-  sock_sendmsg+0x70/0x88
-  ____sys_sendmsg+0xe8/0x368
-  ___sys_sendmsg+0x98/0xe0
-  __sys_sendmmsg+0xf4/0x3b8
-  __arm64_sys_sendmmsg+0x34/0x48
-  invoke_syscall+0x64/0x160
-  el0_svc_common.constprop.4+0x124/0x300
-  do_el0_svc+0x44/0xc8
-  el0_svc+0x3c/0x1e8
-  el0t_64_sync_handler+0x88/0xb0
-  el0t_64_sync+0x16c/0x170
+Rejecting SEND_IPI and SEND_IPI_EX fixes a NULL-pointer dereference if
+Hyper-V enlightenments are exposed to the guest without an in-kernel local
+APIC:
 
-Changes since v1:
--Change the variable [length] type to unsigned, as Eric Dumazet suggested.
-Changes since v2:
--Don't change exthdrlen type in ip6_make_skb, as Paolo Abeni suggested.
-Changes since v3:
--Don't change ulen type in udpv6_sendmsg and l2tp_ip6_sendmsg, as
-Jakub Kicinski suggested.
+  dump_stack+0xbe/0xfd
+  __kasan_report.cold+0x34/0x84
+  kasan_report+0x3a/0x50
+  __apic_accept_irq+0x3a/0x5c0
+  kvm_hv_send_ipi.isra.0+0x34e/0x820
+  kvm_hv_hypercall+0x8d9/0x9d0
+  kvm_emulate_hypercall+0x506/0x7e0
+  __vmx_handle_exit+0x283/0xb60
+  vmx_handle_exit+0x1d/0xd0
+  vcpu_enter_guest+0x16b0/0x24c0
+  vcpu_run+0xc0/0x550
+  kvm_arch_vcpu_ioctl_run+0x170/0x6d0
+  kvm_vcpu_ioctl+0x413/0xb20
+  __se_sys_ioctl+0x111/0x160
+  do_syscal1_64+0x30/0x40
+  entry_SYSCALL_64_after_hwframe+0x67/0xd1
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/20220607120028.845916-1-wangyufen@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Conflict due to f37a4cc6bb0b ("udp6: pass flow in ip6_make_skb
-  together with cork") not in the tree ]
+Note, checking the sending vCPU is sufficient, as the per-VM irqchip_mode
+can't be modified after vCPUs are created, i.e. if one vCPU has an
+in-kernel local APIC, then all vCPUs have an in-kernel local APIC.
+
+Reported-by: Dongjie Zou <zoudongjie@huawei.com>
+Fixes: 214ff83d4473 ("KVM: x86: hyperv: implement PV IPI send hypercalls")
+Fixes: 2bc39970e932 ("x86/kvm/hyper-v: Introduce KVM_GET_SUPPORTED_HV_CPUID")
+Cc: stable@vger.kernel.org
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20250118003454.2619573-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ Conflict due to 72167a9d7da2 ("KVM: x86: hyper-v: Stop shadowing
+  global 'current_vcpu' variable") not in the tree ]
 Signed-off-by: Abdelkareem Abdelsaamad <kareemem@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ipv6.h    |    4 ++--
- net/ipv6/ip6_output.c |    6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/kvm/hyperv.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -991,7 +991,7 @@ int ip6_find_1stfragopt(struct sk_buff *
- int ip6_append_data(struct sock *sk,
- 		    int getfrag(void *from, char *to, int offset, int len,
- 				int odd, struct sk_buff *skb),
--		    void *from, int length, int transhdrlen,
-+		    void *from, size_t length, int transhdrlen,
- 		    struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
- 		    struct rt6_info *rt, unsigned int flags);
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -1618,6 +1618,9 @@ static u64 kvm_hv_send_ipi(struct kvm_vc
+ 	u32 vector;
+ 	bool all_cpus;
  
-@@ -1007,7 +1007,7 @@ struct sk_buff *__ip6_make_skb(struct so
- struct sk_buff *ip6_make_skb(struct sock *sk,
- 			     int getfrag(void *from, char *to, int offset,
- 					 int len, int odd, struct sk_buff *skb),
--			     void *from, int length, int transhdrlen,
-+			     void *from, size_t length, int transhdrlen,
- 			     struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
- 			     struct rt6_info *rt, unsigned int flags,
- 			     struct inet_cork_full *cork);
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1449,7 +1449,7 @@ static int __ip6_append_data(struct sock
- 			     struct page_frag *pfrag,
- 			     int getfrag(void *from, char *to, int offset,
- 					 int len, int odd, struct sk_buff *skb),
--			     void *from, int length, int transhdrlen,
-+			     void *from, size_t length, int transhdrlen,
- 			     unsigned int flags, struct ipcm6_cookie *ipc6)
- {
- 	struct sk_buff *skb, *skb_prev = NULL;
-@@ -1795,7 +1795,7 @@ error:
- int ip6_append_data(struct sock *sk,
- 		    int getfrag(void *from, char *to, int offset, int len,
- 				int odd, struct sk_buff *skb),
--		    void *from, int length, int transhdrlen,
-+		    void *from, size_t length, int transhdrlen,
- 		    struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
- 		    struct rt6_info *rt, unsigned int flags)
- {
-@@ -1989,7 +1989,7 @@ EXPORT_SYMBOL_GPL(ip6_flush_pending_fram
- struct sk_buff *ip6_make_skb(struct sock *sk,
- 			     int getfrag(void *from, char *to, int offset,
- 					 int len, int odd, struct sk_buff *skb),
--			     void *from, int length, int transhdrlen,
-+			     void *from, size_t length, int transhdrlen,
- 			     struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
- 			     struct rt6_info *rt, unsigned int flags,
- 			     struct inet_cork_full *cork)
++	if (!lapic_in_kernel(current_vcpu))
++		return HV_STATUS_INVALID_HYPERCALL_INPUT;
++
+ 	if (!ex) {
+ 		if (!fast) {
+ 			if (unlikely(kvm_read_guest(kvm, ingpa, &send_ipi,
+@@ -2060,7 +2063,8 @@ int kvm_vcpu_ioctl_get_hv_cpuid(struct k
+ 			ent->eax |= HV_X64_REMOTE_TLB_FLUSH_RECOMMENDED;
+ 			ent->eax |= HV_X64_APIC_ACCESS_RECOMMENDED;
+ 			ent->eax |= HV_X64_RELAXED_TIMING_RECOMMENDED;
+-			ent->eax |= HV_X64_CLUSTER_IPI_RECOMMENDED;
++			if (!vcpu || lapic_in_kernel(vcpu))
++				ent->eax |= HV_X64_CLUSTER_IPI_RECOMMENDED;
+ 			ent->eax |= HV_X64_EX_PROCESSOR_MASKS_RECOMMENDED;
+ 			if (evmcs_ver)
+ 				ent->eax |= HV_X64_ENLIGHTENED_VMCS_RECOMMENDED;
 
 
