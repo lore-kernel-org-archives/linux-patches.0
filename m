@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34494263C90;
-	Tue,  8 Apr 2025 11:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44FD263C90;
+	Tue,  8 Apr 2025 11:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111628; cv=none; b=ripGa6PqHqA5qHWfQQ0xmLAu0lh4OzWYZLS8w+ymMb4hF0lYfYwYlOTTFEkW2rwL0C7pZyueSXP7mKyfYRj0KKe3JbLbN4I+YroJk1Id20t6DJ+Bm15hc6QXh5L0qGIUKb4scBnYtKyW382IWuU5Pl8o5z7zxmHcppCi5zWflTQ=
+	t=1744111630; cv=none; b=R0kAfXKpyDiVonnSNxei5YYIHaEFzq1liHG+hsIvJCU782Y4f6fONIjMFP2MsRjBq3+Cmz2ktv0Lgy8S47i2ZO/tvuB62mLIDKORC3kLYtIeO5yNtttGN8FSeBgXF1W8d+/9vpjNNdYzbk4ZZt8cgBrRH6bXWaRLQ2gi1+VFjwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111628; c=relaxed/simple;
-	bh=ONVbwcyHMs9gnXNYekYKgwdOcF1EWZtGzug7C256cA0=;
+	s=arc-20240116; t=1744111630; c=relaxed/simple;
+	bh=nekFRW9NQHp2KOCTPW/ukqxmjyEPXjBHtxLgTCzqSeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QU/1/HHw4z5majBU1YSRrWW/++ExpFmiTZpE4yq+hnHE+eR9lhijfSXWKQX3jwUwcKbh99LOrWjOETxWNO894mZjG0MoRRoSvW5eAs7TGV2EVc/LPvGUrOmQw+JWD7YrPtBminMthbF0iZvdaA9+vlozc+hngBC8SfQr8W3oY50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qs9wzrxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lLS5QeRR/O5W6A1nh8VJMnfoVohb2iBDcJyJROiPiMBMUkwCEuXELR8sMqnz0VUYsyhDftjy714fsJv5yny/0rlwqBlmQGGnbk5G9h03y33rWsMIz8SIfGRVoI0SkMhmxfk1XawjXRtFRxXkijbE4yr7VOe3Hij6ICmRo3YKouQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSUWSSP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qs9wzrxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9608C4CEE7;
-	Tue,  8 Apr 2025 11:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSUWSSP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63727C4CEE5;
+	Tue,  8 Apr 2025 11:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111628;
-	bh=ONVbwcyHMs9gnXNYekYKgwdOcF1EWZtGzug7C256cA0=;
+	s=korg; t=1744111630;
+	bh=nekFRW9NQHp2KOCTPW/ukqxmjyEPXjBHtxLgTCzqSeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs9wzrxGuMTNfATLhptBDIh3+Ugvx+bc+MOYvjIKUwUAn3V592Ce6Kzn6XkqOnBGK
-	 QePk6KKJEcFCCpeP15tZctuOKRkI7YDjVy/YRfiEfeMYaWVZ9GFn2lBfWAtZE6jNGd
-	 HTxvRs/9Q/AwdS3pfXdJSG1VrpcZAtQL/M/XWBvc=
+	b=FSUWSSP49X3lX05acOxVVY3d2UzEzKP4gABTGAFbVf20tyP7+5PFFja94ikgr03vf
+	 XtM7yTC1Dr0y9GjlGoGnBDInvIgHW0D88RLMdtK7qPFhPEwQA/UhTW2rs7lfsXqEEw
+	 C6prEJ3Ky6LDyyVjH4HiGG1wlb7vHSKeCwP2LbkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
 	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 499/731] perf evsel: tp_format accessing improvements
-Date: Tue,  8 Apr 2025 12:46:36 +0200
-Message-ID: <20250408104925.881220681@linuxfoundation.org>
+Subject: [PATCH 6.14 500/731] perf x86/topdown: Fix topdown leader sampling test error on hybrid
+Date: Tue,  8 Apr 2025 12:46:37 +0200
+Message-ID: <20250408104925.904596444@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,60 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit eb7e83a7ca2dba01671c711e1711705e1a15626d ]
+[ Upstream commit b74683b3bb224eccb644cf260753dfc82e802d92 ]
 
-Ensure evsel__clone copies the tp_sys and tp_name variables.
-In evsel__tp_format, if tp_sys isn't set, use the config value to find
-the tp_format. This succeeds in python code where pyrf__tracepoint has
-already found the format.
+When running topdown leader smapling test on Intel hybrid platforms,
+such as LNL/ARL, we see the below error.
 
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20250228222308.626803-4-irogers@google.com
-Fixes: 6c8310e8380d472c ("perf evsel: Allow evsel__newtp without libtraceevent")
+Topdown leader sampling test
+Topdown leader sampling [Failed topdown events not reordered correctly]
+
+It indciates the below command fails.
+
+perf record -o "${perfdata}" -e "{instructions,slots,topdown-retiring}:S" true
+
+The root cause is that perf tool creats a perf event for each PMU type
+if it can create.
+
+As for this command, there would be 5 perf events created,
+cpu_atom/instructions/,cpu_atom/topdown_retiring/,
+cpu_core/slots/,cpu_core/instructions/,cpu_core/topdown-retiring/
+
+For these 5 events, the 2 cpu_atom events are in a group and the other 3
+cpu_core events are in another group.
+
+When arch_topdown_sample_read() traverses all these 5 events, events
+cpu_atom/instructions/ and cpu_core/slots/ don't have a same group
+leade, and then return false directly and lead to cpu_core/slots/ event
+is used to sample and this is not allowed by PMU driver.
+
+It's a overkill to return false directly if "evsel->core.leader !=
+ leader->core.leader" since there could be multiple groups in the event
+list.
+
+Just "continue" instead of "return false" to fix this issue.
+
+Fixes: 1e53e9d1787b ("perf x86/topdown: Correct leader selection with sample_read enabled")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Tested-by: Thomas Falcon <thomas.falcon@intel.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250307023906.1135613-2-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ tools/perf/arch/x86/util/topdown.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index bc144388f8929..9cd78cdee6282 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -511,6 +511,16 @@ struct evsel *evsel__clone(struct evsel *dest, struct evsel *orig)
+diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
+index f63747d0abdf9..d1c6548390496 100644
+--- a/tools/perf/arch/x86/util/topdown.c
++++ b/tools/perf/arch/x86/util/topdown.c
+@@ -81,7 +81,7 @@ bool arch_topdown_sample_read(struct evsel *leader)
+ 	 */
+ 	evlist__for_each_entry(leader->evlist, evsel) {
+ 		if (evsel->core.leader != leader->core.leader)
+-			return false;
++			continue;
+ 		if (evsel != leader && arch_is_topdown_metrics(evsel))
+ 			return true;
  	}
- 	evsel->cgrp = cgroup__get(orig->cgrp);
- #ifdef HAVE_LIBTRACEEVENT
-+	if (orig->tp_sys) {
-+		evsel->tp_sys = strdup(orig->tp_sys);
-+		if (evsel->tp_sys == NULL)
-+			goto out_err;
-+	}
-+	if (orig->tp_name) {
-+		evsel->tp_name = strdup(orig->tp_name);
-+		if (evsel->tp_name == NULL)
-+			goto out_err;
-+	}
- 	evsel->tp_format = orig->tp_format;
- #endif
- 	evsel->handler = orig->handler;
-@@ -634,7 +644,11 @@ struct tep_event *evsel__tp_format(struct evsel *evsel)
- 	if (evsel->core.attr.type != PERF_TYPE_TRACEPOINT)
- 		return NULL;
- 
--	tp_format = trace_event__tp_format(evsel->tp_sys, evsel->tp_name);
-+	if (!evsel->tp_sys)
-+		tp_format = trace_event__tp_format_id(evsel->core.attr.config);
-+	else
-+		tp_format = trace_event__tp_format(evsel->tp_sys, evsel->tp_name);
-+
- 	if (IS_ERR(tp_format)) {
- 		int err = -PTR_ERR(evsel->tp_format);
- 
 -- 
 2.39.5
 
