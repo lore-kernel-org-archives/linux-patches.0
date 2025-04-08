@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB63268685;
-	Tue,  8 Apr 2025 12:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD093268685;
+	Tue,  8 Apr 2025 12:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114068; cv=none; b=fU5hfjdv01HaepiPM1qW4CHCixwsMdwGWQOLaS5LJTZVwwkOlwEHjMsjfOWw+G1H+YxlugVLwnbZXm6V8xQjqmft+0V7+rjK7ZVA500HRrGX4IAjIGFuGcu8gcyh4aiWCk2BNRQnuqOxG/3cgN4hii/G3bRLU8+Q9it6w1iwFDk=
+	t=1744114070; cv=none; b=TYFJr2wFnOYk1YnOgIFewa/HSSYdS+Ox3Mjcxv4TSAvqtpXbiz14Z/iapYTDKf6NLCu5OvLE+Qm1i0L0GiIJeAWeJ1JlnFWZ9w+5o8WuRc3lSLgcSlCQJ1samGm+Kurm+XzkFHTI8lEU7MBMH0jcKWfSlUdP58x1EPMkWzkW34c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114068; c=relaxed/simple;
-	bh=Gobktv8SstNqrPiytHResXc7Cr4DqfyfTjA9OT/R70k=;
+	s=arc-20240116; t=1744114070; c=relaxed/simple;
+	bh=GFoP006RhTXiF1z+AZnsfR0I9oe34Kbkr+YjxuhZA7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIYR73mJcYmdNIzFMfwDLxDLZN83OB0MjfXayI0hb+L/5T4NvDUCZzJKCgGEbjllHoYu6gwCVcpY5NQ1FjQITZ64gYxQMOF0bzdvC92AZXWfPJPDVd83RB/tKoAdPpEiEsJ0z7nSHrUzf/UR36I0+dKl/U1FGBdImiRghoVquBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKLvkBaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2Rtx9MdHrPfqrdAe0M3KsHkL8S3akf8I5WhnOJWaLC4h6GbRX8+roBRIzf+zhQwgIN5eL+uMlcH0N2qJKz20GKFuFqgf+Ii5NBpVfKGPtSQv/RPh2rSAZuUYh89RWTUVG+LnvCbp0hZdcp9cvobXXIFuaP+FC7UfklP5oDHOpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGQRYt3F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKLvkBaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA66C4CEE5;
-	Tue,  8 Apr 2025 12:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGQRYt3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0FBC4CEE5;
+	Tue,  8 Apr 2025 12:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114067;
-	bh=Gobktv8SstNqrPiytHResXc7Cr4DqfyfTjA9OT/R70k=;
+	s=korg; t=1744114070;
+	bh=GFoP006RhTXiF1z+AZnsfR0I9oe34Kbkr+YjxuhZA7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKLvkBaNnIa+dM36n8VZmSk47cf0lBYvpNNl7dHFRysxXmJFYGEpt2IDUU+zr6k/5
-	 KznYHxrH7KOgi0ISxNwrNEoS5cAKcVkbnmO0IIjlLNRELUClE7LJg2hqsVz3+2jGXp
-	 cUT448qJhWfmQ7hYMXUktI5zvplobL2kVU22CYG0=
+	b=oGQRYt3FbRTnSzH+8Nkjk2IPBw4IfDghxhPovJjDS8cpW6MphnU8KhZQX2we0A1tm
+	 4fI2L010PExye8y2kiagnIZ6PdLd8yf0wY15BmYFxeoB01qSdyOV5MRp9iSs7YQRE3
+	 Mb3mHKPMsIxrFXRdd7uvqsfUxS2T9b4rWKSZXzfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/154] objtool, media: dib8000: Prevent divide-by-zero in dib8000_set_dds()
-Date: Tue,  8 Apr 2025 12:51:06 +0200
-Message-ID: <20250408104819.318676496@linuxfoundation.org>
+Subject: [PATCH 5.4 126/154] ring-buffer: Fix bytes_dropped calculation issue
+Date: Tue,  8 Apr 2025 12:51:07 +0200
+Message-ID: <20250408104819.349426717@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -54,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit e63d465f59011dede0a0f1d21718b59a64c3ff5c ]
+[ Upstream commit c73f0b69648501978e8b3e8fa7eef7f4197d0481 ]
 
-If dib8000_set_dds()'s call to dib8000_read32() returns zero, the result
-is a divide-by-zero.  Prevent that from happening.
+The calculation of bytes-dropped and bytes_dropped_nested is reversed.
+Although it does not affect the final calculation of total_dropped,
+it should still be modified.
 
-Fixes the following warning with an UBSAN kernel:
-
-  drivers/media/dvb-frontends/dib8000.o: warning: objtool: dib8000_tune() falls through to next function dib8096p_cfg_DibRx()
-
-Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/bd1d504d930ae3f073b1e071bcf62cae7708773c.1742852847.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/r/202503210602.fvH5DO1i-lkp@intel.com/
+Link: https://lore.kernel.org/20250223070106.6781-1-yangfeng59949@163.com
+Fixes: 6c43e554a2a5 ("ring-buffer: Add ring buffer startup selftest")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib8000.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib8000.c b/drivers/media/dvb-frontends/dib8000.c
-index 02cb48223dc67..a28cbbd9e475c 100644
---- a/drivers/media/dvb-frontends/dib8000.c
-+++ b/drivers/media/dvb-frontends/dib8000.c
-@@ -2701,8 +2701,11 @@ static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
- 	u8 ratio;
- 
- 	if (state->revision == 0x8090) {
-+		u32 internal = dib8000_read32(state, 23) / 1000;
-+
- 		ratio = 4;
--		unit_khz_dds_val = (1<<26) / (dib8000_read32(state, 23) / 1000);
-+
-+		unit_khz_dds_val = (1<<26) / (internal ?: 1);
- 		if (offset_khz < 0)
- 			dds = (1 << 26) - (abs_offset_khz * unit_khz_dds_val);
- 		else
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 2011219c11a91..b12838d4c3270 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5195,9 +5195,9 @@ static __init int rb_write_something(struct rb_test_data *data, bool nested)
+ 		/* Ignore dropped events before test starts. */
+ 		if (started) {
+ 			if (nested)
+-				data->bytes_dropped += len;
+-			else
+ 				data->bytes_dropped_nested += len;
++			else
++				data->bytes_dropped += len;
+ 		}
+ 		return len;
+ 	}
 -- 
 2.39.5
 
