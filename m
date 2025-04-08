@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC16626F47A;
-	Tue,  8 Apr 2025 12:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622C427CB27;
+	Tue,  8 Apr 2025 12:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117108; cv=none; b=AFyjT+4mHrZ3P3+t5fW7nxRiFXjnygdTmgViX9JCL7JVI82x8G/2mssFKHF5UvggNBxwfaecrFEtq4qi+n0+yVcqoVvvaP7qpupW9+dCwenO1u1wt2hJY4Kx1EWUu9uJEFY4k1HO9BnV66dI0WVVKYoVJVvMUHRNP8OsBbLVZ5M=
+	t=1744117111; cv=none; b=PGO0tFZ+nA3rhhBnPi3uI/Y8/6UGKXJR4tmoTUcvv9zcOrl5VrxwKg00m+1o50nIE761VXR6baKSWAbGeOMzKAR/6Tk+/tFCGrBe7ZN0E57BvFJJ09lCa6EHPl7YQSRaf3FFXowhpaURbbRHcfmLsd69Jp5BBgcpLjR1rJJe/ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117108; c=relaxed/simple;
-	bh=g18HDSRfK518+95IS0pJcT4chErZqw6dmAjl3INEXE0=;
+	s=arc-20240116; t=1744117111; c=relaxed/simple;
+	bh=7PNoV5JwLInBTusELkX/rsfgHI5rxH0g4MD3pFvCSiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lz8VW7q6BWU353Ai3j10AFB6tH3PhVpw5ILajGVwilW7GDnagpJr4X1GT0DLnO/R/OGkp86vnzpZxdfJrPjvyNReXGEyNv5LEcBxtIW5mf0Dpn4xx3QAJITTWSLM3oilQym0qGiMQqm1qAvvHc/E0PmWrWgrryUBIui4I0POLr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7unpNlC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QnSjX/C2TxctTYr4VzLdU87MLUIEO1BF7PMfDm68JTnkDiCIO7GAdyxApq3i90zRLziAfs71dVLBfGerXPvgH5RUouB3zRBW0e/bjZiW7jD3e6ufNb+pR0Xq7VhxHajq2QGXBGZRgmm65XUcqsP4fYKHGWRvMjiQffEvIfl18Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LtuPJfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7unpNlC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D271C4CEE7;
-	Tue,  8 Apr 2025 12:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LtuPJfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73C0C4CEE5;
+	Tue,  8 Apr 2025 12:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117108;
-	bh=g18HDSRfK518+95IS0pJcT4chErZqw6dmAjl3INEXE0=;
+	s=korg; t=1744117111;
+	bh=7PNoV5JwLInBTusELkX/rsfgHI5rxH0g4MD3pFvCSiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7unpNlCBnrRSHlm5NyWF1VxkEZwK0bEEJAgRj6wqvFAXzvsjnc1K4dxOcwsunqVH
-	 781MKH7/7KwvBoRMqGNK5zTXts0m0ZE20W99quECK4LyBfrCUB7PAY7cHbrV4opnil
-	 hoaF1MsjlUE/BZ5D87hVkYQIH0hDF069PchXNB4I=
+	b=1LtuPJfMuZ8o7RgBHEx/A0cuo2elAZAnK81F/WC0Kuv5+RK3bXLfRDgj3o9L8ucnu
+	 3b6ToMss9Ne7STpEoiupavHZ/DYKTW2RtEYeviWNpevMvNU4v4ky7XpiuF0cD95GOw
+	 kY1E9emEljco7Zn2OQpVPq7rslxjMaGcyUni5Ggo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Ira Weiny <ira.weiny@intel.com>
-Subject: [PATCH 6.12 385/423] acpi: nfit: fix narrowing conversion in acpi_nfit_ctl
-Date: Tue,  8 Apr 2025 12:51:51 +0200
-Message-ID: <20250408104854.853363479@linuxfoundation.org>
+	Arjan van de Ven <arjan@linux.intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 349/423] tools/power turbostat: report CoreThr per measurement interval
+Date: Tue,  8 Apr 2025 12:51:15 +0200
+Message-ID: <20250408104853.971197013@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,50 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Len Brown <len.brown@intel.com>
 
-commit 2ff0e408db36c21ed3fa5e3c1e0e687c82cf132f upstream.
+[ Upstream commit f729775f79a9c942c6c82ed6b44bd030afe10423 ]
 
-Syzkaller has reported a warning in to_nfit_bus_uuid(): "only secondary
-bus families can be translated". This warning is emited if the argument
-is equal to NVDIMM_BUS_FAMILY_NFIT == 0. Function acpi_nfit_ctl() first
-verifies that a user-provided value call_pkg->nd_family of type u64 is
-not equal to 0. Then the value is converted to int, and only after that
-is compared to NVDIMM_BUS_FAMILY_MAX. This can lead to passing an invalid
-argument to acpi_nfit_ctl(), if call_pkg->nd_family is non-zero, while
-the lower 32 bits are zero.
+The CoreThr column displays total thermal throttling events
+since boot time.
 
-Furthermore, it is best to return EINVAL immediately upon seeing the
-invalid user input.  The WARNING is insufficient to prevent further
-undefined behavior based on other invalid user input.
+Change it to report events during the measurement interval.
 
-All checks of the input value should be applied to the original variable
-call_pkg->nd_family.
+This is more useful for showing a user the current conditions.
+Total events since boot time are still available to the user via
+/sys/devices/system/cpu/cpu*/thermal_throttle/*
 
-[iweiny: update commit message]
+Document CoreThr on turbostat.8
 
-Fixes: 6450ddbd5d8e ("ACPI: NFIT: Define runtime firmware activation commands")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c80d8dc0d9fa81a3cd8c
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20250123163945.251-1-m.masimov@mt-integration.ru
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: eae97e053fe30 ("turbostat: Support thermal throttle count print")
+Reported-by: Arjan van de Ven <arjan@linux.intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Cc: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/nfit/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/power/x86/turbostat/turbostat.8 | 2 ++
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -485,7 +485,7 @@ int acpi_nfit_ctl(struct nvdimm_bus_desc
- 		cmd_mask = nd_desc->cmd_mask;
- 		if (cmd == ND_CMD_CALL && call_pkg->nd_family) {
- 			family = call_pkg->nd_family;
--			if (family > NVDIMM_BUS_FAMILY_MAX ||
-+			if (call_pkg->nd_family > NVDIMM_BUS_FAMILY_MAX ||
- 			    !test_bit(family, &nd_desc->bus_family_mask))
- 				return -EINVAL;
- 			family = array_index_nospec(family,
+diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
+index 56c7ff6efcdab..a3cf1d17163ae 100644
+--- a/tools/power/x86/turbostat/turbostat.8
++++ b/tools/power/x86/turbostat/turbostat.8
+@@ -168,6 +168,8 @@ The system configuration dump (if --quiet is not used) is followed by statistics
+ .PP
+ \fBPkgTmp\fP Degrees Celsius reported by the per-package Package Thermal Monitor.
+ .PP
++\fBCoreThr\fP Core Thermal Throttling events during the measurement interval.  Note that events since boot can be find in /sys/devices/system/cpu/cpu*/thermal_throttle/*
++.PP
+ \fBGFX%rc6\fP The percentage of time the GPU is in the "render C6" state, rc6, during the measurement interval. From /sys/class/drm/card0/power/rc6_residency_ms or /sys/class/drm/card0/gt/gt0/rc6_residency_ms or /sys/class/drm/card0/device/tile0/gtN/gtidle/idle_residency_ms depending on the graphics driver being used.
+ .PP
+ \fBGFXMHz\fP Instantaneous snapshot of what sysfs presents at the end of the measurement interval. From /sys/class/graphics/fb0/device/drm/card0/gt_cur_freq_mhz or /sys/class/drm/card0/gt_cur_freq_mhz or /sys/class/drm/card0/gt/gt0/rps_cur_freq_mhz or /sys/class/drm/card0/device/tile0/gtN/freq0/cur_freq depending on the graphics driver being used.
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 235e82fe7d0a5..77ef60980ee58 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -3242,7 +3242,7 @@ void delta_core(struct core_data *new, struct core_data *old)
+ 	old->c6 = new->c6 - old->c6;
+ 	old->c7 = new->c7 - old->c7;
+ 	old->core_temp_c = new->core_temp_c;
+-	old->core_throt_cnt = new->core_throt_cnt;
++	old->core_throt_cnt = new->core_throt_cnt - old->core_throt_cnt;
+ 	old->mc6_us = new->mc6_us - old->mc6_us;
+ 
+ 	DELTA_WRAP32(new->core_energy.raw_value, old->core_energy.raw_value);
+-- 
+2.39.5
+
 
 
