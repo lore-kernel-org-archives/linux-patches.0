@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0503E263C6D;
-	Tue,  8 Apr 2025 11:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C31227EBD;
+	Tue,  8 Apr 2025 11:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112597; cv=none; b=a/87bRRSvrcQmkS3fRxMF7HGI9WVEcYn7cnyerxk4h0aZSGVBoPZSWyuUZchcSTlOlVoCZl+nzKl0culpcf6wzCXxvtsY/PI9F27PSJQiBaZ2T//zls270cPCY2K3k6RLm++k5Hg72BtPNj6ysdr2cxIg6FpqITfz8t+0qHgU10=
+	t=1744112599; cv=none; b=LVFDF3qE40oT1Zl17RVlqci94gKNbGBDo4tXvKS097sByp1X26sQsG+brnKAJ6DhJIU0v4R72JuFokVuaTROZZFbuKbDndhpbNZIEe8WH3No9QlC3Hr9q1wU4vXJyMbimMar5mxse6hFgzG6IFR0veUdrGQrsS0poSzsQR8Sqe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112597; c=relaxed/simple;
-	bh=moJzFv9xhMnZ+Oot/Gvmczgonsc43d8FqM9ccveTgfw=;
+	s=arc-20240116; t=1744112599; c=relaxed/simple;
+	bh=fV6UWKzzGdoVFCaDMgR58Gu7znpgKAq9YiZrCJik7QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUedL7ZhdzzDjjKcD5w8NmT1xg1Cw/zFj+qNisGbLZ1NrYDFX912P5+pAdF3Yp0Ez20zw0Am4mviou2GHEikSpAzoF8qP/yLuZiMq/Tk7QOTfkJl+xlPNmtQhx4TdM1V07FtLzQRTs6N08cHJRcGZ2LKQ3DI64znXajieljdSa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgKByXoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/MjITlkwQRb9gCG6pCK5Se3CTLzPUBVU3cWej3oFTCb12N/nxDsJh0rksUQRwAckgW0uTWrFEgKF4l9CnjLfN6UXl0vIeBowx9YzPcbxEcGAcRcEOtP/v7skQR1dXwoXS3cy3U63W+J69yZ3D7tobf77qldOgMj4BjpldKhP2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMSPH5pi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgKByXoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EBCC4CEE5;
-	Tue,  8 Apr 2025 11:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMSPH5pi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D12C4CEE5;
+	Tue,  8 Apr 2025 11:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112596;
-	bh=moJzFv9xhMnZ+Oot/Gvmczgonsc43d8FqM9ccveTgfw=;
+	s=korg; t=1744112599;
+	bh=fV6UWKzzGdoVFCaDMgR58Gu7znpgKAq9YiZrCJik7QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgKByXooelFRtdAxNNWKWxdnebyBpmfIj3lwmDKVO3gvB6eek0xoW+pSaXhItAp6H
-	 D641I3tn8D3sINrDBcVyoG1mWG3EDhx1ttyLXI8QPDuTTfY1msUWYa2IY3nxJAOgnJ
-	 rogsdndfs8S20NcbQsNIa4gr/VuP00MUcQTsnUm4=
+	b=aMSPH5piUnj0QFqaZcxMQxdbFZSESsX7AavYeb4akWgIYKIi4hwmAoQrbTCnfW5Kl
+	 v/oqGuyEK+9V6dbBl3GhTJkJnPama2ud2lYW33O/1NTbOkdt9uTOJ95jlMj+lSMTOn
+	 17vIBdx1fl91YtpCbMXi+IPoMOP0ifOfthAX0sRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/279] RDMA/hns: Fix unmatched condition in error path of alloc_user_qp_db()
-Date: Tue,  8 Apr 2025 12:47:50 +0200
-Message-ID: <20250408104828.694446065@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 078/279] smb: client: fix potential UAF in cifs_debug_files_proc_show()
+Date: Tue,  8 Apr 2025 12:47:41 +0200
+Message-ID: <20250408104828.451307532@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,64 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit b9f59a24ba35a7d955a9f8e148dd9f85b7b40a01 ]
+commit ca545b7f0823f19db0f1148d59bc5e1a56634502 upstream.
 
-Currently the condition of unmapping sdb in error path is not exactly
-the same as the condition of mapping in alloc_user_qp_db(). This may
-cause a problem of unmapping an unmapped db in some case, such as
-when the QP is XRC TGT. Unified the two conditions.
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-Fixes: 90ae0b57e4a5 ("RDMA/hns: Combine enable flags of qp")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250311084857.3803665-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ This patch removes lock/unlock operation in routine cifs_ses_exiting()
+  for ses_lock is not present in v5.15 and not ported yet. ses->status
+  is protected by a global lock, cifs_tcp_ses_lock, in v5.15. ]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/cifs/cifs_debug.c |    2 ++
+ fs/cifs/cifsglob.h   |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index ff019e32c4552..d7f620eb4f21d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -842,12 +842,14 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 			    struct hns_roce_ib_create_qp *ucmd,
- 			    struct hns_roce_ib_create_qp_resp *resp)
- {
-+	bool has_sdb = user_qp_has_sdb(hr_dev, init_attr, udata, resp, ucmd);
- 	struct hns_roce_ucontext *uctx = rdma_udata_to_drv_context(udata,
- 		struct hns_roce_ucontext, ibucontext);
-+	bool has_rdb = user_qp_has_rdb(hr_dev, init_attr, udata, resp);
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	int ret;
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -183,6 +183,8 @@ static int cifs_debug_files_proc_show(st
+ 	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
+ 		list_for_each(tmp, &server->smb_ses_list) {
+ 			ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
++			if (cifs_ses_exiting(ses))
++				continue;
+ 			list_for_each(tmp1, &ses->tcon_list) {
+ 				tcon = list_entry(tmp1, struct cifs_tcon, tcon_list);
+ 				spin_lock(&tcon->open_file_lock);
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -2041,4 +2041,12 @@ static inline struct scatterlist *cifs_s
+ 	return sg;
+ }
  
--	if (user_qp_has_sdb(hr_dev, init_attr, udata, resp, ucmd)) {
-+	if (has_sdb) {
- 		ret = hns_roce_db_map_user(uctx, ucmd->sdb_addr, &hr_qp->sdb);
- 		if (ret) {
- 			ibdev_err(ibdev,
-@@ -858,7 +860,7 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 		hr_qp->en_flags |= HNS_ROCE_QP_CAP_SQ_RECORD_DB;
- 	}
- 
--	if (user_qp_has_rdb(hr_dev, init_attr, udata, resp)) {
-+	if (has_rdb) {
- 		ret = hns_roce_db_map_user(uctx, ucmd->db_addr, &hr_qp->rdb);
- 		if (ret) {
- 			ibdev_err(ibdev,
-@@ -872,7 +874,7 @@ static int alloc_user_qp_db(struct hns_roce_dev *hr_dev,
- 	return 0;
- 
- err_sdb:
--	if (hr_qp->en_flags & HNS_ROCE_QP_CAP_SQ_RECORD_DB)
-+	if (has_sdb)
- 		hns_roce_db_unmap_user(uctx, &hr_qp->sdb);
- err_out:
- 	return ret;
--- 
-2.39.5
-
++static inline bool cifs_ses_exiting(struct cifs_ses *ses)
++{
++	bool ret;
++
++	ret = ses->status == CifsExiting;
++	return ret;
++}
++
+ #endif	/* _CIFS_GLOB_H */
 
 
