@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B8D269CF5;
-	Tue,  8 Apr 2025 11:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF49269D15;
+	Tue,  8 Apr 2025 11:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111847; cv=none; b=k9D2dA0eF8NihCPsCl2Jd6lJW3sxUWRELOVXZIA4yZEMf1kuG9C8bV+4ZOP0TiTkdPatVSqDQK5HSxFEbQpgCzLZ5H/ZrbFC4akJhI4F6fYevVPT9kSHPAgDfe0cxJuKb9dKQG6GmvXUNou2BhW1yy3Y5F5rva6ayUCS0kSNQOc=
+	t=1744111850; cv=none; b=bvHSAi6ct3vmXG4FZ1h3U3xs1Em/6UVKrno/ptJXc3UNJ93oMXQcwJkuSJ3waFjikc5F+9agLhhlqgK9EY3LyYMv1/Rcz7Z4wgSQ21mHyrP63rTgmbSgW/96aBSyLjC/0K9MNsAwEdIDvkgB84nm1YKXAZWK9CtFNHe4z37leak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111847; c=relaxed/simple;
-	bh=jIdWJ/M4qeatqTcM1qZD0x1jvbGrkOdFfsFIb5a3LCY=;
+	s=arc-20240116; t=1744111850; c=relaxed/simple;
+	bh=mF2tdVmZl8PNgzhoz8TWTcTi4PKC2lykLTlScxD/eyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3jDdUtQosbkJGWRbF9H3pC8g5hJ0DaaFIwRnT5hYSrFVcjAgrrmUhr72fjDSUJ5zPaFGNZYi/tC63SNrQ/jSLRjcNonjMzd6+zbmbniEpm5H1f6HIAdTkBA9CYuqiz37b6+Kslc0+nOHOdouzQ+AvAEdI3pSLbUALbXuKoi8xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzpAhz9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGipTes7lkQL8mO7mIW0+zP0uxxd/Xxoi2Qxbg8/XZU5n3CeCtGBC3FHfnHfy9Ab13zHoYNOH1tP2C9Lnrq/VvpQQGE5rts1hrmxdA+cNJzB4JDzGTSY8UW96s0j85FdXCEEUKaPIkGFleslU/aC48gFBbfL8j9VG1tIHzIbNTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tixh4ZAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzpAhz9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C9C4CEE5;
-	Tue,  8 Apr 2025 11:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tixh4ZAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA58C4CEE7;
+	Tue,  8 Apr 2025 11:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111847;
-	bh=jIdWJ/M4qeatqTcM1qZD0x1jvbGrkOdFfsFIb5a3LCY=;
+	s=korg; t=1744111850;
+	bh=mF2tdVmZl8PNgzhoz8TWTcTi4PKC2lykLTlScxD/eyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzpAhz9KRTTY5Zyy3t0ZvYr49ozPI9YHnvRXY64xFMPvMr0awrX3biiw9lCOk+4Hd
-	 J407btoaNIMmvXQjWnJuI57Hs5BPqdDTBahFrDQmBas6cDsUFxXn8NEAcTU9l5+vtb
-	 0ZKv5ao8hi9I6qPwefdvxd6fqTtSYsdEPw4AHz4w=
+	b=tixh4ZAamA9TFZFfLqaLkZZSJeBVAIEn43jWtJGsthvgTzS+9hzzJYW/1562qW3iG
+	 oQ6w21HXXx0qu7orajrgeuQbB1L9wKU6/g73tPM9jRUqsJclo2NyXGopdQnLXhzMPz
+	 igChFcBxEP0LqkSOj2IDVosRjLVZYTpRn/ygWbxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juhan Jin <juhan.jin@foxmail.com>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Tingbo Liao <tingbo.liao@starfivetech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 581/731] riscv: ftrace: Add parentheses in macro definitions of make_call_t0 and make_call_ra
-Date: Tue,  8 Apr 2025 12:47:58 +0200
-Message-ID: <20250408104927.787864721@linuxfoundation.org>
+Subject: [PATCH 6.14 582/731] riscv: Fix the __riscv_copy_vec_words_unaligned implementation
+Date: Tue,  8 Apr 2025 12:47:59 +0200
+Message-ID: <20250408104927.810951274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,60 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juhan Jin <juhan.jin@foxmail.com>
+From: Tingbo Liao <tingbo.liao@starfivetech.com>
 
-[ Upstream commit 5f1a58ed91a040d4625d854f9bb3dd4995919202 ]
+[ Upstream commit 475afa39b123699e910c61ad9a51cedce4a0d310 ]
 
-This patch adds parentheses to parameters caller and callee of macros
-make_call_t0 and make_call_ra. Every existing invocation of these two
-macros uses a single variable for each argument, so the absence of the
-parentheses seems okay. However, future invocations might use more
-complex expressions as arguments. For example, a future invocation might
-look like this: make_call_t0(a - b, c, call). Without parentheses in the
-macro definition, the macro invocation expands to:
+Correct the VEC_S macro definition to fix the implementation
+of vector words copy in the case of unalignment in RISC-V.
 
-...
-unsigned int offset = (unsigned long) c - (unsigned long) a - b;
-...
-
-which is clearly wrong.
-
-The use of parentheses ensures arguments are correctly evaluated and
-potentially saves future users of make_call_t0 and make_call_ra debugging
-trouble.
-
-Fixes: 6724a76cff85 ("riscv: ftrace: Reduce the detour code size to half")
-Signed-off-by: Juhan Jin <juhan.jin@foxmail.com>
+Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
 Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/tencent_AE90AA59903A628E87E9F80E563DA5BA5508@qq.com
+Signed-off-by: Tingbo Liao <tingbo.liao@starfivetech.com>
+Link: https://lore.kernel.org/r/20250228090801.8334-1-tingbo.liao@starfivetech.com
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/ftrace.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/vec-copy-unaligned.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/ftrace.h b/arch/riscv/include/asm/ftrace.h
-index c4721ce44ca47..2636ee00ccf0f 100644
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -92,7 +92,7 @@ struct dyn_arch_ftrace {
- #define make_call_t0(caller, callee, call)				\
- do {									\
- 	unsigned int offset =						\
--		(unsigned long) callee - (unsigned long) caller;	\
-+		(unsigned long) (callee) - (unsigned long) (caller);	\
- 	call[0] = to_auipc_t0(offset);					\
- 	call[1] = to_jalr_t0(offset);					\
- } while (0)
-@@ -108,7 +108,7 @@ do {									\
- #define make_call_ra(caller, callee, call)				\
- do {									\
- 	unsigned int offset =						\
--		(unsigned long) callee - (unsigned long) caller;	\
-+		(unsigned long) (callee) - (unsigned long) (caller);	\
- 	call[0] = to_auipc_ra(offset);					\
- 	call[1] = to_jalr_ra(offset);					\
- } while (0)
+diff --git a/arch/riscv/kernel/vec-copy-unaligned.S b/arch/riscv/kernel/vec-copy-unaligned.S
+index d16f19f1b3b65..7ce4de6f6e694 100644
+--- a/arch/riscv/kernel/vec-copy-unaligned.S
++++ b/arch/riscv/kernel/vec-copy-unaligned.S
+@@ -11,7 +11,7 @@
+ 
+ #define WORD_SEW CONCATENATE(e, WORD_EEW)
+ #define VEC_L CONCATENATE(vle, WORD_EEW).v
+-#define VEC_S CONCATENATE(vle, WORD_EEW).v
++#define VEC_S CONCATENATE(vse, WORD_EEW).v
+ 
+ /* void __riscv_copy_vec_words_unaligned(void *, const void *, size_t) */
+ /* Performs a memcpy without aligning buffers, using word loads and stores. */
 -- 
 2.39.5
 
