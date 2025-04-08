@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A942925F97B;
-	Tue,  8 Apr 2025 12:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5183D26AA9B;
+	Tue,  8 Apr 2025 12:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115768; cv=none; b=bbR9H5jeplcSKnYLUWlicP9A6mJOGE0AVupkL7YzuxfAGGUyWhO9ISCXTDeXKdjd6UoTFAh03UUqXlysDJpNagwnwleT8sBaTeBn+JdMBq2JC3IbF+lLrxa7pYo6Ja++yF60S1TgzJavdpIIqXPrG40GSLF+W9JbWu4mLST1r5U=
+	t=1744115771; cv=none; b=d2jswhZgUIQI6Yxc5QUGExnTpA7Fa6Lm4X7OXHFjo6rDOjHIG/h+u4X0gEQzVjXYr6i6hUq3TtxM2RnJ1HC6U8kmg1vi+JXX2/u5ofw57YOsxoLDyolKOo27oxybdjt4W0VJ6YSFP9Mxpop+sPTLgXqwVxA25OtAgHhk6rxUbE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115768; c=relaxed/simple;
-	bh=9+ir4BMDWv+mpjiisu/0mzKu/E4bKb//gB/RrPpcHRA=;
+	s=arc-20240116; t=1744115771; c=relaxed/simple;
+	bh=STYJVdQZduegt15sU8WpHAEsHfeDtfYUipZM+6CQYgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcnwTnkaJDFCeE5uo7r7fLelIw/N01aZhKeWnBEiP1uJNgNFqCFiIIX8XpXquo0BlkRZMzxzCicw6LKCDrty1erZeH/wkOGGmtegJERPQQsXmoOg695I9qxyvKiJiAyIQ9IVqw4+4OGwgeDsRNFenGCdGlTuYXhQb/dHVZRNBQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTZW5DJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBOfJmPiYRgJ521y8IIdQtDJiwqIigwcuIz9jndEhaIqpGJn8Q1D4ruH4HxUIZp3uRSwj079OLw0GaKHnSZQcSEsbCaPk5QxBo8skfLoTHeDX7nuo9ufJxaB/DbRiRr2XImJrW4hbElfOpvaBqv1eUGzTF0t4l0AAk77O1m3Tg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBKfHqOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTZW5DJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3962AC4CEE5;
-	Tue,  8 Apr 2025 12:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBKfHqOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC744C4CEE5;
+	Tue,  8 Apr 2025 12:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115768;
-	bh=9+ir4BMDWv+mpjiisu/0mzKu/E4bKb//gB/RrPpcHRA=;
+	s=korg; t=1744115771;
+	bh=STYJVdQZduegt15sU8WpHAEsHfeDtfYUipZM+6CQYgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTZW5DJE7B1e4kkSSh/7AZLt5pqhb4tVsD9AQGtBCvfK5jjn3k/jzC+5TPEOLi+TV
-	 I+DEuY636huVV6FyK5U5rlNyzWmi8wnwq1MQ4Tx6pFsvmK1t6svti6R3v4yUtNKIJD
-	 mYe4hFzB0GKE9Q6bpIBX1TWJMhPSKpdmIkExp0mA=
+	b=PBKfHqOCfR3JMDbnKqe6+Dd0bAjjqmYpTwoU72v4vVicPcG8E89iBnMSSG6vm/ZGF
+	 neM4T8CZdg02q12oh5XaF18PFg0fbQ4EeAG7IAmsu2JtKwJpDD2XTgU5pLC+mcgF/D
+	 wEbNbGqVrO2/3CA2TmNgzpjcNnsx7HAGbtOF7klo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Baoquan He <bhe@redhat.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	syzbot+66c146268dc88f4341fd@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Kurt Hackel <kurt.hackel@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/204] kexec: initialize ELF lowest address to ULONG_MAX
-Date: Tue,  8 Apr 2025 12:50:27 +0200
-Message-ID: <20250408104823.185984933@linuxfoundation.org>
+Subject: [PATCH 6.1 098/204] ocfs2: validate l_tree_depth to avoid out-of-bounds access
+Date: Tue,  8 Apr 2025 12:50:28 +0200
+Message-ID: <20250408104823.214314024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -56,69 +59,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 9986fb5164c8b21f6439cfd45ba36d8cc80c9710 ]
+[ Upstream commit a406aff8c05115119127c962cbbbbd202e1973ef ]
 
-Patch series "powerpc/crash: use generic crashkernel reservation", v3.
+The l_tree_depth field is 16-bit (__le16), but the actual maximum depth is
+limited to OCFS2_MAX_PATH_DEPTH.
 
-Commit 0ab97169aa05 ("crash_core: add generic function to do reservation")
-added a generic function to reserve crashkernel memory.  So let's use the
-same function on powerpc and remove the architecture-specific code that
-essentially does the same thing.
+Add a check to prevent out-of-bounds access if l_tree_depth has an invalid
+value, which may occur when reading from a corrupted mounted disk [1].
 
-The generic crashkernel reservation also provides a way to split the
-crashkernel reservation into high and low memory reservations, which can
-be enabled for powerpc in the future.
-
-Additionally move powerpc to use generic APIs to locate memory hole for
-kexec segments while loading kdump kernel.
-
-This patch (of 7):
-
-kexec_elf_load() loads an ELF executable and sets the address of the
-lowest PT_LOAD section to the address held by the lowest_load_addr
-function argument.
-
-To determine the lowest PT_LOAD address, a local variable lowest_addr
-(type unsigned long) is initialized to UINT_MAX.  After loading each
-PT_LOAD, its address is compared to lowest_addr.  If a loaded PT_LOAD
-address is lower, lowest_addr is updated.  However, setting lowest_addr to
-UINT_MAX won't work when the kernel image is loaded above 4G, as the
-returned lowest PT_LOAD address would be invalid.  This is resolved by
-initializing lowest_addr to ULONG_MAX instead.
-
-This issue was discovered while implementing crashkernel high/low
-reservation on the PowerPC architecture.
-
-Link: https://lkml.kernel.org/r/20250131113830.925179-1-sourabhjain@linux.ibm.com
-Link: https://lkml.kernel.org/r/20250131113830.925179-2-sourabhjain@linux.ibm.com
-Fixes: a0458284f062 ("powerpc: Add support code for kexec_file_load()")
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Acked-by: Hari Bathini <hbathini@linux.ibm.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lkml.kernel.org/r/20250214084908.736528-1-kovalev@altlinux.org
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Reported-by: syzbot+66c146268dc88f4341fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=66c146268dc88f4341fd [1]
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Kurt Hackel <kurt.hackel@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Vasiliy Kovalev <kovalev@altlinux.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/alloc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/kexec_elf.c b/kernel/kexec_elf.c
-index d3689632e8b90..3a5c25b2adc94 100644
---- a/kernel/kexec_elf.c
-+++ b/kernel/kexec_elf.c
-@@ -390,7 +390,7 @@ int kexec_elf_load(struct kimage *image, struct elfhdr *ehdr,
- 			 struct kexec_buf *kbuf,
- 			 unsigned long *lowest_load_addr)
- {
--	unsigned long lowest_addr = UINT_MAX;
-+	unsigned long lowest_addr = ULONG_MAX;
- 	int ret;
- 	size_t i;
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index 51c93929a1461..7f11ffacc9150 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -1796,6 +1796,14 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
  
+ 	el = root_el;
+ 	while (el->l_tree_depth) {
++		if (unlikely(le16_to_cpu(el->l_tree_depth) >= OCFS2_MAX_PATH_DEPTH)) {
++			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
++				    "Owner %llu has invalid tree depth %u in extent list\n",
++				    (unsigned long long)ocfs2_metadata_cache_owner(ci),
++				    le16_to_cpu(el->l_tree_depth));
++			ret = -EROFS;
++			goto out;
++		}
+ 		if (le16_to_cpu(el->l_next_free_rec) == 0) {
+ 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
+ 				    "Owner %llu has empty extent list at depth %u\n",
 -- 
 2.39.5
 
