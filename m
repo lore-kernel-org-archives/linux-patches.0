@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF54826982F;
-	Tue,  8 Apr 2025 12:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5977026B956;
+	Tue,  8 Apr 2025 12:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116121; cv=none; b=noGAPVICgyOEtCbACECl1WyUfJuruyten3x2rlstrpdM/lUu3iMU6EHqdu1/UFe6+olx1Rgrey7ZJujinZAUXftHNkA6wp8ucEQbxeAKA/QttI/HwfJwY5f5fFbnckZ+b23yEsgoRtxX00yasRy2xWXNnP/46skRjjNoTys5HI0=
+	t=1744116124; cv=none; b=AgDXIR+bYms7TNFaabV6ZQQexqGLQyiHkltn0UnMEoHgSCrleASmqxEesgHtfpIuTeTV7SNEz7csR+mPniC8iwI5k4VAjyEETahYLgEh7XB65/6JGm6FVn9176lVlzm7m9cRYaxYKNqSgmIM6kb3SVlcZI2toropzTnDIGZRsCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116121; c=relaxed/simple;
-	bh=TMkpjeZ7dMC/IVfzRg7CaMxvoF4FqLi41cWES71dy7M=;
+	s=arc-20240116; t=1744116124; c=relaxed/simple;
+	bh=sjWadk+GVboP165CdFi8dZiz5Pas1SwAQIthPWQSMkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nir7yc9RQjJleHwYafdhxocSiu1hiP/6zP43UeYFRLCds12t1b67wb9XpTIC9mozylGD2xawDMgCia4IoQyx126AO8jDs1GM05MzTbLIDbycoqYLTF/sEv89YMYKSVExLfG+f7X0WUz8iMWX0d02Aq/oPUyj8iklXK8mzuaM6FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtdS4Oy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMXERz7F5o6Tce8Ec3oUbYW2rkFRluTVuVOwtYR255RAEJ6GLRGNveQbjb93wjpBJ6XdeQ7SI7oIh7P5z3b5rVqAfh1S1a1xSXC4m1WQEMuzCMUu7+EEl+pcQCtWv4681KqcIrPvXgdNVa0KlI6TU4pKeLBfK4MSM/Y6C8fDQi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeH+0zK6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtdS4Oy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403FCC4CEE5;
-	Tue,  8 Apr 2025 12:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeH+0zK6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F0EC4CEE5;
+	Tue,  8 Apr 2025 12:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116121;
-	bh=TMkpjeZ7dMC/IVfzRg7CaMxvoF4FqLi41cWES71dy7M=;
+	s=korg; t=1744116124;
+	bh=sjWadk+GVboP165CdFi8dZiz5Pas1SwAQIthPWQSMkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtdS4Oy06JKmuIahgIvITeHVKoL1VkMVEnPLW07fsPaWVmZkDmXVetJiBASGjSAee
-	 Y0nkx2Ln9zzuvkyruyD6ju8BRTpFwsZ0KhtzE4K9UM1KVG0NfclrkNshpSBR1/ieok
-	 dOv5HDAtSzUoK5jFOHrVfDnevwaprgI/FTOc35XQ=
+	b=xeH+0zK6Vy2QukpwXPoAV2lnPhpbNEKS7gDtDlslkfq1BowKe333jk04gkO15Hpsk
+	 5NVZclUwA9Rr7pVYGyEAvuGt2fOhwDWgy8mNu2vh2g6AIpJrJOOCwm6meR8s3GOk1r
+	 GdCX8QttL+5ZCVlE4kRrGEIcrWEwVKhN3osIl5nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	James Morse <james.morse@arm.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	David Hildenbrand <david@redhat.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Tony Luck <tony.luck@intel.com>,
-	Gary Wang <gary.c.wang@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/423] EDAC/ie31200: Fix the error path order of ie31200_init()
-Date: Tue,  8 Apr 2025 12:45:49 +0200
-Message-ID: <20250408104846.284460872@linuxfoundation.org>
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Peter Newman <peternewman@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Carl Worth <carl@os.amperecomputing.com>,
+	Amit Singh Tomar <amitsinght@marvell.com>,
+	Shanker Donthineni <sdonthineni@nvidia.com>
+Subject: [PATCH 6.12 024/423] x86/resctrl: Fix allocation of cleanest CLOSID on platforms with no monitors
+Date: Tue,  8 Apr 2025 12:45:50 +0200
+Message-ID: <20250408104846.308883098@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,66 +61,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: James Morse <james.morse@arm.com>
 
-[ Upstream commit 231e341036d9988447e3b3345cf741a98139199e ]
+[ Upstream commit a121798ae669351ec0697c94f71c3a692b2a755b ]
 
-The error path order of ie31200_init() is incorrect, fix it.
+Commit
 
-Fixes: 709ed1bcef12 ("EDAC/ie31200: Fallback if host bridge device is already initialized")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Gary Wang <gary.c.wang@intel.com>
-Link: https://lore.kernel.org/r/20250310011411.31685-4-qiuxu.zhuo@intel.com
+  6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
+
+added logic that causes resctrl to search for the CLOSID with the fewest dirty
+cache lines when creating a new control group, if requested by the arch code.
+This depends on the values read from the llc_occupancy counters. The logic is
+applicable to architectures where the CLOSID effectively forms part of the
+monitoring identifier and so do not allow complete freedom to choose an unused
+monitoring identifier for a given CLOSID.
+
+This support missed that some platforms may not have these counters.  This
+causes a NULL pointer dereference when creating a new control group as the
+array was not allocated by dom_data_init().
+
+As this feature isn't necessary on platforms that don't have cache occupancy
+monitors, add this to the check that occurs when a new control group is
+allocated.
+
+Fixes: 6eac36bb9eb0 ("x86/resctrl: Allocate the cleanest CLOSID by searching closid_num_dirty_rmid")
+Signed-off-by: James Morse <james.morse@arm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Carl Worth <carl@os.amperecomputing.com> # arm64
+Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Tested-by: Peter Newman <peternewman@google.com>
+Tested-by: Amit Singh Tomar <amitsinght@marvell.com> # arm64
+Tested-by: Shanker Donthineni <sdonthineni@nvidia.com> # arm64
+Tested-by: Babu Moger <babu.moger@amd.com>
+Link: https://lore.kernel.org/r/20250311183715.16445-2-james.morse@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/ie31200_edac.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
-index 92714dd88b3f6..56be8ef40f376 100644
---- a/drivers/edac/ie31200_edac.c
-+++ b/drivers/edac/ie31200_edac.c
-@@ -617,7 +617,7 @@ static int __init ie31200_init(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index d7163b764c626..2d48db66fca85 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -148,7 +148,8 @@ static int closid_alloc(void)
  
- 	pci_rc = pci_register_driver(&ie31200_driver);
- 	if (pci_rc < 0)
--		goto fail0;
-+		return pci_rc;
+ 	lockdep_assert_held(&rdtgroup_mutex);
  
- 	if (!mci_pdev) {
- 		ie31200_registered = 0;
-@@ -628,11 +628,13 @@ static int __init ie31200_init(void)
- 			if (mci_pdev)
- 				break;
- 		}
-+
- 		if (!mci_pdev) {
- 			edac_dbg(0, "ie31200 pci_get_device fail\n");
- 			pci_rc = -ENODEV;
--			goto fail1;
-+			goto fail0;
- 		}
-+
- 		pci_rc = ie31200_init_one(mci_pdev, &ie31200_pci_tbl[i]);
- 		if (pci_rc < 0) {
- 			edac_dbg(0, "ie31200 init fail\n");
-@@ -640,12 +642,12 @@ static int __init ie31200_init(void)
- 			goto fail1;
- 		}
- 	}
--	return 0;
- 
-+	return 0;
- fail1:
--	pci_unregister_driver(&ie31200_driver);
--fail0:
- 	pci_dev_put(mci_pdev);
-+fail0:
-+	pci_unregister_driver(&ie31200_driver);
- 
- 	return pci_rc;
- }
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID) &&
++	    is_llc_occupancy_enabled()) {
+ 		cleanest_closid = resctrl_find_cleanest_closid();
+ 		if (cleanest_closid < 0)
+ 			return cleanest_closid;
 -- 
 2.39.5
 
