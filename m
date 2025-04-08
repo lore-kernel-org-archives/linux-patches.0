@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7216326A0FF;
-	Tue,  8 Apr 2025 12:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48E26A0FF;
+	Tue,  8 Apr 2025 12:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117085; cv=none; b=sFfH4mhWAvWXdzlhNdX8TNPyHlH1S1Ftda4CCi50bWtHW5Rf+6Y/VdAKKLFEdDma5rmVJigwg+bwnT32WjXAitdqAJO9JQdTJGj/3Q45LS4yUgOgecc4lVc9CaJN1SMyhzF9QSJYL7vcxnW1dmWugKu/O6ldMsVvCZ8ULfIDOP0=
+	t=1744117088; cv=none; b=lRAS+Gm5+LlM5GccmyImMgaE0txKZZalDSivr9fsHIPMcRiUH6L5m23JA2TvnmsSnzsiwKYFLZicEzsEAISyhC36RliyxMuCbayx/+wilpPuO3QEtoIxIsWcKrPfxLDInYFqcMM0Cm7XJ0WHl0phbp71hSICa9rgI+YiL6uCYUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117085; c=relaxed/simple;
-	bh=Nnc1dA47Qf1wGfHwVV8O4/W1NISYXDkp6UHLRgjwr8U=;
+	s=arc-20240116; t=1744117088; c=relaxed/simple;
+	bh=6zqnYydIaz4CvX98RPv+ik05vfE2KA4zieMX9FqLRcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7KgmoFQo28jwv7ChLTzuQ7LaiIZdXUNj5+M+WGd6cHW605UoN7RWvMkpUXqqxmLtxJKB9dhL/2AHc3Uc5pS56XklzyieG8Tz+qki/CW4BSfVvNYHGR5dYl3ILcDZk1GHIZLPBD4JYVnUqH5yjB6jOo6XhnLPUtkZ10IG1bwNzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NA20nHCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYocFx0kelqgBA2OStP5wYNxvoXMBmOxI4shpnDtL0dBY7NpFzuGAgo2zm42an7aKY6nZPWvhJpBN2VTlgjVD0QRcu2ulLF84LKUwHI0PRTEik8GNR5u6UYf1zR2FncQgjz+snH0ABmN7dnenc1dKT6yQqJnmu3QpVJ+zeXiqkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYjPYn+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA20nHCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F4EC4CEE7;
-	Tue,  8 Apr 2025 12:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYjPYn+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B17C4CEE5;
+	Tue,  8 Apr 2025 12:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117085;
-	bh=Nnc1dA47Qf1wGfHwVV8O4/W1NISYXDkp6UHLRgjwr8U=;
+	s=korg; t=1744117088;
+	bh=6zqnYydIaz4CvX98RPv+ik05vfE2KA4zieMX9FqLRcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NA20nHCMMSNROjpNicqZWDqQ3EQjNxagkuLBrEw+2Z1wVxLLyG2ydYKy9DEX2n2Wa
-	 Oo/2Y2XIZnPMIWQ7xZFYCtXNC7ioq3laO7OmIlO5gyU8tjOcs3qF1joXefdz86VhpM
-	 Rcml3vYaVb7HR5ELMZyq/UiTmueuvL4zbvTbDJbM=
+	b=LYjPYn+Si5B+NYXaqnmKFt/VZrqD5iDFLshpVVuCFSM5oh288QYrogzwaixG7l1ni
+	 aY22dg8TkvB3mfYq3Da4+w7NOYGaDxQR6l4h+2B9FMpofLW7QXuNmcWsDaXSJLwYoS
+	 3C7xqMmj3yD1Q2rNAcYYK+LxprVWJhTNXwIOUfOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.12 378/423] perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read
-Date: Tue,  8 Apr 2025 12:51:44 +0200
-Message-ID: <20250408104854.682838547@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Kees Cook <kees@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Andy Lutomirski <luto@kernel.org>
+Subject: [PATCH 6.12 379/423] uprobes/x86: Harden uretprobe syscall trampoline check
+Date: Tue,  8 Apr 2025 12:51:45 +0200
+Message-ID: <20250408104854.706420375@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,128 +57,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit f9bdf1f953392c9edd69a7f884f78c0390127029 upstream.
+commit fa6192adc32f4fdfe5b74edd5b210e12afd6ecc0 upstream.
 
-The WARN_ON(this_cpu_read(cpu_hw_events.enabled)) in the
-intel_pmu_save_and_restart_reload() is triggered, when sampling read
-topdown events.
+Jann reported a possible issue when trampoline_check_ip returns
+address near the bottom of the address space that is allowed to
+call into the syscall if uretprobes are not set up:
 
-In a NMI handler, the cpu_hw_events.enabled is set and used to indicate
-the status of core PMU. The generic pmu->pmu_disable_count, updated in
-the perf_pmu_disable/enable pair, is not touched.
-However, the perf_pmu_disable/enable pair is invoked when sampling read
-in a NMI handler. The cpuc->enabled is mistakenly set by the
-perf_pmu_enable().
+   https://lore.kernel.org/bpf/202502081235.5A6F352985@keescook/T/#m9d416df341b8fbc11737dacbcd29f0054413cbbf
 
-Avoid disabling PMU if the core PMU is already disabled.
-Merge the logic together.
+Though the mmap minimum address restrictions will typically prevent
+creating mappings there, let's make sure uretprobe syscall checks
+for that.
 
-Fixes: 7b2c05a15d29 ("perf/x86/intel: Generic support for hardware TopDown metrics")
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: ff474a78cef5 ("uprobe: Add uretprobe syscall to speed up return probe")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Cc: Andy Lutomirski <luto@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250121152303.3128733-2-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/r/20250212220433.3624297-1-jolsa@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   41 +++++++++++++++++++++++------------------
- arch/x86/events/intel/ds.c   |   11 +----------
- arch/x86/events/perf_event.h |    2 +-
- 3 files changed, 25 insertions(+), 29 deletions(-)
+ arch/x86/kernel/uprobes.c |   14 +++++++++-----
+ include/linux/uprobes.h   |    2 ++
+ kernel/events/uprobes.c   |    2 +-
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2779,28 +2779,33 @@ static u64 icl_update_topdown_event(stru
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -357,19 +357,23 @@ void *arch_uprobe_trampoline(unsigned lo
+ 	return &insn;
+ }
  
- DEFINE_STATIC_CALL(intel_pmu_update_topdown_event, x86_perf_event_update);
- 
--static void intel_pmu_read_topdown_event(struct perf_event *event)
-+static void intel_pmu_read_event(struct perf_event *event)
+-static unsigned long trampoline_check_ip(void)
++static unsigned long trampoline_check_ip(unsigned long tramp)
  {
--	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+	if (event->hw.flags & (PERF_X86_EVENT_AUTO_RELOAD | PERF_X86_EVENT_TOPDOWN)) {
-+		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+		bool pmu_enabled = cpuc->enabled;
-+
-+		/* Only need to call update_topdown_event() once for group read. */
-+		if (is_metric_event(event) && (cpuc->txn_flags & PERF_PMU_TXN_READ))
-+			return;
-+
-+		cpuc->enabled = 0;
-+		if (pmu_enabled)
-+			intel_pmu_disable_all();
-+
-+		if (is_topdown_event(event))
-+			static_call(intel_pmu_update_topdown_event)(event);
-+		else
-+			intel_pmu_drain_pebs_buffer();
-+
-+		cpuc->enabled = pmu_enabled;
-+		if (pmu_enabled)
-+			intel_pmu_enable_all(0);
- 
--	/* Only need to call update_topdown_event() once for group read. */
--	if ((cpuc->txn_flags & PERF_PMU_TXN_READ) &&
--	    !is_slots_event(event))
- 		return;
-+	}
- 
--	perf_pmu_disable(event->pmu);
--	static_call(intel_pmu_update_topdown_event)(event);
--	perf_pmu_enable(event->pmu);
--}
+-	unsigned long tramp = uprobe_get_trampoline_vaddr();
 -
--static void intel_pmu_read_event(struct perf_event *event)
--{
--	if (event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD)
--		intel_pmu_auto_reload_read(event);
--	else if (is_topdown_count(event))
--		intel_pmu_read_topdown_event(event);
--	else
--		x86_perf_event_update(event);
-+	x86_perf_event_update(event);
+ 	return tramp + (uretprobe_syscall_check - uretprobe_trampoline_entry);
  }
  
- static void intel_pmu_enable_fixed(struct perf_event *event)
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -932,7 +932,7 @@ unlock:
- 	return 1;
- }
- 
--static inline void intel_pmu_drain_pebs_buffer(void)
-+void intel_pmu_drain_pebs_buffer(void)
+ SYSCALL_DEFINE0(uretprobe)
  {
- 	struct perf_sample_data data;
+ 	struct pt_regs *regs = task_pt_regs(current);
+-	unsigned long err, ip, sp, r11_cx_ax[3];
++	unsigned long err, ip, sp, r11_cx_ax[3], tramp;
++
++	/* If there's no trampoline, we are called from wrong place. */
++	tramp = uprobe_get_trampoline_vaddr();
++	if (unlikely(tramp == UPROBE_NO_TRAMPOLINE_VADDR))
++		goto sigill;
  
-@@ -2079,15 +2079,6 @@ get_next_pebs_record_by_bit(void *base,
- 	return NULL;
- }
+-	if (regs->ip != trampoline_check_ip())
++	/* Make sure the ip matches the only allowed sys_uretprobe caller. */
++	if (unlikely(regs->ip != trampoline_check_ip(tramp)))
+ 		goto sigill;
  
--void intel_pmu_auto_reload_read(struct perf_event *event)
--{
--	WARN_ON(!(event->hw.flags & PERF_X86_EVENT_AUTO_RELOAD));
--
--	perf_pmu_disable(event->pmu);
--	intel_pmu_drain_pebs_buffer();
--	perf_pmu_enable(event->pmu);
--}
--
- /*
-  * Special variant of intel_pmu_save_and_restart() for auto-reload.
+ 	err = copy_from_user(r11_cx_ax, (void __user *)regs->sp, sizeof(r11_cx_ax));
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -28,6 +28,8 @@ struct page;
+ 
+ #define MAX_URETPROBE_DEPTH		64
+ 
++#define UPROBE_NO_TRAMPOLINE_VADDR	(~0UL)
++
+ struct uprobe_consumer {
+ 	/*
+ 	 * handler() can return UPROBE_HANDLER_REMOVE to signal the need to
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1898,8 +1898,8 @@ void uprobe_copy_process(struct task_str
   */
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1627,7 +1627,7 @@ void intel_pmu_pebs_disable_all(void);
+ unsigned long uprobe_get_trampoline_vaddr(void)
+ {
++	unsigned long trampoline_vaddr = UPROBE_NO_TRAMPOLINE_VADDR;
+ 	struct xol_area *area;
+-	unsigned long trampoline_vaddr = -1;
  
- void intel_pmu_pebs_sched_task(struct perf_event_pmu_context *pmu_ctx, bool sched_in);
- 
--void intel_pmu_auto_reload_read(struct perf_event *event);
-+void intel_pmu_drain_pebs_buffer(void);
- 
- void intel_pmu_store_pebs_lbrs(struct lbr_entry *lbr);
- 
+ 	/* Pairs with xol_add_vma() smp_store_release() */
+ 	area = READ_ONCE(current->mm->uprobes_state.xol_area); /* ^^^ */
 
 
