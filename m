@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104BE26A0AF;
-	Tue,  8 Apr 2025 12:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41B526B94F;
+	Tue,  8 Apr 2025 12:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113661; cv=none; b=ly2nRh5VUWug+69n8EeFhZqrb4ZrHaJ2vRXSwzqRjgJ+HkW4FjdoJpJJ7MApiyaRpDu08pefqWhoFZAenV+TyavRb4GFrvsI4BeTFj9BmdEI69fm0l+FtQ/nJRnYG7+mVmQMXlvW2mH1b5O0prA01O8LyT025OFU238mkhZItFQ=
+	t=1744113663; cv=none; b=tp43dSSIiD5+83mH8HN0GalE9hlYaN9HWbrD6ds5l81idjn6gMES3W9mIuGBHenSZKGyxCBd1y0+MdBX/fEOV1ylge9Ffbs3Vv5/YWCXIhXzZnj1mB3YQrb0/4k6+L2i4pcIfCWDJ5VcaYh78aGLE/KDdm8s9s56ZgC1xJ2VZaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113661; c=relaxed/simple;
-	bh=bJ7FuPpJXntvNolUjEZRbM21tktNjpOE/ux3jF6J8Qc=;
+	s=arc-20240116; t=1744113663; c=relaxed/simple;
+	bh=mwkUAiOsN1y+wN75zexzs8IfghpS6S//VcorZYQLaZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNkdvY24k12Inop2dekEqmIaumzaQhMVSPzPqcP3wHIwGJ8pjJ1NdXie3rVuJxhgHPgGcNh7pDH7Q3B+/o4COvpc/MGrWiH5PAKlO6hJROAJB6zJdh02i8TKrZLjjGqpSUXQGfyQJ8J9xEiHE20tITa2PyTikJQ1SOiMK+PYC18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyrPkT5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gr3UoWvV/n6AYCrHOmVG1CtGwfIhzIKN3HNS+dvRVow74Ky6omZv7Sb3Wl/SSWgVzBX2b+rYtPG9VJrPdg26hTmpVAzPd7qelXttmAqte8rXLBoQfi0tsoUsueu3qd1kn0i7Fdg0SmukTyZCzkNxY6sfDAdAt4IL+/W5aLjidNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIX0PTUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyrPkT5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9470CC4CEE5;
-	Tue,  8 Apr 2025 12:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIX0PTUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D085C4CEEA;
+	Tue,  8 Apr 2025 12:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113660;
-	bh=bJ7FuPpJXntvNolUjEZRbM21tktNjpOE/ux3jF6J8Qc=;
+	s=korg; t=1744113663;
+	bh=mwkUAiOsN1y+wN75zexzs8IfghpS6S//VcorZYQLaZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JyrPkT5mLTvFuiyXH2va4lpoInv9UweiojhgTk8pDL9I4c6I9peyAbaUbtU/MbC38
-	 7eIYGMuPxx3P02Fhb8gH8uJI+g1xY+DgdQ3BbCyd+kZD+9kdY+BwVX6qllCA0S1+wX
-	 JVVz8pL8h7BiUhMWb2rIwiiMrkR8KN3ovYSo7mWw=
+	b=mIX0PTUKOtoze7OlJwHirVPPKjDTYaT8ZFFg8VJhQyhMwVqr1MaZz3eCiVzs69D+/
+	 jJTexqYB0sU/7s+ufjA7h9l2zIR7htlK5CRzB9NHwV7ARgwwdGozSPB3DoKo46znqU
+	 9C3/h++bMQ+TMCWEzqs+MolxfZ8TIUBJS2LH70P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyu Lan <tiala@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.6 235/268] x86/hyperv: Fix check of return value from snp_set_vmsa()
-Date: Tue,  8 Apr 2025 12:50:46 +0200
-Message-ID: <20250408104834.930282657@linuxfoundation.org>
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.6 244/268] x86/tsc: Always save/restore TSC sched_clock() on suspend/resume
+Date: Tue,  8 Apr 2025 12:50:55 +0200
+Message-ID: <20250408104835.166368873@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,34 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyu Lan <tiala@microsoft.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit e792d843aa3c9d039074cdce728d5803262e57a7 upstream.
+commit d90c9de9de2f1712df56de6e4f7d6982d358cabe upstream.
 
-snp_set_vmsa() returns 0 as success result and so fix it.
+TSC could be reset in deep ACPI sleep states, even with invariant TSC.
 
+That's the reason we have sched_clock() save/restore functions, to deal
+with this situation. But what happens is that such functions are guarded
+with a check for the stability of sched_clock - if not considered stable,
+the save/restore routines aren't executed.
+
+On top of that, we have a clear comment in native_sched_clock() saying
+that *even* with TSC unstable, we continue using TSC for sched_clock due
+to its speed.
+
+In other words, if we have a situation of TSC getting detected as unstable,
+it marks the sched_clock as unstable as well, so subsequent S3 sleep cycles
+could bring bogus sched_clock values due to the lack of the save/restore
+mechanism, causing warnings like this:
+
+  [22.954918] ------------[ cut here ]------------
+  [22.954923] Delta way too big! 18446743750843854390 ts=18446744072977390405 before=322133536015 after=322133536015 write stamp=18446744072977390405
+  [22.954923] If you just came from a suspend/resume,
+  [22.954923] please switch to the trace global clock:
+  [22.954923]   echo global > /sys/kernel/tracing/trace_clock
+  [22.954923] or add trace_clock=global to the kernel command line
+  [22.954937] WARNING: CPU: 2 PID: 5728 at kernel/trace/ring_buffer.c:2890 rb_add_timestamp+0x193/0x1c0
+
+Notice that the above was reproduced even with "trace_clock=global".
+
+The fix for that is to _always_ save/restore the sched_clock on suspend
+cycle _if TSC is used_ as sched_clock - only if we fallback to jiffies
+the sched_clock_stable() check becomes relevant to save/restore the
+sched_clock.
+
+Debugged-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 44676bb9d566 ("x86/hyperv: Add smp support for SEV-SNP guest")
-Signed-off-by: Tianyu Lan <tiala@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20250313085217.45483-1-ltykernel@gmail.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250313085217.45483-1-ltykernel@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250215210314.351480-1-gpiccoli@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/hyperv/ivm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/tsc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/hyperv/ivm.c
-+++ b/arch/x86/hyperv/ivm.c
-@@ -338,7 +338,7 @@ int hv_snp_boot_ap(int cpu, unsigned lon
- 	vmsa->sev_features = sev_status >> 2;
+--- a/arch/x86/kernel/tsc.c
++++ b/arch/x86/kernel/tsc.c
+@@ -955,7 +955,7 @@ static unsigned long long cyc2ns_suspend
  
- 	ret = snp_set_vmsa(vmsa, true);
--	if (!ret) {
-+	if (ret) {
- 		pr_err("RMPADJUST(%llx) failed: %llx\n", (u64)vmsa, ret);
- 		free_page((u64)vmsa);
- 		return ret;
+ void tsc_save_sched_clock_state(void)
+ {
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
+ 
+ 	cyc2ns_suspend = sched_clock();
+@@ -975,7 +975,7 @@ void tsc_restore_sched_clock_state(void)
+ 	unsigned long flags;
+ 	int cpu;
+ 
+-	if (!sched_clock_stable())
++	if (!static_branch_likely(&__use_tsc) && !sched_clock_stable())
+ 		return;
+ 
+ 	local_irq_save(flags);
 
 
