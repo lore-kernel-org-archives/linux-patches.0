@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA892698BE;
-	Tue,  8 Apr 2025 11:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0289F269885;
+	Tue,  8 Apr 2025 11:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113457; cv=none; b=Y+rRLsfQlnh0/PdiN+Ccz//7YQI7khziU7/jP1gdaEYFYSV7jztQdSU+IQuwevaMqbmFKGK46DgFh32nsJmTqav8ned/v0W+gVoapi+A/RLan4VUomZNiyGS/817lvm5nXUR1JOphgOXJiuDw4iarJu+ebvE37k+MeLel2XN/Kc=
+	t=1744113460; cv=none; b=hmuumU36rl0uAQ/j9IDSaCPtqKykj0EGv/0qVR0HQuN2k98Q9tpc1QLXMQ5MgjCS+GvDcLAQIML1VMLn8no3kRPdd3fCThCikEwyN2r9WBeI75HFSxrNOvar/1/kqKQVHQHpfljYO6XiCJ2pochw/JdVw+0RsDCAmr76GAWkgbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113457; c=relaxed/simple;
-	bh=2kK3MX/Nlq9S4dzIVGGkiWHToNFButd7TZHxjBI8JNk=;
+	s=arc-20240116; t=1744113460; c=relaxed/simple;
+	bh=6vrp2dhiWkBJA42bvN85osYUzuF4IQ6+np81/jrDekY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSwR+Dh3K0FL+GwduRVCQCjxtvKbH5KjtMiF90kIYEpnxUF0bqDbSxaIvPPORizVlWBeX6TD9rCOBabf4fzHcPnjcAsXF4/GXWwl+t0Kj9KZ547a6IsMdUcM46fPc9k4NV5c6nhAfP1+ptKKf/bk8N5QIrU8HjHN2J6rcGXl5d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4gAaJuE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKg7H+SK9BwAmTKN2IcNxQX6UW4Yh326SFns+N9SpvbolVRBZv7+B3NNIivRoHiFvGPjyx77HBxNHCNp6QnoRHuz6xjbXJLDbfaQkWTktgOunpDAyJZrJOYXHHlVuy3Rlp4rHPnrgFzxgybZDp5BXjZtjo5ZySZeHW1Kej2NO1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiHaTEfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4gAaJuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1958C4CEEA;
-	Tue,  8 Apr 2025 11:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiHaTEfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842E2C4CEE5;
+	Tue,  8 Apr 2025 11:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113457;
-	bh=2kK3MX/Nlq9S4dzIVGGkiWHToNFButd7TZHxjBI8JNk=;
+	s=korg; t=1744113459;
+	bh=6vrp2dhiWkBJA42bvN85osYUzuF4IQ6+np81/jrDekY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4gAaJuEIawrKrd7Tr1Fofyc6GvUt3GLRiVqQE9pqAkgSS/+tfscp0s0uk3+imQHI
-	 euuoM0P3aF0WRR2TCK6kNPCLh6cU6iSpnChmTmuk9OZ10tUEDgHQMEUuVtUmkEfv3f
-	 UHxd2xiILPe1z7YNKraaejGSjocc01bOZXuDdBlM=
+	b=ZiHaTEfeZVNS5xMvNA8uu5efHaXNoTMwyK1xmqDSnrMNCii0XMcmTRy1LCiXJZy+B
+	 ZuSLI9UIstUWuN22oZhErdNw8C3fen6RflGMCNgF2vAciK82apc5fkvdPePPxAPx+A
+	 1HaIlqgLu5zf13Sa4N3qMVsqI9sRvrAdk54Wv6N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Proske <email@matthias-proske.de>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Simon Tatham <anakin@pobox.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/268] wifi: brcmfmac: keep power during suspend if board requires it
-Date: Tue,  8 Apr 2025 12:49:38 +0200
-Message-ID: <20250408104833.053021454@linuxfoundation.org>
+Subject: [PATCH 6.6 168/268] affs: generate OFS sequence numbers starting at 1
+Date: Tue,  8 Apr 2025 12:49:39 +0200
+Message-ID: <20250408104833.080249349@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,98 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Proske <email@matthias-proske.de>
+From: Simon Tatham <anakin@pobox.com>
 
-[ Upstream commit 8c3170628a9ce24a59647bd24f897e666af919b8 ]
+[ Upstream commit e4cf8ec4de4e13f156c1d61977d282d90c221085 ]
 
-After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
-unless WOWL is used"), the wifi adapter by default is turned off on
-suspend and then re-probed on resume.
+If I write a file to an OFS floppy image, and try to read it back on
+an emulated Amiga running Workbench 1.3, the Amiga reports a disk
+error trying to read the file. (That is, it's unable to read it _at
+all_, even to copy it to the NIL: device. It isn't a matter of getting
+the wrong data and being unable to parse the file format.)
 
-This conflicts with some embedded boards that require to remain powered.
-They will fail on resume with:
+This is because the 'sequence number' field in the OFS data block
+header is supposed to be based at 1, but affs writes it based at 0.
+All three locations changed by this patch were setting the sequence
+number to a variable 'bidx' which was previously obtained by dividing
+a file position by bsize, so bidx will naturally use 0 for the first
+block. Therefore all three should add 1 to that value before writing
+it into the sequence number field.
 
-brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
-ieee80211 phy1: brcmf_bus_started: failed: -110
-ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
-brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
+With this change, the Amiga successfully reads the file.
 
-This commit checks for the Device Tree property 'cap-power-off-cards'.
-If this property is not set, it means that we do not have the capability
-to power off and should therefore remain powered.
+For data block reference: https://wiki.osdev.org/FFS_(Amiga)
 
-Signed-off-by: Matthias Proske <email@matthias-proske.de>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20250212185941.146958-2-email@matthias-proske.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Simon Tatham <anakin@pobox.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/affs/file.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index 7710367c319ec..14f3c4900f56c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -1167,6 +1167,7 @@ static int brcmf_ops_sdio_suspend(struct device *dev)
- 	struct brcmf_bus *bus_if;
- 	struct brcmf_sdio_dev *sdiodev;
- 	mmc_pm_flag_t sdio_flags;
-+	bool cap_power_off;
- 	int ret = 0;
- 
- 	func = container_of(dev, struct sdio_func, dev);
-@@ -1174,19 +1175,23 @@ static int brcmf_ops_sdio_suspend(struct device *dev)
- 	if (func->num != 1)
- 		return 0;
- 
-+	cap_power_off = !!(func->card->host->caps & MMC_CAP_POWER_OFF_CARD);
- 
- 	bus_if = dev_get_drvdata(dev);
- 	sdiodev = bus_if->bus_priv.sdio;
- 
--	if (sdiodev->wowl_enabled) {
-+	if (sdiodev->wowl_enabled || !cap_power_off) {
- 		brcmf_sdiod_freezer_on(sdiodev);
- 		brcmf_sdio_wd_timer(sdiodev->bus, 0);
- 
- 		sdio_flags = MMC_PM_KEEP_POWER;
--		if (sdiodev->settings->bus.sdio.oob_irq_supported)
--			enable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
--		else
--			sdio_flags |= MMC_PM_WAKE_SDIO_IRQ;
-+
-+		if (sdiodev->wowl_enabled) {
-+			if (sdiodev->settings->bus.sdio.oob_irq_supported)
-+				enable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
-+			else
-+				sdio_flags |= MMC_PM_WAKE_SDIO_IRQ;
-+		}
- 
- 		if (sdio_set_host_pm_flags(sdiodev->func1, sdio_flags))
- 			brcmf_err("Failed to set pm_flags %x\n", sdio_flags);
-@@ -1208,18 +1213,19 @@ static int brcmf_ops_sdio_resume(struct device *dev)
- 	struct brcmf_sdio_dev *sdiodev = bus_if->bus_priv.sdio;
- 	struct sdio_func *func = container_of(dev, struct sdio_func, dev);
- 	int ret = 0;
-+	bool cap_power_off = !!(func->card->host->caps & MMC_CAP_POWER_OFF_CARD);
- 
- 	brcmf_dbg(SDIO, "Enter: F%d\n", func->num);
- 	if (func->num != 2)
- 		return 0;
- 
--	if (!sdiodev->wowl_enabled) {
-+	if (!sdiodev->wowl_enabled && cap_power_off) {
- 		/* bus was powered off and device removed, probe again */
- 		ret = brcmf_sdiod_probe(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to probe device on resume\n");
- 	} else {
--		if (sdiodev->settings->bus.sdio.oob_irq_supported)
-+		if (sdiodev->wowl_enabled && sdiodev->settings->bus.sdio.oob_irq_supported)
- 			disable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
- 
- 		brcmf_sdiod_freezer_off(sdiodev);
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index 04c018e196028..8fd1a7c5958a8 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -597,7 +597,7 @@ affs_extent_file_ofs(struct inode *inode, u32 newsize)
+ 		BUG_ON(tmp > bsize);
+ 		AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 		AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++		AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
+ 		affs_fix_checksum(sb, bh);
+ 		bh->b_state &= ~(1UL << BH_New);
+@@ -748,7 +748,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		if (buffer_new(bh)) {
+ 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(bsize);
+ 			AFFS_DATA_HEAD(bh)->next = 0;
+ 			bh->b_state &= ~(1UL << BH_New);
+@@ -782,7 +782,7 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
+ 		if (buffer_new(bh)) {
+ 			AFFS_DATA_HEAD(bh)->ptype = cpu_to_be32(T_DATA);
+ 			AFFS_DATA_HEAD(bh)->key = cpu_to_be32(inode->i_ino);
+-			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx);
++			AFFS_DATA_HEAD(bh)->sequence = cpu_to_be32(bidx + 1);
+ 			AFFS_DATA_HEAD(bh)->size = cpu_to_be32(tmp);
+ 			AFFS_DATA_HEAD(bh)->next = 0;
+ 			bh->b_state &= ~(1UL << BH_New);
 -- 
 2.39.5
 
