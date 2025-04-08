@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAAE26A0A5;
-	Tue,  8 Apr 2025 12:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DE326A0AA;
+	Tue,  8 Apr 2025 12:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114087; cv=none; b=ReBYl0leD9ay9+ES4EFh5OLNk2KHG0tRWfQYmPLDfZYSSXQ47OLuMpNSEITMWUwWiUTzgLqUCNJtSRY2S6sGafL7x2rpJX/P5Qti09w+TOfeOKDEqqkzE/DYXIk2K4vBPOxVQH/I/+vWUHTdpa8QE6so2hCzUZPiHYKFsiCH4yk=
+	t=1744114089; cv=none; b=Rdkh6nuvOEcfj64CGKzfMjKD7r8NenhTfO0RmvpWSGNzvv4G+KNcW6Dr3m/lQkn5aZmC2GhVTKxUSM6r+4mrrukzyxq1aqPbdw27LHzyersyKIar2Kru6wQbXrj52vXX927P6dtzJUxymJ2KyOPK1diec9myusJYGOlFPE3oIzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114087; c=relaxed/simple;
-	bh=ZLMAew5PuoU9PKBzTgzHQnnnotRHV1eDpReQE7ObaOA=;
+	s=arc-20240116; t=1744114089; c=relaxed/simple;
+	bh=ESV4J9EUcV12vSkjQUPfCZ0Nb3wdkhzc8Zy+wAZJ1wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjYQ7CxeCDDEPHPvmCmPDCdyj5yF/ZHiEo4iciPHy+fZqgdJM9g0dgan4opnVBH/8hB0DVrg+cse8NvmV/Bpzwbi8/FhVwBjrZvYlESK1flxvNtkscLfvRcbT51tTriN8wohobGntI7mkdUTL1qF/Ffd3rh7vWiwQnGyedQ6KQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIF5cqit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSadTPICVy0g9jU7T1bHD7HOy3oElB870isJeQ8g60P2YTPtinIpH2qkeGK4g5ZD2slq/hycioXwMc9GX2HML5iH3pjjF4RFTuKS/BZkOdhzZFgIoET4rvsOBRrx/TWYFfw9TLg2tLndcO+ytpXqa6vug3x4wFJJpTwO+o0YTSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2I2WLkm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIF5cqit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9CDC4CEE5;
-	Tue,  8 Apr 2025 12:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2I2WLkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC28C4CEE5;
+	Tue,  8 Apr 2025 12:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114086;
-	bh=ZLMAew5PuoU9PKBzTgzHQnnnotRHV1eDpReQE7ObaOA=;
+	s=korg; t=1744114089;
+	bh=ESV4J9EUcV12vSkjQUPfCZ0Nb3wdkhzc8Zy+wAZJ1wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIF5cqitW7cGLMNJvVOec+VMm7yDxOmZRTj4s3U0zuszdJFmX8P496mbMNAN2EI6b
-	 paeWZplpHyHGhgIfFdePR+Z23LASC5RhuD0co155/e84cPe54YdieJWNi9L2pAvD/Q
-	 9c3MJB3JmR7YV7edpOUwNCN9Wz2aupAMQsyuIuR8=
+	b=U2I2WLkmtso9PziNCfe+nWq0YspObZwvWpw9x3iZAKOLWQ+Ghcltxgs7jnMbaDZVz
+	 40z5NnGnWWcIqf3mPNMoMLhxmd/YOVCOcsKJMz5egKsLexNK80qQLYAb7HX1WhsXEI
+	 MmTreT+FGOzHZ30dhIPSh9bVY3V4HpioDKU7WmW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Tatham <anakin@pobox.com>,
-	David Sterba <dsterba@suse.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 131/154] affs: dont write overlarge OFS data block size fields
-Date: Tue,  8 Apr 2025 12:51:12 +0200
-Message-ID: <20250408104819.508960288@linuxfoundation.org>
+Subject: [PATCH 5.4 132/154] sched/deadline: Use online cpus for validating runtime
+Date: Tue,  8 Apr 2025 12:51:13 +0200
+Message-ID: <20250408104819.544130752@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Tatham <anakin@pobox.com>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
+[ Upstream commit 14672f059d83f591afb2ee1fff56858efe055e5a ]
 
-If a data sector on an OFS floppy contains a value > 0x1e8 (the
-largest amount of data that fits in the sector after its header), then
-an Amiga reading the file can return corrupt data, by taking the
-overlarge size at its word and reading past the end of the buffer it
-read the disk sector into!
+The ftrace selftest reported a failure because writing -1 to
+sched_rt_runtime_us returns -EBUSY. This happens when the possible
+CPUs are different from active CPUs.
 
-The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
-the new size field for a data block was computed by adding the amount
-of data currently being written (into the block) to the existing value
-of the size field. This is correct if you're extending the file at the
-end, but if you seek backwards in the file and overwrite _existing_
-data, it can lead to the size field being larger than the maximum
-legal value.
+Active CPUs are part of one root domain, while remaining CPUs are part
+of def_root_domain. Since active cpumask is being used, this results in
+cpus=0 when a non active CPUs is used in the loop.
 
-This commit changes the calculation so that it sets the size field to
-the max of its previous size and the position within the block that we
-just wrote up to.
+Fix it by looping over the online CPUs instead for validating the
+bandwidth calculations.
 
-Signed-off-by: Simon Tatham <anakin@pobox.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://lore.kernel.org/r/20250306052954.452005-2-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/affs/file.c b/fs/affs/file.c
-index 6dae4ca09be5f..199b92f6a9941 100644
---- a/fs/affs/file.c
-+++ b/fs/affs/file.c
-@@ -724,7 +724,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		tmp = min(bsize - boff, to - from);
- 		BUG_ON(boff + tmp > bsize || tmp > bsize);
- 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
--		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
-+		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
-+			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
- 		affs_fix_checksum(sb, bh);
- 		mark_buffer_dirty_inode(bh, inode);
- 		written += tmp;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index ba3d7c223999e..023d52d2a0f10 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2513,7 +2513,7 @@ int sched_dl_global_validate(void)
+ 	 * cycling on root_domains... Discussion on different/better
+ 	 * solutions is welcome!
+ 	 */
+-	for_each_possible_cpu(cpu) {
++	for_each_online_cpu(cpu) {
+ 		rcu_read_lock_sched();
+ 		dl_b = dl_bw_of(cpu);
+ 		cpus = dl_bw_cpus(cpu);
 -- 
 2.39.5
 
