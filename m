@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228CE227EBD;
-	Tue,  8 Apr 2025 11:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E5F227EBD;
+	Tue,  8 Apr 2025 11:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112624; cv=none; b=p+HnbLgUr6vjn8lhiEfa8Phriu26nNOiIUGaiMOcMaIslaVHLTVVG3aWVoHE2snt2X0DszN8vS9PwZBhH8srsUOPorIacwmwAd47JyZCb+rF2eGZVrwprM1T6ZzUNSVnxttKvg+Qd746HGT+lXjBZT8p8knjqWGv5eeBHkAp6wk=
+	t=1744112626; cv=none; b=UQbrTxdqEmDZybVMro7vecdApTtrPtfHc+OptmIbfF0Rs6QDOYq+iKvyovpLFKc2lIKPHIMZwAwKGboXy7BFGmJalDm9wBewzgLRDr7fZB+5TTjeRFJnEvVu257en/BMkO2vlOr1B4zAt90a9HM4s8QXCyZQmMalm0YyoN8IOUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112624; c=relaxed/simple;
-	bh=SAnlpREnCpEN7fLoQ4ZqC851Rz1wrU4QTBGgm92Onhg=;
+	s=arc-20240116; t=1744112626; c=relaxed/simple;
+	bh=LdMjE7qqXEAjuTFWu7GfD2z2sbF5r8u7VAxKpbAnOjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnJGO4DaBbt21/ZJSXYZieq+4xy1A1wSacMT+8gxQCKqlrvjC5icRXRkLEruXY+LU3GwiXphgO32dypajGjvpSqyLRGGMfKGGa5CqC670XFrhKCrSXM+KRUqLGid8ConA9tfM2l4BHFTelTmnjPM8ID40BcKJF0yqUCt/LAUxFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmlZ4MCP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cJsrWbgQS6cdvhWZuNCGGl590o4+PKIYR7+2OKty0k9dnCdfypvcCpbvCZMHcaIijOye5+kOnuK48WgC1+4JaXGc2c/t02r7a8QPImzlPUFFOVVRxmAPjPOcznvtRsmSp1aiXwvzLppEkAMRPtaoTwUMylLFfb9/m8h2c3j55vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wq2i1HKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmlZ4MCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6859C4CEE5;
-	Tue,  8 Apr 2025 11:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wq2i1HKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFC2C4CEE5;
+	Tue,  8 Apr 2025 11:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112624;
-	bh=SAnlpREnCpEN7fLoQ4ZqC851Rz1wrU4QTBGgm92Onhg=;
+	s=korg; t=1744112626;
+	bh=LdMjE7qqXEAjuTFWu7GfD2z2sbF5r8u7VAxKpbAnOjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmlZ4MCPEwjx8VpVlw+c24w6nBeyMuBcoL7RlKf2N1vtHhY/bLcr8J68lvyuljTFn
-	 kAbHChcbKlOz6ht21c1ksx5EaqaYFd2xXPgnIA8XJFN3hxbUm+y723Ng7GY0Qm7U7l
-	 aYRubf0L7goxSuEi2i2Xi8fmSlDsRdeA0xxuPgo4=
+	b=wq2i1HKL40/jl6OoSggG37yzu3QQRAm0HA0dwVQamF9S37Hx1HVzN8eWECLyO6XGU
+	 33IgHELrTYwt0rDzje+AY/3dgQ7KFOxhJc3AyVvzTPylp1LvTNNZBgPSm/hP8tVY3m
+	 0/a55H/r4BBFySrc07tQPa4iIP2papwKjt4EM4MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Gary Wang <gary.c.wang@intel.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/279] EDAC/ie31200: Fix the error path order of ie31200_init()
-Date: Tue,  8 Apr 2025 12:48:41 +0200
-Message-ID: <20250408104830.066394822@linuxfoundation.org>
+Subject: [PATCH 5.15 139/279] thermal: int340x: Add NULL check for adev
+Date: Tue,  8 Apr 2025 12:48:42 +0200
+Message-ID: <20250408104830.092814448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -46,72 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 231e341036d9988447e3b3345cf741a98139199e ]
+[ Upstream commit 2542a3f70e563a9e70e7ded314286535a3321bdb ]
 
-The error path order of ie31200_init() is incorrect, fix it.
+Not all devices have an ACPI companion fwnode, so adev might be NULL.
+This is similar to the commit cd2fd6eab480
+("platform/x86: int3472: Check for adev == NULL").
 
-Fixes: 709ed1bcef12 ("EDAC/ie31200: Fallback if host bridge device is already initialized")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Gary Wang <gary.c.wang@intel.com>
-Link: https://lore.kernel.org/r/20250310011411.31685-4-qiuxu.zhuo@intel.com
+Add a check for adev not being set and return -ENODEV in that case to
+avoid a possible NULL pointer deref in int3402_thermal_probe().
+
+Note, under the same directory, int3400_thermal_probe() has such a
+check.
+
+Fixes: 77e337c6e23e ("Thermal: introduce INT3402 thermal driver")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20250313043611.1212116-1-chenyuan0y@gmail.com
+[ rjw: Subject edit, added Fixes: ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/ie31200_edac.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/thermal/intel/int340x_thermal/int3402_thermal.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
-index ead3646294b68..acb011cfd8c4f 100644
---- a/drivers/edac/ie31200_edac.c
-+++ b/drivers/edac/ie31200_edac.c
-@@ -607,7 +607,7 @@ static int __init ie31200_init(void)
+diff --git a/drivers/thermal/intel/int340x_thermal/int3402_thermal.c b/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
+index 43fa351e2b9ec..b7fdf25bfd237 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3402_thermal.c
+@@ -45,6 +45,9 @@ static int int3402_thermal_probe(struct platform_device *pdev)
+ 	struct int3402_thermal_data *d;
+ 	int ret;
  
- 	pci_rc = pci_register_driver(&ie31200_driver);
- 	if (pci_rc < 0)
--		goto fail0;
-+		return pci_rc;
- 
- 	if (!mci_pdev) {
- 		ie31200_registered = 0;
-@@ -618,11 +618,13 @@ static int __init ie31200_init(void)
- 			if (mci_pdev)
- 				break;
- 		}
++	if (!adev)
++		return -ENODEV;
 +
- 		if (!mci_pdev) {
- 			edac_dbg(0, "ie31200 pci_get_device fail\n");
- 			pci_rc = -ENODEV;
--			goto fail1;
-+			goto fail0;
- 		}
-+
- 		pci_rc = ie31200_init_one(mci_pdev, &ie31200_pci_tbl[i]);
- 		if (pci_rc < 0) {
- 			edac_dbg(0, "ie31200 init fail\n");
-@@ -630,12 +632,12 @@ static int __init ie31200_init(void)
- 			goto fail1;
- 		}
- 	}
--	return 0;
+ 	if (!acpi_has_method(adev->handle, "_TMP"))
+ 		return -ENODEV;
  
-+	return 0;
- fail1:
--	pci_unregister_driver(&ie31200_driver);
--fail0:
- 	pci_dev_put(mci_pdev);
-+fail0:
-+	pci_unregister_driver(&ie31200_driver);
- 
- 	return pci_rc;
- }
 -- 
 2.39.5
 
