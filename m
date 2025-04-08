@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D262C268FE7;
-	Tue,  8 Apr 2025 12:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A9C374D1;
+	Tue,  8 Apr 2025 12:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115583; cv=none; b=CW5/wy6wm+e8ZEPT3K0yJtBHkNEQc0fTgP82uJqSp6lXkd0sUpR0t2IqxCzPV80ciyLLDZhGOMJgEO0pYPpgmSVQzUq72O2A0E5n84YaOG/WTr+SP0Zp7ROW3w/B/zzCVAhbMYdvrLI8h4XGK0g6CN1mj+0cXwjzsJ/+l/muKZM=
+	t=1744115586; cv=none; b=QwnNBHZFFf/hZhUh+df3rf7biV17zxtZ6qT6Ls8G8xhX3GHipkPSq7s7Owc4/kwI+KsEUVY0hwPShYcU5pIBKdlAUhjc+z7HUYIkPCFgfo0dOo3JhMtZ6j9jFN6bWeU+9H5ct5JnZ2cAQ0x6/1dMUBP0jsnfygmjE1PF19LUOp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115583; c=relaxed/simple;
-	bh=Cangev6ZxXdYDUno4mObBHEpdHTdg+1uJYT7p03/o1M=;
+	s=arc-20240116; t=1744115586; c=relaxed/simple;
+	bh=N0K2GsOsrflpONmz3DEgh8BXkJU/fGPm/zhgH9SLDAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E+ZUFa1o2Oiu8o6cudz8ZnVxgofLSwz8e/QO5A2JzHy3EgClD6nWB1b5BgG/7I3EmiRUQfZuL9zwrwvvZKcwkktxEsQRRHWCXVdkLgDzt3vXGDlX6DrEk04krQ7AIVGU6wZZvh+fBD3puqUtii0vmrS+jhPcpE2tLiRwGInNyQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T92MMTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiXWpvKg71xi2QPL9r3xNvUhqgNrDsbW6PjL6jkuV5nJyzGwdfI5K/veKNbNmY7cBok2zKWwWnMxp3XJ3Df6aPhtlYuwpPibhFukLo1NROSQkASRh1MsNoQiLFHrkfIV7PT0wZ+V72oGiA0e4KN197TJUPuzVShZXMLg2evlPBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxfnP62C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T92MMTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DBCC4CEED;
-	Tue,  8 Apr 2025 12:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxfnP62C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F155C4CEE5;
+	Tue,  8 Apr 2025 12:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115583;
-	bh=Cangev6ZxXdYDUno4mObBHEpdHTdg+1uJYT7p03/o1M=;
+	s=korg; t=1744115586;
+	bh=N0K2GsOsrflpONmz3DEgh8BXkJU/fGPm/zhgH9SLDAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0T92MMTXdcC8Tq0TINza9wZsrW3e4jB8Ut/Gg8M2pnH+8+6HCwIb1cWpJ62QDT31d
-	 DyNaXFV5DnCJTmxRT6jrzYJPf9Fs3CmG+NfzEpwKBb7JlEl0czYjAR5uLOdrXP0+Nt
-	 AWMrZNOw9dgxFTLTw/LyIP/J6MFES51yVaxeOydI=
+	b=DxfnP62CqPK6CEVz8pXF3bR3Bl9T/bW4802lqsGzfA5Rmwz7fpsUM5pMMeTcPRF18
+	 Hevltoa8bUnn6FFNBpgoqGiSScND6xfziaU1h5mBXzvtXrqL30tK6yyhf6CmxKh8Iu
+	 8MZsOfZ6dDtaH8VWOMieWWRFG+5X7ZAUHy2VtdtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Harry Wentland <hwentlan@amd.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
+	Hermes Wu <Hermes.wu@ite.com.tw>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/204] drm/dp_mst: Fix drm RAD print
-Date: Tue,  8 Apr 2025 12:49:18 +0200
-Message-ID: <20250408104821.149574387@linuxfoundation.org>
+Subject: [PATCH 6.1 029/204] drm/bridge: it6505: fix HDCP V match check is not performed correctly
+Date: Tue,  8 Apr 2025 12:49:19 +0200
+Message-ID: <20250408104821.181121356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -48,97 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Hermes Wu <Hermes.wu@ite.com.tw>
 
-[ Upstream commit 6bbce873a9c97cb12f5455c497be279ac58e707f ]
+[ Upstream commit a5072fc77fb9e38fa9fd883642c83c3720049159 ]
 
-[Why]
-The RAD of sideband message printed today is incorrect.
-For RAD stored within MST branch
-- If MST branch LCT is 1, it's RAD array is untouched and remained as 0.
-- If MST branch LCT is larger than 1, use nibble to store the up facing
-  port number in cascaded sequence as illustrated below:
+Fix a typo where V compare incorrectly compares av[] with av[] itself,
+which can result in HDCP failure.
 
-  u8 RAD[0] = (LCT_2_UFP << 4) | LCT_3_UFP
-     RAD[1] = (LCT_4_UFP << 4) | LCT_5_UFP
-     ...
+The loop of V compare is expected to iterate for 5 times
+which compare V array form av[0][] to av[4][].
+It should check loop counter reach the last statement "i == 5"
+before return true
 
-In drm_dp_mst_rad_to_str(), it wrongly to use BIT_MASK(4) to fetch the port
-number of one nibble.
-
-[How]
-Adjust the code by:
-- RAD array items are valuable only for LCT >= 1.
-- Use 0xF as the mask to replace BIT_MASK(4)
-
-V2:
-- Document how RAD is constructed (Imre)
-
-V3:
-- Adjust the comment for rad[] so kdoc formats it properly (Lyude)
-
-Fixes: 2f015ec6eab6 ("drm/dp_mst: Add sideband down request tracing + selftests")
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Harry Wentland <hwentlan@amd.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250113091100.3314533-2-Wayne.Lin@amd.com
+Fixes: 0989c02c7a5c ("drm/bridge: it6505: fix HDCP CTS compare V matching")
+Signed-off-by: Hermes Wu <Hermes.wu@ite.com.tw>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250121-fix-hdcp-v-comp-v4-1-185f45c728dc@ite.com.tw
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c | 8 ++++----
- include/drm/display/drm_dp_mst_helper.h       | 7 +++++++
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_mst_topology.c b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-index 6f41c752844b0..a4d84a2c8b4ec 100644
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -178,13 +178,13 @@ static int
- drm_dp_mst_rad_to_str(const u8 rad[8], u8 lct, char *out, size_t len)
- {
- 	int i;
--	u8 unpacked_rad[16];
-+	u8 unpacked_rad[16] = {};
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 7c3bd539655b8..cc2bf9c143733 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -2030,12 +2030,13 @@ static bool it6505_hdcp_part2_ksvlist_check(struct it6505 *it6505)
+ 			continue;
+ 		}
  
--	for (i = 0; i < lct; i++) {
-+	for (i = 1; i < lct; i++) {
- 		if (i % 2)
--			unpacked_rad[i] = rad[i / 2] >> 4;
-+			unpacked_rad[i] = rad[(i - 1) / 2] >> 4;
- 		else
--			unpacked_rad[i] = rad[i / 2] & BIT_MASK(4);
-+			unpacked_rad[i] = rad[(i - 1) / 2] & 0xF;
+-		for (i = 0; i < 5; i++) {
++		for (i = 0; i < 5; i++)
+ 			if (bv[i][3] != av[i][0] || bv[i][2] != av[i][1] ||
+-			    av[i][1] != av[i][2] || bv[i][0] != av[i][3])
++			    bv[i][1] != av[i][2] || bv[i][0] != av[i][3])
+ 				break;
+ 
+-			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d, %d", retry, i);
++		if (i == 5) {
++			DRM_DEV_DEBUG_DRIVER(dev, "V' all match!! %d", retry);
+ 			return true;
+ 		}
  	}
- 
- 	/* TODO: Eventually add something to printk so we can format the rad
-diff --git a/include/drm/display/drm_dp_mst_helper.h b/include/drm/display/drm_dp_mst_helper.h
-index 68074b13837b5..642995704b69c 100644
---- a/include/drm/display/drm_dp_mst_helper.h
-+++ b/include/drm/display/drm_dp_mst_helper.h
-@@ -220,6 +220,13 @@ struct drm_dp_mst_branch {
- 	 */
- 	struct list_head destroy_next;
- 
-+	/**
-+	 * @rad: Relative Address of the MST branch.
-+	 * For &drm_dp_mst_topology_mgr.mst_primary, it's rad[8] are all 0,
-+	 * unset and unused. For MST branches connected after mst_primary,
-+	 * in each element of rad[] the nibbles are ordered by the most
-+	 * signifcant 4 bits first and the least significant 4 bits second.
-+	 */
- 	u8 rad[8];
- 	u8 lct;
- 	int num_ports;
 -- 
 2.39.5
 
