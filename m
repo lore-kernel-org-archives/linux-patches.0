@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1A626561C;
-	Tue,  8 Apr 2025 11:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7507D266EFE;
+	Tue,  8 Apr 2025 11:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111445; cv=none; b=uQ/bZKK3XU7dnDJz9EbTAxZRU5ujmXq/MtGRWM0EVlIzGr4W3TGqR/qBdgSFc/1FrDvC33/XWcMHLRwUEf7sbkprULlu5HSe/m099ueiZI8RjBEcJQZ15SHoJLAkhcGD3kEwv61LxjpnVQZ7lEtw5zbZ6ZcHgu9ZAQdPj/X16Kw=
+	t=1744111448; cv=none; b=Y/lTIOLeN++0yd8REHhBdyluk5Z3+riRN0CZhV46Dwkc1kFdhbOMh0qX5XDl9rphjNWQZFfWZvh+umnmaIgYmB7z661u7pETy/FRjwIBpqyw3KI2N2wvlW9oklutv1ynLAVQyiEs0MssQcZYy8wsY4bEugpQhCXJDnMovU1hZ4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111445; c=relaxed/simple;
-	bh=0o8yMFaeyxpmaKPUg6PBm/DcuW6dx2CKcFb10tOwi94=;
+	s=arc-20240116; t=1744111448; c=relaxed/simple;
+	bh=oysu/FGBet9ZFM5JzlgZgpk9Pw4opxnrWQV6IKo6Kxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHxgovk3IeM+ujEjjqOd/MA0iNlaBvQYASxXxSPMvpMXyDJoIkEDDVw7XyFdtJK2YeVfk1UpRJXOXuFrYuSXwRNSfUCKO6H/YrGoiGf5gt0YatWgL7CFQ2tvqfjevoovrRCE58r+gj56Nknc4uus6QKwiisNqVwQ1QqWSt6KROA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oN+YMZ51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=II8QC0RnWV8xDNxT9nCvVEwuBEjgLEZW4FCvMOhuXyZOXW4BMsml2Fkhs45ZKadR7UYBUecl+Yhl8X8p31MdH321ojHPoBytvlGdsnQZdjt99l2agfnYMBm3qnvYFCiINGXqBfTu8Nzich7WZ0yZfFG0dCtkk5qRqZuFA+yfCEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxCGlRfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oN+YMZ51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21ED7C4CEE5;
-	Tue,  8 Apr 2025 11:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxCGlRfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03748C4CEE5;
+	Tue,  8 Apr 2025 11:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111445;
-	bh=0o8yMFaeyxpmaKPUg6PBm/DcuW6dx2CKcFb10tOwi94=;
+	s=korg; t=1744111448;
+	bh=oysu/FGBet9ZFM5JzlgZgpk9Pw4opxnrWQV6IKo6Kxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oN+YMZ51MgXu5YGSieeUAbwcbkR/rb7Ps+uSIwLdOF/fzkG9uA7Np9LVa+snqilbd
-	 CxoLcPApfAIK+EER6llP1QoV1ymCvrUwuuVKB4LL6Fohey5zB5zX1jzJ/TBU4xZcvR
-	 YsI1FzUua2RilUR/4t3eTrf7rJTiamt08Y9zigRs=
+	b=nxCGlRfxEmRCus6G/6Syc4Bk3UcxLKUyvrRfDtTyf9RPyBn0fMGdg+F4Nz7sIJ7Td
+	 qmy0DZEjJHkzZyWsZVu5hfMK7yrW5D/uMMYzW2VDadju3pD0+RR7piiNY5pp8cIFpc
+	 7wkxU+s0qumOBfuQDPedPI6AMerVobTtCqafm6QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Utku Selen <ali.utku.selen@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Christoph Winklhofer <cj.winklhofer@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 434/731] perf: Always feature test reallocarray
-Date: Tue,  8 Apr 2025 12:45:31 +0200
-Message-ID: <20250408104924.368275271@linuxfoundation.org>
+Subject: [PATCH 6.14 435/731] w1: fix NULL pointer dereference in probe
+Date: Tue,  8 Apr 2025 12:45:32 +0200
+Message-ID: <20250408104924.391192598@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,84 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 4c4c0724d6521a8092b7c16f8f210c5869d95b17 ]
+[ Upstream commit 0dd6770a72f138dabea9eae87f3da6ffa68f0d06 ]
 
-This is also used in util/comm.c now, so instead of selectively doing
-the feature test, always do it. If it's ever used anywhere else it's
-less likely to cause another build failure.
+The w1_uart_probe() function calls w1_uart_serdev_open() (which includes
+devm_serdev_device_open()) before setting the client ops via
+serdev_device_set_client_ops(). This ordering can trigger a NULL pointer
+dereference in the serdev controller's receive_buf handler, as it assumes
+serdev->ops is valid when SERPORT_ACTIVE is set.
 
-This doesn't remove the need to manually include libc_compat.h, and
-missing that will still cause an error for glibc < 2.26. There isn't a
-way to fix that without poisoning reallocarray like libbpf did, but that
-has other downsides like making memory debugging tools less useful. So
-for Perf keep it like this and we'll have to fix up any missed includes.
+This is similar to the issue fixed in commit 5e700b384ec1
+("platform/chrome: cros_ec_uart: properly fix race condition") where
+devm_serdev_device_open() was called before fully initializing the
+device.
 
-Fixes the following build error:
+Fix the race by ensuring client ops are set before enabling the port via
+w1_uart_serdev_open().
 
-  util/comm.c:152:31: error: implicit declaration of function
-                      'reallocarray' [-Wimplicit-function-declaration]
-  152 |                         tmp = reallocarray(comm_strs->strs,
-      |                               ^~~~~~~~~~~~
-
-Fixes: 13ca628716c6 ("perf comm: Add reference count checking to 'struct comm_str'")
-Reported-by: Ali Utku Selen <ali.utku.selen@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250129154405.777533-1-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: a3c08804364e ("w1: add UART w1 bus driver")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Acked-by: Christoph Winklhofer <cj.winklhofer@gmail.com>
+Link: https://lore.kernel.org/r/20250111181803.2283611-1-chenyuan0y@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config | 10 ++++------
- tools/perf/util/comm.c     |  2 ++
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/w1/masters/w1-uart.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index a148ca9efca91..23dbb6bb91cf8 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -497,13 +497,14 @@ ifeq ($(feature-setns), 1)
-   $(call detected,CONFIG_SETNS)
- endif
+diff --git a/drivers/w1/masters/w1-uart.c b/drivers/w1/masters/w1-uart.c
+index a31782e56ba75..c87eea3478067 100644
+--- a/drivers/w1/masters/w1-uart.c
++++ b/drivers/w1/masters/w1-uart.c
+@@ -372,11 +372,11 @@ static int w1_uart_probe(struct serdev_device *serdev)
+ 	init_completion(&w1dev->rx_byte_received);
+ 	mutex_init(&w1dev->rx_mutex);
  
-+ifeq ($(feature-reallocarray), 0)
-+  CFLAGS += -DCOMPAT_NEED_REALLOCARRAY
-+endif
-+
- ifdef CORESIGHT
-   $(call feature_check,libopencsd)
-   ifeq ($(feature-libopencsd), 1)
-     CFLAGS += -DHAVE_CSTRACE_SUPPORT $(LIBOPENCSD_CFLAGS)
--    ifeq ($(feature-reallocarray), 0)
--      CFLAGS += -DCOMPAT_NEED_REALLOCARRAY
--    endif
-     LDFLAGS += $(LIBOPENCSD_LDFLAGS)
-     EXTLIBS += $(OPENCSDLIBS)
-     $(call detected,CONFIG_LIBOPENCSD)
-@@ -1103,9 +1104,6 @@ ifndef NO_AUXTRACE
-   ifndef NO_AUXTRACE
-     $(call detected,CONFIG_AUXTRACE)
-     CFLAGS += -DHAVE_AUXTRACE_SUPPORT
--    ifeq ($(feature-reallocarray), 0)
--      CFLAGS += -DCOMPAT_NEED_REALLOCARRAY
--    endif
-   endif
- endif
++	serdev_device_set_drvdata(serdev, w1dev);
++	serdev_device_set_client_ops(serdev, &w1_uart_serdev_ops);
+ 	ret = w1_uart_serdev_open(w1dev);
+ 	if (ret < 0)
+ 		return ret;
+-	serdev_device_set_drvdata(serdev, w1dev);
+-	serdev_device_set_client_ops(serdev, &w1_uart_serdev_ops);
  
-diff --git a/tools/perf/util/comm.c b/tools/perf/util/comm.c
-index 49b79cf0c5cc5..8aa456d7c2cd2 100644
---- a/tools/perf/util/comm.c
-+++ b/tools/perf/util/comm.c
-@@ -5,6 +5,8 @@
- #include <internal/rc_check.h>
- #include <linux/refcount.h>
- #include <linux/zalloc.h>
-+#include <tools/libc_compat.h> // reallocarray
-+
- #include "rwsem.h"
- 
- DECLARE_RC_STRUCT(comm_str) {
+ 	return w1_add_master_device(&w1dev->bus);
+ }
 -- 
 2.39.5
 
