@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A4E22257E;
-	Tue,  8 Apr 2025 11:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FF326A0E8;
+	Tue,  8 Apr 2025 11:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113585; cv=none; b=Y/HqMNJXE0edJCfXtjgOh3QO+GochRHhQF38UI6LvSRq9yhuJcSc93cfMcExhk5crHsI3dyymA4taPZD5uKkmFsuMsiQNxzGNzFb53AdmrZJ+jNME5dkVt1x2WnGdVR+5SVY5lg+Kp9IDvYhXns7FLHdHCIaZk/4NQG/5TwRUS8=
+	t=1744113588; cv=none; b=b+UnmUleCDG12WeVcFZMJjFjnv+AX8ZNiBylXfgG+ZMyNXSZh24lwULypKmXOnzwk4JcH9yYWBCviVBzRfAF5iESzXWH8joR/GKLSfU7IBqVN7RDPD2/cuFiyDBJzONQS0TWJRyaWZG729V20dv+A3jPY0jNuxiblwiLcWeXhvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113585; c=relaxed/simple;
-	bh=m+OmsdV4H7nGiqgsg+HNq6JHHXQF/lSUOIAT/RxgUVw=;
+	s=arc-20240116; t=1744113588; c=relaxed/simple;
+	bh=gr4jgN5UeIHjaWwkgrgOhE9iqaSYIuP39Im5A+fIoXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6QG6UwkQREJZ1JFfuQ579iJHgpzkjiebMX1guGk6K+Cj2puT+qhdxDDYlhniTudZHQ7yEjBmZrzARl//tKotcoTZPulVwFJYTz/i2XvB2mum98j/Ho9cBt0luD/Ix59Zkd8fEYAzPLI5ZdP9pnPhBf29F09dEZl3GZA6qdHLds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1MmEfmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iOYly8Z63r73ZR2VmS4hmttkihfJgF1ZHrAaR8GV5kjlDIaCMP+gZqSd6dCXW3tg8HymAzOnE03w4f56wpsrvsdeRpE6+zEGnEJIWJNq50E5WSVYT0tngq5Bn0xrqGz32WCeIZhdFJBkhwK89Ep6U+JNjE1K1wyTDbllAcX7xaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuX6osgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1MmEfmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BA5C4CEE7;
-	Tue,  8 Apr 2025 11:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuX6osgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED48EC4CEE7;
+	Tue,  8 Apr 2025 11:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113585;
-	bh=m+OmsdV4H7nGiqgsg+HNq6JHHXQF/lSUOIAT/RxgUVw=;
+	s=korg; t=1744113588;
+	bh=gr4jgN5UeIHjaWwkgrgOhE9iqaSYIuP39Im5A+fIoXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1MmEfmXsTtZcZPwg2Lah0Q/9gl12JQagdzw3UyyzcP5+noGW8z8Se/kwReLlgkbW
-	 QWIVge2qoxrji2rHqKOazZLke4ZmlDy/21OrFZvTy9lxtTQsFnWmu1LwFWpVJkF2Cp
-	 wYu/atANzxDWmhlv4Xym49CG+n1IcJDuG6Qxdzm0=
+	b=tuX6osgldEWqykdynzk1RhN2Pkh/c9jpY4NrC+O6fmuuIpY5iEqrJXN+cx+IQmE3G
+	 AJPwauGEkBKhn4WvecRJk9CmOMRQjgDsjHUX24vjeBtoffMMpUb1vMjOyHr3SQSsUe
+	 LG6vwnuX1vPy3aDdemHyTIwguDIArxKWT9sCC64I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Fernando Fernandez Mancera <ffmancera@riseup.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 214/268] netfilter: nft_tunnel: fix geneve_opt type confusion addition
-Date: Tue,  8 Apr 2025 12:50:25 +0200
-Message-ID: <20250408104834.353735435@linuxfoundation.org>
+Subject: [PATCH 6.6 215/268] ipv6: fix omitted netlink attributes when using RTEXT_FILTER_SKIP_STATS
+Date: Tue,  8 Apr 2025 12:50:26 +0200
+Message-ID: <20250408104834.378875903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -51,86 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Fernando Fernandez Mancera <ffmancera@riseup.net>
 
-[ Upstream commit 1b755d8eb1ace3870789d48fbd94f386ad6e30be ]
+[ Upstream commit 7ac6ea4a3e0898db76aecccd68fb2c403eb7d24e ]
 
-When handling multiple NFTA_TUNNEL_KEY_OPTS_GENEVE attributes, the
-parsing logic should place every geneve_opt structure one by one
-compactly. Hence, when deciding the next geneve_opt position, the
-pointer addition should be in units of char *.
+Using RTEXT_FILTER_SKIP_STATS is incorrectly skipping non-stats IPv6
+netlink attributes on link dump. This causes issues on userspace tools,
+e.g iproute2 is not rendering address generation mode as it should due
+to missing netlink attribute.
 
-However, the current implementation erroneously does type conversion
-before the addition, which will lead to heap out-of-bounds write.
+Move the filling of IFLA_INET6_STATS and IFLA_INET6_ICMP6STATS to a
+helper function guarded by a flag check to avoid hitting the same
+situation in the future.
 
-[    6.989857] ==================================================================
-[    6.990293] BUG: KASAN: slab-out-of-bounds in nft_tunnel_obj_init+0x977/0xa70
-[    6.990725] Write of size 124 at addr ffff888005f18974 by task poc/178
-[    6.991162]
-[    6.991259] CPU: 0 PID: 178 Comm: poc-oob-write Not tainted 6.1.132 #1
-[    6.991655] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-[    6.992281] Call Trace:
-[    6.992423]  <TASK>
-[    6.992586]  dump_stack_lvl+0x44/0x5c
-[    6.992801]  print_report+0x184/0x4be
-[    6.993790]  kasan_report+0xc5/0x100
-[    6.994252]  kasan_check_range+0xf3/0x1a0
-[    6.994486]  memcpy+0x38/0x60
-[    6.994692]  nft_tunnel_obj_init+0x977/0xa70
-[    6.995677]  nft_obj_init+0x10c/0x1b0
-[    6.995891]  nf_tables_newobj+0x585/0x950
-[    6.996922]  nfnetlink_rcv_batch+0xdf9/0x1020
-[    6.998997]  nfnetlink_rcv+0x1df/0x220
-[    6.999537]  netlink_unicast+0x395/0x530
-[    7.000771]  netlink_sendmsg+0x3d0/0x6d0
-[    7.001462]  __sock_sendmsg+0x99/0xa0
-[    7.001707]  ____sys_sendmsg+0x409/0x450
-[    7.002391]  ___sys_sendmsg+0xfd/0x170
-[    7.003145]  __sys_sendmsg+0xea/0x170
-[    7.004359]  do_syscall_64+0x5e/0x90
-[    7.005817]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[    7.006127] RIP: 0033:0x7ec756d4e407
-[    7.006339] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
-[    7.007364] RSP: 002b:00007ffed5d46760 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
-[    7.007827] RAX: ffffffffffffffda RBX: 00007ec756cc4740 RCX: 00007ec756d4e407
-[    7.008223] RDX: 0000000000000000 RSI: 00007ffed5d467f0 RDI: 0000000000000003
-[    7.008620] RBP: 00007ffed5d468a0 R08: 0000000000000000 R09: 0000000000000000
-[    7.009039] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-[    7.009429] R13: 00007ffed5d478b0 R14: 00007ec756ee5000 R15: 00005cbd4e655cb8
-
-Fix this bug with correct pointer addition and conversion in parse
-and dump code.
-
-Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d5566fd72ec1 ("rtnetlink: RTEXT_FILTER_SKIP_STATS support to avoid dumping inet/inet6 stats")
+Signed-off-by: Fernando Fernandez Mancera <ffmancera@riseup.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250402121751.3108-1-ffmancera@riseup.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_tunnel.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
-index f735d79d8be57..e3f5731ebaacf 100644
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -339,7 +339,7 @@ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GEN
- static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
- 				      struct nft_tunnel_opts *opts)
- {
--	struct geneve_opt *opt = (struct geneve_opt *)opts->u.data + opts->len;
-+	struct geneve_opt *opt = (struct geneve_opt *)(opts->u.data + opts->len);
- 	struct nlattr *tb[NFTA_TUNNEL_KEY_GENEVE_MAX + 1];
- 	int err, data_len;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 8360939acf85a..bb9add46e382a 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -5750,6 +5750,27 @@ static void snmp6_fill_stats(u64 *stats, struct inet6_dev *idev, int attrtype,
+ 	}
+ }
  
-@@ -621,7 +621,7 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
- 		if (!inner)
- 			goto failure;
- 		while (opts->len > offset) {
--			opt = (struct geneve_opt *)opts->u.data + offset;
-+			opt = (struct geneve_opt *)(opts->u.data + offset);
- 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
- 					 opt->opt_class) ||
- 			    nla_put_u8(skb, NFTA_TUNNEL_KEY_GENEVE_TYPE,
++static int inet6_fill_ifla6_stats_attrs(struct sk_buff *skb,
++					struct inet6_dev *idev)
++{
++	struct nlattr *nla;
++
++	nla = nla_reserve(skb, IFLA_INET6_STATS, IPSTATS_MIB_MAX * sizeof(u64));
++	if (!nla)
++		goto nla_put_failure;
++	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_STATS, nla_len(nla));
++
++	nla = nla_reserve(skb, IFLA_INET6_ICMP6STATS, ICMP6_MIB_MAX * sizeof(u64));
++	if (!nla)
++		goto nla_put_failure;
++	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_ICMP6STATS, nla_len(nla));
++
++	return 0;
++
++nla_put_failure:
++	return -EMSGSIZE;
++}
++
+ static int inet6_fill_ifla6_attrs(struct sk_buff *skb, struct inet6_dev *idev,
+ 				  u32 ext_filter_mask)
+ {
+@@ -5771,18 +5792,10 @@ static int inet6_fill_ifla6_attrs(struct sk_buff *skb, struct inet6_dev *idev,
+ 
+ 	/* XXX - MC not implemented */
+ 
+-	if (ext_filter_mask & RTEXT_FILTER_SKIP_STATS)
+-		return 0;
+-
+-	nla = nla_reserve(skb, IFLA_INET6_STATS, IPSTATS_MIB_MAX * sizeof(u64));
+-	if (!nla)
+-		goto nla_put_failure;
+-	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_STATS, nla_len(nla));
+-
+-	nla = nla_reserve(skb, IFLA_INET6_ICMP6STATS, ICMP6_MIB_MAX * sizeof(u64));
+-	if (!nla)
+-		goto nla_put_failure;
+-	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_ICMP6STATS, nla_len(nla));
++	if (!(ext_filter_mask & RTEXT_FILTER_SKIP_STATS)) {
++		if (inet6_fill_ifla6_stats_attrs(skb, idev) < 0)
++			goto nla_put_failure;
++	}
+ 
+ 	nla = nla_reserve(skb, IFLA_INET6_TOKEN, sizeof(struct in6_addr));
+ 	if (!nla)
 -- 
 2.39.5
 
