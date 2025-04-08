@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C0326FD99;
-	Tue,  8 Apr 2025 12:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C60526FD85;
+	Tue,  8 Apr 2025 12:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116270; cv=none; b=l76nWU1oX+oVgwDJy4z2xQDyooS38casYgKMN2CuALc3QmiZlwd7lRvFbyOmpVTEUORqoKOCGNIqjnJQw9L4WZq4+o5tqRuKQ9wqSzCabsZCBF+Lqexi6rgc1Kn4sAg7zQ8DEqrWezAxa+dui1LcdN8hnf2rhgA3oBrnmkfeASk=
+	t=1744116273; cv=none; b=E9sssgt706tuWfEBvxmcLFZMfcHF0WSsVXBr4zHzuGKPYR4I0xRfoL6r4paNaKqIsDQtwec8ynGG0IBvR3tvvm1S6EvG0lA+c5XY9GGK8kEadyAbOx1SzYiDW6ni01c/Kl+spnIsqYpZ/ed7yWcTTX/RGH3lwFHoM4D1JOpr4Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116270; c=relaxed/simple;
-	bh=2Ri6vN45AyznpefHf7ft286BADK5PdQ4F3ziWKDWG98=;
+	s=arc-20240116; t=1744116273; c=relaxed/simple;
+	bh=Ua/w2j+E0Cv3Xpl0RR6+ONiVNNni70gnTYbMcK4kRlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+3uHvddAZ+jXF8Axspr0WC8y+HW8enW3dhWhiIf1G2H3VV7N4p/YtI3Zg5HnMDDu1v6WqCgT/RvgvYAVQNTO6hEGYjCAEBWh3UN/9RD7MCDuFHJcTBlfNLaslCzoTMgQ+eQLMcDagXh8EjdXjYRuqRaKOr9gLEGFO8ONwUKtGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWxzA/6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l9msN8IQE94MABN2eT9VMMDKrP+4oNFkSNffXjRD+8bBHCETYlxVX9W3cL8RNiZW3IfSdsGLBuCbwnZmUNUaroxL4B+aSCX4D7njASGGGHGO4iXkoDZkmvelPHzeMiqHJIXAXhotZK456YOH11AfQuGSds0MCTt60a9kI9ZesFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzqOFggk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWxzA/6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE166C4CEE5;
-	Tue,  8 Apr 2025 12:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzqOFggk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C5C4CEE5;
+	Tue,  8 Apr 2025 12:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116270;
-	bh=2Ri6vN45AyznpefHf7ft286BADK5PdQ4F3ziWKDWG98=;
+	s=korg; t=1744116272;
+	bh=Ua/w2j+E0Cv3Xpl0RR6+ONiVNNni70gnTYbMcK4kRlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWxzA/6liYOpE1kWczHq3JMwtOpvKFyKOoWWKzsWc7cm2Q4MN/S9zazDsP4YhkaVd
-	 daWisG7zAxgvn8YFFj2zH5fXg3aNrsr9+JJjJGwMCajy+w9N+qVCDRcJdbZuxJehYH
-	 fyuBrqCcvmqxbDuoaqLLKyOcKcHBmN7JG1XySJWw=
+	b=WzqOFggkk5PmGnBBvIS/svU2/Vpbjw2VYuj03MKXcscu/Vs1Ui5QRtnaYVerW0tLC
+	 B10VdTXrbZEYUnhcbDlfFQixP2F0+hkwOdekDwV6XuFpNhl3fT+bPJkCVUiKB59zTp
+	 zMNxnDv5WfbVx16C4OuGN5XZyZIA6XwWWR1nSZO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Aravamudan <naravamudan@nvidia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Raphael Norwitz <raphael.norwitz@nutanix.com>,
-	Amey Narkhede <ameynarkhede03@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	Ashley Smith <ashley.smith@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/423] PCI: Avoid reset when disabled via sysfs
-Date: Tue,  8 Apr 2025 12:46:43 +0200
-Message-ID: <20250408104847.536938544@linuxfoundation.org>
+Subject: [PATCH 6.12 078/423] drm/panthor: Update CS_STATUS_ defines to correct values
+Date: Tue,  8 Apr 2025 12:46:44 +0200
+Message-ID: <20250408104847.563229620@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,71 +48,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nishanth Aravamudan <naravamudan@nvidia.com>
+From: Ashley Smith <ashley.smith@collabora.com>
 
-[ Upstream commit 479380efe1625e251008d24b2810283db60d6fcd ]
+[ Upstream commit c82734fbdc50dc9e568e8686622eaa4498acb81e ]
 
-After d88f521da3ef ("PCI: Allow userspace to query and set device reset
-mechanism"), userspace can disable reset of specific PCI devices by writing
-an empty string to the sysfs reset_method file.
+Values for SC_STATUS_BLOCKED_REASON_ are documented in the G610 "Odin"
+GPU specification (CS_STATUS_BLOCKED_REASON register).
 
-However, pci_slot_resettable() does not check pci_reset_supported(), which
-means that pci_reset_function() will still reset the device even if
-userspace has disabled all the reset methods.
+This change updates the defines to the correct values.
 
-I was able to reproduce this issue with a vfio device passed to a qemu
-guest, where I had disabled PCI reset via sysfs.
-
-Add an explicit check of pci_reset_supported() in both
-pci_slot_resettable() and pci_bus_resettable() to ensure both the reset
-status and reset execution are bypassed if an administrator disables it for
-a device.
-
-Link: https://lore.kernel.org/r/20250207205600.1846178-1-naravamudan@nvidia.com
-Fixes: d88f521da3ef ("PCI: Allow userspace to query and set device reset mechanism")
-Signed-off-by: Nishanth Aravamudan <naravamudan@nvidia.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
-Cc: Amey Narkhede <ameynarkhede03@gmail.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Yishai Hadas <yishaih@nvidia.com>
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: Kevin Tian <kevin.tian@intel.com>
+Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Signed-off-by: Ashley Smith <ashley.smith@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250303180444.3768993-1-ashley.smith@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/panthor/panthor_fw.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 25211d1219227..169aa8fd74a11 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5528,6 +5528,8 @@ static bool pci_bus_resettable(struct pci_bus *bus)
- 		return false;
- 
- 	list_for_each_entry(dev, &bus->devices, bus_list) {
-+		if (!pci_reset_supported(dev))
-+			return false;
- 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
- 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
- 			return false;
-@@ -5604,6 +5606,8 @@ static bool pci_slot_resettable(struct pci_slot *slot)
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
- 		if (!dev->slot || dev->slot != slot)
- 			continue;
-+		if (!pci_reset_supported(dev))
-+			return false;
- 		if (dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
- 		    (dev->subordinate && !pci_bus_resettable(dev->subordinate)))
- 			return false;
+diff --git a/drivers/gpu/drm/panthor/panthor_fw.h b/drivers/gpu/drm/panthor/panthor_fw.h
+index 22448abde9923..6598d96c6d2aa 100644
+--- a/drivers/gpu/drm/panthor/panthor_fw.h
++++ b/drivers/gpu/drm/panthor/panthor_fw.h
+@@ -102,9 +102,9 @@ struct panthor_fw_cs_output_iface {
+ #define CS_STATUS_BLOCKED_REASON_SB_WAIT	1
+ #define CS_STATUS_BLOCKED_REASON_PROGRESS_WAIT	2
+ #define CS_STATUS_BLOCKED_REASON_SYNC_WAIT	3
+-#define CS_STATUS_BLOCKED_REASON_DEFERRED	5
+-#define CS_STATUS_BLOCKED_REASON_RES		6
+-#define CS_STATUS_BLOCKED_REASON_FLUSH		7
++#define CS_STATUS_BLOCKED_REASON_DEFERRED	4
++#define CS_STATUS_BLOCKED_REASON_RESOURCE	5
++#define CS_STATUS_BLOCKED_REASON_FLUSH		6
+ #define CS_STATUS_BLOCKED_REASON_MASK		GENMASK(3, 0)
+ 	u32 status_blocked_reason;
+ 	u32 status_wait_sync_value_hi;
 -- 
 2.39.5
 
