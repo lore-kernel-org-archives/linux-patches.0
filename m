@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CB826988C;
-	Tue,  8 Apr 2025 12:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5483326988C;
+	Tue,  8 Apr 2025 12:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117010; cv=none; b=JBTst3bIC3F/X6ahajp1CmicDBhy2d2a/XMY/nwS0zZr3PvSpR1FkLSgVQnt5AZaUHoRzNrrhYAwNhG2IpekOZJ+oXZvmOONtir/Jik9lwJcjVmG+sFacf+fXVPVtSG8NgOdSUx8DBzxJ4M+ME68iW2C7EW6KNRMblNGUKaAYfQ=
+	t=1744117013; cv=none; b=RWqoYS+4CSWK8rlRY+S8WB3qElKXbsEjETP+1/1db2jGTFg+yWp1BQcyWAmZnyVMz58fOKj8FmyvzabedMOFbx94K5QP0EhPI49uyGx9/tVisPOKmj1bEFHufFJutINEpMO3w29R+DvK6rGfelWOG7Px3iA113aNNWDu4ysvRQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117010; c=relaxed/simple;
-	bh=J7tV5IcU9WIhE8Y3kl/xLkasIut5lCAfDtlj/WDuxTU=;
+	s=arc-20240116; t=1744117013; c=relaxed/simple;
+	bh=kkkBArFyb9SqS37KeyaL9JmGYFbA0vXoP4U7E/tO66g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swlXVcg05hanuG91TqlYYehBOEaeZtKMf3CnSkm+BJQFUgwYtBWXvQShGkSvr22tOUw9W8snQgMWzvjm+GKQHrZEypKIo41H8niyNh5+wpo9qCj4Kp6i2ONCF98rAuigrLo6e3ylDrkOEWtVb4yYmYrvWCrTL1sx++cMTphiq4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJafyjHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3QAwpLqUXykmpHyi84qJ2YcmCvZqXenv5yx1SRfuCE+KT9UaqBNShyFDb2+YaS4ho3zsi08/oEOsRWaG1BaC2970kp1umQ7HR3kph/U/Rr4djZ+1cAgwbR2XJf/q+VGxsvNr3onlAO+BVbXUeLddK9mmqR7Ly6RJGZHIWwzvuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhs1qemE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJafyjHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0D6C4CEE5;
-	Tue,  8 Apr 2025 12:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhs1qemE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C5FC4CEE5;
+	Tue,  8 Apr 2025 12:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117010;
-	bh=J7tV5IcU9WIhE8Y3kl/xLkasIut5lCAfDtlj/WDuxTU=;
+	s=korg; t=1744117012;
+	bh=kkkBArFyb9SqS37KeyaL9JmGYFbA0vXoP4U7E/tO66g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sJafyjHJdmg+3uMcjDgnVHemZoE3BYGYncAl6eUCUhhHekhAjtFez+Bruy4Gw5cmU
-	 D3k07hUQIaX+FZNOOn1nxiRNWygD4ASCZ3SbVCcO9zrrtkU/USOdNlPwg6gnhA1ys1
-	 t5FwWWNHn4IiF+90oLDq28jgApOlDQe3+hamu/FE=
+	b=zhs1qemExCeqXXl37wcK0zLSfBbKTwKAt5nkx+WEcDiZ2z75LjM5eQ2ldDAbfJ2o7
+	 pVoZp1dm5Co9HIAMJuo5yUTdhn8TktgllyWZvUBhIDQgvLgSu8Git3RyJCePlPhscW
+	 KYzx93PYkE1fWL7PVPQLFv9sNOX0R+Db0lu6xOjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Alexandru Gagniuc <alexandru.gagniuc@hp.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 301/423] spufs: fix a leak on spufs_new_file() failure
-Date: Tue,  8 Apr 2025 12:50:27 +0200
-Message-ID: <20250408104852.804263041@linuxfoundation.org>
+Subject: [PATCH 6.12 345/423] kbuild: deb-pkg: dont set KBUILD_BUILD_VERSION unconditionally
+Date: Tue,  8 Apr 2025 12:51:11 +0200
+Message-ID: <20250408104853.875995761@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -50,38 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 
-[ Upstream commit d1ca8698ca1332625d83ea0d753747be66f9906d ]
+[ Upstream commit 62604063621fb075c7966286bdddcb057d883fa8 ]
 
-It's called from spufs_fill_dir(), and caller of that will do
-spufs_rmdir() in case of failure.  That does remove everything
-we'd managed to create, but... the problem dentry is still
-negative.  IOW, it needs to be explicitly dropped.
+In ThinPro, we use the convention <upstream_ver>+hp<patchlevel> for
+the kernel package. This does not have a dash in the name or version.
+This is built by editing ".version" before a build, and setting
+EXTRAVERSION="+hp" and KDEB_PKGVERSION make variables:
 
-Fixes: 3f51dd91c807 "[PATCH] spufs: fix spufs_fill_dir error path"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+    echo 68 > .version
+    make -j<n> EXTRAVERSION="+hp" bindeb-pkg KDEB_PKGVERSION=6.12.2+hp69
+
+    .deb name: linux-image-6.12.2+hp_6.12.2+hp69_amd64.deb
+
+Since commit 7d4f07d5cb71 ("kbuild: deb-pkg: squash
+scripts/package/deb-build-option to debian/rules"), this no longer
+works. The deb build logic changed, even though, the commit message
+implies that the logic should be unmodified.
+
+Before, KBUILD_BUILD_VERSION was not set if the KDEB_PKGVERSION did
+not contain a dash. After the change KBUILD_BUILD_VERSION is always
+set to KDEB_PKGVERSION. Since this determines UTS_VERSION, the uname
+output to look off:
+
+    (now)      uname -a: version 6.12.2+hp ... #6.12.2+hp69
+    (expected) uname -a: version 6.12.2+hp ... #69
+
+Update the debian/rules logic to restore the original behavior.
+
+Fixes: 7d4f07d5cb71 ("kbuild: deb-pkg: squash scripts/package/deb-build-option to debian/rules")
+Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/cell/spufs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/package/debian/rules | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/cell/spufs/inode.c b/arch/powerpc/platforms/cell/spufs/inode.c
-index 70236d1df3d3e..793c005607cf0 100644
---- a/arch/powerpc/platforms/cell/spufs/inode.c
-+++ b/arch/powerpc/platforms/cell/spufs/inode.c
-@@ -192,8 +192,10 @@ static int spufs_fill_dir(struct dentry *dir,
- 			return -ENOMEM;
- 		ret = spufs_new_file(dir->d_sb, dentry, files->ops,
- 					files->mode & mode, files->size, ctx);
--		if (ret)
-+		if (ret) {
-+			dput(dentry);
- 			return ret;
-+		}
- 		files++;
- 	}
- 	return 0;
+diff --git a/scripts/package/debian/rules b/scripts/package/debian/rules
+index ca07243bd5cdf..2b3f9a0bd6c40 100755
+--- a/scripts/package/debian/rules
++++ b/scripts/package/debian/rules
+@@ -21,9 +21,11 @@ ifeq ($(origin KBUILD_VERBOSE),undefined)
+     endif
+ endif
+ 
+-revision = $(lastword $(subst -, ,$(shell dpkg-parsechangelog -S Version)))
++revision = $(shell dpkg-parsechangelog -S Version | sed -n 's/.*-//p')
+ CROSS_COMPILE ?= $(filter-out $(DEB_BUILD_GNU_TYPE)-, $(DEB_HOST_GNU_TYPE)-)
+-make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) KBUILD_BUILD_VERSION=$(revision) $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
++make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) \
++    $(addprefix KBUILD_BUILD_VERSION=,$(revision)) \
++    $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
+ 
+ binary-targets := $(addprefix binary-, image image-dbg headers libc-dev)
+ 
 -- 
 2.39.5
 
