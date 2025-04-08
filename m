@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDA4268685;
-	Tue,  8 Apr 2025 12:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6832269823;
+	Tue,  8 Apr 2025 12:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114296; cv=none; b=Y+b7I3bizs6VZw7T5qLT/SqrqMiYDoVfzhGhgYQNXR8IgFSHjXq8DD3DSlzaHrb51bcP1Q17XuzfoSFcsdxIU2rBOjy50kcnb6NU2sWw5SRTrUaexFF4SkaCidbRQ5+nW8txpqQckKrfiAeSd2hzINCLHKpqbw1f+Sn/zuZJl6w=
+	t=1744114298; cv=none; b=hWxlg1HMSgZKVj0Ps9E1Fg177ZnPzyLdbxNcr8Gbdo1tXaWx2e7O/00fBgy6YQxmjqX46ErMLID1k0cVf99qJAs0nuElzti47JaqC7gdnIWliPbyet7C4+bE3iA40j9TuqrFBbhDdRcLG/zy3yMF5Fl4DDuk++KdJPZfQ9nPC0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114296; c=relaxed/simple;
-	bh=/MBDyNUQrY7bC9nQzcirqoDeKyD9gW+l0XMDdECsSu0=;
+	s=arc-20240116; t=1744114298; c=relaxed/simple;
+	bh=qS4GtOlRxVgkeB6MRGIsKcfw/FdHgLVJb+hFRftkGVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7kR7TrvQ6giEdmWs5dMCUS4wirZnKSgaFHCd4byDc6VoIldxkORGjaHqtC6wsHSBwbvqlPLgpUGY6bLua0x2qZ+9B0XYvLAJZNWPFZDk/BI0dHersjWU0hSVcpvdwj2eWWzPCvGzjA5WkyrLlQhyHKZQ/ttU1dS8RksbJaa1LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5mfTyWx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Og65LIi2Xu0EQgDTZX+MQ/NXTzt2ziluNN+ZF6Bdz59ndhPSNlQxDfn+zD1FOOZiLiVrpAR6WgAz5sB0sI1VnUFUyPBWAGDnY7UQ16SsNEL7/2/ThUzXUZqC2Ii0KPpO4a/LH4kU5y7RgktBPTjx43nWuOPB4cPG85yMDnx6IdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o00AZPXi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5mfTyWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A319C4CEE5;
-	Tue,  8 Apr 2025 12:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o00AZPXi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125AFC4CEE5;
+	Tue,  8 Apr 2025 12:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114295;
-	bh=/MBDyNUQrY7bC9nQzcirqoDeKyD9gW+l0XMDdECsSu0=;
+	s=korg; t=1744114298;
+	bh=qS4GtOlRxVgkeB6MRGIsKcfw/FdHgLVJb+hFRftkGVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5mfTyWxqE7KIJeHyeHcX2/QiK99kMXpQqeqGA346ufhqaH75JPDs8HWeUgHGZglM
-	 pO9Z2fHWbTdI6cOb86mSDcXbJPOaVpeLak5tO/RyHEk/lo+JGce4o/eQ4iigcqWqQg
-	 kFqZj5UUjx0fT/Je5XrA68IHrvH/aKfzHpH4Tim0=
+	b=o00AZPXiq/+AkICyrmuJh4O6IlsD72IrYfqKakjqdP29C3DlXHGBynrtCg2zY8CWs
+	 14CAZwAGft+zmsN0kVDSexr0uqPMAfoVguKVfre8cXMahcKIJoSxE0p2MVKCQR3yfW
+	 SO+gcdQEseQW9+/raPzS5TEZXE0ft6B/UMV6wDdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Oleg Gorobets <oleg.goro@gmail.com>
-Subject: [PATCH 6.13 055/499] ALSA: hda/realtek: Always honor no_shutup_pins
-Date: Tue,  8 Apr 2025 12:44:27 +0200
-Message-ID: <20250408104852.608454033@linuxfoundation.org>
+	Ritu Chaudhary <rituc@nvidia.com>,
+	Sheetal <sheetal@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 056/499] ASoC: tegra: Use non-atomic timeout for ADX status register
+Date: Tue,  8 Apr 2025 12:44:28 +0200
+Message-ID: <20250408104852.632580037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,53 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ritu Chaudhary <rituc@nvidia.com>
 
-[ Upstream commit 5a0c72c1da3cbc0cd4940a95d1be2830104c6edf ]
+[ Upstream commit f1d742c35b659fb0122da0a8ff09ad9309cb29d8 ]
 
-The workaround for Dell machines to skip the pin-shutup for mic pins
-introduced alc_headset_mic_no_shutup() that is replaced from the
-generic snd_hda_shutup_pins() for certain codecs.  The problem is that
-the call is done unconditionally even if spec->no_shutup_pins is set.
-This seems causing problems on other platforms like Lenovo.
+ADX startup() callback uses atomic poll timeout on ADX status register.
 
-This patch corrects the behavior and the driver honors always
-spec->no_shutup_pins flag and skips alc_headset_mic_no_shutup() if
-it's set.
+This is unnecessary because:
 
-Fixes: dad3197da7a3 ("ALSA: hda/realtek - Fixup headphone noise via runtime suspend")
-Reported-and-tested-by: Oleg Gorobets <oleg.goro@gmail.com>
-Link: https://patch.msgid.link/20250315143020.27184-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+- The startup() callback itself is non-atomic.
+- The subsequent timeout call in the same function already uses a
+  non-atomic version.
+
+Using atomic version can hog CPU when it is not really needed,
+so replace it with non-atomic version.
+
+Fixes: a99ab6f395a9e ("ASoC: tegra: Add Tegra210 based ADX driver")
+Signed-off-by: Ritu Chaudhary <rituc@nvidia.com>
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Link: https://patch.msgid.link/20250311062010.33412-1-sheetal@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/tegra/tegra210_adx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index ee1682a2e0388..4c7f578726e26 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -586,6 +586,9 @@ static void alc_shutup_pins(struct hda_codec *codec)
- {
- 	struct alc_spec *spec = codec->spec;
+diff --git a/sound/soc/tegra/tegra210_adx.c b/sound/soc/tegra/tegra210_adx.c
+index 0aa93b948378f..3c10e09976ad0 100644
+--- a/sound/soc/tegra/tegra210_adx.c
++++ b/sound/soc/tegra/tegra210_adx.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-// SPDX-FileCopyrightText: Copyright (c) 2021-2024 NVIDIA CORPORATION & AFFILIATES.
++// SPDX-FileCopyrightText: Copyright (c) 2021-2025 NVIDIA CORPORATION & AFFILIATES.
+ // All rights reserved.
+ //
+ // tegra210_adx.c - Tegra210 ADX driver
+@@ -57,8 +57,8 @@ static int tegra210_adx_startup(struct snd_pcm_substream *substream,
+ 	int err;
  
-+	if (spec->no_shutup_pins)
-+		return;
-+
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
-@@ -601,8 +604,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 		alc_headset_mic_no_shutup(codec);
- 		break;
- 	default:
--		if (!spec->no_shutup_pins)
--			snd_hda_shutup_pins(codec);
-+		snd_hda_shutup_pins(codec);
- 		break;
- 	}
- }
+ 	/* Ensure if ADX status is disabled */
+-	err = regmap_read_poll_timeout_atomic(adx->regmap, TEGRA210_ADX_STATUS,
+-					      val, !(val & 0x1), 10, 10000);
++	err = regmap_read_poll_timeout(adx->regmap, TEGRA210_ADX_STATUS,
++				       val, !(val & 0x1), 10, 10000);
+ 	if (err < 0) {
+ 		dev_err(dai->dev, "failed to stop ADX, err = %d\n", err);
+ 		return err;
 -- 
 2.39.5
 
