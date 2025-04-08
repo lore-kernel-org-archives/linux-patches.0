@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD35267B96;
-	Tue,  8 Apr 2025 12:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6601620CCD8;
+	Tue,  8 Apr 2025 12:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114628; cv=none; b=EiS+WoFYYR3EtRCgc0s5F/7k/0kkPNqSytsx1NDxKdgX+KyaIEHqQNX8ZjCDS2xXkncCsOIY39I6GuE7PI+Adqtghqd4YxVvf6W0TnRSTl4UTHYDHOGqkuTCA7V0mZaaiahRfwd0QOZG9kocgiEXwtwPQNMoczm6hR9sFbiCfnM=
+	t=1744114631; cv=none; b=LVfOx9nSliiABH+7+x9mUF2VR4RvGe/8RCqxwGmpkc8SEYSZYdQEqQU6/WHBMIsLzd1eZw3yk+iaaiVZFjndjZ23xAjZPaNPVms04xiQnb7DdfgUJrERUxDBROvvYm5n9n6rZhC04PM2jj/dJMRPnDJSKJrfnA//Wb87a0a8Ovo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114628; c=relaxed/simple;
-	bh=+4nIE5+G6Dlk/1tBWoSo19IsZa7mhaHS6e+t/rE/jHA=;
+	s=arc-20240116; t=1744114631; c=relaxed/simple;
+	bh=ZIGHX+KDTrubVZUJu1fD+B4cXCAPmtuRBp9qHDbwAqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgG6A8Mz27/8fIHTALz9FppG9epn5FLHgcZaZ+/+rvcS3BFN6duehRr4XfnrxbPsAbGx5bcAGOsMUWCxk/SMYzT+1xL4wAWaa/yrGCXZYljUKTo0lfA7wlZgdzYUmTrhAbK9jcdl5v19VtUTJLXMxqHYjNlKPD7DpeGNcIudY/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8NjJNbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8y/SaRRHIB+dG1IbsPSlP5Ga0Tq8PMnWBy2+DoWOUhyeKo3TyjMY7DkKkalS+A7JOuUo6r4i75zeCh3xGBzT6FnVbKd09GG+v4zWNyHJTR4dCub1Uml64cQFUSYLx1eEooBTtfZtKyMYYbhEx79bAwTon3LVzdtk2MqJVmBisw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVT0qOYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8NjJNbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5D7C4CEE5;
-	Tue,  8 Apr 2025 12:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVT0qOYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB534C4CEE5;
+	Tue,  8 Apr 2025 12:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114628;
-	bh=+4nIE5+G6Dlk/1tBWoSo19IsZa7mhaHS6e+t/rE/jHA=;
+	s=korg; t=1744114631;
+	bh=ZIGHX+KDTrubVZUJu1fD+B4cXCAPmtuRBp9qHDbwAqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8NjJNbv47h60y3vJcl/21lZ7IaYX4rWJrO4iP8Ptc2eulU6eP9FOS7ZV8KFnhbrK
-	 6MrQrVM7DFkKRQb2OqAuPTpQaVb2qC7nIAbbngrMK5UZK0DgFE1oObc8BWCxVRqIfQ
-	 G65gRrzR6V2I2r/12Nx6nnw9vEeWumaKLb0P6TyA=
+	b=NVT0qOYWzyea81xvasI4OWBdtRASdjHZZn53cge3rc/FywFrljgoxBx7XYf4QdeUR
+	 ss4TqpXCa/L0lh4Fq+r8iYeplVFlJnJn2LXSpt896f5CUVfyZ+zhabl2gl9bkAQKpl
+	 V37Hh32RcT7bIvF6dONz0b2gcvcc4FUQFu25DpWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinghao Jia <jinghao7@illinois.edu>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Ruowen Qin <ruqin@redhat.com>,
+	Bairavi Alagappan <bairavix.alagappan@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 178/499] samples/bpf: Fix broken vmlinux path for VMLINUX_BTF
-Date: Tue,  8 Apr 2025 12:46:30 +0200
-Message-ID: <20250408104855.612260962@linuxfoundation.org>
+Subject: [PATCH 6.13 179/499] crypto: qat - remove access to parity register for QAT GEN4
+Date: Tue,  8 Apr 2025 12:46:31 +0200
+Message-ID: <20250408104855.638128967@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,43 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinghao Jia <jinghao7@illinois.edu>
+From: Bairavi Alagappan <bairavix.alagappan@intel.com>
 
-[ Upstream commit 94f53edc64e19640b5245721cd6d0c4a84f52587 ]
+[ Upstream commit 92c6a707d82f0629debf1c21dd87717776d96af2 ]
 
-Commit 13b25489b6f8 ("kbuild: change working directory to external
-module directory with M=") changed kbuild working directory of bpf
-sample programs to samples/bpf, which broke the vmlinux path for
-VMLINUX_BTF, as the Makefiles assume the current work directory to be
-the kernel output directory and use a relative path (i.e., ./vmlinux):
+The firmware already handles parity errors reported by the accelerators
+by clearing them through the corresponding SSMSOFTERRORPARITY register.
+To ensure consistent behavior and prevent race conditions between the
+driver and firmware, remove the logic that checks the SSMSOFTERRORPARITY
+registers.
 
-  Makefile:316: *** Cannot find a vmlinux for VMLINUX_BTF at any of "  /path/to/linux/samples/bpf/vmlinux", build the kernel or set VMLINUX_BTF like "VMLINUX_BTF=/sys/kernel/btf/vmlinux" or VMLINUX_H variable.  Stop.
+Additionally, change the return type of the function
+adf_handle_rf_parr_err() to void, as it consistently returns false.
+Parity errors are recoverable and do not necessitate a device reset.
 
-Correctly refer to the kernel output directory using $(objtree).
-
-Fixes: 13b25489b6f8 ("kbuild: change working directory to external module directory with M=")
-Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Ruowen Qin <ruqin@redhat.com>
-Link: https://lore.kernel.org/bpf/20250203085506.220297-3-jinghao7@illinois.edu
+Fixes: 895f7d532c84 ("crypto: qat - add handling of errors from ERRSOU2 for QAT GEN4")
+Signed-off-by: Bairavi Alagappan <bairavix.alagappan@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../intel/qat/qat_common/adf_gen4_ras.c       | 57 ++-----------------
+ 1 file changed, 5 insertions(+), 52 deletions(-)
 
-diff --git a/samples/bpf/Makefile b/samples/bpf/Makefile
-index 96a05e70ace30..f5865fbbae62f 100644
---- a/samples/bpf/Makefile
-+++ b/samples/bpf/Makefile
-@@ -307,7 +307,7 @@ $(obj)/$(TRACE_HELPERS): TPROGS_CFLAGS := $(TPROGS_CFLAGS) -D__must_check=
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+index bf0ea09faa650..0f7f00a19e7dc 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_ras.c
+@@ -1043,63 +1043,16 @@ static bool adf_handle_ssmcpppar_err(struct adf_accel_dev *accel_dev,
+ 	return reset_required;
+ }
  
- VMLINUX_BTF_PATHS ?= $(abspath $(if $(O),$(O)/vmlinux))				\
- 		     $(abspath $(if $(KBUILD_OUTPUT),$(KBUILD_OUTPUT)/vmlinux))	\
--		     $(abspath ./vmlinux)
-+		     $(abspath $(objtree)/vmlinux)
- VMLINUX_BTF ?= $(abspath $(firstword $(wildcard $(VMLINUX_BTF_PATHS))))
+-static bool adf_handle_rf_parr_err(struct adf_accel_dev *accel_dev,
++static void adf_handle_rf_parr_err(struct adf_accel_dev *accel_dev,
+ 				   void __iomem *csr, u32 iastatssm)
+ {
+-	struct adf_dev_err_mask *err_mask = GET_ERR_MASK(accel_dev);
+-	u32 reg;
+-
+ 	if (!(iastatssm & ADF_GEN4_IAINTSTATSSM_SSMSOFTERRORPARITY_BIT))
+-		return false;
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_SRC);
+-	reg &= ADF_GEN4_SSMSOFTERRORPARITY_SRC_BIT;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_SRC, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_ATH_CPH);
+-	reg &= err_mask->parerr_ath_cph_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_ATH_CPH, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_CPR_XLT);
+-	reg &= err_mask->parerr_cpr_xlt_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_CPR_XLT, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_DCPR_UCS);
+-	reg &= err_mask->parerr_dcpr_ucs_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_DCPR_UCS, reg);
+-	}
+-
+-	reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_PKE);
+-	reg &= err_mask->parerr_pke_mask;
+-	if (reg) {
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-		ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_PKE, reg);
+-	}
+-
+-	if (err_mask->parerr_wat_wcp_mask) {
+-		reg = ADF_CSR_RD(csr, ADF_GEN4_SSMSOFTERRORPARITY_WAT_WCP);
+-		reg &= err_mask->parerr_wat_wcp_mask;
+-		if (reg) {
+-			ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-			ADF_CSR_WR(csr, ADF_GEN4_SSMSOFTERRORPARITY_WAT_WCP,
+-				   reg);
+-		}
+-	}
++		return;
  
- $(obj)/vmlinux.h: $(VMLINUX_BTF) $(BPFTOOL)
++	ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+ 	dev_err(&GET_DEV(accel_dev), "Slice ssm soft parity error reported");
+ 
+-	return false;
++	return;
+ }
+ 
+ static bool adf_handle_ser_err_ssmsh(struct adf_accel_dev *accel_dev,
+@@ -1171,8 +1124,8 @@ static bool adf_handle_iaintstatssm(struct adf_accel_dev *accel_dev,
+ 	reset_required |= adf_handle_slice_hang_error(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_spppar_err(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_ssmcpppar_err(accel_dev, csr, iastatssm);
+-	reset_required |= adf_handle_rf_parr_err(accel_dev, csr, iastatssm);
+ 	reset_required |= adf_handle_ser_err_ssmsh(accel_dev, csr, iastatssm);
++	adf_handle_rf_parr_err(accel_dev, csr, iastatssm);
+ 
+ 	ADF_CSR_WR(csr, ADF_GEN4_IAINTSTATSSM, iastatssm);
+ 
 -- 
 2.39.5
 
