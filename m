@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469D219AD5C;
-	Tue,  8 Apr 2025 11:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E153119AD5C;
+	Tue,  8 Apr 2025 11:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112415; cv=none; b=rA4WhZ8xQTzb/Y0Ol8tiZXWmvwFnxSPAo6j3sNVbl7cyfxvvCKICojSY7IjiacrdqPDZjwut3Vg7GtqJtqbS28jkuTjngpI/LleFUK2CcHbRv7tsBv1XY/Ty7ramzTjvFXesIR1u8JFd3I/5oEnkbbUa4iKq1LkxlQBZQlPR3+A=
+	t=1744112418; cv=none; b=bl0O4PigYPb4Hmbw1AgRV2zsY7p+GeaYvCUDkbxyToer0OBRJBdB+OE9qpy+PdYn1EaRhx7Fpj9joCOSwRwuX/ePjNRnfg3pDsjFCfD5sPhXoEdifQBeoPm+wFXJYFV7JQi7CjozZ4LlqDYL5EI/TLvGypqOo8vDwQQMAqaE4w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112415; c=relaxed/simple;
-	bh=tBTmtXtbuV0CBIO3SnzTj3oa2+2Gjo8W92spcremO/s=;
+	s=arc-20240116; t=1744112418; c=relaxed/simple;
+	bh=Jy0VYueuJrzbE41CDE3E16x2lrIaJ1G09NLqjNI1JhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAe9kxg3PGUg0Tq5w0YSE2tPeT5tW+TJepCrM0tjpP5GiWStMTrJQwIMF65tx7OZlzOfuPOQ8p2iL62tEii6fm04nUvxyVQZ9masimtLBinjn4pqj+Pb6SWlcvgNyxngvMISR8mkc0xRHdCnXeRpfeM+ZG/Dv5od5dR18QUOlZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVrv8xFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jcDewg8pyJR0EUYeyfYT83Czc8ywGlJ/hLSjkQFmvoi6hojiqKJfTm6FwqmaftDnwY1grVWIMqkTIh3hfLbUWEICLd9ga/P62dzkTeqNxDnA99qscFY3TIfEGFED9Cho8onDEqkUytmPBxpi6JZdlEvbo3AvlscmX7vbo1HH7J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZsOZbyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVrv8xFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBEFC4CEE5;
-	Tue,  8 Apr 2025 11:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZsOZbyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7395FC4CEE5;
+	Tue,  8 Apr 2025 11:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112415;
-	bh=tBTmtXtbuV0CBIO3SnzTj3oa2+2Gjo8W92spcremO/s=;
+	s=korg; t=1744112417;
+	bh=Jy0VYueuJrzbE41CDE3E16x2lrIaJ1G09NLqjNI1JhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVrv8xFV/JKEYFYrdw1I8vWakY+VbnMYB4qcJh7GhUbbdFfcynphyPRpcGDEy6m+Z
-	 eOQFBnosgvp9J33tjLwWfXe2+WDUlxaEDbG/uTScK9ZuO31Fn0DfVmADvOx0ftqStx
-	 WFr82QP4d1yorrOs0KcE4tZVfbWYb5NOCJo+C2PY=
+	b=HZsOZbydZ8zV5r4DvTorjislnY490MPWXOKweShrsbMazWrHha+dz76sSwzGe46uy
+	 h+P02/wC38fDizaRFGmKEegKvedi/b/a8+4VqIQND0ZlXv7b528P70eOy50cp1xNf5
+	 2d/0NvkM1qqHO0EjRIV4P+dWeYvCp4a3Qimv2doE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 060/279] drm/amd/display: Assign normalized_pix_clk when color depth = 14
-Date: Tue,  8 Apr 2025 12:47:23 +0200
-Message-ID: <20250408104827.973750166@linuxfoundation.org>
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 5.15 061/279] drm/amd/display: Fix slab-use-after-free on hdcp_work
+Date: Tue,  8 Apr 2025 12:47:24 +0200
+Message-ID: <20250408104827.996242790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 79e31396fdd7037c503e6add15af7cb00633ea92 upstream.
+commit e65e7bea220c3ce8c4c793b4ba35557f4994ab2b upstream.
 
-[WHY & HOW]
-A warning message "WARNING: CPU: 4 PID: 459 at ... /dc_resource.c:3397
-calculate_phy_pix_clks+0xef/0x100 [amdgpu]" occurs because the
-display_color_depth == COLOR_DEPTH_141414 is not handled. This is
-observed in Radeon RX 6600 XT.
+[Why]
+A slab-use-after-free is reported when HDCP is destroyed but the
+property_validate_dwork queue is still running.
 
-It is fixed by assigning pix_clk * (14 * 3) / 24 - same as the rests.
+[How]
+Cancel the delayed work when destroying workqueue.
 
-Also fixes the indentation in get_norm_pix_clk.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4006
+Fixes: da3fd7ac0bcf ("drm/amd/display: Update CP property based on HW query")
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 274a87eb389f58eddcbc5659ab0b180b37e92775)
+(cherry picked from commit 725a04ba5a95e89c89633d4322430cfbca7ce128)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1901,10 +1901,13 @@ static int get_norm_pix_clk(const struct
- 			break;
- 		case COLOR_DEPTH_121212:
- 			normalized_pix_clk = (pix_clk * 36) / 24;
--		break;
-+			break;
-+		case COLOR_DEPTH_141414:
-+			normalized_pix_clk = (pix_clk * 42) / 24;
-+			break;
- 		case COLOR_DEPTH_161616:
- 			normalized_pix_clk = (pix_clk * 48) / 24;
--		break;
-+			break;
- 		default:
- 			ASSERT(0);
- 		break;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -396,6 +396,7 @@ void hdcp_destroy(struct kobject *kobj,
+ 	for (i = 0; i < hdcp_work->max_link; i++) {
+ 		cancel_delayed_work_sync(&hdcp_work[i].callback_dwork);
+ 		cancel_delayed_work_sync(&hdcp_work[i].watchdog_timer_dwork);
++		cancel_delayed_work_sync(&hdcp_work[i].property_validate_dwork);
+ 	}
+ 
+ 	sysfs_remove_bin_file(kobj, &hdcp_work[0].attr);
 
 
