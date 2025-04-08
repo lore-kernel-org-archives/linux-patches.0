@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E667267B10;
-	Tue,  8 Apr 2025 11:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428A626B2A3;
+	Tue,  8 Apr 2025 11:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111541; cv=none; b=gm6aoBNqnaRhhXlw9ufABb9uZ0CcK4nICJiQignTS7pthWqX7jNcEkuWZRu5/yn9c0AP4oEFtGlZhlrz/9w+SgO7EHW3y1zGbNmYhBnPqKQcW6lQhzRhBKhyvLk6pnfJN1HE81pkHGYneQGrbzu4ub8e106NKPd6Fd58iCiISKs=
+	t=1744111545; cv=none; b=Awk3YRpyJT/wOADu51psEsgjhiRI9mx8cQWtAS9rgFdDnRFXm8KAvyb0iBLmsWYKuwr2kVTVKFiWzhVtdHGC3fIKGE5WGmmwq2tNnDu0Hu9VgwN++rtSM+IlwNykuspiJzAh3f6VWHSzDLtz0rxgcAbkLGeufrWU9Y9NjssN4hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111541; c=relaxed/simple;
-	bh=kIAAdZvDHEPAmaaE4g8+QORGVJSnKIbJwV9F8kLLzD4=;
+	s=arc-20240116; t=1744111545; c=relaxed/simple;
+	bh=yqUkNnHO2RZtSwEDhFgOY00D+S7T4yBcLyF1Qb5J/wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1ZDU9iizh/tGlDaRyc8IYlCenQdDUMYJvwvH2XulVlJCq3OIjA2m6VODGgRDRI6IDVySMUnfOCw/mfCcJ/YuiJNm/9TjBZYmth6Iylg8gmkkfm2UjlK85MO/Vyz9TxllR2Ms/iGHyOhnPpQ6PAxzb3K8uXUcvXb+SJEOzhaivs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/xPv+m6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=leUB4lJZpIMMa9KYIhdar21NBhmMkbBERVznjMXXXSL48y11h3+mfh26Ri5qjSr4pCqrBJkyvavXTOW4nrMpl9HAOVOdIB6EsTG15Pc/B4Pb55St8zZNvOmpoWOoJt5m3dMmCoO3QtBt/ADC/Y/btRsJSBosLIZEQ2Q1oYCS5Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5a8m/om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/xPv+m6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F53C4CEEA;
-	Tue,  8 Apr 2025 11:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5a8m/om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE08C4CEE5;
+	Tue,  8 Apr 2025 11:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111541;
-	bh=kIAAdZvDHEPAmaaE4g8+QORGVJSnKIbJwV9F8kLLzD4=;
+	s=korg; t=1744111543;
+	bh=yqUkNnHO2RZtSwEDhFgOY00D+S7T4yBcLyF1Qb5J/wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/xPv+m6/CcTKqhFVIz8m+85TAVIwuuJEJ2X2eiAs28P/dCN4srBSSKgX4L/DDfcz
-	 oL9FdNoPqnEALmJNZYYCSSfe29FXifrBA8QSp2eRJKAWwmP9iGUqnfpPo8T2iHhVnG
-	 NBjSQMHqRX6r7zqi1INjunrDkO267Kgw0mR/yI0E=
+	b=J5a8m/omEp778UpZWJ+82J5/l5cq5z6Xspaz3JZSadcFoT2/4ZhJZ7vp4ub3jhltr
+	 UfssNad8aktmmbfIpk38Fk3C28gYWZF7H8f8YFlIHsYPipjsLktoszfbmABIaDRsnl
+	 /dg3Aba+ne6wtWYBSLr/Q3/JRJ0w2yK9DeBWporc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexis GUILLEMET <alexis.guillemet@dunasys.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 429/731] crypto: hisilicon/sec2 - fix for aead auth key length
-Date: Tue,  8 Apr 2025 12:45:26 +0200
-Message-ID: <20250408104924.253714986@linuxfoundation.org>
+Subject: [PATCH 6.14 430/731] pinctrl: intel: Fix wrong bypass assignment in intel_pinctrl_probe_pwm()
+Date: Tue,  8 Apr 2025 12:45:27 +0200
+Message-ID: <20250408104924.277029574@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,49 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1b284ffc30b02808a0de698667cbcf5ce5f9144e ]
+[ Upstream commit 0eee258cdf172763502f142d85e967f27a573be0 ]
 
-According to the HMAC RFC, the authentication key
-can be 0 bytes, and the hardware can handle this
-scenario. Therefore, remove the incorrect validation
-for this case.
+When instantiating PWM, the bypass should be set to false. The field
+is used for the selected Intel SoCs that do not have PWM feature enabled
+in their pin control IPs.
 
-Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: eb78d3604d6b ("pinctrl: intel: Enumerate PWM device when community has a capability")
+Reported-by: Alexis GUILLEMET <alexis.guillemet@dunasys.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: Alexis GUILLEMET <alexis.guillemet@dunasys.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/pinctrl/intel/pinctrl-intel.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 82827d637492a..8ea5305bc320f 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -1085,11 +1085,6 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
- 	struct crypto_shash *hash_tfm = ctx->hash_tfm;
- 	int blocksize, digestsize, ret;
- 
--	if (!keys->authkeylen) {
--		pr_err("hisi_sec2: aead auth key error!\n");
--		return -EINVAL;
--	}
--
- 	blocksize = crypto_shash_blocksize(hash_tfm);
- 	digestsize = crypto_shash_digestsize(hash_tfm);
- 	if (keys->authkeylen > blocksize) {
-@@ -1101,7 +1096,8 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
- 		}
- 		ctx->a_key_len = digestsize;
- 	} else {
--		memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
-+		if (keys->authkeylen)
-+			memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
- 		ctx->a_key_len = keys->authkeylen;
- 	}
+diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
+index 527e4b87ae52e..f8b0221055e4a 100644
+--- a/drivers/pinctrl/intel/pinctrl-intel.c
++++ b/drivers/pinctrl/intel/pinctrl-intel.c
+@@ -1543,7 +1543,6 @@ static int intel_pinctrl_probe_pwm(struct intel_pinctrl *pctrl,
+ 		.clk_rate = 19200000,
+ 		.npwm = 1,
+ 		.base_unit_bits = 22,
+-		.bypass = true,
+ 	};
+ 	struct pwm_chip *chip;
  
 -- 
 2.39.5
