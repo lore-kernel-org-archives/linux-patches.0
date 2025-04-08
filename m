@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB6B374C4;
-	Tue,  8 Apr 2025 11:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB13266583;
+	Tue,  8 Apr 2025 11:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110976; cv=none; b=fO0Qw1EG4WEIfbwdfIRWS0c/sZKLhvmkjQ2MJszVPktBYRYXh+rr5GyAWFox1G3F15ZRx4MX1nA3R9yaNbSBhg0J9sV0MKRK8qoDisMXlgrD/B4gXFxFldEiNjB/w6/EsnUuT1y2c2LaHflgJ8ktGNeEoTL/hhJGR5OrQdJvjwU=
+	t=1744110978; cv=none; b=T56HTtz74PC+Am3sUdxy+53gcywh01GVG4tw8/ofsz/BFVouAzgPBKhmkPSYhAwrH3oXmr/2/J/bq/PEiSNmH9lIELAGfHUWlhEHBF2dxhWIklsyzAuvP6CbmUYONJOWYfvwA66+yFKyYVSkSjL1cwejaU+Mr+pJfPoGD8fKYSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110976; c=relaxed/simple;
-	bh=AStSGNN9jF1cWhMb3ic0W1gkw6bp9xA1+ZYn0reIjms=;
+	s=arc-20240116; t=1744110978; c=relaxed/simple;
+	bh=qcaR/XolJUT++KnECSEer+pVxBlVa0O9BeivsU1D6ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgfr8BmrQoE0wlbTFui0Ne7v0hwnsQ9tKKdnOFk5ZbZu9ws3g5QT5adN9X+6AKK31VZaEbYr10dtEuVvA39aEGjd7hrgj6vG+qbLLanU7kAsYGJ/zF9BYOrXeDeR5klW1UAVeC9i8y4rmwG1zfh7GrP5kvuwru5W7+QshGIAlFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBMYnZ2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmO/kd8mnsPAjU//ydaa3J+WoRys/UvGDnrUNT1dT0E+/zwKtr0d9PQNIrASWQEao0ZfCp70j53RLAzSmTnuq9otYN/7Pj33gfTQ25vlB7FztvvzDI4OtCIWKBIx8xz7rK9rmSOJCivw0LRGoNpTVbYWttkkpsf/SnTdFmTOmTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHn8QeU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBMYnZ2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FBEC4CEE5;
-	Tue,  8 Apr 2025 11:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHn8QeU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAD6C4CEE7;
+	Tue,  8 Apr 2025 11:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110975;
-	bh=AStSGNN9jF1cWhMb3ic0W1gkw6bp9xA1+ZYn0reIjms=;
+	s=korg; t=1744110978;
+	bh=qcaR/XolJUT++KnECSEer+pVxBlVa0O9BeivsU1D6ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBMYnZ2f63cadiyd7z7lwKT1tjmWaMdqwuP3QlI33T5p0pPcIPR+mrmGbm5+mb/VJ
-	 SQygZNDoFU7bvikAsMHdFxq2qHbWT4Wxb8dzFVRFPaHqN+BebWdBf28G7iwRTqUYJ8
-	 eVHZ0+oHU40dAamtknNY8QshE7e6x3sTV8R7zSOU=
+	b=lHn8QeU1oNvLssUYq0pyxsie++dhEClA82imE9I/Ahy5IVdyYlLem9c64dE+BuhGF
+	 RAgGaraUo+gDMHTAR9i0DnZaUsRJ5I9AsNBr8TxCL/jGM35Awx4Q6NUZRNxFzK3JMO
+	 /UhIxeJ3NClM+OXUxItbhNMPPLaAYpISmRe4VX7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 264/731] net: libwx: fix Tx L4 checksum
-Date: Tue,  8 Apr 2025 12:42:41 +0200
-Message-ID: <20250408104920.422603659@linuxfoundation.org>
+Subject: [PATCH 6.14 265/731] rwonce: fix crash by removing READ_ONCE() for unaligned read
+Date: Tue,  8 Apr 2025 12:42:42 +0200
+Message-ID: <20250408104920.444579869@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit c7d82913d5f9e97860772ee4051eaa66b56a6273 ]
+[ Upstream commit 47a60391ae0ed04ffbb9bd8dcd94ad9d08b41288 ]
 
-The hardware only supports L4 checksum offload for TCP/UDP/SCTP protocol.
-There was a bug to set Tx checksum flag for the other protocol that results
-in Tx ring hang. Fix to compute software checksum for these packets.
+When arm64 is built with LTO, it upgrades READ_ONCE() to ldar / ldapr
+(load-acquire) to avoid issues that can be caused by the compiler
+optimizing away implicit address dependencies.
 
-Fixes: 3403960cdf86 ("net: wangxun: libwx add tx offload functions")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20250324103235.823096-2-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Unlike plain loads, these load-acquire instructions actually require an
+aligned address.
+
+For now, fix it by removing the READ_ONCE() that the buggy commit
+introduced.
+
+Fixes: ece69af2ede1 ("rwonce: handle KCSAN like KASAN in read_word_at_a_time()")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/r/20250326203926.GA10484@ax162
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/asm-generic/rwonce.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 9294a9d8c5541..497abf2723a5e 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1337,6 +1337,7 @@ static void wx_tx_csum(struct wx_ring *tx_ring, struct wx_tx_buffer *first,
- 	u8 tun_prot = 0;
+diff --git a/include/asm-generic/rwonce.h b/include/asm-generic/rwonce.h
+index e9f2b84d2338c..52b969c7cef93 100644
+--- a/include/asm-generic/rwonce.h
++++ b/include/asm-generic/rwonce.h
+@@ -86,7 +86,12 @@ unsigned long read_word_at_a_time(const void *addr)
+ 	kasan_check_read(addr, 1);
+ 	kcsan_check_read(addr, 1);
  
- 	if (skb->ip_summed != CHECKSUM_PARTIAL) {
-+csum_failed:
- 		if (!(first->tx_flags & WX_TX_FLAGS_HW_VLAN) &&
- 		    !(first->tx_flags & WX_TX_FLAGS_CC))
- 			return;
-@@ -1441,7 +1442,8 @@ static void wx_tx_csum(struct wx_ring *tx_ring, struct wx_tx_buffer *first,
- 					WX_TXD_L4LEN_SHIFT;
- 			break;
- 		default:
--			break;
-+			skb_checksum_help(skb);
-+			goto csum_failed;
- 		}
+-	return READ_ONCE(*(unsigned long *)addr);
++	/*
++	 * This load can race with concurrent stores to out-of-bounds memory,
++	 * but READ_ONCE() can't be used because it requires higher alignment
++	 * than plain loads in arm64 builds with LTO.
++	 */
++	return *(unsigned long *)addr;
+ }
  
- 		/* update TX checksum flag */
+ #endif /* __ASSEMBLY__ */
 -- 
 2.39.5
 
