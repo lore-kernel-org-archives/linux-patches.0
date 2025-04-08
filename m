@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2B82698BE;
-	Tue,  8 Apr 2025 11:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B329A22257E;
+	Tue,  8 Apr 2025 11:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113004; cv=none; b=tAa1EQp/gtRKQ9s0gfEJOaZnBB8hOsP3MdUmBGIRgv1BnsGymWi7ZXzENSsMETyMOJb7YCKvPTCW6lmgadRfWEajDjsF5n/UsJwuicc99nFtflEN3tXMf+TXHwAXRwPG76j4TmJuppOGVxcjaqeNObyCl5BehJhi/13DpgsVejg=
+	t=1744113006; cv=none; b=UcU2EK66Xd3otfBupM3BRWj92+bzqEl7D1/PTkpEYBcNRlgOTvNKu6e/zMSA1L5BVc28gYpZqNrs3HaJA3+bM+dQqcqhW5yXEFnAe1UmdqXULTrBUeaqk14pABkOxiQLKRm1XYPQ9Y38yoAq36LPcM0CmngQLS1oLuml1Jg0E9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113004; c=relaxed/simple;
-	bh=i7X7SAhBOmEPFI6jPCFWP2tRuq4aHzMwl5QlRSWiIqA=;
+	s=arc-20240116; t=1744113006; c=relaxed/simple;
+	bh=76a2ZE1WPOaDxBOO0nRdU2XsjnJ+hpJckm5rImXZS08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgOrIiGbrALKuOmoR73ynOUG4IVNTIQHuDRXqR49MpbsesYFGLc9F0QvKo30S1DQZJnUtp8OCMyBfp3KqynVKNB/dP93HNKb4WCRbWr9K8k+7S3gRyrtOYr0bxibKXgc/eyzBrvwC3L8Fkkhhf0xLc/F5pWQi8AUpQyC+5i2Blc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frKpW6ra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9zTrRzGLWjub9/D214/9s+x81wrhrvAC6HWgEoA0O3wJ1RJrrorNYRmWJe9YIm+1vD6rfyD4PpZBem5db6Gq6YJArm7aPwww3TxFXPWlUtwT/mpC39FUtTHvWmEpa6uls63DNDaCAhRkgXRRUX8UZLVgdQoOf0xwIb0TyIq0X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUe0kWuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frKpW6ra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D006C4CEEB;
-	Tue,  8 Apr 2025 11:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUe0kWuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45073C4CEE5;
+	Tue,  8 Apr 2025 11:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113004;
-	bh=i7X7SAhBOmEPFI6jPCFWP2tRuq4aHzMwl5QlRSWiIqA=;
+	s=korg; t=1744113006;
+	bh=76a2ZE1WPOaDxBOO0nRdU2XsjnJ+hpJckm5rImXZS08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frKpW6raBIHEseIbrrNL+XWye+U1pUQa0Yanj7FTikB3Sx3+iV8Hs4YPryapTp4WG
-	 fW6IhWhbd02pNhmErGc/rH53lfsXIC1mojYveII6pMuXjjMRnRUijDnFtHPc0/2BPT
-	 rtWileIzaCfT9lKEVVUsOiKn0A4/SvWd7HPS6u/w=
+	b=hUe0kWuCjn/nMr+DwWeBYtPFkm16ByRlrFTOejS3wPRWFwQ5pzGiUIUQdrU+DwSpb
+	 r5hIfQ4dM7S+LG7K6E5U0UHbx/15HIAjTJt+AYouLUNmC/2bMssCXarC2iXiMcVla5
+	 KAV+oxRarjbr7qbL0E2BkRBmw3KOWcXHkFQT7Z5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 251/279] can: flexcan: only change CAN state when link up in system PM
-Date: Tue,  8 Apr 2025 12:50:34 +0200
-Message-ID: <20250408104833.158236833@linuxfoundation.org>
+	Kamal Dasu <kdasu.kdev@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 278/279] mmc: sdhci-brcmstb: use clk_get_rate(base_clk) in PM resume
+Date: Tue,  8 Apr 2025 12:51:01 +0200
+Message-ID: <20250408104833.895889300@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,75 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Kamal Dasu <kdasu.kdev@gmail.com>
 
-[ Upstream commit fd99d6ed20234b83d65b9c5417794343577cf3e5 ]
+commit 886201c70a1cab34ef96f867c2b2dd6379ffa7b9 upstream.
 
-After a suspend/resume cycle on a down interface, it will come up as
-ERROR-ACTIVE.
+Use clk_get_rate for base_clk on resume before setting new rate.
+This change ensures that the clock api returns current rate
+and sets the clock to the desired rate and honors CLK_GET_NO_CACHE
+attribute used by clock api.
 
-$ ip -details -s -s a s dev flexcan0
-3: flexcan0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN group default qlen 10
-    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 1000
-
-$ sudo systemctl suspend
-
-$ ip -details -s -s a s dev flexcan0
-3: flexcan0: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN group default qlen 10
-    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0
-    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 1000
-
-And only set CAN state to CAN_STATE_ERROR_ACTIVE when resume process
-has no issue, otherwise keep in CAN_STATE_SLEEPING as suspend did.
-
-Fixes: 4de349e786a3 ("can: flexcan: fix resume function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20250314110145.899179-1-haibo.chen@nxp.com
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/all/20250314-married-polar-elephant-b15594-mkl@pengutronix.de
-[mkl: add newlines]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 97904a59855c (mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0)
+Signed-off-by: Kamal Dasu <kdasu.kdev@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20220714174132.18541-1-kdasu.kdev@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/flexcan.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-brcmstb.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/flexcan.c b/drivers/net/can/flexcan.c
-index 837bca7347594..fc9cfe434ce4f 100644
---- a/drivers/net/can/flexcan.c
-+++ b/drivers/net/can/flexcan.c
-@@ -2343,8 +2343,9 @@ static int __maybe_unused flexcan_suspend(struct device *device)
- 		}
- 		netif_stop_queue(dev);
- 		netif_device_detach(dev);
-+
-+		priv->can.state = CAN_STATE_SLEEPING;
- 	}
--	priv->can.state = CAN_STATE_SLEEPING;
- 
- 	return 0;
- }
-@@ -2355,7 +2356,6 @@ static int __maybe_unused flexcan_resume(struct device *device)
- 	struct flexcan_priv *priv = netdev_priv(dev);
- 	int err;
- 
--	priv->can.state = CAN_STATE_ERROR_ACTIVE;
- 	if (netif_running(dev)) {
- 		netif_device_attach(dev);
- 		netif_start_queue(dev);
-@@ -2375,6 +2375,8 @@ static int __maybe_unused flexcan_resume(struct device *device)
- 
- 			flexcan_chip_interrupts_enable(dev);
- 		}
-+
-+		priv->can.state = CAN_STATE_ERROR_ACTIVE;
+--- a/drivers/mmc/host/sdhci-brcmstb.c
++++ b/drivers/mmc/host/sdhci-brcmstb.c
+@@ -414,7 +414,14 @@ static int sdhci_brcmstb_resume(struct d
+ 	ret = sdhci_pltfm_resume(dev);
+ 	if (!ret && priv->base_freq_hz) {
+ 		ret = clk_prepare_enable(priv->base_clk);
+-		if (!ret)
++		/*
++		 * Note: using clk_get_rate() below as clk_get_rate()
++		 * honors CLK_GET_RATE_NOCACHE attribute, but clk_set_rate()
++		 * may do implicit get_rate() calls that do not honor
++		 * CLK_GET_RATE_NOCACHE.
++		 */
++		if (!ret &&
++		    (clk_get_rate(priv->base_clk) != priv->base_freq_hz))
+ 			ret = clk_set_rate(priv->base_clk, priv->base_freq_hz);
  	}
  
- 	return 0;
--- 
-2.39.5
-
 
 
