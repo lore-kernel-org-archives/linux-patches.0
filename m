@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C8526A0CF;
-	Tue,  8 Apr 2025 12:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53261EB3D;
+	Tue,  8 Apr 2025 12:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116753; cv=none; b=Mc+8d458BuSoqkg4X+HE3ZGfAi9Hue4G4fiZK7PQKOYKG2KYaI6bfTLHsiNjTJ9NrwO5QJyqBuFUHfCNn89Nj5xQ9dEScJwps9B/is26YzV1qUpxMekKlDn+sGsXGCH8gMke2ZlK1f8F5TH4zcWYVFvB0puGyVUyKoscUJvUumY=
+	t=1744116755; cv=none; b=O22LQ3f5k6UwgHAb3mmkk+XxRptHpJjihKt6UytFBBAviKBHt1s5Cw0mIdS6s3fwLzSA3ttut4OpiRuzcydCNT1eTNegnvSYxGBYIvSCNLjze4DTnkOA6ojoU0rhGb6TsB9vxLCnB5BCGpaADDZGywXfxPYrREAv9STQ1+Gpa2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116753; c=relaxed/simple;
-	bh=qY/bvLEp0v18NHpRh9dHqboFlHBTUfzIcXxiicKpAb8=;
+	s=arc-20240116; t=1744116755; c=relaxed/simple;
+	bh=R7LB4mjrh0+MbCnWNMZZpl5Qpj4aebh1wUVPvQmBSRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JiVNrR2orKV22oo0/SAmCkyaDyxel8dBiMhNX4Rzz/TGnEMSs89cqNyk3PL4wifpwAR9RCTD8oST9CnMt72yzaKhOJMIIN0xnZuoQhO1Pk3Hu74OPtoE6CAt2YHCZAkThLh3SqCkyyb3HvtHciVIy6cLyJ6ZM+MhEokWdVUGwiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHpWkFHx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJ6Mpeh5K4zQq2xBEN7QYdtLjEACLbZ21HS32jzEAKxzIhHcUSTqzfSAYAzKePz8Q/thF/cObsXpZtaNtAgpi8QMlqAj6TEkXmJ3JN9SaEEQ1S/0lE7KGkPTwH1Go765/2z9LcUaaQQjBCGJdRVZE3rlFDvCLF76RGxd3QeW+1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DsEdPRHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHpWkFHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E7AC4CEE5;
-	Tue,  8 Apr 2025 12:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DsEdPRHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3495DC4CEE5;
+	Tue,  8 Apr 2025 12:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116752;
-	bh=qY/bvLEp0v18NHpRh9dHqboFlHBTUfzIcXxiicKpAb8=;
+	s=korg; t=1744116755;
+	bh=R7LB4mjrh0+MbCnWNMZZpl5Qpj4aebh1wUVPvQmBSRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHpWkFHxSGceP2cSEM7o4kQ/Zh0S9lPyrPuo40erOGmJauKaoj1+Y/3nIALQTUztG
-	 y1mOCoBwdDDAM4S2ouV8YHWUXpNNE/Mv9yuzpCJMQXlIHDq86GnpVy4u8Y8raxG6DE
-	 E98qZ2wh/dyKYpFLKsJ2QVwKlbZMJdbOb5kvpfes=
+	b=DsEdPRHCupqV8+FeSfSvAfV2hJMAdB/dc5IB2CWtogR+6wjyT3fICtRGCmJrC/bAP
+	 L0m+VAbExJP+fb6iRMrTlzTBysEAFekELSlF6kOD9RP2hVx1IgM6wEDwuuli71RL4N
+	 aszTwuO3u2Tn0ZMgsCO3tXXseeEMxYnRoTJTUSaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 255/423] wifi: iwlwifi: fw: allocate chained SG tables for dump
-Date: Tue,  8 Apr 2025 12:49:41 +0200
-Message-ID: <20250408104851.682914979@linuxfoundation.org>
+Subject: [PATCH 6.12 220/423] tty: n_tty: use uint for space returned by tty_write_room()
+Date: Tue,  8 Apr 2025 12:49:06 +0200
+Message-ID: <20250408104850.854426860@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,138 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 7774e3920029398ad49dc848b23840593f14d515 ]
+[ Upstream commit d97aa066678bd1e2951ee93db9690835dfe57ab6 ]
 
-The firmware dumps can be pretty big, and since we use single
-pages for each SG table entry, even the table itself may end
-up being an order-5 allocation. Build chained tables so that
-we need not allocate a higher-order table here.
+tty_write_room() returns an "unsigned int". So in case some insane
+driver (like my tty test driver) returns (legitimate) UINT_MAX from its
+tty_operations::write_room(), n_tty is confused on several places.
 
-This could be improved and cleaned up, e.g. by using the SG
-pool code or simply kvmalloc(), but all of that would require
-also updating the devcoredump first since that frees it all,
-so we need to be more careful. SG pool might also run against
-the CONFIG_ARCH_NO_SG_CHAIN limitation, which is irrelevant
-here.
+For example, in process_output_block(), the result of tty_write_room()
+is stored into (signed) "int". So this UINT_MAX suddenly becomes -1. And
+that is extended to ssize_t and returned from process_output_block().
+This causes a write() to such a node to receive -EPERM (which is -1).
 
-Also use _devcd_free_sgtable() for the error paths now, much
-simpler especially since it's in two places now.
+Fix that by using proper "unsigned int" and proper "== 0" test. And
+return 0 constant directly in that "if", so that it is immediately clear
+what is returned ("space" equals to 0 at that point).
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.697c7a465ac9.Iea982df46b5c075bfb77ade36f187d99a70c63db@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Similarly for process_output() and __process_echoes().
+
+Note this does not fix any in-tree driver as of now.
+
+If you want "Fixes: something", it would be commit 03b3b1a2405c ("tty:
+make tty_operations::write_room return uint"). I intentionally do not
+mark this patch by a real tag below.
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20250317070046.24386-6-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 86 ++++++++++++++-------
- 1 file changed, 58 insertions(+), 28 deletions(-)
+ drivers/tty/n_tty.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index fb2ea38e89aca..6594216f873c4 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -558,41 +558,71 @@ static void iwl_dump_prph(struct iwl_fw_runtime *fwrt,
- }
- 
- /*
-- * alloc_sgtable - allocates scallerlist table in the given size,
-- * fills it with pages and returns it
-+ * alloc_sgtable - allocates (chained) scatterlist in the given size,
-+ *	fills it with pages and returns it
-  * @size: the size (in bytes) of the table
--*/
--static struct scatterlist *alloc_sgtable(int size)
-+ */
-+static struct scatterlist *alloc_sgtable(ssize_t size)
+diff --git a/drivers/tty/n_tty.c b/drivers/tty/n_tty.c
+index 5e9ca4376d686..94fa981081fdb 100644
+--- a/drivers/tty/n_tty.c
++++ b/drivers/tty/n_tty.c
+@@ -486,7 +486,8 @@ static int do_output_char(u8 c, struct tty_struct *tty, int space)
+ static int process_output(u8 c, struct tty_struct *tty)
  {
--	int alloc_size, nents, i;
--	struct page *new_page;
--	struct scatterlist *iter;
--	struct scatterlist *table;
-+	struct scatterlist *result = NULL, *prev;
-+	int nents, i, n_prev;
+ 	struct n_tty_data *ldata = tty->disc_data;
+-	int	space, retval;
++	unsigned int space;
++	int retval;
  
- 	nents = DIV_ROUND_UP(size, PAGE_SIZE);
--	table = kcalloc(nents, sizeof(*table), GFP_KERNEL);
--	if (!table)
--		return NULL;
--	sg_init_table(table, nents);
--	iter = table;
--	for_each_sg(table, iter, sg_nents(table), i) {
--		new_page = alloc_page(GFP_KERNEL);
--		if (!new_page) {
--			/* release all previous allocated pages in the table */
--			iter = table;
--			for_each_sg(table, iter, sg_nents(table), i) {
--				new_page = sg_page(iter);
--				if (new_page)
--					__free_page(new_page);
--			}
--			kfree(table);
-+
-+#define N_ENTRIES_PER_PAGE (PAGE_SIZE / sizeof(*result))
-+	/*
-+	 * We need an additional entry for table chaining,
-+	 * this ensures the loop can finish i.e. we can
-+	 * fit at least two entries per page (obviously,
-+	 * many more really fit.)
-+	 */
-+	BUILD_BUG_ON(N_ENTRIES_PER_PAGE < 2);
-+
-+	while (nents > 0) {
-+		struct scatterlist *new, *iter;
-+		int n_fill, n_alloc;
-+
-+		if (nents <= N_ENTRIES_PER_PAGE) {
-+			/* last needed table */
-+			n_fill = nents;
-+			n_alloc = nents;
-+			nents = 0;
-+		} else {
-+			/* fill a page with entries */
-+			n_alloc = N_ENTRIES_PER_PAGE;
-+			/* reserve one for chaining */
-+			n_fill = n_alloc - 1;
-+			nents -= n_fill;
-+		}
-+
-+		new = kcalloc(n_alloc, sizeof(*new), GFP_KERNEL);
-+		if (!new) {
-+			if (result)
-+				_devcd_free_sgtable(result);
- 			return NULL;
- 		}
--		alloc_size = min_t(int, size, PAGE_SIZE);
--		size -= PAGE_SIZE;
--		sg_set_page(iter, new_page, alloc_size, 0);
-+		sg_init_table(new, n_alloc);
-+
-+		if (!result)
-+			result = new;
-+		else
-+			sg_chain(prev, n_prev, new);
-+		prev = new;
-+		n_prev = n_alloc;
-+
-+		for_each_sg(new, iter, n_fill, i) {
-+			struct page *new_page = alloc_page(GFP_KERNEL);
-+
-+			if (!new_page) {
-+				_devcd_free_sgtable(result);
-+				return NULL;
-+			}
-+
-+			sg_set_page(iter, new_page, PAGE_SIZE, 0);
-+		}
+ 	mutex_lock(&ldata->output_lock);
+ 
+@@ -522,16 +523,16 @@ static ssize_t process_output_block(struct tty_struct *tty,
+ 				    const u8 *buf, unsigned int nr)
+ {
+ 	struct n_tty_data *ldata = tty->disc_data;
+-	int	space;
+-	int	i;
++	unsigned int space;
++	int i;
+ 	const u8 *cp;
+ 
+ 	mutex_lock(&ldata->output_lock);
+ 
+ 	space = tty_write_room(tty);
+-	if (space <= 0) {
++	if (space == 0) {
+ 		mutex_unlock(&ldata->output_lock);
+-		return space;
++		return 0;
  	}
--	return table;
-+
-+	return result;
- }
+ 	if (nr > space)
+ 		nr = space;
+@@ -696,7 +697,7 @@ static int n_tty_process_echo_ops(struct tty_struct *tty, size_t *tail,
+ static size_t __process_echoes(struct tty_struct *tty)
+ {
+ 	struct n_tty_data *ldata = tty->disc_data;
+-	int	space, old_space;
++	unsigned int space, old_space;
+ 	size_t tail;
+ 	u8 c;
  
- static void iwl_fw_get_prph_len(struct iwl_fw_runtime *fwrt,
 -- 
 2.39.5
 
