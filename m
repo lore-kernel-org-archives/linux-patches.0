@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0677270ECB;
-	Tue,  8 Apr 2025 12:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03643276028;
+	Tue,  8 Apr 2025 12:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115968; cv=none; b=mHemvua3IOMljfQHGVHHWRQvOY8iQmatbnEQbTdg+tOTF63vwwAzGcfiHLRpc2JlouEtNjHEq3mgdnnvEnhNZ+NRoXg0AOWpP4KBtF0HR1Cr3+ptIDFg+0sHZOiyI4gjNtTb/Gk+uzPqliqZIYmURpdjYxNDtaE9kzPDxXlBjeM=
+	t=1744115971; cv=none; b=NKi55GUEflhFqCsTFRLI7uy9mSrS5IiLoiu9kNu0L9ylifO/6BYVlz1Z12Bq0otyCYaQMpTDmSyKzVxOTbGPR/eeCwTFi18EYVAp3uO52ysumnYjtO4Q67qTw4AGyiO1ko9jLMivBoQxpQ1y8PtXeRa+3im5UbY2h43ldXse5iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115968; c=relaxed/simple;
-	bh=uSgovpjzsgwy/d4UzCE9SkrEcqhKcXdwUFrjl81/WXU=;
+	s=arc-20240116; t=1744115971; c=relaxed/simple;
+	bh=OE9Bs42ipV6JGaHfuEczIFUwpVMDYnEzXRgQRiQpkc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QViY6m7avWQ1NuIFrI4w9Or08v+825HAjxFHFQNISGsqJsETrz7mh4yEzUv82k32M2Z5ews9LiWEQPBMF2QNNXhPFagkniL3w1PtUrECEGGBT3xvBrTByf13L7AhEUpFlBrMjtQoLGI5v7PXyPKSg/VttorJOSy9fvdX2KkAERI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kU83Yjtp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dt0/WFv8KtbN05HLmJR0aFm/QLhjFbw6gVOch1UABwbi5M1ofUJywBLub+/dEgbVpaN9j5ZGN4Bkj4bTYnn+nY4wlngdS1FLb2fk0ZFrw/3UeUg7ycWxOerknwC8uXglR2wIcKZSUHV3qOInjD9oJpsvfeOu+o+rYdjXg+8r2Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozwghHeg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kU83Yjtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81788C4CEE5;
-	Tue,  8 Apr 2025 12:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozwghHeg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2619FC4CEE5;
+	Tue,  8 Apr 2025 12:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115967;
-	bh=uSgovpjzsgwy/d4UzCE9SkrEcqhKcXdwUFrjl81/WXU=;
+	s=korg; t=1744115970;
+	bh=OE9Bs42ipV6JGaHfuEczIFUwpVMDYnEzXRgQRiQpkc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kU83Yjtp3Tkpv0NPm34PPJ6Fe3N8awUwrpG60DOmIsao11/xSmH4hNC/2Kl8bif+R
-	 /vMW+fGsz8o98HOAT56rZOy2p33uz7oiJP01YyToSvQIoH7z3z07DlSkX4ab8Q/HAP
-	 Wqoks3ciA8foLQsObEG4A5q675LwfnU7wkgXTrvY=
+	b=ozwghHegmO1vJ4CRH4ejEigHPYYKM1IkleGbYsr1PS7+Z+zvS1899kRmU7Do82E88
+	 /GgRi5P04XORcfkeLJfhUyLTxM/wGJiYP3/pIGaciJsCTqy/NPP1Yj8YAN9b4Ym83B
+	 iGPJ0oo3jiig91fqEJBFJlT5lgAwbyvKOtQHoxWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/204] tty: serial: fsl_lpuart: disable transmitter before changing RS485 related registers
-Date: Tue,  8 Apr 2025 12:51:42 +0200
-Message-ID: <20250408104825.364006188@linuxfoundation.org>
+	Ying Lu <luying1@xiaomi.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 173/204] usbnet:fix NPE during rx_complete
+Date: Tue,  8 Apr 2025 12:51:43 +0200
+Message-ID: <20250408104825.391861875@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -46,69 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Ying Lu <luying1@xiaomi.com>
 
-[ Upstream commit f5cb528d6441eb860250a2f085773aac4f44085e ]
+commit 51de3600093429e3b712e5f091d767babc5dd6df upstream.
 
-According to the LPUART reference manual, TXRTSE and TXRTSPOL of MODIR
-register only can be changed when the transmitter is disabled.
-So disable the transmitter before changing RS485 related registers and
-re-enable it after the change is done.
+Missing usbnet_going_away Check in Critical Path.
+The usb_submit_urb function lacks a usbnet_going_away
+validation, whereas __usbnet_queue_skb includes this check.
 
-Fixes: 67b01837861c ("tty: serial: lpuart: Add RS485 support for 32-bit uart flavour")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250312022503.1342990-1-sherry.sun@nxp.com
+This inconsistency creates a race condition where:
+A URB request may succeed, but the corresponding SKB data
+fails to be queued.
+
+Subsequent processes:
+(e.g., rx_complete → defer_bh → __skb_unlink(skb, list))
+attempt to access skb->next, triggering a NULL pointer
+dereference (Kernel Panic).
+
+Fixes: 04e906839a05 ("usbnet: fix cyclical race on disconnect with work queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ying Lu <luying1@xiaomi.com>
+Link: https://patch.msgid.link/4c9ef2efaa07eb7f9a5042b74348a67e5a3a7aea.1743584159.git.luying1@xiaomi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/usb/usbnet.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index e96354edff6e9..011f175936132 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1395,6 +1395,19 @@ static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termio
- 
- 	unsigned long modem = lpuart32_read(&sport->port, UARTMODIR)
- 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
-+	u32 ctrl;
-+
-+	/* TXRTSE and TXRTSPOL only can be changed when transmitter is disabled. */
-+	ctrl = lpuart32_read(&sport->port, UARTCTRL);
-+	if (ctrl & UARTCTRL_TE) {
-+		/* wait for the transmit engine to complete */
-+		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+		lpuart32_write(&sport->port, ctrl & ~UARTCTRL_TE, UARTCTRL);
-+
-+		while (lpuart32_read(&sport->port, UARTCTRL) & UARTCTRL_TE)
-+			cpu_relax();
-+	}
-+
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
- 
- 	if (rs485->flags & SER_RS485_ENABLED) {
-@@ -1414,6 +1427,10 @@ static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termio
- 	}
- 
- 	lpuart32_write(&sport->port, modem, UARTMODIR);
-+
-+	if (ctrl & UARTCTRL_TE)
-+		lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+
- 	return 0;
- }
- 
--- 
-2.39.5
-
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -530,7 +530,8 @@ static int rx_submit (struct usbnet *dev
+ 	    netif_device_present (dev->net) &&
+ 	    test_bit(EVENT_DEV_OPEN, &dev->flags) &&
+ 	    !test_bit (EVENT_RX_HALT, &dev->flags) &&
+-	    !test_bit (EVENT_DEV_ASLEEP, &dev->flags)) {
++	    !test_bit (EVENT_DEV_ASLEEP, &dev->flags) &&
++	    !usbnet_going_away(dev)) {
+ 		switch (retval = usb_submit_urb (urb, GFP_ATOMIC)) {
+ 		case -EPIPE:
+ 			usbnet_defer_kevent (dev, EVENT_RX_HALT);
+@@ -551,8 +552,7 @@ static int rx_submit (struct usbnet *dev
+ 			tasklet_schedule (&dev->bh);
+ 			break;
+ 		case 0:
+-			if (!usbnet_going_away(dev))
+-				__usbnet_queue_skb(&dev->rxq, skb, rx_start);
++			__usbnet_queue_skb(&dev->rxq, skb, rx_start);
+ 		}
+ 	} else {
+ 		netif_dbg(dev, ifdown, dev->net, "rx: stopped\n");
 
 
