@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B7B224AEB;
-	Tue,  8 Apr 2025 12:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B970B224AEB;
+	Tue,  8 Apr 2025 12:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115725; cv=none; b=gcw9E0TtWl7tGST0SqNtcPnZKDYoRZ/iTEinWKt32UXo4MZFwcBvjrLhlMZMlt05aMyKkkL48tMgiVTXSz3NCsmrS/A7Z2hd9VG0uabIhDsyKhxAn6HXMMVEfmSUsaJ/49Yylz27nanFYlb/MYl6jtZA9t8mt9bdE7QIcearrtA=
+	t=1744115728; cv=none; b=JLe24q74Q56Rz92Lx0e+EdSAmhn3VIg0X4cjcuDuorPu6C+HBtIfd3XZAF4mCr0tVx62TTFTBDiC6arKVtc8qhAKpqwMzTC/HpeZkOh5TgceRflcjLRss3YRDF8xthyM0DiwZrlJcXFb0V+IqL0bpDszZn43a0bEWf18sszOu40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115725; c=relaxed/simple;
-	bh=18BBKuthwnk3j4yIHwzJiTvX6KjnK8MzpzwNM0++zFk=;
+	s=arc-20240116; t=1744115728; c=relaxed/simple;
+	bh=UgCx2+3HEVlxcMZ+O97qFCz7q9OUFOAhuX67QnhYO4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRT8RYYNbzznGUy281lLqR1GCyrftcqY4LySKCD/leXKAwz5f5427ZKQLXQJKxilFIOBz1nH/qa0BQo/AE4W/1JNN7GaniRfgy0rDphW205a69vQw4W0u4ZAsP2XEcmbRa/3zWv7df4L2tXeM05tIdY+VR2VhgC1Bn3ZB41N5rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYMvnvJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLhv+I+9QkXXiSpcRA4fuXGY8c5dUIWOxPMh/5t8g8Ue1LzRcXhi/uGxlkTHR6bDJ4+x4QOg2f1HgIunxvEBPMTngh4GuQ0JYoXzwANZQrsjGq/k2zF1ifKPFrqodfCfTF3F1nwT/yVvutc5Hj69Czu1Z+CkyrSN9xYgQ+98+U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc7Wu0qa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYMvnvJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D190C4CEE5;
-	Tue,  8 Apr 2025 12:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc7Wu0qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36D6C4CEE5;
+	Tue,  8 Apr 2025 12:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115725;
-	bh=18BBKuthwnk3j4yIHwzJiTvX6KjnK8MzpzwNM0++zFk=;
+	s=korg; t=1744115728;
+	bh=UgCx2+3HEVlxcMZ+O97qFCz7q9OUFOAhuX67QnhYO4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYMvnvJwZkaveOFmo2CQtWEeRN0HAk6BYwzMQOLJUgY2NjQ39M35OC6udbepXB097
-	 Z/Jnl4l0iGiSiwAMPSz42gGBrEEGx2DmV1bMUhNWtQSmRzzV39IGaqOOO948wHWKgm
-	 WM5p1+81xTYFaP9JnBLG1S182PaSqox1RcW1fi4U=
+	b=qc7Wu0qa2hqCmwJdNvALtcKI1a+cMGZEmt7YC7WXrXdicBTZOp3kdkxEXKRY6F4PR
+	 G39iwI50Oovotl+de59/avVIU41XRui+fRVYD8s+tJlybMXU5Yu1b29a94b/Hy6K0a
+	 GO2AEU8IJOgyiPaph/w+J8x+x2J9jCr+He2wvDzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Lee Jones <lee@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/204] mfd: sm501: Switch to BIT() to mitigate integer overflows
-Date: Tue,  8 Apr 2025 12:50:12 +0200
-Message-ID: <20250408104822.762946204@linuxfoundation.org>
+Subject: [PATCH 6.1 083/204] x86/dumpstack: Fix inaccurate unwinding from exception stacks due to misplaced assignment
+Date: Tue,  8 Apr 2025 12:50:13 +0200
+Message-ID: <20250408104822.790518502@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 2d8cb9ffe18c2f1e5bd07a19cbce85b26c1d0cf0 ]
+[ Upstream commit 2c118f50d7fd4d9aefc4533a26f83338b2906b7a ]
 
-If offset end up being high enough, right hand expression in functions
-like sm501_gpio_set() shifted left for that number of bits, may
-not fit in int type.
+Commit:
 
-Just in case, fix that by using BIT() both as an option safe from
-overflow issues and to make this step look similar to other gpio
-drivers.
+  2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+was intended to ensure alignment of the stack pointer; but it also moved
+the initialization of the "stack" variable down into the loop header.
 
-Fixes: f61be273d369 ("sm501: add gpiolib support")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20250115171206.20308-1-n.zhandarovich@fintech.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+This was likely intended as a no-op cleanup, since the commit
+message does not mention it; however, this caused a behavioral change
+because the value of "regs" is different between the two places.
+
+Originally, get_stack_pointer() used the regs provided by the caller; after
+that commit, get_stack_pointer() instead uses the regs at the top of the
+stack frame the unwinder is looking at. Often, there are no such regs at
+all, and "regs" is NULL, causing get_stack_pointer() to fall back to the
+task's current stack pointer, which is not what we want here, but probably
+happens to mostly work. Other times, the original regs will point to
+another regs frame - in that case, the linear guess unwind logic in
+show_trace_log_lvl() will start unwinding too far up the stack, causing the
+first frame found by the proper unwinder to never be visited, resulting in
+a stack trace consisting purely of guess lines.
+
+Fix it by moving the "stack = " assignment back where it belongs.
+
+Fixes: 2e4be0d011f2 ("x86/show_trace_log_lvl: Ensure stack pointer is aligned, again")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20250325-2025-03-unwind-fixes-v1-2-acd774364768@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/sm501.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/dumpstack.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mfd/sm501.c b/drivers/mfd/sm501.c
-index 3ac4508a6742a..78dcbf8e2c15d 100644
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -920,7 +920,7 @@ static void sm501_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
-@@ -946,7 +946,7 @@ static int sm501_gpio_input(struct gpio_chip *chip, unsigned offset)
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
- 	void __iomem *regs = smchip->regbase;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	unsigned long save;
- 	unsigned long ddr;
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index f18ca44c904b7..52dc5839d1e8e 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -195,6 +195,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	printk("%sCall Trace:\n", log_lvl);
  
-@@ -971,7 +971,7 @@ static int sm501_gpio_output(struct gpio_chip *chip,
- {
- 	struct sm501_gpio_chip *smchip = gpiochip_get_data(chip);
- 	struct sm501_gpio *smgpio = smchip->ourgpio;
--	unsigned long bit = 1 << offset;
-+	unsigned long bit = BIT(offset);
- 	void __iomem *regs = smchip->regbase;
- 	unsigned long save;
- 	unsigned long val;
+ 	unwind_start(&state, task, regs, stack);
++	stack = stack ?: get_stack_pointer(task, regs);
+ 	regs = unwind_get_entry_regs(&state, &partial);
+ 
+ 	/*
+@@ -213,9 +214,7 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	 * - hardirq stack
+ 	 * - entry stack
+ 	 */
+-	for (stack = stack ?: get_stack_pointer(task, regs);
+-	     stack;
+-	     stack = stack_info.next_sp) {
++	for (; stack; stack = stack_info.next_sp) {
+ 		const char *stack_name;
+ 
+ 		stack = PTR_ALIGN(stack, sizeof(long));
 -- 
 2.39.5
 
