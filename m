@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04B926773A;
-	Tue,  8 Apr 2025 12:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECE026773A;
+	Tue,  8 Apr 2025 12:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114180; cv=none; b=gvfvF9cXs2uY3Qvd1wVC9fMNHpjD13ciDcEriFLZSxaOkl5Yy0D0FLCXyg8qDrjbMhTBqe37tDehAVra0dV91qEF4RLBXVCseUIIyBILbEabw1ojSHRHsVeEnSKob3tA14jJ6dUPnl4o/DW4yDsz2ArIwzRMeaJcbzQVlt3Mujk=
+	t=1744114183; cv=none; b=TUkNGGpQPmvA3Me3K7GFQxef50vMoeFVc5gD13WIHJUL/tTj1c3BTFrv6wSeLof0N0LeuD/zzc4AcMDbqModhx6s4oayCB122G5bxEtATD4zcPPFUy5mbapodt+ZbDzDRILOhCg+0oE+GJdqHqit/m5DNUmDtTt1bALwyjB1iY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114180; c=relaxed/simple;
-	bh=uT5SEi/6M3LQD0N3++XBC0enbd7Igv8j8+2WO8Nff48=;
+	s=arc-20240116; t=1744114183; c=relaxed/simple;
+	bh=ZczYfUyeAufgobWitecKb5iiM+qwVvXX2JMiZ7O8+Jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2Ce1zHFQ7VbmaRwoaLwAVwV+cXpGvM1E84QvUBHioc3jhM2j1wCXF00TWQKa+l2j5w2/O7M271b6SIyWfU+3SWLTt5HgHNawBU4esr7wcnOk+tZVjeVMRDMuN/dBKULGw2jWKyb8bLdTfIbsU+8dOfNa2quDCsqNa44+QI0mqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=in8nmAm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kJ5bW6Nj2ebR1ppmUEYrp9w/ylbD1Fb3BtN3LtoW4wmSH2bqAk5DVvd2zUmiKOE4GnAOtlnxRtLkhh3NeJx379oBUS7o/or/de9IZzWYVFeSIsbbyv+PL1qgNpd6bnWTcZSNYuRoSVN04fyGUzY1eUgvq21dRtshYUHjcTzbxIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOwflu2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="in8nmAm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1DDC4CEE5;
-	Tue,  8 Apr 2025 12:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOwflu2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4D1C4CEE5;
+	Tue,  8 Apr 2025 12:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114180;
-	bh=uT5SEi/6M3LQD0N3++XBC0enbd7Igv8j8+2WO8Nff48=;
+	s=korg; t=1744114183;
+	bh=ZczYfUyeAufgobWitecKb5iiM+qwVvXX2JMiZ7O8+Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=in8nmAm0/MUEK8nxlQ78k3gSimyEC8CnJPUUykoA9OKWiXKqKcFKqzxGJHLiv9pDH
-	 5PGd471nS3Dq4/5vNgZYwcdNRVMlJpSbrX6RzfZMw/pwSSLFQg6V/pA+gI5QeHXKHU
-	 OmmMVanfu0a47gUW5NCu5NFMkqmB/8cMY/ATzMtY=
+	b=DOwflu2+USVsGu7EGJzWSSeUCtGT89zETfhrf5mraA6rnrcbLgqbxEBvgagM17YwS
+	 ggOoRc2dOcY7uiD5sk0rrFhzLFUWSYBtIkzIc/JvEmlgJINLnFJ/2a62N3T5UyHBpN
+	 dDY7ICcf5LK098kEIn/H81jk8QjvLI28OTpkFV+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Chang <kevin1.chang@intel.com>,
-	Thomas Chen <Thomas.Chen@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 012/499] EDAC/{skx_common,i10nm}: Fix some missing error reports on Emerald Rapids
-Date: Tue,  8 Apr 2025 12:43:44 +0200
-Message-ID: <20250408104851.559344391@linuxfoundation.org>
+Subject: [PATCH 6.13 013/499] x86/vdso: Fix latent bug in vclock_pages calculation
+Date: Tue,  8 Apr 2025 12:43:45 +0200
+Message-ID: <20250408104851.584065326@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -47,147 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit d9207cf7760f5f5599e9ff7eb0fedf56821a1d59 ]
+[ Upstream commit 3ef32d90cdaa0cfa6c4ffd18f8d646a658163e3d ]
 
-When doing error injection to some memory DIMMs on certain Intel Emerald
-Rapids servers, the i10nm_edac missed error reports for some memory DIMMs.
+The vclock pages are *after* the non-vclock pages. Currently there are both
+two vclock and two non-vclock pages so the existing logic works by
+accident.  As soon as the number of pages changes it will break however.
+This will be the case with the introduction of the generic vDSO data
+storage.
 
-Certain BIOS configurations may hide some memory controllers, and the
-i10nm_edac doesn't enumerate these hidden memory controllers. However, the
-ADXL decodes memory errors using memory controller physical indices even
-if there are hidden memory controllers. Therefore, the memory controller
-physical indices reported by the ADXL may mismatch the logical indices
-enumerated by the i10nm_edac, resulting in missed error reports for some
-memory DIMMs.
+Use a macro to keep the calculation understandable and in sync between
+the linker script and mapping code.
 
-Fix this issue by creating a mapping table from memory controller physical
-indices (used by the ADXL) to logical indices (used by the i10nm_edac) and
-using it to convert the physical indices to the logical indices during the
-error handling process.
-
-Fixes: c545f5e41225 ("EDAC/i10nm: Skip the absent memory controllers")
-Reported-by: Kevin Chang <kevin1.chang@intel.com>
-Tested-by: Kevin Chang <kevin1.chang@intel.com>
-Reported-by: Thomas Chen <Thomas.Chen@intel.com>
-Tested-by: Thomas Chen <Thomas.Chen@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20250214002728.6287-1-qiuxu.zhuo@intel.com
+Fixes: e93d2521b27f ("x86/vdso: Split virtual clock pages into dedicated mapping")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250204-vdso-store-rng-v3-1-13a4669dfc8c@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c |  2 ++
- drivers/edac/skx_common.c | 33 +++++++++++++++++++++++++++++++++
- drivers/edac/skx_common.h | 11 +++++++++++
- 3 files changed, 46 insertions(+)
+ arch/x86/entry/vdso/vdso-layout.lds.S | 2 +-
+ arch/x86/entry/vdso/vma.c             | 2 +-
+ arch/x86/include/asm/vdso/vsyscall.h  | 1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index 51556c72a9674..fbdf005bed3a4 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -751,6 +751,8 @@ static int i10nm_get_ddr_munits(void)
- 				continue;
- 			} else {
- 				d->imc[lmc].mdev = mdev;
-+				if (res_cfg->type == SPR)
-+					skx_set_mc_mapping(d, i, lmc);
- 				lmc++;
- 			}
- 		}
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 6cf17af7d9112..85ec3196664d3 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -120,6 +120,35 @@ void skx_adxl_put(void)
- }
- EXPORT_SYMBOL_GPL(skx_adxl_put);
+diff --git a/arch/x86/entry/vdso/vdso-layout.lds.S b/arch/x86/entry/vdso/vdso-layout.lds.S
+index 872947c1004c3..918606ff92a98 100644
+--- a/arch/x86/entry/vdso/vdso-layout.lds.S
++++ b/arch/x86/entry/vdso/vdso-layout.lds.S
+@@ -24,7 +24,7 @@ SECTIONS
  
-+static void skx_init_mc_mapping(struct skx_dev *d)
-+{
-+	/*
-+	 * By default, the BIOS presents all memory controllers within each
-+	 * socket to the EDAC driver. The physical indices are the same as
-+	 * the logical indices of the memory controllers enumerated by the
-+	 * EDAC driver.
-+	 */
-+	for (int i = 0; i < NUM_IMC; i++)
-+		d->mc_mapping[i] = i;
-+}
-+
-+void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc)
-+{
-+	edac_dbg(0, "Set the mapping of mc phy idx to logical idx: %02d -> %02d\n",
-+		 pmc, lmc);
-+
-+	d->mc_mapping[pmc] = lmc;
-+}
-+EXPORT_SYMBOL_GPL(skx_set_mc_mapping);
-+
-+static u8 skx_get_mc_mapping(struct skx_dev *d, u8 pmc)
-+{
-+	edac_dbg(0, "Get the mapping of mc phy idx to logical idx: %02d -> %02d\n",
-+		 pmc, d->mc_mapping[pmc]);
-+
-+	return d->mc_mapping[pmc];
-+}
-+
- static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
- {
- 	struct skx_dev *d;
-@@ -187,6 +216,8 @@ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
- 		return false;
+ 	timens_page  = vvar_start + PAGE_SIZE;
+ 
+-	vclock_pages = vvar_start + VDSO_NR_VCLOCK_PAGES * PAGE_SIZE;
++	vclock_pages = VDSO_VCLOCK_PAGES_START(vvar_start);
+ 	pvclock_page = vclock_pages + VDSO_PAGE_PVCLOCK_OFFSET * PAGE_SIZE;
+ 	hvclock_page = vclock_pages + VDSO_PAGE_HVCLOCK_OFFSET * PAGE_SIZE;
+ 
+diff --git a/arch/x86/entry/vdso/vma.c b/arch/x86/entry/vdso/vma.c
+index 39e6efc1a9cab..aa62949335ece 100644
+--- a/arch/x86/entry/vdso/vma.c
++++ b/arch/x86/entry/vdso/vma.c
+@@ -290,7 +290,7 @@ static int map_vdso(const struct vdso_image *image, unsigned long addr)
  	}
  
-+	res->imc = skx_get_mc_mapping(d, res->imc);
-+
- 	for (i = 0; i < adxl_component_count; i++) {
- 		if (adxl_values[i] == ~0x0ull)
- 			continue;
-@@ -307,6 +338,8 @@ int skx_get_all_bus_mappings(struct res_config *cfg, struct list_head **list)
- 			 d->bus[0], d->bus[1], d->bus[2], d->bus[3]);
- 		list_add_tail(&d->list, &dev_edac_list);
- 		prev = pdev;
-+
-+		skx_init_mc_mapping(d);
- 	}
+ 	vma = _install_special_mapping(mm,
+-				       addr + (__VVAR_PAGES - VDSO_NR_VCLOCK_PAGES) * PAGE_SIZE,
++				       VDSO_VCLOCK_PAGES_START(addr),
+ 				       VDSO_NR_VCLOCK_PAGES * PAGE_SIZE,
+ 				       VM_READ|VM_MAYREAD|VM_IO|VM_DONTDUMP|
+ 				       VM_PFNMAP,
+diff --git a/arch/x86/include/asm/vdso/vsyscall.h b/arch/x86/include/asm/vdso/vsyscall.h
+index 37b4a70559a82..88b31d4cdfaf3 100644
+--- a/arch/x86/include/asm/vdso/vsyscall.h
++++ b/arch/x86/include/asm/vdso/vsyscall.h
+@@ -6,6 +6,7 @@
+ #define __VVAR_PAGES	4
  
- 	if (list)
-diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
-index 54bba8a62f727..849198fd14da6 100644
---- a/drivers/edac/skx_common.h
-+++ b/drivers/edac/skx_common.h
-@@ -93,6 +93,16 @@ struct skx_dev {
- 	struct pci_dev *uracu; /* for i10nm CPU */
- 	struct pci_dev *pcu_cr3; /* for HBM memory detection */
- 	u32 mcroute;
-+	/*
-+	 * Some server BIOS may hide certain memory controllers, and the
-+	 * EDAC driver skips those hidden memory controllers. However, the
-+	 * ADXL still decodes memory error address using physical memory
-+	 * controller indices. The mapping table is used to convert the
-+	 * physical indices (reported by ADXL) to the logical indices
-+	 * (used the EDAC driver) of present memory controllers during the
-+	 * error handling process.
-+	 */
-+	u8 mc_mapping[NUM_IMC];
- 	struct skx_imc {
- 		struct mem_ctl_info *mci;
- 		struct pci_dev *mdev; /* for i10nm CPU */
-@@ -242,6 +252,7 @@ void skx_adxl_put(void);
- void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log);
- void skx_set_mem_cfg(bool mem_cfg_2lm);
- void skx_set_res_cfg(struct res_config *cfg);
-+void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc);
+ #define VDSO_NR_VCLOCK_PAGES	2
++#define VDSO_VCLOCK_PAGES_START(_b)	((_b) + (__VVAR_PAGES - VDSO_NR_VCLOCK_PAGES) * PAGE_SIZE)
+ #define VDSO_PAGE_PVCLOCK_OFFSET	0
+ #define VDSO_PAGE_HVCLOCK_OFFSET	1
  
- int skx_get_src_id(struct skx_dev *d, int off, u8 *id);
- int skx_get_node_id(struct skx_dev *d, u8 *id);
 -- 
 2.39.5
 
