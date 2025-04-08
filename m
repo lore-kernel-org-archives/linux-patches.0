@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22977224239;
-	Tue,  8 Apr 2025 12:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECA72638B8;
+	Tue,  8 Apr 2025 12:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114848; cv=none; b=cHezzbaG1sMHiVi77qGt2t9weRUtmNw8RscL6MZ/KMeeK1DTe9DGHBuuCNYBVLhEjvM9tK4nOL2K9O+apg1RzkEyZB81FdTb8+cH4pws1TTw4kgLmVQiFXWqhBHgMwHS2uNkBe+XVTZfXujcncOmDrC4AJ/0+z6n1gTMgXojj1c=
+	t=1744114850; cv=none; b=uY9A1ESuFPztsfz4ZDS6Ku4NvpSrT/OQKx9Wy7kjzIxdUMCojgXNep8rrzfKtQFejvl8QFqopcWwgMw3g5NiRcXpm9JTF3qmhESBGotUVig1/LkinUJZEXYm8Ef43nSO9UaWpM3DSDCyZSCbIkeOqzusce77T4U+z4j/q5Cn3dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114848; c=relaxed/simple;
-	bh=Y/XIYi8ELtLdE+r+cKAJW5Vd5ri1fTGAzXChv/c2e44=;
+	s=arc-20240116; t=1744114850; c=relaxed/simple;
+	bh=K48aohParSZaUM9Ce8QeJ1vEqfDmmu4jjvbeWfN7QrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNHCm59LEV5vLeRuG2jCdv4YB3mhe7SrgIabpkJk+I37LHyT9b5IH12BJajXaWOnNxQWN8W50r76BFpWFOuHG/LxJPDDE/WaxJLB0qAOmYKh2nJ602nFJJJZJ157hx4DICzq+3p2tWSraaXo0wUJkfovoV+h0u/sefz8Kc6W99s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIfhsL7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKwvM1TFHWcbkh+6ztcYX2n4vMyXgUD8DvXsQ0Zfwe57LZcKBtZQ9C53Q4wXb1Jxrz9YF8GiC8VKMi305jIyCNJdgtdUrmm78V3G+RjWgzhEEsqGEJFfH78Gwiq8qps0yyY5jX3q/X97h3B6BDr0OIdGA7v1OYgCB/Esdf0On3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLU6BHvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIfhsL7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64BDC4CEE5;
-	Tue,  8 Apr 2025 12:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLU6BHvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5034EC4CEE5;
+	Tue,  8 Apr 2025 12:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114848;
-	bh=Y/XIYi8ELtLdE+r+cKAJW5Vd5ri1fTGAzXChv/c2e44=;
+	s=korg; t=1744114850;
+	bh=K48aohParSZaUM9Ce8QeJ1vEqfDmmu4jjvbeWfN7QrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIfhsL7aApz57dX9MU0qdkUxraxZWhtFdngnTD4cvSIsXyqt0kWGFv36cTKUimKOc
-	 w7WMLfmu/+fub5u0r2DMzapwOSCPL0CU5qIrqJosVsIwvB+GJclz2bT2Y8D1a7fwjd
-	 Srzw/d6wrsUmv/xsNWx4boTEKBGAobvR9HE0zv18=
+	b=pLU6BHvcjOUsVrPvCZ2KC70Nif+l5Z92H/u2NyaUTPDVwn8s+3/VwYZjeRyWYxTvZ
+	 s5NUQxwQKDdhj8UYWbWjCCmY+m7HiH9ORKhm8oTreDVf/guFbXl8QhnM8LJOgKxiz/
+	 Bk4Sn/uaGrkGsjVD7T9issmJBs96/uTK7E6L5fk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 217/499] perf pmu: Dont double count common sysfs and json events
-Date: Tue,  8 Apr 2025 12:47:09 +0200
-Message-ID: <20250408104856.620095242@linuxfoundation.org>
+Subject: [PATCH 6.13 208/499] isofs: fix KMSAN uninit-value bug in do_isofs_readdir()
+Date: Tue,  8 Apr 2025 12:47:00 +0200
+Message-ID: <20250408104856.395503195@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,79 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit c9d699e10fa6c0cdabcddcf991e7ff42af6b2503 ]
+[ Upstream commit 81a82e8f33880793029cd6f8a766fb13b737e6a7 ]
 
-After pmu_add_cpu_aliases() is called, perf_pmu__num_events() returns an
-incorrect value that double counts common events and doesn't match the
-actual count of events in the alias list. This is because after
-'cpu_aliases_added == true', the number of events returned is
-'sysfs_aliases + cpu_json_aliases'. But when adding 'case
-EVENT_SRC_SYSFS' events, 'sysfs_aliases' and 'cpu_json_aliases' are both
-incremented together, failing to account that these ones overlap and
-only add a single item to the list. Fix it by adding another counter for
-overlapping events which doesn't influence 'cpu_json_aliases'.
+In do_isofs_readdir() when assigning the variable
+"struct iso_directory_record *de" the b_data field of the buffer_head
+is accessed and an offset is added to it, the size of b_data is 2048
+and the offset size is 2047, meaning
+"de = (struct iso_directory_record *) (bh->b_data + offset);"
+yields the final byte of the 2048 sized b_data block.
 
-There doesn't seem to be a current issue because it's used in perf list
-before pmu_add_cpu_aliases() so the correct value is returned. Other
-uses in tests may also miss it for other reasons like only looking at
-uncore events. However it's marked as a fixes commit in case any new fix
-with new uses of perf_pmu__num_events() is backported.
+The first byte of the directory record (de_len) is then read and
+found to be 31, meaning the directory record size is 31 bytes long.
+The directory record is defined by the structure:
 
-Fixes: d9c5f5f94c2d ("perf pmu: Count sys and cpuid JSON events separately")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250226104111.564443-3-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+	struct iso_directory_record {
+		__u8 length;                     // 1 byte
+		__u8 ext_attr_length;            // 1 byte
+		__u8 extent[8];                  // 8 bytes
+		__u8 size[8];                    // 8 bytes
+		__u8 date[7];                    // 7 bytes
+		__u8 flags;                      // 1 byte
+		__u8 file_unit_size;             // 1 byte
+		__u8 interleave;                 // 1 byte
+		__u8 volume_sequence_number[4];  // 4 bytes
+		__u8 name_len;                   // 1 byte
+		char name[];                     // variable size
+	} __attribute__((packed));
+
+The fixed portion of this structure occupies 33 bytes. Therefore, a
+valid directory record must be at least 33 bytes long
+(even without considering the variable-length name field).
+Since de_len is only 31, it is insufficient to contain
+the complete fixed header.
+
+The code later hits the following sanity check that
+compares de_len against the sum of de->name_len and
+sizeof(struct iso_directory_record):
+
+	if (de_len < de->name_len[0] + sizeof(struct iso_directory_record)) {
+		...
+	}
+
+Since the fixed portion of the structure is
+33 bytes (up to and including name_len member),
+a valid record should have de_len of at least 33 bytes;
+here, however, de_len is too short, and the field de->name_len
+(located at offset 32) is accessed even though it lies beyond
+the available 31 bytes.
+
+This access on the corrupted isofs data triggers a KASAN uninitialized
+memory warning. The fix would be to first verify that de_len is at least
+sizeof(struct iso_directory_record) before accessing any
+fields like de->name_len.
+
+Reported-by: syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>
+Tested-by: syzbot <syzbot+812641c6c3d7586a1613@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=812641c6c3d7586a1613
+Fixes: 2deb1acc653c ("isofs: fix access to unallocated memory when reading corrupted filesystem")
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250211195900.42406-1-qasdev00@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmu.c | 7 ++++---
- tools/perf/util/pmu.h | 5 +++++
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ fs/isofs/dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index d217678631ff5..d9a9fa7d49ec3 100644
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -595,7 +595,7 @@ static int perf_pmu__new_alias(struct perf_pmu *pmu, const char *name,
- 			};
- 			if (pmu_events_table__find_event(pmu->events_table, pmu, name,
- 							 update_alias, &data) == 0)
--				pmu->cpu_json_aliases++;
-+				pmu->cpu_common_json_aliases++;
+diff --git a/fs/isofs/dir.c b/fs/isofs/dir.c
+index eb2f8273e6f15..09df40b612fbf 100644
+--- a/fs/isofs/dir.c
++++ b/fs/isofs/dir.c
+@@ -147,7 +147,8 @@ static int do_isofs_readdir(struct inode *inode, struct file *file,
+ 			de = tmpde;
  		}
- 		pmu->sysfs_aliases++;
- 		break;
-@@ -1840,9 +1840,10 @@ size_t perf_pmu__num_events(struct perf_pmu *pmu)
- 	if (pmu->cpu_aliases_added)
- 		 nr += pmu->cpu_json_aliases;
- 	else if (pmu->events_table)
--		nr += pmu_events_table__num_events(pmu->events_table, pmu) - pmu->cpu_json_aliases;
-+		nr += pmu_events_table__num_events(pmu->events_table, pmu) -
-+			pmu->cpu_common_json_aliases;
- 	else
--		assert(pmu->cpu_json_aliases == 0);
-+		assert(pmu->cpu_json_aliases == 0 && pmu->cpu_common_json_aliases == 0);
- 
- 	if (perf_pmu__is_tool(pmu))
- 		nr -= tool_pmu__num_skip_events();
-diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
-index dbed6c243a5ef..55005cc3caffc 100644
---- a/tools/perf/util/pmu.h
-+++ b/tools/perf/util/pmu.h
-@@ -134,6 +134,11 @@ struct perf_pmu {
- 	uint32_t cpu_json_aliases;
- 	/** @sys_json_aliases: Number of json event aliases loaded matching the PMU's identifier. */
- 	uint32_t sys_json_aliases;
-+	/**
-+	 * @cpu_common_json_aliases: Number of json events that overlapped with sysfs when
-+	 * loading all sysfs events.
-+	 */
-+	uint32_t cpu_common_json_aliases;
- 	/** @sysfs_aliases_loaded: Are sysfs aliases loaded from disk? */
- 	bool sysfs_aliases_loaded;
- 	/**
+ 		/* Basic sanity check, whether name doesn't exceed dir entry */
+-		if (de_len < de->name_len[0] +
++		if (de_len < sizeof(struct iso_directory_record) ||
++		    de_len < de->name_len[0] +
+ 					sizeof(struct iso_directory_record)) {
+ 			printk(KERN_NOTICE "iso9660: Corrupted directory entry"
+ 			       " in block %lu of inode %lu\n", block,
 -- 
 2.39.5
 
