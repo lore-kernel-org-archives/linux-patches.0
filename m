@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8314A207E14;
-	Tue,  8 Apr 2025 12:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EBF206F18;
+	Tue,  8 Apr 2025 12:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115525; cv=none; b=jkgNzM9+Tplqw87t54zLebdwluw9Jr2EJzTwnn+dLVwaTNciquREI6w7rfwtz53zdFHBT8fqROyxH8YMqfXaVAbna6BqwcsBnWS91OQAKzRl5wQHryTA9cTGrIFAFFbu6v558vwV1wncqg69rlXH0KD9sSayMrG5kR4cW/sYLp4=
+	t=1744115528; cv=none; b=Q/wi9CWUe5upUHZWyqR5oKeNqiCa6VjjG1ui4wEcNyCjlBCdqFf4DSbaCwr+8KGP5Y5QdLBvLlWwcFJuilbasQ9xkKYC6nSzkeUA/q85r2O0A02Tx1OjrQlpazCe8/E6dSD43WnSV6jfVOlEH3K1L6rArCQsZrJb9T/pSQ8z2+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115525; c=relaxed/simple;
-	bh=jSN5pRc5QsYMx+i11Jnew3OxyDsmrai+kUV6dEFl4PQ=;
+	s=arc-20240116; t=1744115528; c=relaxed/simple;
+	bh=zazv+dU2dB1iLQuLb1FjBrl89eWqzDkkOO39AamGbuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZgC37WicT6zPJT1z3EVkxaKk13oJNvpVY/RZXjIn1Kt+l1hUtau8ScUArrtEOhsf4LAZkypsg0LP+NwvD17cPLNK8EG4nC1+E9W/mfmu8Qqz00CiTgmbMdFAzaSPAw37wTeiyixoaxUfsfG/IfSfJTu3iLx9vIGEfY3sd82dTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQmryfOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC4/4m3vBK20kEjLuuql+62np6iB3guSMIDQV6LKUweyr5abrRW+gnhIZWO/5MdpxGYNkwchr5zqF294/wvASjY3mJJoDNgAf6bGxsDUln5a7da3f5aVHW4+ME+HEdrU5VvA9pOVjwHdQColUvqnD+mU2pZfr0Tj5RhZ0BrNdiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yod1SiC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQmryfOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D17C4CEE5;
-	Tue,  8 Apr 2025 12:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yod1SiC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3432C4CEE5;
+	Tue,  8 Apr 2025 12:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115525;
-	bh=jSN5pRc5QsYMx+i11Jnew3OxyDsmrai+kUV6dEFl4PQ=;
+	s=korg; t=1744115528;
+	bh=zazv+dU2dB1iLQuLb1FjBrl89eWqzDkkOO39AamGbuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQmryfOJL37gMx8VfTBcJTf8dtPATN7+NBg48sm3tF1Stb0eRM1Qb9K48jrVAiKx3
-	 Q3nrtL6T611t8IM1tJaVv5DVXWnOJjqL9Ha7eJVpaBFf5ZCiFvbzlR0pD5Y1Xy6Zsg
-	 bi9jO76D45c5qzKmmzTKfzEgduoMBfic1HajNX90=
+	b=yod1SiC4q19rdHNXFXuznf8/kzQBUkcntKAEctds++GUlBFoABf74XK6f0q2Sko+R
+	 LGspQT/hCVywPk6ltAZE7ZKRc7UWGF+bYPuegtsdZmSMJl7o1h+n+AkFNLUNd5y4vt
+	 BoIfzBVdjUhFi5e3XlQovDCv4zCJVC47D5Vm8644=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.13 462/499] mmc: omap: Fix memory leak in mmc_omap_new_slot
-Date: Tue,  8 Apr 2025 12:51:14 +0200
-Message-ID: <20250408104902.761885728@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/204] watch_queue: fix pipe accounting mismatch
+Date: Tue,  8 Apr 2025 12:48:51 +0200
+Message-ID: <20250408104820.319109869@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
-References: <20250408104851.256868745@linuxfoundation.org>
+In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
+References: <20250408104820.266892317@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-commit 3834a759afb817e23a7a2f09c2c9911b0ce5c588 upstream.
+[ Upstream commit f13abc1e8e1a3b7455511c4e122750127f6bc9b0 ]
 
-Add err_free_host label to properly pair mmc_alloc_host() with
-mmc_free_host() in GPIO error paths. The allocated host memory was
-leaked when GPIO lookups failed.
+Currently, watch_queue_set_size() modifies the pipe buffers charged to
+user->pipe_bufs without updating the pipe->nr_accounted on the pipe
+itself, due to the if (!pipe_has_watch_queue()) test in
+pipe_resize_ring(). This means that when the pipe is ultimately freed,
+we decrement user->pipe_bufs by something other than what than we had
+charged to it, potentially leading to an underflow. This in turn can
+cause subsequent too_many_pipe_buffers_soft() tests to fail with -EPERM.
 
-Fixes: e519f0bb64ef ("ARM/mmc: Convert old mmci-omap to GPIO descriptors")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250318140226.19650-1-linmq006@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To remedy this, explicitly account for the pipe usage in
+watch_queue_set_size() to match the number set via account_pipe_buffers()
+
+(It's unclear why watch_queue_set_size() does not update nr_accounted;
+it may be due to intentional overprovisioning in watch_queue_set_size()?)
+
+Fixes: e95aada4cb93d ("pipe: wakeup wr_wait after setting max_usage")
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://lore.kernel.org/r/206682a8-0604-49e5-8224-fdbe0c12b460@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/omap.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ kernel/watch_queue.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/mmc/host/omap.c
-+++ b/drivers/mmc/host/omap.c
-@@ -1272,19 +1272,25 @@ static int mmc_omap_new_slot(struct mmc_
- 	/* Check for some optional GPIO controls */
- 	slot->vsd = devm_gpiod_get_index_optional(host->dev, "vsd",
- 						  id, GPIOD_OUT_LOW);
--	if (IS_ERR(slot->vsd))
--		return dev_err_probe(host->dev, PTR_ERR(slot->vsd),
-+	if (IS_ERR(slot->vsd)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->vsd),
- 				     "error looking up VSD GPIO\n");
-+		goto err_free_host;
-+	}
- 	slot->vio = devm_gpiod_get_index_optional(host->dev, "vio",
- 						  id, GPIOD_OUT_LOW);
--	if (IS_ERR(slot->vio))
--		return dev_err_probe(host->dev, PTR_ERR(slot->vio),
-+	if (IS_ERR(slot->vio)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->vio),
- 				     "error looking up VIO GPIO\n");
-+		goto err_free_host;
-+	}
- 	slot->cover = devm_gpiod_get_index_optional(host->dev, "cover",
- 						    id, GPIOD_IN);
--	if (IS_ERR(slot->cover))
--		return dev_err_probe(host->dev, PTR_ERR(slot->cover),
-+	if (IS_ERR(slot->cover)) {
-+		r = dev_err_probe(host->dev, PTR_ERR(slot->cover),
- 				     "error looking up cover switch GPIO\n");
-+		goto err_free_host;
-+	}
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index 442bb92212f2a..a72ea1c2f59fe 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -270,6 +270,15 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
+ 	if (ret < 0)
+ 		goto error;
  
- 	host->slots[id] = slot;
- 
-@@ -1344,6 +1350,7 @@ err_remove_slot_name:
- 		device_remove_file(&mmc->class_dev, &dev_attr_slot_name);
- err_remove_host:
- 	mmc_remove_host(mmc);
-+err_free_host:
- 	mmc_free_host(mmc);
- 	return r;
- }
++	/*
++	 * pipe_resize_ring() does not update nr_accounted for watch_queue
++	 * pipes, because the above vastly overprovisions. Set nr_accounted on
++	 * and max_usage this pipe to the number that was actually charged to
++	 * the user above via account_pipe_buffers.
++	 */
++	pipe->max_usage = nr_pages;
++	pipe->nr_accounted = nr_pages;
++
+ 	ret = -ENOMEM;
+ 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
+ 	if (!pages)
+-- 
+2.39.5
+
 
 
