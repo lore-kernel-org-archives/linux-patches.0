@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC7A20330;
-	Tue,  8 Apr 2025 12:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA49922488E;
+	Tue,  8 Apr 2025 12:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115709; cv=none; b=PiB+Qjxn89JjuB00FiD2LLrww42we/JS/2DRKEDJywEYFcexl0pZk+QDGyNv7T5MZeBqYi/Bx5sfRNMCtvhtbg2NgWk8/kDjDPwSsD62kYVWVyTMFVkVdObjHeEUMERwdH9Z1/knpIWlDQ0dqaVPaYFKWGiQpLLCYzQGnA69bXM=
+	t=1744115712; cv=none; b=G4C/BCUUNGtu7JA2g0SI6aP3Ebdi5QdjppDkbAVdoYrTu/GxKPxDqBnCzeBE5W9OfbCMxcVx0qGbHIxqGAL9e4i0e2i6oYnWXCKKITRXhyEsxDJYBbrf8W7bf0WxTkqZHpSQyXND15JWaSgc5C7P1IYggk6TMEQuMulVi4MGNEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115709; c=relaxed/simple;
-	bh=MF5XEjWlW3x2Clze/6InWw9Wk9l1ldAxicvl7byLJb4=;
+	s=arc-20240116; t=1744115712; c=relaxed/simple;
+	bh=UrCbe6kywAhHOUhcCgCEQoMlsvFJQKTf3P7i5vb4FFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGNJyOOfsi+JhhWBpmSFwJNAwarfKTsXlTdZxshxxeZ/gAYHbKzPaoQ7xI7pm5hGRBrN7Ft+4zd64AfspkC4a7ep8sx0qhBQs53pBFRbcicqsulRLgvb403oJg2ZaUZcXzz9QlCgqEHBA0BfYUNV7UwxFEhAA88gzdfsBENzScM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkDUxs/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ezBlYSKPGw6aU3vQBChT87ADMmCJf4xKaMJusmBMJ/vsp/NgGmu1bgxYJiDC+y089Jgfi5OC4/Sspt6Yhd5QsnX0Simu++5QSPNN7gZcPpxkoyAoQLYvgbdlvhedonUWGBmp6Xxfhx49ynUoJEPweVcYohIDhYcJJaUyICU5FzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNo6cayj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkDUxs/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BD5C4CEE5;
-	Tue,  8 Apr 2025 12:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNo6cayj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0106CC4CEE5;
+	Tue,  8 Apr 2025 12:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115709;
-	bh=MF5XEjWlW3x2Clze/6InWw9Wk9l1ldAxicvl7byLJb4=;
+	s=korg; t=1744115712;
+	bh=UrCbe6kywAhHOUhcCgCEQoMlsvFJQKTf3P7i5vb4FFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkDUxs/bYG0eWj/JO13NT3za5BpxlRG8+tnCyiYLTzXY5EtvRSciNfpotTT1rmheq
-	 12IRMqTOTXrqtvJ/YSWY6tHRLOxuDtKIL8b/vXepP3i79//I1V8WI1cOLrY6x6C49d
-	 2luzTGPsmG47ubJJRZ2Zc7pJtP774ltdLyBvHvh4=
+	b=DNo6cayjU5E+KlEW+aihzW8TqsLO1Ht59DTw/8178b7P7gto6mBBfYzpZizCWOkAk
+	 zZk4qfA6IOmNYOP4tLOtDDY2VLqgwwoddUPJpcvCpVzcglu3TdasIHfJIjpsx2hIf1
+	 NfU6/6+EdvOFvOlyvqOgYdUDlnm5N19Rm5crvDyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Hans Zhang <18255117159@163.com>,
+	Hans Zhang <hans.zhang@cixtech.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/204] drm/msm/dsi: Set PHY usescase (and mode) before registering DSI host
-Date: Tue,  8 Apr 2025 12:49:26 +0200
-Message-ID: <20250408104821.399660842@linuxfoundation.org>
+Subject: [PATCH 6.1 037/204] PCI: cadence-ep: Fix the driver to send MSG TLP for INTx without data payload
+Date: Tue,  8 Apr 2025 12:49:27 +0200
+Message-ID: <20250408104821.432627040@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -46,106 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 660c396c98c061f9696bebacc178b74072e80054 ]
+[ Upstream commit 3ac47fbf4f6e8c3a7c3855fac68cc3246f90f850 ]
 
-Ordering issues here cause an uninitialized (default STANDALONE)
-usecase to be programmed (which appears to be a MUX) in some cases
-when msm_dsi_host_register() is called, leading to the slave PLL in
-bonded-DSI mode to source from a clock parent (dsi1vco) that is off.
+Per the Cadence's "PCIe Controller IP for AX14" user guide, Version
+1.04, Section 9.1.7.1, "AXI Subordinate to PCIe Address Translation
+Registers", Table 9.4, the bit 16 of the AXI Subordinate Address
+(axi_s_awaddr) when set corresponds to MSG with data, and when not set,
+to MSG without data.
 
-This should seemingly not be a problem as the actual dispcc clocks from
-DSI1 that are muxed in the clock tree of DSI0 are way further down, this
-bit still seems to have an effect on them somehow and causes the right
-side of the panel controlled by DSI1 to not function.
+However, the driver is currently doing the opposite and due to this,
+the INTx is never received on the host.
 
-In an ideal world this code is refactored to no longer have such
-error-prone calls "across subsystems", and instead model the "PLL src"
-register field as a regular mux so that changing the clock parents
-programmatically or in DTS via `assigned-clock-parents` has the
-desired effect.
-But for the avid reader, the clocks that we *are* muxing into DSI0's
-tree are way further down, so if this bit turns out to be a simple mux
-between dsiXvco and out_div, that shouldn't have any effect as this
-whole tree is off anyway.
+So, fix the driver to reflect the documentation and also make INTx work.
 
-Fixes: 57bf43389337 ("drm/msm/dsi: Pass down use case to PHY")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/637650/
-Link: https://lore.kernel.org/r/20250217-drm-msm-initial-dualpipe-dsc-fixes-v3-2-913100d6103f@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 37dddf14f1ae ("PCI: cadence: Add EndPoint Controller driver for Cadence PCIe controller")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Hans Zhang <hans.zhang@cixtech.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250214165724.184599-1-18255117159@163.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 32 ++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c | 3 +--
+ drivers/pci/controller/cadence/pcie-cadence.h    | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 3a14173972832..f9e6cbd9e2d20 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -100,17 +100,35 @@ static int dsi_mgr_setup_components(int id)
- 	int ret;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+index b8b655d4047ec..a87dab9abba26 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -354,8 +354,7 @@ static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
+ 	spin_unlock_irqrestore(&ep->lock, flags);
  
- 	if (!IS_BONDED_DSI()) {
-+		/*
-+		 * Set the usecase before calling msm_dsi_host_register(), which would
-+		 * already program the PLL source mux based on a default usecase.
-+		 */
-+		msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
-+		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
-+
- 		ret = msm_dsi_host_register(msm_dsi->host);
- 		if (ret)
- 			return ret;
--
--		msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
--		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
- 	} else if (other_dsi) {
- 		struct msm_dsi *master_link_dsi = IS_MASTER_DSI_LINK(id) ?
- 							msm_dsi : other_dsi;
- 		struct msm_dsi *slave_link_dsi = IS_MASTER_DSI_LINK(id) ?
- 							other_dsi : msm_dsi;
-+
-+		/*
-+		 * PLL0 is to drive both DSI link clocks in bonded DSI mode.
-+		 *
-+		 * Set the usecase before calling msm_dsi_host_register(), which would
-+		 * already program the PLL source mux based on a default usecase.
-+		 */
-+		msm_dsi_phy_set_usecase(clk_master_dsi->phy,
-+					MSM_DSI_PHY_MASTER);
-+		msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
-+					MSM_DSI_PHY_SLAVE);
-+		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
-+		msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
-+
- 		/* Register slave host first, so that slave DSI device
- 		 * has a chance to probe, and do not block the master
- 		 * DSI device's probe.
-@@ -124,14 +142,6 @@ static int dsi_mgr_setup_components(int id)
- 		ret = msm_dsi_host_register(master_link_dsi->host);
- 		if (ret)
- 			return ret;
--
--		/* PLL0 is to drive both 2 DSI link clocks in bonded DSI mode. */
--		msm_dsi_phy_set_usecase(clk_master_dsi->phy,
--					MSM_DSI_PHY_MASTER);
--		msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
--					MSM_DSI_PHY_SLAVE);
--		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
--		msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
- 	}
+ 	offset = CDNS_PCIE_NORMAL_MSG_ROUTING(MSG_ROUTING_LOCAL) |
+-		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code) |
+-		 CDNS_PCIE_MSG_NO_DATA;
++		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code);
+ 	writel(0, ep->irq_cpu_addr + offset);
+ }
  
- 	return 0;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 190786e47df93..2891e8c16a592 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -240,7 +240,7 @@ struct cdns_pcie_rp_ib_bar {
+ #define CDNS_PCIE_NORMAL_MSG_CODE_MASK		GENMASK(15, 8)
+ #define CDNS_PCIE_NORMAL_MSG_CODE(code) \
+ 	(((code) << 8) & CDNS_PCIE_NORMAL_MSG_CODE_MASK)
+-#define CDNS_PCIE_MSG_NO_DATA			BIT(16)
++#define CDNS_PCIE_MSG_DATA			BIT(16)
+ 
+ struct cdns_pcie;
+ 
 -- 
 2.39.5
 
