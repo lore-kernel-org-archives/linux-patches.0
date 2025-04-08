@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68EA268FD5;
-	Tue,  8 Apr 2025 11:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54805268FDD;
+	Tue,  8 Apr 2025 11:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111585; cv=none; b=ZfoSB1kLP4ZNgvtrkklUzPKGuyGsjKBy63cMBzsNWLx8+ELd1Cf7nQJv0Y+YAqcedGrQ2gX/u5Ss4/TspqaCwAoru8znLwchDODn252vwm/IbJrhDRNQ+UYL4/f2xdrPCi2ftgTlwNjnhjvad+mEeMpfun7Y51HhxMnS7xa7sjE=
+	t=1744111588; cv=none; b=DlOW9pcRQDhYbkO5adQHg6OYbOI15/0hSZFO5sJwhmqORNeFHRPoBaonxnBOXEqMIMd2WiXS2N6kMdPg4BCekyLIyWgqYB1fZwy1m6R7oE7LkskEfVlgdD/Lfyvg3rEX2FknQsyg0bZOsu6EgJn9s9tCT+4Rds+FHkjsCKELbZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111585; c=relaxed/simple;
-	bh=JgTWD54CwU4kOVVpT/D1H69xqEZGib9pmIjVwyGmVCI=;
+	s=arc-20240116; t=1744111588; c=relaxed/simple;
+	bh=sPcLjZND1VoFj4bzVEDjIUG400YjdOjxQn0NjQzZTTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC2ynH4pkGwUVWcrRWQmBGmCUW64zHeE0RfkKn+L6K4Lb5nhZxoMmFsTfOPNk2qUeuwZb/Dl1rofBMbGNpq5bFe9IAQ0YyIk1Zy+zWdnKejvwqld0A55dDqpV35XNJTWPfXzWVQ0V7Jvhz3fPgyAfUmAK/8Od9D15ddBA6N5zOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpYNzPYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sh9w8gdYE1ylGRID1X792/m56d/NWTYLJps2UVACt6zFc0g4IKK1BU7iLphSGiUY8T3662oAwI8l5FZFiU9YB4vdY9WQA8n95LePDi5/HWBKKYbW+0xFSV8NmUGF3X0IlHvx5C1hQs/8RbEECwohlm0WZne2RHMAwCAWJp8Rvr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLhuEHul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpYNzPYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342EFC4CEEA;
-	Tue,  8 Apr 2025 11:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLhuEHul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B28C4CEEA;
+	Tue,  8 Apr 2025 11:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111585;
-	bh=JgTWD54CwU4kOVVpT/D1H69xqEZGib9pmIjVwyGmVCI=;
+	s=korg; t=1744111588;
+	bh=sPcLjZND1VoFj4bzVEDjIUG400YjdOjxQn0NjQzZTTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpYNzPYOSlwpH6HHwNIk1cG2W5v28wqycBq9A680mccokH7qzWvYZkzRiIpcfqEhH
-	 rT5xM41Cak0nCOD58nqjB8HONhPZoIvIKl1oqoW107zK8M7N7kuGwTBq7zB2iZJUfq
-	 tBgll1aj7LiYjoK5fF/ZplenEbdqvD9IzFdqSZ5A=
+	b=NLhuEHulrwWDoGsr5p12Ue10Y3ADpgSQ6cQP3fJy3SzA8K78vwd0USWecm4kuJXpF
+	 jmTqSrlbUeZzUvxPejq3j91PQZVNUNOrVUfwu/skfRdrHFKzSL/FhShAtAa/5umnib
+	 cJYTLsY8Mg5CVKUT9IrJzNDlfFYkdFuUogFZ79fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 484/731] perf tests: Fix data symbol test with LTO builds
-Date: Tue,  8 Apr 2025 12:46:21 +0200
-Message-ID: <20250408104925.534321936@linuxfoundation.org>
+Subject: [PATCH 6.14 485/731] NFSD: Fix callback decoder status codes
+Date: Tue,  8 Apr 2025 12:46:22 +0200
+Message-ID: <20250408104925.557198157@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,135 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 36e7748d33bf6a82e558009e03448e9321465e05 ]
+[ Upstream commit 8ce35dcaf3aed7113cd692759dc0a26cec8cd0c3 ]
 
-With LTO builds, although regular builds could also see this as
-all the code is in one file, the datasym workload can realize the
-buf1.reserved data is never accessed. The compiler moves the
-variable to bss and only keeps the data1 and data2 parts as
-separate variables. This causes the symbol check to fail in the
-test. Make the variable volatile to disable the more aggressive
-optimization. Rename the variable to make which buf1 in perf is
-being referred to.
+fs/nfsd/nfs4callback.c implements a callback client. Thus its XDR
+decoders are decoding replies, not calls.
 
-Before:
+NFS4ERR_BAD_XDR is an on-the-wire status code that reports that the
+client sent a corrupted RPC /call/. It's not used as the internal
+error code when a /reply/ can't be decoded, since that kind of
+failure is never reported to the sender of that RPC message.
 
-  $ perf test -vv "data symbol"
-  126: Test data symbol:
-  --- start ---
-  test child forked, pid 299808
-  perf does not have symbol 'buf1'
-  perf is missing symbols - skipping test
-  ---- end(-2) ----
-  126: Test data symbol                                                : Skip
-  $ nm perf|grep buf1
-  0000000000a5fa40 b buf1.0
-  0000000000a5fa48 b buf1.1
+Instead, a reply decoder should return -EIO, as the reply decoders
+in the NFS client do.
 
-After:
-
-  $ nm perf|grep buf1
-  0000000000a53a00 d buf1
-  $ perf test -vv "data symbol"126: Test data symbol:
-  --- start ---
-  test child forked, pid 302166
-   a53a00-a53a39 l buf1
-  perf does have symbol 'buf1'
-  Recording workload...
-  Waiting for "perf record has started" message
-  OK
-  Cleaning up files...
-  ---- end(0) ----
-  126: Test data symbol                                                : Ok
-
-Fixes: 3dfc01fe9d12 ("perf test: Add 'datasym' test workload")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250226230109.314580-1-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 6487a13b5c6b ("NFSD: add support for CB_GETATTR callback")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_data_symbol.sh | 17 +++++++++--------
- tools/perf/tests/workloads/datasym.c       | 11 ++++++-----
- 2 files changed, 15 insertions(+), 13 deletions(-)
+ fs/nfsd/nfs4callback.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_data_symbol.sh b/tools/perf/tests/shell/test_data_symbol.sh
-index c86da02350596..7da606db97cb4 100755
---- a/tools/perf/tests/shell/test_data_symbol.sh
-+++ b/tools/perf/tests/shell/test_data_symbol.sh
-@@ -18,7 +18,7 @@ skip_if_no_mem_event() {
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 484077200c5d7..d649a3d65a3a5 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -101,15 +101,15 @@ static int decode_cb_fattr4(struct xdr_stream *xdr, uint32_t *bitmap,
  
- skip_if_no_mem_event || exit 2
+ 	if (bitmap[0] & FATTR4_WORD0_CHANGE)
+ 		if (xdr_stream_decode_u64(xdr, &fattr->ncf_cb_change) < 0)
+-			return -NFSERR_BAD_XDR;
++			return -EIO;
+ 	if (bitmap[0] & FATTR4_WORD0_SIZE)
+ 		if (xdr_stream_decode_u64(xdr, &fattr->ncf_cb_fsize) < 0)
+-			return -NFSERR_BAD_XDR;
++			return -EIO;
+ 	if (bitmap[2] & FATTR4_WORD2_TIME_DELEG_ACCESS) {
+ 		fattr4_time_deleg_access access;
  
--skip_test_missing_symbol buf1
-+skip_test_missing_symbol workload_datasym_buf1
+ 		if (!xdrgen_decode_fattr4_time_deleg_access(xdr, &access))
+-			return -NFSERR_BAD_XDR;
++			return -EIO;
+ 		fattr->ncf_cb_atime.tv_sec = access.seconds;
+ 		fattr->ncf_cb_atime.tv_nsec = access.nseconds;
  
- TEST_PROGRAM="perf test -w datasym"
- PERF_DATA=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
-@@ -26,18 +26,19 @@ ERR_FILE=$(mktemp /tmp/__perf_test.stderr.XXXXX)
+@@ -118,7 +118,7 @@ static int decode_cb_fattr4(struct xdr_stream *xdr, uint32_t *bitmap,
+ 		fattr4_time_deleg_modify modify;
  
- check_result() {
- 	# The memory report format is as below:
--	#    99.92%  ...  [.] buf1+0x38
-+	#    99.92%  ...  [.] workload_datasym_buf1+0x38
- 	result=$(perf mem report -i ${PERF_DATA} -s symbol_daddr -q 2>&1 |
--		 awk '/buf1/ { print $4 }')
-+		 awk '/workload_datasym_buf1/ { print $4 }')
+ 		if (!xdrgen_decode_fattr4_time_deleg_modify(xdr, &modify))
+-			return -NFSERR_BAD_XDR;
++			return -EIO;
+ 		fattr->ncf_cb_mtime.tv_sec = modify.seconds;
+ 		fattr->ncf_cb_mtime.tv_nsec = modify.nseconds;
  
--	# Testing is failed if has no any sample for "buf1"
-+	# Testing is failed if has no any sample for "workload_datasym_buf1"
- 	[ -z "$result" ] && return 1
- 
- 	while IFS= read -r line; do
--		# The "data1" and "data2" fields in structure "buf1" have
--		# offset "0x0" and "0x38", returns failure if detect any
--		# other offset value.
--		if [ "$line" != "buf1+0x0" ] && [ "$line" != "buf1+0x38" ]; then
-+		# The "data1" and "data2" fields in structure
-+		# "workload_datasym_buf1" have offset "0x0" and "0x38", returns
-+		# failure if detect any other offset value.
-+		if [ "$line" != "workload_datasym_buf1+0x0" ] && \
-+		   [ "$line" != "workload_datasym_buf1+0x38" ]; then
- 			return 1
- 		fi
- 	done <<< "$result"
-diff --git a/tools/perf/tests/workloads/datasym.c b/tools/perf/tests/workloads/datasym.c
-index 8ddb2aa6a049e..1d0b7d64e1ba1 100644
---- a/tools/perf/tests/workloads/datasym.c
-+++ b/tools/perf/tests/workloads/datasym.c
-@@ -10,7 +10,8 @@ typedef struct _buf {
- 	char data2;
- } buf __attribute__((aligned(64)));
- 
--static buf buf1 = {
-+/* volatile to try to avoid the compiler seeing reserved as unused. */
-+static volatile buf workload_datasym_buf1 = {
- 	/* to have this in the data section */
- 	.reserved[0] = 1,
- };
-@@ -34,8 +35,8 @@ static int datasym(int argc, const char **argv)
- 	alarm(sec);
- 
- 	while (!done) {
--		buf1.data1++;
--		if (buf1.data1 == 123) {
-+		workload_datasym_buf1.data1++;
-+		if (workload_datasym_buf1.data1 == 123) {
- 			/*
- 			 * Add some 'noise' in the loop to work around errata
- 			 * 1694299 on Arm N1.
-@@ -49,9 +50,9 @@ static int datasym(int argc, const char **argv)
- 			 * longer a continuous repeating pattern that interacts
- 			 * badly with the bias.
- 			 */
--			buf1.data1++;
-+			workload_datasym_buf1.data1++;
- 		}
--		buf1.data2 += buf1.data1;
-+		workload_datasym_buf1.data2 += workload_datasym_buf1.data1;
- 	}
- 	return 0;
+@@ -682,15 +682,15 @@ static int nfs4_xdr_dec_cb_getattr(struct rpc_rqst *rqstp,
+ 	if (unlikely(status || cb->cb_status))
+ 		return status;
+ 	if (xdr_stream_decode_uint32_array(xdr, bitmap, 3) < 0)
+-		return -NFSERR_BAD_XDR;
++		return -EIO;
+ 	if (xdr_stream_decode_u32(xdr, &attrlen) < 0)
+-		return -NFSERR_BAD_XDR;
++		return -EIO;
+ 	maxlen = sizeof(ncf->ncf_cb_change) + sizeof(ncf->ncf_cb_fsize);
+ 	if (bitmap[2] != 0)
+ 		maxlen += (sizeof(ncf->ncf_cb_mtime.tv_sec) +
+ 			   sizeof(ncf->ncf_cb_mtime.tv_nsec)) * 2;
+ 	if (attrlen > maxlen)
+-		return -NFSERR_BAD_XDR;
++		return -EIO;
+ 	status = decode_cb_fattr4(xdr, bitmap, ncf);
+ 	return status;
  }
 -- 
 2.39.5
