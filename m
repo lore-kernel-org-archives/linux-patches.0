@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC51C26F462;
-	Tue,  8 Apr 2025 12:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA31A26F462;
+	Tue,  8 Apr 2025 12:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116219; cv=none; b=vB4PygBS/7hQ60dSx0jm5IBktOtWp2n0RKCy0vNUdhj18nCuNpffqJEeUOAl8tBAGZG+8kDCwcggh+9uNjC9hWs2JR2GYx39iwCyWuzo0CBhLIB/Xivb9+L/6JOCs+UP+6vkNNFQOZFp8nKDrRNnid62lGtqGbTnbrAtKxgnG5c=
+	t=1744116222; cv=none; b=PR6VwPz1fu+iA8ny9jSklh76yZ+99WqnVBfc3BaCCIFRIZoAb/AJeLIaTR3OQrtxsorJBT0EHFFvp4iBpZWwgw9Qz7hFaoFlGEbSlhj8eElZ6uUjqMZQ11LN1bk62Z7/iHL2qbQ3DykZXcBZM+sEiBLCgel/BNt8rHa8v3BSzEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116219; c=relaxed/simple;
-	bh=Xuh3a3Jg8x/57jtantROY3TenMvyly/VgvliCQTwxVE=;
+	s=arc-20240116; t=1744116222; c=relaxed/simple;
+	bh=+/KojMkfQ6jilqEeKiBZ8jO6y2gEJvZ57+Yzmsr77io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCSTzF3OitrbDHodpj2A0l0aR9OOfSCfnw9YdsfldlgU2J0VhEY4KOm/tY2xVEyM3GgcQsUl+Q9i3v4OKiGVoVOvz5hZHgn3fbb6FN3JYNEqWoPhq5YHzY+pbhUckipDNd2oVlFAbng2RpWe7JiPKMWp43fjEBFDGrlNuoGUR7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXxjRaGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDsyknCrbo1WqeRm7wRAbY4odcZxjYSO1/kH81YvLrmaFoGWjXh9XL6bn/NovxdhZhj7FW8eV0KYhGk955JBWs4MnHJJtyy1HC6kSno+LpPUQk1uYilJDdhfcD4jRDAKFLWKFTsv2j0IQPzQA/0MD9t33AqdFIQ5aJLuQ50jx44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gn9OIB7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXxjRaGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E83C4CEE5;
-	Tue,  8 Apr 2025 12:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gn9OIB7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010B1C4CEE5;
+	Tue,  8 Apr 2025 12:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116219;
-	bh=Xuh3a3Jg8x/57jtantROY3TenMvyly/VgvliCQTwxVE=;
+	s=korg; t=1744116222;
+	bh=+/KojMkfQ6jilqEeKiBZ8jO6y2gEJvZ57+Yzmsr77io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXxjRaGYqxjURg1vinaypQbOGtIQ5wOVi6svPcHLGL3kGHUVCUUJExiUC5Jxs5b1q
-	 io0GUE58TaqI7UAVdcVY/28GbJX74kInSal47V5EmZAfJ89S2GpO3Fdqc0E87rX2MD
-	 Vx/9j9eEr5JV24fzxbkFMto6UPk41hDn/DercfAk=
+	b=gn9OIB7VDLM2Cd8mFt7mvJaiqo/YmVv0OJGcTM7ocvQBPkIu2RKNNiKA3hTAGG2rK
+	 MSEpadP1ppO+UpJc2eWkpeozOq20lrxx5zeSmB45b0cHnAGK273VingbnnDQXXOj7l
+	 XHgBlV8kyq471fesPM7ZdXoCrBPpVCtVRhghz7Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/423] drm/mediatek: mtk_hdmi: Unregister audio platform device on failure
-Date: Tue,  8 Apr 2025 12:46:26 +0200
-Message-ID: <20250408104847.146725492@linuxfoundation.org>
+Subject: [PATCH 6.12 061/423] drm/mediatek: mtk_hdmi: Fix typo for aud_sampe_size member
+Date: Tue,  8 Apr 2025 12:46:27 +0200
+Message-ID: <20250408104847.168933454@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -54,81 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 0be123cafc06eed0fd1227166a66e786434b0c50 ]
+[ Upstream commit 72fcb88e7bbc053ed4fc74cebb0315b98a0f20c3 ]
 
-The probe function of this driver may fail after registering the
-audio platform device: in that case, the state is not getting
-cleaned up, leaving this device registered.
+Rename member aud_sampe_size of struct hdmi_audio_param to
+aud_sample_size to fix a typo and enhance readability.
 
-Adding up to the mix, should the probe function of this driver
-return a probe deferral for N times, we're registering up to N
-audio platform devices and, again, never freeing them up.
-
-To fix this, add a pointer to the audio platform device in the
-mtk_hdmi structure, and add a devm action to unregister it upon
-driver removal or probe failure.
+This commit brings no functional changes.
 
 Fixes: 8f83f26891e1 ("drm/mediatek: Add HDMI support")
 Reviewed-by: CK Hu <ck.hu@mediatek.com>
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250217154836.108895-18-angelogioacchino.delregno@collabora.com/
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250217154836.108895-20-angelogioacchino.delregno@collabora.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-index 7687f673964ec..ce808ee82bafb 100644
+index ce808ee82bafb..1aad8e6cf52e7 100644
 --- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
 +++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-@@ -173,6 +173,7 @@ struct mtk_hdmi {
- 	unsigned int sys_offset;
- 	void __iomem *regs;
- 	enum hdmi_colorspace csp;
-+	struct platform_device *audio_pdev;
- 	struct hdmi_audio_param aud_param;
- 	bool audio_enable;
- 	bool powered;
-@@ -1663,6 +1664,11 @@ static const struct hdmi_codec_ops mtk_hdmi_audio_codec_ops = {
- 	.no_capture_mute = 1,
- };
+@@ -137,7 +137,7 @@ enum hdmi_aud_channel_swap_type {
  
-+static void mtk_hdmi_unregister_audio_driver(void *data)
-+{
-+	platform_device_unregister(data);
-+}
-+
- static int mtk_hdmi_register_audio_driver(struct device *dev)
- {
- 	struct mtk_hdmi *hdmi = dev_get_drvdata(dev);
-@@ -1672,13 +1678,20 @@ static int mtk_hdmi_register_audio_driver(struct device *dev)
- 		.i2s = 1,
- 		.data = hdmi,
- 	};
--	struct platform_device *pdev;
-+	int ret;
+ struct hdmi_audio_param {
+ 	enum hdmi_audio_coding_type aud_codec;
+-	enum hdmi_audio_sample_size aud_sampe_size;
++	enum hdmi_audio_sample_size aud_sample_size;
+ 	enum hdmi_aud_input_type aud_input_type;
+ 	enum hdmi_aud_i2s_fmt aud_i2s_fmt;
+ 	enum hdmi_aud_mclk aud_mclk;
+@@ -1075,7 +1075,7 @@ static int mtk_hdmi_output_init(struct mtk_hdmi *hdmi)
  
--	pdev = platform_device_register_data(dev, HDMI_CODEC_DRV_NAME,
--					     PLATFORM_DEVID_AUTO, &codec_data,
--					     sizeof(codec_data));
--	if (IS_ERR(pdev))
--		return PTR_ERR(pdev);
-+	hdmi->audio_pdev = platform_device_register_data(dev,
-+							 HDMI_CODEC_DRV_NAME,
-+							 PLATFORM_DEVID_AUTO,
-+							 &codec_data,
-+							 sizeof(codec_data));
-+	if (IS_ERR(hdmi->audio_pdev))
-+		return PTR_ERR(hdmi->audio_pdev);
-+
-+	ret = devm_add_action_or_reset(dev, mtk_hdmi_unregister_audio_driver,
-+				       hdmi->audio_pdev);
-+	if (ret)
-+		return ret;
- 
- 	DRM_INFO("%s driver bound to HDMI\n", HDMI_CODEC_DRV_NAME);
- 	return 0;
+ 	hdmi->csp = HDMI_COLORSPACE_RGB;
+ 	aud_param->aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-	aud_param->aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++	aud_param->aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 	aud_param->aud_input_type = HDMI_AUD_INPUT_I2S;
+ 	aud_param->aud_i2s_fmt = HDMI_I2S_MODE_I2S_24BIT;
+ 	aud_param->aud_mclk = HDMI_AUD_MCLK_128FS;
+@@ -1573,14 +1573,14 @@ static int mtk_hdmi_audio_hw_params(struct device *dev, void *data,
+ 	switch (daifmt->fmt) {
+ 	case HDMI_I2S:
+ 		hdmi_params.aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-		hdmi_params.aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++		hdmi_params.aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 		hdmi_params.aud_input_type = HDMI_AUD_INPUT_I2S;
+ 		hdmi_params.aud_i2s_fmt = HDMI_I2S_MODE_I2S_24BIT;
+ 		hdmi_params.aud_mclk = HDMI_AUD_MCLK_128FS;
+ 		break;
+ 	case HDMI_SPDIF:
+ 		hdmi_params.aud_codec = HDMI_AUDIO_CODING_TYPE_PCM;
+-		hdmi_params.aud_sampe_size = HDMI_AUDIO_SAMPLE_SIZE_16;
++		hdmi_params.aud_sample_size = HDMI_AUDIO_SAMPLE_SIZE_16;
+ 		hdmi_params.aud_input_type = HDMI_AUD_INPUT_SPDIF;
+ 		break;
+ 	default:
 -- 
 2.39.5
 
