@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D9B26656B;
-	Tue,  8 Apr 2025 11:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2752676E0;
+	Tue,  8 Apr 2025 11:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110785; cv=none; b=J0Mrz/zWn/BxRRmq7fT0irSmHMjpEnSRGfgjuXnEeAmhLAURD8Lbxhibru+VJgBlKQ7Ub/N5yQ8c3OLMui7pVpV+MDETXGXjvzpRFdKj9+1IVVgFGS8ozWfZryi9WYsvQMCpRwPyBJfVbIGAovuVKfO7f85XjwTyvaPMPGEOhWs=
+	t=1744110788; cv=none; b=Ks+DucTQZVwrCRP7lX9v6inMbiW7xNi1PlTXmkIbOQ0XRnXxHqSOk/IZdo3kpx+nWDnrvRUuhjSJ+LHQDflUd+/LySeSde+VmgSGiMp3qUKN4nzuZyOaO5MRfRlAQ9myvm0pSY4Na7lfER5UBJca/7o1s/tw4dGxc2n1r58mt0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110785; c=relaxed/simple;
-	bh=axXOm+AkryL76qRNhBhqadc84z08i0a0GjYQGKdW9wM=;
+	s=arc-20240116; t=1744110788; c=relaxed/simple;
+	bh=3Iv1GQ+EtQc55In2DxJ7lDyZN5LW/7hdDCBgGqxpU5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayifAeyhPQEcu2HN3XjPMADJPPitzQY6gxBS1/7+itg+SCze9/507Xinf84WvZAJSj5WdP6kdSLBEU7tFrdE8zGkbtoJvlWXGkD+AtkcAn/hIuuxT3qI627UuYTDbVy55EM96fNOgwpnxnOEsnMM3NaEL2OV36RcN2EAEt1munM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEyCYSYs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2xJi+UMzrYKYeA4KXsH5QdpS1x9qT4jwjEFCCG5UWPoRLnkFhZYIN7mIjrCW+ywv56FawCbl/7jpUGd6LwyC5QDqwnkgwSAopRef+0D3cG4PoDdQm3dtaeLEVGop5MKwpEjgXB8MQKTnFolD2WomevWw//U/gOTIZYtsAxxZuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1u/8yb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEyCYSYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A39C4CEE5;
-	Tue,  8 Apr 2025 11:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1u/8yb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE33C4CEE5;
+	Tue,  8 Apr 2025 11:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110785;
-	bh=axXOm+AkryL76qRNhBhqadc84z08i0a0GjYQGKdW9wM=;
+	s=korg; t=1744110788;
+	bh=3Iv1GQ+EtQc55In2DxJ7lDyZN5LW/7hdDCBgGqxpU5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEyCYSYsJ57bcGsBLxqSXMb+68jNKob3gcqxB2E+L+9h/2htOsqLTFCWkxQOVZ/2w
-	 TQfkYNeDW4vrXXs27EukHVS6Ii6mYl6Vg/cPauBAxx0U9kLX39NZljqLzGlBT+ea/Q
-	 j1N6HEzfWkhciv/rUzdkVWDIBXyZ/+pFaHGnnLlY=
+	b=o1u/8yb/gdwotMExs55N3vzx3DkFTBlMyLWYF67au55+l3rPUuvFTRfAKFwSEoxM9
+	 wyac+TeAllwllqTjM2eYVOoJv6VvjBM+D0q9RrvKgNSc6Oj7OWgbWb7nmnrvui1Bt9
+	 r/npIw4fcZizDrGmvNYb8d7dPYGsyJFK9jYs7UvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Yihang Li <liyihang9@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 193/731] f2fs: fix missing discard for active segments
-Date: Tue,  8 Apr 2025 12:41:30 +0200
-Message-ID: <20250408104918.769845066@linuxfoundation.org>
+Subject: [PATCH 6.14 194/731] scsi: hisi_sas: Fixed failure to issue vendor specific commands
+Date: Tue,  8 Apr 2025 12:41:31 +0200
+Message-ID: <20250408104918.794242857@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,83 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunhai Guo <guochunhai@vivo.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 21263d035ff21fa0ccf79adba20bab9cd8cca0f2 ]
+[ Upstream commit 750d4fbe2c20e65d764c70afe2c9e6cfa874b044 ]
 
-During a checkpoint, the current active segment X may not be handled
-properly. This occurs when segment X has 0 valid blocks and a non-zero
-number of discard blocks, for the following reasons:
+At present, we determine the protocol through the cmd type, but other cmd
+types, such as vendor-specific commands, default to the PIO protocol.  This
+strategy often causes the execution of different vendor-specific commands
+to fail. In fact, for these commands, a better way is to use the protocol
+configured by the command's tf to determine its protocol.
 
-locate_dirty_segment() does not mark any active segment as a prefree
-segment. As a result, segment X is not included in dirty_segmap[PRE], and
-f2fs_clear_prefree_segments() skips it when handling prefree segments.
-
-add_discard_addrs() skips any segment with 0 valid blocks, so segment X is
-also skipped.
-
-Consequently, no `struct discard_cmd` is actually created for segment X.
-However, the ckpt_valid_map and cur_valid_map of segment X are synced by
-seg_info_to_raw_sit() during the current checkpoint process. As a result,
-it cannot find the missing discard bits even in subsequent checkpoints.
-Consequently, the value of sbi->discard_blks remains non-zero. Thus, when
-f2fs is umounted, CP_TRIMMED_FLAG will not be set due to the non-zero
-sbi->discard_blks.
-
-Relevant code process:
-
-f2fs_write_checkpoint()
-    f2fs_flush_sit_entries()
-         list_for_each_entry_safe(ses, tmp, head, set_list) {
-             for_each_set_bit_from(segno, bitmap, end) {
-                 ...
-                 add_discard_addrs(sbi, cpc, false); // skip segment X due to its 0 valid blocks
-                 ...
-                 seg_info_to_raw_sit(); // sync ckpt_valid_map with cur_valid_map for segment X
-                 ...
-             }
-         }
-    f2fs_clear_prefree_segments(); // segment X is not included in dirty_segmap[PRE] and is skipped
-
-This issue is easy to reproduce with the following operations:
-
-root # mkfs.f2fs -f /dev/f2fs_dev
-root # mount -t f2fs /dev/f2fs_dev /mnt_point
-root # dd if=/dev/blk_dev of=/mnt_point/1.bin bs=4k count=256
-root # sync
-root # rm /mnt_point/1.bin
-root # umount /mnt_point
-root # dump.f2fs /dev/f2fs_dev | grep "checkpoint state"
-Info: checkpoint state = 45 :  crc compacted_summary unmount ---- 'trimmed' flag is missing
-
-Since add_discard_addrs() can handle active segments with non-zero valid
-blocks, it is reasonable to fix this issue by allowing it to also handle
-active segments with 0 valid blocks.
-
-Fixes: b29555505d81 ("f2fs: add key functions for small discards")
-Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 6f2ff1a1311e ("hisi_sas: add v2 path to send ATA command")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20250220090011.313848-1-liyihang9@huawei.com
+Reviewed-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  3 +--
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 28 ++++++++++++++++++++++++--
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  4 +---
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  4 +---
+ 4 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 2b415926641f0..384bca002ec9a 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2096,7 +2096,9 @@ static bool add_discard_addrs(struct f2fs_sb_info *sbi, struct cp_control *cpc,
- 		return false;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 2d438d722d0b4..e17f5d8226bf2 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -633,8 +633,7 @@ extern struct dentry *hisi_sas_debugfs_dir;
+ extern void hisi_sas_stop_phys(struct hisi_hba *hisi_hba);
+ extern int hisi_sas_alloc(struct hisi_hba *hisi_hba);
+ extern void hisi_sas_free(struct hisi_hba *hisi_hba);
+-extern u8 hisi_sas_get_ata_protocol(struct host_to_dev_fis *fis,
+-				int direction);
++extern u8 hisi_sas_get_ata_protocol(struct sas_task *task);
+ extern struct hisi_sas_port *to_hisi_sas_port(struct asd_sas_port *sas_port);
+ extern void hisi_sas_sata_done(struct sas_task *task,
+ 			    struct hisi_sas_slot *slot);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index da4a2ed8ee863..3596414d970b2 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -21,8 +21,32 @@ struct hisi_sas_internal_abort_data {
+ 	bool rst_ha_timeout; /* reset the HA for timeout */
+ };
  
- 	if (!force) {
--		if (!f2fs_realtime_discard_enable(sbi) || !se->valid_blocks ||
-+		if (!f2fs_realtime_discard_enable(sbi) ||
-+			(!se->valid_blocks &&
-+				!IS_CURSEG(sbi, cpc->trim_start)) ||
- 			SM_I(sbi)->dcc_info->nr_discards >=
- 				SM_I(sbi)->dcc_info->max_discards)
- 			return false;
+-u8 hisi_sas_get_ata_protocol(struct host_to_dev_fis *fis, int direction)
++static u8 hisi_sas_get_ata_protocol_from_tf(struct ata_queued_cmd *qc)
+ {
++	if (!qc)
++		return HISI_SAS_SATA_PROTOCOL_PIO;
++
++	switch (qc->tf.protocol) {
++	case ATA_PROT_NODATA:
++		return HISI_SAS_SATA_PROTOCOL_NONDATA;
++	case ATA_PROT_PIO:
++		return HISI_SAS_SATA_PROTOCOL_PIO;
++	case ATA_PROT_DMA:
++		return HISI_SAS_SATA_PROTOCOL_DMA;
++	case ATA_PROT_NCQ_NODATA:
++	case ATA_PROT_NCQ:
++		return HISI_SAS_SATA_PROTOCOL_FPDMA;
++	default:
++		return HISI_SAS_SATA_PROTOCOL_PIO;
++	}
++}
++
++u8 hisi_sas_get_ata_protocol(struct sas_task *task)
++{
++	struct host_to_dev_fis *fis = &task->ata_task.fis;
++	struct ata_queued_cmd *qc = task->uldd_task;
++	int direction = task->data_dir;
++
+ 	switch (fis->command) {
+ 	case ATA_CMD_FPDMA_WRITE:
+ 	case ATA_CMD_FPDMA_READ:
+@@ -93,7 +117,7 @@ u8 hisi_sas_get_ata_protocol(struct host_to_dev_fis *fis, int direction)
+ 	{
+ 		if (direction == DMA_NONE)
+ 			return HISI_SAS_SATA_PROTOCOL_NONDATA;
+-		return HISI_SAS_SATA_PROTOCOL_PIO;
++		return hisi_sas_get_ata_protocol_from_tf(qc);
+ 	}
+ 	}
+ }
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index 71cd5b4450c2b..6e7f99fcc8247 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2538,9 +2538,7 @@ static void prep_ata_v2_hw(struct hisi_hba *hisi_hba,
+ 			(task->ata_task.fis.control & ATA_SRST))
+ 		dw1 |= 1 << CMD_HDR_RESET_OFF;
+ 
+-	dw1 |= (hisi_sas_get_ata_protocol(
+-		&task->ata_task.fis, task->data_dir))
+-		<< CMD_HDR_FRAME_TYPE_OFF;
++	dw1 |= (hisi_sas_get_ata_protocol(task)) << CMD_HDR_FRAME_TYPE_OFF;
+ 	dw1 |= sas_dev->device_id << CMD_HDR_DEV_ID_OFF;
+ 	hdr->dw1 = cpu_to_le32(dw1);
+ 
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 48b95d9a79275..095bbf80c34ef 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -1456,9 +1456,7 @@ static void prep_ata_v3_hw(struct hisi_hba *hisi_hba,
+ 			(task->ata_task.fis.control & ATA_SRST))
+ 		dw1 |= 1 << CMD_HDR_RESET_OFF;
+ 
+-	dw1 |= (hisi_sas_get_ata_protocol(
+-		&task->ata_task.fis, task->data_dir))
+-		<< CMD_HDR_FRAME_TYPE_OFF;
++	dw1 |= (hisi_sas_get_ata_protocol(task)) << CMD_HDR_FRAME_TYPE_OFF;
+ 	dw1 |= sas_dev->device_id << CMD_HDR_DEV_ID_OFF;
+ 
+ 	if (FIS_CMD_IS_UNCONSTRAINED(task->ata_task.fis))
 -- 
 2.39.5
 
