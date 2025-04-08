@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8342326B0B6;
-	Tue,  8 Apr 2025 12:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D80E26B0B3;
+	Tue,  8 Apr 2025 12:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116465; cv=none; b=goHe06pe49L4UnyTReEFH1cZON6DJZqyoG/c2Kzs1F2MdzsLQ530D2iFdu7focwINFJJI4QXsvzWLpgQKli0OHjJW2vo9ZzKYfa7D+NCZhnvH3SFfpSuQVUDsIFeMXgwFOZ/B0vWI6zynVnACvQNuHynLCMaKpIAdSXniIcI7KA=
+	t=1744116469; cv=none; b=ii8I0MqmCgoeLTZugLiS/dirQ5lHn9kGdrf/O9UHqorK2E6y+1Sg76m/dCJG24djCfjNGMl4Mjz4FzL9FtD70nGEpRhNfjyBja2bIm2MmHTHnLxLivO/KTuAap6mUeNQf7vjss3H8zbssNRBPmnkI1YOZmzy5vzwmjvi0xjT4+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116465; c=relaxed/simple;
-	bh=cd8JW0ew1/nWwhZzby8YYQftE5kiH/mmQtseAzxUyik=;
+	s=arc-20240116; t=1744116469; c=relaxed/simple;
+	bh=DjqKq2iy1w+gDd4FoOSEG5ZWmlT5u0IuoTKkzM+sgZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5Vo3cu0xMxgOPMk9+xORewHVSQ/8QtBwTnSkQJuMSjM2Sh6+X/JqHqjqlTKATeAL6EljiQgVdDNAXvbnJogRVNW6lIs9L95qr5lpl+pjmRTPfxBP70AIV/hRNL1tLABY8bPerssQjwfjnI/xFvdv3aA/bL5LZZEek8Tre+D2aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATkFRXho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgd0ZYS+eQZDx6BKQUEWC2Ec/4VxeDBsEcxkFm+uLT4KL0kIfLVPxeyxoRfFqwLfGl5ZAiHGOC5pg4Sqxa9EP3BKjf4N+5fWeja4QYFhhK8I60YMfHcG6+FeQXyCC1YpRA9cEREBaOL1vbNdj69hIag+om9HDsgzgUilUcOyI+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8AcDPPQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATkFRXho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3633C4CEE5;
-	Tue,  8 Apr 2025 12:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8AcDPPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBFDCC4CEE5;
+	Tue,  8 Apr 2025 12:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116465;
-	bh=cd8JW0ew1/nWwhZzby8YYQftE5kiH/mmQtseAzxUyik=;
+	s=korg; t=1744116468;
+	bh=DjqKq2iy1w+gDd4FoOSEG5ZWmlT5u0IuoTKkzM+sgZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATkFRXhoC1328GIbem2NRtzaURGsGjoI7zJBlmaAAdD2M+hgtP564o/rDGwcEJDZd
-	 cnDG6wt7iurCgDXKkvJ4qp6hM2w0pBWyZXrMYoDhShAXAjfjjoS1z3gqYxpPySBHX/
-	 3IRX2obIjNQPgM6m5BKXVm8tfD2It7BJ7bmKNQJo=
+	b=e8AcDPPQQ8iWA9xdq989Zktwbq01boe41EvYZGk6w5c1bpPJogf8zi813zugYn5YU
+	 Tkx/6qyGVMMcvAA+BLu12FDnFuE8QNSyMF7dd5OyzcK9BnN/B9z/B6ETxZ62AkGS64
+	 tDQe5YbG+Lpce3d4VNnqwL6aVKKH9V5UpUho8ubA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chiara Meiohas <cmeiohas@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/423] RDMA/mlx5: Fix calculation of total invalidated pages
-Date: Tue,  8 Apr 2025 12:47:39 +0200
-Message-ID: <20250408104848.824975397@linuxfoundation.org>
+Subject: [PATCH 6.12 151/423] clk: qcom: gcc-sm8650: Do not turn off USB GDSCs during gdsc_disable()
+Date: Tue,  8 Apr 2025 12:47:57 +0200
+Message-ID: <20250408104849.252289689@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,62 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chiara Meiohas <cmeiohas@nvidia.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 79195147644653ebffadece31a42181e4c48c07d ]
+[ Upstream commit 8b75c2973997e66fd897b7e87b5ba2f3d683e94b ]
 
-When invalidating an address range in mlx5, there is an optimization to
-do UMR operations in chunks.
-Previously, the invalidation counter was incorrectly updated for the
-same indexes within a chunk. Now, the invalidation counter is updated
-only when a chunk is complete and mlx5r_umr_update_xlt() is called.
-This ensures that the counter accurately represents the number of pages
-invalidated using UMR.
+With PWRSTS_OFF_ON, USB GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of USB controller from suspend.
 
-Fixes: a3de94e3d61e ("IB/mlx5: Introduce ODP diagnostic counters")
-Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/560deb2433318e5947282b070c915f3c81fef77f.1741875692.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
+
+Fixes: c58225b7e3d7 ("clk: qcom: add the SM8650 Global Clock Controller driver, part 1")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250305-topic-sm8650-upstream-fix-usb-suspend-v1-1-649036ab0557@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/gcc-sm8650.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index b4e2a6f9cb9c3..e158d5b1ab17b 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -309,9 +309,6 @@ static bool mlx5_ib_invalidate_range(struct mmu_interval_notifier *mni,
- 				blk_start_idx = idx;
- 				in_block = 1;
- 			}
--
--			/* Count page invalidations */
--			invalidations += idx - blk_start_idx + 1;
- 		} else {
- 			u64 umr_offset = idx & umr_block_mask;
+diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
+index 9dd5c48f33bed..fa1672c4e7d81 100644
+--- a/drivers/clk/qcom/gcc-sm8650.c
++++ b/drivers/clk/qcom/gcc-sm8650.c
+@@ -3497,7 +3497,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
-@@ -321,14 +318,19 @@ static bool mlx5_ib_invalidate_range(struct mmu_interval_notifier *mni,
- 						     MLX5_IB_UPD_XLT_ZAP |
- 						     MLX5_IB_UPD_XLT_ATOMIC);
- 				in_block = 0;
-+				/* Count page invalidations */
-+				invalidations += idx - blk_start_idx + 1;
- 			}
- 		}
- 	}
--	if (in_block)
-+	if (in_block) {
- 		mlx5r_umr_update_xlt(mr, blk_start_idx,
- 				     idx - blk_start_idx + 1, 0,
- 				     MLX5_IB_UPD_XLT_ZAP |
- 				     MLX5_IB_UPD_XLT_ATOMIC);
-+		/* Count page invalidations */
-+		invalidations += idx - blk_start_idx + 1;
-+	}
- 
- 	mlx5_update_odp_stats(mr, invalidations, invalidations);
+@@ -3506,7 +3506,7 @@ static struct gdsc usb3_phy_gdsc = {
+ 	.pd = {
+ 		.name = "usb3_phy_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
 -- 
 2.39.5
