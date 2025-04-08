@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93726268FE4;
-	Tue,  8 Apr 2025 12:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A95263F4D;
+	Tue,  8 Apr 2025 12:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114646; cv=none; b=qIpNgfMEnaDosaDjael79N4yjDmoa67v5LYy8D2WbuDCc26LVYzyXEtQQ1gk2ZuBTec8Li+iSN7VwoAfwEHIqY8ANoG2pM+kStqMqgCXMsv7ZDROYZ1bBgqrmPfwqGOg3JCerZmTZxcIlGzOVUrHreZancWC+CPtd30Wx2NoCV4=
+	t=1744114649; cv=none; b=gt/Qa7BKtzBX3RksAHrwuZ6lZ6mTmpz0XO/1Oev8o3RMdCmUSnd7NJ+SKRNFwIspw1hvCfz4Vwow4G3L+4E8aZrVy60AhpBAdhl8ESbxd/oEuiBG0tROqVutl0t2y8MqziLKScRl+4bkZMkKkNPnEP5ptJ8cnb0+1nNciPmfpW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114646; c=relaxed/simple;
-	bh=43Zo7fhescKBTFCP5n22IMcEeKe27N0FIdFgvc1ruM4=;
+	s=arc-20240116; t=1744114649; c=relaxed/simple;
+	bh=3+BrD3q017DkZ75VDFnYHCnJIKhJIHUHUBcLPqQ4jIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTR3xhCwOAVFHhaHUk10C+HpNOE99Mm+OVONHEUggPGO1z3v9H3kT+7Aoq74ZppPnwmM7RknNzlP70M8Q+TE0upACZX7/tnv+26MJzJQ7MmNsRLg6eH0H+Myo/wy1+hkLgiqmdf/L+7AfAJ7N3l+qJmloeww/c2sbkarRIrZwrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZgqthI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gMAIDnoTMOnl3+UR411YDnvxUElaYXwFiKkwqrBWP0hlFQuuq9AUQbRH70nykq0Wo/XIRvSv1bdOdRDp/nHGxmFn5cXB6UewGr2YOpqw/s2lZiJ1jTe2KGGDy/qRxltwYehgeSvfWCi8U1594Ty1VUCeebMk3AnKs1EgdcEGze8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHsVM+0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZgqthI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226DEC4CEE7;
-	Tue,  8 Apr 2025 12:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHsVM+0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B958AC4CEE5;
+	Tue,  8 Apr 2025 12:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114646;
-	bh=43Zo7fhescKBTFCP5n22IMcEeKe27N0FIdFgvc1ruM4=;
+	s=korg; t=1744114649;
+	bh=3+BrD3q017DkZ75VDFnYHCnJIKhJIHUHUBcLPqQ4jIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZgqthI8cPNNFVyC9N/A69yBr/5d8ZAesjdKR02pxK6tgKu1HOc3BT0nn1Pj8gx5a
-	 TMqCcf4PUxdI8UpNxLiUQ7NCxqTcCKRiRiGWW1I/jEk+DHBeV+4Dar6KcCRg17tQDX
-	 5DTfqhZynxTOdYWsqbzWcSpkv2AS/h28HF6zdXN8=
+	b=kHsVM+0rBUMx8ze2yGChX7cpkHmmGsgX5hHkN3BavjW1g1ux0+O6ZpTS8PXeTYXRs
+	 3tyPNt1arx++5+bUWmqTLIypbE/rqXYhS17vS4l6ywFow4LZxlW+dtEIe3crrJyhsX
+	 p2HsiUjDuvP5GUluAr2k3z5qhUQ3ekG7mo3ro61I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 184/499] crypto: nx - Fix uninitialised hv_nxc on error
-Date: Tue,  8 Apr 2025 12:46:36 +0200
-Message-ID: <20250408104855.764882187@linuxfoundation.org>
+Subject: [PATCH 6.13 185/499] clk: qcom: gcc-sm8650: Do not turn off USB GDSCs during gdsc_disable()
+Date: Tue,  8 Apr 2025 12:46:37 +0200
+Message-ID: <20250408104855.788751502@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,93 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 9b00eb923f3e60ca76cbc8b31123716f3a87ac6a ]
+[ Upstream commit 8b75c2973997e66fd897b7e87b5ba2f3d683e94b ]
 
-The compiler correctly warns that hv_nxc may be used uninitialised
-as that will occur when NX-GZIP is unavailable.
+With PWRSTS_OFF_ON, USB GDSCs are turned off during gdsc_disable(). This
+can happen during scenarios such as system suspend and breaks the resume
+of USB controller from suspend.
 
-Fix it by rearranging the code and delay setting caps_feat until
-the final query succeeds.
+So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
+during gdsc_disable() and allow the hardware to transition the GDSCs to
+retention when the parent domain enters low power state during system
+suspend.
 
-Fixes: b4ba22114c78 ("crypto/nx: Get NX capabilities for GZIP coprocessor type")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c58225b7e3d7 ("clk: qcom: add the SM8650 Global Clock Controller driver, part 1")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250305-topic-sm8650-upstream-fix-usb-suspend-v1-1-649036ab0557@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/nx/nx-common-pseries.c | 37 ++++++++++++---------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/clk/qcom/gcc-sm8650.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/nx/nx-common-pseries.c b/drivers/crypto/nx/nx-common-pseries.c
-index 1660c5cf3641c..56129bdf53ab0 100644
---- a/drivers/crypto/nx/nx-common-pseries.c
-+++ b/drivers/crypto/nx/nx-common-pseries.c
-@@ -1145,6 +1145,7 @@ static void __init nxcop_get_capabilities(void)
- {
- 	struct hv_vas_all_caps *hv_caps;
- 	struct hv_nx_cop_caps *hv_nxc;
-+	u64 feat;
- 	int rc;
+diff --git a/drivers/clk/qcom/gcc-sm8650.c b/drivers/clk/qcom/gcc-sm8650.c
+index 9dd5c48f33bed..fa1672c4e7d81 100644
+--- a/drivers/clk/qcom/gcc-sm8650.c
++++ b/drivers/clk/qcom/gcc-sm8650.c
+@@ -3497,7 +3497,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
- 	hv_caps = kmalloc(sizeof(*hv_caps), GFP_KERNEL);
-@@ -1155,27 +1156,26 @@ static void __init nxcop_get_capabilities(void)
- 	 */
- 	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES, 0,
- 					  (u64)virt_to_phys(hv_caps));
-+	if (!rc)
-+		feat = be64_to_cpu(hv_caps->feat_type);
-+	kfree(hv_caps);
- 	if (rc)
--		goto out;
-+		return;
-+	if (!(feat & VAS_NX_GZIP_FEAT_BIT))
-+		return;
+@@ -3506,7 +3506,7 @@ static struct gdsc usb3_phy_gdsc = {
+ 	.pd = {
+ 		.name = "usb3_phy_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--	caps_feat = be64_to_cpu(hv_caps->feat_type);
- 	/*
- 	 * NX-GZIP feature available
- 	 */
--	if (caps_feat & VAS_NX_GZIP_FEAT_BIT) {
--		hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
--		if (!hv_nxc)
--			goto out;
--		/*
--		 * Get capabilities for NX-GZIP feature
--		 */
--		rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
--						  VAS_NX_GZIP_FEAT,
--						  (u64)virt_to_phys(hv_nxc));
--	} else {
--		pr_err("NX-GZIP feature is not available\n");
--		rc = -EINVAL;
--	}
-+	hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
-+	if (!hv_nxc)
-+		return;
-+	/*
-+	 * Get capabilities for NX-GZIP feature
-+	 */
-+	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
-+					  VAS_NX_GZIP_FEAT,
-+					  (u64)virt_to_phys(hv_nxc));
- 
- 	if (!rc) {
- 		nx_cop_caps.descriptor = be64_to_cpu(hv_nxc->descriptor);
-@@ -1185,13 +1185,10 @@ static void __init nxcop_get_capabilities(void)
- 				be64_to_cpu(hv_nxc->min_compress_len);
- 		nx_cop_caps.min_decompress_len =
- 				be64_to_cpu(hv_nxc->min_decompress_len);
--	} else {
--		caps_feat = 0;
-+		caps_feat = feat;
- 	}
- 
- 	kfree(hv_nxc);
--out:
--	kfree(hv_caps);
- }
- 
- static const struct vio_device_id nx842_vio_driver_ids[] = {
 -- 
 2.39.5
 
