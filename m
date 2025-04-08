@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFCB269CF6;
-	Tue,  8 Apr 2025 11:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC97227BB6;
+	Tue,  8 Apr 2025 11:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112013; cv=none; b=ofZKVtQess4DIKc9gjJ95V0DJdbCotuxgAEQL2GvnCEXRZ4GStoi34EjJsc2zieWuCtTnQjsgRHawufcNLRSNlP5i8PZ5B2HL2Ti8cZ3Ltpyj3Od8jJWsVBMeqXlfShm0SsY5ZOIFt8vr0aW2L8z0K1cL2ZTI1J6zgLHoD+UyjE=
+	t=1744112016; cv=none; b=snRycPWsuVQslKTunwbVdWSUezL04R1AHovH7/G4wPRlh2aJpMMaeJm6K666SYPRWTHmPzA+A5KFHKY0rbtHqRIaMV4TTVe4Gya4fPkyOwRyNaKXWH2qJFbMJ4/Glby//RdZMp8qpeY3/mgT6FId35CDip7K2tOSvRA+k/WI1ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112013; c=relaxed/simple;
-	bh=wTMSfAWjIrCSN+ekRSNyf2HrOJ9P7/G9mdTWkeCc6iQ=;
+	s=arc-20240116; t=1744112016; c=relaxed/simple;
+	bh=r6+CIXGW7jcICQWkyiP8aKSMvgpWiXWnOvuvBqvcQfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3fMvwb7RBpqDpGMaSFYJrKBJ0K1nT3uoCp1NNApEPMc6Rou1T+XudGvXeaoKKcIBUTOJBHq967biNdnWOwEzARFG7weVsytuwdzUdYr4q9Nh4s4ZzXgCnkDy82uwRUKa0ZK4nWh1wtAvqQIRyIWW11EbktnP8J7B+IHUD1GQlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzIh7Df6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6w6uv4Jf7P8QQsQak7VVNmmHpKVcUS4ptAQb4oAMllxmRGLAxNV/y6LiWuuGrvKykAJ6533ltPZ24rfn2GSVe/S6FUA+Eoi/p+DH4vIZ4o4PDBafpJnDIqE7bqDv+2R/tFrt2pC97VjcDHu9ssrNmUFK2odEQitrtTPxWSUeU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0MpapQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzIh7Df6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AC0C4CEE7;
-	Tue,  8 Apr 2025 11:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0MpapQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D413C4CEE5;
+	Tue,  8 Apr 2025 11:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112013;
-	bh=wTMSfAWjIrCSN+ekRSNyf2HrOJ9P7/G9mdTWkeCc6iQ=;
+	s=korg; t=1744112015;
+	bh=r6+CIXGW7jcICQWkyiP8aKSMvgpWiXWnOvuvBqvcQfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzIh7Df6wYcrs29FlJOC6asPplFaVijaw9HaaGYrtTm7j7P4oDHjZbKWOULGsKC51
-	 BJAlHe4u+KaT1XNUhWT0Dfur9lZufzo6wMPYXxvtg0cQZWkPXp0+1O6y+pniZeW48R
-	 zR9ssM7Lty2/S8qfv7aYZ0VtBFgLk4WNLDsyIq6U=
+	b=T0MpapQoVPOpmBxvs07sG28P3XZpplZrpJtZygfO2iOd3j4RlF5GeBERhUwOOkhXd
+	 Px9zQduO3SuJ7JrP/DIWT/CvZY1IDSqWubVPW8ZuYu9DgtQKtCqzlf0NW6m2P6hoiv
+	 eHiuxCM9KSMeycIxKv3xct55rTS6S0D7pQGggUtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Bityutskiy <artem.bityutskiy@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Alexandru Gagniuc <alexandru.gagniuc@hp.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 644/731] tools/power turbostat: Allow Zero return value for some RAPL registers
-Date: Tue,  8 Apr 2025 12:49:01 +0200
-Message-ID: <20250408104929.246450491@linuxfoundation.org>
+Subject: [PATCH 6.14 645/731] kbuild: deb-pkg: dont set KBUILD_BUILD_VERSION unconditionally
+Date: Tue,  8 Apr 2025 12:49:02 +0200
+Message-ID: <20250408104929.268918819@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,105 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
 
-[ Upstream commit b312d880fb462d4759396950865ec914de9d253c ]
+[ Upstream commit 62604063621fb075c7966286bdddcb057d883fa8 ]
 
-turbostat aborted with below messages on a dual-package system,
+In ThinPro, we use the convention <upstream_ver>+hp<patchlevel> for
+the kernel package. This does not have a dash in the name or version.
+This is built by editing ".version" before a build, and setting
+EXTRAVERSION="+hp" and KDEB_PKGVERSION make variables:
 
-   turbostat: turbostat.c:3744: rapl_counter_accumulate: Assertion `dst->unit == src->unit' failed.
-   Aborted
+    echo 68 > .version
+    make -j<n> EXTRAVERSION="+hp" bindeb-pkg KDEB_PKGVERSION=6.12.2+hp69
 
-This is because
-1. the MSR_DRAM_PERF_STATUS returns Zero for one package, and non-Zero
-   for another package
-2. probe_msr() treats Zero return value as a failure so this feature is
-   enabled on one package, and disabled for another package.
-3. turbostat aborts because the feature is invalid on some package
+    .deb name: linux-image-6.12.2+hp_6.12.2+hp69_amd64.deb
 
-Unlike the RAPL energy counter registers, MSR_DRAM_PERF_STATUS can
-return Zero value, and this should not be treated as a failure.
+Since commit 7d4f07d5cb71 ("kbuild: deb-pkg: squash
+scripts/package/deb-build-option to debian/rules"), this no longer
+works. The deb build logic changed, even though, the commit message
+implies that the logic should be unmodified.
 
-Fix the problem by allowing Zero return value for RAPL registers other
-than the energy counters.
+Before, KBUILD_BUILD_VERSION was not set if the KDEB_PKGVERSION did
+not contain a dash. After the change KBUILD_BUILD_VERSION is always
+set to KDEB_PKGVERSION. Since this determines UTS_VERSION, the uname
+output to look off:
 
-Fixes: 7c6fee25bdf5 ("tools/power turbostat: Check for non-zero value when MSR probing")
-Reported-by: Artem Bityutskiy <artem.bityutskiy@intel.com>
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+    (now)      uname -a: version 6.12.2+hp ... #6.12.2+hp69
+    (expected) uname -a: version 6.12.2+hp ... #69
+
+Update the debian/rules logic to restore the original behavior.
+
+Fixes: 7d4f07d5cb71 ("kbuild: deb-pkg: squash scripts/package/deb-build-option to debian/rules")
+Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ scripts/package/debian/rules | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 8d5011a0bf60d..ff238798b7747 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -2211,7 +2211,7 @@ int get_msr(int cpu, off_t offset, unsigned long long *msr)
- 	return 0;
- }
+diff --git a/scripts/package/debian/rules b/scripts/package/debian/rules
+index ca07243bd5cdf..2b3f9a0bd6c40 100755
+--- a/scripts/package/debian/rules
++++ b/scripts/package/debian/rules
+@@ -21,9 +21,11 @@ ifeq ($(origin KBUILD_VERBOSE),undefined)
+     endif
+ endif
  
--int probe_msr(int cpu, off_t offset)
-+int probe_rapl_msr(int cpu, off_t offset, int index)
- {
- 	ssize_t retval;
- 	unsigned long long value;
-@@ -2220,13 +2220,22 @@ int probe_msr(int cpu, off_t offset)
+-revision = $(lastword $(subst -, ,$(shell dpkg-parsechangelog -S Version)))
++revision = $(shell dpkg-parsechangelog -S Version | sed -n 's/.*-//p')
+ CROSS_COMPILE ?= $(filter-out $(DEB_BUILD_GNU_TYPE)-, $(DEB_HOST_GNU_TYPE)-)
+-make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) KBUILD_BUILD_VERSION=$(revision) $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
++make-opts = ARCH=$(ARCH) KERNELRELEASE=$(KERNELRELEASE) \
++    $(addprefix KBUILD_BUILD_VERSION=,$(revision)) \
++    $(addprefix CROSS_COMPILE=,$(CROSS_COMPILE))
  
- 	retval = pread(get_msr_fd(cpu), &value, sizeof(value), offset);
+ binary-targets := $(addprefix binary-, image image-dbg headers libc-dev)
  
--	/*
--	 * Expect MSRs to accumulate some non-zero value since the system was powered on.
--	 * Treat zero as a read failure.
--	 */
--	if (retval != sizeof(value) || value == 0)
-+	/* if the read failed, the probe fails */
-+	if (retval != sizeof(value))
- 		return 1;
- 
-+	/* If an Energy Status Counter MSR returns 0, the probe fails */
-+	switch (index) {
-+	case RAPL_RCI_INDEX_ENERGY_PKG:
-+	case RAPL_RCI_INDEX_ENERGY_CORES:
-+	case RAPL_RCI_INDEX_DRAM:
-+	case RAPL_RCI_INDEX_GFX:
-+	case RAPL_RCI_INDEX_ENERGY_PLATFORM:
-+		if (value == 0)
-+			return 1;
-+	}
-+
-+	/* PKG,DRAM_PERF_STATUS MSRs, can return any value */
- 	return 0;
- }
- 
-@@ -7896,7 +7905,7 @@ void rapl_perf_init(void)
- 					rci->flags[cai->rci_index] = cai->flags;
- 
- 					/* Use MSR for this counter */
--				} else if (!no_msr && cai->msr && probe_msr(cpu, cai->msr) == 0) {
-+				} else if (!no_msr && cai->msr && probe_rapl_msr(cpu, cai->msr, cai->rci_index) == 0) {
- 					rci->source[cai->rci_index] = COUNTER_SOURCE_MSR;
- 					rci->msr[cai->rci_index] = cai->msr;
- 					rci->msr_mask[cai->rci_index] = cai->msr_mask;
-@@ -8034,7 +8043,7 @@ void msr_perf_init_(void)
- 					cai->present = true;
- 
- 					/* User MSR for this counter */
--				} else if (!no_msr && cai->msr && probe_msr(cpu, cai->msr) == 0) {
-+				} else if (!no_msr && cai->msr && probe_rapl_msr(cpu, cai->msr, cai->rci_index) == 0) {
- 					cci->source[cai->rci_index] = COUNTER_SOURCE_MSR;
- 					cci->msr[cai->rci_index] = cai->msr;
- 					cci->msr_mask[cai->rci_index] = cai->msr_mask;
-@@ -8148,7 +8157,7 @@ void cstate_perf_init_(bool soft_c1)
- 
- 					/* User MSR for this counter */
- 				} else if (!no_msr && cai->msr && pkg_cstate_limit >= cai->pkg_cstate_limit
--					   && probe_msr(cpu, cai->msr) == 0) {
-+					   && probe_rapl_msr(cpu, cai->msr, cai->rci_index) == 0) {
- 					cci->source[cai->rci_index] = COUNTER_SOURCE_MSR;
- 					cci->msr[cai->rci_index] = cai->msr;
- 				}
 -- 
 2.39.5
 
