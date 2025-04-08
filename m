@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DB3269B0D;
-	Tue,  8 Apr 2025 12:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6EA26E17F;
+	Tue,  8 Apr 2025 12:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114858; cv=none; b=JHLsII/0vUyezDNcZ5t0+9xLHrtH695vGqaXZ9TedeiWSEz2o94FSAXIHhb2dgcHAiH+MWFO5UoEBfA60K5tvp45fnP0GP2oJB49MAmXJo9PRJFmCjQwII9nUwXU0e8BetY/kSfnmHSTGl6MDmaffC9lVIIZNvcO2K7ee+iP5ag=
+	t=1744114861; cv=none; b=bzvn+uJFcDFb1wTJ9D5BV+uGT0FVS021O+O745rQFXbGGjN0wa8IIXZR85YfOnyWJm4yaKrjw4VVeC8qIpCz6nlNba7WPn2l814g+34HEmJmAk696xjcpNr9J6loWN/187ahwso/aMLvZ6FMPfffCuluJ1+hY9nCv+MDBU9mToU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114858; c=relaxed/simple;
-	bh=csE/cZC2w5AaUSmBNWanOCZIFlRkuD62aYGm7NX/h0E=;
+	s=arc-20240116; t=1744114861; c=relaxed/simple;
+	bh=Yk04aHctlkrfxzBequU+qkOTl4Fcb7ayFQD7qYI4p/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lU1xyrGy/SHypL2nu7tQ7d9rrlIsDMiivJe0Z/jsP2otM8EsQZKTk/dfxIrFz8tn3oysueACnGbRnNwfHfhpYBHDtnUP4l8lBNS7J66F6lJ+V04dKl1XL5xQv+NRqECneWfn4S9Hr5og/Qea3QDo0dGbSNMuLH4ohi7cKozzJa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgLv/A/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GYP7CJUQjU4lTyZ/iRd2dMIDkWJK2dcbzOcScux8/fRLfFblgdmm4cqwwZazGbUH3+A7xsU/AiRZGIAc3Q5bnMihkR0tUH/VdHQNos4eUvBTKThSoAdqNdpm2cyBfNXJ5rmNfKXXPrgPdPRf0Ui2CTyh28J6G8Culjvszmo87HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcLwhvrK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgLv/A/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED9CC4CEEA;
-	Tue,  8 Apr 2025 12:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcLwhvrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4126C4CEE5;
+	Tue,  8 Apr 2025 12:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114858;
-	bh=csE/cZC2w5AaUSmBNWanOCZIFlRkuD62aYGm7NX/h0E=;
+	s=korg; t=1744114861;
+	bh=Yk04aHctlkrfxzBequU+qkOTl4Fcb7ayFQD7qYI4p/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgLv/A/9o1NTDQLowLbeQcT6KCSWI9x4DOzKJSl3A9TlSeVpx5+KRlLsSNHTr1f8f
-	 q0wUlOQSdNPsJafRXhIq0wfIKim7yWno52mVBlTS0WJbDvnlALxJ6gQx0ry35wAwov
-	 /HwPMbO8D8HWkp0nxw6oArk/aI0uOLodwUAT/pTo=
+	b=PcLwhvrK7SX5d2Hm8HXyEMTFzlS/hN2xpteSSICTPxnk6ygsetwZxHeaSwvqkpsnR
+	 uwiyycCXTZzXk/nPAyZQmIQ7mPaVwOkeNhJ/+sRNN9Ut/HCPajAB0qjCX3EJLIhe2a
+	 3dRuXMrQkoJ/GiI33SFPCy24T0brbHtRnPDRp+0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 262/499] staging: rtl8723bs: select CONFIG_CRYPTO_LIB_AES
-Date: Tue,  8 Apr 2025 12:47:54 +0200
-Message-ID: <20250408104857.751025204@linuxfoundation.org>
+Subject: [PATCH 6.13 263/499] staging: vchiq_arm: Register debugfs after cdev
+Date: Tue,  8 Apr 2025 12:47:55 +0200
+Message-ID: <20250408104857.777347417@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -45,46 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit b2a9a6a26b7e954297e51822e396572026480bad ]
+[ Upstream commit 63f4dbb196db60a8536ba3d1b835d597a83f6cbb ]
 
-This fixes the following issue:
-ERROR: modpost: "aes_expandkey" [drivers/staging/rtl8723bs/r8723bs.ko]
-undefined!
-ERROR: modpost: "aes_encrypt" [drivers/staging/rtl8723bs/r8723bs.ko]
-undefined!
+The commit 2a4d15a4ae98 ("staging: vchiq: Refactor vchiq cdev code")
+moved the debugfs directory creation before vchiq character device
+registration. In case the latter fails, the debugfs directory won't
+be cleaned up.
 
-Fixes: 7d40753d8820 ("staging: rtl8723bs: use in-kernel aes encryption in OMAC1 routines")
-Fixes: 3d3a170f6d80 ("staging: rtl8723bs: use in-kernel aes encryption")
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/tencent_0BDDF3A721708D16A2E7C3DAFF0FEC79A105@qq.com
+Fixes: 2a4d15a4ae98 ("staging: vchiq: Refactor vchiq cdev code")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250309125014.37166-2-wahrenst@gmx.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/Kconfig b/drivers/staging/rtl8723bs/Kconfig
-index 8d48c61961a6b..353e6ee2c1450 100644
---- a/drivers/staging/rtl8723bs/Kconfig
-+++ b/drivers/staging/rtl8723bs/Kconfig
-@@ -4,6 +4,7 @@ config RTL8723BS
- 	depends on WLAN && MMC && CFG80211
- 	depends on m
- 	select CRYPTO
-+	select CRYPTO_LIB_AES
- 	select CRYPTO_LIB_ARC4
- 	help
- 	This option enables support for RTL8723BS SDIO drivers, such as
+diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+index a4e83e5d619bc..e2e80e90b555b 100644
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -1386,8 +1386,6 @@ static int vchiq_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	vchiq_debugfs_init(&mgmt->state);
+-
+ 	dev_dbg(&pdev->dev, "arm: platform initialised - version %d (min %d)\n",
+ 		VCHIQ_VERSION, VCHIQ_VERSION_MIN);
+ 
+@@ -1401,6 +1399,8 @@ static int vchiq_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	vchiq_debugfs_init(&mgmt->state);
++
+ 	bcm2835_audio = vchiq_device_register(&pdev->dev, "bcm2835-audio");
+ 	bcm2835_camera = vchiq_device_register(&pdev->dev, "bcm2835-camera");
+ 
 -- 
 2.39.5
 
