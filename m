@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA4C26F453;
-	Tue,  8 Apr 2025 12:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3E21FCFF3;
+	Tue,  8 Apr 2025 12:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115477; cv=none; b=V6/R5uWeg+H7rww+Q8i5iGnsHOTXKPcXUVc2T+cGWP/RHOQrgdrxulNuOyRVc3NJks4HR4lo2D8v3g/oCISoC0L8qERXJrVt9Xt4EXB9LJBiHUX0cKoIzZRptCwqNTUIqOXJVm4MK2q89BroBcFwbIS9PFKlzioCJ+2C89aTo7g=
+	t=1744115480; cv=none; b=NzqrkoE2yXBlMzs5Ge3TJPW3WPuHdBSMG/2k6ucQeK3gSuv6fLVH9mYd+mZ58TqhA64IyK03tVrViSzICjWiucmFo4pR6rnNbvIPz39reJMXexyb8Tqy/rwk4YXPsH17c11oiKLvDwaEZmRmMosRLDWKyPE1RkWRVCO6zy8kIkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115477; c=relaxed/simple;
-	bh=Ovx19MOCvu5dcFFfoqOJt1zWFYp0k5frHWonGp2lh8A=;
+	s=arc-20240116; t=1744115480; c=relaxed/simple;
+	bh=rGlFVMorbyTLwjuO5/DxyDrRDeVQAIuOGvashP0vM6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zv+3CZLNXSqWg3NtpqHqq5amRHldQlms2IbuX7vC+6wIef2n8XuSZscAbRLbZpAyuHD7uoHt6an3Mv9nuC+iiHLa+B+32HcyHlIghuKRX7yVNRgcxroNKYCgxJ/iz+1NIIv+JQCGt8mD5c18jajc8V/UfZioWO/Bcd1GbqkN8tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGxhm8yU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cp2Yox0q3bv1/UOhHYeJ83ongy35aX7qz0AeNoYkPbx8G5Z+PI0RHPcj49OBkHLc9u7IQusqBFPAECBS2S9r7DIzwYPZkloHzIYEMQ8iReIwuDy7nRzBeQRAVbitVBTb9qW6zgJjalt/xGFYvUputebS03iHmyNo95tlceG722I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQryQTBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGxhm8yU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA456C4CEE5;
-	Tue,  8 Apr 2025 12:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQryQTBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6472FC4CEE5;
+	Tue,  8 Apr 2025 12:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115477;
-	bh=Ovx19MOCvu5dcFFfoqOJt1zWFYp0k5frHWonGp2lh8A=;
+	s=korg; t=1744115479;
+	bh=rGlFVMorbyTLwjuO5/DxyDrRDeVQAIuOGvashP0vM6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGxhm8yUmUZz3tiyRFdrZDjZFptKEEFyOtY8jsy8Fii2giK1agqOAEwVE22yQiIAP
-	 b4qo/b71YsSf29rYrPP/0y9J32nTT6LR1z4t7UqlekFz6VZKxF5SIdsqy3JNBdJ7uW
-	 Nru02S6fpTKJmKWZYEv4yGZFQY08SzMPjyi5GiXw=
+	b=wQryQTBK3q0HNUdYBfbmekVN6z+nWEknLKu/Tkxzpey5Iib8sIKl4iJPZszuSeleW
+	 3SNaXqQmI6uC9DGtc9w01dGI835/yTj11EyPog1pLWyCJqxKIY57N/LLNDpNdAoXMh
+	 PBAmN1REfvyTAY50b3woP7fvIHcfFSHXou1nKlyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c486d0b62032c82a968@syzkaller.appspotmail.com,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.13 489/499] exec: fix the racy usage of fs_struct->in_exec
-Date: Tue,  8 Apr 2025 12:51:41 +0200
-Message-ID: <20250408104903.553937510@linuxfoundation.org>
+	syzbot+5bcd7c809d365e14c4df@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.13 490/499] media: vimc: skip .s_stream() for stopped entities
+Date: Tue,  8 Apr 2025 12:51:42 +0200
+Message-ID: <20250408104903.578559589@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,89 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit af7bb0d2ca459f15cb5ca604dab5d9af103643f0 upstream.
+commit 36cef585e2a31e4ddf33a004b0584a7a572246de upstream.
 
-check_unsafe_exec() sets fs->in_exec under cred_guard_mutex, then execve()
-paths clear fs->in_exec lockless. This is fine if exec succeeds, but if it
-fails we have the following race:
+Syzbot reported [1] a warning prompted by a check in call_s_stream()
+that checks whether .s_stream() operation is warranted for unstarted
+or stopped subdevs.
 
-	T1 sets fs->in_exec = 1, fails, drops cred_guard_mutex
+Add a simple fix in vimc_streamer_pipeline_terminate() ensuring that
+entities skip a call to .s_stream() unless they have been previously
+properly started.
 
-	T2 sets fs->in_exec = 1
+[1] Syzbot report:
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 5933 at drivers/media/v4l2-core/v4l2-subdev.c:460 call_s_stream+0x2df/0x350 drivers/media/v4l2-core/v4l2-subdev.c:460
+Modules linked in:
+CPU: 0 UID: 0 PID: 5933 Comm: syz-executor330 Not tainted 6.13.0-rc2-syzkaller-00362-g2d8308bf5b67 #0
+...
+Call Trace:
+ <TASK>
+ vimc_streamer_pipeline_terminate+0x218/0x320 drivers/media/test-drivers/vimc/vimc-streamer.c:62
+ vimc_streamer_pipeline_init drivers/media/test-drivers/vimc/vimc-streamer.c:101 [inline]
+ vimc_streamer_s_stream+0x650/0x9a0 drivers/media/test-drivers/vimc/vimc-streamer.c:203
+ vimc_capture_start_streaming+0xa1/0x130 drivers/media/test-drivers/vimc/vimc-capture.c:256
+ vb2_start_streaming+0x15f/0x5a0 drivers/media/common/videobuf2/videobuf2-core.c:1789
+ vb2_core_streamon+0x2a7/0x450 drivers/media/common/videobuf2/videobuf2-core.c:2348
+ vb2_streamon drivers/media/common/videobuf2/videobuf2-v4l2.c:875 [inline]
+ vb2_ioctl_streamon+0xf4/0x170 drivers/media/common/videobuf2/videobuf2-v4l2.c:1118
+ __video_do_ioctl+0xaf0/0xf00 drivers/media/v4l2-core/v4l2-ioctl.c:3122
+ video_usercopy+0x4d2/0x1620 drivers/media/v4l2-core/v4l2-ioctl.c:3463
+ v4l2_ioctl+0x1ba/0x250 drivers/media/v4l2-core/v4l2-dev.c:366
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl fs/ioctl.c:892 [inline]
+ __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f2b85c01b19
+...
 
-	T1 clears fs->in_exec
-
-	T2 continues with fs->in_exec == 0
-
-Change fs/exec.c to clear fs->in_exec with cred_guard_mutex held.
-
-Reported-by: syzbot+1c486d0b62032c82a968@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67dc67f0.050a0220.25ae54.001f.GAE@google.com/
+Reported-by: syzbot+5bcd7c809d365e14c4df@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5bcd7c809d365e14c4df
+Fixes: adc589d2a208 ("media: vimc: Add vimc-streamer for stream control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20250324160003.GA8878@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/media/test-drivers/vimc/vimc-streamer.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1236,13 +1236,12 @@ int begin_new_exec(struct linux_binprm *
- 	 */
- 	bprm->point_of_no_return = true;
+--- a/drivers/media/test-drivers/vimc/vimc-streamer.c
++++ b/drivers/media/test-drivers/vimc/vimc-streamer.c
+@@ -59,6 +59,12 @@ static void vimc_streamer_pipeline_termi
+ 			continue;
  
--	/*
--	 * Make this the only thread in the thread group.
--	 */
-+	/* Make this the only thread in the thread group */
- 	retval = de_thread(me);
- 	if (retval)
- 		goto out;
--
-+	/* see the comment in check_unsafe_exec() */
-+	current->fs->in_exec = 0;
- 	/*
- 	 * Cancel any io_uring activity across execve
- 	 */
-@@ -1504,6 +1503,8 @@ static void free_bprm(struct linux_binpr
+ 		sd = media_entity_to_v4l2_subdev(ved->ent);
++		/*
++		 * Do not call .s_stream() to stop an already
++		 * stopped/unstarted subdev.
++		 */
++		if (!v4l2_subdev_is_streaming(sd))
++			continue;
+ 		v4l2_subdev_call(sd, video, s_stream, 0);
  	}
- 	free_arg_pages(bprm);
- 	if (bprm->cred) {
-+		/* in case exec fails before de_thread() succeeds */
-+		current->fs->in_exec = 0;
- 		mutex_unlock(&current->signal->cred_guard_mutex);
- 		abort_creds(bprm->cred);
- 	}
-@@ -1610,6 +1611,10 @@ static void check_unsafe_exec(struct lin
- 	 * suid exec because the differently privileged task
- 	 * will be able to manipulate the current directory, etc.
- 	 * It would be nice to force an unshare instead...
-+	 *
-+	 * Otherwise we set fs->in_exec = 1 to deny clone(CLONE_FS)
-+	 * from another sub-thread until de_thread() succeeds, this
-+	 * state is protected by cred_guard_mutex we hold.
- 	 */
- 	n_fs = 1;
- 	spin_lock(&p->fs->lock);
-@@ -1868,7 +1873,6 @@ static int bprm_execve(struct linux_binp
- 
- 	sched_mm_cid_after_execve(current);
- 	/* execve succeeded */
--	current->fs->in_exec = 0;
- 	current->in_execve = 0;
- 	rseq_execve(current);
- 	user_events_execve(current);
-@@ -1887,7 +1891,6 @@ out:
- 		force_fatal_sig(SIGSEGV);
- 
- 	sched_mm_cid_after_execve(current);
--	current->fs->in_exec = 0;
- 	current->in_execve = 0;
- 
- 	return retval;
+ }
 
 
