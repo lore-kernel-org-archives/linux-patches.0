@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D970926656B;
-	Tue,  8 Apr 2025 12:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8325527604A;
+	Tue,  8 Apr 2025 12:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115959; cv=none; b=Vn3XSvNDC5bG2xRnYB7z6MnC+iib1p2+ryKmF9mQmoOCEoHyww+7lhFOXyDnOyR6Zuu9eAT4B9mGetriurOI2f+Ag0DUl766fjd7ixwds9VauRL611l7PZPYY26Qlryjo06AExdZqx+LIynuq++llagjNckIrau8Hr6J6I+DCXg=
+	t=1744115962; cv=none; b=BKGOfnTLsuqJoH2YMGSx+OpGmOgzpJKFnHF13tF/TKlYkUXhaDELbYUSc72U+viaHHzR3bec3xI/sGxWUPVcV+fYVFGbIldiqMokZmHMNAHH25W0mouB4LOYaMA9pvnLr8VCzC1I8+edkfKtTheQSYzp90GhFzIO1IepVACBI4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115959; c=relaxed/simple;
-	bh=ljqYJxyEV7le+IKkbL/mhjUyDS6TAlQoQgpTpN08ac4=;
+	s=arc-20240116; t=1744115962; c=relaxed/simple;
+	bh=W03f4jkNmNJJjmvA76597EC2jxLyrz1NMpdrTHMaWM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQh+3e3CnosHM3hMdI6MRkKeMbugKLOwAmCiqGM6PzZTix4tkKhGbkAPhMlRgpfUqyhHVKmXLxDwelqtaa92DromaRSU6tVTx3qWxJhtQaZNYj+QXnR5BhmiYGu2xISF5YISbVeVVHG/0tyq+q2olCcsr9YNurxxWv1pkH2dby8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5XnWO0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEvzCfWKjcZ1xcZFYHKs/kjv0iLDMmtZ5GkNAQFpI/m9MqHRNR4OpaGtl5ZyRohAHNr1Y4FRs/xTtaZDsdNqr9I/Mm52f6jWojYgEeFQqZpdlA2LUDRQEKfn1DLZgL3urCpc5xg9isw46iiuK9G1A/1j175++1ni/q2Q3rsyZJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK8RSHXD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5XnWO0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5B8C4CEE5;
-	Tue,  8 Apr 2025 12:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK8RSHXD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FE8C4CEE5;
+	Tue,  8 Apr 2025 12:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115959;
-	bh=ljqYJxyEV7le+IKkbL/mhjUyDS6TAlQoQgpTpN08ac4=;
+	s=korg; t=1744115962;
+	bh=W03f4jkNmNJJjmvA76597EC2jxLyrz1NMpdrTHMaWM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5XnWO0yYY1itoZOq/GKMNmpSfhOsBnMyHtLhIL9HOmNoni7QGoWiFouGKu/+BRTE
-	 4aSV/Q/HCy8vrNn4hP2c9Ry6Oc2UE7KGkMmAXJ3FK9n96hhcWutuj6/JLvozsRfo89
-	 1o0ztuJbuoGIwX8gTgTmPxR56vtmqBhbKISzr+8A=
+	b=pK8RSHXD0praWmh30FCUkp4Yft82LUAuEU/dtR2Ju511hDcQ2VU81gtfM1sx3pQGY
+	 6v81kW9t3v8odldz+njwo5JkNf7wqBC3ByitjAmbXXSwaPSikOg1WmabZLNKVgor9d
+	 L5HQkZOyXCzq1zKJwnsKNJXSuRA8GutuiYEhwNcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 169/204] io_uring/filetable: ensure node switch is always done, if needed
-Date: Tue,  8 Apr 2025 12:51:39 +0200
-Message-ID: <20250408104825.279264124@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 170/204] drm/amdgpu/gfx11: fix num_mec
+Date: Tue,  8 Apr 2025 12:51:40 +0200
+Message-ID: <20250408104825.307197426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -49,34 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-No upstream patch exists for this issue, as it was introduced by
-a stable backport.
+[ Upstream commit 4161050d47e1b083a7e1b0b875c9907e1a6f1f1f ]
 
-A previous backport relied on other code changes in the io_uring file
-table and resource node handling, which means that sometimes a resource
-node switch can get missed. For 6.1-stable, that code is still in
-io_install_fixed_file(), so ensure we fall-through to that case for the
-success path too.
+GC11 only has 1 mec.
 
-Fixes: a3812a47a320 ("io_uring: drop any code related to SCM_RIGHTS")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3d879e81f0f9 ("drm/amdgpu: add init support for GFX11 (v2)")
+Reviewed-by: Sunil Khatri <sunil.khatri@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/filetable.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/filetable.c
-+++ b/io_uring/filetable.c
-@@ -98,7 +98,7 @@ static int io_install_fixed_file(struct
- 	*io_get_tag_slot(ctx->file_data, slot_index) = 0;
- 	io_fixed_file_set(file_slot, file);
- 	io_file_bitmap_set(&ctx->file_table, slot_index);
--	return 0;
-+	ret = 0;
- err:
- 	if (needs_switch)
- 		io_rsrc_node_switch(ctx, ctx->file_data);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index c76895cca4d9a..61e869839641e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -1301,7 +1301,7 @@ static int gfx_v11_0_sw_init(void *handle)
+ 		adev->gfx.me.num_me = 1;
+ 		adev->gfx.me.num_pipe_per_me = 1;
+ 		adev->gfx.me.num_queue_per_pipe = 1;
+-		adev->gfx.mec.num_mec = 2;
++		adev->gfx.mec.num_mec = 1;
+ 		adev->gfx.mec.num_pipe_per_mec = 4;
+ 		adev->gfx.mec.num_queue_per_pipe = 4;
+ 		break;
+-- 
+2.39.5
+
 
 
