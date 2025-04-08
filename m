@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0251D2676E1;
-	Tue,  8 Apr 2025 11:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF42268688;
+	Tue,  8 Apr 2025 11:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113247; cv=none; b=NTFheea66SUaIzXEB2NwfU2SHvWX2jNOUP5G/GK9tJSW7Fi6N0uKYV6k86x5xHWwAIKcoOeG1QSoqLgqfkxs4Rg3VsDhTYQ2nsCCPXPLOLtPxNTzozTWHKF1cxEoY9b9L8hjRsMEqR9jKl+sPKOLUxZoS7Q5v6+OD7oKz7T6TbE=
+	t=1744113249; cv=none; b=YCL+tQ8O+azlOFbuMwneXj24wRSPDso1FbIqqVdiX1lVfKRyMOzjN2QI7yzzSfiwRyXmh16mkosuecYtAES074yZ/vFoK4Kyo8p7IKwkKPx/Tq9IsEljjDvzTwx0MMN58bGjjpjXn6eZi56fIwDjHQsQecykAq1B7WVpNodDyU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113247; c=relaxed/simple;
-	bh=y3UkM9B7nDwhlRI46+Uh41tSK+cH76QlgR6Z9LNui94=;
+	s=arc-20240116; t=1744113249; c=relaxed/simple;
+	bh=ybfdQ1ujdbX7dz1xZRwTPBtQwjfDuomu1G+gyFsumuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEE43UlDvw5iQx7QAnuuf2JM7EQFSXbyi6BlWDrAZ24hz+oa9Oov35V+/o3sbne8ruOx2IJzQy1uxtMyuVzqsrJVmUo5E5B+FZ23tZ/gLWIHXt1xlDZ4ptgYqS27J56jqpGmPNH1EaSxDU7LOu2fCAtuYq9lGEjaX2Y05/88R9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lW/8mhqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBNlNkbtRqK1M6ze+Yrxh+brzgyd4FNFYcY7m6p0J5W4zMRxASzqRIQs82Ab0WRdgz40yRr9MMeV9M5Ov+RETE0bNl9YdzvJhf4W18A59uieLgxgEW72DpjrXiU79LpyCLFedARd+f53ZSPXkCcP3p1THAEJbuPVrLpKISQOaFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebGcQxw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lW/8mhqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86105C4CEE5;
-	Tue,  8 Apr 2025 11:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebGcQxw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD12C4CEE5;
+	Tue,  8 Apr 2025 11:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113246;
-	bh=y3UkM9B7nDwhlRI46+Uh41tSK+cH76QlgR6Z9LNui94=;
+	s=korg; t=1744113249;
+	bh=ybfdQ1ujdbX7dz1xZRwTPBtQwjfDuomu1G+gyFsumuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lW/8mhqo0Qj5YVgElJ9EzOzKa/zFOSMvrvvkkX7qOYOVXLWOtx9W4KWexPHjlsdRP
-	 /2jS2GQKRNWa9BtIZhmYOZ2GQszmJqaJ9KQ2PNLI/rvGyQRoINaeXwGuw/pBziRD/9
-	 udd6AOQB56wwBdzZfG1CSd4vyZ1u4unX5QMhHYRg=
+	b=ebGcQxw60zNaXo3RzXHiMCfXSyz1VWyf7qllbsa57Dha7zT3WsOOM5McqY29mKpuV
+	 68pZkr+c8M0F2tK7e3Hh6+hXUzNlAZPvsMWkEnk+Nf9rpAePk2qsAp2L5icQBJwl6Q
+	 CwdwCz3FqKo4nPGDNf2IfG7NYLUlHRyz7the4da0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
+	Tamir Duberstein <tamird@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/268] selftests/bpf: Select NUMA_NO_NODE to create map
-Date: Tue,  8 Apr 2025 12:48:19 +0200
-Message-ID: <20250408104830.863943627@linuxfoundation.org>
+Subject: [PATCH 6.6 089/268] rust: fix signature of rust_fmt_argument
+Date: Tue,  8 Apr 2025 12:48:20 +0200
+Message-ID: <20250408104830.890872754@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,53 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 4107a1aeb20ed4cdad6a0d49de92ea0f933c71b7 ]
+[ Upstream commit 901b3290bd4dc35e613d13abd03c129e754dd3dd ]
 
-On powerpc, a CPU does not necessarily originate from NUMA node 0.
-This contrasts with architectures like x86, where CPU 0 is not
-hot-pluggable, making NUMA node 0 a consistently valid node.
-This discrepancy can lead to failures when creating a map on NUMA
-node 0, which is initialized by default, if no CPUs are allocated
-from NUMA node 0.
+Without this change, the rest of this series will emit the following
+error message:
 
-This patch fixes the issue by setting NUMA_NO_NODE (-1) for map
-creation for this selftest.
+error[E0308]: `if` and `else` have incompatible types
+  --> <linux>/rust/kernel/print.rs:22:22
+   |
+21 | #[export]
+   | --------- expected because of this
+22 | unsafe extern "C" fn rust_fmt_argument(
+   |                      ^^^^^^^^^^^^^^^^^ expected `u8`, found `i8`
+   |
+   = note: expected fn item `unsafe extern "C" fn(*mut u8, *mut u8, *mut c_void) -> *mut u8 {bindings::rust_fmt_argument}`
+              found fn item `unsafe extern "C" fn(*mut i8, *mut i8, *const c_void) -> *mut i8 {print::rust_fmt_argument}`
 
-Fixes: 96eabe7a40aa ("bpf: Allow selecting numa node during map creation")
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/bpf/cf1f61468b47425ecf3728689bc9636ddd1d910e.1738302337.git.skb99@linux.ibm.com
+The error may be different depending on the architecture.
+
+To fix this, change the void pointer argument to use a const pointer,
+and change the imports to use crate::ffi instead of core::ffi for
+integer types.
+
+Fixes: 787983da7718 ("vsprintf: add new `%pA` format specifier")
+Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20250303-export-macro-v3-1-41fbad85a27f@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ lib/vsprintf.c       | 2 +-
+ rust/kernel/print.rs | 7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-index f79815b7e951b..fff16cdc93f20 100644
---- a/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-@@ -6,6 +6,10 @@
- #include <test_progs.h>
- #include "bloom_filter_map.skel.h"
+diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+index 2aa408441cd3e..14b27db236cc8 100644
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -2275,7 +2275,7 @@ int __init no_hash_pointers_enable(char *str)
+ early_param("no_hash_pointers", no_hash_pointers_enable);
  
-+#ifndef NUMA_NO_NODE
-+#define NUMA_NO_NODE	(-1)
-+#endif
-+
- static void test_fail_cases(void)
- {
- 	LIBBPF_OPTS(bpf_map_create_opts, opts);
-@@ -69,6 +73,7 @@ static void test_success_cases(void)
+ /* Used for Rust formatting ('%pA'). */
+-char *rust_fmt_argument(char *buf, char *end, void *ptr);
++char *rust_fmt_argument(char *buf, char *end, const void *ptr);
  
- 	/* Create a map */
- 	opts.map_flags = BPF_F_ZERO_SEED | BPF_F_NUMA_NODE;
-+	opts.numa_node = NUMA_NO_NODE;
- 	fd = bpf_map_create(BPF_MAP_TYPE_BLOOM_FILTER, NULL, 0, sizeof(value), 100, &opts);
- 	if (!ASSERT_GE(fd, 0, "bpf_map_create bloom filter success case"))
- 		return;
+ /*
+  * Show a '%p' thing.  A kernel extension is that the '%p' is followed
+diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
+index f48926e3e9fe3..34788218ea5d2 100644
+--- a/rust/kernel/print.rs
++++ b/rust/kernel/print.rs
+@@ -6,12 +6,11 @@
+ //!
+ //! Reference: <https://www.kernel.org/doc/html/latest/core-api/printk-basics.html>
+ 
+-use core::{
++use crate::{
+     ffi::{c_char, c_void},
+-    fmt,
++    str::RawFormatter,
+ };
+-
+-use crate::str::RawFormatter;
++use core::fmt;
+ 
+ #[cfg(CONFIG_PRINTK)]
+ use crate::bindings;
 -- 
 2.39.5
 
