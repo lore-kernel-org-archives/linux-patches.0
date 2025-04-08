@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4932673B7;
-	Tue,  8 Apr 2025 12:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318A263F4D;
+	Tue,  8 Apr 2025 12:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115370; cv=none; b=Pjfhw6LIjvDPcjfKM4fMAnbVJ4yV8mlzqnxT88dzNac9fV4Hf2KO7+TSlScIBp2oBv/UsXGOZZaK2s7ABTGEYVZrQ7/wudG5HLH1IsrmmV1eXotWqexHzT9CT5Q0Va/K8yAfSb9P4GK5hashxa4kfeUQ0RB5ZSweccjGlpcNhbc=
+	t=1744115373; cv=none; b=dkwySJyGv1jbLuAgZ/FKuH3Pnc4sJ63/7lm38/tb+4oCKR6WSu+4H4+XRjoOcPf8B87odO+TQiQqKm5YJN5vZgJ645xTUqt5Qjp7RWn48O47f03ejB+hZoVZMcIRCrDrYEHz9shs3EioGEspPIdu30mk4EIFTRzG/uWD2C9MlQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115370; c=relaxed/simple;
-	bh=tLPTdlomFVDUTp5aAnWaWJhcqXf0MWfbhpPJmT0ADTo=;
+	s=arc-20240116; t=1744115373; c=relaxed/simple;
+	bh=OYKxhML6i7nOsUu9cclVIW3PQNhAlanIXSkE+ZwZQz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hS+cPxGnCDmgK9iUOHokCsR0JD4hhgQFY8B/ngKZfpj7hIdfxTZyfY8guAyM5OELZ7MJQyGOkm0KleePIYw1FgcPDUaEKFlPEn/2vk+oLdKzb027yHDwXpvyqhWWHdDp4l8CbvVcPmRlBmqAmVHpEOpJsJ+5g2Q5s6duuKxNjz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTWiTRB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZDqpSIt+RmB2PxZmawHN1Z8CCf5TgXzci8dYAe6LWHMaXOqO2YL0PY0TtxOY3xYjMv6oZCVbw+PZLM2uRAksMKaSFFzR+AyynW0ROevjS7GqG9MidUpPmEQFRb1C58lqn9ihHjLxRdNLqyICyO+tHCTOrPMaInphFbYYPo25S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBVCApdL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTWiTRB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69BAC4CEE5;
-	Tue,  8 Apr 2025 12:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBVCApdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677B8C4CEE5;
+	Tue,  8 Apr 2025 12:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115370;
-	bh=tLPTdlomFVDUTp5aAnWaWJhcqXf0MWfbhpPJmT0ADTo=;
+	s=korg; t=1744115372;
+	bh=OYKxhML6i7nOsUu9cclVIW3PQNhAlanIXSkE+ZwZQz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTWiTRB1vkNX7RHwOVcid0lXxJNKJhjm/9ieeUM9BTpDDoe7Y5V7fe23pCJGZbunj
-	 tT7VUleoytes2ROZg+bHxCaG8IYBWhVRNP6CFiI+TcK5rehjdxfcfJfmufeex9rmQN
-	 WP8YTCVNKmOGmDgCNm9NcwQqaikZRtEPB2mH8QFc=
+	b=nBVCApdLZNk52azOfPLlqKnavxFM65rWLk/CaGE93OZ5A4JwVGiUwdwBK72BXzvPA
+	 Nssrs04KG7PY5Gtp5Lk/fBtwE7JonhpcV59VZxQXoAUwr3Y89sHUfozel8epX3eanx
+	 mEoe97jwVrEYpfR2H3UznGcIPjHGGlfoIvIFadyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.13 449/499] perf/x86/intel: Apply static call for drain_pebs
-Date: Tue,  8 Apr 2025 12:51:01 +0200
-Message-ID: <20250408104902.429443083@linuxfoundation.org>
+	Nihar Chaithanya <niharchaithanya@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 423/499] staging: gpib: agilent_82357a: Handle gpib_register_driver() errors
+Date: Tue,  8 Apr 2025 12:50:35 +0200
+Message-ID: <20250408104901.776191854@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -50,60 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra (Intel) <peterz@infradead.org>
+From: Nihar Chaithanya <niharchaithanya@gmail.com>
 
-commit 314dfe10576912e1d786b13c5d4eee8c51b63caa upstream.
+[ Upstream commit 9e43ebc613e2adb9b9e900e11a4099e104b61f2d ]
 
-The x86_pmu_drain_pebs static call was introduced in commit 7c9903c9bf71
-("x86/perf, static_call: Optimize x86_pmu methods"), but it's not really
-used to replace the old method.
+The usb_register() function can fail and returns an error value which
+is not returned. The function gpib_register_driver() can also fail
+which can result in semi-registered module.
 
-Apply the static call for drain_pebs.
+In case gpib_register_driver() fails unregister the previous usb driver
+registering function. Return the error value if gpib_register_driver()
+or usb_register() functions fail. Add pr_err when registering driver
+fails also indicating the error value.
 
-Fixes: 7c9903c9bf71 ("x86/perf, static_call: Optimize x86_pmu methods")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250121152303.3128733-1-kan.liang@linux.intel.com
+Signed-off-by: Nihar Chaithanya <niharchaithanya@gmail.com>
+Link: https://lore.kernel.org/r/20241230185633.175690-4-niharchaithanya@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8491e73a5223 ("staging: gpib: Fix Oops after disconnect in agilent usb")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c |    2 +-
- arch/x86/events/intel/ds.c   |    2 +-
- arch/x86/events/perf_event.h |    1 +
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ .../staging/gpib/agilent_82357a/agilent_82357a.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3067,7 +3067,7 @@ static int handle_pmi_common(struct pt_r
- 
- 		handled++;
- 		x86_pmu_handle_guest_pebs(regs, &data);
--		x86_pmu.drain_pebs(regs, &data);
-+		static_call(x86_pmu_drain_pebs)(regs, &data);
- 		status &= intel_ctrl | GLOBAL_STATUS_TRACE_TOPAPMI;
- 
- 		/*
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -957,7 +957,7 @@ static inline void intel_pmu_drain_pebs_
+diff --git a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
+index bf05fb4a736b3..261fb6d2e9916 100644
+--- a/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
++++ b/drivers/staging/gpib/agilent_82357a/agilent_82357a.c
+@@ -1691,12 +1691,24 @@ static struct usb_driver agilent_82357a_bus_driver = {
+ static int __init agilent_82357a_init_module(void)
  {
- 	struct perf_sample_data data;
+ 	int i;
++	int ret;
  
--	x86_pmu.drain_pebs(NULL, &data);
-+	static_call(x86_pmu_drain_pebs)(NULL, &data);
+ 	pr_info("agilent_82357a_gpib driver loading");
+ 	for (i = 0; i < MAX_NUM_82357A_INTERFACES; ++i)
+ 		agilent_82357a_driver_interfaces[i] = NULL;
+-	usb_register(&agilent_82357a_bus_driver);
+-	gpib_register_driver(&agilent_82357a_gpib_interface, THIS_MODULE);
++
++	ret = usb_register(&agilent_82357a_bus_driver);
++	if (ret) {
++		pr_err("agilent_82357a: usb_register failed: error = %d\n", ret);
++		return ret;
++	}
++
++	ret = gpib_register_driver(&agilent_82357a_gpib_interface, THIS_MODULE);
++	if (ret) {
++		pr_err("agilent_82357a: gpib_register_driver failed: error = %d\n", ret);
++		usb_deregister(&agilent_82357a_bus_driver);
++		return ret;
++	}
+ 
+ 	return 0;
  }
- 
- /*
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1106,6 +1106,7 @@ extern struct x86_pmu x86_pmu __read_mos
- 
- DECLARE_STATIC_CALL(x86_pmu_set_period, *x86_pmu.set_period);
- DECLARE_STATIC_CALL(x86_pmu_update,     *x86_pmu.update);
-+DECLARE_STATIC_CALL(x86_pmu_drain_pebs,	*x86_pmu.drain_pebs);
- 
- static __always_inline struct x86_perf_task_context_opt *task_context_opt(void *ctx)
- {
+-- 
+2.39.5
+
 
 
