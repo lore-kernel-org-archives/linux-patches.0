@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB77266EEA;
-	Tue,  8 Apr 2025 11:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE82A94A;
+	Tue,  8 Apr 2025 11:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112865; cv=none; b=PSpfbSC9pO4Fh+Jc1mz/r4MSy8I7ejYeiLCX3BVrLo46W2RALhRVX3NG7TfUCCtRm3Keq2r7tEEUeVMpDePxuS8+FztTopIQXII2HkjSEMDKjvlS9m4pfwVujKZSDPG5a//xPPXFLWxg6t4AHmjC03o2FFpYuhbVK8LaRw9amoE=
+	t=1744112867; cv=none; b=NyafuyPBjVE9EZ6iSYQOaW19aHilc3SFqw4Rl4ZmWJhk5vVaCFisRMOE3eAP+jlz1yDkUe6M3/1kbjWqjJFouGgmEHNLQwGbESnRVbN3YQmbpwZeZUeLM4RUVr28mPfFn+4o8HdlsWKQBqFD1rwiWVnKPJjfbHfcnVqpdkWSoEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112865; c=relaxed/simple;
-	bh=OT7ZH1PTuY4/3cgY/y0MTBB6EIEmjC5Lo9/jM1hPbeQ=;
+	s=arc-20240116; t=1744112867; c=relaxed/simple;
+	bh=DOnR4V3H9FHVgxUpWzzJjgf0weGrzgPyjtZWjn8ccLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5qxK7dFdZhxYVvEyZQa5qAhrmVcLv/G+6zy5XftfS0wmk3B8nWWy2UyuCC8xGdk+OijO6pSgtQbTusfwo35mzguVbHFMUnYpkfyuqxOUSihO4aIKndUs54vKCyiVkVVKuU/cfCUfWv+0vIHAEPBJgPY2uicJIYCnzSU6rJm9AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMOSAmkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqKRlfg0nZA5I3IxnkJNKGB8yL/lkL98ixRTLhDma1LkKOH4/1WWy7Ty+N8oh/8m4mUcAXBO+YAALdHO0HK/PBHD4SZlyOH0kCX1Lx7euQ158cvYeV6HzWMTG5I7OkXL9zuvfrsQhOJiYkZgyLn66NpEsOpVzQdXzFpxV+KI4bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5btAlxz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMOSAmkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3BFC4CEE5;
-	Tue,  8 Apr 2025 11:47:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5btAlxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F37AC4CEE5;
+	Tue,  8 Apr 2025 11:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112864;
-	bh=OT7ZH1PTuY4/3cgY/y0MTBB6EIEmjC5Lo9/jM1hPbeQ=;
+	s=korg; t=1744112867;
+	bh=DOnR4V3H9FHVgxUpWzzJjgf0weGrzgPyjtZWjn8ccLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMOSAmknXMtF313U38xVChepDoFdzvisADCgiBWgbZauILQe2l8HVFddoi1ALpJwF
-	 wU3tgA3YcbPKh1EhpsmPQfsS/+OwtjPh8A+t0tYJhBRwh2zlE32S2mcQLzC+vzl7xN
-	 lepISRrfl/X0idpqyEBn1wQeRVnIULdfBHif6YUE=
+	b=A5btAlxzrTypLTb27m9obmkQtM8ogCRF01/vavBKleJp3iNf8wpC4JQK8uB1ox6dq
+	 mKUjDIb3GdnFYTOIjwvhCvCpxSN227TLQrnU94+6H+xy2S3yMZSgB4sSKzPHlQynIu
+	 1bF5O+nldhARoKTD8sEhJAZiCfAp207jDSQyAlw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Tatham <anakin@pobox.com>,
-	David Sterba <dsterba@suse.com>,
+	Igor Leite Ladessa <igor-ladessa@hotmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/279] affs: dont write overlarge OFS data block size fields
-Date: Tue,  8 Apr 2025 12:50:09 +0200
-Message-ID: <20250408104832.470850694@linuxfoundation.org>
+Subject: [PATCH 5.15 227/279] ksmbd: fix incorrect validation for num_aces field of smb_acl
+Date: Tue,  8 Apr 2025 12:50:10 +0200
+Message-ID: <20250408104832.500052534@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Tatham <anakin@pobox.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 011ea742a25a77bac3d995f457886a67d178c6f0 ]
+[ Upstream commit 1b8b67f3c5e5169535e26efedd3e422172e2db64 ]
 
-If a data sector on an OFS floppy contains a value > 0x1e8 (the
-largest amount of data that fits in the sector after its header), then
-an Amiga reading the file can return corrupt data, by taking the
-overlarge size at its word and reading past the end of the buffer it
-read the disk sector into!
+parse_dcal() validate num_aces to allocate posix_ace_state_array.
 
-The cause: when affs_write_end_ofs() writes data to an OFS filesystem,
-the new size field for a data block was computed by adding the amount
-of data currently being written (into the block) to the existing value
-of the size field. This is correct if you're extending the file at the
-end, but if you seek backwards in the file and overwrite _existing_
-data, it can lead to the size field being larger than the maximum
-legal value.
+if (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
 
-This commit changes the calculation so that it sets the size field to
-the max of its previous size and the position within the block that we
-just wrote up to.
+It is an incorrect validation that we can create an array of size ULONG_MAX.
+smb_acl has ->size field to calculate actual number of aces in request buffer
+size. Use this to check invalid num_aces.
 
-Signed-off-by: Simon Tatham <anakin@pobox.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Igor Leite Ladessa <igor-ladessa@hotmail.com>
+Tested-by: Igor Leite Ladessa <igor-ladessa@hotmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ksmbd/smbacl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/affs/file.c b/fs/affs/file.c
-index 88d4e6263df96..2000241431d55 100644
---- a/fs/affs/file.c
-+++ b/fs/affs/file.c
-@@ -726,7 +726,8 @@ static int affs_write_end_ofs(struct file *file, struct address_space *mapping,
- 		tmp = min(bsize - boff, to - from);
- 		BUG_ON(boff + tmp > bsize || tmp > bsize);
- 		memcpy(AFFS_DATA(bh) + boff, data + from, tmp);
--		be32_add_cpu(&AFFS_DATA_HEAD(bh)->size, tmp);
-+		AFFS_DATA_HEAD(bh)->size = cpu_to_be32(
-+			max(boff + tmp, be32_to_cpu(AFFS_DATA_HEAD(bh)->size)));
- 		affs_fix_checksum(sb, bh);
- 		mark_buffer_dirty_inode(bh, inode);
- 		written += tmp;
+diff --git a/fs/ksmbd/smbacl.c b/fs/ksmbd/smbacl.c
+index 3a6c0abdb0352..ecf9db3d69c38 100644
+--- a/fs/ksmbd/smbacl.c
++++ b/fs/ksmbd/smbacl.c
+@@ -396,7 +396,9 @@ static void parse_dacl(struct user_namespace *user_ns,
+ 	if (num_aces <= 0)
+ 		return;
+ 
+-	if (num_aces > ULONG_MAX / sizeof(struct smb_ace *))
++	if (num_aces > (le16_to_cpu(pdacl->size) - sizeof(struct smb_acl)) /
++			(offsetof(struct smb_ace, sid) +
++			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
+ 		return;
+ 
+ 	ret = init_acl_state(&acl_state, num_aces);
+@@ -430,6 +432,7 @@ static void parse_dacl(struct user_namespace *user_ns,
+ 			offsetof(struct smb_sid, sub_auth);
+ 
+ 		if (end_of_acl - acl_base < acl_size ||
++		    ppace[i]->sid.num_subauth == 0 ||
+ 		    ppace[i]->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
+ 		    (end_of_acl - acl_base <
+ 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
 -- 
 2.39.5
 
