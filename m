@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB331267731;
-	Tue,  8 Apr 2025 12:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAC4267731;
+	Tue,  8 Apr 2025 12:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115075; cv=none; b=hnhEiIWDGY1opub3VpCqUmK3gDZv9ztHZrGA8P08yOUjnrHLJHLRj/+6uv+1OJ1WK7raM9fgr/jz1Ek9tfrn/s4SMpsctbOknitpl2QH6xtjN7wCBsjhKAz6oNBDwbzYlMYl9T5TIF44s9KXxHfIgyaN4buvYN+sNyWARDHOcIU=
+	t=1744115078; cv=none; b=ZXigXCgPXHvQJeO4lP+1Yf3VQ1nruQvw71JNnC5d1jHSsrv8ZNc3RZoH9nyv3cj4y0MGtb0z3nSF3lIfK1WsSVrtT6K/Ncu6Kpfnk9vnFGx+IAqBjV05jeV2ztiot1XqehVm3S0kF9l7euymY0PJhGaoAVUlNBmgE6ENdGPuJ+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115075; c=relaxed/simple;
-	bh=cvGnORBftZLwpvAu3SGEYc+mIVUGdduWXVYVj3BUbwY=;
+	s=arc-20240116; t=1744115078; c=relaxed/simple;
+	bh=sKJyOS9pBsfeeCX64xYu5ItD5R1Ec/QbVfmkLAImncc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDXv9urCpUZMPj2GAvx05ybrgxiyacShJ+Nhzwag4DNEPdIL0v/GFe0D8Dy/qvj7Sdvb1MMOfLSK2xbcdsKCos3WSm9x+oa30ijiInGsVruvIt7duxT5kWfqBemMJj5pkmyzXj4FN62Fwz96XWe1Creeg4M2KOEbV8tX2TGkdtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYiBbSoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TIIKBVF7jgokI/uRa/rb3fvOBHhKwi0EeLKkLtpX9sjQTpLOngNZiQj1Nv1hgWIb/j8fQbTToG8d8qz7HmSgiF6DzAVw5d6c+ym5FD1IFYS53FlpdaLTKsyn2Fqhz499hfcPiaZrRS+ltXgnV6oTbGs+oX/FkBH5htRSjTbmPec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4Q4XDUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYiBbSoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAE1C4CEE5;
-	Tue,  8 Apr 2025 12:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4Q4XDUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BF2C4CEE5;
+	Tue,  8 Apr 2025 12:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115075;
-	bh=cvGnORBftZLwpvAu3SGEYc+mIVUGdduWXVYVj3BUbwY=;
+	s=korg; t=1744115078;
+	bh=sKJyOS9pBsfeeCX64xYu5ItD5R1Ec/QbVfmkLAImncc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYiBbSojiwudppWpXx7XtE07qQDI/5oGJXbGdfabPyxJ0o58CnWKeYKVZ939qRqZ1
-	 uw61RrmPYom4YjcPt8DWR+OsPkBwxfT2JdTTEUi5zGR7CV496y0+DFe/81AmPp59Ig
-	 K1QfVsKvR6lGN6KcgkRJJgprXcBzp9is6qhQCQFI=
+	b=c4Q4XDUABYQGXgJ0SKYKNbbTwE5HUx3ydG/NRf3MMM7xmdKVgdVwQ9uu0fQ6z3CuS
+	 /E+ahD57vyqxiLA9eMs1MKJ3+iJVeCPS6wxOJJu0UpNP5L43XSTcGZUMzCzSjbZgj4
+	 hJhbE163hqquBTjwS1O6j3TdtXqtNimtZyT00np8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Wetzel <Alexander@wetzel-home.de>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 300/499] wifi: mac80211: Cleanup sta TXQs on flush
-Date: Tue,  8 Apr 2025 12:48:32 +0200
-Message-ID: <20250408104858.698454136@linuxfoundation.org>
+Subject: [PATCH 6.13 301/499] wifi: mac80211: remove debugfs dir for virtual monitor
+Date: Tue,  8 Apr 2025 12:48:33 +0200
+Message-ID: <20250408104858.723713436@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,46 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-[ Upstream commit 5b999006e35ea9c11116ddff7e375b256421d0af ]
+[ Upstream commit 646262c71aca87bb66945933abe4e620796d6c5a ]
 
-Drop the sta TXQs on flush when the drivers is not supporting
-flush.
+Don't call ieee80211_debugfs_recreate_netdev() for virtual monitor
+interface when deleting it.
 
-ieee80211_set_disassoc() tries to clean up everything for the sta.
-But it ignored queued frames in the sta TX queues when the driver
-isn't supporting the flush driver ops.
+The virtual monitor interface shouldn't have debugfs entries and trying
+to update them will *create* them on deletion.
+
+And when the virtual monitor interface is created/destroyed multiple
+times we'll get warnings about debugfs name conflicts.
 
 Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Link: https://patch.msgid.link/20250204123129.9162-1-Alexander@wetzel-home.de
+Link: https://patch.msgid.link/20250204164240.370153-1-Alexander@wetzel-home.de
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/driver-ops.c | 10 ++++++++--
+ net/mac80211/iface.c      | 11 ++++++-----
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 5ee7fc81ff8cf..de84260247ef1 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -685,7 +685,7 @@ void __ieee80211_flush_queues(struct ieee80211_local *local,
- 			      struct ieee80211_sub_if_data *sdata,
- 			      unsigned int queues, bool drop)
- {
--	if (!local->ops->flush)
-+	if (!local->ops->flush && !drop)
- 		return;
+diff --git a/net/mac80211/driver-ops.c b/net/mac80211/driver-ops.c
+index 299d38e9e8630..2fc60e1e77a55 100644
+--- a/net/mac80211/driver-ops.c
++++ b/net/mac80211/driver-ops.c
+@@ -116,8 +116,14 @@ void drv_remove_interface(struct ieee80211_local *local,
  
- 	/*
-@@ -712,7 +712,8 @@ void __ieee80211_flush_queues(struct ieee80211_local *local,
- 		}
+ 	sdata->flags &= ~IEEE80211_SDATA_IN_DRIVER;
+ 
+-	/* Remove driver debugfs entries */
+-	ieee80211_debugfs_recreate_netdev(sdata, sdata->vif.valid_links);
++	/*
++	 * Remove driver debugfs entries.
++	 * The virtual monitor interface doesn't get a debugfs
++	 * entry, so it's exempt here.
++	 */
++	if (sdata != local->monitor_sdata)
++		ieee80211_debugfs_recreate_netdev(sdata,
++						  sdata->vif.valid_links);
+ 
+ 	trace_drv_remove_interface(local, sdata);
+ 	local->ops->remove_interface(&local->hw, &sdata->vif);
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 806dffa48ef92..04b3626387309 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -1212,16 +1212,17 @@ void ieee80211_del_virtual_monitor(struct ieee80211_local *local)
+ 		return;
  	}
  
--	drv_flush(local, sdata, queues, drop);
-+	if (local->ops->flush)
-+		drv_flush(local, sdata, queues, drop);
+-	RCU_INIT_POINTER(local->monitor_sdata, NULL);
+-	mutex_unlock(&local->iflist_mtx);
+-
+-	synchronize_net();
+-
++	clear_bit(SDATA_STATE_RUNNING, &sdata->state);
+ 	ieee80211_link_release_channel(&sdata->deflink);
  
- 	ieee80211_wake_queues_by_reason(&local->hw, queues,
- 					IEEE80211_QUEUE_STOP_REASON_FLUSH,
+ 	if (ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF))
+ 		drv_remove_interface(local, sdata);
+ 
++	RCU_INIT_POINTER(local->monitor_sdata, NULL);
++	mutex_unlock(&local->iflist_mtx);
++
++	synchronize_net();
++
+ 	kfree(sdata);
+ }
+ 
 -- 
 2.39.5
 
