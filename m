@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3D126A0CF;
-	Tue,  8 Apr 2025 12:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEC826F472;
+	Tue,  8 Apr 2025 12:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117026; cv=none; b=YGFAJV5Cv/bQ1zf7jNRKeNmD2QLmvmmLCyvJkFKYvPAlWwcpkGZyKFLSo5leuN3uwcEuA9fJDx2xPOcoAJ/d+A3wHTVpHjPTaiRYfsxUqClqub114LDxi6Hi/tC3n7Tj2WAnRRKdVLjVkYq+cdHSiyl6/cY/iDedLCAPcdvdFvQ=
+	t=1744117029; cv=none; b=gU+FiQKsXfrgs73TLQAgmVrSQEwMrgM6C0g4FLMu+NH0ZiJTgHF6fPr15gcQkQRmSCZ8BvEbP5NzBBcpO8ut90IuDRXGLenbdisrbBlpMG/joKvI19lCKPkE2qa1OI8WqIGwSe3Etvp8T2gHsTZcJkwweF+xfNzodv6yxUXRyLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117026; c=relaxed/simple;
-	bh=n3uUWQnNX5l+G05u/MEd4/qpNbwtow6NVJgbp9lpLao=;
+	s=arc-20240116; t=1744117029; c=relaxed/simple;
+	bh=Sbc+Ta3GLYQRauiofZcgUh8WFGOp1Niymi73j81C2Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7S4bi7P2eUxVIrrEi6T3G1X4YTeWZ2OykYEIw4uyJeRXnZWx+vDkqiDRaSrR7oRHHeYhYrxevqhsI+/f/wpdmoR/O1pAabpgbY5YKHuQKt+xK/8lX3JoZwB/QMpZn0mXRZcGHepzo5IahZuw8Aru0txSyQjqE/4aTMiiTAdl5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abhopeGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=feITfMrwq7sAmiLwIoWgS+PTf2n/em8EM9N/NZ4DIntMjMMjehG7U+yuxvY6hJ1KnXITQGsSAP6TDsqPT5coWi+IhIqNkClD1Jiom5B7+Kq56MkHjaAx1w75NTPHDYhv47Ic2jEqftZiDDh+/I0Pd87MOqBHGJKhFj0Bdxc7fiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LepbCyne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abhopeGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8D0C4CEE5;
-	Tue,  8 Apr 2025 12:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LepbCyne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6F3C4CEEA;
+	Tue,  8 Apr 2025 12:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117026;
-	bh=n3uUWQnNX5l+G05u/MEd4/qpNbwtow6NVJgbp9lpLao=;
+	s=korg; t=1744117029;
+	bh=Sbc+Ta3GLYQRauiofZcgUh8WFGOp1Niymi73j81C2Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abhopeGw4ayLi4taxHly3nPlDRq0WH2OhW04Hp6ro3/DWdiqH0laTEpN44jtWJgCu
-	 X/by33n809rjZ7pwB1MYjiJg66kRNL6vQrAf9YPfkuwGTxVExbwzvCCuXfllnet+fV
-	 VW+0DxXsAYkYSuRsV5KJpAgT2kljaOJykkah+/Dw=
+	b=LepbCyneM35j4vuoxhz7I+i6iTjyqHsojlyBdxOhOB0aHwi8he3UBkLoi4NfkjXgO
+	 Pd6GQC+5x+bMjJklHdYKolv4Y77IkDVg7ZYIp+ec5/+TbFbnnJiPnyWZMHAMv4hiyV
+	 UnH+Z2tz0wskKOFjwy0J+sIib+mepnfcHg6Vi4ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Sherry Sun <sherry.sun@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/423] tty: serial: fsl_lpuart: use port struct directly to simply code
-Date: Tue,  8 Apr 2025 12:51:24 +0200
-Message-ID: <20250408104854.193782543@linuxfoundation.org>
+Subject: [PATCH 6.12 359/423] tty: serial: lpuart: only disable CTS instead of overwriting the whole UARTMODIR register
+Date: Tue,  8 Apr 2025 12:51:25 +0200
+Message-ID: <20250408104854.218824166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,519 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit 3cc16ae096f164ae0c6b98416c25a01db5f3a529 ]
+[ Upstream commit e98ab45ec5182605d2e00114cba3bbf46b0ea27f ]
 
-Most lpuart functions have the parameter struct uart_port *port, but
-still use the &sport->port to get the uart_port instead of use it
-directly, let's simply the code logic, directly use this struct instead
-of covert it from struct sport.
+No need to overwrite the whole UARTMODIR register before waiting the
+transmit engine complete, actually our target here is only to disable
+CTS flow control to avoid the dirty data in TX FIFO may block the
+transmit engine complete.
+Also delete the following duplicate CTS disable configuration.
 
+Fixes: d5a2e0834364 ("tty: serial: lpuart: disable flow control while waiting for the transmit engine to complete")
+Cc: stable <stable@kernel.org>
 Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20250312023904.1343351-3-sherry.sun@nxp.com
+Link: https://lore.kernel.org/r/20250307065446.1122482-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e98ab45ec518 ("tty: serial: lpuart: only disable CTS instead of overwriting the whole UARTMODIR register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 213 +++++++++++++++-----------------
- 1 file changed, 102 insertions(+), 111 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index e86fb9c60f1c3..c2b522843b72c 100644
+index c2b522843b72c..951c3cdac3b94 100644
 --- a/drivers/tty/serial/fsl_lpuart.c
 +++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -580,7 +580,7 @@ static int lpuart_dma_tx_request(struct uart_port *port)
- 	ret = dmaengine_slave_config(sport->dma_tx_chan, &dma_tx_sconfig);
- 
- 	if (ret) {
--		dev_err(sport->port.dev,
-+		dev_err(port->dev,
- 				"DMA slave config failed, err = %d\n", ret);
- 		return ret;
- 	}
-@@ -610,13 +610,13 @@ static void lpuart_flush_buffer(struct uart_port *port)
- 	}
- 
- 	if (lpuart_is_32(sport)) {
--		val = lpuart32_read(&sport->port, UARTFIFO);
-+		val = lpuart32_read(port, UARTFIFO);
- 		val |= UARTFIFO_TXFLUSH | UARTFIFO_RXFLUSH;
--		lpuart32_write(&sport->port, val, UARTFIFO);
-+		lpuart32_write(port, val, UARTFIFO);
- 	} else {
--		val = readb(sport->port.membase + UARTCFIFO);
-+		val = readb(port->membase + UARTCFIFO);
- 		val |= UARTCFIFO_TXFLUSH | UARTCFIFO_RXFLUSH;
--		writeb(val, sport->port.membase + UARTCFIFO);
-+		writeb(val, port->membase + UARTCFIFO);
- 	}
- }
- 
-@@ -638,38 +638,36 @@ static void lpuart32_wait_bit_set(struct uart_port *port, unsigned int offset,
- 
- static int lpuart_poll_init(struct uart_port *port)
- {
--	struct lpuart_port *sport = container_of(port,
--					struct lpuart_port, port);
- 	unsigned long flags;
- 	u8 temp;
- 
--	sport->port.fifosize = 0;
-+	port->fifosize = 0;
- 
--	uart_port_lock_irqsave(&sport->port, &flags);
-+	uart_port_lock_irqsave(port, &flags);
- 	/* Disable Rx & Tx */
--	writeb(0, sport->port.membase + UARTCR2);
-+	writeb(0, port->membase + UARTCR2);
- 
--	temp = readb(sport->port.membase + UARTPFIFO);
-+	temp = readb(port->membase + UARTPFIFO);
- 	/* Enable Rx and Tx FIFO */
- 	writeb(temp | UARTPFIFO_RXFE | UARTPFIFO_TXFE,
--			sport->port.membase + UARTPFIFO);
-+			port->membase + UARTPFIFO);
- 
- 	/* flush Tx and Rx FIFO */
- 	writeb(UARTCFIFO_TXFLUSH | UARTCFIFO_RXFLUSH,
--			sport->port.membase + UARTCFIFO);
-+			port->membase + UARTCFIFO);
- 
- 	/* explicitly clear RDRF */
--	if (readb(sport->port.membase + UARTSR1) & UARTSR1_RDRF) {
--		readb(sport->port.membase + UARTDR);
--		writeb(UARTSFIFO_RXUF, sport->port.membase + UARTSFIFO);
-+	if (readb(port->membase + UARTSR1) & UARTSR1_RDRF) {
-+		readb(port->membase + UARTDR);
-+		writeb(UARTSFIFO_RXUF, port->membase + UARTSFIFO);
- 	}
- 
--	writeb(0, sport->port.membase + UARTTWFIFO);
--	writeb(1, sport->port.membase + UARTRWFIFO);
-+	writeb(0, port->membase + UARTTWFIFO);
-+	writeb(1, port->membase + UARTRWFIFO);
- 
- 	/* Enable Rx and Tx */
--	writeb(UARTCR2_RE | UARTCR2_TE, sport->port.membase + UARTCR2);
--	uart_port_unlock_irqrestore(&sport->port, flags);
-+	writeb(UARTCR2_RE | UARTCR2_TE, port->membase + UARTCR2);
-+	uart_port_unlock_irqrestore(port, flags);
- 
- 	return 0;
- }
-@@ -692,33 +690,32 @@ static int lpuart_poll_get_char(struct uart_port *port)
- static int lpuart32_poll_init(struct uart_port *port)
- {
- 	unsigned long flags;
--	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
- 	u32 temp;
- 
--	sport->port.fifosize = 0;
-+	port->fifosize = 0;
- 
--	uart_port_lock_irqsave(&sport->port, &flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
- 	/* Disable Rx & Tx */
--	lpuart32_write(&sport->port, 0, UARTCTRL);
-+	lpuart32_write(port, 0, UARTCTRL);
- 
--	temp = lpuart32_read(&sport->port, UARTFIFO);
-+	temp = lpuart32_read(port, UARTFIFO);
- 
- 	/* Enable Rx and Tx FIFO */
--	lpuart32_write(&sport->port, temp | UARTFIFO_RXFE | UARTFIFO_TXFE, UARTFIFO);
-+	lpuart32_write(port, temp | UARTFIFO_RXFE | UARTFIFO_TXFE, UARTFIFO);
- 
- 	/* flush Tx and Rx FIFO */
--	lpuart32_write(&sport->port, UARTFIFO_TXFLUSH | UARTFIFO_RXFLUSH, UARTFIFO);
-+	lpuart32_write(port, UARTFIFO_TXFLUSH | UARTFIFO_RXFLUSH, UARTFIFO);
- 
- 	/* explicitly clear RDRF */
--	if (lpuart32_read(&sport->port, UARTSTAT) & UARTSTAT_RDRF) {
--		lpuart32_read(&sport->port, UARTDATA);
--		lpuart32_write(&sport->port, UARTFIFO_RXUF, UARTFIFO);
-+	if (lpuart32_read(port, UARTSTAT) & UARTSTAT_RDRF) {
-+		lpuart32_read(port, UARTDATA);
-+		lpuart32_write(port, UARTFIFO_RXUF, UARTFIFO);
- 	}
- 
- 	/* Enable Rx and Tx */
--	lpuart32_write(&sport->port, UARTCTRL_RE | UARTCTRL_TE, UARTCTRL);
--	uart_port_unlock_irqrestore(&sport->port, flags);
-+	lpuart32_write(port, UARTCTRL_RE | UARTCTRL_TE, UARTCTRL);
-+	uart_port_unlock_irqrestore(port, flags);
- 
- 	return 0;
- }
-@@ -1448,12 +1445,9 @@ static void lpuart_dma_rx_free(struct uart_port *port)
- static int lpuart_config_rs485(struct uart_port *port, struct ktermios *termios,
- 			struct serial_rs485 *rs485)
- {
--	struct lpuart_port *sport = container_of(port,
--			struct lpuart_port, port);
--
--	u8 modem = readb(sport->port.membase + UARTMODEM) &
-+	u8 modem = readb(port->membase + UARTMODEM) &
- 		~(UARTMODEM_TXRTSPOL | UARTMODEM_TXRTSE);
--	writeb(modem, sport->port.membase + UARTMODEM);
-+	writeb(modem, port->membase + UARTMODEM);
- 
- 	if (rs485->flags & SER_RS485_ENABLED) {
- 		/* Enable auto RS-485 RTS mode */
-@@ -1471,32 +1465,29 @@ static int lpuart_config_rs485(struct uart_port *port, struct ktermios *termios,
- 			modem &= ~UARTMODEM_TXRTSPOL;
- 	}
- 
--	writeb(modem, sport->port.membase + UARTMODEM);
-+	writeb(modem, port->membase + UARTMODEM);
- 	return 0;
- }
- 
- static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termios,
- 			struct serial_rs485 *rs485)
- {
--	struct lpuart_port *sport = container_of(port,
--			struct lpuart_port, port);
--
--	u32 modem = lpuart32_read(&sport->port, UARTMODIR)
-+	u32 modem = lpuart32_read(port, UARTMODIR)
- 				& ~(UARTMODIR_TXRTSPOL | UARTMODIR_TXRTSE);
- 	u32 ctrl;
- 
- 	/* TXRTSE and TXRTSPOL only can be changed when transmitter is disabled. */
--	ctrl = lpuart32_read(&sport->port, UARTCTRL);
-+	ctrl = lpuart32_read(port, UARTCTRL);
- 	if (ctrl & UARTCTRL_TE) {
- 		/* wait for the transmit engine to complete */
--		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
--		lpuart32_write(&sport->port, ctrl & ~UARTCTRL_TE, UARTCTRL);
-+		lpuart32_wait_bit_set(port, UARTSTAT, UARTSTAT_TC);
-+		lpuart32_write(port, ctrl & ~UARTCTRL_TE, UARTCTRL);
- 
--		while (lpuart32_read(&sport->port, UARTCTRL) & UARTCTRL_TE)
-+		while (lpuart32_read(port, UARTCTRL) & UARTCTRL_TE)
- 			cpu_relax();
- 	}
- 
--	lpuart32_write(&sport->port, modem, UARTMODIR);
-+	lpuart32_write(port, modem, UARTMODIR);
- 
- 	if (rs485->flags & SER_RS485_ENABLED) {
- 		/* Enable auto RS-485 RTS mode */
-@@ -1514,10 +1505,10 @@ static int lpuart32_config_rs485(struct uart_port *port, struct ktermios *termio
- 			modem &= ~UARTMODIR_TXRTSPOL;
- 	}
- 
--	lpuart32_write(&sport->port, modem, UARTMODIR);
-+	lpuart32_write(port, modem, UARTMODIR);
- 
- 	if (ctrl & UARTCTRL_TE)
--		lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+		lpuart32_write(port, ctrl, UARTCTRL);
- 
- 	return 0;
- }
-@@ -1828,11 +1819,11 @@ static int lpuart_startup(struct uart_port *port)
- 	u8 temp;
- 
- 	/* determine FIFO size and enable FIFO mode */
--	temp = readb(sport->port.membase + UARTPFIFO);
-+	temp = readb(port->membase + UARTPFIFO);
- 
- 	sport->txfifo_size = UARTFIFO_DEPTH((temp >> UARTPFIFO_TXSIZE_OFF) &
- 					    UARTPFIFO_FIFOSIZE_MASK);
--	sport->port.fifosize = sport->txfifo_size;
-+	port->fifosize = sport->txfifo_size;
- 
- 	sport->rxfifo_size = UARTFIFO_DEPTH((temp >> UARTPFIFO_RXSIZE_OFF) &
- 					    UARTPFIFO_FIFOSIZE_MASK);
-@@ -1888,11 +1879,11 @@ static int lpuart32_startup(struct uart_port *port)
- 	u32 temp;
- 
- 	/* determine FIFO size */
--	temp = lpuart32_read(&sport->port, UARTFIFO);
-+	temp = lpuart32_read(port, UARTFIFO);
- 
- 	sport->txfifo_size = UARTFIFO_DEPTH((temp >> UARTFIFO_TXSIZE_OFF) &
- 					    UARTFIFO_FIFOSIZE_MASK);
--	sport->port.fifosize = sport->txfifo_size;
-+	port->fifosize = sport->txfifo_size;
- 
- 	sport->rxfifo_size = UARTFIFO_DEPTH((temp >> UARTFIFO_RXSIZE_OFF) &
- 					    UARTFIFO_FIFOSIZE_MASK);
-@@ -1905,7 +1896,7 @@ static int lpuart32_startup(struct uart_port *port)
- 	if (is_layerscape_lpuart(sport)) {
- 		sport->rxfifo_size = 16;
- 		sport->txfifo_size = 16;
--		sport->port.fifosize = sport->txfifo_size;
-+		port->fifosize = sport->txfifo_size;
- 	}
- 
- 	lpuart_request_dma(sport);
-@@ -1965,8 +1956,8 @@ static void lpuart32_shutdown(struct uart_port *port)
- 	uart_port_lock_irqsave(port, &flags);
- 
- 	/* clear status */
--	temp = lpuart32_read(&sport->port, UARTSTAT);
--	lpuart32_write(&sport->port, temp, UARTSTAT);
-+	temp = lpuart32_read(port, UARTSTAT);
-+	lpuart32_write(port, temp, UARTSTAT);
- 
- 	/* disable Rx/Tx DMA */
- 	temp = lpuart32_read(port, UARTBAUD);
-@@ -1995,12 +1986,12 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
- 	unsigned int sbr, brfa;
- 
--	cr1 = old_cr1 = readb(sport->port.membase + UARTCR1);
--	old_cr2 = readb(sport->port.membase + UARTCR2);
--	cr3 = readb(sport->port.membase + UARTCR3);
--	cr4 = readb(sport->port.membase + UARTCR4);
--	bdh = readb(sport->port.membase + UARTBDH);
--	modem = readb(sport->port.membase + UARTMODEM);
-+	cr1 = old_cr1 = readb(port->membase + UARTCR1);
-+	old_cr2 = readb(port->membase + UARTCR2);
-+	cr3 = readb(port->membase + UARTCR3);
-+	cr4 = readb(port->membase + UARTCR4);
-+	bdh = readb(port->membase + UARTBDH);
-+	modem = readb(port->membase + UARTMODEM);
- 	/*
- 	 * only support CS8 and CS7, and for CS7 must enable PE.
- 	 * supported mode:
-@@ -2032,7 +2023,7 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * When auto RS-485 RTS mode is enabled,
- 	 * hardware flow control need to be disabled.
- 	 */
--	if (sport->port.rs485.flags & SER_RS485_ENABLED)
-+	if (port->rs485.flags & SER_RS485_ENABLED)
- 		termios->c_cflag &= ~CRTSCTS;
- 
- 	if (termios->c_cflag & CRTSCTS)
-@@ -2073,59 +2064,59 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * Need to update the Ring buffer length according to the selected
- 	 * baud rate and restart Rx DMA path.
- 	 *
--	 * Since timer function acqures sport->port.lock, need to stop before
-+	 * Since timer function acqures port->lock, need to stop before
- 	 * acquring same lock because otherwise del_timer_sync() can deadlock.
- 	 */
- 	if (old && sport->lpuart_dma_rx_use)
--		lpuart_dma_rx_free(&sport->port);
-+		lpuart_dma_rx_free(port);
- 
--	uart_port_lock_irqsave(&sport->port, &flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
--	sport->port.read_status_mask = 0;
-+	port->read_status_mask = 0;
- 	if (termios->c_iflag & INPCK)
--		sport->port.read_status_mask |= UARTSR1_FE | UARTSR1_PE;
-+		port->read_status_mask |= UARTSR1_FE | UARTSR1_PE;
- 	if (termios->c_iflag & (IGNBRK | BRKINT | PARMRK))
--		sport->port.read_status_mask |= UARTSR1_FE;
-+		port->read_status_mask |= UARTSR1_FE;
- 
- 	/* characters to ignore */
--	sport->port.ignore_status_mask = 0;
-+	port->ignore_status_mask = 0;
- 	if (termios->c_iflag & IGNPAR)
--		sport->port.ignore_status_mask |= UARTSR1_PE;
-+		port->ignore_status_mask |= UARTSR1_PE;
- 	if (termios->c_iflag & IGNBRK) {
--		sport->port.ignore_status_mask |= UARTSR1_FE;
-+		port->ignore_status_mask |= UARTSR1_FE;
- 		/*
- 		 * if we're ignoring parity and break indicators,
- 		 * ignore overruns too (for real raw support).
- 		 */
- 		if (termios->c_iflag & IGNPAR)
--			sport->port.ignore_status_mask |= UARTSR1_OR;
-+			port->ignore_status_mask |= UARTSR1_OR;
- 	}
- 
+@@ -2330,15 +2330,19 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
  	/* update the per-port timeout */
  	uart_update_timeout(port, termios->c_cflag, baud);
  
- 	/* wait transmit engin complete */
--	lpuart_wait_bit_set(&sport->port, UARTSR1, UARTSR1_TC);
-+	lpuart_wait_bit_set(port, UARTSR1, UARTSR1_TC);
- 
- 	/* disable transmit and receive */
- 	writeb(old_cr2 & ~(UARTCR2_TE | UARTCR2_RE),
--			sport->port.membase + UARTCR2);
-+			port->membase + UARTCR2);
- 
--	sbr = sport->port.uartclk / (16 * baud);
--	brfa = ((sport->port.uartclk - (16 * sbr * baud)) * 2) / baud;
-+	sbr = port->uartclk / (16 * baud);
-+	brfa = ((port->uartclk - (16 * sbr * baud)) * 2) / baud;
- 	bdh &= ~UARTBDH_SBR_MASK;
- 	bdh |= (sbr >> 8) & 0x1F;
- 	cr4 &= ~UARTCR4_BRFA_MASK;
- 	brfa &= UARTCR4_BRFA_MASK;
--	writeb(cr4 | brfa, sport->port.membase + UARTCR4);
--	writeb(bdh, sport->port.membase + UARTBDH);
--	writeb(sbr & 0xFF, sport->port.membase + UARTBDL);
--	writeb(cr3, sport->port.membase + UARTCR3);
--	writeb(cr1, sport->port.membase + UARTCR1);
--	writeb(modem, sport->port.membase + UARTMODEM);
-+	writeb(cr4 | brfa, port->membase + UARTCR4);
-+	writeb(bdh, port->membase + UARTBDH);
-+	writeb(sbr & 0xFF, port->membase + UARTBDL);
-+	writeb(cr3, port->membase + UARTCR3);
-+	writeb(cr1, port->membase + UARTCR1);
-+	writeb(modem, port->membase + UARTMODEM);
- 
- 	/* restore control register */
--	writeb(old_cr2, sport->port.membase + UARTCR2);
-+	writeb(old_cr2, port->membase + UARTCR2);
- 
- 	if (old && sport->lpuart_dma_rx_use) {
- 		if (!lpuart_start_rx_dma(sport))
-@@ -2134,7 +2125,7 @@ lpuart_set_termios(struct uart_port *port, struct ktermios *termios,
- 			sport->lpuart_dma_rx_use = false;
- 	}
- 
--	uart_port_unlock_irqrestore(&sport->port, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static void __lpuart32_serial_setbrg(struct uart_port *port,
-@@ -2232,9 +2223,9 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 	unsigned int  baud;
- 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
- 
--	ctrl = old_ctrl = lpuart32_read(&sport->port, UARTCTRL);
--	bd = lpuart32_read(&sport->port, UARTBAUD);
--	modem = lpuart32_read(&sport->port, UARTMODIR);
-+	ctrl = old_ctrl = lpuart32_read(port, UARTCTRL);
-+	bd = lpuart32_read(port, UARTBAUD);
-+	modem = lpuart32_read(port, UARTMODIR);
- 	sport->is_cs7 = false;
++	/*
++	 * disable CTS to ensure the transmit engine is not blocked by the flow
++	 * control when there is dirty data in TX FIFO
++	 */
++	lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
++
  	/*
- 	 * only support CS8 and CS7, and for CS7 must enable PE.
-@@ -2267,7 +2258,7 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * When auto RS-485 RTS mode is enabled,
- 	 * hardware flow control need to be disabled.
- 	 */
--	if (sport->port.rs485.flags & SER_RS485_ENABLED)
-+	if (port->rs485.flags & SER_RS485_ENABLED)
- 		termios->c_cflag &= ~CRTSCTS;
- 
- 	if (termios->c_cflag & CRTSCTS)
-@@ -2308,32 +2299,32 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 	 * Need to update the Ring buffer length according to the selected
- 	 * baud rate and restart Rx DMA path.
- 	 *
--	 * Since timer function acqures sport->port.lock, need to stop before
-+	 * Since timer function acqures port->lock, need to stop before
- 	 * acquring same lock because otherwise del_timer_sync() can deadlock.
- 	 */
- 	if (old && sport->lpuart_dma_rx_use)
--		lpuart_dma_rx_free(&sport->port);
-+		lpuart_dma_rx_free(port);
- 
--	uart_port_lock_irqsave(&sport->port, &flags);
-+	uart_port_lock_irqsave(port, &flags);
- 
--	sport->port.read_status_mask = 0;
-+	port->read_status_mask = 0;
- 	if (termios->c_iflag & INPCK)
--		sport->port.read_status_mask |= UARTSTAT_FE | UARTSTAT_PE;
-+		port->read_status_mask |= UARTSTAT_FE | UARTSTAT_PE;
- 	if (termios->c_iflag & (IGNBRK | BRKINT | PARMRK))
--		sport->port.read_status_mask |= UARTSTAT_FE;
-+		port->read_status_mask |= UARTSTAT_FE;
- 
- 	/* characters to ignore */
--	sport->port.ignore_status_mask = 0;
-+	port->ignore_status_mask = 0;
- 	if (termios->c_iflag & IGNPAR)
--		sport->port.ignore_status_mask |= UARTSTAT_PE;
-+		port->ignore_status_mask |= UARTSTAT_PE;
- 	if (termios->c_iflag & IGNBRK) {
--		sport->port.ignore_status_mask |= UARTSTAT_FE;
-+		port->ignore_status_mask |= UARTSTAT_FE;
- 		/*
- 		 * if we're ignoring parity and break indicators,
- 		 * ignore overruns too (for real raw support).
- 		 */
- 		if (termios->c_iflag & IGNPAR)
--			sport->port.ignore_status_mask |= UARTSTAT_OR;
-+			port->ignore_status_mask |= UARTSTAT_OR;
- 	}
- 
- 	/* update the per-port timeout */
-@@ -2345,22 +2336,22 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	 * LPUART Transmission Complete Flag may never be set while queuing a break
+ 	 * character, so skip waiting for transmission complete when UARTCTRL_SBK is
  	 * asserted.
  	 */
- 	if (!(old_ctrl & UARTCTRL_SBK)) {
--		lpuart32_write(&sport->port, 0, UARTMODIR);
--		lpuart32_wait_bit_set(&sport->port, UARTSTAT, UARTSTAT_TC);
-+		lpuart32_write(port, 0, UARTMODIR);
-+		lpuart32_wait_bit_set(port, UARTSTAT, UARTSTAT_TC);
- 	}
+-	if (!(old_ctrl & UARTCTRL_SBK)) {
+-		lpuart32_write(port, 0, UARTMODIR);
++	if (!(old_ctrl & UARTCTRL_SBK))
+ 		lpuart32_wait_bit_set(port, UARTSTAT, UARTSTAT_TC);
+-	}
  
  	/* disable transmit and receive */
--	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
-+	lpuart32_write(port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
- 		       UARTCTRL);
+ 	lpuart32_write(port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
+@@ -2346,8 +2350,6 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
  
--	lpuart32_write(&sport->port, bd, UARTBAUD);
-+	lpuart32_write(port, bd, UARTBAUD);
+ 	lpuart32_write(port, bd, UARTBAUD);
  	lpuart32_serial_setbrg(sport, baud);
- 	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
--	lpuart32_write(&sport->port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
-+	lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
+-	/* disable CTS before enabling UARTCTRL_TE to avoid pending idle preamble */
+-	lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
  	/* restore control register */
--	lpuart32_write(&sport->port, ctrl, UARTCTRL);
-+	lpuart32_write(port, ctrl, UARTCTRL);
+ 	lpuart32_write(port, ctrl, UARTCTRL);
  	/* re-enable the CTS if needed */
--	lpuart32_write(&sport->port, modem, UARTMODIR);
-+	lpuart32_write(port, modem, UARTMODIR);
- 
- 	if ((ctrl & (UARTCTRL_PE | UARTCTRL_M)) == UARTCTRL_PE)
- 		sport->is_cs7 = true;
-@@ -2372,7 +2363,7 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
- 			sport->lpuart_dma_rx_use = false;
- 	}
- 
--	uart_port_unlock_irqrestore(&sport->port, flags);
-+	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static const char *lpuart_type(struct uart_port *port)
-@@ -2810,7 +2801,7 @@ static int lpuart_global_reset(struct lpuart_port *sport)
- 
- 	ret = clk_prepare_enable(sport->ipg_clk);
- 	if (ret) {
--		dev_err(sport->port.dev, "failed to enable uart ipg clk: %d\n", ret);
-+		dev_err(port->dev, "failed to enable uart ipg clk: %d\n", ret);
- 		return ret;
- 	}
- 
-@@ -2821,10 +2812,10 @@ static int lpuart_global_reset(struct lpuart_port *sport)
- 		 */
- 		ctrl = lpuart32_read(port, UARTCTRL);
- 		if (ctrl & UARTCTRL_TE) {
--			bd = lpuart32_read(&sport->port, UARTBAUD);
-+			bd = lpuart32_read(port, UARTBAUD);
- 			if (read_poll_timeout(lpuart32_tx_empty, val, val, 1, 100000, false,
- 					      port)) {
--				dev_warn(sport->port.dev,
-+				dev_warn(port->dev,
- 					 "timeout waiting for transmit engine to complete\n");
- 				clk_disable_unprepare(sport->ipg_clk);
- 				return 0;
-@@ -3176,7 +3167,7 @@ static void lpuart_console_fixup(struct lpuart_port *sport)
- 	 * in VLLS mode, or restore console setting here.
- 	 */
- 	if (is_imx7ulp_lpuart(sport) && lpuart_uport_is_active(sport) &&
--	    console_suspend_enabled && uart_console(&sport->port)) {
-+	    console_suspend_enabled && uart_console(uport)) {
- 
- 		mutex_lock(&port->mutex);
- 		memset(&termios, 0, sizeof(struct ktermios));
 -- 
 2.39.5
 
