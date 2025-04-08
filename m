@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16346266B4B;
-	Tue,  8 Apr 2025 10:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B9C269820;
+	Tue,  8 Apr 2025 10:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109755; cv=none; b=S36crt3DjSzZ5dEBD1n5RgMMZRsA4ujWemKYEB7onsp4cGZO/2j9SwuOgWHeuIWGQUuDkrg5qL1YQiDbPihvLR9NVqsAak4EVCkGS2nXiD16kxojLfN99xuIRBtaXlhm47QUZ4RrBSYUGAa4vcE+aDQ6avAI9ta8pbLK2tGyx14=
+	t=1744109757; cv=none; b=eGdPim8k0kG4ArKLt5q3KVR9YH2wHZ4de3IzKSpQzE20RCQwLY+q2XIl5n4XBaNrRNwcaPV15rP779/TymZo5cNiViJq0BvSFCJdu0rRowiYG/HYz1GL3Z1tnWhnjJ9+nMoFohsxec7cjbTz/HLdQNLMTIwyZ/s1HvSSjLPRtZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109755; c=relaxed/simple;
-	bh=VDROGf3s4+wg4+4AMGVtU3ScVAGU6wJQtUgPm5uqFLs=;
+	s=arc-20240116; t=1744109757; c=relaxed/simple;
+	bh=+EY/ntD6XkQ8vIGFk0c4sq2muF7N/c2Asvghr/RgxKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPCBygIzC+HLHYutZcGVMH7eAIFKATbWoojyE8CIXF8ZFICyZfT7weblG2YgOH9Zv6dHtg+GH9H/nSgxlWxaU+1m1STGxH0N4e0FDc1OIP3CDZw756eLOdM2igLVAEXG1+RCa3W+0jYFjdtgqes4Akf77l2gBU2LnK3pF5ROHbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9LHVB9N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1ZMAmqzFE8TXBprzQhGcYoaHhF8PRNTJ8iOAQFN1K54C4F+dcCGDqLzFKFB93aGAVsjz+fjk+Vit/IN0wjRzKwcg7wq5+IxQAe01fCEwEqW5m4PYqgY7oJXefjcol8CifdWen45iFgiQ+Eh8n9nfoUexk/tL9CB98UleQWAvYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Omipk2U3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9LHVB9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAD4C4CEE5;
-	Tue,  8 Apr 2025 10:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Omipk2U3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA19AC4CEE5;
+	Tue,  8 Apr 2025 10:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109754;
-	bh=VDROGf3s4+wg4+4AMGVtU3ScVAGU6wJQtUgPm5uqFLs=;
+	s=korg; t=1744109757;
+	bh=+EY/ntD6XkQ8vIGFk0c4sq2muF7N/c2Asvghr/RgxKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9LHVB9NidGmcecdMBV4nI8wNFAzUHOtgxwGW8tznzA8v+LchTcbf0IB/kYB4csGj
-	 dTKG6rLP/UqDBmyLVPwS4oYFJkJsVmk+u2Q1ZmMp2Gar0rMdCB3BdWuqFcuZ4YbK1s
-	 nf4BTGG0lTxsZRecJQjW96XaO4I3uHIpkQrzhHh4=
+	b=Omipk2U30IFKkE7oB9J6aOaVqKLwUPLG0atoHfr7F06RS1OXApG+8J6JSy1H7aawI
+	 l5k6nNAzx0a1qUKe0J9SaY0wg2GFeIUJycnOJYc4cW2VeuzONL3RMlvI0ypwJeWFej
+	 Py9U4t3kIsPy/p7JL/ImaCzlXgpDCSFQ3L/Grcr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/227] ASoC: tas2770: Fix volume scale
-Date: Tue,  8 Apr 2025 12:46:57 +0200
-Message-ID: <20250408104821.580631256@linuxfoundation.org>
+	Hulk Robot <hulkci@huawei.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Abdelkareem Abdelsaamad <kareemem@amazon.com>
+Subject: [PATCH 5.10 004/227] ipv6: Fix signed integer overflow in __ip6_append_data
+Date: Tue,  8 Apr 2025 12:46:22 +0200
+Message-ID: <20250408104820.497901174@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,36 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 579cd64b9df8a60284ec3422be919c362de40e41 ]
+commit f93431c86b631bbca5614c66f966bf3ddb3c2803 upstream.
 
-The scale starts at -100dB, not -128dB.
+Resurrect ubsan overflow checks and ubsan report this warning,
+fix it by change the variable [length] type to size_t.
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2770-v1-1-cf50ff1d59a3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+UBSAN: signed-integer-overflow in net/ipv6/ip6_output.c:1489:19
+2147479552 + 8567 cannot be represented in type 'int'
+CPU: 0 PID: 253 Comm: err Not tainted 5.16.0+ #1
+Hardware name: linux,dummy-virt (DT)
+Call trace:
+  dump_backtrace+0x214/0x230
+  show_stack+0x30/0x78
+  dump_stack_lvl+0xf8/0x118
+  dump_stack+0x18/0x30
+  ubsan_epilogue+0x18/0x60
+  handle_overflow+0xd0/0xf0
+  __ubsan_handle_add_overflow+0x34/0x44
+  __ip6_append_data.isra.48+0x1598/0x1688
+  ip6_append_data+0x128/0x260
+  udpv6_sendmsg+0x680/0xdd0
+  inet6_sendmsg+0x54/0x90
+  sock_sendmsg+0x70/0x88
+  ____sys_sendmsg+0xe8/0x368
+  ___sys_sendmsg+0x98/0xe0
+  __sys_sendmmsg+0xf4/0x3b8
+  __arm64_sys_sendmmsg+0x34/0x48
+  invoke_syscall+0x64/0x160
+  el0_svc_common.constprop.4+0x124/0x300
+  do_el0_svc+0x44/0xc8
+  el0_svc+0x3c/0x1e8
+  el0t_64_sync_handler+0x88/0xb0
+  el0t_64_sync+0x16c/0x170
+
+Changes since v1:
+-Change the variable [length] type to unsigned, as Eric Dumazet suggested.
+Changes since v2:
+-Don't change exthdrlen type in ip6_make_skb, as Paolo Abeni suggested.
+Changes since v3:
+-Don't change ulen type in udpv6_sendmsg and l2tp_ip6_sendmsg, as
+Jakub Kicinski suggested.
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/20220607120028.845916-1-wangyufen@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Conflict due to f37a4cc6bb0b ("udp6: pass flow in ip6_make_skb
+  together with cork") not in the tree ]
+Signed-off-by: Abdelkareem Abdelsaamad <kareemem@amazon.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2770.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/ipv6.h    |    4 ++--
+ net/ipv6/ip6_output.c |    6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index c213c8096142b..1928c1616a52d 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -508,7 +508,7 @@ static int tas2770_codec_probe(struct snd_soc_component *component)
- }
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -991,7 +991,7 @@ int ip6_find_1stfragopt(struct sk_buff *
+ int ip6_append_data(struct sock *sk,
+ 		    int getfrag(void *from, char *to, int offset, int len,
+ 				int odd, struct sk_buff *skb),
+-		    void *from, int length, int transhdrlen,
++		    void *from, size_t length, int transhdrlen,
+ 		    struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
+ 		    struct rt6_info *rt, unsigned int flags);
  
- static DECLARE_TLV_DB_SCALE(tas2770_digital_tlv, 1100, 50, 0);
--static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -12750, 50, 0);
-+static DECLARE_TLV_DB_SCALE(tas2770_playback_volume, -10050, 50, 0);
- 
- static const struct snd_kcontrol_new tas2770_snd_controls[] = {
- 	SOC_SINGLE_TLV("Speaker Playback Volume", TAS2770_PLAY_CFG_REG2,
--- 
-2.39.5
-
+@@ -1007,7 +1007,7 @@ struct sk_buff *__ip6_make_skb(struct so
+ struct sk_buff *ip6_make_skb(struct sock *sk,
+ 			     int getfrag(void *from, char *to, int offset,
+ 					 int len, int odd, struct sk_buff *skb),
+-			     void *from, int length, int transhdrlen,
++			     void *from, size_t length, int transhdrlen,
+ 			     struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
+ 			     struct rt6_info *rt, unsigned int flags,
+ 			     struct inet_cork_full *cork);
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1449,7 +1449,7 @@ static int __ip6_append_data(struct sock
+ 			     struct page_frag *pfrag,
+ 			     int getfrag(void *from, char *to, int offset,
+ 					 int len, int odd, struct sk_buff *skb),
+-			     void *from, int length, int transhdrlen,
++			     void *from, size_t length, int transhdrlen,
+ 			     unsigned int flags, struct ipcm6_cookie *ipc6)
+ {
+ 	struct sk_buff *skb, *skb_prev = NULL;
+@@ -1795,7 +1795,7 @@ error:
+ int ip6_append_data(struct sock *sk,
+ 		    int getfrag(void *from, char *to, int offset, int len,
+ 				int odd, struct sk_buff *skb),
+-		    void *from, int length, int transhdrlen,
++		    void *from, size_t length, int transhdrlen,
+ 		    struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
+ 		    struct rt6_info *rt, unsigned int flags)
+ {
+@@ -1989,7 +1989,7 @@ EXPORT_SYMBOL_GPL(ip6_flush_pending_fram
+ struct sk_buff *ip6_make_skb(struct sock *sk,
+ 			     int getfrag(void *from, char *to, int offset,
+ 					 int len, int odd, struct sk_buff *skb),
+-			     void *from, int length, int transhdrlen,
++			     void *from, size_t length, int transhdrlen,
+ 			     struct ipcm6_cookie *ipc6, struct flowi6 *fl6,
+ 			     struct rt6_info *rt, unsigned int flags,
+ 			     struct inet_cork_full *cork)
 
 
