@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928C922424C;
-	Tue,  8 Apr 2025 11:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E9822424C;
+	Tue,  8 Apr 2025 11:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112428; cv=none; b=Q5AK94fLDAohMGko6U17audI4PfcDyEVkcCeg/dtrz/hEMHlw1Kb9uYH8j/pxPNCcR2NIiFBK3rVRKgN1goKUVXIG3F8TLOCLpJHKd4M6ljx23qE50NtkjiZnSUXu+VVvj9qabG5/uppVJCd921HtEuS0nZno356oRTfoOB0bnc=
+	t=1744112431; cv=none; b=JAguEh4AdyuHi0qZr1Tz9LnvspDJAkKGjv9EV5sjPy5j5/CKziKH9ttsLyZ1LsUGffG5RYuPi4uL04ZPEvBPtwE/NuO+F9sWNztyWhwZEbiU7ZkuRPqi+TrBxp/r3LzmArHWFYp6TxCcbnq/RaUt97zZKQeS5T4bCuEc1N6snaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112428; c=relaxed/simple;
-	bh=F4kjI2UU0dXmWfYongOQLHR3WIpOrhoAvDdTBcdeEhA=;
+	s=arc-20240116; t=1744112431; c=relaxed/simple;
+	bh=D5JcXAeVNiQDMNUYSbsxecR+4riL/ByVXYwyYOFzkGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbhEFuZQ/pYfNsunO2hsIEUWqi7glh43f9E40Pk/9797WRVREPyn/WeSV2zcHRcdcBeRqGOEye1m2TbVtF38WUaA4KnaKi4lEOCzdhfytrDC/NVXMyWmecSs5W3uHv+XAW4krdaHPAzEXU3plXAQW0XGvFkOQPushc+xTQXT25U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3wxHzwm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gd8rHLi25yfM4ojfeH4n6YAlFelNXz5DEohahucE194UoYjpx8NRXikt4YOuEnEVWswVEd98Bc6z6hugChKE0LqtupigX0fgb4f1i98FNa8d3gBp71kJHqWT4IAHFMHy/9X1z3AACUvxEeKeB2F87CXdjsHr9QBnT/1QVZngJIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgaF/tMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3wxHzwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228B7C4CEE5;
-	Tue,  8 Apr 2025 11:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgaF/tMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CFBC4CEE5;
+	Tue,  8 Apr 2025 11:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112428;
-	bh=F4kjI2UU0dXmWfYongOQLHR3WIpOrhoAvDdTBcdeEhA=;
+	s=korg; t=1744112431;
+	bh=D5JcXAeVNiQDMNUYSbsxecR+4riL/ByVXYwyYOFzkGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3wxHzwm/Uq87vlmwMcxL6dZT0KHY9s7DeelBVxxfVhfTrtc4Wb6Br8Az14pR6h8C
-	 NqMMZbCCO1RNZdrL7egV5RigT2zzkyhgoKU8iLR3yO0ZIldQKcZcA9ldid5R99KCxh
-	 tVT5N/Is7NdYqJYeetclF0wZb7DaIK46K5IedS5U=
+	b=CgaF/tMlcnGYaBK06RIp8ocFdBZ9lG5deTiTIBCG0GCGOqdUyKQegUPQFDuEk0DSS
+	 Yu6GFoIOnEFTXvlGwwXPRZWkfRb1JVlCcbCrCmC4rtuaSmrcp0D8BHRKnOlKxTcAtH
+	 v11UeJs2kyXfktqxLyqdr3TnfRJ5r/I/7i/E12DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/279] ASoC: rsnd: dont indicate warning on rsnd_kctrl_accept_runtime()
-Date: Tue,  8 Apr 2025 12:47:01 +0200
-Message-ID: <20250408104827.409578069@linuxfoundation.org>
+Subject: [PATCH 5.15 065/279] ASoC: ops: Consistently treat platform_max as control value
+Date: Tue,  8 Apr 2025 12:47:28 +0200
+Message-ID: <20250408104828.098063450@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,123 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit c3fc002b206c6c83d1e3702b979733002ba6fb2c ]
+[ Upstream commit 0eba2a7e858907a746ba69cd002eb9eb4dbd7bf3 ]
 
-rsnd_kctrl_accept_runtime() (1) is used for runtime convert rate
-(= Synchronous SRC Mode). Now, rsnd driver has 2 kctrls for it
+This reverts commit 9bdd10d57a88 ("ASoC: ops: Shift tested values in
+snd_soc_put_volsw() by +min"), and makes some additional related
+updates.
 
-(A):	"SRC Out Rate Switch"
-(B):	"SRC Out Rate"		// it calls (1)
+There are two ways the platform_max could be interpreted; the maximum
+register value, or the maximum value the control can be set to. The
+patch moved from treating the value as a control value to a register
+one. When the patch was applied it was technically correct as
+snd_soc_limit_volume() also used the register interpretation. However,
+even then most of the other usages treated platform_max as a
+control value, and snd_soc_limit_volume() has since been updated to
+also do so in commit fb9ad24485087 ("ASoC: ops: add correct range
+check for limiting volume"). That patch however, missed updating
+snd_soc_put_volsw() back to the control interpretation, and fixing
+snd_soc_info_volsw_range(). The control interpretation makes more
+sense as limiting is typically done from the machine driver, so it is
+appropriate to use the customer facing representation rather than the
+internal codec representation. Update all the code to consistently use
+this interpretation of platform_max.
 
-(A): can be called anytime
-(B): can be called only runtime, and will indicate warning if it was used
-   at non-runtime.
+Finally, also add some comments to the soc_mixer_control struct to
+hopefully avoid further patches switching between the two approaches.
 
-To use runtime convert rate (= Synchronous SRC Mode), user might uses
-command in below order.
-
-(X):	> amixer set "SRC Out Rate" on
-	> aplay xxx.wav &
-(Y):	> amixer set "SRC Out Rate" 48010 // convert rate to 48010Hz
-
-(Y): calls B
-(X): calls both A and B.
-
-In this case, when user calls (X), it calls both (A) and (B), but it is not
-yet start running. So, (B) will indicate warning.
-
-This warning was added by commit b5c088689847 ("ASoC: rsnd: add warning
-message to rsnd_kctrl_accept_runtime()"), but the message sounds like the
-operation was not correct. Let's update warning message.
-
-The message is very SRC specific, implement it in src.c
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/8734gt2qed.wl-kuninori.morimoto.gx@renesas.com
+Fixes: fb9ad24485087 ("ASoC: ops: add correct range check for limiting volume")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250228151456.3703342-1-ckeepax@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rcar/core.c | 14 --------------
- sound/soc/sh/rcar/rsnd.h |  1 -
- sound/soc/sh/rcar/src.c  | 18 +++++++++++++++++-
- 3 files changed, 17 insertions(+), 16 deletions(-)
+ include/sound/soc.h |  5 ++++-
+ sound/soc/soc-ops.c | 15 +++++++--------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
-index af8ef2a27d341..65022ba5c5875 100644
---- a/sound/soc/sh/rcar/core.c
-+++ b/sound/soc/sh/rcar/core.c
-@@ -1694,20 +1694,6 @@ int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io)
- 	return 1;
- }
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index 3f0369aae2faf..42358dbc19b8c 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1113,7 +1113,10 @@ void snd_soc_close_delayed_work(struct snd_soc_pcm_runtime *rtd);
  
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io)
--{
--	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
--	struct rsnd_priv *priv = rsnd_io_to_priv(io);
--	struct device *dev = rsnd_priv_to_dev(priv);
--
--	if (!runtime) {
--		dev_warn(dev, "Can't update kctrl when idle\n");
--		return 0;
--	}
--
--	return 1;
--}
--
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg)
+ /* mixer control */
+ struct soc_mixer_control {
+-	int min, max, platform_max;
++	/* Minimum and maximum specified as written to the hardware */
++	int min, max;
++	/* Limited maximum value specified as presented through the control */
++	int platform_max;
+ 	int reg, rreg;
+ 	unsigned int shift, rshift;
+ 	unsigned int sign_bit;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 57caa91a4376e..d8d0a26a554de 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -317,7 +317,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 		mask = BIT(sign_bit + 1) - 1;
+ 
+ 	val = ucontrol->value.integer.value[0];
+-	if (mc->platform_max && ((int)val + min) > mc->platform_max)
++	if (mc->platform_max && val > mc->platform_max)
+ 		return -EINVAL;
+ 	if (val > max - min)
+ 		return -EINVAL;
+@@ -330,7 +330,7 @@ int snd_soc_put_volsw(struct snd_kcontrol *kcontrol,
+ 	val = val << shift;
+ 	if (snd_soc_volsw_is_stereo(mc)) {
+ 		val2 = ucontrol->value.integer.value[1];
+-		if (mc->platform_max && ((int)val2 + min) > mc->platform_max)
++		if (mc->platform_max && val2 > mc->platform_max)
+ 			return -EINVAL;
+ 		if (val2 > max - min)
+ 			return -EINVAL;
+@@ -485,17 +485,16 @@ int snd_soc_info_volsw_range(struct snd_kcontrol *kcontrol,
  {
- 	cfg->cfg.val = cfg->val;
-diff --git a/sound/soc/sh/rcar/rsnd.h b/sound/soc/sh/rcar/rsnd.h
-index f8ef6836ef84e..690f4932357c1 100644
---- a/sound/soc/sh/rcar/rsnd.h
-+++ b/sound/soc/sh/rcar/rsnd.h
-@@ -742,7 +742,6 @@ struct rsnd_kctrl_cfg_s {
- #define rsnd_kctrl_vals(x)	((x).val)	/* = (x).cfg.val[0] */
+ 	struct soc_mixer_control *mc =
+ 		(struct soc_mixer_control *)kcontrol->private_value;
+-	int platform_max;
+-	int min = mc->min;
++	int max;
  
- int rsnd_kctrl_accept_anytime(struct rsnd_dai_stream *io);
--int rsnd_kctrl_accept_runtime(struct rsnd_dai_stream *io);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_m(struct rsnd_kctrl_cfg_m *cfg);
- struct rsnd_kctrl_cfg *rsnd_kctrl_init_s(struct rsnd_kctrl_cfg_s *cfg);
- int rsnd_kctrl_new(struct rsnd_mod *mod,
-diff --git a/sound/soc/sh/rcar/src.c b/sound/soc/sh/rcar/src.c
-index f832165e46bc0..9893839666d7b 100644
---- a/sound/soc/sh/rcar/src.c
-+++ b/sound/soc/sh/rcar/src.c
-@@ -530,6 +530,22 @@ static irqreturn_t rsnd_src_interrupt(int irq, void *data)
- 	return IRQ_HANDLED;
+-	if (!mc->platform_max)
+-		mc->platform_max = mc->max;
+-	platform_max = mc->platform_max;
++	max = mc->max - mc->min;
++	if (mc->platform_max && mc->platform_max < max)
++		max = mc->platform_max;
+ 
+ 	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+ 	uinfo->count = snd_soc_volsw_is_stereo(mc) ? 2 : 1;
+ 	uinfo->value.integer.min = 0;
+-	uinfo->value.integer.max = platform_max - min;
++	uinfo->value.integer.max = max;
+ 
+ 	return 0;
  }
- 
-+static int rsnd_src_kctrl_accept_runtime(struct rsnd_dai_stream *io)
-+{
-+	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
-+
-+	if (!runtime) {
-+		struct rsnd_priv *priv = rsnd_io_to_priv(io);
-+		struct device *dev = rsnd_priv_to_dev(priv);
-+
-+		dev_warn(dev, "\"SRC Out Rate\" can use during running\n");
-+
-+		return 0;
-+	}
-+
-+	return 1;
-+}
-+
- static int rsnd_src_probe_(struct rsnd_mod *mod,
- 			   struct rsnd_dai_stream *io,
- 			   struct rsnd_priv *priv)
-@@ -593,7 +609,7 @@ static int rsnd_src_pcm_new(struct rsnd_mod *mod,
- 			       rsnd_io_is_play(io) ?
- 			       "SRC Out Rate" :
- 			       "SRC In Rate",
--			       rsnd_kctrl_accept_runtime,
-+			       rsnd_src_kctrl_accept_runtime,
- 			       rsnd_src_set_convert_rate,
- 			       &src->sync, 192000);
- 
 -- 
 2.39.5
 
