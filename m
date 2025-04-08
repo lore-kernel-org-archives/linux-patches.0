@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B906D269AF8;
-	Tue,  8 Apr 2025 11:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B8A269CF6;
+	Tue,  8 Apr 2025 11:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113073; cv=none; b=a2oH2PcLk821YlY6kokVaQbNSm8pAe6i/RN53MDUI1/YOfiKCo4JPkn+PSC2JAxnKx3bumLfyFiS2hfPZ3WRNJ7ikWQRNsqN0+/2ZfWUzQvgpMGjneNetuCeSqHSZpBQuwQnaBNIiWBBmMdYJDjVmmwgLE3S6rXwMutEef83AK4=
+	t=1744113076; cv=none; b=ix/q/QsR2mOX/c/u63R2iuLQCvzOfwczG5RQr5zWA9OMATKxk8WmvMJtaxYNgPpX9OXG+MtfjnxCxztglaAw9BGQKtfrAjwfVo/LOjl6oi4wKFTZuu6u+XPfHRtsrI5zay6h15x6k8kCCeY7is1X9muvYV2h19jBzq27OgxB0yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113073; c=relaxed/simple;
-	bh=ubjOp9UP1hV/K464MeL2X+Y5wZTllrzEAPyR9e6R0OY=;
+	s=arc-20240116; t=1744113076; c=relaxed/simple;
+	bh=b6w2g2WMR0WaC4lAnuFSqL3mqW/s3mRG/lQhfDGvT3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noait5OIe+LHwAMV27ZxeFU2PNWggXOdUM2SjEgFOzN/Kk5/yQy4gyrjLrUjl3AgmBCYmsGpBwWfiG5nRyxBfFy9maLrQfQUmPiXlT987UwgwQZY3hU7OWcjHDZZTdAnRvopVwADuSBFuqrIdY8x07CpHjnqAj1oOqG4PMKPWNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9j+uZ8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pogEugtx9JFieVu8+r2cMbXkVC3GH3QYL55heWKpWqZ7AeTyVED5omk8kuBFA5Pi1il65rFAb3AXyC4Y0Glp6ajvVehxmtNdp/A0rzWqeZ/RRjR1tF7NVMALn6UbwzrGJRF94qonlU2Rl59uw75K34hYlIt0lEZrD3F9pjiCSsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VttvZoUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9j+uZ8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E95C4CEE5;
-	Tue,  8 Apr 2025 11:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VttvZoUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04FFC4AF09;
+	Tue,  8 Apr 2025 11:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113073;
-	bh=ubjOp9UP1hV/K464MeL2X+Y5wZTllrzEAPyR9e6R0OY=;
+	s=korg; t=1744113076;
+	bh=b6w2g2WMR0WaC4lAnuFSqL3mqW/s3mRG/lQhfDGvT3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9j+uZ8xbNKykr8pDAiHsDStwRcdlI4XCRT2AN/yfNhEcLgCmAiFKOtgPpcjjuOS5
-	 ScbOjptNi80DY8FZx8s12t1gJM15qQZz98Bxl8zf0vJmSg+qnVcUSAGp5YaSqv6l2I
-	 Shp+xI5Fa20N2T0Oq21TspbNkA6d9xYV6avWWM9M=
+	b=VttvZoUAyqpWT0CTQO3EdEisHQp2U0V3LwFc1Glhf68KguVUK8hhgX65tzrd/IEl8
+	 fr35+A9V5C8JitO/RTJLW6ExiO/AYHLLvJYL81YXmuGlNKmYmDWtOt8bokaWDbHH6P
+	 HLWJEqYvzS78VTINqlE0qJubkrp+HPKPspgiOdZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kevin Chang <kevin1.chang@intel.com>,
+	Thomas Chen <Thomas.Chen@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/268] cpufreq: governor: Fix negative idle_time handling in dbs_update()
-Date: Tue,  8 Apr 2025 12:46:56 +0200
-Message-ID: <20250408104828.648617813@linuxfoundation.org>
+Subject: [PATCH 6.6 006/268] EDAC/{skx_common,i10nm}: Fix some missing error reports on Emerald Rapids
+Date: Tue,  8 Apr 2025 12:46:57 +0200
+Message-ID: <20250408104828.677364193@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,114 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Zhan <zhanjie9@hisilicon.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 3698dd6b139dc37b35a9ad83d9330c1f99666c02 ]
+[ Upstream commit d9207cf7760f5f5599e9ff7eb0fedf56821a1d59 ]
 
-We observed an issue that the CPU frequency can't raise up with a 100% CPU
-load when NOHZ is off and the 'conservative' governor is selected.
+When doing error injection to some memory DIMMs on certain Intel Emerald
+Rapids servers, the i10nm_edac missed error reports for some memory DIMMs.
 
-'idle_time' can be negative if it's obtained from get_cpu_idle_time_jiffy()
-when NOHZ is off.  This was found and explained in commit 9485e4ca0b48
-("cpufreq: governor: Fix handling of special cases in dbs_update()").
+Certain BIOS configurations may hide some memory controllers, and the
+i10nm_edac doesn't enumerate these hidden memory controllers. However, the
+ADXL decodes memory errors using memory controller physical indices even
+if there are hidden memory controllers. Therefore, the memory controller
+physical indices reported by the ADXL may mismatch the logical indices
+enumerated by the i10nm_edac, resulting in missed error reports for some
+memory DIMMs.
 
-However, commit 7592019634f8 ("cpufreq: governors: Fix long idle detection
-logic in load calculation") introduced a comparison between 'idle_time' and
-'samling_rate' to detect a long idle interval.  While 'idle_time' is
-converted to int before comparison, it's actually promoted to unsigned
-again when compared with an unsigned 'sampling_rate'.  Hence, this leads to
-wrong idle interval detection when it's in fact 100% busy and sets
-policy_dbs->idle_periods to a very large value.  'conservative' adjusts the
-frequency to minimum because of the large 'idle_periods', such that the
-frequency can't raise up.  'Ondemand' doesn't use policy_dbs->idle_periods
-so it fortunately avoids the issue.
+Fix this issue by creating a mapping table from memory controller physical
+indices (used by the ADXL) to logical indices (used by the i10nm_edac) and
+using it to convert the physical indices to the logical indices during the
+error handling process.
 
-Correct negative 'idle_time' to 0 before any use of it in dbs_update().
-
-Fixes: 7592019634f8 ("cpufreq: governors: Fix long idle detection logic in load calculation")
-Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Link: https://patch.msgid.link/20250213035510.2402076-1-zhanjie9@hisilicon.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c545f5e41225 ("EDAC/i10nm: Skip the absent memory controllers")
+Reported-by: Kevin Chang <kevin1.chang@intel.com>
+Tested-by: Kevin Chang <kevin1.chang@intel.com>
+Reported-by: Thomas Chen <Thomas.Chen@intel.com>
+Tested-by: Thomas Chen <Thomas.Chen@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20250214002728.6287-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_governor.c | 45 +++++++++++++++---------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ drivers/edac/i10nm_base.c |  2 ++
+ drivers/edac/skx_common.c | 33 +++++++++++++++++++++++++++++++++
+ drivers/edac/skx_common.h | 11 +++++++++++
+ 3 files changed, 46 insertions(+)
 
-diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
-index af44ee6a64304..1a7fcaf39cc9b 100644
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -145,7 +145,23 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 		time_elapsed = update_time - j_cdbs->prev_update_time;
- 		j_cdbs->prev_update_time = update_time;
- 
--		idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
-+		/*
-+		 * cur_idle_time could be smaller than j_cdbs->prev_cpu_idle if
-+		 * it's obtained from get_cpu_idle_time_jiffy() when NOHZ is
-+		 * off, where idle_time is calculated by the difference between
-+		 * time elapsed in jiffies and "busy time" obtained from CPU
-+		 * statistics.  If a CPU is 100% busy, the time elapsed and busy
-+		 * time should grow with the same amount in two consecutive
-+		 * samples, but in practice there could be a tiny difference,
-+		 * making the accumulated idle time decrease sometimes.  Hence,
-+		 * in this case, idle_time should be regarded as 0 in order to
-+		 * make the further process correct.
-+		 */
-+		if (cur_idle_time > j_cdbs->prev_cpu_idle)
-+			idle_time = cur_idle_time - j_cdbs->prev_cpu_idle;
-+		else
-+			idle_time = 0;
-+
- 		j_cdbs->prev_cpu_idle = cur_idle_time;
- 
- 		if (ignore_nice) {
-@@ -162,7 +178,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 			 * calls, so the previous load value can be used then.
- 			 */
- 			load = j_cdbs->prev_load;
--		} else if (unlikely((int)idle_time > 2 * sampling_rate &&
-+		} else if (unlikely(idle_time > 2 * sampling_rate &&
- 				    j_cdbs->prev_load)) {
- 			/*
- 			 * If the CPU had gone completely idle and a task has
-@@ -189,30 +205,15 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
- 			load = j_cdbs->prev_load;
- 			j_cdbs->prev_load = 0;
- 		} else {
--			if (time_elapsed >= idle_time) {
-+			if (time_elapsed > idle_time)
- 				load = 100 * (time_elapsed - idle_time) / time_elapsed;
--			} else {
--				/*
--				 * That can happen if idle_time is returned by
--				 * get_cpu_idle_time_jiffy().  In that case
--				 * idle_time is roughly equal to the difference
--				 * between time_elapsed and "busy time" obtained
--				 * from CPU statistics.  Then, the "busy time"
--				 * can end up being greater than time_elapsed
--				 * (for example, if jiffies_64 and the CPU
--				 * statistics are updated by different CPUs),
--				 * so idle_time may in fact be negative.  That
--				 * means, though, that the CPU was busy all
--				 * the time (on the rough average) during the
--				 * last sampling interval and 100 can be
--				 * returned as the load.
--				 */
--				load = (int)idle_time < 0 ? 100 : 0;
--			}
-+			else
-+				load = 0;
-+
- 			j_cdbs->prev_load = load;
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 535f058b48eef..67a46abe07da9 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -755,6 +755,8 @@ static int i10nm_get_ddr_munits(void)
+ 				continue;
+ 			} else {
+ 				d->imc[lmc].mdev = mdev;
++				if (res_cfg->type == SPR)
++					skx_set_mc_mapping(d, i, lmc);
+ 				lmc++;
+ 			}
  		}
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index 0b8aaf5f77d9f..d47f0055217e4 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -120,6 +120,35 @@ void skx_adxl_put(void)
+ }
+ EXPORT_SYMBOL_GPL(skx_adxl_put);
  
--		if (unlikely((int)idle_time > 2 * sampling_rate)) {
-+		if (unlikely(idle_time > 2 * sampling_rate)) {
- 			unsigned int periods = idle_time / sampling_rate;
++static void skx_init_mc_mapping(struct skx_dev *d)
++{
++	/*
++	 * By default, the BIOS presents all memory controllers within each
++	 * socket to the EDAC driver. The physical indices are the same as
++	 * the logical indices of the memory controllers enumerated by the
++	 * EDAC driver.
++	 */
++	for (int i = 0; i < NUM_IMC; i++)
++		d->mc_mapping[i] = i;
++}
++
++void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc)
++{
++	edac_dbg(0, "Set the mapping of mc phy idx to logical idx: %02d -> %02d\n",
++		 pmc, lmc);
++
++	d->mc_mapping[pmc] = lmc;
++}
++EXPORT_SYMBOL_GPL(skx_set_mc_mapping);
++
++static u8 skx_get_mc_mapping(struct skx_dev *d, u8 pmc)
++{
++	edac_dbg(0, "Get the mapping of mc phy idx to logical idx: %02d -> %02d\n",
++		 pmc, d->mc_mapping[pmc]);
++
++	return d->mc_mapping[pmc];
++}
++
+ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ {
+ 	struct skx_dev *d;
+@@ -187,6 +216,8 @@ static bool skx_adxl_decode(struct decoded_addr *res, enum error_source err_src)
+ 		return false;
+ 	}
  
- 			if (periods < idle_periods)
++	res->imc = skx_get_mc_mapping(d, res->imc);
++
+ 	for (i = 0; i < adxl_component_count; i++) {
+ 		if (adxl_values[i] == ~0x0ull)
+ 			continue;
+@@ -307,6 +338,8 @@ int skx_get_all_bus_mappings(struct res_config *cfg, struct list_head **list)
+ 			 d->bus[0], d->bus[1], d->bus[2], d->bus[3]);
+ 		list_add_tail(&d->list, &dev_edac_list);
+ 		prev = pdev;
++
++		skx_init_mc_mapping(d);
+ 	}
+ 
+ 	if (list)
+diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
+index e7f18ada16681..5acfef8fd3d36 100644
+--- a/drivers/edac/skx_common.h
++++ b/drivers/edac/skx_common.h
+@@ -94,6 +94,16 @@ struct skx_dev {
+ 	struct pci_dev *uracu; /* for i10nm CPU */
+ 	struct pci_dev *pcu_cr3; /* for HBM memory detection */
+ 	u32 mcroute;
++	/*
++	 * Some server BIOS may hide certain memory controllers, and the
++	 * EDAC driver skips those hidden memory controllers. However, the
++	 * ADXL still decodes memory error address using physical memory
++	 * controller indices. The mapping table is used to convert the
++	 * physical indices (reported by ADXL) to the logical indices
++	 * (used the EDAC driver) of present memory controllers during the
++	 * error handling process.
++	 */
++	u8 mc_mapping[NUM_IMC];
+ 	struct skx_imc {
+ 		struct mem_ctl_info *mci;
+ 		struct pci_dev *mdev; /* for i10nm CPU */
+@@ -243,6 +253,7 @@ void skx_adxl_put(void);
+ void skx_set_decode(skx_decode_f decode, skx_show_retry_log_f show_retry_log);
+ void skx_set_mem_cfg(bool mem_cfg_2lm);
+ void skx_set_res_cfg(struct res_config *cfg);
++void skx_set_mc_mapping(struct skx_dev *d, u8 pmc, u8 lmc);
+ 
+ int skx_get_src_id(struct skx_dev *d, int off, u8 *id);
+ int skx_get_node_id(struct skx_dev *d, u8 *id);
 -- 
 2.39.5
 
