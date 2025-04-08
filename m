@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E452269CE6;
-	Tue,  8 Apr 2025 12:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45F02690FA;
+	Tue,  8 Apr 2025 12:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114312; cv=none; b=nW/ukwZksOrCl6GYVDSnz8HU+y3lDQ476HlNR/HBNddnZhBHcY4BUtwk4/aRYgAaez5CRV9sRI/91hRvqg79M2hlgrWgJI8Jz4qF2b3jzdpV89w5YCDFGa6igD/pahcaXxLwJalWA0Tp5iRCzEMqNeI0Ca/c9Tdh5mlF/P2IqU8=
+	t=1744114314; cv=none; b=ZwrzcXamk3goSPaG3sFo8BlSc39LJVczPWoz0RO71I+GBHgrpslPfKj2m7kbJNjQWIvBpPlE2BoB8Mywrhbl0ERzHgr+IpBpO46pTZypuvr1dwFJyJosiLesEM8CVE7KqBLusavv3TYM59L1C+YKQ76yRyGWC5mHpCxEH3ZJrDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114312; c=relaxed/simple;
-	bh=gqLS9oNVWkT4Ve3rHLoou/JBLwdBkgm9hpXM7GttNhw=;
+	s=arc-20240116; t=1744114314; c=relaxed/simple;
+	bh=euBEaNod13PyZlAB8SKXf1vo4MAR4BRo3lzqkNrc1u4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeAhqHK9BOkci6tuKfhap9pX0MH+AHnkrrxKE+o7IwmDAEHd1h8t1OHqZowtjKc7XABHcr3TxBoGhsi/XrD3JJLJwPRDkAoGU2V9+eoxMPFCsLdP98CiBLJVjMWU8AvYE0EPVHv00qkmXZiMmHvMb6zujOIXR9Zr6kAQ65zxrVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrJCHJeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmemhyLIYByMVJs3O7PlQ39+cVN5sYUY/EpPOY2GUxB9pcIgGE3fQJmD6TYB+hHie4Eo1+2k0rXPWYb+fjaZc706Bj6KKpsPly+sivTF+MRuNtHTohs84dTmXvc9fEkMULCeApoj7LiIzAb8/ozPFhfRW1P1tAycpEVqLF5jpzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O10pWNhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrJCHJeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925BCC4CEE5;
-	Tue,  8 Apr 2025 12:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O10pWNhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D6FC4CEE5;
+	Tue,  8 Apr 2025 12:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114311;
-	bh=gqLS9oNVWkT4Ve3rHLoou/JBLwdBkgm9hpXM7GttNhw=;
+	s=korg; t=1744114314;
+	bh=euBEaNod13PyZlAB8SKXf1vo4MAR4BRo3lzqkNrc1u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrJCHJeEr852xUvo7vmvFM4qTtoftzHRfD76bx0FJSgHj3s9bMtQUk6xISrsU02aq
-	 jqRfT+U1VT+X1JHwmjwIItmMgHVmfuJ5ihPH/uAqajvinnoWleN9sT4V7MCGwMC42m
-	 E/ObpmR5zDB2fIwMywi0BpNfHmzchKDDVMvAJXi0=
+	b=O10pWNhUFod3g9etPQ1VxsW/Tn9BqJPg3MvR+fI6PbJ3nsXAlToRPY5YRFtTUbnc7
+	 ZJYD4eiP0WASVdd0rpySQRJe9TsrGpzuBMpGP7WNfIxUenz5QPUVWhibOdc1wUEeTa
+	 oNaSBU7/3N01OqhnznEb2mgQl8VAzTqMGBIt5o10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 060/499] drm/bridge: ti-sn65dsi86: Fix multiple instances
-Date: Tue,  8 Apr 2025 12:44:32 +0200
-Message-ID: <20250408104852.731830228@linuxfoundation.org>
+Subject: [PATCH 6.13 061/499] drm/ssd130x: Set SPI .id_table to prevent an SPI core warning
+Date: Tue,  8 Apr 2025 12:44:33 +0200
+Message-ID: <20250408104852.756152639@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,50 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Javier Martinez Canillas <javierm@redhat.com>
 
-[ Upstream commit 574f5ee2c85a00a579549d50e9fc9c6c072ee4c4 ]
+[ Upstream commit 5d40d4fae6f2fb789f48207a9d4772bbee970b5c ]
 
-Each bridge instance creates up to four auxiliary devices with different
-names.  However, their IDs are always zero, causing duplicate filename
-errors when a system has multiple bridges:
+The only reason for the ssd130x-spi driver to have an spi_device_id table
+is that the SPI core always reports an "spi:" MODALIAS, even when the SPI
+device has been registered via a Device Tree Blob.
 
-    sysfs: cannot create duplicate filename '/bus/auxiliary/devices/ti_sn65dsi86.gpio.0'
+Without spi_device_id table information in the module's metadata, module
+autoloading would not work because there won't be an alias that matches
+the MODALIAS reported by the SPI core.
 
-Fix this by using a unique instance ID per bridge instance.  The
-instance ID is derived from the I2C adapter number and the bridge's I2C
-address, to support multiple instances on the same bus.
+This spi_device_id table is not needed for device matching though, since
+the of_device_id table is always used in this case. For this reason, the
+struct spi_driver .id_table member is currently not set in the SPI driver.
 
-Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/7a68a0e3f927e26edca6040067fb653eb06efb79.1733840089.git.geert+renesas@glider.be
+Because the spi_device_id table is always required for module autoloading,
+the SPI core checks during driver registration that both an of_device_id
+table and a spi_device_id table are present and that they contain the same
+entries for all the SPI devices.
+
+Not setting the .id_table member in the driver then confuses the core and
+leads to the following warning when the ssd130x-spi driver is registered:
+
+  [   41.091198] SPI driver ssd130x-spi has no spi_device_id for sinowealth,sh1106
+  [   41.098614] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1305
+  [   41.105862] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1306
+  [   41.113062] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1307
+  [   41.120247] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1309
+  [   41.127449] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1322
+  [   41.134627] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1325
+  [   41.141784] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1327
+  [   41.149021] SPI driver ssd130x-spi has no spi_device_id for solomon,ssd1331
+
+To prevent the warning, set the .id_table even though it's not necessary.
+
+Since the check is done even for built-in drivers, drop the condition to
+only define the ID table when the driver is built as a module. Finally,
+rename the variable to use the "_spi_id" convention used for ID tables.
+
+Fixes: 74373977d2ca ("drm/solomon: Add SSD130x OLED displays SPI support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241231114516.2063201-1-javierm@redhat.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/solomon/ssd130x-spi.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 9e31f750fd889..fb452d1b46995 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -480,6 +480,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 				       const char *name)
- {
- 	struct device *dev = pdata->dev;
-+	const struct i2c_client *client = to_i2c_client(dev);
- 	struct auxiliary_device *aux;
- 	int ret;
+diff --git a/drivers/gpu/drm/solomon/ssd130x-spi.c b/drivers/gpu/drm/solomon/ssd130x-spi.c
+index 08334be386946..7c935870f7d2a 100644
+--- a/drivers/gpu/drm/solomon/ssd130x-spi.c
++++ b/drivers/gpu/drm/solomon/ssd130x-spi.c
+@@ -151,7 +151,6 @@ static const struct of_device_id ssd130x_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, ssd130x_of_match);
  
-@@ -488,6 +489,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
- 		return -ENOMEM;
+-#if IS_MODULE(CONFIG_DRM_SSD130X_SPI)
+ /*
+  * The SPI core always reports a MODALIAS uevent of the form "spi:<dev>", even
+  * if the device was registered via OF. This means that the module will not be
+@@ -160,7 +159,7 @@ MODULE_DEVICE_TABLE(of, ssd130x_of_match);
+  * To workaround this issue, add a SPI device ID table. Even when this should
+  * not be needed for this driver to match the registered SPI devices.
+  */
+-static const struct spi_device_id ssd130x_spi_table[] = {
++static const struct spi_device_id ssd130x_spi_id[] = {
+ 	/* ssd130x family */
+ 	{ "sh1106",  SH1106_ID },
+ 	{ "ssd1305", SSD1305_ID },
+@@ -175,14 +174,14 @@ static const struct spi_device_id ssd130x_spi_table[] = {
+ 	{ "ssd1331", SSD1331_ID },
+ 	{ /* sentinel */ }
+ };
+-MODULE_DEVICE_TABLE(spi, ssd130x_spi_table);
+-#endif
++MODULE_DEVICE_TABLE(spi, ssd130x_spi_id);
  
- 	aux->name = name;
-+	aux->id = (client->adapter->nr << 10) | client->addr;
- 	aux->dev.parent = dev;
- 	aux->dev.release = ti_sn65dsi86_aux_device_release;
- 	device_set_of_node_from_dev(&aux->dev, dev);
+ static struct spi_driver ssd130x_spi_driver = {
+ 	.driver = {
+ 		.name = DRIVER_NAME,
+ 		.of_match_table = ssd130x_of_match,
+ 	},
++	.id_table = ssd130x_spi_id,
+ 	.probe = ssd130x_spi_probe,
+ 	.remove = ssd130x_spi_remove,
+ 	.shutdown = ssd130x_spi_shutdown,
 -- 
 2.39.5
 
