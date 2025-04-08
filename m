@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC5F2686AD;
-	Tue,  8 Apr 2025 11:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CC6207E14;
+	Tue,  8 Apr 2025 11:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111385; cv=none; b=QC08JvzxdFbBOIzBNdHLr6C++G5YKHO5a5r5OnLsjNbfPkUoTAwXGuB//T35CCAgPPMcrjhoTfVgIC8Rmbsiuq0spryiJHsK4gm4WngOhE7F74cZ87ciwtifbtOBq9zezqIDSClDn8nNmWYlCZMoNt8CJw/K1NK1JTKjVVOqON8=
+	t=1744111387; cv=none; b=Y76rDXIVlgAZrCsqAmXBzcpJTa5oMIgY+HcOvJrwAiHHhDomqUYz6OuSr/ItemwRERqUPNtG+t3dShMREjJLDDcdvWids76cUlb1XtCmLay0RWPsz3bJIETkRa2aqjuY78HvJu77dvG8c94XiFmEw/6yu5W2Ve4ATpTuSk1pMEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111385; c=relaxed/simple;
-	bh=Q+WtnUl+yLNepS5uXGHk7G7xJgBdGoFJzjp8tgBxGJY=;
+	s=arc-20240116; t=1744111387; c=relaxed/simple;
+	bh=xoWDFSKMdN+T5CrlwW1UnvVwfLDujFLX60mxCjWEVvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=feAxVEqE227cCGdcGqWx5D2/kHUfCtt6KLxxnGxIq+416rv44ssObng+l9NxmaWoN1foz+2iqxJJIKVsNRYHh9SO8YRmUth9NjmWsjloZvipoXJsCCKtxylaiG1lT7smZCbHUdMmaxDCn6Ma2xfsfQ5vWE9GRxvcop17y0mH/3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybNWc8jG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ym7nXkvCsHTY/wAl/cvd4ppzVjeC3GgaFygjMeNxZaggVDKJSMjamTUAMelusXI7RnggpXjYvLTmTIoY4G3f6L76DYlYKNgT3J0peu7nyuJC/jJ+qj8IfqefuzeTA4l4j/dPdrJrGL2OmHx59QIQKZY1suzXjCNO9mdzWNB3hpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3cX8XBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybNWc8jG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F030C4CEE5;
-	Tue,  8 Apr 2025 11:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3cX8XBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08833C4CEE5;
+	Tue,  8 Apr 2025 11:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111384;
-	bh=Q+WtnUl+yLNepS5uXGHk7G7xJgBdGoFJzjp8tgBxGJY=;
+	s=korg; t=1744111387;
+	bh=xoWDFSKMdN+T5CrlwW1UnvVwfLDujFLX60mxCjWEVvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybNWc8jGJGo43gplViV4XtlCHlrZaeoBNpAkRWZ6GFW5JoxxthF6YdCIDaSlHz/Ez
-	 h2etVQz4czS5CpNc6t+amYXUvsNS2KWPViNrYZev4fB12dXdWD18oUtS/4B0ec242C
-	 /EPwz7rnu30cYvbg4nActIEFoJHWeZEqHCqmm694=
+	b=y3cX8XBO+xCGJr7czSP9e1vGqFqn8CJ5wWAcYF/+tYDk6ouVkzZyGn9NLvsnVkiY8
+	 d3tEfpgqqAi8hHfa8iicrkpWjwLy31U5rNsgZtA6HxOSzryEwEpaGFsNmN06HMu0R5
+	 FwJAuiTJDO49/147I+LBQ6tH1+IKKgVfyOW7ib6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 412/731] clk: clk-imx8mp-audiomix: fix dsp/ocram_a clock parents
-Date: Tue,  8 Apr 2025 12:45:09 +0200
-Message-ID: <20250408104923.857961018@linuxfoundation.org>
+Subject: [PATCH 6.14 413/731] clk: amlogic: g12a: fix mmc A peripheral clock
+Date: Tue,  8 Apr 2025 12:45:10 +0200
+Message-ID: <20250408104923.881124013@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 91be7d27099dedf813b80702e4ca117d1fb38ce6 ]
+[ Upstream commit 0079e77c08de692cb20b38e408365c830a44b1ef ]
 
-The DSP and OCRAM_A modules from AUDIOMIX are clocked by
-AUDIO_AXI_CLK_ROOT, not AUDIO_AHB_CLK_ROOT. Update the clock data
-accordingly.
+The bit index of the peripheral clock for mmc A is wrong
+This was probably not a problem for mmc A as the peripheral is likely left
+enabled by the bootloader.
 
-Fixes: 6cd95f7b151c ("clk: imx: imx8mp: Add audiomix block control")
-Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20250226164513.33822-3-laurentiumihalcea111@gmail.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+No issues has been reported so far but it could be a problem, most likely
+some form of conflict between the ethernet and mmc A clock, breaking
+ethernet on init.
+
+Use the value provided by the documentation for mmc A before this
+becomes an actual problem.
+
+Fixes: 085a4ea93d54 ("clk: meson: g12a: add peripheral clock controller")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241213-amlogic-clk-g12a-mmca-fix-v1-1-5af421f58b64@baylibre.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp-audiomix.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/meson/g12a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp-audiomix.c b/drivers/clk/imx/clk-imx8mp-audiomix.c
-index c409fc7e06186..775f62dddb11d 100644
---- a/drivers/clk/imx/clk-imx8mp-audiomix.c
-+++ b/drivers/clk/imx/clk-imx8mp-audiomix.c
-@@ -180,14 +180,14 @@ static struct clk_imx8mp_audiomix_sel sels[] = {
- 	CLK_GATE("asrc", ASRC_IPG),
- 	CLK_GATE("pdm", PDM_IPG),
- 	CLK_GATE("earc", EARC_IPG),
--	CLK_GATE("ocrama", OCRAMA_IPG),
-+	CLK_GATE_PARENT("ocrama", OCRAMA_IPG, "axi"),
- 	CLK_GATE("aud2htx", AUD2HTX_IPG),
- 	CLK_GATE_PARENT("earc_phy", EARC_PHY, "sai_pll_out_div2"),
- 	CLK_GATE("sdma2", SDMA2_ROOT),
- 	CLK_GATE("sdma3", SDMA3_ROOT),
- 	CLK_GATE("spba2", SPBA2_ROOT),
--	CLK_GATE("dsp", DSP_ROOT),
--	CLK_GATE("dspdbg", DSPDBG_ROOT),
-+	CLK_GATE_PARENT("dsp", DSP_ROOT, "axi"),
-+	CLK_GATE_PARENT("dspdbg", DSPDBG_ROOT, "axi"),
- 	CLK_GATE("edma", EDMA_ROOT),
- 	CLK_GATE_PARENT("audpll", AUDPLL_ROOT, "osc_24m"),
- 	CLK_GATE("mu2", MU2_ROOT),
+diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
+index 563759c51f747..ceabebb1863d6 100644
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -4323,7 +4323,7 @@ static MESON_GATE(g12a_spicc_1,			HHI_GCLK_MPEG0,	14);
+ static MESON_GATE(g12a_hiu_reg,			HHI_GCLK_MPEG0,	19);
+ static MESON_GATE(g12a_mipi_dsi_phy,		HHI_GCLK_MPEG0,	20);
+ static MESON_GATE(g12a_assist_misc,		HHI_GCLK_MPEG0,	23);
+-static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	4);
++static MESON_GATE(g12a_emmc_a,			HHI_GCLK_MPEG0,	24);
+ static MESON_GATE(g12a_emmc_b,			HHI_GCLK_MPEG0,	25);
+ static MESON_GATE(g12a_emmc_c,			HHI_GCLK_MPEG0,	26);
+ static MESON_GATE(g12a_audio_codec,		HHI_GCLK_MPEG0,	28);
 -- 
 2.39.5
 
