@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D09224AEB;
-	Tue,  8 Apr 2025 12:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8255266EEA;
+	Tue,  8 Apr 2025 12:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113986; cv=none; b=ccbuh6Dv7t6sdHzh5PG0UxFzMzI9Z5f/OejGmABqqQdjz9cnh0sI/tHdpPvle2fcVIF1a5wQtYmbbSrdZMIzZLAhzafWb7lE09eqLwJk1SlsRUNlq7x4uwGUedGT6Fi1Up7PAEYuG2SGuO3MikstHoovwsH0BsTBWkQ13gbZBAY=
+	t=1744113988; cv=none; b=CFC1ksW05pwK9zUz6rIQt61NFPf2wyl/dd6+NEWms5wb+qcCaohLO+uzGggF/EnBcWvLYvKMm05iqdn7v9/AdHenAVsMWC74iiV0uczgTzoLD3k9KbOb8KjkcgeT4UT9ZjrjVMnUS9Nnjr++KywaTuBAbm1VdPGItfTX04Dz8hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113986; c=relaxed/simple;
-	bh=x+P+gvSIPJOg4dTaSqdpcm7kg/wKFYn2W8Nl1IXwERw=;
+	s=arc-20240116; t=1744113988; c=relaxed/simple;
+	bh=B/ag3ZxDhCEg+yw/92LljLpMZ+3l4cZ2Z87zEU64jHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ICiFv9sCsKe6NanVOpkBHqUtyn9BaB7hd5JJ4bZG18K4C7TizUDC4E+tb5TWWiB92SJHMtO3kxxl2G3r3mkSohQAmUN7RRpbuql+PsT7CiESTGQo79RMQvimL8Bi6AYTeH3awBzISydSW0y512x2mj01VtXJLpn2A1u0zrsvbN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHf8naVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggcmCHEy7Hu9Z2OjUzTCAHa/BpCj/awBsSxH7NeTBOwcc+MRsP3DC4Ul5fX9T/jZFY4Dkm/40Go1R7/KGCH9w0UOtqRbTUFGGjbRi3wV/uWE+4troZ56DICHReWL5WzGwdugwkU3DJrW+9apoE7xczeVU27IpBMDYcQlRfUPPnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcU/EsAg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHf8naVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B7FC4CEE5;
-	Tue,  8 Apr 2025 12:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcU/EsAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A667C4CEE5;
+	Tue,  8 Apr 2025 12:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113985;
-	bh=x+P+gvSIPJOg4dTaSqdpcm7kg/wKFYn2W8Nl1IXwERw=;
+	s=korg; t=1744113988;
+	bh=B/ag3ZxDhCEg+yw/92LljLpMZ+3l4cZ2Z87zEU64jHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHf8naVQs2EqbDuC3IJyffOfYsyMVsRVRHVtbh5AEMGjQYUT4+M7XyfgiziEi2R4b
-	 WtTbHxVx1Wlb5bA1iCjoBz0JXiq7OGr4kXH8E9fqnqkVE9mMIqGr/74hld5ysuGank
-	 nQ5xN/NrlwnlK5CwFSoGf96N21di0AaHt8uiWdds=
+	b=KcU/EsAgfz78N2H3S0hQXJuTi0KRaJNUNTdlbudOyA9cCyWBJOa7xMBrUNHVJ8U7v
+	 ii5nw34hEnrWDKkNGi8W/BMxRzxIoMwytGM8Jn6feZZl5P9dzJMTN6W+6NV7lATc1m
+	 0stfPbVMuObGBUReImlSiGkU/Sf+yIzFMWtbdv1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Stodden <dns@arista.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/154] PCI/ASPM: Fix link state exit during switch upstream function removal
-Date: Tue,  8 Apr 2025 12:50:35 +0200
-Message-ID: <20250408104818.338509280@linuxfoundation.org>
+Subject: [PATCH 5.4 095/154] PCI/portdrv: Only disable pciehp interrupts early when needed
+Date: Tue,  8 Apr 2025 12:50:36 +0200
+Message-ID: <20250408104818.370790259@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -46,86 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Stodden <daniel.stodden@gmail.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-[ Upstream commit cbf937dcadfd571a434f8074d057b32cd14fbea5 ]
+[ Upstream commit 9d7db4db19827380e225914618c0c1bf435ed2f5 ]
 
-Before 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to
-avoid use-after-free"), we would free the ASPM link only after the last
-function on the bus pertaining to the given link was removed.
+Firmware developers reported that Linux issues two PCIe hotplug commands in
+very short intervals on an ARM server, which doesn't comply with the PCIe
+spec.  According to PCIe r6.1, sec 6.7.3.2, if the Command Completed event
+is supported, software must wait for a command to complete or wait at
+least 1 second before sending a new command.
 
-That was too late. If function 0 is removed before sibling function,
-link->downstream would point to free'd memory after.
+In the failure case, the first PCIe hotplug command is from
+get_port_device_capability(), which sends a command to disable PCIe hotplug
+interrupts without waiting for its completion, and the second command comes
+from pcie_enable_notification() of pciehp driver, which enables hotplug
+interrupts again.
 
-After above change, we freed the ASPM parent link state upon any function
-removal on the bus pertaining to a given link.
+Fix this by only disabling the hotplug interrupts when the pciehp driver is
+not enabled.
 
-That is too early. If the link is to a PCIe switch with MFD on the upstream
-port, then removing functions other than 0 first would free a link which
-still remains parent_link to the remaining downstream ports.
-
-The resulting GPFs are especially frequent during hot-unplug, because
-pciehp removes devices on the link bus in reverse order.
-
-On that switch, function 0 is the virtual P2P bridge to the internal bus.
-Free exactly when function 0 is removed -- before the parent link is
-obsolete, but after all subordinate links are gone.
-
-Link: https://lore.kernel.org/r/e12898835f25234561c9d7de4435590d957b85d9.1734924854.git.dns@arista.com
-Fixes: 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free")
-Signed-off-by: Daniel Stodden <dns@arista.com>
+Link: https://lore.kernel.org/r/20250303023630.78397-1-feng.tang@linux.alibaba.com
+Fixes: 2bd50dd800b5 ("PCI: PCIe: Disable PCIe port services during port initialization")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+[bhelgaas: commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/pci/pcie/portdrv_core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index ee51e433fdedb..c55ea6f0b9552 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1012,16 +1012,16 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 	parent_link = link->parent;
+diff --git a/drivers/pci/pcie/portdrv_core.c b/drivers/pci/pcie/portdrv_core.c
+index 8637f6068f9c2..07d2699286448 100644
+--- a/drivers/pci/pcie/portdrv_core.c
++++ b/drivers/pci/pcie/portdrv_core.c
+@@ -214,10 +214,12 @@ static int get_port_device_capability(struct pci_dev *dev)
  
- 	/*
--	 * link->downstream is a pointer to the pci_dev of function 0.  If
--	 * we remove that function, the pci_dev is about to be deallocated,
--	 * so we can't use link->downstream again.  Free the link state to
--	 * avoid this.
-+	 * Free the parent link state, no later than function 0 (i.e.
-+	 * link->downstream) being removed.
- 	 *
--	 * If we're removing a non-0 function, it's possible we could
--	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
--	 * programming the same ASPM Control value for all functions of
--	 * multi-function devices, so disable ASPM for all of them.
-+	 * Do not free the link state any earlier. If function 0 is a
-+	 * switch upstream port, this link state is parent_link to all
-+	 * subordinate ones.
- 	 */
-+	if (pdev != link->downstream)
-+		goto out;
-+
- 	pcie_config_aspm_link(link, 0);
- 	list_del(&link->sibling);
- 	free_link_state(link);
-@@ -1032,6 +1032,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 		pcie_config_aspm_path(parent_link);
+ 		/*
+ 		 * Disable hot-plug interrupts in case they have been enabled
+-		 * by the BIOS and the hot-plug service driver is not loaded.
++		 * by the BIOS and the hot-plug service driver won't be loaded
++		 * to handle them.
+ 		 */
+-		pcie_capability_clear_word(dev, PCI_EXP_SLTCTL,
+-			  PCI_EXP_SLTCTL_CCIE | PCI_EXP_SLTCTL_HPIE);
++		if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
++			pcie_capability_clear_word(dev, PCI_EXP_SLTCTL,
++				PCI_EXP_SLTCTL_CCIE | PCI_EXP_SLTCTL_HPIE);
  	}
  
-+ out:
- 	mutex_unlock(&aspm_lock);
- 	up_read(&pci_bus_sem);
- }
+ #ifdef CONFIG_PCIEAER
 -- 
 2.39.5
 
