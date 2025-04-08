@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FF820897E;
-	Tue,  8 Apr 2025 11:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BF8374C4;
+	Tue,  8 Apr 2025 11:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110961; cv=none; b=cExgAqK5jaEi+2Tt/JRDHg+qdvM6yg3xeWIDNGCiSzg8yTeFh+XbS5IACPGGSV3BQVkRZ9FseamsbxuVi+DsTcOIMFvCUDFTNL+jR6sxVgj7dc+Xhye+p3su5I0uRtw7PrWjj0+1xDUqOTffv1gIPva912/nv4le0WnZOrUw44I=
+	t=1744110964; cv=none; b=YzNQWmIKRW15gldSmGF0IZsRK60zkeKkmQNcA0v40WMH751JSiH/zmO/0SRspTZg42nqFLrGnuTdE3YDmO2QvBazrWF6BRFxuPnMj8XlR+tobqJ1yyDRw4gCjM07/ZXJ9kQXzJCipMywpGQ6Sx6Q9dkj5rPdHMi5h+4K+vVuRLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110961; c=relaxed/simple;
-	bh=3O9rTBY7rk3sxPdYC26OkNSQuTKZbSXgRdCAyIE+Xfk=;
+	s=arc-20240116; t=1744110964; c=relaxed/simple;
+	bh=dXAVTBaP8A+qvB5y8ddwXhwYuoTDL5wOqoDMVvPQegc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zo5F5a3W0JxteswloAxEj2w3soF2uj2MnOg8jmoCJJbhD+57OScC8JTRp4xJuj+Jq8GD3IlsfBk4nyCCSk8K9Li17Gpy6R7lG2w1wQi1Les2TwljUorCzLsCZFcp4jQDG+Kc3+OUBX5Odb/IrQhGCyZiCmG46N7AO3OkpZo23oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tae/5vMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hv/XHJkHc/wOAx+VZm7d0aXL0v8uF4FMEQw8+JhekRKcTaV7gOL3GKDjNml3cZbMeaQ/P8s/L+8Ea307+h9v+JKAtHws7BXuPWNtxqDDRmUYgXgdO7+tlcuwFnVVZiiUIOnFz1adZ6wCtqDk/pGnKke5j6cU5bv5hPMZBRHPk2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N40c3lED; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tae/5vMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469D8C4CEE5;
-	Tue,  8 Apr 2025 11:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N40c3lED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25B7C4CEE5;
+	Tue,  8 Apr 2025 11:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110961;
-	bh=3O9rTBY7rk3sxPdYC26OkNSQuTKZbSXgRdCAyIE+Xfk=;
+	s=korg; t=1744110964;
+	bh=dXAVTBaP8A+qvB5y8ddwXhwYuoTDL5wOqoDMVvPQegc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tae/5vMYSIYKc0xKtFsTZMN9PQO/yATQB8C4j4M0tLnKpdCjjLRtYJuB9IzkAyI7v
-	 PPJY+sGKZH99JezxTziIvskfPekvSs/R3MsagCPHme2qyR7VhEbjydIEnvKijbgre5
-	 SfAUqdvWcL0GebcDoaUNbYTKDuzIovnGsWhhwSN4=
+	b=N40c3lEDnAQ+jVfM7y5f37yor9xWS2guLNb2vj5W6nwQioCaQJ9K4OC+Ky+8zy6+h
+	 D8vPIYA5FbwE85paWdfRJyfcnkxRd6G8kwJ+GaoIWYAseg4biFV+H7cPuvNfnqhS9l
+	 ZFuJg3R68k4wg96dqkeC7GIRt2JzCCtgdpyYCcwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
-	David Sterba <dsterba@suse.com>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jan Glaza <jan.glaza@intel.com>,
+	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 218/731] btrfs: dont clobber ret in btrfs_validate_super()
-Date: Tue,  8 Apr 2025 12:41:55 +0200
-Message-ID: <20250408104919.353189428@linuxfoundation.org>
+Subject: [PATCH 6.14 209/731] virtchnl: make proto and filter action count unsigned
+Date: Tue,  8 Apr 2025 12:41:46 +0200
+Message-ID: <20250408104919.143484185@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,40 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Jan Glaza <jan.glaza@intel.com>
 
-[ Upstream commit 9db9c7dd5b4e1d3205137a094805980082c37716 ]
+[ Upstream commit db5e8ea155fc1d89c87cb81f0e4a681a77b9b03f ]
 
-Commit 2a9bb78cfd36 ("btrfs: validate system chunk array at
-btrfs_validate_super()") introduces a call to validate_sys_chunk_array()
-in btrfs_validate_super(), which clobbers the value of ret set earlier.
-This has the effect of negating the validity checks done earlier, making
-it so btrfs could potentially try to mount invalid filesystems.
+The count field in virtchnl_proto_hdrs and virtchnl_filter_action_set
+should never be negative while still being valid. Changing it from
+int to u32 ensures proper handling of values in virtchnl messages in
+driverrs and prevents unintended behavior.
+In its current signed form, a negative count does not trigger
+an error in ice driver but instead results in it being treated as 0.
+This can lead to unexpected outcomes when processing messages.
+By using u32, any invalid values will correctly trigger -EINVAL,
+making error detection more robust.
 
-Fixes: 2a9bb78cfd36 ("btrfs: validate system chunk array at btrfs_validate_super()")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 1f7ea1cd6a374 ("ice: Enable FDIR Configure for AVF")
+Reviewed-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jan Glaza <jan.glaza@intel.com>
+Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/avf/virtchnl.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index f09db62e61a1b..70b61bc237e98 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2561,6 +2561,9 @@ int btrfs_validate_super(const struct btrfs_fs_info *fs_info,
- 		ret = -EINVAL;
- 	}
+diff --git a/include/linux/avf/virtchnl.h b/include/linux/avf/virtchnl.h
+index 13a11f3c09b87..aca06f300f833 100644
+--- a/include/linux/avf/virtchnl.h
++++ b/include/linux/avf/virtchnl.h
+@@ -1283,7 +1283,7 @@ struct virtchnl_proto_hdrs {
+ 	 * 2 - from the second inner layer
+ 	 * ....
+ 	 **/
+-	int count; /* the proto layers must < VIRTCHNL_MAX_NUM_PROTO_HDRS */
++	u32 count; /* the proto layers must < VIRTCHNL_MAX_NUM_PROTO_HDRS */
+ 	union {
+ 		struct virtchnl_proto_hdr
+ 			proto_hdr[VIRTCHNL_MAX_NUM_PROTO_HDRS];
+@@ -1335,7 +1335,7 @@ VIRTCHNL_CHECK_STRUCT_LEN(36, virtchnl_filter_action);
  
-+	if (ret)
-+		return ret;
-+
- 	ret = validate_sys_chunk_array(fs_info, sb);
+ struct virtchnl_filter_action_set {
+ 	/* action number must be less then VIRTCHNL_MAX_NUM_ACTIONS */
+-	int count;
++	u32 count;
+ 	struct virtchnl_filter_action actions[VIRTCHNL_MAX_NUM_ACTIONS];
+ };
  
- 	/*
 -- 
 2.39.5
 
