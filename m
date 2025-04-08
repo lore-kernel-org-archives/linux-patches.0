@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D6126A1BD;
-	Tue,  8 Apr 2025 12:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D29278152;
+	Tue,  8 Apr 2025 12:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116048; cv=none; b=owW2SBh9KU0ZIIourOHBftEYXth+S7/hHI5Db+ryUgK/+pUr6g6NRY0cyQtWQB2fLtYlLwhg/t/4NG3VpRgWb5OKemygA53KMHZXcp9BDEajlaz+0HLqB2hj/kpxYxZBSlW7O8eLA3UbOawElq3q0r45wLI0JLN5Wpg/F/8cTGo=
+	t=1744116051; cv=none; b=UdGMV1bjSuNHzKIfI05tigS9P5PZudM+vUowo/hs9z3Ih2h93V+zZ441QmjvbVR4JwJoauNA29sS4iD68Afy0gVWypYE0nFgnRka/7DtUZpmvquGVXPBCbneJrXJg4gwdUzsXO6BLkWsuJdauIXGDxqwC1B4I2sqnzYXA9Aqfe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116048; c=relaxed/simple;
-	bh=z8AjL0kWr0sTI8XOIZ1Vut2NHpN5OlTW0qxs9D5CN24=;
+	s=arc-20240116; t=1744116051; c=relaxed/simple;
+	bh=5/vu/btAw0p/XAfqCBRA6kO4V9c1hbV+D+d/tOFbP7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HObSv8MCWqajg1hsMnaB55k6aJ7QbuBhopdyr1iCA+dyBKp2fmfh0f48Q857sF4qc2g07tpdyGadUGWKzgU/9otbbv1K6Vf2Y57qDqHGjovhCeMsYgKYlP/e1CJwxy9a/iahvKZjPiYIqz4AH7sbVuRyNfE802rqOdzPD3gfZgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEptY87R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3ceR+BQ3uZExAH34BiislrJubDCPjk3L/quv26pYHCMuqowQIQI8AIexaQP2TK8MuivDianA7HQdDJGn+Ku5UMBVKQK6Pc213rAtOP+3hs7gt3ZWXIKphPUcxsJlCZz5xw/+GMiJ4hBtOwwtPKLnEnwLdzDjMzLbDVSzF0/j1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zscXn4o3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEptY87R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75787C4CEEA;
-	Tue,  8 Apr 2025 12:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zscXn4o3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D48DC4CEEB;
+	Tue,  8 Apr 2025 12:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116047;
-	bh=z8AjL0kWr0sTI8XOIZ1Vut2NHpN5OlTW0qxs9D5CN24=;
+	s=korg; t=1744116050;
+	bh=5/vu/btAw0p/XAfqCBRA6kO4V9c1hbV+D+d/tOFbP7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEptY87REGCFS0IY1LxVlYgZ8pG5ILWARV+xQbpqclt1tkziTVgEpPqZTrSe2Ix2/
-	 YkBR3ZWFBwzxshPYANV/2GtpYVTYjFK+fnR28hcR/apX1R4T1xv3yY9ZwODPIaL6+R
-	 PaVhfuc8jpgv+LE5ZzzG6MWCpK5AMzdZ/fjhsOlY=
+	b=zscXn4o375b4DB57roPy4h+p8jmTwIu42l7JvvV1ofwT39L8yto0Ez9W6VQwQmSii
+	 sHuzIhtfHT8Y/SjAIfATLXIpbb//H08DHTF5CRU6FMCDMFxoZB7sDkCJeqd8RF+KN8
+	 EPc6qh/qeusovrCuIwOgWiEl8HdpPYS5FPkB3ysg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Acs <acsjakub@amazon.de>,
-	Theodore Tso <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	linux-ext4@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mahmoud Adam <mngyadam@amazon.com>,
-	security@kernel.org
-Subject: [PATCH 6.1 199/204] ext4: fix OOB read when checking dotdot dir
-Date: Tue,  8 Apr 2025 12:52:09 +0200
-Message-ID: <20250408104826.157113480@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 162/204] netfilter: nft_tunnel: fix geneve_opt type confusion addition
+Date: Tue,  8 Apr 2025 12:51:32 +0200
+Message-ID: <20250408104825.068671364@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -55,100 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Acs, Jakub <acsjakub@amazon.de>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit d5e206778e96e8667d3bde695ad372c296dc9353 upstream.
+[ Upstream commit 1b755d8eb1ace3870789d48fbd94f386ad6e30be ]
 
-Mounting a corrupted filesystem with directory which contains '.' dir
-entry with rec_len == block size results in out-of-bounds read (later
-on, when the corrupted directory is removed).
+When handling multiple NFTA_TUNNEL_KEY_OPTS_GENEVE attributes, the
+parsing logic should place every geneve_opt structure one by one
+compactly. Hence, when deciding the next geneve_opt position, the
+pointer addition should be in units of char *.
 
-ext4_empty_dir() assumes every ext4 directory contains at least '.'
-and '..' as directory entries in the first data block. It first loads
-the '.' dir entry, performs sanity checks by calling ext4_check_dir_entry()
-and then uses its rec_len member to compute the location of '..' dir
-entry (in ext4_next_entry). It assumes the '..' dir entry fits into the
-same data block.
+However, the current implementation erroneously does type conversion
+before the addition, which will lead to heap out-of-bounds write.
 
-If the rec_len of '.' is precisely one block (4KB), it slips through the
-sanity checks (it is considered the last directory entry in the data
-block) and leaves "struct ext4_dir_entry_2 *de" point exactly past the
-memory slot allocated to the data block. The following call to
-ext4_check_dir_entry() on new value of de then dereferences this pointer
-which results in out-of-bounds mem access.
+[    6.989857] ==================================================================
+[    6.990293] BUG: KASAN: slab-out-of-bounds in nft_tunnel_obj_init+0x977/0xa70
+[    6.990725] Write of size 124 at addr ffff888005f18974 by task poc/178
+[    6.991162]
+[    6.991259] CPU: 0 PID: 178 Comm: poc-oob-write Not tainted 6.1.132 #1
+[    6.991655] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[    6.992281] Call Trace:
+[    6.992423]  <TASK>
+[    6.992586]  dump_stack_lvl+0x44/0x5c
+[    6.992801]  print_report+0x184/0x4be
+[    6.993790]  kasan_report+0xc5/0x100
+[    6.994252]  kasan_check_range+0xf3/0x1a0
+[    6.994486]  memcpy+0x38/0x60
+[    6.994692]  nft_tunnel_obj_init+0x977/0xa70
+[    6.995677]  nft_obj_init+0x10c/0x1b0
+[    6.995891]  nf_tables_newobj+0x585/0x950
+[    6.996922]  nfnetlink_rcv_batch+0xdf9/0x1020
+[    6.998997]  nfnetlink_rcv+0x1df/0x220
+[    6.999537]  netlink_unicast+0x395/0x530
+[    7.000771]  netlink_sendmsg+0x3d0/0x6d0
+[    7.001462]  __sock_sendmsg+0x99/0xa0
+[    7.001707]  ____sys_sendmsg+0x409/0x450
+[    7.002391]  ___sys_sendmsg+0xfd/0x170
+[    7.003145]  __sys_sendmsg+0xea/0x170
+[    7.004359]  do_syscall_64+0x5e/0x90
+[    7.005817]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[    7.006127] RIP: 0033:0x7ec756d4e407
+[    7.006339] Code: 48 89 fa 4c 89 df e8 38 aa 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 faf
+[    7.007364] RSP: 002b:00007ffed5d46760 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+[    7.007827] RAX: ffffffffffffffda RBX: 00007ec756cc4740 RCX: 00007ec756d4e407
+[    7.008223] RDX: 0000000000000000 RSI: 00007ffed5d467f0 RDI: 0000000000000003
+[    7.008620] RBP: 00007ffed5d468a0 R08: 0000000000000000 R09: 0000000000000000
+[    7.009039] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+[    7.009429] R13: 00007ffed5d478b0 R14: 00007ec756ee5000 R15: 00005cbd4e655cb8
 
-Fix this by extending __ext4_check_dir_entry() to check for '.' dir
-entries that reach the end of data block. Make sure to ignore the phony
-dir entries for checksum (by checking name_len for non-zero).
+Fix this bug with correct pointer addition and conversion in parse
+and dump code.
 
-Note: This is reported by KASAN as use-after-free in case another
-structure was recently freed from the slot past the bound, but it is
-really an OOB read.
-
-This issue was found by syzkaller tool.
-
-Call Trace:
-[   38.594108] BUG: KASAN: slab-use-after-free in __ext4_check_dir_entry+0x67e/0x710
-[   38.594649] Read of size 2 at addr ffff88802b41a004 by task syz-executor/5375
-[   38.595158]
-[   38.595288] CPU: 0 UID: 0 PID: 5375 Comm: syz-executor Not tainted 6.14.0-rc7 #1
-[   38.595298] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[   38.595304] Call Trace:
-[   38.595308]  <TASK>
-[   38.595311]  dump_stack_lvl+0xa7/0xd0
-[   38.595325]  print_address_description.constprop.0+0x2c/0x3f0
-[   38.595339]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595349]  print_report+0xaa/0x250
-[   38.595359]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595368]  ? kasan_addr_to_slab+0x9/0x90
-[   38.595378]  kasan_report+0xab/0xe0
-[   38.595389]  ? __ext4_check_dir_entry+0x67e/0x710
-[   38.595400]  __ext4_check_dir_entry+0x67e/0x710
-[   38.595410]  ext4_empty_dir+0x465/0x990
-[   38.595421]  ? __pfx_ext4_empty_dir+0x10/0x10
-[   38.595432]  ext4_rmdir.part.0+0x29a/0xd10
-[   38.595441]  ? __dquot_initialize+0x2a7/0xbf0
-[   38.595455]  ? __pfx_ext4_rmdir.part.0+0x10/0x10
-[   38.595464]  ? __pfx___dquot_initialize+0x10/0x10
-[   38.595478]  ? down_write+0xdb/0x140
-[   38.595487]  ? __pfx_down_write+0x10/0x10
-[   38.595497]  ext4_rmdir+0xee/0x140
-[   38.595506]  vfs_rmdir+0x209/0x670
-[   38.595517]  ? lookup_one_qstr_excl+0x3b/0x190
-[   38.595529]  do_rmdir+0x363/0x3c0
-[   38.595537]  ? __pfx_do_rmdir+0x10/0x10
-[   38.595544]  ? strncpy_from_user+0x1ff/0x2e0
-[   38.595561]  __x64_sys_unlinkat+0xf0/0x130
-[   38.595570]  do_syscall_64+0x5b/0x180
-[   38.595583]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: ac27a0ec112a0 ("[PATCH] ext4: initial copy of files from ext3")
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: linux-ext4@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: Mahmoud Adam <mngyadam@amazon.com>
-Cc: stable@vger.kernel.org
-Cc: security@kernel.org
-Link: https://patch.msgid.link/b3ae36a6794c4a01944c7d70b403db5b@amazon.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 925d844696d9 ("netfilter: nft_tunnel: add support for geneve opts")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/dir.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nft_tunnel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/dir.c
-+++ b/fs/ext4/dir.c
-@@ -104,6 +104,9 @@ int __ext4_check_dir_entry(const char *f
- 	else if (unlikely(le32_to_cpu(de->inode) >
- 			le32_to_cpu(EXT4_SB(dir->i_sb)->s_es->s_inodes_count)))
- 		error_msg = "inode out of bounds";
-+	else if (unlikely(next_offset == size && de->name_len == 1 &&
-+			  de->name[0] == '.'))
-+		error_msg = "'.' directory cannot be the last in data block";
- 	else
- 		return 0;
+diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
+index efb505445eac1..01ce65dd2078e 100644
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -339,7 +339,7 @@ static const struct nla_policy nft_tunnel_opts_geneve_policy[NFTA_TUNNEL_KEY_GEN
+ static int nft_tunnel_obj_geneve_init(const struct nlattr *attr,
+ 				      struct nft_tunnel_opts *opts)
+ {
+-	struct geneve_opt *opt = (struct geneve_opt *)opts->u.data + opts->len;
++	struct geneve_opt *opt = (struct geneve_opt *)(opts->u.data + opts->len);
+ 	struct nlattr *tb[NFTA_TUNNEL_KEY_GENEVE_MAX + 1];
+ 	int err, data_len;
  
+@@ -621,7 +621,7 @@ static int nft_tunnel_opts_dump(struct sk_buff *skb,
+ 		if (!inner)
+ 			goto failure;
+ 		while (opts->len > offset) {
+-			opt = (struct geneve_opt *)opts->u.data + offset;
++			opt = (struct geneve_opt *)(opts->u.data + offset);
+ 			if (nla_put_be16(skb, NFTA_TUNNEL_KEY_GENEVE_CLASS,
+ 					 opt->opt_class) ||
+ 			    nla_put_u8(skb, NFTA_TUNNEL_KEY_GENEVE_TYPE,
+-- 
+2.39.5
+
 
 
