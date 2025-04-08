@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A34269B01;
-	Tue,  8 Apr 2025 11:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0917A22257E;
+	Tue,  8 Apr 2025 11:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113268; cv=none; b=UyP2LNASmXQbNWYwoXOf1PesW2/vW1i/y4KY5VmzJp84GLOUVfRXyL2yafptTculn52RceeDjzvs/Au0Jyp3MunIMfTpZt1VFKNLtvoFkevr43fKcyy+lDAh+d4RV4m9C+5YcOpBk+gOSzkcY86m4PvEsRMivttKwSioNDspQj8=
+	t=1744113271; cv=none; b=m09Wm87xP+TgyLRLZFMMlXgfEfXdteoyD0O0joGIcvVsdGTg3iaoEdl4mNzXUy8s2+I05uKpyOHCjVOgpSYUGgJvqj7yICMviwRMPFLAR1huVYbWoidC59oii6+1Jyau0P+z3RG9lUsVjio4D7zXAERbqaXx+fZxiEfNavSnFLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113268; c=relaxed/simple;
-	bh=Fyl+enbqZ4drIjgDaf5o9WkDLmvAdZFPtN2lGn8mu4c=;
+	s=arc-20240116; t=1744113271; c=relaxed/simple;
+	bh=cNS3FxawMP1WdVyLIrR73aVGBGLRiFuTHUXWZPxUcsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipstW/tjPChc5MkNS9mHx83yvr00c2v0vXGlWG50xuu8pfU5DO180RsDb2koyTCOJM+lhQwd3ve4ohTlvst99Htoi50qWfQ1T0MGcl/FTZcxz3+dn/FMQMr9hyZLSzfpadvH7kwR5ErnemFvwDS8I/lv45WZTd93r5YA9MuG8oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duCLh3iQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBgz6FD9WHlHs2n8RQLy4ll5a232FAja5TKrCnQgYeyqU4kz5+L6Qxum9ocCE8F5aArfU4E+vhWUy40nDCKRtUu2qztwndX8RCp4Ena++TVkimrSkfFIwKijLIgrDcH6gpd6qG5v7YZZjgMNqSgziy0P5x8Mjuac4phzv7fgaeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7hxp1m8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duCLh3iQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E84C4CEE5;
-	Tue,  8 Apr 2025 11:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7hxp1m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AEFC4CEE5;
+	Tue,  8 Apr 2025 11:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113268;
-	bh=Fyl+enbqZ4drIjgDaf5o9WkDLmvAdZFPtN2lGn8mu4c=;
+	s=korg; t=1744113270;
+	bh=cNS3FxawMP1WdVyLIrR73aVGBGLRiFuTHUXWZPxUcsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duCLh3iQhSmAS/9iEHT/Ixdq58TRqCT3yt8GPG0LWkZGu/tCyCAwLY+yYkfg6/BF7
-	 X7IWEopiK5IUdzZprzs4/biHpQnR9jKWJIoTKP5I05wIqPqgzU6ASPCzlpRVg5ucZJ
-	 rI7E0b/sD7Fxt2x5m6cC4Vz+AG5xZekLEHY9s2oA=
+	b=F7hxp1m8NPgRyZ2zDQPnUhzDVcSKZisfRMXcp8NBX2tNoTPDf5B1TedA9GOiFNIyf
+	 dkU5HaogWpfTkhGCTQLAbgeSINNqVoKGS2ONxoxVtj8vb+r4Puhl664SbzqkqsNoSl
+	 f9kOz86A4zs69HaZfDc3bbHjM7OAzt9FJX25c6+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/268] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
-Date: Tue,  8 Apr 2025 12:48:26 +0200
-Message-ID: <20250408104831.059608125@linuxfoundation.org>
+Subject: [PATCH 6.6 096/268] pinctrl: renesas: rzv2m: Fix missing of_node_put() call
+Date: Tue,  8 Apr 2025 12:48:27 +0200
+Message-ID: <20250408104831.084962451@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,89 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
+[ Upstream commit 5a550b00704d3a2cd9d766a9427b0f8166da37df ]
 
-When cur_qp isn't NULL, in order to avoid fetching the QP from
-the radix tree again we check if the next cqe QP is identical to
-the one we already have.
+of_parse_phandle_with_fixed_args() requires its caller to
+call into of_node_put() on the node pointer from the output
+structure, but such a call is currently missing.
 
-The bug however is that we are checking if the QP is identical by
-checking the QP number inside the CQE against the QP number inside the
-mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
-FW so it should be matched against mlx5_core_qp which is our FW QP
-number.
+Call into of_node_put() to rectify that.
 
-Otherwise we could use the wrong QP when handling a CQE which could
-cause the kernel trace below.
-
-This issue is mainly noticeable over QPs 0 & 1, since for now they are
-the only QPs in our driver whereas the QP number inside mlx5_ib_qp
-doesn't match the QP number inside mlx5_core_qp.
-
-BUG: kernel NULL pointer dereference, address: 0000000000000012
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP
- CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
- Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
- RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
- Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
- RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
- RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
- RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
- R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
- R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
- FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
- Call Trace:
-  <TASK>
-  ? __die+0x20/0x60
-  ? page_fault_oops+0x150/0x3e0
-  ? exc_page_fault+0x74/0x130
-  ? asm_exc_page_fault+0x22/0x30
-  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
-  __ib_process_cq+0x5a/0x150 [ib_core]
-  ib_cq_poll_work+0x31/0x90 [ib_core]
-  process_one_work+0x169/0x320
-  worker_thread+0x288/0x3a0
-  ? work_busy+0xb0/0xb0
-  kthread+0xd7/0x1f0
-  ? kthreads_online_cpu+0x130/0x130
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork+0x2d/0x50
-  ? kthreads_online_cpu+0x130/0x130
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 92a9b8252576 ("pinctrl: renesas: Add RZ/V2M pin and gpio controller driver")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250305163753.34913-4-fabrizio.castro.jz@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzv2m.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 9773d2a3d97fb..ee9acd58c5121 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -487,7 +487,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+index 52aeafaba4b69..b89ae65e71b0e 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+@@ -944,6 +944,8 @@ static int rzv2m_gpio_register(struct rzv2m_pinctrl *pctrl)
+ 		return ret;
  	}
  
- 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
--	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
-+	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
- 		/* We do not have to take the QP table lock here,
- 		 * because CQs will be locked while QPs are removed
- 		 * from the table.
++	of_node_put(of_args.np);
++
+ 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
+ 	    of_args.args[2] != pctrl->data->n_port_pins) {
+ 		dev_err(pctrl->dev, "gpio-ranges does not match selected SOC\n");
 -- 
 2.39.5
 
