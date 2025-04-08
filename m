@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE866224AEB;
-	Tue,  8 Apr 2025 12:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79049224AEB;
+	Tue,  8 Apr 2025 12:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115556; cv=none; b=GCbSFhbfxM3IDBplrlHVC5ngv1xAK+p2qhWFjoF88Wl0SMqx/fg4lKYTpYrrlRB34Ggu4EUQGilYxzo4wHhCfqgD1obyTau9LZtXsruYsRvlJHKRh7tl/ycB6i1nr8I5lG9fKHrv7ewzO5sQsbCNvYTcH57GyJCL9Vu4agTSI6Q=
+	t=1744115559; cv=none; b=gh4P/uZNkaJWpx2MgWWKnNWvI+u/aAQ4aVBJG3TDQ3V5UpjrV+6kdZrelsWmeTF+ZiHrf5z+FT1Fn9pfauvRVnROlaJM2f3kbd/W8pNUtyYIz8e+iSW+uwrWNWNibMzZc4sb+7P8Z76Kk0fJ7AUGz/7AS3Ef5iQ3tvILQmis38M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115556; c=relaxed/simple;
-	bh=3GYEGYNGr7Tev0ODFRWYir19WvzMSwxLicQvON3CyFg=;
+	s=arc-20240116; t=1744115559; c=relaxed/simple;
+	bh=5glWdCR8L9PQ5l3I90v20uA3htfyZxsSF8xA3Atu05c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWHGGxJhx4VjaEVkK0KDf+IBqVndnJrhILs5GvEiV9kcIOKoB0VmoXDvKv5MPVT1guhwKrzBfr8dvhl0chZKELgPzyez2hqBP/uAxU2FGsFtJrunMZko3738qGhNgB86VwOlRywna1kVMVq5DVk+rFo1eqz9olyMotj5eFeiQes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBoWiZcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ay8zAuafTldzBUbX2lhYOmHbRJIEHmvyKMb7wIYkitSbVjBa6OC1OLFKaTyqrB/EzOELW/2ZsM3/k6B0mk6ojcLwbhPbhAIfANyqBfwR/UBhiMrCmvbV3BIFY6wNADTDQFD2xZ12ta3EwprXLRBZvlwf9wuYh7owiI7wfj7gI+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6SZH573; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBoWiZcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49171C4CEE5;
-	Tue,  8 Apr 2025 12:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6SZH573"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99E6C4CEE5;
+	Tue,  8 Apr 2025 12:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115555;
-	bh=3GYEGYNGr7Tev0ODFRWYir19WvzMSwxLicQvON3CyFg=;
+	s=korg; t=1744115559;
+	bh=5glWdCR8L9PQ5l3I90v20uA3htfyZxsSF8xA3Atu05c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBoWiZcjz/rlQ+x94oXl1L9yV1/t+JJ6FSZX3rfivl9CGPLLVFQEQFVImTKcGbDHo
-	 ZYhRUQ3cSk3RF+PV50aOffUXH2fAHuUzNo8GqEVdQ4T6+73vUrlAnFPLY6jXFB6q2h
-	 feGeLmlQO7H5iWnAI1itlr0etFa7FjoyrTn228No=
+	b=R6SZH573uAJyjILmBAZav+t/dXOjUXggCe9Cvm4WpDpAVE7YkoFQM/LSd/7cxmAB2
+	 1B4aaOAuE1iLC3BZteACItA20L6djnnZNIL+eQMBv5cBx5Xokftljz8iesAfxo9GAN
+	 100DE4cqL2F5V9V6n+PWFysRulRXJWOSBwsvdX0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/204] perf/ring_buffer: Allow the EPOLLRDNORM flag for poll
-Date: Tue,  8 Apr 2025 12:49:09 +0200
-Message-ID: <20250408104820.884288765@linuxfoundation.org>
+Subject: [PATCH 6.1 002/204] x86/mm/pat: cpa-test: fix length for CPA_ARRAY test
+Date: Tue,  8 Apr 2025 12:48:52 +0200
+Message-ID: <20250408104820.348797736@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -55,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit c96fff391c095c11dc87dab35be72dee7d217cde ]
+[ Upstream commit 33ea120582a638b2f2e380a50686c2b1d7cce795 ]
 
-The poll man page says POLLRDNORM is equivalent to POLLIN. For poll(),
-it seems that if user sets pollfd with POLLRDNORM in userspace, perf_poll
-will not return until timeout even if perf_output_wakeup called,
-whereas POLLIN returns.
+The CPA_ARRAY test always uses len[1] as numpages argument to
+change_page_attr_set() although the addresses array is different each
+iteration of the test loop.
 
-Fixes: 76369139ceb9 ("perf: Split up buffer handling from core code")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250314030036.2543180-1-chen.dylane@linux.dev
+Replace len[1] with len[i] to have numpages matching the addresses array.
+
+Fixes: ecc729f1f471 ("x86/mm/cpa: Add ARRAY and PAGES_ARRAY selftests")
+Signed-off-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250126074733.1384926-2-rppt@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 2 +-
+ arch/x86/mm/pat/cpa-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index 98588e96b5919..3e1655374c2ed 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -19,7 +19,7 @@
+diff --git a/arch/x86/mm/pat/cpa-test.c b/arch/x86/mm/pat/cpa-test.c
+index 423b21e80929a..55ce39b6b1b09 100644
+--- a/arch/x86/mm/pat/cpa-test.c
++++ b/arch/x86/mm/pat/cpa-test.c
+@@ -183,7 +183,7 @@ static int pageattr_test(void)
+ 			break;
  
- static void perf_output_wakeup(struct perf_output_handle *handle)
- {
--	atomic_set(&handle->rb->poll, EPOLLIN);
-+	atomic_set(&handle->rb->poll, EPOLLIN | EPOLLRDNORM);
+ 		case 1:
+-			err = change_page_attr_set(addrs, len[1], PAGE_CPA_TEST, 1);
++			err = change_page_attr_set(addrs, len[i], PAGE_CPA_TEST, 1);
+ 			break;
  
- 	handle->event->pending_wakeup = 1;
- 	irq_work_queue(&handle->event->pending_irq);
+ 		case 2:
 -- 
 2.39.5
 
