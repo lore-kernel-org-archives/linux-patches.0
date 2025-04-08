@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D24B267AF2;
-	Tue,  8 Apr 2025 11:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0C268C61;
+	Tue,  8 Apr 2025 11:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112662; cv=none; b=gOD6b7h5y8tYc31fGjFP8rBhrroqurDIVFt9PWUQx+p/4KQxaDQdiTNXQsLzXBV5u6xRxnYTH0xxldJJbO7U1MaT637ve1GwBNwrVfme5D2mOL+RRuKHKA7SFE1wjqxsmXplRQdI81HwtjYtOu8i+OLWrwZKFV4fV1tQ/OpdTpM=
+	t=1744112665; cv=none; b=jgNSXCd2tTjf6LBFFF+gxECmTeKsq7oTvTuMIeTqnrLHICJ4qSPAYbCyWvZrHqp+JANvqD1wRdsWWrrGkJHNkeX33HedCLIF6ETPIPOPEBifb5/HyCTWKfoTL67aMZS6lOGT9CvdwDeICkdoZ6ufjLacftgpeoU6iY5Uu6AXJgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112662; c=relaxed/simple;
-	bh=TovIekLT7SNjCqDog/UkNVUlCy1Ag5aR+yIp3wEtmJk=;
+	s=arc-20240116; t=1744112665; c=relaxed/simple;
+	bh=g2o9A6xzgddO7H/ZHb2w+U2liQOaU4sivLpoQxf3MHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7tKpth97lYoHAhnG64NjbUoLTuICPknmwUOpr1VM6ineaxYkIOs2z8EPPyxKa22lzreJICqAP7lRpGevpVyZ6zoLPJVa8Fc9b5q881tRESciyQLJJnw1eHRCjMNjwaG21huZPDEcBL1Ol+BVN/cM7SxH3+5zZMTnspm2c1SEJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7+4AJFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TERDO6b7TW/SJNHml6pxlACboytJ1Cj2TMjfK5voGEQQfvdXP7CN02HEGPlHbLCbDKr4a6fgDKJF5Zmip9dsjcb+f46+29jOeb0TWKaZxSyzLmlaR63c2G2QJtjKdt0W6BkikBU67TbMclOSt/yeBW+nx8P7YVsp3VTESEJABQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfXLeHee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7+4AJFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9D1C4CEEC;
-	Tue,  8 Apr 2025 11:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfXLeHee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3739EC4CEE7;
+	Tue,  8 Apr 2025 11:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112661;
-	bh=TovIekLT7SNjCqDog/UkNVUlCy1Ag5aR+yIp3wEtmJk=;
+	s=korg; t=1744112664;
+	bh=g2o9A6xzgddO7H/ZHb2w+U2liQOaU4sivLpoQxf3MHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7+4AJFHwVafuDurAueo8fDyvmZR1mv3kL3CLrAyL3MKOdxTcB/9wnsVOgKl3wgMf
-	 RS6dy8cVlrWz6jFsHwzGHGv/IrMdmN6EUWgOI/PD7HFou0HxbD6i1/L6a4CEOuNsS+
-	 MIE2CdxGy9/qwCrhE1GOwM0SDENRVscPrtCZVsYQ=
+	b=KfXLeHeemMsy9mUboh76nj2xHVGE7dEVbItrUnUrISDFeB1o1b5whLeeBGBrxZJUI
+	 RIiJVpp1tnUIFo0n1YbdyzRNAMqqWBNqC3uIhUViPStXs6hYpSUKGTx3N3bKtuCKrv
+	 RMKDbu0dCw5M2tAnSRAPr9ycITsr+hY33Ckn2xHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 124/279] net: usb: usbnet: restore usb%d name exception for local mac addresses
-Date: Tue,  8 Apr 2025 12:48:27 +0200
-Message-ID: <20250408104829.693020517@linuxfoundation.org>
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 151/279] drm/mediatek: mtk_hdmi: Unregister audio platform device on failure
+Date: Tue,  8 Apr 2025 12:48:54 +0200
+Message-ID: <20250408104830.410337878@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,78 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 2ea396448f26d0d7d66224cb56500a6789c7ed07 upstream.
+[ Upstream commit 0be123cafc06eed0fd1227166a66e786434b0c50 ]
 
-commit 8a7d12d674ac ("net: usb: usbnet: fix name regression") assumed
-that local addresses always came from the kernel, but some devices hand
-out local mac addresses so we ended up with point-to-point devices with
-a mac set by the driver, renaming to eth%d when they used to be named
-usb%d.
+The probe function of this driver may fail after registering the
+audio platform device: in that case, the state is not getting
+cleaned up, leaving this device registered.
 
-Userspace should not rely on device name, but for the sake of stability
-restore the local mac address check portion of the naming exception:
-point to point devices which either have no mac set by the driver or
-have a local mac handed out by the driver will keep the usb%d name.
+Adding up to the mix, should the probe function of this driver
+return a probe deferral for N times, we're registering up to N
+audio platform devices and, again, never freeing them up.
 
-(some USB LTE modems are known to hand out a stable mac from the locally
-administered range; that mac appears to be random (different for
-mulitple devices) and can be reset with device-specific commands, so
-while such devices would benefit from getting a OUI reserved, we have
-to deal with these and might as well preserve the existing behavior
-to avoid breaking fragile openwrt configurations and such on upgrade.)
+To fix this, add a pointer to the audio platform device in the
+mtk_hdmi structure, and add a devm action to unregister it upon
+driver removal or probe failure.
 
-Link: https://lkml.kernel.org/r/20241203130457.904325-1-asmadeus@codewreck.org
-Fixes: 8a7d12d674ac ("net: usb: usbnet: fix name regression")
-Cc: stable@vger.kernel.org
-Tested-by: Ahmed Naseef <naseefkm@gmail.com>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20250326-usbnet_rename-v2-1-57eb21fcff26@atmark-techno.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8f83f26891e1 ("drm/mediatek: Add HDMI support")
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250217154836.108895-18-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -181,6 +181,17 @@ int usbnet_get_ethernet_addr(struct usbn
- }
- EXPORT_SYMBOL_GPL(usbnet_get_ethernet_addr);
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 7613b0fa2be6e..047ed79dce3ff 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -174,6 +174,7 @@ struct mtk_hdmi {
+ 	unsigned int sys_offset;
+ 	void __iomem *regs;
+ 	enum hdmi_colorspace csp;
++	struct platform_device *audio_pdev;
+ 	struct hdmi_audio_param aud_param;
+ 	bool audio_enable;
+ 	bool powered;
+@@ -1667,6 +1668,11 @@ static const struct hdmi_codec_ops mtk_hdmi_audio_codec_ops = {
+ 	.no_capture_mute = 1,
+ };
  
-+static bool usbnet_needs_usb_name_format(struct usbnet *dev, struct net_device *net)
++static void mtk_hdmi_unregister_audio_driver(void *data)
 +{
-+	/* Point to point devices which don't have a real MAC address
-+	 * (or report a fake local one) have historically used the usb%d
-+	 * naming. Preserve this..
-+	 */
-+	return (dev->driver_info->flags & FLAG_POINTTOPOINT) != 0 &&
-+		(is_zero_ether_addr(net->dev_addr) ||
-+		 is_local_ether_addr(net->dev_addr));
++	platform_device_unregister(data);
 +}
 +
- static void intr_complete (struct urb *urb)
+ static int mtk_hdmi_register_audio_driver(struct device *dev)
  {
- 	struct usbnet	*dev = urb->context;
-@@ -1764,13 +1775,11 @@ usbnet_probe (struct usb_interface *udev
- 		if (status < 0)
- 			goto out1;
+ 	struct mtk_hdmi *hdmi = dev_get_drvdata(dev);
+@@ -1676,13 +1682,20 @@ static int mtk_hdmi_register_audio_driver(struct device *dev)
+ 		.i2s = 1,
+ 		.data = hdmi,
+ 	};
+-	struct platform_device *pdev;
++	int ret;
  
--		// heuristic:  "usb%d" for links we know are two-host,
--		// else "eth%d" when there's reasonable doubt.  userspace
--		// can rename the link if it knows better.
-+		/* heuristic: rename to "eth%d" if we are not sure this link
-+		 * is two-host (these links keep "usb%d")
-+		 */
- 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
--		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
--		     /* somebody touched it*/
--		     !is_zero_ether_addr(net->dev_addr)))
-+		    !usbnet_needs_usb_name_format(dev, net))
- 			strscpy(net->name, "eth%d", sizeof(net->name));
- 		/* WLAN devices should always be named "wlan%d" */
- 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+-	pdev = platform_device_register_data(dev, HDMI_CODEC_DRV_NAME,
+-					     PLATFORM_DEVID_AUTO, &codec_data,
+-					     sizeof(codec_data));
+-	if (IS_ERR(pdev))
+-		return PTR_ERR(pdev);
++	hdmi->audio_pdev = platform_device_register_data(dev,
++							 HDMI_CODEC_DRV_NAME,
++							 PLATFORM_DEVID_AUTO,
++							 &codec_data,
++							 sizeof(codec_data));
++	if (IS_ERR(hdmi->audio_pdev))
++		return PTR_ERR(hdmi->audio_pdev);
++
++	ret = devm_add_action_or_reset(dev, mtk_hdmi_unregister_audio_driver,
++				       hdmi->audio_pdev);
++	if (ret)
++		return ret;
+ 
+ 	DRM_INFO("%s driver bound to HDMI\n", HDMI_CODEC_DRV_NAME);
+ 	return 0;
+-- 
+2.39.5
+
 
 
