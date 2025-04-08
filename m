@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D5A27E1C9;
-	Tue,  8 Apr 2025 12:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1C0283688;
+	Tue,  8 Apr 2025 12:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117155; cv=none; b=gEbUpaOBfYDAXsq6TKjKwYSaNwbUQ4snofkI3FliGDO7fzomP9IxC8djKYnz17ljWi1K8+hDCx9xvNzxr+7EEJKOFJx3U1n5fJQYDJf7Tgux50ySKBKquniJK3Bq2EpSg4oD1up/TU/95ZmVbNFr7FiM+PZLZqhNyzQSaJXsfc4=
+	t=1744117157; cv=none; b=WCZAJ5i9PC35VFH/KEs8i1SLyOaaYVoHNr9wOKvueY5DUwNqkOn0V98eLHuQcjwluJE5vOGgkPGUnN+RIpDvFjkVBKiKeP4M8Fcb0QuwOEx4/MQbJkevWBM6UM8B3/Wa4gTQ92WmCsZ8oPkyvbExXvvGObZQcXWCGNKwMot5sS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117155; c=relaxed/simple;
-	bh=z5wA69GauaAk3mse8O0z4uzcyTRbeTwcOtSL4eSIFpQ=;
+	s=arc-20240116; t=1744117157; c=relaxed/simple;
+	bh=ZcS7QY9z5rvP8VNmls7UHI/w6Gv3ijAQNPcPC7ZRf7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB+XOQw2t4uNPzcDbat9dDnxb3VACYUXNClZLLL2/bdM+8WmuVGUEbze+XtbNh6vMPKe2rihSDJp0AQ2PHz7d/UW2DvDjIhu1qqGUGVlN791dv+Fwd/EC2l02xYAvC4qhjoG0g5WXw8lFKFW51OzOfe47YO1bw6wQ+F1FefXOHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIq9dc/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgLQTUQ8H1C1iyTQxJVC5SV/8Ih++AkZtBZzleHDfrvcYw5CweX6L2OeitxKQXEW3vDx5MbbLl3AturA51V4fhWyTX/rtNKIa5x7in8QRPoCvOnBIY+pUpg/XQ2U0C7yV+aacdfTTjwCaRF2rCC8bcr4zZyQvihhu6LP37fCiR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1O5FSQny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIq9dc/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7ABC4CEEA;
-	Tue,  8 Apr 2025 12:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O5FSQny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56823C4CEE7;
+	Tue,  8 Apr 2025 12:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117155;
-	bh=z5wA69GauaAk3mse8O0z4uzcyTRbeTwcOtSL4eSIFpQ=;
+	s=korg; t=1744117157;
+	bh=ZcS7QY9z5rvP8VNmls7UHI/w6Gv3ijAQNPcPC7ZRf7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIq9dc/f43yv5jlpwCMz/z3vzaK1bU7Rn/5ikummJqU457l3Fv5WXrAdnOK9hXJ6W
-	 kFCAwFUnEenge+KKLGJQXRbeNDe675m7qt6P82cOdibYE4rATwZ7SmfW9d2wEpSHsy
-	 1Z+NblEsMNzJggJjU8p0RhXuWlcLd0BYtPOhQu1M=
+	b=1O5FSQnyWbeEH28PdCVAQaf/za+nz36enGfIRap9sj8Mx1mamb5wlAbr5pT0hCVIU
+	 i34yv5sUz4I0mPp6gRnuxsnFDDBNitUTwu0Exs9YEchA6y0gE5IYWpMXEbr15uAVYN
+	 ShsZFCh3mkbiK+RZBUJ0wKUZEITzh9EUIA2+0U94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 405/423] tracing: Fix synth event printk format for str fields
-Date: Tue,  8 Apr 2025 12:52:11 +0200
-Message-ID: <20250408104855.345487842@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 388/423] media: omap3isp: Handle ARM dma_iommu_mapping
+Date: Tue,  8 Apr 2025 12:51:54 +0200
+Message-ID: <20250408104854.927363138@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Raillard <douglas.raillard@arm.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 4d38328eb442dc06aec4350fd9594ffa6488af02 upstream.
+commit 6bc076eec6f85f778f33a8242b438e1bd9fcdd59 upstream.
 
-The printk format for synth event uses "%.*s" to print string fields,
-but then only passes the pointer part as var arg.
+It's no longer practical for the OMAP IOMMU driver to trick
+arm_setup_iommu_dma_ops() into ignoring its presence, so let's use the
+same tactic as other IOMMU API users on 32-bit ARM and explicitly kick
+the arch code's dma_iommu_mapping out of the way to avoid problems.
 
-Replace %.*s with %s as the C string is guaranteed to be null-terminated.
-
-The output in print fmt should never have been updated as __get_str()
-handles the string limit because it can access the length of the string in
-the string meta data that is saved in the ring buffer.
-
+Fixes: 4720287c7bf7 ("iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 8db4d6bfbbf92 ("tracing: Change synthetic event string format to limit printed length")
-Link: https://lore.kernel.org/20250325165202.541088-1-douglas.raillard@arm.com
-Signed-off-by: Douglas Raillard <douglas.raillard@arm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Tested-by: Sicelo A. Mhlongo <absicsz@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/ti/omap3isp/isp.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -312,7 +312,7 @@ static const char *synth_field_fmt(char
- 	else if (strcmp(type, "gfp_t") == 0)
- 		fmt = "%x";
- 	else if (synth_field_is_string(type))
--		fmt = "%.*s";
-+		fmt = "%s";
- 	else if (synth_field_is_stack(type))
- 		fmt = "%s";
+--- a/drivers/media/platform/ti/omap3isp/isp.c
++++ b/drivers/media/platform/ti/omap3isp/isp.c
+@@ -1961,6 +1961,13 @@ static int isp_attach_iommu(struct isp_d
+ 	struct dma_iommu_mapping *mapping;
+ 	int ret;
  
++	/* We always want to replace any default mapping from the arch code */
++	mapping = to_dma_iommu_mapping(isp->dev);
++	if (mapping) {
++		arm_iommu_detach_device(isp->dev);
++		arm_iommu_release_mapping(mapping);
++	}
++
+ 	/*
+ 	 * Create the ARM mapping, used by the ARM DMA mapping core to allocate
+ 	 * VAs. This will allocate a corresponding IOMMU domain.
 
 
