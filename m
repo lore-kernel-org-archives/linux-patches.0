@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D26F20A5C3;
-	Tue,  8 Apr 2025 12:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1A226A1DE;
+	Tue,  8 Apr 2025 12:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116386; cv=none; b=i+ixF1W5Uwvhxk0uFhgGmo3uRqkASkhbTx+YJAlhAN7QWQbaRNlzxioV5i5lbu1vFV89RRVYVOsQ1Xm+SQ7H0RjOvDr17Ts2pHRqesEaBjyJcK9D95HMuODoAZMzEATrN+TbyhIXwcTq3KOkmrCaJQZJL2Fbc2KS+gos6VIlXBM=
+	t=1744116389; cv=none; b=U58BT5LzkU0MjeK/zexl8V9hd4KgLkrOIg5p8cYHBujeJYiMb8S7FoXNiD6k14w9iHVClzFweXPyk6bMijB+cxu4PKriGvwz4xDF8/Y3PJev80FXr3nTn3+ZV9PFtiRl5zsEWQ3ar6zKcPQy2wWJQkVaEt0Bqb7RZcEFEf+IxTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116386; c=relaxed/simple;
-	bh=Pyyw5+xBfNvtArdWOqoNLZzQ2OfC3Lw1U45UH3NDn94=;
+	s=arc-20240116; t=1744116389; c=relaxed/simple;
+	bh=ks/1pFT+oQhJjUG/n3uyHqpaXesmOCnajAEjPFNIDD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlUn4KA2DGZTZ0JKMDiN07zEJb7wrA2QuV2qbJqXwdwHHZjhdwnq1skxAxNJcSr1+TFKI/fbeviG17osjuyA7fbAx2Y6r2u4SoTIkABNpYtE6DmJpHdRWtPVhT7lRfSNgSSzItAZ2a613XOlMS0DicMHzQSWTeRlvB9skTo0rWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIhsg249; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KL+U96YucZirY+84jLtYBZ+InhrV9tVdgdyUQB48GyFzRQlN3ZcH/fJXUrTfJSzpAyr2ZiauZcGjWRCJQ8+xVdLiwba9auA3TT0dv+FEv+IQ5yAegQnBwOABoVoxRtu95JoAN8QMpV2m8zjksC04UhIAA0C5PZEXiNvzsx0AAAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf2yrpcr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIhsg249"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27C9C4CEE5;
-	Tue,  8 Apr 2025 12:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf2yrpcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78916C4CEE5;
+	Tue,  8 Apr 2025 12:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116386;
-	bh=Pyyw5+xBfNvtArdWOqoNLZzQ2OfC3Lw1U45UH3NDn94=;
+	s=korg; t=1744116388;
+	bh=ks/1pFT+oQhJjUG/n3uyHqpaXesmOCnajAEjPFNIDD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIhsg249yTF7jm65IZ3j31mx2HaHsZC/YKYv8eyQoy0QoF548ltC8eBF12y/aw9Nb
-	 MML4d2ZDE7uHZzq7mxzXUzIPfLT3lju9AY+R8um3KflL/GnZUT1maqFwETimRPdLTF
-	 8tN/FhSiy/liOxwmgX9ManqJwNgx+By//f/71Nus=
+	b=Yf2yrpcrVReSBw4AhDO09KHNYs/dYMFxuU+cfHGupDkHrOi5913yPQvbz2mKJt2fg
+	 eAQfx6NWMpq3HEKxv/VVKOLHGxeL4h61trFS9o3vCxPulhWps1Y5ro1qoN1lYJyCiy
+	 l5Tssz4ivpFPBEyZ9BRFmfo1ncwPWdW3gW6gUuGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Kees Bakker <kees@ijzerbout.nl>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/423] s390: Remove ioremap_wt() and pgprot_writethrough()
-Date: Tue,  8 Apr 2025 12:47:26 +0200
-Message-ID: <20250408104848.522798929@linuxfoundation.org>
+Subject: [PATCH 6.12 121/423] RDMA/mana_ib: Ensure variable err is initialized
+Date: Tue,  8 Apr 2025 12:47:27 +0200
+Message-ID: <20250408104848.544550550@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,87 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Kees Bakker <kees@ijzerbout.nl>
 
-[ Upstream commit c94bff63e49302d4ce36502a85a2710a67332a4f ]
+[ Upstream commit be35a3127d60964b338da95c7bfaaf4a01b330d4 ]
 
-It turns out that while s390 architecture calls its memory-I/O mapping
-variants write-through and write-back the implementation of ioremap_wt()
-and pgprot_writethrough() does not match Linux notion of ioremap_wt().
+In the function mana_ib_gd_create_dma_region if there are no dma blocks
+to process the variable `err` remains uninitialized.
 
-In particular Linux expects ioremap_wt() to be weaker still than
-ioremap_wc(), allowing not just gathering and re-ordering but also reads
-to be served from cache. Instead s390's implementation is equivalent to
-normal ioremap() while its ioremap_wc() allows re-ordering.
-
-Note that there are no known users of ioremap_wt() on s390 and the
-resulting behavior is in line with asm-generic defining ioremap_wt() as
-ioremap(), if undefined, so no breakage is expected.
-
-As s390 does not have a mapping type matching the Linux notion of
-ioremap_wt() and pgprot_writethrough(), simply drop them and rely on the
-asm-generic fallbacks instead.
-
-Fixes: b02002cc4c0f ("s390/pci: Implement ioremap_wc/prot() with MIO")
-Fixes: b43b3fff042d ("s390: mm: convert to GENERIC_IOREMAP")
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Signed-off-by: Kees Bakker <kees@ijzerbout.nl>
+Link: https://patch.msgid.link/20250221195833.7516C16290A@bout3.ijzerbout.nl
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/io.h      |  2 --
- arch/s390/include/asm/pgtable.h |  3 ---
- arch/s390/mm/pgtable.c          | 10 ----------
- 3 files changed, 15 deletions(-)
+ drivers/infiniband/hw/mana/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/io.h b/arch/s390/include/asm/io.h
-index fc9933a743d69..251e0372ccbd0 100644
---- a/arch/s390/include/asm/io.h
-+++ b/arch/s390/include/asm/io.h
-@@ -34,8 +34,6 @@ void unxlate_dev_mem_ptr(phys_addr_t phys, void *addr);
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index 457cea6d99095..f6bf289041bfe 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -358,7 +358,7 @@ static int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem
+ 	unsigned int tail = 0;
+ 	u64 *page_addr_list;
+ 	void *request_buf;
+-	int err;
++	int err = 0;
  
- #define ioremap_wc(addr, size)  \
- 	ioremap_prot((addr), (size), pgprot_val(pgprot_writecombine(PAGE_KERNEL)))
--#define ioremap_wt(addr, size)  \
--	ioremap_prot((addr), (size), pgprot_val(pgprot_writethrough(PAGE_KERNEL)))
- 
- static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
- {
-diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
-index 0ffbaf7419558..5ee73f245a0c0 100644
---- a/arch/s390/include/asm/pgtable.h
-+++ b/arch/s390/include/asm/pgtable.h
-@@ -1365,9 +1365,6 @@ void gmap_pmdp_idte_global(struct mm_struct *mm, unsigned long vmaddr);
- #define pgprot_writecombine	pgprot_writecombine
- pgprot_t pgprot_writecombine(pgprot_t prot);
- 
--#define pgprot_writethrough	pgprot_writethrough
--pgprot_t pgprot_writethrough(pgprot_t prot);
--
- #define PFN_PTE_SHIFT		PAGE_SHIFT
- 
- /*
-diff --git a/arch/s390/mm/pgtable.c b/arch/s390/mm/pgtable.c
-index 2c944bafb0309..b03c665d72426 100644
---- a/arch/s390/mm/pgtable.c
-+++ b/arch/s390/mm/pgtable.c
-@@ -34,16 +34,6 @@ pgprot_t pgprot_writecombine(pgprot_t prot)
- }
- EXPORT_SYMBOL_GPL(pgprot_writecombine);
- 
--pgprot_t pgprot_writethrough(pgprot_t prot)
--{
--	/*
--	 * mio_wb_bit_mask may be set on a different CPU, but it is only set
--	 * once at init and only read afterwards.
--	 */
--	return __pgprot(pgprot_val(prot) & ~mio_wb_bit_mask);
--}
--EXPORT_SYMBOL_GPL(pgprot_writethrough);
--
- static inline void ptep_ipte_local(struct mm_struct *mm, unsigned long addr,
- 				   pte_t *ptep, int nodat)
- {
+ 	gc = mdev_to_gc(dev);
+ 	hwc = gc->hwc.driver_data;
 -- 
 2.39.5
 
