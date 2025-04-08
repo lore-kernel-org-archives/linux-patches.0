@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B53F263C90;
-	Tue,  8 Apr 2025 11:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3C3266583;
+	Tue,  8 Apr 2025 11:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111342; cv=none; b=YLGJ9HzL+wvZSqA0IjFWi5Jp+L2c5j4kZh/+X4DlVsatW+jLhmHsnrOtLKtJybflcL7/7NgI/Hj1vLZxDchGkCLxansc/MW0CAbIxLhZDYDqib0JX48kejI51AZtfLsLjI+mMdnjkm7J2Pm5D3Nqf/DWG3Hoivc5k/Dq3NcVLn4=
+	t=1744111344; cv=none; b=gMNchQqvcLtftJhxiNeSwQlTliFG4q+aVXe36uxc/aCpyoOvMMKokzOorCPVRKhe5QKaORvDbqFrgYBzi7SjU/V1uU18vRlHgjJnHi7urBVgPhIzCVoJHZZhbCcmU7Yp84qZ4a1yKOhW8R1bszXFo2MEsDQ9L4rjHfohgEkX3Qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111342; c=relaxed/simple;
-	bh=s0WV1qXWf7qdgcjGVovJie8BY8ZzZZN+je0BGY06GxM=;
+	s=arc-20240116; t=1744111344; c=relaxed/simple;
+	bh=5z3Ib4Q47HsiaKv33QrGHCpWI99KKWkH94PtBt9D9DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JLFJQLjLq9Pn6sSt1qVLMSTJfFMop96pM8Sav43t48/P+Eeo4ykUBdfkerZRXfEhfvX9732QRhMLdrCTf/kGXEywSmbUUjEj9angBpdHBqaLHqU9d9ImpFn6fvAfKdYB6GwPkFBSmiSyKJF+uuy939U636ydZoMNcJHvqgmlNKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6EpIqcr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQxMMrbavUCEHP9jrHg/9BgmNuTfGnRAbUAmKt2OpieM9tVoYftbUkMbpBdfsc9ZKWv1geMN1f/fM7CXd0OabE01MvQKYx9dxvzsFy0GTkE/YfdR1Tctf12HWadvMg3jfJ9yZj/jY8yZzRC1t7ivfhNO84xVaO8ozWQKYzV4vFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYrdqCLk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6EpIqcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB1FC4CEE5;
-	Tue,  8 Apr 2025 11:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYrdqCLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1C4C4CEE7;
+	Tue,  8 Apr 2025 11:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111342;
-	bh=s0WV1qXWf7qdgcjGVovJie8BY8ZzZZN+je0BGY06GxM=;
+	s=korg; t=1744111344;
+	bh=5z3Ib4Q47HsiaKv33QrGHCpWI99KKWkH94PtBt9D9DA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6EpIqcrWPTU4N26VffM4nAvtv6p06pjafXmQQGyaY0su2UotX3ADvLV1fnuDgYi5
-	 P+9QNnCxls1rG6UnAsRpAee/fDeUEdJuJEcaB/WtF3PefE17vlJnFMhjTGHj7rcklx
-	 J9u5PV6uh4WwxfR9xamEMu5IG97LOPAurKM4Yuw4=
+	b=rYrdqCLkDzsJirjgi9tJSlGSvVGCWusZI2Yaptdsv5yW3hlo18THNGf80LkHZ2m3t
+	 z6p7khNZGzhAtpU6MWvHRMk1EXP0z2+Dh9zlrhefQpDhAiuOi0QdYG7c1ZGSap4rll
+	 qZa8FrT/M7CVKo+1E8bnOtmrxRa8rzbDJfLU/33s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Lee Jones <lee@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 398/731] leds: st1202: Check for error code from devm_mutex_init() call
-Date: Tue,  8 Apr 2025 12:44:55 +0200
-Message-ID: <20250408104923.530698644@linuxfoundation.org>
+Subject: [PATCH 6.14 381/731] crypto: tegra - Set IV to NULL explicitly for AES ECB
+Date: Tue,  8 Apr 2025 12:44:38 +0200
+Message-ID: <20250408104923.138363459@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,46 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit 8168906bbb3ba678583422de29e6349407a94bb5 ]
+[ Upstream commit bde558220866e74f19450e16d9a2472b488dfedf ]
 
-Even if it's not critical, the avoidance of checking the error code
-from devm_mutex_init() call today diminishes the point of using devm
-variant of it. Tomorrow it may even leak something. Add the missed
-check.
+It may happen that the variable req->iv may have stale values or
+zero sized buffer by default and may end up getting used during
+encryption/decryption. This inturn may corrupt the results or break the
+operation. Set the req->iv variable to NULL explicitly for algorithms
+like AES-ECB where IV is not used.
 
-Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250204-must_check-devm_mutex_init-v2-1-7b6271c4b7e6@weissschuh.net
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/tegra/tegra-se-aes.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index e894b3f9a0f46..4cebc0203c227 100644
---- a/drivers/leds/leds-st1202.c
-+++ b/drivers/leds/leds-st1202.c
-@@ -345,7 +345,9 @@ static int st1202_probe(struct i2c_client *client)
- 	if (!chip)
- 		return -ENOMEM;
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index cdcf05e235cad..be0a0b51f5a59 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -443,6 +443,9 @@ static int tegra_aes_crypt(struct skcipher_request *req, bool encrypt)
+ 	if (!req->cryptlen)
+ 		return 0;
  
--	devm_mutex_init(&client->dev, &chip->lock);
-+	ret = devm_mutex_init(&client->dev, &chip->lock);
-+	if (ret < 0)
-+		return ret;
- 	chip->client = client;
- 
- 	ret = st1202_dt_init(chip);
++	if (ctx->alg == SE_ALG_ECB)
++		req->iv = NULL;
++
+ 	rctx->encrypt = encrypt;
+ 	rctx->config = tegra234_aes_cfg(ctx->alg, encrypt);
+ 	rctx->crypto_config = tegra234_aes_crypto_cfg(ctx->alg, encrypt);
 -- 
 2.39.5
 
