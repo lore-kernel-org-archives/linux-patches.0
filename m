@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9B3265630;
-	Tue,  8 Apr 2025 11:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78140265630;
+	Tue,  8 Apr 2025 11:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111086; cv=none; b=tY74C/GohOs5frZcL8z9sDf0yhIBRammjImv30ZwF91UP70AsWQGiGXsdF16NeT5mtDdQ3r0K5aqGBNx8u7m2aFK99v4ug5TQ+FbAyNpsWrjaAaUXShyAUzkhoH0T5GID6AX/C/raTehhn1deMLJOTi1pTG41q+LqelFvAWyrY8=
+	t=1744111089; cv=none; b=mM2dUEiz/f0gvwtssVZvvWHrQRJNFz+r6wIb72V3hkIUdf6iMLkzoR5Gg5hhVIxSe2JJcevHgPnVfqEmIcOGbyzZEmddfYZApmLnKnPvDoWnyjP+yLAW5il0a7PLvj+rCQFrSB//8MgFRI1XxuEDR784zK33b3uvG4xcs+pevs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111086; c=relaxed/simple;
-	bh=Oks1+5BuYJIXdVpQKr/9Cssd/L7HVgu9FXd/dddRmyU=;
+	s=arc-20240116; t=1744111089; c=relaxed/simple;
+	bh=Jv1sl0iwSogOMpuy8vjRWizUUXymiOumip1AYBBSXxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VpAxULsAy2ioPGQ/rbhBTneLZjxnW5eOCxDgVlRSdo3Bwh6ghD62BJP4+1/Af+L9+t2IRC5nVsYM93u4yW6MaSYlaqR1WOTsRvPUjoVyT1j7liEv+/eyIA7Zm3JhEbbizeMi2xZx8IQQKdRHHTGUL2Xq3qVEGMmLJP+pVXO7QKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE8l7bH2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aXScKRv2HPGqqx7LnmBpMSwhos4Ak6N0oCDtifjE3o+0OgvSZeoyUKiVTyHv+s7H+qajxMdh01q2mAHfIsvBGyknSBcwbElf+9KcpsTVk16tv5PiZLT7xP5QZXyL8s8IX8GhJhLes6lbgQpoRL7pbn/vTU4MG/HDR2BI/sGWZAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+lKio02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE8l7bH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A977C4CEE7;
-	Tue,  8 Apr 2025 11:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+lKio02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C6FC4CEEA;
+	Tue,  8 Apr 2025 11:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111086;
-	bh=Oks1+5BuYJIXdVpQKr/9Cssd/L7HVgu9FXd/dddRmyU=;
+	s=korg; t=1744111089;
+	bh=Jv1sl0iwSogOMpuy8vjRWizUUXymiOumip1AYBBSXxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AE8l7bH2XVJcfCi9yTT3fs2Grt4p/nvULYG3GRS5Gvr3nHS0gOCYLVw1MMcZVaCRg
-	 5+OoC+MxDvsXLSdRceAmBJ5We6uG9KGApOsxgv53t6llGPqn8wiFczMp6pypcsg+kX
-	 GQEF5WrSDgHjv0Q1v8FyxPzkD4qxutHuLKzh1kPs=
+	b=O+lKio027shb2sV3QnEKo+HUUp1+5L9LGSwz/JiIX1bYvoXcjQcJOc8EpVj2rtm1r
+	 OBYJspPNf2//YHEbi030THxgFj49+c4K+WkSOiVYA899CU3Sh+LQWUinpzPKFmNA5v
+	 137BBcDoyZZ4fPwfva2gqpSf6B9kogkARaRSXBTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hans Zhang <18255117159@163.com>,
+	Hans Zhang <hans.zhang@cixtech.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 304/731] PCI: mediatek-gen3: Configure PBUS_CSR registers for EN7581 SoC
-Date: Tue,  8 Apr 2025 12:43:21 +0200
-Message-ID: <20250408104921.349897529@linuxfoundation.org>
+Subject: [PATCH 6.14 305/731] PCI: cadence-ep: Fix the driver to send MSG TLP for INTx without data payload
+Date: Tue,  8 Apr 2025 12:43:22 +0200
+Message-ID: <20250408104921.372519565@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,85 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 249b78298078448a699c39356d27d8183af4b281 ]
+[ Upstream commit 3ac47fbf4f6e8c3a7c3855fac68cc3246f90f850 ]
 
-Configure PBus base address and address mask to allow the hw
-to detect if a given address is accessible on PCIe controller.
+Per the Cadence's "PCIe Controller IP for AX14" user guide, Version
+1.04, Section 9.1.7.1, "AXI Subordinate to PCIe Address Translation
+Registers", Table 9.4, the bit 16 of the AXI Subordinate Address
+(axi_s_awaddr) when set corresponds to MSG with data, and when not set,
+to MSG without data.
 
-Fixes: f6ab898356dd ("PCI: mediatek-gen3: Add Airoha EN7581 support")
+However, the driver is currently doing the opposite and due to this,
+the INTx is never received on the host.
+
+So, fix the driver to reflect the documentation and also make INTx work.
+
+Fixes: 37dddf14f1ae ("PCI: cadence: Add EndPoint Controller driver for Cadence PCIe controller")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Hans Zhang <hans.zhang@cixtech.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/20250225-en7581-pcie-pbus-csr-v4-2-24324382424a@kernel.org
+Link: https://lore.kernel.org/r/20250214165724.184599-1-18255117159@163.com
+[kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek-gen3.c | 28 ++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c | 3 +--
+ drivers/pci/controller/cadence/pcie-cadence.h    | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
-index aa24ac9aaecc7..d0cc7f3b4b520 100644
---- a/drivers/pci/controller/pcie-mediatek-gen3.c
-+++ b/drivers/pci/controller/pcie-mediatek-gen3.c
-@@ -15,6 +15,7 @@
- #include <linux/irqchip/chained_irq.h>
- #include <linux/irqdomain.h>
- #include <linux/kernel.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/module.h>
- #include <linux/msi.h>
- #include <linux/of_device.h>
-@@ -24,6 +25,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
-+#include <linux/regmap.h>
- #include <linux/reset.h>
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+index e0cc4560dfde7..0bf4cde34f517 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -352,8 +352,7 @@ static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
+ 	spin_unlock_irqrestore(&ep->lock, flags);
  
- #include "../pci.h"
-@@ -930,9 +932,13 @@ static int mtk_pcie_parse_port(struct mtk_gen3_pcie *pcie)
+ 	offset = CDNS_PCIE_NORMAL_MSG_ROUTING(MSG_ROUTING_LOCAL) |
+-		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code) |
+-		 CDNS_PCIE_MSG_NO_DATA;
++		 CDNS_PCIE_NORMAL_MSG_CODE(msg_code);
+ 	writel(0, ep->irq_cpu_addr + offset);
+ }
  
- static int mtk_pcie_en7581_power_up(struct mtk_gen3_pcie *pcie)
- {
-+	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
- 	struct device *dev = pcie->dev;
-+	struct resource_entry *entry;
-+	struct regmap *pbus_regmap;
-+	u32 val, args[2], size;
-+	resource_size_t addr;
- 	int err;
--	u32 val;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index f5eeff834ec19..39ee9945c903e 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -246,7 +246,7 @@ struct cdns_pcie_rp_ib_bar {
+ #define CDNS_PCIE_NORMAL_MSG_CODE_MASK		GENMASK(15, 8)
+ #define CDNS_PCIE_NORMAL_MSG_CODE(code) \
+ 	(((code) << 8) & CDNS_PCIE_NORMAL_MSG_CODE_MASK)
+-#define CDNS_PCIE_MSG_NO_DATA			BIT(16)
++#define CDNS_PCIE_MSG_DATA			BIT(16)
  
- 	/*
- 	 * The controller may have been left out of reset by the bootloader
-@@ -945,6 +951,26 @@ static int mtk_pcie_en7581_power_up(struct mtk_gen3_pcie *pcie)
- 	/* Wait for the time needed to complete the reset lines assert. */
- 	msleep(PCIE_EN7581_RESET_TIME_MS);
+ struct cdns_pcie;
  
-+	/*
-+	 * Configure PBus base address and base address mask to allow the
-+	 * hw to detect if a given address is accessible on PCIe controller.
-+	 */
-+	pbus_regmap = syscon_regmap_lookup_by_phandle_args(dev->of_node,
-+							   "mediatek,pbus-csr",
-+							   ARRAY_SIZE(args),
-+							   args);
-+	if (IS_ERR(pbus_regmap))
-+		return PTR_ERR(pbus_regmap);
-+
-+	entry = resource_list_first_type(&host->windows, IORESOURCE_MEM);
-+	if (!entry)
-+		return -ENODEV;
-+
-+	addr = entry->res->start - entry->offset;
-+	regmap_write(pbus_regmap, args[0], lower_32_bits(addr));
-+	size = lower_32_bits(resource_size(entry->res));
-+	regmap_write(pbus_regmap, args[1], GENMASK(31, __fls(size)));
-+
- 	/*
- 	 * Unlike the other MediaTek Gen3 controllers, the Airoha EN7581
- 	 * requires PHY initialization and power-on before PHY reset deassert.
 -- 
 2.39.5
 
