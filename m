@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7131F267B7F;
-	Tue,  8 Apr 2025 11:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2743A268688;
+	Tue,  8 Apr 2025 11:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110038; cv=none; b=rP36ZGuyjzxidmUcOhIj0HCxyird+7F8wnS6HjY1GJoTaQoKIs84tjzLlKYn4z3XzauXtrtifQ3wWVK7U1uinaUaRrq11qif6K6r1EHCBoVuN2T4OTLxWbTSh8u0N9wV6OjCnpqDPhzIFjuNbHzu14wOQ4O4Zo9z6fKjNDGxn1Y=
+	t=1744110041; cv=none; b=TL9c6KJ6bzz4uD7Nt5FEwEM1CNqJJFSkfIT0Vd7YPFQl3UqV2T2U5exINFr6g44I49dvnxTanGEVFtIKe/7ghgK8CCdWSR2ueYeZ2jOknzt12HOAvoO6tmHazRmsgx7Eo3rX5/iilY9NZq9VBy0LoAup9Jin9fnIzo5QeOQCXnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110038; c=relaxed/simple;
-	bh=s8xQjAVEkYi7yUAlGhjkshFVARkDFS36Lt9JrO1/ees=;
+	s=arc-20240116; t=1744110041; c=relaxed/simple;
+	bh=S9/iQ36sJG/0r3epafB1ISRKLiEywe5vtSzoqfSvDvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWuAfOxs3wQnO5NPxikCDzAI2DHWqX0Z4tx/GrhqihzAdKRkbYxMggZhAN7S2adKFWv+59Wlk1rlrtYv5Vb3puUq8uuvhq9h7O0/9KKY+VWnODAMzWlShqv1gUT5qKraTzbtvhi/mjBz02J4Gp4FZ3Y5MHuCtfeAxKLxdTSmeX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkx8cxYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XHHBuOoKXwRHArcDXp+5FV93AOSU41twmcvT9ztLhVawLcr1Wx8pqgxa8kWqUyKLkdgQsvy2Z9QYNj+4Em095553OnSio4zde13gI4zUjIbmkf1xJEyh4L5lM4DVyKTUFSLAHgAPVZtbGNjpWNFqmQaWCiOm1WnAL8NUvFjLz24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH2jPabi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkx8cxYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038A3C4CEE7;
-	Tue,  8 Apr 2025 11:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH2jPabi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB31AC4CEE5;
+	Tue,  8 Apr 2025 11:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110038;
-	bh=s8xQjAVEkYi7yUAlGhjkshFVARkDFS36Lt9JrO1/ees=;
+	s=korg; t=1744110041;
+	bh=S9/iQ36sJG/0r3epafB1ISRKLiEywe5vtSzoqfSvDvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkx8cxYR8G+BJodJsX/Fc0km4qfM77yTh3/mPXDh/1c8lTTvG7nR+96m2H++0/oAy
-	 QxGn22GvY/GY2A4tRhfODVVbFaGKuk/U5wJlcnYLyENgZa47U2+Cq/Nkex/SsooN/Q
-	 LCyQiCLdxG1sBfvSoifXrjz4nL77AUpgpVObOU8M=
+	b=mH2jPabih96MANtxZmo2gWzOa4AFNgmwAstd6xr7gFpPL6/z8xZqdhTY4/xMEahGE
+	 YdBSG5ExX2TYuvZUTB5NyfTJK+voWbRMijGVt/Nn9AaPd9gfcF/mDQwT9gqS5S4Wha
+	 sYBEGQGQMpjqr6XYyhCQx9ZUdlt+4zN/YoEz1UIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Will McVicker <willmcvicker@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/227] remoteproc: qcom_q6v5_pas: Make single-PD handling more robust
-Date: Tue,  8 Apr 2025 12:48:43 +0200
-Message-ID: <20250408104824.658128796@linuxfoundation.org>
+Subject: [PATCH 5.10 146/227] clk: samsung: Fix UBSAN panic in samsung_clk_init()
+Date: Tue,  8 Apr 2025 12:48:44 +0200
+Message-ID: <20250408104824.691299856@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,61 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@lucaweiss.eu>
+From: Will McVicker <willmcvicker@google.com>
 
-[ Upstream commit e917b73234b02aa4966325e7380d2559bf127ba9 ]
+[ Upstream commit d19d7345a7bcdb083b65568a11b11adffe0687af ]
 
-Only go into the if condition for single-PD handling when there's
-actually just one power domain specified there. Otherwise it'll be an
-issue in the dts and we should fail in the regular code path.
+With UBSAN_ARRAY_BOUNDS=y, I'm hitting the below panic due to
+dereferencing `ctx->clk_data.hws` before setting
+`ctx->clk_data.num = nr_clks`. Move that up to fix the crash.
 
-This also mirrors the latest changes in the qcom_q6v5_mss driver.
+  UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
+  <snip>
+  Call trace:
+   samsung_clk_init+0x110/0x124 (P)
+   samsung_clk_init+0x48/0x124 (L)
+   samsung_cmu_register_one+0x3c/0xa0
+   exynos_arm64_register_cmu+0x54/0x64
+   __gs101_cmu_top_of_clk_init_declare+0x28/0x60
+   ...
 
-Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Fixes: 17ee2fb4e856 ("remoteproc: qcom: pas: Vote for active/proxy power domains")
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250128-pas-singlepd-v1-2-85d9ae4b0093@lucaweiss.eu
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e620a1e061c4 ("drivers/clk: convert VL struct to struct_size")
+Signed-off-by: Will McVicker <willmcvicker@google.com>
+Link: https://lore.kernel.org/r/20250212183253.509771-1-willmcvicker@google.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/clk/samsung/clk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 1a0d6eb9425bb..653d204338285 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -309,16 +309,16 @@ static int adsp_pds_attach(struct device *dev, struct device **devs,
- 	if (!pd_names)
- 		return 0;
+diff --git a/drivers/clk/samsung/clk.c b/drivers/clk/samsung/clk.c
+index 1949ae7851b2e..0468ce5506aef 100644
+--- a/drivers/clk/samsung/clk.c
++++ b/drivers/clk/samsung/clk.c
+@@ -64,11 +64,11 @@ struct samsung_clk_provider *__init samsung_clk_init(struct device_node *np,
+ 	if (!ctx)
+ 		panic("could not allocate clock provider context.\n");
  
-+	while (pd_names[num_pds])
-+		num_pds++;
-+
- 	/* Handle single power domain */
--	if (dev->pm_domain) {
-+	if (num_pds == 1 && dev->pm_domain) {
- 		devs[0] = dev;
- 		pm_runtime_enable(dev);
- 		return 1;
- 	}
++	ctx->clk_data.num = nr_clks;
+ 	for (i = 0; i < nr_clks; ++i)
+ 		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
  
--	while (pd_names[num_pds])
--		num_pds++;
--
- 	for (i = 0; i < num_pds; i++) {
- 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
- 		if (IS_ERR_OR_NULL(devs[i])) {
-@@ -343,7 +343,7 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
- 	int i;
+ 	ctx->reg_base = base;
+-	ctx->clk_data.num = nr_clks;
+ 	spin_lock_init(&ctx->lock);
  
- 	/* Handle single power domain */
--	if (dev->pm_domain && pd_count) {
-+	if (pd_count == 1 && dev->pm_domain) {
- 		pm_runtime_disable(dev);
- 		return;
- 	}
+ 	return ctx;
 -- 
 2.39.5
 
