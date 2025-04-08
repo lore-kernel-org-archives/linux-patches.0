@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAEB268FD2;
-	Tue,  8 Apr 2025 10:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D492268FF0;
+	Tue,  8 Apr 2025 10:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109725; cv=none; b=qekaj0S+eWCm0IYGMn8JUUk86LUqNizzedvr11FP32r1btNtMwN/n7gFiGkFDFI1RvYY65AHlhEhOLeimriyJxXuVoWH8K/v1AD+vwXErr0aKMXKl6Kff73UrBu044VVnbWKXNXcsxmn7I/E2IEEpyQXNcc86SGZzrT1aUXLXGA=
+	t=1744109728; cv=none; b=jpnOS2xyHwywjqMsh/MF4MW+191jqsRIS5gv8Mn5lT8DPtvo4uoRUQnfS+SAoi6BkOjm0f5idlfLgeDcNtW6MoI5vfeRuZfq/s8OIYJj5mGjzuGKgphfiKlzPrBZD28rFinCuZEfRfwkqM6+QMKFjpt6MRjWVHTaxSy1oVTKjWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109725; c=relaxed/simple;
-	bh=HCwVwpkG/bt7jURjJdqzByeCHT8/3fJwq8TRsABBhVw=;
+	s=arc-20240116; t=1744109728; c=relaxed/simple;
+	bh=qTDlU+uUYsIQtWJ+WqUkZxLJJ4fezjv2DmSkX8yEugA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDq3PHgEQ/p+eKwCMPY6cQtujcGjJI/7lR64/l4rlvtxBKWl5YWU+oBpXeTmAo2Xazr5Z+nAZ3Hpgj+SXwwlVsMSViH1RRi0/m/LUQtBGB6VMGWKP2qpZ3p6DuWTkagE5FToo2oXovqzvzceOnc11fOlEC0my05gOTTYd68MdsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnnnaxcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTX9VlkgTL+Jx+DAnlk4mziAlE4eyma93qY7VqIghScmX4ecXzE03s/QRmIOOEp1yH/CCuLhaSC/x+M+GzRGtHYxCoJkRaGVh2nZXhOzZqZ2TLHa/rm7pzc8t+gvehW+u9vrWMDGUTbg6y4JPHVSveK9OcOLlZKEtC7vLDSZ6zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAJBWeWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnnnaxcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86866C4CEE5;
-	Tue,  8 Apr 2025 10:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAJBWeWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C80CC4CEE7;
+	Tue,  8 Apr 2025 10:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109724;
-	bh=HCwVwpkG/bt7jURjJdqzByeCHT8/3fJwq8TRsABBhVw=;
+	s=korg; t=1744109727;
+	bh=qTDlU+uUYsIQtWJ+WqUkZxLJJ4fezjv2DmSkX8yEugA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnnnaxcE9sm5MKkT8vNMOIkBRxZqpQN+r1TkqCGrlH7D9qnF38snLVlXl7E96w3Dp
-	 aeM4lXy1QEZ4LkhpOqXWY4+jpy9ZY8YO3j1FD152l4/3bD9Z5yAtJNiBvh7pzb0H14
-	 0Oe0EUFE1NlBIEFzahoI+PEGeHkIBpH31ztJuR2w=
+	b=cAJBWeWQg6jaK9Qc7zY+wG9LNk/cSnaKE78usPcxxI6w36aHfXRpOfX/YhJ52viWV
+	 ctmMyKqYf1P3wkGYKvKRcKN2uaEod5P4W95L8nCWS16ZvRyE560mtshkbEfRFmjW4S
+	 ylXXX48sLW3YdVu8N26k7JrPHWmM6MBcVUqKYGl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/227] HID: intel-ish-hid: fix the length of MNG_SYNC_FW_CLOCK in doorbell
-Date: Tue,  8 Apr 2025 12:46:47 +0200
-Message-ID: <20250408104821.275302984@linuxfoundation.org>
+	Chris von Recklinghausen <crecklin@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Phil Auld <pauld@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
+Subject: [PATCH 5.10 003/227] sched/isolation: Prevent boot crash when the boot CPU is nohz_full
+Date: Tue,  8 Apr 2025 12:46:21 +0200
+Message-ID: <20250408104820.464646247@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -52,56 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 4b54ae69197b9f416baa0fceadff7e89075f8454 ]
+Documentation/timers/no_hz.rst states that the "nohz_full=" mask must not
+include the boot CPU, which is no longer true after:
 
-The timestamps in the Firmware log and HID sensor samples are incorrect.
-They show 1970-01-01 because the current IPC driver only uses the first
-8 bytes of bootup time when synchronizing time with the firmware. The
-firmware converts the bootup time to UTC time, which results in the
-display of 1970-01-01.
+  08ae95f4fd3b ("nohz_full: Allow the boot CPU to be nohz_full").
 
-In write_ipc_from_queue(), when sending the MNG_SYNC_FW_CLOCK message,
-the clock is updated according to the definition of ipc_time_update_msg.
-However, in _ish_sync_fw_clock(), the message length is specified as the
-size of uint64_t when building the doorbell. As a result, the firmware
-only receives the first 8 bytes of struct ipc_time_update_msg.
-This patch corrects the length in the doorbell to ensure the entire
-ipc_time_update_msg is sent, fixing the timestamp issue.
+However after:
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  aae17ebb53cd ("workqueue: Avoid using isolated cpus' timers on queue_delayed_work")
+
+the kernel will crash at boot time in this case; housekeeping_any_cpu()
+returns an invalid CPU number until smp_init() brings the first
+housekeeping CPU up.
+
+Change housekeeping_any_cpu() to check the result of cpumask_any_and() and
+return smp_processor_id() in this case.
+
+This is just the simple and backportable workaround which fixes the
+symptom, but smp_processor_id() at boot time should be safe at least for
+type == HK_TYPE_TIMER, this more or less matches the tick_do_timer_boot_cpu
+logic.
+
+There is no worry about cpu_down(); tick_nohz_cpu_down() will not allow to
+offline tick_do_timer_cpu (the 1st online housekeeping CPU).
+
+[ Apply only documentation changes as commit which causes boot
+  crash when boot CPU is nohz_full is not backported to stable
+  kernels - Krishanth ]
+
+Reported-by: Chris von Recklinghausen <crecklin@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20240411143905.GA19288@redhat.com
+Closes: https://lore.kernel.org/all/20240402105847.GA24832@redhat.com/
+Signed-off-by: Krishanth Jagaduri <Krishanth.Jagaduri@sony.com>
+[ strip out upstream commit and Fixes: so tools don't get confused that
+  this commit actually does anything real - gregkh]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-ish-hid/ipc/ipc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/timers/no_hz.rst |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/ipc.c b/drivers/hid/intel-ish-hid/ipc/ipc.c
-index a45ac7fa417b9..da896f5c74424 100644
---- a/drivers/hid/intel-ish-hid/ipc/ipc.c
-+++ b/drivers/hid/intel-ish-hid/ipc/ipc.c
-@@ -549,14 +549,14 @@ static void fw_reset_work_fn(struct work_struct *unused)
- static void _ish_sync_fw_clock(struct ishtp_device *dev)
- {
- 	static unsigned long	prev_sync;
--	uint64_t	usec;
-+	struct ipc_time_update_msg time = {};
+--- a/Documentation/timers/no_hz.rst
++++ b/Documentation/timers/no_hz.rst
+@@ -129,11 +129,8 @@ adaptive-tick CPUs:  At least one non-ad
+ online to handle timekeeping tasks in order to ensure that system
+ calls like gettimeofday() returns accurate values on adaptive-tick CPUs.
+ (This is not an issue for CONFIG_NO_HZ_IDLE=y because there are no running
+-user processes to observe slight drifts in clock rate.)  Therefore, the
+-boot CPU is prohibited from entering adaptive-ticks mode.  Specifying a
+-"nohz_full=" mask that includes the boot CPU will result in a boot-time
+-error message, and the boot CPU will be removed from the mask.  Note that
+-this means that your system must have at least two CPUs in order for
++user processes to observe slight drifts in clock rate.) Note that this
++means that your system must have at least two CPUs in order for
+ CONFIG_NO_HZ_FULL=y to do anything for you.
  
- 	if (prev_sync && jiffies - prev_sync < 20 * HZ)
- 		return;
- 
- 	prev_sync = jiffies;
--	usec = ktime_to_us(ktime_get_boottime());
--	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &usec, sizeof(uint64_t));
-+	/* The fields of time would be updated while sending message */
-+	ipc_send_mng_msg(dev, MNG_SYNC_FW_CLOCK, &time, sizeof(time));
- }
- 
- /**
--- 
-2.39.5
-
+ Finally, adaptive-ticks CPUs must have their RCU callbacks offloaded.
 
 
