@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DA6269825;
-	Tue,  8 Apr 2025 12:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231F2269825;
+	Tue,  8 Apr 2025 12:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114445; cv=none; b=CD8Tyak+PbfkxINXc4y3KcatE7g2gjdaPflMpatKtLVGwBivX4qbp0UnonV8ECOmoZ5MkZiIGiYfcxPcRFAS4gjgb8DiB9sl6bnVVeU6tb37YIxUi0Q2hjjRYQBP0vFQJfFf1ha1glbxNxEgRxKqAQ9DWc5JIv1fk6FlDYFllOI=
+	t=1744114448; cv=none; b=ebi/4/2JP2BN8jDqAStZb/haw4kTK/kDXQm0w6R0gvUYSxR6jjTZUvC3ihU9YaHw5w5YtwDXfEbuj8/K6Fe0v0XTbAZWJUALXuasJoKPiX5BAoNt91VK+XhV6SSKrKdTPTmmbU/9ugEgNXMKg/5v2RrdFVUEw88sdHxS2V+c4uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114445; c=relaxed/simple;
-	bh=AOxgt+nlJst0oa1c/semfwCHOQX7qNYcMe4cc/3GUsE=;
+	s=arc-20240116; t=1744114448; c=relaxed/simple;
+	bh=LoQpP9Hv1XHUCBEH5FLXvzXXa6lVN4ThlNzQHdL+TZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=il1zNDvSgrLJxxNGFSzdvi+VWRpmNTbUzh+WdGEHsD0C+OHEzZY2P77WxaHR3JBAZd3pfapuR2LiarS6tgyjzLazYYkZEaLWRtFEQ0fDN6VT6vKG4X4kNIsXnlydatXQWQ7nfJZEV07nr4bg3xJegPi4BzUEAjoYY/5ZWG4rd0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn46Bm9H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PyO53ZQO8Dj0YAJR6bL4nJnXDPe4a/K4HqsSeUnyFdB3wMCBVadEaw0os5iKsLb1LM90BbdKlhFqPCvnNJEhOKXBEhuynjbPRFgR0IUPsniwAH2XoP+HUzgfY5DQEAtPSWJyabKeZpQP7eDSkOBf5Rfm2/XcN2fTyVmaW9GDDZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeY4cU1G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn46Bm9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA90C4CEE7;
-	Tue,  8 Apr 2025 12:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeY4cU1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440F4C4CEE5;
+	Tue,  8 Apr 2025 12:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114444;
-	bh=AOxgt+nlJst0oa1c/semfwCHOQX7qNYcMe4cc/3GUsE=;
+	s=korg; t=1744114447;
+	bh=LoQpP9Hv1XHUCBEH5FLXvzXXa6lVN4ThlNzQHdL+TZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn46Bm9Hb/o3DkZNvBFMsxZJVxtkWZpg/Yz3fR2DizUwlPPs9U8c+6VDAlD91Ee5P
-	 VEEwqEqhCO15kPolEMi9zOOYBES4J9nzDr4OQNif/eS59V4W/BFm5YHIZ4mckoOOIg
-	 mS9P4ay82r0ncCPivMo7rkJMnBqQThuRjqftiWh4=
+	b=QeY4cU1Gg3lKEhwXbdrXh1uaMMSHB6wfhI3wyfOtN+N4e8zTKckgcf729Ij8isCMD
+	 e7zgixrcaFINUQN5EhXXWL5xmRa2RvU3aA9PMQ16d23V8q2sjhzmltw/qjQweeHSv3
+	 K3SPjBI/YhtDIa56JrI0Yn58e4BcNt11xf7pL62k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 109/499] PCI: histb: Fix an error handling path in histb_pcie_probe()
-Date: Tue,  8 Apr 2025 12:45:21 +0200
-Message-ID: <20250408104853.924288033@linuxfoundation.org>
+Subject: [PATCH 6.13 110/499] PCI: Fix BAR resizing when VF BARs are assigned
+Date: Tue,  8 Apr 2025 12:45:22 +0200
+Message-ID: <20250408104853.947512814@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,66 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit b36fb50701619efca5f5450b355d42575cf532ed ]
+[ Upstream commit 9ec19bfa78bd788945e2445b09de7b4482dee432 ]
 
-If an error occurs after a successful phy_init() call, then phy_exit()
-should be called.
+__resource_resize_store() attempts to release all resources of the device
+before attempting the resize. The loop, however, only covers standard BARs
+(< PCI_STD_NUM_BARS). If a device has VF BARs that are assigned,
+pci_reassign_bridge_resources() finds the bridge window still has some
+assigned child resources and returns -NOENT which makes
+pci_resize_resource() to detect an error and abort the resize.
 
-Add the missing call, as already done in the remove function.
+Change the release loop to cover all resources up to VF BARs which allows
+the resize operation to release the bridge windows and attempt to assigned
+them again with the different size.
 
-Fixes: bbd11bddb398 ("PCI: hisi: Add HiSilicon STB SoC PCIe controller driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-[kwilczynski: remove unnecessary hipcie->phy NULL check from
-histb_pcie_probe() and squash a patch that removes similar NULL
-check for hipcie-phy from histb_pcie_remove() from
-https://lore.kernel.org/linux-pci/c369b5d25e17a44984ae5a889ccc28a59a0737f7.1742058005.git.christophe.jaillet@wanadoo.fr]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Link: https://lore.kernel.org/r/8301fc15cdea5d2dac21f57613e8e6922fb1ad95.1740854531.git.christophe.jaillet@wanadoo.fr
+If SR-IOV is enabled, disallow resize as it requires releasing also IOV
+resources.
+
+Link: https://lore.kernel.org/r/20250320142837.8027-1-ilpo.jarvinen@linux.intel.com
+Fixes: 91fa127794ac ("PCI: Expose PCIe Resizable BAR support via sysfs")
+Reported-by: Michał Winiarski <michal.winiarski@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-histb.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/pci/pci-sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-histb.c b/drivers/pci/controller/dwc/pcie-histb.c
-index 615a0e3e6d7eb..1f2f4c28a9495 100644
---- a/drivers/pci/controller/dwc/pcie-histb.c
-+++ b/drivers/pci/controller/dwc/pcie-histb.c
-@@ -409,16 +409,21 @@ static int histb_pcie_probe(struct platform_device *pdev)
- 	ret = histb_pcie_host_enable(pp);
- 	if (ret) {
- 		dev_err(dev, "failed to enable host\n");
--		return ret;
-+		goto err_exit_phy;
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 7679d75d71e53..ab54c92c34353 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1448,7 +1448,7 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
+ 		return -EINVAL;
+ 
+ 	device_lock(dev);
+-	if (dev->driver) {
++	if (dev->driver || pci_num_vf(pdev)) {
+ 		ret = -EBUSY;
+ 		goto unlock;
  	}
+@@ -1470,7 +1470,7 @@ static ssize_t __resource_resize_store(struct device *dev, int n,
  
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "failed to initialize host\n");
--		return ret;
-+		goto err_exit_phy;
- 	}
+ 	pci_remove_resource_files(pdev);
  
- 	return 0;
-+
-+err_exit_phy:
-+	phy_exit(hipcie->phy);
-+
-+	return ret;
- }
- 
- static void histb_pcie_remove(struct platform_device *pdev)
-@@ -427,8 +432,7 @@ static void histb_pcie_remove(struct platform_device *pdev)
- 
- 	histb_pcie_host_disable(hipcie);
- 
--	if (hipcie->phy)
--		phy_exit(hipcie->phy);
-+	phy_exit(hipcie->phy);
- }
- 
- static const struct of_device_id histb_pcie_of_match[] = {
+-	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
++	for (i = 0; i < PCI_BRIDGE_RESOURCES; i++) {
+ 		if (pci_resource_len(pdev, i) &&
+ 		    pci_resource_flags(pdev, i) == flags)
+ 			pci_release_resource(pdev, i);
 -- 
 2.39.5
 
