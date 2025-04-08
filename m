@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DC126B0BE;
-	Tue,  8 Apr 2025 12:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC7E26B2A3;
+	Tue,  8 Apr 2025 12:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114367; cv=none; b=Qmw7ZRLL6TGmZY8jOBVZyEUN762K1BwotA27ypER1XIywo3mS8O5k9aFhZClUqxB9Q4fSReJzpF3bevKRWLkker/oaSB0jaGxNAbQlKKBKI3g2fz9e6fdqqged4nNEiuxOpiun3xHXKm/zai1Tctuxch05bjmYnzdpjTcreZRzg=
+	t=1744114370; cv=none; b=bAbyJgpon4gNfqAl/kwoBx33CVjeAaYwgLyIx7flwcwaugbgs0Cuk2JJLoxskSvs0oBhr6E1RIv9iUZ4laH//f3+x0XED82mCiguOqJIhFirQvTjnLNmL7iQ30AclmoZcjDnY22P6siIteSC4ZBB1qz5YFM1DN5JsfuWsfLhYVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114367; c=relaxed/simple;
-	bh=4xpjbKjUJu/+N8KkjUmpsgy6PkZT3y4oNrm16vQVTK8=;
+	s=arc-20240116; t=1744114370; c=relaxed/simple;
+	bh=WySOHKNQOaq1FLAqdIIm5yaeIdtOzoDNU8vjvd2C/CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtnWV8cn70Z9RZdPaYmvafNW/QBq7/XH5wEyzDsW1iVfwAyPipY4bjvWgyRKMF4kFBd0RqEQZYGk4G+6zkpadpjtKwMlKXpX0DKzPYGRkwObMHSqS5Rg/jEPb9mcWMmSnJxPJK2dy3Pu+byc9dJ7kHwY6QSAWU0ldMyLckQQmEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHZNyhXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ruCK6W7cTXk25jv9ooV5W4p0ouzP/MFhUgUXJa21ThokOVDpXPuIGaSOwpzWfIJGOvHdAGJ00JcfIUS7etj+gdg7GyqBJgNllEwiX1/3ZkBXJUXaWk+a+S5G6GjeXXg1zU1c++PE7blELMftDubNNOWgRbtYttr6o6S8F2f8Uhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fthdbeAl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHZNyhXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D534C4CEE5;
-	Tue,  8 Apr 2025 12:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fthdbeAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB64FC4CEE5;
+	Tue,  8 Apr 2025 12:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114367;
-	bh=4xpjbKjUJu/+N8KkjUmpsgy6PkZT3y4oNrm16vQVTK8=;
+	s=korg; t=1744114370;
+	bh=WySOHKNQOaq1FLAqdIIm5yaeIdtOzoDNU8vjvd2C/CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHZNyhXq0rmucqFZlT1QYxjtu/1AsB8bhmzGO0o/mT9gEXwxbPnFeQgfylXhQEtZP
-	 8OCuoU2inwrpdxDgXou1C+4cRnXXBobjZu9H3UuE4Ke26HF0vbcgxSjfHzsKWlDBR4
-	 x3JjoEt9VmjKKMTRB9+Lq4iqVlvDnWRMWxUis/d4=
+	b=fthdbeAl0s2Qj45jLbfTH12FJUZDumZYheRjchoo8eJ5GKLm7CdFvu5GrrYvIZrN2
+	 WGG19O10/EsVGa3rnTM/9FIviNxCB+WA4vGv44sOlhabYkGOHAFjY1QhQ1ivx8P4hw
+	 t0TF87GDZcVzohSQr5l5xyrtvAJ+j4hnRWr3co4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Marek Vasut <marex@denx.de>,
-	Mark Brown <broonie@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 043/499] regulator: pca9450: Fix enable register for LDO5
-Date: Tue,  8 Apr 2025 12:44:15 +0200
-Message-ID: <20250408104852.319353819@linuxfoundation.org>
+Subject: [PATCH 6.13 079/499] drm/panel: ilitek-ili9882t: fix GPIO name in error message
+Date: Tue,  8 Apr 2025 12:44:51 +0200
+Message-ID: <20250408104853.196775116@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,54 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit f5aab0438ef17f01c5ecd25e61ae6a03f82a4586 ]
+[ Upstream commit 4ce2c7e201c265df1c62a9190a98a98803208b8f ]
 
-The LDO5 regulator has two configuration registers, but only
-LDO5CTRL_L contains the bits for enabling/disabling the regulator.
+This driver uses the enable-gpios property and it is confusing that the
+error message refers to reset-gpios.  Use the correct name when the
+enable GPIO is not found.
 
-Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://patch.msgid.link/20241218152842.97483-6-frieder@fris.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e2450d32e5fb5 ("drm/panel: ili9882t: Break out as separate driver")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250217120428.3779197-1-jkeeping@inmusicbrands.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pca9450-regulator.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index 9714afe347dcc..1ffa145319f23 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -454,7 +454,7 @@ static const struct pca9450_regulator_desc pca9450a_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
-@@ -663,7 +663,7 @@ static const struct pca9450_regulator_desc pca9450bc_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
-@@ -835,7 +835,7 @@ static const struct pca9450_regulator_desc pca9451a_regulators[] = {
- 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
- 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
- 			.vsel_mask = LDO5HOUT_MASK,
--			.enable_reg = PCA9450_REG_LDO5CTRL_H,
-+			.enable_reg = PCA9450_REG_LDO5CTRL_L,
- 			.enable_mask = LDO5H_EN_MASK,
- 			.owner = THIS_MODULE,
- 		},
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+index 266a087fe14c1..3c24a63b6be8c 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
+@@ -607,7 +607,7 @@ static int ili9882t_add(struct ili9882t *ili)
+ 
+ 	ili->enable_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+ 	if (IS_ERR(ili->enable_gpio)) {
+-		dev_err(dev, "cannot get reset-gpios %ld\n",
++		dev_err(dev, "cannot get enable-gpios %ld\n",
+ 			PTR_ERR(ili->enable_gpio));
+ 		return PTR_ERR(ili->enable_gpio);
+ 	}
 -- 
 2.39.5
 
