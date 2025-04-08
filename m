@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30FF2288CB;
-	Tue,  8 Apr 2025 11:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE602288CB;
+	Tue,  8 Apr 2025 11:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112607; cv=none; b=lIfaeyk9PVt5IMWnlHQU9ysBva0bw/SyaUujrJO87y8O3YL67Q5DxBwOLhtQfMf/tCF8Q5ue3cPbGlOVp61ES7h4dfwjd3jt75GePPBBwIHHqaImhSFUUUgkJfFNyJLgKDQ2E6MB4Mn5pIRCFeLn+bwmazCEDRvZz7hKYJje9Kc=
+	t=1744112610; cv=none; b=cJEnQyOxa6GkF2W2b26gY8dyqCR0mhkA54O624egSj5QfBGeSKaIqzY1yhPJhl0w8tCTiB7xIJ6pyRKfd4ESw2mLhLf9z+sacu/nB1E50A/JbUUmebQcZWBYEuCx/ZaR/D823ty08BUBEABCvM00e+wMUNGWaOfpoQLr8qptTNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112607; c=relaxed/simple;
-	bh=Inlbhi8zwSm8FKjo3+xj7tlh8IGbgYizVwlpEvi8hQQ=;
+	s=arc-20240116; t=1744112610; c=relaxed/simple;
+	bh=RQ/2qePzQFZAWic8KcynjN6m6n9F5UMMwUbqPUh86Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBqWGXk/pAdezymcbyHhPnH6epPlHsDKnZ0iTXspahNDUWgsh+w1dk/FYsZYYvWB1wbbrwW9kUqwHSznoK69wqwgITBY0sBhs2+tME6KzYI2tMi+veyBmKaqknn83OLqOvn74pWGzLFska2NeoF74Y/edcGNXuYcblKCXxxTdLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gHxq8f7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiQRXqeExhtm/bXp/9TBIIRRnUxEZzgR6CaNJ1/s5UuKKBTsOGy2Lznj+1NcrkvKil3+CiADuCP9vBOm0AUOpyrTdV9GqPOoCaHwaDW/CK4yMjtIjAJWyLCyIOn9gno8hHt3olf+DmD6GASSwwJgPrOvqnere6l9DyXVrF8yijg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf/CVdto; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gHxq8f7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F8BC4CEE5;
-	Tue,  8 Apr 2025 11:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf/CVdto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2039C4CEE5;
+	Tue,  8 Apr 2025 11:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112607;
-	bh=Inlbhi8zwSm8FKjo3+xj7tlh8IGbgYizVwlpEvi8hQQ=;
+	s=korg; t=1744112610;
+	bh=RQ/2qePzQFZAWic8KcynjN6m6n9F5UMMwUbqPUh86Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gHxq8f7iOGIpK44c96kSjjDTiyakl6MdKxPg9CmHisaGtEjWF1bn92sckBKgYgV/
-	 16ZcEpoCDD5OOsXpgy96UzJW8PTM/83YtIyo1ewHiMk7UldWmqzHXNdFSxuLlY4HEd
-	 trJP05QjkOKLI+mj9pVSxr0Maj3Q0K7mEUEg3jig=
+	b=Pf/CVdtowQfYd5jEWG00x3+HL3LIa0mLCnXgqj76wHrH55LDKngy7tQCbSYphCnUX
+	 Aet4VBmbd+zOT0Zgtppm+XFzn9OISbXujX3hYn1L+ocN/aBCE9qeKsbIcyCYcOhZaW
+	 6qe0XzhMVyy95NqurX/VMZ/r2MC36rt2mX2UTfEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Oleg Nesterov <oleg@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/279] x86/fpu: Avoid copying dynamic FP state from init_task in arch_dup_task_struct()
-Date: Tue,  8 Apr 2025 12:48:35 +0200
-Message-ID: <20250408104829.904216192@linuxfoundation.org>
+Subject: [PATCH 5.15 133/279] x86/platform: Only allow CONFIG_EISA for 32-bit
+Date: Tue,  8 Apr 2025 12:48:36 +0200
+Message-ID: <20250408104829.931494641@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -54,54 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5d3b81d4d8520efe888536b6906dc10fd1a228a8 ]
+[ Upstream commit 976ba8da2f3c2f1e997f4f620da83ae65c0e3728 ]
 
-The init_task instance of struct task_struct is statically allocated and
-may not contain the full FP state for userspace. As such, limit the copy
-to the valid area of both init_task and 'dst' and ensure all memory is
-initialized.
+The CONFIG_EISA menu was cleaned up in 2018, but this inadvertently
+brought the option back on 64-bit machines: ISA remains guarded by
+a CONFIG_X86_32 check, but EISA no longer depends on ISA.
 
-Note that the FP state is only needed for userspace, and as such it is
-entirely reasonable for init_task to not contain parts of it.
+The last Intel machines ith EISA support used a 82375EB PCI/EISA bridge
+from 1993 that could be paired with the 440FX chipset on early Pentium-II
+CPUs, long before the first x86-64 products.
 
-Fixes: 5aaeb5c01c5b ("x86/fpu, sched: Introduce CONFIG_ARCH_WANTS_DYNAMIC_TASK_STRUCT and use it on x86")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Fixes: 6630a8e50105 ("eisa: consolidate EISA Kconfig entry in drivers/eisa")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20250226133136.816901-1-benjamin@sipsolutions.net
-----
-
-v2:
-- Fix code if arch_task_struct_size < sizeof(init_task) by using
-  memcpy_and_pad.
-
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250226213714.4040853-11-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/process.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
-index 720d99520316a..72eb0df1a1a5f 100644
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -83,7 +83,12 @@ EXPORT_PER_CPU_SYMBOL_GPL(__tss_limit_invalid);
-  */
- int arch_dup_task_struct(struct task_struct *dst, struct task_struct *src)
- {
--	memcpy(dst, src, arch_task_struct_size);
-+	/* init_task is not dynamically sized (incomplete FPU state) */
-+	if (unlikely(src == &init_task))
-+		memcpy_and_pad(dst, arch_task_struct_size, src, sizeof(init_task), 0);
-+	else
-+		memcpy(dst, src, arch_task_struct_size);
-+
- #ifdef CONFIG_VM86
- 	dst->thread.vm86 = NULL;
- #endif
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 90ac8d84389cf..de6a66ad3fa62 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -194,7 +194,7 @@ config X86
+ 	select HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
+ 	select HAVE_EBPF_JIT
+ 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
+-	select HAVE_EISA
++	select HAVE_EISA			if X86_32
+ 	select HAVE_EXIT_THREAD
+ 	select HAVE_FAST_GUP
+ 	select HAVE_FENTRY			if X86_64 || DYNAMIC_FTRACE
 -- 
 2.39.5
 
