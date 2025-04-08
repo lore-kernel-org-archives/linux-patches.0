@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCA826656B;
-	Tue,  8 Apr 2025 12:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F212686BC;
+	Tue,  8 Apr 2025 12:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114763; cv=none; b=hMFj75eL16O4TP4h7Keap5x9ADCpCqt8v2TKaRWf9KQ5rOdeISwdqLn0aGPDVZx+SMkxfSUAlslWqiQAqdyF51ApU0mjaF82VJPJ7LNHW1Gmcl+vQBdG7qKXTSh1uNf3+3DedudplDqGvEGvBfvg1a4NIUb1+z4fa4dYfY7iVEk=
+	t=1744114765; cv=none; b=FYw8ATaZCUFxotLVfeMo21z59yUEY2yWnXDeVNtOjya4+9AN1Xq6eJqhjcuaSF1a8bC0yGm3o0LzJMstD6LBv5CgvmMFKpBVUOsgIioL0Aa/QJERiOoEhbHCKi3xygEw3ttdYDfmjNF79NmcWNwozROzjUgdxguMW5PBzXVYx4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114763; c=relaxed/simple;
-	bh=fPWDPiDTyzrt7bUi83bei1WeaBnzS8ctJlmyxnpJ8XI=;
+	s=arc-20240116; t=1744114765; c=relaxed/simple;
+	bh=n1++BejQaiEtu2Sa2N8jjCSjJBlMcuiQc32ZVM0pDwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlIx3o7DwE6XxFcW0jzK4hD71ZXjMF+imsA6Ik4R6xq0aadcf+cBJRhV/WE39D/WMfQRHO//kKDpEwZr2TEYpAMqbO5PIruY3tx5WqBupGT5BKhWKLO+W1D5YTGPVvk5YpIH69FoS+l1J2Wh1NTQj76X9E7GcZ66nfkE+rxA8qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7mI6Y4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OeSLeyB4Tf/vDKLU0nIQn3ofAgUQQ8UREz13uJ30/dp+6Qs5nJ9ue8vppgXkfm8ufaITZUQs04g9XG3JuGLjRImd2q/n5pp1443FEliOGxc1Owz1nJVnCgK2yWAzzj4Aq2c4ndiY5vf7Xd6msfTocokSi4EuGsCyHC5wqYKAR48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgLEc/CH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7mI6Y4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D536C4CEE5;
-	Tue,  8 Apr 2025 12:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgLEc/CH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3FDC4CEE7;
+	Tue,  8 Apr 2025 12:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114762;
-	bh=fPWDPiDTyzrt7bUi83bei1WeaBnzS8ctJlmyxnpJ8XI=;
+	s=korg; t=1744114765;
+	bh=n1++BejQaiEtu2Sa2N8jjCSjJBlMcuiQc32ZVM0pDwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7mI6Y4psBEqR9dgDD/Fd5y4V3ur6TJugP5eigDGxTCib9GUt936HRYXSP4xtbe1q
-	 +kpFmZsigcvFEvZboZagcwsU5qJTrer/v8YqNm1dJYqyJsNTv9pjgOrgOKfDd4hS4s
-	 obYmUNeWY3FIZBZSMWmiEnXfQlEUFTPpBcb7G6rU=
+	b=zgLEc/CHq9/DciCKbTSY56btohad9F2ueoeQAlKKdoByfsk1eXQlOhV3o1aPBv+Kk
+	 zQHcmJYjPCJ5sNejkVuGrVIaL7lNgsMbfMSAEWqXOv3/KB2mCAItSG9WSg7aNezMl0
+	 QN6jX+uruh1ps7hlLjPsk7ox/FNK3UqAZ7fUFs+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 227/499] fs/ntfs3: Fix a couple integer overflows on 32bit systems
-Date: Tue,  8 Apr 2025 12:47:19 +0200
-Message-ID: <20250408104856.873022741@linuxfoundation.org>
+Subject: [PATCH 6.13 210/499] soundwire: slave: fix an OF node reference leak in soundwire slave device
+Date: Tue,  8 Apr 2025 12:47:02 +0200
+Message-ID: <20250408104856.445485703@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,43 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 5ad414f4df2294b28836b5b7b69787659d6aa708 ]
+[ Upstream commit aac2f8363f773ae1f65aab140e06e2084ac6b787 ]
 
-On 32bit systems the "off + sizeof(struct NTFS_DE)" addition can
-have an integer wrapping issue.  Fix it by using size_add().
+When initializing a soundwire slave device, an OF node is stored to the
+device with refcount incremented. However, the refcount is not
+decremented in .release(), thus call of_node_put() in
+sdw_slave_release().
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: a2e484585ad3 ("soundwire: core: add device tree support for slave devices")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20241205034844.2784964-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soundwire/slave.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 7eb9fae22f8da..78d20e4baa2c9 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -618,7 +618,7 @@ static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
- 	u32 off = le32_to_cpu(hdr->de_off);
+diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
+index 4869b073b11c2..d2d99555ec5a5 100644
+--- a/drivers/soundwire/slave.c
++++ b/drivers/soundwire/slave.c
+@@ -13,6 +13,7 @@ static void sdw_slave_release(struct device *dev)
+ {
+ 	struct sdw_slave *slave = dev_to_sdw_dev(dev);
  
- 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
--	    off + sizeof(struct NTFS_DE) > end) {
-+	    size_add(off, sizeof(struct NTFS_DE)) > end) {
- 		/* incorrect index buffer. */
- 		return false;
- 	}
-@@ -736,7 +736,7 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
- 	if (end > total)
- 		return NULL;
- 
--	if (off + sizeof(struct NTFS_DE) > end)
-+	if (size_add(off, sizeof(struct NTFS_DE)) > end)
- 		return NULL;
- 
- 	e = Add2Ptr(hdr, off);
++	of_node_put(slave->dev.of_node);
+ 	mutex_destroy(&slave->sdw_dev_lock);
+ 	kfree(slave);
+ }
 -- 
 2.39.5
 
