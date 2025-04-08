@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B2F269819;
-	Tue,  8 Apr 2025 11:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC32267F4F;
+	Tue,  8 Apr 2025 11:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111876; cv=none; b=irtP7LPLgijajbLynNd0pIjWxc4LgPU/o183j5S2kuRaNkO/Z0o3fDIjL/GzZ7g07QhHDcqSIIBo0Nslsqmb19h5DolVdWsPRWPSaBNnc1swimW7OrZr9N4yU12xsf25j4b3Jrc0nW3bT3F08rF4XfhbrUJrfc/yN5GlTCHEnoc=
+	t=1744111879; cv=none; b=fesZnougahh6jKxsYPTZEm1np4Hv6+BwXPAx61veMDuGwACyHV1ISV6rl+jEg9UyHYgQ7Iv9ojMj01FmF/PsI0eEL5rKWyOXASYtbURNAPwk++o96GoRFHBzJKEY2QGqXQwaJHYV3sISEYwmLYVxeosDObGOjsFAhrT2/jIj+Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111876; c=relaxed/simple;
-	bh=xizE3i1MUmIQsf3//NL4fbuyKHoxlNs7c7jEWLklCWU=;
+	s=arc-20240116; t=1744111879; c=relaxed/simple;
+	bh=tOQDrMJABZnEoYeNCGhPB0HWx76PKhPJX0yltLpgDow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBhrey3KKsyZKJP6owI322gLRa9SvnHVKOQnW59oebN412g5QEoFB4mBoteHX4f5fzBTizGXBN+SeL4hEquNW0B/oSiuIOGx8AleLPoAo/4UgrLjS2m/vGk40sQ6XQm/pu5NHYOteXv3v8Z0Ha6kqNuSjNNAwq/GWK0cskAeEg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA0Zwlb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hPqrBSg32knLuc3M7+ku0loDOli0vLKEmpGmXJmmkiBTPyhEiDIk2DXH5P4cfp73PlAoOgeRzr0NrgOQAH/v2aVVVHo2O8rRSfNldWYQ22sip72IgGRHybvwwMN6+LxO4D7A5zBRxLX6rjIDzFl0wtz9V4aO3D6+tQGhTYMPs68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sciEBaMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA0Zwlb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF978C4CEE5;
-	Tue,  8 Apr 2025 11:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sciEBaMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5212EC4CEE5;
+	Tue,  8 Apr 2025 11:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111876;
-	bh=xizE3i1MUmIQsf3//NL4fbuyKHoxlNs7c7jEWLklCWU=;
+	s=korg; t=1744111878;
+	bh=tOQDrMJABZnEoYeNCGhPB0HWx76PKhPJX0yltLpgDow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oA0Zwlb6HwsRfmliute9s+BdZyccTT+KoNCzlAVPfeNAaY65yvWajBSo/ru9MbHLZ
-	 LOYO2hGhCgXlFLaITf3qHlHbPKECJ+fprt4uqfSK03IV1zBX1Rqeppv9QyKy9JU5J7
-	 UHuyZysypS28loiykY31RW/7PIdxwdMwzQ0VFE/E=
+	b=sciEBaMbB3wUqzCjozR44vtyap1KQMfwvs+fdS0MukrZoMedR5ITaxZYDasNIP6TL
+	 g4ADYVkA188ErzBU9KaJR4t6eavUdlnSgeQ2GHHzZzuq8TZ6W/y6bpRku6cacILTen
+	 lwv+SDRqrBDONSfN5L0b3EgmMq07PFicHd6lwnGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Andrew Jones <ajones@ventanamicro.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 590/731] riscv: Fix check_unaligned_access_all_cpus
-Date: Tue,  8 Apr 2025 12:48:07 +0200
-Message-ID: <20250408104927.998418268@linuxfoundation.org>
+Subject: [PATCH 6.14 591/731] riscv: Change check_unaligned_access_speed_all_cpus to void
+Date: Tue,  8 Apr 2025 12:48:08 +0200
+Message-ID: <20250408104928.021306701@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
@@ -53,73 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrew Jones <ajones@ventanamicro.com>
 
-[ Upstream commit e6d0adf2eb5bb3244cb21a7a15899aa058bd384f ]
+[ Upstream commit 813d39baee3229d31420af61460b97f4fafdd352 ]
 
-check_vector_unaligned_access_emulated_all_cpus(), like its name
-suggests, will return true when all cpus emulate unaligned vector
-accesses. If the function returned false it may have been because
-vector isn't supported at all (!has_vector()) or because at least
-one cpu doesn't emulate unaligned vector accesses. Since false may
-be returned for two cases, checking for it isn't sufficient when
-attempting to determine if we should proceed with the vector speed
-check. Move the !has_vector() functionality to
-check_unaligned_access_all_cpus() in order for
-check_vector_unaligned_access_emulated_all_cpus() to return false
-for a single case.
+The return value of check_unaligned_access_speed_all_cpus() is always
+zero, so make the function void so we don't need to concern ourselves
+with it. The change also allows us to tidy up
+check_unaligned_access_all_cpus() a bit.
 
-Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
 Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250304120014.143628-13-ajones@ventanamicro.com
+Link: https://lore.kernel.org/r/20250304120014.143628-14-ajones@ventanamicro.com
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Stable-dep-of: 05ee21f0fcb8 ("riscv: Fix set up of cpu hotplug callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c       |  6 ------
- arch/riscv/kernel/unaligned_access_speed.c | 11 +++++++----
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ arch/riscv/kernel/unaligned_access_speed.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index aacbd9d7196e7..4354c87c0376f 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -609,12 +609,6 @@ bool __init check_vector_unaligned_access_emulated_all_cpus(void)
- {
- 	int cpu;
- 
--	if (!has_vector()) {
--		for_each_online_cpu(cpu)
--			per_cpu(vector_misaligned_access, cpu) = RISCV_HWPROBE_MISALIGNED_VECTOR_UNSUPPORTED;
--		return false;
--	}
--
- 	schedule_on_each_cpu(check_vector_unaligned_access_emulated);
- 
- 	for_each_online_cpu(cpu)
 diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
-index 2e41b42498c76..78ab4cb2ab050 100644
+index 78ab4cb2ab050..bca798153e37d 100644
 --- a/arch/riscv/kernel/unaligned_access_speed.c
 +++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -406,13 +406,16 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
+@@ -218,7 +218,7 @@ static int riscv_offline_cpu(unsigned int cpu)
+ }
+ 
+ /* Measure unaligned access speed on all CPUs present at boot in parallel. */
+-static int __init check_unaligned_access_speed_all_cpus(void)
++static void __init check_unaligned_access_speed_all_cpus(void)
+ {
+ 	unsigned int cpu;
+ 	unsigned int cpu_count = num_possible_cpus();
+@@ -226,7 +226,7 @@ static int __init check_unaligned_access_speed_all_cpus(void)
+ 
+ 	if (!bufs) {
+ 		pr_warn("Allocation failure, not measuring misaligned performance\n");
+-		return 0;
++		return;
+ 	}
+ 
+ 	/*
+@@ -261,12 +261,10 @@ static int __init check_unaligned_access_speed_all_cpus(void)
+ 	}
+ 
+ 	kfree(bufs);
+-	return 0;
+ }
+ #else /* CONFIG_RISCV_PROBE_UNALIGNED_ACCESS */
+-static int __init check_unaligned_access_speed_all_cpus(void)
++static void __init check_unaligned_access_speed_all_cpus(void)
+ {
+-	return 0;
+ }
+ #endif
+ 
+@@ -406,10 +404,10 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
  
  static int __init check_unaligned_access_all_cpus(void)
  {
--	bool all_cpus_emulated, all_cpus_vec_unsupported;
-+	bool all_cpus_emulated;
-+	int cpu;
+-	bool all_cpus_emulated;
+ 	int cpu;
  
- 	all_cpus_emulated = check_unaligned_access_emulated_all_cpus();
--	all_cpus_vec_unsupported = check_vector_unaligned_access_emulated_all_cpus();
+-	all_cpus_emulated = check_unaligned_access_emulated_all_cpus();
++	if (!check_unaligned_access_emulated_all_cpus())
++		check_unaligned_access_speed_all_cpus();
  
--	if (!all_cpus_vec_unsupported &&
--	    IS_ENABLED(CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS)) {
-+	if (!has_vector()) {
-+		for_each_online_cpu(cpu)
-+			per_cpu(vector_misaligned_access, cpu) = RISCV_HWPROBE_MISALIGNED_VECTOR_UNSUPPORTED;
-+	} else if (!check_vector_unaligned_access_emulated_all_cpus() &&
-+		   IS_ENABLED(CONFIG_RISCV_PROBE_VECTOR_UNALIGNED_ACCESS)) {
- 		kthread_run(vec_check_unaligned_access_speed_all_cpus,
+ 	if (!has_vector()) {
+ 		for_each_online_cpu(cpu)
+@@ -420,9 +418,6 @@ static int __init check_unaligned_access_all_cpus(void)
  			    NULL, "vec_check_unaligned_access_speed_all_cpus");
  	}
+ 
+-	if (!all_cpus_emulated)
+-		return check_unaligned_access_speed_all_cpus();
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
