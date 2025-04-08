@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E31226B2DD;
-	Tue,  8 Apr 2025 11:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D64268C6F;
+	Tue,  8 Apr 2025 11:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111554; cv=none; b=BRV7SFRPO44oT8Zy+iUY+reJ01VToiZOCjz6vUL0Yq++kLDJyQ99L2/pKiI+WegJ4Y24de22qc9oW/oUadEios9A04iwdioRHuRE+AHuMFH7UlHOLT5MQ6OwRsyNPHOmoZ8j129qRQ9mcNsoDNlN/dKvRaDmqpBsUmCeVZkGl+c=
+	t=1744111557; cv=none; b=QaxMa55w3W2fHdbH837ABdRnJSnvQBnWX2SAZc3whcHYbltB/9PpbVVkMIozg05mQBU9fF5lEJYfsF2ANroS4TtwIPowWVXoVa7hVMA6U6N7R/gpZFPSRc0xBNPkO7SxIBc4ZBlw0j4aCvl7KyMOfsHbmAw4H7hHI6oRTlmRKdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111554; c=relaxed/simple;
-	bh=493WA2urAfDYlaRD/YgHpNCoBIz7N6e3pUtmfjlczqA=;
+	s=arc-20240116; t=1744111557; c=relaxed/simple;
+	bh=ZWxebfR+gUINz4kshKB2wQ2AwX3RYOTtoyOe+BKMYR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ja24QtF+wgf6NI704OLO5j3X2KLLgFo6TnYp5w2pgA8LUbukXoW93Dc8O0687f/ANZ98jJ4/gLk0UsB8LbsK/NC+Z1s2dvjViw7PmpCZ1IuvkQqyaPZxoFTh4wFzGjBO/eO0iUwBGvbGdLX0CHMWmoGYrOnAT0H2S8A5RhBujyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7xQ8QNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fwr84Ptck2elC9nOxrYROHtQsBb2VH/y6xZtLFoeidvSX7csUpeaDJm+4u4SQuWbf+j+R5R+YSB1H1cu7yNrKScdMuwWGYKU72bOHdp0xrkLJbIbn85iNpHRup4nK1KakwO9XrDW+IYEqJDP3GuT6S3WEFk2pz9E+pDQNYjM/Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJdC20ND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7xQ8QNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ACEC4CEE5;
-	Tue,  8 Apr 2025 11:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJdC20ND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4329C4CEE5;
+	Tue,  8 Apr 2025 11:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111554;
-	bh=493WA2urAfDYlaRD/YgHpNCoBIz7N6e3pUtmfjlczqA=;
+	s=korg; t=1744111557;
+	bh=ZWxebfR+gUINz4kshKB2wQ2AwX3RYOTtoyOe+BKMYR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K7xQ8QNQy7LHk/5Hswgee7NwWYix3zpN0Akw9fAtINp0dCI1rjUM7ul+9QxZZpFFv
-	 sfzvosgCbj5usYyPDgMgFmyUthoGclH6pyLaVnoc03VEPXeCwoStFppvdVP7nChJq2
-	 X9B85WDPI8U00vRZHGHWk/vjHgBH5w0TXGssEUh4=
+	b=MJdC20NDZiVZ8nUhhrxGgwwH83k5d9rxO1ktzMnOBUD//0aTA/p0DuTznxnzgopZn
+	 +Dsh6UsiYyjyClnJcnNvJmmYc2EzXgQvw1wMd70Iz2Th8Ru9UAP94VeGVJ6q4SZW8b
+	 qrLCLvGb3hk4o8exc9GiXU0qPQekqjxfMK0Y6WuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 474/731] iio: core: Rework claim and release of direct mode to work with sparse.
-Date: Tue,  8 Apr 2025 12:46:11 +0200
-Message-ID: <20250408104925.304083849@linuxfoundation.org>
+Subject: [PATCH 6.14 475/731] iio: adc: ad7173: Grab direct mode for calibration
+Date: Tue,  8 Apr 2025 12:46:12 +0200
+Message-ID: <20250408104925.327287170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -46,97 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit d795e38df4b7ebac1072bbf7d8a5500c1ea83332 ]
+[ Upstream commit 7021d97fb89b216557561ca8cdf68144c016993b ]
 
-Initial thought was to do something similar to __cond_lock()
+While a calibration is running, better don't make the device do anything
+else.
 
-	do_iio_device_claim_direct_mode(iio_dev) ? : ({ __acquire(iio_dev); 0; })
-+ Appropriate static inline iio_device_release_direct_mode()
+To enforce that, grab direct mode during calibration.
 
-However with that, sparse generates false positives. E.g.
-
-drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c:1811:17: warning: context imbalance in 'st_lsm6dsx_read_raw' - unexpected unlock
-
-So instead, this patch rethinks the return type and makes it more
-'conditional lock like' (which is part of what is going on under the hood
-anyway) and return a boolean - true for successfully acquired, false for
-did not acquire.
-
-To allow a migration path given the rework is now non trivial, take a leaf
-out of the naming of the conditional guard we currently have for IIO
-device direct mode and drop the _mode postfix from the new functions giving
-iio_device_claim_direct() and iio_device_release_direct()
-
-Whilst the kernel supports __cond_acquires() upstream sparse does not
-yet do so.  Hence rely on sparse expanding a static inline wrapper
-to explicitly see whether __acquire() is called.
-
-Note that even with the solution here, sparse sometimes gives false
-positives. However in the few cases seen they were complex code
-structures that benefited from simplification anyway.
-
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250209180624.701140-2-jic23@kernel.org
+Fixes: 031bdc8aee01 ("iio: adc: ad7173: add calibration support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/8319fa2dc881c9899d60db4eba7fe8e984716617.1740655250.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 7021d97fb89b ("iio: adc: ad7173: Grab direct mode for calibration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iio/iio.h | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/iio/adc/ad7173.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
-index 56161e02f002c..5ed03e36178fc 100644
---- a/include/linux/iio/iio.h
-+++ b/include/linux/iio/iio.h
-@@ -10,6 +10,7 @@
- #include <linux/device.h>
- #include <linux/cdev.h>
- #include <linux/cleanup.h>
-+#include <linux/compiler_types.h>
- #include <linux/slab.h>
- #include <linux/iio/types.h>
- /* IIO TODO LIST */
-@@ -662,6 +663,31 @@ int iio_push_event(struct iio_dev *indio_dev, u64 ev_code, s64 timestamp);
- int iio_device_claim_direct_mode(struct iio_dev *indio_dev);
- void iio_device_release_direct_mode(struct iio_dev *indio_dev);
+diff --git a/drivers/iio/adc/ad7173.c b/drivers/iio/adc/ad7173.c
+index 6c4ed10ae580d..6645a811764fd 100644
+--- a/drivers/iio/adc/ad7173.c
++++ b/drivers/iio/adc/ad7173.c
+@@ -559,6 +559,9 @@ static ssize_t ad7173_write_syscalib(struct iio_dev *indio_dev,
+ 	if (ret)
+ 		return ret;
  
-+/*
-+ * Helper functions that allow claim and release of direct mode
-+ * in a fashion that doesn't generate many false positives from sparse.
-+ * Note this must remain static inline in the header so that sparse
-+ * can see the __acquire() marking. Revisit when sparse supports
-+ * __cond_acquires()
-+ */
-+static inline bool iio_device_claim_direct(struct iio_dev *indio_dev)
-+{
-+	int ret = iio_device_claim_direct_mode(indio_dev);
++	if (!iio_device_claim_direct(indio_dev))
++		return -EBUSY;
 +
-+	if (ret)
-+		return false;
+ 	mode = st->channels[chan->channel].syscalib_mode;
+ 	if (sys_calib) {
+ 		if (mode == AD7173_SYSCALIB_ZERO_SCALE)
+@@ -569,6 +572,8 @@ static ssize_t ad7173_write_syscalib(struct iio_dev *indio_dev,
+ 					      chan->address);
+ 	}
+ 
++	iio_device_release_direct(indio_dev);
 +
-+	__acquire(iio_dev);
-+
-+	return true;
-+}
-+
-+static inline void iio_device_release_direct(struct iio_dev *indio_dev)
-+{
-+	iio_device_release_direct_mode(indio_dev);
-+	__release(indio_dev);
-+}
-+
- /*
-  * This autocleanup logic is normally used via
-  * iio_device_claim_direct_scoped().
+ 	return ret ? : len;
+ }
+ 
 -- 
 2.39.5
 
