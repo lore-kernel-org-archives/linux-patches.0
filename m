@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE5726561C;
-	Tue,  8 Apr 2025 11:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C87D263C90;
+	Tue,  8 Apr 2025 11:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111151; cv=none; b=YMvgbkDjvd7xsRTgSj5LBaEM6aulEmAo9+Yezj/k7FOFq2kmsupkR24HkjU5EcGP5/+u+Nnce6g8cnQ8LNthlNxeA2QTSxNrzZhQyRyRDTI19OGkqpEmbQ6Ja58IkefHYHh/Pc0AJd/GBzUX52GcAbWfQvmI15l9Rs8x0TvOPcI=
+	t=1744111154; cv=none; b=pHy6/+00gTz3nwAE0/ezet421Wi54iFjtnshUUhG4M0kTU2Pmkp4QmmjxQDD2DKiXOFeLOYfPkYE04GVYSMdaFRpR9DuX2Viu30BSTEiNXuykmOzMx/nqS0j7fZvx1JeOd0wfyTnEPXALNf8eVKgLhf45BMo6p6PuAxT6hPT9AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111151; c=relaxed/simple;
-	bh=C2P47ynFAUBzlDVA/VQ8mqrwyyQZKe0MO6vTb5De+ME=;
+	s=arc-20240116; t=1744111154; c=relaxed/simple;
+	bh=IcVPaSAvftbJiv9hVZLK2NhYrsWG5hSd2YWPj8bLTyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bedrj7M6fA9eO2vi+HN7sjsWD9QjgUvG6AbIrA0qVAymLwB9910admwmzTm2NW1tSfT+59nlsFgAOVGfe4YDLs42/oElHufD0JcaaEMWdc8hRp3XV65/JQH9NVlPrhwEzpZUpgatpzE0wPhcFQnJGTRqLt3FYHjBU3Abbs/L8ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j02MiYtv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z3DTTrcB6TpJbFvTagAgOM1XKxw5uBCe3TgFt1r+2SEjfPSfye250VsURn+zBZtm3wu/j8SmPcBZs0EZV9WgKXg9KJ494cx40oGslkC13iS1IsrJbW2NIPorsYR4+X+fRrf5kmkNt6+n0OYZMen27kSlwShwRLmvLryMhQWCob0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqCDgvmw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j02MiYtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C69CC4CEE5;
-	Tue,  8 Apr 2025 11:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqCDgvmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4C6C4CEE5;
+	Tue,  8 Apr 2025 11:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111151;
-	bh=C2P47ynFAUBzlDVA/VQ8mqrwyyQZKe0MO6vTb5De+ME=;
+	s=korg; t=1744111154;
+	bh=IcVPaSAvftbJiv9hVZLK2NhYrsWG5hSd2YWPj8bLTyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j02MiYtvq+pDUa1HwJag5tHdd18vw7RKOJrDm6GPi7FAmQ3TPT3nQHlVmMYvDRz7L
-	 Ff529SDmIWCNTLmEJYZAJjepMsGfwnSMSuMO+HH/G0WCUalV8wKdP0gq2fgShMa34c
-	 ktrND1RuAp/OTp49LM+2yGp7fruMdQZm6riqlUXU=
+	b=sqCDgvmwRlzHky3xllvqzi8rYU+3xv4K83BOKzJj4x+/kWzRKnM0T/S3F24DiS84J
+	 j7YfygUz8QqgpFfvR/is9FeDDhdPYkpJFjYvDW1sIqVEk6eFSJ7DuuWraw+8FLzgF1
+	 FkOm1Kjm+RJOwztFDUNyIsg2VY1aQwomGJfvPCMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Jon Hunter <jonathanh@nvidia.com>,
 	Frank Li <Frank.Li@nxp.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 326/731] misc: pci_endpoint_test: Handle BAR sizes larger than INT_MAX
-Date: Tue,  8 Apr 2025 12:43:43 +0200
-Message-ID: <20250408104921.858799606@linuxfoundation.org>
+Subject: [PATCH 6.14 327/731] PCI: endpoint: pci-epf-test: Handle endianness properly
+Date: Tue,  8 Apr 2025 12:43:44 +0200
+Message-ID: <20250408104921.882816787@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -58,86 +56,344 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 7962c82a6e648d07bf0067796e4a0e69ba1fc702 ]
+[ Upstream commit 3c936e0ec0e412a3ce6072883da8682fb723d573 ]
 
-Running 'pcitest -b 0' fails with "TEST FAILED" when the BAR0 size
-is e.g. 8 GB.
+The struct pci_epf_test_reg is the actual data in pci-epf-test's test_reg
+BAR (usually BAR0), which the host uses to send commands (etc.), and which
+pci-epf-test uses to send back status codes.
 
-The return value of the pci_resource_len() macro can be larger than that
-of a signed integer type. Thus, when using 'pcitest' with an 8 GB BAR,
-the bar_size of the integer type will overflow.
+pci-epf-test currently reads and writes this data without any endianness
+conversion functions, which means that pci-epf-test is completely broken
+on big-endian endpoint systems.
 
-Change bar_size from integer to resource_size_t to prevent integer
-overflow for large BAR sizes with 32-bit compilers.
+PCI devices are inherently little-endian, and the data stored in the PCI
+BARs should be in little-endian.
 
-In order to handle 64-bit resource_type_t on 32-bit platforms, we would
-have needed to use a function like div_u64() or similar. Instead, change
-the code to use addition instead of division. This avoids the need for
-div_u64() or similar, while also simplifying the code.
+Use endianness conversion functions when reading and writing data to
+struct pci_epf_test_reg so that pci-epf-test will behave correctly on
+big-endian endpoint systems.
 
-Fixes: cda370ec6d1f ("misc: pci_endpoint_test: Avoid using hard-coded BAR sizes")
-Co-developed-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Fixes: 349e7a85b25f ("PCI: endpoint: functions: Add an EP function to test PCI")
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250124093300.3629624-2-cassel@kernel.org
-[mani: added fixes tag]
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20250127161242.104651-2-cassel@kernel.org
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/pci_endpoint_test.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-test.c | 126 ++++++++++--------
+ 1 file changed, 73 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
-index 7584d18768598..9dac7cbe8748c 100644
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -272,9 +272,9 @@ static const u32 bar_test_pattern[] = {
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index b94e205ae10b9..2409787cf56d9 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -66,17 +66,17 @@ struct pci_epf_test {
  };
  
- static int pci_endpoint_test_bar_memcmp(struct pci_endpoint_test *test,
--					enum pci_barno barno, int offset,
--					void *write_buf, void *read_buf,
--					int size)
-+					enum pci_barno barno,
-+					resource_size_t offset, void *write_buf,
-+					void *read_buf, int size)
- {
- 	memset(write_buf, bar_test_pattern[barno], size);
- 	memcpy_toio(test->bar[barno] + offset, write_buf, size);
-@@ -287,10 +287,11 @@ static int pci_endpoint_test_bar_memcmp(struct pci_endpoint_test *test,
- static int pci_endpoint_test_bar(struct pci_endpoint_test *test,
- 				  enum pci_barno barno)
- {
--	int j, bar_size, buf_size, iters;
-+	resource_size_t bar_size, offset = 0;
- 	void *write_buf __free(kfree) = NULL;
- 	void *read_buf __free(kfree) = NULL;
- 	struct pci_dev *pdev = test->pdev;
-+	int buf_size;
+ struct pci_epf_test_reg {
+-	u32	magic;
+-	u32	command;
+-	u32	status;
+-	u64	src_addr;
+-	u64	dst_addr;
+-	u32	size;
+-	u32	checksum;
+-	u32	irq_type;
+-	u32	irq_number;
+-	u32	flags;
+-	u32	caps;
++	__le32 magic;
++	__le32 command;
++	__le32 status;
++	__le64 src_addr;
++	__le64 dst_addr;
++	__le32 size;
++	__le32 checksum;
++	__le32 irq_type;
++	__le32 irq_number;
++	__le32 flags;
++	__le32 caps;
+ } __packed;
  
- 	if (!test->bar[barno])
- 		return -ENOMEM;
-@@ -314,11 +315,12 @@ static int pci_endpoint_test_bar(struct pci_endpoint_test *test,
- 	if (!read_buf)
- 		return -ENOMEM;
+ static struct pci_epf_header test_header = {
+@@ -324,13 +324,17 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 	struct pci_epc *epc = epf->epc;
+ 	struct device *dev = &epf->dev;
+ 	struct pci_epc_map src_map, dst_map;
+-	u64 src_addr = reg->src_addr;
+-	u64 dst_addr = reg->dst_addr;
+-	size_t copy_size = reg->size;
++	u64 src_addr = le64_to_cpu(reg->src_addr);
++	u64 dst_addr = le64_to_cpu(reg->dst_addr);
++	size_t orig_size, copy_size;
+ 	ssize_t map_size = 0;
++	u32 flags = le32_to_cpu(reg->flags);
++	u32 status = 0;
+ 	void *copy_buf = NULL, *buf;
  
--	iters = bar_size / buf_size;
--	for (j = 0; j < iters; j++)
--		if (pci_endpoint_test_bar_memcmp(test, barno, buf_size * j,
--						 write_buf, read_buf, buf_size))
-+	while (offset < bar_size) {
-+		if (pci_endpoint_test_bar_memcmp(test, barno, offset, write_buf,
-+						 read_buf, buf_size))
- 			return -EIO;
-+		offset += buf_size;
-+	}
+-	if (reg->flags & FLAG_USE_DMA) {
++	orig_size = copy_size = le32_to_cpu(reg->size);
++
++	if (flags & FLAG_USE_DMA) {
+ 		if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->device->cap_mask)) {
+ 			dev_err(dev, "DMA controller doesn't support MEMCPY\n");
+ 			ret = -EINVAL;
+@@ -350,7 +354,7 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 				      src_addr, copy_size, &src_map);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to map source address\n");
+-			reg->status = STATUS_SRC_ADDR_INVALID;
++			status = STATUS_SRC_ADDR_INVALID;
+ 			goto free_buf;
+ 		}
  
- 	return 0;
+@@ -358,7 +362,7 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 					   dst_addr, copy_size, &dst_map);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to map destination address\n");
+-			reg->status = STATUS_DST_ADDR_INVALID;
++			status = STATUS_DST_ADDR_INVALID;
+ 			pci_epc_mem_unmap(epc, epf->func_no, epf->vfunc_no,
+ 					  &src_map);
+ 			goto free_buf;
+@@ -367,7 +371,7 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 		map_size = min_t(size_t, dst_map.pci_size, src_map.pci_size);
+ 
+ 		ktime_get_ts64(&start);
+-		if (reg->flags & FLAG_USE_DMA) {
++		if (flags & FLAG_USE_DMA) {
+ 			ret = pci_epf_test_data_transfer(epf_test,
+ 					dst_map.phys_addr, src_map.phys_addr,
+ 					map_size, 0, DMA_MEM_TO_MEM);
+@@ -391,8 +395,8 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 		map_size = 0;
+ 	}
+ 
+-	pci_epf_test_print_rate(epf_test, "COPY", reg->size, &start,
+-				&end, reg->flags & FLAG_USE_DMA);
++	pci_epf_test_print_rate(epf_test, "COPY", orig_size, &start, &end,
++				flags & FLAG_USE_DMA);
+ 
+ unmap:
+ 	if (map_size) {
+@@ -405,9 +409,10 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 
+ set_status:
+ 	if (!ret)
+-		reg->status |= STATUS_COPY_SUCCESS;
++		status |= STATUS_COPY_SUCCESS;
+ 	else
+-		reg->status |= STATUS_COPY_FAIL;
++		status |= STATUS_COPY_FAIL;
++	reg->status = cpu_to_le32(status);
  }
+ 
+ static void pci_epf_test_read(struct pci_epf_test *epf_test,
+@@ -423,9 +428,14 @@ static void pci_epf_test_read(struct pci_epf_test *epf_test,
+ 	struct pci_epc *epc = epf->epc;
+ 	struct device *dev = &epf->dev;
+ 	struct device *dma_dev = epf->epc->dev.parent;
+-	u64 src_addr = reg->src_addr;
+-	size_t src_size = reg->size;
++	u64 src_addr = le64_to_cpu(reg->src_addr);
++	size_t orig_size, src_size;
+ 	ssize_t map_size = 0;
++	u32 flags = le32_to_cpu(reg->flags);
++	u32 checksum = le32_to_cpu(reg->checksum);
++	u32 status = 0;
++
++	orig_size = src_size = le32_to_cpu(reg->size);
+ 
+ 	src_buf = kzalloc(src_size, GFP_KERNEL);
+ 	if (!src_buf) {
+@@ -439,12 +449,12 @@ static void pci_epf_test_read(struct pci_epf_test *epf_test,
+ 					   src_addr, src_size, &map);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to map address\n");
+-			reg->status = STATUS_SRC_ADDR_INVALID;
++			status = STATUS_SRC_ADDR_INVALID;
+ 			goto free_buf;
+ 		}
+ 
+ 		map_size = map.pci_size;
+-		if (reg->flags & FLAG_USE_DMA) {
++		if (flags & FLAG_USE_DMA) {
+ 			dst_phys_addr = dma_map_single(dma_dev, buf, map_size,
+ 						       DMA_FROM_DEVICE);
+ 			if (dma_mapping_error(dma_dev, dst_phys_addr)) {
+@@ -481,11 +491,11 @@ static void pci_epf_test_read(struct pci_epf_test *epf_test,
+ 		map_size = 0;
+ 	}
+ 
+-	pci_epf_test_print_rate(epf_test, "READ", reg->size, &start,
+-				&end, reg->flags & FLAG_USE_DMA);
++	pci_epf_test_print_rate(epf_test, "READ", orig_size, &start, &end,
++				flags & FLAG_USE_DMA);
+ 
+-	crc32 = crc32_le(~0, src_buf, reg->size);
+-	if (crc32 != reg->checksum)
++	crc32 = crc32_le(~0, src_buf, orig_size);
++	if (crc32 != checksum)
+ 		ret = -EIO;
+ 
+ unmap:
+@@ -497,9 +507,10 @@ static void pci_epf_test_read(struct pci_epf_test *epf_test,
+ 
+ set_status:
+ 	if (!ret)
+-		reg->status |= STATUS_READ_SUCCESS;
++		status |= STATUS_READ_SUCCESS;
+ 	else
+-		reg->status |= STATUS_READ_FAIL;
++		status |= STATUS_READ_FAIL;
++	reg->status = cpu_to_le32(status);
+ }
+ 
+ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+@@ -514,9 +525,13 @@ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+ 	struct pci_epc *epc = epf->epc;
+ 	struct device *dev = &epf->dev;
+ 	struct device *dma_dev = epf->epc->dev.parent;
+-	u64 dst_addr = reg->dst_addr;
+-	size_t dst_size = reg->size;
++	u64 dst_addr = le64_to_cpu(reg->dst_addr);
++	size_t orig_size, dst_size;
+ 	ssize_t map_size = 0;
++	u32 flags = le32_to_cpu(reg->flags);
++	u32 status = 0;
++
++	orig_size = dst_size = le32_to_cpu(reg->size);
+ 
+ 	dst_buf = kzalloc(dst_size, GFP_KERNEL);
+ 	if (!dst_buf) {
+@@ -524,7 +539,7 @@ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+ 		goto set_status;
+ 	}
+ 	get_random_bytes(dst_buf, dst_size);
+-	reg->checksum = crc32_le(~0, dst_buf, dst_size);
++	reg->checksum = cpu_to_le32(crc32_le(~0, dst_buf, dst_size));
+ 	buf = dst_buf;
+ 
+ 	while (dst_size) {
+@@ -532,12 +547,12 @@ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+ 					   dst_addr, dst_size, &map);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to map address\n");
+-			reg->status = STATUS_DST_ADDR_INVALID;
++			status = STATUS_DST_ADDR_INVALID;
+ 			goto free_buf;
+ 		}
+ 
+ 		map_size = map.pci_size;
+-		if (reg->flags & FLAG_USE_DMA) {
++		if (flags & FLAG_USE_DMA) {
+ 			src_phys_addr = dma_map_single(dma_dev, buf, map_size,
+ 						       DMA_TO_DEVICE);
+ 			if (dma_mapping_error(dma_dev, src_phys_addr)) {
+@@ -576,8 +591,8 @@ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+ 		map_size = 0;
+ 	}
+ 
+-	pci_epf_test_print_rate(epf_test, "WRITE", reg->size, &start,
+-				&end, reg->flags & FLAG_USE_DMA);
++	pci_epf_test_print_rate(epf_test, "WRITE", orig_size, &start, &end,
++				flags & FLAG_USE_DMA);
+ 
+ 	/*
+ 	 * wait 1ms inorder for the write to complete. Without this delay L3
+@@ -594,9 +609,10 @@ static void pci_epf_test_write(struct pci_epf_test *epf_test,
+ 
+ set_status:
+ 	if (!ret)
+-		reg->status |= STATUS_WRITE_SUCCESS;
++		status |= STATUS_WRITE_SUCCESS;
+ 	else
+-		reg->status |= STATUS_WRITE_FAIL;
++		status |= STATUS_WRITE_FAIL;
++	reg->status = cpu_to_le32(status);
+ }
+ 
+ static void pci_epf_test_raise_irq(struct pci_epf_test *epf_test,
+@@ -605,39 +621,42 @@ static void pci_epf_test_raise_irq(struct pci_epf_test *epf_test,
+ 	struct pci_epf *epf = epf_test->epf;
+ 	struct device *dev = &epf->dev;
+ 	struct pci_epc *epc = epf->epc;
+-	u32 status = reg->status | STATUS_IRQ_RAISED;
++	u32 status = le32_to_cpu(reg->status);
++	u32 irq_number = le32_to_cpu(reg->irq_number);
++	u32 irq_type = le32_to_cpu(reg->irq_type);
+ 	int count;
+ 
+ 	/*
+ 	 * Set the status before raising the IRQ to ensure that the host sees
+ 	 * the updated value when it gets the IRQ.
+ 	 */
+-	WRITE_ONCE(reg->status, status);
++	status |= STATUS_IRQ_RAISED;
++	WRITE_ONCE(reg->status, cpu_to_le32(status));
+ 
+-	switch (reg->irq_type) {
++	switch (irq_type) {
+ 	case IRQ_TYPE_INTX:
+ 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
+ 				  PCI_IRQ_INTX, 0);
+ 		break;
+ 	case IRQ_TYPE_MSI:
+ 		count = pci_epc_get_msi(epc, epf->func_no, epf->vfunc_no);
+-		if (reg->irq_number > count || count <= 0) {
++		if (irq_number > count || count <= 0) {
+ 			dev_err(dev, "Invalid MSI IRQ number %d / %d\n",
+-				reg->irq_number, count);
++				irq_number, count);
+ 			return;
+ 		}
+ 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
+-				  PCI_IRQ_MSI, reg->irq_number);
++				  PCI_IRQ_MSI, irq_number);
+ 		break;
+ 	case IRQ_TYPE_MSIX:
+ 		count = pci_epc_get_msix(epc, epf->func_no, epf->vfunc_no);
+-		if (reg->irq_number > count || count <= 0) {
++		if (irq_number > count || count <= 0) {
+ 			dev_err(dev, "Invalid MSIX IRQ number %d / %d\n",
+-				reg->irq_number, count);
++				irq_number, count);
+ 			return;
+ 		}
+ 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
+-				  PCI_IRQ_MSIX, reg->irq_number);
++				  PCI_IRQ_MSIX, irq_number);
+ 		break;
+ 	default:
+ 		dev_err(dev, "Failed to raise IRQ, unknown type\n");
+@@ -654,21 +673,22 @@ static void pci_epf_test_cmd_handler(struct work_struct *work)
+ 	struct device *dev = &epf->dev;
+ 	enum pci_barno test_reg_bar = epf_test->test_reg_bar;
+ 	struct pci_epf_test_reg *reg = epf_test->reg[test_reg_bar];
++	u32 irq_type = le32_to_cpu(reg->irq_type);
+ 
+-	command = READ_ONCE(reg->command);
++	command = le32_to_cpu(READ_ONCE(reg->command));
+ 	if (!command)
+ 		goto reset_handler;
+ 
+ 	WRITE_ONCE(reg->command, 0);
+ 	WRITE_ONCE(reg->status, 0);
+ 
+-	if ((READ_ONCE(reg->flags) & FLAG_USE_DMA) &&
++	if ((le32_to_cpu(READ_ONCE(reg->flags)) & FLAG_USE_DMA) &&
+ 	    !epf_test->dma_supported) {
+ 		dev_err(dev, "Cannot transfer data using DMA\n");
+ 		goto reset_handler;
+ 	}
+ 
+-	if (reg->irq_type > IRQ_TYPE_MSIX) {
++	if (irq_type > IRQ_TYPE_MSIX) {
+ 		dev_err(dev, "Failed to detect IRQ type\n");
+ 		goto reset_handler;
+ 	}
 -- 
 2.39.5
 
