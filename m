@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926BE26A1A0;
-	Tue,  8 Apr 2025 12:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D513326B94A;
+	Tue,  8 Apr 2025 12:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114961; cv=none; b=PpI4suxQwpxQdEw+8GAH233zIPgzNRM8a1N0GcAyvrdBFRdwmWFdrA67MtSlb9hZP1zDGvOMXuRbb1wflLv7lBCPm8u2+MGsYvsJKqZnS96n3ly5jvDqMHntNJK3bE670/SxCtUN2WCSdXxk27hTAh7pbDSysta5kOITmcEXVLI=
+	t=1744114963; cv=none; b=uOMT8YAJUp7BXjbxGpckIM5rU03q3qDemNd+6izsaZTbuQMTww5GMF6OsjmpINgRZuNqtZ9Cob3lVdH4q/mTkoReUvVnW3N9/6anUg/Y4qlR6CvSYt7lHZFgdlsxqy+wkUjfTWWpOpJF63z4UeSRaEfA+yFN5US33snOuOGQFw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114961; c=relaxed/simple;
-	bh=8XMZReQYNx8dATsrY7EqnIsl199ixr2LKMf/eMdbFR8=;
+	s=arc-20240116; t=1744114963; c=relaxed/simple;
+	bh=u7VoE2v8f43/zdy7Yvc2jwJi0wu9vpHf9ecTEt2nV3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qA1cNW9TC+s3xUvnknh8Q0hs0XeYd8mNO5F9XfrgtgnuYnwG3HUDI6UM3KdJ/0JjWFFX2Ee7QgGR91qajkTqrNdKMt+9LWuGclyoahUnJawUACVaoQiiD1i+G8UlWqpMFdWYrxktqEImPydPsfhdEp9hyX6gxEf4OxYdOgkRkwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mg9EptXD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oaLl9zOlChFkmw37m81ErlO5fo0HVb6n7glwRBc1m51zW66lhvySAW4nuKfpcSI2dYPoHZiQxony2YradDFtL/UrptvgWa67wzLqAGndOrtnTwun7GkBBAUUsWo/lgX6F++HTFFzmvd9kVOjk1ywSpjqZmC1jGUcRqyQahES7G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZDy/GcE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mg9EptXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89285C4CEE5;
-	Tue,  8 Apr 2025 12:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZDy/GcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534ADC4CEE5;
+	Tue,  8 Apr 2025 12:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114961;
-	bh=8XMZReQYNx8dATsrY7EqnIsl199ixr2LKMf/eMdbFR8=;
+	s=korg; t=1744114963;
+	bh=u7VoE2v8f43/zdy7Yvc2jwJi0wu9vpHf9ecTEt2nV3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mg9EptXDYlEEAM5u8xZLx6sMA3GJnxNv5IaEPjtBzhpw7Mo2MpeDbWm55S1wnEFks
-	 4CGvC0T5+EeFqEuVkWjh9LhnBFdiO2VHlJj+fi/SEQitblbipGfC0J7X0h0vpAlu1y
-	 KNFvMghbdT+HU0UM8IHXwr9LVm0P0FfI8ekad8zg=
+	b=rZDy/GcEUNLgvqD5dcExFV0N2Vf2AqHG0vyKKAn+Ne/SpRTk3zClGtxC0OH/NWxNP
+	 ReBqizAysnLKbxBCMbkmM+yG92kDPgEFGOyXJuBui2Ra82XTLCTA1xissSwVUw103P
+	 rtyNaBRyZnV8SPpe88uqOU+ekKVHwgxlr8x86qq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 259/499] perf python: Check if there is space to copy all the event
-Date: Tue,  8 Apr 2025 12:47:51 +0200
-Message-ID: <20250408104857.672055085@linuxfoundation.org>
+Subject: [PATCH 6.13 260/499] perf dso: fix dso__is_kallsyms() check
+Date: Tue,  8 Apr 2025 12:47:52 +0200
+Message-ID: <20250408104857.696379930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,66 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Stephen Brennan <stephen.s.brennan@oracle.com>
 
-[ Upstream commit 89aaeaf84231157288035b366cb6300c1c6cac64 ]
+[ Upstream commit ebf0b332732dcc64239119e554faa946562b0b93 ]
 
-The pyrf_event__new() method copies the event obtained from the perf
-ring buffer to a structure that will then be turned into a python object
-for further consumption, so it copies perf_event.header.size bytes to
-its 'event' member:
+Kernel modules for which we cannot find a file on-disk will have a
+dso->long_name that looks like "[module_name]". Prior to the commit
+listed in the fixes, the dso->kernel field would be zero (for user
+space), so dso__is_kallsyms() would return false. After the commit,
+kernel module DSOs are correctly labeled, but the result is that
+dso__is_kallsyms() erroneously returns true for those modules without a
+filesystem path.
 
-  $ pahole -C pyrf_event /tmp/build/perf-tools-next/python/perf.cpython-312-x86_64-linux-gnu.so
-  struct pyrf_event {
-  	PyObject                   ob_base;              /*     0    16 */
-  	struct evsel *             evsel;                /*    16     8 */
-  	struct perf_sample         sample;               /*    24   312 */
+Later, build_id_cache__add() consults this value of is_kallsyms, and
+when true, it copies /proc/kallsyms into the cache. Users with many
+kernel modules without a filesystem path (e.g. ksplice or possibly
+kernel live patch modules) have reported excessive disk space usage in
+the build ID cache directory due to this behavior.
 
-  	/* XXX last struct has 7 bytes of padding, 2 holes */
+To reproduce the issue, it's enough to build a trivial out-of-tree hello
+world kernel module, load it using insmod, and then use:
 
-  	/* --- cacheline 5 boundary (320 bytes) was 16 bytes ago --- */
-  	union perf_event           event;                /*   336  4168 */
+   perf record -ag -- sleep 1
 
-  	/* size: 4504, cachelines: 71, members: 4 */
-  	/* member types with holes: 1, total: 2 */
-  	/* paddings: 1, sum paddings: 7 */
-  	/* last cacheline: 24 bytes */
-  };
+In the build ID directory, there will be a directory for your module
+name containing a kallsyms file.
 
-  $
+Fix this up by changing dso__is_kallsyms() to consult the
+dso_binary_type enumeration, which is also symmetric to the above checks
+for dso__is_vmlinux() and dso__is_kcore(). With this change, kallsyms is
+not cached in the build-id cache for out-of-tree modules.
 
-It was doing so without checking if the event just obtained has more
-than that space, fix it.
-
-This isn't a proper, final solution, as we need to support larger
-events, but for the time being we at least bounds check and document it.
-
-Fixes: 877108e42b1b9ba6 ("perf tools: Initial python binding")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250312203141.285263-7-acme@kernel.org
+Fixes: 02213cec64bbe ("perf maps: Mark module DSOs with kernel type")
+Signed-off-by: Stephen Brennan <stephen.s.brennan@oracle.com>
+Link: https://lore.kernel.org/r/20250318230012.2038790-1-stephen.s.brennan@oracle.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/util/dso.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 3453d150fd237..56b174d8ed9c0 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -512,6 +512,11 @@ static PyObject *pyrf_event__new(union perf_event *event)
- 	      event->header.type == PERF_RECORD_SWITCH_CPU_WIDE))
- 		return NULL;
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index bb8e8f444054d..c0472a41147c3 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -808,7 +808,9 @@ static inline bool dso__is_kcore(const struct dso *dso)
  
-+	// FIXME this better be dynamic or we need to parse everything
-+	// before calling perf_mmap__consume(), including tracepoint fields.
-+	if (sizeof(pevent->event) < event->header.size)
-+		return NULL;
+ static inline bool dso__is_kallsyms(const struct dso *dso)
+ {
+-	return RC_CHK_ACCESS(dso)->kernel && RC_CHK_ACCESS(dso)->long_name[0] != '/';
++	enum dso_binary_type bt = dso__binary_type(dso);
 +
- 	ptype = pyrf_event__type[event->header.type];
- 	pevent = PyObject_New(struct pyrf_event, ptype);
- 	if (pevent != NULL)
++	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
+ }
+ 
+ bool dso__is_object_file(const struct dso *dso);
 -- 
 2.39.5
 
