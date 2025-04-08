@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C30D264FA0;
-	Tue,  8 Apr 2025 10:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7F0264FA0;
+	Tue,  8 Apr 2025 10:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744109945; cv=none; b=YID7/d3HH1PFFmFhWticQWYW5U0lx/13oPnYYtl9X1CqOu6CGoIrxZ2gH0IOTbbM2hZ/xcZnmSIe3RkQQZQeueOgX5SspPE5x/Im4dbPaMpVnu7miu7MIFcc7TIQd2t8wauTdKeLiG8Q50mUPY5dwGsG1Bsd6KwMmrKG4fAvEi4=
+	t=1744109948; cv=none; b=VRPL9ERpNIfgYXfZ3uPRCtfmZO4icj6e6IWpvB90Badx2wWrrghNBzvlXFPKmQ/7RDZbstntDax+C1zXuSqQ9ZFKSrnQLK3TWPGeiXh2wHYCPkHDABwD0Y4nAQn8SzOvJYwOBJp4BoHEHYeTPFQSWddnyQMd58GMHt9k8mtD9tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744109945; c=relaxed/simple;
-	bh=vgLnIe7rIoz8cuJT9xuMPdD7FPwzKGKr49BP/d7ls0Y=;
+	s=arc-20240116; t=1744109948; c=relaxed/simple;
+	bh=80cnH1+XpjHWXlbMOy1pn2/LfsLmwJNgyg2TZRTiSEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw3nkNWtFED4ROUoydNODlAVt4XaIle34qmyEf0K3KvwPN8XL+M4fUAlzwmUW3M1jVdoOxX+uExyqimNCZ5278VQ7iURMLpshpUb9eRgT6PxlDBn1Z9lKLUjn6hWseMj4YRHBGrCnq7u5jRCv50YbWifjJzbPbxEZWL/S/0iJpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXL02gHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IyjyV90f8zcJF7tThVgDZZskwUlebW0RaCW/WCa1wlTThCM+UQCiIlrk6aS2MyiO48u2CHD+WZw6qKAQQK2YreDDCfQqpEnMTZSL4fFosgminV4o9NVJ1uDClaHPOepsajtE78mmLNINaNLsKOVlcYN3PPO/b3wtFITi+UgMO2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4CGxIj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXL02gHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2BCC4CEE5;
-	Tue,  8 Apr 2025 10:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4CGxIj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC085C4CEE5;
+	Tue,  8 Apr 2025 10:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744109945;
-	bh=vgLnIe7rIoz8cuJT9xuMPdD7FPwzKGKr49BP/d7ls0Y=;
+	s=korg; t=1744109948;
+	bh=80cnH1+XpjHWXlbMOy1pn2/LfsLmwJNgyg2TZRTiSEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXL02gHoyMV2LD09zpC1gPbduFCb0X6FrmenBNADIvF+OvkVn3cMKFE88bp4Azclr
-	 7kCQK9ZoAc1a5Xkkep17wHFSkuBxZzDWsThLUnHalL9i9AYTL0oFDvF0wVgFGs3NKa
-	 9nFCxYlhzwZVDazp+DxX48jc+Z7ZXMhXbfxPWYyo=
+	b=N4CGxIj05qNzd+xf/QPIwN7hMzKF92jt9bCi/fueXJ2ld5tTLcPoCGig7ottMO62Z
+	 dfQZsyoMuvnZVzIk3rs0IN2JYZRfEjloUee/4doT989atqJfPfgagoFiTb1KzE6Ct0
+	 k8V0MqIlOHwaBAv8HNlR+WMWYQ24ok6tfX0CM9B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/227] watch_queue: fix pipe accounting mismatch
-Date: Tue,  8 Apr 2025 12:48:09 +0200
-Message-ID: <20250408104823.679577697@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 085/227] proc: fix UAF in proc_get_inode()
+Date: Tue,  8 Apr 2025 12:47:43 +0200
+Message-ID: <20250408104822.933149967@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -51,55 +53,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit f13abc1e8e1a3b7455511c4e122750127f6bc9b0 ]
+commit 654b33ada4ab5e926cd9c570196fefa7bec7c1df upstream.
 
-Currently, watch_queue_set_size() modifies the pipe buffers charged to
-user->pipe_bufs without updating the pipe->nr_accounted on the pipe
-itself, due to the if (!pipe_has_watch_queue()) test in
-pipe_resize_ring(). This means that when the pipe is ultimately freed,
-we decrement user->pipe_bufs by something other than what than we had
-charged to it, potentially leading to an underflow. This in turn can
-cause subsequent too_many_pipe_buffers_soft() tests to fail with -EPERM.
+Fix race between rmmod and /proc/XXX's inode instantiation.
 
-To remedy this, explicitly account for the pipe usage in
-watch_queue_set_size() to match the number set via account_pipe_buffers()
+The bug is that pde->proc_ops don't belong to /proc, it belongs to a
+module, therefore dereferencing it after /proc entry has been registered
+is a bug unless use_pde/unuse_pde() pair has been used.
 
-(It's unclear why watch_queue_set_size() does not update nr_accounted;
-it may be due to intentional overprovisioning in watch_queue_set_size()?)
+use_pde/unuse_pde can be avoided (2 atomic ops!) because pde->proc_ops
+never changes so information necessary for inode instantiation can be
+saved _before_ proc_register() in PDE itself and used later, avoiding
+pde->proc_ops->...  dereference.
 
-Fixes: e95aada4cb93d ("pipe: wakeup wr_wait after setting max_usage")
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/206682a8-0604-49e5-8224-fdbe0c12b460@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+      rmmod                         lookup
+sys_delete_module
+                         proc_lookup_de
+			   pde_get(de);
+			   proc_get_inode(dir->i_sb, de);
+  mod->exit()
+    proc_remove
+      remove_proc_subtree
+       proc_entry_rundown(de);
+  free_module(mod);
+
+                               if (S_ISREG(inode->i_mode))
+	                         if (de->proc_ops->proc_read_iter)
+                           --> As module is already freed, will trigger UAF
+
+BUG: unable to handle page fault for address: fffffbfff80a702b
+PGD 817fc4067 P4D 817fc4067 PUD 817fc0067 PMD 102ef4067 PTE 0
+Oops: Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 26 UID: 0 PID: 2667 Comm: ls Tainted: G
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+RIP: 0010:proc_get_inode+0x302/0x6e0
+RSP: 0018:ffff88811c837998 EFLAGS: 00010a06
+RAX: dffffc0000000000 RBX: ffffffffc0538140 RCX: 0000000000000007
+RDX: 1ffffffff80a702b RSI: 0000000000000001 RDI: ffffffffc0538158
+RBP: ffff8881299a6000 R08: 0000000067bbe1e5 R09: 1ffff11023906f20
+R10: ffffffffb560ca07 R11: ffffffffb2b43a58 R12: ffff888105bb78f0
+R13: ffff888100518048 R14: ffff8881299a6004 R15: 0000000000000001
+FS:  00007f95b9686840(0000) GS:ffff8883af100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffffbfff80a702b CR3: 0000000117dd2000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ proc_lookup_de+0x11f/0x2e0
+ __lookup_slow+0x188/0x350
+ walk_component+0x2ab/0x4f0
+ path_lookupat+0x120/0x660
+ filename_lookup+0x1ce/0x560
+ vfs_statx+0xac/0x150
+ __do_sys_newstat+0x96/0x110
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+[adobriyan@gmail.com: don't do 2 atomic ops on the common path]
+Link: https://lkml.kernel.org/r/3d25ded0-1739-447e-812b-e34da7990dcf@p183
+Fixes: 778f3dd5a13c ("Fix procfs compat_ioctl regression")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/watch_queue.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/proc/generic.c       |   10 +++++++++-
+ fs/proc/inode.c         |    6 +++---
+ fs/proc/internal.h      |   14 ++++++++++++++
+ include/linux/proc_fs.h |    7 +++++--
+ 4 files changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index 73717917d8164..37da8647b4ecb 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -274,6 +274,15 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
- 	if (ret < 0)
- 		goto error;
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -563,10 +563,16 @@ struct proc_dir_entry *proc_create_reg(c
+ 	return p;
+ }
  
-+	/*
-+	 * pipe_resize_ring() does not update nr_accounted for watch_queue
-+	 * pipes, because the above vastly overprovisions. Set nr_accounted on
-+	 * and max_usage this pipe to the number that was actually charged to
-+	 * the user above via account_pipe_buffers.
-+	 */
-+	pipe->max_usage = nr_pages;
-+	pipe->nr_accounted = nr_pages;
+-static inline void pde_set_flags(struct proc_dir_entry *pde)
++static void pde_set_flags(struct proc_dir_entry *pde)
+ {
+ 	if (pde->proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
+ 		pde->flags |= PROC_ENTRY_PERMANENT;
++	if (pde->proc_ops->proc_read_iter)
++		pde->flags |= PROC_ENTRY_proc_read_iter;
++#ifdef CONFIG_COMPAT
++	if (pde->proc_ops->proc_compat_ioctl)
++		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
++#endif
+ }
+ 
+ struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
+@@ -630,6 +636,7 @@ struct proc_dir_entry *proc_create_seq_p
+ 	p->proc_ops = &proc_seq_ops;
+ 	p->seq_ops = ops;
+ 	p->state_size = state_size;
++	pde_set_flags(p);
+ 	return proc_register(parent, p);
+ }
+ EXPORT_SYMBOL(proc_create_seq_private);
+@@ -660,6 +667,7 @@ struct proc_dir_entry *proc_create_singl
+ 		return NULL;
+ 	p->proc_ops = &proc_single_ops;
+ 	p->single_show = show;
++	pde_set_flags(p);
+ 	return proc_register(parent, p);
+ }
+ EXPORT_SYMBOL(proc_create_single_data);
+--- a/fs/proc/inode.c
++++ b/fs/proc/inode.c
+@@ -684,13 +684,13 @@ struct inode *proc_get_inode(struct supe
+ 
+ 	if (S_ISREG(inode->i_mode)) {
+ 		inode->i_op = de->proc_iops;
+-		if (de->proc_ops->proc_read_iter)
++		if (pde_has_proc_read_iter(de))
+ 			inode->i_fop = &proc_iter_file_ops;
+ 		else
+ 			inode->i_fop = &proc_reg_file_ops;
+ #ifdef CONFIG_COMPAT
+-		if (de->proc_ops->proc_compat_ioctl) {
+-			if (de->proc_ops->proc_read_iter)
++		if (pde_has_proc_compat_ioctl(de)) {
++			if (pde_has_proc_read_iter(de))
+ 				inode->i_fop = &proc_iter_file_ops_compat;
+ 			else
+ 				inode->i_fop = &proc_reg_file_ops_compat;
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -79,6 +79,20 @@ static inline bool pde_is_permanent(cons
+ 	return pde->flags & PROC_ENTRY_PERMANENT;
+ }
+ 
++static inline bool pde_has_proc_read_iter(const struct proc_dir_entry *pde)
++{
++	return pde->flags & PROC_ENTRY_proc_read_iter;
++}
 +
- 	ret = -ENOMEM;
- 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
- 	if (!pages)
--- 
-2.39.5
-
++static inline bool pde_has_proc_compat_ioctl(const struct proc_dir_entry *pde)
++{
++#ifdef CONFIG_COMPAT
++	return pde->flags & PROC_ENTRY_proc_compat_ioctl;
++#else
++	return false;
++#endif
++}
++
+ extern struct kmem_cache *proc_dir_entry_cache;
+ void pde_free(struct proc_dir_entry *pde);
+ 
+--- a/include/linux/proc_fs.h
++++ b/include/linux/proc_fs.h
+@@ -20,10 +20,13 @@ enum {
+ 	 * If in doubt, ignore this flag.
+ 	 */
+ #ifdef MODULE
+-	PROC_ENTRY_PERMANENT = 0U,
++	PROC_ENTRY_PERMANENT		= 0U,
+ #else
+-	PROC_ENTRY_PERMANENT = 1U << 0,
++	PROC_ENTRY_PERMANENT		= 1U << 0,
+ #endif
++
++	PROC_ENTRY_proc_read_iter	= 1U << 1,
++	PROC_ENTRY_proc_compat_ioctl	= 1U << 2,
+ };
+ 
+ struct proc_ops {
 
 
