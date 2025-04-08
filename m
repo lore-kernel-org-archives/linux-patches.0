@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDCF269839;
-	Tue,  8 Apr 2025 12:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA1269839;
+	Tue,  8 Apr 2025 12:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116203; cv=none; b=MG+tFxr10vBJrVYJKhu1FsMANI3QlLXxFUNRCSKcIPlP0mz5BpkeGpsD8UZAFid6Fg6ZMGd2iUfotSIJB+RuYJYy4lcidc91xd1iUBHspycesgBAH35Hgl8x+NcRDl8paDBixhaV1lk2NysM4tFwZNOozIVdiw7NW+D3Ui9rnVY=
+	t=1744116206; cv=none; b=Bu0CprsuUIIwVkdSoaQ4VN1dSEgomvr9ATEB8RxdqBCtEf6ykEPwEJFeyTNEC2Nu6Pa55lmTwumr1uKmJYXbvmLpOXC8dCUZGf/I9deN4/DNdvPokV4evquusVVOUJo5HQXASHeopMJ5gJyD+eL5SR23qELgQX4zVec4Y/pisEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116203; c=relaxed/simple;
-	bh=TbMD1O2bNwuA0GuAdVKTOM4zy9X+GYomprMBwXglD2s=;
+	s=arc-20240116; t=1744116206; c=relaxed/simple;
+	bh=pi5nI257IOnDgk+lI8I2xZPf1+0APvBXeq7vy0lkUIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfaQxQ3HcSWPWjSSeabMT4t7qa3x13LIp8ov2OPEF34hrHMApHP4AB52+kkepElwB56bKr+TYpRy1QEPXqvyGJV3AkuNAGITZdFJUv1fPEI+wkocUlNPPfokw4j8x09dXBmV6hCaNjNDYybkK3UwY1bPXephQNyQFupE7Zb6O78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URFrSC92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iHLFht/Wl8sK1jIDCoLJdgytKq6PwQZMkqHqHWfgh67S9gxNIyF3U+mmkNAeEYFFf6xUz6GZVvFDt7PpXR5d7+yjgHAKrq2SIyiYMMg5lDYDc1IMpujfbuNw7QpkXR19DQkljBaVjWecN96v4GfihRraF2G2kS3iFdkNqSAhoOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i32TYk78; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URFrSC92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3D3C4CEE5;
-	Tue,  8 Apr 2025 12:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i32TYk78"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040AFC4CEE5;
+	Tue,  8 Apr 2025 12:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116203;
-	bh=TbMD1O2bNwuA0GuAdVKTOM4zy9X+GYomprMBwXglD2s=;
+	s=korg; t=1744116206;
+	bh=pi5nI257IOnDgk+lI8I2xZPf1+0APvBXeq7vy0lkUIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URFrSC92ZMa6YKY4y4xNTg0g2sLz5dSg56t7pFnxVFMfOvRD31FJt0dHjzaAN8mL8
-	 ox9nLQuQIhQzUooaza2VXlAzkBuKfTILrrnkAYBS7A+2FeDiFB5RJlXI1fBDRIKwGX
-	 A6mGYhLnh5ayfsp3dDZnckIZioXeiNXO+DFFy15o=
+	b=i32TYk78vcD44Lk9poPrDXjPjhemFlz1BzdUD+lzVqh90SpJ4KoLQw3nz3BPcbwUY
+	 PExqIo99wkRkx/ngxKllCPa3HO0EsW63TRzIpOh5O3oRC7rkKhAK0Cqm/3BZM7taOp
+	 6dVIMSKUWIHz7V8Y0/2kOziDdbKb8U7MhV9nhTcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zuoqian <zuoqian113@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/423] cpufreq: scpi: compare kHz instead of Hz
-Date: Tue,  8 Apr 2025 12:45:29 +0200
-Message-ID: <20250408104845.769701489@linuxfoundation.org>
+Subject: [PATCH 6.12 047/423] drm/bridge: ti-sn65dsi86: Fix multiple instances
+Date: Tue,  8 Apr 2025 12:46:13 +0200
+Message-ID: <20250408104846.846157046@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zuoqian <zuoqian113@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4742da9774a416908ef8e3916164192c15c0e2d1 ]
+[ Upstream commit 574f5ee2c85a00a579549d50e9fc9c6c072ee4c4 ]
 
-The CPU rate from clk_get_rate() may not be divisible by 1000
-(e.g., 133333333). But the rate calculated from frequency(kHz) is
-always divisible by 1000 (e.g., 133333000).
-Comparing the rate causes a warning during CPU scaling:
-"cpufreq: __target_index: Failed to change cpu frequency: -5".
-When we choose to compare kHz here, the issue does not occur.
+Each bridge instance creates up to four auxiliary devices with different
+names.  However, their IDs are always zero, causing duplicate filename
+errors when a system has multiple bridges:
 
-Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
-Signed-off-by: zuoqian <zuoqian113@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+    sysfs: cannot create duplicate filename '/bus/auxiliary/devices/ti_sn65dsi86.gpio.0'
+
+Fix this by using a unique instance ID per bridge instance.  The
+instance ID is derived from the I2C adapter number and the bridge's I2C
+address, to support multiple instances on the same bus.
+
+Fixes: bf73537f411b ("drm/bridge: ti-sn65dsi86: Break GPIO and MIPI-to-eDP bridge into sub-drivers")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/7a68a0e3f927e26edca6040067fb653eb06efb79.1733840089.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scpi-cpufreq.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
-index 8d73e6e8be2a5..f2d913a91be9e 100644
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -39,8 +39,9 @@ static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
- static int
- scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 582cf4f73a74c..95ce50ed53acf 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -480,6 +480,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 				       const char *name)
  {
--	u64 rate = policy->freq_table[index].frequency * 1000;
-+	unsigned long freq_khz = policy->freq_table[index].frequency;
- 	struct scpi_data *priv = policy->driver_data;
-+	unsigned long rate = freq_khz * 1000;
+ 	struct device *dev = pdata->dev;
++	const struct i2c_client *client = to_i2c_client(dev);
+ 	struct auxiliary_device *aux;
  	int ret;
  
- 	ret = clk_set_rate(priv->clk, rate);
-@@ -48,7 +49,7 @@ scpi_cpufreq_set_target(struct cpufreq_policy *policy, unsigned int index)
- 	if (ret)
- 		return ret;
+@@ -488,6 +489,7 @@ static int ti_sn65dsi86_add_aux_device(struct ti_sn65dsi86 *pdata,
+ 		return -ENOMEM;
  
--	if (clk_get_rate(priv->clk) != rate)
-+	if (clk_get_rate(priv->clk) / 1000 != freq_khz)
- 		return -EIO;
- 
- 	return 0;
+ 	aux->name = name;
++	aux->id = (client->adapter->nr << 10) | client->addr;
+ 	aux->dev.parent = dev;
+ 	aux->dev.release = ti_sn65dsi86_aux_device_release;
+ 	device_set_of_node_from_dev(&aux->dev, dev);
 -- 
 2.39.5
 
