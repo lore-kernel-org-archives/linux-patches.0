@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD3326461E;
-	Tue,  8 Apr 2025 12:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3F72686AA;
+	Tue,  8 Apr 2025 12:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115837; cv=none; b=W+TIMnPvFb2QBFhpAFLIxWa8tc0mXRns2ISLi7DtGeSnLyNc+xrZpoc2fjRrgCPJPYiVDETighlRjt3KvOE3+1YzXtLRK5xqX+nsVjzmNarzQhH3vSYNdHXZMfdqJjCeXkIsH0f6ZQQYiD6Hz6wsuiOPnPcKm/d9WK4b2DYVzRw=
+	t=1744115840; cv=none; b=oFEtFvHMQMev8WcITTfN2M6d566jMKqUyGQcDy00PLAoUQTTSUnW4BFtSJA/K90dnRMusn/INaMhqNsQ56t13oCB1WuLEXFd7Wp+1o/JUWxFRMyX1WG8hi6APsk95d9BQC7WJJbLEVWhAjDWL7WX/3MoVxif/6oVOqpo3dR4MFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115837; c=relaxed/simple;
-	bh=IhFh2bLjFL6nt42bjHzhGvw2Cr5HP0XozIxaPhuWy7s=;
+	s=arc-20240116; t=1744115840; c=relaxed/simple;
+	bh=u/lphPFJjDCbu25pUrIJlD/cjgjq0HHNOpbjKySDg2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFDc/rTth2Yt5yLmgiDBJna6HPw3w4F3LssVgK4RavHm5JEGlwEADpAETNY6k1/OP1JtAufGFJ29IBzDkO31i6c42x77MFUXJ1d3YPL+mWGfIbZNQwXz0213tIp7ejoO3AVeWfSJoIZrOGRsIz4fJn7a3BjrJ1SMjGeE3jXkpwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoKnm6QR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=luPGluYExHfP0flpW/YbGTkm1KKMD1u+xlFGZHm5ubNrqnh8y4KE7wHfhZbb81+b6qdZkcLXK/4P+vNDWPt3U+MZXk/5x+QPGqDSrTlBX3tdSwKzJWB1BIMZiviGJ8ylLUC/ZXMCJqYnnFjY87/VCGtNgjbyjc8UrV2St6Dg8kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSYVn57O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoKnm6QR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDFFC4CEE5;
-	Tue,  8 Apr 2025 12:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSYVn57O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2643C4CEE5;
+	Tue,  8 Apr 2025 12:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115837;
-	bh=IhFh2bLjFL6nt42bjHzhGvw2Cr5HP0XozIxaPhuWy7s=;
+	s=korg; t=1744115840;
+	bh=u/lphPFJjDCbu25pUrIJlD/cjgjq0HHNOpbjKySDg2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qoKnm6QRQEc4uYknpDCEF5CjV9sndcngP/2Qf31+hZXqe/bClqTpUftl7coec+Xvd
-	 lTFRPKPQmAJqifeZZ2yP54almf2uqUZd4IdDY+eQArtoXCLo/PAVsb5GNezJ+1foj6
-	 d8u/xw1/xo8XIzww5q0N7NAWhtbhwz+6HcK9goYY=
+	b=DSYVn57OHWSlon5M80Bg8BoPBxUT0va1MxDeMz61YNL0KlmO0pStU08Wmb4UpxjAt
+	 H4y4AiF69mD/DfzN6k8P1KVLCbVyNSS6QMskruwmLzEslIqtCok49GKU8ow9CUjLH7
+	 35/j6R9DEZluUc1orDgaJ3OUreneVHRMpdN6Wjbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Heelan <seanheelan@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/204] ksmbd: fix multichannel connection failure
-Date: Tue,  8 Apr 2025 12:50:46 +0200
-Message-ID: <20250408104823.723823996@linuxfoundation.org>
+Subject: [PATCH 6.1 125/204] rcu-tasks: Always inline rcu_irq_work_resched()
+Date: Tue,  8 Apr 2025 12:50:55 +0200
+Message-ID: <20250408104823.976545941@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,125 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit c1883049aa9b2b7dffd3a68c5fc67fa92c174bd9 ]
+[ Upstream commit 6309a5c43b0dc629851f25b2e5ef8beff61d08e5 ]
 
-ksmbd check that the session of second channel is in the session list of
-first connection. If it is in session list, multichannel connection
-should not be allowed.
+Thanks to CONFIG_DEBUG_SECTION_MISMATCH, empty functions can be
+generated out of line.  rcu_irq_work_resched() can be called from
+noinstr code, so make sure it's always inlined.
 
-Fixes: b95629435b84 ("ksmbd: fix racy issue from session lookup and expire")
-Reported-by: Sean Heelan <seanheelan@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 564506495ca9 ("rcu/context-tracking: Move deferred nocb resched to context tracking")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/e84f15f013c07e4c410d972e75620c53b62c1b3e.1743481539.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/d1eca076-fdde-484a-b33e-70e0d167c36d@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 16 ++++++++++++++++
- fs/smb/server/mgmt/user_session.h |  2 ++
- fs/smb/server/smb2pdu.c           | 12 ++++--------
- 3 files changed, 22 insertions(+), 8 deletions(-)
+ include/linux/rcupdate.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index b1c2219ec0b42..3bcfe739ba136 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -255,6 +255,22 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
- 	up_write(&sessions_table_lock);
- }
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 6858cae98da9e..d001a69fcb7d4 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -133,7 +133,7 @@ static inline void rcu_sysrq_end(void) { }
+ #if defined(CONFIG_NO_HZ_FULL) && (!defined(CONFIG_GENERIC_ENTRY) || !defined(CONFIG_KVM_XFER_TO_GUEST_WORK))
+ void rcu_irq_work_resched(void);
+ #else
+-static inline void rcu_irq_work_resched(void) { }
++static __always_inline void rcu_irq_work_resched(void) { }
+ #endif
  
-+bool is_ksmbd_session_in_connection(struct ksmbd_conn *conn,
-+				   unsigned long long id)
-+{
-+	struct ksmbd_session *sess;
-+
-+	down_read(&conn->session_lock);
-+	sess = xa_load(&conn->sessions, id);
-+	if (sess) {
-+		up_read(&conn->session_lock);
-+		return true;
-+	}
-+	up_read(&conn->session_lock);
-+
-+	return false;
-+}
-+
- struct ksmbd_session *ksmbd_session_lookup(struct ksmbd_conn *conn,
- 					   unsigned long long id)
- {
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index ce91b1d698e71..f4da293c4dbb2 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -87,6 +87,8 @@ void ksmbd_session_destroy(struct ksmbd_session *sess);
- struct ksmbd_session *ksmbd_session_lookup_slowpath(unsigned long long id);
- struct ksmbd_session *ksmbd_session_lookup(struct ksmbd_conn *conn,
- 					   unsigned long long id);
-+bool is_ksmbd_session_in_connection(struct ksmbd_conn *conn,
-+				     unsigned long long id);
- int ksmbd_session_register(struct ksmbd_conn *conn,
- 			   struct ksmbd_session *sess);
- void ksmbd_sessions_deregister(struct ksmbd_conn *conn);
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 646c4047d3b94..12bf3712ba2d3 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1723,44 +1723,38 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 
- 		if (conn->dialect != sess->dialect) {
- 			rc = -EINVAL;
--			ksmbd_user_session_put(sess);
- 			goto out_err;
- 		}
- 
- 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
- 			rc = -EINVAL;
--			ksmbd_user_session_put(sess);
- 			goto out_err;
- 		}
- 
- 		if (strncmp(conn->ClientGUID, sess->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE)) {
- 			rc = -ENOENT;
--			ksmbd_user_session_put(sess);
- 			goto out_err;
- 		}
- 
- 		if (sess->state == SMB2_SESSION_IN_PROGRESS) {
- 			rc = -EACCES;
--			ksmbd_user_session_put(sess);
- 			goto out_err;
- 		}
- 
- 		if (sess->state == SMB2_SESSION_EXPIRED) {
- 			rc = -EFAULT;
--			ksmbd_user_session_put(sess);
- 			goto out_err;
- 		}
--		ksmbd_user_session_put(sess);
- 
- 		if (ksmbd_conn_need_reconnect(conn)) {
- 			rc = -EFAULT;
-+			ksmbd_user_session_put(sess);
- 			sess = NULL;
- 			goto out_err;
- 		}
- 
--		sess = ksmbd_session_lookup(conn, sess_id);
--		if (!sess) {
-+		if (is_ksmbd_session_in_connection(conn, sess_id)) {
- 			rc = -EACCES;
- 			goto out_err;
- 		}
-@@ -1926,6 +1920,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 
- 			sess->last_active = jiffies;
- 			sess->state = SMB2_SESSION_EXPIRED;
-+			ksmbd_user_session_put(sess);
-+			work->sess = NULL;
- 			if (try_delay) {
- 				ksmbd_conn_set_need_reconnect(conn);
- 				ssleep(5);
+ #ifdef CONFIG_RCU_NOCB_CPU
 -- 
 2.39.5
 
