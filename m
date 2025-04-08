@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739A0276046;
-	Tue,  8 Apr 2025 12:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E37E20A5C3;
+	Tue,  8 Apr 2025 12:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116372; cv=none; b=e9wB1AbZFwuWPL5Hg84+AghMuisNEGWwARBMrjy7+IJdIHBRaa0feITR6JNDfRNiqEXGI7I5ZoRKOPYqW5NWVT42qsdNW+W9OUARfQwuOfe/7OYb7PTWkLpEQPwjFnmgCPz4vX3znBnSzpkxCKJLT3P7Pqxgcc95CrZbzLGKaIY=
+	t=1744116375; cv=none; b=EAChJXOB8ajyup9bk3q0jXqDU7OlmWFgfGtuDBTOOp7wDLpB64s+Zrc67h9eLq9FxtBIqsmVQv+Qc83dPvlzz4zUao9DSznVGpVWD0qkUMEgvJhT/s8VkyhET3L2BHLn8gVoD7lpoXO1yzdNfv6YXIfscD6D4gRrRv0ptL+Z/3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116372; c=relaxed/simple;
-	bh=uwd79va/NARgCV45MPgGOl586uZqKBevi3P6QmpoEX8=;
+	s=arc-20240116; t=1744116375; c=relaxed/simple;
+	bh=TJgD8YMe2oR3bVWRMuEMunYaMtpOYeKAP2PVZCSboBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJRT8dW52DEec+aj3AzRDL83ZPDioR/pABa/bjea9VgwBiWimBR/lDHmlPdlX1Kxjp497iesgrRdg0Udtb1sl0tFo1toxRlVvA9562Gj9uXF82ITkmQB0yDxxXS+lqCtWZhRalqgRhOWq0mhGuyQRwVJjKavUgct7tU9VcYB7FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0N0iEmJs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ivOZ1MndACYoj19g5jixBXbVGX4Mi5FxZqTchZk0dKxrimCxb0j5bgkfOUukSo5IQon77WUO/LcAnACdTIKV/HSWK+gG4klsrQAa+RBpio0kc3vLKbsBbxspCn8WoUrjyFeGHhKDO55bRS6AQ/eDVD68tB2je5cD8yeNFg5p3K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJz2xo3b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0N0iEmJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E06C4CEE5;
-	Tue,  8 Apr 2025 12:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJz2xo3b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8675C4CEE5;
+	Tue,  8 Apr 2025 12:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116372;
-	bh=uwd79va/NARgCV45MPgGOl586uZqKBevi3P6QmpoEX8=;
+	s=korg; t=1744116375;
+	bh=TJgD8YMe2oR3bVWRMuEMunYaMtpOYeKAP2PVZCSboBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0N0iEmJswtgPtUDliHMXUmZ73o1xv/TdYCrbZj1pQwVkLFPXVMlSOz0+M3Np4xnhE
-	 omy7KZDKv9Z6941FYRv3PyZEzOKu/i1pI5rRvnLauRJaCpcw7u44oUW0tZvcPExhW5
-	 EPBbP21v2UqZ6vknySr3Cx/rj9gcHuEaLgu0r2a8=
+	b=uJz2xo3byNI8ya1mrTXhyYdVL3QBcwo+Tu9WrbCwQObP+0H+JW9S/K54u7IqIAhBQ
+	 TgBYqWfS4rXokXU1l7hUpyHI0nYcuyq1KUCZMitVa4gXrUGNdLGrOOO/vsJugUdcfX
+	 wRf2yK+JJuRXJTXY+mFRBmmviHCHNkOQYCDipAZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will McVicker <willmcvicker@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 116/423] clk: samsung: Fix UBSAN panic in samsung_clk_init()
-Date: Tue,  8 Apr 2025 12:47:22 +0200
-Message-ID: <20250408104848.430652140@linuxfoundation.org>
+Subject: [PATCH 6.12 117/423] pinctrl: nuvoton: npcm8xx: Fix error handling in npcm8xx_gpio_fw()
+Date: Tue,  8 Apr 2025 12:47:23 +0200
+Message-ID: <20250408104848.454057929@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,51 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will McVicker <willmcvicker@google.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit d19d7345a7bcdb083b65568a11b11adffe0687af ]
+[ Upstream commit d6c6fd77e5816e3f6689a2767cdd777797506f24 ]
 
-With UBSAN_ARRAY_BOUNDS=y, I'm hitting the below panic due to
-dereferencing `ctx->clk_data.hws` before setting
-`ctx->clk_data.num = nr_clks`. Move that up to fix the crash.
+fwnode_irq_get() was changed to not return 0, fix this by checking
+for negative error, also update the error log.
 
-  UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
-  <snip>
-  Call trace:
-   samsung_clk_init+0x110/0x124 (P)
-   samsung_clk_init+0x48/0x124 (L)
-   samsung_cmu_register_one+0x3c/0xa0
-   exynos_arm64_register_cmu+0x54/0x64
-   __gs101_cmu_top_of_clk_init_declare+0x28/0x60
-   ...
-
-Fixes: e620a1e061c4 ("drivers/clk: convert VL struct to struct_size")
-Signed-off-by: Will McVicker <willmcvicker@google.com>
-Link: https://lore.kernel.org/r/20250212183253.509771-1-willmcvicker@google.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: acf4884a5717 ("pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver")
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/20250118031334.243324-1-yuehaibing@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk.c b/drivers/clk/samsung/clk.c
-index afa5760ed3a11..e6533513f8ac2 100644
---- a/drivers/clk/samsung/clk.c
-+++ b/drivers/clk/samsung/clk.c
-@@ -74,12 +74,12 @@ struct samsung_clk_provider * __init samsung_clk_init(struct device *dev,
- 	if (!ctx)
- 		panic("could not allocate clock provider context.\n");
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index d09a5e9b2eca5..17825bbe14213 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -2361,8 +2361,8 @@ static int npcm8xx_gpio_fw(struct npcm8xx_pinctrl *pctrl)
+ 			return dev_err_probe(dev, ret, "gpio-ranges fail for GPIO bank %u\n", id);
  
-+	ctx->clk_data.num = nr_clks;
- 	for (i = 0; i < nr_clks; ++i)
- 		ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
+ 		ret = fwnode_irq_get(child, 0);
+-		if (!ret)
+-			return dev_err_probe(dev, ret, "No IRQ for GPIO bank %u\n", id);
++		if (ret < 0)
++			return dev_err_probe(dev, ret, "Failed to retrieve IRQ for bank %u\n", id);
  
- 	ctx->dev = dev;
- 	ctx->reg_base = base;
--	ctx->clk_data.num = nr_clks;
- 	spin_lock_init(&ctx->lock);
- 
- 	return ctx;
+ 		pctrl->gpio_bank[id].irq = ret;
+ 		pctrl->gpio_bank[id].irq_chip = npcmgpio_irqchip;
 -- 
 2.39.5
 
