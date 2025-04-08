@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3788219301;
-	Tue,  8 Apr 2025 11:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37D22257E;
+	Tue,  8 Apr 2025 11:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111953; cv=none; b=pUJEHV1UMdbATzEeUxF+ZmxEYx+fLS9ly9zj+wWtZgyKMptzOL8CHaegZcTECoBQAjLYmDYjNHaAqs6l1zy6NFSunxnvuUR4vtdIx20hcRbkL4y6j5RaKlmKnSlpPw+PMuiRgOElqkBrSjSF49UREUn5+o5w8AgcVf56E61luME=
+	t=1744111956; cv=none; b=gqwVRtiMyqrH887t5Z7hGGb772XP6q2FFC1TU+7OvGYKOLPlaxNyolB98zdMvMuvsHt3gJRXWeFRrvJDCuGF0b6HREE9l4brpmHKt8ADjSu/ZxQEWTb3qVorHKnJEMrGcSzSipZwzlLEs3Xs0IWE0t5h2IM6w1kLdzVxJf5ZCRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111953; c=relaxed/simple;
-	bh=3btJzbsnsanMjp5kVPZXojXOLwTVvH16T7ZIrW1qSkI=;
+	s=arc-20240116; t=1744111956; c=relaxed/simple;
+	bh=EsQvZ8SmJ6RxoRT3Su2SWLXVZgQApmQyr4d6nATwkTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTitTkMBi2qCqF1osxSjVbpTpEOUrWqNXlXK/QlKZ1xUPYc0g6fBjq0K8Jg5w2uqkkgsRt7gE2WlCR3hj0hi6cM2lfwOOUF1uTFttgyoOCMtpzwDfWb1gIs5XQsvNL7cUt/NzDJ8keGwDdquaDtHw2nnwf5aYyVUYPzNLviJM8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/dBmRzw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDN0+9bN1SI4H/wrZ+CXgoInW8ySxEAqbJzwsTEPPl6w3NO8wqamj800BC5GsXKtfpdIxTNsoF/hM2+u67t8qL+bqk+RIsJUmFcneY3am1dmZ5BsDcHFN+gt2RwFwa7GeOblQwGDiGWXnEhCWnLZSFFpV28tc0uX40vPuuUh0ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFxFrJiT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/dBmRzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EC8C4CEE5;
-	Tue,  8 Apr 2025 11:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFxFrJiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071F8C4CEE5;
+	Tue,  8 Apr 2025 11:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111953;
-	bh=3btJzbsnsanMjp5kVPZXojXOLwTVvH16T7ZIrW1qSkI=;
+	s=korg; t=1744111956;
+	bh=EsQvZ8SmJ6RxoRT3Su2SWLXVZgQApmQyr4d6nATwkTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/dBmRzwKTtJ+xgRjK3Ic5oE/uOkzOsWKMVb5rKfLagkWcc2YYIyaZrb0ShUZmpuX
-	 tcR7B6Br3CB/BZksfr4JM3jkXntnjplBdc77dNaUvebrS13dlBpNNk2NJT4PmyJlCd
-	 15s/tmO91eU4M+SyzJrvc0f35bLgr9lzQcQQ/430=
+	b=JFxFrJiTvycNbHstRKcweJN/ycbqgEnRdr6LOPuJtoHwMOsk3LlKZV5l5zQ49p/Sv
+	 hzeH8QPXGy2yWL4zu5AxelQeYMnga1Lf/JF4XsQ7a4XmeAdXo50N4TptPgSawgrSdK
+	 NTpg0G6F4bXw6gpKX7oKAUhOgtUjq3aKu04v17jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com,
-	Nishanth Devarajan <ndev2021@gmail.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 621/731] net_sched: skbprio: Remove overly strict queue assertions
-Date: Tue,  8 Apr 2025 12:48:38 +0200
-Message-ID: <20250408104928.717813138@linuxfoundation.org>
+Subject: [PATCH 6.14 595/731] ALSA: hda/realtek: Fix built-in mic breakage on ASUS VivoBook X515JA
+Date: Tue,  8 Apr 2025 12:48:12 +0200
+Message-ID: <20250408104928.114562340@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,58 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ce8fe975fd99b49c29c42e50f2441ba53112b2e8 ]
+[ Upstream commit 84c3c08f5a6c2e2209428b76156bcaf349c3a62d ]
 
-In the current implementation, skbprio enqueue/dequeue contains an assertion
-that fails under certain conditions when SKBPRIO is used as a child qdisc under
-TBF with specific parameters. The failure occurs because TBF sometimes peeks at
-packets in the child qdisc without actually dequeuing them when tokens are
-unavailable.
+ASUS VivoBook X515JA with PCI SSID 1043:14f2 also hits the same issue
+as other VivoBook model about the mic pin assignment, and the same
+workaround is required to apply ALC256_FIXUP_ASUS_MIC_NO_PRESENCE
+quirk.
 
-This peek operation creates a discrepancy between the parent and child qdisc
-queue length counters. When TBF later receives a high-priority packet,
-SKBPRIO's queue length may show a different value than what's reflected in its
-internal priority queue tracking, triggering the assertion.
-
-The fix removes this overly strict assertions in SKBPRIO, they are not
-necessary at all.
-
-Reported-by: syzbot+a3422a19b05ea96bee18@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a3422a19b05ea96bee18
-Fixes: aea5f654e6b7 ("net/sched: add skbprio scheduler")
-Cc: Nishanth Devarajan <ndev2021@gmail.com>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250329222536.696204-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219902
+Link: https://patch.msgid.link/20250326152205.26733-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_skbprio.c | 3 ---
- 1 file changed, 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_skbprio.c b/net/sched/sch_skbprio.c
-index 20ff7386b74bd..f485f62ab721a 100644
---- a/net/sched/sch_skbprio.c
-+++ b/net/sched/sch_skbprio.c
-@@ -123,8 +123,6 @@ static int skbprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	/* Check to update highest and lowest priorities. */
- 	if (skb_queue_empty(lp_qdisc)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			/* The incoming packet is the only packet in queue. */
--			BUG_ON(sch->q.qlen != 1);
- 			q->lowest_prio = prio;
- 			q->highest_prio = prio;
- 		} else {
-@@ -156,7 +154,6 @@ static struct sk_buff *skbprio_dequeue(struct Qdisc *sch)
- 	/* Update highest priority field. */
- 	if (skb_queue_empty(hpq)) {
- 		if (q->lowest_prio == q->highest_prio) {
--			BUG_ON(sch->q.qlen);
- 			q->highest_prio = 0;
- 			q->lowest_prio = SKBPRIO_MAX_PRIORITY - 1;
- 		} else {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index d70c72bda90a5..9df400f7a144e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10736,6 +10736,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1493, "ASUS GV601VV/VU/VJ/VQ/VI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x14d3, "ASUS G614JY/JZ/JG", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x14e3, "ASUS G513PI/PU/PV", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x14f2, "ASUS VivoBook X515JA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1503, "ASUS G733PY/PZ/PZV/PYV", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.39.5
 
