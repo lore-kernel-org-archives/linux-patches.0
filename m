@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693FA26AA9B;
-	Tue,  8 Apr 2025 12:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C86A26AA88;
+	Tue,  8 Apr 2025 12:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114167; cv=none; b=oNUyBDyyXnYZbza4e4KHo3e56XZ1XKEX81RcSyXEdPhndHqhQYvKN1wqn4tGRRt2VqT2qmVBcc4a3e6iFQ996MOrrzJhl7tVX0NMniod4dASW0afu8/gOlfIxEsKFxiLXj0sFQCFvSNUgImvHsNmxhHEUUpLFsM04+BeU0unXA8=
+	t=1744114170; cv=none; b=KU2Q/0c7h5DSzu5OlpmBTsvF/vDhtYNyD8KG/JZdddN1TIrGD/PuzZGSKEHs8bm1OE4VI7YDUftOSe+lX0A2IMWxSZQrRW2I/0yN3F9CUJIWZHgHjERmRU5MA7virhoPCmntA/PD8IBi7tse+oX0wIjJ84xvVoBQugU298HxYRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114167; c=relaxed/simple;
-	bh=K3b8s1FfJXOWPpIaBU64PETL9rveaAZXSQHVearwoRw=;
+	s=arc-20240116; t=1744114170; c=relaxed/simple;
+	bh=wLq+Hl1TNDRxBoil+X0wrJs4pb9oK4aIGfA8mek6mN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efkxHe9aitoVKXCro9416Icl52UelWVtQzko9llZZhiIX6rmMUiSsFp/ihCIEbaOYgfim3Ws0Q6md1dYBtg05LaTkm9ZxlwkFYhjVUgYg3o0LoB5LrmjDOJFdW3zpqe4LqRdea6y5bh3OEfPJa3YXlWmr0k0NEtlVa0afWFZsRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHYhIbqT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFr7hXqxaEwPU+TzEAZsAzxAoZTmMMmPk6NTa/N3ocBb/I5vC22k0BwHNy3xqK+bIS4RoCdPW4nFdKKqANj3Lih1m8necgXMm2b5NSOuZ5ZHiZsQPW5G8K6Qjl4FS5O0r86h1lTeoO6sUgSicav1uPBRzcSMK9isSYst0jYqKVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9AIhCwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHYhIbqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0160C4CEE5;
-	Tue,  8 Apr 2025 12:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9AIhCwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1637C4CEE5;
+	Tue,  8 Apr 2025 12:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114167;
-	bh=K3b8s1FfJXOWPpIaBU64PETL9rveaAZXSQHVearwoRw=;
+	s=korg; t=1744114170;
+	bh=wLq+Hl1TNDRxBoil+X0wrJs4pb9oK4aIGfA8mek6mN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHYhIbqT7yvE6vH3IbSwu2LsIP7mb5qZ7J8FRrnHvuI+hSHkRZKrvxTqG/iYA5aFA
-	 7RrwEidOUgwg82+romc8MRdnCIa+dtMCMLj2gjmHE0ycR9sJySkJc7W1EC8dpvd8mY
-	 yUD51PqKQwtJ1JUJ2xlUnlRCBYz7R4RM55dTEWEo=
+	b=L9AIhCwJmVnGfm6vXGBWaH4a86gJR8/8vg04XzSefWDcO72qeyc0Ttj4yBL5IdvkI
+	 3EuFTA48tnOOW3esvdR4ZXcQDBYK1tSUG5wF/A70q4LMZeFiIoKZSs3+KGCmNWKCRg
+	 d6qUVuDx984ldwHpf73EeNCOdqIJSxayilmXPhns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+9120834fc227768625ba@syzkaller.appspotmail.com>,
-	Roman Smirnov <r.smirnov@omp.ru>,
+	syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 5.4 154/154] jfs: add index corruption check to DT_GETPAGE()
-Date: Tue,  8 Apr 2025 12:51:35 +0200
-Message-ID: <20250408104820.223637841@linuxfoundation.org>
+Subject: [PATCH 5.4 153/154] jfs: fix slab-out-of-bounds read in ea_get()
+Date: Tue,  8 Apr 2025 12:51:34 +0200
+Message-ID: <20250408104820.194360930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104815.295196624@linuxfoundation.org>
 References: <20250408104815.295196624@linuxfoundation.org>
@@ -51,62 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit a8dfb2168906944ea61acfc87846b816eeab882d upstream.
+commit fdf480da5837c23b146c4743c18de97202fcab37 upstream.
 
-If the file system is corrupted, the header.stblindex variable
-may become greater than 127. Because of this, an array access out
-of bounds may occur:
+During the "size_check" label in ea_get(), the code checks if the extended
+attribute list (xattr) size matches ea_size. If not, it logs
+"ea_get: invalid extended attribute" and calls print_hex_dump().
 
-------------[ cut here ]------------
-UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dtree.c:3096:10
-index 237 is out of range for type 'struct dtslot[128]'
-CPU: 0 UID: 0 PID: 5822 Comm: syz-executor740 Not tainted 6.13.0-rc4-syzkaller-00110-g4099a71718b0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_out_of_bounds+0x121/0x150 lib/ubsan.c:429
- dtReadFirst+0x622/0xc50 fs/jfs/jfs_dtree.c:3096
- dtReadNext fs/jfs/jfs_dtree.c:3147 [inline]
- jfs_readdir+0x9aa/0x3c50 fs/jfs/jfs_dtree.c:2862
- wrap_directory_iterator+0x91/0xd0 fs/readdir.c:65
- iterate_dir+0x571/0x800 fs/readdir.c:108
- __do_sys_getdents64 fs/readdir.c:403 [inline]
- __se_sys_getdents64+0x1e2/0x4b0 fs/readdir.c:389
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
----[ end trace ]---
+Here, EALIST_SIZE(ea_buf->xattr) returns 4110417968, which exceeds
+INT_MAX (2,147,483,647). Then ea_size is clamped:
 
-Add a stblindex check for corruption.
+	int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
 
-Reported-by: syzbot <syzbot+9120834fc227768625ba@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=9120834fc227768625ba
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Although clamp_t aims to bound ea_size between 0 and 4110417968, the upper
+limit is treated as an int, causing an overflow above 2^31 - 1. This leads
+"size" to wrap around and become negative (-184549328).
+
+The "size" is then passed to print_hex_dump() (called "len" in
+print_hex_dump()), it is passed as type size_t (an unsigned
+type), this is then stored inside a variable called
+"int remaining", which is then assigned to "int linelen" which
+is then passed to hex_dump_to_buffer(). In print_hex_dump()
+the for loop, iterates through 0 to len-1, where len is
+18446744073525002176, calling hex_dump_to_buffer()
+on each iteration:
+
+	for (i = 0; i < len; i += rowsize) {
+		linelen = min(remaining, rowsize);
+		remaining -= rowsize;
+
+		hex_dump_to_buffer(ptr + i, linelen, rowsize, groupsize,
+				   linebuf, sizeof(linebuf), ascii);
+
+		...
+	}
+
+The expected stopping condition (i < len) is effectively broken
+since len is corrupted and very large. This eventually leads to
+the "ptr+i" being passed to hex_dump_to_buffer() to get closer
+to the end of the actual bounds of "ptr", eventually an out of
+bounds access is done in hex_dump_to_buffer() in the following
+for loop:
+
+	for (j = 0; j < len; j++) {
+			if (linebuflen < lx + 2)
+				goto overflow2;
+			ch = ptr[j];
+		...
+	}
+
+To fix this we should validate "EALIST_SIZE(ea_buf->xattr)"
+before it is utilised.
+
+Reported-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
+Tested-by: syzbot <syzbot+4e6e7e4279d046613bc5@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=4e6e7e4279d046613bc5
+Fixes: d9f9d96136cb ("jfs: xattr: check invalid xattr size more strictly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dtree.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jfs/xattr.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -117,7 +117,8 @@ do {									\
- 	if (!(RC)) {							\
- 		if (((P)->header.nextindex >				\
- 		     (((BN) == 0) ? DTROOTMAXSLOT : (P)->header.maxslot)) || \
--		    ((BN) && ((P)->header.maxslot > DTPAGEMAXSLOT))) {	\
-+		    ((BN) && (((P)->header.maxslot > DTPAGEMAXSLOT) ||	\
-+		    ((P)->header.stblindex >= DTPAGEMAXSLOT)))) {	\
- 			BT_PUTPAGE(MP);					\
- 			jfs_error((IP)->i_sb,				\
- 				  "DT_GETPAGE: dtree page corrupt\n");	\
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -559,11 +559,16 @@ static int ea_get(struct inode *inode, s
+ 
+       size_check:
+ 	if (EALIST_SIZE(ea_buf->xattr) != ea_size) {
+-		int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
++		if (unlikely(EALIST_SIZE(ea_buf->xattr) > INT_MAX)) {
++			printk(KERN_ERR "ea_get: extended attribute size too large: %u > INT_MAX\n",
++			       EALIST_SIZE(ea_buf->xattr));
++		} else {
++			int size = clamp_t(int, ea_size, 0, EALIST_SIZE(ea_buf->xattr));
+ 
+-		printk(KERN_ERR "ea_get: invalid extended attribute\n");
+-		print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
+-				     ea_buf->xattr, size, 1);
++			printk(KERN_ERR "ea_get: invalid extended attribute\n");
++			print_hex_dump(KERN_ERR, "", DUMP_PREFIX_ADDRESS, 16, 1,
++				       ea_buf->xattr, size, 1);
++		}
+ 		ea_release(inode, ea_buf);
+ 		rc = -EIO;
+ 		goto clean_up;
 
 
