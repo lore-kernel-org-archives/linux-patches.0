@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D44268FFA;
-	Tue,  8 Apr 2025 11:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A763269D09;
+	Tue,  8 Apr 2025 11:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113218; cv=none; b=bGJzGUUPtC48DB+ayxCo9oG/0fOcJRdpdluuOlrS5WayU+hIWBXyHyzdHIWotFsd5XKzgOOy02m5+r/Z6KdELYDz+8pLV6273dI/C0RjcQaCV8aHx2DlNlKVC1WPhElXA90rGrb06LQ+x5fNYgkCby3vwYIOMEdWVokpvy3qQ3Q=
+	t=1744113221; cv=none; b=m/1sKBfhY4USVO38cPKFxyKw/Z/W9oQNVjSnf9d9Hr98umBGnNqAbJbrWrGGXRYHSmmNKTlu1w2k+kSUOsJytRClyruozZU35TDuiCYQ3c9TxDnujtIWu3mknHed9QyocP/hYQ8iw0AUsmHtYk+HODikU+v2TTlGP9E0R7h2zqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113218; c=relaxed/simple;
-	bh=QXE0o3+QESDfqDew/May5RMnnSQACzpJzu71atN3+JE=;
+	s=arc-20240116; t=1744113221; c=relaxed/simple;
+	bh=SDDstXG72UeDgilM4vDjEHsuNrbJfwQ8nLQjERtUa/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gn9ocx0erKpg8HVpRVfulJLYoBxFNcVh4U9wktuvyMVKP/7TQDzWs9TZOmSExD2jijIUqQbY5zOEGkYawppU18Fhqg4lvvcnPPw0eHx5NiJEIFQvkJAF+8xx+1CAW122SCmPJObW0jxQt/pQTy5Qzrfd74iGbyoWg9yc48Zwgwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bw8jyyZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4VxKdXe8QgRIKsSYvg1lE0lQVfMDrKR9lxY2l9Gte23gZdV9ZLewcObEid3UlxgwUD7BeMpjPi9Y0HVwW9AKyaQRtOIZhQsfEFzF1qLoE9GHZvbpiTahvSqSJ1PXqm4gTC72zkVulU9w6DpTl0gU/5M13gTklfGx6dW8GwPpkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWWOv1p5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bw8jyyZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746BEC4CEEC;
-	Tue,  8 Apr 2025 11:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWWOv1p5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35574C4CEEB;
+	Tue,  8 Apr 2025 11:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113217;
-	bh=QXE0o3+QESDfqDew/May5RMnnSQACzpJzu71atN3+JE=;
+	s=korg; t=1744113220;
+	bh=SDDstXG72UeDgilM4vDjEHsuNrbJfwQ8nLQjERtUa/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bw8jyyZssVUTdkc7buHKnhotM08R2UYbiYdKFTJ5kBJ5W3oElwPFkZwQ8rwZTiGqO
-	 q8C7AoiTTaNq7HpVeu0MOb6uu7PtPm12KWlHAVMnjr8uOyE8xkGJ6sDhVp8s+ae6PZ
-	 PJr6OgeiFrBdZXPrldnRSeiaUHUViFzZBOV5w3YA=
+	b=NWWOv1p5R+HusDzvTzlSoAoOqp6030bzIaSGGviYBIWq3yRpZfjJGsrxo529vjdS6
+	 LK7yvcCPKoctZqAQd+wjRQorH22dS8mm3aQK/9U32xX9yihM2Q60/G0eIcF9aWBQm/
+	 tE4FgRbXRZhY0y6hyzL07WWzN5Q6me8+tMzEebNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Peter Geis <pgwipeout@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/268] pinctrl: renesas: rzg2l: Fix missing of_node_put() call
-Date: Tue,  8 Apr 2025 12:48:09 +0200
-Message-ID: <20250408104830.600096901@linuxfoundation.org>
+Subject: [PATCH 6.6 079/268] clk: rockchip: rk3328: fix wrong clk_ref_usb3otg parent
+Date: Tue,  8 Apr 2025 12:48:10 +0200
+Message-ID: <20250408104830.626645978@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -52,40 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Peter Geis <pgwipeout@gmail.com>
 
-[ Upstream commit a5779e625e2b377f16a6675c432aaf299ce5028c ]
+[ Upstream commit a9e60f1ffe1ca57d6af6a2573e2f950e76efbf5b ]
 
-of_parse_phandle_with_fixed_args() requires its caller to
-call into of_node_put() on the node pointer from the output
-structure, but such a call is currently missing.
+Correct the clk_ref_usb3otg parent to fix clock control for the usb3
+controller on rk3328. Verified against the rk3328 trm, the rk3228h trm,
+and the rk3328 usb3 phy clock map.
 
-Call into of_node_put() to rectify that.
-
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20250305163753.34913-3-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: fe3511ad8a1c ("clk: rockchip: add clock controller for rk3328")
+Signed-off-by: Peter Geis <pgwipeout@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250115012628.1035928-2-pgwipeout@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/rockchip/clk-rk3328.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 2ea6ef99cc70b..ac629c72d5927 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -1367,6 +1367,8 @@ static int rzg2l_gpio_register(struct rzg2l_pinctrl *pctrl)
- 		return ret;
- 	}
- 
-+	of_node_put(of_args.np);
-+
- 	if (of_args.args[0] != 0 || of_args.args[1] != 0 ||
- 	    of_args.args[2] != pctrl->data->n_port_pins) {
- 		dev_err(pctrl->dev, "gpio-ranges does not match selected SOC\n");
+diff --git a/drivers/clk/rockchip/clk-rk3328.c b/drivers/clk/rockchip/clk-rk3328.c
+index 267ab54937d3d..a3587c500de28 100644
+--- a/drivers/clk/rockchip/clk-rk3328.c
++++ b/drivers/clk/rockchip/clk-rk3328.c
+@@ -201,7 +201,7 @@ PNAME(mux_aclk_peri_pre_p)	= { "cpll_peri",
+ 				    "gpll_peri",
+ 				    "hdmiphy_peri" };
+ PNAME(mux_ref_usb3otg_src_p)	= { "xin24m",
+-				    "clk_usb3otg_ref" };
++				    "clk_ref_usb3otg_src" };
+ PNAME(mux_xin24m_32k_p)		= { "xin24m",
+ 				    "clk_rtc32k" };
+ PNAME(mux_mac2io_src_p)		= { "clk_mac2io_src",
 -- 
 2.39.5
 
