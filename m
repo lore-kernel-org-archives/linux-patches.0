@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB9126E166;
-	Tue,  8 Apr 2025 12:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483F1268FDE;
+	Tue,  8 Apr 2025 12:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115648; cv=none; b=CKjCwthvM0IBFNiEJ3Ay3oF3tHxcFhnSaTwRoPUBV3qlGHGSoKH3emyFsaFnwdFSh0616n4lAYIglNbnjPlDE21IDfhAGWO2rYev3U/yKYJqm1RAIJjym54pnBdmhTuJBh9lrK3hsHWHx5flsQylsPngHyRNFoqw4d69w1F7Hi8=
+	t=1744115651; cv=none; b=nHAdYIkRIgwps1JHW5kSCpwaZA7pU/IlUnWuU/uaZLu0qq5Crh+orsgXf5bGZJ5hVefsWtyFcVxJz4phGcDumFBJ82PBzX6BQffNey1m3+3TauGAOJxtVYH0pnvGfwmVhj6TKkhN2qENfxJWNvHSzSsQR67pqKDQuCGX3IDknek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115648; c=relaxed/simple;
-	bh=HfPtBaexnRoo/SMYd3pnAJoE9sF9U+ybRNyGvb/zKKw=;
+	s=arc-20240116; t=1744115651; c=relaxed/simple;
+	bh=fKcGAluV1tr5FI0e02Z6jlEKlBq0FUPrBHPH8UTi5gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LK5Nxag2NNm2snFTb2+KvZkOPMgC6SOOxgMXC1F366VOrwpSZ4WcVH0S8uY8qDDC/lbGrG8Lq8lpnWUClf4ozkiLjpg8OGLuaD2sDQMmfsL1xPm0JL+lwxQWTO58XBRVLOKrtGjVR+X/Qe0vgeaoY5foBiNON/4lpt2wwY0G3iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J87sCIHd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TqXr8ijBFaTQyPrMXMc84UdZVcbt0dDge1mKXKoGiuiDiUvKZRKB6CYrG4wWLNE19trAmgSbrKCRUwVxrzJbEDjAgdDFEqn+7JQgw5L3ZJn0dXN3LKr+0JDHxRCJy6+SQ5yfVpKMQ2xeVowRJvDWu0bDxSMkFVfb7gltykgjAYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAieWWUO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J87sCIHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F022C4CEE5;
-	Tue,  8 Apr 2025 12:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAieWWUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF035C4CEEB;
+	Tue,  8 Apr 2025 12:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115648;
-	bh=HfPtBaexnRoo/SMYd3pnAJoE9sF9U+ybRNyGvb/zKKw=;
+	s=korg; t=1744115651;
+	bh=fKcGAluV1tr5FI0e02Z6jlEKlBq0FUPrBHPH8UTi5gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J87sCIHdip/aTKa5Kj49OTjXc/tqC57DoWWesR52Pt0sHwjJWwyGaH+A0+/j7Ir/v
-	 peM96rybizFP4r2CoXLAiVwnUJmMeZ1y78UfY2fh1CWMI1hLiS1NAEfGqH/JmeDgSl
-	 mgIxnSGZdl/h54G30UEba0Vvd4ROIcn7dwiF/uE8=
+	b=SAieWWUOyEztWbQfxGSfSEFzojgA7yRFzdmwuPxlPBw3feX/M3Bb3Ja44wa9vt67m
+	 IxRj1LIBAneHlpOTckKOogKEU3lyPHB8dNehLPFJNB5CxZ2RUXTHdQV7aTMwbAZEEN
+	 kRvzoeeibH2f/ssmY0jzXxIDpZijlVbeHw+eQXZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/204] clk: amlogic: gxbb: drop incorrect flag on 32k clock
-Date: Tue,  8 Apr 2025 12:49:42 +0200
-Message-ID: <20250408104821.869411943@linuxfoundation.org>
+Subject: [PATCH 6.1 053/204] crypto: hisilicon/sec2 - fix for aead authsize alignment
+Date: Tue,  8 Apr 2025 12:49:43 +0200
+Message-ID: <20250408104821.898138506@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,41 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-[ Upstream commit f38f7fe4830c5cb4eac138249225f119e7939965 ]
+[ Upstream commit a49cc71e219040d771a8c1254879984f98192811 ]
 
-gxbb_32k_clk_div sets CLK_DIVIDER_ROUND_CLOSEST in the init_data flag which
-is incorrect. This is field is not where the divider flags belong.
+The hardware only supports authentication sizes
+that are 4-byte aligned. Therefore, the driver
+switches to software computation in this case.
 
-Thankfully, CLK_DIVIDER_ROUND_CLOSEST maps to bit 4 which is an unused
-clock flag, so there is no unintended consequence to this error.
-
-Effectively, the clock has been used without CLK_DIVIDER_ROUND_CLOSEST
-so far, so just drop it.
-
-Fixes: 14c735c8e308 ("clk: meson-gxbb: Add EE 32K Clock for CEC")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241220-amlogic-clk-gxbb-32k-fixes-v1-1-baca56ecf2db@baylibre.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index 608e0e8ca49a8..48c47503ea752 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -1310,7 +1310,7 @@ static struct clk_regmap gxbb_32k_clk_div = {
- 			&gxbb_32k_clk_sel.hw
- 		},
- 		.num_parents = 1,
--		.flags = CLK_SET_RATE_PARENT | CLK_DIVIDER_ROUND_CLOSEST,
-+		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 55b95968ecb70..3de8715aad39d 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -57,7 +57,6 @@
+ #define SEC_TYPE_MASK		0x0F
+ #define SEC_DONE_MASK		0x0001
+ #define SEC_ICV_MASK		0x000E
+-#define SEC_SQE_LEN_RATE_MASK	0x3
  
+ #define SEC_TOTAL_IV_SZ(depth)	(SEC_IV_SIZE * (depth))
+ #define SEC_SGL_SGE_NR		128
+@@ -80,16 +79,16 @@
+ #define SEC_TOTAL_PBUF_SZ(depth)	(PAGE_SIZE * SEC_PBUF_PAGE_NUM(depth) +	\
+ 				SEC_PBUF_LEFT_SZ(depth))
+ 
+-#define SEC_SQE_LEN_RATE	4
+ #define SEC_SQE_CFLAG		2
+ #define SEC_SQE_AEAD_FLAG	3
+ #define SEC_SQE_DONE		0x1
+ #define SEC_ICV_ERR		0x2
+-#define MIN_MAC_LEN		4
+ #define MAC_LEN_MASK		0x1U
+ #define MAX_INPUT_DATA_LEN	0xFFFE00
+ #define BITS_MASK		0xFF
++#define WORD_MASK		0x3
+ #define BYTE_BITS		0x8
++#define BYTES_TO_WORDS(bcount)	((bcount) >> 2)
+ #define SEC_XTS_NAME_SZ		0x3
+ #define IV_CM_CAL_NUM		2
+ #define IV_CL_MASK		0x7
+@@ -1180,7 +1179,7 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
+ 		goto bad_key;
+ 	}
+ 
+-	if (ctx->a_ctx.a_key_len & SEC_SQE_LEN_RATE_MASK) {
++	if (ctx->a_ctx.a_key_len & WORD_MASK) {
+ 		ret = -EINVAL;
+ 		dev_err(dev, "AUTH key length error!\n");
+ 		goto bad_key;
+@@ -1589,11 +1588,10 @@ static void sec_auth_bd_fill_ex(struct sec_auth_ctx *ctx, int dir,
+ 
+ 	sec_sqe->type2.a_key_addr = cpu_to_le64(ctx->a_key_dma);
+ 
+-	sec_sqe->type2.mac_key_alg = cpu_to_le32(authsize / SEC_SQE_LEN_RATE);
++	sec_sqe->type2.mac_key_alg = cpu_to_le32(BYTES_TO_WORDS(authsize));
+ 
+ 	sec_sqe->type2.mac_key_alg |=
+-			cpu_to_le32((u32)((ctx->a_key_len) /
+-			SEC_SQE_LEN_RATE) << SEC_AKEY_OFFSET);
++			cpu_to_le32((u32)BYTES_TO_WORDS(ctx->a_key_len) << SEC_AKEY_OFFSET);
+ 
+ 	sec_sqe->type2.mac_key_alg |=
+ 			cpu_to_le32((u32)(ctx->a_alg) << SEC_AEAD_ALG_OFFSET);
+@@ -1645,12 +1643,10 @@ static void sec_auth_bd_fill_ex_v3(struct sec_auth_ctx *ctx, int dir,
+ 	sqe3->a_key_addr = cpu_to_le64(ctx->a_key_dma);
+ 
+ 	sqe3->auth_mac_key |=
+-			cpu_to_le32((u32)(authsize /
+-			SEC_SQE_LEN_RATE) << SEC_MAC_OFFSET_V3);
++			cpu_to_le32(BYTES_TO_WORDS(authsize) << SEC_MAC_OFFSET_V3);
+ 
+ 	sqe3->auth_mac_key |=
+-			cpu_to_le32((u32)(ctx->a_key_len /
+-			SEC_SQE_LEN_RATE) << SEC_AKEY_OFFSET_V3);
++			cpu_to_le32((u32)BYTES_TO_WORDS(ctx->a_key_len) << SEC_AKEY_OFFSET_V3);
+ 
+ 	sqe3->auth_mac_key |=
+ 			cpu_to_le32((u32)(ctx->a_alg) << SEC_AUTH_ALG_OFFSET_V3);
+@@ -2268,8 +2264,8 @@ static int sec_aead_spec_check(struct sec_ctx *ctx, struct sec_req *sreq)
+ 	struct device *dev = ctx->dev;
+ 	int ret;
+ 
+-	/* Hardware does not handle cases where authsize is less than 4 bytes */
+-	if (unlikely(sz < MIN_MAC_LEN)) {
++	/* Hardware does not handle cases where authsize is not 4 bytes aligned */
++	if (c_mode == SEC_CMODE_CBC && (sz & WORD_MASK)) {
+ 		sreq->aead_req.fallback = true;
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.5
 
