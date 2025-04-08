@@ -1,37 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9290E268684;
-	Tue,  8 Apr 2025 12:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D51AAA32;
+	Tue,  8 Apr 2025 12:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115776; cv=none; b=nqaQ+nY/5SSknPzqP22ihA5VZud+sZwfkJ0zhjkcmTPD5cWepZ3A9f3ISvCB7RjMxLsnPtY4beadYPbSKBGInP7dsRW9Lzvbl52jGwsQY9GxP36TtAs/af3QSuNrI0Q4b9xMIvKhl5EJN5p0wSgcZeZlMQwzreMxgYWQKnRrJ44=
+	t=1744115779; cv=none; b=ihqxm3QsHxd1afrZRuyjGmiQ43i8/EXgpWrEX1jhyHCUzv1ec0kRTIxxJYPV7R6mQ8UvJbWC0g7E1eGx3IYazmTWidV/mO6z4RnRrUhagu3uwoK8RhPCDCzpLt7gA1XP8hioZo2difWu3z4MgJ2nymblngl9fgHoZKwKZOt9p/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115776; c=relaxed/simple;
-	bh=STZgWAvYV5H1Q1xU+oMGUDxfj/x79ZY84UJcMTMDKlY=;
+	s=arc-20240116; t=1744115779; c=relaxed/simple;
+	bh=1XtyfxqLFTUP4qHKLW5Uy3OeUS6y59d2iBHRuR5n1/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cT8IibjRvjgRQk9tmuCsH7OJiP2968r0lkTVjdw9epgk/hMi3zfYOE3IbKlMTJ581sXZIlnAoHCSiCm9vH7iDp0fB5AA+lrLi35WWa/7Ts9Fkk9dSEWd6MBqFDnvdPRcaUpAnD05fppCc0RM72BpfAGr91yCkdgkxCx2sZI+z4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rx8UGiNO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mARiSo8YvslTyUAq7f5m1+qSRE5PPD7AebbJrqBeRN3yczsS76b7sg6UGUUayvYIjTPW//tgbcoQNiUxe5CIW2RLPQyVrh+z/IxD7pNroHQeBQQCEZNRQuXyPO/q9y7RHPo0IVPaHFMrmQ+8H7wIX5QOWELJ4u2TacvJfvFJpG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrMl2TOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rx8UGiNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CE8C4CEE5;
-	Tue,  8 Apr 2025 12:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrMl2TOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2F1C4CEE5;
+	Tue,  8 Apr 2025 12:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115776;
-	bh=STZgWAvYV5H1Q1xU+oMGUDxfj/x79ZY84UJcMTMDKlY=;
+	s=korg; t=1744115779;
+	bh=1XtyfxqLFTUP4qHKLW5Uy3OeUS6y59d2iBHRuR5n1/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rx8UGiNOiP42f3KtNLAzJIE5K/0u4Z+laAo+p3NiG0YKYktbRlllU2lhwENeIu2bt
-	 3EbNRIOcMuRsVIXTXBumoa2GmIsqQIAfM9EILXM3ciynNsu7PMDkruJQWtvTZbpQPg
-	 7FvIhhzT+9Yeh1ezoXzAIC7+gJxVs4jvlFLBTsw0=
+	b=yrMl2TOyDLiBFNNn1b+K4feyMFjdC9/Y/B5b7ZjDy0spKUZzOnHlXIcNpQ8Yce7Fo
+	 SeGmhQWLOcXRPCksa+AihQumJF7lS7kvarfkvBpqeEH1ogJlIU6EyPv+AszayqYsex
+	 5YZNWT++nal4aVu80Z7wM4OLpIeV4LbXVSG8Rl90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Asahi Lina <lina@asahilina.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	linmiaohe <linmiaohe@huawei.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	"Matthew Wilcow (Oracle)" <willy@infradead.org>,
+	=?UTF-8?q?Michael=20 Camp=20Drill=20Sergeant =20Ellerman?= <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ted Tso <tytso@mit.edu>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/204] NFSv4: Dont trigger uneccessary scans for return-on-close delegations
-Date: Tue,  8 Apr 2025 12:50:30 +0200
-Message-ID: <20250408104823.271291421@linuxfoundation.org>
+Subject: [PATCH 6.1 101/204] fuse: fix dax truncate/punch_hole fault path
+Date: Tue,  8 Apr 2025 12:50:31 +0200
+Message-ID: <20250408104823.301528194@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -50,76 +87,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-[ Upstream commit 47acca884f714f41d95dc654f802845544554784 ]
+[ Upstream commit 7851bf649d423edd7286b292739f2eefded3d35c ]
 
-The amount of looping through the list of delegations is occasionally
-leading to soft lockups. Avoid at least some loops by not requiring the
-NFSv4 state manager to scan for delegations that are marked for
-return-on-close. Instead, either mark them for immediate return (if
-possible) or else leave it up to nfs4_inode_return_delegation_on_close()
-to return them once the file is closed by the application.
+Patch series "fs/dax: Fix ZONE_DEVICE page reference counts", v9.
 
-Fixes: b757144fd77c ("NFSv4: Be less aggressive about returning delegations for open files")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Device and FS DAX pages have always maintained their own page reference
+counts without following the normal rules for page reference counting.  In
+particular pages are considered free when the refcount hits one rather
+than zero and refcounts are not added when mapping the page.
+
+Tracking this requires special PTE bits (PTE_DEVMAP) and a secondary
+mechanism for allowing GUP to hold references on the page (see
+get_dev_pagemap).  However there doesn't seem to be any reason why FS DAX
+pages need their own reference counting scheme.
+
+By treating the refcounts on these pages the same way as normal pages we
+can remove a lot of special checks.  In particular pXd_trans_huge()
+becomes the same as pXd_leaf(), although I haven't made that change here.
+It also frees up a valuable SW define PTE bit on architectures that have
+devmap PTE bits defined.
+
+It also almost certainly allows further clean-up of the devmap managed
+functions, but I have left that as a future improvment.  It also enables
+support for compound ZONE_DEVICE pages which is one of my primary
+motivators for doing this work.
+
+This patch (of 20):
+
+FS DAX requires file systems to call into the DAX layout prior to
+unlinking inodes to ensure there is no ongoing DMA or other remote access
+to the direct mapped page.  The fuse file system implements
+fuse_dax_break_layouts() to do this which includes a comment indicating
+that passing dmap_end == 0 leads to unmapping of the whole file.
+
+However this is not true - passing dmap_end == 0 will not unmap anything
+before dmap_start, and further more dax_layout_busy_page_range() will not
+scan any of the range to see if there maybe ongoing DMA access to the
+range.  Fix this by passing -1 for dmap_end to fuse_dax_break_layouts()
+which will invalidate the entire file range to
+dax_layout_busy_page_range().
+
+Link: https://lkml.kernel.org/r/cover.8068ad144a7eea4a813670301f4d2a86a8e68ec4.1740713401.git-series.apopple@nvidia.com
+Link: https://lkml.kernel.org/r/f09a34b6c40032022e4ddee6fadb7cc676f08867.1740713401.git-series.apopple@nvidia.com
+Fixes: 6ae330cad6ef ("virtiofs: serialize truncate/punch_hole and dax fault path")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Co-developed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Asahi Lina <lina@asahilina.net>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: linmiaohe <linmiaohe@huawei.com>
+Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Matthew Wilcow (Oracle) <willy@infradead.org>
+Cc: Michael "Camp Drill Sergeant" Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ fs/fuse/dax.c  | 1 -
+ fs/fuse/dir.c  | 2 +-
+ fs/fuse/file.c | 4 ++--
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index 39c697e100b1b..6363bbc37f425 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -570,17 +570,6 @@ static bool nfs_delegation_need_return(struct nfs_delegation *delegation)
- 
- 	if (test_and_clear_bit(NFS_DELEGATION_RETURN, &delegation->flags))
- 		ret = true;
--	else if (test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags)) {
--		struct inode *inode;
--
--		spin_lock(&delegation->lock);
--		inode = delegation->inode;
--		if (inode && list_empty(&NFS_I(inode)->open_files))
--			ret = true;
--		spin_unlock(&delegation->lock);
--	}
--	if (ret)
--		clear_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
- 	if (test_bit(NFS_DELEGATION_RETURNING, &delegation->flags) ||
- 	    test_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags) ||
- 	    test_bit(NFS_DELEGATION_REVOKED, &delegation->flags))
-@@ -821,11 +810,25 @@ int nfs4_inode_make_writeable(struct inode *inode)
- 	return nfs4_inode_return_delegation(inode);
+diff --git a/fs/fuse/dax.c b/fs/fuse/dax.c
+index 6e71904c396f1..dc28c28654d93 100644
+--- a/fs/fuse/dax.c
++++ b/fs/fuse/dax.c
+@@ -681,7 +681,6 @@ static int __fuse_dax_break_layouts(struct inode *inode, bool *retry,
+ 			0, 0, fuse_wait_dax_page(inode));
  }
  
--static void nfs_mark_return_if_closed_delegation(struct nfs_server *server,
--		struct nfs_delegation *delegation)
-+static void
-+nfs_mark_return_if_closed_delegation(struct nfs_server *server,
-+				     struct nfs_delegation *delegation)
+-/* dmap_end == 0 leads to unmapping of whole file */
+ int fuse_dax_break_layouts(struct inode *inode, u64 dmap_start,
+ 				  u64 dmap_end)
  {
--	set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
--	set_bit(NFS4CLNT_DELEGRETURN, &server->nfs_client->cl_state);
-+	struct inode *inode;
-+
-+	if (test_bit(NFS_DELEGATION_RETURN, &delegation->flags) ||
-+	    test_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags))
-+		return;
-+	spin_lock(&delegation->lock);
-+	inode = delegation->inode;
-+	if (!inode)
-+		goto out;
-+	if (list_empty(&NFS_I(inode)->open_files))
-+		nfs_mark_return_delegation(server, delegation);
-+	else
-+		set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
-+out:
-+	spin_unlock(&delegation->lock);
- }
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index de31cb8eb7201..c431abbf48e66 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1712,7 +1712,7 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
+ 	if (FUSE_IS_DAX(inode) && is_truncate) {
+ 		filemap_invalidate_lock(mapping);
+ 		fault_blocked = true;
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err) {
+ 			filemap_invalidate_unlock(mapping);
+ 			return err;
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 0df1311afb87d..723dd9b94e567 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -240,7 +240,7 @@ int fuse_open_common(struct inode *inode, struct file *file, bool isdir)
  
- static bool nfs_server_mark_return_all_delegations(struct nfs_server *server)
+ 	if (dax_truncate) {
+ 		filemap_invalidate_lock(inode->i_mapping);
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err)
+ 			goto out_inode_unlock;
+ 	}
+@@ -3020,7 +3020,7 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
+ 	inode_lock(inode);
+ 	if (block_faults) {
+ 		filemap_invalidate_lock(inode->i_mapping);
+-		err = fuse_dax_break_layouts(inode, 0, 0);
++		err = fuse_dax_break_layouts(inode, 0, -1);
+ 		if (err)
+ 			goto out;
+ 	}
 -- 
 2.39.5
 
