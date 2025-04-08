@@ -1,95 +1,148 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5906E255E2F
-	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 21:58:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1668C1DF99C;
+	Tue,  8 Apr 2025 22:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744149523; cv=none; b=S6ydKq17Qk7Y+KMIdsgKcr/NxuUGOblt9Lh5LFTEOINa8WtlSworsQ0G2SVyRi3wbDYu/UQDFW4QlOn805KNbcSKat6rby/KqI5RK4TFbyB5SxPJRrWazJZTIK/t//7ECngdechvfUUvCWvQ+fp1CWYUt/7F0qioidlT013HMWM=
+	t=1744149804; cv=none; b=ox1PxSrnzdiOqFh3w1yjU/bfSO0yM15aZXDZQJ76FjnuisKTPDS2Y88Jiit95lZuyArAcAKTS/iTcvcDWYb6shqGR6wLgFx8a1M30NQshv44x5sCK/Dsaxnc9AMOGDYrUI5DhadW0vAlMHRh68nVKCxMOTy98EM8Qg+3rim0R5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744149523; c=relaxed/simple;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nWc/ZTpf9wyNILph/n+SFY386mzL9OvTGUP7HUIQ4NUM8nhyq4Of/vCqmdgjRyxH9dZivQixUzWoD5dF8xdVAv+hk7A4EZZgCZORlCl/k0LSwE33SuF2npLLqzYq39Y4xxfzDkT4irIsw19hCPqt9cp1sN5V3RWNyiBYBBfm0Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=LrhAcCGU; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1744149804; c=relaxed/simple;
+	bh=xOdajHCO7ZEy273vrF1Pnc6StW6I57Grl/gjkVjIkWQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YsH8KSh9oy5c+cgKNcp/R/uEoBkNegU2lQjZiWtozcheV/0JRh9uJrpjsTGKq45nXoPTKpHk1F6E2mys5Os3SaXThjFUQHHNaAddb+PiDi+BQcCRwxWOWv7MCTIKup5m5VTLOD78fpkvNeeN4OEbY4PoKBNrMpwRqfMkNxuFmxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5RtukQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="LrhAcCGU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1744149508; x=1744754308; i=rwarsow@gmx.de;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=LrhAcCGU72NTdllavFWgkIw5YODVitP1AyVrJHQKeCouPKLDuwpAQT+TGkex+qJj
-	 C4XIOWakcFlvUQpFC2VOO22X2GfhDjrohJ6s+ppsV1q0S97VlNxMYTAKACgxqbWmS
-	 rSvw2PG6I9ZQ4Vunhb5WZTjzydRjYVMedoUJmbla7x7Wvl7SZq6MgeEqlGBcBmVkj
-	 sdW9xK2XU3fV4wJVgJuv3os2dAa10tZOpKom3+c9RbdCaxtIqGqy8BgjNEbQsb2d8
-	 uefew11tBPTUcmgpfREm7IywqRL83FQj7yc53lfeCxSEtEjaEziQOUvPP2fPUb5zd
-	 uRBeDjTX1UgTI8ul3Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.200.20] ([46.142.33.88]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M8QWG-1txr7L3Ue0-006dVb; Tue, 08
- Apr 2025 23:58:27 +0200
-Message-ID: <d88f1ca2-95bd-49b7-b73b-95d87f18f82b@gmx.de>
-Date: Tue, 8 Apr 2025 23:58:26 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5RtukQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C24C4CEE7;
+	Tue,  8 Apr 2025 22:03:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744149803;
+	bh=xOdajHCO7ZEy273vrF1Pnc6StW6I57Grl/gjkVjIkWQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=D5RtukQrS76KOBf7UmuXRFauX6hLjObdzmn0OWN9xK/NoMAcu8uhjxssvQNC5djne
+	 RlgRfMnbiUSHS+XP+kl3kJf/r3orZpQy7Y2m7HO1Wq1YiqfMzcClDR0AEVZZwjZBi/
+	 UITi47XD18B37q0mXbwxN3WG11OEpR5SUPLlz/QAx/1Y/JP0dQuoV3ee0W4NpNNN++
+	 pqdEn1r2HrZXhPFcplm6t9J1U2QMCvetgMKPIg5QKOeGS+nwIXc4ihjAsw79GYgmPk
+	 CTYEZ5QR/R/rJdcOiH1eqlbAdnoqFnZroXBW5RkUvlI2LhWSghfndTf+h8FpvY13K3
+	 0xIc2Rs8CA8HQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	kasan-dev@googlegroups.com,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Matthew Maurer <mmaurer@google.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] rust: kasan/kbuild: fix missing flags on first build
+Date: Wed,  9 Apr 2025 00:03:11 +0200
+Message-ID: <20250408220311.1033475-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/728] 6.14.2-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250408195232.204375459@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20250408195232.204375459@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:wSwSTIaSEpoC/UVnroQbBTEhUSqml79b6tWgLqkL9aA2RL99GHb
- gimaCkxDh+/ViSQToStDJWCb1btwstETT7APG9EMzMyoMT6mbCgeqigtLDSoD1G0kgtm/GQ
- Tlkg6BH8qJKwZIAGl2iR/9jZAGZ8MWSjXOmh7AyaLWHRJFnLTsbhi+FEkIxDFp2EZBr9VR2
- iuDKNw8fkyFG028o7kCkA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:99jK/KI/pSc=;5Ur4d1uh1VE+6IBRkhSx6o1HMJV
- YVTEXab7hOPuipwt5s3teW1HVO2gXfYMvUhiotkPtBaT6e4xBVXEfROKWY1g1ORcJ2BOSrG5t
- f6OMrmmrJJllXWC3deGlqma04SOyvvvR4lKhkqNnLYTY1zKWG/VBvnSRNXOGXwG90+ZCfuXXq
- nXfMjfTTGFpfxoH7xE/kjI2osHkvCnTZqIQhQ76lSDJtleL9o1LlrxZS5IFLw28hsnVJr+2F/
- 6GBLVtC/ZLlf6kUkD7JUox10I2Z8cKflpB9UF/PmUoHWnO+Pc/6SoIW4WpthZRjlxmprObxgm
- HYhPC2zozPLEH2z1Lmrou05FDZC7X5ySJ0+CUxMRd/GTuYhSCClwhpbhw/0fKBluPQBtbddaG
- 3RV2rKx5LY61YmUACxJdYgdYEH9sOI7+EPqf0Su0wvx8dEsekkrt4A8QYMcBvCcg7yd1pPy4B
- Pk6GOx3JHiMJrcS6tqW0gQBHoLW1gtpLmRCk0z9uuZBLJjdw5n93Y2mFKxfCyWOhaU5wHz9QW
- x36AvImowgEtT6B6sxoi6NrDj6EMdqJZ1ny3RXcvQL+RTjGgMCJ3cCTsaFIFEQ4nAtTPDCPg4
- YVlNWFXCbnd/Kd0IDUY16Y8hcaYIudGODPwzEAe44Cg5ftEDdOektzNLq65N4ZKKKDS3HCIL/
- qmbdrr3jTI9cD/AJXkWmjBNTCshX7ONc6P4jEfocwAKjGumwqeHdmfHcBGjoIuhYetjfV6IVF
- WA7Yh76Ac/3Imeqy8+61jdaklU5bARGm65TedESszxARpYHhygMbR2ZJpDIvSY/mk85p/CyLi
- qyTBRQFHWLDv/JSDCyW/bTTTApvLi384VxE8WAyY+UE7tj22YZGu5wzylHGhKS+qPDmq7wfFx
- LoV/hCKvYQ0UeaCHPoVwpgquoCMxwSyyBt/Dl7r8iw2H1LDURqC5gqQoBtaXQNC4dEfzNDznK
- JBaw2pyge4iCQnTZ292WiMNLKRnjR8UOftfG+ogjZBbzQECtCi9hWMJH7sRK6sd9RauEzLxy/
- K8/132ID1ajyx142JWqyjEzBdOyn0GqtfBBN5oMoiGV+bZAcUrP6kpFKBLe5BN4iel09Ho9Hg
- YiByn/9/nIlflTJx6hrjZsfh6/lPcjSP6DhCvcTH55GYEB8xXxQksHFAoLVKyDrwQG0agCi1k
- RjzmOPEQ+aHeXNS0ofkX3qEoeJpQgf6GdKM5JTetQ93b3KgxKx/9DCtfEiEDWYjE3MliE6gvV
- gFsiBxP6Nt6/cQcVOEW7+9IwOCERwFa9tsLGnOBsC37X2bjYlUSgD5cliAC/DRDqzStgJGuCw
- l7CqNcnH9ujfzfouJZuBCq1S67FUL1CcqjLwnXL2T8lWcbGKprq+FpldQUbEVy5nNhvNweD3t
- WbLI7Z5GZPaXHxPPptD+cbiG4/dn8D5zDns0opdzr4SqSCVoClXhmLuMqI5Tl2ap+ECBB4foM
- X0YbjYSs7CUcEtr1j+jt+weB73Uc=
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+If KASAN is enabled, and one runs in a clean repository e.g.:
 
-no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+    make LLVM=1 prepare
+    make LLVM=1 prepare
 
-Thanks
+Then the Rust code gets rebuilt, which should not happen.
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+The reason is some of the LLVM KASAN `rustc` flags are added in the
+second run:
 
+    -Cllvm-args=-asan-instrumentation-with-call-threshold=10000
+    -Cllvm-args=-asan-stack=0
+    -Cllvm-args=-asan-globals=1
+    -Cllvm-args=-asan-kernel-mem-intrinsic-prefix=1
+
+Further runs do not rebuild Rust because the flags do not change anymore.
+
+Rebuilding like that in the second run is bad, even if this just happens
+with KASAN enabled, but missing flags in the first one is even worse.
+
+The root issue is that we pass, for some architectures and for the moment,
+a generated `target.json` file. That file is not ready by the time `rustc`
+gets called for the flag test, and thus the flag test fails just because
+the file is not available, e.g.:
+
+    $ ... --target=./scripts/target.json ... -Cllvm-args=...
+    error: target file "./scripts/target.json" does not exist
+
+There are a few approaches we could take here to solve this. For instance,
+we could ensure that every time that the config is rebuilt, we regenerate
+the file and recompute the flags. Or we could use the LLVM version to
+check for these flags, instead of testing the flag (which may have other
+advantages, such as allowing us to detect renames on the LLVM side).
+
+However, it may be easier than that: `rustc` is aware of the `-Cllvm-args`
+regardless of the `--target` (e.g. I checked that the list printed
+is the same, plus that I can check for these flags even if I pass
+a completely unrelated target), and thus we can just eliminate the
+dependency completely.
+
+Thus filter out the target.
+
+This does mean that `rustc-option` cannot be used to test a flag that
+requires the right target, but we don't have other users yet, it is a
+minimal change and we want to get rid of custom targets in the future.
+
+We could only filter in the case `target.json` is used, to make it work
+in more cases, but then it would be harder to notice that it may not
+work in a couple architectures.
+
+Cc: Matthew Maurer <mmaurer@google.com>
+Cc: Sami Tolvanen <samitolvanen@google.com>
+Cc: stable@vger.kernel.org
+Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+By the way, I noticed that we are not getting `asan-instrument-allocas` enabled
+in neither C nor Rust -- upstream LLVM renamed it in commit 8176ee9b5dda ("[asan]
+Rename asan-instrument-allocas -> asan-instrument-dynamic-allocas")). But it
+happened a very long time ago (9 years ago), and the addition in the kernel
+is fairly old too, in 342061ee4ef3 ("kasan: support alloca() poisoning").
+I assume it should either be renamed or removed? Happy to send a patch if so.
+
+ scripts/Makefile.compiler | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index 8956587b8547..7ed7f92a7daa 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -80,7 +80,7 @@ ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
+ # TODO: remove RUSTC_BOOTSTRAP=1 when we raise the minimum GNU Make version to 4.4
+ __rustc-option = $(call try-run,\
+ 	echo '#![allow(missing_docs)]#![feature(no_core)]#![no_core]' | RUSTC_BOOTSTRAP=1\
+-	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null,$(2)) $(3)\
++	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null --target=%,$(2)) $(3)\
+ 	--crate-type=rlib --out-dir=$(TMPOUT) --emit=obj=- - >/dev/null,$(3),$(4))
+
+ # rustc-option
+
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+--
+2.49.0
