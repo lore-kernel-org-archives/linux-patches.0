@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B23B26B95D;
-	Tue,  8 Apr 2025 12:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0486D26B96B;
+	Tue,  8 Apr 2025 12:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115611; cv=none; b=TiPl+993RQ96hx800fDM70PLaFzGE/k8OAW0XSLHvilcAgPnXs1noCRtLG+qyAX2p3CDqMo6IsIaHai791ZQhm0/dWjJ41HS3ln/fvbGTtFo78yREfaHLqeYgmVie77qn71jEsNGCM+QSjBz68F0UHeR8Kjf4SSt8/qWtYpD6Lg=
+	t=1744115614; cv=none; b=S+ggn3lyuItFjUc9ssPmfmaRmpvV6QgVzJ4/BJJvKGxyMZsCituHjJ0wbhscszk46VLcGKpB3aTw0yqJCiiiwrKQZnrp4n2gn9/GDbDEcBLntnItz5Ix0chWayCSovjXRB12BoyIKhMauEk1GdN7gvoa5gTbpiephx4hX/4P2F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115611; c=relaxed/simple;
-	bh=7rC2DzYTuIEHA4qXS5qMgIp3wVVMyQ/tCleazvdhAZo=;
+	s=arc-20240116; t=1744115614; c=relaxed/simple;
+	bh=TZ1Hxuk7FHCVo/oAEbVD9qaiuiGFiiNdHBv0SFdwk8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=haVMCA2Yd7XephABJNdr+C2jk9583Wcc56xngYV2mmOt8ugG8ZNOyydUMPK+bluJw6DpfSzoVrAg9jqvH676gnMoVWOLv59ijPG7l4hULFgKq/89bikoD5ml5AeY6GCX0GLUBZU/Iyb3JmMbarorygA18t+u2EcKo8N8i+c0+/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ruqLHiT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YLpTk5DSVvUDvrj4oC8G5jAeIYrDF1VvcKzZcinXCeJzcstuMM1cg7MhE4cGJD7kvNQrmmtRikekZZ478EmXPqrJEphlkK2UimroN//1Ty7YJzIiAFbJvIwE2SXDlIEq/jlB3a7pnU/AqHhD6rrReI/LbRREyXDcbwSbwIVVk1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HFiTZ9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ruqLHiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8708AC4CEE5;
-	Tue,  8 Apr 2025 12:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HFiTZ9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3C9C4CEE5;
+	Tue,  8 Apr 2025 12:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115610;
-	bh=7rC2DzYTuIEHA4qXS5qMgIp3wVVMyQ/tCleazvdhAZo=;
+	s=korg; t=1744115613;
+	bh=TZ1Hxuk7FHCVo/oAEbVD9qaiuiGFiiNdHBv0SFdwk8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ruqLHiTZH07qAH4l3n9vwJC/Ygtg8hvwMi5ndgh/sLHDNYg7UiXbxWHfj2zEU0k4
-	 bl/o90O6sgXZ8n64dAlsbGYL4YNFYwo8oM4FgJB0V0BHTyb79ofZgVp4kpdwLwFf/7
-	 fJdlk+bqkOt7lbLy30MQytFlVL2puH9T7cTU+GOc=
+	b=0HFiTZ9h3kBgm8obk6xI2Ohoy06Lxl+XVpvnwAyIDNTBwul37FBi1VN8aOx5rYe5E
+	 r/hsDeUvrqfmZHXW6GM8AIDQyIbs2I7MzKKtcQpusNvFjCJ16cWL3XKjvw6AMeyW8M
+	 q55UWI/OoOUbENiNO1lK5NfKnOgnqjFm54UFiKvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Thomas Zimmermann <tzimmremann@suse.de>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/204] drm/vkms: Fix use after free and double free on init error
-Date: Tue,  8 Apr 2025 12:49:21 +0200
-Message-ID: <20250408104821.244181209@linuxfoundation.org>
+Subject: [PATCH 6.1 040/204] PCI: brcmstb: Fix potential premature regulator disabling
+Date: Tue,  8 Apr 2025 12:49:30 +0200
+Message-ID: <20250408104821.522938232@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -53,71 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Jim Quinlan <james.quinlan@broadcom.com>
 
-[ Upstream commit ed15511a773df86205bda66c37193569575ae828 ]
+[ Upstream commit b7de1b60ecab2f7b6f05d8116e93228a0bbb8563 ]
 
-If the driver initialization fails, the vkms_exit() function might
-access an uninitialized or freed default_config pointer and it might
-double free it.
+The platform supports enabling and disabling regulators only on
+ports below the Root Complex.
 
-Fix both possible errors by initializing default_config only when the
-driver initialization succeeded.
+Thus, we need to verify this both when adding and removing the bus,
+otherwise regulators may be disabled prematurely when a bus further
+down the topology is removed.
 
-Reported-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Closes: https://lore.kernel.org/all/Z5uDHcCmAwiTsGte@louis-chauvet-laptop/
-Fixes: 2df7af93fdad ("drm/vkms: Add vkms_config type")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmremann@suse.de>
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250212084912.3196-1-jose.exposito89@gmail.com
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Fixes: 9e6be018b263 ("PCI: brcmstb: Enable child bus device regulators from DT")
+Signed-off-by: Jim Quinlan <james.quinlan@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250214173944.47506-6-james.quinlan@broadcom.com
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_drv.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-brcmstb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_drv.c b/drivers/gpu/drm/vkms/vkms_drv.c
-index f716c5796f5fc..09025ff3b1961 100644
---- a/drivers/gpu/drm/vkms/vkms_drv.c
-+++ b/drivers/gpu/drm/vkms/vkms_drv.c
-@@ -226,17 +226,19 @@ static int __init vkms_init(void)
- 	if (!config)
- 		return -ENOMEM;
+diff --git a/drivers/pci/controller/pcie-brcmstb.c b/drivers/pci/controller/pcie-brcmstb.c
+index 016ea0e79c3ad..3056e9b7223ec 100644
+--- a/drivers/pci/controller/pcie-brcmstb.c
++++ b/drivers/pci/controller/pcie-brcmstb.c
+@@ -1141,7 +1141,7 @@ static void brcm_pcie_remove_bus(struct pci_bus *bus)
+ 	struct subdev_regulators *sr = pcie->sr;
+ 	struct device *dev = &bus->dev;
  
--	default_config = config;
--
- 	config->cursor = enable_cursor;
- 	config->writeback = enable_writeback;
- 	config->overlay = enable_overlay;
+-	if (!sr)
++	if (!sr || !bus->parent || !pci_is_root_bus(bus->parent))
+ 		return;
  
- 	ret = vkms_create(config);
--	if (ret)
-+	if (ret) {
- 		kfree(config);
-+		return ret;
-+	}
- 
--	return ret;
-+	default_config = config;
-+
-+	return 0;
- }
- 
- static void vkms_destroy(struct vkms_config *config)
-@@ -260,9 +262,10 @@ static void vkms_destroy(struct vkms_config *config)
- 
- static void __exit vkms_exit(void)
- {
--	if (default_config->dev)
--		vkms_destroy(default_config);
-+	if (!default_config)
-+		return;
- 
-+	vkms_destroy(default_config);
- 	kfree(default_config);
- }
- 
+ 	if (regulator_bulk_disable(sr->num_supplies, sr->supplies))
 -- 
 2.39.5
 
