@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC3127C875;
-	Tue,  8 Apr 2025 12:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A0F26F478;
+	Tue,  8 Apr 2025 12:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744117077; cv=none; b=LCt++PBNYiJWvMT8E+CR98nRZUtJGOTUeiGdc45pBfhJdwfWBGqEUbStPhrMk4gnuUna3RP3T/Q2yrnH9Sg5teoc54YdLrIJFXK2vW1ewPM1xIrkdhx09AIcRoYKcGLxAU7DkpIuOAAzWOfdOF5jpHYOYc2XZdx2YbXRzi0Z6tk=
+	t=1744117080; cv=none; b=tZF6Rssmi1COluZaSHBFqj15pR/Xg2tP0MVJvpixstQRUjytcg8jIyNVY8bVeAYGuyZ/+QaDNk1v0lAbbnEVrxmCzlW8d37oLFlqaMhi68WhqxOWaHXB1ffExYLRYNl0jxCH98KC/h7GiOoRw2NCs/djUugHbuRH8fSWAUlm1Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744117077; c=relaxed/simple;
-	bh=TvD/3vQ4Xez903AUj/5tUWGpKlH85dxceb4Ptlg0hd8=;
+	s=arc-20240116; t=1744117080; c=relaxed/simple;
+	bh=959scZ3c6HxBKwp1CAJsjJAm1Edc9E2o7+xyQGNLgzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=diofYJIT0JtdqGVwr0DNnhYBpPArKJuC/40BboWFVoCFNFoxfQcXBRx9xiiEircaIz7QgOiXIYZwIyMIqHBwsEgdKbuDm1Z/+dsiN/v6zmBf4DKropU1nbm/ZO3FS+WxP1/iQDSPTvGUUAlv8+ivKViTs6QNbYkO0kinyXR/Ez8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmnDJqpt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nb2HvstMKUuFTclBMhvJbsiTto+Ir1XUv+eKb7ajlIwp30F9PFdS3jB9NWPpg/Z0f2mBPwWGjQsiBH8JZTTOqYtHASTkZPpZVAhu9rK/5ND4yy+r7kkLNsOZN2QGiaefgHuHlXK2GgMDB/sgebdvrcKkiilIBy01Xn6q1vcwGbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh8YbiJV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmnDJqpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B15C4CEE5;
-	Tue,  8 Apr 2025 12:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh8YbiJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9428BC4CEE5;
+	Tue,  8 Apr 2025 12:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744117077;
-	bh=TvD/3vQ4Xez903AUj/5tUWGpKlH85dxceb4Ptlg0hd8=;
+	s=korg; t=1744117079;
+	bh=959scZ3c6HxBKwp1CAJsjJAm1Edc9E2o7+xyQGNLgzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmnDJqptHBnhcan2XQ/p/32gBoAWnZq2r0tkExesoCItlfi2M6bIM0bN/8D2GPmuq
-	 poZKPpg+tgWHAUrtFTNp2bzDmTZpkiqe9T7r8tm1ZdjyMFi00Cg+Bb+URxGvWT6K3F
-	 SUsVdjzzAREvLGVt08ZnakoYUeu+ej2rfjok1UPs=
+	b=eh8YbiJVX1Au501CxGJHiI0AV7LxHhRp9priBQ9JMUs3Eay4Z0DH7SvbA1U0QAP6h
+	 cVyIKGIxr1cwXRj/GGZ/1aktBGZsX7jzqZ9oD6IXiDh9tiLVtDHYKbTnh7WCrY1XYq
+	 q1L7H65aOee9cp0ZxlQNimmBNcgMMq1I/edVmDKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 375/423] platform/x86: ISST: Correct command storage data length
-Date: Tue,  8 Apr 2025 12:51:41 +0200
-Message-ID: <20250408104854.605258073@linuxfoundation.org>
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Jon Mason <jdmason@kudzu.us>
+Subject: [PATCH 6.12 376/423] ntb_perf: Delete duplicate dmaengine_unmap_put() call in perf_copy_chunk()
+Date: Tue,  8 Apr 2025 12:51:42 +0200
+Message-ID: <20250408104854.629908596@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,42 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-commit 9462e74c5c983cce34019bfb27f734552bebe59f upstream.
+commit 4279e72cab31dd3eb8c89591eb9d2affa90ab6aa upstream.
 
-After resume/online turbo limit ratio (TRL) is restored partially if
-the admin explicitly changed TRL from user space.
+The function call “dmaengine_unmap_put(unmap)” was used in an if branch.
+The same call was immediately triggered by a subsequent goto statement.
+Thus avoid such a call repetition.
 
-A hash table is used to store SST mail box and MSR settings when modified
-to restore those settings after resume or online. This uses a struct
-isst_cmd field "data" to store these settings. This is a 64 bit field.
-But isst_store_new_cmd() is only assigning as u32. This results in
-truncation of 32 bits.
+This issue was detected by using the Coccinelle software.
 
-Change the argument to u64 from u32.
-
-Fixes: f607874f35cb ("platform/x86: ISST: Restore state on resume")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Fixes: 5648e56d03fa ("NTB: ntb_perf: Add full multi-port NTB API support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250328224749.2691272-1-srinivas.pandruvada@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_if_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ntb/test/ntb_perf.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-@@ -84,7 +84,7 @@ static DECLARE_HASHTABLE(isst_hash, 8);
- static DEFINE_MUTEX(isst_hash_lock);
+--- a/drivers/ntb/test/ntb_perf.c
++++ b/drivers/ntb/test/ntb_perf.c
+@@ -839,10 +839,8 @@ static int perf_copy_chunk(struct perf_t
+ 	dma_set_unmap(tx, unmap);
  
- static int isst_store_new_cmd(int cmd, u32 cpu, int mbox_cmd_type, u32 param,
--			      u32 data)
-+			      u64 data)
- {
- 	struct isst_cmd *sst_cmd;
+ 	ret = dma_submit_error(dmaengine_submit(tx));
+-	if (ret) {
+-		dmaengine_unmap_put(unmap);
++	if (ret)
+ 		goto err_free_resource;
+-	}
+ 
+ 	dmaengine_unmap_put(unmap);
  
 
 
