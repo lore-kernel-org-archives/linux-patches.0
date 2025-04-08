@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EBF206F18;
-	Tue,  8 Apr 2025 12:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09720269AF8;
+	Tue,  8 Apr 2025 12:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115528; cv=none; b=Q/wi9CWUe5upUHZWyqR5oKeNqiCa6VjjG1ui4wEcNyCjlBCdqFf4DSbaCwr+8KGP5Y5QdLBvLlWwcFJuilbasQ9xkKYC6nSzkeUA/q85r2O0A02Tx1OjrQlpazCe8/E6dSD43WnSV6jfVOlEH3K1L6rArCQsZrJb9T/pSQ8z2+Y=
+	t=1744115531; cv=none; b=HUkn0QyUpf0xNqyBBvJcRMsaWoYwmqVdFFgSv4F4kbzF7NLshh1zlC9makwTOqYMixq7MPONnard3vgT7b2lx9h19KZBplIWUFm0FU3zdOO0zljX3g8nKn6HBU5MgkhGh2iN/r6SMX/AOFmj2R6wRh/AlqeCzV2ptvBB9tdeJ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115528; c=relaxed/simple;
-	bh=zazv+dU2dB1iLQuLb1FjBrl89eWqzDkkOO39AamGbuE=;
+	s=arc-20240116; t=1744115531; c=relaxed/simple;
+	bh=lgWD/X6g+N6Bisvf4ZeaWhb/5vdUfy8KcP+qjmwiJg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vC4/4m3vBK20kEjLuuql+62np6iB3guSMIDQV6LKUweyr5abrRW+gnhIZWO/5MdpxGYNkwchr5zqF294/wvASjY3mJJoDNgAf6bGxsDUln5a7da3f5aVHW4+ME+HEdrU5VvA9pOVjwHdQColUvqnD+mU2pZfr0Tj5RhZ0BrNdiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yod1SiC4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q2HkKoi/frbHAzg0pSw73PPS9uclf0d+XVzIOGfxcUns/LHVbr3HNJdPiqKp2sCpvwArr3CVUkW4pIHsuf4z69oOSBSrZB+pxnd3WR9KEhITlO9+T9JvH5H7MXSBznVmRb0ZJw9nUD+zCni7Vi67VfZLQbAs8oy2kNqz1Q1Qe/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPNUbrtg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yod1SiC4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3432C4CEE5;
-	Tue,  8 Apr 2025 12:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPNUbrtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679DAC4CEE5;
+	Tue,  8 Apr 2025 12:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115528;
-	bh=zazv+dU2dB1iLQuLb1FjBrl89eWqzDkkOO39AamGbuE=;
+	s=korg; t=1744115530;
+	bh=lgWD/X6g+N6Bisvf4ZeaWhb/5vdUfy8KcP+qjmwiJg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yod1SiC4q19rdHNXFXuznf8/kzQBUkcntKAEctds++GUlBFoABf74XK6f0q2Sko+R
-	 LGspQT/hCVywPk6ltAZE7ZKRc7UWGF+bYPuegtsdZmSMJl7o1h+n+AkFNLUNd5y4vt
-	 BoIfzBVdjUhFi5e3XlQovDCv4zCJVC47D5Vm8644=
+	b=CPNUbrtgGOljJqqS1mXEQdEwuf/tOVRktpsHGgksBK1GyxnWkzF5B5BOhKtGUdtU8
+	 h+gX4KUvJDRebgJptwDdJnixw5lqP2fsHS10xigf+iUsKKHpEvXzZfbKwuYUUQSmoF
+	 ft0wdOSuWv+olAzEYbAkm8V8v9H+sA79JTeXMRKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/204] watch_queue: fix pipe accounting mismatch
-Date: Tue,  8 Apr 2025 12:48:51 +0200
-Message-ID: <20250408104820.319109869@linuxfoundation.org>
+Subject: [PATCH 6.1 010/204] lockdep/mm: Fix might_fault() lockdep check of current->mm->mmap_lock
+Date: Tue,  8 Apr 2025 12:49:00 +0200
+Message-ID: <20250408104820.605280663@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -51,53 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit f13abc1e8e1a3b7455511c4e122750127f6bc9b0 ]
+[ Upstream commit a1b65f3f7c6f7f0a08a7dba8be458c6415236487 ]
 
-Currently, watch_queue_set_size() modifies the pipe buffers charged to
-user->pipe_bufs without updating the pipe->nr_accounted on the pipe
-itself, due to the if (!pipe_has_watch_queue()) test in
-pipe_resize_ring(). This means that when the pipe is ultimately freed,
-we decrement user->pipe_bufs by something other than what than we had
-charged to it, potentially leading to an underflow. This in turn can
-cause subsequent too_many_pipe_buffers_soft() tests to fail with -EPERM.
+Turns out that this commit, about 10 years ago:
 
-To remedy this, explicitly account for the pipe usage in
-watch_queue_set_size() to match the number set via account_pipe_buffers()
+  9ec23531fd48 ("sched/preempt, mm/fault: Trigger might_sleep() in might_fault() with disabled pagefaults")
 
-(It's unclear why watch_queue_set_size() does not update nr_accounted;
-it may be due to intentional overprovisioning in watch_queue_set_size()?)
+... accidentally (and unnessecarily) put the lockdep part of
+__might_fault() under CONFIG_DEBUG_ATOMIC_SLEEP=y.
 
-Fixes: e95aada4cb93d ("pipe: wakeup wr_wait after setting max_usage")
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/206682a8-0604-49e5-8224-fdbe0c12b460@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This is potentially notable because large distributions such as
+Ubuntu are running with !CONFIG_DEBUG_ATOMIC_SLEEP.
+
+Restore the debug check.
+
+[ mingo: Update changelog. ]
+
+Fixes: 9ec23531fd48 ("sched/preempt, mm/fault: Trigger might_sleep() in might_fault() with disabled pagefaults")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241104135517.536628371@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watch_queue.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/memory.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index 442bb92212f2a..a72ea1c2f59fe 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -270,6 +270,15 @@ long watch_queue_set_size(struct pipe_inode_info *pipe, unsigned int nr_notes)
- 	if (ret < 0)
- 		goto error;
- 
-+	/*
-+	 * pipe_resize_ring() does not update nr_accounted for watch_queue
-+	 * pipes, because the above vastly overprovisions. Set nr_accounted on
-+	 * and max_usage this pipe to the number that was actually charged to
-+	 * the user above via account_pipe_buffers.
-+	 */
-+	pipe->max_usage = nr_pages;
-+	pipe->nr_accounted = nr_pages;
-+
- 	ret = -ENOMEM;
- 	pages = kcalloc(sizeof(struct page *), nr_pages, GFP_KERNEL);
- 	if (!pages)
+diff --git a/mm/memory.c b/mm/memory.c
+index fd874df17b365..2e776ea38348a 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5848,10 +5848,8 @@ void __might_fault(const char *file, int line)
+ 	if (pagefault_disabled())
+ 		return;
+ 	__might_sleep(file, line);
+-#if defined(CONFIG_DEBUG_ATOMIC_SLEEP)
+ 	if (current->mm)
+ 		might_lock_read(&current->mm->mmap_lock);
+-#endif
+ }
+ EXPORT_SYMBOL(__might_fault);
+ #endif
 -- 
 2.39.5
 
