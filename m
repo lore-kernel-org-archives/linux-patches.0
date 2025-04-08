@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2CF20CCD8;
-	Tue,  8 Apr 2025 11:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89290224234;
+	Tue,  8 Apr 2025 11:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113481; cv=none; b=QNG0qxBPBiNwKTrv8WaGA3AmqptBAFsh4q+uhkgdbm8V96UUvU+YhESw9x9e+ybkJyLesI6xe4R0f8gVlZU2V+dJfGaAJJMDJ3KxAMf24s437rq8bM2gwSav/8OPRDvUXjAtf6JepLZldqSi/guGvHFeUuBbM5QzcgXOPT6uDAA=
+	t=1744113484; cv=none; b=ohkJJNC1rhCR/pA7KYSbC8pz5Ttw3uI3vy33tnwEIOjjrM3qV2KYFbz9jIH/iHIKOAg+vXGDq0zvTZsRq0WfT8mZtLW2dEJTSSU4CzyNeF5V5qkmUUq/poVjqptfDKYGb8pTACk+z/VVQDW8u+mKh/3syyWp4RGmGTPmMq3l3UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113481; c=relaxed/simple;
-	bh=vwVIU2aJjVO8phJSXQFW/qbuYeFvGfzgApdqRK3LqQY=;
+	s=arc-20240116; t=1744113484; c=relaxed/simple;
+	bh=8dXNQZr4F1EkAwuGXokH+1JGJPE7uDGVcepTqdkuEOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KwlVMtNiwc0aThT16oW6JLXE9L5Sndl/rxFsnsVwWYbPox/gMIHuZETPqpYHhzExEyLF9PXMxblUryf5TFe2EDMQ+K3zTO7yOpRBMjI0mtR7RSRcy69tRVoTpjZA+3HMo/alE13Vfyx+o9USSMyhlN6Elkt0v9KW6Yu+PsT57v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrko41dy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2nmkPjCWWEbSKLSmdg+AYEN/+Ho1NCzLLT7MbWPPFl1T4OlCpGlIpZyk/Lz6o7T1IP11qsD2Tj1gEljhTocV3ggonmOcyl7trIn4eGG4/xwbXcCNjrULjWfZuA4KBUWTxIsa9fI7ps+EFjU+pPIPtYvn5rnQ8x9eoScJ4o2qdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6PCBB1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrko41dy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9797C4CEEB;
-	Tue,  8 Apr 2025 11:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6PCBB1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CA9C4CEE5;
+	Tue,  8 Apr 2025 11:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113481;
-	bh=vwVIU2aJjVO8phJSXQFW/qbuYeFvGfzgApdqRK3LqQY=;
+	s=korg; t=1744113484;
+	bh=8dXNQZr4F1EkAwuGXokH+1JGJPE7uDGVcepTqdkuEOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrko41dyWQo4SVdj+xmOgcODIPdnSqyjYELjHTvrQliUOfccideZ3q7m1JsoZ0hEA
-	 5aUrz2qhhCYF2zW6DJhuGWaVDiIByuOAhM7Qmt0bwflrsIZiM5s4hK/7fzwnfa/8Po
-	 MrFr9e/Y6qLdFGu7Jd4KrJH3qYKGgDOm27mNaZKE=
+	b=y6PCBB1VduEd9icrEfBAkbztmg6GTsk/gj6WWwa+yIirF5Oz1YQpUBeM6NL5dce1t
+	 7t2abwg5lr+FlT1VvTeiIdlvti6Mn1fi01gQZ1cM55IIWfq+jS9Ww8Mk3DLEsAh5zr
+	 mnXESuatyyXl1B0V6dX36cvXiI4Pe8kLyVgyT/kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/268] platform/x86/intel/vsec: Add Diamond Rapids support
-Date: Tue,  8 Apr 2025 12:49:46 +0200
-Message-ID: <20250408104833.264561232@linuxfoundation.org>
+Subject: [PATCH 6.6 176/268] HID: i2c-hid: improve i2c_hid_get_report error message
+Date: Tue,  8 Apr 2025 12:49:47 +0200
+Message-ID: <20250408104833.291422893@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
 References: <20250408104828.499967190@linuxfoundation.org>
@@ -45,60 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David E. Box <david.e.box@linux.intel.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit f317f38e7fbb15a0d8329289fef8cf034938fb4f ]
+[ Upstream commit 723aa55c08c9d1e0734e39a815fd41272eac8269 ]
 
-Add PCI ID for the Diamond Rapids Platforms
+We have two places to print "failed to set a report to ...",
+use "get a report from" instead of "set a report to", it makes
+people who knows less about the module to know where the error
+happened.
 
-Signed-off-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20250226214728.1256747-1-david.e.box@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Before:
+i2c_hid_acpi i2c-FTSC1000:00: failed to set a report to device: -11
+
+After:
+i2c_hid_acpi i2c-FTSC1000:00: failed to get a report from device: -11
+
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vsec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
-index 343ab6a82c017..666ed3698afe7 100644
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -420,6 +420,11 @@ static const struct intel_vsec_platform_info oobmsm_info = {
- 	.caps = VSEC_CAP_TELEMETRY | VSEC_CAP_SDSI | VSEC_CAP_TPMI,
- };
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 045db6f0fb4c4..3dcdd3368b463 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -258,7 +258,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
+ 			     ihid->rawbuf, recv_len + sizeof(__le16));
+ 	if (error) {
+ 		dev_err(&ihid->client->dev,
+-			"failed to set a report to device: %d\n", error);
++			"failed to get a report from device: %d\n", error);
+ 		return error;
+ 	}
  
-+/* DMR OOBMSM info */
-+static const struct intel_vsec_platform_info dmr_oobmsm_info = {
-+	.caps = VSEC_CAP_TELEMETRY | VSEC_CAP_TPMI,
-+};
-+
- /* TGL info */
- static const struct intel_vsec_platform_info tgl_info = {
- 	.caps = VSEC_CAP_TELEMETRY,
-@@ -431,6 +436,7 @@ static const struct intel_vsec_platform_info tgl_info = {
- #define PCI_DEVICE_ID_INTEL_VSEC_MTL_M		0x7d0d
- #define PCI_DEVICE_ID_INTEL_VSEC_MTL_S		0xad0d
- #define PCI_DEVICE_ID_INTEL_VSEC_OOBMSM		0x09a7
-+#define PCI_DEVICE_ID_INTEL_VSEC_OOBMSM_DMR	0x09a1
- #define PCI_DEVICE_ID_INTEL_VSEC_RPL		0xa77d
- #define PCI_DEVICE_ID_INTEL_VSEC_TGL		0x9a0d
- static const struct pci_device_id intel_vsec_pci_ids[] = {
-@@ -439,6 +445,7 @@ static const struct pci_device_id intel_vsec_pci_ids[] = {
- 	{ PCI_DEVICE_DATA(INTEL, VSEC_MTL_M, &mtl_info) },
- 	{ PCI_DEVICE_DATA(INTEL, VSEC_MTL_S, &mtl_info) },
- 	{ PCI_DEVICE_DATA(INTEL, VSEC_OOBMSM, &oobmsm_info) },
-+	{ PCI_DEVICE_DATA(INTEL, VSEC_OOBMSM_DMR, &dmr_oobmsm_info) },
- 	{ PCI_DEVICE_DATA(INTEL, VSEC_RPL, &tgl_info) },
- 	{ PCI_DEVICE_DATA(INTEL, VSEC_TGL, &tgl_info) },
- 	{ }
 -- 
 2.39.5
 
