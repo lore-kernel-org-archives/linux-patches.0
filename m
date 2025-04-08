@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8219326A0B3;
-	Tue,  8 Apr 2025 12:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCAD26B080;
+	Tue,  8 Apr 2025 12:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114877; cv=none; b=X01qlZOS6foGOpp5K/46iO9ZyMBkiUUxrhoLLKDvINfcy+OQ+WAB61qT8NSqAFHkRRvZaqCl1+/uERgW/w4aSN2lyzBiyba86snomUgc8tkqBuo30vjmDEX1WB2N1hrIhDoNaKX6wXoum4DsKbJZr8uebtTEbTvWuIaJerpF0Po=
+	t=1744114877; cv=none; b=ehlyHXg1WN11rr6rW5WYnTDvTo6vrfsOM7OAEOPaEnGPQ04DrBeYl0AiS8CdymzaKVwgFpps/uYGAd4JRVNQhk87IveCJ8XvjXFK3THe0tzzjnfKveAFf3FPwRxZ5onaVuduEV70N3kOD7GBVDA+fAJAHzTZR+MsriIOKdElUGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744114877; c=relaxed/simple;
-	bh=9PalclusiZb+8GvFTtKzDWjT5q4iCq5vQEpvYX2uP0w=;
+	bh=rq+G9N6tGKxNSAd2oW78zYRSLBO9kpiAgY8kJQ9t35I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrHm5Cc8WUrmhBOf1YCU5iKedtzRAQCSdHFbp/SJJy+LX0EzcHLyWMm0IQYPJtW7X8J7UvQzmZRyRpwkJNbhUrmZ5v+dmHSBsWcfUaZPB1ihikVaac7/qqC6cDcLcWHmroZmNtaCiBRLZTsRsK+cPPQOCuMgb14WYizHDW5dEsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWPDsLhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwT2eBUw47+xRmzX5CM88P//LF5bMlzZICViutRDoFpMbgKP8jnJjxw99gl1ZkGXEEzFc2IdX9OKtQPsmtggiSTh2pFEpYcX5t/HTkWZHVBLkAQABh81rpu0qkMr/6JxvUkZnBNgG66NzB0zjytJf/0/RSCB1sIJ+ThBGihrpT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+NZYC4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWPDsLhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7368FC4CEE5;
-	Tue,  8 Apr 2025 12:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+NZYC4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45366C4CEE7;
+	Tue,  8 Apr 2025 12:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114875;
-	bh=9PalclusiZb+8GvFTtKzDWjT5q4iCq5vQEpvYX2uP0w=;
+	s=korg; t=1744114877;
+	bh=rq+G9N6tGKxNSAd2oW78zYRSLBO9kpiAgY8kJQ9t35I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWPDsLhV478JxyUiUvSh6KHCd51QmiOO/NnNVbbp1uafrmN0TIhmev5ncfz09EGUh
-	 WIhU3KAQH78zpsMELe4QWfsOW4FPaC3E2SvZMw2YfbH2Omc/2U4RTO7NzL0IDzeejU
-	 c1LGq+1OGqO6dddf61C/JQHuFL1OwUGoFINGyCl8=
+	b=R+NZYC4JQeUw3AKORxn4bsJH+JAR63++7LQPgu+mqMPgMxLsBd0PVoevD0+23dhen
+	 iRzuBsQD9Xg5c4riB/RCRAFDP5dxxCv73os0k3wzncltjZo81P2KYOfZGvXhlLJ7Bd
+	 FaJoPMp3WyX67kEFRD8K4+0QIy1fpQ/NBK0kGvFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Kees Cook <kees@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Likhitha Korrapati <likhitha@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 268/499] fs/procfs: fix the comment above proc_pid_wchan()
-Date: Tue,  8 Apr 2025 12:48:00 +0200
-Message-ID: <20250408104857.900672838@linuxfoundation.org>
+Subject: [PATCH 6.13 269/499] perf tools: Fix is_compat_mode build break in ppc64
+Date: Tue,  8 Apr 2025 12:48:01 +0200
+Message-ID: <20250408104857.924233766@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,39 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Likhitha Korrapati <likhitha@linux.ibm.com>
 
-[ Upstream commit 6287fbad1cd91f0c25cdc3a580499060828a8f30 ]
+[ Upstream commit 7e442be7015af524d2b5fb84f0ff04a44501542b ]
 
-proc_pid_wchan() used to report kernel addresses to user space but that is
-no longer the case today.  Bring the comment above proc_pid_wchan() in
-sync with the implementation.
+Commit 54f9aa1092457 ("tools/perf/powerpc/util: Add support to
+handle compatible mode PVR for perf json events") introduced
+to select proper JSON events in case of compat mode using
+auxiliary vector. But this caused a compilation error in ppc64
+Big Endian.
 
-Link: https://lkml.kernel.org/r/20250319210222.1518771-1-bvanassche@acm.org
-Fixes: b2f73922d119 ("fs/proc, core/debug: Don't expose absolute kernel addresses via wchan")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+arch/powerpc/util/header.c: In function 'is_compat_mode':
+arch/powerpc/util/header.c:20:21: error: cast to pointer from
+integer of different size [-Werror=int-to-pointer-cast]
+   20 |         if (!strcmp((char *)platform, (char *)base_platform))
+      |                     ^
+arch/powerpc/util/header.c:20:39: error: cast to pointer from
+integer of different size [-Werror=int-to-pointer-cast]
+   20 |         if (!strcmp((char *)platform, (char *)base_platform))
+      |
+
+Commit saved the getauxval(AT_BASE_PLATFORM) and getauxval(AT_PLATFORM)
+return values in u64 which causes the compilation error.
+
+Patch fixes this issue by changing u64 to "unsigned long".
+
+Fixes: 54f9aa1092457 ("tools/perf/powerpc/util: Add support to handle compatible mode PVR for perf json events")
+Signed-off-by: Likhitha Korrapati <likhitha@linux.ibm.com>
+Reviewed-by: Athira Rajeev <atrajeev@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250321100726.699956-1-likhitha@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/arch/powerpc/util/header.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 0edf14a9840ef..75a36388c302b 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -416,7 +416,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
- #ifdef CONFIG_KALLSYMS
- /*
-  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
-- * Returns the resolved symbol.  If that fails, simply return the address.
-+ * Returns the resolved symbol to user space.
-  */
- static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
- 			  struct pid *pid, struct task_struct *task)
+diff --git a/tools/perf/arch/powerpc/util/header.c b/tools/perf/arch/powerpc/util/header.c
+index c7df534dbf8f8..0be74f048f964 100644
+--- a/tools/perf/arch/powerpc/util/header.c
++++ b/tools/perf/arch/powerpc/util/header.c
+@@ -14,8 +14,8 @@
+ 
+ static bool is_compat_mode(void)
+ {
+-	u64 base_platform = getauxval(AT_BASE_PLATFORM);
+-	u64 platform = getauxval(AT_PLATFORM);
++	unsigned long base_platform = getauxval(AT_BASE_PLATFORM);
++	unsigned long platform = getauxval(AT_PLATFORM);
+ 
+ 	if (!strcmp((char *)platform, (char *)base_platform))
+ 		return false;
 -- 
 2.39.5
 
