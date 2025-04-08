@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9E6268C6F;
-	Tue,  8 Apr 2025 11:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A87224F6;
+	Tue,  8 Apr 2025 11:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111791; cv=none; b=kkJvdr/BucQ9jd/Y9NIMv57Sx7ZhOjBqNw9nFltPr0F+Gb3b4Fi4iiorLyq+Vn8AcTu0WO1ek+0pqqzmWTP9W821f9SvrYtgd5dzT82hq3a3DZB1gTNbvytOFj3h6gqg1MaS+GlcNJWhl6ZuXCGgAWjYS3Umx4b7mX9UkPoTIAw=
+	t=1744111794; cv=none; b=tE5yONx7jctPWq3ymOqmxLswymQN8JV9qoD6wlfNhdh60WUPHemgemQVjtg2keIiG7CwIwV0VBVd287saIYcJRVDSlz/Q8l/4sqPhm3BcWClJlWQMO1wgdYh0wYYknBl/IAYBT1q6WllRJG4KQ7jzMe3Ofe1Pkv/xNb+hrV+cSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111791; c=relaxed/simple;
-	bh=6TDLd3EUJC6tmZp0sKOqW/CSik75v3RkNlTElKL41+c=;
+	s=arc-20240116; t=1744111794; c=relaxed/simple;
+	bh=DNPBfZb256eirFeuhmrc4sSUqD52UdZXxAy5z894foo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZPKi8I6P5gxWFxSKMr9vQxberWl/DOeDVzqNpmCV+W/aeW8B8OKS+VUbRnPKXISI1LFGb1uC1AnX19TtkY07p04Win9h0fLBEwBPzKjBzslMX6klzl+ujb9s3Hvb1YdwTpG+ePsgxaV/0rLS4G6H7ncOnvqJ/vb4r3QvOsJiGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxXS5Xhd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QV3e5LYG6YbsP68399i45t6+M/fYq4QQKsGB4xB6YkP+xzvfjD0Ip1uiGtbHesku+Fe64tdmAoDTPfVltfvbugfWwoxhHjSswkVqYT2eV9hgJZqult2Ns0gaugCDEDAYKvKqlAS+Sih/4HrV4JpXCmvKvnoqCKK5299EEFM/VoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF1JuC7U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxXS5Xhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E978C4CEE5;
-	Tue,  8 Apr 2025 11:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF1JuC7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08D2C4CEE7;
+	Tue,  8 Apr 2025 11:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111791;
-	bh=6TDLd3EUJC6tmZp0sKOqW/CSik75v3RkNlTElKL41+c=;
+	s=korg; t=1744111794;
+	bh=DNPBfZb256eirFeuhmrc4sSUqD52UdZXxAy5z894foo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxXS5XhdMy9jMZwIrG0OQr457cLYsdcKQlzmNsXUwYvtEGXdqP4zS/MuP3S2CUA+x
-	 zxqipS1debaXJWbB68eVd1QkDxEgld+r+mtCfO3gRYS/xzRAOhT05sIjgVX7F/TTkr
-	 mFrBq5ktpoEAR5w2CYdXOOMX64PdjHlu30Gsxv5A=
+	b=mF1JuC7U/qGF/1pyWxeo7aCG0GFTkspoEoS0RMcNWZHQMtjb96RFfSIYf/g31o22e
+	 VMa0p6+MAoc+fI42fIUdYw+nhNDMO3KOx9cx6LOOG7rICpkmGKEmni7m4zuDLAiOMf
+	 S4lA3WxAx3NHn5O8S4daY3mQQI9Qe47Rl4i/M6V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 562/731] objtool: Fix segfault in ignore_unreachable_insn()
-Date: Tue,  8 Apr 2025 12:47:39 +0200
-Message-ID: <20250408104927.346639468@linuxfoundation.org>
+Subject: [PATCH 6.14 563/731] LoongArch: Fix help text of CMDLINE_EXTEND in Kconfig
+Date: Tue,  8 Apr 2025 12:47:40 +0200
+Message-ID: <20250408104927.369492715@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -46,45 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit 69d41d6dafff0967565b971d950bd10443e4076c ]
+[ Upstream commit be216cbc1ddf99a51915414ce147311c0dfd50a2 ]
 
-Check 'prev_insn' before dereferencing it.
+It is the built-in command line appended to the bootloader command line,
+not the bootloader command line appended to the built-in command line.
 
-Fixes: bd841d6154f5 ("objtool: Fix CONFIG_UBSAN_TRAP unreachable warnings")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/5df4ff89c9e4b9e788b77b0531234ffa7ba03e9e.1743136205.git.jpoimboe@kernel.org
-
-Closes: https://lore.kernel.org/d86b4cc6-0b97-4095-8793-a7384410b8ab@app.fastmail.com
-Closes: https://lore.kernel.org/Z-V_rruKY0-36pqA@gmail.com
+Fixes: fa96b57c1490 ("LoongArch: Add build infrastructure")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 813e708c16499..aa071017c325c 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4009,7 +4009,7 @@ static bool ignore_unreachable_insn(struct objtool_file *file, struct instructio
- 	 * It may also insert a UD2 after calling a __noreturn function.
- 	 */
- 	prev_insn = prev_insn_same_sec(file, insn);
--	if (prev_insn->dead_end &&
-+	if (prev_insn && prev_insn->dead_end &&
- 	    (insn->type == INSN_BUG ||
- 	     (insn->type == INSN_JUMP_UNCONDITIONAL &&
- 	      insn->jump_dest && insn->jump_dest->type == INSN_BUG)))
+diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
+index 2b8bd27a852fe..bdb989c49c094 100644
+--- a/arch/loongarch/Kconfig
++++ b/arch/loongarch/Kconfig
+@@ -382,8 +382,8 @@ config CMDLINE_BOOTLOADER
+ config CMDLINE_EXTEND
+ 	bool "Use built-in to extend bootloader kernel arguments"
+ 	help
+-	  The command-line arguments provided during boot will be
+-	  appended to the built-in command line. This is useful in
++	  The built-in command line will be appended to the command-
++	  line arguments provided during boot. This is useful in
+ 	  cases where the provided arguments are insufficient and
+ 	  you don't want to or cannot modify them.
+ 
 -- 
 2.39.5
 
