@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216F826B959;
-	Tue,  8 Apr 2025 12:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26008267B8C;
+	Tue,  8 Apr 2025 12:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115405; cv=none; b=uD2Gx0fYFJRNzc279IKm/yPJOfVr4SkfiQ4eoHjRPEk4kIa+JImxnEbLkOdueKyvXnzCEpYjynSO2lsrJ5G04lh3KF/QMU/3NKg6xLeMg46B07xzYBQlDC+ztqT675EJls0USo10pWqKvaZHqhOCzRMDB7Y02d7d+f+QB7uzq4Q=
+	t=1744115408; cv=none; b=uAtGxHE5ugMX8SJ4Ze64Gv/kuH+SO5pVh9nwO8pt4I4IAOJt1yfH1c89FuYCFhawWQRtasWu/5u/AdDj9hKHROhc9Vtvq9ZM5C/S1soRNTYZJ0QkMo/mufcGX+vx3O3Ttd2onRyFVEndlydW9R0xSi8ohcj1WXmqxxNUHJcwJkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115405; c=relaxed/simple;
-	bh=AKXhEzZzytsuEMYxw4JrKxFl8UP+uPXkhR66Ki4SPi8=;
+	s=arc-20240116; t=1744115408; c=relaxed/simple;
+	bh=kyRSZvBx4je1ZwKGCawvcvPemdr/C9G0f/qY/nH3410=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tX9argbEpFrIhxVZZ2zMkwxa32FM+17t92fr9mL0+JQibgcYgervrYOFxdryxT0mERliAFl8PBBnYBEsX+Wq8BZcdk3T9iSFCx1EyfziJh8LKKvWeSQEdc/y+nNXJpYLOFwZSizOMwB0SlJoacj36Z2OxmGxiqnZfKgOSy9u1PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJpVJUuG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+Wugb9WZ2pqjvfU5AIxCEWKsJXARLGkk1Yzxhl6KFMMwfOsw2xk3+Z4RBlsBMX8M9rRQVYPDHNaXSdAt62UEEmaN4e2mEfPE1PZUT+WfPAvxB2TXhDc3dLQv/VhxWH2uv675njAJO+MVAb/K4i2Pald7d6xF0vPX2qIzlQrVTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VIWaI+k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJpVJUuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2028C4CEE5;
-	Tue,  8 Apr 2025 12:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VIWaI+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48064C4CEE5;
+	Tue,  8 Apr 2025 12:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115405;
-	bh=AKXhEzZzytsuEMYxw4JrKxFl8UP+uPXkhR66Ki4SPi8=;
+	s=korg; t=1744115407;
+	bh=kyRSZvBx4je1ZwKGCawvcvPemdr/C9G0f/qY/nH3410=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJpVJUuG25UdiCJ+gWGgeVsmAhNtKaiGsajUwyqTXGf1VtBX8QHZCHmpQfT7EXlnr
-	 Y4ajTfmI4YZIhjTLJ8pm2t2pBmZMjDi1InVz3uwfXXyG7dISEn9v3MNaHRqhW9Z37X
-	 Nq7f/Yijd/AuLNMk3CEwXvO5Q7+iP6BlWs4jJqog=
+	b=0VIWaI+kV7zeKBlglD9H06UzXpdpeq9UxzPhQA2oE469uzFS1smoGF2/I4VsU3viB
+	 2AqmDN8OT47giuujtGRuBqh26nVk+Ym2rNK2CwFr3O4PdObIuqHSZym2cMoqBuwSB/
+	 pdGeTl99gZqesGvXGgkw8ZvA+6X6qfruRwx7Qtac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 460/499] media: omap3isp: Handle ARM dma_iommu_mapping
-Date: Tue,  8 Apr 2025 12:51:12 +0200
-Message-ID: <20250408104902.708664894@linuxfoundation.org>
+	Candice Li <candice.li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.13 461/499] Remove unnecessary firmware version check for gc v9_4_2
+Date: Tue,  8 Apr 2025 12:51:13 +0200
+Message-ID: <20250408104902.736088004@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -52,41 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Candice Li <candice.li@amd.com>
 
-commit 6bc076eec6f85f778f33a8242b438e1bd9fcdd59 upstream.
+commit 5b3c08ae9ed324743f5f7286940d45caeb656e6e upstream.
 
-It's no longer practical for the OMAP IOMMU driver to trick
-arm_setup_iommu_dma_ops() into ignoring its presence, so let's use the
-same tactic as other IOMMU API users on 32-bit ARM and explicitly kick
-the arch code's dma_iommu_mapping out of the way to avoid problems.
+GC v9_4_2 uses a new versioning scheme for CP firmware, making
+the warning ("CP firmware version too old, please update!") irrelevant.
 
-Fixes: 4720287c7bf7 ("iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()")
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Tested-by: Sicelo A. Mhlongo <absicsz@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/omap3isp/isp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/ti/omap3isp/isp.c
-+++ b/drivers/media/platform/ti/omap3isp/isp.c
-@@ -1961,6 +1961,13 @@ static int isp_attach_iommu(struct isp_d
- 	struct dma_iommu_mapping *mapping;
- 	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1269,6 +1269,7 @@ static void gfx_v9_0_check_fw_write_wait
+ 	adev->gfx.mec_fw_write_wait = false;
  
-+	/* We always want to replace any default mapping from the arch code */
-+	mapping = to_dma_iommu_mapping(isp->dev);
-+	if (mapping) {
-+		arm_iommu_detach_device(isp->dev);
-+		arm_iommu_release_mapping(mapping);
-+	}
-+
- 	/*
- 	 * Create the ARM mapping, used by the ARM DMA mapping core to allocate
- 	 * VAs. This will allocate a corresponding IOMMU domain.
+ 	if ((amdgpu_ip_version(adev, GC_HWIP, 0) != IP_VERSION(9, 4, 1)) &&
++	    (amdgpu_ip_version(adev, GC_HWIP, 0) != IP_VERSION(9, 4, 2)) &&
+ 	    ((adev->gfx.mec_fw_version < 0x000001a5) ||
+ 	     (adev->gfx.mec_feature_version < 46) ||
+ 	     (adev->gfx.pfp_fw_version < 0x000000b7) ||
 
 
