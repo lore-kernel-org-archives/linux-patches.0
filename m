@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA64B374C4;
-	Tue,  8 Apr 2025 11:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9378C264FA0;
+	Tue,  8 Apr 2025 11:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110862; cv=none; b=bFePhBGOPAEzt3OfrMKM9zO7B3Dna89y1jl5PlUavEIgnhsI8AN9aHK8fXo0fr8ENxB3E/0TKx2ple5ve9I9e1IHLQ3jeUmzVgT2tMxyg7czmdc3nD5UDcv/jUPunXKWLslnQzO0mcRLRuPD7IxMBsVxS/ry6bx1Nier169BI08=
+	t=1744110865; cv=none; b=j35sUyDmYr23vmsEpQI+8aE77YDQyme39DGw/g358sBR+BViOx4hV54PI5HFJclmkaAfIKRLnOTmQ4oIH6jxZvXyy+r3n3UX4q3vJt/8DeWnhsA+uHI1AM6iomEJOa4gmPFEtv/73f2g7rnBDDSEwexdMqN6keSoy4XtdN8mWNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110862; c=relaxed/simple;
-	bh=e1q5VnEyiUQllJq2QqB60NI3f+hg6P25Rb1e4oCAtUE=;
+	s=arc-20240116; t=1744110865; c=relaxed/simple;
+	bh=V/WOyLXgsR1l1JDbv0LuWZas7UN53lB2zHweVAzmePk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/v3jBESqtrWSYY5+Cnbf3UyZOGzFhqdxWnxlbslr5zPmfmU1sjQ0GRuhHq6RI05YySQ13l8RgvOGBsCwG3gv0OdNh15eZB1bhc+9aYy1tQPTERprfymtcLLhLw8e3oFmh/0xragA9nucjici4XQgLcfG+2majFcwYCLKhdoSxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1clgNNTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UXE3ZIdbtZacfuEi107H9C658kenTdmtzJE1cditFCQjdtEB8lT4lHRVjxVVSCOC16Mis/DW4U58FiNE/5Kqj44pIY5PQNxdZcFM1ongVd+RaalqJ2rvIZs88OHN3Bkh1MZ3lHjdAjiZPrJaBhTULwW/ywJbtUxgYSiQgPTx9+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYeTknnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1clgNNTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7CDC4CEE5;
-	Tue,  8 Apr 2025 11:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYeTknnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24421C4CEEA;
+	Tue,  8 Apr 2025 11:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110862;
-	bh=e1q5VnEyiUQllJq2QqB60NI3f+hg6P25Rb1e4oCAtUE=;
+	s=korg; t=1744110865;
+	bh=V/WOyLXgsR1l1JDbv0LuWZas7UN53lB2zHweVAzmePk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1clgNNTrK5CU8Wpbet1INZ2UGefxffA1jopzjqb6f9ddD1xppBBTMTis/WOQN/ZTL
-	 J3s5rWvLNAMDhiUE6Cl6mzpYY+oy6ulTNPRIpPDP3dOhVaOSpFYdN2f79cj417ws+f
-	 aO2PgCPE1SZnYbHt7LrSSqU3UBSRUKFZUf1T80Fc=
+	b=pYeTknnIXyieaUYVRGIWIzDpy+3oJCBEBGqKrIZrCKcm/Sy9aPzajT3jsZTZwioYA
+	 UTDtgjJIYYYbEvGfv6Al3Ggm6ujDtOxo8tepKGRxy8C0yUz6nUuSTwyJzzJBP4jwOt
+	 g1EmEdNvgdqqR+9x815GhlhnCFdz5LLMMfJ/xJ3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 223/731] broadcom: fix supported flag check in periodic output function
-Date: Tue,  8 Apr 2025 12:42:00 +0200
-Message-ID: <20250408104919.468566238@linuxfoundation.org>
+Subject: [PATCH 6.14 224/731] ptp: ocp: reject unsupported periodic output flags
+Date: Tue,  8 Apr 2025 12:42:01 +0200
+Message-ID: <20250408104919.490940942@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -54,41 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit af2b428f7992c07b0767c9a3c341b54d9069542e ]
+[ Upstream commit 8dcfc910a81d8b53f59f8b23211e81f2a91f84f9 ]
 
-In bcm_ptp_perout_locked, the driver rejects requests which have
-PTP_PEROUT_PHASE set. This appears to be an attempt to reject any
-unsupported flags. Unfortunately, this only checks one flag, but does not
-protect against PTP_PEROUT_ONE_SHOT, or any future flags which may be
-added.
+The ptp_ocp_signal_from_perout() function supports PTP_PEROUT_DUTY_CYCLE
+and PTP_PEROUT_PHASE. It does not support PTP_PEROUT_ONE_SHOT, but does not
+reject a request with such an unsupported flag.
 
-Fix the check to ensure that no flag other than the supported
-PTP_PEROUT_DUTY_CYCLE is set.
+Add the appropriate check to ensure that unsupported requests are rejected
+both for PTP_PEROUT_ONE_SHOT as well as any future flags.
 
-Fixes: 7bfe91efd525 ("net: phy: Add support for 1PPS out and external timestamps")
+Fixes: 1aa66a3a135a ("ptp: ocp: Program the signal generators via PTP_CLK_REQ_PEROUT")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250312-jk-net-fixes-supported-extts-flags-v2-4-ea930ba82459@intel.com
+Link: https://patch.msgid.link/20250312-jk-net-fixes-supported-extts-flags-v2-5-ea930ba82459@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/bcm-phy-ptp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_ocp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/phy/bcm-phy-ptp.c b/drivers/net/phy/bcm-phy-ptp.c
-index 208e8f561e069..eba8b5fb1365f 100644
---- a/drivers/net/phy/bcm-phy-ptp.c
-+++ b/drivers/net/phy/bcm-phy-ptp.c
-@@ -597,7 +597,8 @@ static int bcm_ptp_perout_locked(struct bcm_ptp_private *priv,
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index b651087f426f5..4a87af0980d69 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -2090,6 +2090,10 @@ ptp_ocp_signal_from_perout(struct ptp_ocp *bp, int gen,
+ {
+ 	struct ptp_ocp_signal s = { };
  
- 	period = BCM_MAX_PERIOD_8NS;	/* write nonzero value */
- 
--	if (req->flags & PTP_PEROUT_PHASE)
-+	/* Reject unsupported flags */
-+	if (req->flags & ~PTP_PEROUT_DUTY_CYCLE)
- 		return -EOPNOTSUPP;
- 
- 	if (req->flags & PTP_PEROUT_DUTY_CYCLE)
++	if (req->flags & ~(PTP_PEROUT_DUTY_CYCLE |
++			   PTP_PEROUT_PHASE))
++		return -EOPNOTSUPP;
++
+ 	s.polarity = bp->signal[gen].polarity;
+ 	s.period = ktime_set(req->period.sec, req->period.nsec);
+ 	if (!s.period)
 -- 
 2.39.5
 
