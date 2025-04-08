@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5531263C6D;
-	Tue,  8 Apr 2025 11:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A217268C61;
+	Tue,  8 Apr 2025 11:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110605; cv=none; b=agui1GY85/jmU+ya+zs/3vCRUPac53I61I++IyoY5h7B5mjwjBVsDlm9pBAmmgCNByht4RyPzP2eWVrIwvlOKvZ2/tzt2XYNaZP5ekUYolrPYf2qwWBxJwaPcwBI0cYvK56Hwv7lM8Ef6xFZEzDv8qQp1bXI1KthhFKcltK+XSg=
+	t=1744110608; cv=none; b=A0f1cze0WwmZ2qTCPfQrUh5HQ/Xqkq0TjP44Upi4ORWOfffTBYUagZLB1Q2TpeKvFSHRy0a84mgV8ZXAwJ0baBY1Kv0HbIWHpSPgAZZ3iPHvNX8x/BM2BkNm6U+cmTt02Yav6SaZL3ntP6StEbjv/7LRMVwYhcrfd3Rz4bSlbw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110605; c=relaxed/simple;
-	bh=xmJfekEDyxy4HoXyyJqfYHw8tnB9+pCd8s0B8VQm6AU=;
+	s=arc-20240116; t=1744110608; c=relaxed/simple;
+	bh=TvZ4ahKFqXXT6brlIBra0iXrc99YurpAeODU4Qk7E1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7vG/dHt3VXBdSlKqmcwHPAokuvYu3+77NStIFhWHnGh9voAs70Eg7onLYI7IMsEKdg7Txf8AlUm7Ulp5/V4c53GFauY5mqblLrdwptVLjOSZzWGUkPqiDX6A5X3CrJd483uhAKGL4UZE527VJYMgjyd2F92rxvKpdkQLrQv4u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8R2Z88+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KpDdYR9yo1VaVXD8iGZw1rT4YvfNf60hMlD3APnvQ5T/hzdRdY843qR9pwHN6FKC03i4swLhgsYxvMj/0tquMrSXhZDPtSrLO7QGMD3YeQnugtfIDLFLsj6homK8Esevz48H+PRuoJWLDPkR/PkpaIkYMtN9DmEymhXYP8UQ80Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNUI2Ufb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8R2Z88+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAC8C4CEE5;
-	Tue,  8 Apr 2025 11:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNUI2Ufb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90AFC4CEE5;
+	Tue,  8 Apr 2025 11:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110605;
-	bh=xmJfekEDyxy4HoXyyJqfYHw8tnB9+pCd8s0B8VQm6AU=;
+	s=korg; t=1744110608;
+	bh=TvZ4ahKFqXXT6brlIBra0iXrc99YurpAeODU4Qk7E1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E8R2Z88+nHPW4wjP9EdLUFOtQ31CuqeiSJ2EFiNvdhEn07gF7AKOePjUYxk2QkNAv
-	 dy4aE2zOqDiWW0Lc8U2OTn/3mwRpAExZxodCMmxyuOaXCsGUi0ouy1xpUzGOihl9BC
-	 IXkviANI979qCmM+ncQ9azcEpNhTYDpb00Jg0OD0=
+	b=eNUI2UfbJdbzaVXAL3NfLP3aw7WlocAPBz9Z0It6KryltC9EbjFQDtMBGq1alQOLj
+	 5WZxQYO2d4er9vV00WiItdfDF0+CGkRy19ZaFxpFPWh0jVD27fZqhvWCVjzi1G5peo
+	 hl7vWot2vzFWQvD6T6cZZh3+TGxtUyv6aYqfX0/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	David Teigland <teigland@redhat.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 087/731] dlm: prevent NPD when writing a positive value to event_done
-Date: Tue,  8 Apr 2025 12:39:44 +0200
-Message-ID: <20250408104916.293009611@linuxfoundation.org>
+Subject: [PATCH 6.14 088/731] wifi: ath11k: fix RCU stall while reaping monitor destination ring
+Date: Tue,  8 Apr 2025 12:39:45 +0200
+Message-ID: <20250408104916.317331329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -51,44 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 8e2bad543eca5c25cd02cbc63d72557934d45f13 ]
+[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
 
-do_uevent returns the value written to event_done. In case it is a
-positive value, new_lockspace would undo all the work, and lockspace
-would not be set. __dlm_new_lockspace, however, would treat that
-positive value as a success due to commit 8511a2728ab8 ("dlm: fix use
-count with multiple joins").
+While processing the monitor destination ring, MSDUs are reaped from the
+link descriptor based on the corresponding buf_id.
 
-Down the line, device_create_lockspace would pass that NULL lockspace to
-dlm_find_lockspace_local, leading to a NULL pointer dereference.
+However, sometimes the driver cannot obtain a valid buffer corresponding
+to the buf_id received from the hardware. This causes an infinite loop
+in the destination processing, resulting in a kernel crash.
 
-Treating such positive values as successes prevents the problem. Given
-this has been broken for so long, this is unlikely to break userspace
-expectations.
+kernel log:
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
 
-Fixes: 8511a2728ab8 ("dlm: fix use count with multiple joins")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fix this by skipping the problematic buf_id and reaping the next entry,
+replacing the break with the next MSDU processing.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lockspace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
-index 8afac6e2dff00..1929327ffbe1c 100644
---- a/fs/dlm/lockspace.c
-+++ b/fs/dlm/lockspace.c
-@@ -576,7 +576,7 @@ static int new_lockspace(const char *name, const char *cluster,
- 	   lockspace to start running (via sysfs) in dlm_ls_start(). */
- 
- 	error = do_uevent(ls, 1);
--	if (error)
-+	if (error < 0)
- 		goto out_recoverd;
- 
- 	/* wait until recovery is successful or failed */
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index 029ecf51c9efd..07cd336ee01b1 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -4783,7 +4783,7 @@ u32 ath11k_dp_rx_mon_mpdu_pop(struct ath11k *ar, int mac_id,
+ 			if (!msdu) {
+ 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
+ 					   "msdu_pop: invalid buf_id %d\n", buf_id);
+-				break;
++				goto next_msdu;
+ 			}
+ 			rxcb = ATH11K_SKB_RXCB(msdu);
+ 			if (!rxcb->unmapped) {
+@@ -5410,7 +5410,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct ath11k *ar,
+ 					   "full mon msdu_pop: invalid buf_id %d\n",
+ 					    buf_id);
+ 				spin_unlock_bh(&rx_ring->idr_lock);
+-				break;
++				goto next_msdu;
+ 			}
+ 			idr_remove(&rx_ring->bufs_idr, buf_id);
+ 			spin_unlock_bh(&rx_ring->idr_lock);
 -- 
 2.39.5
 
