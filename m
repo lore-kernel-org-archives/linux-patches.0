@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83229267731;
-	Tue,  8 Apr 2025 12:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA91D26B2A3;
+	Tue,  8 Apr 2025 12:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115105; cv=none; b=bpPAJTdBtJ1T1++Z5s4LS1c+115jDdnCFapf2ybg3DwQrx12qPKkDVEg5dJt+pshb5LHOKRaDPpbQhOl/Lp37VE7p0xqGw01e+n1IFzVKO1Slf+r2rTv8CnlPM0GprAb88S9uWFHtjvRDEquZIcePR3JH2qKLdf802K7RTSLc7A=
+	t=1744115107; cv=none; b=ZX4U/mjWhYq+RT2MnvBiDNNlVb2Wjqy6J4mqRdE6xKDat7+W9GLEz/w5gxU5+uZlotTqspkMB7+y3w1OBzRCnQ7b++gdUxFU6yV02KZ1ZshPFyML+1F7pvF4B5Dk213oQcefJzU7Y/aNj5uNDweHgtAteGCkNpQN1j7oDOCoSU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115105; c=relaxed/simple;
-	bh=MmSOLvM57cs66zF7GDOE16R+Jtk+WxqFDLA0BeqJifI=;
+	s=arc-20240116; t=1744115107; c=relaxed/simple;
+	bh=OX6hgk58lEqsi4MlrwInEWktx+hKSh83bpyVIypg1dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMAFR6pIQHUkJBVxM/gEhgtwud0DgLhwLnu/Vg1GFPVe3FcoYT03R2V6SzePZXt6R3/MhBDX91cRK37x4qk4mqzsujeV3XyYxxeOk7rqmudQ1caCQJLsGoO3tGKO7RfSNdojd3+xaBJUTs+VS6YCgI1IlwP6dUbBd+0CDrKGPJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j94qYsOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULMUr9SvxIUyX4x39ErfczdBhfAzVdf5JPQHP/y4x6IsIy3W9DxLO8zF7dWGI1126N+U9gxjynYXKiAdgwx45B7Yj4R5FqPKduo9rHo57kjoYWzOomOXIvVSo6zRBmbEsvdG/OUNPgl2xRxQxpVgUB2E8KRFnivu6x48RoeTm1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnqA3BN0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j94qYsOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76705C4CEE5;
-	Tue,  8 Apr 2025 12:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnqA3BN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB5DC4CEE5;
+	Tue,  8 Apr 2025 12:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115105;
-	bh=MmSOLvM57cs66zF7GDOE16R+Jtk+WxqFDLA0BeqJifI=;
+	s=korg; t=1744115107;
+	bh=OX6hgk58lEqsi4MlrwInEWktx+hKSh83bpyVIypg1dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j94qYsOKukYDosGYTY/WNfTzBJq17QKxFd0QWekGIyDBXBpjhPyHCyOqTbQC8M9iy
-	 Qi2GYaV2MsWwiPoLoS2f08uGPXGO/SeJAcvFFhZ08qV3umbVhZlNSOqqaqKe906REb
-	 u9dLvatTx/InapWGjsjftHJSCyVWvwHyIunZ6fnM=
+	b=wnqA3BN0L0VDGEx9zi0ezPCyH3JgZ9DUAl1jzRWIGZhJ2+iMAD8R9C6ebujblzsdN
+	 Uu3sYNfGxCm4qbn8BX/lZcw9DXbtaNwyYbKwbZmBThBPXwr4uq7xEMK5P4MNF0V315
+	 njtzuV72mG/21u+LJYmc77JArtZ/kHGuvdi5qeZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	ceph-devel@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 352/499] netfs: Fix netfs_unbuffered_read() to return ssize_t rather than int
-Date: Tue,  8 Apr 2025 12:49:24 +0200
-Message-ID: <20250408104900.007715615@linuxfoundation.org>
+Subject: [PATCH 6.13 353/499] rtc: renesas-rtca3: Disable interrupts only if the RTC is enabled
+Date: Tue,  8 Apr 2025 12:49:25 +0200
+Message-ID: <20250408104900.033826995@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -58,53 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 07c574eb53d4cc9aa7b985bc8bfcb302e5dc4694 ]
+[ Upstream commit 27b2fcbd6b98204b0dce62e9aa9540ca0a2b70f1 ]
 
-Fix netfs_unbuffered_read() to return an ssize_t rather than an int as
-netfs_wait_for_read() returns ssize_t and this gets implicitly truncated.
+If the RTC is not enabled and the code attempts to disable the interrupt,
+the readb_poll_timeout_atomic() function in the
+rtca3_alarm_irq_set_helper() may timeout, leading to probe failures.
+This issue is reproducible on some devices because the initial values of
+the PIE and AIE bits in the RCR1 register are undefined.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20250314164201.1993231-5-dhowells@redhat.com
-Acked-by: "Paulo Alcantara (Red Hat)" <pc@manguebit.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: Alex Markuze <amarkuze@redhat.com>
-cc: Ilya Dryomov <idryomov@gmail.com>
-cc: ceph-devel@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+To prevent probe failures in this scenario, disable RTC interrupts only
+when the RTC is actually enabled.
+
+Fixes: d4488377609e ("rtc: renesas-rtca3: Add driver for RTCA-3 available on Renesas RZ/G3S SoC")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250205095519.2031742-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/direct_read.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-renesas-rtca3.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/fs/netfs/direct_read.c b/fs/netfs/direct_read.c
-index b1a66a6e6bc2d..917b7edc34ef5 100644
---- a/fs/netfs/direct_read.c
-+++ b/fs/netfs/direct_read.c
-@@ -108,9 +108,9 @@ static int netfs_dispatch_unbuffered_reads(struct netfs_io_request *rreq)
-  * Perform a read to an application buffer, bypassing the pagecache and the
-  * local disk cache.
-  */
--static int netfs_unbuffered_read(struct netfs_io_request *rreq, bool sync)
-+static ssize_t netfs_unbuffered_read(struct netfs_io_request *rreq, bool sync)
- {
--	int ret;
-+	ssize_t ret;
+diff --git a/drivers/rtc/rtc-renesas-rtca3.c b/drivers/rtc/rtc-renesas-rtca3.c
+index d127933bfc8ad..598bf943cc5b6 100644
+--- a/drivers/rtc/rtc-renesas-rtca3.c
++++ b/drivers/rtc/rtc-renesas-rtca3.c
+@@ -586,17 +586,14 @@ static int rtca3_initial_setup(struct clk *clk, struct rtca3_priv *priv)
+ 	 */
+ 	usleep_range(sleep_us, sleep_us + 10);
  
- 	_enter("R=%x %llx-%llx",
- 	       rreq->debug_id, rreq->start, rreq->start + rreq->len - 1);
-@@ -149,7 +149,7 @@ static int netfs_unbuffered_read(struct netfs_io_request *rreq, bool sync)
- 	}
+-	/* Disable all interrupts. */
+-	mask = RTCA3_RCR1_AIE | RTCA3_RCR1_CIE | RTCA3_RCR1_PIE;
+-	ret = rtca3_alarm_irq_set_helper(priv, mask, 0);
+-	if (ret)
+-		return ret;
+-
+ 	mask = RTCA3_RCR2_START | RTCA3_RCR2_HR24;
+ 	val = readb(priv->base + RTCA3_RCR2);
+-	/* Nothing to do if already started in 24 hours and calendar count mode. */
+-	if ((val & mask) == mask)
+-		return 0;
++	/* Only disable the interrupts if already started in 24 hours and calendar count mode. */
++	if ((val & mask) == mask) {
++		/* Disable all interrupts. */
++		mask = RTCA3_RCR1_AIE | RTCA3_RCR1_CIE | RTCA3_RCR1_PIE;
++		return rtca3_alarm_irq_set_helper(priv, mask, 0);
++	}
  
- out:
--	_leave(" = %d", ret);
-+	_leave(" = %zd", ret);
- 	return ret;
- }
- 
+ 	/* Reconfigure the RTC in 24 hours and calendar count mode. */
+ 	mask = RTCA3_RCR2_START | RTCA3_RCR2_CNTMD;
 -- 
 2.39.5
 
