@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D7A26982F;
-	Tue,  8 Apr 2025 12:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4923026B94B;
+	Tue,  8 Apr 2025 12:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116793; cv=none; b=WYuT13pjP/8W6ySXm+dkzaygBW//mCC9yD4aYTn/jvLwh8IU+L7tSLr0i1n7bgIdChGmYDRrn79N5+tO2WI7aAJO+OKvDa4tPvl5Iw4+GJsk8pgxe/S2ME7snUUkgGARIXAaUesCaddfQvlr4pQ9dclgYN1DbbgLEE2MzeJDGfU=
+	t=1744116795; cv=none; b=dNvppREjBkdMps9GqkUk2KqxdNDh0At9EyPivgviA1WaXhf6EnAatfL7sq4rLhAzGhQW9lYubkMSBNbvtnBqoJi5prP0TSPzSptqa+lhraF+7X1i9DbOG8wMMstqNwnAzm6s5WLBNxdeV4nr+rDXet8xtFX+zPJMjQVYq2c6RE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116793; c=relaxed/simple;
-	bh=RM6T8D0NuKBOuQq+FcYvEEUglPAyyhH2GGZdLWXLIfg=;
+	s=arc-20240116; t=1744116795; c=relaxed/simple;
+	bh=sMN7Zn9etem4umSLGRMb0vle2ZhZL7GQCevm4tSNZyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8Pu3EVjD4sGq+daK5wA6pl5H7QDSqDr24U1hPrCwBAVDluJWcCzcSbfEqWYEAMxoxWVvwBpgBzalrzeVzLc0Xsrb3hKiRGCsaaC7CUBBEh9IphWAp0BfZulUU5g8mqNDCYz/jbtCiZwa/eiyJT/1gy+it+cWxZPxKE17mrnsVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFoZKxrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKZX5yybTr9SKGiMcVwmJGS2wEqMo09pxVFdl/ttto8FbNwbg5bjzy1aIMIIqR2jnREakED/kvvUqUFx/caBbGETcsPhj2H3I97hATlpxWQ3X6hWith3u8lbC+6An3b3qUgeRrZawKV8LNzeywTrTwnXuolF/NSEDsZ3w08zMxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHZojSkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFoZKxrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F063C4CEE5;
-	Tue,  8 Apr 2025 12:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHZojSkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7C2C4CEE5;
+	Tue,  8 Apr 2025 12:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116792;
-	bh=RM6T8D0NuKBOuQq+FcYvEEUglPAyyhH2GGZdLWXLIfg=;
+	s=korg; t=1744116795;
+	bh=sMN7Zn9etem4umSLGRMb0vle2ZhZL7GQCevm4tSNZyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFoZKxrrhBp/3YNa1gP/+xcj9cFcLdjoakHUfoYl9WB4y0s3mgZBZ6SKVcZReIeEj
-	 X4lM7EdNG1N+kaxLO36eFXUyKLSd30cnM6HUIrGVurADyiyvIMSArmbILid5TWX7ro
-	 VjuewJcUkeRsVjbXcOUYcqcsRT+lE7ItI/MDVFvU=
+	b=eHZojSkGm6xi9u+/MO6nZg2EgxS612zU6BoI+/jdrEfCoZYHDhDYjbSXZsVxqMCWo
+	 2rJw+406p6tZQP+BBX8qnfip5N4lrRe+XyJhnAIU/kNyqY6q+1CY1mp4sI/45TfVLT
+	 Bi5NEz9vhwsFoDDdujdp2POW1g/NB22EcO0gX+Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/423] net: dsa: rtl8366rb: dont prompt users for LED control
-Date: Tue,  8 Apr 2025 12:49:57 +0200
-Message-ID: <20250408104852.069146449@linuxfoundation.org>
+Subject: [PATCH 6.12 272/423] HID: i2c-hid: improve i2c_hid_get_report error message
+Date: Tue,  8 Apr 2025 12:49:58 +0200
+Message-ID: <20250408104852.093963973@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -51,35 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit c34424eb3be4c01db831428c0d7d483701ae820f ]
+[ Upstream commit 723aa55c08c9d1e0734e39a815fd41272eac8269 ]
 
-Make NET_DSA_REALTEK_RTL8366RB_LEDS a hidden symbol.
-It seems very unlikely user would want to intentionally
-disable it.
+We have two places to print "failed to set a report to ...",
+use "get a report from" instead of "set a report to", it makes
+people who knows less about the module to know where the error
+happened.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20250228004534.3428681-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Before:
+i2c_hid_acpi i2c-FTSC1000:00: failed to set a report to device: -11
+
+After:
+i2c_hid_acpi i2c-FTSC1000:00: failed to get a report from device: -11
+
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/Kconfig | 2 +-
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/realtek/Kconfig b/drivers/net/dsa/realtek/Kconfig
-index 10687722d14c0..d6eb6713e5f6b 100644
---- a/drivers/net/dsa/realtek/Kconfig
-+++ b/drivers/net/dsa/realtek/Kconfig
-@@ -44,7 +44,7 @@ config NET_DSA_REALTEK_RTL8366RB
- 	  Select to enable support for Realtek RTL8366RB.
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 4e87380d3edd6..bcca89ef73606 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -284,7 +284,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
+ 			     ihid->rawbuf, recv_len + sizeof(__le16));
+ 	if (error) {
+ 		dev_err(&ihid->client->dev,
+-			"failed to set a report to device: %d\n", error);
++			"failed to get a report from device: %d\n", error);
+ 		return error;
+ 	}
  
- config NET_DSA_REALTEK_RTL8366RB_LEDS
--	bool "Support RTL8366RB LED control"
-+	bool
- 	depends on (LEDS_CLASS=y || LEDS_CLASS=NET_DSA_REALTEK_RTL8366RB)
- 	depends on NET_DSA_REALTEK_RTL8366RB
- 	default NET_DSA_REALTEK_RTL8366RB
 -- 
 2.39.5
 
