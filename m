@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DCD263F4D;
-	Tue,  8 Apr 2025 12:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23659267F4F;
+	Tue,  8 Apr 2025 12:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115185; cv=none; b=M7k+FI4qCNaHy2JzlBPMfTFurEdOlDVLrQK1g77bcjiMNE6g3bDaVVtftSiyQcRlc7/h3mYrObqUBqHKLm+99Di2ZJ3b33DVChGwPADi4Vnzfs22gcNsM4cE1M1wCOpZpWXUGGQGRKNpQTlLhbyACx+AeP3ULyX9fECF4D8FnOA=
+	t=1744115188; cv=none; b=ZWOqhIekIUc55ov0t0V5K5YB70dj5kuyzwqMlHpuNQd5S+c36WZSFekeuPDk+5qaJa90LVA0hefqmVcBBtGl6rrASw15TSpMkCAh/7fVBhQbV8gyaVapYd84hXjU+PdhBMZz8JqxLidLe7mSn69I2yNzM4qMTZ77Yov/0iK4dNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115185; c=relaxed/simple;
-	bh=NFU3fK5vTBvjN+xS6gjjshCCKvTE7AlmBI4Nw4GMnEs=;
+	s=arc-20240116; t=1744115188; c=relaxed/simple;
+	bh=yfBB0wx4R1r62REePHe4+LwT2e4Zwl2M/fgqfCuFwks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKD5mxtAsV2oNvgyIkfdCzbGdgwDO+QIHTboRa9qv2QmOP1g+OeGmYRvSYq6OD6JLbKZ6foNRWiPLN60sfzhU8bwOtZD8UTEpA1Y7XNMuk/1XUzNnTYrGuDW8S1Xl+cd8/9UUxS7MX6h3cC5GRV5LtiuTp74oTVm8vaBlCkyJ70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6nhqACk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mN3swFr/gjMksTt3jcwCiiKOfTenKbX8V/c97Ga5Jg0W3tnYV0e408kVj626ZnjJo5bYXRl2Kpv4z+ob+K6aDl87uMsgzFk5LnYSMVKkYDq7hP8jHY6VANQAZC7wO2cXnHkJHc3R5Qq3eCHhruCYYPczPhdlSVcOas+kuOe8vn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TABv+sUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6nhqACk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161C8C4CEE5;
-	Tue,  8 Apr 2025 12:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TABv+sUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93C8C4CEE5;
+	Tue,  8 Apr 2025 12:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115185;
-	bh=NFU3fK5vTBvjN+xS6gjjshCCKvTE7AlmBI4Nw4GMnEs=;
+	s=korg; t=1744115188;
+	bh=yfBB0wx4R1r62REePHe4+LwT2e4Zwl2M/fgqfCuFwks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6nhqACk7W4gpUWpRGQ9FSKoRvem/mxvEk7MTQDiPQfMG3w6df+vMbxlA4cRokYxS
-	 0zMuI7e5/MQR5r0O+CGUPMZLn4rTdI6NFV/jGGbHGiYxARPiiV+twsad0DKKpPTED+
-	 Fw+OZUTsAVRF67CaIIDPxUojYk95kxzU/ss0/7+o=
+	b=TABv+sUqAJZ0EEfwYreMCZOejm4wI/5ARznj34Lcn1SPvsyY+SHGwVEh8Ns8SrIHm
+	 3KdDv8myhxWeY15eJvdY1nH60y5cl3zNQX1HtLOsyXH5ZYrWmBNxCU5ifNsEnDe7ni
+	 TqaevrY1tVMynKWLgOfOTBR+dKNFU2dLahqQ1CiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xaver Hugl <xaver.hugl@gmail.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 342/499] drm/amd: Keep display off while going into S4
-Date: Tue,  8 Apr 2025 12:49:14 +0200
-Message-ID: <20250408104859.752290603@linuxfoundation.org>
+Subject: [PATCH 6.13 343/499] net: devmem: do not WARN conditionally after netdev_rx_queue_restart()
+Date: Tue,  8 Apr 2025 12:49:15 +0200
+Message-ID: <20250408104859.778349245@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -54,100 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 4afacc9948e1f8fdbca401d259ae65ad93d298c0 ]
+[ Upstream commit a70f891e0fa0435379ad4950e156a15a4ef88b4d ]
 
-When userspace invokes S4 the flow is:
+When devmem socket is closed, netdev_rx_queue_restart() is called to
+reset queue by the net_devmem_unbind_dmabuf(). But callback may return
+-ENETDOWN if the interface is down because queues are already freed
+when the interface is down so queue reset is not needed.
+So, it should not warn if the return value is -ENETDOWN.
 
-1) amdgpu_pmops_prepare()
-2) amdgpu_pmops_freeze()
-3) Create hibernation image
-4) amdgpu_pmops_thaw()
-5) Write out image to disk
-6) Turn off system
-
-Then on resume amdgpu_pmops_restore() is called.
-
-This flow has a problem that because amdgpu_pmops_thaw() is called
-it will call amdgpu_device_resume() which will resume all of the GPU.
-
-This includes turning the display hardware back on and discovering
-connectors again.
-
-This is an unexpected experience for the display to turn back on.
-Adjust the flow so that during the S4 sequence display hardware is
-not turned back on.
-
-Reported-by: Xaver Hugl <xaver.hugl@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2038
-Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Harry Wentland <harry.wentland@amd.com>
-Link: https://lore.kernel.org/r/20250306185124.44780-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 68bfdc8dc0a1a7fdd9ab61e69907ae71a6fd3d91)
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250309134219.91670-8-ap420073@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           | 11 +++++++++--
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  5 +++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ net/core/devmem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 91a874bb0e241..fc953ef4eedd0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2556,7 +2556,6 @@ static int amdgpu_pmops_freeze(struct device *dev)
+diff --git a/net/core/devmem.c b/net/core/devmem.c
+index 11b91c12ee113..17f8a83a5ee74 100644
+--- a/net/core/devmem.c
++++ b/net/core/devmem.c
+@@ -108,6 +108,7 @@ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
+ 	struct netdev_rx_queue *rxq;
+ 	unsigned long xa_idx;
+ 	unsigned int rxq_idx;
++	int err;
  
- 	adev->in_s4 = true;
- 	r = amdgpu_device_suspend(drm_dev, true);
--	adev->in_s4 = false;
- 	if (r)
- 		return r;
+ 	if (binding->list.next)
+ 		list_del(&binding->list);
+@@ -119,7 +120,8 @@ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
  
-@@ -2568,8 +2567,13 @@ static int amdgpu_pmops_freeze(struct device *dev)
- static int amdgpu_pmops_thaw(struct device *dev)
- {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
-+	struct amdgpu_device *adev = drm_to_adev(drm_dev);
-+	int r;
+ 		rxq_idx = get_netdev_rx_queue_index(rxq);
  
--	return amdgpu_device_resume(drm_dev, true);
-+	r = amdgpu_device_resume(drm_dev, true);
-+	adev->in_s4 = false;
-+
-+	return r;
- }
- 
- static int amdgpu_pmops_poweroff(struct device *dev)
-@@ -2582,6 +2586,9 @@ static int amdgpu_pmops_poweroff(struct device *dev)
- static int amdgpu_pmops_restore(struct device *dev)
- {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
-+	struct amdgpu_device *adev = drm_to_adev(drm_dev);
-+
-+	adev->in_s4 = false;
- 
- 	return amdgpu_device_resume(drm_dev, true);
- }
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 62a684323ffca..d10fcc2423245 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3330,6 +3330,11 @@ static int dm_resume(struct amdgpu_ip_block *ip_block)
- 
- 		return 0;
+-		WARN_ON(netdev_rx_queue_restart(binding->dev, rxq_idx));
++		err = netdev_rx_queue_restart(binding->dev, rxq_idx);
++		WARN_ON(err && err != -ENETDOWN);
  	}
-+
-+	/* leave display off for S4 sequence */
-+	if (adev->in_s4)
-+		return 0;
-+
- 	/* Recreate dc_state - DC invalidates it when setting power state to S3. */
- 	dc_state_release(dm_state->context);
- 	dm_state->context = dc_state_create(dm->dc, NULL);
+ 
+ 	xa_erase(&net_devmem_dmabuf_bindings, binding->id);
 -- 
 2.39.5
 
