@@ -1,134 +1,152 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE9A2690D5
-	for <patches@lists.linux.dev>; Tue,  8 Apr 2025 12:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A952698AE;
+	Tue,  8 Apr 2025 12:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113730; cv=none; b=d7DlJGfNWcZVp27gDwVXb2UF+YuHMJHTSvbXGyV/pvp8GYaGep4QLKTrjNpyP1yQwFVpTVMxmnU7EmENqVZnp2uHSSBCxbv3XrkQ3+1uVRq+3xkV0csNnI44zRJ/mjtH0BqlJZEN48K5nDMIuPQn3nL8GzVfJcZWo0gy+cagvzs=
+	t=1744113731; cv=none; b=u1AHNkyVmjrtoSz07Jmh6XYWGnos+v6+9nELwcmr/JtmwsX7GTceb9Xq7+VY0zaJ9MY0bJUg/ns24ccsERieA6k2N8/09LYUNslTDISQCbDruDKKGn88x7CFo17S0bnBprrybIYHMcjWCjbxzV6nkVyVSSzZpkcT9iHfQZCF+JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113730; c=relaxed/simple;
-	bh=UFixeHLNjdQjTR+kkvlptM4ncETLW9p2OBuXaKgwWbA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a56eTgzSpesvCy7kgHkHzMeZe/lh79rjsQn+pbnwSu/ESKHF8WGUQhVPyOVDDgApRnQ/yIP0744e9OehbxJfGORYYkvmaaPR7cZpfh9a+aD3kNglQfHCrLVzMhJDpu6jJSYtPLvdzKUMA/4EptrjjdLItw02EeVYsFvcRaSNrzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UWty4+QR; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1744113731; c=relaxed/simple;
+	bh=1GW5evtOVi+VdbfzLCB/Q5jBkoxfrODoJAL0LyRsP1o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EnILuxLlyXsyCzUPgp43oKDHdxZYiLOI7UMohiecRCwfuTYrEzSkZpY7H+UWiBNglZcBS0UkcXgoM40QPsYv8qAn4+6qv4guvKUdNfBPGkat00seYVFfcFoC+1kLJaWBSchQRWUcX8ZPdXzv0wuifNY0nPdGJsXBfnOrkCm8Qos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbBITOSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UWty4+QR"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3995ff6b066so2981580f8f.3
-        for <patches@lists.linux.dev>; Tue, 08 Apr 2025 05:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1744113727; x=1744718527; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TaB33ZWJPGuieEub6nK71J8fMj0CB/UDsbyRfDQHdI4=;
-        b=UWty4+QRtKnyACLdcx2TTzh28WJgWPUUoYIZv1YtZ9v7+1LsSzBH7DA8DmD6VtwE0L
-         vVTab2Stq6UZ47qcnKUQyEel4S9hByTj6DPocrFXPdVIUVZ2KgeNkDP93e/TqvoSNlUJ
-         8hOps6gI7uz3sWH0ZD0B0a3tGAsKyIwYApbZF/R6HnreZcjTmWr65u8j8uGBNiQBvYJX
-         fVpgzhYR/ZEOCbKq4Zvms+i7jDCqoIHuKLnZUqCEdb4jWGteqvCAT0+WVj0TS9b9nrDT
-         5KY93Hg6M+wrU8CkEOt7lpnPNzcxzq7iG/9YPluvSPqK77soiq0pD2y/7X+ggiPpcyN2
-         tLYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744113727; x=1744718527;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TaB33ZWJPGuieEub6nK71J8fMj0CB/UDsbyRfDQHdI4=;
-        b=hLk9g2+H8aTnYoZrhGRyY+SmM2aAvX6N8MAnqh1q8F48RgYSr0tT3TbHQqB2MqIW6j
-         GerRDWYkuc+Uf+zjgriDHQPhMW9mD4C0MBDfyOQWSn/Ha5OTStkejCurJf03ERmbdfMe
-         Kb+CZfOXl2HADhm+UegKhLJy8szP1m1bIwZguqPb6yjrq8YfhfG0HI6P2ApgZRORewWM
-         JZQJL+lVwmqJ7i6mGFJ9AvPfi4DJ0MRtB8FtsPrhRYRndSWJfcLFcNC49Ey1UBDFgcol
-         pyXagQGIpWta1lb1/T+TVS/Rb3f9YaOBTeIVeuHBv299s7HnNzKzpr/f6CMkdbdIZ3Mk
-         OSYw==
-X-Forwarded-Encrypted: i=1; AJvYcCWPF5EbLb486JsYRiGbLKeLWGXaGrkuCRV9IgQrvV15Txfm8nzo9VsLUPtoPZPrM8aaFxDj9I/3@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyng5TK9bsbBmaOlRvwzZ4vLtipzcUwMH6SQsURb5YBdhPVrPUG
-	zaaFM9eup8aPlKpkAmZ3VWfaK15ZYeV11XvaIXpGZ0IVIzUFIPFFN1onMH8S2OF5OeE4l9uYWNB
-	B7bbSUTe0F0OEFX5GNah/X+ph73r3ycLpbVL1
-X-Gm-Gg: ASbGncu21QIaYknA9g2mi+iVGAhqmvVCBToKF6OVTh2vt0z82eZbWmjeLH3MHFH9Z20
-	Vc8mZPPjwff3uv23GMsqaPFOLAZ8oQ2X7LHCHAJ3syqEvwfJsUw72lQz+F+MVsnjf+RxrGJ6pkM
-	/MuQrMhR+zHEdb43/IKxEod2UD3ppY5Fo9HZCe7z79pSiF3zTmtYD+nnG0EM9+6OCb2+8=
-X-Google-Smtp-Source: AGHT+IHXn3WJ6YCdSECNM+7ovqF4F6BBSSghd/853rpu4Q9m55dL3x51uqHj8qHREP2y60W+P/vi1GG5MRr/eiKRt0k=
-X-Received: by 2002:a5d:6d8e:0:b0:39c:1257:c7a1 with SMTP id
- ffacd0b85a97d-39cba93d0bbmr11770462f8f.57.1744113726698; Tue, 08 Apr 2025
- 05:02:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbBITOSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64ADBC4CEE5;
+	Tue,  8 Apr 2025 12:02:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1744113731;
+	bh=1GW5evtOVi+VdbfzLCB/Q5jBkoxfrODoJAL0LyRsP1o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JbBITOSFk0E+9lid1Aaf0iQ27GsfThDmPHaY5ZISiEe9/QRvqyu13HQ6cVl0fllxP
+	 GwAfdQyBdyIqmF+X7C1iKHjZmyUzNYPDBZQWCkHaNlSjGt6OghKXr+nxtc7JAxDfEZ
+	 3EV7XmwjoC/6apj25FZD22I/4wa0bugPQFkOrg+g=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 267/268] nfsd: put dl_stid if fail to queue dl_recall
+Date: Tue,  8 Apr 2025 12:51:18 +0200
+Message-ID: <20250408104835.776902127@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250408104828.499967190@linuxfoundation.org>
+References: <20250408104828.499967190@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250408104828.499967190@linuxfoundation.org> <20250408104830.890872754@linuxfoundation.org>
- <CAH5fLgj6SEKy1-CopXTnaFWK6WFddP+ahccf1_MdabpeCuB87A@mail.gmail.com>
-In-Reply-To: <CAH5fLgj6SEKy1-CopXTnaFWK6WFddP+ahccf1_MdabpeCuB87A@mail.gmail.com>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 8 Apr 2025 14:01:54 +0200
-X-Gm-Features: ATxdqUFkRj9aDnv5yAULCjRgrblo_P7OU2VhSsBvhEFQYpsjIS9BRcEt53vb5D4
-Message-ID: <CAH5fLggOycGwNKXS-=3oO6tSN+mA2YOnJpXBGOOK5pEO6A=qfg@mail.gmail.com>
-Subject: Re: [PATCH 6.6 089/268] rust: fix signature of rust_fmt_argument
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Tamir Duberstein <tamird@gmail.com>, Petr Mladek <pmladek@suse.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 8, 2025 at 1:57=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> wr=
-ote:
->
-> On Tue, Apr 8, 2025 at 1:54=E2=80=AFPM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > 6.6-stable review patch.  If anyone has any objections, please let me k=
-now.
-> >
-> > ------------------
-> >
-> > From: Alice Ryhl <aliceryhl@google.com>
-> >
-> > [ Upstream commit 901b3290bd4dc35e613d13abd03c129e754dd3dd ]
-> >
-> > Without this change, the rest of this series will emit the following
-> > error message:
-> >
-> > error[E0308]: `if` and `else` have incompatible types
-> >   --> <linux>/rust/kernel/print.rs:22:22
-> >    |
-> > 21 | #[export]
-> >    | --------- expected because of this
-> > 22 | unsafe extern "C" fn rust_fmt_argument(
-> >    |                      ^^^^^^^^^^^^^^^^^ expected `u8`, found `i8`
-> >    |
-> >    =3D note: expected fn item `unsafe extern "C" fn(*mut u8, *mut u8, *=
-mut c_void) -> *mut u8 {bindings::rust_fmt_argument}`
-> >               found fn item `unsafe extern "C" fn(*mut i8, *mut i8, *co=
-nst c_void) -> *mut i8 {print::rust_fmt_argument}`
-> >
-> > The error may be different depending on the architecture.
-> >
-> > To fix this, change the void pointer argument to use a const pointer,
-> > and change the imports to use crate::ffi instead of core::ffi for
-> > integer types.
-> >
-> > Fixes: 787983da7718 ("vsprintf: add new `%pA` format specifier")
-> > Reviewed-by: Tamir Duberstein <tamird@gmail.com>
-> > Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> > Acked-by: Petr Mladek <pmladek@suse.com>
-> > Link: https://lore.kernel.org/r/20250303-export-macro-v3-1-41fbad85a27f=
-@google.com
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
->
-> > -use core::{
-> > +use crate::{
-> >      ffi::{c_char, c_void},
->
-> I don't think crate::ffi exists on 6.6, so I would think that this
-> does not compile.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-We probably need to change rust_fmt_argument to use `*mut u8` instead
-of *mut c_char` to fix this. Let me know if you want a patch for this.
+------------------
 
-Alice
+From: Li Lingfeng <lilingfeng3@huawei.com>
+
+commit 230ca758453c63bd38e4d9f4a21db698f7abada8 upstream.
+
+Before calling nfsd4_run_cb to queue dl_recall to the callback_wq, we
+increment the reference count of dl_stid.
+We expect that after the corresponding work_struct is processed, the
+reference count of dl_stid will be decremented through the callback
+function nfsd4_cb_recall_release.
+However, if the call to nfsd4_run_cb fails, the incremented reference
+count of dl_stid will not be decremented correspondingly, leading to the
+following nfs4_stid leak:
+unreferenced object 0xffff88812067b578 (size 344):
+  comm "nfsd", pid 2761, jiffies 4295044002 (age 5541.241s)
+  hex dump (first 32 bytes):
+    01 00 00 00 6b 6b 6b 6b b8 02 c0 e2 81 88 ff ff  ....kkkk........
+    00 6b 6b 6b 6b 6b 6b 6b 00 00 00 00 ad 4e ad de  .kkkkkkk.....N..
+  backtrace:
+    kmem_cache_alloc+0x4b9/0x700
+    nfsd4_process_open1+0x34/0x300
+    nfsd4_open+0x2d1/0x9d0
+    nfsd4_proc_compound+0x7a2/0xe30
+    nfsd_dispatch+0x241/0x3e0
+    svc_process_common+0x5d3/0xcc0
+    svc_process+0x2a3/0x320
+    nfsd+0x180/0x2e0
+    kthread+0x199/0x1d0
+    ret_from_fork+0x30/0x50
+    ret_from_fork_asm+0x1b/0x30
+unreferenced object 0xffff8881499f4d28 (size 368):
+  comm "nfsd", pid 2761, jiffies 4295044005 (age 5541.239s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 30 4d 9f 49 81 88 ff ff  ........0M.I....
+    30 4d 9f 49 81 88 ff ff 20 00 00 00 01 00 00 00  0M.I.... .......
+  backtrace:
+    kmem_cache_alloc+0x4b9/0x700
+    nfs4_alloc_stid+0x29/0x210
+    alloc_init_deleg+0x92/0x2e0
+    nfs4_set_delegation+0x284/0xc00
+    nfs4_open_delegation+0x216/0x3f0
+    nfsd4_process_open2+0x2b3/0xee0
+    nfsd4_open+0x770/0x9d0
+    nfsd4_proc_compound+0x7a2/0xe30
+    nfsd_dispatch+0x241/0x3e0
+    svc_process_common+0x5d3/0xcc0
+    svc_process+0x2a3/0x320
+    nfsd+0x180/0x2e0
+    kthread+0x199/0x1d0
+    ret_from_fork+0x30/0x50
+    ret_from_fork_asm+0x1b/0x30
+Fix it by checking the result of nfsd4_run_cb and call nfs4_put_stid if
+fail to queue dl_recall.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/nfsd/nfs4state.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1066,6 +1066,12 @@ static struct nfs4_ol_stateid * nfs4_all
+ 	return openlockstateid(stid);
+ }
+ 
++/*
++ * As the sc_free callback of deleg, this may be called by nfs4_put_stid
++ * in nfsd_break_one_deleg.
++ * Considering nfsd_break_one_deleg is called with the flc->flc_lock held,
++ * this function mustn't ever sleep.
++ */
+ static void nfs4_free_deleg(struct nfs4_stid *stid)
+ {
+ 	struct nfs4_delegation *dp = delegstateid(stid);
+@@ -4920,6 +4926,7 @@ static const struct nfsd4_callback_ops n
+ 
+ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ {
++	bool queued;
+ 	/*
+ 	 * We're assuming the state code never drops its reference
+ 	 * without first removing the lease.  Since we're in this lease
+@@ -4928,7 +4935,10 @@ static void nfsd_break_one_deleg(struct
+ 	 * we know it's safe to take a reference.
+ 	 */
+ 	refcount_inc(&dp->dl_stid.sc_count);
+-	WARN_ON_ONCE(!nfsd4_run_cb(&dp->dl_recall));
++	queued = nfsd4_run_cb(&dp->dl_recall);
++	WARN_ON_ONCE(!queued);
++	if (!queued)
++		nfs4_put_stid(&dp->dl_stid);
+ }
+ 
+ /* Called from break_lease() with flc_lock held. */
+
+
