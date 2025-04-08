@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14002269811;
-	Tue,  8 Apr 2025 12:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE6C269882;
+	Tue,  8 Apr 2025 12:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115874; cv=none; b=DZZYEWvtWKr0btGMxrFW7BqA3ar26QtcpTT4FBNOyJ44AE8uX0G499ut4Mjji1MKqbYH+Dhsk/V1cyGBDL+9H9slG8g3GAknEkPEVRKM7e1XYqyGyDVcr4sFqJbeQAhe/OEgzJKJ6OoUprVi5975XUuQ8O4JI7Tx4g2ib2LMFsA=
+	t=1744115876; cv=none; b=dIR+dIVThV6IHXrUr0TgtdGmLRexRp33WYdw3W7ePxULCDo3GS/zWwpxMsvnv7Ajit5IuBaY3Fne9NQivIuDM1o8zRqjUxPp1v4DqZxY8JUbXc4fLzgFC1ranitiSeVroG0MheEI7KP6GFNCBD1k1Rzr/PbbI/rj5zZCULvTeuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115874; c=relaxed/simple;
-	bh=ZlASRtkmLYNsUvx69MvBYSp1/y1ogNMVPEpMAbqZMyw=;
+	s=arc-20240116; t=1744115876; c=relaxed/simple;
+	bh=bc1WiDrg3QT+isVk8e4Zx3muIybg2W6paJ3Vw43kp7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K/hBg6SPhG53nQSVX5j5wjhe2gVGSOBIXtG76kE2w0n8W14NOK22+UONY0Ee4CwzHyWMyzKtQhz+eXBR6vZbFI2jZabXXODTRs1pwAUAsLizPfk2O0LUUOubT0b+euQIOOUJUNAmwjUVzznbRSqy/YvOo9je1n6sgqXY8GnsPik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIHYvSVz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5rk4xHKVvRwjH1cesxrWYy1Ls3qLIissxSUCpv4xKsFffn7DpiWEZD0Puyl1NbSwHzVLztzj0YBwrvqvZqjMZ28i7PYfTeBn2nCXWPG4I7C8wO2TA7YbG2x//+7rLyEl0VCpmGyNYc1B0KCeq5EmKtWqFR8vVznrbTxF9WTZlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdQR/wL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIHYvSVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96375C4CEE7;
-	Tue,  8 Apr 2025 12:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdQR/wL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF1FC4CEE5;
+	Tue,  8 Apr 2025 12:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115873;
-	bh=ZlASRtkmLYNsUvx69MvBYSp1/y1ogNMVPEpMAbqZMyw=;
+	s=korg; t=1744115876;
+	bh=bc1WiDrg3QT+isVk8e4Zx3muIybg2W6paJ3Vw43kp7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIHYvSVzUrddBDCiSm5J/oqs01OK9yEdcdBvR7uJtI4oPrfuCK0hB2XjM7gwDAW92
-	 xCtyd4mAqIwq8Iuvk5bs1Dcq8NxWmKnhpQ6OCMQGMv/MBgxhTwuTmC1h70d1DYKbSb
-	 B9wgkCF0mTuInSVskRrwuK5sd+d82WOwFY97Rtps=
+	b=VdQR/wL4s6EI53XIB1gnuF3wSW5u+JPWhBxMhVmaMrALDOHas42Z1SW1RLVAwi22m
+	 mUiuuZ+qA65X9xdkfyT3RAnBI7UIi7HForm/1AJmmT1QbAv9JPU3aUKNDZjUthc8Fv
+	 svasWJpPQDYCiCqObNarIY/ENGKtb3LdBxG67mSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Panchenko <dmitry@d-systems.ee>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/204] platform/x86: intel-hid: fix volume buttons on Microsoft Surface Go 4 tablet
-Date: Tue,  8 Apr 2025 12:51:06 +0200
-Message-ID: <20250408104824.288262450@linuxfoundation.org>
+Subject: [PATCH 6.1 137/204] HID: i2c-hid: improve i2c_hid_get_report error message
+Date: Tue,  8 Apr 2025 12:51:07 +0200
+Message-ID: <20250408104824.318058490@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -46,47 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Panchenko <dmitry@d-systems.ee>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit 2738d06fb4f01145b24c542fb06de538ffc56430 ]
+[ Upstream commit 723aa55c08c9d1e0734e39a815fd41272eac8269 ]
 
-Volume buttons on Microsoft Surface Go 4 tablet didn't send any events.
-Add Surface Go 4 DMI match to button_array_table to fix this.
+We have two places to print "failed to set a report to ...",
+use "get a report from" instead of "set a report to", it makes
+people who knows less about the module to know where the error
+happened.
 
-Signed-off-by: Dmitry Panchenko <dmitry@d-systems.ee>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20250220154016.3620917-1-dmitry@d-systems.ee
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Before:
+i2c_hid_acpi i2c-FTSC1000:00: failed to set a report to device: -11
+
+After:
+i2c_hid_acpi i2c-FTSC1000:00: failed to get a report from device: -11
+
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index b96ef0eb82aff..c13837401c26a 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -109,6 +109,13 @@ static const struct dmi_system_id button_array_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 3"),
- 		},
- 	},
-+	{
-+		.ident = "Microsoft Surface Go 4",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Microsoft Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 4"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 0b05bb1e4410e..8a7ac016b1abe 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -261,7 +261,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
+ 			     ihid->rawbuf, recv_len + sizeof(__le16));
+ 	if (error) {
+ 		dev_err(&ihid->client->dev,
+-			"failed to set a report to device: %d\n", error);
++			"failed to get a report from device: %d\n", error);
+ 		return error;
+ 	}
  
 -- 
 2.39.5
