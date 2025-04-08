@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F046263C71;
-	Tue,  8 Apr 2025 11:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED812673BB;
+	Tue,  8 Apr 2025 11:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110399; cv=none; b=U4v75L57juSx4RoQPWzA1AaxRN1ddTNMdBOoL5C4DJNHQ2wTSJ/Wkhxo2mOFfIinzw25wad9pvTspZe2CUEVVg6Cie3uxGcVXZvDiFcj/5VeI2cC/XlKb/2uIMrP2N9k89bL70oOrJDJC6p0HlNy3+C4w4HsbIJXCA47xsj8Eig=
+	t=1744110401; cv=none; b=GcAC3Ncku3u3CwYjPiHMvQfEnkqSlN1Fq8nw35iWpEB4x7vkajfIsC8u1Su4m+yDnL8QyCJWZarmnSv47oPiaOVO5al8DqIR9bdLUU1g571bWj9t4F5T5lsigphc5frhHsiyIqIB5vINM9eo14ID6CzgU7kfIbhJRjaXch9/R3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110399; c=relaxed/simple;
-	bh=U2Az021s7iOCdyul8QhZzdvRRgM2rD2B9VDuFaDNP7k=;
+	s=arc-20240116; t=1744110401; c=relaxed/simple;
+	bh=Lt7EfVutCSFfXaCi2AJJwpdG5Ln4fFvC68gvQsqgV4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7g/EC9IPhTn4VcMm0dvM//TCYOSyJB84LEES7KCsaBm2zTBjhrkGnftjEi37ODCyurzSIHj12lwJDisodm/p3WTgvOFuYqAyiGeKxPj2AAVUUz03bH735Mkzb4judOFzz1c10MHNNdqJsY5/Y/LZOd3JKiinubSG4bts3vLoY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTH/oMqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/m8A92+EJ/SbVITKFY7iE8Vlvhc4Q5GkWPOGhqAFkcQKVESt7tu3eQpZF/2OA7W5LPqBMgE50PoR01B4x6auQWXf0lBv4umarnLxUz+GLeL327Zk+M5pukZ8TD+4+ajoLzXm1X4+cETjePtuDtXnG0+E7w3//ZuVG+Ijv3VhIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRVz8Baj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTH/oMqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD36C4CEE5;
-	Tue,  8 Apr 2025 11:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRVz8Baj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7A2C4CEE5;
+	Tue,  8 Apr 2025 11:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110399;
-	bh=U2Az021s7iOCdyul8QhZzdvRRgM2rD2B9VDuFaDNP7k=;
+	s=korg; t=1744110401;
+	bh=Lt7EfVutCSFfXaCi2AJJwpdG5Ln4fFvC68gvQsqgV4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTH/oMqHKB+DTAUlYWicF0UauyNfjGs3uZXHWUvSFXVR+fYrIMeVxo+DBp1UrYH1E
-	 9RPcPlIuyMkgcZp4RJ7nuaxCswp2un/b4b86KjWE50Prwj6bKSL3ovusC4hdHCdhvC
-	 SaXiwvL9R3M38pOUvtVrKhkc4YRP2L4Y+p7PtzT0=
+	b=ZRVz8BajXwgoCaQqYpHqlofVu5EqEnboJZ1Xj47X4yIk01Sy8PCspnbPbPbUxlQ9s
+	 qVYnx5QIDLrrdMdy9+F/mZcLuC+j2Nj91b4FpLwtFKZckZBrqS0E+BrTRGJp1Jktjl
+	 43jkG40hFRXiUMt6Xdg0+s/3DCRfSOgmyir7386o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 050/731] sched/topology: Wrappers for sched_domains_mutex
-Date: Tue,  8 Apr 2025 12:39:07 +0200
-Message-ID: <20250408104915.439043865@linuxfoundation.org>
+Subject: [PATCH 6.14 051/731] sched/deadline: Generalize unique visiting of root domains
+Date: Tue,  8 Apr 2025 12:39:08 +0200
+Message-ID: <20250408104915.460975632@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -57,11 +57,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit 56209334dda1832c0a919e1d74768c6d0f3b2ca9 ]
+[ Upstream commit 45007c6fb5860cf63556a9cadc87c8984927e23d ]
 
-Create wrappers for sched_domains_mutex so that it can transparently be
-used on both CONFIG_SMP and !CONFIG_SMP, as some function will need to
-do.
+Bandwidth checks and updates that work on root domains currently employ
+a cookie mechanism for efficiency. This mechanism is very much tied to
+when root domains are first created and initialized.
+
+Generalize the cookie mechanism so that it can be used also later at
+runtime while updating root domains. Also, additionally guard it with
+sched_domains_mutex, since domains need to be stable while updating them
+(and it will be required for further dynamic changes).
 
 Fixes: 53916d5fd3c0 ("sched/deadline: Check bandwidth overflow earlier for hotplug")
 Reported-by: Jon Hunter <jonathanh@nvidia.com>
@@ -72,128 +77,154 @@ Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
 Tested-by: Waiman Long <longman@redhat.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Link: https://lore.kernel.org/r/Z9MP5Oq9RB8jBs3y@jlelli-thinkpadt14gen4.remote.csb
+Link: https://lore.kernel.org/r/Z9MQaiXPvEeW_v7x@jlelli-thinkpadt14gen4.remote.csb
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h   |  5 +++++
- kernel/cgroup/cpuset.c  |  4 ++--
- kernel/sched/core.c     |  4 ++--
- kernel/sched/debug.c    |  8 ++++----
- kernel/sched/topology.c | 12 ++++++++++--
- 5 files changed, 23 insertions(+), 10 deletions(-)
+ include/linux/sched/deadline.h |  3 +++
+ kernel/sched/deadline.c        | 23 +++++++++++++----------
+ kernel/sched/rt.c              |  2 ++
+ kernel/sched/sched.h           |  2 +-
+ kernel/sched/topology.c        |  2 +-
+ 5 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index b13c9545d5d67..6e5c38718ff56 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -383,6 +383,11 @@ enum uclamp_id {
- #ifdef CONFIG_SMP
- extern struct root_domain def_root_domain;
- extern struct mutex sched_domains_mutex;
-+extern void sched_domains_mutex_lock(void);
-+extern void sched_domains_mutex_unlock(void);
-+#else
-+static inline void sched_domains_mutex_lock(void) { }
-+static inline void sched_domains_mutex_unlock(void) { }
- #endif
+diff --git a/include/linux/sched/deadline.h b/include/linux/sched/deadline.h
+index 3a912ab42bb55..6ec578600b24c 100644
+--- a/include/linux/sched/deadline.h
++++ b/include/linux/sched/deadline.h
+@@ -37,4 +37,7 @@ extern void dl_clear_root_domain(struct root_domain *rd);
  
- struct sched_param {
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 0f910c828973a..f87526edb2a46 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -994,10 +994,10 @@ static void
- partition_and_rebuild_sched_domains(int ndoms_new, cpumask_var_t doms_new[],
- 				    struct sched_domain_attr *dattr_new)
- {
--	mutex_lock(&sched_domains_mutex);
-+	sched_domains_mutex_lock();
- 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
- 	dl_rebuild_rd_accounting();
--	mutex_unlock(&sched_domains_mutex);
-+	sched_domains_mutex_unlock();
+ #endif /* CONFIG_SMP */
+ 
++extern u64 dl_cookie;
++extern bool dl_bw_visited(int cpu, u64 cookie);
++
+ #endif /* _LINUX_SCHED_DEADLINE_H */
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 1a041c1fc0d1e..3e05032e9e0eb 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -166,14 +166,14 @@ static inline unsigned long dl_bw_capacity(int i)
+ 	}
  }
  
- /*
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 042351c7afce7..8adf495491179 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8424,9 +8424,9 @@ void __init sched_init_smp(void)
- 	 * CPU masks are stable and all blatant races in the below code cannot
- 	 * happen.
- 	 */
--	mutex_lock(&sched_domains_mutex);
-+	sched_domains_mutex_lock();
- 	sched_init_domains(cpu_active_mask);
--	mutex_unlock(&sched_domains_mutex);
-+	sched_domains_mutex_unlock();
+-static inline bool dl_bw_visited(int cpu, u64 gen)
++static inline bool dl_bw_visited(int cpu, u64 cookie)
+ {
+ 	struct root_domain *rd = cpu_rq(cpu)->rd;
  
- 	/* Move init over to a non-isolated CPU */
- 	if (set_cpus_allowed_ptr(current, housekeeping_cpumask(HK_TYPE_DOMAIN)) < 0)
-diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index ef047add7f9e6..a0893a483d35d 100644
---- a/kernel/sched/debug.c
-+++ b/kernel/sched/debug.c
-@@ -292,7 +292,7 @@ static ssize_t sched_verbose_write(struct file *filp, const char __user *ubuf,
- 	bool orig;
+-	if (rd->visit_gen == gen)
++	if (rd->visit_cookie == cookie)
+ 		return true;
  
- 	cpus_read_lock();
--	mutex_lock(&sched_domains_mutex);
-+	sched_domains_mutex_lock();
+-	rd->visit_gen = gen;
++	rd->visit_cookie = cookie;
+ 	return false;
+ }
  
- 	orig = sched_debug_verbose;
- 	result = debugfs_write_file_bool(filp, ubuf, cnt, ppos);
-@@ -304,7 +304,7 @@ static ssize_t sched_verbose_write(struct file *filp, const char __user *ubuf,
- 		sd_dentry = NULL;
- 	}
+@@ -207,7 +207,7 @@ static inline unsigned long dl_bw_capacity(int i)
+ 	return SCHED_CAPACITY_SCALE;
+ }
  
--	mutex_unlock(&sched_domains_mutex);
-+	sched_domains_mutex_unlock();
- 	cpus_read_unlock();
- 
- 	return result;
-@@ -515,9 +515,9 @@ static __init int sched_init_debug(void)
- 	debugfs_create_u32("migration_cost_ns", 0644, debugfs_sched, &sysctl_sched_migration_cost);
- 	debugfs_create_u32("nr_migrate", 0644, debugfs_sched, &sysctl_sched_nr_migrate);
- 
--	mutex_lock(&sched_domains_mutex);
-+	sched_domains_mutex_lock();
- 	update_sched_domain_debugfs();
--	mutex_unlock(&sched_domains_mutex);
-+	sched_domains_mutex_unlock();
+-static inline bool dl_bw_visited(int cpu, u64 gen)
++static inline bool dl_bw_visited(int cpu, u64 cookie)
+ {
+ 	return false;
+ }
+@@ -3171,15 +3171,18 @@ DEFINE_SCHED_CLASS(dl) = {
  #endif
+ };
  
- #ifdef CONFIG_NUMA_BALANCING
+-/* Used for dl_bw check and update, used under sched_rt_handler()::mutex */
+-static u64 dl_generation;
++/*
++ * Used for dl_bw check and update, used under sched_rt_handler()::mutex and
++ * sched_domains_mutex.
++ */
++u64 dl_cookie;
+ 
+ int sched_dl_global_validate(void)
+ {
+ 	u64 runtime = global_rt_runtime();
+ 	u64 period = global_rt_period();
+ 	u64 new_bw = to_ratio(period, runtime);
+-	u64 gen = ++dl_generation;
++	u64 cookie = ++dl_cookie;
+ 	struct dl_bw *dl_b;
+ 	int cpu, cpus, ret = 0;
+ 	unsigned long flags;
+@@ -3192,7 +3195,7 @@ int sched_dl_global_validate(void)
+ 	for_each_online_cpu(cpu) {
+ 		rcu_read_lock_sched();
+ 
+-		if (dl_bw_visited(cpu, gen))
++		if (dl_bw_visited(cpu, cookie))
+ 			goto next;
+ 
+ 		dl_b = dl_bw_of(cpu);
+@@ -3229,7 +3232,7 @@ static void init_dl_rq_bw_ratio(struct dl_rq *dl_rq)
+ void sched_dl_do_global(void)
+ {
+ 	u64 new_bw = -1;
+-	u64 gen = ++dl_generation;
++	u64 cookie = ++dl_cookie;
+ 	struct dl_bw *dl_b;
+ 	int cpu;
+ 	unsigned long flags;
+@@ -3240,7 +3243,7 @@ void sched_dl_do_global(void)
+ 	for_each_possible_cpu(cpu) {
+ 		rcu_read_lock_sched();
+ 
+-		if (dl_bw_visited(cpu, gen)) {
++		if (dl_bw_visited(cpu, cookie)) {
+ 			rcu_read_unlock_sched();
+ 			continue;
+ 		}
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 4b8e33c615b12..8cebe71d2bb16 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2910,6 +2910,7 @@ static int sched_rt_handler(const struct ctl_table *table, int write, void *buff
+ 	int ret;
+ 
+ 	mutex_lock(&mutex);
++	sched_domains_mutex_lock();
+ 	old_period = sysctl_sched_rt_period;
+ 	old_runtime = sysctl_sched_rt_runtime;
+ 
+@@ -2936,6 +2937,7 @@ static int sched_rt_handler(const struct ctl_table *table, int write, void *buff
+ 		sysctl_sched_rt_period = old_period;
+ 		sysctl_sched_rt_runtime = old_runtime;
+ 	}
++	sched_domains_mutex_unlock();
+ 	mutex_unlock(&mutex);
+ 
+ 	return ret;
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 023b844159c94..1aa65a0ac5864 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -998,7 +998,7 @@ struct root_domain {
+ 	 * Also, some corner cases, like 'wrap around' is dangerous, but given
+ 	 * that u64 is 'big enough'. So that shouldn't be a concern.
+ 	 */
+-	u64 visit_gen;
++	u64 visit_cookie;
+ 
+ #ifdef HAVE_RT_PUSH_IPI
+ 	/*
 diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index c49aea8c10254..296ff2acfd321 100644
+index 296ff2acfd321..44093339761c9 100644
 --- a/kernel/sched/topology.c
 +++ b/kernel/sched/topology.c
-@@ -6,6 +6,14 @@
- #include <linux/bsearch.h>
+@@ -568,7 +568,7 @@ static int init_rootdomain(struct root_domain *rd)
+ 	rd->rto_push_work = IRQ_WORK_INIT_HARD(rto_push_irq_work_func);
+ #endif
  
- DEFINE_MUTEX(sched_domains_mutex);
-+void sched_domains_mutex_lock(void)
-+{
-+	mutex_lock(&sched_domains_mutex);
-+}
-+void sched_domains_mutex_unlock(void)
-+{
-+	mutex_unlock(&sched_domains_mutex);
-+}
- 
- /* Protected by sched_domains_mutex: */
- static cpumask_var_t sched_domains_tmpmask;
-@@ -2791,7 +2799,7 @@ void partition_sched_domains_locked(int ndoms_new, cpumask_var_t doms_new[],
- void partition_sched_domains(int ndoms_new, cpumask_var_t doms_new[],
- 			     struct sched_domain_attr *dattr_new)
- {
--	mutex_lock(&sched_domains_mutex);
-+	sched_domains_mutex_lock();
- 	partition_sched_domains_locked(ndoms_new, doms_new, dattr_new);
--	mutex_unlock(&sched_domains_mutex);
-+	sched_domains_mutex_unlock();
- }
+-	rd->visit_gen = 0;
++	rd->visit_cookie = 0;
+ 	init_dl_bw(&rd->dl_bw);
+ 	if (cpudl_init(&rd->cpudl) != 0)
+ 		goto free_rto_mask;
 -- 
 2.39.5
 
