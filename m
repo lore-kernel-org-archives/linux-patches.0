@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF0224F6;
-	Tue,  8 Apr 2025 11:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC12266583;
+	Tue,  8 Apr 2025 11:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111263; cv=none; b=IgqijTgIDXuSeo6bKgwSeLKR3bQZPTHZ/HdWVTwYzXgjRfJvCW51VhtqH+cCCz/38v8FOhW+srUFw/9x9nLvLJO7bo0AMdYEOzcCMh3xn50+DSrviXPjSClnXTkzjtldY1/V8uAnucbEG/3eEQaMgTJ6BhMqqJ+VX0d8NYH/7WA=
+	t=1744111266; cv=none; b=S9w9PqVV2PS0GdD78d0YBqps1uramK2+AWof+JfUd1wiA+KtqNfFet4Wh4tpJ39WP5eVGjokt74MO2wuZxlN9RrUzv7Kyh82Gk2BmiMMOox6iAM4qjhW5cqkGy4FAbZbhdC1YPUwpeVWkbSBZy1+Sc43nCu3xvX/J6YIuVeDclA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111263; c=relaxed/simple;
-	bh=bZ+mS6ABSEchVksu5TqvKrDu5HUQvr+NGqHd6I+QbCA=;
+	s=arc-20240116; t=1744111266; c=relaxed/simple;
+	bh=zzrwjQb9fril+1GqNpCyGI4leZpUb4z9/Bjb3e24KaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDyff/kCOUWiDnLq0QuKnxVd1VViW8ocGYMmNEeoFaiPU70XjTb5g5yZs7fvJroZQGXsiz9zanX7N59eDg0sp+UIDskbGAwKyjqCKW8lJFYegvYslgf4JeEnG1YIoWU6YY0SXpdjQkTzaiU4Sg03jxCE0RNIfavsmNmdwLDLP+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Leax6fQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hRvBHHqvRIzXt7OjBFXVGqWBCU105f6n5XKnzEwDFjnun6UeuKnzyyI3bJBI8r1CnKBi2955lWGZE52NfGGGRnL4Jxm8S1NxA96Y6kxMn2nGfU95qp5Q5zoJC36HTryVbTGPhCcw24nafqBlx3IYyaMCCnWOcDPpDcDv0bszQ8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDIncQnH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Leax6fQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E783C4CEE5;
-	Tue,  8 Apr 2025 11:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDIncQnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07240C4CEE5;
+	Tue,  8 Apr 2025 11:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111263;
-	bh=bZ+mS6ABSEchVksu5TqvKrDu5HUQvr+NGqHd6I+QbCA=;
+	s=korg; t=1744111266;
+	bh=zzrwjQb9fril+1GqNpCyGI4leZpUb4z9/Bjb3e24KaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Leax6fQbpLVOOdkCdasPUqAMQTh6hY3eJqNZFjRPh8lz2PUywcb3LgggoN7FZM/Gl
-	 twA3aKdBBp3l3KrDEalaXORM+CaYba33ImmcZRFGLFOOjgztZJnNgNhoutB65W/IHq
-	 eBoe28OrJzuHlzt1zzqA5TKb1Z5ukzyLcVQRoWoc=
+	b=aDIncQnHysMeYJOaqjqJLJbIObB2y9g7pdcUJC4ckY2czqgR4XAwyeqlN5VI4+Ug5
+	 Bov2TjumwxGvd9CSDUs/0EbRJi5DA1eXHdMoCrJ0Swz8GMSd3fQxi//quNpHN9g1VS
+	 c7HncYcMQiibTrLcWtq6+bkHiyC09JkjBiLlPvp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 367/731] remoteproc: qcom_q6v5_pas: Make single-PD handling more robust
-Date: Tue,  8 Apr 2025 12:44:24 +0200
-Message-ID: <20250408104922.812945199@linuxfoundation.org>
+Subject: [PATCH 6.14 368/731] libbpf: Fix hypothetical STT_SECTION extern NULL deref case
+Date: Tue,  8 Apr 2025 12:44:25 +0200
+Message-ID: <20250408104922.836266069@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca@lucaweiss.eu>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit e917b73234b02aa4966325e7380d2559bf127ba9 ]
+[ Upstream commit e0525cd72b5979d8089fe524a071ea93fd011dc9 ]
 
-Only go into the if condition for single-PD handling when there's
-actually just one power domain specified there. Otherwise it'll be an
-issue in the dts and we should fail in the regular code path.
+Fix theoretical NULL dereference in linker when resolving *extern*
+STT_SECTION symbol against not-yet-existing ELF section. Not sure if
+it's possible in practice for valid ELF object files (this would require
+embedded assembly manipulations, at which point BTF will be missing),
+but fix the s/dst_sym/dst_sec/ typo guarding this condition anyways.
 
-This also mirrors the latest changes in the qcom_q6v5_mss driver.
-
-Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Fixes: 17ee2fb4e856 ("remoteproc: qcom: pas: Vote for active/proxy power domains")
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250128-pas-singlepd-v1-2-85d9ae4b0093@lucaweiss.eu
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
+Fixes: a46349227cd8 ("libbpf: Add linker extern resolution support for functions and global variables")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250220002821.834400-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/lib/bpf/linker.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 97c4bdd9222a8..78484ed9b6c85 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -501,16 +501,16 @@ static int adsp_pds_attach(struct device *dev, struct device **devs,
- 	if (!pd_names)
- 		return 0;
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index b52f71c59616f..800e0ef09c378 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -2163,7 +2163,7 @@ static int linker_append_elf_sym(struct bpf_linker *linker, struct src_obj *obj,
  
-+	while (pd_names[num_pds])
-+		num_pds++;
-+
- 	/* Handle single power domain */
--	if (dev->pm_domain) {
-+	if (num_pds == 1 && dev->pm_domain) {
- 		devs[0] = dev;
- 		pm_runtime_enable(dev);
- 		return 1;
- 	}
+ 	obj->sym_map[src_sym_idx] = dst_sym_idx;
  
--	while (pd_names[num_pds])
--		num_pds++;
--
- 	for (i = 0; i < num_pds; i++) {
- 		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
- 		if (IS_ERR_OR_NULL(devs[i])) {
-@@ -535,7 +535,7 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
- 	int i;
- 
- 	/* Handle single power domain */
--	if (dev->pm_domain && pd_count) {
-+	if (pd_count == 1 && dev->pm_domain) {
- 		pm_runtime_disable(dev);
- 		return;
+-	if (sym_type == STT_SECTION && dst_sym) {
++	if (sym_type == STT_SECTION && dst_sec) {
+ 		dst_sec->sec_sym_idx = dst_sym_idx;
+ 		dst_sym->st_value = 0;
  	}
 -- 
 2.39.5
