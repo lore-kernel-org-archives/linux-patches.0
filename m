@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8626026A1BC;
-	Tue,  8 Apr 2025 12:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC2E26B96A;
+	Tue,  8 Apr 2025 12:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115035; cv=none; b=gERKDPhROkoF4o0ZqlghQiumCSQDKs3aCLZsdcLlpePg1fQf+oojiEFM58GQm1CwpeOn5mKd8MxmE6cxhKEbXb4m2A9ZRMSpnW+8jyPdJeIF5+l/uY5oNwOCkET20w3k+lph0dK+WC9ADvUokdFJsp6jOytzm29mrwXM3/rWBYA=
+	t=1744115038; cv=none; b=hZfejul6uWHyJ+ntd5cBzXBBSkhHIvVBIrowIc9wlsViVv0y5O5mmuTq2ZJ24tNi+sMcbNaSximHFQH2akHvY1t7MK2EyUXqlZb+rSeU+iHTNs8Y6GQtSdkUYbpuY+khIuwdulyuB/zfNLQSoLnr9edY7KMw9p7js8oYK9KpZ1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115035; c=relaxed/simple;
-	bh=1bZdioDyvSC4Fs10KcKcRuDWKzW3XpiD+PwuNhJJnMI=;
+	s=arc-20240116; t=1744115038; c=relaxed/simple;
+	bh=sFMHuKynNrsXGJHv8eiqpCfGYBgYGQ/MLNnMhwJNa8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoPgxT8nf+JTYIoNtIzi46fuEMgkq7eIDUqsbgTX9Jt65tzIfT9QwHB+OjYjI7/Vp1fE7DTxbISy1pnzNefiAIaFrhJECFvY/ms14X5kK8bCvmQJjaJRBv62DUwuShDZ9wy8QmpqbKPXb6CJ7SSRsBpv2e1gOml11UmxRAXrG8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0VaJMRp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtW4D6mjMwZ9CLWbnt1uRFHDHxROd6B8CfpFAA8PLneKofz5VT2cwlRLLm9b2tU1t4pZATaxC3uG3XR75mTYYenc9U2S1K4djwtxYuvahNy1FuhIczo5hpQHW7rXk5T1XHswvwMfy0474qatY5KI3cTlfzDoQ831rROdrRC7MGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlMbX/3C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0VaJMRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1727BC4CEE5;
-	Tue,  8 Apr 2025 12:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlMbX/3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03C2C4CEE5;
+	Tue,  8 Apr 2025 12:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115035;
-	bh=1bZdioDyvSC4Fs10KcKcRuDWKzW3XpiD+PwuNhJJnMI=;
+	s=korg; t=1744115038;
+	bh=sFMHuKynNrsXGJHv8eiqpCfGYBgYGQ/MLNnMhwJNa8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k0VaJMRpinyF6p1BEnxhMfF9pZvOpX4clzYiIqSFs9srehu2eIJe/Q7Ago4Hx0dEh
-	 gMoCm1sdRuU3eBtdcKMV8SuJF/d3rCXzkepoqtirWUwPDudcT0Juh9J0WUHFVJtcOF
-	 t/U5Fku8UGyL27q4tgID9UNZUN4Nuaq6hoL6EmH8=
+	b=FlMbX/3C6DIuh7hZ8+HucgzeHcFB3moEpWzeICi6ZKq2bUwB3hVSZZADJbtV+EtSq
+	 YfCpd2WjXZc4CK84ch51JXy05IIuWEAszc2C+4zQbiU6cBzrpl67c6YZR+tAvHsZJw
+	 F2mp6uPsN4mv9k5B3xPRlHrcTa5M6wsCERscfOOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Binding <sbinding@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 324/499] ALSA: hda/realtek: Add support for ASUS ROG Strix GA603 Laptops using CS35L41 HDA
-Date: Tue,  8 Apr 2025 12:48:56 +0200
-Message-ID: <20250408104859.304469375@linuxfoundation.org>
+Subject: [PATCH 6.13 325/499] ALSA: hda/realtek: Add support for ASUS ROG Strix G614 Laptops using CS35L41 HDA
+Date: Tue,  8 Apr 2025 12:48:57 +0200
+Message-ID: <20250408104859.330882248@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -53,33 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 16dc157346dd4404b02b42e73b88604be3652039 ]
+[ Upstream commit 9120b2b4ad0dad2f6bbb6bcacd0456f806fda62d ]
 
-Add support for ASUS GA603KP, GA603KM and GA603KH.
+Add support for ASUS G614PH/PM/PP and G614FH/FM/FP.
 
 Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
 
 Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250305170714.755794-3-sbinding@opensource.cirrus.com
+Link: https://patch.msgid.link/20250305170714.755794-4-sbinding@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  sound/pci/hda/patch_realtek.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index ebacbd996bceb..c4e01becdb625 100644
+index c4e01becdb625..1b216e8fa4046 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10760,6 +10760,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a60, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
-+	SND_PCI_QUIRK(0x1043, 0x3d78, "ASUS GA603KH", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1043, 0x3d88, "ASUS GA603KM", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3e00, "ASUS G814FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3e20, "ASUS G814PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x3e30, "ASUS TP3607SA", ALC287_FIXUP_TAS2781_I2C),
+@@ -10651,7 +10651,9 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
++	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
 -- 
 2.39.5
 
