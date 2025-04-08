@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A887E26B2BF;
-	Tue,  8 Apr 2025 12:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B22A1E489;
+	Tue,  8 Apr 2025 12:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115919; cv=none; b=Ch40HLuA1AaXymyuWbtXNngqmQZdSzv+Dn4H//84RQclZhf17fcHsb7bQwx4zgBodiAkf3uA8Ati0bupyucAbPAdd8cydV31eNnXB0ZG1Scfow4qBzTFr+m/EgyGmnKZoKwHv0gcbeH7sjRn9gcIH0uoD2vwrKCqeOCUnSu/g2Q=
+	t=1744115922; cv=none; b=Ihzberxx26AvTJR9CIdr/QdbfYeSRd0bGtqLEhNUQigX/KkU1Vsx0dkyXudb9/jTVlqGzGWg/N9Y+8xrFERAS/BJ7icHgv/ez4OhN/gLUeBleTUhq+cDpB2UVsXnljilwFKhMdoRId/YxWsY5f3UWxn6Sfp7StwWIfjBd4MzxGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115919; c=relaxed/simple;
-	bh=kbd5zB9m2vApikGpYqA+vVh5KuWBcJ1EzQO52GBUTQs=;
+	s=arc-20240116; t=1744115922; c=relaxed/simple;
+	bh=w7Tph13PZEm5SOg1s9IaPMQjV66DQqLW4A/7Fs54wQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9n+UTdWl+Xik6tOqlfhKvQcp9JpxT62f79uKR3i6a3OcHsGCay6o+G/LJcG3jm13sgjmCgQNgJQzE2wDgVmCHGWLruJgYouq0H6Io+JqKNcMayka2jbYWKBXcuDDKvbVUnr6+pUTsbZqqdH7U/4HfWAF2xz8yVPtDXZh3SawNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW3SXfwU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eAeOWQ72xm4l4QGyBJ2tgCkGPp5A/0EQu5XpP1ya3pJx7HM/rNsGaf+W8RNw0kIKrl1SFqRIbIwnGUv7jFhpDtYt57L0WvBF1+gVeTlNFZ1oWVz6w4IvumsC7mwTZwiAvUdyyQrjDDDzur1kIREYYd2+9rEKLPc1lo1LoAr4ypU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C002X7Qy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW3SXfwU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC98C4CEE5;
-	Tue,  8 Apr 2025 12:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C002X7Qy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2FEC4CEE5;
+	Tue,  8 Apr 2025 12:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115919;
-	bh=kbd5zB9m2vApikGpYqA+vVh5KuWBcJ1EzQO52GBUTQs=;
+	s=korg; t=1744115922;
+	bh=w7Tph13PZEm5SOg1s9IaPMQjV66DQqLW4A/7Fs54wQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xW3SXfwUJKPhCxSA19tcT6PHjkoxES8q06sqssETQIs66mtN4wI5sOX6CawpxJSuQ
-	 curZK/BuqLqc3RyGAWHSnswE08/IA8qztIXJyG077SqF7JUvYSTj+WKBuJQlofzyTU
-	 CqeXF0GAnowvjT/fcDZjfjab6RMvm7vmwm7hW0oU=
+	b=C002X7QyUOG52fQ20yTVJ/NT8eM53Nw46OpvoChP+QQDPn+xUH54OZj+YGdzZ8p/D
+	 yf3RVjlPn5G+mjzCsrd+u6EWJKsOVOsHeLAJH5cZNtdyS3Z9S9b+CjK8Fww2pgfTVb
+	 KrYBPCE3RAyXSzDb4NvApazFpykn4PbAH7vdxeDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yajun Deng <yajun.deng@linux.dev>,
-	Logan Gunthorpe <logang@deltatee.com>,
+	Nikita Shubin <n.shubin@yadro.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/204] ntb_hw_switchtec: Fix shift-out-of-bounds in switchtec_ntb_mw_set_trans
-Date: Tue,  8 Apr 2025 12:51:22 +0200
-Message-ID: <20250408104824.767847392@linuxfoundation.org>
+Subject: [PATCH 6.1 153/204] ntb: intel: Fix using link status DBs
+Date: Tue,  8 Apr 2025 12:51:23 +0200
+Message-ID: <20250408104824.796004963@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,42 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yajun Deng <yajun.deng@linux.dev>
+From: Nikita Shubin <n.shubin@yadro.com>
 
-[ Upstream commit de203da734fae00e75be50220ba5391e7beecdf9 ]
+[ Upstream commit 8144e9c8f30fb23bb736a5d24d5c9d46965563c4 ]
 
-There is a kernel API ntb_mw_clear_trans() would pass 0 to both addr and
-size. This would make xlate_pos negative.
+Make sure we are not using DB's which were remapped for link status.
 
-[   23.734156] switchtec switchtec0: MW 0: part 0 addr 0x0000000000000000 size 0x0000000000000000
-[   23.734158] ================================================================================
-[   23.734172] UBSAN: shift-out-of-bounds in drivers/ntb/hw/mscc/ntb_hw_switchtec.c:293:7
-[   23.734418] shift exponent -1 is negative
-
-Ensuring xlate_pos is a positive or zero before BIT.
-
-Fixes: 1e2fd202f859 ("ntb_hw_switchtec: Check for alignment of the buffer in mw_set_trans()")
-Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Fixes: f6e51c354b60 ("ntb: intel: split out the gen3 code")
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ntb/hw/intel/ntb_hw_gen3.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-index 7ce65a00db56b..1bdec59100019 100644
---- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-+++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-@@ -288,7 +288,7 @@ static int switchtec_ntb_mw_set_trans(struct ntb_dev *ntb, int pidx, int widx,
- 	if (size != 0 && xlate_pos < 12)
- 		return -EINVAL;
+diff --git a/drivers/ntb/hw/intel/ntb_hw_gen3.c b/drivers/ntb/hw/intel/ntb_hw_gen3.c
+index ffcfc3e02c353..a5aa96a31f4a6 100644
+--- a/drivers/ntb/hw/intel/ntb_hw_gen3.c
++++ b/drivers/ntb/hw/intel/ntb_hw_gen3.c
+@@ -215,6 +215,9 @@ static int gen3_init_ntb(struct intel_ntb_dev *ndev)
+ 	}
  
--	if (!IS_ALIGNED(addr, BIT_ULL(xlate_pos))) {
-+	if (xlate_pos >= 0 && !IS_ALIGNED(addr, BIT_ULL(xlate_pos))) {
- 		/*
- 		 * In certain circumstances we can get a buffer that is
- 		 * not aligned to its size. (Most of the time
+ 	ndev->db_valid_mask = BIT_ULL(ndev->db_count) - 1;
++	/* Make sure we are not using DB's used for link status */
++	if (ndev->hwerr_flags & NTB_HWERR_MSIX_VECTOR32_BAD)
++		ndev->db_valid_mask &= ~ndev->db_link_mask;
+ 
+ 	ndev->reg->db_iowrite(ndev->db_valid_mask,
+ 			      ndev->self_mmio +
 -- 
 2.39.5
 
