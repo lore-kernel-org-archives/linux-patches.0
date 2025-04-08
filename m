@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0177E224AEF;
-	Tue,  8 Apr 2025 11:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43EB224AEB;
+	Tue,  8 Apr 2025 11:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112259; cv=none; b=QdP4CWs6mvXWZZy8IiPfHdu7TtimS1igxd4x8f5TvEx8ILSMLL4YCXOvoU/Tpo1DpV8vEO+Va0+vbICOEKGulYHGC5HuaObmGF8eBTCkYxjKEwrEYF4tmolRcdVt8MP92OXa11oH8DZNm0v8U/M5aBLvYYyImFxJELySAsjhgAI=
+	t=1744112261; cv=none; b=Wppu+JfLqiq2GscervYo59yG9I8HNKmsUjwxny7EfwH76NyJlfDVIfv2k7k+eaKLwO5Nqul2OVtaV3KIpq6L1zYNCX+4jXwrVYEm5U+1Nj4BjHEqzCvWCuV1Pjw+n7ypxcfw4jMCjH4TH532rA0azf7whTvoxa+487zkTPs7hZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112259; c=relaxed/simple;
-	bh=rK+dW1mEQ8+3c8kgSDGwcvL4rRqWp+ydwt9MDLqXCEs=;
+	s=arc-20240116; t=1744112261; c=relaxed/simple;
+	bh=131sPnFaX7psi/CGU4PDDV/MOf1ZAGz9fNGGm5APxFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pE9Z7JnxD9ZLl0RnFTDSEMTgOLGloh3IIstKm6qnglCR1gzGryMG/Et3Itp+P6qSMCUvbw3lze1P/lK9ZGI40XYIfrfj4aV6y76u61HCyRlx9+H6DOF2njBdNsHZ0CTN2Smt39jvgwO5Bdszm6exTvmEMkPYs9Lw1bLwLT+733s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ba75M3Md; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYG4SXOTgmfcN0dl6bGWI6Lh3WKGRkrrOSnhoJLXP+xJGngqg56UXG8TZoncPZF8S+iGCAufyDrakf/tL4/6rt1M8+pD7ojCbUwZSTkOerYDiuyWXjlnWHV7uT5HGb9X9UWfG2XMahGeu+Jsw4YXlNPceG8PSrd6lhzh0D+FkIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=re8sQ7BT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba75M3Md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85314C4CEE5;
-	Tue,  8 Apr 2025 11:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="re8sQ7BT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D91C4CEE5;
+	Tue,  8 Apr 2025 11:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112258;
-	bh=rK+dW1mEQ8+3c8kgSDGwcvL4rRqWp+ydwt9MDLqXCEs=;
+	s=korg; t=1744112261;
+	bh=131sPnFaX7psi/CGU4PDDV/MOf1ZAGz9fNGGm5APxFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ba75M3MdzIIgXWc8KF3I988EHrhaexV5LI+dWW0P/I5eJH5JkGPTc/E4LkYgjXsWT
-	 3dhvP3SjhnlXIcX6xrvoiSfLbqV4RgKv6TnkPT319jEHLuXK/xoytt0a5KrpMr3XtA
-	 wwVYbUGK/QGzOQRh3l2BIqr31eR+u5D9IthTk2/Q=
+	b=re8sQ7BTRTCE46JDk86us4XK+xanrqOxd9cFJ2eqnFYziem4G1P+Oia6EniZmHxwS
+	 misNvVdLz8OTIqOyQoyfVFIphK1UEyBUb/Qk2hrjBVakYQwG1TQ3q7mcVKNVXbYLJC
+	 HmgWM4xtgsTKuyicVi95YJtIgSkk/xWrN1Z1Gedw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.14 724/731] nfsd: dont ignore the return code of svc_proc_register()
-Date: Tue,  8 Apr 2025 12:50:21 +0200
-Message-ID: <20250408104931.114928956@linuxfoundation.org>
+Subject: [PATCH 6.14 725/731] nfsd: allow SC_STATUS_FREEABLE when searching via nfs4_lookup_stateid()
+Date: Tue,  8 Apr 2025 12:50:22 +0200
+Message-ID: <20250408104931.137920511@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,91 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
+commit d1bc15b147d35b4cb7ca99a9a7d79d41ca342c13 upstream.
 
-Currently, nfsd_proc_stat_init() ignores the return value of
-svc_proc_register(). If the procfile creation fails, then the kernel
-will WARN when it tries to remove the entry later.
+The pynfs DELEG8 test fails when run against nfsd. It acquires a
+delegation and then lets the lease time out. It then tries to use the
+deleg stateid and expects to see NFS4ERR_DELEG_REVOKED, but it gets
+bad NFS4ERR_BAD_STATEID instead.
 
-Fix nfsd_proc_stat_init() to return the same type of pointer as
-svc_proc_register(), and fix up nfsd_net_init() to check that and fail
-the nfsd_net construction if it occurs.
+When a delegation is revoked, it's initially marked with
+SC_STATUS_REVOKED, or SC_STATUS_ADMIN_REVOKED and later, it's marked
+with the SC_STATUS_FREEABLE flag, which denotes that it is waiting for
+s FREE_STATEID call.
 
-svc_proc_register() can fail if the dentry can't be allocated, or if an
-identical dentry already exists. The second case is pretty unlikely in
-the nfsd_net construction codepath, so if this happens, return -ENOMEM.
+nfs4_lookup_stateid() accepts a statusmask that includes the status
+flags that a found stateid is allowed to have. Currently, that mask
+never includes SC_STATUS_FREEABLE, which means that revoked delegations
+are (almost) never found.
 
-Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
-Cc: stable@vger.kernel.org # v6.9
+Add SC_STATUS_FREEABLE to the always-allowed status flags, and remove it
+from nfsd4_delegreturn() since it's now always implied.
+
+Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
+Cc: stable@vger.kernel.org
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |    9 ++++++++-
- fs/nfsd/stats.c  |    4 ++--
- fs/nfsd/stats.h  |    2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2204,8 +2204,14 @@ static __net_init int nfsd_net_init(stru
- 					  NFSD_STATS_COUNTERS_NUM);
- 	if (retval)
- 		goto out_repcache_error;
-+
- 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
- 	nn->nfsd_svcstats.program = &nfsd_programs[0];
-+	if (!nfsd_proc_stat_init(net)) {
-+		retval = -ENOMEM;
-+		goto out_proc_error;
-+	}
-+
- 	for (i = 0; i < sizeof(nn->nfsd_versions); i++)
- 		nn->nfsd_versions[i] = nfsd_support_version(i);
- 	for (i = 0; i < sizeof(nn->nfsd4_minorversions); i++)
-@@ -2215,13 +2221,14 @@ static __net_init int nfsd_net_init(stru
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
--	nfsd_proc_stat_init(net);
- #if IS_ENABLED(CONFIG_NFS_LOCALIO)
- 	spin_lock_init(&nn->local_clients_lock);
- 	INIT_LIST_HEAD(&nn->local_clients);
- #endif
- 	return 0;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7051,7 +7051,7 @@ nfsd4_lookup_stateid(struct nfsd4_compou
+ 		 */
+ 		statusmask |= SC_STATUS_REVOKED;
  
-+out_proc_error:
-+	percpu_counter_destroy_many(nn->counter, NFSD_STATS_COUNTERS_NUM);
- out_repcache_error:
- 	nfsd_idmap_shutdown(net);
- out_idmap_error:
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -73,11 +73,11 @@ static int nfsd_show(struct seq_file *se
+-	statusmask |= SC_STATUS_ADMIN_REVOKED;
++	statusmask |= SC_STATUS_ADMIN_REVOKED | SC_STATUS_FREEABLE;
  
- DEFINE_PROC_SHOW_ATTRIBUTE(nfsd);
+ 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid) ||
+ 		CLOSE_STATEID(stateid))
+@@ -7706,9 +7706,7 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
+ 	if ((status = fh_verify(rqstp, &cstate->current_fh, S_IFREG, 0)))
+ 		return status;
  
--void nfsd_proc_stat_init(struct net *net)
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
-+	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
- }
- 
- void nfsd_proc_stat_shutdown(struct net *net)
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -10,7 +10,7 @@
- #include <uapi/linux/nfsd/stats.h>
- #include <linux/percpu_counter.h>
- 
--void nfsd_proc_stat_init(struct net *net);
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
- void nfsd_proc_stat_shutdown(struct net *net);
- 
- static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
+-	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG,
+-				      SC_STATUS_REVOKED | SC_STATUS_FREEABLE,
+-				      &s, nn);
++	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG, SC_STATUS_REVOKED, &s, nn);
+ 	if (status)
+ 		goto out;
+ 	dp = delegstateid(s);
 
 
