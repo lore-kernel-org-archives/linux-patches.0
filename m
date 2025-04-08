@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352A269CFD;
-	Tue,  8 Apr 2025 11:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B184126A087;
+	Tue,  8 Apr 2025 11:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111853; cv=none; b=A76nTgA40idrujY5uJ9xqRS71Jfk2eI6SMxkTFwYGXGqf5CPox40AUSq7MSWjefz72bO0zqAsQW9zgNi7dqaqV4JH9B8OTtzfCukakwyrQ1OplTv5JJ4iAKnmHi9VP13BF5rqSiNljTTafhpgB9cj9nWDONEHbbBmnoiqDp2ijM=
+	t=1744111855; cv=none; b=oDbbzrFTF17bEODGshpOxtQwd/T28S1O12g/xJCtUBqJ9S8/Z6QdzSGkBkEfDRmx+0zm+WD/edyMxp8hh8O07nHbTk6KrgWSjyn70q8Hx0O2TdAOPkttr1KGKAdob+1gpiLJj+VQ3H1D4u3Mt3jxJ3Hn45qGd+2V+W7JEuWxPdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111853; c=relaxed/simple;
-	bh=GjOgOGb5ohY8X0O8eKDg9ZQiF3551C20ZU8wIPKNtko=;
+	s=arc-20240116; t=1744111855; c=relaxed/simple;
+	bh=wJkuE2Z9ix5rp1Bdr6n4ztJU0zhT7Ix8octq+08gHMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5GtHuZ5Vnr0tiqg/K51PRYVPI4VRso2GYY2xqAYCzeTsdwjU+iwDDnTxt0ZtHR2nvYoQeCVNoWd/OkHKjmTkp/dBSvJFn0znb8SqBETOo6G56p3P1XJMPpFiGpeKOSBroqJDa1mUPwwomVCW5CYjTP/k0qwfrhN9Y6lyRxYDbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiSgwYFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UpUx9y8EESXzHCacm5FqRdLIkhb3fRHAZkAiehKv6tVhSC/CXt3DBPZP+A3lYjSgjzk9qMj7ynVxd1ih7g5UJhkAdOGyavK9zhz/6sGGBANfjCHqMt1K04WgUTXOKtsqNrSQ0dD9D0ca0AiXCFZmm2+i+VrQLc6uBjLltyu3EWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQcjHty6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiSgwYFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2A1C4CEE5;
-	Tue,  8 Apr 2025 11:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQcjHty6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439C4C4CEE5;
+	Tue,  8 Apr 2025 11:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111852;
-	bh=GjOgOGb5ohY8X0O8eKDg9ZQiF3551C20ZU8wIPKNtko=;
+	s=korg; t=1744111855;
+	bh=wJkuE2Z9ix5rp1Bdr6n4ztJU0zhT7Ix8octq+08gHMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiSgwYFQSegVvgP5bF0ul2N1+4U/lyf20cEDZUCIP3ApZnTSlv1Vp2jXT69kYp8tl
-	 U7ulH/SjYiPsGU/4OyDXWwPDNpulIR21j9vEtsjK3mg+ktpn25bBHXswYsmzCj0lhh
-	 p/qMy/Sev5DVUvsDlAiXukXf5UPmXmiFJn+9vPWY=
+	b=HQcjHty6wg5NJ58kcgL0i4V2Jf73iWwbePlSRmFqapFfGdA6W629zatcGfzPRzPKG
+	 jwYWRB5b3qFN1rQXEpu1pUwKSyPIr2BshU1sE0fyPxBb6/VvZtYQZo07HyKWT/kzFM
+	 9rD5XcizlIfJzGLpigJ3aZh0D2E0FiTxbNdQHmKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 583/731] riscv: Fix missing __free_pages() in check_vector_unaligned_access()
-Date: Tue,  8 Apr 2025 12:48:00 +0200
-Message-ID: <20250408104927.833752515@linuxfoundation.org>
+Subject: [PATCH 6.14 584/731] riscv: fgraph: Select HAVE_FUNCTION_GRAPH_TRACER depends on HAVE_DYNAMIC_FTRACE_WITH_ARGS
+Date: Tue,  8 Apr 2025 12:48:01 +0200
+Message-ID: <20250408104927.858067320@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -44,50 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 33981b1c4e499021421686dcfa7b3d23a430d00e ]
+[ Upstream commit e8eb8e1bdae94b9e003f5909519fd311d0936890 ]
 
-The locally allocated pages are never freed up, so add the corresponding
-__free_pages().
+Currently, fgraph on riscv relies on the infrastructure of
+DYNAMIC_FTRACE_WITH_ARGS. However, DYNAMIC_FTRACE_WITH_ARGS may be
+turned off on riscv, which will cause the enabled fgraph to be abnormal.
+Therefore, let's select HAVE_FUNCTION_GRAPH_TRACER depends on
+HAVE_DYNAMIC_FTRACE_WITH_ARGS.
 
-Fixes: e7c9d66e313b ("RISC-V: Report vector unaligned access speed hwprobe")
-Link: https://lore.kernel.org/r/20250228090613.345309-1-alexghiti@rivosinc.com
+Fixes: a3ed4157b7d8 ("fgraph: Replace fgraph_ret_regs with ftrace_regs")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202503160820.dvqMpH0g-lkp@intel.com/
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20250317031214.4138436-1-pulehui@huaweicloud.com
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/unaligned_access_speed.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
-index 91f189cf16113..074ac4abd023e 100644
---- a/arch/riscv/kernel/unaligned_access_speed.c
-+++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -349,7 +349,7 @@ static void check_vector_unaligned_access(struct work_struct *work __always_unus
- 		pr_warn("cpu%d: rdtime lacks granularity needed to measure unaligned vector access speed\n",
- 			cpu);
- 
--		return;
-+		goto free;
- 	}
- 
- 	if (word_cycles < byte_cycles)
-@@ -363,6 +363,9 @@ static void check_vector_unaligned_access(struct work_struct *work __always_unus
- 		(speed ==  RISCV_HWPROBE_MISALIGNED_VECTOR_FAST) ? "fast" : "slow");
- 
- 	per_cpu(vector_misaligned_access, cpu) = speed;
-+
-+free:
-+	__free_pages(page, MISALIGNED_BUFFER_ORDER);
- }
- 
- static int riscv_online_cpu_vec(unsigned int cpu)
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index 7612c52e9b1e3..5d63abc499ce7 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -149,7 +149,7 @@ config RISCV
+ 	select HAVE_DYNAMIC_FTRACE_WITH_ARGS if HAVE_DYNAMIC_FTRACE
+ 	select HAVE_FTRACE_GRAPH_FUNC
+ 	select HAVE_FTRACE_MCOUNT_RECORD if !XIP_KERNEL
+-	select HAVE_FUNCTION_GRAPH_TRACER
++	select HAVE_FUNCTION_GRAPH_TRACER if HAVE_DYNAMIC_FTRACE_WITH_ARGS
+ 	select HAVE_FUNCTION_GRAPH_FREGS
+ 	select HAVE_FUNCTION_TRACER if !XIP_KERNEL && !PREEMPTION
+ 	select HAVE_EBPF_JIT if MMU
 -- 
 2.39.5
 
