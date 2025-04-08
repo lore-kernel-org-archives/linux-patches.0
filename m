@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099582690CB;
-	Tue,  8 Apr 2025 11:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A038F2686B8;
+	Tue,  8 Apr 2025 11:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111219; cv=none; b=ZXQxNWfuyi/12ggqGl/fTP9lEL/VaKZ3gF3j0jU1epxAAYrX1gSonWdo1fot37AhHt27ab4npm0SquWRx9hlwnWRLOGgimgtrAQJPQfcLKHdesrqQBOB+gl3ppCpfRFcMjSyQj8wOC0UDKtGs97yCtmiHvhYo7DFp4fg2WDqFK8=
+	t=1744111221; cv=none; b=jXCYgDHPjRFyJSiwWHZMa2rvtiwAahzBLguvAlQUN8qGGNR2LL9UBZHtVL2PQT9BnEig4VlDVfH3fKMTH/r2GvGfCx8vSaSNNtgrsCec5yDCDLTVtwgi8NRbBj5fZtULoCAiCG+PPPtPbSpmDcmfI5EEBAEJAAttUdAJ6qLKkXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111219; c=relaxed/simple;
-	bh=TJPiK75F9KoUZuYVBsMKAvpVrnDGo/Y/eM8RdERdx2o=;
+	s=arc-20240116; t=1744111221; c=relaxed/simple;
+	bh=8gMRFgR2/x1B58D1NXrLDHuVc6XIGK8S/ltlbjI2zuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo3vXL9WquFa0F/xMk6ICDZPzghzhPlzS5zLoi9po7TXp6cw4F8ObLZpvKsbcA8EgS0G4DkToL8I8p+D/0lPY+7nAGrPWdPGZCf/HcpWJQggwEpbkfVBk6mKFp5TjHJF6ht/sT0bTALVGO+jQfvxO56JYKgo99aBvEoC98d8TzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFVAK3mQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4NuxtwSwOPdEa2oOUj75128O3ySEdJ2FCql351fBycFskxLfCRqbdDL6WELumpJH5/CJrS1xUAA5ojpHKIH5C2f90NkuSYA5MWL/3XE/BWZya1mWnVX9dv9L08U9lj7fBdNADTZWylRhxsoQLe2H/pgHeu7/UMsqaViP+0q7q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+74rgsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFVAK3mQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66144C4CEED;
-	Tue,  8 Apr 2025 11:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+74rgsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3189CC4CEED;
+	Tue,  8 Apr 2025 11:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111218;
-	bh=TJPiK75F9KoUZuYVBsMKAvpVrnDGo/Y/eM8RdERdx2o=;
+	s=korg; t=1744111221;
+	bh=8gMRFgR2/x1B58D1NXrLDHuVc6XIGK8S/ltlbjI2zuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFVAK3mQRijZh5t8SGhhYHql+686Ubnrya6Y4Y+ONXE97o0724FMa8qou9tNtUxyL
-	 g5USTu0/iD8ntU1qjd2for62QX7OPOAEuW5mGLmnpv4avvQPhjKyv2nsi4pkX5jN31
-	 ZaoK1Z5I7M5bfBGDc4HGE10YBSvXHikWW9lgpA50=
+	b=n+74rgsMExLHG8v8YHFQt/q9l+nDAosJYW/fu8mfRpeqYAAKclfPWy+7J8o+UexIT
+	 tnGeE6omswIfLYi9I2jpWYzjC3mjaeRGYR6rSN1D2+6aH3bbMSWnUOyOB1Zv7PZ7/R
+	 LzLKzCQcmanFbO+V1ir+rU207+ahVfLmZSNw8d/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Akhil R <akhilrajeev@nvidia.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 353/731] crypto: tegra - Use separate buffer for setkey
-Date: Tue,  8 Apr 2025 12:44:10 +0200
-Message-ID: <20250408104922.483862316@linuxfoundation.org>
+Subject: [PATCH 6.14 354/731] crypto: tegra - Do not use fixed size buffers
+Date: Tue,  8 Apr 2025 12:44:11 +0200
+Message-ID: <20250408104922.506908645@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -53,14 +53,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit bcfc8fc53f3acb3213fb9d28675244aa4ce208e0 ]
+[ Upstream commit 1cb328da4e8f34350c61a2b6548766c79b4bb64c ]
 
-The buffer which sends the commands to host1x was shared for all tasks
-in the engine. This causes a problem with the setkey() function as it
-gets called asynchronous to the crypto engine queue. Modifying the same
-cmdbuf in setkey() will corrupt the ongoing host1x task and in turn
-break the encryption/decryption operation. Hence use a separate cmdbuf
-for setkey().
+Allocate the buffer based on the request instead of a fixed buffer
+length. In operations which may require larger buffer size, a fixed
+buffer may fail.
 
 Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
 Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
@@ -68,232 +65,365 @@ Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: ff4b7df0b511 ("crypto: tegra - Fix HASH intermediate result handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c  | 16 ++++++++--------
- drivers/crypto/tegra/tegra-se-hash.c | 13 +++++++------
- drivers/crypto/tegra/tegra-se-key.c  | 10 ++++++++--
- drivers/crypto/tegra/tegra-se-main.c | 16 ++++++++++++----
- drivers/crypto/tegra/tegra-se.h      |  3 ++-
- 5 files changed, 37 insertions(+), 21 deletions(-)
+ drivers/crypto/tegra/tegra-se-aes.c  | 124 ++++++++++++++-------------
+ drivers/crypto/tegra/tegra-se-hash.c |  38 +++++---
+ drivers/crypto/tegra/tegra-se.h      |   2 -
+ 3 files changed, 89 insertions(+), 75 deletions(-)
 
 diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index d734c9a567868..7da7e169a314b 100644
+index 7da7e169a314b..c2b8891a905dc 100644
 --- a/drivers/crypto/tegra/tegra-se-aes.c
 +++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -282,7 +282,7 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
+@@ -263,12 +263,6 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
+ 	unsigned int cmdlen;
+ 	int ret;
+ 
+-	rctx->datbuf.buf = dma_alloc_coherent(se->dev, SE_AES_BUFLEN,
+-					      &rctx->datbuf.addr, GFP_KERNEL);
+-	if (!rctx->datbuf.buf)
+-		return -ENOMEM;
+-
+-	rctx->datbuf.size = SE_AES_BUFLEN;
+ 	rctx->iv = (u32 *)req->iv;
+ 	rctx->len = req->cryptlen;
+ 
+@@ -278,6 +272,12 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
+ 			rctx->len += AES_BLOCK_SIZE - (rctx->len % AES_BLOCK_SIZE);
+ 	}
+ 
++	rctx->datbuf.size = rctx->len;
++	rctx->datbuf.buf = dma_alloc_coherent(se->dev, rctx->datbuf.size,
++					      &rctx->datbuf.addr, GFP_KERNEL);
++	if (!rctx->datbuf.buf)
++		return -ENOMEM;
++
+ 	scatterwalk_map_and_copy(rctx->datbuf.buf, req->src, 0, req->cryptlen, 0);
  
  	/* Prepare the command and submit for execution */
- 	cmdlen = tegra_aes_prep_cmd(ctx, rctx);
--	ret = tegra_se_host1x_submit(se, cmdlen);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
+@@ -289,7 +289,7 @@ static int tegra_aes_do_one_req(struct crypto_engine *engine, void *areq)
+ 	scatterwalk_map_and_copy(rctx->datbuf.buf, req->dst, 0, req->cryptlen, 1);
  
- 	/* Copy the result */
- 	tegra_aes_update_iv(req, ctx);
-@@ -719,7 +719,7 @@ static int tegra_gcm_do_gmac(struct tegra_aead_ctx *ctx, struct tegra_aead_reqct
+ 	/* Free the buffer */
+-	dma_free_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	dma_free_coherent(ctx->se->dev, rctx->datbuf.size,
+ 			  rctx->datbuf.buf, rctx->datbuf.addr);
  
- 	cmdlen = tegra_gmac_prep_cmd(ctx, rctx);
+ 	crypto_finalize_skcipher_request(se->engine, req, ret);
+@@ -1117,6 +1117,11 @@ static int tegra_ccm_crypt_init(struct aead_request *req, struct tegra_se *se,
+ 	rctx->assoclen = req->assoclen;
+ 	rctx->authsize = crypto_aead_authsize(tfm);
  
--	return tegra_se_host1x_submit(se, cmdlen);
-+	return tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- }
- 
- static int tegra_gcm_do_crypt(struct tegra_aead_ctx *ctx, struct tegra_aead_reqctx *rctx)
-@@ -736,7 +736,7 @@ static int tegra_gcm_do_crypt(struct tegra_aead_ctx *ctx, struct tegra_aead_reqc
- 
- 	/* Prepare command and submit */
- 	cmdlen = tegra_gcm_crypt_prep_cmd(ctx, rctx);
--	ret = tegra_se_host1x_submit(se, cmdlen);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- 	if (ret)
- 		return ret;
- 
-@@ -759,7 +759,7 @@ static int tegra_gcm_do_final(struct tegra_aead_ctx *ctx, struct tegra_aead_reqc
- 
- 	/* Prepare command and submit */
- 	cmdlen = tegra_gcm_prep_final_cmd(se, cpuvaddr, rctx);
--	ret = tegra_se_host1x_submit(se, cmdlen);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- 	if (ret)
- 		return ret;
- 
-@@ -891,7 +891,7 @@ static int tegra_ccm_do_cbcmac(struct tegra_aead_ctx *ctx, struct tegra_aead_req
- 	/* Prepare command and submit */
- 	cmdlen = tegra_cbcmac_prep_cmd(ctx, rctx);
- 
--	return tegra_se_host1x_submit(se, cmdlen);
-+	return tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- }
- 
- static int tegra_ccm_set_msg_len(u8 *block, unsigned int msglen, int csize)
-@@ -1098,7 +1098,7 @@ static int tegra_ccm_do_ctr(struct tegra_aead_ctx *ctx, struct tegra_aead_reqctx
- 
- 	/* Prepare command and submit */
- 	cmdlen = tegra_ctr_prep_cmd(ctx, rctx);
--	ret = tegra_se_host1x_submit(se, cmdlen);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- 	if (ret)
- 		return ret;
- 
-@@ -1519,8 +1519,8 @@ static int tegra_cmac_do_update(struct ahash_request *req)
- 		tegra_cmac_paste_result(ctx->se, rctx);
- 
- 	cmdlen = tegra_cmac_prep_cmd(ctx, rctx);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- 
--	ret = tegra_se_host1x_submit(se, cmdlen);
- 	/*
- 	 * If this is not the final update, copy the intermediate results
- 	 * from the registers so that it can be used in the next 'update'
-@@ -1553,7 +1553,7 @@ static int tegra_cmac_do_final(struct ahash_request *req)
- 
- 	/* Prepare command and submit */
- 	cmdlen = tegra_cmac_prep_cmd(ctx, rctx);
--	ret = tegra_se_host1x_submit(se, cmdlen);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, cmdlen);
- 	if (ret)
- 		goto out;
- 
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index 0b5cdd5676b17..c7b2a062a03c0 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -300,8 +300,9 @@ static int tegra_sha_do_update(struct ahash_request *req)
- {
- 	struct tegra_sha_ctx *ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(req));
- 	struct tegra_sha_reqctx *rctx = ahash_request_ctx(req);
-+	struct tegra_se *se = ctx->se;
- 	unsigned int nblks, nresidue, size, ret;
--	u32 *cpuvaddr = ctx->se->cmdbuf->addr;
-+	u32 *cpuvaddr = se->cmdbuf->addr;
- 
- 	nresidue = (req->nbytes + rctx->residue.size) % rctx->blk_size;
- 	nblks = (req->nbytes + rctx->residue.size) / rctx->blk_size;
-@@ -353,11 +354,11 @@ static int tegra_sha_do_update(struct ahash_request *req)
- 	 * This is to support the import/export functionality.
- 	 */
- 	if (!(rctx->task & SHA_FIRST))
--		tegra_sha_paste_hash_result(ctx->se, rctx);
-+		tegra_sha_paste_hash_result(se, rctx);
- 
--	size = tegra_sha_prep_cmd(ctx->se, cpuvaddr, rctx);
-+	size = tegra_sha_prep_cmd(se, cpuvaddr, rctx);
- 
--	ret = tegra_se_host1x_submit(ctx->se, size);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, size);
- 
- 	/*
- 	 * If this is not the final update, copy the intermediate results
-@@ -365,7 +366,7 @@ static int tegra_sha_do_update(struct ahash_request *req)
- 	 * call. This is to support the import/export functionality.
- 	 */
- 	if (!(rctx->task & SHA_FINAL))
--		tegra_sha_copy_hash_result(ctx->se, rctx);
-+		tegra_sha_copy_hash_result(se, rctx);
- 
- 	return ret;
- }
-@@ -388,7 +389,7 @@ static int tegra_sha_do_final(struct ahash_request *req)
- 
- 	size = tegra_sha_prep_cmd(se, cpuvaddr, rctx);
- 
--	ret = tegra_se_host1x_submit(se, size);
-+	ret = tegra_se_host1x_submit(se, se->cmdbuf, size);
- 	if (ret)
- 		goto out;
- 
-diff --git a/drivers/crypto/tegra/tegra-se-key.c b/drivers/crypto/tegra/tegra-se-key.c
-index ac14678dbd30d..276b261fb6df1 100644
---- a/drivers/crypto/tegra/tegra-se-key.c
-+++ b/drivers/crypto/tegra/tegra-se-key.c
-@@ -115,11 +115,17 @@ static int tegra_key_insert(struct tegra_se *se, const u8 *key,
- 			    u32 keylen, u16 slot, u32 alg)
- {
- 	const u32 *keyval = (u32 *)key;
--	u32 *addr = se->cmdbuf->addr, size;
-+	u32 *addr = se->keybuf->addr, size;
-+	int ret;
++	if (rctx->encrypt)
++		rctx->cryptlen = req->cryptlen;
++	else
++		rctx->cryptlen = req->cryptlen - rctx->authsize;
 +
-+	mutex_lock(&kslt_lock);
+ 	memcpy(iv, req->iv, 16);
  
- 	size = tegra_key_prep_ins_cmd(se, addr, keyval, keylen, slot, alg);
-+	ret = tegra_se_host1x_submit(se, se->keybuf, size);
- 
--	return tegra_se_host1x_submit(se, size);
-+	mutex_unlock(&kslt_lock);
-+
-+	return ret;
- }
- 
- void tegra_key_invalidate(struct tegra_se *se, u32 keyid, u32 alg)
-diff --git a/drivers/crypto/tegra/tegra-se-main.c b/drivers/crypto/tegra/tegra-se-main.c
-index 918c0b10614d4..1c94f1de05467 100644
---- a/drivers/crypto/tegra/tegra-se-main.c
-+++ b/drivers/crypto/tegra/tegra-se-main.c
-@@ -141,7 +141,7 @@ static struct tegra_se_cmdbuf *tegra_se_host1x_bo_alloc(struct tegra_se *se, ssi
- 	return cmdbuf;
- }
- 
--int tegra_se_host1x_submit(struct tegra_se *se, u32 size)
-+int tegra_se_host1x_submit(struct tegra_se *se, struct tegra_se_cmdbuf *cmdbuf, u32 size)
- {
- 	struct host1x_job *job;
+ 	ret = tegra_ccm_check_iv(iv);
+@@ -1145,30 +1150,26 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	struct tegra_se *se = ctx->se;
  	int ret;
-@@ -160,9 +160,9 @@ int tegra_se_host1x_submit(struct tegra_se *se, u32 size)
- 	job->engine_fallback_streamid = se->stream_id;
- 	job->engine_streamid_offset = SE_STREAM_ID;
  
--	se->cmdbuf->words = size;
-+	cmdbuf->words = size;
++	ret = tegra_ccm_crypt_init(req, se, rctx);
++	if (ret)
++		return ret;
++
+ 	/* Allocate buffers required */
+-	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	rctx->inbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen + 100;
++	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->inbuf.size,
+ 					     &rctx->inbuf.addr, GFP_KERNEL);
+ 	if (!rctx->inbuf.buf)
+ 		return -ENOMEM;
  
--	host1x_job_add_gather(job, &se->cmdbuf->bo, size, 0);
-+	host1x_job_add_gather(job, &cmdbuf->bo, size, 0);
- 
- 	ret = host1x_job_pin(job, se->dev);
- 	if (ret) {
-@@ -220,14 +220,22 @@ static int tegra_se_client_init(struct host1x_client *client)
- 		goto syncpt_put;
+-	rctx->inbuf.size = SE_AES_BUFLEN;
+-
+-	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	rctx->outbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen + 100;
++	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->outbuf.size,
+ 					      &rctx->outbuf.addr, GFP_KERNEL);
+ 	if (!rctx->outbuf.buf) {
+ 		ret = -ENOMEM;
+ 		goto outbuf_err;
  	}
  
-+	se->keybuf = tegra_se_host1x_bo_alloc(se, SZ_4K);
-+	if (!se->keybuf) {
+-	rctx->outbuf.size = SE_AES_BUFLEN;
+-
+-	ret = tegra_ccm_crypt_init(req, se, rctx);
+-	if (ret)
+-		goto out;
+-
+ 	if (rctx->encrypt) {
+-		rctx->cryptlen = req->cryptlen;
+-
+ 		/* CBC MAC Operation */
+ 		ret = tegra_ccm_compute_auth(ctx, rctx);
+ 		if (ret)
+@@ -1179,8 +1180,6 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 		if (ret)
+ 			goto out;
+ 	} else {
+-		rctx->cryptlen = req->cryptlen - ctx->authsize;
+-
+ 		/* CTR operation */
+ 		ret = tegra_ccm_do_ctr(ctx, rctx);
+ 		if (ret)
+@@ -1193,11 +1192,11 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	}
+ 
+ out:
+-	dma_free_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	dma_free_coherent(ctx->se->dev, rctx->inbuf.size,
+ 			  rctx->outbuf.buf, rctx->outbuf.addr);
+ 
+ outbuf_err:
+-	dma_free_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	dma_free_coherent(ctx->se->dev, rctx->outbuf.size,
+ 			  rctx->inbuf.buf, rctx->inbuf.addr);
+ 
+ 	crypto_finalize_aead_request(ctx->se->engine, req, ret);
+@@ -1213,23 +1212,6 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	struct tegra_aead_reqctx *rctx = aead_request_ctx(req);
+ 	int ret;
+ 
+-	/* Allocate buffers required */
+-	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, SE_AES_BUFLEN,
+-					     &rctx->inbuf.addr, GFP_KERNEL);
+-	if (!rctx->inbuf.buf)
+-		return -ENOMEM;
+-
+-	rctx->inbuf.size = SE_AES_BUFLEN;
+-
+-	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, SE_AES_BUFLEN,
+-					      &rctx->outbuf.addr, GFP_KERNEL);
+-	if (!rctx->outbuf.buf) {
+-		ret = -ENOMEM;
+-		goto outbuf_err;
+-	}
+-
+-	rctx->outbuf.size = SE_AES_BUFLEN;
+-
+ 	rctx->src_sg = req->src;
+ 	rctx->dst_sg = req->dst;
+ 	rctx->assoclen = req->assoclen;
+@@ -1243,6 +1225,21 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	memcpy(rctx->iv, req->iv, GCM_AES_IV_SIZE);
+ 	rctx->iv[3] = (1 << 24);
+ 
++	/* Allocate buffers required */
++	rctx->inbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen;
++	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->inbuf.size,
++					     &rctx->inbuf.addr, GFP_KERNEL);
++	if (!rctx->inbuf.buf)
++		return -ENOMEM;
++
++	rctx->outbuf.size = rctx->assoclen + rctx->authsize + rctx->cryptlen;
++	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->outbuf.size,
++					      &rctx->outbuf.addr, GFP_KERNEL);
++	if (!rctx->outbuf.buf) {
 +		ret = -ENOMEM;
-+		goto cmdbuf_put;
++		goto outbuf_err;
 +	}
 +
- 	ret = se->hw->init_alg(se);
- 	if (ret) {
- 		dev_err(se->dev, "failed to register algorithms\n");
--		goto cmdbuf_put;
-+		goto keybuf_put;
+ 	/* If there is associated data perform GMAC operation */
+ 	if (rctx->assoclen) {
+ 		ret = tegra_gcm_do_gmac(ctx, rctx);
+@@ -1266,11 +1263,11 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 		ret = tegra_gcm_do_verify(ctx->se, rctx);
+ 
+ out:
+-	dma_free_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	dma_free_coherent(ctx->se->dev, rctx->outbuf.size,
+ 			  rctx->outbuf.buf, rctx->outbuf.addr);
+ 
+ outbuf_err:
+-	dma_free_coherent(ctx->se->dev, SE_AES_BUFLEN,
++	dma_free_coherent(ctx->se->dev, rctx->inbuf.size,
+ 			  rctx->inbuf.buf, rctx->inbuf.addr);
+ 
+ 	/* Finalize the request if there are no errors */
+@@ -1497,6 +1494,11 @@ static int tegra_cmac_do_update(struct ahash_request *req)
+ 		return 0;
  	}
  
++	rctx->datbuf.buf = dma_alloc_coherent(se->dev, rctx->datbuf.size,
++					      &rctx->datbuf.addr, GFP_KERNEL);
++	if (!rctx->datbuf.buf)
++		return -ENOMEM;
++
+ 	/* Copy the previous residue first */
+ 	if (rctx->residue.size)
+ 		memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
+@@ -1529,6 +1531,9 @@ static int tegra_cmac_do_update(struct ahash_request *req)
+ 	if (!(rctx->task & SHA_FINAL))
+ 		tegra_cmac_copy_result(ctx->se, rctx);
+ 
++	dma_free_coherent(ctx->se->dev, rctx->datbuf.size,
++			  rctx->datbuf.buf, rctx->datbuf.addr);
++
+ 	return ret;
+ }
+ 
+@@ -1543,10 +1548,20 @@ static int tegra_cmac_do_final(struct ahash_request *req)
+ 
+ 	if (!req->nbytes && !rctx->total_len && ctx->fallback_tfm) {
+ 		return crypto_shash_tfm_digest(ctx->fallback_tfm,
+-					rctx->datbuf.buf, 0, req->result);
++					NULL, 0, req->result);
++	}
++
++	if (rctx->residue.size) {
++		rctx->datbuf.buf = dma_alloc_coherent(se->dev, rctx->residue.size,
++						      &rctx->datbuf.addr, GFP_KERNEL);
++		if (!rctx->datbuf.buf) {
++			ret = -ENOMEM;
++			goto out_free;
++		}
++
++		memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
+ 	}
+ 
+-	memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
+ 	rctx->datbuf.size = rctx->residue.size;
+ 	rctx->total_len += rctx->residue.size;
+ 	rctx->config = tegra234_aes_cfg(SE_ALG_CMAC, 0);
+@@ -1565,8 +1580,10 @@ static int tegra_cmac_do_final(struct ahash_request *req)
+ 		writel(0, se->base + se->hw->regs->result + (i * 4));
+ 
+ out:
+-	dma_free_coherent(se->dev, SE_SHA_BUFLEN,
+-			  rctx->datbuf.buf, rctx->datbuf.addr);
++	if (rctx->residue.size)
++		dma_free_coherent(se->dev, rctx->datbuf.size,
++				  rctx->datbuf.buf, rctx->datbuf.addr);
++out_free:
+ 	dma_free_coherent(se->dev, crypto_ahash_blocksize(tfm) * 2,
+ 			  rctx->residue.buf, rctx->residue.addr);
+ 	return ret;
+@@ -1672,28 +1689,15 @@ static int tegra_cmac_init(struct ahash_request *req)
+ 	rctx->residue.buf = dma_alloc_coherent(se->dev, rctx->blk_size * 2,
+ 					       &rctx->residue.addr, GFP_KERNEL);
+ 	if (!rctx->residue.buf)
+-		goto resbuf_fail;
++		return -ENOMEM;
+ 
+ 	rctx->residue.size = 0;
+ 
+-	rctx->datbuf.buf = dma_alloc_coherent(se->dev, SE_SHA_BUFLEN,
+-					      &rctx->datbuf.addr, GFP_KERNEL);
+-	if (!rctx->datbuf.buf)
+-		goto datbuf_fail;
+-
+-	rctx->datbuf.size = 0;
+-
+ 	/* Clear any previous result */
+ 	for (i = 0; i < CMAC_RESULT_REG_COUNT; i++)
+ 		writel(0, se->base + se->hw->regs->result + (i * 4));
+ 
+ 	return 0;
+-
+-datbuf_fail:
+-	dma_free_coherent(se->dev, rctx->blk_size, rctx->residue.buf,
+-			  rctx->residue.addr);
+-resbuf_fail:
+-	return -ENOMEM;
+ }
+ 
+ static int tegra_cmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
+index c7b2a062a03c0..b4a179a8febd5 100644
+--- a/drivers/crypto/tegra/tegra-se-hash.c
++++ b/drivers/crypto/tegra/tegra-se-hash.c
+@@ -332,6 +332,11 @@ static int tegra_sha_do_update(struct ahash_request *req)
+ 		return 0;
+ 	}
+ 
++	rctx->datbuf.buf = dma_alloc_coherent(ctx->se->dev, rctx->datbuf.size,
++					      &rctx->datbuf.addr, GFP_KERNEL);
++	if (!rctx->datbuf.buf)
++		return -ENOMEM;
++
+ 	/* Copy the previous residue first */
+ 	if (rctx->residue.size)
+ 		memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
+@@ -368,6 +373,9 @@ static int tegra_sha_do_update(struct ahash_request *req)
+ 	if (!(rctx->task & SHA_FINAL))
+ 		tegra_sha_copy_hash_result(se, rctx);
+ 
++	dma_free_coherent(ctx->se->dev, rctx->datbuf.size,
++			  rctx->datbuf.buf, rctx->datbuf.addr);
++
+ 	return ret;
+ }
+ 
+@@ -380,7 +388,17 @@ static int tegra_sha_do_final(struct ahash_request *req)
+ 	u32 *cpuvaddr = se->cmdbuf->addr;
+ 	int size, ret = 0;
+ 
+-	memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
++	if (rctx->residue.size) {
++		rctx->datbuf.buf = dma_alloc_coherent(se->dev, rctx->residue.size,
++						      &rctx->datbuf.addr, GFP_KERNEL);
++		if (!rctx->datbuf.buf) {
++			ret = -ENOMEM;
++			goto out_free;
++		}
++
++		memcpy(rctx->datbuf.buf, rctx->residue.buf, rctx->residue.size);
++	}
++
+ 	rctx->datbuf.size = rctx->residue.size;
+ 	rctx->total_len += rctx->residue.size;
+ 
+@@ -397,8 +415,10 @@ static int tegra_sha_do_final(struct ahash_request *req)
+ 	memcpy(req->result, rctx->digest.buf, rctx->digest.size);
+ 
+ out:
+-	dma_free_coherent(se->dev, SE_SHA_BUFLEN,
+-			  rctx->datbuf.buf, rctx->datbuf.addr);
++	if (rctx->residue.size)
++		dma_free_coherent(se->dev, rctx->datbuf.size,
++				  rctx->datbuf.buf, rctx->datbuf.addr);
++out_free:
+ 	dma_free_coherent(se->dev, crypto_ahash_blocksize(tfm),
+ 			  rctx->residue.buf, rctx->residue.addr);
+ 	dma_free_coherent(se->dev, rctx->digest.size, rctx->digest.buf,
+@@ -527,19 +547,11 @@ static int tegra_sha_init(struct ahash_request *req)
+ 	if (!rctx->residue.buf)
+ 		goto resbuf_fail;
+ 
+-	rctx->datbuf.buf = dma_alloc_coherent(se->dev, SE_SHA_BUFLEN,
+-					      &rctx->datbuf.addr, GFP_KERNEL);
+-	if (!rctx->datbuf.buf)
+-		goto datbuf_fail;
+-
  	return 0;
  
-+keybuf_put:
-+	tegra_se_cmdbuf_put(&se->keybuf->bo);
- cmdbuf_put:
- 	tegra_se_cmdbuf_put(&se->cmdbuf->bo);
- syncpt_put:
+-datbuf_fail:
+-	dma_free_coherent(se->dev, rctx->blk_size, rctx->residue.buf,
+-			  rctx->residue.addr);
+ resbuf_fail:
+-	dma_free_coherent(se->dev, SE_SHA_BUFLEN, rctx->datbuf.buf,
+-			  rctx->datbuf.addr);
++	dma_free_coherent(se->dev, rctx->digest.size, rctx->digest.buf,
++			  rctx->digest.addr);
+ digbuf_fail:
+ 	return -ENOMEM;
+ }
 diff --git a/drivers/crypto/tegra/tegra-se.h b/drivers/crypto/tegra/tegra-se.h
-index b9dd7ceb8783c..b54aefe717a17 100644
+index b54aefe717a17..e196a90eedb92 100644
 --- a/drivers/crypto/tegra/tegra-se.h
 +++ b/drivers/crypto/tegra/tegra-se.h
-@@ -420,6 +420,7 @@ struct tegra_se {
- 	struct host1x_client client;
- 	struct host1x_channel *channel;
- 	struct tegra_se_cmdbuf *cmdbuf;
-+	struct tegra_se_cmdbuf *keybuf;
- 	struct crypto_engine *engine;
- 	struct host1x_syncpt *syncpt;
- 	struct device *dev;
-@@ -502,7 +503,7 @@ void tegra_deinit_hash(struct tegra_se *se);
- int tegra_key_submit(struct tegra_se *se, const u8 *key,
- 		     u32 keylen, u32 alg, u32 *keyid);
- void tegra_key_invalidate(struct tegra_se *se, u32 keyid, u32 alg);
--int tegra_se_host1x_submit(struct tegra_se *se, u32 size);
-+int tegra_se_host1x_submit(struct tegra_se *se, struct tegra_se_cmdbuf *cmdbuf, u32 size);
+@@ -340,8 +340,6 @@
+ #define SE_CRYPTO_CTR_REG_COUNT			4
+ #define SE_MAX_KEYSLOT				15
+ #define SE_MAX_MEM_ALLOC			SZ_4M
+-#define SE_AES_BUFLEN				0x8000
+-#define SE_SHA_BUFLEN				0x2000
  
- /* HOST1x OPCODES */
- static inline u32 host1x_opcode_setpayload(unsigned int payload)
+ #define SHA_FIRST	BIT(0)
+ #define SHA_UPDATE	BIT(1)
 -- 
 2.39.5
 
