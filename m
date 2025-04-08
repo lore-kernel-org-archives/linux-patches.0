@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C3726A097;
-	Tue,  8 Apr 2025 12:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DC126B0BE;
+	Tue,  8 Apr 2025 12:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114364; cv=none; b=M9Ir+3futsuwo3YqMnXGzlvc0YHCbsf+PjjYrxNU7tQepwxRQk/nPkf8Ha/ILo5CWWZFj7hJArLryiyqjn49nd41ur/tqzAk0jS9B4fjNAydAFfVUXI/oKeUwi8ay+EsY9uBGEhYBMevi9oTtSo/vtlPt8gy1POBDzdAifRtk4k=
+	t=1744114367; cv=none; b=Qmw7ZRLL6TGmZY8jOBVZyEUN762K1BwotA27ypER1XIywo3mS8O5k9aFhZClUqxB9Q4fSReJzpF3bevKRWLkker/oaSB0jaGxNAbQlKKBKI3g2fz9e6fdqqged4nNEiuxOpiun3xHXKm/zai1Tctuxch05bjmYnzdpjTcreZRzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114364; c=relaxed/simple;
-	bh=AB/7GxWOCpz9bTirJD+Q5Jpm4AmaCPOUooL7jApvJ9I=;
+	s=arc-20240116; t=1744114367; c=relaxed/simple;
+	bh=4xpjbKjUJu/+N8KkjUmpsgy6PkZT3y4oNrm16vQVTK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l2vZ84+HFJbopIddorRvq3LTK1155j8J5D15yKDih6zSwq8XHCyLKLuxX7Bq3bj6x3u9sc2QfsNIvE76NUbKKXPkJpaKEVYNv9kxz5Oo/tVD9QmyWqXJ5ClDCqWATHhZKwnwI2kVZgeInS08a4Muj9CcnBESREDQdX08PgBntJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDbrsmW9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DtnWV8cn70Z9RZdPaYmvafNW/QBq7/XH5wEyzDsW1iVfwAyPipY4bjvWgyRKMF4kFBd0RqEQZYGk4G+6zkpadpjtKwMlKXpX0DKzPYGRkwObMHSqS5Rg/jEPb9mcWMmSnJxPJK2dy3Pu+byc9dJ7kHwY6QSAWU0ldMyLckQQmEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHZNyhXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDbrsmW9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4E6C4CEE5;
-	Tue,  8 Apr 2025 12:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHZNyhXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D534C4CEE5;
+	Tue,  8 Apr 2025 12:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114364;
-	bh=AB/7GxWOCpz9bTirJD+Q5Jpm4AmaCPOUooL7jApvJ9I=;
+	s=korg; t=1744114367;
+	bh=4xpjbKjUJu/+N8KkjUmpsgy6PkZT3y4oNrm16vQVTK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDbrsmW98K+0qLGPxjhXH7J8ZOA0lnpJv5OgLTLiAjocTqUBLalbmHPqvAUCwC99G
-	 Pdzb+rdVEd6OMeba8bufCAqmX0skxdB5/rTdqBbOGmn29nQz001kqUirP+xYstQK6C
-	 urXOBbOM4c1FQnSW6W0+XrgUHN6fBRy5eWGOT3PA=
+	b=AHZNyhXq0rmucqFZlT1QYxjtu/1AsB8bhmzGO0o/mT9gEXwxbPnFeQgfylXhQEtZP
+	 8OCuoU2inwrpdxDgXou1C+4cRnXXBobjZu9H3UuE4Ke26HF0vbcgxSjfHzsKWlDBR4
+	 x3JjoEt9VmjKKMTRB9+Lq4iqVlvDnWRMWxUis/d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Stodden <dns@arista.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Marek Vasut <marex@denx.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 078/499] PCI/ASPM: Fix link state exit during switch upstream function removal
-Date: Tue,  8 Apr 2025 12:44:50 +0200
-Message-ID: <20250408104853.172231203@linuxfoundation.org>
+Subject: [PATCH 6.13 043/499] regulator: pca9450: Fix enable register for LDO5
+Date: Tue,  8 Apr 2025 12:44:15 +0200
+Message-ID: <20250408104852.319353819@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -46,86 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Stodden <daniel.stodden@gmail.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit cbf937dcadfd571a434f8074d057b32cd14fbea5 ]
+[ Upstream commit f5aab0438ef17f01c5ecd25e61ae6a03f82a4586 ]
 
-Before 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to
-avoid use-after-free"), we would free the ASPM link only after the last
-function on the bus pertaining to the given link was removed.
+The LDO5 regulator has two configuration registers, but only
+LDO5CTRL_L contains the bits for enabling/disabling the regulator.
 
-That was too late. If function 0 is removed before sibling function,
-link->downstream would point to free'd memory after.
-
-After above change, we freed the ASPM parent link state upon any function
-removal on the bus pertaining to a given link.
-
-That is too early. If the link is to a PCIe switch with MFD on the upstream
-port, then removing functions other than 0 first would free a link which
-still remains parent_link to the remaining downstream ports.
-
-The resulting GPFs are especially frequent during hot-unplug, because
-pciehp removes devices on the link bus in reverse order.
-
-On that switch, function 0 is the virtual P2P bridge to the internal bus.
-Free exactly when function 0 is removed -- before the parent link is
-obsolete, but after all subordinate links are gone.
-
-Link: https://lore.kernel.org/r/e12898835f25234561c9d7de4435590d957b85d9.1734924854.git.dns@arista.com
-Fixes: 456d8aa37d0f ("PCI/ASPM: Disable ASPM on MFD function removal to avoid use-after-free")
-Signed-off-by: Daniel Stodden <dns@arista.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Link: https://patch.msgid.link/20241218152842.97483-6-frieder@fris.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/regulator/pca9450-regulator.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 28567d457613b..042ade95ff812 100644
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1250,16 +1250,16 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 	parent_link = link->parent;
- 
- 	/*
--	 * link->downstream is a pointer to the pci_dev of function 0.  If
--	 * we remove that function, the pci_dev is about to be deallocated,
--	 * so we can't use link->downstream again.  Free the link state to
--	 * avoid this.
-+	 * Free the parent link state, no later than function 0 (i.e.
-+	 * link->downstream) being removed.
- 	 *
--	 * If we're removing a non-0 function, it's possible we could
--	 * retain the link state, but PCIe r6.0, sec 7.5.3.7, recommends
--	 * programming the same ASPM Control value for all functions of
--	 * multi-function devices, so disable ASPM for all of them.
-+	 * Do not free the link state any earlier. If function 0 is a
-+	 * switch upstream port, this link state is parent_link to all
-+	 * subordinate ones.
- 	 */
-+	if (pdev != link->downstream)
-+		goto out;
-+
- 	pcie_config_aspm_link(link, 0);
- 	list_del(&link->sibling);
- 	free_link_state(link);
-@@ -1270,6 +1270,7 @@ void pcie_aspm_exit_link_state(struct pci_dev *pdev)
- 		pcie_config_aspm_path(parent_link);
- 	}
- 
-+ out:
- 	mutex_unlock(&aspm_lock);
- 	up_read(&pci_bus_sem);
- }
+diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
+index 9714afe347dcc..1ffa145319f23 100644
+--- a/drivers/regulator/pca9450-regulator.c
++++ b/drivers/regulator/pca9450-regulator.c
+@@ -454,7 +454,7 @@ static const struct pca9450_regulator_desc pca9450a_regulators[] = {
+ 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
+ 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
+ 			.vsel_mask = LDO5HOUT_MASK,
+-			.enable_reg = PCA9450_REG_LDO5CTRL_H,
++			.enable_reg = PCA9450_REG_LDO5CTRL_L,
+ 			.enable_mask = LDO5H_EN_MASK,
+ 			.owner = THIS_MODULE,
+ 		},
+@@ -663,7 +663,7 @@ static const struct pca9450_regulator_desc pca9450bc_regulators[] = {
+ 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
+ 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
+ 			.vsel_mask = LDO5HOUT_MASK,
+-			.enable_reg = PCA9450_REG_LDO5CTRL_H,
++			.enable_reg = PCA9450_REG_LDO5CTRL_L,
+ 			.enable_mask = LDO5H_EN_MASK,
+ 			.owner = THIS_MODULE,
+ 		},
+@@ -835,7 +835,7 @@ static const struct pca9450_regulator_desc pca9451a_regulators[] = {
+ 			.n_linear_ranges = ARRAY_SIZE(pca9450_ldo5_volts),
+ 			.vsel_reg = PCA9450_REG_LDO5CTRL_H,
+ 			.vsel_mask = LDO5HOUT_MASK,
+-			.enable_reg = PCA9450_REG_LDO5CTRL_H,
++			.enable_reg = PCA9450_REG_LDO5CTRL_L,
+ 			.enable_mask = LDO5H_EN_MASK,
+ 			.owner = THIS_MODULE,
+ 		},
 -- 
 2.39.5
 
