@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AFE269825;
-	Tue,  8 Apr 2025 12:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FCA26461E;
+	Tue,  8 Apr 2025 12:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115824; cv=none; b=kbGkgPuQP6OwOCFFui1B2Kj36WGwQWpzd2mOZR/Deq08cQFUSWC2uZHyUIbujm2rjUOCG9Zg54SF0urHh+UCnHRq9/JFUtnrA45mL41gY6HBP16eIRFujg2dan4uUB83zzef2AoMq40iqocK/shYTVm6LtIccOdnlMLMfi9yzCM=
+	t=1744115827; cv=none; b=I9gPXPDqx2134DKaJmRKBegU2I4QinOEtzDpFbTt53HiPRScsobO40UezTjSVJhMIwjAhw104UTiW8JXku+6WwFPMy9tGK2gTvqxiV604PSemaJlKOXYkUQVeVrbRgUNSpJttgdwNGswS9VGjU3Qvh6Lnwy0eTPJMrpFEW5/ndc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115824; c=relaxed/simple;
-	bh=j3l7GjF5+AC53AVSqSq3k5mYvhorOofz2VjR51G5ORU=;
+	s=arc-20240116; t=1744115827; c=relaxed/simple;
+	bh=Ssh/P4AbuKfleL/KmjcNifZk+NE5PIUBQgdH8Xv3kpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSkensmyct9hTPRfjj1tx15IkIFGgfFiJxDg5cyH8/ohD83J8pOf8HwnvBmkc4KyR0mo7LXSmc7oIvXnC2df0L+xe65GbNbR/JqCQDNBPtMV9FYDy/Kk9ZIACUtRHGCQFtmxeFHZYb3sxzE1lla9mY41etwv8JQyJgzJ7I0Pwxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYBI/Qei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SH6iImx/yq64dLzYRPeucRJsSb6Jna1+kjcmHSDPzzjLn+0sbAeGwdJzpOoPYedDT5VHypKi7yxaMXv0lc/jfWUMZO4La+JaAigaQIwyEUMCkL/gh83vGRz75E/fHap7X2bq8f9+Vbr2znhpIkGkuKelXyGqu3S2h9jFY2EtduY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSbt4BM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYBI/Qei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD632C4CEE5;
-	Tue,  8 Apr 2025 12:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSbt4BM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779E9C4CEE5;
+	Tue,  8 Apr 2025 12:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115824;
-	bh=j3l7GjF5+AC53AVSqSq3k5mYvhorOofz2VjR51G5ORU=;
+	s=korg; t=1744115826;
+	bh=Ssh/P4AbuKfleL/KmjcNifZk+NE5PIUBQgdH8Xv3kpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYBI/QeiphO/R2jAiPrj+7iKOzXlY+CcnzOtSVGsqO4B8UsRiuodh5IktgrnbEKsO
-	 3AeTJ0Dq6X/V3D4m1c06U55p4bW3T9Zk0UP62deRaUb1IZRY/apW0z6b4RxieE1/Si
-	 x+1YWRZp/v2k0sCpPBMyG/e21rAqEUJ0m1Eq+nR0=
+	b=iSbt4BM6fQCWpiaYmEZg/Hr7uBHfFsjEQbROAbj4CLtg0SNs6Zs33Z8wsv28nt+JJ
+	 mYYvdg2HCeb2o+EdcvuYHYE2d8x2WfdjqlC2BZwo1Tol1muoK8mBxnufOPyO/SIFaH
+	 DljoQHJN6Nvdzlh4g4t8elnlEUvTDCtVYB4WvPXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/204] power: supply: max77693: Fix wrong conversion of charge input threshold value
-Date: Tue,  8 Apr 2025 12:50:08 +0200
-Message-ID: <20250408104822.650815956@linuxfoundation.org>
+Subject: [PATCH 6.1 079/204] crypto: nx - Fix uninitialised hv_nxc on error
+Date: Tue,  8 Apr 2025 12:50:09 +0200
+Message-ID: <20250408104822.681145381@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,43 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 30cc7b0d0e9341d419eb7da15fb5c22406dbe499 ]
+[ Upstream commit 9b00eb923f3e60ca76cbc8b31123716f3a87ac6a ]
 
-The charge input threshold voltage register on the MAX77693 PMIC accepts
-four values: 0x0 for 4.3v, 0x1 for 4.7v, 0x2 for 4.8v and 0x3 for 4.9v.
-Due to an oversight, the driver calculated the values for 4.7v and above
-starting from 0x0, rather than from 0x1 ([(4700000 - 4700000) / 100000]
-gives 0).
+The compiler correctly warns that hv_nxc may be used uninitialised
+as that will occur when NX-GZIP is unavailable.
 
-Add 1 to the calculation to ensure that 4.7v is converted to a register
-value of 0x1 and that the other two voltages are converted correctly as
-well.
+Fix it by rearranging the code and delay setting caps_feat until
+the final query succeeds.
 
-Fixes: 87c2d9067893 ("power: max77693: Add charger driver for Maxim 77693")
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250316-max77693-charger-input-threshold-fix-v1-1-2b037d0ac722@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: b4ba22114c78 ("crypto/nx: Get NX capabilities for GZIP coprocessor type")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max77693_charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/nx/nx-common-pseries.c | 37 ++++++++++++---------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/power/supply/max77693_charger.c b/drivers/power/supply/max77693_charger.c
-index a2c5c9858639f..ef3482fa4023e 100644
---- a/drivers/power/supply/max77693_charger.c
-+++ b/drivers/power/supply/max77693_charger.c
-@@ -556,7 +556,7 @@ static int max77693_set_charge_input_threshold_volt(struct max77693_charger *chg
- 	case 4700000:
- 	case 4800000:
- 	case 4900000:
--		data = (uvolt - 4700000) / 100000;
-+		data = ((uvolt - 4700000) / 100000) + 1;
- 		break;
- 	default:
- 		dev_err(chg->dev, "Wrong value for charge input voltage regulation threshold\n");
+diff --git a/drivers/crypto/nx/nx-common-pseries.c b/drivers/crypto/nx/nx-common-pseries.c
+index 3ea334b7f820c..1b0308ce7ce76 100644
+--- a/drivers/crypto/nx/nx-common-pseries.c
++++ b/drivers/crypto/nx/nx-common-pseries.c
+@@ -1142,6 +1142,7 @@ static void __init nxcop_get_capabilities(void)
+ {
+ 	struct hv_vas_all_caps *hv_caps;
+ 	struct hv_nx_cop_caps *hv_nxc;
++	u64 feat;
+ 	int rc;
+ 
+ 	hv_caps = kmalloc(sizeof(*hv_caps), GFP_KERNEL);
+@@ -1152,27 +1153,26 @@ static void __init nxcop_get_capabilities(void)
+ 	 */
+ 	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES, 0,
+ 					  (u64)virt_to_phys(hv_caps));
++	if (!rc)
++		feat = be64_to_cpu(hv_caps->feat_type);
++	kfree(hv_caps);
+ 	if (rc)
+-		goto out;
++		return;
++	if (!(feat & VAS_NX_GZIP_FEAT_BIT))
++		return;
+ 
+-	caps_feat = be64_to_cpu(hv_caps->feat_type);
+ 	/*
+ 	 * NX-GZIP feature available
+ 	 */
+-	if (caps_feat & VAS_NX_GZIP_FEAT_BIT) {
+-		hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
+-		if (!hv_nxc)
+-			goto out;
+-		/*
+-		 * Get capabilities for NX-GZIP feature
+-		 */
+-		rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
+-						  VAS_NX_GZIP_FEAT,
+-						  (u64)virt_to_phys(hv_nxc));
+-	} else {
+-		pr_err("NX-GZIP feature is not available\n");
+-		rc = -EINVAL;
+-	}
++	hv_nxc = kmalloc(sizeof(*hv_nxc), GFP_KERNEL);
++	if (!hv_nxc)
++		return;
++	/*
++	 * Get capabilities for NX-GZIP feature
++	 */
++	rc = h_query_vas_capabilities(H_QUERY_NX_CAPABILITIES,
++					  VAS_NX_GZIP_FEAT,
++					  (u64)virt_to_phys(hv_nxc));
+ 
+ 	if (!rc) {
+ 		nx_cop_caps.descriptor = be64_to_cpu(hv_nxc->descriptor);
+@@ -1182,13 +1182,10 @@ static void __init nxcop_get_capabilities(void)
+ 				be64_to_cpu(hv_nxc->min_compress_len);
+ 		nx_cop_caps.min_decompress_len =
+ 				be64_to_cpu(hv_nxc->min_decompress_len);
+-	} else {
+-		caps_feat = 0;
++		caps_feat = feat;
+ 	}
+ 
+ 	kfree(hv_nxc);
+-out:
+-	kfree(hv_caps);
+ }
+ 
+ static const struct vio_device_id nx842_vio_driver_ids[] = {
 -- 
 2.39.5
 
