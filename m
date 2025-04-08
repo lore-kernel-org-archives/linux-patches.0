@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC32267F4F;
-	Tue,  8 Apr 2025 11:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1EB267F4F;
+	Tue,  8 Apr 2025 11:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111879; cv=none; b=fesZnougahh6jKxsYPTZEm1np4Hv6+BwXPAx61veMDuGwACyHV1ISV6rl+jEg9UyHYgQ7Iv9ojMj01FmF/PsI0eEL5rKWyOXASYtbURNAPwk++o96GoRFHBzJKEY2QGqXQwaJHYV3sISEYwmLYVxeosDObGOjsFAhrT2/jIj+Ww=
+	t=1744111881; cv=none; b=ddpqo73jZciWyUvcB0NmgMnM1MdwmLxxTIk+ETzfumdUtRyQ2ymg0vKdAT1FTWuCI9aZ9lTQW2TjzR6HhVrNg9YV9XYxmRsv8aNf9kxp19y30MbSLqiF+A7Ru/hKQoeJg90L0eMSjCsYJOzVjvmSa7I5MAex2JCwStUUHtPbx4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111879; c=relaxed/simple;
-	bh=tOQDrMJABZnEoYeNCGhPB0HWx76PKhPJX0yltLpgDow=;
+	s=arc-20240116; t=1744111881; c=relaxed/simple;
+	bh=6KNz8It4SKT+DGSkHuemlZoHac6AnXCjlIzeN4Wo5kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hPqrBSg32knLuc3M7+ku0loDOli0vLKEmpGmXJmmkiBTPyhEiDIk2DXH5P4cfp73PlAoOgeRzr0NrgOQAH/v2aVVVHo2O8rRSfNldWYQ22sip72IgGRHybvwwMN6+LxO4D7A5zBRxLX6rjIDzFl0wtz9V4aO3D6+tQGhTYMPs68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sciEBaMb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U8//wLnZGwibkwQaiXL30Lhy+anhMOcyD3TJ/1eNXdjiNhn2jTNhDU8SPoe7EcU+ENeSNqm4H3SxvD04oRfTX2q7neR6gqpmIjrKly8bBmZf1Bxw25S4GAdrwlGM9Ipkb3EQ0fcORsJRZNwPhkvjphTyZvDXrLqxTm0pYYeDf2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDg14BQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sciEBaMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5212EC4CEE5;
-	Tue,  8 Apr 2025 11:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDg14BQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B3BC4CEE5;
+	Tue,  8 Apr 2025 11:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111878;
-	bh=tOQDrMJABZnEoYeNCGhPB0HWx76PKhPJX0yltLpgDow=;
+	s=korg; t=1744111881;
+	bh=6KNz8It4SKT+DGSkHuemlZoHac6AnXCjlIzeN4Wo5kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sciEBaMbB3wUqzCjozR44vtyap1KQMfwvs+fdS0MukrZoMedR5ITaxZYDasNIP6TL
-	 g4ADYVkA188ErzBU9KaJR4t6eavUdlnSgeQ2GHHzZzuq8TZ6W/y6bpRku6cacILTen
-	 lwv+SDRqrBDONSfN5L0b3EgmMq07PFicHd6lwnGI=
+	b=GDg14BQ2h4e+sEY1s+2nRoLfOtn1tQu1Jk3foAZ7QnWDx0vEXfEFGO5n2C3ceiJBP
+	 zkH9PoYo6T+VWkKoQUBC7KLFzKkTW/rclZ8lGEuaAapIA38APLJ4jw5nruJ2+WY5II
+	 ivlu2W6NxLRu1Wy3/hVQJPgfa++RR/tGgOkkLyYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 591/731] riscv: Change check_unaligned_access_speed_all_cpus to void
-Date: Tue,  8 Apr 2025 12:48:08 +0200
-Message-ID: <20250408104928.021306701@linuxfoundation.org>
+Subject: [PATCH 6.14 554/731] exfat: fix missing shutdown check
+Date: Tue,  8 Apr 2025 12:47:31 +0200
+Message-ID: <20250408104927.163340847@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -46,91 +45,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 813d39baee3229d31420af61460b97f4fafdd352 ]
+[ Upstream commit 47e35366bc6fa3cf189a8305bce63992495f3efa ]
 
-The return value of check_unaligned_access_speed_all_cpus() is always
-zero, so make the function void so we don't need to concern ourselves
-with it. The change also allows us to tidy up
-check_unaligned_access_all_cpus() a bit.
+xfstests generic/730 test failed because after deleting the device
+that still had dirty data, the file could still be read without
+returning an error. The reason is the missing shutdown check in
+->read_iter.
 
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250304120014.143628-14-ajones@ventanamicro.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Stable-dep-of: 05ee21f0fcb8 ("riscv: Fix set up of cpu hotplug callbacks")
+I also noticed that shutdown checks were missing from ->write_iter,
+->splice_read, and ->mmap. This commit adds shutdown checks to all
+of them.
+
+Fixes: f761fcdd289d ("exfat: Implement sops->shutdown and ioctl")
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/unaligned_access_speed.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ fs/exfat/file.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/unaligned_access_speed.c b/arch/riscv/kernel/unaligned_access_speed.c
-index 78ab4cb2ab050..bca798153e37d 100644
---- a/arch/riscv/kernel/unaligned_access_speed.c
-+++ b/arch/riscv/kernel/unaligned_access_speed.c
-@@ -218,7 +218,7 @@ static int riscv_offline_cpu(unsigned int cpu)
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 807349d8ea050..841a5b18e3dfd 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -582,6 +582,9 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	loff_t pos = iocb->ki_pos;
+ 	loff_t valid_size;
+ 
++	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
+ 	inode_lock(inode);
+ 
+ 	valid_size = ei->valid_size;
+@@ -635,6 +638,16 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	return ret;
  }
  
- /* Measure unaligned access speed on all CPUs present at boot in parallel. */
--static int __init check_unaligned_access_speed_all_cpus(void)
-+static void __init check_unaligned_access_speed_all_cpus(void)
++static ssize_t exfat_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
++	return generic_file_read_iter(iocb, iter);
++}
++
+ static vm_fault_t exfat_page_mkwrite(struct vm_fault *vmf)
  {
- 	unsigned int cpu;
- 	unsigned int cpu_count = num_possible_cpus();
-@@ -226,7 +226,7 @@ static int __init check_unaligned_access_speed_all_cpus(void)
+ 	int err;
+@@ -672,14 +685,26 @@ static const struct vm_operations_struct exfat_file_vm_ops = {
  
- 	if (!bufs) {
- 		pr_warn("Allocation failure, not measuring misaligned performance\n");
--		return 0;
-+		return;
- 	}
- 
- 	/*
-@@ -261,12 +261,10 @@ static int __init check_unaligned_access_speed_all_cpus(void)
- 	}
- 
- 	kfree(bufs);
--	return 0;
- }
- #else /* CONFIG_RISCV_PROBE_UNALIGNED_ACCESS */
--static int __init check_unaligned_access_speed_all_cpus(void)
-+static void __init check_unaligned_access_speed_all_cpus(void)
+ static int exfat_file_mmap(struct file *file, struct vm_area_struct *vma)
  {
--	return 0;
- }
- #endif
- 
-@@ -406,10 +404,10 @@ static int __init vec_check_unaligned_access_speed_all_cpus(void *unused __alway
- 
- static int __init check_unaligned_access_all_cpus(void)
- {
--	bool all_cpus_emulated;
- 	int cpu;
- 
--	all_cpus_emulated = check_unaligned_access_emulated_all_cpus();
-+	if (!check_unaligned_access_emulated_all_cpus())
-+		check_unaligned_access_speed_all_cpus();
- 
- 	if (!has_vector()) {
- 		for_each_online_cpu(cpu)
-@@ -420,9 +418,6 @@ static int __init check_unaligned_access_all_cpus(void)
- 			    NULL, "vec_check_unaligned_access_speed_all_cpus");
- 	}
- 
--	if (!all_cpus_emulated)
--		return check_unaligned_access_speed_all_cpus();
--
++	if (unlikely(exfat_forced_shutdown(file_inode(file)->i_sb)))
++		return -EIO;
++
+ 	file_accessed(file);
+ 	vma->vm_ops = &exfat_file_vm_ops;
  	return 0;
  }
+ 
++static ssize_t exfat_splice_read(struct file *in, loff_t *ppos,
++		struct pipe_inode_info *pipe, size_t len, unsigned int flags)
++{
++	if (unlikely(exfat_forced_shutdown(file_inode(in)->i_sb)))
++		return -EIO;
++
++	return filemap_splice_read(in, ppos, pipe, len, flags);
++}
++
+ const struct file_operations exfat_file_operations = {
+ 	.llseek		= generic_file_llseek,
+-	.read_iter	= generic_file_read_iter,
++	.read_iter	= exfat_file_read_iter,
+ 	.write_iter	= exfat_file_write_iter,
+ 	.unlocked_ioctl = exfat_ioctl,
+ #ifdef CONFIG_COMPAT
+@@ -687,7 +712,7 @@ const struct file_operations exfat_file_operations = {
+ #endif
+ 	.mmap		= exfat_file_mmap,
+ 	.fsync		= exfat_file_fsync,
+-	.splice_read	= filemap_splice_read,
++	.splice_read	= exfat_splice_read,
+ 	.splice_write	= iter_file_splice_write,
+ };
  
 -- 
 2.39.5
