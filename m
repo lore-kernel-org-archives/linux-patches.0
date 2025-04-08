@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C88269801;
-	Tue,  8 Apr 2025 12:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D27926F462;
+	Tue,  8 Apr 2025 12:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115954; cv=none; b=allhN8eCqYzUsS2pcJARvqToHsZyVQxWECM0+UVrZICZAWG0pSvzPJoojm2DTnkYkaVd1lwLe0d0BCv4FwAZUzkqsUeCLl4AfUXvVQ7jVkWGKrCrq9fsxSd0qQWPr6leWPwgHKH3N5fHkEkb5v8KX4IuHnkn6A1M8nNRYcupUx8=
+	t=1744115957; cv=none; b=R+TaxruVjYhdr4Zt+pYCOjzNycqM4JnELB2FhJt/ck0huM6xEjzk9DksacIFj3k+ZpKGKIjunkeZBUvW1CfHrnwNCTEPb0ZjHnQ/qRbzgI/ai5bQf2TUugXlaqYBC1kHM3lg5xXDUb7ieb+kSRHbQcl9kBiHGxIdXe25HwOziJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115954; c=relaxed/simple;
-	bh=z0fRtq7N34jHKLyWikfX+T3R8RnT6Lq+4QmKbQz/hvE=;
+	s=arc-20240116; t=1744115957; c=relaxed/simple;
+	bh=ySRgWHIr3sxVjIO3q0OAU6JxP3/FgheSgnsm4TyN3DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuDIZY8Xp1kXOkq8SQbBf0mclRIQhCZL/ASHg3jYZj7+wGyGDjrxBeBhkjLS6rYJbl89F1Ua1HQRYQAPb85EkTSEyls13yxtUHjMLOAfa3BVwgT5lLQNA7ThfKydPq12CjKSo286hRKGm+t7DAC7kPqCGvFSbAKSCmXfcRZMXHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XArFSlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1Edtxd345Vqin5bAS+TN25ERh1AQ/OiWsEerFvR1aIBF2NjmhuKJpr5df6Fm+6GoaiPxMwSkPWWeRz8NRXHrrmfZZ68Zp1pnnUJuKbOxJsV8ZhZJlG6OUSk3bnn5GMJPYbp63+p+kIH0hw7cPsjrH+BOwW2Zu/4Ssq2bN20Xtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzSjz1XD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XArFSlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303A4C4CEE5;
-	Tue,  8 Apr 2025 12:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzSjz1XD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AF2C4CEE5;
+	Tue,  8 Apr 2025 12:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115954;
-	bh=z0fRtq7N34jHKLyWikfX+T3R8RnT6Lq+4QmKbQz/hvE=;
+	s=korg; t=1744115957;
+	bh=ySRgWHIr3sxVjIO3q0OAU6JxP3/FgheSgnsm4TyN3DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XArFSlcNGuYFPMs4AqyJjgTp2jxDRr1TdTVxSaGE9n+rPzRWm4aolDFi5Xgsgli3
-	 2p4p/dYDTPDAwLBcj/WeliJ2MHY0bZEQJOa5yzAB9Ewm2MmtebwYmtFdJO/LdocX3w
-	 WAsTETRvg6gi7zwNBHbMEDyu8H9Z+eLdTpphrxAM=
+	b=vzSjz1XD2M4TDUBWN/vAX7EloZyFq5k5qwi6DZ6SylkXCNpa46WI9wGZvZxAZeWEl
+	 Q4jbCTUwlz70St9uzyeFxCT0cgvaopuVczRvgKuKAIjN3wQQzlthiUpiirfas0QbSN
+	 fXaVl392E6GXHwNlpJhIm5eRIqFOaMEsPC2Xga9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/204] ipv6: Do not consider link down nexthops in path selection
-Date: Tue,  8 Apr 2025 12:51:37 +0200
-Message-ID: <20250408104825.222975693@linuxfoundation.org>
+Subject: [PATCH 6.1 168/204] arcnet: Add NULL check in com20020pci_probe()
+Date: Tue,  8 Apr 2025 12:51:38 +0200
+Message-ID: <20250408104825.252451825@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -52,62 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 8b8e0dd357165e0258d9f9cdab5366720ed2f619 ]
+[ Upstream commit fda8c491db2a90ff3e6fbbae58e495b4ddddeca3 ]
 
-Nexthops whose link is down are not supposed to be considered during
-path selection when the "ignore_routes_with_linkdown" sysctl is set.
-This is done by assigning them a negative region boundary.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+com20020pci_probe() does not check for this case, which results in a
+NULL pointer dereference.
 
-However, when comparing the computed hash (unsigned) with the region
-boundary (signed), the negative region boundary is treated as unsigned,
-resulting in incorrect nexthop selection.
+Add NULL check after devm_kasprintf() to prevent this issue and ensure
+no resources are left allocated.
 
-Fix by treating the computed hash as signed. Note that the computed hash
-is always in range of [0, 2^31 - 1].
-
-Fixes: 3d709f69a3e7 ("ipv6: Use hash-threshold instead of modulo-N")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250402114224.293392-3-idosch@nvidia.com
+Fixes: 6b17a597fc2f ("arcnet: restoring support for multiple Sohard Arcnet cards")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20250402135036.44697-1-bsdhenrymartin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/arcnet/com20020-pci.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 2cfef1c971093..d6de164720a05 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -446,6 +446,7 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- {
- 	struct fib6_info *first, *match = res->f6i;
- 	struct fib6_info *sibling;
-+	int hash;
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index 7b5c8bb02f119..e7db6a4e4dc9d 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -250,18 +250,33 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 			card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-tx",
+ 							dev->dev_id, i);
++			if (!card->tx_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:green:tx:%d-%d",
+ 							dev->dev_id, i);
+-
++			if (!card->tx_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->tx_led.dev = &dev->dev;
+ 			card->recon_led.brightness_set = led_recon_set;
+ 			card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
+ 							GFP_KERNEL, "arc%d-%d-recon",
+ 							dev->dev_id, i);
++			if (!card->recon_led.default_trigger) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"pci:red:recon:%d-%d",
+ 							dev->dev_id, i);
++			if (!card->recon_led.name) {
++				ret = -ENOMEM;
++				goto err_free_arcdev;
++			}
+ 			card->recon_led.dev = &dev->dev;
  
- 	if (!match->nh && (!match->fib6_nsiblings || have_oif_match))
- 		goto out;
-@@ -472,7 +473,8 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 	if (!first)
- 		goto out;
- 
--	if (fl6->mp_hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
-+	hash = fl6->mp_hash;
-+	if (hash <= atomic_read(&first->fib6_nh->fib_nh_upper_bound) &&
- 	    rt6_score_route(first->fib6_nh, first->fib6_flags, oif,
- 			    strict) >= 0) {
- 		match = first;
-@@ -485,7 +487,7 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 		int nh_upper_bound;
- 
- 		nh_upper_bound = atomic_read(&nh->fib_nh_upper_bound);
--		if (fl6->mp_hash > nh_upper_bound)
-+		if (hash > nh_upper_bound)
- 			continue;
- 		if (rt6_score_route(nh, sibling->fib6_flags, oif, strict) < 0)
- 			break;
+ 			ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
 -- 
 2.39.5
 
