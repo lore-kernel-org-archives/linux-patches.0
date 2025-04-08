@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6B22063FD;
-	Tue,  8 Apr 2025 12:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A887B269D15;
+	Tue,  8 Apr 2025 12:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744115731; cv=none; b=seyvAumUhpSwbG/8CwBuNxQ5zrRWKIejoiIzr9QtpmWxHUGzDYwugYyuWzxKZosqs6GfGmYfdadJxqJiZhUFmHCa4woMOR4LdT91U6a9dtV60XyIzk9JtiqIC8jrgDldirh+x044N8P20LmTM6bj4VADi4jSOYOd9EoWghhtAik=
+	t=1744115733; cv=none; b=V1cIq5a6JeLaTemc+7EPNsNrKlxIcQOiE2mF+Z2h/xHHy4TvI150n6d4p2UkWnMXUxY7oMp7hYIxD8bRTVkoOvDciylY69tdL176gE2J3iGSEnTLq0PRJ13a7GtwbNoR1I4bnV658qLgwkPRiST3YSZq62XFusHtLzV4hbKZM/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744115731; c=relaxed/simple;
-	bh=7wvbVQFvsqUUIKym0niK9B0p7SbDhssgx3qNzxd7IIg=;
+	s=arc-20240116; t=1744115733; c=relaxed/simple;
+	bh=rlTTTY02Ig6LLu6+Lsgpwgu6DvUzcRcq+3kn010W1XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kykCzZ/ecfEnvcPjEpMHubfkov1dsq9LZ8sihg+nDUj5bOjWtj1gnTxyy1G0PuP+Cyn9D0bBzQQ2NnLxspnAZj1ZFCiOy0GoN0IxkPhgjYxKIAZ29WCXIv6MVDtvuEouhQ0r6mjuVn1X+Hx13dRX24fxjUfkzpb4IDBWOXDL/sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lsv+oJLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oghmCF7BBZL0MMFuOTXAePJd5LGNK6Nxk8LfuUNGEp/Jqdk+5vI0imWR8oaecD2bAt7yE/qU/Rp6wpcAtLhNQ8ixhmYcdzbMV8tEdyYmw/WTmaEAtDmx459MHIhzmEZvznqJLJjrLva10atdUGZxXF5+mSlHRl49G2BzwS4/nZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDoQhtnW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lsv+oJLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D9CC4CEE5;
-	Tue,  8 Apr 2025 12:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDoQhtnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3335AC4CEEA;
+	Tue,  8 Apr 2025 12:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744115730;
-	bh=7wvbVQFvsqUUIKym0niK9B0p7SbDhssgx3qNzxd7IIg=;
+	s=korg; t=1744115733;
+	bh=rlTTTY02Ig6LLu6+Lsgpwgu6DvUzcRcq+3kn010W1XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lsv+oJLbfr03ELi4loJefvkPwdfnLGoexu1gi118XcG814C7vrXNoYbRgrcgVrk1x
-	 k+h52bVfCwEcnVwUx0LtuW5AKjkv8QzjKUaLnyVkabMCOKredaHVChL3Q7cJWXGRzM
-	 cmqvs9hOwy4bJ+1OpcCja4BwTVPe1T7LN100y9Zg=
+	b=LDoQhtnWDt5ZObBgnzeA2w5Ja6txT39Bo7Hzrzhv+b6tD7bA2yc6ULGaUMD7HJvKU
+	 3IIIC/eqWWKmujGmqtygV0x3KsVtnMNMT7iSNWvMLgHGXCzpboFVj+4tMStc4DC5uU
+	 KegeB7uqKxhAQ5G11d5hpHUO+UBoEr3r6g8hpHdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/204] crypto: hisilicon/sec2 - fix for aead auth key length
-Date: Tue,  8 Apr 2025 12:50:14 +0200
-Message-ID: <20250408104822.822104994@linuxfoundation.org>
+Subject: [PATCH 6.1 085/204] clk: qcom: mmcc-sdm660: fix stuck video_subcore0 clock
+Date: Tue,  8 Apr 2025 12:50:15 +0200
+Message-ID: <20250408104822.851905422@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.266892317@linuxfoundation.org>
 References: <20250408104820.266892317@linuxfoundation.org>
@@ -46,56 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit 1b284ffc30b02808a0de698667cbcf5ce5f9144e ]
+[ Upstream commit 000cbe3896c56bf5c625e286ff096533a6b27657 ]
 
-According to the HMAC RFC, the authentication key
-can be 0 bytes, and the hardware can handle this
-scenario. Therefore, remove the incorrect validation
-for this case.
+This clock can't be enable with VENUS_CORE0 GDSC turned off. But that
+GDSC is under HW control so it can be turned off at any moment.
+Instead of checking the dependent clock we can just vote for it to
+enable later when GDSC gets turned on.
 
-Fixes: 2f072d75d1ab ("crypto: hisilicon - Add aead support on SEC2")
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 5db3ae8b33de6 ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Link: https://lore.kernel.org/r/20250315-clock-fix-v1-1-2efdc4920dda@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/mmcc-sdm660.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 3de8715aad39d..292ab0ff2b07c 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -1094,11 +1094,6 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
- 	struct crypto_shash *hash_tfm = ctx->hash_tfm;
- 	int blocksize, digestsize, ret;
+diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
+index bc19a23e13f8a..4d187d6aba734 100644
+--- a/drivers/clk/qcom/mmcc-sdm660.c
++++ b/drivers/clk/qcom/mmcc-sdm660.c
+@@ -2544,7 +2544,7 @@ static struct clk_branch video_core_clk = {
  
--	if (!keys->authkeylen) {
--		pr_err("hisi_sec2: aead auth key error!\n");
--		return -EINVAL;
--	}
--
- 	blocksize = crypto_shash_blocksize(hash_tfm);
- 	digestsize = crypto_shash_digestsize(hash_tfm);
- 	if (keys->authkeylen > blocksize) {
-@@ -1110,7 +1105,8 @@ static int sec_aead_auth_set_key(struct sec_auth_ctx *ctx,
- 		}
- 		ctx->a_key_len = digestsize;
- 	} else {
--		memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
-+		if (keys->authkeylen)
-+			memcpy(ctx->a_key, keys->authkey, keys->authkeylen);
- 		ctx->a_key_len = keys->authkeylen;
- 	}
- 
+ static struct clk_branch video_subcore0_clk = {
+ 	.halt_reg = 0x1048,
+-	.halt_check = BRANCH_HALT,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x1048,
+ 		.enable_mask = BIT(0),
 -- 
 2.39.5
 
