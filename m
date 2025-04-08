@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99964268FED;
-	Tue,  8 Apr 2025 12:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BC2267F57;
+	Tue,  8 Apr 2025 12:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116286; cv=none; b=W6BmMJm/qFZzVPWdx4LOCvBgOn4OZiVrNJfWq+p8sdm8FdgHCevk/pxjVptvgEIUBTfMZq9lpAmDvl8R6OskeYYu6hg0fjffN70fqG8W88sid7MebGxqNc/cDsD4BB80Ryo1A1xNW/pnqJKWaV6XeiEdBaoUmi5hG6zvHZbkYbA=
+	t=1744116289; cv=none; b=e8Gyd8BwIGq3hnt/hpvS+ejdDb7SN6rH2E56OmY8FsWqZdnTIPQz2QcMRmDuXI8LSM7dw7ZmIvtoJrs+5qmnxzOxdZ1aYu65de6ItmZVGKFP1KywWWExjdGeXNWBn22Xm0oruD4GFPtu1HsDVm+e1oPeFun29CE0TDVsdsjcjio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116286; c=relaxed/simple;
-	bh=cL6ZZm2QEY7oN5d0eDT+VyaMlkuYExcAR+WYmxGSXXw=;
+	s=arc-20240116; t=1744116289; c=relaxed/simple;
+	bh=iEv6Qsaj2sMPJkTFkKHo8Tu5BnWf6F+HVS+KbODGX08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pem1pOM10VoJBIm5GQG9UNRAyzbOcKzd/Im3/SROItBsC8RHuKsMWG1nwBth43BbxhaCtOuIqyNqIoqQ0+PHTpvMFv6nC3FheKyfNY/AmUzWSeJhECSFQY6Wbss5x3KlJZbl4LlAVQfzVSEFoGU42YFxQ1is0e+elbH6kUj6ZIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skOTmB99; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HO9RiWmQb26yFG6KO6NQr1WFi+odJ48LKaIuLtbGWUAiL4ETcb/WGGMAf1dCUY67gXjJnEJ02G0F8XcoV6t7dTIZ4URncl5XRR/jmLWt01ZDg0t1b+qWB+NqoM35Ct28HrJrQqHVC0w9VnpgIr0AjMRyvOIptMglRvz8BvPIDCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMcQfvZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skOTmB99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA6AC4CEE5;
-	Tue,  8 Apr 2025 12:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMcQfvZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D063CC4CEE5;
+	Tue,  8 Apr 2025 12:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116286;
-	bh=cL6ZZm2QEY7oN5d0eDT+VyaMlkuYExcAR+WYmxGSXXw=;
+	s=korg; t=1744116289;
+	bh=iEv6Qsaj2sMPJkTFkKHo8Tu5BnWf6F+HVS+KbODGX08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skOTmB99O3UcoczpwzvVyEeA+3YN6wr9r/bJU5OAWY5PdKtRbuTneWp2JB4aW2B5t
-	 jr3MHU6zby87s1VWwyHuJzZlQUS2eVlIGaRJ4f4BNoUvEHnf5ullxSFArjpMBdDoyc
-	 JufoVW2I7Ma0K2YiL/e04xFOVAfcswGLhVK5Njis=
+	b=KMcQfvZf8iRv2M4sgS3QOqHVceRmTOLlhsocRtlr745mGDjnYtuvRQlvon40fW/2U
+	 eZtfRPbpyhQRf4VJWRWI6LTfNJNeBBW0U37bINso8ruAVNqOKydXNLlKteY5LG6fP8
+	 KwEbsaAILlSEKnaI0t27XqmtyZzyBcfTTcSJzD5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Thippeswamy Havalige <thippeswamy.havalige@amd.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/423] PCI: Remove stray put_device() in pci_register_host_bridge()
-Date: Tue,  8 Apr 2025 12:46:49 +0200
-Message-ID: <20250408104847.676817791@linuxfoundation.org>
+Subject: [PATCH 6.12 084/423] PCI: xilinx-cpm: Fix IRQ domain leak in error path of probe
+Date: Tue,  8 Apr 2025 12:46:50 +0200
+Message-ID: <20250408104847.699159473@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -45,45 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
 
-[ Upstream commit 6e8d06e5096c80cbf41313b4a204f43071ca42be ]
+[ Upstream commit 57b0302240741e73fe51f88404b3866e0d2933ad ]
 
-This put_device() was accidentally left over from when we changed the code
-from using device_register() to calling device_add().  Delete it.
+The IRQ domain allocated for the PCIe controller is not freed if
+resource_list_first_type() returns NULL, leading to a resource leak.
 
-Link: https://lore.kernel.org/r/55b24870-89fb-4c91-b85d-744e35db53c2@stanley.mountain
-Fixes: 9885440b16b8 ("PCI: Fix pci_host_bridge struct device release/free handling")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+This fix ensures properly cleaning up the allocated IRQ domain in
+the error path.
+
+Fixes: 49e427e6bdd1 ("Merge branch 'pci/host-probe-refactor'")
+Signed-off-by: Thippeswamy Havalige <thippeswamy.havalige@amd.com>
+[kwilczynski: added missing Fixes: tag, refactored to use one of the goto labels]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Link: https://lore.kernel.org/r/20250224155025.782179-2-thippeswamy.havalige@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-xilinx-cpm.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index ebb0c1d5cae25..0e757b23a09f0 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -950,10 +950,9 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
- 	/* Temporarily move resources off the list */
- 	list_splice_init(&bridge->windows, &resources);
- 	err = device_add(&bridge->dev);
--	if (err) {
--		put_device(&bridge->dev);
-+	if (err)
- 		goto free;
--	}
-+
- 	bus->bridge = get_device(&bridge->dev);
- 	device_enable_async_suspend(bus->bridge);
- 	pci_set_bus_of_node(bus);
+diff --git a/drivers/pci/controller/pcie-xilinx-cpm.c b/drivers/pci/controller/pcie-xilinx-cpm.c
+index a0f5e1d67b04c..1594d9e9e637a 100644
+--- a/drivers/pci/controller/pcie-xilinx-cpm.c
++++ b/drivers/pci/controller/pcie-xilinx-cpm.c
+@@ -570,15 +570,17 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
+ 		return err;
+ 
+ 	bus = resource_list_first_type(&bridge->windows, IORESOURCE_BUS);
+-	if (!bus)
+-		return -ENODEV;
++	if (!bus) {
++		err = -ENODEV;
++		goto err_free_irq_domains;
++	}
+ 
+ 	port->variant = of_device_get_match_data(dev);
+ 
+ 	err = xilinx_cpm_pcie_parse_dt(port, bus->res);
+ 	if (err) {
+ 		dev_err(dev, "Parsing DT failed\n");
+-		goto err_parse_dt;
++		goto err_free_irq_domains;
+ 	}
+ 
+ 	xilinx_cpm_pcie_init_port(port);
+@@ -602,7 +604,7 @@ static int xilinx_cpm_pcie_probe(struct platform_device *pdev)
+ 	xilinx_cpm_free_interrupts(port);
+ err_setup_irq:
+ 	pci_ecam_free(port->cfg);
+-err_parse_dt:
++err_free_irq_domains:
+ 	xilinx_cpm_free_irq_domains(port);
+ 	return err;
+ }
 -- 
 2.39.5
 
