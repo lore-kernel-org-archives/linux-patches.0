@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0A8269801;
-	Tue,  8 Apr 2025 11:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135BB22257E;
+	Tue,  8 Apr 2025 11:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744113025; cv=none; b=JiB1kkccsa/AzMcLJlgUhC80ImSpkxe53o9WYNjssJjgdlCujj3dGAsGMUQPDqBLffMU5kImNRID0Wmseq9YmKaJwfVqimmD1OZQpDFM1vHZpSPFHBi2uwumHKlOENA/1Pt4Cgm0srDEiWfhIU7yUdB/ACZgNoXNvQAiEeBIRqA=
+	t=1744113028; cv=none; b=SbbsTy2GkLnm+2/EJhoCV4t9ccUj9GG37eLHbHXWXexCHvQMuCM2dAtgyARD+zvD25PU6mEByV6Afu+C92lz5LYj0uXd7FvBaF3zPNVC2Ogx16+QDIicWJY7q1An74jAGGHIMsPLwLwRDG2mDR7ABCCf+04Oc1sSKLatka2nl18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744113025; c=relaxed/simple;
-	bh=wYP4r/sJk1FJfqwgMDUUz9JwmkRfq0veD6CrooBddk4=;
+	s=arc-20240116; t=1744113028; c=relaxed/simple;
+	bh=gh2HeVGAPs6S5WUUJBY1nszSqJ6cscq9zBgMaxKgZ78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9Sf77yB9K9IDTL1crkDCgbnYHaxz6MxgAY05ZSnBoC+/u8wa6fez8RBbQ65EtRD5MstKCHTv6verMonjfiTv9PFADkifjVrwsTEoheXFL+rQYVrCJhpf/9TNxPKuHj+LzJYEZfMeJLEG4mpHY3UN8Woey5B0GQWo+qua5gi6xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joVABiZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PXfHew2iFRV85ZUDnR55ekRkbjJCpa0gskrNSJtJoqbIQjqXc3EgsUjF0EsxIEYk0TM94m/2hJhlYJimveTFxqDG5JMQTWGB0B5jBkkFEOUQMzqpg1/XF8Pfg6C284hiNtz59nrrmvU7Qq+Qb66RzZtZyQxYC5kwtRgbopsj4+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RurMBPFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joVABiZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEAAC4CEE5;
-	Tue,  8 Apr 2025 11:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RurMBPFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70102C4AF09;
+	Tue,  8 Apr 2025 11:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744113025;
-	bh=wYP4r/sJk1FJfqwgMDUUz9JwmkRfq0veD6CrooBddk4=;
+	s=korg; t=1744113028;
+	bh=gh2HeVGAPs6S5WUUJBY1nszSqJ6cscq9zBgMaxKgZ78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=joVABiZyUJTdSTzdGLa4SX5PsyS61gkV3tiD3NUsAclMYnG8bYwk/ZgER2sViOKZN
-	 J7H5OGs9vsKkHU4APIeUVV9jqvsU7Kx+0pfVks5wPnN7ZmECoifc0sswxOvIoT2ykn
-	 A7zBFfrDPdsfPMBDVuSmr6ubsA2cK8ir9RaNgjOw=
+	b=RurMBPFxgvqAQ62mPurZb6LKRvImTKhlLsJ42mmwr+QOZdZ0YAvw/spfmZbAi8Ix0
+	 vYjCnWjEYXI5Da+o/1hx70SRfg+q/nYExLdmMPklBy5RpRLwdlR6E6mv8P0+AtSu/R
+	 92mqH+QAGCfy2NRmsBwncdv3hhR1NHh+vwwGjkpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 257/279] drm/amd/pm: Fix negative array index read
-Date: Tue,  8 Apr 2025 12:50:40 +0200
-Message-ID: <20250408104833.317699872@linuxfoundation.org>
+	Fernando Fernandez Mancera <ffmancera@riseup.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 248/279] ipv6: fix omitted netlink attributes when using RTEXT_FILTER_SKIP_STATS
+Date: Tue,  8 Apr 2025 12:50:31 +0200
+Message-ID: <20250408104833.080281810@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -53,79 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Fernando Fernandez Mancera <ffmancera@riseup.net>
 
-commit c8c19ebf7c0b202a6a2d37a52ca112432723db5f upstream.
+[ Upstream commit 7ac6ea4a3e0898db76aecccd68fb2c403eb7d24e ]
 
-Avoid using the negative values
-for clk_idex as an index into an array pptable->DpmDescriptor.
+Using RTEXT_FILTER_SKIP_STATS is incorrectly skipping non-stats IPv6
+netlink attributes on link dump. This causes issues on userspace tools,
+e.g iproute2 is not rendering address generation mode as it should due
+to missing netlink attribute.
 
-V2: fix clk_index return check (Tim Huang)
+Move the filling of IFLA_INET6_STATS and IFLA_INET6_ICMP6STATS to a
+helper function guarded by a flag check to avoid hitting the same
+situation in the future.
 
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5566fd72ec1 ("rtnetlink: RTEXT_FILTER_SKIP_STATS support to avoid dumping inet/inet6 stats")
+Signed-off-by: Fernando Fernandez Mancera <ffmancera@riseup.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250402121751.3108-1-ffmancera@riseup.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ net/ipv6/addrconf.c | 37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -1231,19 +1231,22 @@ static int navi10_get_current_clk_freq_b
- 					   value);
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 932a10f64adcb..07b3487e3ae97 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -5689,6 +5689,27 @@ static void snmp6_fill_stats(u64 *stats, struct inet6_dev *idev, int attrtype,
+ 	}
  }
  
--static bool navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
-+static int navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
++static int inet6_fill_ifla6_stats_attrs(struct sk_buff *skb,
++					struct inet6_dev *idev)
++{
++	struct nlattr *nla;
++
++	nla = nla_reserve(skb, IFLA_INET6_STATS, IPSTATS_MIB_MAX * sizeof(u64));
++	if (!nla)
++		goto nla_put_failure;
++	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_STATS, nla_len(nla));
++
++	nla = nla_reserve(skb, IFLA_INET6_ICMP6STATS, ICMP6_MIB_MAX * sizeof(u64));
++	if (!nla)
++		goto nla_put_failure;
++	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_ICMP6STATS, nla_len(nla));
++
++	return 0;
++
++nla_put_failure:
++	return -EMSGSIZE;
++}
++
+ static int inet6_fill_ifla6_attrs(struct sk_buff *skb, struct inet6_dev *idev,
+ 				  u32 ext_filter_mask)
  {
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
- 	DpmDescriptor_t *dpm_desc = NULL;
--	uint32_t clk_index = 0;
-+	int clk_index = 0;
+@@ -5710,18 +5731,10 @@ static int inet6_fill_ifla6_attrs(struct sk_buff *skb, struct inet6_dev *idev,
  
- 	clk_index = smu_cmn_to_asic_specific_index(smu,
- 						   CMN2ASIC_MAPPING_CLK,
- 						   clk_type);
-+	if (clk_index < 0)
-+		return clk_index;
-+
- 	dpm_desc = &pptable->DpmDescriptor[clk_index];
+ 	/* XXX - MC not implemented */
  
- 	/* 0 - Fine grained DPM, 1 - Discrete DPM */
--	return dpm_desc->SnapToDiscrete == 0;
-+	return dpm_desc->SnapToDiscrete == 0 ? 1 : 0;
- }
+-	if (ext_filter_mask & RTEXT_FILTER_SKIP_STATS)
+-		return 0;
+-
+-	nla = nla_reserve(skb, IFLA_INET6_STATS, IPSTATS_MIB_MAX * sizeof(u64));
+-	if (!nla)
+-		goto nla_put_failure;
+-	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_STATS, nla_len(nla));
+-
+-	nla = nla_reserve(skb, IFLA_INET6_ICMP6STATS, ICMP6_MIB_MAX * sizeof(u64));
+-	if (!nla)
+-		goto nla_put_failure;
+-	snmp6_fill_stats(nla_data(nla), idev, IFLA_INET6_ICMP6STATS, nla_len(nla));
++	if (!(ext_filter_mask & RTEXT_FILTER_SKIP_STATS)) {
++		if (inet6_fill_ifla6_stats_attrs(skb, idev) < 0)
++			goto nla_put_failure;
++	}
  
- static inline bool navi10_od_feature_is_supported(struct smu_11_0_overdrive_table *od_table, enum SMU_11_0_ODFEATURE_CAP cap)
-@@ -1299,7 +1302,11 @@ static int navi10_print_clk_levels(struc
- 		if (ret)
- 			return size;
- 
--		if (!navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (!ret) {
- 			for (i = 0; i < count; i++) {
- 				ret = smu_v11_0_get_dpm_freq_by_index(smu, clk_type, i, &value);
- 				if (ret)
-@@ -1468,7 +1475,11 @@ static int navi10_force_clk_levels(struc
- 	case SMU_UCLK:
- 	case SMU_FCLK:
- 		/* There is only 2 levels for fine grained DPM */
--		if (navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (ret) {
- 			soft_max_level = (soft_max_level >= 1 ? 1 : 0);
- 			soft_min_level = (soft_min_level >= 1 ? 1 : 0);
- 		}
+ 	nla = nla_reserve(skb, IFLA_INET6_TOKEN, sizeof(struct in6_addr));
+ 	if (!nla)
+-- 
+2.39.5
+
 
 
