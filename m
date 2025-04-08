@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABD82686BC;
-	Tue,  8 Apr 2025 11:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45419268C66;
+	Tue,  8 Apr 2025 11:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111372; cv=none; b=TURagG8UECO+SeeYwVPGD/rJbRQhl7cly/O+DUSldtmIfl+shHtHL23/ID+IljhMJPRpxtLnZkyPQmIq5BQwTnSuCjbjPRAP37wxsO/kBEoYS0wrwnc6w0CO6h741PpoVAZhi6aeKcf5yjLOL/PZ4Cb9GuDU7+JKsT9wqqTfSCM=
+	t=1744111374; cv=none; b=I9EhXPZ13FPFD+Jhs1ta8dEBo7Jhitd989zfnP7uMxicJBq3rkBfPeSSVfMccdhsk253SC0PZknYl4C0iJ+8LXGx9F2AOUBFEyZy2rRUVNqc4xoaSkmm0zaELJBFNtRo8NqBoxrfXumcFEvpjvtu2PH+X84x+Cf0XLl1WepSp/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111372; c=relaxed/simple;
-	bh=1immG/ovlDAijA7UbOQAFCwLajW9aHvmQ5p1g77BAVo=;
+	s=arc-20240116; t=1744111374; c=relaxed/simple;
+	bh=R/F/Z1uY/MhzFVrAbfNTQZl29ABTRBXNu8uJ49bO6MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aoCdakyCC9vCPtQrKA4Du1zqPnQHYqqqGaI2C6ygyRRF4u+CxCKFc1aWLyqiKc3dFtuSQOwr/y7cPoFqjjcrh5UciyEFxoQeqH1HwXt4oHktOJiDVGmEEp9K/FXml3RTW7Uh4bpMuvQyueslvULz/bVYBckvdaju8lbMVBcDJYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1ogEwFv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxVVZq7YzjRuTMe15UI7vnrupc0UP6Tyn89054OC5BRvXEGqGAhpNNG/i1EfcwYIqPSbHPWe3DciKTuIzxvFdXL1U5JrKV4efjUXhP+4keff/G2lh6cF1M+tes8KToelRukKttqgg1OSp2zxDcEw7PYAhvCkbS/w2Wd9B9LJXRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/YJhxz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1ogEwFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A4AC4CEE7;
-	Tue,  8 Apr 2025 11:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/YJhxz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A89C4CEE5;
+	Tue,  8 Apr 2025 11:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111371;
-	bh=1immG/ovlDAijA7UbOQAFCwLajW9aHvmQ5p1g77BAVo=;
+	s=korg; t=1744111374;
+	bh=R/F/Z1uY/MhzFVrAbfNTQZl29ABTRBXNu8uJ49bO6MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1ogEwFvzM9BBu1AsfHi8u8tyCCwxcPEOJuxsEYHhwUCjvBIrn6/gaqG5AHK/FZOc
-	 mEXcu4uefeT/XZ+PmiSjtuPL4AF7xYOmryxYsij1diFIcMG/nh3+itbc7yPRS4bDnl
-	 KMJsoFTuwrZ1mu/AwNueZgj/sa38khvvBlE4KaMU=
+	b=l/YJhxz9Sg9A6tX2//2mW4LetE/sqBS9l0gT9TiNLrl8PJsr7zEJISYtvOThOlDuQ
+	 x5r+rmq2/4umF2bcgmTAJxPnvukvR0zSUuVzJcg4HTnz1UeLf8Yh+G7g69gQq/oHhL
+	 1azYpXP1QxBFZEgHFPLwpuf9lZWrxyjJvrAZC8Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 408/731] clk: mmp: Fix NULL vs IS_ERR() check
-Date: Tue,  8 Apr 2025 12:45:05 +0200
-Message-ID: <20250408104923.763233019@linuxfoundation.org>
+Subject: [PATCH 6.14 382/731] remoteproc: qcom_q6v5_pas: Use resource with CX PD for MSM8226
+Date: Tue,  8 Apr 2025 12:44:39 +0200
+Message-ID: <20250408104923.161294873@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,38 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Luca Weiss <luca@lucaweiss.eu>
 
-[ Upstream commit 00153c64a72d336cc61f4141e5be53b49b7797e1 ]
+[ Upstream commit ba785ff4162a65f18ed501019637a998b752b5ad ]
 
-The devm_kzalloc() function returns NULL on error, not error pointers.
-Fix the check.
+MSM8226 requires the CX power domain, so use the msm8996_adsp_resource
+which has cx under proxy_pd_names and is otherwise equivalent.
 
-Fixes: 03437e857b0a ("clk: mmp: Add Marvell PXA1908 APMU driver")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://lore.kernel.org/r/20250307064708.209511-1-hanchunchao@inspur.com
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Fixes: fb4f07cc9399 ("remoteproc: qcom: pas: Add MSM8226 ADSP support")
+Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250128-pas-singlepd-v1-1-85d9ae4b0093@lucaweiss.eu
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mmp/clk-pxa1908-apmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/mmp/clk-pxa1908-apmu.c b/drivers/clk/mmp/clk-pxa1908-apmu.c
-index 8cfb1258202f6..d3a070687fc5b 100644
---- a/drivers/clk/mmp/clk-pxa1908-apmu.c
-+++ b/drivers/clk/mmp/clk-pxa1908-apmu.c
-@@ -87,8 +87,8 @@ static int pxa1908_apmu_probe(struct platform_device *pdev)
- 	struct pxa1908_clk_unit *pxa_unit;
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 9f2d9b4be2790..60923ed129049 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1411,7 +1411,7 @@ static const struct adsp_data sm8650_mpss_resource = {
+ };
  
- 	pxa_unit = devm_kzalloc(&pdev->dev, sizeof(*pxa_unit), GFP_KERNEL);
--	if (IS_ERR(pxa_unit))
--		return PTR_ERR(pxa_unit);
-+	if (!pxa_unit)
-+		return -ENOMEM;
- 
- 	pxa_unit->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(pxa_unit->base))
+ static const struct of_device_id adsp_of_match[] = {
+-	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
++	{ .compatible = "qcom,msm8226-adsp-pil", .data = &msm8996_adsp_resource},
+ 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
+ 	{ .compatible = "qcom,msm8974-adsp-pil", .data = &adsp_resource_init},
+ 	{ .compatible = "qcom,msm8996-adsp-pil", .data = &msm8996_adsp_resource},
 -- 
 2.39.5
 
