@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C9E26B975;
-	Tue,  8 Apr 2025 12:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065D1269820;
+	Tue,  8 Apr 2025 12:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114597; cv=none; b=RroMC5Y+cr1RUaB9pFsq2K2VlRRztUQG9pejtpXaZDbhI1OAKEHy9ZVUzmz5NV68gWcXBWNB9+tDgfroBZZfTlpWffb+S/zxdNwHKrhNqWMSAaCmIhV+JINLBuIfi1T3VptNQtGiz4vwF+VRKGkJnGLlVx1kQl9t6hBOL9ZcIlQ=
+	t=1744114600; cv=none; b=iQAmh3V+ezA4dl05bwnanaw1clsbhJy3BMMfJNcUktdJqgeA7KBJli53IrFAL6HncVQMIRX0CWDYGslSdsctjyAhrgSdqivJ8ksCY9l1pHvVzAA33lDp9wph/JS1Ktdl1N5/5WRiIODeVJ996Zn8kvw/Hi8gDiRAgpgEkii7qEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114597; c=relaxed/simple;
-	bh=+TcZFT2qZx90arxq7BTS4qI8q/5N6kYkLIovTr1BB34=;
+	s=arc-20240116; t=1744114600; c=relaxed/simple;
+	bh=QGTYLowFX/YFrO4EsvXExkVmpeOxPxgpx7W5xqnGDx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PbjE+a/tbCUdb8/bQBGRBc9YvXDhnTYPZ3a2V5nzXBX9cjOo2v7BckWDd/GLEbAmg3BdiVvTYKFeB3yzTGbLo/nyM8EQOLkmpMFktHTHGPqV8JuqRhA/LbxKs0qVDfCxbOp3gUIREo8RA5xQrKSHEWgXzVs9dSWtZ+lisfQdPgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZJgVWOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHvMFcd2ud8BqYi9xnQts3yk9uVAjQbSk1gA2hyZJvaQQK0SmDtxbCjBFKuAzeJtn3rA82Seobx5A4UHsPtI8jyAI9RAqS1GnVoip0Ev2UJBi4y0FQ3zrXTwT3OgRxWYSTFoF4IKy3wLqbYl6Op36CYhuDUtwC1sgDL9kvY2OrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjjsfTdx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZJgVWOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745D1C4CEE5;
-	Tue,  8 Apr 2025 12:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjjsfTdx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2602AC4CEE7;
+	Tue,  8 Apr 2025 12:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744114596;
-	bh=+TcZFT2qZx90arxq7BTS4qI8q/5N6kYkLIovTr1BB34=;
+	s=korg; t=1744114599;
+	bh=QGTYLowFX/YFrO4EsvXExkVmpeOxPxgpx7W5xqnGDx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZJgVWOF66BtL+Mv5JFTfl/hcMsGkGFbrkBayXF/ARS7qd/NVyjyG88p+UfeWvpGM
-	 HXAerrkIOuZHRb0CPCWAVpn+vy52Q/epBlZ5qMTLJFwJQa1AUyvejIYuBHOMPuWJ9D
-	 jSycugKvHDVbSB2isjRrD7ueGkMRc13cy/QYQgBI=
+	b=XjjsfTdx0E5CLng8zinKSsg5fVfpcit2gVk7MPh4ie+xVz0FQmJ40jsHuXrbS2R/e
+	 QRRxB0Dv11QyT20zCQ+Cl1jG6GQIiijrurnTFH4EN84qoV0irFO0F0r5j1WJjS0rQm
+	 rka9in/4XfRSErVIGgiEzjiHV5ilSygkVHINqHFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 128/499] crypto: tegra - Use HMAC fallback when keyslots are full
-Date: Tue,  8 Apr 2025 12:45:40 +0200
-Message-ID: <20250408104854.389392229@linuxfoundation.org>
+Subject: [PATCH 6.13 164/499] RDMA/erdma: Prevent use-after-free in erdma_accept_newconn()
+Date: Tue,  8 Apr 2025 12:46:16 +0200
+Message-ID: <20250408104855.269955352@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104851.256868745@linuxfoundation.org>
 References: <20250408104851.256868745@linuxfoundation.org>
@@ -51,47 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit f80a2e2e77bedd0aa645a60f89b4f581c70accda ]
+[ Upstream commit 83437689249e6a17b25e27712fbee292e42e7855 ]
 
-The intermediate results for HMAC is stored in the allocated keyslot by
-the hardware. Dynamic allocation of keyslot during an operation is hence
-not possible. As the number of keyslots are limited in the hardware,
-fallback to the HMAC software implementation if keyslots are not available
+After the erdma_cep_put(new_cep) being called, new_cep will be freed,
+and the following dereference will cause a UAF problem. Fix this issue.
 
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 920d93eac8b9 ("RDMA/erdma: Add connection management (CM) support")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-hash.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/erdma/erdma_cm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index 8bed13552ab9e..65a50f29bd7e6 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -632,13 +632,18 @@ static int tegra_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
- 			     unsigned int keylen)
- {
- 	struct tegra_sha_ctx *ctx = crypto_ahash_ctx(tfm);
-+	int ret;
+diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
+index 771059a8eb7d7..e349e8d2fb50a 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cm.c
++++ b/drivers/infiniband/hw/erdma/erdma_cm.c
+@@ -705,7 +705,6 @@ static void erdma_accept_newconn(struct erdma_cep *cep)
+ 		erdma_cancel_mpatimer(new_cep);
  
- 	if (aes_check_keylen(keylen))
- 		return tegra_hmac_fallback_setkey(ctx, key, keylen);
+ 		erdma_cep_put(new_cep);
+-		new_cep->sock = NULL;
+ 	}
  
-+	ret = tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
-+	if (ret)
-+		return tegra_hmac_fallback_setkey(ctx, key, keylen);
-+
- 	ctx->fallback = false;
- 
--	return tegra_key_submit(ctx->se, key, keylen, ctx->alg, &ctx->key_id);
-+	return 0;
- }
- 
- static int tegra_sha_init(struct ahash_request *req)
+ 	if (new_s) {
 -- 
 2.39.5
 
