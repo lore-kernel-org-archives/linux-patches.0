@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BF8374C4;
-	Tue,  8 Apr 2025 11:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFB2192F2;
+	Tue,  8 Apr 2025 11:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110964; cv=none; b=YzNQWmIKRW15gldSmGF0IZsRK60zkeKkmQNcA0v40WMH751JSiH/zmO/0SRspTZg42nqFLrGnuTdE3YDmO2QvBazrWF6BRFxuPnMj8XlR+tobqJ1yyDRw4gCjM07/ZXJ9kQXzJCipMywpGQ6Sx6Q9dkj5rPdHMi5h+4K+vVuRLA=
+	t=1744110967; cv=none; b=ZetZvHvaLsyygfaDkILPB1aYvc6MLFS+zEXhZzoZZw33sh+7Wjj1+uO7+rNvDEPAQ3RiUmrhy55xNyQ8hwbEnE2pnU+Z9Y6YqmDbNzohhIBrqXD11QvSx8bqtprboMFT763eThYTaCh84lQ72KTeeG0x1+W53p5ODKZK22wD8lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110964; c=relaxed/simple;
-	bh=dXAVTBaP8A+qvB5y8ddwXhwYuoTDL5wOqoDMVvPQegc=;
+	s=arc-20240116; t=1744110967; c=relaxed/simple;
+	bh=bv68yh5WS8XLjel2TNBlvmSH26ojUv604AAOJ6nSzxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hv/XHJkHc/wOAx+VZm7d0aXL0v8uF4FMEQw8+JhekRKcTaV7gOL3GKDjNml3cZbMeaQ/P8s/L+8Ea307+h9v+JKAtHws7BXuPWNtxqDDRmUYgXgdO7+tlcuwFnVVZiiUIOnFz1adZ6wCtqDk/pGnKke5j6cU5bv5hPMZBRHPk2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N40c3lED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSDmtsulexuj2sQCW85VKxSxqoAnC3HelWPQi7tQnwQAKpFFDBOrJgNHIk2HmcXDq5ROXcUYjFVmBG39umZIp6B1xqPifYmKgxeoQEtaV1qd1IGmaRSfVO05cF08OkhEGr5a5Rf5Cb8A+dtrifIA3xN+acwVxY8Dh1fKnk2qfko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/JndbLV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N40c3lED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25B7C4CEE5;
-	Tue,  8 Apr 2025 11:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/JndbLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9792C4CEE5;
+	Tue,  8 Apr 2025 11:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110964;
-	bh=dXAVTBaP8A+qvB5y8ddwXhwYuoTDL5wOqoDMVvPQegc=;
+	s=korg; t=1744110967;
+	bh=bv68yh5WS8XLjel2TNBlvmSH26ojUv604AAOJ6nSzxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N40c3lEDnAQ+jVfM7y5f37yor9xWS2guLNb2vj5W6nwQioCaQJ9K4OC+Ky+8zy6+h
-	 D8vPIYA5FbwE85paWdfRJyfcnkxRd6G8kwJ+GaoIWYAseg4biFV+H7cPuvNfnqhS9l
-	 ZFuJg3R68k4wg96dqkeC7GIRt2JzCCtgdpyYCcwI=
+	b=x/JndbLV0nXOh76Ytj46uXbYEYDJilFz89MaLS9BWYILHXAwoKmZJrxh/wD247G39
+	 F/1LYd0pc7HYjuVv37UvkAQuYdD7W9gEOukH4lKLuienqzavJ2LVYYMN4v0lxgA9nl
+	 IOTzQIkooPOUm64hoORAMDcEB6l/MZeGLnddTcHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jan Glaza <jan.glaza@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Pedro Nishiyama <nishiyama.pedro@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 209/731] virtchnl: make proto and filter action count unsigned
-Date: Tue,  8 Apr 2025 12:41:46 +0200
-Message-ID: <20250408104919.143484185@linuxfoundation.org>
+Subject: [PATCH 6.14 253/731] Bluetooth: Add quirk for broken READ_VOICE_SETTING
+Date: Tue,  8 Apr 2025 12:42:30 +0200
+Message-ID: <20250408104920.169297433@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -55,54 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Glaza <jan.glaza@intel.com>
+From: Pedro Nishiyama <nishiyama.pedro@gmail.com>
 
-[ Upstream commit db5e8ea155fc1d89c87cb81f0e4a681a77b9b03f ]
+[ Upstream commit ff26b2dd6568392f60fa67a4e58279938025c3af ]
 
-The count field in virtchnl_proto_hdrs and virtchnl_filter_action_set
-should never be negative while still being valid. Changing it from
-int to u32 ensures proper handling of values in virtchnl messages in
-driverrs and prevents unintended behavior.
-In its current signed form, a negative count does not trigger
-an error in ice driver but instead results in it being treated as 0.
-This can lead to unexpected outcomes when processing messages.
-By using u32, any invalid values will correctly trigger -EINVAL,
-making error detection more robust.
+Some fake controllers cannot be initialized because they return a smaller
+report than expected for READ_VOICE_SETTING.
 
-Fixes: 1f7ea1cd6a374 ("ice: Enable FDIR Configure for AVF")
-Reviewed-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jan Glaza <jan.glaza@intel.com>
-Signed-off-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Pedro Nishiyama <nishiyama.pedro@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 1f04b0e5e3b9 ("Bluetooth: btusb: Fix regression in the initialization of fake Bluetooth controllers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/avf/virtchnl.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci.h      | 8 ++++++++
+ include/net/bluetooth/hci_core.h | 4 ++++
+ net/bluetooth/hci_sync.c         | 3 +++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/include/linux/avf/virtchnl.h b/include/linux/avf/virtchnl.h
-index 13a11f3c09b87..aca06f300f833 100644
---- a/include/linux/avf/virtchnl.h
-+++ b/include/linux/avf/virtchnl.h
-@@ -1283,7 +1283,7 @@ struct virtchnl_proto_hdrs {
- 	 * 2 - from the second inner layer
- 	 * ....
- 	 **/
--	int count; /* the proto layers must < VIRTCHNL_MAX_NUM_PROTO_HDRS */
-+	u32 count; /* the proto layers must < VIRTCHNL_MAX_NUM_PROTO_HDRS */
- 	union {
- 		struct virtchnl_proto_hdr
- 			proto_hdr[VIRTCHNL_MAX_NUM_PROTO_HDRS];
-@@ -1335,7 +1335,7 @@ VIRTCHNL_CHECK_STRUCT_LEN(36, virtchnl_filter_action);
- 
- struct virtchnl_filter_action_set {
- 	/* action number must be less then VIRTCHNL_MAX_NUM_ACTIONS */
--	int count;
-+	u32 count;
- 	struct virtchnl_filter_action actions[VIRTCHNL_MAX_NUM_ACTIONS];
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 3ec915738112b..295d97e312e1d 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -354,6 +354,14 @@ enum {
+ 	 * during the hdev->setup vendor callback.
+ 	 */
+ 	HCI_QUIRK_FIXUP_LE_EXT_ADV_REPORT_PHY,
++
++	/* When this quirk is set, the HCI_OP_READ_VOICE_SETTING command is
++	 * skipped. This is required for a subset of the CSR controller clones
++	 * which erroneously claim to support it.
++	 *
++	 * This quirk must be set before hci_register_dev is called.
++	 */
++	HCI_QUIRK_BROKEN_READ_VOICE_SETTING,
  };
  
+ /* HCI device flags */
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 6281063cbd8e4..8649ad17408bb 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1925,6 +1925,10 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
+ 	((dev)->commands[20] & 0x10 && \
+ 	 !test_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks))
+ 
++#define read_voice_setting_capable(dev) \
++	((dev)->commands[9] & 0x04 && \
++	 !test_bit(HCI_QUIRK_BROKEN_READ_VOICE_SETTING, &(dev)->quirks))
++
+ /* Use enhanced synchronous connection if command is supported and its quirk
+  * has not been set.
+  */
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index dd770ef5ec368..0c6a85abba2c5 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3696,6 +3696,9 @@ static int hci_read_local_name_sync(struct hci_dev *hdev)
+ /* Read Voice Setting */
+ static int hci_read_voice_setting_sync(struct hci_dev *hdev)
+ {
++	if (!read_voice_setting_capable(hdev))
++		return 0;
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_READ_VOICE_SETTING,
+ 				     0, NULL, HCI_CMD_TIMEOUT);
+ }
 -- 
 2.39.5
 
