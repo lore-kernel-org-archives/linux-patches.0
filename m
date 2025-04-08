@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC59A26B941;
-	Tue,  8 Apr 2025 12:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6350426B2DE;
+	Tue,  8 Apr 2025 12:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744116471; cv=none; b=TcHelkA7cm4xjLqAStFP37l2TPqbzioNuovdbKgF8L3a6rpoXqG8KqdgCN4KL9FNHvhoBzLsT0MrbQm73Z+eKWbriomAHz1E7z4DAU5zVjbDjln93/t50EUYw0ExDm/spRU3Zci02oL6Bs7at4D1MVHi8Dte/t2OXOnfkhAgIYg=
+	t=1744116474; cv=none; b=TcYb/ybMeAwKE/dHzPsYMFTbMwAmmZbgv41X88rLdObEaJkF4dLnkX2osFL1H7Wpk4QiZfP1VRkus+JkCvUixiW/4yVMi3D7Y/chHaowkPVTEw8f3T2eyXUDvaOfIG+YfaQawu3atP5B5qMaXfLOGp9wjbewXIVcgr9atkSigH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744116471; c=relaxed/simple;
-	bh=/ZeVv8KE2B4pi5luzeZzLnhm45s8lxGUAgiHZCqna5c=;
+	s=arc-20240116; t=1744116474; c=relaxed/simple;
+	bh=oCbsb3c/Kftm/8PLCeAbnWqBLk4rwmKtTlHWmuTJ2GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5KDgCi2c/0rhLh+EiWwIUjwopsbqzFsM8PGvlFMqOLwCwUTliTDjjaCefxeOWojeDAhpTWbODVHqD+2hzUcpXd/zeuAzc9/vSMJP4Li7w4KuKKNHdhGlcS15UHDanhpeSprytT1qgbmB55WZp2/2axUsU8Vjn12joGN7F7WhUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLzftyPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWexrXqynzw4xY3usUZsK1veUcOSRSjpafAca9WCx1pG2cBq0aTp3hO+sKSO/b8nkIA8/71X2o16nRXpmoEAA0CXgQkh6z4JaG+9xS6yeh4Xc0NEoZ3Hw0PANOp8UGQWU/TLsEGaVfR0+byAbsyFECQyg4lZwZ8Pnt41DHAm4LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEBdlDOm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLzftyPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A5EC4CEE5;
-	Tue,  8 Apr 2025 12:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEBdlDOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717CBC4CEE5;
+	Tue,  8 Apr 2025 12:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744116471;
-	bh=/ZeVv8KE2B4pi5luzeZzLnhm45s8lxGUAgiHZCqna5c=;
+	s=korg; t=1744116473;
+	bh=oCbsb3c/Kftm/8PLCeAbnWqBLk4rwmKtTlHWmuTJ2GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLzftyPi9C+KW4ghQ/kDCSQ5o+Ae+v7xx45RL/7J1gjwQIAJHukxMTZ1d6k9of2AG
-	 dNHesBirUKnfe8ig1iKQpAfre5VSZlhRi9F2GaXnVc+isFyaVzHuWNUEJBX3xtRk3v
-	 X6DZCepKZuJhBNudaCRMKxJKZzx5Jj3QEr0yNVvc=
+	b=WEBdlDOmtE5rZmfjQui/yqjpxu34dJsfwHSuLFzjGS09wY2TPw4OtbHmA4hYuAOL7
+	 pQQy6FcDlvnqQfPgezvXOX1LTEcBXjFzfrV1yzLEoy30EVQjAm6aai9hadYD5oqHC8
+	 h5azaLyEaiIttzI6QDHmSYcy4SPyEa2Ee6d5ix0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d2a2c639d03ac200a4f1@syzkaller.appspotmail.com,
-	Jiayuan Chen <mrpre@163.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/423] bpf: Fix array bounds error with may_goto
-Date: Tue,  8 Apr 2025 12:47:58 +0200
-Message-ID: <20250408104849.275968998@linuxfoundation.org>
+Subject: [PATCH 6.12 153/423] RDMA/mlx5: Fix mlx5_poll_one() cur_qp update flow
+Date: Tue,  8 Apr 2025 12:47:59 +0200
+Message-ID: <20250408104849.300350880@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104845.675475678@linuxfoundation.org>
 References: <20250408104845.675475678@linuxfoundation.org>
@@ -52,100 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 6ebc5030e0c5a698f1dd9a6684cddf6ccaed64a0 ]
+[ Upstream commit 5ed3b0cb3f827072e93b4c5b6e2b8106fd7cccbd ]
 
-may_goto uses an additional 8 bytes on the stack, which causes the
-interpreters[] array to go out of bounds when calculating index by
-stack_size.
+When cur_qp isn't NULL, in order to avoid fetching the QP from
+the radix tree again we check if the next cqe QP is identical to
+the one we already have.
 
-1. If a BPF program is rewritten, re-evaluate the stack size. For non-JIT
-cases, reject loading directly.
+The bug however is that we are checking if the QP is identical by
+checking the QP number inside the CQE against the QP number inside the
+mlx5_ib_qp, but that's wrong since the QP number from the CQE is from
+FW so it should be matched against mlx5_core_qp which is our FW QP
+number.
 
-2. For non-JIT cases, calculating interpreters[idx] may still cause
-out-of-bounds array access, and just warn about it.
+Otherwise we could use the wrong QP when handling a CQE which could
+cause the kernel trace below.
 
-3. For jit_requested cases, the execution of bpf_func also needs to be
-warned. So move the definition of function __bpf_prog_ret0_warn out of
-the macro definition CONFIG_BPF_JIT_ALWAYS_ON.
+This issue is mainly noticeable over QPs 0 & 1, since for now they are
+the only QPs in our driver whereas the QP number inside mlx5_ib_qp
+doesn't match the QP number inside mlx5_core_qp.
 
-Reported-by: syzbot+d2a2c639d03ac200a4f1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/bpf/0000000000000f823606139faa5d@google.com/
-Fixes: 011832b97b311 ("bpf: Introduce may_goto instruction")
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Link: https://lore.kernel.org/r/20250214091823.46042-2-mrpre@163.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+BUG: kernel NULL pointer dereference, address: 0000000000000012
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP
+ CPU: 0 UID: 0 PID: 7927 Comm: kworker/u62:1 Not tainted 6.14.0-rc3+ #189
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+ Workqueue: ib-comp-unb-wq ib_cq_poll_work [ib_core]
+ RIP: 0010:mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+ Code: 03 00 00 8d 58 ff 21 cb 66 39 d3 74 39 48 c7 c7 3c 89 6e a0 0f b7 db e8 b7 d2 b3 e0 49 8b 86 60 03 00 00 48 c7 c7 4a 89 6e a0 <0f> b7 5c 98 02 e8 9f d2 b3 e0 41 0f b7 86 78 03 00 00 83 e8 01 21
+ RSP: 0018:ffff88810511bd60 EFLAGS: 00010046
+ RAX: 0000000000000010 RBX: 0000000000000000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffff88885fa1b3c0 RDI: ffffffffa06e894a
+ RBP: 00000000000000b0 R08: 0000000000000000 R09: ffff88810511bc10
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff88810d593000
+ R13: ffff88810e579108 R14: ffff888105146000 R15: 00000000000000b0
+ FS:  0000000000000000(0000) GS:ffff88885fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000012 CR3: 00000001077e6001 CR4: 0000000000370eb0
+ Call Trace:
+  <TASK>
+  ? __die+0x20/0x60
+  ? page_fault_oops+0x150/0x3e0
+  ? exc_page_fault+0x74/0x130
+  ? asm_exc_page_fault+0x22/0x30
+  ? mlx5_ib_poll_cq+0x4c7/0xd90 [mlx5_ib]
+  __ib_process_cq+0x5a/0x150 [ib_core]
+  ib_cq_poll_work+0x31/0x90 [ib_core]
+  process_one_work+0x169/0x320
+  worker_thread+0x288/0x3a0
+  ? work_busy+0xb0/0xb0
+  kthread+0xd7/0x1f0
+  ? kthreads_online_cpu+0x130/0x130
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork+0x2d/0x50
+  ? kthreads_online_cpu+0x130/0x130
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/4ada09d41f1e36db62c44a9b25c209ea5f054316.1741875692.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c     | 19 +++++++++++++++----
- kernel/bpf/verifier.c |  7 +++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 2b9c8c168a0ba..a60a6a2ce0d7f 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2290,17 +2290,18 @@ void bpf_patch_call_args(struct bpf_insn *insn, u32 stack_depth)
- 	insn->code = BPF_JMP | BPF_CALL_ARGS;
- }
- #endif
--#else
-+#endif
-+
- static unsigned int __bpf_prog_ret0_warn(const void *ctx,
- 					 const struct bpf_insn *insn)
- {
- 	/* If this handler ever gets executed, then BPF_JIT_ALWAYS_ON
--	 * is not working properly, so warn about it!
-+	 * is not working properly, or interpreter is being used when
-+	 * prog->jit_requested is not 0, so warn about it!
- 	 */
- 	WARN_ON_ONCE(1);
- 	return 0;
- }
--#endif
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 4c54dc5780690..1aa5311b03e9f 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -490,7 +490,7 @@ static int mlx5_poll_one(struct mlx5_ib_cq *cq,
+ 	}
  
- bool bpf_prog_map_compatible(struct bpf_map *map,
- 			     const struct bpf_prog *fp)
-@@ -2380,8 +2381,18 @@ static void bpf_prog_select_func(struct bpf_prog *fp)
- {
- #ifndef CONFIG_BPF_JIT_ALWAYS_ON
- 	u32 stack_depth = max_t(u32, fp->aux->stack_depth, 1);
-+	u32 idx = (round_up(stack_depth, 32) / 32) - 1;
- 
--	fp->bpf_func = interpreters[(round_up(stack_depth, 32) / 32) - 1];
-+	/* may_goto may cause stack size > 512, leading to idx out-of-bounds.
-+	 * But for non-JITed programs, we don't need bpf_func, so no bounds
-+	 * check needed.
-+	 */
-+	if (!fp->jit_requested &&
-+	    !WARN_ON_ONCE(idx >= ARRAY_SIZE(interpreters))) {
-+		fp->bpf_func = interpreters[idx];
-+	} else {
-+		fp->bpf_func = __bpf_prog_ret0_warn;
-+	}
- #else
- 	fp->bpf_func = __bpf_prog_ret0_warn;
- #endif
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index a0cab0d0252fa..9000806ee3bae 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -21276,6 +21276,13 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 		if (subprogs[cur_subprog + 1].start == i + delta + 1) {
- 			subprogs[cur_subprog].stack_depth += stack_depth_extra;
- 			subprogs[cur_subprog].stack_extra = stack_depth_extra;
-+
-+			stack_depth = subprogs[cur_subprog].stack_depth;
-+			if (stack_depth > MAX_BPF_STACK && !prog->jit_requested) {
-+				verbose(env, "stack size %d(extra %d) is too large\n",
-+					stack_depth, stack_depth_extra);
-+				return -EINVAL;
-+			}
- 			cur_subprog++;
- 			stack_depth = subprogs[cur_subprog].stack_depth;
- 			stack_depth_extra = 0;
+ 	qpn = ntohl(cqe64->sop_drop_qpn) & 0xffffff;
+-	if (!*cur_qp || (qpn != (*cur_qp)->ibqp.qp_num)) {
++	if (!*cur_qp || (qpn != (*cur_qp)->trans_qp.base.mqp.qpn)) {
+ 		/* We do not have to take the QP table lock here,
+ 		 * because CQs will be locked while QPs are removed
+ 		 * from the table.
 -- 
 2.39.5
 
