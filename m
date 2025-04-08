@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56352268FE9;
-	Tue,  8 Apr 2025 11:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F247268691;
+	Tue,  8 Apr 2025 11:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744110218; cv=none; b=KWvBG538vsDt7lgNppnSf9E86XJcMXJ4YS6INkzkeE4PohNJqTmjUrd6RTRNL/jRbdhLqT8KgfVp1L2BRjxE3l8DBJomgAH9cwoSI0gprI0SkPr1EWn1iT6Yk6wZ4oWcihcQE86uHA0llD2bQ4pHaF1l8h+SWzQseyyp/+P07Aw=
+	t=1744110220; cv=none; b=VOjvbobjbmelSXExLZ7M2LxP1ckQjZtGRWeMC7JQNiRje6eABgusj1SmqJiN1Iz0NBXBsrnkwMFa32GUl0ON0d7I5DmAnGdmpOf/hLIYwDZX8jQwZmzBkSXHaqpZvmBYCZsGVvXJln8VGQ4Q69HsToSBy2CzsCg0MmFy5DY5Tvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744110218; c=relaxed/simple;
-	bh=aaz9YXeODtWVgFGuKIgTD6nDX9HSWJ6rOqJPEAN1I6s=;
+	s=arc-20240116; t=1744110220; c=relaxed/simple;
+	bh=z8z7U5XA1oMMxItFP5rRtsecm5JlD+QZBj+zveDaZhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sz67O+Fz1nJKYiSdsKiLYIZaZbvok7LjBzt+OKAR9EIcsNKsoibqqpX4OMAiXvcSnH6dqESjkKw05vuDU9w9wqsyhxQGJvBCI0Hn8Pwcu3uupiMG89MG0ffiRyt7hL3tZAUtNHiqrpa0zEylc8ZvuFFOGT1Jsj9VIrxkGUcfRcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8IHISAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwEAT0xttv21FZozaAqDMru02/+lrB+R38fjzBY/udJIRMT11IOdxNUNc41KVTTTa7t2d2DkoWaw3lcjcOR5+dFELzXuOZC6bGTfLkgoyXYSrAbgGEX3UcO03tdu+icIODTIiYPAbAJu8raIQAP7Zfc+x3pWRH03dKDA1IKTsaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbogvlqE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8IHISAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB96C4CEE5;
-	Tue,  8 Apr 2025 11:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbogvlqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECA1C4CEE7;
+	Tue,  8 Apr 2025 11:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744110217;
-	bh=aaz9YXeODtWVgFGuKIgTD6nDX9HSWJ6rOqJPEAN1I6s=;
+	s=korg; t=1744110220;
+	bh=z8z7U5XA1oMMxItFP5rRtsecm5JlD+QZBj+zveDaZhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8IHISAtSmG0WW3NaAEaxR0zqmpBjXk3pdu9+3BeULvsgX1ySlgU5owV8wyVq13pO
-	 posebgHSGby6t3U/Cu4UYXGZb0iz8KFB9iWM8rEeeV9jppshgB5dUg3w8HsdRIrxvj
-	 ZlHVVtZJZFkNh/D5ENTGtYumndXpX+Q6uXwZU+3s=
+	b=sbogvlqEJ5xj7mZdcurDYH2T2oZsf4MqssbsIuk/7kY1NlrX5NvfAVirEEGz90k/R
+	 5mWQOnkcr3+vR//ZU7V40eevROWdAwKOiX7At9mAzWIb3vRebBHCKikCdXgzMXEz+n
+	 8gOvsIIU2qby5XV5Drm8QK/fZDFmffqcGG/rOVi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 209/227] drm/amd/pm: Fix negative array index read
-Date: Tue,  8 Apr 2025 12:49:47 +0200
-Message-ID: <20250408104826.583718298@linuxfoundation.org>
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 172/227] perf python: Check if there is space to copy all the event
+Date: Tue,  8 Apr 2025 12:49:10 +0200
+Message-ID: <20250408104825.475569218@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104820.353768086@linuxfoundation.org>
 References: <20250408104820.353768086@linuxfoundation.org>
@@ -53,79 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit c8c19ebf7c0b202a6a2d37a52ca112432723db5f upstream.
+[ Upstream commit 89aaeaf84231157288035b366cb6300c1c6cac64 ]
 
-Avoid using the negative values
-for clk_idex as an index into an array pptable->DpmDescriptor.
+The pyrf_event__new() method copies the event obtained from the perf
+ring buffer to a structure that will then be turned into a python object
+for further consumption, so it copies perf_event.header.size bytes to
+its 'event' member:
 
-V2: fix clk_index return check (Tim Huang)
+  $ pahole -C pyrf_event /tmp/build/perf-tools-next/python/perf.cpython-312-x86_64-linux-gnu.so
+  struct pyrf_event {
+  	PyObject                   ob_base;              /*     0    16 */
+  	struct evsel *             evsel;                /*    16     8 */
+  	struct perf_sample         sample;               /*    24   312 */
 
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  	/* XXX last struct has 7 bytes of padding, 2 holes */
+
+  	/* --- cacheline 5 boundary (320 bytes) was 16 bytes ago --- */
+  	union perf_event           event;                /*   336  4168 */
+
+  	/* size: 4504, cachelines: 71, members: 4 */
+  	/* member types with holes: 1, total: 2 */
+  	/* paddings: 1, sum paddings: 7 */
+  	/* last cacheline: 24 bytes */
+  };
+
+  $
+
+It was doing so without checking if the event just obtained has more
+than that space, fix it.
+
+This isn't a proper, final solution, as we need to support larger
+events, but for the time being we at least bounds check and document it.
+
+Fixes: 877108e42b1b9ba6 ("perf tools: Initial python binding")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250312203141.285263-7-acme@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ tools/perf/util/python.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -900,19 +900,22 @@ static int navi10_get_current_clk_freq_b
- 					   value);
- }
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index b65cca0656396..240f9a0a7297b 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -558,6 +558,11 @@ static PyObject *pyrf_event__new(union perf_event *event)
+ 	      event->header.type == PERF_RECORD_SWITCH_CPU_WIDE))
+ 		return NULL;
  
--static bool navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
-+static int navi10_is_support_fine_grained_dpm(struct smu_context *smu, enum smu_clk_type clk_type)
- {
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
- 	DpmDescriptor_t *dpm_desc = NULL;
--	uint32_t clk_index = 0;
-+	int clk_index = 0;
- 
- 	clk_index = smu_cmn_to_asic_specific_index(smu,
- 						   CMN2ASIC_MAPPING_CLK,
- 						   clk_type);
-+	if (clk_index < 0)
-+		return clk_index;
++	// FIXME this better be dynamic or we need to parse everything
++	// before calling perf_mmap__consume(), including tracepoint fields.
++	if (sizeof(pevent->event) < event->header.size)
++		return NULL;
 +
- 	dpm_desc = &pptable->DpmDescriptor[clk_index];
- 
- 	/* 0 - Fine grained DPM, 1 - Discrete DPM */
--	return dpm_desc->SnapToDiscrete == 0 ? true : false;
-+	return dpm_desc->SnapToDiscrete == 0 ? 1 : 0;
- }
- 
- static inline bool navi10_od_feature_is_supported(struct smu_11_0_overdrive_table *od_table, enum SMU_11_0_ODFEATURE_CAP cap)
-@@ -964,7 +967,11 @@ static int navi10_print_clk_levels(struc
- 		if (ret)
- 			return size;
- 
--		if (!navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (!ret) {
- 			for (i = 0; i < count; i++) {
- 				ret = smu_v11_0_get_dpm_freq_by_index(smu, clk_type, i, &value);
- 				if (ret)
-@@ -1127,7 +1134,11 @@ static int navi10_force_clk_levels(struc
- 	case SMU_UCLK:
- 	case SMU_FCLK:
- 		/* There is only 2 levels for fine grained DPM */
--		if (navi10_is_support_fine_grained_dpm(smu, clk_type)) {
-+		ret = navi10_is_support_fine_grained_dpm(smu, clk_type);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (ret) {
- 			soft_max_level = (soft_max_level >= 1 ? 1 : 0);
- 			soft_min_level = (soft_min_level >= 1 ? 1 : 0);
- 		}
+ 	ptype = pyrf_event__type[event->header.type];
+ 	pevent = PyObject_New(struct pyrf_event, ptype);
+ 	if (pevent != NULL)
+-- 
+2.39.5
+
 
 
