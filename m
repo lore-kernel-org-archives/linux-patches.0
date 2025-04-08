@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D14A26AA8A;
-	Tue,  8 Apr 2025 11:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C658826AAB6;
+	Tue,  8 Apr 2025 11:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744111733; cv=none; b=XnYsp8Ju6FSqvmmM44Isx2tK5+rgjecqSErgpHpq2FcXGQjoCysfLAwPgKWbp+Yj+yKSSPWZFFPxRKf3PjYqzm5UvLThUf+2saWt0lsNPfi1dkWtDgSbPmI6YftMa+l6PBr+X7J0g/Zdxx/sZ4aItY/2pcaqAAWyyRfE8YePxFc=
+	t=1744111735; cv=none; b=G63ga63zJJYw6tbtlq6XrV1/SALFuQcyw2NnqulQOl42yNplmK23hN470pkBUoQEFcmOtv8cQILYvoOkZw/4A5eIgw8+hno0yD+ey1BdjXOrFdPM1mc32baRoiyZskg8hLU1A2SEl10DWcVIWBV4FTZbI2rmCWFMDU4sklq9fTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744111733; c=relaxed/simple;
-	bh=vn+YZVMG0Wj8zlsqLbCKXQG9cke+yP/yGzCodQYMbFM=;
+	s=arc-20240116; t=1744111735; c=relaxed/simple;
+	bh=WA06bfI5ncP3p+QieHI0/+qufJiyGdVP3DLipoVc3QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdxGzZpLIXom1A+5i2ysbB296VZ1xG0FnHDEmRwW/DPHJw3wxypztoEjlb4E1i+gnian52ex321fE+1/kV4rsk7HLH0ZWIbLILp8zzjLR407gwUwOjPHRLMUQZVgi/0y7SpWSL1fbSccH1sSW3iSoGNCQZP5XehVTpcJZAvug/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oalRmdyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPdfr31L7+GJCYZbp7nuiB3yqU7Pa5Ub1luJcHhooR7M/4mEd6KvYGwcxEezqVW7uUOSIIXrkteA/7U0jszUXFiTmV0J3De/UeASf467jutOMFwhzKvLCqwj5wy9YN/CfTeIHPYdWaMlk0OrXnFlxchzM/00X8WHHwXFxcmJ+yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ezj2g/J1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oalRmdyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5131FC4CEE7;
-	Tue,  8 Apr 2025 11:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ezj2g/J1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE22AC4CEE5;
+	Tue,  8 Apr 2025 11:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744111732;
-	bh=vn+YZVMG0Wj8zlsqLbCKXQG9cke+yP/yGzCodQYMbFM=;
+	s=korg; t=1744111735;
+	bh=WA06bfI5ncP3p+QieHI0/+qufJiyGdVP3DLipoVc3QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oalRmdypWldAcvsZGqD6qQFrEarW+p7XlSlf6IifN8aReVHij/bWN0vdUKtE3dqMk
-	 EZ4ne2I21nYhLcAFBmnCjnCV+CEKya0rUgiqywgismwUFmRrwpp84RQ5QsZwP7hM0n
-	 yapUEICCdbrj0EvD2LzldHhqDioJizO2WTMhb62I=
+	b=Ezj2g/J1WtTK0w/WJoAlnksPHi4Ad1i5qF4BGRkjgaMdw+p+4JY+IjGhv2fnY7Fto
+	 4wWs+TmztO6q0Z1TDMVKsajdeAr+JHDz9P5JhQq5haCEiVF9YCuXHiil5huwTgjcJf
+	 63Q/bnEzYRdiAg+NrTrnCVozePXz02CIOebB/6AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Kees Cook <kees@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 538/731] perf vendor events arm64 AmpereOneX: Fix frontend_bound calculation
-Date: Tue,  8 Apr 2025 12:47:15 +0200
-Message-ID: <20250408104926.790973462@linuxfoundation.org>
+Subject: [PATCH 6.14 539/731] fs/procfs: fix the comment above proc_pid_wchan()
+Date: Tue,  8 Apr 2025 12:47:16 +0200
+Message-ID: <20250408104926.814078509@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -52,61 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 182f12f3193341c3400ae719a34c00a8a1204cff ]
+[ Upstream commit 6287fbad1cd91f0c25cdc3a580499060828a8f30 ]
 
-frontend_bound metrics was miscalculated due to different scaling in
-a couple of metrics it depends on. Change the scaling to match with
-AmpereOne.
+proc_pid_wchan() used to report kernel addresses to user space but that is
+no longer the case today.  Bring the comment above proc_pid_wchan() in
+sync with the implementation.
 
-Fixes: 16438b652b46 ("perf vendor events arm64 AmpereOneX: Add core PMU events and metrics")
-Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250313201559.11332-3-ilkka@os.amperecomputing.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250319210222.1518771-1-bvanassche@acm.org
+Fixes: b2f73922d119 ("fs/proc, core/debug: Don't expose absolute kernel addresses via wchan")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/arm64/ampere/ampereonex/metrics.json          | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/proc/base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/arch/arm64/ampere/ampereonex/metrics.json b/tools/perf/pmu-events/arch/arm64/ampere/ampereonex/metrics.json
-index c5d1d22bd034b..5228f94a793f9 100644
---- a/tools/perf/pmu-events/arch/arm64/ampere/ampereonex/metrics.json
-+++ b/tools/perf/pmu-events/arch/arm64/ampere/ampereonex/metrics.json
-@@ -229,19 +229,19 @@
-     },
-     {
-         "MetricName": "slots_lost_misspeculation_fraction",
--        "MetricExpr": "(OP_SPEC - OP_RETIRED) / (CPU_CYCLES * #slots)",
-+        "MetricExpr": "100 * (OP_SPEC - OP_RETIRED) / (CPU_CYCLES * #slots)",
-         "BriefDescription": "Fraction of slots lost due to misspeculation",
-         "DefaultMetricgroupName": "TopdownL1",
-         "MetricGroup": "Default;TopdownL1",
--        "ScaleUnit": "100percent of slots"
-+        "ScaleUnit": "1percent of slots"
-     },
-     {
-         "MetricName": "retired_fraction",
--        "MetricExpr": "OP_RETIRED / (CPU_CYCLES * #slots)",
-+        "MetricExpr": "100 * OP_RETIRED / (CPU_CYCLES * #slots)",
-         "BriefDescription": "Fraction of slots retiring, useful work",
-         "DefaultMetricgroupName": "TopdownL1",
-         "MetricGroup": "Default;TopdownL1",
--        "ScaleUnit": "100percent of slots"
-+        "ScaleUnit": "1percent of slots"
-     },
-     {
-         "MetricName": "backend_core",
-@@ -266,7 +266,7 @@
-     },
-     {
-         "MetricName": "frontend_bandwidth",
--        "MetricExpr": "frontend_bound - frontend_latency",
-+        "MetricExpr": "frontend_bound - 100 * frontend_latency",
-         "BriefDescription": "Fraction of slots the CPU did not dispatch at full bandwidth - able to dispatch partial slots only (1, 2, or 3 uops)",
-         "MetricGroup": "TopdownL2",
-         "ScaleUnit": "1percent of slots"
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index cd89e956c3224..7feb8f41aa253 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -416,7 +416,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
+ #ifdef CONFIG_KALLSYMS
+ /*
+  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
+- * Returns the resolved symbol.  If that fails, simply return the address.
++ * Returns the resolved symbol to user space.
+  */
+ static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
+ 			  struct pid *pid, struct task_struct *task)
 -- 
 2.39.5
 
