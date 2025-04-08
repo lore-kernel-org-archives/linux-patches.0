@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362052192F2;
-	Tue,  8 Apr 2025 11:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4C6268FDE;
+	Tue,  8 Apr 2025 11:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112126; cv=none; b=OtzVCAZPJM/4eNpiIixhCqJAk8kvdXKdsADiTW4Yh5HJyjbrGG1qlnlLSgHSg9wrlbeZVrvJox+bUKljtF2MNznGnOTJ6EoSVTY95ahgSDH1UeCv/L+c6YcNCFFxOptVuTBdjEm7vzEMooj1RJQ292Xarcq9nD8C2WGRBZ8HTC0=
+	t=1744112129; cv=none; b=gVeI3DESJo+DraqctldeELaJJ1LmNAxDTTiV1x4Ai/zpGEYTQvTQBAYYok6F0LrI9cMK+p2WObgVDXDd1dOQpgR3Qlce2Inx2g4KKsQcfK5B8gumIsDhGBoFRouvibUQkqFGL+5zDHn7ZnGTDgHZoaOmkcKfPgnGr+/cXKij3Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112126; c=relaxed/simple;
-	bh=mAQj+8RTAkeQktk78uYPcmjWmiB9qNNnuP0ky51tru4=;
+	s=arc-20240116; t=1744112129; c=relaxed/simple;
+	bh=oWjYnZCZlf1fCIaiN4sz+LZA6/lM1A1Ct3vEL6ZLyIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaxGWWszO1shKRxQGoUfBDstz+z2bd5TZYhayhloWUs8Uzfi1pwXmB+X0YRqTUVK6cK2NerHQp2R10HsTXvxVuT4mR65e43kjYyUJZrGW7mSybGtUxyx6P/Q98KR+kNCI4jHs752NWZKicnwTH6lMEtCDeJOFVFhOBO2NgCRB0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXfI0XPf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZ1cexTxNWWbukUa4z7wCLRHx33qdrIxAwAfrMft5Ncso1fmu1WDfWU5f0gDH8EmhpjT4hpUmJYWrchFuKoaTEk7xOM+FEBCyNKTgEmPW2AAXmPo2I5K4H2GVb7/O86wfWDeZn+saSxZJYsAN16os1257o3HeCytFyMbXsIkq8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnBgF5My; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXfI0XPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577F3C4CEE5;
-	Tue,  8 Apr 2025 11:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnBgF5My"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14387C4CEE5;
+	Tue,  8 Apr 2025 11:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112125;
-	bh=mAQj+8RTAkeQktk78uYPcmjWmiB9qNNnuP0ky51tru4=;
+	s=korg; t=1744112128;
+	bh=oWjYnZCZlf1fCIaiN4sz+LZA6/lM1A1Ct3vEL6ZLyIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXfI0XPfPZPt+yTY2uCsM+eiHJI0tA5qq72VeGA2yGMjgB02io2dQ7uxkzvZmO6oV
-	 28y2T2iSbxIB6MBLVy2llbl/JuraiJjMYR4q1Zwg4E2XW/z0hzbTVPzeceXSQBsumw
-	 gdzFgbZFx/he6UDKq0COtrjtPF6alkNOH/HQB2z4=
+	b=wnBgF5MyxJEDNy75wK5CXqm0mp5n3p69ClQiEAWY0CLFCTCsft8Dr9Mw0mkRIQFdK
+	 gnPQ3/jxGnBIkHCrdv4EkiFRwDjnIUKokl31Y69gF76l+2LAfn2bQ9pS9p6KuU3qqx
+	 I24yfzkYfraSZI/pYjhTzaGzzl3S5pIQO0BTLh2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.14 686/731] wifi: mt76: mt7925: remove unused acpi function for clc
-Date: Tue,  8 Apr 2025 12:49:43 +0200
-Message-ID: <20250408104930.223397835@linuxfoundation.org>
+	syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Ira Weiny <ira.weiny@intel.com>
+Subject: [PATCH 6.14 687/731] acpi: nfit: fix narrowing conversion in acpi_nfit_ctl
+Date: Tue,  8 Apr 2025 12:49:44 +0200
+Message-ID: <20250408104930.247285594@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104914.247897328@linuxfoundation.org>
 References: <20250408104914.247897328@linuxfoundation.org>
@@ -50,33 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit b4ea6fdfc08375aae59c7e7059653b9877171fe4 upstream.
+commit 2ff0e408db36c21ed3fa5e3c1e0e687c82cf132f upstream.
 
-The code for handling ACPI configuration in CLC was copied from the mt7921
-driver but is not utilized in the mt7925 implementation. So removes the
-unused functionality to clean up the codebase.
+Syzkaller has reported a warning in to_nfit_bus_uuid(): "only secondary
+bus families can be translated". This warning is emited if the argument
+is equal to NVDIMM_BUS_FAMILY_NFIT == 0. Function acpi_nfit_ctl() first
+verifies that a user-provided value call_pkg->nd_family of type u64 is
+not equal to 0. Then the value is converted to int, and only after that
+is compared to NVDIMM_BUS_FAMILY_MAX. This can lead to passing an invalid
+argument to acpi_nfit_ctl(), if call_pkg->nd_family is non-zero, while
+the lower 32 bits are zero.
 
+Furthermore, it is best to return EINVAL immediately upon seeing the
+invalid user input.  The WARNING is insufficient to prevent further
+undefined behavior based on other invalid user input.
+
+All checks of the input value should be applied to the original variable
+call_pkg->nd_family.
+
+[iweiny: update commit message]
+
+Fixes: 6450ddbd5d8e ("ACPI: NFIT: Define runtime firmware activation commands")
 Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250304113649.867387-4-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reported-by: syzbot+c80d8dc0d9fa81a3cd8c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c80d8dc0d9fa81a3cd8c
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250123163945.251-1-m.masimov@mt-integration.ru
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/acpi/nfit/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -3155,7 +3155,6 @@ __mt7925_mcu_set_clc(struct mt792x_dev *
- 
- 		.idx = idx,
- 		.env = env_cap,
--		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
- 	};
- 	int ret, valid_cnt = 0;
- 	u8 i, *pos;
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -485,7 +485,7 @@ int acpi_nfit_ctl(struct nvdimm_bus_desc
+ 		cmd_mask = nd_desc->cmd_mask;
+ 		if (cmd == ND_CMD_CALL && call_pkg->nd_family) {
+ 			family = call_pkg->nd_family;
+-			if (family > NVDIMM_BUS_FAMILY_MAX ||
++			if (call_pkg->nd_family > NVDIMM_BUS_FAMILY_MAX ||
+ 			    !test_bit(family, &nd_desc->bus_family_mask))
+ 				return -EINVAL;
+ 			family = array_index_nospec(family,
 
 
