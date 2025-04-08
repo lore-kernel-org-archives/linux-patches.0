@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65A52641CC;
-	Tue,  8 Apr 2025 11:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962BF2676E1;
+	Tue,  8 Apr 2025 11:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112849; cv=none; b=II0zuht2Nowj6ARd4wIFIoCUtOdYTyrvdzRZOf+gp+6AfSZG2LXurPvvY/yQOQNSAqJoR3GUsrFXsaSucpvXqkQx3cIsPqEKgrKhHemY/bEGQvinDfzMVHeHIv9gZQ7rqH42vxr7bYeHoJXNYzxeWdQYvdMXDYolrCwbzK+tuu4=
+	t=1744112851; cv=none; b=JH10Q5oEIJc2e3sNwe2OkW/aNP1UZX4x/KX4/oGd+j/76IOGuA8MtYhEigiaQ0vZbysurWMmHX5T+2f5pkq7hbYWdLIGf9II33+Qtf7Wd+XmjZ5E1EORvQ6HU1JLTieedP8JHy6z/aWfTkILj5wtxPkWoO0Ix31m02F3Iu2jW2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112849; c=relaxed/simple;
-	bh=bFn/hvg9daGidePT2NQ6/4uxEs3Kr3cyKOGcK1SeZ5c=;
+	s=arc-20240116; t=1744112851; c=relaxed/simple;
+	bh=yaJaIMkLXbwmSlHAuBPVx+z2xdPJlNc/g0NYx11PQBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAoeiVCl6Q/X0xkk1oJFtfRtJ4lEK3TwTBnzVwRm+LeX3cFXxvNCMPN/OT30ncPq0iJO1IsUclxq1j+dMLoz44Q6HMElL6SR+SW7cNKArjWVGyswZVhbKL2cc7pbIdBgpPFCjMHmbbgF8WG90VxHX2Hq2ox0IjROlEs+xmewJdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oTlI69F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pqkpTIjFv6Dk9Ps0O379dq0vfKU1poA0gIQwNn5q4GxoE/uexLggdQvGF4ynny6MdbS+aog8OU48pnGMgbkSckVZXkAc+XoUM1jgUwlyYv6MPxlqXqv8f4sVvOP4urX07bnHtwsxnw7/stxltIx4Gs5Pguc4bPZtLLSPcMq8hCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0wLWgbz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oTlI69F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D04C4CEE5;
-	Tue,  8 Apr 2025 11:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0wLWgbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235D5C4CEE5;
+	Tue,  8 Apr 2025 11:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112848;
-	bh=bFn/hvg9daGidePT2NQ6/4uxEs3Kr3cyKOGcK1SeZ5c=;
+	s=korg; t=1744112851;
+	bh=yaJaIMkLXbwmSlHAuBPVx+z2xdPJlNc/g0NYx11PQBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oTlI69FrhB8li/jK1aUtuDNXZmuJ/J7/3DUT6tEerYnGdeGvuzuGHWAaqxT7JYRm
-	 gKmC8DM965WmTK+XMJ7RL9GhdTo0S1U1/4CBCvEOolYcoNK2T/GEjDDbeg+oc878qY
-	 4vnJCjTMQT/BqvLcnpgLNekWq0eqkHHaB/huA+CY=
+	b=a0wLWgbzRkKcpvFxWGLB7juv4mpwczhHaW1yk+sr8bZmsnwE+qb4g5NhmkvbhVPYR
+	 3R9OS9e8Ea8hsxZWc316piUQU83V4iktCFrTCccjZLv02WG//pE2ELMBW35c2heEu4
+	 OfLqf4FVuRffy8XnV2h4Xl4kTX1XUIptwafuwFmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Zhang Guanghui <zhang.guanghui@cestc.cn>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/279] wifi: iwlwifi: fw: allocate chained SG tables for dump
-Date: Tue,  8 Apr 2025 12:50:04 +0200
-Message-ID: <20250408104832.329395725@linuxfoundation.org>
+Subject: [PATCH 5.15 222/279] nvme-tcp: fix possible UAF in nvme_tcp_poll
+Date: Tue,  8 Apr 2025 12:50:05 +0200
+Message-ID: <20250408104832.359448965@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -51,138 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 7774e3920029398ad49dc848b23840593f14d515 ]
+[ Upstream commit 8c1624b63a7d24142a2bbc3a5ee7e95f004ea36e ]
 
-The firmware dumps can be pretty big, and since we use single
-pages for each SG table entry, even the table itself may end
-up being an order-5 allocation. Build chained tables so that
-we need not allocate a higher-order table here.
+nvme_tcp_poll() may race with the send path error handler because
+it may complete the request while it is actively being polled for
+completion, resulting in a UAF panic [1]:
 
-This could be improved and cleaned up, e.g. by using the SG
-pool code or simply kvmalloc(), but all of that would require
-also updating the devcoredump first since that frees it all,
-so we need to be more careful. SG pool might also run against
-the CONFIG_ARCH_NO_SG_CHAIN limitation, which is irrelevant
-here.
+We should make sure to stop polling when we see an error when
+trying to read from the socket. Hence make sure to propagate the
+error so that the block layer breaks the polling cycle.
 
-Also use _devcd_free_sgtable() for the error paths now, much
-simpler especially since it's in two places now.
+[1]:
+--
+[35665.692310] nvme nvme2: failed to send request -13
+[35665.702265] nvme nvme2: unsupported pdu type (3)
+[35665.702272] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[35665.702542] nvme nvme2: queue 1 receive failed:  -22
+[35665.703209] #PF: supervisor write access in kernel mode
+[35665.703213] #PF: error_code(0x0002) - not-present page
+[35665.703214] PGD 8000003801cce067 P4D 8000003801cce067 PUD 37e6f79067 PMD 0
+[35665.703220] Oops: 0002 [#1] SMP PTI
+[35665.703658] nvme nvme2: starting error recovery
+[35665.705809] Hardware name: Inspur aaabbb/YZMB-00882-104, BIOS 4.1.26 09/22/2022
+[35665.705812] Workqueue: kblockd blk_mq_requeue_work
+[35665.709172] RIP: 0010:_raw_spin_lock+0xc/0x30
+[35665.715788] Call Trace:
+[35665.716201]  <TASK>
+[35665.716613]  ? show_trace_log_lvl+0x1c1/0x2d9
+[35665.717049]  ? show_trace_log_lvl+0x1c1/0x2d9
+[35665.717457]  ? blk_mq_request_bypass_insert+0x2c/0xb0
+[35665.717950]  ? __die_body.cold+0x8/0xd
+[35665.718361]  ? page_fault_oops+0xac/0x140
+[35665.718749]  ? blk_mq_start_request+0x30/0xf0
+[35665.719144]  ? nvme_tcp_queue_rq+0xc7/0x170 [nvme_tcp]
+[35665.719547]  ? exc_page_fault+0x62/0x130
+[35665.719938]  ? asm_exc_page_fault+0x22/0x30
+[35665.720333]  ? _raw_spin_lock+0xc/0x30
+[35665.720723]  blk_mq_request_bypass_insert+0x2c/0xb0
+[35665.721101]  blk_mq_requeue_work+0xa5/0x180
+[35665.721451]  process_one_work+0x1e8/0x390
+[35665.721809]  worker_thread+0x53/0x3d0
+[35665.722159]  ? process_one_work+0x390/0x390
+[35665.722501]  kthread+0x124/0x150
+[35665.722849]  ? set_kthread_struct+0x50/0x50
+[35665.723182]  ret_from_fork+0x1f/0x30
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250209143303.697c7a465ac9.Iea982df46b5c075bfb77ade36f187d99a70c63db@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Zhang Guanghui <zhang.guanghui@cestc.cn>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 86 ++++++++++++++-------
- 1 file changed, 58 insertions(+), 28 deletions(-)
+ drivers/nvme/host/tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index fc630a0d9c83c..f1d07ddb3f831 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -558,41 +558,71 @@ static void iwl_dump_prph(struct iwl_fw_runtime *fwrt,
- }
- 
- /*
-- * alloc_sgtable - allocates scallerlist table in the given size,
-- * fills it with pages and returns it
-+ * alloc_sgtable - allocates (chained) scatterlist in the given size,
-+ *	fills it with pages and returns it
-  * @size: the size (in bytes) of the table
--*/
--static struct scatterlist *alloc_sgtable(int size)
-+ */
-+static struct scatterlist *alloc_sgtable(ssize_t size)
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 4ca7ef9416002..0fc5aba88bc15 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2491,6 +2491,7 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx)
  {
--	int alloc_size, nents, i;
--	struct page *new_page;
--	struct scatterlist *iter;
--	struct scatterlist *table;
-+	struct scatterlist *result = NULL, *prev;
-+	int nents, i, n_prev;
+ 	struct nvme_tcp_queue *queue = hctx->driver_data;
+ 	struct sock *sk = queue->sock->sk;
++	int ret;
  
- 	nents = DIV_ROUND_UP(size, PAGE_SIZE);
--	table = kcalloc(nents, sizeof(*table), GFP_KERNEL);
--	if (!table)
--		return NULL;
--	sg_init_table(table, nents);
--	iter = table;
--	for_each_sg(table, iter, sg_nents(table), i) {
--		new_page = alloc_page(GFP_KERNEL);
--		if (!new_page) {
--			/* release all previous allocated pages in the table */
--			iter = table;
--			for_each_sg(table, iter, sg_nents(table), i) {
--				new_page = sg_page(iter);
--				if (new_page)
--					__free_page(new_page);
--			}
--			kfree(table);
-+
-+#define N_ENTRIES_PER_PAGE (PAGE_SIZE / sizeof(*result))
-+	/*
-+	 * We need an additional entry for table chaining,
-+	 * this ensures the loop can finish i.e. we can
-+	 * fit at least two entries per page (obviously,
-+	 * many more really fit.)
-+	 */
-+	BUILD_BUG_ON(N_ENTRIES_PER_PAGE < 2);
-+
-+	while (nents > 0) {
-+		struct scatterlist *new, *iter;
-+		int n_fill, n_alloc;
-+
-+		if (nents <= N_ENTRIES_PER_PAGE) {
-+			/* last needed table */
-+			n_fill = nents;
-+			n_alloc = nents;
-+			nents = 0;
-+		} else {
-+			/* fill a page with entries */
-+			n_alloc = N_ENTRIES_PER_PAGE;
-+			/* reserve one for chaining */
-+			n_fill = n_alloc - 1;
-+			nents -= n_fill;
-+		}
-+
-+		new = kcalloc(n_alloc, sizeof(*new), GFP_KERNEL);
-+		if (!new) {
-+			if (result)
-+				_devcd_free_sgtable(result);
- 			return NULL;
- 		}
--		alloc_size = min_t(int, size, PAGE_SIZE);
--		size -= PAGE_SIZE;
--		sg_set_page(iter, new_page, alloc_size, 0);
-+		sg_init_table(new, n_alloc);
-+
-+		if (!result)
-+			result = new;
-+		else
-+			sg_chain(prev, n_prev, new);
-+		prev = new;
-+		n_prev = n_alloc;
-+
-+		for_each_sg(new, iter, n_fill, i) {
-+			struct page *new_page = alloc_page(GFP_KERNEL);
-+
-+			if (!new_page) {
-+				_devcd_free_sgtable(result);
-+				return NULL;
-+			}
-+
-+			sg_set_page(iter, new_page, PAGE_SIZE, 0);
-+		}
- 	}
--	return table;
-+
-+	return result;
+ 	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
+ 		return 0;
+@@ -2498,9 +2499,9 @@ static int nvme_tcp_poll(struct blk_mq_hw_ctx *hctx)
+ 	set_bit(NVME_TCP_Q_POLLING, &queue->flags);
+ 	if (sk_can_busy_loop(sk) && skb_queue_empty_lockless(&sk->sk_receive_queue))
+ 		sk_busy_loop(sk, true);
+-	nvme_tcp_try_recv(queue);
++	ret = nvme_tcp_try_recv(queue);
+ 	clear_bit(NVME_TCP_Q_POLLING, &queue->flags);
+-	return queue->nr_cqe;
++	return ret < 0 ? ret : queue->nr_cqe;
  }
  
- static void iwl_fw_get_prph_len(struct iwl_fw_runtime *fwrt,
+ static const struct blk_mq_ops nvme_tcp_mq_ops = {
 -- 
 2.39.5
 
