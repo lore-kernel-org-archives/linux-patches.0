@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DCE22424C;
-	Tue,  8 Apr 2025 11:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7087422424C;
+	Tue,  8 Apr 2025 11:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744112870; cv=none; b=m8mZ56ZbKaJgORlwq2Bw/Vr+HdqpVibVw4dsMvSLylkfY6aKjLt6op2Q4ow+rmNiR3kynGvEVewDjLJHgI3mkdF2Tl1mRu6abrnc9dIM0ErKuhWAEWyfjkLmQreT7oNIg/OBjU8VIo9S0s9WaRqPvzNs+Nik4rUTF/KgWlMwf5U=
+	t=1744112873; cv=none; b=XKxJieQBl7osHBtYkTHmdHNXfsk81sjAwWG6lx0aR/zv06FP1cPfNgi8xTA/71RMqeLdF0SuMVa9+5xdxcW0I7woUYz+YrVCCxfnF11aO2DDH5EKFsQsG4C26ix+ky31zfp7CiKS6MaKTqHwi8mZaCPC1nQds5Vyg36yskOJVqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744112870; c=relaxed/simple;
-	bh=fBic988iQBNB8M15aAG6C9ToaZ2noUoLpGPqHhCH+VQ=;
+	s=arc-20240116; t=1744112873; c=relaxed/simple;
+	bh=wVF4ORS8JHQBePO3CXG4HtINv00pONIwFAh9M++zaHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K77FmixaAPeRUI0crXjfE6HOXPpvMl/tRjGiq4DnO/EXH1U4ErH7y/OEdBVj/r2Qcwwn3h50Jdk5LnbgXW5YYzD0ZC7ei10prHK/OSP4kFE9QjOMyCY0mEfJQYIXhgxLNDR2hT/pciJOUJOuK0mA+P8IfTIV30A8+kALjrP+U3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cf1IYbF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6wb5mak13hXvGlBZmYBRy+ARAah5IxsuTVFhOwKDQk0b+gsgtyjTBOaZNijMehIKDnHsRahidH6sSJIKjufpLdJZa6rrTRSep4/iuAgnf0APfsr8cbtTGsjYB0oe2OA83DvB5zEnEaX5dJ+wNQd92t1uIRrw/24vdtqs3p3xCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BW23qxvZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cf1IYbF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA906C4CEE5;
-	Tue,  8 Apr 2025 11:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BW23qxvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF94C4CEE5;
+	Tue,  8 Apr 2025 11:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744112870;
-	bh=fBic988iQBNB8M15aAG6C9ToaZ2noUoLpGPqHhCH+VQ=;
+	s=korg; t=1744112872;
+	bh=wVF4ORS8JHQBePO3CXG4HtINv00pONIwFAh9M++zaHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cf1IYbF4HW5hvtw/K+jz64Ue4h92yDlrT7FHWfCeqiIP2+sNSna8O/MeRr/prmzcH
-	 dN7NaH6DV4FGbkWk+dShLz3Lrp9wpafziETZpq3tadiwuymqkhbC0yhcLxiwFlfQas
-	 Dk5v/gUBgEpWzv9Nz2Mg8tVSCzFy9S6KIS/ScKYc=
+	b=BW23qxvZv3enPCBCZqZZGUJcWVi7tIKqLF8gUsqbyk1yp7r75bY9ss3w9JGrckyYP
+	 08BjK7hyfKY7EtPHvb7BHa7TkCrzv5nDTBP3cfGZYDxUMJBFdiVqXXdVCwYAZyFZRR
+	 AtNTnFHN6kNUb0kFbnBuXnt5Uo2gCQp/nZyRL2r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	yzbot+ed801a886dfdbfe7136d@syzkaller.appspotmail.com,
+	Waiman Long <longman@redhat.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/279] sched/deadline: Use online cpus for validating runtime
-Date: Tue,  8 Apr 2025 12:50:11 +0200
-Message-ID: <20250408104832.526885872@linuxfoundation.org>
+Subject: [PATCH 5.15 229/279] locking/semaphore: Use wake_q to wake up processes outside lock critical section
+Date: Tue,  8 Apr 2025 12:50:12 +0200
+Message-ID: <20250408104832.554071208@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408104826.319283234@linuxfoundation.org>
 References: <20250408104826.319283234@linuxfoundation.org>
@@ -52,43 +54,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 14672f059d83f591afb2ee1fff56858efe055e5a ]
+[ Upstream commit 85b2b9c16d053364e2004883140538e73b333cdb ]
 
-The ftrace selftest reported a failure because writing -1 to
-sched_rt_runtime_us returns -EBUSY. This happens when the possible
-CPUs are different from active CPUs.
+A circular lock dependency splat has been seen involving down_trylock():
 
-Active CPUs are part of one root domain, while remaining CPUs are part
-of def_root_domain. Since active cpumask is being used, this results in
-cpus=0 when a non active CPUs is used in the loop.
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  6.12.0-41.el10.s390x+debug
+  ------------------------------------------------------
+  dd/32479 is trying to acquire lock:
+  0015a20accd0d4f8 ((console_sem).lock){-.-.}-{2:2}, at: down_trylock+0x26/0x90
 
-Fix it by looping over the online CPUs instead for validating the
-bandwidth calculations.
+  but task is already holding lock:
+  000000017e461698 (&zone->lock){-.-.}-{2:2}, at: rmqueue_bulk+0xac/0x8f0
 
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+  the existing dependency chain (in reverse order) is:
+  -> #4 (&zone->lock){-.-.}-{2:2}:
+  -> #3 (hrtimer_bases.lock){-.-.}-{2:2}:
+  -> #2 (&rq->__lock){-.-.}-{2:2}:
+  -> #1 (&p->pi_lock){-.-.}-{2:2}:
+  -> #0 ((console_sem).lock){-.-.}-{2:2}:
+
+The console_sem -> pi_lock dependency is due to calling try_to_wake_up()
+while holding the console_sem raw_spinlock. This dependency can be broken
+by using wake_q to do the wakeup instead of calling try_to_wake_up()
+under the console_sem lock. This will also make the semaphore's
+raw_spinlock become a terminal lock without taking any further locks
+underneath it.
+
+The hrtimer_bases.lock is a raw_spinlock while zone->lock is a
+spinlock. The hrtimer_bases.lock -> zone->lock dependency happens via
+the debug_objects_fill_pool() helper function in the debugobjects code.
+
+  -> #4 (&zone->lock){-.-.}-{2:2}:
+         __lock_acquire+0xe86/0x1cc0
+         lock_acquire.part.0+0x258/0x630
+         lock_acquire+0xb8/0xe0
+         _raw_spin_lock_irqsave+0xb4/0x120
+         rmqueue_bulk+0xac/0x8f0
+         __rmqueue_pcplist+0x580/0x830
+         rmqueue_pcplist+0xfc/0x470
+         rmqueue.isra.0+0xdec/0x11b0
+         get_page_from_freelist+0x2ee/0xeb0
+         __alloc_pages_noprof+0x2c2/0x520
+         alloc_pages_mpol_noprof+0x1fc/0x4d0
+         alloc_pages_noprof+0x8c/0xe0
+         allocate_slab+0x320/0x460
+         ___slab_alloc+0xa58/0x12b0
+         __slab_alloc.isra.0+0x42/0x60
+         kmem_cache_alloc_noprof+0x304/0x350
+         fill_pool+0xf6/0x450
+         debug_object_activate+0xfe/0x360
+         enqueue_hrtimer+0x34/0x190
+         __run_hrtimer+0x3c8/0x4c0
+         __hrtimer_run_queues+0x1b2/0x260
+         hrtimer_interrupt+0x316/0x760
+         do_IRQ+0x9a/0xe0
+         do_irq_async+0xf6/0x160
+
+Normally a raw_spinlock to spinlock dependency is not legitimate
+and will be warned if CONFIG_PROVE_RAW_LOCK_NESTING is enabled,
+but debug_objects_fill_pool() is an exception as it explicitly
+allows this dependency for non-PREEMPT_RT kernel without causing
+PROVE_RAW_LOCK_NESTING lockdep splat. As a result, this dependency is
+legitimate and not a bug.
+
+Anyway, semaphore is the only locking primitive left that is still
+using try_to_wake_up() to do wakeup inside critical section, all the
+other locking primitives had been migrated to use wake_q to do wakeup
+outside of the critical section. It is also possible that there are
+other circular locking dependencies involving printk/console_sem or
+other existing/new semaphores lurking somewhere which may show up in
+the future. Let just do the migration now to wake_q to avoid headache
+like this.
+
+Reported-by: yzbot+ed801a886dfdbfe7136d@syzkaller.appspotmail.com
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lore.kernel.org/r/20250306052954.452005-2-sshegde@linux.ibm.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250307232717.1759087-3-boqun.feng@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/locking/semaphore.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0a6d6899be5bd..66eb68c59f0bb 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2610,7 +2610,7 @@ int sched_dl_global_validate(void)
- 	 * value smaller than the currently allocated bandwidth in
- 	 * any of the root_domains.
- 	 */
--	for_each_possible_cpu(cpu) {
-+	for_each_online_cpu(cpu) {
- 		rcu_read_lock_sched();
+diff --git a/kernel/locking/semaphore.c b/kernel/locking/semaphore.c
+index 9ee381e4d2a4d..a26c915430ba0 100644
+--- a/kernel/locking/semaphore.c
++++ b/kernel/locking/semaphore.c
+@@ -29,6 +29,7 @@
+ #include <linux/export.h>
+ #include <linux/sched.h>
+ #include <linux/sched/debug.h>
++#include <linux/sched/wake_q.h>
+ #include <linux/semaphore.h>
+ #include <linux/spinlock.h>
+ #include <linux/ftrace.h>
+@@ -37,7 +38,7 @@ static noinline void __down(struct semaphore *sem);
+ static noinline int __down_interruptible(struct semaphore *sem);
+ static noinline int __down_killable(struct semaphore *sem);
+ static noinline int __down_timeout(struct semaphore *sem, long timeout);
+-static noinline void __up(struct semaphore *sem);
++static noinline void __up(struct semaphore *sem, struct wake_q_head *wake_q);
  
- 		if (dl_bw_visited(cpu, gen))
+ /**
+  * down - acquire the semaphore
+@@ -182,13 +183,16 @@ EXPORT_SYMBOL(down_timeout);
+ void up(struct semaphore *sem)
+ {
+ 	unsigned long flags;
++	DEFINE_WAKE_Q(wake_q);
+ 
+ 	raw_spin_lock_irqsave(&sem->lock, flags);
+ 	if (likely(list_empty(&sem->wait_list)))
+ 		sem->count++;
+ 	else
+-		__up(sem);
++		__up(sem, &wake_q);
+ 	raw_spin_unlock_irqrestore(&sem->lock, flags);
++	if (!wake_q_empty(&wake_q))
++		wake_up_q(&wake_q);
+ }
+ EXPORT_SYMBOL(up);
+ 
+@@ -256,11 +260,12 @@ static noinline int __sched __down_timeout(struct semaphore *sem, long timeout)
+ 	return __down_common(sem, TASK_UNINTERRUPTIBLE, timeout);
+ }
+ 
+-static noinline void __sched __up(struct semaphore *sem)
++static noinline void __sched __up(struct semaphore *sem,
++				  struct wake_q_head *wake_q)
+ {
+ 	struct semaphore_waiter *waiter = list_first_entry(&sem->wait_list,
+ 						struct semaphore_waiter, list);
+ 	list_del(&waiter->list);
+ 	waiter->up = true;
+-	wake_up_process(waiter->task);
++	wake_q_add(wake_q, waiter->task);
+ }
 -- 
 2.39.5
 
